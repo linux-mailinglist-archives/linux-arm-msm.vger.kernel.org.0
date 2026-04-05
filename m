@@ -1,69 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-101885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KBMlHbC70mnGaAcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Apr 2026 21:44:48 +0200
+	id sNbRM9q60mnGaAcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Apr 2026 21:41:14 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 197E639F938
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Apr 2026 21:44:48 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E26C39F84F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Apr 2026 21:41:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 96A8930484C6
+	by sto.lore.kernel.org (Postfix) with ESMTP id DD19E30078BC
 	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2026 19:40:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73D0C35F18B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74F9935F171;
 	Sun,  5 Apr 2026 19:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SAiorilD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JoUYhNK2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA1E35AC2F;
-	Sun,  5 Apr 2026 19:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAA435AC31;
+	Sun,  5 Apr 2026 19:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775418044; cv=none; b=Gf+pwuoFZDywZQsZWWA14UxhkQmS07uJLZ9U5AWrQaktFilIbeggxZR7PQjTfy8WC9LmQN2o80a6BHzyEbprPH6a8tPQCTACSgUC8BH5Qzte4G0yhvCDbdcQmSarX3ml1NUz4S218/8+HDP57pbf1OiEMwIW7KUSrY7ZnImagFg=
+	t=1775418044; cv=none; b=U+GW9a6yxAYvDNjVQgKwfE53j9ZdguwzOVfOzJT3Kwmyp/c5ZC8/jE78j7WeHc7FyyBkYaLLnH13bpWgT2POP/elTkW4qM3goVMDpB+FbON9+IAs8cogqjaXDLUhBrlfP7JpjaleWN0bmazZwOzZfJa0EbxMu4qYU+kVwNhvELg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775418044; c=relaxed/simple;
-	bh=s14akoiYE6AItWVTCLfNsOj1qvKu5inJeD00kzVA/Kk=;
+	bh=G8OHlwTmTRxK63cP/30d5ZvSGyTtM/dCdLD08SQGNd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TZzk+4cjRQKGoajQ43A/08ClchYaJEyiugqiftjH53Urnf2D7hj5WRLksLCBGtYCkIbFrv1XWC0dSd9XV4weYq0S1p7LCLxgU+5+WiuPvv/0Brzm+jmPhhN+IZMYK7jGTWcm5/DC9Wrzs8QD9KbWMsq4qPpKJF44eFoFuFbY/oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SAiorilD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD56C116C6;
-	Sun,  5 Apr 2026 19:40:41 +0000 (UTC)
+	 MIME-Version:Content-Type; b=myCdxExndhg56zgNFZz7FU8qHtxwrOOST612DvqmXLdZ556Zulm9d8GjyIZ+0oSdvi/jRGI4Br2b4qID/h6WADbxwLhIuSY3o0t45BTWro2rFeImPQinMtwP5tKVwI1B9cp7dYwlbI+aQbb4pVKeeDay2PNYi5b9UFfrggjziaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JoUYhNK2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEECC19424;
+	Sun,  5 Apr 2026 19:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775418042;
-	bh=s14akoiYE6AItWVTCLfNsOj1qvKu5inJeD00kzVA/Kk=;
+	s=k20201202; t=1775418043;
+	bh=G8OHlwTmTRxK63cP/30d5ZvSGyTtM/dCdLD08SQGNd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SAiorilDO4IghE7Dz7APuREAw7VjTnqXpg7RBgxuUgIpTfRstB+5hG5yHtiE3/apR
-	 +Z8krvSJfwOg+l5FxEF8eq29S6nKkpBEWdh8Q/j1hE/L891UFjGKsgzyQzjmygyi7v
-	 7sw9THHB4j3K3OQMZgoJPd3DftJoE/vBhIJ8ZFBOfYCMLz5DEk7shFaFSpQTrtBbhU
-	 pixvOadIVp4zQ/qVF0Daj4/eSD/vYKDHAOwyey7uaJYBPVNqfSLw2q6WO2GA1kDQKv
-	 f1mletfaTSzYTAcFCQER95syyiUvFPD0XiR4nemkV0I0LgwEXQBsNp42LBLqXWeikN
-	 MaXN8UUaBslJw==
+	b=JoUYhNK2rn1I9djWNCEm2ncbbVbMGSkx0CS6iUkKGHWMM2FOqei1RTfHwkST1aDx4
+	 YD8rNvVpCK9quSnJYfg/G5zMWwgJ3hpEZGSr7gT2BIIwJ0XuAIvP+tqZNsa52Wf6BS
+	 O6gXbTrW9AeFMIcV/bGGwlodb+eHhUn0N1V0w2k4KU4gtlDd1CCUFGWB8kTgBSizNE
+	 6UuDwcNVgW5PbEk7JogQSNWAUg5z4P36ywzp6tWW113LvTSu1W9+6bzEYMFsx2sN2Q
+	 hOL24jvU8AJHmYX36O9bv5XMNaBjRSpJFZzUFScPSvGgqbyh6vrZHdGedsjNkcy/rg
+	 fseOGL04fij+w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Georgi Djakov <djakov@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-Cc: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
+	David Heidelberg <david@ixit.cz>,
+	Paul Sajna <sajattack@postmarketos.org>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Mike Tipton <mike.tipton@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v3 0/3] Enable QoS configuration on QCS615
-Date: Sun,  5 Apr 2026 14:40:22 -0500
-Message-ID: <177541802152.2061229.9414750574233334991.b4-ty@kernel.org>
+	phone-devel@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	Amir Dahan <system64fumo@tuta.io>,
+	Christopher Brown <crispybrown@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Pavel Machek <pavel@ucw.cz>
+Subject: Re: [PATCH v7 00/15] arm64: dts: qcom: sdm845-lg: Improve hardware support in devicetree
+Date: Sun,  5 Apr 2026 14:40:23 -0500
+Message-ID: <177541802142.2061229.9094394728986735362.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260311103548.1823044-1-odelu.kukatla@oss.qualcomm.com>
-References: <20260311103548.1823044-1-odelu.kukatla@oss.qualcomm.com>
+In-Reply-To: <20260331-judyln-dts-v7-0-87217b15fefb@postmarketos.org>
+References: <20260331-judyln-dts-v7-0-87217b15fefb@postmarketos.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,56 +75,77 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-101886-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101885-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,tuta.io,gmail.com,oss.qualcomm.com,ucw.cz];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 197E639F938
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 7E26C39F84F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On Wed, 11 Mar 2026 16:05:45 +0530, Odelu Kukatla wrote:
-> This series enables QoS configuration for QNOC type device which
-> can be found on QCS615 platform. It enables QoS configuration
-> for master ports with predefined priority and urgency forwarding.
-> This helps in prioritizing the traffic originating from different
-> interconnect masters at NOC (Network On Chip).
+On Tue, 31 Mar 2026 20:15:05 -0700, Paul Sajna wrote:
+> Rollup of improved hardware support via devicetree for LG G7 ThinQ
+> (judyln) from sdm845-mainline kernel fork
 > 
-> The system may function normally without this feature. However,
-> enabling QoS helps optimize latency and bandwidth across subsystems
-> like CPU, GPU, and multimedia engines, which becomes important in
-> high-throughput scenarios. This is a feature aimed at performance
-> enhancement to improve system performance under concurrent workloads.
+> Notably, this patch-series enables full DRM acceleration and wifi,
+> among other small improvements in individual commits
+> 
+> after this patch-series the main things that remain to be worked
+> on include touchscreen, audio, and modem.
 > 
 > [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: talos: Add clocks for QoS configuration
-      commit: 9b7d6b6c5cef6c578e976a1a605985c255779327
+[01/15] arm64: dts: qcom: sdm845-lg-common: Sort nodes and properties
+        commit: 6a9e8df732014c1c758bd3cd6254b5b4cb273c7f
+[02/15] arm64: dts: qcom: sdm845-lg-judyln: Add firmware nodes, change path
+        commit: b9afe8581c0e14b7b56e2314dc7f9597bf23ef67
+[03/15] arm64: dts: qcom: sdm845-lg-judyp: Define firmware paths for judyp
+        commit: 8f4c53ae286bd6a113245ad53ce957e623374cf0
+[04/15] arm64: dts: qcom: sdm845-lg-common: Enable venus
+        commit: e9f611de7ab51540c0cf246df6b7d4d99f4cec64
+[05/15] arm64: dts: qcom: sdm845-lg-common: Enable qups and their dma controllers
+        commit: 4ec3045c969a326c458c53ca65bde5749e575d52
+[06/15] arm64: dts: qcom: sdm845-lg: Add uarts and Bluetooth
+        commit: e746ed5af3084e9534135679c55e69eced0c657f
+[07/15] arm64: dts: qcom: sdm845-lg-judyln: Add battery and charger
+        commit: 995c258982429db93db103fc26fcb3a0acd6a5ee
+[08/15] arm64: dts: qcom: sdm845-lg-common: Add LEDs
+        commit: b49722c8a18cdd11f49357f3b8be23549f76a506
+[09/15] arm64: dts: qcom: sdm845-lg-judyln: Add lab/ibb
+        commit: 2e7cdd400b6a4e67c27fc3e839342824b51d01ff
+[10/15] arm64: dts: qcom: sdm845-lg-judyln: Add display panel
+        commit: c6c66aa3ef33dc3076c6dac64003b29bd9515b58
+[11/15] arm64: dts: qcom: sdm845-lg: Add wifi nodes
+        commit: eb8fa32085261a07d763e9d616b3c206d0be82ff
+[12/15] arm64: dts: qcom: sdm845-lg-common: Add chassis-type
+        commit: a5a5ad9848980e1019ca841fe057afb83debecfa
 
 Best regards,
 -- 
