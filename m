@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-101904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kFXeEyPi0mn+bwcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 00:28:51 +0200
+	id 6FiBOA/q0mnxcAcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 01:02:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A019639FFAE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 00:28:50 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D03F3A0131
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 01:02:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B33733006972
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2026 22:28:46 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1062E300538A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2026 23:02:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B5DA36C5BE;
-	Sun,  5 Apr 2026 22:28:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3ED2B3822AF;
+	Sun,  5 Apr 2026 23:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pSSRAZ6u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UpzF/e9r"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75C27081E;
-	Sun,  5 Apr 2026 22:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173492367CF;
+	Sun,  5 Apr 2026 23:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775428124; cv=none; b=EE35lUakk7fVAfNOkCLomVGNnrvXFzh9I0/9SC1rthqA1l61rFDb8hET3stNRveaDrHKqIZm7PNIsVsp+pGKvdaRbcRd44Ei3KHe1bEWvmD9iJzDp27SBE9SD2Id2uyl7xBXLf0pNOhlJNgd6y2p5R1eI3PDO7bzMwUeG2UZT7w=
+	t=1775430154; cv=none; b=hWINH8PN0VfpmZnX1u9F+Fwf0HQhJ1VHrzjaOVufwUO8wbSbd1ASfdMJGsQC9ZzoneYa9Uau+D/itqEublfrfExYBC0iPN00Ny+t3QG+Rp03kLrdV/AVoOGb7wFi8vsFlUJugBnsFlnOgmvRIROP1hwwbJPWCBEg/XDhkKoUdXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775428124; c=relaxed/simple;
-	bh=sbn7cSt43ByRtf5P3IZPaeZopVX1YvGYKd1MKlCCcAg=;
+	s=arc-20240116; t=1775430154; c=relaxed/simple;
+	bh=AWRDv3dYlnVLH8M78Vu/CRSLMGyviOHStxu9JnvTLnw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b6Niw5d0eJnbTT7vI1l5Bmc0P1ueb+wqYkS7N47Gi5LRlYGeq44Lv5VgI8vdBrOFkNBGz/ZCqK6Gn5D7VhxF/ToOFsIFkmADLT6Eg5NdlqGztJKDUqwXpbiSOmB4RizKU2Vr3uunl+m34fJID3ynd/ICd0cLQshnIPVuOQ/gP2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pSSRAZ6u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D3BC116C6;
-	Sun,  5 Apr 2026 22:28:43 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=LgUdfB2DVS3Lkz/K3VSXyIPfAl123KgxIp5/2ApxnsSs+HvjYEPKcggSf22VXN/e/AytZGFtTkVSatygB76vep6v+L5WwCpEC4+f1UWol1b4zEWs+zFFYOenHGJ0BUqJcWYvriXEnMSTzOgRQF5JsZNmEL7YfRskVPsy4SHhUck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UpzF/e9r; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79783C116C6;
+	Sun,  5 Apr 2026 23:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775428124;
-	bh=sbn7cSt43ByRtf5P3IZPaeZopVX1YvGYKd1MKlCCcAg=;
+	s=k20201202; t=1775430153;
+	bh=AWRDv3dYlnVLH8M78Vu/CRSLMGyviOHStxu9JnvTLnw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=pSSRAZ6uFllVa4WTmvevDT1RFY0M6Uyk8CQaZjE8TmGJeocgkzazCFH7IhxytBtd5
-	 QE+LFHDEyuDgQDzYdwLBR0/ccFzoAQn/Va1m8DKTMyxlF8mZKbNqFpotCYLTdToIZ6
-	 h29e0CezOrumd3pcc6+1bagOyoDE7iG8uSf35Wn3HXjhLpAWj7eb3cewwzd+6bclnW
-	 a2zYWnYPwOEUPervov4yFvAKC89M4yr9tmJU1LrYC2OOSpYG14Khmmhtged+8hnClv
-	 H1g7F7sASIbxBbNnzcw8vMZr0bhCMB47jIPc62YAA8c+SbpE8MWPURDCcKNOG6dC8P
-	 PcdnWItiZxY2g==
-Message-ID: <b7520942-865a-450f-8b06-1b5cbc95c7c2@kernel.org>
-Date: Sun, 5 Apr 2026 15:28:42 -0700
+	b=UpzF/e9rwQePgER3O3lp0nBHskFh1r5QwllSDnOagkLDwHKjaTORIw7K9coLH64V0
+	 PGXQPHqr16Q5sUNKKeyfDFxqA4l7DC84eTjXRjmowSeEFND7sppO8MAOSRLR3k52U9
+	 QxcQa1xtY8BNepGVzXmoXhJaXAU0rI+PFyJRiHZSi16WBiWP0wcXF/E0F14QtxaFgs
+	 yvBTadJEMccztoUW1Bah+Yp+TZUFOFUrGzGlIkqDolEiDn95vYYNFhTnw7tlCtccC9
+	 J/JONU5FDfO5YC7WqXDBtgZYFj1aROmgydSxjxLNcexqpbkZTFIfjBgQzVRmnOYVHD
+	 5mUWMPHZ93uIA==
+Message-ID: <954a1202-e9b7-47ce-b218-a576e41d2512@kernel.org>
+Date: Mon, 6 Apr 2026 00:02:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,72 +53,66 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] dt-bindings: net: wireless: ath11k: Document
- WCN6755 WiFi
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Alexander Koskovich <AKoskovich@pm.me>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann
- <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
- Rocky Liao <quic_rjliao@quicinc.com>,
- Johannes Berg <johannes@sipsolutions.net>, Jeff Johnson <jjohnson@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org,
- linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
-References: <20260403-milos-fp6-bt-wifi-v2-0-393322b27c5f@fairphone.com>
- <20260403-milos-fp6-bt-wifi-v2-3-393322b27c5f@fairphone.com>
-From: Jeff Johnson <jjohnson@kernel.org>
+Subject: Re: [RFC PATCH 0/3] media: qcom: camss: CAMSS Offline Processing
+ Engine support
+To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+ vladimir.zapolskiy@linaro.org, kieran.bingham@ideasonboard.com,
+ robh@kernel.org, krzk+dt@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, johannes.goede@oss.qualcomm.com,
+ mchehab@kernel.org
+References: <xy6TKmdveRx4cMshSHEUGZ7s3lbsurWcsc2vq05A7_N4bCialR7EelZitouugtZDkpFCAghjqY4NDdSQEIPprw==@protonmail.internalid>
+ <20260323125824.211615-1-loic.poulain@oss.qualcomm.com>
+ <055a7281-3e41-4e26-a8c8-5e28d69c0685@kernel.org>
+ <CAFEp6-2NniQquVrw_V8P_cyUayMMY0SPC8hgczjB3ef5zx7e5A@mail.gmail.com>
+ <j1jExQP2GCnHhjXkyuhDn_d0CP50oZDMyso3CFfkygb7Ww_9Z3L93P8Px0KjTQAqU5jzr2I41V1_2ZdQOQqfxA==@protonmail.internalid>
+ <20260405194851.GA3972481@killaraus.ideasonboard.com>
+ <d5bb1f75-f55f-43e6-8160-bacc4088b0a2@kernel.org>
+ <zZSYnBEVwbsoC3zAxYw3b-FDBES5SVplE8_8v55ro9lhsRrCnB3xietqoJ41CLDv5iHdFFvfWF7ZgO1QFjrQiQ==@protonmail.internalid>
+ <20260405204722.GF1213462@killaraus.ideasonboard.com>
 Content-Language: en-US
-In-Reply-To: <20260403-milos-fp6-bt-wifi-v2-3-393322b27c5f@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+From: Bryan O'Donoghue <bod@kernel.org>
+In-Reply-To: <20260405204722.GF1213462@killaraus.ideasonboard.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101904-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[fairphone.com,kernel.org,pm.me,gmail.com,holtmann.org,quicinc.com,sipsolutions.net];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[24];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-101905-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jjohnson@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,fairphone.com:email]
-X-Rspamd-Queue-Id: A019639FFAE
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 5D03F3A0131
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 4/3/2026 6:52 AM, Luca Weiss wrote:
-> Document the WCN6755 WiFi using a fallback to WCN6750 since the two
-> chips seem to be completely pin and software compatible. In fact the
-> original downstream kernel just pretends the WCN6755 is a WCN6750.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+On 05/04/2026 21:47, Laurent Pinchart wrote:
+>> So actually I've shifted my focus on Hamoa to IFE/IPP.
+> I'd love to get stats out of the IFE 🙂
 
-Bjorn, will you take this entire series through your tree?
+Yeah, I'm fiddling with stats on Hamoa IFE right now.
 
-Acked-by: Jeff Johnson <jjohnson@kernel.org>
-
-
+---
+bod
 
