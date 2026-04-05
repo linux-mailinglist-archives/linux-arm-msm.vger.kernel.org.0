@@ -1,90 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-101852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uG4QBXdY0mkqWwcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Apr 2026 14:41:27 +0200
+	id cKlvIXJj0mlQXQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Apr 2026 15:28:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A1BE39E449
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Apr 2026 14:41:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E97439E8C9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Apr 2026 15:28:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A7FA730078D4
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2026 12:40:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BBF403006B42
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Apr 2026 13:28:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34D44341ACA;
-	Sun,  5 Apr 2026 12:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E815341ACA;
+	Sun,  5 Apr 2026 13:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mm.st header.i=@mm.st header.b="UBvJ/dYd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h/zlEoIa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WpHTPrFY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC74A2749ED
-	for <linux-arm-msm@vger.kernel.org>; Sun,  5 Apr 2026 12:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362A529E117;
+	Sun,  5 Apr 2026 13:28:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775392841; cv=none; b=elNnlytQHVXvyM51I7kV5v/aiVz1ddRpUVJLiZbAsh2t3Q2OT/Xl/vKmoZ/li6rlQDA7lfGqroHOM9U6/1z7Se4Wo7P7AM7B5rHbhIZJR+bLjXypYls5aZF+S8ApwijKCn2KYTCogbz9pU3PCHo2vpwl1REop8ZMbNs3xD1eoLM=
+	t=1775395694; cv=none; b=JhBBIOTXnAQt6AxVvxPSEVAD+PaqaihexBqqzUa+Dd9J3CtwCz5oZrvvrpVLNfIkNVfIAO6+NV5DoaSO5lspD3278sXHAC/rqK97Wx/s4EDdBp/0oHlETXqkMM31rQtcmxHezR9ulLu+W0QvDZ0pjCpakIrr3HwxnkUYojbv1NA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775392841; c=relaxed/simple;
-	bh=HQFp8ooP96QTzvjwCJo3hOHyKu9pYT2dLvWCl4J1f1Y=;
-	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=NoWLHH0bShx6lr8z0HtMA/Yhj76FDJ8gv0wd6dpoxR+d9dwUKZEbFcI99H/i12lEuipfXkjxc9OteUVyl8xn/E8okVWuGr/FuX+VrxVcraSSqJ3KMNbjNQUhN2P3d5omgKjcVwBpSqNSx1M6vZXmARfs7R1KYCpP/Qd2mBzv1TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mm.st; spf=pass smtp.mailfrom=mm.st; dkim=pass (2048-bit key) header.d=mm.st header.i=@mm.st header.b=UBvJ/dYd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h/zlEoIa; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mm.st
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mm.st
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 005347A0170;
-	Sun,  5 Apr 2026 08:40:37 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Sun, 05 Apr 2026 08:40:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mm.st; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1775392837; x=1775479237; bh=qvhNMzF2Rd
-	qRowlPz7NRArEVYUhW5TkuePlxZ54jMR8=; b=UBvJ/dYdn/DiAEEyqyJk6PUrXh
-	1WQX6lvPPPchFBEDN2I2h5oE1qLRgAynX54rtt8B9F1xyM6WDvQnLdTvwtX3QtfZ
-	E7I71Yjx4kYB5lrIS0hN9ktMCQYFesNLOqfbzRxht1C6OE8qqksIsHe3i7ywzip7
-	wv6whLdy2qphZsKUPvUdayzCW9BAag/WVUI5P2jOVuuMC5pah4dirylDM2NMYaGo
-	r2L73tAXIMVQDjFAcIHOmeVYx5cK0VbfznrfEnQlHTczM1QzUTHEpaKB/UgOCMfF
-	ZtiSgG/bv5XSbo35oBBg+lLDxjtW+1y3R3mNSc4SS6qhjj21C9udTzUWUf8A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1775392837; x=1775479237; bh=qvhNMzF2RdqRowlPz7NRArEVYUhW
-	5TkuePlxZ54jMR8=; b=h/zlEoIaBvVn2LVYtqBN7rxxGZMB7Y7Uo8gM0plDzUsS
-	5bjcGtjXRBzA52nuPELMjoY2JyicKxFqT89ZKE5adbe2hGwLH+81ldDh8eWbEDcF
-	dSGYLdBRyTXe+DeHcv/1fJYQRwYsLsYCjcLRXNm6ac+mW2dJgxEPZwLnOTeihe2s
-	FOe9hvA5GbW2LUIxQWRgF0GaGqrGwQHZCQ9lQZQXyqmbT1kkpU7wBLGZR5zy8uXZ
-	bAcCW6G05Nwosp9dIPgCDOsXULgvaFVutxLTOIcGetN8wemLul2MIil0Ot+eM1sC
-	AQOuxcu2kJPV2qRiMMLhxKYHtjAdvzk78MZWlOSeqA==
-X-ME-Sender: <xms:RVjSaZ2EXxoYmzRRhjkPw7H7qg8sZld4i-9NNFyR-oAYWvfKYLVOkA>
-    <xme:RVjSaeDNZppQrQvtQLuzMn7AUgiadmEP5uZNRQTwl4PSl3ieg5avZgIJrRkABrhyz
-    PnHB9YRJzhEKwphoeF_Qjsahp5HpQJQawtkW8sHCG_n6BwrG1Yotg>
-X-ME-Received: <xmr:RVjSaRdmAw82gJA_SRlw2YMqeGkU9uJt_YhkptGEONLopCmRpWzFdNC4mswsB175jPCP9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeejjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepkfffgggfvfevhffutgfgsehtkeertddtvd
-    ejnecuhfhrohhmpehnihhnohcuoehnihhnohesmhhmrdhstheqnecuggftrfgrthhtvghr
-    nhepheekveeflefftddvueeujeeivdffgeeggfegheduleeuhfffvdeguddvgfevkeelne
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepnhhinhho
-    sehmmhdrshhtpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehlihhnuhigqdgrrhhmqdhmshhmsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepughrihdquggvvhgvlheslhhishhtshdrfhhrvggvuggvshhkthhophdroh
-    hrgh
-X-ME-Proxy: <xmx:RVjSaTgN9x5x5hHjeVNyvQfIUTBhzFek-IElJsWckTqTF8xOf33dZQ>
-    <xmx:RVjSaZqjRcAFaARkfrALqKFv7hm7yYodZpnTUv2peoF2JTGpgm4Frg>
-    <xmx:RVjSaTH8bH4oKo3gOyXH4-GB4B8Pr9FqVs2k9RSwlk62Tj3wCXc8mw>
-    <xmx:RVjSaTlvpe4hUa2r9qwLi5F5ZRfKVx_azYX3gv6RWtfJOco7HKbusw>
-    <xmx:RVjSaeKR04BAH_4Q2VDH90PYLxBDZEGrIN-cNhG4TGH1ZA0PKT-qI4G_>
-Feedback-ID: i7990409e:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 5 Apr 2026 08:40:37 -0400 (EDT)
-Message-ID: <3f4d2926-6d00-48bc-ad9b-ba48602be95c@mm.st>
-Date: Sun, 5 Apr 2026 14:40:35 +0200
+	s=arc-20240116; t=1775395694; c=relaxed/simple;
+	bh=v12eyFNx5o85b2ZGpakdYCN9+1ToSv+BEIH3AgjWRzY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=We16Hnzw5XolIBPsC+/SuRXfKQDQORZJ1ur6XKUbQScmzScjmRCIg5Rnh+8FY+NtOLMkI6d56kV9NUtWih4NrpRVS3KY8obGz6SUF1uGTnDygbnPfylzoMlLZZmxvEirmW7PKUZsN7r6q0a4hD0XLYVcZZGBTXqrQjIF0wP44VA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WpHTPrFY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E302C116C6;
+	Sun,  5 Apr 2026 13:28:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775395693;
+	bh=v12eyFNx5o85b2ZGpakdYCN9+1ToSv+BEIH3AgjWRzY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=WpHTPrFYlydv0naDku8xttYoGvb1ztSIxNLshFtSAa8cwyCaLbHTDQIeDexEs+DTi
+	 vMntM2T3lLKApxXtKFnsoy8xMdxB1Qi0yG8ZiJFJAV3td4Sg1PHlbwcAa2LQp2Drti
+	 q8OlA+mXikVZe6e9nw7NLgBhqjHFT3FjDf3bAFEnF/4sdhzCwXKFod7eDgArBS+kVN
+	 RQHVJI7lzH0ez3J8RG/DfsTALa+rSyHmyTf60bVDHhny8qu2QEhVFFdvsO0sSB0EMx
+	 9h9nBYZP1MfeAR1Tp42FfXSIwc9WOx3mVBqmQeRhh60nU8Tx0JWWnc+UXofvraExeI
+	 1Vtm1tBuHSgCg==
+Message-ID: <9211dae3-3d74-43ae-9c38-31af1266afc3@kernel.org>
+Date: Sun, 5 Apr 2026 15:28:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,82 +53,132 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] arm64: dts: qcom: Few dtc W=1 warning fixes
+To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>,
+ Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+ Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Abel Vesa <abel.vesa@oss.qualcomm.com>,
+ Wesley Cheng <wesley.cheng@oss.qualcomm.com>,
+ Maulik Shah <maulik.shah@oss.qualcomm.com>,
+ Qiang Yu <qiang.yu@oss.qualcomm.com>,
+ Taniya Das <taniya.das@oss.qualcomm.com>,
+ Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
+ Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>,
+ Dmitry Baryshkov <lumag@kernel.org>,
+ Varadarajan Narayanan <quic_varada@quicinc.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20260404-dts-qcom-w-1-fixes-v1-0-b8a9e6806e0a@oss.qualcomm.com>
+ <23755291-8b53-4926-899e-8d3d1d8ea91d@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-To: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-From: nino <nino@mm.st>
-Subject: [BUG] msm-dp-display: DP PHY voltage swing state not reset on s2idle
- resume, link training fails (Snapdragon X1E78100)
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <23755291-8b53-4926-899e-8d3d1d8ea91d@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[mm.st,none];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[mm.st:s=fm2,messagingengine.com:s=fm2];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[mm.st:+,messagingengine.com:+];
-	TAGGED_FROM(0.00)[bounces-101852-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWO(0.00)[2];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-101853-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_FROM(0.00)[mm.st];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[nino@mm.st,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[25];
+	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_NONE(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 8A1BE39E449
+X-Rspamd-Queue-Id: 2E97439E8C9
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi,
+On 05/04/2026 12:24, Krishna Kurapati wrote:
+> 
+> 
+> On 4/4/2026 3:20 PM, Krzysztof Kozlowski wrote:
+>> Not marking stable as these do not have actual impact on user, but still
+>> warnings are not desired.
+>>
+>> Best regards,
+>> Krzysztof
+>>
+>> ---
+>> Krzysztof Kozlowski (5):
+>>        arm64: dts: qcom: glymur: Fix USB simple_bus_reg warning
+>>        arm64: dts: qcom: glymur: Fix cache and SRAM simple_bus_reg warnings
+>>        arm64: dts: qcom: glymur: Fix USB simple_bus_reg warnings
+> 
+> This third one must be "arm64: dts: qcom: ipq5424". I think its 
+> mistakenly written as glymur.
+> 
 
-On Lenovo ThinkPad T14s Gen 6 (Snapdragon X1E78100, kernel 
-7.0.0-29-qcom-x1e), the external DisplayPort output via USB-C Alt Mode 
-fails to recover after a prolonged s2idle suspend. After waking, the 
-msm-dp-display driver attempts link training but immediately hits max 
-voltage swing level and fails:
+Indeed.
 
-   [drm:msm_dp_ctrl_link_train_1] *ERROR* max v_level reached
-   [drm:msm_dp_ctrl_link_train_1_2] *ERROR* link training #1 on phy 0 
-failed. ret=-11
-   [drm:msm_dp_ctrl_link_train] *ERROR* link training on sink failed. 
-ret=-11
-   [drm:msm_dp_display_process_hpd_high] *ERROR* failed to complete DP 
-link training
-
-The failure also produces an EDID read failure during the suspend/resume 
-transition itself:
-
-   [drm:msm_dp_panel_read_sink_caps] *ERROR* panel edid read failed
-
-The issue is reproducible after longer suspends (multi-hour/overnight) 
-but not always after short ones, suggesting the PHY voltage swing and 
-pre-emphasis state is not being reset before link training is 
-re-attempted on resume.
-
-Affected controllers: ae90000.displayport-controller, 
-ae98000.displayport-controller (USB-C DP Alt Mode). ae9a000 and aea0000 
-(internal eDP) are unaffected.
-
-Hardware: Lenovo ThinkPad T14s Gen 6, Snapdragon X1E78100
-Kernel: 7.0.0-29-qcom-x1e (ubuntu upstream for these AMR64 cpu laptops)
-Dock: Dell D6000 via USB-C
-OS: Ubuntu 26.04 beta
-
-Happy to provide further logs or test patches.
-
-Nino
-
+Best regards,
+Krzysztof
 
