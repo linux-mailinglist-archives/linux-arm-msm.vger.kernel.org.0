@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-102000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kPpsF5EW1GncqwcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 22:24:49 +0200
+	id 7FteCiEX1GkLrAcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 22:27:13 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDB413A7241
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 22:24:48 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9187E3A72BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 22:27:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id AAC9D3047BCF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 20:19:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C4FD530233EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 20:25:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC0922F5A36;
-	Mon,  6 Apr 2026 20:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E581630EF95;
+	Mon,  6 Apr 2026 20:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gTfgXb0L"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FgBx1ekO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EF32D5923;
-	Mon,  6 Apr 2026 20:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F032F619D;
+	Mon,  6 Apr 2026 20:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775506749; cv=none; b=JjBPkF7RgphhVDVZ7Atfe1GX04Tnbb5thaEG4hghXEMK+mFrM1QOIiXUIkDOFURJIw238eSJB050lj8oXlvx7FYGCLnhnX4/+se22NOwH+qnZPg7bDon05sdQ6tfQeaXOL+6p9+gWVwzkUQCtRe7kvDEYHSozkbOtmdW5ZzLZig=
+	t=1775507137; cv=none; b=nktYEINRcTvzH00eB4z55ulyLimgpogkGEwBWDTLyiHD3luTUO38kcaxObz3pAMCWtWUYf2eSiI/TW5Jc66Ojx1AkPIO8F4eEk4zh+5AKLxCHOYVjwHSUJG/b5nE9WfvtAeKeHKLeVpzwkztmhj9xOw3k6F40vwqPxNtP2MK7kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775506749; c=relaxed/simple;
-	bh=0Q3tXh/N/mW8ffhClmjJ/eV4MLTTy6YVNm70ooWEQ50=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=u0wKe1UlO6ZmNki0hd+SO3BfmY4lhCguhUSHtx/xiYHuJPDbhAuFhL4rVKY6DtbGOdu+VvCV6IxOyhHorP8fNTtCLD28EzBmRCCNG06IL+8kqyXSeCX+4BEObT/wGHQKFick/2S8E6MpJiIdka6T8wR40LY1ChCv6ypGDNudzpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gTfgXb0L; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 26934C4CEF7;
-	Mon,  6 Apr 2026 20:19:09 +0000 (UTC)
+	s=arc-20240116; t=1775507137; c=relaxed/simple;
+	bh=SDhHc8Gdlrhgi2kS2fCmPzPir3jVgVnkcwYGV6/fk9M=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=nW58hFznvZeDe45S6pal+85BPFcdpquPQczCCMpXTgZwdC8pn7VG3WdPcLFSsNlrm57f+4fqlJMNXkAyf9lwKg2V+Xnk0z1VbSuYpGT3VQ0HNANM3cRVz9JVR0DSmgH5PGzqKa1ueZ/pbM6PlQsmr6kL/QRBvcHcLFgmaR0SlQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FgBx1ekO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3F2D0C4CEF7;
+	Mon,  6 Apr 2026 20:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775506749;
-	bh=0Q3tXh/N/mW8ffhClmjJ/eV4MLTTy6YVNm70ooWEQ50=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=gTfgXb0L8FTWWe0vVFg4X+tszuE5ZD1TT4UDEihKw+MbvOn8oFu3H9gAS9nRJ38Qu
-	 /ZSnlOSsgp3oiEKiPOscB6Pioxpj23ncQOQkA/boX4q0ZO5+3wd/uy5W43vmiwsDsU
-	 FESSJqnXsZIQJdq5+twWkhy1DjKV7RNE4psCQH/nlMdP0x3i1dz5xa2dWswoYmrfUZ
-	 X7XIRJxiKYgaYYLYHFUDX1eAVHcNTwGpRWygiTGEsHPbSoEGX4HYON4Hl58c3gefAV
-	 fVh8GKQFtk/G75TDYVINMjKcg8uMjkTEh/CDreB5FYtXx6Z86kIn3m3aHfjvGN4Tqz
-	 tcDN+CP8+mgxQ==
+	s=k20201202; t=1775507137;
+	bh=SDhHc8Gdlrhgi2kS2fCmPzPir3jVgVnkcwYGV6/fk9M=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=FgBx1ekOUTiEsWsUrAoqOOdI/IWsOCVAScIt2qcejLH9Pj0ziRhibBhStbzF6O6QM
+	 j/vGVVgblX9bfnBuRJDjPNZa88To1XUTZP4k9HjPYTZ2CXNuiHixvrBOX9DXRB2OFk
+	 puq1gFoHX6TRe1hEU0dfcRBS3zkF9bOFvKmQvnnfvJBrjx2va5MCPz4p+IUgsnPXp5
+	 UVNMf7f9jTPcqczljd5qrkBkSHkOaGeso6fYsjffhsih4YlhEld1SXbbmpQu71/5y+
+	 gZsUsrdtlD4N7V020P/9hXD4rYbXri8nfC/Xtr3xRLnaBpi2bdl8Wn1OLSLBQe3qCV
+	 +0hzdgksoIs/g==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 108A7FB5160;
-	Mon,  6 Apr 2026 20:19:09 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Mon, 06 Apr 2026 22:18:25 +0200
-Subject: [PATCH v2] arm64: dts: qcom: sdm845-oneplus: Enable known blocks
- and add placeholders
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FFD7FB5164;
+	Mon,  6 Apr 2026 20:25:37 +0000 (UTC)
+From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
+Subject: [PATCH v21 0/6] Add PWM support for IPQ chipsets
+Date: Mon, 06 Apr 2026 22:24:37 +0200
+Message-Id: <20260406-ipq-pwm-v21-0-6ed1e868e4c2@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,133 +57,234 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260406-placeholders-v2-1-9cdbe1fc9666@ixit.cz>
-X-B4-Tracking: v=1; b=H4sIABAV1GkC/1XMywrCMBCF4VcpszaSjLmoK99DugjJaAZKW5JSq
- qXvbqwrl/+B861QKDMVuDYrZJq58NDXwEMDIfn+SYJjbUCJRik8ibHzgdLQRcpFuGgN4cXqs9d
- QL2OmBy87d29rJy7TkF+7Pqvv+oNQ2X9oVkKJ6KLRGqUkF2688HQMb2i3bfsA/AJQMaYAAAA=
-X-Change-ID: 20251123-placeholders-7d65e29648a4
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1563; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=AVzwMsW29OzyZogD7/oC7WV7gAZxzBH+SW2iQDHGVNU=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBp1BU7glHYvyVib5voHAAb05fXLjKUjKvkSXEBO
- JhQ91xt4hOJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCadQVOwAKCRBgAj/E00kg
- cucJD/9M5lIqwyWqQrriy8WD8qm4T3QiE/Vd0fCadR4Rmi1RR6p/Q6n+MLu+XWpbHyYGJdTcHon
- xEGMR6wMAf7f2EgbNZdJIlaXHTQXDd8qMuW1VYd5U8NwQG9RgBb3nmmRtYkdD9rUomWXkpVoetV
- MCOIG5oHo4133DR6cxXXA5f4Z0jr+XeQzxgI92UHxR+KHMB8lbeiHr+JuJRDdJMfM2Vk/n3h0/u
- XxnulhAVr7zCb5/+BtaDgsnRPJpO9mhP28rCBPSiFWEu7vnPSszOY8XfRf1r8UpT0z/DVj79qLS
- HL6NarB2BgqqsljBtrLQ1sVU8jaJWG3ihEvA5lftgf/21fcc737tyCkTSb3z79TdQ9iaKRRF3SH
- Gx0JXHWuanre5TvR8sz5bDAjTeGibhCxGoMEztvcRLH2TGUbPWRttXm97rx/eYBB1LcnlgmP0wU
- 8G5F7RYEiiEEAnTrtazGSLABsAsE96+mvosm4+GMnr4ckOjseSdUHB2dgQYUdvegeLK8pyKUOVw
- tPT5hJlQpBZbKCaImiJ7zaUM7vBOCf7iaJZjPn4pl9l6VdsKiLgI9e5ZF3Zo2yx40xEnw7ODlWX
- gfo3TkW3gO0u5/cp6jyRVgCUMoX81StLTCmvhxnRo1NejUg13SsFbld7u/TPDDeCp7HmSoPbRE+
- 0dxTez1sv0XbJiQ==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAIUW1GkC/23O0U7DMAwF0F+Z+kwm22malKf9B0KoTRwWQZcu3
+ QrT1H8nrTRWxB6d+FzfazFwCjwUz5trkXgMQ4iHPBA+bQq7bw7vLILLDwUBKaiJROiPov/qhDV
+ WK4uldoqKvN0n9uF7iXp5zbNPsROnfeLm5iUCKKxAKdhSSRK0EiiO52DfXD7dp3DZzVM42K2N3
+ Ry6D8MppstSb8Rqzl6a5CT8bZI/BAgJ4ElqBq7MLp5PnzF+LDFzmRH12pqV1dnWrSslO2+11w+
+ sWVmqV9Zky65lb9i3reEHtr5bpPXdOluUrdVQWls16r8luNkKCMq7JZg7o5YSEBvp8K+dpukHU
+ CXzXtgBAAA=
+X-Change-ID: 20250922-ipq-pwm-c8c75c147d52
+To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ George Moussalem <george.moussalem@outlook.com>, 
+ Devi Priya <quic_devipriy@quicinc.com>, 
+ Baruch Siach <baruch.siach@siklu.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>
+X-Mailer: b4 0.15.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775507135; l=6465;
+ i=george.moussalem@outlook.com; s=20260406; h=from:subject:message-id;
+ bh=SDhHc8Gdlrhgi2kS2fCmPzPir3jVgVnkcwYGV6/fk9M=;
+ b=3JWHAb2VwyMun5FJ77dftxXSowjvRhsNsVjt17VuQmMMMLEZFy8r7ueQeWewK2OLqnScZg2nh
+ KbGnOSdD2R7AOkqDVyp9wzw3F+8kVUYIL8kGu794NbXzZ5C5OHuwPuP
+X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
+ pk=uqspem3ahtBvPEBuxVbyyXT/0Vp3JNb/mo1EPbmBzWg=
+X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20260406
+ with auth_id=722
+X-Original-From: George Moussalem <george.moussalem@outlook.com>
+Reply-To: george.moussalem@outlook.com
+X-Spamd-Result: default: False [1.34 / 15.00];
+	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-102000-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	TAGGED_FROM(0.00)[bounces-102004-lists,linux-arm-msm=lfdr.de,george.moussalem.outlook.com];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_REPLYTO(0.00)[outlook.com];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.998];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	FREEMAIL_CC(0.00)[vger.kernel.org,outlook.com,quicinc.com,siklu.com,oss.qualcomm.com,kernel.org];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	HAS_REPLYTO(0.00)[david@ixit.cz];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: CDB413A7241
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	HAS_REPLYTO(0.00)[george.moussalem@outlook.com];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,outlook.com:email,outlook.com:replyto,outlook.com:mid]
+X-Rspamd-Queue-Id: 9187E3A72BE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: David Heidelberg <david@ixit.cz>
+Add PWM driver and binding support for IPQ chipsets.
+Also, add nodes to add support for pwm in ipq6018, ipq5018, ipq5332, and
+ipq9574.
 
-We know these devices are present; most of them are supported by
-downstream and are close to the mainline kernels.
+I've picked up work based on Devi's last submission (v15) which dates
+back to 05 October 2023 as below SoCs are still active.
 
-This adds placeholders for:
- - front camera (imx371)
- - rear cameras (imx519, imx376k)
- - actuators
-
-This is very handy when rebasing the integration tree with
-support for multiple different blocks at the same time.
-
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
+Changes in v21:
+- Added macro definition for minimum supported period and lower bound check to ensure a valid period 
+- Added code comment to explain why pre_div won't overflow
+- Link to v20: https://patch.msgid.link/20260204-ipq-pwm-v20-0-91733011a3d1@outlook.com
+
+Changes in v20:
+- Updated IPQ_PWM_MAX_DIV macro definition to use FIELD_MAX
+- Removed clk struct from ipq_pwm struct and added clk_rate field
+  instead which is set during probe.
+- Consolidated config_div_and_duty into ipq_pwm_apply
+- Fixed arithmetic overflows in apply and get_state
+- Fixed off-by-one in divider calculation
+- Enabled 100% relative duty cycle support
+- Aligned continuation on next lines relative to opening parentheses
+- Return 0 instead of ret in probe
+- Link to v19: https://lore.kernel.org/r/20251128-ipq-pwm-v19-0-13bc704cc6a5@outlook.com
+
+Changes in v19:
+- Changed pwm-cells property in dt bindings from 2 to 3 as per Uwe's
+  recommendation
+- Added hardware notes and limitations based on own findings as
+  requested. NOTE: there's no publically available datasheet though.
+- Expanded comment on REG1_UPDATE to indicate that when this bit is set,
+  values for div and pre-div take effect. The hardware automatically
+  unsets it when the change is completed.
+- Added newline between MACRO definition and next comment
+- In config_div_and_duty, used mul_u64_u64_div_u64 to avoid overflow
+- Removed unncessary restriction of pwm_div to MAX_DIV - 1 after testing
+- Constrain pre_div to MAX_DIV is pre_div calculated is > MAX_DIV
+- Use of mul_u64_u64_div_u64 in .apply
+- Skip calculation of period and duty cycle when PWM_ENABLE REG is unset
+- Set duty cycle to period value when calculated duty cycle > period to
+  return a valid config
+- Removed .npwm as it's taken care of in devm_pwmchip_alloc
+- Added call to devm_clk_rate_exclusive_get to lock the clock rate
+- Start all kernel messages with a capital letter and end with \n.
+- Changed pwm-cells property in all dtsi from 2->3 for in scope IPQ SOCs
+- Link to v18: https://lore.kernel.org/r/20251029-ipq-pwm-v18-0-edbef8efbb8e@outlook.com
+
+Changes in v18:
+- Updated maintainer info in binding
+- Squashed dt bindings patches into the first for adding compatibles for
+  IPQ5018, IPQ5332, and IPQ9574
+- Link to v17: https://lore.kernel.org/r/20251008-ipq-pwm-v17-0-9bd43edfc7f7@outlook.com
+
+Changes in v17:
+- Picked up RB tags from Dmitry and Rob
+- Removed unnecessary code comments
+- Corrected reg property in PWM node in ipq6018 DTS in line with
+  expected nr of bytes for address and size cells
+- Link to v16: https://lore.kernel.org/r/20251001-ipq-pwm-v16-0-300f237e0e68@outlook.com
+
+Changes in v16:
+- Removed reg description in bindings as the offset is not relative to
+  the TCSR region anymore since simple-mfd support was dropped and PWM
+  nodes defined as their own nodes, not child nodes. Updated the example
+  too.
+- Dropped patch to add simple-mfd support to the qcom,tcsr bindings
+- Simplified code to calculate divs and duty cycle as per Uwe's comments
+- Removed unused pwm_chip struct from ipq_pwm_chip struct
+- Removed unnecessary cast as per Uwe's comment
+- Replaced devm_clk_get & clk_prepare_enable by devm_clk_get_enabled
+- Replaced pwmchip_add by devm_pwmchip_add and removed .remove function
+- Removed .owner from driver struct
+- Added compatibles to the bindings and nodes to the device trees to add
+  PWM support in the IPQ5018, IPQ5332, and IPQ9574 SoCs
+- Link to v15: https://lore.kernel.org/r/20231005160550.2423075-1-quic_devipriy@quicinc.com
+
+Changes in v15:
+- No change
+- Link to v14: https://lore.kernel.org/r/20231005033053.2626465-1-quic_devipriy@quicinc.com
+
+Changes in v14:
+- Picked up the R-b tag
+- Link to v13: https://lore.kernel.org/r/20231004090449.256229-1-quic_devipriy@quicinc.com
+
+Changes in v13:
+- Updated the file name to match the compatible
+- Sorted the properties and updated the order in the required field
+- Dropped the syscon node from examples
+- Link to v12: https://lore.kernel.org/r/20230925065915.3467964-1-quic_devipriy@quicinc.com
+
+Changes in v12:
+- Picked up the R-b tag
+
+Changes in v11:
+- No change
+
+Changes in v10:
+- No change
+
+Changes in v9:
+- Add 'ranges' property to example (Rob)
+- Drop label in example (Rob)
+
+Changes in v8:
+- Add size cell to 'reg' (Rob)
+
+Changes in v7:
+- Use 'reg' instead of 'offset' (Rob)
+- Drop 'clock-names' and 'assigned-clock*' (Bjorn)
+- Use single cell address/size in example node (Bjorn)
+- Move '#pwm-cells' lower in example node (Bjorn)
+- List 'reg' as required
+
+Changes in v6:
+- Device node is child of TCSR; remove phandle (Rob Herring)
+- Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
+
+Changes in v5:
+- Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+    Andersson, Kathiravan T)
+
+Changes in v4:
+- Update the binding example node as well (Rob Herring's bot)
+
+Changes in v3:
+- s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+
 Changes in v2:
-- Dropped NFC placeholder, as the series for NFC support has been sent
-  upstream.
-- Link to v1: https://lore.kernel.org/r/20251216-placeholders-v1-1-d7d544200e7c@ixit.cz
----
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 6b7378cf4d493..719d98240a21d 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -442,6 +442,26 @@ vreg_s3c_0p6: smps3 {
- 	};
- };
- 
-+&cci {
-+	status = "okay";
-+};
-+
-+&cci_i2c0 {
-+	/* front sony,imx371 @10 */
-+
-+	/* rear sony,imx519 @1a */
-+
-+	/* rear onnn,lc898217xc @72 */
-+};
-+
-+&cci_i2c1 {
-+	/* sa,sa3103 @0d */
-+
-+	/* rear sony,imx376k @10 */
-+
-+	/* onnn,lc898217xc @74 */
-+};
-+
- &cdsp_pas {
- 	firmware-name = "qcom/sdm845/OnePlus/enchilada/cdsp.mbn";
- 
+- Make #pwm-cells const (Rob Herring)
 
 ---
-base-commit: 816f193dd0d95246f208590924dd962b192def78
-change-id: 20251123-placeholders-7d65e29648a4
+
+---
+Devi Priya (3):
+      dt-bindings: pwm: add IPQ6018 binding
+      pwm: driver for qualcomm ipq6018 pwm block
+      arm64: dts: qcom: ipq6018: add pwm node
+
+George Moussalem (3):
+      arm64: dts: qcom: ipq5018: add pwm node
+      arm64: dts: qcom: ipq5332: add pwm node
+      arm64: dts: qcom: ipq9574: add pwm node
+
+ .../devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml  |  51 ++++
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi              |  10 +
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi              |  10 +
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              |  10 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi              |  10 +
+ drivers/pwm/Kconfig                                |  12 +
+ drivers/pwm/Makefile                               |   1 +
+ drivers/pwm/pwm-ipq.c                              | 259 +++++++++++++++++++++
+ 8 files changed, 363 insertions(+)
+---
+base-commit: 2febe6e6ee6e34c7754eff3c4d81aa7b0dcb7979
+change-id: 20250922-ipq-pwm-c8c75c147d52
 
 Best regards,
--- 
-David Heidelberg <david@ixit.cz>
+--  
+George Moussalem <george.moussalem@outlook.com>
 
 
 
