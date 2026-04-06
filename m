@@ -1,270 +1,267 @@
-Return-Path: <linux-arm-msm+bounces-102021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eDrUGSMz1GmtsAcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 00:26:43 +0200
+	id VNYRJp821GkNsQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 00:41:35 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D26BC3A7DA9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 00:26:42 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E22843A7E62
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 00:41:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id EFFE830598F9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 22:25:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EC31B303FFBB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 22:41:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 361493988F2;
-	Mon,  6 Apr 2026 22:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1CDE39DBC0;
+	Mon,  6 Apr 2026 22:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bSDNo/Cp";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jGUYtLb5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="P56FrZx/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4F838CFF1
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Apr 2026 22:25:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.180.131
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775514307; cv=pass; b=k6xGNrqgo4ZTsgtV3/u7HpeWGX0savRliMo38IMvRCNQG5NVWIcZSe+IM22Bqs7uD+c1T34tyCWR8DaM8637W7J6c/CQ7iyuW3M8N60GTQzOtrZu4TISdZ4p5e23yqR6yGZFN74AJTQ/iIE2MH0H3RimJvUiqD7bj7jg3h0Kp0Q=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775514307; c=relaxed/simple;
-	bh=XDyIQZC8VrWjxOvP0Ys1TA1SkwAcSYq3nLyGA3k4aEY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OhlQUdY8KMmP0goYa7aoYeI6VFw6Wc4SUCeQkKPWvLfoBDxCWOeuqtFkad778c43Yb7GZYmoVRVdlzSFGk9UrIrKA/pKQtLDHLI6Y7YGxdP9PhtaybNkdwrNapoHjmWQkza0TMikNQb3T1onChiu2TwXtRBnCbWo6hUtoa57wu8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bSDNo/Cp; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jGUYtLb5; arc=pass smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 636LQ9sq1404160
-	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Apr 2026 22:24:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:to; s=
-	qcppdkim1; bh=t2bz/AuUCyIyjUyeiEAv5+oKtlxkr+8qudGmv/ZvY58=; b=bS
-	DNo/CpLSg5Q0/LYBh07j6rSOuEKz+t2Zyqk74J+9h+2fHqzqMddYKfJh/01Z8/G7
-	Tdu1wLBcG5RYA66x4rgahrtot3t7g4ZcMyFuFay6O/VkA7i8Bwo6UFJ14pxF7ERm
-	J/TGr74kJh/MVOK35vLkWXT3ZzbH56TX87e/DKdUnLQJiJ9tT31JklahFmpdCTyh
-	o9tk4f+kTHfWe1BCFnwNd+p8fxrK7xdST/3B/UzYowaKmzLxbz+cz7c9U1FNxDsT
-	JtWOX2EkGjQ9LTiIqeyY3Ul4p/wXcDIEt49ahH91Vl0pUW0opJIW6cWtyx+KR+/L
-	cFG+g1NBO2bTOw2srhag==
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com [209.85.210.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dcmr8844k-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2026 22:24:55 +0000 (GMT)
-Received: by mail-ot1-f70.google.com with SMTP id 46e09a7af769-7dbb6b95836so10018626a34.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2026 15:24:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775514295; cv=none;
-        d=google.com; s=arc-20240605;
-        b=PHYsI4NylShTm2fdYcb43B7DnMaOn3g51Y4/o2U823yIRQ4ZsAuBj3PV4pkkLUn4rC
-         BJ62EfTOJ0MYKPfc1SB++85+ZK/cLlYoD3x3q2JZZIyLSAFtnED4NK66UkxWe4s207qY
-         OCk2M0uwu2+twgMlM0fPZhBkNs4SwxqzxgFEqnrL4aLgeVqwMEH8gfdvNGqeAXCEN/Lh
-         amuecDdj7SCLbBUcMLkayH9zeV6BF4Av5SDYdd7mGzK81QQd0imBc9iM2VHJp3YeM8Pi
-         gGjmDeeZRQTIK33xXI20VIz7Jt8MUrNe2Ty2jUe0iI4I3wmTbriPzGnx+t4rB9Of4iZd
-         aHTQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:dkim-signature;
-        bh=t2bz/AuUCyIyjUyeiEAv5+oKtlxkr+8qudGmv/ZvY58=;
-        fh=D4UiLQVERc5B8tHaQSCv9oIys5zk1TOlb9vdq9IDgEI=;
-        b=Go+t79WIH+M8Ql5H+YYYT89vH7y0JBbxvUm2b2GhGFlfOudOr/kfipVog6SMGPHyrE
-         3tHI2ebPV5z2QCev664TvJ6SP2RTTJVm5nF1AZu6AUpB/RMmopoimuL0OU0hzGjeigLz
-         39P3kgpMU+Ux5e/eseu0yyKl1oeHQ7ChBZa14wHNGsVjisx2SbCq1BsM2YPRiV6RfG/F
-         6+i8vrHgRXRnIqablYRTLoaRB9nuJVtC0VTux3csRImYlEtyZApszvUN/DTIgylBr8u9
-         IZ0QJ0b+tyDuzk2ar4wL+fmdjCkRm27mC+GVLT7hG0SDPq9LPY2j0xnMaSkUK2LfQXqK
-         Q1pA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBBB1E89C
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Apr 2026 22:41:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775515291; cv=none; b=e9U4rBEN6d4nOw2iMHWc3Y3QzylLHlc8kjmnN2LNi0fn4SLsJ9ptvsa0hKPhxKPGcCZeHLIg638fYPtRKwL8E/32JOQGVjIiDbiwMJ7OUQm/AH6tAE8q56htPPTaDv4Ox3KtfP84f1xvIoZ3HwgUTOYjZ8Ti4AvKO3shcHNEOnQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775515291; c=relaxed/simple;
+	bh=rq3AU77WzvBFXo+3+0Fp5PwIFd7YUbJZ6A/QINchdfQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eLkRMmF1xFNWCwSronQdT1yDQsZ5IdEA0jkN1jAaDaqamENbIgSV0MWk+AJGGAKYk5hnhjO+0CRDuzocKmxB/LvlNZV6srmzFiCFZ1yLG38z91jtfaja+TRwH2rpCctmZE1XHs3fuiiMUqI3SL33ZzXkGwbVQ13z4KWiXZH3ACU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=P56FrZx/; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-38df0a031daso2567051fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2026 15:41:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1775514295; x=1776119095; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=t2bz/AuUCyIyjUyeiEAv5+oKtlxkr+8qudGmv/ZvY58=;
-        b=jGUYtLb5ugFFRDVqaxkU33CahtCQOVss0pIouJBguKhEAJZJGY+xkUuoHxW0ptz9fd
-         zvw3+9m9kt9xmx4aV7hRsRz+QAH3Z5vM7oBIdMhGHxu0+rI4dX9f+yn/0av5yGFnBUDn
-         UFmxzK6Y3bsTJljatHov0oz/WvwT2oYmg9/xpx0vHY7ixmewJC4Xrh3jZjp4d+vfg72z
-         70XQPaUIjYdIptFmSpWYlVyeZfESZtVt5FQjg7jL3kglOPfw3FNzL9uJMyXsrfH/G50h
-         AvviVGar29WSNBrUKsKbHHACBqJJzcQIP6l72gYgjcNWjW+fFgJ2GYqceucDsZemTg4A
-         fo4g==
+        d=linaro.org; s=google; t=1775515289; x=1776120089; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m6xY5R4cNcV4g8oF6JwJO4h1zpXLceVm3FoP5Twk7Qo=;
+        b=P56FrZx/GdYgpvN6O+oFAqrAdrJ0BaKrBkV0/ClXdenRzQFp3six4esYcnVEE288pQ
+         gCeOpW9QTnwUBS5dVGVRI/KpJac9jn8vwxP0ENVvJnkUv9cGBO3w6DaDLFrkUAYdy/8T
+         aw8F/SlAmeGTS5yODIQJcFzsUa6oezk7SGUHC9UkSUZ1gpmh40TTjkVE/Tql00ZcWqj5
+         o4Oo3Bjsv8dCIt3/fHnCI1LGpTGLd8EYSD1oJQGA5peDFMRC5H8IreEYHm6Q7k8zlVTm
+         yYGp6EcqfoCFnUfN9c3bMPjOT0bZdlo3i+THKRZUepw+PNQ64rx96+FAqkZjlH194KGp
+         beyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775514295; x=1776119095;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t2bz/AuUCyIyjUyeiEAv5+oKtlxkr+8qudGmv/ZvY58=;
-        b=qpJld2tudtaslFW9rRu73q00HAO7kDCieYbm7L+d1T6t6zekrl1USvNDFf7mOnk2Gq
-         xWBg9bLIu9gvX5NVvoIv8aqOpMDi7uDYBZOlvFOzDj+eMRiebNmfudnGO/joapXmSCPG
-         Sg5QEA7mkoI5Jwzrd+fHQeT11n4BstWiTgEyz878f4vmAilNBivsmdCGPJUl0TUWYvZF
-         0BQN0wbQ1uI2SttPIza9V/oKWtes9WN6gW3LN+0TFP+hgISE5ROtrw6eRnjbXjNn7GmG
-         r9Fmi9Mg0rdDwUkBv5OudZVJIPnp1mSKCXzqvlJKxbegiJezIeQIMgX2XCnXP6b7OFEX
-         Z+tw==
-X-Forwarded-Encrypted: i=1; AJvYcCV0X4paKYI/tCD2kf3uu0hlnHyIgW/ktDrdj00IltiUU+1F4b4mSrRG/vKDdk11LrTmTkkUJ4/A0GkjqpxB@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWoZXRlSaekXab0n4SP5i422spa5RxD7kiZWpMhJYE7aBao4QV
-	3wwG41hGF6wRWp280re7fq7mdxXTCXwSk3OR5g3RAviFjmtAfJipibIf/waSUS0VnABVeBsirl8
-	Pod/LHhS+zQ8WeNjNQ7wak/iT7+UzvJAEA85RdHWjExNeLL5OssPk6lvsUR/tNb5yst8I+Wn1ST
-	c7B/JeJWVGJ3fPC+IbFqNpRVVUO+RG0Lu9Mk4J0PfF+gU=
-X-Gm-Gg: AeBDietHAQaWcyLhiBLo4Rx8r2WMWVwchhqOkGtY0bN6KsZrurJ02nymoVtKCmp6aVJ
-	I2RL0IztYr5c5R2CsdT9hBa0+YsUR/5ol/+wJKCvsy3E+h/6vNNINZqBFD0U2fpSzefFqm+F05l
-	0NDF3AYAb4Z27Srt0YaPXHr3oCmkTNWn1j6EW3u+2G3p/Zvy+SsxXQCo6/SrgbhxVsuZgx32CT4
-	67cab86IFVjPlziZUKNjL4ssA/zXORDWLhHow==
-X-Received: by 2002:a05:6830:6b0d:b0:7d7:ddb9:5061 with SMTP id 46e09a7af769-7dbb6fa2b4emr9066004a34.13.1775514294948;
-        Mon, 06 Apr 2026 15:24:54 -0700 (PDT)
-X-Received: by 2002:a05:6830:6b0d:b0:7d7:ddb9:5061 with SMTP id
- 46e09a7af769-7dbb6fa2b4emr9065986a34.13.1775514294542; Mon, 06 Apr 2026
- 15:24:54 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1775515289; x=1776120089;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=m6xY5R4cNcV4g8oF6JwJO4h1zpXLceVm3FoP5Twk7Qo=;
+        b=SW3PSfYSwJkswqk4wTyN5SPn0z7ZggemTKcAOjvUbzbHmT7WkzlEInc60fOQ7Xi5W+
+         X1vXIAzILRtM/XwBBR9zLdBk666rO5BCErXsHUOambRr8sm2yzIkmw0FNDTGFmWKpk61
+         Awpcl39QLg8Gs8igBULEnwl+7SSdNNlMXgbqUNLvvRoH9zjsCMM/+j/DFh1o5nKKywmP
+         V6qIto/xQ4lChsRISAvP5xJTQYOCpKhCbZETyouyUsKvT00ZF00teF1DFvZ7qf9hZjow
+         V3le6nYBLO1rfxPTatC20VqAeG1aABuAzw+rA32fWmXGraHRzTWPTq1rjYEWuyRPNweX
+         HVlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUaJbT+XeleodgdCdV4inLdWFvIWfJuK6yRJPRwmwZJp3QsODl+75Io5Zi1KzASDyGQVPnubbUSLc90sTzR@vger.kernel.org
+X-Gm-Message-State: AOJu0YzM5AWF10sHEJCPZjzOJ21mPhhuYdhsXaR6i4yYucyrlLwz4wBc
+	S9CbwWqA0NhakgHwsViEmDKiub3iN7sLsKLcJQxgLIwT7+LDDts8M/mET0/jQ5Hws5k=
+X-Gm-Gg: AeBDievUI/JiOGMcKUSPucL0JycQHyJ5dysyP6bABON6ZnJNfCrmt16q8WOJ0fmvbL+
+	DBwZxlwFFUXnUbFhqIuTewLw5KfFnFeoWlJMF93x5aKv9cg+qEG2uNY5SMIhy0FNX97pPUtZXrr
+	6aSm7ZFdK9V7xgW8SOM5rhtaTUKmFYsgsuUFlFVtqT9jaNLnmNBTqAoaWDkHGcqJfeQjftVPAvl
+	eujRfZvD3vYDiO5LhhLWq/fZlX9tO69Ylm17d9avSsnH5aZAHEzhVNLLAOgtx6vd+0sLppOTIV/
+	lIbDbHwWzN2sdH4gVwJUxPn7cW7GSp0mYiCMSpGcS4mqG8NP9gG3M+/VBiJIcaPRlFOzzdMLk2O
+	lXJieMHc5lA3tlbJ3aiJEF++A5zfXi/NfCqOP4Lws9DGzwMeJlREtcTmgouUNbVvEeDK97eqQ+P
+	lvgX0HtjTuAQsrbv5TJQlGlXpAz5sHBkgT9J7kuKYqQwZDuxAlljTHCDp1atNJB7pS3a5VBe/EG
+	dLe2g==
+X-Received: by 2002:a05:6512:39c7:b0:5a2:bc5c:f421 with SMTP id 2adb3069b0e04-5a337596dddmr2971851e87.8.1775515288463;
+        Mon, 06 Apr 2026 15:41:28 -0700 (PDT)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a2c6cd3509sm3676707e87.75.2026.04.06.15.41.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Apr 2026 15:41:28 -0700 (PDT)
+Message-ID: <7b349fdc-7a78-4c17-a8ae-2729bc704186@linaro.org>
+Date: Tue, 7 Apr 2026 01:41:18 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260407-adreno-fix-ubwc-v1-1-bb2b09450b87@oss.qualcomm.com>
-In-Reply-To: <20260407-adreno-fix-ubwc-v1-1-bb2b09450b87@oss.qualcomm.com>
-Reply-To: rob.clark@oss.qualcomm.com
-From: Rob Clark <rob.clark@oss.qualcomm.com>
-Date: Mon, 6 Apr 2026 15:24:43 -0700
-X-Gm-Features: AQROBzBS8EWtQypBhKxnT0niYnWq5NV_q0tMBtRASSXiPvPyGM3PAAbslpXL_kk
-Message-ID: <CACSVV03uVF-STTwCVR3=9Jf=dCh7buBmk-1LBhYO0YfUDYXNDQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/adreno: fix userspace-triggered crash on a2xx-a4xx
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: Dob0GTCE6LWAoPxcoV4YkiBiDi8ChaCC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA2MDIxOSBTYWx0ZWRfX/4MM/Tg7d04x
- Wv2kvGw807ILuYMepOoeKz+UpzwFZ5HoVSh6iODsdNR9kwbP587E6hKLKnJ9bXcHodXTNGjR6jr
- lxrO+ly+FTEzdnVsLQtWyqhB672vzozWvlL0k1qge5KypitLgOJANfvpFnOE5WSkEWhJJ48tl7I
- o8V4OtvmPKUB2O3swhbq9Bd5bDFfv0OofMcrP85k8eeUmv1VouE3SRbzzN6z6ZC68K+ShkjxG2/
- lsuQMChdGMNTR8ZU1nNKH7L4UCuCc7W44wpFYtVqkRRkH7FQ4AWGmEcjqqGxPLYNDnz2DjWoRA6
- S1CckzyUKyz7vVVLJj+NWU1nFm4x+oY8JyLOlvVjHncbjLqbmqGC4Xqo+fWHN43aAkKvTRRA5my
- dlPx9c8yMw5UtZmlBG0QatphScooYbQGB1OPhe1xiR3hpECXwWsrqQt6UgTTHYtKYbAPMO4dExs
- kC6mBw+3BmLKg9S2uPg==
-X-Proofpoint-GUID: Dob0GTCE6LWAoPxcoV4YkiBiDi8ChaCC
-X-Authority-Analysis: v=2.4 cv=A/hc+aWG c=1 sm=1 tr=0 ts=69d432b7 cx=c_pps
- a=7uPEO8VhqeOX8vTJ3z8K6Q==:117 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8 a=lCW5SLys8A1o4QUykOsA:9
- a=QEXdDO2ut3YA:10 a=EXS-LbY8YePsIyqnH6vw:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-06_04,2026-04-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 clxscore=1015
- phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604060219
-X-Spamd-Result: default: False [2.84 / 15.00];
-	RECEIVED_BLOCKLISTDE(3.00)[209.85.210.70:received];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] media: qcom: camss: Fix RDI streaming for CSID 680
+To: bod@kernel.org, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hverkuil@kernel.org>,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>,
+ Hans Verkuil <hverkuil+cisco@kernel.org>,
+ Gjorgji Rosikopulos <quic_grosikop@quicinc.com>,
+ Milen Mitkov <quic_mmitkov@quicinc.com>,
+ Depeng Shao <quic_depengs@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20260406-camss-rdi-fix-v1-0-d3f8b12473d0@kernel.org>
+ <20260406-camss-rdi-fix-v1-1-d3f8b12473d0@kernel.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20260406-camss-rdi-fix-v1-1-d3f8b12473d0@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
-	BAD_REP_POLICIES(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-102021-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[poorly.run,kernel.org,oss.qualcomm.com,linux.dev,gmail.com,somainline.org,ffwll.ch,vger.kernel.org,lists.freedesktop.org];
-	R_DKIM_ALLOW(0.00)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	TAGGED_FROM(0.00)[bounces-102022-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[qualcomm.com,reject];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	REPLYTO_DOM_EQ_TO_DOM(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,linaro.org,oss.qualcomm.com,quicinc.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_SPAM(0.00)[0.924];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	REPLYTO_ADDR_EQ_FROM(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[rob.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	R_SPF_ALLOW(0.00)[+ip6:2600:3c04:e001:36c::/64];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	HAS_REPLYTO(0.00)[rob.clark@oss.qualcomm.com]
-X-Rspamd-Queue-Id: D26BC3A7DA9
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,cisco];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:email,linaro.org:mid]
+X-Rspamd-Queue-Id: E22843A7E62
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Apr 6, 2026 at 3:14=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> Before a5xx Adreno driver will not try fetching UBWC params (because
-> those generations didn't support UBWC anyway), however it's still
-> possible to query UBWC-related params from the userspace, triggering
-> possible NULL pointer dereference. Check for UBWC config in
-> adreno_get_param() and return sane defaults if there is none.
->
-> Fixes: a452510aad53 ("drm/msm/adreno: Switch to the common UBWC config st=
-ruct")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+On 4/7/26 00:55, bod@kernel.org wrote:
+> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> 
+> Fix streaming to RDI1 and RDI2. csid->phy.en_vc contains a bitmask of
+> enabled CSID ports not virtual channels.
+> 
+> We cycle through the number of available CSID ports and test this value
+> against the vc_en bitmask.
+> 
+> We then use the passed value both as an index to the port configuration
+> macros and as a virtual channel index.
+> 
+> This is a very broken pattern. Reviewing the initial introduction of VC
+> support it states that you can only map one CSID to one VFE. This is true
+> however each CSID has multiple sources which can sink inside of the VFE -
+> for example there is a "pixel" path for bayer stats which sources @
+> CSID(x):3 and sinks on VFE(x):pix.
+> 
+> That is CSID port # 3 should drive VFE port #3. With our current setup only
+> a sensor which drives virtual channel number #3 could possibly enable that
+> setup.
+> 
+> This is deeply wrong the virtual channel has no relevance to hooking CSID
+> to VFE, a fact that is proven after this patch is applied allowing
+> RDI0,RDI1 and RDI2 to function with VC0 whereas before only RDI1 worked.
+> 
+> Default the VC back to zero. A follow on series will implement subdev
+> streams to actually enable VCs without breaking CSID source to VFE sink.
+> 
+> Fixes: 253314b20408 ("media: qcom: camss: Add CSID 680 support")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 15 ++++++++++++---
->  1 file changed, 12 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/ms=
-m/adreno/adreno_gpu.c
-> index d5fe6f6f0dec..7dc95c0a17f7 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -426,16 +426,25 @@ int adreno_get_param(struct msm_gpu *gpu, struct ms=
-m_context *ctx,
->                 *value =3D vm->mm_range;
->                 return 0;
->         case MSM_PARAM_HIGHEST_BANK_BIT:
-> -               *value =3D adreno_gpu->ubwc_config->highest_bank_bit;
-> +               if (!adreno_gpu->ubwc_config)
-> +                       *value =3D 13;
-> +               else
-> +                       *value =3D adreno_gpu->ubwc_config->highest_bank_=
-bit;
+>   drivers/media/platform/qcom/camss/camss-csid-680.c | 26 +++++++++++-----------
+>   1 file changed, 13 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid-680.c b/drivers/media/platform/qcom/camss/camss-csid-680.c
+> index 3ad3a174bcfb8..35a6bb209f97c 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid-680.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid-680.c
+> @@ -219,9 +219,9 @@ static void __csid_configure_top(struct csid_device *csid)
+>   	    CSID_TOP_IO_PATH_CFG0(csid->id));
+>   }
+>   
+> -static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 vc)
+> +static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 port, u8 vc)
+>   {
+> -	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + vc];
+> +	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + port];
+>   	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
+>   								   csid->res->formats->nformats,
+>   								   input_format->code);
+> @@ -240,21 +240,21 @@ static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8
+>   	 * the four least significant bits of the five bit VC
+>   	 * bitfield to generate an internal CID value.
+>   	 *
+> -	 * CSID_RDI_CFG0(vc)
+> +	 * CSID_RDI_CFG0(port)
+>   	 * DT_ID : 28:27
+>   	 * VC    : 26:22
+>   	 * DT    : 21:16
+>   	 *
+>   	 * CID   : VC 3:0 << 2 | DT_ID 1:0
+>   	 */
+> -	dt_id = vc & 0x03;
+> +	dt_id = port & 0x03;
+>   
+>   	/* note: for non-RDI path, this should be format->decode_format */
+>   	val |= DECODE_FORMAT_PAYLOAD_ONLY << RDI_CFG0_DECODE_FORMAT;
+>   	val |= format->data_type << RDI_CFG0_DATA_TYPE;
+>   	val |= vc << RDI_CFG0_VIRTUAL_CHANNEL;
+>   	val |= dt_id << RDI_CFG0_DT_ID;
+> -	writel(val, csid->base + CSID_RDI_CFG0(vc));
+> +	writel(val, csid->base + CSID_RDI_CFG0(port));
+>   
+>   	val = RDI_CFG1_TIMESTAMP_STB_FRAME;
+>   	val |= RDI_CFG1_BYTE_CNTR_EN;
+> @@ -265,23 +265,23 @@ static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8
+>   	val |= RDI_CFG1_CROP_V_EN;
+>   	val |= RDI_CFG1_PACKING_MIPI;
+>   
+> -	writel(val, csid->base + CSID_RDI_CFG1(vc));
+> +	writel(val, csid->base + CSID_RDI_CFG1(port));
+>   
+>   	val = 0;
+> -	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(vc));
+> +	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(port));
+>   
+>   	val = 1;
+> -	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(vc));
+> +	writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(port));
+>   
+>   	val = 0;
+> -	writel(val, csid->base + CSID_RDI_CTRL(vc));
+> +	writel(val, csid->base + CSID_RDI_CTRL(port));
+>   
+> -	val = readl(csid->base + CSID_RDI_CFG0(vc));
+> +	val = readl(csid->base + CSID_RDI_CFG0(port));
+>   	if (enable)
+>   		val |= RDI_CFG0_ENABLE;
+>   	else
+>   		val &= ~RDI_CFG0_ENABLE;
+> -	writel(val, csid->base + CSID_RDI_CFG0(vc));
+> +	writel(val, csid->base + CSID_RDI_CFG0(port));
+>   }
+>   
+>   static void csid_configure_stream(struct csid_device *csid, u8 enable)
+> @@ -293,8 +293,8 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
+>          /* Loop through all enabled VCs and configure stream for each */
 
-These three params are only used by userspace on a6xx, so tbh it would
-be ok to return -ENOENT for platforms that have no ubwc config.  That
-might be better than returning imaginary values.
+The comment should get an update as well, this is applicable and should be done
+for the changes in camss-csid-680.c, camss-csid-gen2.c and camss-csid-gen3.c.
 
-BR,
--R
+>   	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++) {
+>   		if (csid->phy.en_vc & BIT(i)) {
+> -			__csid_configure_rdi_stream(csid, enable, i);
+> -			__csid_configure_rx(csid, &csid->phy, i);
+> +			__csid_configure_rdi_stream(csid, enable, i, 0);
+> +			__csid_configure_rx(csid, &csid->phy, 0);
+>   			__csid_ctrl_rdi(csid, enable, i);
+>   		}
+>   	}
+> 
 
->                 return 0;
->         case MSM_PARAM_RAYTRACING:
->                 *value =3D adreno_gpu->has_ray_tracing;
->                 return 0;
->         case MSM_PARAM_UBWC_SWIZZLE:
-> -               *value =3D adreno_gpu->ubwc_config->ubwc_swizzle;
-> +               if (!adreno_gpu->ubwc_config)
-> +                       *value =3D 0;
-> +               else
-> +                       *value =3D adreno_gpu->ubwc_config->ubwc_swizzle;
->                 return 0;
->         case MSM_PARAM_MACROTILE_MODE:
-> -               *value =3D adreno_gpu->ubwc_config->macrotile_mode;
-> +               if (!adreno_gpu->ubwc_config)
-> +                       *value =3D 0;
-> +               else
-> +                       *value =3D adreno_gpu->ubwc_config->macrotile_mod=
-e;
->                 return 0;
->         case MSM_PARAM_UCHE_TRAP_BASE:
->                 *value =3D adreno_gpu->uche_trap_base;
->
-> ---
-> base-commit: 36ece9697e89016181e5ae87510e40fb31d86f2b
-> change-id: 20260407-adreno-fix-ubwc-6a2564710e21
->
-> Best regards,
-> --
-> With best wishes
-> Dmitry
->
+-- 
+Best wishes,
+Vladimir
 
