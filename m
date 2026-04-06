@@ -1,66 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-101950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SI8ZJeOn02k4kAcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 14:32:35 +0200
+	id iFDDBI+p02k4kAcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 14:39:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD6743A34A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 14:32:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 659183A35B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 14:39:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 90F9E300D6AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 12:32:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7C1013014955
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 12:39:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF85533262F;
-	Mon,  6 Apr 2026 12:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33EBE342514;
+	Mon,  6 Apr 2026 12:39:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lhA2M99E"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QtOYCTc+";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ajy8TMB/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA48023183C;
-	Mon,  6 Apr 2026 12:32:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3039340A5A
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Apr 2026 12:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775478752; cv=none; b=TzontE2fjJfdHhHRtPpTdMXNF1jv0h8JKYJwxqBBli3JsG54bM8T8iuSWgqa4slSQ0yE6p33mbZASSnx75Uh31H4JXipU+73MtTcWHYZNLlHr0ei449TOEM8PCkXczD8Q8scjpC0YrfbT2RO7OqRHfvelFNeOyJyzw6b9qm2yEs=
+	t=1775479173; cv=none; b=OER1KZOCvVblxYlMUcfVMDRWvk2qnc7ZIhIxD2XjzI+4V3eHZ1ObWaqusoC+UiSz/7/a+UygmUJuiXmg1DSwfT0pIzFz6WEZEy0k3ZksoezSQlavc/AGNW8Yxhg8tXNwLclDsqGqDb+eg0X6NbxYaUK67uXZ8Ch5g12LdkvGNi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775478752; c=relaxed/simple;
-	bh=93nmLJJXcQ6fbQNQAA8dv7doCKMICW/nB+1lRWqwYHo=;
+	s=arc-20240116; t=1775479173; c=relaxed/simple;
+	bh=Knv6qOFhvYoY1wNDCbwdvpFcR2wMWggmlrKlYkLq4uQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g8T7fU5mjT1cqVIvVNCldAvkW4ui+CVxZuk4uHyfUdOxko0GuAeB8w6jkSkwepLcU2rLtOgngA2va5STbhvzsklK+v4KqZ5WUX11K/MfUH/eO+IRvMzKhzB3VMUjhSM8wQIikNtWzX+0oTOxLkWkVArkWJfq4F60v3GqyLnvkuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lhA2M99E; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04476C4CEF7;
-	Mon,  6 Apr 2026 12:32:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775478752;
-	bh=93nmLJJXcQ6fbQNQAA8dv7doCKMICW/nB+1lRWqwYHo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lhA2M99EkjAwe+FN/1VCsNK9m24alwkE/NK/wPHgYL6t+G0DaaJXpKwu40r/r/soj
-	 5HQ7O1JXwC0jsj3nd3QsIe+b4ST0d3mbwoe2EWvqyHiTFFVID1eIw1a8VXY3c5R+RQ
-	 Wxgb+F2IcMCgNb84sx/QI5X+XnVGFBPc6eCUZa2NJE9P6MolHOW7rbgtaL9UFXAqYX
-	 DQpnIYJfSc0wtVOSnoI5Yf+puNm79LwU/XRHJcF5S0u/R53+ZUtpAL2O3cMQl0M1OM
-	 NSU3hKVKZI8/EJPCRUHc354L4tXGQUb4nDVzRFy7PRGYpj6MqmYBgXqUJJsLYQxITY
-	 XAwKLeZtWs3Yw==
-Date: Mon, 6 Apr 2026 07:32:27 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Aleksandrs Vinarskis <alex@vinarskis.com>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, laurentiu.tudor1@dell.com, 
-	Abel Vesa <abel.vesa@oss.qualcomm.com>, Tobias Heider <tobias.heider@canonical.com>, 
-	Val Packett <val@packett.cool>
-Subject: Re: [PATCH v2 2/4] platform: arm64: dell-xps-ec: new driver
-Message-ID: <adOl-iVGAyiA-QSx@baldur>
-References: <20260404-dell-xps-9345-ec-v2-0-c977c3caa81f@vinarskis.com>
- <20260404-dell-xps-9345-ec-v2-2-c977c3caa81f@vinarskis.com>
- <6be0cefb-72e4-4a8a-8668-45994db6c5d8@linaro.org>
- <P9IQ5Penud7CH3Yfn0bw0RXJfIhFhFGksRjP-aZwLoAxmajMfeOtLEItrcWOXwVjHE_zObIA8SYjcPVR9dkAk9KgDYLun0DJJ6dBIU-IRDI=@vinarskis.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=KQMdlLnRQ4NYr5fIL4Q02d3IeQKXFRAnaHM/bC0fs8f2gcQmmKtcZ+qajHpm3DFCaJaF3RRtMuKBkNuekrNBQ53RakHd+hTk9dpbbG7TelejnGwgfxMbUMGVQio97AkgVsSnMr5t065ESgasrgI0r11TA67DCNlhy4RQ6rpLPu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QtOYCTc+; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ajy8TMB/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 636A6ZVg3990038
+	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Apr 2026 12:39:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=zuu/AoiEte6QHeVBrtxX+erw
+	+OHYiGVQnUPmzLKXoMY=; b=QtOYCTc+fXjtoyNzRBSUpqQfhj3WyRC2oktmPNrI
+	p0gIS7J0NIkROHwZZz36JU9sh9Sv7xuVBb/B9zSb1QJcYZ8e8ftwCQrY+1J4pl86
+	i2FHtH+CjaPHJpGbwaFxevOHt4gx8MEof4xF4II8ctGJHnc+JqDyOsalHfRu7yOn
+	70X/Ihmqhl50ahsUWzTfIwXdVvBvbed12IacGIbW5Wcyi1QtU9o9A2kOsJDTLe6c
+	x4t7XXGg5rFP23kQFzIF805vThQJNrCRh5/ewZ7mPHvq3OTrYVxtclchr2AN4QmE
+	wjAU5D1z7TWfm0RO3w8hK4TEgufBHbyjme3f2JT69kMYsg==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dasyfn5t4-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2026 12:39:30 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-35c1491a5b8so697012a91.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2026 05:39:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1775479169; x=1776083969; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zuu/AoiEte6QHeVBrtxX+erw+OHYiGVQnUPmzLKXoMY=;
+        b=Ajy8TMB/D8wqKTgokeNiNqbw8PN2vUi61yxhz54c1uniuYaITBYTVDC3vsPPt/s8Tm
+         M9l+yS6DRqmKc4DYhVifAeostVm/FsTFsy39yR0/UqgyWGi5jjAU+clC2X19Cu6pLqlu
+         pH8mAaoQUZsRr6WSlwwBxHdM22KxPG+1d9MsnJvAa6U2xdjlPJr+yagLcThDWGBsRl7H
+         8DxY9eHZMf76KDa0igJSeiCklCU1kZGLc39sw/F38V3kmPDxztfIPl+unG9f9c/G5ZqF
+         9Tnon0W8AzmDGmR0dtOwqqOgFEOQwP8J7l/vUkfpd5UR+IuAuDWbkTu3XuQh7duzARwx
+         cd+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775479169; x=1776083969;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zuu/AoiEte6QHeVBrtxX+erw+OHYiGVQnUPmzLKXoMY=;
+        b=swu66sO5M3bLkgsStBZsgpP3BVxdK67+jcZHleurz67tn/FOYjJpI2gTjDCWddq4r7
+         FgB+OSsgKzwlvFvSU82e0RYOKVpqCpy9nN/udyvT20t8NkEJJzXELjsmYMwCDK7YdLLP
+         Cu+ur4xEgk8TIfd1cEyyblm41qiubrXhMf/dz93Efl+Exz5N6EpTlAXfD6HVIaK64tkB
+         pv5ToZAz8HIOWC3YS1IlWE4gmAsoI4ArabMtYVAJLy/K6PKOI3dMbkDaAO+A0ZOCweE3
+         x1Dqex1rA3CKhi48Drf6a7yeiDbipgVo1IJ3F+Oh4ZDQ6x4qkDbKBkQeO8zW9Cf6ZZ6I
+         P4Yw==
+X-Forwarded-Encrypted: i=1; AJvYcCX+PmGd9ubUWSRmgZ8arKfeIp3j/QNPzlJSeSFR2a9cu12MbCLlqXagUCmNKrx1YEozcVN3NnQF/EjrE/SN@vger.kernel.org
+X-Gm-Message-State: AOJu0YxFsLLIMhNXzgEDgcGDp3uCIp7DWYGutoJJedfee4CC1C6LeCtG
+	6YlR2tQShQBmdvgaWKBVASQ+BWEQ2XKEc1oal56hS20bPgYZugL5y1XgLEuS3pM2wC0u3eEGoGR
+	K5+z6leOxrkXphv+ATTHfsibv1oYx1HbofbGrmZfvRKsI0QaW7WeR8ITjnZcjKreX0Zbl
+X-Gm-Gg: AeBDiesiCDy7AAYMYGfrT+1AwLf6G+LhlE8wBiRAX5AuST5p6TtnQFN49lgSlxMLjeA
+	RwXLEzxUeDCAnByEt0VlOlYST+cEDt9R0lNZz2WGIbGvwmTfnvcL2k3B4kznPbG5VSfxqCkZPCA
+	HX2PKRgdc1aJVw535fS6a1nb+y9JWqIDlRSC+rT7wVONXWLe3eS3kw0CFQkJboQQNCtGP6VCN3C
+	DxezsTfRg/c3h2ds8FJrhIZxx8sL7JevhyDg4NTuFFN0dKRu8sy7zzUNLPkIeVoRVADouiCO98/
+	0RYegVr98EddKa2lXAyHhjFtA42oPwA+W/nEZg5uOeuSbrWWS7x6QoOO7Bq9kxxoPLgcFgU8EPZ
+	NbzkyE28B0E91aE0sm9Nnq+OoKuRJdEM/3S9uRbEWuZzRfpi/jQfDbovkLflD03HTgZC2mjRDql
+	tmcF0PvVwwtX4/ScOKr/7UNh3V8CPgvgZx5SqXNixdoA==
+X-Received: by 2002:a17:90b:48d0:b0:35d:92e4:c0a6 with SMTP id 98e67ed59e1d1-35de6a4ee40mr6959060a91.7.1775479169409;
+        Mon, 06 Apr 2026 05:39:29 -0700 (PDT)
+X-Received: by 2002:a17:90b:48d0:b0:35d:92e4:c0a6 with SMTP id 98e67ed59e1d1-35de6a4ee40mr6959035a91.7.1775479168901;
+        Mon, 06 Apr 2026 05:39:28 -0700 (PDT)
+Received: from hu-vishsain-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35de697e327sm3712755a91.8.2026.04.06.05.39.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Apr 2026 05:39:28 -0700 (PDT)
+Date: Mon, 6 Apr 2026 18:09:23 +0530
+From: Vishnu Saini <vishnu.saini@oss.qualcomm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-kernel@vger.kernel.org, prahlad.valluru@oss.qualcomm.com
+Subject: Re: [PATCH] phy: qcom: edp: Initialize swing_pre_emph_cfg for sc7280
+Message-ID: <adOpe/sRD5Ojc+iT@hu-vishsain-blr.qualcomm.com>
+References: <20260403-phy_for_next-v1-1-3d336b555019@oss.qualcomm.com>
+ <lsqxzcdcwut5y3xog7bfo5erziffc53vqrikyso5oujscowta7@cx7juz5qph5w>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,266 +113,84 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <P9IQ5Penud7CH3Yfn0bw0RXJfIhFhFGksRjP-aZwLoAxmajMfeOtLEItrcWOXwVjHE_zObIA8SYjcPVR9dkAk9KgDYLun0DJJ6dBIU-IRDI=@vinarskis.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+In-Reply-To: <lsqxzcdcwut5y3xog7bfo5erziffc53vqrikyso5oujscowta7@cx7juz5qph5w>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA2MDEyNCBTYWx0ZWRfX9qy2/5G3Nv0p
+ KdGjplyzFKGBAKmmryhLgnSv4oq+zsNEzifiNjjW+xdoHIfdibL33BdghKoyioxttp1DNo+IRgi
+ cXhE41YXk2UGNeHcQLZepHMuqmZZQrhuhwi1AVAg97UX//uKPGhO7XEioqbXb2CLuEa1yUKzQlk
+ 93kOLW3PXOb1C9fPEux9tORoyKNfN/GOTrU6unwwTJc4Au8V+zBAA81dwyA6kpgfor0PxsTeiin
+ kj+/zZQmiHoN+/OJzCKhCOc6tmi5qgfLOXNzDqIcAiW8XBv1Q770yqouCXdjyvIhTGEOeq5lBqb
+ NAlpg8YfvP4snOv3OdPUHkvKWfB7bPz9tnDRYlbvS3oDq16x1GsSydpsT6NjwSP657sWtkwDU+1
+ i47jgZnpnRHJKWrWGZwDnF+DlhZ/63EkvxlsxqnL9S/0mPWMGLwx8GPruPAcEdhHyxkcEN6zaqA
+ TMpKRacg+phO3n0vXqA==
+X-Authority-Analysis: v=2.4 cv=U5qfzOru c=1 sm=1 tr=0 ts=69d3a982 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=yfmGr3Zwk4HYnreM4cwA:9
+ a=CjuIK1q_8ugA:10 a=uKXjsCUrEbL0IQVhDsJ9:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: bOyRmDw0Vef4NRBkJA_xVaB_yy1ZDlWm
+X-Proofpoint-GUID: bOyRmDw0Vef4NRBkJA_xVaB_yy1ZDlWm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-06_03,2026-04-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
+ suspectscore=0 clxscore=1015 spamscore=0 impostorscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2604060124
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101950-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,hu-vishsain-blr.qualcomm.com:mid];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-101951-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:email,bewilderbeest.net:email]
-X-Rspamd-Queue-Id: DD6743A34A3
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vishnu.saini@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 659183A35B1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Sun, Apr 05, 2026 at 08:48:25PM +0000, Aleksandrs Vinarskis wrote:
-> On Sunday, April 5th, 2026 at 02:29, Bryan O'Donoghue <bryan.odonoghue@linaro.org> wrote:
+On Fri, Apr 03, 2026 at 10:49:16PM +0300, Dmitry Baryshkov wrote:
+> On Fri, Apr 03, 2026 at 05:54:56PM +0530, Vishnu Saini wrote:
+> > Aux timeout is observed on few monitors like Benq BL2420-T due to
+> > missing swing_pre_emph_cfg.
+> > 
+> > Signed-off-by: Vishnu Saini <vishnu.saini@oss.qualcomm.com>
+> > ---
+> >  drivers/phy/qualcomm/phy-qcom-edp.c | 1 +
+> >  1 file changed, 1 insertion(+)
 > 
-> > On 04/04/2026 13:55, Aleksandrs Vinarskis wrote:
-> > > Introduce EC driver for Dell XPS 13 9345 (codename 'tributo') which may
-> > > partially of fully compatible with Snapdragon-based Dell Latitude,
-> > > Inspiron ('thena'). Primary function of this driver is unblock EC's
-> > > thermal management, specifically to provide it with necessary
-> > > information to control device fans, peripherals power.
-> > >
-> > > The driver was developed primarily by analyzing ACPI DSDT's _DSM and
-> > > i2c dumps of communication between SoC and EC. Changes to Windows
-> > > driver's behavior include increasing temperature feed loop from ~50ms
-> > > to 100ms here.
-> > >
-> > > While Xps's EC is rather complex and controls practically all device
-> > > peripherals including touch row's brightness and special keys such as
-> > > mic mute, these do not go over this particular i2c interface.
-> > >
-> > > Not yet implemented features:
-> > > - On lid-close IRQ event is registered. Windows performs what to
-> > >    appears to be thermistor constants readout, though its not obvious
-> > >    what it used for.
-> > > - According to ACPI's _DSM there is a method to readout fans' RPM.
-> > > - Initial thermistor constants were sniffed from Windows, these can be
-> > >    likely fine tuned for better cooling performance.
-> > > - There is additional temperature reading that Windows sents to EC but
-> > >    more rare than others, likely SoC T_j / TZ98 or TZ4. This is the only
-> > >    thermal zone who's reading can exceed 115C without triggering thermal
-> > >    shutdown.
-> > > - Given similarities between 'tributo' and 'thena' platforms, including
-> > >    EC i2c address, driver can be potentially extended to support both.
-> > >
-> > > Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
-> > > ---
-> > >   MAINTAINERS                          |   1 +
-> > >   drivers/platform/arm64/Kconfig       |  12 ++
-> > >   drivers/platform/arm64/Makefile      |   1 +
-> > >   drivers/platform/arm64/dell-xps-ec.c | 267 +++++++++++++++++++++++++++++++++++
-> > >   4 files changed, 281 insertions(+)
-> > >
-> > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > > index a5d175559f4468dfe363b319a1b08d3425f4d712..c150f57b60706224e5b24b0dfb3d8a9b81f36398 100644
-> > > --- a/MAINTAINERS
-> > > +++ b/MAINTAINERS
-> > > @@ -7240,6 +7240,7 @@ DELL XPS EMBEDDED CONTROLLER DRIVER
-> > >   M:	Aleksandrs Vinarskis <alex@vinarskis.com>
-> > >   S:	Maintained
-> > >   F:	Documentation/devicetree/bindings/embedded-controller/dell,xps13-9345-ec.yaml
-> > > +F:	drivers/platform/arm64/dell-xps-ec.c
-> > >
-> > >   DELTA AHE-50DC FAN CONTROL MODULE DRIVER
-> > >   M:	Zev Weiss <zev@bewilderbeest.net>
-> > > diff --git a/drivers/platform/arm64/Kconfig b/drivers/platform/arm64/Kconfig
-> > > index 10f905d7d6bfa5fad30a0689d3a20481268c781e..0bc8f016032bb05cb3a7cc50bdf1092da04153bc 100644
-> > > --- a/drivers/platform/arm64/Kconfig
-> > > +++ b/drivers/platform/arm64/Kconfig
-> > > @@ -33,6 +33,18 @@ config EC_ACER_ASPIRE1
-> > >   	  laptop where this information is not properly exposed via the
-> > >   	  standard ACPI devices.
-> > >
-> > > +config EC_DELL_XPS
-> > > +	tristate "Dell XPS 9345 Embedded Controller driver"
-> > > +	depends on ARCH_QCOM || COMPILE_TEST
-> > > +	depends on I2C
-> > > +	depends on IIO
-> > > +	help
-> > > +	  Driver for the Embedded Controller in the Qualcomm Snapdragon-based
-> > > +	  Dell XPS 13 9345, which handles thermal management and fan speed
-> > > +	  control.
-> > > +
-> > > +	  Say M or Y here to include this support.
-> > > +
-> > >   config EC_HUAWEI_GAOKUN
-> > >   	tristate "Huawei Matebook E Go Embedded Controller driver"
-> > >   	depends on ARCH_QCOM || COMPILE_TEST
-> > > diff --git a/drivers/platform/arm64/Makefile b/drivers/platform/arm64/Makefile
-> > > index 60c131cff6a15bb51a49c9edab95badf513ee0f6..6768dc6c2310837374e67381cfc729bed1fdaaef 100644
-> > > --- a/drivers/platform/arm64/Makefile
-> > > +++ b/drivers/platform/arm64/Makefile
-> > > @@ -6,6 +6,7 @@
-> > >   #
-> > >
-> > >   obj-$(CONFIG_EC_ACER_ASPIRE1)	+= acer-aspire1-ec.o
-> > > +obj-$(CONFIG_EC_DELL_XPS)	+= dell-xps-ec.o
-> > >   obj-$(CONFIG_EC_HUAWEI_GAOKUN)	+= huawei-gaokun-ec.o
-> > >   obj-$(CONFIG_EC_LENOVO_YOGA_C630) += lenovo-yoga-c630.o
-> > >   obj-$(CONFIG_EC_LENOVO_THINKPAD_T14S) += lenovo-thinkpad-t14s.o
-> > > diff --git a/drivers/platform/arm64/dell-xps-ec.c b/drivers/platform/arm64/dell-xps-ec.c
-> > > new file mode 100644
-> > > index 0000000000000000000000000000000000000000..bf1495fbe473ccdb82b95a66b56e8525f782cc8e
-> > > --- /dev/null
-> > > +++ b/drivers/platform/arm64/dell-xps-ec.c
-> > > @@ -0,0 +1,267 @@
-> > > +// SPDX-License-Identifier: GPL-2.0-only
-> > > +/*
-> > > + * Copyright (c) 2026, Aleksandrs Vinarskis <alex@vinarskis.com>
-> > > + */
-> > > +
-> > > +#include <linux/array_size.h>
-> > > +#include <linux/dev_printk.h>
-> > > +#include <linux/device.h>
-> > > +#include <linux/devm-helpers.h>
-> > > +#include <linux/err.h>
-> > > +#include <linux/i2c.h>
-> > > +#include <linux/iio/consumer.h>
-> > > +#include <linux/interrupt.h>
-> > > +#include <linux/jiffies.h>
-> > > +#include <linux/module.h>
-> > > +#include <linux/pm.h>
-> > > +#include <linux/unaligned.h>
-> > > +#include <linux/workqueue.h>
-> > > +
-> > > +#define DELL_XPS_EC_SUSPEND_CMD		0xb9
-> > > +#define DELL_XPS_EC_SUSPEND_MSG_LEN	64
-> > > +
-> > > +#define DELL_XPS_EC_TEMP_CMD0		0xfb
-> > > +#define DELL_XPS_EC_TEMP_CMD1		0x20
-> > > +#define DELL_XPS_EC_TEMP_CMD3		0x02
-> > > +#define DELL_XPS_EC_TEMP_MSG_LEN	6
-> > > +#define DELL_XPS_EC_TEMP_POLL_JIFFIES	msecs_to_jiffies(100)
-> > > +
-> > > +/*
-> > > + * Format:
-> > > + * - header/unknown (2 bytes)
-> > > + * - per-thermistor entries (3 bytes): thermistor_id, param1, param2
-> > > + */
-> > > +static const u8 dell_xps_ec_thermistor_profile[] = {
-> > > +	0xff, 0x54,
-> > > +	0x01, 0x00, 0x2b,	/* sys_therm0 */
-> > > +	0x02, 0x44, 0x2a,	/* sys_therm1 */
-> > > +	0x03, 0x44, 0x2b,	/* sys_therm2 */
-> > > +	0x04, 0x44, 0x28,	/* sys_therm3 */
-> > > +	0x05, 0x55, 0x2a,	/* sys_therm4 */
-> > > +	0x06, 0x44, 0x26,	/* sys_therm5 */
-> > > +	0x07, 0x44, 0x2b,	/* sys_therm6 */
-> > > +};
-> > > +
-> > > +/*
-> > > + * Mapping from IIO channel name to EC command byte
-> > > + */
-> > > +static const struct {
-> > > +	const char *name;
-> > > +	u8 cmd;
-> > > +} dell_xps_ec_therms[] = {
-> > > +	/* TODO: 0x01 is sent only occasionally, likely TZ98 or TZ4 */
-> > > +	{ "sys_therm0", 0x02 },
-> > > +	{ "sys_therm1", 0x03 },
-> > > +	{ "sys_therm2", 0x04 },
-> > > +	{ "sys_therm3", 0x05 },
-> > > +	{ "sys_therm4", 0x06 },
-> > > +	{ "sys_therm5", 0x07 },
-> > > +	{ "sys_therm6", 0x08 },
-> > > +};
-> >
-> > You could probably retrieve these strings from the dt if you really need
-> > them.
-> >
-> > I don't think you need static consts in your driver though you could
-> > just as easily do `sprintf("sys_therm%d\n", i) where you use
-> > ec_therms[i].name - the name is only used to print errors and you have
-> > the index of the channel when you do.
-> >
-> > It would be nicer to get the strings from DT - certainly make the string
-> > names mandatory but, then let the DT specify those names.
-> >
-> > Either that or just do the sprintf("sys_therm%d\n", i); for the index,
-> > whichever you wish yourself.
-> 
-> Hi Bryan,
-> 
-> Will answer here to all three comments about `sys_thermX`.
-> 
-> The reason I have added them as static consts here, and defined them in
-> the schema is because the order of the channels matters:
-> 1. On my XPS (UEFI v2.11.0) changes in sys_therm2 immediately result in
->    changes in fan speeds. Other channels seemingly have no affect, at
->    least when spoofed one by one, implying that EC cares which value
->    is which.
-> 2. As I do not know internals of the EC firmware, even if today the other
->    thermistor channels ordering is seemingly not relevant, we cannot be
->    sure it will not change with EC firmware upgrade.
-> 
-> I have reconstructed the order of channels by comparing i2c data dumps
-> and real-time temps on Windows, eg. sys_therm0 is sent to EC under id 0x02
-> and represents the TZ71 (around dram on XPS). There is no other reason to
-> have the names of the channels in this driver except for enforcing the
-> channel mapping, so `sprintf("sys_therm%d\n", i)` wouldn't be useful.
-> 
-> By allowing source and sink to define the names and not enforcing it in
-> schema we lose ability to force the correct order, there is no way of
-> knowing whether "lpddr5-therm" or "ssd-therm" goes first. By forcing
-> "sys_thermX" convention, one would need to figure which one is which,
-> for example by referring to laptop schematics. I assume, "thena"'s
-> schematics has thermistors labeled as "sys_thermX"?
-> 
-> I do agree that labels of the ADC nodes could be more useful for the
-> user. So far I followed the example of sc8280xp platforms that define
-> ADC channels with "sys_thermX". Perhaps, we could separate the
-> io-channel-names and ADC node labels then? eg:
-> 
+> Missing Fixes tag.
 
-The general guidance for such naming questions is to follow naming from
-the schematics, whenever available.
+phy cfg is not initialized for sc7280 when it was added first time with:
+https://lore.kernel.org/all/20220207161612.REPOST.v1.2.Iff75c0ea8499f0baf2aa5800f2c45c4128e2415a@changeid/ 
+Shall i add this tag? 
+Fixes: cc62512c1be3 ("phy: qcom: Add support for eDP PHY on sc7280")
 
-> + io-channel-names = "sys_therm0",
-> + 		     "sys_therm1",
-> ...
-> 
-> + &pmk8550_vadc {
-> +	sys_therm0: channel@14c {
-> + 		reg = <PM8350_ADC7_GPIO3_100K_PU(1)>;
-> + 		qcom,hw-settle-time = <200>;
-> + 		qcom,ratiometric;
-> + 		label = "lpddr5x-therm";
-> 
-> Though not sure if such approach is 'legal'?
+Later phy cfgs added first time with below patches:
+https://lore.kernel.org/r/20220810040745.3582985-5-bjorn.andersson@linaro.org
+https://lore.kernel.org/r/20220810040745.3582985-6-bjorn.andersson@linaro.org
 
-I might be missing something, but that does look legal. Your node's
-label follows (what I assume to be) the naming in the schematics and you
-provide a human-friendly label.
-
-
-PS. Once we have these adc channels in place, I presume there's also a
-TM that would allow us to wire them up as cooling-maps, to throttle the
-CPUs? Similar to "skin-temp-thermal" in x13s.
-
-Regards,
-Bjorn
+> -- 
+> With best wishes
+> Dmitry
 
