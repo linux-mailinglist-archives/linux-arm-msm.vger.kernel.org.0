@@ -1,263 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-101974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KCS7B3/W02nUnAcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 17:51:27 +0200
+	id uGRdMLnW02kHnQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 17:52:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE15E3A4E8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 17:51:26 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 013283A4EC2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 17:52:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9EB84301A288
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 15:51:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CF8513013A86
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 15:51:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A372D2DAFD7;
-	Mon,  6 Apr 2026 15:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 833AC2D0614;
+	Mon,  6 Apr 2026 15:51:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="J93kyziE";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IbjsllHE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C75B288C81;
-	Mon,  6 Apr 2026 15:51:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DE31BD9C9
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Apr 2026 15:51:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775490669; cv=none; b=KBXoCyXPRBH4z7daLNAsYx5bXpIaaSD+o/0kzerON8nn6E8aMV9c8nxdTpfZ+9VRf0y4i0lnXKlYBxMg6/GpH6D5NxuPCmptqozvWrR+yCxsabQOSw6+IJGS7L/OsnAtOfgTyR9P/k/DrJ3q+iJy0JyggqxrBHvb5AcDkpRK6r0=
+	t=1775490703; cv=none; b=UNPC2wDFw2r+u9tVHP6MhxB6ldKXO+uA4Gx6qGxU1dgUF5ffUILxjlLh2dHkk5LgWbG4CXlHIs2LRo3gcyBscWZyOrHkn+uXbo7QWybtt5ouGEvfGrdBKTmeTcjvL9mxIm8Vb9PHg4vMdFgVhiEJqJsdlYOYU/tPjSrVfw76kcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775490669; c=relaxed/simple;
-	bh=UBTu/kKo70Jh0+IVyBq78WBUn6kXsLDznnaFIyQAqI8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=L/wT/45RQghYHfCqhTZYwwxJcHy1e/I/y0HOEI1AWSxzwvHvmyJVlDvxyApNg9rZkbCoc3Iln1NMzHVEBDNp8JUJueUOR6FkKGcb2Q7WHbdbQaZccE7noL+C93WzIpADMXtWTaVzxH5UeaZ104Z7/F6w+H4nLWCQEYuxqkskFzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=18.194.254.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: zesmtpsz5t1775490614t2a71ab47
-X-QQ-Originating-IP: +bci2OFNhnZPPCdhCYxE7IGxHtXRITc9jF3kaO8N6T4=
-Received: from [192.168.30.32] ( [116.234.14.100])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 06 Apr 2026 23:50:12 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7770315344713574114
-EX-QQ-RecipientCnt: 10
-From: Xilin Wu <sophon@radxa.com>
-Date: Mon, 06 Apr 2026 23:50:02 +0800
-Subject: [PATCH 2/2] pwm: clk-pwm: add GPIO and pinctrl support for
- constant output levels
+	s=arc-20240116; t=1775490703; c=relaxed/simple;
+	bh=rzKk5WejB+mbn/yRTIRbxkZzr1bQ4VA/zMee/GV8yyM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pxGq8MoYSyeYYUDN1w7MiW7GnBdFtOc14lEuXDRa8UFZVauvLouiphSDu/jdBgwKJBgMjtaCMIzxxBtZ+TGEHSMYgLtSogmmhULOvwTfEdJt0f7a0jIshv3sOa9itcnir8QZiD2FI7MFwi+uwI1GE0u7luCgzOs/4arAELp5rfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=J93kyziE; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IbjsllHE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 636DuYoo2420715
+	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Apr 2026 15:51:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ukQ6Zlht3NZUUsrPWZJsHdIlUjCDU/cg8ksvGrwiy2Q=; b=J93kyziEVXCaDbwt
+	ZIT0AYP/Y0+O2Lgk/IKQ0H3W06K6bAYtGRhFzD/XVbuvpZuwpBH6MUqdtNwsDJme
+	WouloICu0BfgqnKRoKxAXUdFscYsqt+EzzQAr3mUlPGKWa9Z7g5Vs2bE84XzaaCw
+	SOrQzYu5omCBrrW6wKKaa972ZNQllDgt2bpVHBel4Z4m43XHQAmU1EoqibHgajAY
+	Q4M2Q6kP21cghTLNdd/R8AVtvijc50TVOf5nh9YowLnhNFLjo8+T2wUK3iYDNgxX
+	DGMmbGzJS2N7idyKVqmsQuuOeeXQB216jedwhbFbXct2QhlY5R1P0fM7Sh28eK91
+	GYrzjg==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dce5jrct7-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2026 15:51:41 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-2c16233ee11so5778756eec.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2026 08:51:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1775490700; x=1776095500; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ukQ6Zlht3NZUUsrPWZJsHdIlUjCDU/cg8ksvGrwiy2Q=;
+        b=IbjsllHEUZ/v8E9OXA7/tD/s+FfZWcQcKqrETnI9P5/Tv5KN02nycERtnS12civnWt
+         6IOIrCQpf1xGMmXEpPhlOoJaFaVfTRhbaK2jYO0VNRFmYvcbrUoZgXQFOuG2bpKajoHq
+         fsoZiULiMUpzWnXltrwKb6BHxIYB31vF8jV1N27OSttLGeOG8PnTvJvIs7OGyD9UhAWz
+         iu32/UXhLSLkvh23qJH63KguQgz8Obl5tlGCehiPvepDjovIc4352pDmX1FzRtEfkoiZ
+         ZGMY7HeKxkjUT3xU1iW5J1MrHAqwxx7q8DAYHNIe14oYD9Boaon0bLjDaVMQRYqQSQEN
+         FrEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775490700; x=1776095500;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ukQ6Zlht3NZUUsrPWZJsHdIlUjCDU/cg8ksvGrwiy2Q=;
+        b=KAgyvIFQCuTB+/AORYov1oBzZ0E5N/gxzVgKLTUiIudJWC5TisBAIj1Hq/5vahHulX
+         WqWVcS7fD7FK7iSmIG61P3FIpPfiqPYksAe2gnd8t1VHBXdBum0zsZSkZ4YWiPEp/zNG
+         HUad2hYvuZE3qTn9Pd/cbay8wwbzrob7WejJdvSz8fx/eOfNGELm2rOVPTVVZScejF4p
+         smYaYwQdoIjqm9QeKbtIGfzgWqcBIYSG5kRXsalpXHtVuUiByV7gjeEsWsM7Y97KzFUD
+         T9hsFohVyxf3e9RvroeuBQ1h4+awBrgesK4bCED+pI/G0lb4srNQiRe1/n1s4eNKOXQA
+         uDvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUSTahDciPXTLTjuHHjeHwTolzfcfBualXVP7r5XL56i3yNfwiPy18U4H+5vxYqf+/R2s6EK7X9BrEfJd9+@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyo3A9hNjQ39ucKCxIZNMNZzbKWx5YE7A+J3omU/3eAJdrA5vmg
+	ZMD+cQ8X22oxZOqqH52GNlnLqHZYlzn8dWPUVyr4B17pisxt/cRXDLAubkQicb231EsLl7uIU3b
+	12gCpyynjB8gmCTELFVQ/4+buyzbnPMSf8kpyzY5LEECx/8C6jZZnKVNUAOiZPmf/PQUn
+X-Gm-Gg: AeBDiet+/676kn/kKcyDPPrOQXmZ6CIv96LMI25v4ZFrAEGYebV3Ew2n8zcRCYgNVSZ
+	/VruZPaDRUi9UoPFXnOVpSL4+EO3iRQ4CvWS4QNGGPSkGOyndVCGVtcUcksHNxJQrUcM8ufEfk6
+	aNPyepoae+fK8EXLLcBX4YogGFKVFvSO+hFHo1Zl9HmmomeYe3HGNDwiNlPeZeQ57Z/auVlPA9O
+	8eDmtqxnBRwhW9Vg7gikUJg/Ey0dCOdKMHux2ZqNlok+ro9l1QZ6UH+J6BTii4SAN8hahTW9G0W
+	91fFApfB21HQ6nSyUNFxv7SHa3Jzmlw/swwSwfhejPWTTkkFpQOy26TqqNHqrrwyPqMXrviu5x3
+	S2iEpnkHaYtrJhQ6Q2codTw336Xb0ZGnAlkTcbzc5cuwB3ce1zHGQkBsyC5G70Vg52xvZhg/79Q
+	yHwGhnVbUHJkbETw==
+X-Received: by 2002:a05:7022:62aa:b0:128:cc34:35fc with SMTP id a92af1059eb24-12bfb70ef65mr5780055c88.16.1775490700211;
+        Mon, 06 Apr 2026 08:51:40 -0700 (PDT)
+X-Received: by 2002:a05:7022:62aa:b0:128:cc34:35fc with SMTP id a92af1059eb24-12bfb70ef65mr5780019c88.16.1775490699506;
+        Mon, 06 Apr 2026 08:51:39 -0700 (PDT)
+Received: from [192.168.1.44] (c-24-130-122-79.hsd1.ca.comcast.net. [24.130.122.79])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12bede54ba8sm15701803c88.10.2026.04.06.08.51.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Apr 2026 08:51:38 -0700 (PDT)
+Message-ID: <0cf5e285-b5f0-49ef-97ae-6c04504044ac@oss.qualcomm.com>
+Date: Mon, 6 Apr 2026 08:51:37 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/3] dt-bindings: wireless: ath10k: Add quirk to skip
+ host cap QMI requests
+To: david@ixit.cz, Johannes Berg <johannes@sipsolutions.net>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Paul Sajna <sajattack@postmarketos.org>
+Cc: Amit Pundir <amit.pundir@linaro.org>, linux-wireless@vger.kernel.org,
+        devicetree@vger.kernel.org, ath10k@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        phone-devel@vger.kernel.org
+References: <20260325-skip-host-cam-qmi-req-v4-0-bc08538487aa@ixit.cz>
+ <20260325-skip-host-cam-qmi-req-v4-1-bc08538487aa@ixit.cz>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260325-skip-host-cam-qmi-req-v4-1-bc08538487aa@ixit.cz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260406-clk-pwm-gpio-v1-2-40d2f3a20aff@radxa.com>
-References: <20260406-clk-pwm-gpio-v1-0-40d2f3a20aff@radxa.com>
-In-Reply-To: <20260406-clk-pwm-gpio-v1-0-40d2f3a20aff@radxa.com>
-To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Nikita Travkin <nikita@trvn.ru>
-Cc: linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Xilin Wu <sophon@radxa.com>
-X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4950; i=sophon@radxa.com;
- h=from:subject:message-id; bh=UBTu/kKo70Jh0+IVyBq78WBUn6kXsLDznnaFIyQAqI8=;
- b=owGbwMvMwCVmdFg0fe08Iz/G02pJDJmXr+lNF2Lb4XthzqHvhh9Mf5VMU/7i73nvH1eTV/SmX
- x+4Eg6e6ihlYRDjYpAVU2RRiGeYy16Ze+2pWKkezBxWJpAhDFycAjCRzGJGhj1z9/yXs5d5kSh4
- PCo8+l3Bh2mVqr2vlbxN+pZelroe48vwT1na4oy9VcPOnyJpb9h2iFSxXS73n7mn+MWvV/tnSTR
- P4gQA
-X-Developer-Key: i=sophon@radxa.com; a=openpgp;
- fpr=205F009D07796DD6E516752E32C31567AD9E324E
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: OCBj5Amv9vLxNlhcrkcEq3PDWYL5zw8G+iXyAhx/HJ4uEV9oDi50Ayno
-	WBCbJhiRUG6/dr4eq9I+15/6WpibUrzFzm7lKgKaNnDFTmVGeVUQVgxwyOHP3sMuWqsjZ/N
-	aF5D6ZecEwngi8l8ecZkK4eN94zP/0cs/RvETlrLFcxQkH2aI9I5OHlqfxzeEUOYiatYrp5
-	CKHGaWvmaS5RmG/GdAIpLKdCwU8sawJ9NEHFqjwlPoUwlCP4dWzeYzL1fmWpuF3DnyhnByp
-	Y6q/4kZj9BLBUPa9EYuxqoovBXW64aE9WD3FK3O8TYLGaVXbaJ88gCeRQnjbOR/9Yf+FgOa
-	1FfUkXNkHYj04RKxF2+EYT35jvL1d40IWCVyC+y8Mjrr5Kvv1cw/IsodE99UtSFCQ/O4/Zq
-	aJIwR9zu404Co0JGZzxtLUSmCH5oaybnvbH7yIcigUnRoctUPYQAScMg0JamhTljX3F9rJ9
-	JE+z+X/EfF3H1SbNWY+mT4xdNtBO2GHH16sbwNxovPTaVJo37R7+GR3o4SOkSYnd2JpgjD2
-	l/MTdaW0QZJZ3HDY8DmSt8/PluRaYX6D8uG71Bhv/UGXYwEw8mbmXFFQevJpVteSxjM8x7A
-	T9mOGqrhkYV3l+p2HztTSQ1dkRvFZPkvljpBPXzHjzIXRikaLnlp7RP/MKYTzLaYhL1TYlN
-	tJ3ZRa3W3PZp3I8tl4hgru5nbCdiF02Jt0sF+Y6jZilT5q+3tGR+rt6jmECfNVrfj5bAywX
-	Jn2nPWZmTqrffVxkgJmL+tphZXI4B5LmNJHQBpV1PIUuLYSCRJz8UNLUHwEfXDu1GM/ERbI
-	/TXpviH+t2Td98hiPcfO0lgHNt1Knx7XL6k3LTmskbNZGIzckrkubpxBi2m0xazBR75OR7E
-	JZ4++PxXPlvHAkO8G631V3P/pYBj3aQ0WJD/AT57wccXj8gWXgfDVH9tAv183q4+ULSSdNn
-	oWxkBTg2TqLo9ZgTNEiCylUZZ3Kut5vPAA2rOY/0jRqqC4xeucDJ022oUJcqEDM50jpbGbm
-	Ugf8CbokTaj7CTZIABooAQY6yTpql0OXmTPSi5p8q0mV7ykrC4fiqUBvRw8oIHUKKyVsIRs
-	N02p75wCzDDGvUPpl578hc=
-X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
-X-QQ-RECHKSPAM: 0
-X-Spamd-Result: default: False [0.14 / 15.00];
+X-Authority-Analysis: v=2.4 cv=R9AO2NRX c=1 sm=1 tr=0 ts=69d3d68d cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=Tg7Z00WN3eLgNEO9NLUKUQ==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=VwQbUJbxAAAA:8 a=Gbw9aFdXAAAA:8 a=KKAkSRfTAAAA:8 a=Jr6ivFuIO4VC9FIHmAQA:9
+ a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=9vIz8raoGPyDa4jBFAYH:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: nTjcrS_y1SBuCbev3afesctEkaiEvqBZ
+X-Proofpoint-GUID: nTjcrS_y1SBuCbev3afesctEkaiEvqBZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA2MDE1NiBTYWx0ZWRfXy+v3FnoVhozc
+ fZ9fLIxA5C61WVup9rV3KVfMsOqxvpLeSMERy0qv/2YqqzgHQfHGvZhMAZiJ0fZk0UkZgarczqY
+ wDNVrq3z/W5CWFR9Q3GQLsYmVm2GHPtrQ1VS1bX9OG+YaQSLok7KpTHnMctJr4ckkhy3axDdt62
+ 63Pe6YrfuO2VJpixPsosnGKG6fY19cZ/oosuP6ZRmcd/VtD4ww4STJGlr9/lkwojQ0WJcU+/gcr
+ /pDMewwYlL7Aea38tePLFkZVRgoOggBYPJU2m6I0OFd6RaSZhl4GcHQzmsACOu+6dP+c5rbGHVb
+ g0Gn8Y4wOVnbMzKunRTlTBlUystWuh2m6AO8i1O72OTmnpyrXZKxZYyLxx84K2VCaWK27bineNY
+ fkxDoA+j0B6+ytbJ+qAWxdpIKcMUuWcEFsKuUVwCQ8hSl2a4fQPsl7tSZfnuL882WK2mX8+ANH2
+ EeAUzDvOYOvce0otGgQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-06_03,2026-04-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 spamscore=0 adultscore=0 suspectscore=0 malwarescore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2604060156
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101974-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-101975-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ixit.cz:email,linaro.org:email];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.846];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	R_DKIM_NA(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jeff.johnson@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: CE15E3A4E8B
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 013283A4EC2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The clk-pwm driver cannot guarantee a defined output level when the
-PWM is disabled or when 0%/100% duty cycle is requested, because the
-pin state when the clock is stopped is hardware-dependent.
+On 3/25/2026 10:57 AM, David Heidelberg via B4 Relay wrote:
+> From: Amit Pundir <amit.pundir@linaro.org>
+> 
+> Some firmware versions do not support the host-capability QMI request.
+> Since this request occurs before firmware and board files are loaded,
+> the quirk cannot be expressed in the firmware itself and must be described
+> in the device tree.
+> 
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  Documentation/devicetree/bindings/net/wireless/qcom,ath10k.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.yaml b/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.yaml
+> index f2440d39b7ebc..5120b3589ab57 100644
+> --- a/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.yaml
+> +++ b/Documentation/devicetree/bindings/net/wireless/qcom,ath10k.yaml
+> @@ -171,6 +171,12 @@ properties:
+>        Quirk specifying that the firmware expects the 8bit version
+>        of the host capability QMI request
+>  
+> +  qcom,snoc-host-cap-skip-quirk:
+> +    type: boolean
+> +    description:
+> +      Quirk specifying that the firmware wants to skip the host
+> +      capability QMI request
+> +
+>    qcom,xo-cal-data:
+>      $ref: /schemas/types.yaml#/definitions/uint32
+>      description:
+> 
 
-Add optional GPIO and pinctrl support: when a GPIO descriptor and
-pinctrl states ("default" for clock mux, "gpio" for GPIO mode) are
-provided in the device tree, the driver switches the pin to GPIO mode
-and drives the appropriate level for disabled/0%/100% states. For
-normal PWM output, the pin is switched back to its clock function mux.
+DT folks, there is a pending DTS series [1] that would like to reference this
+capability. Would like to get an ack so I can get this in the upcoming merge
+window.
 
-If no GPIO is provided, the driver falls back to the original
-clock-only behavior.
+Thanks,
+/jeff
 
-Signed-off-by: Xilin Wu <sophon@radxa.com>
----
- drivers/pwm/pwm-clk.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 66 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/pwm/pwm-clk.c b/drivers/pwm/pwm-clk.c
-index f8f5af57acba..99821fae54e7 100644
---- a/drivers/pwm/pwm-clk.c
-+++ b/drivers/pwm/pwm-clk.c
-@@ -10,12 +10,15 @@
-  * Limitations:
-  * - Due to the fact that exact behavior depends on the underlying
-  *   clock driver, various limitations are possible.
-- * - Underlying clock may not be able to give 0% or 100% duty cycle
-- *   (constant off or on), exact behavior will depend on the clock.
-- * - When the PWM is disabled, the clock will be disabled as well,
-- *   line state will depend on the clock.
-  * - The clk API doesn't expose the necessary calls to implement
-  *   .get_state().
-+ *
-+ * Optionally, a GPIO descriptor and pinctrl states ("default" and
-+ * "gpio") can be provided. When a constant output level is needed
-+ * (0% duty, 100% duty, or disabled), the driver switches the pin to
-+ * GPIO mode and drives the appropriate level. For normal PWM output
-+ * the pin is switched back to its clock function mux. If no GPIO is
-+ * provided, the driver falls back to the original clock-only behavior.
-  */
- 
- #include <linux/kernel.h>
-@@ -25,11 +28,17 @@
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/clk.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/pinctrl/consumer.h>
- #include <linux/pwm.h>
- 
- struct pwm_clk_chip {
- 	struct clk *clk;
- 	bool clk_enabled;
-+	struct pinctrl *pinctrl;
-+	struct pinctrl_state *pins_default;  /* clock function mux */
-+	struct pinctrl_state *pins_gpio;     /* GPIO mode */
-+	struct gpio_desc *gpiod;
- };
- 
- static inline struct pwm_clk_chip *to_pwm_clk_chip(struct pwm_chip *chip)
-@@ -45,14 +54,36 @@ static int pwm_clk_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	u32 rate;
- 	u64 period = state->period;
- 	u64 duty_cycle = state->duty_cycle;
-+	bool constant_level = false;
-+	int gpio_value = 0;
- 
- 	if (!state->enabled) {
--		if (pwm->state.enabled) {
-+		constant_level = true;
-+		gpio_value = 0;
-+	} else if (state->duty_cycle == 0) {
-+		constant_level = true;
-+		gpio_value = (state->polarity == PWM_POLARITY_INVERSED) ? 1 : 0;
-+	} else if (state->duty_cycle >= state->period) {
-+		constant_level = true;
-+		gpio_value = (state->polarity == PWM_POLARITY_INVERSED) ? 0 : 1;
-+	}
-+
-+	if (constant_level) {
-+		if (pcchip->gpiod) {
-+			pinctrl_select_state(pcchip->pinctrl, pcchip->pins_gpio);
-+			gpiod_direction_output(pcchip->gpiod, gpio_value);
-+		}
-+		if (pcchip->clk_enabled) {
- 			clk_disable(pcchip->clk);
- 			pcchip->clk_enabled = false;
- 		}
- 		return 0;
--	} else if (!pwm->state.enabled) {
-+	}
-+
-+	if (pcchip->gpiod)
-+		pinctrl_select_state(pcchip->pinctrl, pcchip->pins_default);
-+
-+	if (!pcchip->clk_enabled) {
- 		ret = clk_enable(pcchip->clk);
- 		if (ret)
- 			return ret;
-@@ -97,6 +128,35 @@ static int pwm_clk_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, PTR_ERR(pcchip->clk),
- 				     "Failed to get clock\n");
- 
-+	pcchip->pinctrl = devm_pinctrl_get(&pdev->dev);
-+	if (IS_ERR(pcchip->pinctrl)) {
-+		ret = PTR_ERR(pcchip->pinctrl);
-+		pcchip->pinctrl = NULL;
-+		if (ret == -EPROBE_DEFER)
-+			return ret;
-+	} else {
-+		pcchip->pins_default = pinctrl_lookup_state(pcchip->pinctrl,
-+							    PINCTRL_STATE_DEFAULT);
-+		pcchip->pins_gpio = pinctrl_lookup_state(pcchip->pinctrl,
-+							 "gpio");
-+		if (IS_ERR(pcchip->pins_default) || IS_ERR(pcchip->pins_gpio))
-+			pcchip->pinctrl = NULL;
-+	}
-+
-+	/*
-+	 * Switch to GPIO pinctrl state before requesting the GPIO.
-+	 * The driver core has already applied the "default" state, which
-+	 * muxes the pin to the clock function and claims it.  We must
-+	 * release that claim first so that gpiolib can request the pin.
-+	 */
-+	if (pcchip->pinctrl)
-+		pinctrl_select_state(pcchip->pinctrl, pcchip->pins_gpio);
-+
-+	pcchip->gpiod = devm_gpiod_get_optional(&pdev->dev, NULL, GPIOD_ASIS);
-+	if (IS_ERR(pcchip->gpiod))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(pcchip->gpiod),
-+				     "Failed to get gpio\n");
-+
- 	chip->ops = &pwm_clk_ops;
- 
- 	ret = pwmchip_add(chip);
-
--- 
-2.53.0
-
+[1] https://lore.kernel.org/all/20260401-judyln-dts-v8-0-7677cfafbc78@postmarketos.org/
 
