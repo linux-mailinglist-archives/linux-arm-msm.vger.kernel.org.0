@@ -1,156 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-101968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YD7mFs/P02n8mQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 17:22:55 +0200
+	id +tHFLw6z02kdkgcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 15:20:14 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA9A83A4AC9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 17:22:54 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30E3B3A37E1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 15:20:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 84B51300A503
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 15:22:53 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 0B0B0300C9B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 13:20:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B15F386550;
-	Mon,  6 Apr 2026 15:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A3BC3290C3;
+	Mon,  6 Apr 2026 13:20:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vFbjQkjD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lx/63tbT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5613C386541;
-	Mon,  6 Apr 2026 15:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD7E1A5BAE
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Apr 2026 13:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775488970; cv=none; b=d0uUNJzovyGcJnXU64sfuMTOHNNb047O8sK/Q8aeF5Xw3QsXdon1sSPwkdhQWfcNDgdZh4eCz5TR6tjWKQ7ns3nX4khKP3YOPb0zzssIoe/S1lpMz0z45nReUvzWETgDuJLXqfdrnLMbp4R6fLSHd/ZInX72rE5EgC1G9R6Kdec=
+	t=1775481612; cv=none; b=kWpbusKGvuB0wqwD/qOfGksGpr1L8WqU1PiS8tWx7q0PhbmijuhF4Q8/uclrm2yN1fIKC2z6v8ovYaMYu4n18sw5AK+wUoSkDHKYPOU6usR/Gi6N/TWlCO017VPbFT4VnhUI058VAXTs6i7y8Eg3aVLhBhQVosDY1qEsGwNwDOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775488970; c=relaxed/simple;
-	bh=iC5RuUkjr4YheJjq+5kXm0uCQrLTCZePxmO0UJuDLJI=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=MvsIPdmVPD43ZcPOHmlQ7OfBNlw0mvhAFhts5gi5i5hmuBmv8amMmR1HeFpBPoUa1LOQArVaF8sPaRzSAhnIPLGnY7qvIViv4xHMWIwETlBC9oqGb8MRmhdi0FnE9v5q/lZy27kGNUtB6xhEqSdDgki31hw5Ih/68ofyROyxOAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vFbjQkjD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9718C4CEF7;
-	Mon,  6 Apr 2026 15:22:45 +0000 (UTC)
+	s=arc-20240116; t=1775481612; c=relaxed/simple;
+	bh=StZoYZSX3E03qoBHUpVi4AQ8Vdh7LtYLTjwMGiHSG10=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=maXInv49VEyEIYMGAPXWf3UcIxCYHz1JrOKFej00RubrgirqSd8gIB9UosJs+oGeNCdYzA3SN7m3Vw+jWL7f3v0l39JtgcE21FqGuNQv/GODzBC9A+A9M44nZek2qE9b2KQniLVmt7SUnqWwwyrkKUFnQpIJIp2vCxryEuZ2jyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lx/63tbT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 268CDC4CEF7;
+	Mon,  6 Apr 2026 13:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775488969;
-	bh=iC5RuUkjr4YheJjq+5kXm0uCQrLTCZePxmO0UJuDLJI=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=vFbjQkjDICQPatHELDGaZzMGsOG7IMqZS8Nx0QZ7vwFj+aO7qSZLsXOzn/2N3Aj8P
-	 GQaS+U+vr2nDy11N5l6FpMnGTPxVQCPaO44HkAA0aJr7qr1c6F5Nfjt8wEOGHEdnaG
-	 uvklpS8YoFvJ8yZ4D9kHX5qNvlrRjscjnj6mvcxJIR/OHxiuHuUTfNloMmaxYvV1hs
-	 p9NclkJ/ClxVwPY7sllotz/eUaHLFeDjYUhXB7y9xDxfCsmLWmVlApD9hr+Nsa2eDI
-	 rE+YsIJ/4bKRYOWBWiKAMG5g4+q2szxGIIDSDYo+GQLzupJ/idfiqks9ySg9L9GvoR
-	 THwzn+tommHiQ==
-From: Mark Brown <broonie@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Alexander Koskovich <AKoskovich@pm.me>, 
- Liam Girdwood <lgirdwood@gmail.com>, Bartosz Golaszewski <brgl@kernel.org>, 
- Marcel Holtmann <marcel@holtmann.org>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
- Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
- Rocky Liao <quic_rjliao@quicinc.com>, 
- Johannes Berg <johannes@sipsolutions.net>, 
- Jeff Johnson <jjohnson@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
- linux-wireless@vger.kernel.org, ath11k@lists.infradead.org, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <20260403-milos-fp6-bt-wifi-v2-0-393322b27c5f@fairphone.com>
-References: <20260403-milos-fp6-bt-wifi-v2-0-393322b27c5f@fairphone.com>
-Subject: Re: (subset) [PATCH v2 0/7] Enable Bluetooth and WiFi on Fairphone
- (Gen. 6)
-Message-Id: <177548144839.46304.13972601101594073712.b4-ty@b4>
-Date: Mon, 06 Apr 2026 14:17:28 +0100
+	s=k20201202; t=1775481611;
+	bh=StZoYZSX3E03qoBHUpVi4AQ8Vdh7LtYLTjwMGiHSG10=;
+	h=From:To:Cc:Subject:Date:From;
+	b=lx/63tbTBTxuSxb+GUC1vG9fWJr7naq+7Hx8amitFSBw96HDow9a5P9EtlPvI2qBE
+	 /tQsB6uTEvRlVSskV95YURmF2UxXB62MB9O3LTlMbn5eUGi4BKsMA7Sh65TEH/aW1i
+	 A4V56wXyAjG1kTwcA+SkK/J1iwWLUNVArP6ScKF/RYBwlsanWOrhgBnqCLGnD+sfBd
+	 uzhZSOaipmHa0lB0WPgz51msd/JBnyiiKyMCIR506FY6pEVxjVVbSz6ltbe/V1XRAe
+	 zwo5wY7CqWbM9RvbhU1h7w/SoytBZgfFuhg/9dv2Af8/6Di/UzPhttTcquAV0ce4d2
+	 LjNN/RWcxbPtg==
+From: Bjorn Andersson <andersson@kernel.org>
+To: arm@kernel.org,
+	soc@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Paul Sajna <sajattack@postmarketos.org>,
+	Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>,
+	Sudarshan Shetty <tessolveupstream@gmail.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Casey Connolly <casey.connolly@linaro.org>,
+	Jie Zhang <quic_jiezh@quicinc.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Alexander Martinz <amartinz@shiftphones.com>,
+	Amir Dahan <system64fumo@tuta.io>,
+	Christopher Brown <crispybrown@gmail.com>,
+	Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>,
+	Qingqing Zhou <quic_qqzhou@quicinc.com>
+Subject: [GIT PULL] A few more Arm64 DeviceTree updates for v7.1
+Date: Mon,  6 Apr 2026 08:20:07 -0500
+Message-ID: <20260406132007.2264408-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev-67696
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1248; i=broonie@kernel.org;
- h=from:subject:message-id; bh=iC5RuUkjr4YheJjq+5kXm0uCQrLTCZePxmO0UJuDLJI=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBp08/EHCSvABc5+hfj7LywcFO5vIyiMIyPbeR7h
- ppJ03irVwuJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCadPPxAAKCRAk1otyXVSH
- 0KVpB/9S4D+rqQdrlGK7dDEaMH4ZQMEuGOMsBF05rICalPIeS+4HrqIdPQlTVFXQS+2FvhlW2v9
- 05Q1bZHOQZs52JJs+bbrwIb+9HnsD4fm4Fcq/CwxMBFfcb3D/8Uh7op9NLC9TMkaPvIlEyMVD4V
- 2eZIcjoyQ3ZyIsPzOqGIEKPo5UdI+TQyvmwOYnNcJ7Pg/Ft7ElkHEieBdQ7gR8SjyUegXQSAXNJ
- Lklhvvjd7b4qNJo6F8BDqvjelJFrUH+BSDJI63aYQTuDG5KvMSdQqyGFYjyO6PyvaEmtsmtpWY1
- OBo9Osy1m0mMXQWQCHFcbL50CpXYNDkWKuhxF3yLVZDqBqGq
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
+	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,pm.me,gmail.com,holtmann.org,quicinc.com,sipsolutions.net,fairphone.com];
-	RCPT_COUNT_TWELVE(0.00)[24];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101968-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,arndb.de,postmarketos.org,oss.qualcomm.com,gmail.com,linaro.org,quicinc.com,shiftphones.com,tuta.io];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-101952-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: CA9A83A4AC9
+X-Rspamd-Queue-Id: 30E3B3A37E1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, 03 Apr 2026 15:52:46 +0200, Luca Weiss wrote:
-> Enable Bluetooth and WiFi on Fairphone (Gen. 6)
-> 
-> Add the required bits to enable Bluetooth and WiFi on the Milos
-> SoC-based Fairphone (Gen. 6) smartphone.
 
-Applied to
+The following changes since commit b683730e27ba4f91986c4c92f5cb7297f1e01a6d:
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-7.1
+  arm64: dts: qcom: sm8250: Add missing CPU7 3.09GHz OPP (2026-03-30 09:35:01 -0500)
 
-Thanks!
+are available in the Git repository at:
 
-[1/7] regulator: dt-bindings: qcom,qca6390-pmu: Document WCN6755 PMU
-      https://git.kernel.org/broonie/regulator/c/b043657c35e5
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-for-7.1-2
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+for you to fetch changes up to af241225893ac4933bb8f0615f2dfda8ea2326ce:
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+  arm64: dts: qcom: Add the Lenovo IdeaCentre Mini X (2026-04-02 16:08:54 -0500)
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+----------------------------------------------------------------
+A few more Arm64 DeviceTree updates for v7.1
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+Introduce the Hamoa-based Lenovo IdeaCentre Mini X, the Dragonwing
+IQ-615 (Talos) EVK, and a Talos EVK camera overlay.
 
-Thanks,
-Mark
+Enable DisplayPort support on the Glymur CRD.
 
+Add WiFi, Bluetooh, LEDs, and venus on LG-based SDM845 devices. Add
+battery, charger, and display on the LG G7 ThinQ.
+
+Enable SD-card, describe the audio amplifier, and increase the speed of
+the i2c clock for touchscreen on the SHIFT SHIFT6mq.
+
+Add camera subsystem, camera control interface, GPU, GMU, and GPU
+cooling on the Talos platform. Enable the GPU on the Ride board.
+
+----------------------------------------------------------------
+Abel Vesa (1):
+      arm64: dts: qcom: glymur-crd: Enable DisplayPort support
+
+Alexander Martinz (1):
+      arm64: dts: qcom: sdm845-shift-axolotl: Enable TFA9890 codec
+
+Amir Dahan (1):
+      arm64: dts: qcom: sdm845-lg-common: Add LEDs
+
+Bjorn Andersson (2):
+      dt-bindings: arm: qcom: Document the Lenovo IdeaCentre Mini X
+      arm64: dts: qcom: Add the Lenovo IdeaCentre Mini X
+
+Casey Connolly (2):
+      arm64: dts: qcom: sdm845-shift-axolotl: Enable sdcard
+      arm64: dts: qcom: sdm845-shift-axolotl: Set higher touchscreen i2c clock
+
+Christopher Brown (1):
+      arm64: dts: qcom: sdm845-lg-judyln: Add battery and charger
+
+Gaurav Kohli (1):
+      arm64: dts: qcom: talos: Add GPU cooling
+
+Jie Zhang (2):
+      arm64: dts: qcom: talos: Add gpu and rgmu nodes
+      arm64: dts: qcom: qcs615-ride: Enable Adreno 612 GPU
+
+Mukesh Ojha (1):
+      arm64: dts: qcom: talos: Add EL2 overlay
+
+Odelu Kukatla (1):
+      arm64: dts: qcom: talos: Add clocks for QoS configuration
+
+Paul Sajna (10):
+      arm64: dts: qcom: sdm845-lg-common: Sort nodes and properties
+      arm64: dts: qcom: sdm845-lg-judyln: Add firmware nodes, change path
+      arm64: dts: qcom: sdm845-lg-judyp: Define firmware paths for judyp
+      arm64: dts: qcom: sdm845-lg-common: Enable venus
+      arm64: dts: qcom: sdm845-lg-common: Enable qups and their dma controllers
+      arm64: dts: qcom: sdm845-lg: Add uarts and Bluetooth
+      arm64: dts: qcom: sdm845-lg-judyln: Add lab/ibb
+      arm64: dts: qcom: sdm845-lg-judyln: Add display panel
+      arm64: dts: qcom: sdm845-lg: Add wifi nodes
+      arm64: dts: qcom: sdm845-lg-common: Add chassis-type
+
+Qingqing Zhou (1):
+      arm64: dts: qcom: talos: add the GPU SMMU node
+
+Sudarshan Shetty (3):
+      dt-bindings: arm: qcom: talos-evk: Add QCS615 Talos EVK SMARC platform
+      arm64: dts: qcom: talos/qcs615-ride: Fix inconsistent USB PHY node naming
+      arm64: dts: qcom: talos-evk: Add support for QCS615 talos evk board
+
+Wenmeng Liu (4):
+      arm64: dts: qcom: talos: Add camss node
+      arm64: dts: qcom: talos: Add CCI definitions
+      arm64: dts: qcom: talos: Add camera MCLK pinctrl
+      arm64: dts: qcom: talos-evk-camera: Add DT overlay
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    2 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   14 +
+ arch/arm64/boot/dts/qcom/glymur-crd.dts            |   16 +
+ .../qcom/hamoa-lenovo-ideacentre-mini-01q8x10.dts  | 1200 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts           |   10 +-
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi     |  210 +++-
+ arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts      |  127 ++-
+ arch/arm64/boot/dts/qcom/sdm845-lg-judyp.dts       |   28 +-
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts  |   59 +
+ arch/arm64/boot/dts/qcom/talos-el2.dtso            |   25 +
+ .../boot/dts/qcom/talos-evk-camera-imx577.dtso     |   63 +
+ .../dts/qcom/talos-evk-lvds-auo,g133han01.dtso     |  127 +++
+ arch/arm64/boot/dts/qcom/talos-evk-som.dtsi        |  617 ++++++++++
+ .../boot/dts/qcom/talos-evk-usb1-peripheral.dtso   |   27 +
+ arch/arm64/boot/dts/qcom/talos-evk.dts             |  139 +++
+ arch/arm64/boot/dts/qcom/talos.dtsi                |  436 ++++++-
+ 16 files changed, 3033 insertions(+), 67 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/hamoa-lenovo-ideacentre-mini-01q8x10.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/talos-el2.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-camera-imx577.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-lvds-auo,g133han01.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-som.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/talos-evk-usb1-peripheral.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
 
