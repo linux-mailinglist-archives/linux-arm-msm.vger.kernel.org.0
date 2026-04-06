@@ -1,50 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-101978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id vtCbL/DX02lmnQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 17:57:36 +0200
+	id 2HNZKODY02nUnAcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 18:01:36 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D32C3A4FCF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 17:57:36 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFC8C3A5091
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 18:01:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9BAE1301E6C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 15:56:10 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B33A83002D51
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 16:01:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5A8F335BBB;
-	Mon,  6 Apr 2026 15:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A25F6387375;
+	Mon,  6 Apr 2026 16:01:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE32325701;
-	Mon,  6 Apr 2026 15:56:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7084E344025;
+	Mon,  6 Apr 2026 16:01:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775490968; cv=none; b=vEpR2ps8yZscU+Gdh6UQrGfoI9iwqVitEcqEj888vVm32ITUrH+NWFUCfaqgT3zWSnpvpISJENcCeVSatjKST6IafovchV3TNMPNWCVq1VHe+FMaZ3WENiuspaIM++i8IdfS7uiU62FMVLVMW66n9x/vh8Zl5PbZklXB1ONNRa8=
+	t=1775491293; cv=none; b=UIerd3JWNn6f2DmxPcEOltA5zWH4MMoh06uvbdRWWRFexewmqjOu34U/aM3fXec7IedXx0BdHt0Z1MJebHb3sRON6eHaFCQbKorTBhTPAue8oTEIIK1XOOmUAxT8dz06jlzY7krJOFT2lqHk6c0VYnxpGbGbpDZ1WsUm9QTkuNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775490968; c=relaxed/simple;
-	bh=/G6qp68CyMYWgMJp25Zpj5M5dAg24l46LVGosbtcH1Q=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qm+6Y2bc1uYX33p6sTeJ9ai6zPwGPyw749zjKgFRXJzQ4DghqrRVdDHe9Brxa+cTLogzRafpWyGkOh9QqNk5Z0wZV5vZccKpwxBfOTW53aHZRFhAV/zfhrsnuaKqTLX+h4Y2Fb0mPDmw/eCgESQ5HzhFUs9CfzSD3qxcbJvHFQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.207.19.206
+	s=arc-20240116; t=1775491293; c=relaxed/simple;
+	bh=QyOERKD54DGtJuGHMgNron63KBsG0a26exTFK/mdpLg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=tm/7H1GeblrMOmQZM7sVbv6xMvjicPk7zAcDrPOqWlEEsGH5krNd8L21ewau62Cze8eodkHS3UtW58CaHM7HP8m1MpdNP+2uzZJhV30Mqm1YIxkCzSvhKV4UAbF3O57/5niJkTsSV0xlRN4cfhJwCJtTwb28fkURCEljrXy370M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.206.16.166
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: zesmtpgz9t1775490902t7c4ddd20
-X-QQ-Originating-IP: u9LdF/MuUBTYhB/eG4aIcw9LJyIudnoCCsBBbNR3WA0=
+X-QQ-mid: zesmtpgz5t1775491264t6c9cbbc1
+X-QQ-Originating-IP: DS5B0/3h/WhaagrWox+iG/E+AQ5tDYNWxa3EmdARaCw=
 Received: from [192.168.30.32] ( [116.234.14.100])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 06 Apr 2026 23:55:00 +0800 (CST)
+	id ; Tue, 07 Apr 2026 00:01:02 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 190652990989054796
-EX-QQ-RecipientCnt: 11
+X-BIZMAIL-ID: 15980131768172091507
+EX-QQ-RecipientCnt: 7
 From: Xilin Wu <sophon@radxa.com>
-Date: Mon, 06 Apr 2026 23:54:37 +0800
-Subject: [PATCH 5/5] clk: qcom: clk-rcg2: fix set_duty_cycle() integer
- overflow in boundary checks
+Date: Tue, 07 Apr 2026 00:00:59 +0800
+Subject: [PATCH RFC] clk: qcom: gcc-sc7280: switch GP clocks to
+ clk_rcg2_gp_ops
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,130 +51,144 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260406-clk-qcom-gpclk-fixes-v1-5-7a14fe64552d@radxa.com>
-References: <20260406-clk-qcom-gpclk-fixes-v1-0-7a14fe64552d@radxa.com>
-In-Reply-To: <20260406-clk-qcom-gpclk-fixes-v1-0-7a14fe64552d@radxa.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260407-gcc-gpclk-sc7280-v1-1-2445c2f7a539@radxa.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDEwMz3fTkZN30guScbN3iZHMjCwNdoyQTQyMjI/Nk07REJaC2gqLUtMw
+ KsJHRSkFuzkqxEMHi0qSs1OQSkGFKtbUAe95Du3kAAAA=
+X-Change-ID: 20260406-gcc-gpclk-sc7280-2b412227c5fa
 To: Bjorn Andersson <andersson@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Dzmitry Sankouski <dsankouski@gmail.com>, 
- Taniya Das <quic_tdas@quicinc.com>, Mike Turquette <mturquette@linaro.org>
+ Stephen Boyd <sboyd@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>, 
- Xilin Wu <sophon@radxa.com>
+ linux-kernel@vger.kernel.org, Xilin Wu <sophon@radxa.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1716; i=sophon@radxa.com;
- h=from:subject:message-id; bh=/G6qp68CyMYWgMJp25Zpj5M5dAg24l46LVGosbtcH1Q=;
- b=owGbwMvMwCVmdFg0fe08Iz/G02pJDJmXr3vInVurq5DKfrvxnuJkDpObF482zFHjdHF+ksvu2
- 33zgkVpRykLgxgXg6yYIotCPMNc9srca0/FSvVg5rAygQxh4OIUgIlwxjH899efY9N1Y8vtE+JM
- Rov+R7Tdzec7qp58tHzDqaAYgUNvQxkZLq11FQi7/SxU0/0hZ66zwJmJV4qC1+SdlfpWvCjm+rY
- SJgA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2348; i=sophon@radxa.com;
+ h=from:subject:message-id; bh=QyOERKD54DGtJuGHMgNron63KBsG0a26exTFK/mdpLg=;
+ b=owGbwMvMwCVmdFg0fe08Iz/G02pJDJmXb+w78Petou3aYvnN4R0bWrdX8VQoOGWL+52vW2ZW3
+ DexvvJZRykLgxgXg6yYIotCPMNc9srca0/FSvVg5rAygQxh4OIUgIn8sGb4Hxuo8m7m7YfMs/kX
+ Szw0DbGY/LuvsfzS5cMVvbOUJEQEVBkZ3vww5zP75HssakPUg84gg+Qnkq+FnTbUrSmMz7vh7xb
+ CAgA=
 X-Developer-Key: i=sophon@radxa.com; a=openpgp;
  fpr=205F009D07796DD6E516752E32C31567AD9E324E
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: NOH1TaCqk/M+slQkMoa7JS71wOtNgBraIBTc1/7ijaxzoXHqkg8NttZg
-	W4lR8azkvfuHBWM+B+hfKoeuT+aORDoxQuo1Fl/veh+4kzy1Plq9CBQGaUKCSv8OQj6hGNf
-	UbKHxk1ZLWgGdHm7CKJ6JKMXk0Q+GtMmmeiK6PaqAWrtyebDKrcmSVbQJV71bhX/3UtHCGN
-	zfkF369C4EnOl+LSOUW6LHskcIR31xCGyTHa/yhtVXY1THrK+b9E3C97jmJbk8ElEbGqSQ6
-	icVMkwztS1B9giv4jrTbuui5ToVUg0kUPPFWCQ6QnxSf3JAJTZ2G9FSyZERMMbPYDHBUMa5
-	xUg+KsMIHv0wHoDmHrOI8js8GJ9VDt9dR+oGGhUIlAN5g3U+SuAKZtB+mthJiXxQ0CxKPHs
-	zYXzb8Ajm97Eo/ExH0vSBfuUPnffi4Ihad1DNkBm4Oss13+x4F1IXXn3k0BjJfuv6+8TvEb
-	vn36VZLukQ6QSbJ79rlfTUCvmNKn/dLHzY+VzUha6NmWUwjk4A6dxZIS9M1d8G/MJVJHQID
-	uh+hCaJ8OccrHO0OzE5mTibDsPfMPJMJiEE/quUiMEAdSICZfDCb9YdHXpQBsW4ZOfnv5Ge
-	Izz1Wcs+1RHrIVUbyoaYBG6th6q49JVjgH12tdoqx+BSvqc8Jh6Uc07tLJM4ooKiApZvOw6
-	3cYfpQ+1Nqm35HgO2Wb41j0ODMmSNJ9+CGUQQQaW0Iew/t6EIuA6gmGp1XOS1EHTymsgsuO
-	F7h308Jj+u4yVCBS56taleWDnjL6Sf8cTkZMNKwokuQqZ9xuXrTavplLY02VbtaQzExK5Nn
-	w/G45UtGqVLAtdF0hs9zQEk8zh48r664hhljO/ks/cD/t1b/CnL2W8F6FZXuHNpTqi6mnMx
-	vcO9NqdEjcDPwcVucvfZI/5Bu4DulkT2UvwRIDYknQ+1q5Sgoq8rIwVRJmqxQGs0RnM1y14
-	tRf02e6IHbqr3hsm+TIuKYu1WgJG0OPzTza/eDVX/zvQH705Rs4TebJNBCgItg2BVF6dg2G
-	gbI5D2Il6zkhlqk/ph
-X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-XMAILINFO: NE8iuDeseKq8Twmv7D2K1f87c5KdqF9xRLVmn6aUbcGICAwYzFziyF4C
+	fYcf+AMJTOiuxUalntoSUv3amLn9zvJLPRlQZVvnYz+cyT+ps7SzO923xRbqBZMA0v+OcB+
+	U5YTMU+YzJnGFhfWfiGvD1V6MZyL7B5zwKo6RTdC+G1hzzXDwsdJlBrcrg8jVbj90XOZkL9
+	ci1s9imZLDdTT9rTO8jXaqR5c+ePJHTI7AQZCGyy+pY1YJfan+Bmnl/9B8kLxuU/Axg4UAK
+	LS2kPRwyi7AsFcO65Z1KFMOYDNQGS8MSj6SmrfXXOMmCUDLPOxXsPXycSqF6Fb4SQr+z4vP
+	1P4MW7Fi/FENlPGSVkM4KIOuRMKba7wZtVqv+DtjYyIZilDCdyYxoneB5dXIPXeDgUx1R+r
+	Xaqs2xbAA6nsJ/qt5iyknwGRAX8tXQdsItvCuxNwt80/8smqsf90DujZ+5DFPQwsamIAR1l
+	skAY3QISG08zgnHfSaNYJ9+3wzcwqsc3VZxvW1r+GQ36C1Nm2k2JF1PjTz6bX2mBKF6IlvC
+	Q/ep9+H4stvrIlEfwv+a33XNEXpHmSHQipREwmJVAXq00hH9aTUnD/S5cXbfwunwU2EvIYD
+	UD8vnnQ+AQcTuei1XpjziB0q/NNhBKyLxiRn3+IPmbRhod8yP+wi3WXLxKsC1ptJfFzLqgQ
+	GVI0i0jeVukGqOZpxI/7q2u+RxTX0YrE28O1d/dKM5jHpnsQ0+Ke+fIbtWRNocIL3R2hp0O
+	EAMWzXFmHzoJSs9TAJvOQ3IyVRn7ixAx7TS64XJOs/GSz5TGWWKNtMYu4KfJS0Ucg/dpJw7
+	laxpqTnBE/0ys6hR+ccrExtRN+CAuuuiHsp+q0Uye2PaVHmlYVxotjbVfqihk+kUb4nfF/w
+	UNvEV8E0LqxzHI7PYALUmqeKSaPYV1QPLqij/R9IcnkBhMw3ERekNoQn8wiuOuefIJszxou
+	pkyHrZH75ENnv2ZAkE35rbcthcLxUA7n1j5vuCv6XWveJj446HhOhw1L6/27XfDENMLRhxS
+	QiKoSy6g==
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
 X-QQ-RECHKSPAM: 0
 X-Spamd-Result: default: False [-1.36 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101978-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,baylibre.com,gmail.com,quicinc.com,linaro.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.777];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	R_DKIM_NA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[radxa.com:email,radxa.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
 	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[radxa.com:email,radxa.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 1D32C3A4FCF
+	NEURAL_HAM(-0.00)[-0.947];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_COUNT_THREE(0.00)[4];
+	R_DKIM_NA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	PRECEDENCE_BULK(0.00)[];
+	TAGGED_FROM(0.00)[bounces-101982-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[]
+X-Rspamd-Queue-Id: EFC8C3A5091
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The duty cycle boundary checks in clk_rcg2_set_duty_cycle() use
-integer division to compare the 2d value against hardware limits:
+The GP1/GP2/GP3 clock sources are general-purpose timer/PWM clocks
+that require runtime-computed MND divider values and duty cycle
+control. They are currently using clk_rcg2_ops with a frequency table
+containing only a few fixed entries (50/100/200 MHz), which:
 
-    if ((d / 2) > (n - m))
-        d = (n - m) * 2;
-    else if ((d / 2) < (m / 2))
-        d = m;
+- Cannot produce arbitrary frequencies needed for PWM periods
+- Bypasses the MND divider (m=0, n=0), making duty cycle control
+  impossible (MND is in bypass mode, set_duty_cycle returns -EINVAL)
 
-When d is odd, d/2 truncates, allowing values one beyond the hardware
-maximum to pass. For example with n=7680, m=1, requesting 99.995%
-duty:
+Switch to clk_rcg2_gp_ops which uses clk_rcg2_calc_mnd() to
+dynamically compute optimal M/N/pre_div values from any requested
+frequency, and empty the frequency table since it is not used by the
+GP ops path.
 
-    d = 15359  (raw 2d value)
-    d / 2 = 7679  (truncated)
-    n - m = 7679
-    7679 > 7679 → false, check passes
-
-But d=15359 exceeds the hardware limit of 2*(n-m)=15358. Writing this
-invalid value causes the RCG to fail its configuration update, the
-CMD_UPDATE bit never clears, and the clock output stops entirely.
-
-The initial D value in __clk_rcg2_configure_mnd() correctly uses
-direct comparison without division:
-
-    d_val = clamp_t(u32, d_val, f->m, 2 * (f->n - f->m));
-
-Align set_duty_cycle() with the same bounds by comparing directly:
-
-    if (d > (n - m) * 2)
-    else if (d < m)
-
-Fixes: 7f891faf596e ("clk: qcom: clk-rcg2: Add support for duty-cycle for RCG")
 Signed-off-by: Xilin Wu <sophon@radxa.com>
 ---
- drivers/clk/qcom/clk-rcg2.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Sending this as RFC, because I'm not sure if all other gcc drivers require
+the same change.
+---
+ drivers/clk/qcom/gcc-sc7280.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 732f34629ea2..153d2058c2a9 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -814,9 +814,9 @@ static int clk_rcg2_set_duty_cycle(struct clk_hw *hw, struct clk_duty *duty)
- 	 */
- 	d = clamp_val(d, 1, mask);
+diff --git a/drivers/clk/qcom/gcc-sc7280.c b/drivers/clk/qcom/gcc-sc7280.c
+index 4502926a2691..e7748c468721 100644
+--- a/drivers/clk/qcom/gcc-sc7280.c
++++ b/drivers/clk/qcom/gcc-sc7280.c
+@@ -457,9 +457,6 @@ static struct clk_regmap_mux gcc_usb3_sec_phy_pipe_clk_src = {
+ };
  
--	if ((d / 2) > (n - m))
-+	if (d > (n - m) * 2)
- 		d = (n - m) * 2;
--	else if ((d / 2) < (m / 2))
-+	else if (d < m)
- 		d = m;
+ static const struct freq_tbl ftbl_gcc_gp1_clk_src[] = {
+-	F(50000000, P_GCC_GPLL0_OUT_EVEN, 6, 0, 0),
+-	F(100000000, P_GCC_GPLL0_OUT_EVEN, 3, 0, 0),
+-	F(200000000, P_GCC_GPLL0_OUT_ODD, 1, 0, 0),
+ 	{ }
+ };
  
- 	not2d = ~d & mask;
+@@ -473,7 +470,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
+ 		.name = "gcc_gp1_clk_src",
+ 		.parent_data = gcc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_4),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_gp_ops,
+ 	},
+ };
+ 
+@@ -487,7 +484,7 @@ static struct clk_rcg2 gcc_gp2_clk_src = {
+ 		.name = "gcc_gp2_clk_src",
+ 		.parent_data = gcc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_4),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_gp_ops,
+ 	},
+ };
+ 
+@@ -501,7 +498,7 @@ static struct clk_rcg2 gcc_gp3_clk_src = {
+ 		.name = "gcc_gp3_clk_src",
+ 		.parent_data = gcc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_4),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_gp_ops,
+ 	},
+ };
+ 
 
--- 
-2.53.0
+---
+base-commit: 2febe6e6ee6e34c7754eff3c4d81aa7b0dcb7979
+change-id: 20260406-gcc-gpclk-sc7280-2b412227c5fa
+
+Best regards,
+--  
+Xilin Wu <sophon@radxa.com>
 
 
