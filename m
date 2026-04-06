@@ -1,86 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-101928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YNmqNMNr02lViAcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 10:16:03 +0200
+	id ODOIJR9u02mjiAcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 10:26:07 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93F353A22B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 10:16:02 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3F373A232B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 10:26:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6348030036E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 08:16:01 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 2CB4B30055D0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 08:26:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4B04311C1B;
-	Mon,  6 Apr 2026 08:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B08862F7AAB;
+	Mon,  6 Apr 2026 08:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S2ea06Yy"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fsDUwhot";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="PBWL1pLm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C1630F957
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Apr 2026 08:15:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6762031196F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Apr 2026 08:25:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775463359; cv=none; b=Yir3esjAN/YR5XnRJ6uGzsFDpeLDseyfSe05IVtzjgjnqmHuFofu2PfCB9uO4hit9CzN4zcBMFawTSG7tjwVUFH4gSqtsTfJSQ21YHm92jWt/Z/V/wX1IsUbh726k0m2say1b4zQtdbxWbiClyMowljd7Jhws7Q7u0KT9nmbZuU=
+	t=1775463960; cv=none; b=OrgIPi2oQ1Jmjb/Exfvg7IlC2DZlo4VM54vTPGgzWPXbkGW3KzN83l5E7ZbTcTHLVxFDs7+48hsO8LMbxp+FeVYNFx3wRGCWQ22AWPqQjgMwLV8Grur/gmIYA5l+auRIyp5TGZWT5jq/e2RzRlqhtUbqATIXo81ecr6qGFI6mWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775463359; c=relaxed/simple;
-	bh=BXSCMDcWSCT1X/PPmkFaDuuMIcNq+ICC4sZrvIHudAM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cAKzshGIg7hhQQEjCPSJ1R6/faQhW452jJVIWOPjiL9U4YmiaxP3IaqHMpngioo47F7HYKF1eH1tmrP6DRxSubMoVXlhvXXlB23HAA7f5x2s05I8jakfm9gbNNF/fCq3DZhYNNqG42hSbn9sQ8xgoUB26RSYsbCvyrO6EQj1AC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S2ea06Yy; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-b9c603ec2dfso344391266b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2026 01:15:57 -0700 (PDT)
+	s=arc-20240116; t=1775463960; c=relaxed/simple;
+	bh=tyWK96ZWWKZnO+q9rIXpNByqGHb/OnJPr2cUQ1sKBws=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=lUx3mFk64+wr+m2oE9FLxfyAQE9dxbwC5+DXxk658gDBeXZZNTtIJMz+RoDFwPIWpOxxaVQBc8BpTO7kFUejlMLljNoGR+GDxJlgNsM7gR5QvqxGebwXy0J+k3T1Iv6OSdxCx3cGB1WuFFvhKhUSiAjr0IriC91ZMmfW5ivXvOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fsDUwhot; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PBWL1pLm; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 635Lss0L3722967
+	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Apr 2026 08:25:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	MOrTBocZl5kySfciOGvZUv9NqCenxGWPRnDVcRlP+6o=; b=fsDUwhotpLBuj2kO
+	yvZg0S99iJu1Vs4cYJb4qpEMwShEUoeFNqfD0wFjLAZ4kSl++idXi783epGxhVh9
+	HoB9+SZTkiHGPysckwkX6uKRBroKreInHUWDa31DQYTksxZyxc7n6RnxjSAsAaor
+	IIpoxyDBjyrVzZryCLzvITS/WcX3tJgpis0sdqp19loiXxUdA5ESrfOzCosM8NxA
+	tDsGhgqHDS44PJe5NuBIPZkI2FNk724sERoAIZhE0i9bam8JV+Xv6c8x3TuRmGPH
+	4IeZTHf+qqSG3+dOyU08E1V7FzxXzIJ0YmneOzPa/+H4E15pK4lYH8qULpzzjgEz
+	hhGKwg==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dauthcda9-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2026 08:25:57 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-82c70d1f65aso2138190b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Apr 2026 01:25:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1775463356; x=1776068156; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1jZf5cnrrkq8dx84bXNNVnhn1yv8NNVpaiRpnVq4qxg=;
-        b=S2ea06Yy4PC/Kxv6wqGbCms7lGd+1VzdgRRiIPgg8O/MvojuCMKJ80prqtyvsen0D8
-         aNhmboBi7cgMJHmKl5JPdDaDzFgw6f8i0N5CjG4970Eiw8P+azmUeCpK3wbUwNf7FD/y
-         /0Zt1cAdXPSWYPF6P2CnP0K3CcDrD8M4H4QRJDyYxfqvBbXy3HnUSP6YZWmtG2oz3ikF
-         AsncQvbrc90d8qg2PA4Z9zptxtkOMoxO8hJXTT9XS/o5sfxsQcqf1nMvPWFGQNzBZsLF
-         TQnPEmTLmqhymCF4k9C1Y5tyaoWeLptqU6KJ796FZZc1dUldz9JXmOOi0OxUBOs8cIbw
-         8oOg==
+        d=oss.qualcomm.com; s=google; t=1775463957; x=1776068757; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=MOrTBocZl5kySfciOGvZUv9NqCenxGWPRnDVcRlP+6o=;
+        b=PBWL1pLmmj+Qo61pIwddbDBLOd9sYns/aTvvmTdSpq0l8A8wBHGRhAwESSaq8PU84p
+         dr22JbPv2i7KqGt2ZjvX8EFyOvaS3JlmB1DDe9DofFaQsFW7rVvu2CcDNmh8Ih2X9JoR
+         xIkAwnyM6XwowcxO06fHrDfdUMi5aG91pXDSc8SqE/w+x6NIaYcM/efhtjwgpmsQ0o56
+         GOFlQamlVlaX2gM8OevEk2kwuCdtToFcJ6iukli2xGNNehelKZAaRCEo5hFQMbHiXcbS
+         gfZ6B0cDK0Qvp4HuKegqXlAmhZybj+OhgBs7Y8pn+TRU5o1nIN2QVhyZqin4umRvMilg
+         lskQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775463356; x=1776068156;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1jZf5cnrrkq8dx84bXNNVnhn1yv8NNVpaiRpnVq4qxg=;
-        b=OAXZQnHlRPU/rr178SmJLTn0T5UJ8JHezH3b/Ytej5TwOxrV+AM8/Xxw8HEFMYHVLH
-         Fm+3hho/zVsmXfmFdKGTO0edCzO0XLWAl3UlKlqATaKIq/OIFVM5EtGubg+FAWt+24Rk
-         skx3eBX0IJGeAuDDFq2e0YdNzjTYgztcj/yjn25pV7cRCG4FcRX9N17HP5L+HZtImE1d
-         DfRLks3Liwf14cza+sCZed79KYEa0VvBCIRKEu9AuMhEctKaobv1jeky/wpTBAzAYWkQ
-         szmnumf/gPrkBBKl1FvU8pyQqbTZ1HxGspDxJQtu69iz/Vq/3sByid204Bi1qC7Gxf8r
-         wrnw==
-X-Forwarded-Encrypted: i=1; AJvYcCWcKDL2izQqdSA1Ydp8SOz5K1/W/r0d40WIHxsOGwLPPfJuJX1exrQdt4Z/jHClSmPzOm+rKeSNfWC3CPOw@vger.kernel.org
-X-Gm-Message-State: AOJu0YwMgijpX1YoSeREUlxVCKkxhFOq6jYMrbCn26F66vOrz1NqDHqK
-	S7CJkIdfA1qZdWMqTq0I7EY5Rp4TeUqF9c/G5QAfHALBSmiHppRNFhv+Ol6cpi6pQ0g=
-X-Gm-Gg: AeBDievPPIyzplLpsDXCSZ/OYrTjw+PbWDB0TaB6fmo5v50AdBKXnbNEJIRXNDns2Pq
-	wNTEBtXj8kzeKlWsKDcAq5E2XfoAdmhIxgZ2SsniDk5oDD9Q+vBh6zU5UkPFdpna2DcRBHfe94Y
-	hr9WT2rXRIu5+6kGGltr5toDmmd0cZnKHILB87TY128NbCJ6rboJuyD23T+tK2qHc/hwGreUUuB
-	a3GYp12GuAn8EQuN1qHJZxVFbmtPxhsJ4EKb4whhUjzgQGY0137sExiSLGQqRENop4Y/QpZ7ivv
-	1booYwW7/wmYNCUSEFkWr76m1OclsolAfdVmAS7QWGpEd8UtVNzFPBDCwREMObxRl4Jh7qeBUkn
-	XKYZdsp/fLcUz+U/FNKHrUq70NxMnBeGIJ8m2jfzaVnpaTpgKr/h/UcIHjWwrAs1CAFrgn0EVH4
-	VhRrOq8WTs9HrFHDH3PYTQ3Og7dOuSjI5GCwU/x1gY8j/ly5zLK9ResqfMPNwyVQFwy90w/XiId
-	M+yerYMkHXPj/XbXfg5xzP9z7K3MnXMyI1ZDA94nTMJYKNYMfhLrrq221sqtrQfOJ76kWOlXlX3
-	XDZO/xcvTz2qdQ==
-X-Received: by 2002:a17:906:2092:b0:b9b:1b9f:8397 with SMTP id a640c23a62f3a-b9c67b4d146mr344896366b.31.1775463355810;
-        Mon, 06 Apr 2026 01:15:55 -0700 (PDT)
-Received: from ?IPV6:2001:1c06:2302:5600:7555:cca3:bbc4:648b? (2001-1c06-2302-5600-7555-cca3-bbc4-648b.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:7555:cca3:bbc4:648b])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-66e02d36f16sm3491001a12.3.2026.04.06.01.15.53
+        d=1e100.net; s=20251104; t=1775463957; x=1776068757;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MOrTBocZl5kySfciOGvZUv9NqCenxGWPRnDVcRlP+6o=;
+        b=V7/YrbuFNvlXAnCkeEzd3B3JHH6ipQrX+mJxMW9pamUUufBu9XvLj7WrTyebmT6gXt
+         zkXQSbu1SjgWuWibAsV3MttSQGAR55ThYGIEAMeDBhDxnICNxE473rBoRcQHdwde1fuV
+         EEg9AUdaevc7xR/Q10nCxAP8m7TCOOXI0qxvzC+tMhgL1eANeloq+fImaDbi4bCBvk1M
+         2oZb0sDOX0K6Bi+cRnFEGRiJKSGF03aIcDJhsBr3zvLa8exoJ3FRxwsif9aahTdZqRKx
+         cJkI33zxqixqHqeNcKTOH80mpATtjihpYI6/BafsqCiYHKsg4HGI99cykXtui045F48D
+         2ERw==
+X-Forwarded-Encrypted: i=1; AJvYcCVgkpr0xYYti+BYQZPcQzmP/WVlXYLVG1gn52JvIWbO6SR+u5o06dOLvLiNN6BcRzUOTQQnRoaq4RVCbrOk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+wFfoR6E1iYg+OV9Ju2SDlEe7pqG9LI38o/D4164kN/z/6l+X
+	c9cYpWr3lXLstjwsG4bRwzBeZt9naDTwU/hHkBsIEHpRl8qLLy+W8gjTlB0iKFex4qHHLr/Cw97
+	Mi9kwFdM6SxQEfrvTt3f46qI0OIXqaPiMp7X71N44aDBTlLU55htcpK342LDrp8u0l6iB
+X-Gm-Gg: AeBDievM9vBCDdYla4dNqlFcb3HTabtJuZCLVT/q2H+A/J4jgmSHUsxLUexqsBd8/S7
+	BOhysXdb8Q43EoBE9ndlus6Azs+1c0ClnXhRyeD1PJBS1I37iSX65LBXPrx8Ox6x7CAuzeBIpQM
+	CYe6RPHbygC8aZA/arvQMR1zCkZIh/azsuQ18+6tYFMObEicFm9wMLctjE2OYta/YA4zgk6AmnG
+	KF2dYij/QBpKfVyZkJjVJ7kH0+nU2+qe+gu1R7rCYxhJJ69RAq058JIonV2vD8h93ViJHRw4ZM9
+	xcg1ZxHVeLJeZXBR/Nc8jW5CuoayIr279QrpmTo5jla5HYRriaVwmNo/n0lFQMEhfBmQ6ctURd1
+	aNcg/h9E6ATpZ5JMPL/feyfvmA3XC4KfU8kEZr/1KMR86gp5D3mY=
+X-Received: by 2002:a05:6a00:c92:b0:82c:d6d3:3197 with SMTP id d2e1a72fcca58-82d0daadb73mr12018064b3a.23.1775463956917;
+        Mon, 06 Apr 2026 01:25:56 -0700 (PDT)
+X-Received: by 2002:a05:6a00:c92:b0:82c:d6d3:3197 with SMTP id d2e1a72fcca58-82d0daadb73mr12018025b3a.23.1775463956288;
+        Mon, 06 Apr 2026 01:25:56 -0700 (PDT)
+Received: from [10.217.223.121] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82cf9b5fb22sm16753198b3a.26.2026.04.06.01.25.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Apr 2026 01:15:54 -0700 (PDT)
-Message-ID: <4bef096a-9f0d-4609-a74c-088caf8fba1e@linaro.org>
-Date: Mon, 6 Apr 2026 09:15:52 +0100
+        Mon, 06 Apr 2026 01:25:55 -0700 (PDT)
+Message-ID: <89d95bae-01d3-44b8-b3b6-5e70074d272e@oss.qualcomm.com>
+Date: Mon, 6 Apr 2026 13:55:46 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,235 +105,226 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: platform: introduce EC for Dell XPS
- 13 9345
-To: Aleksandrs Vinarskis <alex@vinarskis.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- laurentiu.tudor1@dell.com, Abel Vesa <abel.vesa@oss.qualcomm.com>,
- Tobias Heider <tobias.heider@canonical.com>, Val Packett <val@packett.cool>,
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-References: <20260404-dell-xps-9345-ec-v2-0-c977c3caa81f@vinarskis.com>
- <20260404-dell-xps-9345-ec-v2-1-c977c3caa81f@vinarskis.com>
- <e69ebf4a-126e-48c7-970b-1ba2a40a4492@linaro.org>
- <21_zFoUYN_HKM8GMSFC7b0uIgOQevyqpWbjtIX1vVP7YtK9tlMgqC3XRgwo35ANlvZ1veGNShZuQFHkKWcf3B_qhjhD90FS7kvR3qCpKzIY=@vinarskis.com>
+Subject: Re: [PATCH v4 01/11] dt-bindings: crypto: qcom,ice: Fix missing
+ power-domain and iface clk
+From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+To: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abel Vesa <abel.vesa@oss.qualcomm.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+        cros-qcom-dts-watchers@chromium.org,
+        Eric Biggers <ebiggers@google.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+        Tengfei Fan <tengfei.fan@oss.qualcomm.com>,
+        Bartosz Golaszewski <brgl@kernel.org>,
+        David Wronek <davidwronek@gmail.com>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Alexander Koskovich <akoskovich@pm.me>
+Cc: Brian Masney <bmasney@redhat.com>,
+        Neeraj Soni <neeraj.soni@oss.qualcomm.com>,
+        Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+References: <20260323-qcom_ice_power_and_clk_vote-v4-0-e36044bbdfe9@oss.qualcomm.com>
+ <20260323-qcom_ice_power_and_clk_vote-v4-1-e36044bbdfe9@oss.qualcomm.com>
+ <873e8ad2-50cd-4c09-9a51-20ad745fe8dc@oss.qualcomm.com>
+ <2b71dd68-ff35-411e-905d-3ffa2ea3efe4@oss.qualcomm.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <21_zFoUYN_HKM8GMSFC7b0uIgOQevyqpWbjtIX1vVP7YtK9tlMgqC3XRgwo35ANlvZ1veGNShZuQFHkKWcf3B_qhjhD90FS7kvR3qCpKzIY=@vinarskis.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <2b71dd68-ff35-411e-905d-3ffa2ea3efe4@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA2MDA4MSBTYWx0ZWRfX3r4frQxYQGcV
+ hKFscPXGb/bZK1DYYwI0Gm6VPIQ5sMLfDKoQa6c34sOeA6T1kmXxu9Ay1LfXZrSqr/Sqfuo/Qxi
+ AepMMEWSnc0Csy6q0XsxPdBjcsrbKf80Gl8/Txxm7sn1V8gUyNiyCdSv1/dxsdaTVkZ5axCmoYn
+ A2iDzbd4XDE5x11tGFp4O9iN4ObRqVoJmgJ4I3k1qUnq+D5geV6xx02rypZr5q3fPsZzHh/6uFk
+ 8WtrlhkqViB8SpjDfDExdJs5Tfgl+0pd0ZWvnyXBOqgmKhGgVI0buXzGO5xZ7eXyJyzO6UxS7N3
+ uwYM5tZ0cvfdR7CFfP+AGBIv5GsjFD3gR3Jces+VjoBfGOkUswsz6KO/CmeEc1e8geTOAa4o/rP
+ 14Q6fsCLciAS7DWmApPtgnDAUp0SHcvfiq4MlP0jC0ihckMSHLiUdUCcV62SEUV5Cp7hdn0Tjdb
+ PhV96b15HoLsCttrfeQ==
+X-Proofpoint-GUID: McHFKHHaRVAkn7BzzW0py-dkA6IthsZi
+X-Authority-Analysis: v=2.4 cv=MIptWcZl c=1 sm=1 tr=0 ts=69d36e15 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=P-IC7800AAAA:8 a=EUspDBNiAAAA:8 a=qoNIJ1LOUDDmZ2oDbzIA:9 a=QEXdDO2ut3YA:10
+ a=OpyuDcXvxspvyRM73sMx:22 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-ORIG-GUID: McHFKHHaRVAkn7BzzW0py-dkA6IthsZi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-06_02,2026-04-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 suspectscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 impostorscore=0 phishscore=0 bulkscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2604060081
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	TAGGED_FROM(0.00)[bounces-101929-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,gondor.apana.org.au,davemloft.net,kernel.org,chromium.org,google.com,gmail.com,fairphone.com,linaro.org,quicinc.com,pm.me];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101928-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[31];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
+	FROM_NEQ_ENVFROM(0.00)[harshal.dev@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.998];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[devicetree.org:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,3b:email,vinarskis.com:email,bewilderbeest.net:email]
-X-Rspamd-Queue-Id: 93F353A22B6
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: E3F373A232B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 05/04/2026 21:50, Aleksandrs Vinarskis wrote:
-> On Sunday, April 5th, 2026 at 02:05, Bryan O'Donoghue <bryan.odonoghue@linaro.org> wrote:
+Hi Krzysztof,
+
+May I request your review on this commit once again. Hopefully I have resolved
+the issues pointed out in the previous version of this commit.
+
+Thank you very much,
+Harshal
+
+On 3/31/2026 3:10 PM, Harshal Dev wrote:
+> Hi Kuldeep,
 > 
->> On 04/04/2026 13:55, Aleksandrs Vinarskis wrote:
->>> Add bindings for Embedded Controller (EC) in Dell XPS 13 9345 (platform
->>> codename 'tributo'). It may be partially or fully compatible with EC
->>> found in Snapdragon-based Dell Latitude, Inspiron ('thena').
+> On 3/24/2026 4:16 PM, Kuldeep Singh wrote:
+>>
+>> On 3/23/2026 2:47 PM, Harshal Dev wrote:
+>>> The DT bindings for inline-crypto engine do not specify the UFS_PHY_GDSC
+>>> power-domain and iface clock. Without enabling the iface clock and the
+>>> associated power-domain the ICE hardware cannot function correctly and
+>>> leads to unclocked hardware accesses being observed during probe.
 >>>
->>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
->>> Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
+>>> Fix the DT bindings for inline-crypto engine to require the UFS_PHY_GDSC
+>>> power-domain and iface clock for new devices (Eliza and Milos) introduced
+>>> in the current release (7.0) with yet-to-stabilize ABI, while preserving
+>>> backward compatibility for older devices.
+>>>
+>>> Fixes: 618195a7ac3df ("dt-bindings: crypto: qcom,inline-crypto-engine: Document the Eliza ICE")
+>>> Fixes: 85faec1e85555 ("dt-bindings: crypto: qcom,inline-crypto-engine: document the Milos ICE")
+>>> Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
 >>> ---
->>>    .../embedded-controller/dell,xps13-9345-ec.yaml    | 91 ++++++++++++++++++++++
->>>    MAINTAINERS                                        |  5 ++
->>>    2 files changed, 96 insertions(+)
+>>>  .../bindings/crypto/qcom,inline-crypto-engine.yaml | 35 +++++++++++++++++++++-
+>>>  1 file changed, 34 insertions(+), 1 deletion(-)
 >>>
->>> diff --git a/Documentation/devicetree/bindings/embedded-controller/dell,xps13-9345-ec.yaml b/Documentation/devicetree/bindings/embedded-controller/dell,xps13-9345-ec.yaml
->>> new file mode 100644
->>> index 0000000000000000000000000000000000000000..e14dbf2f1a6af8cc7511890fbef08c6c717c0aa6
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/embedded-controller/dell,xps13-9345-ec.yaml
->>
->> I believe the part name of this embedded controller is the "mec5200" so
->> instead of calling it dell,xps13-9345-ec suggest "dell,mec5200"
-> 
-> Correct, its Microchip MEC5200. I remember reading some series discussion
-> about not naming driver after IC its based on, but rather platform its
-> used for since driver depends on firmware which is platform specific...
-> cannot find that discussion now.
-> 
->>
->>> @@ -0,0 +1,91 @@
->>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/embedded-controller/dell,xps13-9345-ec.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> diff --git a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+>>> index 876bf90ed96e..ccb6b8dd8e11 100644
+>>> --- a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+>>> +++ b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
+>>> @@ -30,6 +30,16 @@ properties:
+>>>      maxItems: 1
+>>>  
+>>>    clocks:
+>>> +    minItems: 1
+>>> +    maxItems: 2
 >>> +
->>> +title: Dell XPS 13 9345 Embedded Controller
->>> +
->>> +maintainers:
->>> +  - Aleksandrs Vinarskis <alex@vinarskis.com>
->>> +
->>> +description:
->>> +  The Dell XPS 13 9345 has an Embedded Controller (EC) which handles thermal
->>> +  and power management. It is communicating with SoC over multiple i2c busses.
->>> +  Among other things, it handles fan speed control, thermal shutdown, peripheral
->>> +  power supply including trackpad, touch-row, display. For these functions, it
->>> +  requires frequently updated thermal readings from onboard thermistors.
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: dell,xps13-9345-ec
->>
->> Ditto the compat - name it after the IC not the laptop its a "mec5200"
->> or "mec5200-ec" - I suspect the -ec postfix is a tautology the ec bit in
->> "mec" probably captures.
-> 
-> I'm not sure I agree regarding the compatible, its supposed to be as exact as
-> possible. "dell,mec5200" will not allow us to differentiate between EC drivers
-> of "tributo" and "thena" for example.
-> 
-> Suggestion:
-> - Schema filename to be generalized "dell,mec5200-ec.yaml"
-> - Driver filename to be generalized "dell-mec5200-ec.c"
-> - Config to be generalized "EC_DELL_MEC5200"
-> - Compatible to stay specific "dell,xps13-9345-ec", with fallback to
->    "dell,mec5200-ec".
-> 
-> I would also keep "-ec" to stay consistent with naming convention of
-> existing drivers and bindings.
-> 
-> Let me know if this would work for you.
-> 
-> Alex
-
-To me including the laptop model in the IC name, when our best 
-information is that this same chip is used on both Thena variants isn't 
-very logical.
-
-The thing is the IC not the platform it resides on.
-
-But if you think the firmware is specific to each platform - something 
-like dell-mec5200-ec, dell,mec5200-xps13-9345-ec makes sense to me.
-
-> 
->>
->>> +
->>> +  reg:
->>> +    const: 0x3b
->>> +
->>> +  interrupts:
->>> +    maxItems: 1
->>> +
->>> +  io-channels:
->>> +    description:
->>> +      ADC channels connected to the 7 onboard thermistors on PMK8550.
->>> +      EC requires frequent thermal readings of these channels to perform
->>> +      automated fan speed control.
+>>> +  clock-names:
+>>> +    minItems: 1
 >>> +    items:
->>> +      - description: ADC channel for sys_therm0
->>> +      - description: ADC channel for sys_therm1
->>> +      - description: ADC channel for sys_therm2
->>> +      - description: ADC channel for sys_therm3
->>> +      - description: ADC channel for sys_therm4
->>> +      - description: ADC channel for sys_therm5
->>> +      - description: ADC channel for sys_therm6
+>>> +      - const: core
+>>> +      - const: iface
 >>> +
->>> +  io-channel-names:
->>> +    items:
->>> +      - const: sys_therm0
->>> +      - const: sys_therm1
->>> +      - const: sys_therm2
->>> +      - const: sys_therm3
->>> +      - const: sys_therm4
->>> +      - const: sys_therm5
->>> +      - const: sys_therm6
+>>> +  power-domains:
+>>>      maxItems: 1
+>>>  
+>>>    operating-points-v2: true
+>>> @@ -44,6 +54,25 @@ required:
+>>>  
+>>>  additionalProperties: false
+>>>  
+>>> +allOf:
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            enum:
+>>> +              - qcom,eliza-inline-crypto-engine
+>>> +              - qcom,milos-inline-crypto-engine
+>>> +
+>>> +    then:
+>>> +      required:
+>>> +        - power-domains
+>>> +        - clock-names
+>>> +      properties:
+>>> +        clocks:
+>>> +          minItems: 2
+>>> +        clock-names:
+>>> +          minItems: 2
+>>> +
 >>
+>> Hi Krzysztof,
 >>
->>> +
->>> +required:
->>> +  - compatible
->>> +  - reg
->>> +  - interrupts
->>> +  - io-channels
->>> +  - io-channel-names
->>> +
->>> +additionalProperties: false
->>> +
->>> +examples:
->>> +  - |
->>> +    #include <dt-bindings/interrupt-controller/irq.h>
->>> +    #include <dt-bindings/iio/qcom,spmi-adc7-pm8350.h>
->>> +    i2c {
->>> +        #address-cells = <1>;
->>> +        #size-cells = <0>;
->>> +
->>> +        embedded-controller@3b {
->>> +            compatible = "dell,xps13-9345-ec";
->>> +            reg = <0x3b>;
->>> +            interrupts-extended = <&tlmm 66 IRQ_TYPE_LEVEL_LOW>;
->>> +
->>> +            io-channels = <&pmk8550_vadc PM8350_ADC7_GPIO3_100K_PU(1)>,
->>> +                          <&pmk8550_vadc PM8350_ADC7_GPIO4_100K_PU(1)>,
->>> +                          <&pmk8550_vadc PM8350_ADC7_AMUX_THM1_100K_PU(1)>,
->>> +                          <&pmk8550_vadc PM8350_ADC7_AMUX_THM2_100K_PU(1)>,
->>> +                          <&pmk8550_vadc PM8350_ADC7_AMUX_THM3_100K_PU(1)>,
->>> +                          <&pmk8550_vadc PM8350_ADC7_AMUX_THM4_100K_PU(1)>,
->>> +                          <&pmk8550_vadc PM8350_ADC7_AMUX_THM5_100K_PU(1)>;
->>> +            io-channel-names = "sys_therm0",
->>> +                               "sys_therm1",
->>> +                               "sys_therm2",
->>> +                               "sys_therm3",
->>> +                               "sys_therm4",
->>> +                               "sys_therm5",
->>> +                               "sys_therm6";
->>> +        };
->>> +    };
->>> +...
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index 96e0781f2201b41b976dfa69efd44d62c4ff0058..a5d175559f4468dfe363b319a1b08d3425f4d712 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -7236,6 +7236,11 @@ S:	Maintained
->>>    F:	Documentation/ABI/testing/sysfs-class-firmware-attributes
->>>    F:	drivers/platform/x86/dell/dell-wmi-sysman/
->>>
->>> +DELL XPS EMBEDDED CONTROLLER DRIVER
->>> +M:	Aleksandrs Vinarskis <alex@vinarskis.com>
->>> +S:	Maintained
->>> +F:	Documentation/devicetree/bindings/embedded-controller/dell,xps13-9345-ec.yaml
->>> +
->>>    DELTA AHE-50DC FAN CONTROL MODULE DRIVER
->>>    M:	Zev Weiss <zev@bewilderbeest.net>
->>>    L:	linux-hwmon@vger.kernel.org
->>>
+>> As motive here is to enforce 2 clocks for upcoming targets and keep
+>> minItems as 1 for already merged ones for ensuring backward
+>> compatibility. Can we do like below?
 >>
+>> allOf:
+>>   - if:
+>>       not:
+>>         properties:
+>>           compatible:
+>>             contains:
+>>               enum:
+>>                 - qcom,kaanapali-inline-crypto-engine
+>>                 - qcom,qcs8300-inline-crypto-engine
+>>                 - qcom,sa8775p-inline-crypto-engine
+>>                 - qcom,sc7180-inline-crypto-engine
+>>                 - qcom,sc7280-inline-crypto-engine
+>>                 - qcom,sm8450-inline-crypto-engine
+>>                 - qcom,sm8550-inline-crypto-engine
+>>                 - qcom,sm8650-inline-crypto-engine
+>>                 - qcom,sm8750-inline-crypto-engine
 >>
+>>     then:
+>>       required:
+>>         - power-domains
+>>         - clock-names
+>>       properties:
+>>         clocks:
+>>           minItems: 2
+>>         clock-names:
+>>           minItems: 2
+>>
+>> This will ensure for every new target addition, default clock count is
+>> enforced as 2 default.
+>> Please share your thoughts as well.
+>>
+> 
+> I don't really have any particular objections to this proposal, but I can
+> see that other bindings where the need for an additional clock was realized
+> later on use a similar pattern as this patchset does:
+> https://elixir.bootlin.com/linux/v7.0-rc2/source/Documentation/devicetree/bindings/timer/fsl,imxgpt.yaml
+> 
+> I'll wait for Krzysztof to take a final call on this.
+> 
+> Regards,
+> Harshal
+> 
 
 
