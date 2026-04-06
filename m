@@ -1,145 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-101969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aDv3Ge3P02n8mQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101969-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 17:23:25 +0200
+	id +OP6KIOk02m1jwcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 14:18:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFF443A4B02
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 17:23:24 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11EAE3A33D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Apr 2026 14:18:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6BDCE301B4D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 15:23:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A1AEE300D969
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Apr 2026 12:17:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EAA2386565;
-	Mon,  6 Apr 2026 15:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D66F318B9C;
+	Mon,  6 Apr 2026 12:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P9DrRGGO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kno0LClW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F7C2DF717;
-	Mon,  6 Apr 2026 15:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499C4883F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Apr 2026 12:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775488979; cv=none; b=ORCOgse3YwLFHTG8W6lWkTni2t0/eee7hpTK4zqjnliFw0xQmD6v5UsP05QDW64MT6Ird6ejoZ4SNBNCNTPLWIaPsFDGO6a6JPamRTMkQaLEG/DZXLSIDjGsAuk3uMziMoqaSizfOloUCeFRaSLYOf9qn6Ck/Xa3ZKwW4E0H598=
+	t=1775477873; cv=none; b=XU7T07Jh0/qvfetdzYvUQDWpRXn22FQEg+YYtfX9mDbQhL12oqYz3PAA96reu5sxpQHnu+zjdEkbEeysp4AcwSb1AJjFF0x3YT02+K8uDy4b4mIoKB8D/NoSZltslstd722pJSoZ50MNG27SpLXZI4u8VM49peceWe2OdtuxAbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775488979; c=relaxed/simple;
-	bh=V4ELdVf5d9iHf/NqfvPUF5/Gp6/vCgjLUPBVli8v5Y0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=tPcorJPzXikSanZS9dBpAeHVwECiiOOiZL0AwPy6hpJS+VtA1bwiyyG5UMwf8TO1WJ7Hh4obe/BG7zgCmcA+NDYL49NOInHFlHcU4ZkpcItFVEqifBtXvZN3XCJAlWbN3uf8py617T+dkwMTH7lQpZgCq9PibjwUwZ6MsW5B+AE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P9DrRGGO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27BD0C4CEF7;
-	Mon,  6 Apr 2026 15:22:56 +0000 (UTC)
+	s=arc-20240116; t=1775477873; c=relaxed/simple;
+	bh=yFdJwiEVINgONrJy1w1Fju+r6dDcyJdI5aC2Lb90A3I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DR6TC82BaHQtEZzyXdzfN72Z3K32l6iF2l4Fx/1sevlD195zsFRUmLhkhSRXXqKGFYrHwHIKlEVqtF76gVXl5cu4r7YdkiSxunimS5AzJm39G0udMK5RlvP0pNzWtxKaQKk41itl4qZASieL0dE4KGK0zV528n1LGFacadv7uGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kno0LClW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38CDC4CEF7;
+	Mon,  6 Apr 2026 12:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775488979;
-	bh=V4ELdVf5d9iHf/NqfvPUF5/Gp6/vCgjLUPBVli8v5Y0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=P9DrRGGOihCVFln9v4UQgmZpfqT//cg/2fP8X39NL1kiwBjH51vngb+iMgBN+hjRw
-	 oPmWq5pTibhd9UQ8CpdCqc+VzbQZ3pfvkPloece51kKYsXUBTgX/wSZgkhGd5Pku3u
-	 /DHJrU2KKwBbb86YH5qJPMzTaeZtpY4208sM/z6gfoY4MgMJ/QrNwCvQ7NRHVDd8WX
-	 4TUAmgF56SX782YktzVOhJTtIikUYHhO2c2vpnvQ/+4JrtR09KbVeRseH2kr1BfL11
-	 8b8BPCPNdEb0ejprEj/l8yDdSlhIf/unEVMuV+1N4ttpuC38B0eGN5nk6+xKlmWBVA
-	 zY2CpC/PYC9Jg==
-From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srini@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
- Ravi Hothi <ravi.hothi@oss.qualcomm.com>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>, 
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, mohammad.rafi.shaik@oss.qualcomm.com, 
- ajay.nandam@oss.qualcomm.com
-In-Reply-To: <20260326113531.3144998-1-ravi.hothi@oss.qualcomm.com>
-References: <20260326113531.3144998-1-ravi.hothi@oss.qualcomm.com>
-Subject: Re: [PATCH v2] ASoC: qcom: audioreach: explicitly enable speaker
- protection modules
-Message-Id: <177547723276.46304.3835417500406745879.b4-ty@b4>
-Date: Mon, 06 Apr 2026 13:07:12 +0100
+	s=k20201202; t=1775477872;
+	bh=yFdJwiEVINgONrJy1w1Fju+r6dDcyJdI5aC2Lb90A3I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=kno0LClWBQSLnEk5FONJtokVkIhIfQRu5IpLb+xTlZZnMcmNr0f8aGieqAcXB5WyW
+	 k7wRBHV+QTicmmy4Gxd3Kjp3KMsb8+7jVWBF74iKcLp9ibzei62TOoRs6Io4VDuogX
+	 30C3FFB/lyHrF8CTfFa6YUMuMy1Gkt46ACixi1bO89gbCdBBzlXYPStWUYcarcrKEv
+	 Gwz7er9+8VWfxWe3w+vyrXRGzjJ3Nf3nqNp/Y+55RM+zE/waLjSc0wrGrN+5+a6WRg
+	 DLPGvuQTEbbmuhqKvKjFhf62+p/r8yQZ4YIWLAF70uYn6GGTYTIGmDDt/3rywLGDnG
+	 ufcS2fBJrchdA==
+Date: Mon, 6 Apr 2026 07:17:42 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Arnd Bergmann <arnd@arndb.de>
+Cc: arm <arm@kernel.org>, soc@kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	=?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>, Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Luca Weiss <luca.weiss@fairphone.com>, 
+	Abel Vesa <abel.vesa@oss.qualcomm.com>, Swati Agarwal <swati.agarwal@oss.qualcomm.com>, 
+	Val Packett <val@packett.cool>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+	Loic Poulain <loic.poulain@oss.qualcomm.com>, Biswapriyo Nath <nathbappai@gmail.com>, 
+	David Heidelberg <david@ixit.cz>, Jingyi Wang <jingyi.wang@oss.qualcomm.com>, 
+	Md Sadre Alam <quic_mdalam@quicinc.com>, Nihal Kumar Gupta <quic_nihalkum@quicinc.com>, 
+	Taniya Das <taniya.das@oss.qualcomm.com>, Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>, 
+	Yijie Yang <yijie.yang@oss.qualcomm.com>, Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>, 
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>, Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>, 
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Pankaj Patil <pankaj.patil@oss.qualcomm.com>, 
+	Paul Adam <adamp@posteo.de>, Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>, 
+	Pragnesh Papaniya <pragnesh.papaniya@oss.qualcomm.com>, Roger Shimizu <rosh@debian.org>, 
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>, Tobias Heider <tobias.heider@canonical.com>, 
+	Xilin Wu <wuxilin123@gmail.com>, Abel Vesa <abelvesa@kernel.org>, 
+	Ayushi Makhija <quic_amakhija@quicinc.com>, Canfeng Zhuang <canfeng.zhuang@oss.qualcomm.com>, 
+	Erikas Bitovtas <xerikasxx@gmail.com>, Jie Gan <jie.gan@oss.qualcomm.com>, 
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>, 
+	Petr Hodina <petr.hodina@protonmail.com>, Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>, 
+	Raymond Hackley <raymondhackley@protonmail.com>, Sarthak Garg <sarthak.garg@oss.qualcomm.com>, 
+	Sibi Sankar <sibi.sankar@oss.qualcomm.com>, Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>, 
+	Umang Chheda <umang.chheda@oss.qualcomm.com>, Wesley Cheng <wesley.cheng@oss.qualcomm.com>, 
+	Xin Liu <xin.liu@oss.qualcomm.com>, Yuanjie Yang <yuanjie.yang@oss.qualcomm.com>, 
+	Aaron Kling <webgeek1234@gmail.com>, Aleksandrs Vinarskis <alex@vinarskis.com>, 
+	Alexander Koskovich <AKoskovich@pm.me>, Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, Christopher Obbard <christopher.obbard@linaro.org>, 
+	Gabor Juhos <j4g8y7@gmail.com>, Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Gergo Koteles <soyer@irl.hu>, 
+	Gianluca Boiano <morf3089@gmail.com>, Hongyang Zhao <hongyang.zhao@thundersoft.com>, 
+	Janaki Ramaiah Thota <janaki.thota@oss.qualcomm.com>, Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>, 
+	KancyJoe <kancy2333@outlook.com>, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	Le Qi <le.qi@oss.qualcomm.com>, 
+	Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>, Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, Max McNamee <maxmcnamee@proton.me>, 
+	Pengyu Luo <mitltlatltl@gmail.com>, Riccardo Mereu <r.mereu@arduino.cc>, 
+	Richard Acayan <mailingradian@gmail.com>, Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, 
+	Vishnu Saini <vishnu.saini@oss.qualcomm.com>, Wei Deng <wei.deng@oss.qualcomm.com>, 
+	Wei Zhang <wei.zhang@oss.qualcomm.com>, Xueyao An <xueyao.an@oss.qualcomm.com>, 
+	Yedaya Katsman <yedaya.ka@gmail.com>, Zijun Hu <zijun.hu@oss.qualcomm.com>
+Subject: Re: [GIT PULL] Qualcomm Arm64 DeviceTree updates for v7.1
+Message-ID: <adOh0D8wQW4yT3WO@baldur>
+References: <20260401142242.1068620-1-andersson@kernel.org>
+ <2c5402a1-9724-4fb1-bd31-6e8d133f3b88@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev-67696
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1152; i=broonie@kernel.org;
- h=from:subject:message-id; bh=V4ELdVf5d9iHf/NqfvPUF5/Gp6/vCgjLUPBVli8v5Y0=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBp08/QrUcsQyQKmQdAFDy8WUSXFBO7lKfFqJ9Sh
- OnXTPu+U5eJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCadPP0AAKCRAk1otyXVSH
- 0FNeB/9S4LLIB8Uxjus5deubV+o3tuKysNHCTli/LPKzJTG7MLP6YD4QhaquM+bXrC7GCPIY5IB
- YFCvdNeFL16t77W8Ee/8FYp5NQIijGTSQKnB1lPZ3oMkibtaoJWg9VSpZjKY4GjU9osSUiu/CzW
- jPCddtrxY8UcqpLQSFl+jPl5aaaxszDisNiXBZTHwCj3MdXtBoSZ59ycsSdukcA86xxFGk7Y9pZ
- dhc30A0ttPQMHMBM+ynOjvkd1XKs1XokTNKDfQP+kogF4JcqWnWp1DQFkE3FG/Moous5xNUWDVB
- TUreXjPM0gcE9fiIX01C+CelHDq5U67jm+mOdn0u0l3li2I0
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
-X-Spamd-Result: default: False [-1.66 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2c5402a1-9724-4fb1-bd31-6e8d133f3b88@app.fastmail.com>
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,lists.infradead.org,oss.qualcomm.com,mainlining.org,fairphone.com,packett.cool,linaro.org,gmail.com,ixit.cz,quicinc.com,oldschoolsolutions.biz,posteo.de,debian.org,canonical.com,protonmail.com,vinarskis.com,pm.me,glider.be,irl.hu,thundersoft.com,outlook.com,proton.me,arduino.cc];
+	TAGGED_FROM(0.00)[bounces-101949-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com,oss.qualcomm.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-101969-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	MISSING_XM_UA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_GT_50(0.00)[85];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.998];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: CFF443A4B02
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 11EAE3A33D5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, 26 Mar 2026 17:05:31 +0530, Ravi Hothi wrote:
-> ASoC: qcom: audioreach: explicitly enable speaker protection modules
+On Fri, Apr 03, 2026 at 12:26:17AM +0200, Arnd Bergmann wrote:
+> On Wed, Apr 1, 2026, at 16:22, Bjorn Andersson wrote:
+> > The following changes since commit 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f:
+> >
+> >   Linux 7.0-rc1 (2026-02-22 13:18:59 -0800)
+> >
+> > are available in the Git repository at:
+> >
+> >   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git 
+> > tags/qcom-arm64-for-7.1
+> >
+> > for you to fetch changes up to b683730e27ba4f91986c4c92f5cb7297f1e01a6d:
+> >
+> >   arm64: dts: qcom: sm8250: Add missing CPU7 3.09GHz OPP (2026-03-30 
+> > 09:35:01 -0500)
+> >
+> > ----------------------------------------------------------------
+> > Qualcomm Arm64 DeviceTree updates for v7.1
+> >
+> > Introduce the Eliza, Glymur, Mahua, and IPQ5210 Qualcomm SoCs.
+> 
+> I pulled this one as well now.
 
-Applied to
+Thank you, Arnd.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.1
+> The contents all seem fine to me,
+> but please try to group the dts changes into smaller branches
+> so you can send some of it earlier when you know that you
+> have a large amount of content queued up.
+> 
 
-Thanks!
+I've considered splitting the branch up like so, but have not found
+a model that seems feasible. New platforms are intermingled and there
+are often cleanups etc that crosses multiple targets. Forcing a cleaner
+split of such work would seem to result in more work for everyone
+involved.
 
-[1/1] ASoC: qcom: audioreach: explicitly enable speaker protection modules
-      https://git.kernel.org/broonie/sound/c/b481eabe5a19
+I will invest some time to think about this.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+> I know this is hard, and I also tend to do things in the
+> last minute, but it would really help to have e.g. the
+> newly added SoCs in a separate branch, or even just
+> the stuff that you know is ready by -rc3.
+> 
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+I generally don't rebase these branches, so starting earlier and then
+following up with incremental PRs should be straightforward to implement.
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+Regards,
+Bjorn
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+> This pull request alone has 178 files / 258 patches / 38000 lines,
+> among 686 files / 913 patches / 68376 lines that are queued
+> up in total across 63 branches we have merged so far for 7.1.
+> 
+>        Arnd
 
