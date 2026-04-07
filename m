@@ -1,121 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-102071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EBGwBpq11GmvwgcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 09:43:22 +0200
+	id iEtIKnu61GnQwgcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 10:04:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D3F03AAE5F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 09:43:21 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 139053AB13A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 10:04:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 97C74300D84A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 07:43:13 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 06206300B77A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 08:04:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0AA73A1A56;
-	Tue,  7 Apr 2026 07:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F23C3A3E8C;
+	Tue,  7 Apr 2026 08:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f5tZTZ8t"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OU/mkJwN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD97351C09;
-	Tue,  7 Apr 2026 07:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE843A3E7B;
+	Tue,  7 Apr 2026 08:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775547792; cv=none; b=XzNYDiiSAP4N9uou9GBJioAj/XV2q63pmFaNDhHFB016ty4LEnXjUkmHY1T1yv7Drmz7sW+Mfioo0mq813SRBGSHF7QscKlJfDYC86Bm0XE1PHYrgKKavjismuz/5V1Y898e2wDIBX18BwcVRCd2rg1wajTEonTkxo1tUtdjZJU=
+	t=1775549049; cv=none; b=gES5fF5eeL8hCGiCjNOBcgSVtIfSSYHfeHr4KhyBrlKTlOpMhTS670L1N3vzW82uIrbRBOGa7ABFQ1u95H1czy1WdMBrng4Fd1LSmej/Z6mj60DHtiopdbptP7OUH2S1wZzmDYyyJioIVP0DfBuKP75vJH9r7ZO7bophKd3uJss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775547792; c=relaxed/simple;
-	bh=Hk6+VHFenX04clpQAO+mTciYjlspmdalljFSCi4R2lE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kM2Xk7oJUVdRiQqyhirVUttj9FDFlKlWeGRO5sNaMElKgIDoHMy1FSd7urvAJfiJJF2+WiU7vBXOuEKsLp622XYdx7/BIf4U00EgOE+lBlvSHHRm5xLJpFfBznZEQWPAFXpLMRqg2tvPtmabrmkIFiT75tVDZI9iBRBFzC362jQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f5tZTZ8t; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02663C116C6;
-	Tue,  7 Apr 2026 07:43:08 +0000 (UTC)
+	s=arc-20240116; t=1775549049; c=relaxed/simple;
+	bh=e03XGAle/eVycpn3gM3R8Pwurq83UH6v/CkIFozz1/c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C8rhkH03qzPPxjWI8nGdv3nrjrpW+CVzaOkDrjeCFkkxLhoi8oJHooOrQJNV/IfZg1q5dQ56JftrMQW86G30wMUJd2CICH2p+4ZhmiMGeDzGkyVmIKrMJF1qWY4XsCjHeNOkNshyNOAnprO20w82IexOtvb/t4QJDBfVzDfPXiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OU/mkJwN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030E5C116C6;
+	Tue,  7 Apr 2026 08:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775547792;
-	bh=Hk6+VHFenX04clpQAO+mTciYjlspmdalljFSCi4R2lE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=f5tZTZ8tmknz0ODMnhyBJIAjT0cZAcq9BICzsrVSBsL+tkfWRTImTtDeshkvsQ37E
-	 LKba8p0j+msRg1S/CMCwqwb+clJsIgryFfso+qaNbmqeAP6t9baEp/C8yd+lMxSlzq
-	 Qg925cf6HQMoy/LsJZxtLW3A0hypkTxwo+6HHlMc2eiHL5XmIH4w9gUtSo9zMSlGBq
-	 pScNtGMiFxhnQobv86n3+kmDxo5tR074BabLxcm2vR3j0t+5FwlJQYH5C17ny9XBPy
-	 a36tq4avsZPztcMe0OLTQkgbiikTHHle8HHMCTZ3In5en593ajbgCbPqTuilXEPRZu
-	 VypIcPaDq5h3Q==
-Message-ID: <300fdb0c-3b1c-443c-83b6-9d1d352127bf@kernel.org>
-Date: Tue, 7 Apr 2026 08:43:07 +0100
+	s=k20201202; t=1775549048;
+	bh=e03XGAle/eVycpn3gM3R8Pwurq83UH6v/CkIFozz1/c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OU/mkJwNXfxxvGzVeq7vO1EsXwqMFe1jkj4rKCH4zwoyB+tBaKHrLwgE7rAMp7bpJ
+	 jrLCuED+PdSz8PdZTvk3hmMVTNEFLbGCCN91OsIbSEh2IzO73pZ8MQRsaZcWqV0Avt
+	 UGnnQwIKWrzyNn9omXJFifwv2emyWaOlu1vq+PS6v/1FnB1j5ZYITcF+Kus5n2F1UA
+	 0cIZAZ44id2pRhnWThhmR3Ea8znD+Ms0wdY6JxkK3VL3R2KqKIoJFs8kevnJtJQIHr
+	 wpwahhCZ6POHIq+Zgu3EywUt2W6UfIP5RtC6VAOI9VrnTR0axrIIvppyb7UqdgxGTG
+	 Kfe5xUKjct/lg==
+Date: Tue, 7 Apr 2026 10:04:06 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Alexander Koskovich <akoskovich@pm.me>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Bryan O'Donoghue <bod@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: media: qcom,milos-iris: Add Milos video
+ codec
+Message-ID: <20260407-mamba-of-algebraic-wealth-8928cc@quoll>
+References: <20260406-milos-iris-v1-0-17ed0167ba6f@pm.me>
+ <20260406-milos-iris-v1-1-17ed0167ba6f@pm.me>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] media: qcom: camss: Fix RDI streaming for CSID 680
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil@kernel.org>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>,
- Hans Verkuil <hverkuil+cisco@kernel.org>,
- Gjorgji Rosikopulos <quic_grosikop@quicinc.com>,
- Milen Mitkov <quic_mmitkov@quicinc.com>,
- Depeng Shao <quic_depengs@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20260406-camss-rdi-fix-v1-0-d3f8b12473d0@kernel.org>
- <20260406-camss-rdi-fix-v1-1-d3f8b12473d0@kernel.org>
- <A-DuD16RwvOtjgGY4VILWqm4mQ2smfGOokm9LgPYadMl64lea1MLYte2JQB7iDtuUpzQcMkMIn4pLoPU_em3Bw==@protonmail.internalid>
- <7b349fdc-7a78-4c17-a8ae-2729bc704186@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bod@kernel.org>
-In-Reply-To: <7b349fdc-7a78-4c17-a8ae-2729bc704186@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260406-milos-iris-v1-1-17ed0167ba6f@pm.me>
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102071-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[linaro.org,kernel.org,gmail.com,oss.qualcomm.com,quicinc.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-102072-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,cisco];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 8D3F03AAE5F
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 139053AB13A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 06/04/2026 23:41, Vladimir Zapolskiy wrote:
->>           /* Loop through all enabled VCs and configure stream for each */
-> The comment should get an update as well, this is applicable and should be done
-> for the changes in camss-csid-680.c, camss-csid-gen2.c and camss-csid-gen3.c.
+On Mon, Apr 06, 2026 at 10:19:34AM +0000, Alexander Koskovich wrote:
+> Add binding for Qualcomm Milos Iris video codec.
+> 
+> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+> ---
+>  .../devicetree/bindings/media/qcom,milos-iris.yaml | 166 +++++++++++++++++++++
+>  1 file changed, 166 insertions(+)
 
-I struggled with the comment myself, it didn't feel strictly necessary 
-for a backport but, I take your point, when you read the code the fix 
-and the comment should match.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
----
-bod
+Best regards,
+Krzysztof
+
 
