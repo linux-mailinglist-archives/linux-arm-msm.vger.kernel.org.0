@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-102190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YI1rEJEh1WnJ1AcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:24:01 +0200
+	id MNeoBD8h1Wnr0wcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:22:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83C7F3B0EC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:24:00 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB7DB3B0E21
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:22:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id DCBF8303509A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 15:21:30 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id BB0903038812
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 15:21:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B36AC36C0C7;
-	Tue,  7 Apr 2026 15:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7AEE370D73;
+	Tue,  7 Apr 2026 15:20:46 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80AA3314B9;
-	Tue,  7 Apr 2026 15:20:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E0C369236;
+	Tue,  7 Apr 2026 15:20:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775575240; cv=none; b=bC5FpJVykXQjAbRWoiACf2VZYdi8Tu2ogMwSe8NnEFzWHXYEt31wRoNy3xyjaUOOHmS5jcRCJdY8GtodWF4agkgCsVziRqsfJ8HZhavfDGUTqmqSBTSKrK4nSM+HWKPw2ZQlyT/70jqCPcYRD+8fgqsj/HcMP72V9xDPoGM4tsM=
+	t=1775575244; cv=none; b=ZrrPSWX2ny1UO7uIJ/7DltmfXqPFfGUvrPc8SfyS5KD29eiw+Vbjg//tYVnbfiwdEwI3cKcqJQ3ZFfl3vsCjRe+hUYwx6mHj3MIvAOL+tgMhP6ltyJ3gGoNcCs2pL5BtQ0pfTUrUcRZGnkrVS7ZlJKY2NZ5vjYtD4Bpuf1Hrj7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775575240; c=relaxed/simple;
-	bh=6D5o3aRIvVw2mCnM4sWHf6QgcCsjwGnaYRepeqs6ZN8=;
+	s=arc-20240116; t=1775575244; c=relaxed/simple;
+	bh=dZ0W3crIv2VM2i7FwnY+eaL8nfzHIiIMpSyWZb4mzRk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=B+dojJalQ9bMyHzqa3UudBK+5ANm5bpPzFHQpuUA+9FV5GRGxeZpye54kb4FWlZ9r0yWn8WTyzW2+IvPoXICzC/32zU4NkrWuUH47U2cxMsaEIN76bPVi+eZDFwaobY5EQUqxloAKjEfsAU6HOM7Azen+Kgx+ksCMRLbcmDyXKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.206.34.216
+	 In-Reply-To:To:Cc; b=EXZt9swniX3+QxlzLLpJXaC4qLpRIrbFr1A5YTXh9puqhsBDEBsOrMWIu9rNFjL/kvUTQzr/CoLa9BQ4xRVYXP9NK2YxKXrAf0wd8i0GOqyQTxKEKnic3MrkijA+UXFvR/xreYhvgXRSOgUk9zmv96lmJAEAUiqRu8/YA3Tf4VQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.254.200.128
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: esmtpsz19t1775575227t766628a7
-X-QQ-Originating-IP: xphdlHTr9lW6Vn8mo8g2kkD+mYJX5nmHsVuHkbktNIE=
+X-QQ-mid: esmtpsz19t1775575230t65590e4f
+X-QQ-Originating-IP: s7C9YY0GkcLG2+RO5lXB1RxkJTAyQKg14f8A6WgXlWc=
 Received: from [192.168.30.32] ( [116.234.14.100])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 07 Apr 2026 23:20:25 +0800 (CST)
+	id ; Tue, 07 Apr 2026 23:20:28 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 13575695803740898803
-EX-QQ-RecipientCnt: 15
+X-BIZMAIL-ID: 5371476590089596179
+EX-QQ-RecipientCnt: 16
 From: Xilin Wu <sophon@radxa.com>
-Date: Tue, 07 Apr 2026 23:19:58 +0800
-Subject: [PATCH 06/12] arm64: dts: qcom: qcs6490-radxa-dragon-q6a: Drop
- QSPI node and reserve its pins
+Date: Tue, 07 Apr 2026 23:19:59 +0800
+Subject: [PATCH 07/12] arm64: dts: qcom: qcs6490-radxa-dragon-q6a: Correct
+ GPIO_27 label
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260407-dragon-q6a-feat-fixes-v1-6-14aca49dde3d@radxa.com>
+Message-Id: <20260407-dragon-q6a-feat-fixes-v1-7-14aca49dde3d@radxa.com>
 References: <20260407-dragon-q6a-feat-fixes-v1-0-14aca49dde3d@radxa.com>
 In-Reply-To: <20260407-dragon-q6a-feat-fixes-v1-0-14aca49dde3d@radxa.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -65,40 +65,42 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Judy Hsiao <judyhsiao@chromium.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  devicetree@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- linux-sound@vger.kernel.org, Xilin Wu <sophon@radxa.com>
+ linux-sound@vger.kernel.org, Xilin Wu <sophon@radxa.com>, 
+ Stephen Chen <stephen@radxa.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2875; i=sophon@radxa.com;
- h=from:subject:message-id; bh=6D5o3aRIvVw2mCnM4sWHf6QgcCsjwGnaYRepeqs6ZN8=;
- b=owGbwMvMwCVmdFg0fe08Iz/G02pJDJlXFZbsTPNbv+6rguzxvQsVTRIunlw1cd++YwtrRJ9nV
- /k7crv6dpSyMIhxMciKKbIoxDPMZa/MvfZUrFQPZg4rE8gQBi5OAZgIExcjw8sPhlXSWjV7nW/c
- zfXLTYk9PCd+T4LJnvj0jOrN5447STP8FeDy1lho8dPxdNW1OP/VQd1dBR9mP4158+19WP3T109
- 7mAA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=934; i=sophon@radxa.com;
+ h=from:subject:message-id; bh=9OBnu2yMm4Es5sevvbv4Qgq197Rbtmk/nKpeGZFfIdI=;
+ b=owGbwMvMwCVmdFg0fe08Iz/G02pJDJlXFZbO0/mz49or3tmLpiXt2bxm7fMdlZ9ty10VJmkLX
+ MpkMyjZ2FHKwiDGxSArpsiiEM8wl70y99pTsVI9mDmsTCBDGLg4BWAiRZyMDEtvv0vJqHn/PCVj
+ E4d1RqlMUfxT68c/Pwr5XU05svJDcT8jw46Du1eWCL5Wnz7rqM7yE/8ftmZapp15x83isHTNome
+ r3nMDAA==
 X-Developer-Key: i=sophon@radxa.com; a=openpgp;
  fpr=205F009D07796DD6E516752E32C31567AD9E324E
 X-QQ-SENDSIZE: 520
 Feedback-ID: esmtpsz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: Md6GZDcNObI8iZgFedqg3T5sDSirFHKpiC8frv40kRgcB1zdymwF5tRS
-	q4B3SEB4/5hbuvOJvrCuQIgs2KKm9Wp9vokVC2Q+xzyERbSXn1BwF6LDWYJdEHvcWJNcZe7
-	0TRW9VI9vEUWI3oAp+n/nw0lBr9SPCoXURVukLfSFjuJMLKvPaz6dudiGCuwo738jx6HlHI
-	o2aTK6fuJ5ZbgHz5ejbdlt46I2hFvKJkPigVnUQiaMnfwA7D8hdOyMglBnDe7tRaHQKGKNl
-	c1u8wPxTbl922rCIc3KC1bHFBqRzSCJGovCGZhdzRKVRKGeJNHo2ydoOzfqQuLHYE2UEl6g
-	x6kf8JpxKpnfAomf0qtRuTvkm7bU+CasWiGuXuk4wuUulwnt4o+3C17JYY2jqraCV9v8Bxl
-	ycbOUKlV1VTjpoQOHy4i1hmG8SCtV9usn3uouQ76hDq/zGaIPhEqcHnP9QljlrAwOcNrZBH
-	om5zfksm7yDUEtlrDEP4cXiv8ePWLyDX2MZwwRlFswVZACRExD4TcirkFT8GZxhp69CjkI+
-	MjN8sl2nrm6QvIy69/Q4Eng2XeCgpYAIIY/rygyCgrHigUKI3gdncp/rMijQfqmg3EDFrQr
-	CxFlI91LFKUi1VCoQYKshg7u6UIB3U3piRK2S9mdqaeV2GH4flv1wMnwfVOSB8RaLziXq4L
-	AXcJt2vAnCLaqyy8bdzLJ58m32eL919xsDaNH3T34KNdkaWT6cVsrE9/u2PvDgd22xgKgCk
-	GA7uvuN9ezWQNgtaq0P48DjbXfoJLe5tP9JiWnjDnwawAvkLZSsb7FtVtfjQzjH/myu66Mb
-	nerku+ixfUcz3UtKekglmYU1g8qAvalOSWaZlgY6QiokMKJGZvmmjXR7FFgMfFsvZFqxeUi
-	CkA1DSK9iKzGO8OKxhTkEu7EI6kOZPVv777m/JraB/RdvPTxVZ+r8QAe00r92RT0nfhrZiR
-	bLIXFqQx1zdX+cQ7wi0ofYZ5L2G4Rx+9PkktKc8O4HI4/w+5dw3WzKmH3F+wQpsyaoOoQRk
-	eWaUVEoenIpHbkFzpfGzYD7FiNHTpve4NfWTBwXRrhkZWJof2RW3MOxG8ORQk=
-X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+X-QQ-XMAILINFO: OdxngZb53Esr4WrFcemvpMQt28Bn8c+JS9wC3MbBFYExQgX5AIlKwfej
+	mruGHiQGfm0RjCqYfy+/1EG/BIclDv4VsjUXMWpUMxhrskJadyNT+U1gvB5iKH8+GPvggCw
+	wnGxGAJ1JA6teKezGA00XchBYRfJq/flfB2eKKG1MZPI90H8fX7f8zGFkWVrZqf3Yj57g+v
+	KcW4RXn8KDvtbwo92BavbUEtAlN559+HthRdWAq+ha5TJNv04mXXexeborl83D0Yq1d/Avm
+	HlKbTX7DSTdETFiKzimBVsFpO4J0NCd0LHn+bi22/LND+R64Yg1Nc5pd7BW/r/ophyDMMZA
+	NJ4UpmxLZy8gGhNUmH35p5qj6jZwH92hWwk1lZXdFyouaZiu5W3yO6oXHf0Qkva1G+Jy3Al
+	iEPVtbNt6m5RYuF8pnnuCxiEIBjx1PqpX9UFlbXJ3miLyBzMQ6EQjOi1kWwWIdeI4IOG0PT
+	9r8cI6/zup8h1MQRtfa1IP4kIF/f3+iF2yebWxe6IjmjzwG6sS0l8VnNA4QmK/B+apekc7C
+	cA4zi11lphA+kdQTV7ZulIE7rPh3r9kU4GyPCrxKxWdMdgXg2Vv2pE9vr54GYc6N9TuRPkU
+	70h2zo5eGJ+qd/bPKuYtpXiDio3Qy90bX+Jc64BLeL2ERNIMBbX5XpP0mhq2SiSC8oduHE1
+	jQ3a6nlkvmCCOaDAneg6Z9biv15DLRyZ3HRE/PcntFF/Zw7RgaMM+zkq8MWygia1jXmZlic
+	OKzekAZ7skF9dGTVi+SZ3e/xmJcvObm4f9TS5qqcjhpEOp6CYtzaAbMFCd0WQkoXEBsosNM
+	CTCwy0dUfh16SBqB0YYvEzo8aPK3J5ZG/dQFxHPfIIfXkz9jvtbA05McsovwKWtKW1ZQ2C5
+	WgjI87oAgqCoran26OggbLov2APac9qm7cFTmQI3aCThCQHMVqdQ2LFQkxfw2C/3qDRjFHg
+	kWcz+ijlXnr8u0iWiJJYV7TAPu7OKspdwbinu3pL7ELT+OFJ1RxtGMcNniufTGHIO7gz7QJ
+	lcEeILrwunt1EPBA4Oz/sC0FAAj42dI5geBOw5UXK1NgTbz+efEk9jM8dUQ05hUYL6f1N4h
+	CpHAv2kK/bW
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
 X-QQ-RECHKSPAM: 0
 X-Spamd-Result: default: False [0.14 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
@@ -107,136 +109,48 @@ X-Spamd-Result: default: False [0.14 / 15.00];
 	RCVD_COUNT_THREE(0.00)[4];
 	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,gmail.com,chromium.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102190-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	TAGGED_FROM(0.00)[bounces-102192-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.800];
+	NEURAL_HAM(-0.00)[-0.856];
 	MID_RHS_MATCH_FROM(0.00)[];
 	R_DKIM_NA(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,0.0.0.0:email,radxa.com:email,radxa.com:mid]
-X-Rspamd-Queue-Id: 83C7F3B0EC2
+	DBL_BLOCKED_OPENRESOLVER(0.00)[radxa.com:email,radxa.com:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: CB7DB3B0E21
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The latest official boot firmware configures TrustZone to restrict
-direct access to the QSPI controller. Any attempt to access it from
-the non-secure world causes an immediate board reset.
+From: Stephen Chen <stephen@radxa.com>
 
-Remove the QSPI flash node and its associated pinctrl states, mark
-GPIOs 12-17 as reserved, and protect the QSPI clocks in the GCC
-node to prevent the kernel from touching this hardware.
+The label of GPIO_27 is wrong. Fix it.
 
+Fixes: ef254b12ec60 ("arm64: dts: qcom: qcs6490: Introduce Radxa Dragon Q6A")
+Signed-off-by: Stephen Chen <stephen@radxa.com>
 Signed-off-by: Xilin Wu <sophon@radxa.com>
 ---
- .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 60 +++-------------------
- 1 file changed, 7 insertions(+), 53 deletions(-)
+ arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
-index 91f1b4f57915..8d6bb4b0724b 100644
+index 8d6bb4b0724b..fe3f60f8ed5a 100644
 --- a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
 +++ b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
-@@ -513,6 +513,9 @@ &gcc {
- 			   <GCC_MSS_Q6SS_BOOT_CLK_SRC>,
- 			   <GCC_MSS_Q6_MEMNOC_AXI_CLK>,
- 			   <GCC_MSS_SNOC_AXI_CLK>,
-+			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
-+			   <GCC_QSPI_CORE_CLK>,
-+			   <GCC_QSPI_CORE_CLK_SRC>,
- 			   <GCC_SEC_CTRL_CLK_SRC>,
- 			   <GCC_WPSS_AHB_BDG_MST_CLK>,
- 			   <GCC_WPSS_AHB_CLK>,
-@@ -745,28 +748,6 @@ &pon_pwrkey {
- 	status = "okay";
- };
- 
--&qspi {
--	/* It's not possible to use QSPI with iommu */
--	/* due to an error in qcom_smmu_write_s2cr */
--	/delete-property/ iommus;
--
--	pinctrl-0 = <&qspi_clk>, <&qspi_cs0>, <&qspi_data0>,
--				<&qspi_data1>, <&qspi_data23>;
--	pinctrl-1 = <&qspi_sleep>;
--	pinctrl-names = "default", "sleep";
--
--	status = "okay";
--
--	spi_flash: flash@0 {
--		compatible = "winbond,w25q256", "jedec,spi-nor";
--		reg = <0>;
--
--		spi-max-frequency = <104000000>;
--		spi-tx-bus-width = <4>;
--		spi-rx-bus-width = <4>;
--	};
--};
--
- &qupv3_id_0 {
- 	firmware-name = "qcom/qcm6490/qupv3fw.elf";
- 	status = "okay";
-@@ -906,6 +887,10 @@ wcd_tx: codec@0,3 {
- };
- 
- &tlmm {
-+	/*
-+	 * 12-17: reserved for QSPI flash
-+	 */
-+	gpio-reserved-ranges = <12 6>;
- 	gpio-line-names =
- 		/* GPIO_0 ~ GPIO_3 */
- 		"PIN_13", "PIN_15", "", "",
-@@ -1024,12 +1009,6 @@ pcie1_wake_n: pcie1-wake-n-state {
- 		bias-pull-up;
- 	};
- 
--	qspi_sleep: qspi-sleep-state {
--		pins = "gpio12", "gpio13", "gpio14", "gpio15", "gpio16", "gpio17";
--		function = "gpio";
--		output-disable;
--	};
--
- 	sd_cd: sd-cd-state {
- 		pins = "gpio91";
- 		function = "gpio";
-@@ -1210,31 +1189,6 @@ &pcie1_clkreq_n {
- 	drive-strength = <2>;
- };
- 
--&qspi_clk {
--	bias-disable;
--	drive-strength = <16>;
--};
--
--&qspi_cs0 {
--	bias-disable;
--	drive-strength = <8>;
--};
--
--&qspi_data0 {
--	bias-disable;
--	drive-strength = <8>;
--};
--
--&qspi_data1 {
--	bias-disable;
--	drive-strength = <8>;
--};
--
--&qspi_data23 {
--	bias-disable;
--	drive-strength = <8>;
--};
--
- &sdc1_clk {
- 	bias-disable;
- 	drive-strength = <16>;
+@@ -905,7 +905,7 @@ &tlmm {
+ 		/* GPIO_20 ~ GPIO_23 */
+ 		"", "", "PIN_8", "PIN_10",
+ 		/* GPIO_24 ~ GPIO_27 */
+-		"PIN_3", "PIN_5", "PIN_16", "PIN_27",
++		"PIN_3", "PIN_5", "PIN_16", "PIN_18",
+ 		/* GPIO_28 ~ GPIO_31 */
+ 		"PIN_31", "PIN_11", "PIN_32", "PIN_29",
+ 		/* GPIO_32 ~ GPIO_35 */
 
 -- 
 2.53.0
