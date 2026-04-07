@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-102187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4E3NGEsh1Wnr0wcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:22:51 +0200
+	id cFkpITkh1Wnr0wcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:22:33 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F01FD3B0E2F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:22:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E08693B0E0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:22:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6ACCC305CD9E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 15:21:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 15F1D3054326
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 15:20:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07051364E82;
-	Tue,  7 Apr 2026 15:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AC11364945;
+	Tue,  7 Apr 2026 15:20:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581D3364042;
-	Tue,  7 Apr 2026 15:20:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A9E481B1;
+	Tue,  7 Apr 2026 15:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775575232; cv=none; b=SOLYDoMHINd51jsaVAPBfmcgWGsFi4RY60y32m8OMP1VVPG3oQBwszgJwRCKSqH3e6+6VtEhIblSLnucwTsdkNgYdpA8mt+fhS0T83cYOO7Br60O35h1hhyqqXF69FL8cZ0jXX+5OAvk0kprgQxcVArBrswSOdinmShfOKmXNNs=
+	t=1775575229; cv=none; b=nDLY587zssj1Rk2rNp4I1Bo5rzr8M9KHm72RWHlZsjeTWGgJ5UU9+Mm18V0Kb0lI5CbO7j/+iQdHTV1BAytfdAC6FlbMFyjTfz5nuKHthVk84mnNDFgQVU1I4KK+nI4ODqOT/pt+66XVnsDPtEcHh7KhaGYtD2VU8HuoY1dPBwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775575232; c=relaxed/simple;
-	bh=3J7HlkaNSppOHglQhRRih8iS2zdT6ETbXMPztWIA5KE=;
+	s=arc-20240116; t=1775575229; c=relaxed/simple;
+	bh=ixPJrGY1O+mE0aWnTQIzBfshjAE69bo/XerA5vDLAcc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=V9psH7ifcmYK8oRz6qVZjMin9yX2C+K1lmNh79uALygiCxn9EJ3g0wvc/4uTn3iB1/uFUcSrjpLfnlQm3geoK0noWHdefB8qfp7j71GS27ehZps5qDz4sVYqipsM7zDP+roxRccwxh7MV5nBh1RxfKj8fIgZL1bsYd4PLnOjKz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.207.19.206
+	 In-Reply-To:To:Cc; b=WnCrM3Xu0LW8VxfwJwQW0bxfaukR+ajbu95UWuLQtHxvQP9hr4Tm7fAZQCmbhqu7FGPV2euA4uA8VcO/vk5BFqk9dYLd2v34iXTi1LBjgdwu88wG0Eoc7ZMp+f/htc+SslH7mYZ6gPmq7a7x+N+S7BO3eD/dLAc4GBrxuB18EpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.243.244.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: esmtpsz19t1775575214t05a945ca
-X-QQ-Originating-IP: iPsDdYAklBv7ydbyqaqD9yjsOwdL41B3JXDi5K6xcGQ=
+X-QQ-mid: esmtpsz19t1775575217t4daf605d
+X-QQ-Originating-IP: mWhUZZhuCWLavO5C3vvO2wQbtODyPLIMTZnPjkSdL4A=
 Received: from [192.168.30.32] ( [116.234.14.100])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 07 Apr 2026 23:20:12 +0800 (CST)
+	id ; Tue, 07 Apr 2026 23:20:15 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 5970734436179505529
+X-BIZMAIL-ID: 15496350578048626149
 EX-QQ-RecipientCnt: 15
 From: Xilin Wu <sophon@radxa.com>
-Date: Tue, 07 Apr 2026 23:19:54 +0800
-Subject: [PATCH 02/12] arm64: dts: qcom: qcs6490-radxa-dragon-q6a: Enable
- UFS controller
+Date: Tue, 07 Apr 2026 23:19:55 +0800
+Subject: [PATCH 03/12] arm64: dts: qcom: qcs6490-radxa-dragon-q6a: Enable
+ USB 3.0 and HDMI ports
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260407-dragon-q6a-feat-fixes-v1-2-14aca49dde3d@radxa.com>
+Message-Id: <20260407-dragon-q6a-feat-fixes-v1-3-14aca49dde3d@radxa.com>
 References: <20260407-dragon-q6a-feat-fixes-v1-0-14aca49dde3d@radxa.com>
 In-Reply-To: <20260407-dragon-q6a-feat-fixes-v1-0-14aca49dde3d@radxa.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -67,32 +67,33 @@ Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
  linux-sound@vger.kernel.org, Xilin Wu <sophon@radxa.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1313; i=sophon@radxa.com;
- h=from:subject:message-id; bh=3J7HlkaNSppOHglQhRRih8iS2zdT6ETbXMPztWIA5KE=;
- b=owGbwMvMwCVmdFg0fe08Iz/G02pJDJlXFZY0s5zNTTbvmvFr3+e08i+ZU4Qf39COM/OYwd0Xk
- vDgyIwPHaUsDGJcDLJiiiwK8Qxz2Stzrz0VK9WDmcPKBDKEgYtTACZicoHhf2RRX+PxT2eqWU7G
- xJ3J0xa683vXI6HHHS/fHJfJ2P06PouR4fHeYlGnmGJxp6rgdTIORcwtDcZnWbMnzj9ZuU6vLUS
- XDQA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3987; i=sophon@radxa.com;
+ h=from:subject:message-id; bh=ixPJrGY1O+mE0aWnTQIzBfshjAE69bo/XerA5vDLAcc=;
+ b=owGbwMvMwCVmdFg0fe08Iz/G02pJDJlXFZaseKjllL/EJSdSN1lc7UWggNYEx8IitRDf8OfFg
+ fs828I7SlkYxLgYZMUUWRTiGeayV+ZeeypWqgczh5UJZAgDF6cATCRlMiPDHwORlgs7Sy4I7ZNi
+ c8qONawSXDG9XKXx6Ku9XkuUD78JZ/gr55HuHDP5S+kEnkeOC3w9zlnuuheusfaf+JZskfIg/nw
+ eAA==
 X-Developer-Key: i=sophon@radxa.com; a=openpgp;
  fpr=205F009D07796DD6E516752E32C31567AD9E324E
 X-QQ-SENDSIZE: 520
 Feedback-ID: esmtpsz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: MgRO26CFjEybBwd/wb6YOxOGPiY4zJHeK0mv+Xm5+1c17O9+itYnlfty
-	s9Y2FGqIOKpJ4moTdacRlhEEyAAgW+HZszQ6QHb6yF/gmSCGGzJjgvwMfFyCa4zJijWm5xZ
-	Ouv7qmmKA96JaypVDBluMKf8RtB9gYI5hayM0RUzyAIfPLkHfMgbqp+T3kW5hs9OHT2dCz8
-	sXkOF6KtUllC0BEQvmuCjUBd73uRod9LGz7YhPXmGsIS9du/0fH73kzV09PPS3gox2MTPTF
-	JGR09hAQwpy52XqHHr63MWhr8BB9sLl6I3bI7NGHhU4/piNzWCSiBb0eVpV8Vsx9gngf+Bi
-	/kvL8XTeYB80ZgbOcIHYsicXdLZjF30eu8MrfPeGx4Ob+8GteEDh6ul5k9tEdglUEi1QZmL
-	VuCkdYO0d+Nk7VxFFX3hRdaLcAAGxhEcDVLM5iMjSnxs9KwcV21uCKBFD8abb5bI5sOUaL8
-	Aca7dx3kmJwbFm7/cep34/nbqXAb8KDTlWgaM9+TyKfx+p62TyvQQRn4xuT6ORwKqourmwh
-	vJ3VVEqhESJMLrY7uPVN3wSDa6DeCkWYPWUsCMHKDC53mLaZRSiVTUkb/LxBH6rzETgQYIp
-	C5DKr/DBD8dqnhnEBUdirmi7jUtaKR/CyrVt4xi8r1NrEwjB8PoLVTjW2axnp9jRrKq3MpM
-	oDp1FL2YG8TtaWJDSdGZUL04I1yRpuZEbSsTZJopH93VwhryKK48Y8qxCzfZubIRZzyJkm3
-	1ozNU3EnzcPEmBQoh5TTJF/4jypxvZTpfVnnRv2NWUQOmshvGn9/TtCR8YV9W8oMPXdoPSd
-	js+6XwUxbflOWGahykPMBWax1uiF0D91FVKkt5Oap9ZV/HBzBI2cgU8F0/bLCK8JASjY74D
-	gRm7RjldThvmYfLJcuPAnWFyKfTUUglQIuFIU5A9umBVQBsaLeh3fXEpaJmAsZhy202h5f/
-	3qE6BbIbhtoZAW8s4WRTWsYdlDNkCde7mK+glnkhKwa/aUm1PShn+nfL1AgRghs9XYPcvnw
-	fCTtlZyBAkX5bSx+dx
+X-QQ-XMAILINFO: MorwW1vbY5Ciw7ZCgDZfWiXnBCvxCPavOEzWVqO4T6hG9/PcHFSHnrQG
+	EY1SxvB8PsczIMkXBrfAjlrxaBzKsika9HKLVcbvKOA2DnFPLOPwgys+iSEaI8fl1pt1Q67
+	lmOqQemws6N02ys/SgIACUIgfyiSJIIm5qvY2kquX8Q9+BbrTtu2POKWtNTiXvd9/iBKl76
+	+XRrmWv3DrbRyyZhx5f8DrcnWEx7VBUstR1G3NQVXFBQrCZ1OkvcdOJDdcNI6NtXNrj/CbD
+	m9o/wpsh9p3GguPESLqKl+JiinHlki5sonhsi5zQUewe5/Yt0ZXQhBUXHWNKABgwNLKN3fS
+	Mo9ld3KkWdhwEUeElc+ZOkGfyfMjwL/Z3LpU94EM/OIMc6rxojJtHi/SghspYsS8NIMf7DS
+	kEOKC0ZPUwW/ih775LtDj/F3lNG3/2kyWJXMBiTP5o+fgaio8CxKiOzqWFzSRSh98RktgHL
+	Jog4HZ3PQUP125ZTw52ufEHxuQSN+doL8gnoqorRXWCwhI33f6a+/CZWzmujN2m8dhdKWVP
+	etgikdBH2lta7RNfkHHDBo6YnK/NWCV3D1rU6q+/PkoR/WADlAqmNtDo5MhLnX6EhNArHO8
+	lLndbEn+DZvx/7V30H4PM87n82xvqyYC8sgTnGe1+dDbRSGUsDonoQ4XA1uJPJ/CH8no0gL
+	2ZxweUnuCMQWUVcBpqdh/04GaK1CGuy9bY9ZHI99mSoZLoyA4v4Mxd2lDyjJmUK7C7sjaGs
+	DR9AiAR+CLc98VZokUKbxEXUkD4r41xnPzYaMuz/Hb8LlKDxNv20X33uu83Wi6R8Yp73WVo
+	/CJK3z4N0snfUU8F9TClTtqbumLyS6LxP821fT1+mFtb9y2q9CFwijCtC03OTJYLL2Gq6k9
+	O5e5DMjXR1+V+xVf9WLaLFiW1wZHRD8tRdFqXKZfakhrcJLENsfTS+7FGaIbVP2yeSHvHCL
+	aKzwwKEma4kWuCHKW4s2Dn3d/jaoZqE1+JYC8cgwUQViCeq4gOYtv2cdqCT3DtigrBSnnW7
+	drV8w040MCELn8j3yJ/R5tm+0A5afd6yM6KtHsaqsw4LQAGleAYrN2aikn4hKtCR94ERJNM
+	w==
 X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
 X-QQ-RECHKSPAM: 0
 X-Spamd-Result: default: False [0.14 / 15.00];
@@ -107,7 +108,7 @@ X-Spamd-Result: default: False [0.14 / 15.00];
 	RCVD_COUNT_THREE(0.00)[4];
 	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,gmail.com,chromium.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102187-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-102186-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
@@ -116,59 +117,217 @@ X-Spamd-Result: default: False [0.14 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.799];
+	NEURAL_HAM(-0.00)[-0.771];
 	MID_RHS_MATCH_FROM(0.00)[];
 	R_DKIM_NA(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[radxa.com:email,radxa.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: F01FD3B0E2F
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.1:email,0.0.0.0:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,radxa.com:email,radxa.com:mid]
+X-Rspamd-Queue-Id: E08693B0E0A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add and enable UFS related nodes for this board.
+This board doesn't feature a regular Type-C port. The usb_1_qmpphy's
+RX1/TX1 pair is statically connected to the USB-A port, while its RX0/TX0
+pair is connected to the RA620 DP-to-HDMI bridge.
 
-Note that UFS Gear-4 Rate-B is unstable due to board and UFS module design
-limitations. UFS on this board is stable when working at Gear-4 Rate-A.
+Add and enable the nodes for the features to work.
 
 Signed-off-by: Xilin Wu <sophon@radxa.com>
 ---
- .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 23 ++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 152 +++++++++++++++++++++
+ 1 file changed, 152 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
-index bb5a42b038f1..c961d3ec625f 100644
+index c961d3ec625f..8d649b3a1cfa 100644
 --- a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
 +++ b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
-@@ -959,6 +959,29 @@ &uart5 {
+@@ -111,6 +111,71 @@ usb2_3_connector: endpoint {
+ 		};
+ 	};
+ 
++	usb3_con: connector {
++		compatible = "usb-a-connector";
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				usb3_con_hs_in: endpoint {
++					remote-endpoint = <&usb_1_dwc3_hs>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				usb3_con_ss_in: endpoint {
++					remote-endpoint = <&usb_1_qmpphy_out_usb>;
++				};
++			};
++		};
++	};
++
++	hdmi-bridge {
++		compatible = "radxa,ra620";
++
++		pinctrl-0 = <&dp_hot_plug_det>;
++		pinctrl-names = "default";
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				hdmi_bridge_in: endpoint {
++					remote-endpoint = <&usb_1_qmpphy_out_dp>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				hdmi_bridge_out: endpoint {
++					remote-endpoint = <&hdmi_connector_in>;
++				};
++			};
++		};
++	};
++
++	hdmi-connector {
++		compatible = "hdmi-connector";
++		label = "hdmi";
++		type = "a";
++
++		port {
++			hdmi_connector_in: endpoint {
++				remote-endpoint = <&hdmi_bridge_out>;
++			};
++		};
++	};
++
+ 	leds {
+ 		compatible = "gpio-leds";
+ 
+@@ -521,6 +586,21 @@ &lpass_va_macro {
  	status = "okay";
  };
  
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-+	vcc-supply = <&vreg_l7b_2p96>;
-+	vcc-max-microamp = <800000>;
-+	vccq-supply = <&vreg_l9b_1p2>;
-+	vccq-max-microamp = <900000>;
-+	vccq2-supply = <&vreg_l9b_1p2>;
-+	vccq2-max-microamp = <1300000>;
++&mdss {
++	status = "okay";
++};
 +
-+	/* Gear-4 Rate-B is unstable due to board */
-+	/* and UFS module design limitations */
-+	limit-gear-rate = "rate-a";
++&mdss_dp {
++	sound-name-prefix = "Display Port0";
 +
 +	status = "okay";
 +};
 +
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vreg_l10c_0p88>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
++&mdss_dp_out {
++	data-lanes = <0 1>;
++	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
++};
++
+ &pcie0 {
+ 	perst-gpios = <&tlmm 87 GPIO_ACTIVE_LOW>;
+ 	wake-gpios = <&tlmm 89 GPIO_ACTIVE_HIGH>;
+@@ -738,6 +818,22 @@ &sound {
+ 			"AMIC2", "MIC BIAS2",
+ 			"TX SWR_ADC1", "ADC2_OUTPUT";
+ 
++	dp0-dai-link {
++		link-name = "DP0 Playback";
++
++		codec {
++			sound-dai = <&mdss_dp>;
++		};
++
++		cpu {
++			sound-dai = <&q6apmbedai DISPLAY_PORT_RX_0>;
++		};
++
++		platform {
++			sound-dai = <&q6apm>;
++		};
++	};
++
+ 	wcd-playback-dai-link {
+ 		link-name = "WCD Playback";
+ 
+@@ -982,6 +1078,58 @@ &ufs_mem_phy {
+ 	status = "okay";
+ };
+ 
++&usb_1 {
++	dr_mode = "host";
 +
 +	status = "okay";
++};
++
++&usb_1_dwc3_hs {
++	remote-endpoint = <&usb3_con_hs_in>;
++};
++
++&usb_1_hsphy {
++	vdda-pll-supply = <&vreg_l10c_0p88>;
++	vdda33-supply = <&vreg_l2b_3p072>;
++	vdda18-supply = <&vreg_l1c_1p8>;
++
++	status = "okay";
++};
++
++&usb_1_qmpphy {
++	vdda-phy-supply = <&vreg_l6b_1p2>;
++	vdda-pll-supply = <&vreg_l1b_0p912>;
++
++	/delete-property/ orientation-switch;
++
++	status = "okay";
++
++	ports {
++		port@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			/delete-node/ endpoint;
++
++			/* RX0/TX0 is statically connected to RA620 bridge */
++			usb_1_qmpphy_out_dp: endpoint@0 {
++				reg = <0>;
++
++				data-lanes = <0 1>;
++				remote-endpoint = <&hdmi_bridge_in>;
++			};
++
++			/* RX1/TX1 is statically connected to USB-A port */
++			usb_1_qmpphy_out_usb: endpoint@1 {
++				reg = <1>;
++
++				data-lanes = <2 3>;
++				remote-endpoint = <&usb3_con_ss_in>;
++			};
++		};
++	};
 +};
 +
  &usb_2 {
  	dr_mode = "host";
  
+@@ -1048,6 +1196,10 @@ &venus {
+ };
+ 
+ /* PINCTRL - additions to nodes defined in sc7280.dtsi */
++&dp_hot_plug_det {
++	bias-disable;
++};
++
+ &pcie0_clkreq_n {
+ 	bias-pull-up;
+ 	drive-strength = <2>;
 
 -- 
 2.53.0
