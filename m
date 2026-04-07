@@ -1,249 +1,362 @@
-Return-Path: <linux-arm-msm+bounces-102168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YB3jDaAD1WnOzQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 15:16:16 +0200
+	id 0LF8MwMH1WnMzgcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 15:30:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8839C3AEE99
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 15:16:15 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BD413AF25C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 15:30:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1A1DD3019838
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 13:16:10 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 108BE3033F1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 13:28:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D1CB3B3896;
-	Tue,  7 Apr 2026 13:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAE9D3B8944;
+	Tue,  7 Apr 2026 13:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ppWcSLxq";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UlkfxFE8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BtGfXzhP";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Jerb/1vx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDB13B3C0A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Apr 2026 13:16:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775567769; cv=none; b=Y9EXULA7HIk2Va8K07ZRYpmsyG3Ab8FSFqAJT8fGaXfthASl+inOkiMi97GCLOaRwP9s5O4hfgPj8z9+PUwfSUXYO5bplXkzLMFFH2z2zZwooNI8xYtR+sV4CgEKGAvhxAfJDjn4JcxVj7L0V9nEkZJKfI3m8lTwJ4RmNHBtfBM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775567769; c=relaxed/simple;
-	bh=ZhvcqY6r1tq6QhvYIMabKOvGzftrA2RhnzWMy/baQZo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jZFqfxSH+6FTwiZ9x4WDFYJ53PFJ314MambOuBrIM+mG3grlhg29VW5GYzlv2YJlGmvMKkq9CidA/yxwrE1SdpFoGcpIzJnBX/F8ECkwJEJRTPZYvJkvSkjmbXiXy714e6APgudXzz1rB592peUWAKTc+taufDhKdfrM7Ff1mmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ppWcSLxq; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UlkfxFE8; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C823B8BD1
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Apr 2026 13:28:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.180.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775568504; cv=pass; b=fFmWSAXCv89VkoS0Y+50brTOpuFn3Rd4Bmjd1L20tJLntY/NEWN4folfg5scu8PUwtwqEUco4QYXnpA6UNMtAlJcoYZDk51NtEbCOqOwzRG9tClLakddZ+uX8pup9vZVvgpsxX01Tbf8EAzLH4W+2zPzhwe22XWV8amYDTjNJxM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775568504; c=relaxed/simple;
+	bh=3pOru3AI31M/7h4/J1wCs9vsJpaSVKgPBYqi+q3nlak=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lSqjNTk0XwM+eC54TWPf18HfENr5SUJWnFRxTsniEKsuLEfaYgw737QmonKgQ6iISoxZ+qZ3uUtpYWOLuelSiw/gIOtGOohpIPj/YKdpX1GtcP3U/+6T991N+Ynjv0L2O1xGDzI0WghqgqImDldqgKev2J2RV3jbpY5gp1KqHOg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BtGfXzhP; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Jerb/1vx; arc=pass smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 637D3cio492494
-	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Apr 2026 13:16:07 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 637DKN8N3815757
+	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Apr 2026 13:28:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XKnEUyjc+ddoTTjBnULfB8xhWcYvXVbs8lR0FNjEwO0=; b=ppWcSLxqr5d5b9/h
-	OZE7Q/KsO6xrwkRE+iJkyMXvUzZ2FHC429n0VxXDoAKUuMeeNxqlu+YiU9jT2+aK
-	HNv45y2ToeC/B+P53CW+nbnaDOxNMuMco7kqoq2TpnigXwgQRJGkjmxAFhQCj/Hv
-	9FlvYA1OMWAFVSiuGOKzW3gWIpt90V3EkfR/2+SrQMBzEoFvPwkjYPYhZJ4u+RvI
-	F5iAxX9snpkLXYB04U1vbOQBxsBuYJzw59EqrOmWGi1y2SPmF2ESqETCHkEpFnGX
-	ZJpHUlgLg7CH/sG+4Kg9SB++Zd59PFWq3IG7h6bJ23Pi3jERXb0pt5WqTC+2Hq16
-	6Ld0nA==
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com [209.85.161.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dcmr8tt7p-1
+	3u3llKzVLDQQ1FlFCEY194yhid55v7vOzxTYrGz6xOU=; b=BtGfXzhPfChAEVCy
+	xpiyQDSs/fGZP8cjWz89crppBhT+9xZ5t/LTYmC4ddtYs8xEoJGeh8/UKJmzuJ2j
+	jX73Vt8nJ5JEdtWPL0QPiG7ueMw3k7jQetD5WGU1ggIylvdhwxG7f1K+NtY7RtGP
+	3itgxU9fZtBkPGBxlZ922aazNS34tjBa8vdvGu+8t07tlTlwxzGioNubVYpYpQP9
+	WYZFmordBwNB99tV5yjOa+2IotiWLqi4J1g60UC1YpnC02+QAmUbNhdZtznk4yF8
+	omBceh2k+cv673/oRvFZ3BcI8A1uJqx/Cz0SIBFu129cDFTFybBwociSLuLVxd9R
+	WDKa2Q==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dcmr4twny-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 13:16:07 +0000 (GMT)
-Received: by mail-oo1-f70.google.com with SMTP id 006d021491bc7-6838006a075so383250eaf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 06:16:07 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 13:28:22 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-50b4b81c632so123111461cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 06:28:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775568502; cv=none;
+        d=google.com; s=arc-20240605;
+        b=T0JwlWU+Aa7nV0VLyTi1JJX0qM0itF2kw6xgtbyp5/7SSIEc8Zml/ZbTtI4+C8yXBE
+         TJqbeScUIRAUP2XxQrBk2agUhuFRJfqHqrA9c6vZp9OfWtyIWK4zpSBMiXwoFfMSRNfV
+         2s3L15ERmWHQ3GJ6mwp/poDJqj0CuTby+NgRxn3O+O0pIxnXsdiEbkWnjVP3wMkuWYl0
+         9yp8tYpNb/XvClQGZyF0cny+Cbma4mbkoIzmiqXz9Gf1HBLbBU5ZkuvSD7fLGhaYXnTR
+         UNXnk0Q1NB+ZqXNFVjTl+jNTZ4JhTFBuIaFTaygYIyyYhkwlhCyUD5Dn3WgJ/yR2bjpV
+         Udxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=3u3llKzVLDQQ1FlFCEY194yhid55v7vOzxTYrGz6xOU=;
+        fh=+iclYT5SkWpGB2JXl0tLo0nr7aIBLUc9WMzecosryjM=;
+        b=SEE8ruxdbF+9ENvII6TJU72UzHkZBqez60UuYQVH1HUlB64Pqoi1WuLipmdRz0Qqc0
+         G2w/A6WR359qIOIztxz9yFU/xObXmCu96QbtdXPJCjKCyu934jBlJggvLfmzsf4JS7Vv
+         L+ViWQSKGJMCVGN9zK3lVRMUdPYECq2gBaHJBYEy6Vx5kmRrJsB0GnL3SCOLlMrCIuVT
+         Gd4ZH/xKvs4gvmguMzYGQSh8cWHiwbl53gE2saiEe8BIF3Y0fIzBxhQGGGD26B5kq9yC
+         87p6JyRtUshSFrGfgLi+C0t2Y9ZZ8QLtxXiRvUm/TIwY+PwfsWMVTSXpHfh8H/W4XQMN
+         FiLw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1775567767; x=1776172567; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XKnEUyjc+ddoTTjBnULfB8xhWcYvXVbs8lR0FNjEwO0=;
-        b=UlkfxFE8IK3F5JeqDM3vBWvs7vdjej7JFJa9zodmXX0g6AJmHCaOtKAs66eYw/Fk1P
-         bOraX7ki70vWe3g4xdSBj5hvHRVoVvF2JTtKphA4oh062mrzq1/xxvGe2KYT7llrw2w6
-         ATEfxB098UtCBu2iBM5ajJ4JSeBoPyWiZif/ZpArU9SRN8Havl39hNEAnLr/ykJWko8h
-         +7pCbOKxxoMODGKc6mRbO9u1kevL/c9Bu0VMhXLDrraAzU1zJXGwYdKxf9s5BDSOMKMZ
-         dXKEnF8T6ImfuTReGWpOhQrxBCDBXd0O7nkELK4syeBlpfdnRScdrd4M4uUed2yegUHL
-         2JCg==
+        d=oss.qualcomm.com; s=google; t=1775568502; x=1776173302; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3u3llKzVLDQQ1FlFCEY194yhid55v7vOzxTYrGz6xOU=;
+        b=Jerb/1vxVj9QG4HFakiUyKSqV3ryifUYxTvmog5+bJV+Xq1YBJqZ+bqRr3ZH1xuLhU
+         5bDPkJm3d+yK/bzzEbqNvXigo9ZRuhCiKp4OtZ7Qme97CnkGC2deS73o/yeRxf4aIK1f
+         zLO+dyC7jMmtOV6FTkvLryq7jwIdRIqnj8MRLWh1LJxay3e28MgP2Var/ouwEFvi/lbI
+         DG4pjcay02TaawsEtptsR+iIbXrIgxINjgYUHtZ8STYBsJdpDWbjXPO3iP1mOTg96Sjj
+         QCBkOq0HX2PO0k5ODmoq4d2HcBIPH4hSyNaZqbdB9Fmvr+GctqDh2g/foBtsGb7A/bEP
+         J2ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775567767; x=1776172567;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XKnEUyjc+ddoTTjBnULfB8xhWcYvXVbs8lR0FNjEwO0=;
-        b=WVXORvJsyfu2aSb3QOgrDIOqPj/+AorIIDJwu5VF49M/W/T5A5HlAmZUQTzj5rFXgW
-         BFb8l8WztjVM1zTl+W/Il9GGIeK3kn1G7hBZTxBP3b4yu4Rj2jN2TgIDHq/rssmdB5uK
-         Z7NDMXuB6u6JzFdHH31MLzzn/sajGc06XwZ+NVeP14PWqzU/eJORKIMVm0olwURjTTqn
-         AL0wybU676gc4jSA7d6TLAjo/Ett+o6BjfIezv+TiyvBA5WxVC+U1puTK4apsrKCyQfw
-         OYLbwnlQHrJKOjHhNeBu5/MjR1pNa/UVim9OY5u9mjWvABjAjIB2ikOblBxPcLNcTqeX
-         o4dw==
-X-Forwarded-Encrypted: i=1; AJvYcCVADtQdU/YM/uMLLQ+z/EW4CXATRPRPLio6PBmadPUSGByvFJGOxMHU9dZQBDG4D+4NllauHOdiW6Oqp+aH@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfljdselPi64bc2Gs0OvdbyoBu1ZzcwlFQwmHOG0GkvewgCwzk
-	hJh0gUPLf916unN75AKFGCp1Pqzm5AVvDTDqgtbGTxSTPOf4Js5RtZUfc698R1IdrTnRoNzmgGr
-	nU/+7zs2K07eCu7maBsz45XJXwJHLr9Mz3tD6LJhtsN4csRhc0mUKDtkjrHbg5netMAlv
-X-Gm-Gg: AeBDievultlPlRDKMsN4cEiwjc8R/ypoQp+LSvyNTFXEzT8aTKi2NzUAlddYC/XfShu
-	txWGI+rQWzJCLhukZnkYgjcguqLMLOHzNvJUwcq/ZMAiXoUY0N75Iu+FYJxQGSyD3pb9k+P9dBm
-	t49hjhtZcNvM5e6IFIW/4EhNCyWdX/6MCzKuXyhwqbQfxAwmk/XXVdZo7aFnvQ+BaqmykfP02G6
-	sXSf1cOgVs6RynGLOvJ7kTMXYIqNGxv9+ACqsYSkWURS3k0AsLTmZgG8YMwdmJExHaIAkPN7xC7
-	GqS9d3eXSFSHBej2r98jefaP//oPjFicrOX6cxp8V3baLmdZut4gxUmB68OZ0mWzB/Vz1mZzYAC
-	eLe+faeibqKivQOw959h/mz87KgKnTQf8mEZk7qCToSdIGAJZrtt7YQoUm1gCS5Ezd9HJ0HHOkg
-	A+RgQ=
-X-Received: by 2002:a05:6808:4fe9:b0:462:dd41:414c with SMTP id 5614622812f47-46ef831d5aamr5805558b6e.6.1775567766056;
-        Tue, 07 Apr 2026 06:16:06 -0700 (PDT)
-X-Received: by 2002:a05:6808:4fe9:b0:462:dd41:414c with SMTP id 5614622812f47-46ef831d5aamr5805526b6e.6.1775567765296;
-        Tue, 07 Apr 2026 06:16:05 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9c3c99ec5dsm567712966b.15.2026.04.07.06.16.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Apr 2026 06:16:04 -0700 (PDT)
-Message-ID: <2514523f-a43f-4470-a69b-3d5175d10385@oss.qualcomm.com>
-Date: Tue, 7 Apr 2026 15:16:00 +0200
+        d=1e100.net; s=20251104; t=1775568502; x=1776173302;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3u3llKzVLDQQ1FlFCEY194yhid55v7vOzxTYrGz6xOU=;
+        b=Sx0vmbrVUnW3Ipw7JJZfwAPt1VSJCinhhov6MA274RuXSgnw5sKSgnBzKXUbwf2EFk
+         3M92hszqGJpkTGRXv7u3S3Wp4EQ2BuTF635tD8zflCs3kbzmXw7qf2pY5eTtvc06+f7l
+         SJfarQeQS90lw2HcNFDN4zif+p6mh1aw34xcZ/3ed7luKYbUk8yeoPEFzqTzHy9NYhss
+         DkXpqxV7OhlKxLMUZJvITXr43354ib/0DN3QW9heIArdVh2R0R4KT5tRZhmEG1OFnJr2
+         8Giel4G5Zf+58G2O7RgPGJSiaFoG1LevtirLZNqXBniC2PElMOpJrj2hWPXNNoN5+R2T
+         eKgw==
+X-Forwarded-Encrypted: i=1; AJvYcCXozZ4J9GaomfH60DwYLimU3iOb41E7r1sfgPVvtAgL9kyXZ0YnCNON+cbWsB/fZSvrv95QDmBQ1hkvD/Wo@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8uE21MYbLsd4xGbITVuhwpuvXh/uH2aFu6m8ZVcBpvS9fN3AZ
+	jM/27zayEwpx+DofD0/Qun9wpXr6Lf+tQTc8UquZQqm1aZEX8s2mH+YgjxvjxmGGJmx8OIYTdHZ
+	TBJdyTA4jrvjRc9876XOh4Fwj4Zrlx7V4kXg4ZwBpVETkDGuaNFGQJyVKZLCcQuem5rKoSQ/vSw
+	ylnZmQ2MnZ60DZ4gmXCiui+gfBpJE771p2iG+ttePUwvY=
+X-Gm-Gg: AeBDieuovyXakxy2PhufPd2QOaFBt0QHzx1QTPZx/Wltryhca6IQALcxgOJ2v2LNNwW
+	Atg0wjHSeM3fRPrA4Bft1314qb3XuxpJNsxtrLiHY5LuNDKTi/5+kZi0NE5AiWA4de+K7oJs8D8
+	rgqTPShwn0Xj3VpFYM20Gm8zwNPxbXkI2vAcmEM7+wG+WW3HlenTH+uMwlraU2fYXCvUXxL2UTE
+	PJSPn79mhWXEVAoaH6bizaFiyQIfF+fW+Y1l4E=
+X-Received: by 2002:a05:6214:260a:b0:89c:e5f0:8f33 with SMTP id 6a1803df08f44-8a7022bbec0mr288401826d6.10.1775568501519;
+        Tue, 07 Apr 2026 06:28:21 -0700 (PDT)
+X-Received: by 2002:a05:6214:260a:b0:89c:e5f0:8f33 with SMTP id
+ 6a1803df08f44-8a7022bbec0mr288401066d6.10.1775568500950; Tue, 07 Apr 2026
+ 06:28:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/7] arm64: dts: qcom: milos-fairphone-fp6: Enable WiFi
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-        Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Alexander Koskovich <AKoskovich@pm.me>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Bartosz Golaszewski <brgl@kernel.org>,
-        Marcel Holtmann
- <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-        Rocky Liao <quic_rjliao@quicinc.com>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Jeff Johnson
- <jjohnson@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+References: <20260407-camss-rdi-fix-v3-0-08f72d1f3442@kernel.org> <20260407-camss-rdi-fix-v3-1-08f72d1f3442@kernel.org>
+In-Reply-To: <20260407-camss-rdi-fix-v3-1-08f72d1f3442@kernel.org>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Date: Tue, 7 Apr 2026 15:28:08 +0200
+X-Gm-Features: AQROBzAyNBpy58RNaEmWDuRNdJwyI4yb41s1_d-Hz7TIYwxCes3dmoGPrtgvyVU
+Message-ID: <CAFEp6-0PrSv3YpaMUxhMCYwLenD31jWy4xZ-p4R-sHAT9cYWmw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/5] media: qcom: camss: Fix RDI streaming for CSID 680
+To: bod@kernel.org
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil@kernel.org>,
+        Hans Verkuil <hverkuil+cisco@kernel.org>,
+        Gjorgji Rosikopulos <quic_grosikop@quicinc.com>,
+        Milen Mitkov <quic_mmitkov@quicinc.com>,
+        Depeng Shao <quic_depengs@quicinc.com>,
+        Yongsheng Li <quic_yon@quicinc.com>, linux-media@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
-References: <20260403-milos-fp6-bt-wifi-v2-0-393322b27c5f@fairphone.com>
- <20260403-milos-fp6-bt-wifi-v2-7-393322b27c5f@fairphone.com>
- <4fbs4arx6sez6fffy75ctmzecfvitr6aocau3cczlr2ps2ptld@v7wpa2irsihl>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <4fbs4arx6sez6fffy75ctmzecfvitr6aocau3cczlr2ps2ptld@v7wpa2irsihl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: gBb-unsKraGfAtZdwYpYz_raNVfmbpSx
-X-Proofpoint-ORIG-GUID: gBb-unsKraGfAtZdwYpYz_raNVfmbpSx
-X-Authority-Analysis: v=2.4 cv=c9abhx9l c=1 sm=1 tr=0 ts=69d50397 cx=c_pps
- a=lkkFf9KBb43tY3aOjL++dA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=6H0WHjuAAAAA:8 a=EUspDBNiAAAA:8 a=iIL34To0PIL57gYWuS8A:9
- a=QEXdDO2ut3YA:10 a=k4UEASGLJojhI9HsvVT1:22 a=Soq9LBFxuPC4vsCAQt-j:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDEyNSBTYWx0ZWRfX0f9SKJ19vV2+
- gNQQ8ktxNdhZP0vrccwKNrYqoJwT1qsZqZFQFbeacRjr22keftzi7uELGOinXMF6em/nm0bxx2M
- hEQp5KXCg7q/K5Rr1AwoIRdLaNbcINGUQ23Ew8pdxfha7vfILWvWOjqcRuyQ8TMJGiLnwn/uopW
- X9ug6d5l/jFQYkX0gqARKxgoqBrOlhM/Z/CobW9QUwTwmruTBRb//KmTt4DQielZSD0+w5IpJNO
- JW9pTpUzaFCuS6YY96rUddszY5KKPQ5gWRjk6WIzMdh5DVx9sC+NGMbdQf/26KvvZG3dbAYn/mI
- gbDKDg9Y5eS0XXHhqZLxnNIVoGsYih7X+lZrtH2GAXq+HhJro1KPgcsljhCecNsu9GZ6XEmN6Hr
- JyF2HOKN5Wy3iWKm5Jvt2s7xstVVtVDVN0mxF/vhN/pMDIcVSejQWrKroEZ7hRanJvaE9xSlQBb
- cfoDmks3oAbtrPy1Yig==
+        stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=dO6WXuZb c=1 sm=1 tr=0 ts=69d50676 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=ZpdpYltYx_vBUK5n70dp:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=x3_dpc_kMFUGcRNcKJYA:9 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: yEktcXDU7B-Yxz2NgTGeApbucPGIOGOn
+X-Proofpoint-ORIG-GUID: yEktcXDU7B-Yxz2NgTGeApbucPGIOGOn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDEyNiBTYWx0ZWRfX7kBZKiA0sZhE
+ RORzHdBQZeYa1FZ3Po+hBHTGTbXmpUo82zkfXvmbThp0KlmCClo8EnqzGyQi0re57WXzSPAlOBH
+ 13mzd+fFWbpYZukqKCV1mQ8fzaTRWsN7dAiBDne8Ttbt7CdEhgkGGGgGOESEcDJBGQyWAZ0i0sE
+ G1esxkXG2SPo+oabQas4u8sTcVkst+V5L4JtJPyndRyMfMD1UeAxzbHq91vu8oKfNQ5Oh/UbVPc
+ cWKbw76JNOQD30GkCU3AfNnmITNActHgj4PA1iPdZw5i1Jm/mn+xG+8ruCVMnjfBkALpE2LfTqB
+ YZfQA/4aFWpVY3FnvzUHWc5LZhhXEGHC+4nlbh/2rEmDsdnjfQ9H7/Q8jiu9cxmgWtWmIzLVbSa
+ NohnogjHmREJt4RY1Z7OO4FeTpRbEzTAJ+JICNPCN9MeBSJvbZufMgilhyhsAUPB0rD8j/X51Xv
+ gSuv/w0ABNaDFgB+uZA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-07_02,2026-04-07_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 adultscore=0 suspectscore=0 priorityscore=1501
- bulkscore=0 spamscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 priorityscore=1501 malwarescore=0
+ impostorscore=0 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604070125
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604070126
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,pm.me,gmail.com,holtmann.org,quicinc.com,sipsolutions.net,lists.sr.ht,vger.kernel.org,lists.infradead.org];
-	TAGGED_FROM(0.00)[bounces-102168-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,fairphone.com:email];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[27];
+	URIBL_MULTI_FAIL(0.00)[oss.qualcomm.com:server fail,mail.gmail.com:server fail,qualcomm.com:server fail,sto.lore.kernel.org:server fail,linaro.org:server fail];
+	TAGGED_FROM(0.00)[bounces-102169-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,quicinc.com,vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 8839C3AEE99
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	NEURAL_HAM(-0.00)[-0.998];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,cisco];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,linaro.org:email,qualcomm.com:dkim,qualcomm.com:email,mail.gmail.com:mid]
+X-Rspamd-Queue-Id: 8BD413AF25C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 4/3/26 9:35 PM, Dmitry Baryshkov wrote:
-> On Fri, Apr 03, 2026 at 03:52:53PM +0200, Luca Weiss wrote:
->> Configure and enable the WiFi node, and add the required pinctrl to
->> provide the sleep clock from the PMK8550 (PMK7635) to WCN6755.
->>
->> Thanks to Alexander Koskovich for helping with the bringup, adding
->> the missing pinctrl to make the WPSS stop crashing.
->>
->> Link: https://lore.kernel.org/linux-arm-msm/DBF7OWAWQ94M.FSCP4DPF8ZJY@fairphone.com/
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->> ---
->>  arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts | 19 ++++++++++++++++++-
->>  1 file changed, 18 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
->> index db72418b7195..d8ac495ca7c8 100644
->> --- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
->> +++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
->> @@ -242,7 +242,7 @@ wcn6750-pmu {
->>  
->>  		clocks = <&rpmhcc RPMH_RF_CLK1>;
->>  
->> -		pinctrl-0 = <&bluetooth_enable_default>;
->> +		pinctrl-0 = <&bluetooth_enable_default>, <&pmk8550_sleep_clk_default>;
->>  		pinctrl-names = "default";
->>  
->>  		regulators {
->> @@ -766,6 +766,17 @@ &pmiv0104_eusb2_repeater {
->>  	qcom,tune-usb2-preem = /bits/ 8 <0x6>;
->>  };
->>  
->> +&pmk8550_gpios {
->> +	pmk8550_sleep_clk_default: sleep-clk-default-state {
->> +		pins = "gpio5";
->> +		function = "func1";
->> +		input-disable;
->> +		output-enable;
-> 
-> Hmm, if it's a sleep_clk, should it not be handled via the power
-> sequencer?
+On Tue, Apr 7, 2026 at 12:35=E2=80=AFPM <bod@kernel.org> wrote:
+>
+> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>
+> Fix streaming to RDI1 and RDI2. csid->phy.en_vc contains a bitmask of
+> enabled CSID ports not virtual channels.
+>
+> We cycle through the number of available CSID ports and test this value
+> against the vc_en bitmask.
+>
+> We then use the passed value both as an index to the port configuration
+> macros and as a virtual channel index.
+>
+> This is a very broken pattern. Reviewing the initial introduction of VC
+> support it states that you can only map one CSID to one VFE. This is true
+> however each CSID has multiple sources which can sink inside of the VFE -
+> for example there is a "pixel" path for bayer stats which sources @
+> CSID(x):3 and sinks on VFE(x):pix.
+>
+> That is CSID port # 3 should drive VFE port #3. With our current setup on=
+ly
+> a sensor which drives virtual channel number #3 could possibly enable tha=
+t
+> setup.
+>
+> This is deeply wrong the virtual channel has no relevance to hooking CSID
+> to VFE, a fact that is proven after this patch is applied allowing
+> RDI0,RDI1 and RDI2 to function with VC0 whereas before only RDI1 worked.
+>
+> Another way the current model breaks is the DT field. A sensor driving
+> different data-types on the same VC would not be able to separate the VC:=
+DT
+> pair to separate RDI outputs, thus breaking another feature of VCs in the
+> MIPI data-stream.
+>
+> Default the VC back to zero. A follow on series will implement subdev
+> streams to actually enable VCs without breaking CSID source to VFE sink.
+>
+> Fixes: 253314b20408 ("media: qcom: camss: Add CSID 680 support")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-If you mean that it may be needed to toggle it with specific timings,
-possibly..  seems that WCN6855 has a "xo-clk" GPIO defined. I requested
-access to some docs that I think should have the answer, hopefully should
-get it soon.
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-Or maybe +Jeff/Baochen could answer faster?
 
-Konrad
+> ---
+>  drivers/media/platform/qcom/camss/camss-csid-680.c | 30 +++++++++++-----=
+------
+>  1 file changed, 15 insertions(+), 15 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid-680.c b/drivers=
+/media/platform/qcom/camss/camss-csid-680.c
+> index 3ad3a174bcfb8..edf01ba79907d 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid-680.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid-680.c
+> @@ -219,9 +219,9 @@ static void __csid_configure_top(struct csid_device *=
+csid)
+>             CSID_TOP_IO_PATH_CFG0(csid->id));
+>  }
+>
+> -static void __csid_configure_rdi_stream(struct csid_device *csid, u8 ena=
+ble, u8 vc)
+> +static void __csid_configure_rdi_stream(struct csid_device *csid, u8 ena=
+ble, u8 port, u8 vc)
+>  {
+> -       struct v4l2_mbus_framefmt *input_format =3D &csid->fmt[MSM_CSID_P=
+AD_FIRST_SRC + vc];
+> +       struct v4l2_mbus_framefmt *input_format =3D &csid->fmt[MSM_CSID_P=
+AD_FIRST_SRC + port];
+>         const struct csid_format_info *format =3D csid_get_fmt_entry(csid=
+->res->formats->formats,
+>                                                                    csid->=
+res->formats->nformats,
+>                                                                    input_=
+format->code);
+> @@ -233,28 +233,28 @@ static void __csid_configure_rdi_stream(struct csid=
+_device *csid, u8 enable, u8
+>                 lane_cnt =3D 4;
+>
+>         val =3D 0;
+> -       writel(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(vc));
+> +       writel(val, csid->base + CSID_RDI_FRM_DROP_PERIOD(port));
+>
+>         /*
+>          * DT_ID is a two bit bitfield that is concatenated with
+>          * the four least significant bits of the five bit VC
+>          * bitfield to generate an internal CID value.
+>          *
+> -        * CSID_RDI_CFG0(vc)
+> +        * CSID_RDI_CFG0(port)
+>          * DT_ID : 28:27
+>          * VC    : 26:22
+>          * DT    : 21:16
+>          *
+>          * CID   : VC 3:0 << 2 | DT_ID 1:0
+>          */
+> -       dt_id =3D vc & 0x03;
+> +       dt_id =3D port & 0x03;
+>
+>         /* note: for non-RDI path, this should be format->decode_format *=
+/
+>         val |=3D DECODE_FORMAT_PAYLOAD_ONLY << RDI_CFG0_DECODE_FORMAT;
+>         val |=3D format->data_type << RDI_CFG0_DATA_TYPE;
+>         val |=3D vc << RDI_CFG0_VIRTUAL_CHANNEL;
+>         val |=3D dt_id << RDI_CFG0_DT_ID;
+> -       writel(val, csid->base + CSID_RDI_CFG0(vc));
+> +       writel(val, csid->base + CSID_RDI_CFG0(port));
+>
+>         val =3D RDI_CFG1_TIMESTAMP_STB_FRAME;
+>         val |=3D RDI_CFG1_BYTE_CNTR_EN;
+> @@ -265,23 +265,23 @@ static void __csid_configure_rdi_stream(struct csid=
+_device *csid, u8 enable, u8
+>         val |=3D RDI_CFG1_CROP_V_EN;
+>         val |=3D RDI_CFG1_PACKING_MIPI;
+>
+> -       writel(val, csid->base + CSID_RDI_CFG1(vc));
+> +       writel(val, csid->base + CSID_RDI_CFG1(port));
+>
+>         val =3D 0;
+> -       writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(vc));
+> +       writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PERIOD(port));
+>
+>         val =3D 1;
+> -       writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(vc));
+> +       writel(val, csid->base + CSID_RDI_IRQ_SUBSAMPLE_PATTERN(port));
+>
+>         val =3D 0;
+> -       writel(val, csid->base + CSID_RDI_CTRL(vc));
+> +       writel(val, csid->base + CSID_RDI_CTRL(port));
+>
+> -       val =3D readl(csid->base + CSID_RDI_CFG0(vc));
+> +       val =3D readl(csid->base + CSID_RDI_CFG0(port));
+>         if (enable)
+>                 val |=3D RDI_CFG0_ENABLE;
+>         else
+>                 val &=3D ~RDI_CFG0_ENABLE;
+> -       writel(val, csid->base + CSID_RDI_CFG0(vc));
+> +       writel(val, csid->base + CSID_RDI_CFG0(port));
+>  }
+>
+>  static void csid_configure_stream(struct csid_device *csid, u8 enable)
+> @@ -290,11 +290,11 @@ static void csid_configure_stream(struct csid_devic=
+e *csid, u8 enable)
+>
+>         __csid_configure_top(csid);
+>
+> -       /* Loop through all enabled VCs and configure stream for each */
+> +       /* Loop through all enabled ports and configure a stream for each=
+ */
+>         for (i =3D 0; i < MSM_CSID_MAX_SRC_STREAMS; i++) {
+>                 if (csid->phy.en_vc & BIT(i)) {
+> -                       __csid_configure_rdi_stream(csid, enable, i);
+> -                       __csid_configure_rx(csid, &csid->phy, i);
+> +                       __csid_configure_rdi_stream(csid, enable, i, 0);
+> +                       __csid_configure_rx(csid, &csid->phy, 0);
+>                         __csid_ctrl_rdi(csid, enable, i);
+>                 }
+>         }
+>
+> --
+> 2.52.0
+>
 
