@@ -1,166 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-102075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iNYQLKy/1GmWwwcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 10:26:20 +0200
+	id MO4dHlzB1GmWwwcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 10:33:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2577B3AB46D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 10:26:19 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D94413AB655
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 10:33:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D925A307AA51
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 08:21:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AEF28300A3BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 08:33:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C76A3A3E81;
-	Tue,  7 Apr 2026 08:21:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="2p3KwyGA"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 315CA3988F9;
+	Tue,  7 Apr 2026 08:33:28 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BFA3A3E63
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Apr 2026 08:21:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78BB397E76;
+	Tue,  7 Apr 2026 08:33:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775550110; cv=none; b=lQl+hIUuyqX9LNxVmtsGeI3eoRD56EIAuzO4X5YOXzm/8MZADQk/hbFGF8kMlQsto6wZfJl661raGEXbZzIabv0PtSgkeY22A611ZX00lJe4QEcTiWRLGhIrkzusWHQi+LsPIIGeXLWNKXUkQKU8jUOiN6bVC2McJJNoCUupNWY=
+	t=1775550807; cv=none; b=M8AUIIGwi34EW2oPXVCEE/y2vY7wvcQr2Wc3Jv5HzztdOSoP8m7wrEy9HYD8g1R5AAvIT62pS+hHQjXEwWK1wThhpEgLYEJEFi9Kdq4ReWkB4Yc8cvUTL9tCcJkeBbS9tcnjwq7chItRSJHd+p4RskZABZmtCnLnAjXVedH3ox8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775550110; c=relaxed/simple;
-	bh=GrX5EJt4t9cQ0y5PJf5xNnceKPLkSMXbMni6kC0vHEA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=dFkV4PxcpvUPtCT0FnLixJEebuaGPPBuSVPJamHch1cJWK0q454hhpazlRu5FasHDnaQbSRlS5tjj9dIPfAi2W6XM64epEFLYmJEMWOlGIiPHw+yFVVsE1mXIpgEiB/aaYESECa8QmW/5PdfYPFxpHI2Pp0UwHLq4Tx4p/FqoWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=2p3KwyGA; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-66e6f1d8237so1437946a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 01:21:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1775550107; x=1776154907; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=61qWV5sp3TCv0+h+N/I/PUI4iC1Lq3vzfWty1ImfKAk=;
-        b=2p3KwyGA/dKlU1tpK/sdHOTXlcKnBJLR36sSHWBQUul6dl1xvxMzUz5qOMgHD48V2Y
-         HYmsAtUUJt0GFdXiQ5B0reuR+2cJhahNvaUXbHPG3ZNUL0C/O7DpfGiwoNd6LSkM+hLz
-         2wjhySye0BQOnm4wAejTHtFchMH4wWx268uAzqL6JTPKYRkTMvl4BNQqNrGfX0nszMU+
-         xH9bL8pKJPTXllaTbI5q85ENnev7r3kTsSLhLvkWDnlKgMGMOzcMnsnTgz1avn1+ftxE
-         jMOzUhnln7k1uCztmg0oSuxQ+xyFc4Xf2Y7JFDTtzruAo4kJ8nBOAFG7C0h7aF8O4nLZ
-         wmNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775550107; x=1776154907;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=61qWV5sp3TCv0+h+N/I/PUI4iC1Lq3vzfWty1ImfKAk=;
-        b=RUcW9eA7YoXNRQaOzrtEV5fjYeZcTI8NfQ6kmDSJ/8SKTZUr+hb6gdK6YcTa37efFB
-         z0SZFMcXme+ESfO8035cx+aY6K/8LqiiMbmahdgWpYEYuBy4QcU9ce2tV29LyHaQFlPo
-         G6vaqrO/livsLZqgr+mlknls+yf0OKig6T2/j577cySTHmdz8wGq/vDYzhuTC4WijV2y
-         HRy+ik+jwK1qIRf5BiVGjEFsA/dR11e9sorp236D+mJJcLl9lep4gjN+iZ+cBmnZwRs/
-         Dg8oyi0V/YcFjq8L3zjhbdgO6ZTHAiDgXViUQxJreAijQS48vMCLIgD53aWAjwRwEdMw
-         qMPg==
-X-Forwarded-Encrypted: i=1; AJvYcCUQh5vXidRErlUdWP11JwYPhXNPv2avuLBkDrF2cwDKSZWi/KBltfJV+2I9+/rN9zsuJGqBx0NxFvEiyRMW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzoxduoJejtPQ54Fw5/zcBnxRqBQYX/1vGAWeywhSwy1YRugsKd
-	QQSSeUB8DzEl7xBVeWy+g/C0dxKqbkK2SqBd0YN/gFx8rNnr7VLuibdC2dHUG6xm/Ow=
-X-Gm-Gg: AeBDietcUlqy/+LrX/GcshctqeQaPk+KYKTGhRtWPJGS/oYwQghgm0h2womQl2HGkDC
-	+egHSb35yY2w5J7F4EJYjsaUjLjSFkWJsUJL8TKR3NhXqGSkMH4h6Y+aMsRV8bZETmfRj4o3Sqr
-	rqknTm5FwzqFPtApSMXR0GTQ2lGmLStiBRzfYg7svxuhnVE8ciiLe0CTd94ZncojfvNgsFEKqR5
-	/98Okm4CGS1BVGjrSVMp4b3m2J0NREAcihzGEPCQSA4OWllYPnnisnWEYfW3Nf/2j14fCQxj/e2
-	hgwvQSR8O309tHRbl2cRJF2T26Nt6pBS86XJmuUhHTEo1WhJ1gow+7SxiR98f+Q/8fFne4QLBsc
-	dpN3FXyPtB+PeTKXnwdVPZ/AKz12Bnad/lMTrVa04WCeuyJxdP0ED9mSNJMNuR73zMQNSX3Pyw1
-	iSvSGoJHT0wix5ijeEgMlD+okeaHRtH8Zw5IX9OV+gED3/XrVudjW6N18StL7EbUEncf9LE1Y2D
-	kxVZtk=
-X-Received: by 2002:a17:907:c002:b0:b9b:6869:bab0 with SMTP id a640c23a62f3a-b9c672f45b8mr892867266b.2.1775550106969;
-        Tue, 07 Apr 2026 01:21:46 -0700 (PDT)
-Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9c3d028831sm525473666b.59.2026.04.07.01.21.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Apr 2026 01:21:46 -0700 (PDT)
+	s=arc-20240116; t=1775550807; c=relaxed/simple;
+	bh=btgOKgbuheDcUPT8oEZacQRTKrs4Vl9Yek45oxBmL2I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Ez+DcpHZKqltW8/uS9D5T/U5QrfIhcqA0khWdxFFjz9yrqZHowTlysqa3bkHTyhVLREFxqc1YwzEaeBlGJwtKgbV56rsM6LUZNSUdSG7ar6QioQOuj5JPJmoEHqZmRd0i1fqhk2fcCi7693K5eIDwmqIjTKkTEjHUv6a3+8D51c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.206.34.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: esmtpgz11t1775550741t4bae4b67
+X-QQ-Originating-IP: km4qO8TB8e0CX3fAEWqRNQfz23UNoL5SmAgx2StGANo=
+Received: from [192.168.30.32] ( [116.234.14.100])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 07 Apr 2026 16:32:19 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 5058057940856507686
+EX-QQ-RecipientCnt: 12
+From: Xilin Wu <sophon@radxa.com>
+Date: Tue, 07 Apr 2026 16:32:05 +0800
+Subject: [PATCH 6.18.y] ASoC: qcom: sc7280: make use of common helpers
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 07 Apr 2026 10:21:46 +0200
-Message-Id: <DHMRZE7498YA.2K983P59ETZ7S@fairphone.com>
-Cc: "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Bjorn
- Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>, <~postmarketos/upstreaming@lists.sr.ht>,
- <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: sram: qcom,imem: Add the Milos
- compatible
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Krzysztof Kozlowski" <krzk@kernel.org>, "Luca Weiss"
- <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260403-milos-imem-v1-0-4244ebb47017@fairphone.com>
- <20260403-milos-imem-v1-1-4244ebb47017@fairphone.com>
- <20260405-rampant-green-harrier-eaf680@quoll>
-In-Reply-To: <20260405-rampant-green-harrier-eaf680@quoll>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260407-qcom-sdw-6-18-v1-1-2e1b884c14cf@radxa.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yWMzQ6CMBAGX4V8Z5d0G1KIr2I8QLvomgja9TeEd
+ 7fqcSaZWWCSVQzbakGWh5rOUwHeVIjHfjoIaSoM73xwjWvpGuczWXpSIO7Ip36QJrBwO6I0lyy
+ jvn6/HULNXf3G/u/tPpwk3r4zrOsH7uS5nnkAAAA=
+X-Change-ID: 20260407-qcom-sdw-6-18-2dabe461e17f
+To: Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>, 
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
+ Steev Klimaszewski <threeway@gmail.com>, Xilin Wu <sophon@radxa.com>
+X-Mailer: b4 0.15.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2001; i=sophon@radxa.com;
+ h=from:subject:message-id; bh=w+gy2MD3FrtevswuLj1MAXnzeWGi3gtTK0a6/TYrKU4=;
+ b=owGbwMvMwCVmdFg0fe08Iz/G02pJDJlXDorcZUj5/a4ywbHVetb/93uWm4X43ZS68TlO8OlPS
+ 0kpq/OtHaUsDGJcDLJiiiwK8Qxz2Stzrz0VK9WDmcPKBDKEgYtTACYyr4KR4T6vTU7CpqPnGhak
+ OGa48q/Z+eXw6ZjsPfyHKy/8PRuZtZHhn103F4/ez7lSGyI//Py8Olbfe2GWh+TFGyy3BIzW/mb
+ w5QMA
+X-Developer-Key: i=sophon@radxa.com; a=openpgp;
+ fpr=205F009D07796DD6E516752E32C31567AD9E324E
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: NNCgUTg3ctKTMDUrCTnMZMl4OsNfKTYmF6/2Qxei4XrdNrTcEj79/YkN
+	Vj7wathQG1INbkZgNJMHl54wbduGDEkeLJ7KhRJbyhUfWOGjf4aAVmOdq1oXtaWvTD8ck5P
+	abQ5+vJnqJIu0eOj4IUlvsDGXcrwlv4XfXL+iUNLB0+Y5u+sUhyFjPL6Oa1M4tHmBstyYr/
+	11zZHHvAYX6pNnl34YJSPVo2jcvCUw1cLpJGUmDmXk/rx9tGxEZg3ZcQoEhtKaaD9ySWW0Q
+	UcGsCdUZKUVBJxehAQcnKZFpL3ONLmHWAmF5jdtsQ+5l4mvZFTaDYFO/06EH/qUzjFrBjNu
+	3/SIoVfJYQeTDgA+6REwxRbK7OqQJ5Sl/PVWGMCikDph5P9Ry9EyyDuzwneUl0AMTuH17S6
+	d2OkFuHlyCHlNzxY0VlXxKHczBiwub++R1bd5n/K2WbhXpL7pXOVfqAC7d173OoWxNEsH0M
+	4bsFNi7Q8OmebgzlaQSvEhF8UOq7yui5zZJrzGbRezVl44eYJUZSbbbyBFuaWy/6Nu1oTrc
+	vSw0g6QxUmmxlNyXetQ+yOz1ea0Ynb/jjl19uEeWxdrRVmIC0n6PylT1/Nd1v+6yjmAD1pz
+	LL0rZvGokSJLjHKDTvmKh8ox6WbG1UoFZVCtyYkZ2mekG/T3PW1tZ8DQJdauooJu9Aa5Zdw
+	1xT1/6ffs0n5KD09WALvAHiQfh9dWTwJIaE/k3jhIY13o7MxvMf+dOmvwdIC0HzOd8MdAbE
+	/mKcA2hfcvcrDCWp2wAi2IdpXUgoY/USYfeDShxT2C231907nhrkuuvaR8xKtEzVs5gKasq
+	Q6+F51gBfjSm/wKT/etAoCbsmKH2G67fDjWAZrQ5ei6M4slZHHbXrxBISwguHLlFegeJNfu
+	AyPx005Njj1ZBH5UakZPypAi7p5tuZyZAsIZ9LMIkcjunRYrzwqMxca53oOq8XBvjnitBhM
+	0ZBwfp00KpkScITwmU4pUmnc/QV9W5YPyr0NqaH1dQkPu0Y+LzrshPhyMLDQQNwfRBniFYK
+	3Em0tJk7mLWPIOYYRBnq8lYYxpziM=
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+X-QQ-RECHKSPAM: 0
+X-Spamd-Result: default: False [-1.36 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102075-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[fairphone.com:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-102076-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,vger.kernel.org,gmail.com,radxa.com];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,fairphone.com:dkim,fairphone.com:email,fairphone.com:mid]
-X-Rspamd-Queue-Id: 2577B3AB46D
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.982];
+	MID_RHS_MATCH_FROM(0.00)[];
+	R_DKIM_NA(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: D94413AB655
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Sun Apr 5, 2026 at 9:54 AM CEST, Krzysztof Kozlowski wrote:
-> On Fri, Apr 03, 2026 at 05:00:23PM +0200, Luca Weiss wrote:
->> Add compatible for Milos SoC IMEM.
->>=20
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->> ---
->>  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
->>  1 file changed, 1 insertion(+)
->>=20
->> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Doc=
-umentation/devicetree/bindings/sram/qcom,imem.yaml
->> index c63026904061..38488e28a6b4 100644
->> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->> @@ -19,6 +19,7 @@ properties:
->>        - enum:
->>            - qcom,apq8064-imem
->>            - qcom,ipq5424-imem
->> +          - qcom,milos-imem
->
-> Wasn't this imem binding supposed to stop growing and switch to a
-> different style?
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-Then I missed the memo. Is this written anywhere (apart from LKML)?
+commit 8fdb030fe283c84fd8d378c97ad0f32d6cdec6ce upstream.
 
-Regards
-Luca
+sc7280 machine driver can make use of common sdw functions to do most of
+the soundwire related operations. Remove such redundant code from sc7280
+driver.
+
+[This is a partial backport containing only the sound/soc/qcom/sdw.c
+changes which add LPASS CDC DMA DAI IDs to qcom_snd_is_sdw_dai().
+The sc7280.c refactoring changes are omitted as they depend on
+intermediate patches not present in 6.18.y. The sdw.c change fixes a
+NULL pointer dereference for lpass-cpu based SoundWire links.]
+
+Fixes: bcba17279327 ("ASoC: qcom: sdw: fix memory leak for sdw_stream_runtime")
+Cc: stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Tested-by: Steev Klimaszewski <threeway@gmail.com> # Thinkpad X13s
+Link: https://patch.msgid.link/20251022143349.1081513-5-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Xilin Wu <sophon@radxa.com>
+---
+ sound/soc/qcom/sdw.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/sound/soc/qcom/sdw.c b/sound/soc/qcom/sdw.c
+index 7b2cae92c812..5f880c74c8dc 100644
+--- a/sound/soc/qcom/sdw.c
++++ b/sound/soc/qcom/sdw.c
+@@ -2,6 +2,7 @@
+ // Copyright (c) 2018-2023, Linaro Limited.
+ // Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ 
++#include <dt-bindings/sound/qcom,lpass.h>
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <linux/module.h>
+ #include <sound/soc.h>
+@@ -35,6 +36,16 @@ static bool qcom_snd_is_sdw_dai(int id)
+ 		break;
+ 	}
+ 
++	/* DSP Bypass usecase, cpu dai index overlaps with DSP dai ids,
++	 * DO NOT MERGE into top switch case */
++	switch (id) {
++	case LPASS_CDC_DMA_TX3:
++	case LPASS_CDC_DMA_RX0:
++		return true;
++	default:
++		break;
++	}
++
+ 	return false;
+ }
+ 
+
+---
+base-commit: dd26ea937ef593a9c47aa4c85296e6b57a5344a1
+change-id: 20260407-qcom-sdw-6-18-2dabe461e17f
+
+Best regards,
+--  
+Xilin Wu <sophon@radxa.com>
+
 
