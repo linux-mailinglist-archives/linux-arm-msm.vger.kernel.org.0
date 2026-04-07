@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-102220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ICr5FqdV1Wmu4wcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 21:06:15 +0200
+	id cH3PLh5W1Wnz4wcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 21:08:14 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AED713B3303
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 21:06:14 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 020DE3B33D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 21:08:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 527A63019822
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 19:06:13 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 3BB91301BDB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 19:06:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 798ED33A9DE;
-	Tue,  7 Apr 2026 19:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79FCC33E35B;
+	Tue,  7 Apr 2026 19:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YMnXt+8Z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fpOJ6YjX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5598622083;
-	Tue,  7 Apr 2026 19:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F7824DCF9;
+	Tue,  7 Apr 2026 19:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775588772; cv=none; b=ZvMZhaWOYSRO69kR9yCgi8oD9mXtBZIky2AOkY/G44taySwrLY1+3JKcAwUJtQxtCAXxPm2UZ6qxRZjiTnQjxjpJEmS42iAY57VGh5Ba2Z2GtxaKX1gvjpDdgnP2xXhqVxzhBRQknkGzYtPjoxRRrHZmjVLqJTmf3iZ3iip5lsg=
+	t=1775588795; cv=none; b=BXMVlqnAuCjxHvwDcCs4LDDc2COzjTJOnQmTOnkwqvJq9d/S4ovkSiewz9RsUbBE56i3blnIK6cfUcjlQdXkc12ZJ3PVKEvX1hBFk+lkYrrCCm1gSFU7WiWT9OdJlNEDKPZ64Xn2yhfjfY6kVe5oSeFyQizfhjAZsvhdTpcAmhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775588772; c=relaxed/simple;
-	bh=lPIilq/uq9DXQOmuPLnwo3pM67Y4HykvoJOE43Gkroo=;
+	s=arc-20240116; t=1775588795; c=relaxed/simple;
+	bh=Hq+IOJYCkw4JbDC+bBwSEX/CPKTrUlWLzyB1XTjz5/k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VpLTBqXekwHOZ6NSdARKYmNvGJz+s4Ep7FHqs6ypRd8s40UNP8AjqxIYLB1WGBqXAh3Kj2Apqs6RTJBfyGsLKCi5qQ7a57xYjB3I4TMg5REurZ2GsLlkHnMNuMf3sv2H6P8al1flZLCO1Ad/N9BedSkpfdFwqzX1+Xf2dAObU1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YMnXt+8Z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9033C116C6;
-	Tue,  7 Apr 2026 19:06:11 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=GFPBfJq/VgNzl5jPExFeyWpQEDAfpmIM2BEflGCsR6KRjm785pOJWyupnoLguD+ZXtcOjm2Ndy8GXjPLNQxj0aw5M4iVHPOqyfk3xCgsHfvc+kdu8SB5d0T0eliJAvB1VcsthQFW0zGuktPaX92CrEzPTxxo2WuK97b8LJLVGKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fpOJ6YjX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0D3C116C6;
+	Tue,  7 Apr 2026 19:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775588772;
-	bh=lPIilq/uq9DXQOmuPLnwo3pM67Y4HykvoJOE43Gkroo=;
+	s=k20201202; t=1775588795;
+	bh=Hq+IOJYCkw4JbDC+bBwSEX/CPKTrUlWLzyB1XTjz5/k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YMnXt+8Z8J/C08cmelJ1UYxDoryXXEvUAmkrIyJD4GXvtpVgxOZ2pq/j4u5HKcRl6
-	 ocdGJVDzsqtDSP1P5aw9LXfAJ+Lv1L056I//mTRvVvjD8oHzxpK3PE9pHEp/mXIoRo
-	 2pQI8gwCRh7/3feCmWITTVuZJ9hr3i62ynmWZIEfqJKIBZlHfsDWmTDBVN/AnLPaRB
-	 UUvFeI2vLTRTzz4Bp4FLvBlxoUSbLwgtlSmNMo5gmUIru95lyioKgmHZZEhsYf38xH
-	 unWtMKU3TghOrMpIigf/IY4uS/JEzzhygQim9PWQGAkizdvpnckq9fO4miM52Gj2Sy
-	 yZxiXc6Mj6XFQ==
-Date: Tue, 7 Apr 2026 14:06:10 -0500
+	b=fpOJ6YjXaLtR+iTm+8cOI4bsFzeo8smYwnwD2pj7kfNh0tHoLxj4W8ivd2+zIXSOi
+	 A1zXkd+RGA6Dl/zX3/+qsDaR7jEJO3mR0AxWETVz27E9mXPunsVMVmae8r0oleaDr7
+	 3KXwEH0YZHr/Z4egZN1eqjae9GS8z0m862fYLLSPH/GrPdtco6U2NZfJM6B8Pv5jrK
+	 SVzHrF+73zJzStcdFSrPdDnCSYGeqAfQxWYNxgHL/3Q8azyiu5Av54mVL5VqELmAvU
+	 gYckmrSLjTi6aQvV6Cv/ABWuiNsiLO+ZVQbm+BvMjQbnl/1/kQBfUFK0cvLpHhYCTO
+	 B8uPj0G0WapLw==
+Date: Tue, 7 Apr 2026 14:06:33 -0500
 From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: freedreno@lists.freedesktop.org, Alexander Koskovich <akoskovich@pm.me>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	linux-kernel@vger.kernel.org, Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	David Airlie <airlied@gmail.com>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
+Cc: Maxime Ripard <mripard@kernel.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
-	phone-devel@vger.kernel.org, Dmitry Baryshkov <lumag@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	dri-devel@lists.freedesktop.org,
-	~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-	Jonathan Marek <jonathan@marek.ca>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	phone-devel@vger.kernel.org, Simona Vetter <simona@ffwll.ch>,
+	David Airlie <airlied@gmail.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	~postmarketos/upstreaming@lists.sr.ht,
+	Conor Dooley <conor+dt@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org, Simona Vetter <simona@ffwll.ch>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-kernel@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>,
 	Krishna Manikandan <quic_mkrishn@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH v2 1/9] dt-bindings: display: msm-dsi-phy-7nm: document
- the Milos DSI PHY
-Message-ID: <177558876975.3405237.15393961747581849793.robh@kernel.org>
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Alexander Koskovich <akoskovich@pm.me>
+Subject: Re: [PATCH v2 2/9] dt-bindings: display: msm-dsi-controller-main:
+ document the Milos DSI Controller
+Message-ID: <177558879261.3407888.5748390211797594500.robh@kernel.org>
 References: <20260327-milos-mdss-v2-0-bc586683f5ca@fairphone.com>
- <20260327-milos-mdss-v2-1-bc586683f5ca@fairphone.com>
+ <20260327-milos-mdss-v2-2-bc586683f5ca@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,21 +81,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260327-milos-mdss-v2-1-bc586683f5ca@fairphone.com>
+In-Reply-To: <20260327-milos-mdss-v2-2-bc586683f5ca@fairphone.com>
 X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCPT_COUNT_TWELVE(0.00)[27];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[lists.freedesktop.org,pm.me,kernel.org,linux.intel.com,vger.kernel.org,poorly.run,linux.dev,gmail.com,suse.de,oss.qualcomm.com,somainline.org,lists.sr.ht,marek.ca,linaro.org,ffwll.ch,quicinc.com];
-	TAGGED_FROM(0.00)[bounces-102220-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,suse.de,oss.qualcomm.com,gmail.com,vger.kernel.org,lists.freedesktop.org,linux.intel.com,ffwll.ch,linaro.org,lists.sr.ht,somainline.org,poorly.run,marek.ca,quicinc.com,linux.dev,pm.me];
+	TAGGED_FROM(0.00)[bounces-102221-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
@@ -107,22 +107,22 @@ X-Spamd-Result: default: False [0.34 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,fairphone.com:email]
-X-Rspamd-Queue-Id: AED713B3303
+	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 020DE3B33D3
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On Fri, 27 Mar 2026 17:12:20 +0100, Luca Weiss wrote:
-> Document the DSI PHY on the Milos Platform.
+On Fri, 27 Mar 2026 17:12:21 +0100, Luca Weiss wrote:
+> Document the DSI Controller on the Milos Platform.
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
 
 Acked-by: Rob Herring (Arm) <robh@kernel.org>
