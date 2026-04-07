@@ -1,47 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-102198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UOOxLu8j1WlF1gcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:34:07 +0200
+	id MI7JBGQl1WnK1AcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:40:20 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id B93943B1184
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:34:06 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F62D3B1293
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 17:40:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 730F43063838
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 15:24:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2EAE33022058
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 15:34:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 060C63BC676;
-	Tue,  7 Apr 2026 15:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D536B3BBA18;
+	Tue,  7 Apr 2026 15:34:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Wuzy4eyn";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="sLWfVGyh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AFF371CF7;
-	Tue,  7 Apr 2026 15:22:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A6E316902
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Apr 2026 15:34:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775575359; cv=none; b=N8yNN1QIootkFfcs2QWq36Lx+4rEoT4ll1Cx1NmUDPf83Wx++o5kJUf0nmEglXBZ6nR507FPl9GqifD8/QhdNHPfJnnvOvpR83ircf827371jvRHGMTva1pN5AHh4L7B3/pPuw0pGcDR2EAKoKcpKb37kBlOAaOUmuzMUotBPMw=
+	t=1775576053; cv=none; b=qQW/lRBrBbcJXh2nB5f7zPFLdjbhtZUHxo7aRHdFFbfFkruO5JpgRlW2tZtqhyl88shWQIUTMh8KkMlUrCjtLNRUSO6vVprNx3ELHDTbxrzhbWNXEUIEjf1K6iEBot789C5quQboo86DSyMo+0RuRhNa6QKoKnKvmf6G8iIPD+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775575359; c=relaxed/simple;
-	bh=knKVOI6U71qaymZDGg5rCkNH2h3DJ1z6t+6jjVa1MSg=;
+	s=arc-20240116; t=1775576053; c=relaxed/simple;
+	bh=emtTneTFVkE4pjmv/p658dZ+xTb6Jw/XAktCB655R80=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GwrrDjxf5hwdggWYMSzBaNzuuTtA3pMMKDCbT5W75FOEaKh39Uth/p8BlHmwBiuWNqDKcQXrtL5+pUQoaJ5WLLPbvRxqoypQl1AlBKqMhrOIcbWyT5rjbHsjoCHN+hbZATj8sOWe1UOGUi1rFg6z2XmYVyjbLEKTGGK3KLufPn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=18.132.163.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: esmtpgz16t1775575341t63f59720
-X-QQ-Originating-IP: 6yZcCTzaiUziuNg30c2HWoO5ayfcwe6znXUb7/usZt0=
-Received: from [127.0.0.1] ( [116.234.14.100])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 07 Apr 2026 23:22:18 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 15274376702589257556
-Message-ID: <6B50CEBA165F1731+1380aab5-da45-4ce2-ae66-3d92015c1a21@radxa.com>
-Date: Tue, 7 Apr 2026 23:22:17 +0800
+	 In-Reply-To:Content-Type; b=IbjSQEp//WynTXxvZhXxYDNXea+s6emzpFvXq5XeamIHW9QLhqxYHbwqJPWpxOF37/rtD42uwyw/E3O7TjNhqVayt7HbgjJDa2IIVXtIgZe08De0vfnZFyuyY99CSRmazft76VXPDFfigIBtxtmQdQEgg3p+AwdElM/DJXhb4kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Wuzy4eyn; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=sLWfVGyh; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1775576041;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=18QRVkQOlgUM0SqdTeH58o5Qj8GUKsltIAUn2fzUV8o=;
+	b=Wuzy4eyntdRLr9IMdQi3ZBoCADEBdHqe+mgqPrlbh4Bw3oJPs/RUvLlfZUZgShDvMmQra1
+	hJ0WnJGhaUnK63cOITg9EhyLB5kTVJ94Ko+zElX9e7zIUTdgvQj032ftItS0uvQotiVOUC
+	K7v2NfDbYt4NbplkbD2qzsiO+GIX9L8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-113--2YnG1lIMtaEvR5RooQSqQ-1; Tue, 07 Apr 2026 11:33:59 -0400
+X-MC-Unique: -2YnG1lIMtaEvR5RooQSqQ-1
+X-Mimecast-MFC-AGG-ID: -2YnG1lIMtaEvR5RooQSqQ_1775576039
+Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-488be6ab870so5577805e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 08:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=redhat.com; s=google; t=1775576039; x=1776180839; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=18QRVkQOlgUM0SqdTeH58o5Qj8GUKsltIAUn2fzUV8o=;
+        b=sLWfVGyh/ddQw7rA9o2IJ2poUvnvfac5WpwUNBbmWZIfiCPJlG7w4tkm02Qx8qhFwt
+         T+D7KJLAqNnbEwlE7skZD3LdWJ7fka1J5B22TQs9D31PTRTFpT4I+icSAe8YMqqAB/22
+         HAAUjdlwaNhu1WXIXtEF9Ogn4hpwX8jLF6xFdPZRL6Xzbr+hidx9rZTcV1LPWSDFeOvF
+         0qdESVPysLA4uQLwJVUNIX/5LOohA+FYQu/87UFbV4VTRNKGvBjE1xZSTK1JvY+l7ipo
+         lxPLGN2nDExORki2eZhk13vcWNRyb61ga9HFc12i9F4NG0d7FB+rub/RYz0jTdc/K3im
+         knJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775576039; x=1776180839;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=18QRVkQOlgUM0SqdTeH58o5Qj8GUKsltIAUn2fzUV8o=;
+        b=tTlZozRv3K/63T0q6bf8D9JigzQm1VyX3Xl4CKuKVUBuu1ASPx4X6xjcHvrtofLcLg
+         aZ7WyokRUffxUn2nK7MIxIWcMvSytmucM2W+rvbTznZYQ9dM9+EkmJL/MERqUtJ6ivaV
+         C4PJDfEhBsTFVWL7jrs/GBVpeN8VD9fcezA6Ld5MrRL+l1i+/NyBkWqNtA5TLA3pbkw9
+         m236xDgCPU5bSyrKumpc/Stx88ps3QWZmIAZNs2PtUIook3kqgoa+90hml/IbISs8m/r
+         elxqgzj3IU9mYkcp//nPRhrZ2W0sUcAFsJGWjQ+hcg7ZlkOFBRU7YdeSbyRl9CkQCeNb
+         Jg4g==
+X-Gm-Message-State: AOJu0YwBb6yeDpwZWaasUxfDSMMOw5/uiQJHMcclT6PNwKiriD9dLXXB
+	qPBH2D5QG8x/ZysTCmTKCzQA/u1cw2kaikfDp+grv7CoefkLySPe/cKRphNZ5++HtMvIaswO+cl
+	MvGThA3zPeSkoRrznHfA5tM8X05a2c9pIcdG0Hlq0GLirEmaPzUApIEBVSXD0GMae4LA=
+X-Gm-Gg: AeBDietlLcziKOEbyC8xvXP+KXL0RCs/dpdQSbVT8ECfAL0XHwJWpuwDHkgf8jpg5T4
+	53/Yi7gwQ12cNS0IZUt/z5ozP7qVxicinzIp3SNE3T2T1AWtmN0CCqklRil8L+fHSffwDoYw0aH
+	idBHRQjuY8KdYd1tXf8PwrZbsH7PYG+acAxZqZG5P7h01rwuo7OwA01UtUfmmCi5qNioyIiYEze
+	cW2RCHkAx6ITajvn6poKT4F7CvV3pkkgn0pxvICGDwQnE6rYY+9I2k9dzp0nbnfxTVavQYd+jWs
+	4xeLs1JL0PLkG0zkYVD7z+SJiGm+cqspUGNFScKusFllzVD3hL1pLuFdCOk5msibs2UYpY0YEKy
+	S2FolFFuoQlbfuvheBpculJipa75YPzjgyeUgFOVP/FkI2/eHXvT+5qUFOQ==
+X-Received: by 2002:a05:600c:5292:b0:485:ae14:8191 with SMTP id 5b1f17b1804b1-488996d2309mr260481565e9.5.1775576038149;
+        Tue, 07 Apr 2026 08:33:58 -0700 (PDT)
+X-Received: by 2002:a05:600c:5292:b0:485:ae14:8191 with SMTP id 5b1f17b1804b1-488996d2309mr260480235e9.5.1775576037144;
+        Tue, 07 Apr 2026 08:33:57 -0700 (PDT)
+Received: from [192.168.88.32] ([212.105.153.231])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4887e83682fsm588473115e9.7.2026.04.07.08.33.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Apr 2026 08:33:56 -0700 (PDT)
+Message-ID: <0ab00cb4-8335-472d-b43e-3bbd99b41480@redhat.com>
+Date: Tue, 7 Apr 2026 17:33:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,155 +104,118 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 0/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
- Q6A
-To: Andriy Sharandakov <ash.ashway@gmail.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>,
- Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
- Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-References: <20250912-radxa-dragon-q6a-v1-0-8ccdbf9cd19b@radxa.com>
- <56b5bacc-7214-41aa-b969-4f622afcd9f9@oss.qualcomm.com>
- <103424579111FE76+93c3daf1-4bce-440b-9048-74edb833031e@radxa.com>
- <cc8ba407-1d44-419d-9171-b6911f673772@oss.qualcomm.com>
- <9f04ae8e-e15a-414f-a436-987d02d31cdd@gmail.com>
+Subject: Re: [PATCH v2 5/5] net: qrtr: ns: Fix use-after-free in driver
+ remove()
+To: manivannan.sadhasivam@oss.qualcomm.com,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Simon Horman <horms@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20260403-qrtr-fix-v2-0-f88a14859c63@oss.qualcomm.com>
+ <20260403-qrtr-fix-v2-5-f88a14859c63@oss.qualcomm.com>
 Content-Language: en-US
-From: Xilin Wu <sophon@radxa.com>
-In-Reply-To: <9f04ae8e-e15a-414f-a436-987d02d31cdd@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Paolo Abeni <pabeni@redhat.com>
+In-Reply-To: <20260403-qrtr-fix-v2-5-f88a14859c63@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: OKKHiI6c9SH3TL/0m7PbPb419A7vEICcxHGKXTIILwnpEfcgGhSEmRjF
-	Uz2ink4zT3rxJ/++eRepP6vsdnFGZ0xLR9LFRAatpryvoQ/M2pd0tuZBw4/+iyUnu7Iqten
-	xtpRJwRkiJm61ArS3zTs9delrtsw3G6Cv+Nt/kCmRkBbdBrI5+TAsM5Oam+uH9jZwi7Ve5k
-	0ERswNhVeX9DT50q3KlN5vNRansyyuSmd1NPmYkwqdE0e4c0bvnoUBriAoMLmdraiJUn1BE
-	BpQiafo39IiAjqHy4M5/Y/9Z3rRfQBlm+vllnb7/aGWHsFYleV3iQ+bhpwbumQamtQ4ACPr
-	M4kGnVBduJz2NeJOVbPQ+yZxGz7ORAbByUEFHS3VRpbGYgjoYwztehONKbHycllNqRW+PLE
-	PbTbluVUTQ5vOJnIEYzaJR20ELzzR6lREksF5rlNKtdLcuzR6kUb3a79UDY9kYsGQaGzcB6
-	6d38uZ/ayzu99mqsbfFwDAVg00R+R4kFIuTChmFlhYIz42ImHpxV2m15wMgGEnTMGCxWbNa
-	nK48DBWA8CqH4i1h3IxZiFtBZgdc1+jxoN852kFRsQlFQzq1QqLyGEGx1+ph1uApedbsh7v
-	2MIGY4t3WBoVJzRdci/1It6DUc16RTzS45iasSXhZHAVrCHQ0K6YJDyxeqlvaByTMeemErJ
-	uFHuuyfbN4HhBZ8+3N827RFapKc/0uHPsjDJY3APYCwj2ZMZEGfrEDUc419+Oned+rUJu8D
-	wh32CYRieIErErgrzYHbw8a+ZwFe02bJhnLTukCFVrVeyQU9U/TWn6NupFGdlOlF52GjvFo
-	Ue78PxbPov3oFZiICnHSbUVq6akQJ6iYHBiFO87tUFLzO55EF1+JNwpsD7bfzDJM0HhbvnH
-	eUPVHuMF4LM7H83P46aySDrCPx6gJaXngvOwzzNfq0JvohEjJ8eTvJHAqNqUBB2qxe8bP1u
-	1zM3j8YGRHEuOS4D12WJu25a/Yp0Dqs+vrdAuZZ6ONMA9iEg4WmDAX+STW0nDXeTSkRnvjt
-	vx5+Ab6LEHN7wbScKIa8MiMqwWTh20J5rltg1gSortbZ/5JWukAHJfoJgpqk8=
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
-X-QQ-RECHKSPAM: 0
-X-Spamd-Result: default: False [0.14 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,oss.qualcomm.com,kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-102198-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.867];
+	DKIM_TRACE(0.00)[redhat.com:+];
+	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-102199-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
-	FORGED_MUA_MAILLIST(0.00)[];
-	R_DKIM_NA(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[pabeni@redhat.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[radxa.com:email,radxa.com:mid,radxa.com:url,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: B93943B1184
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,sashiko.dev:url,qualcomm.com:email]
+X-Rspamd-Queue-Id: 5F62D3B1293
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 4/7/2026 6:16 PM, Andriy Sharandakov wrote:
-> On 12.09.2025 11:15, Konrad Dybcio wrote:
->> On 9/12/25 11:04 AM, Xilin Wu wrote:
->>> On 2025/9/12 16:56:04, Konrad Dybcio wrote:
->>>> On 9/12/25 10:03 AM, Xilin Wu wrote:
->>>>> Radxa Dragon Q6A (https://docs.radxa.com/en/dragon/q6a) is a single 
->>>>> board
->>>>> computer, based on the Qualcomm QCS6490 platform.
->>>>>
->>>>> The board ships with a modified version of the Qualcomm Linux boot
->>>>> firmware, which is stored on the onboard SPI NOR flash. This allows
->>>>> booting standard EFI-based bootloaders from SD/eMMC/USB/UFS/NVMe. It
->>>>> supports replaceable UFS 3.1/eMMC modules for easy user upgrades.
->>>>>
->>>>> The board schematic is available at [1].
->>>>>
->>>>> Features enabled and working:
->>>>>
->>>>> - USB-A 3.0 port (depends on [2])
->>>>> - Three USB-A 2.0 ports
->>>>> - RTL8111K Ethernet connected to PCIe0
->>>>> - UFS 3.1 module (depends on [3])
->>>>> - eMMC module
->>>>> - SD card
->>>>> - M.2 M-Key 2230 PCIe 3.0 x2
->>>>> - HDMI 2.0 port including audio (depends on [2])
->>>>> - Configurable I2C/SPI/UART from 40-Pin GPIO (depends on [4])
->>>>> - Headphone jack
->>>>> - Onboard thermal sensors
->>>>> - QSPI controller for updating boot firmware
->>>>> - ADSP remoteproc (Type-C and charging features disabled in firmware)
->>>>> - CDSP remoteproc (for AI applications using QNN)
->>>>> - Venus video encode and decode accelerator
->>>>
->>>> You have a number of features that depend on several other series, and
->>>> as Krzysztof pointed out this is difficult to merge/review.. Could you
->>>> please create a "linux-next/master-ready" version of this series and
->>>> separate the changes for which the dependencies are unmet, putting them
->>>> at the end? This way we can take at least some of your diff.
->>>>
->>>> If you still want review on them, you can also send them as [PATCH DNM]
->>>> or so
->>>>
->>>> Konrad
->>>>
->>>
->>> Thanks for the suggestion. I think I can separate the changes that 
->>> have unmet dependencies, and mark them as DNM. Can I send the new 
->>> series now, or am I supposed to wait for a few days?
->>
->> Since we can't do much with this one, please apply Krzysztof's review
->> comments and tags and feel free to resend
->>
->> Konrad
+On 4/3/26 6:06 PM, Manivannan Sadhasivam via B4 Relay wrote:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 > 
-> Xilin,
+> In the remove callback, if a packet arrives after destroy_workqueue() is
+> called, but before sock_release(), the qrtr_ns_data_ready() callback will
+> try to queue the work, causing use-after-free issue.
 > 
-> The prerequisite for the "USB-A 3.0 port (depends on [2])" feature has 
-> been added - https://github.com/torvalds/linux/commit/ 
-> f842daf740114a8783be566219db34c6a0f1d02c
+> Fix this issue by saving the default 'sk_data_ready' callback during
+> qrtr_ns_init() and use it to replace the qrtr_ns_data_ready() callback at
+> the start of remove(). This ensures that even if a packet arrives after
+> destroy_workqueue(), the work struct will not be dereferenced.
 > 
-> Could you please check and resend the USB 3.0 port feature?
+> Cc: stable@vger.kernel.org
+> Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> ---
+>  net/qrtr/ns.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> Thanks.
-> 
-> Best regards,
-> Andriy
-> 
-> 
+> diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+> index dfb5dad9473c..c62d79e03d64 100644
+> --- a/net/qrtr/ns.c
+> +++ b/net/qrtr/ns.c
+> @@ -25,6 +25,7 @@ static struct {
+>  	u32 lookup_count;
+>  	struct workqueue_struct *workqueue;
+>  	struct work_struct work;
+> +	void (*saved_data_ready)(struct sock *sk);
+>  	int local_node;
+>  } qrtr_ns;
+>  
+> @@ -754,6 +755,7 @@ int qrtr_ns_init(void)
+>  		goto err_sock;
+>  	}
+>  
+> +	qrtr_ns.saved_data_ready = qrtr_ns.sock->sk->sk_data_ready;
+>  	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns_data_ready;
+>  
+>  	sq.sq_port = QRTR_PORT_CTRL;
+> @@ -803,6 +805,10 @@ EXPORT_SYMBOL_GPL(qrtr_ns_init);
+>  
+>  void qrtr_ns_remove(void)
+>  {
+> +	write_lock_bh(&qrtr_ns.sock->sk->sk_callback_lock);
+> +	qrtr_ns.sock->sk->sk_data_ready = qrtr_ns.saved_data_ready;
+> +	write_unlock_bh(&qrtr_ns.sock->sk->sk_callback_lock);
 
-Hi Andriy,
+Sashiko says:
 
-Thanks for reminding me. A new series has been sent just now.
+---
+Does this lock adequately protect against concurrent callback execution?
+In the network receive path, __sock_queue_rcv_skb() typically evaluates
+!sock_flag(sk, SOCK_DEAD) and invokes sk->sk_data_ready() locklessly,
+without acquiring sk_callback_lock or being in an RCU read-side
+critical section.
+If a thread processing a packet fetches the qrtr_ns_data_ready pointer
+and is preempted, could it resume and execute the callback after
+qrtr_ns_remove() has already finished destroying the workqueue?
+---
 
--- 
-Best regards,
-Xilin Wu <sophon@radxa.com>
+There are more remarks from sashiko:
+
+https://sashiko.dev/#/patchset/20260403-qrtr-fix-v2-0-f88a14859c63%40oss.qualcomm.com
+
+AFAICS they are pre-existing issues or false positive, but please have a
+look.
+
+/P
 
 
