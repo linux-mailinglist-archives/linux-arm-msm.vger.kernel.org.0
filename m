@@ -1,102 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-102160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UC2nErsA1WnOzQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 15:03:55 +0200
+	id cLtrNt8A1WnOzQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 15:04:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C18983AECC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 15:03:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 61DAD3AECDD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 15:04:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1182430372E2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 13:03:26 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5EA98300AC24
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 13:03:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54A963B6C00;
-	Tue,  7 Apr 2026 13:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C11913B6C1E;
+	Tue,  7 Apr 2026 13:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="H22OXZ5d";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Pl6F8mjM"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IWO+Br8j";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="iCz5pe9i"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2ED39EF1C
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Apr 2026 13:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C883B7759
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Apr 2026 13:03:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775567004; cv=none; b=sHDKXeOtKmKk0q8Y2Xe4OJp2uXDqRY8MExh/z2WNe7LWt7QpX8XC6Q/Gqnsiw5p7OhPejVp/40bMcWxju7/KqZKyQaRsSJ7br436xZUjsuMYRYYeCHCNAcb4arZOdceE7K6l+Q7cIfuUQ1oZOeu+xmz7ljF6+LeGSS0w96aiJ+8=
+	t=1775567011; cv=none; b=PnO3MI4Jefm921Nawjvg0LinS9p+dASR0SgC1HlSCvQcyT8XwnI3B9Tq7cwB5AL/Nvg0Y23RX2LkXfZE4EemOjKpYAirkqiuD1hJA/zITpcHkaQIB2WHeK/FMeloYnWoGrg7x7CZrE27todIg5usto4DTGycMsqHli8PNP90qLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775567004; c=relaxed/simple;
-	bh=bbZHPBwF0Y3DBIKbxtiScwcSKdeSgmMbid936OxbnBU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pkHRI64HfIAk3va8U/HzJrhQkci7hh1vcGtrEa/NFwMXjWojgDxDzn1SPlyF1k2d8ukHnzuT6/pGB+CTLPhUywzb0tLhuc+4i4whbQEXmwu8rLSw1+JCzWmRF0488BTbFuelfBb6VMZrJ49NoqSMghrIgOjl1GNJnEwxeLloytw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=H22OXZ5d; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Pl6F8mjM; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1775567011; c=relaxed/simple;
+	bh=77/I314LVY80VJYVakANAJH+wffpPLweMyKMYg0Una4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=sxXBRlRsQcjEkiIkbto349orJwbav7RaS8Wk11S9vfmJSaFkrgoxsJrOlpjqR6Wi4L/Ay7yvYAEdRnOYDMO6A3F1OCddfyGdeJm/9OPepOhCE9WeX2e1KxlSa3R/SE+B/bjf3s2z5lSPEbTqqzizCFcZascaPoYxbXZX9k0RG2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IWO+Br8j; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iCz5pe9i; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 637CCVjW492547
-	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Apr 2026 13:03:22 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6376X4wb2327732
+	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Apr 2026 13:03:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=EWfiOTUoMlsU2KnUtPmDzh
-	DH5pQC5b/7NcEX/ql4yZI=; b=H22OXZ5ddH0SJQY6Os/LiT+625TJYyTYzyuCUF
-	TZYWDMdjkRSss8plmfoBBM6Ng0i4A5guCSGs+sa4gSNwDhOFAu+3JiMniPXH3UTh
-	bsBbSFTvJ3CR5jFXLQoSwtbnauWHZC/PQufPKl20d5fyCs4taQXytVpy1hsoJQsq
-	RrmI7M340+JMnJwSk7L1gpveK7m9JWIiLA3xqwFNN1MU60G91y/iNuFfQcS6QVCq
-	CPQM3puRQiVGnTzq2uRTkcSQei1fTW7H577bcuLYgOAbq+btq9S6fmFwz2uT4fMy
-	DptwRqFxYGK39BkfcD26NhnNMAwvM4uCnfvgQdyTy4BlP+qg==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dcmr8trk3-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xkmg3F6NSFziMg5x7zcfPohfxWa2M+zq+HuSXMlQHbo=; b=IWO+Br8juXfi2GMw
+	0IKkHEoBDywwCfX6efs6+f1+rQqegHIh85G20uAZ0uuoPeRiYz2n40wE5vaCMBXS
+	ar97iG62w1tGd+Dh+yEQGMi67d6zt8x/scdL5surl/JrjnDqd4WVZaoRq7QMg5xx
+	usIhv76hAZYFh7/3l+8ssdpAv0gqZ0qGSEuBsJaKCuFsbrJL65cvqC7nJ654KUmP
+	npN8/89e96MwZqJPhv9tX3AzKEgGbYhKmexXkhG4r39seWlGDFfOTrtyfnj3YC4B
+	WbAq0DdY//I94CsYUXpawV7xoKKXyXCW3nw1GZERMlAnGc4RHw9vEiQ8bult3+qB
+	7/LClQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dcms4tssc-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 13:03:21 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2b24305cb3cso60983405ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 06:03:21 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 13:03:26 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2b2523e0299so125355405ad.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 06:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1775567001; x=1776171801; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EWfiOTUoMlsU2KnUtPmDzhDH5pQC5b/7NcEX/ql4yZI=;
-        b=Pl6F8mjM5It+LLzKP/hXPSmky/0JW1PY9B0nYQ+dqiljHBExdmWIH7t/dsGNxXF3O0
-         1xD5SfEIkIBGqwUCrqBJ0iHV7GnKBN0EZs3J5tdoZ6WHt1v0x6kTkTyW4qdKrqNXVzxW
-         hR9DYnkvQtpxW+SvQl406c11EAXnaBHjk8YRv9OY9n1G2PqcplwUy02VbpWE/O/xKst/
-         RdpEm17fdDHXjAEwajpm5mzVB8lz7u3A55Kpzn18JnwhvHJYerd5Xkkpe18aKH6I6N0f
-         WEAbu5jeC61uX8Ujp+Vkl6aGiUfbt9XtSHoVF+RreyqQmUGKL1vPy2SzJW2CI8ILTlF9
-         Yo7w==
+        d=oss.qualcomm.com; s=google; t=1775567006; x=1776171806; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xkmg3F6NSFziMg5x7zcfPohfxWa2M+zq+HuSXMlQHbo=;
+        b=iCz5pe9iLbrG5YtAVN2sTZ7XiukMekq98A+M4TxRugVpnK/rx1ArlvKmJzBeOBqFUA
+         +MIBNSMJU8fj9CVyOtKWUceMtereHeP/3Lp2nUoeUZmNSIH7C2SKKK+x1OQEn0dn+ZCF
+         9BJo62GOE6Wz1/xiYNy3e38dQc02Rrm/CMwG08TmgDZZiDZl6zHmj7P54DccXP7xqDCA
+         GIPlpgArOdLZWiL900kjS2Aojh9fMEjAuhkWMpoVHq9WKQjomZ7mm86a7Q5KbemI082l
+         h2NcSJi8YiiJ+UdESNdXPiNsUQitYUj4oPM4vGSTPhyy4EO2I1j03modFBd6A6vJbkY4
+         2w/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775567001; x=1776171801;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EWfiOTUoMlsU2KnUtPmDzhDH5pQC5b/7NcEX/ql4yZI=;
-        b=DM9aJGxDTu2yADbi9lT4xuZVrHsf/83dO8LO77Peh1tdXDQdc3I32rDP3mIJGQX9LF
-         /ct9GZTQGoB72oLuNNi6IRjKEcv37J2Cx7cqovzweTZ8xv7V1QDHjCwGYgCulOn+FyAg
-         6/2wBvdR+VN2om2AEbkhdwaRkqpV489bYFh2UM65hGihnR+59Y86nOhoG1sMMXz+qn61
-         O6tVaKVzY8GycBeuBz8tBIUbm1nxWfFs1PY0YIIR/+QCMik/6q0aIChMalIx/VdnNTaO
-         f9Qm1/zCMXwEk3hitEEpninDyjB4YdVdZpGLuMjy21AK8LW9iZvqWZ80qYla8S0FZaBa
-         UMBA==
-X-Forwarded-Encrypted: i=1; AJvYcCVPvvuBuq5sySa+LwcGBWlcDALHXcfIu2wnBGdizn5ng8tY3XDg4rtIC+VT/I9AD2D4qBksH5kyUbnLT7i9@vger.kernel.org
-X-Gm-Message-State: AOJu0YybPzCS6A+vnUaBvrQGBOFL79Kw+yrU4Kcbaub/4EF8F2bNPFvB
-	kJQxwPGMMmg+AQ3lfzKytjYK7k40zOA8WUYGKm3gWeDR7VRubEyo1gpHEpb8wgeF3G+AuhACey9
-	KJ5W0DtUueojwcxv0pUWQvw+U7r/i+FssWTo2r/t8Vpl+eSOIsd5NDYquFN2BgACx9bJD
-X-Gm-Gg: AeBDievmtGza//z6OsfHgW7nYT5HmLXL1lK6OX1EAz2AudkHpU2DekPGPxAFmleZ25a
-	M7p7pJ0lMJLzzzMiJf1sHYdm5pYfBBe3Yg7u3XXqlfvoEa/VI6sAX8wWTeFO1guJD/m87fggxqR
-	AC8Rta0R17eAaKGotyjwp8ewlsoHHua7JtqKBgmGIDiN3e5LbAjwlYcM9OrzNGgkOLDucRnuc2R
-	CC17lmCjNCbGCwibzBT8bTGzIOHttMbu1e2tBeHg3VeawPan2AoNjG9KDK7aO3as2LZ3sDe/r5Z
-	jPbVavetNCcqYHk5PDXyhXaXOPak8Gfy26G9AaH1HS9hjj8l7KJZOoq0ngM990ymccuLvoQ1WJ6
-	OoLBLzC0x0NMwzeKA0Z+Z0/7fjqCR+pw/VjYqKa522eTfvzltNPAzLO1A
-X-Received: by 2002:a17:903:1b2e:b0:2b2:4a9a:b149 with SMTP id d9443c01a7336-2b28164b6a8mr163831765ad.9.1775567001076;
-        Tue, 07 Apr 2026 06:03:21 -0700 (PDT)
-X-Received: by 2002:a17:903:1b2e:b0:2b2:4a9a:b149 with SMTP id d9443c01a7336-2b28164b6a8mr163830075ad.9.1775566999609;
-        Tue, 07 Apr 2026 06:03:19 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1775567006; x=1776171806;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=xkmg3F6NSFziMg5x7zcfPohfxWa2M+zq+HuSXMlQHbo=;
+        b=Ikqpz+6I/VIIXuVDIBJjo75pCVZP6+upejO32mWa2CjN8TDbrCLNeXAGRCIBbcQsmu
+         bHr9i1dM5t5mYQhFiT17TDKB4AanykFjBZ+4KHtZSA9OY41HBh59FHD4/0bEblbgYo7u
+         +xoUY1CMPnPojTB3oYJ2XTXZb1MLXYAJq7CeZzheBv+AfMbFuq7vTVUDIkGIOrqx4d7+
+         qk4mDW7E1hLddaIDWdTgwFoYXvz1uRdMrbEGlw5W7sKDnkmvxfx7SWZ0r9B7Lz4ZVKDo
+         59vrAn0pgEkNXVwrmhoG6oWaqC/w/wefNcf+6G9MUm0IisS0JcV+q0TunFanENHMrFQq
+         cWgg==
+X-Forwarded-Encrypted: i=1; AJvYcCWu4IS9zi36ViSLja22iXnB8Quizpp9Y627QhXQN+2NobZzDqMhXb9CQfxtRVbmtE2jegwH482V8BNZdvxZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwuIRZ9dbf2YLB5R9oHmlVWxEid/RQQPNFRrf5XwHpkcYaTEMQK
+	oDJwo2t7updQnPs9CMYUO4Rog1jG5B6r8cLnJndGr164tAIKOYu866l05Rpnw75U+UyO0FkKklH
+	0yUiZbeXZwKC3w2ByRamrUhQxJfz+aUr6ffyT+Ii6ZPuq+iHaFhHG1XqSPmZkarhqr8+Q
+X-Gm-Gg: AeBDievhkyv3+K+DvQutVsqrJyxey6gulKd4zyj3GMhqFDhfCQSFmqosslO8ljkPZUa
+	3RtdHpuZFmct0fBajw+TtRNHlFoIlSYCJNelNOqv8DgtvxWFo9RzUHYzS1VLsH7GjvAkb5UXKPy
+	If8Ob18QhcehBpdEcXcHMrA6v0FV3je/eO5T+eYTB5EmF9oaSkIDna5a417U1KuhV/AYy9HCYi+
+	GQjfuA4f5l9fgCUR8n7+69XftaKuFYhlVBJb97FryZ6ZQYD2waZCFzC+H1Argk1JQAZP9MuGrmc
+	QMpXUshvpZemfEHxjk5YUsQoQH6QAUsnxW7LuBMll/TwainNfzZef4JzBdFFUQM6Vj91Dgp0akf
+	5PjLwbHJWzgSQZVLfyOIyl1Ar3KUXtLKkAOZbYUYwWQQPYj5/qUWDMIIs
+X-Received: by 2002:a17:903:910:b0:2b2:4fcc:2687 with SMTP id d9443c01a7336-2b2818014a4mr185891115ad.31.1775567005727;
+        Tue, 07 Apr 2026 06:03:25 -0700 (PDT)
+X-Received: by 2002:a17:903:910:b0:2b2:4fcc:2687 with SMTP id d9443c01a7336-2b2818014a4mr185890375ad.31.1775567005020;
+        Tue, 07 Apr 2026 06:03:25 -0700 (PDT)
 Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2749794e8sm181564885ad.53.2026.04.07.06.03.15
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2749794e8sm181564885ad.53.2026.04.07.06.03.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Apr 2026 06:03:19 -0700 (PDT)
+        Tue, 07 Apr 2026 06:03:24 -0700 (PDT)
 From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: [PATCH v4 0/5] PCI: qcom: Add D3cold support
-Date: Tue, 07 Apr 2026 18:33:07 +0530
-Message-Id: <20260407-d3cold-v4-0-bb171f75b465@oss.qualcomm.com>
+Date: Tue, 07 Apr 2026 18:33:08 +0530
+Subject: [PATCH v4 1/5] PCI: host-common: Add helper to determine host
+ bridge D3cold eligibility
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,12 +107,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAIsA1WkC/3XM3w6CIBiH4VtxHIeDD1ToqPtoHci/ZFMpKVdz3
- nvolp7UCduPfc87oWgHbyM6ZhMa7OijD30a/JAh3dT91WJv0kZAoKAAEhumQ2uwclJKoLIkSqF
- 0fBus8681dL6k3fj4CMN77Y50+V0SJaEgvomRYoKNEY45oq0Afgox5vdn3erQdXl60FIaYddAq
- 01D0kIqBiBKTjj7o9muGaWbZklzIwqjKw2lLH7oeZ4/GYnYOx8BAAA=
-X-Change-ID: 20251229-d3cold-bf99921960bb
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260407-d3cold-v4-1-bb171f75b465@oss.qualcomm.com>
+References: <20260407-d3cold-v4-0-bb171f75b465@oss.qualcomm.com>
+In-Reply-To: <20260407-d3cold-v4-0-bb171f75b465@oss.qualcomm.com>
 To: Jingoo Han <jingoohan1@gmail.com>, Manivannan Sadhasivam <mani@kernel.org>,
         Lorenzo Pieralisi <lpieralisi@kernel.org>,
         =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
@@ -120,35 +121,35 @@ Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
         jonathanh@nvidia.com, bjorn.andersson@oss.qualcomm.com,
         Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775566994; l=4316;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775566994; l=5037;
  i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
- bh=bbZHPBwF0Y3DBIKbxtiScwcSKdeSgmMbid936OxbnBU=;
- b=qB71aTfgISqqMCT6mCJwX0p5orSaap73x00G+PAaNBw94RsyjSLRYSvbPHid5mkc7BTNk2a1a
- GsosDzP4BIOArgbVzPjURXPk3AYKV286hmCaS8667ujUbbc2zZlgn5c
+ bh=77/I314LVY80VJYVakANAJH+wffpPLweMyKMYg0Una4=;
+ b=r1GJebOmyKQ4qtkufVQselEhGDrMwX8o8kZA/JGziIc9JLDm5oPUn77lbC9tpF24nWy2xQMbi
+ 0/q3x7aBMOHBF27p39O+NVYefOdrvXo2B2Lt545T5xRzzwSkpKUXMoR
 X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
  pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-Proofpoint-GUID: Dp9XIaEhbKS6HSLh0h1eBhOgbhCxgUJT
-X-Proofpoint-ORIG-GUID: Dp9XIaEhbKS6HSLh0h1eBhOgbhCxgUJT
-X-Authority-Analysis: v=2.4 cv=c9abhx9l c=1 sm=1 tr=0 ts=69d50099 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDEyMSBTYWx0ZWRfX1b+SpEiAGtKg
+ o5XY1ITQk0VqvOYVAA/eZTI14lVEOvdMtXsLE1PLlV+l6O04zvmB3dLvlHmwcYW4lI27aDfDyeS
+ xJfBWo7H4J/XiBuvIblMPtOfl6Yqt4wRKm8ASEAO/wo7yCmBsbsco9P38+uvzhPIJ4/kMwj5tBL
+ E1ggGutcj/xd5gfZrSS+BN/KBNcUdMn55wIkJvQlCeMyYt1DkwhfKzEnGy1/4N7pQ2QdaXuBLgx
+ 61V9miU8+Ncm+Cn9Zl/xvxyvYobTiayqd03ZWpAH2wNPEN/I7a9xAC2kGODp+L45HiZTaWfbc8I
+ odXRJ/oo1jPDSHC3cy1Brsy80GI2FBzlBwuNYY4oacPN772gjzsxeGvponYz1tCRDXlZP/DaNLd
+ MtIVHsBAeON0z6+X9S65H5ODXC+HRqfxgAMnti5NahGdUKJJrVZUzQQR/kw2o0c0s/WUYgdecSI
+ OJaJ6YTtpIjITb4hzLQ==
+X-Proofpoint-ORIG-GUID: I2_64nkfIGgpLoJ9JYlbHsux6yXl8azA
+X-Authority-Analysis: v=2.4 cv=WNZPmHsR c=1 sm=1 tr=0 ts=69d5009e cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=Z0v7mYVB04eUNMBhXUoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA3MDEyMSBTYWx0ZWRfXx2ZGO83TxkEf
- LI0g4WHLlQN0uKUDmMW7L6oHtU/yK2sG4S7zh5KUyOGUmxVIuatDc5cuO9Gj29aJe0qZUzK4L9C
- 9nuK4f/w4wSY8ipipcz4fgZiMpX6h90e7Kju3vpN0dDCXCICwC1QFzOnvCfnk296CuMsxfqWgWS
- 1dYdduwiZEkI9oBXisl738Pr3lY2Jv2TbmxrOCPRrRxoK6vxTLFtVgTn322HBddKnGnvh/heysV
- 52wUtO0ZnXLQxpQWJu3bOnyQ1kuw+4nDtsCZ9sZBEl07FiQWWGF8Ty3WfXL3Km+i3Mh87vZnMoj
- lh4r9oOwN002h2jUh6HclAqLtY+k4QTPfCh0ZBD2+Y5bO7dKhe6cP3Ohu2plhvDPYHWwV0l1B4Z
- 2h0DW93xRK2EEb5x2lgh2tTNcghEBb4eyiBkPqMVxGeHv+qv1NGoCt+6fFglu9YwiBKwzO05xUp
- NK2f7ZgIw2nnef9gknQ==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=w2i6tlqj-xX_7Oe5WM0A:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: I2_64nkfIGgpLoJ9JYlbHsux6yXl8azA
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-07_02,2026-04-07_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 adultscore=0 suspectscore=0 priorityscore=1501
- bulkscore=0 spamscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 spamscore=0 impostorscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1015 malwarescore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604070121
 X-Spamd-Result: default: False [-2.16 / 15.00];
@@ -159,7 +160,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-102160-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-102161-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_TO(0.00)[gmail.com,kernel.org,google.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -167,7 +168,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krishna.chundru@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
@@ -178,103 +179,137 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: C18983AECC5
+X-Rspamd-Queue-Id: 61DAD3AECDD
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-This series adds support for putting Qualcomm PCIe host bridges into D3cold
-when downstream conditions allow it, and introduces a small common helper
-to determine D3cold eligibility based on endpoint state.
+Add a common helper, pci_host_common_d3cold_possible(), to determine
+whether PCIe devices under host bridge can safely transition to D3cold.
 
-On Qualcomm platforms, PCIe host controllers are currently kept powered
-even when there are no active endpoints (i.e. all endpoints are already in
-PCI_D3hot). This prevents the SoC from entering deeper low‑power states
-such as CXPC.
+This helper is intended to be used by PCI host controller drivers to
+decide whether they may safely put the host bridge into D3cold based on
+the power state and wakeup capabilities of downstream endpoints.
 
-While PCIe D3cold support exists in the PCI core, host controller drivers
-lack a common mechanism to determine whether it is safe to power off the
-host bridge without breaking active devices or wakeup functionality.
-As a result, controllers either avoid entering D3cold or depend on rough,
-driver‑specific workarounds.
+The helper walks all devices on the all bridge buses and only allows
+the devices to enter D3cold if all PCIe endpoints are already in
+PCI_D3hot. This ensures that we do not power off the host bridge while
+any active endpoint still requires the link to remain powered.
 
-This series addresses that gap.
+For devices that may wake the system, the helper additionally requires
+that the device supports PME wake from D3cold (via WAKE#). Devices that
+do not have wakeup enabled are not restricted by this check and do not
+block the devices under host bridge from entering D3cold.
 
-1. Introduces pci_host_common_can_enter_d3cold(), a helper that determines
-   whether a host bridge may enter D3cold based on downstream PCIe endpoint
-   state. The helper permits D3cold only when all *active* endpoints are
-   already in PCI_D3hot, and any wakeup‑enabled endpoint supports PME
-   from D3cold.
+Devices without a bound driver and with PCI not enabled via sysfs are
+treated as inactive and therefore do not prevent the devices under host
+bridge from entering D3cold. This allows controllers to power down more
+aggressively when there are no actively managed endpoints.
 
-2. Updates the Designware PCIe host driver to use this helper in the
-   suspend_noirq() path, replacing the existing heuristic that blocked
-   D3cold whenever L1 ASPM was enabled.
-
-3. Enables D3cold support for Qualcomm PCIe controllers by wiring them into
-   the DesignWare common suspend/resume flow and explicitly powering down
-   controller resources when all endpoints are in D3hot.
-
-The immediate outcome of this series is that Qualcomm PCIe host bridges can
-enter D3cold when all endpoints are in D3hot.
-
-This is a necessary but not sufficient step toward unblocking CXPC. With
-this series applied, CXPC can be achieved on systems with no attached NVMe
-devices. Support for NVMe‑attached systems requires additional changes
-in NVMe driver, which are being worked on separately.
-
-Tested on:
-  - Qualcomm Lemans EVK, Monaco & sc7280 platforms.
-
-Validation steps:
-  - Boot without NVMe attach:
-      * PCIe host enters D3cold during suspend
-      * SoC is able to reach CXPC provided other drivers also remove
-	their votes as part of suspend.
+Some devices (e.g. M.2 without auxiliary power) lose PME detection when
+main power is removed. Even if such devices advertise PME-from-D3cold
+capability, entering D3cold may break wakeup. So, return PME-from-D3cold
+capability via an output parameter so PCIe controller drivers can apply
+platform-specific handling to preserve wakeup functionality.
 
 Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 ---
-Changes in v4:
-- Added new argument to the API to know if there is any device with
-  wakeup enabled and pme can be generated in D3cold. we need this info
-  to decide to turn off power to device or not.
-- Couple of nits in commit text (Mani).
-- Link to v3: https://lore.kernel.org/r/20260311-d3cold-v3-0-4d85dc7c2695@oss.qualcomm.com
+ drivers/pci/controller/pci-host-common.c | 63 ++++++++++++++++++++++++++++++++
+ drivers/pci/controller/pci-host-common.h |  2 +
+ 2 files changed, 65 insertions(+)
 
-Changes in v3:
-- Changed the function name from pci_host_common_can_enter_d3cold() to
-  pci_host_common_d3cold_possible() (Mani).
-- Couple of nits for commit text, newlines etc(Mani).
-- Removed -ETIMEDOUT check and added -ENODEV & -EIO(Mani).
-- Link to v2: https://lore.kernel.org/r/20260217-d3cold-v2-0-89b322864043@oss.qualcomm.com
+diff --git a/drivers/pci/controller/pci-host-common.c b/drivers/pci/controller/pci-host-common.c
+index d6258c1cffe5ec480fd2a7e50b3af39ef6ac4c8c..34e4c4c1d8c0fdead3e714525a497b722a41392e 100644
+--- a/drivers/pci/controller/pci-host-common.c
++++ b/drivers/pci/controller/pci-host-common.c
+@@ -17,6 +17,9 @@
+ 
+ #include "pci-host-common.h"
+ 
++#define PCI_HOST_D3COLD_ALLOWED        BIT(0)
++#define PCI_HOST_PME_D3COLD_CAPABLE    BIT(1)
++
+ static void gen_pci_unmap_cfg(void *ptr)
+ {
+ 	pci_ecam_free((struct pci_config_window *)ptr);
+@@ -106,5 +109,65 @@ void pci_host_common_remove(struct platform_device *pdev)
+ }
+ EXPORT_SYMBOL_GPL(pci_host_common_remove);
+ 
++static int __pci_host_common_d3cold_possible(struct pci_dev *pdev, void *userdata)
++{
++	u32 *flags = userdata;
++
++	if (pci_pcie_type(pdev) != PCI_EXP_TYPE_ENDPOINT)
++		return 0;
++
++	if (!pdev->dev.driver && !pci_is_enabled(pdev))
++		return 0;
++
++	if (pdev->current_state != PCI_D3hot)
++		goto exit;
++
++	if (device_may_wakeup(&pdev->dev)) {
++		if (!pci_pme_capable(pdev, PCI_D3cold))
++			goto exit;
++		else
++			*flags |= PCI_HOST_PME_D3COLD_CAPABLE;
++	}
++
++	return 0;
++
++exit:
++	*flags &= ~PCI_HOST_D3COLD_ALLOWED;
++
++	return -EOPNOTSUPP;
++}
++
++/**
++ * pci_host_common_d3cold_possible - Determine whether the host bridge can transition the
++ *				     devices into D3Cold.
++ *
++ * @bridge: PCI host bridge to check
++ * @pme_capable: Pointer to update if there is any device which is capable of generating
++ *		 PME from D3cold.
++ *
++ * Walk downstream PCIe endpoint devices and determine whether the host bridge
++ * is permitted to transition the devices into D3cold.
++ *
++ * Devices under host bridge can enter D3cold only if all active PCIe endpoints are in
++ * PCI_D3hot and any wakeup-enabled endpoint is capable of generating PME from D3cold.
++ * Inactive endpoints are ignored.
++ *
++ * The @pme_capable output allows PCIe controller drivers to apply
++ * platform-specific handling to preserve wakeup functionality.
++ *
++ * Return: %true if the host bridge may enter D3cold, otherwise %false.
++ */
++bool pci_host_common_d3cold_possible(struct pci_host_bridge *bridge, bool *pme_capable)
++{
++	u32 flags = PCI_HOST_D3COLD_ALLOWED;
++
++	pci_walk_bus(bridge->bus, __pci_host_common_d3cold_possible, &flags);
++
++	*pme_capable = !!(flags & PCI_HOST_PME_D3COLD_CAPABLE);
++
++	return !!(flags & PCI_HOST_D3COLD_ALLOWED);
++}
++EXPORT_SYMBOL_GPL(pci_host_common_d3cold_possible);
++
+ MODULE_DESCRIPTION("Common library for PCI host controller drivers");
+ MODULE_LICENSE("GPL v2");
+diff --git a/drivers/pci/controller/pci-host-common.h b/drivers/pci/controller/pci-host-common.h
+index b5075d4bd7eb31fbf1dc946ef1a6afd5afb5b3c6..7eb5599b9ce4feb5c8ba2aa1f2e532b0cf3e1c03 100644
+--- a/drivers/pci/controller/pci-host-common.h
++++ b/drivers/pci/controller/pci-host-common.h
+@@ -20,4 +20,6 @@ void pci_host_common_remove(struct platform_device *pdev);
+ 
+ struct pci_config_window *pci_host_common_ecam_create(struct device *dev,
+ 	struct pci_host_bridge *bridge, const struct pci_ecam_ops *ops);
++
++bool pci_host_common_d3cold_possible(struct pci_host_bridge *bridge, bool *pme_capable);
+ #endif
 
-Changes in v2:
-- Updated the cover letter (Bjorn Andersson)
-- Add get_ltssm helper function to read LTSSM state from parf.
-- Allow D3cold if there is no driver enabled for a endpoint.
-- Added a seperate patch to make phy down in deinit part to avoid power
-  leakage.
-- Revert icc bw voting if resume fails(Bjorn Andersson).
-- Link to v1: https://lore.kernel.org/r/20260128-d3cold-v1-0-dd8f3f0ce824@oss.qualcomm.com
-
----
-Krishna Chaitanya Chundru (5):
-      PCI: host-common: Add helper to determine host bridge D3cold eligibility
-      PCI: qcom: Add .get_ltssm() helper
-      PCI: qcom: Power down PHY via PARF_PHY_CTRL before disabling rails/clocks
-      PCI: dwc: Use common D3cold eligibility helper in suspend path
-      PCI: qcom: Add D3cold support
-
- drivers/pci/controller/dwc/pcie-designware-host.c |  11 +-
- drivers/pci/controller/dwc/pcie-designware.h      |   1 +
- drivers/pci/controller/dwc/pcie-qcom.c            | 194 +++++++++++++++-------
- drivers/pci/controller/pci-host-common.c          |  63 +++++++
- drivers/pci/controller/pci-host-common.h          |   2 +
- 5 files changed, 204 insertions(+), 67 deletions(-)
----
-base-commit: 3aae9383f42f687221c011d7ee87529398e826b3
-change-id: 20251229-d3cold-bf99921960bb
-
-Best regards,
 -- 
-Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+2.34.1
 
 
