@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-102065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QAoXHB6s1GmKwQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 09:02:54 +0200
+	id +F+CFu6s1GnNwQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 09:06:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D77C3AA99D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 09:02:54 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E83053AAA25
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Apr 2026 09:06:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 14E95300A507
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 07:02:53 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id ED72A3006B17
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Apr 2026 07:03:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08384391E70;
-	Tue,  7 Apr 2026 07:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D33D3921C2;
+	Tue,  7 Apr 2026 07:03:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aj5esGEa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iXyWOlKT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9566391E42
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Apr 2026 07:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE61C391E68
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Apr 2026 07:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775545371; cv=none; b=Q7H0QzlfImXFT2LIrZjfhG8yXPCNkKYZIBFIoWIvbesDTFK3HdoiW/LEc/diUpi/PImHnp70v371GicfYi4vhBYrecNNhe3GxwEWVb0jILm8vGqGtdUlVNMv5ja5ofum3HdNpoAo0FMyQ21Fu/K0H1ZnzJeMzIxTxVNE9LNrYi8=
+	t=1775545403; cv=none; b=YaxzfJdbIPNuZR/e/bBpOjIthq0ziuPJZshaFfHn0Ms7hZ/Gg2z3DzflNCrqqIme7X7/ijjcavmBUYZ5iKYw5Uq9KjqjS02Qww21HBroq2uRPjTZY49I0XwD/Ov7cHru7RC/XGpMDnET4OF8hAZ+WthJaxCZcFaiINBD8GsOQBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775545371; c=relaxed/simple;
-	bh=LUMUfngw5BmR4+GVbeaTttcxyJo2/uhE4b2TZgq/zj8=;
+	s=arc-20240116; t=1775545403; c=relaxed/simple;
+	bh=hdGsIdGCujQd+qCvIkSwIUYZUKZLbuNKzjiPq/1FM1s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h6XoM5UN25wc+Nrgz+fRLGcU6B3s/Uex73vBDvQXhaleRhd6+e3dxL/bwVfh0gQfLpHYLY0cc0ypWd6nZAl2B2n0Wng9bFIJ+pOMADT0967krAG6whp6sI1FPG+f8zJI6KA+tewv5lYkJnL1LAAHLWgSy9Qb3E3gi3pKEKDRVms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aj5esGEa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA4AC2BCAF
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Apr 2026 07:02:51 +0000 (UTC)
+	 To:Cc:Content-Type; b=LyXndcVDjZv25Uu/Tu+tHvGxEQqFSiUWtcXXPehCvyk0Z7MF19FP/2yva2C3jpoDII18hXPgiZTlin9LIQ+ftxTqt0b/XGsDolU2FaDnVbYveHYj3S2C6jlXBGg0E/PCEL6OwDYZlm85uZWnihVGWLHtpnsTZqlTcSQW64jdcSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iXyWOlKT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D03C2BCAF
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Apr 2026 07:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775545371;
-	bh=LUMUfngw5BmR4+GVbeaTttcxyJo2/uhE4b2TZgq/zj8=;
+	s=k20201202; t=1775545403;
+	bh=hdGsIdGCujQd+qCvIkSwIUYZUKZLbuNKzjiPq/1FM1s=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=Aj5esGEaJglc37W1ozidj6mAqq9Jcw1/T0LsYfZFMGjNlNAHMIdF0bM6QB/DtkUft
-	 4IX/wtgeIownk0iIlX11Ddb/frnjbgjLROp0cghf95l0exOuV/iNbm5gnpWWChyW2z
-	 dHe/UTuWk7tl0zyVNt9fbwO5aFQtcgTmAxrjM9L6gz+b/poQohZkKeYF1dLI5uPCzw
-	 opicr56heMZNbC49J3Q83WGepCqBRBgju/ruzFg7xSpL5IRGXxPZcR7wke18ex/UUk
-	 n+jGLQ936GZEZbj8Kzym7UkIQAJwrQBN4sjSnrPJ4ywVH/XRELCtawnA9lSwKZTNda
-	 YBAUGWg/f+m1g==
-Received: by mail-yx1-f45.google.com with SMTP id 956f58d0204a3-6501c4857b2so2296309d50.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 00:02:51 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVm/W9gwGR19vylf/+jrcOMfio7fLqAmzrLXRv8DokdkRcIkBv4eV+bITgRVrNm7lEh/AoGUO9k+lLfYudH@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2xKqhVbvbEMEUODMluz3jX4SW5kedmK63rJUgCLhWQgl4OZsj
-	R8h6CphShFMMSp5XDaWKDicktPnkKkhyNxGa2csHluon+g30Otvy9cS7u8SwuEUXp7E9Bn3cjSR
-	wL5OWummkrha0NDkdpIOV0AudN0EErzM=
-X-Received: by 2002:a05:690e:138a:b0:650:4a79:f3db with SMTP id
- 956f58d0204a3-6504a79fcf0mr14778469d50.51.1775545370947; Tue, 07 Apr 2026
- 00:02:50 -0700 (PDT)
+	b=iXyWOlKToI/eCfrQD7qKUtIfeRsgMuPvO1ZqRzMqAmvisW1gad0ssF48BSQL+Y59E
+	 4FwgHTXtY+VLclBwrG2ovQTiLmtR3/WakMj/aNthvUXF4KaAOI0RZNKtoZC41/gCd4
+	 geCpcSlLZlm+vOwdWZUoABvS8RdWBz492oRZDOMxUzB2tZN67blIZBtPnF1tgCPDtY
+	 D/dBLzToGzH4sTClhcuz3NzGx6795ZpWD+oQru3+ym5VHwdVqSpY6pn/NfCyany3W9
+	 rPnZphnIwpqNuyYYcodTMZ8MGJf+OC7KOA66awoT2yMnsq2Xeg9pqnBI7Bu1qnKJML
+	 zeKtjAX2h9YNQ==
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-79ab3e26cceso40404107b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Apr 2026 00:03:23 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVQb4muTvG0t98WOLvMHA4kjBbtqeOxJw8aJy9J4/In+G3CiQhEfSEiiJ3LJYy5gRVfVy5Uswr72B42/Mxt@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRPTpMa5/Dkl92tlah+KtqQUz+SUd+BI1N23XsSwibcXGLs7GE
+	CLSkn2ZJeHSb87qRkTpFPOwxPiWmROKlug7X0QJN7+MmdXJUABNrBs3+jcLdjmf0MBsBDFUEDaU
+	VwMcteCjjGuhkLpvtplAR907VsrL5BSQ=
+X-Received: by 2002:a05:690c:f14:b0:79a:d2ba:3c24 with SMTP id
+ 00721157ae682-7a4d5f5a3a8mr161901347b3.41.1775545403027; Tue, 07 Apr 2026
+ 00:03:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260331200658.1306-1-mailingradian@gmail.com>
-In-Reply-To: <20260331200658.1306-1-mailingradian@gmail.com>
+References: <20260331200658.1306-1-mailingradian@gmail.com> <20260331200658.1306-5-mailingradian@gmail.com>
+In-Reply-To: <20260331200658.1306-5-mailingradian@gmail.com>
 From: Linus Walleij <linusw@kernel.org>
-Date: Tue, 7 Apr 2026 09:02:39 +0200
-X-Gmail-Original-Message-ID: <CAD++jL=0LvdaYVTrDGiCiPE=qZWzBpH5ZCNH9N28wBLOy-981A@mail.gmail.com>
-X-Gm-Features: AQROBzDlAy5pLG3p0JqXUGeo80M2oiwNZ2fWncgiphyWDpp5mb6TpMvRT7vecLA
-Message-ID: <CAD++jL=0LvdaYVTrDGiCiPE=qZWzBpH5ZCNH9N28wBLOy-981A@mail.gmail.com>
-Subject: Re: [PATCH v5 0/4] SDM670 LPASS LPI pin controller support
+Date: Tue, 7 Apr 2026 09:03:11 +0200
+X-Gmail-Original-Message-ID: <CAD++jLk5VzmH93KcfY_JQf7qidoroiuDyQyD4GT73uq7rAU4kQ@mail.gmail.com>
+X-Gm-Features: AQROBzBKdohQM7PK3scjzV3O3ZZeGxVk4mW9zkJSPWiCUIGziZg7yTKCeJqHL38
+Message-ID: <CAD++jLk5VzmH93KcfY_JQf7qidoroiuDyQyD4GT73uq7rAU4kQ@mail.gmail.com>
+Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: sdm670: add lpi pinctrl
 To: Richard Acayan <mailingradian@gmail.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
@@ -77,7 +77,7 @@ Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -85,7 +85,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102065-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-102066-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_TO(0.00)[gmail.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -95,29 +95,29 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 1D77C3AA99D
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,mail.gmail.com:mid]
+X-Rspamd-Queue-Id: E83053AAA25
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 On Tue, Mar 31, 2026 at 10:06=E2=80=AFPM Richard Acayan <mailingradian@gmai=
 l.com> wrote:
 
-> Richard Acayan (4):
->   dt-bindings: qcom: lpass-lpi-common: add reserved GPIOs property
->   dt-bindings: pinctrl: qcom: Add SDM670 LPASS LPI pinctrl
->   pinctrl: qcom: add sdm670 lpi tlmm
+> The Snapdragon 670 has a separate TLMM for audio pins. Add the device
+> node for it.
+>
+> Also add reserved GPIOs for the Pixel 3a, which blocks access to the
+> sensor GPIOs.
+>
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-These three patches applied to the pinctrl tree for v7.1
-
->   arm64: dts: qcom: sdm670: add lpi pinctrl
-
-Please funnel this patch through the SoC tree!
+Acked-by: Linus Walleij <linusw@kernel.org>
 
 Yours,
 Linus Walleij
