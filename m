@@ -1,104 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-102325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MAxCLPNU1mm8DQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Apr 2026 15:15:31 +0200
+	id iGZBILZW1mn5DwgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Apr 2026 15:23:02 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 733F53BCB1C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Apr 2026 15:15:31 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40A713BCC9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Apr 2026 15:23:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B104B301BEEF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2026 13:15:29 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EB8C830970FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2026 13:20:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D73E2F39C2;
-	Wed,  8 Apr 2026 13:15:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PmmZi6a1";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZUAPccZ2"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 159303264D5;
+	Wed,  8 Apr 2026 13:20:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB442F3600
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Apr 2026 13:15:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBEB313E36;
+	Wed,  8 Apr 2026 13:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775654126; cv=none; b=aLf0yDva79czjDrw5ktHGOMc1/OJ+oL/QHFuxrRVvfTxe5dqTi87V3ZYjRvaNLQMWcRgdiNm+HqVWZRLM8srPAQrjnk6IlAEVx688itnmUcr5E40zMtiaz21B4PtAvzC9xTYKZt4nwjPe7DY8qA5o7ltDea8z7BHrvM3HT9woRw=
+	t=1775654409; cv=none; b=X9PBi7f3ry6YDbKTn72mx78JbfqpmNPb4GStmWNvgICxbzKFW++L/mbGN+1e0H8qGQHPyHPCcp3iuaoRqGN4qt16j7dmzm1GTJCO0p0rvoFqb9t7OlUNwZAZpnfE3p1BQt9yvanHqvrdYbSx6OpyresBp6jycONYzoDyKOgp7yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775654126; c=relaxed/simple;
-	bh=WKw2b3FSwa9eQdiAmEXghTEAkcX11kE2vpR3flmnA3g=;
+	s=arc-20240116; t=1775654409; c=relaxed/simple;
+	bh=Qwpbhww7CrXXunhU8ku2p7hNzmTqVyIvdYsDejjvfsM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JTy4sBwIWuv/JDe09HJ38Fid9jS+QdVCORnzUz4ELJKJ/XI7OHwmziYN4xyDQanDWv6BwGOm8l334d/dTdww3wd9XEzAVrNmRCXvwwxdoI7lkwWtxDvhFthx/tg3SIziIuHsaQHvtOycgoR+OjyAiLWK5viuUeHpTxfJ7sM0g5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PmmZi6a1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZUAPccZ2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 638B0bxO3362809
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Apr 2026 13:15:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	8GEteQTg38VOFlAPveazAOZENV7yVsPAb7+IVYkJJmw=; b=PmmZi6a1fRtGG6F1
-	xE1cJN/v0PWX2VTPCVRU3MwIurl42/A48suwCfWyN0lAJxQwagJqVMIDqU69TWk9
-	qEae8Wp88HQnb1tjAe3egguHktB/fLH4eHLtKunKQh3KlcCz6CtAW6iQ1gnB+FEU
-	fTXJW0BUNaBESfPhbh2tVY/2DaE2XNe0El7JYsqwc2aqBNQxbIfUEEugpNPhcfa+
-	bGYGUO1ypZrU0j0yq61VUk6ugO1yehFYZYcsbDk+3mYdZJl4is/sdAqqprBU3tyc
-	T6REKmapRK6jx0twW4QbRsphm+TkxKNG7VFA0mJj1xqYz7uq49V6rM6c4i644hrM
-	2Syn6w==
-Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com [209.85.221.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dd7tkkgte-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Apr 2026 13:15:24 +0000 (GMT)
-Received: by mail-vk1-f199.google.com with SMTP id 71dfb90a1353d-56db538f3a2so259369e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Apr 2026 06:15:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1775654124; x=1776258924; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8GEteQTg38VOFlAPveazAOZENV7yVsPAb7+IVYkJJmw=;
-        b=ZUAPccZ27Rw6TujKXwe+5VCKUKZP0WdFTdBRyUuGhJvPIEu8QHegqYtaFxx9Romg4J
-         I9c3EFPD240BhslcFeLhSSnmF5GJuPiZbZCgU0GNO/Z7+OIWoIEJL8T4lwbNFgoHoMnq
-         5Wq1dgnzBXN5mhtJxOB/Lj4H450d1ZhHR5v/Vh6av/P29XPP78LdOk/lZhjFbueAX0n8
-         nhXOHtUcHel/ElaLw6lTp+0SP70G7x1GUyovZGV7Qz8C+AZHB/yCDBNUrFMqr6ZFOR5n
-         MfrhrpKD7RFN/lDwGDRpN706ruzvB4BsVWoiJ7CYbnQ7HQItkmF223AlldWAN8QiO2Ys
-         YNzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775654124; x=1776258924;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8GEteQTg38VOFlAPveazAOZENV7yVsPAb7+IVYkJJmw=;
-        b=qTKcbQ3r6sFqenZEDww4RHRacEnY2HZx9NYryhtpPJ3rp8xyt7/P2phJ6fM0CaHuk8
-         Z/mqv4GcCiqjyaR7YjGcdVfjouaWBHred8PPJYF8A4k9329b38Xo6YJHJzvfDnEjkPj8
-         10rrQCvc4b5759EStW11wo2tiXquTh6ANFx99Ams4iCVwTHF/mT5aMc8E9hzEKI/ZgfX
-         luhqSVKvEgAhJwK0yueK2P0oU81SEYp5RSroMOvTfSSdNtQ9ie2mMPDGOmHZnN3E0b0h
-         2lmxKfnHa6TyXbPrtMxSRViGMGziXDSbklF3s+9KTn1pAiuYjsKtwebKvIMTRcQK2xrK
-         1Z3w==
-X-Gm-Message-State: AOJu0YxeBEuWxJ5ZQjB8vpI0ylgZ6wBMkXVAMirOI4W662zkuPrQ4Ryv
-	qhHAmdbNBfw1b5eaRxJfnmUkesQWBR/QyboeGCBl5TfO1qMcQdLPobEuWbDGY+FhBcCxlddTxsq
-	7SWX3Fb7IZNo6ZAjEUnxgSRP2i0VYSfIaLET/oSX35gkLJkbr0pHsyJsJk8KfLZGwZ/Uo
-X-Gm-Gg: AeBDietZhnX37/mo/dcnu/wdz8a4nVP++6f7ss0jHBkmDNO5JuwsbOpNJta3Q1Y8XQk
-	0B/pCfZZGzEFVVYsoBpRhnj60evw4oRJDZjKQgRrjVNcvznRwOEkRLmVhBJw5Hf9kOtAhPFVwou
-	aocXWFujhJPeajly9ePSsdauTlFZBaWRA1oEyXVTZNRV/wsiZJ369eaaqNcbayJwjaWzlI4MBEC
-	IsGYWpAxzt6k3UmaKCx9/muMIaY511/tPvDi35JdbSm5YAN7n01xSD2fAdhGTr3y+NvpD2u27RR
-	lAF6NsqzjDCJ6Xu4YaJv1b3eDHKdV90/j0pp4flT4NSkqEOm1J8B83dIV14dqZ/LKy5NQZYLngC
-	b+9Oc7AjoQW0jqIbdCq4U33BuBzgCKTHjLTI7TZXnLX4EBlnAV2crhY3sqnw4mjDq1FlYix+csQ
-	tbF+M=
-X-Received: by 2002:a05:6102:a0e:b0:5f8:d54c:18c9 with SMTP id ada2fe7eead31-6079973d057mr455246137.3.1775654123650;
-        Wed, 08 Apr 2026 06:15:23 -0700 (PDT)
-X-Received: by 2002:a05:6102:a0e:b0:5f8:d54c:18c9 with SMTP id ada2fe7eead31-6079973d057mr455235137.3.1775654123132;
-        Wed, 08 Apr 2026 06:15:23 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38cd217c96asm44670771fa.40.2026.04.08.06.15.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Apr 2026 06:15:22 -0700 (PDT)
-Message-ID: <285a6169-61c5-4230-80d4-795c55155838@oss.qualcomm.com>
-Date: Wed, 8 Apr 2026 15:15:18 +0200
+	 In-Reply-To:Content-Type; b=lfWSDabGaaAnljuFUu1QHjr/oT+UnKCXBngDw1klXEFf9YqhTsh2fxYloLyCtvihW8JcEHAhGnBD3OcdUmfnc7DvaRP5EaS7GRd35R0PTupU0HkwFv/ohygyB9Az0CHtNAz84bLFWYrKm0oeleQsMoh13bxkXfC+JpxXE3KYe3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.207.19.206
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: esmtpsz18t1775654363t3cb4073c
+X-QQ-Originating-IP: gZbJhug9qvNVdH4zYW+DyL7LZUKCNEJAVtc2edbWdQA=
+Received: from [127.0.0.1] ( [116.234.85.158])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 08 Apr 2026 21:19:21 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 9970830700309624208
+Message-ID: <7BA26FC036D1C9AF+64204287-21b5-4664-ae75-be3dd54ec092@radxa.com>
+Date: Wed, 8 Apr 2026 21:19:19 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,108 +49,296 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: qcs8550: add QCS8550 RB5Gen2
- board support
-To: Neil Armstrong <neil.armstrong@linaro.org>, jsandom@axon.com,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260407-rb5gen2-dts-v2-0-d0c7f447ee73@axon.com>
- <20260407-rb5gen2-dts-v2-5-d0c7f447ee73@axon.com>
- <4359bb07-d848-4b77-b1a9-f1c6f53caa10@oss.qualcomm.com>
- <ce9061ea-8961-4d5a-bbb0-b4f50b7e6d29@linaro.org>
+Subject: Re: [PATCH v2 2/2] pwm: clk-pwm: add GPIO and pinctrl support for
+ constant output levels
+To: Nikita Travkin <nikita@trvn.ru>
+Cc: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-pwm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20260408-clk-pwm-gpio-v2-0-d22f1f3498a0@radxa.com>
+ <20260408-clk-pwm-gpio-v2-2-d22f1f3498a0@radxa.com>
+ <8030cac3703f9aa1b7a8b476ad92aeae@trvn.ru>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <ce9061ea-8961-4d5a-bbb0-b4f50b7e6d29@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Xilin Wu <sophon@radxa.com>
+In-Reply-To: <8030cac3703f9aa1b7a8b476ad92aeae@trvn.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=drPrzVg4 c=1 sm=1 tr=0 ts=69d654ec cx=c_pps
- a=+D9SDfe9YZWTjADjLiQY5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=h77gEMGJAAAA:8 a=lEVunVoeGWrKdAki99sA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=vmgOmaN-Xu0dpDh8OwbV:22 a=PYyYjrCoJcZo81GydsRF:22
-X-Proofpoint-ORIG-GUID: yzlexHjOYXLcBi0korrUYbYfJsf5tp2W
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA4MDEyMiBTYWx0ZWRfX2E4Bzq/HorRS
- dMGD1hAzxTdDVaZqupgtoeplBactfQQSmn6S8g3A8yiWIveOJawQqd0GY3CG9UFBpo1I8jNUi9J
- EG8v+5TIR1x3d1E+W3AOLDE6pufbWxwA8c2pVVeOQf4Cy9jIqYrDkWNoV0Hp9m40WK1bFdaJNv/
- IFHiiCVkmUWJzyacat4e9J12/6gmSXdKJK5Qb/YKQgmMMwpzEQTIIJdy5t+CQeUqyStkGqV7ELr
- F/0fAJ137t84YVEjSV3cqjQKuuuoWuneX/LVI+u0KD9sR4SaADwwalffc6Dzu92EsgstSM7kB6P
- sdY/0bFBm456Ojg57ElhkF2SKEBdlX2RnlXPUGWPWshZbyERqCLBNpqk8FRLZUoiYpgsLB+5AK9
- bgAR8SACL1aucRedaIRv18GMB35679gAQHGCkWXeoWG4RV8shusL6Np+f1Uco7L8A/Q7LIlTh+a
- 2+gWlrdR/qSGrDvjCeg==
-X-Proofpoint-GUID: yzlexHjOYXLcBi0korrUYbYfJsf5tp2W
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-08_04,2026-04-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 malwarescore=0
- bulkscore=0 impostorscore=0 phishscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604080122
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: NvjhxCSDgXICj91atmTlnbUBY1+dVlCNR7IDUDdEfp3KvGNGjxPVNsDo
+	urwzpIJKfXKahcDXxbOx/8S3xnUUsppvftsmv/qBRmvlvO8tNMZpR1qRcBV3zlDXvLnEPlx
+	NPvAcb88zwvZgw+2BPMR01uIhdgmJ4HtK7eYmPKDezPl+UVVD2AOzN55SkgTQcShRxAt6zr
+	iqzz0NqAAbEclWMhZm/FpYtHEFwA/X8Wlh/IIPNKhDXcgCCz290LyineUzbYQeKaekFoW7k
+	G/c1LKxHHyWxigGfMRmB10XzS2irKPrjV9I+uxl4mGrPQ7IZ1GbsERGgR0EcUSXUuEc5xYT
+	FbHG4aFmQ2AsaZ/uO95DXqnt9WXbNJl1y5+AkvvMamHWJhho0QQ9ZoB+Zun3qdasOUF/Yq0
+	/85ghtMIPFJCZmfvY7KKtjyWDb9Vk8qoEDITwdRINBZ8yphiu2nmqqTbjLKIuvIr3MP9tyk
+	8srS4B9pVrwAY9r8+DFKC5bzJ5sgDmq6geK5U2QVyiuTKQZRPLlp1SziQGNRcCZ7ZTFP5Z8
+	DivwzSYeBtHKKJFVrtdDz7X9HHBpZfrQSXvKnTUO8PUDc+fCaI9QfC/kJCVyIK8felIzWU4
+	55VyfbBp+3dZgd2ge0cXW5ltjmmoPoyIqIM1RGIwDBtiASEwcBtH3YIEeO0toqXZFqOdLZl
+	0MzxvhyGXCkT9tvBjLCzT/QIsZaGwtMLV7ZROlboMwOW0SxZo7zvRxR38WnGnG0KljCbe+H
+	OTCxVrlRN/mA7qBBqsxAwGBCXXvlBVjVDqYhTjDlOHMfoxQGJ45a+bGejdSe2tKuRAQY89X
+	g7nDJinK67u6H7ao8PQEtXXBSl3vMR1AW+Wvmwa5vbRuDiyTLVrbFtOCWQ4K6CA77igfLiQ
+	RndIcy/1+AP+oq46o/e9+os6lfoWQXpyy2j+gGuOJTxXFYZho1jiWyK4YUw59k94Nr9lw0N
+	f2RLOzbqTmNmAqkWOxiK4s+9/KUHZmLB5/hlctNJcIMjavocMBPATLqmpvk71ZcpNN2Yfg1
+	raq8Fs0Q==
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+X-QQ-RECHKSPAM: 0
+X-Spamd-Result: default: False [-1.36 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,axon.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102325-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-102326-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	FORGED_MUA_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.999];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.966];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	R_DKIM_NA(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 733F53BCB1C
+	DBL_BLOCKED_OPENRESOLVER(0.00)[radxa.com:email,radxa.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 40A713BCC9A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 4/8/26 2:35 PM, Neil Armstrong wrote:
-> On 4/8/26 11:57, Konrad Dybcio wrote:
->> On 4/7/26 5:46 PM, Joe Sandom via B4 Relay wrote:
->>> From: Joe Sandom <jsandom@axon.com>
->>>
->>> The RB5gen2 is an embedded development platform for the
->>> QCS8550, based on the Snapdragon 8 Gen 2 SoC (SM8550).
+On 4/8/2026 6:42 PM, Nikita Travkin wrote:
+> Xilin Wu писал(а) 08.04.2026 15:07:
+>> The clk-pwm driver cannot guarantee a defined output level when the
+>> PWM is disabled or when 0%/100% duty cycle is requested, because the
+>> pin state when the clock is stopped is hardware-dependent.
 >>
->> [...]
+>> Add optional GPIO and pinctrl support: when a GPIO descriptor and
+>> pinctrl states ("default" for clock mux, "gpio" for GPIO mode) are
+>> provided in the device tree, the driver switches the pin to GPIO mode
+>> and drives the appropriate level for disabled/0%/100% states. For
+>> normal PWM output, the pin is switched back to its clock function mux.
 >>
+>> If no GPIO is provided, the driver falls back to the original
+>> clock-only behavior.
 >>
->>> +    /* Lontium LT9611UXC fails FW upgrade and has timeouts with geni-i2c */
->>> +    /* Workaround is to use bit-banged I2C */
+>> Signed-off-by: Xilin Wu <sophon@radxa.com>
+>> ---
+>>   drivers/pwm/pwm-clk.c | 84 ++++++++++++++++++++++++++++++++++++++++++++++++---
+>>   1 file changed, 80 insertions(+), 4 deletions(-)
 >>
->> Interesting.. I was under the impression that it was only an issue on
->> RB1 and RB2 boards.. perhaps we're missing some magic register write..
+>> diff --git a/drivers/pwm/pwm-clk.c b/drivers/pwm/pwm-clk.c
+>> index f8f5af57acba..d7d8d2c2dd0f 100644
+>> --- a/drivers/pwm/pwm-clk.c
+>> +++ b/drivers/pwm/pwm-clk.c
+>> @@ -11,11 +11,20 @@
+>>    * - Due to the fact that exact behavior depends on the underlying
+>>    *   clock driver, various limitations are possible.
+>>    * - Underlying clock may not be able to give 0% or 100% duty cycle
+>> - *   (constant off or on), exact behavior will depend on the clock.
+>> + *   (constant off or on), exact behavior will depend on the clock,
+>> + *   unless a gpio pinctrl state is supplied.
+>>    * - When the PWM is disabled, the clock will be disabled as well,
+>> - *   line state will depend on the clock.
+>> + *   line state will depend on the clock, unless a gpio pinctrl
+>> + *   state is supplied.
+>>    * - The clk API doesn't expose the necessary calls to implement
+>>    *   .get_state().
+>> + *
+>> + * Optionally, a GPIO descriptor and pinctrl states ("default" and
+>> + * "gpio") can be provided. When a constant output level is needed
+>> + * (0% duty, 100% duty, or disabled), the driver switches the pin to
+>> + * GPIO mode and drives the appropriate level. For normal PWM output
+>> + * the pin is switched back to its clock function mux. If no GPIO is
+>> + * provided, the driver falls back to the original clock-only behavior.
+>>    */
+>>   
+>>   #include <linux/kernel.h>
+>> @@ -25,11 +34,17 @@
+>>   #include <linux/of.h>
+>>   #include <linux/platform_device.h>
+>>   #include <linux/clk.h>
+>> +#include <linux/gpio/consumer.h>
+>> +#include <linux/pinctrl/consumer.h>
+>>   #include <linux/pwm.h>
+>>   
+>>   struct pwm_clk_chip {
+>>   	struct clk *clk;
+>>   	bool clk_enabled;
+>> +	struct pinctrl *pinctrl;
+>> +	struct pinctrl_state *pins_default;  /* clock function mux */
+>> +	struct pinctrl_state *pins_gpio;     /* GPIO mode */
+>> +	struct gpio_desc *gpiod;
+>>   };
+>>   
+>>   static inline struct pwm_clk_chip *to_pwm_clk_chip(struct pwm_chip *chip)
+>> @@ -45,14 +60,36 @@ static int pwm_clk_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+>>   	u32 rate;
+>>   	u64 period = state->period;
+>>   	u64 duty_cycle = state->duty_cycle;
+>> +	bool constant_level = false;
+>> +	int gpio_value = 0;
+>>   
+>>   	if (!state->enabled) {
+>> -		if (pwm->state.enabled) {
+>> +		constant_level = true;
+>> +		gpio_value = 0;
+>> +	} else if (state->duty_cycle == 0) {
+>> +		constant_level = true;
+>> +		gpio_value = (state->polarity == PWM_POLARITY_INVERSED) ? 1 : 0;
+>> +	} else if (state->duty_cycle >= state->period) {
+>> +		constant_level = true;
+>> +		gpio_value = (state->polarity == PWM_POLARITY_INVERSED) ? 0 : 1;
+>> +	}
+>> +
 > 
-> On the SM8650-HDK, the HDMI i2c is shared with the battmgr in ADSP, causing a lot
-> of issues... the only solution is [1] to declare the bus shared and use GPI DMA.
-> I assume it's the same here.
+> So I'm looking at it again, and I'm a bit confused.
+> 
+> Old behavior was:
+>   - pwm was enabled and being disabled -> stop the clock and hope state is 0;
+>   - pwm is still enabled but
+>                              - duty=0%   -> set clk duty to 0%
+>                              - duty=100% -> set clk duty to 100%
+> 
+> New behavior if we have gpio:
+>   - pwm was enabled and being disabled -> constant 0
+>   - pwm is still enabled but
+>                              - duty=0%   -> constant 0
+>                              - duty=100% -> constant 1
+> 
+> New behavior if we don't have gpio:
+> Same as above but
+>    - if we need constant 0 -> clock is halted and we pray it's 0
+>    - if we need constant 1 -> clock is halted and we pray it's 1 (??)
+> 
+> Per my recollection, when I wrote this driver 5 years ago, I've manually
+> verified that at least on qcom setting duty cycle to 0% and 100% worked
+> properly, so this feels like it would regress it if left as-is...
+> 
+> (Btw I wonder what's the platform you need this for?)
+> 
 
-Ohhhh hmm.. doesn't seem to be the case on RB1 but I wouldn't
-completely rule that out either (maybe something is poking at the
-bus regardless of its usefulness..)
+I took a careful look at clk_rcg2_set_duty_cycle() in 
+drivers/clk/qcom/clk-rcg2.c, and I believe the Qualcomm RCG2 MND counter 
+cannot produce a true 0% or 100% duty cycle. For a 0% duty request, the 
+actual duty cycle can become very small, but never exactly zero. 
+Likewise, for a 100% duty request, it can get very close to 100%, but 
+not exactly 100%.
 
-> Sharing the same bus between APPS and ADSP is a weird feat... It seems that having
-> 26 i2c busses and 212 gpios available on the system is not enough.
+I agree that the current change may cause a regression. Do you think it 
+would make more sense to keep the old behavior when no GPIO is 
+available, and still set the clock duty cycle to 0% or 100% in that case?
 
-That's only the tip of the iceberg..
+We need this for many of our future Qualcomm-based products, because the 
+PMIC that comes with the SoC usually provides only one PWM output.
 
-Konrad
+>> +	if (constant_level) {
+>> +		if (pcchip->gpiod) {
+>> +			gpiod_direction_output(pcchip->gpiod, gpio_value);
+>> +			pinctrl_select_state(pcchip->pinctrl, pcchip->pins_gpio);
+>> +		}
+>> +		if (pcchip->clk_enabled) {
+>>   			clk_disable(pcchip->clk);
+>>   			pcchip->clk_enabled = false;
+>>   		}
+>>   		return 0;
+>> -	} else if (!pwm->state.enabled) {
+>> +	}
+>> +
+>> +	if (pcchip->gpiod)
+>> +		pinctrl_select_state(pcchip->pinctrl, pcchip->pins_default);
+>> +
+>> +	if (!pcchip->clk_enabled) {
+>>   		ret = clk_enable(pcchip->clk);
+>>   		if (ret)
+>>   			return ret;
+>> @@ -97,6 +134,45 @@ static int pwm_clk_probe(struct platform_device *pdev)
+>>   		return dev_err_probe(&pdev->dev, PTR_ERR(pcchip->clk),
+>>   				     "Failed to get clock\n");
+>>   
+>> +	pcchip->pinctrl = devm_pinctrl_get(&pdev->dev);
+>> +	if (IS_ERR(pcchip->pinctrl)) {
+>> +		ret = PTR_ERR(pcchip->pinctrl);
+>> +		pcchip->pinctrl = NULL;
+>> +		if (ret == -EPROBE_DEFER)
+>> +			return ret;
+>> +	} else {
+>> +		pcchip->pins_default = pinctrl_lookup_state(pcchip->pinctrl,
+>> +							    PINCTRL_STATE_DEFAULT);
+>> +		pcchip->pins_gpio = pinctrl_lookup_state(pcchip->pinctrl,
+>> +							 "gpio");
+>> +		if (IS_ERR(pcchip->pins_default) || IS_ERR(pcchip->pins_gpio))
+>> +			pcchip->pinctrl = NULL;
+>> +	}
+>> +
+>> +	/*
+>> +	 * Switch to GPIO pinctrl state before requesting the GPIO.
+>> +	 * The driver core has already applied the "default" state, which
+>> +	 * muxes the pin to the clock function and claims it.  We must
+>> +	 * release that claim first so that gpiolib can request the pin.
+>> +	 */
+>> +	if (pcchip->pinctrl)
+>> +		pinctrl_select_state(pcchip->pinctrl, pcchip->pins_gpio);
+>> +
+>> +	pcchip->gpiod = devm_gpiod_get_optional(&pdev->dev, NULL, GPIOD_ASIS);
+>> +	if (IS_ERR(pcchip->gpiod))
+>> +		return dev_err_probe(&pdev->dev, PTR_ERR(pcchip->gpiod),
+>> +				     "Failed to get gpio\n");
+>> +
+>> +	/*
+>> +	 * If pinctrl states were found but no GPIO was provided, the pin is
+>> +	 * stuck in GPIO mode from the switch above.  Restore the default
+>> +	 * (clock-function) mux and fall back to clock-only operation.
+>> +	 */
+> 
+> Feels slightly weird to silently allow "broken" DT, it would make no sense
+> for it to have "gpio" pinctrl and not have a gpio defined, would it?
+> 
+> Perhaps it makes more sense to put getting a gpio under having pins_gpio
+> and make it strict, so two allowed states for the driver would be either
+> no pinctrl-1 and no gpio, or having both at the same time?
+> 
+> (maybe then also worth adding cross dependency of pinctrl-1 and gpio in
+> the binding, it's one way only currently, not sure what's the correct
+> way to describe it tho)
+> 
+> Nikita
+> 
+
+Yeah, good point. Having a gpio pinctrl state without an actual gpio 
+property is indeed a broken DT and there's no reason to silently work 
+around it. Do you think the following change would work?
+
+	if (pcchip->pinctrl) {
+		pinctrl_select_state(pcchip->pinctrl, pcchip->pins_gpio);
+
+		pcchip->gpiod = devm_gpiod_get(&pdev->dev, NULL, GPIOD_ASIS);
+		if (IS_ERR(pcchip->gpiod))
+			return dev_err_probe(&pdev->dev, PTR_ERR(pcchip->gpiod),
+					     "GPIO required when 'gpio' pinctrl state is present\n");
+	}
+
+>> +	if (pcchip->pinctrl && !pcchip->gpiod) {
+>> +		pinctrl_select_state(pcchip->pinctrl, pcchip->pins_default);
+>> +		pcchip->pinctrl = NULL;
+>> +	}
+>> +
+>>   	chip->ops = &pwm_clk_ops;
+>>   
+>>   	ret = pwmchip_add(chip);
+> 
+
+
+-- 
+Best regards,
+Xilin Wu <sophon@radxa.com>
+
 
