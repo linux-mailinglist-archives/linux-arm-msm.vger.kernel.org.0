@@ -1,55 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-102354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uFnnASqS1mmiGQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Apr 2026 19:36:42 +0200
+	id iM3rJ1GU1mkgGggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Apr 2026 19:45:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id A02ED3BFAA4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Apr 2026 19:36:41 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6D733BFCBA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Apr 2026 19:45:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 5FBCF3028666
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2026 17:34:35 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 5B50B3008C8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2026 17:34:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8D123D565F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B04B03D75C0;
 	Wed,  8 Apr 2026 17:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JTpD6i1d"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bI1tRRRj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8449F2494F0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84520343D66;
 	Wed,  8 Apr 2026 17:34:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775669673; cv=none; b=hzWxeB4QWESztnxXZwtH2sdFGffqvzwmIUoRpjhLWbldwwNnFNwJtba6RDOq0VFLTL+mjqHt6XQn3wPyfautIQ6EF6srANLrD2ZPNx5DpJ5TyTB4Q91kCuTTsSWsDPoZxgnVvhjKRAYPp5A9rcp3/wohBX2HaR7cxexxtPOmBxw=
+	t=1775669673; cv=none; b=HjWK0qq/LKJhvihyK5DqlKe/EWYu1f+xT7sQYAGDq9YzzKcbfEV8csgc+qJt2cftod8UGT/txAnmPUpJe2DpADC31WyRr7BVYeCn1CQp013EJE3gir9NZQmOtQG3iDc1amArziu1GEOCfhMCMkfsAqQwMxX3tde60PI2o6TkQdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775669673; c=relaxed/simple;
-	bh=JzKGMSO1Qx98W099lIY3XmzWJxWoll9867PldA76mjU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Yld3Ed1liG/Ieb9RfutSqCAWl4GMOmEMI5Yvn7IeMlxoBnyhbWBF+4gQE8687CU3NPb5zuB/gRIlHL1CeqUJRe8N5DTbbRCBbS1eXkAqpQnzp19/hXvVYgNPm1fD3R/XNPyh8pjQ/yJtLA5o20Eim2W/G7F8LrMVNTW/pksh+Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JTpD6i1d; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 326E5C19421;
+	bh=oBgPDt/LJlibW8Hgm1a/bsT5ObHlCxGW++DUgK9IrHg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=oNrYhIEJzbfgckT9ARqxQRK9ZmKZelBgT2ufzzZkN0hXFPrCw2W8PskT7f+cYlLACrQKUBKYgRyc0E0Cb2c97B7ZB3GNGbUiCgiiaVgYzkT6xRKjS26KFd6jo9cXXQSaOyq+n7HLlU1a2+yiHHSC4br/ioZ+irXxOye7adwV22k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bI1tRRRj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 49DF9C2BC87;
 	Wed,  8 Apr 2026 17:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1775669673;
-	bh=JzKGMSO1Qx98W099lIY3XmzWJxWoll9867PldA76mjU=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=JTpD6i1dFv1hzkJMCLmROA7toGOiYQ8KLSmTWWNO5OWmAGxM8fccIZnG2Fn73CSND
-	 +dqr3y174BYm75bfLiJdwu06weHxEDGV859Z5xB1nwS9epIeFzHameyDOLBfMe2GHU
-	 lc4qzepVqpd1AHLwlvCAl0cIO3qiVPykRByWIbYXqrjMR4vY1xlw3yv7ojhh+CNxPt
-	 oWrQXWBXBFTr7ZBstisbP9NvT7/U6Q3sHGOX6xTCQdTUTbwRi0nroX3thop1Hw08fg
-	 lBttZ1AAcMvWYh7gL85F6478lhiETdWtC5AtrcZDEJC88IIrIGZtzC25eFJMgnkPJH
-	 rD0plpab466yw==
+	bh=oBgPDt/LJlibW8Hgm1a/bsT5ObHlCxGW++DUgK9IrHg=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=bI1tRRRjurLyDDmxcZF9ZJrzIiiFFlSRw++7BWzrfFULpqcI1a4DbkRIDrc9+ZkoL
+	 hInw3edG6GItZK5CjuY/4fIZl+aMgWF5L/KooSfSiLpIYksu9AHntjRmpOUEcHgEwO
+	 /iOn2vM32vjeyNxo4fC+oebdZYu3flBJSeujE3SREM9eXNkC7kTmWH45NZ3OuDvSeV
+	 c0QgmkuIGY3wpMcE8VmlZm+BbXiGaE/mzjhX0zZb94jXCQhebip3RP9XFCWYb7diD7
+	 DO+hcL7zV3f6OMEwBfone1/FEUKtKKKNGYZvOJEe19F+BB/QcT4SBRN1JbltWC1Ybs
+	 jEWATK8eb51PA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F3CA10F9963;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3625610F9964;
 	Wed,  8 Apr 2026 17:34:33 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Subject: [PATCH 0/2] Introduce OnePlus 6/6T touchscreen compatible
-Date: Wed, 08 Apr 2026 19:34:31 +0200
-Message-Id: <20260408-synaptics-rmi4-dt-v1-0-2d32bacce673@ixit.cz>
+Date: Wed, 08 Apr 2026 19:34:32 +0200
+Subject: [PATCH 1/2] dt-bindings: input: syna,rmi4: Document
+ syna,rmi4-s3706b
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,10 +59,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAKeR1mkC/x3MTQ5AMBBA4as0szZJi/i7ilhUO5iFko4IEXfXW
- H6L9x4QikwCnXog0snCW0gwmQK32DATsk+GXOeVLnWDcge7H+wE48ol+gMbS+NUmLrV3kHq9kg
- TX/+zH973A7nUXfhjAAAA
-X-Change-ID: 20260408-synaptics-rmi4-dt-8aebf31790dc
+Message-Id: <20260408-synaptics-rmi4-dt-v1-1-2d32bacce673@ixit.cz>
+References: <20260408-synaptics-rmi4-dt-v1-0-2d32bacce673@ixit.cz>
+In-Reply-To: <20260408-synaptics-rmi4-dt-v1-0-2d32bacce673@ixit.cz>
 To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>, 
@@ -74,21 +74,21 @@ Cc: linux-input@vger.kernel.org, devicetree@vger.kernel.org,
  phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>, 
  Krzysztof Kozlowski <krzk@kernel.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=766; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1250; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=JzKGMSO1Qx98W099lIY3XmzWJxWoll9867PldA76mjU=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBp1pGnAYMMzfmWVcCoSBFRXxcsIHcyzsFYYsnCw
- LV/rmkIDtiJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCadaRpwAKCRBgAj/E00kg
- cmpSEACRduCxZQPGLcSjXukxyg+Is/ZozXUdsnX4cggpr/x5ZQRcu6UBppSw7dD/CtCepy4ieZ5
- 3p33gqJs1q+bed23rLuPGo8aBqBZ1FzYaskzHqU8FSmGIHHDJK4jepK3QFbYG7s0QUK1yxhwNkB
- WydDiRnL/HUhjnVoQjI6NcIHZd0lo+8cy4rTnw3ZE8cRP0qFS6HyGtHjVDiu2bfDeUtifX3o+Dp
- qMMRMXs7rSec7ZwpkdH9ZICDCXql1y70IZ1b2Lm2zgDbKlWxsH1dyWw9CGJOAVoCW76LfJQ4VL3
- X1KR1W/nBNea/Je09+qXRHjEh8rzDVJLwIwU6xzO7HTll62bT1ldHrKOglQjCWHdDr98BXwWGFN
- eYu0/vlBcw2Rm7pEWBH/wTXKkzAiqB67gpDQW8VZ+DYXEOpkCXxQrdijSbBgzMU7ikVMdZXdG/E
- lA8qO5ez1v96CVaz7ysgA74aDcaVk2yXe3EPYUOa1hD4hr48ckFJ2c5cRrKEAT4yZIT+apWIhW3
- zBRylTDonCLUrAuV9b/hsIFA6s4GeQMnBhvXexaYJ0nFHrE0u9BvVl/O6XSGy1b1Llzx2/JIr2e
- rYZDcjJMAS1Cf9ozQ9uLnzV2UuTeIV7CIJscLWSkNceZMxT6QSwC7ujsbCBXm1WZ7VWqLRPLeBe
- 63DkU6NxRswBFrg==
+ bh=sEfAUOYzG1M4zvx/Xv8wME49V12PqhPhJ6Tk21Hc6yo=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBp1pGnRYv8b9NfVyUWQW1cq7zGcwvT6MzqyLu+D
+ MpQNcOVFzGJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCadaRpwAKCRBgAj/E00kg
+ cugVEADQNlRqMzFq6OW5/JM4N9RqHX0ZZtmZav19w6y15C7iV1B5rzWB0cRDizNam5dbLvEkWQU
+ OYtcZPm6H6wwa/GiyGoywpoc2XmGSNkIbVm0KrrmO4tDhkmNE3eI1HLi/Qxkk6tAcj6YTHhhO+u
+ 22jX0dUTq83XOKUqKTZ0W9dQMBGyQaW86SXRpzWOjKBJ5Z/oFySGanrrjys19Rh4M8b8V+uo0Cy
+ XviUSumFYduu5Pzr9sXR6ol1ocrVbz7pAr8ZXZ1/YmNRJ09pMXh+/SMR6Ir+L8omFmGi8OcoWd1
+ 40MkFEfzdre19/UoLvzOAjF7owWe4xuOEMDCBrQ4tesa4XhrDceMmtF+nmw854tkcgZH08cyGpo
+ HKxt/qO1Emq4D/vPpHs9ciJYKCggOvGZHgN9I90QFxHW5pLa1dWy6on0CvGpiA2pDyX0KH7rnRe
+ k2SNrFxDRCIr/72zBTE5sOiTdtmy5F04IhHBL9kWQorbx0tswQwvTP8gbGZ9sTAQIno83D2+jHI
+ KXYVVbT+3lO1HIpOPwO+sLqBJZrqFKpWx6I4x+QyFuyI830OncC4Rmk2n4CvrxjxqemIztjHUEc
+ z4yVKphaJzavOoNZYOsEGymFsjjwi0Y2A5A+YaANVwH7Ig0iKja+cdxoRQoAL4L3tufdha+Vo4e
+ 5rZ212qBWw27SEA==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -99,12 +99,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102354-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	TAGGED_FROM(0.00)[bounces-102355-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_TO(0.00)[gmail.com,kernel.org,zx2c4.com,ew.tq-group.com,tw.synaptics.com];
@@ -118,36 +118,55 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	HAS_REPLYTO(0.00)[david@ixit.cz];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,codeberg.org:url]
-X-Rspamd-Queue-Id: A02ED3BFAA4
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid,linaro.org:email]
+X-Rspamd-Queue-Id: B6D733BFCBA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Mostly related to the
-  https://codeberg.org/sdm845/linux/commits/branch/b4/synaptics-rmi4
-series, but independent on other changes which I trying to upstream for
-more than one year.
+From: David Heidelberg <david@ixit.cz>
 
+Mostly irrelevant for authentic Synaptics touchscreens, but very important
+for applying workarounds to cheap TS knockoffs.
+
+These knockoffs work well with the downstream driver, and since the user
+has no way to distinguish them, later in this patch set, we introduce
+workarounds to ensure they function as well as possible.
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
-David Heidelberg (2):
-      dt-bindings: input: syna,rmi4: Document syna,rmi4-s3706b
-      arm64: dts: qcom: sdm845-oneplus: Update compatible to include model
-
  Documentation/devicetree/bindings/input/syna,rmi4.yaml | 11 ++++++++---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi    |  2 +-
- 2 files changed, 9 insertions(+), 4 deletions(-)
----
-base-commit: f3e6330d7fe42b204af05a2dbc68b379e0ad179e
-change-id: 20260408-synaptics-rmi4-dt-8aebf31790dc
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/input/syna,rmi4.yaml b/Documentation/devicetree/bindings/input/syna,rmi4.yaml
+index 8685ef4481f4a..fb4804ac3544d 100644
+--- a/Documentation/devicetree/bindings/input/syna,rmi4.yaml
++++ b/Documentation/devicetree/bindings/input/syna,rmi4.yaml
+@@ -18,9 +18,14 @@ description: |
+ 
+ properties:
+   compatible:
+-    enum:
+-      - syna,rmi4-i2c
+-      - syna,rmi4-spi
++    oneOf:
++      - enum:
++          - syna,rmi4-i2c
++          - syna,rmi4-spi
++      - items:
++          - enum:
++              - syna,rmi4-s3706b  # OnePlus 6/6T
++          - const: syna,rmi4-i2c
+ 
+   reg:
+     maxItems: 1
+
 -- 
-David Heidelberg <david@ixit.cz>
+2.53.0
 
 
 
