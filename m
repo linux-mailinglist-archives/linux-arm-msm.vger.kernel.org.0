@@ -1,196 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-102375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6FGROarT1mkpJAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 00:16:10 +0200
+	id jH7SLOfW1mmPJAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 00:29:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id A649B3C45BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 00:16:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A4B03C483B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 00:29:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 54B0D30233DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2026 22:15:59 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 347BD301048A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Apr 2026 22:29:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 243EC3A75A6;
-	Wed,  8 Apr 2026 22:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C15C3A1E6D;
+	Wed,  8 Apr 2026 22:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kiS7skWT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="px6Pkjfu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750F33A4524;
-	Wed,  8 Apr 2026 22:15:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B023644C3
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Apr 2026 22:29:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775686551; cv=none; b=YnEsDMjs+zRBuMaDs2nqP/ShB5XreLc9IscqsNGtoMrkE1Yczk7Z43n1RsA7IC4+/1jgp3Ar3Bium0Kapb35w3UgRpLlEAXoCdfU6jtS8g0KjC7ONA9h8ZCPcwgkJ9J/cCp3eavZvC0vKMCpUFLh/tjx4G7mPPR+mf47/k7Kd3U=
+	t=1775687396; cv=none; b=gNvtCuJmdwlgyFsh0sMOIQbstLzaHgL7bE5tIddYHSMZS9UpgeBYSA/lDcpc8KUB6lPHGPpyoC6FHAULgTJ70HcMzZiRTgTuWB8f1T7/DlQxaejlFnZT9k8DFfct350Xg0RkzFVk9skFP/r0IZJVD+DfntRQENWcADI3VkSNm3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775686551; c=relaxed/simple;
-	bh=kHakWtc7I/4KMZNxyXdf4ZZNQ6CPJJ3HAz/w/Rhm82s=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eOSj4vGk8xXHqxdMRD40LoTRLaos0D2Sq00YW/ZoH7SjXtlkM2/oJ0dKMKBEm92bm6bRBAZ632qDKG9hU0GuFigiRQJs336g08H1bYXwsKKsHFOp/X+eOlOXHiIQdPVUJndIxIIWEfWgrDCX0+sGViY2sdIJJJUUsTLzGT/xgGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kiS7skWT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 50842C19421;
-	Wed,  8 Apr 2026 22:15:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775686551;
-	bh=kHakWtc7I/4KMZNxyXdf4ZZNQ6CPJJ3HAz/w/Rhm82s=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=kiS7skWTNXTLnFDt5YrRaai+6DODIhvjR5X7zhUCsOePFByb0p8CQrwuJ0X3qUUhE
-	 rb0XwpCbi/avsNQ3hCv4HW7CmdWM2QokjMnIRyKTfK//S2kqoWqh8uSvlI//SgvbNt
-	 Ui6keRgohDd/3pd2QDPTyC70ZtICYR/yhjuFtc4Kh0JDA4/aEYRtudVMPsWGIVeElS
-	 STWW+Zkpy115UsYLfHzlsKrHaxXOjWJ3sEk5ayitbQb23/J1kwYB83st1YQDn0lXuQ
-	 RISAMdzNhdWdLNUKk8qQCJLDE7dA74PZ0kaLpFHym5odD1GZ1sRoTaadhHCfWHs8ql
-	 0OdUwDB7reFRA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4525510FC45F;
-	Wed,  8 Apr 2026 22:15:51 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Thu, 09 Apr 2026 00:15:54 +0200
-Subject: [PATCH v4 11/11] arm64: dts: qcom: sdm845-google: Add STM FTS
- touchscreen support
+	s=arc-20240116; t=1775687396; c=relaxed/simple;
+	bh=prwd17M7JxELofGYoEJJNZIQU7RumAbcrI8O831MYvc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cl6GOPaT0XdVj/SxmYQp88kTU8O0pjw9ZYU3tcTi+Zlpvd+Euitp7JkCkOAI7tvVZDTOhRkI977CftiRLgTCA4APEvoRxzwi+KcEVP+gCSLb9+B2rY0C3mhdHgRjOSUuEqi9buah6ekPZ3SQrs5NsOOOx3RCRvjWcVrWkY9DqSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=px6Pkjfu; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-50b3488fb31so2470111cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Apr 2026 15:29:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775687393; x=1776292193; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qeg7SYz5U5slZCh/riNwU6KseeGH/B83E/l64VPEeX0=;
+        b=px6PkjfuYxDAb1/fmM5dugSXGo2AomFEOmQ3oxaxm9g01qf3c0PcoDI4hNp2JLUtpw
+         gMXqMfRlPmIYhwQQ7ZXnVcFcu45o1S5yzkKUBY8kcOgUbiHoDJ7qJGZhmqr0pk0yqo6M
+         Jn3Lp4xAdN6gNJ2NSMsnp5/ucfMM3lMu1LjBbbj6Am9jZfVjNFwsb3ReB0Nk84zuhzHu
+         lpuF48HT1TVKpEMY7X7VxBEIi4TINMsUClGtU3NeWxKkrX8ZLDhvFkK8ChfXBDxAQOFS
+         NvM7jIBExYk3SPFh/PdcVZqi/GTEaeTgrej396gAwUUMBrL0NQcQqjvLInQhrxF/pzqk
+         An4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775687393; x=1776292193;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Qeg7SYz5U5slZCh/riNwU6KseeGH/B83E/l64VPEeX0=;
+        b=MfY/duM2MI/7kJM//eHIWXhuvwTFGjVsJogkMRMi55xoWmfZxwP0zPWgZdZER61AOy
+         R14Ww6gMxaCbE1WadTtq+p0zRsk47ImlLWK4qJc180T7i+Hl644nDvUoByfWwhnDKk4N
+         81Q4MNpZIBuNMF/t/nDMgXMqp7zpxDC9Ct7jcU53KDsufBLbq9f1QJJRBFgnhlp9k60C
+         pLigLWkx3RpviYXoBbd503KbAkM3UotwUTD1Sv7cUcdYEkDetcYN86/5tylYIppjIw5q
+         RxkqH/WYRJ1iAC46V/hQSAtJ2cku9VnzG/xb65PR4VwdFuiDjBqlDIBqAS9QTzx6WCNY
+         YQsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVBIu85Ko7xfOr5iR8+JWwPz1N/eYzigFMWV0UNo7O6b9XVbfhuy5p2Ko/OaIl1ixPEL+VeG3F6W0oSk4dP@vger.kernel.org
+X-Gm-Message-State: AOJu0YxFjG4cd0v298cXHvFkzVRE3mLmluuLHZDR1OD3zIaeRT7TWtAf
+	YeGvJr7pm7ccTk3ePgwivbX24EBv3QuSHQGLbTRSgX2zC+rS1bQvxyKFIZJ7qw==
+X-Gm-Gg: AeBDiesOmWqh0Uz/ZxrFDCr3kX7cgBK9X70nV2IvasK97MyGvGM+LWq7aNSuCRf2hlW
+	Zi4l8TO8lfDjPBwqaJLTVTIHA5gzRxi9y6/VUv4oguDC08AWuWYjkylnIy1mRFWqwWHAQyt7Uhg
+	BfPpSpq2aDWn1tpPAsBv6X5HZJxHOzF1o+rKeAL5RsNiEzIZ5RAmHpVhi2IA4Qur5TjH4gCOw+Y
+	WzeirDoIT8uTjA6c0QYSCXcb5Aq8NrzpMo//oFhK13v35rdC8sP4xyx9EQ0qOa7gEmOUjfHeE5E
+	8Ha/XHQTTydSdN6noqMQO57M3snZyYYODQ8hpK2uabTjWh9E2U6+EYpO58jlfN9O2GuYVnFCjGm
+	PNloVRV6SIZx3EY8lDto9BdVG7oTm6G42yp83uNbo6hKDkVas7pEGyDqNjEE2bkqI7ztA3Qeuvc
+	L5Yte2FNWrnhUnMr8MT2f8uoUEV6JROEeyMIZxXmqIydoh4WeoAuyu1S5CPew6i1+TvjCcQLuaz
+	tnQvg32dMu6RYM=
+X-Received: by 2002:ac8:588e:0:b0:50d:a682:2c6b with SMTP id d75a77b69052e-50dc183ecddmr19680501cf.0.1775687392984;
+        Wed, 08 Apr 2026 15:29:52 -0700 (PDT)
+Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50d4b93dd10sm171255511cf.7.2026.04.08.15.29.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Apr 2026 15:29:51 -0700 (PDT)
+From: Richard Acayan <mailingradian@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org
+Cc: kernel test robot <lkp@intel.com>,
+	Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH] pinctrl: qcom: sdm670-lpass-lpi: label variables as static
+Date: Wed,  8 Apr 2026 18:30:38 -0400
+Message-ID: <20260408223038.52264-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260409-stmfts5-v4-11-64fe62027db5@ixit.cz>
-References: <20260409-stmfts5-v4-0-64fe62027db5@ixit.cz>
-In-Reply-To: <20260409-stmfts5-v4-0-64fe62027db5@ixit.cz>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Henrik Rydberg <rydberg@bitmath.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Petr Hodina <petr.hodina@protonmail.com>, linux-input@vger.kernel.org, 
- linux-stm32@st-md-mailman.stormreply.com, 
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzk@kernel.org>, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org, 
- David Heidelberg <david@ixit.cz>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1856; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=7SvlmHIP51I6dk+k6+tvNP3/MABqkfu3zdnv9py6gtI=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBp1tOSbkFU6aEYu1WSXcSny3Bib98zFWA+1DYun
- thcrml6diuJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCadbTkgAKCRBgAj/E00kg
- coutD/0XMKWSj++FRSkStRFByRa+K5bf/KenIGUw9yS6Emc+5dhSrjiUP+MpBY961IreoJ7GvfA
- 2vv1TiTcJsZ65jxJpzQ0Dz0w4G9hoWi8V1iEGA6t7yFRB89rDaFcn4n7ORsObw2oPZz0tn59Gjy
- ayEx4qzSg2gXL6/h0DP1uUGrt+jgj0CWgd+wk0sRhgK1igWwfNwndn3Om+ZUClgSJPyAStUHSvS
- vCT0K3LrxFviAxkQXgNEVhg0WizdwahTXTwcSicUqPHBlXncNhhY2tvBFZb3xyRL+5zo4/XUkdf
- wZS6EBXa67Y7GnaUdBBbQNyDwsFryaOZQbWr6g17LR5z/igz1xeDIu5Fal6KQW5hDiM4XoWD2bT
- EtTpeSWcSGQc9zB/mroFJkiO0HiMWA06AmRYFR/6uUdUstqeaxoa18VTfps7musntig5wbFXYN2
- 2VWIWJAxALeJV+3HC/x5qWlG8dpret/2INQuh/DwxaLunH4DidZOUwRPlfiTtxxTwgoIH7YnXIq
- B1FKqjLUQn2b0VwY6t3G7Coj7i2FmbcNGK8Svd4EGsdS8mTf/SK4vYqGQFTE0q2AoD/2x978zi7
- 4s5zM8RcB2+W0VAnaOJaWVLV4eQhZIQ1meN7PGjQKlH7oDtcpkX+FcJOtG0wjoMbtrs4izGXKLm
- zqjJzSVm9qTBp5g==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-102375-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
-	FREEMAIL_TO(0.00)[gmail.com,foss.st.com,kernel.org,bitmath.org];
-	RCVD_TLS_LAST(0.00)[];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[intel.com,gmail.com];
+	TAGGED_FROM(0.00)[bounces-102376-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.999];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[protonmail.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,kernel.org,ixit.cz,oss.qualcomm.com];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	HAS_REPLYTO(0.00)[david@ixit.cz];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,0.0.0.49:email,protonmail.com:email,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: A649B3C45BD
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 4A4B03C483B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Petr Hodina <petr.hodina@protonmail.com>
+These variables are local to the driver and have no need to be exported
+to the global namespace. Label them as static to fix compiler warnings.
 
-Basic touchscreen connected to second i2c bus.
-
-Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Co-developed-by: David Heidelberg <david@ixit.cz>
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202604080950.Mvm8aN0a-lkp@intel.com/
+Fixes: 9826035a75da ("pinctrl: qcom: add sdm670 lpi tlmm")
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sdm845-google-blueline.dts | 19 ++++++++++++++++++-
- arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi  |  2 +-
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-blueline.dts b/arch/arm64/boot/dts/qcom/sdm845-google-blueline.dts
-index fa89be500fb85..8fb988130b551 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-google-blueline.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-google-blueline.dts
-@@ -26,7 +26,24 @@ &i2c2 {
+diff --git a/drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c
+index 6270c6d09c22..858146c408d0 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c
+@@ -80,7 +80,7 @@ static const char * const pdm_sync_groups[] = { "gpio19" };
+ static const char * const pdm_tx_groups[] = { "gpio20" };
+ static const char * const slimbus_clk_groups[] = { "gpio18" };
  
- 	status = "okay";
- 
--	/* ST,FTS @ 49 */
-+	touchscreen@49 {
-+		compatible = "st,stmfts5";
-+		reg = <0x49>;
-+
-+		pinctrl-0 = <&touchscreen_irq_n>, <&touchscreen_reset>;
-+		pinctrl-names = "default";
-+
-+		interrupts-extended = <&tlmm 125 IRQ_TYPE_LEVEL_LOW>;
-+
-+		mode-switch-gpios = <&tlmm 136 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&tlmm 99 GPIO_ACTIVE_LOW>;
-+
-+		avdd-supply = <&vreg_l14a_1p8>;
-+		vdd-supply = <&vreg_l19a_3p3>;
-+
-+		touchscreen-size-x = <1080>;
-+		touchscreen-size-y = <2160>;
-+	};
+-const struct lpi_pingroup sdm670_lpi_pinctrl_groups[] = {
++static const struct lpi_pingroup sdm670_lpi_pinctrl_groups[] = {
+ 	LPI_PINGROUP(0, LPI_NO_SLEW, _, _, _, _),
+ 	LPI_PINGROUP(1, LPI_NO_SLEW, _, _, _, _),
+ 	LPI_PINGROUP(2, LPI_NO_SLEW, _, _, _, _),
+@@ -115,7 +115,7 @@ const struct lpi_pingroup sdm670_lpi_pinctrl_groups[] = {
+ 	LPI_PINGROUP(31, LPI_NO_SLEW, _, _, _, _),
  };
  
- &mdss_dsi0 {
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
-index 6930066857768..4653c63ec26d2 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
-@@ -466,7 +466,7 @@ touchscreen_reset: ts-reset-state {
- 		bias-pull-up;
- 	};
- 
--	touchscreen_pins: ts-pins-gpio-state {
-+	touchscreen_irq_n: ts-irq-n-gpio-state {
- 		pins = "gpio125";
- 		function = "gpio";
- 		drive-strength = <2>;
-
+-const struct lpi_function sdm670_lpi_pinctrl_functions[] = {
++static const struct lpi_function sdm670_lpi_pinctrl_functions[] = {
+ 	LPI_FUNCTION(comp_rx),
+ 	LPI_FUNCTION(dmic1_clk),
+ 	LPI_FUNCTION(dmic1_data),
 -- 
 2.53.0
-
 
 
