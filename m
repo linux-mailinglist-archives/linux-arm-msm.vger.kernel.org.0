@@ -1,230 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-102487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cDVaBRCV12mGPwgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 14:01:20 +0200
+	id AIHzCN+Z12kUQQgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 14:21:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C66333C9FE8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 14:01:04 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id A11283CA563
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 14:21:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 8A6113033F0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 11:58:37 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9BAFF30073E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 12:21:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F3933C3452;
-	Thu,  9 Apr 2026 11:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7C153B0AFC;
+	Thu,  9 Apr 2026 12:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S/QKIivU"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Z82JrVhH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797083C343F;
-	Thu,  9 Apr 2026 11:57:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D29E379ED7;
+	Thu,  9 Apr 2026 12:21:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775735871; cv=none; b=LYKNXC6CgCRjkwI4obkhl9wwCJMF9XfjTsshLijH2wvnQBd+mSMaMQ/gedu3A+h3terw54zooeP4xGhNd14Vm2vfM0aLhltKRuyDCEhAYs2NV99LccvMfMXyXCKVSRe9/bxZ4DanBaF/sb4TO2RQ9mvvezncmDubb3yIEMFtM6w=
+	t=1775737283; cv=none; b=M/G/z/wsWJoUhXWQ+4NN9OOB9ZfeEe+dsucRQZ0fQq4t5UFqWkZN3AV+j7ol6BtoUqzp0Z6hXWCWwb9mWFEfs77m7RZ9FAen6+IYeS0f2UmSXvoeL/WCm7LEeGMEeTPsBmVbOCSj1XbmRck+8ESmnWVHIcAfEmPXGvHa++q5o04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775735871; c=relaxed/simple;
-	bh=DA0NkvvgdwZQ6nEqdoZX7mvZkVs3uTDY2bfvL+lIIMU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hx3YbzM+Sy8SgmaNXfItX1qrfhHzwLyW6nxAd0WbjB1UKSFtYQsuPFVsSMOivYTjljR+8TGGIyk7ceFR2Fn7vZLSEGQZ0Z/gYrI7SrB2gaWIQFQAVoWaTZ7L2fHO6/4qP9rXJStrlqNtE0EEwKHheMGBUO738Uj8EIwVRKVXGGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S/QKIivU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C62C2BC9E;
-	Thu,  9 Apr 2026 11:57:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775735871;
-	bh=DA0NkvvgdwZQ6nEqdoZX7mvZkVs3uTDY2bfvL+lIIMU=;
-	h=From:Date:Subject:To:Cc:From;
-	b=S/QKIivUGkI2kk9eucdS7YaW2QV4t9QhBmc0He3JhcZuXl1XvCLNzTDDdOlAmQtEu
-	 nEdq4Edp9AUYj6Qv8sfNqNKjoXHTWzKDFzQVprsev94p6xjLzUDBhvLoDhPQZTKOKR
-	 6VfRmyRg0fggZ90zWtOT9m4ipA2ainpc0mzwbys42OARo+TNMntslkAKyuGqdCJPGB
-	 HzhUckAbEn5P3/3IOw0XL39V65knpRQ8QYGMh8ycNeyE68qeFYb0oYV00ZoY8bZEaM
-	 IlcG6HWeK/ctU7gkDbyYciP7NhRqM0/CWCEKs/SN4DVbC9iEVUQPPla7A/163nz5vz
-	 iKR25xhGqsEZA==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Thu, 09 Apr 2026 13:57:45 +0200
-Subject: [PATCH] clk: qcom: regmap-phy-mux: Rework the implementation
+	s=arc-20240116; t=1775737283; c=relaxed/simple;
+	bh=rgtUB1c5aNLZHE/IkBoX6IeByjxo/MzCTwq4f/gSu1U=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=JezCmLF8LGSOTmL1phrBLDPV2lz8pSKafuIUxgjlQcNeYoAIkdAuyBCUQtHw36VycSZWykY6segKGLKYVYWnkCTZdd94MV+H3AQdTMniy9WfF2tv8BGrXjEaFhMib5EAsJ1L4tNgQkpiHB5CGb7OYP79XdFJJXRNiGK0uQv9UcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Z82JrVhH; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 639B4Cs12615182;
+	Thu, 9 Apr 2026 12:21:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=iRJojx90PbsK5eqwfGxXr5Q9vwOQMRc8Moo
+	WzOIPrKU=; b=Z82JrVhH+IbCyM8WalLWIPT+Ncz0aiQV4Qh+tLKTFv5VY96Ykfu
+	zv0/L9yRU5eiEZRnSgIp0O9YCfwSKJRAd4AVZpnHScniP69N3cdzxhm6K+L0iUAr
+	n8wbE75FB7heo0PRHJ3h6kobJLOBg8obJlZkVtJp0dYHc1x3KroRKfSpTYPJtYZ4
+	O9AgwK6A8zMv6Ft5Nz81YdUgO52HDyUbHXrO1eJX2MIUVNh3fgqV3j9suglBVAZ8
+	gQbWzwiGR+FM9bnoBq8E8RUIa0B7Uo8Cxqz4oPe5vmDbX3cmDdxYQkEXCwgd1Xw/
+	vVunt+guE1+cskVr1NEEeUGguxtp2X587gA==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddt28v1h5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 09 Apr 2026 12:21:16 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 639CLCBl031231;
+	Thu, 9 Apr 2026 12:21:12 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4db3u1y6cd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 09 Apr 2026 12:21:12 +0000 (GMT)
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 639CLCXh031225;
+	Thu, 9 Apr 2026 12:21:12 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-amakhija-hyd.qualcomm.com [10.213.99.91])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 639CLCIx031224
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 09 Apr 2026 12:21:12 +0000 (GMT)
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4090850)
+	id D56AC5F3; Thu,  9 Apr 2026 17:51:11 +0530 (+0530)
+From: Ayushi Makhija <ayushi.makhija@oss.qualcomm.com>
+To: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        dmitry.baryshkov@linaro.org
+Cc: Ayushi Makhija <ayushi.makhija@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH v1] arm64: dts: qcom: sm8750-mtp: Set sufficient voltage for panel nt37801
+Date: Thu,  9 Apr 2026 17:51:09 +0530
+Message-Id: <20260409122110.214680-1-ayushi.makhija@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260409-topic-phy_fastclk-v1-1-6b4aaee56b90@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MTQqAIBBA4avIrBNM7PcqEWE21VCYqEQR3T1p+
- S3eeyCgJwzQsgc8nhTosAl5xsCs2i7IaUoGKWQplGh4PBwZ7tZ7mHWIZt94I4taKzFWBU6QOud
- xput/dv37fuo0ubdjAAAA
-X-Change-ID: 20260409-topic-phy_fastclk-9258a40b75ed
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Taniya Das <taniya.das@oss.qualcomm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Cc: usb4-upstream@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, 
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775735867; l=3710;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=ZBunsSWP7UvmxeurBAj7ASuxpfk0/UhcgP555CC0X1w=;
- b=50JWlCfgsLJRHES2GGnk90UliCnYXrCtVtj8N8kOiq6nLYupU9WA0apXc9a/S9sWWMIa6z/5/
- JWJnxpWYy/TDwbSthIN42n1OP1HU2r9lsCS2XyiMZgU/yERZkM1Rfbe
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-ORIG-GUID: OXF4xuTpOgYJfK6NUmxtmVEnGPcIUQVo
+X-Authority-Analysis: v=2.4 cv=fIIJG5ae c=1 sm=1 tr=0 ts=69d799bc cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8 a=LDVbE-baonJtzDLOTeQA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDExMSBTYWx0ZWRfXwjBS59UIkWK8
+ UklVZqTbftY22EAQqx3U/Q4h8D9ivNaIPqCGIiOnsqTZe7BH/6wF3NFLwjkWt0VJA5j3sv8AK6X
+ Ww2KueZ115uaDTPTF0IuKhfODH65FNf3o+czc0+1aHmgjOJM5YdVcWkSJZ7OKYf9/LaMeJ44qgH
+ iD/ilDkAVQVFzetNdDRsvECB5kMn87jXjlLJID5TQOlzx6S1a8NGkbhc+F5JAhXT9NXJaDh5VTa
+ 9NTNdOYsH1bxQiNrCASu2i5oyYGQXjeLiu6C2O26cEw7MBvDWhnK0Jh66A/CLABZEM0to5YhV83
+ GzCx7H8kOMg84xfXja9D1s1vQbN1fhcj+b1cyYj1ti9SHVdljGlsCJBOfPmJwEreytY+med5Zkl
+ aTruR+oMySSRmv/CHnk/6BbkYO8rcoWp4UOh5z+exzyH4883Cu1Ze0hIfQKMXIif/jSHzTnAoTI
+ RCgovTYd0lZu/EOSayQ==
+X-Proofpoint-GUID: OXF4xuTpOgYJfK6NUmxtmVEnGPcIUQVo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-09_03,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1011 adultscore=0
+ bulkscore=0 malwarescore=0 phishscore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604090111
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RSPAMD_URIBL_FAIL(0.00)[qualcomm.com:query timed out];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102487-lists,linux-arm-msm=lfdr.de];
-	ASN_FAIL(0.00)[1.2.3.5.c.f.2.1.0.0.0.0.0.0.0.0.7.a.0.0.1.0.0.e.9.0.c.3.0.0.6.2.asn6.rspamd.com:query timed out];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	RSPAMD_EMAILBL_FAIL(0.00)[konrad.dybcio.oss.qualcomm.com:query timed out];
+	TAGGED_FROM(0.00)[bounces-102488-lists,linux-arm-msm=lfdr.de];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	FROM_NEQ_ENVFROM(0.00)[konradybcio@kernel.org,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[ayushi.makhija@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:mid];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	NEURAL_HAM(-0.00)[-1.000];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,oss.qualcomm.com:mid,qualcomm.com:email]
-X-Rspamd-Queue-Id: C66333C9FE8
+	RCVD_COUNT_SEVEN(0.00)[10]
+X-Rspamd-Queue-Id: A11283CA563
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+The NT37801 Sepc V1.0 chapter "5.7.1 Power On Sequence" states
+VDDI=1.65V~1.95V, so set sufficient voltage for panel nt37801.
 
-The sole reason this hw exists is to let the branch clock downstream of
-it keep running, with the PHY disengaged. This is not possible with the
-current implementation, as the enabled status is hijacked to mean
-"enabled" = "use fast/PHY source" and "disabled" = "use XO source".
-
-This is an issue, since the mux enable state follows that of the child
-branch, making the desired "child enabled, MUX @ XO" combination
-impossible.
-
-Solve that by implementing ratesetting. Because PHY clock rates may
-change at runtime and aren't really deterministic from Linux, assume
-ULONG_MAX as "fast clock" and 19.2 MHz as XO. All the branches in
-question already set CLK_SET_RATE_PARENT, so everything works out.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: 4fca6849864d ("drm/panel: Add Novatek NT37801 panel driver")
+Signed-off-by: Ayushi Makhija <ayushi.makhija@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- drivers/clk/qcom/clk-regmap-phy-mux.c | 58 +++++++++++++++++++++++------------
- 1 file changed, 38 insertions(+), 20 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/clk-regmap-phy-mux.c b/drivers/clk/qcom/clk-regmap-phy-mux.c
-index 7b7243b7107d..b7d1c69d62f7 100644
---- a/drivers/clk/qcom/clk-regmap-phy-mux.c
-+++ b/drivers/clk/qcom/clk-regmap-phy-mux.c
-@@ -15,48 +15,66 @@
- #define PHY_MUX_PHY_SRC		0
- #define PHY_MUX_REF_SRC		2
+diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+index 3837f6785320..6ba4e69bf377 100644
+--- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
++++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+@@ -462,7 +462,7 @@ vreg_l11b_1p0: ldo11 {
  
-+#define XO_RATE			19200000UL
-+
- static inline struct clk_regmap_phy_mux *to_clk_regmap_phy_mux(struct clk_regmap *clkr)
- {
- 	return container_of(clkr, struct clk_regmap_phy_mux, clkr);
- }
- 
--static int phy_mux_is_enabled(struct clk_hw *hw)
-+static unsigned long phy_mux_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
- {
- 	struct clk_regmap *clkr = to_clk_regmap(hw);
- 	struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(clkr);
--	unsigned int val;
-+	u32 val;
- 
- 	regmap_read(clkr->regmap, phy_mux->reg, &val);
--	val = FIELD_GET(PHY_MUX_MASK, val);
- 
--	WARN_ON(val != PHY_MUX_PHY_SRC && val != PHY_MUX_REF_SRC);
--
--	return val == PHY_MUX_PHY_SRC;
-+	switch (FIELD_GET(PHY_MUX_MASK, val)) {
-+	case PHY_MUX_PHY_SRC:
-+		return ULONG_MAX;
-+	case PHY_MUX_REF_SRC:
-+		return XO_RATE;
-+	default:
-+		return 0;
-+	}
- }
- 
--static int phy_mux_enable(struct clk_hw *hw)
-+static int phy_mux_determine_rate(struct clk_hw *hw, struct clk_rate_request *req)
-+{
-+	if (req->rate == XO_RATE || req->rate == ULONG_MAX)
-+		return 0;
-+
-+	return -EINVAL;
-+}
-+
-+static int phy_mux_set_rate(struct clk_hw *hw, unsigned long rate, unsigned long parent_rate)
- {
- 	struct clk_regmap *clkr = to_clk_regmap(hw);
- 	struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(clkr);
-+	u32 val;
- 
--	return regmap_update_bits(clkr->regmap, phy_mux->reg,
--				  PHY_MUX_MASK,
--				  FIELD_PREP(PHY_MUX_MASK, PHY_MUX_PHY_SRC));
--}
--
--static void phy_mux_disable(struct clk_hw *hw)
--{
--	struct clk_regmap *clkr = to_clk_regmap(hw);
--	struct clk_regmap_phy_mux *phy_mux = to_clk_regmap_phy_mux(clkr);
-+	switch (rate) {
-+	case XO_RATE:
-+		val = PHY_MUX_REF_SRC;
-+		break;
-+	case ULONG_MAX:
-+		val = PHY_MUX_PHY_SRC;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
- 
- 	regmap_update_bits(clkr->regmap, phy_mux->reg,
- 			   PHY_MUX_MASK,
--			   FIELD_PREP(PHY_MUX_MASK, PHY_MUX_REF_SRC));
-+			   FIELD_PREP(PHY_MUX_MASK, val));
-+
-+	return 0;
- }
- 
- const struct clk_ops clk_regmap_phy_mux_ops = {
--	.enable = phy_mux_enable,
--	.disable = phy_mux_disable,
--	.is_enabled = phy_mux_is_enabled,
-+	.recalc_rate = phy_mux_recalc_rate,
-+	.determine_rate = phy_mux_determine_rate,
-+	.set_rate = phy_mux_set_rate,
- };
- EXPORT_SYMBOL_GPL(clk_regmap_phy_mux_ops);
-
----
-base-commit: db7efce4ae23ad5e42f5f55428f529ff62b86fab
-change-id: 20260409-topic-phy_fastclk-9258a40b75ed
-
-Best regards,
+ 		vreg_l12b_1p8: ldo12 {
+ 			regulator-name = "vreg_l12b_1p8";
+-			regulator-min-microvolt = <1200000>;
++			regulator-min-microvolt = <1650000>;
+ 			regulator-max-microvolt = <1800000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 			regulator-allow-set-load;
 -- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+2.34.1
 
 
