@@ -1,169 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-102502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WJPlFZzD12mdSQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 17:19:56 +0200
+	id gLl7MSbE12mdSQgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 17:22:14 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7A0D3CC863
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 17:19:55 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65CD63CC908
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 17:22:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id BCC47300A514
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 15:19:54 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id B0580300BBBC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 15:22:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59CDF3DE432;
-	Thu,  9 Apr 2026 15:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 686513DEFFD;
+	Thu,  9 Apr 2026 15:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="hDJDzfar"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O2PxuV1I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com [74.125.224.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CB33DA5D8;
-	Thu,  9 Apr 2026 15:19:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775747992; cv=none; b=aBfLe9oZalTuhZOjvLOl+SXl7we9iULM9znBr8dzfqH7yoRuooUJ6Q3IoRVNMFAAhlEvUEtDUnsa3Fa7mBJfWfQP6ge8QDnKTp3n4cMizTxcW1ua8VqTv/6GRaO7O6WLDZp57upZDoIY2qexVMs+FXstYB9l0XX2Yf8QhBY1FgQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775747992; c=relaxed/simple;
-	bh=9Eu0siJJ65AxUBDrGi32lm17n2xyY2V/g+wLQ+IeBmI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hzEBtIDdau6s9GkgrO1xtDlGrsky1XZnjesBsNwqRpsNylBvLiy/EDi61+8m9+jqvWc4ahPM1V8OZ8plZf0FHZEE7rEi8hVWBFq2umovZaUPlt7HjlsEeE/ToY/XOxbi9z2XDrsvNbEExE5OWh1+1VAY+R9YsieGzN4EC0zCNb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=hDJDzfar; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [192.168.218.16] (37-48-0-9.nat.epc.tmcz.cz [37.48.0.9])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 4A646534151B;
-	Thu, 09 Apr 2026 17:19:45 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1775747986;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=ldSQMaCIi3RqWDrIuCTK/RsYt+ET/zsF/yIERTkZQa8=;
-	b=hDJDzfartZD8ZhK+DdH1uZ5t0a4uTQJ9HnaH0LEXlt5HzdPQqhV2uZIB1XWkaIHhmWMGql
-	2591Us8+Gj1r8nVKrAJZVsIVoDDj0pUWxz0Ww4R1zJ7Oq/exdNkjjb3+3DUjjbwEtDpPXT
-	Bbbm2cefP8a97tXKngV/8uLwChnnuRo=
-Message-ID: <232b1df4-3261-42c9-adc6-463e5a189e6f@ixit.cz>
-Date: Thu, 9 Apr 2026 17:19:44 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F030E3D88E4
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Apr 2026 15:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775748128; cv=pass; b=WJ7W/QkxpPINsdnNWFWoHfkjNYcjuxZUsBKKx2Gs57kHjkv0T/yt7/Iih8stK2e9UBd8BVVHBgHbk6gq+Kw62iw8/JgtKPsLhj6wmXk89tdC3pkjgyRYjSpcfXP/SdGPmEeIjjPBbTJdGrOSOFbKGeR+jmar9NhRDyJOhn+qA+M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775748128; c=relaxed/simple;
+	bh=meMgMr/h5W+MS/0Yh/1Per24DLP0Ws3LCGTS9OJSr5c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bhx009wGhpvL4cu7StMm4zog/RlYc/qEeYjU7WcB2M6daPOujBIBoKY/C6V+mgSypEt2V7P5kTCRCEpFQgMsyWCIDz1q4u97egxkAmuntiDqkFmIsMsQojSGm1REd8K4sm/A4+dhXzcnRMq7Xg4szEfIe7jQeCwJTZpvzv3wBrY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O2PxuV1I; arc=pass smtp.client-ip=74.125.224.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-65075c2ba66so1221576d50.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2026 08:22:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775748125; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lsqIJn4ZvlDj72nsWm4iwkHVrXvyVVKQdqSb94Gt2Nm94PschmLPiNdA0Rsl+6K2b2
+         DgoKhtSYvS9jxNzRILkRdOUdQVRaXaHILCh5LnhEcnrlc3V9cH734g8e62k7152Gx9fN
+         /Seb8YGeUNxQG3NL4q5XYNZEUHKWcC7SB1x0oXA40sZbtV/Mb/qvqIPsLQxCik+ZbXuS
+         dV00ca0zLSTvszl2A70p8wOKijAPTmGtvmywddRDl3F9VVKq/zef/X5iQny2xTn6tLC+
+         XxiOvDKSRSA/IQ/oWR9U6c1QIfinuqaDB+agCf/4RWcmxHCUzIztu87Q3yGst4KJd9ic
+         BxDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=x4X5CmZAT1pVZBOn/ctm5Alifxeb/7sxa5gdbd1aUPo=;
+        fh=13mqWPZWlEceXDqgHcTUxlCZPtYWTYPJWT6Un/V3qyw=;
+        b=FFGwW2ZNz9RuTFE+V4jqhUzZ6WpxKji+3TUUF7ByiKUiBELau6UZQS+uXe7pQOk2gc
+         6IVMUPZ3TGcTHnRSlM366R7a5dqO3dFCs4lyxABTkNMW//5IeicrKP4C77EUppKmNHe9
+         gL9BOSW6juDmxnFT9pCgxsXUhUJyLyCmpxtTYfk876BZa/ljeBAK7FS8ZFhPX9vdNORv
+         AqfCdU5j1Q5vItslodVsjfkB6ajQcTFfcxiC9lwIt2+CSQ+M23Cb26kmRrNuzOJeahW9
+         OUx7byRb/qhmZlriWDSvDfEhmiIieOs7+6Wt45r3BJhRXF825lDEDHshCyEjPBEnUp+L
+         PIrQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775748125; x=1776352925; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=x4X5CmZAT1pVZBOn/ctm5Alifxeb/7sxa5gdbd1aUPo=;
+        b=O2PxuV1IbU3qNEACyWmEOH1M9p9bVfznNpOoN/mBF7alEmGQKGoErxdPCxprgysJkq
+         X/80XAsnAOiddH1v2FGRgL89g3KkNxqqbnIoJDR745SIn1keFpVQXaw7bZzX1nPQ9Dvd
+         tdzLEGVmo1U1myLUj+uOZrviftO2o80+EJ6CVFUiyEMFLeTpoNMWeBW+rDL2NQxL+dT+
+         MaoQPhns3t8Y/5O2H3jwgJ9qaGTUk9zRxgVR0vKxaJdALFhGK5rW8+zmtwqCnp8n8pCY
+         B5I/nCb0wICNiSTNkKqxXYe5Rs68lnwxNJ76gk6QH3MwEOsHMiFZoJ+GkIPj7SOO41Bf
+         H9Ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775748125; x=1776352925;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=x4X5CmZAT1pVZBOn/ctm5Alifxeb/7sxa5gdbd1aUPo=;
+        b=lKca/wx8b6GMQ5+VRi71cs9BJUofgMbYl4IV5PbhpEc5L6p6cLxw3/gBScsn1vKvrb
+         Dp2yVw1PomLz5nByLshofGjwTPCD5KbzWxbV5J4FXFSoL+9rxmlp4zSaY+kBeV+SS4W5
+         Cted0ItsaBTEdbpuuEQwFVUalOcagTdl4drHpZGDeHomNxje9buIqJhaX2PO3/WBFZ6L
+         bEWjSPqxplX38OhY3h0eWqiqqKV634+hLX1M4c2x1qaP781l2XyguBtLg8jEYJmHIwoq
+         ht2gm0pVzOIhoDygZaVyLu0C91qWfQH9GAaWGrFQuYRQECkLDC9HbURpy+YauIQkLBJQ
+         MPRg==
+X-Forwarded-Encrypted: i=1; AJvYcCX4OokGcnp3JdAR2ryb2xDYGEXF2W8xiiUxbtyCNHj3ZbWW2luZt6kFrmGK6YOTFyimCgsRq1BbIr9ERyBa@vger.kernel.org
+X-Gm-Message-State: AOJu0YypSIogDyzjWMrTQ3jn6jEmvaZKesQUcX2ghRZUBbvSBRKPjwFF
+	ZZ453jFoLi0DHx4nDVqhSQlrdeh6dF07yJ81lTP4q0dG1aCyAex6bcDlTbAV/Cqc/IK/b+fG45V
+	26RvkEcM3akTvXE0tle9MzI4R5zEOJA4=
+X-Gm-Gg: AeBDiesiZz87nfBxM8HpFwUDKi/4VchUQXa5YVcZSWGLDL3shpf7rzjXHFZiwhVpiBD
+	M5wlv4fmhHfcCBaS9NZHs70yfTZ8k4LHq2yLGZpMkZgzQDUjgv+YoGIKkaAnCFG4Bs7QgVlWgFO
+	v1HPi2yjDLnXMPG7HMjW7g5zBReyGh81GIPsIkWKcQ44J88mwlP/So+dsuFURw/0RAzulXZFJZV
+	dV2IGvccnSA9o77vWi6v83cZnmgZiqwkvrpKH/Qkzqvw1qS+tBcWtRCUz+KNJFjB1bXi0T9msNa
+	eYTn9LLy0g1PyIsh+N2EPAR2X048we4K/qpItJEll3Ims7rVU4nc+ZJPzfr0x03QaHU=
+X-Received: by 2002:a05:690e:438b:b0:650:3396:52d0 with SMTP id
+ 956f58d0204a3-65187573d7emr2456882d50.13.1775748124653; Thu, 09 Apr 2026
+ 08:22:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm845-oneplus: Update compatible
- to include model
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
- Vincent Huang <vincent.huang@tw.synaptics.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-input@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- phone-devel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
-References: <20260408-synaptics-rmi4-dt-v1-0-2d32bacce673@ixit.cz>
- <20260408-synaptics-rmi4-dt-v1-2-2d32bacce673@ixit.cz>
- <80067706-1857-46a0-a281-7f4ff3937468@oss.qualcomm.com>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <80067706-1857-46a0-a281-7f4ff3937468@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
-	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+References: <20260409112233.3326467-1-shuai.zhang@oss.qualcomm.com>
+In-Reply-To: <20260409112233.3326467-1-shuai.zhang@oss.qualcomm.com>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Thu, 9 Apr 2026 11:21:53 -0400
+X-Gm-Features: AQROBzCmtoBFJywFV2obk7F71rv-m4o5gJ80-OufF2THW4vlYHJC1HnPRJKppvY
+Message-ID: <CABBYNZL25=Q6cR5HKf202D61oe6pYL-2NR3vb32ja+5W6xQcXA@mail.gmail.com>
+Subject: Re: [PATCH v5] Bluetooth: qca: Fix delayed hw_error handling due to
+ missing wakeup during SSR
+To: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Cc: Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, linux-arm-msm@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	cheng.jiang@oss.qualcomm.com, quic_chezhou@quicinc.com, 
+	wei.deng@oss.qualcomm.com, jinwang.li@oss.qualcomm.com, 
+	mengshi.wu@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102502-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,gmail.com,kernel.org,zx2c4.com,ew.tq-group.com,tw.synaptics.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-102503-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[ixit.cz:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: C7A0D3CC863
+	FROM_NEQ_ENVFROM(0.00)[luizdentz@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sashiko.dev:url,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email,mail.gmail.com:mid]
+X-Rspamd-Queue-Id: 65CD63CC908
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 09/04/2026 14:41, Konrad Dybcio wrote:
-> On 4/8/26 7:34 PM, David Heidelberg via B4 Relay wrote:
->> From: David Heidelberg <david@ixit.cz>
->>
->> We know the driver is reporting s3706b, introduce the compatible so we
-> 
-> via Google search AI summary:
-> "Bon Chef S3706B is a black dinner fork (Roman Euro Dinner Fork)" - the
-> more you know!
+Hi Shuai,
 
-Oh no, that's definitely not compatible hardware! Maybe it's some fork... :P
+On Thu, Apr 9, 2026 at 7:22=E2=80=AFAM Shuai Zhang <shuai.zhang@oss.qualcom=
+m.com> wrote:
+>
+> When Bluetooth controller encounters a coredump, it triggers
+> the Subsystem Restart (SSR) mechanism. The controller first
+> reports the coredump data, and once the data upload is complete,
+> it sends a hw_error event. The host relies on this event to
+> proceed with subsequent recovery actions.
+>
+> If the host has not finished processing the coredump data
+> when the hw_error event is received,
+> it sets a timer to wait until either the data processing is complete
+> or the timeout expires before handling the event.
+>
+> The current implementation lacks a wakeup trigger. As a result,
+> even if the coredump data has already been processed, the host
+> continues to wait until the timer expires, causing unnecessary
+> delays in handling the hw_error event.
+>
+> To fix this issue, adds a `wake_up_bit()` call after the host finishes
+> processing the coredump data. This ensures that the waiting thread is
+> promptly notified and can proceed to handle the hw_error event without
+> waiting for the timeout.
+>
+> Test case:
+> - Trigger controller coredump using the command: `hcitool cmd 0x3f 0c 26`=
+.
+> - Use `btmon` to capture HCI logs.
+> - Observe the time interval between receiving the hw_error event
+> and the execution of the power-off sequence in the HCI log.
+>
+> Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+> ---
+> Changes v5:
+> - Replace clear_and_wake_up_bit with wake_up_bit
+> - Link to v4
+>   https://lore.kernel.org/all/20260327083258.1398450-1-shuai.zhang@oss.qu=
+alcomm.com/
+>
+> Changes v4:
+> - add Acked-by signoff
+> - Link to v3
+>   https://lore.kernel.org/all/20251107033924.3707495-1-quic_shuaz@quicinc=
+.com/
+>
+> Changes v3:
+> - add Fixes tag
+> - Link to v2
+>   https://lore.kernel.org/all/20251106140103.1406081-1-quic_shuaz@quicinc=
+.com/
+>
+> Changes v2:
+> - Split timeout conversion into a separate patch.
+> - Clarified commit messages and added test case description.
+> - Link to v1
+>   https://lore.kernel.org/all/20251104112601.2670019-1-quic_shuaz@quicinc=
+.com/
+> ---
+>  drivers/bluetooth/hci_qca.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+>
+> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+> index c17a462ae..9fffe665b 100644
+> --- a/drivers/bluetooth/hci_qca.c
+> +++ b/drivers/bluetooth/hci_qca.c
+> @@ -1108,7 +1108,7 @@ static void qca_controller_memdump(struct work_stru=
+ct *work)
+>                                 qca->qca_memdump =3D NULL;
+>                                 qca->memdump_state =3D QCA_MEMDUMP_COLLEC=
+TED;
+>                                 cancel_delayed_work(&qca->ctrl_memdump_ti=
+meout);
+> -                               clear_bit(QCA_MEMDUMP_COLLECTION, &qca->f=
+lags);
+> +                               wake_up_bit(&qca->flags, QCA_MEMDUMP_COLL=
+ECTION);
+>                                 clear_bit(QCA_IBS_DISABLED, &qca->flags);
+>                                 mutex_unlock(&qca->hci_memdump_lock);
+>                                 return;
+> @@ -1186,7 +1186,7 @@ static void qca_controller_memdump(struct work_stru=
+ct *work)
+>                         kfree(qca->qca_memdump);
+>                         qca->qca_memdump =3D NULL;
+>                         qca->memdump_state =3D QCA_MEMDUMP_COLLECTED;
+> -                       clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
+> +                       wake_up_bit(&qca->flags, QCA_MEMDUMP_COLLECTION);
+>                 }
+>
+>                 mutex_unlock(&qca->hci_memdump_lock);
+> --
+> 2.34.1
+
+https://sashiko.dev/#/patchset/20260409112233.3326467-1-shuai.zhang%40oss.q=
+ualcomm.com
+
+Lots of comments which Im not sure are really valid, but one is
+considered critical so we do have to pay attention if that is valid
+then it should be addressed.
+
+--=20
+Luiz Augusto von Dentz
 
