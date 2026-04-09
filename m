@@ -1,242 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-102399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qM1FMNYX12k1KwgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 05:07:02 +0200
+	id eI+qLx8e12mQKwgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 05:33:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61A013C5EAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 05:07:02 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DC7C3C6080
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 05:33:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9E02A30252AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 03:02:18 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B74E730157E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 03:33:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14F0236EA98;
-	Thu,  9 Apr 2026 03:02:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VIUzniQM"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBBC32D060C;
+	Thu,  9 Apr 2026 03:33:47 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11B7283C89;
-	Thu,  9 Apr 2026 03:02:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AAE1A23B1
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Apr 2026 03:33:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775703737; cv=none; b=hZ8YD7qS+SN56nko1ZVESUCt4lK3d2psSRVkF/72BjrHk5jQrS69Y62Xc0S426HyW/ADnVEt6QYpWmEJdeKj/+z88MTDMlmjsPddtF9sVkgEHtErYjNeKuTQVfI5uZGAyZBkFsBKmlIF/IrRk/i5d+Sf/k0T7VwWWNngLVkl3jQ=
+	t=1775705627; cv=none; b=sH/R7LHApWl5/NUqDZoXl2nJnpJmJU5yXSIN53SqhkaASknmahgKUPiCQ04czTQMfHqXuIz/LX0Aa8+kCwGGRG62wpaHg9Kw/fZDnOWjjiXbPURraAi18ucR79kVbD9JUq1tSOZdmGjeOizlin/Z8khGUiwcvNhZYrcLNwZVHrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775703737; c=relaxed/simple;
-	bh=ZK0Jt09C4Z9U33V+ppXkSe1vacGRZVaGrK1Ie+JDaNk=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dHR2F4mxniE83YJREBI4IcBMraIA8GJcgcEgWHmHhMzH3/OaxWy/PS3eI9QJyjEgRbqtgkunK3PJ4y7Hp9006bHO4Eyaja8F6ZBlQInopdykcfE2xGiXRWegb/7gvETEErZ4GMiYEoAhAHPyPsEDK0jApMuQwxTKADMpsiMGxCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VIUzniQM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 638NbUdg2845979;
-	Thu, 9 Apr 2026 03:02:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=UwJ8M5/B4qA
-	zvuVvs50+96VS34OzafblppBlZqLUgo4=; b=VIUzniQMtqvK7YPw9CffpqV7ahB
-	KZCO+GiQvQrywdjdSQ01CAH/42TOZYUXTB52x7lvleDnpTuyofG4KZvuv3L2EBn/
-	hmzJOaWZuOLtUiVyQiRwdNaRfl7RMKy4alaV91fvuiUuJbhd7Hz55UlcmYZEIeqv
-	jZLXwsXznbnL7SADgFBVnVpKiia/V19JQxbJVn7TzEbpmJxU2AX128S+1w7ucl64
-	0OyBlZVFTXMqoD1XPFBxe+AW8ha1R9Ah6BXcY5VoCo/Y1hRC3a5o1utc87509AiC
-	fykjXbJgxGHR5VPfK9ejXC5ZRIeYwl8PyvY6hwaNCGGPQ4beP/3j/DJ9fQg==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddt7hj3sj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Apr 2026 03:02:12 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 639329Gc018159;
-	Thu, 9 Apr 2026 03:02:09 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4db3njt426-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Apr 2026 03:02:09 +0000 (GMT)
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 6393293v018150;
-	Thu, 9 Apr 2026 03:02:09 GMT
-Received: from cse-cd01-lnx.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 639328G0018141
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Apr 2026 03:02:08 +0000 (GMT)
-Received: by cse-cd01-lnx.ap.qualcomm.com (Postfix, from userid 4531182)
-	id 9DB2921BB8; Thu,  9 Apr 2026 11:02:07 +0800 (CST)
-From: Le Qi <le.qi@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com,
-        Le Qi <le.qi@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v5 2/2] arm64: dts: qcom: talos-evk: Add sound card support with DA7212 codec
-Date: Thu,  9 Apr 2026 11:01:56 +0800
-Message-Id: <20260409030156.155455-3-le.qi@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260409030156.155455-1-le.qi@oss.qualcomm.com>
-References: <20260409030156.155455-1-le.qi@oss.qualcomm.com>
+	s=arc-20240116; t=1775705627; c=relaxed/simple;
+	bh=HYXxuDQ723ABDQyPj00uTiG12kI8ouqjTgcYE4SLtps=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CttzDLKcw2XSWHGNgqgIr41Xnn5abZp9RbVJzdDWU6J1Zs8XFieGnSv7a2EFoWgtoHU/Kz5g2yvAkRY85aGIyPSM8zAseKCnQ/TNlnDgmExrooBaS2nQzmRdBuCNNqMTSSqUPTe3+8N/m3pr36MTbRPFAFkOGUvL8niUW1pYuXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.206.34.216
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpgz1t1775705551t2319c7ad
+X-QQ-Originating-IP: iPdQQC9dXO4BSlTU8vQld8nhoyJkadYCcNxTYOwmP78=
+Received: from [127.0.0.1] ( [116.234.85.158])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 09 Apr 2026 11:32:29 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 11463198670806814864
+Message-ID: <FF86F4EE9CC46323+193f23fc-e72a-4171-aa4b-e13bc3465c5e@radxa.com>
+Date: Thu, 9 Apr 2026 11:32:28 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Authority-Analysis: v=2.4 cv=O5IJeh9W c=1 sm=1 tr=0 ts=69d716b4 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8 a=c-OUY-gO7Egmvcr4Y_wA:9
-X-Proofpoint-ORIG-GUID: IpHvtYo-oMHb9d8K2SztoKc1asNCOVUH
-X-Proofpoint-GUID: IpHvtYo-oMHb9d8K2SztoKc1asNCOVUH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDAyNCBTYWx0ZWRfX9i76uMwix2HJ
- l7iEQ56WcnPQE2Qa5KHFIl+DEyFZ8LpAPLDaXcPDvNPaCC7s1/8pr/QOSbhXtTj3V+2Z7s/mF+F
- ea2BJUbRHO2+DWmTyqvL43QE6Qm44ly/jqaoejelWl1JnW3lpIca7btWC2UEipExWez2eNUkee7
- 2+JKd8Uot4tl5BYrQLWh4GVEeHl0T4rU3xuNtSiqkHxqp2NuAogCF2+N36co+O0yzqaV1sR9cMq
- /5x/FAJJmymK4R/6SbGUMEGnWNgxTPyXz6bbhdVdd+T9m8K8mnuRmFhyWB4C2sSR/POce1qM5q2
- 0IStFgkOEKZnD7fP7poMtppnkvpp6Fd26JdGrR/cz941HqBkOdQoyAEse7uJgRVQVmlUk2dt0n1
- /gcRa4FKyhMCwoCZ3PuVJUXF0NBeiqbpR+epEv33WPCHX7QA8Gx+5lZ/2NwVUo8Jppsr98MXMWT
- ieltf5nxBlh88ECvj/g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-08_07,2026-04-08_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0 spamscore=0 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 suspectscore=0 clxscore=1015 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604090024
-X-Spamd-Result: default: False [-0.66 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] clk: qcom: clk-rcg2: calculate timeout based on clock
+ frequency
+To: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Dzmitry Sankouski <dsankouski@gmail.com>,
+ Taniya Das <quic_tdas@quicinc.com>, Mike Turquette <mturquette@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>,
+ Mike Tipton <quic_mdtipton@quicinc.com>
+References: <20260406-clk-qcom-gpclk-fixes-v1-0-7a14fe64552d@radxa.com>
+ <20260406-clk-qcom-gpclk-fixes-v1-4-7a14fe64552d@radxa.com>
+ <c2cdc581-2f8f-4495-bb87-812b27a1e381@oss.qualcomm.com>
+ <adcGdXeqltQVwPLz@baldur>
+Content-Language: en-US
+From: Xilin Wu <sophon@radxa.com>
+In-Reply-To: <adcGdXeqltQVwPLz@baldur>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: NC36Jv9FdMDB5lTI5ngZ5hV3XM/olBNRWJ6fXTN3QgGFRIfHA3wBCL8Z
+	M1m0dASD/mV5v3mHLXQaByVmHQxTgLGJsZ9l4S3BsxmP1LWOr/su1VR9J2dZuTwoq54npfY
+	hwht+gwLitv4gz4fD19gqXTTS7r3a4ZNCyiQR7l+JHTFYUkMexcXKxn57C4xHYr1RJ4TRDT
+	ZqgjK19ap9UbjBbzHxPKXnTebnVuna2DrRcK/8qicZckji03Ozx3vDGTpbPRHW5KIYDg6Pq
+	YEFixkRnklHR4CCe2hHsBlYbmP+1oXmsi9PrskDo87ilCkEWmHrx9sKaUnlCnNUYOjUudlA
+	uTfqOfgEHQsGHP6K/xdTb8Rt56/v6zFnRogAU/HMDSyMbs9jfmm5dIVVfnns940jARMA/fh
+	+LSYxONyRJJqWV7qw9Nmw76vZ9pp+7hraVZ1z+f+ijykD2LO5eoLFGgNVoW6KBWUOtNWW0I
+	3ZM5EJqrw4ZT6wIBWDfGomEdRx6Evaf5sWtZK6XRPvRR22vqs82QL9qwptZ846T1DzrDDrk
+	J+x/ehKNzjGiUQShOfA5qh3GvZjmSr8yI16YRrBQZcESBgMWoPsxJEXcMkwezsv3md9tLnL
+	bYXuBfFI0yNeErQb0FyoJN8h8PCEmvgjtu21C7V9IwUiDs4lFnlTBE6HlIPRh7wacFsWYK6
+	bzjDBEbFR5cbF9z8a7ZD5LL/zrHMn8uPzE369+HfrMaHlyG+PwXeyGy8r7p1bR+PIwsFSMQ
+	3hj3vgpsO60JB++/fkC3sry2Z78/MPiwrM35O4kqkp3HPJ8D7SDmlwrfouFyTSCgqXA3Ztx
+	MDNXChpfVsuBEQTez7AqLDsN8oJXWhDxnttWMIycnMCleW30eTLXqz7vHNv7GLJkf+z4dPa
+	IvkkrbCrzX5tYpmChjh4IdnnBLo1Aj9vB4/joy3/sZiVjLK3ahRNLeJFU7dibN5r3eq/3LD
+	GN3LLhtDrQEDBPbpX1H2RQ8Mj96JFEYW2m5QRENVHLR6Xoq7VG+JQQzW6GhLu4q6rxbYUr6
+	kYzTEJfvIi+vorWh/teMzpetLebHyGs8lTuKO3SMc/5eYmMuWdQ9F5qepn/OAqyaFQVNJpd
+	KbMZNpm6bCo
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+X-QQ-RECHKSPAM: 0
+X-Spamd-Result: default: False [-1.36 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102399-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[le.qi@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-102401-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_MUA_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.945];
 	PRECEDENCE_BULK(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email,1a:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[10]
-X-Rspamd-Queue-Id: 61A013C5EAA
+	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[baylibre.com,kernel.org,gmail.com,quicinc.com,linaro.org,vger.kernel.org,codeaurora.org];
+	R_DKIM_NA(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[codelinaro.org:url,radxa.com:email,radxa.com:mid,quicinc.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 2DC7C3C6080
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add the sound card node for QCS615 Talos EVK with DA7212 codec
-connected over the Primary MI2S interface. The configuration enables
-headphone playback and headset microphone capture, both of which have
-been tested to work.
+On 4/9/2026 9:55 AM, Bjorn Andersson wrote:
+> On Tue, Apr 07, 2026 at 12:13:09PM +0200, Konrad Dybcio wrote:
+>> On 4/6/26 5:54 PM, Xilin Wu wrote:
+>>> RCGs with extremely low rates (tens of Hz to low kHz) take much longer
+>>> to update than the fixed 500 us timeout allows. A 1 kHz clock needs at
+>>> least 3 ms (3 cycles) for the configuration handshake.
+>>>
+>>> Instead of increasing the timeout to a huge fixed value for all clocks,
+>>> dynamically compute the required timeout based on both the old and new
+>>> clock rates, accounting for 3 cycles at each rate.
+>>>
+>>> Based on a downstream patch by Mike Tipton:
+>>> https://git.codelinaro.org/clo/la/kernel/qcom/-/commit/aa899c2d1fa31e247f04810f125ac9c60927c901
+>>>
+>>> Fixes: bcd61c0f535a ("clk: qcom: Add support for root clock generators (RCGs)")
+>>> Signed-off-by: Mike Tipton <quic_mdtipton@quicinc.com>
+>>
+>> Having Mike's s-o-b here is odd, given you've decided to go forward
+>> without his "From:"
+>>
+> 
+> s/odd/wrong/ Please correct the author of the commit.
+> 
+> Note thought that it's good etiquette to document the changes you make
+> to Mike's original patch, by adding a line "[Xilin: changed x, y, z]"
+> between Mike's s-o-b and yours...until you end up having more changes
+> than the original author, then you're the author of the patch.
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Le Qi <le.qi@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/talos-evk.dts | 56 ++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+Thanks for pointing this out. I'll correct the author of the commit in v2.
 
-diff --git a/arch/arm64/boot/dts/qcom/talos-evk.dts b/arch/arm64/boot/dts/qcom/talos-evk.dts
-index af100e22beee..b7f514fbc7b2 100644
---- a/arch/arm64/boot/dts/qcom/talos-evk.dts
-+++ b/arch/arm64/boot/dts/qcom/talos-evk.dts
-@@ -5,6 +5,7 @@
- /dts-v1/;
- 
- #include "talos-evk-som.dtsi"
-+#include <dt-bindings/sound/qcom,q6afe.h>
- 
- / {
- 	model = "Qualcomm QCS615 IQ 615 EVK";
-@@ -40,6 +41,46 @@ hdmi_con_out: endpoint {
- 		};
- 	};
- 
-+	sound {
-+		compatible = "qcom,qcs615-sndcard";
-+		model = "TALOS-EVK";
-+
-+		pinctrl-0 = <&mi2s1_pins>, <&mi2s_mclk>;
-+		pinctrl-names = "default";
-+
-+		pri-mi2s-capture-dai-link {
-+			link-name = "Primary MI2S Capture";
-+
-+			codec {
-+				sound-dai = <&codec_da7212>;
-+			};
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai PRIMARY_MI2S_TX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		pri-mi2s-playback-dai-link {
-+			link-name = "Primary MI2S Playback";
-+
-+			codec {
-+				sound-dai = <&codec_da7212>;
-+			};
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai PRIMARY_MI2S_RX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+	};
-+
- 	vreg_v1p8_out: regulator-v1p8-out {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vreg-v1p8-out";
-@@ -109,6 +150,21 @@ adv7535_out: endpoint {
- 	};
- };
- 
-+&i2c5 {
-+	status = "okay";
-+
-+	codec_da7212: codec@1a {
-+		compatible = "dlg,da7212";
-+		reg = <0x1a>;
-+		#sound-dai-cells = <0>;
-+		clocks = <&q6prmcc LPASS_CLK_ID_MCLK_2 LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+		clock-names = "mclk";
-+		VDDA-supply = <&vreg_v1p8_out>;
-+		VDDIO-supply = <&vreg_v1p8_out>;
-+		VDDMIC-supply = <&vreg_v3p3_out>;
-+	};
-+};
-+
- &mdss_dsi0_out {
- 	remote-endpoint = <&adv7535_in>;
- 	data-lanes = <0 1 2 3>;
+> Regards,
+> Bjorn
+> 
+>> [...]
+>>> +static int get_update_timeout(const struct clk_rcg2 *rcg)
+>>
+>> Let's tack on a '_us'
+>>
+>>> +{
+>>> +	int timeout = 0;
+>>> +	unsigned long current_freq;
+>>> +
+>>> +	/*
+>>> +	 * The time it takes an RCG to update is roughly 3 clock cycles of the
+>>> +	 * old and new clock rates.
+>>> +	 */
+>>> +	current_freq = clk_hw_get_rate(&rcg->clkr.hw);
+>>> +	if (current_freq)
+>>> +		timeout += 3 * (USEC_PER_SEC / current_freq);
+>>> +	if (rcg->configured_freq)
+>>> +		timeout += 3 * (USEC_PER_SEC / rcg->configured_freq);
+>>
+>> I suppose both are nonzero if we end up in this path but a check for zerodiv
+>> is always welcome
+>>
+>>> +
+>>> +	return max(timeout, 500);
+>>> +}
+>>> +
+>>>   static int update_config(struct clk_rcg2 *rcg)
+>>>   {
+>>> -	int count, ret;
+>>> +	int timeout, count, ret;
+>>>   	u32 cmd;
+>>>   	struct clk_hw *hw = &rcg->clkr.hw;
+>>>   	const char *name = clk_hw_get_name(hw);
+>>> @@ -123,8 +141,10 @@ static int update_config(struct clk_rcg2 *rcg)
+>>>   	if (ret)
+>>>   		return ret;
+>>>   
+>>> +	timeout = get_update_timeout(rcg);
+>>
+>> You can just assign count = get_update_timeout() below since you're not
+>> reusing this value
+>>
+>> Konrad
+> 
+
+
 -- 
-2.34.1
+Best regards,
+Xilin Wu <sophon@radxa.com>
 
 
