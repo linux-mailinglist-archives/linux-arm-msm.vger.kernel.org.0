@@ -1,55 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-102392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wE3MFhoS12kSKwgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 04:42:34 +0200
+	id EAO4DPcS12kSKwgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 04:46:15 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C91673C59C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 04:42:33 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 888653C5A85
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 04:46:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 769F9302332C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 02:42:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 136A13034DC4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 02:42:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD61136CE1E;
-	Thu,  9 Apr 2026 02:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0AC836BCDE;
+	Thu,  9 Apr 2026 02:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="aUBB8ZCb"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="b/OoYyzu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF526368276
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Apr 2026 02:42:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C386D258EE1;
+	Thu,  9 Apr 2026 02:42:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775702539; cv=none; b=jMY5dn01sVEI86mCJIkc2J1EH889jPxF94fA9TJuAkllz7Op8XtaS2NrcSVZpM6u2qeVL2auVouY5yTJcWblJIaZ8IkJTxgY10H3EaB8klvGYjNlZgORkVnHKxLCu9sk8hJf4HJcgkK9EDT4X5J1ywjcfx6+2o46gCPdiS1ph1M=
+	t=1775702542; cv=none; b=JeC1A2JgC84Ri3fl7tOkybCXw82HS4t1mbRbn4rdWJj9s1/pPA/1I4HqOn1sb5o4ZjpT7daCUgXXRWO4FDeOKAB/Abpah3O0XAlF02C3G1amhuUdGTskeRq04D8VdBbNV21QSH34JFkLY76YwGsRSo0lUNoTHBLaB+idIlzRdsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775702539; c=relaxed/simple;
-	bh=62aRNidf81NIQSpQlivJzpjBxKi4+6TnrkQkwf9cnQY=;
+	s=arc-20240116; t=1775702542; c=relaxed/simple;
+	bh=sqb2CwDa1Cq0XxXDMv1rUhOVD7diLDVG83sABn513b8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eatW10qRMnFeKw8Gex21MXdd0v+CanQ3gTSzm6frsP01+Oj2BSHvf70KoLOWvpiUMUSPrZW/3fq6bK6H28nsKS/g/V+nBF742mn4LIZ2vsygV2bThnCsDpd+Goi6B/c0syix9vOOdKjkdbXLq8IxFT7qjn2/lhnG76fDNaJBGrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=aUBB8ZCb; arc=none smtp.client-ip=91.218.175.170
+	 In-Reply-To:To:Cc; b=Bb69xIlPpRuXKo1v+GTURRWLzuOnwmUMdO1xoGxgcow5GO9GljmxJdgqCSn+y4JD2MCjdS8UX/hQajRxgmvpL+/5Sxz0zHR1fSiYRb18wLohuHqlkUQ8Bz60fXOwNqDXGyNMTG/kn/0y9x37rlwgA8N97rgMqI6LiIvSu3/Imco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=b/OoYyzu; arc=none smtp.client-ip=91.218.175.184
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1775702535;
+	s=key1; t=1775702539;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=8ncEp6L8HOBIzKU2YR0UCVFBGSGus/FpKTSPP46t8Nw=;
-	b=aUBB8ZCb9eP+dJCBXqRW6Sjna1itBqfcFFOVvn5ybGZpC+PuxDnVd2NjMnTzOoMKfHROgZ
-	84lTQGxjGpEXgCQfzsKNBWKItJrWiEVaJin3LuYwWsE4lBc/Ra4arJTb9h+Tj9voOExyNJ
-	9foD6RWWVS0I2hu+XVftnWwAdriSmiAPdtvqjqdlrylypoOjD6Kog84CdI8hPgYKGDutW3
-	rhuUgChqGVTVK0MMwYrj9nv4rUkBZCQhQ37K5j6YQwUIgBdb5lmZVjMYF7nUk/BNSw0sAi
-	JLn67kQB8lrtuuZCgcc0lM4m0oH4Vk1Dq3j88+A9UZTLJkrW13vJFFTZHwtHyA==
+	bh=c4vft3JoOWNIiyb6XKVwI3B9R+MjrgmBnquYhO1fWhg=;
+	b=b/OoYyzuc7a9rPbMDKRtohqieZw/YG1+VStkpmV9VRI44IMFhxtgGSXY0V09dughuBnm6C
+	mOFqtse5XZztN4KqHuvzcVQaMjlpXh7OUsb+wr4V+jN0kqX4J+NtVvpbgGtD/SLuqFgd5q
+	7NL58cX55q+e7GnY/Z4RztuY1Ew4CNk74jJr+19vql+YoFyuz8Gd8EnD/+qaP1D0y7sN81
+	Cr4+1hpncRV8JRvejDCN3n9zSQK2dPvDhpu8INYGHrkGCv3IYmzJ8lDs9wLo4F2SROBKvf
+	76f5fLSA73QnhHjTbxQgqBaNTZwrIguotm8JPOEOcG0lhAVrazCGFhrxNOFQzQ==
 From: Paul Sajna <sajattack@postmarketos.org>
-Date: Wed, 08 Apr 2026 19:41:12 -0700
-Subject: [PATCH 1/4] arm64: dts: qcom: sdm845-lg-common: Add camera flash
+Date: Wed, 08 Apr 2026 19:41:13 -0700
+Subject: [PATCH 2/4] arm64: dts: qcom: sdm845-lg-common: Change ipa
+ gsi-loader to 'self', add memory-region
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260408-judyln-followup-v1-1-823467519b59@postmarketos.org>
+Message-Id: <20260408-judyln-followup-v1-2-823467519b59@postmarketos.org>
 References: <20260408-judyln-followup-v1-0-823467519b59@postmarketos.org>
 In-Reply-To: <20260408-judyln-followup-v1-0-823467519b59@postmarketos.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -73,11 +74,11 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  ~postmarketos/upstreaming@lists.sr.ht, 
  Paul Sajna <sajattack@postmarketos.org>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775702528; l=955;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775702528; l=1064;
  i=sajattack@postmarketos.org; s=20250422; h=from:subject:message-id;
- bh=62aRNidf81NIQSpQlivJzpjBxKi4+6TnrkQkwf9cnQY=;
- b=Q0LoHbKUeSRoXcFmsI3g7Un7r2NLs2w2hheSv1YsDGDy5tVCxgpvcu6QSfYCMjPtK3OU1J9E1
- Q+GSqpFCz0NALZzwzkuNg1jRAQGQiG9u9XHqlMEMmvZLj/VAHGnbNo7
+ bh=sqb2CwDa1Cq0XxXDMv1rUhOVD7diLDVG83sABn513b8=;
+ b=4qgYHp3X0iqCOX1EAvidijoFkGMZ/+/ZE3Zg7y7oY/Po4VxghjhQ4ld2rLRo65+VhIzC/1K92
+ TIk7VjaMF1EDVCsjDIiY9QMjzphcRoUeJH5BS+3Mvt4nmv6O2rBAI4l
 X-Developer-Key: i=sajattack@postmarketos.org; a=ed25519;
  pk=TwacvEOiRJ2P2oAdEqIDrtQTL18QS4FfcHfP/zNsxkQ=
 X-Migadu-Flow: FLOW_OUT
@@ -86,12 +87,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[postmarketos.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[postmarketos.org:s=key1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102392-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-102393-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -104,45 +105,45 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[sajattack@postmarketos.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[postmarketos.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email,postmarketos.org:dkim,postmarketos.org:email,postmarketos.org:mid]
-X-Rspamd-Queue-Id: C91673C59C6
+	DBL_BLOCKED_OPENRESOLVER(0.00)[postmarketos.org:dkim,postmarketos.org:email,postmarketos.org:mid,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 888653C5A85
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Camera doesn't work yet (imx351), but we can use the flash as a flashlight.
+The modem firmware for this device doesn't preload the IPA firmware
+and requires the OS handles that instead. Set qcom,gsi-loader = "self"
+to reflect that.
+
+Ensure the ipa uses the correct memory.
+
+ipa 1e40000.ipa: channel 4 limited to 256 TREs
+ipa 1e40000.ipa: IPA driver initialized
+ipa 1e40000.ipa: received modem starting event
+ipa 1e40000.ipa: received modem running event
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-index 71d070619ad7..9d82961d527e 100644
+index 9d82961d527e..85dc4468b6c4 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-@@ -496,6 +496,19 @@ &pm8998_resin {
- 	status = "okay";
+@@ -473,7 +473,9 @@ &gpu {
  };
  
-+&pmi8998_flash {
-+	status = "okay";
+ &ipa {
+-	qcom,gsi-loader = "modem";
++	qcom,gsi-loader = "self";
++	memory-region = <&ipa_fw_mem>;
 +
-+	led-0 {
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_WHITE>;
-+		led-sources = <1>, <2>;
-+		led-max-microamp = <100000>;
-+		flash-max-microamp = <500000>;
-+		flash-max-timeout-us = <500000>;
-+	};
-+};
-+
- &pmi8998_lpg {
  	status = "okay";
+ };
  
 
 -- 
