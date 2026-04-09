@@ -1,117 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-102451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ABbKOKVp12moNwgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 10:56:05 +0200
+	id 4GE7FPJp12myNggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 10:57:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AC863C813C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 10:56:05 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B05F3C81A2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 10:57:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2B442300E4A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 08:53:43 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 04A9F30131F5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 08:56:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3C4037FF4C;
-	Thu,  9 Apr 2026 08:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49C5B3909B2;
+	Thu,  9 Apr 2026 08:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hnV4tPsK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r+I0iEqe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F303783C7
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Apr 2026 08:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F55390C8C
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Apr 2026 08:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775724820; cv=none; b=AWBb/R5o0FWKiwhBNpNnxK/4rt3egEuNuFzFLUsIxqqFCmmwuGDCUb/QFBITIhBjFNquEo8uGi5anvSqxs8WR4vzeioEC5kRtGVW+FcI/CtDiu4WOlgGrzqy7pMThSjHwHw3UJlZ0d3gHmVJq0+qwPdmUyyVT+CwLXj0yriC65c=
+	t=1775724959; cv=none; b=FMAihDWt5pE2ZnXNrCGqcsebYc2Gfoj5wz2a0REKSI1/cTLrP4mr5VEbYRK1zkFPS+b8wUyKma5J8ngwiKyi3IGkwJqbMkF8PFTEe1MZp9J79ybRN8aCfZgDnbwS9a49fOPkQcarEyzNFPCDzSK++kXgqkNiTzVq00hUi42j2cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775724820; c=relaxed/simple;
-	bh=+gnYadLPiXy+5pNfg8GvSB4jJxsEx+b65W3ka6Kxn9A=;
+	s=arc-20240116; t=1775724959; c=relaxed/simple;
+	bh=NF3CUyvqEslN3aObPGJxyj9WcwsImXGdgGhPpcpwHTM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uEe7Q1AJsAnEGmpUnWxpyq/lG1KHzoa3sS9NA/CUnNaV027APDjDTsetVTN9Q8pCn/HTR3vOzyVySxR+zEzHtPEdoONV1lI7U9XqZYAKupbNlaGJT8GF0RNuA6Hm+jDEsCNtiRnsLtsqwe84aLuHYOYqtpgNgFoqFbcPCIQVne0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hnV4tPsK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7D9C2BCAF
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Apr 2026 08:53:40 +0000 (UTC)
+	 To:Cc:Content-Type; b=KabGXZ1SFs0eBOjC9+WwuVSmBKtSeAwxStqffBf9trRYEPQJKaY9cVz4TPEex46lyLKtRuFV1AB0foFgD/I1XX8TxivcbDLC5ZD4MEmEgsqNqiLmnLmmEdBnrAkl1G4cfjUxsbo3rDdbTdalrd1b04eYl2AWqgHVPQhg3NtQTKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r+I0iEqe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC244C2BCB0
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Apr 2026 08:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775724820;
-	bh=+gnYadLPiXy+5pNfg8GvSB4jJxsEx+b65W3ka6Kxn9A=;
+	s=k20201202; t=1775724958;
+	bh=NF3CUyvqEslN3aObPGJxyj9WcwsImXGdgGhPpcpwHTM=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=hnV4tPsK/NsT1jjzDTn+Xrrw04dglbAqMClXktPPbAvdPcpoKbLLqxZL50vuUELSk
-	 4Hj7zHz8ROv7Pjj6O0XQrpBs4kqt4I3g4TEjgdu4h50gnXrlwHKJ31AxzQQmGVnwC3
-	 oXCNWK6v1b5S7iBYMWLGjcU6zSzfPi8ZGwB7CGHfgJ4Et5qwBZV37Q9NZaidQKnQPc
-	 izqUGnN2W4aDVPUbq4QtmYSLo8tysZTIveOQKrEacxtA8qgASnTkS66rb7EWQC7PQU
-	 d1rSoxl8CZlKpUAsZGO/UMczErV442grgX4UIQdhmECtiLMC6hSZv8KfcGlBogCcNP
-	 bDjuWCq/aRPzg==
-Received: by mail-yx1-f43.google.com with SMTP id 956f58d0204a3-6501d32b04bso687873d50.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2026 01:53:40 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCW0URyhKpuehfgE5ljhuMtEA6qLgJhZN0DOTKQn8oWmhVSpimWav+kbUTcDYZQ+JF07KUSgtxPx+V38hzPa@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCeAQD0+6NyfCj/EFlCKwDBFDOLOVMjdbqfXZAzUzN3cEzMDy0
-	OKCUOUn8iOxKq+KOoC7s7AX8W/zvc8l6b1i6L+8GFMq4YK7z85Eahq+ASJDc7U9mzGUUqs5rDBg
-	IpXSsDazt1wMXDlF2wH49rG8dFjH/HQo=
-X-Received: by 2002:a05:690c:9:b0:7a4:e4e5:38ba with SMTP id
- 00721157ae682-7adf314ac35mr30273177b3.45.1775724819767; Thu, 09 Apr 2026
- 01:53:39 -0700 (PDT)
+	b=r+I0iEqefF3AP0tMNA2d+KcJ64kOSTnPrpggsB+Yb1LDIp1Cw5n9EIYVWFBZER3Mw
+	 kRV8jQ6aefjOT4hMAS8c/qSK/TEBGNgcNAFYO5I46T6pfAI6am6AN3ti+5yigGFV6i
+	 /KFZU3GCCIivKlJQHSBD5wqHdxP2m59vwGZ6s+R0DjNBG0kI9ZXpeNJNzJL5coXvB4
+	 8pFPq4os3cSwP9nTIBIk2ZCVh28IW1Djf+EOXE1mDiqxphQmmBrMVPhsJTbH/E23m2
+	 olrotCjqKixmWwdNvad4FqdFqh3cH34s1Olasu08+Wn7w99TdOKO8WCuym5+tQCXv5
+	 m4ZY2CZfH/Pbg==
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-79ab3e26cceso6101147b3.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2026 01:55:58 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWT2YQW44OvdKJSfsMQuitqEfiDX9w4lcBmniMWjuEicZNi3pc2SGAXPnujCgtxlda/DivPUp5bGuHCHCqx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx9z9E3FtFAOirEDFwAqTcRb1ne9NIde5krqdPGx2AxhBYT4yed
+	UvXvggKWZ9aRH0fc53ISef9wA+Wbg/5selqAQXfKqpdK3eZhJgl5CsPjWfXAgw4Ru8D8yRs+4Si
+	b1hmF9d4Dmn8q5bd+VQDWBVw21N3nK8w=
+X-Received: by 2002:a05:690c:81:b0:798:cf16:1c6e with SMTP id
+ 00721157ae682-7a4d3bd7d7amr243494517b3.21.1775724958284; Thu, 09 Apr 2026
+ 01:55:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260408-hawi-pinctrl-v2-0-fd7f681f5e05@oss.qualcomm.com>
-In-Reply-To: <20260408-hawi-pinctrl-v2-0-fd7f681f5e05@oss.qualcomm.com>
+References: <20260406-eliza_pinctrl-v1-1-52fbf0ebc56c@oss.qualcomm.com>
+In-Reply-To: <20260406-eliza_pinctrl-v1-1-52fbf0ebc56c@oss.qualcomm.com>
 From: Linus Walleij <linusw@kernel.org>
-Date: Thu, 9 Apr 2026 10:53:28 +0200
-X-Gmail-Original-Message-ID: <CAD++jLkVHZOBk3bgdqk0dX2q4v=+CD8jC+1vu2gi8CK9BLfX2w@mail.gmail.com>
-X-Gm-Features: AQROBzA6XJGRgSvcnO-lnO5vSscUWxOTlZ4i6TF-QZ3gCocWNhYISa1pZoKedJw
-Message-ID: <CAD++jLkVHZOBk3bgdqk0dX2q4v=+CD8jC+1vu2gi8CK9BLfX2w@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] pinctrl: qcom: Introduce Pinctrl for Hawi SoC
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Date: Thu, 9 Apr 2026 10:55:46 +0200
+X-Gmail-Original-Message-ID: <CAD++jLkLQMLOhhZ54ifV0YdXdGp1yg5ReF2gHQUBsEiDF6M5=g@mail.gmail.com>
+X-Gm-Features: AQROBzBjsuKMpK23woKhjFABPMxI28LWUeRVpLvhrEIc36GbEsp1oRKa401QDyI
+Message-ID: <CAD++jLkLQMLOhhZ54ifV0YdXdGp1yg5ReF2gHQUBsEiDF6M5=g@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: Remove unused macro definitions
+To: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-102452-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102451-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCPT_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: 0AC863C813C
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 3B05F3C81A2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Apr 8, 2026 at 4:16=E2=80=AFPM Mukesh Ojha <mukesh.ojha@oss.qualcom=
+On Sun, Apr 5, 2026 at 8:34=E2=80=AFPM Maulik Shah <maulik.shah@oss.qualcom=
 m.com> wrote:
 
-> Introduce Top Level Mode Multiplexer dt-binding and driver for upcoming
-> Qualcomm Hawi SoC.
+> Remove SDC_QDSD_PINGROUP, QUP_I3C and UFS_RESET macros as on some
+> platforms they are unused.
+>
+> No functional impact.
+>
+> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
 
-All was reviewed quickly so patches applied for kernel v7.1,
-because why not.
+This does not apply to my pinctrl tree.
+
+Since it's just cleanup, please hold this off until v7.1-rc1, then rebase
+and resend it and I will apply it.
 
 Yours,
 Linus Walleij
