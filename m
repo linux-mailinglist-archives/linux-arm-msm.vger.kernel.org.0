@@ -1,191 +1,490 @@
-Return-Path: <linux-arm-msm+bounces-102490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cIOOD5Cf12kUQQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 14:46:08 +0200
+	id YAV0NZqr12kMRQgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 15:37:30 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF4F93CA936
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 14:46:07 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54ED43CB595
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 15:37:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 60EC83041A49
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 12:44:14 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3DF69311C9A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 13:22:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 408163CA48E;
-	Thu,  9 Apr 2026 12:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4FE728B7DA;
+	Thu,  9 Apr 2026 13:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JGvHF6xX";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VOiwTvTz"
+	dkim=pass (2048-bit key) header.d=ndufresne-ca.20251104.gappssmtp.com header.i=@ndufresne-ca.20251104.gappssmtp.com header.b="mnfDTDrf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A193BE630
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Apr 2026 12:44:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2E128C854
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Apr 2026 13:19:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775738654; cv=none; b=fD20WBNJLnYQMthBjNXVY9wwe/xYLS0HvLEOPnknnrwJsWKS93Oe5C6RUkSpHUR8n1qKwJ3eZU0rIhjlLUTb+1P5VZaaNEEfyyu8ZcxrW6qUoiGWSIEsCN9o32257yjBfJzuUQW5SqPiftczemFM2Wajuljgf47ft91seMrniWk=
+	t=1775740780; cv=none; b=FqjBRuangk2ivsGwaYI1hLsNvfjORVlbniPTKknMD+v113HGL2wpCiaSVA5Cx7jqDkNTxYsQ404YNRKLRCUVueEvqJ7Bt8lVAPIoxwqxus0nThx52RK2EiW9QKfLgcIre2+JHFZIvQP3i+WOXf/kOhL/+1YKlAgadNUMkBG8y6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775738654; c=relaxed/simple;
-	bh=3SIHh0Y4HoJCGFzcpjDdlE+ctNXBb9mCHjfhTCx9HFE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sIfh6DNmR24LZwijnRwBK7Prw68s0iReamAYQt4HDLkc/J3GNm6ZHfTt3zb77ivS6VJOjXntUqS2ACAVj1TmPLmawleCqZrdCXvJeRxLT665h16YyBB9B5un6l3Uxsz/e3qbmYgvexDLpaTXqZN4hPTxSklykeMCtlIotoTUqxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JGvHF6xX; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VOiwTvTz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6397CVXg1072956
-	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Apr 2026 12:44:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9C9oWQfWDmGpPtikmH5HnfUowBswV0pV+/8WWu7A0nw=; b=JGvHF6xXWBfYczmu
-	bRJ8Upsa2lINBYUJH5DU4tb/Ek4DxIuEd8+Vmp+hWf8wh1+OlpkHyJ+pRouKCJ/R
-	//UWQHaf8AzFH1ptp52wB2i63aefDvOJ5ny00wQPj9HoLWVMhRZgdAyBFidWQzH0
-	3yJTFH9LqCeewxGYbeQeUpZIAQp3IlrWktvohJ/ct/ikn1WqgC9zbA3RI3AlfYML
-	ga/RmlciJBbEEVGGJxnZTukP0MMRq9r+8NZM2XpL/ZQj1U7tbTiz77/9cOAMJxjD
-	hZbT+reXROrrUemdEm/h+QnRpYT/0qu/+N0JsHifr2uotG9CvxaUHIsOosCfMLZP
-	yjAVSQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddtb3c1nu-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2026 12:44:05 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-50d8c183c2eso8731791cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2026 05:44:05 -0700 (PDT)
+	s=arc-20240116; t=1775740780; c=relaxed/simple;
+	bh=YTEFXB4Em+95TNKjqInan+WcTox/8mm8B4L8+hibVG0=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=XivIGBVJMnT22OKR5XZ2dYd3u7f+KGH8/JKwuXBN5QgSV8hfN7cfd5JUuM4gBf3KtX9TiNY31ie8BVIE8rmHAVpZvzzlvDH5nO1p6xuU8HIkFIe4w60rlKNimoCHVMVI3YBadIqgR3KbvsqYqjl5jqGHPSfYyUX6vuy5hg8fcoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20251104.gappssmtp.com header.i=@ndufresne-ca.20251104.gappssmtp.com header.b=mnfDTDrf; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-8a151012558so9909326d6.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2026 06:19:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1775738645; x=1776343445; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9C9oWQfWDmGpPtikmH5HnfUowBswV0pV+/8WWu7A0nw=;
-        b=VOiwTvTzmYtYbn/cjctTKMjmsndt64iEWz5Bsc2pIZ075aMPq34CGYafL5KptxLmdk
-         QZv3P06+Ln90y1r6DeebLqXZys7ipbGQGTnlyVszAhuco8s7Iz1y+re3YBxLoqbTKwGl
-         1a2ZBbC8gF5nEe1kBN0PhWPClEpq2Ubtk6pR2LgX9vn7Xe/u4fVIjxH8pr6CQRuu4HhW
-         flvLYRYqYAGs7APLfgIT74ZSWdVMP91VZPLcgwUtS016q61sqGZeFn9xCY/fKZoMNuDS
-         niyQ/2HB/BREZ3/o2HFfmk1EzdP1bavsopHdPa2H3PyWXpgPmtW8aU4rm0U2WIwyNObS
-         HPzw==
+        d=ndufresne-ca.20251104.gappssmtp.com; s=20251104; t=1775740777; x=1776345577; darn=vger.kernel.org;
+        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
+         :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GFG+7N2yTFpROZaXMIUZJ1XmWxfRVB2pSwz8dP8/hqM=;
+        b=mnfDTDrf6v6B8tQlXzbZb3t0PSidqvM7KJi9TeQE7PD7w7uw1X3/8/4ObkkivnrHS8
+         10T/kfY9dKlPih9e9LYCxFE7NGck4Hjw0nqM+7OElyfrcHZfI9O9Z13ZLTgriGSDYyVi
+         oZ5zPasdRcw+6a19g5LjH0MFB0arnoM9aUXiGrgpehEXirVVdOYH2AoBr6nF78SdW+3A
+         LGYS90pNnS5y5vf4p/rUfMSWInro8bBpxIUfV2UNbco80UVo57V5vkG0nnT9Jv8d11pX
+         sztHC0NmTtCY9NW93egil/JuMPa12biZGtwxX4amaKqTUj8a2jbsf+nKHmNOfEDw15Mf
+         GvAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775738645; x=1776343445;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9C9oWQfWDmGpPtikmH5HnfUowBswV0pV+/8WWu7A0nw=;
-        b=H6oLIGATCU3zqU3JYAz9hEZlIdUTzis0nBKCLXavEhO4utKr3nF1HJjWo/rRAidlH7
-         SDVyKBVHHXOWS0zu574xhp28RpKuWEZtUa970b2ognIZHyt2rnGY8Zwgv/V3/su5ycoK
-         J1lSydb0aQOg/v1KliXWl1RTkJJC86kfOfcS+0ZSasseHPq4m1hPGbmLsQAqq6cX+IG1
-         nPFrdOSWRH+g5KtptT1DBD6Amr9i4i5bKeNDb3FKKwyuFeD61hvBss5z212pDL4pU/l4
-         6Ci56F3jH9jbfXLXMlebkIihvpX+p/vpW+PRTwt5s5rzU9K9wi4gIcwFXxFqdKj3WDVw
-         9tiA==
-X-Gm-Message-State: AOJu0YwqPjCF4C59g9MaVfWp6w4VO60h4ilg2j7gRrrTnn7AkzI5xxsj
-	qQKTMA+aleJHzZGO9glqpw/FwGQESdm7CEYMZ6eAC/7LSz23lMn5tLoNx0Y28BSYXNmeluDZ0bQ
-	+49nk9fJ8clxRbKdBlt/EGbXCRWgmAmFHUixQ0of5uNiCkUyxbLj0XOHQP1ZZH1QB90c4
-X-Gm-Gg: AeBDievt/6i69g28NH+nrjFlVfzYm06LaH8N3jjnumVvGTXBWpu/3c1fY+KipW76qcV
-	Xf5qT5cKnQ1DoKc4Gz0aSiNV13IzdM9UK9vhf2vTg1r5zz/3T7pq9y7ZDtTcyiifKuSrGegFiVr
-	HgdgUMNuHHwnx3Eb7Pwktuze62R02W4Hkl4dELkDEgHkuT58HyX1PpRlZsiT9pAPZEkffvrJByB
-	wL+Ij+hkuzc0WsixmzNKLSe4BY3Y4+8iE6D64MLfgkUN6rO+WHdMECzA0y+6JpVEQLAtMSRNoY5
-	9kmsNADZQEB0DMQ4pi9Izwa4+wO2lkEfWhdnYU4d5hPx4Z2Y6uEu1TzMlxM6qyXFxdQIDZ1+7Us
-	ycInTTMfPXBsuBf8kW7lNNGVkkPbrETkeTqAJMzWWshbV4VMX321j7884F6ZoZjy6xLdeuaDL97
-	LpcWU=
-X-Received: by 2002:ac8:5f90:0:b0:509:2a92:8088 with SMTP id d75a77b69052e-50d62af945cmr248141611cf.1.1775738645279;
-        Thu, 09 Apr 2026 05:44:05 -0700 (PDT)
-X-Received: by 2002:ac8:5f90:0:b0:509:2a92:8088 with SMTP id d75a77b69052e-50d62af945cmr248141321cf.1.1775738644853;
-        Thu, 09 Apr 2026 05:44:04 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9c3cec6c31sm740741166b.37.2026.04.09.05.44.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Apr 2026 05:44:03 -0700 (PDT)
-Message-ID: <388f494e-72a7-4c10-89d9-2eefe0cd3939@oss.qualcomm.com>
-Date: Thu, 9 Apr 2026 14:44:01 +0200
+        d=1e100.net; s=20251104; t=1775740777; x=1776345577;
+        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
+         :from:subject:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GFG+7N2yTFpROZaXMIUZJ1XmWxfRVB2pSwz8dP8/hqM=;
+        b=it4gZftuJrN9oINwIMMqasMXPb5rUgLmGA3T0IVEHZVJEZtoU6jEY6bBbxI6rhSNdB
+         KemaMwbNtIc0X3IW7bWThwkkDDo4ApspwH0n7Nj1fd8SeeEMos970Ttr/BRmxZyCrnjc
+         f15gSx57GtWSk2vlDh7h3eg5oE7qYrxwSLpZZNulJ4OYmB8fL0KW+iviQdOguWroXk97
+         2B5d8tuJCgL2i3nRrd+XVKssSo+sdTmST+myhdhr68/0NqE2naGGQTvk/aOpHZwYCG80
+         /vL0KGXaXKSVKSTyDl7X5YHfS0ea8UcUKifF1YRYo9Pjm7TlmFciR0VkIVzxZW7Ssl4M
+         RFDA==
+X-Forwarded-Encrypted: i=1; AJvYcCV72AkCldo7Yxs7TjR+bFVY2GQ4NRuaYV7hg75TJg8ovv/JFTZe3uGbgUi5ggPa5o5uywQ40IzuwF0xplS8@vger.kernel.org
+X-Gm-Message-State: AOJu0YyRBBN9J3QIWDML3TT/l5XC9+rM/ADpep2zGGu2tjCjFLX7rQLS
+	5D9Y+rNZt3XwmyMIMdfl85q5VwHLF15JcuBPcoilGFSDce2U5FLGEU3mZ+uZt5Wbxvw=
+X-Gm-Gg: AeBDies1jHH4Pcb0I2/j3nxQ8+3oygW2PE4j8T+68+h/UMqnenMUwt3QH4yEG79YcUQ
+	QSU51A0kp9fx4vIU6ZC5jdLxlwRzqURhYOXU+krU217tZcX1GxZjqvbfWMimO9lUaArdhRuFiXg
+	1Y70l/A/4R5F7/lqb828cmzYcglMJQJ5EvhcXGSm9Zg1ZGYBIrqlxxyOoFAC5AivqDG+qK8c2vv
+	QXpi9wgqKLjlU/2+lswiBkJMRDVD2Ygt5RBObinkYoKVhu1ucqnEkwpqwO0bYJkQikrU6n/PmiC
+	5340d2wpFzuCPg0JnB8LBzAcX7wLkGWhOImFGcHBk4gITnXOn9DW+to5RbQpbqaaSXcXgcxK4Tm
+	zxFHWeva6QLhRP+k8hBwZFGxJ6c0lQ9S56IxOw31F4uuH9KKTHF1lbel4UHb6TkHFe6QUgW71A7
+	h3jFbzSU1XA9TZ2Rc8G8Hs5jUSVUI3
+X-Received: by 2002:a05:6214:76f:b0:89c:dd02:75d3 with SMTP id 6a1803df08f44-8ac740ac47fmr61009126d6.9.1775740776887;
+        Thu, 09 Apr 2026 06:19:36 -0700 (PDT)
+Received: from ?IPv6:2606:6d00:15:e06b::5ac? ([2606:6d00:15:e06b::5ac])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8a596a0a655sm197646116d6.29.2026.04.09.06.19.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Apr 2026 06:19:35 -0700 (PDT)
+Message-ID: <353933d7dc0821de180db2a8bae4b0d309ed4c25.camel@ndufresne.ca>
+Subject: Re: [PATCH RFC 0/7] media: qcom: iris: add support for decoding
+ 10bit formats
+From: Nicolas Dufresne <nicolas@ndufresne.ca>
+To: Neil Armstrong <neil.armstrong@linaro.org>, Dmitry Baryshkov
+	 <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>, Dikshita Agarwal	
+ <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar
+ <abhinav.kumar@linux.dev>,  Bryan O'Donoghue	 <bod@kernel.org>, Mauro
+ Carvalho Chehab <mchehab@kernel.org>, 	linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, 	linux-kernel@vger.kernel.org
+Date: Thu, 09 Apr 2026 09:19:33 -0400
+In-Reply-To: <f9edc172-c26a-4fa1-bca2-425e74bcd90b@linaro.org>
+References: 
+	<20260408-topic-sm8x50-iris-10bit-decoding-v1-0-428c1ec2e3f3@linaro.org>
+	 <b4uqpepf6caojxe463izkmnrlayrdrgce6jusak33ewcr5yd4w@ukwbo7zfphn2>
+	 <454f0f277cbaee5774c25d34a33fc3bc478fa756.camel@ndufresne.ca>
+	 <f9edc172-c26a-4fa1-bca2-425e74bcd90b@linaro.org>
+Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual;
+ keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
+ /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
+ cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
+ CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
+ abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
+ nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
+ AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
+ smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
+ AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
+ iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
+ ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
+ bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-Hst4jAB8ppCutrX+uWL9"
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] phy: qcom: edp: Initialize swing_pre_emph_cfg for sc7280
-To: Vishnu Saini <vishnu.saini@oss.qualcomm.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, prahlad.valluru@oss.qualcomm.com
-References: <20260403-phy_for_next-v1-1-3d336b555019@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260403-phy_for_next-v1-1-3d336b555019@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDExNSBTYWx0ZWRfXyOC2Xmrr7wKV
- svst7iM/vFFk7fPXsit3LIKRuXxT0mElIbnWxr53dmSFNZpuRaCDnwCQg64oNQc8xb8temVxX7j
- rf08oqxMCBosDo3XX1jqAEmpYQxKQ9VVSzvbTlGu+/dQvOvdFwJWFjuNEZMQnV0swZoIqmr/vgo
- T4ijWEGk/ti2rvSvFIZ2Xmb3InAEGyuXhAqBDEPIDp3Z8MVPdWp6NUMEh21lMeWdU9JqqzwHDnH
- WOo7W9JyFhhGBruOx2RbfyIxrx66dHplasCFlUi+KIvaD9GFgnPPzSgbO+1dS1RVZVyRbsgFXRp
- D/3sJ1KrSeTLZ6cO0Y2GolLuDWpQq8EeZe+iofrGOPctk3utF9BMMBF/41DNJi54igQeEqZaEqH
- So/Brf7/muUpQ4L9vIEA1cuJhKBbqjMhzGt0aMPI8jERoiFEurm+tgFs1/TNiu0hCDT5fy90vDR
- abt86K04XDY/fI7+MYg==
-X-Authority-Analysis: v=2.4 cv=eKIjSnp1 c=1 sm=1 tr=0 ts=69d79f15 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=v1qHDkAZ9QAkCiyPRCoA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-GUID: -VXUU0fExWXo0lY4sC6lNeyY_YkN_1Z_
-X-Proofpoint-ORIG-GUID: -VXUU0fExWXo0lY4sC6lNeyY_YkN_1Z_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-09_03,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 phishscore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1015 spamscore=0 suspectscore=0 malwarescore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
- definitions=main-2604090115
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	SIGNED_PGP(-2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	R_DKIM_ALLOW(-0.20)[ndufresne-ca.20251104.gappssmtp.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[ndufresne.ca : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[ndufresne-ca.20251104.gappssmtp.com:+];
+	TAGGED_FROM(0.00)[bounces-102491-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102490-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[nicolas@ndufresne.ca,linux-arm-msm@vger.kernel.org];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: BF4F93CA936
+	RCPT_COUNT_SEVEN(0.00)[10];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,ndufresne-ca.20251104.gappssmtp.com:dkim,gitlab.freedesktop.org:url,linaro.org:email,ndufresne.ca:mid]
+X-Rspamd-Queue-Id: 54ED43CB595
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 4/3/26 2:24 PM, Vishnu Saini wrote:
-> Aux timeout is observed on few monitors like Benq BL2420-T due to
-> missing swing_pre_emph_cfg.
-> 
-> Signed-off-by: Vishnu Saini <vishnu.saini@oss.qualcomm.com>
-> ---
 
-We could take it as-is to get rid of the timeouts, but 
+--=-Hst4jAB8ppCutrX+uWL9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-https://lore.kernel.org/linux-arm-msm/20260302-edp_phy-v3-1-ca8888d793b0@oss.qualcomm.com/
+Le jeudi 09 avril 2026 =C3=A0 09:36 +0200, Neil Armstrong a =C3=A9crit=C2=
+=A0:
+> Hi,
+>=20
+> On 4/9/26 03:04, Nicolas Dufresne wrote:
+> > Hi,
+> >=20
+> > Le jeudi 09 avril 2026 =C3=A0 03:02 +0300, Dmitry Baryshkov a =C3=A9cri=
+t=C2=A0:
+> > > On Wed, Apr 08, 2026 at 06:43:53PM +0200, Neil Armstrong wrote:
+> > > > This adds the plumbing to support decoding HEVC and AV1
+> > > > streams into 10bit pixel formats, linear and compressed.
+> > > >=20
+> > > > This has only been tested on SM8650 with HEVC, and was inspired by
+> > > > Venus and the downstream vidc driver for the buffer
+> > > > calculations and HFI messages.
+> > > >=20
+> > > > I was unable to get 10bit decoding working with Gstreamer
+> > > > and ffmpeg, but v4l2-ctl works with:
+> > >=20
+> > > Any particular errors? I assume Gstreamer needs to be taught about
+> > > Q10C. But P010 should (hopefully) work.
+> >=20
+> > P010 should work for both Gst and FFMPEG, its probably a user error, or=
+ there is
+> > a hidden bug in the driver that make it fail, v4l2-ctl is very permissi=
+ve as it
+> > simply dump to disk. You should provide an updated fluster score, so yo=
+u have to
+> > use one of these.
+>=20
+> I did run fluster and all main10 fails with Gstreamer and FFmpeg, I tried=
+ to manually
+> run the gst and ffmpeg commands with v4l2-tracer and logs but I can't exp=
+lain the reason,
+> all returns from the driver seems valid but somehow they just error out w=
+ith:
+>=20
+> FFmpeg:
+> $ ffmpeg -c:v hevc_v4l2m2m -i Big_Buck_Bunny_1080_10s_30MB_main10.h265 -y=
+ -f null -
+> ...
+> [hevc_v4l2m2m @ 0x55c0328aa0] Using device /dev/video-dec0
+> [hevc_v4l2m2m @ 0x55c0328aa0] driver 'iris_driver' on card 'iris_decoder'=
+ in mplane mode
+> [hevc_v4l2m2m @ 0x55c0328aa0] requesting formats: output=3DHEVC/none capt=
+ure=3DNV12/yuv420p10le
+> ...
+> [hevc_v4l2m2m @ 0x55c0328aa0] An invalid frame was output by a decoder. T=
+his is a bug, please report it.
+> [vist#0:0/hevc @ 0x55c02dc9b0] [dec:hevc_v4l2m2m @ 0x55c029d510] Decoding=
+ error: Internal bug, should not have happened
+>=20
 
-suggests that these values are not super correct.. I'm long overdue
-for re-reviewing that, I'll hopefully do so tomorrow or next week
+This one needs further investigation for sure. This error can be various th=
+ings,
+and it requires going up to the v4l2 code to figure-out:
 
-Konrad
+
+Case 1:
+    if (!frame->buf[0] || frame->format < 0)
+        goto fail;
+
+Case 2
+        if (frame->width <=3D 0 || frame->height <=3D 0)
+            goto fail;
+
+But a quick look lead me to think it case 1 (frame->format < 0) since I don=
+'t
+see P010 in the format map in ./libavcodec/v4l2_fmt.c (at least in mainline=
+).
+Its also missing support for any opaque format, in fact I believe the DMABu=
+f/DRM
+context is only in LibreELEC fork. But overall, it points toward ffmpeg for=
+ this
+error so far.
+
+
+> The v4l2 trace shows a normal sequence with the driver returning P010 as =
+G_FMT after the source change event,
+> and the capture planes dequeued but for an unknown reason the buffer is r=
+ejected by ffmpeg.
+>=20
+> Gst:
+> $ gst-launch-1.0 -v -m filesrc location=3DBig_Buck_Bunny_1080_10s_30MB_ma=
+in10.h265 ! h265parse !=C2=A0 v4l2h265dec ! tee ! fakevideosink
+> Setting pipeline to PAUSED ...
+> Pipeline is PREROLLING ...
+> ...
+> Got message #37 from element "h265parse0" (latency): no message details
+> ERROR: from element /GstPipeline:pipeline0/GstH265Parse:h265parse0: Inter=
+nal data stream error.
+> Redistribute latency...
+> Additional debug info:
+> ../gstreamer/subprojects/gstreamer/libs/gst/base/gstbaseparse.c(3702): gs=
+t_base_parse_loop (): /GstPipeline:pipeline0/GstH265Parse:h265parse0:
+> streaming stopped, reason not-negotiated (-4)
+> Got message #39 from pad "h265parse0:src" (property-notify): ERROR: pipel=
+ine doesn't want to preroll.
+> GstMessagePropertyNotify, property-name=3D(string)caps, property-value=3D=
+(GstCaps)"video/x-h265\,\ width\=3D\(int\)1920\,\ height\=3D\(int\)1080\,\ =
+framerate\=3D\(fraction\)30/1\,\ chroma-format\=3D\(string\)4:2:0\,\ bit-de=
+pth-luma\=3D\(uint\)10\,\ bit-depth-chroma\=3D\(uint\)10\,\ parsed\=3D\(boo=
+lean\)true\,\ stream-format\=3D\(string\)byte-stream\,\ alignment\=3D\(stri=
+ng\)au\,\ pixel-aspect-ratio\=3D\(fraction\)1/1\,\ profile\=3D\(string\)mai=
+n-10\,\ tier\=3D\(string\)main\,\ level\=3D\(string\)4";
+> /GstPipeline:pipeline0/GstH265Parse:h265parse0.GstPad:src: caps =3D video=
+/x-h265, width=3D(int)1920, height=3D(int)1080, framerate=3D(fraction)30/1,=
+ chroma-format=3D(string)4:2:0, bit-depth-luma=3D(uint)10, bit-depth-chroma=
+=3D(uint)10, parsed=3D(boolean)true, stream-format=3D(string)byte-stream, a=
+lignment=3D(string)au, pixel-aspect-ratio=3D(fraction)1/1, profile=3D(strin=
+g)main-10, tier=3D(string)main, level=3D(string)4
+> ...
+
+There is not a lot of details here, but I would start looking into
+V4L2_CID_MPEG_VIDEO_HEVC_PROFILE and V4L2_CID_MPEG_VIDEO_HEVC_LEVEL
+implementation. GStreamer (and Chromium too) will refuse to use a decoder t=
+hat
+does not advertise the supported profile (though I see there is code for th=
+at,
+maybe its just some bug).
+
+>=20
+> In this case OUTPUT is not STREAMON and no OUTPUT buffers are queued, so =
+I wonder why this one fails....
+>=20
+> My gstreamer and ffmpeg foo is bad and I probably missed something obviou=
+s...
+>=20
+>=20
+You may get a different hint with more traces, just enabling general warnin=
+gs:
+
+  export GST_DEBUG=3D2
+
+Or the full V4L2 traces too:
+
+  export GST_DEBUG=3D"v4l2*:7,2"
+
+
+I'm sure its just a bug (or two). Happy to help to find it.
+
+>=20
+> >=20
+> > For Q10C on GStreamer, it needs mapping [0] and you need some bugfix [1=
+] and
+> > another that I will be sending tomorrow. We had never tested video comp=
+ression
+> > with this module before.
+> >=20
+> > [0] https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests=
+/8195
+> > [1] https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests=
+/11222
+> >=20
+> > The last issue has to do with:
+> > https://gitlab.freedesktop.org/gstreamer/gstreamer/-/blob/38965e2d9c111=
+9674a65dc437ee7e8ec95339f31/subprojects/gst-plugins-good/sys/v4l2/gstv4l2ob=
+ject.c#L4378
+> >=20
+> > V4L2 format gives us the number of allocation, but not really the numbe=
+r of
+> > planes, and we forgot to initialize that number for the "opaque" format=
+ case. A
+> > tempory fix might be to add this after S_FMT:
+> >=20
+> > if (GST_VIDEO_INFO_FORMAT (&info.vinfo) =3D=3D GST_VIDEO_FORMAT_DMA_DRM=
+)
+> > =C2=A0=C2=A0 n_v4l_planes =3D format.fmt.pix_mp.num_planes;
+> >=20
+> > Works for AFBC and QC at leat, since both are unambiguously single plan=
+e, and so
+> > cannot have mplane variants.
+>=20
+> I'll definitely try that ! thanks for the pointers !
+>=20
+> >=20
+> > Let me know how far you get! Please be aware that Robert and I are maki=
+ng these
+> > patches based on feedback, we don't have access to any boards capable o=
+f
+> > decoding to QC compressed formats.
+> >=20
+> > >=20
+> > > > v4l2-ctl --verbose --set-fmt-video-out=3Dpixelformat=3DHEVC --set-f=
+mt-video=3Dpixelformat=3DP010 --stream-mmap --stream-out-mmap --stream-from=
+-hdr Big_Buck_Bunny_1080_10s_30MB_main10.h265.hdr --stream-to out.P010
+> > > > v4l2-ctl --verbose --set-fmt-video-out=3Dpixelformat=3DHEVC --set-f=
+mt-video=3Dpixelformat=3DQ10C --stream-mmap --stream-out-mmap --stream-from=
+-hdr Big_Buck_Bunny_1080_10s_30MB_main10.h265.hdr --stream-to out.QC10
+> > > >=20
+> > > > The non-10bit decoding still works as before.
+> > > >=20
+> > > > With Big_Buck_Bunny_1080_10s_30MB reencoded in 10-bit profile
+> > > > and tranformed in v4l2 header format with [1]:
+> > > > ffmpeg -i Big_Buck_Bunny_1080_10s_30MB.h264 -pix_fmt yuv420p10le -c=
+:v libx265 -crf 28 -x265-params profile=3Dmain10 Big_Buck_Bunny_1080_10s_30=
+MB_main10.h265
+> > > > /path/to/mkhdr.sh Big_Buck_Bunny_1080_10s_30MB_main10.h265 raw Big_=
+Buck_Bunny_1080_10s_30MB_main10.h265.hdr
+> > > >=20
+> > > > The frames correctness has been verified buy displaying them
+> > > > via Vulkan DMA_BUF import, including QC10C and QC08C.
+> >=20
+> > In GStreamer, once the video4linux plugin issues are fixed, you should =
+be able
+> > to display the frames using glimagesink. GL only allow for RGB render, =
+which
+> > damages the data, so its not good enough for conformance testing with
+> > compression enabled, but usually just doing visual inspection is accept=
+able.
+> >=20
+> > > >=20
+> > > > The support is probably incomplete for other platforms and
+> > > > I'm unsure what's required to conform to the V4L2 M2M stateless
+> > >=20
+> > > stateful
+> > >=20
+> > > > spec, especially since AFAIK the decoder doesn't support
+> > > > decoding 10bit streams in 8bit pixel format, thus the RFC state.
+> > > > Review is welcome !
+> >=20
+> > Why would your decoder need to support decoding 10bit into 8bit ? This =
+is quite
+> > rare and its only possible with post-processed capture buffer.
+>=20
+> Yeah it's just a note, the Amlogic one supported outputing main10 in NV12=
+ but
+> only supported 10bit in their compressed format.
+>=20
+
+Ack. There is a lot of variation with various hardware for sure. The Allwin=
+ner
+stateless one swallow the extra 2bit plane (since they do some funky NV12 +=
+ two
+more planes for the missing 2bits, and that's complicate as a format hehe).
+
+
+cheers,
+Nicolas
+
+>=20
+> >=20
+> > > >=20
+> > > > [1] https://github.com/superna9999/pyv4l2compliance
+> > > >=20
+> > > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > > > ---
+> > > > Neil Armstrong (7):
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: qcom: iris: add QC10C &=
+ P010 buffer size calculations
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: qcom: iris: gen2: add s=
+upport for 10bit decoding
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: qcom: iris: add helpers=
+ for 8bit and 10bit formats
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: qcom: iris: vdec: updat=
+e size and stride calculations for 10bit formats
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: qcom: iris: vdec: forbi=
+d g_fmt while waiting for first source change
+> >=20
+> > The is suspicious, it should just send the previous state until you get=
+ the
+> > event. Typical use case is for application to set a format based on bit=
+stream
+> > parsing, and use that as a guess to try and pre-allocate the buffers. I=
+ don't
+> > usually review iris code, but I'll give that series some more eyes in t=
+he coming
+> > days.
+>=20
+> Yeah I wasn't sure, venus does that, same as the vendor driver so I thoug=
+ht it would
+> be good but I'm probably mistaken.
+>=20
+> >=20
+> > cheers,
+> > Nicolas
+>=20
+> Thanks!
+> Neil
+>=20
+> >=20
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: qcom: iris: vdec: updat=
+e find_format to handle 8bit and 10bit formats
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: qcom: iris: vdec: allow=
+ decoding into 10bit format
+> > > >=20
+> > > > =C2=A0=C2=A0drivers/media/platform/qcom/iris/iris_buffer.c=C2=A0=C2=
+=A0=C2=A0=C2=A0 | 81 +++++++++++++++++++++-
+> > > > =C2=A0=C2=A0.../platform/qcom/iris/iris_hfi_gen2_command.c=C2=A0=C2=
+=A0=C2=A0=C2=A0 | 71 ++++++++++++++++++-
+> > > > =C2=A0=C2=A0.../platform/qcom/iris/iris_hfi_gen2_defines.h=C2=A0=C2=
+=A0=C2=A0=C2=A0 |=C2=A0 1 +
+> > > > =C2=A0=C2=A0.../platform/qcom/iris/iris_hfi_gen2_response.c=C2=A0=
+=C2=A0=C2=A0 | 35 ++++++++--
+> > > > =C2=A0=C2=A0drivers/media/platform/qcom/iris/iris_instance.h=C2=A0=
+=C2=A0 |=C2=A0 2 +
+> > > > =C2=A0=C2=A0.../platform/qcom/iris/iris_platform_common.h=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 +
+> > > > =C2=A0=C2=A0.../media/platform/qcom/iris/iris_platform_gen2.c=C2=A0=
+ |=C2=A0 3 +-
+> > > > =C2=A0=C2=A0drivers/media/platform/qcom/iris/iris_state.c=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 6 ++
+> > > > =C2=A0=C2=A0drivers/media/platform/qcom/iris/iris_state.h=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 +
+> > > > =C2=A0=C2=A0drivers/media/platform/qcom/iris/iris_utils.c=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 | 16 ++++-
+> > > > =C2=A0=C2=A0drivers/media/platform/qcom/iris/iris_utils.h=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 +
+> > > > =C2=A0=C2=A0drivers/media/platform/qcom/iris/iris_vdec.c=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 70 +++++++++++++++++--
+> > > > =C2=A0=C2=A0drivers/media/platform/qcom/iris/iris_vidc.c=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 14 +++-
+> > > > =C2=A0=C2=A013 files changed, 285 insertions(+), 18 deletions(-)
+> > > > ---
+> > > > base-commit: f3e6330d7fe42b204af05a2dbc68b379e0ad179e
+> > > > change-id: 20260408-topic-sm8x50-iris-10bit-decoding-074c3ac7975c
+> > > >=20
+> > > > Best regards,
+> > > > --
+> > > > Neil Armstrong <neil.armstrong@linaro.org>
+> > > >=20
+
+--=-Hst4jAB8ppCutrX+uWL9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCadenZQAKCRDZQZRRKWBy
+9HUTAQCXiz/zGaVPKTEDrc5OX78dMhL/OeLI63q8rdwPtUthzgEA0R8cv+osHgGP
+tnJu5cgmABlw6/QJtjYa7w6qPbJyPwM=
+=Ykh3
+-----END PGP SIGNATURE-----
+
+--=-Hst4jAB8ppCutrX+uWL9--
 
