@@ -1,181 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-102516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GIW6NMrP12mrTAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 18:11:54 +0200
+	id MMfYNC3j12kVUQgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 19:34:37 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52D6F3CD749
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 18:11:54 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE89F3CE2A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 19:34:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 66026300FF80
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 15:59:58 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id E391930028CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 17:34:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7509E32D0DE;
-	Thu,  9 Apr 2026 15:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7196D29D291;
+	Thu,  9 Apr 2026 17:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UK2YBOnA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LwAnZbz7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00023242A4
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Apr 2026 15:59:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EA63C8728;
+	Thu,  9 Apr 2026 17:34:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775750397; cv=none; b=hvHUKDahKxO4lMg8ZejwMZKPtrMo4OlPQHX1mWcfe1iWnsQ4prIHjJ4mxOBr2aRLhHTuFRX2HNkTCS4Hzcgxrioeb2pZv+gDKaWr/53iG9qyrouMmlyKzGKM1h0xC/hHlJ7asDrbMhzYB7gYi6ejOdeHHoUeSthvw6z3Dto8O0Y=
+	t=1775756056; cv=none; b=q3R+FKADF9Mvhz62DPQju+K0jHC3TnaZK9DbtMH+KZI3YO06SegqgUFrrTyDnWoBE4B43oreWlkw1TTmc16ggRcy6eh+KlaKsZPG42e1nM2++GmiVr5eLTDX22ZYLlWgzrAf/9bVx7Kj5hYbvSMpqQAv+vR6Q5IlxYhzyMRGGhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775750397; c=relaxed/simple;
-	bh=6fOgEdrTDXG4J9FoTfDRCR08WcOMcszG3utCaL0Tn8M=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ZAmjpg9B7qbb0wwpnpzQpj+lZE0AgHecxVkM/bifr6v87mRumBBoI7WB7tO952drGdevWWgINSvdglebDSOVMV5GNwEiC6a5fQCLGztqvyqKi4k59AqQHlAqacB6Bb2dp5c2RPG6xt4ySEEEMumYlKOZOG4283cXiBzz+SmlbAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UK2YBOnA; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-38cd60ad1d2so1313191fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Apr 2026 08:59:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1775750394; x=1776355194; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2U04qQNDkQW4gdeWnoAOVfit+UeFcepKVp4vhcTXFJY=;
-        b=UK2YBOnAyVtFz7A599c6SUwpDs2OBI3KADzi7sOspo6/pVZjl58SKmS4AGNsagUr2Z
-         onMWwIOVAGk6Gk0mOjU7BgpN1NrQIEpjtUFO201pV8L5mmWjMW4dEi4T1SqkhiJUhSUR
-         jqPRgHQHLCLxxfdHGzs8k0YrPqeWbA0wd5dzWk71ZpCFF+zvty4pt1GKZ3ExSqzJh8i+
-         AmFUoil6B3haZXcSith7/JDkY4JXKx9Zsi5mbdOGQ1w3KroifGzhIrKItJtwmXQ+37O5
-         at0OVWJLDsj6Kdr4MHN74jw+DYpHSfzR/OgjEzBKg0zzbP0MSAp7E1dCZf2iNq9jGmSO
-         E0Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775750394; x=1776355194;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2U04qQNDkQW4gdeWnoAOVfit+UeFcepKVp4vhcTXFJY=;
-        b=K38uzQQ0e+6qb49szO02TP43Qr3aKMq4r/JB3/K7yHryXhAuRvMWsT7WHFpOcqgFCu
-         1A0d0m5nxAV/nCjH/j+LVtvmqSy+KrS16HtzLtfwvUxGNy2dkkwSkbHmOvokR/yUUSup
-         LfI6wIjqTzn4H7TtALqL4tEpynda+FrUEPmRJzynT7IaXcR9vVtwQZQbX/t++Sgiuod1
-         iS31Ksffhc3+/5LXijIWcxJpeyWmNQ+NNoRD+PRDZ+7RWAO+zNwJ7lndfShKV1A1OTFW
-         0IpjtRXfDuNxy0AnlqyXCAI/y5yC/Tr5E2hX+qD1j2VCLenrqyBHEh7HBWbog6kkZcsi
-         CzXA==
-X-Forwarded-Encrypted: i=1; AJvYcCU4mzNvvLo3if7NHIqqgot17r+rs98IZowvWufYyK+LspcmUOHNi+0ew2JRJw+u6a5r4NqkiY1u33Ppyi/4@vger.kernel.org
-X-Gm-Message-State: AOJu0YzgemIEuXbSxxqwbcdNt5Y1sXMb6zeZ0K36lN/uxVXgEUvWueo1
-	TFNL2WmPvGFmBKKr7bw74F3I65RALAM0n/Fl80RfAzTwWBMAgJJYQ5fbp9yoh0/Hqe3JT3z2kxh
-	idHr8
-X-Gm-Gg: AeBDieubPVwA5TbRiZV09vpyiCmM959ZyPupJ7dQyQt80rtxspeo12oLJAaeoLA2goP
-	RWI4R4dZcmrxIvWPQmEy10o/5RlcakJwa/uzrp5+IQ0A9tGFEJt6sW/qJoBQzO3K4udVS4dLlPq
-	tWiVOEVmjAE66JJOfQ8v3ONsKwJYjCR4oQKg4saiRi5SNlShKTUfcdnjRbRdnWcrC33OAVUuRMJ
-	E0Ai7FmNiDIT6jzLfROtWBhUwTsShYdO5qQiAtd+OhnXfOJAulArrCtYPalLOkAjcMrEfd9CocN
-	UjoCrtUPxBDaslCcJbwtWSx4/qXukr75q2p4NWRIzXgnV2/Pj0LhpS27kmoBl/MBlCK3Ap137+j
-	WIkT8R+aZJx4N89RAFk2tk01wQk2KMBm19w3xnEISxTMsKNM5ZdoexecU+55snK8mGOOFAoUWOt
-	2KZt0+gogHOZkL54s+AGapiSzDbNdJHTPi6dWVrxXJi2GWLy5LLcbC4QcGLk7LbAyqzw4aZdr/v
-	EPPJZDd9zmKfWL3
-X-Received: by 2002:a05:6512:31c7:b0:5a1:4712:376a with SMTP id 2adb3069b0e04-5a3e25f2c8dmr1235674e87.8.1775750393869;
-        Thu, 09 Apr 2026 08:59:53 -0700 (PDT)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38e495ae59bsm240151fa.38.2026.04.09.08.59.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Apr 2026 08:59:53 -0700 (PDT)
-Message-ID: <9ed4015f-192d-4cc4-886d-27e633bbd97a@linaro.org>
-Date: Thu, 9 Apr 2026 18:59:52 +0300
+	s=arc-20240116; t=1775756056; c=relaxed/simple;
+	bh=Gj136g/kwa38w+/k4mfmIaV2zPHIHZSBmkO4GwE8mh0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=gWGQPLVb83gRwNp9i7sNaIYDVFcoKlikDRiJlB08HXXytQkN6YJu3E19HAXJ+74pB4XnEP1METriGhpY5DAZVTTRjA4k1C86ZsWNe3Cc3N2eREZ5ErvEZe9YB8Kdsj9Trn2W/9rMYYARph3Pt30/q2vIdvFeCSCJRlRv+M16g5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LwAnZbz7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 7303AC4CEF7;
+	Thu,  9 Apr 2026 17:34:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775756055;
+	bh=Gj136g/kwa38w+/k4mfmIaV2zPHIHZSBmkO4GwE8mh0=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=LwAnZbz7kLjfhAYbCLyIhuPpnoma3Cg8ewiptOI8XjjNfII5XbnopoK5uE1lMjTDQ
+	 MwV56q2WIQyZERKL5RC+hllnY0CKnsKbxjKG+Ih4poNyism4K2eZogpS4uFYQWqmW0
+	 B43q38CsBBQGPF2ehaeSPWtKfvqIppgCxrc7wDrhAEimUJbovVpI2PEJXvwcKslzXi
+	 ggTBXzAi41+fL6RJUXMMH4GAOcsIjxppumSxzV6q7k7o30HCg0z5du76WCacC2c3An
+	 Ozoe4URuEuJfqPUl8GZ3Y138IebjGeZSQGmOB/VpuD+E+rYgvWaenYlOMtUaLvTL77
+	 ciSy6pIEjIY6Q==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60DC8F364A9;
+	Thu,  9 Apr 2026 17:34:15 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
+Subject: [PATCH v3 0/5] net: qrtr: ns: A bunch of fixs
+Date: Thu, 09 Apr 2026 23:04:11 +0530
+Message-Id: <20260409-qrtr-fix-v3-0-00a8a5ff2b51@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] clk: qcom: camcc: Add clock controllers to Titan GDSC
- power domain
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20260331140142.892579-1-vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20260331140142.892579-1-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABPj12kC/02OSw6CMBCGr2K6dkiZtqS68h7GRamDVIXqFIjGc
+ HeLLnQzyTf5Xy+RiAMlsV29BNMUUoh9BrVeCd+6/kQQjpkFSqykUiXceWBowgNqI9FjRabRlcj
+ yG1N+f6L2hy+nsT6THxb/omg4djC0TO4vEjeYc40u0JYGrYYSLmPtdhfinq5F5NNibUMaIj8/M
+ ydcKr52LdVv0YQgobHWldqaja/ULqZU3Ed39bHrinzEYZ7nNxs5c970AAAA
+X-Change-ID: 20260331-qrtr-fix-b502c26e5f46
+To: Manivannan Sadhasivam <mani@kernel.org>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Simon Horman <horms@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
+ Yiming Qian <yimingqian591@gmail.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+X-Mailer: b4 0.15.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=949;
+ i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
+ bh=Gj136g/kwa38w+/k4mfmIaV2zPHIHZSBmkO4GwE8mh0=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBp1+MUJAogw19JAzFEh47vDzrMQ1OW1lrxzap1O
+ SpdPxnd5bKJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCadfjFAAKCRBVnxHm/pHO
+ 9bAMB/9lerWH44bHX4s2xq30YdjVETr4NMjyYm+h7jlQDLvEUlhGRvDlkkAo/MesNCdkAHmS6n8
+ kmnCD+AgovjwjpP9rN23JQ7VH4/qCX/togkVa1lXKFe6Kr5L4zJrn63ns8EaniqsaLUO+pTliI3
+ SlhJ+y6+MXOoJfA0zYWf5xBw6FSvAeKic5luupbgYaXdiqJknM40BzmufTzyeaiXuRHVjRB6HQK
+ BWW+1wZh8oUFmMZc0fpAtBmmEgGYlC+PWBYZzOSjyK16fNSEm5rguhmwz+yvzaVAe1tKpw0TG2o
+ q5Xxpsq0jBj409/ihH6rDYvypeTVF7heOnJL6ao8tODvKMfP
+X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reply-To: manivannan.sadhasivam@oss.qualcomm.com
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-102518-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
 	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102516-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,oss.qualcomm.com];
 	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	HAS_REPLYTO(0.00)[manivannan.sadhasivam@oss.qualcomm.com];
 	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,linaro.org:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 52D6F3CD749
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,msgid.link:url]
+X-Rspamd-Queue-Id: CE89F3CE2A1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/31/26 17:01, Vladimir Zapolskiy wrote:
-> Starting from Snapdragon 845 SoC CAMCC device serves as both a power
-> domain provider with a special Titan GDSC as a top power domain in
-> the hierarchy and as a clock controller, where the clock provider
-> function of the IP strictly depends on top Titan GDSC being enabled,
-> thus it makes the CAMCC clock controller to belong to Titan power domain.
-> 
-> Today the formal hardware dependency between CAMCC power domain and clock
-> controller is managed by runtime PM in every CAMCC consumer device driver
-> like CAMSS and CCI, however this is terribly scalable to any future
-> CAMSS IP device drivers, and unfortunately it is not scalable at all
-> camera sensor drivers, which are also CAMCC clock controller consumers.
-> 
-> The change adds an option to describe CAMCC power domain to CAMCC clock
-> controller dependency properly, therefore runtime PM management can
-> be simplified on the CAMCC client's side.
-> 
-> The series touches only platforms with CAMCC drivers, which marked as ones
-> using runtime PM (see .use_rpm flag) but Kaanapali, which formally has two
-> CAMCC IPs, on the opposite end e.g. MSM8996 can not be covered by this
-> change, because camera clocks and GDSC power domain are not separated from
-> other media clocks and GDSCs.
+Hi,
 
-I'd appreciate to get more input on this series from Qualcomm developers.
+This series fixes a bunch of possible memory exhaustion issues in the QRTR
+nameserver.
 
-TLDR:
-1) sensors are CAMCC consumers, and sensors are not under CAMCC power domains,
-2) exactly zero negative side effects are expected from linking CAMCC clock
-controller and CAMCC top GDSC power domain.
+---
+Changes in v3:
+- Fixed the issues in remove() callback and other places reported by Sashiko
+- Link to v2: https://patch.msgid.link/20260403-qrtr-fix-v2-0-f88a14859c63@oss.qualcomm.com
 
-> 
-> Vladimir Zapolskiy (2):
->    clk: qcom: common: Add option to link clock controller to power domain
->    clk: qcom: camcc: Make Titan GDSC a power domain of clock controller
-> 
->   drivers/clk/qcom/camcc-milos.c    |  1 +
->   drivers/clk/qcom/camcc-sm8450.c   |  1 +
->   drivers/clk/qcom/camcc-sm8550.c   |  1 +
->   drivers/clk/qcom/camcc-sm8650.c   |  1 +
->   drivers/clk/qcom/camcc-sm8750.c   |  1 +
->   drivers/clk/qcom/camcc-x1e80100.c |  1 +
->   drivers/clk/qcom/common.c         | 16 ++++++++++++++++
->   drivers/clk/qcom/common.h         |  1 +
->   8 files changed, 23 insertions(+)
-> 
+---
+Manivannan Sadhasivam (5):
+      net: qrtr: ns: Limit the maximum server registration per node
+      net: qrtr: ns: Limit the maximum number of lookups
+      net: qrtr: ns: Free the node during ctrl_cmd_bye()
+      net: qrtr: ns: Limit the total number of nodes
+      net: qrtr: ns: Fix use-after-free in driver remove()
 
--- 
-Best wishes,
-Vladimir
+ net/qrtr/ns.c | 79 +++++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 69 insertions(+), 10 deletions(-)
+---
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+change-id: 20260331-qrtr-fix-b502c26e5f46
+
+Best regards,
+--  
+Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+
+
 
