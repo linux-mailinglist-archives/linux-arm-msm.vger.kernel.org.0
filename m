@@ -1,224 +1,343 @@
-Return-Path: <linux-arm-msm+bounces-102474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8KUINEKM12k3PggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 13:23:46 +0200
+	id 2EEDFYSO12nzPggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 13:33:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53EAF3C99E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 13:23:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AFE003C9B08
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Apr 2026 13:33:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 58824301F1B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 11:22:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 43FA03001848
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Apr 2026 11:23:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA2813C13E6;
-	Thu,  9 Apr 2026 11:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1FB53C13FB;
+	Thu,  9 Apr 2026 11:23:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="n22FO75F"
+	dkim=pass (1024-bit key) header.d=axon.com header.i=@axon.com header.b="LL6V5hkS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012050.outbound.protection.outlook.com [40.107.209.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564D13C0623;
-	Thu,  9 Apr 2026 11:22:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775733778; cv=none; b=fsn9aNkPamlNawjSO5v58nlYe1ncAokvEXrpR6Ea4cJ7yagfFeFq5HrEZoZCHFov3i06XLRhjJTUQxJbf+Gcae/PulJdxB3F1EnJOXkdTTXjrYrYO8ZrMZ1vPI+sA6jvE5XmLsyAHZerUl8yQSYWVV7tQ0HQBqQXWgN+97jlcO8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775733778; c=relaxed/simple;
-	bh=ZvlZi5CbcmEV2go9cPuXnCEvtdxTh5fXCo77fhyumnQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=B6/4oiU4SlDDos7/wGPH9EPv1P6XcCoIQV+aKvZeB+LPyWCyLU3+YpmnLemyvtl2OMPmhwybGOvO1ajg0S7LkkwRSbrfm170xMUkc3LmDHaDAJfKmg5XHG4wrjC9AIXICePh/oRXPdM/EQ4izLk/go9V3eC5j2k3gjCaqzki87o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n22FO75F; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6395OQjY254218;
-	Thu, 9 Apr 2026 11:22:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=AqYhFyIAhfp1LHLHWC/4w1Zv1bTldniczyh
-	en2AZVyk=; b=n22FO75FzU1iMDS+e4cTXxdmIFU/0SnzSSXdihDlLPr3fE6IEQT
-	BBOyZ3wNrtyvBcgaSWdjZxbHfvh3hVs21FOI9ln8nWHw0BKIXQhWr7h66l9b7II8
-	E4hO9FTvrx/DiM2leZJedRQejDjjGLH9n+hUOy9+wimlVLMEXf6DdZ/196hyl/46
-	RShYAVR7lyAAhHuDwb1Hrha5KJxZx+NQYfO8QWLJQH6wiic3HH/ybTP/UxZ9koSH
-	rt+0P1yR5aE2FKVoRdAwElIAVZD1Oy0hsiS83NcDjbi1c/y2C504FSwclNiO6w9l
-	Y/8JkaXzCl+BW2BvD/dr0Yd5aonvkMZicVg==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ddt6ybrm2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Apr 2026 11:22:50 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 639BMm2Q014226;
-	Thu, 9 Apr 2026 11:22:48 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4db3njwav0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Apr 2026 11:22:48 +0000 (GMT)
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 639BMmmk014220;
-	Thu, 9 Apr 2026 11:22:48 GMT
-Received: from shuaz-gv.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 639BMmpU014219
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Apr 2026 11:22:48 +0000 (GMT)
-Received: by shuaz-gv.ap.qualcomm.com (Postfix, from userid 4467449)
-	id 664D25EC; Thu,  9 Apr 2026 19:22:47 +0800 (CST)
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-To: Bartosz Golaszewski <brgl@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
-        quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com,
-        jinwang.li@oss.qualcomm.com, mengshi.wu@oss.qualcomm.com,
-        shuai.zhang@oss.qualcomm.com
-Subject: [PATCH v5] Bluetooth: qca: Fix delayed hw_error handling due to missing wakeup during SSR
-Date: Thu,  9 Apr 2026 19:22:33 +0800
-Message-Id: <20260409112233.3326467-1-shuai.zhang@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3480F39F174;
+	Thu,  9 Apr 2026 11:23:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775733798; cv=fail; b=Dd1J1k0yKbAOrVfR9rAsTNts1LaPPGkjGt9JLEtBCoCRAcIGpg3IBSegAoF6dEuSVtPz5ztr7XzyvKj6XaHkh4sTWIpAXj4LZ6VOIxi69MqzZCVM6GvKOF8hHBwbqZeX5vtuNrSWf7wzklttqvWPJyJqUXJWyZ1BY7A6vd/HYb8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775733798; c=relaxed/simple;
+	bh=RLWqJglAxm4nRWeOANv8VS7sd8O3td1uYfQ9TNtAi8w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=D4oBZZbTSh3mp4DbXcvrT3mGDHPY3rsNdMsCt4qbh7bEB1OT4fwHNeX1fnz0rxmiveBkgVFq9VeLP1FBN2BaY4Q3KzgvhWdTeAse42TaViZyTOfDAS5IuDnMoRehuvGngc9/L/KnO5YTTDrjTotgYJwstXkIjecXr8kKA6yQbZA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=axon.com; spf=pass smtp.mailfrom=axon.com; dkim=pass (1024-bit key) header.d=axon.com header.i=@axon.com header.b=LL6V5hkS; arc=fail smtp.client-ip=40.107.209.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=axon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=axon.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AEe+MOAVuXz6WV2rsIxRMNWKE8njwa7dmO9vLBC5Qc3tjF+Gvq5O5niZ5m/OtU8N1KiU4hE40U+I4jy9F1aLQODsBoCgwPtO20o5E3ykS5pciliQxZoziQU5mecj9fWXnuHiCSFb99wHeQtbreU0c55icSOx2CERDhrl4p/Tr4/Ro+6HUMgp4HM2DBWfKqV+HNGwxPUmWWq36wavmoUJ6qtlYWwYwOYL2C1GvokgYWXQhT6wsIl9mffyP4rCRj3yrCQ6uvdVEfxtbJiAkNu4cDrVXFCoylEerYEvnuntzg+pWCAq3gR9sruwRpcUSpBlfgs7006K6Z6EcYlIWaoWDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Kv6/4sLRRFszGsQ2QDRr4nYzIKga/lvyjbYqIuPIEBc=;
+ b=EywCtiSj6uRTgEmOgZuLabmdYmgEwIVjmTNRM8s3aUDFREQqkqCSvqd8KwKsn+0+nbL7Xf2RjorMVQ1Lj1BDC4amN/ouQmZlf/i/8lnHhT7+ODQdlfUX2MytBXrxlglgghDTodLuji5xNN7Tfpr+yG7MoDBMuy8xoL/YbadiYEEB6PHFdnl202ylg6jttgyUZYus5pXze8olOPJQdMKVjLZUCeT7bntRPoI7ufepQO5QYd3wHeRho75iAD7HG2wNems2Uu06365bB0jWERmLwT15x68WqGtsDdkYhNHzsi/xRXQfSjvRJpLotGv6XJ+SUoKvUasQ2W1DvQBNEeD1fg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=axon.com; dmarc=pass action=none header.from=axon.com;
+ dkim=pass header.d=axon.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axon.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Kv6/4sLRRFszGsQ2QDRr4nYzIKga/lvyjbYqIuPIEBc=;
+ b=LL6V5hkSpt0cOo0dbzqUbse5oqly2/ec4biDS5irRlBuHVuDJaTFQDdiC8HNGp6dEJLTSCQdqQb4vPNaf35lYM6o/lXYj8IKolfBvJ/8/TxQS9chsbYG3POmFUPOg9EnRFJ/a3tA0XPfhQ07RkoN121l0xDcBD/prkiiBxqs+eY=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axon.com;
+Received: from SA2PR10MB4524.namprd10.prod.outlook.com (2603:10b6:806:118::8)
+ by BL3PR10MB6041.namprd10.prod.outlook.com (2603:10b6:208:3b1::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.19; Thu, 9 Apr
+ 2026 11:23:13 +0000
+Received: from SA2PR10MB4524.namprd10.prod.outlook.com
+ ([fe80::f41d:e38a:4741:e76c]) by SA2PR10MB4524.namprd10.prod.outlook.com
+ ([fe80::f41d:e38a:4741:e76c%4]) with mapi id 15.20.9769.018; Thu, 9 Apr 2026
+ 11:23:13 +0000
+Date: Thu, 9 Apr 2026 12:23:09 +0100
+From: Joe Sandom <jsandom@axon.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: qcs8550: add QCS8550 RB5Gen2
+ board support
+Message-ID: <20260409112309.vaibvwsmfdjardvy@linaro>
+References: <20260407-rb5gen2-dts-v2-0-d0c7f447ee73@axon.com>
+ <20260407-rb5gen2-dts-v2-5-d0c7f447ee73@axon.com>
+ <4359bb07-d848-4b77-b1a9-f1c6f53caa10@oss.qualcomm.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4359bb07-d848-4b77-b1a9-f1c6f53caa10@oss.qualcomm.com>
+X-ClientProxiedBy: LO4P265CA0235.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:315::12) To SA2PR10MB4524.namprd10.prod.outlook.com
+ (2603:10b6:806:118::8)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-ORIG-GUID: b-yzOyLQwaO0LPtmqZEzyguG6kzwUAKc
-X-Proofpoint-GUID: b-yzOyLQwaO0LPtmqZEzyguG6kzwUAKc
-X-Authority-Analysis: v=2.4 cv=R9sz39RX c=1 sm=1 tr=0 ts=69d78c0a cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=Um2Pa8k9VHT-vaBCBUpS:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
- a=eIGlGOcC9ytwnVZZLkwA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDA5MDEwMiBTYWx0ZWRfXw7JtpsCQovmr
- vXm8yrWoqvrvBpYer1mPIllSWC34k83mCjFu4p+4TZSv/huwyhoVdBVeJboad+cCABryK1J1262
- mwJobFxu6J7P2VdrImIJJ25apOyiu8/t4brfbCIr87IW5i5geU9NP+giMuk5RIT9gWJUBKGKxiZ
- 8Pj4b0LdNmGgM7k5D9yJFnoMhqDQzgFXE2g3z1D61kXsehG5xA3jqPCNZ6CZ9SXkQbkDxBJ7AAV
- 3aq3GWXEr4ajDlsMyS9FveMkURFEfBkqVd7CLyueJkuQhVGWy8HYvYveimuUZt0ZmOGGQOQp6i+
- vw4FdkP6Qe5PsO6c1sVDGgpYckmSXI1vG4C1OB0aDwT6zL9myDc1vOMkAaIrAlmOgmlcL+go/2a
- SHQnYrDHsjANii0R0cTZcQfSF9LA6QOm/PPKQOtDZ9koxQe/XC7Zzzha5hgfmNfBXwemcJGrL6C
- gPSWDi69oZkU1J7kQKg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-09_03,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 priorityscore=1501 suspectscore=0 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604090102
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PR10MB4524:EE_|BL3PR10MB6041:EE_
+X-MS-Office365-Filtering-Correlation-Id: a2927e9f-64d5-48dc-6d95-08de962a6332
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|366016|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info:
+	93f0BHG6XQYBG6MaIVnT0yLzkdnYAa2vJOloirODwUnhGd2LhPuABQzWLFeMv4IbpkVZN07ivuFtv1GaEYEgNYBGeHknB7Gg+ZTG7XwcEdYyr30euB6Tv0VK7G5D+B74kxI+7vixkPb70NCPau9pw9ET1MI89g1+qXjxukI/vgYmsq/gU5KQpeC8EkMlubTSlW2AeDgqndz7+4vTOwvMH9Vx52hPOtvz1ovyEApd2Yi7UeePrim3kSDR2XK4nWYBBo/4wJF59hc0uTTmOXvZC0kCOHESo4Yup0urDRPj9h9P3qd1lo2BDm293X1jljuWZYlipcXMQ60iBHo2rNLgiLk1k+w+/SGouFzStN+FSDj3RUHSokmbXj/d9+2NBsH8ObjXA0vGeS/a1SkW6nfQNya3pD8RI6EhOL25KkBmrVwySb70zT8pq0LF8zxL4e27EJG4JOeUISJjWKGO9H4pvJn/9gbEgocOUXSaHly1d6dm6PLV/S9woFNHXIt068e7GgO71EFQ7lrKEDaQ7gOoXcVqsoKkDV0CeZ4QkHawoU6LJ58NUmswL5d2b+LZWFQKsoImaSwX83w75oNikFOqKBG8T0TYZCkI+fcPZCQjEeq9++arwV6VBQwUn7w23o0KMp3YzTeG5Nt4vudeRHueMr5ZLLv++PRSf431+Sxi0B2vyRCRrjemoJ4FNDv4xyfTZhDyegr1Vy5mIBZoIWtZ/iRvYuGrL0N+sRelUhPWxqA=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA2PR10MB4524.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ZJVaoXeHqDnjhB/YrgwoKF2SnV20Sqz5Fm6hMlJWwIxW4PQnG7QsiDPew9mt?=
+ =?us-ascii?Q?F27usbpD9+fHNO5vhwCn4m6wdvaaCZQAHz+KuYbsc3hsZb5p6sYhpYgw4n85?=
+ =?us-ascii?Q?kXgWARUMPflRMcuU3MsOLDSnxDc8/qMDsUgRWOusnUsul9fbz5oVsJAQMKmJ?=
+ =?us-ascii?Q?RRf6iDLjkIafNR3IW8GWOx50+Y34uFYaBOnt1/cuIzloiWoza7a3XhoZw2Cz?=
+ =?us-ascii?Q?au81sRTsfuQ1xnxZsX+v31PLrOpTyAEdv3X+DWER+8+a1NE19kOvvgFPEiwW?=
+ =?us-ascii?Q?ZewPjKUfDP+uz2OGCVQXxUUZ93QAzQ5D/B8xKYj3hBWlur1WJeoDQIck3yAT?=
+ =?us-ascii?Q?9dsKwsx+T7cYhMLY1kUyHdQ6yq2DBjTYBEYztL24vNrVGSL0sYnkDNDTI5GA?=
+ =?us-ascii?Q?yxjAn01cQUDBinx3QT85L4cQ6DDaipRgF4fi8ESzfM6+FTMbIk9P5em99cM8?=
+ =?us-ascii?Q?UCknRPsNH4vpWV0bZ9Bke3BYdA2WoM7ozFdvsggmT7PuKcr8vm3CzhpFJW7f?=
+ =?us-ascii?Q?rt3byREtzd4muefAHkxLBxLpioW6LznmZdvmB+fTYhSPIzunGRW0RN1QfRyA?=
+ =?us-ascii?Q?wA9c41ZEtQ4kT+Zl3xxjFYWSOtS45FVHKp6T7m5YuNOLfcjGdqjwzlCUxttG?=
+ =?us-ascii?Q?3vpJoTU3fFXaXIn4qIsODMIlogtJHZLY1ByQxcnOB5tLQhNAuUfq72KcrLle?=
+ =?us-ascii?Q?PZdwLw917DyW6Z+5lTGG4haXGDJZMlrohhGmquMkXXkmWS5SMCxn/Zpatp4i?=
+ =?us-ascii?Q?/hC2y2Ky3Fz7CF1TY3oY2c/UP1UsPexpSgNFVHUB31vagpokIZnYfuSG3TAN?=
+ =?us-ascii?Q?Ou2/w9FKDfE/bALNkc6rOVY52eMLY/SDx16aNgIsDlzZssnChtX2Ew2/QgJ2?=
+ =?us-ascii?Q?P6wiYlgNmnzDknwgJZMWhyLkGhgKN3YgslxL7syE6ikShIbKe6O3BFu4vxqU?=
+ =?us-ascii?Q?rfnFHISlz9HdtjG0Cs9KV2mBzQPvog4Aou61150SshmzIyGn1o1LVxVBmloN?=
+ =?us-ascii?Q?9I9qlKatxK0DK3vRRm2tl/2jW2UPttJDAzI2jUW0CafNF5IMQkfiNoVi10qE?=
+ =?us-ascii?Q?VzD1YCPXfeh+f5W1uwNgxA8tS5gK/V1BcxzeDQzokuSkC8zLMbGjOdtTxenl?=
+ =?us-ascii?Q?XUmYBi+yICRpmBp50KIyVs8mG3jDQY6A+fs2CCn88lCpEzM/+XZKOfCnmxXH?=
+ =?us-ascii?Q?cWgSon1yfKyDMKqgvDDre8MxkRrxHJoli+j3lwyELkYiyJuT2C6TxFPGE6JJ?=
+ =?us-ascii?Q?4xIuAYGoiAf/zSBsieu4SKUbj9dQFscwwdAQZ+nJuGqGZnWrUwVfNCjh4En6?=
+ =?us-ascii?Q?DgXYsQODMEslXW42grxa+rYy5MywdC2csEUoJkT5VCOzqrwK6Wek7gvSkp7A?=
+ =?us-ascii?Q?3nwcEVICn2W7XeN9dcWB+TxlKB0OsA8EisIyV00G8At9lIToBurdHOUrs1su?=
+ =?us-ascii?Q?+2G1CDtIxbx/OXFQtSN+rXk7s9DEokB8XeXpCpsW4H8SsYOODexeGeMDtJKW?=
+ =?us-ascii?Q?iBRgeyCwV2Vj31FQjN8TIfDX2foc3/w8uijQmsmlSU83xg5ZatUFDFOzhETa?=
+ =?us-ascii?Q?/wMMNa6NXkPhdnHPKT5Sn7IHf/XO+QDUR8XXiSAf6Yt9g2O++O1I/kyTmrST?=
+ =?us-ascii?Q?eIAIggJD9ydVfige15FdhiQX8Ek2yg8PRShZoQuId4Sikh2u0XUiJ4qafRSG?=
+ =?us-ascii?Q?/L6aTsuZmXloVNu4GK2WoDqsI+CdCIII2eC+dbYDvVlVmY3O?=
+X-OriginatorOrg: axon.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a2927e9f-64d5-48dc-6d95-08de962a6332
+X-MS-Exchange-CrossTenant-AuthSource: SA2PR10MB4524.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Apr 2026 11:23:13.2256
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: b575368d-7461-447d-a9a4-f90f22962981
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: JqOoj2+W19vPQ+n3g/Ng7dnMUMSDlC5jVH8zKHLMa6FJEFgmUtO/CxX/PSbk8RismrXnL8XbS5uadwKrJlDpDg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR10MB6041
+X-Spamd-Result: default: False [5.84 / 15.00];
+	SEM_URIBL(3.50)[0.0.0.0:email];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	SUSPICIOUS_URL_IN_SUSPICIOUS_MESSAGE(1.00)[];
+	MID_RHS_NOT_FQDN(0.50)[];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	BAD_REP_POLICIES(0.10)[];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_TO(0.00)[kernel.org,holtmann.org,gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[12];
+	TAGGED_FROM(0.00)[bounces-102475-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102474-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shuai.zhang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:mid];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-1.000];
+	R_DKIM_ALLOW(0.00)[axon.com:s=selector1];
+	MIME_TRACE(0.00)[0:+];
+	DMARC_POLICY_ALLOW(0.00)[axon.com,reject];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	GREYLIST(0.00)[pass,body];
+	DKIM_TRACE(0.00)[axon.com:+];
+	NEURAL_SPAM(0.00)[0.551];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jsandom@axon.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	R_SPF_ALLOW(0.00)[+ip4:172.234.253.10:c];
+	REDIRECTOR_URL(0.00)[urldefense.com];
+	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[10]
-X-Rspamd-Queue-Id: 53EAF3C99E7
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,axon.com:dkim,axon.com:email,urldefense.com:url,0.0.0.0:email]
+X-Rspamd-Queue-Id: AFE003C9B08
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-When Bluetooth controller encounters a coredump, it triggers
-the Subsystem Restart (SSR) mechanism. The controller first
-reports the coredump data, and once the data upload is complete,
-it sends a hw_error event. The host relies on this event to
-proceed with subsequent recovery actions.
+On Wed, Apr 08, 2026 at 11:57:18AM +0200, Konrad Dybcio wrote:
+> On 4/7/26 5:46 PM, Joe Sandom via B4 Relay wrote:
+> > From: Joe Sandom <jsandom@axon.com>
+> > 
+> > The RB5gen2 is an embedded development platform for the
+> > QCS8550, based on the Snapdragon 8 Gen 2 SoC (SM8550).
+> 
+> [...]
+> 
+> 
+> > +	/* Lontium LT9611UXC fails FW upgrade and has timeouts with geni-i2c */
+> > +	/* Workaround is to use bit-banged I2C */
+> 
+> Interesting.. I was under the impression that it was only an issue on
+> RB1 and RB2 boards.. perhaps we're missing some magic register write..
+> 
+> 
+> [...]
+> 
+> > +		pinctrl-names = "default";
+> > +		pinctrl-0 = <&wlan_en>, <&bt_default>, <&sw_ctrl_default>,
+> > +			    <&pmk8550_sleep_clk>;
+> 
+> nit: let's keep the order of
+> 
+> property-n
+> property-names
+> 
+> file-wide
+>
+Agree. Good catch - will amend this in v3.
+> [...]
+> 
+> > +&sdhc_2 {
+> > +	cd-gpios = <&pm8550_gpios 12 GPIO_ACTIVE_LOW>;
+> > +
+> > +	pinctrl-0 = <&sdc2_default>, <&sdc2_card_det_n>;
+> > +	pinctrl-1 = <&sdc2_sleep>, <&sdc2_card_det_n>;
+> > +	pinctrl-names = "default", "sleep";
+> > +
+> > +	vmmc-supply = <&vreg_l9b_2p9>;
+> > +	vqmmc-supply = <&vreg_l8b_1p8>;
+> > +
+> > +	max-sd-hs-hz = <37000000>;
+> 
+> Are you sure you want to overwrite that? The value in the SoC DTSI is
+> set to half a MHz higher
+This was originally carried over from the downstream workaround for 
+clock driver ceiling behaviour that I saw;
 
-If the host has not finished processing the coredump data
-when the hw_error event is received,
-it sets a timer to wait until either the data processing is complete
-or the timeout expires before handling the event.
+/*
+ * Due to level shifter insertion, HS mode frequency is reduced to 37.5MHz
+ * but clk's driver supply 37MHz only and uses ceil ops. So vote for
+ * 37MHz to avoid picking next ceil value.
+ */
+#define LEVEL_SHIFTER_HIGH_SPEED_FREQ	37000000
 
-The current implementation lacks a wakeup trigger. As a result,
-even if the coredump data has already been processed, the host
-continues to wait until the timer expires, causing unnecessary
-delays in handling the hw_error event.
-
-To fix this issue, adds a `wake_up_bit()` call after the host finishes
-processing the coredump data. This ensures that the waiting thread is
-promptly notified and can proceed to handle the hw_error event without
-waiting for the timeout.
-
-Test case:
-- Trigger controller coredump using the command: `hcitool cmd 0x3f 0c 26`.
-- Use `btmon` to capture HCI logs.
-- Observe the time interval between receiving the hw_error event
-and the execution of the power-off sequence in the HCI log.
-
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
----
-Changes v5:
-- Replace clear_and_wake_up_bit with wake_up_bit
-- Link to v4
-  https://lore.kernel.org/all/20260327083258.1398450-1-shuai.zhang@oss.qualcomm.com/
-
-Changes v4:
-- add Acked-by signoff
-- Link to v3
-  https://lore.kernel.org/all/20251107033924.3707495-1-quic_shuaz@quicinc.com/
-
-Changes v3:
-- add Fixes tag
-- Link to v2
-  https://lore.kernel.org/all/20251106140103.1406081-1-quic_shuaz@quicinc.com/
-
-Changes v2:
-- Split timeout conversion into a separate patch.
-- Clarified commit messages and added test case description.
-- Link to v1
-  https://lore.kernel.org/all/20251104112601.2670019-1-quic_shuaz@quicinc.com/
----
- drivers/bluetooth/hci_qca.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index c17a462ae..9fffe665b 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1108,7 +1108,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 				qca->qca_memdump = NULL;
- 				qca->memdump_state = QCA_MEMDUMP_COLLECTED;
- 				cancel_delayed_work(&qca->ctrl_memdump_timeout);
--				clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
-+				wake_up_bit(&qca->flags, QCA_MEMDUMP_COLLECTION);
- 				clear_bit(QCA_IBS_DISABLED, &qca->flags);
- 				mutex_unlock(&qca->hci_memdump_lock);
- 				return;
-@@ -1186,7 +1186,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 			kfree(qca->qca_memdump);
- 			qca->qca_memdump = NULL;
- 			qca->memdump_state = QCA_MEMDUMP_COLLECTED;
--			clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
-+			wake_up_bit(&qca->flags, QCA_MEMDUMP_COLLECTION);
- 		}
- 
- 		mutex_unlock(&qca->hci_memdump_lock);
--- 
-2.34.1
-
+But I now realise this isn't an issue in the upstream driver, so I will
+drop this in v3. Thanks!
+> 
+> > +
+> > +	no-sdio;
+> > +	no-mmc;
+> > +
+> > +	status = "okay";
+> > +};
+> > +
+> > +&sleep_clk {
+> > +	clock-frequency = <32764>;
+> > +};
+> > +
+> > +&spi11 {
+> > +	status = "okay";
+> > +
+> > +	can@0 {
+> > +		compatible = "microchip,mcp2518fd";
+> > +		reg = <0>;
+> > +		interrupts-extended = <&tlmm 55 IRQ_TYPE_LEVEL_LOW>;
+> > +		clocks = <&clk40m>;
+> > +		spi-max-frequency = <10000000>;
+> > +		vdd-supply = <&vreg_l14b_3p2>;
+> > +		xceiver-supply = <&vreg_l14b_3p2>;
+> 
+> It may be that for this chip to actually be able to communiate with devices
+> on the bus, you need to set the new 'microchip,xstbyen' property
+> 
+> see:
+> 
+> https://urldefense.com/v3/__https://lore.kernel.org/linux-arm-msm/20260321135031.3107408-1-viken.dadhaniya@oss.qualcomm.com/__;!!K76kBA!3JvIWVouSl6ZkbxojAFYUus-8UPRvjrHx0qENKOyIIBpZ9knecOfH0NCBAr8ESxNXg2H6982UXqs_8QyR_k9NuKnmA$ 
+> 
+Good to know. Confirmed that it will be needed.
+Happy to provide a follow-up patch once the above series lands if that
+works for you?
+> [...]
+> 
+> > +&tlmm {
+> > +	gpio-reserved-ranges = <32 8>;
+> 
+> Would you happen to know what these pins are connected to, and if
+> so, add a comment (like in arch/arm64/boot/dts/qcom/x1-crd.dtsi)?
+Yes, 32-35 for NFC and 36-39 for fingerprint sensor. I'll add a comment
+in v3 so it's clear.
+> 
+> 
+> > +
+> > +	bt_default: bt-default-state {
+> > +		pins = "gpio81";
+> 
+> It would be best to keep these entries ordered by pin idx
+Fair point. Will amend this for v3.
+> 
+> > +		function = "gpio";
+> > +		drive-strength = <16>;
+> > +		bias-disable;
+> > +	};
+> > +
+> > +	sw_ctrl_default: sw-ctrl-default-state {
+> > +		pins = "gpio82";
+> > +		function = "gpio";
+> > +		bias-pull-down;
+> > +	};
+> > +
+> > +	lt9611_irq_pin: lt9611-irq-state {
+> > +		pins = "gpio40";
+> > +		function = "gpio";
+> > +		bias-disable;
+> > +	};
+> > +
+> > +	lt9611_rst_pin: lt9611-rst-state {
+> > +		pins = "gpio7";
+> > +		function = "gpio";
+> > +		output-high;
+> 
+> You shouldn't need to assert the GPIO state in the pin entry node
+> - the driver should take care of that
+Fair point. Will amend this for v3.
+> 
+>  
+> > +	};
+> > +
+> > +	ntn0_en: ntn0-en-state {
+> > +		pins = "gpio67";
+> > +		function = "gpio";
+> > +		drive-strength = <2>;
+> > +		bias-disable;
+> > +	};
+> > +
+> > +	ntn1_en: ntn1-en-state {
+> > +		pins = "gpio42";
+> > +		function = "gpio";
+> > +		drive-strength = <2>;
+> > +		bias-disable;
+> > +	};
+> > +
+> > +	upd_1p05_en: upd-1p05-en-state {
+> > +		pins = "gpio179";
+> > +		function = "gpio";
+> > +		drive-strength = <2>;
+> > +		bias-pull-up;
+> > +	};
+> 
+> I don't know if pulling up an active-high pin is what you want
+> (there's some more occurences)
+> 
+Good point. Will amend this for v3.
+> Konrad
 
