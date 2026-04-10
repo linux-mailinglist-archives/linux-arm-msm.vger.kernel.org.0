@@ -1,245 +1,283 @@
-Return-Path: <linux-arm-msm+bounces-102713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8J1BCB422WkjnggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 19:40:46 +0200
+	id IO2xJ4NE2WnjnwgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 20:42:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D2673DB23F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 19:40:45 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18E1C3DB829
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 20:42:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 23CA1300A764
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 17:40:44 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 74BEF3012CA4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 18:42:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F0DB3DC4DF;
-	Fri, 10 Apr 2026 17:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F1A13E3C54;
+	Fri, 10 Apr 2026 18:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lyk6oZWb"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Yf60hlti";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hDrfZTk0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CB039EF0B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 17:40:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775842843; cv=pass; b=fKWL68jykLDe+NDAJDtsUVYG7KPFamEmKkNHAVZ2DiXMeODA+FZCNxhb+2aRCrC8EL/bjC/8VKFgFCgVS1Q/+2XxqFWrx2oBjW59rYysuCxjM1xZTPh+olBeMBnxWCLTTfFY/evXvgCXZi1+UhDaYuGOeIJZEVx8DZf7VCm+PeM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775842843; c=relaxed/simple;
-	bh=EB+hFHu4o8mR5IB8DxbDE45H1JTJFvQueNfIGjdGdOo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HtX6Q5S5yYg3DJECfy4TPp2EaPOtSLFNLmvuPkp0b1qc7Jwmn3UzxIoZXNMtHMuLLo819KLVF3Wmm1HqOh1hp6J50tthTujDN5pRDxY93dFlEtKLfzrnkQ0Tw6KJtAo0eV3jNSluFmO8P+0uUPoeS7Egc/SOX9ItJTgKkEYtlDk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lyk6oZWb; arc=pass smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b9c62fc8debso370596966b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 10:40:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1775842840; cv=none;
-        d=google.com; s=arc-20240605;
-        b=UOzB9bhpuyrMx4W17qGYBpgSOwXlgeaQP1nPwXEreBZVSH9fCJKDJwvLMs3CcvOCau
-         q/Nh+/4iO/uQx+6NUdr4x3Iu8UkQTprptWUZZV7hvktTNjpkVUMWMcHcvflGmOVFWhXu
-         dkmVmntwZjyXphRBnC7MXVp79W1kpDVqbiycBJDrmTPtbgSeWO6ePqk0WN5VWZGDinCu
-         A/BowUJm8pY6U7fmJXC1mg87eBKabVf+04g9OVJs0VYboECddX7NfCnyczY5ZBUVd+1h
-         YdlGe+yO2fS+Ir8dvJu+ew63K31ujsPUkBawWhMSjO2xri8RiK24FrMiMCXYZ0QYIoLu
-         LG/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=dN6OHHDaiTfVdHomxkKXHWudndDr0TAk+XE4EiflmuI=;
-        fh=qfpLNkYiny6oIclnUJzHZQm6ukxGrtZQyPrsjjYY5ps=;
-        b=RLMZX7xVvuODhhzHI+XWwiPwfBb42OScFabhbA2GPHflsRDglOz5I96mOQVtw90N0d
-         dU//CUr3wck12ZGWjZtA+Ot7V90kJzA1gjsq+LkKtYswiEHMZa9Y1aUOvv+JnAV5p1qd
-         Qg+qGvh8T7BFgAvIWOUWx1KO2L6qjXNfIklheNKWcev1B5XPlX/Z2mnTNFrF1/hRiYqL
-         h1vGw+PS6/v7zI6SKToXVJuZJpU147/fxuy8/zOaIUAP2bT0Ux4ud0ygHTLPyBj6jP4e
-         5qvTJXZ+4lM66W8CGrRZ0zKuR2C1tD0YGBM46FOmAojhbCzOO1Yo7Ir/Ifj/e9azq7IU
-         W0DQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5123358A7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 18:42:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775846527; cv=none; b=mvt3C/awjBBN4xFUS67Pb4D3UMJyX0oYtFZ2vAmIhJ0Hlor6tZOVpDMSwPa7fL0iTOhQ2jI/RxcT0V2KRRk1xqAAgo9ud0VIew6AWZDzeZA1kKWyWIkPO1eLFKws/XAEfuv75fgS/YuSbkQaSYNMxx4d8QYgIr6K3qByAJgjjTM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775846527; c=relaxed/simple;
+	bh=Xii/ErT1Xj1n8XWw7mfOWIQJRcGW4d+b620Dqy3n2wU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GVBpkZKUymvsJtBS9eHr0nCAj02A5YZqZb98WI48c2Usp2FzwgNJIbCGBtoMU4bRJMoV3mbqGpXPvRS8gdZFfHknBbDxFBV4dZ7TxLv7HCcjdM2/A41siFN23awUWdxKgF5ugOdStykhLtgW+euuxebpQpBhXgwlD/4AMZxewoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Yf60hlti; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hDrfZTk0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63AIBX502698373
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 18:42:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=LkOHEiyv4wNs2xK1MBQesq
+	evDYPBfrfROxl/qZcMhl0=; b=Yf60hltiKqiThivHqk4rtxnqWDiK62w+uYyNjb
+	lX5Luzuq2TAi2vSLKlT56hOo8WL3IrXT3oNDsI3HV5eAoEo9qugR2SDfwM2xd3LO
+	Ijhm0Y3WavW4edGSuw5V62dVcw08Iby5i+1e/icYEapckfrqWlYSb87snmIYB5e8
+	5cNvEwbgsOipzhT1OayzeroeHvQEgCtoUNHA2N1fen0U88I0euD0AWDtTKNonK3r
+	HJC3n2ngP8g0W3v6umtyF0O52COAfHTv7tzMuK0qY9jxkAKkbn9wi8pQYLIIYx8i
+	vsWPPjH5LFZsmGEgjnZLjvIOG/I7AnXQ7u3VwdFNDQnGqe4Q==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4degt9v9ks-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 18:42:04 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c769e2b1bd0so1252240a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 11:42:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775842840; x=1776447640; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dN6OHHDaiTfVdHomxkKXHWudndDr0TAk+XE4EiflmuI=;
-        b=lyk6oZWbtyGzOzCJkXEAP+xRBcdymw/pLvvCJvJCkU076Bx9aby2Y6xsh3bnqZsWdP
-         FEfqCc4EcgjSGvTFRGZgY1OuzCBwW2Zpu5lcGAlGo9Yq+VKlg6sxcScmOu+WXE0jnVra
-         SoJRwKT8uPs3o7TEFsrc8p4gHacUnivZJYwBbsCQ6sb/97VK6ENzOBZvNfVeOB1O/8Jw
-         eCNiFrjWTi4hNZU65mX6G0HZANqtmIs8yZ74RpajXgIvxGLvMLIai71hFUZk0Lx6nkbe
-         zuLHBYOfq+me42TGxV/+nnjuxD5Gj45TCtqVGe7vMxC0APC5lPPB7FdTJjjxEPic/V44
-         yxWw==
+        d=oss.qualcomm.com; s=google; t=1775846524; x=1776451324; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LkOHEiyv4wNs2xK1MBQesqevDYPBfrfROxl/qZcMhl0=;
+        b=hDrfZTk0JXmLAe7jNgM2OQUY/zEkhK7J+37YDIj7W9DkJK+dAG3c2ZrYzt1M3MATG8
+         SMYxfg8mgvDf5Py2IyKygWqVIQ4mS7LNAruvxeRa1ZYmhywwsCbYeR8d/zToromRKxAf
+         7Si7Sy1X1Yhm/rq7Ux10Ge5U9K0bTNTv2h2sjS7CBIimMMcZfv9Y+GfwaMxhae5qhyup
+         CJt/dvicPsd8WTKwNBdQj7qqTGxw7SND66CZ6DsJvqvNNgj750RRiJYWp3b3PD3WZU22
+         P5piTr89cEsqw4SE13J4WRulwk1wuIT/wDH7j1TSL1Jz396hozIz7ZmqG94BnhTyV2M1
+         hQfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775842840; x=1776447640;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=dN6OHHDaiTfVdHomxkKXHWudndDr0TAk+XE4EiflmuI=;
-        b=MYFMT6sGV0xGMrL3jG7oDMjzRGv7+iuxkYNE8QDCUaJui/wfSA4upVDVF67cv6ccBt
-         1zhkumppxRSsn35fkbuYU/aDhMEql1M21OpcXfeug8Z8GHxMgyU7tsplFXGyiYt2du3m
-         kvB9bKD6PO2T30TWTvi7b8deRr6rk4kcOj34RdgdWCvy3He3+E6nU/noPKJ70dAbNMlJ
-         bXrOPPQAmDjouNpXn5SpmN5usmDkbaeDsQCSr6GxNVrofvoZcuNGQN4x8gxYKhzZ/UZK
-         0en7H/zHMfRA9mA9kSQwItggeSp6ftUXPVftPVC2QWbuLfgrgadcXld105SUNwLIfi5m
-         /lbw==
-X-Gm-Message-State: AOJu0YyZNnEGRrmBk4SWetPK3eJs1lPhAfllJb/tEktdTI4Yeugz4it/
-	fNoFtDaIdKHY/6DXM62cNK4Q864uEOPt4IJNlYJVGSdsLixR7KBVpOqjSLwGfuTzCHg3vs096oV
-	vAEYg7fr/4YEyAUgqirzTa3bPnYgT0n0=
-X-Gm-Gg: AeBDievh98iKY2uUg9Ynu7+Mi95fjlJfpy3b6/qSxSfmiYe3onAWsqmQk2ikcTeNTXO
-	hIbyqkPIP/THIckhjPrnlHDC22hmYO+9FjI+lL3fXqLwwaW4iVLbJgkUWOKec8pOKl7wG59qbIv
-	Z/ZFXHYYtuyBFFrb2DYuWil0KrWrVkVE4T9u/0HUYXuqi6bP3jTgJYH/jYQ6yk2YEdwDcaAluGR
-	66ruwBUJon905DlCePdhh1h6AjpA2cyrD6TcP+rcHqOb3JOkwsI+dG/LSQabaigiKQojEQpT4K+
-	aKoVyKBLb3QZ37cfmNAtw+fMDaKzyi2y90FV3AP1UeIN7fhcnha04TvZIM78JRbn9s/oPMD+80N
-	v9AESMei5sbf9z9yf
-X-Received: by 2002:a17:906:eece:b0:b9c:350b:f849 with SMTP id
- a640c23a62f3a-b9d7297e205mr254084166b.24.1775842840105; Fri, 10 Apr 2026
- 10:40:40 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1775846524; x=1776451324;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LkOHEiyv4wNs2xK1MBQesqevDYPBfrfROxl/qZcMhl0=;
+        b=NAZqrCjM82waWJtBqnU1hjZor1ECoDmGcVGKwzgUFqTW7xxp/rxXyDHd1SzfGdtKwL
+         Q0lQ5QFZHmKdz43G69R5Tn0RDow5Zz1qd9zNlVF7p5fwCi+TBC3q/Aqf7J8UTRVwhNow
+         S2mzH9T5AJWimA7gQodiKs3mRabFl32fjzx4/zdXzlqdswEKqlG4alLxo0KXeBS78HEd
+         SamiY0847eLf/pxnQX2a9xeFDZGFjuDR5HF+JJWhJ6OR1duLgzJBS73++z8lLhJ9KM2G
+         L2KZVYuDUllIuL8nPI6mPkeZcmto53rgqIbl+ZjcdMWh9aYSU3g1cpcwdR8yEYMLHCth
+         NCHA==
+X-Forwarded-Encrypted: i=1; AJvYcCU741MGUZ1/JBuV5soJU0huan4qMqGVElqwYWtcEJ4I3o7g6n4a+sLCEXkrZIyDCRyXzvaBwECYTVA3uslD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw2/j5mIbE0Qco9RLi8rllE6VjUQwZpnLcSJnPbIx74eRaPZXsb
+	FjM5ym7HIXowTspErOF7kvhQtqoEW8mWizNKoZ548sEfMrIIgStlt9do55hwTEJOimy8vLPtpSK
+	JcOyszY0wqVTQMOLGvib/bFadKPEKfVJCU5e7h7UUMbuzvotvOq2ucAbIxNQF3XToUGp/
+X-Gm-Gg: AeBDievruAvishtA9Krkgc256UB8AQASlfX3FqhfDM7k1yhYenK3Zsc1n7nTtSQrc7g
+	tgxmN0ktwQl7wQoFAMqVlAnvoNr8JOi1op+V76Kl+QiZptRa1Nqw/efGe8Sb1qYm+WMJH6uIk9w
+	nVY8yIQfDsmRvHgjc/RrKzaaIL4cVcflCjyPU8MDyKq2wZZxxJid/eDO6myd0qgxVWLofPfgT6/
+	Z+9QxnXKFjicbPMYXggRIgoTiXrJFBIXOLwhk7mEnfK9IN2TLOjnXUPRzZqNvDaavdbTyJTBVKB
+	u7Q1OGsJ0OSGtUGepWRBTJenD+seLKtBTnudfeQHpZDVWeh0Ebh6ZXMagTfP+m4sE2UyeJC3UIN
+	Us9w1zGZDoybO2SgGmnLgZsutgw9/apKQKs77P0A0a3ZZOlkO
+X-Received: by 2002:a05:6a00:a223:b0:82a:7471:eb90 with SMTP id d2e1a72fcca58-82f0c299062mr4720884b3a.30.1775846523640;
+        Fri, 10 Apr 2026 11:42:03 -0700 (PDT)
+X-Received: by 2002:a05:6a00:a223:b0:82a:7471:eb90 with SMTP id d2e1a72fcca58-82f0c299062mr4720849b3a.30.1775846522803;
+        Fri, 10 Apr 2026 11:42:02 -0700 (PDT)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f0c32e744sm4036922b3a.13.2026.04.10.11.41.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Apr 2026 11:42:02 -0700 (PDT)
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Subject: [PATCH 00/35] irqchip/qcom-pdc: Clean up register mapping and DT descriptions
+Date: Sat, 11 Apr 2026 00:10:37 +0530
+Message-ID: <20260410184124.1068210-1-mukesh.ojha@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260401220643.12802-1-rosenp@gmail.com> <b772c81c-3628-45c5-ab11-a0737a94b812@oss.qualcomm.com>
-In-Reply-To: <b772c81c-3628-45c5-ab11-a0737a94b812@oss.qualcomm.com>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Fri, 10 Apr 2026 10:40:28 -0700
-X-Gm-Features: AQROBzAGbFQNHO1NpZGhgy_hzsDylIa-uvfdzOOR1DS2GBgDZwb6wKvs4Zz0Xlg
-Message-ID: <CAKxU2N96X31nsB-Vyt-Sm1rQMTo8cuZG+UDN=37av8c_5n-EcQ@mail.gmail.com>
-Subject: Re: [PATCHv2] accel/qaic: kcalloc + kzalloc to kzalloc
-To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, 
-	Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>, Oded Gabbay <ogabbay@kernel.org>, 
-	Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
-	"open list:QUALCOMM CLOUD AI (QAIC) DRIVER" <dri-devel@lists.freedesktop.org>, open list <linux-kernel@vger.kernel.org>, 
-	"open list:KERNEL HARDENING (not covered by other areas):Keyword:b__counted_by(_le|_be)?b" <linux-hardening@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEwMDE3NCBTYWx0ZWRfX5ljeKSOw1dpr
+ ENDTKnlycSAD3b+94gm0dLi12pRlBi0rthefxHzuv68KKQ3i6dep1q5Kd4CNTQXZ8EJbgFjyxvc
+ MSYpibgCre3Fv7D8e/+iDtVyl79ag+6wEpRJALLzt1rAUsIjGKYb0ig9c/NW0Eh0MNxmrkHdd07
+ PokChQukT68agoqLwzzIJd5uqfOp1TiuYhUelodL9qtdxTBZGWDbJlIMYDUOgWJDnQ13QDcSccQ
+ bPRQhJFRbE9HRhu39nxvc6SoBNnVD2tVTfqyW5qG8k03yZIPJTmgIEvt/SJDibCOa7OBnJT9Yqn
+ ZjvG9iXx0dNVloB0r7QEpdRoAQDD4ucOb81Eq6JVJb1cg00q5Sci+poJAFvONVcsh2W/RuXXgM7
+ /E/wcnIsbszkJB5y6/YzmSR5tPXp9fzVmmzG27s8Q67VkfcNQVcGTaxRpYcRTdk7vBp7PnF+5gG
+ yNp8Bry8SJDOda+NSRw==
+X-Proofpoint-ORIG-GUID: 8Uijz7_hE663hRreJFvL6J35St8zJh95
+X-Proofpoint-GUID: 8Uijz7_hE663hRreJFvL6J35St8zJh95
+X-Authority-Analysis: v=2.4 cv=BJyDalQG c=1 sm=1 tr=0 ts=69d9447d cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=W6bzyTRxDKc9L6jH1-MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=x9snwWr2DeNwDh03kgHS:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-10_05,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 clxscore=1015 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604100174
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102713-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-102714-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[rosenp@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 6D2673DB23F
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 18E1C3DB829
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, Apr 10, 2026 at 10:01=E2=80=AFAM Jeff Hugo <jeff.hugo@oss.qualcomm.=
-com> wrote:
->
-> For future reference, $SUBJECT should have a space between "PATCH" and
-> the version. git format-patch will do it correctly for you if you use
-> the -v option.
->
-> On 4/1/2026 4:06 PM, Rosen Penev wrote:
-> > Consolidate the two-element allocation into a single allocation using a
-> > flexible array member. This reduces memory fragmentation and simplifies
-> > the error path by eliminating the need to check for allocation failure
-> > between the two allocations.
-> >
-> > Add __counted_by for runtime bounds checking.
->
-> This reword addresses my "why" comment on v1.  However I don't see that
-> you responded to my question about how this was validated. I don't
-> require a v3 of this patch, nor do I really want one. I want you to
-> reply to this message and detail what validation you performed on this
-> patch.
-None. This is a straightforward conversion to a flexible array member
-(and future devm_kzalloc_flex).
->
-> > Signed-off-by: Rosen Penev <rosenp@gmail.com>
-> > ---
-> >   v2: use macro for number of elements. reword commit message.
->
-> Also for future reference, a blank line to separate the change log from
-> the patch diff here makes the change log easier to find and read.
->
-> >   drivers/accel/qaic/qaic.h     | 4 ++--
-> >   drivers/accel/qaic/qaic_drv.c | 8 +++-----
-> >   2 files changed, 5 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
-> > index fa7a8155658c..e237020f6aa9 100644
-> > --- a/drivers/accel/qaic/qaic.h
-> > +++ b/drivers/accel/qaic/qaic.h
-> > @@ -152,8 +152,6 @@ struct qaic_device {
-> >       struct list_head        cntl_xfer_list;
-> >       /* Synchronizes MHI control device transactions and its xfer list=
- */
-> >       struct mutex            cntl_mutex;
-> > -     /* Array of DBC struct of this device */
-> > -     struct dma_bridge_chan  *dbc;
-> >       /* Work queue for tasks related to MHI control device */
-> >       struct workqueue_struct *cntl_wq;
-> >       /* Synchronizes all the users of device during cleanup */
-> > @@ -206,6 +204,8 @@ struct qaic_device {
-> >       void                    *ssr_mhi_buf;
-> >       /* DBC which is under SSR. Sentinel U32_MAX would mean that no SS=
-R in progress */
-> >       u32                     ssr_dbc;
-> > +     /* Array of DBC struct of this device */
-> > +     struct dma_bridge_chan  dbc[] __counted_by(num_dbc);
-> >   };
-> >
-> >   struct qaic_drm_device {
-> > diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_dr=
-v.c
-> > index 63fb8c7b4abc..1dda8dfea5a4 100644
-> > --- a/drivers/accel/qaic/qaic_drv.c
-> > +++ b/drivers/accel/qaic/qaic_drv.c
-> > @@ -43,6 +43,7 @@ MODULE_IMPORT_NS("DMA_BUF");
-> >   #define QAIC_DESC                   "Qualcomm Cloud AI Accelerators"
-> >   #define CNTL_MAJOR                  5
-> >   #define CNTL_MINOR                  0
-> > +#define DBC_NUM                              16
-> >
-> >   struct qaic_device_config {
-> >       /* Indicates the AIC family the device belongs to */
-> > @@ -405,15 +406,12 @@ static struct qaic_device *create_qdev(struct pci=
-_dev *pdev,
-> >       struct drm_device *drm;
-> >       int i, ret;
-> >
-> > -     qdev =3D devm_kzalloc(dev, sizeof(*qdev), GFP_KERNEL);
-> > +     qdev =3D devm_kzalloc(dev, struct_size(qdev, dbc, DBC_NUM), GFP_K=
-ERNEL);
-> >       if (!qdev)
-> >               return NULL;
-> >
-> > +     qdev->num_dbc =3D DBC_NUM;
-> >       qdev->dev_state =3D QAIC_OFFLINE;
-> > -     qdev->num_dbc =3D 16;
-> > -     qdev->dbc =3D devm_kcalloc(dev, qdev->num_dbc, sizeof(*qdev->dbc)=
-, GFP_KERNEL);
-> > -     if (!qdev->dbc)
-> > -             return NULL;
-> >
-> >       qddev =3D devm_drm_dev_alloc(&pdev->dev, &qaic_accel_driver, stru=
-ct qaic_drm_device, drm);
-> >       if (IS_ERR(qddev))
-> > --
-> > 2.53.0
-> >
->
+The Qualcomm PDC (Power Domain Controller) hardware exposes multiple DRV
+(Driver) regions, each 0x10000 bytes in size, where each region serves a
+specific client in the system . Linux only needs access to the APSS DRV
+region.
+
+Despite this, the driver was mapping up to 0x30000 bytes (three DRV
+regions) via a QCOM_PDC_SIZE clamp introduced as a workaround for old
+sm8150 DTs that described a too-small register window. Correspondingly,
+most platform DTS files described the PDC reg as 0x30000 in size, and
+several also carried a second, entirely unused reg entry pointing at an
+unrelated register region that the driver never maps.
+
+This series cleans all of that up in three logical steps:
+
+1. (patches 2-6):
+
+Split __pdc_enable_intr() into two focused per-version helpers
+to separate the HW < 3.2 bank-based path from the HW >= 3.2 per-pin
+path. Replace the pdc_version global with a function pointer assigned
+once at probe time, moving the version check out of the hot path.
+Tighten the ioremap clamp from QCOM_PDC_SIZE (0x30000) to PDC_DRV_SIZE
+(0x10000) now that the DT fixes below make the workaround unnecessary.
+Also add a PDC_VERSION() constructor macro and use FIELD_GET() for bank
+index extraction to make the bit encoding self-documenting.
+
+2. (patches 1, 7-28):
+
+All 28 platform DTS files that described the PDC reg window as 0x30000
+are corrected to 0x10000, reflecting the single APSS DRV region that
+Linux actually maps.
+
+3. (patches 29-35):
+
+Seven platform DTS files (kaanapali, lemans, milos, monaco, sc8280xp,
+sdx75, talos) carried a second reg entry pointing at an unrelated
+hardware block. The driver only ever calls of_address_to_resource(node,
+0, ...) so this second entry was never mapped or accessed. Remove it.
+
+The net result is that every PDC node in the tree now describes exactly
+one register region of exactly 0x10000 bytes — the APSS DRV region that
+the driver actually uses — and the driver's ioremap clamp matches that
+reality.
+
+Mukesh Ojha (35):
+  dt-bindings: qcom,pdc: Tighten reg to single APSS DRV region
+  irqchip/qcom-pdc: Split __pdc_enable_intr() into per-version helpers
+  irqchip/qcom-pdc: Tighten ioremap clamp to single DRV region size
+  irqchip/qcom-pdc: Replace pdc_version global with a function pointer
+  irqchip/qcom-pdc: Add PDC_VERSION() macro to describe version register
+    fields
+  irqchip/qcom-pdc: Use FIELD_GET() to extract bank index and bit
+    position
+  arm64: dts: qcom: sdm845: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sdm670: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sc7180: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sc7280: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sc8180x: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sm8150: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sc8280xp: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sm8250: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sm8350: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sm8450: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sm8550: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sm8650: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sm4450: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: x1e80100: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sm6350: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sar2130p: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: qcs615: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: qcs8300: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sa8775p: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: sdx75: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: milos: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: qdu1000: Fix PDC reg size to single APSS DRV region
+  arm64: dts: qcom: kaanapali: Drop unused second PDC reg entry
+  arm64: dts: qcom: lemans: Drop unused second PDC reg entry
+  arm64: dts: qcom: milos: Drop unused second PDC reg entry
+  arm64: dts: qcom: monaco: Drop unused second PDC reg entry
+  arm64: dts: qcom: sc8280xp: Drop unused second PDC reg entry
+  arm64: dts: qcom: sdx75: Drop unused second PDC reg entry
+  arm64: dts: qcom: talos: Drop unused second PDC reg entry
+
+ .../interrupt-controller/qcom,pdc.yaml        |  2 +-
+ arch/arm64/boot/dts/qcom/hamoa.dtsi           |  2 +-
+ arch/arm64/boot/dts/qcom/kaanapali.dtsi       |  3 +-
+ arch/arm64/boot/dts/qcom/kodiak.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/lemans.dtsi          |  3 +-
+ arch/arm64/boot/dts/qcom/milos.dtsi           |  3 +-
+ arch/arm64/boot/dts/qcom/monaco.dtsi          |  3 +-
+ arch/arm64/boot/dts/qcom/qdu1000.dtsi         |  2 +-
+ arch/arm64/boot/dts/qcom/sar2130p.dtsi        |  2 +-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi         |  2 +-
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  2 +-
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sdx75.dtsi           |  3 +-
+ arch/arm64/boot/dts/qcom/sm4450.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm8550.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm8650.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/talos.dtsi           |  3 +-
+ drivers/irqchip/qcom-pdc.c                    | 56 +++++++++++--------
+ 25 files changed, 57 insertions(+), 53 deletions(-)
+
+-- 
+2.53.0
+
 
