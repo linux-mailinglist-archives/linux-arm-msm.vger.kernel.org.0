@@ -1,165 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-102712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kP+XKJsv2WkOnQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 19:12:59 +0200
+	id 8J1BCB422WkjnggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 19:40:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FB203DAEFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 19:12:59 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D2673DB23F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 19:40:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6ACD53005AC8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 17:10:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 23CA1300A764
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 17:40:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4701218ADD;
-	Fri, 10 Apr 2026 17:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F0DB3DC4DF;
+	Fri, 10 Apr 2026 17:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="H2mTnqkV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lyk6oZWb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DDD73DFC77
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 17:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775841046; cv=none; b=DNOw3Yt5r8DmFdNM5nvog2JuWP2b9GrkcMEf3jCYB6ZbRXpDmA1eOOaGsn7dM/AptEKggX4HHfzRGjOidjDvp8pdZJRTYvKzv9iwKVcVFtaOUcibQyZwpQ/UUavMec0nhXjv9VcNvfxlMfQAHcgKe+sarnbd+U28kohWg3Ir1Jg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775841046; c=relaxed/simple;
-	bh=eStU3i7xbyOQ/8mrBlXosGPOz2LATtGTCKZTSHKcY5o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MV2oJ0x9ZE/y3Ci8g3MmoAW3WBu/wBQcO6T8YDPn/r5uXcyLqJM6yPEXY5DhO2Mu9ICddpev7POzVxJ6XWAYQgcGEd9rhlrjB/iH7cLaFEYGLqVackTc0k47nf8wLCLrOzw8xXSnQi9NqjFXKqt+z2AJF471tW/JSrdc2o7FU3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=H2mTnqkV; arc=none smtp.client-ip=185.171.202.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 38AAAC5C1A5;
-	Fri, 10 Apr 2026 17:11:11 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id C5A19603F0;
-	Fri, 10 Apr 2026 17:10:35 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 6D2A210450077;
-	Fri, 10 Apr 2026 19:10:30 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1775841034; h=from:subject:date:message-id:to:cc:mime-version:
-	 content-transfer-encoding; bh=F1NfZqIejbtKCh+NaPP95bKnLVDVR4KaSEjAHJAWrvc=;
-	b=H2mTnqkVE9iX/NoE/W02infw9hN/6+HTpEprCljrFAK8/Kz9ir1+nuyiXxumzVDnJdi8Hl
-	MROsh3dTvTXTj5fPx+tgSh67l3i5TAQUZuKA5AIKMc79Ol5ot8LNWXGUsOZJJzv3e92i1Z
-	2i3PPDKL0M9JkWGe0Q2stiPisUdBVEGGslXZKbhEAV7JltNgC/+yODJTx7X/RFi2DDSji7
-	BcY5Dw+Ux8JerCwkqhl9oQR6L6P1GzkgmGAX7MGDxESJoNNC3k5ZZpG497fVs2eV7Qe5hT
-	y4FT+Nzg1dDxGl8kidsDZL4Y2yUPkuUKUfuJF1ObmQ6Dzk7/2zCF65iqp5aMRg==
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	davem@davemloft.net,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Simon Horman <horms@kernel.org>,
-	Russell King <linux@armlinux.org.uk>
-Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	thomas.petazzoni@bootlin.com,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH net] net: phy: qcom: at803x: Use the correct bit to disable extended next page
-Date: Fri, 10 Apr 2026 19:10:20 +0200
-Message-ID: <20260410171021.1277138-1-maxime.chevallier@bootlin.com>
-X-Mailer: git-send-email 2.49.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CB039EF0B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 17:40:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775842843; cv=pass; b=fKWL68jykLDe+NDAJDtsUVYG7KPFamEmKkNHAVZ2DiXMeODA+FZCNxhb+2aRCrC8EL/bjC/8VKFgFCgVS1Q/+2XxqFWrx2oBjW59rYysuCxjM1xZTPh+olBeMBnxWCLTTfFY/evXvgCXZi1+UhDaYuGOeIJZEVx8DZf7VCm+PeM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775842843; c=relaxed/simple;
+	bh=EB+hFHu4o8mR5IB8DxbDE45H1JTJFvQueNfIGjdGdOo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HtX6Q5S5yYg3DJECfy4TPp2EaPOtSLFNLmvuPkp0b1qc7Jwmn3UzxIoZXNMtHMuLLo819KLVF3Wmm1HqOh1hp6J50tthTujDN5pRDxY93dFlEtKLfzrnkQ0Tw6KJtAo0eV3jNSluFmO8P+0uUPoeS7Egc/SOX9ItJTgKkEYtlDk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lyk6oZWb; arc=pass smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b9c62fc8debso370596966b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 10:40:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775842840; cv=none;
+        d=google.com; s=arc-20240605;
+        b=UOzB9bhpuyrMx4W17qGYBpgSOwXlgeaQP1nPwXEreBZVSH9fCJKDJwvLMs3CcvOCau
+         q/Nh+/4iO/uQx+6NUdr4x3Iu8UkQTprptWUZZV7hvktTNjpkVUMWMcHcvflGmOVFWhXu
+         dkmVmntwZjyXphRBnC7MXVp79W1kpDVqbiycBJDrmTPtbgSeWO6ePqk0WN5VWZGDinCu
+         A/BowUJm8pY6U7fmJXC1mg87eBKabVf+04g9OVJs0VYboECddX7NfCnyczY5ZBUVd+1h
+         YdlGe+yO2fS+Ir8dvJu+ew63K31ujsPUkBawWhMSjO2xri8RiK24FrMiMCXYZ0QYIoLu
+         LG/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=dN6OHHDaiTfVdHomxkKXHWudndDr0TAk+XE4EiflmuI=;
+        fh=qfpLNkYiny6oIclnUJzHZQm6ukxGrtZQyPrsjjYY5ps=;
+        b=RLMZX7xVvuODhhzHI+XWwiPwfBb42OScFabhbA2GPHflsRDglOz5I96mOQVtw90N0d
+         dU//CUr3wck12ZGWjZtA+Ot7V90kJzA1gjsq+LkKtYswiEHMZa9Y1aUOvv+JnAV5p1qd
+         Qg+qGvh8T7BFgAvIWOUWx1KO2L6qjXNfIklheNKWcev1B5XPlX/Z2mnTNFrF1/hRiYqL
+         h1vGw+PS6/v7zI6SKToXVJuZJpU147/fxuy8/zOaIUAP2bT0Ux4ud0ygHTLPyBj6jP4e
+         5qvTJXZ+4lM66W8CGrRZ0zKuR2C1tD0YGBM46FOmAojhbCzOO1Yo7Ir/Ifj/e9azq7IU
+         W0DQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775842840; x=1776447640; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dN6OHHDaiTfVdHomxkKXHWudndDr0TAk+XE4EiflmuI=;
+        b=lyk6oZWbtyGzOzCJkXEAP+xRBcdymw/pLvvCJvJCkU076Bx9aby2Y6xsh3bnqZsWdP
+         FEfqCc4EcgjSGvTFRGZgY1OuzCBwW2Zpu5lcGAlGo9Yq+VKlg6sxcScmOu+WXE0jnVra
+         SoJRwKT8uPs3o7TEFsrc8p4gHacUnivZJYwBbsCQ6sb/97VK6ENzOBZvNfVeOB1O/8Jw
+         eCNiFrjWTi4hNZU65mX6G0HZANqtmIs8yZ74RpajXgIvxGLvMLIai71hFUZk0Lx6nkbe
+         zuLHBYOfq+me42TGxV/+nnjuxD5Gj45TCtqVGe7vMxC0APC5lPPB7FdTJjjxEPic/V44
+         yxWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775842840; x=1776447640;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=dN6OHHDaiTfVdHomxkKXHWudndDr0TAk+XE4EiflmuI=;
+        b=MYFMT6sGV0xGMrL3jG7oDMjzRGv7+iuxkYNE8QDCUaJui/wfSA4upVDVF67cv6ccBt
+         1zhkumppxRSsn35fkbuYU/aDhMEql1M21OpcXfeug8Z8GHxMgyU7tsplFXGyiYt2du3m
+         kvB9bKD6PO2T30TWTvi7b8deRr6rk4kcOj34RdgdWCvy3He3+E6nU/noPKJ70dAbNMlJ
+         bXrOPPQAmDjouNpXn5SpmN5usmDkbaeDsQCSr6GxNVrofvoZcuNGQN4x8gxYKhzZ/UZK
+         0en7H/zHMfRA9mA9kSQwItggeSp6ftUXPVftPVC2QWbuLfgrgadcXld105SUNwLIfi5m
+         /lbw==
+X-Gm-Message-State: AOJu0YyZNnEGRrmBk4SWetPK3eJs1lPhAfllJb/tEktdTI4Yeugz4it/
+	fNoFtDaIdKHY/6DXM62cNK4Q864uEOPt4IJNlYJVGSdsLixR7KBVpOqjSLwGfuTzCHg3vs096oV
+	vAEYg7fr/4YEyAUgqirzTa3bPnYgT0n0=
+X-Gm-Gg: AeBDievh98iKY2uUg9Ynu7+Mi95fjlJfpy3b6/qSxSfmiYe3onAWsqmQk2ikcTeNTXO
+	hIbyqkPIP/THIckhjPrnlHDC22hmYO+9FjI+lL3fXqLwwaW4iVLbJgkUWOKec8pOKl7wG59qbIv
+	Z/ZFXHYYtuyBFFrb2DYuWil0KrWrVkVE4T9u/0HUYXuqi6bP3jTgJYH/jYQ6yk2YEdwDcaAluGR
+	66ruwBUJon905DlCePdhh1h6AjpA2cyrD6TcP+rcHqOb3JOkwsI+dG/LSQabaigiKQojEQpT4K+
+	aKoVyKBLb3QZ37cfmNAtw+fMDaKzyi2y90FV3AP1UeIN7fhcnha04TvZIM78JRbn9s/oPMD+80N
+	v9AESMei5sbf9z9yf
+X-Received: by 2002:a17:906:eece:b0:b9c:350b:f849 with SMTP id
+ a640c23a62f3a-b9d7297e205mr254084166b.24.1775842840105; Fri, 10 Apr 2026
+ 10:40:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
-	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+References: <20260401220643.12802-1-rosenp@gmail.com> <b772c81c-3628-45c5-ab11-a0737a94b812@oss.qualcomm.com>
+In-Reply-To: <b772c81c-3628-45c5-ab11-a0737a94b812@oss.qualcomm.com>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Fri, 10 Apr 2026 10:40:28 -0700
+X-Gm-Features: AQROBzAGbFQNHO1NpZGhgy_hzsDylIa-uvfdzOOR1DS2GBgDZwb6wKvs4Zz0Xlg
+Message-ID: <CAKxU2N96X31nsB-Vyt-Sm1rQMTo8cuZG+UDN=37av8c_5n-EcQ@mail.gmail.com>
+Subject: Re: [PATCHv2] accel/qaic: kcalloc + kzalloc to kzalloc
+To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, 
+	Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>, Oded Gabbay <ogabbay@kernel.org>, 
+	Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+	"open list:QUALCOMM CLOUD AI (QAIC) DRIVER" <dri-devel@lists.freedesktop.org>, open list <linux-kernel@vger.kernel.org>, 
+	"open list:KERNEL HARDENING (not covered by other areas):Keyword:b__counted_by(_le|_be)?b" <linux-hardening@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	TAGGED_FROM(0.00)[bounces-102712-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	DKIM_TRACE(0.00)[bootlin.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[maxime.chevallier@bootlin.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_FROM(0.00)[bounces-102713-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 1FB203DAEFE
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[rosenp@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 6D2673DB23F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-As noted in the blamed commit, the AR8035 and other PHYs from this
-family advertise the Extended Next Page support by default, which may be
-understood by some partners as this PHY being multi-gig capable.
-
-The fix is to disable XNP advertising, which is done by setting bit 12
-of the Auto-Negotiation Advertisement Register (MII_ADVERTISE).
-
-The blamed commit incorrectly uses MDIO_AN_CTRL1_XNP, which is bit 13 as per
-802.3 : 45.2.7.1 AN control register (Register 7.0)
-
-BIT 12 in MII_ADVERTISE is wrapped by ADVERTISE_RESV, used by some
-drivers such as the aquantia one. 802.3 Clause 28 defines bit 12 as
-Extended Next Page ability, at least in recent versions of the standard.
-
-Let's add a define for it and use it in the at803x driver.
-
-Fixes: 3c51fa5d2afe ("net: phy: ar803x: disable extended next page bit")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
----
-Some further driver cleanup can be done to remove the use of
-ADVERTISE_RESV, but the macro is uapi now so it'll have to stay.
-
- drivers/net/phy/qcom/at803x.c | 2 +-
- include/uapi/linux/mii.h      | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/net/phy/qcom/at803x.c b/drivers/net/phy/qcom/at803x.c
-index 338acd11a9b6..023c1fe0cd14 100644
---- a/drivers/net/phy/qcom/at803x.c
-+++ b/drivers/net/phy/qcom/at803x.c
-@@ -524,7 +524,7 @@ static int at803x_config_init(struct phy_device *phydev)
- 	 * behaviour but we still need to accommodate it. XNP is only needed
- 	 * for 10Gbps support, so disable XNP.
- 	 */
--	return phy_modify(phydev, MII_ADVERTISE, MDIO_AN_CTRL1_XNP, 0);
-+	return phy_modify(phydev, MII_ADVERTISE, ADVERTISE_XNP, 0);
- }
- 
- static void at803x_link_change_notify(struct phy_device *phydev)
-diff --git a/include/uapi/linux/mii.h b/include/uapi/linux/mii.h
-index 39f7c44baf53..61d6edad4b94 100644
---- a/include/uapi/linux/mii.h
-+++ b/include/uapi/linux/mii.h
-@@ -82,7 +82,8 @@
- #define ADVERTISE_100BASE4	0x0200	/* Try for 100mbps 4k packets  */
- #define ADVERTISE_PAUSE_CAP	0x0400	/* Try for pause               */
- #define ADVERTISE_PAUSE_ASYM	0x0800	/* Try for asymetric pause     */
--#define ADVERTISE_RESV		0x1000	/* Unused...                   */
-+#define ADVERTISE_XNP		0x1000  /* Extended Next Page */
-+#define ADVERTISE_RESV		ADVERTISE_XNP /* Used to be reserved */
- #define ADVERTISE_RFAULT	0x2000	/* Say we can detect faults    */
- #define ADVERTISE_LPACK		0x4000	/* Ack link partners response  */
- #define ADVERTISE_NPAGE		0x8000	/* Next page bit               */
--- 
-2.49.0
-
+On Fri, Apr 10, 2026 at 10:01=E2=80=AFAM Jeff Hugo <jeff.hugo@oss.qualcomm.=
+com> wrote:
+>
+> For future reference, $SUBJECT should have a space between "PATCH" and
+> the version. git format-patch will do it correctly for you if you use
+> the -v option.
+>
+> On 4/1/2026 4:06 PM, Rosen Penev wrote:
+> > Consolidate the two-element allocation into a single allocation using a
+> > flexible array member. This reduces memory fragmentation and simplifies
+> > the error path by eliminating the need to check for allocation failure
+> > between the two allocations.
+> >
+> > Add __counted_by for runtime bounds checking.
+>
+> This reword addresses my "why" comment on v1.  However I don't see that
+> you responded to my question about how this was validated. I don't
+> require a v3 of this patch, nor do I really want one. I want you to
+> reply to this message and detail what validation you performed on this
+> patch.
+None. This is a straightforward conversion to a flexible array member
+(and future devm_kzalloc_flex).
+>
+> > Signed-off-by: Rosen Penev <rosenp@gmail.com>
+> > ---
+> >   v2: use macro for number of elements. reword commit message.
+>
+> Also for future reference, a blank line to separate the change log from
+> the patch diff here makes the change log easier to find and read.
+>
+> >   drivers/accel/qaic/qaic.h     | 4 ++--
+> >   drivers/accel/qaic/qaic_drv.c | 8 +++-----
+> >   2 files changed, 5 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
+> > index fa7a8155658c..e237020f6aa9 100644
+> > --- a/drivers/accel/qaic/qaic.h
+> > +++ b/drivers/accel/qaic/qaic.h
+> > @@ -152,8 +152,6 @@ struct qaic_device {
+> >       struct list_head        cntl_xfer_list;
+> >       /* Synchronizes MHI control device transactions and its xfer list=
+ */
+> >       struct mutex            cntl_mutex;
+> > -     /* Array of DBC struct of this device */
+> > -     struct dma_bridge_chan  *dbc;
+> >       /* Work queue for tasks related to MHI control device */
+> >       struct workqueue_struct *cntl_wq;
+> >       /* Synchronizes all the users of device during cleanup */
+> > @@ -206,6 +204,8 @@ struct qaic_device {
+> >       void                    *ssr_mhi_buf;
+> >       /* DBC which is under SSR. Sentinel U32_MAX would mean that no SS=
+R in progress */
+> >       u32                     ssr_dbc;
+> > +     /* Array of DBC struct of this device */
+> > +     struct dma_bridge_chan  dbc[] __counted_by(num_dbc);
+> >   };
+> >
+> >   struct qaic_drm_device {
+> > diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_dr=
+v.c
+> > index 63fb8c7b4abc..1dda8dfea5a4 100644
+> > --- a/drivers/accel/qaic/qaic_drv.c
+> > +++ b/drivers/accel/qaic/qaic_drv.c
+> > @@ -43,6 +43,7 @@ MODULE_IMPORT_NS("DMA_BUF");
+> >   #define QAIC_DESC                   "Qualcomm Cloud AI Accelerators"
+> >   #define CNTL_MAJOR                  5
+> >   #define CNTL_MINOR                  0
+> > +#define DBC_NUM                              16
+> >
+> >   struct qaic_device_config {
+> >       /* Indicates the AIC family the device belongs to */
+> > @@ -405,15 +406,12 @@ static struct qaic_device *create_qdev(struct pci=
+_dev *pdev,
+> >       struct drm_device *drm;
+> >       int i, ret;
+> >
+> > -     qdev =3D devm_kzalloc(dev, sizeof(*qdev), GFP_KERNEL);
+> > +     qdev =3D devm_kzalloc(dev, struct_size(qdev, dbc, DBC_NUM), GFP_K=
+ERNEL);
+> >       if (!qdev)
+> >               return NULL;
+> >
+> > +     qdev->num_dbc =3D DBC_NUM;
+> >       qdev->dev_state =3D QAIC_OFFLINE;
+> > -     qdev->num_dbc =3D 16;
+> > -     qdev->dbc =3D devm_kcalloc(dev, qdev->num_dbc, sizeof(*qdev->dbc)=
+, GFP_KERNEL);
+> > -     if (!qdev->dbc)
+> > -             return NULL;
+> >
+> >       qddev =3D devm_drm_dev_alloc(&pdev->dev, &qaic_accel_driver, stru=
+ct qaic_drm_device, drm);
+> >       if (IS_ERR(qddev))
+> > --
+> > 2.53.0
+> >
+>
 
