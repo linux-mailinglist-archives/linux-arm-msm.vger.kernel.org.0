@@ -1,139 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-102610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +LbzIAO22GnnhAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 10:34:11 +0200
+	id OMkoHOq22GnnhAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 10:38:02 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9C8A3D424E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 10:34:10 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C872E3D4315
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 10:38:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3FA1B3037455
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 08:27:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 96FDE3081A08
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 08:31:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FAA93AA4E9;
-	Fri, 10 Apr 2026 08:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BB23318ED6;
+	Fri, 10 Apr 2026 08:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ETa0meso"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="COoctWWO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7ED37AA99;
-	Fri, 10 Apr 2026 08:27:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775809623; cv=none; b=SlAVK4txVSRECYLnmyHyxsfI+KZQ8E2KMLZyQ+AHwLnbNK9j75MZ6nTQ9c0C4omTCxqlJOqx6k/dTwLlgDbxvPiwUn4cggx17+xws3FJ18OK+Eg7WkGGnOOo6UOTTJS5uu2mb007kRLmgUaZ/FBmMRYKzY20dWZj4SUeuz4mK3o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775809623; c=relaxed/simple;
-	bh=wiVpkLOHesaDxqsTty1+qn46GjmDPchZxN/XYbW0yVY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sybdIX6wRWCu/LDB87V5CC/bL5q/ZilNhg4FvQ2+ZvNK93mGoaJYvXlNAJ/jnPGemIokGo1gc3LxVKonsaUZ433YJWtrj11i9wHp5p1NvV1WhnJA2JP/9q3J6CKVOO1Wl5OkVK0naW/dlWdAMaMLGGwBcQCiGcjMpoEV2VH0ZIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ETa0meso; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EEEC19421;
-	Fri, 10 Apr 2026 08:26:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775809622;
-	bh=wiVpkLOHesaDxqsTty1+qn46GjmDPchZxN/XYbW0yVY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ETa0mesoel9QguYJ8pV0cmtc3Cyt+G6JUpWibDvnx++QugKMurkEiMLxtwQDB5+4M
-	 52/cbsopugbayzbSPnnyAbHWsP0AdFH67TlACy8kcfjh4JdG6u2Qq/LC1oH/Eiu4g6
-	 bfyMNUg5cCwzSZz9MdhsqS4IWcLAKxeL5tYLwh3e6uu5BnTlKtyIR0LjeFSbDSstuK
-	 fFnnYkgL415whPrxMxn28Q5jI5A2U/9LwBir5p2eofF6AYQid7qaJOIQ/pBC5aLcD5
-	 osR7giAvoly013z7WULooyA3wUIaHOb5+eAjs96gtEyycEn74RadjM7s8MUn7+f7Vk
-	 LV0Sgr7ATh/ZA==
-Message-ID: <b280ad04-d4ae-4904-9e99-3d057e3d221b@kernel.org>
-Date: Fri, 10 Apr 2026 09:26:56 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295613AB267
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 08:31:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775809891; cv=pass; b=Og+/HcANIe1VPF6jZunyhxDVekHfcPOTz2S1DRrsh7VHaaCqsSje/hLKKppPXNIdzfQA45aPFkMBEwWAfTwoJrwCtEaPy431LUSWv1B/CmMXYRqjlHVi6pFJyi3e59+pfoxZcgwxx01a1w/wD520nKLgKycJYTrLouWtkVmPCmc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775809891; c=relaxed/simple;
+	bh=402Q/LEjsil+pHuLqlPEUXJ3L6aFG5rDH+20SRXqqw4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=H/meaa+Qg2WAyWxAUVBrzHeaQuoJfe/SkXEIBO0GfqOON8AWPRzyqdfnRi/sKtMFHCr3HAhlF0PAJfWRaIgoYRfogijfgnq9FOZX+dJjIi+Y2xyinHKcfmwccfWDmRrNP7YCF2e1ImpRhsSE23rL+yHIO7IqWryeOlTyTl/1igk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=COoctWWO; arc=pass smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5a2b5ea59a1so1924586e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 01:31:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1775809887; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Wszo3n0VgVSXBKmtNK6yZg7Wr/N0nYrk8lLC7A9L48xPgGQDZLEK5z9oDGN4/NRUI+
+         c1NZAZyBvEEf3w4wM0RQRy9cdlSD3+8x9NWnKlmU1XE15roM94Pyz1jgYa/MvCHl0Drz
+         dkpYoQT6RcbJ/o0ePc8zaR4+QQ6TRjFmJ7pUo8wr2Stgm2nwkgKVWK1ikJiusxbkf411
+         ScKJa0ipF7DDLsVSmnXDQRP866ZZM6DMTHLdwZFJkgjjx5VHf+HZ0gSRevwbYBgTeBP8
+         o2QWWF5a90Aw6/CBRfbMy9xKPpRuGonDsvWS4tic07X5OX4MMUfrlxFG6uYtkN7i0+r5
+         Vpiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=KEJjrIfQId/h77djj7M4y4n3Tb/7Xj1HxO0kKsRBFF0=;
+        fh=XGxob8f30nuNa/BMJqHH6AR1Koi6ylrdvdtcbZ7MbuQ=;
+        b=jphFkkFnhu0hIzER4ga4gn2U8wz0qdJ0WNviam4Uu0/WwCb5w0rnRVtngCNiXtph82
+         ZmbHhN3jaLnXYEG1BdKV0f7YEk571OOECTxEihRz9du+uYf5UGKArHXVUIzVIqquV2Pt
+         5CJRmFk3MfkWOF7VnQ6vqrkg2TfoiumpphRXbQTFaenb/hqNZQEvcTtzX9bzNrJOZe7V
+         sg99bsnDOlUGSAtihNafsmjm5ER9BCKiJZteEM6k4a53X0OW5R06gW8/bg2z2S2YpRF4
+         mWmCEvj6gt5LtpU2iCrDqoLvGyh0O/VAsshNXHO7jGMZSTO05WoEtjtxI/mT6UNlQn+C
+         9MnQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1775809887; x=1776414687; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KEJjrIfQId/h77djj7M4y4n3Tb/7Xj1HxO0kKsRBFF0=;
+        b=COoctWWOZZwmFLtqj5+KD0CT6B6aGMz7AmqwWAESsU9puJSkNLECLPd6GRzpIaw/Ls
+         IlHqwYQarriTXWp0eb4KJ43uCbQZAJT5KPy3auZ7AgjMBkNDCDI+4slG6KLa972Ev5Sz
+         k4rsrfE4sqNYFU1HKDHw18I8FRZHfJaH6NUowozoFyyXb+aXh9dfzr6FoG/f08a/Ltk6
+         +ASiczmOoOa3FtASR7B7BgY0bc8iANsBTY8+cm25esXloyPI2+Qmf/loJbX/NODCydRm
+         63qZdMPFrsKz60ahEF0tYZFKvlzeMPlMVOz3uVTuE+g+xRnlg3cUPuXhDluHez7daODS
+         S5gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775809887; x=1776414687;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KEJjrIfQId/h77djj7M4y4n3Tb/7Xj1HxO0kKsRBFF0=;
+        b=VVepcllO+PgvowIYMqQeJFfGktIILXrWxtfKtkIoaUfPHYTDLZggKAuLSaF6BjsPIj
+         p7SEISn3/lg3ttr9ny7FtHXspr1kCAQZtdPwx78blPMIWeeFfVww7F+Jvo5xieYaKndn
+         pK9iGIwOe8/tPzr7QI7AMMQtmxqqEwOzg8RcYSC4gqXJAnaMyjemeY1b15EDF4VPGBbX
+         tPU1nmkBm4YyOtW6vz2qoC0wvUQN5b6pk6bulAc/UO5Zx3uXOvYXR/lqXiWj/zyQBxp/
+         y9mU4RH7Diqfmn4MjLwmcyO93Nm057HurlgJux7/QMx42CzT7SCmUkq6FFBJNnA/Vh1r
+         vgrg==
+X-Forwarded-Encrypted: i=1; AJvYcCWq000flQDtek+Xt1aGHUt3turbqoIY/7EGkslI3AfMpzjdAowHrNOyy5ZL2LFHYg21mMyvCO9sOV5skU2d@vger.kernel.org
+X-Gm-Message-State: AOJu0YwcpC2mccZ9JxUAhhgE4Zn280CwQdi8JYoZOrpXuOOeTfRVhg3r
+	qmWrZnxwY7bw6zvqVJ4OUV7UhDhhOvkrh5FfA1cZfJvEsZwStK9US1ao69lCSwhkYckisJ0KXQB
+	KG72GSX6sG5FOULMA6eEjAemSFGmX/5FSFSMVBp7leg==
+X-Gm-Gg: AeBDievfyuYA0i0kuDvwHh2P6qITxrzR9ddm7UL2TGiZXhU2hmdwgaY/09famKP5Tuf
+	gL+OxGH2+VEIaUmSb6O74D3ODBKdIzk5DvFUVskJPr12CLmYp7SVK2XAHPGHHdhOsvMYHKBZN26
+	47v5eTpwHFchFJ3BkA9jnSoA7Og8K2Mo+113KFD3PdlfDX6XWyY78qTl9OYe3Km3IKqVhn8XGP0
+	cDCHVF5DyhXps/i4jn3+bAOZI2escAM+4VRyAweRskCod3rJw5r8S/FEoFxIlZj/XH/enwmhnyD
+	vhVvKMKa
+X-Received: by 2002:a05:6512:3d88:b0:5a2:a5a5:5247 with SMTP id
+ 2adb3069b0e04-5a3efb41a66mr856670e87.32.1775809887115; Fri, 10 Apr 2026
+ 01:31:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: eliza: Add support for MM clock
- controllers
-To: Taniya Das <taniya.das@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
- Imran Shaik <imran.shaik@oss.qualcomm.com>,
- Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org
-References: <20260409-eliza_mm_cc_v2-v2-0-bc0c6dd77bc5@oss.qualcomm.com>
- <20260409-eliza_mm_cc_v2-v2-8-bc0c6dd77bc5@oss.qualcomm.com>
- <cb5a40e8-e2e3-4ed9-a9c6-0daa9f408710@nxsw.ie>
- <Z8a4y73p6MgF8gQkVtottkgG2Ok8-Vhm8zzckWEbiU_DUO84x2VlwPt-VBL2g0utw3ZwZK0aUvI4ev-p_YRGoQ==@protonmail.internalid>
- <328b388c-438e-4f91-9384-0dad903355a5@oss.qualcomm.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bod@kernel.org>
-In-Reply-To: <328b388c-438e-4f91-9384-0dad903355a5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+References: <20260410065833.3189808-1-neeraj.soni@oss.qualcomm.com>
+In-Reply-To: <20260410065833.3189808-1-neeraj.soni@oss.qualcomm.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Fri, 10 Apr 2026 10:30:51 +0200
+X-Gm-Features: AQROBzDrswIC_zPTfU0VV8YKa_B7tyiyd0t06DcGC-OIk4-kF9hovQfVfSbQBB0
+Message-ID: <CAPDyKFqRUnijc3zdGszukUw9HHwfbJw+F+WxuE+vj9qpMgu=ow@mail.gmail.com>
+Subject: Re: [PATCH v2] mmc: host: sdhci-msm: Fix the wrapped key handling
+To: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
+Cc: adrian.hunter@intel.com, ebiggers@kernel.org, abel.vesa@linaro.org, 
+	linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102610-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,baylibre.com,gmail.com,foss.st.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-102611-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: D9C8A3D424E
+	FROM_NEQ_ENVFROM(0.00)[ulf.hansson@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,linaro.org:dkim,qualcomm.com:email]
+X-Rspamd-Queue-Id: C872E3D4315
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 10/04/2026 04:55, Taniya Das wrote:
->> Why do these two controllers have no power-domains ?
-> Bryan, on Eliza the videocc and camcc are connected on CX and MXA.
+On Fri, 10 Apr 2026 at 08:58, Neeraj Soni <neeraj.soni@oss.qualcomm.com> wrote:
+>
+> Inline Crypto Engine (ICE) supports wrapped key generation.
+> While registering crypto profile the supported key types are queried
+> from ICE driver. So the explicit check for RAW key is not needed.
+>
+> Fixes: fd78e2b582a0 ("mmc: sdhci-msm: Add support for wrapped keys")
+> Signed-off-by: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
 
-Shouldn't you at least have:
+Applied for next, thanks!
 
-power-domains = <&rpmhpd RPMHPD_CX> ?
+Kind regards
+Uffe
 
-And even
 
-power-domains = <&rpmhpd RPMHPD_MX>,
-                 <&rpmhpd RPMHPD_CX>;
-power-domain-names = "mx",
-                      "cx";
-
-Konrad's suggestion to me was that MXA should have a vote in my CSIPHY 
-series I think he and Jagadeesh discussed it but I'm not sure if they 
-_concluded_ what was the right thing to do.
-
-Right now I'm representing the dependency. MXA is always on ... and 
-there's nothing to do voting for it @ MX ?
-
----
-bod
+>
+> ---
+> The patch series "mmc: host: sdhci-msm: Add support for wrapped keys"
+> was originally discussed here: https://lore.kernel.org/all/CAPDyKFqRG1_1aYavfrA0Ss85B0kcTnjVBeqLgq8PUJUcSx5LUg@mail.gmail.com/
+>
+> Changes in v2:
+> - Updated the commit message.
+> - Added the "Fixes:" tag.
+>
+> Changes in v1:
+> - Initial changes to fix wrapped key support.
+> - Link to v1 https://lore.kernel.org/all/20260403105949.1007447-1-neeraj.soni@oss.qualcomm.com/
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 5 -----
+>  1 file changed, 5 deletions(-)
+>
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index da356627d9de..df0a038269d4 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -1926,11 +1926,6 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
+>         if (IS_ERR_OR_NULL(ice))
+>                 return PTR_ERR_OR_ZERO(ice);
+>
+> -       if (qcom_ice_get_supported_key_type(ice) != BLK_CRYPTO_KEY_TYPE_RAW) {
+> -               dev_warn(dev, "Wrapped keys not supported. Disabling inline encryption support.\n");
+> -               return 0;
+> -       }
+> -
+>         msm_host->ice = ice;
+>
+>         /* Initialize the blk_crypto_profile */
+> --
+> 2.34.1
+>
 
