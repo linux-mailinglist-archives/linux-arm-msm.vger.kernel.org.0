@@ -1,86 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-102687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GJdqLIT/2Gl3kwgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 15:47:48 +0200
+	id sBjIHmMB2WkWlAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 15:55:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A27C73D84F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 15:47:47 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7E1B3D8651
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 15:55:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 176F8300A25D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 13:47:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 99799301A901
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Apr 2026 13:51:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B7D82D8DC2;
-	Fri, 10 Apr 2026 13:47:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BB093C554B;
+	Fri, 10 Apr 2026 13:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GtZTyJ/0"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="nh4vgcaH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ixit.cz (ixit.cz [185.100.197.86])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC5B30FF08
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 13:47:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E491273D9F;
+	Fri, 10 Apr 2026 13:51:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775828844; cv=none; b=ZKAeZ8DRWqMPN6x8ilw5xeChhn7/sxARFl0TjsyP1P39atHipRZ5UBy6WN75B9DFCdxcuCOrP5j+/qpxhXxTugPioJMQ9j0aTA8SEYIe9J+XNHmg0DtlESr8JtrNZCYciC9pw93uQZi1Z2eNSEY4DLLw+oCHA5TbnaUT8NfmyUg=
+	t=1775829087; cv=none; b=gu9552F9o/PItCnzEHO/paeG99R0wmfn3m+cuzpxDvk/yiHwuHbQyPahybW/E2IoctsR0d+cQ7E2BO7tjps6D+pqdpRrl4mmc3g4LbXfyd/2WaXwASsRmJItZd/PKiyTYNYMrCFBMU+k+LQfod4NGI+DIjB8eahLGuOPNro0Xqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775828844; c=relaxed/simple;
-	bh=/9YLiHSlBBeuUGksZZmIRHaHg0NDtKgpl9Pv1O1q8nk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=pA+JFCLh4DCnxOBNAfXpZzox1TwbuxIcuU2uGyoLqqb/Ho3Z2YNyTSt20jVAZTmteWEMcUA5A5aUWffzPxFkHjSUfj/8BkzuH3/NxPk9hXEUzHA9SdPYYmCUYCP9hbpOznQq2kmxWbT2bnbHE1W+IzZEvGFXYAvEs2q4lD35u0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GtZTyJ/0; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-488c21c636dso12149285e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 06:47:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1775828841; x=1776433641; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HY0v9vnNB0cSghEPTbRdLaX/P/UJ93BNk17g46Nvi8A=;
-        b=GtZTyJ/0WAG4QWoU7yQ0vZA9Y3eXg71UJx+KGIBAif/TW82fYOgkhQS6vhqw1t90hf
-         5jRyzMA4Nz9slTNKP6VBOOmC7GdLm3zyFi8zXcFduXnqTG9OoiErX/ibw3xhSYN7Vrmn
-         PSlRytAxsq6Lfi+lK2REIp4f7P9pvVKG6dFE+jzXmDWvQOeRuARcTKv/HP6yuYoOqw/q
-         WOTMHdS8NxU8SrwPcQM3kMOhZ0wZX7QIYRb5bUUPPAnIbO1yfYhLBhwqkD6gXwn21Uey
-         KYwlL3A8dSNgCgbYKL6Ii0KPqqjYKD9JEsMKhGk5DPE0G0MfZbgv3+WZT+1oiF/VHkuT
-         YGPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775828841; x=1776433641;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HY0v9vnNB0cSghEPTbRdLaX/P/UJ93BNk17g46Nvi8A=;
-        b=h06xF51LDaUe08SR6O8kEEBL+nD3O5eFCFvNoOOotfeMus2/6SQESCoKzcSD1sOCJ4
-         PqbrcBY+E7qUoRwx933crN+Whl7G8CbkrtdRjZ1FtG00sramHPSAw+OD0pInsHDJiU+v
-         VMpa5iD5FyL2nRkIvbIPkSFbjuFdsV9RhxlWQvhfnogfih1+Lu2RqcAw6xEpToIYceZ5
-         gCxhKMrNvhxoPkika61zwOu0Fj82OUED6wWr1k0D6EvaZ6UlJfyDj46WorREXGT6vCNZ
-         d3jU2kNduQC0P6soLKxbyOr7SU9w7zeGsSbHJHBUGYGNzqe2IbvV9aGcMTj9i+2WuFOZ
-         KDgw==
-X-Forwarded-Encrypted: i=1; AJvYcCWuKe/dmDrlk7wPdCBqEvVposQriQtQFvNAb1j46dcaNEbicW+t1sZvHB81DDxQF1xVmQAyEV0IS30WRqTY@vger.kernel.org
-X-Gm-Message-State: AOJu0YyazUkQ9JAUZg3VRpgxVc3FMfSqEmKZx39W4nM5ULYntYSK2JeT
-	XV16EZQV8lGpUyA0XS6zIL71YBgD3UqvubsvclsGLttsN53mN9t2SunUfLZ7ygeRPdc=
-X-Gm-Gg: AeBDietZbfePY7l7a06gt1no1Q67xLgLzcVJVsGCB+hWPKC3B9uSFcxUXhSE5tqVJvt
-	PoV90CPZSrkIUmEWUDWmG1tHGPkV0dXqpJs/K7YnrrvAJqkHSoV9XtBoX7QWS7LJtksAmdtCsKp
-	VHcNgwy2nYaUhwUwHIEeF/lzWLNCSOVldyzMbhqBSl6eUVDT2ZVBnQOhBJiZOzBvEUvAW9nhS6e
-	34O7EZgaxqAXzaQMqxALEnDl8/3oxzufdD8FEgbkCTLHnB69vYg7AuQ5xC7R8LwbgjIEXKduUiA
-	8AQZ71TyRgGjKAm2cFoBzEOQIbPYmU/Lbp3LVDnCp1HyiQ30GPxG2/DYc/wianrZXEqcGtWg56/
-	bc6aOKnkhwfeo5kqI9QkRb9PYH0TeXfmL77693rglv4YsybUtXhL6b1gpKZll5yGP6c5ywkREWs
-	4nBujw5owo5sg3MD1DEo/k3kIabkUCc4wKlrV5hHfqLcbvnsBkUFJZHFxfnaTETmr7YI6HILn3B
-	pHFjdY=
-X-Received: by 2002:a05:600c:674f:b0:488:a82f:bb9b with SMTP id 5b1f17b1804b1-488d68cb47amr45964215e9.30.1775828841015;
-        Fri, 10 Apr 2026 06:47:21 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:c8e5:d5af:c912:c512? ([2a01:e0a:106d:1080:c8e5:d5af:c912:c512])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488d5da1341sm22552125e9.8.2026.04.10.06.47.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Apr 2026 06:47:20 -0700 (PDT)
-Message-ID: <a4fb341e-3ba0-47b3-a901-809fb77f0aae@linaro.org>
-Date: Fri, 10 Apr 2026 15:47:19 +0200
+	s=arc-20240116; t=1775829087; c=relaxed/simple;
+	bh=Lo7DRblMceQFaUvtUeWjsN2m6Fy7CmAz0GdK3+ig6D4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gD2WejMhew0eG6WY5jVVTJqJFVg6SYwJpbU2nFFKF8ctdHkbM0EFQexvccRWz3un8ojeVubymgCRd9/mc4ML0cS8/PMmBy1ulQIfqxIhOMOhjWkj1Qz981z1q6scHIkpm2R4UsO0qAw2ZyOBS1D9IQ9qen6stelUZsGAn3pMD84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=nh4vgcaH; arc=none smtp.client-ip=185.100.197.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [192.168.1.154] (unknown [194.212.224.143])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id B8DFF53413F2;
+	Fri, 10 Apr 2026 15:51:14 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1775829075;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=cqWiyAKJPW/dzUmqzI++ATr4+Mg5zcTSyYZLAPVeEtY=;
+	b=nh4vgcaHjqvFAe0kXhBUk73MvZUDQMm6NaZhxZS+OjLohMLW8UqoKIIZCI8be7Kw219o34
+	IznT1fYnVs+o+hcVXOZPc5pxct1YHmzSw6YZziusr2KzT0MIGHyz0CvxKMdcmspKx5VQU1
+	QQRbH8WLJ607YjJsHDqZCqo+hkqe+CI=
+Message-ID: <c746d310-5925-4656-9487-3521cb87793a@ixit.cz>
+Date: Fri, 10 Apr 2026 15:51:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,183 +59,115 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH RFC 4/7] media: qcom: iris: vdec: update size and stride
- calculations for 10bit formats
-To: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260408-topic-sm8x50-iris-10bit-decoding-v1-0-428c1ec2e3f3@linaro.org>
- <20260408-topic-sm8x50-iris-10bit-decoding-v1-4-428c1ec2e3f3@linaro.org>
- <99eb55a8-6370-bf7b-f9de-e88231454b0e@oss.qualcomm.com>
- <0301bf82-0859-44cd-99df-3de997e2cff4@linaro.org>
- <7db19009-4e33-945e-789e-689b72c39aa5@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <7db19009-4e33-945e-789e-689b72c39aa5@oss.qualcomm.com>
+Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: sdm845-xiaomi-beryllium-tianma:
+ Disable MDSS
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Sam Day <me@samcday.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+ Petr Hodina <petr.hodina@protonmail.com>
+References: <20260317-beryllium-fb-v2-0-36b69dfb760c@ixit.cz>
+ <20260317-beryllium-fb-v2-5-36b69dfb760c@ixit.cz>
+ <73fyiqoxxg2gg5244wkukepdfw6lnguq63si22qsx2ueyna4hu@l4vyykvn43oo>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <73fyiqoxxg2gg5244wkukepdfw6lnguq63si22qsx2ueyna4hu@l4vyykvn43oo>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-102687-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	HAS_ORG_HEADER(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	FREEMAIL_CC(0.00)[kernel.org,samcday.com,vger.kernel.org,protonmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-102688-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[ixit.cz:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	REPLYTO_EQ_FROM(0.00)[]
-X-Rspamd-Queue-Id: A27C73D84F5
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: C7E1B3D8651
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 4/10/26 14:57, Vishnu Reddy wrote:
+On 18/03/2026 15:47, Dmitry Baryshkov wrote:
+> On Tue, Mar 17, 2026 at 11:12:35PM +0100, David Heidelberg via B4 Relay wrote:
+>> From: Petr Hodina <petr.hodina@protonmail.com>
+>>
+>> Currently the panel driver for tianma is broken.
+>> Disable MDSS to prevent DRM taking over the framebuffer.
 > 
-> On 4/10/2026 5:29 PM, Neil Armstrong wrote:
->> On 4/10/26 12:10, Vishnu Reddy wrote:
->>>
->>> On 4/8/2026 10:13 PM, Neil Armstrong wrote:
->>>> Update the gen2 response and vdec s_fmt code to take in account
->>>> the P010 and QC010 when calculating the width, height and stride.
->>>>
->>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>>> ---
->>>>   .../platform/qcom/iris/iris_hfi_gen2_response.c     | 19 ++++++++++++++++---
->>>>   drivers/media/platform/qcom/iris/iris_vdec.c        | 21 ++++++++++++++++++---
->>>>   2 files changed, 34 insertions(+), 6 deletions(-)
->>>>
->>>> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
->>>> index 8e19f61bbbf9..d268149191ea 100644
->>>> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
->>>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
->>>> @@ -542,9 +542,22 @@ static void iris_hfi_gen2_read_input_subcr_params(struct iris_inst *inst)
->>>>       pixmp_ip->width = width;
->>>>       pixmp_ip->height = height;
->>>> -    pixmp_op->width = ALIGN(width, 128);
->>>> -    pixmp_op->height = ALIGN(height, 32);
->>>> -    pixmp_op->plane_fmt[0].bytesperline = ALIGN(width, 128);
->>>> +    pixmp_op->width = pixmp_op->pixelformat == V4L2_PIX_FMT_QC10C ?
->>>> +        ALIGN(width, 192) : ALIGN(width, 128);
->>>> +    pixmp_op->height = pixmp_op->pixelformat == V4L2_PIX_FMT_QC10C ?
->>>> +        ALIGN(height, 16) : ALIGN(height, 32);
->>>> +    switch (pixmp_op->pixelformat) {
->>>> +    case V4L2_PIX_FMT_P010:
->>>> +        pixmp_op->plane_fmt[0].bytesperline = ALIGN(width * 2, 256);
->>>> +        break;
->>>> +    case V4L2_PIX_FMT_QC10C:
->>>> +        pixmp_op->plane_fmt[0].bytesperline = ALIGN(ALIGN(width, 192) * 4 / 3, 256);
->>>> +        break;
->>>> +    case V4L2_PIX_FMT_NV12:
->>>> +    case V4L2_PIX_FMT_QC08C:
->>>> +        pixmp_op->plane_fmt[0].bytesperline = ALIGN(width, 128);
->>>> +        break;
->>>> +    }
->>>>       pixmp_op->plane_fmt[0].sizeimage = iris_get_buffer_size(inst, BUF_OUTPUT);
->>>>       matrix_coeff = subsc_params.color_info & 0xFF;
->>>> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
->>>> index 719217399a30..ca0518c27834 100644
->>>> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
->>>> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
->>>> @@ -272,10 +272,25 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
->>>>           fmt = inst->fmt_dst;
->>>>           fmt->type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
->>>>           fmt->fmt.pix_mp.pixelformat = f->fmt.pix_mp.pixelformat;
->>>> -        fmt->fmt.pix_mp.width = ALIGN(f->fmt.pix_mp.width, 128);
->>>> -        fmt->fmt.pix_mp.height = ALIGN(f->fmt.pix_mp.height, 32);
->>>> +        codec_align = f->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC10C ? 192 : 128;
->>>> +        fmt->fmt.pix_mp.width = ALIGN(f->fmt.pix_mp.width, codec_align);
->>>> +        codec_align = f->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC10C ? 16 : 32;
->>>> +        fmt->fmt.pix_mp.height = ALIGN(f->fmt.pix_mp.height, codec_align);
->>>>           fmt->fmt.pix_mp.num_planes = 1;
->>>> -        fmt->fmt.pix_mp.plane_fmt[0].bytesperline = ALIGN(f->fmt.pix_mp.width, 128);
->>>> +        switch (f->fmt.pix_mp.pixelformat) {
->>>> +        case V4L2_PIX_FMT_P010:
->>>> +            fmt->fmt.pix_mp.plane_fmt[0].bytesperline =
->>>> +                ALIGN(f->fmt.pix_mp.width * 2, 256);
->>>> +            break;
->>>> +        case V4L2_PIX_FMT_QC10C:
->>>> +            fmt->fmt.pix_mp.plane_fmt[0].bytesperline =
->>>> +                ALIGN(f->fmt.pix_mp.width * 4 / 3, 256);
->>>> +            break;
->>>> +        case V4L2_PIX_FMT_NV12:
->>>> +        case V4L2_PIX_FMT_QC08C:
->>>> +            fmt->fmt.pix_mp.plane_fmt[0].bytesperline = f->fmt.pix_mp.width;
->>> In the removed code, bytesperline for NV12 and QC08C was aligned to 128 bytes.
->>> In the new code, Is that alignment missed or not required?
->>
->> The alignment is done right before:
->>     codec_align = f->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC10C ? 192 : 128;
->>     fmt->fmt.pix_mp.width = ALIGN(f->fmt.pix_mp.width, codec_align);
->>
->> calling ALIGN(f->fmt.pix_mp.width, 128) again is a no-op.
->>
-> Here f->fmt.pix_mp.width is not aligned, fmt->fmt.pix_mp.width is aligned.
-> It should be fmt->fmt.pix_mp.plane_fmt[0].bytesperline = fmt->fmt.pix_mp.width.
+> I'd still hope that somebody can get it to work. I'd start by using
+> prepare_prev_first. Sumit reported the panel as working in 2020 and I
+> have no doubts that it was the case. Another option migt be something
+> related to the dispcc (see my [1]).
 
-Indeed you're right, I did misread...
+Sadly, the prepare_prev_first didn't solve the issue. The framebuffer -> MDSS 
+takover happens, but at greetd (login) loading screen goes black and never restores.
 
-Thanks,
-Neil
+Will need more work.
 
-> 
-> Thanks,
-> Vishnu Reddy
->> Thanks,
->> Neil
->>
->>>> +            break;
->>>> +        }
->>>>           fmt->fmt.pix_mp.plane_fmt[0].sizeimage = iris_get_buffer_size(inst, BUF_OUTPUT);
->>>>           inst->buffers[BUF_OUTPUT].min_count = iris_vpu_buf_count(inst, BUF_OUTPUT);
->>>>           inst->buffers[BUF_OUTPUT].size = fmt->fmt.pix_mp.plane_fmt[0].sizeimage;
->>>>
->>
-
+David>
+> [1] https://lore.kernel.org/linux-arm-msm/20260217-sdm845-hdk-v1-1-866f1965fef7@oss.qualcomm.com/
 
