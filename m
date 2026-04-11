@@ -1,149 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-102800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CFeQFeGA2mlC3QgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 19:12:01 +0200
+	id 8EZqDoeD2mnI3QgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 19:23:19 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF8453E0F86
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 19:12:00 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C35B3E1011
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 19:23:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5B9A630693D4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 17:10:55 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7AEAE3018409
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 17:23:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54EE53B95FF;
-	Sat, 11 Apr 2026 17:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E59A21D6BB;
+	Sat, 11 Apr 2026 17:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YSy8I1GR";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SFY7Qmo1"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="b/wIHT7i";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CXhOe6UQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69E83559F5
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 17:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5037D266565
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 17:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775927452; cv=none; b=Wsvqv9UwOyrW7Q3rpp7m4DN1GtmdaiPEVSnW7H+X5c69E9tXsppkgNhqMYzkjT6Fkm2+enyefM3k51CWGo6xfGOPBJxH6acJrBzaTBmNtKUVZEI3aV6esAI7xi3MoscxEB3/6K8MNHkvH8w7+CF1OJh9GkEtJDrltp3UKjjAkBg=
+	t=1775928196; cv=none; b=fgwSVOVFwaut5vdbSXJtuSU6WMhL5EPV+QaeXHAOsLVaJD78C8yPq3OJ06hW/496K1ExhbERXS+9I9/16ER6XEmW/xh5hmBau/cFMd0nsH2yqD2KaGBepbVLe+gA16UzmfPRfQOx1SbFMlJOLZmDsVtfvryPftp1tEDQOxIuef4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775927452; c=relaxed/simple;
-	bh=GA1bi/Nl4FCTnvtyGgMqfY0giYa5H9BIz9GZFJeNdjc=;
+	s=arc-20240116; t=1775928196; c=relaxed/simple;
+	bh=4R5otZu6qljn/L0cev0qtoc1uxyzpKge9OSGQF6Qst4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kwh4fTDcYogHnqQenRTVbg6VI/MnkEpenTIhxnvB/v2F6maDJDtCRs4KmN+6run95BSU+kuae5z7PD84nl7AbHrvnLuxhDo1wSLr0pfJrFm4Y5I+zUCyeOiqTR3QyLEucRT0z/5MFlEmak8tis62kCxWaw4MzB1W2ZLiyeekBfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YSy8I1GR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SFY7Qmo1; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=dDwYw/XoypYeVbmEOM3WI+aag4Ab92A/bwkOxtn1T0+KiAdn38oWqC/9SGzAiaa9DHI1vzDDKAFITBYi/rhXfnj5gmSuhSXrAX5Kr3UE3xXBbGVvLOOSCevRr9AvQRzItKNr50t4VQ+zN8xa6hTcBfWYv/ZMebO1ySmOGxQsSpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b/wIHT7i; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CXhOe6UQ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63BHAFYu788208
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 17:10:49 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63B41M0S3377139
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 17:23:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7fOy5saLzqfwg3hIv0WfrGPfqmVDqIwRz4fvh7DZbto=; b=YSy8I1GRr7JLiJjV
-	x/6ClavkHdhSKAsQ9O+Qqit/6EcdInAGkZNjcXVAAt8CAU+RDv2UmPL+IB2F2qj/
-	sLoeWYsE7a7Xkq+UkmZxIN9nDbsXkDawH/Kf2mXA5ID/PrCK8WP3FvDfO2z//gZ/
-	vePKYQVOMoOn5of7TNNKy0/kFsW2D6PNFvBGaAo+SDjbcrg0zOeXxX6vUk9W1dRS
-	zsb7dT/WLLTt2GEQCNwCVXESRdSIpCHD//qcXY7ON5zth4iOJS0P6FTkBflWz8Fs
-	tGFVZWCrVEqznWibYPJu8vY5y8+CZ3k01JIFAkCJky2Vmh3dKtUm26kbqY/nJAN0
-	R4BjbQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dfewks3uc-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=u6kPVbXNnQQwRrBlwHiRqi+h
+	dgEu8F6PUX4I0bxwbO4=; b=b/wIHT7iOygcOhWXCW+PsQJ2NKRtBEMMntWVzFZQ
+	iC9EjZJ4etULvFH0MRQmleUi/ewkr8A7s3Ci2SIqMjQwLvH6SZYCiKZUvrkinU5v
+	EMZd1AQz2OSLs3rmjID04WlOxEmVzAsE/VusaFoL8eglaaWCaA9X5UfVkUh3vUsC
+	IhQNKpeYJPA7EmAfDt9VKBPiEUJHFSiRQ1ADAs54vxBZ36tKDVyegXVrsUJ2r9/y
+	KyIzlWyY7R9jX7B2aOBlp3jssEEJvMXD313pfTH5SMVtMvDexp8Yyvm/J1l55Wzx
+	3ZkqfORcuaJ6X1VzLm4fdEcgXwy3OsneKGoBb9Ijef/08Q==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dfewks4g6-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 17:10:49 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-50b781542c1so62365501cf.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 10:10:49 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 17:23:14 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-50b44f7b7bbso77665541cf.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 10:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1775927448; x=1776532248; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=7fOy5saLzqfwg3hIv0WfrGPfqmVDqIwRz4fvh7DZbto=;
-        b=SFY7Qmo1IT5bN34vCHqxDBnPj8vj60++ulSDen28DzbBOvDPA68c+grXkra3CMC6xD
-         MmEqsgsbHCrMHJuMjdE0EzgKrNOhpDYxjchrby5/Kd95Dyhcf20nMhFigxbzq0PDzbnW
-         kB+BNozvP6a3Hsmiy4WKOeiLUnULew3XOPbBaxH0DQbXBHpe+F2S8Fkrfd3fLbBU0lIC
-         agrYoFkagDOWr8MCLcBAGxEGZ7JAuALtZvfgpsuP+bqvherfiWNvxVJ2B37+AKK1JMBC
-         dTlEev65SbycMQdiOCBuO4VbaJF1m/eVfoSho3mRt/ZBglDLbk3PgR8RlZzI4Ltt/2o/
-         dXZQ==
+        d=oss.qualcomm.com; s=google; t=1775928193; x=1776532993; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=u6kPVbXNnQQwRrBlwHiRqi+hdgEu8F6PUX4I0bxwbO4=;
+        b=CXhOe6UQsFsFiP25AsIL5KS8iUMPDNiYYz16/MbeZ7wJNamQ/xSleVcIBqSsoKVCH1
+         q6gtbPF6orFsZSOARANDBf53pQVv9HKAafxOe5rqBmauhuyQYfulwcVG7XfHMMzBfPbp
+         T4Ezxr6n8LZEJ2KPw7pIKUSZUoxeLGSFtwky+HSC6XWgx9u9Bb3+hIFy6ur1gsKB3v0N
+         kC2zI6cXcGFFXn/1o3+5ZRhRKUHzF52vErwfqI8udElO8ry750WmHKfjCr19QSlIj+Iz
+         sEVdubC6t8r6ZtKxbPB82trcCYfGcOcgZvkTZTmRStn310kcLFBAu7J776fIDCKU9stp
+         lO+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775927448; x=1776532248;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7fOy5saLzqfwg3hIv0WfrGPfqmVDqIwRz4fvh7DZbto=;
-        b=lSlmBD0FLF4Y/5Nd2Dr9sHdtZwf0SFZGe9rzn48yw+ueluuMAXjXwYJ8+Gia59TEtD
-         t+p9r/8gGfea3YypncDJt38PxXheJ6+l0LAkfkBxfmRT07NGN8Ze2cnpf1e8Nd4IRSHt
-         sj3nb1bIl7r3S6/OH/ZJS3Sej3PfC3fLAmS65zxBi4XmLXNO4jA5WyfXNN+t9q7D8n53
-         HBr48hFe2MkZiSkN+bv2vbM/TuZC4h2QfyDE/rWXvlf5ji0McrVEnWSxhtnxpwys250w
-         H1nhwx81svIYMXayx3TfhUwPbaj2DBNLIZgBwsT4KiP7Dp+LeO7+r3KCjyP2O1YmxWxq
-         8O2g==
-X-Forwarded-Encrypted: i=1; AJvYcCVNmlAFaYzzzABYg87N3V03hBHMlxcEav3kmLTZNok+aAzYrWpWIusNN3D6UfAahKO8Vh/ys/NmC39MeyiF@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWE2vo9mPaKzFGHWWr9q7NLlw9Kq1tsDHQPAg11/Il7eclLHWr
-	jlJcs3n5xuln9pI7QtBaBwerUMGZS9H6nbCSoHv7HWOG367PGaJJC4QgHnB7WAQJA94kdsEZ1ck
-	j3k8lS6tQzbTzWrQszK31sam29gBho0SXEz0UzkTCQeHER1TIUOoVIZXZsvP9PK2smqAPWjmuTj
-	ke
-X-Gm-Gg: AeBDiesI0RixpY+PVNQAY8nXDfti0U7gebj241RsDO7BjqW89iQcaSUl+gIsIH+eo5k
-	hGvAWYpMsg6mCKJRlzwM8aH5jzVqffgKAi13Py1dA7HJqUwoCWbmamZSSiBMC6U3PxjoEafmIEx
-	/pVhqRmuNV5kedNRqx0bm7CKOL0cE6v4BMU0B11qOHDg2C+KMi31K/gqqKbua5H4Gg437oAEPn1
-	2GAM7K04fYyAmJ7zK1yqIki8pK8HP5J+T7G7VMzG8o7IRbb7rrW5v2Tm2iIYwTbBuftYY46f7F6
-	k+kt4lVQEgvmNYxABCzYLFJOmuRuTLPht3LjmSL5yK996656Olo4+3WOfporxjQrriaXo4g4ko4
-	P+UQTwlNr7UsXcEsYE6JBKSKl3qG6LKDjSZDUGJcSS+llF81kDDdp/g+2uf1Pvse29yHio4O+Rs
-	imxiqgIva+y8edOht4ergXqaXVk2J4gV3awqQ=
-X-Received: by 2002:a05:622a:4a08:b0:50d:9174:cf27 with SMTP id d75a77b69052e-50dd5ada552mr108030091cf.20.1775927447783;
-        Sat, 11 Apr 2026 10:10:47 -0700 (PDT)
-X-Received: by 2002:a05:622a:4a08:b0:50d:9174:cf27 with SMTP id d75a77b69052e-50dd5ada552mr108029531cf.20.1775927447255;
-        Sat, 11 Apr 2026 10:10:47 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1775928193; x=1776532993;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=u6kPVbXNnQQwRrBlwHiRqi+hdgEu8F6PUX4I0bxwbO4=;
+        b=gY3+unGv1K+NMfGQQ/OT3lg4II3rijED8bM9PvZJGAey13yI7BzFbeOfoYBbLuNw3R
+         SIk5+a7s6eLDmWtMcbOtdGnD+nxx0QahQXsxqzwaKEWyTCqHQemlRIcSgWAsIJtSqfQN
+         VcC+0c+YnxLyOzDJbBz1m6Jq7nFJjV07dK+RbICLfTKrU9bfdM9MSf3l4r+nlYXH5K+d
+         OBFKfUCrXifdAi6IXhPxPy3U455UWZG+Db9Lrw8sCW7dRiRvuGbSSZsVsfnPx1PCVBbT
+         twwPYoKMN2pawWxjRqyHl4/y1+rCDVyTMtHqIahgokWS3xVoZE3S+L06sr2f2dRJNkDS
+         XIQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXpOB8zzJtebMBh6vxhjC7w7HtHcjMcixRwQlaOBWrVx1RQpviKdsARgx8e/DpxSbUimKpZHw2DxM0lWtmu@vger.kernel.org
+X-Gm-Message-State: AOJu0YzJ9wkqvUzJqhSgkQNkWhAItXY2d/rzghwNSdZTQAC19lLeZHJB
+	gXjIOikyhm5DlO7ZZBaiHmzxKRfkhuzX1pSrwZ8z59IYTif62ANBsZ8e8w/knTrkNAUOppUnj+O
+	axecwU/OOL2BAKwpIVwAx6LO2V36luQvHFwdRdoFjZ7gLU6jZSU3wy+ihOH/FLMrJ0DD4
+X-Gm-Gg: AeBDiesQacFEiejUG0LTUUZOTH+SdkV+VViYK9vjqLOk/Wdg0q/ADzAow6pjGK/VV/Z
+	WGpSlCwkFLsPueakFIM4dRpHa4ziWg/xqENuTtkYDLQa88/AR1OSGLyW22RFV/HI0ZfgwhfVoeL
+	rzGOqjIcvFxa/TwWjkAMgD6qUidnhdajxkvEJ/3h4oNv07KCBeXPBudjX2dgNFvLmtu/B6TSWE2
+	wZmABkwWFjuMbhSAmnYvP8tP68+Hbcd7Q2tYKjBiNaiwcKK7pVkQOWcrqI6Z/ZUigh2RPehbiOz
+	il2vFuCuNo7vZaPNRTWb84TczmB9zawfAXGo5BHKhxsPclFytZMi3bOnjNmzicbwag1CR8SXTYt
+	HBenu7H130clY9gEIw/9wpVlVJDGnCE6Vgm7JK083L6H+iZS4rPOpZegIvaxo1ljIo2eUZj1ePG
+	AJYovvKhOcqrHFDGV0lRpxHwmuxUtuIUc870Q=
+X-Received: by 2002:a05:622a:24c:b0:50b:4c64:4730 with SMTP id d75a77b69052e-50dd5abce85mr112321301cf.15.1775928193499;
+        Sat, 11 Apr 2026 10:23:13 -0700 (PDT)
+X-Received: by 2002:a05:622a:24c:b0:50b:4c64:4730 with SMTP id d75a77b69052e-50dd5abce85mr112320951cf.15.1775928193027;
+        Sat, 11 Apr 2026 10:23:13 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a3eeee120csm1495055e87.48.2026.04.11.10.10.44
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38e4957eb1esm13440051fa.35.2026.04.11.10.23.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Apr 2026 10:10:46 -0700 (PDT)
-Date: Sat, 11 Apr 2026 20:10:43 +0300
+        Sat, 11 Apr 2026 10:23:10 -0700 (PDT)
+Date: Sat, 11 Apr 2026 20:23:08 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Nicolas Dufresne <nicolas@ndufresne.ca>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 0/7] media: qcom: iris: add support for decoding
- 10bit formats
-Message-ID: <434j4a4jln7abberxnrdd5fknpsca63irylpj4q74mvgsi7fkn@ipalraotc7h4>
-References: <20260408-topic-sm8x50-iris-10bit-decoding-v1-0-428c1ec2e3f3@linaro.org>
- <b4uqpepf6caojxe463izkmnrlayrdrgce6jusak33ewcr5yd4w@ukwbo7zfphn2>
- <454f0f277cbaee5774c25d34a33fc3bc478fa756.camel@ndufresne.ca>
- <f9edc172-c26a-4fa1-bca2-425e74bcd90b@linaro.org>
- <353933d7dc0821de180db2a8bae4b0d309ed4c25.camel@ndufresne.ca>
- <43378eb2-8976-49fe-add6-c691d78c0ec6@linaro.org>
- <a89f0047-e5e7-4409-bb6f-434f2b4501f3@linaro.org>
+To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Jessica Zhang <jesszhan0024@gmail.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: Re: [PATCH v4 02/39] drm/msm/dp: drop deprecated .mode_set() and use
+ .atomic_enable
+Message-ID: <lavty23n26lx6rqsmue3nljvsgrpwiyarkwosmqcqqgogqmybm@pgid7zsnpqk7>
+References: <20260410-msm-dp-mst-v4-0-b20518dea8de@oss.qualcomm.com>
+ <20260410-msm-dp-mst-v4-2-b20518dea8de@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <a89f0047-e5e7-4409-bb6f-434f2b4501f3@linaro.org>
-X-Authority-Analysis: v=2.4 cv=bcFbluPB c=1 sm=1 tr=0 ts=69da8099 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
+In-Reply-To: <20260410-msm-dp-mst-v4-2-b20518dea8de@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=bcFbluPB c=1 sm=1 tr=0 ts=69da8382 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=L16fR37oqBIwrSETSwcA:9
- a=wPNLvfGTeEIA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDE1MSBTYWx0ZWRfX3z3DYzHtxQa/
- KMD4pVUYXoj67ULjOIbEvZhbttYCGZZgBlDlWzqPPcD3ISf9ctWv5hdk9c1zzsciP0tDSlc8XvN
- mzS4/VTgQ1NVv8Ui4U/bVgPBygnBq2qCY1N9XapOVpU91CbUfAxFn6nsWVpSreHVe1j1LfS3Fkj
- dVrrgJpkXmuAqxCq5OUYPfZVsCYDkGiphk4O3xDi6cNPKbwog97NmYOQDdFwH1QZzN0G58R4jJ1
- gO9Habgkx98G7VBw5ymS+LKRR9DuQmxaC15p6pnJDb4D7OYnwKcJ2CAFkz+bVVYr3fIlsDQ8IOn
- K071cyq/UJFnpT/J7+e8b2GNFeDMCcxT5qFQ9QqBOPL+hRuPZgzmLh/02BXRkmVp0JGzamwT3Vy
- 6gfVj5H0Nw0KWFV4d+kSBBX9GRA0FMyqw0NKKLEdsIUwvA3aCP5/Hd+qWLVpX1Ohobv6Bd/ZTs/
- pBaPQTxGeZhcwE8ziyw==
-X-Proofpoint-ORIG-GUID: Ak7SGbZdhWl-uiN-txKbwb6qyD4md3ev
-X-Proofpoint-GUID: Ak7SGbZdhWl-uiN-txKbwb6qyD4md3ev
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=COk6AnOGAAAA:8
+ a=EUspDBNiAAAA:8 a=xvVyhEcr_FJfiUna9c4A:9 a=CjuIK1q_8ugA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDE1MyBTYWx0ZWRfX+eEDlwxaNWMx
+ TCiPWq8IWxXKu7mzSRnB9yLo+agnRDkPMwJzUcNJW5tadLOQIX+yiU3z+bXwEDcMEX6RJFUmEwd
+ yTFPK3YqzTTtS6HTgDKkiSBMBjlqbPDzCN5s2etozvYCVP9DfR7NC8TpsKiJUvLltfaDvtAjHP4
+ 33QH97IG7uP391jLXKGgBN6+l7WZM/ezJ6ApZLIwWG3pGZ2ZFvIyfsYw/j0ME7Oz15ssEbJ6J3D
+ xxHmIC3pndCeuN2w8tMw0eFKheDzzfE3uDYYoAnrQ+vOAPrcFywHTaV7K7gud9zBBpdb64MiCPb
+ XwA48ZO0rC2cCfEEn4hyJju4N51WTcsBSiMfdbz5uG+ZEvsuxqFGsHkyTFeI450J6MA+/vaQMYk
+ JA1HPJ67xZE1k1I3g09UwlXUd/ZfTpal5ek3goLq9eUckqh/6IDlvdsKHA055sg4n4ZkMxBLB3e
+ aPZ8vRhbFhr0CbqUIsw==
+X-Proofpoint-ORIG-GUID: VvVs7kAw5gIrnR3_bK7fFys--WIcEjl5
+X-Proofpoint-GUID: VvVs7kAw5gIrnR3_bK7fFys--WIcEjl5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-11_04,2026-04-09_02,2025-10-01_01
@@ -152,274 +145,245 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  suspectscore=0 adultscore=0 bulkscore=0 phishscore=0 priorityscore=1501
  spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
  adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
- definitions=main-2604110151
+ definitions=main-2604110153
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_FROM(0.00)[bounces-102801-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	URIBL_MULTI_FAIL(0.00)[qualcomm.com:server fail,quicinc.com:server fail,oss.qualcomm.com:server fail,tor.lore.kernel.org:server fail];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102800-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,poorly.run,somainline.org,gmail.com,ffwll.ch,vger.kernel.org,lists.freedesktop.org,quicinc.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,quicinc.com:email,oss.qualcomm.com:dkim,qualcomm.com:dkim,qualcomm.com:email];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim,oss.qualcomm.com:dkim];
-	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: BF8453E0F86
+X-Rspamd-Queue-Id: 8C35B3E1011
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, Apr 10, 2026 at 06:25:55PM +0200, Neil Armstrong wrote:
-> On 4/10/26 14:00, Neil Armstrong wrote:
-> > On 4/9/26 15:19, Nicolas Dufresne wrote:
-> > > Le jeudi 09 avril 2026 =E0 09:36 +0200, Neil Armstrong a =E9crit=A0:
-> > > > Hi,
-> > > >=20
-> > > > On 4/9/26 03:04, Nicolas Dufresne wrote:
-> > > > > Hi,
-> > > > >=20
-> > > > > Le jeudi 09 avril 2026 =E0 03:02 +0300, Dmitry Baryshkov a =E9cri=
-t=A0:
-> > > > > > On Wed, Apr 08, 2026 at 06:43:53PM +0200, Neil Armstrong wrote:
-> > > > > > > This adds the plumbing to support decoding HEVC and AV1
-> > > > > > > streams into 10bit pixel formats, linear and compressed.
-> > > > > > >=20
-> > > > > > > This has only been tested on SM8650 with HEVC, and was inspir=
-ed by
-> > > > > > > Venus and the downstream vidc driver for the buffer
-> > > > > > > calculations and HFI messages.
-> > > > > > >=20
-> > > > > > > I was unable to get 10bit decoding working with Gstreamer
-> > > > > > > and ffmpeg, but v4l2-ctl works with:
-> > > > > >=20
-> > > > > > Any particular errors? I assume Gstreamer needs to be taught ab=
-out
-> > > > > > Q10C. But P010 should (hopefully) work.
-> > > > >=20
-> > > > > P010 should work for both Gst and FFMPEG, its probably a user err=
-or, or there is
-> > > > > a hidden bug in the driver that make it fail, v4l2-ctl is very pe=
-rmissive as it
-> > > > > simply dump to disk. You should provide an updated fluster score,=
- so you have to
-> > > > > use one of these.
-> > > >=20
-> > > > I did run fluster and all main10 fails with Gstreamer and FFmpeg, I=
- tried to manually
-> > > > run the gst and ffmpeg commands with v4l2-tracer and logs but I can=
-'t explain the reason,
-> > > > all returns from the driver seems valid but somehow they just error=
- out with:
-> > > >=20
-> > > > FFmpeg:
-> > > > $ ffmpeg -c:v hevc_v4l2m2m -i Big_Buck_Bunny_1080_10s_30MB_main10.h=
-265 -y -f null -
-> > > > ...
-> > > > [hevc_v4l2m2m @ 0x55c0328aa0] Using device /dev/video-dec0
-> > > > [hevc_v4l2m2m @ 0x55c0328aa0] driver 'iris_driver' on card 'iris_de=
-coder' in mplane mode
-> > > > [hevc_v4l2m2m @ 0x55c0328aa0] requesting formats: output=3DHEVC/non=
-e capture=3DNV12/yuv420p10le
-> > > > ...
-> > > > [hevc_v4l2m2m @ 0x55c0328aa0] An invalid frame was output by a deco=
-der. This is a bug, please report it.
-> > > > [vist#0:0/hevc @ 0x55c02dc9b0] [dec:hevc_v4l2m2m @ 0x55c029d510] De=
-coding error: Internal bug, should not have happened
-> > > >=20
-> > >=20
-> > > This one needs further investigation for sure. This error can be vari=
-ous things,
-> > > and it requires going up to the v4l2 code to figure-out:
-> > >=20
-> > >=20
-> > > Case 1:
-> > > =A0=A0=A0=A0 if (!frame->buf[0] || frame->format < 0)
-> > > =A0=A0=A0=A0=A0=A0=A0=A0 goto fail;
-> > >=20
-> > > Case 2
-> > > =A0=A0=A0=A0=A0=A0=A0=A0 if (frame->width <=3D 0 || frame->height <=
-=3D 0)
-> > > =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 goto fail;
-> > >=20
-> > > But a quick look lead me to think it case 1 (frame->format < 0) since=
- I don't
-> > > see P010 in the format map in ./libavcodec/v4l2_fmt.c (at least in ma=
-inline).
-> > > Its also missing support for any opaque format, in fact I believe the=
- DMABuf/DRM
-> > > context is only in LibreELEC fork. But overall, it points toward ffmp=
-eg for this
-> > > error so far.
-> >=20
-> > Yeah I didn't find any ffmpeg for with P010 supported...
-> >=20
-> > >=20
-> > >=20
-> > > > The v4l2 trace shows a normal sequence with the driver returning P0=
-10 as G_FMT after the source change event,
-> > > > and the capture planes dequeued but for an unknown reason the buffe=
-r is rejected by ffmpeg.
-> > > >=20
-> > > > Gst:
-> > > > $ gst-launch-1.0 -v -m filesrc location=3DBig_Buck_Bunny_1080_10s_3=
-0MB_main10.h265 ! h265parse !=A0 v4l2h265dec ! tee ! fakevideosink
-> > > > Setting pipeline to PAUSED ...
-> > > > Pipeline is PREROLLING ...
-> > > > ...
-> > > > Got message #37 from element "h265parse0" (latency): no message det=
-ails
-> > > > ERROR: from element /GstPipeline:pipeline0/GstH265Parse:h265parse0:=
- Internal data stream error.
-> > > > Redistribute latency...
-> > > > Additional debug info:
-> > > > ../gstreamer/subprojects/gstreamer/libs/gst/base/gstbaseparse.c(370=
-2): gst_base_parse_loop (): /GstPipeline:pipeline0/GstH265Parse:h265parse0:
-> > > > streaming stopped, reason not-negotiated (-4)
-> > > > Got message #39 from pad "h265parse0:src" (property-notify): ERROR:=
- pipeline doesn't want to preroll.
-> > > > GstMessagePropertyNotify, property-name=3D(string)caps, property-va=
-lue=3D(GstCaps)"video/x-h265\,\ width\=3D\(int\)1920\,\ height\=3D\(int\)10=
-80\,\ framerate\=3D\(fraction\)30/1\,\ chroma-format\=3D\(string\)4:2:0\,\ =
-bit-depth-luma\=3D\(uint\)10\,\ bit-depth-chroma\=3D\(uint\)10\,\ parsed\=
-=3D\(boolean\)true\,\ stream-format\=3D\(string\)byte-stream\,\ alignment\=
-=3D\(string\)au\,\ pixel-aspect-ratio\=3D\(fraction\)1/1\,\ profile\=3D\(st=
-ring\)main-10\,\ tier\=3D\(string\)main\,\ level\=3D\(string\)4";
-> > > > /GstPipeline:pipeline0/GstH265Parse:h265parse0.GstPad:src: caps =3D=
- video/x-h265, width=3D(int)1920, height=3D(int)1080, framerate=3D(fraction=
-)30/1, chroma-format=3D(string)4:2:0, bit-depth-luma=3D(uint)10, bit-depth-=
-chroma=3D(uint)10, parsed=3D(boolean)true, stream-format=3D(string)byte-str=
-eam, alignment=3D(string)au, pixel-aspect-ratio=3D(fraction)1/1, profile=3D=
-(string)main-10, tier=3D(string)main, level=3D(string)4
-> > > > ...
-> > >=20
-> > > There is not a lot of details here, but I would start looking into
-> > > V4L2_CID_MPEG_VIDEO_HEVC_PROFILE and V4L2_CID_MPEG_VIDEO_HEVC_LEVEL
-> > > implementation. GStreamer (and Chromium too) will refuse to use a dec=
-oder that
-> > > does not advertise the supported profile (though I see there is code =
-for that,
-> > > maybe its just some bug).
-> > >=20
-> > > >=20
-> > > > In this case OUTPUT is not STREAMON and no OUTPUT buffers are queue=
-d, so I wonder why this one fails....
-> > > >=20
-> > > > My gstreamer and ffmpeg foo is bad and I probably missed something =
-obvious...
-> > > >=20
-> > > >=20
-> > > You may get a different hint with more traces, just enabling general =
-warnings:
-> > >=20
-> > > =A0=A0 export GST_DEBUG=3D2
-> > >=20
-> > > Or the full V4L2 traces too:
-> > >=20
-> > > =A0=A0 export GST_DEBUG=3D"v4l2*:7,2"
-> > >=20
-> > >=20
-> > > I'm sure its just a bug (or two). Happy to help to find it.
-> >=20
-> > You were right, this did the trick:
-> > diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/dr=
-ivers/media/platform/qcom/iris/iris_platform_gen2.c
-> > index a9cdd93e77fd..debdd30a751e 100644
-> > --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-> > +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-> > @@ -56,9 +56,10 @@ static const struct platform_inst_fw_cap inst_fw_cap=
-_sm8550_dec[] =3D {
-> >  =A0=A0=A0=A0=A0=A0=A0 {
-> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .cap_id =3D PROFILE_HEVC,
-> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .min =3D V4L2_MPEG_VIDEO=
-_HEVC_PROFILE_MAIN,
-> > -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .max =3D V4L2_MPEG_VIDEO_HE=
-VC_PROFILE_MAIN_STILL_PICTURE,
-> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .max =3D V4L2_MPEG_VIDEO_HE=
-VC_PROFILE_MAIN_10,
-> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .step_or_mask =3D BIT(V4=
-L2_MPEG_VIDEO_HEVC_PROFILE_MAIN) |
-> > -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0 BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE),
-> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0 BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE) |
-> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0 BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_10),
-> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .value =3D V4L2_MPEG_VID=
-EO_HEVC_PROFILE_MAIN,
-> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .hfi_id =3D HFI_PROP_PRO=
-FILE,
-> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .flags =3D CAP_FLAG_OUTP=
-UT_PORT | CAP_FLAG_MENU,
-> >=20
-> > But the gstreamer I'm using is too old and doesn't support P010... upda=
-ting but it should work now,
-> > and I'll test the QC10 in the same time.
->=20
-> Tested with gstreamer git, it works fine now with P010.
->=20
-> But I applied the QC10 change, but how am I supposed to test it ?
->=20
-> The QC formats seems to be detected and the right modifier is used:
-> 0:00:07.231474967     296677     296852 INFO                    v4l2 gstv=
-4l2object.c:5544:gst_v4l2_object_probe_caps:<v4l2h265dec0:src> probed caps:=
- video/x-raw(memory:DMABuf), format=3D(string)DMA_DRM, drm-format=3D(string=
-){ NV12:0x0500000000000001, NV12 }, width=3D(int)[ 96, 8192 ], height=3D(in=
-t)[ 96, 8192 ], framerate=3D(fraction)[ 0/1, 2147483647/1 ], pixel-aspect-r=
-atio=3D(fraction)1/1, colorimetry=3D(string){ bt601, 1:4:16:3, smpte240m, b=
-t709, 1:3:5:1, 2:4:5:2, 2:4:5:3, 1:4:5:3, 1:4:7:1, 2:4:7:1, 2:4:12:8, bt202=
-0, bt2100-pq, 2:0:0:0 }; video/x-raw, format=3D(string)NV12, width=3D(int)[=
- 96, 8192 ], height=3D(int)[ 96, 8192 ], framerate=3D(fraction)[ 0/1, 21474=
-83647/1 ], pixel-aspect-ratio=3D(fraction)1/1, colorimetry=3D(string){ bt60=
-1, 1:4:16:3, smpte240m, bt709, 1:3:5:1, 2:4:5:2, 2:4:5:3, 1:4:5:3, 1:4:7:1,=
- 2:4:7:1, 2:4:12:8, bt2020, bt2100-pq, 2:0:0:0 }; video/x-raw(memory:DMABuf=
-), format=3D(string)DMA_DRM, drm-format=3D(string){ NV12:0x0500000000000001=
-, NV12 }, width=3D(int)[ 96, 8192 ], height=3D(int)[ 96, 8192 ], framerate=
-=3D(fraction)[ 0/1, 2147483647/1 ], pixel-aspect-ratio=3D(fraction)1/1; vid=
-eo/x-raw, format=3D(string)NV12, width=3D(int)[ 96, 8192 ], height=3D(int)[=
- 96, 8192 ], framerate=3D(fraction)[ 0/1, 2147483647/1 ], pixel-aspect-rati=
-o=3D(fraction)1/1
-> 0:00:07.224200523     304189     304365 INFO                    v4l2 gstv=
-4l2object.c:5544:gst_v4l2_object_probe_caps:<v4l2h265dec0:src> probed caps:=
- video/x-raw(memory:DMABuf), format=3D(string)DMA_DRM, drm-format=3D(string=
-){ P010, P010:0x0500000000000001 }, width=3D(int)[ 96, 8192 ], height=3D(in=
-t)[ 96, 8192 ], framerate=3D(fraction)[ 0/1, 2147483647/1 ], pixel-aspect-r=
-atio=3D(fraction)1/1, colorimetry=3D(string){ bt601, 1:4:16:3, smpte240m, b=
-t709, 1:3:5:1, 2:4:5:2, 2:4:5:3, 1:4:5:3, 1:4:7:1, 2:4:7:1, 2:4:12:8, bt202=
-0, bt2100-pq, 2:0:0:0 }; video/x-raw, format=3D(string)P010_10LE, width=3D(=
-int)[ 96, 8192 ], height=3D(int)[ 96, 8192 ], framerate=3D(fraction)[ 0/1, =
-2147483647/1 ], pixel-aspect-ratio=3D(fraction)1/1, colorimetry=3D(string){=
- bt601, 1:4:16:3, smpte240m, bt709, 1:3:5:1, 2:4:5:2, 2:4:5:3, 1:4:5:3, 1:4=
-:7:1, 2:4:7:1, 2:4:12:8, bt2020, bt2100-pq, 2:0:0:0 }; video/x-raw(memory:D=
-MABuf), format=3D(string)DMA_DRM, drm-format=3D(string){ P010, P010:0x05000=
-00000000001 }, width=3D(int)[ 96, 8192 ], height=3D(int)[ 96, 8192 ], frame=
-rate=3D(fraction)[ 0/1, 2147483647/1 ], pixel-aspect-ratio=3D(fraction)1/1;=
- video/x-raw, format=3D(string)P010_10LE, width=3D(int)[ 96, 8192 ], height=
-=3D(int)[ 96, 8192 ], framerate=3D(fraction)[ 0/1, 2147483647/1 ], pixel-as=
-pect-ratio=3D(fraction)1/1
->=20
-> But what's the proper way to validate ? I've been unable to run kmssink s=
-o far.
+On Fri, Apr 10, 2026 at 05:33:37PM +0800, Yongxing Mou wrote:
+> The bridge .mode_set() callback is deprecated. Remove it and move all
+> mode setup logic to .atomic_enable(), where the adjusted_mode is
+> available from the atomic CRTC state.
+> 
+> Drop msm_dp_mode from msm_dp_display_private and store the mode directly
+> in the panel, as it was only used as a temporary cache. Both changes are
+> limited to msm_dp_display_set_mode and are kept in a single patch.
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 81 ++++++++++++++-----------------------
+>  drivers/gpu/drm/msm/dp/dp_drm.c     |  2 -
+>  drivers/gpu/drm/msm/dp/dp_drm.h     |  3 --
+>  3 files changed, 31 insertions(+), 55 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index e28cc1bbb5b1..e9f0b96c3ebd 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -63,7 +63,6 @@ struct msm_dp_display_private {
+>  	struct msm_dp_panel   *panel;
+>  	struct msm_dp_ctrl    *ctrl;
+>  
+> -	struct msm_dp_display_mode msm_dp_mode;
+>  	struct msm_dp msm_dp_display;
+>  
+>  	/* wait for audio signaling */
+> @@ -593,16 +592,33 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
+>  }
+>  
+>  static int msm_dp_display_set_mode(struct msm_dp *msm_dp_display,
+> -			       struct msm_dp_display_mode *mode)
+> +				   const struct drm_display_mode *adjusted_mode,
+> +				   struct msm_dp_panel *msm_dp_panel)
+>  {
+>  	struct msm_dp_display_private *dp;
+> +	u32 bpp;
+>  
+>  	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+>  
+> -	drm_mode_copy(&dp->panel->msm_dp_mode.drm_mode, &mode->drm_mode);
+> -	dp->panel->msm_dp_mode.bpp = mode->bpp;
+> -	dp->panel->msm_dp_mode.out_fmt_is_yuv_420 = mode->out_fmt_is_yuv_420;
+> -	msm_dp_panel_init_panel_info(dp->panel);
+> +	drm_mode_copy(&msm_dp_panel->msm_dp_mode.drm_mode, adjusted_mode);
+> +	if (msm_dp_display_check_video_test(msm_dp_display))
+> +		bpp = msm_dp_display_get_test_bpp(msm_dp_display);
+> +	else
+> +		bpp = msm_dp_panel->connector->display_info.bpc * 3;
+> +
+> +	msm_dp_panel->msm_dp_mode.bpp = bpp ? bpp : 24; /* Default bpp */
+> +	msm_dp_panel->msm_dp_mode.v_active_low =
+> +		!!(adjusted_mode->flags & DRM_MODE_FLAG_NVSYNC);
+> +	msm_dp_panel->msm_dp_mode.h_active_low =
+> +		!!(adjusted_mode->flags & DRM_MODE_FLAG_NHSYNC);
+> +	msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420 =
+> +		drm_mode_is_420_only(&msm_dp_panel->connector->display_info, adjusted_mode) &&
+> +		msm_dp_panel->vsc_sdp_supported;
 
-Unfrotunately the easiest way would be to get it to work with the
-kmssink (or to dump the raw buffers and then get them displayed
-manually).
+We need to stop poking into the msm_dp_panel internals. would you mind
+changing the code to pass the mode to msm_dp_panel_init_panel_info()? It
+can be the next patch in the series.
 
---=20
+Nevertheless,
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+
+> +	msm_dp_panel_init_panel_info(msm_dp_panel);
+> +
+> +	/* populate wide_bus_support to different layers */
+> +	dp->ctrl->wide_bus_en =
+> +		msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420 ? false : dp->wide_bus_supported;
+>  	return 0;
+>  }
+>  
+> @@ -1305,7 +1321,7 @@ bool msm_dp_wide_bus_available(const struct msm_dp *msm_dp_display)
+>  
+>  	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+>  
+> -	if (dp->msm_dp_mode.out_fmt_is_yuv_420)
+> +	if (dp->panel->msm_dp_mode.out_fmt_is_yuv_420)
+>  		return false;
+>  
+>  	return dp->wide_bus_supported;
+> @@ -1361,15 +1377,19 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+>  {
+>  	struct msm_dp_bridge *msm_dp_bridge = to_dp_bridge(drm_bridge);
+>  	struct msm_dp *dp = msm_dp_bridge->msm_dp_display;
+> +	struct drm_crtc *crtc;
+> +	struct drm_crtc_state *crtc_state;
+>  	int rc = 0;
+>  	struct msm_dp_display_private *msm_dp_display;
+>  	bool force_link_train = false;
+>  
+>  	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+> -	if (!msm_dp_display->msm_dp_mode.drm_mode.clock) {
+> -		DRM_ERROR("invalid params\n");
+> +
+> +	crtc = drm_atomic_get_new_crtc_for_encoder(state,
+> +						   drm_bridge->encoder);
+> +	if (!crtc)
+>  		return;
+> -	}
+> +	crtc_state = drm_atomic_get_new_crtc_state(state, crtc);
+>  
+>  	if (dp->is_edp)
+>  		msm_dp_hpd_plug_handle(msm_dp_display);
+> @@ -1382,7 +1402,7 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+>  	if (msm_dp_display->link->sink_count == 0)
+>  		return;
+>  
+> -	rc = msm_dp_display_set_mode(dp, &msm_dp_display->msm_dp_mode);
+> +	rc = msm_dp_display_set_mode(dp, &crtc_state->adjusted_mode, msm_dp_display->panel);
+>  	if (rc) {
+>  		DRM_ERROR("Failed to perform a mode set, rc=%d\n", rc);
+>  		return;
+> @@ -1440,45 +1460,6 @@ void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
+>  	pm_runtime_put_sync(&dp->pdev->dev);
+>  }
+>  
+> -void msm_dp_bridge_mode_set(struct drm_bridge *drm_bridge,
+> -			const struct drm_display_mode *mode,
+> -			const struct drm_display_mode *adjusted_mode)
+> -{
+> -	struct msm_dp_bridge *msm_dp_bridge = to_dp_bridge(drm_bridge);
+> -	struct msm_dp *dp = msm_dp_bridge->msm_dp_display;
+> -	struct msm_dp_display_private *msm_dp_display;
+> -	struct msm_dp_panel *msm_dp_panel;
+> -
+> -	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+> -	msm_dp_panel = msm_dp_display->panel;
+> -
+> -	memset(&msm_dp_display->msm_dp_mode, 0x0, sizeof(struct msm_dp_display_mode));
+> -
+> -	if (msm_dp_display_check_video_test(dp))
+> -		msm_dp_display->msm_dp_mode.bpp = msm_dp_display_get_test_bpp(dp);
+> -	else /* Default num_components per pixel = 3 */
+> -		msm_dp_display->msm_dp_mode.bpp = dp->connector->display_info.bpc * 3;
+> -
+> -	if (!msm_dp_display->msm_dp_mode.bpp)
+> -		msm_dp_display->msm_dp_mode.bpp = 24; /* Default bpp */
+> -
+> -	drm_mode_copy(&msm_dp_display->msm_dp_mode.drm_mode, adjusted_mode);
+> -
+> -	msm_dp_display->msm_dp_mode.v_active_low =
+> -		!!(msm_dp_display->msm_dp_mode.drm_mode.flags & DRM_MODE_FLAG_NVSYNC);
+> -
+> -	msm_dp_display->msm_dp_mode.h_active_low =
+> -		!!(msm_dp_display->msm_dp_mode.drm_mode.flags & DRM_MODE_FLAG_NHSYNC);
+> -
+> -	msm_dp_display->msm_dp_mode.out_fmt_is_yuv_420 =
+> -		drm_mode_is_420_only(&dp->connector->display_info, adjusted_mode) &&
+> -		msm_dp_panel->vsc_sdp_supported;
+> -
+> -	/* populate wide_bus_support to different layers */
+> -	msm_dp_display->ctrl->wide_bus_en =
+> -		msm_dp_display->msm_dp_mode.out_fmt_is_yuv_420 ? false : msm_dp_display->wide_bus_supported;
+> -}
+> -
+>  void msm_dp_bridge_hpd_enable(struct drm_bridge *bridge)
+>  {
+>  	struct msm_dp_bridge *msm_dp_bridge = to_dp_bridge(bridge);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+> index 8dc0dabd275c..af3d3e3a2d84 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+> @@ -56,7 +56,6 @@ static const struct drm_bridge_funcs msm_dp_bridge_ops = {
+>  	.atomic_enable          = msm_dp_bridge_atomic_enable,
+>  	.atomic_disable         = msm_dp_bridge_atomic_disable,
+>  	.atomic_post_disable    = msm_dp_bridge_atomic_post_disable,
+> -	.mode_set     = msm_dp_bridge_mode_set,
+>  	.mode_valid   = msm_dp_bridge_mode_valid,
+>  	.get_modes    = msm_dp_bridge_get_modes,
+>  	.detect       = msm_dp_bridge_detect,
+> @@ -233,7 +232,6 @@ static const struct drm_bridge_funcs msm_edp_bridge_ops = {
+>  	.atomic_enable = msm_edp_bridge_atomic_enable,
+>  	.atomic_disable = msm_edp_bridge_atomic_disable,
+>  	.atomic_post_disable = msm_edp_bridge_atomic_post_disable,
+> -	.mode_set = msm_dp_bridge_mode_set,
+>  	.mode_valid = msm_edp_bridge_mode_valid,
+>  	.atomic_reset = drm_atomic_helper_bridge_reset,
+>  	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
+> diff --git a/drivers/gpu/drm/msm/dp/dp_drm.h b/drivers/gpu/drm/msm/dp/dp_drm.h
+> index 6c0426803d78..6d4cbb9f3918 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_drm.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_drm.h
+> @@ -36,9 +36,6 @@ void msm_dp_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
+>  enum drm_mode_status msm_dp_bridge_mode_valid(struct drm_bridge *bridge,
+>  					  const struct drm_display_info *info,
+>  					  const struct drm_display_mode *mode);
+> -void msm_dp_bridge_mode_set(struct drm_bridge *drm_bridge,
+> -			const struct drm_display_mode *mode,
+> -			const struct drm_display_mode *adjusted_mode);
+>  void msm_dp_bridge_hpd_enable(struct drm_bridge *bridge);
+>  void msm_dp_bridge_hpd_disable(struct drm_bridge *bridge);
+>  void msm_dp_bridge_hpd_notify(struct drm_bridge *bridge,
+> 
+> -- 
+> 2.43.0
+> 
+
+-- 
 With best wishes
 Dmitry
 
