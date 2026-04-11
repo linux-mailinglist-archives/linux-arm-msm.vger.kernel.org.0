@@ -1,101 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-102817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qIGPCvyf2mnR4QgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 21:24:44 +0200
+	id oIShFgah2mnR4QgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 21:29:10 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75FF03E17CD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 21:24:43 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF9AC3E1848
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 21:29:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1A3A6300BCA4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 19:24:42 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8FA44305659A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 19:27:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16E773BA24B;
-	Sat, 11 Apr 2026 19:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97FD13BBA1B;
+	Sat, 11 Apr 2026 19:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CxZvdNvo";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="j6Jih4BR"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Pu1+1z9a";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ieyBigGm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7010F3BB9E1
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 19:24:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD23F36C9CC
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 19:26:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775935480; cv=none; b=rIQuaOlHbBGH5wWknxX/Q58s+RBLy9+LpTqGt49rpn1Adhv1hC4EP5nUqOrLEAojEB2vRSq3kWxntsFhpL5Y+HU63th4c8rsoZDcPvSen1Ntz/9gu7F4H45keGpLwZukNi+WBCNBCodyz380n3DYVL7PEGUVrkT9dxuELGlCI2g=
+	t=1775935618; cv=none; b=ezc+tHd+6lhhmF0tCwxMbyr2Zhxjav9CwI0MIcEHrygJogCcou45KBsNVoMFKHSf0JItYCb8WTsVpO2SIfUR8H2UroOjl5M+IV9We/M3U0fdqnxdzUdm+ne9wZszMIeutmfmDbVrlQPIcsQvnTP3Do7uEok833W7cCJESM9RC/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775935480; c=relaxed/simple;
-	bh=SqfSWZGo3Zh5fHCTSozENe4qDnKcyLLUwyC3HaptIt0=;
+	s=arc-20240116; t=1775935618; c=relaxed/simple;
+	bh=CIeGBEbkd+27xf1c5e9mW0TfQ5k5knNImaACCVFTL9M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gYvUhlmBBAtt6Wbykqrht9AU413XuLkFr90OG2is3GbWBIODLewtCYBhrlw1F76q8k9sEvMmR2ClpAAJqK3skZlMKC/SQ0Frp0d1OPkxdWLl+5RiWBTsyiKKBTB8EXrdCuzt23moO9+Aq4I7ukcwxZ+C2CsFDGbbaZtKEiH63sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CxZvdNvo; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=j6Jih4BR; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=UbzOLmKreonHDMPCeIPz+FT7myH2XBcqPJATiwfKJlSYYIdhPQLKFw6K2824Y6neOdvLSxvK2bGYXJDb7++ahm7JRKf7zn0FKbsqkhvPiu2xTj2xcv4Ncv95S954Zb51jHdIbWJkiHjlzAXIbudBGj1zNxaS4AJ2FguwFeClaBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Pu1+1z9a; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ieyBigGm; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63B47iw81200641
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 19:24:38 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63B7unPM3336391
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 19:26:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=84UcgAE8IEkLDuyxu5eeS545
-	SDEHrHAhWdpX3MeZnHU=; b=CxZvdNvoJorZZMsJ1Am/zd2/dVNUP65Cd7hwPoNU
-	LPwRy7GNbTrLtcMPyjPnXcJy+Mar7DIL6Ve4oDCPqsZzV2Ebi0MuYaJWCa1afxjJ
-	yYKM8s+V6SiQm7/0ieZ0APJ4j1kctKX37HtR6dLNTiIP4OqFmcYRlMSyl2ZutLGE
-	vD18IiGoZnZScUCaK5a7Ltm2ndlmvhUha/061brh1rJGqeA4m2Z/Pr4G8ypqOVWi
-	hK1BDJDkeKbp0AKk7PK0EUq3mLsS5YxqgrJjWZeNBi/gzJhczAq0YfjDS7ZUBO0M
-	zpUotgt5C1knVeF6k+W6cLcujc38b0vNBLOhaGdTz9JyeQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dff0js8dq-1
+	:references:subject:to; s=qcppdkim1; bh=E3IcyDvJ1i17Lur9ph/QOElg
+	Ara1tTa7mfLQQ9nB/dg=; b=Pu1+1z9aL8b3lpAvgh09k2u/i2B9Fe/vxdR1KnEP
+	AFovKI/USbqsdyIARr/OGiXOIjj+3f0XqFpIgNmONx4lv3DOkxQZJ5S15Dj341WE
+	duZNfU6o8ff0AdQhcmimPnnjamYmkDVKDycbYpuTj6Up4XgheVwbnqeadDXmPnj2
+	65pwN4wr6WfXCWrz5Y1qezC8UeJS8jw/0r43WF1zrrpCp3/jlyZ+ar5x7XUyrDGJ
+	LcUa5qjKclHuO1BCclTKQZ8+y0nclmtDwK3c1FJuMeoR9GkkQDNPosis02dWvC5u
+	eKnQU0x/MZ41uIiaqPWqHLXrjhDOg3WP5C73k8k7b3J2Mg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dfjbp8xv4-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 19:24:38 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-50b4661881eso35491961cf.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 12:24:38 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 19:26:54 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8d654ade33aso702376685a.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 12:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1775935477; x=1776540277; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1775935614; x=1776540414; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=84UcgAE8IEkLDuyxu5eeS545SDEHrHAhWdpX3MeZnHU=;
-        b=j6Jih4BRo5tPonmm3PKVt3sCWqAM6jB7JtfrvPuTqD5spzdSWG//u68XELqvC+AHlf
-         mpMYr6hx5VCL0af17kMBuGsuFPW2SFlFF2H0vzBX6UBIrI0YK8RxSCO2xd9igfk8syCT
-         4xA4eSu2giiVQ1S+J95rFNWoh8Ak69gro+l1R7kbCTQnsx89yOaFAXbevxjxOMFZ8qD/
-         6E4T/C4QZgaMHMIfmp8d+5RY5cmZ25nK2xpcOSr2ZoV7hPCnGq63UWckYjB6S3Y7TI5I
-         L21O70/OEW23fnlcjSj/rMtPvxameNdA6N0m8lmP9nR7apo5Whda112QJHOi407Oge0M
-         G1Bw==
+        bh=E3IcyDvJ1i17Lur9ph/QOElgAra1tTa7mfLQQ9nB/dg=;
+        b=ieyBigGmKXqy7Lb+yJfWuPLcnealcQDT7XlAnDxheWoISCXxQ1/J0cREJAdTKp4aY8
+         o7nnKi9IiBS8WR/SAs9t98akxelZB47SvjrgqQHcmDq7iuyStz2Luw3nNV9+DivX7aG0
+         MBy/B/h/+/sqA6zCLBeiWWjayoZI6aoqncq8q0vqGunOUMnlhjKyCqhiju4C7BX0Y/DM
+         TUVvb98752JvA7Um0aLEHJTJYeaFQkFLE6kTvoELxBz8Wddu+0u4KZHmek6S2D8wJddk
+         MaUgkFPWWfIZkQOp8RG/xUv601b3UkwqenDwNUShbODcZ3jCqjXz0Y1YfOQO+WF2FdR+
+         LA7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775935477; x=1776540277;
+        d=1e100.net; s=20251104; t=1775935614; x=1776540414;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=84UcgAE8IEkLDuyxu5eeS545SDEHrHAhWdpX3MeZnHU=;
-        b=huN/bIAWr8yJuMipQRvOjp7qsBIFq8zIBIz6MAu1D+aVR30pJ+rTrmgri1t56/cMWW
-         e6LvOYP28JEWMp0yz08XDxnyqgxzVKSdQngf+ag3xCo7M8Wnk6bSX6l3uI+ITezYbRr4
-         ipBcPIP+yeYzTTpFzjmUNE1xYVA+J89JrYqsLkRe+K9/RAnk3RA6qSIwu5Ay0lcwTwrk
-         kl9sNG/v+w7QGETQZIr4JS+c3OLx2tEZjI4UCtCWfR2E6hKAYEec1/PgMDWZmNShPpVO
-         O1BSg8fnjZROw9heict0luPTrvP239LWMehOeTRypcjl41U899luN2h7To4jH7SFVIC6
-         Tf0w==
-X-Forwarded-Encrypted: i=1; AJvYcCUrp7jRyRIR/h/i8QsWaC1GoIJVcPpDTSIp27PfIXo24IzJYtStCC3QCzo6h3a0A0729GmylIcKlqMaM0Y7@vger.kernel.org
-X-Gm-Message-State: AOJu0YymP3HGO9T2en3oLPEFN/HCwT8v8Pq6uOhiO3O+b1Mmhjl6llrp
-	xXrHfS8G5um3bc/m4+8uive3vviFVMN7liUJMnO6DLb3s+I+CfcVUY+lypcGEFUmVSxanD4nMHv
-	7H4T4GHfWBE52dm4rC2ZeqSvTXMi4n3rp7ElUcMN/OY+7vq7IW/FVkQ2WmOnfGNhIRKO6
-X-Gm-Gg: AeBDiev7wN+TPE3PfI0jRYG7plcHz8y2Ne7ddJw9t7PL5wo6XsUsSUOgkTYT5WVZoIz
-	8YmdHjLA55bf9ylr9CO1moh2U9n+nEqHmZJeEh7QqFzNHlU7MwK8bReXivtImxHpY3Trgg/9kQB
-	4fj0BWL4a/uH6ZPD29szDP0kQzQSp1XhS01hm2VoOfc5TzWNju/FQ5iND7sFxA2QOHHSkUGIIDP
-	GY79GUKysdYxT4ftA0GW3Leutf/5fdjrfM6PMgsDLJt2JQUKGpLoC2CB1Kmk8RKmfEwpeXbp28B
-	4VQD3h/M6icKK0B/ZtHNrJJfVkXZqRXwHjmqDtIU09yYG1l2OhT4ioap7CZn0m4a/Ft1BtaacBV
-	EvwbDXtLzocK29d1df0o8c4i161cZCLfvoZdk0IQ9nZGn06jRmsSihm9Bi3FpCrhbQ27/O8U4GY
-	DjPydiP63GvYq0IgHpiBi3WXxM0Qqh7HV5qrM=
-X-Received: by 2002:a05:622a:241:b0:50d:a602:1263 with SMTP id d75a77b69052e-50dd5c43411mr111031471cf.63.1775935477392;
-        Sat, 11 Apr 2026 12:24:37 -0700 (PDT)
-X-Received: by 2002:a05:622a:241:b0:50d:a602:1263 with SMTP id d75a77b69052e-50dd5c43411mr111031191cf.63.1775935476868;
-        Sat, 11 Apr 2026 12:24:36 -0700 (PDT)
+        bh=E3IcyDvJ1i17Lur9ph/QOElgAra1tTa7mfLQQ9nB/dg=;
+        b=cHfwRrG9kU+KFR+FO7WB/pK1sOiqG1Z+7s32eYN9DIrvT3A3j8jaNOyVjiW2r8qztD
+         2O5UaWgRaMa6cYLnbUyn0b+AtELYYhAFDk8ymT6iglDiBuNmyKZCfSbOFBhPNJ6XReuQ
+         ZEzNIHlzC+QVSuqVMZNZLRW15zukNfeqL2bKw16psMuWhF7Dc2EUdRJk/JV9cBebxWtD
+         08FsG8BBCtOMMch0BET06p2OVRUm59W97BW9qtReYBkvFY/0Q6Z1tX2osdseEr93i9OE
+         Sj1Utv70pMWU8bXyHWM81IuVK8AiD4Fdc1eINIwZEiG3HM1+DztOlxWxAJKfwPOyegV5
+         bsKA==
+X-Forwarded-Encrypted: i=1; AJvYcCVreqHjrv5miO9gHeNowGEpf/iJM515eJuzzY+E8pM46YJfVOm5D83n8953W4kqy1xuh4crZtnshGt5L4US@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw36TGdpx/Iwv7VlnPnsWxZqU86zY6oKMZBHhBArzyB4lGCg71o
+	xADC+vROt7tIPgdT7ku3pRC/WNbq4fAso+wlAS//OON2d5RRg1syH3/kD1W/Nk/b9O49LcnAejI
+	C0IivU1tiOMEPh6+SjdPp/BKZL4svG9cD6TKeJtxNf/S3xqDaR6taeOdTreK4Q9lBbJZQ
+X-Gm-Gg: AeBDieuowN/cwGJC+eXXgLD9uhDWxQewKAdXUCdCfW+AIpeC5G5VF/LIcNiYZjstOnl
+	K6cGmtw8lkSaFJ7f8GpQ4ooqmdCFdCwGkVSZ0/DcI5g3ws6gdspXIFB8vuwbFFxDXiO6/FaBgBk
+	gjdvX97/J/3Zfuj7BzPHvpjAb4gg3RA6zZzVP0YVxrCSETXBK2TAEZ+yF0BvQkPMAVdXsugtYBi
+	Co+Qh0jeFQP04LTmJ2g0AcNmIcax004CYTh2eDiM8Au5NrOj2Gytj3os07MZgEm4/FAdathNc3K
+	xR1Jd+CQP2HTb7l0XmRekrs8M0N6R+RYUJfj/gnzAPliwdt4Ef9rcWmwiGKVQM7veEwyKWD66Md
+	AogozmFKZL+UB+L1q4bzgg1Ynxu4vPDrxUbEz2qtz5ybSsNFYDa7PBH/+RMqoyWmDj0K3+/oiOQ
+	XOmaHZBSb3xTEgAfIg0ZssG6crVkxvGgVBEKo=
+X-Received: by 2002:a05:622a:150:b0:509:5c6f:c0e with SMTP id d75a77b69052e-50dc1b85089mr154121961cf.37.1775935613934;
+        Sat, 11 Apr 2026 12:26:53 -0700 (PDT)
+X-Received: by 2002:a05:622a:150:b0:509:5c6f:c0e with SMTP id d75a77b69052e-50dc1b85089mr154121641cf.37.1775935613469;
+        Sat, 11 Apr 2026 12:26:53 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a3eef07991sm1592793e87.82.2026.04.11.12.24.35
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38e492710ccsm14248581fa.7.2026.04.11.12.26.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Apr 2026 12:24:35 -0700 (PDT)
-Date: Sat, 11 Apr 2026 22:24:34 +0300
+        Sat, 11 Apr 2026 12:26:52 -0700 (PDT)
+Date: Sat, 11 Apr 2026 22:26:50 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
@@ -105,13 +105,12 @@ Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
         Jessica Zhang <jesszhan0024@gmail.com>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: Re: [PATCH v4 22/39] drm/msm/dp: Add support for sending VCPF
- packets in DP controller
-Message-ID: <i6x7675n4neufglcjwneds6nehetclystyg3abosbdjkh25ub5@psdjsrfl6wek>
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 39/39] drm/msm/dp: Add MST stream support for
+ supported DP controllers
+Message-ID: <lo66frdojl4l244h4zvo3g7p6saonytsf2mej7cvuwp6qc3ejr@pjsy577o2e4d>
 References: <20260410-msm-dp-mst-v4-0-b20518dea8de@oss.qualcomm.com>
- <20260410-msm-dp-mst-v4-22-b20518dea8de@oss.qualcomm.com>
+ <20260410-msm-dp-mst-v4-39-b20518dea8de@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -120,47 +119,46 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260410-msm-dp-mst-v4-22-b20518dea8de@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDE3MiBTYWx0ZWRfX/ykUupR7Pwaf
- 948MFyg++7ccs1b9eX1+asC/IGaYEnb1sohzO+NexgiHZ9LeNVkzEdwRlU40aPpGYQ54nhyx5xU
- oWd/lCQTzcTefa9LjRmR79RoZPmDuuqur2joOjF1iw05nbTtjpma7jPC7TfnaLtozvCfN0LB8Nk
- YIIXSFMV4/9Z7ioOoHzESU4vTYIha/DDDjJMNn+pGT9QyGzMFiW4hvordP99l+VzrzCTn0/koyT
- cCP3GOo8KMGR7chPYDyAbfakxJZ1NMv2ht+VY1fgeKiBLBor2twJXX9mj64FZuwwrwkSXzUOwNN
- R8pcgaJd1oyOrQLOcXUZAudUKLOqivshz443+L53txdH0UovpXT9hWnjcWajxN41uME5RFk8Led
- AMuRwwFdp37EMV+cmA1IHLGPUlnmTyzmkoNTefQkhx/FK1r1aVlCh/GupKriTWss8GMtqffLCTw
- nfwqsB40ABwP31+Yyrw==
-X-Proofpoint-ORIG-GUID: -JPZsjs2ezhaUAudVaDvAipOs9a8nIS6
-X-Proofpoint-GUID: -JPZsjs2ezhaUAudVaDvAipOs9a8nIS6
-X-Authority-Analysis: v=2.4 cv=d/LFDxjE c=1 sm=1 tr=0 ts=69da9ff6 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+In-Reply-To: <20260410-msm-dp-mst-v4-39-b20518dea8de@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=PuijqQM3 c=1 sm=1 tr=0 ts=69daa07e cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=5d8QvkXpvjy1hx8jmZUA:9 a=CjuIK1q_8ugA:10
- a=a_PwQJl-kcHnX1M80qC6:22 a=TjNXssC_j7lpFel5tvFf:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=J3SxvE2sJgW6avChXnAA:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: 7iuXHq54PMx-oyoQk1CsctdmUCqJH8c5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDE3NCBTYWx0ZWRfX7N/eN2MUWZw5
+ kFavRV9ekI98COfqHq2vjnRwLwSV3//jr+yadaBaJVxIkgOb2LFS7tDCovqVf0YPmkpdp8hrP09
+ yd/jTZC4Cvs/wDZRC6GhuWxvAVGDDhHBuur/qr2fECluXX3te7zAE+UYL3EFvUi0QxbsfJ5tmzo
+ 4woBr46JcknROzBHlKBXvxg281RS0BNi71oFQ7wTpo5AKjKcIX+yCFhDEPFpNolWc5kHJy1JGD/
+ od6uePjSJ/WR6RqR+TNQFOgrnf2mOB14x1TnVXzpUgpAZGnGDBqcM1uHJRtsKkpu3yzNU/f2mL2
+ 4fjOPOMBJIwsv/SBIHjQnLUrSihzHDVx3rg+gwl6Hb1/MvSuG3mv3G2h/zsbHZQ2K67EjeYPpo7
+ ViRyYqHXzqrdMz9SuNwJAERZeuSEgpvu1a9XA033bpkU8DqMfF46e0HQuKJn2AwOz+jj7I8zJla
+ Bdnc9CIZiWkJM1MkHpw==
+X-Proofpoint-GUID: 7iuXHq54PMx-oyoQk1CsctdmUCqJH8c5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-11_05,2026-04-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 malwarescore=0 phishscore=0 priorityscore=1501
- bulkscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 spamscore=0 phishscore=0
+ malwarescore=0 clxscore=1015 impostorscore=0 adultscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604110172
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604110174
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-102817-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,poorly.run,somainline.org,gmail.com,ffwll.ch,vger.kernel.org,lists.freedesktop.org,quicinc.com];
+	TAGGED_FROM(0.00)[bounces-102818-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,poorly.run,somainline.org,gmail.com,ffwll.ch,vger.kernel.org,lists.freedesktop.org];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email,oss.qualcomm.com:dkim,qualcomm.com:dkim,qualcomm.com:email];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:dkim];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -171,218 +169,113 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 75FF03E17CD
+X-Rspamd-Queue-Id: CF9AC3E1848
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, Apr 10, 2026 at 05:33:57PM +0800, Yongxing Mou wrote:
-> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+On Fri, Apr 10, 2026 at 05:34:14PM +0800, Yongxing Mou wrote:
+> Enables MST support for MSM DP controllers that support it, allowing each
+> controller to handle up to two or four DisplayPort streams. All necessary
+> MST support code was already implemented in the previous series of patches.
+
+As I wrote earlier, we have this information in the DT. Please drop.
+
 > 
-> The VC Payload Fill (VCPF) sequence is inserted by the DP controller
-> when stream symbols are absent, typically before a stream is disabled.
-> This patch adds support for triggering the VCPF sequence in the MSM DP
-> controller.
-> 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 55 ++++++++++++++++++++++++++++++++++---
->  drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 +-
->  drivers/gpu/drm/msm/dp/dp_display.c |  2 +-
->  drivers/gpu/drm/msm/dp/dp_reg.h     |  5 ++++
->  4 files changed, 58 insertions(+), 6 deletions(-)
+>  drivers/gpu/drm/msm/dp/dp_display.c | 42 ++++++++++++++++++++++++-------------
+>  1 file changed, 28 insertions(+), 14 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index e64f81bc8c36..9907f2e56e65 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -65,9 +65,18 @@
->  	(PSR_UPDATE_MASK | PSR_CAPTURE_MASK | PSR_EXIT_MASK | \
->  	PSR_UPDATE_ERROR_MASK | PSR_WAKE_ERROR_MASK)
->  
-> +#define DP_INTERRUPT_STATUS5 \
-> +	(DP_INTR_DP0_VCPF_SENT | DP_INTR_DP1_VCPF_SENT)
-> +#define DP_INTERRUPT_STATUS5_MASK \
-> +	(DP_INTERRUPT_STATUS5 << DP_INTERRUPT_STATUS_MASK_SHIFT)
-> +
->  #define DP_CTRL_INTR_READY_FOR_VIDEO     BIT(0)
->  #define DP_CTRL_INTR_IDLE_PATTERN_SENT  BIT(3)
->  
-> +#define DP_DP0_PUSH_VCPF		BIT(12)
-> +#define DP_DP1_PUSH_VCPF		BIT(14)
-> +#define DP_MSTLINK_PUSH_VCPF		BIT(12)
-
-dp_reg.h, under corresponding registers.
-
-> +
->  #define MR_LINK_TRAINING1  0x8
->  #define MR_LINK_SYMBOL_ERM 0x80
->  #define MR_LINK_PRBS7 0x100
-> @@ -405,6 +414,8 @@ void msm_dp_ctrl_enable_irq(struct msm_dp_ctrl *msm_dp_ctrl)
->  			DP_INTERRUPT_STATUS1_MASK);
->  	msm_dp_write_ahb(ctrl, REG_DP_INTR_STATUS2,
->  			DP_INTERRUPT_STATUS2_MASK);
-> +	msm_dp_write_ahb(ctrl, REG_DP_INTR_STATUS5,
-> +			 DP_INTERRUPT_STATUS5_MASK);
->  }
->  
->  void msm_dp_ctrl_disable_irq(struct msm_dp_ctrl *msm_dp_ctrl)
-> @@ -414,6 +425,7 @@ void msm_dp_ctrl_disable_irq(struct msm_dp_ctrl *msm_dp_ctrl)
->  
->  	msm_dp_write_ahb(ctrl, REG_DP_INTR_STATUS, 0x00);
->  	msm_dp_write_ahb(ctrl, REG_DP_INTR_STATUS2, 0x00);
-> +	msm_dp_write_ahb(ctrl, REG_DP_INTR_STATUS5, 0x00);
->  }
->  
->  static u32 msm_dp_ctrl_get_psr_interrupt(struct msm_dp_ctrl_private *ctrl)
-> @@ -433,6 +445,20 @@ static void msm_dp_ctrl_config_psr_interrupt(struct msm_dp_ctrl_private *ctrl)
->  	msm_dp_write_ahb(ctrl, REG_DP_INTR_MASK4, DP_INTERRUPT_MASK4);
->  }
->  
-> +static u32 msm_dp_ctrl_get_mst_interrupt(struct msm_dp_ctrl_private *ctrl)
-> +{
-> +	u32 intr, intr_ack;
-> +
-> +	intr = msm_dp_read_ahb(ctrl, REG_DP_INTR_STATUS5);
-> +	intr &= ~DP_INTERRUPT_STATUS5_MASK;
-> +	intr_ack = (intr & DP_INTERRUPT_STATUS5)
-> +			<< DP_INTERRUPT_STATUS_ACK_SHIFT;
-> +	msm_dp_write_ahb(ctrl, REG_DP_INTR_STATUS5,
-> +			 intr_ack | DP_INTERRUPT_STATUS5_MASK);
-> +
-> +	return intr;
-> +}
-> +
->  static void msm_dp_ctrl_psr_mainlink_enable(struct msm_dp_ctrl_private *ctrl)
->  {
->  	u32 val;
-> @@ -516,14 +542,28 @@ static bool msm_dp_ctrl_mainlink_ready(struct msm_dp_ctrl_private *ctrl)
->  	return true;
->  }
->  
-> -void msm_dp_ctrl_push_idle(struct msm_dp_ctrl *msm_dp_ctrl)
-> +void msm_dp_ctrl_push_idle(struct msm_dp_ctrl *msm_dp_ctrl, struct msm_dp_panel *msm_dp_panel)
->  {
->  	struct msm_dp_ctrl_private *ctrl;
-> +	u32 state = 0x0;
->  
->  	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
->  
-> +	if (!ctrl->mst_active)
-> +		state |= DP_STATE_CTRL_PUSH_IDLE;
-> +	else if (msm_dp_panel->stream_id == DP_STREAM_0)
-> +		state |= DP_DP0_PUSH_VCPF;
-> +	else if (msm_dp_panel->stream_id == DP_STREAM_1)
-> +		state |= DP_DP1_PUSH_VCPF;
-> +	else
-> +		state |= DP_MSTLINK_PUSH_VCPF;
-> +
->  	reinit_completion(&ctrl->idle_comp);
-
-And there can't be two streams wanting to push idle at the same time? 
-
-> -	msm_dp_write_link(ctrl, 0, REG_DP_STATE_CTRL, DP_STATE_CTRL_PUSH_IDLE);
-> +
-> +	msm_dp_write_link(ctrl, msm_dp_panel->stream_id,
-> +			  msm_dp_panel->stream_id > 1 ?
-> +			  REG_DP_MSTLINK_STATE_CTRL : REG_DP_STATE_CTRL,
-> +			  state);
->  
->  	if (!wait_for_completion_timeout(&ctrl->idle_comp,
->  			IDLE_PATTERN_COMPLETION_TIMEOUT_JIFFIES))
-> @@ -2073,7 +2113,7 @@ void msm_dp_ctrl_set_psr(struct msm_dp_ctrl *msm_dp_ctrl, bool enter)
->  			return;
->  		}
->  
-> -		msm_dp_ctrl_push_idle(msm_dp_ctrl);
-> +		msm_dp_ctrl_push_idle(msm_dp_ctrl, ctrl->panel);
->  		msm_dp_write_link(ctrl, 0, REG_DP_STATE_CTRL, 0);
->  
->  		msm_dp_ctrl_psr_mainlink_disable(ctrl);
-> @@ -2183,7 +2223,7 @@ static int msm_dp_ctrl_link_maintenance(struct msm_dp_ctrl_private *ctrl)
->  	int ret = 0;
->  	int training_step = DP_TRAINING_NONE;
->  
-> -	msm_dp_ctrl_push_idle(&ctrl->msm_dp_ctrl);
-> +	msm_dp_ctrl_push_idle(&ctrl->msm_dp_ctrl, ctrl->panel);
-
-Which panel are we passing and why? It feels to me that we have two
-different cases, one for the MST stream and another one for the SST
-link. Can we handle them separately? (note: I might be wrong here,
-please correct me if I'm wrong).
-
->  
->  	ctrl->link->phy_params.p_level = 0;
->  	ctrl->link->phy_params.v_level = 0;
-> @@ -3005,6 +3045,13 @@ irqreturn_t msm_dp_ctrl_isr(struct msm_dp_ctrl *msm_dp_ctrl)
->  		ret = IRQ_HANDLED;
->  	}
->  
-> +	isr = msm_dp_ctrl_get_mst_interrupt(ctrl);
-> +	if (isr & (DP_INTR_DP0_VCPF_SENT | DP_INTR_DP1_VCPF_SENT)) {
-> +		drm_dbg_dp(ctrl->drm_dev, "vcpf sent\n");
-> +		complete(&ctrl->idle_comp);
-> +		ret = IRQ_HANDLED;
-> +	}
-> +
->  	/* DP aux isr */
->  	isr = msm_dp_ctrl_get_aux_interrupt(ctrl);
->  	if (isr)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> index c59338199399..cfe7e4496943 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
-> @@ -22,7 +22,7 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl,
->  int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train);
->  void msm_dp_ctrl_off_link(struct msm_dp_ctrl *msm_dp_ctrl);
->  void msm_dp_ctrl_off_pixel_clk(struct msm_dp_ctrl *msm_dp_ctrl, enum msm_dp_stream_id stream_id);
-> -void msm_dp_ctrl_push_idle(struct msm_dp_ctrl *msm_dp_ctrl);
-> +void msm_dp_ctrl_push_idle(struct msm_dp_ctrl *msm_dp_ctrl, struct msm_dp_panel *msm_dp_panel);
->  irqreturn_t msm_dp_ctrl_isr(struct msm_dp_ctrl *msm_dp_ctrl);
->  void msm_dp_ctrl_handle_sink_request(struct msm_dp_ctrl *msm_dp_ctrl);
->  struct msm_dp_ctrl *msm_dp_ctrl_get(struct device *dev,
 > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index e0bf4dffa6af..e8028402f748 100644
+> index ca89e20b7563..f632b4f64ccc 100644
 > --- a/drivers/gpu/drm/msm/dp/dp_display.c
 > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1557,7 +1557,7 @@ void msm_dp_display_atomic_disable(struct msm_dp *msm_dp_display)
+> @@ -107,16 +107,21 @@ struct msm_dp_desc {
+>  };
 >  
->  	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+>  static const struct msm_dp_desc msm_dp_desc_glymur[] = {
+> -	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+> -	{ .io_start = 0x0af5c000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+> -	{ .io_start = 0x0af64000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+> +	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true,
+> +	  .mst_streams = 2 },
+> +	{ .io_start = 0x0af5c000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true,
+> +	  .mst_streams = 2 },
+> +	{ .io_start = 0x0af64000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true,
+> +	  .mst_streams = 2 },
+>  	{ .io_start = 0x0af6c000, .id = MSM_DP_CONTROLLER_3, .wide_bus_supported = true },
+>  	{}
+>  };
 >  
-> -	msm_dp_ctrl_push_idle(dp->ctrl);
-> +	msm_dp_ctrl_push_idle(dp->ctrl, dp->panel);
->  	msm_dp_ctrl_mst_stream_channel_slot_setup(dp->ctrl);
->  	msm_dp_ctrl_mst_send_act(dp->ctrl);
->  }
-> diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
-> index 835a55446868..65695fcb48d0 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_reg.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_reg.h
-> @@ -42,9 +42,13 @@
->  #define DP_INTR_FRAME_END		BIT(6)
->  #define DP_INTR_CRC_UPDATED		BIT(9)
+>  static const struct msm_dp_desc msm_dp_desc_sa8775p[] = {
+> -	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+> -	{ .io_start = 0x0af5c000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+> +	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true,
+> +	  .mst_streams = 4},
+> +	{ .io_start = 0x0af5c000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true,
+> +	  .mst_streams = 2},
+>  	{ .io_start = 0x22154000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+>  	{ .io_start = 0x2215c000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+>  	{}
+> @@ -133,38 +138,47 @@ static const struct msm_dp_desc msm_dp_desc_sc7180[] = {
+>  };
 >  
-> +#define DP_INTR_DP0_VCPF_SENT		BIT(0)
-> +#define DP_INTR_DP1_VCPF_SENT		BIT(3)
-> +
->  #define REG_DP_INTR_STATUS3			(0x00000028)
+>  static const struct msm_dp_desc msm_dp_desc_sc7280[] = {
+> -	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+> +	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true,
+> +	  .mst_streams = 2 },
+>  	{ .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+>  	{}
+>  };
 >  
->  #define REG_DP_INTR_STATUS4			(0x0000002C)
-> +#define REG_DP_INTR_STATUS5			(0x00000034)
->  #define PSR_UPDATE_INT				(0x00000001)
->  #define PSR_CAPTURE_INT				(0x00000004)
->  #define PSR_EXIT_INT				(0x00000010)
-> @@ -356,6 +360,7 @@
->  #define REG_DP_DP0_RG				(0x000004F8)
->  #define REG_DP_DP1_RG				(0x000004FC)
+>  static const struct msm_dp_desc msm_dp_desc_sc8180x[] = {
+> -	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+> +	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true,
+> +	  .mst_streams = 2 },
+>  	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+>  	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+>  	{}
+>  };
 >  
-> +#define REG_DP_MSTLINK_STATE_CTRL		(0x00000000)
->  #define REG_DP_MSTLINK_CONFIGURATION_CTRL	(0x00000034)
->  #define REG_DP_MSTLINK_TIMESLOT_1_32		(0x00000038)
->  #define REG_DP_MSTLINK_TIMESLOT_33_63		(0x0000003C)
+>  static const struct msm_dp_desc msm_dp_desc_sc8280xp[] = {
+> -	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+> -	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+> +	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true,
+> +	  .mst_streams = 2},
+> +	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true,
+> +	  .mst_streams = 2},
+>  	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+>  	{ .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_3, .wide_bus_supported = true },
+> -	{ .io_start = 0x22090000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+> -	{ .io_start = 0x22098000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+> +	{ .io_start = 0x22090000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true,
+> +	  .mst_streams = 2},
+> +	{ .io_start = 0x22098000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true,
+> +	  .mst_streams = 2},
+>  	{ .io_start = 0x2209a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+>  	{ .io_start = 0x220a0000, .id = MSM_DP_CONTROLLER_3, .wide_bus_supported = true },
+>  	{}
+>  };
+>  
+>  static const struct msm_dp_desc msm_dp_desc_sm8650[] = {
+> -	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+> +	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true,
+> +	  .mst_streams = 2 },
+>  	{}
+>  };
+>  
+>  static const struct msm_dp_desc msm_dp_desc_x1e80100[] = {
+> -	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
+> -	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
+> +	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true,
+> +	  .mst_streams = 2},
+> +	{ .io_start = 0x0ae98000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true,
+> +	  .mst_streams = 2},
+>  	{ .io_start = 0x0ae9a000, .id = MSM_DP_CONTROLLER_2, .wide_bus_supported = true },
+>  	{ .io_start = 0x0aea0000, .id = MSM_DP_CONTROLLER_3, .wide_bus_supported = true },
+>  	{}
 > 
 > -- 
 > 2.43.0
