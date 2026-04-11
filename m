@@ -1,179 +1,425 @@
-Return-Path: <linux-arm-msm+bounces-102799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qjI0CKd92mlM3AgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 18:58:15 +0200
+	id CFeQFeGA2mlC3QgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 19:12:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B4F93E0F37
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 18:58:14 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF8453E0F86
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 19:12:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3D16230056ED
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 16:54:15 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5B9A630693D4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 17:10:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B555D176ADE;
-	Sat, 11 Apr 2026 16:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54EE53B95FF;
+	Sat, 11 Apr 2026 17:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="O2P6DHpx"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YSy8I1GR";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SFY7Qmo1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E961E98EF
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 16:54:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69E83559F5
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 17:10:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775926454; cv=none; b=YNmVt1US8yB2SftK3Qks7Rj/qKSsfNgiutzgeXpSuVyT3mC21cmeVXnlsOgOxG81nr/6+iW0e40sYMOjhBpHu2qTD5zBoD574rqcCqC9hIkU3fgtXhtKpAKcKfQmxy8t5ld2lLXzUoF3bHBTkMmksYaqodovaiCh7gs8zu+DOWU=
+	t=1775927452; cv=none; b=Wsvqv9UwOyrW7Q3rpp7m4DN1GtmdaiPEVSnW7H+X5c69E9tXsppkgNhqMYzkjT6Fkm2+enyefM3k51CWGo6xfGOPBJxH6acJrBzaTBmNtKUVZEI3aV6esAI7xi3MoscxEB3/6K8MNHkvH8w7+CF1OJh9GkEtJDrltp3UKjjAkBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775926454; c=relaxed/simple;
-	bh=Xy1i8/Vb4xb6aKipUIHhB8zyMf1+xp7IX2ZLwSpy02o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mv5YB3fM5uk7T6KZbwlyQ1dthQNUERUvrK7g3461KhnanutJsfdZe8Ifz7qWjOii0LNvV3vc+a8wqLTcLhtoBZIMY4ZQzHLzQ5VG4TXXmZXHyjJG0Ne6fWXORKOG1gUXK08Ath3EBKf4vt3hXDRJAhMQWCUSmEDJJXpbRoCXgB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=O2P6DHpx; arc=none smtp.client-ip=185.171.202.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 8EAA5C5C1B6;
-	Sat, 11 Apr 2026 16:54:43 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id A7CF460410;
-	Sat, 11 Apr 2026 16:54:07 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B20771045001C;
-	Sat, 11 Apr 2026 18:54:02 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1775926446; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=W5IQ24kdhXhWFFYvlmQCRDImAovTvZLPLnv6pYIeYaw=;
-	b=O2P6DHpxDPhELF4ajyXzJ3baTB1Crkn9mpVScIXAJh1f1yER+6tM+qlAi/O6zbvkhq8ZE7
-	MSD7AzrrFafxgfdscvfdd+DzWfAbsleaL7fw5HeZv7C7f2EffF8xxKE+y7DIoWNSza9cy5
-	XpMsCSlLdPEurUcOESQ/1Bu4sxviuiMlv3z1RGDSNx+ePzEICBr86OJJNwMTOmDOi8zwl6
-	7FUnckGuqk0E+0My5+hboi6MOIctauhJiN2oT9pkXIeV3XnEqHs01+whGp7EELaP0L/cQx
-	zft+htkqeKaLgwJAQ5TWWLcuyCrMaNzkbzJzdTpFbNgVHuAvENBfltu8kkETMA==
-Message-ID: <c37f182e-cbb4-4f0b-817a-759d39940212@bootlin.com>
-Date: Sat, 11 Apr 2026 18:54:01 +0200
+	s=arc-20240116; t=1775927452; c=relaxed/simple;
+	bh=GA1bi/Nl4FCTnvtyGgMqfY0giYa5H9BIz9GZFJeNdjc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kwh4fTDcYogHnqQenRTVbg6VI/MnkEpenTIhxnvB/v2F6maDJDtCRs4KmN+6run95BSU+kuae5z7PD84nl7AbHrvnLuxhDo1wSLr0pfJrFm4Y5I+zUCyeOiqTR3QyLEucRT0z/5MFlEmak8tis62kCxWaw4MzB1W2ZLiyeekBfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YSy8I1GR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SFY7Qmo1; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63BHAFYu788208
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 17:10:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	7fOy5saLzqfwg3hIv0WfrGPfqmVDqIwRz4fvh7DZbto=; b=YSy8I1GRr7JLiJjV
+	x/6ClavkHdhSKAsQ9O+Qqit/6EcdInAGkZNjcXVAAt8CAU+RDv2UmPL+IB2F2qj/
+	sLoeWYsE7a7Xkq+UkmZxIN9nDbsXkDawH/Kf2mXA5ID/PrCK8WP3FvDfO2z//gZ/
+	vePKYQVOMoOn5of7TNNKy0/kFsW2D6PNFvBGaAo+SDjbcrg0zOeXxX6vUk9W1dRS
+	zsb7dT/WLLTt2GEQCNwCVXESRdSIpCHD//qcXY7ON5zth4iOJS0P6FTkBflWz8Fs
+	tGFVZWCrVEqznWibYPJu8vY5y8+CZ3k01JIFAkCJky2Vmh3dKtUm26kbqY/nJAN0
+	R4BjbQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dfewks3uc-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 17:10:49 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-50b781542c1so62365501cf.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 10:10:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1775927448; x=1776532248; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7fOy5saLzqfwg3hIv0WfrGPfqmVDqIwRz4fvh7DZbto=;
+        b=SFY7Qmo1IT5bN34vCHqxDBnPj8vj60++ulSDen28DzbBOvDPA68c+grXkra3CMC6xD
+         MmEqsgsbHCrMHJuMjdE0EzgKrNOhpDYxjchrby5/Kd95Dyhcf20nMhFigxbzq0PDzbnW
+         kB+BNozvP6a3Hsmiy4WKOeiLUnULew3XOPbBaxH0DQbXBHpe+F2S8Fkrfd3fLbBU0lIC
+         agrYoFkagDOWr8MCLcBAGxEGZ7JAuALtZvfgpsuP+bqvherfiWNvxVJ2B37+AKK1JMBC
+         dTlEev65SbycMQdiOCBuO4VbaJF1m/eVfoSho3mRt/ZBglDLbk3PgR8RlZzI4Ltt/2o/
+         dXZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775927448; x=1776532248;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7fOy5saLzqfwg3hIv0WfrGPfqmVDqIwRz4fvh7DZbto=;
+        b=lSlmBD0FLF4Y/5Nd2Dr9sHdtZwf0SFZGe9rzn48yw+ueluuMAXjXwYJ8+Gia59TEtD
+         t+p9r/8gGfea3YypncDJt38PxXheJ6+l0LAkfkBxfmRT07NGN8Ze2cnpf1e8Nd4IRSHt
+         sj3nb1bIl7r3S6/OH/ZJS3Sej3PfC3fLAmS65zxBi4XmLXNO4jA5WyfXNN+t9q7D8n53
+         HBr48hFe2MkZiSkN+bv2vbM/TuZC4h2QfyDE/rWXvlf5ji0McrVEnWSxhtnxpwys250w
+         H1nhwx81svIYMXayx3TfhUwPbaj2DBNLIZgBwsT4KiP7Dp+LeO7+r3KCjyP2O1YmxWxq
+         8O2g==
+X-Forwarded-Encrypted: i=1; AJvYcCVNmlAFaYzzzABYg87N3V03hBHMlxcEav3kmLTZNok+aAzYrWpWIusNN3D6UfAahKO8Vh/ys/NmC39MeyiF@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWE2vo9mPaKzFGHWWr9q7NLlw9Kq1tsDHQPAg11/Il7eclLHWr
+	jlJcs3n5xuln9pI7QtBaBwerUMGZS9H6nbCSoHv7HWOG367PGaJJC4QgHnB7WAQJA94kdsEZ1ck
+	j3k8lS6tQzbTzWrQszK31sam29gBho0SXEz0UzkTCQeHER1TIUOoVIZXZsvP9PK2smqAPWjmuTj
+	ke
+X-Gm-Gg: AeBDiesI0RixpY+PVNQAY8nXDfti0U7gebj241RsDO7BjqW89iQcaSUl+gIsIH+eo5k
+	hGvAWYpMsg6mCKJRlzwM8aH5jzVqffgKAi13Py1dA7HJqUwoCWbmamZSSiBMC6U3PxjoEafmIEx
+	/pVhqRmuNV5kedNRqx0bm7CKOL0cE6v4BMU0B11qOHDg2C+KMi31K/gqqKbua5H4Gg437oAEPn1
+	2GAM7K04fYyAmJ7zK1yqIki8pK8HP5J+T7G7VMzG8o7IRbb7rrW5v2Tm2iIYwTbBuftYY46f7F6
+	k+kt4lVQEgvmNYxABCzYLFJOmuRuTLPht3LjmSL5yK996656Olo4+3WOfporxjQrriaXo4g4ko4
+	P+UQTwlNr7UsXcEsYE6JBKSKl3qG6LKDjSZDUGJcSS+llF81kDDdp/g+2uf1Pvse29yHio4O+Rs
+	imxiqgIva+y8edOht4ergXqaXVk2J4gV3awqQ=
+X-Received: by 2002:a05:622a:4a08:b0:50d:9174:cf27 with SMTP id d75a77b69052e-50dd5ada552mr108030091cf.20.1775927447783;
+        Sat, 11 Apr 2026 10:10:47 -0700 (PDT)
+X-Received: by 2002:a05:622a:4a08:b0:50d:9174:cf27 with SMTP id d75a77b69052e-50dd5ada552mr108029531cf.20.1775927447255;
+        Sat, 11 Apr 2026 10:10:47 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a3eeee120csm1495055e87.48.2026.04.11.10.10.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Apr 2026 10:10:46 -0700 (PDT)
+Date: Sat, 11 Apr 2026 20:10:43 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Nicolas Dufresne <nicolas@ndufresne.ca>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC 0/7] media: qcom: iris: add support for decoding
+ 10bit formats
+Message-ID: <434j4a4jln7abberxnrdd5fknpsca63irylpj4q74mvgsi7fkn@ipalraotc7h4>
+References: <20260408-topic-sm8x50-iris-10bit-decoding-v1-0-428c1ec2e3f3@linaro.org>
+ <b4uqpepf6caojxe463izkmnrlayrdrgce6jusak33ewcr5yd4w@ukwbo7zfphn2>
+ <454f0f277cbaee5774c25d34a33fc3bc478fa756.camel@ndufresne.ca>
+ <f9edc172-c26a-4fa1-bca2-425e74bcd90b@linaro.org>
+ <353933d7dc0821de180db2a8bae4b0d309ed4c25.camel@ndufresne.ca>
+ <43378eb2-8976-49fe-add6-c691d78c0ec6@linaro.org>
+ <a89f0047-e5e7-4409-bb6f-434f2b4501f3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net] net: phy: qcom: at803x: Use the correct bit to
- disable extended next page
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Jakub Kicinski <kuba@kernel.org>, davem@davemloft.net,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Simon Horman <horms@kernel.org>, Russell King <linux@armlinux.org.uk>,
- thomas.petazzoni@bootlin.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20260410171021.1277138-1-maxime.chevallier@bootlin.com>
- <4b386a4a-9743-4e79-8d3d-3576bb9de492@lunn.ch>
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Content-Language: en-US
-In-Reply-To: <4b386a4a-9743-4e79-8d3d-3576bb9de492@lunn.ch>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <a89f0047-e5e7-4409-bb6f-434f2b4501f3@linaro.org>
+X-Authority-Analysis: v=2.4 cv=bcFbluPB c=1 sm=1 tr=0 ts=69da8099 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
+ a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=L16fR37oqBIwrSETSwcA:9
+ a=wPNLvfGTeEIA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDE1MSBTYWx0ZWRfX3z3DYzHtxQa/
+ KMD4pVUYXoj67ULjOIbEvZhbttYCGZZgBlDlWzqPPcD3ISf9ctWv5hdk9c1zzsciP0tDSlc8XvN
+ mzS4/VTgQ1NVv8Ui4U/bVgPBygnBq2qCY1N9XapOVpU91CbUfAxFn6nsWVpSreHVe1j1LfS3Fkj
+ dVrrgJpkXmuAqxCq5OUYPfZVsCYDkGiphk4O3xDi6cNPKbwog97NmYOQDdFwH1QZzN0G58R4jJ1
+ gO9Habgkx98G7VBw5ymS+LKRR9DuQmxaC15p6pnJDb4D7OYnwKcJ2CAFkz+bVVYr3fIlsDQ8IOn
+ K071cyq/UJFnpT/J7+e8b2GNFeDMCcxT5qFQ9QqBOPL+hRuPZgzmLh/02BXRkmVp0JGzamwT3Vy
+ 6gfVj5H0Nw0KWFV4d+kSBBX9GRA0FMyqw0NKKLEdsIUwvA3aCP5/Hd+qWLVpX1Ohobv6Bd/ZTs/
+ pBaPQTxGeZhcwE8ziyw==
+X-Proofpoint-ORIG-GUID: Ak7SGbZdhWl-uiN-txKbwb6qyD4md3ev
+X-Proofpoint-GUID: Ak7SGbZdhWl-uiN-txKbwb6qyD4md3ev
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-11_04,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 clxscore=1015 impostorscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
+ definitions=main-2604110151
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
-	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[bootlin.com:+];
-	TAGGED_FROM(0.00)[bounces-102799-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-102800-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim,oss.qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[maxime.chevallier@bootlin.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:dkim,bootlin.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 6B4F93E0F37
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: BF8453E0F86
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Andrew,
+On Fri, Apr 10, 2026 at 06:25:55PM +0200, Neil Armstrong wrote:
+> On 4/10/26 14:00, Neil Armstrong wrote:
+> > On 4/9/26 15:19, Nicolas Dufresne wrote:
+> > > Le jeudi 09 avril 2026 =E0 09:36 +0200, Neil Armstrong a =E9crit=A0:
+> > > > Hi,
+> > > >=20
+> > > > On 4/9/26 03:04, Nicolas Dufresne wrote:
+> > > > > Hi,
+> > > > >=20
+> > > > > Le jeudi 09 avril 2026 =E0 03:02 +0300, Dmitry Baryshkov a =E9cri=
+t=A0:
+> > > > > > On Wed, Apr 08, 2026 at 06:43:53PM +0200, Neil Armstrong wrote:
+> > > > > > > This adds the plumbing to support decoding HEVC and AV1
+> > > > > > > streams into 10bit pixel formats, linear and compressed.
+> > > > > > >=20
+> > > > > > > This has only been tested on SM8650 with HEVC, and was inspir=
+ed by
+> > > > > > > Venus and the downstream vidc driver for the buffer
+> > > > > > > calculations and HFI messages.
+> > > > > > >=20
+> > > > > > > I was unable to get 10bit decoding working with Gstreamer
+> > > > > > > and ffmpeg, but v4l2-ctl works with:
+> > > > > >=20
+> > > > > > Any particular errors? I assume Gstreamer needs to be taught ab=
+out
+> > > > > > Q10C. But P010 should (hopefully) work.
+> > > > >=20
+> > > > > P010 should work for both Gst and FFMPEG, its probably a user err=
+or, or there is
+> > > > > a hidden bug in the driver that make it fail, v4l2-ctl is very pe=
+rmissive as it
+> > > > > simply dump to disk. You should provide an updated fluster score,=
+ so you have to
+> > > > > use one of these.
+> > > >=20
+> > > > I did run fluster and all main10 fails with Gstreamer and FFmpeg, I=
+ tried to manually
+> > > > run the gst and ffmpeg commands with v4l2-tracer and logs but I can=
+'t explain the reason,
+> > > > all returns from the driver seems valid but somehow they just error=
+ out with:
+> > > >=20
+> > > > FFmpeg:
+> > > > $ ffmpeg -c:v hevc_v4l2m2m -i Big_Buck_Bunny_1080_10s_30MB_main10.h=
+265 -y -f null -
+> > > > ...
+> > > > [hevc_v4l2m2m @ 0x55c0328aa0] Using device /dev/video-dec0
+> > > > [hevc_v4l2m2m @ 0x55c0328aa0] driver 'iris_driver' on card 'iris_de=
+coder' in mplane mode
+> > > > [hevc_v4l2m2m @ 0x55c0328aa0] requesting formats: output=3DHEVC/non=
+e capture=3DNV12/yuv420p10le
+> > > > ...
+> > > > [hevc_v4l2m2m @ 0x55c0328aa0] An invalid frame was output by a deco=
+der. This is a bug, please report it.
+> > > > [vist#0:0/hevc @ 0x55c02dc9b0] [dec:hevc_v4l2m2m @ 0x55c029d510] De=
+coding error: Internal bug, should not have happened
+> > > >=20
+> > >=20
+> > > This one needs further investigation for sure. This error can be vari=
+ous things,
+> > > and it requires going up to the v4l2 code to figure-out:
+> > >=20
+> > >=20
+> > > Case 1:
+> > > =A0=A0=A0=A0 if (!frame->buf[0] || frame->format < 0)
+> > > =A0=A0=A0=A0=A0=A0=A0=A0 goto fail;
+> > >=20
+> > > Case 2
+> > > =A0=A0=A0=A0=A0=A0=A0=A0 if (frame->width <=3D 0 || frame->height <=
+=3D 0)
+> > > =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 goto fail;
+> > >=20
+> > > But a quick look lead me to think it case 1 (frame->format < 0) since=
+ I don't
+> > > see P010 in the format map in ./libavcodec/v4l2_fmt.c (at least in ma=
+inline).
+> > > Its also missing support for any opaque format, in fact I believe the=
+ DMABuf/DRM
+> > > context is only in LibreELEC fork. But overall, it points toward ffmp=
+eg for this
+> > > error so far.
+> >=20
+> > Yeah I didn't find any ffmpeg for with P010 supported...
+> >=20
+> > >=20
+> > >=20
+> > > > The v4l2 trace shows a normal sequence with the driver returning P0=
+10 as G_FMT after the source change event,
+> > > > and the capture planes dequeued but for an unknown reason the buffe=
+r is rejected by ffmpeg.
+> > > >=20
+> > > > Gst:
+> > > > $ gst-launch-1.0 -v -m filesrc location=3DBig_Buck_Bunny_1080_10s_3=
+0MB_main10.h265 ! h265parse !=A0 v4l2h265dec ! tee ! fakevideosink
+> > > > Setting pipeline to PAUSED ...
+> > > > Pipeline is PREROLLING ...
+> > > > ...
+> > > > Got message #37 from element "h265parse0" (latency): no message det=
+ails
+> > > > ERROR: from element /GstPipeline:pipeline0/GstH265Parse:h265parse0:=
+ Internal data stream error.
+> > > > Redistribute latency...
+> > > > Additional debug info:
+> > > > ../gstreamer/subprojects/gstreamer/libs/gst/base/gstbaseparse.c(370=
+2): gst_base_parse_loop (): /GstPipeline:pipeline0/GstH265Parse:h265parse0:
+> > > > streaming stopped, reason not-negotiated (-4)
+> > > > Got message #39 from pad "h265parse0:src" (property-notify): ERROR:=
+ pipeline doesn't want to preroll.
+> > > > GstMessagePropertyNotify, property-name=3D(string)caps, property-va=
+lue=3D(GstCaps)"video/x-h265\,\ width\=3D\(int\)1920\,\ height\=3D\(int\)10=
+80\,\ framerate\=3D\(fraction\)30/1\,\ chroma-format\=3D\(string\)4:2:0\,\ =
+bit-depth-luma\=3D\(uint\)10\,\ bit-depth-chroma\=3D\(uint\)10\,\ parsed\=
+=3D\(boolean\)true\,\ stream-format\=3D\(string\)byte-stream\,\ alignment\=
+=3D\(string\)au\,\ pixel-aspect-ratio\=3D\(fraction\)1/1\,\ profile\=3D\(st=
+ring\)main-10\,\ tier\=3D\(string\)main\,\ level\=3D\(string\)4";
+> > > > /GstPipeline:pipeline0/GstH265Parse:h265parse0.GstPad:src: caps =3D=
+ video/x-h265, width=3D(int)1920, height=3D(int)1080, framerate=3D(fraction=
+)30/1, chroma-format=3D(string)4:2:0, bit-depth-luma=3D(uint)10, bit-depth-=
+chroma=3D(uint)10, parsed=3D(boolean)true, stream-format=3D(string)byte-str=
+eam, alignment=3D(string)au, pixel-aspect-ratio=3D(fraction)1/1, profile=3D=
+(string)main-10, tier=3D(string)main, level=3D(string)4
+> > > > ...
+> > >=20
+> > > There is not a lot of details here, but I would start looking into
+> > > V4L2_CID_MPEG_VIDEO_HEVC_PROFILE and V4L2_CID_MPEG_VIDEO_HEVC_LEVEL
+> > > implementation. GStreamer (and Chromium too) will refuse to use a dec=
+oder that
+> > > does not advertise the supported profile (though I see there is code =
+for that,
+> > > maybe its just some bug).
+> > >=20
+> > > >=20
+> > > > In this case OUTPUT is not STREAMON and no OUTPUT buffers are queue=
+d, so I wonder why this one fails....
+> > > >=20
+> > > > My gstreamer and ffmpeg foo is bad and I probably missed something =
+obvious...
+> > > >=20
+> > > >=20
+> > > You may get a different hint with more traces, just enabling general =
+warnings:
+> > >=20
+> > > =A0=A0 export GST_DEBUG=3D2
+> > >=20
+> > > Or the full V4L2 traces too:
+> > >=20
+> > > =A0=A0 export GST_DEBUG=3D"v4l2*:7,2"
+> > >=20
+> > >=20
+> > > I'm sure its just a bug (or two). Happy to help to find it.
+> >=20
+> > You were right, this did the trick:
+> > diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/dr=
+ivers/media/platform/qcom/iris/iris_platform_gen2.c
+> > index a9cdd93e77fd..debdd30a751e 100644
+> > --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> > +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> > @@ -56,9 +56,10 @@ static const struct platform_inst_fw_cap inst_fw_cap=
+_sm8550_dec[] =3D {
+> >  =A0=A0=A0=A0=A0=A0=A0 {
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .cap_id =3D PROFILE_HEVC,
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .min =3D V4L2_MPEG_VIDEO=
+_HEVC_PROFILE_MAIN,
+> > -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .max =3D V4L2_MPEG_VIDEO_HE=
+VC_PROFILE_MAIN_STILL_PICTURE,
+> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .max =3D V4L2_MPEG_VIDEO_HE=
+VC_PROFILE_MAIN_10,
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .step_or_mask =3D BIT(V4=
+L2_MPEG_VIDEO_HEVC_PROFILE_MAIN) |
+> > -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0 BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE),
+> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0 BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE) |
+> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0 BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_10),
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .value =3D V4L2_MPEG_VID=
+EO_HEVC_PROFILE_MAIN,
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .hfi_id =3D HFI_PROP_PRO=
+FILE,
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 .flags =3D CAP_FLAG_OUTP=
+UT_PORT | CAP_FLAG_MENU,
+> >=20
+> > But the gstreamer I'm using is too old and doesn't support P010... upda=
+ting but it should work now,
+> > and I'll test the QC10 in the same time.
+>=20
+> Tested with gstreamer git, it works fine now with P010.
+>=20
+> But I applied the QC10 change, but how am I supposed to test it ?
+>=20
+> The QC formats seems to be detected and the right modifier is used:
+> 0:00:07.231474967     296677     296852 INFO                    v4l2 gstv=
+4l2object.c:5544:gst_v4l2_object_probe_caps:<v4l2h265dec0:src> probed caps:=
+ video/x-raw(memory:DMABuf), format=3D(string)DMA_DRM, drm-format=3D(string=
+){ NV12:0x0500000000000001, NV12 }, width=3D(int)[ 96, 8192 ], height=3D(in=
+t)[ 96, 8192 ], framerate=3D(fraction)[ 0/1, 2147483647/1 ], pixel-aspect-r=
+atio=3D(fraction)1/1, colorimetry=3D(string){ bt601, 1:4:16:3, smpte240m, b=
+t709, 1:3:5:1, 2:4:5:2, 2:4:5:3, 1:4:5:3, 1:4:7:1, 2:4:7:1, 2:4:12:8, bt202=
+0, bt2100-pq, 2:0:0:0 }; video/x-raw, format=3D(string)NV12, width=3D(int)[=
+ 96, 8192 ], height=3D(int)[ 96, 8192 ], framerate=3D(fraction)[ 0/1, 21474=
+83647/1 ], pixel-aspect-ratio=3D(fraction)1/1, colorimetry=3D(string){ bt60=
+1, 1:4:16:3, smpte240m, bt709, 1:3:5:1, 2:4:5:2, 2:4:5:3, 1:4:5:3, 1:4:7:1,=
+ 2:4:7:1, 2:4:12:8, bt2020, bt2100-pq, 2:0:0:0 }; video/x-raw(memory:DMABuf=
+), format=3D(string)DMA_DRM, drm-format=3D(string){ NV12:0x0500000000000001=
+, NV12 }, width=3D(int)[ 96, 8192 ], height=3D(int)[ 96, 8192 ], framerate=
+=3D(fraction)[ 0/1, 2147483647/1 ], pixel-aspect-ratio=3D(fraction)1/1; vid=
+eo/x-raw, format=3D(string)NV12, width=3D(int)[ 96, 8192 ], height=3D(int)[=
+ 96, 8192 ], framerate=3D(fraction)[ 0/1, 2147483647/1 ], pixel-aspect-rati=
+o=3D(fraction)1/1
+> 0:00:07.224200523     304189     304365 INFO                    v4l2 gstv=
+4l2object.c:5544:gst_v4l2_object_probe_caps:<v4l2h265dec0:src> probed caps:=
+ video/x-raw(memory:DMABuf), format=3D(string)DMA_DRM, drm-format=3D(string=
+){ P010, P010:0x0500000000000001 }, width=3D(int)[ 96, 8192 ], height=3D(in=
+t)[ 96, 8192 ], framerate=3D(fraction)[ 0/1, 2147483647/1 ], pixel-aspect-r=
+atio=3D(fraction)1/1, colorimetry=3D(string){ bt601, 1:4:16:3, smpte240m, b=
+t709, 1:3:5:1, 2:4:5:2, 2:4:5:3, 1:4:5:3, 1:4:7:1, 2:4:7:1, 2:4:12:8, bt202=
+0, bt2100-pq, 2:0:0:0 }; video/x-raw, format=3D(string)P010_10LE, width=3D(=
+int)[ 96, 8192 ], height=3D(int)[ 96, 8192 ], framerate=3D(fraction)[ 0/1, =
+2147483647/1 ], pixel-aspect-ratio=3D(fraction)1/1, colorimetry=3D(string){=
+ bt601, 1:4:16:3, smpte240m, bt709, 1:3:5:1, 2:4:5:2, 2:4:5:3, 1:4:5:3, 1:4=
+:7:1, 2:4:7:1, 2:4:12:8, bt2020, bt2100-pq, 2:0:0:0 }; video/x-raw(memory:D=
+MABuf), format=3D(string)DMA_DRM, drm-format=3D(string){ P010, P010:0x05000=
+00000000001 }, width=3D(int)[ 96, 8192 ], height=3D(int)[ 96, 8192 ], frame=
+rate=3D(fraction)[ 0/1, 2147483647/1 ], pixel-aspect-ratio=3D(fraction)1/1;=
+ video/x-raw, format=3D(string)P010_10LE, width=3D(int)[ 96, 8192 ], height=
+=3D(int)[ 96, 8192 ], framerate=3D(fraction)[ 0/1, 2147483647/1 ], pixel-as=
+pect-ratio=3D(fraction)1/1
+>=20
+> But what's the proper way to validate ? I've been unable to run kmssink s=
+o far.
 
-On 11/04/2026 16:10, Andrew Lunn wrote:
-> On Fri, Apr 10, 2026 at 07:10:20PM +0200, Maxime Chevallier wrote:
->> As noted in the blamed commit, the AR8035 and other PHYs from this
->> family advertise the Extended Next Page support by default, which may be
->> understood by some partners as this PHY being multi-gig capable.
->>
->> The fix is to disable XNP advertising, which is done by setting bit 12
->> of the Auto-Negotiation Advertisement Register (MII_ADVERTISE).
->>
->> The blamed commit incorrectly uses MDIO_AN_CTRL1_XNP, which is bit 13 as per
->> 802.3 : 45.2.7.1 AN control register (Register 7.0)
->>
->> BIT 12 in MII_ADVERTISE is wrapped by ADVERTISE_RESV, used by some
->> drivers such as the aquantia one. 802.3 Clause 28 defines bit 12 as
->> Extended Next Page ability, at least in recent versions of the standard.
-> 
->> Let's add a define for it and use it in the at803x driver.
-> 
-> I agree with this, it defines the C22 4.12 bit. And this is what the
-> at803x driver is using it for.
-> 
->>  static void at803x_link_change_notify(struct phy_device *phydev)
->> diff --git a/include/uapi/linux/mii.h b/include/uapi/linux/mii.h
->> index 39f7c44baf53..61d6edad4b94 100644
->> --- a/include/uapi/linux/mii.h
->> +++ b/include/uapi/linux/mii.h
->> @@ -82,7 +82,8 @@
->>  #define ADVERTISE_100BASE4	0x0200	/* Try for 100mbps 4k packets  */
->>  #define ADVERTISE_PAUSE_CAP	0x0400	/* Try for pause               */
->>  #define ADVERTISE_PAUSE_ASYM	0x0800	/* Try for asymetric pause     */
->> -#define ADVERTISE_RESV		0x1000	/* Unused...                   */
->> +#define ADVERTISE_XNP		0x1000  /* Extended Next Page */
->> +#define ADVERTISE_RESV		ADVERTISE_XNP /* Used to be reserved */
-> 
-> Should we keep ADVERTISE_RESV?
-> 
->   45.2.7.6 AN advertisement register
-> 
->   If the Auto-Negotiation advertisement register (register 4) is
->   present, (see 28.2.4.1.3), then this register is a copy of the
->   Auto-Negotiation advertisement register (register 4). In this case,
->   reads to the AN advertisement register (7.16) report the value of
->   the Auto-Negotiation advertisement register (register 4); writes to
->   the AN advertisement register (7.16) cause a write to occur to the
->   Auto-Negotiation advertisement register.
-> 
-> So MDIO_MMD_AN:MDIO_AN_ADVERTISE is a straight copy of MII_ADVERTISE.
-> 
->         ef4_mdio_write(efx, MDIO_MMD_AN, MDIO_AN_ADVERTISE, reg);
->         ret = phy_write_mmd(phydev, MDIO_MMD_AN, MDIO_AN_ADVERTISE, adv);
-> 
-> So ADVERTISE_XNP is just as valid in the other two drivers using
-> ADVERTISE_RESV. I think we should change those as well to
-> ADVERTISE_XNP and remove ADVERTISE_RESV?
-> 
-> 	Andrew
+Unfrotunately the easiest way would be to get it to work with the
+kmssink (or to dump the raw buffers and then get them displayed
+manually).
 
-I agree with that yes and I've considered converting these drivers once
-we have net merged into net-next should this patch be applied :)
-
-That said, ADVERTISE_RESV is in uapi, is it even possible to remove it ?
-
-I think the best we can hope for is to no longer have in-tree users of
-ADVERTISE_RESV :(
-
-Maxime
-
+--=20
+With best wishes
+Dmitry
 
