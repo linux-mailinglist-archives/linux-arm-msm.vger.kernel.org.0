@@ -1,105 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-102783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aCwxMPhP2mlv0AgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 15:43:20 +0200
+	id 4DYyLw1S2mmz0AgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 15:52:13 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BF7D3E025C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 15:43:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4222E3E02BC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 15:52:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 26D6F3018AFE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 13:43:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0266030512A1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 13:50:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E11327FD4F;
-	Sat, 11 Apr 2026 13:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5417A2D060B;
+	Sat, 11 Apr 2026 13:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="U9iGiH9w";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TsWDB30n"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UwoR2E+i";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RKGmsWK6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C5B27E05F
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 13:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3EA280CD2
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 13:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775914989; cv=none; b=faFquk/LZ4NIYOafbhuo25VanvcVvIuWZ6+hOcMbBVgiRkyi6qXIWa9N6zLN571cj4vbXPQ1yrzbEMt8/EBrdYRNBGM3XSIJSNIqIM79TGfRNfB1zt8LmlyVoDHjySpOwS7AukhJS9CMybq2+XlaLqpsw4mbk6IxR9FDuDV1yYM=
+	t=1775915447; cv=none; b=S73cOgQ1mL/DWYbCJlxt1/z8heuRMyUSJ2qAiiILbVWuQmNG5mNS+UueVB2Og2BGqKFhodCH9hKPBAF9RiyYwitNmEG020Wb+JOCUS4vC0D9IwTvfBQMvBfs90RkFHBFR561z/ta5NGBN0wNJjKBrBX8kQ8NR27V7qC9xvXDaDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775914989; c=relaxed/simple;
-	bh=JyIewGYPt9jhNA4Rfo3r/BCePd/6bb5X4WwamqK+Tdc=;
+	s=arc-20240116; t=1775915447; c=relaxed/simple;
+	bh=jWTEtBSoUuYVX3uYmsPPbfkMn03+61vZqJRvH6Ym1pI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NynIf8z7v9+sQwcdoiVXdr7KDBCRRa9JrbXwPES9L5XtVOCfYaNRJT/CnUTZnbcLiXD4srzqlQsvq2DekCWui3Pv/rwLHt97GQ7zwAzpkiB2kgAHL5rj68u5cZsX5DcWroxj+FXkH6tY5w5hrbPd0VB+HEnmBd/tFkrPG7IknFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=U9iGiH9w; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TsWDB30n; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=Qy6Di6Qeb3Ud6Wv0TG+p3hJG+vKzvKc86TX6tkGPTpEZaupyd44pOCWeM+TVlHhUXLfdy8UhEUe9LgSGoe6gNW8JXN2tali0TJllIIzWSyh/c+xCFiGeBkQHp0tfvFBQFhlwj6LhG1lSXtSeBROk7fCqJJkzBITavYK8IyxGnLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UwoR2E+i; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RKGmsWK6; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63B47lEe1200648
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 13:43:07 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63B47nlr1200668
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 13:50:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1FM6PxlKeuHV4NdVI59ngZh8BnaIV4nhG/SH9Tn2maM=; b=U9iGiH9wWFInLj2V
-	cfk6HoVjL78QabUj7IaDd1ObJEPPtvk+f22rkVPS3B+Gav9Z81/SoxT/jKxuGr3J
-	IA/3klDMFSVj5pFHkNM5AM+uPByJwdIlmnuQCsLbPhjgoUurLiEhOQCaq+llmJCW
-	ADjtn6t8vLvSl1b0Wn2KvTns/B+35XLAzPcrma0Ihkq7DlunQAfXR8aurLueI7aE
-	Z2mNi73ke/BGG5a9ugFZGtnulAaSkxp3psmMKk4YRBC9YKS1jdQ/Ki2aC3FpuHP2
-	T66j4C6Ed5/MbzsitxmwY0XwQMoIGbsP32vATWzXp1Mg8h+acT3UQ5ELu8jRBHy7
-	e/kS3g==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dff0jrsc0-1
+	TYB9dL+sZas18a3SOYDriqRYOhYW5fQ4urBIjpNFZ54=; b=UwoR2E+iBDY/3B3n
+	GQbKX+vVChbmoUfY5++ArMGfqzXshl1tVyMAr1zYR1kwTwEXsIe5gRHtcolwVxKT
+	TSrnVv7kkxICqLu27KHd0QnkF/NcTHV79jmBe0GijH4xzUxG6BvGqw947+hNNXaC
+	5zOUrE1nNBqNTdBYpV6LyktaWE+ME4b6jDIH2OXbEaTM+1I6NWuCj3wdcpbb3onR
+	7dXkMHRROpuc9gVWH6klUkEWPoAFphHg/jJ9HdHDBadFsm9SAGKStUWeiP3R/IFs
+	U/ik4uHdIzaAQ8uehQzFVglheIYwIIYCSPo6tBftZRmVwbWcxfDo6DJyORVHUNCI
+	WuXLSw==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dff0jrsse-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 13:43:06 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-35da86144daso3609957a91.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 06:43:06 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 13:50:44 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2b2523e0299so73403145ad.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 06:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1775914986; x=1776519786; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1775915443; x=1776520243; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1FM6PxlKeuHV4NdVI59ngZh8BnaIV4nhG/SH9Tn2maM=;
-        b=TsWDB30nAMkoib4KOIRaMIQ8VyZz6iiFBWZIBJpNS7X304i/sMF1kJE0oopqsdlcWq
-         URKw0gMD7Ybn1Mr/mYxjW508qPKqNQD0v0JqGVvMinB9nIcD2a29s7QEn/EV8f1Tgzgz
-         Bc3mXJjO9OTqu3PD+3rKbRGFHlr8c1wV7AyUkegstOdIGKvYrDK/d8gwrsMtNuoSWumP
-         FLjV3fkAKRz0J11xmBYFa50h/Et1ikRo9hIS99p0eP24Mq6Z7Q8xJEjEfAxkpz2bNpNA
-         hP3NEKpKeTb0p2CuOq7U6YaAjhDfdw49o4K1jMcNn1LC4BzeixSq9Qck7PWr7bYZaTSX
-         BAtQ==
+        bh=TYB9dL+sZas18a3SOYDriqRYOhYW5fQ4urBIjpNFZ54=;
+        b=RKGmsWK6VyIh/LEnJMielX3qyVt6kEnIqECojPzW3rLPf1pEUwjppxPKweML2Dzfgm
+         0Dhf/OyFVJrwkJiZt/a1xR5DUrxxicsIP9YXaUOyNXLeC5Jso6MMOL16QySCraryT/Xk
+         jg2D2C7sHmTrmK0JSKg8cw5oTZhoIG5VOm5PVgB2tNE9rpzWkHfJEq91xwhALQIAkEdK
+         s787I+o+tCez/3tPdDHB9K93LsdX4ppTRTwkezGOT8e4zSiT4gnqLZLGHH6IAoAHZrHt
+         2S39Dah071l9ZMiF9hGBGFEjM9sG686kVRVGq95PqgN7rTgeUaRnlLn9Up+QdRZh8Lxm
+         m1tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775914986; x=1776519786;
+        d=1e100.net; s=20251104; t=1775915443; x=1776520243;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1FM6PxlKeuHV4NdVI59ngZh8BnaIV4nhG/SH9Tn2maM=;
-        b=JktxywQRKjwvuIW0HZTwnSHuF2MPo9wrpjfYl3SSIzJ6tbhWFQUniKun9BCrsgLCNI
-         uNbSFJeydzWub4JZ8AM3NUX1M9Y0nH8E4rK5sxfpmBy/jhGda02+wIz55SyhUIwPEncB
-         C4AMT9QQfjDdF6w5VqTetD6yPfMYm3CudkPUSvdoHw5O0BAFUa2RnapEbSVuSOkzAq4M
-         1ZSRnnrldlxkEt8rTMGtIALVkpGa1CXqHGA2zWi5KhRELO95yk7OfiHf+O+1GR8W81zK
-         HiC+yyChUmXnk8boX1axNjbinCRtf1j/2akBZAlKvora8uLGDlicfMaAFW6PayxidUNf
-         3Thw==
-X-Forwarded-Encrypted: i=1; AJvYcCWST6cOqfkK6LNKfc7RiMYWDRLNl5uZQ+auf4/p4xMVlRRVsbDkSPJ/1LHIYdBskeq4C5PiYd1Feig35uMi@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFEx5A+maE9wwXFPmK7L3iK+xLQn0vju3Wk0iMvcU/rF+m530/
-	yUx1NpVORkJwCEcXBnlsZckUE3pfY3vP7a0OlZwvL61ppJ2vAbOthPge86yQPm+9UcUiAQT9cYt
-	3OtBKDUglGOngOlAt4rn5c4A8C5PVZEcbrwyKAiaq16TtongEogR84nWgBMBGWy43/tqk
-X-Gm-Gg: AeBDieuIpZSmTHvDz64vAZl7BZjxjLz+S95DpZvEv49nIpyA/R17kQeRTLkiL+I8lwV
-	ghJeka4iGVeNq11Y6XO7Q58r1kDou67mmnoEkcASL8/XZfnIx9YaM0hd7Lawcs0hd5Irtp5rz1E
-	IaFUroLTTxDoXKEitpBEQ9vNqnktBnnZOZj2xkqa6Zko2FRloR7UfqffUlaqjUUNRmmV/cj/tDS
-	WrhQBhLiYHnjabQhavB6fDDIvKDlLUIdj6JjZ/FAMEdASCOfjuevaytgeCzTVfqG2Ee7mlV4ZHz
-	LSZhNe+b2RslsWbKg6AxUcf4g6lpAs+m+PvDiWf5HC8I6ZjrUp7YHJFlXD/X8m1KkwZ3z9yqWfB
-	9aSCPKOwbvwasZ7df2zW7LTamzrei4ZJ7ArScK0A8cIXbkTtViInuMfiwlQZCgNRv8Nb3BrGBbf
-	WWMEcufet0/Q==
-X-Received: by 2002:a05:6a20:3d87:b0:39c:1871:7c6e with SMTP id adf61e73a8af0-39fe3d0dcd4mr8121068637.16.1775914985753;
-        Sat, 11 Apr 2026 06:43:05 -0700 (PDT)
-X-Received: by 2002:a05:6a20:3d87:b0:39c:1871:7c6e with SMTP id adf61e73a8af0-39fe3d0dcd4mr8121042637.16.1775914985223;
-        Sat, 11 Apr 2026 06:43:05 -0700 (PDT)
+        bh=TYB9dL+sZas18a3SOYDriqRYOhYW5fQ4urBIjpNFZ54=;
+        b=ILonU1J9b9lH3dtf66Y4WA6A7qKDlvn4rrS0aDVAqj7NmCTBle+MIPh7X6E2dfg+iA
+         rp0UCXKGEBrC2GAgsxB8DDNU164IevXEPjKRuOl0V6aK07S2gDXjL8fY/H1uvn7Ui1pv
+         jSGXpkkk7D8JTSISh/CzrzogzCgVi1DfohMIKbVF4bfVtbWU7okz/rZKuBAa0+CitP5M
+         7yi7jxMCdb8lIIEiGcWtkmeP23aN5WrtIhT968NBvC2K7Zi0hf0ih5S0rnbGBiRqg5qx
+         0wxzvt+2/xawHvUQMU3eUrybK9CfsdRIHQlF4ZmSRHcqp2EDQwZdb1mi5rec/XFOhWDp
+         Twdg==
+X-Forwarded-Encrypted: i=1; AJvYcCVc+PJlYYZsDd1vRYJXp4LTJUEtp8ZMKafGb0VWV218VJ7B15tY4xQaQVcQ+i6u56xR/qoQUkkYv8TnN36a@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLUHs7CnSWYGuzx2W1BDlBUc/qWBAC9QkL0dWFUC/yaU4PVznv
+	q6CDVZY46N6feXCnBk/JM+ZnRX/lIOxN+DPDWAncBYg5mDMwIZ72BweeVygcnSbHmYSgEfHba5o
+	D5xjiX5Byd1HxN/DsRswu8izkPG5aa+Ca/LBrhD+1wIL/WHKD+UM2dLP32Q80kqiSYc7K
+X-Gm-Gg: AeBDiesTIOLBgP0x5atlkr/Olfl4+Cz+O6dFKORflWxSiZE92aM3UYkTh4Z32kM7iFZ
+	yVULZG0ymP9bfVkPwpvXz9ovfp5cgXAtCFRG7/2U0YltL74UuXIyXlQUmV3exOM4OT7IZNXoUdu
+	OWtPg5GillrMAtfP5hhy+wCxmgBSxERRj1oPNMaBmvqC5awGTtKDTBksYaAevoF2HpMw7Tj6ffn
+	9tMrBE4LNscl8qtN7QXOr7ZTIz4cTLx8R/XOX/b3KkzRAkZyidn6qaCEqj/jDKI5s74z3nlzDfe
+	lHN2xsfqbFQj0w1QvpXYWO9HKgSb/pG7hxPZRglSqgEatVxK7y/Cbpvmw7S5FQSLzXvukBfOqb7
+	t0CpDWJJZSyC2UytSyTS8HsatK82hCOMXfxFFjoANrGvA8wyUGNE8P1zo1D/Q6pKjbLCkMoj9Ud
+	RHEkKWyzAZIg==
+X-Received: by 2002:a17:902:e193:b0:2b0:72c7:3ed8 with SMTP id d9443c01a7336-2b2d5a2c1d8mr54178875ad.25.1775915443330;
+        Sat, 11 Apr 2026 06:50:43 -0700 (PDT)
+X-Received: by 2002:a17:902:e193:b0:2b0:72c7:3ed8 with SMTP id d9443c01a7336-2b2d5a2c1d8mr54178635ad.25.1775915442781;
+        Sat, 11 Apr 2026 06:50:42 -0700 (PDT)
 Received: from [10.133.33.83] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c793488d824sm519547a12.16.2026.04.11.06.43.02
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2d4f0b284sm61643745ad.52.2026.04.11.06.50.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Apr 2026 06:43:04 -0700 (PDT)
-Message-ID: <4b0c24ac-65eb-4861-80f5-2b9c9239e719@oss.qualcomm.com>
-Date: Sat, 11 Apr 2026 21:43:00 +0800
+        Sat, 11 Apr 2026 06:50:42 -0700 (PDT)
+Message-ID: <21f823b7-3140-4436-a4d4-6fb7b6cf8d5b@oss.qualcomm.com>
+Date: Sat, 11 Apr 2026 21:50:37 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,37 +107,38 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] bus: mhi: host: Add support for non-posted TSC
- timesync feature
+Subject: Re: [PATCH v2 6/6] bus: mhi: host: mhi_phc: Add support for PHC over
+ MHI
 To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
         Manivannan Sadhasivam <mani@kernel.org>,
         Richard Cochran <richardcochran@gmail.com>
 Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Vivek Pernamitta <quic_vpernami@quicinc.com>
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Taniya Das <taniya.das@oss.qualcomm.com>
 References: <20260411-tsc_timesync-v2-0-6f25f72987b3@oss.qualcomm.com>
- <20260411-tsc_timesync-v2-2-6f25f72987b3@oss.qualcomm.com>
+ <20260411-tsc_timesync-v2-6-6f25f72987b3@oss.qualcomm.com>
 Content-Language: en-US
 From: Jie Gan <jie.gan@oss.qualcomm.com>
-In-Reply-To: <20260411-tsc_timesync-v2-2-6f25f72987b3@oss.qualcomm.com>
+In-Reply-To: <20260411-tsc_timesync-v2-6-6f25f72987b3@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDExNiBTYWx0ZWRfX7mmwKOZJL4jG
- iicFqZv7CCMvw1y3YCo86zlzWi5lvLUXfcJpzEipe+8RsCChzbn1OZyByNtrEOEPG2x82VbL3Sv
- B+JUca5YNhIay7Y9Np6IHWtffdYFXDzsKXa4izz35rzheAvsS7ROu6+TXiBsT2XUSfDX/aluSY7
- RzRDGEPbUEHEm8y+FIqkXiI9fVGJyEQEOYg5Vpzgfn4T7/69Zz2lQSIRihxF0BgdHhQVZ/FMcuU
- mwhqA16kAdTvsZ9xwbCXk71BeuJdDStxzqvFRb9d2eNse69ZT3Pc5Q28XR5/tlbBCvWfLDD52D1
- qMEhDVHPTPqDOCKblliVKN+GsqqoZttbxIfwjk1cFV1MBxllnTAUsEyT41ilNbrlfpN5ycrgfzL
- 2mk7R36vH/CMyj/xD33rhhnMpI7L8o2QHnxaYb2JperbisdF09G11lnKFfWNoVyaddvXlwzLFyu
- kjMeNg9UgX5IwL6vxyg==
-X-Proofpoint-ORIG-GUID: Q8LYEPzkLSLGPq1-sx6NBTVOdWZUyB35
-X-Proofpoint-GUID: Q8LYEPzkLSLGPq1-sx6NBTVOdWZUyB35
-X-Authority-Analysis: v=2.4 cv=d/LFDxjE c=1 sm=1 tr=0 ts=69da4fea cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDExOCBTYWx0ZWRfX7CZczLp6wzqO
+ eSHSjjQs0fIRp3+WHqvSBJUf0W9OtCeZb7p9CZ4CkN9Zx9hg6nJ35Cqof8uI7+4cdamD+9Qmy6o
+ /ewpul1T/BGERfAck3vp7GIXtmJPzrOorNT1wm5zLXwybhukO7/7Okjp4E5+efsttIBcZ43Lgrt
+ IBJf88cBcnQvPiv9jS3j+xfoXYz9g4Cny3rWfGFgMdJ+zXE+/PZJaaSXO1joZACuBxIei6tXJFy
+ JQn/lYzYZCJpUBLjGp2q10znQxvbCAz1j8FDv3k86XYNlkbMxxI5RxRL/GA1PpPR9nVWzLbgwjp
+ sl5bVedrSj96+2+D0ZNiJSpzPxgu7BmoQd0nPXFyLYPEvtNnaN+coy8A2C5SaYIKHrF6bSkH7LE
+ VZ142euJN/TYq0axZy6t7BcHjiFzlWBU9wW0WouYi2o4r+9/FIrL7YTMRGtc1vej7509ylVUp/g
+ ZeTeNPv4lZuKlpAKOaA==
+X-Proofpoint-ORIG-GUID: M778l9A_54IuidVtNji5I_zEuLwIAmHi
+X-Proofpoint-GUID: M778l9A_54IuidVtNji5I_zEuLwIAmHi
+X-Authority-Analysis: v=2.4 cv=d/LFDxjE c=1 sm=1 tr=0 ts=69da51b4 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=Obl49t-0RtMGbK0jPykA:9 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22 a=TjNXssC_j7lpFel5tvFf:22
+ a=EUspDBNiAAAA:8 a=TlgILChHWuASUgA4TAAA:9 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-11_03,2026-04-09_02,2025-10-01_01
@@ -145,7 +146,7 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  spamscore=0 impostorscore=0 malwarescore=0 phishscore=0 priorityscore=1501
  bulkscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604110116
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604110118
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
@@ -155,8 +156,8 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	TAGGED_FROM(0.00)[bounces-102783-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	TAGGED_FROM(0.00)[bounces-102784-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
 	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
@@ -169,281 +170,348 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[8];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 1BF7D3E025C
+X-Rspamd-Queue-Id: 4222E3E02BC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
 
 On 4/11/2026 4:12 PM, Krishna Chaitanya Chundru wrote:
-> From: Vivek Pernamitta <quic_vpernami@quicinc.com>
+> From: Imran Shaik <imran.shaik@oss.qualcomm.com>
 > 
-> Implement non-posted time synchronization as described in section 5.1.1
-> of the MHI v1.2 specification. The host disables low-power link states
-> to minimize latency, reads the local time, issues a MMIO read to the
-> device's TIME register.
+> This patch introduces the MHI PHC (PTP Hardware Clock) driver, which
+> registers a PTP (Precision Time Protocol) clock and communicates with
+> the MHI core to get the device side timestamps. These timestamps are
+> then exposed to the PTP subsystem, enabling precise time synchronization
+> between the host and the device.
 > 
-> Add support for initializing this feature and export a function to be
-> used by the drivers which does the time synchronization.
+> The following diagram illustrates the architecture and data flow:
 > 
-> MHI reads the device time registers in the MMIO address space pointed to
-> by the capability register after disabling all low power modes and keeping
-> MHI in M0. Before and after MHI reads, the local time is captured
-> and shared for processing.
+>   +-------------+    +--------------------+    +--------------+
+>   |Userspace App|<-->|Kernel PTP framework|<-->|MHI PHC Driver|
+>   +-------------+    +--------------------+    +--------------+
+>                                                       |
+>                                                       v
+>   +-------------------------------+         +-----------------+
+>   | MHI Device (Timestamp source) |<------->| MHI Core Driver |
+>   +-------------------------------+         +-----------------+
 > 
-> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> - User space applications use the standard Linux PTP interface.
+> - The PTP subsystem routes IOCTLs to the MHI PHC driver.
+> - The MHI PHC driver communicates with the MHI core to fetch timestamps.
+> - The MHI core interacts with the device to retrieve accurate time data.
+> 
+> Co-developed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
 > ---
->   drivers/bus/mhi/common.h        |  4 +++
->   drivers/bus/mhi/host/init.c     | 28 ++++++++++++++++
->   drivers/bus/mhi/host/internal.h |  9 +++++
->   drivers/bus/mhi/host/main.c     | 74 +++++++++++++++++++++++++++++++++++++++++
->   include/linux/mhi.h             | 37 +++++++++++++++++++++
->   5 files changed, 152 insertions(+)
+>   drivers/bus/mhi/host/Kconfig       |   8 ++
+>   drivers/bus/mhi/host/Makefile      |   1 +
+>   drivers/bus/mhi/host/mhi_phc.c     | 150 +++++++++++++++++++++++++++++++++++++
+>   drivers/bus/mhi/host/mhi_phc.h     |  28 +++++++
+>   drivers/bus/mhi/host/pci_generic.c |  23 ++++++
+>   5 files changed, 210 insertions(+)
 > 
-> diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
-> index 4c316f3d5a68beb01f15cf575b03747096fdcf2c..64f9b2b94387a112bb6b5e20c634c3ba8d6bc78e 100644
-> --- a/drivers/bus/mhi/common.h
-> +++ b/drivers/bus/mhi/common.h
-> @@ -118,6 +118,10 @@
->   #define CAP_CAPID_MASK			GENMASK(31, 24)
->   #define CAP_NEXT_CAP_MASK		GENMASK(23, 12)
+> diff --git a/drivers/bus/mhi/host/Kconfig b/drivers/bus/mhi/host/Kconfig
+> index da5cd0c9fc620ab595e742c422f1a22a2a84c7b9..b4eabf3e5c56907de93232f02962040e979c3110 100644
+> --- a/drivers/bus/mhi/host/Kconfig
+> +++ b/drivers/bus/mhi/host/Kconfig
+> @@ -29,3 +29,11 @@ config MHI_BUS_PCI_GENERIC
+>   	  This driver provides MHI PCI controller driver for devices such as
+>   	  Qualcomm SDX55 based PCIe modems.
 >   
-> +/* MHI TSC Timesync */
-> +#define TSC_TIMESYNC_TIME_LOW_OFFSET	(0x8)
-> +#define TSC_TIMESYNC_TIME_HIGH_OFFSET	(0xC)
+> +config MHI_BUS_PHC
+> +	bool "MHI PHC driver"
+> +	depends on MHI_BUS_PCI_GENERIC
+> +	help
+> +	  This driver provides Precision Time Protocol (PTP) clock and
+> +	  communicates with MHI PCI driver to get the device side timestamp,
+> +	  which enables precise time synchronization between the host and
+> +	  the device.
+> diff --git a/drivers/bus/mhi/host/Makefile b/drivers/bus/mhi/host/Makefile
+> index 859c2f38451c669b3d3014c374b2b957c99a1cfe..5ba244fe7d596834ea535797efd3428963ba0ed0 100644
+> --- a/drivers/bus/mhi/host/Makefile
+> +++ b/drivers/bus/mhi/host/Makefile
+> @@ -4,3 +4,4 @@ mhi-$(CONFIG_MHI_BUS_DEBUG) += debugfs.o
+>   
+>   obj-$(CONFIG_MHI_BUS_PCI_GENERIC) += mhi_pci_generic.o
+>   mhi_pci_generic-y += pci_generic.o
+> +mhi_pci_generic-$(CONFIG_MHI_BUS_PHC) += mhi_phc.o
+> diff --git a/drivers/bus/mhi/host/mhi_phc.c b/drivers/bus/mhi/host/mhi_phc.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..fa04eb7f6025fa281d86c0a45b5f7d3e61f5ce12
+> --- /dev/null
+> +++ b/drivers/bus/mhi/host/mhi_phc.c
+> @@ -0,0 +1,150 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2025, Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
 > +
->   /* Command Ring Element macros */
->   /* No operation command */
->   #define MHI_TRE_CMD_NOOP_PTR		0
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index c2162aa04e810e45ccfbedd20aaa62f892420d31..eb720f671726d919646cbc450cd54bda655a1060 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -498,6 +498,30 @@ static int mhi_find_capability(struct mhi_controller *mhi_cntrl, u32 capability)
->   	return 0;
->   }
->   
-> +static int mhi_init_tsc_timesync(struct mhi_controller *mhi_cntrl)
+> +#include <linux/kernel.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/mhi.h>
+> +#include <linux/ptp_clock_kernel.h>
+> +#include "mhi_phc.h"
+> +
+> +#define NSEC 1000000000ULL
+> +
+> +/**
+> + * struct mhi_phc_dev - MHI PHC device
+> + * @ptp_clock: associated PTP clock
+> + * @ptp_clock_info: PTP clock information
+> + * @mhi_dev: associated mhi device object
+> + * @lock: spinlock
+> + * @enabled: Flag to track the state of the MHI device
+> + */
+> +struct mhi_phc_dev {
+> +	struct ptp_clock *ptp_clock;
+> +	struct ptp_clock_info  ptp_clock_info;
+> +	struct mhi_device *mhi_dev;
+> +	spinlock_t lock;
+> +	bool enabled;
+> +};
+> +
+> +static int qcom_ptp_gettimex64(struct ptp_clock_info *ptp, struct timespec64 *ts,
+> +			       struct ptp_system_timestamp *sts)
 > +{
-> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	struct mhi_timesync *mhi_tsc_tsync;
-> +	u32 time_offset;
+> +	struct mhi_phc_dev *phc_dev = container_of(ptp, struct mhi_phc_dev, ptp_clock_info);
+> +	struct mhi_timesync_info time;
+> +	ktime_t ktime_cur;
+> +	unsigned long flags;
 > +	int ret;
 > +
-> +	time_offset = mhi_find_capability(mhi_cntrl, MHI_CAP_ID_TSC_TIME_SYNC);
-> +	if (!time_offset)
-> +		return -ENXIO;
-> +
-> +	mhi_tsc_tsync = devm_kzalloc(dev, sizeof(*mhi_tsc_tsync), GFP_KERNEL);
-> +	if (!mhi_tsc_tsync)
-> +		return -ENOMEM;
-> +
-> +	mhi_cntrl->tsc_timesync = mhi_tsc_tsync;
-> +	mutex_init(&mhi_tsc_tsync->ts_mutex);
-> +
-> +	/* save time_offset for obtaining time via MMIO register reads */
-> +	mhi_tsc_tsync->time_reg = mhi_cntrl->regs + time_offset;
-> +
-> +	return 0;
-> +}
-> +
->   int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
->   {
->   	u32 val;
-> @@ -635,6 +659,10 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
->   		return ret;
->   	}
->   
-> +	ret = mhi_init_tsc_timesync(mhi_cntrl);
-> +	if (ret)
-> +		dev_dbg(dev, "TSC Time synchronization init failure\n");
-> +
->   	return 0;
->   }
->   
-> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> index 7b0ee5e3a12dd585064169b7b884750bf4d8c8db..a0e729e7a1198c1b82c70b6bfe3bc2ee24331229 100644
-> --- a/drivers/bus/mhi/host/internal.h
-> +++ b/drivers/bus/mhi/host/internal.h
-> @@ -15,6 +15,15 @@ extern const struct bus_type mhi_bus_type;
->   #define MHI_SOC_RESET_REQ_OFFSET			0xb0
->   #define MHI_SOC_RESET_REQ				BIT(0)
->   
-> +/*
-> + * With ASPM enabled, the link may enter a low power state, requiring
-> + * a wake-up sequence. Use a short burst of back-to-back reads to
-> + * transition the link to the active state. Based on testing,
-> + * 4 iterations are necessary to ensure reliable wake-up without
-> + * excess latency.
-> + */
-> +#define MHI_NUM_BACK_TO_BACK_READS			4
-> +
->   struct mhi_ctxt {
->   	struct mhi_event_ctxt *er_ctxt;
->   	struct mhi_chan_ctxt *chan_ctxt;
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 53c0ffe300702bcc3caa8fd9ea8086203c75b186..b7a727b1a5d1f20b570c62707a991ec5b85bfec7 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -1626,3 +1626,77 @@ int mhi_get_channel_doorbell_offset(struct mhi_controller *mhi_cntrl, u32 *chdb_
->   	return 0;
->   }
->   EXPORT_SYMBOL_GPL(mhi_get_channel_doorbell_offset);
-> +
-> +static int mhi_get_remote_time(struct mhi_controller *mhi_cntrl, struct mhi_timesync *mhi_tsync,
-> +			       struct mhi_timesync_info *time)
-> +{
-> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	int ret, i;
-> +
-> +	if (!mhi_tsync && !mhi_tsync->time_reg) {
-
-if (!mhi_tsync || !mhi_tsync->time_reg) {
-
-> +		dev_err(dev, "Time sync is not supported\n");
-> +		return -EINVAL;
+> +	spin_lock_irqsave(&phc_dev->lock, flags);
+> +	if (!phc_dev->enabled) {
+> +		ret = -ENODEV;
+> +		goto err;
 > +	}
 > +
-> +	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))) {
-> +		dev_err(dev, "MHI is not in active state, pm_state:%s\n",
-> +			to_mhi_pm_state_str(mhi_cntrl->pm_state));
-> +		return -EIO;
-> +	}
-> +
-> +	/* bring to M0 state */
-> +	ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
-> +	if (ret)
-> +		return ret;
-> +
-> +	guard(mutex)(&mhi_tsync->ts_mutex);
-> +	mhi_cntrl->runtime_get(mhi_cntrl);
-> +
-> +	/*
-> +	 * time critical code to fetch device time, delay between these two steps
-> +	 * should be deterministic as possible.
-> +	 */
-> +	preempt_disable();
-> +	local_irq_disable();
-> +
-> +	time->t_host_pre = ktime_get_real();
-> +
-> +	/*
-> +	 * To ensure the PCIe link is in L0 when ASPM is enabled, perform series
-> +	 * of back-to-back reads. This is necessary because the link may be in a
-> +	 * low-power state (e.g., L1 or L1ss), and need to be forced it to
-> +	 * transition to L0.
-> +	 */
-> +	for (i = 0; i < MHI_NUM_BACK_TO_BACK_READS; i++) {
-> +		ret = mhi_read_reg(mhi_cntrl, mhi_tsync->time_reg,
-> +				   TSC_TIMESYNC_TIME_LOW_OFFSET, &time->t_dev_lo);
-> +
-> +		ret = mhi_read_reg(mhi_cntrl, mhi_tsync->time_reg,
-> +				   TSC_TIMESYNC_TIME_HIGH_OFFSET, &time->t_dev_hi);
+> +	ret = mhi_get_remote_tsc_time_sync(phc_dev->mhi_dev, &time);
 
-ret is assigned but no where checked.
+mhi_get_remote_tsc_time_sync -> mhi_device_get_sync -> 
+__mhi_device_get_sync -> wait_event_timeout (can sleep with spinlock)
+
+Be careful to use the spinlock here.
 
 Thanks,
 Jie
 
+> +	if (ret)
+> +		goto err;
+> +
+> +	ktime_cur = time.t_dev_hi * NSEC + time.t_dev_lo;
+> +	*ts = ktime_to_timespec64(ktime_cur);
+> +
+> +	dev_dbg(&phc_dev->mhi_dev->dev, "TSC time stamps sec:%u nsec:%u current:%lld\n",
+> +		time.t_dev_hi, time.t_dev_lo, ktime_cur);
+> +
+> +	/* Update pre and post timestamps for PTP_SYS_OFFSET_EXTENDED*/
+> +	if (sts != NULL) {
+> +		sts->pre_ts = ktime_to_timespec64(time.t_host_pre);
+> +		sts->post_ts = ktime_to_timespec64(time.t_host_post);
+> +		dev_dbg(&phc_dev->mhi_dev->dev, "pre:%lld post:%lld\n",
+> +			time.t_host_pre, time.t_host_post);
 > +	}
 > +
-> +	time->t_host_post = ktime_get_real();
+> +err:
+> +	spin_unlock_irqrestore(&phc_dev->lock, flags);
 > +
-> +	local_irq_enable();
-> +	preempt_enable();
+> +	return ret;
+> +}
 > +
-> +	mhi_cntrl->runtime_put(mhi_cntrl);
+> +int mhi_phc_start(struct mhi_controller *mhi_cntrl)
+> +{
+> +	struct mhi_phc_dev *phc_dev = dev_get_drvdata(&mhi_cntrl->mhi_dev->dev);
+> +	unsigned long flags;
 > +
-> +	mhi_device_put(mhi_cntrl->mhi_dev);
+> +	if (!phc_dev) {
+> +		dev_err(&mhi_cntrl->mhi_dev->dev, "Driver data is NULL\n");
+> +		return -ENODEV;
+> +	}
+> +
+> +	spin_lock_irqsave(&phc_dev->lock, flags);
+> +	phc_dev->enabled = true;
+> +	spin_unlock_irqrestore(&phc_dev->lock, flags);
 > +
 > +	return 0;
 > +}
 > +
-> +int mhi_get_remote_tsc_time_sync(struct mhi_device *mhi_dev, struct mhi_timesync_info *time)
+> +int mhi_phc_stop(struct mhi_controller *mhi_cntrl)
 > +{
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +	struct mhi_timesync *mhi_tsc_tsync = mhi_cntrl->tsc_timesync;
+> +	struct mhi_phc_dev *phc_dev = dev_get_drvdata(&mhi_cntrl->mhi_dev->dev);
+> +	unsigned long flags;
+> +
+> +	if (!phc_dev) {
+> +		dev_err(&mhi_cntrl->mhi_dev->dev, "Driver data is NULL\n");
+> +		return -ENODEV;
+> +	}
+> +
+> +	spin_lock_irqsave(&phc_dev->lock, flags);
+> +	phc_dev->enabled = false;
+> +	spin_unlock_irqrestore(&phc_dev->lock, flags);
+> +
+> +	return 0;
+> +}
+> +
+> +static struct ptp_clock_info qcom_ptp_clock_info = {
+> +	.owner    = THIS_MODULE,
+> +	.gettimex64 =  qcom_ptp_gettimex64,
+> +};
+> +
+> +int mhi_phc_init(struct mhi_controller *mhi_cntrl)
+> +{
+> +	struct mhi_device *mhi_dev = mhi_cntrl->mhi_dev;
+> +	struct mhi_phc_dev *phc_dev;
 > +	int ret;
 > +
-> +	ret = mhi_get_remote_time(mhi_cntrl, mhi_tsc_tsync, time);
-> +	if (ret)
-> +		dev_err(&mhi_dev->dev, "Failed to get TSC Time Sync value:%d\n", ret);
+> +	phc_dev = devm_kzalloc(&mhi_dev->dev, sizeof(*phc_dev), GFP_KERNEL);
+> +	if (!phc_dev)
+> +		return -ENOMEM;
 > +
-> +	return ret;
+> +	phc_dev->mhi_dev = mhi_dev;
+> +
+> +	phc_dev->ptp_clock_info = qcom_ptp_clock_info;
+> +	strscpy(phc_dev->ptp_clock_info.name, mhi_dev->name, PTP_CLOCK_NAME_LEN);
+> +
+> +	spin_lock_init(&phc_dev->lock);
+> +
+> +	phc_dev->ptp_clock = ptp_clock_register(&phc_dev->ptp_clock_info, &mhi_dev->dev);
+> +	if (IS_ERR(phc_dev->ptp_clock)) {
+> +		ret = PTR_ERR(phc_dev->ptp_clock);
+> +		dev_err(&mhi_dev->dev, "Failed to register PTP clock\n");
+> +		phc_dev->ptp_clock = NULL;
+> +		return ret;
+> +	}
+> +
+> +	dev_set_drvdata(&mhi_dev->dev, phc_dev);
+> +
+> +	dev_dbg(&mhi_dev->dev, "probed MHI PHC dev: %s\n", mhi_dev->name);
+> +	return 0;
+> +};
+> +
+> +void mhi_phc_exit(struct mhi_controller *mhi_cntrl)
+> +{
+> +	struct mhi_phc_dev *phc_dev = dev_get_drvdata(&mhi_cntrl->mhi_dev->dev);
+> +
+> +	if (!phc_dev)
+> +		return;
+> +
+> +	/* disable the node */
+> +	ptp_clock_unregister(phc_dev->ptp_clock);
+> +	phc_dev->enabled = false;
 > +}
-> +EXPORT_SYMBOL_GPL(mhi_get_remote_tsc_time_sync);
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 88ccb3e14f481d6b85c2a314eb74ba960c2d4c81..f39c8ca7c251954f2d83c1227d206b600b88c75f 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -286,6 +286,30 @@ struct mhi_controller_config {
->   	bool m2_no_db;
+> diff --git a/drivers/bus/mhi/host/mhi_phc.h b/drivers/bus/mhi/host/mhi_phc.h
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..e6b0866bc768ba5a8ac3e4c40a99aa2050db1389
+> --- /dev/null
+> +++ b/drivers/bus/mhi/host/mhi_phc.h
+> @@ -0,0 +1,28 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2025, Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
+> +
+> +#ifdef CONFIG_MHI_BUS_PHC
+> +int mhi_phc_init(struct mhi_controller *mhi_cntrl);
+> +int mhi_phc_start(struct mhi_controller *mhi_cntrl);
+> +int mhi_phc_stop(struct mhi_controller *mhi_cntrl);
+> +void mhi_phc_exit(struct mhi_controller *mhi_cntrl);
+> +#else
+> +static inline int mhi_phc_init(struct mhi_controller *mhi_cntrl)
+> +{
+> +	return 0;
+> +}
+> +
+> +static inline int mhi_phc_start(struct mhi_controller *mhi_cntrl)
+> +{
+> +	return 0;
+> +}
+> +
+> +static inline int mhi_phc_stop(struct mhi_controller *mhi_cntrl)
+> +{
+> +	return 0;
+> +}
+> +
+> +static inline void mhi_phc_exit(struct mhi_controller *mhi_cntrl) {}
+> +#endif
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index b1122c7224bdd469406d96af6d3df342040e1002..6cba5cecd1adb40396bba30c9b2a551898dce871 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -16,6 +16,7 @@
+>   #include <linux/pm_runtime.h>
+>   #include <linux/timer.h>
+>   #include <linux/workqueue.h>
+> +#include "mhi_phc.h"
+>   
+>   #define MHI_PCI_DEFAULT_BAR_NUM 0
+>   
+> @@ -1044,6 +1045,7 @@ struct mhi_pci_device {
+>   	struct timer_list health_check_timer;
+>   	unsigned long status;
+>   	bool reset_on_remove;
+> +	bool mhi_phc_init_done;
 >   };
 >   
-> +/**
-> + * struct mhi_timesync - MHI time synchronization structure
-> + * @time_reg: Points to address of Timesync register
-> + * @ts_mutex: Mutex for synchronization
-> + */
-> +struct mhi_timesync {
-> +	void __iomem *time_reg;
-> +	struct mutex ts_mutex;
-> +};
-> +
-> +/**
-> + * struct mhi_timesync_info - MHI time sync info structure
-> + * @t_host_pre: Pre host soc time
-> + * @t_host_post: Post host soc time
-> + * @t_dev_lo: Mhi device time of lower dword
-> + * @t_dev_hi: Mhi device time of higher dword
-> + */
-> +struct mhi_timesync_info {
-> +	ktime_t t_host_pre;
-> +	ktime_t t_host_post;
-> +	u32 t_dev_lo;
-> +	u32 t_dev_hi;
-> +};
-> +
->   /**
->    * struct mhi_controller - Master MHI controller structure
->    * @name: Device name of the MHI controller
-> @@ -323,6 +347,7 @@ struct mhi_controller_config {
->    * @mhi_event: MHI event ring configurations table
->    * @mhi_cmd: MHI command ring configurations table
->    * @mhi_ctxt: MHI device context, shared memory between host and device
-> + * @tsc_timesync: MHI TSC timesync
->    * @pm_mutex: Mutex for suspend/resume operation
->    * @pm_lock: Lock for protecting MHI power management state
->    * @timeout_ms: Timeout in ms for state transitions
-> @@ -401,6 +426,8 @@ struct mhi_controller {
->   	struct mhi_cmd *mhi_cmd;
->   	struct mhi_ctxt *mhi_ctxt;
+>   #ifdef readq
+> @@ -1084,6 +1086,7 @@ static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
+>   			      enum mhi_callback cb)
+>   {
+>   	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
+> +	struct mhi_pci_device *mhi_pdev = pci_get_drvdata(pdev);
 >   
-> +	struct mhi_timesync *tsc_timesync;
+>   	/* Nothing to do for now */
+>   	switch (cb) {
+> @@ -1091,9 +1094,21 @@ static void mhi_pci_status_cb(struct mhi_controller *mhi_cntrl,
+>   	case MHI_CB_SYS_ERROR:
+>   		dev_warn(&pdev->dev, "firmware crashed (%u)\n", cb);
+>   		pm_runtime_forbid(&pdev->dev);
+> +		/* Stop PHC */
+> +		if (mhi_cntrl->tsc_timesync)
+> +			mhi_phc_stop(mhi_cntrl);
+>   		break;
+>   	case MHI_CB_EE_MISSION_MODE:
+>   		pm_runtime_allow(&pdev->dev);
+> +		/* Start PHC */
+> +		if (mhi_cntrl->tsc_timesync) {
+> +			if (!mhi_pdev->mhi_phc_init_done) {
+> +				mhi_phc_init(mhi_cntrl);
+> +				mhi_pdev->mhi_phc_init_done = true;
+> +			}
 > +
->   	struct mutex pm_mutex;
->   	rwlock_t pm_lock;
->   	u32 timeout_ms;
-> @@ -795,4 +822,14 @@ bool mhi_queue_is_full(struct mhi_device *mhi_dev, enum dma_data_direction dir);
->    */
->   int mhi_get_channel_doorbell_offset(struct mhi_controller *mhi_cntrl, u32 *chdb_offset);
+> +			mhi_phc_start(mhi_cntrl);
+> +		}
+>   		break;
+>   	default:
+>   		break;
+> @@ -1236,6 +1251,10 @@ static void mhi_pci_recovery_work(struct work_struct *work)
 >   
-> +/**
-> + * mhi_get_remote_tsc_time_sync - get external soc time relative to local soc
-> + * time pre and post using MMIO method.
-> + * @mhi_dev: Device associated with the channels
-> + * @time: mhi_timesync_info to get device time details
-> + *
-> + * Returns:
-> + * 0 for success, error code for failure
-> + */
-> +int mhi_get_remote_tsc_time_sync(struct mhi_device *mhi_dev, struct mhi_timesync_info *time);
->   #endif /* _MHI_H_ */
+>   	pm_runtime_forbid(&pdev->dev);
+>   
+> +	/* Stop PHC */
+> +	if (mhi_cntrl->tsc_timesync)
+> +		mhi_phc_stop(mhi_cntrl);
+> +
+>   	/* Clean up MHI state */
+>   	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
+>   		mhi_power_down(mhi_cntrl, false);
+> @@ -1457,6 +1476,10 @@ static void mhi_pci_remove(struct pci_dev *pdev)
+>   		timer_delete_sync(&mhi_pdev->health_check_timer);
+>   	cancel_work_sync(&mhi_pdev->recovery_work);
+>   
+> +	/* Remove PHC */
+> +	if (mhi_cntrl->tsc_timesync)
+> +		mhi_phc_exit(mhi_cntrl);
+> +
+>   	if (test_and_clear_bit(MHI_PCI_DEV_STARTED, &mhi_pdev->status)) {
+>   		mhi_power_down(mhi_cntrl, true);
+>   		mhi_unprepare_after_power_down(mhi_cntrl);
 > 
 
 
