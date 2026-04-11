@@ -1,105 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-102752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SBKyINCv2WmKsAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 04:20:00 +0200
+	id 2E1ZMH+w2WmgsAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 04:22:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AA123DDF76
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 04:20:00 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3823B3DDF9F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 04:22:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 45E613012873
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 02:19:59 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id E0C42303A9D0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 02:22:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E37A71DA628;
-	Sat, 11 Apr 2026 02:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DB8D2475CF;
+	Sat, 11 Apr 2026 02:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OPlQbhoY";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UH/oCXLT"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QQW8pBiI";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="b42c8kbI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC6D175A8C
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 02:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177401E376C
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 02:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775873996; cv=none; b=VxJdk0SXjclGd2XCfYzoNTW7dnPx7AsI/UcnKa78sf/yElrhIpK/6OLpuud+1FhG6ZtvWZSsVk8jzvBQX7NAtzoRfIjSFDyGZzMWIysl/UoKqSKq33hndwf0aXvVqIqK1NoetTEkdZRJzBhXVP90WyWHbJxe3y/LGvEoVMvme0E=
+	t=1775874172; cv=none; b=JULdQqmH6B/L0RZ7hKxTdklRHNTll8DMFMbdmDzROb6Ok7P498yLjMmcOq4IX1JzqFruL84/8A3FBXlEKF5ZYJH5x+nYlUuFNvtrsxduDiMXO0zKk4cCFXLmp1tQRMloqdYHuajRMFD0wxbqT/4DQjBKjCdCl/anvP2UHZyqAqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775873996; c=relaxed/simple;
-	bh=qV94mvhunm2CQxfU5vWLj2IDFJWAz+BpYskLeJcFbGg=;
+	s=arc-20240116; t=1775874172; c=relaxed/simple;
+	bh=cjlhZdPE0y3zOZPRXjtMrt/oUgujMYDJ/vFmReFGNBU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n/3Sk1mpAmu0M+43i5gYyxGxJc9iePLHTjrPm6VJW1kwuA5Fw6xyLT7SeHXxfq74xpEKjwu7uqh28VBFqeiqbH1PejmPlF01O/hrJoTWaOVeMQ10vaf6jtNjZiseh8sHM3I1dXrShTqIRxlzvYbI6KusbjdFn8vz/18cHdx1Jd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OPlQbhoY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UH/oCXLT; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=Qol7e3gHI/tccjFOECf6XidNAORJb9ejADztBrvWduCM4/BUu5P2/IkaVS4Cdb3FuRmSBUVAQaUobeQv28YiMhFTK2LuEMocdAsEbVgL7FBvJ5HhPhWPxgxkZGvOxUdCqkCIfN9F22NaUJ70h6esQaM9fnMVFNxEZnioc9CxQao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QQW8pBiI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=b42c8kbI; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63AH5Awh1498649
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 02:19:54 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63AIqZOX3742909
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 02:22:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gu/teDD23fbBDqFsqXo8me0HScED9ySD1rAeh3K6Hoc=; b=OPlQbhoYxHsfB80l
-	LtswwCJZ06ZS4yDA67ORpWXqiNdDCT7+vCLHYBF8eX8DuJyaw+WUeKM7U3hgEF7U
-	lYNhxfzFAMp4mg71Ng1lCT7lz218ld59cUIfO9F0/9q3IC6CZjRDdqnZgxR1s3dg
-	AoNx1drI2YYzVAxkWfuhnVoUIXzNp/nd8NwN0gtHue3Kocq64TBscLbKcaWupfUB
-	+XMX7invrlqHOVs9mgoitG8Kfh8kp66OC5Q+IOEA4ZGUEjSt+VvUzszwy9AiTVDS
-	G1rQBNuLZ6cfJbdsFXi8KFPBG25Yc5QbXG7x97rqGcghk6jS1KRiZ0xi77XXLn98
-	b8L5IQ==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dey5b2fe1-1
+	jsPK59L1DEHDhwsLvGu/62voFLqLbdR2wUTVJKE17k8=; b=QQW8pBiI8qFZn7n8
+	UVGjw6oKqIKXC7MqB9kSiym8WuRWcNEwfw8MZqMDKgv0dnumYoKqZjXUL9SBHgc8
+	WdU2RUwoWZ45S4FaM729VQDpBfID14tqowKSBxDnhL82tZK7GLZyMBz2Zk4HPvgE
+	LpViPigUowPCaUuioatfKTAePWeerB+JqH/jHRj5ZXQKg9RuXcQiFGCUAy3XROHL
+	9SAjAzIn1vmqt6YZ3q4C0mkeBTNYm2rS4NjRCp4s2BE3WDpf/gURUQjGu/dCfBHt
+	CMYqDoDqMdUtDeBPCc5yq62nhZOPvpukuV/9rRBPX44ta4MsIkco6V+p7r+Kapqs
+	hNJvQQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4deytnjbxh-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 02:19:54 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c741f038f7cso1648712a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 19:19:54 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 02:22:50 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2b0f4e632caso37314725ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Apr 2026 19:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1775873994; x=1776478794; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1775874169; x=1776478969; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=gu/teDD23fbBDqFsqXo8me0HScED9ySD1rAeh3K6Hoc=;
-        b=UH/oCXLTXvbO/Kqt8Vdh8OtxKIBMoaYsVWhpuOGIdkHHBG0Fit9hjxeOgnQxpSHN+o
-         3lcG/X5PiCoptHd16gvWuvpqjwkZCSYRVmg5IDvn+OyVdSAqjWqphrCXlqppS9+AvRCr
-         0PE7CCMht3pPCiVRwZMBFT+bMx7IOpQPg/c7afoay15tOMMxlBwf0FuR5m/OQNotpefG
-         bRxsfywSIkC7LxhfVqRiZIBdQdRI9LfQEFpOSQskSAQLiwi/FBuXfSlTBakPlja7UeKa
-         s7tMscB6NZRiFC+UmKuFWdiq7pNkY1qLWxO7yE2AAp+m1b68fxb1C12Y1H0y3bM2mXAJ
-         lYcw==
+        bh=jsPK59L1DEHDhwsLvGu/62voFLqLbdR2wUTVJKE17k8=;
+        b=b42c8kbIdPbJ4uetEdcbO3grlKH3u6E2e8a8oZFi8SlS+Me/0zi/Fy8uLdk4+WR/w1
+         CilyiFBqZ83Mq11KG5WHkk03oACqZ/eszMnXVRzq8dLGgQPMS4nn7BhZlRBHLOrmUj5t
+         tmkY2DH2QlMaIJf9fs8mqdSR3A3WX3Sm0vzD1Apnv0+GSfyhshH/Bh2NlprjcG0kKTNn
+         PEl9X/7OnBQEfE4I82VqmfqD1v4kwtQC3VcNHcKEyCQYYrPHfPcVN/aXO+kh7uQ25SrQ
+         A1RXT7h3W8Ax2WgUWUSXTchNCl10qR8K0ROSJHsdwS/5C9gZDLdM6jq02baUGWDCXwP2
+         N2Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775873994; x=1776478794;
+        d=1e100.net; s=20251104; t=1775874169; x=1776478969;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=gu/teDD23fbBDqFsqXo8me0HScED9ySD1rAeh3K6Hoc=;
-        b=sGXhszbamCJg1UCZCjYioabSZ1dgUz7rt7XCd0hJe6XVLXHNwvy3taE8RB+VOW9TCq
-         tI54yUY3LIgOD7rJiewcy6JrQ5ilt/ivlisJptV2dLtBt6yAkU7D0FgdoMOnRpXnWcaL
-         eCjqgXfn5SDPmSdQRD3zkhXVFXn6IL69VrGhltmGj1kFZfiw6gw1175ihBIPza8Czvds
-         +XwzoMrxl7gxTjXwPnxhAkvbdYG34PC7RnidINPxo3mHjhGRm27zgr2D77QbUjMCQoEA
-         KuA7i+1YHy5C4vJOwa75Hk4iirv/j9oeD87CH6j0sTzrScFKYyPHieqixWlOIHcvaOMN
-         zBWg==
-X-Gm-Message-State: AOJu0YxPol9jw8LyQUr77of/U8d/uUqcLDTyImCFtoxy8gfukZkJbY84
-	e7zBpEO/24/VWje/CSm3Ap0PdImmMxgMsf9LnfDgxq4WIYXYuDk+5c05N4KxTrbndvvL+2K7ECY
-	x3cn5sp49mU4zgDT1TU1A9SkcyLDpSXcx93NcdcAD5C+zzPA049oBMyOqTwDTMg6MpxbYXnpnCX
-	c59OE=
-X-Gm-Gg: AeBDietCejBjOSJap9jEZZ1B9lvt6xhho5Cca3e1KybxW0SMee7wBraMl8ipZfeaWzA
-	GbIkzQmdnLwF9UJyBneuMh6Q9wJPmgr9+ixwpEe6DqGZS556mIF8IPruoXQslLTNjixQCoymfbp
-	u8fRMCxetaQ5Znnr6JvBn6+YLMg1IrX7BMwhee6uQVRQ+Y483q7qj4U1tn1IZDQBqDtPgFrGLpC
-	mgp5x04vwzEvNiKE+zAr+Ir0TLe+yRvyUcCrJu4XSrm/tWfjR0TZS+EERiU4c0Fh0xCpd8tTQPW
-	z7jeHtgsS5efEwkTR6N/6maFE3GMvsXdLHL2TFryAi1ZThyA4Ol5t/KkD9VdoPDadJ99OTm3Klx
-	vFSqESW5+78e/EA8B/sBtAQMsBlcSnuamchP/jI/AgueX+6FWuQgBAnU2ZVEdq/ERDPSo5NAhS4
-	psyN/8DjrwGA==
-X-Received: by 2002:a05:6a00:2411:b0:82c:d6d3:3190 with SMTP id d2e1a72fcca58-82f0c250e58mr5670299b3a.38.1775873993457;
-        Fri, 10 Apr 2026 19:19:53 -0700 (PDT)
-X-Received: by 2002:a05:6a00:2411:b0:82c:d6d3:3190 with SMTP id d2e1a72fcca58-82f0c250e58mr5670271b3a.38.1775873992848;
-        Fri, 10 Apr 2026 19:19:52 -0700 (PDT)
+        bh=jsPK59L1DEHDhwsLvGu/62voFLqLbdR2wUTVJKE17k8=;
+        b=AhC4dU3gwm87HeiAFU0GjOw3CCRK5Gut6fcueYzFv5TPUXp1DcxMc9VSkUpH+EmRRK
+         Qms/s6H+VbD3zGWZuddbUtAKbSZhypwqLaqhJKzydJlUBtRhEiHCMHMnNKDW2LiHYdx1
+         y0piyQwRpP21s4D4V3SPiYDXomcA74CiEynNVOCvCvUoQoPeMmTyOpfTvaCaqnjrFP1C
+         OcTnYqUKD5WmYKikhknBzx2q4hphL0XH7qf2BGFtj6RVIlW3mlMALjD20S2ZBE6lbryz
+         eotxKulc3CDgRNoaSwW1nWvbBCmHzwEdfM94OgBN+Vyur9a/KX78SE2BZg3S7RaKNK1z
+         KZNQ==
+X-Gm-Message-State: AOJu0YzQGLYxp3hvYbmpikMDDPp/NHCCx+b4/aXwd1Ndlmo6uEoTcIxn
+	HRhzIqx1xzGVyK0StEfXaQMxIyryL+m8cVTPf+qTsIAXDSLiSSQFMzMYpOXdKe0jNrWboLMw/fV
+	U7/ahKwQItGOaCpq/wWIOuXZa9c2s8/IETKEj6NA1vxAsAqaDP8zCqW7+oO5RbpNCql6c
+X-Gm-Gg: AeBDiesdZRQTRfgRmHlsFKB7l0JZl1cSTEWDi1dtJQDrVzacNuxnjbB4ZaIV7qnsryl
+	0Ckp2v/1uxR9JzQVLMoxoe9slrlrKnZ/3g66Ka5MfqONShGzRjA0YWYXE/PkWh6gWBo3EJmBTSH
+	N2/RW9JUl26sUE5GKlc33bpfLk/W8JY1utXhZzxj0XWR1zISYtN7sY7Dvtfbt+A4n9tp7DlDFtI
+	np6lzVdoZU70Q1vEanfYsYS7voGMhC5MowvD1M3thZqIGGouhqW2ypMODNTr84MBT5IGeF646rn
+	QaPVWe3cIgcMgNmBvmtFN1LhvPbzPDzgEkx7HV6eCQk0ThSRTtUry0jh9Nf0MXoT7WHWxQLR3C/
+	yhdHTHFnIQTVuTHf8FHachxoymv+MRHvoNCDE9CY8UNIcSwbpv3p2TF//sLzAhRr0pHJu0fop/f
+	E8jIpzuulaDQ==
+X-Received: by 2002:a17:902:ffcb:b0:2ae:aa16:acfb with SMTP id d9443c01a7336-2b2d5a304b9mr60539195ad.22.1775874169327;
+        Fri, 10 Apr 2026 19:22:49 -0700 (PDT)
+X-Received: by 2002:a17:902:ffcb:b0:2ae:aa16:acfb with SMTP id d9443c01a7336-2b2d5a304b9mr60538885ad.22.1775874168671;
+        Fri, 10 Apr 2026 19:22:48 -0700 (PDT)
 Received: from [10.133.33.83] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f0c4b251esm4053702b3a.37.2026.04.10.19.19.45
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2d4f3afebsm42714125ad.72.2026.04.10.19.22.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Apr 2026 19:19:52 -0700 (PDT)
-Message-ID: <31e75026-f22e-4bb1-9589-317408081d10@oss.qualcomm.com>
-Date: Sat, 11 Apr 2026 10:19:42 +0800
+        Fri, 10 Apr 2026 19:22:48 -0700 (PDT)
+Message-ID: <07fcf759-b53c-4bc8-8e88-48b82713fecb@oss.qualcomm.com>
+Date: Sat, 11 Apr 2026 10:22:41 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,7 +106,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/17] drm/msm/a6xx: Add soft fuse detection support
+Subject: Re: [PATCH v2 15/17] drm/msm/a8xx: Preemption support for A840
 To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
         Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
         Konrad Dybcio <konradybcio@kernel.org>,
@@ -124,267 +123,684 @@ To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 References: <20260327-a8xx-gpu-batch2-v2-0-2b53c38d2101@oss.qualcomm.com>
- <20260327-a8xx-gpu-batch2-v2-12-2b53c38d2101@oss.qualcomm.com>
+ <20260327-a8xx-gpu-batch2-v2-15-2b53c38d2101@oss.qualcomm.com>
 Content-Language: en-US
 From: Jie Gan <jie.gan@oss.qualcomm.com>
-In-Reply-To: <20260327-a8xx-gpu-batch2-v2-12-2b53c38d2101@oss.qualcomm.com>
+In-Reply-To: <20260327-a8xx-gpu-batch2-v2-15-2b53c38d2101@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 8CuKOlhPsGnBJeUtnBtsY9Sc1NzhkIQr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDAxNiBTYWx0ZWRfX0i6Yekn2ZZU3
- hGUDyVLF8NT9kcAem5LHSjFv3Ifo3O2eoSwRtTjdCBMfK0vTJIDkAj+ryFJyrvTkQ1IvCmLEwLo
- /EOUfdjQvXMAUbg509MibPibAPEt+J5YV70bcQBxg5WfFsvl9LpFDEGIVcbbvo14f/EB5+rNQy1
- N1LjWvANHdh1PChEwwyHIIxEaXQNa1u/gZ5o0FKTF8RAYMLlF/uCUwZntQ1iYrWkkBi1iwco7N8
- 6IAtqR1nwWk49PO4fZ2o4f67qtaHNgD5b/GTK0Vadt2v/9yhIQzyLcCCpZ4K61VEjXfsVNz29jN
- 4fl8aVSl9XgrJau8G7KtIuCo0Bybeza3CJv/FtF6c5E2jib7rffUuwTnfdVM3nsY1anpkqB+19K
- laVGe/vPAUfEkdjOR/Kt2ZCkmm+Lv5N25ENyiGxZ6yijnCjBWA+/YW6Rlxil97DsS786oO+Sis1
- opbPLvcsw90ou0YjbLw==
-X-Proofpoint-GUID: 8CuKOlhPsGnBJeUtnBtsY9Sc1NzhkIQr
-X-Authority-Analysis: v=2.4 cv=VsgTxe2n c=1 sm=1 tr=0 ts=69d9afca cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+X-Proofpoint-ORIG-GUID: 2Ituhh1kboNFsCqIZ8v2PClOoVlqT4s9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDExMDAxNiBTYWx0ZWRfX7ZvyEwEyV8Ko
+ nzsGIQo7Hi1AH+5yGFkl1Lo11fyEJFSMxxtaAOOUbszHN/YV5GfJNMLOX6IWDkpour/E7pfOOr6
+ rMuQcoQ7z1zoh1s7tkOCk40EqnKMtPJKXulX2SwzoEI6lWEy+SBz/GwpoL9BOYy1kWQbOwPqPQM
+ 7Uk+W0sSmlyd098Ls1hfc1TnnC3OcFgQelkMsptd2fsQ0BedxEY3b5JvnhS2rDiakOBxnbx88Ez
+ Zhef5ueRSLT6rdqFwUFmUJXp7cTDoqGoN4Wfq7hnBgmtalPNY5sDULqWQSgXSwguDCJ6hFFUL61
+ GD03u6Smt+oEbpjVXiCcNLsjt7xIrhnLGA868hZA00gb72Uz9YdJ3v1mOTUXbLmokwu9WX7uMiF
+ 8bjgQqBwmktJz+MhusWcft24ABvZxeNE6BwX/V30W2GJ5oXEegMFmusw+iaGQWNX9uZC7pb4xML
+ 6mkPQGefMWX6m/bev8A==
+X-Proofpoint-GUID: 2Ituhh1kboNFsCqIZ8v2PClOoVlqT4s9
+X-Authority-Analysis: v=2.4 cv=crGrVV4i c=1 sm=1 tr=0 ts=69d9b07a cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=_Z3VJ0DL17_MYGaqnVMA:9 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=68z4iRH7ockWEGeBAzMA:9 a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
+ a=uG9DUKGECoFWVXl0Dc02:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-10_07,2026-04-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 spamscore=0 suspectscore=0 clxscore=1015 bulkscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
- definitions=main-2604110016
+ priorityscore=1501 impostorscore=0 bulkscore=0 clxscore=1015 suspectscore=0
+ spamscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604110016
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-102753-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102752-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	FREEMAIL_TO(0.00)[oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch,linux.intel.com,suse.de];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[jie.gan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 1AA123DDF76
+X-Rspamd-Queue-Id: 3823B3DDF9F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
 
 On 3/27/2026 8:14 AM, Akhil P Oommen wrote:
-> Recent chipsets like Glymur supports a new mechanism for SKU detection.
-> A new CX_MISC register exposes the combined (or final) speedbin value
-> from both HW fuse register and the Soft Fuse register. Implement this new
-> SKU detection along with a new quirk to identify the GPUs that has soft
-> fuse support.
+> The programing sequence related to preemption is unchanged from A7x. But
+> there is some code churn due to register shuffling in A8x. So, split out
+> the common code into a header file for code sharing and add/update
+> additional changes required to support preemption feature on A8x GPUs.
 > 
-> There is a side effect of this patch on A4x and older series. The
-> speedbin field in the MSM_PARAM_CHIPID will be 0 instead of 0xffff. This
-> should be okay as Mesa correctly handles it. Speedbin was not even a
-> thing when those GPUs' support were added.
+> Finally, enable the preemption quirk in A840's catalog to enable this
+> feature.
 > 
 > Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 > ---
->   drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |  6 ++++
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c         | 41 ++++++++++++++++++++++-----
->   drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  5 ----
->   drivers/gpu/drm/msm/adreno/adreno_gpu.h       |  1 +
->   drivers/gpu/drm/msm/registers/adreno/a6xx.xml |  4 +++
->   5 files changed, 45 insertions(+), 12 deletions(-)
+>   drivers/gpu/drm/msm/Makefile              |   1 +
+>   drivers/gpu/drm/msm/adreno/a6xx_catalog.c |   1 +
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c     |   7 +-
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |   5 +
+>   drivers/gpu/drm/msm/adreno/a6xx_preempt.c |  77 +--------
+>   drivers/gpu/drm/msm/adreno/a6xx_preempt.h |  82 ++++++++++
+>   drivers/gpu/drm/msm/adreno/a8xx_gpu.c     |  37 ++++-
+>   drivers/gpu/drm/msm/adreno/a8xx_preempt.c | 259 ++++++++++++++++++++++++++++++
+>   8 files changed, 389 insertions(+), 80 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> index 79a441e91fa1..d7ed3225f635 100644
-> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> @@ -1731,6 +1731,7 @@ static struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
->   	struct adreno_gpu *adreno_gpu;
->   	struct msm_gpu *gpu;
->   	unsigned int nr_rings;
-> +	u32 speedbin;
->   	int ret;
+> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> index 8b94c5f1cb68..ba45e99be05b 100644
+> --- a/drivers/gpu/drm/msm/Makefile
+> +++ b/drivers/gpu/drm/msm/Makefile
+> @@ -25,6 +25,7 @@ adreno-y := \
+>   	adreno/a6xx_hfi.o \
+>   	adreno/a6xx_preempt.o \
+>   	adreno/a8xx_gpu.o \
+> +	adreno/a8xx_preempt.o \
 >   
->   	a5xx_gpu = kzalloc(sizeof(*a5xx_gpu), GFP_KERNEL);
-> @@ -1757,6 +1758,11 @@ static struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
->   		return ERR_PTR(ret);
->   	}
+>   adreno-$(CONFIG_DEBUG_FS) += adreno/a5xx_debugfs.o \
 >   
-> +	/* Set the speedbin value that is passed to userspace */
-> +	if (adreno_read_speedbin(&pdev->dev, &speedbin) || !speedbin)
-> +		speedbin = 0xffff;
-> +	adreno_gpu->speedbin = (uint16_t) (0xffff & speedbin);
-> +
->   	msm_mmu_set_fault_handler(to_msm_vm(gpu->vm)->mmu, gpu,
->   				  a5xx_fault_handler);
->   
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> index 53548f6e891b..21f5a685196b 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> @@ -2120,6 +2120,7 @@ static const struct adreno_info a8xx_gpus[] = {
+>   		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+>   		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
+>   			  ADRENO_QUIRK_HAS_HW_APRIV |
+> +			  ADRENO_QUIRK_PREEMPTION |
+>   			  ADRENO_QUIRK_IFPC,
+>   		.funcs = &a8xx_gpu_funcs,
+>   		.a6xx = &(const struct a6xx_info) {
 > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 5cddfc03828f..fb9662b946d0 100644
+> index fb9662b946d0..44ce02b412ca 100644
 > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
 > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -2546,13 +2546,33 @@ static u32 fuse_to_supp_hw(const struct adreno_info *info, u32 fuse)
->   	return UINT_MAX;
+> @@ -410,7 +410,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   	a6xx_flush(gpu, ring);
 >   }
 >   
-> -static int a6xx_set_supported_hw(struct device *dev, const struct adreno_info *info)
-> +static int a6xx_read_speedbin(struct device *dev, struct a6xx_gpu *a6xx_gpu,
-> +		const struct adreno_info *info, u32 *speedbin)
+> -static void a6xx_emit_set_pseudo_reg(struct msm_ringbuffer *ring,
+> +void a6xx_emit_set_pseudo_reg(struct msm_ringbuffer *ring,
+>   		struct a6xx_gpu *a6xx_gpu, struct msm_gpu_submitqueue *queue)
+>   {
+>   	u64 preempt_postamble;
+> @@ -620,7 +620,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>   	a6xx_flush(gpu, ring);
+>   
+>   	/* Check to see if we need to start preemption */
+> -	a6xx_preempt_trigger(gpu);
+> +	if (adreno_is_a8xx(adreno_gpu))
+> +		a8xx_preempt_trigger(gpu);
+> +	else
+> +		a6xx_preempt_trigger(gpu);
+>   }
+>   
+>   static void a6xx_set_hwcg(struct msm_gpu *gpu, bool state)
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> index a4434a6a56dd..eb431e5e00b1 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> @@ -278,6 +278,8 @@ void a6xx_preempt_hw_init(struct msm_gpu *gpu);
+>   void a6xx_preempt_trigger(struct msm_gpu *gpu);
+>   void a6xx_preempt_irq(struct msm_gpu *gpu);
+>   void a6xx_preempt_fini(struct msm_gpu *gpu);
+> +void a6xx_emit_set_pseudo_reg(struct msm_ringbuffer *ring,
+> +		struct a6xx_gpu *a6xx_gpu, struct msm_gpu_submitqueue *queue);
+>   int a6xx_preempt_submitqueue_setup(struct msm_gpu *gpu,
+>   		struct msm_gpu_submitqueue *queue);
+>   void a6xx_preempt_submitqueue_close(struct msm_gpu *gpu,
+> @@ -327,6 +329,9 @@ void a8xx_gpu_get_slice_info(struct msm_gpu *gpu);
+>   int a8xx_hw_init(struct msm_gpu *gpu);
+>   irqreturn_t a8xx_irq(struct msm_gpu *gpu);
+>   void a8xx_llc_activate(struct a6xx_gpu *a6xx_gpu);
+> +void a8xx_preempt_hw_init(struct msm_gpu *gpu);
+> +void a8xx_preempt_trigger(struct msm_gpu *gpu);
+> +void a8xx_preempt_irq(struct msm_gpu *gpu);
+>   bool a8xx_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring);
+>   void a8xx_recover(struct msm_gpu *gpu);
+>   #endif /* __A6XX_GPU_H__ */
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+> index 747a22afad9f..df4cbf42e9a4 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+> @@ -6,85 +6,10 @@
+>   #include "msm_gem.h"
+>   #include "a6xx_gpu.h"
+>   #include "a6xx_gmu.xml.h"
+> +#include "a6xx_preempt.h"
+>   #include "msm_mmu.h"
+>   #include "msm_gpu_trace.h"
+>   
+> -/*
+> - * Try to transition the preemption state from old to new. Return
+> - * true on success or false if the original state wasn't 'old'
+> - */
+> -static inline bool try_preempt_state(struct a6xx_gpu *a6xx_gpu,
+> -		enum a6xx_preempt_state old, enum a6xx_preempt_state new)
+> -{
+> -	enum a6xx_preempt_state cur = atomic_cmpxchg(&a6xx_gpu->preempt_state,
+> -		old, new);
+> -
+> -	return (cur == old);
+> -}
+> -
+> -/*
+> - * Force the preemption state to the specified state.  This is used in cases
+> - * where the current state is known and won't change
+> - */
+> -static inline void set_preempt_state(struct a6xx_gpu *gpu,
+> -		enum a6xx_preempt_state new)
+> -{
+> -	/*
+> -	 * preempt_state may be read by other cores trying to trigger a
+> -	 * preemption or in the interrupt handler so barriers are needed
+> -	 * before...
+> -	 */
+> -	smp_mb__before_atomic();
+> -	atomic_set(&gpu->preempt_state, new);
+> -	/* ... and after*/
+> -	smp_mb__after_atomic();
+> -}
+> -
+> -/* Write the most recent wptr for the given ring into the hardware */
+> -static inline void update_wptr(struct a6xx_gpu *a6xx_gpu, struct msm_ringbuffer *ring)
+> -{
+> -	unsigned long flags;
+> -	uint32_t wptr;
+> -
+> -	spin_lock_irqsave(&ring->preempt_lock, flags);
+> -
+> -	if (ring->restore_wptr) {
+> -		wptr = get_wptr(ring);
+> -
+> -		a6xx_fenced_write(a6xx_gpu, REG_A6XX_CP_RB_WPTR, wptr, BIT(0), false);
+> -
+> -		ring->restore_wptr = false;
+> -	}
+> -
+> -	spin_unlock_irqrestore(&ring->preempt_lock, flags);
+> -}
+> -
+> -/* Return the highest priority ringbuffer with something in it */
+> -static struct msm_ringbuffer *get_next_ring(struct msm_gpu *gpu)
+> -{
+> -	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> -	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> -
+> -	unsigned long flags;
+> -	int i;
+> -
+> -	for (i = 0; i < gpu->nr_rings; i++) {
+> -		bool empty;
+> -		struct msm_ringbuffer *ring = gpu->rb[i];
+> -
+> -		spin_lock_irqsave(&ring->preempt_lock, flags);
+> -		empty = (get_wptr(ring) == gpu->funcs->get_rptr(gpu, ring));
+> -		if (!empty && ring == a6xx_gpu->cur_ring)
+> -			empty = ring->memptrs->fence == a6xx_gpu->last_seqno[i];
+> -		spin_unlock_irqrestore(&ring->preempt_lock, flags);
+> -
+> -		if (!empty)
+> -			return ring;
+> -	}
+> -
+> -	return NULL;
+> -}
+> -
+>   static void a6xx_preempt_timer(struct timer_list *t)
+>   {
+>   	struct a6xx_gpu *a6xx_gpu = timer_container_of(a6xx_gpu, t,
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.h b/drivers/gpu/drm/msm/adreno/a6xx_preempt.h
+> new file mode 100644
+> index 000000000000..df36c945b836
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.h
+> @@ -0,0 +1,82 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/* Copyright (c) 2018, The Linux Foundation. All rights reserved. */
+> +/* Copyright (c) 2023 Collabora, Ltd. */
+> +/* Copyright (c) 2024 Valve Corporation */
+> +/* Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries. */
+> +
+> +/*
+> + * Try to transition the preemption state from old to new. Return
+> + * true on success or false if the original state wasn't 'old'
+> + */
+> +static inline bool try_preempt_state(struct a6xx_gpu *a6xx_gpu,
+> +		enum a6xx_preempt_state old, enum a6xx_preempt_state new)
 > +{
-> +	int ret;
+> +	enum a6xx_preempt_state cur = atomic_cmpxchg(&a6xx_gpu->preempt_state,
+> +		old, new);
 > +
-> +	/* Use speedbin fuse if present. Otherwise, fallback to softfuse */
-> +	ret = adreno_read_speedbin(dev, speedbin);
-> +	if (ret != -ENOENT)
-> +		return ret;
+> +	return (cur == old);
+> +}
 > +
-> +	if (info->quirks & ADRENO_QUIRK_SOFTFUSE) {
-> +		*speedbin = a6xx_llc_read(a6xx_gpu, REG_A8XX_CX_MISC_SW_FUSE_FREQ_LIMIT_STATUS);
+> +/*
+> + * Force the preemption state to the specified state.  This is used in cases
+> + * where the current state is known and won't change
+> + */
+> +static inline void set_preempt_state(struct a6xx_gpu *gpu,
+> +		enum a6xx_preempt_state new)
+> +{
+> +	/*
+> +	 * preempt_state may be read by other cores trying to trigger a
+> +	 * preemption or in the interrupt handler so barriers are needed
+> +	 * before...
+> +	 */
+> +	smp_mb__before_atomic();
+> +	atomic_set(&gpu->preempt_state, new);
+> +	/* ... and after */
+> +	smp_mb__after_atomic();
+> +}
+> +
+> +/* Write the most recent wptr for the given ring into the hardware */
+> +static inline void update_wptr(struct a6xx_gpu *a6xx_gpu, struct msm_ringbuffer *ring)
+> +{
+> +	unsigned long flags;
+> +	uint32_t wptr;
+> +
+> +	spin_lock_irqsave(&ring->preempt_lock, flags);
+> +
+> +	if (ring->restore_wptr) {
+> +		wptr = get_wptr(ring);
+> +
+> +		a6xx_fenced_write(a6xx_gpu, REG_A6XX_CP_RB_WPTR, wptr, BIT(0), false);
+> +
+> +		ring->restore_wptr = false;
+> +	}
+> +
+> +	spin_unlock_irqrestore(&ring->preempt_lock, flags);
+> +}
+> +
+> +/* Return the highest priority ringbuffer with something in it */
+> +static inline struct msm_ringbuffer *get_next_ring(struct msm_gpu *gpu)
+> +{
+> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> +
+> +	unsigned long flags;
+> +	int i;
+> +
+> +	for (i = 0; i < gpu->nr_rings; i++) {
+> +		bool empty;
+> +		struct msm_ringbuffer *ring = gpu->rb[i];
+> +
+> +		spin_lock_irqsave(&ring->preempt_lock, flags);
+> +		empty = (get_wptr(ring) == gpu->funcs->get_rptr(gpu, ring));
+> +		if (!empty && ring == a6xx_gpu->cur_ring)
+> +			empty = ring->memptrs->fence == a6xx_gpu->last_seqno[i];
+> +		spin_unlock_irqrestore(&ring->preempt_lock, flags);
+> +
+> +		if (!empty)
+> +			return ring;
+> +	}
+> +
+> +	return NULL;
+> +}
+> +
+> diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+> index e406681b8c80..9e6f2ed69247 100644
+> --- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+> @@ -463,6 +463,34 @@ static void a8xx_patch_pwrup_reglist(struct msm_gpu *gpu)
+>   	a8xx_aperture_clear(gpu);
+>   }
+>   
+> +static int a8xx_preempt_start(struct msm_gpu *gpu)
+> +{
+> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> +	struct msm_ringbuffer *ring = gpu->rb[0];
+> +
+> +	if (gpu->nr_rings <= 1)
+> +		return 0;
+> +
+> +	/* Turn CP protection off */
+> +	OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
+> +	OUT_RING(ring, 0);
+> +
+> +	a6xx_emit_set_pseudo_reg(ring, a6xx_gpu, NULL);
+> +
+> +	/* Yield the floor on command completion */
+> +	OUT_PKT7(ring, CP_CONTEXT_SWITCH_YIELD, 4);
+> +	OUT_RING(ring, 0x00);
+> +	OUT_RING(ring, 0x00);
+> +	OUT_RING(ring, 0x00);
+> +	/* Generate interrupt on preemption completion */
+> +	OUT_RING(ring, 0x00);
+> +
+> +	a6xx_flush(gpu, ring);
+> +
+> +	return a8xx_idle(gpu, ring) ? 0 : -EINVAL;
+> +}
+> +
+>   static int a8xx_cp_init(struct msm_gpu *gpu)
+>   {
+>   	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> @@ -738,6 +766,8 @@ static int hw_init(struct msm_gpu *gpu)
+>   	gpu_write64(gpu, REG_A6XX_CP_RB_RPTR_ADDR, shadowptr(a6xx_gpu, gpu->rb[0]));
+>   	gpu_write64(gpu, REG_A8XX_CP_RB_RPTR_ADDR_BV, rbmemptr(gpu->rb[0], bv_rptr));
+>   
+> +	a8xx_preempt_hw_init(gpu);
+> +
+>   	for (i = 0; i < gpu->nr_rings; i++)
+>   		a6xx_gpu->shadow[i] = 0;
+>   
+> @@ -800,6 +830,9 @@ static int hw_init(struct msm_gpu *gpu)
+>   	/* Enable hardware clockgating */
+>   	a8xx_set_hwcg(gpu, true);
+>   out:
+> +	/* Last step - yield the ringbuffer */
+> +	a8xx_preempt_start(gpu);
+> +
+>   	/*
+>   	 * Tell the GMU that we are done touching the GPU and it can start power
+>   	 * management
+> @@ -1209,11 +1242,11 @@ irqreturn_t a8xx_irq(struct msm_gpu *gpu)
+>   
+>   	if (status & A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS) {
+>   		msm_gpu_retire(gpu);
+> -		a6xx_preempt_trigger(gpu);
+> +		a8xx_preempt_trigger(gpu);
+>   	}
+>   
+>   	if (status & A6XX_RBBM_INT_0_MASK_CP_SW)
+> -		a6xx_preempt_irq(gpu);
+> +		a8xx_preempt_irq(gpu);
+>   
+>   	return IRQ_HANDLED;
+>   }
+> diff --git a/drivers/gpu/drm/msm/adreno/a8xx_preempt.c b/drivers/gpu/drm/msm/adreno/a8xx_preempt.c
+> new file mode 100644
+> index 000000000000..3d8c33ba722e
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/adreno/a8xx_preempt.c
+> @@ -0,0 +1,259 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/* Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries. */
+> +
+> +#include "msm_gem.h"
+> +#include "a6xx_gpu.h"
+> +#include "a6xx_gmu.xml.h"
+> +#include "a6xx_preempt.h"
+> +#include "msm_mmu.h"
+> +#include "msm_gpu_trace.h"
+> +
+> +static void preempt_prepare_postamble(struct a6xx_gpu *a6xx_gpu)
+> +{
+> +	u32 *postamble = a6xx_gpu->preempt_postamble_ptr;
+> +	u32 count = 0;
+> +
+> +	postamble[count++] = PKT7(CP_REG_RMW, 3);
+> +	postamble[count++] = REG_A8XX_RBBM_PERFCTR_SRAM_INIT_CMD;
+> +	postamble[count++] = 0;
+> +	postamble[count++] = 1;
+> +
+> +	postamble[count++] = PKT7(CP_WAIT_REG_MEM, 6);
+> +	postamble[count++] = CP_WAIT_REG_MEM_0_FUNCTION(WRITE_EQ);
+> +	postamble[count++] = CP_WAIT_REG_MEM_POLL_ADDR_LO(
+> +				REG_A8XX_RBBM_PERFCTR_SRAM_INIT_STATUS);
+> +	postamble[count++] = CP_WAIT_REG_MEM_POLL_ADDR_HI(0);
+> +	postamble[count++] = CP_WAIT_REG_MEM_3_REF(0x1);
+> +	postamble[count++] = CP_WAIT_REG_MEM_4_MASK(0x1);
+> +	postamble[count++] = CP_WAIT_REG_MEM_5_DELAY_LOOP_CYCLES(0);
+> +
+> +	a6xx_gpu->preempt_postamble_len = count;
+> +
+> +	a6xx_gpu->postamble_enabled = true;
+> +}
+> +
+> +static void preempt_disable_postamble(struct a6xx_gpu *a6xx_gpu)
+> +{
+> +	u32 *postamble = a6xx_gpu->preempt_postamble_ptr;
+> +
+> +	/*
+> +	 * Disable the postamble by replacing the first packet header with a NOP
+> +	 * that covers the whole buffer.
+> +	 */
+> +	*postamble = PKT7(CP_NOP, (a6xx_gpu->preempt_postamble_len - 1));
+> +
+> +	a6xx_gpu->postamble_enabled = false;
+> +}
+> +
+> +/*
+> + * Set preemption keepalive vote. Please note that this vote is different from the one used in
+> + * a8xx_irq()
+> + */
+> +static void a8xx_preempt_keepalive_vote(struct msm_gpu *gpu, bool on)
+> +{
+> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> +
+> +	gmu_write(&a6xx_gpu->gmu, REG_A8XX_GMU_PWR_COL_PREEMPT_KEEPALIVE, on);
+> +}
+> +
+> +void a8xx_preempt_irq(struct msm_gpu *gpu)
+> +{
+> +	uint32_t status;
+> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> +	struct drm_device *dev = gpu->dev;
+> +
+> +	if (!try_preempt_state(a6xx_gpu, PREEMPT_TRIGGERED, PREEMPT_PENDING))
+> +		return;
+> +
+> +	/* Delete the preemption watchdog timer */
+> +	timer_delete(&a6xx_gpu->preempt_timer);
+> +
+> +	/*
+> +	 * The hardware should be setting the stop bit of CP_CONTEXT_SWITCH_CNTL
+> +	 * to zero before firing the interrupt, but there is a non zero chance
+> +	 * of a hardware condition or a software race that could set it again
+> +	 * before we have a chance to finish. If that happens, log and go for
+> +	 * recovery
+> +	 */
+> +	status = gpu_read(gpu, REG_A8XX_CP_CONTEXT_SWITCH_CNTL);
+> +	if (unlikely(status & A8XX_CP_CONTEXT_SWITCH_CNTL_STOP)) {
+> +		DRM_DEV_ERROR(&gpu->pdev->dev,
+> +					  "!!!!!!!!!!!!!!!! preemption faulted !!!!!!!!!!!!!! irq\n");
+> +		set_preempt_state(a6xx_gpu, PREEMPT_FAULTED);
+> +		dev_err(dev->dev, "%s: Preemption failed to complete\n",
+> +			gpu->name);
+> +		kthread_queue_work(gpu->worker, &gpu->recover_work);
+> +		return;
+> +	}
+> +
+> +	a6xx_gpu->cur_ring = a6xx_gpu->next_ring;
+> +	a6xx_gpu->next_ring = NULL;
+> +
+> +	set_preempt_state(a6xx_gpu, PREEMPT_FINISH);
+> +
+> +	update_wptr(a6xx_gpu, a6xx_gpu->cur_ring);
+> +
+> +	set_preempt_state(a6xx_gpu, PREEMPT_NONE);
+> +
+> +	a8xx_preempt_keepalive_vote(gpu, false);
+> +
+> +	trace_msm_gpu_preemption_irq(a6xx_gpu->cur_ring->id);
+> +
+> +	/*
+> +	 * Retrigger preemption to avoid a deadlock that might occur when preemption
+> +	 * is skipped due to it being already in flight when requested.
+> +	 */
+> +	a8xx_preempt_trigger(gpu);
+> +}
+> +
+> +void a8xx_preempt_hw_init(struct msm_gpu *gpu)
+> +{
+> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> +	int i;
+> +
+> +	/* No preemption if we only have one ring */
+> +	if (gpu->nr_rings == 1)
+> +		return;
+> +
+> +	for (i = 0; i < gpu->nr_rings; i++) {
+> +		struct a6xx_preempt_record *record_ptr = a6xx_gpu->preempt[i];
+> +
+> +		record_ptr->wptr = 0;
+> +		record_ptr->rptr = 0;
+> +		record_ptr->rptr_addr = shadowptr(a6xx_gpu, gpu->rb[i]);
+> +		record_ptr->info = 0;
+> +		record_ptr->data = 0;
+> +		record_ptr->rbase = gpu->rb[i]->iova;
+> +	}
+> +
+> +	/* Write a 0 to signal that we aren't switching pagetables */
+> +	gpu_write64(gpu, REG_A8XX_CP_CONTEXT_SWITCH_SMMU_INFO, 0);
+> +
+> +	/* Enable the GMEM save/restore feature for preemption */
+> +	gpu_write(gpu, REG_A6XX_RB_CONTEXT_SWITCH_GMEM_SAVE_RESTORE_ENABLE, 0x1);
+> +
+> +	/* Reset the preemption state */
+> +	set_preempt_state(a6xx_gpu, PREEMPT_NONE);
+> +
+> +	spin_lock_init(&a6xx_gpu->eval_lock);
+> +
+> +	/* Always come up on rb 0 */
+> +	a6xx_gpu->cur_ring = gpu->rb[0];
+> +}
+> +
+> +void a8xx_preempt_trigger(struct msm_gpu *gpu)
+> +{
+> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> +	unsigned long flags;
+> +	struct msm_ringbuffer *ring;
+> +	unsigned int cntl;
+> +	bool sysprof;
+> +
+> +	if (gpu->nr_rings == 1)
+> +		return;
+> +
+> +	/*
+> +	 * Lock to make sure another thread attempting preemption doesn't skip it
+> +	 * while we are still evaluating the next ring. This makes sure the other
+> +	 * thread does start preemption if we abort it and avoids a soft lock.
+> +	 */
+> +	spin_lock_irqsave(&a6xx_gpu->eval_lock, flags);
+> +
+> +	/*
+> +	 * Try to start preemption by moving from NONE to START. If
+> +	 * unsuccessful, a preemption is already in flight
+> +	 */
+> +	if (!try_preempt_state(a6xx_gpu, PREEMPT_NONE, PREEMPT_START)) {
+> +		spin_unlock_irqrestore(&a6xx_gpu->eval_lock, flags);
+> +		return;
+> +	}
+> +
+> +	cntl = A8XX_CP_CONTEXT_SWITCH_CNTL_LEVEL(a6xx_gpu->preempt_level);
+> +
+> +	if (a6xx_gpu->skip_save_restore)
+> +		cntl |= A8XX_CP_CONTEXT_SWITCH_CNTL_SKIP_SAVE_RESTORE;
+> +
+> +	if (a6xx_gpu->uses_gmem)
+> +		cntl |= A8XX_CP_CONTEXT_SWITCH_CNTL_USES_GMEM;
+> +
+> +	cntl |= A8XX_CP_CONTEXT_SWITCH_CNTL_STOP;
+> +
+> +	/* Get the next ring to preempt to */
+> +	ring = get_next_ring(gpu);
+> +
+> +	/*
+> +	 * If no ring is populated or the highest priority ring is the current
+> +	 * one do nothing except to update the wptr to the latest and greatest
+> +	 */
+> +	if (!ring || (a6xx_gpu->cur_ring == ring)) {
+> +		set_preempt_state(a6xx_gpu, PREEMPT_FINISH);
+> +		update_wptr(a6xx_gpu, a6xx_gpu->cur_ring);
+> +		set_preempt_state(a6xx_gpu, PREEMPT_NONE);
+> +		spin_unlock_irqrestore(&a6xx_gpu->eval_lock, flags);
+> +		return;
+> +	}
+> +
+> +	spin_unlock_irqrestore(&a6xx_gpu->eval_lock, flags);
+> +
+> +	spin_lock_irqsave(&ring->preempt_lock, flags);
+> +
+> +	struct a7xx_cp_smmu_info *smmu_info_ptr =
+> +		a6xx_gpu->preempt_smmu[ring->id];
+> +	struct a6xx_preempt_record *record_ptr = a6xx_gpu->preempt[ring->id];
+> +	u64 ttbr0 = ring->memptrs->ttbr0;
+> +	u32 context_idr = ring->memptrs->context_idr;
 
-a6xx_llc_read accesses the a6xx_gpu->llcc_mmio without check the 
-validation of the a6xx_gpu->llcc_mmio. If the llcc_mmio is invalid, the 
-subsequent readl() in a6xx_llc_read() will crash with a kernel oops.
+Shall we declare these variables at the top of the function body?
 
 Thanks,
 Jie
 
-> +		*speedbin = A8XX_CX_MISC_SW_FUSE_FREQ_LIMIT_STATUS_FINALFREQLIMIT(*speedbin);
-> +		return 0;
-> +	}
 > +
-> +	return -ENOENT;
+> +	smmu_info_ptr->ttbr0 = ttbr0;
+> +	smmu_info_ptr->context_idr = context_idr;
+> +	record_ptr->wptr = get_wptr(ring);
+> +
+> +	/*
+> +	 * The GPU will write the wptr we set above when we preempt. Reset
+> +	 * restore_wptr to make sure that we don't write WPTR to the same
+> +	 * thing twice. It's still possible subsequent submissions will update
+> +	 * wptr again, in which case they will set the flag to true. This has
+> +	 * to be protected by the lock for setting the flag and updating wptr
+> +	 * to be atomic.
+> +	 */
+> +	ring->restore_wptr = false;
+> +
+> +	trace_msm_gpu_preemption_trigger(a6xx_gpu->cur_ring->id, ring->id);
+> +
+> +	spin_unlock_irqrestore(&ring->preempt_lock, flags);
+> +
+> +	/* Set the keepalive bit to keep the GPU ON until preemption is complete */
+> +	a8xx_preempt_keepalive_vote(gpu, true);
+> +
+> +	a6xx_fenced_write(a6xx_gpu,
+> +		REG_A8XX_CP_CONTEXT_SWITCH_SMMU_INFO, a6xx_gpu->preempt_smmu_iova[ring->id],
+> +		BIT(1), true);
+> +
+> +	a6xx_fenced_write(a6xx_gpu,
+> +		REG_A8XX_CP_CONTEXT_SWITCH_PRIV_NON_SECURE_RESTORE_ADDR,
+> +		a6xx_gpu->preempt_iova[ring->id], BIT(1), true);
+> +
+> +	a6xx_gpu->next_ring = ring;
+> +
+> +	/* Start a timer to catch a stuck preemption */
+> +	mod_timer(&a6xx_gpu->preempt_timer, jiffies + msecs_to_jiffies(10000));
+> +
+> +	/* Enable or disable postamble as needed */
+> +	sysprof = refcount_read(&a6xx_gpu->base.base.sysprof_active) > 1;
+> +
+> +	if (!sysprof && !a6xx_gpu->postamble_enabled)
+> +		preempt_prepare_postamble(a6xx_gpu);
+> +
+> +	if (sysprof && a6xx_gpu->postamble_enabled)
+> +		preempt_disable_postamble(a6xx_gpu);
+> +
+> +	/* Set the preemption state to triggered */
+> +	set_preempt_state(a6xx_gpu, PREEMPT_TRIGGERED);
+> +
+> +	/* Trigger the preemption */
+> +	a6xx_fenced_write(a6xx_gpu, REG_A8XX_CP_CONTEXT_SWITCH_CNTL, cntl, BIT(1), false);
 > +}
 > +
-> +static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
-> +		const struct adreno_info *info)
->   {
->   	u32 supp_hw;
->   	u32 speedbin;
->   	int ret;
->   
-> -	ret = adreno_read_speedbin(dev, &speedbin);
-> +	ret = a6xx_read_speedbin(dev, a6xx_gpu, info, &speedbin);
->   	/*
->   	 * -ENOENT means that the platform doesn't support speedbin which is
->   	 * fine
-> @@ -2586,11 +2606,13 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->   	struct msm_drm_private *priv = dev->dev_private;
->   	struct platform_device *pdev = priv->gpu_pdev;
->   	struct adreno_platform_config *config = pdev->dev.platform_data;
-> +	const struct adreno_info *info = config->info;
->   	struct device_node *node;
->   	struct a6xx_gpu *a6xx_gpu;
->   	struct adreno_gpu *adreno_gpu;
->   	struct msm_gpu *gpu;
->   	extern int enable_preemption;
-> +	u32 speedbin;
->   	bool is_a7xx;
->   	int ret, nr_rings = 1;
->   
-> @@ -2613,14 +2635,14 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->   	adreno_gpu->gmu_is_wrapper = of_device_is_compatible(node, "qcom,adreno-gmu-wrapper");
->   
->   	adreno_gpu->base.hw_apriv =
-> -		!!(config->info->quirks & ADRENO_QUIRK_HAS_HW_APRIV);
-> +		!!(info->quirks & ADRENO_QUIRK_HAS_HW_APRIV);
->   
->   	/* gpu->info only gets assigned in adreno_gpu_init(). A8x is included intentionally */
-> -	is_a7xx = config->info->family >= ADRENO_7XX_GEN1;
-> +	is_a7xx = info->family >= ADRENO_7XX_GEN1;
->   
->   	a6xx_llc_slices_init(pdev, a6xx_gpu, is_a7xx);
->   
-> -	ret = a6xx_set_supported_hw(&pdev->dev, config->info);
-> +	ret = a6xx_set_supported_hw(&pdev->dev, a6xx_gpu, info);
->   	if (ret) {
->   		a6xx_llc_slices_destroy(a6xx_gpu);
->   		kfree(a6xx_gpu);
-> @@ -2628,15 +2650,20 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->   	}
->   
->   	if ((enable_preemption == 1) || (enable_preemption == -1 &&
-> -	    (config->info->quirks & ADRENO_QUIRK_PREEMPTION)))
-> +	    (info->quirks & ADRENO_QUIRK_PREEMPTION)))
->   		nr_rings = 4;
->   
-> -	ret = adreno_gpu_init(dev, pdev, adreno_gpu, config->info->funcs, nr_rings);
-> +	ret = adreno_gpu_init(dev, pdev, adreno_gpu, info->funcs, nr_rings);
->   	if (ret) {
->   		a6xx_destroy(&(a6xx_gpu->base.base));
->   		return ERR_PTR(ret);
->   	}
->   
-> +	/* Set the speedbin value that is passed to userspace */
-> +	if (a6xx_read_speedbin(&pdev->dev, a6xx_gpu, info, &speedbin) || !speedbin)
-> +		speedbin = 0xffff;
-> +	adreno_gpu->speedbin = (uint16_t) (0xffff & speedbin);
-> +
->   	/*
->   	 * For now only clamp to idle freq for devices where this is known not
->   	 * to cause power supply issues:
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> index 8475802fdde2..f6c39aed50f2 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> @@ -1185,7 +1185,6 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->   	struct msm_gpu_config adreno_gpu_config  = { 0 };
->   	struct msm_gpu *gpu = &adreno_gpu->base;
->   	const char *gpu_name;
-> -	u32 speedbin;
->   	int ret;
->   
->   	adreno_gpu->funcs = funcs;
-> @@ -1214,10 +1213,6 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->   			devm_pm_opp_set_clkname(dev, "core");
->   	}
->   
-> -	if (adreno_read_speedbin(dev, &speedbin) || !speedbin)
-> -		speedbin = 0xffff;
-> -	adreno_gpu->speedbin = (uint16_t) (0xffff & speedbin);
-> -
->   	gpu_name = devm_kasprintf(dev, GFP_KERNEL, "%"ADRENO_CHIPID_FMT,
->   			ADRENO_CHIPID_ARGS(config->chip_id));
->   	if (!gpu_name)
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> index 29097e6b4253..044ed4d49aa7 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> @@ -63,6 +63,7 @@ enum adreno_family {
->   #define ADRENO_QUIRK_PREEMPTION			BIT(5)
->   #define ADRENO_QUIRK_4GB_VA			BIT(6)
->   #define ADRENO_QUIRK_IFPC			BIT(7)
-> +#define ADRENO_QUIRK_SOFTFUSE			BIT(8)
->   
->   /* Helper for formating the chip_id in the way that userspace tools like
->    * crashdec expect.
-> diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
-> index 3941e7510754..2309870f5031 100644
-> --- a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
-> +++ b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
-> @@ -5016,6 +5016,10 @@ by a particular renderpass/blit.
->   		<bitfield pos="1" name="LPAC" type="boolean"/>
->   		<bitfield pos="2" name="RAYTRACING" type="boolean"/>
->   	</reg32>
-> +	<reg32 offset="0x0405" name="CX_MISC_SW_FUSE_FREQ_LIMIT_STATUS" variants="A8XX-">
-> +		<bitfield high="8" low="0" name="FINALFREQLIMIT"/>
-> +		<bitfield pos="24" name="SOFTSKUDISABLED" type="boolean"/>
-> +	</reg32>
->   </domain>
->   
->   </database>
 > 
 
 
