@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-102774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kmInMRII2mkEyAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 10:36:34 +0200
+	id UEfdK6MI2mkEyAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102775-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 10:38:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 356CC3DEFCB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 10:36:33 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DB803DEFF1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 10:38:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C4AC4301EC70
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 08:36:32 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 944DD30215B7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Apr 2026 08:38:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63771286891;
-	Sat, 11 Apr 2026 08:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03E4F2EA731;
+	Sat, 11 Apr 2026 08:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OEq+8xdW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KojuZtuX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404C71C84BB
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 08:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53A42DF126
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Apr 2026 08:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775896590; cv=none; b=a9xt4svO/92r4x7Iqd6E7QFepR+fNxMdh2G5FPS/fV61poEfnJhpqR1QEfmUSYo7WCQj5iLCe/mALBEt62gyXOeOqnAF8Q9cAtVsp9sn4itLuL2J46px0NuEE5y021DV5gOvtBAXhbZfdddO3Iz8TTq7TZwc9z9H4ooW+CAy2Y0=
+	t=1775896718; cv=none; b=d7eR98R9F4RzXwP7KRSDJn+N/i79jr5g1v3k6eFhBXtS15e5YIfrRECO23AwjHjvdMyKktUWPMKjAltPnI6EwwLxMqnq/C+BhqAWf+SiSpqjqeV0e3AifCBF7YiAQi2HKalEGVqPCeGAn/TChODv0NvhMXSEMoa3RsHrZkuqUP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775896590; c=relaxed/simple;
-	bh=wprADVJKu9wHnF7hgXcFtU3lqaLTiDIRd/Vv8wZiTZc=;
+	s=arc-20240116; t=1775896718; c=relaxed/simple;
+	bh=WJwPAsSYyhBmXwIaIw1VAto7NG+MlEuN2t6R5r+/qJw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GQje7XYBG/c5GGpnyIDF0JAJXKyqXH5vbNaqedffZDBQa8Aufu6RwCrkinrABbdA8d6vVhXs4gNaTXwwY4xAzlhaFXayVsHk2y0S5+CVTzgRFB7k6SvBJybMWOiwm94rDB/guLb28D7KkHN8zJTc5Zi71/FVtVr6vmN9M1Ph8OM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OEq+8xdW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60921C4CEF7;
-	Sat, 11 Apr 2026 08:36:29 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=AItATVhkMswAcPHA58+p9P85ubwJwryygufenvm8c4GraEV9WrWPjfflO1LeEHleC8AjTuQlM3LFbcUSO9hIGs2Is0EQqQcn5yxM3jOrXj9HvmztsvjyvLmfq0y9MbixpFUYRbFgLMH6UZ/32kLL3Jl83PoB9X24CzKo1wIx6KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KojuZtuX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631EAC4CEF7;
+	Sat, 11 Apr 2026 08:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775896589;
-	bh=wprADVJKu9wHnF7hgXcFtU3lqaLTiDIRd/Vv8wZiTZc=;
+	s=k20201202; t=1775896718;
+	bh=WJwPAsSYyhBmXwIaIw1VAto7NG+MlEuN2t6R5r+/qJw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OEq+8xdWHBmKWDgsA2JDojibVUDQ9tmJo4A3w1aQXafDDRStzOQqLETOsS6bezolZ
-	 UKhyks9z07BeunXBMPTFcVyXwkKc0zQmsEAw0lrzUp2Crii6pe5I8k39RO0E9l5UtF
-	 k2Cvmuvh7v1MW7uxqVyRwtlzFW3Hw/RGw1QBtpNQLqPv7QRY1lc8/9HBs7vOTVwpzD
-	 0r72IMin8TyOAnSaiiiWsVM0mMCMv2nig7HJ/pklvK0UAmv35RXys9qVuScr518QBz
-	 Vz4nqNB73JpzeVIrrTtCBQHEZGJ17N/QqSq0gqcbw+LIs7vMlRyX5dt9+dmoGAm43+
-	 qyUPV2pSRQN7w==
-Date: Sat, 11 Apr 2026 10:36:27 +0200
+	b=KojuZtuXa+vfA+4gyCMqMFo1YA6loJ6n8pXUWBGJKSsrjBq6nD9XMBtxdy95aFDZG
+	 upszcPCrjivP+hrJcwlzW4LAnH4rY6Un69RhXgwhOKRxnC5MjZgulSlOOb8M8vhNDE
+	 VOJosRb7JzeG130LU17K7XZq9xAzym9kEUWxtqhNmEVgF7T0OdNeia0hvlUg2Cyicn
+	 ZkAe80SSGgXH/Zik5Ol0Bm4rsW1Tmcg26AMnCmZjpgwlgybjGKv40sk+gj/YnGh4Wu
+	 WvORo8CJdOUvDpC8VaQ1fup7Z+7V7/ZxHVnGRjQdzeCnDD9D5yI5OSRUT8VLwCpTM3
+	 VBdHT3LBvtkoQ==
+Date: Sat, 11 Apr 2026 10:38:36 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Bjorn Andersson <andersson@kernel.org>
 Cc: arm@kernel.org, soc@kernel.org, linux-arm-msm@vger.kernel.org, 
@@ -57,7 +57,7 @@ Cc: arm@kernel.org, soc@kernel.org, linux-arm-msm@vger.kernel.org,
 	Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>, Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
 	Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>, Qingqing Zhou <quic_qqzhou@quicinc.com>
 Subject: Re: [GIT PULL] A few more Arm64 DeviceTree updates for v7.1
-Message-ID: <20260411-strict-nifty-otter-fcd6dd@quoll>
+Message-ID: <20260411-amusing-hot-koala-cfcdaf@quoll>
 References: <20260406132007.2264408-1-andersson@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -72,13 +72,13 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102774-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-102775-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,lists.infradead.org,arndb.de,postmarketos.org,oss.qualcomm.com,gmail.com,linaro.org,quicinc.com,shiftphones.com,tuta.io];
@@ -92,11 +92,11 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 356CC3DEFCB
+X-Rspamd-Queue-Id: 2DB803DEFF1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
@@ -115,24 +115,9 @@ On Mon, Apr 06, 2026 at 08:20:07AM -0500, Bjorn Andersson wrote:
 >   arm64: dts: qcom: Add the Lenovo IdeaCentre Mini X (2026-04-02 16:08:54 -0500)
 > 
 > ----------------------------------------------------------------
-> A few more Arm64 DeviceTree updates for v7.1
-> 
-> Introduce the Hamoa-based Lenovo IdeaCentre Mini X, the Dragonwing
-> IQ-615 (Talos) EVK, and a Talos EVK camera overlay.
-> 
-> Enable DisplayPort support on the Glymur CRD.
-> 
-> Add WiFi, Bluetooh, LEDs, and venus on LG-based SDM845 devices. Add
-> battery, charger, and display on the LG G7 ThinQ.
-> 
-> Enable SD-card, describe the audio amplifier, and increase the speed of
-> the i2c clock for touchscreen on the SHIFT SHIFT6mq.
-> 
-> Add camera subsystem, camera control interface, GPU, GMU, and GPU
-> cooling on the Talos platform. Enable the GPU on the Ride board.
-> 
 
-Thanks, applied
+A note: your GPG key has expired. Consider dropping expiration time. At
+least I am planning to drop it in my next keys update.
 
 Best regards,
 Krzysztof
