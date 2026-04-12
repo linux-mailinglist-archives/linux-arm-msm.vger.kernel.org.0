@@ -1,111 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-102849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yyeJJNi122kxFgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2026 17:10:16 +0200
+	id 0K2zI7i622keFwkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2026 17:31:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE4643E4705
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2026 17:10:15 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CF7D3E4812
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2026 17:31:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5C065300B62D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2026 15:09:54 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 50CB03004F0B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Apr 2026 15:31:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EAC2381B18;
-	Sun, 12 Apr 2026 15:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAEE033985;
+	Sun, 12 Apr 2026 15:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RNrEXUME"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="GGBtoRzi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-43103.protonmail.ch (mail-43103.protonmail.ch [185.70.43.103])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9CB313E24;
-	Sun, 12 Apr 2026 15:09:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9F2CA5A
+	for <linux-arm-msm@vger.kernel.org>; Sun, 12 Apr 2026 15:30:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.103
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776006593; cv=none; b=th+d1/8J6dQf7QVJ0bd0FT1NV52LBSgyRPiSpd/Ks6ufBbJQMkElU769zxMXkmsbUU3HDIuZCzI29K574iX9O88HEOaGrtAXnf84EuZtINPgtYqcH1wsEHArgP+jGoLS0KuSuzeuwciTsvk2YtPs6FIg6U9lsaT9tqOb3aaV4TE=
+	t=1776007857; cv=none; b=SICFa+kI8Ld+XsHhWHcRSqDlPHTOu3t3hU7LeeOWvZn0yqcIT2f0L4/QBmzKNytHuU/Z0179kxxTM51UFqTcBV6ORXM0UP6F8t00xCkIlvNhofT1kExG30OORN/SSP5Q8VNE68x0DHFVmMYdqb3kWUMpEpx3VFQzWK7sd4qO3OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776006593; c=relaxed/simple;
-	bh=6Q9TrAexH6j3xFRDHRXi/lQBR7mf/rF1oo/tXG0V7sU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N6Gs4K3RjZUS5vgtbsYJEPHJqz1D+M6ZdgAN4+sb5ZVyXa7mPOhAwvURba34reDpGjCQpW4I3hPast4Da7QPV/i8Wm1TKSKckNc2BUOXC6G5AlkZKs04cEfs7x2uyGRnzOQ24TpgRo0BQfwfVadWJ5Wo1kzS3l0t4HgI9PADfzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RNrEXUME; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFD4C19424;
-	Sun, 12 Apr 2026 15:09:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776006593;
-	bh=6Q9TrAexH6j3xFRDHRXi/lQBR7mf/rF1oo/tXG0V7sU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=RNrEXUMEwkOz/JD+fxWpOSKO7SKZ4MF2mAAXrBLylXadrhPRJCVMHbT9eDMPS+nRM
-	 xwMS4XzdK4VvCPzcjo98aRfARQi5D7LEtI9m0fdNAQO+F5234Oya2kuQos1DDBXCEn
-	 w34rDtPdnGQrxanRIUiWPSe2pGZfVBQCZ5Z+HOEUSsG1LGshBDaoBpb0vjU92jBIDv
-	 LcDaX2kHLJT9MWtVypoRHTF+gocDKfe5fiQFYR8ZS7SVYoGuLUlEi65elMGi1ijPTZ
-	 fMy2Y4pODvk0GOXlWiTLNND8A1lGczsYS2qakajtgp1eJFY7+BiqAE1eBszUh4SXH0
-	 VHFNVdQ5fnTIA==
-Date: Sun, 12 Apr 2026 08:09:51 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, Richard Cochran
- <richardcochran@gmail.com>, mhi@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org, Vivek Pernamitta
- <vivek.pernamitta@oss.qualcomm.com>, Sivareddy Surasani
- <sivareddy.surasani@oss.qualcomm.com>, Vivek Pernamitta
- <quic_vpernami@quicinc.com>, Imran Shaik <imran.shaik@oss.qualcomm.com>,
- Taniya Das <taniya.das@oss.qualcomm.com>
-Subject: Re: [PATCH v2 0/6] bus: mhi: host: mhi_phc: Add support for PHC
- over MHI
-Message-ID: <20260412080951.723295fa@kernel.org>
-In-Reply-To: <20260411-tsc_timesync-v2-0-6f25f72987b3@oss.qualcomm.com>
-References: <20260411-tsc_timesync-v2-0-6f25f72987b3@oss.qualcomm.com>
+	s=arc-20240116; t=1776007857; c=relaxed/simple;
+	bh=fS5pY0/j5z7De+TIQ5fJJ216Ld5MOEv8jk/IQWF3TKU=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=lz0CpG/fJUr9xQGB5RqKWsFO6W2qP39VL+7FMTSi6Iv+pO0i09T6RsqeKxhhGYUNNerOAa2J4le4WbNHYDLEXLnhixI9PFOENqym88O5Ey8PmijnPnhJoFiAlv3dNRJnbydQ/cIUO0yTCu8PhEseACQUFWSfi1wnfNgTdHLwfSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=GGBtoRzi; arc=none smtp.client-ip=185.70.43.103
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1776007852; x=1776267052;
+	bh=MM/26Hm35xCPc7b54FBmQmxkGjPiKHVLx5akTLsDdAk=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=GGBtoRzioo+AiCNiW4/lkGIipLW32r168oK2UrM6QNveyK7CEwcg5xujzeEgz8MuE
+	 XCUK2Dsd2PllEVLT6JFycfkvwEzCr1qvQnhy0IPo8G4sG4GrqgxHw7VYxl2g13yaKl
+	 RgENmwMkZQe1Ku++cfw+bVgIus9zsL69fBRAEo06Vx7oBzoLEKvAfdEY5x2f9cR7J5
+	 GG8n9LOBuWOn8mi4Xf1Tvb4TYyLt6JoARnbzyFTju/4oUR54pPOAEpaNRWc07It+ep
+	 SVX+luFbRzd+ZE3THdjvpWM3Iua5+AWP2lK0pS4rlZMM+Z7FNnZQ9H2EdFbmBFu5cL
+	 oAHn9wq+1locQ==
+Date: Sun, 12 Apr 2026 15:30:48 +0000
+To: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
+Subject: [PATCH 0/2] clk: qcom: clk-rpmh: Make all VRMs optional by default
+Message-ID: <20260412-clk-rpmh-vrm-opt-v1-0-37c890c420ff@pm.me>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: fcf56ab00c5df48881397586bd94cf5e610520af
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,lists.linux.dev,vger.kernel.org,oss.qualcomm.com,quicinc.com];
-	TAGGED_FROM(0.00)[bounces-102849-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kuba@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[pm.me:+];
+	RCVD_COUNT_THREE(0.00)[3];
+	TAGGED_FROM(0.00)[bounces-102850-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[7];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: DE4643E4705
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 3CF7D3E4812
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Sat, 11 Apr 2026 13:42:00 +0530 Krishna Chaitanya Chundru wrote:
-> - User space applications use the standard Linux PTP interface.
-> - The PTP subsystem routes IOCTLs to the MHI PHC driver.
-> - The MHI PHC driver communicates with the MHI core to fetch timestamps.
-> - The MHI core interacts with the device to retrieve accurate time data.
+This series is meant to resolve an issue seen on the Nothing Phone (4a) Pro
+(Eliza) where probe fails due to RPMH_RF_CLK5 not being present on this boa=
+rd.
 
-Nack, stop adding functionality under the mhi "bus".
-Bus is supposed to be an abstraction into which real drivers plug in.
+The existing clka_optional mechanism does not cover rfclka also being missi=
+ng,
+so just mirror the downstream approach of marking all VRMs as optional inst=
+ead
+of expanding the check to include rfclka.
+
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+---
+Alexander Koskovich (2):
+      Revert "clk: qcom: rpmh: make clkaN optional"
+      clk: qcom: clk-rpmh: Make all VRMs optional by default
+
+ drivers/clk/qcom/clk-rpmh.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+---
+base-commit: 591cd656a1bf5ea94a222af5ef2ee76df029c1d2
+change-id: 20260412-clk-rpmh-vrm-opt-78b97cf451ba
+
+Best regards,
+--=20
+Alexander Koskovich <akoskovich@pm.me>
+
+
 
