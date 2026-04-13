@@ -1,154 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-102972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YH64DlP53GnXYgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	id 6FvqHFP53GnXYgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 16:10:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D5AE3ED16B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 16:10:26 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15D6D3ED16C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 16:10:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7F7E23050A3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 14:03:13 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id E992F302663F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 14:08:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F026F3CEBBD;
-	Mon, 13 Apr 2026 14:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6400D3D890B;
+	Mon, 13 Apr 2026 14:08:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bv6Tsm0Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51F43CB2C1;
-	Mon, 13 Apr 2026 14:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A433D7D9E;
+	Mon, 13 Apr 2026 14:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776088992; cv=none; b=YZceBHgH4bUMaps8QTPAPDTRV0J6kkPj+/M5WeNmMP2isXzJV/9Em9nF9+Tmu06pC+YLxm6kOBmo6Qqm9Mj+OpDgGvwcouJ58/8/1dp6wxJmwukDSDaZjRuE3+GQmf/IBqYyAd+pAwwqLgC5ixMzVK6anX8QrEqIslYIgsbvVRM=
+	t=1776089316; cv=none; b=Xky34MYSN0QQawcCCauVDGl5RRdKZsUn81cpotDJ0zwGVmtj93I+QlMgmZm4linYLw7ugovkZoW232F18DoUfQxHNX5k9bhg/448vXaeuMvxZLkL3qG6PgsPZVlgVMW2CKU5rlNyQfygHVWK4/Y4gJ+SDy0zzqCXjuwXFlxzCdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776088992; c=relaxed/simple;
-	bh=ZujmsWUiIlgFWuYStOUbuRgZOWkohs/X7TyfIkjFDX0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=efDZ2JdPE90FGg9ogvnnpHIbKTrfSznnGKNM10b1x33TwmWyA9///HlchC6Nc/o7urdMZKzL/xfm1NKAPB6iCc5nJK4qZEtxelDFnoqRYnk+nzbJEamrUn+Dpl6LI/EMRClzTd9AX5FXHtJhCGRfGMV6l8v8mXU8L87XeXa7bBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE95C2BCAF;
-	Mon, 13 Apr 2026 14:03:03 +0000 (UTC)
-Date: Mon, 13 Apr 2026 19:32:53 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-To: Chen-Yu Tsai <wenst@chromium.org>
-Cc: Rob Herring <robh@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
-	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Bartosz Golaszewski <brgl@kernel.org>, 
-	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	linux-acpi@vger.kernel.org, Hans de Goede <johannes.goede@oss.qualcomm.com>, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: Re: [PATCH v7 0/8] Add support for handling PCIe M.2 Key E
- connectors in devicetree
-Message-ID: <fpcs4p62f35a5qyqwgm5ysa73stbysxcr62tkmmkrrcvsuf4t4@4ivukyqjey57>
-References: <20260326-pci-m2-e-v7-0-43324a7866e6@oss.qualcomm.com>
- <20260413075459.GA2626902@google.com>
+	s=arc-20240116; t=1776089316; c=relaxed/simple;
+	bh=q0MjYcTJVLaR5d0DE/TEg6bKVzBus3R3lsOoTnumFws=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=J7sv0Gj9WgAg9aKGsdbdvRPb0sFtAYBwaswbyYI9Bf00iWyG0LePCrPjY3usjuOrvlm8ftL+CHjh5WZ4JPCWctn24jl0orCYj3J2OK8sEWs9aQ+Sd8AXl2KBJChDWfZbXZCUuZO6O7lCcP74c8afijCLDfGlZTav5LBiOqJsJpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bv6Tsm0Q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DA0C2BCAF;
+	Mon, 13 Apr 2026 14:08:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776089316;
+	bh=q0MjYcTJVLaR5d0DE/TEg6bKVzBus3R3lsOoTnumFws=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=bv6Tsm0Q8sdM2Yf35WWRRN4HZAl/4MwIeWQQqEF0boZHDFBmNzx/wX6jZwJK/bQBF
+	 lroEJJ3I9San0oZZPyiZWxHPBYi9oKH6nUTP7c/Nd1B2Ei13ryqvkHYZ3v96YWrelK
+	 9R+6qzso+TLOSLovKP+VCaRrl4smAx4s4S1EbBpKGkgakOMOwFz7sD/d44CsdhiaCl
+	 7IlwS8OMsdomnoUcoVfzhXwEEwtqVW19KbI6QL4brAfodWSfvK1YVrnbqjkii2HYoT
+	 H1oMxV6Sx5IhPSvy9Rk9drE+tgN/LCt3jwhHIRqvg5qKV+lRaWXSw124Ibhzt2RIIW
+	 5z7dL0WYZ5S/Q==
+Message-ID: <44d79f33-26ea-4a57-b292-74ef474fe0a9@kernel.org>
+Date: Mon, 13 Apr 2026 14:08:31 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260413075459.GA2626902@google.com>
-X-Spamd-Result: default: False [2.54 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[qualcomm.com : SPF not aligned (relaxed), No valid DKIM,reject];
-	SUSPICIOUS_RECIPS(1.50)[];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/4] misc: fastrpc: Move fdlist to invoke context
+ structure
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, srini@kernel.org,
+ linux-arm-msm@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+ linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+ dri-devel@lists.freedesktop.org, arnd@arndb.de,
+ dmitry.baryshkov@oss.qualcomm.com, andersson@kernel.org,
+ konrad.dybcio@oss.qualcomm.com
+References: <20260402054923.3061925-1-ekansh.gupta@oss.qualcomm.com>
+ <20260402054923.3061925-2-ekansh.gupta@oss.qualcomm.com>
+Content-Language: en-US
+From: Srinivas Kandagatla <srini@kernel.org>
+In-Reply-To: <20260402054923.3061925-2-ekansh.gupta@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-102972-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-102973-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,linuxfoundation.org,linux.dev,linux.intel.com,squebb.ca,gmail.com,holtmann.org,bgdev.pl,vger.kernel.org,linaro.org,oss.qualcomm.com];
-	RCPT_COUNT_TWELVE(0.00)[32];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[manivannan.sadhasivam@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.994];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	R_DKIM_NA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[srini@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 7D5AE3ED16B
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 15D6D3ED16C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Apr 13, 2026 at 03:54:59PM +0800, Chen-Yu Tsai wrote:
-> Hi,
-> 
-> On Thu, Mar 26, 2026 at 01:36:28PM +0530, Manivannan Sadhasivam wrote:
-> > Hi,
-> > 
-> > This series is the continuation of the series [1] that added the initial support
-> > for the PCIe M.2 connectors. This series extends it by adding support for Key E
-> > connectors. These connectors are used to connect the Wireless Connectivity
-> > devices such as WiFi, BT, NFC and GNSS devices to the host machine over
-> > interfaces such as PCIe/SDIO, USB/UART and NFC. This series adds support for
-> > connectors that expose PCIe interface for WiFi and UART interface for BT. Other
-> > interfaces are left for future improvements.
-> 
-> Thanks for working on this. I started playing with it now that it is in
-> -next. The PCIe part works fine. I'm looking into how to fit the pwrseq
-> 
-> A couple questions:
-> 
-> - Given that this connector actually represents two devices, how do I
->   say I want the BT part to be a wakeup source, but not the WiFi part?
->   Does wakeup-source even work at this point?
-> 
 
-You can't use the DT property since the devices are not described in DT
-statically. But you can still use the per-device 'wakeup' sysfs knob to enable
-wakeup.
 
-> - Are there plans to do the SDIO part?
+On 4/2/26 5:49 AM, Ekansh Gupta wrote:
+> The fdlist is currently part of the meta buffer which is set during
+> fastrpc_get_args(), this fdlist is getting recalculated during
+> fastrpc_put_args().
 > 
-
-No, not at the moment. Feel free to take it up if you have the hardware and
-motivation :)
-
-> - The matching done in the M.2 connector driver for pwrseq_get() seems a
->   bit naive. It simply checks if the remote device in the OF graph is
->   the same as the requesting device.
+> Move fdlist to the invoke context structure to improve maintainability
+> and reduce redundancy. This centralizes its handling and simplifies
+> meta buffer preparation and reading logic.
 > 
->   I think this would run into issues with USB hubs. If I have a USB hub
->   and two M.2 connectors, with both connectors connected to the same
->   hub, pwrseq_get() is going to always return only one of the instances.
->   This is because the USB hub has one device node with multiple OF graph
->   ports.
+> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+> ---
+>  drivers/misc/fastrpc.c | 13 ++++---------
+>  1 file changed, 4 insertions(+), 9 deletions(-)
 > 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 47356a5d5804..11f4ae749e51 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -233,6 +233,7 @@ struct fastrpc_invoke_ctx {
+>  	int pid;
+>  	int client_id;
+>  	u32 sc;
+> +	u64 *fdlist;
+>  	u32 *crc;
+>  	u64 ctxid;
+>  	u64 msg_sz;
+> @@ -1016,6 +1017,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
+>  	rpra = ctx->buf->virt;
+>  	list = fastrpc_invoke_buf_start(rpra, ctx->nscalars);
+>  	pages = fastrpc_phy_page_start(list, ctx->nscalars);
+> +	ctx->fdlist = (u64 *)(pages + ctx->nscalars);
+>  	args = (uintptr_t)ctx->buf->virt + metalen;
+>  	rlen = pkt_size - metalen;
+>  	ctx->rpra = rpra;
+> @@ -1118,18 +1120,11 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
+>  	union fastrpc_remote_arg *rpra = ctx->rpra;
+>  	struct fastrpc_user *fl = ctx->fl;
+>  	struct fastrpc_map *mmap = NULL;
+> -	struct fastrpc_invoke_buf *list;
+> -	struct fastrpc_phy_page *pages;
+> -	u64 *fdlist;
+> -	int i, inbufs, outbufs, handles;
+> +	u64 *fdlist = ctx->fdlist;
 
-Yeah, this is a known limitation. I'm trying to improve this part now and have
-the WIP commits here: https://github.com/Mani-Sadhasivam/linux/tree/pwrseq-bt-en-fixes
+fdlist is available after input , output buffers and handles.
 
-Once the merge window closes, I'll submit these.
+why this is now changed to nscalars?
 
-- Mani
+--srini
+> +	int i, inbufs;
+>  	int ret = 0;
+>  
+>  	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
+> -	outbufs = REMOTE_SCALARS_OUTBUFS(ctx->sc);
+> -	handles = REMOTE_SCALARS_INHANDLES(ctx->sc) + REMOTE_SCALARS_OUTHANDLES(ctx->sc);
+> -	list = fastrpc_invoke_buf_start(rpra, ctx->nscalars);
+> -	pages = fastrpc_phy_page_start(list, ctx->nscalars);
+> -	fdlist = (uint64_t *)(pages + inbufs + outbufs + handles);
+>  
+>  	for (i = inbufs; i < ctx->nbufs; ++i) {
+>  		if (!ctx->maps[i]) {
 
--- 
-மணிவண்ணன் சதாசிவம்
 
