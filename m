@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-102979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UGpqF34X3WmXZwkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 18:19:10 +0200
+	id 2B2LKTgY3WnNZwkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 18:22:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8A583EE9C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 18:19:09 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 523F83EEB9D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 18:22:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 85E5B3021733
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 16:09:48 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 94DFE307FA3A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 16:11:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0335C2C21C4;
-	Mon, 13 Apr 2026 16:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F3B729E0E5;
+	Mon, 13 Apr 2026 16:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X4LeMJ90"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iSRLtEPr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25D226E6F3;
-	Mon, 13 Apr 2026 16:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9B624DCF6;
+	Mon, 13 Apr 2026 16:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776096533; cv=none; b=LHKo5lXiNsIL/9qdSwP6IZSLFwvAQybJcltGbowx89A90+5tMtDaMRB7nIuSv7scXIi261Q0xXl2Hm7/aeEXAvs9y3J87QkbWlAOYjogCAdN5o2TmxKhGtwhKpOnmCASxB7381D8z0gF4wmUFYPVfMQgCb4bbK9Frz7Pc39cUc4=
+	t=1776096644; cv=none; b=lMuEavutywTt9lPeqbG2wCBsck3Ql4YdatEarL8XtnLyh1s609acooQQBcko9xKeu+N1kfJPwc7Jr9HoM5ZPd8+qpGauIxPYM3Ac2QLs7BtiWfZOePQ0UCjs9JpcSpjaocDEfo+/rfQxZjleaILJ7EODA3A7Mc+dH5AFea3Yy0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776096533; c=relaxed/simple;
-	bh=OgAFjZ0sSZ6PN2bYz/YPopqq8d5scdkfHFJT5oZSN9w=;
+	s=arc-20240116; t=1776096644; c=relaxed/simple;
+	bh=uDBJqMGwbfPLkSqGOIhJ/CIup+/YwhMnkgRVGoUyIiI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kMgcgBpSzZjTnFrW/H0qv64/bzLgspdxDlBSxWlj88Z7s9+vGnvVJaq+FkoYl3ktZ9pCWi70UfD6AqRFjD4vl5a46C0pvF18x+leM8ZlYaB8mRVbIm+13nG12iE5lY9vi3DfOZ/Jvp5dF4r95Jqdw2HoUjTo8krXejrUkv/CFxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X4LeMJ90; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A62C2BCAF;
-	Mon, 13 Apr 2026 16:08:51 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=IqhUeVbNg/XONudmnmUGmCa2zi7wQcHIDnKpWlD8eQj6NMH5Ge+wM+09KdR3T8pGS5gJcQQtGMAayI4Ek/jAZIBKGdJCTfFvweH3MmhRaR9w+1cQkp8r/Ksty6d4s7tbnWfXFKBF3aK72jO2haZujrnk96fG99tj1T8BtT9fR4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iSRLtEPr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0009CC2BCAF;
+	Mon, 13 Apr 2026 16:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776096533;
-	bh=OgAFjZ0sSZ6PN2bYz/YPopqq8d5scdkfHFJT5oZSN9w=;
+	s=k20201202; t=1776096644;
+	bh=uDBJqMGwbfPLkSqGOIhJ/CIup+/YwhMnkgRVGoUyIiI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=X4LeMJ90FATjSX48b6gTm3NiWMUCSaLU7BJw25dlIPP1OEl6C9hzmaYVogoYqFCLP
-	 QhgWH7AjU9rIX7lE4Zl6Xb0lVoLCFm84QhbNendGmNhtZpxVr4BazPUWbXV+rGgrlT
-	 8dIC6EEPOlE5t8yy49HQszSEwKVhMsHLBZv1vUq0AglETywHV1xi0r18qqI38mWfit
-	 l9b2taxD+t025I0O5ZSwW2ByE+9mYBLvocEpvi9v+yFVURpBZAvExMbOZrtfXXuBqj
-	 H2uNj8lnk/bJbUqz3O+qrjFIPP4EZmzwQqKYTqvC+v9ybLn1EE55L2VpbnbmRfZ0MY
-	 Fqgm1gxTDbiTg==
-Message-ID: <d671229f-1c9f-470f-b1d1-7d015c0721e8@kernel.org>
-Date: Mon, 13 Apr 2026 18:08:49 +0200
+	b=iSRLtEPr2pi4XyQUZdOL4AMx5IvZeuUExI4FnAjUIQkti1FSQF9yay6AFVQO62cgh
+	 VsLcGcGIhLbAzbi6RvT6a3v/CmYJlpxw2cbqHT0VtJBF4T16XLiaNRqeiOBlFUdVtx
+	 fZEo+jH2GLX7bNcOyXqktH9yH5yzorBzyip2ECmQOyqTNh/MlJES456C3kcx4VLgQf
+	 s2X3/rITHjovK6G5ON8tGSRnod71wDceLN6I/v2r8XxXZ1zpiiuLNnGFGARVXoAdXN
+	 QkB30kGXlBXAQjqfGMWLu6LC2cxm7Q8Sdq0zN4APeMey9kLbQxE2FJsNLjg+uNBCE8
+	 gEd3i3qJoDbUQ==
+Message-ID: <516270e3-1d59-403c-ad01-7153147c9e30@kernel.org>
+Date: Mon, 13 Apr 2026 18:10:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,23 +53,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] dt-bindings: arm: cpus: Add compatible qcom,oryon-1-5
-To: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Subject: Re: [PATCH v2 3/3] soc: qcom: llcc-qcom: Capitalize LLCC/EDAC in
+ comments and diagnostics
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+ Francisco Munoz Ruiz <francisco.ruiz@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>,
- Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
- Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260413091625.607976-1-shengchao.guo@oss.qualcomm.com>
- <20260413091625.607976-3-shengchao.guo@oss.qualcomm.com>
- <a1f8cdcb-fddb-43ca-adbd-07e36949eef2@kernel.org>
- <adzjYypJciYFLT6F@QCOM-aGQu4IUr3Y>
- <1c06bd0f-24ce-4ea2-a7a1-4c61827b4763@kernel.org>
- <adzrY4AijnKqXDrh@QCOM-aGQu4IUr3Y>
- <cc08a091-9f2d-48de-9284-2f0c68fd343a@kernel.org>
- <adz--4_2qAs7lkTu@QCOM-aGQu4IUr3Y>
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor@kernel.org>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>, Rob Herring
+ <robh@kernel.org>, Kees Cook <kees@kernel.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20260407-external_llcc_changes2set-v2-0-b5017ce2020b@oss.qualcomm.com>
+ <20260407-external_llcc_changes2set-v2-3-b5017ce2020b@oss.qualcomm.com>
+ <20260413152528.muemkbfuow2qg3ta@hu-mojha-hyd.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,115 +114,51 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <adz--4_2qAs7lkTu@QCOM-aGQu4IUr3Y>
+In-Reply-To: <20260413152528.muemkbfuow2qg3ta@hu-mojha-hyd.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-102979-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-102980-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: B8A583EE9C7
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 523F83EEB9D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 13/04/2026 16:34, Shawn Guo wrote:
-> On Mon, Apr 13, 2026 at 03:30:28PM +0200, Krzysztof Kozlowski wrote:
->> On 13/04/2026 15:10, Shawn Guo wrote:
->>> On Mon, Apr 13, 2026 at 02:40:18PM +0200, Krzysztof Kozlowski wrote:
->>>>>> Please organize your patchset correctly.
->>>>>
->>>>> Are you asking for a big series that consists of all the new bindings
->>>>> used by Nord DTS and DTS itself?  Unless this big series gets applied as
->>>>> one-go, there are still chances that bindings get into a kernel release
->>>>> without any users, e.g. subsystem maintainers pick up bindgins being
->>>>> reviewed, but DTS requires more iterations and thus misses the release.
->>>>
->>>> Please follow existing rules, communicated multiple times on the mailing
->>>> list. Qualcomm also has internal guideline clarifying this.
->>>>
->>>> Below are some upstream discussion clarifying this:
->>>> https://lore.kernel.org/linux-samsung-soc/CADrjBPq_0nUYRABKpskRF_dhHu+4K=duPVZX==0pr+cjSL_caQ@mail.gmail.com/T/#m2d9130a1342ab201ab49670fa6c858ee3724c83c
->>>> https://lore.kernel.org/all/49258645-d4d8-44a5-a4fc-b403c926a5d1@kernel.org/
->>>>
->>>> And how to do it:
->>>> https://lore.kernel.org/all/20231121-topic-sm8650-upstream-dt-v3-0-db9d0507ffd3@linaro.org/
->>>
->>> That's what I'm trying to do, posting bindings in prior to DTS, so that
+On 13/04/2026 17:25, Mukesh Ojha wrote:
+> On Tue, Apr 07, 2026 at 02:51:49PM -0700, Francisco Munoz Ruiz wrote:
+>> Capitalize occurrences of the acronym "LLCC" and "EDAC" in comments
+>> and diagnostic text to improve consistency and readability.
 >>
->> Hm? Nothing above claimed that. I am sorry, but which rule either
->> communicated publicly or privately encouraged or even allowed that?
->>
->>> when posting DTS, either bindings is already merged or we can refer to
->>> lore link of bindings.
->>>
->>> I still need to understand you comment "Bindings come with the user".
->>> Are you saying that bindings and DTS in different series should be posted
->>> at the same time to show bindings has an user?
->>
->> I am saying that you cannot post bindings alone where there is no user.
->> Why do want even such binding? I see no point in having it in the
->> kernel, unless you speak about very specific exception, but then please
->> clarify that exception and why it applies to this work.
+>> Signed-off-by: Francisco Munoz Ruiz <francisco.ruiz@oss.qualcomm.com>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> I think I'm getting what the requirement is now, but still not sure what
-> the point of the requirement is.
-> 
-> - Posting bindings and DTS at the same time doesn't guarantee they get
->   into the same release.  It can often happen that bindings are merged
+> This could have been sent alone..
 
-No one claimed it will guarantee that and no one even suggested that.
-Submitting patches even describes this...
-
->   alone into a release.  So it doesn't really help to avoid situation of
->   there is bindings in-tree with no users.
-
-That was not the comment from me, either. When I say there is no user, I
-mean no user at all. Nowhere in ecosystem considered usptream, including
-mailing list.
-
-> 
-> - From what I can see, there are always DTS patches coming after bindings
->   changes, sooner or later.  No one would be bothered to submit a bindings
->   if the DTS using the bindings is only kept out of tree.
-
-I would be bothered. I don't want to maintain unused (unused as in
-upstream) ABI. I don't care about such ABI for downstream users and no
-one in upstream should spend any precious cycles on reviewing something
-which serves no upstream purposes.
-
-> 
-> In short, there will be Nord DTS using the binding coming, and I do not
-
-Maybe there will, maybe there will not.
-
-> think posting them at the same time should be a requirement.
-
-Well, it is a requirement as I explained previously, said that
-*multiple* times on the mailing list, documented expectations in
-mentioned/linked email threads. It's also documented in submitting
-patches in DT (although not with that strong wording).
+No, not necessarily. It is close to churn, so multiple subsystems ask
+for doing this only with some other work. The process here was correct.
 
 Best regards,
 Krzysztof
