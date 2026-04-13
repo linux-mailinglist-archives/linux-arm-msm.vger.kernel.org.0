@@ -1,106 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-102952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iFb9Dyfg3GnrXgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 14:23:03 +0200
+	id CNeZCTTg3GnrXgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 14:23:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0C033EBDD6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 14:23:02 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDDE73EBDED
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 14:23:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3FAD33012BDE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 12:22:56 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B0BAA301A2AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 12:22:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 594823C454B;
-	Mon, 13 Apr 2026 12:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 982273C456E;
+	Mon, 13 Apr 2026 12:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TzLNs6Gg";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="huPLBe2g"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="onLJ9rIS";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="X/kYniUx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669E83C4548
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 12:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B7C3C4566
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 12:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776082975; cv=none; b=N97Vy+DJPMABg9lvhY1hRmUZ4h+K8U0qn8ZdbgI6iTVyH7flapM9a2WilFtbExQiLacZQFlkIl19iVXYRFuv1SUxIuFmg5izoKIvhtLy0yq4rxWX/MpCpUr+Po3Enl8UhdrfAsJOiZ9ZJZmv/rR9c2TYShPzGkrKWsb+dQsQLu0=
+	t=1776082977; cv=none; b=R0MgQavhF4n+/kiepbtOWe37LEcV+6Xr9shB5dpIgKA4vUDyX3qONagmvpRmqVQIyBeIMMZG2snafvwrclnQcf15BMNF4KGxO++PEsIjHa+bkEgknRWIZ0bb1YJWKhUsDIGn/Qj1wOpNtIzG9jQvJpcwYw4AvGznTmpkCTwT7u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776082975; c=relaxed/simple;
-	bh=WqGjp+3nNmWD37jnenV4bomrrnmUA2taflFijifU3W0=;
+	s=arc-20240116; t=1776082977; c=relaxed/simple;
+	bh=ut9PV2o4yH/f8FFw1egzoxIKS47z+ANZobPjPIWRqWk=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=axd22xe2YxTINvz+pxQuXml7BvLm9QY34/ggcw99fWpWBW+XfamYKcKjy3f0V/0ZtEZ4/O6R7vztKrjrOwtqVmEmokQ4XvGJGj/Fwa2Kya4l5+zgo1+WBLnmKIuaUODQjMXOXEsF2TCgPLM6d7BrCVT6v7tnF1TDItGu+9NAIgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TzLNs6Gg; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=huPLBe2g; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=lFPyLA+IO23/5gHDAUEQRinR+W31PnpveCHOoX3zYK4q6X10SLeStD9vOxf42Pcc+9IqJ1Rl50Iwne1UwcTpx5cr59h5KwqRkRzQDbcwuNx7IF03FuEidYimGaT+huvD2yX6AYHxMzBYJUJiJdAOSPRyAgUlsP6gpTWzgi11voA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=onLJ9rIS; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=X/kYniUx; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63D79KrO480469
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 12:22:52 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63D82R1a605319
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 12:22:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=jIHQxfHe8DT
-	AODaHCq4F4LiV1LMXh8MqG2eRCRTxoak=; b=TzLNs6Ggz6DeART+AVrG3FRXxtD
-	kyPJRNCrvj0usGt7jNTK7yp8mTmOe7beCeUW19wxAHkQAGLKH73aAynvuP9dS+h9
-	2i8mGWW7fJc6SzoOak7pL3S3SYACHIQAVBj1fTiiIj7NLOCt7oQyxCUPaTUromOt
-	8tcj2qJLXnSMH1H60D9LtL32tMBBUTWojSJtoe3o2wQwdCh1RQOi0OEuBPpKTxD+
-	LyaoAtG0RpeaXjiCjg6ATQlAS11mDJkBNMAKXnTjiDeP1jw0bvAfNRDvEezOarf2
-	Z+HjrcFPI1/ONNHLPU4JVVpzb5wB9+IHmukPfUL31Aun0YQn2T/g3BTxR2w==
+	:mime-version:references:subject:to; s=qcppdkim1; bh=/JSKbxKMjlH
+	hR33pPEPgG0vWEqr9Nna/LCJkfK6/9BQ=; b=onLJ9rISvd95Su9DRKOxqBAqa9C
+	WT67BEOcfPbGm1K5H1ZKsImVuDmZ+fhec0YXJdF4bMQFW8xyx9SsAlMaTC9gP3Yy
+	+etHTyNcGUrXsYL2wt3t5ZrysYKDwOrq9KFobRZDw4iNqnDtnYZ0UTJw0IsgzzGv
+	jrrBz37c7lTSnU7dOWioV5aH17V04BmsKU7veloOJZmrqjCEQ52W9ypnPZPvO4tK
+	uc0oQVd0L44bCn4NTA2Ta3NsExM424+V3q24aP+qdT3cQKNRalk/EY9eDRR/O6Kv
+	5o+8MaNy3SjziFB7kqlzRVRz+Y3n5f4bnNSh7K08SCJyFq+r1j9vd5ozwfQ==
 Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com [209.85.128.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dguuj91bd-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dfffhw6fy-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 12:22:52 +0000 (GMT)
-Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-79064868702so93754557b3.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 05:22:52 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 12:22:55 +0000 (GMT)
+Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-7b28f7d8cbeso16654947b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 05:22:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776082972; x=1776687772; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1776082974; x=1776687774; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jIHQxfHe8DTAODaHCq4F4LiV1LMXh8MqG2eRCRTxoak=;
-        b=huPLBe2gQufZ3Kz1wblHBW7Wwinu5CYsQtSQ7j6UrN8hshtYJttcJd8WZD1JlzxXF7
-         ZJ6Ry3x9I6pfCLbp5Tm05CeVvfqSOZIc6DSsOZ4KgKIFKcPQPreGSmstrGBjQRjtGGtD
-         rWtsDZKAAOP70JSfiym+vPJipyheyIMODUZglWCbicmXOSe3GDP60ntEvEshrzQH0Ckx
-         MsIczoOzpCG2xdRdHkKaol573hOjJs4Aufoy/NVVWa63cHvSlkEshvAIxzaF2tlFZ/Y9
-         eZoJQTfdUy8mzz3R9M8ur5iZMZvIuI8MgJvSaCYu/Jp8MLXcbpSAejCZx0x/aseYUdAm
-         buaQ==
+        bh=/JSKbxKMjlHhR33pPEPgG0vWEqr9Nna/LCJkfK6/9BQ=;
+        b=X/kYniUxE7SfUp+h+n1DrPgU3SpoIJFQK8Aa9GVK0CSo/paswXzAcCX5t+dOKb3WX5
+         ipv4RRiRktC6vI/eKXdRyTzFDiKkdLVTCtoMqKQQgogtZ5W3iXKmjoM9L+SUjG7e5Um4
+         XgDt6+SSWBSSznW2OEMMY9MfOGbYwvBtHGfl7qze9vxZ8aVWoGRDAWsFtJqor6pjxMgy
+         s2xl2sZEM3zTft80DROLdoyNceTWydfqD/9V+8uLyYIF4d9d6TMGIUEO5qGxXUaEEyxx
+         6UIw59hAhJsgO0lyD81eB7CxqWOQyo2/0YYccsC+nD4rqwQ74VfXGwU7Thlzj8uvz5Jm
+         QpFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776082972; x=1776687772;
+        d=1e100.net; s=20251104; t=1776082974; x=1776687774;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=jIHQxfHe8DTAODaHCq4F4LiV1LMXh8MqG2eRCRTxoak=;
-        b=HzbFTOsK0tSNe8U981SmJukFVw5cQCLFwDvT887RIGQ7dP5pSL9h0ethvGGGc36Ucj
-         YLNsZ/27mCH/TCPB7DJcf6oDnEBg+IWv90gaY3e5oGI3Kk4Z6G+g9Io1Msj6jKLESseM
-         9jcAVIiG5WyXgtOPYiN+DW8D0vc5oLhjwC9f3fHOJ/DvPPKqFLJvquPBnZn+Mg2eP8IQ
-         DlTL5PEah1rUXLRi3lCkdbJwY+sOsfvuocQKO+1knSUS2kDGUoaequnU2SfyF7wcX665
-         po7xhSro4lP3eLg1Tr6kdE8xsO5FMroGBGVs2IIAwHTV3YaR7BLRrOPThTn1qrT7xQgC
-         JqKA==
-X-Gm-Message-State: AOJu0Yw+wibxRwZ4L4Kh9H02bAzYqdRhRHUcRjZCMG65azcuifrdanBj
-	qnFrbI/tUVbb62k/C8lu6uR/Od01RAGBC28fVlGGwbxKcnwLAKQa56NO+H74T2N3HCfAtaJmJXY
-	CKSE+CulVe4MPZpySYH3qdL62tSJUmIC4PMoZXkU5BTJO8AGPAAad0uBnZMzHWyrVX8Jk
-X-Gm-Gg: AeBDieuWJ1hXDIeQw3KdcJY8dUReO5w0u4JopnAvusVceIEThv4qRlt12vSM412k87r
-	mrrulIYDHE4N6ql9vGwd0XDGxrWJmTPbdMuRI5f6fON8JAaNucee5FqL8brs5C5TTr1ll2V81KV
-	Blg6cjBiVrkB7ZfCaO1h8wx5Oho7/AeX3mWi7sFHup9pIfcT4SwdlGc17kaOm81qA/6sV1/FKC2
-	pt5d6XXGPnm+05ZtJDKZRcclCPh6+Kbfd9Y6qp4H0iqu9YliNEsRA8mj2m8WrD9ERurzqe5+CuV
-	h5rxXzujs68vboNuLZm/durOp0I2D17WAyvOghYoY+CwVE/2a4IxZcoR52CAIOGWHkxuiiWVXYf
-	ymzTDxXoSkXppLhK5MFgIacrXjzBrbrlLs/kfihYAXt0oZFhi0w==
-X-Received: by 2002:a05:690c:60c6:b0:79c:a09a:e596 with SMTP id 00721157ae682-7af7253064dmr143747457b3.47.1776082971492;
-        Mon, 13 Apr 2026 05:22:51 -0700 (PDT)
-X-Received: by 2002:a05:690c:60c6:b0:79c:a09a:e596 with SMTP id 00721157ae682-7af7253064dmr143747127b3.47.1776082970937;
-        Mon, 13 Apr 2026 05:22:50 -0700 (PDT)
+        bh=/JSKbxKMjlHhR33pPEPgG0vWEqr9Nna/LCJkfK6/9BQ=;
+        b=b/2/vgqWCdGrrOcDoxqifgHmvkLJ4RQ5JgEuAA93BDwe4brHf9ZiPp0H7Oj3v95OGZ
+         GpWNRx7U/iGco8XEjWcojrD+bv/5tLmv87K/cSuV8mNvO3OaDONacPjubNTEO59B7brf
+         BWMAqT5SI9zLNK7+K8MYQPsnNA2A9ngs/cRQfD2K26VPG2brm61J6+3pHPH0qGCDwf6U
+         zRiSXIGIkPqIw4n6hFJxQZAJ9UktDWCPkP2Qu02MdAGbsV7/YyF0+8Tk91ZV1LS4kolv
+         UKjCLrDc/E0TCmpop/m1MLTNLWerk7frZFciHP38hEEzzvDtKMzUHM/yONoNu53zSYPa
+         cxmQ==
+X-Gm-Message-State: AOJu0Yyr9WmSJrYkwH9V7Jma6pDw5wuB2K5zwNl6CJdjO22ZscTFibYN
+	wv/729xWoCkwROQ63hTkVVjXWO2ni0g3pO9Jt3RlBenEeyExuwdlnbWu2Dw2pbs4IYIPjk1oFe9
+	A5pu3GsW2sk/34bqkG9aZxlCi4rnzf5iGj/IxXKyx9ndkHJg7luDUPBnIjqcteLsDZu6X
+X-Gm-Gg: AeBDieuW1hVqRlS5ukrStTtc7nikBleNJyfNylzLzdSwF9kl+RG35Vn8lMQeDLtXI1T
+	puyrwl+HdbHmnIWXNC/zb+5h89afPMRK5kFyR17sFj//1DjNcaHHzZo2HkIBCEGpR26lJCjT+jC
+	gHvUcAqTa7DJkXVKdLYNClZ2JDwYcENH69KIDDbiKxxqWShT6FnT7hWaZRYkbGD1a6Etpq3CxTb
+	dpb1+4VvX5SRCHOYiRmAYVkVLHGrwNKA/op5Iut4UrkrTjjLGPg0Bd+HDs88u55bX9MMJuQCO/p
+	f/Xj4fTCs+KFXpDk5rI77pqzLy1VmMiYX8zftVhvlRgkpeo486pUIpkisACNDYE5upaPBlHc5Ef
+	Zb6UF8+V7/tD5w4SG0encuJtXPvmHceLgSQef41SQMF7MDPYdnw==
+X-Received: by 2002:a05:690c:60c7:b0:79e:8299:7505 with SMTP id 00721157ae682-7af6ef4008dmr143218237b3.6.1776082974382;
+        Mon, 13 Apr 2026 05:22:54 -0700 (PDT)
+X-Received: by 2002:a05:690c:60c7:b0:79e:8299:7505 with SMTP id 00721157ae682-7af6ef4008dmr143217887b3.6.1776082973816;
+        Mon, 13 Apr 2026 05:22:53 -0700 (PDT)
 Received: from hu-nandam-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7af400eb1fasm50781657b3.44.2026.04.13.05.22.48
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7af400eb1fasm50781657b3.44.2026.04.13.05.22.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Apr 2026 05:22:50 -0700 (PDT)
+        Mon, 13 Apr 2026 05:22:53 -0700 (PDT)
 From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         linux-kernel@vger.kernel.org, srinivas.kandagatla@oss.qualcomm.com
-Subject: [PATCH v1 1/3] pinctrl: qcom: lpass-lpi: Switch to PM clock framework for runtime PM
-Date: Mon, 13 Apr 2026 17:52:31 +0530
-Message-Id: <20260413122233.375945-2-ajay.nandam@oss.qualcomm.com>
+Subject: [PATCH v1 2/3] pinctrl: qcom: lpass-lpi: Fix GPIO register access helper return types
+Date: Mon, 13 Apr 2026 17:52:32 +0530
+Message-Id: <20260413122233.375945-3-ajay.nandam@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260413122233.375945-1-ajay.nandam@oss.qualcomm.com>
 References: <20260413122233.375945-1-ajay.nandam@oss.qualcomm.com>
@@ -111,27 +111,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDEyMiBTYWx0ZWRfX0dK55LSn+DgZ
- tyApUKVj4ROeZW8IB+PFVGHSFEiACAGB7w07nKbpf3k2OaavR6fdcILulc8x1nNNBR18bUejC5h
- QS0JpwVAKuKFbXg3gzdIne95PQHK8BEKC98E+GQJefRVz2jNxSDqVvQ/MSxrQnGzRhNzydixFzT
- M+Les7L2ck1QVaOE4Mvu05+4c0a0JJN35Yd15bC61yV9/RX7wpHt5XDRNDVBIbp+G+BY8nN2NnO
- 1yw4wmmen8yTeQwi26yrJbK9TyB/D3Zkt+Ju8qL1xSP0Pa9E53r5RwFQoYlw4r8pFM0H+IMtyMb
- vIwy5P6REs6xEC/awdau7jW97/nFd/7uyWV+UqREHy44ZaBhwdG8IfRdKLVkVyez/AUQTSkRKJa
- Ugg+EOjLL8pXjqkUwMPiibHqEsnwbX4HpXpgYz1hUVkD+m9xhuV2uNMc3b4wXeTgyHXLqpe1Bzh
- wXsRwizZbR2+7EiQsfQ==
-X-Authority-Analysis: v=2.4 cv=c/ibhx9l c=1 sm=1 tr=0 ts=69dce01c cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDEyMiBTYWx0ZWRfX+QDzrT7zi9Qg
+ 8alryUzlltzP0sWqYY4kd3+HtDGmGwsuk8SjoSoU9qgMinhlbd0BlJluzxy8oJqfvxU/WpgmAod
+ Iirg+ycZY4OeSBbLonc4UZdCPmnrKRppc2pGHjy8qL/CQkefMHATuPnIMa2lUgdEHwXAdIkOr1M
+ 5qPpDC1jQR47+V9DpVXD5Ky3q9dbjLqKkdlQJKTA2rqD8vpFQ40y2n9Ti9qM3suBF7PuJTHYyJw
+ xoTnGVCyAGDcGs5ELFtn7e+Ad33gpHneNJkmVwsPLUMy74Uesy93QMI8sxIQ3y1Qf6SZM1Tz74g
+ 2TVf9DM31VrQ/jJ3mlCH0tLW44POBpXnmpSanbIPsVSXYwBfoEFqe85X7krBWP6v5fYBOsMQ78F
+ 86BuK9es6oJoIFAH18YfwTFEVFa9UVlzXzsfoDWSrjkmvriEvroIFbo06Ce/hQulyeD1iwcQMWq
+ ggzwPAiJ5ae6+ewMFFg==
+X-Proofpoint-ORIG-GUID: frF0tyAV0pPG3QNNGz3JiLLSWY0YVfql
+X-Authority-Analysis: v=2.4 cv=FOkrAeos c=1 sm=1 tr=0 ts=69dce01f cx=c_pps
  a=72HoHk1woDtn7btP4rdmlg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
- a=hf2oG6dDkt1_u3eYQosA:9 a=kA6IBgd4cpdPkAWqgNAz:22
-X-Proofpoint-GUID: qHpjlZ5iRebPN3EpKvvJRWdZNcJW7whB
-X-Proofpoint-ORIG-GUID: qHpjlZ5iRebPN3EpKvvJRWdZNcJW7whB
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
+ a=1J4TlokszvnMI57PoO4A:9 a=kA6IBgd4cpdPkAWqgNAz:22
+X-Proofpoint-GUID: frF0tyAV0pPG3QNNGz3JiLLSWY0YVfql
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-13_03,2026-04-13_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
- clxscore=1015 malwarescore=0 phishscore=0 suspectscore=0 impostorscore=0
+ adultscore=0 malwarescore=0 impostorscore=0 suspectscore=0 priorityscore=1501
+ clxscore=1015 spamscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604130122
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -139,13 +139,13 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102952-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-102953-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email];
 	MIME_TRACE(0.00)[0:+];
@@ -158,158 +158,197 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCPT_COUNT_FIVE(0.00)[6];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: E0C033EBDD6
+X-Rspamd-Queue-Id: CDDE73EBDED
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Convert the LPASS LPI pinctrl driver to use the PM clock framework for
-runtime power management.
+The LPI GPIO register access helpers previously returned the value from
+ioread32(), even though their return type was int. This mixes data
+return with status and is inconsistent with common kernel helper
+conventions.
 
-This allows the LPASS LPI pinctrl driver to drop clock votes when idle,
-improves power efficiency on platforms using LPASS LPI island mode, and
-aligns the driver with common runtime PM patterns used across Qualcomm
-LPASS subsystems.
+Rework lpi_gpio_read() and lpi_gpio_write() to return an int status and
+use output parameters to pass register values. Update all callers to
+match the new helper interface.
+
+This change fixes the helper API and resulting call sites without
+intending any functional change in GPIO or pinctrl behavior.
 
 Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
 ---
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c      | 36 +++++++++++++------
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.h      |  2 ++
- .../pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c   |  5 +++
- 3 files changed, 32 insertions(+), 11 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c | 66 +++++++++++++++++-------
+ 1 file changed, 47 insertions(+), 19 deletions(-)
 
 diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-index 76aed3296..6d50e06ef 100644
+index 6d50e06ef..d108e7321 100644
 --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
 +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -14,15 +14,16 @@
+@@ -39,22 +39,26 @@ struct lpi_pinctrl {
+ };
  
- #include <linux/pinctrl/pinconf-generic.h>
- #include <linux/pinctrl/pinconf.h>
-+#include <linux/pm_runtime.h>
- #include <linux/pinctrl/pinmux.h>
+ static int lpi_gpio_read(struct lpi_pinctrl *state, unsigned int pin,
+-			 unsigned int addr)
++			 unsigned int addr, u32 *val)
+ {
+ 	u32 pin_offset;
++	int ret;
  
- #include "../pinctrl-utils.h"
+ 	if (state->data->flags & LPI_FLAG_USE_PREDEFINED_PIN_OFFSET)
+ 		pin_offset = state->data->groups[pin].pin_offset;
+ 	else
+ 		pin_offset = LPI_TLMM_REG_OFFSET * pin;
  
- #include "pinctrl-lpass-lpi.h"
-+#include <linux/pm_clock.h>
+-	return ioread32(state->tlmm_base + pin_offset + addr);
++	*val = ioread32(state->tlmm_base + pin_offset + addr);
++
++	return 0;
+ }
  
- #define MAX_NR_GPIO		32
- #define GPIO_FUNC		0
--#define MAX_LPI_NUM_CLKS	2
+ static int lpi_gpio_write(struct lpi_pinctrl *state, unsigned int pin,
+ 			  unsigned int addr, unsigned int val)
+ {
+ 	u32 pin_offset;
++	int ret;
  
- struct lpi_pinctrl {
- 	struct device *dev;
-@@ -31,7 +32,6 @@ struct lpi_pinctrl {
- 	struct pinctrl_desc desc;
- 	char __iomem *tlmm_base;
- 	char __iomem *slew_base;
--	struct clk_bulk_data clks[MAX_LPI_NUM_CLKS];
- 	/* Protects from concurrent register updates */
- 	struct mutex lock;
- 	DECLARE_BITMAP(ever_gpio, MAX_NR_GPIO);
-@@ -480,9 +480,6 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
- 	pctrl->data = data;
- 	pctrl->dev = &pdev->dev;
+ 	if (state->data->flags & LPI_FLAG_USE_PREDEFINED_PIN_OFFSET)
+ 		pin_offset = state->data->groups[pin].pin_offset;
+@@ -107,7 +111,8 @@ static int lpi_gpio_set_mux(struct pinctrl_dev *pctldev, unsigned int function,
+ {
+ 	struct lpi_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
+ 	const struct lpi_pingroup *g = &pctrl->data->groups[group];
+-	u32 val;
++	u32 val, io_val;
++	int ret;
+ 	int i, pin = g->pin;
  
--	pctrl->clks[0].id = "core";
--	pctrl->clks[1].id = "audio";
--
- 	pctrl->tlmm_base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(pctrl->tlmm_base))
- 		return dev_err_probe(dev, PTR_ERR(pctrl->tlmm_base),
-@@ -495,13 +492,17 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
- 					     "Slew resource not provided\n");
+ 	for (i = 0; i < g->nfuncs; i++) {
+@@ -119,7 +124,9 @@ static int lpi_gpio_set_mux(struct pinctrl_dev *pctldev, unsigned int function,
+ 		return -EINVAL;
+ 
+ 	mutex_lock(&pctrl->lock);
+-	val = lpi_gpio_read(pctrl, pin, LPI_GPIO_CFG_REG);
++	ret = lpi_gpio_read(pctrl, pin, LPI_GPIO_CFG_REG, &val);
++	if (ret)
++		goto out_unlock;
+ 
+ 	/*
+ 	 * If this is the first time muxing to GPIO and the direction is
+@@ -129,24 +136,28 @@ static int lpi_gpio_set_mux(struct pinctrl_dev *pctldev, unsigned int function,
+ 	 */
+ 	if (i == GPIO_FUNC && (val & LPI_GPIO_OE_MASK) &&
+ 	    !test_and_set_bit(group, pctrl->ever_gpio)) {
+-		u32 io_val = lpi_gpio_read(pctrl, group, LPI_GPIO_VALUE_REG);
++		ret = lpi_gpio_read(pctrl, group, LPI_GPIO_VALUE_REG, &io_val);
++		if (ret)
++			goto out_unlock;
+ 
+ 		if (io_val & LPI_GPIO_VALUE_IN_MASK) {
+ 			if (!(io_val & LPI_GPIO_VALUE_OUT_MASK))
+-				lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG,
+-					       io_val | LPI_GPIO_VALUE_OUT_MASK);
++				ret = lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG,
++						     io_val | LPI_GPIO_VALUE_OUT_MASK);
+ 		} else {
+ 			if (io_val & LPI_GPIO_VALUE_OUT_MASK)
+-				lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG,
+-					       io_val & ~LPI_GPIO_VALUE_OUT_MASK);
++				ret = lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG,
++						     io_val & ~LPI_GPIO_VALUE_OUT_MASK);
+ 		}
  	}
  
--	ret = devm_clk_bulk_get_optional(dev, MAX_LPI_NUM_CLKS, pctrl->clks);
-+	ret = devm_pm_clk_create(dev);
- 	if (ret)
- 		return ret;
- 
--	ret = clk_bulk_prepare_enable(MAX_LPI_NUM_CLKS, pctrl->clks);
--	if (ret)
--		return dev_err_probe(dev, ret, "Can't enable clocks\n");
-+	ret = of_pm_clk_add_clks(dev);
-+	if (ret < 0)
-+		return ret;
+ 	u32p_replace_bits(&val, i, LPI_GPIO_FUNCTION_MASK);
+-	lpi_gpio_write(pctrl, pin, LPI_GPIO_CFG_REG, val);
++	ret = lpi_gpio_write(pctrl, pin, LPI_GPIO_CFG_REG, val);
 +
-+	pm_runtime_set_autosuspend_delay(dev, 100);
-+	pm_runtime_use_autosuspend(dev);
-+	pm_runtime_enable(dev);
++out_unlock:
+ 	mutex_unlock(&pctrl->lock);
  
- 	pctrl->desc.pctlops = &lpi_gpio_pinctrl_ops;
- 	pctrl->desc.pmxops = &lpi_gpio_pinmux_ops;
-@@ -539,20 +540,33 @@ int lpi_pinctrl_probe(struct platform_device *pdev)
- 	return 0;
- 
- err_pinctrl:
-+	pm_runtime_disable(dev);
- 	mutex_destroy(&pctrl->lock);
--	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
- 
- 	return ret;
+-	return 0;
++	return ret;
  }
- EXPORT_SYMBOL_GPL(lpi_pinctrl_probe);
  
-+int lpi_pinctrl_runtime_suspend(struct device *dev)
-+{
-+	return pm_clk_suspend(dev);
-+}
-+EXPORT_SYMBOL_GPL(lpi_pinctrl_runtime_suspend);
-+
-+int lpi_pinctrl_runtime_resume(struct device *dev)
-+{
-+	return pm_clk_resume(dev);
-+}
-+EXPORT_SYMBOL_GPL(lpi_pinctrl_runtime_resume);
-+
- void lpi_pinctrl_remove(struct platform_device *pdev)
+ static const struct pinmux_ops lpi_gpio_pinmux_ops = {
+@@ -165,8 +176,11 @@ static int lpi_config_get(struct pinctrl_dev *pctldev,
+ 	int is_out;
+ 	int pull;
+ 	u32 ctl_reg;
++	int ret;
+ 
+-	ctl_reg = lpi_gpio_read(state, pin, LPI_GPIO_CFG_REG);
++	ret = lpi_gpio_read(state, pin, LPI_GPIO_CFG_REG, &ctl_reg);
++	if (ret)
++		return ret;
+ 	is_out = ctl_reg & LPI_GPIO_OE_MASK;
+ 	pull = FIELD_GET(LPI_GPIO_PULL_MASK, ctl_reg);
+ 
+@@ -293,17 +307,22 @@ static int lpi_config_set(struct pinctrl_dev *pctldev, unsigned int group,
+ 	}
+ 
+ 	mutex_lock(&pctrl->lock);
+-	val = lpi_gpio_read(pctrl, group, LPI_GPIO_CFG_REG);
++	ret = lpi_gpio_read(pctrl, group, LPI_GPIO_CFG_REG, &val);
++	if (ret) {
++		mutex_unlock(&pctrl->lock);
++		goto out_unlock;
++	}
+ 
+ 	u32p_replace_bits(&val, pullup, LPI_GPIO_PULL_MASK);
+ 	u32p_replace_bits(&val, LPI_GPIO_DS_TO_VAL(strength),
+ 			  LPI_GPIO_OUT_STRENGTH_MASK);
+ 	u32p_replace_bits(&val, output_enabled, LPI_GPIO_OE_MASK);
+ 
+-	lpi_gpio_write(pctrl, group, LPI_GPIO_CFG_REG, val);
+-	mutex_unlock(&pctrl->lock);
++	ret = lpi_gpio_write(pctrl, group, LPI_GPIO_CFG_REG, val);
+ 
+-	return 0;
++out_unlock:
++	mutex_unlock(&pctrl->lock);
++	return ret;
+ }
+ 
+ static const struct pinconf_ops lpi_gpio_pinconf_ops = {
+@@ -352,9 +371,13 @@ static int lpi_gpio_direction_output(struct gpio_chip *chip,
+ static int lpi_gpio_get(struct gpio_chip *chip, unsigned int pin)
  {
- 	struct lpi_pinctrl *pctrl = platform_get_drvdata(pdev);
- 	int i;
+ 	struct lpi_pinctrl *state = gpiochip_get_data(chip);
++	u32 val;
++	int ret;
  
-+	pm_runtime_disable(pctrl->dev);
-+
- 	mutex_destroy(&pctrl->lock);
--	clk_bulk_disable_unprepare(MAX_LPI_NUM_CLKS, pctrl->clks);
+-	return lpi_gpio_read(state, pin, LPI_GPIO_VALUE_REG) &
+-		LPI_GPIO_VALUE_IN_MASK;
++	ret = lpi_gpio_read(state, pin, LPI_GPIO_VALUE_REG, &val);
++	if (ret)
++		return ret;
++	return val & LPI_GPIO_VALUE_IN_MASK;
+ }
  
- 	for (i = 0; i < pctrl->data->npins; i++)
- 		pinctrl_generic_remove_group(pctrl->ctrl, i);
-diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-index f48368492..ae94ef48d 100644
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-@@ -107,5 +107,7 @@ struct lpi_pinctrl_variant_data {
+ static int lpi_gpio_set(struct gpio_chip *chip, unsigned int pin, int value)
+@@ -387,6 +410,7 @@ static void lpi_gpio_dbg_show_one(struct seq_file *s,
+ 	int drive;
+ 	int pull;
+ 	u32 ctl_reg;
++	int ret;
  
- int lpi_pinctrl_probe(struct platform_device *pdev);
- void lpi_pinctrl_remove(struct platform_device *pdev);
-+int lpi_pinctrl_runtime_suspend(struct device *dev);
-+int lpi_pinctrl_runtime_resume(struct device *dev);
+ 	static const char * const pulls[] = {
+ 		"no pull",
+@@ -397,7 +421,11 @@ static void lpi_gpio_dbg_show_one(struct seq_file *s,
  
- #endif /*__PINCTRL_LPASS_LPI_H__*/
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-index 750f41031..2d955643d 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
-@@ -139,10 +139,15 @@ static const struct of_device_id lpi_pinctrl_of_match[] = {
- };
- MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
+ 	pctldev = pctldev ? : state->ctrl;
+ 	pindesc = pctldev->desc->pins[offset];
+-	ctl_reg = lpi_gpio_read(state, offset, LPI_GPIO_CFG_REG);
++	ret = lpi_gpio_read(state, offset, LPI_GPIO_CFG_REG, &ctl_reg);
++	if (ret) {
++		seq_printf(s, " %-8s: <read error %d>", pindesc.name, ret);
++		return;
++	}
+ 	is_out = ctl_reg & LPI_GPIO_OE_MASK;
  
-+static const struct dev_pm_ops lpi_pinctrl_pm_ops = {
-+	RUNTIME_PM_OPS(lpi_pinctrl_runtime_suspend, lpi_pinctrl_runtime_resume, NULL)
-+};
-+
- static struct platform_driver lpi_pinctrl_driver = {
- 	.driver = {
- 		   .name = "qcom-sc7280-lpass-lpi-pinctrl",
- 		   .of_match_table = lpi_pinctrl_of_match,
-+		   .pm = pm_ptr(&lpi_pinctrl_pm_ops),
- 	},
- 	.probe = lpi_pinctrl_probe,
- 	.remove = lpi_pinctrl_remove,
+ 	func = FIELD_GET(LPI_GPIO_FUNCTION_MASK, ctl_reg);
 -- 
 2.34.1
 
