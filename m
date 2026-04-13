@@ -1,59 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-102960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OPc+HsX33GnCYgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 16:03:49 +0200
+	id wFjTGOf33GlaYgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 16:04:23 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7BEC3ECEB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 16:03:48 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0E4F3ECED3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 16:04:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DF784303A857
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 13:58:53 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E53BF305BFC1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 13:58:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B81003CEB84;
-	Mon, 13 Apr 2026 13:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C64522A1AA;
+	Mon, 13 Apr 2026 13:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="ndG8cFwi"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="z/IAyX3c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C343469F4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 13:58:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB243CCFAC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 13:58:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776088733; cv=none; b=dJUpW57EoKId9l9P+2BWOxrDM2MAkAK1j6rjPgqvThBiKr1pQQU9V62kkwz0DrsiL0SbG8U7xdYDKJk1UADEzHFxuj7+pKVBnZLMr0yfh9mG+smN4M1iKjFz8iX/lDH1+/aFhAI4cGTqbxFO+mDj061pz1XDsiSYjNLfEdhvW84=
+	t=1776088735; cv=none; b=Ckeb/BCiaK0y6EVKO64gHwcD3Cfeh8DjHWI8LqoitR07bTjbR4bglrMjGFkZEt5k61bwj/j9Q163AQDuaFnE2CQvW7w8IxREHo9pcwNI9sicxytD2oGlQdPhKHugIRfOwePjTHyAGO2H/0eTPPxNnglizvV5JvCkSxnC2PK0ANo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776088733; c=relaxed/simple;
-	bh=vVQxdYGqXVMngZFxuSstGhnNSPZbGUIuwB+RzpXWy6g=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=AYppmmo7z7QaAri+UtkmWTCAGXLLrjSii18K5fTfCeZGlaPVYk2DWhwVMa0hAL8EWeIKAdAY/eZrQXXkKNcmkpmaMWbwmDhIvHt+b9YkvSK3ADkaHkwDToFv7eh5emCy493y1To7O5FMoPUysKMSPOOwNXcjiKHgBT69EknzFew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=ndG8cFwi; arc=none smtp.client-ip=185.246.84.56
+	s=arc-20240116; t=1776088735; c=relaxed/simple;
+	bh=IzAiRtkh4t4ltosBZsCDPr1JizG7oMevwo3oXr34XiM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=kHp23g/OHghsMNwcN0+hUc4jG3Si6He5gcO+CZ+LOKL9yzLj4m8z5uh5niOEQfP0qvJkFQkJeKvZj/E+xqy0mU9px/LJ/Yt8Ut/rSoe7lOuUQG9k2FxoletO34BkZqBgclKG6TJlfbDDgzDWB/ibwCc5zjr7giEnbRdvB+VMyXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=z/IAyX3c; arc=none smtp.client-ip=185.171.202.116
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id A1DC01A31E4;
-	Mon, 13 Apr 2026 13:58:48 +0000 (UTC)
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 66EF4C5B1B7;
+	Mon, 13 Apr 2026 13:59:29 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 7141C5FFB9;
-	Mon, 13 Apr 2026 13:58:48 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 509781045001B;
-	Mon, 13 Apr 2026 15:58:35 +0200 (CEST)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id C4FA75FFB9;
+	Mon, 13 Apr 2026 13:58:52 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8366410450084;
+	Mon, 13 Apr 2026 15:58:47 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1776088726; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding; bh=kpXfKOvR3np/sIO/bcw5rLSmNmCzh2OkzuwODBfBSCs=;
-	b=ndG8cFwi4OvHrdGhfS6oTekIINOSMhMMJc0IvQBdV5wcq5mE4cXAwZtuYMFvrjJNXIKJR+
-	9Cp118556v0j2R+3UQyGB3Kmief67FHcsCpElkiOH5Dif3KuVLogPhgOowFAffGWNk2I48
-	37+HupFaKDXdnAizp9YN4HL8l59UW3FaTiIuY2ZSRQgxPNbmMjq8euFUPxhDMNZ6dK+6CB
-	aahmxJO4mYdQcDAKxLI4HDCnz0COlAyeb6yycqed3yEpLweRehEiVPki+7KscV/NpxU5FK
-	VlV5J8LMOUbcIaMKUVJ8MWWJw01mhkXKALWJvW4/nH7/w8IAY7CLtxPvwkPwoA==
+	t=1776088731; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=6uVyC++V1UmVV258SySNjnH/QWEzHB3vGKW3rS3VhpE=;
+	b=z/IAyX3cr6ydhmF+62EMz8NfkSsjebBn7/omwngWBm8Nn4uyX7nYklonTQ5fXdLL5QiOYy
+	+1THmm5QjgiJqYt3Gx6EHZqO1sYrGB5+soslEjRulOl7J0x7FLcZRIV7rOcXvFvfvjQPS3
+	WpTDOcLtHwMq4fovz2LnVZRTWM3zCfi+WcZwtPZkqWq6hglUMRpXS6gA+3cjLhRjk/EjWx
+	+ENFvJi4VWk66EXtK3T72MsaL/pERdNNZTfe8S9pK84OG09lOVXS/NVr5a8rhwY120mzk2
+	gWIkuNkFFsjLlXjxZerjx1HbvuXqJ8hxOjxcp8YXLCaId3XpvSlQWExCz5zH5A==
 From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 00/10] drm/bridge: handle refcounting for bridge-only
- callers of drm_of_find_panel_or_bridge()
-Date: Mon, 13 Apr 2026 15:58:32 +0200
-Message-Id: <20260413-drm-bridge-alloc-getput-panel_or_bridge-v1-0-acd01cd79a1f@bootlin.com>
+Date: Mon, 13 Apr 2026 15:58:33 +0200
+Subject: [PATCH 01/10] drm/bridge: add of_drm_get_bridge_by_endpoint()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,11 +61,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAIj23GkC/y2NWwrCMBAAr1L220CSVhGvIlLyWOtKTMImFaH07
- o3Vz2FgZoGCTFjg0i3A+KZCKTZQhw7cw8QJBfnGoKU+yUFJ4fklLJNvxoSQnJiw5rmKbCKGMfH
- 4l4M+SmX7MxrjodUy450+++l6+3GZ7RNd/eZhXTcyVXZEiwAAAA==
-X-Change-ID: 20260410-drm-bridge-alloc-getput-panel_or_bridge-42501b38eaad
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260413-drm-bridge-alloc-getput-panel_or_bridge-v1-1-acd01cd79a1f@bootlin.com>
+References: <20260413-drm-bridge-alloc-getput-panel_or_bridge-v1-0-acd01cd79a1f@bootlin.com>
+In-Reply-To: <20260413-drm-bridge-alloc-getput-panel_or_bridge-v1-0-acd01cd79a1f@bootlin.com>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
  Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
  David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
@@ -96,20 +95,20 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102960-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-102961-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,linaro.org,hisilicon.com,google.com,intel.com,ideasonboard.com,kwiboo.se,amd.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[34];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
@@ -120,104 +119,127 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:dkim,bootlin.com:email,bootlin.com:mid,i.mx:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: C7BEC3ECEB4
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,bootlin.com:dkim,bootlin.com:email,bootlin.com:mid]
+X-Rspamd-Queue-Id: A0E4F3ECED3
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-This series converts all the bridge-only callers of the deprecated
-drm_of_find_panel_or_bridge() API to a new, simpler API that handles bridge
-refcounting.
+drm_of_find_panel_or_bridge() is widely used, but many callers pass NULL
+into the @panel or the @bridge arguments, thus making a very partial usage
+of this rather complex function.
 
-== Series description
+Besides, the bridge returned in @bridge is not refcounted, thus making this
+API unsafe when DRM bridge hotplug will be introduced.
 
- * The first patch introduces of_drm_get_bridge_by_endpoint() as a
-   replacement for bridge-only calls to drm_of_find_panel_or_bridge(); the
-   new function is simpler and returns a refcounted bridge
- * The following patches convert all bridge-only users to the new API
- * The last patch forbids new bridge-only calls to
-   drm_of_find_panel_or_bridge()
+Solve both issues for the cases of calls to drm_of_find_panel_or_bridge()
+with a NULL @panel pointer by adding a new function that only looks for
+bridges (and is thus much simpler) and increments the refcount of the
+returned bridge.
 
-== Grand plan
+The new function is identical to drm_of_find_panel_or_bridge() except it:
 
-This is part of the work to support hotplug of DRM bridges. The grand plan
-was discussed in [0].
+ - handles bridge refcounting: uses of_drm_find_and_get_bridge() instead of
+   of_drm_find_bridge() internally to return a refcounted bridge
+ - is slightly simpler to use: just takes no @panel parameter
+ - has a simpler implementation: it is equal to
+   drm_of_find_panel_or_bridge() after removing the code that becomes dead
+   when @panel == NULL
 
-Here's the work breakdown (➜ marks the current series):
-
- 1. ➜ add refcounting to DRM bridges struct drm_bridge,
-      based on devm_drm_bridge_alloc()
-    A. ✔ add new alloc API and refcounting (v6.16)
-    B. ✔ convert all bridge drivers to new API (v6.17)
-    C. ✔ kunit tests (v6.17)
-    D. ✔ add get/put to drm_bridge_add/remove() + attach/detach()
-         and warn on old allocation pattern (v6.17)
-    E. ➜ add get/put on drm_bridge accessors
-       1. ✔ drm_bridge_chain_get_first_bridge(), add cleanup action (v6.18)
-       2. ✔ drm_bridge_get_prev_bridge() (v6.18)
-       3. ✔ drm_bridge_get_next_bridge() (v6.19)
-       4. ✔ drm_for_each_bridge_in_chain() (v6.19)
-       5. ✔ drm_bridge_connector_init (v6.19)
-       6. … protect encoder bridge chain with a mutex
-       7. ➜ of_drm_find_bridge
-          a. ✔ add of_drm_get_bridge() (v7.0),
-               convert basic direct users (v7.0-v7.1)
-          b. ✔ convert direct of_drm_get_bridge() users, part 2 (v7.0)
-          c. ✔ convert direct of_drm_get_bridge() users, part 3 (v7.0)
-          d. ✔… convert direct of_drm_get_bridge() users, part 4
-                (some v7.1, some pending)
-          e. ➜ convert bridge-only drm_of_find_panel_or_bridge() users
-       8. drm_of_find_panel_or_bridge, *_of_get_bridge
-       9. ✔ enforce drm_bridge_add before drm_bridge_attach (v6.19)
-    F. ✔ debugfs improvements
-       1. ✔ add top-level 'bridges' file (v6.16)
-       2. ✔ show refcount and list lingering bridges (v6.19)
- 2. … handle gracefully atomic updates during bridge removal
-    A. ✔ Add drm_bridge_enter/exit() to protect device resources (v7.0)
-    B. … protect private_obj removal from list
-    C. ✔ Add drm_bridge_clear_and_put() (v7.1)
- 3. … DSI host-device driver interaction
- 4. ✔ removing the need for the "always-disconnected" connector
- 5. … Migrate i.MX LCDIF driver to bridge-connector
- 6.   DRM bridge hotplug
-    A.   Bridge hotplug management in the DRM core
-    B.   Device tree description
-
-[0] https://lore.kernel.org/lkml/20250206-hotplug-drm-bridge-v6-0-9d6f2c9c3058@bootlin.com/#t
+Also add this function to drm_bridge.c and not drm_of.c because it returns
+bridges only.
 
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 ---
-Luca Ceresoli (10):
-      drm/bridge: add of_drm_get_bridge_by_endpoint()
-      drm/msm/hdmi: switch to of_drm_get_bridge_by_endpoint()
-      drm/hisilicon/kirin: switch to of_drm_get_bridge_by_endpoint()
-      drm/bridge: chrontel-ch7033: switch to of_drm_get_bridge_by_endpoint()
-      drm/bridge: lontium-lt9611uxc: switch to of_drm_get_bridge_by_endpoint()
-      drm/bridge: lt9611: switch to of_drm_get_bridge_by_endpoint()
-      drm/bridge: adv7511: switch to of_drm_get_bridge_by_endpoint()
-      drm/bridge: lt8713sx: switch to of_drm_get_bridge_by_endpoint()
-      drm: zynqmp_dp: switch to of_drm_get_bridge_by_endpoint()
-      drm: of: forbid bridge-only calls to drm_of_find_panel_or_bridge()
+ drivers/gpu/drm/drm_bridge.c | 46 ++++++++++++++++++++++++++++++++++++++++++++
+ include/drm/drm_bridge.h     |  9 +++++++++
+ 2 files changed, 55 insertions(+)
 
- drivers/gpu/drm/bridge/adv7511/adv7511.h     |  1 -
- drivers/gpu/drm/bridge/adv7511/adv7511_drv.c |  8 ++---
- drivers/gpu/drm/bridge/chrontel-ch7033.c     | 24 +++++++--------
- drivers/gpu/drm/bridge/lontium-lt8713sx.c    |  7 ++---
- drivers/gpu/drm/bridge/lontium-lt9611.c      |  5 ++-
- drivers/gpu/drm/bridge/lontium-lt9611uxc.c   |  5 ++-
- drivers/gpu/drm/drm_bridge.c                 | 46 ++++++++++++++++++++++++++++
- drivers/gpu/drm/drm_of.c                     | 26 ++++++++--------
- drivers/gpu/drm/hisilicon/kirin/dw_drm_dsi.c |  4 +--
- drivers/gpu/drm/msm/hdmi/hdmi.c              |  3 +-
- drivers/gpu/drm/xlnx/zynqmp_dp.c             | 10 +++---
- include/drm/drm_bridge.h                     |  9 ++++++
- 12 files changed, 97 insertions(+), 51 deletions(-)
----
-base-commit: f9ef69563cc82e908e1ce84fd135d3290fb65cde
-change-id: 20260410-drm-bridge-alloc-getput-panel_or_bridge-42501b38eaad
+diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+index ba80bebb5685..e51990b74417 100644
+--- a/drivers/gpu/drm/drm_bridge.c
++++ b/drivers/gpu/drm/drm_bridge.c
+@@ -1581,6 +1581,52 @@ struct drm_bridge *of_drm_find_bridge(struct device_node *np)
+ 	return bridge;
+ }
+ EXPORT_SYMBOL(of_drm_find_bridge);
++
++/**
++ * of_drm_get_bridge_by_endpoint - return DRM bridge connected to a port/endpoint
++ * @np: device tree node containing output ports
++ * @port: port in the device tree node, or -1 for the first port found
++ * @endpoint: endpoint in the device tree node, or -1 for the first endpoint found
++ * @bridge: pointer to hold returned drm_bridge, must not be NULL
++ *
++ * Given a DT node's port and endpoint number, find the connected node and
++ * return the associated drm_bridge device.
++ *
++ * The refcount of the returned bridge is incremented. Use drm_bridge_put()
++ * when done with it.
++ *
++ * Returns zero (and sets *bridge to a valid bridge pointer) if successful,
++ * or one of the standard error codes (and the value in *bridge is
++ * unspecified) if it fails.
++ */
++int of_drm_get_bridge_by_endpoint(const struct device_node *np,
++				  int port, int endpoint,
++				  struct drm_bridge **bridge)
++{
++	if (!bridge)
++		return -EINVAL;
++
++	/*
++	 * of_graph_get_remote_node() produces a noisy error message if port
++	 * node isn't found and the absence of the port is a legit case here,
++	 * so at first we silently check whether graph presents in the
++	 * device-tree node.
++	 */
++	if (!of_graph_is_present(np))
++		return -ENODEV;
++
++	struct device_node *remote __free(device_node) =
++		of_graph_get_remote_node(np, port, endpoint);
++	if (!remote)
++		return -ENODEV;
++
++	*bridge = of_drm_find_and_get_bridge(remote);
++	if (*bridge)
++		return 0;
++
++	return -EPROBE_DEFER;
++}
++EXPORT_SYMBOL_GPL(of_drm_get_bridge_by_endpoint);
+ #endif
+ 
+ /**
+diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
+index a8d67bd9ee50..ad93597cd622 100644
+--- a/include/drm/drm_bridge.h
++++ b/include/drm/drm_bridge.h
+@@ -1327,6 +1327,9 @@ int drm_bridge_attach(struct drm_encoder *encoder, struct drm_bridge *bridge,
+ #ifdef CONFIG_OF
+ struct drm_bridge *of_drm_find_and_get_bridge(struct device_node *np);
+ struct drm_bridge *of_drm_find_bridge(struct device_node *np);
++int of_drm_get_bridge_by_endpoint(const struct device_node *np,
++				  int port, int endpoint,
++				  struct drm_bridge **bridge);
+ #else
+ static inline struct drm_bridge *of_drm_find_and_get_bridge(struct device_node *np)
+ {
+@@ -1336,6 +1339,12 @@ static inline struct drm_bridge *of_drm_find_bridge(struct device_node *np)
+ {
+ 	return NULL;
+ }
++static inline int of_drm_get_bridge_by_endpoint(const struct device_node *np,
++						int port, int endpoint,
++						struct drm_bridge **bridge)
++{
++	return -ENODEV;
++}
+ #endif
+ 
+ static inline bool drm_bridge_is_last(struct drm_bridge *bridge)
 
-Best regards,
---  
-Luca Ceresoli <luca.ceresoli@bootlin.com>
+-- 
+2.53.0
 
 
