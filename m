@@ -1,60 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-102879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0OamLlOQ3GkmTAkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 08:42:27 +0200
+	id KDrhB/mV3GnVTgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 09:06:33 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37EDE3E7D88
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 08:42:27 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C12A3E8117
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 09:06:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 28ACA3008E15
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 06:42:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1D76A300D95A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 07:06:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96D9B39183F;
-	Mon, 13 Apr 2026 06:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3C383815C7;
+	Mon, 13 Apr 2026 07:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YpxULcdE"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dnee/Qit";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CokkenFR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A35389111;
-	Mon, 13 Apr 2026 06:42:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B77139183A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 07:06:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776062543; cv=none; b=M9ADB/gJaGwGACxI7BMTNSNdK5I6h6tsdLqe2kb1i4wBpC1GSHAKSckvRBRW+jbYUtiaPcPP1Fnz3tHcYY4oVzhrLIriPs8TdcFc0RatbgKG3pgnWcO603BYHtNJCEkJR0c6caFgu0PKpaU3iUby3j2vGrstIe9LvMpBtb9Qe6U=
+	t=1776063987; cv=none; b=U105Pv6Pyfkt8WMn8hQ5abBj/PF9lgsSzEtoSgtr2aWjOezvCjrCVGIzG15EOvZL1c6iXNVVH8dbj22KjvfuHpn+48JsEzGHmptZw4naMOqi+nM1oy9r1tQ1GzvnTbi7wfBNgRx2WZpCtSpnDNW/BS0HivGbipsw6YZPp3O55sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776062543; c=relaxed/simple;
-	bh=0lH0LC1aP3wRhPO0FuTozezUioK4pF5EefTJuQZXdfQ=;
+	s=arc-20240116; t=1776063987; c=relaxed/simple;
+	bh=Sj+L99sUSwTEyMi23gHzi6pYkjLLtkY9+6dqcHgqsMs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wqem3731uZ5mjb6xq4upxvfUEyJ6cF9cIqixU7+LAgxXjbHQW+FKbQIyluevGgQcGnYe3C7dKYrvlf7+QrZvwxOiLxdRdLyndBi9Feae/cZbiA4kO41cRCh9EKQZUI3KMCteC8iFqSQAe9pvVg8I49VpoFTIgnHtPwM4TjLUV0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YpxULcdE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C659C2BCB1;
-	Mon, 13 Apr 2026 06:42:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776062543;
-	bh=0lH0LC1aP3wRhPO0FuTozezUioK4pF5EefTJuQZXdfQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YpxULcdEiToYfFRqvbT6mNWWGFi0R1omTWyY+y04c4i1F1/RBISmmWQoWHmHQylT7
-	 tTorexOMN0AMoTxm1p5zXi7mysDIVaRDKbvDSpcWk6zWUmgvXcUl2OpAbdY7BD/s+/
-	 bjxELWe5Is3aTj3Ug29Iv8E7K4JS3VnEGRmo8h1JZox+CFuCqlyBKPPTDR9hR1qnsf
-	 7wEK5Sr2R+HPBLWlJQXZyssoeTRknBZigsSQsZxI4JU1jNQpLhLK+FDFBkP0A3YSNT
-	 3b2yZ5aOST+dhnDKWgZRIEXXgUh6VbjCLe3eChGP+XzcPMWAZXUD1c4hrNMBjw0pGt
-	 TouuaQUItgGxA==
-Date: Mon, 13 Apr 2026 12:12:16 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Richard Cochran <richardcochran@gmail.com>, mhi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
-	Vivek Pernamitta <quic_vpernami@quicinc.com>
-Subject: Re: [PATCH v2 2/6] bus: mhi: host: Add support for non-posted TSC
- timesync feature
-Message-ID: <rwyescvy4m64hffttma2ikpbtukyzm3oqmiapcd5h7i4evygwc@gq72yoedmnxp>
-References: <20260411-tsc_timesync-v2-0-6f25f72987b3@oss.qualcomm.com>
- <20260411-tsc_timesync-v2-2-6f25f72987b3@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=GXvoQgsm3vdWXWQJ9nRBXLUbsNiFqQFUPYFDIkbhVCD52dlkHGBDgKuFDTbtee07VEP6s74VNL4fdllxxmOz+CNhbXU9og06q75mlO7MRFdhUH/D+HzYL6zOJ6v8HK3uYHzE/WQ2r8BUh9DRZx+eJunUITY9LcL4xwecofXuhes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dnee/Qit; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CokkenFR; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63D5F7PO3561252
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 07:06:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3jjK8Nih47sl0WG6XxQVBWS89giyS6q5zzggrvFy6EA=; b=dnee/QitXFCu8iSV
+	8ZIwzexSidJDDc7RR5nYRwt3cJ02aEDKOgvCukDvI9lDWnnulYnRpo7Ko0Iehr0h
+	nwoEti2OKCuuDHpshj6L5W4b5zmrGh7OhONTTM9FJK3XKrUCxpvKsKQvWpHnJjZz
+	PS7hnanBFa3dVdzoHKtbVJY9Gd6EaadHTUfgBT15xTD4gcwmSXiJUHa5NRNYtK5W
+	vt0mD3HX6aTtzq0wdLI9lpfuGhpeq9uplsBzFu5ve5sorrJJg2L9E9vlpPE6E0Ko
+	/C0wUJsP9dJbZRiO/jpCl1v/dDqrIxwcEvtacY9Y4CIR1QzViFQURJlhD1kBFrld
+	FruzVg==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dffb0m57q-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 07:06:25 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-2d443c3b094so9045375eec.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 00:06:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1776063985; x=1776668785; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3jjK8Nih47sl0WG6XxQVBWS89giyS6q5zzggrvFy6EA=;
+        b=CokkenFRW5BPVYu6/fchoCNZ9SvEUvLVd6MbDW6dSgjbO4pUNJm4V854Bo+tLiLEL1
+         Z9RyBl00J3XAzvrTO3aGw15m1TEhcBmc+KtEfvf/EztzijwH3rwQ8+MUqZ0PmLrpISTn
+         1L0p/270Y2547rX+7dko8Uc2MHSVkWcyrxCwvPI1gUvdpVa7TzTepST2RqdYm7d79ceF
+         XvO5oj4MajkYpuNYSLQ9SZ+BIxDQmnRd2OLu2kfkFJL8x8ZV2nI4okNK0+VyodWNcEH6
+         rzkIhE3jTPMaBCszzQEeVdsQjQAIzz4+/rH0ko2X3cvryc7jSQyIu3z7A0uaMGWafecX
+         Um8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776063985; x=1776668785;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3jjK8Nih47sl0WG6XxQVBWS89giyS6q5zzggrvFy6EA=;
+        b=Unj7+13EEia+aUyqSuBNS9Yo2me1wA3Kd1uL/woxpLET3cTgqv0aNwbCIsmnLopWB4
+         2OOy7jk0nvcna6PiDpqktMq4RORsLWmwtr64cGwk9k3JK5/4KwrI9KJZMbW0BWq3n6AT
+         GlyMmUivgLU7X9zh22TaRAUKe+HItDfyQe+K1rzXrLtahKNitsqYPPFfs/hdurxw3O6r
+         QfrwTUgcGdewj684IuuN95Y6V/zwamMq6kV8WFx+iE+ptCTkmx9iEUSf0p8Wu77nKNAN
+         lCOq2LENXljMFCWa0Eme2KtQMR18xAsZgi9vZF9t8afjPhW7P3syvweyEWI4fRs02Q3k
+         HsNQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9FuXAXxYEon5NovEs/HMyZC7CjAqCR/kwc2z9GXc8Tq901JKTkpcha065FzIkobB0XwMYeWIIPsEHKHfMY@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+XjeZyVW/Lg8VyOQU2Mh7dgy4DCIfIO1ExS+7DF+XROmLTlWL
+	oyloFKqnXmPj8G1FuQA0dOPZUtWtpg1LjlJljDyWKjWLMqSZA6kdu4TvRLbfpKxTyT5esBdCKzH
+	5lha1nILlfpwPbp08+sCIv/qGLpwE+4CQUQiyUnY375ejX3gsxJUuseOTFgIUPFd4LL/z
+X-Gm-Gg: AeBDieu1tEQLg6GrNgYKytJSXPM4Z5Q4QADefqoQSq6Gu4Z9wjU/rZRJAf+lK0TbOBg
+	o0VE56aCU5f7Lt5GFfVRZh0bEJk6/q8v7hR8nq6bp2x1A2hfSPGWsyRbY7QijQPeBJaQ3f/xYuz
+	inxdyo1XlwUo1Yi3HgvKnAWj+XXB125rte0hQxwqjpDo+cxl4VvlNZfA93OdoKTCTmMpGddM9/d
+	TJ3R+OiFAxiYQjxxDImYC7FgcTOAq2VA3LzQubWI+ojCcBFQCEOkGyZhmLlFolSszg0YxyI05iO
+	KUK060gE7OpaqTdeuvpNjK3NzSIShjRoUzNOv/e6ZtkyvBMOPjhmAXUmY7ZGpJzyKkUOhhhF4Vb
+	eT6uvTQyPKrANv0NVtHRT4W1SqnlzcX3NYdg1GXx9//ECkFfmn/3VS6+Ze2apbn/m3A7l
+X-Received: by 2002:a05:7300:269a:b0:2d9:6373:ad11 with SMTP id 5a478bee46e88-2d96373b109mr957559eec.28.1776063984904;
+        Mon, 13 Apr 2026 00:06:24 -0700 (PDT)
+X-Received: by 2002:a05:7300:269a:b0:2d9:6373:ad11 with SMTP id 5a478bee46e88-2d96373b109mr957547eec.28.1776063984308;
+        Mon, 13 Apr 2026 00:06:24 -0700 (PDT)
+Received: from hu-qianyu-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2d55faa5257sm15438521eec.9.2026.04.13.00.06.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Apr 2026 00:06:23 -0700 (PDT)
+Date: Mon, 13 Apr 2026 00:06:22 -0700
+From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Taniya Das <taniya.das@oss.qualcomm.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, johan@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC 3/4] clk: qcom: tcsrcc-glymur: Migrate
+ tcsr_pcie_N_clkref_en to clk_ref common helper
+Message-ID: <adyV7qKQL+SJ6TxL@hu-qianyu-lv.qualcomm.com>
+References: <20260331-qref_vote-v1-0-3fd7fbf87864@oss.qualcomm.com>
+ <20260331-qref_vote-v1-3-3fd7fbf87864@oss.qualcomm.com>
+ <ebce5979-0ab5-47ff-963e-68e27216821d@oss.qualcomm.com>
+ <ac306hTHe3qVORk2@hu-qianyu-lv.qualcomm.com>
+ <adem2WKh2B-Leivq@baldur>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,316 +124,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260411-tsc_timesync-v2-2-6f25f72987b3@oss.qualcomm.com>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+In-Reply-To: <adem2WKh2B-Leivq@baldur>
+X-Authority-Analysis: v=2.4 cv=YfmNIQRf c=1 sm=1 tr=0 ts=69dc95f1 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=P9E2af56O7jvyERa8gIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDA2NyBTYWx0ZWRfXxnpeIziWQioR
+ 44/Azwf/4IpRGUbvXvsm7TYXmfbVBbSrOtoTRtowA3nSWYEPdfG/dxGdcErwO1vIREuh3VQNi1O
+ 7KvkVeXToyKExAatUPIpYqHsMQGOU71qMEds1sfwErRISO9sCcrr+VW4+1Z3MW6hNWifPiHLuG3
+ g/n7MYXzXCzQcbMB+NMd8rcF6bd4iUKZjUbBbRqt2spwdDKnwuqsjKFWtMOjZ1rtX8+cyM3C+kQ
+ 3MbJ8vOHrp6EdzougGwExdWz+h6nAHp50e8weeRIrBSlKpOFgbE80If91bQlCkSSXkH2kCB1q+K
+ O9ye2qiWqpMqdXEiZOMzMnLgR46GRt/Ew9qbTCMto5Hk6g64nh/i5KmzuyDlA8D9kb+hxLgoPxo
+ te3U6ENSTUL1OCQKnH/LiDaZYbiaOMy8oPtbKfyOCJcR/8r8X6wPXdL73l5jGxs7nzZ0YEP3KMu
+ Ct0e1U1C0OeSjaWaZvg==
+X-Proofpoint-ORIG-GUID: N0YX32IhKu99xL44o91fVlhVAHwjfUdm
+X-Proofpoint-GUID: N0YX32IhKu99xL44o91fVlhVAHwjfUdm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-13_02,2026-04-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 phishscore=0 malwarescore=0
+ spamscore=0 suspectscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604010000 definitions=main-2604130067
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[gmail.com,lists.linux.dev,vger.kernel.org,quicinc.com];
-	TAGGED_FROM(0.00)[bounces-102879-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-102880-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,hu-qianyu-lv.qualcomm.com:mid];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[qiang.yu@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,quicinc.com:email]
-X-Rspamd-Queue-Id: 37EDE3E7D88
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 8C12A3E8117
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Sat, Apr 11, 2026 at 01:42:02PM +0530, Krishna Chaitanya Chundru wrote:
-> From: Vivek Pernamitta <quic_vpernami@quicinc.com>
+On Thu, Apr 09, 2026 at 08:19:41AM -0500, Bjorn Andersson wrote:
+> On Wed, Apr 01, 2026 at 09:47:38PM -0700, Qiang Yu wrote:
+> > On Wed, Apr 01, 2026 at 10:05:12PM +0530, Taniya Das wrote:
+> > > On 4/1/2026 12:05 PM, Qiang Yu wrote:
+> > > > diff --git a/drivers/clk/qcom/tcsrcc-glymur.c b/drivers/clk/qcom/tcsrcc-glymur.c
+> [..]
+> > > > +static const char * const tcsr_pcie_4_regulators[] = {
+> > > > +	"vdda-refgen-0p9",
+> > > > +	"vdda-refgen-1p2",
+> > > > +	"vdda-qreftx1-0p9",
+> > > > +	"vdda-qrefrpt0-0p9",
+> > > > +	"vdda-qrefrpt1-0p9",
+> > > > +	"vdda-qrefrpt2-0p9",
+> > > > +	"vdda-qrefrx2-0p9",
+> > > > +};
+> > > > +
+> > > 
+> > > TCSR clock refs are just not for PCIe alone, they would have supplies
+> > > for all the ref clocks. These supplies can also be shared across other
+> > > clock refs. I think it is not the correct way to handle the supplies, as
+> > > TCSR does not have the complete supplies map.
+> > >
+> > We have complete supplies map. You can get it on ipcatlog. Here is example
+> > for other instances eg USB and EDP:
+> > - Glymur (eDP): CXO PAD -> TX0 -> RPT0 -> RX0 -> eDP
+> > - Glymur (USB4_2): CXO PAD -> TX0 -> RPT0 -> RPT1 -> RX1 -> USB4_2
+> > - Glymur (USB3): CXO PAD -> TX0 -> RPT3 -> RPT4 -> RX4 -> USB3_SS3
+> > 
+> > I only add supplies for PCIe in this series because USB and EDP vote these
+> > LDO in their PHY driver. They can remove them in PHY dts node and add same
+> > regulator list here.
+> > 
 > 
-> Implement non-posted time synchronization as described in section 5.1.1
-> of the MHI v1.2 specification. The host disables low-power link states
-> to minimize latency, reads the local time, issues a MMIO read to the
-> device's TIME register.
+> The regulators are reference counted. Can't we add the USB and eDP
+> handling here as well now, and then after they are voted here we remove
+> them from the PHY?
+>
+
+For USB, I’m not yet sure which tcsr_*_clkref_en each USB instance in the
+QREF diagram is tied to. I need to confirm that mapping first, I'm
+checking with Wesley Cheng.
+
+For eDP, there is only one instance, so I can add it.
+
+- Qiang Yu
+> Regards,
+> Bjorn
 > 
-> Add support for initializing this feature and export a function to be
-> used by the drivers which does the time synchronization.
-> 
-> MHI reads the device time registers in the MMIO address space pointed to
-> by the capability register after disabling all low power modes and keeping
-> MHI in M0. Before and after MHI reads, the local time is captured
-> and shared for processing.
-> 
-> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->  drivers/bus/mhi/common.h        |  4 +++
->  drivers/bus/mhi/host/init.c     | 28 ++++++++++++++++
->  drivers/bus/mhi/host/internal.h |  9 +++++
->  drivers/bus/mhi/host/main.c     | 74 +++++++++++++++++++++++++++++++++++++++++
->  include/linux/mhi.h             | 37 +++++++++++++++++++++
->  5 files changed, 152 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/common.h b/drivers/bus/mhi/common.h
-> index 4c316f3d5a68beb01f15cf575b03747096fdcf2c..64f9b2b94387a112bb6b5e20c634c3ba8d6bc78e 100644
-> --- a/drivers/bus/mhi/common.h
-> +++ b/drivers/bus/mhi/common.h
-> @@ -118,6 +118,10 @@
->  #define CAP_CAPID_MASK			GENMASK(31, 24)
->  #define CAP_NEXT_CAP_MASK		GENMASK(23, 12)
->  
-> +/* MHI TSC Timesync */
-> +#define TSC_TIMESYNC_TIME_LOW_OFFSET	(0x8)
-> +#define TSC_TIMESYNC_TIME_HIGH_OFFSET	(0xC)
-> +
->  /* Command Ring Element macros */
->  /* No operation command */
->  #define MHI_TRE_CMD_NOOP_PTR		0
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index c2162aa04e810e45ccfbedd20aaa62f892420d31..eb720f671726d919646cbc450cd54bda655a1060 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -498,6 +498,30 @@ static int mhi_find_capability(struct mhi_controller *mhi_cntrl, u32 capability)
->  	return 0;
->  }
->  
-> +static int mhi_init_tsc_timesync(struct mhi_controller *mhi_cntrl)
-> +{
-> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	struct mhi_timesync *mhi_tsc_tsync;
-> +	u32 time_offset;
-> +	int ret;
-> +
-> +	time_offset = mhi_find_capability(mhi_cntrl, MHI_CAP_ID_TSC_TIME_SYNC);
-> +	if (!time_offset)
-> +		return -ENXIO;
-> +
-> +	mhi_tsc_tsync = devm_kzalloc(dev, sizeof(*mhi_tsc_tsync), GFP_KERNEL);
-> +	if (!mhi_tsc_tsync)
-> +		return -ENOMEM;
-> +
-> +	mhi_cntrl->tsc_timesync = mhi_tsc_tsync;
-> +	mutex_init(&mhi_tsc_tsync->ts_mutex);
-> +
-> +	/* save time_offset for obtaining time via MMIO register reads */
-> +	mhi_tsc_tsync->time_reg = mhi_cntrl->regs + time_offset;
-> +
-> +	return 0;
-> +}
-
-Move all the function definitions from MHI core code to mhi_phc.c.
-
-> +
->  int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
->  {
->  	u32 val;
-> @@ -635,6 +659,10 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
->  		return ret;
->  	}
->  
-> +	ret = mhi_init_tsc_timesync(mhi_cntrl);
-> +	if (ret)
-> +		dev_dbg(dev, "TSC Time synchronization init failure\n");
-
-And just keep this call in the MHI core.
-
-> +
->  	return 0;
->  }
->  
-> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> index 7b0ee5e3a12dd585064169b7b884750bf4d8c8db..a0e729e7a1198c1b82c70b6bfe3bc2ee24331229 100644
-> --- a/drivers/bus/mhi/host/internal.h
-> +++ b/drivers/bus/mhi/host/internal.h
-> @@ -15,6 +15,15 @@ extern const struct bus_type mhi_bus_type;
->  #define MHI_SOC_RESET_REQ_OFFSET			0xb0
->  #define MHI_SOC_RESET_REQ				BIT(0)
->  
-> +/*
-> + * With ASPM enabled, the link may enter a low power state, requiring
-> + * a wake-up sequence. Use a short burst of back-to-back reads to
-> + * transition the link to the active state. Based on testing,
-> + * 4 iterations are necessary to ensure reliable wake-up without
-> + * excess latency.
-> + */
-> +#define MHI_NUM_BACK_TO_BACK_READS			4
-> +
->  struct mhi_ctxt {
->  	struct mhi_event_ctxt *er_ctxt;
->  	struct mhi_chan_ctxt *chan_ctxt;
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 53c0ffe300702bcc3caa8fd9ea8086203c75b186..b7a727b1a5d1f20b570c62707a991ec5b85bfec7 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -1626,3 +1626,77 @@ int mhi_get_channel_doorbell_offset(struct mhi_controller *mhi_cntrl, u32 *chdb_
->  	return 0;
->  }
->  EXPORT_SYMBOL_GPL(mhi_get_channel_doorbell_offset);
-> +
-> +static int mhi_get_remote_time(struct mhi_controller *mhi_cntrl, struct mhi_timesync *mhi_tsync,
-> +			       struct mhi_timesync_info *time)
-> +{
-> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	int ret, i;
-> +
-> +	if (!mhi_tsync && !mhi_tsync->time_reg) {
-> +		dev_err(dev, "Time sync is not supported\n");
-> +		return -EINVAL;
-
--EOPNOTSUPP
-
-> +	}
-> +
-> +	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))) {
-> +		dev_err(dev, "MHI is not in active state, pm_state:%s\n",
-> +			to_mhi_pm_state_str(mhi_cntrl->pm_state));
-> +		return -EIO;
-> +	}
-> +
-> +	/* bring to M0 state */
-> +	ret = mhi_device_get_sync(mhi_cntrl->mhi_dev);
-> +	if (ret)
-> +		return ret;
-> +
-> +	guard(mutex)(&mhi_tsync->ts_mutex);
-> +	mhi_cntrl->runtime_get(mhi_cntrl);
-> +
-> +	/*
-> +	 * time critical code to fetch device time, delay between these two steps
-> +	 * should be deterministic as possible.
-> +	 */
-> +	preempt_disable();
-> +	local_irq_disable();
-> +
-> +	time->t_host_pre = ktime_get_real();
-> +
-> +	/*
-> +	 * To ensure the PCIe link is in L0 when ASPM is enabled, perform series
-> +	 * of back-to-back reads. This is necessary because the link may be in a
-> +	 * low-power state (e.g., L1 or L1ss), and need to be forced it to
-> +	 * transition to L0.
-> +	 */
-
-You should be doing these back-to-back reads only if ASPM is enabled. You can
-check that using pcie_aspm_enabled(). Also, see if you can hide this call inside
-pci_generic driver to make mhi_phc truly transport agnostic.
-
-> +	for (i = 0; i < MHI_NUM_BACK_TO_BACK_READS; i++) {
-> +		ret = mhi_read_reg(mhi_cntrl, mhi_tsync->time_reg,
-> +				   TSC_TIMESYNC_TIME_LOW_OFFSET, &time->t_dev_lo);
-> +
-> +		ret = mhi_read_reg(mhi_cntrl, mhi_tsync->time_reg,
-> +				   TSC_TIMESYNC_TIME_HIGH_OFFSET, &time->t_dev_hi);
-> +	}
-> +
-> +	time->t_host_post = ktime_get_real();
-> +
-> +	local_irq_enable();
-> +	preempt_enable();
-> +
-> +	mhi_cntrl->runtime_put(mhi_cntrl);
-> +
-> +	mhi_device_put(mhi_cntrl->mhi_dev);
-> +
-> +	return 0;
-> +}
-> +
-> +int mhi_get_remote_tsc_time_sync(struct mhi_device *mhi_dev, struct mhi_timesync_info *time)
-> +{
-> +	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
-> +	struct mhi_timesync *mhi_tsc_tsync = mhi_cntrl->tsc_timesync;
-> +	int ret;
-> +
-> +	ret = mhi_get_remote_time(mhi_cntrl, mhi_tsc_tsync, time);
-> +	if (ret)
-> +		dev_err(&mhi_dev->dev, "Failed to get TSC Time Sync value:%d\n", ret);
-
-What is the difference between 'TSC' and 'Time Sync'?
-
-Nit: Space after 'value:'
-
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(mhi_get_remote_tsc_time_sync);
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 88ccb3e14f481d6b85c2a314eb74ba960c2d4c81..f39c8ca7c251954f2d83c1227d206b600b88c75f 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -286,6 +286,30 @@ struct mhi_controller_config {
->  	bool m2_no_db;
->  };
->  
-> +/**
-> + * struct mhi_timesync - MHI time synchronization structure
-> + * @time_reg: Points to address of Timesync register
-> + * @ts_mutex: Mutex for synchronization
-> + */
-> +struct mhi_timesync {
-> +	void __iomem *time_reg;
-> +	struct mutex ts_mutex;
-> +};
-> +
-> +/**
-> + * struct mhi_timesync_info - MHI time sync info structure
-> + * @t_host_pre: Pre host soc time
-> + * @t_host_post: Post host soc time
-
-Get rid of 'soc', it provides no value.
-
-> + * @t_dev_lo: Mhi device time of lower dword
-> + * @t_dev_hi: Mhi device time of higher dword
-
-s/Mhi/MHI
-
-> + */
-> +struct mhi_timesync_info {
-> +	ktime_t t_host_pre;
-> +	ktime_t t_host_post;
-> +	u32 t_dev_lo;
-> +	u32 t_dev_hi;
-> +};
-> +
->  /**
->   * struct mhi_controller - Master MHI controller structure
->   * @name: Device name of the MHI controller
-> @@ -323,6 +347,7 @@ struct mhi_controller_config {
->   * @mhi_event: MHI event ring configurations table
->   * @mhi_cmd: MHI command ring configurations table
->   * @mhi_ctxt: MHI device context, shared memory between host and device
-> + * @tsc_timesync: MHI TSC timesync
->   * @pm_mutex: Mutex for suspend/resume operation
->   * @pm_lock: Lock for protecting MHI power management state
->   * @timeout_ms: Timeout in ms for state transitions
-> @@ -401,6 +426,8 @@ struct mhi_controller {
->  	struct mhi_cmd *mhi_cmd;
->  	struct mhi_ctxt *mhi_ctxt;
->  
-> +	struct mhi_timesync *tsc_timesync;
-> +
->  	struct mutex pm_mutex;
->  	rwlock_t pm_lock;
->  	u32 timeout_ms;
-> @@ -795,4 +822,14 @@ bool mhi_queue_is_full(struct mhi_device *mhi_dev, enum dma_data_direction dir);
->   */
->  int mhi_get_channel_doorbell_offset(struct mhi_controller *mhi_cntrl, u32 *chdb_offset);
->  
-> +/**
-> + * mhi_get_remote_tsc_time_sync - get external soc time relative to local soc
-
-Same comment as above
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+> > - Qiang Yu
+> > > 
+> > > > +static const struct qcom_clk_ref_desc tcsr_cc_glymur_clk_descs[] = {
+> > > > +	[TCSR_EDP_CLKREF_EN] = {
+> > > > +		.name = "tcsr_edp_clkref_en",
+> > > > +		.offset = 0x60,
+> > > >  	},
+> > > > -};
+> > > >
+> > > 
+> > > 
+> > > -- 
+> > > Thanks,
+> > > Taniya Das
+> > > 
 
