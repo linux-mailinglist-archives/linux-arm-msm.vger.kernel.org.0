@@ -1,128 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-103014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aC5EEaFn3WnsdgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 00:01:05 +0200
+	id oGM4Hmlt3WlNeAkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 00:25:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99BFA3F3AED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 00:01:04 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F8A53F3D0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 00:25:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 78D213018AC7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 22:00:36 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D6280302CD0C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 22:25:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CACD539479F;
-	Mon, 13 Apr 2026 22:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25B7039B494;
+	Mon, 13 Apr 2026 22:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jTVfCIXE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YU85GmQw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72B934A795;
-	Mon, 13 Apr 2026 22:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0263C3909A2;
+	Mon, 13 Apr 2026 22:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776117634; cv=none; b=Tq7S3x7WvlOvg6B2it5igoozURCVDZJO+x5VwS36RYt0HNhH3Pmq/q6eg+l2GwIPSOAcYodHnipHS0/6ZO3KTck9BCZz0G//ageWuY1iFvrTiE5yK/3xLcpNKpGHWxXGlCUgWllQtzBhTsBkV+8TEKJm86aEptCagsPmWSHWBzI=
+	t=1776119143; cv=none; b=QPPHJOx4RB3TsqQwx8KOySjE2XuECNDVQHcjrROABPDMfjQOXZIeMnLCtMPmkxz/CZJQosY5XW7LM+B+a4F7XlrVWYgkvVaQkn/FZC+kw5Q9NmWLHpI5Utz2q0UcZoD/vUM8p7YIJf+66LIn1/FTh1rI8ZcpJ42VAdshJvITLsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776117634; c=relaxed/simple;
-	bh=ijE24X/kUki5oJeGVH3Ht4hUAfy77dDbpEaHriRF3Ug=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=J3v/CTtW/dqHigBm9CieoVkkrXrQF7HzGRPIlZCUMM6vlnSQVVEzcYFqWLlqGdBwq3/HIpoizNrnwVCNE8iDqxpaLCWiH6jmelpTByyF/w1XS4Ohi2DEEzjE04LAE6E8dRCJF+5tYWH+85FDqGqD05jY0DlNUzHXmv9mZzs3ZOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jTVfCIXE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D429C2BCAF;
-	Mon, 13 Apr 2026 22:00:34 +0000 (UTC)
+	s=arc-20240116; t=1776119143; c=relaxed/simple;
+	bh=qPxaChfzSVz+uzhSLWRQeUwbcPQeVKJ23FDo/WyT5MI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g2jvtgQazfsj7rIvuf9xlYsd+alSSl7FkgG7q+YcNWUDUmGj4QLaQ5rEQUKMa+esIa2r5K4JUWSNKwxT7ZNIKEEAS9O/kgKlY0MTrturRHDeNycuK6MRY8QD5ew+t9AMJ2nNe7UiJ/nPVAKSuvGx/YcbCXd9bS9BkXN0RaRNAIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YU85GmQw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59840C2BCAF;
+	Mon, 13 Apr 2026 22:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776117634;
-	bh=ijE24X/kUki5oJeGVH3Ht4hUAfy77dDbpEaHriRF3Ug=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=jTVfCIXEmjh+5wwNUiifNPxU/OQbJc+nOlW0rtSkAYzQ1IcvH4FHT0lG/zGFsdYST
-	 uX1N7qtLRK0vfmy7FdUXdWi2TpkWLVe+uLiSVRvwvlW3eCoc3a9BTHU2Sqw/9uRMsE
-	 zQ+NYBIV2fxo1CVQLaki4DrcSLGquWCIWeUXpUPmCr1dFsn5eBPCBLNbq9Y2WtDo2Z
-	 0TmCfdM2lm8FTgM3AjYvl9nzCOh1vJ9J7GxEGkG4z6XqHEx7/8OJYvOybxbMQLAaeZ
-	 FZkrYqc2d44LA8YfmQx0XmJoVRPWNJ0HJxmkfDV0Mfs6MeU6VLtjAYz2iVkY20Y+mC
-	 lnuCU/D7Km+JQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id B9EF43809A0C;
-	Mon, 13 Apr 2026 22:00:06 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1776119142;
+	bh=qPxaChfzSVz+uzhSLWRQeUwbcPQeVKJ23FDo/WyT5MI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YU85GmQw+yaNCVSUtKQ6P7x713mJkyn58xlCwDeNxHOUNuGB4Z7w809cn00VYrSwA
+	 yuG5l0MQESLeSoGeuTekIeI7ZsdgaNUCHolXeifw1jTtdhxNj4atgYLB3HVbe2jq0N
+	 eIv6ruoncOSndBprOEnPYAgSefLen4/Q5evdCgv+lW4KninYocuzj1uvh3kRfVLIag
+	 jSeUMnyZuKRf25uepGA+QWGEa1WgE5vgR++PFDhT9YmuL5+0v8HTjgVVMQ0SgjkSpN
+	 CB1lK2rSzwg5IDGNeOmPJn+3vHgkzDfKuHX66RUPnSC9Js7awSQWPhGyvjI2Msn4fp
+	 52YrZqqksiMmQ==
+Date: Mon, 13 Apr 2026 17:25:40 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	Thomas Gleixner <tglx@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH] dt-bindings: qcom,pdc: document the Hawi Power Domain
+ Controller
+Message-ID: <177611913959.3647505.2231745846728551068.robh@kernel.org>
+References: <20260401125004.592925-1-mukesh.ojha@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net] net: phy: qcom: at803x: Use the correct bit to
- disable
- extended next page
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <177611760554.563263.13531672738495714536.git-patchwork-notify@kernel.org>
-Date: Mon, 13 Apr 2026 22:00:05 +0000
-References: <20260410171021.1277138-1-maxime.chevallier@bootlin.com>
-In-Reply-To: <20260410171021.1277138-1-maxime.chevallier@bootlin.com>
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Cc: andrew@lunn.ch, kuba@kernel.org, davem@davemloft.net, edumazet@google.com,
- pabeni@redhat.com, horms@kernel.org, linux@armlinux.org.uk,
- thomas.petazzoni@bootlin.com, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260401125004.592925-1-mukesh.ojha@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.16 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103014-lists,linux-arm-msm=lfdr.de,netdevbpf];
+	TAGGED_FROM(0.00)[bounces-103015-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FROM_NO_DN(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 99BFA3F3AED
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 0F8A53F3D0D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hello:
 
-This patch was applied to netdev/net.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Fri, 10 Apr 2026 19:10:20 +0200 you wrote:
-> As noted in the blamed commit, the AR8035 and other PHYs from this
-> family advertise the Extended Next Page support by default, which may be
-> understood by some partners as this PHY being multi-gig capable.
+On Wed, 01 Apr 2026 18:20:04 +0530, Mukesh Ojha wrote:
+> Document the Power Domain Controller on the Qualcomm Hawi SoC.
 > 
-> The fix is to disable XNP advertising, which is done by setting bit 12
-> of the Auto-Negotiation Advertisement Register (MII_ADVERTISE).
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> ---
+>  .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml       | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> [...]
 
-Here is the summary with links:
-  - [net] net: phy: qcom: at803x: Use the correct bit to disable extended next page
-    https://git.kernel.org/netdev/net/c/e7a62edd34b1
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+Applied, thanks!
 
 
