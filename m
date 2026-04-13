@@ -1,178 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-102923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-102924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uFZzCqq13Gm2VgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-102923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 11:21:46 +0200
+	id cNp8Gvu43GkvVwkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-102924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 11:35:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92C353E9C6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 11:21:45 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48FCA3E9E82
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 11:35:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id BA6D1302084F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 09:20:24 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 24B1130055C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Apr 2026 09:35:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 053203B389E;
-	Mon, 13 Apr 2026 09:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09DA53A383B;
+	Mon, 13 Apr 2026 09:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VXIm4qx5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bx+8O1xs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE12B3B19A7;
-	Mon, 13 Apr 2026 09:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC6E21B185;
+	Mon, 13 Apr 2026 09:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776072001; cv=none; b=eQpDp1KpxjdPaAPw8kHgU0MnTEkYTooxjvsxZ1uRYERJlsBGFM1rcMI16lQcbZKXyfCZCkiHJGYaya2103eUwIkegKu3wpzKW42iT9pZtwcM2aKSLUJ3D0pe726uYWiQjMArqM9KcxYb5oHBHvOYtZ0PjrtY0zqVUi5IoCAQeBY=
+	t=1776072949; cv=none; b=quyU+q+nCh7qwH9jhd7+ElU7n4FB7Oi9/FBnZ/wJYp+jnZDfOBKsaJupr677CZulqb9rfQharxEd92wPySM1H4YZkFJ7av277cApI/4olr6zv559c0C9LRp9NdLi+ng1msfjhjgdoGzK1l3TC3fAUZtGo6q/LzRFZghOLzub1dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776072001; c=relaxed/simple;
-	bh=vZ1xKAkwtz6hyMABBouJkUlR9h9RqOm8ureovRrW33g=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=qyQOp2hQ161WO9FUF7NjNVe4Kw6wJqBd5rK4sYoSuMe496Jrtn35WiY0XKaUDyqpHQDyHGPA5pdlD55yl6zJyYjcOnxCmd4QrqoXg9NssKsVCWmH0/re6GcIJHVfYjhkl9AM2CQNspteVY5OTWNifLpwnN11seZgyaxJHdGvTKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VXIm4qx5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63D5t8Rd439900;
-	Mon, 13 Apr 2026 09:19:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=deJnviWwGhE
-	gD4Sw1OB0YdaKut6FaLlSryuBAgXVr9k=; b=VXIm4qx5O/Pni5gCWT3rX2uiZaY
-	R8yE/t2FLV/CmvqdH4qpnLNjPP8MTBQmhxBbhwTUQD5caF6K06cIDDP/Ntl+pqfO
-	nsM4qXxbdnccy1xHDHq5s6KHXx1M1jqikVp94vGCOtWkhnUH2msuSiy3/o48tA+P
-	CaRWct65bMl/p6d574LfyLWBVfbABulTy6T3YmVcg7j7pS2VUyqLD+q8mqx6nr40
-	Va16nl+i2tuZrjQUJv5Ye0VXQ/DXLHMwZKQl1gaxmMzg56soyxIujf4FIflYhBZ8
-	tPpXtBH4b3L4zhOkMq3parLV13evpFSDlu7nTTu1bDN+U0RjKS/59pBbWeA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dfevtmp1u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Apr 2026 09:19:53 +0000 (GMT)
-Received: from pps.filterd (NALASPPMTA01.qualcomm.com [127.0.0.1])
-	by NALASPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 63D9JqZ8014809;
-	Mon, 13 Apr 2026 09:19:52 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 4dg5er2ekp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Apr 2026 09:19:52 +0000 (GMT)
-Received: from NALASPPMTA01.qualcomm.com (NALASPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 63D9Jpqb014800;
-	Mon, 13 Apr 2026 09:19:51 GMT
-Received: from hu-devc-lv-u22-c.qualcomm.com (hu-kumaranu-lv.qualcomm.com [10.81.89.194])
-	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 63D9JpVj014796
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 13 Apr 2026 09:19:51 +0000 (GMT)
-Received: by hu-devc-lv-u22-c.qualcomm.com (Postfix, from userid 4187942)
-	id A2FF96B0; Mon, 13 Apr 2026 02:19:51 -0700 (PDT)
-From: Kumar Anurag <kumar.singh@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org,
-        Kumar Anurag <kumar.singh@oss.qualcomm.com>
-Subject: [PATCH v1 4/4] ASoC: qcom: sc8280xp: don't force S16_LE in hw_params fixup
-Date: Mon, 13 Apr 2026 02:19:37 -0700
-Message-Id: <20260413091937.134469-5-kumar.singh@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260413091937.134469-1-kumar.singh@oss.qualcomm.com>
-References: <20260413091937.134469-1-kumar.singh@oss.qualcomm.com>
+	s=arc-20240116; t=1776072949; c=relaxed/simple;
+	bh=qiSFmjvv5lf+NtOOLOQm0uLeRuLoVxlpeEyskUaC3G4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jQKhsQj7/0pfjc90bL4A5lrQbJ6gs1/sy8B90CZmbZU/DoG2R3MD3tHP3yMFaD6wwei37b8tOkPCwxudhfMmP8aqpYGdeWY3Iewtj6CbZDMbwNgi7/BNlng/bffHK/wvxXPf75xn7ccAiza9Kcm06CRGLwL01vmRnwKs0l0ZcJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bx+8O1xs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6266CC116C6;
+	Mon, 13 Apr 2026 09:35:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776072949;
+	bh=qiSFmjvv5lf+NtOOLOQm0uLeRuLoVxlpeEyskUaC3G4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bx+8O1xsLMg1XvBrUY7YbsV+O9u6e1FnpGe3gUhAwPIlmYzi5Hmc2Y1+Jj0NMfA8M
+	 fygbPc3FZs8fQtu/IOb9+z6G8NYERzukKabqj2bp49YuZaxJ1PlM6LzLvwK+ep/CHL
+	 1Z/FjbieYQp2GzajCnSW/GLW1NXyZhTiiZzMnZicPhXKvqmc1ctpcSGyggNuVPhRcL
+	 eK7OL9M0tpVt/+QDLeK7HdmyDFaT7t0WQoQufgqVLCD6YiQULqN08AEWQ3EH6iZfOA
+	 K6Udbe/py48uw7F+jc4JdXKbGkgvdnC/UCN/7G/DxUsrctbI9mVDz2yO2o73wNnoCk
+	 pEMqkqVqKfECw==
+Date: Mon, 13 Apr 2026 11:35:47 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: george.moussalem@outlook.com
+Cc: Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Devi Priya <quic_devipriy@quicinc.com>
+Subject: Re: [PATCH v21 2/6] pwm: driver for qualcomm ipq6018 pwm block
+Message-ID: <ady2pLwiNT9FffF7@monoceros>
+References: <20260406-ipq-pwm-v21-0-6ed1e868e4c2@outlook.com>
+ <20260406-ipq-pwm-v21-2-6ed1e868e4c2@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Authority-Analysis: v=2.4 cv=RYWgzVtv c=1 sm=1 tr=0 ts=69dcb539 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8 a=MudgD1MToes5hn6vDNUA:9
-X-Proofpoint-GUID: q34jnvIeQV2gaxK5LSYXRqGiNVmizlpa
-X-Proofpoint-ORIG-GUID: q34jnvIeQV2gaxK5LSYXRqGiNVmizlpa
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDEzMDA5MCBTYWx0ZWRfX4uzdtnhsr0K3
- S6kU4h8UlMDnGu0kMamngt0gmk7hf4IhR6fe6Dqlg67yYSfkSsoEBG39wNIXjGohAIV9/Fpmuef
- //53bZv41pTwz0pZHYQCE+sIb0WSJkHWBz2qEKZ8f0vCRtX149miKBCJ8OiEEh0TmzeKe9u+6GQ
- tUuQu6/FT4BUpWJ96dXMsFgILA9v4/HhPX1vCzxhj1ehBFji1vGUqbfEtE/yBPVg0Ru7FyhfNyn
- isjjZc9F3pTSCXW5lMj9wet/3l9zXjMChHSww/kPWhdPGh+JkQWroXyORom0uveEOYiJCz5OIlE
- PURnPaVymS66xH8mSSzMgV/qh3Q81qlAKbpGnSkdz1iAGUHjc177dznar8N/Yud0DH7hKevolq4
- mjJUImiuthkm39KHKnJgDcLUKMQNbKiVaVoaFOm72kVAxFyKRyjw4PqrWmTMuDEwXdPbzdh2smr
- Mswn9mWKvS6Ct4wauog==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-13_02,2026-04-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 spamscore=0 impostorscore=0 phishscore=0
- clxscore=1015 suspectscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604010000
- definitions=main-2604130090
-X-Spamd-Result: default: False [0.84 / 15.00];
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5u5li7rew6iszz66"
+Content-Disposition: inline
+In-Reply-To: <20260406-ipq-pwm-v21-2-6ed1e868e4c2@outlook.com>
+X-Spamd-Result: default: False [-2.26 / 15.00];
+	SIGNED_PGP(-2.00)[];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com];
-	RCPT_COUNT_TWELVE(0.00)[15];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-102923-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-102924-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kumar.singh@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_TO(0.00)[outlook.com];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ukleinek@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-0.997];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[10]
-X-Rspamd-Queue-Id: 92C353E9C6C
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,outlook.com:email]
+X-Rspamd-Queue-Id: 48FCA3E9E82
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The machine driver was unconditionally forcing S16_LE in
-sc8280xp_be_hw_params_fixup(), which prevents links (e.g. HDMI bridges)
-that require 32-bit formats from working. Drop the format override and
-keep only the fixed rate/channels constraints.
 
-Signed-off-by: Kumar Anurag <kumar.singh@oss.qualcomm.com>
----
- sound/soc/qcom/sc8280xp.c | 2 --
- 1 file changed, 2 deletions(-)
+--5u5li7rew6iszz66
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v21 2/6] pwm: driver for qualcomm ipq6018 pwm block
+MIME-Version: 1.0
 
-diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
-index 7925aa3f63ba..c00eabf200b7 100644
---- a/sound/soc/qcom/sc8280xp.c
-+++ b/sound/soc/qcom/sc8280xp.c
-@@ -75,10 +75,8 @@ static int sc8280xp_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
- 					SNDRV_PCM_HW_PARAM_RATE);
- 	struct snd_interval *channels = hw_param_interval(params,
- 					SNDRV_PCM_HW_PARAM_CHANNELS);
--	struct snd_mask *fmt = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
- 
- 	rate->min = rate->max = 48000;
--	snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S16_LE);
- 	channels->min = 2;
- 	channels->max = 2;
- 	switch (cpu_dai->id) {
--- 
-2.34.1
+Hello,
 
+On Mon, Apr 06, 2026 at 10:24:39PM +0200, George Moussalem via B4 Relay wro=
+te:
+> From: Devi Priya <quic_devipriy@quicinc.com>
+>=20
+> Driver for the PWM block in Qualcomm IPQ6018 line of SoCs. Based on
+> driver from downstream Codeaurora kernel tree. Removed support for older
+> (V1) variants because I have no access to that hardware.
+>=20
+> Tested on IPQ5018 and IPQ6010 based hardware.
+>=20
+> Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
+> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+
+I have a few remaining nitpicks. If you're ok I'll squash the following
+diff into this patch and apply it:
+
+diff --git a/drivers/pwm/pwm-ipq.c b/drivers/pwm/pwm-ipq.c
+index b79e5e457d1a..65af19ded72c 100644
+--- a/drivers/pwm/pwm-ipq.c
++++ b/drivers/pwm/pwm-ipq.c
+@@ -2,7 +2,7 @@
+ /*
+  * Copyright (c) 2016-2017, 2020 The Linux Foundation. All rights reserved.
+  *
+- * Hardware notes / Limitations:
++ * Limitations:
+  * - The PWM controller has no publicly available datasheet.
+  * - Each of the four channels is programmed via two 32-bit registers
+  *   (REG0 and REG1 at 8-byte stride).
+
+This is to make
+
+	sed -rn '/Limitations:/,/\*\/?$/p' drivers/pwm/*.c
+
+do the right thing. I know "Limitations" isn't a good subject for this,
+but until I come around to pick a better marker, doing the same in all
+drivers is good.
+
+@@ -44,13 +44,6 @@
+=20
+ #define IPQ_PWM_REG1			4
+ #define IPQ_PWM_REG1_PRE_DIV		GENMASK(15, 0)
+-
+-/*
+- * The max value specified for each field is based on the number of bits
+- * in the pwm control register for that field (16-bit)
+- */
+-#define IPQ_PWM_MAX_DIV			FIELD_MAX(IPQ_PWM_REG0_PWM_DIV)
+-
+ /*
+  * Enable bit is set to enable output toggling in pwm device.
+  * Update bit is set to trigger the change and is unset automatically
+@@ -59,6 +52,12 @@
+ #define IPQ_PWM_REG1_UPDATE		BIT(30)
+ #define IPQ_PWM_REG1_ENABLE		BIT(31)
+=20
++/*
++ * The max value specified for each field is based on the number of bits
++ * in the pwm control register for that field (16-bit)
++ */
++#define IPQ_PWM_MAX_DIV			FIELD_MAX(IPQ_PWM_REG0_PWM_DIV)
++
+ struct ipq_pwm_chip {
+ 	void __iomem *mem;
+ 	unsigned long clk_rate;
+
+This is just about ordering definitions taken 1:1 from the manual before
+driver specific stuff.
+
+@@ -95,6 +94,12 @@ static int ipq_pwm_apply(struct pwm_chip *chip, struct p=
+wm_device *pwm,
+ 	unsigned long val =3D 0;
+ 	unsigned long hi_dur;
+=20
++	if (!state->enabled) {
++		/* clear IPQ_PWM_REG1_ENABLE */
++		ipq_pwm_reg_write(pwm, IPQ_PWM_REG1, IPQ_PWM_REG1_UPDATE);
++		return 0;
++	}
++
+ 	if (state->polarity !=3D PWM_POLARITY_NORMAL)
+ 		return -EINVAL;
+=20
+This ensures that the PWM can be disabled even if state->polarity is
+bogus or period and duty_cycle are out of range.
+
+@@ -102,7 +107,8 @@ static int ipq_pwm_apply(struct pwm_chip *chip, struct =
+pwm_device *pwm,
+ 	 * Check the upper and lower bounds for the period as per
+ 	 * hardware limits
+ 	 */
+-	period_ns =3D max(state->period, IPQ_PWM_MIN_PERIOD_NS);
++	if (state->period < IPQ_PWM_MIN_PERIOD_NS)
++		return -ERANGE;
+ 	period_ns =3D min(state->period, IPQ_PWM_MAX_PERIOD_NS);
+ 	duty_ns =3D min(state->duty_cycle, period_ns);
+=20
+This is about correctness. A driver is expected to never configure a
+higher value than requested. (And otherwise I would have converted that
+to clamp().)
+
+@@ -134,7 +140,7 @@ static int ipq_pwm_apply(struct pwm_chip *chip, struct =
+pwm_device *pwm,
+=20
+ 	/* pwm duty =3D HI_DUR * (PRE_DIV + 1) / clk_rate */
+ 	hi_dur =3D mul_u64_u64_div_u64(duty_ns, ipq_chip->clk_rate,
+-				     (u64)(pre_div + 1) * NSEC_PER_SEC);
++				     (u64)NSEC_PER_SEC * (pre_div + 1));
+=20
+ 	val =3D FIELD_PREP(IPQ_PWM_REG0_HI_DURATION, hi_dur) |
+ 		FIELD_PREP(IPQ_PWM_REG0_PWM_DIV, pwm_div);
+
+Just consistency with the period calculation
+
+@@ -144,9 +150,7 @@ static int ipq_pwm_apply(struct pwm_chip *chip, struct =
+pwm_device *pwm,
+ 	ipq_pwm_reg_write(pwm, IPQ_PWM_REG1, val);
+=20
+ 	/* PWM enable toggle needs a separate write to REG1 */
+-	val |=3D IPQ_PWM_REG1_UPDATE;
+-	if (state->enabled)
+-		val |=3D IPQ_PWM_REG1_ENABLE;
++	val |=3D IPQ_PWM_REG1_UPDATE | IPQ_PWM_REG1_ENABLE;
+ 	ipq_pwm_reg_write(pwm, IPQ_PWM_REG1, val);
+=20
+ 	return 0;
+
+Simplification that is possible after checking for state->enabled early.
+
+@@ -174,7 +178,7 @@ static int ipq_pwm_get_state(struct pwm_chip *chip, str=
+uct pwm_device *pwm,
+ 	hi_dur =3D FIELD_GET(IPQ_PWM_REG0_HI_DURATION, reg0);
+ 	pre_div =3D FIELD_GET(IPQ_PWM_REG1_PRE_DIV, reg1);
+=20
+-	effective_div =3D (u64)(pre_div + 1) * (pwm_div + 1);
++	effective_div =3D (u64)(pwm_div + 1) * (pre_div + 1)
+=20
+ 	/*
+ 	 * effective_div <=3D 0x100000000, so the multiplication doesn't overflow.
+
+Again consistency.
+
+A nice followup for this patch would be the conversion to the waveform
+API; just in case you're still motivated to work on this driver :-)
+
+Best regards
+Uwe
+
+--5u5li7rew6iszz66
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmncuPAACgkQj4D7WH0S
+/k6j2ggAi6ViW/EbwGsB3KMUtRdeCBKA1j/00S/Dirdtq6zPgEP4NdESKK/dC8NK
+dAEL8QG5001/3TAsWqRPZLTgqTaefy0MFnqTWFZ9IvrveGJ2OgydifghV1rO/d/W
+xCPkzF+IVf/0r2TXTaHdyVTVYpdm3M432AlYoNv7QRSuE5Lga1LmNLR21fgCUosS
+XQH54r9AYH9ORQEXQm7KgiNfDBnzLvYmMIwTiaxJO72curvNHUjlOchnoeYSWLOS
+prkwooNqVME5Lm/QD9UqXN/aFSToaOsZbzKWGAFZn/hngwzl4TdplA0Tdd/juGe4
+onbAs6qgAxlQ8J4eS55a877V4RYPmw==
+=m3gv
+-----END PGP SIGNATURE-----
+
+--5u5li7rew6iszz66--
 
