@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-103055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MNt3Ezjo3WmulAkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 09:09:44 +0200
+	id mMGfAX/q3WmulAkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 09:19:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A38B33F66B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 09:09:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 756C23F6882
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 09:19:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E5EF730B038A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 07:05:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BE5B53027B4B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 07:11:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AFDB35B64D;
-	Tue, 14 Apr 2026 07:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18BB135E947;
+	Tue, 14 Apr 2026 07:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nVl9FLh9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jfkaysH8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57212342519;
-	Tue, 14 Apr 2026 07:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E963635DA65;
+	Tue, 14 Apr 2026 07:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776150342; cv=none; b=nJX0ZBgTmOl8uuK7lDND/hQlOFanV8pTT+pirT9HEgt2yPwd6hDLKV/G6L6Ni23jHiJR7DdzriLPS065KfPZo9PAPxXJtgz3JXdaN8TgpFuaSks5c+Z4S+Hku7mr8w4eF547hloBW5pKJ44nwcqJtL3jbSZCn/SDQFT968xUdyA=
+	t=1776150703; cv=none; b=bDH6qkqCQUXFpdKk3pfan00ivyaSDB5v9wQ0uzQ/i5fo11vqG50f0OChtc0tD6xx0ICZZx1FqruogDgHDci9lYQniQDVVgKCG7SBUkDAQB2Bso+LirIEtRuMGQdfhVz9jVbAiiIwMc3rjSrnail9OZ93oWkBdZxo7Dbwi6SwqO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776150342; c=relaxed/simple;
-	bh=RPkgGlZiCHcWal52nPhWopxIa+KLyQVGU21nLwjz1iM=;
+	s=arc-20240116; t=1776150703; c=relaxed/simple;
+	bh=iJBxYMhExWxjbyCYD5gf1Jspd0JHLiouAD41tAWt0zg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=APWvjAtXVf8dF1mRFcWY6seBC5seaGdyx/tT7UQTbnzqoDqqKxqfctW9ud3pMLY/wufnXysG33bjrSqK+VoABoVedD8FMf166JFnx7+CDzAENC6wQirtLMZ2EuWMNKvzkpOqnZVmA1+yuvkHUPdG5MAtLaie4o/f3NDHeGGEtR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nVl9FLh9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D51C19425;
-	Tue, 14 Apr 2026 07:05:39 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=RlGx/Pa7GAKQlhLwgI5qAuLdJ7K+V5N6AVwdRMrhX0N4p8WDD0Rw0GoHqNSX/mK4R+rl66Q7Mrfo79Fvxe/rS1gCSSE9EhXU83cydthX1pGmZJpXcy+XkflYxiGZHAjwapZroB7TpTxfLFrCLaz6jM9jGAVzp5tZQ9NtUZmqZUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jfkaysH8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E35C19425;
+	Tue, 14 Apr 2026 07:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776150341;
-	bh=RPkgGlZiCHcWal52nPhWopxIa+KLyQVGU21nLwjz1iM=;
+	s=k20201202; t=1776150702;
+	bh=iJBxYMhExWxjbyCYD5gf1Jspd0JHLiouAD41tAWt0zg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nVl9FLh9TvM0WwqObP40Ese/zlAP3AIcQZUTZLHOjxItflSaO/kpbg/UWEOMZAVf1
-	 /GhY9SDEfPv/bOLo0ghgkzZB0rKilQ778kISKm18QtXa72njbvzKXndBrA03Tr6UOF
-	 uEH9l0S+KgQg1Yxllu7LqXblpd9tqbDqQaGJJB3UED4hyS3ALa3DPPry2ZU0CClDP5
-	 uKZtXdjYIzx1rAsetC2qmJ820dh2UKCMXvsA2cQiQCffUmCH50cT2mpGkGvSaQIyqe
-	 wde8Umt4vpzuUdZ+fnq9/POGEJpGzD0kXJmpOuvCjlpaHLWMTmp5Dx0rCsp5mgjKI4
-	 2NtGZ6wUVh0rQ==
-Message-ID: <0afae218-a9c3-461f-a6c5-f984e8dbb78e@kernel.org>
-Date: Tue, 14 Apr 2026 09:05:37 +0200
+	b=jfkaysH8JCrm/Q7oKhARB/WJ0iF0xZg7eXtpWW2WTr+DjwLCwAUUSB39tZ5kPN4fw
+	 R2bUrf+zn1O24X311wggWjG0ms8CcFZqREn+5WiwQkIVoZK7KCg8AzyokkMY1nWO9R
+	 fjymjYp2pUUnOfC9wQR/QuM7NwAQyf3knaQxFZ9tmLKh73Myj1ydITVwbZPoFAxDnk
+	 O3p4uH/o/djaDMWTs6v1C1i13KI5SySkSfRXD0nqQsrlsOZWtwSjzrme39oSeL2bKt
+	 PBJNB6ms3OmxdRcG5pJmPZ76z/psQBdxfpMcqDl71KyaKYQ3mVluHmsHpjb6Vymogw
+	 6UdzaRwX1k9Ow==
+Message-ID: <e80cbf58-3701-48fd-81ea-2fe6007221d0@kernel.org>
+Date: Tue, 14 Apr 2026 09:11:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -129,7 +129,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103055-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103056-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -146,8 +146,8 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[get_maintainer.pl:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: A38B33F66B1
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,get_maintainer.pl:url]
+X-Rspamd-Queue-Id: 756C23F6882
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
@@ -178,47 +178,16 @@ On 14/04/2026 08:59, Shawn Guo wrote:
 > 
 > Rob Herring <robh@kernel.org> appears at the top of get_maintainer.pl
 > output, so I guess it's DT/Rob?
-> 
->>> These are what I'm trying to do, and I'm not just posting DTS
->>> simultaneously.  I do not really read the requirement of posting
->>> binding and DTS using it simultaneously from the email threads.
->>>
->>> Taking a step back, even if the requirement is mentioned in an email
->>> thread like this one, I'm not sure it's the correct or well received
->>> way to define a requirement.  And that might be why you had to keep
->>> repeating yourself.
->>>
->>>> It's also documented in submitting
->>>> patches in DT (although not with that strong wording).
->>>
->>> Either I'm blind or reading the wrong document.  I failed to find
->>> the requirement of posting binding and DTS using it simultaneously
->>> in Documentation/devicetree/bindings/submitting-patches.rst.  Could you
->>> point it out explicitly?
->>
->> Rule 8.
-> 
-> This one?
-> 
->   8) If a documented compatible string is not yet matched by the
->      driver, the documentation should also include a compatible
->      string that is matched by the driver
-> 
-> Are we looking at the same version of the document?  How does that map
-> to the requirement of posting binding and DTS using it simultaneously we
-> are debating here?  I'm confused.
 
-Why is the rule there and what is expressed by it? We do not discuss
-posting binding and DTS using simultaneously. We discuss lack of user of
-a binding.
+If you guess, then why did you post it separately from the other patches
+targeting Rob?
 
-I even asked earlier explicitly:
+But you mentioned oryon-2-3 compatible. Who applied it? Rob? Who applied
+Kryo? Or Samsung Mongoose?
 
-"Why do want even such binding?"
-
-Do you have a user of this compatible? Not a single one. So apply the
-spirit of that rule. Or if you cannot get the spirit, you could apply it
-literally.
+I explained you the rule - bindings go with the subsystem and you post
+everything targeting subsystem in one patchset. This was explicitly
+asked for in my referenced postings. The SoC is the primary subsystem here.
 
 Best regards,
 Krzysztof
