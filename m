@@ -1,98 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-103067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IDWhE0r33WlolgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:14:02 +0200
+	id GKdvCB/73WkRmAkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:30:23 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F04B3F7047
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:14:01 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72A653F74C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:30:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 40B60300A654
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 08:13:45 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BCFC530053DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 08:24:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 150A339DBC9;
-	Tue, 14 Apr 2026 08:13:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FA2B3A1E89;
+	Tue, 14 Apr 2026 08:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zvs3SPOU"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="R7Se93AD";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HNe1n/8L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4631739937C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 08:13:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B2E3A3804
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 08:24:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776154420; cv=none; b=prskomoTie3dQjNsr5Iso9zKRlId7ytRaZxT+/hdrcODvzZ/vjMonLRrLGcjgVTdG3PTqWRgnS4iVfKpkKU6RcGTPhE0vp5d3Ro9XRYQoihlpG4d5C2LMukTRog/ux/9cuN5X9v8hmRzi0tiysae2J3SMjvh28jETsR7h7n6tt8=
+	t=1776155077; cv=none; b=Bt0JB7CMvu6u3B/JbdV0K2V4yhsLu5SCCgGOSwgJZCtoO6TNRvA8lRTGj8q/OPOFSrqa0m6Ao+s5O4Zg018vJ+HJ+52u3rJ7JcXKEJ6PSqw7qUDb4Qo0mUlHCc8QJIUKbImscV7GqOuCr1EkPjlrN7FTXL/ogGBPjKQE1FN5Rqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776154420; c=relaxed/simple;
-	bh=gT+pzsVIRW212TZcva4L+Ri/0g6hFNVEgkKfdytwY2A=;
+	s=arc-20240116; t=1776155077; c=relaxed/simple;
+	bh=9IF9m1mKLVzcQNa7yd1qS+gKQCjkoMgglb99+nR4csA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=smkH1ujyqKcvtU53qcABIFsnKGxbJvBZLeqOPmO7LcwP0gh+3FlP+lj7+PJlAuMUBSKvq8m3I0aX1wl11pnNTZ0bdzFuXyACm8xpmDHbgvyQbzU2K3Icmlw/IczWNPKMRY3822bZCzRpJtXCQuIrHs61/4lpjsLvUhB0BerdrqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zvs3SPOU; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-43cfd1f9fd1so3377471f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 01:13:37 -0700 (PDT)
+	 Content-Type:Content-Disposition:In-Reply-To; b=SuSrLnhNOPDIigr5rwlSFtMIdtnPnMQiz+V6YzJroDPXoEsBNzN+sTDmZlrPwGIU/+wDVP4aSyFYC6EYIvA4shC1j246YKZRxx+hvG+pxHCiNibZv1+WhsAB3Kvr0xYB7KifOsnkMAYp2M+SN0JboP/QZmzqBJyh7yYlqSy/qMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=R7Se93AD; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HNe1n/8L; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63E6jGYi2509959
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 08:24:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=aIMSYQ0X7vND3I65jUYYSFUk
+	nWvgiYPlHx2DQST0cP8=; b=R7Se93ADokkKnwQTqrzGYCGmgfCsHHcNAYh3ebmP
+	rl9XNbnOZGCrsnG1yD4dluHBO9erC1T8klrNo3afg//7n2/QlYaIc0Jh+QFV/PzX
+	FiqAgJBtWgKEtwz2CWviItqBD78GameoxWi1sOWR97B/WO9dDQwucrPOC2mFGh3x
+	dv8Zm8syqY8F2N0cuWPTDjaaR/gYEpUy9bVMyD8E7PEwGDDqm4Jd54DNFjc89xTg
+	pT8kBD1fiag2geFEbRVDstutB3VO4U7WQ1jKbk0fCZH0zMYlU5cSHLKf75P2kjOx
+	4rXpLkua566QR3jOQI6CsuKOM3UbxHugQcFPybP2iTSPpg==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dh867sr6t-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 08:24:35 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2b2eba42b8dso21158345ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 01:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1776154416; x=1776759216; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1776155074; x=1776759874; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VoTqL997tPTbH+Ap01GQJYcrt0BpStuqMk4Cw3k+aSQ=;
-        b=zvs3SPOUWaJfZaTyoCV5ztGlEjHDSb7rGvmA9wRTfariTS9NPlz4kExcVNvDYIXhC2
-         lT0/iL+3PSgFmBkv0tsdzeFAwMWjrXlzFYZ17l0gUQ84Zu1JQrY8BQ/FvnFolMavNjsM
-         OW7vT1Z2chOpdbAu8MsQc5qsvPEePtFAtb7F6d15hWfxvFRlGIJG5u5hDKInuy23XeIG
-         fmYu2uDTUqcdMmFyhfKmHPQo1iPXE/R+mh0oL6L8ULsiXbZc0QP+223Kpu5xh0GxK/Pr
-         Q05Q9plzuxVA4HBbhxYQ9u0u4ZYg7pgZeEYdNH/0Y2iGwqhxQjJ+LQUyYjkYSDgIwLta
-         3SEw==
+        bh=aIMSYQ0X7vND3I65jUYYSFUknWvgiYPlHx2DQST0cP8=;
+        b=HNe1n/8L2wh4sR4k5oIX9XuxtMFt9KJo603keulaYu7EeWYTW1oBHu3CRPQbuKqgfn
+         XbGd5fFD9lwREjn5MtzKqSI2V8dbnQaC+4rr1P23LoLKSSFG0ndZiuyzXHZ5S4vvIMSM
+         EDgEHVVy4siPhM4kQf7Pjsm6eEw3ms54uMfuz6hI/OSQZkSqcq7ArN/uNoWGbA3GFjSl
+         dtHLlEoIRtpjgVoesIcjJ1Ogc5K3bc/cn6jvSNFn7Za4pFU72GXS6THTsYLrVVwCIMjF
+         cmxci+Ev2jNQX7owcJuceAfAvDCjufciB8q7Ark4PTqsAGe7Rd1zDayD5DUQgeqE1jBS
+         aygQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776154416; x=1776759216;
+        d=1e100.net; s=20251104; t=1776155074; x=1776759874;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VoTqL997tPTbH+Ap01GQJYcrt0BpStuqMk4Cw3k+aSQ=;
-        b=DqJp16d7B7DGK1GB9i8/UmGTwJ2eNoxDN8yd+EbLL0H0PWYuklwLMtNRC7lu2mYi6/
-         Myzk/DyrbgqRAEjtsDtc/Yyp+ARAibekzfpqRmBQ6LN8XBiOjTrx/aVGvJHmDyW67Spk
-         D0234/fPXOz+Wv0P03NCeq0buKLrVGCeC045bRhU3LNX1EFXau1xxjz0dvtJDUG7Up7O
-         0K02GrTKpDmRfrLqaD2//CNzqMW5807oTPshllQzj2bPjkJg5txazoSM0xRVAdRc1DKZ
-         E+JC6oylLXWB/v75taM0H28/DMqA8SJGjgc6P1+GUfgXslV97fA/OBLsWjv1FqVB6jwa
-         3Cew==
-X-Forwarded-Encrypted: i=1; AFNElJ/CFfnm70ZneeRNsR2ygejdbXpvw7Tb/dKXDZSlrOgMj/cu11IHY9KgSqaod2EXqCDkVaKOqYvK+w5MTlfd@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywo9Sg/tkyK10f/zaiBAVJk/7+tq0Pp68MGZefZbTM88Qrdk8LQ
-	6I1P60lQu5b0o/G6aWnCYTWi7VRG7SH6Zy4X9/1jsD70ZhbhY8fFBx4tS8tzXUAGuIA=
-X-Gm-Gg: AeBDiesf1LYTzn6T9OdZYgF1tra8PMKJUHKDvfgYRJQ1zEjzTNv5rRxdvDmKLlHWW4h
-	hTwLBcVKTpR7zR4p0CB21IcHZgxGI0i00HDnrOEr45zus8/c9wmhw/1m27wmaqBmfdrnKdThQKM
-	2eB3LLt3AxAzIdjVMjdVgb7xvJ4p6FKHwzCqJBrXGkeLoEljKgS8RCvKvoUmKqNBxYn4ubod0Aw
-	kWHMFpjCj/BQ135FLHnHFB9HiUhUDyapqEwhM8xwMUoTzCCEbeAdIviNGbB+Q9TT2ySrHbRW9Tk
-	5MeHsB6MeviK8B6ARmr5k1xCYodWvBBZ4GTFm6XbUC47KN0/VSVf9hCiQ1kTTZAYtN5dPgEQ2H3
-	zTmVdRTczWksu0nbIUaV5vac+HkKiwkcpzNCZuhmybTkJwuTdSzDwlbbBxr7Vlg80diduTm7y+4
-	PptP8fQrfZ7rLJFEdy6CQctr9LEZA=
-X-Received: by 2002:a05:6000:268a:b0:43d:7403:4b60 with SMTP id ffacd0b85a97d-43d74034c72mr13905007f8f.3.1776154415587;
-        Tue, 14 Apr 2026 01:13:35 -0700 (PDT)
-Received: from linaro.org ([77.64.147.31])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d762decf6sm27040970f8f.8.2026.04.14.01.13.34
+        bh=aIMSYQ0X7vND3I65jUYYSFUknWvgiYPlHx2DQST0cP8=;
+        b=EkyAars/k9f1vyEC5Fg1FCj9oaeRJak+cWT8sulm1ztR1u8EldN0UHijcIMIYkSFEf
+         MvaP/0bh7j5H1+6WZfg/6DClLuI9h+aF/hFzUH5leSecq9OBRO2OXvE3mDp5n0Rc9ct2
+         DkwAD4gTa0xdq+HZ0yJI6aj9ifBGOD8rzvB+iUJjs2vzOXw8Pz7VYUZIO4i4tRGLJfWY
+         uP/IoqdArgsRURu+BwzKeglFbCOXHURbz+g+RC/xRfZD4ptTZnuuT6ELQdkxnqokSL0x
+         qj9oLPescanfZv7xlDlqmDNJf7ywTZvj1oni+0frsi+e9xsxBiGBy8TXL9v1FuAgqdf/
+         iQ8w==
+X-Forwarded-Encrypted: i=1; AFNElJ9GrEYxVq7ixfbZTwU8X59qyWq93OFqn2pRcRylGu/6UCHeaOFpJwnmlbSBRhN/nx/1LUXUbvOiPyzPhGYH@vger.kernel.org
+X-Gm-Message-State: AOJu0YxgFTJV2+oJ4dkBdOZrLq4lZtj7NSLQ6kgk1u6iGqREfoQ56VxZ
+	LtUhl9B73raVLyneGCR8NOYXnVTCJjnL8qqP5ZBEBHaTmAhkwOIPBKcOGUOCTeoWWMmA/QxURhn
+	hJpfmBV1UBTqMFGACNUv7L0h3hJ9ZNrhnsD92zegejDgwXw80Xh2vbkBv+K5jlylE595Z
+X-Gm-Gg: AeBDiesm9H5P+GuKplrV3Smp5378A7zAO6Mvlb2szaMZp0pEAGflqNurOd8M5OADLKH
+	iNfzdCMmNgHgCMabn/tn5tHhQk4EFYxg/L7nXHkpydBR2tVooy1siRD2IhXs12zrE4L/OyyoxTJ
+	dAPoRVPXmzSwnw5A1dVz/MG5ER2VyQRxJzWzzsfUWhVOcaGkZSE/qLHDqgLjMh/ju5lZnFD0kKz
+	jsrdu/r54SBvW+tfMXVlyA2BJwoRM5+K0HXinaPeKSk/o9X09/qqP9A1Xgs7qCcBClU9g2ZLARL
+	1WDpQZyXriIX6cp+bY8RrfR3XFFLm3j2IjOfHPOhlsmBvdvOFMM9SJcU2RSV/C3Yaa0M9f9JNpv
+	A9ogmG84GvKgDJH+Rj7fPydJ67E/pgc7PerBJcJx9GqD9xPYG
+X-Received: by 2002:a17:902:d504:b0:2b4:5ff5:e51a with SMTP id d9443c01a7336-2b45ff5ed39mr67690055ad.19.1776155074128;
+        Tue, 14 Apr 2026 01:24:34 -0700 (PDT)
+X-Received: by 2002:a17:902:d504:b0:2b4:5ff5:e51a with SMTP id d9443c01a7336-2b45ff5ed39mr67689695ad.19.1776155073576;
+        Tue, 14 Apr 2026 01:24:33 -0700 (PDT)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b2d4dabcdesm146235985ad.2.2026.04.14.01.24.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2026 01:13:35 -0700 (PDT)
-Date: Tue, 14 Apr 2026 10:13:31 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
-	linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH 1/2] remoteproc: core: Attach rproc asynchronously in
- rproc_add() path
-Message-ID: <ad33KwKYBNB6oE5e@linaro.org>
-References: <20260409-rproc-attach-issue-v1-0-088a1c348e7a@oss.qualcomm.com>
- <20260409-rproc-attach-issue-v1-1-088a1c348e7a@oss.qualcomm.com>
- <adkI8Si4ejf6T73T@linaro.org>
- <846cf4bb-43da-4d2a-a128-bdaf1371e19b@oss.qualcomm.com>
+        Tue, 14 Apr 2026 01:24:33 -0700 (PDT)
+Date: Tue, 14 Apr 2026 13:54:26 +0530
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 01/35] dt-bindings: qcom,pdc: Tighten reg to single APSS
+ DRV region
+Message-ID: <20260414082426.fhkgwpjth7a6hzxe@hu-mojha-hyd.qualcomm.com>
+References: <20260410184124.1068210-1-mukesh.ojha@oss.qualcomm.com>
+ <20260410184124.1068210-2-mukesh.ojha@oss.qualcomm.com>
+ <gd5ixcfablbyyyz2wdacrvg43jogwg425na6utsgfcterm276k@tdko64tn6gwh>
+ <ecb75ada-60c4-40e6-81bd-fc392007e9d8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,136 +120,91 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <846cf4bb-43da-4d2a-a128-bdaf1371e19b@oss.qualcomm.com>
+In-Reply-To: <ecb75ada-60c4-40e6-81bd-fc392007e9d8@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: nm3l9ge4_Y8IOrJLB8l_t6cte_4xw1vY
+X-Proofpoint-GUID: nm3l9ge4_Y8IOrJLB8l_t6cte_4xw1vY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE0MDA3NyBTYWx0ZWRfX2yh1KN/BtEVu
+ rHJj+YGAS/G7IeltB7vsFnqICO1o4aEtQQlLG+CVY75eElSDmz8/4mQ/fB4kaTidkDgJmWM5VY4
+ WTzaLKVWtOfMEyQw8qSp0bSlEA5XBsihOZ9eb0TFWXqxLmh/LiH5VZQHrveAvFcYIoNnolORdKo
+ I6zE336sdQRiC8ZoMojm08xJNTkTE9zhEr04jhJxx4tRdssQQmuKOgkdqSB7S6sDbkq+A/p+sVE
+ NYojOKRdDJEs7Bgugb46ozur/dDmmLFd1IZiPOjL9waWad2d9M4GgJkJ3Pu86rmbWtSPf3As1NX
+ NxcCSARdKdr+x/T/RUakwQw9mwpDmYLN2V4/oY59lE3IuJCZESd36c/T8FsAvxdOi0vjqfxImIE
+ IxV4heJD+a+jc6WFcfsllNmZ4t0EKxdKN2+Ynna6fz5q6AbZjEtYwhQ6weF2uk/RHeG0wj0BImu
+ UU3Vj3UQEazy8zVpHfA==
+X-Authority-Analysis: v=2.4 cv=etzvCIpX c=1 sm=1 tr=0 ts=69ddf9c3 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=5-FrFs3OjuvqJegpMgEA:9 a=CjuIK1q_8ugA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-14_02,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
+ priorityscore=1501 bulkscore=0 suspectscore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604140077
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-103067-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103068-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,qualcomm.com:dkim,hu-mojha-hyd.qualcomm.com:mid];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,linaro.org:dkim,linaro.org:mid]
-X-Rspamd-Queue-Id: 6F04B3F7047
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 72A653F74C6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, Apr 14, 2026 at 11:41:39AM +0800, Jingyi Wang wrote:
+On Mon, Apr 13, 2026 at 10:23:59AM +0200, Konrad Dybcio wrote:
+> On 4/11/26 4:32 PM, Dmitry Baryshkov wrote:
+> > On Sat, Apr 11, 2026 at 12:10:38AM +0530, Mukesh Ojha wrote:
+> >> The PDC has multiple DRV regions, each sized 0x10000, where each region
+> >> serves a specific client in the system. Linux only needs access to the
+> > 
+> > Nit: there are other OS than Linux. Would you rather point out that
+> > other DRV regions are to be used by ... what?
 > 
+> TZ, HYP, HLOS, CPUCP..
+
+Thanks for pitching in..
+
 > 
-> On 4/10/2026 10:28 PM, Stephan Gerhold wrote:
-> > +Cc Bartosz, Dmitry
-> > 
-> > On Thu, Apr 09, 2026 at 01:46:21AM -0700, Jingyi Wang wrote:
-> > > For rproc with state RPROC_DETACHED and auto_boot enabled, the attach
-> > > callback will be called in the rproc_add()->rproc_trigger_auto_boot()->
-> > > rproc_boot() path, the failure in this path will cause the rproc_add()
-> > > fail and the resource release, which will cause issue like rproc recovery
-> > > or falling back to firmware load fail. Add attach_work for rproc and call
-> > > it asynchronously in rproc_add() path like what rproc_start() do.
-> > > 
-> > > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> > > ---
-> > >   drivers/remoteproc/remoteproc_core.c | 20 ++++++++++++--------
-> > >   include/linux/remoteproc.h           |  1 +
-> > >   2 files changed, 13 insertions(+), 8 deletions(-)
-> > > 
-> > > diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-> > > index b087ed21858a..f02db1113fae 100644
-> > > --- a/drivers/remoteproc/remoteproc_core.c
-> > > +++ b/drivers/remoteproc/remoteproc_core.c
-> > > @@ -1673,18 +1673,21 @@ static void rproc_auto_boot_callback(const struct firmware *fw, void *context)
-> > >   	release_firmware(fw);
-> > >   }
-> > > +static void rproc_attach_work(struct work_struct *work)
-> > > +{
-> > > +	struct rproc *rproc = container_of(work, struct rproc, attach_work);
-> > > +
-> > > +	rproc_boot(rproc);
-> > > +}
-> > > +
-> > >   static int rproc_trigger_auto_boot(struct rproc *rproc)
-> > >   {
-> > >   	int ret;
-> > > -	/*
-> > > -	 * Since the remote processor is in a detached state, it has already
-> > > -	 * been booted by another entity.  As such there is no point in waiting
-> > > -	 * for a firmware image to be loaded, we can simply initiate the process
-> > > -	 * of attaching to it immediately.
-> > > -	 */
-> > > -	if (rproc->state == RPROC_DETACHED)
-> > > -		return rproc_boot(rproc);
-> > > +	if (rproc->state == RPROC_DETACHED) {
-> > > +		schedule_work(&rproc->attach_work);
-> > > +		return 0;
-> > > +	}
-> > 
-> > I think the change itself is reasonable to make "auto-attach" behavior
-> > consistent with "auto-boot". The commit message is a bit misleading
-> > though:
-> > 
-> >   - You're really doing two separate functional changes here:
-> > 
-> >     (1) Ignore the return value of rproc_boot() during auto-boot attach,
-> >         to keep the remoteproc registered and available in sysfs even if
-> >         attaching fails.
-> >     (2) Run the rproc_boot() in the background using schedule_work().
-> >         [To improve boot performance? To work around some locking issues?]
-> > 
-> >   - The actual issue you are seeing sounds like a use-after-free in the
-> >     remoteproc core error cleanup path. I think this one is still
-> >     present, we should really have a call to
-> >     cancel_work_sync(&rproc->crash_handler) as Dmitry wrote in the
-> >     previous discussion [1].
-> > 
-> > Thanks,
-> > Stephan
-> > 
-> > [1]: https://lore.kernel.org/all/ce24a2sgg4b6wymoxwgl2ve6np2nxn2wuxfqxfpmvqqrpvgouf@xihd6ziqwu4m/
-> 
-> Hi Stephan,
-> 
-> Exactly as you say, what this change do is allowing rproc_attach return false.
-> It should be okay to keep this change and describe it more clear in commit msg
-> in next version?
+> I'm wondering if we can make use of the HYP one on e.g. Glymur, to
+> parallelize accesses (and whether that would bring any practical
+> benefit).
+
+I mean, Ideally, It makes sense to utilize extra 0x10000 to use or just
+to use the hypervisor one for Glymur.
+
+ 
+> In the RPMH architecture, each "client" has their own (GPU, AOP, DISP,
+> etc.). Then, each one of those clients may have an associates RSC
+> (Resource State Coordinator) and/or anyOf BCM ("interconnect"), VRM
+> ("regulator"), ARC ("RPMHPD") voting interfaces
 > 
 
-That's fine for me.
+> Konrad
 
-> And the use-after-free issue is what we want to resolve in the patch2
-> in this series, I think cancel_work_sync() is a reasonable change
-> but it cannot resolve this issue as the worker could be executing when
-> we call this(and this is what it behaves when I did local test) and
-> the use-after-free issue still exists. Shall we send a separate patch
-> for this cancel_work_sync?
-> 
-
-cancel_work_sync() should wait until the worker execution has finished.
-If you call it before freeing the resources (= deleting the remoteproc),
-I would expect it should work as expected.
-
-It makes sense to have separate patches for this, one is about fixing
-the use-after-free issue, the other is more about the behavior when the
-initial auto-boot fails.
-
-Thanks,
-Stephan
+-- 
+-Mukesh Ojha
 
