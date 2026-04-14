@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-103167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YO1hD/dk3mmcDgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 18:01:59 +0200
+	id cJEZCBBl3mmxDgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 18:02:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDA203FC440
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 18:01:58 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5D773FC46E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 18:02:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 190393060C63
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 16:00:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7ACC23075946
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 16:00:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7CF93ED139;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D3613ED124;
 	Tue, 14 Apr 2026 16:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uXKky96s"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AkS2pQfu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFB83ED12A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D9C3ED11A;
 	Tue, 14 Apr 2026 16:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776182412; cv=none; b=g+at8VWfbcBOxS6aN+QjcUoBeFTJJC4d+6aZySzD4T82hXiEskVBZ5jZt/Z1Orxco8+9A0gNmHN2a5KTsLVMHXxKa2h0+Abe6oE2wPoobMEkl9/0QP3eaCOPz28wzMO1is3lW7lTHYnEpwqgYE9o8LpIuIQTRa7peLkx1aTqA28=
+	t=1776182412; cv=none; b=lXRREoyBEg+p+N/d7BLnmggYBKpn7Kxsxxw27QwPJFnV4/HvVt02NAW0HnMmUn2b9/CKjdaePwelxOCNR9hcYKNubMJ78AU77LW5IkXVflNFDg6Hb77S6POsdZQDpuz1MF7nKISVCelSFHLH9DCCRuK5n2qXC071RQ8SNsWeXMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1776182412; c=relaxed/simple;
-	bh=iAKBGCABkb4xVXmTd/HHowC129P8QPZmpSjEkWgabaM=;
+	bh=HWMbqwedOoMw8lw/15aldB8uIf8M+iftPYa/bgkZ12o=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=f3iWN8RUNWL6Ayuz7nTo7/ymkY94Vrbg7xpUDVgR/LzKwJzObdu3oKONb/ibBDgtUML1bx77wL36fzN7ZV/3uaUqiF8moEQrUODczzIjZxiqQvMunc+Cu8BAItD/00a2Z0Z0kSQPpOIoqbkehzO0c0+2B+fsFgK9Yt4O1QwmsGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uXKky96s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 22753C2BCB3;
+	 In-Reply-To:To:Cc; b=TxwdHNfvqdcn6cbF4PHq8UDWo9AU86xDDy6DhlESt//ik9RwHPe7n82fXs81IF4mveRV7v3jnarXjjZAMzoolKeppplJsfXFf6XvxB/SbebrkemoGaX9nee/18jokboZ8/ExBlOfonz4gDPVdeeDOVgReASHA8mUBTgZdxEshhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AkS2pQfu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 334C1C2BCB8;
 	Tue, 14 Apr 2026 16:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1776182412;
-	bh=iAKBGCABkb4xVXmTd/HHowC129P8QPZmpSjEkWgabaM=;
+	bh=HWMbqwedOoMw8lw/15aldB8uIf8M+iftPYa/bgkZ12o=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=uXKky96s4f2fZd0xkfLHCZWRm0T+DxsrWxzfjtB7AOPiXXzA5Kyk78F1z4PckZRUx
-	 6dBpazkd8sU1PsIiC8RbU14IDR8+aMY0fwXYekDXJFd3SIrBwU7BZsTHWqMINkqxrD
-	 SmU8eOtOQ3kdt0NBCtRM30KnMMbLWl4tmznpDodwjbB1dJPfBswvSPihMfiqcb7eTU
-	 12CVznGksApMcdpekQzScV/6ApRjWtyqmNOPzPuDvm5oTBU39oQdYbFzDrGbtGV2W1
-	 LElrarzAYZ1A3NqJWHSgqlXuej06LBcjoLTQWJGSCWyIcg4Noqs2MObe4ueVtg4o7x
-	 3ZFjpzUkQ+r1g==
+	b=AkS2pQfuVfK9IaoAzE3tAiWiZ57wZP3rJXnVYe7dQ5Yojf5adoXNCU5xnXgnTwy5L
+	 D7UDBJyXFVqcyAmWaLgSIMkaICr+Qm8mFKy8Fk5NuLUq0j/ZEaIJaMvITkqsxhW1wz
+	 58590VHwI1AqGHgMm5shcPzo8u4axLZwou6yL26RRQ8pYAQUrW3e7yaLOE5bapapgj
+	 yphgvcIQKO5flR6JNasMcq67OOpR8gqikhus6PTlUoDHqlCZ6L3QU3smArEkfx0Rsb
+	 luhAX+M8cY5zwukxca11Fm2j1keVNTX+RGGzc0fWvkfBrjCn26tJJQCxubUgZyj/Uw
+	 DVnFUIXZbYW4w==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15844F9D0DA;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25C80F9D0D3;
 	Tue, 14 Apr 2026 16:00:12 +0000 (UTC)
 From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Tue, 14 Apr 2026 21:29:39 +0530
-Subject: [PATCH 1/4] PCI: Introduce an API to check if RC/platform can
- retain device context during suspend
+Date: Tue, 14 Apr 2026 21:29:40 +0530
+Subject: [PATCH 2/4] PCI: Indicate context lost if L1ss exit is broken
+ during resume from system suspend
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260414-l1ss-fix-v1-1-adbb4555b5ab@oss.qualcomm.com>
+Message-Id: <20260414-l1ss-fix-v1-2-adbb4555b5ab@oss.qualcomm.com>
 References: <20260414-l1ss-fix-v1-0-adbb4555b5ab@oss.qualcomm.com>
 In-Reply-To: <20260414-l1ss-fix-v1-0-adbb4555b5ab@oss.qualcomm.com>
 To: Bjorn Helgaas <bhelgaas@google.com>, 
@@ -73,16 +73,16 @@ Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-nvme@lists.infradead.org, 
  Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 X-Mailer: b4 0.15.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3214;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3305;
  i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=dSaPO8AlhFDgfohNEVxN4pE727IFbvTr7L0udrmkbZ4=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBp3mSJQGw7NOXWNlGDoeSfbsV1IadRDRAOlYwji
- DQFQoP4FhCJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCad5kiQAKCRBVnxHm/pHO
- 9QAXCACJnEGJZagKmL2MdEaxeZuzF4dIIzTKziQQG5AIPw3Z4UVbWgIj3Zb7SbPKzv/aCmagape
- iwuDEL0M7cXyE0HwQivolMkYcD4r1gd15o9rmUTnO/V6Bsi5vq0VKiMVZV+/k8ZjPJaw52gAeTA
- m2lzJvk20/tKA0OAf+V3483lrzls8SnxpHReWcBIljHufXnZo6pnTBbcu2J/4rbWgeuw7qYCXP3
- mfW5qvK0FFmPAt+UUVlx6UPvrLXcXtvG71WtlydGXCW2vnYRqwj0kD6exEgFM1QEQUueP4GkgFB
- Vi8P2tAYTG55YT2bsXz/Z1R46f3iEZKY/M/0gPExjMHiJ5x1
+ bh=LyQjngZpjyM7atFii62PC/2oWcdYdOsG7s31euB1g4g=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBp3mSJmlZhEN3RfjDf/GEGFtsvDX0Ll8oF+/ind
+ omQnGB3tZqJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCad5kiQAKCRBVnxHm/pHO
+ 9ZQPB/0TFauDo1bNl4OhfXKRCke7aoRExVdAT6cGff+51gC9NlEDUehXTYuzKL5aDTHYH3ze3Ev
+ ff8UzBeyFVUlIkHbaYlWYXMsWfgsT9c+cFuKXMqflurzV6GJZWp6wfJGoEl91gbonS6TDmLwITa
+ Auq6bnsaVRZULioqu2rI37EFXRDXcAZLL6CGooAg7SHcTBHs+08DXbUHuneegTd82hf+KOD81uY
+ CoGr1SLR5WAn4VwxhvlFNQTPH5oPDwNj9kbNQrNtT/tLV1wUrSNbhtArNOVdkPJDGtFuRx35Muz
+ OoYeVIpwIXc6uVTS5uNg88zL70+ulUzFTKjvoG118XKUHMag
 X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 X-Endpoint-Received: by B4 Relay for
@@ -93,11 +93,11 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103167-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-103165-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -112,109 +112,90 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	HAS_REPLYTO(0.00)[manivannan.sadhasivam@oss.qualcomm.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:replyto,oss.qualcomm.com:mid]
-X-Rspamd-Queue-Id: DDA203FC440
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:replyto,oss.qualcomm.com:mid,qualcomm.com:email]
+X-Rspamd-Queue-Id: A5D773FC46E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-Currently, the PCI endpoint drivers like NVMe checks whether the device
-context will be retained or not during system suspend, with the help of
-pm_suspend_via_firmware() API.
+The PCIe spec v7.0, sec 5.5.3.3.1, states that for exiting L1.2 due to an
+endpoint asserting CLKREQ# signal, the refclk must be turned on no earlier
+than TL10_REFCLK_ON, and within the latency advertised in the LTR message.
+This same behavior applies to L1.1 as well.
 
-But it is possible that the device context might be lost due to some
-platform limitation as well. Having those checks in the endpoint drivers
-will not scale and will cause a lot of code duplication.
+On some platforms like Qcom, these requirements are satisfied during OS
+runtime, but not while resuming from the system suspend. This happens
+because the PCIe RC driver may remove all resource votes and turns off the
+PHY during suspend to maximize power savings while keeping the link in
+L1ss.
 
-So introduce an API that acts as a sole point of truth that the endpoint
-drivers can rely on to check whether they can expect the device context
-to be retained or not.
+Consequently, when the endpoint asserts CLKREQ# to wake up, the OS must
+first resume and the RC driver must restore the PHY and enable the refclk.
+This recovery process exceeds the L1ss exit latency time. And this latency
+violation results in an L1ss exit timeout, followed by Link Down (LDn). If
+the endpoint device is used to host the RootFS, it will result in an OS
+crash. For other endpoints, it may result in a complete device
+reset/recovery.
 
-If the API returns 'false', then the client drivers need to prepare for
-context loss by performing actions such as resetting the device, saving
-the context, shutting it down etc... If it returns 'true', then the drivers
-do not need to perform any special action and can leave the device in
-active state.
-
-Right now, this API only incorporates the pm_suspend_via_firmware() check.
-But will be extended in the future commits.
+So to indicate this platform limitation to the client drivers, introduce a
+new flag 'pci_host_bridge::broken_l1ss_resume' and check it in the
+pci_dev_suspend_retention_supported() API. If the flag is set by the RC
+driver, the API will return 'false' indicating the client drivers that the
+device context may not be retained and the drivers must be prepared for
+context loss.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 ---
- drivers/pci/pci.c   | 23 +++++++++++++++++++++++
- include/linux/pci.h |  7 +++++++
- 2 files changed, 30 insertions(+)
+ drivers/pci/pci.c   | 11 +++++++++++
+ include/linux/pci.h |  2 ++
+ 2 files changed, 13 insertions(+)
 
 diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 8479c2e1f74f..211616467a77 100644
+index 211616467a77..e871cccf24ae 100644
 --- a/drivers/pci/pci.c
 +++ b/drivers/pci/pci.c
-@@ -33,6 +33,7 @@
- #include <asm/dma.h>
- #include <linux/aer.h>
- #include <linux/bitfield.h>
-+#include <linux/suspend.h>
- #include "pci.h"
+@@ -2911,6 +2911,8 @@ void pci_config_pm_runtime_put(struct pci_dev *pdev)
+  */
+ bool pci_dev_suspend_retention_supported(struct pci_dev *pdev)
+ {
++	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
++
+ 	/*
+ 	 * If the platform firmware (like ACPI) is involved at the end of system
+ 	 * suspend, device context may not be retained.
+@@ -2918,6 +2920,15 @@ bool pci_dev_suspend_retention_supported(struct pci_dev *pdev)
+ 	if (pm_suspend_via_firmware())
+ 		return false;
  
- DEFINE_MUTEX(pci_slot_mutex);
-@@ -2900,6 +2901,28 @@ void pci_config_pm_runtime_put(struct pci_dev *pdev)
- 		pm_runtime_put_sync(parent);
- }
- 
-+/**
-+ * pci_dev_suspend_retention_supported - Check if the platform can retain the device
-+ *					 context during system suspend
-+ * @pdev: PCI device to check
-+ *
-+ * Returns true if the platform can guarantee to retain the device context,
-+ * false otherwise.
-+ */
-+bool pci_dev_suspend_retention_supported(struct pci_dev *pdev)
-+{
 +	/*
-+	 * If the platform firmware (like ACPI) is involved at the end of system
-+	 * suspend, device context may not be retained.
++	 * Some host bridges power off the PHY to enter deep low-power modes
++	 * during system suspend. Exiting L1 PM Substates from this condition
++	 * violates strict timing requirements and results in Link Down (LDn).
++	 * On such platforms, the endpoint must be prepared for context loss.
 +	 */
-+	if (pm_suspend_via_firmware())
++	if (bridge && bridge->broken_l1ss_resume)
 +		return false;
 +
-+	/* Assume that the context is retained by default */
-+	return true;
-+}
-+EXPORT_SYMBOL_GPL(pci_dev_suspend_retention_supported);
-+
- static const struct dmi_system_id bridge_d3_blacklist[] = {
- #ifdef CONFIG_X86
- 	{
+ 	/* Assume that the context is retained by default */
+ 	return true;
+ }
 diff --git a/include/linux/pci.h b/include/linux/pci.h
-index 1c270f1d5123..d9bc7ad4eaa4 100644
+index d9bc7ad4eaa4..860d8a774b51 100644
 --- a/include/linux/pci.h
 +++ b/include/linux/pci.h
-@@ -2080,6 +2080,8 @@ pci_release_mem_regions(struct pci_dev *pdev)
- 			    pci_select_bars(pdev, IORESOURCE_MEM));
- }
+@@ -658,6 +658,8 @@ struct pci_host_bridge {
+ 	unsigned int	preserve_config:1;	/* Preserve FW resource setup */
+ 	unsigned int	size_windows:1;		/* Enable root bus sizing */
+ 	unsigned int	msi_domain:1;		/* Bridge wants MSI domain */
++	unsigned int	broken_l1ss_resume:1;	/* Resuming from L1ss during
++						   system suspend is broken */
  
-+bool pci_dev_suspend_retention_supported(struct pci_dev *pdev);
-+
- #else /* CONFIG_PCI is not enabled */
- 
- static inline void pci_set_flags(int flags) { }
-@@ -2239,6 +2241,11 @@ pci_alloc_irq_vectors(struct pci_dev *dev, unsigned int min_vecs,
- static inline void pci_free_irq_vectors(struct pci_dev *dev)
- {
- }
-+
-+static inline bool pci_dev_suspend_retention_supported(struct pci_dev *pdev)
-+{
-+	return true;
-+}
- #endif /* CONFIG_PCI */
- 
- /* Include architecture-dependent settings and functions */
+ 	/* Resource alignment requirements */
+ 	resource_size_t (*align_resource)(struct pci_dev *dev,
 
 -- 
 2.51.0
