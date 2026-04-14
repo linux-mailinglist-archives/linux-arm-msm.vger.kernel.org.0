@@ -1,291 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-103213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ICUlNkKL3mnZFgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 20:45:22 +0200
+	id OOlXNoGN3mkIFwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 20:54:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id C522B3FDC47
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 20:45:21 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id EDF003FDDAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 20:54:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 121883020D36
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 18:45:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6B1ED306BC4C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 18:52:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 563943242A4;
-	Tue, 14 Apr 2026 18:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 488CD231C91;
+	Tue, 14 Apr 2026 18:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="iukSMsVU"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Vy5Gf44b";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ahP7AY+K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-10699.protonmail.ch (mail-10699.protonmail.ch [79.135.106.99])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02BD31F992
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 18:44:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.99
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C351E5018
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 18:52:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776192304; cv=none; b=o5YYsCjyzgjlxAAJvSNa7WVBPJgNbWSA0uKE54fvACYb/jsORU9IJJyqdiCzV0TrMyltHwJGiEzejYmVf53nqqwEdQfFDFzSTrMRDXvKwh5d16qIruuUDEqj5KFwplNdw9LjKFKXdrGJABoFRRHxTV8XhSOGyjV/HhAcCR3b5p8=
+	t=1776192731; cv=none; b=gEa/yN8mGuH9/AXybJObo2Lf6Yy+gMEq1GXHJrmS4lMu72ZUKAeLyg+o6JxkWUNxSsD+6vYDBJatvrL9KasnuNfHIsprxEa7ezu742Eof92/77/yWqu5GNgbAGRbGynySE1WCXt/zaZhsV3YI04pG8dbwMZsa+2cOWv1IW0MPpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776192304; c=relaxed/simple;
-	bh=0CF4/Bk0Wq2cuRuYQJOqFwMzntOOt7x4YDP7XlM1I9k=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qQ95sqX/xS64yh2p7csPYi7nMkgTgOrve92BmsxTIeh4S+P37UsDoJrc4GIqrSYJnIBNH5scFifLUEvnGT4LMBNil86EM1XW+9rNT5G+wdOOzG+7iekk5ziVKLb9HaycQvqVwRV5zmRgppFuMj+JvdcjW3vmJ/BEdWI0z7hEe54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=iukSMsVU; arc=none smtp.client-ip=79.135.106.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1776192297; x=1776451497;
-	bh=wF7XGc8CIQcRmH2ZlRKGhnkkkCJEh4IZ11LTi6Y90gQ=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=iukSMsVU7cAAVfZSIAaRZ2y6CMjBJrTWR8y2hF49xTYgpql1pyQj/ZBGVQGRkUXEP
-	 EAiAsEWYucs2XT+SUJhlWvRczbsWhzbjF1TQgev7KGn0io69jZdrMRCtRNBfdXXR53
-	 +cLW2F1+lzJakIknPW+y1Ugsz77BTe81VprWRO8w6aLhGtFTVTl8sdevGY9esPWSKK
-	 DTUzlZhMDJLhy6YSz7FW1glEs4Y0v/SscWCGbmPrF/QBM8rdXaHmOBOVJRPbv3688+
-	 ZKX1WGIkWm/sXEpmd9rK0Dk1yuQJHZM7dwFIQY0HIvIcs7rVHvc0sA6V4L5H5Ol3YM
-	 /XJLw5Zec9BCw==
-Date: Tue, 14 Apr 2026 18:44:55 +0000
-To: linux-kernel@vger.kernel.org
-From: "Lin, Meng-Bo" <linmengbo06890@proton.me>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, "Lin, Meng-Bo" <linmengbo06890@proton.me>
-Subject: [PATCH 2/2] arm64: dts: qcom: msm8916-panasonic-eluga-u2: add initial device tree
-Message-ID: <20260414184429.168612-3-linmengbo06890@proton.me>
-In-Reply-To: <20260414184429.168612-1-linmengbo06890@proton.me>
-References: <20260414184429.168612-1-linmengbo06890@proton.me>
-Feedback-ID: 112742687:user:proton
-X-Pm-Message-ID: 7f4e5896de6de4358243d6ac5b38867072e8c426
+	s=arc-20240116; t=1776192731; c=relaxed/simple;
+	bh=S6xohSLoXJccfCQEg2QqComjMAl3QPjojUIlGkD3nS8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=b3D399dOjKB8wdDGdb3wMfmR9xC4Erz8Ubf/EbRFXWF9mMYU1uq68KZqxUmfF9WkzcN8jOK18fry+QJoiFPc1PHlw9ujUxPKKlLCSf63avrFWGb/djS1OSXk3RuCojSpRaPGi9CSOjiIHKaWIZ9d+9m05N+95eHbjfKvxg2C9gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Vy5Gf44b; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ahP7AY+K; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63EH1Znr031125
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 18:52:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=YwElSoQ/iEAb1412AmMdQklGVnJZFWpO9xU
+	/T5F6EOg=; b=Vy5Gf44bZz7u5LdX4KhMGO+CEG0gUojSHHV/l4bPqKlKXKXprFQ
+	fvjofuGPjQ/Ft9Nm3MZeDV3jZfGoHNIuV4nAfLsXJppVydWR4RxhfUI2kKHnWhli
+	vw0qm+PVVKY+WVNHQ9QeKlvjK+5UQgaCnxxVsc9tEo73GR4t+EysGD5IlUcvEUzn
+	cuYzoXUSCJv/AhICm4WguquN1E+7hPyP6uZIKmlpm1Y6IVGp6QGCCxe5EGFiobmm
+	3mNUBLKClOZ3cOE9qK1s1L+M55TgsGYQFioBdWn6xY8JXi+6oLGxfPkQAUWzY558
+	mBmmA5gjx5VOL0OCT0wRaNVB0MKMbuhD01A==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dhkgmhw9a-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 18:52:08 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-50da529ff48so142827611cf.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 11:52:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1776192728; x=1776797528; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YwElSoQ/iEAb1412AmMdQklGVnJZFWpO9xU/T5F6EOg=;
+        b=ahP7AY+KBY9DQQz4FR7cbk/HYMjhxG6PQJXnLUOOaSRC6JiOcxaRZYy5EZFIdfojCx
+         PeM1U5YQbkecl6QJ0Btz99noLiuzmFK8HPBUt3os8IGV8i6gT7fnpPEYKcbDX9VSbHHC
+         qv9DNz6XoCSW13PeWQxr048VtRNsUeVAJQ1D33J2x9EaY4vexSWVf3K+4vfNLIOQ6dTn
+         x9E+c2q5vHVPG3VpJz63m7wa2zIB2tTWeO6ztHUWKpcNzN20VjaEFSZzSbdeZwhYeHyV
+         baxBOxP04yX5Hwv7Ga5hL1O94vcYumScEjWuZ5tJk7jo+yjy80B6Se3ujQYQgsv95/IB
+         sdHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776192728; x=1776797528;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YwElSoQ/iEAb1412AmMdQklGVnJZFWpO9xU/T5F6EOg=;
+        b=eoa23iTjnnv3zsJKkv5ZwwKyTGOsRXnyiJK6dRWHYRjcnknttz9uxLWtTIlgc8cpKa
+         eSBodHCq1PpgbsNXHZlhES01Qqmb3pKOguqCmQccvBfFVSsq1k2XJIVghUXEVKqw1YOh
+         Ti/vxWxK0wS6IlVMwUYWq5Y3FXFe78Q0J5DkI8NJPAD26BJQVqERzmBIK02yn6zcUNZC
+         y/L6jqdy3nF5XTC/aH0JjPan3l+Zg5tF2cQPMU1qhp4ArrvenUmRBIFsbWQ4reia6qS8
+         iENIA5Hb6+fwb9Tn78W7HJwlhIrNs7Idv6P8XvTSsXBzgaJQjHTunShbZIpxX+rNC2Fo
+         VRlg==
+X-Forwarded-Encrypted: i=1; AFNElJ/QRaVD3XFIZCDtokURJJVvHLeLgR0LIBg3fO03LMMxlLA23+ppR5A41UFg2411028liBq1TPKLhSA6C2+8@vger.kernel.org
+X-Gm-Message-State: AOJu0YycUHQe4ohp+9smjOJlXZBfC+e2SLU0yY4y3L8vWEOLv6nnRV+C
+	4ByGp7R8HRx5t2pHDX0JLRFWhi3jj0QzBrjtntlMewpUsidrF2DVQSL0hfjyfS7LeGrGkKPtkEN
+	kDdCuUG9EJVDqD1ip3ss2CFY0VtDHkhufIPOv4gdVqoecyKUAPtnXG48PNoWXyVpK4ZTU
+X-Gm-Gg: AeBDiesq5yd4lBWrld7fKCBJGw6S9o/Mws6l88HXRl/KaAnSeDcNgmrVOPbs5QgVAco
+	Ybkz4SnGXiiSyI0bppmqF7rKXKQqqUKsyZuEOAnz9KaODT1gE5rmuEOzR9MzWXL0mEVsMlxldgk
+	ICcNxjQm38pI2qg/H8JnwnIFlzpt+hZMrzSMwU/ZJ+tMW5BjoNU8Jaq67no70x6hFBNxPoyHgwb
+	Wpuz2vWQhSk6f8BVpt8YCmMB11IJ4tz89azHs0Esn3Irp19TcD7cWpE2xn16PIJvzsM8r2k9tba
+	UXx9qADX+NlFOEHSoRRwgGzk77tHkRD9EsCStZmkjSGxgA48xYZONvNg2AUZsnaVfXbFdlusqj0
+	rHhVrFmtwk3yN9AlWaXYcO0CHL7HVQY4eUfMcfSf/PJNM5+fzfilmB77GHgDiGNDD8cdYxlUXkl
+	5cDuAYIXewmSQ=
+X-Received: by 2002:a05:622a:65cb:b0:50d:7f60:6210 with SMTP id d75a77b69052e-50dd5bf5333mr198346431cf.59.1776192727965;
+        Tue, 14 Apr 2026 11:52:07 -0700 (PDT)
+X-Received: by 2002:a05:622a:65cb:b0:50d:7f60:6210 with SMTP id d75a77b69052e-50dd5bf5333mr198345991cf.59.1776192727270;
+        Tue, 14 Apr 2026 11:52:07 -0700 (PDT)
+Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:830:450:f062:40f:6621:e20e])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9d6de97e9esm427647366b.11.2026.04.14.11.52.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Apr 2026 11:52:06 -0700 (PDT)
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+To: bryan.odonoghue@linaro.org, vladimir.zapolskiy@linaro.org
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        mchehab@kernel.org, konrad.dybcio@oss.qualcomm.com,
+        dmitry.baryshkov@oss.qualcomm.com,
+        Loic Poulain <loic.poulain@oss.qualcomm.com>
+Subject: [PATCH v5 0/5] media: qcom: camss: Add PIX support for CSID/VFE-340
+Date: Tue, 14 Apr 2026 20:51:57 +0200
+Message-Id: <20260414185202.2714019-1-loic.poulain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [0.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE0MDE3NCBTYWx0ZWRfX15MRUQrpvjSd
+ MpdqY5PccUh4OV8HrkBRKFIFLUq5BBO1STbgQ15vE8+oRKagpT/k5IcxuEUKHhqX/GeTjg+D9Yv
+ 9liZNJIt+kv662RdCCR78w+cO3fh46YOvY1es6+SmexBnBP56zZ+VBVvnrBf9XKCRb2+6v8bez2
+ rZNbqrYdT3JrmjyXhsi3hZInFe6lgawPFwox8cUbVW+FOWLJXAFb8dIeMO3xSk2PWXltU5E8ofy
+ zVxDWbgE351dLdzPsm1KIVvTAnSGdZ+L7lG5BZHF/7RwMp70SS3S5DF1gQYYJ71vpuUCczWNfoh
+ hDQ+n6H8XWsc2ophVzX6HFu7PBjO+nmP/+Ze/eRzdY8beUxuwzgvkuA0Zl49Q93SPw3pbn6ZBiy
+ b5DGheOAO+dZR8b3ZWVEw4Oy1t7Utayf6kXrzFDhgkLm3YyqWKjMipH6im8rrHwKu7ec2+VnE5A
+ bb5DisN+uzCXVivMYqA==
+X-Proofpoint-ORIG-GUID: 1n7Yxedbf8dvVC-BIdv_dTRCi_WHcBwX
+X-Proofpoint-GUID: 1n7Yxedbf8dvVC-BIdv_dTRCi_WHcBwX
+X-Authority-Analysis: v=2.4 cv=HJLz0Itv c=1 sm=1 tr=0 ts=69de8cd8 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=A5OVakUREuEA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=rJkE3RaqiGZ5pbrm-msn:22 a=QLs-j7ecQSDb903mvAwA:9 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-14_03,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604140174
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[proton.me,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[proton.me:s=protonmail];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-103213-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103214-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linmengbo06890@proton.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[proton.me:+];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,proton.me:email,proton.me:dkim,proton.me:mid]
-X-Rspamd-Queue-Id: C522B3FDC47
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: EDF003FDDAB
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Panasonic ELUGA U2 is a phone using the MSM8916 SoC released in 2015.
+Add PIX-path support to the CAMSS pipeline on CSID-340 and VFE-340,
+allowing frames to be routed to the VFE PIX interface and exposed
+through PIX output devices such as msm_vfe0_pix.
 
-Add a device tree for with initial support for:
+On CM2290/TFE, the PIX interface includes a minimal inline processing
+engine, which we will be able to leverage later to export statistics
+needed for proper 3A frame processing. This also fixes the PIX path
+not being usable on this platform, as PIX routing was previously
+unsupported, causing frame capture hangs.
 
-- GPIO keys
-- GPIO LEDs
-- pm8916-vibrator
-- SDHCI (internal and external storage)
-- USB Device Mode
-- UART
-- Regulators
+Changes in V5:
+- Rebase/Move from en_vc to en_port
+- Use common __csid_configure_stream for RDI and PIX
+- Use bitwise | for packing vfe width and height config
+- Simplify vfe_packer_format, no error expected
 
-Signed-off-by: "Lin, Meng-Bo" <linmengbo06890@proton.me>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../dts/qcom/msm8916-panasonic-eluga-u2.dts   | 149 ++++++++++++++++++
- 2 files changed, 150 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8916-panasonic-eluga-u2.dts
+Changes in V4:
+- Remove unnecessary boundary check for wm-to-client
+- Remove stray \n and fix commit subject for 2/5
+- Add proper define for PIX pad index in csid-340
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/M=
-akefile
-index 4ba8e7306419..4cbb4a079420 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -81,6 +81,7 @@ dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-motorola-harpia.dt=
-b
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-motorola-osprey.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-motorola-surnia.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-mtp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-panasonic-eluga-u2.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-a3u-eur.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-a5u-eur.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-samsung-coreprimeltevzw.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-panasonic-eluga-u2.dts b/arch=
-/arm64/boot/dts/qcom/msm8916-panasonic-eluga-u2.dts
-new file mode 100644
-index 000000000000..8eff59119760
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-panasonic-eluga-u2.dts
-@@ -0,0 +1,149 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "msm8916-pm8916.dtsi"
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/leds/common.h>
-+
-+/ {
-+=09model =3D "Panasonic ELUGA U2";
-+=09compatible =3D "panasonic,eluga-u2", "qcom,msm8916";
-+=09chassis-type =3D "handset";
-+
-+=09aliases {
-+=09=09mmc0 =3D &sdhc_1; /* eMMC */
-+=09=09mmc1 =3D &sdhc_2; /* SD card */
-+=09=09serial0 =3D &blsp_uart2;
-+=09};
-+
-+=09chosen {
-+=09=09stdout-path =3D "serial0";
-+=09};
-+
-+=09gpio-keys {
-+=09=09compatible =3D "gpio-keys";
-+
-+=09=09pinctrl-0 =3D <&gpio_keys_default>;
-+=09=09pinctrl-names =3D "default";
-+
-+=09=09label =3D "GPIO Buttons";
-+
-+=09=09button-volume-up {
-+=09=09=09label =3D "Volume Up";
-+=09=09=09gpios =3D <&tlmm 107 GPIO_ACTIVE_LOW>;
-+=09=09=09linux,code =3D <KEY_VOLUMEUP>;
-+=09=09};
-+=09};
-+
-+=09gpio-leds {
-+=09=09compatible =3D "gpio-leds";
-+=09=09pinctrl-0 =3D <&pm8916_mpps_leds_default>;
-+=09=09pinctrl-names =3D "default";
-+
-+=09=09led-green {
-+=09=09=09function =3D LED_FUNCTION_STATUS;
-+=09=09=09color =3D <LED_COLOR_ID_GREEN>;
-+=09=09=09gpios =3D <&pm8916_mpps 2 GPIO_ACTIVE_LOW>;
-+=09=09=09default-state =3D "off";
-+=09=09};
-+
-+=09=09led-blue {
-+=09=09=09function =3D LED_FUNCTION_STATUS;
-+=09=09=09color =3D <LED_COLOR_ID_BLUE>;
-+=09=09=09gpios =3D <&pm8916_mpps 4 GPIO_ACTIVE_LOW>;
-+=09=09=09default-state =3D "off";
-+=09=09};
-+=09};
-+
-+=09usb_id: usb-id {
-+=09=09compatible =3D "linux,extcon-usb-gpio";
-+=09=09id-gpios =3D <&tlmm 110 GPIO_ACTIVE_HIGH>;
-+=09=09pinctrl-0 =3D <&usb_id_default>;
-+=09=09pinctrl-names =3D "default";
-+=09};
-+};
-+
-+&blsp_uart2 {
-+=09status =3D "okay";
-+};
-+
-+&pm8916_mpps {
-+=09pm8916_mpps_leds_default: pm8916-mpps-state {
-+=09=09pins =3D "mpp2", "mpp4";
-+=09=09function =3D "digital";
-+=09=09output-low;
-+=09};
-+};
-+
-+&pm8916_resin {
-+=09linux,code =3D <KEY_VOLUMEDOWN>;
-+=09status =3D "okay";
-+};
-+
-+&pm8916_rpm_regulators {
-+=09pm8916_l17: l17 {
-+=09=09regulator-min-microvolt =3D <2850000>;
-+=09=09regulator-max-microvolt =3D <2850000>;
-+=09};
-+};
-+
-+&pm8916_vib {
-+=09status =3D "okay";
-+};
-+
-+&sdhc_1 {
-+=09status =3D "okay";
-+};
-+
-+&sdhc_2 {
-+=09pinctrl-0 =3D <&sdc2_default &sdc2_cd_default>;
-+=09pinctrl-1 =3D <&sdc2_sleep &sdc2_cd_default>;
-+=09pinctrl-names =3D "default", "sleep";
-+
-+=09cd-gpios =3D <&tlmm 38 GPIO_ACTIVE_LOW>;
-+
-+=09status =3D "okay";
-+};
-+
-+&usb {
-+=09extcon =3D <&usb_id>, <&usb_id>;
-+=09status =3D "okay";
-+};
-+
-+&usb_hs_phy {
-+=09extcon =3D <&usb_id>;
-+};
-+
-+&tlmm {
-+=09gpio_keys_default: gpio-keys-default-state {
-+=09=09pins =3D "gpio107";
-+=09=09function =3D "gpio";
-+=09=09drive-strength =3D <2>;
-+=09=09bias-pull-up;
-+=09};
-+
-+=09sdc2_cd_default: sdc2-cd-default-state {
-+=09=09pins =3D "gpio38";
-+=09=09function =3D "gpio";
-+=09=09drive-strength =3D <2>;
-+=09=09bias-disable;
-+=09};
-+
-+=09usb_id_default: usb-id-default-state {
-+=09=09pins =3D "gpio110";
-+=09=09function =3D "gpio";
-+=09=09drive-strength =3D <8>;
-+=09=09bias-pull-up;
-+=09};
-+};
-+
-+&venus {
-+=09status =3D "okay";
-+};
-+
-+&venus_mem {
-+=09status =3D "okay";
-+};
---=20
-2.47.3
+Changes in V3:
+- Introduce what PIX is/means in 2/5 as discussed with Dmitry.
+- Fix patches format/encoding (proper ASCII)
 
+Changes in V2:
+- Fix various typos, extra spaces, and reword commit messages.
+- Split the CSID-340 patch into three independent changes.
+- Make VC/DT-ID configuration explicit in the CSID/PIX setup.
+- Add the csid_vc_iface_map helper to retrieve the interface offset
+  from a Virtual Channel (VC).
+- Add cropping configuration in the VFE/PIX path so that it
+  respects the crop parameters defined in camss-vfe.
+
+Loic Poulain (5):
+  media: qcom: camss: csid-340: Switch to generic CSID_CFG/CTRL
+    registers
+  media: qcom: camss: csid-340: Add port-to-interface mapping
+  media: qcom: camss: csid-340: Enable PIX interface routing
+  media: qcom: camss: vfe-340: Proper client handling
+  media: qcom: camss: vfe-340: Support for PIX client
+
+ .../platform/qcom/camss/camss-csid-340.c      |  83 ++++++----
+ .../media/platform/qcom/camss/camss-vfe-340.c | 152 +++++++++++++-----
+ 2 files changed, 156 insertions(+), 79 deletions(-)
+
+-- 
+2.34.1
 
 
