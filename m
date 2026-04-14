@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-103117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4I9WKrYd3mk1ngkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 12:57:58 +0200
+	id mBnAFekd3mk1ngkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 12:58:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 057C33F905B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 12:57:57 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A53B83F9079
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 12:58:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1EC9A301D6B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:54:53 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 039D1305D5DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:56:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68954399351;
-	Tue, 14 Apr 2026 10:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68DB83876A4;
+	Tue, 14 Apr 2026 10:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="einlZ3Pf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CkhRuOkv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418A93290A1;
-	Tue, 14 Apr 2026 10:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4330D33F8AD;
+	Tue, 14 Apr 2026 10:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776164092; cv=none; b=XvCGHttKyABwOezEDcHm7HgQTK7snCf0t5Hre70rQf2roQeK0SEWdzPAE/+pBHQAoYw2melKqozfPXEZLSPnY2oheM8YMrScTMRMctFgylF3W23pn4zTBdX0MFx/BymqEpvN0uvd7S/wABu3iMiwsLBlYC3JIc3LjD1oUCiqUxU=
+	t=1776164163; cv=none; b=Od46PoicifCPmg08v4e56imU7Eirixpc3inM5WfH7wKkC0vdPeCy3p4OU3brwJ2ZMMxfYwLuWHvIiTF8msctLJi9i+fG6E2KIyz90J9YPK9FbHm4e1MQFE9HZg6Kj6L+eXW1oeEDr6uMJAHNkPoeH0t6cUFXKqLdEgIJ06jyAY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776164092; c=relaxed/simple;
-	bh=BqzXLkSQZH4qFfBfeVPyxjk+lpBCugc05wUzpgE5byk=;
+	s=arc-20240116; t=1776164163; c=relaxed/simple;
+	bh=lsaF8QghHwx5Uam5bvw87Qh17eT7cC6U6SMftAE4mI0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZgelKj5d3d2jvPb8SD/Kfe5DqBnp2UO6NHpfmkIrylz9VBJRqWJWX2npROYIjW4EUzbos2WYjYkdcuThzvDPWhPvowx1KwrZ+d4VZRrRWVd1kkwjRmOhG/qhp51vBEhTzpvj1N+NLeHG70bRxaeaJxoloSu38faKtJdAViGLQdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=einlZ3Pf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5D0C19425;
-	Tue, 14 Apr 2026 10:54:49 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=tNwwJ2J8PpSsnXGZgJn9KMYrIfG4n0w31ToqR9iZ4T6ulAokb5OkEVVALFx8Jgp+/NazuJtqS0bUdOHAX9l7b61msrRS1JrJGuJ8xaS40rZpAWo5VpVh2Wo/C4p4o9i0KJekpEz9re18F9p7S2uQHPoqRIxb8OocQOHH0B6JOjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CkhRuOkv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8D9C19425;
+	Tue, 14 Apr 2026 10:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776164091;
-	bh=BqzXLkSQZH4qFfBfeVPyxjk+lpBCugc05wUzpgE5byk=;
+	s=k20201202; t=1776164163;
+	bh=lsaF8QghHwx5Uam5bvw87Qh17eT7cC6U6SMftAE4mI0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=einlZ3PfKK6Zc4HKzwnpUrjrY/ahDpzJ2ghkalBsM4Zx7FD+eDsSSlbZQxTSIH8VN
-	 r9ocaNHNnCt0tQq0pNPyOIjci50auIJaw5o8QrbFjh/hMbAc9sIvAXjOZPa1XdwCxO
-	 l0FQNx16QPaGxsnMrCvOIoYUdaJL8gYHH9eCycCdXETbjtj55+s1yoU/qzHDg2noXa
-	 kN/WVqh/0PzBOo1gQoH71OSARMY9vfM2fpj/KQpDtvxvIjI2rJRQKY0tjqhQI5ONFU
-	 YfvoFzrjZUzBpqG47/ki50fIzP5n12tXp7RvSxAZc74+9EzMmWT2l8nU8bYSjRhZaw
-	 SrpxiWreMHH8A==
-Message-ID: <8bbedd63-d6bc-4dfa-a81d-353e68e6c6f9@kernel.org>
-Date: Tue, 14 Apr 2026 12:54:47 +0200
+	b=CkhRuOkvV51e1aIrDb3BZK+N+SyZ5ViXse+4J9JMIAcp11VU0Y8oE4C2QssWYLrz0
+	 6s1WIXhv3UNqt0RM4zJYnhK94AjeQim6aGgbEjH0bOyI5LWCImcvTGB9oe46z+l61b
+	 6vD7GbfC+r37rJ0J9b2jo4Gj7KBCWjMBK1chep9heFtzIRpDH3b7wCupgrJ5UwcqpA
+	 O0sp6cJznSerLhI8Ms8IUWUizgYfKe06AxarqUkPAOoO0gSMqJJxZbmNkEVu+I/rRS
+	 32xoz9oFR4rlV44BXVk0Kofada/FGMMicz7Sd4uYFStopHLrtGT8Kv6dxCvZMBAghc
+	 yhmtSns+S2JEw==
+Message-ID: <b3401b41-257e-42d8-9e28-f52ecacb52e2@kernel.org>
+Date: Tue, 14 Apr 2026 12:55:58 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,8 +53,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 32/35] arm64: dts: qcom: monaco: Drop unused second PDC
- reg entry
+Subject: Re: [PATCH 35/35] arm64: dts: qcom: talos: Drop unused second PDC reg
+ entry
 To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
  Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -63,7 +63,7 @@ To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 References: <20260410184124.1068210-1-mukesh.ojha@oss.qualcomm.com>
- <20260410184124.1068210-33-mukesh.ojha@oss.qualcomm.com>
+ <20260410184124.1068210-36-mukesh.ojha@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,21 +109,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260410184124.1068210-33-mukesh.ojha@oss.qualcomm.com>
+In-Reply-To: <20260410184124.1068210-36-mukesh.ojha@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103117-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103118-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -133,13 +133,13 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 057C33F905B
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: A53B83F9079
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
@@ -147,9 +147,13 @@ On 10/04/2026 20:41, Mukesh Ojha wrote:
 > The PDC driver only maps the first register region (APSS DRV) via
 > of_address_to_resource(node, 0, ...). The second reg entry was never
 > accessed by the driver and can be removed.
+> 
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> ---
 
-This is not a correct reason, see writing bindings.
-
+Same comment as for other patches like that. This is not a valid reason
+or at least not sufficiently explained. Either hardware has it or has
+not. Why is driver relevant here? That must be explained in commit msg.
 
 Best regards,
 Krzysztof
