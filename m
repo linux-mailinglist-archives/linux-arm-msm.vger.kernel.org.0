@@ -1,612 +1,285 @@
-Return-Path: <linux-arm-msm+bounces-103051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IHLDHYfi3WnrkgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 08:45:27 +0200
+	id SDgENZ/j3WnDkwkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 08:50:07 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2CA53F630B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 08:45:26 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D9883F6411
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 08:50:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9058C305856A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 06:39:01 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 44E6730784B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 06:45:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD13236EAB1;
-	Tue, 14 Apr 2026 06:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E389525DB1C;
+	Tue, 14 Apr 2026 06:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ASFrB9Zj";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="PZnbzTBb"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="f+/FdJ3g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F164036EA82
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 06:38:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D021F30E0FB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 06:45:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776148740; cv=none; b=ZFdHEBpFRYsd/4bTQ2omwO3HGc9vZLW0EHSmMXtL8qgwSKXIBwK9U5SqhCIZ90UCgQj4Z7/tTIA3g8nanBBxKaXjUACS4aJL/MaEjDY7wRWYBbzDagwN8okE56R2c+SW3G38Cepjg5Jevq7cphxL6JI8goS0Xua/CE8CyZyGyRM=
+	t=1776149109; cv=none; b=gLV24fhwu6wfa0y93aT9GUFxNN/G1/JNu3OZG3DaI8HE0qpRsB8seLZjl4TBCFQ96GEupIdOXxWMZU/KwL6p+OZutltlsjHj03NPz9k9h5MlhUfwMsrquCrG8WiodPsSLNA3AnV1xeKXI3klN/5IbN+hDzPmoB9IjyuegIUofnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776148740; c=relaxed/simple;
-	bh=DtbGk7k4Mht1v+X/oA64yyN7ZpSmiywmjOZx+/x00Zw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B1xWXZGU0a15TosgMAP31uCzjHVtwsN5i07cjNYV2Z9XQnc3Qwi0QnmkNTqdA8eJPgZpbx0VniPVqxCV3azQxG8C5DZCK/Rw8RO6wQeYzlC3vwwQokgjZMwSRoA/RO6OePDF/Pg4nuB3HfamENGogFk0JDg84RUIEYahdt01tP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ASFrB9Zj; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PZnbzTBb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63E6VYss395647
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 06:38:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=wA7ItPVNJyk9xUMa9WVh9ZNh
-	UhHR+dQxj0+bgCPDySs=; b=ASFrB9ZjHkwxa+VnkkIKUFiNr49M/8eozLaLXmyp
-	pVxN4DgCfylWqyuP8EARamVAgIAFc8MuVxokzcInuV+zECO68wi/o3nM8VJcmTbK
-	dc/pgqSl55utLJTg75BzUaU1+d5xHDwiIDF7PPyKlWEjsSdF14gSPPvpM457u5+i
-	7bZefu1o34+SKtxshAdpXCunFM77GYBP0EZc/mpNfcd4yB7jMkXsxDzxYGmteyfk
-	srb2M7iZ6kLBnYnDIOtOU6KUtrvcvgtFfuccR2DvtSH4PWDYPg//iAG5sz4CkBcC
-	2Spfceh22DQU+lfRDYFO5ToKs8fcm/nY9PgL6Z3kfhp/Dw==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dh870sda9-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 06:38:57 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c76ad3b732eso6357131a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Apr 2026 23:38:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776148737; x=1776753537; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wA7ItPVNJyk9xUMa9WVh9ZNhUhHR+dQxj0+bgCPDySs=;
-        b=PZnbzTBb49rpJIjQ3HD+m2NBXWvQ+He9buRz2cWBYCITEwAt+X0khQKIX2xWSeO5HB
-         rKWZ+1ul1WYrhs8lQDA81UcKqMPUxvSYwu76dvpQRLx2YcYEKFQGZYbj3kKfpwkSK8KJ
-         euVdCH4Pu0BT96jJtgNCBvPFBpb84amYilcMhXc0ksStp7YZutOipRYOc7IMVdEaubQV
-         p/bnuyeH5vrZMlrLqOlGziBg/KYqk0fP+yAI9wHHhOnwWnJtXk9pP6tg8Wf04wpBnLZ4
-         fgL3nKR9HoxxK/4LiGB3wD8AUOMoj9knoNgeBfhcf++7ihFQNNnLD4DD7Mve83vK58J0
-         7UEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776148737; x=1776753537;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wA7ItPVNJyk9xUMa9WVh9ZNhUhHR+dQxj0+bgCPDySs=;
-        b=g6zW6MuA0XiR3p4wjOEmnbAhxyRIWtp9Ao4ui/hnuhKyqcV7n4mh+xSqE2PLjURrWg
-         W3oH3VsoGetzUfMWAVq0vnc2D/0YRMV2YHSj3UWvVe5ClNuU6FfjSfVAENkVVX5No/LS
-         SxwWrM5DrzxnKpiuBYmLF/8uxB6hbgh04bCLAcwR9/czyPHO9mlqosP2Pk/F3XpTXQY5
-         +9rq1D2i91J6bvUgmN0iH/VH8qLahQhftoIHDQmiPRS0lz5cUIwjGbCljIniRAyIXV+t
-         ElWkj8F9j+dXURu8PhO/+pDSNP1IwlHSIkeQClf0n6+UDQYQs+xDnnk/hSkO87d9UlDY
-         mQ5A==
-X-Forwarded-Encrypted: i=1; AFNElJ9cgRjqIowB1jcykeT7Y+gQAqG2SH5lZ0+zcBizrIh+VqCeNwL/6PPKkka5haV/8CYwuNt7lNaaKOtdrNuW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzK0tbcPH8+2pULL3T5qWvOaxW5Xhjx+bisC4pMze5RpY6ysSAu
-	vVvv6T/jgYqtTjwGAwfiaSMJ1YepBqzaDB587j/j0oYcfMiRs33Ngt/QZOEROf9Xm/j/yYDa3fG
-	oIjwQXZc68Ooe3m21Ypow6sGFTBJ/gvrKvw2VCrDNFX2hAF7L5rnhSAOI1vqwHIfVBxOk
-X-Gm-Gg: AeBDieu4u5BjeG0D8O028fqWPR2PseXttqfWleyHYPhtqg0zaAdM8W7zgXKqADNLnrN
-	EnLymxixet1hOT6cli5hp4rTX7JJkVvCu+3FC7VTvxVbQxaxiPU/skOVTBUqJZbSowhFPkJCMlk
-	wm4Daeu6wdDgtdvcMIUi6HTzvc0ZJ37PWg3QWIUFAq0qL/LpFUIQJGWN9xaYMWw7aKGr7xPyzzx
-	JoSVtNyu83iByBz0O/trshewnvos2fODv1slAj4J/4oWpbVy5lMwOssKYOQs4f5EBiMqNYgcl1b
-	yPG0mMBiScfBfzWUv+kpNyRFAWESzc0/y75UE07/a9D3wGJkZtpWbzdb4MT03LG7Zl/zw8KyI6w
-	1U7eSe4078ezKG6REdyZeymt5MDOyZg5S9geWlhgiifNeb3QS
-X-Received: by 2002:a05:6a00:399c:b0:82d:2086:de2a with SMTP id d2e1a72fcca58-82f0c2a761emr17590630b3a.35.1776148736565;
-        Mon, 13 Apr 2026 23:38:56 -0700 (PDT)
-X-Received: by 2002:a05:6a00:399c:b0:82d:2086:de2a with SMTP id d2e1a72fcca58-82f0c2a761emr17590579b3a.35.1776148735877;
-        Mon, 13 Apr 2026 23:38:55 -0700 (PDT)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f0f8a7501sm13379162b3a.50.2026.04.13.23.38.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Apr 2026 23:38:55 -0700 (PDT)
-Date: Tue, 14 Apr 2026 12:08:46 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bod@kernel.org>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        Hans Verkuil <hverkuil@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, iommu@lists.linux.dev
-Subject: Re: [PATCH 07/11] media: iris: Rename clock and power domain macros
- to use vcodec prefix
-Message-ID: <20260414063846.fixumrttkfqwydch@hu-mojha-hyd.qualcomm.com>
-References: <20260414-glymur-v1-0-7d3d1cf57b16@oss.qualcomm.com>
- <20260414-glymur-v1-7-7d3d1cf57b16@oss.qualcomm.com>
+	s=arc-20240116; t=1776149109; c=relaxed/simple;
+	bh=6qInlkwnyS6fNhWVhfDVcEDSa2xpB71k7Qjspi3WNFQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
+	 References:In-Reply-To; b=RIwYAPpnes1u+mQM8jA4Aq0GW3v1MJDVCVgKqBohdT7mphnZVMUrKCvdCB5pfgRiLDhfVYwMzTx9Ttrk/VcnHLQCi0uqNMPUeBJDl+NsynNYGmDc/h1SlABZgacQzOFCW/p4QS7e0aJAUWYEj88Ob4rCw5IQnF+rrbl6jsmFmfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=f+/FdJ3g; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id C84901A329A;
+	Tue, 14 Apr 2026 06:45:02 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 898E15FFBB;
+	Tue, 14 Apr 2026 06:45:02 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 745AD10450B1D;
+	Tue, 14 Apr 2026 08:44:48 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1776149100; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=vj+EQ05FPKBTp1OV46fO5Oedc52PA+zs2hyhcrWvq4Y=;
+	b=f+/FdJ3gFgZicxmZg+3TKsSO2HjLdvbBRDofdKToAwxC33qBRQ8P/OdBuele8fRfK4UKQl
+	oPu7bXBT3oYRrsNRnKLHjc2lXCMhrD7vseb+uh3e3JcLdfl4qE2Xo/XaNcgiLOHQJ+7Fdl
+	PpSRU3G8FBDAsHB50K9vRe3YC0ujuVMYP+5Jb11M33LXw2l/RQBGw/4FFnsbXrbW0723RW
+	3+Xo5cxuTUThO8Lh9gqqILwQnGxkCHNX/rsWMcbo1SENnBzQon0lO11SMv0jGNUOuRF5gi
+	iZdcqnP0mxCLizVi57yo8M+WvjPhNrEofWGsMNJwur3uxKctJE62SaR9CHo8fQ==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260414-glymur-v1-7-7d3d1cf57b16@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: AngHEqFnE2kVeVhf0hxTNTKhcT1ZFpVO
-X-Proofpoint-GUID: AngHEqFnE2kVeVhf0hxTNTKhcT1ZFpVO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE0MDA2MCBTYWx0ZWRfX5osysrxpAoON
- iVzAE90LEUed7xWMwocWo9NkRQWXbFnBV2LknGBniHET2MeY0pVcnHV0C8tZzBrmsv9eq7RZi/G
- onrlZK2ud6dSx05TheAgFiwNrVNMLlIjy/YGPXFKURT91hkNy1N5AdOr4vPLg4EQD9YKN1OyP4O
- UaM2L3Ry/BuJxaMToDx5Bc8ROoomaJDtwvS70r3d/7FW9767Y9J14SRog9asgD9yDlzc0e7g8Tp
- PXcXByGqBTu6/hi9+DE4qFg/ReaKQx+LOEhHIu/y+cOZrFtYYnwHvhYlWw05CyRvbbhCilsTags
- HKResClnVb7xPARHxRFhPk/6CzZmKOLZ23v9WkeiUjhZSz6QgvYzzVDrwhpzsQqdZYBpa5OzRID
- /+CaVbSAefEwO6O33/MgaQCGyQ7uI7gwJmCrk2nzlqYM5enkewnneQHURrm64otSpXWkTOH04Il
- Io5AgMrLPp3Czkv9mLA==
-X-Authority-Analysis: v=2.4 cv=MK9QXsZl c=1 sm=1 tr=0 ts=69dde101 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=JHE2Tk9p9Fz13fLrjUoA:9 a=CjuIK1q_8ugA:10
- a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-14_01,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- clxscore=1015 suspectscore=0 spamscore=0 bulkscore=0 malwarescore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
- definitions=main-2604140060
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 14 Apr 2026 08:44:47 +0200
+Message-Id: <DHSOAYIAQWWN.2WEM50YWAZZSB@bootlin.com>
+Subject: Re: [PATCH 01/10] drm/bridge: add of_drm_get_bridge_by_endpoint()
+Cc: "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>, "Maxime Ripard"
+ <mripard@kernel.org>, "Thomas Zimmermann" <tzimmermann@suse.de>, "David
+ Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Rob Clark"
+ <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
+ "Abhinav Kumar" <abhinav.kumar@linux.dev>, "Jessica Zhang"
+ <jesszhan0024@gmail.com>, "Sean Paul" <sean@poorly.run>, "Marijn Suijten"
+ <marijn.suijten@somainline.org>, "Xinliang Liu" <xinliang.liu@linaro.org>,
+ "Tian Tao" <tiantao6@hisilicon.com>, "Xinwei Kong"
+ <kong.kongxinwei@hisilicon.com>, "Sumit Semwal" <sumit.semwal@linaro.org>,
+ "Yongqin Liu" <yongqin.liu@linaro.org>, "John Stultz" <jstultz@google.com>,
+ "Andrzej Hajda" <andrzej.hajda@intel.com>, "Neil Armstrong"
+ <neil.armstrong@linaro.org>, "Robert Foss" <rfoss@kernel.org>, "Laurent
+ Pinchart" <Laurent.pinchart@ideasonboard.com>, "Jonas Karlman"
+ <jonas@kwiboo.se>, "Jernej Skrabec" <jernej.skrabec@gmail.com>, "Tomi
+ Valkeinen" <tomi.valkeinen@ideasonboard.com>, "Michal Simek"
+ <michal.simek@amd.com>, "Hui Pu" <Hui.Pu@gehealthcare.com>, "Ian Ray"
+ <ian.ray@gehealthcare.com>, "Thomas Petazzoni"
+ <thomas.petazzoni@bootlin.com>, <dri-devel@lists.freedesktop.org>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <freedreno@lists.freedesktop.org>, <linux-arm-kernel@lists.infradead.org>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
+From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
+X-Mailer: aerc 0.20.1
+References: <20260413-drm-bridge-alloc-getput-panel_or_bridge-v1-0-acd01cd79a1f@bootlin.com> <20260413-drm-bridge-alloc-getput-panel_or_bridge-v1-1-acd01cd79a1f@bootlin.com> <u2awvqh2uoc2acuuvyavwwtuvtiaidhbkkj5a2d2wwph2s7j7g@b4j73kwzblgk> <DHS6WZRYGWZQ.1X6ABU4UWF730@bootlin.com> <omlnswxukeqgnatzdvooaashgkfcacjevkvbkm6xt33itgua2k@jcmzll2w6kdq>
+In-Reply-To: <omlnswxukeqgnatzdvooaashgkfcacjevkvbkm6xt33itgua2k@jcmzll2w6kdq>
+X-Last-TLS-Session-Version: TLSv1.3
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
+	MV_CASE(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103051-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,hu-mojha-hyd.qualcomm.com:mid,oss.qualcomm.com:dkim];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCPT_COUNT_TWELVE(0.00)[21];
+	TAGGED_FROM(0.00)[bounces-103052-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,linaro.org,hisilicon.com,google.com,intel.com,ideasonboard.com,kwiboo.se,amd.com,gehealthcare.com,bootlin.com,lists.freedesktop.org,vger.kernel.org,lists.infradead.org];
+	RCPT_COUNT_TWELVE(0.00)[34];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[luca.ceresoli@bootlin.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[bootlin.com:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-0.997];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: D2CA53F630B
+	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:dkim,bootlin.com:mid,bootlin.com:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 6D9883F6411
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, Apr 14, 2026 at 10:30:03AM +0530, Vishnu Reddy wrote:
-> The current clock and power domain enum names are too generic. Rename
-> them with a vcodec prefix to make the names more meaningful and to easily
-> accommodate vcodec1 enums for the secondary core in the following patches.
+Hi Dmitry,
 
-patches ?
+On Mon Apr 13, 2026 at 7:56 PM CEST, Dmitry Baryshkov wrote:
+> On Mon, Apr 13, 2026 at 07:07:14PM +0200, Luca Ceresoli wrote:
+>> Hi Dmitry, Maxime,
+>>
+>> thanks Dmitry for the quick feedback!
+>>
+>> On Mon Apr 13, 2026 at 4:58 PM CEST, Dmitry Baryshkov wrote:
+>>
+>> >> --- a/drivers/gpu/drm/drm_bridge.c
+>> >> +++ b/drivers/gpu/drm/drm_bridge.c
+>> >> @@ -1581,6 +1581,52 @@ struct drm_bridge *of_drm_find_bridge(struct d=
+evice_node *np)
+>> >>  	return bridge;
+>> >>  }
+>> >>  EXPORT_SYMBOL(of_drm_find_bridge);
+>> >> +
+>> >> +/**
+>> >> + * of_drm_get_bridge_by_endpoint - return DRM bridge connected to a =
+port/endpoint
+>> >> + * @np: device tree node containing output ports
+>> >> + * @port: port in the device tree node, or -1 for the first port fou=
+nd
+>> >> + * @endpoint: endpoint in the device tree node, or -1 for the first =
+endpoint found
+>> >> + * @bridge: pointer to hold returned drm_bridge, must not be NULL
+>> >> + *
+>> >> + * Given a DT node's port and endpoint number, find the connected no=
+de and
+>> >> + * return the associated drm_bridge device.
+>> >> + *
+>> >> + * The refcount of the returned bridge is incremented. Use drm_bridg=
+e_put()
+>> >> + * when done with it.
+>> >> + *
+>> >> + * Returns zero (and sets *bridge to a valid bridge pointer) if succ=
+essful,
+>> >> + * or one of the standard error codes (and the value in *bridge is
+>> >> + * unspecified) if it fails.
+>> >
+>> > Can we return drm_bridge or error cookie instead?
+>>
+>> (while replying I realized there is a design flaw in my implementation, =
+but
+>> see below)
+>>
+>> I initially thought I'd do it, but I don't like returning an error cooki=
+e
+>> for functions getting a bridge pointer. The main reason is that with bri=
+dge
+>> refcounting the __free() cleanup actions are handy in a lot of places, s=
+o we
+>> are introdugin a lot of code like:
+>>
+>>   struct drm_bridge *foo __free(drm_bridge_put) =3D some_func(...);
+>>
+>> Where some_func can be one of of_drm_find_bridge(),
+>> drm_bridge_get_next_bridge(), drm_bridge_chain_get_{first,last}_bridge()
+>> etc.
+>
+> This is fine even with the functions returning a cookie: the free
+> function can explicitly check and return early if IS_ERR() pointer is
+> passed to it.
+>
+>>
+>> Such code is very handy exactly because these functions return either a
+>> valid pointer or NULL, and thus the cleanup actions always does the righ=
+t
+>> thing. If an error cookie were returned, the caller would have to be ver=
+y
+>> careful in inhibiting the cleanup action by clearing the pointer before
+>> returning. This originate for example this discussion: [0]
+>>
+>> [0] https://lore.kernel.org/lkml/4cd29943-a8d0-4706-b0c5-01d6b33863e4@bo=
+otlin.com/
+>>
+>> So I think never having a negative error value in the bridge pointer is
+>> useful to prevent bugs slipping in drivers. For this we should take one =
+of
+>> these two opposite approaches:
+>>
+>>  1. don't return a bridge pointer which can be an ERR_PTR; return an int
+>>     with the error code and take a **drm_bridge and:
+>>       - on success, set the valid pointer in *bridge
+>>       - on failure, set *bridge =3D NULL (*)
+>>  2. like the above-mentioned functions (of_drm_find_bridge(),
+>>     drm_bridge_get_next_bridge() etc) return a drm_bridge pointer which =
+is
+>>     either a valid pointer or NULL
+>
+> 3. Return pointer or cookie, ignore cookie in the release function.
 
-> 
-> This patch only renames the macros and does not introduce any functional
-> changes.
+Ah, that's a good idea indeed!
 
-"this patch" or "patches" are not preferred.. write the commit text in
-imperative mood..
+It had been proposed recently by Laurent too, but in that case I didn't
+take the suggestion because it was referring to a panel API which IIUC is
+meant to be reworked anyway [0]. I must have archived the idea too much and
+didn't think about using it now! :)
 
-> 
-> Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-> ---
->  .../platform/qcom/iris/iris_platform_common.h      | 12 ++++----
->  .../media/platform/qcom/iris/iris_platform_gen1.c  |  6 ++--
->  .../media/platform/qcom/iris/iris_platform_gen2.c  |  6 ++--
->  .../platform/qcom/iris/iris_platform_sc7280.h      | 10 +++----
->  .../platform/qcom/iris/iris_platform_sm8750.h      | 12 ++++----
->  drivers/media/platform/qcom/iris/iris_vpu3x.c      | 25 ++++++++--------
->  drivers/media/platform/qcom/iris/iris_vpu4x.c      | 30 ++++++++++---------
->  drivers/media/platform/qcom/iris/iris_vpu_common.c | 35 +++++++++++-----------
->  8 files changed, 70 insertions(+), 66 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> index 55ff6137d9a9..30e9d4d288c6 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> @@ -49,14 +49,14 @@ extern const struct iris_platform_data sm8650_data;
->  extern const struct iris_platform_data sm8750_data;
->  
->  enum platform_clk_type {
-> -	IRIS_AXI_CLK, /* AXI0 in case of platforms with multiple AXI clocks */
-> +	IRIS_AXI_VCODEC_CLK,
->  	IRIS_CTRL_CLK,
->  	IRIS_AHB_CLK,
-> -	IRIS_HW_CLK,
-> -	IRIS_HW_AHB_CLK,
-> -	IRIS_AXI1_CLK,
-> +	IRIS_VCODEC_CLK,
-> +	IRIS_VCODEC_AHB_CLK,
-> +	IRIS_AXI_CTRL_CLK,
->  	IRIS_CTRL_FREERUN_CLK,
-> -	IRIS_HW_FREERUN_CLK,
-> +	IRIS_VCODEC_FREERUN_CLK,
->  	IRIS_BSE_HW_CLK,
->  	IRIS_VPP0_HW_CLK,
->  	IRIS_VPP1_HW_CLK,
-> @@ -206,7 +206,7 @@ struct icc_vote_data {
->  
->  enum platform_pm_domain_type {
->  	IRIS_CTRL_POWER_DOMAIN,
-> -	IRIS_HW_POWER_DOMAIN,
-> +	IRIS_VCODEC_POWER_DOMAIN,
->  	IRIS_VPP0_HW_POWER_DOMAIN,
->  	IRIS_VPP1_HW_POWER_DOMAIN,
->  	IRIS_APV_HW_POWER_DOMAIN,
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen1.c b/drivers/media/platform/qcom/iris/iris_platform_gen1.c
-> index df8e6bf9430e..be6a631f8ede 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_gen1.c
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen1.c
-> @@ -284,9 +284,9 @@ static const char * const sm8250_pmdomain_table[] = { "venus", "vcodec0" };
->  static const char * const sm8250_opp_pd_table[] = { "mx" };
->  
->  static const struct platform_clk_data sm8250_clk_table[] = {
-> -	{IRIS_AXI_CLK,  "iface"        },
-> -	{IRIS_CTRL_CLK, "core"         },
-> -	{IRIS_HW_CLK,   "vcodec0_core" },
-> +	{IRIS_AXI_VCODEC_CLK,	"iface"		},
-> +	{IRIS_CTRL_CLK,		"core"		},
-> +	{IRIS_VCODEC_CLK,	"vcodec0_core"	},
->  };
->  
->  static const char * const sm8250_opp_clk_table[] = {
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-> index 5da90d47f9c6..47c6b650f0b4 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-> @@ -780,9 +780,9 @@ static const char * const sm8550_pmdomain_table[] = { "venus", "vcodec0" };
->  static const char * const sm8550_opp_pd_table[] = { "mxc", "mmcx" };
->  
->  static const struct platform_clk_data sm8550_clk_table[] = {
-> -	{IRIS_AXI_CLK,  "iface"        },
-> -	{IRIS_CTRL_CLK, "core"         },
-> -	{IRIS_HW_CLK,   "vcodec0_core" },
-> +	{IRIS_AXI_VCODEC_CLK,	"iface"		},
-> +	{IRIS_CTRL_CLK,		"core"		},
-> +	{IRIS_VCODEC_CLK,	"vcodec0_core"	},
->  };
->  
->  static const char * const sm8550_opp_clk_table[] = {
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sc7280.h b/drivers/media/platform/qcom/iris/iris_platform_sc7280.h
-> index 0ec8f334df67..6b783e524b81 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_sc7280.h
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_sc7280.h
-> @@ -16,11 +16,11 @@ static const struct bw_info sc7280_bw_table_dec[] = {
->  static const char * const sc7280_opp_pd_table[] = { "cx" };
->  
->  static const struct platform_clk_data sc7280_clk_table[] = {
-> -	{IRIS_CTRL_CLK,    "core"         },
-> -	{IRIS_AXI_CLK,     "iface"        },
-> -	{IRIS_AHB_CLK,     "bus"          },
-> -	{IRIS_HW_CLK,      "vcodec_core"  },
-> -	{IRIS_HW_AHB_CLK,  "vcodec_bus"   },
-> +	{IRIS_CTRL_CLK,		"core"		},
-> +	{IRIS_AXI_VCODEC_CLK,	"iface"		},
-> +	{IRIS_AHB_CLK,		"bus"		},
-> +	{IRIS_VCODEC_CLK,	"vcodec_core"	},
-> +	{IRIS_VCODEC_AHB_CLK,	"vcodec_bus"	},
->  };
->  
->  static const char * const sc7280_opp_clk_table[] = {
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8750.h b/drivers/media/platform/qcom/iris/iris_platform_sm8750.h
-> index 719056656a5b..f843f13251c5 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_sm8750.h
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8750.h
-> @@ -11,12 +11,12 @@ static const char * const sm8750_clk_reset_table[] = {
->  };
->  
->  static const struct platform_clk_data sm8750_clk_table[] = {
-> -	{IRIS_AXI_CLK,		"iface"			},
-> -	{IRIS_CTRL_CLK,		"core"			},
-> -	{IRIS_HW_CLK,		"vcodec0_core"		},
-> -	{IRIS_AXI1_CLK,		"iface1"		},
-> -	{IRIS_CTRL_FREERUN_CLK,	"core_freerun"		},
-> -	{IRIS_HW_FREERUN_CLK,	"vcodec0_core_freerun"	},
-> +	{IRIS_AXI_VCODEC_CLK,		"iface"			},
-> +	{IRIS_CTRL_CLK,			"core"			},
-> +	{IRIS_VCODEC_CLK,		"vcodec0_core"		},
-> +	{IRIS_AXI_CTRL_CLK,		"iface1"		},
-> +	{IRIS_CTRL_FREERUN_CLK,		"core_freerun"		},
-> +	{IRIS_VCODEC_FREERUN_CLK,	"vcodec0_core_freerun"	},
->  };
->  
->  #endif
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3x.c b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> index fe4423b951b1..1f0a3a47d87f 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> @@ -209,7 +209,7 @@ static int iris_vpu33_power_off_controller(struct iris_core *core)
->  
->  disable_power:
->  	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
-> -	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_AXI_VCODEC_CLK);
->  
->  	return 0;
->  }
-> @@ -218,36 +218,37 @@ static int iris_vpu35_power_on_hw(struct iris_core *core)
->  {
->  	int ret;
->  
-> -	ret = iris_enable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
-> +	ret = iris_enable_power_domains(core,
-> +					core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN]);
->  	if (ret)
->  		return ret;
->  
-> -	ret = iris_prepare_enable_clock(core, IRIS_AXI_CLK);
-> +	ret = iris_prepare_enable_clock(core, IRIS_AXI_VCODEC_CLK);
->  	if (ret)
->  		goto err_disable_power;
->  
-> -	ret = iris_prepare_enable_clock(core, IRIS_HW_FREERUN_CLK);
-> +	ret = iris_prepare_enable_clock(core, IRIS_VCODEC_FREERUN_CLK);
->  	if (ret)
->  		goto err_disable_axi_clk;
->  
-> -	ret = iris_prepare_enable_clock(core, IRIS_HW_CLK);
-> +	ret = iris_prepare_enable_clock(core, IRIS_VCODEC_CLK);
->  	if (ret)
->  		goto err_disable_hw_free_clk;
->  
-> -	ret = dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], true);
-> +	ret = dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN], true);
->  	if (ret)
->  		goto err_disable_hw_clk;
->  
->  	return 0;
->  
->  err_disable_hw_clk:
-> -	iris_disable_unprepare_clock(core, IRIS_HW_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_VCODEC_CLK);
->  err_disable_hw_free_clk:
-> -	iris_disable_unprepare_clock(core, IRIS_HW_FREERUN_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_VCODEC_FREERUN_CLK);
->  err_disable_axi_clk:
-> -	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_AXI_VCODEC_CLK);
->  err_disable_power:
-> -	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
-> +	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN]);
->  
->  	return ret;
->  }
-> @@ -256,8 +257,8 @@ static void iris_vpu35_power_off_hw(struct iris_core *core)
->  {
->  	iris_vpu33_power_off_hardware(core);
->  
-> -	iris_disable_unprepare_clock(core, IRIS_HW_FREERUN_CLK);
-> -	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_VCODEC_FREERUN_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_AXI_VCODEC_CLK);
->  }
->  
->  const struct vpu_ops iris_vpu3_ops = {
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu4x.c b/drivers/media/platform/qcom/iris/iris_vpu4x.c
-> index a8db02ce5c5e..4082d331d2f3 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu4x.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu4x.c
-> @@ -27,7 +27,8 @@ static int iris_vpu4x_genpd_set_hwmode(struct iris_core *core, bool hw_mode, u32
->  {
->  	int ret;
->  
-> -	ret = dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], hw_mode);
-> +	ret = dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN],
-> +				      hw_mode);
->  	if (ret)
->  		return ret;
->  
-> @@ -63,7 +64,7 @@ static int iris_vpu4x_genpd_set_hwmode(struct iris_core *core, bool hw_mode, u32
->  		dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_VPP0_HW_POWER_DOMAIN],
->  					!hw_mode);
->  restore_hw_domain_mode:
-> -	dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], !hw_mode);
-> +	dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN], !hw_mode);
->  
->  	return ret;
->  }
-> @@ -162,15 +163,15 @@ static int iris_vpu4x_enable_hardware_clocks(struct iris_core *core, u32 efuse_v
->  {
->  	int ret;
->  
-> -	ret = iris_prepare_enable_clock(core, IRIS_AXI_CLK);
-> +	ret = iris_prepare_enable_clock(core, IRIS_AXI_VCODEC_CLK);
->  	if (ret)
->  		return ret;
->  
-> -	ret = iris_prepare_enable_clock(core, IRIS_HW_FREERUN_CLK);
-> +	ret = iris_prepare_enable_clock(core, IRIS_VCODEC_FREERUN_CLK);
->  	if (ret)
->  		goto disable_axi_clock;
->  
-> -	ret = iris_prepare_enable_clock(core, IRIS_HW_CLK);
-> +	ret = iris_prepare_enable_clock(core, IRIS_VCODEC_CLK);
->  	if (ret)
->  		goto disable_hw_free_run_clock;
->  
-> @@ -198,11 +199,11 @@ static int iris_vpu4x_enable_hardware_clocks(struct iris_core *core, u32 efuse_v
->  disable_bse_hw_clock:
->  	iris_disable_unprepare_clock(core, IRIS_BSE_HW_CLK);
->  disable_hw_clock:
-> -	iris_disable_unprepare_clock(core, IRIS_HW_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_VCODEC_CLK);
->  disable_hw_free_run_clock:
-> -	iris_disable_unprepare_clock(core, IRIS_HW_FREERUN_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_VCODEC_FREERUN_CLK);
->  disable_axi_clock:
-> -	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_AXI_VCODEC_CLK);
->  
->  	return ret;
->  }
-> @@ -216,9 +217,9 @@ static void iris_vpu4x_disable_hardware_clocks(struct iris_core *core, u32 efuse
->  		iris_disable_unprepare_clock(core, IRIS_VPP0_HW_CLK);
->  
->  	iris_disable_unprepare_clock(core, IRIS_BSE_HW_CLK);
-> -	iris_disable_unprepare_clock(core, IRIS_HW_CLK);
-> -	iris_disable_unprepare_clock(core, IRIS_HW_FREERUN_CLK);
-> -	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_VCODEC_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_VCODEC_FREERUN_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_AXI_VCODEC_CLK);
->  }
->  
->  static int iris_vpu4x_power_on_hardware(struct iris_core *core)
-> @@ -226,7 +227,8 @@ static int iris_vpu4x_power_on_hardware(struct iris_core *core)
->  	u32 efuse_value = readl(core->reg_base + WRAPPER_EFUSE_MONITOR);
->  	int ret;
->  
-> -	ret = iris_enable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
-> +	ret = iris_enable_power_domains(core,
-> +					core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN]);
->  	if (ret)
->  		return ret;
->  
-> @@ -278,7 +280,7 @@ static int iris_vpu4x_power_on_hardware(struct iris_core *core)
->  		iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs
->  						[IRIS_VPP0_HW_POWER_DOMAIN]);
->  disable_hw_power_domain:
-> -	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
-> +	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN]);
->  
->  	return ret;
->  }
-> @@ -356,7 +358,7 @@ static void iris_vpu4x_power_off_hardware(struct iris_core *core)
->  		iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs
->  					   [IRIS_VPP0_HW_POWER_DOMAIN]);
->  
-> -	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
-> +	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN]);
->  }
->  
->  const struct vpu_ops iris_vpu4x_ops = {
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.c b/drivers/media/platform/qcom/iris/iris_vpu_common.c
-> index bfd1e762c38e..006fd3ffc752 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
-> @@ -213,7 +213,7 @@ int iris_vpu_power_off_controller(struct iris_core *core)
->  disable_power:
->  	iris_disable_unprepare_clock(core, IRIS_AHB_CLK);
->  	iris_disable_unprepare_clock(core, IRIS_CTRL_CLK);
-> -	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_AXI_VCODEC_CLK);
->  	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
->  
->  	return 0;
-> @@ -221,10 +221,10 @@ int iris_vpu_power_off_controller(struct iris_core *core)
->  
->  void iris_vpu_power_off_hw(struct iris_core *core)
->  {
-> -	dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], false);
-> -	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
-> -	iris_disable_unprepare_clock(core, IRIS_HW_AHB_CLK);
-> -	iris_disable_unprepare_clock(core, IRIS_HW_CLK);
-> +	dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN], false);
-> +	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN]);
-> +	iris_disable_unprepare_clock(core, IRIS_VCODEC_AHB_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_VCODEC_CLK);
->  }
->  
->  void iris_vpu_power_off(struct iris_core *core)
-> @@ -251,7 +251,7 @@ int iris_vpu_power_on_controller(struct iris_core *core)
->  	if (ret)
->  		goto err_disable_power;
->  
-> -	ret = iris_prepare_enable_clock(core, IRIS_AXI_CLK);
-> +	ret = iris_prepare_enable_clock(core, IRIS_AXI_VCODEC_CLK);
->  	if (ret)
->  		goto err_disable_power;
->  
-> @@ -268,7 +268,7 @@ int iris_vpu_power_on_controller(struct iris_core *core)
->  err_disable_ctrl_clock:
->  	iris_disable_unprepare_clock(core, IRIS_CTRL_CLK);
->  err_disable_axi_clock:
-> -	iris_disable_unprepare_clock(core, IRIS_AXI_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_AXI_VCODEC_CLK);
->  err_disable_power:
->  	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
->  
-> @@ -279,30 +279,31 @@ int iris_vpu_power_on_hw(struct iris_core *core)
->  {
->  	int ret;
->  
-> -	ret = iris_enable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
-> +	ret = iris_enable_power_domains(core,
-> +					core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN]);
->  	if (ret)
->  		return ret;
->  
-> -	ret = iris_prepare_enable_clock(core, IRIS_HW_CLK);
-> +	ret = iris_prepare_enable_clock(core, IRIS_VCODEC_CLK);
->  	if (ret)
->  		goto err_disable_power;
->  
-> -	ret = iris_prepare_enable_clock(core, IRIS_HW_AHB_CLK);
-> +	ret = iris_prepare_enable_clock(core, IRIS_VCODEC_AHB_CLK);
->  	if (ret && ret != -ENOENT)
->  		goto err_disable_hw_clock;
->  
-> -	ret = dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], true);
-> +	ret = dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN], true);
->  	if (ret)
->  		goto err_disable_hw_ahb_clock;
->  
->  	return 0;
->  
->  err_disable_hw_ahb_clock:
-> -	iris_disable_unprepare_clock(core, IRIS_HW_AHB_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_VCODEC_AHB_CLK);
->  err_disable_hw_clock:
-> -	iris_disable_unprepare_clock(core, IRIS_HW_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_VCODEC_CLK);
->  err_disable_power:
-> -	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
-> +	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_VCODEC_POWER_DOMAIN]);
->  
->  	return ret;
->  }
-> @@ -362,7 +363,7 @@ int iris_vpu35_vpu4x_power_off_controller(struct iris_core *core)
->  disable_power:
->  	iris_disable_unprepare_clock(core, IRIS_CTRL_CLK);
->  	iris_disable_unprepare_clock(core, IRIS_CTRL_FREERUN_CLK);
-> -	iris_disable_unprepare_clock(core, IRIS_AXI1_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_AXI_CTRL_CLK);
->  
->  	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
->  
-> @@ -379,7 +380,7 @@ int iris_vpu35_vpu4x_power_on_controller(struct iris_core *core)
->  	if (ret)
->  		return ret;
->  
-> -	ret = iris_prepare_enable_clock(core, IRIS_AXI1_CLK);
-> +	ret = iris_prepare_enable_clock(core, IRIS_AXI_CTRL_CLK);
->  	if (ret)
->  		goto err_disable_power;
->  
-> @@ -396,7 +397,7 @@ int iris_vpu35_vpu4x_power_on_controller(struct iris_core *core)
->  err_disable_ctrl_free_clk:
->  	iris_disable_unprepare_clock(core, IRIS_CTRL_FREERUN_CLK);
->  err_disable_axi1_clk:
-> -	iris_disable_unprepare_clock(core, IRIS_AXI1_CLK);
-> +	iris_disable_unprepare_clock(core, IRIS_AXI_CTRL_CLK);
->  err_disable_power:
->  	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_CTRL_POWER_DOMAIN]);
->  
-> 
-> -- 
-> 2.34.1
-> 
+So yes, being of_drm_get_bridge_by_endpoint() a new API that is meant to
+stay, I think it's worth doing.
 
--- 
--Mukesh Ojha
+Sadly, I guess that means I have to drop all the R-by you already gave to
+various patches in the series.
+
+[0] https://lore.kernel.org/all/DH624WYWKT14.5TSCJXZPVN0T@bootlin.com/
+
+>> >> + */
+>> >> +int of_drm_get_bridge_by_endpoint(const struct device_node *np,
+>> >> +				  int port, int endpoint,
+>> >> +				  struct drm_bridge **bridge)
+>> >
+>> > Nit: can it be drm_of_get_bridge_by_endpoint?
+>>
+>> Argh, this convention is changing periodically it seems! :-)
+>>
+>> I previous discussions I was asked to do either drm_of_ [1] of of_drm_ [=
+2],
+>> but since the latter was the last one requested I sticked on it.
+>>
+>> @Maxime, Dmitry, I'm OK with either, just let me know if I need to chang=
+e.
+>
+> I missed Maxime's response, sorry. I'm fine with the suggested
+> convention of using the first argument.
+
+OK, no problem. Based on current discussion, in v2 the new API will be:
+
+/**
+ * of_drm_get_bridge_by_endpoint - return DRM bridge connected to a port/en=
+dpoint
+ * @np: device tree node containing output ports
+ * @port: port in the device tree node, or -1 for the first port found
+ * @endpoint: endpoint in the device tree node, or -1 for the first endpoin=
+t found
+ *
+ * Given a DT node's port and endpoint number, find the connected node and
+ * return the associated drm_bridge device.
+ *
+ * The refcount of the returned bridge is incremented. Use drm_bridge_put()
+ * when done with it.
+ *
+ * Returns a pointer to the connected drm_bridge, or a negative error on fa=
+ilure
+ */
+struct drm_bridge *int of_drm_get_bridge_by_endpoint(const struct device_no=
+de *np,
+                                                     int port, int endpoint=
+);
+
+It would be nice to agree on the API before v2, to avoid the need to rework
+many patches and drop any review tags multiple times.
+
+Luca
+
+--
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
