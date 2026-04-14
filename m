@@ -1,205 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-103066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EJlQLur13WlolgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:08:10 +0200
+	id IDWhE0r33WlolgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:14:02 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53DD53F6F44
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:08:10 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F04B3F7047
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:14:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id CA7F8300FF83
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 08:08:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 40B60300A654
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 08:13:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CCE338D007;
-	Tue, 14 Apr 2026 08:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 150A339DBC9;
+	Tue, 14 Apr 2026 08:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TySy27fE";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="X+Pov0nc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zvs3SPOU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C2338C426
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 08:08:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4631739937C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 08:13:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776154088; cv=none; b=S4ha0JBzeilMIoiFZ7qm3gPjbUmQGva+R1HyK2ZPKTL7RtiUGH39LBfOcgjThpxPqTRD4QlcRa9lucK+6+zp2P8RwtuQgGPTNeCPWtxeoEFtb7C7RaoZMjWrJClqWOw0azkZ4kHL447VF+pvhoOQc/bjEdsVNTAWy5xHfLkrO8E=
+	t=1776154420; cv=none; b=prskomoTie3dQjNsr5Iso9zKRlId7ytRaZxT+/hdrcODvzZ/vjMonLRrLGcjgVTdG3PTqWRgnS4iVfKpkKU6RcGTPhE0vp5d3Ro9XRYQoihlpG4d5C2LMukTRog/ux/9cuN5X9v8hmRzi0tiysae2J3SMjvh28jETsR7h7n6tt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776154088; c=relaxed/simple;
-	bh=+na2rETZY3PhgUgP2f4aP6B+WxxI3R8eOMpOE0i2NN8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VEklaaRkr6r/gT0BYM6lwdwnTu3s+fIyDFuxlyqzJ/euNiZo/QWEPSHRBkdlZeAMLMlO0/UeA3jH+Sf3dRlP/fZqJlH5wtAEXiF+0hNtD/AHojfgfzNO/BpeB28QinUZZqM9fxj7XFNWYAS9wMoeagr6CSbs+ViZywoH8kYXC1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TySy27fE; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=X+Pov0nc; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63E6VNm83157277
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 08:08:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Or8e6KVvqN5oLm2ttfPCRCtO9ggnyvfWSveduUn6uCQ=; b=TySy27fEX0oJEA5P
-	1yGIg6jqDVxYj4yWvcPAjAAr5FFMxkrguuexME0GvhJvCGbNf6AXcjVqu8KaFEZb
-	CD0QRpJyokuZcneIS91Azo0VZu3+vDbuxzYzzSpbb5jWB2GNwnS9DTqTdiNt88lW
-	Wcc0gODe3myzJV2yDkcU/rI0WAlA2ZUtVsf7DF8DqMD8+4wVjmOg+0CFsKLtWEmZ
-	nekXuDSK/Eae6NGcy5RxOCgDpkBzeQD7Bfryuwb7Q6W5oGcVGoHNZtuwTjvDUPBw
-	4cTPoTU1kRDm9iFo9/zEmhyzCdh0chPd9hnpJ2GGWC6f5fxQuIM/KrNbndIVHxTI
-	KQgTDQ==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dh86b9pdv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 08:08:05 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8cfe29579d5so106106585a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 01:08:05 -0700 (PDT)
+	s=arc-20240116; t=1776154420; c=relaxed/simple;
+	bh=gT+pzsVIRW212TZcva4L+Ri/0g6hFNVEgkKfdytwY2A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=smkH1ujyqKcvtU53qcABIFsnKGxbJvBZLeqOPmO7LcwP0gh+3FlP+lj7+PJlAuMUBSKvq8m3I0aX1wl11pnNTZ0bdzFuXyACm8xpmDHbgvyQbzU2K3Icmlw/IczWNPKMRY3822bZCzRpJtXCQuIrHs61/4lpjsLvUhB0BerdrqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zvs3SPOU; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-43cfd1f9fd1so3377471f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 01:13:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776154085; x=1776758885; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Or8e6KVvqN5oLm2ttfPCRCtO9ggnyvfWSveduUn6uCQ=;
-        b=X+Pov0ncPtujRuy5DaUAzgLNC3lVEg07QZTt/fqGUKHKhLlZNJn9PKGt/nFQWz7Dmo
-         oz448hK6QlAY/9ND3g9UClZvTeJw6/wW0iwLGg88KGT5tlgFbo9D/SSP6qoxv0HSdIjD
-         0u4nz/AKBQ0VrrKlCC+9XHxzyx5LV+g7UQVzUXCB0um6QC/1Zg0yh5eraXVTTok7s8WH
-         Y5U4AUkzgwlzWvaOxnkoIMcIU6Jb3eXhnrkJiwLyDOdz2GhZ3GLPhRYolXoEcZRsuKDT
-         bFrnHHHVbGaRehWGwCeAVqV0yNRyzdnkMzwpsQ8fjysZPCcfqrNEp7Jr+BAnj2Z/+4J0
-         m0Vw==
+        d=linaro.org; s=google; t=1776154416; x=1776759216; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VoTqL997tPTbH+Ap01GQJYcrt0BpStuqMk4Cw3k+aSQ=;
+        b=zvs3SPOUWaJfZaTyoCV5ztGlEjHDSb7rGvmA9wRTfariTS9NPlz4kExcVNvDYIXhC2
+         lT0/iL+3PSgFmBkv0tsdzeFAwMWjrXlzFYZ17l0gUQ84Zu1JQrY8BQ/FvnFolMavNjsM
+         OW7vT1Z2chOpdbAu8MsQc5qsvPEePtFAtb7F6d15hWfxvFRlGIJG5u5hDKInuy23XeIG
+         fmYu2uDTUqcdMmFyhfKmHPQo1iPXE/R+mh0oL6L8ULsiXbZc0QP+223Kpu5xh0GxK/Pr
+         Q05Q9plzuxVA4HBbhxYQ9u0u4ZYg7pgZeEYdNH/0Y2iGwqhxQjJ+LQUyYjkYSDgIwLta
+         3SEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776154085; x=1776758885;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Or8e6KVvqN5oLm2ttfPCRCtO9ggnyvfWSveduUn6uCQ=;
-        b=g7/vvSSd4rOV0imr3sv0GDNauA4qGf1HXuo6QLi3qB4MZxBqql/NEz7hrbYRaOoUaO
-         1hO7BAae7bbrFMBVuIbE3mGJ41vu7OLnvb78mGOED3mY8GRHO3eOisD/pwccxIZWMgL0
-         I5/IsHWWTDyywlc4bfqIz9a0SbUI6epzpEvl0x1aOVb9yjX5dFG59Q7J/845P8T6Gv9t
-         NBy3Cg/dQRqGfRjQ/DrzBWcvX8Uud/7wpHnIuIELmRZalKXbM7FtoU44dfaMcFcQDKfU
-         Cvz1fYU0WMmve1L1grXWXzpK2S7wyYQtYq3rmw6Y4SRvnow/tl2XqnCoVHpkoZY7JX+q
-         pFRw==
-X-Forwarded-Encrypted: i=1; AFNElJ+TMVXaQxXew0HBED4mgRy7HdHwDBRqgaN5LxeFzRXXRl0zUAwseZE1W90qMznTE7BHIdhhDQsFGhXf5WEv@vger.kernel.org
-X-Gm-Message-State: AOJu0YwyMAKojTs/NzMJ7kirtQwcIg4iZrY/XSaRKtiqLVbTlY321qEx
-	4AlZjarsU8uKIyiVIOLdiPcm9j7YLpMJjQYElSIAJfM8AY24E0pGifSDwAWeh0kStq76kAEoH6D
-	gZpGO8V1pfrADyGrxjDyw3ltjQgFiDLAyyoQDDYGmDs85EJ+jnZB8YUFo1+5E2I/XNSb/
-X-Gm-Gg: AeBDies6DfWFcpJIR+Vm1bowO8BWjq1zCGeQOp81IQUPjet6aFlppgiPpn0tMBSjORQ
-	H2lWhQ+jqcmD20jNT321IvQDrgx2mAs+NhZe8TBLBJ+5rPX70mvear6yBXDTX3UCBoGQmEkDd1F
-	OsDQRBQ+zV8dENF7DlbPuJhwMEBR7o6Pv6NhOJW+nQICvG9zXiif4iXwz25O2fAW5JgO1Gl8gbS
-	wH2FLXTcAuNMVsuYPIrD4/sEIgLL13zfxDa2SDBmEaD5i4uZBE1vRTyXd4szlhzQfbzt8R6fxqW
-	RhqphV4lYmSl3rrucZqYEOL7ZDtSjt9ct9LKltIhi56iGs5tZSTaUXVNeRvD4Yeeq6WLaq8Hh9B
-	ibdbzcf4D3sdQ/hV1nXgB1ARSQudKuoLHKKX0nYB090YFspV98B0/rhcmfzuwhBZj/IKGbSvlkq
-	l+s/n82if7Zcfehg==
-X-Received: by 2002:a05:620a:410a:b0:8cf:d289:d0f3 with SMTP id af79cd13be357-8ddeb1cfaf4mr1620678185a.4.1776154085214;
-        Tue, 14 Apr 2026 01:08:05 -0700 (PDT)
-X-Received: by 2002:a05:620a:410a:b0:8cf:d289:d0f3 with SMTP id af79cd13be357-8ddeb1cfaf4mr1620675885a.4.1776154084770;
-        Tue, 14 Apr 2026 01:08:04 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-670eb258a99sm1899153a12.15.2026.04.14.01.08.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Apr 2026 01:08:04 -0700 (PDT)
-Message-ID: <677f1d1d-a1fe-42ec-9e82-c9e504873c98@oss.qualcomm.com>
-Date: Tue, 14 Apr 2026 10:08:00 +0200
+        d=1e100.net; s=20251104; t=1776154416; x=1776759216;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VoTqL997tPTbH+Ap01GQJYcrt0BpStuqMk4Cw3k+aSQ=;
+        b=DqJp16d7B7DGK1GB9i8/UmGTwJ2eNoxDN8yd+EbLL0H0PWYuklwLMtNRC7lu2mYi6/
+         Myzk/DyrbgqRAEjtsDtc/Yyp+ARAibekzfpqRmBQ6LN8XBiOjTrx/aVGvJHmDyW67Spk
+         D0234/fPXOz+Wv0P03NCeq0buKLrVGCeC045bRhU3LNX1EFXau1xxjz0dvtJDUG7Up7O
+         0K02GrTKpDmRfrLqaD2//CNzqMW5807oTPshllQzj2bPjkJg5txazoSM0xRVAdRc1DKZ
+         E+JC6oylLXWB/v75taM0H28/DMqA8SJGjgc6P1+GUfgXslV97fA/OBLsWjv1FqVB6jwa
+         3Cew==
+X-Forwarded-Encrypted: i=1; AFNElJ/CFfnm70ZneeRNsR2ygejdbXpvw7Tb/dKXDZSlrOgMj/cu11IHY9KgSqaod2EXqCDkVaKOqYvK+w5MTlfd@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywo9Sg/tkyK10f/zaiBAVJk/7+tq0Pp68MGZefZbTM88Qrdk8LQ
+	6I1P60lQu5b0o/G6aWnCYTWi7VRG7SH6Zy4X9/1jsD70ZhbhY8fFBx4tS8tzXUAGuIA=
+X-Gm-Gg: AeBDiesf1LYTzn6T9OdZYgF1tra8PMKJUHKDvfgYRJQ1zEjzTNv5rRxdvDmKLlHWW4h
+	hTwLBcVKTpR7zR4p0CB21IcHZgxGI0i00HDnrOEr45zus8/c9wmhw/1m27wmaqBmfdrnKdThQKM
+	2eB3LLt3AxAzIdjVMjdVgb7xvJ4p6FKHwzCqJBrXGkeLoEljKgS8RCvKvoUmKqNBxYn4ubod0Aw
+	kWHMFpjCj/BQ135FLHnHFB9HiUhUDyapqEwhM8xwMUoTzCCEbeAdIviNGbB+Q9TT2ySrHbRW9Tk
+	5MeHsB6MeviK8B6ARmr5k1xCYodWvBBZ4GTFm6XbUC47KN0/VSVf9hCiQ1kTTZAYtN5dPgEQ2H3
+	zTmVdRTczWksu0nbIUaV5vac+HkKiwkcpzNCZuhmybTkJwuTdSzDwlbbBxr7Vlg80diduTm7y+4
+	PptP8fQrfZ7rLJFEdy6CQctr9LEZA=
+X-Received: by 2002:a05:6000:268a:b0:43d:7403:4b60 with SMTP id ffacd0b85a97d-43d74034c72mr13905007f8f.3.1776154415587;
+        Tue, 14 Apr 2026 01:13:35 -0700 (PDT)
+Received: from linaro.org ([77.64.147.31])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43d762decf6sm27040970f8f.8.2026.04.14.01.13.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Apr 2026 01:13:35 -0700 (PDT)
+Date: Tue, 14 Apr 2026 10:13:31 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+	linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH 1/2] remoteproc: core: Attach rproc asynchronously in
+ rproc_add() path
+Message-ID: <ad33KwKYBNB6oE5e@linaro.org>
+References: <20260409-rproc-attach-issue-v1-0-088a1c348e7a@oss.qualcomm.com>
+ <20260409-rproc-attach-issue-v1-1-088a1c348e7a@oss.qualcomm.com>
+ <adkI8Si4ejf6T73T@linaro.org>
+ <846cf4bb-43da-4d2a-a128-bdaf1371e19b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/10] clk: qcom: clk-rpm: add msm8960 compatible
-To: linux@smankusors.com, Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        Rudraksha Gupta <guptarud@gmail.com>
-References: <20260414-msm8960-wifi-v1-0-007fda9d6134@smankusors.com>
- <20260414-msm8960-wifi-v1-4-007fda9d6134@smankusors.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260414-msm8960-wifi-v1-4-007fda9d6134@smankusors.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE0MDA3NSBTYWx0ZWRfX3PrFkTNtMGoP
- AEG1UAAkE99yc+BuRR5hYIt5abIfbLUHfv93W3L0Y0Qvh9YpAz+SkV3H2vCMilQuHcuIXiDxkn7
- o8LKs/CKJMcavVMpV9O8yujTyHxTGlwQQqEH1dQZvETFKALKO8a986BRz5vii3PJlAHgEuJifz7
- 6hsPIarEMVAkPJJyW2XepmiXmkOQlyJIc9NxwUcjRvCuQQzcuxZCWZHiwwxWvsIWhJdBMroxGOD
- 57JoIiUAXbL+v2YTJ+s4AGMrmpYJ0IALLeactvPDrWxttMJe/q2fVoYoT2htpoOxm0PSuVJDtHZ
- mZCNOoxV4lgrGyQHVe2QKL7kOFvuEc8NbeAK2EGZVmtdJMVwR0/+XM5jyDIO0dP+FX7bdzM1oh/
- 92b0+Kr578g6cZJJNqgDwExDA2V2Wwhj0yzOeENZDs/VnbVYuF4nY+6ne+ne3+bUrYelfhuNP6e
- YQqPcyv1GMoEbtxQXcA==
-X-Authority-Analysis: v=2.4 cv=MahcfZ/f c=1 sm=1 tr=0 ts=69ddf5e5 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=wxLWbCv9AAAA:8 a=pGLkceISAAAA:8 a=5PoCL-xiRuW4qANWJgcA:9 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22 a=QJY96suAAestDpCc5Gi9:22
-X-Proofpoint-ORIG-GUID: 12B-V9HvsKWJbg0e2OyFTi1WrY2OGDcy
-X-Proofpoint-GUID: 12B-V9HvsKWJbg0e2OyFTi1WrY2OGDcy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-14_02,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 adultscore=0 impostorscore=0
- priorityscore=1501 phishscore=0 suspectscore=0 malwarescore=0 spamscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
- definitions=main-2604140075
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <846cf4bb-43da-4d2a-a128-bdaf1371e19b@oss.qualcomm.com>
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[16];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103067-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103066-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[smankusors.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	SEM_URIBL_FRESH15_UNKNOWN_FAIL(0.00)[qualcomm.com:server fail,oss.qualcomm.com:server fail,smankusors.com:server fail];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	SEM_URIBL_UNKNOWN_FAIL(0.00)[qualcomm.com:server fail,oss.qualcomm.com:server fail,smankusors.com:server fail];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 53DD53F6F44
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,linaro.org:dkim,linaro.org:mid]
+X-Rspamd-Queue-Id: 6F04B3F7047
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 4/13/26 8:55 PM, Antony Kurniawan Soemardi via B4 Relay wrote:
-> From: Antony Kurniawan Soemardi <linux@smankusors.com>
+On Tue, Apr 14, 2026 at 11:41:39AM +0800, Jingyi Wang wrote:
 > 
-> Add support for the "qcom,rpmcc-msm8960" compatible string to the
-> RPM clock driver.
 > 
-> msm8960 uses the same RPM clock descriptions as apq8064, so reuse
-> rpm_clk_apq8064 for this compatible.
+> On 4/10/2026 10:28 PM, Stephan Gerhold wrote:
+> > +Cc Bartosz, Dmitry
+> > 
+> > On Thu, Apr 09, 2026 at 01:46:21AM -0700, Jingyi Wang wrote:
+> > > For rproc with state RPROC_DETACHED and auto_boot enabled, the attach
+> > > callback will be called in the rproc_add()->rproc_trigger_auto_boot()->
+> > > rproc_boot() path, the failure in this path will cause the rproc_add()
+> > > fail and the resource release, which will cause issue like rproc recovery
+> > > or falling back to firmware load fail. Add attach_work for rproc and call
+> > > it asynchronously in rproc_add() path like what rproc_start() do.
+> > > 
+> > > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> > > ---
+> > >   drivers/remoteproc/remoteproc_core.c | 20 ++++++++++++--------
+> > >   include/linux/remoteproc.h           |  1 +
+> > >   2 files changed, 13 insertions(+), 8 deletions(-)
+> > > 
+> > > diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> > > index b087ed21858a..f02db1113fae 100644
+> > > --- a/drivers/remoteproc/remoteproc_core.c
+> > > +++ b/drivers/remoteproc/remoteproc_core.c
+> > > @@ -1673,18 +1673,21 @@ static void rproc_auto_boot_callback(const struct firmware *fw, void *context)
+> > >   	release_firmware(fw);
+> > >   }
+> > > +static void rproc_attach_work(struct work_struct *work)
+> > > +{
+> > > +	struct rproc *rproc = container_of(work, struct rproc, attach_work);
+> > > +
+> > > +	rproc_boot(rproc);
+> > > +}
+> > > +
+> > >   static int rproc_trigger_auto_boot(struct rproc *rproc)
+> > >   {
+> > >   	int ret;
+> > > -	/*
+> > > -	 * Since the remote processor is in a detached state, it has already
+> > > -	 * been booted by another entity.  As such there is no point in waiting
+> > > -	 * for a firmware image to be loaded, we can simply initiate the process
+> > > -	 * of attaching to it immediately.
+> > > -	 */
+> > > -	if (rproc->state == RPROC_DETACHED)
+> > > -		return rproc_boot(rproc);
+> > > +	if (rproc->state == RPROC_DETACHED) {
+> > > +		schedule_work(&rproc->attach_work);
+> > > +		return 0;
+> > > +	}
+> > 
+> > I think the change itself is reasonable to make "auto-attach" behavior
+> > consistent with "auto-boot". The commit message is a bit misleading
+> > though:
+> > 
+> >   - You're really doing two separate functional changes here:
+> > 
+> >     (1) Ignore the return value of rproc_boot() during auto-boot attach,
+> >         to keep the remoteproc registered and available in sysfs even if
+> >         attaching fails.
+> >     (2) Run the rproc_boot() in the background using schedule_work().
+> >         [To improve boot performance? To work around some locking issues?]
+> > 
+> >   - The actual issue you are seeing sounds like a use-after-free in the
+> >     remoteproc core error cleanup path. I think this one is still
+> >     present, we should really have a call to
+> >     cancel_work_sync(&rproc->crash_handler) as Dmitry wrote in the
+> >     previous discussion [1].
+> > 
+> > Thanks,
+> > Stephan
+> > 
+> > [1]: https://lore.kernel.org/all/ce24a2sgg4b6wymoxwgl2ve6np2nxn2wuxfqxfpmvqqrpvgouf@xihd6ziqwu4m/
 > 
-> Tested-by: Rudraksha Gupta <guptarud@gmail.com>
-> Signed-off-by: Antony Kurniawan Soemardi <linux@smankusors.com>
-> ---
+> Hi Stephan,
+> 
+> Exactly as you say, what this change do is allowing rproc_attach return false.
+> It should be okay to keep this change and describe it more clear in commit msg
+> in next version?
+> 
 
-This suggests a fallback compatible could be fitting
+That's fine for me.
 
-Konrad
+> And the use-after-free issue is what we want to resolve in the patch2
+> in this series, I think cancel_work_sync() is a reasonable change
+> but it cannot resolve this issue as the worker could be executing when
+> we call this(and this is what it behaves when I did local test) and
+> the use-after-free issue still exists. Shall we send a separate patch
+> for this cancel_work_sync?
+> 
+
+cancel_work_sync() should wait until the worker execution has finished.
+If you call it before freeing the resources (= deleting the remoteproc),
+I would expect it should work as expected.
+
+It makes sense to have separate patches for this, one is about fixing
+the use-after-free issue, the other is more about the behavior when the
+initial auto-boot fails.
+
+Thanks,
+Stephan
 
