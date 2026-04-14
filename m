@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-103118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mBnAFekd3mk1ngkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 12:58:49 +0200
+	id IL2RBDwe3mk1ngkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 13:00:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A53B83F9079
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 12:58:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D91F3F9093
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 13:00:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 039D1305D5DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:56:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 55EBA301B708
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 10:57:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68DB83876A4;
-	Tue, 14 Apr 2026 10:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A13D23B3898;
+	Tue, 14 Apr 2026 10:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CkhRuOkv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CstZd32z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4330D33F8AD;
-	Tue, 14 Apr 2026 10:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BA33D7D9E;
+	Tue, 14 Apr 2026 10:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776164163; cv=none; b=Od46PoicifCPmg08v4e56imU7Eirixpc3inM5WfH7wKkC0vdPeCy3p4OU3brwJ2ZMMxfYwLuWHvIiTF8msctLJi9i+fG6E2KIyz90J9YPK9FbHm4e1MQFE9HZg6Kj6L+eXW1oeEDr6uMJAHNkPoeH0t6cUFXKqLdEgIJ06jyAY8=
+	t=1776164238; cv=none; b=P0kgTaMH/ZkTrbKw0IbAHW336vAegWf1jsJmG1jZ+5WqDDh6pbVnec2oV3AVABCNGy9L9FQhVDq1JGtomlLgZs6hLr7AWbtYqD6uGABbtrayCYXt32BJh08hqX/06E1sEw3gHUjjH3P+hE2Ifp5N6lVak2aUaLYlcP91p8DUinY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776164163; c=relaxed/simple;
-	bh=lsaF8QghHwx5Uam5bvw87Qh17eT7cC6U6SMftAE4mI0=;
+	s=arc-20240116; t=1776164238; c=relaxed/simple;
+	bh=xIYrBgmNAw9Brwl2dN1v7ppUEDoDucKoyv1z81zX6Oo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tNwwJ2J8PpSsnXGZgJn9KMYrIfG4n0w31ToqR9iZ4T6ulAokb5OkEVVALFx8Jgp+/NazuJtqS0bUdOHAX9l7b61msrRS1JrJGuJ8xaS40rZpAWo5VpVh2Wo/C4p4o9i0KJekpEz9re18F9p7S2uQHPoqRIxb8OocQOHH0B6JOjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CkhRuOkv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8D9C19425;
-	Tue, 14 Apr 2026 10:56:00 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=YKsJ7Rryq+lXe/weBrfxmyQ04jvlLRzuBQuMT0aC8PBVAAIUBKBD1RrAtgI99PmYYQXpl+JsNwwDP5sa0OYeUt+gijlCgEvLiwA5ZJ2OZbK7C/pnCC+app3/dk3ZhSrDYlz1BIFvDv1IzQXlA+hX115k6IXZ9c1aKDSl2k0fAm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CstZd32z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2082DC19425;
+	Tue, 14 Apr 2026 10:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776164163;
-	bh=lsaF8QghHwx5Uam5bvw87Qh17eT7cC6U6SMftAE4mI0=;
+	s=k20201202; t=1776164237;
+	bh=xIYrBgmNAw9Brwl2dN1v7ppUEDoDucKoyv1z81zX6Oo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CkhRuOkvV51e1aIrDb3BZK+N+SyZ5ViXse+4J9JMIAcp11VU0Y8oE4C2QssWYLrz0
-	 6s1WIXhv3UNqt0RM4zJYnhK94AjeQim6aGgbEjH0bOyI5LWCImcvTGB9oe46z+l61b
-	 6vD7GbfC+r37rJ0J9b2jo4Gj7KBCWjMBK1chep9heFtzIRpDH3b7wCupgrJ5UwcqpA
-	 O0sp6cJznSerLhI8Ms8IUWUizgYfKe06AxarqUkPAOoO0gSMqJJxZbmNkEVu+I/rRS
-	 32xoz9oFR4rlV44BXVk0Kofada/FGMMicz7Sd4uYFStopHLrtGT8Kv6dxCvZMBAghc
-	 yhmtSns+S2JEw==
-Message-ID: <b3401b41-257e-42d8-9e28-f52ecacb52e2@kernel.org>
-Date: Tue, 14 Apr 2026 12:55:58 +0200
+	b=CstZd32zlXYBVfvl87qASEClFBwQRJDy4CNmDZSQUyhmBeDiDCAMbdi5op0GN133q
+	 wNeAgm+kpEe9iC4MKarTZCGKPXvse1BQh8lOlRFzn/iZgW4/CbuKZQGi6ID0DdD80+
+	 wNAHMPm4P8C03/GDwi3IYZs7ZZ2Ketzg8kB++Y3yayu+O3VxceUwY86HfeICVvtzfH
+	 fJOW9qA8aDIcY7kmQSABpy85Pkdth8ACZgX5EtrJIy8aPrZgac2ZWU98PNEjSz0CHB
+	 bH9AIVr0slEtCB0wJ/hH8Cn6oushCtMtgi5iQxNY03gf586Cv8DcnuzFq1NmYK8ccm
+	 QabW7s+W3ZDUw==
+Message-ID: <3d14a22a-f2ad-4d46-9505-98b52e450955@kernel.org>
+Date: Tue, 14 Apr 2026 12:57:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 35/35] arm64: dts: qcom: talos: Drop unused second PDC reg
+Subject: Re: [PATCH 31/35] arm64: dts: qcom: milos: Drop unused second PDC reg
  entry
 To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
  Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -63,7 +63,7 @@ To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 References: <20260410184124.1068210-1-mukesh.ojha@oss.qualcomm.com>
- <20260410184124.1068210-36-mukesh.ojha@oss.qualcomm.com>
+ <20260410184124.1068210-32-mukesh.ojha@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,7 +109,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260410184124.1068210-36-mukesh.ojha@oss.qualcomm.com>
+In-Reply-To: <20260410184124.1068210-32-mukesh.ojha@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -123,7 +123,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103118-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103119-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -138,8 +138,8 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: A53B83F9079
+	DBL_BLOCKED_OPENRESOLVER(0.00)[af00000:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,b220000:email]
+X-Rspamd-Queue-Id: 7D91F3F9093
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
@@ -150,10 +150,21 @@ On 10/04/2026 20:41, Mukesh Ojha wrote:
 > 
 > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 > ---
+>  arch/arm64/boot/dts/qcom/milos.dtsi | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom/milos.dtsi
+> index 71941e6f49bf..a3c2ac8ca675 100644
+> --- a/arch/arm64/boot/dts/qcom/milos.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/milos.dtsi
+> @@ -1564,8 +1564,7 @@ dispcc: clock-controller@af00000 {
+>  
+>  		pdc: interrupt-controller@b220000 {
+>  			compatible = "qcom,milos-pdc", "qcom,pdc";
+> -			reg = <0x0 0x0b220000 0x0 0x10000>,
 
-Same comment as for other patches like that. This is not a valid reason
-or at least not sufficiently explained. Either hardware has it or has
-not. Why is driver relevant here? That must be explained in commit msg.
+You already changed this line in previous patch. Fixing one property in
+DTS to match hardware is one commit.
 
 Best regards,
 Krzysztof
