@@ -1,56 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-103179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aG6vLkRt3mncEAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 18:37:24 +0200
+	id uJTICC9s3mncEAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 18:32:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3638E3FCA87
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 18:37:24 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A1BF3FC9E1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 18:32:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 44CF53033520
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 16:31:28 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A7AE2300D4FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 16:31:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B806E3A4502;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A01831E82F;
 	Tue, 14 Apr 2026 16:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A+JL0elu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sl23EOQO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E699D28CF4A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68D8288C30;
 	Tue, 14 Apr 2026 16:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776184281; cv=none; b=PrUiBhdal3tXDKAAdXKsXg32SrmHbjRC4+XqoQomvPMRLTFmtSsCeNOlnc9KR/YziURHh716fvR7L+x8keUegmZ5auc6eTkRkud8agHipLtgMVVUHVBppEXcJlNkQlmQXsB2sMo8Rw4eALfKQVxjykBrhlqb/FAMo1Wuj3iOepg=
+	t=1776184281; cv=none; b=WxEL3Ka4B8dgPSP3uNkZ6i/yrwpLukE84+rTQ/iCfwmFCOhbhD6CMWsKih+wUXVxZrOBiZAhFeOGw23q3zc5QEIf7GJFz8OAYrf2NH/d+TUPhV/JePjCu9xbViqtnuwP+B2EstPaSQur3254M+JxCFJn8U4aSlDhbeoavJTaG9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1776184281; c=relaxed/simple;
-	bh=gNqdE9d81DRyUjeuqyd3JZqlKkL8O3oEZBn4pvoKquI=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hAq43hgCJMvUBQRXfAJvfl8OtMppeqeaSfc4Okwv6GJF7E9ilqGtYA5LL9ouqaVifuLbrThmKMjAQpNcYfN6DKtw06mjiOXdzSVVwAZyLV47mRHN7iXr5fJnu+GVvub/TITUymGuMN5q+BSuuzuCz8bpdY11Ux7QuA+YBKYp9og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A+JL0elu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5E285C19425;
+	bh=Xcje/jed8ZwOn7gRcR4WUVa/XkNJGc5sFLasaQZsHEo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=rUKh1FEAMxt2mIEPg83e4TYgwqQR8nxNPhe73EBXM7dI98txqGQW5493R1L559/dUresInp4mrwMs3SEpaWttZQTeYcZWlHmBuc+prV93as0VgZA6Kd+NguoS2Bd7LrnH0HlSypTWydDrwAf9KclcX1p+I/d3tGIgAZSCD4Ax7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sl23EOQO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6EB9AC2BCB5;
 	Tue, 14 Apr 2026 16:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1776184280;
-	bh=gNqdE9d81DRyUjeuqyd3JZqlKkL8O3oEZBn4pvoKquI=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=A+JL0eluU8YhIaTg9TVLcFGK6AaI6NWA8iV8RdB5LAie5AE4Tj8N8vWVSWz0/AAyg
-	 TsztY8nxACWFQ70K/mdmRl08JzP6x9Wc/xTJbHrhcL2CGVFUzS6ATo4iYvPDkwKnnd
-	 LEMsorVqoZY16SqhRbYn3aR34yLlNZ7JGwKv5vb1n6phC66iFe9Vjta2fOOYotaTCj
-	 XyEBM/bsg3oNQE86A5m8KB2NJ7LJctVDMxLTF8NtUpR002wXFmMakuRjssdtfFxhqi
-	 6Jb3Vfb+iZ9vgyoKMo/Ighkls5jNFyanvzUcKlkpvc3kfeLeZLwxQR2f2MEYrQh5g3
-	 Gjga8N+Z85RzA==
+	bh=Xcje/jed8ZwOn7gRcR4WUVa/XkNJGc5sFLasaQZsHEo=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=Sl23EOQOrOUSm+TNf/WDDX6GJXmyjo1lPHEAT2oe79CFibRS8Al27zKKghKKgz5sS
+	 jb2Dk9Fj0VLuMBnKB+h3nMed+ZqCj5buBgv1R3fbASvUAhqVvTsy1E5XxsUVpEkMQ7
+	 O+9+a+gF4Dxf/PhWz4Tuwv1aJo0bDQDxrcfKV+oQyugQltQYmfPE2EU+3WptXIWmE6
+	 rK53tfASjizMPyrovDO6BY8C3RFTqFHbcktC5jpXvct6jh1dsnZVpnTUPjo7Bmz5N0
+	 h1dX63c6DcVK+V8mY7Hl/+qKq/bzhUjXJXjDoqZYM1dr98LX9/7RuzswlOChPoyXzU
+	 JrROHtlfrym9g==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47ED0F9D0DC;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D462F9D0E7;
 	Tue, 14 Apr 2026 16:31:20 +0000 (UTC)
 From: Ekansh Gupta via B4 Relay <devnull+ekansh.gupta.oss.qualcomm.com@kernel.org>
-Subject: [PATCH 0/3] Introduce generic context device bus for IOMMU context
- isolation
-Date: Tue, 14 Apr 2026 22:01:14 +0530
-Message-Id: <20260414-computebus-v1-0-4d904d40926a@oss.qualcomm.com>
+Date: Tue, 14 Apr 2026 22:01:15 +0530
+Subject: [PATCH 1/3] drivers: base: Add generic context device bus
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,10 +58,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANJr3mkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDE0MT3eT83ILSktSk0mLdVAtTozRLS5PUVCNTJaCGgqLUtMwKsGHRsbW
- 1AE2VhC1cAAAA
-X-Change-ID: 20260414-computebus-e852f994ee25
+Message-Id: <20260414-computebus-v1-1-4d904d40926a@oss.qualcomm.com>
+References: <20260414-computebus-v1-0-4d904d40926a@oss.qualcomm.com>
+In-Reply-To: <20260414-computebus-v1-0-4d904d40926a@oss.qualcomm.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
  "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>, 
  Thierry Reding <thierry.reding@kernel.org>, 
@@ -78,11 +76,11 @@ Cc: linux-kernel@vger.kernel.org, driver-core@lists.linux.dev,
  iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
  Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1776184278; l=2594;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1776184278; l=3013;
  i=ekansh.gupta@oss.qualcomm.com; s=20260223; h=from:subject:message-id;
- bh=gNqdE9d81DRyUjeuqyd3JZqlKkL8O3oEZBn4pvoKquI=;
- b=baxjKIj5uScDYrCIYv1qYvM3a63CPT0wbgKn65lPfsAUxTA/AlgOpd2u7suXXwN600FcGRQqF
- 3nuqpzm5lmqBrQTEYy04WW8GTzfnkrDDDEQwfOQK54jlvxWaVJzVsAz
+ bh=GiaW9KX6EnyHl15uXUaLI85Eugyx6gIsQQrGnKwyVVk=;
+ b=g7ZvTKbHA9UTo3rRc56oQRClDN77YoCoOIyf0Ch0pvK4S/d5lszMPmM5fNmU56g6YpXEOAu9x
+ J6BS+tcG340ACkYknZbhTqxrn/ex62ByFElTbD0dzk54v75d4aqeryz
 X-Developer-Key: i=ekansh.gupta@oss.qualcomm.com; a=ed25519;
  pk=n0SepARizye+pYjhjg1RA5J+Nq4+IJbyRcBybU+/ERQ=
 X-Endpoint-Received: by B4 Relay for ekansh.gupta@oss.qualcomm.com/20260223
@@ -92,12 +90,12 @@ Reply-To: ekansh.gupta@oss.qualcomm.com
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103179-lists,linux-arm-msm=lfdr.de,ekansh.gupta.oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-103178-lists,linux-arm-msm=lfdr.de,ekansh.gupta.oss.qualcomm.com];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -113,72 +111,114 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:replyto,oss.qualcomm.com:mid,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 3638E3FCA87
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:replyto,oss.qualcomm.com:mid,qualcomm.com:email]
+X-Rspamd-Queue-Id: 1A1BF3FC9E1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-This series introduces a generic context device bus to replace driver-specific
-implementations and enable proper IOMMU handling of synthetic context bank
-devices used by accelerator and GPU drivers.
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 
-Background:
------------
-During review of the fastrpc driver changes [1], it was pointed out that using
-a platform driver for compute bank (CB) devices was incorrect since these are
-synthetic IOMMU context banks, not real platform devices. The platform driver
-approach also had a race condition where device nodes were created before
-channel resources were initialized, and probe was async, allowing applications
-to open devices before sessions were available.
+Introduce a new generic bus type for synthetic context bank devices
+that require IOMMU context isolation. This bus provides a shared
+infrastructure for accelerator and GPU drivers that create virtual
+devices representing IOMMU context banks.
 
-The reviewer suggested following the pattern used in host1x_memory_context_list_init()
-and creating devices manually. During review of the QDA driver [2], it was
-further suggested to create a generic bus type that could be shared across
-multiple drivers rather than having each driver implement its own bus.
-
-This series implements that suggestion by:
-1. Creating a generic context_device_bus_type in drivers/base/
-2. Migrating the existing host1x driver to use it
-3. Converting fastrpc to use it, fixing the race condition in the process
-
-References:
------------
-[1] Fastrpc platform driver review:
-    https://lore.kernel.org/all/golcrcr6voafr3fqsnihyjyut36sii55vzws4josfhkjjg3nie@ur43qq2kvlsv/
-
-[2] QDA driver review requesting generic bus:
-    https://lore.kernel.org/all/en5tdgemre7vq5qihe6wnkbrro24vtzwfxwqrpnrrmugxoszs7@x2ox64zeznvd/
+Currently, drivers like host1x implement their own bus types for
+context devices. This generic implementation allows multiple drivers
+to share the same bus infrastructure, simplifying the IOMMU subsystem
+integration and reducing code duplication.
 
 Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 ---
-Ekansh Gupta (3):
-      drivers: base: Add generic context device bus
-      gpu: host1x: Migrate to generic context device bus
-      misc: fastrpc: Use context device bus for compute banks
+ drivers/base/Kconfig        |  3 +++
+ drivers/base/Makefile       |  1 +
+ drivers/base/context_bus.c  | 24 ++++++++++++++++++++++++
+ include/linux/context_bus.h | 15 +++++++++++++++
+ 4 files changed, 43 insertions(+)
 
- drivers/base/Kconfig             |   3 +
- drivers/base/Makefile            |   1 +
- drivers/base/context_bus.c       |  24 ++++++
- drivers/gpu/host1x/Kconfig       |   5 +-
- drivers/gpu/host1x/Makefile      |   1 -
- drivers/gpu/host1x/context.c     |   2 +-
- drivers/gpu/host1x/context.h     |   3 +-
- drivers/gpu/host1x/context_bus.c |  26 ------
- drivers/iommu/iommu.c            |   6 +-
- drivers/misc/Kconfig             |   1 +
- drivers/misc/fastrpc.c           | 180 +++++++++++++++++++++++++++------------
- include/linux/context_bus.h      |  15 ++++
- 12 files changed, 174 insertions(+), 93 deletions(-)
----
-base-commit: 1c7cc4904160c6fc6377564140062d68a3dc93a0
-change-id: 20260414-computebus-e852f994ee25
+diff --git a/drivers/base/Kconfig b/drivers/base/Kconfig
+index f7d385cbd3ba..479bc4bb442b 100644
+--- a/drivers/base/Kconfig
++++ b/drivers/base/Kconfig
+@@ -4,6 +4,9 @@ menu "Generic Driver Options"
+ config AUXILIARY_BUS
+ 	bool
+ 
++config CONTEXT_DEVICE_BUS
++	bool
++
+ config UEVENT_HELPER
+ 	bool "Support for uevent helper"
+ 	help
+diff --git a/drivers/base/Makefile b/drivers/base/Makefile
+index 8074a10183dc..ab9a0b2dc73b 100644
+--- a/drivers/base/Makefile
++++ b/drivers/base/Makefile
+@@ -8,6 +8,7 @@ obj-y			:= component.o core.o bus.o dd.o syscore.o \
+ 			   topology.o container.o property.o cacheinfo.o \
+ 			   swnode.o faux.o
+ obj-$(CONFIG_AUXILIARY_BUS) += auxiliary.o
++obj-$(CONFIG_CONTEXT_DEVICE_BUS) += context_bus.o
+ obj-$(CONFIG_DEVTMPFS)	+= devtmpfs.o
+ obj-y			+= power/
+ obj-$(CONFIG_ISA_BUS_API)	+= isa.o
+diff --git a/drivers/base/context_bus.c b/drivers/base/context_bus.c
+new file mode 100644
+index 000000000000..6ddb6c27bf69
+--- /dev/null
++++ b/drivers/base/context_bus.c
+@@ -0,0 +1,24 @@
++// SPDX-License-Identifier: GPL-2.0-only
++// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++
++#include <linux/context_bus.h>
++#include <linux/init.h>
++
++const struct bus_type context_device_bus_type = {
++	.name = "context-device",
++};
++EXPORT_SYMBOL_GPL(context_device_bus_type);
++
++static int __init context_device_bus_init(void)
++{
++	int err;
++
++	err = bus_register(&context_device_bus_type);
++	if (err < 0) {
++		pr_err("context-device bus registration failed: %d\n", err);
++		return err;
++	}
++
++	return 0;
++}
++postcore_initcall(context_device_bus_init);
+diff --git a/include/linux/context_bus.h b/include/linux/context_bus.h
+new file mode 100644
+index 000000000000..0cd44cb5b147
+--- /dev/null
++++ b/include/linux/context_bus.h
+@@ -0,0 +1,15 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
++
++#ifndef __LINUX_CONTEXT_BUS_H
++#define __LINUX_CONTEXT_BUS_H
++
++#include <linux/device.h>
++
++#ifdef CONFIG_CONTEXT_DEVICE_BUS
++extern const struct bus_type context_device_bus_type;
++#endif
++
++#endif /* __LINUX_CONTEXT_BUS_H */
 
-Best regards,
 -- 
-Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+2.34.1
 
 
 
