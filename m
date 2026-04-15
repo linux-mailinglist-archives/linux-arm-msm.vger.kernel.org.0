@@ -1,326 +1,265 @@
-Return-Path: <linux-arm-msm+bounces-103224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mC8/HCbQ3ml0IgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 01:39:18 +0200
+	id yIIbHNT83mlINQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 04:49:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8AB33FF188
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 01:39:17 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CF353FFD69
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 04:49:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 2E02B3005AA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Apr 2026 23:39:17 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 1956D30326D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 02:49:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70FBF3CB2D2;
-	Tue, 14 Apr 2026 23:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 922D1313E3F;
+	Wed, 15 Apr 2026 02:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ndufresne-ca.20251104.gappssmtp.com header.i=@ndufresne-ca.20251104.gappssmtp.com header.b="jKd1dHOu"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mCWrYkCT";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hUFS0Xl5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E567389443
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 23:39:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217B83128C6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 02:49:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776209952; cv=none; b=YVaFwrZR8R0Nbrzo7hPVLB5n8fALHQCR1SUaFbmKcqBCh/BT1u9sGHUpO3aDRkPz1kS9v9FyRPte5FPjcrWSkW54TbP6wByBhfl38TQpbW0JtjsQB6BYydsDIVyVzRd7a+TGVug0s6qKPR62E4qsDeD0aVwfyY8iHcP9qhvZhwk=
+	t=1776221391; cv=none; b=cyy7ev6O5FWlXT4LjT33IcbA6kti3F4EI+iLhIQF2AuJqLKkSwel16FX5UVYD9jNWwacY99N9YUBDAinOoWm2uYT/ICh1XMwlllWTkiP84A7fcwSUlklK/dsM/UBjb06DujJStSPAyE+RuwMwsZkfn3BuHk8o3fBL+/Ul1RTM/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776209952; c=relaxed/simple;
-	bh=ZQsOBkB1S3n0//aolM4avdvsGyqltWWjuQg9TpDOfeM=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=uPWQH4wLZobhVuv5LHfHjpMqNOOFTAV2GatyBhVxlxKN092RbCPLyOcErevXSoWpRFYEbfsC6LphO2oo2zwyodocj2CoCwArqT0+ZahktWuQz3Pol0ldqlnflKGEBwoHwvo2t38C/JLP9yXP2DDm/25CTFYc29GlnApj6m/w860=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20251104.gappssmtp.com header.i=@ndufresne-ca.20251104.gappssmtp.com header.b=jKd1dHOu; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-899d6b7b073so62869696d6.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 16:39:09 -0700 (PDT)
+	s=arc-20240116; t=1776221391; c=relaxed/simple;
+	bh=JFEi0VD48StKC6owki25ycmNF/t8sTADQ78yU90b22o=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=fm8iqQqETfa1U7SzC7rHkKTbyE2ko5m3Yfo7YFuuw11BvFE5HmQcLxyzQXFAaNqJj4qH22YS6vHExgi8gyUWk9FdcOkHERu/hPolI7tbqTDSA3C6VPvw9OGhPdoswOCg/b+CM68Frl14DI9xjSS2zSrOT16vrSnDRYstF+CTso0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mCWrYkCT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hUFS0Xl5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63F2chpV029991
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 02:49:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4r/cAuIiAsQKjwiHb55odcavxKshbzULhKnHQ931Y8w=; b=mCWrYkCT8qk1NUkB
+	bewW2VfbzffXXXquDehlKK6/SDL7mFZQH55DugkuLnFg64kT7XJoqxrYi0TYOrRE
+	76GVArR9Cia4n1O+qSKmEzNhloTNDVRTfsj098jmpXPWiVWdVgqtjkiUzriPnBpd
+	Eg5x24Sov0BJH/NQI0NHKv/j3VoDN8YQegEu4aNW+ZlJ+cnpdAViPlOcS0sSThyU
+	H3io9liQVlYG4UCkDFpr2q6/oSDUGXTtmg5PdTpzx8hjK8XNnhNGOV164jkOdS9S
+	YV/ZQLHttedaP03ZYkx2ECXAHvrkcy7lqlTlQpkO42nHddx0fY7wkcFC20UeA0r7
+	WIGUWQ==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dhkgmk1e1-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 02:49:49 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id a92af1059eb24-12c21dbc9c1so11246636c88.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Apr 2026 19:49:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20251104.gappssmtp.com; s=20251104; t=1776209948; x=1776814748; darn=vger.kernel.org;
-        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
-         :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xdcDizxUzZtD3adFCvdchJhJRQ2hD09xTn0vHjtmQjM=;
-        b=jKd1dHOu8CUFco7qVVWGRl5mBx40cygBhTdsm1y5zcT2TZgT5p72fpNiJUhY0XcBAK
-         qfuM6d2pesrt56hgSRWt4wnnWPrKoAjncqvgPr1KF+kB7z5ITjeUqovogWQ2an3I2AsH
-         +BgLVtA/1YwsYmkfSvFKpf2ksqtco007lEGXCWQi/n4hlxwy3BuS75rKHtuOE0k1S+91
-         mTppkSzayK48PfHHbiB5QcssB4sGuHDfq1QhkLaZaokPLhKnmNYeknO6o7u5d7T6isR7
-         7e4fHNdOHW/iNft/GtB+o8hgfvAShhTBn6+B4DHkNOMzvGogXsgsNR6/RLbyHzHEDvsY
-         X2yQ==
+        d=oss.qualcomm.com; s=google; t=1776221388; x=1776826188; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4r/cAuIiAsQKjwiHb55odcavxKshbzULhKnHQ931Y8w=;
+        b=hUFS0Xl5KD9YsELGNZrZuGnZ/mPAZHp7ENOtXFS+qPjgkS2zobuNoF7g/LaXAZOIDv
+         lmAjkIaJ7SBdC7HLAedJIIYSfOiZ8t3CSugMLO1rYvADN3U1GebApnhXe/PxvL3/o7KQ
+         ULS0bEuK8N1XFECRobhxcNqQQcTeuE9Od5pUVq8Pl76wyO+h5b82llXB+MJT/WTT3IbM
+         KHdw5WSb0FxCWQXJigpOzXNhMBSYiuXTJiKJ4bABtaBRbqwggIrsYa8U/UquaTJpLgG8
+         I6p46G3UxUb2TXVOFLofhoUiGBJqiGYs/Aspo8UUkK8pmvKrleBzzxXdoOd2GR8H/1So
+         hE7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776209948; x=1776814748;
-        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
-         :from:subject:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xdcDizxUzZtD3adFCvdchJhJRQ2hD09xTn0vHjtmQjM=;
-        b=jv4B6fDibs3KyE+/gYK7DBeHsGu8Pgal7YF5kmfp5dS7IvHXY6vc0TdnbceclIKcy9
-         fwg5zWoF7IeUgFyd+z4YNm38+6CTIqcHKoWsgnKVV6zohWPQFMK3iniSZffbzv3Ns69F
-         8ZaGTrmXSrLzNu/mt80Le0pY71G+XHF/78aR24NZfOV6ToohtImoixwrQoyum2xjEg94
-         GpX4rfB0y2TmlhN9eUPuYcxyZ/WBUvGw4SPM98gb11NxU4kKuafqEX5PUjPwYQnOsV/E
-         YTgUSDlLQB2pxbDv7KknjuR66YriSeMoIZgQiYZiAo2todJy3KloeDy+U8QBgVmgJOH6
-         bjHA==
-X-Forwarded-Encrypted: i=1; AFNElJ86xm/sL3TzPlJiuDUKg6sR3K/Prm1o3rya5e+mli/hYHGqyXWvGuJ820Hqn2METG6P+YX+FSTqpVcTtM5A@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCf2wv2chqJMUriTt0JChKWOjeEnrQinR7AMPNq8Wb8E9ZyQaw
-	FAqoJUgwLzMTyznwCvJ82ipIKd4BcHPDVW83v0xZrDfjCNLi+47zFG0QShC8xaXATzU=
-X-Gm-Gg: AeBDieuAU76OcZ5Ychw2GEDQbrwynRhDI01NHNO5lo8uz0C9JiMcR6/61KszpnS2L8m
-	JG/q/oitLt6KS5GkcKI6iiKc+fGPTW48C8zOzTWE3vXn4DccWFh2aJiqQ12Wvyd+tP0UDh6X8HT
-	jv6HgPb5bqP5GSh6t41s1unN300AuCduBLsulEkbOdaC2/5n1XROYZ+oDUbkPOGUrGjQJ8tgdIa
-	GIQDQVScdcyexYcei79rvN1quIayM0UiNEmpCgHwXI3HOY+V03poFTZ+LZh72sFRZd78YFQvMzY
-	MQ3IxA18HPhWAU8yTfFankRGO7grLM534A7AtHfggZko0QzsP5WBJIg9a28XnEBrNGKVC/607GS
-	M+YcZ3RQm62nHT7SvXRJWGkfdn8vu8wZrMcVoCPxzbugDbMV1xlVJmYQiSFrFJ2mysea0CFdhBj
-	xMppX+AqkmJdBAaoljm18HDDKoeFPjqrIe8uB1pJE=
-X-Received: by 2002:a05:6214:2503:b0:8ac:b204:3238 with SMTP id 6a1803df08f44-8acb20435f5mr139156866d6.30.1776209948439;
-        Tue, 14 Apr 2026 16:39:08 -0700 (PDT)
-Received: from ?IPv6:2606:6d00:15:e06b::5ac? ([2606:6d00:15:e06b::5ac])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8aca5222c8esm93751436d6.28.2026.04.14.16.39.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Apr 2026 16:39:07 -0700 (PDT)
-Message-ID: <5d9c38edcfa4faffdf9d02a318f87355a5c9a021.camel@ndufresne.ca>
-Subject: Re: [PATCH RFC 4/7] media: qcom: iris: vdec: update size and stride
- calculations for 10bit formats
-From: Nicolas Dufresne <nicolas@ndufresne.ca>
-To: Neil Armstrong <neil.armstrong@linaro.org>, Vishnu Reddy	
- <busanna.reddy@oss.qualcomm.com>, Vikash Garodia	
- <vikash.garodia@oss.qualcomm.com>, Dikshita Agarwal	
- <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar
- <abhinav.kumar@linux.dev>,  Bryan O'Donoghue	 <bod@kernel.org>, Mauro
- Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Date: Tue, 14 Apr 2026 19:39:05 -0400
-In-Reply-To: <0301bf82-0859-44cd-99df-3de997e2cff4@linaro.org>
-References: 
-	<20260408-topic-sm8x50-iris-10bit-decoding-v1-0-428c1ec2e3f3@linaro.org>
-	 <20260408-topic-sm8x50-iris-10bit-decoding-v1-4-428c1ec2e3f3@linaro.org>
-	 <99eb55a8-6370-bf7b-f9de-e88231454b0e@oss.qualcomm.com>
-	 <0301bf82-0859-44cd-99df-3de997e2cff4@linaro.org>
-Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual;
- keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
- /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
- cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
- CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
- abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
- nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
- AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
- smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
- AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
- iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
- ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
- bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-CdX+pDs4e4UxKbXGxFhm"
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+        d=1e100.net; s=20251104; t=1776221388; x=1776826188;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4r/cAuIiAsQKjwiHb55odcavxKshbzULhKnHQ931Y8w=;
+        b=l+ZjnAVzfEUW7xngc+bJFeD1gayuBfKK7g52bRYeummTbE2ihuEQ5xeL/eQDc2WQOO
+         lRhnQe48G2zB+SvahfzVQ4B2h0SgkdkNdRH8z5QyQi1RhDeL0VZcT6MDqg7JtZtpH08m
+         aZg1L9JtPAl6FDVbnTAb+2LHUOLcB1cDYd9JkpB/JMn7rA2yJn9L69mEqJeDqLww9/dk
+         tHiVtFUU2DhSTDocfqIdPEzIpdQNwShXt/yQf4AK+YjbSIQd2XHXn1Rxnwhyp87cOGje
+         RwKPJxQmBdWM8OG/KsfisipoCLIFitIcEAUWVBYWZKisQO9hs6ZKuBxku99qdPUmSQ7Y
+         SthQ==
+X-Forwarded-Encrypted: i=1; AFNElJ92Cf5pidfkDnO0tiWPtuGhGxme6AnnZ5RAYxLHK1jDnjyxm/qq8HTdMmn6u99jm2bduxz4uPMATJt2dfzg@vger.kernel.org
+X-Gm-Message-State: AOJu0YyB3bjPd6fg1GW9XMn87WMGQbeOgPdWpP30yRIrGkszwKmzmkrv
+	pJy6zbszI+WqnAiZnuSzge7ZEMsDpuj9c4a9NzssyLylfxCczL4Dzmu4Vd3lJFFCFz3Tw0DjZDI
+	0yyGPjo85fqBNFLr7AX1legDgI3V1h/E48VuSSZs2MmpoMNiaEA9cptZ4dcJk7JmGPNpv
+X-Gm-Gg: AeBDievEkMB8y+KZhn7zZArki0ug+1eEKfh1RLA7fAehUHuAqdWM0TCnt5VVx1RIiyC
+	9O93dFTrdPfFlu/MqVS1Kky8I4MfQZ5ynbBtlJPlPaHV4GZDz7MMqmlpIBujoHDyKv60EwOiZ/m
+	6066WJjO6o2CT5WZF7N4PFEAgSV8FJ7dbzohRGhO4Lvg7ovL50A/LstQTBe2uGsgdlt6Es2UfiF
+	jsnnt64DdQzvwIEbgJDYpGID3OPhSkQJIdwUt0Q2fbaT3+gf/PMFnjdAHFFF1v/Uyfv4wKNxl8q
+	QtICGRadGlc4bj2Tn7Vir3fB1R+ebrW82IkBaXLhNXEpk13oNuYSxHPaGaXSOO65gIbDEsVgwDq
+	jpcmEFXQ20JX8qaEM15nxzYnwF6zXMG+/98SUHVkd6O5G7ssw
+X-Received: by 2002:a05:7301:1017:b0:2c9:1943:e7ff with SMTP id 5a478bee46e88-2d587d80ee9mr13078019eec.10.1776221388006;
+        Tue, 14 Apr 2026 19:49:48 -0700 (PDT)
+X-Received: by 2002:a05:7301:1017:b0:2c9:1943:e7ff with SMTP id 5a478bee46e88-2d587d80ee9mr13078000eec.10.1776221387489;
+        Tue, 14 Apr 2026 19:49:47 -0700 (PDT)
+Received: from [10.239.97.158] ([114.94.8.21])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2de8c605883sm710270eec.10.2026.04.14.19.49.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Apr 2026 19:49:46 -0700 (PDT)
+Message-ID: <e41ee37c-c93a-44c0-9168-79bf59550859@oss.qualcomm.com>
+Date: Wed, 15 Apr 2026 10:49:39 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Spamd-Result: default: False [-3.66 / 15.00];
-	SIGNED_PGP(-2.00)[];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] Bluetooth: hci_qca: Convert timeout from jiffies to ms
+From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Bartosz Golaszewski <brgl@kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>, linux-arm-msm@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+        cheng.jiang@oss.qualcomm.com, quic_chezhou@quicinc.com,
+        wei.deng@oss.qualcomm.com, jinwang.li@oss.qualcomm.com,
+        mengshi.wu@oss.qualcomm.com, stable@vger.kernel.org,
+        Paul Menzel <pmenzel@molgen.mpg.de>
+References: <20260327082941.1396521-1-shuai.zhang@oss.qualcomm.com>
+ <CABBYNZKY_-QgsenfU4hpyQ1+87rXDS13wFueN2nX6Wojy4BgHQ@mail.gmail.com>
+ <f6a9419d-5e63-4c36-a7e9-aab6ac798703@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <f6a9419d-5e63-4c36-a7e9-aab6ac798703@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE1MDAyNCBTYWx0ZWRfX1oVvkgZfxCWu
+ bsGVu0+4n57ZG//uwKCIJAdp9thckP1LkmpYLYrv7HQfnocgZWztNHNwMspRxkM5ufwx73mE8Zu
+ A+RgkT5v7x/ldvnxRS5J0qaEdWF82JqdHIazSUV2/SdzlbhND5NOGxVot6WMxR7NyT84zKwhlFB
+ PYHwz+2f1zMSrQ79KBTDxJ8v0Gyi9MEt/7dDmtEVeHAQ0d2AwJac/5Kfld7yg08KuHCzoUU+2zN
+ J72nz8kpfySMjRhKy90ULKcRuueEJYPeL7fq6sOrctrxOYG4oRIv+OAqxjIAgZjhUkbmFjU7sWe
+ hRAWw/nB1vT/UtCix3YpVayBaBHJXAT+V7hgJXejDWJcu/HxO+Cw5S5jwkxW9cpI0/gPMKTLFNe
+ QSdUFa4oKR5TO5rBQveFfKJFxSFj3AKaiMvoQHs7MVXpEhECjiey22TnzjojOavIYUGi3PYfzEO
+ FcZ66m7DiiMuEKfa11g==
+X-Proofpoint-ORIG-GUID: _K1JK35Hzfe_dEz1YMll-8RXNrWaZqQj
+X-Proofpoint-GUID: _K1JK35Hzfe_dEz1YMll-8RXNrWaZqQj
+X-Authority-Analysis: v=2.4 cv=HJLz0Itv c=1 sm=1 tr=0 ts=69defccd cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8
+ a=KKAkSRfTAAAA:8 a=PU9PaiTs9atMpjuS6XkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=vr4QvYf-bLy2KjpDp97w:22 a=TjNXssC_j7lpFel5tvFf:22 a=GvGzcOZaWPEFPQC_NcjD:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-14_04,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604150024
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_DKIM_ALLOW(-0.20)[ndufresne-ca.20251104.gappssmtp.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[ndufresne.ca : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[ndufresne-ca.20251104.gappssmtp.com:+];
-	TAGGED_FROM(0.00)[bounces-103224-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	TAGGED_FROM(0.00)[bounces-103225-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sashiko.dev:url,qualcomm.com:dkim,qualcomm.com:email,quicinc.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,linaro.org:email];
+	FREEMAIL_TO(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[nicolas@ndufresne.ca,linux-arm-msm@vger.kernel.org];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[shuai.zhang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,ndufresne.ca:mid,ndufresne-ca.20251104.gappssmtp.com:dkim]
-X-Rspamd-Queue-Id: D8AB33FF188
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 0CF353FFD69
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+Hi Luiz
 
---=-CdX+pDs4e4UxKbXGxFhm
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 4/10/2026 4:56 PM, Shuai Zhang wrote:
+> Hi Luiz
+>
+> On 3/28/2026 1:53 AM, Luiz Augusto von Dentz wrote:
+>> Hi Shuai,
+>>
+>> On Fri, Mar 27, 2026 at 4:30 AM Shuai Zhang
+>> <shuai.zhang@oss.qualcomm.com> wrote:
+>>> From: Shuai Zhang <quic_shuaz@quicinc.com>
+>>>
+>>> Since the timer uses jiffies as its unit rather than ms, the timeout 
+>>> value
+>>> must be converted from ms to jiffies when configuring the timer. 
+>>> Otherwise,
+>>> the intended 8s timeout is incorrectly set to approximately 33s.
+>>>
+>>> Cc: stable@vger.kernel.org
+>>> Fixes: d841502c79e3 ("Bluetooth: hci_qca: Collect controller memory 
+>>> dump during SSR")
+>>> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
+>>> Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+>>> Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>>> ---
+>>> Changes v4:
+>>> - add review-by signoff
+>>> - Link to v3
+>>> https://lore.kernel.org/all/20251107033924.3707495-1-quic_shuaz@quicinc.com/
+>>>
+>>> Changes v3:
+>>> - add Fixes tag
+>>> - Link to v2
+>>> https://lore.kernel.org/all/20251106140103.1406081-1-quic_shuaz@quicinc.com/
+>>>
+>>> Changes v2:
+>>> - Split timeout conversion into a separate patch.
+>>> - Clarified commit messages and added test case description.
+>>> - Link to v1
+>>> https://lore.kernel.org/all/20251104112601.2670019-1-quic_shuaz@quicinc.com/
+>>> ---
+>>>
+>>>   drivers/bluetooth/hci_qca.c | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+>>> index 228a754a9..d66af13ab 100644
+>>> --- a/drivers/bluetooth/hci_qca.c
+>>> +++ b/drivers/bluetooth/hci_qca.c
+>>> @@ -1607,7 +1607,7 @@ static void 
+>>> qca_wait_for_dump_collection(struct hci_dev *hdev)
+>>>          struct qca_data *qca = hu->priv;
+>>>
+>>>          wait_on_bit_timeout(&qca->flags, QCA_MEMDUMP_COLLECTION,
+>>> -                           TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT_MS);
+>>> +                           TASK_UNINTERRUPTIBLE, 
+>>> msecs_to_jiffies(MEMDUMP_TIMEOUT_MS));
+>>>
+>>>          clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
+>>>   }
+>>> -- 
+>>> 2.34.1
+>>>
+>> https://sashiko.dev/#/patchset/20260327082941.1396521-1-shuai.zhang%40oss.qualcomm.com 
+>>
+>>
+>> Comments seem valid to me.
+>
+>
+> https://lore.kernel.org/all/20260410085202.4128000-1-shuai.zhang@oss.qualcomm.com/ 
+>
+>
+> The wait will be woken up once the coredump collection is completed.
+>
+>
 
-Le vendredi 10 avril 2026 =C3=A0 13:59 +0200, Neil Armstrong a =C3=A9crit=
-=C2=A0:
-> On 4/10/26 12:10, Vishnu Reddy wrote:
-> >=20
-> > On 4/8/2026 10:13 PM, Neil Armstrong wrote:
-> > > Update the gen2 response and vdec s_fmt code to take in account
-> > > the P010 and QC010 when calculating the width, height and stride.
-> > >=20
-> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > ---
-> > > =C2=A0 .../platform/qcom/iris/iris_hfi_gen2_response.c=C2=A0=C2=A0=C2=
-=A0=C2=A0 | 19
-> > > ++++++++++++++++---
-> > > =C2=A0 drivers/media/platform/qcom/iris/iris_vdec.c=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 | 21
-> > > ++++++++++++++++++---
-> > > =C2=A0 2 files changed, 34 insertions(+), 6 deletions(-)
-> > >=20
-> > > diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.=
-c
-> > > b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-> > > index 8e19f61bbbf9..d268149191ea 100644
-> > > --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-> > > +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-> > > @@ -542,9 +542,22 @@ static void
-> > > iris_hfi_gen2_read_input_subcr_params(struct iris_inst *inst)
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pixmp_ip->width =3D width;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pixmp_ip->height =3D height;
-> > > -=C2=A0=C2=A0=C2=A0 pixmp_op->width =3D ALIGN(width, 128);
-> > > -=C2=A0=C2=A0=C2=A0 pixmp_op->height =3D ALIGN(height, 32);
-> > > -=C2=A0=C2=A0=C2=A0 pixmp_op->plane_fmt[0].bytesperline =3D ALIGN(wid=
-th, 128);
-> > > +=C2=A0=C2=A0=C2=A0 pixmp_op->width =3D pixmp_op->pixelformat =3D=3D =
-V4L2_PIX_FMT_QC10C ?
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ALIGN(width, 192) : ALIGN=
-(width, 128);
-> > > +=C2=A0=C2=A0=C2=A0 pixmp_op->height =3D pixmp_op->pixelformat =3D=3D=
- V4L2_PIX_FMT_QC10C ?
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ALIGN(height, 16) : ALIGN=
-(height, 32);
-> > > +=C2=A0=C2=A0=C2=A0 switch (pixmp_op->pixelformat) {
-> > > +=C2=A0=C2=A0=C2=A0 case V4L2_PIX_FMT_P010:
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pixmp_op->plane_fmt[0].by=
-tesperline =3D ALIGN(width * 2, 256);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> > > +=C2=A0=C2=A0=C2=A0 case V4L2_PIX_FMT_QC10C:
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pixmp_op->plane_fmt[0].by=
-tesperline =3D ALIGN(ALIGN(width, 192) * 4
-> > > / 3, 256);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> > > +=C2=A0=C2=A0=C2=A0 case V4L2_PIX_FMT_NV12:
-> > > +=C2=A0=C2=A0=C2=A0 case V4L2_PIX_FMT_QC08C:
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pixmp_op->plane_fmt[0].by=
-tesperline =3D ALIGN(width, 128);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 break;
-> > > +=C2=A0=C2=A0=C2=A0 }
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pixmp_op->plane_fmt[0].sizeimage =3D i=
-ris_get_buffer_size(inst,
-> > > BUF_OUTPUT);
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 matrix_coeff =3D subsc_params.color_in=
-fo & 0xFF;
-> > > diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c
-> > > b/drivers/media/platform/qcom/iris/iris_vdec.c
-> > > index 719217399a30..ca0518c27834 100644
-> > > --- a/drivers/media/platform/qcom/iris/iris_vdec.c
-> > > +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-> > > @@ -272,10 +272,25 @@ int iris_vdec_s_fmt(struct iris_inst *inst, str=
-uct
-> > > v4l2_format *f)
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt =3D inst->=
-fmt_dst;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt->type =3D =
-V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt->fmt.pix_m=
-p.pixelformat =3D f->fmt.pix_mp.pixelformat;
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt->fmt.pix_mp.width =3D=
- ALIGN(f->fmt.pix_mp.width, 128);
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt->fmt.pix_mp.height =
-=3D ALIGN(f->fmt.pix_mp.height, 32);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 codec_align =3D f->fmt.pi=
-x_mp.pixelformat =3D=3D V4L2_PIX_FMT_QC10C ?
-> > > 192 : 128;
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt->fmt.pix_mp.width =3D=
- ALIGN(f->fmt.pix_mp.width, codec_align);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 codec_align =3D f->fmt.pi=
-x_mp.pixelformat =3D=3D V4L2_PIX_FMT_QC10C ?
-> > > 16 : 32;
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt->fmt.pix_mp.height =
-=3D ALIGN(f->fmt.pix_mp.height,
-> > > codec_align);
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt->fmt.pix_m=
-p.num_planes =3D 1;
-> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt->fmt.pix_mp.plane_fmt=
-[0].bytesperline =3D ALIGN(f-
-> > > >fmt.pix_mp.width, 128);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 switch (f->fmt.pix_mp.pix=
-elformat) {
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 case V4L2_PIX_FMT_P010:
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 f=
-mt->fmt.pix_mp.plane_fmt[0].bytesperline =3D
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 ALIGN(f->fmt.pix_mp.width * 2, 256);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 b=
-reak;
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 case V4L2_PIX_FMT_QC10C:
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 f=
-mt->fmt.pix_mp.plane_fmt[0].bytesperline =3D
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 ALIGN(f->fmt.pix_mp.width * 4 / 3, 256);
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 b=
-reak;
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 case V4L2_PIX_FMT_NV12:
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 case V4L2_PIX_FMT_QC08C:
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 f=
-mt->fmt.pix_mp.plane_fmt[0].bytesperline =3D f-
-> > > >fmt.pix_mp.width;
-> > In the removed code, bytesperline for NV12 and QC08C was aligned to 128
-> > bytes.
-> > In the new code, Is that alignment missed or not required?
->=20
-> The alignment is done right before:
-> 	codec_align =3D f->fmt.pix_mp.pixelformat =3D=3D V4L2_PIX_FMT_QC10C ? 19=
-2 :
-> 128;
-> 	fmt->fmt.pix_mp.width =3D ALIGN(f->fmt.pix_mp.width, codec_align);
->=20
-> calling ALIGN(f->fmt.pix_mp.width, 128) again is a no-op.
+Please let me know if any additional information is needed.
 
-What typically other drivers do is implement a static table that associate =
-a
-v4l2_frmsize_stepwise to each format, and possibly per HW generation. And t=
-hen
-uses v4l2_apply_frmsize_constraints() to apply them generically in their
-try/s_fmt functions. This make lot cleaner and clearer code then the sate o=
-f
-this driver.
 
-Nicolas
-
->=20
 > Thanks,
-> Neil
->=20
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 b=
-reak;
-> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 fmt->fmt.pix_m=
-p.plane_fmt[0].sizeimage =3D
-> > > iris_get_buffer_size(inst, BUF_OUTPUT);
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 inst->buffers[=
-BUF_OUTPUT].min_count =3D iris_vpu_buf_count(inst,
-> > > BUF_OUTPUT);
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 inst->buffers[=
-BUF_OUTPUT].size =3D fmt-
-> > > >fmt.pix_mp.plane_fmt[0].sizeimage;
-> > >=20
->=20
-
---=-CdX+pDs4e4UxKbXGxFhm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCad7QGgAKCRDZQZRRKWBy
-9OTVAQDjDrJmAqZEOXX8SZYq68g2MLgk/zHNCSipt8K3Kenp/wEAh/Y/BbqAEvAn
-GwHnpqw/pVb+Q+MkJnLervpmdFlT6AY=
-=itdH
------END PGP SIGNATURE-----
-
---=-CdX+pDs4e4UxKbXGxFhm--
+> Shuai
+>
 
