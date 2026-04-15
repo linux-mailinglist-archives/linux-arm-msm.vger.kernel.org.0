@@ -1,281 +1,292 @@
-Return-Path: <linux-arm-msm+bounces-103306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aEDQDqnE32ksYwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 19:02:33 +0200
+	id WL6ZHefK32nVYwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 19:29:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B217240692A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 19:02:32 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7754D406CCA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 19:29:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2406231F7930
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 16:54:16 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 743B3304C724
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 17:16:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91A1B3ECBD5;
-	Wed, 15 Apr 2026 16:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6663A3E8C72;
+	Wed, 15 Apr 2026 17:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="YmQOhjm2"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DJlDCc+P";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UwKw84Gm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012049.outbound.protection.outlook.com [40.107.209.49])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60C73ED10B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 16:52:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776271950; cv=fail; b=IgZI73il8t4FAIAW3+1FZTGo2nnKhIdz86WIofbbAFDFDUoD9ljB1xBUjFDPmtL+jE3qlUt8F4JMMupaMNdOvrQdvIQsSIWXEv+adHZlVGSmb6PFvjD++tXSu6q2k87fVaqzBNSaUNGLhIukatZI//mYMYgt1zLQPa2+CJIoNss=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776271950; c=relaxed/simple;
-	bh=/edpperTSESpUKzMojV/aO9VXfdPkSBZaF8mDiyOVq4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=LKAR54alrq5R0tLzbkVq80K/p0kv/DECSMLG/g/sA8zm/L4angAtra+5Dm37j6RMTzWzkWiOCjj5GiJAtqpH+c1U3CBNtDw1OlVbu7LyHtoJ/j8zTE5O1n0e66f7zwcZO7teB6d7YD0eoTNhhTJu+zUhLFUpwApPZ8M01SfcUZs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=YmQOhjm2; arc=fail smtp.client-ip=40.107.209.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GA1C5HPhj5UsS28W7AoFEEV0WIDW7UJddt7EOX45TTdtfZUjszRTG7ZxoBRr3dtpS7OYaqwwUpZ+v9zjwHCkmjiUXxc4F66k8H39S0VQkxSg0iH29SNFOF0xQSEmwohskbS+UZVF/hL1XVt/G5s1vUXSdBTd7emAsTbjQw+g44NwGo4qCtn8xE34oIfs51yJK51XZKMeXFeBymXhZgDifdgLHCjKvFPvtt84oxnvrMb/jRENIH4325/ysAzO3VY3C4CLMRCCMzkwBjCdvHkgQzxd5sb6fQ3iBto8UlLL1bYL+bEHK1XrjhQERgFt7IJuu1uzi87Ejq/vMby7THngOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9DwMq2RTJYydRxJ6G0CYeJQMxCJq5u39Mt31BdEV7Hw=;
- b=FkrzAyCRItUIYG+N7UK/lN+yx3z9R3J2UgKcsXaWYZXcspJchs4BWsMNeGoN/2t3iF5cp+vwjLTVIceqHvpDm9ZJR3m2RIacLM2YGadHfts5VElWBSEEuzp1caOl1Q0AeuN/igLOJdLYwMulKRwMyuRwRralpuInnwyOF07oz6plPZfY8t9FlwdpKelDs9zDf/mgWEXjGXeWNDC4FiToXwAY0nz6nNCdciOXu9PYQHwrN5Qbm85mlgR2ypmjIpK3c7eoEg/2Pwss0H+2BNlLrVEvUsnjMu5AIxG5hSieFVHbK8RkyKPUXeQmXvLzq5WTXuHMH9f9lHXIXDciBOjA6g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oss.qualcomm.com smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9DwMq2RTJYydRxJ6G0CYeJQMxCJq5u39Mt31BdEV7Hw=;
- b=YmQOhjm2O77W+6VmGqDbii8I+Uw2dKW1BRmybi+6fhUIohWdd+oek98YRjSqWliBwNjZ8bOSWgFFf4Z5N3kqE2d5aoJds41qUcrbhnacn+/dMAQE/7jt47pIDLzL/JYvVkSESmiNR4ruEswg9j9UQ/TXNIIeglJ+9GSjG5UpAkk=
-Received: from BN0PR04CA0010.namprd04.prod.outlook.com (2603:10b6:408:ee::15)
- by IA1PR12MB8240.namprd12.prod.outlook.com (2603:10b6:208:3f2::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.20; Wed, 15 Apr
- 2026 16:52:24 +0000
-Received: from BN1PEPF00004681.namprd03.prod.outlook.com
- (2603:10b6:408:ee:cafe::37) by BN0PR04CA0010.outlook.office365.com
- (2603:10b6:408:ee::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9769.48 via Frontend Transport; Wed,
- 15 Apr 2026 16:52:23 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- BN1PEPF00004681.mail.protection.outlook.com (10.167.243.87) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9769.17 via Frontend Transport; Wed, 15 Apr 2026 16:52:23 +0000
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 15 Apr
- 2026 11:52:23 -0500
-Received: from [172.19.71.207] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
- Transport; Wed, 15 Apr 2026 11:52:22 -0500
-Message-ID: <78a955ce-8990-8594-1ebc-e7d4da14dce0@amd.com>
-Date: Wed, 15 Apr 2026 09:52:21 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E883E4C61
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 17:16:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776273388; cv=none; b=FPUi/7axqniW4ZMHNBQXprXFXG0M6/YIKdsM7q0ZCL5+Q8DrrKlWZaD4mpObiPJA5e4ZdeMukQa0pzSsBibp1bVfhAxoOruMOZ/CYDP/Pom5imAELsfZBN+8w/W5OQwRonfR77Sn1TPJZWkad2C5AR6A56lySMi90OR7EX4ja8A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776273388; c=relaxed/simple;
+	bh=S0EDPJ9l+fvj9T5naoPwWY+Enw0gjv+15LBTelh/VlM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=L3wnj8aHs+2zc8XSk89ELfmHNk2r3Ivs43jPysVyWhnpwSAH/9pGn1oE7aqeUTCq1oK068OrI7Elh5hL8OFoiMNUcarDjF8IOuxXmQoLRQVsTpQA+GLzm7Tc+1WXz4NNNSsDqny+kGrXSXIzsWF/BSsI/Lw5lb0HcRPKVPOtgPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DJlDCc+P; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UwKw84Gm; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63FFGNjg1793612
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 17:16:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	RXvT4zjNncbaQTzuRUGDRSkWnu4bijnWhJgtWj2vfqg=; b=DJlDCc+P7kvAcR3W
+	1i9+1MbX2YXxQYZ/Z48HaSJr9AdMUgXqCSWSChH6RoDXEE2xBPyKp9anBuYiWgxS
+	bqS9J0ixRzZwbUaxsx6M9EtAnU0bUKxa17zlMssX+JUzW/RcLm9LWjHcfmH6Hagj
+	q073QblXiX5Zec20+sZ/rKek5Wv46TrczYvsEH9l6hs1TPcj89bGrALmS14g7u4/
+	lk+qWOq7Q3Ynwx/jB7RAcRVSRPd2vUaqjZa70JGyLcS8pJeuJUisDox8hLY3aeFR
+	WmtZvKh4MTnzwgQjNEtyazblgy3ItIlwsOrJn3pbrBF9nDkIKHcxdDXZr+RYjJqv
+	k9VjJw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4djd5prefq-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 17:16:25 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2aad5fec175so100427065ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 10:16:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1776273384; x=1776878184; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RXvT4zjNncbaQTzuRUGDRSkWnu4bijnWhJgtWj2vfqg=;
+        b=UwKw84GmX1twq9q14oz7h9emayFdfayY3yYIfZ6Dzy+T9dhHQwAVEx9Cy8oY2wa2aw
+         8a30kr6AFjodFHxNaDmdyYUaW+Dh21v41d1c3vDaxmX8LsFmZZU1Aa1wNarvc33pcjXO
+         iiQk0nSJ+aSTo+K+tcRFiuyDpRNXo6JltgU12Kmmt5nfwnrPmMBWvEJENyrfHIqsNclH
+         w1iMkP+9zOdwH/qxq+e1sx1MJXuAcj7gDEooiGbjn8yyKLUoCW7By/qs2BbP1kSZ2s2M
+         SlnhLcvs3mDgzI2Neej0GI+r5yy9g9hHzs8wPHiHjGbZnjecz9Zv0Jr9zJfoxpKCgISn
+         EfoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776273384; x=1776878184;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RXvT4zjNncbaQTzuRUGDRSkWnu4bijnWhJgtWj2vfqg=;
+        b=M6246SKk6PDPmTpHwtG0S4L+30zWuCtrkBuYRVx3a5FYuhkM7VhHO0cB8l5jaqDDDY
+         nPc2NbC5+nyak4L8Q7xRbbtPZfzGhYHIzRg3qS1Rfq01FPJqtwnhDQ5sW7z7Rpz7yRpT
+         +CZkmYrqrcvVdEf5tcuSBGJveO0EPqb1tolqgEH/5/MpELtIwcuPoZogHgi2BzdJgHe2
+         4JUyHeDaqLrSgBacWHPdBVGw8N6I+o0YUDManS0rAm1vWXly0YWbOuB9iZ60XfWas+A1
+         3eHeKCSelndNfuVOV66tY9bng3diF4loQhTTBlRA3aaSLAezo9UvEwhgBRhZoI3bjo0x
+         rzXA==
+X-Forwarded-Encrypted: i=1; AFNElJ8/SMmb7Y482+Sok5Sz7UYwVVea38KcG/JQbRwcK0l/nGbc1746bt3aE/9x1cz3Vwr9TxQ1jExMoDqG78w6@vger.kernel.org
+X-Gm-Message-State: AOJu0YweevxrV5hd27ewL6VQ/kR9nz1Ld0DukV7RdAhQLgFRYLgGDV3J
+	GJ2HpIgCV5/ulBsGIZSzgh+QeRifLMsQ5LJsfUqnSx99GLZn9HjDQVYDKPM8JL0DsO0Zlg3t9NM
+	lWV41B39AdzbX+O4yC+uGLsJgBP7uyPJdWtoXatUc+m4HOVGw+J7Qy3f2RdugJFvLcP7H
+X-Gm-Gg: AeBDievzB2/Qbyjhmvgb5Nn7Dq2vT/AxEJjsaQQzdtA11lGgLfgTx11miLkA6BB6CC+
+	pkUEPfiJVMXf4x/vjFUlkS2+YLLJIWLKDqL9M1Ih6c4N2grMPUzmtHGAFCQCP4WCB1wVYTvwqdx
+	UKgNMjd6ho/7WT2porDd3W5ZpkpAkT37n1czbTJiKX5nIQpYMlRGWZ+2s7gbkN5k4+bhoOVfOhX
+	IM37MCuIMHxdKANIshsdNmQ8F9FB3lkJkS4QHuEZsf5SrajRzJAqf02y/m0mxR0/mpVAMhGtblN
+	qthj5NDXS+L0s88W+sVm+uZ2myHboXgcEKNkui9jnnLEUzPifKkvAPclipZFXh0qXFDTDvqt3dB
+	GcI0VXqtc6NrNhe3pWGhcCPnI87EoU6+O+d0XY60WSBuZccz2ehEubw==
+X-Received: by 2002:a17:902:cf05:b0:2b2:42da:25c4 with SMTP id d9443c01a7336-2b2d59adee5mr234505645ad.14.1776273384141;
+        Wed, 15 Apr 2026 10:16:24 -0700 (PDT)
+X-Received: by 2002:a17:902:cf05:b0:2b2:42da:25c4 with SMTP id d9443c01a7336-2b2d59adee5mr234505285ad.14.1776273383593;
+        Wed, 15 Apr 2026 10:16:23 -0700 (PDT)
+Received: from [10.206.105.200] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b47826e306sm27292945ad.46.2026.04.15.10.16.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Apr 2026 10:16:22 -0700 (PDT)
+Message-ID: <75191131-2eb5-a7d3-0222-8c03a5ded45a@oss.qualcomm.com>
+Date: Wed, 15 Apr 2026 22:46:13 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Subject: Re: [PATCH] accel/qaic: Address potential out-of-bounds read in
- resp_worker()
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 1/3] drivers: base: Add generic context device bus
 Content-Language: en-US
-To: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
-	<jeff.hugo@oss.qualcomm.com>, <carl.vanderlip@oss.qualcomm.com>,
-	<troy.hanson@oss.qualcomm.com>, <zachary.mckevitt@oss.qualcomm.com>
-CC: <ogabbay@kernel.org>, <karol.wachowski@linux.intel.com>,
-	<linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>, Ruikai
- Peng <ruikai@pwno.io>
-References: <20260414173249.3672053-1-youssef.abdulrahman@oss.qualcomm.com>
-From: Lizhi Hou <lizhi.hou@amd.com>
-In-Reply-To: <20260414173249.3672053-1-youssef.abdulrahman@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Danilo Krummrich <dakr@kernel.org>,
+        Thierry Reding <thierry.reding@kernel.org>,
+        Mikko Perttunen <mperttunen@nvidia.com>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>, Arnd Bergmann <arnd@arndb.de>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Bharath Kumar <quic_bkumar@quicinc.com>,
+        Chenna Kesava Raju <quic_chennak@quicinc.com>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Cc: linux-kernel@vger.kernel.org, driver-core@lists.linux.dev,
+        dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org
+References: <20260414-computebus-v1-0-4d904d40926a@oss.qualcomm.com>
+ <20260414-computebus-v1-1-4d904d40926a@oss.qualcomm.com>
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+In-Reply-To: <20260414-computebus-v1-1-4d904d40926a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00004681:EE_|IA1PR12MB8240:EE_
-X-MS-Office365-Filtering-Correlation-Id: 43759456-af29-48b9-8a70-08de9b0f5dd7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|36860700016|7416014|376014|82310400026|18002099003|56012099003|22082099003;
-X-Microsoft-Antispam-Message-Info:
-	2qxNpik867QVXIj8H1ggjCPMM6TTyb+OVxmuyFcKzg+On/T4ssBD3jaTLuYG73zLmua356VIYBJbNrfxVsAwUVK1EaC9fEWpcErZJ7GI7D8lD+MKIYoqDtF7XYMCaMlLqCbToHUabiRT7fHZSTmWLiOzCbtT6JXCGv9yfMKwft4T1nN50HAT4nrasNigjKiMglCJpqk1xUuU5VA/kqUJ3EQPA3odd7gSoShCft6DtBk4Th1SE/EYpSs6Yb7MPjP/xKAFl6hRqVQZ3Zno7aJZ6hAwB02ibduyqRuFFXtUCCbYDOmn2gehqCbPphk5WRGmzScGJt1oB2rT4Pyl5Pu6glah1AKUotYpse9XnawTWQfy/l3/PiJMy2//DOXKNefpszbLFzL+Yc0ViMmZy5C24eVlr74KiBZ1E+bgRcKO6Fw8LIg9MIk+V6qSp8f+DudSK47TwfyGmNTC0WPaFKH60fT9+tZMZmqML+b1Rg/9nOzvjVjygEcY43QF8OV2kYhiYxNrq7QcP3RZDENVD/xD8HiEV8weKPowgcaLwGwJmZzgV+p1uoWS+WN9/VG6Y17pv6q9VOlwQqQjSFhaceGoQA/zVmzMZDoqAzQywx5uPhsEAYbq5zypntGvZwjBABP2Alu90t3XdAn2qVmVa0uNpIi9tpXH1pquya/+JIuj4Xsde4trT1P7Bwzv/e+9P+7GsbvG7hapcyDmvamm1WKTr+6L0+l/fLEXbOUEyGosz4gh2Pdc3fuDplO91pLx1v9UCGWWl1M9PKL5WGsEQknSpw==
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb08.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(36860700016)(7416014)(376014)(82310400026)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	ONn0WQv0So/8KJQFzp0UJPONmt/E/0EAf+6uQgf5lIuFV5CIKmFqijWTrJvvV3h4ofQk/k3sFgEcmC7fKoieMMVz8PAIAFLP5fXDcM2yf5/fkjTBbINKWRGOidvLeE1lVTV9ofQWkFDHuHSjya3CQqxra5tTXuxZ6uJvNMAFmCo6P/KqhjUn9wzADTEnfM48fdigMb4ik7YWIkp5wGPW2v8EFYCBNC68gmM0VEs32Z26WPSP+A/f4cjc+Y79yI2j8wzJmvVPT//Yhx1NR79BaQzdDuQjNyvBj/TNrCzBWHHBkUM3QgC5tpm1OChiIZved7f9zaKvhmyXDo0tQRfBaL6ZbhQpTyBPJ/j6fK8l76bPR+1s9ZxbswhRsTP4Z8WldY0P/wjxH3uYUsISrGSzCGiaQyt3HIoiOYZk8I/E0zGaEOUrCej6bTGiSKm5/BDi
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Apr 2026 16:52:23.3988
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 43759456-af29-48b9-8a70-08de9b0f5dd7
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BN1PEPF00004681.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8240
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[amd.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[amd.com:s=selector1];
+X-Proofpoint-ORIG-GUID: 55mEEPMNcygpX2xdtPC4HPpothvNJda_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE1MDE2MSBTYWx0ZWRfX9xE6/KN+yjP7
+ 0YuLnThyrv6OvOa/oWYmHFeyRjVnrvAHMul2mjpzAgbZBP/Uki8vgPN9Y0jofPvc9aueYIreZ2M
+ Bh7P2UMsffb34vmOyMZTC5fl01hBzgHnOrPqAlf+NMs5btRgk4uygMmJl0wvUhbwt0T/+pO60o/
+ OBSC6Gd6osSU4vxcLxP8Zg1jt6zgK2pVncCWltOfLTa27eBQ3XRLz8UJC1RbjN0ZlrSV6KASGhZ
+ 0ZArkohP4ORty2dhPGkU0Qc12Oy6ob7tzlUf83EExJvdidYBK2IKiAGTWrqQ1hCuk2ELF4q5060
+ 9LjUVihoz8Kll7+IJXSRuhvs1wARuMtSt2zaZi30jF3gFcPDgTg0dCcAlBVVrR/IKNFjrst9ofn
+ hKXWOmSrPqX4gvWmbifMYsHRfWx+PBtetAkrJ89Cl9ngzOXyz+RKtmWitos+4a4TldUsTQSsEN8
+ 01KAw6VeKIuUX3o3bZg==
+X-Authority-Analysis: v=2.4 cv=AcmB2XXG c=1 sm=1 tr=0 ts=69dfc7e9 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=m666xMD4OwuZyzqZ95sA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: 55mEEPMNcygpX2xdtPC4HPpothvNJda_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-15_01,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 priorityscore=1501
+ phishscore=0 malwarescore=0 impostorscore=0 clxscore=1015 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604150161
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-103306-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[amd.com:+];
+	TAGGED_FROM(0.00)[bounces-103307-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,linuxfoundation.org,kernel.org,nvidia.com,gmail.com,ffwll.ch,8bytes.org,arm.com,arndb.de,quicinc.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,amd.com:dkim,amd.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lizhi.hou@amd.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[busanna.reddy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[8]
-X-Rspamd-Queue-Id: B217240692A
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 7754D406CCA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On 4/14/26 10:32, Youssef Samir wrote:
-> Although 'commit 2feec5ae5df7 ("accel/qaic: Handle DBC deactivation if the
-> owner went away")' fixes the scenario it was intended for by walking the
-> message and only decoding QAIC_TRANS_DEACTIVATE_FROM_DEV, if present, it
-> skipped over the bounds checking code that is included in decode_message().
-> This could lead to issues such as reading past the slab allocation's end,
-> infinite loops or kernel panics. For those issues to happen, a malformed
-> wire message is needed to be sent from the device.
->
-> Instead of duplicating the bounds checking code already present in
-> decode_message(), use the function inside resp_worker().
->
-> Reported-by: Ruikai Peng <ruikai@pwno.io>
-> Fixes: 2feec5ae5df7 ("accel/qaic: Handle DBC deactivation if the owner went away")
-> Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+
+On 4/14/2026 10:01 PM, Ekansh Gupta wrote:
+> Introduce a new generic bus type for synthetic context bank devices
+> that require IOMMU context isolation. This bus provides a shared
+> infrastructure for accelerator and GPU drivers that create virtual
+> devices representing IOMMU context banks.
+> 
+> Currently, drivers like host1x implement their own bus types for
+> context devices. This generic implementation allows multiple drivers
+> to share the same bus infrastructure, simplifying the IOMMU subsystem
+> integration and reducing code duplication.
+> 
+> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 > ---
->   drivers/accel/qaic/qaic_control.c | 48 ++++++++++++++++---------------
->   1 file changed, 25 insertions(+), 23 deletions(-)
->
-> diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
-> index b21e6b5b3a10..818a77adde2a 100644
-> --- a/drivers/accel/qaic/qaic_control.c
-> +++ b/drivers/accel/qaic/qaic_control.c
-> @@ -1075,11 +1075,13 @@ static int decode_status(struct qaic_device *qdev, void *trans, struct manage_ms
+>   drivers/base/Kconfig        |  3 +++
+>   drivers/base/Makefile       |  1 +
+>   drivers/base/context_bus.c  | 24 ++++++++++++++++++++++++
+>   include/linux/context_bus.h | 15 +++++++++++++++
+>   4 files changed, 43 insertions(+)
+> 
+> diff --git a/drivers/base/Kconfig b/drivers/base/Kconfig
+> index f7d385cbd3ba..479bc4bb442b 100644
+> --- a/drivers/base/Kconfig
+> +++ b/drivers/base/Kconfig
+> @@ -4,6 +4,9 @@ menu "Generic Driver Options"
+>   config AUXILIARY_BUS
+>   	bool
 >   
->   static int decode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
->   			  struct wire_msg *msg, struct ioctl_resources *resources,
-> -			  struct qaic_user *usr)
-> +			  struct qaic_user *usr, bool orphaned_deactivate)
->   {
-> +	u32 msg_hdr_count = le32_to_cpu(msg->hdr.count);
->   	u32 msg_hdr_len = le32_to_cpu(msg->hdr.len);
->   	struct wire_trans_hdr *trans_hdr;
->   	u32 msg_len = 0;
-> +	int trans_type;
->   	int ret;
->   	int i;
->   
-> @@ -1089,13 +1091,15 @@ static int decode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
->   		return -EINVAL;
->   	}
->   
-> -	user_msg->len = 0;
-> -	user_msg->count = le32_to_cpu(msg->hdr.count);
-> +	if (user_msg) {
-> +		user_msg->len = 0;
-> +		user_msg->count = msg_hdr_count;
-> +	}
->   
->   	trace_qaic_manage_dbg(qdev->qddev, "Number of transaction to decode is %llu.",
-> -			      user_msg->count);
-> +			      msg_hdr_count);
->   
-> -	for (i = 0; i < user_msg->count; ++i) {
-> +	for (i = 0; i < msg_hdr_count; ++i) {
->   		u32 hdr_len;
->   
->   		if (msg_len > msg_hdr_len - sizeof(*trans_hdr))
-> @@ -1110,7 +1114,20 @@ static int decode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
->   		trace_qaic_manage_dbg(qdev->qddev, "Decoding transaction %llu.",
->   				      le32_to_cpu(trans_hdr->type));
->   
-> -		switch (le32_to_cpu(trans_hdr->type)) {
-> +		trans_type = le32_to_cpu(trans_hdr->type);
-> +		/*
-> +		 * orphaned_deactivate is the case where a deactivate response
-> +		 * is received from the device after the user owning the DBC,
-> +		 * and the message requesting deactivation, has gone away.
-> +		 * In this case, only process QAIC_TRANS_DEACTIVATE_FROM_DEV
-> +		 * transaction and skip the others.
-> +		 */
-> +		if (orphaned_deactivate && trans_type != QAIC_TRANS_DEACTIVATE_FROM_DEV) {
-> +			msg_len += hdr_len;
-> +			continue;
-> +		}
+> +config CONTEXT_DEVICE_BUS
+> +	bool
 > +
-> +		switch (trans_type) {
->   		case QAIC_TRANS_PASSTHROUGH_FROM_DEV:
->   			ret = decode_passthrough(qdev, trans_hdr, user_msg, &msg_len);
->   			break;
-> @@ -1430,7 +1447,7 @@ static int qaic_manage(struct qaic_device *qdev, struct qaic_user *usr, struct m
->   		goto dma_cont_failed;
->   	}
->   
-> -	ret = decode_message(qdev, user_msg, rsp, &resources, usr);
-> +	ret = decode_message(qdev, user_msg, rsp, &resources, usr, false);
->   
->   dma_cont_failed:
->   	free_dbc_buf(qdev, &resources);
-> @@ -1607,22 +1624,7 @@ static void resp_worker(struct work_struct *work)
->   		 * response to the QAIC_TRANS_TERMINATE_TO_DEV transaction,
->   		 * otherwise, the user can issue an soc_reset to the device.
->   		 */
-> -		u32 msg_count = le32_to_cpu(msg->hdr.count);
-> -		u32 msg_len = le32_to_cpu(msg->hdr.len);
-> -		u32 len = 0;
-> -		int j;
-> -
-> -		for (j = 0; j < msg_count && len < msg_len; ++j) {
-> -			struct wire_trans_hdr *trans_hdr;
-> -
-> -			trans_hdr = (struct wire_trans_hdr *)(msg->data + len);
-> -			if (le32_to_cpu(trans_hdr->type) == QAIC_TRANS_DEACTIVATE_FROM_DEV) {
-> -				if (decode_deactivate(qdev, trans_hdr, &len, NULL))
-> -					len += le32_to_cpu(trans_hdr->len);
-> -			} else {
-> -				len += le32_to_cpu(trans_hdr->len);
-> -			}
-> -		}
-> +		decode_message(qdev, NULL, msg, NULL, NULL, true);
+>   config UEVENT_HELPER
+>   	bool "Support for uevent helper"
+>   	help
+> diff --git a/drivers/base/Makefile b/drivers/base/Makefile
+> index 8074a10183dc..ab9a0b2dc73b 100644
+> --- a/drivers/base/Makefile
+> +++ b/drivers/base/Makefile
+> @@ -8,6 +8,7 @@ obj-y			:= component.o core.o bus.o dd.o syscore.o \
+>   			   topology.o container.o property.o cacheinfo.o \
+>   			   swnode.o faux.o
+>   obj-$(CONFIG_AUXILIARY_BUS) += auxiliary.o
+> +obj-$(CONFIG_CONTEXT_DEVICE_BUS) += context_bus.o
+>   obj-$(CONFIG_DEVTMPFS)	+= devtmpfs.o
+>   obj-y			+= power/
+>   obj-$(CONFIG_ISA_BUS_API)	+= isa.o
+> diff --git a/drivers/base/context_bus.c b/drivers/base/context_bus.c
+> new file mode 100644
+> index 000000000000..6ddb6c27bf69
+> --- /dev/null
+> +++ b/drivers/base/context_bus.c
+> @@ -0,0 +1,24 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> +
+> +#include <linux/context_bus.h>
+> +#include <linux/init.h>
+> +
+> +const struct bus_type context_device_bus_type = {
+> +	.name = "context-device",
 
-This seems changing the previous behavior. The original code will 
-continue the loop when decode_deactivate() returns error. And 
-decode_message() will error immediately when decode_deactivate() returns 
-error.
+add the .dma_configure callback instead of calling from the client driver.
 
-
-Lizhi
-
->   		/* request must have timed out, drop packet */
->   		trace_qaic_manage(NULL, "Packet dropped.", -ETIME);
->   		kfree(msg);
+> +};
+> +EXPORT_SYMBOL_GPL(context_device_bus_type);
+> +
+> +static int __init context_device_bus_init(void)
+> +{
+> +	int err;
+> +
+> +	err = bus_register(&context_device_bus_type);
+> +	if (err < 0) {
+> +		pr_err("context-device bus registration failed: %d\n", err);
+> +		return err;
+> +	}
+> +
+> +	return 0;
+> +}
+> +postcore_initcall(context_device_bus_init);
+> diff --git a/include/linux/context_bus.h b/include/linux/context_bus.h
+> new file mode 100644
+> index 000000000000..0cd44cb5b147
+> --- /dev/null
+> +++ b/include/linux/context_bus.h
+> @@ -0,0 +1,15 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
+> +
+> +#ifndef __LINUX_CONTEXT_BUS_H
+> +#define __LINUX_CONTEXT_BUS_H
+> +
+> +#include <linux/device.h>
+> +
+> +#ifdef CONFIG_CONTEXT_DEVICE_BUS
+> +extern const struct bus_type context_device_bus_type;
+> +#endif
+> +
+> +#endif /* __LINUX_CONTEXT_BUS_H */
+> 
 
