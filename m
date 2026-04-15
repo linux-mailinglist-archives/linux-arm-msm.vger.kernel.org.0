@@ -1,425 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-103234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OCyXO8VB32kxRAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 09:44:06 +0200
+	id iMajDS9E32nzRAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 09:54:23 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 480D5401827
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 09:44:05 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 738BC401967
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 09:54:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1CA46304CEB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 07:41:54 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8AD0630128C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 07:44:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D0653A759E;
-	Wed, 15 Apr 2026 07:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF55A3AC0C4;
+	Wed, 15 Apr 2026 07:44:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fmv5bHmd";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="U+TnDPuC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EsvKsX22"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12351385539
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 07:41:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8920D391856;
+	Wed, 15 Apr 2026 07:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776238913; cv=none; b=IGXm6H8AoRQRHNJHnHFzEg6ewwUQ70T/cHYLl036rmd3pnt9d5/qn+36YdBGswy2XoptxASb0Alo/vvOPcwbRC2bw02VtQ66h/gIwCgItLW4AYrJCvtZhk0C63HZ6c1LfEELSvsq5GQmZbC8KlrfVOPOii8aCeMp5WjoewJ113U=
+	t=1776239058; cv=none; b=D5ENLUqREuNWNHkYkAXdG3O57uHtdawYCj0z2uctDJysK0bWCtMf+3gngYvHJMJb/rgSepyUkWCQxqKbMjwJCIZatWTUsYCGHAFr/FZaipmISoQr+lpaVz7AToTrTzRn04+keqn1aU5g1yc1CAtWK75CgszPLfolYAtPa8e5DhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776238913; c=relaxed/simple;
-	bh=W62tWESM4gyLAD60Nr8FLrKgGfGIsNrx/lX0lAT80rw=;
+	s=arc-20240116; t=1776239058; c=relaxed/simple;
+	bh=IpVNfJ9DJKRrgDgRGsPo+kUo+1XlJ8lK8e+SU0EKmxY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j28uH+GdwADGQiyn6ax/aMVF1zdVuzu1HYlg+p8WoC18Nzb93Fzq25WsV4LkgdcaoAsEsJdXgOFvnie2nZEGsDf75/tkRtEX/1mlRn87rH85fL8egth7n/5CHoMPUpAykq1gT3kbp3Ksml5CSXV+03AitH3JZSzJX2WUgv54kpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fmv5bHmd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=U+TnDPuC; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63F25G2n1778805
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 07:41:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=fEE+gAEsFWtIb8J9lBZIYnIc
-	JedOP7rud4t86JGVm1g=; b=fmv5bHmdyeeR0J5fV6LTm1j0KuQGJ82LUOLwOjAz
-	vo4PmJagFxMmZ9AEE3iR5zYoXul7wvZf3Q5+GrLx3H3D4QpXCpcWhgk1L87G3rPK
-	JPWULzEc2eL2oBpTh+ndk552gmtSdKBsynPemxzJ3N75mpHC7s8W2P4Bq/7AHfdZ
-	4S2Ebb97lpbTqdxruC9969b+2EOGvE7dO7oWOo9ovmEO3h1A/tClDKqn96A1eWmM
-	vNtReg1uUXxUAcBc3YZFXnLl2fnvaN6Khj5kqsXZuzwbITqbU5yRu4MF/oeQmgbA
-	zC2CzHbjnPTeTpUuPDStzTHhFd99cAq94KU0FWQXR2RuKQ==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dhrw02hpb-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 07:41:51 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3594620fe97so16959450a91.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Apr 2026 00:41:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776238911; x=1776843711; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fEE+gAEsFWtIb8J9lBZIYnIcJedOP7rud4t86JGVm1g=;
-        b=U+TnDPuC8rDM1qGKHsrJnU4fQl20xTtRuoQmmA7agAMUbc6WqhxEfPlLWU1SRoeC1K
-         EUh386RkyfiluAuTFVU9PRZ5QAhqcngsPcIRr9spOD9P0B1CenFp17nyH2IkwCKXfyKM
-         2lB7LjvokM/HxeiOzq4Ng4Nw6GtIa1BUldARe3Oc1NzRrlc7O5CdK+vK6Z/6BXnb0ACe
-         v5gA7cf4VDrD9hrsy2iikGHG7YSbU/o4c9CsY8TLq4Tc8xGanqeLGwPqDUrVPFdmc7bP
-         tD1No/+KI8BGJZG4R7VTtOaSQLy2MxNUYlHE0WhZdyGfAAkraAZ0esswp9lKpewpkJTU
-         kC2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776238911; x=1776843711;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fEE+gAEsFWtIb8J9lBZIYnIcJedOP7rud4t86JGVm1g=;
-        b=FFeRuO8TQfgyq4X1vTCjCSHAWVgHXD7M4RUHgp8JYRYQBN+DazwXIDDilbpEVf5FLk
-         0jee0xz7W468qN2QMDx50B2CEgMRrH5M3J+HMdIhILxm5FX7p6eskEVowE5zwD90kQv/
-         3LMaWJdC38uoPX/Ls4msO/AZ0SVefmBzCHzKDLj3mX/1DQV0JMbKsvvmxGANC9/dUQa0
-         AmtvS0yWw10kkFdB/ukMVdHBq9xR3SxI/L+SYY3YOaCbKcb3rA42EN4I60LIpAqR+g1E
-         axg198TPugbFFlXUIamdUzR1aaIBaBcIhtEbN6R1qvmmQuuNhHs45EoljrplfbCPMLaP
-         ruBg==
-X-Forwarded-Encrypted: i=1; AFNElJ82jvuiwhBbI4Ey0hftL8sMxKw5UrvqJoGGfzjBemFeCpzIa4l+skn8fP9oFu1MPdCPZJsqweFBoLhhrC6F@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyfmzmh7iaFiChaRKLCFZJudnaifzhS//MfHrq6+AelMlbSF1Ca
-	e2K1zylxopPkXVupdAnwa5lr5LMeABo6WpU/aaKHkXN4qzO7/lnd2mWyq6oI800A3vS2isdNEXd
-	fkY12XOxJJESL33bg84OUJH8xuKhnO3nm/nX2yegTlhWUXAjODWGY7n1/1t43b47z9WV/
-X-Gm-Gg: AeBDievNY7AwIw2sMjyNagEaqp+RtfACgBw2E9wLlhSVfPWynaXqdLOneYa0xeQIkyf
-	pAtzLn0HW1wEnvXztnIC+Qi9MfyfPo9eq+kVX0rzCVfEAvZbXJx3euL8ukzcA28c/RqZULjAOcD
-	nbFybeaaGKfNJnrj14nUsO6Ft1LKRvymbj11fNiL036Jv+9ASaOVgPstZyKTFoqk+0rypfBR91E
-	ShLsN6zjso4jUA6RL+nUWSgvYTQunYyJoEJF8zDnAHDY/lanYkHSpZiL1ykQW9eB2JRSyL7Fwut
-	Uzpz5jQIzixsfSTjN02/tYzHRrdfENQiLou+81EYQTRNLPpL0LNR1deQC7t8KzbH5BuN+mthF0F
-	iniieeVm0fMkuwwYGvvJk2LKq7azqxhI9rR3zcT0sVQvc5eDL
-X-Received: by 2002:a17:90b:2890:b0:35f:bd29:75b9 with SMTP id 98e67ed59e1d1-35fbd2976d8mr9238425a91.22.1776238910418;
-        Wed, 15 Apr 2026 00:41:50 -0700 (PDT)
-X-Received: by 2002:a17:90b:2890:b0:35f:bd29:75b9 with SMTP id 98e67ed59e1d1-35fbd2976d8mr9238391a91.22.1776238909809;
-        Wed, 15 Apr 2026 00:41:49 -0700 (PDT)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35fd2010246sm1863160a91.6.2026.04.15.00.41.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Apr 2026 00:41:49 -0700 (PDT)
-Date: Wed, 15 Apr 2026 13:11:40 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bod@kernel.org>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        Hans Verkuil <hverkuil@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, iommu@lists.linux.dev
-Subject: Re: [PATCH 05/11] media: iris: Enable Secure PAS support with IOMMU
- managed by Linux
-Message-ID: <20260415074140.46bg27tzbuyzjq3d@hu-mojha-hyd.qualcomm.com>
-References: <20260414-glymur-v1-0-7d3d1cf57b16@oss.qualcomm.com>
- <20260414-glymur-v1-5-7d3d1cf57b16@oss.qualcomm.com>
- <20260414063128.6ass64wfi7nmtzti@hu-mojha-hyd.qualcomm.com>
- <20260415073605.qqvpf36uhqmghg5h@hu-mojha-hyd.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=KYwi+8s4p0bOiHYPKgppJf/4cTQL2NkOskFdvb6LRs7YWNT/Uhh+trXCAcJKfk7HLK+72gr9Yu5ARBV9ia0pWLfriyiQ90UQFzPPnSUNHvmsvOYyqji1XuuqbxH0et0n8NRaVF/g+SqjxyVi5mqeoYV/vMdVwHcrKqW9LlRUD18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EsvKsX22; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9EEC19424;
+	Wed, 15 Apr 2026 07:44:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776239058;
+	bh=IpVNfJ9DJKRrgDgRGsPo+kUo+1XlJ8lK8e+SU0EKmxY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EsvKsX22T4W/rAfDQ7E3wFklFMejdHbKl9PhiB5jzUCfhByHQf1Tz7mj61GB71r5q
+	 nRv6D3/WwmobztRnRK5M87XjDt9QwURXH+5FzixW77EfNU8eQE3SlUEtc802VbQS0E
+	 6dzeh+F8o3o6FlZ8N0/SdcjNcWfMEKBwsh+6IPHhkB2Tqra+GpE6QV0qmJfwK+z/Ez
+	 NhIzHwy6H0PjpkFPkdk+G5TPQ3fLzWJ+1JxvGx6jpYNX2Tj8OMREpShvZMfnrnIMCw
+	 4crsLoyWn8jkssAhNHcjdItgYVa53xNJmvuCgZya7QxAlTrAhMXNQhEWY0AKLLgsW+
+	 M38Ymz3lbt3XA==
+Date: Wed, 15 Apr 2026 09:44:15 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Qiang Yu <qiang.yu@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 5/5] arch: arm64: dts: qcom: Add support for PCIe3a
+Message-ID: <20260415-pragmatic-termite-of-attraction-3dbab5@quoll>
+References: <20260412-glymur_gen5x8_phy_0413-v3-0-affcebc16b8b@oss.qualcomm.com>
+ <20260412-glymur_gen5x8_phy_0413-v3-5-affcebc16b8b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260415073605.qqvpf36uhqmghg5h@hu-mojha-hyd.qualcomm.com>
-X-Proofpoint-GUID: ytTh9CaZ2DQsQwuvptYzNwuHNgQeIjgQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE1MDA2OSBTYWx0ZWRfX0XH2DqZdQWQk
- O+GAKNXYvRvQ/fA2jYogXFCVLl6YP22zkwLVg06EEs1WxWJ8SWU0HExq1Yd3JtVRk34k7PzxnDg
- Vrxi5vJhJ5dY2aoTAGyz48hwjJRBZ5OB8OnwWkvQoE6+bNq/pKMiGqmUimblx67NTHWd+lV8EFJ
- Ls8VgD7zS7l/JqG6Vk0vp4n23GlVVj8tuzbMi2e1iVC8ehf4bGhEZA2iTLAJnPzu2Jg5lQkJpJ4
- u8shsJ9lm2JHWeVTwFRwRjQvId/mLKtAVpXhuYHQQYdvLz2Lc6XPhvFmYnRapo/Xr80wdJrvkuj
- 7UqP0CDdA9F0IqUbvcBph6lEn39dmt2WLt6kj07naJNT9dhD+qkL2fyQeyF7l2Oa9/fZ5uF+dxK
- wHFK9AHRsDUV/HXzbl2jzzSJ6Tr8bTns4669zbJXamky27ZuBwqIsYsXE8p8hQkoWQhH05tzjnj
- kTaxfCokGYajpa/tWPw==
-X-Proofpoint-ORIG-GUID: ytTh9CaZ2DQsQwuvptYzNwuHNgQeIjgQ
-X-Authority-Analysis: v=2.4 cv=YMGvDxGx c=1 sm=1 tr=0 ts=69df413f cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=No4tYzxTJ-fOGiIKadYA:9 a=CjuIK1q_8ugA:10
- a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-14_04,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 phishscore=0 bulkscore=0 spamscore=0
- suspectscore=0 clxscore=1015 malwarescore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604150069
-X-Spamd-Result: default: False [-0.66 / 15.00];
+In-Reply-To: <20260412-glymur_gen5x8_phy_0413-v3-5-affcebc16b8b@oss.qualcomm.com>
+X-Spamd-Result: default: False [5.34 / 15.00];
+	SEM_URIBL(3.50)[0.0.0.0:email];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
 	MAILLIST(-0.15)[generic];
+	BAD_REP_POLICIES(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103234-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,hu-mojha-hyd.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim,qualcomm.com:email];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCPT_COUNT_TWELVE(0.00)[21];
+	TAGGED_FROM(0.00)[bounces-103235-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	GREYLIST(0.00)[pass,body];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	R_DKIM_ALLOW(0.00)[kernel.org:s=k20201202];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	R_SPF_ALLOW(0.00)[+ip4:172.105.105.114:c];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 480D5401827
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	NEURAL_SPAM(0.00)[0.139];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,0.1.134.160:email]
+X-Rspamd-Queue-Id: 738BC401967
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Apr 15, 2026 at 01:06:05PM +0530, Mukesh Ojha wrote:
-> On Tue, Apr 14, 2026 at 12:01:28PM +0530, Mukesh Ojha wrote:
-> > On Tue, Apr 14, 2026 at 10:30:01AM +0530, Vishnu Reddy wrote:
-> > > From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> > > 
-> > > Most Qualcomm platforms feature a proprietary hypervisor (such as Gunyah
-> > > or QHEE), which typically handles IOMMU configuration. This includes
-> > > mapping memory regions and device memory resources for remote processors
-> > > by intercepting qcom_scm_pas_auth_and_reset() calls. These mappings are
-> > > later removed during teardown. Additionally, SHM bridge setup is required
-> > > to enable memory protection for both remoteproc metadata and its memory
-> > > regions.
-> > > 
-> > > When the hypervisor is absent, the operating system must perform these
-> > > configurations instead.
-> > > 
-> > > Support for handling IOMMU and SHM setup in the absence of a hypervisor
-> > > is now in place. Extend the Iris driver to enable this functionality on
-> > > platforms where IOMMU is managed by Linux (i.e., non-Gunyah, non-QHEE).
-> > > 
-> > > Additionally, the Iris driver must map the firmware and its required
-> > > resources to the firmware SID, which is now specified via iommu-map in
-> > > the device tree.
-> > > 
-> > > Co-developed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-> > > Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-> > > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> > > Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-> > > ---
-> > >  drivers/media/platform/qcom/iris/iris_core.h     |  4 ++
-> > >  drivers/media/platform/qcom/iris/iris_firmware.c | 71 +++++++++++++++++++++---
-> > >  2 files changed, 66 insertions(+), 9 deletions(-)
-> > > 
-> > > diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
-> > > index fb194c967ad4..aa7abef6f0e0 100644
-> > > --- a/drivers/media/platform/qcom/iris/iris_core.h
-> > > +++ b/drivers/media/platform/qcom/iris/iris_core.h
-> > > @@ -34,6 +34,8 @@ enum domain_type {
-> > >   * struct iris_core - holds core parameters valid for all instances
-> > >   *
-> > >   * @dev: reference to device structure
-> > > + * @dev_fw: reference to the context bank device used for firmware load
-> > > + * @ctx_fw: SCM PAS context for authenticated firmware load and shutdown
-> > >   * @reg_base: IO memory base address
-> > >   * @irq: iris irq
-> > >   * @v4l2_dev: a holder for v4l2 device structure
-> > > @@ -77,6 +79,8 @@ enum domain_type {
-> > >  
-> > >  struct iris_core {
-> > >  	struct device				*dev;
-> > > +	struct device				*dev_fw;
-> > > +	struct qcom_scm_pas_context		*ctx_fw;
-> > 
-> > fw_dev suits better and ctx_fw is always for firmware, maybe pas_ctx is
-> > better.
-> > 
-> > >  	void __iomem				*reg_base;
-> > >  	int					irq;
-> > >  	struct v4l2_device			v4l2_dev;
-> > > diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
-> > > index 5f408024e967..93d77996c83f 100644
-> > > --- a/drivers/media/platform/qcom/iris/iris_firmware.c
-> > > +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
-> > > @@ -5,6 +5,7 @@
-> > >  
-> > >  #include <linux/firmware.h>
-> > >  #include <linux/firmware/qcom/qcom_scm.h>
-> > > +#include <linux/iommu.h>
-> > >  #include <linux/of_address.h>
-> > >  #include <linux/of_reserved_mem.h>
-> > >  #include <linux/soc/qcom/mdt_loader.h>
-> > > @@ -13,12 +14,15 @@
-> > >  #include "iris_firmware.h"
-> > >  
-> > >  #define MAX_FIRMWARE_NAME_SIZE	128
-> > > +#define IRIS_FW_START_ADDR	0
-> > >  
-> > >  static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
-> > >  {
-> > > +	struct device *dev = core->dev_fw ? core->dev_fw : core->dev;
-> > >  	u32 pas_id = core->iris_platform_data->pas_id;
-> > >  	const struct firmware *firmware = NULL;
-> > > -	struct device *dev = core->dev;
-> > > +	struct qcom_scm_pas_context *ctx_fw;
-> > > +	struct iommu_domain *domain;
-> > >  	struct resource res;
-> > >  	phys_addr_t mem_phys;
-> > >  	size_t res_size;
-> > > @@ -29,13 +33,17 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
-> > >  	if (strlen(fw_name) >= MAX_FIRMWARE_NAME_SIZE - 4)
-> > >  		return -EINVAL;
-> > >  
-> > > -	ret = of_reserved_mem_region_to_resource(dev->of_node, 0, &res);
-> > > +	ret = of_reserved_mem_region_to_resource(core->dev->of_node, 0, &res);
-> > >  	if (ret)
-> > >  		return ret;
-> > >  
-> > >  	mem_phys = res.start;
-> > >  	res_size = resource_size(&res);
-> > >  
-> > > +	ctx_fw = devm_qcom_scm_pas_context_alloc(dev, pas_id, mem_phys, res_size);
-> > > +	if (IS_ERR(ctx_fw))
-> > > +		return PTR_ERR(ctx_fw);
-> > > +
-> > >  	ret = request_firmware(&firmware, fw_name, dev);
-> > >  	if (ret)
-> > >  		return ret;
-> > > @@ -52,9 +60,27 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
-> > >  		goto err_release_fw;
-> > >  	}
-> > >  
-> > > -	ret = qcom_mdt_load(dev, firmware, fw_name,
-> > > -			    pas_id, mem_virt, mem_phys, res_size, NULL);
-> > > +	ctx_fw->use_tzmem = !!core->dev_fw;
-> > > +	ret = qcom_mdt_pas_load(ctx_fw, firmware, fw_name, mem_virt, NULL);
+On Sun, Apr 12, 2026 at 11:26:00PM -0700, Qiang Yu wrote:
+> Describe PCIe3a controller and PHY. Also add required system resources
+> like regulators, clocks, interrupts and registers configuration for PCIe3a.
 > 
-> We need to release the metadata because this is the change compared to
-> the previous qcom_mdt_load() API, which silently released DMA memory for
-> metadata in the pas_init SCM call for clients that passed metadata ctx
-> as NULL. Since with this new API every new client must pass the new pas
-> ctx, it cannot be NULL anymore. I intended to document this clearly when
-> introducing qcom_mdt_pas_load() API, but I did not do so. but thinking
-> it over again, we should not be asking client to release the memory
-> which they not allocated, so let me write a patch for this where I
-> client like remoteproc explicitly ask or set it if they do not want to
-> release this memory as their XPU locked and can only released after auth
-> and reset successful.
+> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
 
-Just to further clarify, nothing extra related to metadata release need
-to done for unaffected client like video who were passing NULL as part
-of qcom_mdt_load() earlier., so no changes needed in this patch., I will
-basically introduce boolean and set this only for remoteproc clients.
+subject: drop arch.
 
+Please use subject prefixes matching the subsystem. You can get them for
+example with 'git log --oneline -- DIRECTORY_OR_FILE' on the directory
+your patch is touching. For bindings, the preferred subjects are
+explained here:
+https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
 
+> ---
+>  arch/arm64/boot/dts/qcom/glymur.dtsi | 316 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 315 insertions(+), 1 deletion(-)
 > 
-> 
-> > > +	if (ret)
-> > > +
-> > > +	if (ctx_fw->use_tzmem) {
-> > > +		domain = iommu_get_domain_for_dev(core->dev_fw);
-> > > +		if (!domain) {
-> > > +			ret = -ENODEV;
-> > > +			goto err_mem_unmap;
-> > > +		}
-> > > +
-> > > +		ret = iommu_map(domain, IRIS_FW_START_ADDR, mem_phys, res_size,
-> > > +				IOMMU_READ | IOMMU_WRITE | IOMMU_PRIV, GFP_KERNEL);
-> > > +		if (ret)
-> > > +			goto err_mem_unmap;
-> > > +	}
-> > >  
-> > > +	core->ctx_fw = ctx_fw;
-> > > +
-> > > +err_mem_unmap:
-> > >  	memunmap(mem_virt);
-> > >  err_release_fw:
-> > >  	release_firmware(firmware);
-> > > @@ -62,6 +88,19 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
-> > >  	return ret;
-> > >  }
-> > >  
-> > > +static void iris_fw_iommu_unmap(struct iris_core *core)
-> > > +{
-> > > +	bool use_tzmem = core->ctx_fw->use_tzmem;
-> > > +	struct iommu_domain *domain;
-> > > +
-> > > +	if (!use_tzmem)
-> > > +		return;
-> > > +
-> > > +	domain = iommu_get_domain_for_dev(core->dev_fw);
-> > > +	if (domain)
-> > > +		iommu_unmap(domain, IRIS_FW_START_ADDR, core->ctx_fw->mem_size);
-> > > +}
-> > > +
-> > >  int iris_fw_load(struct iris_core *core)
-> > >  {
-> > >  	const struct tz_cp_config *cp_config;
-> > > @@ -79,10 +118,10 @@ int iris_fw_load(struct iris_core *core)
-> > >  		return -ENOMEM;
-> > >  	}
-> > >  
-> > > -	ret = qcom_scm_pas_auth_and_reset(core->iris_platform_data->pas_id);
-> > > +	ret = qcom_scm_pas_prepare_and_auth_reset(core->ctx_fw);
-> > >  	if (ret)  {
-> > >  		dev_err(core->dev, "auth and reset failed: %d\n", ret);
-> > > -		return ret;
-> > > +		goto err_unmap;
-> > >  	}
-> > >  
-> > >  	for (i = 0; i < core->iris_platform_data->tz_cp_config_data_size; i++) {
-> > > @@ -93,17 +132,31 @@ int iris_fw_load(struct iris_core *core)
-> > >  						     cp_config->cp_nonpixel_size);
-> > >  		if (ret) {
-> > >  			dev_err(core->dev, "qcom_scm_mem_protect_video_var failed: %d\n", ret);
-> > > -			qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
-> > > -			return ret;
-> > > +			goto err_pas_shutdown;
-> > >  		}
-> > >  	}
-> > >  
-> > > +	return 0;
-> > > +
-> > > +err_pas_shutdown:
-> > > +	qcom_scm_pas_shutdown(core->ctx_fw->pas_id);
-> > > +err_unmap:
-> > > +	iris_fw_iommu_unmap(core);
-> > > +
-> > >  	return ret;
-> > >  }
-> > >  
-> > >  int iris_fw_unload(struct iris_core *core)
-> > >  {
-> > > -	return qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
-> > > +	int ret;
-> > > +
-> > > +	ret = qcom_scm_pas_shutdown(core->ctx_fw->pas_id);
-> > > +	if (ret)
-> > > +		return ret;
-> > > +
-> > > +	iris_fw_iommu_unmap(core);
-> > > +
-> > > +	return ret;
-> > >  }
-> > >  
-> > >  int iris_set_hw_state(struct iris_core *core, bool resume)
-> > > 
-> > > -- 
-> > > 2.34.1
-> > > 
-> > 
-> > -- 
-> > -Mukesh Ojha
-> 
-> -- 
-> -Mukesh Ojha
+> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> index f23cf81ddb77a4138deeb4e00dd8b316930a2feb..c15f87c37ecbad72076a6c731f4959a1a8bd8425 100644
+> --- a/arch/arm64/boot/dts/qcom/glymur.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> @@ -736,7 +736,7 @@ gcc: clock-controller@100000 {
+>  				 <0>,				/* USB 2 Phy PCIE PIPEGMUX */
+>  				 <0>,				/* USB 2 Phy PIPEGMUX */
+>  				 <0>,				/* USB 2 Phy SYS PCIE PIPEGMUX */
+> -				 <0>,				/* PCIe 3a */
+> +				 <&pcie3a_phy>,			/* PCIe 3a */
+>  				 <&pcie3b_phy>,			/* PCIe 3b */
+>  				 <&pcie4_phy>,			/* PCIe 4 */
+>  				 <&pcie5_phy>,			/* PCIe 5 */
+> @@ -3640,6 +3640,320 @@ pcie3b_port0: pcie@0 {
+>  			};
 
--- 
--Mukesh Ojha
+...
+
+> > +		pcie3a_phy: phy@f00000 {
+
+Same comment as before.
+
+Best regards,
+Krzysztof
+
 
