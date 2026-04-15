@@ -1,178 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-103230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wC2oD0Yz32lqQAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 08:42:14 +0200
+	id AMYTIZk132mCQQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 08:52:09 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A7F2400F24
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 08:42:13 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A555401180
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 08:52:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 1696F3044D04
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 06:40:58 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 7CCE93038673
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Apr 2026 06:52:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 502303914FE;
-	Wed, 15 Apr 2026 06:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB560392C40;
+	Wed, 15 Apr 2026 06:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H6llO12+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lAY1UZjr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5503909AC;
-	Wed, 15 Apr 2026 06:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6380391E5C;
+	Wed, 15 Apr 2026 06:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776235248; cv=none; b=XEifBlT1hX3krsfPsgss5AUlhm4EgNfyVyGilG82ivpqlZzX0m61YzhKdU0NGQdSBVEl5jqp0vi8PcIJsRrzI4TA+MEqZvqnyHT93jyukxcdGi9huY9cqe2NxqEVddd6gN2YCm9917cZPZvtxC/tvV1dJ7Gdn/XoasyeS8jV4rk=
+	t=1776235921; cv=none; b=oeAD7AaUIqvvMzw31wCIh7yFrYBKM0JR++fV1lMZYMQgsR80f2HICTNstrOF4ljJUlyFpUO163yLAQwLbvevzEce5JCpCVjmNSr0ViBu1HI8oluXj1RtrAcWms2WiDf/wm4D0A/7DtooMqPlZpTKvMTbEh3DBfiGSZJHDO46KHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776235248; c=relaxed/simple;
-	bh=sIZukYp/MC9yiKpZPIf9DyrYXHRDrgr50n9fS4t8Mvs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=J+yq5iJqAHm1rCsbEujp6283foRa9ABUYM8FzfmGE2GgWbn+gpj/sXfeY/JiwZdFXQiqA7EgHEG8T11ckInAbABV+fizN46nDbZN9ISFnV7bIU3NP86GElAeYVzyDYCN9QRQUTQtKfCwGfqlax6STUeS97RBqDmCPLKupwMnWn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H6llO12+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C4866C2BCB5;
-	Wed, 15 Apr 2026 06:40:47 +0000 (UTC)
+	s=arc-20240116; t=1776235921; c=relaxed/simple;
+	bh=oIPllxHWPyagWDL1Abeanp7dj2Ninry9o4xCoPbgQsc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ghVcR8C+ezb6eUGfyxF+lYiJXgh1LyI8TV1TTb7NscrDgXFdSH1L97KjolxGzLmnCCqdOeAOxU/+hnORPinpua2KwyvIppWKZ2+dhNcPZMWuwUU+pRmKNdaL99U3tTxEdZgnhfYKyo3u/ncA2LJ3Q4YMqqeejHL9EETT6GHvfLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lAY1UZjr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BF0C19424;
+	Wed, 15 Apr 2026 06:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776235247;
-	bh=sIZukYp/MC9yiKpZPIf9DyrYXHRDrgr50n9fS4t8Mvs=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=H6llO12+VeDFIIUkYxwaWB4uyp34T2dL3ObqG83XX1ah7B50s6bHXcsnvaoeyFcAZ
-	 Q5W5hBmE+9b8mJfvEcFpXNCqEwwE7xwQ5Z7EX5MVwhHDU5qWeK4Slxybb3w/psg7Xf
-	 QvVDrUn3T53gw598Nm8ooJZr9lGh+ixSfuU71IAWtecABEYt5XNOtK2THGsXh+YzGC
-	 Nr72WAdHCFcyYFrIq184GCA94DshlVWve4cqPQxgLV8NvYC5dEzJx47sWUh8Xl4yRD
-	 eyzQV1PX8Lo0KKa1IeZXmRoox6cYByzAsYj2XTZor2ziDV55UdN/GKUJH+JkN8Gty4
-	 azCp07CToqXDw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF1B8FA0C39;
-	Wed, 15 Apr 2026 06:40:47 +0000 (UTC)
-From: Ekansh Gupta via B4 Relay <devnull+ekansh.gupta.oss.qualcomm.com@kernel.org>
-Date: Wed, 15 Apr 2026 12:10:46 +0530
-Subject: [PATCH] arm64: dts: qcom: monaco: add GDSP fastrpc-compute-cb
- nodes
+	s=k20201202; t=1776235921;
+	bh=oIPllxHWPyagWDL1Abeanp7dj2Ninry9o4xCoPbgQsc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=lAY1UZjrmymWFIklYCF4exMl9hXQ/GP1Q4HsuZ82zgD27kH2gQegE4w/jGlr8MTQu
+	 irlMGllfVMm3+bjTXaMv2VSmlIzzpAHqrv3X4UQadecNbfT8oXizMn84Lj/mb3hukq
+	 bimKPVew4rcb3MPd9ogWOlq/+FjIkWQO0FwGrB3ggJoeS9D2eX/ppShHDaTMGa0isC
+	 6Z51yO9iDwjiSkDdYgih7l6Nw7h7ax7rXwWtKYLEjY7//H/HjbLdiSayqBRlzML9LZ
+	 A3axe+DWtFGURDjqyWBTiQWALp+txj38G94zuZYhzHml3b8Ou2hFKtVaGBL+9vzELr
+	 HlR0fU+TbkoAQ==
+Message-ID: <bac33524-1caa-4bff-be36-df909917cf3b@kernel.org>
+Date: Wed, 15 Apr 2026 08:51:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/10] dt-bindings: mfd: syscon: add qcom,msm8960-sps-sic
+To: Antony Kurniawan Soemardi <linux@smankusors.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+ Rudraksha Gupta <guptarud@gmail.com>
+References: <20260414-msm8960-wifi-v1-0-007fda9d6134@smankusors.com>
+ <20260414-msm8960-wifi-v1-2-007fda9d6134@smankusors.com>
+ <20260414-frisky-aloof-koala-4cbfdb@quoll>
+ <b80727eb-6a7a-44fc-b6a2-56c4ee199b57@smankusors.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <b80727eb-6a7a-44fc-b6a2-56c4ee199b57@smankusors.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260415-monacogdsp-v1-1-077ded36c7fc@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAO0y32kC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDE0NT3dz8vMTk/PSU4gLdlCRzC9OUVAMLg1RTJaCGgqLUtMwKsGHRsbW
- 1AFZZrDVcAAAA
-X-Change-ID: 20260415-monacogdsp-db785de080e5
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, quic_bkumar@quicinc.com, 
- quic_chennak@quicinc.com, srinivas.kandagatla@oss.qualcomm.com
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1776235246; l=1445;
- i=ekansh.gupta@oss.qualcomm.com; s=20260223; h=from:subject:message-id;
- bh=/EG/yomTV06O1VHp8itajNVeYotdDNN6kgP9T9ejF8I=;
- b=AnuUg5syqVnJpw+A6G+a6GG6nuPAgItZu+FyhX/IPzcS5wvq+dDEkVCvjc9+Oqi1t/cc9VFx1
- DB/V0xJlfzOCUXtJcBwccHRtOWufMsq4/0UivfWq4LxYE3xD4zCXNYe
-X-Developer-Key: i=ekansh.gupta@oss.qualcomm.com; a=ed25519;
- pk=n0SepARizye+pYjhjg1RA5J+Nq4+IJbyRcBybU+/ERQ=
-X-Endpoint-Received: by B4 Relay for ekansh.gupta@oss.qualcomm.com/20260223
- with auth_id=647
-X-Original-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Reply-To: ekansh.gupta@oss.qualcomm.com
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	MID_RHS_MATCH_TO(1.00)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	REPLYTO_DOM_EQ_TO_DOM(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103231-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103230-lists,linux-arm-msm=lfdr.de,ekansh.gupta.oss.qualcomm.com];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,vger.kernel.org,gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	DBL_PROHIBIT(0.00)[0.0.0.3:email,0.0.0.2:email];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	HAS_REPLYTO(0.00)[ekansh.gupta@oss.qualcomm.com];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:replyto,oss.qualcomm.com:mid,0.0.0.1:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 8A7F2400F24
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 8A555401180
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+On 14/04/2026 20:34, Antony Kurniawan Soemardi wrote:
+> On 4/14/2026 2:19 PM, Krzysztof Kozlowski wrote:
+>> This was also sent. Where is the changelog and versioning? What changed
+>> here?
+> Sorry, the cover letter should have referenced the earlier dt-bindings
+> series [1] and explained about it.
+> 
+> In this patch series, I combined the original 2 patches into a larger 10
+> patch series to make it more complete. Especially since earlier feedback
+> noted that the bindings were not used by any in-tree consumers. Since
+> the scope changed significantly from the original, I resent it as a new
+> series rather than a v2.
+> 
+> Would you prefer splitting this series into separate series like before,
+> for example:
 
-Add GDSP fastrpc compute-cb nodes for monaco SoC.
-
-Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/monaco.dtsi | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/monaco.dtsi b/arch/arm64/boot/dts/qcom/monaco.dtsi
-index 7b1d57460f1e..ce6ff259cb4a 100644
---- a/arch/arm64/boot/dts/qcom/monaco.dtsi
-+++ b/arch/arm64/boot/dts/qcom/monaco.dtsi
-@@ -7615,6 +7615,35 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 
- 				label = "gpdsp";
- 				qcom,remote-pid = <17>;
-+
-+				fastrpc {
-+					compatible = "qcom,fastrpc";
-+					qcom,glink-channels = "fastrpcglink-apps-dsp";
-+					label = "gdsp0";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					compute-cb@1 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <1>;
-+						iommus = <&apps_smmu 0x28a1 0x0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@2 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <2>;
-+						iommus = <&apps_smmu 0x28a2 0x0>;
-+						dma-coherent;
-+					};
-+
-+					compute-cb@3 {
-+						compatible = "qcom,fastrpc-compute-cb";
-+						reg = <3>;
-+						iommus = <&apps_smmu 0x28a3 0x0>;
-+						dma-coherent;
-+					};
-+				};
- 			};
- 		};
- 
-
----
-base-commit: 1c7cc4904160c6fc6377564140062d68a3dc93a0
-change-id: 20260415-monacogdsp-db785de080e5
+No, you need to keep versioning, changelogs and make clear how previous
+comments got resolved.
 
 Best regards,
--- 
-Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-
-
+Krzysztof
 
