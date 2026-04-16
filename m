@@ -1,63 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-103359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mMcJBaqu4GkRkwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 11:40:58 +0200
+	id yOVmLHGu4GkRkwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 11:40:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5555140C823
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 11:40:57 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E4CB40C7EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 11:40:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2C56C318634F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 09:35:47 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 4B41A3001333
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 09:40:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3429939C013;
-	Thu, 16 Apr 2026 09:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0F01396567;
+	Thu, 16 Apr 2026 09:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hqNrE+8N"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="VNzF41fr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-244122.protonmail.ch (mail-244122.protonmail.ch [109.224.244.122])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E8739C002;
-	Thu, 16 Apr 2026 09:35:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEAE391507;
+	Thu, 16 Apr 2026 09:39:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776332143; cv=none; b=ql9ad3rfae3m1znsWqdZMziUy9EPXBGeKJdcPCRIfMiKLodkMeMxIZ6k7nOKOh8oH2KFBUJoAUE43GrAzgxLl0A7ut4qe5tKepG/18emOPGRbLqL2gbiIq+q/G0l5T4xmGU21twaBbH2tyKx+luDRcg/sbvVFog9QMzp0+gM6oM=
+	t=1776332398; cv=none; b=qygKDMBBOi53uw2DFh92RgliSfA4ZmTzJVhtwDCY5EZjZkzh4SAYCWR5llz+Ku1f+SF805x67ft5hLCYhjqHIiFRGa+1cjQq1RxEhk0DfEODOlqYmRxOHMoq/GbNUOXwlMQAn1nvdQdKOHJpVs2gp4ymcAfmlUuw82T05KQSG6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776332143; c=relaxed/simple;
-	bh=Na4TpuUuc6fAl3ui0+vDl787FpKfXjMymOJKEX2Kqxk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t/K8VSr8eNaohHaEH+TvnDteKcKJuyr/mVJy4AmC7kJiPB7HXg9+ImAycL1oXSADM8Yqq1FMKZvMnvp5iYZpKGlEOHo3xelUzVfOUx0MgcnyoVD3JHa3Xf1XKD6Bg3xJ6YFyT0+HBmolDWovYKuhzzVO8wZ2r+nYt1ItzoliuqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hqNrE+8N; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998B9C2BCAF;
-	Thu, 16 Apr 2026 09:35:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776332143;
-	bh=Na4TpuUuc6fAl3ui0+vDl787FpKfXjMymOJKEX2Kqxk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hqNrE+8N4RGODIxVEx4DzoS1vXFzYMvqlD42LlDfYjaK38NXFNb6ke0g9pMqe5Ktl
-	 xS9X/k77rumIsBH4VmEMaUSqvB9kkclyPucYw/321Xfk9wT61d6l6Qi1IuWlo1M3dn
-	 Ue/TIIwTT5mwYsSI0klz5v29a7g6ifXmpnhc6rwk5x/dB1bUsrpXqcBEWdn5vDa2qx
-	 S/Kz1t8WTURQSTRrjfnsUwwq4SYl6NIm0lQS8KoM1D+dEy9thSWMetYL5es7DH6VT3
-	 YxDAWNPZ7C3UbvPPyZLw6e2mk08u8YA9Uifl5jWTse5XvLlD07m3eSpGIREt+scSv7
-	 hqc28/lTA95BQ==
-Date: Thu, 16 Apr 2026 11:35:40 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/5] arm64: dts: qcom: add IPQ9650 SoC and rdp488 board
- support
-Message-ID: <20260416-khaki-goose-of-will-ec76bf@quoll>
-References: <20260415-ipq9650_boot_to_shell-v1-0-b37eb4c3a1d1@oss.qualcomm.com>
- <20260415-ipq9650_boot_to_shell-v1-4-b37eb4c3a1d1@oss.qualcomm.com>
+	s=arc-20240116; t=1776332398; c=relaxed/simple;
+	bh=BD0cwyV0XW/t5ezHwMgClNSnK70nWFAxhYPo27dixqg=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=BLy7MGzeFsZ120aAVLpFJCLlvj/gVYZjuc5PWxWXTF6ZfoBcHuA24hQUkTOtEsxOkxkDdBuK1sC5FdSvtEsGnW1DO7W+ucYLY58jEqfxFNpHecdpYsLKMnOkTl7VXa8chWlOvJkrB7YISWbz9eJczrVPK5RLOY/J16yjMoV7B7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=VNzF41fr; arc=none smtp.client-ip=109.224.244.122
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1776332390; x=1776591590;
+	bh=ZcOCyUzaVXe/Qvp5i/tcqCJQynw29lc63i+zflJ5wik=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=VNzF41frvY5ionnJnHTAvBiAuHtDG6uBAQt6rU9YVrmBAb8byv8g6f9uiae7L5i1h
+	 nvGpFY3WJfahEL6p9tmAkqcojB9ECXduN5lHbxVYeO24VaiqEHmfzsHSjcL8yFUOim
+	 lZbuU7OIP2pNwCaTSv3o7GR51wavfLWYps/4IZiLlgXl2IZVdHAb6HeLxx++uA6xN6
+	 LsLquGREOeM8MdO8e4z+HUba0VK2h8AJPmrSaNBLxpf3I61lqB68rB/jFVwaUj2+oC
+	 v6OlbHC6cGjUgO+5k8nAarvMqgGMD+HkEP7D8m/LRCmNBZcvHr6bId3pLlMT91pCf4
+	 jfsd9FA/nYSqQ==
+Date: Thu, 16 Apr 2026 09:39:46 +0000
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
+Subject: [PATCH v2 0/3] Describe IMEM on Eliza
+Message-ID: <20260416-eliza-imem-v2-0-fb7a71123451@pm.me>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: 90e17c226ca56f779132f36ce5286861c6b415ed
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,59 +59,65 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260415-ipq9650_boot_to_shell-v1-4-b37eb4c3a1d1@oss.qualcomm.com>
-X-Spamd-Result: default: False [5.34 / 15.00];
-	SEM_URIBL(3.50)[0.0.0.0:email];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_RHS_NOT_FQDN(0.50)[];
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
 	MAILLIST(-0.15)[generic];
-	BAD_REP_POLICIES(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103359-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103360-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	GREYLIST(0.00)[pass,body];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	R_DKIM_ALLOW(0.00)[kernel.org:s=k20201202];
+	RCVD_COUNT_THREE(0.00)[3];
+	DKIM_TRACE(0.00)[pm.me:+];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	R_SPF_ALLOW(0.00)[+ip4:172.234.253.10:c];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	NEURAL_SPAM(0.00)[0.393];
+	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,0.0.0.0:email]
-X-Rspamd-Queue-Id: 5555140C823
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,pm.me:email,pm.me:dkim,pm.me:mid]
+X-Rspamd-Queue-Id: 3E4CB40C7EB
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Apr 15, 2026 at 07:03:19PM +0530, Kathiravan Thirumoorthy wrote:
-> +		xo_board: xo-board-clk {
-> +			compatible = "fixed-clock";
-> +			#clock-cells = <0>;
-> +		};
-> +	};
-> +
-> +	cpus {
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		CPU0: cpu@0 {
+Add a compatible and describe the IMEM for the Eliza SoC.
 
-Labels should be lowercase.
+Also sort nodes by unit address.
+
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+---
+Changes in v2:
+- Fix sorting of nodes in eliza.dtsi
+- Link to v1: https://lore.kernel.org/r/20260415-eliza-imem-v1-0-4a90e86837=
+99@pm.me
+
+---
+Alexander Koskovich (3):
+      arm64: dts: qcom: eliza: Sort nodes by unit address
+      dt-bindings: sram: Document qcom,eliza-imem
+      arm64: dts: qcom: eliza: Add IMEM node
+
+ Documentation/devicetree/bindings/sram/sram.yaml |  1 +
+ arch/arm64/boot/dts/qcom/eliza.dtsi              | 94 ++++++++++++++------=
+----
+ 2 files changed, 58 insertions(+), 37 deletions(-)
+---
+base-commit: 936c21068d7ade00325e40d82bfd2f3f29d9f659
+change-id: 20260415-eliza-imem-e791f44abf1b
 
 Best regards,
-Krzysztof
+--=20
+Alexander Koskovich <akoskovich@pm.me>
+
 
 
