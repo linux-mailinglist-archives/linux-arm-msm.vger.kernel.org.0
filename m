@@ -1,81 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-103354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CF99EW+k4GkEkgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 10:57:19 +0200
+	id gN98FFit4GkRkwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 11:35:20 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8888040BE67
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 10:57:18 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90ECB40C74D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 11:35:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 04DE73039C57
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 08:56:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 06A2931960D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 09:30:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10423395DAC;
-	Thu, 16 Apr 2026 08:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB83639B4A6;
+	Thu, 16 Apr 2026 09:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iJlnzjZD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s/JNlUDK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4653803E4;
-	Thu, 16 Apr 2026 08:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85C939A7F8;
+	Thu, 16 Apr 2026 09:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776329759; cv=none; b=HkmqzkC237y8LyPKIZ9CMaQtNFubvzI1X+BPUfJ+BUs6HlrxlMpVrPtgkUGMTfapXOir4Xru7dJekFjEWmA53jZMwVkIcRwnQMYVHoPPBNBlRY/eFWsjJo2FlUw5PyGYUOtEhsYGDHVUIgAPk46JlNcG8QsR4dlLuSxSHE6tisk=
+	t=1776331814; cv=none; b=P8bsURDhcJxFXDTAfsFl22HwJZIfFOZksbKBMgwb82hGqU2+Z3jLlpCT/oZVB4PigiamQ8GUt4BE2SxoSFiSu+f2LVc+7HJ3O1Kxa1kKZYqAms58VHlOjviXsxphV0ZuaiVoau2/pXL7ukRSHoke3/v5VkMfUNu4hNm8qH/waqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776329759; c=relaxed/simple;
-	bh=qP9op7qqcS5Lukl0xY0FbOKSLZSPfuuTkBQ5FGAIXHs=;
+	s=arc-20240116; t=1776331814; c=relaxed/simple;
+	bh=mniGz+KFTOHEPMp0qTFF3z5lzmO7QiEiuYq23UlzO3c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eecpctI9I+2cTil7kbrNbea4202oxQSJKHcb44SGCNU5poUE+WG4fRDVQYJ5R5XMiaf94mhhAnPYTUJy+2KIbq+mXyst139gR3KRpYAgWC7C+0joLv/+eU89GcQYC5kS846Jdg6Mx09Pz0KNrlpqKe9yYh/3QwBmC9JNKc2WvwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iJlnzjZD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE584C2BCB3;
-	Thu, 16 Apr 2026 08:55:49 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=kObtDM5rWn8+9hFiAuSmm8YJ5aW3mEZZaBWwDW9vPU+b3CSQ9Sp9dYRH3QVLt20HMSfxMuIM4Mu/mOy4JY1s1jUncTyVF1+40ccVY6k6X1dlpRO0rMYyXAYByk0Qf6iygb/kG1CcFcwj6Tf98vEnD/KYink+h8R5oTG4xookEPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s/JNlUDK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C3EC2BCAF;
+	Thu, 16 Apr 2026 09:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776329759;
-	bh=qP9op7qqcS5Lukl0xY0FbOKSLZSPfuuTkBQ5FGAIXHs=;
+	s=k20201202; t=1776331814;
+	bh=mniGz+KFTOHEPMp0qTFF3z5lzmO7QiEiuYq23UlzO3c=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iJlnzjZDwcviicCbIILPDAxC4Y0Mnwb5Vex/ZZdnkcTF4swx0HthKq5a/CxVUQJ5I
-	 RaWf/yMsvg2I7H+kK63WbY+o5zZt0NKR7QtexrEONzBwSOzI6xsrS6jpTYT39jbH02
-	 JAJFyv/K9BkTkJQziyfkkJJ+FhebMJ0JYH6D9GiJAJLx0OQpJOmwTMXGH3MoSGp+d2
-	 bqootzA4OtnmAGQ1OTMfP8QAFPMn4OuQ2WmuMCjZIKcbYpFs1TAUh1TPAydaBLNcIX
-	 5xr/kJUuKYS9LEiUC46WBOHJwYYsjh4h8xTtUoYnGFn89huAW56f/j+VjePkFn3Dl6
-	 dy5VRIffuc3YA==
-Date: Thu, 16 Apr 2026 14:25:39 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Herve Codina <herve.codina@bootlin.com>
-Cc: Chen-Yu Tsai <wenst@chromium.org>, 
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Rob Herring <robh@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
-	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, Mark Pearson <mpearson-lenovo@squebb.ca>, 
-	"Derek J. Clark" <derekjohn.clark@gmail.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Bartosz Golaszewski <brgl@kernel.org>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org, 
-	Hans de Goede <johannes.goede@oss.qualcomm.com>, Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: Re: [PATCH v7 0/8] Add support for handling PCIe M.2 Key E
- connectors in devicetree
-Message-ID: <4yockfx5rjcvfh2n2excrgsknnhi72rv2w7wf7onks2ryt33sm@w7zkcxuc6vem>
-References: <20260326-pci-m2-e-v7-0-43324a7866e6@oss.qualcomm.com>
- <20260413075459.GA2626902@google.com>
- <fpcs4p62f35a5qyqwgm5ysa73stbysxcr62tkmmkrrcvsuf4t4@4ivukyqjey57>
- <eeytuhqpgdz4do4tgtbmfntub2femtyq7bij7svhodpyjwaylx@j3gmvq2a2zqc>
- <CAGXv+5E=tujhtZjwi6Qm7hk3Ks74UzTQHWq82NiTEw1+vYod5g@mail.gmail.com>
- <ad36pIu-0dutL7Nk@ashevche-desk.local>
- <CAGXv+5EGe59nJctLweEdZjb3MNmMvjuCHngGSfptzN985OiLdg@mail.gmail.com>
- <ad4tJN27opdEooA7@ashevche-desk.local>
- <CAGXv+5EPA29G-fsH=wWOD8AK6TZFezFhsE0NHPYj_Pt3nT+d_w@mail.gmail.com>
- <20260415165651.153b573d@bootlin.com>
+	b=s/JNlUDKXIjCt7sw1QUi+uqOMdbkibmDrEhqCJ6/y3zuIFbSiFMYpQqp4LIMvpFx4
+	 H9nNzVerx4jP2fJg5pFKtMsGJItpNxpUYYpYYrQ8oWan/p8FmKoWm+DMo49hxe9j7f
+	 gfi2litFdlTgBW5l5MMl++ngG5mQa7TLaZ+Ku6k/q/wVf3SvZV4XXBt0v5mffUX080
+	 LJbE51x8zoUtV6CaynE251W0E7RPVQA/DlO+P8Z+3M8yMoVIc0eE9IrKT7cFAXdGC7
+	 /qsz7PiwYeTBJ6nze6imXEXzIK7lPXgqXvE7XQB/1d+OFT3JhHB2GxDwLhOYPVBtl9
+	 ZGKq3wvQZ4SDg==
+Date: Thu, 16 Apr 2026 11:30:11 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: add IPQ9650 pinctrl
+Message-ID: <20260416-electric-dandelion-scallop-1dfb24@quoll>
+References: <20260415-ipq9650_tlmm-v1-0-bd16ccb06332@oss.qualcomm.com>
+ <20260415-ipq9650_tlmm-v1-1-bd16ccb06332@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,137 +64,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260415165651.153b573d@bootlin.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+In-Reply-To: <20260415-ipq9650_tlmm-v1-1-bd16ccb06332@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	ASN_FAIL(0.00)[4.211.64.104.asn.rspamd.com:server fail];
-	RCPT_COUNT_TWELVE(0.00)[34];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-103354-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103355-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[chromium.org,linux.intel.com,oss.qualcomm.com,kernel.org,linuxfoundation.org,linux.dev,squebb.ca,gmail.com,holtmann.org,bgdev.pl,vger.kernel.org,linaro.org,bootlin.com];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 8888040BE67
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 90ECB40C74D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Apr 15, 2026 at 04:56:51PM +0200, Herve Codina wrote:
-> Hi Chen, all,
+On Wed, Apr 15, 2026 at 04:59:24PM +0530, Kathiravan Thirumoorthy wrote:
+> Add device tree bindings for IPQ9650 TLMM block.
 > 
-> ...
->  
-> > 
-> > I'm not arguing for a even more generic "M.2" connector. The "key" is
-> > already described in the compatible. I'm saying we should have some way
-> > of describing the individual interfaces (PCIe, SDIO, USB, UART, I2S, I2C)
-> > on the connector so further nodes or properties can be attached to them,
-> > either with overlays or dynamically within the kernel. Right now the
-> > are only described as individual ports, but we can't actually tie a
-> > device to a OF graph port.
-> > 
-> > But maybe I'm overthinking the representation part. AFAICT for Qualcomm's
-> > UART-based BT bit part, Mani just had the driver create a device node
-> > under the UART (by traversing the OF graph to find the UART). If that's
-> > the desired way then the connector binding should mention it. And that
-> > works for me. But I think it's messier and also we're missing an
-> > opportunity to make the M.2 connector a standardized attachment point
-> > for overlays.
-> > 
-> > Mani, could you also chime in a bit on what you envisioned?
-> > 
-> > (Added Luca from Bootlin to CC, as I think there are parallels to the
-> >  "Hotplug of Non-discoverable Hardware" work)
-> >
-> 
-> Related to "Hotplug of Non-discoverable Hardware",
-> 
-> I would add entries for busses in the connector without using an OF graph.
-> 
+> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+> ---
+>  .../bindings/pinctrl/qcom,ipq9650-tlmm.yaml        | 118 +++++++++++++++++++++
+>  1 file changed, 118 insertions(+)
 
-I don't think this is a correct representation. It is non-standard to describe
-the device nodes in some other connectors. While it may work with your series in
-the future, not something I would bet-on at this point.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-Using OF graph to link the connector nodes look like the cleaner solution to me.
+Best regards,
+Krzysztof
 
-> For I2C and later SPI, this was is done.
-> 
-> You already have an i2c-parent property but no node where an i2c device
-> can be added.
-> 
-> The last discussion related to hotplug, connectors and DT led to the RFC
-> series [1].
-> 
-> It is a huge series. The last patch give a real example of representation:
->   https://lore.kernel.org/all/20260112142009.1006236-78-herve.codina@bootlin.com/
-> 
-> In your case I would see some thing like:
-> 
->     connector {
->         compatible = "pcie-m2-e-connector";
->         vpcie3v3-supply = <&vreg_wcn_3p3>;
->         vpcie1v8-supply = <&vreg_l15b_1p8>;
-> 
-> 	/*
-> 	 * If those GPIOs have to be used by components available in
-> 	 * the connected board, a Nexus node should be used.
->          */
->         w-disable1-gpios = <&tlmm 115 GPIO_ACTIVE_LOW>;
->         w-disable2-gpios = <&tlmm 116 GPIO_ACTIVE_LOW>;
->         viocfg-gpios = <&tlmm 117 GPIO_ACTIVE_HIGH>;
->         uart-wake-gpios = <&tlmm 118 GPIO_ACTIVE_LOW>;
->         sdio-wake-gpios = <&tlmm 119 GPIO_ACTIVE_LOW>;
->         sdio-reset-gpios = <&tlmm 120 GPIO_ACTIVE_LOW>;
-> 
-> 	conn-i2c {
-> 		i2c-parent = <&i2c0>;
-> 
-> 		/*
->  		 * Here i2c devices available on the board
-> 		 * connected to the connector can be described.
-> 		 */
-> 	};
-> 
-> 	/* Same kind to description for other busses */
-> 	conn-pcie {
-> 		pci-parent = <&xxxxx>;
-> 
-> 		/*
-> 		 * The PCIe bus has abilities to discover devices.
-> 		 * Not sure this node is needed.
-> 		 *
-> 		 * If a PCI device need a DT description to describe
-> 		 * stuffs behind the device, what has been done for LAN966x
-> 		 * could be re-used [2] and [3]
-> 		 */
-
-I don't think anyone would connect something like LAN966x to the M.2 connector.
-M.2 cards have a defined purpose, like NVMe, WLAN etc... If anyone wants to
-connect another SoC like LAN966x, they would use non-M.2 connectors.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
