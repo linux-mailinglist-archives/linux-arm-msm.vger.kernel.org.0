@@ -1,104 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-103434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ACSaCiPs4Gk4ngAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 16:03:15 +0200
+	id 6OiPCP7s4Gk4ngAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 16:06:54 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86B1540F53F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 16:03:14 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C8DB40F5AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 16:06:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 36A1E30285EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 13:58:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6EDF6310DA0D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 14:02:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B317D3D3306;
-	Thu, 16 Apr 2026 13:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBA453D565F;
+	Thu, 16 Apr 2026 14:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="T9rspaF8";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZAxCh5cm"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="K88paQfM";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="aHrI5x0m"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90A53B52E6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 13:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966EE38AC76
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 14:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776347903; cv=none; b=totmLoZaqiia/PpvkJWXXlCX4+3bz/VzxXgel54uuxaCRIVK/UCU8SleWn13Qmr5911AsQNHyF8VP88c4havEMhyyj8QGyqCnqMxsBhmnnQA/0wJhvVgaHcOX/212W0pIF9JWXC9I20i0BNA2bDAzRB0Uq8kTPf9HJLq3RCkjoE=
+	t=1776348174; cv=none; b=eT3NodliRxIehFEXjFEz1xi0FIYoqMgGTu7oyUUyAjNvmf0weHr7K+uWRpHG1O9415p2OaTB7091Mwae2scdHJP7KvhyvmajH6Zv0cobzthDiIKFZdqfBPIfp8KTG2kDutuUFfR0F9h5q7SwIrEHHsN7vksFt9EVy1uW5rzdFQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776347903; c=relaxed/simple;
-	bh=JEBObbI3ACl/T9n3Pv0wCedqVUUbAKKkxEyu53otmq0=;
+	s=arc-20240116; t=1776348174; c=relaxed/simple;
+	bh=qjRdv1T42sIsZ52Prw/LobikbnuRFbe8j88C1bwa3Wc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FlYDBKLZaB5uWmBb8G3ANA7LLC3o/x3oHjlubMkzbNgdGy8QrdwiZIcuVkRhSWMpvoxsOWK/O4JFFtXWGpcEmi5gEZ4CnKCxjCWTjC8HiOzpXGutoRaXtrmd/d9QspM4XLDJEk+74aPsUhDW9URjusTET0JKn3yKM+07Gy2YJcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=T9rspaF8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZAxCh5cm; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=D6NDcV7BYlg985q0ai0HdxVVk4wMqz9gXNm1ki7zXZ2TUEvEusctNtn3W/QqxXDuPbEzoWz51zmsXbLSzOY/JHkLFTmMslTw+d180FG2ua528mkynHuuonOTE9yJsEV4BPdx3WhgPsD5AZkE/A5ihn3ekjawlex3fKzTGTSacac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=K88paQfM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=aHrI5x0m; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63G8TngM862148
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 13:58:17 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63G8GJb0862379
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 14:02:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jHBtOeE993tOe4SQEGWOa66fcOQQwR2SMB1ef/T4B24=; b=T9rspaF8R0SZil75
-	HY97ZECGrLlbajeihis5MBFzGZ7QHWWNY6aoXdToB722VTHWkkBMCfJSV098dayf
-	uNyHr5QF2WQ0BgAs+5cr6QtecSD/RTQZrk6zi6D3285HLMYUCLs27EBukHo/wdo2
-	FuOLwWQojaOqdykzsicLzxLK9EpwDgPyr5K5LmYQCm/cbxUDQXCeTbAVZCQk+Zd4
-	A07b7drLsboilUnDNyiy+I+wSXB4Bb4LQLQh8jRq184MT1I773sKZ7H4ORu+uqkG
-	N/X8IgDAnPOZnimvqXajHqjSWYiAqT0oa2dMF3VqGMy8Z+fj/l3Y8mZe8klebgP+
-	idpd0A==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4djd0ec4w2-1
+	lK4ABVEsh6vQVo/gXF6kYceIrK1uJbLooD8HSUD9HiY=; b=K88paQfMfy9cAtk2
+	kzMbi/YdkaDrgPNwIPQdzDhZWgqOjhYwuwfNHKEgk33d09bMdZl4Jn1gEWXtCIWN
+	xM7vM0Nxi3aycorwa1zAfmTBHGb2SgsewN/TnguvOvzP1WUe3qWTz5cTqu2FUcL8
+	1TO5E1xZwik8YQNb4VcmGuK8Ln88CXRyyhhuEamnc3wtzBZwgIJ0rHIR8DhH+r0C
+	fQBMA0qd4i3yNWUtAprWcS94JZS0gdGZDwZSMpnobI0RNIGa6c1fcYSQNmo0DJJl
+	HiFPwVrpWTmUb5C6NaxcFEqCepv4ygg6L6mSIfdXRuAM810/1x0ng1rRs2s4ojF+
+	0mwn9Q==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4djd0ec5jg-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 13:58:17 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3568090851aso18887510a91.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 06:58:17 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 14:02:52 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-82f543bae3cso413961b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 07:02:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776347896; x=1776952696; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1776348172; x=1776952972; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=jHBtOeE993tOe4SQEGWOa66fcOQQwR2SMB1ef/T4B24=;
-        b=ZAxCh5cmXs/6bpwMTXa0Sjz/OANcTaVGEUSRoiO3CqyHdX9sWzoIzu7iBzQG55fmjs
-         0fMpRCDEvJgsq7TabAunJb8I4h6LxOFip8NS8+zFhnwq3OBZLY0VN+KCb/UghKkpkCHy
-         IqYwYYs+hfdHT8kXdOlduFzzu+1YfLofkqBj4MwyXA9+WKC8iRudPK+JF5ySUrjc204V
-         +ZsfIL0UJ+Se80sFtWM6+6qLNbEGEHtoKcdqGcBwi1jO4uBmfRe/xY49FLfotiZ9/Zkq
-         p03BvVdjMYJvTph5nnM6Ta9ADaKT7CNcUDDULgNFSW45lEDrjZ4jUrfhcZov0jYmPtb1
-         bdMg==
+        bh=lK4ABVEsh6vQVo/gXF6kYceIrK1uJbLooD8HSUD9HiY=;
+        b=aHrI5x0mXosil8ChXkeS4sa/GxfRmAjl4+gvs4Gnr1ZKae9StN0pPLxxGBYnwI9Xab
+         WqiZJ54PL7q+2CogHqZ6dFRpJfPkvNV1PRUlGq6NEiAcVbjGfey/TVlr4DYiZd9SVBBa
+         A7UBamYsy3UdZHhxMNq6VXds6QQmrej64NmW5ZK0x/ywzXKNl05hll4s2/+zfZpznyqZ
+         OmzilPZGcCb1JxrsLbR49O2Cbyc8lVl8n/aErV5J8gI4SnSSL6VbDic97/ig0RDutd3g
+         IBzKGw7UMkY9dDqeBtVLXZnlpqojTbxoXYr6lITNldCqCln/lrkOso0oLCwY/kpK4aUB
+         tjkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776347896; x=1776952696;
+        d=1e100.net; s=20251104; t=1776348172; x=1776952972;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=jHBtOeE993tOe4SQEGWOa66fcOQQwR2SMB1ef/T4B24=;
-        b=Pf7CjNjVAY48mr6yAIsqhkj9aaqRrGdVe9Ul2NFStJQcz3dtDBZhDiAn6QHqYpQT07
-         WiHRVWwHJujbnFMiXuhkD0NXUtASAyZ++Q12L880hNRX56D0hOo1pWu+gTRGVEHfsZOM
-         pmhyj+Gp6PX+DHVCgaYnBGkzXm8a2Lm+cTzah0RVzKmzPCgzd4Gsk/PJtjWvCfZctgh0
-         KyCZm/gjkwzL1uPt89783wysnpv17Wwbag2JCBwGK8CRDN00yXci0SByXyMXkNhDTnZC
-         IUKf1BplrayNCnnKAwq6+KKeWMSdlGfYuYDs1sKwfOFSLGJTpyKWd2GSnWgOzDRBCzlx
-         tB8A==
-X-Forwarded-Encrypted: i=1; AFNElJ8vfzKW7BsDt+C5hdJC5DUccUQvBB2qODlBiJwqrY/S8i+d3QbRPzDr4sSjF0SQDovK79LkvDr4ouSss5/O@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx003VZut+BrK3Q7LKLWrCCsXAKiGE2ywULgEmGuWxnReGH/11r
-	MfP1GBYJCgbfeIrUm7mSl42120JCYGYO5255D2/QZZmMSHrEHrgXprpoNYLx2inWe971RnRN46G
-	2bNIJLSPINj+RGVdz8qJj6zHvi2jDOnUmxZ0/bRI/6esmE+v6nty/vRS5/lPvqozm7Trz
-X-Gm-Gg: AeBDieu0CQVa3h/G5t4yGQySlPmLuKsGmFISCfaGNrcSS1HpiBQOaQmlIIPZOgXDHCV
-	beDhl3yxbRHBMry8RYN2KfkxZX9n3GhUx7rimTizh+BR5OvOq/GHK6A+JF9a1rjaQpoZmaebyvN
-	HWbev8cNUprzu2TqYLWlc8mg1QNBySQRPRCG/PCNKeHQ1oYcXxDunRy502CM2Uga+NWpNPV6pYF
-	pLXzzi0j++uRhH/6bzlPGc2ukG3gevyd8Fhy/sbPc0yPbBhGPREgT1U8+ctvL88+DeIBTJYOghy
-	0miIB8WNf0CmyLi/9TKlBNm0RbOxB0s8FgqwvF3FocDhDzJkVs7yO6PhTPygi96m72DAj8VGJoV
-	NDFDyHvZi3rVjdRHKREO3lq0X3f0j7nLGBr0Z0iwqPPeTfrVp58Z+2RhSqOX+/+Y=
-X-Received: by 2002:a17:90a:e7c1:b0:35f:b987:4dac with SMTP id 98e67ed59e1d1-35fb9875138mr16866752a91.12.1776347896058;
-        Thu, 16 Apr 2026 06:58:16 -0700 (PDT)
-X-Received: by 2002:a17:90a:e7c1:b0:35f:b987:4dac with SMTP id 98e67ed59e1d1-35fb9875138mr16866724a91.12.1776347895362;
-        Thu, 16 Apr 2026 06:58:15 -0700 (PDT)
+        bh=lK4ABVEsh6vQVo/gXF6kYceIrK1uJbLooD8HSUD9HiY=;
+        b=qoNYjd7ZFH36r3lVbm/4cwG+ORG3BwDPykEt2/2Yw0rAxUwjyWNg52UMUu7WrNB0S8
+         eoryFm0/W+F6hPb9GLKM4ld668A655ZVqqAG1ieJXCXVhr0N/AYVODvfTbgbJkr2GkUp
+         O7+Vqmg50+h1qcmKHxUB+ScpI5ibUFTgw1/ifAdYNwRwncinZlVm8hNdmpS0oOjPCkzv
+         Aqip7Mm04py92zJwApeWWmu8zJrXFW/UTWaeJzWOqv6xHjWM5WYpwW/B1I9eiNlrN/yL
+         eDR853y+JeMFcIu56sNcETzSNPMOxVA/RezhxnZgnfq/t+I7eggUmnd2PlaNAH8cpX+w
+         Fdjg==
+X-Forwarded-Encrypted: i=1; AFNElJ8jahB7cAloFaq5hipyf3MPkmwX75nj6Gxlr6QHOt5B+UrfWR7kOCImZ8AjjzHFCutVBVNUnnRuFcOsYw8j@vger.kernel.org
+X-Gm-Message-State: AOJu0YxQ0r7EzN+Z3SC3clMYMgJ0JSC7kzNSlHuytgD/h8EgWwjW87R6
+	Mq9W4FFXcKoYAg/33vepNWcvi8etoLkOL2svbJrRNje4uJlSKyB8ROAD/E4oJS2RQF7jb2OF6vl
+	50yCsvgrfVO8qFCDF7nwIVpkFOEK7vfiiQltufilYxbXXP2EJ33vvksUT1sjcQfwDMO/R
+X-Gm-Gg: AeBDiesOSPjI58UMFdxxmmRgm8Pl/n5ygyS0Id5gOwuQFiBhIjUIfIktUGBuMJTX2aA
+	EgIQnpxSXU98lcSAzet7NRK7/r7HGDXaLIgZ+1ZS9YyzdXx1W971+RZmelw9B6LuSxLclUZOODP
+	P0SVAUDVN2VzHOlqiG9p68HdwzFWVZ91WwfU9zdQr9mzOI6H4F9/NtIOm+Kz9yhw8ikOINbzfBh
+	oHJoHauISdgfczao+3G5LoZ2szl2bFojmBnQ4w0rUE0tgp9dAb6NaKXuj1FdGnrL/jAERrEQSV/
+	DiK65yp7vzgJDAtHFBB3/1aqbdYq6NGfOa3zPWAB8SiyyM3IGKBgCALfDBzg7HPjiZCkOHaV526
+	FYY0qM5dvvXkOqiKtcOfIrOIP4gbdHYqiSruDErWPVqhjkY2nlSbf1TESh9BeUck=
+X-Received: by 2002:a05:6a00:4308:b0:82f:6640:7221 with SMTP id d2e1a72fcca58-82f764f632dmr3315537b3a.22.1776348170757;
+        Thu, 16 Apr 2026 07:02:50 -0700 (PDT)
+X-Received: by 2002:a05:6a00:4308:b0:82f:6640:7221 with SMTP id d2e1a72fcca58-82f764f632dmr3315466b3a.22.1776348170039;
+        Thu, 16 Apr 2026 07:02:50 -0700 (PDT)
 Received: from [192.168.1.10] ([122.164.36.130])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35fd075882dsm2699163a91.3.2026.04.16.06.58.11
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f738b399bsm3451789b3a.8.2026.04.16.07.02.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Apr 2026 06:58:14 -0700 (PDT)
-Message-ID: <90c2f6d5-21cd-4ba1-86e4-458100c8f830@oss.qualcomm.com>
-Date: Thu, 16 Apr 2026 19:28:09 +0530
+        Thu, 16 Apr 2026 07:02:49 -0700 (PDT)
+Message-ID: <0bab12c2-48f3-45a2-a87b-b33b60b5a7df@oss.qualcomm.com>
+Date: Thu, 16 Apr 2026 19:32:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,37 +108,36 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v8 4/4] misc: fastrpc: Add polling mode support for
  fastRPC driver
-To: Luben Tuikov <ltuikov89@gmail.com>, srini@kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: srini@kernel.org, linux-arm-msm@vger.kernel.org,
+        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
         linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
         dri-devel@lists.freedesktop.org, arnd@arndb.de,
-        dmitry.baryshkov@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com,
-        andersson@kernel.org
+        konrad.dybcio@oss.qualcomm.com, andersson@kernel.org
 References: <20260415112530.4083240-1-ekansh.gupta@oss.qualcomm.com>
  <20260415112530.4083240-5-ekansh.gupta@oss.qualcomm.com>
- <8dc8c094-63ab-4f9c-867a-96b615dff2cf@gmail.com>
+ <ymieeagodsfbygq7fsejsqriajmncoubzvor7t3ll6ntomtbeg@l65yihnixwbu>
 Content-Language: en-US
 From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-In-Reply-To: <8dc8c094-63ab-4f9c-867a-96b615dff2cf@gmail.com>
+In-Reply-To: <ymieeagodsfbygq7fsejsqriajmncoubzvor7t3ll6ntomtbeg@l65yihnixwbu>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: rbKvPnS_6swdAYnYLwzuot4n2Xli5UNN
-X-Proofpoint-ORIG-GUID: rbKvPnS_6swdAYnYLwzuot4n2Xli5UNN
-X-Authority-Analysis: v=2.4 cv=GP441ONK c=1 sm=1 tr=0 ts=69e0eaf9 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=XANuBpsXGvULjGEGCPeV4Q==:17
+X-Proofpoint-GUID: NjeWSK5Sa8l9UFTAcv9zAsT_LLW6jPJq
+X-Proofpoint-ORIG-GUID: NjeWSK5Sa8l9UFTAcv9zAsT_LLW6jPJq
+X-Authority-Analysis: v=2.4 cv=GP441ONK c=1 sm=1 tr=0 ts=69e0ec0c cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=XANuBpsXGvULjGEGCPeV4Q==:17
  a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=5r13Z1IhC2nsk_t_lv4A:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDEzNCBTYWx0ZWRfX9qwVWHeMYy+2
- BgHUevla1qwlOhlr5Aa2GIQKDEXvvYLoKVwvMijw8OFAZDc8GmFd9buHyN0jSN0IXvR8WKAj8oA
- ZnB3/m+PUHSWOW8iejMO3tdknPVAYNH9X4AsCz/iJIt1emOZGFPNTwSi1kP6/LaLiMn8KFk9gc7
- oZF+KCbN2TgzqaPDFQX1bTnDumBIYLSKAfgklWU3Ot/sx3Zl5U9PQY5lPm2IoSm1IJZnFo4DubT
- 8H8PUVjW71UMCMGoGN4hSN5kkEtTxQFtV4VKT3yW2es4d0vGlkSuDi2Zp0wgG5gKX1G44ejUS/K
- 8zwDJNOdITh2c71v8ocKjT1jfiHx5Y7hbsqnfMjyODF4xLoQZRlGjIHehiiLOWIa6dr7OIJzVIm
- 0n/szwS11x32XnuQEybTykYuByecfHWLfIUo+vVaXndIQKVCuPTSbFuHQ/77p9rskNtSHKRkBlu
- tE9JiR0uLmqtTQXNjaQ==
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=pm_eAs2JUF_NPnZ18oEA:9 a=QEXdDO2ut3YA:10
+ a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDEzNCBTYWx0ZWRfX3lz3O8HMdn1h
+ amFKLHX3y2Jn+Ydnodx/cJ32AgFqUr01GTaa9OiY2muYXOxljqTnKOhmO08ASGB1eFeKuf6xcNq
+ ZqtoS97Hjmc11WYd6lAgF0YYMeycZ7+YSrOX6SGiEZ5AfzWqeTn56F3V/Yaxdq3ZF8gRs9qhWjm
+ W+4EnyD3hOxQsuqIHldUb6+C7gCub9wA8ca4JEPtwr66hIUDncVsWbH1vczDFcKPi0wKLsRLTyf
+ JV/Q3oQ2ysqAKtiEanOcI1aqAO+JD9WUAT8jbZMbQwyfwx7YgBWXGhOQuznxdHVThy193frY9Aa
+ eV+iy+mWaECVKdmnJwONqLuDAaxgHdUfSVYA1ayEY2jCr36F4ByVGMRW1CebWNKPEnPlZd2IhF2
+ u12954A+D8NUoKq/zuJBQe9euDqHvNRcr/pKI++z1X7IpVmv4f30Q6nk8InhRdwhRypelEUbX88
+ C+j93GP+EgRR2PiYEBA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-16_03,2026-04-16_02,2025-10-01_01
@@ -151,40 +150,35 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103434-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org,vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103435-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 86B1540F53F
+X-Rspamd-Queue-Id: 9C8DB40F5AA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 16-04-2026 13:47, Luben Tuikov wrote:
-> Hi Ekansh,
-> 
-> Good work. A couple of notes below:
-> 
-> On 2026-04-15 07:25, Ekansh Gupta wrote:
+On 16-04-2026 16:25, Dmitry Baryshkov wrote:
+> On Wed, Apr 15, 2026 at 04:55:30PM +0530, Ekansh Gupta wrote:
 >> For any remote call to DSP, after sending an invocation message,
 >> fastRPC driver waits for glink response and during this time the
 >> CPU can go into low power modes. This adds latency to overall fastrpc
@@ -202,207 +196,48 @@ On 16-04-2026 13:47, Luben Tuikov wrote:
 >>  include/uapi/misc/fastrpc.h |  25 +++++++
 >>  2 files changed, 155 insertions(+), 7 deletions(-)
 >>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index c4a3547a5c7f..5311a4ba4bb7 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -24,6 +24,8 @@
->>  #include <linux/of_reserved_mem.h>
->>  #include <linux/bits.h>
->>  #include <linux/bitops.h>
->> +#include <linux/compiler.h>
->> +#include <linux/iopoll.h>
->>  
->>  #define ADSP_DOMAIN_ID (0)
->>  #define MDSP_DOMAIN_ID (1)
->> @@ -38,6 +40,12 @@
->>  #define FASTRPC_CTX_MAX (256)
->>  #define FASTRPC_INIT_HANDLE	1
->>  #define FASTRPC_DSP_UTILITIES_HANDLE	2
->> +/*
->> + * Maximum handle value for static handles.
->> + * Static handles are pre-defined, fixed numeric values statically assigned
->> + * in the IDL file or FastRPC framework.
->> + */
->> +#define FASTRPC_MAX_STATIC_HANDLE (20)
->>  #define FASTRPC_CTXID_MASK GENMASK(15, 8)
->>  #define INIT_FILELEN_MAX (2 * 1024 * 1024)
->>  #define INIT_FILE_NAMELEN_MAX (128)
->> @@ -106,6 +114,12 @@
->>  
->>  #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
->>  
->> +/* Poll response number from remote processor for call completion */
->> +#define FASTRPC_POLL_RESPONSE (0xdecaf)
->> +
->> +/* Polling mode timeout limit */
->> +#define FASTRPC_POLL_MAX_TIMEOUT_US (10000)
->> +
->>  struct fastrpc_phy_page {
->>  	dma_addr_t addr;	/* dma address */
->>  	u64 size;		/* size of contiguous region */
->> @@ -236,8 +250,14 @@ struct fastrpc_invoke_ctx {
->>  	u32 sc;
->>  	u64 *fdlist;
->>  	u32 *crc;
->> +	/* Poll memory that DSP updates */
->> +	u32 *poll;
-> 
-> Perhaps "poll_addr"? "poll" seems just too generic.
-ack
-> 
->>  	u64 ctxid;
->>  	u64 msg_sz;
->> +	/* work done status flag */
->> +	bool is_work_done;
->> +	/* process updates poll memory instead of glink response */
->> +	bool is_polled;
->>  	struct kref refcount;
->>  	struct list_head node; /* list of ctxs */
->>  	struct completion work;
->> @@ -308,6 +328,8 @@ struct fastrpc_user {
->>  	int client_id;
->>  	int pd;
->>  	bool is_secure_dev;
->> +	/* Flags poll mode state */
->> +	bool poll_mode;
->>  	/* Lock for lists */
->>  	spinlock_t lock;
->>  	/* lock for allocations */
->> @@ -923,7 +945,8 @@ static int fastrpc_get_meta_size(struct fastrpc_invoke_ctx *ctx)
->>  		sizeof(struct fastrpc_invoke_buf) +
->>  		sizeof(struct fastrpc_phy_page)) * ctx->nscalars +
->>  		sizeof(u64) * FASTRPC_MAX_FDLIST +
->> -		sizeof(u32) * FASTRPC_MAX_CRCLIST;
->> +		sizeof(u32) * FASTRPC_MAX_CRCLIST +
->> +		sizeof(u32);
->>  
->>  	return size;
->>  }
->> @@ -1019,6 +1042,9 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
->>  	list = fastrpc_invoke_buf_start(rpra, ctx->nscalars);
->>  	pages = fastrpc_phy_page_start(list, ctx->nscalars);
->>  	ctx->fdlist = (u64 *)(pages + ctx->nscalars);
->> +	ctx->poll = (u32 *)((uintptr_t)ctx->fdlist + sizeof(u64) * FASTRPC_MAX_FDLIST +
->> +			     sizeof(u32) * FASTRPC_MAX_CRCLIST);
->> +
->>  	args = (uintptr_t)ctx->buf->virt + metalen;
->>  	rlen = pkt_size - metalen;
->>  	ctx->rpra = rpra;
->> @@ -1188,6 +1214,74 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
->>  
+>> @@ -1813,6 +1908,30 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
+>>  	return 0;
 >>  }
 >>  
->> +static inline u32 fastrpc_poll_op(void *p)
+>> +static int fastrpc_set_option(struct fastrpc_user *fl, char __user *argp)
 >> +{
->> +	struct fastrpc_invoke_ctx *ctx = p;
+>> +	struct fastrpc_ioctl_set_option opt = {0};
+>> +	int i;
 >> +
->> +	dma_rmb();
->> +	return READ_ONCE(*ctx->poll);
-> 
-> I think you're better off using readl() here, but see my comment below, which obviates this function.
-> 
->> +}
+>> +	if (copy_from_user(&opt, argp, sizeof(opt)))
+>> +		return -EFAULT;
 >> +
->> +static int poll_for_remote_response(struct fastrpc_invoke_ctx *ctx)
->> +{
->> +	u32 val;
->> +	int ret;
->> +
->> +	/*
->> +	 * Poll until DSP writes FASTRPC_POLL_RESPONSE into *ctx->poll
->> +	 * or until another path marks the work done.
->> +	 */
->> +	ret = read_poll_timeout_atomic(fastrpc_poll_op, val,
->> +				       (val == FASTRPC_POLL_RESPONSE) || ctx->is_work_done, 1,
->> +				       FASTRPC_POLL_MAX_TIMEOUT_US, false, ctx);
-> 
-> Is there any reason you're not using readl_poll_timeout_atomic() as documented in linux/iopoll.h?
-> Does readl() not satisfy the read operation in fastrpc_poll_op()?
-I didn't check this, I'll try this out.
-> 
-> How can ctx->is_work_done be updated here? Perhaps you just want to use "val == FASTRPC_POLL_RESPONSE" as a condition here...
-That is to handle the possibility that normal response comes while the
-polling is ongoing. In that case, the call will get completed by
-fastrpc_rpmsg_callback.
-> 
->> +
->> +	if (!ret && val == FASTRPC_POLL_RESPONSE) {
->> +		ctx->is_work_done = true;
->> +		ctx->retval = 0;
+>> +	for (i = 0; i < ARRAY_SIZE(opt.reserved); i++) {
+>> +		if (opt.reserved[i] != 0)
+>> +			return -EINVAL;
 >> +	}
 >> +
->> +	if (ret == -ETIMEDOUT)
->> +		ret = -EIO;
+>> +	if (opt.request_id != FASTRPC_POLL_MODE)
+>> +		return -EINVAL;
 >> +
->> +	return ret;
->> +}
->> +
->> +static inline int fastrpc_wait_for_response(struct fastrpc_invoke_ctx *ctx,
->> +					    u32 kernel)
+>> +	if (opt.value)
+>> +		fl->poll_mode = true;
 > 
-> What is "kernel" and why is it a u32 when it is used as a "bool"? Perhaps a better name can be had?
-This reflects kernel message. As of now, just propagated the same that
-is used across the driver, maybe can address this as a separate patch.
-> 
->> +{
->> +	int err = 0;
->> +
->> +	if (kernel) {
->> +		if (!wait_for_completion_timeout(&ctx->work, 10 * HZ))
->> +			err = -ETIMEDOUT;
->> +	} else {
->> +		err = wait_for_completion_interruptible(&ctx->work);
->> +	}
->> +
->> +	return err;
->> +}
->> +
->> +static int fastrpc_wait_for_completion(struct fastrpc_invoke_ctx *ctx,
->> +				       u32 kernel)
->> +{
->> +	int err;
->> +
->> +	do {
->> +		if (ctx->is_polled) {
->> +			err = poll_for_remote_response(ctx);
->> +			/* If polling timed out, move to normal response mode */
->> +			if (err)
->> +				ctx->is_polled = false;
->> +		} else {
->> +			err = fastrpc_wait_for_response(ctx, kernel);
->> +			if (err)
->> +				return err;
->> +		}
->> +	} while (!ctx->is_work_done);
-> 
-> Perhaps you want to also check "err" here to make the exit condition more explicit. (The invariant in do-while loops is generally directly determined by something within the loop and generally not implicit.)
-The reason to not keep "err" check is because the call should fallback
-to normal response(fastrpc_wait_for_response()) in case
-poll_for_remote_response() fails.
-> 
-> Is it possible that in poll_for_remote_response() you get 0 as a poll result and val is not equal to FASTRCPC_POLL_RESPONSE? In such a case, this may hang. (Is a hang desired here?)
-That's actually a good point, let me try making it more robust, this
-condition might get encountered in case normal response is sent instead
-of poll memory update.
-> 
-> Is it possible that if polling is enabled, then you want to poll only once, and if unsuccessful, or successful but "!work_done", then transition to fastrpc_wait_for_response() and return, without looping? (since polling is looping after all...)
-This is correct, the intention is the poll until it returns, continue if
-successful and fallback to normal response if unsuccessful.
-> 
->> +
->> +	return 0;
-> 
-> "err" is always initialized so you can return "err" here if you exit with "err" as part of the exit condition. (And if you add "!err &&" in the loop invariant, then you don't need (if (err) return err;) after "fastrpc_wait_for_response()").
-I'll be keeping this unchanged if I don't end up adding "!err &&" check
-here, as err is always going to be zero here as suggested in earlier
-version[1].
-
-Thanks, Luben, for taking the time to review this change and for
-providing insightful comments.
+> This will enable poll mode on the platforms where it is not supported,
+> later silinently changing back to the normal mode. Please don't surprise
+> users and make this call fail if polling mode is not supported.
+Ack. Working on adding compatible based checks for supporting platforms
+by reading the root compatible string, something like pdmapper[1].
 
 [1]
-https://lore.kernel.org/all/wipphezpxtuuxtwhpwamsmvhwgwuesexmy5ev5pcqb65vov5kz@vuzzyyqnu7ci/
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/soc/qcom/qcom_pd_mapper.c#n643
+
+Thanks,
+Ekansh
+
+> 
+>> +	else
+>> +		fl->poll_mode = false;
+>> +
+>> +	return 0;
+>> +}
+>> +
 > 
 
 
