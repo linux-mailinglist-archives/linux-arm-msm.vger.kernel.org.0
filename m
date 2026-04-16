@@ -1,187 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-103368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wFiSDl214Gn5kwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 12:09:33 +0200
+	id yAA3FM624GlYlAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 12:15:42 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA74A40CBE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 12:09:32 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A19B40CCB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 12:15:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id DEF13301E014
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 10:09:31 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 91CA0302291D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 10:15:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D569B39D6D6;
-	Thu, 16 Apr 2026 10:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 329D339E17C;
+	Thu, 16 Apr 2026 10:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hv1KPzlu"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="L0Y9URzI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14F2395257;
-	Thu, 16 Apr 2026 10:09:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DADF313558;
+	Thu, 16 Apr 2026 10:15:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776334168; cv=none; b=YB78mNya/1BRlti1B65hyZ0Q0iHTtOiPjWx9+ZFvgcjOsMEYfYPp3lnSxokCinOJckMszIz4LuekhNYwL4Jcn9cWZrkPUkce6df384NIEI9dSOb2Xd9j2dbSRqPJp9XjL+/L4rSMRxdWRxkzf3odbxZHznsBylEkVF5tBIvZVGE=
+	t=1776334526; cv=none; b=cHsvJ62/RvdSZ3Tr9WyFIlK71GVD2mBpFmHO4y0vLzJtqpzyqeldb6t+kxjKXDpejphFfjahTQhNlT7r1q4LmrcSc0StiJp2qyJqNy9piE1VX72m4dF9d4jPVNmdxpaTXky4yNWcfghkKGbYx3q2Sfc/urK319ruvEBarozVPVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776334168; c=relaxed/simple;
-	bh=hJqdrNuUQ+ihigT3Xqx466V5zxeRI4imCZRi8ZRFpwM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JR3UMVZVHSJxdhFMc+h8Z6IBu7YeCpWllv2JqKOxlFMHtteoKaK0RgxqiZcRj/eAmXMKkTGdDmh+TaJwPDkE5jMuDmKAU1qxpHCyvxVOkRKbkanm70dHPMJEaoEWm7VQ5Sz2b8udsZrtvnls+LB6/SK0aQwbsqEzcJ1Jg7itca8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hv1KPzlu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2285EC2BCAF;
-	Thu, 16 Apr 2026 10:09:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776334168;
-	bh=hJqdrNuUQ+ihigT3Xqx466V5zxeRI4imCZRi8ZRFpwM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Hv1KPzlu25U3gi1qYwYPaQcNsXoRm51A+F1wrvQ2KxrDyA5s8ygnFacuHdXz4NBXX
-	 KOTMk59uWrFrTtZvu0f90CuxRdpO064fN7cfkX0dMgJLRWjrlrPyu2y8GHbtMtKARj
-	 xdZL5POyifyHJU+/9GD5cViTOduN+l7shMx+Of3RqYCAz3nmklKAv18JQGFko3UH/X
-	 4HMR83DsKKOCuQKMf9vHqDVnUXlZvcEUVAp1H1F79414MA8Dp845VYbW7UF9Pq4yhs
-	 wcWT4unzbQDwx5GDfY6eQQzO0W2zc8kkiXc9K4sFDoVAtpNES/obRI/j5bmIc5e80b
-	 asHHL+XDRBGqQ==
-Message-ID: <9592f205-7467-462b-874e-7fc599e5277a@kernel.org>
-Date: Thu, 16 Apr 2026 12:09:24 +0200
+	s=arc-20240116; t=1776334526; c=relaxed/simple;
+	bh=i9u2toCQeo/TGqEpiUXZdE6qSFYzkl2ibLCuEvAPjto=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=fTjJS4Akv9/0YiG3N+XEO+ix8/fdv0aHfoVvKLKEbii6004e90QytxPrZn/7A5VJuUOiCJ7RcQOuVHyNbhiTUzcmyDRs631QBY0mr5xufRUuIlLUqFT5JU7SucLMKK8gwKqG28g97OSWm+1wNUNU+znjMejyJ6KjA0S1vB73NzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=L0Y9URzI; arc=none smtp.client-ip=185.70.43.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1776334522; x=1776593722;
+	bh=enIl/aGtK9F5vuuVOrgpSnjtyBuWt7e4jd2kN1VmneE=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=L0Y9URzI9zOZOT3alEIvYzdKVIalHdHGgiPYVGaudHtJFRHiZCr/BErQ7cQKfHJLW
+	 s1HZl5Irtqadcftkofi5vp6tjYkkKY0FOizIws1JZ54Wx992V8BJWDHrLoqOH0sKk5
+	 EFDa1VY64uy21u1t4yRSueLYhfWEyZu2lNwAczASjYdIsEXSOUJkvFGgDL7w1kHwGE
+	 AyXYBzlyjtpHsQMP1aXrkVq2RcEkeoJpxqRRcMn7MwUt1/QAfv3DKO4lLo7r4DgyzZ
+	 vPIrMnLjzQFOBoLKjeRLm0++23aY5DYMRJyPJw7qxmiAJXqF+o2ccOUWOv809M6+RH
+	 k3sC57GPs4KMQ==
+Date: Thu, 16 Apr 2026 10:15:20 +0000
+To: Krzysztof Kozlowski <krzk@kernel.org>
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: eliza: Add IMEM node
+Message-ID: <jqIIiW2Ouy-8QTfn81SNoVSORMH3YOYXbtpGGc7bWZoDAXLHW55mdk8b5BRhDUYLqaHG9rA5NtA3EOCblHlbz9gQ0DuKchHSoCsNUTsq5-o=@pm.me>
+In-Reply-To: <9592f205-7467-462b-874e-7fc599e5277a@kernel.org>
+References: <20260416-eliza-imem-v2-0-fb7a71123451@pm.me> <20260416-eliza-imem-v2-3-fb7a71123451@pm.me> <9592f205-7467-462b-874e-7fc599e5277a@kernel.org>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: d2cf1beaefdd3d8b30981347c74ef32989d7ea14
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: eliza: Add IMEM node
-To: Alexander Koskovich <akoskovich@pm.me>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20260416-eliza-imem-v2-0-fb7a71123451@pm.me>
- <20260416-eliza-imem-v2-3-fb7a71123451@pm.me>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260416-eliza-imem-v2-3-fb7a71123451@pm.me>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_FROM(0.00)[bounces-103368-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[pm.me:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103369-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	DBL_PROHIBIT(0.00)[0.0.11.184:email,0.223.255.192:email];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCPT_COUNT_SEVEN(0.00)[9];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: CA74A40CBE5
+	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:email,pm.me:dkim,pm.me:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,94c:email]
+X-Rspamd-Queue-Id: 7A19B40CCB1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 16/04/2026 11:40, Alexander Koskovich wrote:
-> Add a node for the IMEM found on Eliza, which contains pil-reloc-info
-> and the modem tables for IPA, among others.
-> 
-> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-> ---
->  arch/arm64/boot/dts/qcom/eliza.dtsi | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/eliza.dtsi b/arch/arm64/boot/dts/qcom/eliza.dtsi
-> index 6fa5679c1a62..551df07e44c6 100644
-> --- a/arch/arm64/boot/dts/qcom/eliza.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/eliza.dtsi
-> @@ -1029,6 +1029,26 @@ qup_uart14_default: qup-uart14-default-state {
->  			};
->  		};
->  
-> +		sram@14680000 {
-> +			compatible = "qcom,eliza-imem", "mmio-sram";
-> +			reg = <0x0 0x14680000 0x0 0x2c000>;
-> +			ranges = <0x0 0x0 0x14680000 0x2c000>;
-> +
-> +			no-memory-wc;
-> +
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +
-> +			pilreloc-sram@94c {
-> +				compatible = "qcom,pil-reloc-info";
-> +				reg = <0x94c 0xc8>;
-> +			};
-> +
-> +			ipa_modem_tables: modem-tables-sram@3000 {
-> +				reg = <0x3000 0x2000>;
+On Thursday, April 16th, 2026 at 6:09 AM, Krzysztof Kozlowski <krzk@kernel.=
+org> wrote:
 
-I don't think these two should be in the main SoC DTSI. The non-modem
-version obviously does not have modem-tables.
+> On 16/04/2026 11:40, Alexander Koskovich wrote:
+> > Add a node for the IMEM found on Eliza, which contains pil-reloc-info
+> > and the modem tables for IPA, among others.
+> >
+> > Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+> > ---
+> >  arch/arm64/boot/dts/qcom/eliza.dtsi | 20 ++++++++++++++++++++
+> >  1 file changed, 20 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/eliza.dtsi b/arch/arm64/boot/dts/=
+qcom/eliza.dtsi
+> > index 6fa5679c1a62..551df07e44c6 100644
+> > --- a/arch/arm64/boot/dts/qcom/eliza.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/eliza.dtsi
+> > @@ -1029,6 +1029,26 @@ qup_uart14_default: qup-uart14-default-state {
+> >  =09=09=09};
+> >  =09=09};
+> >
+> > +=09=09sram@14680000 {
+> > +=09=09=09compatible =3D "qcom,eliza-imem", "mmio-sram";
+> > +=09=09=09reg =3D <0x0 0x14680000 0x0 0x2c000>;
+> > +=09=09=09ranges =3D <0x0 0x0 0x14680000 0x2c000>;
+> > +
+> > +=09=09=09no-memory-wc;
+> > +
+> > +=09=09=09#address-cells =3D <1>;
+> > +=09=09=09#size-cells =3D <1>;
+> > +
+> > +=09=09=09pilreloc-sram@94c {
+> > +=09=09=09=09compatible =3D "qcom,pil-reloc-info";
+> > +=09=09=09=09reg =3D <0x94c 0xc8>;
+> > +=09=09=09};
+> > +
+> > +=09=09=09ipa_modem_tables: modem-tables-sram@3000 {
+> > +=09=09=09=09reg =3D <0x3000 0x2000>;
+>=20
+> I don't think these two should be in the main SoC DTSI. The non-modem
+> version obviously does not have modem-tables.
+>=20
+> Either this is part of board or common DTSI for SMxxxx SoC. Whatever is
+> chosen here, should be consistent with other platforms.
 
-Either this is part of board or common DTSI for SMxxxx SoC. Whatever is
-chosen here, should be consistent with other platforms.
+Would you want the IPA node, MPSS remoteproc, etc to follow same pattern? C=
+an
+just throw them in a sm7550.dtsi.
 
-Best regards,
-Krzysztof
+Since sm7550.dtsi wouldn't have any consumers until I push my board dts, I =
+guess should hold off on this until then?
+
+The node sort part of this patchset can be applied separately.
+
+>=20
+> Best regards,
+> Krzysztof
+>=20
+
+Thanks,
+Alex
 
