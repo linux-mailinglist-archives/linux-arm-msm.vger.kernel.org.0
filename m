@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-103337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +NKKDhOD4GmgigAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 08:34:59 +0200
+	id mE00HeqE4GmmiwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 08:42:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEE1540AAE1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 08:34:57 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E1A440ABAF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 08:42:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 49A2A3076A00
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 06:34:56 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id AE4363002F67
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 06:42:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB453378D89;
-	Thu, 16 Apr 2026 06:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 515D437B027;
+	Thu, 16 Apr 2026 06:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cdZHAT0v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hPEV0l59"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72F830C608;
-	Thu, 16 Apr 2026 06:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA1137B007;
+	Thu, 16 Apr 2026 06:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776321295; cv=none; b=TSFL9V+sb0u3M2XXUPQCmoO6Tf0Uh3E4wsyxKtQGCgi7NYOjwn2cyUwMfIpBFKC0d4rJYruyKouXcsx7aw6kHISACSH+0uFdDFBTgGXvssK6rcB8Jp0DNIVMSDSB4Kv7YYg6zKqR3aIoZUHANpC8QVhoAmUL3MhRzeiDd3PDs3w=
+	t=1776321764; cv=none; b=OAu5/sDZA4lpdtUOxSey1lj1UXXdmyMcYPBkyFA3D7yjSxzeRp7E4iH2joqAKFv7b3In5hxCEMJWqBK118dOPtEYUTbbxjcaYS5Wz8oiGA6Mi3/9JwuE02wv4zbZE05fdKACrcXPIhO9/vfOTPNJmBH9B9FWYJobZjFGZKZPQ6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776321295; c=relaxed/simple;
-	bh=N/Hxqw9DwApKPuJ9Q8r2VvfqDyVC1NQx+qFttUE32ec=;
+	s=arc-20240116; t=1776321764; c=relaxed/simple;
+	bh=u2slqgQP1qdy8zn3eJUOMPuQEUe8AJQvBbp7EkWzO+c=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KTe33gsZiurNuLH59jmb818MSRgJApe8YImoO4zvDeRRNYJJR/Zlgm1oX9RHeft3T8+bsPRGGe8A1eoZsiPSYqi9k3u81JSsbkvIRTXLgGXQNXcSX2MmTThj/w45oy1A+7Qe3kjlAeiSHGHkzx1jOfOJQH8C99O0uusmxVmMPRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cdZHAT0v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC4DC2BCAF;
-	Thu, 16 Apr 2026 06:34:52 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=T7GLPd8ui+IIDhXvw886svCAqwoy+pGJAQIF8MjTjY2DJcxpqyATfxoNgdExvO5nww58wBs9QWDfaaeklVdry1x5+plFG8fmHbmUs7wxdZiqHjcBYaK9ToWXAjsr2XRq5n67hPSN1ifulFv/djKbl9g0XEJBFBenISRbw00fpm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hPEV0l59; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F35C2BCAF;
+	Thu, 16 Apr 2026 06:42:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776321295;
-	bh=N/Hxqw9DwApKPuJ9Q8r2VvfqDyVC1NQx+qFttUE32ec=;
+	s=k20201202; t=1776321763;
+	bh=u2slqgQP1qdy8zn3eJUOMPuQEUe8AJQvBbp7EkWzO+c=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=cdZHAT0vXpbfokZSv7xRzy05mxSDCfOf33tUtvIScOWAEk77JJnoAeYygSoxyPCb0
-	 V0ZrBENJc1mpoTiu5gS40IjeXSDEsuMCpsaR1iCYtaOmfnk8Q7k+iAzsmpGJxicSHF
-	 PF66JySAoLDGB4atVL8uarJS9n6sIAQePQwEaqjlmGVIllzaNndmVv2kcjeQm7h1ok
-	 xUb53ZNtu7K0mqRGSkAORW6wxJDrmaCMoxv15QkVuM7D+FrnGvah/6PO2LpE46f5Km
-	 3Q8QTyMZ8Dd1lo40ZF6pclfNEaF1x1bkpz4k88IONbARKbdfdUny6MsX8cjNyW8fKX
-	 ixXo6qMpPPbuA==
-Message-ID: <21b09d39-ff7c-4859-a078-45e303a392e2@kernel.org>
-Date: Thu, 16 Apr 2026 08:34:50 +0200
+	b=hPEV0l59qj+osuSz0g7bHAKDQc2mx3olFfl5NpPuzU2yHIOm9bkaOSHLxOhY2NfHm
+	 CSFt13CHE6Jq38nUgMu3FWLbX/VAofeXevOMFji/8E1Fr/+u6bn4mJqb4XZ9weiCN8
+	 dhderkSZ9BVvyEznQOb5GaDgtQ+QKnkEacEmI7J6zqbCsBSHVCWsUE95vFc4YkNl5E
+	 FtEXta7t3sOGxCoTFwgNNZAv+m2puMDjXE+J4Tku72x5jULu6rhHAiFOHkVV/dZg5V
+	 MuHjqp3HMbOCl5NSzhdFj3LWXltXlpYLPo24cDh+TC3aZqWfMhCZGOnEpV1QygDIR/
+	 7pAVDaiNZ5lLg==
+Message-ID: <3c65d107-3ff0-44f2-ba42-3df8384e9bf5@kernel.org>
+Date: Thu, 16 Apr 2026 08:42:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,8 +53,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] clk: qcom: add Global Clock controller (GCC) driver
- for IPQ9650 SoC
+Subject: Re: [PATCH 5/5] arm64: defconfig: enable IPQ9650 RDP488 base configs
 To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -65,7 +64,7 @@ To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20260415-ipq9650_boot_to_shell-v1-0-b37eb4c3a1d1@oss.qualcomm.com>
- <20260415-ipq9650_boot_to_shell-v1-2-b37eb4c3a1d1@oss.qualcomm.com>
+ <20260415-ipq9650_boot_to_shell-v1-5-b37eb4c3a1d1@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,7 +110,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260415-ipq9650_boot_to_shell-v1-2-b37eb4c3a1d1@oss.qualcomm.com>
+In-Reply-To: <20260415-ipq9650_boot_to_shell-v1-5-b37eb4c3a1d1@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -119,17 +118,17 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103337-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103338-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
 	RCPT_COUNT_TWELVE(0.00)[13];
-	ASN_FAIL(0.00)[1.2.3.5.c.f.2.1.0.0.0.0.0.0.0.0.b.d.0.0.1.0.0.e.a.0.c.3.0.0.6.2.asn6.rspamd.com:server fail];
+	ASN_FAIL(0.00)[4.211.64.104.asn.rspamd.com:server fail];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -140,40 +139,42 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: AEE1540AAE1
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 9E1A440ABAF
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 On 15/04/2026 15:33, Kathiravan Thirumoorthy wrote:
-> Add support for the global clock controller found on IPQ9650 SoC.
+> Enable GCC, Pinctrl for Qualcomm's IPQ9650 SoC which is required to boot
+> ipq9650-rdp488 board to a console shell.
 > 
 > Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 > ---
->  drivers/clk/qcom/Kconfig       |    8 +
->  drivers/clk/qcom/Makefile      |    1 +
->  drivers/clk/qcom/gcc-ipq9650.c | 3794 ++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 3803 insertions(+)
+>  arch/arm64/configs/defconfig | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index df21ef5ffd68..ed4c5765557b 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -434,6 +434,14 @@ config IPQ_GCC_9574
->  	  i2c, USB, SD/eMMC, etc. Select this for the root clock
->  	  of ipq9574.
->  
-> +config IPQ_GCC_9650
-> +	tristate "IPQ9650 Global Clock Controller"
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index dd1ac01ee29b..442aee9d197c 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -662,6 +662,7 @@ CONFIG_PINCTRL_IPQ5424=y
+>  CONFIG_PINCTRL_IPQ8074=y
+>  CONFIG_PINCTRL_IPQ6018=y
+>  CONFIG_PINCTRL_IPQ9574=y
+> +CONFIG_PINCTRL_IPQ9650=y
+>  CONFIG_PINCTRL_KAANAPALI=y
+>  CONFIG_PINCTRL_MSM8916=y
+>  CONFIG_PINCTRL_MSM8953=y
+> @@ -1509,6 +1510,7 @@ CONFIG_IPQ_GCC_5424=y
+>  CONFIG_IPQ_GCC_6018=y
+>  CONFIG_IPQ_GCC_8074=y
+>  CONFIG_IPQ_GCC_9574=y
+> +CONFIG_IPQ_GCC_9650=y
 
-And the soc is for ARM64? Add proper dependency.
+I plan to remove all this, but at current stage this patch is fine:
 
-> +	help
-> +	  Support for global clock controller on ipq9650 devices.
-> +	  Say Y if you want to use peripheral devices such as UART, SPI,
-> +	  i2c, USB, SD/eMMC, etc. Select this for the root clock
-> +	  of ipq9650.
-> +
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
 Best regards,
 Krzysztof
 
