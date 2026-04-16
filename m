@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-103381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SFaIM8bC4GkFlwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 13:06:46 +0200
+	id +PxMLPPD4Gm8lgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 13:11:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4887C40D260
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 13:06:45 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 165C240D307
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 13:11:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 41646304F225
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 11:05:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 22D8231CFB4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 11:06:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C9C739D6E2;
-	Thu, 16 Apr 2026 11:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B57A33A640C;
+	Thu, 16 Apr 2026 11:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="kqCrBdnf"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="d3mZCgUW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-244123.protonmail.ch (mail-244123.protonmail.ch [109.224.244.123])
+Received: from mail-24417.protonmail.ch (mail-24417.protonmail.ch [109.224.244.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D95F39D6CA;
-	Thu, 16 Apr 2026 11:05:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3177239D6CA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 11:06:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776337557; cv=none; b=QhzolY+D3TsGfhEvXTr0YFYVvpnYiKG1/lZiUSj/kbvAfAKOKrQJxTZHmDwKmlgoPpYPpoFs39b3m2EPXGliD0Yy2oXy69lf58mAPf3v5tt7bYDbDMMREDvWhv9pzKCYK4JE9NeC/UG5UNSQuehtT7GynKMDUA63kf+7l77gbJk=
+	t=1776337574; cv=none; b=FjwyBaM/ICALQCTB0SLqxDn1bDdQJxFLT2kOK5DA8PQkkGVqNGpqeu1Df7MU1OA5OlUHYX+SJR7jifqO6ZGMOfvFYqw3nn5wV0tDGfjvv7Hn9mE7pSBMGAlVFET01cpSxxJjNAmF/cBbtpgtAfdQpJd043Wd9RmI/vb4ux4PPMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776337557; c=relaxed/simple;
-	bh=csE1z7AppJhmBY8vqCWILMPhGxj4InmSFDlq75qZN0U=;
+	s=arc-20240116; t=1776337574; c=relaxed/simple;
+	bh=RrSqla7wnuI2wgM/ez3+PkPqSd3VDYKSeopuZLjxuBE=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LjQgvTkGFajaEcd/71GH+0NDEOSdWq78yeXvaJC2TykGzxKIX3vWIj2RFMzDYnlFKnjQ+qK6nXy+NFyOypLmDqE2HMb2ZK2rIOu8hUfH+6pp6mNpTL65V2A6D8y6MjVorzXWWaduhGDtEOFXgQV8k+X2BczV2fhCQJakfbJMWa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=kqCrBdnf; arc=none smtp.client-ip=109.224.244.123
+	 MIME-Version:Content-Type; b=dCylQh1dLKXkvmEOTvNYDxbZKBmi9+SzWkeE35oCyiwi5A3We7w0HweZtNJneH1ow5AjsNI1oRkzcgEmla4EWgfHDgTuuUIBwXBPB48L+K8mMFVeBpPfY9j4V90eFQDZGTsLcYNZWwsnMVcYLzbEfdNXTOsZ3OkL1SIIjGT/DzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=d3mZCgUW; arc=none smtp.client-ip=109.224.244.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1776337552; x=1776596752;
-	bh=c1rbe0rNlYOIWu6+PcSx/wNd6Ugr+Kem1Xw6tTm2X0s=;
+	s=protonmail3; t=1776337564; x=1776596764;
+	bh=Wnc3A7tER4ZejfalykwBJcqTcIaEXnL9kY6Z4U0W7ZQ=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=kqCrBdnfXRcNuFKRueEksCk3j52xwMD+DnaFKyX2Q1lZCaMXfzbTrUqn1DXhChOVT
-	 rWaxo8ZuaH3hAuhDyT+8Zo6I2YjCmLht8Nty6IKLqwVj47fLXoRbi2kdpyIsKe69+L
-	 B6UeYPRASDOeOd7OUr+sBEFazqb8EerEy7+nE6Zmf1HvZGyd9qPMSRvDlb6pLZbgH5
-	 XftSXU+pBsibWjhkYW1LXUYvTTMpNdW7HMpJkS1KJgntsoivzmIQifvspFYvLvPqoR
-	 J0ehGpWnz6XJYOYidePuGQnD9EiKbI7Bgw9H1394IqQW0jI9p9PP4cBslN6mu10I4M
-	 5LbuISPFi9QEg==
-Date: Thu, 16 Apr 2026 11:05:46 +0000
+	b=d3mZCgUWUe0bF4wqBFQRjIT8nWTjgVBpc7nDIQD5eXO/kaYeoJ34Se9vc8mDpczpS
+	 7E277V0wtHtmK+FGphjwtyPxn7j8T21mEHnUlC5DjaQLLbycCD9bI0b7NIeV26pgvx
+	 IcNks5w2dmqj90EoakzT+hggA8d25spaFMNeOEyjuZ8YIHbIx3/SumeLfG+vgxpT4j
+	 nTaSBLJRb6+I8+/k/3umJWHEg5DxqiRcAGK85JbtTs9sBZm83Ai+mMK+KMwu+M0P1Y
+	 R7BkReufGhGnYsGuVqDUnnzYapRXtv8kSus+AjQxP4RTHhN49MO/5gaTgAYwyQ6ArL
+	 qXaYts5jMqN5w==
+Date: Thu, 16 Apr 2026 11:05:57 +0000
 To: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
 From: Alexander Koskovich <akoskovich@pm.me>
 Cc: Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH RFC v4 6/7] drm/msm/adreno: add Adreno 810 GPU support
-Message-ID: <20260416-adreno-810-v4-6-61676e073f8a@pm.me>
+Subject: [PATCH RFC v4 7/7] arm64: dts: qcom: milos: Add Adreno 810 GPU and GMU nodes
+Message-ID: <20260416-adreno-810-v4-7-61676e073f8a@pm.me>
 In-Reply-To: <20260416-adreno-810-v4-0-61676e073f8a@pm.me>
 References: <20260416-adreno-810-v4-0-61676e073f8a@pm.me>
 Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: f477157f5ec76711fca29591b1663fde05b6a25e
+X-Pm-Message-ID: f104980b69ce4563155bfb14f1bb2f98a37cf343
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,12 +69,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
 	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103381-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103382-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,linux.intel.com,suse.de,ffwll.ch];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[3];
@@ -88,382 +88,212 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[pm.me:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,pm.me:email,pm.me:dkim,pm.me:mid]
-X-Rspamd-Queue-Id: 4887C40D260
+	DBL_BLOCKED_OPENRESOLVER(0.00)[3d37000:email,pm.me:email,pm.me:dkim,pm.me:mid,3c40000:email,fairphone.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 165C240D307
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add catalog entry and register configuration for the Adreno 810
-found in Qualcomm SM7635 (Milos) based devices.
+Add GPU and GMU devicetree nodes for the Adreno 810 GPU found on
+Qualcomm SM7635 (Milos) based devices.
+
+The qcom,kaanapali-gxclkctl.h header can be reused here because
+Milos uses the same driver and the GX_CLKCTL_GX_GDSC definition
+is identical.
 
 Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 296 ++++++++++++++++++++++++++=
+ arch/arm64/boot/dts/qcom/milos.dtsi | 166 ++++++++++++++++++++++++++++++++=
 ++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.h   |   5 +
- 2 files changed, 301 insertions(+)
+ 1 file changed, 166 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/ms=
-m/adreno/a6xx_catalog.c
-index 550ff3a9b82e..1190804632d6 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-@@ -1799,6 +1799,259 @@ static const struct adreno_reglist_pipe x285_dyn_pw=
-rup_reglist_regs[] =3D {
- };
- DECLARE_ADRENO_REGLIST_PIPE_LIST(x285_dyn_pwrup_reglist);
+diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom=
+/milos.dtsi
+index 0e7cfc12b0d2..4abaef42d7d4 100644
+--- a/arch/arm64/boot/dts/qcom/milos.dtsi
++++ b/arch/arm64/boot/dts/qcom/milos.dtsi
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2025, Luca Weiss <luca.weiss@fairphone.com>
+  */
 =20
-+static const struct adreno_reglist_pipe a810_nonctxt_regs[] =3D {
-+=09{ REG_A8XX_CP_SMMU_STREAM_ID_LPAC, 0x00000101, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_GRAS_DBG_ECO_CNTL, 0x00f80800, BIT(PIPE_BV) | BIT(PIPE_BR) }=
-,
-+=09{ REG_A6XX_PC_AUTO_VERTEX_STRIDE, 0x00000001, BIT(PIPE_BV) | BIT(PIPE_B=
-R) },
-+=09{ REG_A8XX_PC_VIS_STREAM_CNTL, 0x10010000, BIT(PIPE_BV) | BIT(PIPE_BR) =
-},
-+=09{ REG_A8XX_PC_CONTEXT_SWITCH_STABILIZE_CNTL_1, 0x00000002, BIT(PIPE_BV)=
- | BIT(PIPE_BR) },
-+=09{ REG_A8XX_PC_CHICKEN_BITS_1, 0x00000003, BIT(PIPE_BR) },
-+=09{ REG_A8XX_PC_CHICKEN_BITS_1, 0x00000023, BIT(PIPE_BV) }, /* Avoid part=
-ial waves at VFD */
-+=09{ REG_A8XX_PC_CHICKEN_BITS_2, 0x00000200, BIT(PIPE_BV) | BIT(PIPE_BR) }=
-,
-+=09{ REG_A8XX_PC_CHICKEN_BITS_3, 0x00500000, BIT(PIPE_BV) | BIT(PIPE_BR) }=
-,
-+=09{ REG_A8XX_PC_CHICKEN_BITS_4, 0x00500050, BIT(PIPE_BV) | BIT(PIPE_BR) }=
-,
-+=09{ REG_A7XX_RB_CCU_CNTL, 0x00000068, BIT(PIPE_BR) },
-+=09{ REG_A8XX_RB_RESOLVE_PREFETCH_CNTL, 0x00000007, BIT(PIPE_BR) },
-+=09{ REG_A8XX_RB_CMP_DBG_ECO_CNTL, 0x00004000, BIT(PIPE_BR) },
-+=09{ REG_A8XX_RBBM_NC_MODE_CNTL, 0x00000001, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_RBBM_SLICE_NC_MODE_CNTL, 0x00000001, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_RBBM_WAIT_IDLE_CLOCKS_CNTL, 0x00000030, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_RBBM_WAIT_IDLE_CLOCKS_CNTL2, 0x00000030, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_UCHE_GBIF_GX_CONFIG, 0x010240e0, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_RBBM_GBIF_CLIENT_QOS_CNTL, 0x22122212, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_RBBM_CGC_P2S_CNTL, 0x00000040, BIT(PIPE_NONE) },
-+=09/*
-+=09 * BIT(22): Disable PS out of order retire
-+=09 * BIT(23): Enable half wave mode and MM instruction src&dst is half pr=
-ecision
-+=09 */
-+=09{ REG_A7XX_SP_CHICKEN_BITS_2, BIT(22) | BIT(23), BIT(PIPE_NONE) },
-+=09{ REG_A7XX_SP_CHICKEN_BITS_3, 0x00300000, BIT(PIPE_NONE) },
-+=09{ REG_A6XX_SP_PERFCTR_SHADER_MASK, 0x0000003f, BIT(PIPE_NONE) },
-+=09{ REG_A7XX_SP_HLSQ_TIMEOUT_THRESHOLD_DP, 0x00000080, BIT(PIPE_NONE) },
-+=09{ REG_A7XX_SP_READ_SEL, 0x0001ff00, BIT(PIPE_NONE) },
-+=09{ REG_A6XX_TPL1_DBG_ECO_CNTL, 0x10000000, BIT(PIPE_NONE) },
-+=09{ REG_A6XX_TPL1_DBG_ECO_CNTL1, 0x00000724, BIT(PIPE_NONE) },
-+=09{ REG_A6XX_UCHE_MODE_CNTL, 0x00020000, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_UCHE_CCHE_MODE_CNTL, 0x00001000, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_UCHE_CCHE_CACHE_WAYS, 0x00000800, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_UCHE_CACHE_WAYS, 0x00080000, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_UCHE_VARB_IDLE_TIMEOUT, 0x00000020, BIT(PIPE_NONE) },
-+=09{ REG_A7XX_VFD_DBG_ECO_CNTL, 0x00008000, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A8XX_VFD_CB_BV_THRESHOLD, 0x00500050, BIT(PIPE_BV) | BIT(PIPE_BR)=
- },
-+=09{ REG_A8XX_VFD_CB_BR_THRESHOLD, 0x00600060, BIT(PIPE_BV) | BIT(PIPE_BR)=
- },
-+=09{ REG_A8XX_VFD_CB_BUSY_REQ_CNT, 0x00200020, BIT(PIPE_BV) | BIT(PIPE_BR)=
- },
-+=09{ REG_A8XX_VFD_CB_LP_REQ_CNT, 0x00100020, BIT(PIPE_BV) | BIT(PIPE_BR) }=
-,
-+=09{ REG_A8XX_VPC_FLATSHADE_MODE_CNTL, 0x00000001, BIT(PIPE_BV) | BIT(PIPE=
-_BR) },
-+=09{ REG_A8XX_VSC_BIN_SIZE, 0x00010001, BIT(PIPE_NONE) },
-+=09{ REG_A8XX_RB_GC_GMEM_PROTECT, 0x00900000, BIT(PIPE_BR) },
-+=09{ },
-+};
-+
-+static const u32 a810_protect_regs[] =3D {
-+=09A6XX_PROTECT_RDONLY(0x00000, 0x03a3),
-+=09A6XX_PROTECT_RDONLY(0x003b4, 0x008b),
-+=09A6XX_PROTECT_NORDWR(0x00440, 0x001f),
-+=09A6XX_PROTECT_RDONLY(0x00580, 0x005f),
-+=09A6XX_PROTECT_NORDWR(0x005e0, 0x011f),
-+=09A6XX_PROTECT_RDONLY(0x0074a, 0x0005),
-+=09A6XX_PROTECT_RDONLY(0x00759, 0x0026),
-+=09A6XX_PROTECT_RDONLY(0x00789, 0x0000),
-+=09A6XX_PROTECT_RDONLY(0x0078c, 0x0013),
-+=09A6XX_PROTECT_NORDWR(0x00800, 0x0029),
-+=09A6XX_PROTECT_NORDWR(0x00837, 0x00af),
-+=09A6XX_PROTECT_RDONLY(0x008e7, 0x00c9),
-+=09A6XX_PROTECT_NORDWR(0x008ec, 0x00c3),
-+=09A6XX_PROTECT_NORDWR(0x009b1, 0x0250),
-+=09A6XX_PROTECT_RDONLY(0x00ce0, 0x0001),
-+=09A6XX_PROTECT_RDONLY(0x00df0, 0x0000),
-+=09A6XX_PROTECT_NORDWR(0x00df1, 0x0000),
-+=09A6XX_PROTECT_NORDWR(0x00e01, 0x0000),
-+=09A6XX_PROTECT_NORDWR(0x00e03, 0x1fff),
-+=09A6XX_PROTECT_NORDWR(0x03c00, 0x00c5),
-+=09A6XX_PROTECT_RDONLY(0x03cc6, 0x1fff),
-+=09A6XX_PROTECT_NORDWR(0x08600, 0x01ff),
-+=09A6XX_PROTECT_NORDWR(0x08e00, 0x00ff),
-+=09A6XX_PROTECT_RDONLY(0x08f00, 0x0000),
-+=09A6XX_PROTECT_NORDWR(0x08f01, 0x01be),
-+=09A6XX_PROTECT_NORDWR(0x09600, 0x01ff),
-+=09A6XX_PROTECT_RDONLY(0x0981a, 0x02e5),
-+=09A6XX_PROTECT_NORDWR(0x09e00, 0x01ff),
-+=09A6XX_PROTECT_NORDWR(0x0a600, 0x01ff),
-+=09A6XX_PROTECT_NORDWR(0x0ae00, 0x0006),
-+=09A6XX_PROTECT_NORDWR(0x0ae08, 0x0006),
-+=09A6XX_PROTECT_NORDWR(0x0ae10, 0x036f),
-+=09A6XX_PROTECT_NORDWR(0x0b600, 0x1fff),
-+=09A6XX_PROTECT_NORDWR(0x0dc00, 0x1fff),
-+=09A6XX_PROTECT_RDONLY(0x0fc00, 0x1fff),
-+=09A6XX_PROTECT_NORDWR(0x18400, 0x003f),
-+=09A6XX_PROTECT_RDONLY(0x18440, 0x013f),
-+=09A6XX_PROTECT_NORDWR(0x18580, 0x1fff),
-+=09A6XX_PROTECT_NORDWR(0x1b400, 0x1fff),
-+=09A6XX_PROTECT_NORDWR(0x1f400, 0x0477),
-+=09A6XX_PROTECT_RDONLY(0x1f878, 0x0787),
-+=09A6XX_PROTECT_NORDWR(0x1f930, 0x0329),
-+=09A6XX_PROTECT_NORDWR(0x20000, 0x1fff),
-+=09A6XX_PROTECT_NORDWR(0x27800, 0x007f),
-+=09A6XX_PROTECT_RDONLY(0x27880, 0x0381),
-+=09A6XX_PROTECT_NORDWR(0x27882, 0x0001),
-+=09A6XX_PROTECT_NORDWR(0x27c02, 0x0000),
-+};
-+DECLARE_ADRENO_PROTECT(a810_protect, 64);
-+
-+static const uint32_t a810_pwrup_reglist_regs[] =3D {
-+=09REG_A6XX_UCHE_MODE_CNTL,
-+=09REG_A8XX_UCHE_VARB_IDLE_TIMEOUT,
-+=09REG_A8XX_UCHE_GBIF_GX_CONFIG,
-+=09REG_A8XX_UCHE_CACHE_WAYS,
-+=09REG_A8XX_UCHE_CCHE_MODE_CNTL,
-+=09REG_A8XX_UCHE_CCHE_CACHE_WAYS,
-+=09REG_A8XX_UCHE_CCHE_GC_GMEM_RANGE_MIN,
-+=09REG_A8XX_UCHE_CCHE_GC_GMEM_RANGE_MIN + 1,
-+=09REG_A8XX_UCHE_CCHE_TRAP_BASE,
-+=09REG_A8XX_UCHE_CCHE_TRAP_BASE + 1,
-+=09REG_A8XX_UCHE_CCHE_WRITE_THRU_BASE,
-+=09REG_A8XX_UCHE_CCHE_WRITE_THRU_BASE + 1,
-+=09REG_A8XX_UCHE_WRITE_THRU_BASE,
-+=09REG_A8XX_UCHE_WRITE_THRU_BASE + 1,
-+=09REG_A8XX_UCHE_TRAP_BASE,
-+=09REG_A8XX_UCHE_TRAP_BASE + 1,
-+=09REG_A8XX_UCHE_CLIENT_PF,
-+=09REG_A8XX_VSC_BIN_SIZE,
-+=09REG_A8XX_RB_CMP_NC_MODE_CNTL,
-+=09REG_A7XX_SP_HLSQ_TIMEOUT_THRESHOLD_DP,
-+=09REG_A8XX_SP_HLSQ_GC_GMEM_RANGE_MIN,
-+=09REG_A8XX_SP_HLSQ_GC_GMEM_RANGE_MIN + 1,
-+=09REG_A7XX_SP_READ_SEL,
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(1),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(2),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(3),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(4),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(5),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(6),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(7),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(8),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(9),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(10),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(11),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(12),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(13),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(14),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(15),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(16),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(17),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(18),
-+=09REG_A8XX_TPL1_BICUBIC_WEIGHTS_TABLE(19),
-+};
-+DECLARE_ADRENO_REGLIST_LIST(a810_pwrup_reglist);
-+
-+static const u32 a810_ifpc_reglist_regs[] =3D {
-+=09REG_A8XX_RBBM_NC_MODE_CNTL,
-+=09REG_A8XX_RBBM_PERFCTR_CNTL,
-+=09REG_A8XX_RBBM_SLICE_INTERFACE_HANG_INT_CNTL,
-+=09REG_A8XX_RBBM_SLICE_NC_MODE_CNTL,
-+=09REG_A6XX_SP_NC_MODE_CNTL,
-+=09REG_A7XX_SP_CHICKEN_BITS_2,
-+=09REG_A7XX_SP_CHICKEN_BITS_3,
-+=09REG_A6XX_SP_PERFCTR_SHADER_MASK,
-+=09REG_A6XX_TPL1_NC_MODE_CNTL,
-+=09REG_A6XX_TPL1_DBG_ECO_CNTL,
-+=09REG_A6XX_TPL1_DBG_ECO_CNTL1,
-+=09REG_A8XX_CP_PROTECT_GLOBAL(0),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(1),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(2),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(3),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(4),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(5),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(6),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(7),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(8),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(9),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(10),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(11),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(12),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(13),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(14),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(15),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(16),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(17),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(18),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(19),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(20),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(21),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(22),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(23),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(24),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(25),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(26),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(27),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(28),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(29),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(30),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(31),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(32),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(33),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(34),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(35),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(36),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(37),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(38),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(39),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(40),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(41),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(42),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(43),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(44),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(45),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(46),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(47),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(48),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(49),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(50),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(51),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(52),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(53),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(54),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(55),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(56),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(57),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(58),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(59),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(60),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(61),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(62),
-+=09REG_A8XX_CP_PROTECT_GLOBAL(63),
-+};
-+DECLARE_ADRENO_REGLIST_LIST(a810_ifpc_reglist);
-+
-+static const struct adreno_reglist_pipe a810_dyn_pwrup_reglist_regs[] =3D =
-{
-+=09{ REG_A8XX_CP_PROTECT_CNTL_PIPE, 0, BIT(PIPE_BR) | BIT(PIPE_BV) },
-+=09{ REG_A8XX_CP_PROTECT_PIPE(15), 0, BIT(PIPE_BR) | BIT(PIPE_BV) },
-+=09{ REG_A8XX_GRAS_TSEFE_DBG_ECO_CNTL, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A8XX_GRAS_NC_MODE_CNTL, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A8XX_GRAS_DBG_ECO_CNTL, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A7XX_RB_CCU_CNTL, 0, BIT(PIPE_BR) },
-+=09{ REG_A8XX_RB_CCU_NC_MODE_CNTL, 0, BIT(PIPE_BR) },
-+=09{ REG_A8XX_RB_CMP_NC_MODE_CNTL, 0, BIT(PIPE_BR) },
-+=09{ REG_A8XX_RB_RESOLVE_PREFETCH_CNTL, 0, BIT(PIPE_BR) },
-+=09{ REG_A8XX_RB_CMP_DBG_ECO_CNTL, 0, BIT(PIPE_BR) },
-+=09{ REG_A8XX_RB_GC_GMEM_PROTECT, 0, BIT(PIPE_BR) },
-+=09{ REG_A6XX_RB_CONTEXT_SWITCH_GMEM_SAVE_RESTORE_ENABLE, 0, BIT(PIPE_BR) =
-},
-+=09{ REG_A8XX_VPC_FLATSHADE_MODE_CNTL, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A8XX_PC_CHICKEN_BITS_1, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A8XX_PC_CHICKEN_BITS_2, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A8XX_PC_CHICKEN_BITS_3, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A8XX_PC_CHICKEN_BITS_4, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A6XX_PC_AUTO_VERTEX_STRIDE, 0, BIT(PIPE_BR) | BIT(PIPE_BV) },
-+=09{ REG_A8XX_PC_VIS_STREAM_CNTL, 0, BIT(PIPE_BR) | BIT(PIPE_BV) },
-+=09{ REG_A8XX_PC_CONTEXT_SWITCH_STABILIZE_CNTL_1, 0, BIT(PIPE_BR) | BIT(PI=
-PE_BV) },
-+=09{ REG_A8XX_VFD_CB_BV_THRESHOLD, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A8XX_VFD_CB_BR_THRESHOLD, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A8XX_VFD_CB_BUSY_REQ_CNT, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A8XX_VFD_CB_LP_REQ_CNT, 0, BIT(PIPE_BV) | BIT(PIPE_BR) },
-+=09{ REG_A7XX_VFD_DBG_ECO_CNTL, 0, BIT(PIPE_BR) | BIT(PIPE_BV) },
-+};
-+DECLARE_ADRENO_REGLIST_PIPE_LIST(a810_dyn_pwrup_reglist);
-+
- static const struct adreno_reglist_pipe a840_nonctxt_regs[] =3D {
- =09{ REG_A8XX_CP_SMMU_STREAM_ID_LPAC, 0x00000101, BIT(PIPE_NONE) },
- =09{ REG_A8XX_GRAS_DBG_ECO_CNTL, 0x00000800, BIT(PIPE_BV) | BIT(PIPE_BR) }=
-,
-@@ -2193,6 +2446,48 @@ static const struct adreno_info a8xx_gpus[] =3D {
- =09=09=09{ 252, 2 },
- =09=09=09{ 221, 3 },
- =09=09),
-+=09}, {
-+=09=09.chip_ids =3D ADRENO_CHIP_IDS(0x44010000),
-+=09=09.family =3D ADRENO_8XX_GEN1,
-+=09=09.fw =3D {
-+=09=09=09[ADRENO_FW_SQE] =3D "gen80300_sqe.fw",
-+=09=09=09[ADRENO_FW_GMU] =3D "gen80300_gmu.bin",
-+=09=09},
-+=09=09.gmem =3D SZ_512K + SZ_64K,
-+=09=09.inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
-+=09=09.quirks =3D ADRENO_QUIRK_HAS_CACHED_COHERENT |
-+=09=09=09  ADRENO_QUIRK_HAS_HW_APRIV |
-+=09=09=09  ADRENO_QUIRK_PREEMPTION |
-+=09=09=09  ADRENO_QUIRK_IFPC,
-+=09=09.funcs =3D &a8xx_gpu_funcs,
-+=09=09.zapfw =3D "gen80300_zap.mbn",
-+=09=09.a6xx =3D &(const struct a6xx_info) {
-+=09=09=09.protect =3D &a810_protect,
-+=09=09=09.nonctxt_reglist =3D a810_nonctxt_regs,
-+=09=09=09.pwrup_reglist =3D &a810_pwrup_reglist,
-+=09=09=09.dyn_pwrup_reglist =3D &a810_dyn_pwrup_reglist,
-+=09=09=09.ifpc_reglist =3D &a810_ifpc_reglist,
-+=09=09=09.gbif_cx =3D a840_gbif,
-+=09=09=09.max_slices =3D 1,
-+=09=09=09.gmu_chipid =3D 0x8030000,
-+=09=09=09.bcms =3D (const struct a6xx_bcm[]) {
-+=09=09=09=09{ .name =3D "SH0", .buswidth =3D 16 },
-+=09=09=09=09{ .name =3D "MC0", .buswidth =3D 4 },
-+=09=09=09=09{
-+=09=09=09=09=09.name =3D "ACV",
-+=09=09=09=09=09.fixed =3D true,
-+=09=09=09=09=09.perfmode =3D BIT(2),
-+=09=09=09=09=09.perfmode_bw =3D 10687500,
-+=09=09=09=09},
-+=09=09=09=09{ /* sentinel */ },
-+=09=09=09},
-+=09=09},
-+=09=09.preempt_record_size =3D 4558 * SZ_1K,
-+=09=09.speedbins =3D ADRENO_SPEEDBINS(
-+=09=09=09{ 0,   0 },
-+=09=09=09{ 242, 1 },
-+=09=09=09{ 221, 2 },
-+=09=09),
- =09}
- };
++#include <dt-bindings/clock/qcom,kaanapali-gxclkctl.h>
+ #include <dt-bindings/clock/qcom,milos-camcc.h>
+ #include <dt-bindings/clock/qcom,milos-dispcc.h>
+ #include <dt-bindings/clock/qcom,milos-gcc.h>
+@@ -1554,6 +1555,171 @@ lpass_ag_noc: interconnect@3c40000 {
+ =09=09=09qcom,bcm-voters =3D <&apps_bcm_voter>;
+ =09=09};
 =20
-@@ -2205,4 +2500,5 @@ static inline __always_unused void __build_asserts(vo=
-id)
- =09BUILD_BUG_ON(a660_protect.count > a660_protect.count_max);
- =09BUILD_BUG_ON(a690_protect.count > a690_protect.count_max);
- =09BUILD_BUG_ON(a730_protect.count > a730_protect.count_max);
-+=09BUILD_BUG_ON(a810_protect.count > a810_protect.count_max);
- }
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/=
-adreno/adreno_gpu.h
-index ec643b84646b..d88eb8ecf417 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -592,6 +592,11 @@ static inline int adreno_is_a8xx(struct adreno_gpu *gp=
-u)
- =09return gpu->info->family >=3D ADRENO_8XX_GEN1;
- }
-=20
-+static inline int adreno_is_a810(struct adreno_gpu *gpu)
-+{
-+=09return gpu->info->chip_ids[0] =3D=3D 0x44010000;
-+}
++=09=09gpu: gpu@3d00000 {
++=09=09=09compatible =3D "qcom,adreno-44010000", "qcom,adreno";
++=09=09=09reg =3D <0x0 0x03d00000 0x0 0x40000>,
++=09=09=09      <0x0 0x03d9e000 0x0 0x2000>,
++=09=09=09      <0x0 0x03d61000 0x0 0x800>;
++=09=09=09reg-names =3D "kgsl_3d0_reg_memory",
++=09=09=09=09    "cx_mem",
++=09=09=09=09    "cx_dbgc";
 +
- static inline int adreno_is_x285(struct adreno_gpu *gpu)
- {
- =09return gpu->info->chip_ids[0] =3D=3D 0x44070001;
++=09=09=09interrupts =3D <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH 0>;
++
++=09=09=09iommus =3D <&adreno_smmu 0 0x0>;
++
++=09=09=09operating-points-v2 =3D <&gpu_opp_table>;
++
++=09=09=09nvmem-cells =3D <&gpu_speed_bin>;
++=09=09=09nvmem-cell-names =3D "speed_bin";
++
++=09=09=09qcom,gmu =3D <&gmu>;
++=09=09=09#cooling-cells =3D <2>;
++
++=09=09=09interconnects =3D <&gem_noc MASTER_GFX3D QCOM_ICC_TAG_ALWAYS
++=09=09=09=09=09 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
++=09=09=09interconnect-names =3D "gfx-mem";
++
++=09=09=09status =3D "disabled";
++
++=09=09=09gpu_zap_shader: zap-shader {
++=09=09=09=09memory-region =3D <&gpu_microcode_mem>;
++=09=09=09};
++
++=09=09=09gpu_opp_table: opp-table {
++=09=09=09=09compatible =3D "operating-points-v2-adreno",
++=09=09=09=09=09     "operating-points-v2";
++
++=09=09=09=09opp-264000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <264000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
++=09=09=09=09=09opp-peak-kBps =3D <2136718>;
++=09=09=09=09=09opp-supported-hw =3D <0x7>;
++=09=09=09=09=09qcom,opp-acd-level =3D <0xc8295ffd>;
++=09=09=09=09};
++
++=09=09=09=09opp-362000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <362000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_LOW_SVS>;
++=09=09=09=09=09opp-peak-kBps =3D <2136718>;
++=09=09=09=09=09opp-supported-hw =3D <0x7>;
++=09=09=09=09=09qcom,opp-acd-level =3D <0xc02c5ffd>;
++=09=09=09=09};
++
++=09=09=09=09opp-510000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <510000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS>;
++=09=09=09=09=09opp-peak-kBps =3D <3972656>;
++=09=09=09=09=09opp-supported-hw =3D <0x7>;
++=09=09=09=09=09qcom,opp-acd-level =3D <0x882b5ffd>;
++=09=09=09=09};
++
++=09=09=09=09opp-644000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <644000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS_L1>;
++=09=09=09=09=09opp-peak-kBps =3D <5285156>;
++=09=09=09=09=09opp-supported-hw =3D <0x7>;
++=09=09=09=09=09qcom,opp-acd-level =3D <0x882a5ffd>;
++=09=09=09=09};
++
++=09=09=09=09opp-688000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <688000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS_L2>;
++=09=09=09=09=09opp-peak-kBps =3D <6074218>;
++=09=09=09=09=09opp-supported-hw =3D <0x7>;
++=09=09=09=09=09qcom,opp-acd-level =3D <0x882a5ffd>;
++=09=09=09=09};
++
++=09=09=09=09opp-763000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <763000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_NOM>;
++=09=09=09=09=09opp-peak-kBps =3D <6671875>;
++=09=09=09=09=09opp-supported-hw =3D <0x7>;
++=09=09=09=09=09qcom,opp-acd-level =3D <0xa8295ffd>;
++=09=09=09=09};
++
++=09=09=09=09opp-895000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <895000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_NOM_L1>;
++=09=09=09=09=09opp-peak-kBps =3D <8171875>;
++=09=09=09=09=09opp-supported-hw =3D <0x7>;
++=09=09=09=09=09qcom,opp-acd-level =3D <0x88295ffd>;
++=09=09=09=09};
++
++=09=09=09=09opp-960000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <960000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_TURBO>;
++=09=09=09=09=09opp-peak-kBps =3D <8171875>;
++=09=09=09=09=09opp-supported-hw =3D <0x7>;
++=09=09=09=09=09qcom,opp-acd-level =3D <0xa8285ffd>;
++=09=09=09=09};
++
++=09=09=09=09opp-1050000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <1050000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_TURBO_L1>;
++=09=09=09=09=09opp-peak-kBps =3D <18597656>;
++=09=09=09=09=09opp-supported-hw =3D <0x7>;
++=09=09=09=09=09qcom,opp-acd-level =3D <0x88285ffd>;
++=09=09=09=09};
++
++=09=09=09=09opp-1150000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <1150000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_TURBO_L2>;
++=09=09=09=09=09opp-peak-kBps =3D <18597656>;
++=09=09=09=09=09opp-supported-hw =3D <0x3>;
++=09=09=09=09=09qcom,opp-acd-level =3D <0xa02f5ffd>;
++=09=09=09=09};
++=09=09=09};
++=09=09};
++
++=09=09gmu: gmu@3d37000 {
++=09=09=09compatible =3D "qcom,adreno-gmu-810.0", "qcom,adreno-gmu";
++=09=09=09reg =3D <0x0 0x03d37000 0x0 0x68000>;
++=09=09=09reg-names =3D "gmu";
++
++=09=09=09interrupts =3D <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH 0>,
++=09=09=09=09     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH 0>;
++=09=09=09interrupt-names =3D "hfi", "gmu";
++
++=09=09=09clocks =3D <&gpucc GPU_CC_AHB_CLK>,
++=09=09=09=09 <&gpucc GPU_CC_CX_GMU_CLK>,
++=09=09=09=09 <&gpucc GPU_CC_CXO_CLK>,
++=09=09=09=09 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
++=09=09=09=09 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
++=09=09=09=09 <&gpucc GPU_CC_HUB_CX_INT_CLK>;
++=09=09=09clock-names =3D "ahb",
++=09=09=09=09      "gmu",
++=09=09=09=09      "cxo",
++=09=09=09=09      "axi",
++=09=09=09=09      "memnoc",
++=09=09=09=09      "hub";
++
++=09=09=09power-domains =3D <&gpucc GPU_CC_CX_GDSC>,
++=09=09=09=09=09<&gxclkctl GX_CLKCTL_GX_GDSC>;
++=09=09=09power-domain-names =3D "cx",
++=09=09=09=09=09     "gx";
++
++=09=09=09iommus =3D <&adreno_smmu 5 0x0>;
++
++=09=09=09qcom,qmp =3D <&aoss_qmp>;
++
++=09=09=09operating-points-v2 =3D <&gmu_opp_table>;
++
++=09=09=09gmu_opp_table: opp-table {
++=09=09=09=09compatible =3D "operating-points-v2";
++
++=09=09=09=09opp-350000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <350000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_LOW_SVS>;
++=09=09=09=09};
++
++=09=09=09=09opp-650000000 {
++=09=09=09=09=09opp-hz =3D /bits/ 64 <650000000>;
++=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS>;
++=09=09=09=09};
++=09=09=09};
++=09=09};
++
+ =09=09gxclkctl: clock-controller@3d64000 {
+ =09=09=09compatible =3D "qcom,milos-gxclkctl";
+ =09=09=09reg =3D <0x0 0x03d64000 0x0 0x6000>;
 
 --=20
 2.53.0
