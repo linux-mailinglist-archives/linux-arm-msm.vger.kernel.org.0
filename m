@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-103377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kJ32DRTD4Gm8lgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 13:08:04 +0200
+	id AHb8LTLD4Gm8lgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 13:08:34 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EF9A40D290
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 13:08:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 14A9D40D2A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 13:08:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0DD1F30EE7DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 11:05:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 935A63144061
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 11:05:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EC8138D6A9;
-	Thu, 16 Apr 2026 11:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 194053A0B31;
+	Thu, 16 Apr 2026 11:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="dVlODALS"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="EobvhG8W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-106119.protonmail.ch (mail-106119.protonmail.ch [79.135.106.119])
+Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDAA3A0B31;
-	Thu, 16 Apr 2026 11:05:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.119
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9536E39D6E2;
+	Thu, 16 Apr 2026 11:05:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776337511; cv=none; b=MbaHIUgfSZCy069GC+FR25ziUNcYvwDAHZ21q9CToCDinp9iuHgGgNq20boABDdH2J1wPzvyLdxvRm1hc75uMz6VGgCbynxYse8eqMtUZjfcRqkytnNE2lULugFaf9m/tCPd8UPgNSFJIoOgaUdA3n12yUarFgph2V7vV26UyQw=
+	t=1776337523; cv=none; b=RTk8rC1LqVJe0gJ03tKmgMOYPzeVRTUb0wMFGdD5yfhtYr7kMmv2PAc5WO+9kvgv/7f1/5J9PYYXbKIxWs5UzIUvNFBQgPWFzUzU7CR9Tq+Zc8iBaZ8FRslnmn+fHteca8DR87TgwqCPEPsOyF44i9UAUz3OCqI16L063saEkdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776337511; c=relaxed/simple;
-	bh=1jCkH10yYEW6CrEOr84sMFf6zjJPH7zlhT0XCmHYFP4=;
+	s=arc-20240116; t=1776337523; c=relaxed/simple;
+	bh=nzQObpAPrcSdYX6uto8esFDmyD5kapyt7sbl2q4PMSE=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K3G7kphmD7jAS6HuKA8k2Yae8lsKvGZIKruoCTzDrv9BMfSQmoK63d53pkV96PP4iJQsZI+FUBIVoFSDRYiFPr8Q9y7Cohvf95rtdM0ngn9XKt2sTDrIlvuKCjRpEgHrTj2yi7Ivqq6UcMQHboeQL8V3SuPaSBCsRfXIl2Xd90M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=dVlODALS; arc=none smtp.client-ip=79.135.106.119
+	 MIME-Version:Content-Type; b=l5xnVSOqvu56yF8KkMC7OXIvK5zl7yhaL6Ymq17H1nsfQoDM/odoIKUPHfX8NgpgvqlmWqDbagR1t/NNfyVJSlGRysFNpF0hvgVZyYGeDFvPmt+bsLE2MW+yLxTnDeSoD67JBfXnwZhOqihMLRrVE7S6PNw37O916tiA39OyZ1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=EobvhG8W; arc=none smtp.client-ip=185.70.43.22
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1776337508; x=1776596708;
-	bh=pm0yg1XnWCN6qVV/+6F+T0ld+Sbc0pebe5jSdMJUCb4=;
+	s=protonmail3; t=1776337518; x=1776596718;
+	bh=6Y9wyShBEbuRDWcowqrU45jNU6QCKVTF+X7+oewA8Vw=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=dVlODALSIWHhtShcE2sLY3Y6DYlyZEBijcDBSiepCBrkFeAE/gXQoIH7CRGQg5A5t
-	 BcsGUXA1OR97h/qpRi9Sg2qhuPuvywjFAQ7MF52edyaXQIB2Gx4rlzRle5wzq4tI5i
-	 M/RwsT9kF7ycw8ye7IlTOnIi/N1Soz1m4O0A6NTDLkOt6qTqBoTQKzhEabyP+lV3zH
-	 vKz0KU104fTk1uxyDTuUGTvufRTTO5lgJH456zVWCRgQx4KTb20t57w4xxc7AKuIoq
-	 mA1aM7mOfC6YzDmfiWrojirzF4Wn7Xy+3cHpHKeQu4qlnY943QV0aewWPj7G98EtST
-	 aehP9p3g+GZRQ==
-Date: Thu, 16 Apr 2026 11:05:02 +0000
+	b=EobvhG8WEyxwFtMn8Dc/w3qwIr8RRglpeLRKVLo4kMPn8ayHwm81C0Or/RoMtGGiU
+	 5pxJGqchOD69G8OiQJOvhND1eidDeFbr4L2K0pjluaJiy7FIfv3gxAEp6+U2ajGL7c
+	 29e4rLfSQsc3Leav4EDHC5fWCQT2ad5i/0v96Fwa6M2PrxJd92AejUrHhe5SwDwcJl
+	 0lKP4cmCcTqtq/jKYULPPE62u4zDWhl8/shUEfzPdpdA1MNELjor6sccPmpSrKAvwp
+	 p1A8K5EmvkmIn9codA5Y9sV6DNB3XMbY5LIhCm46nY3GRR/penSsi00o9ybOIHwHHH
+	 kmcMWFydT/npw==
+Date: Thu, 16 Apr 2026 11:05:12 +0000
 To: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
 From: Alexander Koskovich <akoskovich@pm.me>
-Cc: Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH RFC v4 2/7] dt-bindings: display/msm/gpu: Document A810 GPU
-Message-ID: <20260416-adreno-810-v4-2-61676e073f8a@pm.me>
+Cc: Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH RFC v4 3/7] drm/msm/adreno: rename llc_mmio to cx_misc_mmio
+Message-ID: <20260416-adreno-810-v4-3-61676e073f8a@pm.me>
 In-Reply-To: <20260416-adreno-810-v4-0-61676e073f8a@pm.me>
 References: <20260416-adreno-810-v4-0-61676e073f8a@pm.me>
 Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 5023327bad91fcafe3c860e3384d4e02c7866b58
+X-Pm-Message-ID: 40693c907428f35884df200bdffd6158d6aa9351
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,11 +74,11 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103377-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103378-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,linux.intel.com,suse.de,ffwll.ch];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[3];
-	RCPT_COUNT_TWELVE(0.00)[24];
+	RCPT_COUNT_TWELVE(0.00)[25];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -91,32 +91,209 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,pm.me:email,pm.me:dkim,pm.me:mid]
-X-Rspamd-Queue-Id: 8EF9A40D290
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,pm.me:email,pm.me:dkim,pm.me:mid,qualcomm.com:email]
+X-Rspamd-Queue-Id: 14A9D40D2A6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Document the GPU compatible string used for the Adreno 810.
+This region is used for more than just LLCC, it also provides access to
+software fuse values (raytracing, etc).
 
+Rename relevant symbols from _llc to _cx_misc for use in a follow up
+change that decouples this from LLCC.
+
+Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 ---
- Documentation/devicetree/bindings/display/msm/gpu.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c |  8 ++++----
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 16 ++++++++--------
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h | 14 +++++++-------
+ drivers/gpu/drm/msm/adreno/a8xx_gpu.c |  2 +-
+ 4 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Docum=
-entation/devicetree/bindings/display/msm/gpu.yaml
-index 04b2328903ca..1875a3b9f688 100644
---- a/Documentation/devicetree/bindings/display/msm/gpu.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-@@ -434,6 +434,7 @@ allOf:
-               - qcom,adreno-43050a01
-               - qcom,adreno-43050c01
-               - qcom,adreno-43051401
-+              - qcom,adreno-44010000
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/ad=
+reno/a6xx_gmu.c
+index b7166a883b01..6a369682bb80 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -947,7 +947,7 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsi=
+gned int state)
 =20
-     then: # Starting with A6xx, the clocks are usually defined in the GMU =
-node
-       properties:
+ =09/* Turn on TCM (Tightly Coupled Memory) retention */
+ =09if (adreno_is_a7xx(adreno_gpu))
+-=09=09a6xx_llc_write(a6xx_gpu, REG_A7XX_CX_MISC_TCM_RET_CNTL, 1);
++=09=09a6xx_cx_misc_write(a6xx_gpu, REG_A7XX_CX_MISC_TCM_RET_CNTL, 1);
+ =09else if (!adreno_is_a8xx(adreno_gpu))
+ =09=09gmu_write(gmu, REG_A6XX_GMU_GENERAL_7, 1);
+=20
+@@ -1215,7 +1215,7 @@ static int a6xx_gmu_secure_init(struct a6xx_gpu *a6xx=
+_gpu)
+ =09=09if (!qcom_scm_is_available()) {
+ =09=09=09dev_warn_once(gpu->dev->dev,
+ =09=09=09=09"SCM is not available, poking fuse register\n");
+-=09=09=09a6xx_llc_write(a6xx_gpu, REG_A7XX_CX_MISC_SW_FUSE_VALUE,
++=09=09=09a6xx_cx_misc_write(a6xx_gpu, REG_A7XX_CX_MISC_SW_FUSE_VALUE,
+ =09=09=09=09A7XX_CX_MISC_SW_FUSE_VALUE_RAYTRACING |
+ =09=09=09=09A7XX_CX_MISC_SW_FUSE_VALUE_FASTBLEND |
+ =09=09=09=09A7XX_CX_MISC_SW_FUSE_VALUE_LPAC);
+@@ -1236,7 +1236,7 @@ static int a6xx_gmu_secure_init(struct a6xx_gpu *a6xx=
+_gpu)
+ =09=09 * firmware, find out whether that's the case. The scm call
+ =09=09 * above sets the fuse register.
+ =09=09 */
+-=09=09fuse_val =3D a6xx_llc_read(a6xx_gpu,
++=09=09fuse_val =3D a6xx_cx_misc_read(a6xx_gpu,
+ =09=09=09=09=09 REG_A7XX_CX_MISC_SW_FUSE_VALUE);
+ =09=09adreno_gpu->has_ray_tracing =3D
+ =09=09=09!!(fuse_val & A7XX_CX_MISC_SW_FUSE_VALUE_RAYTRACING);
+@@ -1343,7 +1343,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+=20
+ =09/* Check to see if we are doing a cold or warm boot */
+ =09if (adreno_is_a7xx(adreno_gpu) || adreno_is_a8xx(adreno_gpu)) {
+-=09=09status =3D a6xx_llc_read(a6xx_gpu, REG_A7XX_CX_MISC_TCM_RET_CNTL) =
+=3D=3D 1 ?
++=09=09status =3D a6xx_cx_misc_read(a6xx_gpu, REG_A7XX_CX_MISC_TCM_RET_CNTL=
+) =3D=3D 1 ?
+ =09=09=09GMU_WARM_BOOT : GMU_COLD_BOOT;
+ =09} else if (gmu->legacy) {
+ =09=09status =3D gmu_read(gmu, REG_A6XX_GMU_GENERAL_7) =3D=3D 1 ?
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/ad=
+reno/a6xx_gpu.c
+index d5aba072f44c..4275c1d726b2 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2039,7 +2039,7 @@ static void a6xx_llc_activate(struct a6xx_gpu *a6xx_g=
+pu)
+ =09struct msm_gpu *gpu =3D &adreno_gpu->base;
+ =09u32 cntl1_regval =3D 0;
+=20
+-=09if (IS_ERR(a6xx_gpu->llc_mmio))
++=09if (IS_ERR(a6xx_gpu->cx_misc_mmio))
+ =09=09return;
+=20
+ =09if (!llcc_slice_activate(a6xx_gpu->llc_slice)) {
+@@ -2078,14 +2078,14 @@ static void a6xx_llc_activate(struct a6xx_gpu *a6xx=
+_gpu)
+ =09 * pagetables
+ =09 */
+ =09if (!a6xx_gpu->have_mmu500) {
+-=09=09a6xx_llc_write(a6xx_gpu,
++=09=09a6xx_cx_misc_write(a6xx_gpu,
+ =09=09=09REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1, cntl1_regval);
+=20
+ =09=09/*
+ =09=09 * Program cacheability overrides to not allocate cache
+ =09=09 * lines on a write miss
+ =09=09 */
+-=09=09a6xx_llc_rmw(a6xx_gpu,
++=09=09a6xx_cx_misc_rmw(a6xx_gpu,
+ =09=09=09REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_0, 0xF, 0x03);
+ =09=09return;
+ =09}
+@@ -2098,7 +2098,7 @@ static void a7xx_llc_activate(struct a6xx_gpu *a6xx_g=
+pu)
+ =09struct adreno_gpu *adreno_gpu =3D &a6xx_gpu->base;
+ =09struct msm_gpu *gpu =3D &adreno_gpu->base;
+=20
+-=09if (IS_ERR(a6xx_gpu->llc_mmio))
++=09if (IS_ERR(a6xx_gpu->cx_misc_mmio))
+ =09=09return;
+=20
+ =09if (!llcc_slice_activate(a6xx_gpu->llc_slice)) {
+@@ -2151,15 +2151,15 @@ static void a6xx_llc_slices_init(struct platform_de=
+vice *pdev,
+ =09of_node_put(phandle);
+=20
+ =09if (is_a7xx || !a6xx_gpu->have_mmu500)
+-=09=09a6xx_gpu->llc_mmio =3D msm_ioremap(pdev, "cx_mem");
++=09=09a6xx_gpu->cx_misc_mmio =3D msm_ioremap(pdev, "cx_mem");
+ =09else
+-=09=09a6xx_gpu->llc_mmio =3D NULL;
++=09=09a6xx_gpu->cx_misc_mmio =3D NULL;
+=20
+ =09a6xx_gpu->llc_slice =3D llcc_slice_getd(LLCC_GPU);
+ =09a6xx_gpu->htw_llc_slice =3D llcc_slice_getd(LLCC_GPUHTW);
+=20
+ =09if (IS_ERR_OR_NULL(a6xx_gpu->llc_slice) && IS_ERR_OR_NULL(a6xx_gpu->htw=
+_llc_slice))
+-=09=09a6xx_gpu->llc_mmio =3D ERR_PTR(-EINVAL);
++=09=09a6xx_gpu->cx_misc_mmio =3D ERR_PTR(-EINVAL);
+ }
+=20
+ #define GBIF_CLIENT_HALT_MASK=09=09BIT(0)
+@@ -2560,7 +2560,7 @@ static int a6xx_read_speedbin(struct device *dev, str=
+uct a6xx_gpu *a6xx_gpu,
+ =09=09return ret;
+=20
+ =09if (info->quirks & ADRENO_QUIRK_SOFTFUSE) {
+-=09=09*speedbin =3D a6xx_llc_read(a6xx_gpu, REG_A8XX_CX_MISC_SW_FUSE_FREQ_=
+LIMIT_STATUS);
++=09=09*speedbin =3D a6xx_cx_misc_read(a6xx_gpu, REG_A8XX_CX_MISC_SW_FUSE_F=
+REQ_LIMIT_STATUS);
+ =09=09*speedbin =3D A8XX_CX_MISC_SW_FUSE_FREQ_LIMIT_STATUS_FINALFREQLIMIT(=
+*speedbin);
+ =09=09return 0;
+ =09}
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/ad=
+reno/a6xx_gpu.h
+index eb431e5e00b1..648608c1c98e 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+@@ -102,7 +102,7 @@ struct a6xx_gpu {
+=20
+ =09bool has_whereami;
+=20
+-=09void __iomem *llc_mmio;
++=09void __iomem *cx_misc_mmio;
+ =09void *llc_slice;
+ =09void *htw_llc_slice;
+ =09bool have_mmu500;
+@@ -240,19 +240,19 @@ static inline bool a6xx_has_gbif(struct adreno_gpu *g=
+pu)
+ =09return true;
+ }
+=20
+-static inline void a6xx_llc_rmw(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 ma=
+sk, u32 or)
++static inline void a6xx_cx_misc_rmw(struct a6xx_gpu *a6xx_gpu, u32 reg, u3=
+2 mask, u32 or)
+ {
+-=09return msm_rmw(a6xx_gpu->llc_mmio + (reg << 2), mask, or);
++=09return msm_rmw(a6xx_gpu->cx_misc_mmio + (reg << 2), mask, or);
+ }
+=20
+-static inline u32 a6xx_llc_read(struct a6xx_gpu *a6xx_gpu, u32 reg)
++static inline u32 a6xx_cx_misc_read(struct a6xx_gpu *a6xx_gpu, u32 reg)
+ {
+-=09return readl(a6xx_gpu->llc_mmio + (reg << 2));
++=09return readl(a6xx_gpu->cx_misc_mmio + (reg << 2));
+ }
+=20
+-static inline void a6xx_llc_write(struct a6xx_gpu *a6xx_gpu, u32 reg, u32 =
+value)
++static inline void a6xx_cx_misc_write(struct a6xx_gpu *a6xx_gpu, u32 reg, =
+u32 value)
+ {
+-=09writel(value, a6xx_gpu->llc_mmio + (reg << 2));
++=09writel(value, a6xx_gpu->cx_misc_mmio + (reg << 2));
+ }
+=20
+ #define shadowptr(_a6xx_gpu, _ring) ((_a6xx_gpu)->shadow_iova + \
+diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/ad=
+reno/a8xx_gpu.c
+index 9b99ec5ceeb5..d519a29573a1 100644
+--- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+@@ -104,7 +104,7 @@ void a8xx_gpu_get_slice_info(struct msm_gpu *gpu)
+ =09=09return;
+ =09}
+=20
+-=09slice_mask &=3D a6xx_llc_read(a6xx_gpu,
++=09slice_mask &=3D a6xx_cx_misc_read(a6xx_gpu,
+ =09=09=09REG_A8XX_CX_MISC_SLICE_ENABLE_FINAL);
+=20
+ =09a6xx_gpu->slice_mask =3D slice_mask;
 
 --=20
 2.53.0
