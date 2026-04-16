@@ -1,229 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-103374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id rQeOOzbA4GlglgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 12:55:50 +0200
+	id 4HrHN8bC4GkFlwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 13:06:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48EFA40D100
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 12:55:49 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4933940D261
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 13:06:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 26C503051CBD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 10:55:48 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7730E300EFB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 11:04:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2680C39B94D;
-	Thu, 16 Apr 2026 10:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2D0F38D6A9;
+	Thu, 16 Apr 2026 11:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FRmo4TI2";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="gLLxcpIW"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="Moijb+2p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mail-10631.protonmail.ch (mail-10631.protonmail.ch [79.135.106.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B877F38D6AD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 10:55:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87D527B357
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 11:04:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.31
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776336947; cv=none; b=f07QvoD/Qt5yOsVXLkgRVo9tKeSj195reBxner0YXlRZHFd1jADclM6JHaM0e5cuOt+E6hS43d0tQij4127mhs9OxBP1Ul7hdS0cPb1FAtaBcZkXnMNyauaYOTLqacuKHxo5NnCu+JMB72dANOpLImlnOpGBdcQgEKudAeC3wqY=
+	t=1776337494; cv=none; b=ZRQB+475Ii3zGryhx92wUvJK7173MPNboiAebXfrLIx1ArR1S934fHBFJJCbiIAY1lQRPl9r5ubrTXUUorQau+JoXMhV+13iaLHWi9ZX3cAPGf4kPlJIB9ViL40NQdTW044T8GkCZfiZta/3wq7pOALCLrcxvJOnylgl0HBBEVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776336947; c=relaxed/simple;
-	bh=KgmAQgZnZVaUGFsBDw/AzLkq4BFJPVsoa7iQJnjyBdw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WSiNpiG1jvjjjsILfRtzomCP1w6lYcSspVWPoy95Tqn/Gn5qnBe84PPoq+kAqTVkeCHwzF/2wE6WF9xQrCMdAGGbXHCG6MEjnqGGshcNtvVWNYazxVUsg6kvT/Sal4gpwN+GzaqAbiMSsrpWEL7BiHpu91ln6iIQ8EoK3H00Osc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FRmo4TI2; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=gLLxcpIW; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63G8Y81g1703935
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 10:55:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=qhaT6frBkv4Qr3L0ozWOVUx5
-	2eDBgylITMC5mRQp/mE=; b=FRmo4TI2ZtmcWnTZjoLJrcD/hrw6adet6xXlhAui
-	ndrA8l0YG7xWn/hyJWGLV1uCnCvIFcIbH2TwvWKTgFFSIcaNus+zHQPOmB2NtChZ
-	aNZnOt4NL+mkSJMfdCpscTBApsXKtTXP51UOjBq9ZPWwB+YyzN/qJdcVxZwvnhXz
-	hnw1sRbjKfliAc6KFqQDMyuLPtIJfJZlO1alP7/3IYGu58nIeJIXSrmurkL9wCgS
-	Gt3dM3rIxbc/EHIGWQuxRIYrSbbcq2hr/OQd1C1MaWbeiiNzwbEHSq6NnyfFLRrU
-	pUmYPo6GQX/YKVkZCRHyJ4p9lZ3buMZ9ilwSaHcon5xEzQ==
-Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com [209.85.221.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4djdamkgpv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 10:55:44 +0000 (GMT)
-Received: by mail-vk1-f198.google.com with SMTP id 71dfb90a1353d-5675cb317e3so8096376e0c.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 03:55:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776336944; x=1776941744; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qhaT6frBkv4Qr3L0ozWOVUx52eDBgylITMC5mRQp/mE=;
-        b=gLLxcpIWRQydNmGSOoj73vRPbwqOUaDAQCeGdQgC6/43Lxp9y8q1YtGhTyyhKlbf9R
-         ToxwAkntJ9S5eqQufXOha3i06nZ62kMQIAh7TeWcjtJsBcgfssPvBPOSwqHL/oh4Dikg
-         gY3rqtzu/gmqrD9BI5aXl0w+ljPUuII8yKC9bddqAryzJtNIvuogiPZfKg5To5i6Ca+2
-         kR9LfJ0cfxZuUqANMKSLi5iapMr6DQbj8gbjrWysNUi9ZLiKH335/XSHgCzcxAcCYmfq
-         w98Ww2qwfaV4VwJEgbRtM3dXvoykieU3sB/Y0b6qrOig7at0rS9dVVeuleuiEAw4q0T7
-         rD/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776336944; x=1776941744;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qhaT6frBkv4Qr3L0ozWOVUx52eDBgylITMC5mRQp/mE=;
-        b=Ffs7xaBTnKcv555w9c+e2jJHCxyGWFCbDtG0U5oCDO/KUN53WYNFuW/vkizMTg5DrR
-         luidLN01SnMG0xIlTPCyJSdDqDNl5J8bKFRDfbK5wYHjN3Fc4QfjfwMJ5QAsfAkX5Zk9
-         9rBeksxf+sjg0Gosc6GIzHzR+6ybDGFJ3yfP3zM+sm1huUJQOWI3YrFzJkcVWZj/yNPY
-         V76k+llt+KgRsO67WnCSiqhvrXyx/x+9a/YIcJeLMR6J/NWpb5U3Suz+rlPjAX/mdp/3
-         qZ4VB6FAGWCkX6Z6iVFKjpID1voea0HljSWKwLa8+NbEku1/bvvEKquDULp5/of2tfRI
-         PUCg==
-X-Forwarded-Encrypted: i=1; AFNElJ8q9r3gT4lH+dL03xdklK+RuyyQtSo22JhPiXt2JV+Sk3okHeH35Cb7dY4sR/Er0KIVnfF8BFmKo1BjitKC@vger.kernel.org
-X-Gm-Message-State: AOJu0YxswqxYy1Ss7+xWwSOpYeR7TnxmTCIsgHDpMR3p3c7Q8iBaZVSq
-	9A2f/dTfY8gGl3OJ4Yj6x/bBIpko9bCgeLRVCKB0VD+Bz/fAffDeWwupr1hkytp//D5oaZUJUoP
-	T/HMTMW4HqAWNNgZdYz6H3gx4c/m3mJ+N/vhj0gaKRUnFyheOW4D2uNAWVXH8P/M+Kugt
-X-Gm-Gg: AeBDieuXsE/DYYwmqK8jNlqQW3hcGBSkc6jKTKuDH+XqzlM4pMiZcSpxD6WTztsMNaT
-	7ZqmIBz70jGhsvxLq6onMVXw3nBGXXenCTHQ+SrEc7tXU2H+Q9/vijlPl5p6BPmevC2oJFE/uUR
-	jNdjZFCB8rhkFhIMYI8wjlXPAd09QhCI4cE+hWzFZs3JVsCKw/9q5TH/7gvZBa1hNe6R45WWV43
-	uKKF97C941RnHRoasUmMt0yvCYpuToX0C1CTl2Rb/LZVQ9WK+IEWmn5NqBoNLIqssc/+kt+xTqS
-	5kIz10R4UiVyqc3fJtTx6p2apeaqRN9k9G4fMsujOg8afSLF/qd/qtkQhmIb6CpEP3iWmz1WvOR
-	LcFfx/f3L5Bndd/WD/S6Yodapx4blfUrCrVwDoXqnf+pgQCVKt0zFhuGU7A8c99HWyHC8b6QEuy
-	uBkdheM18cO9nf6MCdVzjLPNBdOUSGgQRcFCNVXhFkhf76qg==
-X-Received: by 2002:a05:6102:3e04:b0:5ff:ea33:2be with SMTP id ada2fe7eead31-60a00427d2amr11297886137.19.1776336943943;
-        Thu, 16 Apr 2026 03:55:43 -0700 (PDT)
-X-Received: by 2002:a05:6102:3e04:b0:5ff:ea33:2be with SMTP id ada2fe7eead31-60a00427d2amr11297876137.19.1776336943460;
-        Thu, 16 Apr 2026 03:55:43 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38e9ebe67e2sm9936291fa.26.2026.04.16.03.55.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Apr 2026 03:55:42 -0700 (PDT)
-Date: Thu, 16 Apr 2026 13:55:40 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Cc: srini@kernel.org, linux-arm-msm@vger.kernel.org,
-        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        dri-devel@lists.freedesktop.org, arnd@arndb.de,
-        konrad.dybcio@oss.qualcomm.com, andersson@kernel.org
-Subject: Re: [PATCH v8 4/4] misc: fastrpc: Add polling mode support for
- fastRPC driver
-Message-ID: <ymieeagodsfbygq7fsejsqriajmncoubzvor7t3ll6ntomtbeg@l65yihnixwbu>
-References: <20260415112530.4083240-1-ekansh.gupta@oss.qualcomm.com>
- <20260415112530.4083240-5-ekansh.gupta@oss.qualcomm.com>
+	s=arc-20240116; t=1776337494; c=relaxed/simple;
+	bh=v9dZUijvKbwEj6cICPn2Bfzs4TG9TBtGp5Pd+DQtyGE=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=Wi4eGxROVXSRy1NMxZZFHWbf/4U8VXQ3j2S+06TcKlyb3jalVB73zox9reegAvlpSAb/xPfe/bls1NJr0DjcuWH4bzKutFwqARacf1imF4ySEBuQ3jAO/ADMf8zHw8dhkl76A3C2OAppfWL75tE//JrCxzYNWOFEHkxhf5zrV+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=Moijb+2p; arc=none smtp.client-ip=79.135.106.31
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1776337484; x=1776596684;
+	bh=ND45yB22FWjIji9RmDjY8g6tzsg5Y5+t9sZmH4XvSKU=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=Moijb+2pzfp8N/wXiwy0bwgPqgVdkJhMePsB+FlxuG1uwUPrPdeBbQYc0ECTTGOrT
+	 Ja+ruK/Mab3a7h2o74GGBRE0HX5xKs1hxoJzmoXqMQ1btDOvADD/69RZG1IOu6GDkh
+	 Ese1Fqb0qcV43l+bifDkT4nstPml/LWbXjasOR05CT05M+LPCS518qFzjIzpoSz/9t
+	 EefaZcK/DbS8myFgpV6S6Lcmi5vkqRPAKvLVTzGQ3xR3LFEgUydJkVvrVFRGai6Xwm
+	 /cm/ZhW6RDJcisnkHJ3pMOKzHzfiVuHb0LLx+RIeyK7ZeMhWmtbo2kZ7aYIR8B3Wue
+	 u1E2MC5Dn/ZZQ==
+Date: Thu, 16 Apr 2026 11:04:36 +0000
+To: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>, Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH RFC v4 0/7] Add support for Adreno 810 GPU
+Message-ID: <20260416-adreno-810-v4-0-61676e073f8a@pm.me>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: 9198165a4acde663ff75ac413a75938d5f73a19c
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260415112530.4083240-5-ekansh.gupta@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: LD_E1qyT4W5tKge68cqWhdTCIsl_7jRW
-X-Authority-Analysis: v=2.4 cv=HMjz0Itv c=1 sm=1 tr=0 ts=69e0c030 cx=c_pps
- a=1Os3MKEOqt8YzSjcPV0cFA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
- a=EekQdeYcPna9Ds66k2oA:9 a=CjuIK1q_8ugA:10 a=hhpmQAJR8DioWGSBphRh:22
-X-Proofpoint-GUID: LD_E1qyT4W5tKge68cqWhdTCIsl_7jRW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDEwMyBTYWx0ZWRfX71tdVbBY7A2v
- A/lYh5S5rkFG7XH+kQYKUb+xRk8g+92/ik67l3F6/MusRG+rnISGJsMqXqvytIIweWPbnkboTVs
- BL7qoN/1rexp8utD96QQjG9uPZtmBEYd/Ig011d8laR77IxzrAwwMR56iz9dy+yVDPAMqzWtU7V
- bbSdWypcdmLjUCvVRtOG+tEkWdnIRtDBFPabgk7sKuU6Zy+3opDfRKI0qCdb8nJ3iCAUelvvR2Z
- fXOrv/14Xg1xIB0CyvRWvc4zANBIXATpX7R7LmHhAwCGG7uzG7B+AqM57Uhq/8W76BQW4y8hthY
- Evc8emu27sX4PvgCy4ML8Mn747TRYifL1pAkUHoapYXVfba5LVpKZM8SG79pm/kpAoLiIKOlZst
- USq5iVr2RRTkR3WbQNr4QZ0PE2DDGkMM8YKv10NlivlmwkwwQwIyhH8GcqWJzOJycAwbGNDgZLZ
- l0H1+NCs/XFlNmX5yHQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-16_03,2026-04-13_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 priorityscore=1501
- clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604160103
-X-Spamd-Result: default: False [-1.66 / 15.00];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103375-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,linux.intel.com,suse.de,ffwll.ch];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103374-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[3];
+	RCPT_COUNT_TWELVE(0.00)[26];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 48EFA40D100
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[pm.me:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,pm.me:email,pm.me:dkim,pm.me:mid]
+X-Rspamd-Queue-Id: 4933940D261
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Apr 15, 2026 at 04:55:30PM +0530, Ekansh Gupta wrote:
-> For any remote call to DSP, after sending an invocation message,
-> fastRPC driver waits for glink response and during this time the
-> CPU can go into low power modes. This adds latency to overall fastrpc
-> call as CPU wakeup and scheduling latencies are included. Add polling
-> mode support with which fastRPC driver will poll continuously on a
-> memory after sending a message to remote subsystem which will eliminate
-> CPU wakeup and scheduling latencies and reduce fastRPC overhead. In case
-> poll timeout happens, the call will fallback to normal RPC mode.  Poll
-> mode can be enabled by user by using FASTRPC_IOCTL_SET_OPTION ioctl
-> request with FASTRPC_POLL_MODE request id.
-> 
-> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-> ---
->  drivers/misc/fastrpc.c      | 137 ++++++++++++++++++++++++++++++++++--
->  include/uapi/misc/fastrpc.h |  25 +++++++
->  2 files changed, 155 insertions(+), 7 deletions(-)
-> 
-> @@ -1813,6 +1908,30 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
->  	return 0;
->  }
->  
-> +static int fastrpc_set_option(struct fastrpc_user *fl, char __user *argp)
-> +{
-> +	struct fastrpc_ioctl_set_option opt = {0};
-> +	int i;
-> +
-> +	if (copy_from_user(&opt, argp, sizeof(opt)))
-> +		return -EFAULT;
-> +
-> +	for (i = 0; i < ARRAY_SIZE(opt.reserved); i++) {
-> +		if (opt.reserved[i] != 0)
-> +			return -EINVAL;
-> +	}
-> +
-> +	if (opt.request_id != FASTRPC_POLL_MODE)
-> +		return -EINVAL;
-> +
-> +	if (opt.value)
-> +		fl->poll_mode = true;
+Adreno 810 is present in the Milos SoC and is the first GPU to be released =
+in
+the A8x family.
 
-This will enable poll mode on the platforms where it is not supported,
-later silinently changing back to the normal mode. Please don't surprise
-users and make this call fail if polling mode is not supported.
+This series is marked as RFC because it depends on a few other in review
+series, GPU GX GDSC handling [1], QFPROM efuse for Milos [2] and the GXCLKC=
+TL
+block for Milos [3].
 
-> +	else
-> +		fl->poll_mode = false;
-> +
-> +	return 0;
-> +}
-> +
+Also depends on A8x batch 2 but it looks like that made it into linux-next.
 
--- 
-With best wishes
-Dmitry
+[1]: https://lore.kernel.org/linux-arm-msm/20260407-gfx-clk-fixes-v1-0-4bb5=
+583a5054@oss.qualcomm.com
+[2]: https://lore.kernel.org/linux-arm-msm/20260331-milos-qfprom-v1-0-36017=
+cc642db@pm.me
+[3]: https://lore.kernel.org/linux-arm-msm/20260403-milos-gxclkctl-v2-0-95e=
+b94a7d0a4@fairphone.com
+
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+---
+Changes in v4:
+- Add 1150MHz speedbin
+- Rebase on next-20260415
+- Add dep on efuse patchset
+- Link to v3: https://lore.kernel.org/r/20260407-adreno-810-v3-0-30cb7f196e=
+d4@pm.me
+
+Changes in v3:
+- Drop DEMET from GMU clocks (not required on A810)
+- Document qcom,adreno-44010000 compatible (regex is gone in 7.0+)
+- Drop zeroed out CP_PROTECT_REG[46, 62] range, not required
+- Add a810_protect to __build_asserts
+- Add UCHE_CCHE_TRAP_BASE_[LO|HI] and UCHE_CCHE_WRITE_THRU_BASE_[LO|HI] to =
+a810_pwrup_reglist_regs
+- Move TPL1 registers to a810_pwrup_reglist_regs
+- Include all protect registers in a810_ifpc_reglist_regs
+- Revert pipe reg comment, just copied it from downstream but original also=
+ works
+- Link to v2: https://lore.kernel.org/r/20260402-adreno-810-v2-0-ce337ca87a=
+9e@pm.me
+
+Changes in v2:
+- Mark as RFC due to dependency on in-review changes
+- Explain in DTS commit why qcom,kaanapali-gxclkctl.h and not qcom,milos-gx=
+clkctl.h
+- cx_mmio -> cx_misc_mmio
+- Sync a810_nonctxt_regs with GRAPHICS.LA.14.0.r5-03100-lanai.0
+- Link to v1: https://lore.kernel.org/r/20260331-adreno-810-v1-0-725801dbb1=
+2b@pm.me
+
+---
+Alexander Koskovich (7):
+      dt-bindings: display/msm/gmu: Document Adreno 810 GMU
+      dt-bindings: display/msm/gpu: Document A810 GPU
+      drm/msm/adreno: rename llc_mmio to cx_misc_mmio
+      drm/msm/adreno: set cx_misc_mmio regardless of if platform has LLCC
+      drm/msm/a8xx: use pipe protect slot 15 for last-span-unbound feature
+      drm/msm/adreno: add Adreno 810 GPU support
+      arm64: dts: qcom: milos: Add Adreno 810 GPU and GMU nodes
+
+ .../devicetree/bindings/display/msm/gmu.yaml       |  30 +++
+ .../devicetree/bindings/display/msm/gpu.yaml       |   1 +
+ arch/arm64/boot/dts/qcom/milos.dtsi                | 166 ++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c          | 296 +++++++++++++++++=
+++++
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |   8 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  44 ++-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |  14 +-
+ drivers/gpu/drm/msm/adreno/a8xx_gpu.c              |   6 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   5 +
+ 9 files changed, 532 insertions(+), 38 deletions(-)
+---
+base-commit: 5fe4fcc47bbe1ee4474e743378c1b296a0b40e4c
+change-id: 20260330-adreno-810-5a47525522cd
+
+Best regards,
+--=20
+Alexander Koskovich <akoskovich@pm.me>
+
+
 
