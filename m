@@ -1,163 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-103452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GHv3OAQW4WnoogAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 19:01:56 +0200
+	id 8DhrKqs04WkEqgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 21:12:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DFE3412407
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 19:01:56 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 019E1414007
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 21:12:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1148C3015871
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 17:01:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2CF6630EAB41
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 19:11:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40BB02D73A0;
-	Thu, 16 Apr 2026 17:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56F9E226CFE;
+	Thu, 16 Apr 2026 19:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mbhw+e6Y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ik2rhivZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D077126056A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 17:00:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E3533F5BE;
+	Thu, 16 Apr 2026 19:11:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776358858; cv=none; b=a2FK/FvB0OdDNSLtSdWbDOuJnyo1mDC+Mcyw7GBlgbGmmvR+P8Pbmyhjoryd4DGLDJMF/qkDTBtwWOcZh2PATWb4UytEDOow87KeYN/fRS0NQlr632vpVpQTxRNot6UablzrZciymaSgv06YP/jDUVrhTiGUEoK1+LwacxZdGgo=
+	t=1776366673; cv=none; b=KasdrSxEH4sRNvc+ImZLm9kPMyt5jKg4N5ZBq0lsOQSoutYRQUXm8LDCQiqkip3zrPxNgxGcB7r8WlprAk1/jOmyM7gFTPgq3DVhX4icCCZq0+4jliBtLx3vzjYtHss/tuDLFA+NOo/o6TcXxsCpNVT+YU9hAnr/LAqwnUxGyX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776358858; c=relaxed/simple;
-	bh=1CZuCyQ4F7gIhJWlCZS7gOU94W9dFudind/rqbdZLnA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m6+wDkubF74E1JW6pMp+l7GSHzke1Pangb8XJxajQ/mlQhR6TXwy1ACy2oIP5oY/Joino8nzmSpcEKhblHuTZT6WHnFrguBi+E81XvUBGYgAsdoCDffY9poie7D8GXArHLmTevwJHU0vwNkVEfhFqVwaGs8DxpPyQviMDlTD/K8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mbhw+e6Y; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-38ddeb0f5abso67307431fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 10:00:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776358855; x=1776963655; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2VpkNf2axxZW2MI3QuLeduQYZrK6zUSn2neT924zAFg=;
-        b=mbhw+e6YOzTXs0axvtFDK2+Shs5RZqoVEKCp4AiAgq+9DwRWx/afofi2IMKkEHUZCt
-         /v8DyZQ0NndvOt7baJCgUpaykGAuB7kSdhZ1em53Xy3V9QL1HrIjJz4VtQ3NksC87EkX
-         +k8GJ/l9vB9wD/9PVjyIxaONFjDDNBWg98iLXqHMRHZjF5FXAARbcwn1fCfj7Jpc5zGo
-         oK0REA0bewgZPuWYwIGYuA1msjcWuilTOCxj/F7TRN4jYV5mJwosrU+LnIloky3GzBSu
-         ZvbfgfFAfo8BTJ6UQag0K3iJQnhEwEjpiqFrE0WEoTYVztEZLi8tnTgoF2IqZw+bJH2d
-         Bc8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776358855; x=1776963655;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2VpkNf2axxZW2MI3QuLeduQYZrK6zUSn2neT924zAFg=;
-        b=g6C0nrRaynxnr0bByoFUG2scoRi3Lte/Tphsp+y25fUUXmdBwFAaB+7SBXDKGhtkxC
-         6b49E9h5/3sZPDsoxVl2mwB1shGzX5ZkmjENffg8JTILW8c/8Nx4uUKqDiqyIoffQIhl
-         D4uJaG0/i2rqIHEyBWuGsULsERa95YzEJwdl2X1S9T/79dEAzvVEQ/f0qJTMx5EtP2y7
-         1PWEHUHEmCNBtr97lXZNHHNR5WmlbLyo4BATDaQznaww6CNlN1YtCZR15PU7wgSp2qVd
-         JVuZE0b6mkOvyqNui5JnSfO5LigbelV2UpzsE4gWm4t7aya9nuTrfVWaJOV/Zy+qgFsQ
-         Edhw==
-X-Forwarded-Encrypted: i=1; AFNElJ8bVth2acm8cwMMCAPKvkMT2rNIvDP+Vu5xqud0qclSyK/kjygVxvx2C4t04DYnem3GjSLX4IwwuEmopf4R@vger.kernel.org
-X-Gm-Message-State: AOJu0YxknZrvhYwaogkosW2GQCMjNId2DmD8GPlZ6/lpJdaFKUB556sU
-	/8r0h7xLAqLAop6bhkD5QhBw2cSvaN9MrhcjkNpWux2l1l/Mj1SwO4Qb
-X-Gm-Gg: AeBDieuloSZmQoUZQDVIBLV/V+X7ZHhiYhAyf+E89O5ffvLJg2QCyE6Dz7XJ/udMTpl
-	zZklnBpV954MYsf69zaYujVQLW1Gusts6qk2ISRa4+NiZzoOC7hPDLEPR0tTqdmwvASkH0p7Hqg
-	Kz5qyWe5Ptpwccphkj+elpo2lf56ayoGvap8a5ihtzFkeXAH2TL6x+Kpfy0H1EYqROfjLl44NhH
-	XJal4lUiqhIP5UGQcvjd4bdJbzhIvJpC8ShT/+pjHbOL24KVQ+/U0tH0OQ8k1Et6oDYTFpPWniP
-	zY+3vM+M62u0cHMXjIqLsMjvgyj0RS5EkpysRls9l7uJRQoNaHT+T0SNJHD34qN6syrg5COa5ON
-	3ENhXg0ALRDbXTt5Uqz5AmXz7J4pom3CWh5WT7GiUEBW8sPxB0NDXcauWFz7L0Qy5JG2nq7J8k8
-	hISMeUAU0wSLl3mls8MLsHaaBl6dl8GRUg53sURtCaD4wQO29AroN9/FNwzKeVVg8skboxMv+QR
-	8M=
-X-Received: by 2002:a05:6512:3405:b0:5a3:fe5e:3d5f with SMTP id 2adb3069b0e04-5a415540f62mr51697e87.20.1776358854697;
-        Thu, 16 Apr 2026 10:00:54 -0700 (PDT)
-Received: from [10.29.244.82] (m-37-0-167-201.cust.tele2.lt. [37.0.167.201])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a40a272e14sm1416433e87.3.2026.04.16.10.00.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Apr 2026 10:00:53 -0700 (PDT)
-Message-ID: <6b8f767b-98c3-4e31-beb3-20988f764359@gmail.com>
-Date: Thu, 16 Apr 2026 20:00:49 +0300
+	s=arc-20240116; t=1776366673; c=relaxed/simple;
+	bh=Q2H3x8CdirEHfVoa08O/a+N+b/S6QwlAH7SlxTlmmfg=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=f0CzWC0AuXFJlDl/4xIirfCVDzFr87yweWGyssrg+xlkiRZQhOUzs/8esvIZehQZXQknI4Q10JRuDWd0KI4oTIkrJPjZ5d80neEbSy3d2W9R7BGNq3AaPEW8Kl9C+vCYFSvWBNUFilVscLIvBrr2PfwupDqIe+h+2nnAg83los4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ik2rhivZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B72C2BCAF;
+	Thu, 16 Apr 2026 19:11:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776366672;
+	bh=Q2H3x8CdirEHfVoa08O/a+N+b/S6QwlAH7SlxTlmmfg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=Ik2rhivZKSXgN5rKi/dWwx3Hgk21VWQffi8tBP/cwrpj6Y01UiKcQoXv37K6MDg99
+	 cmta1Pz8Jdr5BxvUomqb2r+EILw2ONnyLXpBh3hvYq7DiEpN2NrpxMp4AMiE679pao
+	 JA3ycbMLQY7v0X2uc/aeoPmi50YD61iaOD1acTZZOHxnwzPUjcylcfB11I5//Md2Ok
+	 XuWtabYZFKCjaBDObM4WqIVOxuGn0cwutpM0etxUvP6MpPFNaTb83sQYZCFGWvZ9aU
+	 bnGhSzEGoKuTooYlB77rwelwHnFwmQEwuybTt7LGfvsgBdLnMr5YCzOlZdqkyn6IaB
+	 oJrhZLIfEL9RQ==
+Date: Thu, 16 Apr 2026 14:11:11 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Keith Busch <kbusch@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	"Rafael J. Wysocki" <rafael@kernel.org>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-nvme@lists.infradead.org
+Subject: Re: [PATCH 0/4] PCI: Introduce pci_dev_suspend_retention_supported()
+ API
+Message-ID: <20260416191111.GA21551@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 00/10] media: qcom: venus: add MSM8939 support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bryan O'Donoghue <bod@kernel.org>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org
-References: <20260416-msm8939-venus-rfc-v1-0-a09fcf2c23df@gmail.com>
- <b7b6c3e7-f8e6-4b73-b17a-e5e1691a54f8@oss.qualcomm.com>
-Content-Language: en-US
-From: Erikas Bitovtas <xerikasxx@gmail.com>
-In-Reply-To: <b7b6c3e7-f8e6-4b73-b17a-e5e1691a54f8@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260414-l1ss-fix-v1-0-adbb4555b5ab@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103452-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[xerikasxx@gmail.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103453-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 8DFE3412407
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 019E1414007
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
->> 3. MSM8939 supports HEVC decoding, however, as the patchset is written
->>    now, it does not work. It can be enabled, however, it will result in
->>    breakage of Venus for faulty MSM8916 firmwares, because the code
->>    disabling HEVC for HFI v1 needs to be removed, and as per commit
->>    c50cc6dc6c48 ("media: venus: hfi_parser: Ignore HEVC encoding for V1"),
->>    this would break support for some MSM8916 devices. What could be the
->>    best way to work around this?
-> 
-> if (!device_is_compatible(core->dev, "qcom,msm8939-venus"))?
-> 
-> Also, you mentioned HEVC *de*coding, while the commit you pointed to
-> disables *en*coding (decoding had been already disabled prior to that
-> commit)
-> 
-> Konrad
+[+cc Rafael]
 
-From the commit message I assumed HEVC decoding had already been
-disabled for the same reasons encoding was - faulty firmware reporting
-codecs it doesn't actually support.
+On Tue, Apr 14, 2026 at 09:29:38PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> This series introduces a new PCI API
+> pci_dev_suspend_retention_supported() to let the client drivers know
+> whether they can expect context retention across suspend/resume or
+> not and uses it in the NVMe PCI host driver.
+> 
+> This new API is targeted to abstract the PCI power management
+> details away from the client drivers. This is needed because client
+> drivers like NVMe make use of APIs such as pm_suspend_via_firmware()
+> and decide to keep the device in low power mode if this API returns
+> 'false'. But some platforms may have other limitations like in the
+> case of Qcom, where if the RC driver removes the resource vote to
+> allow the SoC to enter low power mode, it cannot reliably exit the
+> L1ss state when the endpoint asserts CLKREQ#. So in this case also,
+> the client drivers cannot keep the device in low power state during
+> suspend and expect context retention.
+
+I don't know what pm_suspend_via_firmware() means.  The kernel-doc
+says "platform firmware is going to be invoked at the end of the
+system-wide power management transition," but that doesn't say
+anything about what firmware might do or what it means to drivers.
+
+Based on d916b1be94b6 ("nvme-pci: use host managed power state for
+suspend"), which used it in nvme_suspend(), I guess the assumption is
+that pm_suspend_via_firmware() means the device might be put in D3cold
+and lose all its internal state, and conversely,
+!pm_suspend_via_firmware() means the device will *never* be put in a
+low-power state that loses internal state.
+
+> And these limitations may just keep adding in the future. Without a
+> unified API, the client drivers have to implement their own logic
+> which may cause code duplication and may also lead to drivers
+> missing some of the platform limitations.
+> 
+> Once this series gets merged, we can extend this API usage to other
+> client drivers as well.
+
+> 
+> Testing
+> =======
+> 
+> This series is tested on Qualcomm Hamoa based Lenovo Thinkpad T14s latop with
+> NVMe drive.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> ---
+> Manivannan Sadhasivam (4):
+>       PCI: Introduce an API to check if RC/platform can retain device context during suspend
+>       PCI: Indicate context lost if L1ss exit is broken during resume from system suspend
+>       PCI: qcom: Indicate broken L1ss exit during resume from system suspend
+>       nvme-pci: Use pci_dev_suspend_retention_supported() API during suspend
+> 
+>  drivers/nvme/host/pci.c                |  3 ++-
+>  drivers/pci/controller/dwc/pcie-qcom.c | 11 +++++++++++
+>  drivers/pci/pci.c                      | 34 ++++++++++++++++++++++++++++++++++
+>  include/linux/pci.h                    |  9 +++++++++
+>  4 files changed, 56 insertions(+), 1 deletion(-)
+> ---
+> base-commit: 591cd656a1bf5ea94a222af5ef2ee76df029c1d2
+> change-id: 20260414-l1ss-fix-6c9cf2451944
+> 
+> Best regards,
+> --  
+> Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> 
+> 
 
