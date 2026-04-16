@@ -1,442 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-103348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QN/ALl+c4GnokAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 10:22:55 +0200
+	id oKJyHQqf4GlukQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 10:34:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B1D240B78C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 10:22:55 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21A5B40B9B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 10:34:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8D95A31ABA47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 08:17:56 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D102F3110509
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Apr 2026 08:28:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 695763806A4;
-	Thu, 16 Apr 2026 08:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3E9A3914EA;
+	Thu, 16 Apr 2026 08:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bTAt2PIV"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NxbDqwk7";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DMDCTF8u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870E4390C88
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 08:17:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562D038F656
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 08:28:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776327476; cv=none; b=QRHtaM9vUf4cAL3DQ7TmTdZ7rYacd+RdQX+3gLx4EWVEQHg8f+VkCo+k3QxHYNGxt9Wj76XOGF2OCgxtvsZMwh8BwXTYgEjXAhEFXMihH1pitJ/WH9ZSN4hSx8PrH7aHgG0fzOeaEkj4IDioLi7C8sAXqirRuHAzzKKfogQa2GM=
+	t=1776328119; cv=none; b=Sf+U3reVskHffbtx/R70fz7R+f+CnZ9P5dv1hLvmfnMrlPZYSnUff8q9upcmazKzDsb9jDw8MESegQabcxsJGoA7+CnSXMzR/2lyWlRIwDmWajbOz6P4NP3ZQFoGv2kUjdF0qKfPku5IIq17hCaCBzM9L1v9FudzhYKmJ2gnflk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776327476; c=relaxed/simple;
-	bh=lhKx86SAWyQDXPMvu/Dm6MZA48bUrd67Ya7+Q8UDXes=;
+	s=arc-20240116; t=1776328119; c=relaxed/simple;
+	bh=UArPoZ37I80QcdnFfys7bFqnf/VN5V0FZIqC2nIlfYs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qTeNq68ZgXOP35aVbVuJosJ45LJ3kMtoNTWh12el3q1si/Exx0AUV0ZkeBX50z/pk+Zd0HgA2GEKKHnZVjD5/K5vaDt5pA8c1luPOMVW70d8XzmXN1jQEhN/WA2Q4BZKqCMR2bspA+GakO2JfXnff8mVTepvr/jWlu5BWRd3Rgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bTAt2PIV; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-8d736211595so550282985a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 01:17:53 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=bVWqFqGcZsn4VX8qJLMBsOqpTL4MEWjjhmzBFUmMOCJ8BjxDVchp0BJwvAcvpyQEEXuVzGbYwO485+Lv5hRKFlhopc0KnaUwt296W3yGtYp5NtMJbIk+c8k8sovmtCLHxRNkKrQ+Krs2qwkKsWvY6DE1jAlTSrkt1X+siYh0XKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NxbDqwk7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DMDCTF8u; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63G6p3da219437
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 08:28:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	DQHthsDGdl9w7MGb0t8lhxCpnqMRCQMQQcCA2m7POEw=; b=NxbDqwk7EKtyLjPB
+	Xom//KYTmM9aj+qhFdj66c0KYuA2dL/fdcTGqIcuLGJe8Q0ahQ+DBhidTOxV/qyY
+	05vfoMfTogH24OklCiTNyNJERBhE+YYDS8OqCXZMXMA5car+wuZqOQ5unkZ8jHkj
+	gSiPatAJyq+G//tEr1whM6OPAmj9fpx43EyzbtNE6SWHeSeS3bh2RmfBlZTeVzgB
+	ZHxcGTyxz6dXniLG0GcSX3V8d+B1g/PKAoH3KnmRB9ZfrcPDrdFN7r2yYotgkdpm
+	swEqLzpgvUioyyRMI0ClVUG0D7Yg6tSAj4N9Uvr1QVtb8JmeMwj40jCt9+atMUze
+	5auKTQ==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4djtuygax2-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 08:28:36 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-8acb3741d12so10995226d6.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Apr 2026 01:28:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1776327472; x=1776932272; darn=vger.kernel.org;
-        h=in-reply-to:autocrypt:from:content-language:references:cc:to
-         :subject:user-agent:mime-version:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=u2ZjfbInVFTY5PYo7jzcdvXUYZGYONUg3u6BG3gcFj4=;
-        b=bTAt2PIVrk1eoZom4orivEzm7nHLeezZEBu9ab4HQ9VkNKVXAaZiQVBol8NXuAiPtR
-         rER0Q+l+rJg6KgpgHkFcvF5dXdUhUPzb/dEoi79u7f+DXbV8JByIgGOvCxxD2EB9gjz6
-         DaOIByge7JOP/hhazbBLT6T4/X4i4HXujQC19NpbY4vYFrFsiFTifS4qtUOGq6FnnI07
-         ALLEJcgWm7FXquGqt/6YflA/PjV8IlZGVA+uDP+JpkJ1aurwwgp/Zhm8Iw4f5zhBSqT9
-         W7F4VCDdi0Y8yDmo/BgpGE4D4FRgAdCTBaEaS+hi3pozGuZa+WjF324ZLC9rd0/GnD72
-         YnSQ==
+        d=oss.qualcomm.com; s=google; t=1776328116; x=1776932916; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DQHthsDGdl9w7MGb0t8lhxCpnqMRCQMQQcCA2m7POEw=;
+        b=DMDCTF8u46e+nmxuDmmNDkG15QXudbld5IN0mQjLlXfWCH2Yxs3K5WqPb7Cf2imEar
+         V4BUrAbudbVt//xx5zqMkAbOCpGshLws8PTC47pScDdw+ZOKA/ruImXPtk5x9ujEjUXa
+         DurVxBaEKN9FfOdcH31bulNV4tpt5jTJHUzziBgtKSKmr9nz0qvCa2OUKY0mv61dEWGh
+         1tfBLlnCye7YecKTnVFYnwa47AaiU2HGIpCAceCym0FQfFdffar8xC5+Ur1W4N7SlTFt
+         sRc3+mgA/uHb3M0NwdR46MdhjjX7LsgCx83Vy1nCLYxKSp/d7NBEfQUqES+wO0v7eE80
+         ECmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776327472; x=1776932272;
-        h=in-reply-to:autocrypt:from:content-language:references:cc:to
-         :subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u2ZjfbInVFTY5PYo7jzcdvXUYZGYONUg3u6BG3gcFj4=;
-        b=SoTxX4A3RD2bJ+PBCIY1JyyxtayU03C7rZX82uHOGz2doA/blDgUaQl1xsioFN5iYz
-         XG/EPnzTpKEzebgg0jqnXxVC+PWdVOUmqLi+fm4EY6W9jbRO6KVa1Eu2H1gBFZ0rmVPT
-         ft8AeG/N2daTLle4aexcfuq5NC2gIzW0IbjFLuZ5mOOoRlBpFQ/TzkHX3gKHDokmnPP+
-         RyXVDwzqrtaW00xnot9DNtEz3k1skqNZnum0IYQSnoHnrxYJDBVDeapUQIn3yNX431S/
-         8Gs0VEF3kgd6Ibx48SHgmE1j6W0od/M9lN8HFnhru4SzOSGagh5cUn8epTQjGs6f/Ful
-         2PZQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8HfD382ACGp2JmBhu+CSs1CZdc9428OiFsaLs6JIDzLSjwb4SW2Dcyx8itAk/A9dNnoWl/TqjCWJGl2fyv@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQ04HXby3tF+dSJRsAcvIgXRiRCyd/MukBBduEu6kUjXXKVph+
-	kXYtjPIfRji8gdrA9w/CMpbvkXUC94hFf71fk67BfU6DkEjjuLfmJzU3
-X-Gm-Gg: AeBDietL9ToDEvcKrXteGpqUvIJgr7yVP0Eaq9M1diZUauZbY7e4Pug4fns39JnwPkw
-	OEHxSisro8AuuV1gCg2l99PlTTFDif7iUNbiBDCzum2F/pWQbUW/6BDBuGf8A0eJaGWv6teqOFp
-	fk1BittOdVf53TtqQdhlIrWsbfmJuacTFHJz4V6lJpUleCZVN1K4bUoVgVJ+1DazOLjRiOwVvYg
-	CeWLXJLFBRqvDS12FtSVVKkNFT80iUF6go3tHNhkanP6hMQbZGUFDLrztWRJoaYAM2t3WbVtjlJ
-	PBFm8ykF7tQsGmOOyNCGTZ6JkiqpzPu5C0ksltKDcZ6Ca64T8Zu8dziuZuth+0g6TrgYt5/f1Tt
-	9/yiJMsVlpseEGmLHIH76ZI59aFBZ94Yu8Ii9Ksiln6rZpSh9BPdY59OJRrOwNKyOvO/W1FFatu
-	aI21KzYDzNz/fSRK2/jAesZB0rlb9yWzf2NAB8YA==
-X-Received: by 2002:a05:620a:d8a:b0:8d6:874c:a762 with SMTP id af79cd13be357-8ddd03973ffmr3928880885a.54.1776327472259;
-        Thu, 16 Apr 2026 01:17:52 -0700 (PDT)
-Received: from [192.168.2.25] ([184.146.175.99])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8e4ef33afd3sm312406885a.17.2026.04.16.01.17.50
+        d=1e100.net; s=20251104; t=1776328116; x=1776932916;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DQHthsDGdl9w7MGb0t8lhxCpnqMRCQMQQcCA2m7POEw=;
+        b=VVwJ0Z4AHY/CTTcnJq1xmpbWKaL7lxlnu+7kbbpixeHP3IEcvS3L0in4+HCpmtGwLm
+         qDkhWl/Coafh+aXlhJ1KfVp6UBY4SJ3vOI6a1PIt0MHT0pb/EOTBz24kZWjPdLbuzQC7
+         84wMzCCSZzl67BRYdJ2nX+ZQO+jIVf1Xlnr+20ub221qhOmhuTsoDjFqGupN+i4WEoXy
+         bXI9Rz2vbmL2ilsC48ArOsCw/WeNUhNZgztfRr8ZN70jtL0RfUHo3jslxey3PJy380zf
+         8SshpE2oEGMETAL/K2AtItiBGQMaQvfQyn7oZBXgV53ZQZH1oRiwJ3BBpZHRPy/7y9jd
+         YOJg==
+X-Gm-Message-State: AOJu0Yydj+GlHNToVQEYwPiAXjxYkUT2X1oE0iWvRAe515WTIBji5A/w
+	EnA7no5+9fzrFZiI5wr3LBlRibY5m+YM9wo/PtqCaAi8BC4BTQfiufmk4+n9BKqhO0RqugM9pX3
+	rMnq7lUB8gQEytQ267wNiNQEU6v64sJuIvw6ub+tgY7kuNs0Q6llWz42aGNifdfJIgu6b
+X-Gm-Gg: AeBDievYnd3LR/SPse0+iage1cxwMZ6nYlp43lBpYl57ONt34IDhsI5rVvsrIOaGnt4
+	hPo6rNsOp3EqZhDrGIbSxPy2srYnGfUFxjvLfyEQmQOZWJK61ZneUJLtqwhYmhy01+IDyKSXc0i
+	fYDuXsdM5LjfsBTKGcdB3c7skggafyhAbESZm49iYhjCZKZsOuDTGu5m+LfxtDtUsiW2gwDTZw1
+	scSC8wcVT9vhokyXgF99KTSVxI9hAn+pkIhKeyOfriMJgJtVtbcWCqdhnYormDc9buDyVYZZT+U
+	+jW6kg7ervm98tzk3bzTLwEhfe3YSBXY4vjLJ6VocLP24ObAx26cbl2EkvNX8n8OkqRFOLEm7JA
+	KjOeo4fw9AGGu/7qG9NA7WCi/fvOxeiPWZ00JnidA58Mw4ccsHEgSR0pJMDOiGMQNgt6Y2x+jRR
+	LFwkxNCfr/BvE/CQ==
+X-Received: by 2002:a05:6214:e6a:b0:8ae:6380:8fae with SMTP id 6a1803df08f44-8af61fe98bdmr16985606d6.3.1776328116355;
+        Thu, 16 Apr 2026 01:28:36 -0700 (PDT)
+X-Received: by 2002:a05:6214:e6a:b0:8ae:6380:8fae with SMTP id 6a1803df08f44-8af61fe98bdmr16984156d6.3.1776328111838;
+        Thu, 16 Apr 2026 01:28:31 -0700 (PDT)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ba1739300fbsm146192266b.14.2026.04.16.01.28.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Apr 2026 01:17:51 -0700 (PDT)
-Message-ID: <8dc8c094-63ab-4f9c-867a-96b615dff2cf@gmail.com>
-Date: Thu, 16 Apr 2026 04:17:40 -0400
+        Thu, 16 Apr 2026 01:28:30 -0700 (PDT)
+Message-ID: <ce0ed808-facd-456d-b5a7-620dbad6465c@oss.qualcomm.com>
+Date: Thu, 16 Apr 2026 10:28:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:136.0) Gecko/20100101
- Thunderbird/136.0
-Subject: Re: [PATCH v8 4/4] misc: fastrpc: Add polling mode support for
- fastRPC driver
-To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, srini@kernel.org,
- linux-arm-msm@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
- linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
- dri-devel@lists.freedesktop.org, arnd@arndb.de,
- dmitry.baryshkov@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com,
- andersson@kernel.org
-References: <20260415112530.4083240-1-ekansh.gupta@oss.qualcomm.com>
- <20260415112530.4083240-5-ekansh.gupta@oss.qualcomm.com>
-Content-Language: en-CA, en-US
-From: Luben Tuikov <ltuikov89@gmail.com>
-Autocrypt: addr=ltuikov89@gmail.com; keydata=
- xjMEZTohOhYJKwYBBAHaRw8BAQdAWSq76k+GsENjDTMVCy9Vr4fAO9Rb57/bPT1APnbnnRHN
- Ikx1YmVuIFR1aWtvdiA8bHR1aWtvdjg5QGdtYWlsLmNvbT7CmQQTFgoAQRYhBJkj7+VmFO9b
- eaAl10wVR5QxozSvBQJlOiE6AhsDBQkJZgGABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheA
- AAoJEEwVR5QxozSvSm4BAOwCpX53DTQhE20FBGlTMqKCOQyJqlMcIQ9SO1qPWX1iAQCv3vfy
- JwktF7REl1yt7IU2Sye1qmQMfJxdt9JMbMNNBs44BGU6IToSCisGAQQBl1UBBQEBB0BT9wSP
- cCE8uGe7FWo8C+nTSyWPXKTx9F0gpEnlqReRBwMBCAfCfgQYFgoAJhYhBJkj7+VmFO9beaAl
- 10wVR5QxozSvBQJlOiE6AhsMBQkJZgGAAAoJEEwVR5QxozSvSsYA/2LIFjbxQ2ikbU5S0pKo
- aMDzO9eGz69uNhNWJcvIKJK6AQC9228Mqc1JeZMIyjYWr2HKYHi8S2q2/zHrSZwAWYYwDA==
-In-Reply-To: <20260415112530.4083240-5-ekansh.gupta@oss.qualcomm.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------xN0t5LhGw6YuTD2O0ja123f4"
-X-Spamd-Result: default: False [-4.16 / 15.00];
-	SIGNED_PGP(-2.00)[];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] clk: qcom: Make important arm64 drivers default
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260416-clk-qcom-defaults-v1-0-579e75c4cfe5@oss.qualcomm.com>
+ <20260416-clk-qcom-defaults-v1-2-579e75c4cfe5@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260416-clk-qcom-defaults-v1-2-579e75c4cfe5@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE2MDA3OCBTYWx0ZWRfX/QCTO9th+rns
+ uqjmr98C4CFUuYoPFN8d7CckejxHDCCLQRcudIbAnIfITrFVnhRKgdJjNNl72ykGTqRw0YlVadJ
+ rWDdPDFdlN00hFg6GQHXIzM3LscG4C31v315NocsUzk3vlU5jMi9L/5GbKRdaB1p1Le2PiihHZB
+ dB2uqcMmrWsO+1EoBYVHd6Yy15CM8t4hgUjpXsFawFEL1pCKjO3kwgepO9lpD1cvNn3qj8Qr1yU
+ K/g/Y7GmHfg5NF1jbZXpFItNR8USCVKTlDM+ibhJr2cG8K5aac1scq1jchr4LD0ACYv56yuQa+g
+ xvUIblM7zaPnUyKz3QgHTspgQ9W6SY3W8qWucmB6zStpm0p9OAIUr0hsX/Js8EE9jMptWDe1DnB
+ 05kTqwVeDCvhd/l2hNnrFU8VEooylZHGIekXKRHQl+C5udj08iHpoVE2Le3W80CaRbdGMSuhkJW
+ KYJ+3xEP5pMMfaGZXXA==
+X-Proofpoint-ORIG-GUID: AUGEcyxXVE-N1tFJUCo7t1FOY3kuaK27
+X-Authority-Analysis: v=2.4 cv=Ipgutr/g c=1 sm=1 tr=0 ts=69e09db5 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=H8HeEjOgkr3naCPkutQA:9 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-GUID: AUGEcyxXVE-N1tFJUCo7t1FOY3kuaK27
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-16_02,2026-04-13_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
+ definitions=main-2604160078
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	MIME_GOOD(-0.20)[multipart/signed,multipart/mixed,text/plain];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
-	MIME_UNKNOWN(0.10)[application/pgp-keys];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+,1:+,2:+,3:+,4:~,5:~];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103348-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_FROM(0.00)[bounces-103349-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_SEVEN(0.00)[7];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	ASN_FAIL(0.00)[10.253.234.172.asn.rspamd.com:server fail];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	ASN_FAIL(0.00)[114.105.105.172.asn.rspamd.com:server fail];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FROM_NEQ_ENVFROM(0.00)[ltuikov89@gmail.com,linux-arm-msm@vger.kernel.org];
-	HAS_ATTACHMENT(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 0B1D240B78C
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email]
+X-Rspamd-Queue-Id: 21A5B40B9B9
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------xN0t5LhGw6YuTD2O0ja123f4
-Content-Type: multipart/mixed; boundary="------------AQKjfm64Py2xRSpCXKO1GqWn";
- protected-headers="v1"
-From: Luben Tuikov <ltuikov89@gmail.com>
-To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, srini@kernel.org,
- linux-arm-msm@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
- linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
- dri-devel@lists.freedesktop.org, arnd@arndb.de,
- dmitry.baryshkov@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com,
- andersson@kernel.org
-Message-ID: <8dc8c094-63ab-4f9c-867a-96b615dff2cf@gmail.com>
-Subject: Re: [PATCH v8 4/4] misc: fastrpc: Add polling mode support for
- fastRPC driver
-References: <20260415112530.4083240-1-ekansh.gupta@oss.qualcomm.com>
- <20260415112530.4083240-5-ekansh.gupta@oss.qualcomm.com>
-In-Reply-To: <20260415112530.4083240-5-ekansh.gupta@oss.qualcomm.com>
+On 4/16/26 10:10 AM, Krzysztof Kozlowski wrote:
+> Clock controller drivers are essential for booting up SoCs and are not
+> really optional for a given platform.  Kernel should not ask users
+> choice of drivers when that choice is obvious and known to the
+> developers that answer should be 'yes' or 'module'.
+> 
+> Switch all Qualcomm clock controller drivers which are chosen in
+> defconfig to respective default 'yes' or 'module'.
+> 
+> This has no impact on arm64 defconfig include/generated/autoconf.h,
+> however changes few drivers for arm:
+> 
+> 1. multi_v7_defconfig: Enable QCOM_CLK_RPMH as module, because SDX55
+>    (ARM 32-bit) uses it.
+> 
+> 2. Enable QCOM_A53PLL, QCOM_CLK_APCS_MSM8916 and MSM_GCC_8916 as
+>    built-in, because MSM8916 is also used ARM 32-bit.
 
---------------AQKjfm64Py2xRSpCXKO1GqWn
-Content-Type: multipart/mixed; boundary="------------S05zGcNgK51jtBwXIQA5K08D"
+Is that to say that the arm(non-64) defconfig should be updated
+too? I don't see a related change in the series
 
---------------S05zGcNgK51jtBwXIQA5K08D
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Ekansh,
-
-Good work. A couple of notes below:
-
-On 2026-04-15 07:25, Ekansh Gupta wrote:
-> For any remote call to DSP, after sending an invocation message,
-> fastRPC driver waits for glink response and during this time the
-> CPU can go into low power modes. This adds latency to overall fastrpc
-> call as CPU wakeup and scheduling latencies are included. Add polling
-> mode support with which fastRPC driver will poll continuously on a
-> memory after sending a message to remote subsystem which will eliminate=
-
-> CPU wakeup and scheduling latencies and reduce fastRPC overhead. In cas=
-e
-> poll timeout happens, the call will fallback to normal RPC mode.  Poll
-> mode can be enabled by user by using FASTRPC_IOCTL_SET_OPTION ioctl
-> request with FASTRPC_POLL_MODE request id.
->=20
-> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 > ---
->  drivers/misc/fastrpc.c      | 137 ++++++++++++++++++++++++++++++++++--=
 
->  include/uapi/misc/fastrpc.h |  25 +++++++
->  2 files changed, 155 insertions(+), 7 deletions(-)
->=20
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index c4a3547a5c7f..5311a4ba4bb7 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -24,6 +24,8 @@
->  #include <linux/of_reserved_mem.h>
->  #include <linux/bits.h>
->  #include <linux/bitops.h>
-> +#include <linux/compiler.h>
-> +#include <linux/iopoll.h>
-> =20
->  #define ADSP_DOMAIN_ID (0)
->  #define MDSP_DOMAIN_ID (1)
-> @@ -38,6 +40,12 @@
->  #define FASTRPC_CTX_MAX (256)
->  #define FASTRPC_INIT_HANDLE	1
->  #define FASTRPC_DSP_UTILITIES_HANDLE	2
-> +/*
-> + * Maximum handle value for static handles.
-> + * Static handles are pre-defined, fixed numeric values statically ass=
-igned
-> + * in the IDL file or FastRPC framework.
-> + */
-> +#define FASTRPC_MAX_STATIC_HANDLE (20)
->  #define FASTRPC_CTXID_MASK GENMASK(15, 8)
->  #define INIT_FILELEN_MAX (2 * 1024 * 1024)
->  #define INIT_FILE_NAMELEN_MAX (128)
-> @@ -106,6 +114,12 @@
-> =20
->  #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, m=
-iscdev)
-> =20
-> +/* Poll response number from remote processor for call completion */
-> +#define FASTRPC_POLL_RESPONSE (0xdecaf)
-> +
-> +/* Polling mode timeout limit */
-> +#define FASTRPC_POLL_MAX_TIMEOUT_US (10000)
-> +
->  struct fastrpc_phy_page {
->  	dma_addr_t addr;	/* dma address */
->  	u64 size;		/* size of contiguous region */
-> @@ -236,8 +250,14 @@ struct fastrpc_invoke_ctx {
->  	u32 sc;
->  	u64 *fdlist;
->  	u32 *crc;
-> +	/* Poll memory that DSP updates */
-> +	u32 *poll;
+For the change here:
 
-Perhaps "poll_addr"? "poll" seems just too generic.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
->  	u64 ctxid;
->  	u64 msg_sz;
-> +	/* work done status flag */
-> +	bool is_work_done;
-> +	/* process updates poll memory instead of glink response */
-> +	bool is_polled;
->  	struct kref refcount;
->  	struct list_head node; /* list of ctxs */
->  	struct completion work;
-> @@ -308,6 +328,8 @@ struct fastrpc_user {
->  	int client_id;
->  	int pd;
->  	bool is_secure_dev;
-> +	/* Flags poll mode state */
-> +	bool poll_mode;
->  	/* Lock for lists */
->  	spinlock_t lock;
->  	/* lock for allocations */
-> @@ -923,7 +945,8 @@ static int fastrpc_get_meta_size(struct fastrpc_inv=
-oke_ctx *ctx)
->  		sizeof(struct fastrpc_invoke_buf) +
->  		sizeof(struct fastrpc_phy_page)) * ctx->nscalars +
->  		sizeof(u64) * FASTRPC_MAX_FDLIST +
-> -		sizeof(u32) * FASTRPC_MAX_CRCLIST;
-> +		sizeof(u32) * FASTRPC_MAX_CRCLIST +
-> +		sizeof(u32);
-> =20
->  	return size;
->  }
-> @@ -1019,6 +1042,9 @@ static int fastrpc_get_args(u32 kernel, struct fa=
-strpc_invoke_ctx *ctx)
->  	list =3D fastrpc_invoke_buf_start(rpra, ctx->nscalars);
->  	pages =3D fastrpc_phy_page_start(list, ctx->nscalars);
->  	ctx->fdlist =3D (u64 *)(pages + ctx->nscalars);
-> +	ctx->poll =3D (u32 *)((uintptr_t)ctx->fdlist + sizeof(u64) * FASTRPC_=
-MAX_FDLIST +
-> +			     sizeof(u32) * FASTRPC_MAX_CRCLIST);
-> +
->  	args =3D (uintptr_t)ctx->buf->virt + metalen;
->  	rlen =3D pkt_size - metalen;
->  	ctx->rpra =3D rpra;
-> @@ -1188,6 +1214,74 @@ static int fastrpc_invoke_send(struct fastrpc_se=
-ssion_ctx *sctx,
-> =20
->  }
-> =20
-> +static inline u32 fastrpc_poll_op(void *p)
-> +{
-> +	struct fastrpc_invoke_ctx *ctx =3D p;
-> +
-> +	dma_rmb();
-> +	return READ_ONCE(*ctx->poll);
-
-I think you're better off using readl() here, but see my comment below, w=
-hich obviates this function.
-
-> +}
-> +
-> +static int poll_for_remote_response(struct fastrpc_invoke_ctx *ctx)
-> +{
-> +	u32 val;
-> +	int ret;
-> +
-> +	/*
-> +	 * Poll until DSP writes FASTRPC_POLL_RESPONSE into *ctx->poll
-> +	 * or until another path marks the work done.
-> +	 */
-> +	ret =3D read_poll_timeout_atomic(fastrpc_poll_op, val,
-> +				       (val =3D=3D FASTRPC_POLL_RESPONSE) || ctx->is_work_done, 1,=
-
-> +				       FASTRPC_POLL_MAX_TIMEOUT_US, false, ctx);
-
-Is there any reason you're not using readl_poll_timeout_atomic() as docum=
-ented in linux/iopoll.h?
-Does readl() not satisfy the read operation in fastrpc_poll_op()?
-
-How can ctx->is_work_done be updated here? Perhaps you just want to use "=
-val =3D=3D FASTRPC_POLL_RESPONSE" as a condition here...
-
-> +
-> +	if (!ret && val =3D=3D FASTRPC_POLL_RESPONSE) {
-> +		ctx->is_work_done =3D true;
-> +		ctx->retval =3D 0;
-> +	}
-> +
-> +	if (ret =3D=3D -ETIMEDOUT)
-> +		ret =3D -EIO;
-> +
-> +	return ret;
-> +}
-> +
-> +static inline int fastrpc_wait_for_response(struct fastrpc_invoke_ctx =
-*ctx,
-> +					    u32 kernel)
-
-What is "kernel" and why is it a u32 when it is used as a "bool"? Perhaps=
- a better name can be had?
-
-> +{
-> +	int err =3D 0;
-> +
-> +	if (kernel) {
-> +		if (!wait_for_completion_timeout(&ctx->work, 10 * HZ))
-> +			err =3D -ETIMEDOUT;
-> +	} else {
-> +		err =3D wait_for_completion_interruptible(&ctx->work);
-> +	}
-> +
-> +	return err;
-> +}
-> +
-> +static int fastrpc_wait_for_completion(struct fastrpc_invoke_ctx *ctx,=
-
-> +				       u32 kernel)
-> +{
-> +	int err;
-> +
-> +	do {
-> +		if (ctx->is_polled) {
-> +			err =3D poll_for_remote_response(ctx);
-> +			/* If polling timed out, move to normal response mode */
-> +			if (err)
-> +				ctx->is_polled =3D false;
-> +		} else {
-> +			err =3D fastrpc_wait_for_response(ctx, kernel);
-> +			if (err)
-> +				return err;
-> +		}
-> +	} while (!ctx->is_work_done);
-
-Perhaps you want to also check "err" here to make the exit condition more=
- explicit. (The invariant in do-while loops is generally directly determi=
-ned by something within the loop and generally not implicit.)
-
-Is it possible that in poll_for_remote_response() you get 0 as a poll res=
-ult and val is not equal to FASTRCPC_POLL_RESPONSE? In such a case, this =
-may hang. (Is a hang desired here?)
-
-Is it possible that if polling is enabled, then you want to poll only onc=
-e, and if unsuccessful, or successful but "!work_done", then transition t=
-o fastrpc_wait_for_response() and return, without looping? (since polling=
- is looping after all...)
-
-> +
-> +	return 0;
-
-"err" is always initialized so you can return "err" here if you exit with=
- "err" as part of the exit condition. (And if you add "!err &&" in the lo=
-op invariant, then you don't need (if (err) return err;) after "fastrpc_w=
-ait_for_response()").
-
---=20
-Regards,
-Luben
---------------S05zGcNgK51jtBwXIQA5K08D
-Content-Type: application/pgp-keys; name="OpenPGP_0x4C15479431A334AF.asc"
-Content-Disposition: attachment; filename="OpenPGP_0x4C15479431A334AF.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-
-xjMEZTohOhYJKwYBBAHaRw8BAQdAWSq76k+GsENjDTMVCy9Vr4fAO9Rb57/bPT1A
-PnbnnRHNIkx1YmVuIFR1aWtvdiA8bHR1aWtvdjg5QGdtYWlsLmNvbT7CmQQTFgoA
-QRYhBJkj7+VmFO9beaAl10wVR5QxozSvBQJlOiE6AhsDBQkJZgGABQsJCAcCAiIC
-BhUKCQgLAgQWAgMBAh4HAheAAAoJEEwVR5QxozSvSm4BAOwCpX53DTQhE20FBGlT
-MqKCOQyJqlMcIQ9SO1qPWX1iAQCv3vfyJwktF7REl1yt7IU2Sye1qmQMfJxdt9JM
-bMNNBs44BGU6IToSCisGAQQBl1UBBQEBB0BT9wSPcCE8uGe7FWo8C+nTSyWPXKTx
-9F0gpEnlqReRBwMBCAfCfgQYFgoAJhYhBJkj7+VmFO9beaAl10wVR5QxozSvBQJl
-OiE6AhsMBQkJZgGAAAoJEEwVR5QxozSvSsYA/2LIFjbxQ2ikbU5S0pKoaMDzO9eG
-z69uNhNWJcvIKJK6AQC9228Mqc1JeZMIyjYWr2HKYHi8S2q2/zHrSZwAWYYwDA=3D=3D
-=3DqCaZ
------END PGP PUBLIC KEY BLOCK-----
-
---------------S05zGcNgK51jtBwXIQA5K08D--
-
---------------AQKjfm64Py2xRSpCXKO1GqWn--
-
---------------xN0t5LhGw6YuTD2O0ja123f4
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQSZI+/lZhTvW3mgJddMFUeUMaM0rwUCaeCbJAUDAAAAAAAKCRBMFUeUMaM0r8Vo
-AP9WJmN4Q2hEUkOxLBryVAF2pXe//FmJ8gPI7CjyCV15BAEAgSG5h3/wdSlwchwof952csqUEnNy
-zRf038thQ2HcUQw=
-=tPQ1
------END PGP SIGNATURE-----
-
---------------xN0t5LhGw6YuTD2O0ja123f4--
+Konrad
 
