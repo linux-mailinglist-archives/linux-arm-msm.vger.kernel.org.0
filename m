@@ -1,85 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-103507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kJoQKXYC4mna0QAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 11:50:46 +0200
+	id OEoREoEC4mna0QAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 11:50:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A292419941
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 11:50:45 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BFBF419955
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 11:50:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7F06D30C0462
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 09:38:04 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id DAC6430C49C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 09:38:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5986C3B47CD;
-	Fri, 17 Apr 2026 09:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 376193B4E9F;
+	Fri, 17 Apr 2026 09:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ysZL/ic8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g9KlAUsS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09812375F82
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 09:37:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD4B3AD502
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 09:37:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776418674; cv=none; b=QuYfbI76UZGsu7BaSsiM0vzPsMvSOnnKpexUSHYVNTRrF6KSGPfQNOvkqu3DX2rxHIuaFcTgFQoFnNe6uN+3X3FpeJFIKMne/tV+ipKIdfqRPI15vAiq5NlZtLqR7DdZb3M1nkA618SvhAhKWWmyliWMZUcMv5fJYbcEFt7fQQ8=
+	t=1776418675; cv=none; b=p5BEHxfMjv8p9V2T3pyRBIyh/5DOUU4ZNe7COQ8FHzs+JUZQVZIDabmky5ntXBePwCXCJ/cefuGlQSSnk4ZRjaQno7IgzwgfTMzroAd/HAPZCa9BdpRIESCuCL5GnxpwdETXAZvYHsBslwAyn7VrNg1xz3nwTWO20Qk6r93154A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776418674; c=relaxed/simple;
-	bh=d9uRXaLdyFWWRpJT+htD5WetYhp0U6x8tsZUnkHSdQs=;
+	s=arc-20240116; t=1776418675; c=relaxed/simple;
+	bh=vUdFYSgnBSzZgk95HkEcJ1yBIuWlbgrBUX6/E7cKxlo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=De1SG8MkSo9+9Gh5MMMDVzlrge5Hw4uFP3gs/n06/Ppj4VKuBgzfgHRKytH3cE9M8793reRqDIM/1y0xluSkw//er8selYoEfo1G2RDjHaB9QMl7nyG92B+2cuazpjJuefBX4zsZ+cFrI5g3UMzvyHM6QvPgRnnBeh5mlG5kguA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ysZL/ic8; arc=none smtp.client-ip=209.85.128.52
+	 In-Reply-To:To:Cc; b=bT+icHFuiZbJowCXGe4n639FX07KLeJ9wVGbLc3ymDzdQYFDZcXSTtPpLqeOvlVTUDunkM4mVeNm4pxO33BUopp107B2Tx2JYGDuPeHs6elJjiaUGeWoIfgIY7Tfa3XkwwTnMBzVTWHoY5sYPpqYXcNR3Y1g8TdSLR7V2Ea0tBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g9KlAUsS; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-488b8bc6bc9so3140965e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 02:37:51 -0700 (PDT)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4838c15e3cbso4140345e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 02:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1776418670; x=1777023470; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1776418671; x=1777023471; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qmLWdZEsMa5osbUvm5RbW/e0ymGFNTcUQWqcDHN80mM=;
-        b=ysZL/ic8TxeYq7mgNKyF4SafnjViDxhVtxuxYfY1cl9EBPtFdOpJK49N7yG6/Ix4fk
-         /BwRaM1kcbaaDYMys6rbl2WdC6TLerPrGkMcRaRyWjJ65rioIQNa1Sv7KdAAAUJFvC6n
-         HUDYvBVQnlqKYxHcLQXNOqWRYDcoOKiqYy/JzsoEwjq44RXIpDwjrQhHRXq1hL0Z749j
-         BHx8LP6wy4JqIY+n93K5OxJ1D5JtsseNWCO9M/mphXde7+T/Ma1OpXbxUWk+LKnY7fpc
-         AgqhWqe1+1VPiUutnFdaTrs+8wfRw+EfMJ9ss+0PRu++/+UAkITWCs+sDzpNepBh5i5/
-         8jDg==
+        bh=WDbXOBlWoAeeu3uACVssb9h5dacPl/RzVtWw9N7wjaM=;
+        b=g9KlAUsSLDGNi3Ws0i7tAPRAkWWylpXlfaN9mjKI3+q4RwhibovsCok8j0klOVBl/W
+         EbPOW/U2GoKAa7Ieu9GF5MGiC89Vr2lycQ2OASbTsHD3WamygaORWLe2HdiWUtB7jHuh
+         WSp3t6O1Oq2J3UlNeULGcKxUYNjCfl1owDo4yhiQT57/ZCj63QG4exXCXLu1DJM/ZuPK
+         xNHLY1qmPXxvkbOUv74GJzJCjxSdE4oe0tMYII0FgK28lVuC6IbVlbuGCRtRpYTQLTNo
+         q0i11F9cbcAVO74Ze7XNLJEae6vrd/J7BlU+9jjgMvOBurKh+k3dwvfXw97MuKVY99VS
+         rYtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776418670; x=1777023470;
+        d=1e100.net; s=20251104; t=1776418671; x=1777023471;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=qmLWdZEsMa5osbUvm5RbW/e0ymGFNTcUQWqcDHN80mM=;
-        b=WgGhg5z6911fPmYox4keeJqrdYelaRY8vjh+RJ4E3j15V7hESVx2wVhek8n48HWLnX
-         24gHZ29KXraNh2jc4iqomVsf1fzLhZb29uCvrzULHfGkuDMrDRh0HL15NaE05Ikg4j3B
-         wlLwITyebePnOmOAxN0V573/lRQFTd2m06duzQlYX7FiLzKjWZ4nX2+705w2LsFG6LiI
-         m3nPN9JQNr5/tVaaxOTD5ZafUa7y6zFXyf6A31G0YBCFmVJNFEFkguAQeIqKEz9khwxg
-         XUtGUUSctAiC/V+tJ6Y+pSD9Yv6MYsjpeH7dxNH/k0sVifTzptP9typ4sVaeQtS7S0xY
-         QPig==
-X-Forwarded-Encrypted: i=1; AFNElJ9zM7zTsYP0wF8OAZkHTMJXDAXFCmf4QWa8tKm3GZuSpcCS8b2eO72UjPJQKPeSjQKh+qERPDhzO2ttvtkN@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKcRkASeWOUIjsVgUrB2Q8cOuF5k24IxCkOtGem4RsFQ5DGvxk
-	ilHu0IWX9BYPa27VONCWU3yTyMuveOY2MgG2TkC+dIqJDOTE+nWGyO1RR1OSXsFtwdQ=
-X-Gm-Gg: AeBDievMnugiu1AivihZqRCB7B6LEO7yN4FmOai5OBAEvZNoTK4Iwkb54en1nOt2UUv
-	8VDqKTq0O7AXk7t2HxT4O6bkEfA4rflbS9FMecWAOg7Tr8EqJAvKndPgwwAq8yazOMXW2edVukV
-	RTAhfwsWJ3UlM0qZgOrj3wFGu2/zyuAC8WV78wvdB8oCo20wBLOn+vpHDEZ9u55TCbONOeRKMiU
-	JtvuBGiARdn4gzTe6gkqgUojEDPv7hPDBOoFu8D4+SEwK2dT4AhrXf5500taH88jN4yIyS2u665
-	JVwIt2yVyAe5+FtR901iLOmdMSXRobO5QYwKKiq9Pb9BFc7fiCLVVx96za7Ohdkw94kWT55Ixq5
-	BctjcBnNstZr3iW/DDDVKHff3eaPJIeEpkxo5dsAj4YHuPfbdWdY92VFiWGfU4KHNyo25Mbrlb7
-	YdWF61b6z9NbZiF9Q65uBWO8XeINwBNScmHP2RO0ryzJQJ4VaP/Fa+PwM=
-X-Received: by 2002:a05:600c:4e16:b0:488:d6eb:e63a with SMTP id 5b1f17b1804b1-488fb76fe73mr29078455e9.14.1776418670342;
-        Fri, 17 Apr 2026 02:37:50 -0700 (PDT)
+        bh=WDbXOBlWoAeeu3uACVssb9h5dacPl/RzVtWw9N7wjaM=;
+        b=i4nYsiFzieAfUm74rMNfShLXCSP2bW/NG68oKwluneZFKw0xMVG3u3ZYnfQ4buUqmF
+         1X/NZHcYyQffv+B6m5ceLamvxxkYUqNPy6poSOxAx6zzF5MFrx9vZXNWgdbFrwMYzme/
+         bXzXFK4LKnfz7Mze39CpN2dv3qo38KZhsgTiZu9nD2wBqMh+LNIetOOmJksWZwLdZP+b
+         gK/DjNDd2zgpH4X+1txi8GFllkF1LW921gGHA2nsj7i9iGPSr4hmE4GDgfJr6w8zXKw0
+         HvpHZvThok/Ig9672HikPlxsTLcKJtt2Uj2LtJYnpq8Ka87Ld/jr5bLgqFp4CLDaCobW
+         F9hQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/vUXkOexNdGt+IfQdVOaoVA0L/4Isqic6GPOoCMu0FH04x5E03+ioI/nv3XIvbJdVw8mW4kzqiHEis9hY6@vger.kernel.org
+X-Gm-Message-State: AOJu0YxfdXWyhBQuyUe+4QUIQXGENn2/bZfn8ESNifcexJa7g03P3cRw
+	/Xo6RSB66CGWGQl3ndQWw1nktE8brUdv86B+HR6lWhI774lWRhqfUMgVm9pmNywxWPUOPtXySX1
+	fepQL5QA=
+X-Gm-Gg: AeBDietNxwqAGvKsbLHgvkrcKVhFUIUwXJbFuAEMyBQicnULPTzXm1iwR2fR5LEw6wp
+	I+mU8LtjOISBkbpSv+VkIaR8qt09nBR/OImzOXlPNwJ8o4WG03r7QIWvXG8fROfCW1tdZs4ozWt
+	0rTeWtfW6W4hvPDtEMIcGEDtE9PqMaYsP38OdSvZfBCB7caRoPx2Q1Jmt3j2uB0s9KaYoosJ4kP
+	Fc0oe1I8Im6Vx/ex1vt+92ICBFY+zbpRAQ1oXotmQhNyvUq+YVvlrqc+MMDEaIL3aF6mmDVF1YQ
+	kKNhqQxsU78wriK5zpf2L8Tw4CkzZXoZgiF0ZePFEvOZdD2qjJWsfjOf/8XoVXnZ8t3wIWAVJOP
+	OFPJuNAuEg6rOjbIRaI0pKkNgN1ozEiwmXTllGA34BUqD/lSiA9dojM+iJk7PigizzGjIuKcHZx
+	WW9Gt3N2D5ZyYdqjXBFi3u9vCzrXHJryB2WkfVv596HQivGi2rW2D0buI=
+X-Received: by 2002:a05:600c:3513:b0:488:a977:8de with SMTP id 5b1f17b1804b1-488fb77a3a7mr27141775e9.16.1776418671041;
+        Fri, 17 Apr 2026 02:37:51 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:106d:1080:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488fb7b2634sm12915435e9.28.2026.04.17.02.37.49
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-488fb7b2634sm12915435e9.28.2026.04.17.02.37.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 17 Apr 2026 02:37:50 -0700 (PDT)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Fri, 17 Apr 2026 11:37:42 +0200
-Subject: [PATCH v2 2/6] media: qcom: iris: add QC10C & P010 buffer size
- calculations
+Date: Fri, 17 Apr 2026 11:37:43 +0200
+Subject: [PATCH v2 3/6] media: qcom: iris: gen2: add support for 10bit
+ decoding
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,7 +89,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260417-topic-sm8x50-iris-10bit-decoding-v2-2-c987b65a31d5@linaro.org>
+Message-Id: <20260417-topic-sm8x50-iris-10bit-decoding-v2-3-c987b65a31d5@linaro.org>
 References: <20260417-topic-sm8x50-iris-10bit-decoding-v2-0-c987b65a31d5@linaro.org>
 In-Reply-To: <20260417-topic-sm8x50-iris-10bit-decoding-v2-0-c987b65a31d5@linaro.org>
 To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
@@ -98,27 +99,27 @@ To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10187;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6219;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=d9uRXaLdyFWWRpJT+htD5WetYhp0U6x8tsZUnkHSdQs=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBp4f9pHBx8Vw9i0s7t+/VLzm4eYh+19POBDWexlvOt
- Kx1zfCOJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaeH/aQAKCRB33NvayMhJ0cVYEA
- CbJvjDCxf7JY4BYG8MFnbuHwDIzAecFeHZK3iqNgYDis1JNLzVEhDTSrqwxREAK9lk4IVhJ2NGvHZY
- caLZSbINxiap/PBD25gz1BE28oNWDjd5cQJzFXZ039AqCLqNWiyMWwBNFSobfyFyTLEullAvmhRrQe
- zqQYPGWioUWlPWtkNWLiTfcgSmUMTYhVshVO2+aJp/S3/ZfpSG5pnOZMZoxY9xOjvw/B6Bmtan7Zau
- AvipzaaH7BUrkL+8Htqr7xOS7DwYHoXOQADyBZqUR28WeQsu0dwD1DJVwNAt8RTN1esTuRDyWILC0A
- N2QcqTJZp5bMxi4l2Vbb14tX7dUWpx+5prEOBmirCtJeLV0WLr4ta0UaA+ERhz/kZNyQrD48BbTa3e
- zKdTK/uBJVtHlh+MKRaOsKXDOT32sxS6dpGSrQ/2Ax0Nnf9jgdum25X4ZJCbFhQ72LEqxZ5ZrvREU7
- F22SePp3OjD7SYDN1/gSqyf43HYHHbLPhznus9bp5T5QTuLNX0n9E2E+Q9rKHf31h+BhzIwxhboJl4
- 4VxG4UjX09SI/mk5isEHBoJaOBtLckDHnf89jAFbcoXscIPAaALeun6x5V6wIBrJsVX6GYLrU/+of6
- gag5/jMQ57ZnTv2l2mUTdrspNx7tHst0QspBOIbhMRDv4FuLlpKcVH9qVVQA==
+ bh=vUdFYSgnBSzZgk95HkEcJ1yBIuWlbgrBUX6/E7cKxlo=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBp4f9qPEZNzp8pS+zT5//LmokfgsXW8PhYSXhAu2zO
+ otwm8MyJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaeH/agAKCRB33NvayMhJ0YccD/
+ 0bGHzr6Z1ikdT6xxRrQfdd2gf0IJRC7MD2Urjf1LLXDKdPpTZNF3n2WW5sW5Gp2/cYqznChEB8y6al
+ UHiMh0RT7uXBxoM6zzlglkcJ7scc9zsU8QL+HRWeb0hwdPrTgjVdICTJACv3cSznSHZqADTutJTTzK
+ qTFECx8j+86RXphU9TCI+e9MkOm6gYNXqhuCzZrxSiy0wbsJI7qHPhat1hWW3roH0lqKvPjuyI3zjr
+ SjU72rcjj08lc14hvMXznDluuxVYrPqJG2m1tIWvXvweLSPqIHyVz/AR5b63myNvzKpiv0LlgdNWTC
+ 3wqUxMQrQAyeXOAH3AbAOQLCqmXmNi7xZ4loQLtfuw5u0t8wPLXZxGFaiWNVg4DNDgQPUj75GDXU26
+ NEof05ZzJ5UH2jecsAe9es+opmSYHJ8m98uJMB7mzDMw2Ag8b/oG3HPdxQCPj8kdiJP7SUYpbxuUG2
+ IC47dHZ8raJWeUNFJDDqAtdrei6aSsLSOTTznfTUo2qaWP+MEt/0TZUhRDt4qeAaw3wub4crzSR3xt
+ C5Jy9q10XMvbysIdLR2Qy4jnjhGdhQGNDL8DoBI9tb5bXg/rA5budsaptELtWYqz0EAn9OGyAg8xuu
+ 1M7u46GPAf+/1hYF0F+01d6ufIu+PxrGBXS7DBhQUfM5Arc6Iz+JD1zPPTEQ==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -127,9 +128,9 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103507-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103508-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	PRECEDENCE_BULK(0.00)[];
@@ -140,254 +141,150 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCPT_COUNT_SEVEN(0.00)[9];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,linaro.org:email,linaro.org:dkim,linaro.org:mid]
-X-Rspamd-Queue-Id: 9A292419941
+X-Rspamd-Queue-Id: 2BFBF419955
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The P010 (YUV format with 16-bits per pixel with interleaved UV)
-and QC10C (P010 compressed mode similar to QC08C) requires specific
-buffer calculations to allocate the right buffer size for DPB frames
-and frames consumed by userspace.
-
-Similar to 8bit, the 10bit DPB frames uses QC10C format.
+Add the necessary plumbing into the HFi Gen2 to signal the decoder
+the right 10bit pixel format and stride when in compressed mode.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/media/platform/qcom/iris/iris_buffer.c | 195 ++++++++++++++++++++++++-
- 1 file changed, 194 insertions(+), 1 deletion(-)
+ .../platform/qcom/iris/iris_hfi_gen2_command.c     | 71 +++++++++++++++++++++-
+ .../platform/qcom/iris/iris_hfi_gen2_defines.h     |  1 +
+ drivers/media/platform/qcom/iris/iris_utils.c      |  4 +-
+ 3 files changed, 72 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
-index 9151f43bc6b9..23a3e9a9c383 100644
---- a/drivers/media/platform/qcom/iris/iris_buffer.c
-+++ b/drivers/media/platform/qcom/iris/iris_buffer.c
-@@ -15,8 +15,11 @@
- #define MAX_WIDTH 4096
- #define MAX_HEIGHT 2304
- #define Y_STRIDE_ALIGN 128
-+#define Y_STRIDE_ALIGN_P010 256
- #define UV_STRIDE_ALIGN 128
-+#define UV_STRIDE_ALIGN_P010 256
- #define Y_SCANLINE_ALIGN 32
-+#define Y_SCANLINE_ALIGN_QC10C 16
- #define UV_SCANLINE_ALIGN 16
- #define UV_SCANLINE_ALIGN_QC08C 32
- #define META_STRIDE_ALIGNED 64
-@@ -80,6 +83,63 @@ static u32 iris_yuv_buffer_size_nv12(struct iris_inst *inst)
- 	return ALIGN(y_plane + uv_plane, PIXELS_4K);
+diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+index 30bfd90d423b..d664e606e886 100644
+--- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
++++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+@@ -481,8 +481,20 @@ static int iris_hfi_gen2_set_colorformat(struct iris_inst *inst, u32 plane)
+ 
+ 	if (inst->domain == DECODER) {
+ 		pixelformat = inst->fmt_dst->fmt.pix_mp.pixelformat;
+-		hfi_colorformat = pixelformat == V4L2_PIX_FMT_NV12 ?
+-			HFI_COLOR_FMT_NV12 : HFI_COLOR_FMT_NV12_UBWC;
++		switch (pixelformat) {
++		case V4L2_PIX_FMT_NV12:
++			hfi_colorformat = HFI_COLOR_FMT_NV12;
++			break;
++		case V4L2_PIX_FMT_QC08C:
++			hfi_colorformat = HFI_COLOR_FMT_NV12_UBWC;
++			break;
++		case V4L2_PIX_FMT_P010:
++			hfi_colorformat = HFI_COLOR_FMT_P010;
++			break;
++		case V4L2_PIX_FMT_QC10C:
++			hfi_colorformat = HFI_COLOR_FMT_TP10_UBWC;
++			break;
++		};
+ 	} else {
+ 		pixelformat = inst->fmt_src->fmt.pix_mp.pixelformat;
+ 		hfi_colorformat = pixelformat == V4L2_PIX_FMT_NV12 ?
+@@ -517,7 +529,8 @@ static int iris_hfi_gen2_set_linear_stride_scanline(struct iris_inst *inst, u32
+ 	stride_uv = stride_y;
+ 	scanline_uv = scanline_y / 2;
+ 
+-	if (pixelformat != V4L2_PIX_FMT_NV12)
++	if (pixelformat != V4L2_PIX_FMT_NV12 &&
++	    pixelformat != V4L2_PIX_FMT_P010)
+ 		return 0;
+ 
+ 	payload[0] = stride_y << 16 | scanline_y;
+@@ -532,6 +545,57 @@ static int iris_hfi_gen2_set_linear_stride_scanline(struct iris_inst *inst, u32
+ 						  sizeof(u64));
  }
  
-+/*
-+ * P010:
-+ * YUV 4:2:0 image with a plane of 10 bit Y samples followed
-+ * by an interleaved U/V plane containing 10 bit 2x2 subsampled
-+ * colour difference samples.
-+ *
-+ * <-Y/UV_Stride (aligned to 256)->
-+ * <----- Width*2 ------->
-+ * Y Y Y Y Y Y Y Y Y Y Y Y . . . .  ^           ^
-+ * Y Y Y Y Y Y Y Y Y Y Y Y . . . .  |           |
-+ * Y Y Y Y Y Y Y Y Y Y Y Y . . . .  Height      |
-+ * Y Y Y Y Y Y Y Y Y Y Y Y . . . .  |          y_scanlines (aligned to 32)
-+ * Y Y Y Y Y Y Y Y Y Y Y Y . . . .  |           |
-+ * Y Y Y Y Y Y Y Y Y Y Y Y . . . .  |           |
-+ * Y Y Y Y Y Y Y Y Y Y Y Y . . . .  |           |
-+ * Y Y Y Y Y Y Y Y Y Y Y Y . . . .  V           |
-+ * . . . . . . . . . . . . . . . .              |
-+ * . . . . . . . . . . . . . . . .              |
-+ * . . . . . . . . . . . . . . . .              |
-+ * . . . . . . . . . . . . . . . .              V
-+ * U V U V U V U V U V U V . . . .  ^
-+ * U V U V U V U V U V U V . . . .  |
-+ * U V U V U V U V U V U V . . . .  |
-+ * U V U V U V U V U V U V . . . .  uv_scanlines (aligned to 16)
-+ * . . . . . . . . . . . . . . . .  |
-+ * . . . . . . . . . . . . . . . .  V
-+ * . . . . . . . . . . . . . . . .  --> Buffer size aligned to 4K
-+ *
-+ * y_stride : Width*2 aligned to 256
-+ * uv_stride : Width*2 aligned to 256
-+ * y_scanlines: Height aligned to 32
-+ * uv_scanlines: Height/2 aligned to 16
-+ * Total size = align((y_stride * y_scanlines
-+ *          + uv_stride * uv_scanlines , 4096)
-+ *
-+ * Note: All the alignments are hardware requirements.
-+ */
-+static u32 iris_yuv_buffer_size_p010(struct iris_inst *inst)
++static int iris_hfi_gen2_set_ubwc_stride_scanline(struct iris_inst *inst, u32 plane)
 +{
-+	u32 y_plane, uv_plane, y_stride, uv_stride, y_scanlines, uv_scanlines;
-+	struct v4l2_format *f;
++	u32 meta_stride_y, meta_scanline_y, meta_stride_uv, meta_scanline_uv;
++	u32 stride_y, scanline_y, stride_uv, scanline_uv;
++	u32 port = iris_hfi_gen2_get_port(inst, plane);
++	u32 pixelformat, width, height;
++	u32 payload[4];
 +
-+	if (inst->domain == DECODER)
-+		f = inst->fmt_dst;
-+	else
-+		f = inst->fmt_src;
++	pixelformat = inst->fmt_dst->fmt.pix_mp.pixelformat;
++	width = inst->fmt_dst->fmt.pix_mp.width;
++	height = inst->fmt_dst->fmt.pix_mp.height;
 +
-+	y_stride = ALIGN(f->fmt.pix_mp.width * 2, Y_STRIDE_ALIGN_P010);
-+	uv_stride = ALIGN(f->fmt.pix_mp.width * 2, UV_STRIDE_ALIGN_P010);
-+	y_scanlines = ALIGN(f->fmt.pix_mp.height, Y_SCANLINE_ALIGN);
-+	uv_scanlines = ALIGN((f->fmt.pix_mp.height + 1) >> 1, UV_SCANLINE_ALIGN);
-+	y_plane = y_stride * y_scanlines;
-+	uv_plane = uv_stride * uv_scanlines;
++	switch (pixelformat) {
++	case V4L2_PIX_FMT_QC08C:
++		stride_y = ALIGN(width, 128);
++		scanline_y = ALIGN(height, 32);
++		stride_uv = ALIGN(width, 128);
++		scanline_uv = ALIGN((height + 1) >> 1, 32);
++		meta_stride_y = ALIGN(DIV_ROUND_UP(width, 32), 64);
++		meta_scanline_y = ALIGN(DIV_ROUND_UP(height, 8), 16);
++		meta_stride_uv = ALIGN(DIV_ROUND_UP((width + 1) >> 1, 16), 64);
++		meta_scanline_uv = ALIGN(DIV_ROUND_UP((height + 1) >> 1, 8), 16);
++		break;
++	case V4L2_PIX_FMT_QC10C:
++		stride_y = ALIGN(width * 4 / 3, 256);
++		scanline_y = ALIGN(height, 16);
++		stride_uv = ALIGN(width * 4 / 3, 256);
++		scanline_uv = ALIGN((height + 1) >> 1, 16);
++		meta_stride_y = ALIGN(DIV_ROUND_UP(width, 48), 64);
++		meta_scanline_y = ALIGN(DIV_ROUND_UP(height, 4), 16);
++		meta_stride_uv = ALIGN(DIV_ROUND_UP((width + 1) >> 1, 24), 64);
++		meta_scanline_uv = ALIGN(DIV_ROUND_UP((height + 1) >> 1, 4), 16);
++		break;
++	default:
++		return 0;
++	}
 +
-+	return ALIGN(y_plane + uv_plane, PIXELS_4K);
++	payload[0] = stride_y << 16 | scanline_y;
++	payload[1] = stride_uv << 16 | scanline_uv;
++	payload[2] = meta_stride_y << 16 | meta_scanline_y;
++	payload[3] = meta_stride_uv << 16 | meta_scanline_uv;
++
++	return iris_hfi_gen2_session_set_property(inst,
++						  HFI_PROP_UBWC_STRIDE_SCANLINE,
++						  HFI_HOST_FLAGS_NONE,
++						  port,
++						  HFI_PAYLOAD_U32_ARRAY,
++						  &payload[0],
++						  sizeof(u32) * 4);
 +}
 +
- /*
-  * QC08C:
-  * Compressed Macro-tile format for NV12.
-@@ -204,6 +264,132 @@ static u32 iris_yuv_buffer_size_qc08c(struct iris_inst *inst)
- 	return ALIGN(y_meta_plane + y_plane + uv_meta_plane + uv_plane, PIXELS_4K);
- }
- 
-+/*
-+ * QC10C:
-+ * UBWC-compressed format for P010.
-+ * Contains 4 planes in the following order -
-+ * (A) Y_Meta_Plane
-+ * (B) Y_UBWC_Plane
-+ * (C) UV_Meta_Plane
-+ * (D) UV_UBWC_Plane
-+ *
-+ * Y_Meta_Plane consists of meta information to decode compressed
-+ * tile data in Y_UBWC_Plane.
-+ * Y_UBWC_Plane consists of Y data in compressed macro-tile format.
-+ * UBWC decoder block will use the Y_Meta_Plane data together with
-+ * Y_UBWC_Plane data to produce loss-less uncompressed 10 bit Y samples.
-+ *
-+ * UV_Meta_Plane consists of meta information to decode compressed
-+ * tile data in UV_UBWC_Plane.
-+ * UV_UBWC_Plane consists of UV data in compressed macro-tile format.
-+ * UBWC decoder block will use UV_Meta_Plane data together with
-+ * UV_UBWC_Plane data to produce loss-less uncompressed 10 bit 2x2
-+ * subsampled color difference samples.
-+ *
-+ * Each tile in Y_UBWC_Plane/UV_UBWC_Plane is independently decodable
-+ * and randomly accessible. There is no dependency between tiles.
-+ *
-+ * <----- Y Meta stride -----> (aligned to 64)
-+ * <-------- Width ----------> (aligned to 48)
-+ * M M M M M M M M M M M M . .      ^           ^
-+ * M M M M M M M M M M M M . .      |           |
-+ * M M M M M M M M M M M M . .      Height      |
-+ * M M M M M M M M M M M M . .      |         Meta_Y_Scanlines (aligned to 16)
-+ * M M M M M M M M M M M M . .      |           |
-+ * M M M M M M M M M M M M . .      |           |
-+ * M M M M M M M M M M M M . .      |           |
-+ * M M M M M M M M M M M M . .      V           |
-+ * . . . . . . . . . . . . . .                  |
-+ * . . . . . . . . . . . . . .                  |
-+ * . . . . . . . . . . . . . .      -------> Buffer size aligned to 4k
-+ * . . . . . . . . . . . . . .                  V
-+ * <--Compressed tile Y stride --> (aligned to 256)
-+ * <------- Width * 4/3 ---------> (aligned to 48)
-+ * Y* Y* Y* Y* Y* Y* Y* Y* . . . .  ^           ^
-+ * Y* Y* Y* Y* Y* Y* Y* Y* . . . .  |           |
-+ * Y* Y* Y* Y* Y* Y* Y* Y* . . . .  Height      |
-+ * Y* Y* Y* Y* Y* Y* Y* Y* . . . .  |        Macro_tile_Y_Scanlines (aligned to 16)
-+ * Y* Y* Y* Y* Y* Y* Y* Y* . . . .  |           |
-+ * Y* Y* Y* Y* Y* Y* Y* Y* . . . .  |           |
-+ * Y* Y* Y* Y* Y* Y* Y* Y* . . . .  |           |
-+ * Y* Y* Y* Y* Y* Y* Y* Y* . . . .  V           |
-+ * . . . . . . . . . . . . . . . .              |
-+ * . . . . . . . . . . . . . . . .              |
-+ * . . . . . . . . . . . . . . . .  -------> Buffer size aligned to 4k
-+ * . . . . . . . . . . . . . . . .              V
-+ * <---- UV Meta stride ----> (aligned to 64)
-+ * <----- Width / 2 --------> (aligned to 24)
-+ * M M M M M M M M M M M M . .    ^           ^
-+ * M M M M M M M M M M M M . .    |           |
-+ * M M M M M M M M M M M M . .    Height/2    |
-+ * M M M M M M M M M M M M . .    V           M_UV_Scanlines (aligned to 16)
-+ * . . . . . . . . . . . . . .                |
-+ * . . . . . . . . . . . . . .                V
-+ * . . . . . . . . . . . . . .      -------> Buffer size aligned to 4k
-+ * <--Compressed tile UV stride--> (aligned to 256)
-+ * <------- Width * 4/3 ---------> (aligned to 48)
-+ * U* V* U* V* U* V* U* V* . . . .  ^
-+ * U* V* U* V* U* V* U* V* . . . .  |
-+ * U* V* U* V* U* V* U* V* . . . .  |
-+ * U* V* U* V* U* V* U* V* . . . .  UV_Scanlines (aligned to 16)
-+ * . . . . . . . . . . . . . . . .  |
-+ * . . . . . . . . . . . . . . . .  V
-+ * . . . . . . . . . . . . . . . .  -------> Buffer size aligned to 4k
-+ *
-+ * y_stride: width aligned to 256
-+ * uv_stride: width aligned to 256
-+ * y_scanlines: height aligned to 16
-+ * uv_scanlines: height aligned to 16
-+ * y_plane: buffer size aligned to 4096
-+ * uv_plane: buffer size aligned to 4096
-+ * y_meta_stride: width aligned to 64
-+ * y_meta_scanlines: height aligned to 16
-+ * y_meta_plane: buffer size aligned to 4096
-+ * uv_meta_stride: width aligned to 64
-+ * uv_meta_scanlines: height aligned to 16
-+ * uv_meta_plane: buffer size aligned to 4096
-+ *
-+ * Total size = align( y_plane + uv_plane +
-+ *           y_meta_plane + uv_meta_plane, 4096)
-+ *
-+ * Note: All the alignments are hardware requirements.
-+ */
-+static u32 iris_yuv_buffer_size_qc10c(struct iris_inst *inst)
-+{
-+	u32 y_plane, uv_plane, y_stride, uv_stride;
-+	u32 uv_meta_stride, uv_meta_plane;
-+	u32 y_meta_stride, y_meta_plane;
-+	struct v4l2_format *f = NULL;
-+
-+	if (inst->domain == DECODER)
-+		f = inst->fmt_dst;
-+	else
-+		f = inst->fmt_src;
-+
-+	y_meta_stride = ALIGN(DIV_ROUND_UP(f->fmt.pix_mp.width, 48),
-+			      META_STRIDE_ALIGNED);
-+	y_meta_plane = y_meta_stride * ALIGN(DIV_ROUND_UP(f->fmt.pix_mp.height, 4),
-+					     META_SCANLINE_ALIGNED);
-+	y_meta_plane = ALIGN(y_meta_plane, PIXELS_4K);
-+
-+	y_stride = ALIGN(f->fmt.pix_mp.width * 4 / 3, Y_STRIDE_ALIGN_P010);
-+	y_plane = ALIGN(y_stride * ALIGN(f->fmt.pix_mp.height, Y_SCANLINE_ALIGN_QC10C),
-+			PIXELS_4K);
-+
-+	uv_meta_stride = ALIGN(DIV_ROUND_UP((f->fmt.pix_mp.width + 1) / 2, 24),
-+			       META_STRIDE_ALIGNED);
-+	uv_meta_plane = uv_meta_stride *
-+			ALIGN(DIV_ROUND_UP((f->fmt.pix_mp.height + 1) / 2, 4),
-+			      META_SCANLINE_ALIGNED);
-+	uv_meta_plane = ALIGN(uv_meta_plane, PIXELS_4K);
-+
-+	uv_stride = ALIGN(f->fmt.pix_mp.width * 4 / 3, UV_STRIDE_ALIGN_P010);
-+	uv_plane = ALIGN(uv_stride * ALIGN((f->fmt.pix_mp.height + 1) / 2, UV_SCANLINE_ALIGN),
-+			 PIXELS_4K);
-+
-+	return ALIGN(y_meta_plane + y_plane + uv_meta_plane + uv_plane, PIXELS_4K);
-+}
-+
- static u32 iris_dec_bitstream_buffer_size(struct iris_inst *inst)
+ static int iris_hfi_gen2_set_tier(struct iris_inst *inst, u32 plane)
  {
- 	struct platform_inst_caps *caps = inst->core->iris_platform_data->inst_caps;
-@@ -268,10 +454,17 @@ int iris_get_buffer_size(struct iris_inst *inst,
- 		case BUF_OUTPUT:
- 			if (inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC08C)
- 				return iris_yuv_buffer_size_qc08c(inst);
-+			else if (inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC10C)
-+				return iris_yuv_buffer_size_qc10c(inst);
-+			else if (inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_P010)
-+				return iris_yuv_buffer_size_p010(inst);
- 			else
- 				return iris_yuv_buffer_size_nv12(inst);
- 		case BUF_DPB:
--			return iris_yuv_buffer_size_qc08c(inst);
-+			if (iris_fmt_is_10bit(inst->fmt_dst->fmt.pix_mp.pixelformat))
-+				return iris_yuv_buffer_size_qc10c(inst);
-+			else
-+				return iris_yuv_buffer_size_qc08c(inst);
- 		default:
- 			return 0;
- 		}
+ 	u32 port = iris_hfi_gen2_get_port(inst, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
+@@ -620,6 +684,7 @@ static int iris_hfi_gen2_session_set_config_params(struct iris_inst *inst, u32 p
+ 		{HFI_PROP_OPB_ENABLE,                 iris_hfi_gen2_set_opb_enable             },
+ 		{HFI_PROP_COLOR_FORMAT,               iris_hfi_gen2_set_colorformat            },
+ 		{HFI_PROP_LINEAR_STRIDE_SCANLINE,     iris_hfi_gen2_set_linear_stride_scanline },
++		{HFI_PROP_UBWC_STRIDE_SCANLINE,       iris_hfi_gen2_set_ubwc_stride_scanline },
+ 		{HFI_PROP_TIER,                       iris_hfi_gen2_set_tier                   },
+ 		{HFI_PROP_FRAME_RATE,                 iris_hfi_gen2_set_frame_rate             },
+ 		{HFI_PROP_AV1_FILM_GRAIN_PRESENT,     iris_hfi_gen2_set_film_grain             },
+diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+index cecf771c55dd..68f849232906 100644
+--- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
++++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+@@ -118,6 +118,7 @@ enum hfi_flip {
+ #define HFI_PROP_OPB_ENABLE			0x03000184
+ #define HFI_PROP_AV1_TILE_ROWS_COLUMNS		0x03000187
+ #define HFI_PROP_AV1_DRAP_CONFIG		0x03000189
++#define HFI_PROP_UBWC_STRIDE_SCANLINE		0x03000190
+ #define HFI_PROP_COMV_BUFFER_COUNT		0x03000193
+ #define HFI_PROP_AV1_UNIFORM_TILE_SPACING	0x03000197
+ #define HFI_PROP_END				0x03FFFFFF
+diff --git a/drivers/media/platform/qcom/iris/iris_utils.c b/drivers/media/platform/qcom/iris/iris_utils.c
+index bdedd6bfa87a..c75dcb8e671e 100644
+--- a/drivers/media/platform/qcom/iris/iris_utils.c
++++ b/drivers/media/platform/qcom/iris/iris_utils.c
+@@ -35,7 +35,9 @@ int iris_get_mbpf(struct iris_inst *inst)
+ bool iris_split_mode_enabled(struct iris_inst *inst)
+ {
+ 	return inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_NV12 ||
+-		inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC08C;
++		inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC08C ||
++		inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_P010 ||
++		inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC10C;
+ }
+ 
+ bool iris_fmt_is_8bit(__u32 pixelformat)
 
 -- 
 2.34.1
