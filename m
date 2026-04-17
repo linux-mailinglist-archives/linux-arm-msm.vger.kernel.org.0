@@ -1,282 +1,451 @@
-Return-Path: <linux-arm-msm+bounces-103545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KBgcDeFP4mnx4QAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 17:21:05 +0200
+	id MBgENhtQ4mnx4QAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 17:22:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B671A41C83E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 17:21:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A4DA541C85A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 17:22:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0E6A5303CD1D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 15:20:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0FC2F303DAAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 15:20:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5E10284B4F;
-	Fri, 17 Apr 2026 15:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DCC22F260C;
+	Fri, 17 Apr 2026 15:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MEHa0pWc";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="i499Izi7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iACiFt+I";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SkPqhne4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9822FE07D
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 15:20:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABDE2E7179
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 15:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776439204; cv=none; b=MYGBd2LUyOCM92IkBEArTIIAIHhor/62Cu59YaYr1z/9WFEDQQHrpHh+3dD5yuKR+TDnH0BlVnqlwc6sF50u3MDmhbcEZEckhhdrzcPMWn5r+klgR+0cuOh5rn5yKc+82cpTT5UZoeV5INzzEN2xuivTdPiwnZShToPZGS82rdE=
+	t=1776439225; cv=none; b=fxPhOmEfeDSiHweg+Sby0vVfakIxXNUipjYUJlP6Lc861rcw/kbL4s2s6Ueb+FrZ+i8H39t7/fWYc7AmCvP9UPSro3W3PyLHeadBwLc/dCCfpOBReRPITAFLw0+BkdQG5uTBAFnAUnfmcg0eo5aWK/D3WaDPnVFE2hXOeCefLQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776439204; c=relaxed/simple;
-	bh=94H9O5bKpZJFIum9FyBi6L/m0YdYgTBfbD+IuzK2avE=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=F1OdBGpAWdpRpE+B1YGbV35ovif+laGrki9cz3QQ7UjWW6/TX5q/mklcMDdygDaRY1FILZI7fRgHhvSP1CIhWBeiV7vR8DhA3rjRrw0gtHyWYY+JBVXrbgv/hs7++sYUJN+SCzJzYFuiMKxsT4NNPM/crG4+NmsZYtgogN53iHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MEHa0pWc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=i499Izi7; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1776439225; c=relaxed/simple;
+	bh=a+WFpFLZBsaqzg12XI/jkp56yPXr8RkKvea/iafe0U4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=e/HE434YIhylOuB68TYOq9SAaVLrMYfKYHUyiOZnqy6MUOiPKly9fr27zNXIFd03N2Xq/silJZn8e5/H64X66yGGZtR5zzAOhoYhRgF3+hXZCDqOJidMjizRFDwaW031EM88F4xwctHaHoLNakWZsZG2P+DAaWttklY2ERmiKvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iACiFt+I; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SkPqhne4; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63H8o0VK3100295
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 15:19:56 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63H9wvf61323861
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 15:20:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3Wig1FYIP1zNSkQ75Q9iE46JSnYQwQ+jz+kMS2CZwmk=; b=MEHa0pWcmt4NO+oF
-	XIOI8kb+L/JodJtIBeDcElJu/+MpF8jpLDR0GlNqqApUe2eJajsKAq8JeaYtNJxg
-	H/wN4Nt7BSzlq10yeH4HIALqtTsivmqxDZUgf8/bVaap8KD+DQXenT/t32cTdh4/
-	s06CZFhAe+4OsroOecp6k++stVG3vDYZ2pwcGOPs7DndR7ccnKcgdYg2HNsfJ4/i
-	vauSf8nkMEm5yS5MzHOpsHJ2uKxuXC2iOVY8XbEAHNt4A42yvyPbvtjNURUSUxaY
-	ntoxZgsbt7aGdKmi3iMIkZaI3HSXN0pSu0Rw3DaZEdtgeVZAEQ5hsTyX05sPD94g
-	TtjIKg==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dkhpu1afw-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=06tNW4cbqK3OdZ2r2WgitT
+	1IYug+KY06HCOgPE4ReZ0=; b=iACiFt+IQ4yvCMbk3D5uQT80Q7FwpC3I8/NJWj
+	2U3sc5GQF7Nj22aWcWobHETi1IuwqzvqjBYX2HgNZxMTTbD4Awqq7h6KFEkTfx0r
+	ljJW2HyAYkF+l1GU7GcOIoRE+7UPLTQv3GH5wpwJkZV8XaeHXmRQYGEQ1bJljnse
+	f/mkpprlzG4SgRDfc9jt9AeR66KrVW0gViIlyezVyqMGxwLwfJ0SzLPr7xE7UIxZ
+	KH7aHew+D1WmZVjr0li71x6CABv0uDQdc5jFLAtCwNLz9hj6uU4P33WoDOFseWOq
+	D+7hUD2QLtTr1Lr/UmksRcesYW0qUY08R6pW+WNVWJiJPrKQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dkdgy29m5-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 15:19:55 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c76bfd7b9cdso403784a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 08:19:55 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 15:20:23 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2adef9d486bso8457895ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 08:20:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776439195; x=1777043995; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3Wig1FYIP1zNSkQ75Q9iE46JSnYQwQ+jz+kMS2CZwmk=;
-        b=i499Izi7N7Yfi5ruR0x8skwnH6FTBmH55tL2qO44mestcvP5Mefs9TRqq3t2fHSWdw
-         3zu2Pxf+moHHMa3YItYLMC9JOQ3DBzRIbUrc+vr/wxVAIwKFvGBGVBDB39IKJgpyqaE8
-         w9+LNJCANK0J9/LaRWxlu0s9NhqHPgzjpC1Z8Xbvlwz72W+cffoJN+3xPIxqKNtE+ep8
-         cJK42URutRU9kevpDyml5i+UuMErbW4vixMnnBjrJ0eq1w1IaaHImyNnZteHkU+jFWYj
-         TaFPJIq9ZtKKcHsV7btPlZjJ/RYrxv7whJS+c8qmpb6Zgtimcyah3cdVTM8lWXYDGiqU
-         yFRQ==
+        d=oss.qualcomm.com; s=google; t=1776439223; x=1777044023; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=06tNW4cbqK3OdZ2r2WgitT1IYug+KY06HCOgPE4ReZ0=;
+        b=SkPqhne4uqmXZmFQY5RdK6b+vlpAkkp7Bcd6SDI6Lf5thFsBxBNeLz7R0RzmbvjLID
+         U888Lv6A/ciFtymU6xFrXstVAmCDAj8a2m4sacdfzAn9Le89twsbRHD+1Lgs1il+rIXy
+         YPyYAgBjWcpka8v3lvDD5ZnkNn4hV5FIWvzdZaTSdzwK8mAd8HwMx4ivciZUXaHQSH3Y
+         Gv7nn4wTeuz5Ei9lsyTVXM2Vu4wYHLs+wHtLjcNHJDlkqt526F4tCLhYUaTGzx02jp8J
+         kcD5IJq53TPEOf25E6VRwu2h4MmeZvnlz2mAXhnOf9g5GmlvfgPMJlycWjW8Ock/sS3p
+         t1Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776439195; x=1777043995;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Wig1FYIP1zNSkQ75Q9iE46JSnYQwQ+jz+kMS2CZwmk=;
-        b=kgiTFupyzuQsGtHZHiL1Dx4ALTAEMAYtNPRnUnvq+gN3FY0oDv8KIvcE5oSTgtm4hD
-         C84Ve2/gvod+7v447ZPn9/cvw77wimmGDSDm4577sn3anff+SrzAUkVs3Ct+qUKlxf0q
-         32TWVeEVDp2cIsztY85RISM5sliJ1EGIDZu0tuObvhgHHKyN5FWQ4VqPI1F930wFkqdH
-         KqJhAUnFZ+wcid75+gNC+d7NC66b44IXT2W9rd1sr8csRzYzAhFQhUeGU/A1rixuUaZw
-         bQ29B/zzXaIUL4YSb6dPZ8eD+xRYcdd2qzsDYGodzVtqNRBX2luJfp954YAAtSG54wJv
-         CkOw==
-X-Forwarded-Encrypted: i=1; AFNElJ+tMt8H/mEQLO3CPX9tjqi0MzuhAfIbe2ob3fM4+I4m3O/NmGJ1BSBWiG+uHUBuaKZkn7JvRorM7Hti4etK@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWE2HDbaln+dVVtIN9UjdRNRB8vWRpDycrjfasf3btw3RiHJUj
-	kdedA4oxjQQNYsmguKqpuDHxRzBjcaSU+mlteroakYCjVeMQfRZSYnSw1F5SQBXSLM5AYdk1mDE
-	0qHuREVKSaSVEa8X4177amVmgnR2xPbZiYjLwehj1FW/u2wQtqzDFxYtteuYX9RxLYu8Y
-X-Gm-Gg: AeBDiesOsDl0DKjTlKBmXMwLBBW9g8PZyBcRUL3nutFxvQzY2L9+SuItWd/EhXtOZjS
-	gyv/lVkLJoIMI3p46Dqm2A2ASDZTeTRUe61PtVSGGSTg7FPpTGNbEy2A7qNGO3QtW8u+inMDnTg
-	whMhjnay1gPuvVDIanyCn6asKOVlbzXlO8Kg/eyS66okjqazQO1zQzoNCGlrleTt/5CJtVR714s
-	CzalazQtaiuZ2zksn49ZR1Rvro02BUAtjGXZqWRbiI7ssBmQOsmQFqRm3uhuLotff4LcUqmDSxk
-	6aa2MobYvJ44VynqZuwS6b4a/lNgy5H+SyaCU/alcuQSYDSGxK/1eaSDWIgYaqKE8FnlE3rpVyV
-	8eQPGpEAO/sVCzpRN0U2FZ/r8L4+K7NI6MKE6V/NgOo+r184kFiWf1MnkaRQeAVFG
-X-Received: by 2002:a05:6a20:4326:b0:398:b178:a53f with SMTP id adf61e73a8af0-3a08d8f5c50mr4016420637.40.1776439194911;
-        Fri, 17 Apr 2026 08:19:54 -0700 (PDT)
-X-Received: by 2002:a05:6a20:4326:b0:398:b178:a53f with SMTP id adf61e73a8af0-3a08d8f5c50mr4016360637.40.1776439194246;
-        Fri, 17 Apr 2026 08:19:54 -0700 (PDT)
-Received: from [10.206.105.200] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f8ebcc9easm3096856b3a.39.2026.04.17.08.19.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Apr 2026 08:19:53 -0700 (PDT)
-Message-ID: <b0ba2172-3f66-c912-29e9-0a48b4480987@oss.qualcomm.com>
-Date: Fri, 17 Apr 2026 20:49:44 +0530
+        d=1e100.net; s=20251104; t=1776439223; x=1777044023;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=06tNW4cbqK3OdZ2r2WgitT1IYug+KY06HCOgPE4ReZ0=;
+        b=bAvGR8HW/BxBZ+2DI/HoA0625+J5b0G7fZlWqDXeMJxMbgJGBtuZG5fYZgErnCFS2M
+         eVryN7d6jVbs/mABUbfX6Rm7aPGWkzfkXd9EpUjcOMC33cbejojc/+BMniRwR204D8L4
+         Af0FuZD8lV6kWPIyeH2nvmcqG+ARML2zlB9/gE6zf+wG96mUdPbIwCvJ3JIMOb5FmoPj
+         r5JoSkori3Dv6CC8hslBcszMMjCVMgslZK+88dDXvH2yXb80IObhaimVwVIsSwXsHziN
+         2HNg6kVLnypMvTk8BY7TXu8qIpQX/EreKvXGtUlh9UpHfnUnKrEdlNPEyOrFG1jTCIPJ
+         XNNQ==
+X-Gm-Message-State: AOJu0YxecGiLNK9dsTclQ1gx5tVe8O4LUhFpPHH1J64KhBUdkoAJaVTr
+	jWqgoPIvimWvOkeD5zyLiJqVSPbsTCfy333Bgu15af8oIaqWCvHdLCmC+/E47JvobPeD5VRAWMp
+	BJHwFvfiiplcUhYX+CIqItero8PtSID/AhDYhSSI13bAJcgaV2fVYJMvDSlDUn2JCg+i+
+X-Gm-Gg: AeBDieuwzj0sEdqaunHiaKiJteC8EIWlLWFt6JXeIIgQv42eEumuBQLka8f1Q7Z69wO
+	v+kYdSMk1XZB9CAl51c5Miln5pJcpOiIRV61LdDo8p1DJWZlgyZ9LrvmbDTgTe2Ve4iRBFvh5vR
+	IOpqjMhmbx61dfzKEqm7kYsaWUa5QuSyUYgLX7pyMy5wEF+AKe0U2hCFC6V2gZtf3MOEX2lE6dc
+	I1WBIwFCW2jYck3P17vGePmcfiijk6NnKPerZRBdAcxGlzOWm1mqdAAj7cHPRFHkEJqTm27EWmY
+	kogaDlb5VrbAHXToJDcGaptG8hS8I9/GRV/I3rNLUln/zicaAuLiqVfQiLtWeGoztjgWP+UBZgb
+	ehSlFHjbxcj2QHFLlutQsZWyZPEU/MmbeMxPieyGR0SaX9T/sR1wqBEs+znP5mRK2AQ==
+X-Received: by 2002:a17:902:d30b:b0:2b0:673a:7c90 with SMTP id d9443c01a7336-2b5f9f50051mr24678205ad.28.1776439222561;
+        Fri, 17 Apr 2026 08:20:22 -0700 (PDT)
+X-Received: by 2002:a17:902:d30b:b0:2b0:673a:7c90 with SMTP id d9443c01a7336-2b5f9f50051mr24677855ad.28.1776439221995;
+        Fri, 17 Apr 2026 08:20:21 -0700 (PDT)
+Received: from hu-swatagar-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b5fa9ff390sm23491605ad.9.2026.04.17.08.20.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Apr 2026 08:20:21 -0700 (PDT)
+From: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+Subject: [PATCH] arm64: dts: qcom: monaco-evk: Enable primary USB controller in host mode
+Date: Fri, 17 Apr 2026 20:50:14 +0530
+Message-Id: <20260417152014.3000797-1-swati.agarwal@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Subject: Re: [PATCH 04/11] media: iris: Add helper to create a context bank
- device on iris vpu bus
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bod@kernel.org>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        Hans Verkuil <hverkuil@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, iommu@lists.linux.dev
-References: <20260414-glymur-v1-0-7d3d1cf57b16@oss.qualcomm.com>
- <20260414-glymur-v1-4-7d3d1cf57b16@oss.qualcomm.com>
- <ie6dad3xewm25gdrqqne2fsroopu3jwgrqmu54sfzjliis6mo5@6qsgagvyynwx>
-Content-Language: en-US
-In-Reply-To: <ie6dad3xewm25gdrqqne2fsroopu3jwgrqmu54sfzjliis6mo5@6qsgagvyynwx>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Kd7idwYD c=1 sm=1 tr=0 ts=69e24f9b cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: dtC494XLYM1kN2meWiVCb1O-weWe5RED
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE3MDE1NSBTYWx0ZWRfX36yuJ8LAvgCI
+ GoCTjxFNO/mNcVid1VkgLkTxx+urb4AzF5keSRyUDJ3TzJfYg+gv5pxJMq2ZiXCxfYUqaSV1kNH
+ ZHElUR/i+pTtpBTJXuqMHVPKu44Lld8svHYBeVi+XQPL4ztmahQ3OSKdSl85q8MnNYtuoKxQTql
+ jSQR+Uo/nJbLD1iWYl0BGVh/L+ASpRy5BWwiTymEREz/b7NnDNDSH21Jc8LFqkjy/87xyEDDwpD
+ RXxq6cO3Wvt97PqkQNiEY39i8bD98g1kghR6q+Sbqsl9pG2OKSWafE9JV6xn30UTFOTzyUKuaJT
+ Y652Ic6jmOfRU9xpIZKH2CU1kggOc1e5qdetNcTvSvG3K36Sj280kQb95Ip4eBMzZdUksmEJlrr
+ a2+9QDJN33MoP/hkAZ9+/BRqjp2tVqkdMsX+tLMsHPMDBrHEdcX/h0WOjmwt4IHY3GtfzflV6TR
+ bFIzdTIqQkF1ZRDgy9A==
+X-Authority-Analysis: v=2.4 cv=GN041ONK c=1 sm=1 tr=0 ts=69e24fb7 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=JgkdHvVJu_VE_hPiJvkA:9 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-GUID: JGwFq3d0cdagQclXBdxfUbhO4YnNWfYT
-X-Proofpoint-ORIG-GUID: JGwFq3d0cdagQclXBdxfUbhO4YnNWfYT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE3MDE1NCBTYWx0ZWRfX0MUmy6gk2gYv
- 97YS/KDRJ7lVUqIBkfY09G2jI3n0HicxMSsdeRpuIxdFgYIx0o+HhrSUtMdlSINFovH5VemvvzX
- LyH+jjEQqYe5ggrHSHBRHWa7eI1vl6Mw6KAT5Y9clotndN6fzU8+Qod8PYehjYllmlf3TXzLRcn
- mnuloWR5fMBGPBd2GgJt7qvkJ6LwsKZIYAY4qeEEjfpTa6d3YR0jlvRiMiQxUtKfxoJ8QI5D1aW
- 9p9Uxb+4li9XJ5/XT4FYYoRZ2kzUKXJhx4RbEV4CVmKv0dGumh1A3TDCbjTBIYzZbgsn6xKy43a
- l1i+P9OfdKpaYnKHxMarYP2PCo83+Vbu1xmohRTYSYWIuH54a3ZKpPwlTOvCIydUeOIHMOkLBgX
- aiqB7wq1EpQYiFMpdL2cuISJW0byMaiPpyFkE44AcTE1hjoKuolAtEm3H12eLe6XwndUDz9lpxS
- zYwpMiQzOMP1zzcHwhQ==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=MCf0qIOZ10eql2xmLHUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: dtC494XLYM1kN2meWiVCb1O-weWe5RED
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-17_01,2026-04-17_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
- adultscore=0 spamscore=0 phishscore=0 suspectscore=0 malwarescore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
- definitions=main-2604170154
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+ clxscore=1015 priorityscore=1501 spamscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604170155
+X-Spamd-Result: default: False [-1.16 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103545-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,0.0.0.2:email];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103546-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[busanna.reddy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[swati.agarwal@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_PROHIBIT(0.00)[0.0.0.1:email,0.0.0.4:email,0.0.0.47:email];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: B671A41C83E
+X-Rspamd-Queue-Id: A4DA541C85A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+Enable primary USB controller in host mode on monaco EVK Platform.
 
-On 4/14/2026 8:48 PM, Dmitry Baryshkov wrote:
-> On Tue, Apr 14, 2026 at 10:30:00AM +0530, Vishnu Reddy wrote:
->> From: Vikash Garodia<vikash.garodia@oss.qualcomm.com>
->>
->> Add a helper function to allocate and register context bank (CB) device
->> on the iris vpu bus. The function ID associated with the CB is specified
->> from the platform data, allowing the bus dma_configure callback to apply
->> correct stream ID mapping when device is registered.
->>
->> Signed-off-by: Vikash Garodia<vikash.garodia@oss.qualcomm.com>
->> Signed-off-by: Vishnu Reddy<busanna.reddy@oss.qualcomm.com>
->> ---
->>   drivers/media/platform/qcom/iris/iris_resources.c | 33 +++++++++++++++++++++++
->>   drivers/media/platform/qcom/iris/iris_resources.h |  1 +
->>   2 files changed, 34 insertions(+)
->>
->> diff --git a/drivers/media/platform/qcom/iris/iris_resources.c b/drivers/media/platform/qcom/iris/iris_resources.c
->> index 773f6548370a..a25e0f2e9d26 100644
->> --- a/drivers/media/platform/qcom/iris/iris_resources.c
->> +++ b/drivers/media/platform/qcom/iris/iris_resources.c
->> @@ -6,6 +6,7 @@
->>   #include <linux/clk.h>
->>   #include <linux/devfreq.h>
->>   #include <linux/interconnect.h>
->> +#include <linux/iris_vpu_bus.h>
->>   #include <linux/pm_domain.h>
->>   #include <linux/pm_opp.h>
->>   #include <linux/pm_runtime.h>
->> @@ -141,3 +142,35 @@ int iris_disable_unprepare_clock(struct iris_core *core, enum platform_clk_type
->>   
->>   	return 0;
->>   }
->> +
->> +static void iris_release_cb_dev(struct device *dev)
->> +{
->> +	kfree(dev);
->> +}
->> +
->> +struct device *iris_create_cb_dev(struct iris_core *core, const char *name, const u32 *f_id)
-> Please move into the bus code and make it generic enough.
-Do you suggest to add a wrapper to pass the varying inputs to the 
-generic bus, something like this
-struct device* create_and_register_device(dma_mask, parent_dev, 
-*release, dev_name,...)
->> +{
->> +	struct device *dev;
->> +	int ret;
->> +
->> +	dev = kzalloc_obj(*dev);
->> +	if (!dev)
->> +		return ERR_PTR(-ENOMEM);
->> +
->> +	dev->release = iris_release_cb_dev;
->> +	dev->bus = &iris_vpu_bus_type;
->> +	dev->parent = core->dev;
->> +	dev->coherent_dma_mask = core->iris_platform_data->dma_mask;
->> +	dev->dma_mask = &dev->coherent_dma_mask;
-> Would you also need to set the of_node? See
-> device_set_of_node_from_dev()
+Primary USB controller is connected to a Genesys Logic USB HUB GL3590
+having 4 ports. The ports of hub that are present on lemans EVK standalone
+board are used as follows:-
+1) port-1 is connected to HD3SS3220 Type-C port controller.
+2) port-4 is used for the M.2 E key on corekit. Standard core kit uses UART
+for Bluetooth. This port is to be used only if user optionally replaces the
+WiFi card with the NFA765 chip which uses USB for Bluetooth.
 
-It might be needed for FastRPC as they are following sub node approach, 
-Iris does not need.
->> +
->> +	dev_set_name(dev, "%s", name);
->> +	dev_set_drvdata(dev, (void *)f_id);
->> +
->> +	ret = device_register(dev);
->> +	if (ret) {
->> +		put_device(dev);
->> +		return ERR_PTR(ret);
->> +	}
->> +
->> +	return dev;
->> +}
->> diff --git a/drivers/media/platform/qcom/iris/iris_resources.h b/drivers/media/platform/qcom/iris/iris_resources.h
->> index 6bfbd2dc6db0..4a494627ff23 100644
->> --- a/drivers/media/platform/qcom/iris/iris_resources.h
->> +++ b/drivers/media/platform/qcom/iris/iris_resources.h
->> @@ -15,5 +15,6 @@ int iris_unset_icc_bw(struct iris_core *core);
->>   int iris_set_icc_bw(struct iris_core *core, unsigned long icc_bw);
->>   int iris_disable_unprepare_clock(struct iris_core *core, enum platform_clk_type clk_type);
->>   int iris_prepare_enable_clock(struct iris_core *core, enum platform_clk_type clk_type);
->> +struct device *iris_create_cb_dev(struct iris_core *core, const char *name, const u32 *f_id);
->>   
->>   #endif
->>
->> -- 
->> 2.34.1
->>
+Remaining 2 ports will become functional when the interface plus mezzanine
+board is stacked on top of corekit:
+
+3) port-2 is connected to another hub which is present on the mezz through
+which 4 type-A ports are connected.
+4) port-3 is used for the M.2 B key for a 5G card when the mezz is
+connected.
+
+Primary USB Controller
+          ↓
+GL3590 USB Hub (4 ports)
+    |
+    |-- Port 1 → HD3SS3220 Type‑C Port Controller → USB‑C Connector
+    |
+    |-- Port 2 → Mezzanine USB Hub (when mezz attached)
+    |
+    |-- Port 3 → M.2 B‑Key Slot (when mezz attached)
+    |
+    |-- Port 4 → M.2 E‑Key Slot
+                         (Default: BT via UART;
+                          USB only if NFA765 module is installed)
+
+Mark the primary USB controller as host only capable and add the HD3SS3220
+Type-C port controller along with Type-c connector for controlling vbus
+supply.
+
+In hardware, there are dip switches provided to operate between USB1 port 0
+and port 1 for primary Type-C USB controller. By default, switches will be
+off operating at USB0 port. After bootup to HLOS, it will be operated in
+USB1 port. Added support in the software for both HS and SS switches as
+usb1_hs_sel_switch and usb1_ss_sel_switch to avoid manually changing the
+dip switch position for USB1 port to function. Also, added usb1_hub_reset
+pin for USB1 hub to get detected after bootup as USB1 hub will be in
+inactive state before bootup.
+
+Signed-off-by: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+---
+ .../boot/dts/qcom/monaco-evk-common.dtsi      | 173 +++++++++++++++++-
+ 1 file changed, 172 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/monaco-evk-common.dtsi b/arch/arm64/boot/dts/qcom/monaco-evk-common.dtsi
+index 12c847c03757..6316a8270f57 100644
+--- a/arch/arm64/boot/dts/qcom/monaco-evk-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/monaco-evk-common.dtsi
+@@ -23,6 +23,37 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 
++	connector-1 {
++		compatible = "usb-c-connector";
++		label = "USB1-Type-C";
++		data-role = "host";
++		power-role = "source";
++
++		vbus-supply = <&usb1_vbus>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				usb1_con_hs_ep: endpoint {
++					remote-endpoint = <&usb_hub_2_1>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				usb1_con_ss_ep: endpoint {
++					remote-endpoint = <&hd3ss3220_1_in_ep>;
++				};
++
++			};
++		};
++	};
++
+ 	connector-2 {
+ 		compatible = "gpio-usb-b-connector", "usb-b-connector";
+ 		label = "micro-USB";
+@@ -77,6 +108,15 @@ dp1_connector_in: endpoint {
+ 		};
+ 	};
+ 
++	usb1_vbus: regulator-usb1-vbus {
++		compatible = "regulator-fixed";
++		regulator-name = "usb1_vbus";
++		gpio = <&expander1 3 GPIO_ACTIVE_HIGH>;
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		enable-active-high;
++	};
++
+ 	usb2_vbus: regulator-usb2-vbus {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "usb2_vbus";
+@@ -445,6 +485,39 @@ lt8713sx_dp1_out: endpoint {
+ 			};
+ 		};
+ 	};
++
++	usb-typec@47 {
++		compatible = "ti,hd3ss3220";
++		reg = <0x47>;
++
++		interrupts-extended = <&tlmm 45 IRQ_TYPE_EDGE_FALLING>;
++
++		id-gpios = <&tlmm 13 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&usb1_id>, <&usb1_intr>;
++		pinctrl-names = "default";
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				hd3ss3220_1_in_ep: endpoint {
++					remote-endpoint = <&usb1_con_ss_ep>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				hd3ss3220_1_out_ep: endpoint {
++					remote-endpoint = <&usb_hub_3_1>;
++				};
++			};
++		};
++	};
+ };
+ 
+ &i2c1 {
+@@ -556,6 +629,13 @@ expander5: gpio@3d {
+ 		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
+ 		pinctrl-0 = <&expander5_int>;
+ 		pinctrl-names = "default";
++
++		gpio5-hog {
++			gpio-hog;
++			gpios = <5 GPIO_ACTIVE_HIGH>;
++			output-high;
++			line-name = "usb1_ss_sel_switch";
++		};
+ 	};
+ 
+ 	expander6: gpio@3e {
+@@ -742,6 +822,28 @@ expander5_int: expander5-int-state {
+ 		bias-pull-up;
+ 	};
+ 
++	usb1_hub_reset: usb1-hub-reset-state {
++		pins = "gpio7";
++		function = "gpio";
++		output-enable;
++		output-high;
++		bias-disable;
++	};
++
++	usb1_id: usb1-id-state {
++		pins = "gpio13";
++		function = "gpio";
++		bias-pull-up;
++	};
++
++	usb1_hs_sel_switch: usb1-hs-sel-switch-state {
++		pins = "gpio14";
++		function = "gpio";
++		output-enable;
++		output-high;
++		bias-disable;
++	};
++
+ 	expander1_int: expander1-int-state {
+ 		pins = "gpio16";
+ 		function = "gpio";
+@@ -784,6 +886,12 @@ expander3_int: expander3-int-state {
+ 		bias-pull-up;
+ 	};
+ 
++	usb1_intr: usb1-intr-state {
++		pins = "gpio45";
++		function = "gpio";
++		bias-pull-up;
++	};
++
+ 	expander6_int:  expander6-int-state {
+ 		pins = "gpio52";
+ 		function = "gpio";
+@@ -863,9 +971,72 @@ &ufs_mem_phy {
+ };
+ 
+ &usb_1 {
+-	dr_mode = "peripheral";
++	dr_mode = "host";
++
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&usb1_hub_reset &usb1_hs_sel_switch>;
+ 
+ 	status = "okay";
++
++	usb_hub_2_x: hub@1 {
++		compatible = "usb5e3,610";
++		reg = <1>;
++
++		peer-hub = <&usb_hub_3_x>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@1 {
++				reg = <1>;
++
++				usb_hub_2_1: endpoint {
++					remote-endpoint = <&usb1_con_hs_ep>;
++				};
++			};
++
++			/*
++			 * Port-4 is connected to M.2 E key connector on corekit.
++			 */
++			port@4 {
++				reg = <4>;
++
++				usb_hub_2_4: endpoint {
++				};
++			};
++		};
++	};
++
++	usb_hub_3_x: hub@2 {
++		compatible = "usb5e3,625";
++		reg = <2>;
++
++		peer-hub = <&usb_hub_2_x>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@1 {
++				reg = <1>;
++
++				usb_hub_3_1: endpoint {
++					remote-endpoint = <&hd3ss3220_1_out_ep>;
++				};
++			};
++
++			port@4 {
++				reg = <4>;
++
++				usb_hub_3_4: endpoint {
++				};
++			};
++		};
++	};
+ };
+ 
+ &usb_1_hsphy {
+-- 
+2.34.1
+
 
