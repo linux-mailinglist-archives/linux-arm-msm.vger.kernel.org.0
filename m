@@ -1,181 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-103495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6LHKGMbz4Wmv0AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 10:48:06 +0200
+	id sO+JJsTz4Wmv0AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 10:48:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87131418E66
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 10:48:01 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36FF1418E64
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 10:48:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 5F0A030028D0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 08:44:25 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2A92330457E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 08:47:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CAEA3750B2;
-	Fri, 17 Apr 2026 08:44:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F11C3AEF58;
+	Fri, 17 Apr 2026 08:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dAttBC4M"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vo45Rkdd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393F8358391;
-	Fri, 17 Apr 2026 08:44:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B3739BFE2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 08:47:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776415464; cv=none; b=n5SQZl4tPJOgbyV46H8U6Of5os4q3eRI3xhude0rGQfe1fnRwC2vScWkz4D3krrts+fg8rIc1N2L5UtSCEJkgr+uodxzq2IbNZVdiUku/FBiGVKc/G5hts/S9mltPSAkAEVpq2ZbfnrMmFqdjxP9HAyJsfUyIftywlEn0u1kjfw=
+	t=1776415678; cv=none; b=gQsxUNBntfhPIZTsPNNGA1zC7tuk3U/lPAC24OPdwjfa4gFqBr2UNANWnJOh7c+co2CFPvjjyMwPP3sVr1EKWLjWN8JCrNZknyRV/EmBtnjdDT44y5XB37KDa1GQh7qlWkrUKamhTOMxTzjGDE3j6NlawauNpq22q2YLDZ0sXEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776415464; c=relaxed/simple;
-	bh=LXmhqgbQcDG9CqDQlQ3xAFUL+LYcpUbeGdza9zd1nCc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Y9YhnjiLkgJvCCPDvm3Ri7NkZRt3OBd0Gn0NeefoGsjHkXGFGjQfkl7kLiQDKT+NojUvPTeImcIG7gaJdWwXILmtdxPumJ26gWWJtR0Q4zY4fWymkphYqo2XXVHF9NB7WaQmTwl7jtD0MaaERE5lirVtZBYZAV5Y4YaFbYAXTzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dAttBC4M; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10580C19425;
-	Fri, 17 Apr 2026 08:44:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776415463;
-	bh=LXmhqgbQcDG9CqDQlQ3xAFUL+LYcpUbeGdza9zd1nCc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=dAttBC4M2HauGcMfsyLACl3GmTqZn65W7ZqmrsklEw3YrqEWCRFCXd5wSVAYDZXtD
-	 FSdFuQVk5cvrrLaQhTwhwc/gxN86KaDCg8k5qC+hAZ7tMvqw1uyGzcVq3KKzHjOcn4
-	 S9mqqrW6CRXWmNPDZqVAVmCPRoDphGvZzqliJyKdHzwZjKFhOUIMLWLEQp15+rXAFw
-	 LyM+WZVn11oPJBJYko85fgclExaMybgxmw0UchRYTaMZudld9/r3EpWFgDe37/B7ka
-	 BE0IlM+s1f4zIJ6pJ/j8Y4LLBw2IW45ByRIvxJ6J1807pX/C++ak7SpLHnvuh6+ON0
-	 HK0IdTnoySltg==
-Message-ID: <c2d7588a-34c7-42de-b809-0733b03d331f@kernel.org>
-Date: Fri, 17 Apr 2026 10:44:20 +0200
+	s=arc-20240116; t=1776415678; c=relaxed/simple;
+	bh=l1EaDFY9lVbPRb6NM68LmhtFzEdCUmxstw3Kjtxw8Nk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qRHTAq/CqUuwiIJCYatJw09bXWPYZcCnt+qNyj218UsIgdDk/6/bk6qAerUdlBWllxoyY3xKZ2ZHO6C/96M6jOIR+nD6aFu0x/q1lYUhEtOm/zQUfYKhJ18CaS1JBu5oo8aIK+RNlnuvoWJFA7NxRgYGPrwhWYZ20JZ9scGE4FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vo45Rkdd; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-67179ed133dso437087a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 01:47:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776415676; x=1777020476; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CEET8vV8bxTC95bwA4y5KBbwm94kt3IaZw5P98527UI=;
+        b=Vo45Rkdde2F5/WgwCbyanHBmuka2jHjMmHFtJ8W7rRWhROMemTcfeLn5Qt14JSKpg9
+         MbHYD487omApR0wL/vVBpeSeYH5CtYXWhcWTc7HiCD7kdDhuAa8a2nsbNehuFti16wkT
+         lbbg8DaQQ7SsT5Q4SwoYCmQ1OVm/cLFNuUdYmhpkeXCMVQfUpBmrBGwAmISivhMcFCDz
+         mDQUaY1AZBvT7iWg46gzti3jlzr/Bs/2QsPYIAykeZpdftKI4lxl/GwK1uWyuFMyWKd8
+         MZKcs1eMOEUllssFvrlIULGSxWDJFX3XgSQTOTIhSme/pqJpAI3p5JOVpaky5wK6aeJD
+         H82g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776415676; x=1777020476;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CEET8vV8bxTC95bwA4y5KBbwm94kt3IaZw5P98527UI=;
+        b=Fx5Tcvg6AcYhSs49KcpKPnWNptOAuEDY9vZV85UytuX3yIpWRT/SSwTL3A0xiY7/tc
+         aNgFGTp56Qsbw6KmZWH4sL2Llg7955h9FQHHQWMoVBzNuIgecquWtSsNYFLnCvnLN7YC
+         BCn45xF6qK0HrC9HifrKsITQ4e+Ky5CeJlAl0AbFxqYyBzJDlMpYOX/NCzmTuhhoYm6T
+         nBNhj/yhcCqJ6nmS0OMd4ZMVvoqOkaRtqH/E+H5vSligWk3F1ZbqAZmkE/J5ARJQ83A7
+         mIqnIxcg5sODbhyMUY4tHh5prFpA01BSa78YgZosZJOb+Y7YbRB14sBKlFUhTVxlO+pj
+         /V3w==
+X-Gm-Message-State: AOJu0Yw6mNr2QGrpC1JA0PGKN6qDG6XHcUsljP5YzYvgur4j/34nEUhv
+	DOUE6aV4k+Dmj7Rrm/kV/xiEqJNamIj4ragP9q4I+NP5o8IBEqw2Dn+W
+X-Gm-Gg: AeBDieu/QiqSXPzoRMQoMfRIQ9epoKxpr8BwQj9NwxQ2xcZTeSzNsuoyEWUU7ld/ppv
+	i8u1n5fNSRw5CdNp7MOMCVWgb+SLTS248WoHlI5SqqdZRUO9/w0rQYVaj5iVY6gjcMxVxIWu3YJ
+	rE6f4U3Hay6kzTFjJr677HHUry0mKA2DNLpp6bsVg5l3S3qrVTOYxe6ujjK5qkKCUrjrttejfrb
+	vpARbPSL2NuQSXnCKHeVSOnt0U3uOzGJ83TYupzahxuSVGq56XuaFatO39UuP/3tgv2qOPoK3Ni
+	j6+1vrZF/daCBAG56JSV8TC8YL5JjoSeIznTKcBeNf5jemYIFygCmnYsofQ5Lkvt69jJiGps9Xj
+	pWrbXKKZHZGaQn0ctJXkosa3pDgbo7+ZfC8KA5WQWVL+nBwDdTUAvQwWQQv8DlLMeCJWgYEwVpW
+	soOp3dgYNk+LRzwT7arVVObX6U2yjxlNE4hrw1ToA=
+X-Received: by 2002:a17:907:6e94:b0:b9a:cb5e:5354 with SMTP id a640c23a62f3a-ba4190787a9mr107349266b.16.1776415675273;
+        Fri, 17 Apr 2026 01:47:55 -0700 (PDT)
+Received: from workstation.home ([178.230.164.112])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ba45503c435sm32789166b.43.2026.04.17.01.47.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Apr 2026 01:47:54 -0700 (PDT)
+From: Stanislav Zaikin <zstaseg@gmail.com>
+To: devicetree@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	andersson@kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-kernel@vger.kernel.org,
+	val@packett.cool,
+	Stanislav Zaikin <zstaseg@gmail.com>
+Subject: [PATCH v5 0/2] Add Xiaomi 12 Lite 5G (taoyao) device tree
+Date: Fri, 17 Apr 2026 10:47:47 +0200
+Message-ID: <20260417084749.253242-1-zstaseg@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm UFS and QMP UFS PHY
- drivers as built-in
-To: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Dmitry Baryshkov
- <lumag@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260417035509.1021860-1-shengchao.guo@oss.qualcomm.com>
- <898874b3-fb73-4a46-b440-6ea3377c2f2d@kernel.org>
- <aeHxPALfVd7SgtUj@QCOM-aGQu4IUr3Y.na.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <aeHxPALfVd7SgtUj@QCOM-aGQu4IUr3Y.na.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103495-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,packett.cool,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103496-lists,linux-arm-msm=lfdr.de];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[8];
+	FROM_NEQ_ENVFROM(0.00)[zstaseg@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	NEURAL_HAM(-0.00)[-0.999];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 87131418E66
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 36FF1418E64
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 17/04/2026 10:37, Shawn Guo wrote:
-> On Fri, Apr 17, 2026 at 10:14:23AM +0200, Krzysztof Kozlowski wrote:
->> On 17/04/2026 05:55, Shawn Guo wrote:
->>> UFS is the primary storage for Linux rootfs across the breadth of
->>> Qualcomm development boards - Mobile, Automotive and IoT.  With
->>> Qualcomm UFS host controller driver (SCSI_UFS_QCOM) and the UFS PHY
->>> driver (PHY_QCOM_QMP_UFS) as modules, developers need an initramfs
->>
->> Yes, you always need initramfs and every developer has it.
->>
->>> to boot from UFS, which adds friction to daily development workflows.
->>
->> No friction, it's both standard, easy and all of Qualcomm and Linaro
->> developers have it solved long time ago.
-> 
-> I'm looking at a kernel regression by running git bisect, where kernel
-> version string varies for every single boot.  How do you usually deal
-> with it by using initramfs?
+This series adds device tree support for the Xiaomi 12 Lite 5G (taoyao),
+based on the Qualcomm SM7325 SoC.
 
-No difference from every other build and boot? I build kernel and the
-same step I have initramfs with modules. Whether I bisect or build
-kernel for normal boot is exactly the same.
+The display panel model is unknown, so bootloader-initialized
+simple-framebuffer is therefore used to expose the display.
 
-The only difference is `git bisect good`.
+Changes in v5:
+- Patch no. 1 - no changes
+- Change vccq-supply to vccq2-supply in ufs node as it's ufs2.2 (patch no. 2)
+- Val's patch for goodix-berlin didn't have effect on my touchscreen,
+  therefore keep the touchscreen szie (no changes in this regard in
+  patch no. 2)
+- Link to v4:
+  https://lore.kernel.org/all/20260305093941.305122-1-zstaseg@gmail.com/
 
-> 
-> If using initramfs is standard and easy, I wonder why Qualcomm QLI
-> (meta-qcom) kernel has UFS drivers as built-in.
+Changes in v4:
+- Patch no. 1 - no changes
+- Removed Konrad's R-b tag, please take a look again (patch no. 2)
+- Fixed vreg_s2b_0p7 regulator name to spmb2 (patch no. 2)
+- Switched bluetooth to wcn6750-pmu (patch no. 2)
+- Dropped qcom,local-bd-address-broken as it has no effect (patch no. 2)
+- Added wifi calibration variant "Xiaomi_taoyao" (also sent board-2.bin
+  files to ath11k) (patch no. 2)
+- Link to v3:
+  https://lore.kernel.org/all/20260224114424.1966947-1-zstaseg@gmail.com/
 
-This I don't know. Distros do various things, but of course there might
-be an argument I do not know (e.g. like it was why distros do not make
-IPV6 a module).
+Changes in v3:
+- Patch no. 1 - no changes
+- Drop unit address for framebuffer node (patch no. 2)
+- Add Konrad's R-b tag (patch no. 2)
+- Link to v2:
+  https://lore.kernel.org/all/20260216120715.3432191-1-zstaseg@gmail.com/
 
-Best regards,
-Krzysztof
+Changes in v2:
+- Add Rob's A-b tag (patch no. 1)
+- Add explicit framebuffer_reserved label (patch no. 2)
+- Use memory-region for simple-framebuffer (patch no. 2)
+- Fix reserved-memory naming: make node names consistent with labels
+  and intended subsystem (CVP/camera/video) (patch no. 2)
+- Convert mem-type value from <0x02> to <2> (patch no. 2)
+- Fix s2b regulator comment style (patch no. 2)
+- Remove unused gpio-reserved-ranges entry (<32 2>) (patch no. 2)
+- Link to v1:
+  https://lore.kernel.org/all/20260204115645.1343750-1-zstaseg@gmail.com/
+
+Stanislav Zaikin (2):
+  dt-bindings: arm: qcom: Add SM7325 Xiaomi 12 Lite 5G (taoyao)
+  arm64: dts: qcom: Add Xiaomi 12 Lite 5G (taoyao) DTS
+
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sm7325-xiaomi-taoyao.dts    | 907 ++++++++++++++++++
+ 3 files changed, 909 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm7325-xiaomi-taoyao.dts
+
+-- 
+2.51.0
+
 
