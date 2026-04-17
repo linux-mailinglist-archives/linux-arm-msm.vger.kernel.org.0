@@ -1,236 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-103564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IK3hBXJ84mm36gAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 20:31:14 +0200
+	id 0MJfJu6R4mnf7QAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 22:02:54 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8303841DF92
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 20:31:09 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9857841E6CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 22:02:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BE5A7301C898
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 18:31:07 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id C37173025C21
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Apr 2026 20:02:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6126E263C9F;
-	Fri, 17 Apr 2026 18:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F104E329365;
+	Fri, 17 Apr 2026 20:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QVR+d2ym";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="O0m8H9ab"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oY6yALLu";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kM8MzQed"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290C11A5B84
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 18:31:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EC4311C2D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 20:02:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776450667; cv=none; b=M9Ho7aQff2vRr0G+WXp6k6lS5v40kVoNu6wacML2Mn+MkCBZDhWRSeyy8TDp1XavDaXUz7ZQAY2SFCmyAcgH/TTEFIHSoROlTmsmbVz8W5+bxSnnuJmsQFJujV2iIveNaDV0IuvG+/OSDY5jtqU27PvxrYgfZG6yqWJy660bqJA=
+	t=1776456127; cv=none; b=dr6Mc5cpCyy5SNPLnVUiSdG1nZ89CEHmGTGX1DhGHUDIYc20H17p9dnE+ipMl00ojgLZQR/OiZVp07dE3ODjhPTiIp8577fW4wrIvpZdit+YXt4fHp/+XxwQq++qy/ARvmuqT1TNqyMHNekbp5bxsUOJVSsaJ1QT2DXb5ULc/p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776450667; c=relaxed/simple;
-	bh=JkKOwkEcT4D8ryHgKwaaZ0yPiMvgxeFUx12jixsCSDM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oD9gsGVVTpfCAx9fqYoPqH4wAJQoKJh1p+JVrT6G1csoktluxh11+EfNq4h/QAVea55LX/7vhWP2iTQDP5X0u1yXrhsfMQDPerarsa7oxkJ7BnsBLhARfnpFGxXTNddBxMqdWZ9Y8SyBpiChAG9f64Fe8+MHAwQWVFIY9zrRdJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QVR+d2ym; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=O0m8H9ab; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1776456127; c=relaxed/simple;
+	bh=JB8wuchRBt9J1x0+dBXYSHtIZwYSy35QkurVZa5Twfs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WWUhmITccRo0nqD4SsCHDLD2wx+Ex/H4FAzbFx/o0VOKo8U95HHZJDtC6s23ZmHTDDC2mTuWLTNR5SOs1TgJi9J6BkKK3WsNpwtSK6yKtBJBq0XE8vbstijaP2LLSyTcLdDC08kTUYT+a0ZYNDD6jYpsEmLLeTEKghyO6B2AoR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oY6yALLu; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kM8MzQed; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63HG4DT04044188
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 18:31:05 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63HG4g9M2669870
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 20:02:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=zJHWa2uZRpV/rmjTXEG/PvVZ
-	8/IZn5LnPOQKv/Tfa3k=; b=QVR+d2ymTJhbZoPBWGqgcN+Xzmxckyz8lwnTEkFl
-	YfZ2W1FGTraUKgN7h5WSkHrEXAPFCd66VsdtsKotSAcx1Ix9odFToiSmlK8tbfZ0
-	4porw56HNVI30h2IqEcv5Atpf8HQEl8eqEsucs/lg4EEJskwp0I6YH6U+i/ZtOGp
-	VnHRlZyBh0FtrEVT7Hx3Jx2bx/hT63kWGdTieeouc/pfi0bvoBc7WUEU6vX5I6RV
-	CooIEKO6BirS5tjMe8frlR4oC0js+waHUggUmhK02uF0+B6z1G/3Fu0z9Jfk2kSn
-	1MPajWUCvvB4m/1P5mlSouZ+XPx8HF3pm51ivuSF3qp83w==
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com [209.85.167.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dkqumghk5-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=ViS/wJuo28OBwDkXiCvAvSC5Eff3JISAuPv
+	NKYCjY2M=; b=oY6yALLuOkd80Bfm00nUxAPQz/Arhfus7PEHCCESMgIxTYM9oo1
+	h0lLLdN7JN3Pe+Jgb9G6XWAuVzfSN9tIupOxOl8PBBgdDnf0OFOuomRFg8AVYM0t
+	tG5stVobHbsw8uS8CEZZRPpar//BYlggxqbHPWowJXX1snHzQ2Au7VTkOwed8ic7
+	XlCbLEicybarFxujyIzrXIeCocEw4s1syZmuY/KbrZfBoMtZ7V5KB/nnLUyJyHu0
+	jdHLGNh8yPpTomodsViDQ3GKytusqGOkuvyo2kjVCznu+o067rG85JhIohGSJWYG
+	iHoQQWcvFg3wraTAvw13bNIiydwvl+Cm3Nw==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dkaxcumys-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 18:31:05 +0000 (GMT)
-Received: by mail-oi1-f197.google.com with SMTP id 5614622812f47-47545742ec3so1562908b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 11:31:05 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 20:02:03 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2b249975139so20992775ad.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Apr 2026 13:02:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776450664; x=1777055464; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zJHWa2uZRpV/rmjTXEG/PvVZ8/IZn5LnPOQKv/Tfa3k=;
-        b=O0m8H9abyevTevFJGMm1HNEOsVkCzVTOqaYk0Bwtd4UfLo3qoqUF9utZ16B8C4LhY4
-         rOVCO7q2WAedEuvYwH6kzkBpj0aaOY7B1zulZccXADNeX3R+tpsx3vEHtipvZGXCTpMo
-         wjdJ90uSF5tX2RZ3eqwMbgLPrfLwfCA1EIw06zAzEhpluuFAx6HXXfh3GrdbnkEgzOK8
-         HUUiDnxadQmRkBGOJcOfQFKDWQ+29ZaoEyJmth9LxPqwIv1+XV9sSmgaOeQBB7vt9eKk
-         zCtoNI8DxDWnrKPiJA/nDFv1GW59gdwwcWYQq73C/SMYdYFFp9X08h5kCVu5fczW7FqS
-         gcPA==
+        d=oss.qualcomm.com; s=google; t=1776456122; x=1777060922; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ViS/wJuo28OBwDkXiCvAvSC5Eff3JISAuPvNKYCjY2M=;
+        b=kM8MzQedWacl50B/Fmuy10AoKNPiBfWpkaeLgsK7tih3OmFX9FlO0pA6Kke8Uzj/94
+         lqQyXzzDqJCgU4SNq3Km/lOc0OdjOYnBCLZz6VeyJUwfFGa+FMwGGk2tOYjwVBU08g/U
+         B1sT9ooJGOCIj4mT3crxOMVcCxa1G0ZLa+fv9bVPcAVRmBQCcXRWGKKx11kADkDIHe/N
+         i4kIgZsGiTAWg3Y5PlQGpxX7uWboPMlP/cOFKgZvcGXwWF/ycBHKcJSw1Tr4R68wF0ya
+         GsSxPqCgA66iQdS5taSR+hXJr2EU0UvF7ingkNK2nvCvRzsoaGuamIpKadenOCjvfuBH
+         gNkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776450664; x=1777055464;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zJHWa2uZRpV/rmjTXEG/PvVZ8/IZn5LnPOQKv/Tfa3k=;
-        b=pFjFOuUxymEXC/pjIJwy41VVhWC+4Fxqxodr0YDS0fVR7R0/q7T1DxakQF5ViLiwFY
-         VoHJPdto6h2RvVOS+M474VdftpoxifB3r6uozBEVq0chxetO7XNkpvtNx0EjzsOVa9vW
-         Q9ag7mZcW2t212Eq1fdXiRQrs2SYMMicj5gB06lQwsQbN5MK+1v++ind9l3JriqNPJXN
-         VlaYRHkNEI9qN29iU1qOxcyeVFNHeExukymc+r8N2a9YSAjupZlVb7K1cYB2FRiu94Ef
-         NVMOiCYNNuXUq1g8sm/PCggv66ZBFsE8E1OxyQB13oD4lkJiRnKEU8oRvv3i16/PQUs2
-         SifA==
-X-Forwarded-Encrypted: i=1; AFNElJ9qvIt2XeR23Nquls8TP6QiThvfH4CRL8Uw3Mz+5g8aqYGc3wPU4TCLIGs1wYX4ORm/Mli0o2qFWKPLMj1s@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZ5wtjNAFZrnk48uzto+DCdAuB9gc7Xcsr0w9tHt4PmYVEDy8i
-	OqmueVGvIj8JQtzO9fuxjcV7DljMrqByAC4re5FSIz7sHp+b4xVqJYhhrErQ2oxFyJD+hNVGUxO
-	+DqV3eApq/VPGWqWlD6l86GrOcVpwpiFNfzCQUK1Al41QoSV+viUeWzz7yRB45F2hG6Fl
-X-Gm-Gg: AeBDiesnKNiHdi+uSgszNBu7zbMXixo7CDBYn2ErwKX9uGRgvfSGEL3XNliFTzX3gDm
-	zTVwIuBFcShrBDuk5G6x8XVG/UBhaJRLpzi9CCSPyP7mozorFsGstQSsML/AGllJ5NPLcwMGjky
-	ooM1rmjuwHuQarqipzSwq04aYFbNyvpI07Do2WRT0XT03fHbCAHg+HcmBoBQuFcOJSWrQNmWwnC
-	bOmIgb4i2i2ETxgu+gxq1hmfEH4cZbkoMUXxFcT525yW0XglVv5HAM4r1PAGR2ZdcbRpi1dqmK4
-	sSqV7d1TRm8FdUt5P8KcXUuScaeqi9P7qoR9J7fTAGaYkjizxLnwTWzQC1pGPBFxbOBP4LfV1yE
-	EefbDkK6izGtmKqB1wGB71NTEsd/B5rLgprbjsVJm2zS0niBNDmBhKeSYqvG/fsVMLG5nEfJ8QU
-	cDgkVRtHIgdA9FyBuse2ksQJ/1NSmEH5fYhDRfyCzUeyLQ9g==
-X-Received: by 2002:a05:6808:220f:b0:472:cd4c:c36f with SMTP id 5614622812f47-4799c873bb6mr2096893b6e.3.1776450664434;
-        Fri, 17 Apr 2026 11:31:04 -0700 (PDT)
-X-Received: by 2002:a05:6808:220f:b0:472:cd4c:c36f with SMTP id 5614622812f47-4799c873bb6mr2096860b6e.3.1776450663882;
-        Fri, 17 Apr 2026 11:31:03 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a4185bc333sm629956e87.24.2026.04.17.11.31.02
+        d=1e100.net; s=20251104; t=1776456122; x=1777060922;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ViS/wJuo28OBwDkXiCvAvSC5Eff3JISAuPvNKYCjY2M=;
+        b=rx0NlTw82PJQD9eyfFRCnDepBZL/E1oBgsHKmcgoWgUnmlhySXEPUiY3CAtIaxwg1g
+         Fc7JFSs6TwaCZD6mxt9FphpxpTqp+KVFhYdvyijfHxysXgeOyX5ygCPd4FRKi8MVGSuw
+         kPJO4ljc1ShM441Het7g2sIP0YEqtHEkE2O+1DvF2ir3ptprTp9iWcBDI6WBBaBI0e0W
+         l5YoB9wpZYXm97M9+6N7tbp+8CA6ZZdaGBHlHz5uxcGoplq2vTyT8iILDoTnNYMDSxue
+         PxaPb7hPCQ6FTwDJfCLhYxnPKxvzXhJ3SD1zBRA37HqdWiD/bjebeXynP1mPMhyEjOwC
+         hFCA==
+X-Gm-Message-State: AOJu0YwFcmjNFBbD+pz8hqWH5lyn0igG1rjHkZiBGrEw0lwwL3uvMOoE
+	ZLOZF6pS5M6uG1betRpWfVlVsZDShuQrU8Wd1HNj95D0yRcay1P9NY70TP/p4DRG0DZVoJCuUzG
+	8eelrdokbr8GG3mjruiGuin6NcExQN3pxOmYv2KYE09jvNp1v1fE7ZMZbabNFw6yP1ekw0BuoGj
+	5N
+X-Gm-Gg: AeBDietN+T62CZNnmfclYU5gVxgByAOWZBv1++6xkB1HK2lZihmmRoWBdl5TunXcD7h
+	9hJKp+R2j0RPf0bJpCULDl5hAuAL9+ifb6J0Q7EbnOkZc2M/LXzJF95ORug20xxKYC+usDLESga
+	IbcW3tzjWM0o5GvxJ2Tp+bGfNrRBjvOCcezp0+7d8WxkWUOY0As1kKPOVTffr0o5V5UtFjdsTH3
+	io0etfiOHRk8TbdeGvpoUqdiU2zITDk9pwBbINLrsY4nd4Y6WX0Ku6OVTqLoSv8ZiPEWJ44jcWp
+	pUlh0Oy8SUiMYBf9l6Sd7XVwVP4yrP1oyhQ/aPbZmkzTQBPHy7D2hhdBrlHLq9kfOdiZfXWcZO3
+	EV68OSesW/Zvjh174BV/FNUoR3jvakCQgSMnOfEhBbM2pJsWTzcW1XN3sDdY=
+X-Received: by 2002:a17:902:cece:b0:2b5:f105:52b2 with SMTP id d9443c01a7336-2b5f9eceba5mr46078145ad.9.1776456122210;
+        Fri, 17 Apr 2026 13:02:02 -0700 (PDT)
+X-Received: by 2002:a17:902:cece:b0:2b5:f105:52b2 with SMTP id d9443c01a7336-2b5f9eceba5mr46077745ad.9.1776456121556;
+        Fri, 17 Apr 2026 13:02:01 -0700 (PDT)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b5fab3ad18sm28953315ad.71.2026.04.17.13.01.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Apr 2026 11:31:02 -0700 (PDT)
-Date: Fri, 17 Apr 2026 21:31:01 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jianping Li <jianping.li@oss.qualcomm.com>
-Cc: Srinivas Kandagatla <srini@kernel.org>,
+        Fri, 17 Apr 2026 13:02:01 -0700 (PDT)
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Srinivas Kandagatla <srini@kernel.org>,
         Amol Maheshwari <amahesh@qti.qualcomm.com>,
         Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Abel Vesa <abelvesa@kernel.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez-ortiz@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, ekansh.gupta@oss.qualcomm.com,
-        quic_chennak@quicinc.com
-Subject: Re: [PATCH v4 3/4] misc: fastrpc: Allocate entire reserved memory
- for Audio PD in probe
-Message-ID: <7rfiwbbunlbzmhdjvsfqccltdx7cveahbgg2rk6kkom2jesta4@nnbas4vn63we>
-References: <20260409062617.1182-1-jianping.li@oss.qualcomm.com>
- <20260409062617.1182-4-jianping.li@oss.qualcomm.com>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Subject: [PATCH] misc: fastrpc: Fix NULL pointer dereference in rpmsg callback
+Date: Sat, 18 Apr 2026 01:31:46 +0530
+Message-ID: <20260417200146.184425-1-mukesh.ojha@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260409062617.1182-4-jianping.li@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: Ei64bI-hhIPGQXOUBQ11BaBw_dGzUcmx
-X-Proofpoint-GUID: Ei64bI-hhIPGQXOUBQ11BaBw_dGzUcmx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE3MDE4NiBTYWx0ZWRfX9YDNz2m3ujVY
- xxxIfCEelhOIZ9gmyeK7RDKcghI/jooWRQu6n3tq6Kp6+7uh3MS7Z4h1cqIu87DE9I75uaEM3jd
- 6pTYXJ0uAguBWR6BWfHOGHKPO+uhrPIo3gt2KAkjdqzLWXnNZ2RfQR3MBq18b3uDTXO3oaxKQ+r
- fmQANI1qHVstWxax4slMIBFwHjaR069nEixCtOl9XD/MSG5c7IlXiJG5/9kmDLuzv3voEX8Ah3U
- rzlgluzBevQ0kt55WOVMr+DU6EoLnm+ZP5seUFQbXMeieWhradT/14sxI/EyHkBdfe8bGUZJKeA
- kjhAAOYIVDv6ddyIAwp222eDa1tI5z67UOnkflE66KSHOULVlZflhNxoDBMArUqZ3WSABfXFsbF
- Z94YMMyUxuiEkU/gfHTUfC5PibRR/qA27E7dRfMgfEqGcvFkCkIFL3tu0fGOhThSpnDp2TzV7DT
- A7CxmHCdVfnW690Zzfg==
-X-Authority-Analysis: v=2.4 cv=PKw/P/qC c=1 sm=1 tr=0 ts=69e27c69 cx=c_pps
- a=WJcna6AvsNCxL/DJwPP1KA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=JcqMa0KV c=1 sm=1 tr=0 ts=69e291bb cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
- a=xL7owM3MNuM7HuHup6QA:9 a=CjuIK1q_8ugA:10 a=_Y9Zt4tPzoBS9L09Snn2:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8
+ a=MnYYGAq_QTRuFDU830wA:9 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE3MDIwMSBTYWx0ZWRfX3tYvqXDRQXjr
+ 0mZsFIPebUPHSKdqclOzopsoMW/guyNICtiOhWD8bnMuGJwIQl3dzfMGmZb0+Uw5UqJ7IgRnAFM
+ L0QGL6bDiv7stHqJkYosfC5zg2wRSDN92X6VLjeWj5br9hVcJeU8WI3QJ7fP2EIib6X4r1n3ahh
+ LQiGsHSA5OvpHETflyOdFf1flDSVH+Vu34wXnkZ0wcA0mpiAM1X7cdfmRoKAiPGzWrQ+SPFEHTr
+ dz5osbRYk7YiWtAR4bH9/jN1spHBSHnkDdDlhaVs/O2zEpAt1An9ACqKPmDiGz5ysR+J5JZ9QB3
+ eWB8MRBq6iwHmytufHbDTEubbKYyWXi0t0BkQX1XXwlUUQdpSFlLOs47oF7L6DT/mO3d6nQIpyT
+ vNJ9ZK2hB39qS+Cuq7TFOtGiayhONS2RIPhecneLlB+HuLwKWVpPcDEjvn1G3kQrwfLz+6SGR1Z
+ dwINGRPev5iS4WIpK+Q==
+X-Proofpoint-GUID: 5DBT4j86qEKVEf3XojXsuORPhwTei28o
+X-Proofpoint-ORIG-GUID: 5DBT4j86qEKVEf3XojXsuORPhwTei28o
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-17_01,2026-04-17_04,2025-10-01_01
+ definitions=2026-04-17_02,2026-04-17_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 phishscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 clxscore=1015 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604170186
-X-Spamd-Result: default: False [-1.66 / 15.00];
+ spamscore=0 adultscore=0 clxscore=1015 malwarescore=0 phishscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
+ definitions=main-2604170201
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103564-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103565-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 8303841DF92
+X-Rspamd-Queue-Id: 9857841E6CC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, Apr 09, 2026 at 02:26:16PM +0800, Jianping Li wrote:
-> Allocating and freeing Audio PD memory from userspace is unsafe because
-> the kernel cannot reliably determine when the DSP has finished using the
-> memory. Userspace may free buffers while they are still in use by the DSP,
-> and remote free requests cannot be safely trusted.
-> 
-> Allocate the entire Audio PD reserved-memory region upfront during rpmsg
-> probe and tie its lifetime to the rpmsg channel. This avoids userspace-
-> controlled alloc/free and ensures memory is reclaimed only when the DSP
-> shuts down.
-> 
-> Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
-> ---
->  drivers/misc/fastrpc.c | 104 +++++++++++++++++++++--------------------
->  1 file changed, 53 insertions(+), 51 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 148085c3b61a..a67ae991c0b0 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -276,6 +276,8 @@ struct fastrpc_channel_ctx {
->  	struct kref refcount;
->  	/* Flag if dsp attributes are cached */
->  	bool valid_attributes;
-> +	/* Flag if audio PD init mem was allocated */
-> +	bool audio_init_mem;
->  	u32 dsp_attributes[FASTRPC_MAX_DSP_ATTRIBUTES];
->  	struct fastrpc_device *secure_fdevice;
->  	struct fastrpc_device *fdevice;
-> @@ -1295,15 +1297,16 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->  	struct fastrpc_init_create_static init;
->  	struct fastrpc_invoke_args *args;
->  	struct fastrpc_phy_page pages[1];
-> +	struct fastrpc_channel_ctx *cctx = fl->cctx;
+A NULL pointer dereference was observed on Hawi at boot when the DSP
+sends a glink message before fastrpc_rpmsg_probe() has completed
+initialization:
 
-What was the base for this series? It doesn't apply to linux-next. The
-code here is different.
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000178
+  pc : _raw_spin_lock_irqsave+0x34/0x8c
+  lr : fastrpc_rpmsg_callback+0x3c/0xcc [fastrpc]
+  ...
+  Call trace:
+   _raw_spin_lock_irqsave+0x34/0x8c (P)
+   fastrpc_rpmsg_callback+0x3c/0xcc [fastrpc]
+   qcom_glink_native_rx+0x538/0x6a4
+   qcom_glink_smem_intr+0x14/0x24 [qcom_glink_smem]
 
->  	char *name;
->  	int err;
-> -	bool scm_done = false;
->  	struct {
->  		int client_id;
->  		u32 namelen;
->  		u32 pageslen;
+The faulting address 0x178 corresponds to the lock variable inside
+struct fastrpc_channel_ctx, confirming that cctx is NULL when
+fastrpc_rpmsg_callback() attempts to take the spinlock.
 
-This struct is way bigger.
+There are two issues here. First, dev_set_drvdata() is called before
+spin_lock_init() and idr_init(), leaving a window where the callback
+can retrieve a valid cctx pointer but operate on an uninitialized
+spinlock. Second, the rpmsg channel becomes live as soon as the driver
+is bound, so fastrpc_rpmsg_callback() can fire before dev_set_drvdata()
+is called at all, resulting in dev_get_drvdata() returning NULL.
 
->  	} inbuf;
->  	u32 sc;
-> +	unsigned long flags;
->  
->  	args = kzalloc_objs(*args, FASTRPC_CREATE_STATIC_PROCESS_NARGS);
->  	if (!args)
+Fix both issues by moving all cctx initialization ahead of
+dev_set_drvdata() so the structure is fully initialized before it
+becomes visible to the callback, and add a NULL check in
+fastrpc_rpmsg_callback() as a guard against any remaining window.
 
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+---
+ drivers/misc/fastrpc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 1080f9acf70a..a1a54453bb7e 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -2431,7 +2431,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 
+ 	kref_init(&data->refcount);
+ 
+-	dev_set_drvdata(&rpdev->dev, data);
+ 	rdev->dma_mask = &data->dma_mask;
+ 	dma_set_mask_and_coherent(rdev, DMA_BIT_MASK(32));
+ 	INIT_LIST_HEAD(&data->users);
+@@ -2440,6 +2439,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 	idr_init(&data->ctx_idr);
+ 	data->domain_id = domain_id;
+ 	data->rpdev = rpdev;
++	dev_set_drvdata(&rpdev->dev, data);
+ 
+ 	err = of_platform_populate(rdev->of_node, NULL, NULL, rdev);
+ 	if (err)
+@@ -2513,6 +2513,9 @@ static int fastrpc_rpmsg_callback(struct rpmsg_device *rpdev, void *data,
+ 	if (len < sizeof(*rsp))
+ 		return -EINVAL;
+ 
++	if (!cctx)
++		return -ENODEV;
++
+ 	ctxid = ((rsp->ctx & FASTRPC_CTXID_MASK) >> 4);
+ 
+ 	spin_lock_irqsave(&cctx->lock, flags);
 -- 
-With best wishes
-Dmitry
+2.53.0
+
 
