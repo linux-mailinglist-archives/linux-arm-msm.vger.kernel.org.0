@@ -1,223 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-103584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id K9iqGp4Z42k4CAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 07:41:50 +0200
+	id KudhJWMc42mSCAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 07:53:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D26E94200E0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 07:41:49 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D04BF42013B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 07:53:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7FB0F30421C6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 05:39:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6A64830125F6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 05:48:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8A8E346FA5;
-	Sat, 18 Apr 2026 05:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7353A26056C;
+	Sat, 18 Apr 2026 05:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sxcsRTqj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dStCvFr/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C543E343D85;
-	Sat, 18 Apr 2026 05:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2712628D;
+	Sat, 18 Apr 2026 05:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776490760; cv=none; b=DKSjIsJJXDYxZQMRwCRyYMCjYFXYobY76D2hc2eceyROFIwxABMUE/LDSuhzFa/xkKw2QyGAtG/gHKbk/J0RYD4uCoCLT1BSxd428EqxHkaRnPisU6HP0DrZAURNsyobRcG+uTwLsX0lOUvpNpUQyi62he2LrmhMnoTtSgLJ71Y=
+	t=1776491283; cv=none; b=S6n0v83S31iKTASraLYFyGNZ56dvmn/K+QPRwCzFt5axvHJmYq8HRwoW0/D2iSugdcMJKCFeDiskGjP3t/N5W41IQj9M78ZWjBNAy9hh589FuYJ7lhTVTo0hiKZisj8/60BAGRJMZCm15nrIuXX8X203Zz36HjAxrl1BUGN38+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776490760; c=relaxed/simple;
-	bh=ou7N/SAToUdUipn1bP61ti+OCAutGaSxSg0D1lrTFzg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=glWDgWzBkJqP4TvyICfXslgbeqeToj8UuI+HWWf8yLh9OayYceQHcDS/IeCehnXZEr2xLJN9eVEUXQgKJ6Wh7CxhXQiPbJP7M68GvwVTURI+TACDtsptD9zNCGPE5GgxtrChmHatBz2ekkzBJxzT21fL4X6DtuVAWTqcjScruZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sxcsRTqj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D287FC19424;
-	Sat, 18 Apr 2026 05:39:15 +0000 (UTC)
+	s=arc-20240116; t=1776491283; c=relaxed/simple;
+	bh=FFr0kkWeKJ3tSMCVYhgeHbHXcHTAH76UkQ1rl2TonGQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=bgQQqc2ZH4wPxwQrWTFIu3S0ITZXsVjFuEkmlK9Sw1BKSZz6UXSpEeZxs4a9rbnc6Nx+bWhbMyh9pwz7ScHfYx9qihLWDIKsIlsdVf3JhA51f/eoV/oTS2vOpq/UV6fgTCcr22atRc+UtEjSKFqntWyXUsZygnIBFWBwiHo8iDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dStCvFr/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2BDA4C19424;
+	Sat, 18 Apr 2026 05:48:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776490760;
-	bh=ou7N/SAToUdUipn1bP61ti+OCAutGaSxSg0D1lrTFzg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sxcsRTqji/tQAdLXO+tZPQA85CA03e0XeuX4Wb/he752h3CqcSv0Iu7dPVAQSb2pd
-	 DcsAnObjbSOtKO4wBTTrUJP0p8OVhsOPPU4vtkLXFSzCjnSMmnDPhnhiFwCHfrRxV4
-	 qgpwNv8/wl0bCgRYfnBikQW5HZyex4/MbPgyv5yZTX+LmujPnKUyc5ytPrG5uH2az+
-	 LJHiOPch28ERBMGNh4X/3eJLULqRG8Zqr2n7NRq7Ed7rPnuH1Es+aY9Wn0vv88mXQX
-	 yCQcykKb9ewKbzaZAn/Pak43ikHapywgK7208EMwssYHtkheeJIaAh9ziVjuSolzTo
-	 NW2JNYdEzsIig==
-Date: Sat, 18 Apr 2026 11:09:11 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, Keith Busch <kbusch@kernel.org>, 
-	Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-nvme@lists.infradead.org
-Subject: Re: [PATCH 3/4] PCI: qcom: Indicate broken L1ss exit during resume
- from system suspend
-Message-ID: <zv3tl2cvlhpmwe5ikcszdneft4bjebqibrl6onbg7457vtzmmc@clh7nzgpeext>
-References: <vji2jty2pqerse6g66pavrt7e7oq3bax4m6sobp5wxew6xwv6d@r5lbv35klz6b>
- <20260417222615.GA97425@bhelgaas>
+	s=k20201202; t=1776491283;
+	bh=FFr0kkWeKJ3tSMCVYhgeHbHXcHTAH76UkQ1rl2TonGQ=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=dStCvFr/SpM1WyKb9kODlAJ/wBBxi+nLApytZT9LhiWx1vP1xekABKMfVD9LgHDke
+	 kZjyYTlJpgjoJ+yjjJrTtfqHYnCXyuXr6+7nD5ER0B28f3sxXMjRyyrexdkreSbyzX
+	 L5VenHB+FjzRWixmyQFucwAdaKmCuHAL4C7sQtpiaajOFZSCcc3utHOxQDJQTvBHc5
+	 2n0boCbovbj930+tSzg+CoV/A/8I/y01ONaGmeZfeMIPWfcSSMZWw1kbpuTUskcOSt
+	 GlY9RbbTQbXla8Gbq5MnKntsX3dJBuwa2QcGOEKJ9DRA+aGRbsbHUAI8ihqCUFTWJK
+	 0utTZ6t3mrFBA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19351F8D75C;
+	Sat, 18 Apr 2026 05:48:03 +0000 (UTC)
+From: Ekansh Gupta via B4 Relay <devnull+ekansh.gupta.oss.qualcomm.com@kernel.org>
+Date: Sat, 18 Apr 2026 11:18:01 +0530
+Subject: [PATCH] arm64: dts: qcom: talos: Add memory-region for audio PD
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260417222615.GA97425@bhelgaas>
-X-Spamd-Result: default: False [-1.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260418-talosaudio-v1-1-585ab22faaf4@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIABAb42kC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDE0ML3ZLEnPzixNKUzHzdJIvU5DSLJMtEwyRjJaCGgqLUtMwKsGHRsbW
+ 1AHnUJtpcAAAA
+X-Change-ID: 20260418-talosaudio-b8ecf8b9a1b3
+To: konrad.dybcio@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, quic_bkumar@quicinc.com, 
+ quic_chennak@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1776491281; l=1647;
+ i=ekansh.gupta@oss.qualcomm.com; s=20260223; h=from:subject:message-id;
+ bh=xyhz++sJzQ3Z0d/MSUt2gZmlgBl2KeY1Pv4pkaPQIEQ=;
+ b=5fD/H11F6rcHeCvqYI8Koal0dmpCgF7FKttknim5HYxqAGfloT1iYUsCJSict+ghK6GJlkJSy
+ IaSpnEgPUV9DWFsIfCXH0Z1FQZIC/wOuJYbwKoI7wNlxBM/K/5Ef2e8
+X-Developer-Key: i=ekansh.gupta@oss.qualcomm.com; a=ed25519;
+ pk=n0SepARizye+pYjhjg1RA5J+Nq4+IJbyRcBybU+/ERQ=
+X-Endpoint-Received: by B4 Relay for ekansh.gupta@oss.qualcomm.com/20260223
+ with auth_id=647
+X-Original-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Reply-To: ekansh.gupta@oss.qualcomm.com
+X-Spamd-Result: default: False [4.34 / 15.00];
+	SEM_URIBL(3.50)[0.0.0.0:email];
+	MID_RHS_MATCH_TO(1.00)[];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	BAD_REP_POLICIES(0.10)[];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103584-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103585-lists,linux-arm-msm=lfdr.de,ekansh.gupta.oss.qualcomm.com];
+	R_DKIM_ALLOW(0.00)[kernel.org:s=k20201202];
+	GREYLIST(0.00)[pass,body];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: D26E94200E0
+	REPLYTO_DOM_EQ_TO_DOM(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	HAS_REPLYTO(0.00)[ekansh.gupta@oss.qualcomm.com];
+	RCVD_COUNT_FIVE(0.00)[5];
+	DBL_PROHIBIT(0.00)[5.211.3.56:email];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-0.724];
+	R_SPF_ALLOW(0.00)[+ip6:2600:3c0a:e001:db::/64:c];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,oss.qualcomm.com:replyto,oss.qualcomm.com:mid,5.211.11.8:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: D04BF42013B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, Apr 17, 2026 at 05:26:15PM -0500, Bjorn Helgaas wrote:
-> On Fri, Apr 17, 2026 at 05:36:42PM +0530, Manivannan Sadhasivam wrote:
-> > On Thu, Apr 16, 2026 at 02:20:00PM -0500, Bjorn Helgaas wrote:
-> > > On Tue, Apr 14, 2026 at 09:29:41PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > > > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > > 
-> > > > Qcom PCIe RCs can successfully exit from L1ss during OS runtime.
-> > > > However, during system suspend, the Qcom PCIe RC driver may
-> > > > remove all resource votes and turns off the PHY to maximize
-> > > > power savings.
-> > > > 
-> > > > Consequently, when the host is in system suspend with the link
-> > > > in L1ss and the endpoint asserts CLKREQ#, the OS must first wake
-> > > > up and the RC driver must restore the PHY and enable the refclk.
-> > > > This recovery process causes the strict L1ss exit latency time
-> > > > to be exceeded. (If the RC driver were to retain all votes
-> > > > during suspend, L1ss exit would succeed without issue, but at
-> > > > the expense of higher power consumption).
-> > > 
-> > > I don't think the link can be in L1.x if the PHY is turned off,
-> > > can it?  I assume if the PHY is off, the link would be in L2 (if
-> > > aux power is available) or L3.
-> > 
-> > As per the spec, if the link is in L1.2, the entire analog circuitry
-> > of the PHY can be powered off and that's what I meant here. The
-> > LTSSM state would be preserved by the MAC layer, whose context is
-> > always retained.
-> > 
-> > The only problem is that, CLKREQ# is routed to an Always-on-Domain
-> > (AON) inside the SoC. So when the endpoint asserts CLKREQ#, AON
-> > wakes up the SoC and later the PCIe controller driver turns ON the
-> > PHY. But by that time, the L1ss exit latency would've elapsed,
-> > causing LDn.
-> > 
-> > > L2 and L3 both correspond to the downstream device being in D3cold
-> > > (PCIe r7.0, sec 5.3.2), so I assume this is a reset as far as the
-> > > device is concerned, and we need all the delays associated with
-> > > reset and the D3cold -> D0 transition.
-> > > 
-> > > > This latency violation leads to an L1ss exit timeout, followed
-> > > > by a Link Down (LDn) condition during resume. This LDn can crash
-> > > > the OS if the endpoint hosts the RootFS, and for other types of
-> > > > devices, it may result in a full device reset/recovery.
-> > > 
-> > > What does "L1SS exit timeout" mean in PCIe terms?  Is there some
-> > > event (Message, interrupt, etc) that is triggered by the timeout?
-> > 
-> > By 'L1ss exit timeout' I meant the failure to move to L0 state post
-> > L1.2 exit.  During L1.2 exit, the endpoint expects the refclk and
-> > common mode voltage to be restored within the negotiated time. Per
-> > spec, r7.0, sec 5.5.3.3.1, Exit from L1.2:
-> > 
-> > ```
-> > Next state is L1.0 after waiting for TPOWER_ON
-> > 
-> > * Common mode is permitted to be established passively during L1.0,
-> > and actively during Recovery. In order to ensure common mode has
-> > been established, the Downstream Port must maintain a timer, and the
-> > Downstream Port must continue to send TS1 training sequences until a
-> > minimum of TCOMMONMODE has elapsed since the Downstream Port has
-> > started transmitting TS1 training sequences and has detected
-> > electrical idle exit on any Lane of the configured Link.
-> > ```
-> > 
-> > So if this condition is not satisfied, then the link would move to
-> > the LDn state and that's the only event triggered to the OS.
-> > 
-> > > > So to ensure that the client drivers can properly handle this
-> > > > scenario, let them know about this platform limitation by
-> > > > setting the 'pci_host_bridge::broken_l1ss_resume' flag.
-> > > 
-> > > I don't see how this means L1SS is broken.  If the device is
-> > > effectively reset, of course we can't go from L1.x to L0 because
-> > > we didn't start from L1.x.
-> > 
-> > From the OS perspective, the link would still be in L1ss and not
-> > expected to move to L2/L3 during suspend/resume, since that
-> > transition is controlled by the OS itself. But when the OS resumes,
-> > the link would go to LDn state and it can only be brought back to
-> > L0, after a complete reset.
-> 
-> Thanks for the background.  It would help a lot if I had more of a
-> hardware background!
-> 
-> Does L1.2 have to meet the advertised L1 Exit Latency?  I assume maybe
-> it does because I don't see an exception for L1.x or any exit
-> latencies advertised in the L1 PM Substates Capability.
-> 
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 
-As per my understanding, 'L1 Exit Latency' only covers ASPM L1 state, not L1ss.
-Because, 'L1 Exit Latency' field exists even before L1 PM Substates got
-introduced in r3.1. So it doesn't cover L1.2 exit latency.
+Reserve memory region for audio PD dynamic loading and remote heap
+requirements. Add the required VMID list for memory ownership
+transfers.
 
-> Regardless, I'd be kind of surprised if *any* system could meet an
-> L1.2 exit latency from a system suspend situation where PHY power is
-> removed.  On ACPI systems, the OS doesn't know how to remove PHY
-> power, so I don't think that situation can happen unless firmware
-> is involved in the suspend.
-> 
+Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+---
+ arch/arm64/boot/dts/qcom/talos.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Yes, you are right. Even for systems turning off the PHY completely, they should
-have some mechanism to detect the CLKREQ# assert and turn ON the PHY within the
-expected time. On our Qcom platforms, we do have some co-processors handling
-this even before the OS wakesup. But support for that co-processor is currently
-not available in upstream and we don't know when it is going to be added. Until
-then, we only have one option to not put the link to L1ss during suspend and
-keep the devices into D3Cold to achieve the SoC low power state.
+diff --git a/arch/arm64/boot/dts/qcom/talos.dtsi b/arch/arm64/boot/dts/qcom/talos.dtsi
+index ff5afbfce2a4..c36917d6e0a9 100644
+--- a/arch/arm64/boot/dts/qcom/talos.dtsi
++++ b/arch/arm64/boot/dts/qcom/talos.dtsi
+@@ -11,6 +11,7 @@
+ #include <dt-bindings/clock/qcom,qcs615-videocc.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ #include <dt-bindings/dma/qcom-gpi.h>
++#include <dt-bindings/firmware/qcom,scm.h>
+ #include <dt-bindings/interconnect/qcom,icc.h>
+ #include <dt-bindings/interconnect/qcom,osm-l3.h>
+ #include <dt-bindings/interconnect/qcom,qcs615-rpmh.h>
+@@ -657,6 +658,11 @@ pil_gpu_mem: pil-gpu@97715000 {
+ 			reg = <0x0 0x97715000 0x0 0x2000>;
+ 			no-map;
+ 		};
++
++		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap@97717000 {
++			reg = <0x0 0x97717000 0x0 0x800000>;
++			no-map;
++		};
+ 	};
+ 
+ 	soc: soc@0 {
+@@ -5100,6 +5106,9 @@ fastrpc {
+ 					compatible = "qcom,fastrpc";
+ 					qcom,glink-channels = "fastrpcglink-apps-dsp";
+ 					label = "adsp";
++					memory-region = <&adsp_rpc_remote_heap_mem>;
++					qcom,vmids = <QCOM_SCM_VMID_LPASS
++							  QCOM_SCM_VMID_ADSP_HEAP>;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+ 
 
-> Maybe that's part of why pm_suspend_via_firmware() exists.  What if
-> native host drivers just called pm_set_suspend_via_firmware()?  After
-> all, if they support suspend, they're doing things that are done by
-> firmware on other systems.
+---
+base-commit: c7275b05bc428c7373d97aa2da02d3a7fa6b9f66
+change-id: 20260418-talosaudio-b8ecf8b9a1b3
 
-No, that would be inappropriate. pm_set_suspend_via_firmware() is supposed to
-be called only when the firmware is invoked at the end of suspend. If OS handles
-everything and not the firmware, there is no need to invoke this API.
-
-- Mani
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+
+
 
