@@ -1,466 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-103591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MLpnITBg42k7GAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 12:42:56 +0200
+	id +DVHIZKe42n0JAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 17:09:06 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1C02420B92
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 12:42:55 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D925E4216A1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 17:09:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 181CF301FF91
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 10:42:51 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E3BC13012C5A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Apr 2026 15:09:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4994D34DB78;
-	Sat, 18 Apr 2026 10:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87DDA2C158E;
+	Sat, 18 Apr 2026 15:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="mbxUDNZX"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cdgBPamb";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WQz5PaEf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-24417.protonmail.ch (mail-24417.protonmail.ch [109.224.244.17])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D869F26461F
-	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Apr 2026 10:42:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210A5280037
+	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Apr 2026 15:08:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776508970; cv=none; b=JS0RvGroSqEmsxhBvNLx/kii+7gQi7kQcF6BxvtnhXbs6OdZVTefTxNSKTo3iA04Hi16s+JUbl6TWLUyKIjD5xfcR4E/sOdsyKSmF4HAC5BaJDrI0cgWA5WWZdTyG+c1JJ6dEX+0CcVDVpCUXkMaeBtNNn27LiTGmzHp6lnSLaU=
+	t=1776524942; cv=none; b=ItBdx7yFBoL1Vlf6YGJe6P0rTWFqWu33olsOUu6cgktZLxgbpzeQzwMisXqk4Lv0l/pSwC+A+CBoBBrpN3mKmXV+U5p9f6P29+Yo1WoMDvdiOKjMK0HyTf6lZCjHUTsvnsvtUTeUn/SeY8qxPwp8/on0yNDmla2zwqhi7WL51+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776508970; c=relaxed/simple;
-	bh=LEqSHUmTP67GIW1AHY3F3NrOImdwYcfoPIQdVE6zgSE=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=NXCxP0RMXgPs6xGCAWHz1xb4QGZTJROsCdcFdqJPyB1PSa7eC0gFeIo6sM/xaSQr9ABJTTkkUNgYacRhAdwhTITlte5h6B8OvQAXjSDl5XGLPYoacjkNyryBTCJh4cNqwO8gMpx/JIcnySRUCJOP9Rao3oaoDN0HCdoMomNekJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=mbxUDNZX; arc=none smtp.client-ip=109.224.244.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1776508965; x=1776768165;
-	bh=LEqSHUmTP67GIW1AHY3F3NrOImdwYcfoPIQdVE6zgSE=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=mbxUDNZXKvV3+9aXd5kMbkJ764xKbTTufz+ZNS+Lq2owH9niqjelo9xzQCiw6apeg
-	 kM9I2gEQUwQoYCWLWjG9+8y4fsonsVDdEWCJtglbLWkDSghoDjxkf9HKVPw/Q7Ai/3
-	 U9lH9h0BkzrcEe+eZOHSbcrOpgcEJLSK5LztwmJmpeNpQMEair99yssWZqu0QFRRSs
-	 c4AxNVVsCCSeZFeoRPbX4D8tZeM4qSEAnJnzAoLjpFr5Rq2v66D62X+o5FV3Vy1WZ4
-	 Ml1WrMhZYF0EnQeIxWVW9KUGNkZrosLdF189n0QuhKvWmwsggv7dUyk0tvpesdz8TV
-	 W6x6Bln58MsIg==
-Date: Sat, 18 Apr 2026 10:42:41 +0000
-To: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH] pinctrl: qcom: eliza: Split up some QUP pin groups
-Message-ID: <20260418-fix-eliza-pinctrl-v1-1-864bf95ac83b@pm.me>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: f1691854a061b348fbdbec435ebe89bf8e40bc7d
+	s=arc-20240116; t=1776524942; c=relaxed/simple;
+	bh=K9Pw6o8Brk8am9IXaoscqme2/3W4hMGqjRJxjBd4Xx8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KsJ6K49heAg3mdGCylfmfw/IZfCd04FrJd/f0uy5i81dT5JDKaSZvwIFFvtQVRZ9YIN3WK2w3rgPtoPBsVHkODuqHmnitNwb7D9dMVYa7XsEKSGT1Q4Wff1YkVJ9MJ55uKRGQCRlbgGEXpHuYURr1//MuqXviBz/LcrKTmxqr+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cdgBPamb; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WQz5PaEf; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63I4UQJW3441426
+	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Apr 2026 15:08:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=7RKGiZUqwXHwZlcK3riA8O7YRYr98W6ip9N
+	WAR5j7yc=; b=cdgBPambaGImn9rgHx07MsxuvMGmN+FB0slXy+XK/gn5TPAfKP2
+	QIQbNrirfJz7BHLn41K9m5uSewx9JVb7lrhQUmVo2ZmKb5d2tVO6d7LsvFfpWBYk
+	aoZQLW1VHGieEKGTaingE9TLqZ3pD3wtn0QuffyEW1njgjzTywYqwL0gn1FA/gDz
+	Pki5igp6knt4dU7+V+jvpAj0rr70nDJkogh12+CvR0MG6QJ1nXka5Oz+zP9Tzy72
+	jaHSyxpTVJSiZZNlOq81xrcKtS0ONGwgnxE/EVRMkW7Mj8XQK8V2erd2E3iYV1XT
+	M/aDXX1dDS2SHAjvKxYe/bFVQH4UMTIwwCA==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dkyne995x-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Apr 2026 15:08:53 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-35d9278587bso1834433a91.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Apr 2026 08:08:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1776524932; x=1777129732; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7RKGiZUqwXHwZlcK3riA8O7YRYr98W6ip9NWAR5j7yc=;
+        b=WQz5PaEffaFwLSGS18eoezf7FuB7xupWG/MmssUAFA1YFHBirj3N3E6jdt68xQyZ9C
+         u017Mk5SUQstkF7/9QKAkJRGofqoiX/FfDPW3httJ4CzEv86+FOzaGuaZR4Re9p1mm/S
+         F18VDtOJP/0xhEOwqSNdypXiFj8DDZ+5D4iPE0KBUeamFPxJQUQ51Uui2/ytFxU+7ghl
+         i26l/ggyj3iDNIdQfdHeyi1T6QY8FjP7+zfRqYo9uoCEz6RrS4qrlBq1H+WJn495l0GO
+         WrarPLGznEGJzygwv6Zv4lx2Va+vDlO/X4QGctHCHpRSGQke3M75+5WAsVYSNUbNQtnb
+         vLEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776524932; x=1777129732;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7RKGiZUqwXHwZlcK3riA8O7YRYr98W6ip9NWAR5j7yc=;
+        b=BFFB5hBV2nw5XzpqdVLdw/UlMfQINg0PCvKWpWZ+fu3mR9/WQDZaXdtAtTD8+toLOa
+         VSKvVn2H1DGTxFVDLaUl55qj8hw87JMpuDQlyFKgfBzfawUqMT+2sOw1r5uoRsJTMTYU
+         bPpkgYB6Sy6fuMFtPo9JaZpe1zqn+r4vFLzlrfSfAv3YhjQHTr6XBsV7/2xxcE+XkCiA
+         LihpUOCGZx51QmcT/2/TH3ZrFUvB+nyQwiAWU8nIirHV8jkRhGMkwDjd0ykPeReV4Hvo
+         MERtl1+JDv6YNnBfSvpHZDMI7H8XHFijeN+Fpmm7yR6xmokMiv14ypDXaMWboSLYaIwh
+         AnBw==
+X-Gm-Message-State: AOJu0Yx9cXP9+flAfL//39qTCVMuZ7NjB0iab2/UoV+B9sLgI5upm5Ok
+	DKOCb5OeUVomVkey30fbmIc08rdcaIqSHy2gIyaBDojgNynpxd116ayAvf9BkpuEzPhHvQiLKxE
+	IV0Rx4Rwpj6D2rEpkA1ZfvBYob/CRjJgNAdUX28YFCu6ZUXKWuegnkXnsLZheLksYIMs/
+X-Gm-Gg: AeBDieuednunMCDISrZ7canM0D+0FunDin6NmtCC8LLcfKaQf5t1uIu2TlfpTxpp1zs
+	yjaRF5dogp4gdy1aKCq69lO3qBj+MNGrZnD4AQBVLHfXW0nvKXWVaW2u0EvBpqfwZhBzaCJPwm0
+	4F9imQUvjjXfR5RcrlrRq8RlqqnugS58s4sYgzhQkC0CW+ggCa02H1xpqqBqGIHOmALflUUDOkO
+	gqcHcE7sMzOoHB2ICFP0Ij/RQNATdxLtRdbrjrXZzT8cLgtFRRI9uF6sO+iNih7NwPmMbpt4D7D
+	scsMrJhuL9SCQLmRJ/4wZKoggqOGIGpfQSi2ZEomUqIiovYa5jBGW52K99kgRA+oYYRelACkRbJ
+	/wMt5uqsqaCy9DzTTN/fr81t9B54iM3xT8wuv9ujaoL0=
+X-Received: by 2002:a17:90b:3b89:b0:35f:b1f3:ac12 with SMTP id 98e67ed59e1d1-361403cb172mr7163558a91.4.1776524932473;
+        Sat, 18 Apr 2026 08:08:52 -0700 (PDT)
+X-Received: by 2002:a17:90b:3b89:b0:35f:b1f3:ac12 with SMTP id 98e67ed59e1d1-361403cb172mr7163528a91.4.1776524931993;
+        Sat, 18 Apr 2026 08:08:51 -0700 (PDT)
+Received: from localhost ([2601:1c0:5000:d5c:4ec8:83f5:8254:6891])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36143b0dc2fsm4882353a91.3.2026.04.18.08.08.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Apr 2026 08:08:51 -0700 (PDT)
+From: Rob Clark <robin.clark@oss.qualcomm.com>
+To: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm: Correct modparam description
+Date: Sat, 18 Apr 2026 08:08:47 -0700
+Message-ID: <20260418150847.157246-1-robin.clark@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=HbokiCE8 c=1 sm=1 tr=0 ts=69e39e85 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=xqWC_Br6kY4A:10 a=A5OVakUREuEA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8 a=J8kFTu22RRC7rXhO3X0A:9
+ a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-GUID: obtLeZwWubw02WYG4WEtt4tpn1XxiAN3
+X-Proofpoint-ORIG-GUID: obtLeZwWubw02WYG4WEtt4tpn1XxiAN3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDE4MDE1MCBTYWx0ZWRfX+LoVeZNP5ylQ
+ 8P5b67S2jVub5WUlItFrAo33dxbKcAOFld2dxRnC2lhmx7K4NbTHHsrRcVoBRTv1DrywilxbehJ
+ 3Jivwv4YiVIahQdbUy65Czg6EJiuMV/RDVAMz+4m2385JnF/aluwi1qHzyuyTggr4hTooLJCm8C
+ HE/KN8ZQayEifWtnKNMzr4Xb6AB9YGa5/ZoZ2H6vWFYpjSTtkxXGQvAKPFHqzOlNIdtuw5XusSX
+ vaK/88pz7q9mAB/IoNJ86vKgdk9L6lD3KzljAGsFQyKKf3z6SdOpEG+DHFyx12v+ABb3Hi/Su5h
+ XtMHXeK9RsjccBhBF8+hCXIelj3otq59uUD6vTEj3hcXLZD2+fKGX4h+5o7DC7iMvbxE4hFcoTV
+ QAIxtVTdlpIZwiG4Fho3VQpluhTwiYAfOi19n1yWpjepG3WvedJBkTG+dVgSX2jpgbzayokGpmj
+ hn9kk6IFxaGfMOlo+qw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-18_04,2026-04-17_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1015
+ priorityscore=1501 adultscore=0 phishscore=0 suspectscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604180150
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch];
+	TAGGED_FROM(0.00)[bounces-103592-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103591-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DKIM_TRACE(0.00)[pm.me:+];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robin.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,pm.me:email,pm.me:dkim,pm.me:mid]
-X-Rspamd-Queue-Id: D1C02420B92
+	NEURAL_HAM(-0.00)[-1.000];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: D925E4216A1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Multiple QUPs have lanes that can be routed to one of two GPIOs and
-collapsing them prevents devicetrees from requesting specific routing.
+Preemption is enabled for gen8 as well.
 
-For example, a board that wires an I2C SCL line to one of two GPIOs
-cannot request that specific pin with the groups collapsed.
-
-This change splits them up so devicetrees can request the configuration
-they need.
-
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 ---
- drivers/pinctrl/qcom/pinctrl-eliza.c | 200 +++++++++++++++++++++++++++++--=
-----
- 1 file changed, 169 insertions(+), 31 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-eliza.c b/drivers/pinctrl/qcom/pi=
-nctrl-eliza.c
-index c1f756cbcdeb..a1365bcd3bf6 100644
---- a/drivers/pinctrl/qcom/pinctrl-eliza.c
-+++ b/drivers/pinctrl/qcom/pinctrl-eliza.c
-@@ -562,16 +562,39 @@ enum eliza_functions {
- =09msm_mux_qspi_cs,
- =09msm_mux_qup1_se0,
- =09msm_mux_qup1_se1,
--=09msm_mux_qup1_se2,
-+=09msm_mux_qup1_se2_l0,
-+=09msm_mux_qup1_se2_l1,
-+=09msm_mux_qup1_se2_l2_mira,
-+=09msm_mux_qup1_se2_l2_mirb,
-+=09msm_mux_qup1_se2_l3_mira,
-+=09msm_mux_qup1_se2_l3_mirb,
-+=09msm_mux_qup1_se2_l4,
-+=09msm_mux_qup1_se2_l5,
-+=09msm_mux_qup1_se2_l6,
- =09msm_mux_qup1_se3,
- =09msm_mux_qup1_se4,
- =09msm_mux_qup1_se5,
--=09msm_mux_qup1_se6,
--=09msm_mux_qup1_se7,
-+=09msm_mux_qup1_se6_l0,
-+=09msm_mux_qup1_se6_l1_mira,
-+=09msm_mux_qup1_se6_l1_mirb,
-+=09msm_mux_qup1_se6_l2,
-+=09msm_mux_qup1_se6_l3_mira,
-+=09msm_mux_qup1_se6_l3_mirb,
-+=09msm_mux_qup1_se7_l0_mira,
-+=09msm_mux_qup1_se7_l0_mirb,
-+=09msm_mux_qup1_se7_l1_mira,
-+=09msm_mux_qup1_se7_l1_mirb,
-+=09msm_mux_qup1_se7_l2,
-+=09msm_mux_qup1_se7_l3,
- =09msm_mux_qup2_se0,
- =09msm_mux_qup2_se1,
- =09msm_mux_qup2_se2,
--=09msm_mux_qup2_se3,
-+=09msm_mux_qup2_se3_l0_mira,
-+=09msm_mux_qup2_se3_l0_mirb,
-+=09msm_mux_qup2_se3_l1_mira,
-+=09msm_mux_qup2_se3_l1_mirb,
-+=09msm_mux_qup2_se3_l2,
-+=09msm_mux_qup2_se3_l3,
- =09msm_mux_qup2_se4,
- =09msm_mux_qup2_se5,
- =09msm_mux_qup2_se6,
-@@ -977,8 +1000,40 @@ static const char *const qup1_se1_groups[] =3D {
- =09"gpio32", "gpio33", "gpio34", "gpio35",
- };
-=20
--static const char *const qup1_se2_groups[] =3D {
--=09"gpio52", "gpio53", "gpio54", "gpio52", "gpio55", "gpio53", "gpio40", "=
-gpio42", "gpio30",
-+static const char *const qup1_se2_l0_groups[] =3D {
-+=09"gpio52",
-+};
-+
-+static const char *const qup1_se2_l1_groups[] =3D {
-+=09"gpio53",
-+};
-+
-+static const char *const qup1_se2_l2_mira_groups[] =3D {
-+=09"gpio54",
-+};
-+
-+static const char *const qup1_se2_l2_mirb_groups[] =3D {
-+=09"gpio52",
-+};
-+
-+static const char *const qup1_se2_l3_mira_groups[] =3D {
-+=09"gpio55",
-+};
-+
-+static const char *const qup1_se2_l3_mirb_groups[] =3D {
-+=09"gpio53",
-+};
-+
-+static const char *const qup1_se2_l4_groups[] =3D {
-+=09"gpio40",
-+};
-+
-+static const char *const qup1_se2_l5_groups[] =3D {
-+=09"gpio42",
-+};
-+
-+static const char *const qup1_se2_l6_groups[] =3D {
-+=09"gpio30",
- };
-=20
- static const char *const qup1_se3_groups[] =3D {
-@@ -993,12 +1048,52 @@ static const char *const qup1_se5_groups[] =3D {
- =09"gpio132", "gpio133", "gpio134", "gpio135", "gpio34", "gpio35",
- };
-=20
--static const char *const qup1_se6_groups[] =3D {
--=09"gpio40", "gpio42", "gpio54", "gpio42", "gpio40", "gpio55",
-+static const char *const qup1_se6_l0_groups[] =3D {
-+=09"gpio40",
-+};
-+
-+static const char *const qup1_se6_l1_mira_groups[] =3D {
-+=09"gpio42",
-+};
-+
-+static const char *const qup1_se6_l1_mirb_groups[] =3D {
-+=09"gpio54",
-+};
-+
-+static const char *const qup1_se6_l2_groups[] =3D {
-+=09"gpio42",
-+};
-+
-+static const char *const qup1_se6_l3_mira_groups[] =3D {
-+=09"gpio40",
- };
-=20
--static const char *const qup1_se7_groups[] =3D {
--=09"gpio81", "gpio78", "gpio80", "gpio114", "gpio114", "gpio78",
-+static const char *const qup1_se6_l3_mirb_groups[] =3D {
-+=09"gpio55",
-+};
-+
-+static const char *const qup1_se7_l0_mira_groups[] =3D {
-+=09"gpio81",
-+};
-+
-+static const char *const qup1_se7_l0_mirb_groups[] =3D {
-+=09"gpio78",
-+};
-+
-+static const char *const qup1_se7_l1_mira_groups[] =3D {
-+=09"gpio80",
-+};
-+
-+static const char *const qup1_se7_l1_mirb_groups[] =3D {
-+=09"gpio114",
-+};
-+
-+static const char *const qup1_se7_l2_groups[] =3D {
-+=09"gpio114",
-+};
-+
-+static const char *const qup1_se7_l3_groups[] =3D {
-+=09"gpio78",
- };
-=20
- static const char *const qup2_se0_groups[] =3D {
-@@ -1013,8 +1108,28 @@ static const char *const qup2_se2_groups[] =3D {
- =09"gpio8", "gpio9", "gpio10", "gpio11", "gpio16", "gpio17", "gpio18",
- };
-=20
--static const char *const qup2_se3_groups[] =3D {
--=09"gpio79", "gpio116", "gpio97", "gpio100", "gpio100", "gpio116",
-+static const char *const qup2_se3_l0_mira_groups[] =3D {
-+=09"gpio79",
-+};
-+
-+static const char *const qup2_se3_l0_mirb_groups[] =3D {
-+=09"gpio116",
-+};
-+
-+static const char *const qup2_se3_l1_mira_groups[] =3D {
-+=09"gpio97",
-+};
-+
-+static const char *const qup2_se3_l1_mirb_groups[] =3D {
-+=09"gpio100",
-+};
-+
-+static const char *const qup2_se3_l2_groups[] =3D {
-+=09"gpio100",
-+};
-+
-+static const char *const qup2_se3_l3_groups[] =3D {
-+=09"gpio116",
- };
-=20
- static const char *const qup2_se4_groups[] =3D {
-@@ -1235,16 +1350,39 @@ static const struct pinfunction eliza_functions[] =
-=3D {
- =09MSM_PIN_FUNCTION(qspi_cs),
- =09MSM_PIN_FUNCTION(qup1_se0),
- =09MSM_PIN_FUNCTION(qup1_se1),
--=09MSM_PIN_FUNCTION(qup1_se2),
-+=09MSM_PIN_FUNCTION(qup1_se2_l0),
-+=09MSM_PIN_FUNCTION(qup1_se2_l1),
-+=09MSM_PIN_FUNCTION(qup1_se2_l2_mira),
-+=09MSM_PIN_FUNCTION(qup1_se2_l2_mirb),
-+=09MSM_PIN_FUNCTION(qup1_se2_l3_mira),
-+=09MSM_PIN_FUNCTION(qup1_se2_l3_mirb),
-+=09MSM_PIN_FUNCTION(qup1_se2_l4),
-+=09MSM_PIN_FUNCTION(qup1_se2_l5),
-+=09MSM_PIN_FUNCTION(qup1_se2_l6),
- =09MSM_PIN_FUNCTION(qup1_se3),
- =09MSM_PIN_FUNCTION(qup1_se4),
- =09MSM_PIN_FUNCTION(qup1_se5),
--=09MSM_PIN_FUNCTION(qup1_se6),
--=09MSM_PIN_FUNCTION(qup1_se7),
-+=09MSM_PIN_FUNCTION(qup1_se6_l0),
-+=09MSM_PIN_FUNCTION(qup1_se6_l1_mira),
-+=09MSM_PIN_FUNCTION(qup1_se6_l1_mirb),
-+=09MSM_PIN_FUNCTION(qup1_se6_l2),
-+=09MSM_PIN_FUNCTION(qup1_se6_l3_mira),
-+=09MSM_PIN_FUNCTION(qup1_se6_l3_mirb),
-+=09MSM_PIN_FUNCTION(qup1_se7_l0_mira),
-+=09MSM_PIN_FUNCTION(qup1_se7_l0_mirb),
-+=09MSM_PIN_FUNCTION(qup1_se7_l1_mira),
-+=09MSM_PIN_FUNCTION(qup1_se7_l1_mirb),
-+=09MSM_PIN_FUNCTION(qup1_se7_l2),
-+=09MSM_PIN_FUNCTION(qup1_se7_l3),
- =09MSM_PIN_FUNCTION(qup2_se0),
- =09MSM_PIN_FUNCTION(qup2_se1),
- =09MSM_PIN_FUNCTION(qup2_se2),
--=09MSM_PIN_FUNCTION(qup2_se3),
-+=09MSM_PIN_FUNCTION(qup2_se3_l0_mira),
-+=09MSM_PIN_FUNCTION(qup2_se3_l0_mirb),
-+=09MSM_PIN_FUNCTION(qup2_se3_l1_mira),
-+=09MSM_PIN_FUNCTION(qup2_se3_l1_mirb),
-+=09MSM_PIN_FUNCTION(qup2_se3_l2),
-+=09MSM_PIN_FUNCTION(qup2_se3_l3),
- =09MSM_PIN_FUNCTION(qup2_se4),
- =09MSM_PIN_FUNCTION(qup2_se5),
- =09MSM_PIN_FUNCTION(qup2_se6),
-@@ -1316,7 +1454,7 @@ static const struct msm_pingroup eliza_groups[] =3D {
- =09[27] =3D PINGROUP(27, qup2_se4, aoss_cti, mdp_vsync11_out, qup2_se7, gc=
-c_gp1, _, _, _, _, _, _),
- =09[28] =3D PINGROUP(28, qup1_se0, ibi_i3c, _, _, _, _, _, _, _, _, egpio)=
-,
- =09[29] =3D PINGROUP(29, qup1_se0, ibi_i3c, _, _, _, _, _, _, _, _, egpio)=
-,
--=09[30] =3D PINGROUP(30, qup1_se0, qup1_se2, cci_async_in, gcc_gp3, qdss_g=
-pio_tracedata, _, _, _, _, _, egpio),
-+=09[30] =3D PINGROUP(30, qup1_se0, qup1_se2_l6, cci_async_in, gcc_gp3, qds=
-s_gpio_tracedata, _, _, _, _, _, egpio),
- =09[31] =3D PINGROUP(31, qup1_se0, cci_async_in, qdss_gpio_tracedata, _, _=
-, _, _, _, _, _, egpio),
- =09[32] =3D PINGROUP(32, qup1_se1, ibi_i3c, audio_ref_clk, gcc_gp2, qdss_c=
-ti, _, _, _, _, _, _),
- =09[33] =3D PINGROUP(33, qup1_se1, ibi_i3c, host2wlan_sol, gcc_gp3, _, _, =
-_, _, _, _, _),
-@@ -1326,9 +1464,9 @@ static const struct msm_pingroup eliza_groups[] =3D {
- =09[37] =3D PINGROUP(37, qup1_se4, qup1_se4, ibi_i3c, _, _, _, _, _, _, _,=
- _),
- =09[38] =3D PINGROUP(38, _, _, _, _, _, _, _, _, _, _, _),
- =09[39] =3D PINGROUP(39, _, _, _, _, _, _, _, _, _, _, _),
--=09[40] =3D PINGROUP(40, qup1_se6, qup1_se2, qup1_se6, _, qdss_gpio_traced=
-ata, gnss_adc1, ddr_pxi1, _, _, _, _),
-+=09[40] =3D PINGROUP(40, qup1_se6_l0, qup1_se2_l4, qup1_se6_l3_mira, _, qd=
-ss_gpio_tracedata, gnss_adc1, ddr_pxi1, _, _, _, _),
- =09[41] =3D PINGROUP(41, _, _, _, _, _, _, _, _, _, _, _),
--=09[42] =3D PINGROUP(42, qup1_se6, qup1_se2, qup1_se6, qdss_gpio_tracedata=
-, gnss_adc0, ddr_pxi1, _, _, _, _, _),
-+=09[42] =3D PINGROUP(42, qup1_se6_l2, qup1_se2_l5, qup1_se6_l1_mira, qdss_=
-gpio_tracedata, gnss_adc0, ddr_pxi1, _, _, _, _, _),
- =09[43] =3D PINGROUP(43, _, _, _, _, _, _, _, _, _, _, _),
- =09[44] =3D PINGROUP(44, qup1_se3, _, _, _, _, _, _, _, _, _, _),
- =09[45] =3D PINGROUP(45, qup1_se3, _, _, _, _, _, _, _, _, _, _),
-@@ -1338,10 +1476,10 @@ static const struct msm_pingroup eliza_groups[] =3D=
- {
- =09[49] =3D PINGROUP(49, _, _, _, _, _, _, _, _, _, _, _),
- =09[50] =3D PINGROUP(50, sdc2_fb_clk, _, _, _, _, _, _, _, _, _, _),
- =09[51] =3D PINGROUP(51, _, _, _, _, _, _, _, _, _, _, _),
--=09[52] =3D PINGROUP(52, qup1_se2, pcie1_clk_req_n, qup1_se2, ddr_bist_com=
-plete, qdss_gpio_tracedata, _, vsense_trigger_mirnat, _, _, _, _),
--=09[53] =3D PINGROUP(53, qup1_se2, qup1_se2, gcc_gp1, ddr_bist_stop, _, qd=
-ss_gpio_tracedata, _, _, _, _, _),
--=09[54] =3D PINGROUP(54, qup1_se2, qup1_se6, qdss_gpio_tracedata, gnss_adc=
-1, atest_usb, ddr_pxi0, _, _, _, _, _),
--=09[55] =3D PINGROUP(55, qup1_se2, dp0_hot, qup1_se6, _, gnss_adc0, atest_=
-usb, ddr_pxi0, _, _, _, _),
-+=09[52] =3D PINGROUP(52, qup1_se2_l0, pcie1_clk_req_n, qup1_se2_l2_mirb, d=
-dr_bist_complete, qdss_gpio_tracedata, _, vsense_trigger_mirnat, _, _, _, _=
-),
-+=09[53] =3D PINGROUP(53, qup1_se2_l1, qup1_se2_l3_mirb, gcc_gp1, ddr_bist_=
-stop, _, qdss_gpio_tracedata, _, _, _, _, _),
-+=09[54] =3D PINGROUP(54, qup1_se2_l2_mira, qup1_se6_l1_mirb, qdss_gpio_tra=
-cedata, gnss_adc1, atest_usb, ddr_pxi0, _, _, _, _, _),
-+=09[55] =3D PINGROUP(55, qup1_se2_l3_mira, dp0_hot, qup1_se6_l3_mirb, _, g=
-nss_adc0, atest_usb, ddr_pxi0, _, _, _, _),
- =09[56] =3D PINGROUP(56, usb0_hs, tsense_pwm1, tsense_pwm2, tsense_pwm3, t=
-sense_pwm4, _, _, _, _, _, _),
- =09[57] =3D PINGROUP(57, sd_write_protect, _, _, _, _, _, _, _, _, _, _),
- =09[58] =3D PINGROUP(58, _, _, _, _, _, _, _, _, _, _, _),
-@@ -1364,10 +1502,10 @@ static const struct msm_pingroup eliza_groups[] =3D=
- {
- =09[75] =3D PINGROUP(75, cci_i2c_scl, _, phase_flag, _, _, _, _, _, _, _, =
-_),
- =09[76] =3D PINGROUP(76, cci_i2c_sda, cci_timer, prng_rosc2, _, phase_flag=
-, _, _, _, _, _, _),
- =09[77] =3D PINGROUP(77, cci_i2c_scl, jitter_bist, _, _, _, _, _, _, _, _,=
- _),
--=09[78] =3D PINGROUP(78, qup1_se7, qup1_se7, _, phase_flag, _, _, _, _, _,=
- _, _),
--=09[79] =3D PINGROUP(79, qspi0, mdp_vsync, qup2_se3, _, _, _, _, _, _, _, =
-_),
--=09[80] =3D PINGROUP(80, pcie0_clk_req_n, qup1_se7, _, phase_flag, _, _, _=
-, _, _, _, _),
--=09[81] =3D PINGROUP(81, wcn_sw_ctrl, qup1_se7, dbg_out_clk, _, _, _, _, _=
-, _, _, _),
-+=09[78] =3D PINGROUP(78, qup1_se7_l3, qup1_se7_l0_mirb, _, phase_flag, _, =
-_, _, _, _, _, _),
-+=09[79] =3D PINGROUP(79, qspi0, mdp_vsync, qup2_se3_l0_mira, _, _, _, _, _=
-, _, _, _),
-+=09[80] =3D PINGROUP(80, pcie0_clk_req_n, qup1_se7_l1_mira, _, phase_flag,=
- _, _, _, _, _, _, _),
-+=09[81] =3D PINGROUP(81, wcn_sw_ctrl, qup1_se7_l0_mira, dbg_out_clk, _, _,=
- _, _, _, _, _, _),
- =09[82] =3D PINGROUP(82, _, _, _, _, _, _, _, _, _, _, _),
- =09[83] =3D PINGROUP(83, _, _, _, _, _, _, _, _, _, _, _),
- =09[84] =3D PINGROUP(84, uim0_data, _, _, _, _, _, _, _, _, _, _),
-@@ -1383,10 +1521,10 @@ static const struct msm_pingroup eliza_groups[] =3D=
- {
- =09[94] =3D PINGROUP(94, qlink_wmss, _, _, _, _, _, _, _, _, _, _),
- =09[95] =3D PINGROUP(95, qlink_big_request, _, _, _, _, _, _, _, _, _, _),
- =09[96] =3D PINGROUP(96, qlink_big_enable, _, _, _, _, _, _, _, _, _, _),
--=09[97] =3D PINGROUP(97, uim1_data, qspi0, qup2_se3, _, _, _, _, _, _, _, =
-_),
-+=09[97] =3D PINGROUP(97, uim1_data, qspi0, qup2_se3_l1_mira, _, _, _, _, _=
-, _, _, _),
- =09[98] =3D PINGROUP(98, uim1_clk, qspi0, _, _, _, _, _, _, _, _, _),
- =09[99] =3D PINGROUP(99, uim1_reset, qspi0, _, _, _, _, _, _, _, _, _),
--=09[100] =3D PINGROUP(100, uim1_present, qspi0, qup2_se3, coex_uart2_tx, q=
-up2_se3, mdp_vsync, _, _, _, _, _),
-+=09[100] =3D PINGROUP(100, uim1_present, qspi0, qup2_se3_l2, coex_uart2_tx=
-, qup2_se3_l1_mirb, mdp_vsync, _, _, _, _, _),
- =09[101] =3D PINGROUP(101, _, _, _, _, _, _, _, _, _, _, _),
- =09[102] =3D PINGROUP(102, _, _, _, _, _, _, _, _, _, _, _),
- =09[103] =3D PINGROUP(103, _, _, _, _, _, _, _, _, _, _, _),
-@@ -1400,9 +1538,9 @@ static const struct msm_pingroup eliza_groups[] =3D {
- =09[111] =3D PINGROUP(111, coex_uart1_tx, _, _, _, _, _, _, _, _, _, _),
- =09[112] =3D PINGROUP(112, coex_uart1_rx, _, _, _, _, _, _, _, _, _, _),
- =09[113] =3D PINGROUP(113, _, nav_gpio3, _, _, _, _, _, _, _, _, _),
--=09[114] =3D PINGROUP(114, qup1_se7, qup1_se7, _, qdss_gpio_tracedata, _, =
-_, _, _, _, _, _),
-+=09[114] =3D PINGROUP(114, qup1_se7_l2, qup1_se7_l1_mirb, _, qdss_gpio_tra=
-cedata, _, _, _, _, _, _, _),
- =09[115] =3D PINGROUP(115, _, qspi0, cci_async_in, _, _, _, _, _, _, _, _)=
-,
--=09[116] =3D PINGROUP(116, qspi0, coex_uart2_rx, qup2_se3, qup2_se3, _, _,=
- _, _, _, _, _),
-+=09[116] =3D PINGROUP(116, qspi0, coex_uart2_rx, qup2_se3_l3, qup2_se3_l0_=
-mirb, _, _, _, _, _, _, _),
- =09[117] =3D PINGROUP(117, nav_gpio1, _, vfr_1, _, _, _, _, _, _, _, _),
- =09[118] =3D PINGROUP(118, nav_gpio2, _, _, _, _, _, _, _, _, _, _),
- =09[119] =3D PINGROUP(119, nav_gpio0, _, _, _, _, _, _, _, _, _, _),
-
----
-base-commit: c7275b05bc428c7373d97aa2da02d3a7fa6b9f66
-change-id: 20260418-fix-eliza-pinctrl-b6e66dd92766
-
-Best regards,
---=20
-Alexander Koskovich <akoskovich@pm.me>
-
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 770078904182..7f20320ef66a 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -17,7 +17,7 @@ MODULE_PARM_DESC(snapshot_debugbus, "Include debugbus sections in GPU devcoredum
+ module_param_named(snapshot_debugbus, snapshot_debugbus, bool, 0600);
+ 
+ int enable_preemption = -1;
+-MODULE_PARM_DESC(enable_preemption, "Enable preemption (A7xx only) (1=on , 0=disable, -1=auto (default))");
++MODULE_PARM_DESC(enable_preemption, "Enable preemption (A7xx+ only) (1=on , 0=disable, -1=auto (default))");
+ module_param(enable_preemption, int, 0600);
+ 
+ bool disable_acd;
+-- 
+2.53.0
 
 
