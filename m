@@ -1,201 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-103744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2L9SLvAS5mnRrAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 13:50:08 +0200
+	id eBunEMMU5mnRrAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 13:57:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1F9E42A285
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 13:50:07 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9ABF742A5C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 13:57:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 8D7803006D50
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 11:50:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 651F43002FA1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 11:51:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0900739E6E4;
-	Mon, 20 Apr 2026 11:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8CC939D6CF;
+	Mon, 20 Apr 2026 11:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VTpHXisL";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NmLGfzOl"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="kbqgEp8q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F6839BFE9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 11:50:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313AA375AD0;
+	Mon, 20 Apr 2026 11:51:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776685802; cv=none; b=bbl4Lhs5PN5Nd1SMv+Viy4BaIBAaO+a6Vh3vDTo9mjCFLkBkLN2qtbahY+4ad/j2ezzVvqH0xLoZUePdNiWrELx3YYSpFd9Hq5qIavWEF39qybwMxcBRhskJMpVsPvSdNCt/ztAvMWxIHo9S6iNxqEjM7ntPvB8XYGkHfTF5G+A=
+	t=1776685918; cv=none; b=d2HWaPbrtVJza+DWBoBi6Dj9lEN2Jtl69fsPOFhEVxSGzRYq2dt8tg+E1SrZ92HyNhKd6PnLTnaFXtYMG9mh6XwFKeITRSSqE6yJJS4d5sYxkAzpY9TImwC/eUrZlFNEf4sCKvT1YZ5EQpgTdsPYdLB3S4WeBeW9i9jbsan/uQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776685802; c=relaxed/simple;
-	bh=BhtVsvHqwipunR1cVFQzCSny4nImw5wDkPa6vKIEfXc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=B9023Zwg1RaM6tbANYv9qho5uyJvr666kFTNv2kihS4EAy/RVgKHTZ7DOaLzExUtU330o9bqzYEBKAI3fkEBFiw5cQYh/U+3DRk6+as2R5TFQLR/wfnkaC36ac8aNpL3N2bhl+G2k2Ndkwk6KAnCDfMzpwXDTxvCcVnWLFJgHkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VTpHXisL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NmLGfzOl; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63K7WttT1532097
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 11:50:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=gwv9Rp6MAzjqv4y3DbSzkzWs0vosbCAkTdd
-	M1lHun2Y=; b=VTpHXisL8QBqQqas4ixUxRwIWPzD2Pm2lYcykie/p1fwScQqIMb
-	ugVBfJ83W0j1T0x+hZTioSdb1p6naTMP9Z5PUPcj9L7Kzfc7UOGP5pq4U/15po5Q
-	bWmCnDrC3ZlwK/xV4zIzSIx0SgVzNc0GulbAm/ct0bQpbkuP5rVBXKVvp2slmL0j
-	zaUBlWZwQWFYK2Bml3Tc2fhDye7HkmLG9ztu3DiWmi+3KVZc/fztglJJDXS/9PUQ
-	wJG/pLLVMG5+0WU+cG117OuqR/TdMrW1vvkCII0fWBgSOCSUV2zob4LsSozwfKq7
-	Z5zWGEG8E8J/IxG5iEsd1Uz5WaB6uYgz0Ew==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com [74.125.82.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dnfus17p0-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 11:50:00 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id 5a478bee46e88-2d93379001eso2103150eec.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 04:50:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776685800; x=1777290600; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gwv9Rp6MAzjqv4y3DbSzkzWs0vosbCAkTddM1lHun2Y=;
-        b=NmLGfzOljWPWoMdIrEfWBMQ0ovxVyDDgg9o3ov9BaHhDikYb/HO4AKCyaTlfsFmB2T
-         FX25Tv6O+VtglPWSdPP/ZgsahTHWIEnOuEhENzv91/kB2leE0VEyaPgd1dcDe1/nmb4L
-         dLwBeJEYOan6HWnmVDjJKDtzwGcOZh4i1NTLMXvABtXuKtJmNFoKfeO2FPsEzQ0PN9XA
-         631R6A9bbl9ORqvDuXPCL0XA1OdEewt/JasUdRXG1A+yUrAHeVy1m+mOas3lPgDsDXeH
-         V8LCtnpTr/vVmhGVWnyNF+prJSLrE8oxHILtNi91RCCQPxvwoiikNvIz4KnHakBd8a6u
-         X5WQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776685800; x=1777290600;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gwv9Rp6MAzjqv4y3DbSzkzWs0vosbCAkTddM1lHun2Y=;
-        b=tFXWrChtjAlQUWbfiF6OmMPJ64pG5mGiSTYBCtJJBqcSz6MGKzY4KCe6B5LUCKWhV1
-         4bJUoj4f6zllJvcxLhxhri7NmS/Wb9d6nFFVup5IO9k5TJO0zYD/9SOreoGGPk4cqJ67
-         xCJ0CaP3hUXZCnUhIJ5+wS80YdwJM6YN1Dyl2sO8LBCLobBAwmxgKgtP7A+iPgnC6rYB
-         HVtFXg6Dr7X4tTkY948+D92Ta13GavUHfvLb/U58Pef8Vi6dJ+FQKpzL5ZiHkvWyitZ4
-         1Ce8m4J8yQqr+hn+5rewWDfuc8aAhmAu0qY5zoYIKxpHz493rBUa5BDuRX0KfGwPFJUj
-         frIQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8wkbn340JbpPrcZHJ0MTa0s8EaL0xnPNdISkdrMzztZBtVniLCDwbdXCz2YG0Wn/MIck4zZLZJmoZTHC9g@vger.kernel.org
-X-Gm-Message-State: AOJu0YwanaNah97XNpjlywYoM5Fzub1E2B32+8Piu7yWuTLQQ05o2Bkf
-	Atw2Z23iDwVR3GKTCaYkB4yCItscMzfoFrafqtYruUKnHRfYlMUvkka296Rs4GbLQ1UMdYzMHEa
-	5/xA7jw3OC0a+2pxkF4bpP62gTwyAxxL8XbxE9j5Mn4elqZiBiFYuentLvPUc13gzVkr2
-X-Gm-Gg: AeBDiesxRvSnngOUzP+W0VVMrgK9FJjRnV521HmK53VpQcmMT+RxNFMU6grZZoaRZ46
-	bFhrulw8hvyyxvmRKzvsAjZblstxUfDPXpyPsXBnTqqZIT0yjRSqh3glcmmmAGsrobAm038PxHD
-	RgKWGt5XXwv3faZk5EiEB9eijkvDlLtF7Ym3ySQhiuXJkbJxhjspYPSaC+MwN41JU7wQ51yUdiH
-	H5x44qpOlKvxIF2avvxjyklEvX9gf2KL+1FSeYK7z4Cwe5zJItyhHbTpcb/11AQxJAIhIVutzXB
-	PinbHCDcqLQJxmskL1Ku4tjNnGFe7MjjOtoDlfQ91pw3RYJ3xwe/aIPzX03HfeUcRh8D4rfQztt
-	42X5w3HWJ6kOgRMwtj8406OMQ+TdWO7wnfkqi4dve7BXmjvDI2EJixgPJrKJvjfqMjxVuzqXq5R
-	95qCUuvY2woa5UA0vh
-X-Received: by 2002:a05:7301:578e:b0:2d9:6373:ad1d with SMTP id 5a478bee46e88-2e478c1f833mr7108112eec.20.1776685799829;
-        Mon, 20 Apr 2026 04:49:59 -0700 (PDT)
-X-Received: by 2002:a05:7301:578e:b0:2d9:6373:ad1d with SMTP id 5a478bee46e88-2e478c1f833mr7108095eec.20.1776685799305;
-        Mon, 20 Apr 2026 04:49:59 -0700 (PDT)
-Received: from QCOM-aGQu4IUr3Y.qualcomm.com (i-global052.qualcomm.com. [199.106.103.52])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2e539fa244csm13683810eec.2.2026.04.20.04.49.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2026 04:49:58 -0700 (PDT)
-From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-To: Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck <linux@roeck-us.net>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>,
-        Shawn Guo <shengchao.guo@oss.qualcomm.com>
-Subject: [PATCH] dt-bindings: watchdog: qcom-wdt: Add compatible for Nord watchdog
-Date: Mon, 20 Apr 2026 19:49:50 +0800
-Message-ID: <20260420114950.1253792-1-shengchao.guo@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1776685918; c=relaxed/simple;
+	bh=Uj43gvxABQWLIrStRddWS7MNYGB+8ufSczMe2ZWKRR0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EsCx4rq3IlJ8U/vzqS3PMDIozgSClmL66zFdalNpAVQQcyQt2hxwJXcg2laLxahmXU88QkOALE78LjAkZEJNaIkP5zxBXDHetau+v/r0fjrhKr5G3CsLrRCa2ZM6uUrkIrNx62NRIHsbivKvKiUl+XiA1Az5OEoEFrQqv4f8SQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=kbqgEp8q; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 6AC462451;
+	Mon, 20 Apr 2026 13:50:15 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1776685817;
+	bh=Uj43gvxABQWLIrStRddWS7MNYGB+8ufSczMe2ZWKRR0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=kbqgEp8qfmaABuyz8o4+tz3ZxkCRqnCDoNhgOWtkcu5TeIcyz5caIsXWreGwN4wfM
+	 6BsxqcL8/8ACPJ37j4d3Vu2QnCV+o1n8Jn6oTRHIVgrtQI9/f2ZBLtGcVVzKCoU94B
+	 GWx/HhsBWfufDywWK/v7i1LaHHABg3vl/L4miqdk=
+Message-ID: <ac330f76-24dc-4f6b-aeaf-69176eb41298@ideasonboard.com>
+Date: Mon, 20 Apr 2026 14:51:49 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDExNSBTYWx0ZWRfX2qYfa0xG7S/g
- feszD2Sx306rb+vInP4v4DSPS5gDAg/1E6KAMNLh7N+OtCK2ZxTGe9Frw46OYVI1Bxw3KmEojBo
- fF6ovTLj5dJD2tHvB7ca/WYNFWlViEdy3b+pGScSKp/0yWNK8cd6xCctgLOxCK2wgxwJnTXvehS
- PSbZqpHJWEYJ77Yk1gWm+4WJIoYmtiUDvX35Yht9c3MBRw+LqVAcMXslBD2ZNOQ7aHg3IcEyIYe
- jG+jOwF3NJOqTKEg3O9WqrO8vdg/8Vl8JGJ1f69pEbqNAGIT+k/O5af5TZ7jbcRPpSiDC3zEzN/
- mvsGCDec8nzIb2mBFGmijtPw4oNHslOq2ABUoVzq6dExco9+LMirl9slPBRbFSJB1QLaDPuoyXy
- rix4sqmHplloFOo6NvN/YXIsp5EUqzFFhUvnGbNqECpzfSFFqv0US4EGF5NmyVB2BX0ZEoamnAf
- QnsN2MLYstirZE00ygg==
-X-Proofpoint-GUID: qQOhsl4EflEb8thw2Ywcm__U3VhJZ8Th
-X-Authority-Analysis: v=2.4 cv=PMQ/P/qC c=1 sm=1 tr=0 ts=69e612e8 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=b9+bayejhc3NMeqCNyeLQQ==:17
- a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
- a=r--zF035SsPxjZAzwykA:9 a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-ORIG-GUID: qQOhsl4EflEb8thw2Ywcm__U3VhJZ8Th
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-20_02,2026-04-17_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 impostorscore=0 adultscore=0 lowpriorityscore=0
- suspectscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604200115
-X-Spamd-Result: default: False [0.84 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] drm/connector: report IRQ_HPD events to
+ drm_connector_oob_hotplug_event()
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-usb@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, linux-amlogic@lists.infradead.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Adrien Grassein <adrien.grassein@gmail.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ Rodrigo Vivi <rodrigo.vivi@intel.com>,
+ Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+ Tvrtko Ursulin <tursulin@ursulin.net>, Kevin Hilman <khilman@baylibre.com>,
+ Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Pengyu Luo <mitltlatltl@gmail.com>,
+ Nikita Travkin <nikita@trvn.ru>, Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+References: <20260416-hpd-irq-events-v1-0-1ab1f1cfb2b2@oss.qualcomm.com>
+ <20260416-hpd-irq-events-v1-1-1ab1f1cfb2b2@oss.qualcomm.com>
+ <51b7c44e-36c9-461f-983a-eaa86eeb8cfd@ideasonboard.com>
+ <6z572fdjkvjqvedifwvotgdy4lcrifiqvkjpnutousjqc6764r@zepfzkqy2kbu>
+ <a2e60e74-a1be-469d-8f4d-ecce1f30b517@ideasonboard.com>
+ <3vrqk67oivkgo26xdc3r774rvj3jn3t6sfydhlytyrfiftubhg@cipain7xxcjz>
+ <f74ecd0a-3ff3-45b4-935e-44b89cd0c92d@ideasonboard.com>
+ <v7h3a5pwx32dfcumc3diysylja6lhkhobyzemfthb6dsadcxnp@2kkidnsgov4e>
+Content-Language: en-US
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+In-Reply-To: <v7h3a5pwx32dfcumc3diysylja6lhkhobyzemfthb6dsadcxnp@2kkidnsgov4e>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[ideasonboard.com,none];
+	R_DKIM_ALLOW(-0.20)[ideasonboard.com:s=mail];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-103745-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103744-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shengchao.guo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[lists.freedesktop.org,vger.kernel.org,lists.infradead.org,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,linuxfoundation.org,intel.com,linaro.org,ideasonboard.com,kwiboo.se,ursulin.net,baylibre.com,googlemail.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,trvn.ru];
+	RCPT_COUNT_TWELVE(0.00)[42];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-0.997];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[tomi.valkeinen@ideasonboard.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[ideasonboard.com:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: B1F9E42A285
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ideasonboard.com:dkim,ideasonboard.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 9ABF742A5C0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
+Hi,
 
-Add compatible for watchdog present on Qualcomm Nord SoC with a fallback
-on qcom,kpss-wdt based on the compatibility.
+On 20/04/2026 14:45, Dmitry Baryshkov wrote:
+> On Mon, Apr 20, 2026 at 02:01:57PM +0300, Tomi Valkeinen wrote:
+>> Hi,
+>>
+>> On 20/04/2026 12:50, Dmitry Baryshkov wrote:
+>>> On Mon, Apr 20, 2026 at 07:50:46AM +0300, Tomi Valkeinen wrote:
+>>>> Hi,
+>>>>
+>>>> On 18/04/2026 01:32, Dmitry Baryshkov wrote:
+>>>>> On Thu, Apr 16, 2026 at 11:10:03AM +0300, Tomi Valkeinen wrote:
+>>>>>> Hi,
+>>>>>>
+>>>>>> On 16/04/2026 02:22, Dmitry Baryshkov wrote:
+>>>>>>> The DisplayPort standard defines a special kind of events called IRQ.
+>>>>>>> These events are used to notify DP Source about the events on the Sink
+>>>>>>> side. It is extremely important for DP MST handling, where the MST
+>>>>>>> events are reported through this IRQ.
+>>>>>>>
+>>>>>>> In case of the USB-C DP AltMode there is no actual HPD pulse, but the
+>>>>>>> events are ported through the bits in the AltMode VDOs.
+>>>>>>>
+>>>>>>> Extend the drm_connector_oob_hotplug_event() interface and report IRQ
+>>>>>>> events to the DisplayPort Sink drivers.
+>>>>>>>
+>>>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>>>>>> ---
+>>>>>>>      drivers/gpu/drm/drm_connector.c          |  4 +++-
+>>>>>>>      drivers/usb/typec/altmodes/displayport.c | 12 ++++++++----
+>>>>>>>      include/drm/drm_connector.h              |  3 ++-
+>>>>>>>      3 files changed, 13 insertions(+), 6 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
+>>>>>>> index 47dc53c4a738..5fdacbd84bd7 100644
+>>>>>>> --- a/drivers/gpu/drm/drm_connector.c
+>>>>>>> +++ b/drivers/gpu/drm/drm_connector.c
+>>>>>>> @@ -3510,6 +3510,7 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
+>>>>>>>       * drm_connector_oob_hotplug_event - Report out-of-band hotplug event to connector
+>>>>>>>       * @connector_fwnode: fwnode_handle to report the event on
+>>>>>>>       * @status: hot plug detect logical state
+>>>>>>> + * @irq_hpd: HPD pulse detected
+>>>>>>>       *
+>>>>>>>       * On some hardware a hotplug event notification may come from outside the display
+>>>>>>>       * driver / device. An example of this is some USB Type-C setups where the hardware
+>>>>>>> @@ -3520,7 +3521,8 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
+>>>>>>>       * a drm_connector reference through calling drm_connector_find_by_fwnode().
+>>>>>>>       */
+>>>>>>>      void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
+>>>>>>> -				     enum drm_connector_status status)
+>>>>>>> +				     enum drm_connector_status status,
+>>>>>>> +				     bool irq_hpd)
+>>>>>> I find the "IRQ HPD" naming always confusing, even if I'm somewhat familiar
+>>>>>> with DP, but if someone has mainly worked on HDMI, I'm sure it's even worse.
+>>>>>>
+>>>>>> Can we define this a bit more precisely? Is 'irq_hpd' only for displayport?
+>>>>>> If so, perhaps 'dp_irq_hpd' or 'displayport_irq_hpd'. I might even call it
+>>>>>> 'dp_hpd_pulse', but maybe that's not good as the spec talks about HPD pulse
+>>>>>> for both short and long ones (although in the kernel doc you just write "HPD
+>>>>>> pulse")... The kernel doc could be expanded a bit to make it clear what this
+>>>>>> flag indicates.
+>>>>>
+>>>>> I attempted to stay away from defining a DP-specific flag, keeping it
+>>>>> generic enough. HDMI is pretty close (IMO) to requiring separate flag in
+>>>>
+>>>> If it's not specifically the DP IRQ HPD, then we need to define what it
+>>>> means. I tried to think what it would mean with HDMI, but I didn't come up
+>>>> with anything.
+>>>
+>>> I might be mistaken, but I had someting like HEAC HPD / EDID status
+>>> changes in mind (or HDCP-triggered HPD status changes). But here I
+>>> admit, I hadn't checked if it is actually applicable or not.
+>>
+>> Possibly, I'm not familiar with those.
+>>
+>>> Anyway, for e.g. DVI or VGA that means nothing. But, my point really is
+>>> to abstain from defining someting as DP-only in the top-level API.
+>>
+>> I'm fine with that, but then it really has to be defined =).
+>>
+>>>>> Linux. Likewise I'd rather not use "pulse". The DP AltMode defines a bit
+>>>>> in the VDO rather than a pulse.
+>>>>>
+>>>>> Anyway, if irq_hpd doesn't sound precise enough, what about "bool
+>>>>> extra_irq"? This would convey that this is the extra hpd-related IRQ,
+>>>>> but it would also be obvious that it's not related to the HPD pin
+>>>>> itself.
+>>>> We'd still need to define what exactly it means. I think it might be better
+>>>> to just define it as the DP IRQ HPD, as then the meaning is clear.
+>>>>
+>>>> Also, would an enum flags parameter be better than a bool parameter?
+>>>
+>>> Maybe not enum, but u32 param. Then it can become:
+>>>
+>>> @extra_status: additional type-specific information provided by the sink
+>>> without changing the HPD state
+>>>
+>>> void drm_connector_oob_hotplug_event(..., u32 extra_status);
+>>>
+>>> /* DP short HPD pulse or corresponding AltMode flag */
+>>> #define DRM_CONNECTOR_OOB_DP_IRQ_HPD BIT(0)
+>>> /* DP long HPD pulse, debounced XXX: do we need this? */
+>>> #define DRM_CONNECTOR_OOB_DP_REPLUG BIT(1)
+>>
+>> Why is u32 better than enum? So that we could e.g. pass short values inside
+>> the extra_status?
+> 
+> No, my thought was to be able to define values specific to the
+> particular connector types and to be able to combine those values.
+> 
+> After sending the email I started thinking about the bridged and
+> corresponding notifications. There having overlapping values will not
+> work becasue bridges in the chanin don't easily know the final connector
+> type.
 
-Signed-off-by: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
-Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
----
- Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
- 1 file changed, 1 insertion(+)
+An enum can have overlapping values. I don't think there's much 
+difference between u32 and an enum in C. I just like enum because 1) it 
+groups the possible values in the header file, and 2) the function 
+parameters can use the enum type, making it obvious what flags you are 
+supposed to use there.
 
-diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-index 9f861045b71e..f2e6091902b1 100644
---- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-+++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-@@ -27,6 +27,7 @@ properties:
-               - qcom,apss-wdt-msm8226
-               - qcom,apss-wdt-msm8974
-               - qcom,apss-wdt-msm8994
-+              - qcom,apss-wdt-nord
-               - qcom,apss-wdt-qcm2290
-               - qcom,apss-wdt-qcs404
-               - qcom,apss-wdt-qcs615
--- 
-2.43.0
+> I think you are correct here, it should be the enum. With the first
+> iteration defined as:
+> 
+> /**
+>   * enum drm_connector_status_extra - additional events sent by the sink
+>   * together or in replacement of the HPD status changes
+>   /
+> enum drm_connector_status_extra {
+>    /**
+>     * @DRM_CONNECTOR_DP_IRQ_HPD: DisplayPort Sink has sent the
+>     * IRQ_HPD (either by the HPD short pulse or via the AltMode event).
+>     */
+>    DRM_CONNECTOR_DP_IRQ_HPD = BIT(0),
+> };
+> 
+> /**
+>    * @extra_status: additional information provided by the sink without
+>    * changing the HPD state (or in addition to such a change). It is an
+>    * OR of the values defined in the drm_connector_status_extra enum.
+>    */
+> void drm_connector_oob_hotplug_event(..., u32 extra_status);
+
+Looks good to me, except I'd use "enum drm_connector_status_extra" 
+instead of u32 there in the function parameters.
+
+  Tomi
 
 
