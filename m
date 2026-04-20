@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-103710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OA9sAW3u5WnxpAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 11:14:21 +0200
+	id wP8BJTLu5WnxpAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 11:13:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9504F428BA8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 11:14:20 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 418EA428B43
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 11:13:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D2C74305E9F3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 09:13:19 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 6C9AE300BBAB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 09:13:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72E0538B159;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 992B438CFFA;
 	Mon, 20 Apr 2026 09:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vwysg1RO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FvgiuLty"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B63E388E73;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675C038AC85;
 	Mon, 20 Apr 2026 09:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776676398; cv=none; b=GkjKaDLWbL6DMdSDIMONfIQJ5osSbTaGeyM8u/PDdeeoxmOLFgh8dq7gPK2rABejgsIAFClR3RUIVJ3gq2SzuLjZ40QUBipw48ASzu499ao6FfTEk3P1ehgPFCqJTkCqoXDoC7k/tfRnU+ZYDb7zZphwkDLl6aSkce/4ZPIc8bk=
+	t=1776676398; cv=none; b=sa/4swUPJLREqRrIxio8vqKyBjAluURSdmUK/jHZpMKSvEiehUG01bg+RO839/omuu6n/yW943RzOS2sejg524zt4ZYUidmoZYWBL7W+rTNb1ZYcdXomu61B9F/6T1tAAZ+MlIWU0gzwHZqxWHikgpTBP+CMfaKbw16dZQrdIaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1776676398; c=relaxed/simple;
-	bh=CPeLnTCytq5apC3Xf81ylWPoZiJdIH6Sk0OmNhFg2bw=;
+	bh=8ymOGtV7ZYio6bX7A1zy+b5IP5On8ZOjobHhJ+TuRqU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Qxhp5yP2+qSySk/UuRAxHD3aD3Aoy7rj/iWnCHQuJ6AZ4/xcD1TH5q47MEdcF9+9k7mvR7B2bdakjjblP/UHAOVuwY5wdfee+JcpCCS8nyCD3wVZwXFxPk5mgzOHwsozYXMIBl4El6M9/tGZB1zDdriRxrdPef2n2blPbeEYNW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vwysg1RO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1DA68C2BCB8;
+	 In-Reply-To:To:Cc; b=qZEFxC7dbztDsbtdDFqWFk3qFp/xv56KbwHc9F1fX4QOSWekRq6CxRl2EYbMf8v90RS09Gg7tht+dvY/QL2CwVjJLwi5bDAgX1TTdx6Q3d4bmcs7pFT08icdH5BaGISyEO4nceSgdAtN3o6/vmA5iF0hs4GTIanPEB5aKG5We04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FvgiuLty; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 30AA9C2BCF6;
 	Mon, 20 Apr 2026 09:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1776676398;
-	bh=CPeLnTCytq5apC3Xf81ylWPoZiJdIH6Sk0OmNhFg2bw=;
+	bh=8ymOGtV7ZYio6bX7A1zy+b5IP5On8ZOjobHhJ+TuRqU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=Vwysg1RObSfZXXbQDQqleXt0ZaTvT5BJLAzgI2lj3XdWOzm2+FSUE4ZX/NJBEg/sv
-	 QbNhJ6scM5l2F++hAD295IjxtKpV1W6odkEpcz67ASJQH2BJK3QGMNTP6iaM53XU45
-	 0rQ4mZjCyRnKBs9U/qbjcVEpSn3/NI6xoG6Qtuhr3G4sdvCg/IQF6u5B3kxyoQwvsx
-	 QTG21cQSaFj8b/yIrI9CMpWaAiemmhD4g7LTQdVM8SrK2FblCli0gGVGZsfhowbjVO
-	 RPTZRo9wXd3AcNJE/uWlM3ZutvW6h0RdA4SCm3fHlqFuGw/RmRTnjTYjk0QPQUPS+O
-	 q1hbHTYXIT9FQ==
+	b=FvgiuLty6a1fIirZaNuFr1255doLnCRvJZpvtf6mHGOW8RRT4PMf65DBeVRJbuaCm
+	 l2muKeogy6e9z5rt61TYXN4c4SC7b2NyKAz4vByUa7dSTDbv7aE29FPr9C9fd6q0IV
+	 afrMX7wdzoMqWjrq4I+ZkFwtD2WXJShlTvf5mAILQi6rIZcjMXtsU7F9iq2d5+u6LU
+	 XbfoGsctOH558Wvo68ZxPNdZaSXDxNd7YYOm0kugYCqCV/ttrMrxCMsYneBzL8grjI
+	 Zhnpk6xFz475nF3l/rJgdagGZcYgHCtHX/C9/XAqvQQqXCcHK7zMiJzK2t15VUMOh3
+	 P5sqLf8nFiQMQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15CE9F557F1;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27FFFF557E2;
 	Mon, 20 Apr 2026 09:13:18 +0000 (UTC)
 From: Joe Sandom via B4 Relay <devnull+jsandom.axon.com@kernel.org>
-Date: Mon, 20 Apr 2026 10:13:15 +0100
-Subject: [PATCH v4 3/5] arm64: dts: qcom: sm8550: move IPA properties to
- SoC device tree
+Date: Mon, 20 Apr 2026 10:13:16 +0100
+Subject: [PATCH v4 4/5] dt-bindings: arm: qcom: document QCS8550 RB5Gen2
+ board
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260420-rb5gen2-dts-v4-3-b461909c2de8@axon.com>
+Message-Id: <20260420-rb5gen2-dts-v4-4-b461909c2de8@axon.com>
 References: <20260420-rb5gen2-dts-v4-0-b461909c2de8@axon.com>
 In-Reply-To: <20260420-rb5gen2-dts-v4-0-b461909c2de8@axon.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -68,13 +68,13 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Joe Sandom <jsandom@axon.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1776676395; l=2013;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1776676395; l=1053;
  i=jsandom@axon.com; s=20260319; h=from:subject:message-id;
- bh=2Hf81fBazRw+MMKDG2/cNY2JsBcSjh+sphR62doLGW8=;
- b=Q1t/lEirurX5HqzIyviieG74aCBbHvQ5KN06iE90BzciCXl9+iYjtywFC/cMWpYUPdm+j6dJU
- iFgIRY8CGL2B+4mR/iz0/AjuPToFTtiNJ1S3Hpq1wmq+bYWvQ3bLLB/
+ bh=X7bqqJqdT0hN1KiBNbd6ABCxR6gi8MIYVUn555bOoDI=;
+ b=CTWmSF03nuwKOY25sJhpdNpwNb/gbrtBSt2VRmPulZCmPOXI4CoSgYF82Ts/kPHohrZSpPBPR
+ sXL5PG70kxRCRTvsjx5IcLGEWP5pGCK7R8yZfeTevulKPaE0N237tnG
 X-Developer-Key: i=jsandom@axon.com; a=ed25519;
  pk=Q/yflwj2WhkgBVTskrS9Vl5oScD0Bp3vTzDi+OxskTo=
 X-Endpoint-Received: by B4 Relay for jsandom@axon.com/20260319 with
@@ -85,12 +85,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103710-lists,linux-arm-msm=lfdr.de,jsandom.axon.com];
+	TAGGED_FROM(0.00)[bounces-103711-lists,linux-arm-msm=lfdr.de,jsandom.axon.com];
 	FROM_HAS_DN(0.00)[];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -104,68 +104,45 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	NEURAL_HAM(-0.00)[-0.999];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[10];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[axon.com:email,axon.com:replyto,axon.com:mid,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 9504F428BA8
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,axon.com:email,axon.com:replyto,axon.com:mid]
+X-Rspamd-Queue-Id: 418EA428B43
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Joe Sandom <jsandom@axon.com>
 
-Move qcom,gsi-loader and memory-region properties from individual board
-DTS files into the SoC DTSI, since these are common to all SM8550-based
-boards.
+Document the Qualcomm RB5gen2 from Thundercomm based on the
+QCS8550 chipset from Qualcomm.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+[1] https://www.thundercomm.com/product/qualcomm-rb5-gen-2-development-kit/
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Joe Sandom <jsandom@axon.com>
 ---
- arch/arm64/boot/dts/qcom/sm8550-hdk.dts | 2 --
- arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 2 --
- arch/arm64/boot/dts/qcom/sm8550.dtsi    | 2 ++
- 3 files changed, 2 insertions(+), 4 deletions(-)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
-index e821b731bdc496c872703723df02ae9b9b0233b5..b795589385520acd74eecc7701cab82f4f7da200 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-hdk.dts
-@@ -939,8 +939,6 @@ &i2c_master_hub_0 {
- };
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 1335a7bee397c46e8dc62806091531e32b7327d4..f9f8001e3e6b66e3a926255bdb15363f4c7c2b66 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -1093,6 +1093,12 @@ properties:
+           - const: qcom,qcs8550
+           - const: qcom,sm8550
  
- &ipa {
--	qcom,gsi-loader = "self";
--	memory-region = <&ipa_fw_mem>;
- 	firmware-name = "qcom/sm8550/ipa_fws.mbn";
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-index cf63109ff7bf7b6fc827f108e22e82b8b04273c1..f2effa55d8197819175bfd5a89d2fddb20561548 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-@@ -818,8 +818,6 @@ fsa4480_sbu_mux: endpoint {
- };
- 
- &ipa {
--	qcom,gsi-loader = "self";
--	memory-region = <&ipa_fw_mem>;
- 	firmware-name = "qcom/sm8550/ipa_fws.mbn";
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 54308cbde40732da072177eab533582c155df590..d292dfce6b66fff6cff918b8bd6ac0b9cd22c4b3 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2730,6 +2730,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
- 			qcom,smem-state-names = "ipa-clock-enabled-valid",
- 						"ipa-clock-enabled";
- 
-+			qcom,gsi-loader = "self";
-+			memory-region = <&ipa_fw_mem>;
- 			sram = <&ipa_modem_tables>;
- 
- 			status = "disabled";
++      - items:
++          - enum:
++              - qcom,qcs8550-rb5gen2
++          - const: qcom,qcs8550
++          - const: qcom,sm8550
++
+       - items:
+           - enum:
+               - ayaneo,pocket-s2
 
 -- 
 2.34.1
