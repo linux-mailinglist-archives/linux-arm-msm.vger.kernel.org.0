@@ -1,69 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-103765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EBpeCSwz5mmOtQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 16:07:40 +0200
+	id qGbADe0u5mliswEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:49:33 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12CFF42CA9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 16:07:38 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB0E442C52E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:49:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 720503250358
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 13:24:35 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 2BC6830B244A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 13:36:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C7563BA238;
-	Mon, 20 Apr 2026 13:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D93B3D5676;
+	Mon, 20 Apr 2026 13:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E9TuX5zn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uliTc7Mw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456F83A5421;
-	Mon, 20 Apr 2026 13:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3768B3B4EA0;
+	Mon, 20 Apr 2026 13:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691022; cv=none; b=LZjZ/XemkTmWL1wNH98dMhuUQuSvc5+YcRV2NRLgqwWpprx9QDLuIL8LgzH/so/6Ib1UplubnBUCDFtNHZT3ng5uKukk6L2tHhwfRijAGDJ83HrEyMgU15lEOV6cdDDh+tIFo87nLUmR8UTswgTjRYuSiYVZlana5HDVR8yHQjo=
+	t=1776691422; cv=none; b=osqSP/sdrsClvkwMpdvCoqti9H1aMiVXHUfAyeZU7dVCODfumr+jgnM9B9S9NOCNiZllisu8ATlVO6bWcR5LYZ+tu1vmrD/gRrJ+grbxGMsUVuLkz/EFU0wu39VLt2i6WG0JLFrpWftyIvV8qA8yxH7ckeWf55bP0atNT4mEaNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691022; c=relaxed/simple;
-	bh=o2BQ8tLO1WJSMZ5lUAftphaYlqLGzweqzJDt9RDrhPc=;
+	s=arc-20240116; t=1776691422; c=relaxed/simple;
+	bh=Qx5BWE5JKdzh50v31WfXTYccvFO/EIWCcAxnDRZsVg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mb1SYNtyCAnxj3CHNObbWLxw/fqqx/6Lvd68ZT0/OXpur6B+3FCxMNLvvbZjOGnTWMotDoH6r5XkStDrwPw3bfRIYHBVej0d5lEEhnMfwOUCNJOhyiOegbjiN8y+fib+iP6jUgjY0PCcQI14YuKuczzCNSXlnm+j0b+BJqrBHzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E9TuX5zn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C592BC2BCB4;
-	Mon, 20 Apr 2026 13:17:00 +0000 (UTC)
+	 MIME-Version:Content-Type; b=c4gSCBGx/zmP9nbR1hidslxlPZUw/CH36uJoLyi474eKzxxfoyKilOmOCIIainrfKMYaOF4QFzshIEYCxftbzHhNeZXBrdPEVz0RkhKfnhZx8Xy8B2dA3/251ACCMUvxA6YHuGNpM60meQvxsF/bCwuANcUFsq5sNL7sxKn3p9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uliTc7Mw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCA0C2BCB7;
+	Mon, 20 Apr 2026 13:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691022;
-	bh=o2BQ8tLO1WJSMZ5lUAftphaYlqLGzweqzJDt9RDrhPc=;
+	s=k20201202; t=1776691422;
+	bh=Qx5BWE5JKdzh50v31WfXTYccvFO/EIWCcAxnDRZsVg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9TuX5zndlpMP6skowVUy2QRHERihd6Ftu6tSFdCxMYGxGnEdREWUsJnR48cJi6GY
-	 gfGlNTmBZGS9BAh91ufyj7DuHA2r2h5BEQSB4v56ghUzge99Bnzc7LiMG8mD/M7hNy
-	 HbTizB8V71Y4xbDY4migjqIbzBVZqgnvEXeCzcOlKdyzZlYBEyA1N4muG5rPC6p982
-	 joAIjMzZpgiJA/dNt2OU4xhraWzs91TAGe1wy2+jORC1YiTsqoEeaeEaoD+VJVb7yM
-	 sgwUsnBkbRkatEUt8WQ+0eZmCx0/tXdqmACAwYseLzrIPRYmTLDWyub49XimQAfRF6
-	 Ylk6Co7VYG1qQ==
+	b=uliTc7Mwhg6ir8I3JWjpDOa47avXLxap9LYKlmDvU5dYimum7XZml9iL1V0YLj8/a
+	 PgA6ySUaPXflaxO8XVUeynqLCg+dfHksh8CMBAuiMOc/UWgKMYbi/qhQ+yNywuWtAx
+	 m9/Rc0xa1ZCQx3ROw0sPS9DaKLIaUzyyOGxhYqlHfb6dCdEsvE87EJ57KATqBalbtG
+	 AstClvkzkQHu2KO0jZCX9Wexoi9ADesBht4LUu4MRjys0tnuCfc00+bY6CDdeGdK4p
+	 NW/Bh5/rCYipiL0jBARwbJFy9bizmmsE+5412RqUbjjVgSetkgBcanExqAuHF/VDzf
+	 Z/u9UmBk0mtlA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	brgl@kernel.org,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
+	mathieu.poirier@linaro.org,
 	linux-arm-msm@vger.kernel.org,
-	linux-bluetooth@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.6] Bluetooth: hci_qca: Fix missing wakeup during SSR memdump handling
-Date: Mon, 20 Apr 2026 09:08:34 -0400
-Message-ID: <20260420131539.986432-48-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.15] remoteproc: qcom: Fix minidump out-of-bounds access on subsystems array
+Date: Mon, 20 Apr 2026 09:16:51 -0400
+Message-ID: <20260420132314.1023554-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
-References: <20260420131539.986432-1-sashal@kernel.org>
+In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
+References: <20260420132314.1023554-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,405 +72,438 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [0.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103765-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103766-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,molgen.mpg.de,intel.com,kernel.org,holtmann.org,gmail.com,vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mpg.de:email,intel.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,yhbt.net:url]
-X-Rspamd-Queue-Id: 12CFF42CA9C
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: EB0E442C52E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 
-[ Upstream commit c347ca17d62a32c25564fee0ca3a2a7bc2d5fd6f ]
+[ Upstream commit 743cfae79d2458e241b06ed523c28a09f1449b75 ]
 
-When a Bluetooth controller encounters a coredump, it triggers the
-Subsystem Restart (SSR) mechanism. The controller first reports the
-coredump data and, once the upload is complete, sends a hw_error
-event. The host relies on this event to proceed with subsequent
-recovery actions.
+MAX_NUM_OF_SS was hardcoded to 10 in the minidump_global_toc struct,
+which is a direct overlay on an SMEM item allocated by the firmware.
+Newer Qualcomm SoC firmware allocates space for more subsystems, while
+older firmware only allocates space for 10. Bumping the constant would
+cause Linux to read/write beyond the SMEM item boundary on older
+platforms.
 
-If the host has not finished processing the coredump data when the
-hw_error event is received, it waits until either the processing is
-complete or the 8-second timeout expires before handling the event.
+Fix this by converting subsystems[] to a flexible array member and
+deriving the actual number of subsystems at runtime from the size
+returned by qcom_smem_get(). Add a bounds check on minidump_id against
+the derived count before indexing into the array.
 
-The current implementation clears QCA_MEMDUMP_COLLECTION using
-clear_bit(), which does not wake up waiters sleeping in
-wait_on_bit_timeout(). As a result, the waiting thread may remain
-blocked until the timeout expires even if the coredump collection
-has already completed.
-
-Fix this by clearing QCA_MEMDUMP_COLLECTION with
-clear_and_wake_up_bit(), which also wakes up the waiting thread and
-allows the hw_error handling to proceed immediately.
-
-Test case:
-- Trigger a controller coredump using:
-    hcitool cmd 0x3f 0c 26
-- Tested on QCA6390.
-- Capture HCI logs using btmon.
-- Verify that the delay between receiving the hw_error event and
-  initiating the power-off sequence is reduced compared to the
-  timeout-based behavior.
-
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260331171243.1962067-1-mukesh.ojha@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a complete analysis. Let me
-compile it.
-
----
+Now I have enough information to complete my analysis.
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-### Step 1.1: PARSE THE SUBJECT LINE
-- **Subsystem prefix:** Bluetooth: hci_qca
-- **Action verb:** "Fix" - explicitly a bug fix
-- **One-line summary:** Fix missing wakeup during SSR memdump handling -
-  `clear_bit()` doesn't wake up waiters sleeping in
-  `wait_on_bit_timeout()`.
+**Step 1.1 - Subject Line Parse:**
+Record: Subsystem `remoteproc: qcom:`; action verb `Fix`; summary: fix
+out-of-bounds access on minidump subsystems array.
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Reviewed-by:** Bartosz Golaszewski (Qualcomm contributor,
-  knowledgeable in this driver)
-- **Reviewed-by:** Paul Menzel (known active reviewer)
-- **Signed-off-by:** Shuai Zhang <shuai.zhang@oss.qualcomm.com> (author,
-  Qualcomm - QCA chipset vendor)
-- **Signed-off-by:** Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  (Bluetooth maintainer)
-- No Fixes: tag, no Reported-by, no syzbot. Absence of Fixes: is
-  expected.
+**Step 1.2 - Tags:**
+Record:
+- `Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>` (author,
+  Qualcomm/remoteproc contributor)
+- `Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>` (subsystem
+  contributor)
+- `Link: https://lore.kernel.org/r/20260331171243.1962067-1-
+  mukesh.ojha@oss.qualcomm.com`
+- `Signed-off-by: Bjorn Andersson <andersson@kernel.org>` (remoteproc
+  co-maintainer)
+- No `Cc: stable@vger.kernel.org`, no `Fixes:` tag (expected for review
+  candidates)
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-- **Bug:** When Bluetooth controller encounters a coredump (SSR), it
-  sends memdump data then sends `hw_error` event. The host calls
-  `wait_on_bit_timeout()` on `QCA_MEMDUMP_COLLECTION` to wait for the
-  collection to complete. But the collection worker clears the bit with
-  `clear_bit()`, which does NOT wake up the waiter.
-- **Symptom:** The waiting thread blocks for the full 8-second timeout
-  (`MEMDUMP_TIMEOUT_MS = 8000`) even when collection finishes early.
-- **Root cause:** API misuse - `wait_on_bit_timeout()` documentation
-  explicitly requires wakeup via `wake_up_bit()` or
-  `clear_and_wake_up_bit()`.
-- **Test:** Tested on QCA6390 hardware using `hcitool` and btmon.
+**Step 1.3 - Commit Body:**
+Record: Bug description: `MAX_NUM_OF_SS` hardcoded to 10 but
+`minidump_global_toc` overlays SMEM item allocated by firmware; newer
+firmware allocates more subsystems; bumping constant would overflow SMEM
+on older platforms. Fix: convert to flexible array, derive count at
+runtime from `qcom_smem_get()` size, add bounds check.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-This is an explicitly stated bug fix, not disguised. The
-`wait_on_bit_timeout` API documentation (in `include/linux/wait_bit.h`)
-states: "The clearing of the bit must be signalled with wake_up_bit(),
-often as clear_and_wake_up_bit()." Using plain `clear_bit()` is an API
-violation.
+**Step 1.4 - Hidden Fix:**
+Record: Explicit bug fix ("Fix ... out-of-bounds access") - not hidden.
 
----
+## PHASE 2: DIFF ANALYSIS
 
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
+**Step 2.1 - Inventory:**
+Record: Single file `drivers/remoteproc/qcom_common.c`; +14/-3 lines;
+modifies `qcom_minidump()` function and `struct minidump_global_toc`;
+surgical, single-file fix.
 
-### Step 2.1: INVENTORY THE CHANGES
-- **File:** `drivers/bluetooth/hci_qca.c` only
-- **Changes:** 2 lines changed (2 `clear_bit` → `clear_and_wake_up_bit`)
-- **Functions modified:** `qca_controller_memdump()` (2 locations)
-- **Scope:** Single-file, single-function surgical fix
+**Step 2.2 - Code Flow:**
+Record: Before: `qcom_smem_get(...,NULL)` ignores size; directly indexes
+`toc->subsystems[minidump_id]` which is declared `[MAX_NUM_OF_SS=10]`.
+After: requests actual SMEM size via `&toc_size`; computes `num_ss` from
+`(toc_size - offsetof(...,subsystems))/sizeof(subsystem)`; returns early
+with error if `minidump_id >= num_ss`.
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-**Hunk 1 (line 1108):** Error path when `hci_devcd_init()` fails:
-- Before: `clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags)` — clears bit
-  but no wakeup
-- After: `clear_and_wake_up_bit(QCA_MEMDUMP_COLLECTION, &qca->flags)` —
-  clears bit AND wakes waiting thread
+**Step 2.3 - Bug Mechanism:**
+Record: Category: **memory safety / out-of-bounds access**. With
+`MAX_NUM_OF_SS=10`, accessing `toc->subsystems[20]` (as done for SA8775p
+CDSP1) is out-of-bounds per the C array type. Fix converts to flexible
+array member and validates index at runtime.
 
-**Hunk 2 (line 1186):** Normal completion path (last sequence received):
-- Before: same `clear_bit()` without wakeup
-- After: same `clear_and_wake_up_bit()` with wakeup
-
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-This is a **synchronization bug**: missing wakeup. The
-`qca_wait_for_dump_collection()` function calls `wait_on_bit_timeout()`
-which puts the thread to sleep waiting for the bit to be cleared AND a
-wakeup signal. Without the wakeup, the thread sleeps for the full
-8-second timeout.
-
-### Step 2.4: ASSESS THE FIX QUALITY
-- **Obviously correct:** Yes. The `wait_on_bit_timeout` documentation
-  explicitly states wakeup is required.
-- **Minimal:** Yes, 2 line changes.
-- **Regression risk:** Negligible. `clear_and_wake_up_bit()` does
-  exactly what `clear_bit()` does plus a wakeup. No new side effects.
-
----
+**Step 2.4 - Fix Quality:**
+Record: Obviously correct; minimal/surgical; preserves behavior for
+valid indexes (< actual count); no regression risk for existing devices
+using minidump_id 3/4/5/7; depends on `qcom_smem_get()` reporting
+accurate size which is its contract.
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
-### Step 3.1: BLAME THE CHANGED LINES
-- Line 1108 (`clear_bit`): Introduced by `06d3fdfcdf5cef` (Sai Teja
-  Aluvala, 2023-06-14) — v6.6-rc1
-- Line 1186 (`clear_bit`): Introduced by `7c2c3e63e1e97c` (Venkata
-  Lakshmi, 2020-02-14) — v5.7-rc1
-- `wait_on_bit_timeout` (line 1606): Introduced by `d841502c79e3fd`
-  (Balakrishna Godavarthi, 2020-01-02) — v5.6-rc1
+**Step 3.1 - Blame:**
+Record: `MAX_NUM_OF_SS=10` was introduced by `8ed8485c4f056
+("remoteproc: qcom: Add capability to collect minidumps")` in Nov 2020
+(v5.11). The buggy code has been present since v5.11.
 
-So the bug at line 1186 has existed since v5.7, and the bug at line 1108
-since v6.6.
+**Step 3.2 - Fixes Tag:**
+Record: No `Fixes:` tag present. The bug was technically present since
+minidump was added in v5.11, but only becomes an observable OOB when a
+device's `minidump_id` exceeds 9.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-No Fixes: tag (expected).
+**Step 3.3 - File History:**
+Record: The file has been minimally modified. Key related commits:
+- `9091225ba28c0` ("remoteproc: qcom: pas: Add support for SA8775p ADSP,
+  CDSP and GPDSP") in v6.12-rc1 added `minidump_id = 20, 21, 22` for
+  sa8775p CDSP1, GPDSP0, GPDSP1 → this is when the bug becomes
+  triggerable.
+- `318da1371246f` ("remoteproc: qcom: Expand MD_* as MINIDUMP_*") - same
+  author, minidump cleanup
+- Standalone fix, not part of a series.
 
-### Step 3.3: CHECK FILE HISTORY
-Recent changes to `hci_qca.c` are active (73 commits since v5.15). The
-file sees regular activity.
+**Step 3.4 - Author Context:**
+Record: Mukesh Ojha is a regular Qualcomm remoteproc contributor and the
+primary author of minidump-related work (multiple minidump cleanup
+commits). Fix from a knowledgeable author.
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Shuai Zhang is a Qualcomm contributor with multiple commits to the QCA
-Bluetooth stack. The fix was reviewed by the Bluetooth maintainer (Luiz
-Augusto von Dentz).
+**Step 3.5 - Dependencies:**
+Record: Only dependency is that `qcom_smem_get()` supports returning
+size via pointer, which it has done since inception (verified in all
+stable trees).
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-None. `clear_and_wake_up_bit()` has existed since v4.17. The fix is a
-drop-in replacement for `clear_bit()` at two locations.
+## PHASE 4: MAILING LIST RESEARCH
 
----
+**Step 4.1 - b4 dig:**
+Record: Found at `https://lore.kernel.org/all/20260331171243.1962067-1-
+mukesh.ojha@oss.qualcomm.com/`. Only v2 was applied.
 
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+**Step 4.2 - Reviewers:**
+Record: Sent to Bjorn Andersson (co-maintainer), Mathieu Poirier (co-
+maintainer), linux-arm-msm, linux-remoteproc. Reviewed/Acked by Konrad
+Dybcio.
 
-### Step 4.1-4.2: FIND THE ORIGINAL PATCH DISCUSSION
-Found at:
-https://yhbt.net/lore/lkml/177583080679.2077665.8641347877052929776.git-
-patchwork-notify@kernel.org/T/
+**Step 4.3 - History - v1 Discussion:**
+Record: Fetched v1 thread
+(`20250808164417.4105659-1-mukesh.ojha@oss.qualcomm.com`). V1 was a
+naïve fix bumping `MAX_NUM_OF_SS` from 10 to 30. Bjorn Andersson
+objected: "this number is used to size the minidump_global_toc struct...
+Doesn't this imply that on older platforms you've now told Linux (and
+your debugger) that it's fine to write beyond the smem item?" and
+suggested "check the returned size of the qcom_smem_get() call." Author
+Mukesh specifically asked **"do you think it should a fix (cc
+stable)?"**. V2 implemented exactly Bjorn's suggestion, received Ack,
+and was applied.
 
-The patch went through **7 revisions** (v1 through v7), indicating
-extensive review:
-- v5→v6: Changed from `wake_up_bit` to `clear_and_wake_up_bit` (the
-  proper API)
-- Applied to bluetooth-next by Luiz Augusto von Dentz (Bluetooth
-  maintainer)
-- Commit in bluetooth-next: `9f07d5d04826`
+**Step 4.4 - Series:**
+Record: Standalone single-patch submission.
 
-### Step 4.3: BUG REPORT
-No external bug report — the author identified the issue through
-code/testing.
-
-### Step 4.4-4.5: RELATED PATCHES AND STABLE HISTORY
-This is a standalone single-patch fix. No series dependencies.
-
----
+**Step 4.5 - Stable Mailing List:**
+Record: No separate stable discussion visible; author explicitly
+considered it a stable fix but final v2 lacks Cc:stable tag.
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-### Step 5.1-5.4: KEY FUNCTIONS AND CALL CHAINS
-The affected path:
-1. Bluetooth controller crashes → sends memdump data → sends `hw_error`
-   event
-2. `qca_hw_error()` or `qca_reset()` → calls
-   `qca_wait_for_dump_collection()` → `wait_on_bit_timeout()` on
-   `QCA_MEMDUMP_COLLECTION`
-3. Concurrently, `qca_controller_memdump()` (workqueue) processes dump
-   packets
-4. On completion, `qca_controller_memdump()` clears
-   `QCA_MEMDUMP_COLLECTION` — but without waking up the waiter in step 2
-5. Result: waiter in step 2 sleeps for full 8 seconds even though
-   collection finished
+**Step 5.1 - Key Functions:**
+Record: `qcom_minidump()` is the modified function; `struct
+minidump_global_toc` is the modified type.
 
-Both `qca_hw_error()` and `qca_reset()` call
-`qca_wait_for_dump_collection()`, so both paths are affected.
+**Step 5.2 - Callers:**
+Record: `qcom_minidump()` is called from exactly one place -
+`qcom_pas_minidump()` in `drivers/remoteproc/qcom_q6v5_pas.c:151`. This
+is registered as `.coredump` callback in `qcom_pas_minidump_ops` (line
+531), which is invoked by `rproc_boot_recovery()` in
+`remoteproc_core.c:1798` when a crashed remoteproc is being recovered.
 
-### Step 5.5: SIMILAR PATTERNS
-No other `clear_bit`/`wait_on_bit_timeout` mismatches found in this
-file.
+**Step 5.3 - Callees:**
+Record: Calls `qcom_smem_get()` (SMEM item retrieval), `dev_err()`, and
+then `rproc_coredump()` or `qcom_add_minidump_segments()` +
+`rproc_coredump_using_sections()`.
 
----
+**Step 5.4 - Call Chain / Reachability:**
+Record: Reachable from remoteproc crash recovery: remoteproc crash →
+`rproc_boot_recovery()` → `rproc->ops->coredump()` →
+`qcom_pas_minidump()` → `qcom_minidump(rproc, pas->minidump_id, ...)`.
+With `pas->minidump_id = 20/21/22`, this triggers OOB on
+`toc->subsystems[20]` indexing. This path is triggered automatically
+when the remoteproc crashes (real-world trigger, not obscure).
 
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+**Step 5.5 - Similar Patterns:**
+Record: Verified the file contains only this one use of the
+`subsystems[]` array. Checked `minidump_id` values in `qcom_q6v5_pas.c`:
+values 3, 4, 5, 7, 20, 21, 22 are used. The 20/21/22 are all for
+`sa8775p` CDSP1/GPDSP0/GPDSP1 resources.
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-- The `clear_bit` at the completion path (line 1186) has been present
-  since v5.7, so it exists in stable trees 5.10.y, 5.15.y, 6.1.y, 6.6.y,
-  6.12.y.
-- The `clear_bit` at the error path (line 1108) was introduced in v6.6,
-  so only in 6.6.y, 6.12.y.
+## PHASE 6: CROSS-REFERENCING STABLE TREES
 
-### Step 6.2: BACKPORT COMPLICATIONS
-The patch should apply cleanly or with minor context adjustments. The
-two lines being changed are simple API call replacements. Older trees
-may not have the first hunk (line 1108) since that code was added in
-v6.6.
+**Step 6.1 - Does Buggy Code Exist?**
+Record: Verified by inspecting each stable branch:
 
-### Step 6.3: RELATED FIXES ALREADY IN STABLE
-No related fixes for this specific bug found.
+| Stable | MAX_NUM_OF_SS=10 | minidump_id 20/21/22 | Bug triggers? |
+|--------|------------------|----------------------|---------------|
+| p-6.1  | Yes              | No                   | No (harmless) |
+| p-6.6  | Yes              | Yes (3 entries)      | **Yes**       |
+| p-6.12 | Yes              | Yes (3 entries)      | **Yes**       |
+| p-6.15 | Yes              | Yes (3 entries)      | **Yes**       |
+| p-6.16 | Yes              | Yes (3 entries)      | **Yes**       |
+| p-6.17 | Yes              | Yes (3 entries)      | **Yes**       |
 
----
+Stable 6.6.y through 6.17.y all have the buggy configuration. 6.1.y has
+the limit but no triggering minidump_ids, so safe.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+**Step 6.2 - Backport Complications:**
+Record: Diffed `qcom_common.c` across p-6.12, p-6.15, p-6.17 - file is
+identical across these stable trees. Fix should apply cleanly. For p-6.6
+the surrounding code is functionally identical. `qcom_smem_get()`
+signature with `size_t *size` parameter is unchanged across all trees
+(verified in p-6.6).
 
-### Step 7.1: SUBSYSTEM CRITICALITY
-- **Subsystem:** drivers/bluetooth — Bluetooth driver for Qualcomm
-  chipsets
-- **Criticality:** IMPORTANT — QCA Bluetooth chipsets are widely used in
-  laptops, phones, and embedded systems
+**Step 6.3 - Related Fixes in Stable:**
+Record: No prior fix for this specific issue exists in stable trees; the
+MAX_NUM_OF_SS limit has been 10 since minidump was added.
 
-### Step 7.2: SUBSYSTEM ACTIVITY
-Active subsystem with regular commits.
+## PHASE 7: SUBSYSTEM CONTEXT
 
----
+**Step 7.1 - Subsystem:**
+Record: `drivers/remoteproc/qcom_common.c` - PERIPHERAL (Qualcomm-
+specific remoteproc common helpers, affects only Qualcomm SoC users,
+primarily SA8775p automotive).
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+**Step 7.2 - Activity:**
+Record: Actively maintained subsystem with recent activity.
 
-### Step 8.1: AFFECTED POPULATION
-Users of QCA Bluetooth chipsets (QCA6390 and similar) — a significant
-population in the Android and laptop ecosystem.
+## PHASE 8: IMPACT AND RISK
 
-### Step 8.2: TRIGGER CONDITIONS
-Triggered when the Bluetooth controller crashes and SSR begins. Not
-common in normal operation, but when it happens (coredump, hw error),
-the 8-second unnecessary delay is always present.
+**Step 8.1 - Affected Users:**
+Record: Driver-specific - SA8775p SoC users (Qualcomm automotive
+platform) using remoteproc/minidump for CDSP1, GPDSP0, or GPDSP1
+subsystems.
 
-### Step 8.3: FAILURE MODE SEVERITY
-- **Failure mode:** Unnecessary 8-second delay during Bluetooth recovery
-  after controller crash
-- **Severity:** MEDIUM — Not a crash, not data corruption, not a
-  security issue. It's a latency bug during error recovery that affects
-  usability.
+**Step 8.2 - Trigger:**
+Record: Triggered when a SA8775p CDSP1/GPDSP0/GPDSP1 remoteproc crashes
+and `rproc_boot_recovery()` invokes the coredump callback. Cannot be
+triggered by unprivileged users directly; occurs on hardware/firmware-
+induced remoteproc crashes.
 
-### Step 8.4: RISK-BENEFIT RATIO
-- **Benefit:** Eliminates unnecessary 8-second delay during SSR
-  recovery. Correct API usage per documentation.
-- **Risk:** Very low — 2-line change, `clear_and_wake_up_bit` is a
-  strict superset of `clear_bit` (clear + wakeup). No new side effects.
-- **Ratio:** Very favorable — minimal risk for a real improvement in
-  error recovery behavior.
+**Step 8.3 - Failure Severity:**
+Record: With `MAX_NUM_OF_SS=10` and `minidump_id=20`,
+`&toc->subsystems[20]` reads past the declared struct end. On SA8775p
+the firmware's SMEM item is sized for 23+ entries, so reads land within
+SMEM but access memory not described by the Linux struct (UBSAN would
+flag this). With a UBSAN-enabled kernel → WARN/report. Without UBSAN →
+reads memory bytes 320+ from struct start, potentially interprets them
+as `status`/`enabled`/`regions_baseptr`. If `regions_baseptr` has non-
+zero bits from surrounding SMEM, the code proceeds to
+`qcom_add_minidump_segments()` which calls `ioremap()` with attacker-
+uncontrolled but wrong values, and `rproc_coredump_add_custom_segment`
+with garbage `da`/`size`. Severity: **MEDIUM-HIGH** - not a routine
+crash but a real OOB in crash-recovery path that can cause incorrect
+behavior, broken minidump collection, and potentially ioremap of wrong
+addresses.
 
----
+**Step 8.4 - Risk-Benefit:**
+Record:
+- Benefit: Fixes real OOB on SA8775p automotive SoC users; enables
+  correct minidump collection on these subsystems.
+- Risk: Very low - fix is +14/-3 lines, surgical, only affects the path
+  that was broken; does not change behavior for valid minidump_ids (<
+  real count); doesn't alter the SMEM overlay layout (flexible array
+  occupies the same offset as the previous fixed array).
+- Assessment: Positive risk-benefit.
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+**Step 9.1 - Evidence:**
+For:
+- Real OOB bug reachable from remoteproc crash path on SA8775p
+- Verified triggering config (minidump_id 20/21/22) is present in stable
+  trees 6.6.y–6.17.y
+- Small, contained fix (single file, single function, ~17 lines)
+- Reviewed and Acked by subsystem contributor
+- Author explicitly considered it stable-worthy
+- Applied cleanly across stable trees (file identical across
+  6.12/6.15/6.17)
+- Fix doesn't change behavior for existing working configurations
+- Addresses exact concern raised by maintainer Bjorn in v1 review
 
-**FOR backporting:**
-- Fixes a genuine API misuse bug (`clear_bit` instead of
-  `clear_and_wake_up_bit`)
-- 2-line surgical fix, trivially correct per API documentation
-- Extensively reviewed (7 revisions), 2 Reviewed-by tags
-- Applied by Bluetooth maintainer
-- Tested on real hardware (QCA6390)
-- Very low regression risk
-- Bug exists since v5.7 for one path and v6.6 for the other
-- `clear_and_wake_up_bit()` exists since v4.17, no dependency issues
+Against:
+- No `Cc: stable` tag on final patch
+- No explicit `Fixes:` tag
+- Only affects SA8775p users (peripheral driver)
+- Crash-recovery path, not hot path
 
-**AGAINST backporting:**
-- The bug doesn't cause crashes, data corruption, or security issues
-- Only manifests during SSR (error recovery), not during normal
-  operation
-- It's a latency/usability improvement rather than a fix for a hard
-  failure
+Unresolved: None material.
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. **Obviously correct and tested?** YES — API documentation is
-   explicit, tested on hardware
-2. **Fixes a real bug?** YES — missing wakeup causing unnecessary
-   8-second delay
-3. **Important issue?** MEDIUM — recovery delay, not crash/corruption
-4. **Small and contained?** YES — 2 lines in 1 file
-5. **No new features or APIs?** YES — just corrects API usage
-6. **Can apply to stable trees?** YES — `clear_and_wake_up_bit` exists
-   since v4.17
+**Step 9.2 - Stable Rules Checklist:**
+1. Obviously correct? Yes - proper size-derivation from SMEM + bounds
+   check.
+2. Fixes real bug? Yes - OOB access verified via source inspection.
+3. Important issue? Medium - OOB with potential for misbehavior in crash
+   recovery.
+4. Small/contained? Yes - +14/-3 in one file.
+5. No new features? Correct - pure bug fix.
+6. Applies to stable? Yes - verified file identical in 6.12/6.15/6.17;
+   p-6.6 is compatible.
 
-### Step 9.3: EXCEPTION CATEGORIES
-Not applicable — this is a standard bug fix.
+**Step 9.3 - Exceptions:**
+Not a device ID/quirk/DT/build/doc exception; a standard bug fix.
 
-### Step 9.4: DECISION
-The fix is tiny, obviously correct, well-reviewed, and addresses a real
-bug where `wait_on_bit_timeout()` is used with `clear_bit()` instead of
-`clear_and_wake_up_bit()`, causing an unnecessary 8-second blocking
-delay during Bluetooth error recovery. While the impact is "only" a
-latency issue during recovery (not a crash or data loss), the extremely
-low risk of the fix and the real user-visible improvement make this
-appropriate for stable.
-
----
+**Step 9.4 - Decision:**
+YES - this fixes a real, verifiable out-of-bounds memory access
+reachable in a realistic path (remoteproc crash recovery on SA8775p). It
+satisfies all stable kernel rules.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by from Bartosz Golaszewski and Paul
-  Menzel; SOB from author and Bluetooth maintainer
-- [Phase 2] Diff analysis: 2 lines changed in
-  `qca_controller_memdump()`, replacing `clear_bit()` with
-  `clear_and_wake_up_bit()`
-- [Phase 3] git blame: Line 1108 introduced in `06d3fdfcdf5cef`
-  (v6.6-rc1); Line 1186 introduced in `7c2c3e63e1e97c` (v5.7-rc1);
-  `wait_on_bit_timeout` introduced in `d841502c79e3fd` (v5.6-rc1)
-- [Phase 3] git describe: `clear_and_wake_up_bit` introduced in
-  `8236b0ae31c83` (v4.17-rc4), present in all active stable trees
-- [Phase 4] lore thread found: patch went through v1→v7, applied to
-  bluetooth-next by maintainer as `9f07d5d04826`
-- [Phase 4] No NAKs or objections in the discussion thread
-- [Phase 5] Call chain: `qca_hw_error()`/`qca_reset()` →
-  `qca_wait_for_dump_collection()` → `wait_on_bit_timeout()` waits for
-  bit cleared by `qca_controller_memdump()` workqueue
-- [Phase 5] Verified `wait_on_bit_timeout()` documentation in
-  `include/linux/wait_bit.h` lines 118-120 explicitly requires
-  `clear_and_wake_up_bit()`
-- [Phase 6] Buggy code exists in stable trees 5.10+, 5.15+, 6.1+, 6.6+,
-  6.12+ (second hunk); 6.6+, 6.12+ (first hunk)
-- [Phase 6] `MEMDUMP_TIMEOUT_MS` is 8000 (8 seconds) — confirmed at line
-  54
-- [Phase 8] Failure mode: 8-second unnecessary delay during Bluetooth
-  SSR recovery, severity MEDIUM
+- [Phase 1] Parsed commit message: confirmed Acked-by Konrad, SoB from
+  Bjorn Andersson, Link to lore; no stable/Fixes tag (expected).
+- [Phase 2] Read the diff: verified `MAX_NUM_OF_SS` removed,
+  `subsystems[]` changed to flexible array, `qcom_smem_get()` now
+  requests `toc_size`, `num_ss` derived via `offsetof`, and bounds check
+  added.
+- [Phase 3.1] Ran `git blame` on lines 30-35 of
+  `drivers/remoteproc/qcom_common.c`: confirmed `MAX_NUM_OF_SS`
+  originated from `8ed8485c4f056` (Siddharth Gupta, 2020-11-19).
+- [Phase 3.1] `git describe --contains 8ed8485c4f056` →
+  `v5.11-rc1~148^2~10`: minidump feature introduced in v5.11.
+- [Phase 3.3] `git log -S "minidump_id = 20"` → `9091225ba28c0` (SA8775p
+  support) in v6.12-rc1 (`git describe --contains`).
+- [Phase 3.3] `git show 9091225ba28c0` confirmed minidump_id = 20, 21,
+  22 added for sa8775p CDSP1/GPDSP0/GPDSP1.
+- [Phase 4.1] `b4 dig -c 743cfae79d245` → found at lore v2 URL; `-a`
+  shows only v2 in this series.
+- [Phase 4.3] `b4 mbox` on v1 URL `20250808164417.4105659-1-...`:
+  retrieved v1 discussion; confirmed Bjorn objected to v1's naïve
+  constant bump and suggested the exact approach used in v2; author
+  asked about Cc: stable.
+- [Phase 5.2] `grep "qcom_minidump"` in drivers/remoteproc: confirmed
+  single caller in `qcom_q6v5_pas.c:151` via
+  `qcom_pas_minidump_ops.coredump`.
+- [Phase 5.2] `grep "coredump"` in remoteproc_core.c: confirmed
+  invocation from `rproc_boot_recovery()` line 1798.
+- [Phase 5.5] `grep "minidump_id = "` in `qcom_q6v5_pas.c`: confirmed
+  values 3, 4, 5, 7, 20, 21, 22 - three are out-of-bounds for
+  MAX_NUM_OF_SS=10.
+- [Phase 6.1] `git show p-6.X:drivers/remoteproc/qcom_common.c | grep
+  MAX_NUM_OF_SS`: all stable branches (6.1, 6.6, 6.12, 6.15, 6.16, 6.17)
+  have `MAX_NUM_OF_SS=10`.
+- [Phase 6.1] `git show p-6.X:drivers/remoteproc/qcom_q6v5_pas.c | grep
+  -c "minidump_id = 2[012]"`: p-6.1=0, p-6.6=3, p-6.12=3, p-6.15=3,
+  p-6.16=3, p-6.17=3. So bug triggers in 6.6.y through 6.17.y.
+- [Phase 6.2] Diffed `qcom_common.c` between p-6.12, p-6.15, p-6.17 -
+  files identical, fix should apply cleanly.
+- [Phase 6.2] `git show p-6.6:drivers/soc/qcom/smem.c | grep
+  qcom_smem_get`: `qcom_smem_get(unsigned host, unsigned item, size_t
+  *size)` signature present.
+- [Phase 6.2] Verified p-6.6 qcom_minidump function structure matches
+  mainline pre-fix version.
+- [Phase 8.3] Confirmed callers of `qcom_minidump`: only
+  `qcom_pas_minidump`, invoked on remoteproc recovery - real reachable
+  path.
+- UNVERIFIED: Could not empirically reproduce UBSAN output or observe a
+  crash; severity assessment based on code reading and standard C
+  semantics.
 
 **YES**
 
- drivers/bluetooth/hci_qca.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/remoteproc/qcom_common.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index edc907c4e870a..524e47392f919 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1105,7 +1105,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 				qca->qca_memdump = NULL;
- 				qca->memdump_state = QCA_MEMDUMP_COLLECTED;
- 				cancel_delayed_work(&qca->ctrl_memdump_timeout);
--				clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
-+				clear_and_wake_up_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
- 				clear_bit(QCA_IBS_DISABLED, &qca->flags);
- 				mutex_unlock(&qca->hci_memdump_lock);
- 				return;
-@@ -1183,7 +1183,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 			kfree(qca->qca_memdump);
- 			qca->qca_memdump = NULL;
- 			qca->memdump_state = QCA_MEMDUMP_COLLECTED;
--			clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
-+			clear_and_wake_up_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
- 		}
+diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
+index 6c31140268acb..fd2b6824ad265 100644
+--- a/drivers/remoteproc/qcom_common.c
++++ b/drivers/remoteproc/qcom_common.c
+@@ -28,7 +28,6 @@
+ #define to_ssr_subdev(d) container_of(d, struct qcom_rproc_ssr, subdev)
+ #define to_pdm_subdev(d) container_of(d, struct qcom_rproc_pdm, subdev)
  
- 		mutex_unlock(&qca->hci_memdump_lock);
+-#define MAX_NUM_OF_SS           10
+ #define MAX_REGION_NAME_LENGTH  16
+ #define SBL_MINIDUMP_SMEM_ID	602
+ #define MINIDUMP_REGION_VALID		('V' << 24 | 'A' << 16 | 'L' << 8 | 'I' << 0)
+@@ -80,7 +79,7 @@ struct minidump_global_toc {
+ 	__le32				status;
+ 	__le32				md_revision;
+ 	__le32				enabled;
+-	struct minidump_subsystem	subsystems[MAX_NUM_OF_SS];
++	struct minidump_subsystem	subsystems[];
+ };
+ 
+ struct qcom_ssr_subsystem {
+@@ -151,9 +150,11 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
+ 	int ret;
+ 	struct minidump_subsystem *subsystem;
+ 	struct minidump_global_toc *toc;
++	unsigned int num_ss;
++	size_t toc_size;
+ 
+ 	/* Get Global minidump ToC*/
+-	toc = qcom_smem_get(QCOM_SMEM_HOST_ANY, SBL_MINIDUMP_SMEM_ID, NULL);
++	toc = qcom_smem_get(QCOM_SMEM_HOST_ANY, SBL_MINIDUMP_SMEM_ID, &toc_size);
+ 
+ 	/* check if global table pointer exists and init is set */
+ 	if (IS_ERR(toc) || !toc->status) {
+@@ -161,6 +162,16 @@ void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
+ 		return;
+ 	}
+ 
++	/* Derive the number of subsystems from the actual SMEM item size */
++	num_ss = (toc_size - offsetof(struct minidump_global_toc, subsystems)) /
++		 sizeof(struct minidump_subsystem);
++
++	if (minidump_id >= num_ss) {
++		dev_err(&rproc->dev, "Minidump id %d is out of range: %d\n",
++			minidump_id, num_ss);
++		return;
++	}
++
+ 	/* Get subsystem table of contents using the minidump id */
+ 	subsystem = &toc->subsystems[minidump_id];
+ 
 -- 
 2.53.0
 
