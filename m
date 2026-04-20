@@ -1,57 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-103789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uLrMKRNE5ml/twEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 17:19:47 +0200
+	id OGYYFyVE5ml/twEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 17:20:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3693442E0D1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 17:19:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 19A8242E0EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 17:20:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id ECF29303AAD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:05:33 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 57FA3303E49D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:05:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37E273A9DA4;
-	Mon, 20 Apr 2026 14:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34E223A8730;
+	Mon, 20 Apr 2026 14:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="Diw8+RkR"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="PPA3xX8X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+Received: from mail-43103.protonmail.ch (mail-43103.protonmail.ch [185.70.43.103])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6053D0912
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 14:27:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EDD3A9DA9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 14:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.103
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776695278; cv=none; b=rZ5OIMbMZJH6FwRMwhNnNGa0EfgxZB9n4qTanLjIPQHVDWTLtvZ6GNQbat2VygvQ27xEgNSMd1aNfNs0pIwFXJ39wBGOq8yLNWgM46w0SfrtpXeUseQe1MTJLhsdMQixPZBCRXx+3zMeSe2oEAPv5whmIIAMwMA7ocdg6ZTnfT8=
+	t=1776695285; cv=none; b=lPBkoaSHM/cZT0m/BVP/NPIFZn3i2nDx0ku+q/6KaLeTcwhmqdP0ZIlrqJbUNcBIIVnWUfh7Bz6W0Qr0dTtUBCX0UDnDxSl8i6jd6akhfXg9qnHXuhkqNN616HCXuNGdSYrkhlZPnUevmGOQiv6RNGpWmJFioV2v2iTWasoM1kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776695278; c=relaxed/simple;
-	bh=GmHovF65AhcKaDhKuPYPUEDtvbz4tbknbmC0pegJ98Y=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=WloikXMiKZEbCYhBcRg+B37PxqK+w3Gky/lxIrWWIfI74VPoT3aj5JhpvLMXneXpbe/nn2oOhlz1Tgh8nZeossktqh2e8KPNukyRbB89oOyXsa9cfR2Ke6jQebVmF/ImKGnCr5iJgUbeoSPwmjEdT30pK+g2Q6FaEisVm+VfEP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=Diw8+RkR; arc=none smtp.client-ip=185.70.43.16
+	s=arc-20240116; t=1776695285; c=relaxed/simple;
+	bh=mhsuqBnDYaNy0r1jBQ7ImxEqI134ijo5W6BiMiwFb0o=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=W82n7EKv6tnJRkh/gLS4hajJGkRcbm3Yk19RYULlfwQPM/ueOL5PLO2NVWGWGU7M/xndQ9vj/D22TbWf9ELXWKYBIwyUxEOnKR5+SHjr/EXMSHwLGBQQ+eHwV22OJ/ut40/TGioz/KttSCkCXOg81ZRG2VOpTEIkSDJkPaY43oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=PPA3xX8X; arc=none smtp.client-ip=185.70.43.103
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1776695272; x=1776954472;
-	bh=17HvWcOauQRMeOJCVn04433LU5s1g0RbLGiy/EatyKY=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=Diw8+RkRQZm1m+spZiGo/UjPxllqV+DYxMJhAgJjNLkqxY4dxb3HrjCegE6IQG0YW
-	 xBTMRa69ZX/0lEFimD57oSJfAYjhNSUMVhPXKTyDINeho7Jev2c3tIaWvHjTOh0psW
-	 O3zFTpA2EEMXETzAG2xZQg08R0yuEBZrHCP7cRRQChDKFQkK9J1Pb3jkKMiso1JLwS
-	 WhLCWba3viy43ANNnWNnLhNh+sEecDM/BOxs0/9EERJ/PcWkEKwKqVro1LLwCJWZqp
-	 pcbtiU/uIrI//oz31y730stRCG9aQraf6m227kcYl2yOS5ncxZY6DhWDvdAU6VSWeQ
-	 TwhBuPUxZ7XTg==
-Date: Mon, 20 Apr 2026 14:27:46 +0000
+	s=protonmail3; t=1776695281; x=1776954481;
+	bh=t1pQgxgFpCDa+wxeiNLcdVPuUfml1zmjp4HoS0YAPLA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=PPA3xX8Xbq3gADe1O1VMbaliOrQkXO8eCFkVkJIu20J8ugh0jFHoEOphW/xbTAOaN
+	 pA53Pwm36SFWwGSWuLodjA2GtwNrdv/ecPWd04udJuqSdpjMyOx3+gZ8U0GvoLTt15
+	 NkOpC97FMBOS9eKbCICtMd3tCggm8RPjSi7XKmrd+RxSaDqeBt8ngGEjg0zB9yuvzU
+	 8el/DBXeLiq0s4rs+lD7NVXf8eYosf632rjgz0IL0ne3G1WlNbwYV4UNAn0yAodMJH
+	 6ryZ0xRGlk4R3c0cy0bRjvhmlPMA756Lt7lZBQVPkikvTWsm4DmDPyqD3IteDscH3p
+	 No8bTBBTMd95w==
+Date: Mon, 20 Apr 2026 14:27:55 +0000
 To: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@oss.qualcomm.com>
 From: Alexander Koskovich <akoskovich@pm.me>
 Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH v2 0/2] pinctrl: qcom: eliza: Split up some QUP pin groups
-Message-ID: <20260420-fix-eliza-pinctrl-v2-0-b68329fd6701@pm.me>
+Subject: [PATCH v2 1/2] dt-bindings: pinctrl: qcom,eliza-tlmm: Update function list
+Message-ID: <20260420-fix-eliza-pinctrl-v2-1-b68329fd6701@pm.me>
+In-Reply-To: <20260420-fix-eliza-pinctrl-v2-0-b68329fd6701@pm.me>
+References: <20260420-fix-eliza-pinctrl-v2-0-b68329fd6701@pm.me>
 Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 5cbdbca9aa3f92a619abb89777b3915c0ea35c61
+X-Pm-Message-ID: 33ab825d1686fd732bc5eb1ecb05ef1ac44dc102
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,7 +73,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103789-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103790-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[3];
 	RCVD_TLS_LAST(0.00)[];
@@ -78,7 +82,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	DKIM_TRACE(0.00)[pm.me:+];
 	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -87,42 +91,52 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	TO_DN_SOME(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,pm.me:email,pm.me:dkim,pm.me:mid]
-X-Rspamd-Queue-Id: 3693442E0D1
+X-Rspamd-Queue-Id: 19A8242E0EE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Multiple QUPs have lanes that can be routed to one of two GPIOs and
-collapsing them prevents devicetrees from requesting specific routing.
+Update the function list to include the QUPs whose lanes can have more
+than one GPIO option.
 
-For example, a board that wires an I2C SCL line to one of two GPIOs
-cannot request that specific pin with the groups collapsed.
-
-This series splits them up so devicetrees can request the configuration
-they need.
+This allows devicetrees to override the function for say, SE6 I2C SCL
+pin from 54 to 42.
 
 Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 ---
-Changes in v2:
-- Update bindings to reflect new split functions
-- Link to v1: https://lore.kernel.org/r/20260418-fix-eliza-pinctrl-v1-1-864=
-bf95ac83b@pm.me
+ .../devicetree/bindings/pinctrl/qcom,eliza-tlmm.yaml        | 13 +++++++++=
++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
----
-Alexander Koskovich (2):
-      dt-bindings: pinctrl: qcom,eliza-tlmm: Update function list
-      pinctrl: qcom: eliza: Split up some QUP pin groups
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,eliza-tlmm.yaml=
+ b/Documentation/devicetree/bindings/pinctrl/qcom,eliza-tlmm.yaml
+index 282650426487..9010226bf1a0 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,eliza-tlmm.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,eliza-tlmm.yaml
+@@ -86,9 +86,16 @@ $defs:
+                 qdss_gpio_tracectl, qdss_gpio_tracedata, qlink_big_enable,
+                 qlink_big_request, qlink_little_enable,
+                 qlink_little_request, qlink_wmss, qspi0, qspi_clk,
+-                qspi_cs, qup1_se0, qup1_se1, qup1_se2, qup1_se3, qup1_se4,
+-                qup1_se5, qup1_se6, qup1_se7, qup2_se0, qup2_se1,
+-                qup2_se2, qup2_se3, qup2_se4, qup2_se5, qup2_se6,
++                qspi_cs, qup1_se0, qup1_se1, qup1_se2_l0, qup1_se2_l1,
++                qup1_se2_l2_mira, qup1_se2_l2_mirb, qup1_se2_l3_mira,
++                qup1_se2_l3_mirb, qup1_se2_l4, qup1_se2_l5, qup1_se2_l6,
++                qup1_se3, qup1_se4, qup1_se5, qup1_se6_l0, qup1_se6_l1_mir=
+a,
++                qup1_se6_l1_mirb, qup1_se6_l2, qup1_se6_l3_mira,
++                qup1_se6_l3_mirb, qup1_se7_l0_mira, qup1_se7_l0_mirb,
++                qup1_se7_l1_mira, qup1_se7_l1_mirb, qup1_se7_l2, qup1_se7_=
+l3,
++                qup2_se0, qup2_se1, qup2_se2, qup2_se3_l0_mira,
++                qup2_se3_l0_mirb, qup2_se3_l1_mira, qup2_se3_l1_mirb,
++                qup2_se3_l2, qup2_se3_l3, qup2_se4, qup2_se5, qup2_se6,
+                 qup2_se7, resout_gpio, sd_write_protect, sdc1, sdc2,
+                 sdc2_fb_clk, tb_trig_sdc1, tb_trig_sdc2, tmess_prng0,
+                 tmess_prng1, tmess_prng2, tmess_prng3, tsense_pwm1,
 
- .../bindings/pinctrl/qcom,eliza-tlmm.yaml          |  13 +-
- drivers/pinctrl/qcom/pinctrl-eliza.c               | 200 +++++++++++++++++=
-----
- 2 files changed, 179 insertions(+), 34 deletions(-)
----
-base-commit: c7275b05bc428c7373d97aa2da02d3a7fa6b9f66
-change-id: 20260418-fix-eliza-pinctrl-b6e66dd92766
-
-Best regards,
 --=20
-Alexander Koskovich <akoskovich@pm.me>
+2.53.0
 
 
 
