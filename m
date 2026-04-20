@@ -1,105 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-103815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uJeBM1Nd5ml6vQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 19:07:31 +0200
+	id GJ48MNRl5mmJvwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 19:43:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 861B343096C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 19:07:31 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D459431EED
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 19:43:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id ED17130A5D41
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 16:31:36 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id CADC9328F717
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 16:31:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FACD35CBC3;
-	Mon, 20 Apr 2026 16:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA66635DA76;
+	Mon, 20 Apr 2026 16:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="G3TZzfiv";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OMKdiDme"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="n9yGoQMa";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HLFf/CBb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B66934FF78
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 16:30:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B94350A18
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 16:30:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776702638; cv=none; b=jmQQG5t1YUTdxzkfd5Di1xanQiNBJ8NOGG3VtabCRedbM1y9RmMOKZqPC87K7nButtyEoU/AsXxl9pMcibwaV0ODjW06jnULA3wvABO+jf3T0avm8yXsVdwYsc0rYMuz2azmyMfClkJc36etR12S0w6g+Zcfm/YRqMXOytA/8mE=
+	t=1776702642; cv=none; b=lp9VCDyjS6ft8NCkwgdwBZT9+X16+CNlLH0OFjjZoL9bp3H2XzFyU65bxG85CxgWlZG2CF8o24uAWwEOUIy+Zf9Ly+llrAg9Q7yJUFPP6bMpRHpO53W+D9arolYWtzXa9vsCTxsF2BuJpOE667mo2jVsZq4xm2hT8nw31Mipp/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776702638; c=relaxed/simple;
-	bh=rtobRT1PjA1jbAn6P6pjOCDsBSURAoTMG1bw1/JByG8=;
+	s=arc-20240116; t=1776702642; c=relaxed/simple;
+	bh=DZ3KmwiHC5R0rNOGb7H/mzeKapAJF3vVekLdIS3xqas=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ygw+Mo+ehvMCfXnkmaN13POY/1dHilUqh2LW/JDAjHqvTG2T8TgWfTv00GFmbjGxnh2QT4rs7edQOB69nYpFf2BWp0Jj72k++DCXglSc8TurGxZ+OCHMnSwl0xCojvqnuW2hdPSqAAmMRXhoVWAd+dgqvcnGPufpFweT5UqHLv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=G3TZzfiv; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OMKdiDme; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=Q/e8nUMmSyFHzO85smVnp5Wov0WKUj2ysJ5oh2lb6R2zxnf3Grm6ImBiuGA150QdH/qu2hFN4Cz6U2QUVzxX6rWMSOGmmoOlMjV6dWnc2P4bsb1s6RHo1YQFT5lZKCuhvfcZK3Xh+wtIBfzpX1IkYwVz7mp0r/zMZFktBYhlNrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n9yGoQMa; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HLFf/CBb; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63KFpLO02281651
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 16:30:35 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63KG1htu785558
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 16:30:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qFYzwR778xQL2d0bCJ2p/Ngc+5WmkhhM+pkWUTimr5g=; b=G3TZzfiv5S9xPvHe
-	25wgkDIubFWaMGT2OPl/qfLXA2EMZ1llQmj8s3DRy6GMXyFLMQyiuTVkkWf0/Zsv
-	+iXjQU02RgaCWWeoKKsmUCNft4edAT8XJ+wPLrycRfr0cHuEUMyIVPmGJIJDAvxW
-	pJOMl0JcNud8EDoMuVVfYZP4fX/wlPUbrVn+mU3QPAtZ9y7IjA8sv703CUMCAPwG
-	UiyLiQ9VQTvj/P5sgOUcZQV3Xvvvhy5CAPMkwidmQ90Nzzyssx6+k299XRaOmwYp
-	VP+ELYr7B5TzmNVRLz6ew6U/mWDkx9OVUaEN68szPB426IGQc++vdw10ioqRD6iP
-	8a70gg==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dnh599nc1-1
+	vnXNKvGPM70nBzOIG5k0xotvjWoRzt1LHDmn/HOTJcE=; b=n9yGoQMaJJvAt+mf
+	q+IohmfA10CSt6DPqEwmk2HhCHcoy+1VZ8cC7wd4pbGQ44JICOlZN6jGZYbzB+o9
+	W6UKBIpvd0tEBiY9KKdEXN4BKZY3BU8D89sd47JUzi/gEkP85yU4klGuQ+C4eQzE
+	kztGO/YRs3xKpnbmrIqcwZaihQL2elhtlRQljZ3UfrBEm/h7K4cJe3Wt36UlSDk9
+	eqgSeCU0ZrV91SK8hZl0CeM9bPoZAlhUuW0ihemKRN5ETqY/fi5IiU5CIwQs60bq
+	jSH6Nv7fLMygth89AHnYLaenagXilX1phPSZp2oYTOfJHnsLDUMo+r5vcsT8VI2R
+	txiUAA==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dnhdhhjg5-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 16:30:35 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-82f9aa52c92so2601013b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 09:30:35 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 16:30:40 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-82f6b0a7164so4389632b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 09:30:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776702634; x=1777307434; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1776702640; x=1777307440; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qFYzwR778xQL2d0bCJ2p/Ngc+5WmkhhM+pkWUTimr5g=;
-        b=OMKdiDmewTpY39Rzv4UiTZ0fsp3H81MAf7iwxwoUWaLnbMF09ZqHHGemH0UO3CXVzw
-         Ts5mCvbGyk0Qw2gMJW9qNBgCiIqW82No28CCE5Id6P3t6wmPVLCu9paUocXEUlymlY1h
-         lQEXPh6SP9nBJA3fmn2BSwJWHCXX4+vPpC0xaVqSNNTWPWxK75Fs1CwMGlNg7MBkVNol
-         cbVpzFnnkT7wTD1igEDXHqCEFHcIVezJGSbdQfDGk+7VAjuues5hsOJBPr8aNAcgbbz1
-         3RmyRMoliNXOmji6Y3V1ZSJgz/ywndvr4Kdsp8+S75zqGROfVl7EhvrtyD5PJIEtgMsI
-         W9QA==
+        bh=vnXNKvGPM70nBzOIG5k0xotvjWoRzt1LHDmn/HOTJcE=;
+        b=HLFf/CBbEC9AvP421bl0vA6e6Lq+qJE+mudsKAFA4VicWtIufeT19/8Q5lbnszk+hz
+         8QWEs653IciTAJdLc85ZGOm7ii/gPi820JKJv2ZQ567XzN0V8TkvrsVgb6OE4cppwVv8
+         jKViwdVNNN2dy4poWBvyOzQhnYmD1cYqQOWrb/fzUwvQnv4vOv/FzAVOaP6L9em3pOHl
+         tcLv2fYNsL1L1J1X+/tz11lXTlcJ7VNMzj5ax4rkpWxXjFu3iYDG9F7y8TBIbcO2Lsf7
+         PjR3oPtDzvZZnmQcjD0MBco3KN/iy7HeiV5tnQmyfZQBu30Kr6VObZdzipGolScHIMJe
+         jblA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776702634; x=1777307434;
+        d=1e100.net; s=20251104; t=1776702640; x=1777307440;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=qFYzwR778xQL2d0bCJ2p/Ngc+5WmkhhM+pkWUTimr5g=;
-        b=kcfbu6AtYv+pJf0gS5DiDu7I3wI0vtPl+CK8rZWml1gGZ/9POWeb5kHI+RuR8Pt4IE
-         WeYs65D67woCJ6EphkiSpWB16vXIQLe8D7PWT4XJUmoerSzmzVaFwQFTaRp7ByhTkFfi
-         R0zAFc94rDNvJ+GWBJpbhBupv3ujIEQVohQG3qiB+DfGWIvQqAj0/c5CGGKzHjYNtQSz
-         DfOPRkbhDzIXFdVbCU13P8MzhNoUXJQlFzdl87XHeTMMlXDGvSW5eSiC66Q4fMEQL430
-         8NZ/3Tr9xypZi4vjYEs+5nn6C4i9vPkZRJ+bPngeEi7XbbDv71qPdykNahpvNP4lJGEq
-         lTFw==
-X-Forwarded-Encrypted: i=1; AFNElJ8sJr4e9FqhLJpfIry7DykC2ky6sRi0vB4GiJBb3i7XV87HBLvTMQ6uHp1kiqQRbnee0OlaEWx0P4tIiCq2@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtXV0qJmwCCizyIMMRTsOagFN+c35fWmWNycI1dN/7OkqZUUhv
-	0dlkPCsagJ1yg8ne+ZsgCQy1C/eqFFVVRAtVgOUrU3ohyIaqFNFm+J8Z1fjV/24cWZ5sX6pgTxx
-	789hmrDnVILlaPnEJijSDAe5DqpXihuxjukrcNiXVfeFaixn+zAanNUTTKtkanj40rTpl
-X-Gm-Gg: AeBDietDdy3rsHRfOyCh68acKGa1F8A/O4wdiHts2Uhiqhl+Zaq3A7t6Iit9ak2Sta4
-	FDd/j0vqhd1ccRJ5Pl3Jzfp2OwP7le4lls4fsVCjFuWYD6x5gZH1aTQ080NmbBmfx9YFznDwVB8
-	GT2fR4ahB7hZEpyBpSDUgBRtyr3Mau6TlYscgqtO1e5cXTOXC8uXvN7T0uXC68gPxTw+6DuvkDd
-	37EDCe75zCF3hJu8wlw4hA3ZmrwpkQEWx8HtHe9X/CjcBzbClxMh3GoIFpSzi8RIFSGgnUlWiix
-	7lyUXFXpXOm0BhFXtC2297iJMSd0rKWMRiA97Ur279QrM/dpEtjECMk7dAp3nXSjPqLtg0dCgVU
-	P7UrUqFyHkXilo9oyKfj3p8v2aLMHj98NE5LUYXMbaFO/cZagEi0zPJmaymfbZI0=
-X-Received: by 2002:a05:6a00:3397:b0:82f:50cd:e586 with SMTP id d2e1a72fcca58-82f8c821430mr15905892b3a.13.1776702634156;
-        Mon, 20 Apr 2026 09:30:34 -0700 (PDT)
-X-Received: by 2002:a05:6a00:3397:b0:82f:50cd:e586 with SMTP id d2e1a72fcca58-82f8c821430mr15905824b3a.13.1776702633527;
-        Mon, 20 Apr 2026 09:30:33 -0700 (PDT)
+        bh=vnXNKvGPM70nBzOIG5k0xotvjWoRzt1LHDmn/HOTJcE=;
+        b=EGdswJlGum9W0IbaSBJbRP+riI8sdLjQasVEZytYqg2amwtQZRxXhg6VHAH/p8zp4j
+         +ub26tR0HwfziEQJJJycCYBUYpFNKMSwjSBF32+zNnhJAmPz7EgBE8XJjonfA2fWZSEZ
+         LU7JP1aGdifF/QMHuFe5to9iJdV4yw2VDv+/dhgb4HYSnA0jKg6eMYrHI6kWgfwN3UwS
+         GYYevIBOBD2nyMDC3fMF0rMs+e+qyKG/Y8EjbM+F1OlMaVoKDcBEDtTevfDyYqOo6DIW
+         4SeMeuzDrtm65DJrja5Oku3mfY+b9Bphsscsg2jMrr5gKVGWklCqV6LzDzcXUhz66OZc
+         w+IQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/nDgUaKUcItI0YzJUko1s1DX+/aB7wpZ4gxoFGcs46CQ4EvcAIAQF1HfIlDqb5y2dTBLrQhkbUQlKzS5gf@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTlvFatJlWvlunlBqSu2/gJfeAjTDg0IdF0+GPxGCRmiANFpTT
+	P67Nx01JIJPvDT0A9zaTF0DI22lKIZ1KWxiLJ2zRGmphkRCTfo2F9DoZ4ETa22f8B0tYo1Ht2kP
+	m5y61APQG3lG5XgAIci9gNqDjbnu7E1IDlA/WxnC+HZFeuy3Xavhv9Nm2R4SV6E3wYB+V
+X-Gm-Gg: AeBDiesYAhawOvLFl3FaARSEbqKOmDqGbq6QwjzjZkHH888LSok7DeUVJgkkXHqlA2b
+	yCCBMY5Pjn1TEAxV5Z/FSv9M242vW3iEl9RqN+cFmMYnVZFNT+6gh4W/cflfBO+vDm9/zgBKmMA
+	Gv/9/NpOWbS246QIt57pf42yT9blKPqF+rTILv9MNuNlSXLQ7YzNplyUSqDAgkIggKn7h5NwfaF
+	HY9sGTjLtsxNS5ZRd1eqfAZqP/bdu/8ENOuCDXzRiI6WMJFyU8hoq6wNFOYPrUQKx+iiwGkFvEn
+	fYCBJ2hax7dCRXPz+9nm0cDHs3mhOIKA8npYSp6E1kXKQgrxzLS52ySRYt4DU5Z3roCEJF+siM+
+	uXKU+dcY0Qygol98up0PwGvFJBcqyp9fnis93dWW83ix7zXPeHtDKvkoAZK2SxAA=
+X-Received: by 2002:a05:6a00:3028:b0:82a:6461:6d15 with SMTP id d2e1a72fcca58-82f8c94c5fbmr15549475b3a.46.1776702639781;
+        Mon, 20 Apr 2026 09:30:39 -0700 (PDT)
+X-Received: by 2002:a05:6a00:3028:b0:82a:6461:6d15 with SMTP id d2e1a72fcca58-82f8c94c5fbmr15549416b3a.46.1776702639195;
+        Mon, 20 Apr 2026 09:30:39 -0700 (PDT)
 Received: from hu-jkona-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f8ec05391sm11666469b3a.56.2026.04.20.09.30.27
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f8ec05391sm11666469b3a.56.2026.04.20.09.30.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2026 09:30:32 -0700 (PDT)
+        Mon, 20 Apr 2026 09:30:38 -0700 (PDT)
 From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Date: Mon, 20 Apr 2026 21:59:01 +0530
-Subject: [PATCH 08/13] clk: qcom: clk-rcg2: Add support for CRM based RCG
- ops
+Date: Mon, 20 Apr 2026 21:59:02 +0530
+Subject: [PATCH 09/13] clk: qcom: common: Add support to register and
+ control clocks using CRM
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,7 +108,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260420-cesta-sm870-dispcc-v1-8-eb27d845df9c@oss.qualcomm.com>
+Message-Id: <20260420-cesta-sm870-dispcc-v1-9-eb27d845df9c@oss.qualcomm.com>
 References: <20260420-cesta-sm870-dispcc-v1-0-eb27d845df9c@oss.qualcomm.com>
 In-Reply-To: <20260420-cesta-sm870-dispcc-v1-0-eb27d845df9c@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -126,35 +126,36 @@ Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
         Taniya Das <taniya.das@oss.qualcomm.com>,
         Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Proofpoint-ORIG-GUID: HdRwr3tqhP3NvPLa9jb7NFpT2_1_x--b
-X-Proofpoint-GUID: HdRwr3tqhP3NvPLa9jb7NFpT2_1_x--b
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDE1OSBTYWx0ZWRfXyftuAIiXa2pN
- Vz+7rUh9d8MFxzzeoEeEyRtLhEgX22m2OkPfsmVYzh8H7fZOqtzoyQ4Ukz5AU5oyz0xe9DmA0or
- /S4wFUjf3CYgyDzUB/nXkH18NJsbWzAnQQjzmzmLY6xzzqwG9RvG5fGmkr47JB7mqzgfEgQSo6S
- wKXCYCcAb6N+ucfZYC4grJ0IQ+WUKNw2DlS1aT1Rdcqt50Xsfo+TrnN6XD1ax6Hi1Y3Y4orxomS
- fY9nGvmQtjrPqf5gvyBnvF2h5hdpBdQARa387KPNMSRiTmIqRGTwI/VMa9vVJx4rYJ1KCP0tV0m
- ZTnb8EYZrqjYQT4K08Q6BiVNTlNlxbQjrJhc7P+XkVxD7PFmew33ehSymauAfAa97eGYhaGe4iV
- cTR9ZjzLAlu7gk8tGWPPw5fECQv7z73sYuykzf3NMlz0wQpCIiDofw0Hs79/F7cc2U9n9o3etUk
- IsnoQX08Q0gmG6WGouA==
-X-Authority-Analysis: v=2.4 cv=HNrz0Itv c=1 sm=1 tr=0 ts=69e654ab cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Proofpoint-ORIG-GUID: 0zhD6psb3IX4Nk_rW3COq5fn1IyZVNm1
+X-Authority-Analysis: v=2.4 cv=IMgyzAvG c=1 sm=1 tr=0 ts=69e654b0 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=NNO5VbLtoeey9YZzRQ4A:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=BZ6vxNvidA0H8-9MRDoA:9 a=QEXdDO2ut3YA:10
+ a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-GUID: 0zhD6psb3IX4Nk_rW3COq5fn1IyZVNm1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDE1OSBTYWx0ZWRfXzFFKk/RQG8wc
+ qdNduZVkDqoqK4aptxG1BU2K7WUx+cz2kbPwFP5ujn7OXJ86xgF7SrJHU8ytTtppilZOkAfkBJA
+ MWN/i44TqpzkTxmhO/92OLS9lkiv5SeKmkeAzXBlAH+7j8+v/I9/gfWnnL+oafTv4pPObKdku11
+ z9SFz0LXTKyPGra3mUY7RrMzTIWj1ydR5tgr1lzvzsbs6LU01NZNBg7KXfX9u01NkELHAifjw3g
+ Y7X19/FQnNhnEZFtk1KQhRnlTSCVy8sQvM+wqV4A2EAQh0iZ2VnJOqeyOnjmyOa5+Shp2Ga0MP5
+ T/lRt4+j+KU+PvaBfR5SdSc8u/zKCZ3ngamMXqZ8emSlD5w0nRDNW3VvV2ks4d1SxTkxwqMSg8n
+ Rwe+Kvv/3RXfzH7Jesuhm819oKW3CajoPMrIqaDtjiNqUQLs0yXoDN8oQIjQJqgqL/GlUP3CMan
+ RIGXxv4svcSzpIsfBfA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-20_03,2026-04-20_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
- impostorscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604200159
+ spamscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ phishscore=0 adultscore=0 clxscore=1015 bulkscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
+ definitions=main-2604200159
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -162,364 +163,158 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[18];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103815-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103816-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email,cmd.data:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[jagadeesh.kona@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 861B343096C
+X-Rspamd-Queue-Id: 9D459431EED
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add clock ops to control RCGs via the CESTA Resource Manager(CRM).
-This adds support for clk_rcg2_crmb_ops where the RCG's frequency
-table is dynamically populated by reading the LUT entries provided
-by CRM. For scaling the RCG, the RCG frequency is converted to BCM
-TCS bandwidth vote and sent to CESTA HW using CRM APIs. The CESTA
-HW would then scale the RCG to the desired frequency requested via
-CRM.
+Add support for helper macros to maintain the list of CRM clocks in a
+clock controller. Add support for qcom_cc_register_cesta_clks() which takes
+this list of CRM clocks and update the ops of these clocks to CRM clock ops
+only if CRM is enabled.
 
 Co-developed-by: Taniya Das <taniya.das@oss.qualcomm.com>
 Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
 Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 ---
- drivers/clk/qcom/clk-rcg.h  |  23 ++++-
- drivers/clk/qcom/clk-rcg2.c | 242 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 264 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/common.c | 54 +++++++++++++++++++++++++++++++++++++++++++++++
+ drivers/clk/qcom/common.h | 19 +++++++++++++++++
+ 2 files changed, 73 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-index 4fbdf4880d0308714a2d1dc8c510ec3819206b9e..4872e7f9caa1096bdebca36dfbb439dc790638ef 100644
---- a/drivers/clk/qcom/clk-rcg.h
-+++ b/drivers/clk/qcom/clk-rcg.h
-@@ -1,5 +1,8 @@
- /* SPDX-License-Identifier: GPL-2.0 */
--/* Copyright (c) 2013, 2018, The Linux Foundation. All rights reserved. */
-+/*
-+ * Copyright (c) 2013, 2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
+diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+index 968e19997daf5eebec65315974cd0c41e08e55ec..14dfae80e567852d09a5972858ae14c62e5074ee 100644
+--- a/drivers/clk/qcom/common.c
++++ b/drivers/clk/qcom/common.c
+@@ -10,10 +10,13 @@
+ #include <linux/platform_device.h>
+ #include <linux/clk-provider.h>
+ #include <linux/interconnect-clk.h>
++#include <linux/mfd/syscon.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/reset-controller.h>
+ #include <linux/of.h>
  
- #ifndef __QCOM_CLK_RCG_H__
- #define __QCOM_CLK_RCG_H__
-@@ -175,9 +178,26 @@ struct clk_rcg2 {
- 	u8			cfg_off;
- 	u32			parked_cfg;
- 	bool			hw_clk_ctrl;
-+
-+};
-+
-+/**
-+ * struct clk_rcg2_crm - root clock generator controlled via CRM
-+ * (CESTA Resource Manager)
-+ *
-+ * @rcg: root clock generator
-+ * @crm_vcd: Virtual Clock Domain(VCD) index for a CRM controlled RCG
-+ * @crm: pointer to CLK CRM instance used for reading frequency LUTs
-+ *	 and to communicate with CESTA HW
-+ */
-+struct clk_rcg2_crm {
-+	struct clk_rcg2		rcg;
-+	u8			crm_vcd;
-+	struct clk_crm		*crm;
- };
- 
- #define to_clk_rcg2(_hw) container_of(to_clk_regmap(_hw), struct clk_rcg2, clkr)
-+#define to_clk_rcg2_crm(_hw) container_of(to_clk_rcg2(_hw), struct clk_rcg2_crm, rcg)
- 
- struct clk_rcg2_gfx3d {
- 	u8 div;
-@@ -202,6 +222,7 @@ extern const struct clk_ops clk_rcg2_shared_ops;
- extern const struct clk_ops clk_rcg2_shared_floor_ops;
- extern const struct clk_ops clk_rcg2_shared_no_init_park_ops;
- extern const struct clk_ops clk_dp_ops;
-+extern const struct clk_ops clk_rcg2_crmb_ops;
- 
- struct clk_rcg_dfs_data {
- 	struct clk_rcg2 *rcg;
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 6064a0e17d5190e9d228688c04c0d4947876b4e6..668115b94a0f202cf3ac4f68efe3cef1684055be 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-  * Copyright (c) 2013, 2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #include <linux/kernel.h>
-@@ -16,9 +17,12 @@
- #include <linux/math64.h>
- #include <linux/gcd.h>
- #include <linux/minmax.h>
-+#include <linux/pm_runtime.h>
- #include <linux/slab.h>
- 
- #include <asm/div64.h>
 +#include <soc/qcom/crm.h>
-+#include <soc/qcom/tcs.h>
- 
- #include "clk-rcg.h"
++
  #include "common.h"
-@@ -59,6 +63,33 @@
- #define SE_PERF_M_DFSR(level)	(0x5c + 0x4 * (level))
- #define SE_PERF_N_DFSR(level)	(0x9c + 0x4 * (level))
+ #include "clk-alpha-pll.h"
+ #include "clk-branch.h"
+@@ -266,6 +269,47 @@ int qcom_cc_register_sleep_clk(struct device *dev)
+ }
+ EXPORT_SYMBOL_GPL(qcom_cc_register_sleep_clk);
  
-+/* Cesta configuration*/
-+#define MAX_CRM_SW_DRV_STATE	3
-+
-+/* Address offset for specific VCD */
-+#define CRMC_OFFS_VCD(crm, _vcd) \
-+	((crm)->regs.vcd_offset * (_vcd))
-+
-+/* LUT registers address offset for specific vcd and lut entry level */
-+#define CRMC_OFFS_LUT(crm, vcd, _level) \
-+	(CRMC_OFFS_VCD(crm, vcd) + ((crm)->regs.lut_level_offset * (_level)))
-+
-+/* CFG_RCGR LUT register address offset for specific vcd and lut entry level */
-+#define CRMC_OFFS_CFG_RCGR(crm, vcd, level) \
-+	(CRMC_OFFS_LUT(crm, vcd, level) + (crm)->regs.reg_cfg_rcgr_lut_base)
-+
-+/* L_VAL LUT register address offset for specific vcd and lut entry level */
-+#define CRMC_OFFS_L_VAL(crm, vcd, level) \
-+	(CRMC_OFFS_LUT(crm, vcd, level) + (crm)->regs.reg_l_val_lut_base)
-+
-+#define PLL_L_VAL_MASK		GENMASK(7, 0)
-+#define PLL_ALPHA_VAL_MASK	GENMASK(31, 16)
-+#define PLL_ALPHA_VAL_SHIFT	16
-+#define PERF_OL_OFF		0
-+#define XO_FREQ			19200000ULL
-+#define CALC_PLL_RATE(l, a)	((XO_FREQ * (l)) + ((XO_FREQ * (a)) >> 16))
-+#define HZ_TO_MHZ(rate)		(rate / 1000000ULL)
-+
- enum freq_policy {
- 	FLOOR,
- 	CEIL,
-@@ -1859,3 +1890,214 @@ const struct clk_ops clk_dp_ops = {
- 	.determine_rate = clk_rcg2_dp_determine_rate,
- };
- EXPORT_SYMBOL_GPL(clk_dp_ops);
-+
-+static int clk_rcg2_crm_populate_freq(struct clk_hw *hw, unsigned int lut_index,
-+				      struct freq_tbl *f)
++static void qcom_register_crm_clk(const struct crm_clk_data *data)
 +{
-+	u32 mask, cfg_rcgr, src, pll_lval, lval, alpha_val, num_parents, pindex;
-+	struct clk_rcg2_crm *rcg_crm = to_clk_rcg2_crm(hw);
-+	struct clk_rcg2 *rcg = &rcg_crm->rcg;
-+	struct clk_crm *crm = rcg_crm->crm;
-+	u32 vcd = rcg_crm->crm_vcd;
-+	unsigned long prate = 0;
-+	struct clk_hw *parent;
++	struct clk_init_data *init = data->init;
 +
-+	/* Read CFG_RCGR and PLL LUT entries */
-+	regmap_read(crm->regmap_crmc, CRMC_OFFS_CFG_RCGR(crm, vcd, lut_index), &cfg_rcgr);
-+	regmap_read(crm->regmap_crmc, CRMC_OFFS_L_VAL(crm, vcd, lut_index), &pll_lval);
-+
-+	/* Calculate the pre_div and parent source from LUT entry */
-+	mask = BIT(rcg->hid_width) - 1;
-+	f->pre_div = 1;
-+	if (cfg_rcgr & mask)
-+		f->pre_div = cfg_rcgr & mask;
-+
-+	src = cfg_rcgr & CFG_SRC_SEL_MASK;
-+	src >>= CFG_SRC_SEL_SHIFT;
-+
-+	lval = pll_lval & PLL_L_VAL_MASK;
-+	alpha_val = (pll_lval & PLL_ALPHA_VAL_MASK) >> PLL_ALPHA_VAL_SHIFT;
-+
-+	/* Find the matching parent and calculate it's rate for LUT entry */
-+	num_parents = clk_hw_get_num_parents(hw);
-+	for (pindex = 0; pindex < num_parents; pindex++) {
-+		if (src == rcg->parent_map[pindex].cfg) {
-+			f->src = rcg->parent_map[pindex].src;
-+
-+			parent = clk_hw_get_parent_by_index(hw, pindex);
-+			if (!parent)
-+				return -EINVAL;
-+
-+			if (!lval)
-+				prate = clk_hw_get_rate(parent);
-+			else
-+				prate = CALC_PLL_RATE(lval, alpha_val);
-+
-+			break;
-+		}
++	switch (data->flags) {
++	case CRM_PLL:
++		init->ops = &clk_alpha_pll_crm_ops;
++		break;
++	case CRM_RCG_CRMB:
++		init->ops = &clk_rcg2_crmb_ops;
++		break;
++	default:
++		pr_err("Invalid CRM flag for %s\n", init->name);
++		break;
 +	}
-+
-+	if (!prate)
-+		return -EINVAL;
-+
-+	/* Calculate the RCG's rate from parent rate */
-+	f->freq = calc_rate(prate, 0, 0, 0, f->pre_div);
-+
-+	return 0;
 +}
 +
-+static int clk_rcg2_crm_populate_freq_table(struct clk_hw *hw)
++static int qcom_cc_register_crm_clks(struct device *dev, struct clk_crm *crm,
++				     const struct crm_clk_data *clks, size_t len)
 +{
-+	struct freq_tbl *freq_tbl, *curr_freq_tbl;
-+	struct clk_rcg2_crm *rcg_crm = to_clk_rcg2_crm(hw);
-+	struct clk_rcg2 *rcg = &rcg_crm->rcg;
-+	struct clk_crm *crm = rcg_crm->crm;
-+	u32 prev_freq = 0;
-+	int i, ret;
++	int i;
 +
-+	/* Allocate space for 1 extra since table is NULL terminated */
-+	freq_tbl = kcalloc(crm->max_perf_ol + 1, sizeof(*freq_tbl), GFP_KERNEL);
-+	if (!freq_tbl)
-+		return -ENOMEM;
++	crm->crm_dev = crm_get(dev);
++	if (IS_ERR(crm->crm_dev))
++		return PTR_ERR(crm->crm_dev);
 +
-+	for (i = 0; i < crm->max_perf_ol; i++) {
-+		/* Skip first LUT entry as first entry is used to disable RCG */
-+		ret = clk_rcg2_crm_populate_freq(hw, i + 1, freq_tbl + i);
-+		if (ret) {
-+			kfree(freq_tbl);
-+			return ret;
-+		}
++	if (crm->crm_dev && crm->max_perf_ol) {
++		crm->regmap_crmc = syscon_regmap_lookup_by_phandle(dev->of_node,
++								   "qcom,crmc-regmap");
++		if (IS_ERR(crm->regmap_crmc))
++			return PTR_ERR(crm->regmap_crmc);
 +
-+		curr_freq_tbl = freq_tbl + i;
++		for (i = 0; i < len; i++)
++			qcom_register_crm_clk(&clks[i]);
 +
-+		/* Two of the same/decreasing frequencies means end of LUT */
-+		if (prev_freq >= curr_freq_tbl->freq) {
-+			curr_freq_tbl->freq = 0;
-+			break;
-+		}
-+
-+		prev_freq = curr_freq_tbl->freq;
-+	}
-+
-+	rcg->freq_tbl = freq_tbl;
-+
-+	return 0;
-+}
-+
-+static int clk_rcg2_crm_determine_rate(struct clk_hw *hw,
-+				       struct clk_rate_request *req)
-+{
-+	struct device *dev = clk_hw_get_dev(hw);
-+	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-+	int ret;
-+
-+	if (!rcg->freq_tbl) {
-+		ret = pm_runtime_get_sync(dev);
-+		if (ret < 0)
-+			return ret;
-+
-+		ret = clk_rcg2_crm_populate_freq_table(hw);
-+		if (ret) {
-+			pm_runtime_put(dev);
-+			return ret;
-+		}
-+
-+		pm_runtime_put(dev);
-+	}
-+
-+	return clk_rcg2_determine_rate(hw, req);
-+}
-+
-+static unsigned long
-+clk_rcg2_crm_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-+{
-+	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-+
-+	if (!rcg->freq_tbl)
-+		return clk_rcg2_recalc_rate(hw, parent_rate);
-+
-+	return rcg->freq_tbl[rcg->parked_cfg].freq;
-+}
-+
-+static int clk_rcg2_crm_init(struct clk_hw *hw)
-+{
-+	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-+
-+	rcg->freq_tbl = NULL;
-+
-+	return 0;
-+}
-+
-+static int clk_rcg2_vote_bw(struct clk_hw *hw, unsigned long rate)
-+{
-+	struct clk_rcg2_crm *rcg_crm = to_clk_rcg2_crm(hw);
-+	struct clk_crm *crm = rcg_crm->crm;
-+	struct crm_cmd cmd;
-+	int ret, i;
-+
-+	cmd.resource_idx = 0;
-+	cmd.wait = true;
-+	cmd.data = BCM_TCS_CMD(1, 1, 0, HZ_TO_MHZ(rate));
-+
-+	for (i = 0; i < MAX_CRM_SW_DRV_STATE; i++) {
-+		cmd.pwr_state = i;
-+		ret = crm_write_bw_vote(crm->crm_dev, crm->client_idx, &cmd);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static int clk_rcg2_crmb_prepare(struct clk_hw *hw)
-+{
-+	unsigned long rate = clk_hw_get_rate(hw);
-+
-+	if (!rate)
-+		return -EINVAL;
-+
-+	return clk_rcg2_vote_bw(hw, rate);
-+}
-+
-+static void clk_rcg2_crmb_unprepare(struct clk_hw *hw)
-+{
-+	clk_rcg2_vote_bw(hw, PERF_OL_OFF);
-+}
-+
-+static int clk_rcg2_crmb_set_rate(struct clk_hw *hw, unsigned long rate,
-+				  unsigned long parent_rate)
-+{
-+	struct clk_rcg2_crm *rcg_crm = to_clk_rcg2_crm(hw);
-+	struct clk_rcg2 *rcg = &rcg_crm->rcg;
-+	struct clk_crm *crm = rcg_crm->crm;
-+	int perf_index;
-+
-+	perf_index = qcom_find_crm_freq_index(rcg->freq_tbl, rate);
-+	if (perf_index <= PERF_OL_OFF || perf_index > crm->max_perf_ol)
-+		return -EINVAL;
-+
-+	/*
-+	 * perf_index returned from qcom_find_crm_freq_index() starts from
-+	 * index 1 since 0 is treated as OFF by CRM, but RCG's frequency
-+	 * table starts from index 0, store parked_cfg aligning to RCG's
-+	 * frequency table index.
-+	 */
-+	rcg->parked_cfg = perf_index - 1;
-+
-+	if (!clk_hw_is_prepared(hw))
 +		return 0;
++	}
 +
-+	return clk_rcg2_vote_bw(hw, rate);
++	return -EOPNOTSUPP;
 +}
 +
-+const struct clk_ops clk_rcg2_crmb_ops = {
-+	.prepare = clk_rcg2_crmb_prepare,
-+	.unprepare = clk_rcg2_crmb_unprepare,
-+	.is_enabled = clk_rcg2_is_enabled,
-+	.get_parent = clk_rcg2_get_parent,
-+	.set_rate = clk_rcg2_crmb_set_rate,
-+	.determine_rate = clk_rcg2_crm_determine_rate,
-+	.recalc_rate = clk_rcg2_crm_recalc_rate,
-+	.init = clk_rcg2_crm_init,
+ /* Drop 'protected-clocks' from the list of clocks to register */
+ static void qcom_cc_drop_protected(struct device *dev, struct qcom_cc *cc)
+ {
+@@ -439,6 +483,16 @@ int qcom_cc_really_probe(struct device *dev,
+ 			goto put_rpm;
+ 	}
+ 
++	if (desc->driver_data &&
++	    desc->driver_data->crm) {
++		ret = qcom_cc_register_crm_clks(dev, desc->driver_data->crm,
++						desc->driver_data->crm_clks,
++						desc->driver_data->num_crm_clks);
++		if (ret)
++			dev_err_probe(dev, ret,
++					"Failed to register clocks with CRM, ret: %d\n", ret);
++	}
++
+ 	cc->rclks = rclks;
+ 	cc->num_rclks = num_clks;
+ 
+diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
+index 9987cec84324a258f3405c7b9093237f52a41b45..d00376f058ce1de7aa82ff760f92826282b1606f 100644
+--- a/drivers/clk/qcom/common.h
++++ b/drivers/clk/qcom/common.h
+@@ -35,6 +35,9 @@ struct qcom_cc_driver_data {
+ 	size_t num_clk_cbcrs;
+ 	const struct clk_rcg_dfs_data *dfs_rcgs;
+ 	size_t num_dfs_rcgs;
++	struct clk_crm *crm;
++	const struct crm_clk_data *crm_clks;
++	size_t num_crm_clks;
+ 	void (*clk_regs_configure)(struct device *dev, struct regmap *regmap);
+ };
+ 
+@@ -97,6 +100,22 @@ struct clk_crm {
+ 	u8 client_idx;
+ };
+ 
++struct crm_clk_data {
++	struct clk_init_data *init;
++#define CRM_PLL		BIT(0)
++#define CRM_RCG_CRMB	BIT(1)
++	u8 flags;
 +};
-+EXPORT_SYMBOL_GPL(clk_rcg2_crmb_ops);
++
++#define CRM_CLK(clk, flag)		\
++{					\
++	.init = &clk##_init,		\
++	.flags = flag,			\
++}
++
++#define CRM_CLK_PLL(clk) CRM_CLK(clk, CRM_PLL)
++#define CRM_CLK_RCG_CRMB(clk) CRM_CLK(clk, CRM_RCG_CRMB)
++
+ extern int qcom_find_crm_freq_index(const struct freq_tbl *f, unsigned long rate);
+ extern const struct freq_tbl *qcom_find_freq(const struct freq_tbl *f,
+ 					     unsigned long rate);
 
 -- 
 2.34.1
