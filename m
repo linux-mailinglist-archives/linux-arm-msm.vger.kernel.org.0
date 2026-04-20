@@ -1,99 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-103845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UJw4F5ao5mnTzQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 00:28:38 +0200
+	id MA0iGW+o5mnTzQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 00:27:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CEEE434AAE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 00:28:37 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B517E434A55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 00:27:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8C303302BDE2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 22:27:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1DEBF300B9F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 22:27:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC1CA3D0908;
-	Mon, 20 Apr 2026 22:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC0AA3CFF72;
+	Mon, 20 Apr 2026 22:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ym9WtLLW";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JR67Rdqy"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="b3jwNKRQ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZWFf7xa9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80B73F9FB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D8338C2AE
 	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 22:27:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776724040; cv=none; b=iyiZvFT2LsQ0+ufW1Hek/AC6PhcSMGfRbPBBO3ddg5gksfOrjQsX3NPbezcp3QWgblieOgbwLZBxHtO0LXEO27PM+b6j8i8m76cpwX9/eKmdDR5PZOu6C7J5dcfsUBZsynzSD2ey5lqxncHZjETDwaKUlaE8OBCAI0sd/7iDQIw=
+	t=1776724037; cv=none; b=TNY4nSqPEkDchw+ixNyw6+uD156yeEhqZrdVaPM3PESZ7tKzrnkUw0MdFZrTnqQ2exfyr5lTqexc5fz/3QjY94nxvU8xC+eWhrozqi56uJMWRivzKgUEjbHJ3xbdXpfq3mg2q21LoP0alZKZN/3ptui4+z+sIVo9Z3+iWw2WDTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776724040; c=relaxed/simple;
-	bh=aTyuH8U0kUhFdvlD8ol6e/2cl7QCQMztiuoC3PGNSnA=;
+	s=arc-20240116; t=1776724037; c=relaxed/simple;
+	bh=kjSdV9NByUia3LjbImtaw/lmpDbbVu5Bv2eOS/pnL60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EyHXotzJt4gO3EgLk8O7VgsFDs3P9sZbZiHqY7gIlZyMr9I2HfGcjxm5jU5RbPwaUOCt6T3ohYLcZvQBGQNHSU+/PjRCR+7F7hC7QtSTZNekKWhbEfdf9GhAPsxQfom3QUODTtVA4gQVOxphbr2uFEEiXRI7izMBI5gPb1BtzrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ym9WtLLW; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JR67Rdqy; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=g6ABq/2Nv60RhfB0uuADu1q4lVNyS1s58Q4GDkvJFsm6R3vytuyB12hLscWVziKSo4R6CpTOo5JG3Uve1crWvNdEIiuE5TDr4iPDA/oSkbAabiyfqbErTs5ot6cS6WsUsyzPQcu6VkrFOLApcggmFM3AX84pnn+A/JCyVcS/YEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b3jwNKRQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZWFf7xa9; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63KGCa0Z2981499
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 22:27:15 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63KFHtPU2281695
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 22:27:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=QI16Fs2h2zd
-	v8SE9AtXc7UhwYE6xxqWsAVah4Xwkwrc=; b=Ym9WtLLW8/uxgRi53xjjd0BBUmK
-	EJ4pXR4ksp6nHMPabBUzsQrSeS0mJQgwzPACeOZmJERGLqzLKf2noDkNFYKP8GXn
-	75GCDyJjo8Q5uBRoGTLAe4LZDx+fCMfmYs4FqVVdfHXzcck3e1rzpwWkbhanLr6/
-	L4IjwVJrK1EAkt3ncyljQAixxI2cflg2hcrdp5s0IK+5cy7GMaql2zfYs1FWEGG8
-	UM/0ftSKZoi1+9M3xDfl8+NiBkiE64NpTmjsIUMa8x3GEQv2dNiGjtdkeQiTKx9R
-	16RRcS4mGr1tMYf6t1fkkNVWlWvDNtybECVBdCdB0R+51Z3ad6oNBkksUYQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dnj2ptj15-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=73a7GDxAtmo
+	eVjOlgWBJJe3wNVofmUGElsbk/4jKqf0=; b=b3jwNKRQRckVDuwJ73dnwzE8ZtG
+	iENXOvezxkWD9NQIf0JPEdkiRfBoqf0ZI4pW47yqIOYOeQTfV00Zk/NQqIlKHlbN
+	Nut9jjdP+2XSybxzmJbL5D+fy64h0WVtETTtoLk4YHcx6pQGfUwwLK71dCNwacWd
+	Q8MjMd5TfSlYKzFaf1FI+GsVfILjRD/odbLcl4feczuOy+xnuhUxYWxpTIuIYHbY
+	dLcz8x5/j5dAYnuLuIRtg/vE0Z0XkTsGTiGcqC3hia6rzr7OByFQh0m02WHAdxba
+	WZpivXMAEtXWEu4CRu4iuQ4xY7Rb2tdiWyERfWyu4GDUSEsFj5R+K11Z/Vg==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dnh59asx3-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 22:27:13 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-35e56ed5d5bso5169378a91.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 15:27:13 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 22:27:14 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c798e905c29so619555a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 15:27:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776724032; x=1777328832; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1776724034; x=1777328834; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QI16Fs2h2zdv8SE9AtXc7UhwYE6xxqWsAVah4Xwkwrc=;
-        b=JR67RdqyT/IIhHgz/+sjcLKCnLPr0NpF/fcB2UQAU2ob7AbvfRQWGJgBc7zpZWGI0I
-         W8xWeDi/GP6XOKj7w8I/BiqSfaNF1xnDsnc/NYAdRjxxDAZWhUNF8755GkWEExyWv8of
-         XHYNxE6Qzy9jDwuO9Db8aSNg+0ooKETc1qRPYUFjLkr/cZn/WXg8Ae0lh7BSz61AVmoT
-         YkVPlUpbLSvz8WOUM7kJZE97hI+5qsgYoLTW8bvKGAxf7nHVsu1MHHcYlFVNTU7lx8WW
-         Doyl6xihbT/0rlqCvLrmjF+72y/dThjQ/Ibz/s2YPUoCOMDf6gye+VxaSB1/4IWBeuOP
-         yMZg==
+        bh=73a7GDxAtmoeVjOlgWBJJe3wNVofmUGElsbk/4jKqf0=;
+        b=ZWFf7xa9ewUIZ9KczlYQy9m5WBFbMh//yQcyZCo5QtcxvGI9wT35LJEqX6+MmPp0VK
+         tjC7aqz6c/wTU2jN9wM7VCXi8DoExidT5Vg8TuugRyDedKpX0HQnzo6WH3eT+uXLUyA8
+         HGytqnHWF7+/pZqxgUKvbiVwFtXxQUz/eWVZj01ZtfEQoOaTCBGQL1LZuGXFHy55J/eK
+         sNmzC2XUXn44TuudiYo8TMP9MKbut+fYg7cmSgB6BKSXUUVKiU4Wy5i3qNBCWoFLJF1M
+         /WrB8wdbPbR+Fl2jVCHbq3Y/7h4m2j+FRgS4DAFNZgeAN146xaQYpukTJb5YIwIKUpBX
+         U6fA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776724032; x=1777328832;
+        d=1e100.net; s=20251104; t=1776724034; x=1777328834;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=QI16Fs2h2zdv8SE9AtXc7UhwYE6xxqWsAVah4Xwkwrc=;
-        b=pTgWgddNClxNCQkFvJlN+SOw6OCQr8mq6Ysp0H/knJ6OfROJJJa3/sBD1mvMH5mnos
-         xFh2Io/V9RJcj3tkElntvhSybvDF2k9Px6c6iy7EDJQir6A27bOFCnE5gikmiMnyKG+D
-         qIKQcdRUI4N84qJgAR24pK0ZIq23SLQp2FzduuZcnLrymcq47jAWjMiKrT9cJZ8XA6Wb
-         pzFsL3E3qanN65wdXTFfn2KXm5ncjCIHF9sWRrMSyGnLtHNGPR0Q5crc6WmDsb97PfSW
-         0CWjRwCufTtKQWVf+MNAJQYz7kH0vJVSrkJAs/0PGUaXKcwMFbsRQ1CPR/hSgXGTNRut
-         DPog==
-X-Gm-Message-State: AOJu0YxZd25ixSatCiZ21Gbv0qIlCaX4KpRVcijk61sMaAx7DII1KlbX
-	AntyeIm7+t9J/49PMcM5xK5V/B/uZR5mGSf26SQ2TWt8L+2UtJqyU3hos8rqb4VxXGOatVdPoos
-	9eWPKuvJv7uYDRj6/nhIG9isnu0L5nQ8f/p9QS+6wwYavQWgQ5BS6Ln/E1gjpONmHIdSe
-X-Gm-Gg: AeBDieuD+1iIjrpYCunwFnv3TVYaR1pgLkw8q5YpryXDC5sDrjPMZ5vNr1PgRTZwptQ
-	VLkYZBsSCrXkuxHUbg5xO3+2F/56kGtnBW7zfz8GLMvKALzybEt++BjU87gNMCFt0PQi7k2cqbq
-	sYxLh3CWLVfxvhOIZl1vXYNyUAl96sxpgf3jRfCOWgZs+Osa4h0q9F7ahOJ5YqDRZz18x+4cu8I
-	YhAtCJtjgqqQYpwOmnJO8EGTGRCQCYqoyROwzIgWfmnCSRL3fTBNJnRMkpJXokJX10Wnf3uzMMC
-	xxvaOi6gi+jzyuIw0slj1DdYvyv3BzC/qWcz4b8pZsWeMzTXAVKqLYUB0ymJh6FU6ZqnNkf+XXj
-	OCT3zNnEONGTnPRITG5usnHCy1v1vazczYmYmWq4mB/w=
-X-Received: by 2002:a17:90b:2884:b0:35b:e4f0:f9b4 with SMTP id 98e67ed59e1d1-361402908eamr11734573a91.10.1776724031243;
-        Mon, 20 Apr 2026 15:27:11 -0700 (PDT)
-X-Received: by 2002:a17:90b:2884:b0:35b:e4f0:f9b4 with SMTP id 98e67ed59e1d1-361402908eamr11734548a91.10.1776724030341;
-        Mon, 20 Apr 2026 15:27:10 -0700 (PDT)
+        bh=73a7GDxAtmoeVjOlgWBJJe3wNVofmUGElsbk/4jKqf0=;
+        b=Pw9lByX5nQlDMPKvRnJ+gFXkf8AUyiuumSsSE2SPoz9Mz2Dibf2M265Pzbd71++djH
+         OYytUiMLa88lFgrVPaNmDONdqKtlC7lChqV394Enr42++sbYq+7z/a7J4Rt4uSQdSycj
+         A67qy1T8jQCAHH51qFmCTOmCURXSuahmvzrokS3WBbIEI+nEDDVriOK1clEdmIUrndyk
+         G+kiYK4x1Wce1Mtz/UF0Yis2PGrfHWXna9Oni+UJXoUvLRC0dH3kBDE8niDu/zHPf1jG
+         yp4Im6pl23jEBTr5pwDsJ1FNzH8cjgh62Xym3cPfZ3U/fRYVWPeQZoIRqdQtofU5Vz/Z
+         ANJA==
+X-Gm-Message-State: AOJu0YzhNAR6x26F0pIsUKQvYZL9Uzo/iN+E5/yWypQ3uAqxmF5gQmWd
+	9t3l31fyrHejd/YebMuu21KVf4lFOku8ePaB0nRgwpVuttQfo1YBptwnuoFfmNBnyafjP6gKC00
+	c2iTuExq5mF7FmIkMuKTRVkfKoryywumnd6B+cU037/vFam0SDRFIzoSfvMxhc3bONImu
+X-Gm-Gg: AeBDiet+OKWiFKpJPl6hg3xPq3C8WGgErxJwlYBONdN/H6RhBHv+3Wfq/fAfYJChQt2
+	kENWJvuKiN5ikRhOYH/tDUkO+A65f1sjUZMMoyJd5v9ER+5dR2H03JM+PiuiTovLjVMhJp3WWkD
+	BmsIf5MWfcOW2JB6arxT8Te3OEhmIOTQckp19P8AcWxSPb4I8RLVzRxA42iqDFFvzuW9Rsb1X2X
+	mXszicp7bfUFpQNL6DyrOjLjYdo/a15huY5an3UrGm6SDsiZFuKcLq+MjXEeg+QLN/Cn7NJs65a
+	X0qe/3kglJGXf6XH99IMOwPTjM7/kv/zX3CkEe06zF4C5dsZN1EmT/0t1CFcwTrrM8b5IcV6EdJ
+	GqI1SQAnkI3LisDoFJwmFWHAyIspQIuWE4QEF2XQUXAs=
+X-Received: by 2002:a05:6a20:244e:b0:398:f1ed:7fa0 with SMTP id adf61e73a8af0-3a08d933fe4mr15374498637.55.1776724033431;
+        Mon, 20 Apr 2026 15:27:13 -0700 (PDT)
+X-Received: by 2002:a05:6a20:244e:b0:398:f1ed:7fa0 with SMTP id adf61e73a8af0-3a08d933fe4mr15374478637.55.1776724032884;
+        Mon, 20 Apr 2026 15:27:12 -0700 (PDT)
 Received: from localhost ([2601:1c0:5000:d5c:4ec8:83f5:8254:6891])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-361410cc196sm11890610a91.17.2026.04.20.15.27.09
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c7976f920e1sm8693062a12.2.2026.04.20.15.27.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2026 15:27:09 -0700 (PDT)
+        Mon, 20 Apr 2026 15:27:12 -0700 (PDT)
 From: Rob Clark <robin.clark@oss.qualcomm.com>
 To: dri-devel@lists.freedesktop.org
 Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
@@ -104,15 +104,11 @@ Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-        Bill Wendling <morbo@google.com>,
-        Justin Stitt <justinstitt@google.com>,
-        linux-kernel@vger.kernel.org (open list),
-        llvm@lists.linux.dev (open list:CLANG/LLVM BUILD SUPPORT:Keyword:\b(?i:clang|llvm)\b)
-Subject: [PATCH 03/13] drm/msm/registers: Sync gen_header.py from mesa
-Date: Mon, 20 Apr 2026 15:25:25 -0700
-Message-ID: <20260420222621.417276-4-robin.clark@oss.qualcomm.com>
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 04/13] drm/msm/registers: Add perfcntr json
+Date: Mon, 20 Apr 2026 15:25:26 -0700
+Message-ID: <20260420222621.417276-5-robin.clark@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420222621.417276-1-robin.clark@oss.qualcomm.com>
 References: <20260420222621.417276-1-robin.clark@oss.qualcomm.com>
@@ -123,49 +119,47 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: AgLL2mQw5f_huUq0ERnbxkXQ1PrG5Lg_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDIyMCBTYWx0ZWRfX1T89fLSXgMEY
- cpOwznoOinVbgxa/NEeVKPjDu5vcIas5kvSgfEWQUsr1tMsa6kfa4WSAINXaawYhYIsaqYSPWNc
- sCfAcngfJ0iyT1SqPfAp2A3x2jHvBKSfqvqRyNv0NITbg4UHzdVLNntyVrneuJmIpFsb6njTJMG
- LwUl/oIIMBuM63rpXRLIvVGfjYmPlF3/0YWMPVgKLAwqqSQerw0NYqgSXYnOx0DsxID7nG68R1h
- ex2+TTdS8/Sdw4vATLm3cFASUPpKBCLrXrYb4/dSCgHIQWtJnuI47SOqa1G1+Py9d+rU3EmeEVI
- 8SnP8E8k+tcT2EgBcr9b4X3mW8zuZQQyum+snnx+YUGsormXzEV6TA8wUVvYjpig/Ft3eOQt9HD
- xkMH/wfb/5fFUO7XIT3BfgR6TVP0XBx4lKjU4vbavfbfsLw4cflkpd9J3L1wSxtYHmAvCyD+JNA
- 0ac80GD+JvKC7WiJfLg==
-X-Authority-Analysis: v=2.4 cv=XMoAjwhE c=1 sm=1 tr=0 ts=69e6a841 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=xqWC_Br6kY4A:10 a=A5OVakUREuEA:10
+X-Proofpoint-ORIG-GUID: et8iP4rTm79lFAIgME9Bz5Y9LNTT1owg
+X-Proofpoint-GUID: et8iP4rTm79lFAIgME9Bz5Y9LNTT1owg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDIyMCBTYWx0ZWRfXy0TnT892Sb+u
+ OSr6Teju50KDsg+yWnot+yESYnEBwaQRnTqPvLXGbEaPNTBm0r08ojhB4S9jCa+PpqfXrVTKOQW
+ 1Ewgn9+n7usXVlWbyEcpm6PF2QFr8lrQZVyp/KxSlz5VuH4GyDdpJRLiCqytqZ4P6BMKCecjRam
+ Hkvr8xYurpKYApHATQRLJXYZSXtdy6M453Ng+LemVguQx++XJ68AzhvNtGaqU/t+ylwxgbdAewN
+ x4cZYtenkiym7fpBX3xGSYlVbvFGU3RaghxahaQ8zSG2NCHFEhO1FjX+vCcMTgWGfKuqZlUswYt
+ qbJJGUQo6RCxYs/rSNHr/M6rj1CvV3JXONjoK61FeFJioXFznN6jjaw6Zfwq5p6g8V17VCbw8VM
+ OE7CHhPaDpeiQ1fP+z4ieEMlPYBp1pL9YYxPf8ogSqtm1xn5/EzZrynPpyuDRFEEOeh6wEg59PG
+ ZhQOVHrua0w49X3zFjQ==
+X-Authority-Analysis: v=2.4 cv=HNrz0Itv c=1 sm=1 tr=0 ts=69e6a842 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=xqWC_Br6kY4A:10 a=A5OVakUREuEA:10
  a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=Um2Pa8k9VHT-vaBCBUpS:22 a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8
- a=upIMGkliACeFOg2EZ_0A:9 a=3o6Nrjf1o8nA2Q1M:21 a=mQ_c8vxmzFEMiUWkPHU9:22
+ a=3WHJM1ZQz_JShphwDgj5:22 a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8
+ a=M8oLgKS-H7hDzfawthsA:9 a=-Dwq1J-KyWTV094w:21 a=bFCP_H2QrGi7Okbo017w:22
  a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-GUID: AgLL2mQw5f_huUq0ERnbxkXQ1PrG5Lg_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-20_04,2026-04-20_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 phishscore=0 adultscore=0 spamscore=0
- suspectscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
- definitions=main-2604200220
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+ priorityscore=1501 suspectscore=0 adultscore=0 spamscore=0 phishscore=0
+ impostorscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604200220
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,google.com,lists.linux.dev];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	TAGGED_FROM(0.00)[bounces-103845-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103842-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -173,2173 +167,657 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[robin.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[parent.name:url,gen_header.py:url,qualcomm.com:dkim,qualcomm.com:email,index_type.name:url,array.name:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,e.name:url,gitlab.freedesktop.org:url,self.name:url,reg.name:url,f.name:url];
-	TAGGED_RCPT(0.00)[linux-arm-msm,lkml];
-	NEURAL_HAM(-0.00)[-0.992];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,gitlab.freedesktop.org:url,qualcomm.com:dkim,qualcomm.com:email];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-0.989];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 8CEEE434AAE
+X-Rspamd-Queue-Id: B517E434A55
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Update gen_header.py to bring in support for generating perfcntr tables.
+Pull in perfcntr json and wire up generation of perfcntr tables.
 
 Sync from https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/40522
 
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/registers/gen_header.py | 2079 ++++++++++---------
- 1 file changed, 1146 insertions(+), 933 deletions(-)
+ drivers/gpu/drm/msm/Makefile                  |  17 ++
+ .../msm/registers/adreno/a6xx_perfcntrs.json  | 105 ++++++++
+ .../msm/registers/adreno/a7xx_perfcntrs.json  | 228 +++++++++++++++++
+ .../msm/registers/adreno/a8xx_perfcntrs.json  | 240 ++++++++++++++++++
+ 4 files changed, 590 insertions(+)
+ create mode 100644 drivers/gpu/drm/msm/registers/adreno/a6xx_perfcntrs.json
+ create mode 100644 drivers/gpu/drm/msm/registers/adreno/a7xx_perfcntrs.json
+ create mode 100644 drivers/gpu/drm/msm/registers/adreno/a8xx_perfcntrs.json
 
-diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
-index 2acad951f1e2..07e6f0cb4e66 100644
---- a/drivers/gpu/drm/msm/registers/gen_header.py
-+++ b/drivers/gpu/drm/msm/registers/gen_header.py
-@@ -11,997 +11,1210 @@ import collections
- import argparse
- import time
- import datetime
-+import json
-+
+diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+index ce00cfb0a875..55388544de9f 100644
+--- a/drivers/gpu/drm/msm/Makefile
++++ b/drivers/gpu/drm/msm/Makefile
+@@ -176,6 +176,11 @@ quiet_cmd_headergen = GENHDR  $@
+       cmd_headergen = mkdir -p $(obj)/generated && $(PYTHON3) $(src)/registers/gen_header.py \
+ 		      $(headergen-opts) --rnn $(src)/registers --xml $< c-defines > $@
  
- class Error(Exception):
--	def __init__(self, message):
--		self.message = message
-+    def __init__(self, message):
-+        self.message = message
++# TODO how to do this for a2xx/a5xx which have different .xml arg?
++quiet_cmd_headergen_json = GENHDRJSN  $@
++      cmd_headergen_json = mkdir -p $(obj)/generated && $(PYTHON3) $(src)/registers/gen_header.py \
++		      $(headergen-opts) --rnn $(src)/registers --xml $(src)/registers/adreno/a6xx.xml perfcntrs --json $< > $@
 +
+ $(obj)/generated/%.xml.h: $(src)/registers/adreno/%.xml \
+ 		$(src)/registers/adreno/adreno_common.xml \
+ 		$(src)/registers/adreno/adreno_pm4.xml \
+@@ -192,6 +197,18 @@ $(obj)/generated/%.xml.h: $(src)/registers/display/%.xml \
+ 		FORCE
+ 	$(call if_changed,headergen)
  
- class Enum(object):
--	def __init__(self, name):
--		self.name = name
--		self.values = []
--
--	def has_name(self, name):
--		for (n, value) in self.values:
--			if n == name:
--				return True
--		return False
--
--	def names(self):
--		return [n for (n, value) in self.values]
--
--	def dump(self, is_deprecated):
--		use_hex = False
--		for (name, value) in self.values:
--			if value > 0x1000:
--				use_hex = True
--
--		print("enum %s {" % self.name)
--		for (name, value) in self.values:
--			if use_hex:
--				print("\t%s = 0x%08x," % (name, value))
--			else:
--				print("\t%s = %d," % (name, value))
--		print("};\n")
--
--	def dump_pack_struct(self, is_deprecated):
--		pass
-+    def __init__(self, name):
-+        self.name = name
-+        self.values = []
-+
-+    def has_name(self, name):
-+        for (n, value) in self.values:
-+            if n == name:
-+                return True
-+        return False
-+
-+    def names(self):
-+        return [n for (n, value) in self.values]
-+
-+    def value(self, name):
-+        for (n, v) in self.values:
-+            if n == name:
-+                return v
-+
-+    def dump(self, has_variants):
-+        use_hex = False
-+        for (name, value) in self.values:
-+            if value > 0x1000:
-+                use_hex = True
-+
-+        print("enum %s {" % self.name)
-+        for (name, value) in self.values:
-+            if use_hex:
-+                print("\t%s = 0x%08x," % (name, value))
-+            else:
-+                print("\t%s = %d," % (name, value))
-+        print("};\n")
-+
-+    def dump_pack_struct(self, has_variants):
-+        pass
-+
- 
- class Field(object):
--	def __init__(self, name, low, high, shr, type, parser):
--		self.name = name
--		self.low = low
--		self.high = high
--		self.shr = shr
--		self.type = type
--
--		builtin_types = [ None, "a3xx_regid", "boolean", "uint", "hex", "int", "fixed", "ufixed", "float", "address", "waddress" ]
--
--		maxpos = parser.current_bitsize - 1
--
--		if low < 0 or low > maxpos:
--			raise parser.error("low attribute out of range: %d" % low)
--		if high < 0 or high > maxpos:
--			raise parser.error("high attribute out of range: %d" % high)
--		if high < low:
--			raise parser.error("low is greater than high: low=%d, high=%d" % (low, high))
--		if self.type == "boolean" and not low == high:
--			raise parser.error("booleans should be 1 bit fields")
--		elif self.type == "float" and not (high - low == 31 or high - low == 15):
--			raise parser.error("floats should be 16 or 32 bit fields")
--		elif self.type not in builtin_types and self.type not in parser.enums:
--			raise parser.error("unknown type '%s'" % self.type)
--
--	def ctype(self, var_name):
--		if self.type is None:
--			type = "uint32_t"
--			val = var_name
--		elif self.type == "boolean":
--			type = "bool"
--			val = var_name
--		elif self.type == "uint" or self.type == "hex" or self.type == "a3xx_regid":
--			type = "uint32_t"
--			val = var_name
--		elif self.type == "int":
--			type = "int32_t"
--			val = var_name
--		elif self.type == "fixed":
--			type = "float"
--			val = "((int32_t)(%s * %d.0))" % (var_name, 1 << self.radix)
--		elif self.type == "ufixed":
--			type = "float"
--			val = "((uint32_t)(%s * %d.0))" % (var_name, 1 << self.radix)
--		elif self.type == "float" and self.high - self.low == 31:
--			type = "float"
--			val = "fui(%s)" % var_name
--		elif self.type == "float" and self.high - self.low == 15:
--			type = "float"
--			val = "_mesa_float_to_half(%s)" % var_name
--		elif self.type in [ "address", "waddress" ]:
--			type = "uint64_t"
--			val = var_name
--		else:
--			type = "enum %s" % self.type
--			val = var_name
--
--		if self.shr > 0:
--			val = "(%s >> %d)" % (val, self.shr)
--
--		return (type, val)
-+    def __init__(self, name, low, high, shr, type, parser):
-+        self.name = name
-+        self.low = low
-+        self.high = high
-+        self.shr = shr
-+        self.type = type
-+
-+        builtin_types = [None, "a3xx_regid", "boolean", "uint", "hex",
-+                         "int", "fixed", "ufixed", "float", "address", "waddress"]
-+
-+        maxpos = parser.current_bitsize - 1
-+
-+        if low < 0 or low > maxpos:
-+            raise parser.error("low attribute out of range: %d" % low)
-+        if high < 0 or high > maxpos:
-+            raise parser.error("high attribute out of range: %d" % high)
-+        if high < low:
-+            raise parser.error(
-+                "low is greater than high: low=%d, high=%d" % (low, high))
-+        if self.type == "boolean" and not low == high:
-+            raise parser.error("booleans should be 1 bit fields")
-+        elif self.type == "float" and not (high - low == 31 or high - low == 15):
-+            raise parser.error("floats should be 16 or 32 bit fields")
-+        elif self.type not in builtin_types and self.type not in parser.enums:
-+            raise parser.error("unknown type '%s'" % self.type)
-+
-+    def ctype(self, var_name):
-+        if self.type is None:
-+            type = "uint32_t"
-+            val = var_name
-+        elif self.type == "boolean":
-+            type = "bool"
-+            val = var_name
-+        elif self.type == "uint" or self.type == "hex" or self.type == "a3xx_regid":
-+            type = "uint32_t"
-+            val = var_name
-+        elif self.type == "int":
-+            type = "int32_t"
-+            val = var_name
-+        elif self.type == "fixed":
-+            type = "float"
-+            val = "(uint32_t)((int32_t)(%s * %d.0))" % (var_name, 1 << self.radix)
-+        elif self.type == "ufixed":
-+            type = "float"
-+            val = "((uint32_t)(%s * %d.0))" % (var_name, 1 << self.radix)
-+        elif self.type == "float" and self.high - self.low == 31:
-+            type = "float"
-+            val = "fui(%s)" % var_name
-+        elif self.type == "float" and self.high - self.low == 15:
-+            type = "float"
-+            val = "_mesa_float_to_half(%s)" % var_name
-+        elif self.type in ["address", "waddress"]:
-+            type = "uint64_t"
-+            val = var_name
-+        else:
-+            type = "enum %s" % self.type
-+            val = var_name
-+
-+        if self.shr > 0:
-+            val = "(%s >> %d)" % (val, self.shr)
-+
-+        return (type, val)
-+
- 
- def tab_to(name, value):
--	tab_count = (68 - (len(name) & ~7)) // 8
--	if tab_count <= 0:
--		tab_count = 1
--	print(name + ('\t' * tab_count) + value)
-+    tab_count = (68 - (len(name) & ~7)) // 8
-+    if tab_count <= 0:
-+        tab_count = 1
-+    print(name + ('\t' * tab_count) + value)
-+
-+def define_macro(name, value, has_variants):
-+    if has_variants:
-+        value = "__FD_DEPRECATED " + value
-+    tab_to(name, value)
- 
- def mask(low, high):
--	return ((0xffffffffffffffff >> (64 - (high + 1 - low))) << low)
-+    return ((0xffffffffffffffff >> (64 - (high + 1 - low))) << low)
-+
- 
- def field_name(reg, f):
--	if f.name:
--		name = f.name.lower()
--	else:
--		# We hit this path when a reg is defined with no bitset fields, ie.
--		# 	<reg32 offset="0x88db" name="RB_RESOLVE_SYSTEM_BUFFER_ARRAY_PITCH" low="0" high="28" shr="6" type="uint"/>
--		name = reg.name.lower()
-+    if f.name:
-+        name = f.name.lower()
-+    else:
-+        # We hit this path when a reg is defined with no bitset fields, ie.
-+        # 	<reg32 offset="0x88db" name="RB_RESOLVE_SYSTEM_BUFFER_ARRAY_PITCH" low="0" high="28" shr="6" type="uint"/>
-+        name = reg.name.lower()
- 
--	if (name in [ "double", "float", "int" ]) or not (name[0].isalpha()):
--			name = "_" + name
-+    if (name in ["double", "float", "int"]) or not (name[0].isalpha()):
-+        name = "_" + name
- 
--	return name
-+    return name
- 
- # indices - array of (ctype, stride, __offsets_NAME)
-+
-+
- def indices_varlist(indices):
--	return ", ".join(["i%d" % i for i in range(len(indices))])
-+    return ", ".join(["i%d" % i for i in range(len(indices))])
-+
- 
- def indices_prototype(indices):
--	return ", ".join(["%s i%d" % (ctype, idx)
--			for (idx, (ctype, stride, offset)) in  enumerate(indices)])
-+    return ", ".join(["%s i%d" % (ctype, idx)
-+                      for (idx, (ctype, stride, offset)) in enumerate(indices)])
-+
- 
- def indices_strides(indices):
--	return " + ".join(["0x%x*i%d" % (stride, idx)
--					if stride else
--					"%s(i%d)" % (offset, idx)
--			for (idx, (ctype, stride, offset)) in  enumerate(indices)])
-+    return " + ".join(["0x%x*i%d" % (stride, idx)
-+                       if stride else
-+                       "%s(i%d)" % (offset, idx)
-+                       for (idx, (ctype, stride, offset)) in enumerate(indices)])
-+
- 
- def is_number(str):
--	try:
--		int(str)
--		return True
--	except ValueError:
--		return False
-+    try:
-+        int(str)
-+        return True
-+    except ValueError:
-+        return False
-+
- 
- def sanitize_variant(variant):
--	if variant and "-" in variant:
--		return variant[:variant.index("-")]
--	return variant
-+    if variant and "-" in variant:
-+        return variant[:variant.index("-")]
-+    return variant
-+
- 
- class Bitset(object):
--	def __init__(self, name, template):
--		self.name = name
--		self.inline = False
--		self.reg = None
--		if template:
--			self.fields = template.fields[:]
--		else:
--			self.fields = []
--
--	# Get address field if there is one in the bitset, else return None:
--	def get_address_field(self):
--		for f in self.fields:
--			if f.type in [ "address", "waddress" ]:
--				return f
--		return None
--
--	def dump_regpair_builder(self, reg):
--		print("#ifndef NDEBUG")
--		known_mask = 0
--		for f in self.fields:
--			known_mask |= mask(f.low, f.high)
--			if f.type in [ "boolean", "address", "waddress" ]:
--				continue
--			type, val = f.ctype("fields.%s" % field_name(reg, f))
--			print("    assert((%-40s & 0x%08x) == 0);" % (val, 0xffffffff ^ mask(0 , f.high - f.low)))
--		print("    assert((%-40s & 0x%08x) == 0);" % ("fields.unknown", known_mask))
--		print("#endif\n")
--
--		print("    return (struct fd_reg_pair) {")
--		print("        .reg = (uint32_t)%s," % reg.reg_offset())
--		print("        .value =")
--		cast = "(uint64_t)" if reg.bit_size == 64 else ""
--		for f in self.fields:
--			if f.type in [ "address", "waddress" ]:
--				continue
--			else:
--				type, val = f.ctype("fields.%s" % field_name(reg, f))
--				print("            (%s%-40s << %2d) |" % (cast, val, f.low))
--		value_name = "dword"
--		if reg.bit_size == 64:
--			value_name = "qword"
--		print("            fields.unknown | fields.%s," % (value_name,))
--
--		address = self.get_address_field()
--		if address:
--			print("        .bo = fields.bo,")
--			print("        .is_address = true,")
--			if f.type == "waddress":
--				print("        .bo_write = true,")
--			print("        .bo_offset = fields.bo_offset,")
--			print("        .bo_shift = %d," % address.shr)
--			print("        .bo_low = %d," % address.low)
--
--		print("    };")
--
--	def dump_pack_struct(self, is_deprecated, reg=None):
--		if not reg:
--			return
--
--		prefix = reg.full_name
--
--		print("struct %s {" % prefix)
--		for f in self.fields:
--			if f.type in [ "address", "waddress" ]:
--				tab_to("    __bo_type", "bo;")
--				tab_to("    uint32_t", "bo_offset;")
--				continue
--			name = field_name(reg, f)
--
--			type, val = f.ctype("var")
--
--			tab_to("    %s" % type, "%s;" % name)
--		if reg.bit_size == 64:
--			tab_to("    uint64_t", "unknown;")
--			tab_to("    uint64_t", "qword;")
--		else:
--			tab_to("    uint32_t", "unknown;")
--			tab_to("    uint32_t", "dword;")
--		print("};\n")
--
--		depcrstr = ""
--		if is_deprecated:
--			depcrstr = " FD_DEPRECATED"
--		if reg.array:
--			print("static inline%s struct fd_reg_pair\npack_%s(uint32_t __i, struct %s fields)\n{" %
--				  (depcrstr, prefix, prefix))
--		else:
--			print("static inline%s struct fd_reg_pair\npack_%s(struct %s fields)\n{" %
--				  (depcrstr, prefix, prefix))
--
--		self.dump_regpair_builder(reg)
--
--		print("\n}\n")
--
--		if self.get_address_field():
--			skip = ", { .reg = 0 }"
--		else:
--			skip = ""
--
--		if reg.array:
--			print("#define %s(__i, ...) pack_%s(__i, __struct_cast(%s) { __VA_ARGS__ })%s\n" %
--				  (prefix, prefix, prefix, skip))
--		else:
--			print("#define %s(...) pack_%s(__struct_cast(%s) { __VA_ARGS__ })%s\n" %
--				  (prefix, prefix, prefix, skip))
--
--
--	def dump(self, is_deprecated, prefix=None, reg=None):
--		if prefix is None:
--			prefix = self.name
--		reg64 = reg and self.reg and self.reg.bit_size == 64
--		if reg64:
--			print("static inline uint32_t %s_LO(uint32_t val)\n{" % prefix)
--			print("\treturn val;\n}")
--			print("static inline uint32_t %s_HI(uint32_t val)\n{" % prefix)
--			print("\treturn val;\n}")
--		for f in self.fields:
--			if f.name:
--				name = prefix + "_" + f.name
--			else:
--				name = prefix
--
--			if not f.name and f.low == 0 and f.shr == 0 and f.type not in ["float", "fixed", "ufixed"]:
--				pass
--			elif f.type == "boolean" or (f.type is None and f.low == f.high):
--				tab_to("#define %s" % name, "0x%08x" % (1 << f.low))
--			else:
--				typespec = "ull" if reg64 else "u"
--				tab_to("#define %s__MASK" % name, "0x%08x%s" % (mask(f.low, f.high), typespec))
--				tab_to("#define %s__SHIFT" % name, "%d" % f.low)
--				type, val = f.ctype("val")
--				ret_type = "uint64_t" if reg64 else "uint32_t"
--				cast = "(uint64_t)" if reg64 else ""
--
--				print("static inline %s %s(%s val)\n{" % (ret_type, name, type))
--				if f.shr > 0:
--					print("\tassert(!(val & 0x%x));" % mask(0, f.shr - 1))
--				print("\treturn (%s(%s) << %s__SHIFT) & %s__MASK;\n}" % (cast, val, name, name))
--		print()
-+    def __init__(self, name, template):
-+        self.name = name
-+        self.inline = False
-+        self.reg = None
-+        if template:
-+            self.fields = template.fields[:]
-+        else:
-+            self.fields = []
-+
-+    # Get address field if there is one in the bitset, else return None:
-+    def get_address_field(self):
-+        for f in self.fields:
-+            if f.type in ["address", "waddress"]:
-+                return f
-+        return None
-+
-+    def dump_regpair_builder(self, reg):
-+        print("#ifndef NDEBUG")
-+        known_mask = 0
-+        for f in self.fields:
-+            known_mask |= mask(f.low, f.high)
-+            if f.type in ["boolean", "address", "waddress"]:
-+                continue
-+            type, val = f.ctype("fields.%s" % field_name(reg, f))
-+            print("    assert((%-40s & 0x%08x) == 0);" %
-+                  (val, 0xffffffff ^ mask(0, f.high - f.low)))
-+        print("    assert((%-40s & 0x%08x) == 0);" %
-+              ("fields.unknown", known_mask))
-+        print("#endif\n")
-+
-+        print("    return (struct fd_reg_pair) {")
-+        print("        .reg = (uint32_t)%s," % reg.reg_offset())
-+        print("        .value =")
-+        cast = "(uint64_t)" if reg.bit_size == 64 else ""
-+        for f in self.fields:
-+            if f.type in ["address", "waddress"]:
-+                continue
-+            else:
-+                type, val = f.ctype("fields.%s" % field_name(reg, f))
-+                print("            (%s%-40s << %2d) |" % (cast, val, f.low))
-+        value_name = "dword"
-+        if reg.bit_size == 64:
-+            value_name = "qword"
-+        print("            fields.unknown | fields.%s," % (value_name,))
-+
-+        address = self.get_address_field()
-+        if address:
-+            print("#ifndef TU_CS_H")
-+            print("        .bo = fields.bo,")
-+            print("        .is_address = true,")
-+            print("        .bo_offset = fields.bo_offset,")
-+            print("        .bo_shift = %d," % address.shr)
-+            print("        .bo_low = %d," % address.low)
-+            print("#else")
-+            print("        .is_address = true,")
-+            print("#endif")
-+
-+        print("    };")
-+
-+    def dump_pack_struct(self, has_variants, reg=None):
-+        if not reg:
-+            return
-+
-+        prefix = reg.full_name
-+
-+        constexpr_mark = " CONSTEXPR"
-+
-+        print("struct %s {" % prefix)
-+        for f in self.fields:
-+            if f.type in ["address", "waddress"]:
-+                print("#ifndef TU_CS_H")
-+                tab_to("    __bo_type", "bo;")
-+                tab_to("    uint32_t", "bo_offset;")
-+                print("#endif\n")
-+                continue
-+            name = field_name(reg, f)
-+
-+            type, val = f.ctype("var")
-+
-+            tab_to("    %s" % type, "%s;" % name)
-+
-+            if f.type == "float":
-+                # Requires using `fui()` or `_mesa_float_to_half()`
-+                constexpr_mark = ""
-+        if reg.bit_size == 64:
-+            tab_to("    uint64_t", "qword;")
-+            tab_to("    uint64_t", "unknown;")
-+        else:
-+            tab_to("    uint32_t", "dword;")
-+            tab_to("    uint32_t", "unknown;")
-+        print("};\n")
-+
-+        if not has_variants:
-+            print("static%s inline struct fd_reg_pair" % constexpr_mark)
-+            if reg.array:
-+                print("pack_%s(uint32_t __i, struct %s fields)\n{" % (prefix, prefix))
-+            else:
-+                print("pack_%s(struct %s fields)\n{" % (prefix, prefix))
-+
-+            self.dump_regpair_builder(reg)
-+
-+            print("\n}\n")
-+
-+        if self.get_address_field():
-+            skip = ", { .reg = 0 }"
-+        else:
-+            skip = ""
-+
-+        if reg.array:
-+            print("#define %s(__i, ...) pack_%s(__i, __struct_cast(%s) { __VA_ARGS__ })%s\n" %
-+                  (prefix, prefix, prefix, skip))
-+        else:
-+            print("#define %s(...) pack_%s(__struct_cast(%s) { __VA_ARGS__ })%s\n" %
-+                  (prefix, prefix, prefix, skip))
-+
-+    def dump(self, has_variants, prefix=None, reg=None):
-+        if prefix is None:
-+            prefix = self.name
-+        suffix = ""
-+        if self.reg and self.reg.bit_size == 64:
-+            print(
-+                "static CONSTEXPR inline uint32_t %s_LO(uint32_t val)\n{" % prefix)
-+            print("\treturn val;\n}")
-+            print(
-+                "static CONSTEXPR inline uint32_t %s_HI(uint32_t val)\n{" % prefix)
-+            print("\treturn val;\n}")
-+            suffix = "ull"
-+
-+        for f in self.fields:
-+            if f.name:
-+                name = prefix + "_" + f.name
-+            else:
-+                name = prefix
-+
-+            if not f.name and f.low == 0 and f.shr == 0 and f.type not in ["float", "fixed", "ufixed"]:
-+                pass
-+            elif f.type == "boolean" or (f.type is None and f.low == f.high):
-+                tab_to("#define %s" % name, "0x%08x%s" % ((1 << f.low), suffix))
-+            else:
-+                tab_to("#define %s__MASK" %
-+                       name, "0x%08x%s" % (mask(f.low, f.high), suffix))
-+                tab_to("#define %s__SHIFT" % name, "%d" % f.low)
-+                type, val = f.ctype("val")
-+                ret_type = "uint64_t" if reg and reg.bit_size == 64 else "uint32_t"
-+                cast = "(uint64_t)" if reg and reg.bit_size == 64 else ""
-+
-+                constexpr_mark = "" if type == "float" else " CONSTEXPR"
-+                print("static%s inline %s %s(%s val)\n{" % (
-+                    constexpr_mark, ret_type, name, type))
-+                if f.shr > 0:
-+                    print("\tassert(!(val & 0x%x));" % mask(0, f.shr - 1))
-+                print("\treturn (%s(%s) << %s__SHIFT) & %s__MASK;\n}" %
-+                      (cast, val, name, name))
-+        print()
-+
- 
- class Array(object):
--	def __init__(self, attrs, domain, variant, parent, index_type):
--		if "name" in attrs:
--			self.local_name = attrs["name"]
--		else:
--			self.local_name = ""
--		self.domain = domain
--		self.variant = variant
--		self.parent = parent
--		self.children = []
--		if self.parent:
--			self.name = self.parent.name + "_" + self.local_name
--		else:
--			self.name = self.local_name
--		if "offsets" in attrs:
--			self.offsets = map(lambda i: "0x%08x" % int(i, 0), attrs["offsets"].split(","))
--			self.fixed_offsets = True
--		elif "doffsets" in attrs:
--			self.offsets = map(lambda s: "(%s)" % s , attrs["doffsets"].split(","))
--			self.fixed_offsets = True
--		else:
--			self.offset = int(attrs["offset"], 0)
--			self.stride = int(attrs["stride"], 0)
--			self.fixed_offsets = False
--		if "index" in attrs:
--			self.index_type = index_type
--		else:
--			self.index_type = None
--		self.length = int(attrs["length"], 0)
--		if "usage" in attrs:
--			self.usages = attrs["usage"].split(',')
--		else:
--			self.usages = None
--
--	def index_ctype(self):
--		if not self.index_type:
--			return "uint32_t"
--		else:
--			return "enum %s" % self.index_type.name
--
--	# Generate array of (ctype, stride, __offsets_NAME)
--	def indices(self):
--		if self.parent:
--			indices = self.parent.indices()
--		else:
--			indices = []
--		if self.length != 1:
--			if self.fixed_offsets:
--				indices.append((self.index_ctype(), None, "__offset_%s" % self.local_name))
--			else:
--				indices.append((self.index_ctype(), self.stride, None))
--		return indices
--
--	def total_offset(self):
--		offset = 0
--		if not self.fixed_offsets:
--			offset += self.offset
--		if self.parent:
--			offset += self.parent.total_offset()
--		return offset
--
--	def dump(self, is_deprecated):
--		depcrstr = ""
--		if is_deprecated:
--			depcrstr = " FD_DEPRECATED"
--		proto = indices_varlist(self.indices())
--		strides = indices_strides(self.indices())
--		array_offset = self.total_offset()
--		if self.fixed_offsets:
--			print("static inline%s uint32_t __offset_%s(%s idx)" % (depcrstr, self.local_name, self.index_ctype()))
--			print("{\n\tswitch (idx) {")
--			if self.index_type:
--				for val, offset in zip(self.index_type.names(), self.offsets):
--					print("\t\tcase %s: return %s;" % (val, offset))
--			else:
--				for idx, offset in enumerate(self.offsets):
--					print("\t\tcase %d: return %s;" % (idx, offset))
--			print("\t\tdefault: return INVALID_IDX(idx);")
--			print("\t}\n}")
--		if proto == '':
--			tab_to("#define REG_%s_%s" % (self.domain, self.name), "0x%08x\n" % array_offset)
--		else:
--			tab_to("#define REG_%s_%s(%s)" % (self.domain, self.name, proto), "(0x%08x + %s )\n" % (array_offset, strides))
--
--	def dump_pack_struct(self, is_deprecated):
--		pass
--
--	def dump_regpair_builder(self):
--		pass
-+    def __init__(self, attrs, domain, variant, parent, index_type):
-+        if "name" in attrs:
-+            self.local_name = attrs["name"]
-+        else:
-+            self.local_name = ""
-+        self.domain = domain
-+        self.variant = variant
-+        self.parent = parent
-+        self.children = []
-+        if self.parent:
-+            self.name = self.parent.name + "_" + self.local_name
-+        else:
-+            self.name = self.local_name
-+        if "offsets" in attrs:
-+            self.offsets = map(lambda i: "0x%08x" %
-+                               int(i, 0), attrs["offsets"].split(","))
-+            self.fixed_offsets = True
-+        elif "doffsets" in attrs:
-+            self.offsets = map(lambda s: "(%s)" %
-+                               s, attrs["doffsets"].split(","))
-+            self.fixed_offsets = True
-+        else:
-+            self.offset = int(attrs["offset"], 0)
-+            self.stride = int(attrs["stride"], 0)
-+            self.fixed_offsets = False
-+        if "index" in attrs:
-+            self.index_type = index_type
-+        else:
-+            self.index_type = None
-+        self.length = int(attrs["length"], 0)
-+        if "usage" in attrs:
-+            self.usages = attrs["usage"].split(',')
-+        else:
-+            self.usages = None
-+
-+    def index_ctype(self):
-+        if not self.index_type:
-+            return "uint32_t"
-+        else:
-+            return "enum %s" % self.index_type.name
-+
-+    # Generate array of (ctype, stride, __offsets_NAME)
-+    def indices(self):
-+        if self.parent:
-+            indices = self.parent.indices()
-+        else:
-+            indices = []
-+        if self.length != 1:
-+            if self.fixed_offsets:
-+                indices.append((self.index_ctype(), None,
-+                               "__offset_%s" % self.local_name))
-+            else:
-+                indices.append((self.index_ctype(), self.stride, None))
-+        return indices
-+
-+    def total_offset(self):
-+        offset = 0
-+        if not self.fixed_offsets:
-+            offset += self.offset
-+        if self.parent:
-+            offset += self.parent.total_offset()
-+        return offset
-+
-+    def dump(self, has_variants):
-+        proto = indices_varlist(self.indices())
-+        strides = indices_strides(self.indices())
-+        array_offset = self.total_offset()
-+        if self.fixed_offsets and not has_variants:
-+            print("static CONSTEXPR inline uint32_t __offset_%s(%s idx)" %
-+                  (self.local_name, self.index_ctype()))
-+            print("{\n\tswitch (idx) {")
-+            if self.index_type:
-+                for val, offset in zip(self.index_type.names(), self.offsets):
-+                    print("\t\tcase %s: return %s;" % (val, offset))
-+            else:
-+                for idx, offset in enumerate(self.offsets):
-+                    print("\t\tcase %d: return %s;" % (idx, offset))
-+            print("\t\tdefault: return INVALID_IDX(idx);")
-+            print("\t}\n}")
-+        if proto == '':
-+            define_macro("#define REG_%s_%s" %
-+                         (self.domain, self.name), "0x%08x\n" % array_offset,
-+                         has_variants)
-+        else:
-+            define_macro("#define REG_%s_%s(%s)" % (self.domain, self.name,
-+                         proto), "(0x%08x + %s )\n" % (array_offset, strides),
-+                         has_variants)
-+
-+    def dump_pack_struct(self, has_variants):
-+        pass
-+
-+    def dump_regpair_builder(self):
-+        pass
-+
- 
- class Reg(object):
--	def __init__(self, attrs, domain, array, bit_size):
--		self.name = attrs["name"]
--		self.domain = domain
--		self.array = array
--		self.offset = int(attrs["offset"], 0)
--		self.type = None
--		self.bit_size = bit_size
--		if array:
--			self.name = array.name + "_" + self.name
--			array.children.append(self)
--		self.full_name = self.domain + "_" + self.name
--		if "stride" in attrs:
--			self.stride = int(attrs["stride"], 0)
--			self.length = int(attrs["length"], 0)
--		else:
--			self.stride = None
--			self.length = None
--
--	# Generate array of (ctype, stride, __offsets_NAME)
--	def indices(self):
--		if self.array:
--			indices = self.array.indices()
--		else:
--			indices = []
--		if self.stride:
--			indices.append(("uint32_t", self.stride, None))
--		return indices
--
--	def total_offset(self):
--		if self.array:
--			return self.array.total_offset() + self.offset
--		else:
--			return self.offset
--
--	def reg_offset(self):
--		if self.array:
--			offset = self.array.offset + self.offset
--			return "(0x%08x + 0x%x*__i)" % (offset, self.array.stride)
--		return "0x%08x" % self.offset
--
--	def dump(self, is_deprecated):
--		depcrstr = ""
--		if is_deprecated:
--			depcrstr = " FD_DEPRECATED "
--		proto = indices_prototype(self.indices())
--		strides = indices_strides(self.indices())
--		offset = self.total_offset()
--		if proto == '':
--			tab_to("#define REG_%s" % self.full_name, "0x%08x" % offset)
--		else:
--			print("static inline%s uint32_t REG_%s(%s) { return 0x%08x + %s; }" % (depcrstr, self.full_name, proto, offset, strides))
--
--		if self.bitset.inline:
--			self.bitset.dump(is_deprecated, self.full_name, self)
--		print("")
--
--	def dump_pack_struct(self, is_deprecated):
--		if self.bitset.inline:
--			self.bitset.dump_pack_struct(is_deprecated, self)
--
--	def dump_regpair_builder(self):
--		self.bitset.dump_regpair_builder(self)
--
--	def dump_py(self):
--		print("\tREG_%s = 0x%08x" % (self.full_name, self.offset))
-+    def __init__(self, attrs, domain, array, bit_size):
-+        self.name = attrs["name"]
-+        self.domain = domain
-+        self.array = array
-+        self.offset = int(attrs["offset"], 0)
-+        self.type = None
-+        self.bit_size = bit_size
-+        if array:
-+            self.name = array.name + "_" + self.name
-+            array.children.append(self)
-+        self.full_name = self.domain + "_" + self.name
-+        if "stride" in attrs:
-+            self.stride = int(attrs["stride"], 0)
-+            self.length = int(attrs["length"], 0)
-+        else:
-+            self.stride = None
-+            self.length = None
-+
-+    # Generate array of (ctype, stride, __offsets_NAME)
-+    def indices(self):
-+        if self.array:
-+            indices = self.array.indices()
-+        else:
-+            indices = []
-+        if self.stride:
-+            indices.append(("uint32_t", self.stride, None))
-+        return indices
-+
-+    def total_offset(self):
-+        if self.array:
-+            return self.array.total_offset() + self.offset
-+        else:
-+            return self.offset
-+
-+    def reg_offset(self):
-+        if self.array:
-+            offset = self.array.offset + self.offset
-+            return "(0x%08x + 0x%x*__i)" % (offset, self.array.stride)
-+        return "0x%08x" % self.offset
-+
-+    def dump(self, has_variants):
-+        proto = indices_prototype(self.indices())
-+        strides = indices_strides(self.indices())
-+        offset = self.total_offset()
-+        if proto == '':
-+            define_macro("#define REG_%s" % self.full_name, "0x%08x" % offset, has_variants)
-+        elif not has_variants:
-+            depcrstr = ""
-+            if has_variants:
-+                depcrstr = " __FD_DEPRECATED "
-+            print("static CONSTEXPR inline%s uint32_t REG_%s(%s) { return 0x%08x + %s; }" % (
-+                  depcrstr, self.full_name, proto, offset, strides))
-+
-+        if self.bitset.inline:
-+            self.bitset.dump(has_variants, self.full_name, self)
-+        print("")
-+
-+    def dump_pack_struct(self, has_variants):
-+        if self.bitset.inline:
-+            self.bitset.dump_pack_struct(has_variants, self)
-+
-+    def dump_regpair_builder(self):
-+        self.bitset.dump_regpair_builder(self)
-+
-+    def dump_py(self):
-+        offset = self.offset
-+        if self.array:
-+            offset += self.array.offset
-+        print("\tREG_%s = 0x%08x" % (self.full_name, offset))
- 
- 
- class Parser(object):
--	def __init__(self):
--		self.current_array = None
--		self.current_domain = None
--		self.current_prefix = None
--		self.current_prefix_type = None
--		self.current_stripe = None
--		self.current_bitset = None
--		self.current_bitsize = 32
--		# The varset attribute on the domain specifies the enum which
--		# specifies all possible hw variants:
--		self.current_varset = None
--		# Regs that have multiple variants.. we only generated the C++
--		# template based struct-packers for these
--		self.variant_regs = {}
--		# Information in which contexts regs are used, to be used in
--		# debug options
--		self.usage_regs = collections.defaultdict(list)
--		self.bitsets = {}
--		self.enums = {}
--		self.variants = set()
--		self.file = []
--		self.xml_files = []
--
--	def error(self, message):
--		parser, filename = self.stack[-1]
--		return Error("%s:%d:%d: %s" % (filename, parser.CurrentLineNumber, parser.CurrentColumnNumber, message))
--
--	def prefix(self, variant=None):
--		if self.current_prefix_type == "variant" and variant:
--			return sanitize_variant(variant)
--		elif self.current_stripe:
--			return self.current_stripe + "_" + self.current_domain
--		elif self.current_prefix:
--			return self.current_prefix + "_" + self.current_domain
--		else:
--			return self.current_domain
--
--	def parse_field(self, name, attrs):
--		try:
--			if "pos" in attrs:
--				high = low = int(attrs["pos"], 0)
--			elif "high" in attrs and "low" in attrs:
--				high = int(attrs["high"], 0)
--				low = int(attrs["low"], 0)
--			else:
--				low = 0
--				high = self.current_bitsize - 1
--
--			if "type" in attrs:
--				type = attrs["type"]
--			else:
--				type = None
--
--			if "shr" in attrs:
--				shr = int(attrs["shr"], 0)
--			else:
--				shr = 0
--
--			b = Field(name, low, high, shr, type, self)
--
--			if type == "fixed" or type == "ufixed":
--				b.radix = int(attrs["radix"], 0)
--
--			self.current_bitset.fields.append(b)
--		except ValueError as e:
--			raise self.error(e)
--
--	def parse_varset(self, attrs):
--		# Inherit the varset from the enclosing domain if not overriden:
--		varset = self.current_varset
--		if "varset" in attrs:
--			varset = self.enums[attrs["varset"]]
--		return varset
--
--	def parse_variants(self, attrs):
--		if "variants" not in attrs:
--				return None
--
--		variant = attrs["variants"].split(",")[0]
--		varset = self.parse_varset(attrs)
--
--		if "-" in variant:
--			# if we have a range, validate that both the start and end
--			# of the range are valid enums:
--			start = variant[:variant.index("-")]
--			end = variant[variant.index("-") + 1:]
--			assert varset.has_name(start)
--			if end != "":
--				assert varset.has_name(end)
--		else:
--			assert varset.has_name(variant)
--
--		return variant
--
--	def add_all_variants(self, reg, attrs, parent_variant):
--		# TODO this should really handle *all* variants, including dealing
--		# with open ended ranges (ie. "A2XX,A4XX-") (we have the varset
--		# enum now to make that possible)
--		variant = self.parse_variants(attrs)
--		if not variant:
--			variant = parent_variant
--
--		if reg.name not in self.variant_regs:
--			self.variant_regs[reg.name] = {}
--		else:
--			# All variants must be same size:
--			v = next(iter(self.variant_regs[reg.name]))
--			assert self.variant_regs[reg.name][v].bit_size == reg.bit_size
--
--		self.variant_regs[reg.name][variant] = reg
--
--	def add_all_usages(self, reg, usages):
--		if not usages:
--			return
--
--		for usage in usages:
--			self.usage_regs[usage].append(reg)
--
--		self.variants.add(reg.domain)
--
--	def do_validate(self, schemafile):
--		if not self.validate:
--			return
--
--		try:
--			from lxml import etree
--
--			parser, filename = self.stack[-1]
--			dirname = os.path.dirname(filename)
--
--			# we expect this to look like <namespace url> schema.xsd.. I think
--			# technically it is supposed to be just a URL, but that doesn't
--			# quite match up to what we do.. Just skip over everything up to
--			# and including the first whitespace character:
--			schemafile = schemafile[schemafile.rindex(" ")+1:]
--
--			# this is a bit cheezy, but the xml file to validate could be
--			# in a child director, ie. we don't really know where the schema
--			# file is, the way the rnn C code does.  So if it doesn't exist
--			# just look one level up
--			if not os.path.exists(dirname + "/" + schemafile):
--				schemafile = "../" + schemafile
--
--			if not os.path.exists(dirname + "/" + schemafile):
--				raise self.error("Cannot find schema for: " + filename)
--
--			xmlschema_doc = etree.parse(dirname + "/" + schemafile)
--			xmlschema = etree.XMLSchema(xmlschema_doc)
--
--			xml_doc = etree.parse(filename)
--			if not xmlschema.validate(xml_doc):
--				error_str = str(xmlschema.error_log.filter_from_errors()[0])
--				raise self.error("Schema validation failed for: " + filename + "\n" + error_str)
--		except ImportError as e:
--			print("lxml not found, skipping validation", file=sys.stderr)
--
--	def do_parse(self, filename):
--		filepath = os.path.abspath(filename)
--		if filepath in self.xml_files:
--			return
--		self.xml_files.append(filepath)
--		file = open(filename, "rb")
--		parser = xml.parsers.expat.ParserCreate()
--		self.stack.append((parser, filename))
--		parser.StartElementHandler = self.start_element
--		parser.EndElementHandler = self.end_element
--		parser.CharacterDataHandler = self.character_data
--		parser.buffer_text = True
--		parser.ParseFile(file)
--		self.stack.pop()
--		file.close()
--
--	def parse(self, rnn_path, filename, validate):
--		self.path = rnn_path
--		self.stack = []
--		self.validate = validate
--		self.do_parse(filename)
--
--	def parse_reg(self, attrs, bit_size):
--		self.current_bitsize = bit_size
--		if "type" in attrs and attrs["type"] in self.bitsets:
--			bitset = self.bitsets[attrs["type"]]
--			if bitset.inline:
--				self.current_bitset = Bitset(attrs["name"], bitset)
--				self.current_bitset.inline = True
--			else:
--				self.current_bitset = bitset
--		else:
--			self.current_bitset = Bitset(attrs["name"], None)
--			self.current_bitset.inline = True
--			if "type" in attrs:
--				self.parse_field(None, attrs)
--
--		variant = self.parse_variants(attrs)
--		if not variant and self.current_array:
--			variant = self.current_array.variant
--
--		self.current_reg = Reg(attrs, self.prefix(variant), self.current_array, bit_size)
--		self.current_reg.bitset = self.current_bitset
--		self.current_bitset.reg = self.current_reg
--
--		if len(self.stack) == 1:
--			self.file.append(self.current_reg)
--
--		if variant is not None:
--			self.add_all_variants(self.current_reg, attrs, variant)
--
--		usages = None
--		if "usage" in attrs:
--			usages = attrs["usage"].split(',')
--		elif self.current_array:
--			usages = self.current_array.usages
--
--		self.add_all_usages(self.current_reg, usages)
--
--	def start_element(self, name, attrs):
--		self.cdata = ""
--		if name == "import":
--			filename = attrs["file"]
--			self.do_parse(os.path.join(self.path, filename))
--		elif name == "domain":
--			self.current_domain = attrs["name"]
--			if "prefix" in attrs:
--				self.current_prefix = sanitize_variant(self.parse_variants(attrs))
--				self.current_prefix_type = attrs["prefix"]
--			else:
--				self.current_prefix = None
--				self.current_prefix_type = None
--			if "varset" in attrs:
--				self.current_varset = self.enums[attrs["varset"]]
--		elif name == "stripe":
--			self.current_stripe = sanitize_variant(self.parse_variants(attrs))
--		elif name == "enum":
--			self.current_enum_value = 0
--			self.current_enum = Enum(attrs["name"])
--			self.enums[attrs["name"]] = self.current_enum
--			if len(self.stack) == 1:
--				self.file.append(self.current_enum)
--		elif name == "value":
--			if "value" in attrs:
--				value = int(attrs["value"], 0)
--			else:
--				value = self.current_enum_value
--			self.current_enum.values.append((attrs["name"], value))
--		elif name == "reg32":
--			self.parse_reg(attrs, 32)
--		elif name == "reg64":
--			self.parse_reg(attrs, 64)
--		elif name == "array":
--			self.current_bitsize = 32
--			variant = self.parse_variants(attrs)
--			index_type = self.enums[attrs["index"]] if "index" in attrs else None
--			self.current_array = Array(attrs, self.prefix(variant), variant, self.current_array, index_type)
--			if len(self.stack) == 1:
--				self.file.append(self.current_array)
--		elif name == "bitset":
--			self.current_bitset = Bitset(attrs["name"], None)
--			if "inline" in attrs and attrs["inline"] == "yes":
--				self.current_bitset.inline = True
--			self.bitsets[self.current_bitset.name] = self.current_bitset
--			if len(self.stack) == 1 and not self.current_bitset.inline:
--				self.file.append(self.current_bitset)
--		elif name == "bitfield" and self.current_bitset:
--			self.parse_field(attrs["name"], attrs)
--		elif name == "database":
--			self.do_validate(attrs["xsi:schemaLocation"])
--
--	def end_element(self, name):
--		if name == "domain":
--			self.current_domain = None
--			self.current_prefix = None
--			self.current_prefix_type = None
--		elif name == "stripe":
--			self.current_stripe = None
--		elif name == "bitset":
--			self.current_bitset = None
--		elif name == "reg32":
--			self.current_reg = None
--		elif name == "array":
--			# if the array has no Reg children, push an implicit reg32:
--			if len(self.current_array.children) == 0:
--				attrs = {
--					"name": "REG",
--					"offset": "0",
--				}
--				self.parse_reg(attrs, 32)
--			self.current_array = self.current_array.parent
--		elif name == "enum":
--			self.current_enum = None
--
--	def character_data(self, data):
--		self.cdata += data
--
--	def dump_reg_usages(self):
--		d = collections.defaultdict(list)
--		for usage, regs in self.usage_regs.items():
--			for reg in regs:
--				variants = self.variant_regs.get(reg.name)
--				if variants:
--					for variant, vreg in variants.items():
--						if reg == vreg:
--							d[(usage, sanitize_variant(variant))].append(reg)
--				else:
--					for variant in self.variants:
--						d[(usage, sanitize_variant(variant))].append(reg)
--
--		print("#ifdef __cplusplus")
--
--		for usage, regs in self.usage_regs.items():
--			print("template<chip CHIP> constexpr inline uint16_t %s_REGS[] = {};" % (usage.upper()))
--
--		for (usage, variant), regs in d.items():
--			offsets = []
--
--			for reg in regs:
--				if reg.array:
--					for i in range(reg.array.length):
--						offsets.append(reg.array.offset + reg.offset + i * reg.array.stride)
--						if reg.bit_size == 64:
--							offsets.append(offsets[-1] + 1)
--				else:
--					offsets.append(reg.offset)
--					if reg.bit_size == 64:
--						offsets.append(offsets[-1] + 1)
--
--			offsets.sort()
--
--			print("template<> constexpr inline uint16_t %s_REGS<%s>[] = {" % (usage.upper(), variant))
--			for offset in offsets:
--				print("\t%s," % hex(offset))
--			print("};")
--
--		print("#endif")
--
--	def has_variants(self, reg):
--		return reg.name in self.variant_regs and not is_number(reg.name) and not is_number(reg.name[1:])
--
--	def dump(self):
--		enums = []
--		bitsets = []
--		regs = []
--		for e in self.file:
--			if isinstance(e, Enum):
--				enums.append(e)
--			elif isinstance(e, Bitset):
--				bitsets.append(e)
--			else:
--				regs.append(e)
--
--		for e in enums + bitsets + regs:
--			e.dump(self.has_variants(e))
--
--		self.dump_reg_usages()
--
--
--	def dump_regs_py(self):
--		regs = []
--		for e in self.file:
--			if isinstance(e, Reg):
--				regs.append(e)
--
--		for e in regs:
--			e.dump_py()
--
--
--	def dump_reg_variants(self, regname, variants):
--		if is_number(regname) or is_number(regname[1:]):
--			return
--		print("#ifdef __cplusplus")
--		print("struct __%s {" % regname)
--		# TODO be more clever.. we should probably figure out which
--		# fields have the same type in all variants (in which they
--		# appear) and stuff everything else in a variant specific
--		# sub-structure.
--		seen_fields = []
--		bit_size = 32
--		array = False
--		address = None
--		for variant in variants.keys():
--			print("    /* %s fields: */" % variant)
--			reg = variants[variant]
--			bit_size = reg.bit_size
--			array = reg.array
--			for f in reg.bitset.fields:
--				fld_name = field_name(reg, f)
--				if fld_name in seen_fields:
--					continue
--				seen_fields.append(fld_name)
--				name = fld_name.lower()
--				if f.type in [ "address", "waddress" ]:
--					if address:
--						continue
--					address = f
--					tab_to("    __bo_type", "bo;")
--					tab_to("    uint32_t", "bo_offset;")
--					continue
--				type, val = f.ctype("var")
--				tab_to("    %s" %type, "%s;" %name)
--		print("    /* fallback fields: */")
--		if bit_size == 64:
--			tab_to("    uint64_t", "unknown;")
--			tab_to("    uint64_t", "qword;")
--		else:
--			tab_to("    uint32_t", "unknown;")
--			tab_to("    uint32_t", "dword;")
--		print("};")
--		# TODO don't hardcode the varset enum name
--		varenum = "chip"
--		print("template <%s %s>" % (varenum, varenum.upper()))
--		print("static inline struct fd_reg_pair")
--		xtra = ""
--		xtravar = ""
--		if array:
--			xtra = "int __i, "
--			xtravar = "__i, "
--		print("__%s(%sstruct __%s fields) {" % (regname, xtra, regname))
--		for variant in variants.keys():
--			if "-" in variant:
--				start = variant[:variant.index("-")]
--				end = variant[variant.index("-") + 1:]
--				if end != "":
--					print("  if ((%s >= %s) && (%s <= %s)) {" % (varenum.upper(), start, varenum.upper(), end))
--				else:
--					print("  if (%s >= %s) {" % (varenum.upper(), start))
--			else:
--				print("  if (%s == %s) {" % (varenum.upper(), variant))
--			reg = variants[variant]
--			reg.dump_regpair_builder()
--			print("  } else")
--		print("    assert(!\"invalid variant\");")
--		print("  return (struct fd_reg_pair){};")
--		print("}")
--
--		if bit_size == 64:
--			skip = ", { .reg = 0 }"
--		else:
--			skip = ""
--
--		print("#define %s(VARIANT, %s...) __%s<VARIANT>(%s{__VA_ARGS__})%s" % (regname, xtravar, regname, xtravar, skip))
--		print("#endif /* __cplusplus */")
--
--	def dump_structs(self):
--		for e in self.file:
--			e.dump_pack_struct(self.has_variants(e))
--
--		for regname in self.variant_regs:
--			self.dump_reg_variants(regname, self.variant_regs[regname])
-+    def __init__(self):
-+        self.current_array = None
-+        self.current_domain = None
-+        self.current_prefix = None
-+        self.current_prefix_type = None
-+        self.current_stripe = None
-+        self.current_bitset = None
-+        self.current_bitsize = 32
-+        # The varset attribute on the domain specifies the enum which
-+        # specifies all possible hw variants:
-+        self.current_varset = None
-+        # Regs that have multiple variants.. we only generated the C++
-+        # template based struct-packers for these
-+        self.variant_regs = {}
-+        # Information in which contexts regs are used, to be used in
-+        # debug options
-+        self.usage_regs = collections.defaultdict(list)
-+        self.bitsets = {}
-+        self.enums = {}
-+        self.variants = set()
-+        self.file = []
-+        self.xml_files = []
-+
-+    def error(self, message):
-+        parser, filename = self.stack[-1]
-+        return Error("%s:%d:%d: %s" % (filename, parser.CurrentLineNumber, parser.CurrentColumnNumber, message))
-+
-+    def prefix(self, variant=None):
-+        if self.current_prefix_type == "variant" and variant:
-+            return sanitize_variant(variant)
-+        elif self.current_stripe:
-+            return self.current_stripe + "_" + self.current_domain
-+        elif self.current_prefix:
-+            return self.current_prefix + "_" + self.current_domain
-+        else:
-+            return self.current_domain
-+
-+    def parse_field(self, name, attrs):
-+        try:
-+            if "pos" in attrs:
-+                high = low = int(attrs["pos"], 0)
-+            elif "high" in attrs and "low" in attrs:
-+                high = int(attrs["high"], 0)
-+                low = int(attrs["low"], 0)
-+            else:
-+                low = 0
-+                high = self.current_bitsize - 1
-+
-+            if "type" in attrs:
-+                type = attrs["type"]
-+            else:
-+                type = None
-+
-+            if "shr" in attrs:
-+                shr = int(attrs["shr"], 0)
-+            else:
-+                shr = 0
-+
-+            b = Field(name, low, high, shr, type, self)
-+
-+            if type == "fixed" or type == "ufixed":
-+                b.radix = int(attrs["radix"], 0)
-+
-+            self.current_bitset.fields.append(b)
-+        except ValueError as e:
-+            raise self.error(e)
-+
-+    def parse_varset(self, attrs):
-+        # Inherit the varset from the enclosing domain if not overriden:
-+        varset = self.current_varset
-+        if "varset" in attrs:
-+            varset = self.enums[attrs["varset"]]
-+        return varset
-+
-+    def parse_variants(self, attrs):
-+        if "variants" not in attrs:
-+            return None
-+
-+        variant = attrs["variants"].split(",")[0]
-+        varset = self.parse_varset(attrs)
-+
-+        if "-" in variant:
-+            # if we have a range, validate that both the start and end
-+            # of the range are valid enums:
-+            start = variant[:variant.index("-")]
-+            end = variant[variant.index("-") + 1:]
-+            assert varset.has_name(start)
-+            if end != "":
-+                assert varset.has_name(end)
-+        else:
-+            assert varset.has_name(variant)
-+
-+        return variant
-+
-+    def add_all_variants(self, reg, attrs, parent_variant):
-+        # TODO this should really handle *all* variants, including dealing
-+        # with open ended ranges (ie. "A2XX,A4XX-") (we have the varset
-+        # enum now to make that possible)
-+        variant = self.parse_variants(attrs)
-+        if not variant:
-+            variant = parent_variant
-+
-+        if reg.name not in self.variant_regs:
-+            self.variant_regs[reg.name] = {}
-+        else:
-+            # All variants must be same size:
-+            v = next(iter(self.variant_regs[reg.name]))
-+            assert self.variant_regs[reg.name][v].bit_size == reg.bit_size
-+
-+        self.variant_regs[reg.name][variant] = reg
-+
-+    def add_all_usages(self, reg, usages):
-+        if not usages:
-+            return
-+
-+        for usage in usages:
-+            self.usage_regs[usage].append(reg)
-+
-+        self.variants.add(reg.domain)
-+
-+    def do_validate(self, schemafile):
-+        if not self.validate:
-+            return
-+
-+        try:
-+            from lxml import etree
-+
-+            parser, filename = self.stack[-1]
-+            dirname = os.path.dirname(filename)
-+
-+            # we expect this to look like <namespace url> schema.xsd.. I think
-+            # technically it is supposed to be just a URL, but that doesn't
-+            # quite match up to what we do.. Just skip over everything up to
-+            # and including the first whitespace character:
-+            schemafile = schemafile[schemafile.rindex(" ")+1:]
-+
-+            # this is a bit cheezy, but the xml file to validate could be
-+            # in a child director, ie. we don't really know where the schema
-+            # file is, the way the rnn C code does.  So if it doesn't exist
-+            # just look one level up
-+            if not os.path.exists(dirname + "/" + schemafile):
-+                schemafile = "../" + schemafile
-+
-+            if not os.path.exists(dirname + "/" + schemafile):
-+                raise self.error("Cannot find schema for: " + filename)
-+
-+            xmlschema_doc = etree.parse(dirname + "/" + schemafile)
-+            xmlschema = etree.XMLSchema(xmlschema_doc)
-+
-+            xml_doc = etree.parse(filename)
-+            if not xmlschema.validate(xml_doc):
-+                error_str = str(xmlschema.error_log.filter_from_errors()[0])
-+                raise self.error(
-+                    "Schema validation failed for: " + filename + "\n" + error_str)
-+        except ImportError as e:
-+            print("lxml not found, skipping validation", file=sys.stderr)
-+
-+    def do_parse(self, filename):
-+        filepath = os.path.abspath(filename)
-+        if filepath in self.xml_files:
-+            return
-+        self.xml_files.append(filepath)
-+        file = open(filename, "rb")
-+        parser = xml.parsers.expat.ParserCreate()
-+        self.stack.append((parser, filename))
-+        parser.StartElementHandler = self.start_element
-+        parser.EndElementHandler = self.end_element
-+        parser.CharacterDataHandler = self.character_data
-+        parser.buffer_text = True
-+        parser.ParseFile(file)
-+        self.stack.pop()
-+        file.close()
-+
-+    def parse(self, rnn_path, filename, validate):
-+        self.path = rnn_path
-+        self.stack = []
-+        self.validate = validate
-+        self.do_parse(filename)
-+
-+    def parse_reg(self, attrs, bit_size):
-+        self.current_bitsize = bit_size
-+        if "type" in attrs and attrs["type"] in self.bitsets:
-+            bitset = self.bitsets[attrs["type"]]
-+            if bitset.inline:
-+                self.current_bitset = Bitset(attrs["name"], bitset)
-+                self.current_bitset.inline = True
-+            else:
-+                self.current_bitset = bitset
-+        else:
-+            self.current_bitset = Bitset(attrs["name"], None)
-+            self.current_bitset.inline = True
-+            if "type" in attrs:
-+                self.parse_field(None, attrs)
-+
-+        variant = self.parse_variants(attrs)
-+        if not variant and self.current_array:
-+            variant = self.current_array.variant
-+
-+        self.current_reg = Reg(attrs, self.prefix(
-+            variant), self.current_array, bit_size)
-+        self.current_reg.bitset = self.current_bitset
-+        self.current_bitset.reg = self.current_reg
-+
-+        if len(self.stack) == 1:
-+            self.file.append(self.current_reg)
-+
-+        if variant is not None:
-+            self.add_all_variants(self.current_reg, attrs, variant)
-+
-+        usages = None
-+        if "usage" in attrs:
-+            usages = attrs["usage"].split(',')
-+        elif self.current_array:
-+            usages = self.current_array.usages
-+
-+        self.add_all_usages(self.current_reg, usages)
-+
-+    def start_element(self, name, attrs):
-+        self.cdata = ""
-+        if name == "import":
-+            filename = attrs["file"]
-+            self.do_parse(os.path.join(self.path, filename))
-+        elif name == "domain":
-+            self.current_domain = attrs["name"]
-+            if "prefix" in attrs:
-+                self.current_prefix = sanitize_variant(
-+                    self.parse_variants(attrs))
-+                self.current_prefix_type = attrs["prefix"]
-+            else:
-+                self.current_prefix = None
-+                self.current_prefix_type = None
-+            if "varset" in attrs:
-+                self.current_varset = self.enums[attrs["varset"]]
-+        elif name == "stripe":
-+            self.current_stripe = sanitize_variant(self.parse_variants(attrs))
-+        elif name == "enum":
-+            self.current_enum_value = 0
-+            self.current_enum = Enum(attrs["name"])
-+            self.enums[attrs["name"]] = self.current_enum
-+            if len(self.stack) == 1:
-+                self.file.append(self.current_enum)
-+        elif name == "value":
-+            if "value" in attrs:
-+                value = int(attrs["value"], 0)
-+            else:
-+                value = self.current_enum_value
-+            self.current_enum.values.append((attrs["name"], value))
-+        elif name == "reg32":
-+            self.parse_reg(attrs, 32)
-+        elif name == "reg64":
-+            self.parse_reg(attrs, 64)
-+        elif name == "array":
-+            self.current_bitsize = 32
-+            variant = self.parse_variants(attrs)
-+            index_type = self.enums[attrs["index"]
-+                                    ] if "index" in attrs else None
-+            self.current_array = Array(attrs, self.prefix(
-+                variant), variant, self.current_array, index_type)
-+            if len(self.stack) == 1:
-+                self.file.append(self.current_array)
-+        elif name == "bitset":
-+            self.current_bitset = Bitset(attrs["name"], None)
-+            if "inline" in attrs and attrs["inline"] == "yes":
-+                self.current_bitset.inline = True
-+            self.bitsets[self.current_bitset.name] = self.current_bitset
-+            if len(self.stack) == 1 and not self.current_bitset.inline:
-+                self.file.append(self.current_bitset)
-+        elif name == "bitfield" and self.current_bitset:
-+            self.parse_field(attrs["name"], attrs)
-+        elif name == "database":
-+            self.do_validate(attrs["xsi:schemaLocation"])
-+
-+    def end_element(self, name):
-+        if name == "domain":
-+            self.current_domain = None
-+            self.current_prefix = None
-+            self.current_prefix_type = None
-+        elif name == "stripe":
-+            self.current_stripe = None
-+        elif name == "bitset":
-+            self.current_bitset = None
-+        elif name == "reg32":
-+            self.current_reg = None
-+        elif name == "array":
-+            # if the array has no Reg children, push an implicit reg32:
-+            if len(self.current_array.children) == 0:
-+                attrs = {
-+                    "name": "REG",
-+                    "offset": "0",
-+                }
-+                self.parse_reg(attrs, 32)
-+            self.current_array = self.current_array.parent
-+        elif name == "enum":
-+            self.current_enum = None
-+
-+    def character_data(self, data):
-+        self.cdata += data
-+
-+    def dump_reg_usages(self):
-+        d = collections.defaultdict(list)
-+        for usage, regs in self.usage_regs.items():
-+            for reg in regs:
-+                variants = self.variant_regs.get(reg.name)
-+                if variants:
-+                    for variant, vreg in variants.items():
-+                        if reg == vreg:
-+                            d[(usage, sanitize_variant(variant))].append(reg)
-+                else:
-+                    for variant in self.variants:
-+                        d[(usage, sanitize_variant(variant))].append(reg)
-+
-+        print("#ifdef __cplusplus")
-+
-+        for usage, regs in self.usage_regs.items():
-+            print("template<chip CHIP> constexpr inline uint16_t %s_REGS[] = {};" % (
-+                usage.upper()))
-+
-+        for (usage, variant), regs in d.items():
-+            offsets = []
-+
-+            for reg in regs:
-+                if reg.array:
-+                    for i in range(reg.array.length):
-+                        offsets.append(reg.array.offset +
-+                                       reg.offset + i * reg.array.stride)
-+                        if reg.bit_size == 64:
-+                            offsets.append(offsets[-1] + 1)
-+                else:
-+                    offsets.append(reg.offset)
-+                    if reg.bit_size == 64:
-+                        offsets.append(offsets[-1] + 1)
-+
-+            offsets.sort()
-+
-+            print("template<> constexpr inline uint16_t %s_REGS<%s>[] = {" % (
-+                usage.upper(), variant))
-+            for offset in offsets:
-+                print("\t%s," % hex(offset))
-+            print("};")
-+
-+        print("#endif")
-+
-+    def has_variants(self, reg):
-+        return reg.name in self.variant_regs and not is_number(reg.name) and not is_number(reg.name[1:])
-+
-+    def dump(self):
-+        enums = []
-+        bitsets = []
-+        regs = []
-+        for e in self.file:
-+            if isinstance(e, Enum):
-+                enums.append(e)
-+            elif isinstance(e, Bitset):
-+                bitsets.append(e)
-+            else:
-+                regs.append(e)
-+
-+        for e in enums + bitsets + regs:
-+            e.dump(self.has_variants(e))
-+
-+        self.dump_reg_usages()
-+
-+    def dump_regs_py(self):
-+        regs = []
-+        for e in self.file:
-+            if isinstance(e, Reg):
-+                regs.append(e)
-+
-+        for e in regs:
-+            e.dump_py()
-+
-+    def dump_reg_variants(self, regname, variants):
-+        if is_number(regname) or is_number(regname[1:]):
-+            return
-+        print("#ifdef __cplusplus")
-+        print("struct __%s {" % regname)
-+        # TODO be more clever.. we should probably figure out which
-+        # fields have the same type in all variants (in which they
-+        # appear) and stuff everything else in a variant specific
-+        # sub-structure.
-+        seen_fields = []
-+        bit_size = 32
-+        array = False
-+        address = None
-+        constexpr_mark = " CONSTEXPR"
-+        for variant in variants.keys():
-+            print("    /* %s fields: */" % variant)
-+            reg = variants[variant]
-+            bit_size = reg.bit_size
-+            array = reg.array
-+            for f in reg.bitset.fields:
-+                fld_name = field_name(reg, f)
-+                if fld_name in seen_fields:
-+                    continue
-+                seen_fields.append(fld_name)
-+                name = fld_name.lower()
-+                if f.type in ["address", "waddress"]:
-+                    if address:
-+                        continue
-+                    address = f
-+                    print("#ifndef TU_CS_H")
-+                    tab_to("    __bo_type", "bo;")
-+                    tab_to("    uint32_t", "bo_offset;")
-+                    print("#endif")
-+                    continue
-+                type, val = f.ctype("var")
-+                tab_to("    %s" % type, "%s;" % name)
-+                if f.type == "float":
-+                    constexpr_mark = ""
-+        print("    /* fallback fields: */")
-+        if bit_size == 64:
-+            tab_to("    uint64_t", "unknown;")
-+            tab_to("    uint64_t", "qword;")
-+        else:
-+            tab_to("    uint32_t", "unknown;")
-+            tab_to("    uint32_t", "dword;")
-+        print("};")
-+        # TODO don't hardcode the varset enum name
-+        varenum = "chip"
-+        print("template <%s %s>" % (varenum, varenum.upper()))
-+        print("static%s inline struct fd_reg_pair" % (constexpr_mark))
-+        xtra = ""
-+        xtravar = ""
-+        if array:
-+            xtra = "int __i, "
-+            xtravar = "__i, "
-+        print("__%s(%sstruct __%s fields) {" % (regname, xtra, regname))
-+        for variant in variants.keys():
-+            if "-" in variant:
-+                start = variant[:variant.index("-")]
-+                end = variant[variant.index("-") + 1:]
-+                if end != "":
-+                    print("  if ((%s >= %s) && (%s <= %s)) {" % (
-+                        varenum.upper(), start, varenum.upper(), end))
-+                else:
-+                    print("  if (%s >= %s) {" % (varenum.upper(), start))
-+            else:
-+                print("  if (%s == %s) {" % (varenum.upper(), variant))
-+            reg = variants[variant]
-+            reg.dump_regpair_builder()
-+            print("  } else")
-+        print("    assert(!\"invalid variant\");")
-+        print("  return (struct fd_reg_pair){};")
-+        print("}")
-+
-+        if bit_size == 64:
-+            skip = ", { .reg = 0 }"
-+        else:
-+            skip = ""
-+
-+        print("#define %s(VARIANT, %s...) __%s<VARIANT>(%s{__VA_ARGS__})%s" % (
-+            regname, xtravar, regname, xtravar, skip))
-+        print("#endif /* __cplusplus */")
-+
-+    def dump_structs(self):
-+        for e in self.file:
-+            e.dump_pack_struct(self.has_variants(e))
-+
-+        for regname in self.variant_regs:
-+            self.dump_reg_variants(regname, self.variant_regs[regname])
- 
- 
- def dump_c(args, guard, func):
--	p = Parser()
--
--	try:
--		p.parse(args.rnn, args.xml, args.validate)
--	except Error as e:
--		print(e, file=sys.stderr)
--		exit(1)
--
--	print("#ifndef %s\n#define %s\n" % (guard, guard))
--
--	print("/* Autogenerated file, DO NOT EDIT manually! */")
--
--	print()
--	print("#ifdef __KERNEL__")
--	print("#include <linux/bug.h>")
--	print("#define assert(x) BUG_ON(!(x))")
--	print("#else")
--	print("#include <assert.h>")
--	print("#endif")
--	print()
--
--	print("#ifdef __cplusplus")
--	print("#define __struct_cast(X)")
--	print("#else")
--	print("#define __struct_cast(X) (struct X)")
--	print("#endif")
--	print()
--
--	print("#ifndef FD_NO_DEPRECATED_PACK")
--	print("#define FD_DEPRECATED __attribute__((deprecated))")
--	print("#else")
--	print("#define FD_DEPRECATED")
--	print("#endif")
--	print()
--
--	func(p)
--
--	print()
--	print("#undef FD_DEPRECATED")
--	print()
--
--	print("#endif /* %s */" % guard)
-+    p = Parser()
-+
-+    try:
-+        p.parse(args.rnn, args.xml, args.validate)
-+    except Error as e:
-+        print(e, file=sys.stderr)
-+        exit(1)
-+
-+    print("#ifndef %s\n#define %s\n" % (guard, guard))
-+
-+    print("/* Autogenerated file, DO NOT EDIT manually! */")
-+
-+    print()
-+    print("#ifdef __KERNEL__")
-+    print("#include <linux/bug.h>")
-+    print("#define assert(x) BUG_ON(!(x))")
-+    print("#else")
-+    print("#include <assert.h>")
-+    print("#endif")
-+    print()
-+
-+    print("#ifdef __cplusplus")
-+    print("#define __struct_cast(X)")
-+    print("#define CONSTEXPR constexpr")
-+    print("#else")
-+    print("#define __struct_cast(X) (struct X)")
-+    print("#define CONSTEXPR")
-+    print("#endif")
-+    print()
-+
-+    # TODO figure out what to do about fd_reg_stomp_allowed()
-+    # vs gcc.. for now only enable the warnings with clang:
-+    print("#if defined(__clang__) && !defined(FD_NO_DEPRECATED_PACK)")
-+    print("#define __FD_DEPRECATED _Pragma (\"GCC warning \\\"Deprecated reg builder\\\"\")")
-+    print("#else")
-+    print("#define __FD_DEPRECATED")
-+    print("#endif")
-+    print()
-+
-+    func(p)
-+
-+    print("#endif /* %s */" % guard)
- 
- 
- def dump_c_defines(args):
--	guard = str.replace(os.path.basename(args.xml), '.', '_').upper()
--	dump_c(args, guard, lambda p: p.dump())
-+    guard = str.replace(os.path.basename(args.xml), '.', '_').upper()
-+    dump_c(args, guard, lambda p: p.dump())
- 
- 
- def dump_c_pack_structs(args):
--	guard = str.replace(os.path.basename(args.xml), '.', '_').upper() + '_STRUCTS'
--	dump_c(args, guard, lambda p: p.dump_structs())
--
-+    guard = str.replace(os.path.basename(args.xml),
-+                        '.', '_').upper() + '_STRUCTS'
-+    dump_c(args, guard, lambda p: p.dump_structs())
-+
-+
-+def dump_perfcntrs(args):
-+    p = Parser()
-+
-+    try:
-+        p.parse(args.rnn, args.xml, args.validate)
-+    except Error as e:
-+        print(e, file=sys.stderr)
-+        exit(1)
-+
-+    perfcntrs = json.load(open(args.json, "r", encoding="utf-8"))
-+
-+    chip_type = p.enums['chip']
-+    chip = perfcntrs['chip']
-+    if not chip_type.has_name(chip):
-+        raise Error("Invalid chip: " + chip)
-+
-+    groups = perfcntrs['groups']
-+
-+    guard = "__" + chip + "_PERFCNTRS_"
-+    print("#ifndef %s\n#define %s\n" % (guard, guard))
-+    print("/* Autogenerated file, DO NOT EDIT manually! */")
-+    print()
-+    print("#ifdef __KERNEL__")
-+    print("#include \"msm_perfcntr.h\"")
-+    print("#endif")
-+    print()
-+
-+    def has_variant(variant):
-+        if variant is None:
-+            return True
-+        if "-" in variant:
-+            start = chip_type.value(variant[:variant.index("-")])
-+            end = chip_type.value(variant[variant.index("-") + 1:])
-+            chipn = chip_type.value(chip)
-+
-+            return (start is None or chipn >= start) and (end is None or chipn <= end)
-+        return chip == variant
-+
-+    # Split out arrays and regs for later access:
-+    arrays = {}
-+    regs = {}
-+    for e in p.file:
-+        if isinstance(e, Array) and has_variant(e.variant):
-+            arrays[e.local_name] = e
-+        if isinstance(e, Reg):
-+            regs[e.name] = e
-+
-+    # For variant regs, overwrite 'regs' entries with correct variant:
-+    for regname in p.variant_regs:
-+        for (variant, reg) in p.variant_regs[regname].items():
-+            if has_variant(variant):
-+                regs[regname] = reg
-+                break
-+
-+    for group in groups:
-+        name = group['name']
-+        name_low = name.lower()
-+        num = group['num']
-+        countable_type_name = group['countable_type']
-+
-+        if not countable_type_name in p.enums:
-+            raise Error("Invalid type: " + countable_type_name)
-+
-+        countable_type = p.enums[countable_type_name]
-+
-+        print("#ifndef __KERNEL__")
-+        print("static const struct fd_perfcntr_countable " + name_low + "_countables[] = {")
-+        for (name, value) in countable_type.values:
-+            # if the countable is prefixed with the chip, strip that:
-+            # (note: avoid py3.9 dependency for kernel)
-+            if name.startswith(chip + "_"):
-+                name = name[len(chip)+1:]
-+            print("   { \"" + name + "\", " + str(value) + " },")
-+        print("};")
-+        print("#endif")
-+
-+        print("static const struct fd_perfcntr_counter " + name_low + "_counters[] = {")
-+        for i in range(0, num):
-+            if "reserved" in group and i in group["reserved"]:
-+                continue
-+            def get_reg(name):
-+                # if reg has {} pattern, expand that first:
-+                name = name.format(i)
-+
-+                if name in arrays:
-+                    arr = arrays[name]
-+                    return arr.offset + (i * arr.stride)
-+
-+                if not name in regs:
-+                    raise Error("Invalid reg: " + name)
-+
-+                reg = regs[name]
-+                return reg.offset
-+
-+            def get_counter():
-+                # if the counter is <reg64> just a single "counter" value
-+                # should be specified in the json, but for legacy separate
-+                # hi/lo <reg32> pairs "counter_lo" and "counter_hi" should
-+                # be specified
-+                if "counter" in group:
-+                    counter = get_reg(group["counter"])
-+                    return [counter, counter+1]
-+                counter_lo = get_reg(group["counter_lo"])
-+                counter_hi = get_reg(group["counter_hi"])
-+                return [counter_lo, counter_hi]
-+
-+            (counter_lo, counter_hi) = get_counter()
-+            select = get_reg(group['select'])
-+
-+            select_offset = 0
-+            if "select_offset" in group:
-+                select_offset = int(group["select_offset"])
-+                select = select + select_offset
-+
-+            slice_select_str = ""
-+            if "slice_select" in group:
-+                slice_select = group["slice_select"]
-+                for reg in slice_select:
-+                    val = get_reg(reg) + select_offset
-+                    slice_select_str += "0x%04x, " % val
-+
-+            # TODO add support for things that need enable/clear regs
-+
-+            print("   { 0x%04x, {%s}, 0x%04x, 0x%04x }," % (select, slice_select_str, counter_lo, counter_hi))
-+        print("};")
-+
-+        print()
-+
-+    print("const struct fd_perfcntr_group " + chip.lower() + "_perfcntr_groups[] = {")
-+    for group in groups:
-+        name = group['name']
-+        name_low = name.lower()
-+        pipe = 'NONE'
-+        if 'pipe' in group:
-+            pipe = group['pipe']
-+
-+        print("   GROUP(\"%s\", PIPE_%s, %s_counters, %s_countables)," % (name, pipe, name_low, name_low))
-+
-+    print("};")
-+    print("const unsigned " + chip.lower() + "_num_perfcntr_groups = ARRAY_SIZE(" + chip.lower() + "_perfcntr_groups);")
-+
-+    print()
-+    print("#endif /* %s */" % guard)
- 
- def dump_py_defines(args):
--	p = Parser()
-+    p = Parser()
- 
--	try:
--		p.parse(args.rnn, args.xml, args.validate)
--	except Error as e:
--		print(e, file=sys.stderr)
--		exit(1)
-+    try:
-+        p.parse(args.rnn, args.xml, args.validate)
-+    except Error as e:
-+        print(e, file=sys.stderr)
-+        exit(1)
- 
--	file_name = os.path.splitext(os.path.basename(args.xml))[0]
-+    file_name = os.path.splitext(os.path.basename(args.xml))[0]
- 
--	print("from enum import IntEnum")
--	print("class %sRegs(IntEnum):" % file_name.upper())
-+    print("from enum import IntEnum")
-+    print("class %sRegs(IntEnum):" % file_name.upper())
- 
--	os.path.basename(args.xml)
-+    os.path.basename(args.xml)
- 
--	p.dump_regs_py()
-+    p.dump_regs_py()
- 
- 
- def main():
--	parser = argparse.ArgumentParser()
--	parser.add_argument('--rnn', type=str, required=True)
--	parser.add_argument('--xml', type=str, required=True)
--	parser.add_argument('--validate', default=False, action='store_true')
--	parser.add_argument('--no-validate', dest='validate', action='store_false')
-+    parser = argparse.ArgumentParser()
-+    parser.add_argument('--rnn', type=str, required=True)
-+    parser.add_argument('--xml', type=str, required=True)
-+    parser.add_argument('--validate', default=False, action='store_true')
-+    parser.add_argument('--no-validate', dest='validate', action='store_false')
-+
-+    subparsers = parser.add_subparsers()
-+    subparsers.required = True
- 
--	subparsers = parser.add_subparsers()
--	subparsers.required = True
-+    parser_c_defines = subparsers.add_parser('c-defines')
-+    parser_c_defines.set_defaults(func=dump_c_defines)
- 
--	parser_c_defines = subparsers.add_parser('c-defines')
--	parser_c_defines.set_defaults(func=dump_c_defines)
-+    parser_c_pack_structs = subparsers.add_parser('c-pack-structs')
-+    parser_c_pack_structs.set_defaults(func=dump_c_pack_structs)
- 
--	parser_c_pack_structs = subparsers.add_parser('c-pack-structs')
--	parser_c_pack_structs.set_defaults(func=dump_c_pack_structs)
-+    parser_perfcntrs = subparsers.add_parser('perfcntrs')
-+    parser_perfcntrs.add_argument('--json', type=str, required=True)
-+    parser_perfcntrs.set_defaults(func=dump_perfcntrs)
- 
--	parser_py_defines = subparsers.add_parser('py-defines')
--	parser_py_defines.set_defaults(func=dump_py_defines)
-+    parser_py_defines = subparsers.add_parser('py-defines')
-+    parser_py_defines.set_defaults(func=dump_py_defines)
- 
--	args = parser.parse_args()
--	args.func(args)
-+    args = parser.parse_args()
-+    args.func(args)
- 
- 
- if __name__ == '__main__':
--	main()
-+    main()
++$(obj)/generated/%.json.c: $(src)/registers/adreno/%.json \
++		$(src)/registers/adreno/a6xx_perfcntrs.json \
++		$(src)/registers/adreno/a7xx_perfcntrs.json \
++		$(src)/registers/adreno/a8xx_perfcntrs.json \
++		FORCE
++	$(call if_changed,headergen_json)
++
++adreno-y += \
++	generated/a6xx_perfcntrs.json.o \
++	generated/a7xx_perfcntrs.json.o \
++	generated/a8xx_perfcntrs.json.o \
++
+ ADRENO_HEADERS = \
+ 	generated/a2xx.xml.h \
+ 	generated/a3xx.xml.h \
+diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx_perfcntrs.json b/drivers/gpu/drm/msm/registers/adreno/a6xx_perfcntrs.json
+new file mode 100644
+index 000000000000..8bb31820479e
+--- /dev/null
++++ b/drivers/gpu/drm/msm/registers/adreno/a6xx_perfcntrs.json
+@@ -0,0 +1,105 @@
++{
++    "chip": "A6XX",
++    "groups": [
++        {
++            "name": "CP",
++            "num": 14,
++            "reserved": [ 0 ],
++            "select": "CP_PERFCTR_CP_SEL",
++            "counter": "RBBM_PERFCTR_CP",
++            "countable_type": "a6xx_cp_perfcounter_select"
++        },
++        {
++            "name": "CCU",
++            "num": 5,
++            "select": "RB_PERFCTR_CCU_SEL",
++            "counter": "RBBM_PERFCTR_CCU",
++            "countable_type": "a6xx_ccu_perfcounter_select"
++        },
++        {
++            "name": "TSE",
++            "num": 4,
++            "select": "GRAS_PERFCTR_TSE_SEL",
++            "counter": "RBBM_PERFCTR_TSE",
++            "countable_type": "a6xx_tse_perfcounter_select"
++        },
++        {
++            "name": "RAS",
++            "num": 4,
++            "select": "GRAS_PERFCTR_RAS_SEL",
++            "counter": "RBBM_PERFCTR_RAS",
++            "countable_type": "a6xx_ras_perfcounter_select"
++        },
++        {
++            "name": "LRZ",
++            "num": 4,
++            "select": "GRAS_PERFCTR_LRZ_SEL",
++            "counter": "RBBM_PERFCTR_LRZ",
++            "countable_type": "a6xx_lrz_perfcounter_select"
++        },
++        {
++            "name": "HLSQ",
++            "num": 6,
++            "select": "HLSQ_PERFCTR_HLSQ_SEL",
++            "counter": "RBBM_PERFCTR_HLSQ",
++            "countable_type": "a6xx_hlsq_perfcounter_select"
++        },
++        {
++            "name": "PC",
++            "num": 8,
++            "select": "PC_PERFCTR_PC_SEL",
++            "counter": "RBBM_PERFCTR_PC",
++            "countable_type": "a6xx_pc_perfcounter_select"
++        },
++        {
++            "name": "RB",
++            "num": 8,
++            "select": "RB_PERFCTR_RB_SEL",
++            "counter": "RBBM_PERFCTR_RB",
++            "countable_type": "a6xx_rb_perfcounter_select"
++        },
++        {
++            "name": "SP",
++            "num": 24,
++            "reserved": [ 0 ],
++            "select": "SP_PERFCTR_SP_SEL",
++            "counter": "RBBM_PERFCTR_SP",
++            "countable_type": "a6xx_sp_perfcounter_select"
++        },
++        {
++            "name": "TP",
++            "num": 12,
++            "select": "TPL1_PERFCTR_TP_SEL",
++            "counter": "RBBM_PERFCTR_TP",
++            "countable_type": "a6xx_tp_perfcounter_select"
++        },
++        {
++            "name": "UCHE",
++            "num": 12,
++            "select": "UCHE_PERFCTR_UCHE_SEL",
++            "counter": "RBBM_PERFCTR_UCHE",
++            "countable_type": "a6xx_uche_perfcounter_select"
++        },
++        {
++            "name": "VFD",
++            "num": 8,
++            "select": "VFD_PERFCTR_VFD_SEL",
++            "counter": "RBBM_PERFCTR_VFD",
++            "countable_type": "a6xx_vfd_perfcounter_select"
++        },
++        {
++            "name": "VPC",
++            "num": 6,
++            "select": "VPC_PERFCTR_VPC_SEL",
++            "counter": "RBBM_PERFCTR_VPC",
++            "countable_type": "a6xx_vpc_perfcounter_select"
++        },
++        {
++            "name": "VSC",
++            "num": 2,
++            "select": "VSC_PERFCTR_VSC_SEL",
++            "counter": "RBBM_PERFCTR_VSC",
++            "countable_type": "a6xx_vsc_perfcounter_select"
++        }
++    ]
++}
+diff --git a/drivers/gpu/drm/msm/registers/adreno/a7xx_perfcntrs.json b/drivers/gpu/drm/msm/registers/adreno/a7xx_perfcntrs.json
+new file mode 100644
+index 000000000000..e60aab1862ec
+--- /dev/null
++++ b/drivers/gpu/drm/msm/registers/adreno/a7xx_perfcntrs.json
+@@ -0,0 +1,228 @@
++{
++    "chip": "A7XX",
++    "groups": [
++        {
++            "name": "CP",
++            "num": 14,
++            "reserved": [ 0 ],
++            "select": "CP_PERFCTR_CP_SEL",
++            "counter": "RBBM_PERFCTR_CP",
++            "countable_type": "a7xx_cp_perfcounter_select"
++        },
++        {
++            "name": "RBBM",
++            "num": 4,
++            "select": "RBBM_PERFCTR_RBBM_SEL",
++            "counter": "RBBM_PERFCTR_RBBM",
++            "countable_type": "a7xx_rbbm_perfcounter_select"
++        },
++        {
++            "name": "PC",
++            "pipe": "BR",
++            "num": 8,
++            "select": "PC_PERFCTR_PC_SEL",
++            "counter": "RBBM_PERFCTR_PC",
++            "countable_type": "a7xx_pc_perfcounter_select"
++        },
++        {
++            "name": "VFD",
++            "pipe": "BR",
++            "num": 8,
++            "select": "VFD_PERFCTR_VFD_SEL",
++            "counter": "RBBM_PERFCTR_VFD",
++            "countable_type": "a7xx_vfd_perfcounter_select"
++        },
++        {
++            "name": "HLSQ",
++            "pipe": "BR",
++            "num": 6,
++            "select": "SP_PERFCTR_HLSQ_SEL",
++            "counter": "RBBM_PERFCTR_HLSQ",
++            "countable_type": "a7xx_hlsq_perfcounter_select"
++        },
++        {
++            "name": "VPC",
++            "pipe": "BR",
++            "num": 6,
++            "select": "VPC_PERFCTR_VPC_SEL",
++            "counter": "RBBM_PERFCTR_VPC",
++            "countable_type": "a7xx_vpc_perfcounter_select"
++        },
++        {
++            "name": "TSE",
++            "pipe": "BR",
++            "num": 4,
++            "select": "GRAS_PERFCTR_TSE_SEL",
++            "counter": "RBBM_PERFCTR_TSE",
++            "countable_type": "a7xx_tse_perfcounter_select"
++        },
++        {
++            "name": "RAS",
++            "pipe": "BR",
++            "num": 4,
++            "select": "GRAS_PERFCTR_RAS_SEL",
++            "counter": "RBBM_PERFCTR_RAS",
++            "countable_type": "a7xx_ras_perfcounter_select"
++        },
++        {
++            "name": "UCHE",
++            "num": 12,
++            "select": "UCHE_PERFCTR_UCHE_SEL",
++            "counter": "RBBM_PERFCTR_UCHE",
++            "countable_type": "a7xx_uche_perfcounter_select"
++        },
++        {
++            "name": "TP",
++            "pipe": "BR",
++            "num": 12,
++            "select": "TPL1_PERFCTR_TP_SEL",
++            "counter": "RBBM_PERFCTR_TP",
++            "countable_type": "a7xx_tp_perfcounter_select"
++        },
++        {
++            "name": "SP",
++            "pipe": "BR",
++            "num": 24,
++            "select": "SP_PERFCTR_SP_SEL",
++            "counter": "RBBM_PERFCTR_SP",
++            "countable_type": "a7xx_sp_perfcounter_select"
++        },
++        {
++            "name": "RB",
++            "num": 8,
++            "select": "RB_PERFCTR_RB_SEL",
++            "counter": "RBBM_PERFCTR_RB",
++            "countable_type": "a7xx_rb_perfcounter_select"
++        },
++        {
++            "name": "VSC",
++            "num": 2,
++            "select": "VSC_PERFCTR_VSC_SEL",
++            "counter": "RBBM_PERFCTR_VSC",
++            "countable_type": "a7xx_vsc_perfcounter_select"
++        },
++        {
++            "name": "CCU",
++            "num": 5,
++            "select": "RB_PERFCTR_CCU_SEL",
++            "counter": "RBBM_PERFCTR_CCU",
++            "countable_type": "a7xx_ccu_perfcounter_select"
++        },
++        {
++            "name": "LRZ",
++            "pipe": "BR",
++            "num": 4,
++            "select": "GRAS_PERFCTR_LRZ_SEL",
++            "counter": "RBBM_PERFCTR_LRZ",
++            "countable_type": "a7xx_lrz_perfcounter_select"
++        },
++        {
++            "name": "CMP",
++            "num": 4,
++            "select": "RB_PERFCTR_CMP_SEL",
++            "counter": "RBBM_PERFCTR_CMP",
++            "countable_type": "a7xx_cmp_perfcounter_select"
++        },
++        {
++            "name": "UFC",
++            "pipe": "BR",
++            "num": 4,
++            "select": "RB_PERFCTR_UFC_SEL",
++            "counter": "RBBM_PERFCTR_UFC",
++            "countable_type": "a7xx_ufc_perfcounter_select"
++        },
++        {
++            "name": "BV_CP",
++            "num": 7,
++            "select": "CP_BV_PERFCTR_CP_SEL",
++            "counter": "RBBM_PERFCTR2_CP",
++            "countable_type": "a7xx_cp_perfcounter_select"
++        },
++        {
++            "name": "BV_PC",
++            "pipe": "BV",
++            "num": 8,
++            "select_offset": 8,
++            "select": "PC_PERFCTR_PC_SEL",
++            "counter": "RBBM_PERFCTR_BV_PC",
++            "countable_type": "a7xx_pc_perfcounter_select"
++        },
++        {
++            "name": "BV_VFD",
++            "pipe": "BV",
++            "num": 8,
++            "select_offset": 8,
++            "select": "VFD_PERFCTR_VFD_SEL",
++            "counter": "RBBM_PERFCTR_BV_VFD",
++            "countable_type": "a7xx_vfd_perfcounter_select"
++        },
++        {
++            "name": "BV_VPC",
++            "pipe": "BV",
++            "num": 6,
++            "select_offset": 6,
++            "select": "VPC_PERFCTR_VPC_SEL",
++            "counter": "RBBM_PERFCTR_BV_VPC",
++            "countable_type": "a7xx_vpc_perfcounter_select"
++        },
++        {
++            "name": "BV_TP",
++            "pipe": "BV",
++            "num": 6,
++            "select_offset": 12,
++            "select": "TPL1_PERFCTR_TP_SEL",
++            "counter": "RBBM_PERFCTR2_TP",
++            "countable_type": "a7xx_tp_perfcounter_select"
++        },
++        {
++            "name": "BV_SP",
++            "pipe": "BV",
++            "num": 12,
++            "select_offset": 24,
++            "select": "SP_PERFCTR_SP_SEL",
++            "counter": "RBBM_PERFCTR2_SP",
++            "countable_type": "a7xx_sp_perfcounter_select"
++        },
++        {
++            "name": "BV_UFC",
++            "pipe": "BV",
++            "num": 2,
++            "select_offset": 4,
++            "select": "RB_PERFCTR_UFC_SEL",
++            "counter": "RBBM_PERFCTR2_UFC",
++            "countable_type": "a7xx_ufc_perfcounter_select"
++        },
++        {
++            "name": "BV_TSE",
++            "pipe": "BV",
++            "num": 4,
++            "select": "GRAS_PERFCTR_TSE_SEL",
++            "counter": "RBBM_PERFCTR_BV_TSE",
++            "countable_type": "a7xx_tse_perfcounter_select"
++        },
++        {
++            "name": "BV_RAS",
++            "pipe": "BV",
++            "num": 4,
++            "select": "GRAS_PERFCTR_RAS_SEL",
++            "counter": "RBBM_PERFCTR_BV_RAS",
++            "countable_type": "a7xx_ras_perfcounter_select"
++        },
++        {
++            "name": "BV_LRZ",
++            "pipe": "BV",
++            "num": 4,
++            "select": "GRAS_PERFCTR_LRZ_SEL",
++            "counter": "RBBM_PERFCTR_BV_LRZ",
++            "countable_type": "a7xx_lrz_perfcounter_select"
++        },
++        {
++            "name": "BV_HLSQ",
++            "pipe": "BV",
++            "num": 6,
++            "select": "SP_PERFCTR_HLSQ_SEL",
++            "counter": "RBBM_PERFCTR2_HLSQ",
++            "countable_type": "a7xx_hlsq_perfcounter_select"
++        }
++    ]
++}
+diff --git a/drivers/gpu/drm/msm/registers/adreno/a8xx_perfcntrs.json b/drivers/gpu/drm/msm/registers/adreno/a8xx_perfcntrs.json
+new file mode 100644
+index 000000000000..503b113df397
+--- /dev/null
++++ b/drivers/gpu/drm/msm/registers/adreno/a8xx_perfcntrs.json
+@@ -0,0 +1,240 @@
++{
++    "chip": "A8XX",
++    "groups": [
++        {
++            "name": "CP",
++            "num": 14,
++            "reserved": [ 0 ],
++            "select": "CP_PERFCTR_CP_SEL",
++            "counter": "RBBM_PERFCTR_CP",
++            "countable_type": "a8xx_cp_perfcounter_select"
++        },
++        {
++            "name": "RBBM",
++            "num": 4,
++            "select": "RBBM_PERFCTR_RBBM_SEL",
++            "slice_select": [ "RBBM_SLICE_PERFCTR_RBBM_SEL" ],
++            "counter": "RBBM_PERFCTR_RBBM",
++            "countable_type": "a8xx_rbbm_perfcounter_select"
++        },
++        {
++            "name": "PC",
++            "pipe": "BR",
++            "num": 8,
++            "select": "PC_PERFCTR_PC_SEL",
++            "slice_select": [ "PC_SLICE_PERFCTR_PC_SEL" ],
++            "counter": "RBBM_PERFCTR_PC",
++            "countable_type": "a8xx_pc_perfcounter_select"
++        },
++        {
++            "name": "VFD",
++            "pipe": "BR",
++            "num": 8,
++            "select": "VFD_PERFCTR_VFD_SEL",
++            "counter": "RBBM_PERFCTR_VFD",
++            "countable_type": "a8xx_vfd_perfcounter_select"
++        },
++        {
++            "name": "HLSQ",
++            "pipe": "BR",
++            "num": 6,
++            "select": "SP_PERFCTR_HLSQ_SEL",
++            "slice_select": [ "SP_PERFCTR_HLSQ_SEL_2" ],
++            "counter": "RBBM_PERFCTR_HLSQ",
++            "countable_type": "a8xx_hlsq_perfcounter_select"
++        },
++        {
++            "name": "VPC",
++            "pipe": "BR",
++            "num": 6,
++            "select": "VPC_PERFCTR_VPC_SEL",
++            "slice_select": [ "VPC_PERFCTR_VPC_SEL_1", "VPC_PERFCTR_VPC_SEL_2" ],
++            "counter": "RBBM_PERFCTR_VPC",
++            "countable_type": "a8xx_vpc_perfcounter_select"
++        },
++        {
++            "name": "TSE",
++            "pipe": "BR",
++            "num": 4,
++            "select": "GRAS_PERFCTR_TSE_SEL",
++            "slice_select": [ "GRAS_PERFCTR_TSEFE_SEL" ],
++            "counter": "RBBM_PERFCTR_TSE",
++            "countable_type": "a8xx_tse_perfcounter_select"
++        },
++        {
++            "name": "RAS",
++            "pipe": "BR",
++            "num": 4,
++            "select": "GRAS_PERFCTR_RAS_SEL",
++            "counter": "RBBM_PERFCTR_RAS",
++            "countable_type": "a8xx_ras_perfcounter_select"
++        },
++        {
++            "name": "UCHE",
++            "num": 12,
++            "select": "UCHE_PERFCTR_UCHE_SEL",
++            "counter": "RBBM_PERFCTR_UCHE",
++            "countable_type": "a8xx_uche_perfcounter_select"
++        },
++        {
++            "name": "TP",
++            "pipe": "BR",
++            "num": 12,
++            "select": "TPL1_PERFCTR_TP_SEL",
++            "counter": "RBBM_PERFCTR_TP",
++            "countable_type": "a8xx_tp_perfcounter_select"
++        },
++        {
++            "name": "SP",
++            "pipe": "BR",
++            "num": 24,
++            "select": "SP_PERFCTR_SP_SEL",
++            "counter": "RBBM_PERFCTR_SP",
++            "countable_type": "a8xx_sp_perfcounter_select"
++        },
++        {
++            "name": "RB",
++            "pipe": "BR",
++            "num": 8,
++            "select": "RB_PERFCTR_RB_SEL",
++            "counter": "RBBM_PERFCTR_RB",
++            "countable_type": "a8xx_rb_perfcounter_select"
++        },
++        {
++            "name": "VSC",
++            "num": 2,
++            "select": "VSC_PERFCTR_VSC_SEL",
++            "counter": "RBBM_PERFCTR_VSC",
++            "countable_type": "a8xx_vsc_perfcounter_select"
++        },
++        {
++            "name": "CCU",
++            "pipe": "BR",
++            "num": 5,
++            "select": "RB_PERFCTR_CCU_SEL",
++            "counter": "RBBM_PERFCTR_CCU",
++            "countable_type": "a8xx_ccu_perfcounter_select"
++        },
++        {
++            "name": "LRZ",
++            "pipe": "BR",
++            "num": 4,
++            "select": "GRAS_PERFCTR_LRZ_SEL",
++            "counter": "RBBM_PERFCTR_LRZ",
++            "countable_type": "a8xx_lrz_perfcounter_select"
++        },
++        {
++            "name": "CMP",
++            "num": 4,
++            "select": "RB_PERFCTR_CMP_SEL",
++            "counter": "RBBM_PERFCTR_CMP",
++            "countable_type": "a8xx_cmp_perfcounter_select"
++        },
++        {
++            "name": "UFC",
++            "pipe": "BR",
++            "num": 4,
++            "select": "RB_PERFCTR_UFC_SEL",
++            "counter": "RBBM_PERFCTR_UFC",
++            "countable_type": "a8xx_ufc_perfcounter_select"
++        },
++        {
++            "name": "BV_CP",
++            "num": 7,
++            "select_offset": 14,
++            "select": "CP_PERFCTR_CP_SEL",
++            "counter": "RBBM_PERFCTR2_CP",
++            "countable_type": "a8xx_cp_perfcounter_select"
++        },
++        {
++            "name": "BV_PC",
++            "pipe": "BV",
++            "num": 8,
++            "select_offset": 8,
++            "select": "PC_PERFCTR_PC_SEL",
++            "slice_select": [ "PC_SLICE_PERFCTR_PC_SEL" ],
++            "counter": "RBBM_PERFCTR_BV_PC",
++            "countable_type": "a8xx_pc_perfcounter_select"
++        },
++        {
++            "name": "BV_VFD",
++            "pipe": "BV",
++            "num": 8,
++            "select_offset": 8,
++            "select": "VFD_PERFCTR_VFD_SEL",
++            "counter": "RBBM_PERFCTR_BV_VFD",
++            "countable_type": "a8xx_vfd_perfcounter_select"
++        },
++        {
++            "name": "BV_VPC",
++            "pipe": "BV",
++            "num": 6,
++            "select_offset": 6,
++            "select": "VPC_PERFCTR_VPC_SEL",
++            "slice_select": [ "VPC_PERFCTR_VPC_SEL_1", "VPC_PERFCTR_VPC_SEL_2" ],
++            "counter": "RBBM_PERFCTR_BV_VPC",
++            "countable_type": "a8xx_vpc_perfcounter_select"
++        },
++        {
++            "name": "BV_TP",
++            "pipe": "BV",
++            "num": 8,
++            "select_offset": 12,
++            "select": "TPL1_PERFCTR_TP_SEL",
++            "counter": "RBBM_PERFCTR2_TP",
++            "countable_type": "a8xx_tp_perfcounter_select"
++        },
++        {
++            "name": "BV_SP",
++            "pipe": "BV",
++            "num": 12,
++            "select_offset": 24,
++            "select": "SP_PERFCTR_SP_SEL",
++            "counter": "RBBM_PERFCTR2_SP",
++            "countable_type": "a8xx_sp_perfcounter_select"
++        },
++        {
++            "name": "BV_UFC",
++            "pipe": "BV",
++            "num": 2,
++            "select_offset": 4,
++            "select": "RB_PERFCTR_UFC_SEL",
++            "counter": "RBBM_PERFCTR2_UFC",
++            "countable_type": "a8xx_ufc_perfcounter_select"
++        },
++        {
++            "name": "BV_TSE",
++            "pipe": "BV",
++            "num": 4,
++            "select": "GRAS_PERFCTR_TSE_SEL",
++            "slice_select": [ "GRAS_PERFCTR_TSEFE_SEL" ],
++            "counter": "RBBM_PERFCTR_BV_TSE",
++            "countable_type": "a8xx_tse_perfcounter_select"
++        },
++        {
++            "name": "BV_RAS",
++            "pipe": "BV",
++            "num": 4,
++            "select": "GRAS_PERFCTR_RAS_SEL",
++            "counter": "RBBM_PERFCTR_BV_RAS",
++            "countable_type": "a8xx_ras_perfcounter_select"
++        },
++        {
++            "name": "BV_LRZ",
++            "pipe": "BV",
++            "num": 4,
++            "select": "GRAS_PERFCTR_LRZ_SEL",
++            "counter": "RBBM_PERFCTR_BV_LRZ",
++            "countable_type": "a8xx_lrz_perfcounter_select"
++        },
++        {
++            "name": "BV_HLSQ",
++            "pipe": "BV",
++            "num": 6,
++            "select": "SP_PERFCTR_HLSQ_SEL",
++            "slice_select": [ "SP_PERFCTR_HLSQ_SEL_2" ],
++            "counter": "RBBM_PERFCTR2_HLSQ",
++            "countable_type": "a8xx_hlsq_perfcounter_select"
++        }
++    ]
++}
 -- 
 2.53.0
 
