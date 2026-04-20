@@ -1,51 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-103657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mBZZB7Sw5Wl+nAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 06:51:00 +0200
+	id YG8VNFi85Wk8ngEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 07:40:40 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A503A426C3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 06:50:59 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47B9A426E31
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 07:40:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id D97BC3002B37
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 04:50:58 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2F528300AC3D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 05:40:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD0A83783CA;
-	Mon, 20 Apr 2026 04:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E73C2C21EE;
+	Mon, 20 Apr 2026 05:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="CmYidhQJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="A7/ppPPU";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="YTK19fVg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FED92D060D;
-	Mon, 20 Apr 2026 04:50:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356FC13B7AE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 05:40:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776660656; cv=none; b=PaqQ6vAKUU9q/q/9IYMmDFwvkf6dDYbGeOnXL1+No96BiEyVqHpKK4hjW9oRNTEcWRMowNETxrD2y/In/yNMSjGpZIUdvtawPXhPoukSulsLeR+164LtKLBHOLFnDBcKrxUZFUaiqswGJEkhDlBGW4MgtAwDJ6hSFxEyJ/1WNVs=
+	t=1776663637; cv=none; b=e3Nm4Dg36vsck6RcTy3Boag208Rh5gGZqpRbLcdlfLlGnUZnmi2oqiShgj7cheZ6Rvg1nucFt0bUE/loGZkuipzSTqcOSDRfFIPCw/yzjpySQUANCGr3mQ0bQD2anh6lIxgMvWYCDYVf1BNBfo3enS/ixG7FkqAWMFI9WANxvso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776660656; c=relaxed/simple;
-	bh=iwh3N+VethXilsaJ64nNuyiBXMJyYXgfop2Jfia4Qv8=;
+	s=arc-20240116; t=1776663637; c=relaxed/simple;
+	bh=myqd4ojhJldM6vUnZJ0gN4tBCWq6MlTbFgeeAUEu2h0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BBST3f82I30+1Ejh23Guom9g0QmAqR79X1Zz/SQulMYC1Ni84VP9knXosU7M4qv2DcCpSnBZss24U+/e3rkuGsB5iT/FBxlZx5bLNXHHUBmVldGgIXLr32y1vvrs2BylFH8BTOV9zIgF/Zjk0bA9w02EfdrtHAVOhoUZW7wm4CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=CmYidhQJ; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id AF9D778C;
-	Mon, 20 Apr 2026 06:49:12 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1776660554;
-	bh=iwh3N+VethXilsaJ64nNuyiBXMJyYXgfop2Jfia4Qv8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CmYidhQJFff1Jy2JNWzkMs/4kz+pEMeZH1/ioKbzV/uchyIkn9+05FEWUXLnWC8Vs
-	 QcM0jmCS1SJ7AfsP6G+9nT1W0hvFAwPxDaaDadIXwF1BdzgdVgUA2jyoHdbwIOK8ma
-	 xdDODxQATbV0t+7b6dsvrTR3c1l8ydq0EsPQejfk=
-Message-ID: <a2e60e74-a1be-469d-8f4d-ecce1f30b517@ideasonboard.com>
-Date: Mon, 20 Apr 2026 07:50:46 +0300
+	 In-Reply-To:Content-Type; b=NNyvSWk46IDZy1ZR9iQyBUvTbV01xhT1nzErM+QZ5iIlMT900g4TGx8NxbdUXUA1X1x4f9amw47adI0QxNMLNJ6DguECApUSKeMaMaLh/Yxl3IaoRn7PJzb92AiUs/l+MaXeEr9vlqSLfmzrc9v77oGZM7ehUYP/WFUf8nQza/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=A7/ppPPU; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=YTK19fVg; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63JLqY6S282762
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 05:40:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cbyOwZQpyGaGhAm+nYK3pftZzkh3JFFDft7u+D4WIq0=; b=A7/ppPPUxlxoQKsa
+	x25X6x9GUgim7xSYg6NmWnXIh5GmhrYhxqSXQXvPXXIpYhDjL1B2/PKSZKN5i5pZ
+	M2SPhM0YvCKTaChAWa1U+PmdI+GoYDZpdKjH3AE7CiiMu0t2EhgSmtuzQdka+Ytf
+	LusixHdhq3BZS9WWXyyWdHy74mVTR/wRtBjuNPGx5SRbV9KJ8jRM0UxS4UzKh/xY
+	8PJcM5pwQNxdt6oOYrcY0hMPN4a4sVV82iZQLMZ/aMBah7dbt9sXS964ftMpjSaF
+	i933exK8WkBXIouI9e16hxSL+GC/LA9gyQocrGJtjDMjFit2H1AUo+wtsh2sbjlo
+	jnfDOA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dkynecg12-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 05:40:35 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2b4654f9bb6so28971605ad.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Apr 2026 22:40:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1776663634; x=1777268434; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cbyOwZQpyGaGhAm+nYK3pftZzkh3JFFDft7u+D4WIq0=;
+        b=YTK19fVgULZpADi8Vs5UtDnMvPmgaQPzCcQ3yFHpVhIRpStRx15xYcN6FatjxwiDr3
+         nU2jP7GgMxwGMuzLWxd40pwvRrwdI1rPvH4IrLBWPrQFsVr5L1rIXS/B9Is/EC0lEbGb
+         W0/Abm5XqiLnou8qgmlJnVi94ZHboGNAFLNaJY2QCBcPPDJ2KsVbojxgWrarDvDXZ/uZ
+         NFec6vObq56zZaZ2uHbgzGeNYL/Yzh/Q+TzMb7P3oyoWVlRLcRR2LHtIxEGvJkfHEs8L
+         wKnYygQSuff+9ZjZ/3SudnDHQihs+HHF08fNA0hsssTakcLkErQ95r4FIK5TiPGi8rJR
+         hoJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776663634; x=1777268434;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cbyOwZQpyGaGhAm+nYK3pftZzkh3JFFDft7u+D4WIq0=;
+        b=TPV2NuQ8JbmYRq5zhe2KUDrnXNBzw75O+f9OS0dYTCqgTG7T7ZpuW7nizxWbpxcRdB
+         g2SVYgBjRMI3lmoAQyOlg7G/hvkQOAKkYbzT9hA2+RVM4rEixZ4f/rqThdwHe+AxZPMm
+         DqSer2KRZkGwHptDqourZ+Khnu1EUU3Q8gghJdTNnajzO6YdagBqISdr0e9dI/jADVJ5
+         ORT27fM8VghB4BO0QUcVrkRE9eIU74t4HbcE9x91HQPoR3eg8VDJNi8eQR7csPtYJfdf
+         SWafUyBj1rfk9tv5cwNrzBbDxiDp/rVbNm5TTgo55Fywb5wYPWDZADPcv23TYHagVMJG
+         V9MA==
+X-Forwarded-Encrypted: i=1; AFNElJ91NQ0noLpF2PCw/z/svGoWVDnBcMTFZ/24Ty3KlyxAfcO+0TVJaCm6fRSXrMY+ILEF4Fbt131i98Z55QYN@vger.kernel.org
+X-Gm-Message-State: AOJu0YwTDwsgLYG9dr5BCplvHAawbiNkfZh5hX43rDUwaZ7xGl2EdgCi
+	CuT5CBpKEXsFM4pdVl9jRdAYMGWuxjaUwOkfNiyyJuQJW3E3iez71s2AZlbHL/1E0WTyn3J7uLY
+	f59blDLbnuCOBmVGdwlvEOuKnY1tYTcP1fsSRSkoFCD74y40FehmRqfAcnqwbqrVL4JYd
+X-Gm-Gg: AeBDiesnmpyOpV22Gm5kXi0L36WH9YTfljrfLLuiSdt03sAUNviXit62NiEgpQJRj88
+	I5s8Sv9U2N50Z+791A4gdrrKBLFent2q19ryRmpmx3lRCXEzqt6kFlxj11kEooag2elARn+yDYd
+	hXHMpNkzIZPl6jYwsATAll8Vx35jBK1vhpa5yKdLpqbW5O7QshUnYQ/Wadt7lFh9QxMxIU4ITJW
+	c56Hf5lHgRv00k3OESilwrtwkobYmXy7HgOcx89gSrmV1Haa5H6hijWff0rJW71gf3UdsrMoC/H
+	QAq2Uu+Xi8qqaye3fKzMG5WHSguaBN1ugEB5elZ2UJjTb/OUeUTXg4YRYtVTEME+m2HjnKD9Osu
+	B/ao0tCmq6yA4rxjKPfn4T8qVNBBNPgKv6wkHJHEX7qR6OANrs9XbnTAbrY/74zw=
+X-Received: by 2002:a17:903:b8f:b0:2b0:7225:d2c0 with SMTP id d9443c01a7336-2b5f9fb9d4cmr121746765ad.30.1776663634273;
+        Sun, 19 Apr 2026 22:40:34 -0700 (PDT)
+X-Received: by 2002:a17:903:b8f:b0:2b0:7225:d2c0 with SMTP id d9443c01a7336-2b5f9fb9d4cmr121746485ad.30.1776663633739;
+        Sun, 19 Apr 2026 22:40:33 -0700 (PDT)
+Received: from [10.218.21.127] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b5fab0caa9sm89101635ad.40.2026.04.19.22.40.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 19 Apr 2026 22:40:33 -0700 (PDT)
+Message-ID: <21664acb-8fbf-4fa9-a674-982c98992df8@oss.qualcomm.com>
+Date: Mon, 20 Apr 2026 11:10:28 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,151 +106,150 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] drm/connector: report IRQ_HPD events to
- drm_connector_oob_hotplug_event()
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-usb@vger.kernel.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, linux-amlogic@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Adrien Grassein <adrien.grassein@gmail.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>, Kevin Hilman <khilman@baylibre.com>,
- Jerome Brunet <jbrunet@baylibre.com>,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Pengyu Luo <mitltlatltl@gmail.com>,
- Nikita Travkin <nikita@trvn.ru>, Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-References: <20260416-hpd-irq-events-v1-0-1ab1f1cfb2b2@oss.qualcomm.com>
- <20260416-hpd-irq-events-v1-1-1ab1f1cfb2b2@oss.qualcomm.com>
- <51b7c44e-36c9-461f-983a-eaa86eeb8cfd@ideasonboard.com>
- <6z572fdjkvjqvedifwvotgdy4lcrifiqvkjpnutousjqc6764r@zepfzkqy2kbu>
+Subject: Re: [PATCH] arm64: defconfig: Enable Qualcomm UFS and QMP UFS PHY
+ drivers as built-in
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260417035509.1021860-1-shengchao.guo@oss.qualcomm.com>
+ <898874b3-fb73-4a46-b440-6ea3377c2f2d@kernel.org>
+ <aeHxPALfVd7SgtUj@QCOM-aGQu4IUr3Y.na.qualcomm.com>
+ <c2d7588a-34c7-42de-b809-0733b03d331f@kernel.org>
+ <aeINUiVreq7HFqf-@QCOM-aGQu4IUr3Y>
+ <dvwh2fwi6xzskicjtr6e7ldzsgf7fsptep4t6p5qzzf274jorc@zo7hl565tu2y>
 Content-Language: en-US
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-In-Reply-To: <6z572fdjkvjqvedifwvotgdy4lcrifiqvkjpnutousjqc6764r@zepfzkqy2kbu>
+From: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+In-Reply-To: <dvwh2fwi6xzskicjtr6e7ldzsgf7fsptep4t6p5qzzf274jorc@zo7hl565tu2y>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Authority-Analysis: v=2.4 cv=HbokiCE8 c=1 sm=1 tr=0 ts=69e5bc53 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=P-IC7800AAAA:8 a=SBhvAfEEOFW5FiPrgcgA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-GUID: UCjhg_hvQBDASusUScCYQQa653edJ0ZA
+X-Proofpoint-ORIG-GUID: UCjhg_hvQBDASusUScCYQQa653edJ0ZA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDA1MiBTYWx0ZWRfX2XlEcHymgONt
+ V8wZDCn9gQB6f2gsbXJ08PmulNqkd5lo0aH1XzhfLUcj2Ex0KPOYZmJ2T+fWCsm1fXwpuW2Hqna
+ MUIad5EdFjaM/QjIAuM1gvKE1jf3TlYgIX8eN97XFiZowcma/IxU/FIK0wWbKZRMlqFUNi8I2Xd
+ vwMw+glvDWLyQyK3GarNXv+UudK9qOE48noFZg+Bb03oZ6LjEHI2DHF1tYSNtPvw5hjKlBrTzm5
+ SbZFQ6t01CUd7iBdBJIbN/rzAhKyPu26cTm2GfOguHcS/Z6yfrqupo0s38aSJnJmWrSjPVrJ2VE
+ rt25dgiAErGaAdFgpSu6dvHTfRZmes2pMDfF+sVjVs6jCTR/5iwkTYpNRQ7c94fZ7jQlydlVNiS
+ gmCqRLj+LYQ27j2LYiT7WT2rEUaFoOq3KIE+sKttPNY3ZaOniWRpU9vZw+J916X/avKAu7clGge
+ s6pPY1QuIBUVRrsgrkw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-20_01,2026-04-17_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1015
+ priorityscore=1501 adultscore=0 phishscore=0 suspectscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604070000 definitions=main-2604200052
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ideasonboard.com,none];
-	R_DKIM_ALLOW(-0.20)[ideasonboard.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103657-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[lists.freedesktop.org,vger.kernel.org,lists.infradead.org,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,linuxfoundation.org,intel.com,linaro.org,ideasonboard.com,kwiboo.se,ursulin.net,baylibre.com,googlemail.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,trvn.ru];
-	RCPT_COUNT_TWELVE(0.00)[42];
-	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[tomi.valkeinen@ideasonboard.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[ideasonboard.com:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103658-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ideasonboard.com:dkim,ideasonboard.com:mid,qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: A503A426C3F
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[kuldeep.singh@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 47B9A426E31
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi,
 
-On 18/04/2026 01:32, Dmitry Baryshkov wrote:
-> On Thu, Apr 16, 2026 at 11:10:03AM +0300, Tomi Valkeinen wrote:
->> Hi,
+
+On 18-04-2026 04:29, Dmitry Baryshkov wrote:
+> On Fri, Apr 17, 2026 at 06:37:06PM +0800, Shawn Guo wrote:
+>> On Fri, Apr 17, 2026 at 10:44:20AM +0200, Krzysztof Kozlowski wrote:
+>>> On 17/04/2026 10:37, Shawn Guo wrote:
+>>>> On Fri, Apr 17, 2026 at 10:14:23AM +0200, Krzysztof Kozlowski wrote:
+>>>>> On 17/04/2026 05:55, Shawn Guo wrote:
+>>>>>> UFS is the primary storage for Linux rootfs across the breadth of
+>>>>>> Qualcomm development boards - Mobile, Automotive and IoT.  With
+>>>>>> Qualcomm UFS host controller driver (SCSI_UFS_QCOM) and the UFS PHY
+>>>>>> driver (PHY_QCOM_QMP_UFS) as modules, developers need an initramfs
+>>>>>
+>>>>> Yes, you always need initramfs and every developer has it.
+>>>>>
+>>>>>> to boot from UFS, which adds friction to daily development workflows.
+>>>>>
+>>>>> No friction, it's both standard, easy and all of Qualcomm and Linaro
+>>>>> developers have it solved long time ago.
+>>>>
+>>>> I'm looking at a kernel regression by running git bisect, where kernel
+>>>> version string varies for every single boot.  How do you usually deal
+>>>> with it by using initramfs?
+>>>
+>>> No difference from every other build and boot? I build kernel and the
+>>> same step I have initramfs with modules. Whether I bisect or build
+>>> kernel for normal boot is exactly the same.
+>>>
+>>> The only difference is `git bisect good`.
 >>
->> On 16/04/2026 02:22, Dmitry Baryshkov wrote:
->>> The DisplayPort standard defines a special kind of events called IRQ.
->>> These events are used to notify DP Source about the events on the Sink
->>> side. It is extremely important for DP MST handling, where the MST
->>> events are reported through this IRQ.
->>>
->>> In case of the USB-C DP AltMode there is no actual HPD pulse, but the
->>> events are ported through the bits in the AltMode VDOs.
->>>
->>> Extend the drm_connector_oob_hotplug_event() interface and report IRQ
->>> events to the DisplayPort Sink drivers.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>> ---
->>>    drivers/gpu/drm/drm_connector.c          |  4 +++-
->>>    drivers/usb/typec/altmodes/displayport.c | 12 ++++++++----
->>>    include/drm/drm_connector.h              |  3 ++-
->>>    3 files changed, 13 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
->>> index 47dc53c4a738..5fdacbd84bd7 100644
->>> --- a/drivers/gpu/drm/drm_connector.c
->>> +++ b/drivers/gpu/drm/drm_connector.c
->>> @@ -3510,6 +3510,7 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
->>>     * drm_connector_oob_hotplug_event - Report out-of-band hotplug event to connector
->>>     * @connector_fwnode: fwnode_handle to report the event on
->>>     * @status: hot plug detect logical state
->>> + * @irq_hpd: HPD pulse detected
->>>     *
->>>     * On some hardware a hotplug event notification may come from outside the display
->>>     * driver / device. An example of this is some USB Type-C setups where the hardware
->>> @@ -3520,7 +3521,8 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
->>>     * a drm_connector reference through calling drm_connector_find_by_fwnode().
->>>     */
->>>    void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
->>> -				     enum drm_connector_status status)
->>> +				     enum drm_connector_status status,
->>> +				     bool irq_hpd)
->> I find the "IRQ HPD" naming always confusing, even if I'm somewhat familiar
->> with DP, but if someone has mainly worked on HDMI, I'm sure it's even worse.
+>> So we have to rebuild initramfs for every single bisect.  But isn't
+>> built-in make it easier and faster for the whole bisect process?
+> 
+> No. Insted you package modules as a separate .cpio.gz archive,
+> concatenate it with the initramfs and boot the kernel.
+> 
+>> It's especially useful for tasks where we do not even need to make modules,
+>> like debugging built-in drivers.
 >>
->> Can we define this a bit more precisely? Is 'irq_hpd' only for displayport?
->> If so, perhaps 'dp_irq_hpd' or 'displayport_irq_hpd'. I might even call it
->> 'dp_hpd_pulse', but maybe that's not good as the spec talks about HPD pulse
->> for both short and long ones (although in the kernel doc you just write "HPD
->> pulse")... The kernel doc could be expanded a bit to make it clear what this
->> flag indicates.
+>>>> If using initramfs is standard and easy, I wonder why Qualcomm QLI
+>>>> (meta-qcom) kernel has UFS drivers as built-in.
+>>>
+>>> This I don't know. Distros do various things, but of course there might
+>>> be an argument I do not know (e.g. like it was why distros do not make
+>>> IPV6 a module).
+>>
+>> We can consult internally, but saving use of initramfs could be part of
+>> it, I would guess.
 > 
-> I attempted to stay away from defining a DP-specific flag, keeping it
-> generic enough. HDMI is pretty close (IMO) to requiring separate flag in
-
-If it's not specifically the DP IRQ HPD, then we need to define what it 
-means. I tried to think what it would mean with HDMI, but I didn't come 
-up with anything.
-
-> Linux. Likewise I'd rather not use "pulse". The DP AltMode defines a bit
-> in the VDO rather than a pulse.
+> Having the meta-qcom hat on:
+> - If we know that the kernel is going to be used on Qualcomm hardware,
+>    it makese sense to enable necessary drivers as built-in to save time,
+>    boot time and to ease overall integration.
 > 
-> Anyway, if irq_hpd doesn't sound precise enough, what about "bool
-> extra_irq"? This would convey that this is the extra hpd-related IRQ,
-> but it would also be obvious that it's not related to the HPD pin
-> itself.
-We'd still need to define what exactly it means. I think it might be 
-better to just define it as the DP IRQ HPD, as then the meaning is clear.
+> - Having the general defconfig, it doesn't make sense to make users of
+>    all other platforms suffer and loose their memory by having
+>    Qualcomm-specific drivers loaded, if that's not an absolute
+>    requirement.
+> 
 
-Also, would an enum flags parameter be better than a bool parameter?
+Then it makes sense to make CONFIG_MSM_SDHCI or 
+CONFIG_MSM_SDHCI_MSM(qcom specific config) as module too?
+https://elixir.bootlin.com/linux/v7.0/source/arch/arm64/configs/defconfig#L1279
 
-  Tomi
+Not sure why it's enabled as builtin for all vendors.
+
+-- 
+Regards
+Kuldeep
 
 
