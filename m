@@ -1,62 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-103769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4D4fKwUw5ml6tAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:54:13 +0200
+	id IDbICZ8w5ml6tAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:56:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23F0642C679
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:54:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A987242C729
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:56:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 830D6308488D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 13:47:50 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 91B4930C3CAC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 13:49:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 804923EB801;
-	Mon, 20 Apr 2026 13:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC6A83EF657;
+	Mon, 20 Apr 2026 13:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ldV5z1ri"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z2Tv7AhE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4CF3EB7FB;
-	Mon, 20 Apr 2026 13:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941093EF650;
+	Mon, 20 Apr 2026 13:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776691506; cv=none; b=rb6pEzXfNjL6tzDAgiR4CGZkaU97qFG2kntP2ksReUoqab2bNt+UgqgwSPujVuDnUPlUZZ7D4z2cNT401T61VyJC6+gs3CVOA9NwCBfWokvM1tiGQoXkc720c65DbcXMZsFPIo2ZdHDVe0qZ2f44JGa8fOrF/jh3VD1E7GXj+w0=
+	t=1776691525; cv=none; b=lFS1dPq1kZ9ixW4Y2c8QD76WCZcNF75H8zl/UrboJrOSBL1hf82nCoMzvrQXqudxwXye2JTd98j/udiMqqHU6vSqm4cmCYeIJP2qaPMdWTGb6/FziD4pRReapLzbqwy53wr5CG7zH0w0kmwPfCVYCYV7Cl8nh9xp84qS/WRoj2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776691506; c=relaxed/simple;
-	bh=Hf9yTG5cr4alGT2BO4PBU0V4D4wRXPj1kxS6E8TimL8=;
+	s=arc-20240116; t=1776691525; c=relaxed/simple;
+	bh=2VRNVQbyAA2kIKYeFyG7zX3zgXDl8CdjLF3CM8tWmQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n43Kwg625M25bLt6/pmUYGM5O4jFbDhAcLe/7aTWt0wQ/BP+A4dCngn3lT70te5GU6lrV2U874dhvK4NuqN+yGYsZP02PBqyNxEO3xZ5TTbRWiRMdXtjSjBozpJuxRr+KXN/SRWklz6GYJ0G+I1ZQEtQdOVZ62+zkoQJ4wqcfEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ldV5z1ri; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33091C2BCB6;
-	Mon, 20 Apr 2026 13:25:05 +0000 (UTC)
+	 MIME-Version:Content-Type; b=bBxhvlwqzq7hkJLzgq4/HmutuSXUOHx71aedQnCui76yFR4z2GUUQE9P/032fPB40Z5p3lLT5vXIfE+UR4iqTm+76gFJPWegQQYDUfqAxb2ntAFggySsL0zbyEyXqvILGgI/+XnjWTCAsHIi34ZH5Op86+yP2TuacNXuyXsyq+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z2Tv7AhE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0526EC2BCC7;
+	Mon, 20 Apr 2026 13:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776691506;
-	bh=Hf9yTG5cr4alGT2BO4PBU0V4D4wRXPj1kxS6E8TimL8=;
+	s=k20201202; t=1776691525;
+	bh=2VRNVQbyAA2kIKYeFyG7zX3zgXDl8CdjLF3CM8tWmQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldV5z1riys3DD8c6RpHyuVfvn3BfKWl5jvLR44F3bD4iBQZ6nR8b/DzfCNSZspA/M
-	 a0uRVXvhnlCC9VDDN2y+P11od4VBgOAOQoUqy8Ff7Tb/I/ZOCu21LoqhX2b1YiKsaG
-	 jYRc9orhNt8+96tctaJBNCpDrK0J5YDDhD7eayg+R09zAC0zIn7dcjxyRzoUQquHah
-	 /ZyRJ5+GQ8mP7bQpn2Q7MO5nSd36c9wVkrKJhWhahwVlWS0XoCurVEabl6XCyiW6nv
-	 v93ZBrQ5nfzLmtYN3XV3SYoxDrnZwDB2vsU3SH52lQbYjKx4NnNMnlrTRZ110C+a1b
-	 kH/eK1+ARK/fA==
+	b=Z2Tv7AhEwECvtXFuSwK77hOmR9ENpU5qBFKsQhEghjKrl3qh35kaOhQMk88ETVxXL
+	 TvuyCNE9WnY9P6KDIar7v8tAt2n+IJyFKmme3UARXbVkVQroz3tJxeGeJ8MBOp2/p+
+	 EI9FcL0S5LY6A3lMscK+7zBwNwkKSQhJWMVwx08rrIs6EfWmjufZ0Z2BH13tXjwX20
+	 06rMsAi8tTgDjN8+glYfDORl/9us75LzriWm4/PHdIU+2IQ93SwEJ9VErJtfiL1WT+
+	 fDCpT/QvOQ8fh4s6otffsOfxDr7QWTnYQS1AQcy9rIJuPYwEVx/C7xivO6+/mELCVx
+	 D/h01m96vs6oQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: =?UTF-8?q?C=C3=A9dric=20Bellegarde?= <cedric.bellegarde@adishatz.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	konradybcio@kernel.org,
+	srini@kernel.org,
+	lgirdwood@gmail.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-6.18] firmware: qcom: scm: Allow QSEECOM on Lenovo IdeaCentre Mini X
-Date: Mon, 20 Apr 2026 09:17:44 -0400
-Message-ID: <20260420132314.1023554-70-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-5.10] ASoC: codecs: wcd-clsh: Always update buck/flyback on transitions on transitions
+Date: Mon, 20 Apr 2026 09:17:54 -0400
+Message-ID: <20260420132314.1023554-80-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260420132314.1023554-1-sashal@kernel.org>
 References: <20260420132314.1023554-1-sashal@kernel.org>
@@ -66,10 +69,10 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-1.16 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
@@ -80,259 +83,380 @@ X-Spamd-Result: default: False [-1.16 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103769-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[adishatz.org,kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-103770-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 23F0642C679
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[msgid.link:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,yhbt.net:url,adishatz.org:email]
+X-Rspamd-Queue-Id: A987242C729
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+From: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
 
-[ Upstream commit a31ad9339eff4ce401dec816b01a94b4e3c47898 ]
+[ Upstream commit f8d51e903a6c97d8d298f14d9f8b4fff808670e3 ]
 
-The Hamoa-based Lenovo IdeaCentre Mini X provides the same UEFI variable
-access through uefisecapp as other Hamoa devices, add it to the
-allowlist.
+The WCD934x audio outputs (earpiece, headphone, speaker) share two power
+supply converters, a buck and a flyback, managed by reference counters
+(buck_users, flyback_users) in the Class-H controller.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260401-ideacentre-v2-3-5745fe2c764e@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+The early return in wcd_clsh_ctrl_set_state() when nstate == ctrl->state
+prevented _wcd_clsh_ctrl_set_state() from being called when switching
+between outputs sharing the same state value. As a result, the buck and
+flyback reference counters were never decremented on disable, leaving the
+converters active and their counters out of sync with the actual hardware
+state.
+
+This caused audible distortion on the earpiece output and spurious MBHC
+over-current protection interrupts on HPHL/HPHR during output switching.
+
+Remove the early return so that CLSH_REQ_ENABLE and CLSH_REQ_DISABLE are
+always dispatched, keeping the buck and flyback reference counters
+consistent on every state transition.
+
+Signed-off-by: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
+Link: https://patch.msgid.link/20260304141006.280894-1-cedric.bellegarde@adishatz.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a thorough picture. Let me compile the analysis.
+Now I have all the information I need. Let me compile the full analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.1: Subject Line**
-- Subsystem: `firmware: qcom: scm`
-- Action verb: "Allow" (enable a device on an allowlist)
-- Summary: Adds the Lenovo IdeaCentre Mini X to the QSEECOM allowlist
-  for UEFI variable access.
+### Step 1.1: Subject Line
+- **Subsystem:** ASoC: codecs: wcd-clsh
+- **Action verb:** "Always update" (implies something was incorrectly
+  not being updated = bug fix)
+- **Summary:** Remove an incorrect early return that prevented
+  buck/flyback power supply reference counters from being updated during
+  audio output transitions.
 
-**Step 1.2: Tags**
-- `Reviewed-by: Dmitry Baryshkov` — Qualcomm maintainer reviewed it
-- `Signed-off-by: Bjorn Andersson` — both as author and as committer;
-  he's the Qualcomm SCM subsystem maintainer
-- `Link:` to lore.kernel.org for the v2 series
-- No `Fixes:` tag (expected for a device ID / allowlist addition)
-- No `Cc: stable`
+### Step 1.2: Tags
+- **Signed-off-by:** Cédric Bellegarde (author)
+- **Link:** https://patch.msgid.link/20260304141006.280894-1-
+  cedric.bellegarde@adishatz.org
+- **Signed-off-by:** Mark Brown (ASoC maintainer, applied the patch)
+- No Fixes: tag, no Reported-by, no Cc: stable — all expected for
+  candidate review.
 
-**Step 1.3: Commit Body**
-The commit explains this is a Hamoa-based device that provides the same
-UEFI variable access (through `uefisecapp`) as other Hamoa devices
-already on the allowlist. The purpose is to enable UEFI variable access
-on this specific hardware.
+### Step 1.3: Commit Body Analysis
+The commit message is detailed and clearly explains:
+- **Bug:** Early return in `wcd_clsh_ctrl_set_state()` when `nstate ==
+  ctrl->state` prevented `_wcd_clsh_ctrl_set_state()` from being called
+  during disable transitions.
+- **Root cause:** Each audio output (earpiece, HPHL, HPHR) calls
+  `set_state` with the same `nstate` for both enable (PRE_DAC) and
+  disable (POST_PA). The early return silently skips the disable call.
+- **Symptom:** Buck/flyback reference counters never decremented →
+  converters left active → audible distortion on earpiece + spurious
+  MBHC over-current interrupts on HPHL/HPHR.
+- **Fix:** Remove the 3-line early return.
 
-**Step 1.4: Hidden Bug Fix?**
-This is not a hidden bug fix. It's a straightforward device allowlist
-addition — enabling existing, validated functionality on a new machine.
+### Step 1.4: Hidden Bug Fix?
+No — this is explicitly described as a bug fix with clear user-visible
+symptoms. The commit message thoroughly explains the bug mechanism.
 
-Record: This is a device allowlist addition, akin to adding a device ID.
+---
 
 ## PHASE 2: DIFF ANALYSIS
 
-**Step 2.1: Inventory**
-- 1 file changed: `drivers/firmware/qcom/qcom_scm.c`
-- 1 line added: `{ .compatible = "lenovo,ideacentre-mini-01q8x10" }`
-- No lines removed (other than context shift)
-- Function affected: static array `qcom_scm_qseecom_allowlist[]`
+### Step 2.1: Inventory
+- **Files changed:** 1 (`sound/soc/codecs/wcd-clsh-v2.c`)
+- **Lines:** -3, +0 (pure deletion)
+- **Function modified:** `wcd_clsh_ctrl_set_state()`
+- **Scope:** Single-file, surgical fix
 
-**Step 2.2: Code Flow Change**
-Before: The Lenovo IdeaCentre Mini X is not in the allowlist →
-`qcom_scm_qseecom_machine_is_allowed()` returns false →
-QSEECOM/uefisecapp is not initialized → no UEFI variable access on this
-device.
-After: The device is matched → QSEECOM is enabled → UEFI variable access
-works.
+### Step 2.2: Code Flow Change
+**Before:** When `nstate == ctrl->state`, the function returns
+immediately without calling `_wcd_clsh_ctrl_set_state()`. This means
+neither CLSH_REQ_ENABLE nor CLSH_REQ_DISABLE is dispatched.
 
-**Step 2.3: Bug Mechanism**
-Category: Hardware enablement / device ID addition. This is analogous to
-adding a PCI/USB device ID to an existing driver. The driver and feature
-exist; only the allowlist entry is new.
+**After:** The function always proceeds to the switch on `clsh_event`,
+dispatching either CLSH_REQ_ENABLE or CLSH_REQ_DISABLE to
+`_wcd_clsh_ctrl_set_state()`.
 
-**Step 2.4: Fix Quality**
-- Trivially correct — a single compatible string added alphabetically to
-  an existing table
-- Zero regression risk — only affects this specific machine
-- Minimal change (1 line)
+### Step 2.3: Bug Mechanism
+This is a **reference counting bug**. Looking at the actual call pattern
+in wcd934x.c:
 
-## PHASE 3: GIT HISTORY
+1. **Enable EAR** (PRE_PMU): `set_state(ctrl, PRE_DAC,
+   WCD_CLSH_STATE_EAR, CLS_H_NORMAL)` → state=EAR, buck_users++,
+   flyback_users++
+2. **Disable EAR** (POST_PMD): `set_state(ctrl, POST_PA,
+   WCD_CLSH_STATE_EAR, CLS_H_NORMAL)` → nstate=EAR == ctrl->state=EAR →
+   **EARLY RETURN!** Buck/flyback never decremented.
 
-**Step 3.1: Blame**
-The allowlist was introduced by `00b1248606ba39` (Maximilian Luz,
-2023-08-27) with just ThinkPad X13s. It has been incrementally expanded
-since then with many similar one-line additions. The table has existed
-since approximately v6.7.
+The same pattern affects ALL outputs (HPHL, HPHR, LO, AUX) across ALL
+WCD codec drivers (wcd9335, wcd934x, wcd937x, wcd938x, wcd939x).
 
-**Step 3.2: No Fixes: tag** — expected for allowlist additions.
+### Step 2.4: Fix Quality
+- **Obviously correct:** Yes. The early return was clearly wrong — the
+  function uses `clsh_event` (enable vs disable) to dispatch different
+  operations, and the early return bypasses this dispatch.
+- **Minimal/surgical:** Maximum surgical — 3-line deletion.
+- **Regression risk:** Very low. The removed check was a premature
+  optimization that incorrectly assumed same nstate means no-op. The
+  `_wcd_clsh_ctrl_set_state` sub-functions use reference counting
+  (buck_users, flyback_users) which already handles idempotency
+  correctly.
 
-**Step 3.3: File History**
-Many similar QSEECOM allowlist additions have been committed: Dell XPS
-13, Surface Pro, HP Omnibook, ASUS Vivobook, Lenovo Thinkbook 16, etc.
-This is a well-established pattern. Each is a standalone one-liner.
+---
 
-**Step 3.4: Author**
-Bjorn Andersson is the Qualcomm SCM subsystem maintainer and the main
-committer for this driver. High trust level.
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 3.5: Dependencies**
-No dependencies. This is a self-contained one-line addition to an
-existing table.
+### Step 3.1: Blame
+The buggy early return at line 851-852 was introduced in commit
+`cc2e324d39b26` ("ASoC: wcd9335: add CLASS-H Controller support") by
+Srinivas Kandagatla, merged in **v5.1-rc1**. This code has been present
+since the initial creation of the file.
 
-## PHASE 4: MAILING LIST
+### Step 3.2: Fixes Tag
+No Fixes: tag present. However, the bug was clearly introduced by
+`cc2e324d39b26` (v5.1-rc1).
 
-b4 dig failed to find the commit (it's not yet in the tree as a
-committed hash). The lore link was blocked by anti-bot protection.
-However, the Link: tag shows this is v2 of the series, reviewed by
-Dmitry Baryshkov, confirming proper review.
+### Step 3.3: File History
+9 commits to `wcd-clsh-v2.c` since initial creation. Changes have been
+minor: unused function removal, new codec version support, symbol
+renaming, GENMASK fixes. No prior fix to this early return logic.
 
-Record: Could not fetch lore discussion due to anti-scraping protection.
-The commit has proper review tags.
+### Step 3.4: Author
+Cédric Bellegarde has one other commit in the tree (ASoC: qcom: q6asm:
+drop DSP responses for closed data streams). Not the subsystem
+maintainer, but the patch was accepted by Mark Brown (ASoC maintainer).
+
+### Step 3.5: Dependencies
+None. This is a standalone 3-line deletion with no dependencies on other
+patches.
+
+---
+
+## PHASE 4: MAILING LIST RESEARCH
+
+### Step 4.1: Original Discussion
+Found via web search at yhbt.net/lore mirror. The patch was submitted on
+2026-03-04 and applied by Mark Brown on 2026-03-16 to `broonie/sound
+for-7.1` (commit `f8d51e903a6c`).
+
+### Step 4.2: Reviewer Feedback
+Mark Brown applied directly with no review comments or objections — a
+clean accept from the ASoC subsystem maintainer. No NAKs or concerns
+raised.
+
+### Step 4.3: Bug Report
+No separate bug report; the author discovered this through direct
+debugging (audio distortion and spurious interrupts during output
+switching).
+
+### Step 4.4: Series Context
+Single standalone patch, not part of any series.
+
+### Step 4.5: Stable Discussion
+No stable-specific discussion found.
+
+---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-The allowlist is checked by `qcom_scm_qseecom_machine_is_allowed()`
-which is called during `qcom_scm_qseecom_init()`. This function gates
-whether the QSEECOM/uefisecapp platform device is created. Without the
-allowlist entry, the specific machine gets an "untested machine,
-skipping" message and UEFI variable access is completely unavailable.
+### Step 5.1: Modified Function
+`wcd_clsh_ctrl_set_state()` — exported function, the main API for the
+Class-H controller.
 
-This is critical for the device: without this entry, the user cannot
-access UEFI variables at all (including boot configuration).
+### Step 5.2: Callers
+`wcd_clsh_ctrl_set_state()` is called from **5 different WCD codec
+drivers**:
+- `wcd9335.c` — 8 call sites (EAR, HPHL, HPHR, LO)
+- `wcd934x.c` — 8 call sites (EAR, HPHL, HPHR, LO)
+- `wcd937x.c` — 8 call sites (EAR, HPHL, HPHR, AUX)
+- `wcd938x.c` — 10 call sites (EAR, HPHL, HPHR, AUX)
+- `wcd939x.c` — 6 call sites (EAR, HPHL, HPHR)
+
+All follow the same pattern: PRE_DAC enable on PMU, POST_PA disable on
+PMD.
+
+### Step 5.3-5.4: Call Chain
+These are called from DAPM widget event handlers, triggered during
+normal audio routing changes. Every user who plays audio through
+earpiece, headphones, or speaker on a Qualcomm WCD93xx-based device
+triggers this code path.
+
+### Step 5.5: Similar Patterns
+The reference counting pattern in `wcd_clsh_buck_ctrl()` and
+`wcd_clsh_flyback_ctrl()` (and v3 variants) all use increment-on-
+enable/decrement-on-disable with `buck_users`/`flyback_users`. The early
+return prevented the decrement path from ever executing.
+
+---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Code existence in stable**
-- v6.6: The allowlist does NOT exist (0 matches) → Not applicable
-- v6.8+: The allowlist exists (3 matches found)
-- The allowlist has been present and growing since approximately
-  v6.7/v6.8
+### Step 6.1: Buggy Code in Stable
+The bug was introduced in `cc2e324d39b26` (v5.1-rc1). This code exists
+in **all active stable trees**: 5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y,
+and any other LTS/stable branches.
 
-The commit is relevant for stable trees v6.8+. However, the current file
-in mainline has additional entries that may not all be in older stable
-trees. The diff should apply cleanly or with trivial context adjustment
-since it's just inserting one line in alphabetical order in a table.
+### Step 6.2: Backport Complications
+The file has had only minor changes (renaming, cleanup). The patch is a
+simple 3-line deletion that should apply cleanly to all stable trees.
 
-**Step 6.2: Backport complications**
-Minor context differences possible (some entries in the list may not be
-present in older stables), but since this is adding a line to a simple
-table, a backport is trivial — worst case requires manual insertion at
-the right alphabetical position.
+### Step 6.3: Related Fixes
+No prior fix for this issue in any stable tree.
+
+---
 
 ## PHASE 7: SUBSYSTEM CONTEXT
 
-- Subsystem: Qualcomm firmware / SCM (Secure Channel Manager)
-- Criticality: IMPORTANT for Qualcomm ARM laptop users. The QSEECOM
-  interface provides UEFI variable access, which is essential for boot
-  configuration on these devices.
-- Very active subsystem with regular allowlist additions.
+### Step 7.1: Subsystem
+- **Path:** sound/soc/codecs/
+- **Subsystem:** ASoC (Audio System on Chip) — audio codec drivers
+- **Criticality:** IMPORTANT — affects audio on all Qualcomm WCD93xx
+  codec-based phones and devices (many Android devices, some embedded
+  systems)
+
+### Step 7.2: Activity
+Moderately active subsystem with steady fixes and improvements.
+
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-**Step 8.1: Affected Users**
-Users of the Lenovo IdeaCentre Mini X (Snapdragon/Hamoa-based). Without
-this entry, they have no UEFI variable access.
+### Step 8.1: Affected Users
+All users of Qualcomm WCD93xx-series audio codecs (WCD9335, WCD934x,
+WCD937x, WCD938x, WCD939x). This includes many Android phones and
+Qualcomm-based embedded systems.
 
-**Step 8.2: Trigger**
-Every boot — the allowlist is checked during driver initialization.
+### Step 8.2: Trigger Conditions
+- **Trigger:** Any normal audio output switching (e.g., call on
+  earpiece, then play music through headphones) — extremely common
+  operation.
+- **Unprivileged trigger:** Yes — any userspace audio playback triggers
+  this.
 
-**Step 8.3: Severity**
-Without this fix: the user cannot access UEFI variables on their
-hardware. This is a functional hardware enablement issue.
+### Step 8.3: Failure Mode Severity
+- **Audible distortion** on earpiece — MEDIUM-HIGH (user-perceivable
+  audio quality issue)
+- **Spurious MBHC over-current interrupts** — MEDIUM (can cause spurious
+  headphone detection events)
+- **Power supply reference counter leak** — MEDIUM (converters left
+  active, wasted power, potential for undefined hardware behavior)
+- Overall severity: **HIGH** — directly affects audio functionality
 
-**Step 8.4: Risk-Benefit**
-- Benefit: HIGH — enables essential functionality on real hardware
-- Risk: VERY LOW — 1-line addition to a device table, affects only one
-  specific machine
-- Ratio: Excellent — high benefit, near-zero risk
+### Step 8.4: Risk-Benefit Ratio
+- **Benefit:** HIGH — fixes audio distortion and spurious interrupts on
+  a wide class of devices, bug present since v5.1
+- **Risk:** VERY LOW — 3-line deletion, obviously correct, no regression
+  risk (the removed check was always wrong)
+- **Ratio:** Very favorable for backporting
+
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Evidence FOR backporting:**
-- This is a device allowlist addition — directly analogous to adding a
-  device ID, which is an established exception category for stable
-- 1-line change, trivially correct, zero regression risk
-- Written and committed by the subsystem maintainer (Bjorn Andersson)
-- Reviewed by Qualcomm maintainer (Dmitry Baryshkov)
-- Follows a well-established pattern (20+ similar commits in history)
-- Enables essential UEFI variable access on real shipping hardware
+### Step 9.1: Evidence Compilation
 
-**Evidence AGAINST backporting:**
-- The allowlist doesn't exist in v6.6 and earlier (limits applicability
-  to v6.8+ stable trees)
-- This is technically "new hardware enablement" rather than a "bug fix"
+**FOR backporting:**
+- Fixes a real, user-visible bug: audio distortion and spurious
+  interrupts
+- Reference counting bug — buck/flyback users never decremented on
+  disable
+- Affects ALL WCD93xx codec users (5 codec drivers, ~40 call sites)
+- Bug present since v5.1-rc1 — affects all active stable trees
+- Fix is minimal: 3-line deletion, obviously correct
+- Applied by ASoC maintainer Mark Brown with no concerns
+- No dependencies — standalone fix
+- Will apply cleanly to all stable trees
 
-**Decision:** This falls squarely into the **device ID / hardware
-allowlist addition** exception category. It's a single-line addition to
-an existing allowlist table in an existing driver, enabling known-good
-functionality on a new machine. The pattern is identical to adding
-PCI/USB device IDs. It has proper review, is written by the maintainer,
-and carries essentially zero risk.
+**AGAINST backporting:**
+- No Fixes: tag (expected — that's why it's under manual review)
+- Author is not the subsystem maintainer
+- No formal Reported-by (author found it themselves)
+
+### Step 9.2: Stable Rules Checklist
+1. **Obviously correct and tested?** YES — 3-line deletion, logic
+   clearly wrong, applied by maintainer
+2. **Fixes a real bug?** YES — audio distortion, spurious interrupts,
+   reference counter leak
+3. **Important issue?** YES — user-perceivable audio quality degradation
+   on common hardware
+4. **Small and contained?** YES — 3 lines removed from 1 file, 1
+   function
+5. **No new features or APIs?** YES — pure bug fix
+6. **Can apply to stable?** YES — clean apply expected
+
+### Step 9.3: Exception Categories
+Not applicable — this is a straightforward bug fix, not an exception
+category.
+
+### Step 9.4: Decision
+This is a clear, minimal fix for a real reference counting bug that
+causes audible audio distortion on all Qualcomm WCD93xx codec-based
+devices. The bug has existed since v5.1. The fix is a 3-line deletion
+that is obviously correct and was accepted by the ASoC maintainer.
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Dmitry Baryshkov, Signed-off-by
-  Bjorn Andersson (2x — author and committer)
-- [Phase 2] Diff: 1 line added to `qcom_scm_qseecom_allowlist[]` array —
-  a compatible string
-- [Phase 3] git blame: allowlist created by commit `00b1248606ba39`
-  (v6.7 era, 2023-08-27)
-- [Phase 3] git tag --contains: allowlist first in `next-20251219`, not
-  in v6.6
-- [Phase 3] v6.8 check: allowlist exists with 3 references (confirmed
-  with `git show v6.8:...`)
-- [Phase 3] git log: 20+ similar QSEECOM allowlist additions in history
-  (established pattern)
-- [Phase 4] b4 dig: failed to find commit (not yet in tree); lore
-  blocked by anti-bot
-- [Phase 5] Allowlist checked in `qcom_scm_qseecom_machine_is_allowed()`
-  → gates QSEECOM init → without entry, device prints "untested machine,
-  skipping" and UEFI access is disabled
-- [Phase 6] Applicable to v6.8+ stable trees only; trivial backport
-  (table insertion)
-- [Phase 8] Risk: VERY LOW (1 line, only affects one machine); Benefit:
-  HIGH (enables UEFI access)
-- UNVERIFIED: Exact lore discussion content (anti-bot blocked); does not
-  affect decision
+- [Phase 1] Parsed tags: Signed-off-by (author + Mark Brown), Link to
+  patch.msgid.link
+- [Phase 2] Diff analysis: 3 lines removed from
+  `wcd_clsh_ctrl_set_state()`, removes incorrect early return
+- [Phase 2] Verified bug mechanism: PRE_DAC sets state=EAR, POST_PA
+  passes same nstate=EAR, early return prevents DISABLE dispatch
+- [Phase 2] Verified reference counting: `wcd_clsh_buck_ctrl()` (line
+  182-183) and `wcd_clsh_flyback_ctrl()` (line 231-232) use
+  increment/decrement of `buck_users`/`flyback_users`
+- [Phase 3] git blame: buggy code introduced in cc2e324d39b26 (v5.1-rc1)
+  — present since file creation
+- [Phase 3] git log: only 9 commits to this file since creation, no
+  prior fix for this issue
+- [Phase 4] Found original submission at yhbt.net lore mirror: single
+  patch, clean accept by Mark Brown for-7.1
+- [Phase 4] No NAKs, no review concerns raised
+- [Phase 5] Verified callers: 5 codec drivers (wcd9335, wcd934x,
+  wcd937x, wcd938x, wcd939x), ~40 call sites, all follow enable/disable
+  pattern
+- [Phase 6] Code exists in all active stable trees (v5.1+)
+- [Phase 6] File has minimal changes — clean apply expected
+- [Phase 8] Failure mode: audio distortion + spurious interrupts,
+  severity HIGH
 
 **YES**
 
- drivers/firmware/qcom/qcom_scm.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/wcd-clsh-v2.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-index f06bed79666b9..4450741b8221b 100644
---- a/drivers/firmware/qcom/qcom_scm.c
-+++ b/drivers/firmware/qcom/qcom_scm.c
-@@ -2301,6 +2301,7 @@ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
- 	{ .compatible = "hp,omnibook-x14" },
- 	{ .compatible = "huawei,gaokun3" },
- 	{ .compatible = "lenovo,flex-5g" },
-+	{ .compatible = "lenovo,ideacentre-mini-01q8x10" },
- 	{ .compatible = "lenovo,thinkbook-16" },
- 	{ .compatible = "lenovo,thinkpad-t14s" },
- 	{ .compatible = "lenovo,thinkpad-x13s", },
+diff --git a/sound/soc/codecs/wcd-clsh-v2.c b/sound/soc/codecs/wcd-clsh-v2.c
+index 13d07296916f6..62ca22ea0f3b6 100644
+--- a/sound/soc/codecs/wcd-clsh-v2.c
++++ b/sound/soc/codecs/wcd-clsh-v2.c
+@@ -848,9 +848,6 @@ int wcd_clsh_ctrl_set_state(struct wcd_clsh_ctrl *ctrl,
+ {
+ 	struct snd_soc_component *comp = ctrl->comp;
+ 
+-	if (nstate == ctrl->state)
+-		return 0;
+-
+ 	if (!wcd_clsh_is_state_valid(nstate)) {
+ 		dev_err(comp->dev, "Class-H not a valid new state:\n");
+ 		return -EINVAL;
 -- 
 2.53.0
 
