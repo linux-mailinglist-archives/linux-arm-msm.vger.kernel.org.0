@@ -1,210 +1,478 @@
-Return-Path: <linux-arm-msm+bounces-103762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OP9PFFMk5ml1sgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:04:19 +0200
+	id MOa6C9on5mm6sgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:19:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7E3642B32A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:04:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B63B142B8BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 15:19:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id CA35E3019765
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 13:04:13 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 03D4330257B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Apr 2026 13:17:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E75593A0B1C;
-	Mon, 20 Apr 2026 13:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DACF73A6403;
+	Mon, 20 Apr 2026 13:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Lgvc8jY0";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TXGXHmVR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NUuopON2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8485C39FCDB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 13:04:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B516D3A63F8;
+	Mon, 20 Apr 2026 13:15:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776690247; cv=none; b=kKXmjq91VCSppL67eF3z3GOOAPZhCAjWM1JWD3fiQZvWNfCKTEv2Tk8hE+h8W2hWy2/eDApVfuEyL6aPY0bZdHKY0lFtxHyfF2ERxbShGS1ydmV0F9qd4z+7FoLdL7ilChte+BkoJZY8Dgty3TGEh6QYrGxd2GI3QWdCrzfi7Tw=
+	t=1776690958; cv=none; b=bn8ZBogfxZblpJPYb6tEUYI2ThQAJZAmTHaHPBE3PnoLkMehJoaumwXUW5XsBPtVW54kmR9GoIud/MBYdPu9b1hgbkS2gCHGB4N9F+6zK79lc6dkvYAxqss3aAgfkoZKm3JuuGROD5qjLniwcrtEchrQwqcGufxQk4o6GN3jwgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776690247; c=relaxed/simple;
-	bh=Trk8gkpor/osngq4XuZ8gGF8Cd6HFh5WDJQJRtkJqPY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HiQK2n3v42eqgMvlE8Te/3fu8wQCDteT3VGN+C6iaDBix/WXjEDkJIkT8/t5r4QVUAu2F+cSia61eG3pr3z0LR9F0WTPD4bj7NzLrSZB/Xk2LV7Lzt1YSmVTwpopkLdQ+WwjTjpa9MgWvhoOpuEBsQkgTM5XcpwZEbWQXexwOYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Lgvc8jY0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TXGXHmVR; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63KBaogZ3212342
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 13:04:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=RXXwL6cYP99FpAVgoSPW7u6Z
-	iYv32gJO6YC73BOhMRQ=; b=Lgvc8jY0caf41kIOS224JG7yicEysIrGJkkTuC0/
-	oTeZjVWAV2mh8YFKLIa1UYPe1y4Gwu7RqBuTuKb8c689o7dTgYBqOKBtGVphjqqw
-	oSDGy3Aaer3mtbnM81l9YpvpYUQjiZdZcbJJi3XyAJ5zSBBVHsAWfXPkwzlc22bm
-	qqB+akw6lDAJ3MhjP8zq0PiDrn7DQj4ueQPd9UzfMpjhfsrLO7I3aygtXqOw6/PH
-	hSogHbU5YogLTOqgiDqOuHYiM26FLrAbOMc24hH2+CaHT5qoXJPm1d8hBaHJtlcc
-	Jjrd97e+uiUz1RyaI1K69mYNXcJFH6jQ2yMhXNTVrCPmOA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dnfcfhgg2-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 13:04:05 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-35e5791871fso5758879a91.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Apr 2026 06:04:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776690244; x=1777295044; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RXXwL6cYP99FpAVgoSPW7u6ZiYv32gJO6YC73BOhMRQ=;
-        b=TXGXHmVRDldIYefqL5cTvSsSYEOjjV8LhOYt7XtMs0RPpWiF9Vf0zLlYzOsv0hHK5N
-         7KgDYDQuYo2Om4xZ+S3QgYj5cD/DVtWV+BNF92aI9ZaOJdHf5uXlx9Zbw3g1vcur4JSw
-         zYGBdfQVOBCFuj6V8bFe9NXuw0Xfu/vhK8v4sPrMt0n/l4scqZjW6hB46OH62ck34tSw
-         dED0tWBzzrz2xi7yNIXxMD/7XTYLKCSFwR9hFiM351E6Mx2lI7+r48HyVozHA1s6mb+R
-         WYWa4usT+AJ108JJEJMo6WGrmOBnPKmiZIozzX97lCj78I/EYDee0cXko2ppNIYL1fgV
-         B2iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776690244; x=1777295044;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RXXwL6cYP99FpAVgoSPW7u6ZiYv32gJO6YC73BOhMRQ=;
-        b=gdHFgq35NdiVSld/y/6XLJGguc8Gqm6xAbopaniiA89vlnZh6h/xdrpmuD833IWUtL
-         pzGO8qYIkqgEyvVq8yXYkkQdDMlr0ditgMLcUva3oLnyT2p3SYzzyTp4S13I6nwgioEA
-         gdAAPn0dom3OprOWCQHOTVUd1eongqHoskTiOVyU34NBj3MQjG1gu7tcmCMTVA/cwhOE
-         5xeQlPZQR+76hjF5z6Y1imiofzKOl4392aZd+kOpiMIbHBNyD2po3Y6zfPEHoenBiiDF
-         o2kLrM2KYMmBa9G7lsPtbgr54xtvEskBY6jBAqtnwslqZxeS0UZPpVyGbjUhRKVZX+ct
-         09Kw==
-X-Forwarded-Encrypted: i=1; AFNElJ/vFB6rJhxxrbd8UnZE2y+uKqyZ0xjDGuiPuMEa8UyMzaD+0YqGoizmD6aQVRlUoKdtcJHs0KufdVdVJsIw@vger.kernel.org
-X-Gm-Message-State: AOJu0YwE0ANK0KwVue18ywE4icmj8EYWzI5I5yCwmf+ALDL5I01Qjea4
-	pDTH/iJ487GFVotAmGWeYz9GoJkulraIRa57ZVoo6vgO5nxZdgd/Vhzz9cDuDnku5SJSupGb/m+
-	hVDKfzv/2nq/fg8V/s3dzDiPYum+eA/ARyDiCD/Opc78o2e+XSxIZCuDc/KMuw+m4SFi/
-X-Gm-Gg: AeBDieu3ajJYVOllyHtTB0957zIrhoVI/h1q4/NglWGtHE2NLllx0AtNAHqDU04IXF/
-	kkVz9cwtCXRF4v2zrOK2a9/bb5s/YtcOk1CKSLpidPK43oGK8YSEisN0FUUW52unJfvOuApy2vO
-	TE9vawh0vhPpWXdyQu3TW4bRtCvGcgrs+MxWTfs1eceLpTumDyn7rQV6icvzrA94Xjyz/VdsHXo
-	rtgT7xLcqOBKKPjdWq6jajqUUt0fQG+frMtfPdsSFoFSoArs9mKsCJIvKIIC53nYfCcGOnP8keM
-	Y6ugVWjrz99fJnaoA8AwxlVnGbzdqkBWzyzQNN789gZjVSfVLiP7jEf18mp5oA4oxfguZ7KbpTR
-	V7iqg5akfQAZgDvhAuRdjCUu+Dtw2ZAx3LfqllPz98I5SgCs=
-X-Received: by 2002:a17:90b:3f84:b0:359:1130:1047 with SMTP id 98e67ed59e1d1-36140468c28mr13356790a91.17.1776690244033;
-        Mon, 20 Apr 2026 06:04:04 -0700 (PDT)
-X-Received: by 2002:a17:90b:3f84:b0:359:1130:1047 with SMTP id 98e67ed59e1d1-36140468c28mr13356738a91.17.1776690243409;
-        Mon, 20 Apr 2026 06:04:03 -0700 (PDT)
-Received: from oss.qualcomm.com ([188.27.161.193])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43fe4cb135asm32973763f8f.6.2026.04.20.06.03.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Apr 2026 06:04:01 -0700 (PDT)
-Date: Mon, 20 Apr 2026 16:03:45 +0300
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
-To: Alexander Koskovich <akoskovich@pm.me>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: eliza-mtp: Enable USB and ADSP
- support
-Message-ID: <kzyttwrt67eqjdhqsibhtr2ue3enciusfjnqxgxr235z4z5yth@j3kkukfjn6fr>
-References: <adyfWzVHsg3qo9cH@prism>
+	s=arc-20240116; t=1776690958; c=relaxed/simple;
+	bh=ap10gA4x702GegdyFFkhpC7MtN3m7LIoExCHfGHCtWc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BcWyMku12vh7AafiJUcaqdScJo3duvFfXgTAgO0T0FRNgBzGQl5pxb360wlwXiLcV626fjxBOY3l2h98Rs3qoHMYxHbgmyrk6sn9YZ1RoUugeK71fc0LvNWiZeN+cdc8Yg3/H7FnFwzL7e7BnOVgvtDNTXozA2NsgGnzABwXPHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NUuopON2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9B3C2BCB6;
+	Mon, 20 Apr 2026 13:15:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776690958;
+	bh=ap10gA4x702GegdyFFkhpC7MtN3m7LIoExCHfGHCtWc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=NUuopON2zwHfEcREufdSFwIlsiRjSs1jYOsrdJ/2qxfyQH1+0cEXRzE7OVzwSuo0Q
+	 VWF2ErQXYoK5DPqIlooJd7Qrndchl67Tv0uoKx/s63OGjyRpPGHQ/ede3nmg12vDIs
+	 Og6D2wo4lCMIi7Iszp8t+pvUPAMG7R1E8U0UFg4NLc5qeU8AjgtiUfPbVuZef7hZB6
+	 iqXS8+H/rIb5+bsgdfOl3hX1T2k3UYGqZFpm3+S8aWKmpOETTm38o0tcVbfI64nCri
+	 Hk8NdUHrf408FuGc02Vh4mIyy0tV60Zcl9czLt5ZCzxv6bUabGSNQOao1owF9EfSGU
+	 9OKd8mwJwA9Dg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 7.0-5.10] net: qrtr: fix endian handling of confirm_rx field
+Date: Mon, 20 Apr 2026 09:07:58 -0400
+Message-ID: <20260420131539.986432-12-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260420131539.986432-1-sashal@kernel.org>
+References: <20260420131539.986432-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <adyfWzVHsg3qo9cH@prism>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDEyNiBTYWx0ZWRfXwoy5GYoNIQFo
- gxZi6ozryfAbYKoL1DUV0fJFl4UvC6TPVac5yzletpH17kiCA445NjTycCSaKLPYgOF8shCN3Kg
- AN5YeZ20NHs57XyvlkZXdgsaptD0Chd4Wj7K1DOQWB8++IgAYS7IoS2ps4ADDyFRY0PYBpEcfZq
- viEqI+JlGlievqxAJgBksrd4HuKL5Ub1g6Y5o108p+rzxYQLxLAwe+BTa5SjnZt5WwbflBWZ8Na
- MliC2d2CnMFVEVlyHr/N0Mk+KdG/AO9GMnnLFo5hnbrddTUIa2xZFoHUNWdiu/tUvSq8q3RPQUW
- tzY8LKVBhY8FyCSCuPsxv3wDvrq1jaHh6D585lUbCcohhLfp0Op90SaMz3/v4DYMhtxBXljAZkn
- 2xdvqCXHeRdAWLgLDZRlwdOrOCWfL8zGikDjCPn2rWyuvNfocTJb6wJ9AY8DxTyOSuLswR0l8UR
- v4MB/quMvqINepifMXQ==
-X-Proofpoint-ORIG-GUID: gPvYiJuViB1O3U9sL4a8ghuPFdlGMYke
-X-Proofpoint-GUID: gPvYiJuViB1O3U9sL4a8ghuPFdlGMYke
-X-Authority-Analysis: v=2.4 cv=L+ItheT8 c=1 sm=1 tr=0 ts=69e62445 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=EiYrS7xXfcF7w+nkr41hpQ==:17
- a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=i2al5Ykz3Aht5zOOcbIA:9 a=CjuIK1q_8ugA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-20_02,2026-04-17_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 adultscore=0 lowpriorityscore=0
- suspectscore=0 clxscore=1015 impostorscore=0 malwarescore=0 spamscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2604070000
- definitions=main-2604200126
-X-Spamd-Result: default: False [-1.66 / 15.00];
+Content-Type: text/plain; charset=UTF-8
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 7.0
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-1.16 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103763-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103762-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[abel.vesa@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: E7E3642B32A
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,westermo.com:email]
+X-Rspamd-Queue-Id: B63B142B8BD
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 26-04-13 07:52:27, Alexander Koskovich wrote:
-> On Tue, Mar 31, 2026 at 01:37:24PM +0300, Abel Vesa wrote:
-> > The Eliza MTP features a single USB Type-C port. Its USB 2.0 lines are
-> > routed through an eUSB2 repeater provided by the PM7750BA PMIC.
-> > 
-> > Describe the port and repeater, and enable the USB controller and PHYs.
-> > 
-> > Also specify the ADSP firmware and enable the remoteproc.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/eliza-mtp.dts | 83 ++++++++++++++++++++++++++++++++++
-> >  1 file changed, 83 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/eliza-mtp.dts b/arch/arm64/boot/dts/qcom/eliza-mtp.dts
-> > index 90f629800cb0..c31f00e36eee 100644
-> > --- a/arch/arm64/boot/dts/qcom/eliza-mtp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/eliza-mtp.dts
-> > @@ -6,9 +6,12 @@
-> >  /dts-v1/;
-> ...
-> >  
-> > +&usb_hsphy {
-> > +	vdd-supply = <&vreg_l2b>;
-> 
-> Shouldn't this be l7k? Looking at kera-usb.dtsi I see the vdd-supply for
-> eusb2_phy0 as l7k. I don't see this being overriden by anything else
-> downstream either.
-> 
-> Just bringing it up since I copied this part for another Eliza platform
-> (USB 2 only) and USB failed until I fixed this supply.
+From: Alexander Wilhelm <alexander.wilhelm@westermo.com>
 
-Yep. That seems to be the case. Thanks for pointing this out.
+[ Upstream commit e4cf6087cab382c7031e6b436ec55202fa9f2d7b ]
 
-Will fix when respinning.
+Convert confirm_rx to little endian when enqueueing and convert it back on
+receive. This fixes control flow on big endian hosts, little endian is
+unaffected.
+
+On transmit, store confirm_rx as __le32 using cpu_to_le32(). On receive,
+apply le32_to_cpu() before using the value. !! ensures the value is 0 or 1
+in native endianness, so the conversion isn’t strictly required here, but
+it is kept for consistency and clarity.
+
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Alexander Wilhelm <alexander.wilhelm@westermo.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+Now I have all the information needed for a comprehensive analysis.
+
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: PARSE THE SUBJECT LINE
+Record: **[net: qrtr]** **[fix]** Fix endian handling of `confirm_rx`
+field — the word "fix" is used explicitly, targeting an endianness bug
+in QRTR protocol.
+
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>** —
+  QRTR/Qualcomm ARM SoC maintainer
+- **Signed-off-by: Alexander Wilhelm <alexander.wilhelm@westermo.com>**
+  — Author (Westermo, embedded networking)
+- **Reviewed-by: Simon Horman <horms@kernel.org>** — Netdev reviewer
+- **Signed-off-by: David S. Miller <davem@davemloft.net>** — Net
+  subsystem maintainer merged it
+
+No Fixes: tag (it was deliberately removed at Simon Horman's request
+during review — see Phase 4). No Reported-by tag. No Cc: stable tag.
+
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The commit explains that:
+- On transmit, `confirm_rx` needs `cpu_to_le32()` because the header
+  struct field is `__le32`
+- On receive, `le32_to_cpu()` should be applied before use
+- The `!!` ensures the value is 0 or 1, so the receive-side conversion
+  isn't strictly required but is kept for consistency
+- This "fixes control flow on big endian hosts"
+
+Record: Bug: Missing endian conversion for the `confirm_rx` field on
+both TX and RX paths. Symptom: Broken flow control on big-endian hosts.
+Little-endian unaffected. Root cause: `confirm_rx` was stored/read as
+native endian into a `__le32` field.
+
+### Step 1.4: DETECT HIDDEN BUG FIXES
+Not hidden — this is an explicit endianness bug fix. The subject says
+"fix" directly.
+
+---
+
+## PHASE 2: DIFF ANALYSIS — LINE BY LINE
+
+### Step 2.1: INVENTORY THE CHANGES
+- **File**: `net/qrtr/af_qrtr.c` — 2 lines changed (1 modified in TX
+  path, 1 modified in RX path)
+- **Functions modified**: `qrtr_node_enqueue()` (TX),
+  `qrtr_endpoint_post()` (RX)
+- **Scope**: Single-file, extremely surgical fix
+
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+
+**Hunk 1 (line 364, TX path in `qrtr_node_enqueue`):**
+- Before: `hdr->confirm_rx = !!confirm_rx;` — stores native-endian int
+  into `__le32` field
+- After: `hdr->confirm_rx = cpu_to_le32(!!confirm_rx);` — properly
+  converts to little-endian
+- On LE hosts: `cpu_to_le32` is a no-op, identical behavior
+- On BE hosts: Value 1 was stored as `0x00000001` in native (big-endian)
+  byte order = `0x01000000` in LE interpretation. Now correctly stored
+  as LE 1.
+
+**Hunk 2 (line 465, RX path in `qrtr_endpoint_post`):**
+- Before: `cb->confirm_rx = !!v1->confirm_rx;` — reads `__le32` as
+  native int
+- After: `cb->confirm_rx = !!le32_to_cpu(v1->confirm_rx);` — properly
+  converts from LE first
+- Due to `!!`, the result on the receive side was already correct (any
+  non-zero becomes 1). The fix adds the conversion for
+  correctness/consistency.
+
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+Category: **Endianness/type bug (f)**. The `qrtr_hdr_v1` struct declares
+`confirm_rx` as `__le32`, and every other field in the struct uses
+proper `cpu_to_le32()`/`le32_to_cpu()` conversions — except
+`confirm_rx`. This is the one field that was missed.
+
+### Step 2.4: ASSESS THE FIX QUALITY
+- **Obviously correct**: Yes — it follows the exact same pattern as all
+  adjacent fields (type, src_node_id, etc.)
+- **Minimal**: Yes — 2 lines, exactly matching the existing code pattern
+- **Regression risk**: Essentially zero. On LE hosts (the vast
+  majority), these are no-ops. On BE hosts, this makes the behavior
+  correct.
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: BLAME THE CHANGED LINES
+- TX line (364): `hdr->confirm_rx = !!confirm_rx;` — introduced by
+  commit **5fdeb0d372ab** ("net: qrtr: Implement outgoing flow
+  control"), authored 2020-01-13, first appeared in **v5.6-rc1**
+- RX line (465): `cb->confirm_rx = !!v1->confirm_rx;` — introduced by
+  commit **194ccc88297ae** ("net: qrtr: Support decoding incoming v2
+  packets"), authored 2017-10-10, first appeared in **v4.15**
+
+Record: The buggy TX code has been present since v5.6. The buggy RX code
+since v4.15. Both are in all active stable trees (5.10, 5.15, 6.1, 6.6,
+6.12, 7.0).
+
+### Step 3.2: FOLLOW THE FIXES: TAG
+The v2 submission HAD `Fixes: 5fdeb0d372ab` but it was removed at Simon
+Horman's request. The original buggy commit 5fdeb0d372ab ("Implement
+outgoing flow control") is present in v5.6+ and all active stable trees.
+
+### Step 3.3: CHECK FILE HISTORY
+Recent changes to `af_qrtr.c` are unrelated refactoring (xarray
+conversion, treewide changes, proto_ops changes). No recent endianness
+fixes.
+
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Alexander Wilhelm from Westermo has a clear pattern of fixing endianness
+bugs in Qualcomm subsystems: QMI encoding/decoding, MHI BHI vector
+table, ath12k QMI data. This is part of an effort to make Qualcomm
+subsystems work on big-endian platforms.
+
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+None. The fix applies directly to the original buggy lines without any
+prerequisites.
+
+---
+
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
+
+### Step 4.1: FIND THE ORIGINAL PATCH DISCUSSION
+Found via yhbt.net mirror of lore.kernel.org. The patch went through 3
+versions:
+- **v1** (2026-03-20): Initial submission with Fixes tag, targeted at
+  `net`
+- **v2** (2026-03-24): Rebase on latest net tree, improved commit
+  message, still had Fixes tag
+- **v3** (2026-03-26): Rebase on `net-next`, Fixes tag removed at Simon
+  Horman's request
+
+### Step 4.2: KEY REVIEWER FEEDBACK
+**Simon Horman** (netdev reviewer): "But as this isn't strictly
+necessary let's target net-next and drop the Fixes tag." This is a
+**negative signal** for stable backport — the netdev reviewer explicitly
+downgraded from fix to enhancement.
+
+**Manivannan Sadhasivam** (QRTR maintainer) disagreed: "FWIW: Adding
+Fixes tag doesn't mean that the patch should be queued for -rcS." Mani
+thought the Fixes tag was appropriate.
+
+### Step 4.3: BUG REPORT
+No external bug report. The author found this during systematic
+endianness auditing.
+
+### Step 4.4: RELATED PATCHES
+This is a standalone fix. Not part of a series.
+
+### Step 4.5: STABLE MAILING LIST HISTORY
+No stable-specific discussion found.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1: IDENTIFY KEY FUNCTIONS
+- `qrtr_node_enqueue()` — TX path
+- `qrtr_endpoint_post()` — RX path
+
+### Step 5.2: TRACE CALLERS
+- `qrtr_node_enqueue()` is called from: `qrtr_sendmsg()` (the main
+  sendmsg path), `qrtr_send_resume_tx()`, and broadcast path. It's the
+  core TX function.
+- `qrtr_endpoint_post()` is called from: MHI driver (`qrtr_mhi.c`), SMD
+  driver (`qrtr_smd.c`), tun driver (`qrtr_tun.c`). It's the core RX
+  entry point — called for EVERY incoming QRTR packet.
+
+### Step 5.3-5.4: CALL CHAIN
+`qrtr_endpoint_post()` is called directly from hardware transport
+drivers on every received packet. `qrtr_node_enqueue()` is called on
+every transmitted packet. Both are hot-path functions.
+
+### Step 5.5: SIMILAR PATTERNS
+All other fields in `qrtr_hdr_v1` already use proper endian conversions.
+`confirm_rx` was the only one missed.
+
+---
+
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+
+### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
+The TX bug (5fdeb0d372ab) exists in **v5.6+**, so all active stable
+trees: 5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y.
+The RX bug (194ccc88297ae) exists since **v4.15**.
+
+### Step 6.2: BACKPORT COMPLICATIONS
+The code at these two lines has not changed since introduction. The
+patch should apply cleanly to all active stable trees.
+
+### Step 6.3: RELATED FIXES ALREADY IN STABLE
+None found.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: SUBSYSTEM CRITICALITY
+**net/qrtr** — Qualcomm IPC Router, used for communication between Linux
+and Qualcomm firmware (modem, WiFi, etc.).
+Criticality: **PERIPHERAL** — affects users of Qualcomm SoC platforms
+running big-endian kernels (very niche). Qualcomm SoCs are little-endian
+ARM, so the primary users are unaffected.
+
+### Step 7.2: SUBSYSTEM ACTIVITY
+Moderate activity — mostly maintenance fixes, not heavy development.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: WHO IS AFFECTED
+Only big-endian hosts that use QRTR. This is extremely niche — Qualcomm
+SoCs are LE ARM. However, Westermo (author's company) apparently runs BE
+systems with QRTR, and there could be other embedded platforms.
+
+### Step 8.2: TRIGGER CONDITIONS
+Every QRTR data transmission on a big-endian host. The TX side stores
+the wrong endianness, which means the remote end receives a malformed
+`confirm_rx` value. The RX side is actually mitigated by `!!` (any non-
+zero normalizes to 1).
+
+### Step 8.3: FAILURE MODE SEVERITY
+On big-endian hosts: The flow control mechanism (confirm_rx/resume_tx)
+breaks. The TX side sends `confirm_rx` in wrong byte order. If the
+remote firmware compares `confirm_rx` directly to 1 (rather than using
+`!!`), it won't send RESUME_TX messages, causing the sender to
+eventually block or exhaust remote resources.
+Severity: **MEDIUM** — broken flow control on a niche platform.
+
+### Step 8.4: RISK-BENEFIT RATIO
+- **Benefit**: Fixes real protocol-level correctness bug on BE hosts.
+  Low impact population but real for those affected.
+- **Risk**: Essentially zero. `cpu_to_le32`/`le32_to_cpu` are no-ops on
+  LE. The fix follows the established pattern used by every other field
+  in the same struct.
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: COMPILE THE EVIDENCE
+
+**FOR backporting:**
+- Real endianness correctness bug
+- Extremely small fix (2 lines), obviously correct
+- Zero regression risk on LE systems (no-op), fixes BE systems
+- Follows the identical pattern of all adjacent header fields
+- Present in all stable trees since v5.6
+- Reviewed by 2 reviewers, merged by David Miller
+- Manivannan Sadhasivam (QRTR maintainer) considered the Fixes tag
+  appropriate
+
+**AGAINST backporting:**
+- Simon Horman explicitly said "not strictly necessary," asked to drop
+  Fixes tag and target net-next
+- Big-endian QRTR usage is extremely niche
+- The `!!` on the RX path mitigates the receive side (only TX is truly
+  broken)
+- No user bug report — found during code audit
+
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **Yes** — standard endian conversion
+   pattern
+2. Fixes a real bug? **Yes** — broken wire protocol on BE hosts
+3. Important issue? **Borderline** — broken flow control, but only on BE
+   hosts using QRTR
+4. Small and contained? **Yes** — 2 lines in 1 file
+5. No new features? **Correct**
+6. Can apply to stable? **Yes** — clean apply expected
+
+### Step 9.3: EXCEPTION CATEGORIES
+None applicable.
+
+### Step 9.4: DECISION
+This is a genuine endianness bug fix with zero regression risk. While
+the affected population is niche, the fix is so small and obviously
+correct that the risk/benefit ratio strongly favors inclusion. The
+netdev reviewer's pushback was about targeting net vs. net-next (merge
+window process), not about whether the fix is correct. The QRTR
+maintainer (Mani) disagreed with dropping the Fixes tag. For stable
+users on big-endian platforms running QRTR, this fixes a real protocol-
+level correctness issue in the flow control mechanism.
+
+---
+
+## Verification
+
+- [Phase 1] Parsed tags: Reviewed-by from Manivannan Sadhasivam and
+  Simon Horman, SOB from David S. Miller (merger)
+- [Phase 2] Diff analysis: 2 lines changed — adding `cpu_to_le32()` on
+  TX, `le32_to_cpu()` on RX, matching pattern of all other fields
+- [Phase 2] Verified `qrtr_hdr_v1.confirm_rx` is declared as `__le32`
+  (line 44 of af_qrtr.c)
+- [Phase 3] git blame: TX line introduced by 5fdeb0d372ab (v5.6,
+  2020-01-13), RX line by 194ccc88297ae (v4.15, 2017-10-10)
+- [Phase 3] git merge-base: Confirmed 5fdeb0d372ab is in v5.10, v5.15,
+  v6.1, v6.6 (all active stable trees)
+- [Phase 3] Author check: Alexander Wilhelm has 7 commits all fixing
+  Qualcomm endianness bugs
+- [Phase 4] Mailing list (yhbt.net mirror): Found full v2 thread. Simon
+  Horman said "not strictly necessary," Mani disagreed
+- [Phase 4] Patch went v1->v2->v3; v3 dropped Fixes tag, targeted net-
+  next at reviewer request
+- [Phase 5] Callers verified: `qrtr_node_enqueue` is core TX path,
+  `qrtr_endpoint_post` is core RX entry point (EXPORT_SYMBOL_GPL)
+- [Phase 5] Verified all other `qrtr_hdr_v1` fields use proper endian
+  conversions — only `confirm_rx` was missed
+- [Phase 6] Code is unchanged at buggy lines since introduction — clean
+  apply expected
+- [Phase 8] Risk assessment: zero risk on LE (no-op conversions), fixes
+  correctness on BE
+
+**YES**
+
+ net/qrtr/af_qrtr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index d77e9c8212da5..7cec6a7859b03 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -361,7 +361,7 @@ static int qrtr_node_enqueue(struct qrtr_node *node, struct sk_buff *skb,
+ 	}
+ 
+ 	hdr->size = cpu_to_le32(len);
+-	hdr->confirm_rx = !!confirm_rx;
++	hdr->confirm_rx = cpu_to_le32(!!confirm_rx);
+ 
+ 	rc = skb_put_padto(skb, ALIGN(len, 4) + sizeof(*hdr));
+ 
+@@ -462,7 +462,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+ 		cb->type = le32_to_cpu(v1->type);
+ 		cb->src_node = le32_to_cpu(v1->src_node_id);
+ 		cb->src_port = le32_to_cpu(v1->src_port_id);
+-		cb->confirm_rx = !!v1->confirm_rx;
++		cb->confirm_rx = !!le32_to_cpu(v1->confirm_rx);
+ 		cb->dst_node = le32_to_cpu(v1->dst_node_id);
+ 		cb->dst_port = le32_to_cpu(v1->dst_port_id);
+ 
+-- 
+2.53.0
 
 
