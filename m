@@ -1,176 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-103977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cFZzNHCw52lZ/QEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 19:14:24 +0200
+	id wCz3L6Sw52lZ/QEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 19:15:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 547BD43DCA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 19:14:24 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCC4743DCCD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 19:15:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6B2AF308269D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 17:11:32 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 54B74302DC35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 17:11:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E2CA3876B0;
-	Tue, 21 Apr 2026 17:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE3943876D7;
+	Tue, 21 Apr 2026 17:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ny2Iu0dI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c+XIVBeU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4995637A481;
-	Tue, 21 Apr 2026 17:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0AE3845B7;
+	Tue, 21 Apr 2026 17:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776791484; cv=none; b=ZI8YzxjqumgKOYMwxdgD+NAn6pIU0pjMYTiaIkLuxjydWq06FXFb+Dq1iCMTQYfPkpeReM/16svMg1wTxrShLA5hMdC+y6lH0IPD6QLJ1MgHdcWhFK56JV58wVpdoQDokITgYgQe7zVyUBRzz2Wb3RMGWl2I4Lm5nV0GT1O2lRs=
+	t=1776791503; cv=none; b=MHwT76f2WbACADPD7cQNHdRqa67XKio4hV5Z96qLU9WtgGvZYxdPiayiLzkJIotTq+0Sd5QsUIqtXwR23qklGgfSC4Ktz1oXVARzIPBE180AWppkSJU8ZMiFYGLQeXW0wDAEAnVH0XEmCUqKMzCIBaRCuYHJScjjvccXHxyCVW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776791484; c=relaxed/simple;
-	bh=AHtrmGhN5J/vsvtIwiAqM8EI8sFhj4a4bvN+jToBjkQ=;
+	s=arc-20240116; t=1776791503; c=relaxed/simple;
+	bh=vok/sWJ8AOzEDKYmt8jHtz+Hdy1CE78jKXsvl6F/LfQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rWfoH62TGhMErOqNq30JTtiFhGDK4vzADIT+gtQu4wTJ3jV8GbpjY9WwE4VbwiChLYUpcfllgn9owPekfKKrtEOOHLNp/bLRJSLU9tL1ghtz03KgY/8zpED8p3Ynuq8R+2fg2kNteq1nJw1iXaCHRp+JP0o2z5vYLSiBTo6YgzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ny2Iu0dI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929F1C2BCB5;
-	Tue, 21 Apr 2026 17:11:18 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=mPdbc5DwLdd5L+Ipfaz7h+BrjqqrI8UrFxTREdu9+TRTUvS7p2EwraU6c3Dfc6UxlRmNn9ssi3MQbFNXFDitqdHX1AqFwVPG+QWKG2gxRwpmF5YDG+QVgjDua+x4eNWQ853IXkHXSLm0ugfY5SIiW8RVpynBeR2fHqtZcJfJzNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c+XIVBeU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66ABCC2BCB0;
+	Tue, 21 Apr 2026 17:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776791483;
-	bh=AHtrmGhN5J/vsvtIwiAqM8EI8sFhj4a4bvN+jToBjkQ=;
+	s=k20201202; t=1776791503;
+	bh=vok/sWJ8AOzEDKYmt8jHtz+Hdy1CE78jKXsvl6F/LfQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ny2Iu0dIkI+IAzLWnRo/dQolio56CfrRzGLDxapFHeL41W2BMt9kWPWyJLjLnvHZx
-	 Hd9X0iNjCsOC5mp44673N+IozjhAKaDq2eD5jyrO2T45ddJGR1AAPz6nVXS4JLKUeo
-	 4kGbwAFy5IdQpTBJYmAB8Ly/WLLteSrUx53c/pkB0hdA5W6PZC38h2FU21W/BkYBuk
-	 7XlSdmytouADLU7flPD/JHXFoIroHSxKGS0iab3/1gE4l7BIJQFWMe8kUrVlLxl/TC
-	 N1zk0bKShx46dzqnG2VGGlo51HCIevKmDI0qaSRWyyYT6RaNArKp2d4CG8c0qJQsJt
-	 nAl3PhcPP3ezg==
-Date: Tue, 21 Apr 2026 22:41:08 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, Keith Busch <kbusch@kernel.org>, 
-	Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-nvme@lists.infradead.org
-Subject: Re: [PATCH 3/4] PCI: qcom: Indicate broken L1ss exit during resume
- from system suspend
-Message-ID: <bkejoqdchyv55efsyl7o6b3ewiwaj5kbc2hgltxt5vwqdvt5yf@cxvwcjo5zcrp>
-References: <zv3tl2cvlhpmwe5ikcszdneft4bjebqibrl6onbg7457vtzmmc@clh7nzgpeext>
- <20260420204915.GA231862@bhelgaas>
+	b=c+XIVBeUmS8b4CKqWDqP1awp1k6fNjlPT4YzUfnPd/4h1645xEgSwJATWbYRXAaBM
+	 XfMJdDqKYad0MyTvZRnGkbxyguTxs3JAP6vA1H8eC6R3CxxFMoiSfc8yYYFFhDurGK
+	 DRRyUud9HURogtebWaE1sgehgRYUeO4do+Wq/RiegcF/9NHGK4SrpYgntTUUXCfwzF
+	 B9bXe8v3+vxeByK1M2XuzQoLnaA7BIQt+7AQEOyX+TlGDdFrr2eLh5hvZf87NLGtM3
+	 omgoS9sM1bZhm/tlYx0I1uU2pP+s/TxeDd8A10yc1fGZqt3/emHWyToyOLPgGU/aPo
+	 XRoUOACo1WS9w==
+Date: Tue, 21 Apr 2026 18:11:38 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, mohammad.rafi.shaik@oss.qualcomm.com
+Subject: Re: [PATCH] ASoC: codecs: wcd937x: fix AUX PA sequencing and mixer
+ controls
+Message-ID: <89ccc6c9-525e-4878-a43f-f91c681969c3@sirena.org.uk>
+References: <20260420180221.785113-1-ajay.nandam@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Z88XJgBepUVyiYNf"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260420204915.GA231862@bhelgaas>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+In-Reply-To: <20260420180221.785113-1-ajay.nandam@oss.qualcomm.com>
+X-Cookie: Jenkinson's Law:
+X-Spamd-Result: default: False [-4.26 / 15.00];
+	SIGNED_PGP(-2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103978-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org,oss.qualcomm.com];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103977-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 547BD43DCA0
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,sirena.org.uk:mid]
+X-Rspamd-Queue-Id: DCC4743DCCD
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Apr 20, 2026 at 03:49:15PM -0500, Bjorn Helgaas wrote:
-> On Sat, Apr 18, 2026 at 11:09:11AM +0530, Manivannan Sadhasivam wrote:
-> > On Fri, Apr 17, 2026 at 05:26:15PM -0500, Bjorn Helgaas wrote:
-> > ...
-> 
-> > > Does L1.2 have to meet the advertised L1 Exit Latency?  I assume
-> > > maybe it does because I don't see an exception for L1.x or any
-> > > exit latencies advertised in the L1 PM Substates Capability.
-> > 
-> > As per my understanding, 'L1 Exit Latency' only covers ASPM L1
-> > state, not L1ss.  Because, 'L1 Exit Latency' field exists even
-> > before L1 PM Substates got introduced in r3.1. So it doesn't cover
-> > L1.2 exit latency.
-> > 
-> > > Regardless, I'd be kind of surprised if *any* system could meet an
-> > > L1.2 exit latency from a system suspend situation where PHY power
-> > > is removed.  On ACPI systems, the OS doesn't know how to remove
-> > > PHY power, so I don't think that situation can happen unless
-> > > firmware is involved in the suspend.
-> > 
-> > Yes, you are right. Even for systems turning off the PHY completely,
-> > they should have some mechanism to detect the CLKREQ# assert and
-> > turn ON the PHY within the expected time.
-> 
-> What would the expected time be?
-> 
 
-That's mostly L10_REFCLK_ON + T_COMMONMODE. But nevertheless, the system wakeup
-and controller driver resume() time would be far greater than it.
+--Z88XJgBepUVyiYNf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > On our Qcom platforms, we do have some co-processors handling this
-> > even before the OS wakesup.  But support for that co-processor is
-> > currently not available in upstream and we don't know when it is
-> > going to be added. Until then, we only have one option to not put
-> > the link to L1ss during suspend and keep the devices into D3Cold to
-> > achieve the SoC low power state.
-> > 
-> > > Maybe that's part of why pm_suspend_via_firmware() exists.  What
-> > > if native host drivers just called pm_set_suspend_via_firmware()?
-> > > After all, if they support suspend, they're doing things that are
-> > > done by firmware on other systems.
-> > 
-> > No, that would be inappropriate. pm_set_suspend_via_firmware() is
-> > supposed to be called only when the firmware is invoked at the end
-> > of suspend. If OS handles everything and not the firmware, there is
-> > no need to invoke this API.
-> 
-> This is part of my issue with the "pm_suspend_via_firmware()" name --
-> it doesn't really matter whether the code is in the OS or in the
-> firmware.  What matters is what the code *does* or is *allowed* to do.
-> The native host bridge drivers do things that are done by firmware on
-> ACPI systems, so the "via_firmware" part is not as clear as it once
-> was.
+On Mon, Apr 20, 2026 at 11:32:21PM +0530, Ajay Kumar Nandam wrote:
 
-I partly agree with you. But it should be noted that this API doesn't just apply
-to PCI alone, but for the overall system. So even if the native host controller
-drivers are present, the firmware might do something more at the end of suspend.
-This is exactly what happens on ARM64 systems where PSCI firmware carries out
-some activities at the end of suspend and we still have host controller drivers
-doing some power management. Consequently, even if the host controller driver
-wants to keep the bus active, the firmware might power down the whole PCI bus
-for system power savings.
+> Enable AUX PA sequencing during AUX DAC DAPM events and keep the
+> AUX-specific RX supplies enabled while the path is active.
+>=20
+> Add the missing AUX-related mixer controls, including CLSH PA and
+> DSD left/right switches, so AUX playback can be routed from userspace.
 
-So you are right that host controller drivers do what the firmware might do on
-ACPI based systems, but there could be some firmware involvement also.
+> @@ -730,10 +736,23 @@ static int wcd937x_codec_enable_aux_pa(struct snd_s=
+oc_dapm_widget *w,
 
-For this series, I'm trying to keep the existing behavior intact and just
-introduce one more check. But if we want to move away from
-pm_suspend_via_firmware(), that could be done as a follow up series. Wdyt?
+>  	case SND_SOC_DAPM_PRE_PMD:
+>  		disable_irq_nosync(wcd937x->aux_pdm_wd_int);
+> +		snd_soc_component_update_bits(component,
+> +					      WCD937X_ANA_RX_SUPPLIES,
+> +					      BIT(6), 0x00);
+> +		snd_soc_component_update_bits(component,
+> +					      WCD937X_ANA_RX_SUPPLIES,
+> +					      BIT(7), 0x00);
+>  		break;
+>  	case SND_SOC_DAPM_POST_PMD:
+>  		usleep_range(2000, 2010);
 
-- Mani
+It's a bit weird that the supplies are disabled in the _PRE_PMD
+callback before DAPM disables the PGA, I'd have expected them after the
+disable.
 
--- 
-மணிவண்ணன் சதாசிவம்
+--Z88XJgBepUVyiYNf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnnr8kACgkQJNaLcl1U
+h9BUcAf/f/3cEACS1zzesHBclsExi7XapFr0LFl5/JiBYtCQI5t1m0//ojBKr5nY
+0AtnYejaxN2IFgJec0Nb9IpjkVicA4AByg5bJBek2u3p/67YCDmniaO+V9ucWndQ
+AIqrhOsxKC97EUcx3dQ6a/gBaRYmXIPAMUbx2aoi7hl4Nv+H0f7fic/auetMVLdp
+fYxiaMpaeDnl8uTe3VAXwvAasUBdxqISRaF8A80TVTpZPDy9Q2l0TvH3aCXJ0pEP
+3r9+DLlbUzFa+E+qNRpWNDYYIQv+8O32VtD1qW08LxZzwmPgHAXOYFdCAzpHjfW8
+SfHhA6UxXbRKjQSziRQYR4f8zfRoDA==
+=2IO3
+-----END PGP SIGNATURE-----
+
+--Z88XJgBepUVyiYNf--
 
