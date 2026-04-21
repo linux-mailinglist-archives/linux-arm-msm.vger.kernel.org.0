@@ -1,281 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-103964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aHelJS6a52kV+QEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 17:39:26 +0200
+	id GCbBMjua52kV+QEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 17:39:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A45E43CD7E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 17:39:25 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D24B343CD86
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 17:39:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0245D309F3FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 15:32:36 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 74A95301C82A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 15:37:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE5CF29B77E;
-	Tue, 21 Apr 2026 15:32:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9D092BDC05;
+	Tue, 21 Apr 2026 15:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="FfmbpygB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UcJGNyd1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAF5926ED3A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2026 15:32:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5032FC01B;
+	Tue, 21 Apr 2026 15:37:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776785554; cv=none; b=YfA7L9d8lwyuZvBPk1/X1OwIN6WsJoyapvQqy/l9wKhK23Kw73m0ZEnWfIEAmLNsQrXgIqmHZ9bsdlsuDFxKiwdbXMgZb7jbVSp9AklOTKPXCvY2F64/F0MtfJiXPDo+bPERmGq0x1d1TzjGyAwdDQra3Wmb78X5Lkj6lRokHCc=
+	t=1776785848; cv=none; b=luYAxPYbHnc1RLqBXalnKGYta7UnLezQFxS+3X3reCahXnD6xjHl6/ucVgt1ZGTCLsqZLUy9yr7ls9IFi2h4ylTkVM4f5YrAlWQEW3NIfyx7UI6SnCCWXY1AMrzTKetFROYvmUamKz1Gibb950w9DrC/fqQ8xHV+oThR6HLFdwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776785554; c=relaxed/simple;
-	bh=fhBy7ZTDUwKSbf3HhFiViEZekUwSlWT1MQ0rYA5c8Qg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l55RcipVODJeXh57bFpV7CVIuyBMUJ2VN/ZIGI3IMgjHHM9+XYKDkPVasuzJHM/5MniQC5AoKY32VZ7lmHjysDSnGzEAxa1DsQl8uPokzr0jayjnws448lgc89NYLJ4LZhb+/UcdxIVLH9II+YWMbZAxDW3LFWga30wkWUtQFhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=FfmbpygB; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A313227B5
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2026 08:32:26 -0700 (PDT)
-Received: from [10.2.11.34] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id EEA203FAF5
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2026 08:32:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1776785552; bh=fhBy7ZTDUwKSbf3HhFiViEZekUwSlWT1MQ0rYA5c8Qg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FfmbpygByk23YzbABMyTRXWW85LQhh39rMk/SBDS7be7vcThpdAMi7FVHx4+734Lg
-	 Fh4YPeHC0X2PdGG1at/V8wsnqvGs6KgdkfLFOFEDr6ec38YW+gQgkTl21X2jA28D11
-	 oXZwVnnKX2+wfNt66d6nhHZbHEN8s+kwATnOD+Fs=
-Date: Tue, 21 Apr 2026 16:32:21 +0100
-From: Liviu Dudau <liviu.dudau@arm.com>
-To: Laura Nao <laura.nao@collabora.com>
-Cc: dakr@kernel.org, boris.brezillon@collabora.com, steven.price@arm.com,
-	matthew.brost@intel.com, thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com, dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, kernel@collabora.com
-Subject: Re: [PATCH] drm: Remove DRIVER_GEM_GPUVA feature flag
-Message-ID: <aeeYhWsRqXqfnzge@e142607>
-References: <20260421084701.24227-1-laura.nao@collabora.com>
+	s=arc-20240116; t=1776785848; c=relaxed/simple;
+	bh=G2w1sKL3l5wuSUcaAd0p9VSqnfL6gf7sVEeWF7dVURc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nKJzz4vgdnBAXtik/YUfbeiulylGOPfH68SYDk8sjAslZ1BtYg9EDOAJYH0gmZnudBc3eU2rHytl783oqqNe6G4j4MvrcZux1jvW267r7KTNOiZMH9sNvcxzLYEpHZr7GsItQH7PcJW2YLwpCXJAnUGcF7k4vQu/ufImbGh8zuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UcJGNyd1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26BBC2BCB3;
+	Tue, 21 Apr 2026 15:37:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776785846;
+	bh=G2w1sKL3l5wuSUcaAd0p9VSqnfL6gf7sVEeWF7dVURc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=UcJGNyd1GeMtl8O5K3wA+iJ7Ahd+v8AhzHmn6aQhprdsM5L4DBy2ZbggnbxrXw+KF
+	 LORh54xxGxhZxh8GOWKAJhVKt8R3EODpiLk+0lmzNTUrWVMPJ7BgdE+aFjvlm8lWQZ
+	 gemNdmNQF9kZfikAn/CustdjaUpHKRdIAs5ONLviTSIT93cbWGXelKtIN/kL7ge8lw
+	 nOw4ckyOjLxWLSUDOQxDFX6fXHLC6yX7fXAcvPkib3eq9krWpa6am7OParD+Sva7J1
+	 KSctuyRSH6nuQEa6cIGqoVcP/XZHWsZNo2lrn+XQe500ZAkrpdiKW0Qugg6BmJEghl
+	 QVMbDHcCHK3GQ==
+Message-ID: <b2c9158f-ebaa-41b0-b471-22413ed5bc2b@kernel.org>
+Date: Tue, 21 Apr 2026 17:37:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260421084701.24227-1-laura.nao@collabora.com>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] soc: qcom: socinfo: Add SoC ID for Nord SA8797P
+To: Shawn Guo <shengchao.guo@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Dmitry Baryshkov <lumag@kernel.org>,
+ Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+ Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260421040231.1256998-1-shengchao.guo@oss.qualcomm.com>
+ <20260421040231.1256998-3-shengchao.guo@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20260421040231.1256998-3-shengchao.guo@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
-	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103964-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-103965-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	DKIM_TRACE(0.00)[arm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[liviu.dudau@arm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[collabora.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,arm.com:dkim,arm.com:email]
-X-Rspamd-Queue-Id: 3A45E43CD7E
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: D24B343CD86
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, Apr 21, 2026 at 10:47:01AM +0200, Laura Nao wrote:
-> The DRIVER_GEM_GPUVA feature flag is currently only used to control two
-> behaviors within the DRM core:
-> - calling  drm_gem_gpuva_init() during
->   GEM object initialization
-> - creating the "gpuvas" debugfs entry
+On 21/04/2026 06:02, Shawn Guo wrote:
+> From: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
 > 
-> drm_gem_gpuva_init() is a plain INIT_LIST_HEAD() and therefore is cheap
-> to run for every GEM object. The DRM_DEBUGFS_GPUVA_INFO macro is only
-> referenced by GPU-VA capable drivers, so clearing the feature bit does
-> not cause any unrelated drivers to get the "gpuvas" debugfs node. The
-> flag doesn't have any relevant purpose (e.g. gating ioctl handlers or MM
-> logic) and doesn't provide any practical benefit.
-> 
-> Remove the flag definition and drop it from all drivers that use it,
-> call drm_gem_gpuva_init() unconditionally and clear the driver features
-> bit in DRM_DEBUGFS_GPUVA_INFO.
-> 
-> Signed-off-by: Laura Nao <laura.nao@collabora.com>
-> ---
->  drivers/gpu/drm/drm_gem.c             | 3 +--
->  drivers/gpu/drm/imagination/pvr_drv.c | 2 +-
->  drivers/gpu/drm/msm/msm_drv.c         | 2 --
->  drivers/gpu/drm/nouveau/nouveau_drm.c | 1 -
->  drivers/gpu/drm/panthor/panthor_drv.c | 2 +-
+> Nord is a SoC family from Qualcomm designed as the next generation of
+> Lemans series.  SA8797P is the automotive variant of Nord, where
+> the platform resources such as clocks, regulators, interconnects, etc.
+> are managed by firmware through SCMI.
 
-For panthor changes:
+Binding said it, no need to say the same twice. Binding commit is
+describing the hardware, not the driver commit. Please look at Git
+history for some examples.
 
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
+With above paragraph dropped:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
 
 Best regards,
-Liviu
-
->  drivers/gpu/drm/xe/xe_device.c        | 2 +-
->  include/drm/drm_debugfs.h             | 2 +-
->  include/drm/drm_drv.h                 | 6 ------
->  include/drm/drm_gem.h                 | 3 ---
->  9 files changed, 5 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-> index 0377a5fd402d..cb703d0072aa 100644
-> --- a/drivers/gpu/drm/drm_gem.c
-> +++ b/drivers/gpu/drm/drm_gem.c
-> @@ -232,8 +232,7 @@ void drm_gem_private_object_init(struct drm_device *dev,
->  	if (!obj->resv)
->  		obj->resv = &obj->_resv;
->  
-> -	if (drm_core_check_feature(dev, DRIVER_GEM_GPUVA))
-> -		drm_gem_gpuva_init(obj);
-> +	drm_gem_gpuva_init(obj);
->  
->  	drm_vma_node_reset(&obj->vma_node);
->  	INIT_LIST_HEAD(&obj->lru_node);
-> diff --git a/drivers/gpu/drm/imagination/pvr_drv.c b/drivers/gpu/drm/imagination/pvr_drv.c
-> index 268900464ab6..80033d4cb66a 100644
-> --- a/drivers/gpu/drm/imagination/pvr_drv.c
-> +++ b/drivers/gpu/drm/imagination/pvr_drv.c
-> @@ -1375,7 +1375,7 @@ pvr_drm_driver_postclose(__always_unused struct drm_device *drm_dev,
->  DEFINE_DRM_GEM_FOPS(pvr_drm_driver_fops);
->  
->  static struct drm_driver pvr_drm_driver = {
-> -	.driver_features = DRIVER_GEM | DRIVER_GEM_GPUVA | DRIVER_RENDER |
-> +	.driver_features = DRIVER_GEM | DRIVER_RENDER |
->  			   DRIVER_SYNCOBJ | DRIVER_SYNCOBJ_TIMELINE,
->  	.open = pvr_drm_driver_open,
->  	.postclose = pvr_drm_driver_postclose,
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 195f40e331e5..ee38c18715f0 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -825,7 +825,6 @@ static const struct file_operations fops = {
->  
->  #define DRIVER_FEATURES_GPU ( \
->  		DRIVER_GEM | \
-> -		DRIVER_GEM_GPUVA | \
->  		DRIVER_RENDER | \
->  		DRIVER_SYNCOBJ | \
->  		DRIVER_SYNCOBJ_TIMELINE | \
-> @@ -833,7 +832,6 @@ static const struct file_operations fops = {
->  
->  #define DRIVER_FEATURES_KMS ( \
->  		DRIVER_GEM | \
-> -		DRIVER_GEM_GPUVA | \
->  		DRIVER_ATOMIC | \
->  		DRIVER_MODESET | \
->  		0 )
-> diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c b/drivers/gpu/drm/nouveau/nouveau_drm.c
-> index 5d8475e4895e..0f5f662e5429 100644
-> --- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-> +++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-> @@ -1364,7 +1364,6 @@ static struct drm_driver
->  driver_stub = {
->  	.driver_features = DRIVER_GEM |
->  			   DRIVER_SYNCOBJ | DRIVER_SYNCOBJ_TIMELINE |
-> -			   DRIVER_GEM_GPUVA |
->  			   DRIVER_MODESET |
->  			   DRIVER_RENDER,
->  	.open = nouveau_drm_open,
-> diff --git a/drivers/gpu/drm/panthor/panthor_drv.c b/drivers/gpu/drm/panthor/panthor_drv.c
-> index 87d27c3c1456..1a1d40a744db 100644
-> --- a/drivers/gpu/drm/panthor/panthor_drv.c
-> +++ b/drivers/gpu/drm/panthor/panthor_drv.c
-> @@ -1805,7 +1805,7 @@ static void panthor_debugfs_init(struct drm_minor *minor)
->   */
->  static const struct drm_driver panthor_drm_driver = {
->  	.driver_features = DRIVER_RENDER | DRIVER_GEM | DRIVER_SYNCOBJ |
-> -			   DRIVER_SYNCOBJ_TIMELINE | DRIVER_GEM_GPUVA,
-> +			   DRIVER_SYNCOBJ_TIMELINE,
->  	.open = panthor_open,
->  	.postclose = panthor_postclose,
->  	.show_fdinfo = panthor_show_fdinfo,
-> diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
-> index ffea4a453c01..b3acc202df76 100644
-> --- a/drivers/gpu/drm/xe/xe_device.c
-> +++ b/drivers/gpu/drm/xe/xe_device.c
-> @@ -393,7 +393,7 @@ static struct drm_driver driver = {
->  	.driver_features =
->  	    DRIVER_GEM |
->  	    DRIVER_RENDER | DRIVER_SYNCOBJ |
-> -	    DRIVER_SYNCOBJ_TIMELINE | DRIVER_GEM_GPUVA,
-> +	    DRIVER_SYNCOBJ_TIMELINE,
->  	.open = xe_file_open,
->  	.postclose = xe_file_close,
->  
-> diff --git a/include/drm/drm_debugfs.h b/include/drm/drm_debugfs.h
-> index ea8cba94208a..eb93512b0f23 100644
-> --- a/include/drm/drm_debugfs.h
-> +++ b/include/drm/drm_debugfs.h
-> @@ -48,7 +48,7 @@
->   * For each DRM GPU VA space drivers should call drm_debugfs_gpuva_info() from
->   * their @show callback.
->   */
-> -#define DRM_DEBUGFS_GPUVA_INFO(show, data) {"gpuvas", show, DRIVER_GEM_GPUVA, data}
-> +#define DRM_DEBUGFS_GPUVA_INFO(show, data) {"gpuvas", show, 0, data}
->  
->  /**
->   * struct drm_info_list - debugfs info list entry
-> diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
-> index 42fc085f986d..e09559495c5b 100644
-> --- a/include/drm/drm_drv.h
-> +++ b/include/drm/drm_drv.h
-> @@ -107,12 +107,6 @@ enum drm_driver_feature {
->  	 * acceleration should be handled by two drivers that are connected using auxiliary bus.
->  	 */
->  	DRIVER_COMPUTE_ACCEL            = BIT(7),
-> -	/**
-> -	 * @DRIVER_GEM_GPUVA:
-> -	 *
-> -	 * Driver supports user defined GPU VA bindings for GEM objects.
-> -	 */
-> -	DRIVER_GEM_GPUVA		= BIT(8),
->  	/**
->  	 * @DRIVER_CURSOR_HOTSPOT:
->  	 *
-> diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
-> index 86f5846154f7..996aa418dce9 100644
-> --- a/include/drm/drm_gem.h
-> +++ b/include/drm/drm_gem.h
-> @@ -663,9 +663,6 @@ static inline bool drm_gem_is_imported(const struct drm_gem_object *obj)
->   *
->   * This initializes the &drm_gem_object's &drm_gpuvm_bo list.
->   *
-> - * Calling this function is only necessary for drivers intending to support the
-> - * &drm_driver_feature DRIVER_GEM_GPUVA.
-> - *
->   * See also drm_gem_gpuva_set_lock().
->   */
->  static inline void drm_gem_gpuva_init(struct drm_gem_object *obj)
-> -- 
-> 2.39.5
-> 
-
--- 
-====================
-| I would like to |
-| fix the world,  |
-| but they're not |
-| giving me the   |
- \ source code!  /
-  ---------------
-    ¯\_(ツ)_/¯
+Krzysztof
 
