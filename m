@@ -1,196 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-103982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iNKmIR7Z52kBBwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 22:07:58 +0200
+	id 2Cd/CIra52kBBwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 22:14:02 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EC3943F42C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 22:07:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8148E43F555
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 22:14:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8992B30F234D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 20:00:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BC3B9305D6D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 20:07:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D2CA3DD52B;
-	Tue, 21 Apr 2026 20:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 106973DD501;
+	Tue, 21 Apr 2026 20:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q3Ls/D6b"
+	dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b="jTtZPxWf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513E03D9DDA;
-	Tue, 21 Apr 2026 20:00:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776801617; cv=none; b=rh9tp3DjZdP3oDA3sa4lxMJEgpMU0OkdPqhQgu9nHbsFPe8JNk4NlGznUXZc43K9GsLR8qwzS2YQAK/100lQcftDISxPQgHH7lOU066Omjtjx3YgoEw8CXWwgfOhqPpHsPIXP5a1fLDilyPW5k5+3EolkPBLMNeeIixx4VErQJo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776801617; c=relaxed/simple;
-	bh=Zlc1xvs7V1MA2mbAbpURS34qCSlGhYRGswgZIBC4UrY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l7s0wRpKAUaRlTYNweTQaSxXgHpVC+TQoOf8xJjGmK4DfcO3cqS7QSLgdu6QKqE4jKZC7j//X4Qpdpu4onodJ3m9mdjgH55Zz1Pc5qvFuxim0UxMGF4mC82ODfPgqQ0x1zeSgosQ1CPRzUK/l3tijUsZTwLE6KyDMzG3uzgtGRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q3Ls/D6b; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1E0C2BCB0;
-	Tue, 21 Apr 2026 20:00:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776801617;
-	bh=Zlc1xvs7V1MA2mbAbpURS34qCSlGhYRGswgZIBC4UrY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Q3Ls/D6bQyexm8rodqpy6NEtHra1oMoMVRLg3U9JMkuJrvmpKemOoLsPg8viOmxAA
-	 oqbL97hhSfvKpFblHAkaTwKXjjjZLWkOveAAbzSfAq6JcamM1T1fjT2bPzUSogslAK
-	 +zvD75CC72k7pSEbCjzlxRdWV5d56eR8iYLCZ//CrhVjnarDFCciD4iZ3S+xX53yHk
-	 JTeIP7kLtxMiNbsa1tHstJOkS9fk+Nvrwwvv0ksP1PkgiT2k6Bx4ENQF1dlHWnOOKe
-	 HidJJmzeMoiBAw/SATUP6S23FVd3QT8sw7/HfUkMqBjCCQnnLWyBosurg75kP4c4BR
-	 TJbjwsrX4yqUA==
-Date: Tue, 21 Apr 2026 21:00:06 +0100
-From: Mark Brown <broonie@kernel.org>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Jeff Johnson <jjohnson@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Yang Xiwen <forbidden405@outlook.com>,
-	Alex Elder <elder@kernel.org>,
-	Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-	Rao Mandadapu <quic_srivasam@quicinc.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	linux-wireless@vger.kernel.org, ath10k@lists.infradead.org,
-	ath11k@lists.infradead.org, linux-pci@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-spi@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: Fix phandle-array constraints, again
-Message-ID: <ddeb29fc-1292-4191-8963-8ba817410740@sirena.org.uk>
-Mail-Followup-To: "Rob Herring (Arm)" <robh@kernel.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Jeff Johnson <jjohnson@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Yang Xiwen <forbidden405@outlook.com>,
-	Alex Elder <elder@kernel.org>,
-	Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-	Rao Mandadapu <quic_srivasam@quicinc.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Xu Yang <xu.yang_2@nxp.com>, Peng Fan <peng.fan@nxp.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-	linux-wireless@vger.kernel.org, ath10k@lists.infradead.org,
-	ath11k@lists.infradead.org, linux-pci@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-spi@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20260421195836.1547469-1-robh@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82583DD51F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2026 20:07:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.125.188.122
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776802062; cv=pass; b=rtKnwCQz84YKS5PHx8iukq35aYnTCVzjq/Ve4WVKJTsRZmUvIh0czrrqQQ20UtGNBzrCIg1NbrFBQ0C8KNIZE317kdgf2PKR96xLTfME8rE0BXq/1ALy0r9z+5rSCfMFlnrkMIFWsHi31R/RIgfo7apavGubDi7fXY5OR4xpbQo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776802062; c=relaxed/simple;
+	bh=823S5uz3tJJObpEPcWmvau0aO2vpfGG9Vl1N5EZDQ8M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qZuv1OHsYkDkbrx+yffixTNEyNDecnYteVKidNcb0Fqyd/rrZLsGRimnbjNCI3bV2PM6fjSM6rRwyfJtYD0xMM1cIbB9MGUzAflf+3yNJy1HTvNCRSTXZiTCg0P90j/ge+9NUJcGSMCvf8fY5auogMwRYpSrl52BVKBRCt4hAZc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b=jTtZPxWf; arc=pass smtp.client-ip=185.125.188.122
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com [209.85.218.69])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 477F53F7DA
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2026 20:07:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20251003; t=1776802057;
+	bh=SgynumTsm4DxtjJgRso0TliW7nAI7gZng0e1H8jdSFI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type;
+	b=jTtZPxWfYjY141+IDtq+x2elUki2C/c35h6/SWT+VrUAE+C4eda9RrhXXguPYVqf9
+	 +wdvN+lwVIJB0hbrNfem2zm6gtCM91XN4mwGfD1kzqXoZmJ5eFkaqLUj30bfAa6hr0
+	 bDDiuG4hyibJUGJ8NoeTR379gtuz7HWiksZSq2lbCymEKDQKKzVLaokN9rRwNDq6lz
+	 kdxSkmJkCD50LqS7y6kWofsRraF10nF7bSMjbYkPC98h7pIme3kx8lerrvWLoHr/Z/
+	 UOsh9KRxX4+TO/n7sqN1+bzw4WOwcZtJIRUOtjZDLIoUKSgQAQi7GJV6CASR7c9hjD
+	 3d0W3iEFMJjXmQXQdadS/I6kyoy4k9XUkOF2MSjdOVLgCaqOZ15n3inCuRmCLA65Mv
+	 9FCrLJMR1Wq61slqqHRhhPbKi2dDyG/QWF/5G4O6SQpMsiyuC+OHiJqLHiuPHc0h51
+	 7uf5khACDp2/qMcp9f0sLiO2mF8WddD7l+Py8RyUsC3OO1+5//NqJuya6tNjon2wei
+	 SFjhbwTtltdo4ahVRgDVSjSoOLwtzlNBNQPqxQXss0Fj1ITch876TmGYPKyfKHX8hw
+	 kuLyC9yy5Y81cdKLtgJfhHdk6sGU/l7WHvVjj7qTNdNq8G3SFzVHmhhxlzTq6At8tw
+	 bXsyHjMfgA+phDktt6OHJS9c=
+Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-ba70cda6755so152278166b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Apr 2026 13:07:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776802057; cv=none;
+        d=google.com; s=arc-20240605;
+        b=iK/hwJ5RCdh/Mzmzj3RvC5srhxOMB7JaHWuzNBlDNQq7dCS+3z4Vb+xpwmxN8+dcVs
+         +igRWoYhHgFrxYC3KAJ99ZrLTm1LpD/6w9LfCLfvs0EMpnpuuaMwc8rF7h/6WbuNakJd
+         L7fU1DLcN0wALH6tN8BsVRLUNKxIM1BuT3yzVz+pDP6/fDHGFcj3euducMB2I+cRR9Wz
+         caHaN8vTt7KZPGoxBe5kI8JQK+mvBstI/LSVneKDD+7w05o7t3cEA7HrznmW24U3Jifd
+         hn0QnrBSv890weRbu3oynqA3ub1ssHrUqksE6uaEVNeR4BL5dTF2BJBNjSLYNy1lOdOQ
+         moDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version;
+        bh=SgynumTsm4DxtjJgRso0TliW7nAI7gZng0e1H8jdSFI=;
+        fh=xtZljNSgBXo/iSuaSBPjaS8+OKeqNCDsEn1u+iJLMwg=;
+        b=VbYWomKpt74OTUh4uc2rRQ2uZa4olk4NSiFgzmOXL4ITJulSxTnsC8ftEUesI8CiYM
+         xteERsrxqchYqv6k3yuEJELwDBeNFJdwhHkFN87FVFxqmUQN/U2g9PnOyoDElfQ/Wx1G
+         FEv7ycHYg3/O8i4a/vQkOF0fg1ENH+xifqZySxqWCQtiUPoUs4GlwC2VdaB9tIsIEkJ6
+         hi7NHRwhweNFF+lu4ObTtiVqRqDU6FCftlJzd7B8zkqBENOUDffL7lK/yT56fZodd39V
+         MRMDGJo2Q9gSl1IA10DlRuxieLtfBVidQxJJs0YX2qYcV/5ywhagYkeBTxnaRIoFZHH1
+         84Vw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776802057; x=1777406857;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=SgynumTsm4DxtjJgRso0TliW7nAI7gZng0e1H8jdSFI=;
+        b=ZWev+Eo3UFQms1xeCNkroIzpmmzayKpJAzHR2t7pD73Pnuk2KKKuv6iyhu7iHhqgxX
+         eY3Zm1sOXkLvjfuIv550PNrdClEEIJwclTYMpeOvyL5ECtuPFaoYH1S2Mp0Dq7bhiIcY
+         vhw3hkLalEgqWqa/97rA1Jj3XG8EyFJa9gntQvLZEvpOEUK13EWctlJvsno10WjBtQcz
+         smY0NMZkG0XW0/qGnIltWubzQ319yo9Zu3uTcjqo//gUKll/1F8+CM99ObeR9rcfllE1
+         eSk9z9qX41yoY57PgkVuRN9xq5IXQxJ48awHe2O90HEIrKpekXyRSLLlEZSg98Lo+j6N
+         9L7g==
+X-Forwarded-Encrypted: i=1; AFNElJ+wHFZMUR8YGv2MOk1KcOxHcMhjVKA+pMKL0V/T2syq49ZHf2kygqd/+8dwwxkJ4uP4bZnV1Daw9FHqVDD0@vger.kernel.org
+X-Gm-Message-State: AOJu0YzQ2USl+kPRM4agzzu4F6g26tGzTeE7zV82YAJKoUQlFUE3WwIk
+	rUk/1gpsWD5pOIAxEqWSAJ0sFgtjvXTb1EH3PhkuXj+vLlF9hmL6gdYxsGO9owWkOuhmFXeQYBu
+	7jVqo4O91L+4PQXstzdC8+HUkYqoEWvs0nFGWh86ThL9yC+nQWB3l2vAtlyp19Ai3pNjp7jxQ2z
+	Cshbv8q6RwJnNMa76iLf2Xudk2Fg83WKbxxVC58annQ3VAQHijpbDhFSBXUw==
+X-Gm-Gg: AeBDievYNFFm+oqpcNLBiBdprEywtVVktExl8mkIn6DiPqhCC8e1lIE/jZ9rEAjt8tc
+	2H/iF/8aQXmEXUhn1oSAl/E6cXF/Gz8CrwyLAI2Nb32yUQOVda64AHbLqtlNYjolu3fCLXRlfmK
+	gn0SeTiinlRzNbWHto2Ntss6aRiRNkZJ7wqGPWH7q9Hl39eNK3tdSEkmu/xjgfGBE5alk6AUfvu
+	iQfssWdr+dpwMd6CXzP/9mfqRDCHB0Zxzo3vHIC9twByCDwgA==
+X-Received: by 2002:a17:907:160d:b0:ba9:2223:93a9 with SMTP id a640c23a62f3a-ba9222393e3mr365453666b.33.1776802056794;
+        Tue, 21 Apr 2026 13:07:36 -0700 (PDT)
+X-Received: by 2002:a17:907:160d:b0:ba9:2223:93a9 with SMTP id
+ a640c23a62f3a-ba9222393e3mr365451666b.33.1776802056350; Tue, 21 Apr 2026
+ 13:07:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="SlEK5XXQLOw6MldA"
-Content-Disposition: inline
-In-Reply-To: <20260421195836.1547469-1-robh@kernel.org>
-X-Cookie: Jenkinson's Law:
-X-Spamd-Result: default: False [-2.76 / 15.00];
-	SIGNED_PGP(-2.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+References: <20260421-x1e80100-audio-limit-v1-1-98bac8cee2ee@canonical.com> <abcab457-a8e3-47e2-b5b8-f073bb741c1d@sirena.org.uk>
+In-Reply-To: <abcab457-a8e3-47e2-b5b8-f073bb741c1d@sirena.org.uk>
+From: Tobias Heider <tobias.heider@canonical.com>
+Date: Tue, 21 Apr 2026 22:07:25 +0200
+X-Gm-Features: AQROBzASU_KTNYayV4ZF9fPgCjdd-0NvGfl1zXPAI4_UHIVGmRoYed66n7wTKOE
+Message-ID: <CAARv3RQjL1JGnUnC4oBkGKNi+C0G5_Pr0anDCrwm24Pdj-E6iQ@mail.gmail.com>
+Subject: Re: [PATCH] ASoC: qcom: x1e80100: limit speaker volumes
+To: Mark Brown <broonie@kernel.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, linux-sound@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Johan Hovold <johan@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[canonical.com,reject];
+	R_DKIM_ALLOW(-0.20)[canonical.com:s=20251003];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103982-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[linux.intel.com,kernel.org,linaro.org,gerhold.net,lunn.ch,davemloft.net,google.com,redhat.com,sipsolutions.net,samsung.com,gmail.com,linuxfoundation.org,outlook.com,oss.qualcomm.com,quicinc.com,foss.st.com,nxp.com,suse.de,vger.kernel.org,lists.infradead.org];
-	RCPT_COUNT_TWELVE(0.00)[45];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[canonical.com:+];
+	TAGGED_FROM(0.00)[bounces-103983-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,sirena.org.uk:mid]
-X-Rspamd-Queue-Id: 1EC3943F42C
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[tobias.heider@canonical.com,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[canonical.com:dkim,mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 8148E43F555
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+On Tue, Apr 21, 2026 at 6:27=E2=80=AFPM Mark Brown <broonie@kernel.org> wro=
+te:
+>
+> On Tue, Apr 21, 2026 at 02:07:58PM +0200, Tobias Heider wrote:
+> > Limit the digital gain and PA volumes to a combined -3 dB in the machin=
+e
+> > driver to reduce the risk of speaker damage until we have active speake=
+r
+> > protection in place (or higher safe levels have been established).
+>
+> > +             snd_soc_limit_volume(card, "WSA_RX0 Digital Volume", 81);
+> > +             snd_soc_limit_volume(card, "WSA_RX1 Digital Volume", 81);
+>
+> Do these actually match?  The hamoa WSA devices look like they've got
+> sound-name-prefix specified so the actual controls will have WSA and
+> WSA2 prefixes but snd_soc_limit_volume() uses snd_soc_card_get_kcontrol()
+> which just does a snd_ctl_find_id_mixer(), that doesn't understand
+> prefixes.
+>
+> Probably something in that chain of operations should log an error since
+> typos really aren't going to be discoverable here...
 
---SlEK5XXQLOw6MldA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I think you might be right but I am not too experienced with alsa so I coul=
+d use
+some help to figure out if what I'm doing makes sense.
 
-On Tue, Apr 21, 2026 at 02:55:25PM -0500, Rob Herring (Arm) wrote:
-> The unfortunately named 'phandle-array' property type is really a matrix
-> with phandle and fixed arg cells entries. A matrix property should have 2
-> levels of items constraints.
+I ran `amixer -c0 controls` and that actually shows the prefixed names
+as you said.
+`amixer -c0 cget name=3D"WSA WSA_RX0 Digital Volume"` also confirms that th=
+ey are
+still listing max=3D124, so it looks like it indeed didn't work.
 
-Acked-by: Mark Brown <broonie@kernel.org>
+From what I understand the correct fix would be listing all four as in:
+snd_soc_limit_volume(card, "WSA WSA_RX0 Digital", 81);
+snd_soc_limit_volume(card, "WSA WSA_RX1 Digital", 81);
+snd_soc_limit_volume(card, "WSA2 WSA_RX0 Digital", 81);
+snd_soc_limit_volume(card, "WSA2 WSA_RX1 Digital", 81);
 
---SlEK5XXQLOw6MldA
-Content-Type: application/pgp-signature; name="signature.asc"
+Does that sound correct?
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnn10UACgkQJNaLcl1U
-h9C8Vgf/TIh3jOwQkzaSh+ITMEgUCeXAFPb4VUUhIGQS66939JxKIGlaCr8kVeam
-fIS+iyN8BAflGToJHouS473TERLm3pmQaKv4FHy2m/XW3E7aNKl/WZ6nuPJbZzLH
-jN5jU8h19JcMriiidDPn73PPnDdSLZHsxuegwuYvWjjutnanS7pzFFJnvB5FqglH
-DmQVRssnzzYzUBCLII2ARQtKPwTAkv1thWPjVRwXU0AxPSrEWA2+9xpNDedbe86f
-gZJyKDlrKgAXce/tnTDNOJYTUAUwUf66KgGMWLOjfRI+tbwsRV/Z1s6TbSIGgVif
-0AXVOMGUdqpfkYJFeGJGk/8tGGdtZw==
-=Hh8L
------END PGP SIGNATURE-----
-
---SlEK5XXQLOw6MldA--
+I'll run a few tests and send a fixed version once I have verified
+that works and amixer
+prints the correct max limit.
 
