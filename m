@@ -1,60 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-103919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8GQ8AL5R52mm6gEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 12:30:22 +0200
+	id oHH5NUxS52mn6gEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 12:32:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F8F44398A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 12:30:21 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 594D1439939
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 12:32:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 037043014A19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 10:27:14 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6B6543038D06
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 10:30:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B8B23AE1A2;
-	Tue, 21 Apr 2026 10:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1906A3B7767;
+	Tue, 21 Apr 2026 10:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PYEW0azN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oi/uzCeg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4805B38836A;
-	Tue, 21 Apr 2026 10:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0C43A1A5F;
+	Tue, 21 Apr 2026 10:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776767204; cv=none; b=BrKTqCFWzlNPlwmZ1JGqzLM3VGOURwhrgsgChac3GHkiePWE1KBqg3yvKLSsnDhgryIlkDuZ3JKBupvOPdVbom2g+u82W54fS7wXa+kfZYCmTxeweaMmFzeJ6MZX1RBY1WQJYUsfd7hckrIlxV2MrCLlhOXy4Xuk3lJXp2uiGCM=
+	t=1776767414; cv=none; b=s02YP2DuL3R/hRqHAn+rPRKO5r5zXAyE1qI2RNELOQ6gko5zDnL+dOmH8XiuDwZS8+Z8H4i91Larp7UHDggyoVGc9XpeBGQXP+KV/uC+kcL6UY5MT6894iIwsSQiXfoywmnp52spVWntTfDJi5IcCxQp6J4s4hlRcvLFF2YZB4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776767204; c=relaxed/simple;
-	bh=yd1Y/WINI54aboyMSg7g+yteFK5+wdGUNcu8TPZZHxo=;
+	s=arc-20240116; t=1776767414; c=relaxed/simple;
+	bh=zp3St2ZPpV3+uoZ2cwpRxOGcnzYyOTjsdd/OkGYILsE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TPaIdPFNQ07/x3ysE1ce/Hs0xKnLlP9NRUYRcA+iIxqeaGU9eF/GdPtOaACmqq0ozIw9qvXmrl+hMjYRmL9TqCamqgXRmD/9ndZvD1k7Qgd+ShZRxpf3JhgHnvqyqLVHVBz09ziOln+bZ64Q3tAv/BV01VTimhTzK02ngJMyRCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PYEW0azN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8BBC2BCB7;
-	Tue, 21 Apr 2026 10:26:43 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y9qiV+xoLe0b6emYbuXkfF9VDzBhS1Oj3sGkmaXhZKhvgpW3Dk06c05pQb1glIm9tduSN8MewPqAMe3uDOBlp4SZA7sbG/SQ26KMkvomnE2/hRZQ99h44LDOr66+PMNohSQGmr61/whQamskQ8f3Jiew3rQmFgkc3/YMUMsAyr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oi/uzCeg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A03C2BCB6;
+	Tue, 21 Apr 2026 10:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776767204;
-	bh=yd1Y/WINI54aboyMSg7g+yteFK5+wdGUNcu8TPZZHxo=;
+	s=k20201202; t=1776767414;
+	bh=zp3St2ZPpV3+uoZ2cwpRxOGcnzYyOTjsdd/OkGYILsE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PYEW0azNDg8vzl8nXxZcIIc3lqNzYGblhfy8uUdc+b3jZxkPBu+G3h+mr+qI+IK9O
-	 EF5ayhoO91JSy3JCCxqVCr1x1OYaqLAIR77LKfbKde339cWdJ9C1UnwDOtPMu3WMHb
-	 koGwnKnGaKQRcMCnbQJYcYY1E6LCj1BYY8qLBrb77zHqlhLaGBpANAlQ40/O33ORTA
-	 sr1PQwCr1TZjUYx9HcmkwTU2I8aQeOGyomwmdradDhcAVWdBeRkC4rTIYeewLMS3LV
-	 JLnocTz1C9laQuiTuBeX/NHfppbJgmebSvZT61wXAHoG8B8X/dDXuqh+6dFxJcV6AB
-	 qov/m9bEnabdQ==
-Date: Tue, 21 Apr 2026 12:26:41 +0200
+	b=oi/uzCegyCI+CV97WcLDfMpZw2C9Cqx0K6F74Jt6y9zttLXU0VECxGNMVulWqZq5c
+	 hQALnB0wvd+jBmtggdGIn0LmiDBzfl+BHwwNet4U7mIlln7NGqcDdMRi9/sIK6NJO/
+	 FMuTjaNL3GFxLIiRvPTsi8idl5Y53fFw3vLmP5+TVpU8GLE0UMz8nVWoXt8ffhkbd2
+	 p0KEkv+OUWHc6r408NL/7UTmgucQ2Y76LGZaXuf1+g/SHBXSuZbCSbgTwF2tBP9Bsx
+	 IRhZoaJvJ+js1Gf5aWd6XP1i0GmSXI3jF743mynB0FhhyrmBU09a3LnOMs9kszHt5b
+	 9VLTnIUsW2vWQ==
+Date: Tue, 21 Apr 2026 12:30:11 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+To: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Cc: Jassi Brar <jassisinghbrar@gmail.com>, 
+	Sibi Sankar <sibi.sankar@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: soc: qcom: qcom,pmic-glink: Add Hawi
- compatible string
-Message-ID: <20260421-honored-brave-pegasus-b285f1@quoll>
-References: <20260419-hawi-pmic-glink-v1-1-a26908c468fc@oss.qualcomm.com>
+	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: mailbox: qcom: Document Nord CPUCP
+ mailbox controller
+Message-ID: <20260421-free-meticulous-beetle-bb3fcd@quoll>
+References: <20260420034932.1247344-1-shengchao.guo@oss.qualcomm.com>
+ <20260420034932.1247344-2-shengchao.guo@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,49 +66,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260419-hawi-pmic-glink-v1-1-a26908c468fc@oss.qualcomm.com>
+In-Reply-To: <20260420034932.1247344-2-shengchao.guo@oss.qualcomm.com>
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-103919-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-103920-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[gmail.com,oss.qualcomm.com,kernel.org,vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 1F8F44398A8
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 594D1439939
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Sun, Apr 19, 2026 at 07:37:37PM -0700, Fenglin Wu wrote:
-> Hawi is a mobile platform that is compatible with Kaanapali platform
-> with respect to pmic-glink support. Add the Hawi compatible string
-> with Kaanapali as a fallback.
+On Mon, Apr 20, 2026 at 11:49:31AM +0800, Shawn Guo wrote:
+> From: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
 > 
-> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-> ---
->  Documentation/devicetree/bindings/soc/qcom/qcom,pmic-glink.yaml | 5 +++++
->  1 file changed, 5 insertions(+)
+> Document CPUSS Control Processor (CPUCP) mailbox controller for Qualcomm
+> Nord SoC.  It has 16 IPC channels, compared to 3 on X1E80100 CPUCP.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+And more channels does not make it incompatible (see writing bindings or
+DTS101 slides). Please provide explanation why devices are not
+compatible.
 
 Best regards,
 Krzysztof
