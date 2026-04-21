@@ -1,158 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-103988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-103989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eFPBGEnp52nGCgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-103988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 23:16:57 +0200
+	id YGIzHjDt52mhCwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-103989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 23:33:36 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3CA343FB31
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 23:16:56 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id B793D43FC08
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 23:33:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C7D213045276
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 21:16:55 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A7F9B305ED9D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Apr 2026 21:33:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3A0C37DE84;
-	Tue, 21 Apr 2026 21:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3017379ED6;
+	Tue, 21 Apr 2026 21:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LdV+7tP7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RfEYijh7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B23362156;
-	Tue, 21 Apr 2026 21:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8DF2F4A05;
+	Tue, 21 Apr 2026 21:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776806212; cv=none; b=WRauJZtsNQkEz4AFCfwp/Qk7S22AOPgUeiz9V+UHvRjCOgNKXl8AT2e11P2CmAsuD9s22VST9msHir2pXmrcXYJMAtA1VKBhLyzOCX4ZXzhwQCbfY3Ct5IwOagriW/8NqJj2qWT3OfLNLEW04BQLM8bQ539kLKlP/v0yvhnoqVs=
+	t=1776807212; cv=none; b=Zej1RspqZqcTNA2mbdXSbX5f34XMtajp+x1dAESkweSDIGZiBvs2GJwRm5dygFUMNHxG2JuA3WS/mas+1SnM28kMDbcevNWU61qR5LymuziDZs1YlZ0VrYYGpTtG4oHwlQhteRVSL9vp2banEGXKRf2jbvDaLzD+P1epPWnlAAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776806212; c=relaxed/simple;
-	bh=vRFrBCyS12ZK2We0LSqEz5+dlFxdZefS4a2zrdylNd0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Iws9maT0AafHO0j+b5QbSzEPsgrDILJJpuuEUJBRO3E+LVdfh7VcW37eW0W7Gtq1BHNwwt/+UbtQrRkRYz/1i6qr+01WKadG6ZGSYjYGajlLr5AQ6ALoi+hha8xmScYZUERm+n12WexMVOcG6bdt1T0nVcp1B8SpamRYtIsu+DE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LdV+7tP7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0652BC2BCB0;
-	Tue, 21 Apr 2026 21:16:50 +0000 (UTC)
+	s=arc-20240116; t=1776807212; c=relaxed/simple;
+	bh=vatupuq4WrABpSuEUMYUtujivXgVDiHk3e1MmNVxM+Q=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=e1kkqojvvb7JKiyHcSlbBsam7OTIMBBZQS6ktaBp07FzxRJ+3rBhtw0Dv8FXXsQBEUiwlwc2CLnacNUxdPuAJ5Ocy8zyq/z+XSHghqguR+xsIvSi1ug384x3X+rnZ5AWH85zkZtAcmQlrZes8q6xS7T0aJ1i6xB0cPa0OZWuDlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RfEYijh7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D63C2BCB0;
+	Tue, 21 Apr 2026 21:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776806212;
-	bh=vRFrBCyS12ZK2We0LSqEz5+dlFxdZefS4a2zrdylNd0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LdV+7tP7o8nV2r534L9CdkkP0XhX8sQgoeYzpd2q+/B6+8ioPXSNIOuZW7NpoPyQm
-	 5Ro6g0EDRCvQOkci1SXMbPcCVf1nJyQ9azyZn4oEj2S6XL7dpPSp8Ae86/qWJe3Ymv
-	 Zpeq4+/pUxVt8cTSFcYzkvol6lz8YO+Mx9dzmcNYtAYyjToZtqlMUpvwWD7fswjCm2
-	 Pxx6nXXm0HiQbfi4ajZmMLC4vJCBTAoVk4NFzopbf1G4MsOVdxUxnMKpZ+Q8G55BmM
-	 G4idO1q12OHudCae49t+waBJfUcIeSLhIi3HWqmhn7Mk7RDjQOHrcem5rG288+es2t
-	 mfTBpF0mTzhFA==
-Date: Tue, 21 Apr 2026 22:16:48 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>, Vinod Koul <vkoul@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 3/4] regulator: qcom-rpmh: readback
- voltage/bypass/mode/status set during bootup
-Message-ID: <66f59c2f-f759-44b4-9639-d8845581ae9b@sirena.org.uk>
-References: <20260420-read-rpmh-v3-v4-0-70c152e6c958@oss.qualcomm.com>
- <20260420-read-rpmh-v3-v4-3-70c152e6c958@oss.qualcomm.com>
+	s=k20201202; t=1776807212;
+	bh=vatupuq4WrABpSuEUMYUtujivXgVDiHk3e1MmNVxM+Q=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=RfEYijh7XhOIIxtCBiZK1gn5IXNLv5qcn5amQw5CqC2XQ0mRjsWMy0SwC/jKxN8Ha
+	 +lGNHgaycbYUVz/8qUQTAV87+keU8WY1I1fe4qL/Cubm0CmcRljTFyT4oCGT3XsCWG
+	 21JAOI+XCTuLyqtAQ0JY89PQj9ztU0bsVRSzsv4sAV4REIQeaAk9EIXe86axCL8Lcv
+	 P49oQppEQE3W5ysKk35W1yekjIPJzFLIHvqS9YHqLVNNeeeAs1gWZnOJuQHTbQ76Mo
+	 fn4ArOBoMvEaOR/5jHbzodnC5RnVkOGNRxUq58/UbFZ0QTUKrwlb9kjzN5QiQ3GPHQ
+	 wuq7UQCA8GLiQ==
+Date: Tue, 21 Apr 2026 16:33:30 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Iha+hpkMpV0+LM2D"
-Content-Disposition: inline
-In-Reply-To: <20260420-read-rpmh-v3-v4-3-70c152e6c958@oss.qualcomm.com>
-X-Cookie: Jenkinson's Law:
-X-Spamd-Result: default: False [-4.26 / 15.00];
-	SIGNED_PGP(-2.00)[];
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Sylwester Nawrocki <s.nawrocki@samsung.com>, ath11k@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-pci@vger.kernel.org, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Xu Yang <xu.yang_2@nxp.com>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ Andrew Lunn <andrew+netdev@lunn.ch>, linux-spi@vger.kernel.org, 
+ Patrice Chotard <patrice.chotard@foss.st.com>, 
+ Rao Mandadapu <quic_srivasam@quicinc.com>, Mark Brown <broonie@kernel.org>, 
+ linux-sound@vger.kernel.org, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Bjorn Andersson <andersson@kernel.org>, linux-remoteproc@vger.kernel.org, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, 
+ Sibi Sankar <sibi.sankar@oss.qualcomm.com>, linux-wireless@vger.kernel.org, 
+ Johannes Berg <johannes@sipsolutions.net>, 
+ Yang Xiwen <forbidden405@outlook.com>, 
+ Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+ Alex Elder <elder@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+ Ulf Hansson <ulf.hansson@linaro.org>, Stephan Gerhold <stephan@gerhold.net>, 
+ linux-kernel@vger.kernel.org, Eric Dumazet <edumazet@google.com>, 
+ Paolo Abeni <pabeni@redhat.com>, Jakub Kicinski <kuba@kernel.org>, 
+ linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
+ Bjorn Helgaas <bhelgaas@google.com>, Jeff Johnson <jjohnson@kernel.org>, 
+ linux-mmc@vger.kernel.org, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Peng Fan <peng.fan@nxp.com>, 
+ "David S. Miller" <davem@davemloft.net>, 
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, ath10k@lists.infradead.org, 
+ netdev@vger.kernel.org, Maxime Ripard <mripard@kernel.org>
+To: "Rob Herring (Arm)" <robh@kernel.org>
+In-Reply-To: <20260421195836.1547469-1-robh@kernel.org>
+References: <20260421195836.1547469-1-robh@kernel.org>
+Message-Id: <177680720998.183058.5012840252939438533.robh@kernel.org>
+Subject: Re: [PATCH] dt-bindings: Fix phandle-array constraints, again
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-103988-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[46];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[samsung.com,lists.infradead.org,vger.kernel.org,linaro.org,kernel.org,nxp.com,lunn.ch,foss.st.com,quicinc.com,linux.intel.com,gmail.com,suse.de,oss.qualcomm.com,sipsolutions.net,outlook.com,gerhold.net,google.com,redhat.com,davemloft.net,linuxfoundation.org];
+	TAGGED_FROM(0.00)[bounces-103989-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,sirena.org.uk:mid]
-X-Rspamd-Queue-Id: D3CA343FB31
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: B793D43FC08
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
---Iha+hpkMpV0+LM2D
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Tue, 21 Apr 2026 14:55:25 -0500, Rob Herring (Arm) wrote:
+> The unfortunately named 'phandle-array' property type is really a matrix
+> with phandle and fixed arg cells entries. A matrix property should have 2
+> levels of items constraints.
+> 
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> ---
+> Can someone from QCom provide some descriptions for 'qcom,smem-states'
+> properties.
+> ---
+>  .../display/rockchip/rockchip,rk3399-cdn-dp.yaml         | 2 ++
+>  .../bindings/mmc/hisilicon,hi3798cv200-dw-mshc.yaml      | 7 ++++---
+>  Documentation/devicetree/bindings/net/qcom,bam-dmux.yaml | 6 ++++++
+>  Documentation/devicetree/bindings/net/qcom,ipa.yaml      | 6 ++++++
+>  .../devicetree/bindings/net/wireless/qcom,ath10k.yaml    | 5 ++++-
+>  .../devicetree/bindings/net/wireless/qcom,ath11k.yaml    | 5 ++++-
+>  .../bindings/net/wireless/qcom,ipq5332-wifi.yaml         | 9 +++++++++
+>  .../devicetree/bindings/pci/toshiba,tc9563.yaml          | 5 +++--
+>  .../bindings/remoteproc/qcom,msm8916-mss-pil.yaml        | 3 +++
+>  .../bindings/remoteproc/qcom,msm8996-mss-pil.yaml        | 3 +++
+>  .../devicetree/bindings/remoteproc/qcom,pas-common.yaml  | 4 ++++
+>  .../bindings/remoteproc/qcom,qcs404-cdsp-pil.yaml        | 4 ++++
+>  .../bindings/remoteproc/qcom,sc7180-mss-pil.yaml         | 3 +++
+>  .../bindings/remoteproc/qcom,sc7280-adsp-pil.yaml        | 3 +++
+>  .../bindings/remoteproc/qcom,sc7280-mss-pil.yaml         | 3 +++
+>  .../bindings/remoteproc/qcom,sc7280-wpss-pil.yaml        | 3 +++
+>  .../bindings/remoteproc/qcom,sdm845-adsp-pil.yaml        | 3 +++
+>  .../devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml   | 3 +++
+>  Documentation/devicetree/bindings/sound/samsung,tm2.yaml | 2 ++
+>  .../devicetree/bindings/spi/st,stm32mp25-ospi.yaml       | 5 +++--
+>  .../devicetree/bindings/usb/chipidea,usb2-common.yaml    | 2 ++
+>  Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml  | 7 ++++---
+>  22 files changed, 81 insertions(+), 12 deletions(-)
+> 
 
-On Mon, Apr 20, 2026 at 09:13:40PM +0530, Kamal Wadhwa wrote:
-> Currently, during regulator registration, regulator framework sends an
-> unnecessary `min-microvolts` request for the rpmh-regulator device. This
-> happens because in current design, we do not have a way to readback the
-> voltage settings that was set during the bootloader stage.
+My bot found errors running 'make dt_binding_check' on your patch:
 
-> +static int _rpmh_regulator_vrm_get_voltage(struct regulator_dev *rdev, int *uV)
-> +{
-> +	struct rpmh_vreg *vreg = rdev_get_drvdata(rdev);
-> +	struct tcs_cmd cmd = {
-> +		.addr = vreg->addr + RPMH_REGULATOR_REG_VRM_VOLTAGE,
-> +	};
-> +	int min_uV = rdev->constraints->min_uV;
-> +	int max_uV = rdev->constraints->max_uV;
-> +	int ret, _uV = 0;
-> +
-> +	ret = rpmh_regulator_read_data(vreg, &cmd);
-> +	if (!ret)
-> +		_uV = (cmd.data & RPMH_REGULATOR_VOLTAGE_MASK) * 1000;
-> +	else
-> +		dev_err(vreg->dev, "failed to read VOLTAGE ret = %d\n", ret);
-> +
-> +	if (!_uV || (_uV >= min_uV && _uV <= max_uV))
-> +		*uV = _uV;
-> +	else
-> +		dev_err(vreg->dev, "read voltage %d is out-of-range[%d:%d]\n",
-> +						_uV, min_uV, max_uV);
-> +
-> +	return ret;
-> +}
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/remoteproc/qcom,qcs404-cdsp-pil.yaml:99:1: [warning] too many blank lines (2 > 1) (empty-lines)
+./Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml:67:1: [warning] too many blank lines (2 > 1) (empty-lines)
 
-Why are we constraining the reported voltage?  The hardware may have a
-value that's outside of our constraints, we should report that if it's
-the case.
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/i2c/i2c-demux-pinctrl.example.dtb: i2c-mux3 (i2c-demux-pinctrl): i2c-parent:0: [2, 3, 4] is too long
+	from schema $id: http://devicetree.org/schemas/i2c/i2c-demux-pinctrl.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/samsung,tm2.example.dtb: sound (samsung,tm2-audio): i2s-controller: [[4294967295], [0], [4294967295], [0]] is too long
+	from schema $id: http://devicetree.org/schemas/sound/samsung,tm2.yaml
 
---Iha+hpkMpV0+LM2D
-Content-Type: application/pgp-signature; name="signature.asc"
+doc reference errors (make refcheckdocs):
 
------BEGIN PGP SIGNATURE-----
+See https://patchwork.kernel.org/project/devicetree/patch/20260421195836.1547469-1-robh@kernel.org
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnn6T8ACgkQJNaLcl1U
-h9BI8Qf/U7uFbt9f43EOI9JRyr+uUtNFnsojBfeYyqctFDsOhYLoc+jCF+ByYuIW
-4UZ/wW0Eqvl4DnyZHL7+7M+L6Kyu1eFbsh8kkV91RyLeGxz0sBLGzOVQRyXf2x1+
-yc9vfaqdoqGlvSda+6WRiVxaOEn/7qBL4s7cAXGtkAr+UqXO5dDXDir0p3QazSnb
-8pcxiQdbCub8Z2YG7VI+Hkb45KyE6LCZhySAGzigcucFTdFkwlqBpsZ8HBEDy1o2
-8W7+PAilScuWq53QuxBS7hD8j2LaIU1Et7XDM8nrlsuJMABtcMiVnEi1bAA0GZ+7
-+pN8yI1afdN5HSTq1XCNdGiAU1mpOw==
-=p0yz
------END PGP SIGNATURE-----
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
---Iha+hpkMpV0+LM2D--
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
