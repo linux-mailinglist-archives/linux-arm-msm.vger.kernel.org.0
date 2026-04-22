@@ -1,105 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-104082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aOF1MYeu6GkhOwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 13:18:31 +0200
+	id mJLXNLau6GlDOwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 13:19:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27A1344529B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 13:18:30 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52BAF4452CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 13:19:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2AF8B305BFFD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 11:16:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 647ED306DEA1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 11:17:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC11C3CF671;
-	Wed, 22 Apr 2026 11:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 366903CF04F;
+	Wed, 22 Apr 2026 11:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="F8NedmIT";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RNeKjPru"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mqdAaAV+";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kaF0/Y4Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97FB3CF05A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2026 11:16:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4603ACF19
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2026 11:17:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776856618; cv=none; b=O9VnHD1IxEzSZHAJmKldnvNRHCymG5a2CTIMMIrW1YXl4586XkmcRMEudnNaYUl7Bxb9yPCaHPO498phnsFDUSytExDD8pB4YRDttFaD+kikwTbLPuKwpFYF2jK2drkkaKVk6TFduxtjbyWdcP8hq9HP2eGgQ9EGXoFz1GBQf/0=
+	t=1776856623; cv=none; b=kmHPrqg6DB9JI9f78NULaQgNV+c7TePBIPZEw2dzzz+irOjSm21wn90f22t7WEvUsNikHCDck71oUhIHXMYTTh4/RVl1EHaq4FINaU6o2ogWGbSQ8oNbjOIwYtwsQzCyaxawFIuE+2EGQeJd5VLpi3xFVrn6BBULmL9VDptICpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776856618; c=relaxed/simple;
-	bh=G6ZFBPo0z9LQpTfYNT7xUXOr5jQoLY8ztbN1qAozn6I=;
+	s=arc-20240116; t=1776856623; c=relaxed/simple;
+	bh=VC9WposBlvve2ycacip2kliKPfx0sQcMrhIp6YST/BM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LxSspr+0auA/zixQk3fYKA1m7PC7B2hscWFKQKcnN84hdMBP0rpgu1LHOkej++/jvKqhCHs9rRdKeAy7PfLbBMNL7YUv2fIfUvY/Xl6DEvIMNSYAiyacGAe7WiWR5Mkmg84d3ucwd5MGqnrzgXmHDU1lS82VK2ADxdWRljQHBOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=F8NedmIT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RNeKjPru; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=CQ9HiBPOYrf+9gZot5Piqy9ztiz9/hekkHmuHxE5y8htMb2dHKXDUA3NP9ruebMDe+HHUxeBYl4p6THxPR/aU847j4z+wh78sAIeBfXtgPvnRZ4ePPpuGHH6s+wavWzxZO7Qa4OD4oQofb1o9SMsRXGeNY2FwGAF591TtqRaUi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mqdAaAV+; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kaF0/Y4Q; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63MB7Gc64051051
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2026 11:16:56 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63M99E1b1082101
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2026 11:17:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7QfYSMr6guIMXdf3O06pHgZqjV/R1TMVX9fUxgcBlDw=; b=F8NedmITBx0SGJb+
-	nY4Xi6S/VvxmYFvcP27A+lu9ld93v2odprx4tSDLYhZai+1PWjOgzYxeeSeR9JpF
-	0QHQzmxSZJ3+FCgPuflgaYITQZq8arJKHFl+rhOPEs2HzKXpeZfE/OhOy8iQKfuH
-	I3Fl08NklOFgbQE8YD8j14YbtPkBke6BUY7Uev6a/Me7wF9JExX3468HkMPKAol4
-	jPaNixFobAZLNxP9wwqm49+ZxnU0waJr7MeLeSpB/s34+/7DU8UoSqz70CW5ZBzZ
-	VzfCbHz3LDkJds2nBHYqe7N+3Z+G+IRf5dB1Kn+Zpxvodjl23ieq7U38m8JkYFkK
-	Fb6iOw==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dpenfk64h-1
+	1lzMCwbAjL7qV1kx/Xu6U0s693kcoGBTXqWxUmoSiBY=; b=mqdAaAV+7IKvawnK
+	iUp1aLBGwDiPYnLfgtZsGh8hpS9EkGQS4vcM93CPdxHKOpFtBYGz2kGCAnLKw2qf
+	cDQBZaCfFQ1EZLwFAVhiFVIVpgfYadTnwICvjCF+VSnlnT9xE2Mmdhpykt/+7Dg3
+	OQj38Z0Kor19zIijR18RzyHy9aoiLqfQgPuVfl+m5JjEuD6dHb06Q7GbEnHXWJKS
+	t1IvM0wG1ulN5RxPFcCIDNoCOZwbN9/Y7Id3p3wo5xjIZUQrYZpWtTDUfigZK2yf
+	70FKzK76O+/lUcnM6EnfkwUBt5IawivlAIutY02ODwXjPGKXaZd/wN4odk9nLOU3
+	8JYM7w==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dpeng35ge-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2026 11:16:56 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-82f543bae3cso2869135b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2026 04:16:55 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2026 11:17:00 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c76cb2dce57so3183546a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2026 04:17:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1776856615; x=1777461415; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1776856619; x=1777461419; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7QfYSMr6guIMXdf3O06pHgZqjV/R1TMVX9fUxgcBlDw=;
-        b=RNeKjPruC6z3Zmubba67AMnong8D06qDpHQ9ZDr7fZPsiCnYCKQuLSlhm0iy9jLGxj
-         0AZHBKs63Hqev8jtJtwgtXueIA0HIiQM61vlpSx0EanOAamFLgJr+TcA9Kl9YS9++MMV
-         vAA2xHxc5IL65PmGCoWWZRcCxZyyb2xx8kEmHPwNSGFrje673sTlEsDmxpVu6CzQBzbP
-         tBlDXQ/1lF2aEWXl6ZQMhrzXJkHBfhpGuO+lo0AyDyqBgFyv/hNsTafZzgLzx+Cay4I7
-         h2YtsyxuBH+QLlpStrCZTckuxtg2fqLBQWBc7dZ9bAwfqvZhG6DangnkipQy8BzmuvNb
-         siIw==
+        bh=1lzMCwbAjL7qV1kx/Xu6U0s693kcoGBTXqWxUmoSiBY=;
+        b=kaF0/Y4QH7Cl4qhMUKNo7KRS46x5mvU9UAm6gHHgZC43w+rpVHdcDGUNfV5z48U0qy
+         kVOxh2MQNNS5SIAVklLHZSig7D6vfatqHYEQpJBJhHw0VTjQ2wlD3xv4Gs1Vj0KFJGql
+         Ivycc3FzC+qqo+nXI57pEIRyE1JsjcGe9lzdCDQ2FfNiDu79dTkUFxKA6GaXFEjjht7Y
+         0dwX7o2g95ZQnpx9gRft2LaG59Yv3q18fK+Gx0lJdkd6ovnzfNyJauQdaK6qCq4AvZzZ
+         xUouBK18MwrKjFlqVUIuhQTVy638AVPUdflD5HammIqgPQ09r28dAxebkNDBU5tAnX76
+         0ytw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1776856615; x=1777461415;
+        d=1e100.net; s=20251104; t=1776856619; x=1777461419;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=7QfYSMr6guIMXdf3O06pHgZqjV/R1TMVX9fUxgcBlDw=;
-        b=PgvS5E3g1rKPDj0Dz98Kk08MsW08/4DPzTFIUDDROTSAN5MINYEVbbufTWcjOUXYS+
-         jA/8VEBrQsS9zz1MR4XBrhjzvUhJkYQBiX63aQDEGuR60WgwZSUixr8H23GvzWKCEagd
-         HIeOWFRPX22wO7JQ0ppP9xgrXIYcbKJIDkjWYSeYrT5YF4C5snYVOI6P2fB3OYtl0S6j
-         crLPRALUDQAHHT6nx8R/7guqhgLvkx7bWe3qV5m06XMvzVPY8pHfbkfZM2s8hoCLd48v
-         Qj+vab7BBwM71M+PjIJJM0lE5F4YEgQH/Z8OZridULsmP5MHoHE9cr7WngDYv6lMC3u8
-         QdVw==
-X-Forwarded-Encrypted: i=1; AFNElJ/23mUQn+F12pO+EIHlwmCPBjr5sh7i2PfcKeqVV2VME82voFGHjX6Z+SfkAzH5E4YA0Awe8MoyyBURk5Rq@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZga97FUMvgJ3hZXE/rAux6anQcnRatdkAKVLrsvIkjvcdahxY
-	+275gRJ5vzwMmJJcclvNaLOuAxfT5schMGtQhEplNfSzRBUxvql4f9g8fkTB5VsoVdJjssF66Ld
-	NAGGSolx5kVeQUgVnNu4RJR21cQAH1Ni/RSQBQy0NQq73O3/lsaE9T5FCjfrLSBN47nmo
-X-Gm-Gg: AeBDiev84NsgTANyHGzLEbZWS6is0pAupK5xOIYB5ltCas3rAMeDRPw8mBUKFc9pOx8
-	sqObByPhSKZPjuL9JCzIWYaxD//9VV3F94uKwk+dJtU6Cl5zgGsJmgt3+T+P3OyOmNrPPpw/W/Y
-	OFV+SwT6YgnHJoni2tN/w3ALLwW0NRdmySMcR/xEdmWBfcavD8Qw+GTYLaZ0hrSikQkz0jnpldK
-	TTzo8aSbO7uq4StFFRVDn8m7F/uv71/Dp23I7HR4ZJWt6k/IaR/mY/lIoDRZXCuByA/GUeFN29B
-	OE+pAFrJPcR358LUB6GQXg5efRw/ELUsJXEMpJFlreDUfepNmYm0ICJPP91A6sRBrkEV6T8IIyJ
-	Qja+QY4MLlPlNuS/fFGVhxktbUzXV9aLDSTC83D56bF0Yj0aMUtJcnE5l5zZlZXft7pXCRA==
-X-Received: by 2002:a05:6a00:94e2:b0:7e8:3fcb:9b03 with SMTP id d2e1a72fcca58-82f8b531fe8mr18696179b3a.25.1776856615168;
-        Wed, 22 Apr 2026 04:16:55 -0700 (PDT)
-X-Received: by 2002:a05:6a00:94e2:b0:7e8:3fcb:9b03 with SMTP id d2e1a72fcca58-82f8b531fe8mr18696144b3a.25.1776856614610;
-        Wed, 22 Apr 2026 04:16:54 -0700 (PDT)
+        bh=1lzMCwbAjL7qV1kx/Xu6U0s693kcoGBTXqWxUmoSiBY=;
+        b=AWhwolIBSc4/G1gg0dtFn5ezz0v/saxBqGBpQLfzAW1E2lD3ds2eyFpRhw/7QppL3X
+         ah0yHjgJr+zZfZDlJNBbZoTWBO7L4GKbGSZSyQIX0KQvqyzV9HTgoUL7uW5Rl1yUrtbt
+         yNjczgWruhKkxnceo6itCFkCylpWExtJ/scW9oN2fFCBKtYlYV7cGodu+NfBZuFDD6xB
+         POGDONJqxS3jQcqD/zOuFdUPBxNXg4t9iWpaYvuvR8QXiXnmnC1hDRn7K8IeTaraKrsc
+         39eBt8D5Zka9TmSOW+IoknnFcqS06hqm+u1CFKKhxOg+vPChN+qYtCCOPLtw0vh+WHs+
+         A9mg==
+X-Forwarded-Encrypted: i=1; AFNElJ9P07VE+vVkjwBaaVW5nZp5KyQ4x2hrVB6ICBZXmfD+GaBjreZNX/jANLiaVsXv/a+rKIZsyvUmUS+KNjPC@vger.kernel.org
+X-Gm-Message-State: AOJu0YxnYqJGt/wtcKhv5+1j80ZhzxJpbTxfGBzA6w2/vempEZq7KpBq
+	1xNu3eD7e/0jUlcjK4ewWsm/qyuRSZkH42+9WilUv4Itggv/5VHM36tDzLVYLPILjgPRuOHAMJe
+	lehRcmE0aK/nDm1rzs+WCI/bbC59+P6FreCW/2q7aCOlqCIkCzKapAv3HPrMv6GrwXQ06
+X-Gm-Gg: AeBDieuy/eI1697PqzmxqNkMycFT40YJvmTjt7GAEZbASB1l//mfznQjzoxA4kE8Pg8
+	1sKTJz2hLbguc4Gbx6Rujx5RBWvHl1VXpPk0UECsP/2TXr7D4ORg0MHCawwMOnSWplhEkdfArMz
+	VdU8ntym1z14tMmcNSH611VjM1hxTJSmiV8V65Vbjp8pWoCYj59SrimfuyQojUwaKnPeG7SJUPT
+	CNdMttPzFv4RFfKNrzkw0QkHM9Ec5UJxkibe/zMUgBd61nme7r9JomoggjqSWvM84VTEqgx5e4r
+	dY3GWSBJybWywT92hN2NnpTm/v+LzXfXE99S8J7SnLwAzHEj9Nc9XhvdvZF66F/NYSeiDaB2QhX
+	DJltQdqqOn1LFxUUTiEHg6058Zx6E8P8EkjONmrbvlJppd9SyN7axAR+E/syait6HqyeKdg==
+X-Received: by 2002:a05:6300:210d:b0:3a0:d88:6d6b with SMTP id adf61e73a8af0-3a08d90b33cmr25778799637.49.1776856619431;
+        Wed, 22 Apr 2026 04:16:59 -0700 (PDT)
+X-Received: by 2002:a05:6300:210d:b0:3a0:d88:6d6b with SMTP id adf61e73a8af0-3a08d90b33cmr25778757637.49.1776856618917;
+        Wed, 22 Apr 2026 04:16:58 -0700 (PDT)
 Received: from hu-dikshita-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f8ebe901csm21100782b3a.48.2026.04.22.04.16.50
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82f8ebe901csm21100782b3a.48.2026.04.22.04.16.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Apr 2026 04:16:54 -0700 (PDT)
+        Wed, 22 Apr 2026 04:16:58 -0700 (PDT)
 From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Date: Wed, 22 Apr 2026 16:46:34 +0530
-Subject: [PATCH 1/7] media: qcom: iris: Centralize internal buffer table
- selection
+Date: Wed, 22 Apr 2026 16:46:35 +0530
+Subject: [PATCH 2/7] media: qcom: iris: fix state-change debug log printing
+ stale value
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,7 +108,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260422-iris-code-improvement-v1-1-8e150482212d@oss.qualcomm.com>
+Message-Id: <20260422-iris-code-improvement-v1-2-8e150482212d@oss.qualcomm.com>
 References: <20260422-iris-code-improvement-v1-0-8e150482212d@oss.qualcomm.com>
 In-Reply-To: <20260422-iris-code-improvement-v1-0-8e150482212d@oss.qualcomm.com>
 To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
@@ -124,42 +124,42 @@ Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1776856606; l=7994;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1776856606; l=1218;
  i=dikshita.agarwal@oss.qualcomm.com; s=20240917; h=from:subject:message-id;
- bh=G6ZFBPo0z9LQpTfYNT7xUXOr5jQoLY8ztbN1qAozn6I=;
- b=efO/sBo+hgCNafAVgACO5Nw+pI3JmSKKRsDsbn2bt7dyuth8qPRvNzHD3dLVixe3iqy/LA31d
- oErJRweHuT5CX4+3bpS2SpF1LIiCFZpXnwsZ3H3hSTTSJtbG4hAoG5m
+ bh=VC9WposBlvve2ycacip2kliKPfx0sQcMrhIp6YST/BM=;
+ b=XRyt4NbjzTkcPs9rnszE/7tjuhN52sg/EEloca15RHAHSaBRXfkw4g0GwU2zJzmX02gAiVEqk
+ M4AOXfRReV9CCEqJ1oCXjgvecVg5cMWcOh8Un2GA0S8lT+oMllVdD2u
 X-Developer-Key: i=dikshita.agarwal@oss.qualcomm.com; a=ed25519;
  pk=EEvKY6Ar1OI5SWf44FJ1Ebo1KuQEVbbf5UNPO+UHVhM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIyMDEwOCBTYWx0ZWRfXyc9v/fepvCq0
- asrKUxuq3gQDBnPNGoxLdqd5Yophbqh6DUKddSEFqxk9O7ulIYl2ep67RG6LErXD9X9iTMdBGZw
- ZvN/NPGDONyDXn6zFPDJcLQVLa0OFJcBtB+dg+LrcCxThLWWiLak4TmEUGzWS5CcGcS2j+qk/14
- G60SzflSQkL1aTXx6Ze9YSxNC+wKUaBMiSUxcozEB6oZZwG3ynlfgK600rEhGnTGhuKc89zylyQ
- zLdKjDpHqmAiMXpDi15xZzMzlkdllSYf+EWBfH5Bt8QqNoy6C5vdKDLiq3lxe2zZKBL5mbOXjou
- TCJOBwEFXTvwtMeN3LuZvNNpAGXqo7v82USmaaV1CyC9jcSg2eqk1MpjIG5FqLqzfuMwxIvpuv9
- P6CHBAGAD3sIjOHO8BelS1yZ6/fHhnCAH6Jkk4wZtHZZPpPXJsBPvdIqXvI+Gw9LUQBOA4GNeVg
- XOHf0lRpx4nShBu2g7A==
-X-Authority-Analysis: v=2.4 cv=VMrtWdPX c=1 sm=1 tr=0 ts=69e8ae28 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Authority-Analysis: v=2.4 cv=CNUamxrD c=1 sm=1 tr=0 ts=69e8ae2c cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=YO4-hHwgDu7wuGDVLqgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-GUID: TmZZIYoWOpRwSVlLwwNa5eY-GV9SAjrA
-X-Proofpoint-ORIG-GUID: TmZZIYoWOpRwSVlLwwNa5eY-GV9SAjrA
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=xFg6UwmA3-Dp8VzUGb0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-GUID: po_8W_7-_m_vGqkUr7CMCJPHBbWpvBKe
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIyMDEwOCBTYWx0ZWRfX615wG+Ropmsd
+ Wvj3reTVaFjcVMJsllDIvJmrEe/xj3XkEgadUQAvp/XVK0JBb70xR9d2p43dpBvBNXFQfJrdGdv
+ UULquqeuMIDKvy37GNtYJIlx0jdX4AAAsLbnpBcdE/XlYo/gIOT3V3+3kvI7jMYyJvhAWj9jDVl
+ hil1/Swu/R6zwbhcziDB8w7jKDX+JD7K1KSzmeaXzQPH0SjY7KTlAU2DPVVloqhC0UroPbkB+qh
+ dhjPbQdipLr707dVXUTNob93Y7SVxMwgQR68+S6qwq8reETgugPX36jRq23FCzvTiblImyw+EFW
+ IJBQEYrY7FujRwIblScFu+D3emuSyO9k5IPSFsAqyJfgf6S928YlVVuIJCSVYCUEMbq2MComVUh
+ 5gFp1oMSvEXZZto6csgp9v9gjfZTgcv/X8fS9R8Uc+CjukfNoRN+uyaBz2fZo/yQjiomfiv7Dnf
+ k2Lv9c1hlW9sPsUP+gw==
+X-Proofpoint-ORIG-GUID: po_8W_7-_m_vGqkUr7CMCJPHBbWpvBKe
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-22_01,2026-04-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 impostorscore=0 bulkscore=0 malwarescore=0
- spamscore=0 phishscore=0 priorityscore=1501 suspectscore=0 adultscore=0
+ malwarescore=0 lowpriorityscore=0 impostorscore=0 phishscore=0 bulkscore=0
+ suspectscore=0 clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604220108
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -167,219 +167,54 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[13];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104082-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-104083-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[dikshita.agarwal@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,cisco];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 27A1344529B
+X-Rspamd-Queue-Id: 52BAF4452CB
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Internal buffer table dispatch is duplicated across multiple Iris code
-paths, which is error‑prone and makes future changes harder to reason
-about.
+The state‑change debug log in iris_inst_change_state() always prints the
+same value for the old and new state, rendering it useless for
+debugging. This happens because the state is updated before the log is
+emitted.
 
-Consolidate the buffer dispatch logic into a single helper so that table
-selection is defined in exactly one place and keep call sites minimal.
-No functional change intended.
+Log the transition before updating the state so the previous value is
+preserved, consistent with the existing sub‑state handling.
 
+Fixes: 11712ce70f8e ("media: iris: implement vb2 streaming ops")
 Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 ---
- drivers/media/platform/qcom/iris/iris_buffer.c | 107 ++++++-------------------
- 1 file changed, 26 insertions(+), 81 deletions(-)
+ drivers/media/platform/qcom/iris/iris_state.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
-index 9151f43bc6b9c2c34c803de4231d1e6de0bec6c4..137a69c99bcc24a72f4f27e516b8fb4d6509c0ad 100644
---- a/drivers/media/platform/qcom/iris/iris_buffer.c
-+++ b/drivers/media/platform/qcom/iris/iris_buffer.c
-@@ -299,39 +299,41 @@ static void iris_fill_internal_buf_info(struct iris_inst *inst,
- 	buffers->min_count = iris_vpu_buf_count(inst, buffer_type);
+diff --git a/drivers/media/platform/qcom/iris/iris_state.c b/drivers/media/platform/qcom/iris/iris_state.c
+index d14472414750dc7edc4834f32a51f2c5adc3762e..e991f34916ec6e74f3d2cf98bd61b8b1e12a3ca8 100644
+--- a/drivers/media/platform/qcom/iris/iris_state.c
++++ b/drivers/media/platform/qcom/iris/iris_state.c
+@@ -60,9 +60,9 @@ int iris_inst_change_state(struct iris_inst *inst,
+ 		return -EINVAL;
+ 
+ change_state:
+-	inst->state = request_state;
+ 	dev_dbg(inst->core->dev, "state changed from %x to %x\n",
+ 		inst->state, request_state);
++	inst->state = request_state;
+ 
+ 	return 0;
  }
- 
--void iris_get_internal_buffers(struct iris_inst *inst, u32 plane)
-+static void iris_get_int_buf_tbl(struct iris_inst *inst, u32 plane,
-+				 const u32 **buf_tbl, u32 *buf_tbl_size)
- {
- 	const struct iris_platform_data *platform_data = inst->core->iris_platform_data;
--	const u32 *internal_buf_type;
--	u32 internal_buffer_count, i;
- 
- 	if (inst->domain == DECODER) {
- 		if (V4L2_TYPE_IS_OUTPUT(plane)) {
--			internal_buf_type = platform_data->dec_ip_int_buf_tbl;
--			internal_buffer_count = platform_data->dec_ip_int_buf_tbl_size;
--			for (i = 0; i < internal_buffer_count; i++)
--				iris_fill_internal_buf_info(inst, internal_buf_type[i]);
-+			*buf_tbl = platform_data->dec_ip_int_buf_tbl;
-+			*buf_tbl_size = platform_data->dec_ip_int_buf_tbl_size;
- 		} else {
--			internal_buf_type = platform_data->dec_op_int_buf_tbl;
--			internal_buffer_count = platform_data->dec_op_int_buf_tbl_size;
--			for (i = 0; i < internal_buffer_count; i++)
--				iris_fill_internal_buf_info(inst, internal_buf_type[i]);
-+			*buf_tbl = platform_data->dec_op_int_buf_tbl;
-+			*buf_tbl_size = platform_data->dec_op_int_buf_tbl_size;
- 		}
- 	} else {
- 		if (V4L2_TYPE_IS_OUTPUT(plane)) {
--			internal_buf_type = platform_data->enc_ip_int_buf_tbl;
--			internal_buffer_count = platform_data->enc_ip_int_buf_tbl_size;
--			for (i = 0; i < internal_buffer_count; i++)
--				iris_fill_internal_buf_info(inst, internal_buf_type[i]);
-+			*buf_tbl = platform_data->enc_ip_int_buf_tbl;
-+			*buf_tbl_size = platform_data->enc_ip_int_buf_tbl_size;
- 		} else {
--			internal_buf_type = platform_data->enc_op_int_buf_tbl;
--			internal_buffer_count = platform_data->enc_op_int_buf_tbl_size;
--			for (i = 0; i < internal_buffer_count; i++)
--				iris_fill_internal_buf_info(inst, internal_buf_type[i]);
-+			*buf_tbl = platform_data->enc_op_int_buf_tbl;
-+			*buf_tbl_size = platform_data->enc_op_int_buf_tbl_size;
- 		}
- 	}
- }
- 
-+void iris_get_internal_buffers(struct iris_inst *inst, u32 plane)
-+{
-+	const u32 *internal_buf_type;
-+	u32 internal_buffer_count, i;
-+
-+	iris_get_int_buf_tbl(inst, plane, &internal_buf_type, &internal_buffer_count);
-+
-+	for (i = 0; i < internal_buffer_count; i++)
-+		iris_fill_internal_buf_info(inst, internal_buf_type[i]);
-+}
-+
- static int iris_create_internal_buffer(struct iris_inst *inst,
- 				       enum iris_buffer_type buffer_type, u32 index)
- {
-@@ -366,29 +368,12 @@ static int iris_create_internal_buffer(struct iris_inst *inst,
- 
- int iris_create_internal_buffers(struct iris_inst *inst, u32 plane)
- {
--	const struct iris_platform_data *platform_data = inst->core->iris_platform_data;
- 	u32 internal_buffer_count, i, j;
- 	struct iris_buffers *buffers;
- 	const u32 *internal_buf_type;
- 	int ret;
- 
--	if (inst->domain == DECODER) {
--		if (V4L2_TYPE_IS_OUTPUT(plane)) {
--			internal_buf_type = platform_data->dec_ip_int_buf_tbl;
--			internal_buffer_count = platform_data->dec_ip_int_buf_tbl_size;
--		} else {
--			internal_buf_type = platform_data->dec_op_int_buf_tbl;
--			internal_buffer_count = platform_data->dec_op_int_buf_tbl_size;
--		}
--	} else {
--		if (V4L2_TYPE_IS_OUTPUT(plane)) {
--			internal_buf_type = platform_data->enc_ip_int_buf_tbl;
--			internal_buffer_count = platform_data->enc_ip_int_buf_tbl_size;
--		} else {
--			internal_buf_type = platform_data->enc_op_int_buf_tbl;
--			internal_buffer_count = platform_data->enc_op_int_buf_tbl_size;
--		}
--	}
-+	iris_get_int_buf_tbl(inst, plane, &internal_buf_type, &internal_buffer_count);
- 
- 	for (i = 0; i < internal_buffer_count; i++) {
- 		buffers = &inst->buffers[internal_buf_type[i]];
-@@ -442,30 +427,13 @@ int iris_queue_internal_deferred_buffers(struct iris_inst *inst, enum iris_buffe
- 
- int iris_queue_internal_buffers(struct iris_inst *inst, u32 plane)
- {
--	const struct iris_platform_data *platform_data = inst->core->iris_platform_data;
- 	struct iris_buffer *buffer, *next;
- 	struct iris_buffers *buffers;
- 	const u32 *internal_buf_type;
- 	u32 internal_buffer_count, i;
- 	int ret;
- 
--	if (inst->domain == DECODER) {
--		if (V4L2_TYPE_IS_OUTPUT(plane)) {
--			internal_buf_type = platform_data->dec_ip_int_buf_tbl;
--			internal_buffer_count = platform_data->dec_ip_int_buf_tbl_size;
--		} else {
--			internal_buf_type = platform_data->dec_op_int_buf_tbl;
--			internal_buffer_count = platform_data->dec_op_int_buf_tbl_size;
--		}
--	} else {
--		if (V4L2_TYPE_IS_OUTPUT(plane)) {
--			internal_buf_type = platform_data->enc_ip_int_buf_tbl;
--			internal_buffer_count = platform_data->enc_ip_int_buf_tbl_size;
--		} else {
--			internal_buf_type = platform_data->enc_op_int_buf_tbl;
--			internal_buffer_count = platform_data->enc_op_int_buf_tbl_size;
--		}
--	}
-+	iris_get_int_buf_tbl(inst, plane, &internal_buf_type, &internal_buffer_count);
- 
- 	for (i = 0; i < internal_buffer_count; i++) {
- 		buffers = &inst->buffers[internal_buf_type[i]];
-@@ -501,30 +469,13 @@ int iris_destroy_internal_buffer(struct iris_inst *inst, struct iris_buffer *buf
- 
- static int iris_destroy_internal_buffers(struct iris_inst *inst, u32 plane, bool force)
- {
--	const struct iris_platform_data *platform_data = inst->core->iris_platform_data;
- 	struct iris_buffer *buf, *next;
- 	struct iris_buffers *buffers;
- 	const u32 *internal_buf_type;
- 	u32 i, len;
- 	int ret;
- 
--	if (inst->domain == DECODER) {
--		if (V4L2_TYPE_IS_OUTPUT(plane)) {
--			internal_buf_type = platform_data->dec_ip_int_buf_tbl;
--			len = platform_data->dec_ip_int_buf_tbl_size;
--		} else {
--			internal_buf_type = platform_data->dec_op_int_buf_tbl;
--			len = platform_data->dec_op_int_buf_tbl_size;
--		}
--	} else {
--		if (V4L2_TYPE_IS_OUTPUT(plane)) {
--			internal_buf_type = platform_data->enc_ip_int_buf_tbl;
--			len = platform_data->enc_ip_int_buf_tbl_size;
--		} else {
--			internal_buf_type = platform_data->enc_op_int_buf_tbl;
--			len = platform_data->enc_op_int_buf_tbl_size;
--		}
--	}
-+	iris_get_int_buf_tbl(inst, plane, &internal_buf_type, &len);
- 
- 	for (i = 0; i < len; i++) {
- 		buffers = &inst->buffers[internal_buf_type[i]];
-@@ -593,18 +544,12 @@ static int iris_release_internal_buffers(struct iris_inst *inst,
- 
- static int iris_release_input_internal_buffers(struct iris_inst *inst)
- {
--	const struct iris_platform_data *platform_data = inst->core->iris_platform_data;
- 	const u32 *internal_buf_type;
- 	u32 internal_buffer_count, i;
- 	int ret;
- 
--	if (inst->domain == DECODER) {
--		internal_buf_type = platform_data->dec_ip_int_buf_tbl;
--		internal_buffer_count = platform_data->dec_ip_int_buf_tbl_size;
--	} else {
--		internal_buf_type = platform_data->enc_ip_int_buf_tbl;
--		internal_buffer_count = platform_data->enc_ip_int_buf_tbl_size;
--	}
-+	iris_get_int_buf_tbl(inst, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
-+			     &internal_buf_type, &internal_buffer_count);
- 
- 	for (i = 0; i < internal_buffer_count; i++) {
- 		ret = iris_release_internal_buffers(inst, internal_buf_type[i]);
 
 -- 
 2.34.1
