@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-104092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WMtdOGGw6GldOwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 13:26:25 +0200
+	id qEFYDkmw6GldOwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 13:26:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 640B2445491
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 13:26:25 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C73C544546D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 13:26:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0BD7D3035883
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 11:25:20 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 210E2301DEC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 11:25:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08BD63CFF6E;
-	Wed, 22 Apr 2026 11:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFE663CF687;
+	Wed, 22 Apr 2026 11:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PqeJP+Bq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c8gGNfkD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6A63BF694;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB550376496;
 	Wed, 22 Apr 2026 11:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776857112; cv=none; b=KRYi2DOQMftbX5Wo+WCy4lng40j4anXWztUKybpt37suPF9vOMtjbJDCADtuv7tpFSCIHASg3a4qqESWBocJp7p5bTsD6uxLg9f+bK34pkOHg26KjD6QGC9UMqwFgLH4LaE/Gu0OkrMr9vny0ReB08B0CUbCXW1WK5lyLsvU1PU=
+	t=1776857112; cv=none; b=NQ1W0D3B/6uPoYAsrSjbTWV1SCO28UpnM5cT3qjXSvt8oX7eT1zXvsoyVhN7z5tLKbTAsDxe5pgBlF8XNc18EhKl1CsXud0KBsoi6PHqEgi2riPLVN43cbCj+P7I5JPoYPrVCmraDVfs1Mppd4lE0/GUeG1OCyf6Ir1SNF9vPvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1776857112; c=relaxed/simple;
-	bh=zG3I57WWplMJcf/hk5ar7t1I+jzieYtwUyZKV6LKybs=;
+	bh=eBmp37Fh5ZTlSrodz8LYA7+9XM/VHH8EMneGh3WJBVA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=STqquz9zpNljHfwF7GUOn/lJgHrHoae9wDm/VTntzWF7lHXa74DhLKXsBYpE3GKsA9L84B6h6gq3RMN/QnYNhRykrELIpxlv+6m9jSu/n2f3QB+gATUl0nZn0p+uTRAVgsy/7QKRtynB18L1Gfo2eWMi+R35ZgGldl8aobfqrX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PqeJP+Bq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 84DDEC2BCB4;
+	 In-Reply-To:To:Cc; b=Up3lFu3Kuw5slrnankvHwNXtdPjG9anUct2SmosKbLlmRMfFWsWc52n1UUokTy29PzmMiLxMTQUjl3HF+Au5zUZV++LOzK/zQR8fTXOBY/YUNtNKZctM7YXAF1I8rT1rVbOFQnrDIdp4FwfoCMwpIlgN0gZ+ZNFXCl+/QA3jIas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c8gGNfkD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 971F7C2BCB8;
 	Wed, 22 Apr 2026 11:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1776857112;
-	bh=zG3I57WWplMJcf/hk5ar7t1I+jzieYtwUyZKV6LKybs=;
+	bh=eBmp37Fh5ZTlSrodz8LYA7+9XM/VHH8EMneGh3WJBVA=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=PqeJP+BqAQNRVQ5d8J+yX9lmRAYBOZbzLhf3hOWPfj+bO9AVKYYEXiPKV3EdCL3j8
-	 1WFnLPWWoDTPYJrcTyCbM+k9iYsAAzOBiCyVd9t+HHdyBUVXJXN9eHmOuMmtsRTLIP
-	 suszwhALSNVKiK9HR3+4zydyaWaAIOIq3OScqwCB4THzRpNdGZ0jhcfi+m8ngAcgTJ
-	 +59kJIneqwZPXn3wtFzvzWEK2UlXJ+8zPEzk/hGoZh1Z6KEH4SnEXufK35jtB2iTas
-	 Ha7ZGLV9fOCo80LLw8QovqG3v/NCGG6+PcMiUxpJmwZr+f2/eK/nHbOLCsN8V53CHX
-	 PH2ncJQMbXA9Q==
+	b=c8gGNfkDPhwuVFHuYlh7ySuag3bN2J3tGptEhSsinFDqvr3XJvL1IyhHtV8/rOdTo
+	 QnLE7IzRCG7CjZkARPE1/EflVemx1Mo0qGrnWBPsEl86vet8nUmQrlUN98wywV+4eM
+	 PShHqQuDvCUg21g5AkkTAcCEGUKh79iB0RpwUEP2uOM5uRFW0sSw+JfxzCMoDG8iVQ
+	 GF0y8nlr8dMmSIyOKn078vni/xIVw/UwZVUt+lj9a3+ORaBDPhsS+HmutFsE8BBg/r
+	 ujsJADzdFHtl8XiAnYekJhzxrziCZ6qN/u9qtRIV7jsKj0+boLzzi43FpDjMY6q38S
+	 /mm0h/Wq7yKdw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76381F5A8DD;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8596FF8FA87;
 	Wed, 22 Apr 2026 11:25:12 +0000 (UTC)
 From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Wed, 22 Apr 2026 16:54:43 +0530
-Subject: [PATCH 02/12] power: sequencing: pcie-m2: Add support for
- 'is_fixed()' callback to 'uart' target
+Date: Wed, 22 Apr 2026 16:54:44 +0530
+Subject: [PATCH 03/12] power: sequencing: qcom-wcn: Add support for
+ 'is_fixed()' callback to 'bluetooth' target
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260422-pwrseq-m2-bt-v1-2-720d02545a64@oss.qualcomm.com>
+Message-Id: <20260422-pwrseq-m2-bt-v1-3-720d02545a64@oss.qualcomm.com>
 References: <20260422-pwrseq-m2-bt-v1-0-720d02545a64@oss.qualcomm.com>
 In-Reply-To: <20260422-pwrseq-m2-bt-v1-0-720d02545a64@oss.qualcomm.com>
 To: Bartosz Golaszewski <brgl@kernel.org>, 
@@ -73,16 +73,16 @@ Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
  Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, 
  Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 X-Mailer: b4 0.15.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1269;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1665;
  i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=KrtcCm7OcSv08XpTnM/lQ/uL0Jkw1/hkwY8pIBjRoGw=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBp6LAUHpCgMluCaUwOrCltzrJ6ja/gcCe4jKxCe
- rrgJaYjXUOJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaeiwFAAKCRBVnxHm/pHO
- 9Q1fB/9YdhK57pITNVRy/bWS9zw1nLMkSCIl1c9LaHMyPWQl+jBVvrhgMJvyuGZVFrDFUdXjoDj
- mjyPROGFEv9J2oYrtv/9RRz96bujgr7l55UtBwkc3AykDGQEYw8c0wWVUrnhpDD9DhzwZxrYJlH
- UpNIj1l/cU8a7xyUzg1kn5IPEIPe8SnGxNPMz1uRIs853ozxAq885PAMZ82uxJSFVsiKiEVwMJQ
- gpR8Vbl1ep2SwszXzShwqEgqcK1QeRrOFgk0pZeVFnrmgzevKnn7RlAqOLEiet30EUiJ98f47O8
- Oir94HPSNehL9jijUIksuWgaYhLOLF5X1qHe3w0y9X7Rvlr4
+ bh=OSA0rk78WdDSmkcO/t8XlaqhuYDC5RIPI2ByJSjXDI8=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBp6LAVY4ZUMxgx8tEOqbhjBW009KzxqC7sLg0vT
+ YkPI3/4rnmJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaeiwFQAKCRBVnxHm/pHO
+ 9XLTCACmBOZ/6vCM4GiNJ4EAGBbpjMZp+nMbfjxiLoBS84VUGeB8Hj8Xoy1cIX1iWY4oEe2c2/D
+ YkmNGMDuV4gDCUu4QClzMHbBZeBfAkOLRttaC2X+uY24y0qyyiBqW7zuZD+KyCY+/dtNooVG/8V
+ t/nqfqoVvJAW1FXZ6yXL0G6rxs3RCZZv61pGlJf4jr7OOoc4RvTMTLXfiBqSaKvXFiuKNN60/bJ
+ 2/ERYv1EOw0+oo3S8KroevAAVwhTmM6JePXZpuqJZEizu+GBsRnA3CZOLAwoKl3x6MFjSTxv6nT
+ NcYo1MoZvG8k7207e3Byz4wsXLkXTgGq68ShZY0sUYUDpVSb
 X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 X-Endpoint-Received: by B4 Relay for
@@ -94,12 +94,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104092-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-104090-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_TO(0.00)[kernel.org,holtmann.org,gmail.com,quicinc.com];
@@ -113,49 +113,57 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	HAS_REPLYTO(0.00)[manivannan.sadhasivam@oss.qualcomm.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:replyto,oss.qualcomm.com:mid]
-X-Rspamd-Queue-Id: 640B2445491
+X-Rspamd-Queue-Id: C73C544546D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-Add support for 'is_fixed()' callback to tell the consumers whether this
-power sequencer target 'uart' is fixed or controllable. This is decided
-based on the availability of the 'W_DISABLE2#' GPIO in DT.
+Add support for 'is_fixed()' callback to indicate the consumers whether
+this power sequencer target 'bluetooth' is fixed or controllable. This is
+decided based on the availability of the 'bt-enable' GPIO in DT.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 ---
- drivers/power/sequencing/pwrseq-pcie-m2.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/power/sequencing/pwrseq-qcom-wcn.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/sequencing/pwrseq-pcie-m2.c
-index ef69ae268059..2b79f2e34079 100644
---- a/drivers/power/sequencing/pwrseq-pcie-m2.c
-+++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
-@@ -121,10 +121,18 @@ static int pwrseq_pcie_m2_e_pwup_delay(struct pwrseq_device *pwrseq)
- 	return 0;
+diff --git a/drivers/power/sequencing/pwrseq-qcom-wcn.c b/drivers/power/sequencing/pwrseq-qcom-wcn.c
+index b55b4317e21b..50ac5973b8e7 100644
+--- a/drivers/power/sequencing/pwrseq-qcom-wcn.c
++++ b/drivers/power/sequencing/pwrseq-qcom-wcn.c
+@@ -254,10 +254,18 @@ static int pwrseq_qcom_wcn6855_xo_clk_deassert(struct pwrseq_device *pwrseq)
+ 	return pwrseq_qcom_wcn_pwup_delay(pwrseq);
  }
  
-+static bool pwrseq_pcie_m2_e_uart_is_fixed(struct pwrseq_device *pwrseq)
++static bool pwrseq_qcom_wcn_bt_is_fixed(struct pwrseq_device *pwrseq)
 +{
-+	struct pwrseq_pcie_m2_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
++	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
 +
-+	return !ctx->w_disable2_gpio;
++	return !ctx->bt_gpio;
 +}
 +
- static const struct pwrseq_target_data pwrseq_pcie_m2_e_uart_target_data = {
- 	.name = "uart",
- 	.unit = &pwrseq_pcie_m2_e_uart_unit_data,
- 	.post_enable = pwrseq_pcie_m2_e_pwup_delay,
-+	.is_fixed = pwrseq_pcie_m2_e_uart_is_fixed,
+ static const struct pwrseq_target_data pwrseq_qcom_wcn_bt_target_data = {
+ 	.name = "bluetooth",
+ 	.unit = &pwrseq_qcom_wcn_bt_unit_data,
+ 	.post_enable = pwrseq_qcom_wcn_pwup_delay,
++	.is_fixed = pwrseq_qcom_wcn_bt_is_fixed,
  };
  
- static const struct pwrseq_target_data pwrseq_pcie_m2_e_pcie_target_data = {
+ static const struct pwrseq_target_data pwrseq_qcom_wcn_wlan_target_data = {
+@@ -281,6 +289,7 @@ static const struct pwrseq_target_data pwrseq_qcom_wcn6855_bt_target_data = {
+ 	.name = "bluetooth",
+ 	.unit = &pwrseq_qcom_wcn6855_bt_unit_data,
+ 	.post_enable = pwrseq_qcom_wcn6855_xo_clk_deassert,
++	.is_fixed = pwrseq_qcom_wcn_bt_is_fixed,
+ };
+ 
+ static const struct pwrseq_target_data pwrseq_qcom_wcn6855_wlan_target_data = {
 
 -- 
 2.51.0
