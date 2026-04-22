@@ -1,140 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-104172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mHGMN5go6WljVAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 21:59:20 +0200
+	id cODTNTHm6GkHRQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 17:16:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE72E44A591
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 21:59:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E2FDE447BFD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 17:15:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2750D3012211
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 19:58:28 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 6A432301CEC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Apr 2026 15:15:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50B563F210B;
-	Wed, 22 Apr 2026 19:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 783D51E0E14;
+	Wed, 22 Apr 2026 15:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g8cYEcyD"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="JOKazJ6Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5A03F210A;
-	Wed, 22 Apr 2026 19:58:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E473148B4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Apr 2026 15:15:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776887895; cv=none; b=MHAJbLTWaNmqqXAjxCr0m15MCbeubvQ/VcjXZWvH/Eas9txhdbXNOt6+O3mjkzKAuaU7XpGfjrOhkOkdoLbd7CVF61KvA9Abwr0Cf9qqN7fG/x1WmGdjkbBoDI0gifdCnzVIQlC8GOlYEoMtLDYiI05fksFqZPRjyf21Jb3N8to=
+	t=1776870932; cv=none; b=mM9bdXMtO2zil2YjKI3f2xhvDWUtNWWYhsZrPQ2QAJEPNfeUynlO//KzLZ9YBgy51+JnUEO4PGZ/AcWCBC4cEHlAyZ9rb+dZMULeBQ0oxxhjo0RFGpz4zFsVYFroRJL3LAS2vRbKJgdORims8TmXbcr3tpX6pcjDhNayhKqK0IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776887895; c=relaxed/simple;
-	bh=LYvVyC78e037bReXvjd2uyLs7TRcgWQ1/dWq77r4RAo=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=gVfOKM8URDEe0mXjiPC9sDRFXlYlgVd1CM5xdy2KoXRvuatFbJLjeTmNf4swyRWJ1wAAwPsNnLRHXCO4FzpYOu3/fLue/xUav4YvbjMhNpBnvtu4RSc0t8+iMPqmhfmeBu6Qx1kMRCpBsaqW7OV+2KSYuRAc+AZ/EmqpeP3cju4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g8cYEcyD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC0BC2BCB4;
-	Wed, 22 Apr 2026 19:58:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776887895;
-	bh=LYvVyC78e037bReXvjd2uyLs7TRcgWQ1/dWq77r4RAo=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=g8cYEcyDw3XK9v/hkWE5fkFprDngOjqLKILR7aBJsntj8be+BpBCgfp+wDdw1gGw/
-	 ZzzpgpHDhZzVxGteBe5te6d2+N0CoowdIvyNX0l4g8VruJZ3Ol6cdfXTWqvs0pa0yU
-	 CqDkCKTzrbj86XhCDsivAelw+IbzC9EVoAeZ7p85j2loZuNhyyXHPq6HAJTgwOmIFU
-	 V/9rh0Zi0iBhXZ12mfrYy+kWHoHPxLrhz3SDe4KM+5LEEgVRJVkMzOXIkYn00Ekj05
-	 X2N76q52T0sxO1Jyh6yDqfdS4GEgywFNFyCY5OfLH4IEQHyFjCNlhzyX2NskHpJiAi
-	 7B31EzfpNWNDw==
-From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srini@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Tobias Heider <tobias.heider@canonical.com>
-Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>
-In-Reply-To: <20260422-x1e80100-audio-limit-v2-1-333258b97697@canonical.com>
-References: <20260422-x1e80100-audio-limit-v2-1-333258b97697@canonical.com>
-Subject: Re: [PATCH v2] ASoC: qcom: x1e80100: limit speaker volumes
-Message-Id: <177686906300.36226.17703920373519139645.b4-ty@b4>
-Date: Wed, 22 Apr 2026 15:44:23 +0100
+	s=arc-20240116; t=1776870932; c=relaxed/simple;
+	bh=sHNqh4ED7ri+md+IpvU9rdyr82PR7DeT+0YsgFMyNZg=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QwACoVgn8DxWl6I91aqdNDpEw4YTTN4dQZCUH+GB3K++WN79p6jQ9uXkWyFiLYSlhE9FfzcSD3EIsnKOb36Qg6cmEiWgYBiYHx/rFo3c74G/djL3VYtlLgRi2ECCgZL3aOcssLbGzBh2wenGFh/FhxYnN5qJcGiQmKfNyKpJXWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=JOKazJ6Q; arc=none smtp.client-ip=185.70.43.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1776870922; x=1777130122;
+	bh=l6+PqlJB6HASuTZjBIQFQZe3Akfa9hmumLUXf6H6UhU=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=JOKazJ6Qrt3IcKfOCJ2R+puLhsuG0PS9wbKU6oiY83W/8/iZQf0287hjj7TlFSrJe
+	 popq7DENBYUch/7vHE4uR4G9UFTmt6uRkYXkLbTEvEf13bQpiALW8WVrDcZF5o4rZT
+	 QiaG5yd7FNm184NDVWJMNl2lr5GRPH4jfnNC+4je50SjZB6N6YkoYNXnzUMCKwzYGH
+	 8OGy3N/FAveAzRZauHeJdRHJ8Uk8cboZS8Eo1yU0zGJywuMydVc9ike5Iu6X5t/eD6
+	 pVYHvOPmZBJahqtVQexPpUR+B0zRFiOqDymaRTFUQexgpNDacVD2mgrXoZsD0Xs+gu
+	 3YDspHvM5QvrQ==
+Date: Wed, 22 Apr 2026 15:15:17 +0000
+To: Alexander Koskovich <akoskovich@pm.me>
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v2 1/2] drm/mipi-dsi: add flag for sending all DSC slices in one packet
+Message-ID: <9vOWCBGQu4kqkzUaF1cAimiRnCHzd7NAjB98ZcmVygN9kNr7G2H-UzhkQfyiDlaj7G6wxWqKlGvAprsMtVE-P2erdkutRN7LuO1GQBOSzH8=@pm.me>
+In-Reply-To: <20260318-dsi-dsc-slice-per-pkt-v2-1-0a1b316f8250@pm.me>
+References: <20260318-dsi-dsc-slice-per-pkt-v2-0-0a1b316f8250@pm.me> <20260318-dsi-dsc-slice-per-pkt-v2-1-0a1b316f8250@pm.me>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: fd442c31505b96e580cd2d83842a4670e0592a66
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1105; i=broonie@kernel.org;
- h=from:subject:message-id; bh=LYvVyC78e037bReXvjd2uyLs7TRcgWQ1/dWq77r4RAo=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBp6ShUWhI1AJ83zS9iBN4pHlmu+JdKtsuaG9pHI
- tTcKr9OnbuJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCaekoVAAKCRAk1otyXVSH
- 0OroB/4+Q3Vw7LVxInAw6tWH+HL4hvWbHD6S6ULRbm5T6R1Nkbbj1BNxLJToCaqTVVAjkzU7zV7
- FOpjSLk/Bhpf+nRd4ZgLC2xf2VeGnikvlmpJw4wPF8P3IoEXY7iERGN1xWZjNV8hTLDobqJssA8
- 7hFm2G1Eyncs/JZvWaVnEGyqFhG//zq1yWfZkfNUlRqew7TZjgST57Cza9+dxYevKG/6Eh5tLr6
- oti2Z/U7vM0lKx6/IzZi9y70BFrt34+B31zw5B2Te4VRlcAweYWWEmubLVIC5NfjCLwBSVGYz8l
- c9S3gOlgy6V8wfSKWw/7HOEfjHZCWkQ8TxDQZaH97g8zbE3T
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
-X-Spamd-Result: default: False [-1.66 / 15.00];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_CC(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,lists.freedesktop.org,vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-104138-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com,canonical.com];
-	TAGGED_FROM(0.00)[bounces-104172-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[pm.me:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
+	MAILSPIKE_FAIL(0.00)[2600:3c15:e001:75::12fc:5321:query timed out];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: DE72E44A591
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: E2FDE447BFD
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, 22 Apr 2026 15:30:59 +0200, Tobias Heider wrote:
-> ASoC: qcom: x1e80100: limit speaker volumes
+On Wednesday, March 18th, 2026 at 5:58 AM, Alexander Koskovich <akoskovich@=
+pm.me> wrote:
 
-Applied to
+> The MIPI DSI v1.3 spec defines two modes for transporting compressed
+> pixel data: one slice per packet or multiple slice widths in a single
+> packet (Section 8.8.24 Figure 40).
+>=20
+> Add a MIPI_DSI_MODE_DSC_ALL_SLICES_IN_PKT flag that panel drivers can
+> set to indicate that all DSC slices for a line should be packed into a
+> single packet. When unset should default to 1 slice per packet.
+>=20
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+> ---
+>  include/drm/drm_mipi_dsi.h | 2 ++
+>  1 file changed, 2 insertions(+)
+>=20
+> diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+> index 3aba7b380c8d..d3ad8c5d3ebe 100644
+> --- a/include/drm/drm_mipi_dsi.h
+> +++ b/include/drm/drm_mipi_dsi.h
+> @@ -138,6 +138,8 @@ struct mipi_dsi_host *of_find_mipi_dsi_host_by_node(s=
+truct device_node *node);
+>  #define MIPI_DSI_MODE_LPM=09=09BIT(11)
+>  /* transmit data ending at the same time for all lanes within one hsync =
+*/
+>  #define MIPI_DSI_HS_PKT_END_ALIGNED=09BIT(12)
+> +/* pack all DSC slices for a line into a single packet */
+> +#define MIPI_DSI_MODE_DSC_ALL_SLICES_IN_PKT=09BIT(13)
+>=20
+>  enum mipi_dsi_pixel_format {
+>  =09MIPI_DSI_FMT_RGB888,
+>=20
+> --
+> 2.53.0
+>=20
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.1
-
-Thanks!
-
-[1/1] ASoC: qcom: x1e80100: limit speaker volumes
-      https://git.kernel.org/broonie/sound/c/0a5ee0e520ef
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+If there are no objections, could this be merged?
 
 Thanks,
-Mark
+Alex
 
 
