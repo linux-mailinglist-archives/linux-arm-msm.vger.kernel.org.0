@@ -1,137 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-104353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UC/oFbEh6mnKuwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 15:42:09 +0200
+	id CBJdFU0k6mnRvAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 15:53:17 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01910453293
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 15:42:08 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 514B84534CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 15:53:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DDA6130247C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 13:40:30 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 5579A30074EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 13:48:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC2902D0C72;
-	Thu, 23 Apr 2026 13:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4826E29D260;
+	Thu, 23 Apr 2026 13:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d51b2ao5"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Sf0G/QlJ";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="dmU3Se5U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA04626E173;
-	Thu, 23 Apr 2026 13:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192C42248A8;
+	Thu, 23 Apr 2026 13:48:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776951629; cv=none; b=lQ7VSDRCKTNwbo/n6yfj81vmnwwXP3KKAcqhOe5czHSK34jmApT0marDEl9QWy3dFv3C2mpBbMWmzws26O9K8nyAyyFcypPSrZznqvcl/vMcQ/BIs/0nnYHNnd+JPI/XZ3GBMxzxcAJ8NGDS/F/qO947cN8m2eZskaf1Y/KXlog=
+	t=1776952111; cv=none; b=XpeENBxbNzAtvWSJgyAN0AX00EaHA2+fQ0Gnz9i65uGmwewkeyE1/Eb5xu/MSeN9RUoQ7w4RbWWhHZidmIY2yJ+NP0kVAonm3DfGgbvNXJpGbPYCvmprzOolmrXL/QOgL3sfGbx+uwSPQIDU9o0ATLidsLA+2O8NCqjIodE+28U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776951629; c=relaxed/simple;
-	bh=3KP4UVdXkAjUCLuoO/Zngx5JujLIt1ZAmsr3rv4yp5M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l/JRcLrJqFTLi/8W2HALgjlTFJqix7lh5b0jNf10175wOJAE8DghWyQfS3SuM8L3ri0DfdB5tkvEp///uUGmgYCxNL2hC9SKps5HKOLRX41Hzbk0bg/ep8rHIhFnnV8ZfprXpxW07+iZAEFtDIFP6ifibAI0Z1A9ByTFldJ7tc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d51b2ao5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7DEBC2BCAF;
-	Thu, 23 Apr 2026 13:40:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1776951629;
-	bh=3KP4UVdXkAjUCLuoO/Zngx5JujLIt1ZAmsr3rv4yp5M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=d51b2ao5sf7XgHmfz7iMq57cj2OZF6xGfimWjCfRuSY0cxJxIeeynX8T6+uuCsAwQ
-	 QelMwuEkg4FlvKEstXscM6rkCKvWKSJS/rsmkYU1wU7PB/pRdg3xHq5U1ViGvA+c5o
-	 2ESF5wtWpLmggMSwRMhFBfaffFSNbnd27dGEbD6o=
-Date: Thu, 23 Apr 2026 15:40:26 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bod@kernel.org>,
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Stefan Schmidt <stefan.schmidt@linaro.org>,
-	Hans Verkuil <hverkuil@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Jonathan Hunter <jonathanh@nvidia.com>, linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
-	driver-core@lists.linux.dev, dri-devel@lists.freedesktop.org,
-	linux-tegra@vger.kernel.org,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Subject: Re: [PATCH v2 03/13] gpu: host1x: Migrate to generic dma context bus
-Message-ID: <2026042330-recopy-corner-07d9@gregkh>
-References: <20260423-glymur-v2-0-0296bccb9f4e@oss.qualcomm.com>
- <20260423-glymur-v2-3-0296bccb9f4e@oss.qualcomm.com>
+	s=arc-20240116; t=1776952111; c=relaxed/simple;
+	bh=CD7JbdUIZT8JduFaMDsHEf2I3lR2qNGtYUCVh8vYBLs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kilj4ldBCtx6/6ioig2FfdwSZbgAXgRMstzJdE0B9l4kwLNJoidnpXFSk/wui9Xth9fcjVtNIyuugcaFgiX3n/O8zUHf2dcbrZO0y2sF5AsH+GVANepelerG3aMFaissr8UmqTp/zs0NRfD5MoTmHCzZdlQjolrdRWbg4fCUUCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Sf0G/QlJ; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=dmU3Se5U; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1776952105; bh=w5k0XO8LJEIzi6AeWI+9kH4
+	GzIhYNOUnnHZx6jNXtLI=; b=Sf0G/QlJLFx5a/B42BpSfdf1AIeSuvCrIFSdb2/HeyjTUDS16k
+	MluuICBT8AJ8fjiGGu8l/5ACDhhVbuVe0pmDFuN1L1YWEvP4fivcz7L69dpzQAvbcltcnP8U0QD
+	z211VfVmfX7HZRjdeieDRpTZaReKaJMsRv434qyjSRHtko1fmf8TQr9b6Wky4w5j1giQ/IYh6QQ
+	74EDrMjHwKW27zOguSfhI6Jz7N44oPDBQpbg1XLLGYNjpz86iBBcFVVbPkjwRGniG9dLd+MH4f1
+	0Ga0go3lTfHh/vSKUWRlHCqMxFUSGwS7GQKZURQGcmxuLXWQ571+5YdW4/j9pM8MzHQ==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1776952105; bh=w5k0XO8LJEIzi6AeWI+9kH4
+	GzIhYNOUnnHZx6jNXtLI=; b=dmU3Se5U5oPHiS5IcYaIuxorVkqWO1ex+d0PrilJTMQzOX7LcR
+	XOyGrxVhVHSiz1MO5e7O3h67NnFdQ4k1fkBA==;
+Message-ID: <af584db7-8d21-4dc1-aae8-0496be27fe17@mainlining.org>
+Date: Thu, 23 Apr 2026 16:48:24 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260423-glymur-v2-3-0296bccb9f4e@oss.qualcomm.com>
-X-Spamd-Result: default: False [3.84 / 15.00];
-	MID_END_EQ_FROM_USER_PART(4.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sdm630: assign adsp_mem region
+ to ADSP FastRPC node
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260422-qcom-sdm660-cdsp-adsp-fastrpc-dts-fix-v3-0-274ba3715db0@mainlining.org>
+ <20260422-qcom-sdm660-cdsp-adsp-fastrpc-dts-fix-v3-4-274ba3715db0@mainlining.org>
+ <0d411167-caad-4f6e-b52b-de7caeaf2333@oss.qualcomm.com>
+ <e0c2c127-9f27-4d8e-802f-bdf1acfa960c@mainlining.org>
+ <94a977a4-0664-48f2-9aae-821119581d6b@oss.qualcomm.com>
+Content-Language: ru-RU, en-US
+From: Nickolay Goppen <setotau@mainlining.org>
+In-Reply-To: <94a977a4-0664-48f2-9aae-821119581d6b@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linuxfoundation.org,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
-	R_DKIM_ALLOW(-0.20)[linuxfoundation.org:s=korg];
+	DMARC_POLICY_ALLOW(-0.50)[mainlining.org,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[mainlining.org:s=202507r,mainlining.org:s=202507e];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104353-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,linux.dev,8bytes.org,arm.com,linaro.org,nvidia.com,gmail.com,ffwll.ch,vger.kernel.org,lists.linux.dev,lists.freedesktop.org];
-	RCPT_COUNT_TWELVE(0.00)[32];
+	TAGGED_FROM(0.00)[bounces-104354-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[3];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MAILSPIKE_FAIL(0.00)[172.234.253.10:server fail];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[gregkh@linuxfoundation.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linuxfoundation.org:+];
+	FROM_NEQ_ENVFROM(0.00)[setotau@mainlining.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[mainlining.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linuxfoundation.org:dkim]
-X-Rspamd-Queue-Id: 01910453293
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,mainlining.org:email,mainlining.org:dkim,mainlining.org:mid]
+X-Rspamd-Queue-Id: 514B84534CE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, Apr 23, 2026 at 06:59:32PM +0530, Vishnu Reddy wrote:
-> --- a/include/linux/host1x.h
-> +++ b/include/linux/host1x.h
-> @@ -462,7 +462,7 @@ struct host1x_memory_context {
->  	struct pid *owner;
->  
->  	struct device_dma_parameters dma_parms;
-> -	struct device dev;
-> +	struct device *dev;
 
-Ah, nice try, but no.  You can't use a "generic" device for this type of
-thing (i.e. your dma context bus device), as that's not what this device
-really is.  Add the needed logic to the bus this real device lives on,
-don't try to work around it.
+23.04.2026 16:08, Konrad Dybcio пишет:
+> On 4/23/26 3:06 PM, Nickolay Goppen wrote:
+>> 23.04.2026 14:05, Konrad Dybcio пишет:
+>>> On 4/22/26 5:39 PM, Nickolay Goppen wrote:
+>>>> Downstream [1] ADSP FastRPC node has the adsp_mem region assigned, so
+>>>> assign it to the ADSP FastRPC node.
+>>>>
+>>>> [1]: https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/blob/11-EAS/arch/arm/boot/dts/qcom/sdm660.dtsi#L1693
+>>>>
+>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>>> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+>>>> ---
+>>>>    arch/arm64/boot/dts/qcom/sdm630.dtsi | 3 +++
+>>>>    1 file changed, 3 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+>>>> index 36b419dea153..af2bc29ccdad 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+>>>> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+>>>> @@ -2458,6 +2458,9 @@ fastrpc {
+>>>>                        compatible = "qcom,fastrpc";
+>>>>                        qcom,glink-channels = "fastrpcglink-apps-dsp";
+>>>>                        label = "adsp";
+>>>> +                    memory-region = <&adsp_mem>;
+>>>> +                    qcom,vmids = <QCOM_SCM_VMID_LPASS
+>>>> +                              QCOM_SCM_VMID_ADSP_HEAP>;
+>>> Please double-check that, the VMID used to be different on
+>>> older SoCs
+>> Do you know how to check that?
+> The least painful way is probably to add debug prints to what downstream
+> calls hyp_assign_phys()
 
-thanks,
+I've found in drivers/soc/qcom/qdsp6v2/msm_audio_ion.c the following vmids:
 
-greg k-h
+VMID_HLOS= 0x3
+VMID_CP_ADSP_SHARED33
+
+>
+> Konrad
+
+-- 
+Best regards,
+Nickolay
+
 
