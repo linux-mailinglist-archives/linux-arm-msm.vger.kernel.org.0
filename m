@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-104196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aHgaD5+p6WkxgwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 07:09:51 +0200
+	id gNM2IB2q6Wl6gwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 07:11:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C29AD44D286
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 07:09:50 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0BE444D2E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 07:11:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 11C5F302BA02
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 05:09:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 438BD3026317
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 05:09:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DF4E3CAE6C;
-	Thu, 23 Apr 2026 05:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B367F3CCFDC;
+	Thu, 23 Apr 2026 05:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="w5/nUPSo"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="WcDSDhwF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
+Received: from out-185.mta0.migadu.com (out-185.mta0.migadu.com [91.218.175.185])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E5F379EF2;
-	Thu, 23 Apr 2026 05:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD30379EF2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2026 05:09:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.185
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776920976; cv=none; b=bz3tpwCJ1qbV9A8oAkg94QeuBzzVLR6Jz3v8UitztMDx/zL9gu7chG48ch0c/NyuYlt4J/ehFL9yYWvg5qEpgqMpHLhY83V3ZJ5ODCyOOlI7O99+3dtFOhWueqBJ+XQJmK7uce3xLF0sZkfqD8WyYXaQ52NiybcdYw2mvs82SRo=
+	t=1776920989; cv=none; b=n+oI8kMyYJKO8gqG5nJ4wj3SuezNp5EUwK7pc/RDhD9GTjHAk2AvbRiVvcldLaH4HSH/ikRvpVHZWw59TSUq4WXpQyFzU3bUz6vVQMd/i2Q9wzMgiaDIlYdu2Of77lFIdE4qLVoez9qkxwD+lBkDNQGMnss2ockhufkMMMurkAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776920976; c=relaxed/simple;
-	bh=2yxpfwbmtMhGY7toV/DOGqB0FSWoIMgpc7O5paD+vro=;
+	s=arc-20240116; t=1776920989; c=relaxed/simple;
+	bh=KK4PCBaRdORX6zmggbvhDPAyBW9xmTKLJ7Lr4HzmAFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JsLFUlMpFFkaVXO3at5o1mShh9L7BTUierfz/LxHQEUQ0x+6IVvybKhsXVddq04BFUycMF+Stnt1GPjfqyRBvlklDMWIFlhrVGXhpxN8QRzDWfVhp8NfFcVLbAZcDZV1/ySC9ijZODBazRhrVbnNUJYv0GANR4OtsJe9SFa1dFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=w5/nUPSo; arc=none smtp.client-ip=91.218.175.179
+	 MIME-Version; b=FKghUOzujb/CmM3Db7qVzxUWEbHYETuYTy+cwZK+wqSzokTnWUl4rjVDmmfJETfR6TqjRhgkQm/UOxTtoA+NDF0w2AiNMUGv2EGUndEFIFQAblxPdnn3DTEC029fpi3vh0T2SPPl5zroMULo8Xq1WhSYc5+9APG1idTaMeyF15o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=WcDSDhwF; arc=none smtp.client-ip=91.218.175.185
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1776920972;
+	s=key1; t=1776920986;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=XJvn4Kmgr3hYMJPtGfeLpjqkFYR7MaG36asqmMm2Wkg=;
-	b=w5/nUPSomFR26SfFQM/pfJdzfn/lNYsunzIQF0/c2GWwEyFhdnnrHfLu6U/287nrSf3lsg
-	CGUq4Wc1SaAiLWjJXaWgmUU9n93I/H3PCkNHrNdgk7CGy9rS+8bHUXDW4w2JG8cJwZQsZt
-	kD8loCDGfBrbG9c6+ZdECt313+XHCR5xfyjpXWU1fnmZsBaTbMhuibO+fGb8RTpmV9UKlt
-	YqlIDLOkC6M2yIFTK0xsxV/QPmcjDndcjh+DVqgmyDX6qYdRWrUy1Sqb9VCoBDgNv7Redf
-	8C+Qn1Lkq/PEyLiCjdOZgN2iaEq2H2PyAT6lTWMDgJ6/3xb7Cf+aSyVpfywI/A==
+	bh=hZApfdz3ALUTL6N7BA3ZFZeFOe0Ov8S9Lcryp9JLM2M=;
+	b=WcDSDhwFUzJHDbgNTIpIsBcfDj8w+9BdUrvDUBB+22oajcdqDUvom5f6HGVMe6oHLpSpmA
+	4vGovVOxSYymWbZwQJMKNrVgiWTViHgRpn6f4OCKIrdFssFUYwvepczIdt09G8+k9zZ4ct
+	NywHR+x7Uy8N7Xr0zOf7tOfOFXfhSrLD9UFe0Px6ORuGCqawpTicH4xvMI0SJlaQlHVhib
+	wkMfgAe91tYWNgXlwFavB5suY+wJrag+BCz1G2vhtW9EH6hkyUH5d9VOpW+2UV+Y4GiUhs
+	/qyqv4/nTi9Nup41dGjZamxsy/lr3BsTr+31Y6HEE/+oddRMwYydoejv6MKXSg==
 From: Val Packett <val@packett.cool>
 To: Srinivas Kandagatla <srini@kernel.org>,
 	Liam Girdwood <lgirdwood@gmail.com>,
@@ -62,9 +62,9 @@ Cc: Val Packett <val@packett.cool>,
 	linux-arm-msm@vger.kernel.org,
 	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/6] ASoC: qcom: qdsp6: q6routing: add Senary MI2S ports
-Date: Thu, 23 Apr 2026 01:41:02 -0300
-Message-ID: <20260423050801.210840-4-val@packett.cool>
+Subject: [PATCH 3/6] ASoC: qcom: sm8250: add Senary MI2S RX support
+Date: Thu, 23 Apr 2026 01:41:03 -0300
+Message-ID: <20260423050801.210840-5-val@packett.cool>
 In-Reply-To: <20260423050801.210840-2-val@packett.cool>
 References: <20260423050801.210840-2-val@packett.cool>
 Precedence: bulk
@@ -80,13 +80,13 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104196-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-104197-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[3];
 	RCVD_TLS_LAST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[14];
@@ -99,71 +99,41 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[packett.cool:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,packett.cool:email,packett.cool:dkim,packett.cool:mid]
-X-Rspamd-Queue-Id: C29AD44D286
+	DBL_BLOCKED_OPENRESOLVER(0.00)[packett.cool:email,packett.cool:dkim,packett.cool:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: D0BE444D2E8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-This commit adds support for senary MI2S mixers.
+Add support for the SENARY_MI2S_RX DAI which is used on some devices to
+send audio data to speaker amplifiers.
 
 Signed-off-by: Val Packett <val@packett.cool>
 ---
- sound/soc/qcom/qdsp6/q6routing.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/soc/qcom/sm8250.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/soc/qcom/qdsp6/q6routing.c b/sound/soc/qcom/qdsp6/q6routing.c
-index 7386226046fa..55119cc33d95 100644
---- a/sound/soc/qcom/qdsp6/q6routing.c
-+++ b/sound/soc/qcom/qdsp6/q6routing.c
-@@ -68,6 +68,7 @@
- 	{ mix_name, "SEC_MI2S_TX", "SEC_MI2S_TX" },	\
- 	{ mix_name, "QUAT_MI2S_TX", "QUAT_MI2S_TX" },	\
- 	{ mix_name, "QUIN_MI2S_TX", "QUIN_MI2S_TX" },	\
-+	{ mix_name, "SEN_MI2S_TX", "SEN_MI2S_TX" },	\
- 	{ mix_name, "TERT_MI2S_TX", "TERT_MI2S_TX" },		\
- 	{ mix_name, "SLIMBUS_0_TX", "SLIMBUS_0_TX" },		\
- 	{ mix_name, "SLIMBUS_1_TX", "SLIMBUS_1_TX" },		\
-@@ -145,6 +146,9 @@
- 	SOC_SINGLE_EXT("QUIN_MI2S_TX", QUINARY_MI2S_TX,			\
- 		id, 1, 0, msm_routing_get_audio_mixer,			\
- 		msm_routing_put_audio_mixer),				\
-+	SOC_SINGLE_EXT("SEN_MI2S_TX", SENARY_MI2S_TX,			\
-+		id, 1, 0, msm_routing_get_audio_mixer,			\
-+		msm_routing_put_audio_mixer),				\
- 	SOC_SINGLE_EXT("SLIMBUS_0_TX", SLIMBUS_0_TX,			\
- 		id, 1, 0, msm_routing_get_audio_mixer,			\
- 		msm_routing_put_audio_mixer),				\
-@@ -535,6 +539,9 @@ static const struct snd_kcontrol_new quaternary_mi2s_rx_mixer_controls[] = {
- static const struct snd_kcontrol_new quinary_mi2s_rx_mixer_controls[] = {
- 	Q6ROUTING_RX_MIXERS(QUINARY_MI2S_RX) };
- 
-+static const struct snd_kcontrol_new senary_mi2s_rx_mixer_controls[] = {
-+	Q6ROUTING_RX_MIXERS(SENARY_MI2S_RX) };
-+
- static const struct snd_kcontrol_new tertiary_mi2s_rx_mixer_controls[] = {
- 	Q6ROUTING_RX_MIXERS(TERTIARY_MI2S_RX) };
- 
-@@ -777,6 +784,9 @@ static const struct snd_soc_dapm_widget msm_qdsp6_widgets[] = {
- 	SND_SOC_DAPM_MIXER("QUIN_MI2S_RX Audio Mixer", SND_SOC_NOPM, 0, 0,
- 			   quinary_mi2s_rx_mixer_controls,
- 			   ARRAY_SIZE(quinary_mi2s_rx_mixer_controls)),
-+	SND_SOC_DAPM_MIXER("SEN_MI2S_RX Audio Mixer", SND_SOC_NOPM, 0, 0,
-+			   senary_mi2s_rx_mixer_controls,
-+			   ARRAY_SIZE(senary_mi2s_rx_mixer_controls)),
- 	SND_SOC_DAPM_MIXER("TERT_MI2S_RX Audio Mixer", SND_SOC_NOPM, 0, 0,
- 			   tertiary_mi2s_rx_mixer_controls,
- 			   ARRAY_SIZE(tertiary_mi2s_rx_mixer_controls)),
-@@ -969,6 +979,7 @@ static const struct snd_soc_dapm_route intercon[] = {
- 	Q6ROUTING_RX_DAPM_ROUTE("SLIMBUS_6_RX Audio Mixer", "SLIMBUS_6_RX"),
- 	Q6ROUTING_RX_DAPM_ROUTE("QUAT_MI2S_RX Audio Mixer", "QUAT_MI2S_RX"),
- 	Q6ROUTING_RX_DAPM_ROUTE("QUIN_MI2S_RX Audio Mixer", "QUIN_MI2S_RX"),
-+	Q6ROUTING_RX_DAPM_ROUTE("SEN_MI2S_RX Audio Mixer", "SEN_MI2S_RX"),
- 	Q6ROUTING_RX_DAPM_ROUTE("TERT_MI2S_RX Audio Mixer", "TERT_MI2S_RX"),
- 	Q6ROUTING_RX_DAPM_ROUTE("SEC_MI2S_RX Audio Mixer", "SEC_MI2S_RX"),
- 	Q6ROUTING_RX_DAPM_ROUTE("PRI_MI2S_RX Audio Mixer", "PRI_MI2S_RX"),
+diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
+index f193d0ba63d0..a675913da943 100644
+--- a/sound/soc/qcom/sm8250.c
++++ b/sound/soc/qcom/sm8250.c
+@@ -112,6 +112,14 @@ static int sm8250_snd_startup(struct snd_pcm_substream *substream)
+ 		snd_soc_dai_set_fmt(cpu_dai, fmt);
+ 		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+ 		break;
++	case SENARY_MI2S_RX:
++		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
++		snd_soc_dai_set_sysclk(cpu_dai,
++			Q6AFE_LPASS_CLK_ID_SEN_MI2S_IBIT,
++			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
++		snd_soc_dai_set_fmt(cpu_dai, fmt);
++		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
++		break;
+ 	default:
+ 		break;
+ 	}
 -- 
 2.53.0
 
