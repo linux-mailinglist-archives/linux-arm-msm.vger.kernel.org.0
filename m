@@ -1,231 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-104361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UCAcLUg06mkCwwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 17:01:28 +0200
+	id GG63CPs06mk+xAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 17:04:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AC1F454060
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 17:01:23 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9918B45410E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 17:04:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3638E30C30E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 14:57:54 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B13A03054BB9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 15:00:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CD9D3590AE;
-	Thu, 23 Apr 2026 14:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E578435B62A;
+	Thu, 23 Apr 2026 15:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N6461PjQ"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Fnr1ehOv";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="kXUbMxxZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F093126B2;
-	Thu, 23 Apr 2026 14:57:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26A6356A0A;
+	Thu, 23 Apr 2026 15:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776956265; cv=none; b=SYZ4bD7ceBKk9Wrz51Qa6mtN2WRbuRLy/KbP0OFAZ1CcP4XVeudljwMoJvBif2UQQAZ5NU2IvJ4fFe1i2oLmKYpLaVwHpGnmuiD8GCtsHqrTFC3RRJou7m9VT6BWeRcvX2Q4nWIpFB1EXpikcTmKq4VrBg2Nts5ZuVJrKUqJjvo=
+	t=1776956454; cv=none; b=B+uyeiK8mzyYqqTMIOIFtWXeoyUnz4+VdShCRjHAPd0ISR5Q1huR2IcHuM8Hgdff3hSfei5cGCSXd6uFhCp1vfdjwEinXFxbfSi0mg1SEoczD5lMr2RtUtwEsL4S/RwWTwjng5rETboTNUx0sia+8rOyRgT9mlMFVHjzEohmnXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776956265; c=relaxed/simple;
-	bh=5wWO8YpZZeKWSICm5+VAGrGxxREHvjDClIgimaLRvN4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qiwzlh+xhywg0A/NaAY+kg66Vlyh4I5aOXS4HBhKsi+cofSzQEgNEGsw5xdGrnOk1bZqbMzJ1pWRsB1FN0HheCL4JCo0mZgu4lXzYUlQV/CJzLGBAq3wo/rrAWbgMWncO+0oIQ02JIoAnokkASj7xcEQJLbRHdFxCbDZWxxrpEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N6461PjQ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63NBwigG009885;
-	Thu, 23 Apr 2026 14:57:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=dKWP3BzwCZ7
-	DH9txszXX63ggQ7TbNv0YUXlfrhzzdJs=; b=N6461PjQ6aSKrwud81Z4tlKnObp
-	u06Kp7qaogu4vi8Utp80pgq8j+fNaWBeYPmhyqTr+WtNf/t1UkGkH86E8dqYUGHU
-	w/DO4LgEvCmd0GFsU5wYMbP383SxOHgijMKVRnT3/aizhju8G3VfM9Pvb3W6rjjj
-	z5N1MsqmWVYvaj4ffAON/jhDgfJ1C2LKeqTkQk1aToLqhOrTQwteOk1cAibc3t8K
-	m9nUzSyJ6xB7jye46PmO1RqUtZ3g5IEzVdvn0+qFI8wZ7ulouMiWQ6J9P63yOgzS
-	AIVPUDFMUwTm6j+QmfcNQ0DRawsNiLot9AwhhF/3TubQgKwPsvdFiygjq1w==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dqk178p60-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Apr 2026 14:57:39 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 63NEvUA9011463;
-	Thu, 23 Apr 2026 14:57:30 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4dm31k24bj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Apr 2026 14:57:30 +0000 (GMT)
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 63NEvU7i011455;
-	Thu, 23 Apr 2026 14:57:30 GMT
-Received: from hu-devc-hyd-u24-a.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.147.246.140])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 63NEvTsT011451
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Apr 2026 14:57:30 +0000 (GMT)
-Received: by hu-devc-hyd-u24-a.qualcomm.com (Postfix, from userid 429934)
-	id AF69E21C47; Thu, 23 Apr 2026 20:27:28 +0530 (+0530)
-From: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
-To: viken.dadhaniya@oss.qualcomm.com, andi.shyti@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, vkoul@kernel.org,
-        Frank.Li@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-        dmitry.baryshkov@oss.qualcomm.com, linmq006@gmail.com,
-        quic_jseerapu@quicinc.com, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org
-Cc: krzysztof.kozlowski@oss.qualcomm.com, bartosz.golaszewski@oss.qualcomm.com,
-        bjorn.andersson@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com,
-        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
-Subject: [PATCH v7 4/4] i2c: qcom-geni: Support multi-owner controllers in GPI mode
-Date: Thu, 23 Apr 2026 20:25:51 +0530
-Message-ID: <20260423145705.545552-5-mukesh.savaliya@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260423145705.545552-1-mukesh.savaliya@oss.qualcomm.com>
-References: <20260423145705.545552-1-mukesh.savaliya@oss.qualcomm.com>
+	s=arc-20240116; t=1776956454; c=relaxed/simple;
+	bh=2l3rTPexjafIVGeQo/DBMOtwsxaQACO7NLqJAnr+pAk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qak0uEqMagp7Asmtux4vSMBzaOf4VOv/t+c39oClCwWNpTsQuVejJx3zwo9p9rGJKBHlX85BFKFua1hWRGvBdquj0oFmA8/7Ow/G29hsbC9NAWpFNxfiS+vf7l+oERpSaSMNMLvFP5fUqJnr0ej/rf9SkKgrnWZb1tWQvKO1KcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Fnr1ehOv; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=kXUbMxxZ; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1776956450; bh=yxRTbkH0ThQD7GDjv6mAYBb
+	BxFNanB4TidxxS4bJLiQ=; b=Fnr1ehOvpzvlGVlhSuQZ2lIiyx5N+okiCtov23RjY5ylGQUJ0J
+	EmgnAcD/wUpINPIsHFvmmBiigmL+AqN/TJX5DPL2OnQ8heIkbbNc/iYHYGn9Mzbb5GqTbBk6Vn4
+	b6QNrcIV+DuOzbndWiUO6UzLg4L+pYEZU/Dg8JAA8Uvjnu0BiqopvPjNoV2mQSRv52TO+lttgUK
+	iOhPG4/U0PAOuESYcDgePz6thl/LhD66mdZ0a/DuLm0AynrZJCCkayNtrfAet82e8wv1ZtNl+Mm
+	Tzrb0o29IICoOJiBdLpXUGcPV6heifjSg9XIe+oAsSbVBQW/GUK5yR6AJlKgVK80jyw==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=From:To:Subject:Date:Message-ID; t=1776956450; bh=yxRTbkH0ThQD7GDjv6mAYBb
+	BxFNanB4TidxxS4bJLiQ=; b=kXUbMxxZM3O+jzwTe/YIni7repEf5/w6EqTqAoRwG+jhnACnSs
+	jlqHzPUmAItRW9HCzNO6nRGcFBeaKBsDoXBQ==;
+Message-ID: <7ca1a729-b8c5-428f-8785-287c5c7c73b3@mainlining.org>
+Date: Thu, 23 Apr 2026 18:00:49 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sdm630: assign adsp_mem region
+ to ADSP FastRPC node
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260422-qcom-sdm660-cdsp-adsp-fastrpc-dts-fix-v3-0-274ba3715db0@mainlining.org>
+ <20260422-qcom-sdm660-cdsp-adsp-fastrpc-dts-fix-v3-4-274ba3715db0@mainlining.org>
+ <0d411167-caad-4f6e-b52b-de7caeaf2333@oss.qualcomm.com>
+ <e0c2c127-9f27-4d8e-802f-bdf1acfa960c@mainlining.org>
+ <94a977a4-0664-48f2-9aae-821119581d6b@oss.qualcomm.com>
+ <af584db7-8d21-4dc1-aae8-0496be27fe17@mainlining.org>
+ <22faffca-b4bc-4e43-b33f-2c5a7152a218@oss.qualcomm.com>
+Content-Language: ru-RU, en-US
+From: Nickolay Goppen <setotau@mainlining.org>
+In-Reply-To: <22faffca-b4bc-4e43-b33f-2c5a7152a218@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-GUID: xpahXvXzHtvYjIgZ8PxySvxbpBjJ0HGd
-X-Authority-Analysis: v=2.4 cv=R98z39RX c=1 sm=1 tr=0 ts=69ea3363 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8 a=r5MnBgDnrAiVjouRZIUA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIzMDE0OSBTYWx0ZWRfX8iwpSd9tFd8F
- zxbZ7rJP4V3sMaVsWZDnblxkLhxkNQYFzz0+iZHodA9vh/MGzbCmDlGGWYfaLB9Vmz5JU+Ucve8
- NuLGwJ8Lh3xmFccnI2qrSo6RezdSHYEohLl2fTDzP+dw4D7LfvWPc3EgvkUvlQL0JlojqvjCG/E
- RxIAoQnlibBF9KUDfHK1Wf8GRg9dCwIGC4Vs2kkxsZqMy+P3FmWg2YgF2l80aMRz0E6PFw/08Hs
- 9wa1IMiTP4AYrtHpSoglQGB/JlbGsE0piuEa14vcufowljWjaSXhJjaD3WpmvLcwWbwQCFwOhrO
- Yat/pW2ZAc4rto6RavaE9RsaUGKA5RuY939KeZhdn1d0guoPya5cftHf5rR8oYZbmdGPteDnQ/E
- +x9RxkNt2XY+iuXRW3UbmyBnoZusEPvxjFXZtAat3GSuWuVu/EqzsB3NtsILmyuD8l+fm8tOtnM
- ZH9jFElxrQVkVE3fzng==
-X-Proofpoint-ORIG-GUID: xpahXvXzHtvYjIgZ8PxySvxbpBjJ0HGd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501 phishscore=0
- malwarescore=0 impostorscore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604230149
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[mainlining.org,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[mainlining.org:s=202507r,mainlining.org:s=202507e];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,quicinc.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-104361-lists,linux-arm-msm=lfdr.de];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mukesh.savaliya@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	MAILSPIKE_FAIL(0.00)[2600:3c04:e001:36c::12fc:5321:query timed out];
-	NEURAL_HAM(-0.00)[-1.000];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
+	TAGGED_FROM(0.00)[bounces-104362-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	DKIM_TRACE(0.00)[mainlining.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[setotau@mainlining.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MAILSPIKE_FAIL(0.00)[172.105.105.114:query timed out];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[10]
-X-Rspamd-Queue-Id: 3AC1F454060
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,mainlining.org:email,mainlining.org:dkim,mainlining.org:mid]
+X-Rspamd-Queue-Id: 9918B45410E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Some platforms use a QUP-based I2C controller in a configuration where the
-controller is shared with another system processor. In this setup the
-operating system must not assume exclusive ownership of the controller or
-its associated pins.
 
-Add support for enabling multi-owner operation when DeviceTree specifies
-qcom,qup-multi-owner. When enabled, mark the underlying serial engine as
-shared so the common GENI resource handling avoids selecting the "sleep"
-pinctrl state, which could disrupt transfers initiated by the other
-processor.
+23.04.2026 17:39, Ekansh Gupta пишет:
+> On 23-04-2026 19:18, Nickolay Goppen wrote:
+>> 23.04.2026 16:08, Konrad Dybcio пишет:
+>>> On 4/23/26 3:06 PM, Nickolay Goppen wrote:
+>>>> 23.04.2026 14:05, Konrad Dybcio пишет:
+>>>>> On 4/22/26 5:39 PM, Nickolay Goppen wrote:
+>>>>>> Downstream [1] ADSP FastRPC node has the adsp_mem region assigned, so
+>>>>>> assign it to the ADSP FastRPC node.
+>>>>>>
+>>>>>> [1]: https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/
+>>>>>> blob/11-EAS/arch/arm/boot/dts/qcom/sdm660.dtsi#L1693
+>>>>>>
+>>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>>>>> Signed-off-by: Nickolay Goppen <setotau@mainlining.org>
+>>>>>> ---
+>>>>>>     arch/arm64/boot/dts/qcom/sdm630.dtsi | 3 +++
+>>>>>>     1 file changed, 3 insertions(+)
+>>>>>>
+>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/
+>>>>>> boot/dts/qcom/sdm630.dtsi
+>>>>>> index 36b419dea153..af2bc29ccdad 100644
+>>>>>> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+>>>>>> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+>>>>>> @@ -2458,6 +2458,9 @@ fastrpc {
+>>>>>>                         compatible = "qcom,fastrpc";
+>>>>>>                         qcom,glink-channels = "fastrpcglink-apps-dsp";
+>>>>>>                         label = "adsp";
+>>>>>> +                    memory-region = <&adsp_mem>;
+>>>>>> +                    qcom,vmids = <QCOM_SCM_VMID_LPASS
+>>>>>> +                              QCOM_SCM_VMID_ADSP_HEAP>;
+>>>>> Please double-check that, the VMID used to be different on
+>>>>> older SoCs
+>>>> Do you know how to check that?
+>>> The least painful way is probably to add debug prints to what downstream
+>>> calls hyp_assign_phys()
+>> I've found in drivers/soc/qcom/qdsp6v2/msm_audio_ion.c the following vmids:
+>>
+>> VMID_HLOS= 0x3
+>> VMID_CP_ADSP_SHARED33
+> This VMID looks correct.
+>
+> Just had a look at the downstream fastrpc driver code in the same tree.
+> The fastrpc node in DT[1] is adding a "qcom,fastrpc-vmid-heap-shared"
+> property. For this property, the VMID is getting set as
+> "VMID_CP_ADSP_SHARED" in the downstream fastrpc driver[2]. The
+> hyp_assign is happening during daemon attach call[3] with srcVM being
+> "VMID_HLOS".
+>
+> Thanks Konrad for highlighting this difference in VMID.
+>
+> [1]
+> https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/blob/11-EAS/arch/arm/boot/dts/qcom/sdm660.dtsi#L1699
+> [2]
+> https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/blob/11-EAS/drivers/char/adsprpc.c#L3602
+> [3]
+> https://github.com/xiaomi-sdm660/android_kernel_xiaomi_sdm660/blob/11-EAS/drivers/char/adsprpc.c#L1999
+Didn't find the "VMID_CP_ADSP_SHARED 0x33" in the upstream bindings. 
+Does it need to be added to the bindings?
+>>> Konrad
 
-For GPI mode transfers, request lock/unlock TRE sequencing from the GPI
-driver by setting a single lock_action selector per message, emitting lock
-before the first message and unlock after the last message (handling the
-single-message case as well). This serializes access to the shared
-controller without requiring message-position flags to be passed into the
-DMA engine layer.
-
-Signed-off-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
----
- drivers/i2c/busses/i2c-qcom-geni.c | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index ae609bdd2ec4..a396ddc7d8f4 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -815,6 +815,14 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
- 		if (i < num - 1)
- 			peripheral.stretch = 1;
- 
-+		peripheral.lock_action = GPI_LOCK_NONE;
-+		if (gi2c->se.multi_owner) {
-+			if (i == 0)
-+				peripheral.lock_action = GPI_LOCK_ACQUIRE;
-+			else if (i == num - 1)
-+				peripheral.lock_action = GPI_LOCK_RELEASE;
-+		}
-+
- 		peripheral.addr = msgs[i].addr;
- 		if (i > 0 && (!(msgs[i].flags & I2C_M_RD)))
- 			peripheral.multi_msg = false;
-@@ -1014,6 +1022,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 		gi2c->clk_freq_out = I2C_MAX_STANDARD_MODE_FREQ;
- 	}
- 
-+	if (of_property_read_bool(pdev->dev.of_node, "qcom,qup-multi-owner")) {
-+		gi2c->se.multi_owner = true;
-+		dev_dbg(&pdev->dev, "I2C controller is shared with another system processor\n");
-+	}
-+
- 	if (has_acpi_companion(dev))
- 		ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(dev));
- 
-@@ -1089,7 +1102,9 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 	}
- 
- 	if (fifo_disable) {
--		/* FIFO is disabled, so we can only use GPI DMA */
-+		/* FIFO is disabled, so we can only use GPI DMA.
-+		 * SE can be shared in GSI mode between subsystems, each SS owns a GPII.
-+		 */
- 		gi2c->gpi_mode = true;
- 		ret = setup_gpi_dma(gi2c);
- 		if (ret)
-@@ -1098,6 +1113,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
- 	} else {
- 		gi2c->gpi_mode = false;
-+
-+		if (gi2c->se.multi_owner)
-+			return dev_err_probe(dev, -EINVAL,
-+					     "I2C sharing not supported in non GSI mode\n");
-+
- 		tx_depth = geni_se_get_tx_fifo_depth(&gi2c->se);
- 
- 		/* I2C Master Hub Serial Elements doesn't have the HW_PARAM_0 register */
 -- 
-2.43.0
+Best regards,
+Nickolay
 
 
