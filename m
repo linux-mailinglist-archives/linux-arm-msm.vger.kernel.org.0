@@ -1,51 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-104215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0LMFK4LJ6WnAkAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 09:25:54 +0200
+	id +FFVEJLR6Wm9kgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 10:00:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4091C44DF26
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 09:25:54 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE6B444E420
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 10:00:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6759F30E16C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 07:21:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7505B3007CAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 07:58:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8104282F36;
-	Thu, 23 Apr 2026 07:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12A333451CE;
+	Thu, 23 Apr 2026 07:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GE3canle"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="uxA1ifH9";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="tYbcOygt";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="uxA1ifH9";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="tYbcOygt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44491F5821;
-	Thu, 23 Apr 2026 07:21:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DF62E62B7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2026 07:58:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776928863; cv=none; b=pqJRDLj0IeneQN3ata7ZLIoRef4t4xfAx/Pf1ALE+fel2du6sScWgWexqMjbT0oS/jWwzBWwZX48x4fJDJDOETEs0dez3dc2bsjrHgMhJJBOY+RvEYE8k1Nr5Mk29RQ7q5XGVbW/P+sg96xSVgc2ZQIW2atznmheQFML1tHcrQ4=
+	t=1776931130; cv=none; b=Wv7H1S2fx02wqkOOa7zquEUHe0dNEv2ULZ6fjSBbHPIfjcsUDxFz7gB+OneeaoBWfQCmGA25FAqWmO+mSMWwaHfhCDQkFT6dkzvMt7Y8HFeJ5BGf8droBlaLHRnRL+IRnPPI4zOENQlpkUuLbRRr1vecw6gLUGkd3dfXHqz+N0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776928863; c=relaxed/simple;
-	bh=N7jecxfvfqnMWDnCBfqWAiE7E2MlOrEKVILAmn+F4YA=;
+	s=arc-20240116; t=1776931130; c=relaxed/simple;
+	bh=x4BIMmNjV+GaviRjQMA3gkmgtVYkfr8E0ZOD8QqZdLQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tDEYHVvbEyvYa77kaNZe2QG6ICswrx0+JkzFeTOUy9IbRLO+VSGv1MsWjC2VMSKIo1ueGvhhuoC0RFOAMm/WXUPh16hZXnY9GTM32BprZbotriPJPlOwO11HSVbkCS3hqTXiSqCsWDgCY7XPiN0vMa4FqLyiw5Y50/M6L7fyc9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GE3canle; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14285C2BCB5;
-	Thu, 23 Apr 2026 07:21:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776928863;
-	bh=N7jecxfvfqnMWDnCBfqWAiE7E2MlOrEKVILAmn+F4YA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=GE3canleDAbVFs066SSwB7AldCoxQJzEf4D+cw+2Sxq1ZxTz9An8m1LN7Bc+M9l7U
-	 HKzneWtQEdV2uG5u1Q5Z7XlUKYL/bzkVwMFQt3xSK+uNiTbSnfxFqh6CmdQELwa1ic
-	 /xBKfI7LVed6m8gs4LrVAQBVd5LzUVqbYiFY1bQlfZmwSuseD2CuKj+1M6nWqRRH1h
-	 KgGcl/OsI4ngIXoEWAARVUjBlnYeUewTKGonUNyq840Q9niTDWpKqzy/KFnzp65vLB
-	 p33nCq/mlqfJoFiTklTA/7YqyBMx3P8gUJlmPgJwX2+/puWOabyRQW2jW0lHAu7iQT
-	 4mFCDLpAVHfwQ==
-Message-ID: <eab2d0b8-a949-47d8-b953-fe34bd2fd869@kernel.org>
-Date: Thu, 23 Apr 2026 09:20:59 +0200
+	 In-Reply-To:Content-Type; b=mbMXVAhs3snYKGFXT8p1L3s/dp2grxxLLyZD4Ox4uWRq7g8bxF2g6frr2qlwioIBWi0zfmznxCHJarZTrPSIRcOQlZpw5J3FRMEuxaD3YQrkAJdVN5LzV9Jezryp/lRw+EytRwHNIsk2qHSEHjw6pX8cfViSxWscrKsxQFDzKjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=uxA1ifH9; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=tYbcOygt; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=uxA1ifH9; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=tYbcOygt; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 8D1426A844;
+	Thu, 23 Apr 2026 07:58:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1776931126; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Q8pTHjOBe16sd6ffSKsMW34CU0TTHy47Iw8rAMAOfxk=;
+	b=uxA1ifH9n5VfzHuM5MjDE+XjulMSjtec+ddyEP5BYSrIhmLRNsrOEKao8ti6wLUqQolZAY
+	3Q0vAFFYBV7XthuyTAaglVhZT55NHPGMnqstKEqmtRPvz8FxWJmkQ8ISpAZF9Dc0NVGgcO
+	dz7T84PHRN9aQ0xhVoDaUYmqnLlrJac=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1776931126;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Q8pTHjOBe16sd6ffSKsMW34CU0TTHy47Iw8rAMAOfxk=;
+	b=tYbcOygt/71xdIC9pPy1r70vnPb1GGch/k7WF2gG3DbTi//v29SdzC4BqXEiLmIwFmJ42/
+	7VlHfkPJC0nZMVCw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1776931126; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Q8pTHjOBe16sd6ffSKsMW34CU0TTHy47Iw8rAMAOfxk=;
+	b=uxA1ifH9n5VfzHuM5MjDE+XjulMSjtec+ddyEP5BYSrIhmLRNsrOEKao8ti6wLUqQolZAY
+	3Q0vAFFYBV7XthuyTAaglVhZT55NHPGMnqstKEqmtRPvz8FxWJmkQ8ISpAZF9Dc0NVGgcO
+	dz7T84PHRN9aQ0xhVoDaUYmqnLlrJac=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1776931126;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=Q8pTHjOBe16sd6ffSKsMW34CU0TTHy47Iw8rAMAOfxk=;
+	b=tYbcOygt/71xdIC9pPy1r70vnPb1GGch/k7WF2gG3DbTi//v29SdzC4BqXEiLmIwFmJ42/
+	7VlHfkPJC0nZMVCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 39EC7593A3;
+	Thu, 23 Apr 2026 07:58:46 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id xFQ2DDbR6WlZVAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 23 Apr 2026 07:58:46 +0000
+Message-ID: <837457c1-2a4b-417d-80a6-a7ca43642838@suse.de>
+Date: Thu, 23 Apr 2026 09:58:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,107 +100,173 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: qcs6490-rb3gen2: Add WCD headset
- playback and record for qcs6490-rb3gen2 industrial mezzanine
-To: Karthik S <karthik.s@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260423071951.3181130-1-karthik.s@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 4/6] drm/msm: fbdev: Calculate buffer geometry with format
+ helpers
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+ jesszhan0024@gmail.com, sean@poorly.run, marijn.suijten@somainline.org,
+ airlied@gmail.com, simona@ffwll.ch, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+References: <20260421125733.209568-1-tzimmermann@suse.de>
+ <20260421125733.209568-5-tzimmermann@suse.de>
+ <kywf5seogl4dmh6msqcmfyxdxyg7i5y2jyr2z6fcbu7qrpemhy@nemrwv3lyg7i>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260423071951.3181130-1-karthik.s@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <kywf5seogl4dmh6msqcmfyxdxyg7i5y2jyr2z6fcbu7qrpemhy@nemrwv3lyg7i>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Score: -4.30
+X-Spam-Level: 
+X-Spam-Flag: NO
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[suse.de,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-104215-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,vger.kernel.org,lists.freedesktop.org];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-104216-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[suse.de:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[tzimmermann@suse.de,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 4091C44DF26
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,suse.de:email,suse.de:dkim,suse.de:mid]
+X-Rspamd-Queue-Id: EE6B444E420
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 23/04/2026 09:19, Karthik S wrote:
-> Add WCD playback and capture DAI link to sound node. Add WCD
-> codec node and corresponding soundwire nodes to perform
-> headset playback and record.
-> 
-> Changes since v1:
-> 	- "audio-codec" node moved before "regulator".
-> 	- renaming node from "audio-codec-0" to "audio-codec".
-> 	- dt-nodes sorted alphabetically.
-> 	- patchwise run on the patch and indentation errors fixed.
+Hi
 
-This goes to changelog, so under ---. Take a look at other patches how
-they do it.
+Am 22.04.26 um 02:07 schrieb Dmitry Baryshkov:
+> On Tue, Apr 21, 2026 at 02:51:17PM +0200, Thomas Zimmermann wrote:
+>> Replace the geometry and size calculation in msm's fbdev emulation
+>> with DRM format helpers. This consists of a 4CC lookup from the fbdev
+>> parameters, format lookup, pitch calculation and size calculation.
+>> Then allocate the GEM buffer object for the framebuffer memory from
+>> the calculated size.
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> ---
+>>   drivers/gpu/drm/msm/msm_drv.h   |  7 -------
+>>   drivers/gpu/drm/msm/msm_fbdev.c | 26 ++++++++++++--------------
+>>   2 files changed, 12 insertions(+), 21 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+>> index b3173fa4d222..00c50d7437d6 100644
+>> --- a/drivers/gpu/drm/msm/msm_drv.h
+>> +++ b/drivers/gpu/drm/msm/msm_drv.h
+>> @@ -509,13 +509,6 @@ void msm_hrtimer_work_init(struct msm_hrtimer_work *work,
+>>   #define DBG(fmt, ...) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
+>>   #define VERB(fmt, ...) if (0) DRM_DEBUG_DRIVER(fmt"\n", ##__VA_ARGS__)
+>>   
+>> -static inline int align_pitch(int width, int bpp)
+>> -{
+>> -	int bytespp = (bpp + 7) / 8;
+>> -	/* adreno needs pitch aligned to 32 pixels: */
+>> -	return bytespp * ALIGN(width, 32);
+>> -}
+>> -
+>>   /* for the generated headers: */
+>>   #define INVALID_IDX(idx) ({BUG(); 0;})
+>>   #define fui(x)                ({BUG(); 0;})
+>> diff --git a/drivers/gpu/drm/msm/msm_fbdev.c b/drivers/gpu/drm/msm/msm_fbdev.c
+>> index 1eb0368a6d07..5532c5779f17 100644
+>> --- a/drivers/gpu/drm/msm/msm_fbdev.c
+>> +++ b/drivers/gpu/drm/msm/msm_fbdev.c
+>> @@ -95,23 +95,25 @@ int msm_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+>>   	struct fb_info *fbi = helper->info;
+>>   	struct drm_mode_fb_cmd2 mode_cmd = { };
+>>   	struct drm_framebuffer *fb = NULL;
+>> +	const struct drm_format_info *format;
+>> +	u32 fourcc, pitch;
+>> +	u64 size;
+>>   	struct drm_gem_object *bo;
+>>   	uint64_t paddr;
+>> -	uint32_t format;
+>> -	int ret, pitch;
+>> -	int size;
+>> -
+>> -	format = drm_mode_legacy_fb_format(sizes->surface_bpp, sizes->surface_depth);
+>> +	int ret;
+>>   
+>>   	DBG("create fbdev: %dx%d@%d (%dx%d)", sizes->surface_width,
+>>   			sizes->surface_height, sizes->surface_bpp,
+>>   			sizes->fb_width, sizes->fb_height);
+>>   
+>> -	pitch = align_pitch(sizes->surface_width, sizes->surface_bpp);
+>> +	fourcc = drm_mode_legacy_fb_format(sizes->surface_bpp, sizes->surface_depth);
+>> +	format = drm_get_format_info(dev, fourcc, DRM_FORMAT_MOD_LINEAR);
+>> +	/* adreno needs pitch aligned to 32 pixels: */
+>> +	pitch = drm_format_info_min_pitch(format, 0, ALIGN(sizes->surface_width, 32));
+>> +	size = ALIGN(pitch * sizes->surface_height, PAGE_SIZE);
+> Hmm, why do we need to align the size to the PAGE_SIZE? I might be
+> missing a point, but it would be nice to mention it in the commit
+> message.
 
-Best regards,
-Krzysztof
+This buffer will be mmap'ed to user space and fbdev's mmap of course 
+requires page-aligned sizes.  Hence the alignment here. Msm's memory 
+manager should take care of this, but it doesn't hurt to request it 
+specifically.
+
+On a more general note: while we use this GEM buffer object for backing 
+the DRM framebuffer, it is better to think of it as fbdev framebuffer 
+memory.
+
+I'll update the commit description accordingly.
+
+Best regards
+Thomas
+
+
+>
+> Other than that, LGTM.
+>
+
+-- 
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
+GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+
+
 
