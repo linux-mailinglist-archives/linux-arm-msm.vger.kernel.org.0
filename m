@@ -1,188 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-104363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2J0cMXg56mnYxAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 17:23:36 +0200
+	id gBSJFAhM6mkhxgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 18:42:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AD394543F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 17:23:35 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55E844550F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 18:42:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0A4323006150
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 15:15:52 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 374473014A30
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 16:24:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 968952773E4;
-	Thu, 23 Apr 2026 15:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AD6637BE78;
+	Thu, 23 Apr 2026 16:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ozdPHSNw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nS6W89vj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AA6270545;
-	Thu, 23 Apr 2026 15:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD0F29DB6E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2026 16:24:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776957351; cv=none; b=fniHchefDZXJZI/sJjQa1LatGDLicoGAJFimXO1Oi3E3tImLn/35pgvUzGv5j3VVJ1eH9zI2VoMqO4wzLuRkM1LS4KkDGy92hkGrmw0nofVAUT53lxFIeoev+nzLY1wxMhAIv/+80PiUk7atWEfMinGse+Mwlea4vEBsm0ERteY=
+	t=1776961446; cv=none; b=Fk/M2pBy7f8x4gWQHq+uPWOe2n+WjPEaJlScsx9zAaUPLnIBxwoT0eiEIzWTCz+0cnNv03Rc+fiAZdg+50LfZkYx0kBmxGBkcgyOhn5Lj9YATsufoMtOvXodFokWerrCrLrmQgA88hrpDd4jW2wX+OXCQablShBCacPYBKaZ57U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776957351; c=relaxed/simple;
-	bh=oTqmn846eDcPC24miKu77LDWVbxha/8Sm/ChagtCJQI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YgRQS0C55+f3zo5lScrJfyauwZSPSfNQA1fCiMp2DfHoFX5ZM21lQvTKnhea0xkgSoAQpRdt3neZ/5oFVbpfp7o972i58iHicZ7zddW/JSnIqJwJSsFzd0JKyudWpWLlH8lLmg0ifqsYE0DA2W9qsgwD3SSyklU8ZHI1px+DqnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ozdPHSNw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7700EC2BCAF;
-	Thu, 23 Apr 2026 15:15:46 +0000 (UTC)
+	s=arc-20240116; t=1776961446; c=relaxed/simple;
+	bh=U+KFmt95aVCklt9f5liT8xPIB/iXLBQ9X5Y2xAA1h0Y=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WhpykY+qXuKXe9laOv/kJQX4pHTSkmBLQ1rCnTInuuErA67IZk+G7khKR7zNTRSeFUIC5DlEvvs1Kwu89Sn7HdwewTg0aADwpRKhQ0EOvrd0sSwrBmQuhVOsKiAZRtMFyGyBHI/tsnJesXcDatCAoXGiUhSDkJdvRDL9eDYYksw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nS6W89vj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AECA4C2BCF4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2026 16:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776957351;
-	bh=oTqmn846eDcPC24miKu77LDWVbxha/8Sm/ChagtCJQI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ozdPHSNwwS+Qj7yZnttq+jJAL8YEIfTguuS/p1JGVEk1aeJOKb2+AXsxTGKTvst7u
-	 Rj2vnFjITKXV7jty01dmvewi9Umeic+hyQfHBhrAObX+n7nXSnssl4vzdSTvKkspYU
-	 y9GyeEjEj4Qpj51X5awiIumPfMCm7u+WSk7Phyqv7PQaYXquWVtVyw2GJ4rYtN0RYX
-	 SCtR08dlfMJgPB5m5dutcaJZ2s+qwB7tvAI0dxyEUzQtaMYPSGngzwJEVMgf80A5tn
-	 4tS0GeZkR5dkI81b9I8QrOeyn9AYOxbNbpDn8wvJ2vtpKKD4Il6o2HLdjwAGKi3TX+
-	 /QDJlG8jSIjHA==
-Date: Thu, 23 Apr 2026 20:45:42 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, Keith Busch <kbusch@kernel.org>, 
-	Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-nvme@lists.infradead.org
-Subject: Re: [PATCH 3/4] PCI: qcom: Indicate broken L1ss exit during resume
- from system suspend
-Message-ID: <sssgkayhnxjbgav3jfkroyk4usez7rjbktjlurubovhq5bvf2m@aupvtrjxiuu4>
-References: <bkejoqdchyv55efsyl7o6b3ewiwaj5kbc2hgltxt5vwqdvt5yf@cxvwcjo5zcrp>
- <20260422234938.GA416865@bhelgaas>
+	s=k20201202; t=1776961446;
+	bh=U+KFmt95aVCklt9f5liT8xPIB/iXLBQ9X5Y2xAA1h0Y=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=nS6W89vj0JqAP+zMKZnxP9lt6XnAIW+wpC2dm/vaVq/mMjJdNKZn4ttFFXdH/0+IL
+	 uq6I2vCb9GKfgA9QOx1nQAc3Bx/zxcWPOGW95zw+HAxpTEF+Yx3g4w+gwhxiErrM6R
+	 e2mnVXE04VBQWzcr21THDTTJRzx/e7aJL0VF1hipnEMCPZO42ADliQ21FQaZLkVpIx
+	 otyvBGs2myhIt3NuncqRZ6be8OhC8/OTFIyhA02tsBP+DZK3LwAfmESP0o6pzYR94T
+	 IfnFave+z7R8VYKilC+ZSi1djW0Uo+uafXCm2bvl3Kh5jYpr4Wwu7mzbbXwIryk55Y
+	 XC/K7bOvyhWjQ==
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-38e91b06006so57254941fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2026 09:24:06 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ9IHNUSI0NvR98ZC1jZ6QwArXmXU7M9LNmFotE70OY31P5ZFJ++vT6uuI5AUglHqr57uHG9Ou1efcn7oThb@vger.kernel.org
+X-Gm-Message-State: AOJu0YyHuQG8eaKBtgDEGSZosVZnDf4rR/3uGEGZ3R75AC5BH9Yme3eP
+	dIBBQdS0TuZCO8I1zz1t5AdFSY87pLWa20fq5CR7BEfyYYAK2atEcEySOOg0W9eWBfPayIk1M/j
+	w3MukjNSFquWCwFPTU+Dry0kzQB+oUiam5CaEBewAUg==
+X-Received: by 2002:a05:651c:23d2:20b0:38c:594e:ffd4 with SMTP id
+ 38308e7fff4ca-38ec7af20b4mr66586491fa.25.1776961445086; Thu, 23 Apr 2026
+ 09:24:05 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 23 Apr 2026 12:24:02 -0400
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 23 Apr 2026 12:24:02 -0400
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260422-pwrseq-m2-bt-v1-1-720d02545a64@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260422234938.GA416865@bhelgaas>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+References: <20260422-pwrseq-m2-bt-v1-0-720d02545a64@oss.qualcomm.com> <20260422-pwrseq-m2-bt-v1-1-720d02545a64@oss.qualcomm.com>
+Date: Thu, 23 Apr 2026 12:24:02 -0400
+X-Gmail-Original-Message-ID: <CAMRc=MfCprFY4QCwEJzbBnROGJzrRE-sRAD89xDxsUsJVfqOiQ@mail.gmail.com>
+X-Gm-Features: AQROBzCFPeFFKBDUBTFbF_d8cAOg-aBLOztoD_JeOpJg9Ts6CIUwK_iUG3b0JI0
+Message-ID: <CAMRc=MfCprFY4QCwEJzbBnROGJzrRE-sRAD89xDxsUsJVfqOiQ@mail.gmail.com>
+Subject: Re: [PATCH 01/12] power: sequencing: Introduce an API to check
+ whether the pwrseq is fixed or controllable
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, Wei Deng <wei.deng@oss.qualcomm.com>, 
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, Bartosz Golaszewski <brgl@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Shuai Zhang <quic_shuaz@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-104364-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,oss.qualcomm.com,intel.com,holtmann.org,gmail.com,quicinc.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,mail.gmail.com:mid,qualcomm.com:email];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104363-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 0AD394543F0
+	TAGGED_RCPT(0.00)[linux-arm-msm,manivannan.sadhasivam.oss.qualcomm.com];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 55E844550F2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Apr 22, 2026 at 06:49:38PM -0500, Bjorn Helgaas wrote:
-> On Tue, Apr 21, 2026 at 10:41:08PM +0530, Manivannan Sadhasivam wrote:
-> > On Mon, Apr 20, 2026 at 03:49:15PM -0500, Bjorn Helgaas wrote:
-> > > On Sat, Apr 18, 2026 at 11:09:11AM +0530, Manivannan Sadhasivam wrote:
-> > > > On Fri, Apr 17, 2026 at 05:26:15PM -0500, Bjorn Helgaas wrote:
-> > > > ...
-> > > 
-> > > > > Does L1.2 have to meet the advertised L1 Exit Latency?  I assume
-> > > > > maybe it does because I don't see an exception for L1.x or any
-> > > > > exit latencies advertised in the L1 PM Substates Capability.
-> > > > 
-> > > > As per my understanding, 'L1 Exit Latency' only covers ASPM L1
-> > > > state, not L1ss.  Because, 'L1 Exit Latency' field exists even
-> > > > before L1 PM Substates got introduced in r3.1. So it doesn't cover
-> > > > L1.2 exit latency.
-> 
-> FWIW, this FAQ from https://pcisig.com/faq?keys=3.0 confirms your
-> understanding:
-> 
->   Section 7.8.6 - Is the L1 Exit Latency in the Link Capabilities
->   register only the ASPM L1.0 exit latency or does it include the
->   added ASPM L1.2 to ASPM L1.0 latency?
-> 
->     The ASPM L1 Exit Latency in the Link Capabilities register
->     indicates the L1/L1.0 to L0 latency, and does not include added
->     latency due to Clock Power Management, L1.1 or L1.2.
-> 
-
-Thanks for cross checking.
-
-> > > > > Regardless, I'd be kind of surprised if *any* system could meet an
-> > > > > L1.2 exit latency from a system suspend situation where PHY power
-> > > > > is removed.  On ACPI systems, the OS doesn't know how to remove
-> > > > > PHY power, so I don't think that situation can happen unless
-> > > > > firmware is involved in the suspend.
-> > > > 
-> > > > Yes, you are right. Even for systems turning off the PHY completely,
-> > > > they should have some mechanism to detect the CLKREQ# assert and
-> > > > turn ON the PHY within the expected time.
-> > > 
-> > > What would the expected time be?
-> > 
-> > That's mostly L10_REFCLK_ON + T_COMMONMODE. But nevertheless, the
-> > system wakeup and controller driver resume() time would be far
-> > greater than it.
-> 
-> This patch sets "pp->bridge->broken_l1ss_resume = true".  I'm trying
-> to understand how we know to set this.  There might be other platforms
-> that need to do this but I don't know how to identify them.
+On Wed, 22 Apr 2026 13:24:42 +0200, Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+>
+> Introduce an API pwrseq_is_fixed() so that the consumers can check whether
+> the given power sequencer is fixed or controllable. This will come handy
+> in situations where the consumers need to know whether the specific power
+> sequencer like 'Bluetooth' can be controllable using properties like BT_EN.
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> ---
 >
 
-As I said earlier, if the other platforms do not have any hardware mechanism to
-detect CLKREQ# assert and enable refclk/establish common mode voltage, then they
-would also suffer from the same issue. But it is not possible to identify them
-only by looking at the host controller driver. Because, even if the controller
-driver power off the PHY, some other hardware entity could be handling CLKREQ#
-and taking care of refclk/common mode voltage.
+I have several concerns about this new function: its name is very vague and
+doesn't really indicate its function (how is it "fixed" if you still control
+it?), it can be used to expose all kinds of things because of this lack of
+precision. I feel like it goes against the goal of pwrseq which is to abstract
+these things away from consumers.
 
-So this flag should only be set when the host controller driver is solely
-responsible for controlling refclk.
- 
-> This comment:
-> 
->   + * Some host bridges power off the PHY to enter deep low-power modes
->   + * during system suspend. Exiting L1 PM Substates from this condition
->   + * violates strict timing requirements and results in Link Down (LDn).
->   + * On such platforms, the endpoint must be prepared for context loss.
-> 
-> suggests that the L1.2 exit takes too long and results in the link
-> going down, which is essentially a reset for the downstream device,
-> which would destroy the context.
-> 
-> Is there some spec language that determines how long the Downstream
-> Port waits for the L1.2 exit before it gives up and decides the link
-> is down?
+The problem we have here is for now a HW quirk affecting a single driver. I'm
+thinking that we can live with this driver just checking the relevant property
+of the provider device.
 
-Spec r7.0, sec 5.5.3.3.1 defines the timing requirements for refclk restoration
-and common mode recovery. But it doesn't specify what happens when these timing
-requirements are not satisfied by the downstream port and this could be the
-implementation behavior. On the Qcom platforms, we are seeing endpoints giving
-up and moving to LDn if they didn't receive refclk within L10_REFCLK_ON.
+Many subsystems provide functions that allow accessing the struct device
+associated with the provider. Could we introduce something like:
 
-- Mani
+struct device *pwrseq_to_device(struct pwrseq_desc);
 
--- 
-மணிவண்ணன் சதாசிவம்
+that would return the address of struct device associated with the provider of
+the descriptor? It wouldn't even have to return a new reference as holding a
+descriptor already implies also holding a reference to the pwrseq device
+backing it.
+
+Then in the bluetooth driver you could do:
+
+	struct pwrseq_desc *pwrseq = pwrseq_get(dev, "bluetooth");
+	struct device *dev = pwrseq_to_device(pwrseq);
+
+	// Big fat comment stating why you do this
+	if (!device_property_present(dev, "enable-gpios")) {
+		// do whatever quirk is required
+	}
+
+Would that make sense?
+
+Bart
 
