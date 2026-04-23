@@ -1,191 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-104332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sO20ERMe6mntuQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 15:26:43 +0200
+	id EBS2OUkf6mntuQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 15:31:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B368452E3F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 15:26:42 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57915452F78
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 15:31:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id BBD77300B8C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 13:19:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A23F9300B474
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 13:25:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B61A63F0A9E;
-	Thu, 23 Apr 2026 13:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 535F63F0AAC;
+	Thu, 23 Apr 2026 13:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="CHffhXGz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LWG6CYKM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4613EFD32;
-	Thu, 23 Apr 2026 13:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4453E6DCC;
+	Thu, 23 Apr 2026 13:25:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776950374; cv=none; b=A7uWA0DTcz4ZLbO9vbx7e8igaWHbHjNmyolkYhl2HggNj3sjY+v+iN3DpxeKT1PD1SU3jKgi3mcXThDTCwlP8tQWgPXRfAjfxfrL8/37XW9RoA+NlUHifi1TGR+CujdvigoBVTDb8Zi3ImC/CrFQxvbMY5UVDaecjhXwEKkyfJA=
+	t=1776950712; cv=none; b=FDzU4mxxvY+VsGaQquhkadHaVFEL8j8wfDjuEtI+bDpJbPN6wn2UV2WLSpPKQHM9Ho+drTxeYzGVLPpN7oFQZI0J9R2bMjCBzOJEXDU6LkGxO6/yumo89RUiU5lSNCFs2QJDVwKWXjNlm8BR/RC4zY2n0gVuUFJ7LRPbQ/cp6L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776950374; c=relaxed/simple;
-	bh=+v1IGGwBlD7W1TrUt5/g/toItgrGx+CShEQy9dqBHjY=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=ocTHWn7Mok1Ao89PSZCvDfCLXISwRodfYyUTuvwl0EYXOyF911+dwkaMDBA8lcOJEz1aIH5jH00C3b1lJou1M+Y9zqI+31w6iSLi8JPnWI7GYLzOD82ik0O2VCZVALS66m02+7sdJke98jgnMNpmdFLurlXzIlZIfBkPpy3strg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=CHffhXGz; arc=none smtp.client-ip=185.171.202.116
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id C1232C5EF12;
-	Thu, 23 Apr 2026 13:20:11 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 6500E604EB;
-	Thu, 23 Apr 2026 13:19:30 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B727910460BC4;
-	Thu, 23 Apr 2026 15:19:04 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1776950366; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=N0czXPTCBLd6Via7w9anQbZ1SyEjDMbKmYb2klNRSzM=;
-	b=CHffhXGzBeQ87qx+VLT/QJwCaDtokpzRnxIGgqeeBGcHmpx9dkFTQezMvWUYtBFalmt0ym
-	ZlPNQeOk5Q1kth18AWc/K+W7Raxp9+99ljR8+PbnvhlipPqpO27B6VpRihKIXQayDAqgRG
-	da/TeGo6hU5ux+mR4M6i/8AmHfkbG+YJihJqxxPpKk1ng/qYjjX625VUgLNqxJALo9M/FP
-	rIln33FBGqBltj0d5nmulxlKj/OYQmYlq0XBZlKDps6B3HZSM/rShXabOS7pnFzpExVbdP
-	stMHIMq4UYNiQX+If3xxxJ52QyUsGZwDX30+01HblvyxBtNmG2GoUDU/v0ZI4A==
+	s=arc-20240116; t=1776950712; c=relaxed/simple;
+	bh=hek54JpptwLJ3gA+UJA9MmgBD5QEgs6jDnBqWr+sU0Y=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GmgXPw6l9pjp769KxQOI/Gc5URILKFJUMN4u9RhCWBw9PjFz9UwGHK1dD2CaIH5WakRRegNdu+V1jH259oJw64VOr7wQXuVDzGL6OnSwD2Fqq2GWbYnVbOwE0YpilC66e0a2OtNMeFN/k5D58cJmNkyhPy0/pFzq+XETbgut2R0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LWG6CYKM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C3D00C2BCB3;
+	Thu, 23 Apr 2026 13:25:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1776950711;
+	bh=hek54JpptwLJ3gA+UJA9MmgBD5QEgs6jDnBqWr+sU0Y=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=LWG6CYKMwak5A/YNpsU+DcmiGB7KzQVO7usOSCnmrtfvwj5iXW6ZvL9F31vcr8S5w
+	 pTO3bpKn9HXh4sE/C2qyo4LVR3ujarSyi+LhN4PdlvIMBDeK+YB7WfWBad/LzREPk7
+	 FJtgd4IwSW9Gm9CtDyv6D3Qv1Ta9B7cika2CRFAZFJgL8anaAzfEc/E9yDP7OTqti5
+	 3MtwyIgQdGdqFEc5BBJn687dJeqB4X4Mnn2fOUfhMlauM9C+VwE9rhgf2t+Wfqc1UC
+	 PpdZ+VK++z2ddpeEQ4KVpN+t+u5mTHM+RT3tkXo03sSdN1dXpfr3RW6UvcTvC8Lce7
+	 Y42WWJWaBI1HA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1E02F589D2;
+	Thu, 23 Apr 2026 13:25:11 +0000 (UTC)
+From: David Wales via B4 Relay <devnull+daviewales.disroot.org@kernel.org>
+Subject: [PATCH 0/2] Add initial device tree for Motorola Moto G (2014)
+Date: Thu, 23 Apr 2026 23:24:49 +1000
+Message-Id: <20260423-device-motorola-titan-mainline-v1-0-e1813a028cc8@disroot.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 23 Apr 2026 15:19:03 +0200
-Message-Id: <DI0KBQCGJWIC.1TNNX177Z8ZNU@bootlin.com>
-Subject: Re: [PATCH 35/41] drm/rockchip: lvds: remove now-redundant call to
- drm_connector_attach_encoder()
-Cc: "Andrzej Hajda" <andrzej.hajda@intel.com>, "Neil Armstrong"
- <neil.armstrong@linaro.org>, "Robert Foss" <rfoss@kernel.org>, "Laurent
- Pinchart" <Laurent.pinchart@ideasonboard.com>, "Jonas Karlman"
- <jonas@kwiboo.se>, "Jernej Skrabec" <jernej.skrabec@gmail.com>, "Maarten
- Lankhorst" <maarten.lankhorst@linux.intel.com>, "Maxime Ripard"
- <mripard@kernel.org>, "Thomas Zimmermann" <tzimmermann@suse.de>, "David
- Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Sasha
- Finkelstein" <fnkl.kernel@gmail.com>, "Janne Grunau" <j@jannau.net>, "Liu
- Ying" <victor.liu@nxp.com>, "Douglas Anderson" <dianders@chromium.org>,
- "Laurentiu Palcu" <laurentiu.palcu@oss.nxp.com>, "Lucas Stach"
- <l.stach@pengutronix.de>, "Frank Li" <Frank.Li@nxp.com>, "Sascha Hauer"
- <s.hauer@pengutronix.de>, "Pengutronix Kernel Team"
- <kernel@pengutronix.de>, "Fabio Estevam" <festevam@gmail.com>, "Philipp
- Zabel" <p.zabel@pengutronix.de>, "Paul Cercueil" <paul@crapouillou.net>,
- "Anitha Chrisanthus" <anitha.chrisanthus@intel.com>, "Chun-Kuang Hu"
- <chunkuang.hu@kernel.org>, "Matthias Brugger" <matthias.bgg@gmail.com>,
- "AngeloGioacchino Del Regno" <angelogioacchino.delregno@collabora.com>,
- "Kevin Hilman" <khilman@baylibre.com>, "Jerome Brunet"
- <jbrunet@baylibre.com>, "Martin Blumenstingl"
- <martin.blumenstingl@googlemail.com>, "Rob Clark"
- <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
- "Abhinav Kumar" <abhinav.kumar@linux.dev>, "Jessica Zhang"
- <jesszhan0024@gmail.com>, "Sean Paul" <sean@poorly.run>, "Marijn Suijten"
- <marijn.suijten@somainline.org>, "Tomi Valkeinen"
- <tomi.valkeinen@ideasonboard.com>, "Sandy Huang" <hjc@rock-chips.com>,
- =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, "Andy Yan"
- <andy.yan@rock-chips.com>, "Thierry Reding" <thierry.reding@gmail.com>,
- "Mikko Perttunen" <mperttunen@nvidia.com>, "Jonathan Hunter"
- <jonathanh@nvidia.com>, "Icenowy Zheng" <zhengxingda@iscas.ac.cn>, "Jingoo
- Han" <jingoohan1@gmail.com>, "Inki Dae" <inki.dae@samsung.com>, "Seung-Woo
- Kim" <sw0312.kim@samsung.com>, "Kyungmin Park" <kyungmin.park@samsung.com>,
- "Krzysztof Kozlowski" <krzk@kernel.org>, "Alim Akhtar"
- <alim.akhtar@samsung.com>, "Laurent Pinchart"
- <laurent.pinchart+renesas@ideasonboard.com>, "Tomi Valkeinen"
- <tomi.valkeinen+renesas@ideasonboard.com>, "Kieran Bingham"
- <kieran.bingham+renesas@ideasonboard.com>, "Geert Uytterhoeven"
- <geert+renesas@glider.be>, "Magnus Damm" <magnus.damm@gmail.com>, "Biju
- Das" <biju.das.jz@bp.renesas.com>, "Marek Vasut" <marex@denx.de>, "Stefan
- Agner" <stefan@agner.ch>, "Jyri Sarha" <jyri.sarha@iki.fi>, "Michal Simek"
- <michal.simek@amd.com>, "Hui Pu" <Hui.Pu@gehealthcare.com>, "Ian Ray"
- <ian.ray@gehealthcare.com>, "Thomas Petazzoni"
- <thomas.petazzoni@bootlin.com>, <dri-devel@lists.freedesktop.org>,
- <linux-kernel@vger.kernel.org>, <asahi@lists.linux.dev>,
- <imx@lists.linux.dev>, <linux-arm-kernel@lists.infradead.org>,
- <linux-mips@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
- <linux-amlogic@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
- <freedreno@lists.freedesktop.org>, <linux-rockchip@lists.infradead.org>,
- <linux-tegra@vger.kernel.org>, <linux-samsung-soc@vger.kernel.org>,
- <linux-renesas-soc@vger.kernel.org>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
-From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
-X-Mailer: aerc 0.20.1
-References: <20260423-drm-bridge-connector-attach_encoder-v2-0-2ae6ca69b390@bootlin.com> <20260423115334.444750-1-luca.ceresoli@bootlin.com> <wapbiwxou64emxlt6oz5slst3nvcgvs35hvhpz7v3wmwp33bzc@mvdog4t7un6m>
-In-Reply-To: <wapbiwxou64emxlt6oz5slst3nvcgvs35hvhpz7v3wmwp33bzc@mvdog4t7un6m>
-X-Last-TLS-Session-Version: TLSv1.3
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXNQQrCMBCF4auUWTsQYxvEq4iLmM60U9qJJFEKp
+ Xdv1OUHj/9tkCkJZbg1GyT6SJaoFedTA2H0OhBKXw3WWGda02JfR4FwiSWmOHssUrzi4kVnUUJ
+ m5658sZ2zDDXySsSy/g7uj7/z+zlRKN8q7PsBoSfGe4IAAAA=
+X-Change-ID: 20260404-device-motorola-titan-mainline-ff668f32562f
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, David Wales <daviewales@disroot.org>
+X-Mailer: b4 0.15.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=953;
+ i=daviewales@disroot.org; h=from:subject:message-id;
+ bh=hek54JpptwLJ3gA+UJA9MmgBD5QEgs6jDnBqWr+sU0Y=;
+ b=owEBbQGS/pANAwAKAW1jV4FG9KFmAcsmYgBp6h2uKtbvjnotgEJEIl6vq44CE9KyZjUby642R
+ 0ZVxL0I9taJATMEAAEKAB0WIQTXikd3yUPmOPWSLPJtY1eBRvShZgUCaeodrgAKCRBtY1eBRvSh
+ ZlQeCACSUJRRu6tFX7pQ/aeqftVA5qoiHh5/muMOtQMILRWeE1u/icTKmLxjcA2myd7WMCxR7vu
+ 7QBuhOq2rk1QjnGysenHKdraSve0V1nEK+fwFY1zIwkiJr0lETH/QdKWOz1Hgj5+V9E6yUmBz5O
+ THM06MHlz8vqN/6OmVS67x9toIjhF19m7Y3ZmQw+n9aOY25WBYW9/D8pEszIBxGxOq5XzHQ496H
+ f2tbTO/ePsWOKqmgXMBBrHC/QAc6WDj4zRwErFIqoHZObWoI9mzKJ3NO88RB2nBNXMcpiTPRGhD
+ TVLkvLrp2Zvs0AW2mmezCryYa8xO1xgSSS9adtrhGZPIX16w
+X-Developer-Key: i=daviewales@disroot.org; a=openpgp;
+ fpr=8F5BAFB15444A769DC3B61684022B817D275D037
+X-Endpoint-Received: by B4 Relay for daviewales@disroot.org/default with
+ auth_id=737
+X-Original-From: David Wales <daviewales@disroot.org>
+Reply-To: daviewales@disroot.org
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
-	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[intel.com,linaro.org,kernel.org,ideasonboard.com,kwiboo.se,gmail.com,linux.intel.com,suse.de,ffwll.ch,jannau.net,nxp.com,chromium.org,oss.nxp.com,pengutronix.de,crapouillou.net,collabora.com,baylibre.com,googlemail.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,rock-chips.com,sntech.de,nvidia.com,iscas.ac.cn,samsung.com,glider.be,bp.renesas.com,denx.de,agner.ch,iki.fi,amd.com,gehealthcare.com,bootlin.com,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,lists.infradead.org];
-	TAGGED_FROM(0.00)[bounces-104332-lists,linux-arm-msm=lfdr.de];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	TAGGED_FROM(0.00)[bounces-104335-lists,linux-arm-msm=lfdr.de,daviewales.disroot.org];
 	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TO_DN_SOME(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[bootlin.com:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MAILSPIKE_FAIL(0.00)[2600:3c15:e001:75::12fc:5321:server fail];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	HAS_REPLYTO(0.00)[daviewales@disroot.org];
+	MAILSPIKE_FAIL(0.00)[172.234.253.10:server fail];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.ceresoli@bootlin.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	RCVD_COUNT_FIVE(0.00)[6];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[78];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	NEURAL_HAM(-0.00)[-1.000];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 8B368452E3F
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,disroot.org:email,disroot.org:replyto,disroot.org:mid]
+X-Rspamd-Queue-Id: 57915452F78
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Dmitry, Geert,
+The Motorola Moto G (2014) is the second device in the Moto G series,
+with codename motorola-titan.
 
-On Thu Apr 23, 2026 at 2:42 PM CEST, Dmitry Baryshkov wrote:
-> On Thu, Apr 23, 2026 at 01:53:28PM +0200, Luca Ceresoli wrote:
->> drm_connector_attach_encoder() is now called by
->> drm_bridge_connector_init().
->>
->> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
->> ---
->>  drivers/gpu/drm/rockchip/rockchip_lvds.c | 6 ------
->>  1 file changed, 6 deletions(-)
->>
->
-> stray duplicate
+This series documents the motorola-titan, and adds an initial device
+tree.
 
-Due to the long Cc list, when sending the series with b4 I hit the mail
-provider limit, so patches after 34 were not sent.
+These patches have been previously discussed and merged into the
+downstream msm8226-mainline fork:
+https://github.com/msm8226-mainline/linux/pull/18
 
-I then sent them manually using the good old git format-patch/send-email,
-but in the process I missed the v2 (heh, b4 is great at automating
-that!). So patch 35 got sent without v2, and then I resent it and the
-following ones with the v2 marker.
+Signed-off-by: David Wales <daviewales@disroot.org>
+---
+David Wales (2):
+      dt-bindings: arm: qcom: Add Motorola Moto G2 (2014)
+      ARM: dts: qcom: Support Motorola Moto G2 (2014)
 
-Sorry about the noise!
+ Documentation/devicetree/bindings/arm/qcom.yaml   |   1 +
+ arch/arm/boot/dts/qcom/Makefile                   |   1 +
+ arch/arm/boot/dts/qcom/msm8226-motorola-titan.dts | 351 ++++++++++++++++++++++
+ 3 files changed, 353 insertions(+)
+---
+base-commit: 028ef9c96e96197026887c0f092424679298aae8
+change-id: 20260404-device-motorola-titan-mainline-ff668f32562f
 
-I think with Dmitry's all-series R-by this whole series can be applied at
-once (I'll wait ~1 week before applying, in case of more comments). This
-will avoid more iterations spamming lots of people.
+Best regards,
+--  
+David Wales <daviewales@disroot.org>
 
-Luca
 
---
-Luca Ceresoli, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
 
