@@ -1,188 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-104374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UJp/J01e6mksygIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104374-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 20:00:45 +0200
+	id EDSfNcSA6mm80AIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 22:27:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 737B7455D55
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 20:00:44 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 379D7457455
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 22:27:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 387B4300A7DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 17:59:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 81162300B605
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Apr 2026 20:27:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 975953A7F61;
-	Thu, 23 Apr 2026 17:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C56333439F;
+	Thu, 23 Apr 2026 20:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b="VidnwjpK"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="ULOazdOO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from aposti.net (aposti.net [185.119.170.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-43102.protonmail.ch (mail-43102.protonmail.ch [185.70.43.102])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26E13AA4E7;
-	Thu, 23 Apr 2026 17:59:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.119.170.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A3A32ED39
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Apr 2026 20:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.102
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776967180; cv=none; b=HRxqg5Cc9eGRqYvIhIo6BJQgaZX7fdDODx1nxtlP4oIrSFKVzn81+DymHnq4m+13qWYFLcu0xGR75sucUqbNF0blAeS1n9UqsmWEtsDsEBfCwF7Jm9dAuMbNZtSKf7P0BVn8cqZkPOKAzOsf0D9XOaaQogu813/rO3eDfrVP33s=
+	t=1776976064; cv=none; b=aRyciCxJzDg9Rfwa1IyUrEH4RfaaUMeJ2D3d0+NNKECUWNBa9QvKH2h79APGk/x+pO+iVgDGNhsdpXFb4xd1Xxm59MCj+dtqiCkCm4oAKm5BEpIfU11ALyStq3Umi7hbcxxyZq49NxdK2bd2614HgDfNJbqQT69IDYJtbTEkahc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776967180; c=relaxed/simple;
-	bh=QGXWKH7JhojDk/vCfoesF6wdkbcwasz+b8TzqgsvnEY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=l4edDqx79mpKVfHeDJZhrRKqXbhIXbPargs0d1QU//u/hUK54H3t7cllKaFYzpsAqzFJtFUWNeDSoSBZkhTV/oZ5hYlyBOqO4ssSu36EEwMfXuLQpjIM8MQSpTcqrw03HXb4syPLUxFFVme+oM0bEf8oTDBAUIXoU0JdrPfH1xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net; spf=pass smtp.mailfrom=crapouillou.net; dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b=VidnwjpK; arc=none smtp.client-ip=185.119.170.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crapouillou.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crapouillou.net;
-	s=mail; t=1776967168;
-	bh=QGXWKH7JhojDk/vCfoesF6wdkbcwasz+b8TzqgsvnEY=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-	b=VidnwjpKlxAHpZXdZ5M8HqNp1+KLzj/lVqpTUjnVCvvI0AlMOvy6xLPjbVADW6Z7T
-	 zX2omNSMnvzMFu+5OaTkic3YSw0JBpTj1pMqKOxAH5KG+vq/PHkgVXLcKBhtSsGmGS
-	 Vrdc/osIcU6MzDXs3blATAtRvZpS57uE18zfDmjI=
-Message-ID: <6bdce57340942334cf7d3c7f7ed0215458717495.camel@crapouillou.net>
-Subject: Re: [PATCH v2 10/41] drm/ingenic: remove now-redundant call to
- drm_connector_attach_encoder()
-From: Paul Cercueil <paul@crapouillou.net>
-To: Luca Ceresoli <luca.ceresoli@bootlin.com>, Dmitry Baryshkov	
- <dmitry.baryshkov@oss.qualcomm.com>, Andrzej Hajda
- <andrzej.hajda@intel.com>,  Neil Armstrong <neil.armstrong@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Laurent Pinchart	
- <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>,
- Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>,  Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
- Simona Vetter <simona@ffwll.ch>, Sasha Finkelstein <fnkl.kernel@gmail.com>,
- Janne Grunau <j@jannau.net>, Liu Ying <victor.liu@nxp.com>, Douglas
- Anderson <dianders@chromium.org>, Laurentiu Palcu	
- <laurentiu.palcu@oss.nxp.com>, Lucas Stach <l.stach@pengutronix.de>, Frank
- Li	 <Frank.Li@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix
- Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>,
- Philipp Zabel	 <p.zabel@pengutronix.de>, Anitha Chrisanthus
- <anitha.chrisanthus@intel.com>,  Chun-Kuang Hu <chunkuang.hu@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
- <angelogioacchino.delregno@collabora.com>, Kevin Hilman
- <khilman@baylibre.com>,  Jerome Brunet <jbrunet@baylibre.com>, Martin
- Blumenstingl <martin.blumenstingl@googlemail.com>, Rob Clark	
- <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang
- <jesszhan0024@gmail.com>, Sean Paul	 <sean@poorly.run>, Marijn Suijten
- <marijn.suijten@somainline.org>, Tomi Valkeinen
- <tomi.valkeinen@ideasonboard.com>, Sandy Huang <hjc@rock-chips.com>, Heiko
- =?ISO-8859-1?Q?St=FCbner?=	 <heiko@sntech.de>, Andy Yan
- <andy.yan@rock-chips.com>, Thierry Reding	 <thierry.reding@gmail.com>,
- Mikko Perttunen <mperttunen@nvidia.com>,  Jonathan Hunter
- <jonathanh@nvidia.com>, Icenowy Zheng <zhengxingda@iscas.ac.cn>, Jingoo Han
- <jingoohan1@gmail.com>,  Inki Dae <inki.dae@samsung.com>, Seung-Woo Kim
- <sw0312.kim@samsung.com>, Kyungmin Park	 <kyungmin.park@samsung.com>,
- Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar	
- <alim.akhtar@samsung.com>, Laurent Pinchart	
- <laurent.pinchart+renesas@ideasonboard.com>, Tomi Valkeinen	
- <tomi.valkeinen+renesas@ideasonboard.com>, Kieran Bingham	
- <kieran.bingham+renesas@ideasonboard.com>, Geert Uytterhoeven	
- <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, Biju Das	
- <biju.das.jz@bp.renesas.com>, Marek Vasut <marex@denx.de>, Stefan Agner	
- <stefan@agner.ch>, Jyri Sarha <jyri.sarha@iki.fi>, Michal Simek	
- <michal.simek@amd.com>
-Cc: Hui Pu <Hui.Pu@gehealthcare.com>, Ian Ray <ian.ray@gehealthcare.com>, 
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	asahi@lists.linux.dev, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, 	linux-mips@vger.kernel.org,
- linux-mediatek@lists.infradead.org, 	linux-amlogic@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, 	freedreno@lists.freedesktop.org,
- linux-rockchip@lists.infradead.org, 	linux-tegra@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org, 	linux-renesas-soc@vger.kernel.org
-Date: Thu, 23 Apr 2026 19:59:21 +0200
-In-Reply-To: <20260423-drm-bridge-connector-attach_encoder-v2-10-2ae6ca69b390@bootlin.com>
-References: 
-	<20260423-drm-bridge-connector-attach_encoder-v2-0-2ae6ca69b390@bootlin.com>
-	 <20260423-drm-bridge-connector-attach_encoder-v2-10-2ae6ca69b390@bootlin.com>
-Autocrypt: addr=paul@crapouillou.net; prefer-encrypt=mutual;
- keydata=mQENBF0KhcEBCADkfmrzdTOp/gFOMQX0QwKE2WgeCJiHPWkpEuPH81/HB2dpjPZNW03ZM
- LQfECbbaEkdbN4YnPfXgcc1uBe5mwOAPV1MBlaZcEt4M67iYQwSNrP7maPS3IaQJ18ES8JJ5Uf5Uz
- FZaUawgH+oipYGW+v31cX6L3k+dGsPRM0Pyo0sQt52fsopNPZ9iag0iY7dGNuKenaEqkYNjwEgTtN
- z8dt6s3hMpHIKZFL3OhAGi88wF/21isv0zkF4J0wlf9gYUTEEY3Eulx80PTVqGIcHZzfavlWIdzhe
- +rxHTDGVwseR2Y1WjgFGQ2F+vXetAB8NEeygXee+i9nY5qt9c07m8mzjABEBAAG0JFBhdWwgQ2VyY
- 3VlaWwgPHBhdWxAY3JhcG91aWxsb3UubmV0PokBTgQTAQoAOBYhBNdHYd8OeCBwpMuVxnPua9InSr
- 1BBQJdCoXBAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEHPua9InSr1BgvIH/0kLyrI3V0f
- 33a6D3BJwc1grbygPVYGuC5l5eMnAI+rDmLR19E2yvibRpgUc87NmPEQPpbbtAZt8On/2WZoE5OIP
- dlId/AHNpdgAtGXo0ZX4LGeVPjxjdkbrKVHxbcdcnY+zzaFglpbVSvp76pxqgVg8PgxkAAeeJV+ET
- 4t0823Gz2HzCL/6JZhvKAEtHVulOWoBh368SYdolp1TSfORWmHzvQiCCCA+j0cMkYVGzIQzEQhX7U
- rf9N/nhU5/SGLFEi9DcBfXoGzhyQyLXflhJtKm3XGB1K/pPulbKaPcKAl6rIDWPuFpHkSbmZ9r4KF
- lBwgAhlGy6nqP7O3u7q23hRU=
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1776976064; c=relaxed/simple;
+	bh=JiO+nL3nWpHhg6uFWwwLfYy3x42UnvI90KTZdlD8a/0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=S05kW9Xc3SbboTrHBW6fOcUSfQ3k5NrB89NCWSNA6K+lf8ZeIURXNuFdARGsBesg0435MH+p64aj+Un4Ng+LFzpZ2XlJnuKdi2201/EVXJAHZHLKi0N/lLY34capVvM2YRFZqu9I7QhcceVr3PWc58A9l6qXuSuGjzL7jPlwGAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=ULOazdOO; arc=none smtp.client-ip=185.70.43.102
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1776976054; x=1777235254;
+	bh=jC3Jj+pe7e8TjZGPc3jpIn3auWo68Qc5RELwM6CC6mo=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=ULOazdOOWnHQZXmGMx2nGb1WGe6LJDbwJm3SCNhKpDAAWMeouv595xSL+RUdlnvbh
+	 vmmcUUxDU+Z+1PCrFdlOIB0/UPGAca1rSluiUU46rRnFt567Ferw+y7BAu4ykHTin/
+	 8p9KZ3mFSRRm3FABo8+OPQ5bXT8xeuRccC/j1UmA2jFx1yBYogUhw1yx2U/dvzt9OC
+	 W3XSa90ZEBPDWA3/+oOgOIu6RqzGkP6aRd1ctoDzVIgZ7mV0oNdOF4UIxGyfibl6II
+	 O7fkH79w+l3EGLycdB+aucIOv9CJ/lu/UUhdCKzNsEoPrn6EcoxW7GMaTL03zddcCP
+	 SNgxpkIXHs1Vw==
+Date: Thu, 23 Apr 2026 20:27:27 +0000
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC v4 6/7] drm/msm/adreno: add Adreno 810 GPU support
+Message-ID: <RxsrYj7kE1fS38uw9Frlum-uhzNhpKl4jkrZhaTmBCLLg5ZXTIG-2qdD8HTAyeyHfGMxjV8BAtwwsJJx28J6XApr3P2cFFmNMux3uKTUKgo=@pm.me>
+In-Reply-To: <eccce3f2-01a8-4454-87d2-3a599a15b34f@oss.qualcomm.com>
+References: <20260416-adreno-810-v4-0-61676e073f8a@pm.me> <20260416-adreno-810-v4-6-61676e073f8a@pm.me> <eccce3f2-01a8-4454-87d2-3a599a15b34f@oss.qualcomm.com>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: b068081630eee9f29900c9312ab14b1b0fe8d6de
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[crapouillou.net,none];
-	R_DKIM_ALLOW(-0.20)[crapouillou.net:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-104374-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	FREEMAIL_TO(0.00)[bootlin.com,oss.qualcomm.com,intel.com,linaro.org,kernel.org,ideasonboard.com,kwiboo.se,gmail.com,linux.intel.com,suse.de,ffwll.ch,jannau.net,nxp.com,chromium.org,oss.nxp.com,pengutronix.de,collabora.com,baylibre.com,googlemail.com,linux.dev,poorly.run,somainline.org,rock-chips.com,sntech.de,nvidia.com,iscas.ac.cn,samsung.com,glider.be,bp.renesas.com,denx.de,agner.ch,iki.fi,amd.com];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-104375-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[3];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[crapouillou.net:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[78];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[paul@crapouillou.net,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,linux.intel.com,suse.de,ffwll.ch,fairphone.com,vger.kernel.org,lists.freedesktop.org];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[pm.me:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,bootlin.com:email,crapouillou.net:email,crapouillou.net:dkim,crapouillou.net:mid]
-X-Rspamd-Queue-Id: 737B7455D55
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:email,pm.me:dkim,pm.me:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 379D7457455
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Luca,
+On Wednesday, April 22nd, 2026 at 9:04 AM, Konrad Dybcio <konrad.dybcio@oss=
+.qualcomm.com> wrote:
 
-Le jeudi 23 avril 2026 =C3=A0 11:17 +0200, Luca Ceresoli a =C3=A9crit=C2=A0=
-:
-> drm_connector_attach_encoder() is now called by
-> drm_bridge_connector_init().
 >=20
-> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-
-Acked-by: Paul Cercueil <paul@crapouillou.net>
-
-Cheers,
--Paul
-
-> ---
-> =C2=A0drivers/gpu/drm/ingenic/ingenic-drm-drv.c | 2 --
-> =C2=A01 file changed, 2 deletions(-)
 >=20
-> diff --git a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-> b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-> index 4068114adf8c..70088db34f69 100644
-> --- a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-> +++ b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-> @@ -1330,8 +1330,6 @@ static int ingenic_drm_bind(struct device *dev,
-> bool has_components)
-> =C2=A0			ret =3D PTR_ERR(connector);
-> =C2=A0			goto err_drvdata;
-> =C2=A0		}
-> -
-> -		drm_connector_attach_encoder(connector, encoder);
-> =C2=A0	}
-> =C2=A0
-> =C2=A0	drm_for_each_encoder(encoder, drm) {
+> On 16-Apr-26 13:05, Alexander Koskovich wrote:
+> > Add catalog entry and register configuration for the Adreno 810
+> > found in Qualcomm SM7635 (Milos) based devices.
+> >
+> > Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+> > ---
+> >  drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 296 ++++++++++++++++++++++=
+++++++++
+> >  drivers/gpu/drm/msm/adreno/adreno_gpu.h   |   5 +
+> >  2 files changed, 301 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/dr=
+m/msm/adreno/a6xx_catalog.c
+> > index 550ff3a9b82e..1190804632d6 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+> > @@ -1799,6 +1799,259 @@ static const struct adreno_reglist_pipe x285_dy=
+n_pwrup_reglist_regs[] =3D {
+> >  };
+> >  DECLARE_ADRENO_REGLIST_PIPE_LIST(x285_dyn_pwrup_reglist);
+> >
+> > +static const struct adreno_reglist_pipe a810_nonctxt_regs[] =3D {
+>=20
+> To align with the latest kgsl which includes all the latest
+> recommendations, remove:
+>=20
+> { REG_A8XX_SP_READ_SEL, 0x0001ff00, BIT(PIPE_NONE) },
+>=20
+> { REG_A8XX_TPL1_DBG_ECO_CNTL, 0x10000000, BIT(PIPE_NONE) },
+> { REG_A8XX_TPL1_DBG_ECO_CNTL1, 0x00000724, BIT(PIPE_NONE) },
+>=20
+> { REG_A8XX_UCHE_CACHE_WAYS, 0x00080000, BIT(PIPE_NONE) },
+>=20
+> { REG_A8XX_VSC_BIN_SIZE, 0x00010001, BIT(PIPE_NONE) },
+>=20
+> and add:
+>=20
+> (below RB_CCU_CNTL)
+> { REG_A8XX_RB_CCU_DBG_ECO_CNTL, 0x00002200, BIT(PIPE_BR) },
+>=20
+> (swap in place)
+> { REG_A8XX_TPL1_DBG_ECO_CNTL, 0x10100000, BIT(PIPE_NONE) },
+> { REG_A8XX_TPL1_DBG_ECO_CNTL1, 0x04000724, BIT(PIPE_NONE) },
+>=20
+> (below UCHE_CCHE_CACHE_WAYS)
+> { REG_A8XX_UCHE_HW_DBG_CNTL, BIT(8), BIT(PIPE_NONE) },
+>=20
+> (below RB_GC_GMEM_PROTECT)
+> { REG_A8XX_RB_CCU_DBG_ECO_CNTL, 0x00002200, BIT(PIPE_BR) },
+
+Just wanted to clarify if this was a typo, since you also asked for RB_CCU_=
+DBG_ECO_CNTL below RB_CCU_CNTL as well.
+
+>=20
+> (The order doesn't actually matter but it'll be easier to diff)
+>=20
+> Konrad
+>=20
+
+Thanks,
+Alex
 
