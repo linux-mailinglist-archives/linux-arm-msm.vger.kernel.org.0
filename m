@@ -1,193 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-104492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oGMCJ1um62kYQAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 19:20:27 +0200
+	id 4DdxIUrA62ngQwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 21:11:06 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21FE5461D5E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 19:20:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 267E3462B19
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 21:11:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0D503302AD24
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 17:10:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 867073009503
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 19:08:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BDD93DBD4F;
-	Fri, 24 Apr 2026 17:10:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F17D3FA5C4;
+	Fri, 24 Apr 2026 19:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="McVb1jCS"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="nnt1cmrY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368DA33D6F9;
-	Fri, 24 Apr 2026 17:10:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377313EFD05
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2026 19:08:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777050611; cv=none; b=nd0AFwLjLSOS6s18hqD+nKenr/WaoaN1bMfS05D/7uu+akWvEWjBQSZU32UkG5ybCGCxsk4aktl9q4Cn6p3E6n/WslxOU6PEEEl9kWhWKiFjU4qs+b12OlImQz5orgsByAyToQGr8IX8OU9Z57oHbQvqZa87aKHCE/mRkMGSk4I=
+	t=1777057703; cv=none; b=b/Z8YiCTBYc3L2KipuJnKynHrwUFtiqfPAVHArmFt1rr2HA1F4CsgXi6xrmkdeQQhHZ6P3R1xntj/u/AD17OLt1iM070sDxHRrhIKaNX6M2LLJVTl8VSiuFQkfJTiJ4HJaLSSQiHDvgAgHryEqw8J/oCgf7l+ySmuSByiC2jfs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777050611; c=relaxed/simple;
-	bh=qfWKieCXbBYMdQxfYVMx55bUan7y1KqVLf5YR98KU/U=;
+	s=arc-20240116; t=1777057703; c=relaxed/simple;
+	bh=8A6x/gwvigokDWQHjH1XTTPUpJb98Mhg/r0z4VARm4Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CyhJyzLbf6U1Cs0zCgrR0sOY63TCWW4k1944M5e8hFutG3jzb2cXtLjZoOGwIhO8vwNy1Zoe0V4gHyDdtVlBMO1kn4Fz0otafQxp6ADVub3jHlxk401ivayl2GYNMgdC4ZjeDec4sHZbBRx9i6W1N9W9yQwXNk1APwMDTA1uZ0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=McVb1jCS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDA8C19425;
-	Fri, 24 Apr 2026 17:10:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777050610;
-	bh=qfWKieCXbBYMdQxfYVMx55bUan7y1KqVLf5YR98KU/U=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=McVb1jCSeQDL6GZHyLDJ2PQApHyEvqB4NCRzPlDOBaol4jkgDY87LUqrl7GHRTp7r
-	 yZsjenRDFVlZ+sR5dhMN/4LCruSF/TNKIMgWDeZkSBSIKHUuvzQ0gdFRUauzMisay2
-	 pNY7gKRDNYpXRpdW/DkL8wI3ukGp6yh6K5tFtBzduHN1tT213Mg9fQeP+wZMMS4qOt
-	 kmf5YLu4bAI4A4Q5tVS7KtxKidW6D6SsWEd5XKgksJO10B1jvMWaZffRyyTQdTrxsj
-	 JNNoL3XRa2sFopN7gycuODNMkRQiZy3rYE5kMWkqqDE44ZxRJket3MzWbG6YkTK/t9
-	 hd3+qYdjPUOQw==
-Message-ID: <a9cacc9d-c7da-4803-8950-97511f8d927a@kernel.org>
-Date: Fri, 24 Apr 2026 19:09:58 +0200
+	 In-Reply-To:Content-Type; b=ipSGLJ2j4SJVXguRjy0g0Kodb7OH0j7Hjtr/y1l62jAQPmlJlUU4Vyy6DUzyKM4GOHWnclz+mGpXDBJ9+Jyerxuip33sTu0M7yHRUCL6V1m/18+Qomh2GowGa9pLxF5M1sNuqtaKAJtzoZJfNWmbYEGDlV2tDspgxM89G0zxUi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=nnt1cmrY; arc=none smtp.client-ip=95.215.58.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <c3b833d8-2e8a-4418-9043-6cd04d9901e1@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1777057689;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=/Q7AY28qlHBjgzfWhhXsEAsuWHcEKhugX23O64AEQqA=;
+	b=nnt1cmrYKgqViG1liVRq6/0f4EejzGYfXen3cebO9qtTfbXXcCQm7vSo3J/ezkwa1y1Huj
+	yuEhv5AQt9otPdCsyU5Si1H+ksvzqUjbHms01qDdVFCGwSYpnMkJQ5N8epX1tab+xAO4/G
+	vz0B/vHMxyRIHTeAxHIvhXQD/5e2r3gy/cVkFvTUbSqwfMeUKqL4bIgfYr1vFyVfTWGLb1
+	FOwQHBlzAxLRyq4Pho8rDP6u2W1W42Yf6R5Op7z9JzR/sM2fZLT3XWXfKQTxjk4rJ1uNZz
+	tXuapn2aXf9bId8MCU6aT1JfKrUHgu0GpKyNf/R0irr3cfRjvi4KIR+j5BMtXg==
+Date: Fri, 24 Apr 2026 16:07:56 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/13] dt-bindings: media: qcom,glymur-iris: Add glymur
- video codec
-To: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
- Bryan O'Donoghue <bod@kernel.org>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH 12/12] arm64: dts: qcom: qcs6490-radxa-dragon-q6a: add
+ LPASS CPU audio variant
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Xilin Wu <sophon@radxa.com>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Stefan Schmidt <stefan.schmidt@linaro.org>,
- Hans Verkuil <hverkuil@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>,
- Thierry Reding <thierry.reding@kernel.org>,
- Mikko Perttunen <mperttunen@nvidia.com>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Jonathan Hunter <jonathanh@nvidia.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- iommu@lists.linux.dev, driver-core@lists.linux.dev,
- dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org
-References: <20260423-glymur-v2-0-0296bccb9f4e@oss.qualcomm.com>
- <20260423-glymur-v2-4-0296bccb9f4e@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Judy Hsiao <judyhsiao@chromium.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-sound@vger.kernel.org
+References: <20260407-dragon-q6a-feat-fixes-v1-0-14aca49dde3d@radxa.com>
+ <20260407-dragon-q6a-feat-fixes-v1-12-14aca49dde3d@radxa.com>
+ <29a7dd01-7513-4fe5-8546-d57757b3b2d0@oss.qualcomm.com>
+ <88B7BBB9133FBAD1+ccb025ea-4999-4701-bb18-c57a42cabe2f@radxa.com>
+ <2f830f17-4bc5-4ebd-a66b-8068a14a871a@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260423-glymur-v2-4-0296bccb9f4e@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <2f830f17-4bc5-4ebd-a66b-8068a14a871a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 21FE5461D5E
+X-Migadu-Flow: FLOW_OUT
+X-Rspamd-Queue-Id: 267E3462B19
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
+	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104492-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-104493-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[3];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,8bytes.org,arm.com,linaro.org,linuxfoundation.org,nvidia.com,gmail.com,ffwll.ch];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,radxa.com,kernel.org,gmail.com,chromium.org];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[packett.cool:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_TWELVE(0.00)[32];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	TO_DN_SOME(0.00)[]
 
-On 23/04/2026 15:29, Vishnu Reddy wrote:
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - dma-coherent
-> +  - interconnects
-> +  - interconnect-names
-> +  - interrupts
-> +  - iommus
-> +  - memory-region
-> +  - power-domains
-> +  - power-domain-names
-> +  - resets
-> +  - reset-names
-> +
-> +unevaluatedProperties: false
-> +
-I think I commented around here but probably not specific enough. You
-miss here either reference to venus or usage of additionalProperties
-instead of unevaluatedProperties.
 
-If you intend not to use qcom,venus-common.yaml, then explain WHY in
-commit msg and switch to additionalProperties: false.
+On 4/24/26 9:28 AM, Konrad Dybcio wrote:
+> On 4/8/26 11:47 AM, Xilin Wu wrote:
+>> On 4/8/2026 5:06 PM, Konrad Dybcio wrote:
+>>> On 4/7/26 5:20 PM, Xilin Wu wrote:
+>>>> Add a qcs6490-radxa-dragon-q6a-lpass-cpu.dts variant for debugging and
+>>>> bring-up of the host-controlled LPASS audio path on the Radxa Dragon
+>>>> Q6A.
+>>>>
+>>>> This variant enables the LPASS blocks and codec macros needed by the
+>>>> lpass-cpu driver, wires WCD9380 playback/capture and DisplayPort audio
+>>>> to the LPASS CDC DMA and DP interfaces, and disables remoteproc_adsp so
+>>>> that the audio hardware is owned directly by Linux.
+>>>>
+>>>> This DTB is an optional configuration for systems booted with the kernel
+>>>> running at EL2, where direct CPU access to the LPASS hardware is
+>>>> available. It is useful for users who need low-latency and fully
+>>>> controllable audio.
+>>> I believe on Chrome platforms it was done this way because at some point
+>>> it was determined that they would specifically like not to use the DSP.
+>>>
+>>> I think this is more of a hack than anything else.. but at the end of the
+>>> commit message you mention low latency - is the impact actually measurable?
+>>>
+>> Some of our users also specifically prefer not to use the DSP [1] :)
+>>
+>> Based on their testing, the AudioReach/ADSP path imposes a minimum scheduling interval of 10 ms, which is much higher than the 0.67 ms they can get on a Raspberry Pi 5 with direct I2S/DMA.
+> We passed on this feedback.
+>
+>> Since the lpass-cpu setup works properly, I would not consider this a hack.
+> Well yeah it works, but I was really hoping it would be made
+> unnecessary and available for removal sooner or later..
+>
+> But since there's a genuine usecase, perhaps not.
 
-Otherwise, you miss $ref.
+lpass-cpu is also great from a "I don't want my pure libre operating 
+system to touch dirty proprietary binary blobs" perspective, but you can 
+definitely argue that that's not a genuine use case :)
 
-Rest looked good.
+~val
 
-Best regards,
-Krzysztof
 
