@@ -1,208 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-104457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aLF/B7pa62nkKwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 13:57:46 +0200
+	id uLezDiFc62lGLwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 14:03:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F12945E178
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 13:57:45 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 847EF45E27D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 14:03:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 03CEB303FFCE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 11:55:24 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 97E853001062
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Apr 2026 12:03:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1F433C140E;
-	Fri, 24 Apr 2026 11:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05EC1282F36;
+	Fri, 24 Apr 2026 12:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emXKArew"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IaoJALgQ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DzfPZly5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605DA3C061D;
-	Fri, 24 Apr 2026 11:55:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DB7318ED6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2026 12:03:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777031722; cv=none; b=LVrUsIKSHRm3hKwObTr87WZhIbUyyKF0fcAiSbLy4dUwSabVkIeAUiFzV1F+HrGHIaOPL+agBVivHQjSDTViWgQPgUwntTVZQg+Nb6hCpi8vJPESLp/crMMnAEU0a98sczD1bp0nydNQ1f3HomM6+kIBCKGiYBK5PZCEQ0bKw8I=
+	t=1777032217; cv=none; b=oO50VaqP06H97yvplpBJKmc9PngkuPbFyx5lZpSDd8PVOCGh6VeLRq4x0pvlBlqK0ZlV1eWKxJ3QD0EAn2a/7Z6pPXeEqhijAXLJHmwFKuyhUo65Kt6IQ+MOlP+zjI5XWmKExshqdRpJlG1/0/7W1oEvQ/9jf8nJ/3gWPj6eQuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777031722; c=relaxed/simple;
-	bh=3sGm0CtNeMyxvoxyTsn9tGTUUQmNik0i9na4gi9/c/E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FzHHKFEaoQznKiX6/bUnDBiTL9S5sy7TVROGHvvSoWPMqRvaZyN17HqC7b0aDzw2gFUUJLj5+Wzfvrx/SpQwcVq3hrxBscqiB8/bLhukbHjMxgg9qaJFbVcR23yaEcROIhWkkzB0P8npUlhKqdmcd1Pph04FzNrvaBFdUrnv0Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emXKArew; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C75C2BCB2;
-	Fri, 24 Apr 2026 11:55:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1777031722;
-	bh=3sGm0CtNeMyxvoxyTsn9tGTUUQmNik0i9na4gi9/c/E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=emXKArew82z8jyq1RECSlihUt6jeOEmAagE+12KYKAcywJi51oKfYF9J40fUJOyof
-	 Z5pVFhExBNSatBsbJyRm8w5giaG/n/wqJ5Pj6lAgl1+e72piF+lF1o4UOJ8x7oWrKh
-	 iHvt8kArSk81cIUHY6hbL1V8MkyiU9Tj23AclgQI=
-Date: Fri, 24 Apr 2026 13:55:19 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bod@kernel.org>,
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Stefan Schmidt <stefan.schmidt@linaro.org>,
-	Hans Verkuil <hverkuil@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Jonathan Hunter <jonathanh@nvidia.com>, linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
-	driver-core@lists.linux.dev, dri-devel@lists.freedesktop.org,
-	linux-tegra@vger.kernel.org,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v2 02/13] drivers: base: Add generic dma context bus
-Message-ID: <2026042428-blemish-helpline-7d8d@gregkh>
-References: <20260423-glymur-v2-0-0296bccb9f4e@oss.qualcomm.com>
- <20260423-glymur-v2-2-0296bccb9f4e@oss.qualcomm.com>
- <2026042346-trustable-register-095a@gregkh>
- <06c04947-e72e-679b-493b-e112d693f391@oss.qualcomm.com>
- <2026042422-deem-chemist-8d0f@gregkh>
- <4c3fa710-f61a-4aad-622d-54909190cb9e@oss.qualcomm.com>
+	s=arc-20240116; t=1777032217; c=relaxed/simple;
+	bh=P03y8Cz/PQho1qaJY+z7AEvcB9WS9ziyAKvPnj3HDQU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RApyf4QsNH5Ys24mex869pGXU3xZyMg5G0DHpSVfpOZjrTIN+MsOAeP5LUpSRuUuYXGUqOJIuDFwr3gbmEBde+qypwo5RhJIs8a65etnG5kOXaVT6K6HU1GZkdPNHB3chGyNhUqAQpMOiRQ+GIRb0WAAfwk1pzD6QexQKfs/Dhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IaoJALgQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DzfPZly5; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63O9ANch1533272
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2026 12:03:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	UqYU+UVD7SqbPk43y5btMoFYViDdfcSDL9l/g8yShPw=; b=IaoJALgQ74anwTfS
+	qnzcMCSb9cSiGZB5L14Gt6WN9GPIkXtjkpy3yh/+Prl0nhegxl+oEAu3V4x4pR9B
+	nZFFt+aTha0RYuOi1tR3b49G3Vmwn4DOCopva/o+7aaHE2FQVEJlHxBqHWZRFrTk
+	LygjeliOXF4YU8UWRl+mHuXAZm3QSiOA0yw1r1/GHdMicWq0+B/ZkCm+m2OvUFCX
+	JM5KSg/YTyxVibTDISaCyDmD0YZeO1qAVYCfykn5Skon28TRTUgDIHWsSrNqTiPU
+	2E7rzhcsR6KOKqDpLI9+6yn96QT5YfnLM6QVWLkTbGww9jqAIEAk86IdABczP4gA
+	586/zw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dqr26m1th-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2026 12:03:35 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8edcc885cd3so120605685a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Apr 2026 05:03:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1777032215; x=1777637015; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UqYU+UVD7SqbPk43y5btMoFYViDdfcSDL9l/g8yShPw=;
+        b=DzfPZly57mHccVfn2gEEQnpr7jfLrjGtM6vLXovz5GdJJ83F5sk4IplaG9AnoajV/M
+         9OJaJIWqMjNMHmus5n9AJMoGKLuuJwPX5XkedMScnxdVGBgNKv4QopmS8OZh3Daz09YT
+         GkLu2vxkh1ECAcoXslJT+BVGb5iLyikiXzq+4PA3Kiw8wtiadnByakx2V9T2UH8s+Jkr
+         x4gK2TIAfoAirE+jl0FskmeOawniq9vMe2J5VjBzcP4ZC/J/BDVhleHkuiZMKb4IziPE
+         O7180PGRKcmiLvS/DwVZnDDErwIiSLC/DPeTQFUfS4lOAbzw1NnyDgPLEPkfOCNMO3XY
+         df5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777032215; x=1777637015;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UqYU+UVD7SqbPk43y5btMoFYViDdfcSDL9l/g8yShPw=;
+        b=qLTLwFvit4zArEKK6eEFHVatBbj/duZjymuAGjhLlkY/D6g3NaU7u0fluvjEHQpKBn
+         kFKH3znDIJnQ/1FF/5qNoyttsX0ehmWdDI63hdsbxIAVMA8n/kk2iQxoROjPvhUXNlBw
+         AsaCIfh05lLAfL+djsO8E7ElPbPNRfVhVzBSG7mlRLoCKxGX/s7e4b7ZGdXgS8n9RyP1
+         t+9B89VhamS+ZzQYy9pyhOCDzr/bwOPTtTyDS5JALTkqTAB5Gdr8dY7UKVt/r05e0B3U
+         8VPLmRmNj+opzC7Z7TsvobOHj1K/bQBGRME5XGQtcEsyjrSWRgE9AZDLMWsF6VGuafY9
+         sJ/g==
+X-Forwarded-Encrypted: i=1; AFNElJ97yKAvGUjseqwPNHo5NvOA8IvsGfY6TUYWtr/IzcRK/AbXKJcIzO/FlUI1fulNgastUadF1vnK7mWAdDp6@vger.kernel.org
+X-Gm-Message-State: AOJu0YyHc0TFwOnmZFNHQJqP7kfxOsiD6qEEWYZFNdYk+/URnh4K8gVe
+	d83Ep94gaXCtLLNGj1TmOARIEN4yNiDytRAsAC036KGR3g+b4S9HzpSA2wERbe0zJqEZjZGFmkf
+	YBJm2C5Mvh0onLBatbPudX4vbSPHE7T/T3u1zZy8d/g3Tky5ti0VQy/0NbknS9S9A8E2V
+X-Gm-Gg: AeBDievfCaR7gPq4voNoPjjCZRI24OVDNpnVlj+6FHorNcEqaz6hka7zxr5Ef9hMuVU
+	sb1ccLOTexQQedLpZVihuew5oK/ZjWowo7REYXlm2ZFV5PCNq6UYpI92hamdkpzZOYW8Q09BsN2
+	2YWw0qS8bHH3i915YkKShx5FZwV7f0ESR2lZYwIRQmXQTjGEjNMkYeSVkWs9vEqdT8K2b5mynlt
+	LLJSOkH3lCjpEof6BvqLURUMrlxB7rDEj9Igu/YwZ68O2W8WbY5kXrIGq5BlKT6WsOcTXB2ncVc
+	7K48HWafZiquUm1H6A04TtTTMr740N7SYJ0pJAAOUczdLly9aE1E5f//pdJPlecj3aPkYYHNV4w
+	scRRjgYDIIBaulH5U7ckiVGQUmOrojozPEHMDmNCO5rQRsjYKRn/PF1rLj/5/u2iPCYfOER2gIT
+	tYkb+KQslRij8Aaw==
+X-Received: by 2002:a05:620a:2ae8:b0:8ea:c7a8:5065 with SMTP id af79cd13be357-8eac7a856ecmr1607168585a.2.1777032214980;
+        Fri, 24 Apr 2026 05:03:34 -0700 (PDT)
+X-Received: by 2002:a05:620a:2ae8:b0:8ea:c7a8:5065 with SMTP id af79cd13be357-8eac7a856ecmr1607165885a.2.1777032214518;
+        Fri, 24 Apr 2026 05:03:34 -0700 (PDT)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-672c4d51820sm5008447a12.22.2026.04.24.05.03.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Apr 2026 05:03:32 -0700 (PDT)
+Message-ID: <4d1d71e2-18e9-4262-9dbc-4e05cb17d5a1@oss.qualcomm.com>
+Date: Fri, 24 Apr 2026 14:03:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4c3fa710-f61a-4aad-622d-54909190cb9e@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 6F12945E178
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: kaanapali: Add qcrypto node support
+To: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+        Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: Harshal Dev <harshal.dev@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
+        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260424-knp_qce-v1-0-813e18f8f355@oss.qualcomm.com>
+ <20260424-knp_qce-v1-3-813e18f8f355@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260424-knp_qce-v1-3-813e18f8f355@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: 26R-YoQecrGfaBOg_l1pDw0QjpNDCoeH
+X-Authority-Analysis: v=2.4 cv=QLhYgALL c=1 sm=1 tr=0 ts=69eb5c17 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=Vc80FJqyMH11bIRubAIA:9 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-GUID: 26R-YoQecrGfaBOg_l1pDw0QjpNDCoeH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDExNSBTYWx0ZWRfX1ZepGaRwgbsi
+ JrFzk+jVPA4ht8CRDFveey2hgTsO6hSy4p1VYtgDv+Y2R0+MkD2WG/r+iGg0BDP3RRXbdz2heuS
+ uTi1Mu85uFK+ZydpCKOC9Xs0tERFaU5+8hJGp2NLsdsDFrvaN+aRO3ifsrjdviEWaKTg4eGqWhV
+ e9rtanBnktwJedocD65jL4UKGC3ybgu0bZL3TfgcnqBFweizLfWix50Z40stM1gTtQLhTjOExWt
+ ea1l/kD/kaXmp21FjIYcbbZBDPbQ/6oWCSBfszi/ubwjm7Jvt93kOBuR3HotiAz+hKyDjI0/1RU
+ Bk7JaON4R4Y1i6ffZj1/IjXjrFbw6O36+R0/k5T4xhGecmDKEzQp1Ks/QrT0/7sdHl3aGW+koVE
+ ef1EdxFctVaB+zf8zAERRITa5TQdUmKlEsx32UHEtixWbU1e9FaJKfJVbH1FLoUd/NaWI8Txd7G
+ iOvcBAy90J916OJadpQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 suspectscore=0 phishscore=0 bulkscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604240115
+X-Rspamd-Queue-Id: 847EF45E27D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [3.84 / 15.00];
-	MID_END_EQ_FROM_USER_PART(4.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linuxfoundation.org,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[linuxfoundation.org:s=korg];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104457-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	TAGGED_FROM(0.00)[bounces-104458-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[33];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,linux.dev,8bytes.org,arm.com,linaro.org,nvidia.com,gmail.com,ffwll.ch,vger.kernel.org,lists.linux.dev,lists.freedesktop.org];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[gregkh@linuxfoundation.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linuxfoundation.org:+];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linuxfoundation.org:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-On Fri, Apr 24, 2026 at 05:15:02PM +0530, Vishnu Reddy wrote:
+On 4/24/26 1:34 PM, Kuldeep Singh wrote:
+> Add qcrypto and cryptobam support for kaanapali target.
 > 
-> On 4/24/2026 4:43 PM, Greg Kroah-Hartman wrote:
-> > On Fri, Apr 24, 2026 at 04:01:13PM +0530, Vishnu Reddy wrote:
-> >> On 4/23/2026 7:07 PM, Greg Kroah-Hartman wrote:
-> >>> On Thu, Apr 23, 2026 at 06:59:31PM +0530, Vishnu Reddy wrote:
-> >>>> From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-> >>>>
-> >>>> When a driver needs to create virtual device at runtime and map it to
-> >>>> an IOMMU context for memory isolation, there is no common bus available
-> >>>> for this purpose. Each driver ends up implementing its own bus type,
-> >>>> leading to duplicated logic across multiple drivers.
-> >>>>
-> >>>> host1x driver implemented its own bus type to attach an IOMMU context to
-> >>>> a dynamically created device. The Iris VPU driver now has the same
-> >>>> requirement. Rather than duplicating the same bus logic again, a shared
-> >>>> bus type is introduced under drivers/base that multiple drivers can use
-> >>>> directly.
-> >>>>
-> >>>> The bus takes care of creating a device and attaching the IOMMU context
-> >>>> to it based on the client inputs.
-> >>>>
-> >>>> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> >>>> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-> >>>> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-> >>>> Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-> >>>> ---
-> >>>>  drivers/base/Kconfig            |  3 ++
-> >>>>  drivers/base/Makefile           |  1 +
-> >>>>  drivers/base/dma_context_bus.c  | 77 +++++++++++++++++++++++++++++++++++++++++
-> >>>>  include/linux/dma_context_bus.h | 26 ++++++++++++++
-> >>>>  4 files changed, 107 insertions(+)
-> >>> as you can not have a device on multiple busses at the same time, this
-> >>> makes no sense to me at all.  "dma context" is a bus-specific thing, so
-> >>> please add it to the bus that you are wanting it for.  It can't be a
-> >>> generic bus as that just doesn't work.
-> >>>
-> >>> Or what am I missing here?
-> >>>
-> >>> And why is DMA somehow "special" here from any other hardware attribute?
-> >> Let me give brief information which was discussed, in the initial series,
-> >> the iris VPU used platform bus for dynamically created devices and we got
-> >> the comment/suggestion from Robin to implement a proper bus_type with a
-> >> .dma_configure callback.
-> >>
-> >> https://lore.kernel.org/all/02b3d0f5-f94c-43cd-93af-97cfcf7751b1@arm.com/
-> >>
-> >> based on the discussion, implemented the dma_context_bus and used for iris
-> >> VPU devices instead of platform bus.
-> > Why not make a irus_vpu_bus where you can do what you want?
-> Initially iris_vpu_bus was introduced, and it was made generic based on the
-> discussion,
-> 
-> https://lore.kernel.org/all/20260227-kaanapali-iris-v2-3-850043ac3933@oss.qualcomm.com/
+> Signed-off-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+> ---
 
-I don't really see that request here, I see a "make this better and more
-generic for other busses" but that does not mean "dump it into
-drivers/bus/ for someone else to maintain" :)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-> >> Here, the device have only one bus (dma_context_bus), not multiple buses.
-> >>
-> >> Regarding the "DMA" naming, the core operation of this bus is its
-> >> .dma_configure callback, which calls of_dma_configure_id() to map the device
-> >> to a corresponding IOMMU stream ID. The name "dma_context" reflects this
-> >> purpose.
-> >>
-> >> I am open to suggestions from you or Robin or anyone else, if there is a
-> >> better or preferred way to achieve this, I am happy to consider it and
-> >> rework the implementation accordingly.
-> > As there is only one user, just make this your own bus please and do all
-> > of the needed bus operations for your devices there (i.e. don't hang an
-> > "empty" device off of it.)
-> The reasoning behind to make it generic was to have more users - host1x,
-> Iris VPU, QDA on the generic context bus, instead of each of them having
-> their own. Let me know if you suggest to have the iris_vpu_bus.
-
-But you did not add such users here, so how would we know this?
-
-And still, I have no idea what this bus really is doing.  Is it dynamic?
-Is it self-describing?  Why not just use aux-bus?  What is it supposed
-to be doing and used for?
-
-still totally confused,
-
-greg k-h
+Konrad
 
