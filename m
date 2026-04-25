@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-104516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6ADAKeyd7GltagAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 12:56:44 +0200
+	id uBZNIBWe7GltagAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 12:57:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id F41B9465FF1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 12:56:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 141C546601B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 12:57:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 95D7E3009FAB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 10:56:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A885930180B2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 10:56:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E7B13939C2;
-	Sat, 25 Apr 2026 10:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8C5739479C;
+	Sat, 25 Apr 2026 10:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pBKHsWUU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O7Hp0JeU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055C93845A6
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2026 10:56:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CE93932D8
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2026 10:56:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777114578; cv=none; b=saANShAPOgGhEeb42kMZD5/EkBpMGISsA4a/wMqqu68gqyUFAJY2pXGyQmlOH0B+nGqAcg7nCM93rqZLBeHOfnzAeTrx2zkOXNydxsYxqa/51f8C6sQ6vTBJz51YWGCAjJ8sp2O36zoZtYjYfLTDK25IW+cKeF9/iEhpBrvN9E4=
+	t=1777114592; cv=none; b=W59IxU0hTO3m0mZVJYLqIcWb1oSATbvcfTY74hoNtuI4OZ80BP+haA9BFZgTMj2aNJkvOY+kxLrtryXtClVy2IG9laDCDWa1UgcQ1tqEnhGOdakgAxu2F7IASfHdgZAgDyiXHDYy6YELJpLrp3HPcxulP1wKKFZRfrhvOI+5Mik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777114578; c=relaxed/simple;
-	bh=0DFMRmRmnT3HIcrBDMAr1tbxa08F3uNrVtX65Evd/tg=;
+	s=arc-20240116; t=1777114592; c=relaxed/simple;
+	bh=FigZvmJ6e3ezsNXGyVPDbmmS8EdNURQUJM3t3MANHlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aMeeSVvT9xDOJ3lK8U0Ga+V8Wmf7kkblnhwRohAnyKOuBkBkZrgbook/UZXxz7EIcQywIkmHtTT5/rMXpKRsurl92E8uiKtz2KQHajCzo4qRU0LE7BmATmf1TIQz6Aojf38tbldESY9EOhsBslJsW9us3HnEwipOtoc1CTPRlWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pBKHsWUU; arc=none smtp.client-ip=209.85.214.170
+	 MIME-Version; b=pHSjURuHD36P77uMwDVFDZCWiIRRIx5TQQdMCft7+7eRgUtznOTJUmYUqZ+/c/Iwqn4U5RNSLtu9LRD25mEQ/NlkcIhOHfykHww89wE53jWJYbqk7ZitCFwQINx6T6Ccuq2yfZ0pPY8aHQ2F07MCjBNVCsugQKNwXlX4bRaaESY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O7Hp0JeU; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2b2d3a9e149so45853155ad.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2026 03:56:16 -0700 (PDT)
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2b23fcf90b2so82723495ad.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2026 03:56:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777114576; x=1777719376; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777114591; x=1777719391; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=s6Yo5rERlGwlb3Ci6vxCe4GRUzMyoCAKAgtEtNiZmzs=;
-        b=pBKHsWUUQFqC4Jr2gMSQdSUOJyg57E/uvYIZTTf+HL8H5SieX2Fpn8kKEUpNwDasfF
-         bJKz2FZ+XeLhXw7J22Hj60BkEhN2/QgcQ3fhDuie68MfQDq7n7A36v4OrjnqY1fRbIfO
-         EvwCHmZSzRA0orFpglAahu2qb3iHjq3aOmbg8dhFokereqIHNdktTlPxlLY7Sw6uXEuw
-         GI8ZRg9q8S96g9TLHCmwcGglupPTiXSaDSRzlA629oNdPLvLL4WLayY10BuJByh691qe
-         DLmT63b0oOwKT+EWHGw1sX4N4qXvawPac8fqK0eHmNtEtWvZgCNfCjK9hEjINOcrtChV
-         OXxA==
+        bh=ZrPxbW2Ki+GMIMbXGlvA5ZceXyUNusJm2uzRjJG262s=;
+        b=O7Hp0JeUUdAsa+WfzzmrpLXowDexaXdrpUmyuib/k+gtAk3keFLnT4p3JQ9Gsq2FsM
+         Di/t8dU0fcsQSLUhnqnu/KZCghGsk4NfTAL7z9x0rYIUFsgQgk8yVaQkOVw9QCNdrStm
+         d8ZmTJP6co6xm9U9BB5KypYZuMy7Va9QkHX9b9R3mQgFBXm6XfM6wFjzZmZMDxU2NwOn
+         BuscB+uJdJkQqwmeFVijl5rN697zUWJedcvIxIhhvUBS2Fx4S4V1tP7wetfHiRMI4ktr
+         dyFeX63+wUBtai1JoR9wviRb8B08JXCODgtWW7RJngsZzoE9h9DoSBjIEk7o0hVBz0+4
+         n0rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777114576; x=1777719376;
+        d=1e100.net; s=20251104; t=1777114591; x=1777719391;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=s6Yo5rERlGwlb3Ci6vxCe4GRUzMyoCAKAgtEtNiZmzs=;
-        b=RyQNbIL6pFFqJK4iTkEyZKbWSH5RobVqTn3cLtlP41abylU1gEONFSBGUpNWMdjmkK
-         gA3GWYqWpLVtc2trJ55E0nRSd7aNgMPFORX7H7VHKHtjKXKvpohh3uGsujvtSZHiusgg
-         c9ZD4jWCRN2WxbTZItZqgGVOGo8oRSYivHV4Dq5JPZIPz+jYEL+RWpNAG0l8BS1Yk8ww
-         6kSxMs5x8NhT/Eq9SKtaWYY9srcZ6QnzzQNbzbUB7iwWPYccfycvwK41I1MMiZ7KeWWP
-         +bI2Q0pylzOwvRncTkbs5a+htlbrdVDX8l6sWmzlsTE4MS7frkuIoweorDbuGNVmEwIk
-         Kndw==
-X-Gm-Message-State: AOJu0YxLWSuvZuBatJw2Cg71xg1r3uAR2tJ/y7ZrC8uCzlkNN6fGfDQh
-	Mw2wGmRH+oE9+NCXd5iy1RTpBEpSLtqgubWXxnAWC5oJtydZ1ZmdAwIz
-X-Gm-Gg: AeBDieu6SM3IZW0y5jp28EVTwonHvXZEbkrmJ9zBqq4WPH+fZ/tNddnK3WTqWvLyv3G
-	AOdEiH16bTXGvW10G+fJvry/qlECvbaKI6NsuAFjg14hyNyrBmO4xVKLBbgmq0L5FgnXSXilWkL
-	gQC/KsJ9+LkSoZLpf/uSV+jhar5KDPp/jgwMQroGvYoUSVoLvAHD8PYcn27X9KrAs4Ju9t33oQW
-	vW8tF+N3o4t6Um45MSMy65VVWkyYHmpvrHEr4ZKAX4RcRRZ8iaEcHtmLL0O6fYy8eAYF1VzPidM
-	epW+z5A+C/2iZO1iWYoawwCc6kYxDFtD48uYKDNxC+Td4bpGW7WljVlwl4/wEP1PvQPaSR9Qb1u
-	q5McNvIctQU1ygc5sIaY1d5p9PiA3vSJktZf8h2x16lE/jIS35FRpizkXg6GQRYCcs7t3ne2L4/
-	jz6MD1B4aueQSIxmYWekv5r5I38Dkm
-X-Received: by 2002:a17:903:11c3:b0:2ae:5346:d4e6 with SMTP id d9443c01a7336-2b5f9ef78e0mr323118295ad.28.1777114576428;
-        Sat, 25 Apr 2026 03:56:16 -0700 (PDT)
+        bh=ZrPxbW2Ki+GMIMbXGlvA5ZceXyUNusJm2uzRjJG262s=;
+        b=SIuH0bRMDdTTYMwPeYjb0vVIHw8/r0rlHPT3Pc86oYBJdGYM+gy2rm5f5T9c32PruW
+         4I/e3nZBwlg/DNHYbLbCT+r7yGTkqQXnbMu/GpBR3XbwqPsnypigMftVxhfEQnBT33wB
+         cq0GjrdD2mVe15bjnsumF6JU8/VmbtXvg+1WHLGzrQ2qNSI+8DWm42Q/2gDJws2CFU2R
+         IP/obNExdEzOO8+AgNeghd6XmvCSr6gCN9Am4Ch8ye8PysDwL/fOzGIO0GKzpeMkth/M
+         Yv9156djDM/Ez0wYwoXmzZBJ46BlJB/KnI4VDH22TuHDG7TGLHbZXChfgnMLux/WCSt/
+         bKUw==
+X-Gm-Message-State: AOJu0Ywsb3//u3B/Vkp1Exy3hdH2GLskm7Ji72fMCQ95oZnFRn+iv9Eg
+	ZMwiYEaIUV0HUWv4IzoCp5JXC9z/kc4Uovwgy6Z3PAg1tg4BnXKTQqwE
+X-Gm-Gg: AeBDietEc0hzr4Wa/aSoLqVJJxDQ1Q6b/mMFKbEMzDghaMoEtooGNQRD0IImqHGqgdU
+	fj4QPcUfjuRLIoB0oEaIhTW9G/uok5EljZ2aydbQLQcHykGL01aTSpeNz5c7+s5mKfSy8/7WCWu
+	xwukeYtxUFvM1RJqTZO6794JnadewIrQMrCboBPFw9MyAXxLk+c858D39Ju717EIcTSJd8dcqpA
+	avq6H8s/JJ4mx0N1KYN/gK32kcb5BatN61nOkzrQfLKGpTYp85M+YczFgsLKhD8x/HOCFLjdc4M
+	HhLi4uG97MtKiIYOxmFaBlDrW5JL5B65W/V89o9Kz8sTMMNnv6f1yCQm0dXBL0yUhvZT/wBIv50
+	YqPoCI1EUhnyHgWmkuCOTEoDwmJcU2QDLwvfoJoPzNuxgdPIjU9XnacVEjE9/ivAjCH1tnCNfiq
+	1cOUBgeYKlyDa5BZ4CgNfm1Nlca9Iw
+X-Received: by 2002:a17:903:1ae5:b0:2b2:ec46:dfd4 with SMTP id d9443c01a7336-2b5f9f1eb04mr401287745ad.22.1777114590804;
+        Sat, 25 Apr 2026 03:56:30 -0700 (PDT)
 Received: from nuvole ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b5faa33486sm303832345ad.33.2026.04.25.03.56.05
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b5faa33486sm303832345ad.33.2026.04.25.03.56.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Apr 2026 03:56:15 -0700 (PDT)
+        Sat, 25 Apr 2026 03:56:30 -0700 (PDT)
 From: Pengyu Luo <mitltlatltl@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
@@ -91,9 +91,9 @@ Cc: linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-media@vger.kernel.org,
 	Pengyu Luo <mitltlatltl@gmail.com>
-Subject: [PATCH 1/4] media: hi846: fix hi846_write_reg_16 handling
-Date: Sat, 25 Apr 2026 18:52:57 +0800
-Message-ID: <20260425105300.745044-2-mitltlatltl@gmail.com>
+Subject: [PATCH 2/4] media: hi846: Add 6MP and 8MP mode support
+Date: Sat, 25 Apr 2026 18:52:58 +0800
+Message-ID: <20260425105300.745044-3-mitltlatltl@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260425105300.745044-1-mitltlatltl@gmail.com>
 References: <20260425105300.745044-1-mitltlatltl@gmail.com>
@@ -104,7 +104,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: F41B9465FF1
+X-Rspamd-Queue-Id: 141C546601B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [0.84 / 15.00];
@@ -124,7 +124,7 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[15];
-	TAGGED_FROM(0.00)[bounces-104516-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-104517-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -138,34 +138,207 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 
-hi846_write_reg_16() does not clear a positive *err value on success.
-pm_runtime_get_if_in_use() returns a positive value when the device
-is already in use. When hi846_set_ctrl() passes &ret holding this
-positive value) to hi846_write_reg_16(), the function returns with ret
-as is, the positive value propagates back as a return code, which
-callers interpret as an error.
+Hi846 is an 8MP sensor, but the upstream driver has only supported 2MP
+mode for years. This patch adds 6MP and 8MP modes to maximize sensor
+utilization.
 
-Fix this by resetting *err to 0 only when it is positive.
+Note that these modes require 4-lane MIPI CSI-2, as the downstream
+driver only exposes 2MP, 6MP, and 8MP configurations in 4-lane
+operation on the target device. The register sequences are extracted
+from the downstream Windows driver.
 
-Fixes: 04fc06f6dc15 ("media: hi846: fix usage of pm_runtime_get_if_in_use()")
 Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
 ---
- drivers/media/i2c/hi846.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/i2c/hi846.c | 159 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 158 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/media/i2c/hi846.c b/drivers/media/i2c/hi846.c
-index a3f77b8434ca..09c109f3fba9 100644
+index 09c109f3fba9..d6739a7c2324 100644
 --- a/drivers/media/i2c/hi846.c
 +++ b/drivers/media/i2c/hi846.c
-@@ -1270,6 +1270,8 @@ static void hi846_write_reg_16(struct hi846 *hi846, u16 reg, u16 val, int *err)
+@@ -1027,6 +1027,111 @@ static const struct hi846_reg mode_1632x1224_mipi_4lane[] = {
+ 	{HI846_REG_TG_ENABLE,			0x0100},
+ };
  
- 	if (*err < 0)
- 		return;
-+	else
-+		*err = 0;
++static const struct hi846_reg mode_3264x1836_config[] = {
++	{HI846_REG_MODE_SELECT,			0x0000},
++	{HI846_REG_Y_ODD_INC_FOBP,		0x1111},
++	{HI846_REG_Y_ODD_INC_VACT,		0x1111},
++	{HI846_REG_Y_ADDR_START_VACT_H,		0x0172},
++	{HI846_REG_Y_ADDR_END_VACT_H,		0x089d},
++	{HI846_REG_UNKNOWN_005C,		0x2101},
++	{HI846_REG_FLL,				0x09de},
++	{HI846_REG_LLP,				0x0ed8},
++	{HI846_REG_BINNING_MODE,		0x0022},
++	{HI846_REG_HBIN_MODE,			0x0000},
++	{HI846_REG_UNKNOWN_0A24,		0x0000},
++	{HI846_REG_X_START_H,			0x0000},
++	{HI846_REG_X_OUTPUT_SIZE_H,		0x0cc0},
++	{HI846_REG_Y_OUTPUT_SIZE_H,		0x072c},
++	{HI846_REG_EXPOSURE,			0x09d8},
++
++	/* For OTP */
++	{HI846_REG_UNKNOWN_021C,		0x0001},
++	{HI846_REG_UNKNOWN_021E,		0x0235},
++
++	{HI846_REG_ISP_EN_H,			0x014a},
++	{HI846_REG_UNKNOWN_0418,		0x023e},
++	{HI846_REG_UNKNOWN_0B02,		0xe04d},
++	{HI846_REG_UNKNOWN_0B10,		0x6821},
++	{HI846_REG_UNKNOWN_0B12,		0x0120},
++	{HI846_REG_UNKNOWN_0B14,		0x0001},
++	{HI846_REG_UNKNOWN_2008,		0x38fd},
++	{HI846_REG_UNKNOWN_326E,		0x0000},
++
++// ?
++	// {0x0710, 0x074c},
++	// {0x0f32, 0x025a},
++	// {0x0f38, 0x025a},
++};
++
++static const struct hi846_reg mode_3264x1836_mipi_4lane[] = {
++	{HI846_REG_UNKNOWN_0900,		0x0300},
++	{HI846_REG_MIPI_TX_OP_MODE,		0xc319},
++	{HI846_REG_UNKNOWN_0914,		0xc109},
++	{HI846_REG_TCLK_PREPARE,		0x061a},
++	{HI846_REG_UNKNOWN_0918,		0x0407},
++	{HI846_REG_THS_ZERO,			0x0a0b},
++	{HI846_REG_TCLK_POST,			0x0e08},
++	{HI846_REG_UNKNOWN_091E,		0x0a00},
++	{HI846_REG_UNKNOWN_090C,		0x0427},
++	{HI846_REG_UNKNOWN_090E,		0x0059},
++	{HI846_REG_UNKNOWN_0954,		0x0089},
++	{HI846_REG_UNKNOWN_0956,		0x0000},
++	{HI846_REG_UNKNOWN_0958,		0xca80},
++	{HI846_REG_UNKNOWN_095A,		0x9240},
++	{HI846_REG_PLL_CFG_MIPI2_H,		0x4124},
++	{HI846_REG_TG_ENABLE,			0x0100},
++};
++
++static const struct hi846_reg mode_3264x2448_config[] = {
++	{HI846_REG_MODE_SELECT,			0x0000},
++	{HI846_REG_Y_ODD_INC_FOBP,		0x1111},
++	{HI846_REG_Y_ODD_INC_VACT,		0x1111},
++	{HI846_REG_Y_ADDR_START_VACT_H,		0x0040},
++	{HI846_REG_Y_ADDR_END_VACT_H,		0x09cf},
++	{HI846_REG_UNKNOWN_005C,		0x2101},
++	{HI846_REG_FLL,				0x09de},
++	{HI846_REG_LLP,				0x0ed8},
++	{HI846_REG_BINNING_MODE,		0x0022},
++	{HI846_REG_HBIN_MODE,			0x0000},
++	{HI846_REG_UNKNOWN_0A24,		0x0000},
++	{HI846_REG_X_START_H,			0x0000},
++	{HI846_REG_X_OUTPUT_SIZE_H,		0x0cc0},
++	{HI846_REG_Y_OUTPUT_SIZE_H,		0x0990},
++	{HI846_REG_EXPOSURE,			0x09d8},
++
++	/* For OTP */
++	{HI846_REG_UNKNOWN_021C,		0x0001},
++	{HI846_REG_UNKNOWN_021E,		0x0235},
++
++	{HI846_REG_ISP_EN_H,			0x014a},
++	{HI846_REG_UNKNOWN_0418,		0x0000},
++	{HI846_REG_UNKNOWN_0B02,		0xe04d},
++	{HI846_REG_UNKNOWN_0B10,		0x6821},
++	{HI846_REG_UNKNOWN_0B12,		0x0120},
++	{HI846_REG_UNKNOWN_0B14,		0x0001},
++	{HI846_REG_UNKNOWN_2008,		0x38fd},
++	{HI846_REG_UNKNOWN_326E,		0x0000},
++};
++
++static const struct hi846_reg mode_3264x2448_mipi_4lane[] = {
++	{HI846_REG_UNKNOWN_0900,		0x0300},
++	{HI846_REG_MIPI_TX_OP_MODE,		0xc319},
++	{HI846_REG_UNKNOWN_0914,		0xc109},
++	{HI846_REG_TCLK_PREPARE,		0x061a},
++	{HI846_REG_UNKNOWN_0918,		0x0407},
++	{HI846_REG_THS_ZERO,			0x0a0b},
++	{HI846_REG_TCLK_POST,			0x0e08},
++	{HI846_REG_UNKNOWN_091E,		0x0a00},
++	{HI846_REG_UNKNOWN_090C,		0x0427},
++	{HI846_REG_UNKNOWN_090E,		0x0059},
++	{HI846_REG_UNKNOWN_0954,		0x0089},
++	{HI846_REG_UNKNOWN_0956,		0x0000},
++	{HI846_REG_UNKNOWN_0958,		0xca80},
++	{HI846_REG_UNKNOWN_095A,		0x9240},
++	{HI846_REG_PLL_CFG_MIPI2_H,		0x4124},
++	{HI846_REG_TG_ENABLE,			0x0100},
++};
++
+ static const char * const hi846_test_pattern_menu[] = {
+ 	"Disabled",
+ 	"Solid Colour",
+@@ -1042,9 +1147,11 @@ static const char * const hi846_test_pattern_menu[] = {
  
- 	put_unaligned_be16(reg, buf);
- 	put_unaligned_be16(val, buf + 2);
+ #define FREQ_INDEX_640	0
+ #define FREQ_INDEX_1280	1
++#define FREQ_INDEX_3264	2
+ static const s64 hi846_link_freqs[] = {
+ 	[FREQ_INDEX_640] = 80000000,
+ 	[FREQ_INDEX_1280] = 200000000,
++	[FREQ_INDEX_3264] = 288000000,
+ };
+ 
+ static const struct hi846_reg_list hi846_init_regs_list_2lane = {
+@@ -1134,7 +1241,57 @@ static const struct hi846_mode supported_modes[] = {
+ 			.width = 1632 * 2,
+ 			.height = 1224 * 2,
+ 		},
+-	}
++	},
++	{
++		.width = 3264,
++		.height = 1836,
++		.link_freq_index = FREQ_INDEX_3264,
++		.fps = 30,
++		.frame_len = 2526,
++		.llp = HI846_LINE_LENGTH,
++		.reg_list_config = {
++			.num_of_regs = ARRAY_SIZE(mode_3264x1836_config),
++			.regs = mode_3264x1836_config,
++		},
++		.reg_list_2lane = {
++			.num_of_regs = 0,
++		},
++		.reg_list_4lane = {
++			.num_of_regs = ARRAY_SIZE(mode_3264x1836_mipi_4lane),
++			.regs = mode_3264x1836_mipi_4lane,
++		},
++		.crop = {
++			.left = 0x46,
++			.top = 0x172,
++			.width = 3264,
++			.height = 1836,
++		},
++	},
++	{
++		.width = 3264,
++		.height = 2448,
++		.link_freq_index = FREQ_INDEX_3264,
++		.fps = 30,
++		.frame_len = 2526,
++		.llp = HI846_LINE_LENGTH,
++		.reg_list_config = {
++			.num_of_regs = ARRAY_SIZE(mode_3264x2448_config),
++			.regs = mode_3264x2448_config,
++		},
++		.reg_list_2lane = {
++			.num_of_regs = 0,
++		},
++		.reg_list_4lane = {
++			.num_of_regs = ARRAY_SIZE(mode_3264x2448_mipi_4lane),
++			.regs = mode_3264x2448_mipi_4lane,
++		},
++		.crop = {
++			.left = 0x46,
++			.top = 0x40,
++			.width = 3264,
++			.height = 2448,
++		},
++	},
+ };
+ 
+ struct hi846_datafmt {
 -- 
 2.54.0
 
