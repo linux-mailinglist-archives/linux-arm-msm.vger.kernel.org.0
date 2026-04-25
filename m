@@ -1,102 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-104519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qE7DIlSe7GltagAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 12:58:28 +0200
+	id YwIYH7q07Gl6bwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 14:34:02 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0DE8466038
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 12:58:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AA3D9466393
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 14:34:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 850D130125D3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 10:56:53 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 08486300CC2D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Apr 2026 12:34:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 105FA394793;
-	Sat, 25 Apr 2026 10:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFACA175A80;
+	Sat, 25 Apr 2026 12:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cy/T4de0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KK85mPkd";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SMQUMZ1l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8FC393DDC
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2026 10:56:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D69640DFD5
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2026 12:33:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777114613; cv=none; b=doRzU4C4bUZ7squIebyoctwLgisLSXoKiOhzu746R5Hq4W9cCSFu2vtMWrWPd+vqEdZU0BV4C3BsICq29iW4BZxVrcUxgUxzWN5JtUlb3MMTBB8l27rEu+vVdBR9ZCoYlJBDld5m64rLvKiWzGmVUMYUMrd0S+DOSDG59Uh2QnY=
+	t=1777120439; cv=none; b=pJfI0/9dIQh7DubhaG03ZDE5+atw5VtCw7kneNJsdOb38d+t1gHISbeUmdxqaQakrZ26sUTLxJk2URg28EDTUF+Wm3UkkClAWAnE157a4w2Dmt8r0flJRgSn7PkqWbJEXQ5iVhYWiVcDd4dGnr8t13ou2qwLnGYx+XbLvwA0LBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777114613; c=relaxed/simple;
-	bh=j92iOYgKQ7RjjOLofBQE3Vd++tZ0z/woMt8SEp8QCZo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6qBPPjjng7TmGiuBWGPuh2CwHAtKOg8guoiQqoJq68wskTwatqJrUHSeiEU3lhIRVsfuvOOci1ltExgK5e342wlpz+rXZf5sOD7f13Kxag8i6T30wi9XDC0dmjTFhkOjwvjmelzg57xQ00nb2NlHDKkJhA4U8x2pM6m0fXAr5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cy/T4de0; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2b23fcf90b2so82724995ad.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2026 03:56:51 -0700 (PDT)
+	s=arc-20240116; t=1777120439; c=relaxed/simple;
+	bh=4EHrx9O0zy+tPpiQTmGb67MVCUynxF2C7uZoBqaBbBc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uSomM0HQeuZL2SgaFpbeKihiD97jfXos+pRQpEHmz9OSy8HXeVe9pF95tJdighH6s3K+ftvLqw5JQwlFU4SqzT9yA8V6dMnZURbg3RK9K9mAYaxJaTVt67RnumSQT0ZjYRPYaOJBcwoMv/CM7fwlNPcWckL0+SLIQMt5n9dttn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KK85mPkd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SMQUMZ1l; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63P3MqGw206546
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2026 12:33:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=klF0v38YUv00mDFPTnwJug9xOiBA9PSH07C
+	CCWnh0Ck=; b=KK85mPkdkk+neFh0+A2grw1rUEyF1JlPDySBmVQSOv05aCGsAVq
+	9GKAS5iIXS6A9MWijLfQ9o7pfhaWkM4s2tLv8huxooW5q+ihzEjbB3ObQ/ka+Uqt
+	CjxVw6PCZ36HkKmRdz8csN4xaoisTWWDcB1O3CN7jzNPXe9wWES8VrMen5UIqe1T
+	cVgHVv0TRNgVoiE/ayyQu7BFIf+ooY6cfrAu5NWUiAl41XtuGPHtYNLQqbZKQo5a
+	ZXkkwD6Jan2rPd+sDCJmxmxFG2NYNu+4ccmgHrToMlraw6/KYNiFnLcKWCV0qLvF
+	lf6mCHEt95UGua5tGDq+IMw95eaKtxjOytA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4drnnf0v8t-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2026 12:33:56 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-50fb3403e99so148609211cf.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2026 05:33:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777114611; x=1777719411; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hXgloxp5cdGXbJc9mmRLA5BQUt4nlOpF3BcjxCU2IHU=;
-        b=Cy/T4de0glMoZvobRKvlj9PMd914hdEQHtP/N/WaVTSjrZLyFeN6v/o8Km+MEAOQBg
-         Ml2qsU8mFNBt0c1eUIukhrEhk2n/5cvK/A/NR6lXcvdouM2hl/8SzXkO/D+AhtCFS8x0
-         4H4GU8HRjZ+bKEzVe0Q/O7B4TDXDIdUCL6xWuCQqeRPSDus/AOTWnSo+6ArEyqJr4LAN
-         OoTkIFA0xpCMH3OxLdAu7E2Mk8y+dNl5DyPaOm5aFUJGBzLOqSI9GUX7pUM4TotC7x61
-         5w2IQ1WuH3iczDo8Pmj12x2QlyO3g7T/aUYQgMHQUZmafMxWrtPxPlNASs7H9aQ7aTip
-         IvpQ==
+        d=oss.qualcomm.com; s=google; t=1777120436; x=1777725236; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=klF0v38YUv00mDFPTnwJug9xOiBA9PSH07CCCWnh0Ck=;
+        b=SMQUMZ1lVIrxMeYoAbcgKn3prTyzJ/VBMSvvrKMw6imfnexG5McfkoFh1lbxmd7esc
+         yW7ZHEQdBVHZoYkUNsTLR4ABBE0BYGyT7zmchLPqx1HGdGMsR8NubJ1jRGg5GkBlJvjD
+         yAi6lkDxSCx+yqMSvEMIuAaOYjBgAdey3pfM7Daxf/cfqXgEPVZm/qE0eUHtYCQVQcDU
+         otoJDcl2SeOXSl84aVz/pVpRAaHC+S3zYIuDmSPKBkhXU9KkDrZLck7H4BAP5QLTL6it
+         mKRg/HBmXgI7nLoPxqrtHPyMSEU16XIt+iRSUWRc3Sr8JXemGJjyAUR1aj4I3Jzbq3wN
+         RbDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777114611; x=1777719411;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=hXgloxp5cdGXbJc9mmRLA5BQUt4nlOpF3BcjxCU2IHU=;
-        b=s4J+xktbeJKfOFDw8jZVHLb+TJmPV6/R0TGS30MdPEl9R6FKclYQheYiRGbvweFN88
-         tI8bGZtYCQyh8fR3z+8PFCjabnto+ZHTQlYA3oaeWuBClpT28S+QkjSG0aGAc3JdPDFw
-         gczL91FCLaqCbgOiEaMOMVjoxDOdxKSakxAbV9FXvo4fQDsGrzYubgbOksJVbGSyuUUy
-         3tNikSVSYmQNNZmoPiowTqcPBZe/MrIAXBrDTYqaonVR9guxqc4mX8C3mo3iKDYozda0
-         iyTy/pnht7ozYapdAJY11qxQE9Q8V3jeuVspj4AyZgi6SYWyaHXAvDozIVCVcacOJjvG
-         UzWQ==
-X-Gm-Message-State: AOJu0YxQjcOpC+dxp+BqrRWBPWHG+9iD4JHWAQgK9D9/7Fdhkfk4NBEn
-	ZaiF+xR0YQ54qRes7S8pYUI9+Srygjofduw/cZu9ldRqcbgXb/x1Q0qCqaMgRyUY
-X-Gm-Gg: AeBDies3rT8pGgkhxvi3+a9/hp2bHFJMGudLqGP8GFM9wdP7U/DxOPRlPlH5+oGpxb2
-	nHj2l+3SmQxKkXUrTkMP2u9NXx/YLM8CDFF8hk/JkRrwbomfslIjaymWHvfC8v8VUz5rw/ujidw
-	sK784YUQFQ0fKH4m/8NOyxAL6ngnjGse8cXw/qP+OVWu7aigbNKt1AoUIbznmphDT5ueOw3Ilva
-	UAbyES6Nap7nt0z0JzOGjl5JDPNYhBq1r6nlqpz6Jo5LVZrnxnlnh1btyGnF6GWm7nFHoNuRGgN
-	VonPSAoD0ea4btawnFpk/DAkdDNW1ye2KZv3ZqpHh0RZ8S7L9QkuFG12deRiM0s1NuXDt8PJNes
-	i0Hb+94JS8BFcrYQVlcmljsZ0E3IU6EOz2ptGRsy77+4qibnMTGWutNn53cfWrMkUbZdP7ujsUk
-	d7mTCFP1yxxWIPYpy9DkC7V1gvmPop
-X-Received: by 2002:a17:902:a516:b0:2b2:4f43:b48c with SMTP id d9443c01a7336-2b5f9ea55d1mr247155295ad.14.1777114611051;
-        Sat, 25 Apr 2026 03:56:51 -0700 (PDT)
-Received: from nuvole ([144.202.86.13])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b5faa33486sm303832345ad.33.2026.04.25.03.56.41
+        d=1e100.net; s=20251104; t=1777120436; x=1777725236;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=klF0v38YUv00mDFPTnwJug9xOiBA9PSH07CCCWnh0Ck=;
+        b=PyHj2Le4BNuLpzA6nL8YgHeZghj/LRVgmQ49pQ1iC7UU3+p1KxysFWE2CKsZ7zQ+ms
+         7xyTJL7vQwmrukXi43uLXBboLJ2h/KTGz8n5aYehJ91zVAyPIP7apdZEq6M9CYuZdCAh
+         I4RSXPvKofZeAy6HnHtI+wKaIesfKDNCi7xg9DnZaRfTJiReCkokAt/2H8AeOfNF8tM2
+         omTQHdej7+IGQ9rBsmWOZkWnE34ZuuXLXmYWLOMXYa1sAiHb3jsVQ6A2DImEViQTiME9
+         r64aVKqagO7qiUqek08BkoC5MKLiyrfFinntWkPPgqa4s7an2ed/Q61tJ7NvKXVzxGuq
+         W72w==
+X-Forwarded-Encrypted: i=1; AFNElJ9v8Lc5Uu1Na0r2wT8Ml2/qtVM10OYhl7nvNvrcVcSrgCXaMUzutSCY9YNppbHO6JMg41wkRMXoCiYascpf@vger.kernel.org
+X-Gm-Message-State: AOJu0YzyplN/71VxDVV9R75VyLxJ7ZuiHtqU/RiGjY6k+4aEVMcEI6fp
+	mrWc5+Bj3Zb0Y9d5QUj1CXyBR7XjyjRlKItlFwW9TUJQPalqtcWesbOgirjuPD9PxK6CTQ1+hzw
+	eo86jxpX4/TYi/zGPNo5OZrBquqZHxV2oL/EYbMh/aU+awDfe22nw5hXsXwcMejw1xyU18eZSDc
+	GQ
+X-Gm-Gg: AeBDieuZzUykAa+Zseuu362N6t4Xg3+P+62mgUfXp8CSvdsole4jYlVolK6ujjjKyTu
+	0XM4hg022lU0+8Da6cxDy1LlcIMPoeKrsOwqPWg6E4040zY0ONBRNu+VjgX3gZhchvaOjpv7w/q
+	1b0/ffm7lavRAsgezplLGZ9SJZFBbcyKaZTIOyvhvLHTHGr+RO3pB1ANZY1RRpUC2oFvW0EZHj4
+	XE1TXvFUdrU78AJ02t/FogDm6bsWmHbx1irWF+yAVIdwTP6cTSBqTBjuPQU9smZ26fd3TsuZoCx
+	e0sZSnW1t3sP60RDg44csEaehiKcKaoJIwvKFXomGTX2zPt1oyB+XbKy6xY8aAHMdx9HNiaRVcu
+	lvYAUVB7fAWy3KIlJqt1wdfb5V8UomD64FHRp6+NsMEQRIxysW4LfGfdfjLV0nvNv7eCTsTN7OZ
+	lnL/QsQJb1wTkb1d1CtvRhSb4WLyKLVQWvt+zqVy0pfTE=
+X-Received: by 2002:ac8:5892:0:b0:50b:2d93:97bd with SMTP id d75a77b69052e-50e36b40e4cmr542453991cf.24.1777120435660;
+        Sat, 25 Apr 2026 05:33:55 -0700 (PDT)
+X-Received: by 2002:ac8:5892:0:b0:50b:2d93:97bd with SMTP id d75a77b69052e-50e36b40e4cmr542453521cf.24.1777120435235;
+        Sat, 25 Apr 2026 05:33:55 -0700 (PDT)
+Received: from t14s (2001-1c00-0c32-7800-07d4-cca3-ec08-7ac7.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:7d4:cca3:ec08:7ac7])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ba4517ef3d4sm884189666b.17.2026.04.25.05.33.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Apr 2026 03:56:50 -0700 (PDT)
-From: Pengyu Luo <mitltlatltl@gmail.com>
+        Sat, 25 Apr 2026 05:33:54 -0700 (PDT)
+From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Martin Kepplinger-Novakovic <martink@posteo.de>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hverkuil@kernel.org>,
-	Martin Kepplinger <martin.kepplinger@puri.sm>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	Pengyu Luo <mitltlatltl@gmail.com>
-Subject: [PATCH 4/4] arm64: dts: qcom: sc8280xp: gaokun3: describe rear camera module information as musch as possible
-Date: Sat, 25 Apr 2026 18:53:00 +0800
-Message-ID: <20260425105300.745044-5-mitltlatltl@gmail.com>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc: Hans de Goede <johannes.goede@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH] clk: qcom: x1e80100-dispcc: Stop disp_cc_mdss_mdp_clk_src from getting parked
+Date: Sat, 25 Apr 2026 14:33:51 +0200
+Message-ID: <20260425123351.6292-1-johannes.goede@oss.qualcomm.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260425105300.745044-1-mitltlatltl@gmail.com>
-References: <20260425105300.745044-1-mitltlatltl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -104,264 +113,87 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: E0DE8466038
-X-Rspamd-Action: add header
+X-Proofpoint-ORIG-GUID: pQvpA_grno5WrIi0iiDYDLRYNAnKjc1N
+X-Authority-Analysis: v=2.4 cv=Y5rIdBeN c=1 sm=1 tr=0 ts=69ecb4b4 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=A5OVakUREuEA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8 a=iLpfOVNSR9RCDSG3wP8A:9
+ a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-GUID: pQvpA_grno5WrIi0iiDYDLRYNAnKjc1N
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI1MDEyNiBTYWx0ZWRfXwhBDMrZFQDTr
+ aH4c1qWk4iSEU71cZnqAxoTas7SZX44bdWJK088nfF4CKHl9/wHv62POGLKl1Ojr1vN5G+Amyab
+ CgH3tyHApb2/uTmQfJSH71ELsSsXqnVfra2U/JWp3zREl6DNSzOptEhyPm/YmlPGsRKza6YGeW8
+ 6OlTO0Eve75ciZuCgSBmE+UiQh8AGXELSUgicRb/SZKBfZbF93w7cT/RbgHF4kGS5370xrakDBd
+ RRSvlj+y6kb9aFyvhSvM1gexRB9kYx+/IItnbdfQkHBz/f7HRQwNHHHgva/3Rt9lrIwQMc0HtAP
+ RdqqGQ423gKW5/N/NxB+lOEIeqWVK6RafFV6NfjCpMHztTHENZUUqx0ZakS+Je+nTWjM/TbzdBA
+ ec+y76Pamld1gE4c65+XgI7rcBR2OSrEeYsehZEBO/A8HbzCvjJX3YAjlXFSttDRZCeMbOEMd84
+ dHOtNwfGMwsQW3yJ6Pw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-25_03,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 suspectscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604250126
+X-Rspamd-Queue-Id: AA3D9466393
+X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [6.34 / 15.00];
-	SEM_URIBL(3.50)[0.0.0.0:email];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
-	BAD_REP_POLICIES(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-104519-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	R_DKIM_ALLOW(0.00)[gmail.com:s=20251104];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	GREYLIST(0.00)[pass,meta];
 	MIME_TRACE(0.00)[0:+];
-	DMARC_POLICY_ALLOW(0.00)[gmail.com,none];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-104520-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	DBL_PROHIBIT(0.00)[0.0.0.50:email,0.0.0.10:email];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	NEURAL_HAM(-0.00)[-0.618];
-	R_SPF_ALLOW(0.00)[+ip6:2600:3c0a:e001:db::/64:c];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.3:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,c:email,puri.sm:url]
-X-Spam: Yes
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[johannes.goede@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-The rear sensor is S5K3L6, describing it but dropping compatible
-string, since there is no upstream driver. A funcitonal downstream
-driver is in comment.
+Parking disp_cc_mdss_mdp_clk_src at 19.2MHz causing the EFI GOP framebuffer
+to stop functioning. The EFI GOP framebuffer should keep working until
+the msm display driver loads, to help with boot debugging and to ensure
+display output when the msm module is not in the initramfs.
 
-The VCM is dw9714, describe it.
+Switch disp_cc_mdss_mdp_clk_src over to clk_rcg2_shared_no_init_park_ops
+to keep the EFI GOP working after binding the x1e80100-dispcc driver.
 
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 ---
-Please take this patch as a RFC, I am not sure, how much I am allowed
-to add without a sensor driver.
----
- .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 129 +++++++++++++++++-
- 1 file changed, 123 insertions(+), 6 deletions(-)
+ drivers/clk/qcom/dispcc-x1e80100.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-index 39e559e91289..76b1ecb3819d 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-@@ -22,12 +22,18 @@
- #include "sc8280xp.dtsi"
- #include "sc8280xp-pmics.dtsi"
- 
-+/* remove due to gpio pins collision, skip 2nd instance won't break things */
-+/delete-node/ &cci1_i2c1;
-+/delete-node/ &cci1_i2c1_default;
-+/delete-node/ &cci1_i2c1_sleep;
-+
- / {
- 	chassis-type = "tablet";
- 	model = "Matebook E Go";
- 	compatible = "huawei,gaokun3", "qcom,sc8280xp";
- 
- 	aliases {
-+		i2c1 = &cci1_i2c0;
- 		i2c2 = &cci2_i2c1;
- 		i2c4 = &i2c4;
- 		i2c15 = &i2c15;
-@@ -52,9 +58,17 @@ framebuffer0: framebuffer@c6200000 {
- 	leds {
- 		compatible = "gpio-leds";
- 
--		pinctrl-0 = <&cam_indicator_en>;
-+		pinctrl-0 = <&cam_indicator_en>, <&camera_flash_en>;
- 		pinctrl-names = "default";
- 
-+		camera_flash: led {
-+			function = LED_FUNCTION_FLASH;
-+			color = <LED_COLOR_ID_WHITE>;
-+			gpios = <&tlmm 93 GPIO_ACTIVE_HIGH>;
-+			linux,default-trigger = "none";
-+			default-state = "off";
-+		};
-+
- 		privacy_led: privacy-led {
- 			function = LED_FUNCTION_INDICATOR;
- 			color = <LED_COLOR_ID_WHITE>;
-@@ -129,6 +143,18 @@ vreg_camf_1p2: regulator-camf-1p2 {
- 		pinctrl-names = "default";
- 	};
- 
-+	vreg_camr: regulator-camr {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vreg_camr";
-+
-+		gpio = <&tlmm 92 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&camr_reg_en>;
-+		pinctrl-names = "default";
-+	};
-+
- 	vreg_misc_3p3: regulator-misc-3p3 {
- 		compatible = "regulator-fixed";
- 
-@@ -387,8 +413,8 @@ vreg_l1b: ldo1 {
- 
- 		vreg_l2b: ldo2 {
- 			regulator-name = "vreg_l2b";
--			regulator-min-microvolt = <1904000>;
--			regulator-max-microvolt = <1904000>;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-@@ -433,10 +459,9 @@ vreg_l6b: ldo6 {
- 
- 		vreg_l7b: ldo7 {
- 			regulator-name = "vreg_l7b";
--			regulator-min-microvolt = <1800000>;
--			regulator-max-microvolt = <1800000>;
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--			regulator-boot-on;
- 		};
- 
- 		vreg_l9b: ldo9 {
-@@ -622,6 +647,16 @@ &camss {
- 	status = "okay";
- 
- 	ports {
-+		port@0 {
-+			csiphy0_ep: endpoint@0 {
-+				reg = <0>;
-+
-+				clock-lanes = <7>;
-+				data-lanes = <0 1 2 3>;
-+				remote-endpoint = <&s5k3l6_ep>;
-+			};
-+		};
-+
- 		port@3 {
- 			csiphy3_ep: endpoint@0 {
- 				reg = <0>;
-@@ -634,6 +669,58 @@ csiphy3_ep: endpoint@0 {
- 	};
+diff --git a/drivers/clk/qcom/dispcc-x1e80100.c b/drivers/clk/qcom/dispcc-x1e80100.c
+index aa7fd43969f9..cd45bedf2649 100644
+--- a/drivers/clk/qcom/dispcc-x1e80100.c
++++ b/drivers/clk/qcom/dispcc-x1e80100.c
+@@ -580,7 +580,7 @@ static struct clk_rcg2 disp_cc_mdss_mdp_clk_src = {
+ 		.parent_data = disp_cc_parent_data_6,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
  };
  
-+&cci1 {
-+	status = "okay";
-+};
-+
-+&cci1_i2c0 {
-+	voice_coil_motor: vcm@c {
-+		compatible = "dongwoon,dw9714";
-+		reg = <0xc>;
-+		vcc-supply = <&vreg_l7b>; /* FIXME: require l2c on first */
-+	};
-+
-+	/*
-+	 * https://source.puri.sm/Librem5/linux/-/blob/pureos/latest/drivers/media/i2c/s5k3l6xx.c
-+	 *
-+	 * This sensor has never been detected on Goakun3(2.69GHz)
-+	 */
-+	camera_rear: camera@10 {
-+		reg = <0x10>;
-+
-+		pinctrl-0 = <&camr_rgb_default>;
-+		pinctrl-names = "default";
-+
-+		clocks = <&camcc CAMCC_MCLK4_CLK>;
-+		clock-names = "mclk";
-+		clock-frequency = <24000000>;
-+
-+		rstn-gpios = <&tlmm 7 GPIO_ACTIVE_LOW>;
-+
-+		vddio-supply = <&vreg_camr>;
-+		vdda-supply = <&vreg_l2b>;
-+		vddd-supply = <&vreg_l2c>;
-+
-+		/* &camera_flash can't be enabled directly for now */
-+		leds = <&privacy_led>;
-+		led-names = "privacy";
-+
-+		lens-focus = <&voice_coil_motor>;
-+
-+		orientation = <1>;
-+		rotation = <180>;
-+
-+		port {
-+			s5k3l6_ep: endpoint {
-+				data-lanes = <1 2 3 4>;
-+				remote-endpoint = <&csiphy0_ep>;
-+			};
-+		};
-+	};
-+
-+	/* eeprom@50/51 */
-+};
-+
- &cci2 {
- 	status = "okay";
- };
-@@ -1423,6 +1510,13 @@ cam_indicator_en: cam-indicator-en-state {
- 		bias-disable;
- 	};
- 
-+	camera_flash_en: camera-flash-en-state {
-+		pins = "gpio93";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	camf_1p2_reg_en: camf-1p2-reg-en-state {
- 		pins = "gpio44";
- 		function = "gpio";
-@@ -1446,6 +1540,29 @@ sc-rgb-xshut-n-pins {
- 		};
- 	};
- 
-+	camr_reg_en: camr-reg-en-state {
-+		pins = "gpio92";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	camr_rgb_default: camr-rgb-default-state {
-+		mclk-pins {
-+			pins = "gpio6";
-+			function = "cam_mclk";
-+			drive-strength = <6>;
-+			bias-disable;
-+		};
-+
-+		sc-rgb-xshut-n-pins {
-+			pins = "gpio7";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
- 	i2c4_default: i2c4-default-state {
- 		pins = "gpio171", "gpio172";
- 		function = "qup4";
 -- 
 2.54.0
 
