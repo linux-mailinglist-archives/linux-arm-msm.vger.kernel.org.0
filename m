@@ -1,2221 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-104550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qKfCOGNX7WmziAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Apr 2026 02:08:03 +0200
+	id OByPIafe7WkzoQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Apr 2026 11:45:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA46A4686F6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Apr 2026 02:07:57 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 223574694E2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Apr 2026 11:45:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 17D9E301904C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Apr 2026 00:04:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3A6303011855
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Apr 2026 09:45:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 506DC4A33;
-	Sun, 26 Apr 2026 00:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AA09344DAA;
+	Sun, 26 Apr 2026 09:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RGxi7gO8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lRMESk1f";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="gSnPxNx7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCE79463
-	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Apr 2026 00:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EFB31F9B8
+	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Apr 2026 09:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777161876; cv=none; b=o26dVERl7wgqtsQOZ5wj0WYs5GxL/GYB4FFedg7ngoGYqFf0fOKWDg0l6rYJnV1ZeXPUNoNTMje/G6E/NXmE88XS5AZkDTljkcTnwI3ykKliGyDE6QpCzIHGZdsRkuEah1ofHqz3BsE3ey9MjgWGbNzqkFLzfT/RToV6fDjHeKU=
+	t=1777196704; cv=none; b=ZFljd0tya0QuboxBk9xhC5Z4+Lrv/6PIYZ5urXbuhc1oqvKz8GW22WR7wBmg00pDC0xhU73Xs0sVNzXW/9T4a8S1xZevh6F10qGCH2f/kcbwTXPFHh02jwcw5ri+nr6JgYKDIy+uPFuOmB3Gs/WoSgzNk5A1+iB2GGzKK9KgKqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777161876; c=relaxed/simple;
-	bh=6ZGr75N0EhWFDdOOuCaz4hbr5KFpGj7jyd2wbhKWBck=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=sTVp21ZkUa7kUIvkWzNDw5SVP2AedNOWeRfzoivMTrD1NsxUfjkfPk8aTmQDhHHoYeCb0lvGoLNJWxYE2yBAwN69QZA4ktPZtZOeLaQnTnMML76/wns5almDDWbDL4a0EfNvw2hoBWVdBmiaFYfAmogZ5f8W0vpgkgucDYGRbK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RGxi7gO8; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-488b8bc6bc9so64845275e9.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Apr 2026 17:04:31 -0700 (PDT)
+	s=arc-20240116; t=1777196704; c=relaxed/simple;
+	bh=LN6QvXIfvlOgF3WeZb3Zw7L625TymMXRS8Ovh3/G4F4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dzPCCSvzDoWzqly4tzKMrGMY2hGBSK2YIHtIpACgpIT41EK3qLaK9JwIer5jxQ7Unk5f9sQ6xEyolYXCaeTArhdz/ulVtozvKFnEvcy8wokF83twsA39yV+s0d/6pBi149vi9iexPiJRpPvWRGKjSJWxPcXo+/m219Y1EEfIPdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lRMESk1f; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=gSnPxNx7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63PNNOjE795924
+	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Apr 2026 09:45:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=G7b/uBqzuEMI+mgDq4jUHq
+	r7P2xYSFrOTGRJ9hQrPFg=; b=lRMESk1f7Ww0HSI50a3aCLGVSAzJxl7SQPVAiQ
+	te6QhHuoyGJ4xJsFWyAaX72MizRC+TVOw5Tm5NaF9T8Z4ypGFzKaLQy2rLED0MkG
+	f1uDUei2o9UtC7QkNQjqYe8eeSXawLc/tnseXVU/lGchG2wt+b58DARzxB8WZQiY
+	PCSkCOF8i2hCOFFiFnLDpTj1Kj3ENCejn/rJPNzxfua6SgAr/0rjV6C/B98u93LH
+	VjZLaCff8OPTjsnsLWR04tvBP+QM661ZqZ47Q5xCrFPr1WHsmNkOmshw8sgy1AYu
+	rPJMFSpoE03sMFL/x/r2ks+hmPrXtWkl6xLSpolsgzkUraxA==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4drpcdjhw1-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Apr 2026 09:45:00 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2b461b36990so98367185ad.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Apr 2026 02:45:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1777161870; x=1777766670; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WurV7MWTjmt/hlNJaBToMe6ENTOxZ0+25FUPUbqF+2k=;
-        b=RGxi7gO8Ef4r2PH1kmpe6X0FHNmItYAA0b9grLT4MmOqPsBR2TpbEdwiz4CDc/VCE4
-         ucxI5ULzp3a3e/0+378lNPxBD2yIZL+ZIUpHoyCqtJ5VOwn3dEGzCQiiy3yb/F0xYa/E
-         xNmt6qqCz6900KVO6xrq7VEjymUWhq1Ki4r4an5KqFZyHgNX5+qEivLPdXsRlJ7C/jAJ
-         o07mxHVAZWLyhpVO4AW6Koj/Xa1Hcyo8Z77+4IYwBUFLsE+Gw5bh0Vna9mLy06cL/C/W
-         RxiTxdcXiWMSDBs3wenoegFnQm7NsBil7P5K6tiOq3N8sh6hU8ZxcSyot4jRSEGvTOyF
-         e5rQ==
+        d=oss.qualcomm.com; s=google; t=1777196700; x=1777801500; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=G7b/uBqzuEMI+mgDq4jUHqr7P2xYSFrOTGRJ9hQrPFg=;
+        b=gSnPxNx7lmxVXNnS0SaDFrftSASX0HSBKT624+oYM3xrwyT6jvIPTazqZ6E0o5P1WU
+         RZtEVkne8vWyY78wk4zarqRe1KZlPgc0rD47gVRc+LhiWewbHuowIEgLHiMDLB4vSeZj
+         T83oLQtajU4p8RRRcM1qRGtBaZr34pAW38rQpz8zc6jqK4J4ZFGcI6zMeM0mAmyeCwjQ
+         hUQJJ/NybwvYOHFFr+yDpdwjQ6JnHPQxSiQiLTEvASC3ICUL94eCY+wxOvDizClsXo9o
+         /ggPoTv21JAOaF8NWOzjOSCeX7Xn0hiAIZJSImBH2PIzSe6F9xufP1SBeSKRZUvYOZtb
+         i1jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777161870; x=1777766670;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1777196700; x=1777801500;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WurV7MWTjmt/hlNJaBToMe6ENTOxZ0+25FUPUbqF+2k=;
-        b=sn6Hx0Ly/qZih8ZO9YB37aqWx3QXcbnfYWBsIGVdH5xEw5Xdn7eTkA96K1PB1yCCWN
-         ehsQEJDHTkcJ5a98uI0s8ddlMmHejReRZ2D1VYx8VKMqEexAYS2vkbbJgsiapPOIUBlK
-         Jy+3BvIyxx/um6nRe+sw8JXrC5vgLQKuiA7Da5q3/cOtl1WkW5NyYIpHodeI/Onacp9g
-         WZsxNljgFve7QudyLZSom85zlIsyyENkU0c7NqwxWbv8xYTN3YZWwfr3O6S3RfVr9Kqr
-         RbykOiUYBwhF8oSZ7qCzdfIYs4uDLh2IgPtifGUAxQNFTxevIHY++tO/6ZNoroSCzgz0
-         wh5w==
-X-Forwarded-Encrypted: i=1; AFNElJ/4oo9w8Ti/eusXcNtuJGXZLXVtz3Hm2sx4JaDiUfpvDDVthovqKFYiL2IKCBH1Io3LS3j8byi3T0yjj9mM@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKHb5VjXDzOuGhTSAutU5BV0LHbYTKUEzMV1N0stHC+nr59+qO
-	jrqC9F3iSoAJv3ZhENQjq+LEvQjJ+fF8jmYvrHtbAdzg4dGod5F1+Z6cTYjZAZUfP+c=
-X-Gm-Gg: AeBDieuPKmmwwWPH0pTES2VpOAp+H/hs/aM0KI4wu6/pibDH1rNOaYhzgmX/dxzN5Hm
-	ebPAeU9Zw+ZhwT5OkRFEZC2AiOdHEqubCAvFLi38nhyxZcjAnZpLOsK9KDp5XzhCFep8vBslznw
-	hyqaoNQ2uIGchhs6MqwU/w8Lx2Gk0iJl/NVfQhh1j6E7vcOdgLOO+8OkUExt6gckEKGH242Sv55
-	/RDfkotbJGC0ouePJMIDdhzOJ88PoBGc8Rm8IITjqE0qLJtqgSlqe2mtvbTdCnQ/F+x1YT8eQ9N
-	dHTNO34y7hk/eC3TXMeKZv6vGniBg4o2cX+0Pq9rrGjr8b7SCJ9th9OGokdwks15Bd1MGI4dHQC
-	FvlSaTNVdjcmBMSWIT9YDo44hpETsHAXwZUNt83aJlB4PFdjeqQIYOldxBgLa3KJ8MNFLtBJcNt
-	jQDf0G8bb7kIysNxsBl2mWfHCcCeq1ZB83y3AI+J7f50WNUqtA
-X-Received: by 2002:a05:600c:c04a:b0:487:12c:e7e1 with SMTP id 5b1f17b1804b1-488fb750840mr380167955e9.11.1777161869388;
-        Sat, 25 Apr 2026 17:04:29 -0700 (PDT)
-Received: from inspiron14p-linux ([109.76.87.206])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a557412eesm168052105e9.9.2026.04.25.17.04.28
+        bh=G7b/uBqzuEMI+mgDq4jUHqr7P2xYSFrOTGRJ9hQrPFg=;
+        b=NUGdtFhK4ZxEw6DTRp4G5dL0u3/Kuuyeh0xbhzEk3sHWZCUnsEgZ1nh1BW1N2bKMCc
+         7wYQbkDaR1RFTcej5NyKYPj3hy7TJNH7X0vmkJB5FdsDCrQi19oO9kuNED5n+VWLjGK0
+         +Vilrj1RZcEgCv58948X+nES66bjhl89ieAImojNtHUfX9vsBL78se723ovnh5co6wka
+         D7faDdhvLYIBr8QfvVu6m0k+ydG+952ToOLofBcChLtnpZItbKdCpHqFnqJgBwrovUyL
+         5MNT0Mzb4K3KynP933XegdktMX+r8ILPGHKBZlC4gbPmnDc2nA1Kb9jDsGiV5XKOW0xH
+         +ePw==
+X-Forwarded-Encrypted: i=1; AFNElJ/DLpPvvVqSLVLhR5aZfEks3pB8AAHwjCCj/jom7RfK9vTNgHucOGVTTAH58BO0bpXx3e7upomOHG7T0Fz+@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpY6Tppx9nJisoI5RHXmhh5le36bsHXOqzoxKBMT2Da5tNi6hJ
+	1BNtEQFE7vmP/qX0O8H6rbTwq22ms5TkEmjzYEgwMu8WOyF4HL2zjlyTjE2OokPcA4GJ1SfTVcS
+	gwhQSMAe2f7cXx7dQyRXJMqCb2EPhPgoo6bcfHoAR0ORtOXejZqzFq6Xtwez/ZNKmgJnN
+X-Gm-Gg: AeBDievjny8lmeCuzg4fhhlSR3ehdPYgcJTtP6FhBGYJxyGUftyEc8WqG+4IOaZfQLu
+	oIeSqhvCohIDX/QNcjY5GltkdX3AulC6iatmkmh5/R9miH2jQN2gtFZb3yaBw6UXM2CNwsvaMbZ
+	vdWdHgH2U6dm/m2lNykLYRPG/P0UEfyTQA28tqVTBdGJ+z7fb0C+hvx4IGfPUXBInJNmDgpU7Hd
+	DgQgxmzWPRh12MGTAa7VA42R9HLTWrxOarOF4la7qvPqu7S2F3BWrjCGfi01L+Me4D6J+YMfptn
+	Zh+64xsUkgMZynWzPkzef809bgePYLqeaXH0cU7bkaaW7lovWL1EofSovYZS74leoKsSiYxA31m
+	ER0DEBq8qQ+t9MJCcWrbzgNFOQpI+mT/512j1ogkofToMc8UqeGDu7LsE7lNAeDXR9RgFDZ7avX
+	FeSbSTPrkWg1MsfePu/yFClXVs
+X-Received: by 2002:a17:902:ce0a:b0:2b0:af2f:b27a with SMTP id d9443c01a7336-2b5f9ec3590mr377638585ad.11.1777196699631;
+        Sun, 26 Apr 2026 02:44:59 -0700 (PDT)
+X-Received: by 2002:a17:902:ce0a:b0:2b0:af2f:b27a with SMTP id d9443c01a7336-2b5f9ec3590mr377638395ad.11.1777196699121;
+        Sun, 26 Apr 2026 02:44:59 -0700 (PDT)
+Received: from jinlmao-gv.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b5fab208d4sm294960905ad.55.2026.04.26.02.44.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Apr 2026 17:04:28 -0700 (PDT)
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To: rfoss@kernel.org,
-	todor.too@gmail.com,
-	bryan.odonoghue@linaro.org,
-	vladimir.zapolskiy@linaro.org,
-	loic.poulain@oss.qualcomm.com,
-	hansg@kernel.org,
-	laurent.pinchart@ideasonboard.com
-Cc: mchehab@kernel.org,
-	hverkuil@xs4all.nl,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bryan O'Donoghue <bod@kernel.org>
-Subject: [PATCH RFC] media: uapi: qcom-camss-stats-params
-Date: Sun, 26 Apr 2026 01:04:17 +0100
-Message-ID: <20260426000418.1158716-1-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.52.0
+        Sun, 26 Apr 2026 02:44:58 -0700 (PDT)
+From: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
+Subject: [PATCH v8 0/4] Add Qualcomm extended CTI support
+Date: Sun, 26 Apr 2026 17:44:37 +0800
+Message-Id: <20260426-extended-cti-v8-0-23b900a4902f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: CA46A4686F6
+X-B4-Tracking: v=1; b=H4sIAIXe7WkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyLHQUlJIzE
+ vPSU3UzU4B8JSMDIzMDEyMz3dSKktS8lNQU3eSSTF1jozRzI4s0S+PkpEQloJaCotS0zAqwcdG
+ xtbUAjYp5RF4AAAA=
+To: Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach <mike.leach@arm.com>,
+        James Clark <james.clark@linaro.org>, Leo Yan <leo.yan@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_yingdeng@quicinc.com, Jinlong Mao <jinlong.mao@oss.qualcomm.com>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        Jie Gan <jie.gan@oss.qualcomm.com>,
+        Yingchao Deng <yingchao.deng@oss.qualcomm.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777196695; l=4590;
+ i=yingchao.deng@oss.qualcomm.com; s=20260426; h=from:subject:message-id;
+ bh=LN6QvXIfvlOgF3WeZb3Zw7L625TymMXRS8Ovh3/G4F4=;
+ b=U/EqHGBz5VvyOajPDJxSXuOSybQ5pe4QqkMyjVAKzteU1fjyXJHIcOZNVEe4TWj0oOBWKIGIZ
+ YAQhD4VLlDUCqKtlzEchAPPnwMAF8SGAzQqh0AGKsP48BPyRIsEE88m
+X-Developer-Key: i=yingchao.deng@oss.qualcomm.com; a=ed25519;
+ pk=aufKZC4I8k2lqi+B/z87rB5kPPybOn8C3mLosbtw+no=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI2MDEwMyBTYWx0ZWRfX7BkACxzk5e8J
+ TSarajiZjoo9GEn9LLaho5/ghgZBNFPVQ10yhKOYkAGRo+XsydjxHQxUI0jjrmKFOS4ctcJi8sF
+ qrfdY2ueVnlJ+6Ve+E9jEXSxRMoOmOOkkF9r7HOkZvPii9giRdGFiI5I9MLxLcJ7V/TkTXm+zrW
+ EO5WeYK+FmsCSMqSKQVTFWui++sbI1yTKQYRsCQH2O0EFk4ac4mGdhIs8q9JgQuFsGTyU+g9B25
+ BMw8tOfKBJpzHg/GkeA8mvUBLXgrrP1qk46XTj/UQtWKSb7beRnnEFZAHpGoBRTThpcpXmYtCje
+ ZAxzQVGJWky4E7o+fLrG3Xbe1K6hWHLy1ugTii5ygruHRdKfCTFoYXY2WMCnG9C0m4L3+DM8nfR
+ 5tvVq7ygJTN/7EfjTRAWpa2h1GYkxwFiE84zTmX7gkcbAH75RiFeG2FIhmXs+w4yYag/W+2AxGO
+ wTvrDG5aanEI1fhSatQ==
+X-Authority-Analysis: v=2.4 cv=N5IZ0W9B c=1 sm=1 tr=0 ts=69edde9c cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=ivfPcWm90DfOTC_Zvf4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uG9DUKGECoFWVXl0Dc02:22 a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: wGs2u8p-w6OXpIqElwkrHokqk7edDRgg
+X-Proofpoint-GUID: wGs2u8p-w6OXpIqElwkrHokqk7edDRgg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-26_03,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 clxscore=1015 suspectscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604260103
+X-Rspamd-Queue-Id: 223574694E2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,xs4all.nl,vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	TAGGED_FROM(0.00)[bounces-104550-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	TAGGED_FROM(0.00)[bounces-104551-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,linaro.org,oss.qualcomm.com,ideasonboard.com];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	FROM_NEQ_ENVFROM(0.00)[yingchao.deng@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,linaro.org:dkim,linaro.org:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-From: Bryan O'Donoghue <bod@kernel.org>
+The Qualcomm extended CTI is a heavily parameterized version of ARM’s
+CSCTI. It allows a debugger to send to trigger events to a processor or to
+send a trigger event to one or more processors when a trigger event occurs
+on another processor on the same SoC, or even between SoCs.
 
-This header is an RFC on the topic of making a common stats and params
-definition for Qualcomm CAMSS data.
+Qualcomm extended CTI supports up to 128 triggers. And some of the register
+offsets are changed.
 
-We have three different types of camera hardware that can produce and
-consume this data. A simplified view of the consumers and produces is:
+The commands to configure CTI triggers are the same as ARM's CTI.
 
-Class A:
-Inline - This is the IFE block which can do stats, params and colour
-	 conversion straight into DRAM in one sweep. This inline engine can
-	 operate on CSI2 sensor data directly producing YUV into DRAM in
-	 one shot.
+Prerequisites:
+   This series depends on the following CoreSight fix:
+   [PATCH v2 1/1] coresight: fix issue where coresight component has no claimtags
+Link: https://lore.kernel.org/all/20251027223545.2801-2-mike.leach@linaro.org/
 
-Offline firmware - Usually offline means a co-processor firmware called the
-	  ICP controls two core blocks the Bayer Processing Segment (BPS)
-	  and/or the Image Processing Engine (IPE).
-	  A kernel/userspace ABI called Host Firmware Interface (HFI)
-	  provides session and resource management as well as implements
-	  some of the more advanced features that an inline engine can't
-	  directly do - temporal denoise as an example.
-	  The offline engines are by their nature memory-to-memory and
-	  must either be fed sensor data from an IFE or from another
-	  data-source.
+Changes in v8:
+1. Rebased on top of linux-next-20260424.
+2. patch 1: Use devm_bitmap_zalloc() with nr_trig_max instead of per-connection
+   signal counts; add bitmap_zalloc() for filter trigger group.
+3. patch 2: Add #include <linux/bitfield.h>; move CTIINOUTEN_MAX expansion
+   to patch3.
+4. patch 3: wrap CLAIMSET clear with CS_UNLOCK/CS_LOCK; move CTIINOUTEN_MAX
+   to 128 here with comment; fix macro alignment in qcom-cti.h.
+5. patch 4: Make qcom_suffix_registers[] static.
 
-Class B:
-Offline no firmware - Some IOT systems have a stripped down version of the
-		      IFE called the Thin Front End (TFE) which can produce
-		      basic Bayer stats but can't do colour conversion.
-		      On these systems the only way to produce YUV is to
-		      feed raw Bayer data into the OPE via memory-to-memory
-		      methods.
+Changes in v7:
+1. Split the extended CTI support into smaller, logically independent
+   patches to improve reviewability.
+2. Removed the dual offset-array based register access used in v6 for
+   standard and Qualcomm CTIs. Register addressing is now unified through
+   a single code path by encoding the register index together with the base
+   offset and applying variant-specific translation at the final MMIO
+   access point. 
+3. Removed ext_reg_sel, extend the CTI sysfs interface to expose banked 
+   register instances on Qualcomm CTIs only. Numbered sysfs nodes are
+   hidden on standard ARM CTIs, and on Qualcomm CTIs their visibility is
+   derived from nr_trig_max (32 triggers per bank), ensuring that only
+   registers backed by hardware are exposed.
+Link to v6 - https://lore.kernel.org/all/20251202-extended_cti-v6-0-ab68bb15c4f5@oss.qualcomm.com/
 
-Interestingly the HFI provides a representation of params and stats that we
-can use again for the inline IFE case, the offline OPE case and the offline
-ICP/BPS/IPE case. Since the HFI blocks on a given SoC will re-use the same
-silicon IP as the IFE blocks on that silicon it is not only logical but
-required to reuse insofar as possible HFI's definition of the data. Anyway
-there are some parallel works in progress addressing this topic so I've
-taken the time here, with the assistance of an LLM to begin to address the
-significant work this will entail.
+Changes in v6:
+1. Rename regs_idx to ext_reg_sel and add information in documentation
+   file.
+2. Reset CLAIMSET to zero for qcom-cti during probe.
+3. Retrieve idx value under spinlock.
+4. Use yearless copyright for qcom-cti.h.
+Link to v5 - https://lore.kernel.org/all/20251020-extended_cti-v5-0-6f193da2d467@oss.qualcomm.com/
 
-Sidequest note:
-Offline no firmware - One could in theory control the BPS and IPE directly
-		      from the kernel but then all of the "secret sauce"
-		      the ICP provides - like temporal denoise must be
-		      handled manually.
+Changes in v5:
+1. Move common part in qcom-cti.h to coresight-cti.h.
+2. Convert trigger usage fields to dynamic bitmaps and arrays.
+3. Fix holes in struct cti_config to save some space.
+4. Revert the previous changes related to the claim tag in
+   cti_enable/disable_hw.
+Link to v4 - https://lore.kernel.org/linux-arm-msm/20250902-extended_cti-v4-1-7677de04b416@oss.qualcomm.com/
 
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Changes in v4:
+1. Read the DEVARCH registers to identify Qualcomm CTI.
+2. Add a reg_idx node, and refactor the coresight_cti_reg_show() and
+coresight_cti_reg_store() functions accordingly.
+3. The register offsets specific to Qualcomm CTI are moved to qcom_cti.h.
+Link to v3 - https://lore.kernel.org/linux-arm-msm/20250722081405.2947294-1-quic_jinlmao@quicinc.com/
+
+Changes in v3:
+1. Rename is_extended_cti() to of_is_extended_cti().
+2. Add the missing 'i' when write the CTI trigger registers.
+3. Convert the multi-line output in sysfs to single line.
+4. Initialize offset arrays using designated initializer.
+Link to V2 - https://lore.kernel.org/all/20250429071841.1158315-3-quic_jinlmao@quicinc.com/
+
+Changes in V2:
+1. Add enum for compatible items.
+2. Move offset arrays to coresight-cti-core
+
+Signed-off-by: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
 ---
- .../media/qcom/camss/camss-stats-params.h     | 2022 +++++++++++++++++
- 1 file changed, 2022 insertions(+)
- create mode 100644 include/uapi/linux/media/qcom/camss/camss-stats-params.h
+Yingchao Deng (4):
+      coresight: cti: Convert trigger usage fields to dynamic bitmaps and arrays
+      coresight: cti: encode trigger register index in register offsets
+      coresight: cti: add Qualcomm extended CTI identification and quirks
+      coresight: cti: expose banked sysfs registers for Qualcomm extended CTI
 
-diff --git a/include/uapi/linux/media/qcom/camss/camss-stats-params.h b/include/uapi/linux/media/qcom/camss/camss-stats-params.h
-new file mode 100644
-index 0000000000000..5af1dce88c109
---- /dev/null
-+++ b/include/uapi/linux/media/qcom/camss/camss-stats-params.h
-@@ -0,0 +1,2022 @@
-+/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
-+/*
-+ * Qualcomm CAMSS ISP statistics and parameters UAPI.
-+ *
-+ * Uses the generic V4L2 extensible ISP parameters buffer format
-+ * defined in <uapi/linux/media/v4l2-isp.h>.
-+ *
-+ * This header defines the userspace ABI for the Qualcomm CAMSS
-+ * subsystem in two directions:
-+ *
-+ *   - Parameters (userspace -> kernel): IQ tuning blocks and
-+ *     stats-engine configuration, carried as extensible per-block
-+ *     entries in a V4L2 params buffer. See
-+ *     &enum camss_params_block_type below.
-+ *
-+ *   - Statistics output (kernel -> userspace): hardware-written
-+ *     memory layouts for each stats engine, surfaced via V4L2
-+ *     meta-capture nodes. See the "Stats outputs" section.
-+ *
-+ * CAMSS has two distinct conceptual modes of operation Inline and Offline.
-+ *
-+ * Inline:
-+ *
-+ *	Inline processing mode operates on data that has been or is in the
-+ *	process of being delivered by a sensor into DRAM.
-+ *	This is the fastest and most efficient method of delivering YUV
-+ *	data to DRAM. The Inline Front Ends (IFEs) contain Raw Data
-+ *	Interfaces (RDIs) and Pixel Paths (PIX). The PIX path is capable of
-+ *	generating bayer statistics, applying given parameters, generating
-+ *	YUV output, as well as various different types of downscaling.
-+ *
-+ * Offline:
-+ *
-+ *	Offline processing engines do not operate on sensor data they are
-+ *	memory-to-memory devices. A firmware running on a co-processor
-+ *	called the Image Control Processor (ICP) implements a message
-+ *	passing system called the Host Firmware Interface (HFI). This HFI
-+ *	provides an abstraction over two further blocks the Bayer
-+ *	Processing Segment (BPS) and Image Processing Engine (IPE).
-+ *	The ICP/BPS/IPE nexus provides a session context which in turn
-+ *	allows the ICP firmware to implement things like temporal
-+ *	denoising.
-+ *
-+ *	A second type of offline processing is the Thin Front End (TFE)
-+ *	paired with the Offline Processing Engine (OPE). In this case the
-+ *	TFE can produce minimal bayer stats with raw Bayer data into
-+ *	memory. The OPE operates as a memory-to-memory device without an
-+ *	ICP. The OPE can be viewed as a reduced amalgam of the BPS and IPE
-+ *	above.
-+ *
-+ * Design principles:
-+ *
-+ *   - Fields carry their Q-format and bit-width inline in the kdoc,
-+ *     matching what the hardware consumes natively, so userspace
-+ *     can produce values at the right precision.
-+ *
-+ *   - The struct layout is not a register-level layout. Register
-+ *     packing, Camera Data Mover (CDM) program composition can be
-+ *     specified in any order and is up to the kernel to decide.
-+ *
-+ * Future work:
-+ *
-+ *   IPE advanced-processing blocks:
-+ *
-+ *     - ASF (Adaptive Sharpening Filter) — expected to split by
-+ *       sub-function (config / gain LUTs / soft-threshold LUTs /
-+ *       skin detection).
-+ *     - ANR (Advanced Noise Reduction) — multi-pass pyramid
-+ *       denoiser, IPE-only.
-+ *     - TF (Temporal Filter) — needs reference-frame management
-+ *       across frames; depends on ICP firmware for state.
-+ *     - ICA (Image Correction Algorithm) — grid-based geometric
-+ *       warp, two instances on IPE (pre and post).
-+ *     - CAC (Chromatic Aberration Correction) — IPE-only.
-+ *     - HNR / LENR — noise reduction variants. HNR placement
-+ *       varies across SoC generations (BPS on older, IPE on
-+ *       newer).
-+ *     - Skin-colour enhancement, grain adder, HDR10 display block,
-+ *       DSX / VSE / upscale chains — all IPE-only.
-+ *     - PDPC (PDAF + bad-pixel correction)
-+ *     - GIC (green-imbalance correction)
-+ *     - LCAC (local CAC)
-+ *     - HDR reconstruction variants (v22, v23, v30)
-+ *     - Bayer-domain GTM
-+ *
-+ *   Further work is required to tie-down the formats for IFE/BPS
-+ *   components:
-+ *
-+ *     - STATS_AWB_BFW — Bayer Focus Window stats for AWB
-+ *     - STATS_SPARSE_PD — sparse PDAF pixel extraction config
-+ *     - STATS_PDAF_V2 — PDAF v2.0 data and SAD
-+ *
-+ * Copyright (c) 2026 Linaro Ltd.
-+ * Author: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-+ */
-+
-+#ifndef _UAPI_LINUX_CAMSS_STATS_PARAMS_H
-+#define _UAPI_LINUX_CAMSS_STATS_PARAMS_H
-+
-+#include <linux/types.h>
-+#include <linux/media/v4l2-isp.h>
-+#include <linux/videodev2.h>
-+
-+/**
-+ * enum camss_params_block_type - CAMSS ISP parameter block identifiers
-+ *
-+ * Each value identifies one ISP processing block. The value is
-+ * placed in the @type field of &struct v4l2_isp_params_block_header.
-+ *
-+ * Reserved fields are added to allow for future additions say in the pre
-+ * demosiac phase.
-+ */
-+enum camss_params_block_type {
-+	/* Raw Bayer / pre-demosaic (IFE + BPS) */
-+	CAMSS_PARAMS_BLS               = 1,
-+	CAMSS_PARAMS_LINEARISATION     = 2,
-+	CAMSS_PARAMS_DEMUX             = 3,
-+	CAMSS_PARAMS_BINCORRECT        = 4,
-+	CAMSS_PARAMS_ABF_FILTER        = 5,
-+	CAMSS_PARAMS_ABF_NOISE_LUT     = 6,
-+	CAMSS_PARAMS_ABF_ACTIVITY_LUT  = 7,
-+	CAMSS_PARAMS_ABF_DARK_LUT      = 8,
-+	CAMSS_PARAMS_ABF_RNR           = 9,
-+
-+	/* Demosaic / post-demosaic RGB (IFE + BPS) */
-+	CAMSS_PARAMS_WB_GAIN           = 20,
-+	CAMSS_PARAMS_LSC               = 21,
-+	CAMSS_PARAMS_DEMOSAIC          = 22,
-+
-+	/*
-+	 * Present on IFE, BPS and IPE.
-+	 */
-+	CAMSS_PARAMS_COLOR_CORRECT     = 40, /* CCM matrix */
-+	CAMSS_PARAMS_COLOR_XFORM       = 41,
-+	CAMSS_PARAMS_GLUT              = 42, /* gamma LUT */
-+	CAMSS_PARAMS_GTM               = 43,
-+	CAMSS_PARAMS_UVG               = 44, /* UV gain */
-+
-+	/* LTM (Local Tone Mapping).
-+	 *
-+	 * On newer SoCs there is a Bayer-domain LTM instance on IFE
-+	 * and BPS, and a YUV-domain LTM on IPE. The tuning-parameter
-+	 * shape is the same in both cases (the algorithm is shared;
-+	 * only the pipeline stage and pixel-domain differ).
-+	 *
-+	 * Split by update cadence so userspace re-uploads only the
-+	 * parts that changed.
-+	 */
-+	CAMSS_PARAMS_LTM_CONFIG        = 60,
-+	CAMSS_PARAMS_LTM_CURVES        = 61,
-+	CAMSS_PARAMS_LTM_GAMMA         = 62,
-+	CAMSS_PARAMS_LTM_MASK_FILTER   = 63,
-+
-+	/* 64–99 reserved for IPE advanced processing (future work):
-+	 * ASF sub-blocks, ANR, TF, ICA, CAC, HNR, LENR, SCE, UPSCALE,
-+	 * GRA, HDR10, DSX, VSE, 2DLUT, ...
-+	 */
-+
-+	CAMSS_PARAMS_MAX,
-+};
-+
-+/**
-+ * enum camss_stats_block_type - CAMSS ISP statistics block identifiers
-+ *
-+ * Each value identifies one ISP processing block. The value is
-+ * placed in the @type field of &struct v4l2_isp_params_block_header.
-+ *
-+ */
-+enum camss_stats_block_type {
-+	/* Stats blocks */
-+	CAMSS_STATS_BG          = 1, /* AWB / HDR-BE / Tintless via @usage */
-+	CAMSS_STATS_BHIST       = 2, /* AEC / GTM via @usage */
-+	CAMSS_STATS_HDR_BHIST   = 3,
-+	CAMSS_STATS_IHIST       = 4, /* IFE only */
-+	CAMSS_STATS_RS          = 5, /* IFE only — flicker detect */
-+	CAMSS_STATS_BAF         = 6, /* IFE only — focus stats */
-+	CAMSS_STATS_AWB_BFW     = 7, /* Bayer Focus Window for AWB */
-+	CAMSS_STATS_SPARSE_PD   = 8, /* Sparse PDAF pixel extract */
-+	CAMSS_STATS_PDAF_V2     = 9, /* PDAF v2.0 data + SAD */
-+	CAMSS_STATS_MAX,
-+};
-+
-+/* Maximum number of regions the gridded BG/BE engines can produce
-+ * per frame (horizontal_num_max * vertical_num_max).
-+ */
-+#define CAMSS_STATS_BG_MAX_REGIONS   (64 * 48)
-+
-+/**
-+ * struct camss_stats_bg_region - Per-region BG output, regular mode
-+ *
-+ * Hardware layout: 4 x 32-bit words per region = 16 bytes.
-+ *   Word 0: RSum (bits 29:0), reserved (31:30)
-+ *   Word 1: BSum (bits 29:0), reserved (31:30)
-+ *   Word 2: GrSum (bits 29:0), reserved (31:30)
-+ *   Word 3: GbSum (bits 29:0), reserved (31:30)
-+ *   Word 4: RCnt (bits 15:0), BCnt (bits 31:16)
-+ *   Word 5: GrCnt (bits 15:0), GbCnt (bits 31:16)
-+ *
-+ * Note: the layout actually uses 6 32-bit words (24 bytes). Some
-+ * variants pack differently; see the *_sat and *_ystats variants.
-+ *
-+ * Sums accumulate per-channel pixel intensities; counts track how
-+ * many pixels contributed to each sum (pixels excluded by channel
-+ * gain thresholds are not counted).
-+ *
-+ * @r_sum:      R channel sum (30u)
-+ * @_reserved0: reserved, hardware-zero
-+ * @b_sum:      B channel sum (30u)
-+ * @_reserved1: reserved, hardware-zero
-+ * @gr_sum:     Gr channel sum (30u)
-+ * @_reserved2: reserved, hardware-zero
-+ * @gb_sum:     Gb channel sum (30u)
-+ * @_reserved3: reserved, hardware-zero
-+ * @r_count:    count of R pixels contributing to @r_sum (16u)
-+ * @b_count:    count of B pixels (16u)
-+ * @gr_count:   count of Gr pixels (16u)
-+ * @gb_count:   count of Gb pixels (16u)
-+ */
-+struct camss_stats_bg_region {
-+	__u32 r_sum       : 30;
-+	__u32 _reserved0  :  2;
-+	__u32 b_sum       : 30;
-+	__u32 _reserved1  :  2;
-+	__u32 gr_sum      : 30;
-+	__u32 _reserved2  :  2;
-+	__u32 gb_sum      : 30;
-+	__u32 _reserved3  :  2;
-+	__u32 r_count     : 16;
-+	__u32 b_count     : 16;
-+	__u32 gr_count    : 16;
-+	__u32 gb_count    : 16;
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_stats_bg_region_sat - Per-region BG output, saturation mode
-+ *
-+ * Extended layout used when the matching params block specifies
-+ * @output_mode = CAMSS_STATS_BG_MODE_SATURATION. Carries a second
-+ * set of sums and counts, this time for pixels that saturated
-+ * (hit the gain threshold). Useful for AWB to avoid bias from
-+ * blown highlights.
-+ *
-+ * @r_sum..@gb_count:       regular-pixel accumulators (as in
-+ *                          &struct camss_stats_bg_region)
-+ * @sat_r_sum:              saturated R pixels sum (30u)
-+ * @_reserved4:             reserved
-+ * @sat_b_sum:              saturated B pixels sum (30u)
-+ * @_reserved5:             reserved
-+ * @sat_gr_sum:             saturated Gr pixels sum (30u)
-+ * @_reserved6:             reserved
-+ * @sat_gb_sum:             saturated Gb pixels sum (30u)
-+ * @_reserved7:             reserved
-+ * @sat_r_count:            saturated R pixel count (16u)
-+ * @sat_b_count:            saturated B pixel count (16u)
-+ * @sat_gr_count:           saturated Gr pixel count (16u)
-+ * @sat_gb_count:           saturated Gb pixel count (16u)
-+ */
-+struct camss_stats_bg_region_sat {
-+	__u32 r_sum       : 30;
-+	__u32 _reserved0  :  2;
-+	__u32 b_sum       : 30;
-+	__u32 _reserved1  :  2;
-+	__u32 gr_sum      : 30;
-+	__u32 _reserved2  :  2;
-+	__u32 gb_sum      : 30;
-+	__u32 _reserved3  :  2;
-+	__u32 r_count     : 16;
-+	__u32 b_count     : 16;
-+	__u32 gr_count    : 16;
-+	__u32 gb_count    : 16;
-+	__u32 sat_r_sum   : 30;
-+	__u32 _reserved4  :  2;
-+	__u32 sat_b_sum   : 30;
-+	__u32 _reserved5  :  2;
-+	__u32 sat_gr_sum  : 30;
-+	__u32 _reserved6  :  2;
-+	__u32 sat_gb_sum  : 30;
-+	__u32 _reserved7  :  2;
-+	__u32 sat_r_count : 16;
-+	__u32 sat_b_count : 16;
-+	__u32 sat_gr_count: 16;
-+	__u32 sat_gb_count: 16;
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_stats_bg_region_ystats - Per-region BG output, Y-stats mode
-+ *
-+ * Layout used when @output_mode = CAMSS_STATS_BG_MODE_Y_STATS in
-+ * the matching params block. Instead of per-channel Gr/Gb
-+ * separation, the hardware accumulates a unified G channel and
-+ * computes a Y (luma) value using the R/G/B weights from the
-+ * params block.
-+ *
-+ * @r_sum:      R channel sum (30u)
-+ * @_reserved0: reserved
-+ * @b_sum:      B channel sum (30u)
-+ * @_reserved1: reserved
-+ * @g_sum:      G channel sum (30u; unified Gr + Gb)
-+ * @_reserved2: reserved
-+ * @y_sum:      Y (luma) sum (31u)
-+ * @_reserved3: reserved
-+ * @r_count:    R pixel count (16u)
-+ * @b_count:    B pixel count (16u)
-+ * @g_count:    G pixel count (16u)
-+ * @y_count:    Y pixel count (16u)
-+ */
-+struct camss_stats_bg_region_ystats {
-+	__u32 r_sum       : 30;
-+	__u32 _reserved0  :  2;
-+	__u32 b_sum       : 30;
-+	__u32 _reserved1  :  2;
-+	__u32 g_sum       : 30;
-+	__u32 _reserved2  :  2;
-+	__u32 y_sum       : 31;
-+	__u32 _reserved3  :  1;
-+	__u32 r_count     : 16;
-+	__u32 b_count     : 16;
-+	__u32 g_count     : 16;
-+	__u32 y_count     : 16;
-+} __attribute__((packed));
-+
-+#define CAMSS_STATS_BHIST_BINS  1024
-+
-+/**
-+ * struct camss_stats_bhist_bin - One histogram bin
-+ *
-+ * @count:     per-bin pixel count (25u)
-+ * @_reserved: reserved, hardware-zero (7u)
-+ */
-+struct camss_stats_bhist_bin {
-+	__u32 count     : 25;
-+	__u32 _reserved :  7;
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_stats_bhist_output - BHist stats buffer
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * Single-channel Bayer histogram. The channel is selected by the
-+ * matching &struct camss_stats_bhist (@channel field);
-+ * see &enum camss_stats_color_channel.
-+ *
-+ * Bit-width: 25-bit per-bin counts, leaving headroom for the
-+ * maximum possible pixel count at full-frame BG region coverage.
-+ *
-+ * @bins: 1024 per-bin entries, each with a 25-bit count
-+ */
-+struct camss_stats_bhist_output {
-+	struct camss_stats_bhist_bin bins[CAMSS_STATS_BHIST_BINS];
-+} __attribute__((packed));
-+
-+#define CAMSS_STATS_HDR_BHIST_BINS  256
-+
-+/**
-+ * struct camss_stats_hdr_bhist_bins - R/G/B triple for one HDR-BHist bin
-+ *
-+ * The HDR Bayer histogram accumulates all three colour channels
-+ * in parallel, one triple per bin. 12 bytes per bin (3 x 32-bit
-+ * words, 25 valid bits each).
-+ *
-+ * @red_bin:    R channel count (25u)
-+ * @_reserved0: reserved (7u)
-+ * @green_bin:  G channel count (25u)
-+ * @_reserved1: reserved (7u)
-+ * @blue_bin:   B channel count (25u)
-+ * @_reserved2: reserved (7u)
-+ */
-+struct camss_stats_hdr_bhist_bins {
-+	__u32 red_bin    : 25;
-+	__u32 _reserved0 :  7;
-+	__u32 green_bin  : 25;
-+	__u32 _reserved1 :  7;
-+	__u32 blue_bin   : 25;
-+	__u32 _reserved2 :  7;
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_stats_hdr_bhist_output - HDR BHist stats buffer
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * Three-channel Bayer histogram for HDR exposure analysis. The
-+ * exposure field (long / short / all) is selected by the matching
-+ * &struct camss_stats_hdr_bhist (@field_select field).
-+ *
-+ * @bins: 256 per-bin R/G/B triples
-+ */
-+struct camss_stats_hdr_bhist_output {
-+	struct camss_stats_hdr_bhist_bins bins[CAMSS_STATS_HDR_BHIST_BINS];
-+} __attribute__((packed));
-+
-+#define CAMSS_STATS_IHIST_BINS  256
-+
-+/**
-+ * struct camss_stats_ihist_output - Image histogram stats buffer
-+ *
-+ * Hardware availability: IFE only.
-+ *
-+ * Image histogram for post-demosaic luminance / chroma analysis.
-+ * The active channel arrays depend on @channel in the matching
-+ * &struct camss_stats_ihist:
-+ *
-+ *   - CAMSS_STATS_IHIST_Y:  @ycc_histogram holds Y
-+ *   - CAMSS_STATS_IHIST_CB: @ycc_histogram holds Cb
-+ *   - CAMSS_STATS_IHIST_CR: @ycc_histogram holds Cr
-+ *
-+ * The per-channel R/G/B histograms are always populated; the YCC
-+ * slot is multiplexed depending on selection.
-+ *
-+ * @ycc_histogram:   Y or Cb or Cr histogram (per @channel)
-+ * @green_histogram: G histogram
-+ * @blue_histogram:  B histogram
-+ * @red_histogram:   R histogram
-+ */
-+struct camss_stats_ihist_output {
-+	__u16 ycc_histogram[CAMSS_STATS_IHIST_BINS];
-+	__u16 green_histogram[CAMSS_STATS_IHIST_BINS];
-+	__u16 blue_histogram[CAMSS_STATS_IHIST_BINS];
-+	__u16 red_histogram[CAMSS_STATS_IHIST_BINS];
-+} __attribute__((packed));
-+
-+#define CAMSS_STATS_RS_MAX_REGIONS  (16 * 16)
-+
-+/**
-+ * struct camss_stats_rs_region - One Row-Sum region
-+ *
-+ * @luma_sum: per-region luma sum (32u; field width is sufficient
-+ *            for the maximum full-frame region and full bit depth)
-+ */
-+struct camss_stats_rs_region {
-+	__u32 luma_sum;
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_stats_rs_output - Row Sum stats buffer
-+ *
-+ * Hardware availability: IFE only.
-+ *
-+ * Row sums over configurable horizontal regions, used primarily
-+ * for 50/60 Hz flicker detection. The region count is set by the
-+ * matching &struct camss_stats_rs (@stats_h_num,
-+ * @stats_v_num); only (stats_h_num * stats_v_num) entries of
-+ * @regions carry valid data.
-+ *
-+ * Regions are stored in raster order: row 0 left-to-right, then
-+ * row 1, and so on.
-+ *
-+ * @regions: up to 16 x 16 region sums
-+ */
-+struct camss_stats_rs_output {
-+	struct camss_stats_rs_region regions[CAMSS_STATS_RS_MAX_REGIONS];
-+} __attribute__((packed));
-+
-+#define CAMSS_STATS_BAF_MAX_REGIONS  180
-+
-+/**
-+ * struct camss_stats_baf_region - One BAF per-region focus measurement
-+ *
-+ * Hardware layout: 32 bytes per region.
-+ *
-+ * Each region carries sums, counts, and sharpness measures from
-+ * both the horizontal and vertical filter chains. The sharpness
-+ * value is a 40-bit accumulator of squared filter-response
-+ * values — larger magnitudes indicate stronger edges in the
-+ * region, which is what the focus algorithm maximises.
-+ *
-+ * The @sel bit selects between two horizontal filter chains
-+ * (H1 and H2); the vertical chain is always active in the
-+ * vertical fields.
-+ *
-+ * Region layout in the buffer is not raster-ordered; instead
-+ * each region carries explicit @region_id and @output_id fields
-+ * identifying which ROI it corresponds to. The last valid entry
-+ * sets @end_of_buffer = 1; userspace must stop parsing there.
-+ *
-+ * @h1_sum:          horizontal filter sum (37u)
-+ * @_reserved0:      reserved (2u)
-+ * @h1_count:        horizontal pixels contributing (23u)
-+ * @_reserved1:      reserved (1u)
-+ * @sel:             H-filter selector: 0 = H1, 1 = H2 (1u)
-+ * @h1_sharpness:    horizontal sharpness accumulator (40u)
-+ * @_reserved2:      reserved (14u)
-+ * @region_id:       ROI index from the params block (8u)
-+ * @_reserved3:      reserved (2u)
-+ * @v_sum:           vertical filter sum (37u)
-+ * @_reserved4:      reserved (2u)
-+ * @v_count:         vertical pixels contributing (23u)
-+ * @_reserved5:      reserved (2u)
-+ * @v_sharpness:     vertical sharpness accumulator (40u)
-+ * @_reserved6:      reserved (14u)
-+ * @output_id:       output-sequence ID from the params block (8u)
-+ * @merge:           1 = this region spans a dual-IFE split and must
-+ *                   be merged with its peer region
-+ * @end_of_buffer:   1 = last valid entry in the buffer (1u)
-+ */
-+struct camss_stats_baf_region {
-+	__u64 h1_sum       : 37;
-+	__u64 _reserved0   :  2;
-+	__u64 h1_count     : 23;
-+	__u64 _reserved1   :  1;
-+	__u64 sel          :  1;
-+
-+	__u64 h1_sharpness : 40;
-+	__u64 _reserved2   : 14;
-+	__u64 region_id    :  8;
-+	__u64 _reserved3   :  2;
-+
-+	__u64 v_sum        : 37;
-+	__u64 _reserved4   :  2;
-+	__u64 v_count      : 23;
-+	__u64 _reserved5   :  2;
-+
-+	__u64 v_sharpness  : 40;
-+	__u64 _reserved6   : 14;
-+	__u64 output_id    :  8;
-+	__u64 merge        :  1;
-+	__u64 end_of_buffer:  1;
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_stats_baf_output - BAF (focus) stats buffer
-+ *
-+ * Hardware availability: IFE only.
-+ *
-+ * Focus statistics per ROI. Up to 180 ROIs can be configured via
-+ * the matching &struct camss_stats_baf. The output buffer
-+ * is sized for the worst case; the hardware terminates the valid
-+ * region list by setting @end_of_buffer = 1 on the last entry.
-+ *
-+ * Userspace scans @regions in order, parsing each entry until
-+ * @end_of_buffer is found. Values past that entry are undefined.
-+ *
-+ * @regions: up to 180 ROI measurements
-+ */
-+struct camss_stats_baf_output {
-+	struct camss_stats_baf_region regions[CAMSS_STATS_BAF_MAX_REGIONS];
-+} __attribute__((packed));
-+
-+/* ===================================================================
-+ * Raw Bayer / pre-demosaic blocks
-+ *
-+ * Hardware availability: IFE and BPS.
-+ *
-+ * These blocks are instantiated as the same silicon IP in both
-+ * engines. The UAPI struct describes the tuning; the kernel
-+ * translator selected by the V4L2 device node programs the
-+ * corresponding engine.
-+ * =================================================================== */
-+
-+/**
-+ * struct camss_params_bls - Black level subtraction
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * BLS subtracts a constant offset from each Bayer channel and then
-+ * scales to restore the dynamic range. Per-channel thresholds gate
-+ * the subtraction to avoid clipping dark noise.
-+ *
-+ * The scale field compensates for the offset removal:
-+ *     scale = (1 << PIPELINE_BITWIDTH) /
-+ *             ((1 << PIPELINE_BITWIDTH) - offset)
-+ *
-+ * @header:       block header; @header.type = CAMSS_PARAMS_BLS
-+ * @offset:       subtractive offset, identical across 4 channels (14u)
-+ * @scale:        gain scaling after subtraction (17u Q11)
-+ * @threshold_r:  threshold for R  channel
-+ * @threshold_gr: threshold for Gr channel
-+ * @threshold_gb: threshold for Gb channel
-+ * @threshold_b:  threshold for B  channel
-+ * @_pad:         reserved, must be zero
-+ *
-+ */
-+struct camss_params_bls {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 offset;
-+	__u32 scale;
-+	__u16 threshold_r;
-+	__u16 threshold_gr;
-+	__u16 threshold_gb;
-+	__u16 threshold_b;
-+	__u16 _pad[1];
-+} __attribute__((aligned(8)));
-+
-+#define CAMSS_LINEARISATION_KNEE_POINTS  8
-+#define CAMSS_LINEARISATION_SEGMENTS     9
-+
-+/**
-+ * struct camss_params_linearisation_channel - one Bayer channel's curve
-+ *
-+ * @knee_points: x-axis breakpoints of the piecewise-linear curve
-+ * @base:        y-value at each segment start
-+ * @delta:       slope of each segment (output per input unit)
-+ */
-+struct camss_params_linearisation_channel {
-+	__u16 knee_points[CAMSS_LINEARISATION_KNEE_POINTS];
-+	__u16 base[CAMSS_LINEARISATION_SEGMENTS];
-+	__u32 delta[CAMSS_LINEARISATION_SEGMENTS];
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_params_linearisation - Sensor response linearisation
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * Four independent piecewise-linear curves (R/Gr/Gb/B), each with
-+ * 8 knee points and 9 segments. Used to undo sensor companding or
-+ * non-linear response before downstream blocks (which assume
-+ * linear-light data).
-+ *
-+ * On newer SoCs this block is named CLC_COMPDECOMP (compand /
-+ * de-compand) in the hardware; the operation and register layout
-+ * are equivalent.
-+ *
-+ * The hardware uses double-buffered LUTs internally; bank
-+ * selection is kernel-managed and not exposed.
-+ *
-+ * @header: block header; @header.type = CAMSS_PARAMS_LINEARISATION
-+ * @r:      R  channel curve
-+ * @gr:     Gr channel curve
-+ * @gb:     Gb channel curve
-+ * @b:      B  channel curve
-+ */
-+struct camss_params_linearisation {
-+	struct v4l2_isp_params_block_header header;
-+	struct camss_params_linearisation_channel r;
-+	struct camss_params_linearisation_channel gr;
-+	struct camss_params_linearisation_channel gb;
-+	struct camss_params_linearisation_channel b;
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_demux - Channel demux and per-channel gain
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * Demultiplexes the Bayer stream into four logical channels,
-+ * applying a per-channel gain and a per-channel black-level offset.
-+ * Used to compensate for per-channel sensor-gain imbalance early
-+ * in the pipeline.
-+ *
-+ * Gain range approximately 0.0 .. 4.0 in 16uQ10; offsets are
-+ * signed and channel-specific.
-+ *
-+ * @header:    block header; @header.type = CAMSS_PARAMS_DEMUX
-+ * @gain_even: gain for even-column channel (16uQ10)
-+ * @gain_odd:  gain for odd-column channel (16uQ10)
-+ * @gain_gr:   Gr channel gain (16uQ10)
-+ * @gain_gb:   Gb channel gain (16uQ10)
-+ * @gain_r:    R  channel gain (16uQ10)
-+ * @gain_b:    B  channel gain (16uQ10)
-+ * @period:    blanking period for odd/even alternation
-+ * @blk_in:    input black level
-+ * @blk_out:   output black level after demux
-+ * @_pad:      reserved, must be zero
-+ */
-+struct camss_params_demux {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 gain_even;
-+	__u16 gain_odd;
-+	__u16 gain_gr;
-+	__u16 gain_gb;
-+	__u16 gain_r;
-+	__u16 gain_b;
-+	__u16 period;
-+	__u16 blk_in;
-+	__u16 blk_out;
-+	__u16 _pad[3];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_bincorrect - Binning correction
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * Corrects pixel positions when the sensor has been configured for
-+ * binning (combining adjacent photosites to trade resolution for
-+ * sensitivity). Sensors in 2x2 binning shift the effective pixel
-+ * centres by half a sample; bincorrect re-aligns the Bayer grid to
-+ * integer positions so downstream demosaic sees correctly
-+ * positioned samples.
-+ *
-+ * @header:  block header; @header.type = CAMSS_PARAMS_BINCORRECT
-+ * @ver_w1:  vertical width 1
-+ * @ver_w2:  vertical width 2
-+ * @hor_w1:  horizontal width 1
-+ * @hor_w2:  horizontal width 2
-+ */
-+struct camss_params_bincorrect {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 ver_w1;
-+	__u16 ver_w2;
-+	__u16 hor_w1;
-+	__u16 hor_w2;
-+} __attribute__((aligned(8)));
-+
-+/*
-+ * ABF (Adaptive Bilateral Filter) — split into five sub-blocks
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * ABF is the primary Bayer-stage noise reduction block. It
-+ * combines a bilateral filter, min/max processing, radial noise
-+ * reduction (RNR), activity-based modulation, dark-region
-+ * adjustment, and edge handling. The full configuration is
-+ * substantial (~80 scalar fields plus three DMI LUTs and an RNR
-+ * curve) and different parts update at different rates.
-+ *
-+ * Sub-block decomposition by update lifecycle:
-+ *
-+ *   FILTER       — scalar control, bilateral filter coefficients,
-+ *                  block-matching levels, per-channel filter
-+ *                  strength, min/max filter, edge handling. Can
-+ *                  change per frame for adaptive behaviour or with
-+ *                  scene/illuminant changes.
-+ *   NOISE_LUT    — 64-entry shot-noise LUT. Updates when analog
-+ *                  gain changes meaningfully (typically banded:
-+ *                  one LUT per analog-gain band, swapped on band
-+ *                  crossings).
-+ *   ACTIVITY_LUT — 32-entry activity-modulation LUT. Mostly static;
-+ *                  may update on tone-preset switch.
-+ *   DARK_LUT     — 42-entry dark-region adjustment LUT. Mostly
-+ *                  static.
-+ *   RNR          — radial NR curve (4 anchor points). Sensor-
-+ *                  geometry-derived; effectively static once
-+ *                  calibrated.
-+ *
-+ * Splitting lets userspace re-upload only the pieces that
-+ * actually changed; the noise LUT is the most frequent updater
-+ * (per-gain-band) while the others typically load once per
-+ * session.
-+ *
-+ */
-+
-+#define CAMSS_ABF_NUM_CHANNELS         4
-+#define CAMSS_ABF_NUM_ANCHORS          4
-+#define CAMSS_ABF_NUM_BLOCK_PIX_LEVELS 2
-+#define CAMSS_ABF_NOISE_LUT_SIZE       64
-+#define CAMSS_ABF_ACTIVITY_LUT_SIZE    32
-+#define CAMSS_ABF_DARK_LUT_SIZE        42
-+
-+/**
-+ * struct camss_params_abf_filter - ABF scalar filter configuration
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * Scalar filter fields of the ABF block. Excludes the three DMI
-+ * LUTs (noise, activity, dark) and the RNR curve, which are
-+ * separate sub-blocks.
-+ *
-+ * @header:               block header; @header.type = CAMSS_PARAMS_ABF_FILTER
-+ *
-+ * Sub-function enables:
-+ * @bilateral_enable:     enable bilateral filter (FILTER_EN in HW)
-+ * @cross_process_enable: enable cross-channel processing
-+ * @direct_smooth_enable: enable directional smoothing
-+ * @dark_desat_enable:    enable dark-region desaturation
-+ * @dark_smooth_enable:   enable dark-region smoothing
-+ * @act_adj_enable:       enable activity adjustment
-+ * @minmax_enable:        enable built-in min/max pixel filter
-+ * @block_opt:            block matching pattern selector, 0..2
-+ *
-+ * Block matching:
-+ * @block_pix_level:      pixel-match levels [0]=R/B, [1]=G
-+ * @distance_level:       distance levels [3][6] — 3 levels x
-+ *                        6 channels; [][0..2] for R/B, [][3..5]
-+ *                        for Gr/Gb
-+ *
-+ * Per-channel filter strength (channel order R, Gr, Gb, B):
-+ * @curve_offset:         curve offset (7u per channel)
-+ * @edge_softness:        edge softness (9u per channel)
-+ * @filter_strength:      filter strength (9u per channel)
-+ *
-+ * Min/max filter:
-+ * @minmax_max_shift:     MINMAX_MAXSHFT
-+ * @minmax_min_shift:     MINMAX_MINSHFT
-+ * @minmax_offset:        (bs-2)u — bs is pipeline bit-depth
-+ * @minmax_bls:           (bs-2)u
-+ *
-+ * Activity normalisation:
-+ * @activity_factor0:     normalisation factor 0
-+ * @activity_factor1:     normalisation factor 1
-+ * @activity_threshold0:  normalisation threshold 0
-+ * @activity_threshold1:  normalisation threshold 1
-+ * @activity_smooth_threshold0: smoothing-kernel threshold 0
-+ * @activity_smooth_threshold1: smoothing-kernel threshold 1
-+ *
-+ * Dark-region:
-+ * @dark_threshold:       dark normalisation threshold
-+ *
-+ * Cross-channel ratios (12u each, AWB-derived):
-+ * @gr_ratio:             Green-Red ratio
-+ * @rg_ratio:             Red-Green ratio
-+ * @gb_ratio:             Green-Blue ratio
-+ * @bg_ratio:             Blue-Green ratio
-+ * @rb_ratio:             Red-Blue ratio
-+ * @br_ratio:             Blue-Red ratio
-+ *
-+ * Edge handling:
-+ * @edge_detect_threshold:    edge detection threshold (4uQ2)
-+ * @edge_count_low:           edge-count low parameter
-+ * @edge_detect_noise_scalar: edge-detect noise scalar (12uQ6)
-+ * @edge_smooth_strength:     edge-smoothing strength (Q6)
-+ * @edge_smooth_noise_scalar: per-channel edge-smooth noise scalar
-+ *                            (12uQ8, channel order R, Gr, Gb, B)
-+ */
-+struct camss_params_abf_filter {
-+	struct v4l2_isp_params_block_header header;
-+
-+	__u8  bilateral_enable;
-+	__u8  cross_process_enable;
-+	__u8  direct_smooth_enable;
-+	__u8  dark_desat_enable;
-+	__u8  dark_smooth_enable;
-+	__u8  act_adj_enable;
-+	__u8  minmax_enable;
-+	__u8  block_opt;
-+
-+	__u16 block_pix_level[CAMSS_ABF_NUM_BLOCK_PIX_LEVELS];
-+	__u16 distance_level[3][6];
-+
-+	__u16 curve_offset[CAMSS_ABF_NUM_CHANNELS];
-+	__u16 edge_softness[CAMSS_ABF_NUM_CHANNELS];
-+	__u16 filter_strength[CAMSS_ABF_NUM_CHANNELS];
-+
-+	__u16 minmax_max_shift;
-+	__u16 minmax_min_shift;
-+	__u16 minmax_offset;
-+	__u16 minmax_bls;
-+
-+	__u16 activity_factor0;
-+	__u16 activity_factor1;
-+	__u16 activity_threshold0;
-+	__u16 activity_threshold1;
-+	__u16 activity_smooth_threshold0;
-+	__u16 activity_smooth_threshold1;
-+
-+	__u16 dark_threshold;
-+
-+	__u16 gr_ratio;
-+	__u16 rg_ratio;
-+	__u16 gb_ratio;
-+	__u16 bg_ratio;
-+	__u16 rb_ratio;
-+	__u16 br_ratio;
-+
-+	__u16 edge_detect_threshold;
-+	__u16 edge_count_low;
-+	__u16 edge_detect_noise_scalar;
-+	__u16 edge_smooth_strength;
-+	__u16 edge_smooth_noise_scalar[CAMSS_ABF_NUM_CHANNELS];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_abf_noise_lut - ABF shot-noise LUT
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * 64-entry 32-bit LUT representing per-luma shot-noise standard
-+ * deviation. Updates when analog gain changes meaningfully —
-+ * typically banded so a small number of LUTs are pre-computed and
-+ * one is uploaded on each gain-band crossing.
-+ *
-+ * @header: block header; @header.type = CAMSS_PARAMS_ABF_NOISE_LUT
-+ * @lut:    shot-noise LUT
-+ */
-+struct camss_params_abf_noise_lut {
-+	struct v4l2_isp_params_block_header header;
-+	__u32 lut[CAMSS_ABF_NOISE_LUT_SIZE];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_abf_activity_lut - ABF activity-adjust LUT
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * 32-entry adjustment for activity-based filter modulation.
-+ *
-+ * @header: block header; @header.type = CAMSS_PARAMS_ABF_ACTIVITY_LUT
-+ * @lut:    activity-adjustment LUT
-+ */
-+struct camss_params_abf_activity_lut {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 lut[CAMSS_ABF_ACTIVITY_LUT_SIZE];
-+	__u16 _pad[2];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_abf_dark_lut - ABF dark-factor LUT
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * 42-entry LUT for dark-region adjustment.
-+ *
-+ * @header: block header; @header.type = CAMSS_PARAMS_ABF_DARK_LUT
-+ * @lut:    dark-factor LUT
-+ */
-+struct camss_params_abf_dark_lut {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 lut[CAMSS_ABF_DARK_LUT_SIZE];
-+	__u16 _pad[2];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_abf_rnr - ABF radial noise reduction curve
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * Defines a piecewise curve in r-squared (radius squared) space
-+ * with 4 anchor points; outside the lens optical centre the noise
-+ * reduction strength is modulated based on radial distance.
-+ *
-+ * The geometry fields (@bx, @by, @r_square_init) are sensor-derived
-+ * and could move to a kernel-only domain if a sensor-driver hook
-+ * supplied them; for now exposed in UAPI for direct control.
-+ *
-+ * @header:           block header; @header.type = CAMSS_PARAMS_ABF_RNR
-+ *
-+ * Curve geometry:
-+ * @bx:               14s — init_h_offset - h_centre
-+ * @by:               14s — init_v_offset - v_centre
-+ * @r_square_scale:   7u  — r^2 scale factor
-+ * @r_square_shift:   4u  — r^2 right-shift
-+ * @r_square_init:    28u — initial r^2 for top-left of stripe
-+ *
-+ * Per-anchor RNR curve (4 anchors):
-+ * @rnr_anchor:       12u anchor x-positions
-+ * @rnr_base0:        8u, RNR_NOISE_BASE
-+ * @rnr_slope0:       12u, RNR_NOISE_SLOPE
-+ * @rnr_shift0:       4u, RNR_NOISE_SHIFT
-+ * @rnr_base1:        8s, RNR_THRESH_BASE
-+ * @rnr_slope1:       10s, RNR_THRESH_SLOPE
-+ * @rnr_shift1:       4s, RNR_THRESH_SHIFT
-+ *
-+ * Noise-preservation curve (2 tables x 4 anchors):
-+ * @nprsv_anchor:     12u, NP_ANCHOR
-+ * @nprsv_base:       8u, NP_BASE [0]=R/B, [1]=Gr/Gb
-+ * @nprsv_shift:      4u, NP_SHIFT [0]=R/B, [1]=Gr/Gb
-+ * @nprsv_slope:      9s, NP_SLOPE
-+ */
-+struct camss_params_abf_rnr {
-+	struct v4l2_isp_params_block_header header;
-+
-+	__s16 bx;
-+	__s16 by;
-+	__u16 r_square_scale;
-+	__u16 r_square_shift;
-+	__u32 r_square_init;
-+
-+	__u16 rnr_anchor[CAMSS_ABF_NUM_ANCHORS];
-+	__u16 rnr_base0[CAMSS_ABF_NUM_ANCHORS];
-+	__u16 rnr_slope0[CAMSS_ABF_NUM_ANCHORS];
-+	__u16 rnr_shift0[CAMSS_ABF_NUM_ANCHORS];
-+	__s16 rnr_base1[CAMSS_ABF_NUM_ANCHORS];
-+	__s16 rnr_slope1[CAMSS_ABF_NUM_ANCHORS];
-+	__s16 rnr_shift1[CAMSS_ABF_NUM_ANCHORS];
-+
-+	__u16 nprsv_anchor[CAMSS_ABF_NUM_ANCHORS];
-+	__u16 nprsv_base[2][CAMSS_ABF_NUM_ANCHORS];
-+	__u16 nprsv_shift[2][CAMSS_ABF_NUM_ANCHORS];
-+	__s16 nprsv_slope[2][CAMSS_ABF_NUM_ANCHORS];
-+} __attribute__((aligned(8)));
-+
-+/* ===================================================================
-+ * Demosaic / post-demosaic RGB blocks
-+ *
-+ * Hardware availability: IFE and BPS.
-+ * =================================================================== */
-+
-+/**
-+ * struct camss_params_wb_gain - White balance gains and offsets
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * Channel ordering follows the hardware output-channel convention:
-+ * channel 0 = G, 1 = B, 2 = R.
-+ *
-+ * Gains are 12uQ10 (12-bit unsigned, 10 fractional bits, range
-+ * approximately 0.0 .. 4.0). Offsets are signed and clamped to 13
-+ * or 15 bits depending on hardware variant.
-+ *
-+ * @header:    block header; @header.type = CAMSS_PARAMS_WB_GAIN
-+ * @g_gain:    green channel gain  (12uQ10)
-+ * @b_gain:    blue  channel gain  (12uQ10)
-+ * @r_gain:    red   channel gain  (12uQ10)
-+ * @g_offset:  green channel offset
-+ * @b_offset:  blue  channel offset
-+ * @r_offset:  red   channel offset
-+ * @_pad:      reserved, must be zero
-+ */
-+struct camss_params_wb_gain {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 g_gain;
-+	__u16 b_gain;
-+	__u16 r_gain;
-+	__u16 g_offset;
-+	__u16 b_offset;
-+	__u16 r_offset;
-+	__u16 _pad[2];
-+} __attribute__((aligned(8)));
-+
-+#define CAMSS_LSC_MESH_H  17
-+#define CAMSS_LSC_MESH_V  13
-+
-+/**
-+ * struct camss_params_lsc - Lens shading correction (rolloff)
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * A 13x17 mesh of per-channel gain values (13uQ10, range
-+ * ~0.0 .. 8.0) for each of R/Gr/Gb/B. The hardware bicubically
-+ * interpolates between mesh points. Grid geometry (subgrid width
-+ * and height, start offsets, x/y delta reciprocals) is computed
-+ * by the kernel from the sensor output dimensions; userspace
-+ * supplies only the 4-channel mesh.
-+ *
-+ * The mesh values encode the full CCT-interpolated table for the
-+ * current illuminant. Userspace computes the interpolation between
-+ * calibrated illuminant tables (A, D50, D65, etc.) and sends the
-+ * result. The kernel does not maintain per-illuminant calibration
-+ * tables.
-+ *
-+ * @header:  block header; @header.type = CAMSS_PARAMS_LSC
-+ * @mesh_r:  R  channel mesh (13uQ10)
-+ * @mesh_gr: Gr channel mesh
-+ * @mesh_gb: Gb channel mesh
-+ * @mesh_b:  B  channel mesh
-+ */
-+struct camss_params_lsc {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 mesh_r[CAMSS_LSC_MESH_V][CAMSS_LSC_MESH_H];
-+	__u16 mesh_gr[CAMSS_LSC_MESH_V][CAMSS_LSC_MESH_H];
-+	__u16 mesh_gb[CAMSS_LSC_MESH_V][CAMSS_LSC_MESH_H];
-+	__u16 mesh_b[CAMSS_LSC_MESH_V][CAMSS_LSC_MESH_H];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_demosaic - Bayer demosaicing tuning
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * The demosaic algorithm itself is fixed in hardware; these
-+ * parameters tune the directional interpolation heuristics that
-+ * decide how to reconstruct missing colour samples at each pixel.
-+ *
-+ * @header:           block header; @header.type = CAMSS_PARAMS_DEMOSAIC
-+ * @cosited_rgb:      1 = cosited RGB output sampling
-+ * @demosaic_v4:      1 = use v4 interpolation filters, 0 = v3
-+ * @disable_dir_g:    disable directional G interpolation
-+ * @disable_dir_rb:   disable directional R/B interpolation
-+ * @dynamic_clamp_g:  enable G dynamic clamping
-+ * @dynamic_clamp_rb: enable R/B dynamic clamping
-+ * @_pad:             reserved, must be zero
-+ * @wk:               directional interpolation weight factor (signed)
-+ * @ak:               directional interpolation activity factor
-+ * @lambda_g:         lambda for G channel
-+ * @lambda_rb:        lambda for R/B channels
-+ */
-+struct camss_params_demosaic {
-+	struct v4l2_isp_params_block_header header;
-+	__u8  cosited_rgb;
-+	__u8  demosaic_v4;
-+	__u8  disable_dir_g;
-+	__u8  disable_dir_rb;
-+	__u8  dynamic_clamp_g;
-+	__u8  dynamic_clamp_rb;
-+	__u16 _pad;
-+	__s16 wk;
-+	__u16 ak;
-+	__u16 lambda_g;
-+	__u16 lambda_rb;
-+} __attribute__((aligned(8)));
-+
-+/* ===================================================================
-+ * Tier 1 blocks — also present on IPE in future work
-+ *
-+ * These blocks are instantiated on IFE, BPS, and IPE. The UAPI
-+ * struct applies regardless of the engine.
-+ * =================================================================== */
-+
-+/**
-+ * struct camss_params_color_correct - 3x3 CCM with per-channel offsets
-+ *
-+ * Hardware availability: IFE, BPS. (IPE: future work.)
-+ *
-+ * Matrix computation, output channel order G, B, R:
-+ *   Out_ch0 (G) = a[0]*G + b[0]*B + c[0]*R + k[0]
-+ *   Out_ch1 (B) = a[1]*G + b[1]*B + c[1]*R + k[1]
-+ *   Out_ch2 (R) = a[2]*G + b[2]*B + c[2]*R + k[2]
-+ *
-+ * Input channel order is G, B, R (not R, G, B) — matches the
-+ * hardware register layout.
-+ *
-+ * All 9 coefficients share a single Q-factor selector @qfactor,
-+ * which applies a right-shift to the multiplier output.
-+ *
-+ * @header:  block header; @header.type = CAMSS_PARAMS_COLOR_CORRECT
-+ * @a:       G-input coefficients per output channel (12s;
-+ *           a[0]=Out_G, a[1]=Out_B, a[2]=Out_R)
-+ * @b:       B-input coefficients (12s)
-+ * @c:       R-input coefficients (12s)
-+ * @k:       per-output-channel offsets (typically 9s effective)
-+ * @qfactor: Q-format selector (2u):
-+ *               0 = Q7, 1 = Q8, 2 = Q9, 3 = Q10
-+ *           Applies uniformly to all 9 matrix coefficients.
-+ * @_pad:    reserved, must be zero
-+ */
-+struct camss_params_color_correct {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 a[3];
-+	__u16 b[3];
-+	__u16 c[3];
-+	__u16 k[3];
-+	__u16 qfactor;
-+	__u16 _pad[3];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_color_xform - Colour-space transform
-+ *
-+ * Hardware availability: IFE, BPS. (IPE: future work — IPE carries
-+ * three instances of this block for pre/mid/post stages.)
-+ *
-+ * Applies the transform:
-+ *     output = M * clamp(input - C) + O
-+ * where C is a per-channel input clamp point, M is a 3x3 matrix,
-+ * and O is a per-channel output offset. S0..S2 are output
-+ * saturation clamps.
-+ *
-+ * @header: block header; @header.type = CAMSS_PARAMS_COLOR_XFORM
-+ * @c0:     input channel-0 clamp
-+ * @c1:     input channel-1 clamp
-+ * @c2:     input channel-2 clamp
-+ * @c01:    input channel-0 secondary clamp
-+ * @c11:    input channel-1 secondary clamp
-+ * @c21:    input channel-2 secondary clamp
-+ * @m:      3x3 matrix, row-major [row][col] (12s)
-+ * @o:      output offsets [0..2] (signed)
-+ * @s:      output saturation clamps [0..2]
-+ * @_pad:   reserved, must be zero
-+ */
-+struct camss_params_color_xform {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 c0, c1, c2;
-+	__u16 c01, c11, c21;
-+	__s16 m[3][3];
-+	__s16 o[3];
-+	__s16 s[3];
-+	__u16 _pad[2];
-+} __attribute__((aligned(8)));
-+
-+#define CAMSS_GLUT_LUT_SIZE  64
-+
-+/**
-+ * struct camss_params_glut - Per-channel gamma LUT
-+ *
-+ * Hardware availability: IFE, BPS. (IPE: future work. IPE has
-+ * multiple gamma instances on modern SoCs; @instance will select
-+ * which when IPE support lands. For IFE and BPS there is a single
-+ * instance per engine and @instance is reserved.)
-+ *
-+ * Three independent 64-entry LUTs for R, G, B, flattened inline.
-+ *
-+ * Entries are packed as pairs in the hardware registers but
-+ * exposed here as a flat array; the kernel repacks as needed.
-+ * Hardware double-buffer bank selectors are kernel-managed.
-+ *
-+ * @header:   block header; @header.type = CAMSS_PARAMS_GLUT
-+ * @instance: reserved (0 for IFE/BPS); used by IPE extension
-+ * @_pad:     reserved, must be zero
-+ * @r:        R channel gamma LUT
-+ * @g:        G channel gamma LUT
-+ * @b:        B channel gamma LUT
-+ */
-+struct camss_params_glut {
-+	struct v4l2_isp_params_block_header header;
-+	__u8  instance;
-+	__u8  _pad[7];
-+	__u16 r[CAMSS_GLUT_LUT_SIZE];
-+	__u16 g[CAMSS_GLUT_LUT_SIZE];
-+	__u16 b[CAMSS_GLUT_LUT_SIZE];
-+} __attribute__((aligned(8)));
-+
-+#define CAMSS_GTM_LUT_SIZE  64
-+
-+/**
-+ * struct camss_params_gtm - Global tone mapping
-+ *
-+ * Hardware availability: IFE, BPS. (IPE: future work.)
-+ *
-+ * Piecewise-linear LUT on luminance ratios, 64 segments. Each
-+ * segment is described by a base value and a slope.
-+ *
-+ * The y_ratio_base values are packed as sign-extended 18-bit in
-+ * the hardware register. 32 bits here preserves the full dynamic
-+ * range; the kernel packs.
-+ *
-+ * @header:        block header; @header.type = CAMSS_PARAMS_GTM
-+ * @y_ratio_base:  base value at start of each segment (unsigned)
-+ * @y_ratio_slope: slope within each segment (signed)
-+ */
-+struct camss_params_gtm {
-+	struct v4l2_isp_params_block_header header;
-+	__u32 y_ratio_base[CAMSS_GTM_LUT_SIZE];
-+	__s32 y_ratio_slope[CAMSS_GTM_LUT_SIZE];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_uvg - UV gain
-+ *
-+ * Hardware availability: IFE, BPS. (IPE: future work.)
-+ *
-+ * Simple per-channel gain on the U and V chroma components after
-+ * colour conversion. Used for chroma saturation control.
-+ *
-+ * @header:  block header; @header.type = CAMSS_PARAMS_UVG
-+ * @u_gain:  U channel gain (10uQ8; 1.0 = no change)
-+ * @v_gain:  V channel gain (10uQ8)
-+ * @_pad:    reserved, must be zero
-+ */
-+struct camss_params_uvg {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 u_gain;
-+	__u16 v_gain;
-+	__u16 _pad[2];
-+} __attribute__((aligned(8)));
-+
-+/* ===================================================================
-+ * Local Tone Mapping (LTM) — split into four sub-blocks
-+ *
-+ * Hardware availability: IFE, BPS. (IPE: future work — IPE has a
-+ * YUV-domain LTM instance using the same tuning parameters; the
-+ * structs defined here apply unchanged when IPE support lands.)
-+ *
-+ * LTM is a heavyweight block combining seven 1D LUTs (weight,
-+ * la_curve, mask_rect_curve, ltm_curve, ltm_scale, lce_scale_pos,
-+ * lce_scale_neg, igamma64), a 5x5 mask filter kernel, a scalar
-+ * control section (data-collection counters, downscaling
-+ * parameters, image-processing offsets), and two large across-
-+ * frame state buffers (LUT25b, avg3d).
-+ *
-+ * The cross-frame state buffers (LUT25b, avg3d) are hardware ping-
-+ * pong buffers managed by the kernel between frames and are NOT
-+ * exposed to userspace.
-+ *
-+ * The remainder is split into four sub-blocks by expected update
-+ * cadence:
-+ *
-+ *   CONFIG       — scalar control, data collection, image processing
-+ *                  (may change per frame for adaptive behaviour)
-+ *   CURVES       — six tone-mapping LUTs (la, mask_rect, ltm_curve,
-+ *                  ltm_scale, lce_scale_pos, lce_scale_neg); change
-+ *                  on tone-preset switch
-+ *   GAMMA        — inverse-gamma 64-LUT; typically loaded once per
-+ *                  session, occasionally on tone-preset change
-+ *   MASK_FILTER  — 5x5 mask kernel; rarely touched after tuning
-+ *
-+ * Splitting lets userspace re-upload only the pieces that actually
-+ * changed; a per-frame adaptive update typically sends only the
-+ * CONFIG block while the LUT blocks stay resident in the
-+ * hardware.
-+ *
-+ * Cross-sub-block consistency is the caller's responsibility:
-+ * blocks apply on top of previous state, so an update to CURVES
-+ * without a corresponding CONFIG update will use the existing
-+ * scalar control values.
-+ * =================================================================== */
-+
-+#define CAMSS_LTM_WEIGHT_LUT_SIZE    12
-+#define CAMSS_LTM_CURVE_LUT_SIZE     65
-+#define CAMSS_LTM_SCALE_LUT_SIZE     65
-+#define CAMSS_LTM_LCE_SCALE_LUT_SIZE 17
-+#define CAMSS_LTM_GAMMA_LUT_SIZE     64
-+#define CAMSS_LTM_MASK_FILTER_SIZE    6
-+
-+/**
-+ * struct camss_params_ltm_config - LTM control, downscale, IP setup
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * Scalar control fields for LTM. Combines three logical groups
-+ * (data collection, downscaling, image processing) that share an
-+ * update lifetime — they typically all change together when LTM
-+ * is reconfigured for a new pipeline geometry or tone preset.
-+ *
-+ * Fields prefixed @dc_ configure the data-collection stage (3D
-+ * bilateral table accumulation), @ds_ configures the downscaler
-+ * that feeds it, and @ip_ configures the image-processing stage
-+ * that consumes the resulting 3D LUT.
-+ *
-+ * @header:                  block header; @header.type = CAMSS_PARAMS_LTM_CONFIG
-+ *
-+ * Top-level enables:
-+ * @data_collect_en:         enable data-collection stage
-+ * @img_process_en:          enable image-processing stage
-+ * @igamma_en:               enable inverse-gamma stage
-+ * @la_en:                   enable la_curve application
-+ *
-+ * Data-collection stage (post-cropping cell layout):
-+ * @dc_3dtable_avg_pong_sel: ping-pong selector for 3D avg table
-+ * @dc_init_cellnum_x:       starting cell x index (4u)
-+ * @dc_init_dx:              initial dx (5u)
-+ * @dc_3d_sum_clear:         clear 3D sum accumulator
-+ * @bin_init_cnt:            initial bin count (4u)
-+ * @dc_conv_start_cell_x:    convolution start cell x (4u)
-+ * @dc_conv_end_cell_x:      convolution end cell x (4u)
-+ * @_pad0:                   reserved, must be zero
-+ * @dc_xstart:               post-cropping x start (8u)
-+ * @dc_xend:                 post-cropping x end (8u)
-+ *
-+ * Downscaler:
-+ * @ds_horizontal_skip_cnt:  horizontal skip count, pre-cropping (10u)
-+ * @ds_vertical_skip_cnt:    vertical skip count (14u)
-+ * @ds_fac:                  downscale factor (2u):
-+ *                             0 = 288x216 ds size, cell w/h 24
-+ *                             1 = 144x108 ds size, cell w/h 12
-+ *                             2 =  72x54  ds size, cell w/h  6
-+ * @_pad1:                   reserved, must be zero
-+ *
-+ * Image-processing stage:
-+ * @ip_init_cellnum_x:       starting cell x index (4u)
-+ * @ip_init_cellnum_y:       starting cell y index (4u)
-+ * @ip_3dtable_avg_pong_sel: ping-pong selector for IP-side 3D avg
-+ * @_pad2:                   reserved, must be zero
-+ * @ip_init_dx:              initial dx (11u)
-+ * @ip_init_dy:              initial dy (11u)
-+ * @ip_init_px:              initial px (18u)
-+ * @ip_init_py:              initial py (18u)
-+ * @ip_inv_cellwidth:        inverse cell width (14u)
-+ * @ip_inv_cellheight:       inverse cell height (14u)
-+ * @ip_cellwidth:            cell width (11u)
-+ * @ip_cellheight:           cell height (11u)
-+ *
-+ * Mixing coefficients (10/11-bit each):
-+ * @c1: coefficient 1 (10u)
-+ * @c2: coefficient 2 (10u)
-+ * @c3: coefficient 3 (10u)
-+ * @c4: coefficient 4 (11u)
-+ *
-+ * Weight LUT (bundled with config since it is tightly coupled):
-+ * @weight_lut: 12-entry weight LUT
-+ *
-+ * Misc:
-+ * @lce_thd:       LCE (local contrast enhancement) threshold
-+ * @y_ratio_max:   maximum Y ratio (10u)
-+ * @debug_out_sel: hardware debug-out selector (2u)
-+ * @_pad3:         reserved, must be zero
-+ */
-+struct camss_params_ltm_config {
-+	struct v4l2_isp_params_block_header header;
-+
-+	__u8  data_collect_en;
-+	__u8  img_process_en;
-+	__u8  igamma_en;
-+	__u8  la_en;
-+
-+	__u8  dc_3dtable_avg_pong_sel;
-+	__u8  dc_init_cellnum_x;
-+	__u8  dc_init_dx;
-+	__u8  dc_3d_sum_clear;
-+	__u8  bin_init_cnt;
-+	__u8  dc_conv_start_cell_x;
-+	__u8  dc_conv_end_cell_x;
-+	__u8  _pad0;
-+	__u16 dc_xstart;
-+	__u16 dc_xend;
-+
-+	__u16 ds_horizontal_skip_cnt;
-+	__u16 ds_vertical_skip_cnt;
-+	__u8  ds_fac;
-+	__u8  _pad1[3];
-+
-+	__u8  ip_init_cellnum_x;
-+	__u8  ip_init_cellnum_y;
-+	__u8  ip_3dtable_avg_pong_sel;
-+	__u8  _pad2;
-+	__u16 ip_init_dx;
-+	__u16 ip_init_dy;
-+	__u32 ip_init_px;
-+	__u32 ip_init_py;
-+	__u16 ip_inv_cellwidth;
-+	__u16 ip_inv_cellheight;
-+	__u16 ip_cellwidth;
-+	__u16 ip_cellheight;
-+
-+	__u16 c1;
-+	__u16 c2;
-+	__u16 c3;
-+	__u16 c4;
-+
-+	__u16 weight_lut[CAMSS_LTM_WEIGHT_LUT_SIZE];
-+
-+	__u16 lce_thd;
-+	__u16 y_ratio_max;
-+	__u8  debug_out_sel;
-+	__u8  _pad3[3];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_ltm_curves - LTM tone-mapping curve LUTs
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * Six 1D tone / scale LUTs:
-+ *   - la_curve:        local-adaptation curve (post-igamma)
-+ *   - mask_rect_curve: mask-shaping curve
-+ *   - ltm_curve:       core LTM transfer curve
-+ *   - ltm_scale:       scale modulation
-+ *   - lce_scale_pos:   LCE positive-direction scale
-+ *   - lce_scale_neg:   LCE negative-direction scale
-+ *
-+ * The la_curve and mask_rect_curve are 65-entry, the LCE scales
-+ * are 17-entry, matching the hardware LUT sizes.
-+ *
-+ * Per hardware spec: la_curve and mask_rect_curve are unsigned
-+ * (10+e)u; ltm_curve, ltm_scale, lce_scale_pos, lce_scale_neg are
-+ * signed (10+e)s.
-+ *
-+ * @header:        block header; @header.type = CAMSS_PARAMS_LTM_CURVES
-+ * @la_curve:      local-adaptation curve (10+e)u
-+ * @mask_rect_curve: mask-shaping curve (10+e)u
-+ * @ltm_curve:     LTM transfer curve (10+e)s
-+ * @ltm_scale:     scale modulation (10+e)s
-+ * @lce_scale_pos: LCE positive scale (10+e)s
-+ * @lce_scale_neg: LCE negative scale (10+e)s
-+ */
-+struct camss_params_ltm_curves {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 la_curve[CAMSS_LTM_CURVE_LUT_SIZE];
-+	__u16 mask_rect_curve[CAMSS_LTM_CURVE_LUT_SIZE];
-+	__s16 ltm_curve[CAMSS_LTM_CURVE_LUT_SIZE];
-+	__s16 ltm_scale[CAMSS_LTM_SCALE_LUT_SIZE];
-+	__s16 lce_scale_pos[CAMSS_LTM_LCE_SCALE_LUT_SIZE];
-+	__s16 lce_scale_neg[CAMSS_LTM_LCE_SCALE_LUT_SIZE];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_ltm_gamma - LTM inverse-gamma LUT
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * 64-entry inverse gamma applied before LTM processing. Typically
-+ * loaded once per session or on tone-preset change. Separate from
-+ * the main gamma block (CAMSS_PARAMS_GLUT) because that drives the
-+ * global post-LTM gamma stage.
-+ *
-+ * @header: block header; @header.type = CAMSS_PARAMS_LTM_GAMMA
-+ * @lut:    inverse gamma LUT, 64 entries (10+e)s
-+ */
-+struct camss_params_ltm_gamma {
-+	struct v4l2_isp_params_block_header header;
-+	__s16 lut[CAMSS_LTM_GAMMA_LUT_SIZE];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_ltm_mask_filter - LTM 5x5 mask filter kernel
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * The 5x5 mask filter kernel is symmetric and stored as 6 unique
-+ * coefficients.
-+ *
-+ * @header: block header; @header.type = CAMSS_PARAMS_LTM_MASK_FILTER
-+ * @kernel: 6 unique 5x5 symmetric kernel coefficients (4u)
-+ * @scale:  output scale factor (12u)
-+ * @shift:  output shift (5u)
-+ * @enable: 1 = apply mask filter
-+ * @_pad:   reserved, must be zero
-+ */
-+struct camss_params_ltm_mask_filter {
-+	struct v4l2_isp_params_block_header header;
-+	__u16 kernel[CAMSS_LTM_MASK_FILTER_SIZE];
-+	__u16 scale;
-+	__u16 shift;
-+	__u8  enable;
-+	__u8  _pad[3];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_params_roi - Rectangle-of-interest coordinates
-+ *
-+ * @left:   x coordinate of the ROI
-+ * @top:    y coordinate of the ROI
-+ * @width:  width of the ROI
-+ * @height: height of the ROI
-+ */
-+struct camss_params_roi {
-+	__u32 left;
-+	__u32 top;
-+	__u32 width;
-+	__u32 height;
-+} __attribute__((packed));
-+
-+/**
-+ * enum camss_stats_bg_usage - Which BG/BE consumer this block targets
-+ */
-+enum camss_stats_bg_usage {
-+	CAMSS_STATS_BG_AWB      = 0, /* AWB Bayer Grid */
-+	CAMSS_STATS_BG_HDR_BE   = 1, /* HDR Bayer Exposure */
-+	CAMSS_STATS_BG_TINTLESS = 2, /* Tintless Bayer Grid */
-+};
-+
-+/**
-+ * enum camss_stats_bg_output_mode - BG/BE stats output mode
-+ */
-+enum camss_stats_bg_output_mode {
-+	CAMSS_STATS_BG_MODE_REGULAR    = 0, /* regular */
-+	CAMSS_STATS_BG_MODE_SATURATION = 1, /* saturation enabled */
-+	CAMSS_STATS_BG_MODE_Y_STATS    = 2, /* Y-stats enabled */
-+};
-+
-+/**
-+ * enum camss_stats_bg_green_type - Which green pixels to use for Y-stats
-+ */
-+enum camss_stats_bg_green_type {
-+	CAMSS_STATS_BG_GREEN_GR      = 0, /* use Gr */
-+	CAMSS_STATS_BG_GREEN_GB      = 1, /* use Gb */
-+	CAMSS_STATS_BG_GREEN_AVERAGE = 2, /* use (Gr + Gb) / 2 */
-+};
-+
-+/**
-+ * struct camss_stats_bg - Bayer Grid / Bayer Exposure stats
-+ *
-+ * Hardware availability: IFE (AWB-BG, HDR-BE, Tintless-BG),
-+ * BPS (BG).
-+ *
-+ * Drives the gridded Bayer accumulator hardware primitive, which
-+ * is instantiated up to four times across IFE and BPS for
-+ * different consumers. The @usage field selects which.
-+ *
-+ * The hardware divides the @roi rectangle into @horizontal_num by
-+ * @vertical_num regions and accumulates per-channel statistics
-+ * over each region. @channel_gain_threshold caps per-pixel
-+ * contribution before accumulation. Channel indexing is Bayer
-+ * order: 0 = R, 1 = B, 2 = Gr, 3 = Gb.
-+ *
-+ * @header:                 block header; @header.type = CAMSS_PARAMS_STATS_BG
-+ * @usage:                  see &enum camss_stats_bg_usage
-+ * @output_mode:            see &enum camss_stats_bg_output_mode
-+ * @green_type:             see &enum camss_stats_bg_green_type
-+ * @_pad0:                  reserved, must be zero
-+ * @horizontal_num:         number of horizontal regions
-+ * @vertical_num:           number of vertical regions
-+ * @roi:                    active region on the sensor
-+ * @channel_gain_threshold: max gain threshold for [R, B, Gr, Gb]
-+ * @output_bit_depth:       requested stats bit depth (0 = hw default)
-+ * @region_width:           width of each subgrid region in pixels
-+ * @region_height:          height of each subgrid region in pixels
-+ * @y_stats_weights_q8:     R/G/B weights for Y-stats mode (Q8)
-+ */
-+struct camss_stats_bg {
-+	struct v4l2_isp_params_block_header header;
-+	__u8  usage;
-+	__u8  output_mode;
-+	__u8  green_type;
-+	__u8  _pad0;
-+	__s32 horizontal_num;
-+	__s32 vertical_num;
-+	struct camss_params_roi roi;
-+	__u32 channel_gain_threshold[4];
-+	__u32 output_bit_depth;
-+	__u32 region_width;
-+	__u32 region_height;
-+	__u32 y_stats_weights_q8[3];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * enum camss_stats_color_channel - Colour channel selector
-+ */
-+enum camss_stats_color_channel {
-+	CAMSS_STATS_CHANNEL_INVALID = 0,
-+	CAMSS_STATS_CHANNEL_R       = 1,
-+	CAMSS_STATS_CHANNEL_GR      = 2,
-+	CAMSS_STATS_CHANNEL_GB      = 3,
-+	CAMSS_STATS_CHANNEL_B       = 4,
-+	CAMSS_STATS_CHANNEL_G       = 5,
-+	CAMSS_STATS_CHANNEL_Y       = 6,
-+};
-+
-+/**
-+ * enum camss_stats_bhist_usage - Which consumer this BHist instance feeds
-+ *
-+ * The same hardware histogram primitive is instantiated multiple
-+ * times on IFE for different consumers (one dedicated to AEC, one
-+ * driving GTM tone-mapping decisions). The @usage field in &struct
-+ * camss_stats_bhist routes to the correct hardware instance.
-+ */
-+enum camss_stats_bhist_usage {
-+	CAMSS_STATS_BHIST_AEC = 0, /* AEC-dedicated histogram */
-+	CAMSS_STATS_BHIST_GTM = 1, /* GTM-dedicated histogram */
-+};
-+
-+/**
-+ * struct camss_stats_bhist - Bayer histogram
-+ *
-+ * Hardware availability: IFE, BPS.
-+ *
-+ * On IFE the hardware instantiates this block multiple times for
-+ * different consumers (AEC, GTM). The @usage field selects which.
-+ * On BPS there is a single instance; @usage is reserved (0).
-+ *
-+ * @header:  block header; @header.type = CAMSS_PARAMS_STATS_BHIST
-+ * @roi:     ROI rectangle to collect statistics from
-+ * @channel: channel selector (see &enum camss_stats_color_channel)
-+ * @uniform: 1 = uniform histogram binning
-+ * @usage:   consumer selector on IFE; see &enum camss_stats_bhist_usage
-+ * @_pad:    reserved, must be zero
-+ */
-+struct camss_stats_bhist {
-+	struct v4l2_isp_params_block_header header;
-+	struct camss_params_roi roi;
-+	__u8  channel;
-+	__u8  uniform;
-+	__u8  usage;
-+	__u8  _pad[5];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * enum camss_stats_hdr_bhist_green - HDR-BHist green channel selection
-+ */
-+enum camss_stats_hdr_bhist_green {
-+	CAMSS_STATS_HDR_BHIST_GR = 0,
-+	CAMSS_STATS_HDR_BHIST_GB = 1,
-+};
-+
-+/**
-+ * enum camss_stats_hdr_bhist_field - HDR-BHist input field selection
-+ *
-+ * Selects which exposure the stats are collected from in HDR
-+ * staggered modes.
-+ */
-+enum camss_stats_hdr_bhist_field {
-+	CAMSS_STATS_HDR_BHIST_ALL   = 0, /* all lines, non-HDR */
-+	CAMSS_STATS_HDR_BHIST_LONG  = 1, /* HDR T1 (long exposure) */
-+	CAMSS_STATS_HDR_BHIST_SHORT = 2, /* HDR T2 (short exposure) */
-+};
-+
-+/**
-+ * struct camss_stats_hdr_bhist - HDR Bayer histogram
-+ *
-+ * Hardware availability: IFE (AEC variant), BPS.
-+ *
-+ * @header:        block header; @header.type = CAMSS_PARAMS_STATS_HDR_BHIST
-+ * @roi:           ROI rectangle
-+ * @green_channel: green channel selector
-+ *                 (see &enum camss_stats_hdr_bhist_green)
-+ * @field_select:  exposure field selector
-+ *                 (see &enum camss_stats_hdr_bhist_field)
-+ * @_pad:          reserved, must be zero
-+ */
-+struct camss_stats_hdr_bhist {
-+	struct v4l2_isp_params_block_header header;
-+	struct camss_params_roi roi;
-+	__u8  green_channel;
-+	__u8  field_select;
-+	__u8  _pad[6];
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * enum camss_stats_ihist_channel - Image histogram channel selection
-+ *
-+ * IHist operates after the YCbCr colour conversion, so the
-+ * channels are YCC not Bayer.
-+ */
-+enum camss_stats_ihist_channel {
-+	CAMSS_STATS_IHIST_Y  = 0,
-+	CAMSS_STATS_IHIST_CB = 1,
-+	CAMSS_STATS_IHIST_CR = 2,
-+};
-+
-+/**
-+ * struct camss_stats_ihist - Image histogram
-+ *
-+ * Hardware availability: IFE only.
-+ *
-+ * @header:                block header; @header.type = CAMSS_PARAMS_STATS_IHIST
-+ * @roi:                   ROI rectangle
-+ * @channel:               YCC channel selector
-+ * @_pad:                  reserved, must be zero
-+ * @max_pixel_sum_per_bin: histogram output bit-shift control.
-+ *                         When image data concentrates in few bins
-+ *                         the output may saturate; this field
-+ *                         tells the hardware how many bits to
-+ *                         shift so pixel sums fit in the output
-+ *                         bin width. 0 = use hardware default.
-+ */
-+struct camss_stats_ihist {
-+	struct v4l2_isp_params_block_header header;
-+	struct camss_params_roi roi;
-+	__u8  channel;
-+	__u8  _pad[3];
-+	__u32 max_pixel_sum_per_bin;
-+} __attribute__((aligned(8)));
-+
-+/**
-+ * struct camss_stats_rs - Row Sum stats
-+ *
-+ * Hardware availability: IFE only.
-+ *
-+ * @header:          block header; @header.type = CAMSS_PARAMS_STATS_RS
-+ * @stats_h_num:     horizontal region count
-+ * @stats_v_num:     vertical region count
-+ * @rscs_color_conv: 1 = enable RGB->Y conversion on input pixels
-+ * @_pad:            reserved, must be zero
-+ */
-+struct camss_stats_rs {
-+	struct v4l2_isp_params_block_header header;
-+	__u32 stats_h_num;
-+	__u32 stats_v_num;
-+	__u8  rscs_color_conv;
-+	__u8  _pad[7];
-+} __attribute__((aligned(8)));
-+
-+/* ------------------------------------------------------------------
-+ * Bayer Auto-Focus (BAF) stats — the large one
-+ *
-+ * BAF configuration splits into sub-sections (input channel
-+ * select, gamma LUT, scaler, FIR filter, IIR filter, ROI layout,
-+ * coring, filter-chain composition). For UAPI we flatten this
-+ * into a single block with the sub-structures inline and caps on
-+ * variable-length arrays.
-+ * ------------------------------------------------------------------ */
-+
-+#define CAMSS_BAF_MAX_GAMMA_ENTRIES      32
-+#define CAMSS_BAF_MAX_FIR_COEFFICIENTS   13
-+#define CAMSS_BAF_MAX_CORING_ENTRIES     17
-+#define CAMSS_BAF_FILTER_TYPE_COUNT       3
-+#define CAMSS_BAF_MAX_ROI_REGIONS       180
-+#define CAMSS_BAF_Y_CONFIG_COUNT          3
-+
-+/**
-+ * enum camss_baf_channel_select - BAF primary channel selection
-+ *
-+ * Picks whether BAF operates on green or luma.
-+ */
-+enum camss_baf_channel_select {
-+	CAMSS_BAF_CHANNEL_G = 0,
-+	CAMSS_BAF_CHANNEL_Y = 1,
-+};
-+
-+/**
-+ * enum camss_baf_input_g_select - BAF Green input channel
-+ *
-+ * When channel select is G, picks which Bayer green to use.
-+ */
-+enum camss_baf_input_g_select {
-+	CAMSS_BAF_INPUT_GR = 0,
-+	CAMSS_BAF_INPUT_GB = 1,
-+};
-+
-+/**
-+ * enum camss_baf_stats_region_type - BAF ROI region classification
-+ */
-+enum camss_baf_stats_region_type {
-+	CAMSS_BAF_REGION_PRIMARY   = 0,
-+	CAMSS_BAF_REGION_SECONDARY = 1,
-+};
-+
-+/**
-+ * enum camss_baf_stats_roi_type - BAF ROI mode
-+ */
-+enum camss_baf_stats_roi_type {
-+	CAMSS_BAF_ROI_DEFAULT = 0, /* hardware default grid */
-+	CAMSS_BAF_ROI_CUSTOM  = 1, /* user-provided ROI list */
-+};
-+
-+/**
-+ * struct camss_baf_roi - One BAF statistics ROI
-+ *
-+ * @region:      see &enum camss_baf_stats_region_type
-+ * @_pad:        reserved, must be zero
-+ * @roi:         ROI coordinates on the sensor
-+ * @region_num:  index within the region's group
-+ * @output_id:   output ordering ID
-+ * @need_merge:  1 if region spans a dual-IFE split and must be merged
-+ * @_pad2:       reserved, must be zero
-+ */
-+struct camss_baf_roi {
-+	__u8  region;
-+	__u8  _pad[3];
-+	struct camss_params_roi roi;
-+	__u32 region_num;
-+	__u32 output_id;
-+	__u8  need_merge;
-+	__u8  _pad2[7];
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_baf_fir_filter - BAF FIR filter configuration
-+ *
-+ * @enable:       1 = FIR filter active
-+ * @_pad:         reserved, must be zero
-+ * @num_coeffs:   how many leading entries of @coefficients are valid
-+ * @coefficients: FIR filter taps
-+ */
-+struct camss_baf_fir_filter {
-+	__u8  enable;
-+	__u8  _pad[3];
-+	__u32 num_coeffs;
-+	__s32 coefficients[CAMSS_BAF_MAX_FIR_COEFFICIENTS];
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_baf_iir_filter - BAF IIR filter configuration
-+ *
-+ * Second-order sections with floating-point coefficients. The
-+ * hardware's IIR stage natively consumes float, so we keep float
-+ * in UAPI.
-+ *
-+ * @enable: 1 = IIR filter active
-+ * @_pad:   reserved, must be zero
-+ * @b10..a22: biquad coefficients
-+ */
-+struct camss_baf_iir_filter {
-+	__u8  enable;
-+	__u8  _pad[7];
-+	float b10, b11, b12, a11, a12;
-+	float b20, b21, b22, a21, a22;
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_baf_filter_coring - BAF coring configuration
-+ *
-+ * @threshold:   filter threshold
-+ * @gain:        filter gain
-+ * @num_entries: number of valid entries in @core
-+ * @_pad:        reserved, must be zero
-+ * @core:        coring LUT
-+ */
-+struct camss_baf_filter_coring {
-+	__s32 threshold;
-+	__u32 gain;
-+	__u32 num_entries;
-+	__u32 _pad;
-+	__u32 core[CAMSS_BAF_MAX_CORING_ENTRIES];
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_baf_filter - One BAF filter
-+ *
-+ * Indexed in the outer block by filter type:
-+ *   0 = horizontal 1
-+ *   1 = horizontal 2
-+ *   2 = vertical
-+ *
-+ * @is_valid:                1 = this filter slot carries valid config
-+ * @horizontal_scale_enable: 1 = enable horizontal scaling
-+ * @_pad:                    reserved, must be zero
-+ * @shift_bits:              post-filter bit-shift
-+ * @fir:                     FIR stage
-+ * @iir:                     IIR stage
-+ * @coring:                  coring stage
-+ */
-+struct camss_baf_filter {
-+	__u8  is_valid;
-+	__u8  horizontal_scale_enable;
-+	__u8  _pad[2];
-+	__s32 shift_bits;
-+	struct camss_baf_fir_filter fir;
-+	struct camss_baf_iir_filter iir;
-+	struct camss_baf_filter_coring coring;
-+} __attribute__((packed));
-+
-+/**
-+ * struct camss_stats_baf - Bayer Auto-Focus stats
-+ *
-+ * Hardware availability: IFE only.
-+ *
-+ * BAF is the most complex stats block. The hardware can be
-+ * programmed with up to 180 ROIs, three filter chains (2
-+ * horizontal + 1 vertical) each with independent FIR/IIR/coring
-+ * config, a 32-entry gamma LUT, and a scaling stage.
-+ *
-+ * Most fields carry an @is_valid / @enable companion to allow
-+ * partial configuration: userspace can leave sections disabled
-+ * and the kernel will skip them when composing the CDM program.
-+ *
-+ * @header:                   block header; @header.type = CAMSS_PARAMS_STATS_BAF
-+ *
-+ * Input channel configuration:
-+ * @input_is_valid:           1 = input config section valid
-+ * @input_channel_select:     G vs Y (see &enum camss_baf_channel_select)
-+ * @input_g_select:           Gr vs Gb (see &enum camss_baf_input_g_select)
-+ * @_pad0:                    reserved, must be zero
-+ * @y_config_q8:              Y-channel mix weights (Q8)
-+ *
-+ * Gamma LUT:
-+ * @gamma_is_valid:           1 = gamma LUT section valid
-+ * @_pad1:                    reserved, must be zero
-+ * @num_gamma_entries:        valid leading entries of @gamma_lut
-+ * @gamma_lut:                pre-filter gamma correction LUT
-+ *
-+ * Scaler:
-+ * @scale_is_valid:           1 = scaler section valid
-+ * @scale_enable:             1 = enable scaler
-+ * @_pad2:                    reserved, must be zero
-+ * @scale_m:                  M scalar
-+ * @scale_n:                  N scalar
-+ * @pixel_offset:             pixel offset
-+ * @mn_init:                  MN init value
-+ * @interpolation_resolution: scaler interpolation resolution
-+ * @phase_init:               phase init
-+ * @phase_step:               phase step
-+ * @input_image_width:        input image width for scaler
-+ *
-+ * Filters:
-+ * @filters:                  one entry per filter type (H1, H2, V)
-+ *
-+ * ROIs:
-+ * @roi_type:                 default grid vs custom list
-+ *                            (see &enum camss_baf_stats_roi_type)
-+ * @_pad3:                    reserved, must be zero
-+ * @num_rois:                 valid leading entries of @rois
-+ * @last_primary_region:      index of last primary-type ROI
-+ * @rois:                     ROI list
-+ */
-+struct camss_stats_baf {
-+	struct v4l2_isp_params_block_header header;
-+
-+	/* Input channel config */
-+	__u8  input_is_valid;
-+	__u8  input_channel_select;
-+	__u8  input_g_select;
-+	__u8  _pad0;
-+	__u32 y_config_q8[CAMSS_BAF_Y_CONFIG_COUNT];
-+
-+	/* Gamma LUT */
-+	__u8  gamma_is_valid;
-+	__u8  _pad1[3];
-+	__u32 num_gamma_entries;
-+	__u32 gamma_lut[CAMSS_BAF_MAX_GAMMA_ENTRIES];
-+
-+	/* Scaler */
-+	__u8  scale_is_valid;
-+	__u8  scale_enable;
-+	__u8  _pad2[2];
-+	__s32 scale_m;
-+	__s32 scale_n;
-+	__s32 pixel_offset;
-+	__s32 mn_init;
-+	__s32 interpolation_resolution;
-+	__s32 phase_init;
-+	__s32 phase_step;
-+	__s32 input_image_width;
-+
-+	/* Three filter chains (H1, H2, V) */
-+	struct camss_baf_filter filters[CAMSS_BAF_FILTER_TYPE_COUNT];
-+
-+	/* ROI list */
-+	__u8  roi_type;
-+	__u8  _pad3[3];
-+	__u32 num_rois;
-+	__u32 last_primary_region;
-+	struct camss_baf_roi rois[CAMSS_BAF_MAX_ROI_REGIONS];
-+} __attribute__((aligned(8)));
-+
-+/* ===================================================================
-+ * Buffer sizing helpers
-+ * =================================================================== */
-+
-+/**
-+ * CAMSS_PARAMS_MAX_SIZE - Maximum total size of CAMSS IQ parameters
-+ *
-+ * Sum of every IQ parameter block's sizeof. The driver uses this
-+ * to size the params buffer so userspace can set all IQ parameter
-+ * blocks in a single frame if needed.
-+ *
-+ * Stats blocks are excluded from this sum:
-+ *   - Stats engine configuration (&struct camss_stats_*) is sized
-+ *     separately by &CAMSS_STATS_CONFIG_MAX_SIZE.
-+ *   - Stats output buffers (&struct camss_stats_*_output) are
-+ *     sized separately per stats engine; they are kernel ->
-+ *     userspace buffers and do not travel in the params buffer.
-+ *
-+ * Where the same struct is used for multiple block types in
-+ * &enum camss_params_block_type, it is counted once per usage so
-+ * userspace can set every distinct block in a single frame.
-+ */
-+#define CAMSS_PARAMS_MAX_SIZE                                      \
-+	(sizeof(struct camss_params_bls)                          + \
-+	 sizeof(struct camss_params_linearisation)                + \
-+	 sizeof(struct camss_params_demux)                        + \
-+	 sizeof(struct camss_params_bincorrect)                   + \
-+	 sizeof(struct camss_params_abf_filter)                   + \
-+	 sizeof(struct camss_params_abf_noise_lut)                + \
-+	 sizeof(struct camss_params_abf_activity_lut)             + \
-+	 sizeof(struct camss_params_abf_dark_lut)                 + \
-+	 sizeof(struct camss_params_abf_rnr)                      + \
-+	 sizeof(struct camss_params_wb_gain)                      + \
-+	 sizeof(struct camss_params_lsc)                          + \
-+	 sizeof(struct camss_params_demosaic)                     + \
-+	 sizeof(struct camss_params_color_correct)                + \
-+	 sizeof(struct camss_params_color_xform)                  + \
-+	 sizeof(struct camss_params_glut)                         + \
-+	 sizeof(struct camss_params_gtm)                          + \
-+	 sizeof(struct camss_params_uvg)                          + \
-+	 sizeof(struct camss_params_ltm_config)                   + \
-+	 sizeof(struct camss_params_ltm_curves)                   + \
-+	 sizeof(struct camss_params_ltm_gamma)                    + \
-+	 sizeof(struct camss_params_ltm_mask_filter))
-+
-+/**
-+ * CAMSS_STATS_CONFIG_MAX_SIZE - Maximum total size of CAMSS stats config
-+ *
-+ * Sum of every stats engine configuration block's sizeof. The
-+ * driver uses this to size the stats configuration buffer so
-+ * userspace can configure all stats engines in a single frame if
-+ * needed.
-+ *
-+ * Stats output buffers are NOT included; those are sized
-+ * separately per stats engine based on the relevant
-+ * &struct camss_stats_*_output.
-+ */
-+#define CAMSS_STATS_CONFIG_MAX_SIZE                                \
-+	(sizeof(struct camss_stats_bg)                            + \
-+	 sizeof(struct camss_stats_bhist)                         + \
-+	 sizeof(struct camss_stats_hdr_bhist)                     + \
-+	 sizeof(struct camss_stats_ihist)                         + \
-+	 sizeof(struct camss_stats_rs)                            + \
-+	 sizeof(struct camss_stats_baf))
-+
-+#endif /* _UAPI_LINUX_CAMSS_STATS_PARAMS_H */
+ drivers/hwtracing/coresight/coresight-cti-core.c   | 118 ++++++++++++++++-----
+ .../hwtracing/coresight/coresight-cti-platform.c   |  26 +++--
+ drivers/hwtracing/coresight/coresight-cti-sysfs.c  |  76 +++++++++++--
+ drivers/hwtracing/coresight/coresight-cti.h        |  32 ++++--
+ drivers/hwtracing/coresight/qcom-cti.h             |  65 ++++++++++++
+ 5 files changed, 265 insertions(+), 52 deletions(-)
+---
+base-commit: 8594d92c94a3624acf07acf634a5e73a8c8f63e2
+change-id: 20260426-extended-cti-32f728f93cba
+
+Best regards,
 -- 
-2.53.0
+Yingchao Deng <yingchao.deng@oss.qualcomm.com>
 
 
