@@ -1,181 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-104841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ILguJtLb72kiHAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 23:57:38 +0200
+	id wB2fCnMr8GmBPQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 05:37:23 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBA5347AFC6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 23:57:37 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3CE047D190
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 05:37:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7B396301AD37
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 21:57:36 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id ABE4E3007B89
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 03:37:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DF442F9D85;
-	Mon, 27 Apr 2026 21:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1DA6274B4A;
+	Tue, 28 Apr 2026 03:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sMyQxbao"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r4s7WmaD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F7F379EDF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 21:57:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC157404E;
+	Tue, 28 Apr 2026 03:37:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777327055; cv=none; b=OhB/ddKPEbfpCo7Ylc33V2GSHtxCR8dB6awKuY6/AEs8mSNXr2oinyaT/SfCEC1JiyJnnOmnvvqHCU36TQC5kgnb1QCNXDDqExvQOV7e5PW1fHXuToE5/dAmbFTXKBPr3P/u+q7ovghOdqt74sgdMnlzlRyGuEE9P6+RcR0NhM8=
+	t=1777347439; cv=none; b=cf2gnjxSmVXWlICkji+YmT0ZBTlzDfagnUIX/R8u4T5aR3KAGBbjZY6n6M01i9Ffs1CPmnUE10TNT3waYdo2WOe4wlT8hbHWei0XYovtbEyhko4g4mZSC0oqKMDTwmJtVBrTx37t950BYvCsza4wX06s9+SFASeCR+5sMRdyDpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777327055; c=relaxed/simple;
-	bh=OFgtGCn1mfUaoCP8LhdAyM8uQwb3Te8gLBE/Ti+VRMI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OWz0QjGlhOqNCLYRFxy8PgYNH+1f5TsqFq2TN3zPSGJ7RGGZ8T7xwZdcUevz4LWEfALf6Pn0NL33scRmJ3DLc7Q3fz4F4oxsOVS+TIDOdH74dDY5muYe/tMKiDTfvfcf675Jz5PGNch564z5rcp7SmVrtWYj2rbvi+DAjS8dd3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sMyQxbao; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-488b8bc6bc9so77462505e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 14:57:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1777327053; x=1777931853; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kV+WIZsj9AmJtT9rTaHxlweLR0VMyPyAnS2ki5QOUJg=;
-        b=sMyQxbaoFGJX/irParUdWhOOocCeUXvxFueNP6tsUkKMDA09z0L27fpY339j5ZCWOJ
-         eVzCjDzD7vnD2t2iCuSoLzQnv8USvbSt3L5MxtOEvVMMsKRrHEN7CIJ7Ulxt3yKHD9rU
-         ztw18e5W+kSqQHS/HYUdoXTEBfEYL5cNNw50k/MGVAFE2645Bh6ZHm8MLFtuOZPFXKs2
-         K8cp10m4Ix5aYnNASAg3qCMpay1gY4706zIWd6QX752KDNbqy1i0ZvFqGRtaPrll93QD
-         gr9BHek6wJpEQzL+mHVhiOaVsUl6npQ8cQJpWbOeGOtPrZG87br/DgVk19I4KrDSDGtY
-         eTQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777327053; x=1777931853;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kV+WIZsj9AmJtT9rTaHxlweLR0VMyPyAnS2ki5QOUJg=;
-        b=gEgc3LGcmHWvW0RrOx3nWeWHJPwViEy+z0nqrMSCilu188DO9FJh/+goXQHcPOikYL
-         Xp4lS/DMuOAk2Qwwv9oRPWBbDVeZY62i0XbYolqSQzYbuyjId51IfFmhjFLrd/785rad
-         39XVzreP/RznKZi3nvHd4Yuu/zPgYVwWdL0m3DVyUPxkr1BP+nIOG1iL3q1ZHdau9oxj
-         W7jnp2IFgjV3BYch61SzhmooMX0DwxEoePtsTG1xyNrVtnOhj2nrcAxslsgFllrr/3+y
-         XUAwnA6DtdjfrJP5t+8isJBzOfex6zh8eYgTSH8MDr1yNmXdCLd4++uR+eGoG/y6ZSP+
-         CYcg==
-X-Forwarded-Encrypted: i=1; AFNElJ8Z17dF+9oLUG8cuni+Sh/Jm8li+ZlafR2I7Sky219b+GFRmMR+2pbl0L/oivNtfWAca7pmThDSHPizpy6Q@vger.kernel.org
-X-Gm-Message-State: AOJu0YwEs51pw1Lbj7ucbI1pFpubc8W1BfRVvG2nZc1WXP/WGLDHGRkp
-	+kNpDKHge79pvwWfBDenN2g0IjitnhcWN4fKLEliUp+nSxkFtPB5BRAnOFYUXFbbUE4=
-X-Gm-Gg: AeBDieuzLcUgP5WPnXqMoSdyI5AMavgzI1Z/CDdLJl4rYczmQL/pvWUnZNagIXs6f5y
-	UphFZ77IKYonO06eDm8HPHy1jQxzaQFaKkBEM+QgJfC17RzfpzeixlnFbwVSwr6PquXqcfFxz5n
-	QknLSb8KtbtIhQTxlWE+Nz+GPB0srfzDv+HqHUN7Dl/T+Uh0+91hSwdApXXnqGJAJz4p0WpEq+C
-	3LAfAuSxOHUZegNf4O7Dq4zddBZl/OXJUMEer18/pWOpZNWEqRK3o+XTIZwaXzJIAPe0WrcxDYi
-	cBC1njrrUuwhKZChH3cP7buIAcSeWdP+OiKKFcVhDlSLRYej9GnBbTZJNmouPCb6TU54fVWI+W0
-	lMYTo2XDHbVRnwxZcX5Jff+HMmBXhlHMzW7vXRcZF7rwHgnH/Ue5W+9kkk2SmEmvktQLMvZBLyR
-	lb+nJzdB/F1cyxo7LZVCDAMP6jgstf4xSJmi1ve1wu9vtAgqR2N0hFsQ==
-X-Received: by 2002:a05:600c:4f0b:b0:48a:55d8:7882 with SMTP id 5b1f17b1804b1-48a77ae6477mr5384895e9.9.1777327052826;
-        Mon, 27 Apr 2026 14:57:32 -0700 (PDT)
-Received: from [10.156.67.45] ([89.101.53.25])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a77609a82sm3993585e9.36.2026.04.27.14.57.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Apr 2026 14:57:32 -0700 (PDT)
-Message-ID: <1b914585-4c27-4f4d-8264-181340c27791@linaro.org>
-Date: Mon, 27 Apr 2026 22:57:26 +0100
+	s=arc-20240116; t=1777347439; c=relaxed/simple;
+	bh=2suceYxU88y6krrt22ZaO5KzYJZ3cUAIndOKkvU548A=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=f7Ljrco/toEJoGYwfsWRiJuVOnSOfACiSCEIuqucWT0MEMtwUQp1UNfF7bewtaqLtQN/qkHxCFH/drE4zmtQK+r9nKzH8nNtoBHTpCogUGZZl47EhN9re7WvKrSvizpCqqNqpXE+5wbtiqR+wHvKpGCJTxXSHzQGngP2k8Jfw0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r4s7WmaD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA24FC2BCAF;
+	Tue, 28 Apr 2026 03:37:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777347439;
+	bh=2suceYxU88y6krrt22ZaO5KzYJZ3cUAIndOKkvU548A=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=r4s7WmaDU2uexnPKho2g9q3exCEFSPLppH/VJZusCXM5NGPtYaZnOWWWRUhefwQOG
+	 QzsS/JqP52n0AfP8CoJDiM2rSd2+AlglEBPHDPIrZrwLOEcGFCoKDXf/IuNwPlBJKI
+	 hmF0K4hD0RrP59idXBMdc9vs5bXw6YGy+1qGJDYj1wZy3FJ6MfwirLM89IKBsM5QX0
+	 ZVtj9gAlx7MCxIQElBEzhX5BlhkPfxdPxEC2dleh+E5ugugjX4aet6XbxqRADiPSp2
+	 +1wNpb31E7uvLhlnwB36FmGthEq6M9sUCZsLpTUuFK8+x+0chuuGHXN7w7746Yj5Or
+	 3ho5VDKniS3pQ==
+From: Mark Brown <broonie@kernel.org>
+To: Bartosz Golaszewski <brgl@kernel.org>, 
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+ Linus Walleij <linusw@kernel.org>
+Cc: linux-gpio@vger.kernel.org, linux-sound@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org
+In-Reply-To: <20260427-asoc-wsa881x-v2-1-9ef965f94624@kernel.org>
+References: <20260427-asoc-wsa881x-v2-1-9ef965f94624@kernel.org>
+Subject: Re: [PATCH v2] ASoC: wsa881x: Move custom workaround to gpiolib-of
+Message-Id: <177732956023.324244.14124577102269598769.b4-ty@b4>
+Date: Tue, 28 Apr 2026 07:39:20 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/14] media: uapi: Add CAMSS ISP configuration
- definition
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Kees Cook <kees@kernel.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>,
- Bryan O'Donoghue <bod@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
- devicetree@vger.kernel.org, laurent.pinchart@ideasonboard.com,
- kieran.bingham@ideasonboard.com
-References: <20260427-camss-isp-ope-v2-0-f430e7485009@oss.qualcomm.com>
- <20260427-camss-isp-ope-v2-12-f430e7485009@oss.qualcomm.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20260427-camss-isp-ope-v2-12-f430e7485009@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: EBA5347AFC6
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1121; i=broonie@kernel.org;
+ h=from:subject:message-id; bh=2suceYxU88y6krrt22ZaO5KzYJZ3cUAIndOKkvU548A=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBp8CtsFp+P81aiwBajJQ/Avj0GJo+RwghkpGYtt
+ GywrkATHQqJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCafArbAAKCRAk1otyXVSH
+ 0LxTB/0ST6p8ZIgydIX+XQ1oW9tF3BWzVHiOFLn7p2DK1ttXHW60O61LdpBqmXI8NLBOjGNdGm5
+ 55AAelKg09NQavo1jc1rZ6QapfaDyVUvS9RdCO5mTjrHjLiTZwql8n+3DN5CdRChJuNKqubI1/N
+ IR8udOR02P9y3f0moalUB5MX7ajCp7IIPLZunF2wSp9JivpQp07ocBxsepcweQ1vnEnA68RmFTc
+ gboxKyeZtQwZ+yhsNtO4X0mUw5QuNNxw7yZSK5i21d09RbPiRQ2OAxrkrUSgRN6YiXrs4xRHsKc
+ 0/Hk0fmL3WK+fBBWM0doQ+zxvcm43ogeA69w57+ZFdAqQeKn
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+X-Rspamd-Queue-Id: B3CE047D190
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-104841-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com];
+	TAGGED_FROM(0.00)[bounces-104848-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:mid]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 
-On 27/04/2026 13:43, Loic Poulain wrote:
-> +/**
-> + * struct camss_params_wb_gain - White Balance gains
-> + *
-> + * @header:   generic block header; @header.type = CAMSS_PARAMS_WB_GAIN
-> + * @g_gain:   green channel gain (15uQ10)
-> + * @b_gain:   blue channel gain (15uQ10)
-> + * @r_gain:   red channel gain (15uQ10)
-> + */
-> +struct camss_params_wb_gain {
-> +	struct v4l2_isp_params_block_header header;
-> +	__u16 g_gain;
-> +	__u16 b_gain;
-> +	__u16 r_gain;
-> +	__u16 _pad;
-> +} __attribute__((aligned(8)));
+On Mon, 27 Apr 2026 10:43:21 +0200, Linus Walleij wrote:
+> ASoC: wsa881x: Move custom workaround to gpiolib-of
 
-So I published a comprehensive list of these structures a few days ago.
+Applied to
 
-https://lore.kernel.org/linux-media/20260426000418.1158716-1-bryan.odonoghue@linaro.org/T/#u
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.2
 
-See:
+Thanks!
 
-struct camss_params_wb_gain - White balance gains and offsets
+[1/1] ASoC: wsa881x: Move custom workaround to gpiolib-of
+      https://git.kernel.org/broonie/sound/c/bfa336cee332
 
-The ICP/HFI structures - at least for the stats I believe are how 
-hardware writes data to memory.
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-OTOH on the way in, the params ought to be pretty uniform as again 
-HFI/ICP needs to take that representation and either
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-- Hand it over to CDM or
-- Pass it over HFI so that ICP can hand it over to CDM
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-The ordering and precision is a resolved thing. I'm ~ sure OPE must 
-write and consume in the same format.
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
----
-bod
+Thanks,
+Mark
+
 
