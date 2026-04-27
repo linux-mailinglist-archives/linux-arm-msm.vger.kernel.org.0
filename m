@@ -1,156 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-104830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sB4fOpbF72m4FwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 22:22:46 +0200
+	id aLH8B0PG72m4FwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 22:25:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 740C8479F6E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 22:22:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BAA94479FEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 22:25:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 5A7FB300DCC8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 20:22:44 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 24542300D75D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 20:25:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9F7F364EB1;
-	Mon, 27 Apr 2026 20:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6971536D9E7;
+	Mon, 27 Apr 2026 20:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="YMzhjdp5"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="EE5ScAbO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF9D29A32D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 20:22:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A54E31F984;
+	Mon, 27 Apr 2026 20:25:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777321362; cv=none; b=OZiIr86Y+7Hhjiws0rnnOAfrfvSQnSco8eJWWNmGUd31j3xgje+7D17GpPBH297GV4C6+zOvgB21pIG+iObVViKKYg205aANBEfrJJRJ4A+0bI62DC4IN/ZQQeZv5R8lXo6Rmc8Z0/c2vYNxfjMkZzajwEFSfDfmuaETfqQC76A=
+	t=1777321536; cv=none; b=hdpzxWBybyKQpNC1y9WYKwtqu/gttYcwv3wGiWcufimSjDzDwH4Rfz5cbTYEUAQz6tFb3DJ4krQfR/1lRdG4yXSTu2drQ07SpVTkQUt3u/4PamoFADOlTEzofRvCl2aCUnVCYnlLa891vfTuQBHjxtGwQ4Ne2xxYnagp5WSxAXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777321362; c=relaxed/simple;
-	bh=YTd/Z0HCcKLHukgv576kTNa9f4xPUI4kMQZ0Lh2Y+V0=;
-	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
-	 In-Reply-To:References; b=TnsshqQWxt+kvhrzDIydtjldma1u41xdroSRgi0AV2INedjkqpxv1OjJ+RDl1juFX4+Zb4/QOV787coOCwTgZZgRmVajayEmRvQ6Jl4U4e3EYCK4TBitYeqjxpMOxs4y8ItEUk3p14zyXg65KKj8VF9QrkSqgNpjWqrZ8PQn+8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=YMzhjdp5; arc=none smtp.client-ip=91.218.175.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
+	s=arc-20240116; t=1777321536; c=relaxed/simple;
+	bh=oHxuF0zz8E0hhW0pls7hle2dqF6YIvkZgvJcLy3BzXs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hG2tl83yhQSXzh7Iyf9QzY1BxSil12SmefJgKm1PSQ1s/hq31LPGTN25oURDgl7myPEHzUa2yy5RWV5GPc5altG/n/Q+lVIQVuuftc/rpHhVIRfpr2NXrxq8c8aKLNhNDCoBbQE0w6Nf5SnJvI2CkAvw5vhNVrRvjq+Hm8cmbL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=EE5ScAbO; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from killaraus.ideasonboard.com (2001-14ba-703d-e500--2a1.rev.dnainternet.fi [IPv6:2001:14ba:703d:e500::2a1])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id E8627145C;
+	Mon, 27 Apr 2026 22:23:42 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1777321423;
+	bh=oHxuF0zz8E0hhW0pls7hle2dqF6YIvkZgvJcLy3BzXs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EE5ScAbO1F/fZr/DQTTI6ND1triKB6GpQa7Z7ASKsATJiY0tlQFgl3yZEOEPoF5bo
+	 WH2kRX9EssbY1q5ZAAXju0xpBGqp6kQcBY5z1vNAW4Dw7Qpsoeessn4m+8P1vbgK5r
+	 CM3rWC9Sm5MRqPpyj9tJvcZhAfzRyB5dQi3zWuDg=
+Date: Mon, 27 Apr 2026 23:25:23 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Bryan O'Donoghue <bod@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org, devicetree@vger.kernel.org,
+	kieran.bingham@ideasonboard.com
+Subject: Re: [PATCH v2 12/14] media: uapi: Add CAMSS ISP configuration
+ definition
+Message-ID: <20260427202523.GE3219146@killaraus.ideasonboard.com>
+References: <20260427-camss-isp-ope-v2-0-f430e7485009@oss.qualcomm.com>
+ <20260427-camss-isp-ope-v2-12-f430e7485009@oss.qualcomm.com>
+ <3e72d17c-e46c-42d3-9b17-54627f6e5e28@oss.qualcomm.com>
+ <CAFEp6-20MzQh55iJzyhn=htFZxN1yq9o+EJJAX0CWG3O6_KSyA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1777321358;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=WBUWoNvxUkGv0blpLp4hLR3tQUEDpc81rOZHnN/VVUo=;
-	b=YMzhjdp5FNAhb4Z1tg0sSgl0PNTXf8kfwPTd2XHvmruWGEvC5xOYGB9qDihwT9c8ppRkdf
-	auEJ/Jb62RLQJMjSVjfAqylbKIyunq9CRr97vOKUK4iCvMlhjGmfETa2lLCJXm5v76NXdH
-	Qr7ltK+j2Fvzf9WvKqLWlf1QjdOiU+AgtoyWmwa/lerPKtMXvvIz/uPFCy5lbZDsWX+/0+
-	LHU62gM+poogk3Bbx9CS5YHM2mLia9wFcr1D0bkTVmjCYmhku/alA5Ij8xVe8xV9K5FcVZ
-	RQNGLfq2Q6tBzWF68Yzg8XCnHKOVzFMcT4VDvXLWkL/gg97+v0Vn2eW2k0FdCg==
-Date: Mon, 27 Apr 2026 20:22:31 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Paul Sajna" <sajattack@postmarketos.org>
-Message-ID: <a0bbc97055846dae83db766e60a39899f09e1e91@postmarketos.org>
-TLS-Required: No
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm845-lg: Enable
- qcom,snoc-host-cap-skip-quirk
-To: david@ixit.cz, "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Amit Pundir" <amit.pundir@linaro.org>, "Dmitry Baryshkov"
- <dmitry.baryshkov@oss.qualcomm.com>
-Cc: "Konrad Dybcio" <konradybcio@gmail.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org, "Konrad Dybcio"
- <konrad.dybcio@oss.qualcomm.com>, "David Heidelberg" <david@ixit.cz>,
- stable@vger.kernel.org
-In-Reply-To: <20260427-b4-skip-host-cam-qmi-req-fixup-v1-2-4398e94bde70@ixit.cz>
-References: <20260427-b4-skip-host-cam-qmi-req-fixup-v1-0-4398e94bde70@ixit.cz>
- <20260427-b4-skip-host-cam-qmi-req-fixup-v1-2-4398e94bde70@ixit.cz>
-X-Migadu-Flow: FLOW_OUT
-X-Rspamd-Queue-Id: 740C8479F6E
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFEp6-20MzQh55iJzyhn=htFZxN1yq9o+EJJAX0CWG3O6_KSyA@mail.gmail.com>
+X-Rspamd-Queue-Id: BAA94479FEA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[postmarketos.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[postmarketos.org:s=key1];
+	DMARC_POLICY_ALLOW(-0.50)[ideasonboard.com,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[ideasonboard.com:s=mail];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104830-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-104831-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCPT_COUNT_TWELVE(0.00)[16];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org,oss.qualcomm.com,ixit.cz];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[ideasonboard.com:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sajattack@postmarketos.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[postmarketos.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[laurent.pinchart@ideasonboard.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email,killaraus.ideasonboard.com:mid]
 
-April 26, 2026 at 11:44 PM, "David Heidelberg via B4 Relay" <devnull+davi=
-d.ixit.cz@kernel.org mailto:devnull+david.ixit.cz@kernel.org?to=3D%22Davi=
-d%20Heidelberg%20via%20B4%20Relay%22%20%3Cdevnull%2Bdavid.ixit.cz%40kerne=
-l.org%3E > wrote:
+On Mon, Apr 27, 2026 at 10:08:59PM +0200, Loic Poulain wrote:
+> On Mon, Apr 27, 2026 at 2:56 PM Konrad Dybcio wrote:
+> > On 4/27/26 2:43 PM, Loic Poulain wrote:
+> > > Add the uapi header camss-config.h defining the ISP parameter
+> > > structures used by the CAMSS Offline Processing Engine (OPE) driver.
+> > > This includes structures for white balance, chroma enhancement and
+> > > color correction configuration.
+> > >
+> > > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> > > ---
+> >
+> > [...]
+> >
+> >
+> > > +/**
+> > > + * struct camss_params_wb_gain - White Balance gains
+> > > + *
+> > > + * @header:   generic block header; @header.type = CAMSS_PARAMS_WB_GAIN
+> > > + * @g_gain:   green channel gain (15uQ10)
+> > > + * @b_gain:   blue channel gain (15uQ10)
+> > > + * @r_gain:   red channel gain (15uQ10)
+> > > + */
+> > > +struct camss_params_wb_gain {
+> > > +     struct v4l2_isp_params_block_header header;
+> > > +     __u16 g_gain;
+> > > +     __u16 b_gain;
+> > > +     __u16 r_gain;
+> > > +     __u16 _pad;
+> > > +} __attribute__((aligned(8)));
+> >
+> > Should this be __le for all of the related types?
+> 
+> At the moment, this is purely a UAPI, the values are not dumped
+> directly to hardware as-is. Instead, each field is translated into one
+> or more register writes, with the appropriate math, masking and
+> shifting applied. Adding explicit endianness in the definition would
+> therefore require special handling on both user and kernel side
+> (to_le16, from_le16).
+> 
+> On the other side, there are scenarios, such as platforms that rely on
+> ICP (firmware-driven processing), where we may want to forward these
+> structures directly within an HFI packet to the ICP MCU. In that
+> context, explicitly defining the endianness could make some sense...
 
+Would those be different structures, or do you envision that someone
+could develop an ICP firmware that understands these structures ?
 
->=20
->=20From: Paul Sajna <sajattack@postmarketos.org>
->=20
->=20The WCN3990 firmware for judyln does not respond to the request for
-> host capabilities. Add the devicetree quirk to skip this request.
->=20
->=20Fixes: eb8fa3208526 ("arm64: dts: qcom: sdm845-lg: Add wifi nodes")
-> Cc: <stable@vger.kernel.org> # 7.1.x
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Reviewed-by: David Heidelberg <david@ixit.cz>
-> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 2 ++
->  1 file changed, 2 insertions(+)
->=20
->=20diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/ar=
-m64/boot/dts/qcom/sdm845-lg-common.dtsi
-> index 71d070619ad73..2d02d77d35ea7 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> @@ -675,10 +675,12 @@ &venus {
->=20=20
->=20 &wifi {
->  vdd-0.8-cx-mx-supply =3D <&vreg_l5a_0p8>;
->  vdd-1.8-xo-supply =3D <&vreg_l7a_1p8>;
->  vdd-1.3-rfa-supply =3D <&vreg_l17a_1p3>;
->  vdd-3.3-ch0-supply =3D <&vreg_l25a_3p3>;
->  vdd-3.3-ch1-supply =3D <&vreg_l23a_3p3>;
->=20=20
->=20+ qcom,snoc-host-cap-skip-quirk;
-> +
->  status =3D "okay";
->  };
->=20
->=20--=20
-> 2.53.0
->
-Tested-By: Paul Sajna <sajattack@postmarketos.org>
+-- 
+Regards,
+
+Laurent Pinchart
 
