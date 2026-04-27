@@ -1,83 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-104793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qJmKH9Sj72kcDgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 19:58:44 +0200
+	id sJlpC+2j72kcDgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 19:59:09 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2550F477FA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 19:58:44 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9863477FD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 19:59:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 887603004D21
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 17:58:43 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5E5083008318
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 17:58:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEEF43DA7DF;
-	Mon, 27 Apr 2026 17:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D47B53E8C7C;
+	Mon, 27 Apr 2026 17:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hq7d2KcZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jbmt1lMc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260DD3E63B5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 17:58:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8993E717A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 17:58:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777312721; cv=none; b=dAOt4Yd8aSHLO8U7iazyHtfUMKdYsXerXSvpkeYwTJKjzAJfyR+dW/ZlvFTZFjofUab06Ladm/CSbpKI1gwDS+t5fwtrw9EPBD/NvFzg1blCTpQIU0bvC0bl12SCqbiUQ8hefHy1w9Sp6Ft6NkzkVM3szk/62wnNY65kRe7tmJs=
+	t=1777312726; cv=none; b=SswLsJnFLzuaRmFZHaRHffsF3prixkPLrrmGn7GMjXAw51RiofX8SJee86ciK+V/iJX61dWOkogM+eILH0GsXI6vTBhXGll3+0vrKMI0v2aCBnw8DZD1RbQoGNzqC6GsmZ1Cs2GHwfSGXE5wO5mSEkbJC7H49Rh5nLQgq/2V3J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777312721; c=relaxed/simple;
-	bh=/8ZPi24r+2KjLGP7S/vkRpBzqTPelKRknbWu+/4Pfq8=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=shM/s37bHKf7RI5MXv/h1l8LMP55DDTYFJ7nb32ow/SMwID6xfhIbwPggok7ysyh1bzgC44yad3/Gcf34znnWMJM53gzZ4j9f6WbcafaikslX81me+2MF6Zg//a7I5hc8Iq9MM6FAlVdyGYxVrNb0igi+FLhuvxFBwzMncmObhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hq7d2KcZ; arc=none smtp.client-ip=209.85.128.173
+	s=arc-20240116; t=1777312726; c=relaxed/simple;
+	bh=sFgdCYiD5TfywfevqOqs8Vz5/tI6iCmjO2YFGeFbPAI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=GJKBret2wgVS9mXyhjms6l6JwkbbZzBl5Jg3XWYxhEvr+HhbKxwRw+7PqqntOhcttMB339iP3nToeNyR3pKOjA6Ho/DnDwYrpvItSikH57EsVHRLruWKyhaD1H/vNVYAVovnQ8oKxkXpj3C/tZn/VxsHO4ZynaJNTHFYAE7Dfgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jbmt1lMc; arc=none smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-797ab169454so120123427b3.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 10:58:40 -0700 (PDT)
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-7986e0553bdso98558977b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 10:58:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777312719; x=1777917519; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yDDYwvsriCdPFU1Y3E6YCoMsHtkfAqF5QUr0mwz7Of0=;
-        b=Hq7d2KcZNoA0a0fK29wCEghyCF07aIfpeuEULvw8i1nmBHrX5H6SgK+QK1/RVZFA6P
-         dgUBmXW/V3CGXeOLWW5neiXcosOL46sugrjwcu1QfsLapPuGaOgDqbO7T6fODPEtGFP+
-         lCk4yYklxzZCv1EiNiBJRF6tQt/dsNh9CNV3w+Vg2wbOVFOSynpbIeo2aneHqlRyK8Ak
-         qBPe61g0er2yEgADNBSve/4H81LHAhnO5XWGllTsTb7tUgbuda5Wh90/b1vrxNXghsuE
-         u/W40jwDsWVOwTJYWTRt9QdswZjQd0QY20leZXUWC745XVIZbVirMKMC22Y00MaYQ5NF
-         oBDA==
+        d=gmail.com; s=20251104; t=1777312724; x=1777917524; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=V8Tgdu3+sQNzcBRuzqvG3gzHTwwqwtEDe5RVadLhXWo=;
+        b=jbmt1lMcDni+FMLlmXV1JnIKbnb9nmT+Tc4zIBEzUfTNHhzDWBK9/lga5UNB8HNgmi
+         /SAf7OxUU7aoxa5UnnqRGo0RM8qDo1lrUny5vKlCxMl74A1jwZ1xnAMR6x4qxSn3j1xv
+         n0BB2hXST1dNNaZHpp92GieQG6JfnOErWeOYazczv/zpnOgvTQnkMXPjLEEFoXUF3iSj
+         hVrISl/ZgGvXIKdD6TyMWMTxz1HbrlhEt2fIDk+/Zol9PCp1AaHQsraG48xsTdd4P/4x
+         zBYglmkPsY338RPYTWH7iTvfu/2MojG/c2J5VGpC3tT5p3C7U3RKdYFOcH4LWyoxmPh+
+         FZIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777312719; x=1777917519;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yDDYwvsriCdPFU1Y3E6YCoMsHtkfAqF5QUr0mwz7Of0=;
-        b=R3witmZvxI+7C2WqpseOMf+Uuk/taaSMcGDHjfNrtfQUvrP/CXkcZaFoBFOfSxAuCz
-         ZviiXWkz209JgLMBpdBUXvxR+KBkYviG9BQ4js/70Ayy/krLnT1TUdktUlxYuEM6J3sh
-         XIYRr6UUGE47wNGKxp0swekfK1A9MO0ThI6/zOTPLP3WSEVQB5HL1+2IxqcTEeSe9EW4
-         unwj1usyHHlPGScgeJjUM3aESdPFf1hloDhwFO2jNsk+L9JHCjd5/bYFKL4HUXcBOhI+
-         jwD83KhMONvTOFlCgr4Gf6OErH/FTtkILzOmkW3ieB5yenYRWmLd7DvGH1jU+E5VlHpr
-         bVdw==
-X-Forwarded-Encrypted: i=1; AFNElJ+jQ8Dee4Hm402T/5hMGMrqSOu9oKD9qZlEolsCsjwNEjc1zjHtI4PbQrSzmQVYVMBSBlgPLopGuM4EJf5Q@vger.kernel.org
-X-Gm-Message-State: AOJu0YxjgWgtoepR/Rzo2/46L30nu1AhV0rdI3kz/jtqkZR+n/A2h3mq
-	PqSIxsm1z5YuZ1WcY2X6nhgEHFP2szkC1pR6mygU7A8k+ISks6LwF+hoD7sTfir/6K0=
-X-Gm-Gg: AeBDieuw4fm2m9zlH4qBdHOsEjC8dg8OHZelXd4u3XRpLYlTQqik5V485os9OZDwEor
-	/+wqoLRQjlSK70BB4+kbgKDC4zUr00+SVLDPgzUv5rF22S00zMbn1cAv2cXymN7qRDMr8MSRDuo
-	5UDCUmsiKAcqVwtp6k20rBAdR/oyXsJzW4oOU+VnhC1y0tOa3uAGz4/2AH9pXW0jD0iCy1/L77K
-	dvixRbg/Xh7Gqro1rXyVU8Nu4G1MqoNdTOt5PCNG5KsQB2WNaqhFcs9IOYE1iwHdd72AxDAlRKG
-	yhPy/e1kHO88XRmzOlzYfRiYsbXwczP0OFxKwPvc710RtD4sQyAu5SRetWuozfgwYMZ6Rs7UB3h
-	ORKf0JAh5UzBvWgN/FejIryJ+ThWCcaCfFBSb70QxpT0/jAgolHLZZ/LYeksggTwy7OIF0dZD6y
-	a5sAQr55QbO0vlszOucd+Emzc60p7R1KfmZJD/La18IO9SUdY=
-X-Received: by 2002:a05:690c:12:b0:79a:cc18:19c6 with SMTP id 00721157ae682-7bcededfdecmr3022397b3.34.1777312718633;
-        Mon, 27 Apr 2026 10:58:38 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1777312724; x=1777917524;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=V8Tgdu3+sQNzcBRuzqvG3gzHTwwqwtEDe5RVadLhXWo=;
+        b=MdZdfOnMgmzSTtTeIyCVuLEoNT9vkDukmOXsIT6FRSgbSsOgMcxZ+gvo3EfEFmQ4tm
+         kqA1Dyd4Tpsq8pM1wBiilGxGij1VZKuxIqvW4jxvcVYdy7bZpnhbSL7O9CdsiklX3L70
+         SV9H5OO4SVRCGt7jIbSHzk6WLZK2ibSrwyOKH+do789TaxRRNCV0sTzbkNolO074PrtE
+         zUcTmMpuba7lP/DMaRDtfgD2QMo6L65NKW/80Ip0irdO3rT6eJTuO7/DXb16UoIm9iGx
+         Cb//ecjfH/pi8MVDDo6re7AS/D0nsugr1RnKr01cGYYPpJFlcIJL4nVN3t4Sds/2CCl4
+         8HsA==
+X-Forwarded-Encrypted: i=1; AFNElJ9tRbiPXz7ig2QsZVAeQZJVBzh9GGtSxMnzeyVzMy9Se6JjzYawNOXEFZvm/NXeBc/6h9BnkaTRXJQWEQ6h@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzefs7QkQrYsnUm/7YswsxQOzuU8F+MOjolFPHLP2vc2f5aP7jg
+	BrUPGQWV6o2zRWgrp90L+SGhe9JJg6CSphh72qRLwzEDBZvpYhPZLfmjim8oVUf24jo=
+X-Gm-Gg: AeBDiesAV+op8XIzRPnLbkMYE3QmRQQLhS96KmKXdBxJCWjjBve8ViKbTzCzjgHdvpU
+	P8hXAR6JmLjXdX2uScHIjsYG0LFIbncAXLqC7CH62LDLHzypanDTFCiHvQCqADeqPWtHksszw7+
+	4vfgyHdST/j/KQXtNE9CjT8HtXPuMreymceXv43fg/qY7c2rmzYzKp/trC6wG0qa1F1pEfZTS0z
+	d8IkLbVDbciHEa9jVEZd0hXjUXbt0cY8+dXqMeGpgziiwuypgfBTPrxz/pGyW+ciQ0LSJurY0x4
+	tb3uj6t05Y/SABDm0vNwwAe4oYhmp0jEvXIFVQq6BEA6Apv99ROOGty8ZjB5WPCxeYQBcwudC+X
+	LJeBRzrwrx+6yLUlNBepz8jmdRG6xHq0Hun6pdR0LBcqD0DdF+qACqxj96szqS3FvOHqLRWKFNu
+	nfwscA8QXO4TkLqe/bX8lAkwcWrfVuPdTULUed
+X-Received: by 2002:a05:690c:6811:b0:79a:60f6:c5ed with SMTP id 00721157ae682-7bced8dc69amr3553787b3.6.1777312723838;
+        Mon, 27 Apr 2026 10:58:43 -0700 (PDT)
 Received: from [192.168.0.39] ([79.133.247.80])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bcf05e9cf8sm198467b3.18.2026.04.27.10.58.33
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bcf05e9cf8sm198467b3.18.2026.04.27.10.58.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2026 10:58:38 -0700 (PDT)
+        Mon, 27 Apr 2026 10:58:43 -0700 (PDT)
 From: Erikas Bitovtas <xerikasxx@gmail.com>
-Subject: [PATCH RFC v3 00/11] media: qcom: venus: add MSM8939 support
-Date: Mon, 27 Apr 2026 20:58:22 +0300
-Message-Id: <20260427-msm8939-venus-rfc-v3-0-288195bb7917@gmail.com>
+Date: Mon, 27 Apr 2026 20:58:23 +0300
+Subject: [PATCH RFC v3 01/11] media: dt-bindings: venus: Add qcom,msm8939
+ schema
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,11 +88,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33NQQ6CMBAF0KuYrq0pAxRxZWLiAdwaFzBMoUbAt
- NBoCHe31A0L4/JP/rw/MUtGk2WHzcQMOW113/kQbzcMm6KrievKZwYCpEgiyVvb7vM454660XK
- jkKOAFBPMElUQ839PQ0q/gnlll/OJ3b5HO5Z3wmHRllqj7dCbd1h2USj/GXERF7wQuUIFCHGlj
- nVb6McO+zb4DlYCpL8E8IKSOaVQxhJEthbmef4AoE2cMAsBAAA=
-X-Change-ID: 20260416-msm8939-venus-rfc-c025c4c74fae
+Message-Id: <20260427-msm8939-venus-rfc-v3-1-288195bb7917@gmail.com>
+References: <20260427-msm8939-venus-rfc-v3-0-288195bb7917@gmail.com>
+In-Reply-To: <20260427-msm8939-venus-rfc-v3-0-288195bb7917@gmail.com>
 To: Bryan O'Donoghue <bod@kernel.org>, 
  Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
  Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
@@ -105,10 +105,9 @@ To: Bryan O'Donoghue <bod@kernel.org>,
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, Erikas Bitovtas <xerikasxx@gmail.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+ phone-devel@vger.kernel.org, Erikas Bitovtas <xerikasxx@gmail.com>
 X-Mailer: b4 0.15.2
-X-Rspamd-Queue-Id: 2550F477FA9
+X-Rspamd-Queue-Id: B9863477FD7
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -116,19 +115,19 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-104793-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-104794-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,gmail.com,oss.qualcomm.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,gmail.com];
 	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[21];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
@@ -139,118 +138,174 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[devicetree.org:url,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,1d00000:email,apitzsch.eu:email]
 
-This patch series adds support for Venus on MSM8939. It is mostly
-similar to MSM8916 Venus, except it needs two additional cores to be
-powered on before it can start decoding.
+From: André Apitzsch <git@apitzsch.eu>
 
-This patch series is marked as an RFC. Before submitting a non-RFC
-series, I would like to have some details clarified regarding how Venus
-works in order to improve and eventually upstream support for MSM8939.
+Add a schema description for the Venus video decoder/encoder IP in
+MSM8939.
 
-1. In downstream, particularly in LA.BR.1.2.9.1_rb1.5, the buses
-   for vcodec0 cores have only decoding bits enabled, as depicted
-   by qcom,bus-configs property of qcom,msm-bus-clients children
-   in qcom,vidc node. Do I understand correctly that these cores
-   are only needed for decoding, and not for encoding?
-2. Currently in device tree there is a video-decoder subnode for Venus
-   node, however, for SDM845-v2 (and newer) chipsets, Venus does not use
-   subnodes. Does this mean it should be dropped for MSM8939 as well?
-3. MSM8939 supports HEVC decoding, however, as the patchset is written
-   now, it does not work. It can be enabled, however, it will result in
-   breakage of Venus for faulty MSM8916 firmwares, because the code
-   disabling HEVC for HFI v1 needs to be removed, and as per commit
-   c50cc6dc6c48 ("media: venus: hfi_parser: Ignore HEVC encoding for V1"),
-   this would break support for some MSM8916 devices. What could be the
-   best way to work around this?
-4. To attach vcodec0 power domain list to dev_{dec,enc}, I had to move
-   vdec_get and venc_get later in the probe. Should this be avoided, and
-   is there a better way to attach vcodec power domains?
-
-There may be some other issues with this patchset - this is WIP code, so
-feedback is very appreciated. Thank you!
-
-Also, as per Dmitry's request, I am attaching Fluster results and
-v4l2-compliance output. Fluster results were very inconsistent and
-caused power collapse fails.
-H.264: https://pastebin.com/C15qeq5W
-H.265 (HEVC): https://pastebin.com/WDsnxvuk
-VP8: https://pastebin.com/egAgEm15
-v4l2-compliance: https://pastebin.com/VpBhEFc1
-Power collapse fail log: https://pastebin.com/rTivMcpK
-
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
 Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
 ---
-Changes in v3:
-- Added missing vcodec1_clks to resource struct.
-- Removed enc_nodename from resource struct since we include
-  video-decoder now.
-- Link to v2: https://patch.msgid.link/20260425-msm8939-venus-rfc-v2-0-f69e52b36207@gmail.com
+ .../bindings/media/qcom,msm8939-venus.yaml         | 147 +++++++++++++++++++++
+ 1 file changed, 147 insertions(+)
 
-Changes in v2:
-- Enabled GDSCs during encoding as well.
-- Merged vcodec{0,1}_pmdomains_num into vcodec_pmdomains_num.
-- Reworded commit for marking GDSCs as hardware controlled. Same
-  situation as in cdc59600bccf ("clk: qcom: gcc-msm8953: fix stuck venus0_core0 clock")
-- Clarified the reason for missing firmware-name property in device
-  tree.
-- Clarified the reason for moving vdec_get and venc_get for later.
-- Link to v1: https://patch.msgid.link/20260416-msm8939-venus-rfc-v1-0-a09fcf2c23df@gmail.com
+diff --git a/Documentation/devicetree/bindings/media/qcom,msm8939-venus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8939-venus.yaml
+new file mode 100644
+index 000000000000..5790b3bf5aef
+--- /dev/null
++++ b/Documentation/devicetree/bindings/media/qcom,msm8939-venus.yaml
+@@ -0,0 +1,147 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/media/qcom,msm8939-venus.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm MSM8939 Venus video encode and decode accelerators
++
++maintainers:
++  - André Apitzsch <git@apitzsch.eu>
++  - Erikas Bitovtas <xerikasxx@gmail.com>
++
++description: |
++  The Venus IP is a video encode and decode accelerator present
++  on Qualcomm platforms
++
++allOf:
++  - $ref: qcom,venus-common.yaml#
++
++properties:
++  compatible:
++    const: qcom,msm8939-venus
++
++  power-domains:
++    maxItems: 1
++
++  clocks:
++    maxItems: 3
++
++  clock-names:
++    items:
++      - const: core
++      - const: iface
++      - const: bus
++
++  iommus:
++    maxItems: 1
++
++  video-decoder:
++    type: object
++
++    properties:
++      compatible:
++        const: venus-decoder
++
++      clocks:
++        maxItems: 2
++
++      clock-names:
++        items:
++          - const: core0
++          - const: core1
++
++      power-domains:
++        maxItems: 2
++
++      power-domain-names:
++        items:
++          - const: core0
++          - const: core1
++
++    required:
++      - compatible
++      - clocks
++      - clock-names
++      - power-domains
++      - power-domain-names
++
++    additionalProperties: false
++
++  video-encoder:
++    type: object
++
++    properties:
++      compatible:
++        const: venus-encoder
++
++      clocks:
++        maxItems: 2
++
++      clock-names:
++        items:
++          - const: core0
++          - const: core1
++
++      power-domains:
++        maxItems: 2
++
++      power-domain-names:
++        items:
++          - const: core0
++          - const: core1
++
++    required:
++      - compatible
++      - clocks
++      - clock-names
++      - power-domains
++      - power-domain-names
++
++    additionalProperties: false
++
++required:
++  - compatible
++  - iommus
++  - video-decoder
++  - video-encoder
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/qcom,gcc-msm8939.h>
++
++    video-codec@1d00000 {
++        compatible = "qcom,msm8939-venus";
++        reg = <0x01d00000 0xff000>;
++        interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
++        clocks = <&gcc GCC_VENUS0_VCODEC0_CLK>,
++                 <&gcc GCC_VENUS0_AHB_CLK>,
++                 <&gcc GCC_VENUS0_AXI_CLK>;
++        clock-names = "core", "iface", "bus";
++        power-domains = <&gcc VENUS_GDSC>;
++        iommus = <&apps_iommu 5>;
++        memory-region = <&venus_mem>;
++
++        video-decoder {
++          compatible = "venus-decoder";
++          clocks = <&gcc GCC_VENUS0_CORE0_VCODEC0_CLK>,
++                   <&gcc GCC_VENUS0_CORE1_VCODEC0_CLK>;
++          clock-names = "core0", "core1";
++          power-domains = <&gcc VENUS_CORE0_GDSC>,
++                          <&gcc VENUS_CORE1_GDSC>;
++          power-domain-names = "core0", "core1";
++        };
++
++        video-encoder {
++          compatible = "venus-encoder";
++          clocks = <&gcc GCC_VENUS0_CORE0_VCODEC0_CLK>,
++                   <&gcc GCC_VENUS0_CORE1_VCODEC0_CLK>;
++          clock-names = "core0", "core1";
++          power-domains = <&gcc VENUS_CORE0_GDSC>,
++                          <&gcc VENUS_CORE1_GDSC>;
++          power-domain-names = "core0", "core1";
++        };
++    };
 
-To: Bryan O'Donoghue <bod@kernel.org>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-To: Mauro Carvalho Chehab <mchehab@kernel.org>
-To: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>
-To: Conor Dooley <conor+dt@kernel.org>
-To: André Apitzsch <git@apitzsch.eu>
-To: Erikas Bitovtas <xerikasxx@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: linux-media@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Cc: linux-clk@vger.kernel.org
-
----
-André Apitzsch (4):
-      media: dt-bindings: venus: Add qcom,msm8939 schema
-      media: qcom: venus: Add msm8939 resource struct
-      arm64: dts: qcom: msm8939: Add venus node
-      arm64: dts: qcom: msm8939-longcheer-l9100: Enable venus node
-
-Erikas Bitovtas (7):
-      media: qcom: venus: add pmdomains to the struct based on the purpose of cores
-      arm64: dts: qcom: msm8939-asus-z00t: add Venus
-      clk: qcom: gcc-msm8939: mark Venus core GDSCs as hardware controlled
-      media: qcom: venus: move getting vdec and venc for later
-      media: qcom: venus: Move HFI v3 venc and vdec methods to HFI v1
-      media: qcom: venus: add power domain enable logic for Venus cores
-      media: qcom: venus: Enable HEVC decoding for MSM8939
-
- .../bindings/media/qcom,msm8939-venus.yaml         | 147 ++++++++++++++++
- arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts     |   8 +
- .../boot/dts/qcom/msm8939-longcheer-l9100.dts      |   8 +
- arch/arm64/boot/dts/qcom/msm8939.dtsi              |  34 ++++
- drivers/clk/qcom/gcc-msm8939.c                     |   4 +
- drivers/media/platform/qcom/venus/core.c           |  42 +++++
- drivers/media/platform/qcom/venus/core.h           |   6 +
- drivers/media/platform/qcom/venus/hfi_parser.c     |   3 +-
- drivers/media/platform/qcom/venus/pm_helpers.c     | 187 ++++++++++++++++++---
- drivers/media/platform/qcom/venus/vdec.c           |  12 +-
- drivers/media/platform/qcom/venus/venc.c           |  12 +-
- 11 files changed, 430 insertions(+), 33 deletions(-)
----
-base-commit: 7080e32d3f09d8688c4a87d81bdcc71f7f606b16
-change-id: 20260416-msm8939-venus-rfc-c025c4c74fae
-
-Best regards,
---  
-Erikas Bitovtas <xerikasxx@gmail.com>
+-- 
+2.54.0
 
 
