@@ -1,247 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-104649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eK4OG5ki72lV7gAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 10:47:21 +0200
+	id GG3kBNEi72lV7gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 10:48:17 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5472A46F557
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 10:47:19 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA13246F5C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 10:48:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2B30C3002B74
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 08:43:31 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 995EF3003D3E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 08:48:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B7BB39D6C9;
-	Mon, 27 Apr 2026 08:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97AFE39FCD2;
+	Mon, 27 Apr 2026 08:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LKv2mHC0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="olxaidGi";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Th27HDD0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169542C1595;
-	Mon, 27 Apr 2026 08:43:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54CCD3A0E80
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 08:48:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777279410; cv=none; b=IhMPGs6utmRHctaKm3AUGUVGz6wkvTuEJ9C9773s6wf5R6U9L7hkCYc0t5sEtabY/I4+DgjXB9qcwe5/NbGOyQ53hW6J8kaeZ9Nl1QfWmgU/COUsw1UxMr5886nxb+X8I74MG8lBYjQDXtff6LzrlTv5/2fcBmK/35BoEfWwGfA=
+	t=1777279693; cv=none; b=STAqy+H1+BV89YcUkqXhk0+ZMfsRUdGYdj6pVDMSO3x+YA10rYrCj+5yT5JHco2gK5qgOHr6VSaq9XRFvvxN62NhdQjeLJxUxG+mD5i2ckQQR4t589lEI7pR+GVpyxGS8K4PGJMBD9zjq5Hvr7pcLlss6yfYHF6EF8Cxt9NsxpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777279410; c=relaxed/simple;
-	bh=KCueZmmoHlvP4A3Xk2iIvGya+WKumH5loHUbnb/3clk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=a+NK9thwdS6ljS0l8f/3wmxvwB/u0/LJdMDlgGscRs4nJkhZ2Stf+BrsGsGIiguc5J7qZtwa7h0xCQXV2qj7lJJTQz755X3uKUkbm9cmJq6vKVQhcme5mI7La3AsitehZq+imdMNNSv1vx13HFcSWQD8i3GGZigIwdH/9cC4yNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LKv2mHC0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3AAC19425;
-	Mon, 27 Apr 2026 08:43:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777279409;
-	bh=KCueZmmoHlvP4A3Xk2iIvGya+WKumH5loHUbnb/3clk=;
-	h=From:Date:Subject:To:Cc:From;
-	b=LKv2mHC0JO7umYbDcD8B/P9XEjd3tPBb8ilMV30Zq7u7FdcEyWa3CA4vIBMU6PGge
-	 XpbpxGK+//Ug+K9Bn61GZs0sFA6MYDHhOvPrD859XTPmFHE3oGUqMmnS1A84V+fzaQ
-	 3gZv6aqL9PoI5V5gLRernrwSqaaVu/1Lf1qZUSvnkf0xfKkYHTc9arkR31Epg9RZav
-	 37y+COkiWh/W0vuzRRbGRGGTrqpW1oUJisev1GWXWRhlsPbCmwPj7OJfs9JYhhmafs
-	 vIAJHySLW5nnSsJvJK9ZgJTKhkSMfb7sl/V4uovTEsNCZbX/q6dGpW8QKxkQDJkApJ
-	 atgoLT1bS74Zg==
-From: Linus Walleij <linusw@kernel.org>
-Date: Mon, 27 Apr 2026 10:43:21 +0200
-Subject: [PATCH v2] ASoC: wsa881x: Move custom workaround to gpiolib-of
+	s=arc-20240116; t=1777279693; c=relaxed/simple;
+	bh=D3vD2kVlYGXS1I5T4J9SraaRD97GJBtR1DS4oNt52qg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Emf/SKpLt/x48jycDTbVnR/kjQD8W5lZEH3yaPTiY2ZKiLhnSA1J6V2Tw4XmrUjBIeQ0D1rUi+6IvMlm9Twc9bf9dMvsgVnDiDyFg40B2MtYV6P0oJMwWbZuCVw80R7PaGgkngOBjN0JoWcCSoRIFOfM7WwvHzUYziDJr2bWACs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=olxaidGi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Th27HDD0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63R8T9ll861260
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 08:48:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Ui/p8UniljFrVfKElakgGeiO2AnZtZXK9CfVIOCmzz4=; b=olxaidGiIzavpjiD
+	dMFTZZe0WqHE5PiGpP5459XPD1OaqHVZJGwHbeMMWetVBum2Z98k5ABvLPhXi9FG
+	o7edD4Lzq997AvdTaOH/THoL9NWSCqk/t1tzYNuNkdIE81CG3sUIjoCGbwg4aRHa
+	zcf9I47J+D9UhWEpNdbLmQ/4EHLcaLzJk6AaJ2bsJ15JRBGHQZE0QlUugRTSlsp/
+	b95FA36/dMCSbdoPaDl2cY6VK3nOdOJ5dY/9hKExcewAr+VtdD+rG5OqjygGLYDu
+	XOqsXsq6VSmKDq60Zc+b5ZrGG+G5RELKj4XMxKdPTba2v4vy2AkgIvrr+BDhk5F5
+	D2bOxA==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4drnpw587t-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 08:48:11 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-358f058973fso11956146a91.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 01:48:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1777279690; x=1777884490; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ui/p8UniljFrVfKElakgGeiO2AnZtZXK9CfVIOCmzz4=;
+        b=Th27HDD0dRXr3tBld32vUxLwHVu5NN9hocXfvWagm9jIDxpzwu6D4VXhkW/Lzokkp0
+         ebET3h+MzAcutf8ieuKdDcOTiLCTR4roSY1BdETsX60vtjNx7twKDjnfuG1HnAzyKtF0
+         Ard7TeOQL8ewmOEoDysSuRlRD7iF2bgZbYCP/Sn+tY8vjJqLqE68CRsHo8PHK/mSESAW
+         y0T/72pBFGijmViGpnwVGxae3ZqadKeA7/ThJncYCXDRhwPgVT55aA/1cryxsmXsvM+W
+         ZgwLW9mVKG/GRj/njqw1lOXKVs46DFnY3+mGa0rneoDhDt3OA0OnEwgSyGkY/83yoUZl
+         gO0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777279690; x=1777884490;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ui/p8UniljFrVfKElakgGeiO2AnZtZXK9CfVIOCmzz4=;
+        b=tJffckb07CXbKHyYfjH4kinXY5Bqvnn615FyzMn5TgUmAMN8wNOk6JGPmov2ZHzPMR
+         0QelhCRiykEckTi7jrIvuLieQM3l+q/msWrpxdJ9EODnNMvCAKXYnofDiqgURR8daMLU
+         MmOWVkKXM4Fb+VQxD8+J+6ljhnJ+rKW9JS3TX53LWTxZ6J4YRHvnX+/perLr/6trIZLE
+         j0CSpzwcigKbiMNqh5lVWeTUhw+jj+N9L5upEatE69rZBc1uddsjmpMJkbTAozFVPSjg
+         3h/PYlVNLSwvssDQzil+/FtUjkaU9ECKOb3+OuYyfk7Td3n3oeB9NP7ws96DG3+HTxNr
+         OfzQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8YCNJWEH7P2zXux/svm5TYA91FtO2wwN9a/calHcnc3CLrCV7xnZdoYjhfUK0lkyoLrKKPPxXNP0qRQq1o@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxy+KtX4gdbp7sjK5kVhXXSyckZbhSKOOUYvDidJwE+lU2ebKjq
+	fJwWeZSSHyeziIjmVDn3Xfcd4nJaSaA06SpnzZIKflUaVtyyOKDpGbmyGMurMTpZIDt0nu+haPB
+	W0Q04c12JcXZBDgoYwNLMenJfYyZL7X/A5gBNIabcOlMRZMWtmXAZ8TJHcTdmNO2CwB7w
+X-Gm-Gg: AeBDieu1vjvikiGjzIm8Y8fkIROpIlMdUHYSkgv7B+Vn/tQ9yT2il1e5U8/qUE4Bdy9
+	SHJodO9ixVXRaTmDs9MWiELBOIf5/G6SyQZzcDBBEfIaKnbD8KJsO0lts8SjFWot1LHNzaMIZh7
+	c1LEXXWDc7AvOEmvKVApgRsJEGmXjhXhb8DxdpMNLAZ6NT+0QV+u6QP6V0hhzOjeIYgllWv7Z/7
+	zvZPtgoXV/x9DiCg8eA98yAxY5TmxzcQJ7Vu2F7IPADARenHndi1Ulj2HCgrsPh+KdI4VNC06Mj
+	VRa1V8ToPDZQIhJ67e+OGXQpbboOp9O8Ms779AYz6ZqzEDsNjHu11Sn/jQZtnmrEbT9oIkoDbDG
+	jqrt+nxg7G3HhRfM9rcHwacmwm6m5LgtMAe0b00AL+7VI+EVRKlU9a5uG0FbBJQA=
+X-Received: by 2002:a17:90b:394e:b0:359:d54:846f with SMTP id 98e67ed59e1d1-361403f10f9mr41482661a91.7.1777279690292;
+        Mon, 27 Apr 2026 01:48:10 -0700 (PDT)
+X-Received: by 2002:a17:90b:394e:b0:359:d54:846f with SMTP id 98e67ed59e1d1-361403f10f9mr41482639a91.7.1777279689802;
+        Mon, 27 Apr 2026 01:48:09 -0700 (PDT)
+Received: from [10.217.222.83] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36140fc593bsm38732895a91.1.2026.04.27.01.48.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Apr 2026 01:48:09 -0700 (PDT)
+Message-ID: <60f06bc0-16fd-4629-90d5-60021fb40d59@oss.qualcomm.com>
+Date: Mon, 27 Apr 2026 14:18:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: dma: qcom: bam-dma: Add support for
+ kaanapali BAM v2.0.0
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Harshal Dev <harshal.dev@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260424-knp_qce-v1-0-813e18f8f355@oss.qualcomm.com>
+ <20260424-knp_qce-v1-1-813e18f8f355@oss.qualcomm.com>
+ <20260425-handsome-papaya-porcupine-d42df7@quoll>
+ <19600dfe-00e7-49be-9879-95cf662e1604@kernel.org>
+Content-Language: en-US
+From: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+In-Reply-To: <19600dfe-00e7-49be-9879-95cf662e1604@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260427-asoc-wsa881x-v2-1-9ef965f94624@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/1XMSwrCMBSF4a2UOzaSB02CI/chHcT0tg1KIjcSK
- yV7NxYcOPwPnG+DjBQww6nbgLCEHFJsIQ8d+MXFGVkYW4PkUnMlNXM5efbKzlqxMq2U92YyXCg
- J7fIgnMK6c5eh9RLyM9F714v4rj/I/ENFMMF6NXreW21QX883pIj3Y6IZhlrrB3TnKsGpAAAA
-X-Change-ID: 20260326-asoc-wsa881x-633cc7f70132
-To: Bartosz Golaszewski <brgl@kernel.org>, 
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
- Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>
-Cc: linux-gpio@vger.kernel.org, linux-sound@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Linus Walleij <linusw@kernel.org>
-X-Mailer: b4 0.15.2
-X-Rspamd-Queue-Id: 5472A46F557
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI3MDA5MiBTYWx0ZWRfX1nEXeFHasjgZ
+ FBvQwwO0aQCToohuO4LvsIYNJm8wY3CSW5WHdEPsBh97glH88FVlWJeTtz+++A8EVNccM05S9Ol
+ 9BsTT7jhSF4rYhLvQ/h3RnrUfbJjzHcA7TSYGjg+EjXzS1/Tt5RpIY/0Cyb9C/GdG82pWMy8vX3
+ Gg+fTbRHrhgHLDYI5p+LjmielwhSuqoewvr89GtT0AK6i7PJ2LsW2S2k5gEIPaX1ID5MRQDV1KJ
+ 60qUMQaOJGdDo5YPyYrXHq2LFsHc0eCUGl/aBOEPe3p7nHZGOXnsVcJmhWysmHs5kui3i3Ggi56
+ YtQK2s9RjSmasXYRhLYlsD6jxl2GS2Jdfegr5OY+bxQ0pr2Fuj3pKBmXcakbv1g1PNSMY3X0nOu
+ wzSMncUDlcG7C0ZprzG6CkLYFiweE2X7dfzlDZtIMuZiwshpZc2YSPEfY8WRZX6A/eX6HDxP9Db
+ Q3cadd0qOFaj6Jl9oTQ==
+X-Proofpoint-ORIG-GUID: 5N2hDjZpLUL8pzBXg2rzqwb7w8g_XQPk
+X-Authority-Analysis: v=2.4 cv=RaGgzVtv c=1 sm=1 tr=0 ts=69ef22cb cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=aNQcmT1Oi1EDLeyP3UsA:9 a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-GUID: 5N2hDjZpLUL8pzBXg2rzqwb7w8g_XQPk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-27_02,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 phishscore=0 spamscore=0 clxscore=1015 suspectscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604270092
+X-Rspamd-Queue-Id: AA13246F5C7
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-104649-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	TAGGED_FROM(0.00)[bounces-104650-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:dkim,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[kuldeep.singh@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-The WSA881x codec driver has a local workaround for old device
-trees that have the "powerdown" GPIO flagged as active high,
-despite it is active low.
+On 25-04-2026 15:54, Krzysztof Kozlowski wrote:
+> On 25/04/2026 12:23, Krzysztof Kozlowski wrote:
+>> On Fri, Apr 24, 2026 at 05:04:15PM +0530, Kuldeep Singh wrote:
+>>> Kaanapali support newer BAM v2.0.0 version.
+>>> Document the compatible string and update example along with it.
+>>
+>> And why v2.0.0 is not compatible with v1.7.0? Or what is not compatible?
+>>
+>>>
+> 
+> 
+> Ah, and drop redundant "support for". Write concise subjects and binding
+> cannot "support" something.
+Sure, will reword and keep something simple like below.
+"Document compatible string for bam v2.0.0 version found on kaanapali."
 
-This quirk can be replaced by a single quirk entry in
-gpiolib-of.c
-
-Drop all polarity inversion code and drop the surplus
-gpiod_direction_output() call in probe() since we now set up
-the line correctly when getting the GPIO.
-
-Also drop the inclusion of the unused <linux/gpio.h>.
-
-Signed-off-by: Linus Walleij <linusw@kernel.org>
----
-Perhaps this can be applied to ASoC directly we seldom add
-things to these quirks so I think it'll be fine.
-
-I was thinking of adding Fixes: but the current code is fine,
-we don't really fix anything we just make it simpler.
----
-Changes in v2:
-- Property name needs to be "powerdown-gpios" not just "powerdown".
-- Link to v1: https://lore.kernel.org/r/20260327-asoc-wsa881x-v1-1-53dc05867e6b@kernel.org
----
- drivers/gpio/gpiolib-of.c  |  8 ++++++++
- sound/soc/codecs/wsa881x.c | 35 ++++-------------------------------
- 2 files changed, 12 insertions(+), 31 deletions(-)
-
-diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
-index 2c923d17541f..90f6295ab338 100644
---- a/drivers/gpio/gpiolib-of.c
-+++ b/drivers/gpio/gpiolib-of.c
-@@ -240,6 +240,14 @@ static void of_gpio_try_fixup_polarity(const struct device_node *np,
- 		 * treats it as "active low".
- 		 */
- 		{ "ti,tsc2005",		"reset-gpios",	false },
-+#endif
-+#if IS_ENABLED(CONFIG_SND_SOC_WSA881X)
-+		/*
-+		 * WSA881 powerdown is always active low, but some device trees
-+		 * missed this when first contributed. It also has a very strange
-+		 * compatible.
-+		 */
-+		{ "sdw10217201000",	"powerdown-gpios", false },
- #endif
- 	};
- 	unsigned int i;
-diff --git a/sound/soc/codecs/wsa881x.c b/sound/soc/codecs/wsa881x.c
-index 2fc234adca5f..d15fda648dad 100644
---- a/sound/soc/codecs/wsa881x.c
-+++ b/sound/soc/codecs/wsa881x.c
-@@ -3,7 +3,6 @@
- // Copyright (c) 2019, Linaro Limited
- 
- #include <linux/bitops.h>
--#include <linux/gpio.h>
- #include <linux/gpio/consumer.h>
- #include <linux/module.h>
- #include <linux/regmap.h>
-@@ -672,11 +671,6 @@ struct wsa881x_priv {
- 	struct sdw_stream_runtime *sruntime;
- 	struct sdw_port_config port_config[WSA881X_MAX_SWR_PORTS];
- 	struct gpio_desc *sd_n;
--	/*
--	 * Logical state for SD_N GPIO: high for shutdown, low for enable.
--	 * For backwards compatibility.
--	 */
--	unsigned int sd_n_val;
- 	int active_ports;
- 	bool hw_init;
- 	bool port_prepared[WSA881X_MAX_SWR_PORTS];
-@@ -1121,31 +1115,11 @@ static int wsa881x_probe(struct sdw_slave *pdev,
- 	if (!wsa881x)
- 		return -ENOMEM;
- 
--	wsa881x->sd_n = devm_gpiod_get_optional(dev, "powerdown", 0);
-+	wsa881x->sd_n = devm_gpiod_get_optional(dev, "powerdown", GPIOD_OUT_LOW);
- 	if (IS_ERR(wsa881x->sd_n))
- 		return dev_err_probe(dev, PTR_ERR(wsa881x->sd_n),
- 				     "Shutdown Control GPIO not found\n");
- 
--	/*
--	 * Backwards compatibility work-around.
--	 *
--	 * The SD_N GPIO is active low, however upstream DTS used always active
--	 * high.  Changing the flag in driver and DTS will break backwards
--	 * compatibility, so add a simple value inversion to work with both old
--	 * and new DTS.
--	 *
--	 * This won't work properly with DTS using the flags properly in cases:
--	 * 1. Old DTS with proper ACTIVE_LOW, however such case was broken
--	 *    before as the driver required the active high.
--	 * 2. New DTS with proper ACTIVE_HIGH (intended), which is rare case
--	 *    (not existing upstream) but possible. This is the price of
--	 *    backwards compatibility, therefore this hack should be removed at
--	 *    some point.
--	 */
--	wsa881x->sd_n_val = gpiod_is_active_low(wsa881x->sd_n);
--	if (!wsa881x->sd_n_val)
--		dev_warn(dev, "Using ACTIVE_HIGH for shutdown GPIO. Your DTB might be outdated or you use unsupported configuration for the GPIO.");
--
- 	dev_set_drvdata(dev, wsa881x);
- 	wsa881x->slave = pdev;
- 	wsa881x->dev = dev;
-@@ -1158,7 +1132,6 @@ static int wsa881x_probe(struct sdw_slave *pdev,
- 	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
- 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
- 	pdev->prop.clk_stop_mode1 = true;
--	gpiod_direction_output(wsa881x->sd_n, !wsa881x->sd_n_val);
- 
- 	wsa881x->regmap = devm_regmap_init_sdw(pdev, &wsa881x_regmap_config);
- 	if (IS_ERR(wsa881x->regmap))
-@@ -1181,7 +1154,7 @@ static int wsa881x_runtime_suspend(struct device *dev)
- 	struct regmap *regmap = dev_get_regmap(dev, NULL);
- 	struct wsa881x_priv *wsa881x = dev_get_drvdata(dev);
- 
--	gpiod_direction_output(wsa881x->sd_n, wsa881x->sd_n_val);
-+	gpiod_direction_output(wsa881x->sd_n, 1);
- 
- 	regcache_cache_only(regmap, true);
- 	regcache_mark_dirty(regmap);
-@@ -1196,13 +1169,13 @@ static int wsa881x_runtime_resume(struct device *dev)
- 	struct wsa881x_priv *wsa881x = dev_get_drvdata(dev);
- 	unsigned long time;
- 
--	gpiod_direction_output(wsa881x->sd_n, !wsa881x->sd_n_val);
-+	gpiod_direction_output(wsa881x->sd_n, 0);
- 
- 	time = wait_for_completion_timeout(&slave->initialization_complete,
- 					   msecs_to_jiffies(WSA881X_PROBE_TIMEOUT));
- 	if (!time) {
- 		dev_err(dev, "Initialization not complete, timed out\n");
--		gpiod_direction_output(wsa881x->sd_n, wsa881x->sd_n_val);
-+		gpiod_direction_output(wsa881x->sd_n, 1);
- 		return -ETIMEDOUT;
- 	}
- 
-
----
-base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
-change-id: 20260326-asoc-wsa881x-633cc7f70132
-
-Best regards,
---  
-Linus Walleij <linusw@kernel.org>
+-- 
+Regards
+Kuldeep
 
 
