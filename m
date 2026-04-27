@@ -1,142 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-104829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MNdsDnPF72lsFwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 22:22:11 +0200
+	id sB4fOpbF72m4FwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 22:22:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FD7B479F42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 22:22:10 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 740C8479F6E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 22:22:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 001F93007E1E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 20:18:47 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5A7FB300DCC8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Apr 2026 20:22:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A4AC2DCF55;
-	Mon, 27 Apr 2026 20:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9F7F364EB1;
+	Mon, 27 Apr 2026 20:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oqUnmZVb"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="YMzhjdp5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CBC2D8DCA
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 20:18:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF9D29A32D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 20:22:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777321126; cv=none; b=DdHJV1k13Khq0zS40HFGaqN8GH8ymhLQt5Y1v8jW3UlHIa+JywRKhmlTqELOhANqtLv0g212VOVrvN2ckWNREYbxLLDxeYNdxUhl2dVky9qqOVmSXBkJ+LzWBWTFEanKVeQOKH2cPpjLxHpiMAS1a/yGkr0++fmOb+P7bkz/zI0=
+	t=1777321362; cv=none; b=OZiIr86Y+7Hhjiws0rnnOAfrfvSQnSco8eJWWNmGUd31j3xgje+7D17GpPBH297GV4C6+zOvgB21pIG+iObVViKKYg205aANBEfrJJRJ4A+0bI62DC4IN/ZQQeZv5R8lXo6Rmc8Z0/c2vYNxfjMkZzajwEFSfDfmuaETfqQC76A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777321126; c=relaxed/simple;
-	bh=2m3w2eF3ySbCRlzKKfWno16CUj5QKOxf9WIS6YvqOy4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ACupyL5Nh/axFcb+tCrlBfmYgCFUuxSDLYrJCE+TrxQAKY4EsynKIZ+sPZnbCjSEZx58ftMC3b9OChIreChf9UXSJCOBd9cdg2tQZfrY0xO8hd7MUL0QVKg/iFne4paJi5nMP6zOKVe55k0OQZihlO2vFYgW/jvJX5/Nkq7663w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oqUnmZVb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B65C2BCB5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 20:18:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777321126;
-	bh=2m3w2eF3ySbCRlzKKfWno16CUj5QKOxf9WIS6YvqOy4=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=oqUnmZVbutl6/yxt4+cqgVCczSJIkB6dH3yocAbV7lESi32RXPrsTItrwzCKOPd72
-	 fODgAQ2MNlBIEL02i7IDfifh/70W4gi2Frh0dYSuM0l/Q9eX5q18Yz34gvLsUTbJm0
-	 bbBgft3QlAAk2KNmM5roTtXH2E54BW+N2o1QLTyZCsDu5MHxUqYCbBvXMvd3aMLRJR
-	 Zj1rMiJKGkLUdYuriT8QUZblm08tyhtlwKK5ijvF8y7YeST+clqIh9D7et9mbssvDy
-	 cTuBuiGw7GVbQX1GFUtGV7ND7JdXE5ldQHQ6E+gUuwBAlupevbdGwSRNoIdMLRVa2C
-	 j/plYrbnR/ABA==
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-59e5aa4ca41so10401682e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 13:18:46 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ+W6BvLWZ2L3gtLvQbKjrbYK6EbSLg7ipwVrItiEkUNiBBDqgfpJDpFjhEdX8ieC8CKaXwuX+qEbgCCj2Vy@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx3gXdvvIWvpKVdrFMQE+JA5yy1AW/QvTj4zyDQBAYrFAlF189R
-	zqfQOKfdLS0uA22pUrc3AbyyLj5cfC4nE1x6yOlQllYIIz1ziGcDOf0goI1wfnub2eRNEs8R9GA
-	Nn9BEyx1ZMJzsJ6nRGTTA5W+8FLHpths=
-X-Received: by 2002:a05:6512:3f18:b0:5a3:fe5e:3d49 with SMTP id
- 2adb3069b0e04-5a746626a7dmr91838e87.23.1777321124983; Mon, 27 Apr 2026
- 13:18:44 -0700 (PDT)
+	s=arc-20240116; t=1777321362; c=relaxed/simple;
+	bh=YTd/Z0HCcKLHukgv576kTNa9f4xPUI4kMQZ0Lh2Y+V0=;
+	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
+	 In-Reply-To:References; b=TnsshqQWxt+kvhrzDIydtjldma1u41xdroSRgi0AV2INedjkqpxv1OjJ+RDl1juFX4+Zb4/QOV787coOCwTgZZgRmVajayEmRvQ6Jl4U4e3EYCK4TBitYeqjxpMOxs4y8ItEUk3p14zyXg65KKj8VF9QrkSqgNpjWqrZ8PQn+8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=YMzhjdp5; arc=none smtp.client-ip=91.218.175.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260425155505.83688-2-krzysztof.kozlowski@oss.qualcomm.com>
-In-Reply-To: <20260425155505.83688-2-krzysztof.kozlowski@oss.qualcomm.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Mon, 27 Apr 2026 22:18:33 +0200
-X-Gmail-Original-Message-ID: <CAD++jL=yCM80YHV3bKTVVfNoYsbTLJ9oV=3sJ8JcL6ftvWa3_g@mail.gmail.com>
-X-Gm-Features: AVHnY4JDVHbJjkTqLXSL4th_cNweCpaDB9wF_OCiODgBCzqsZyGQqWQgB4pLxPc
-Message-ID: <CAD++jL=yCM80YHV3bKTVVfNoYsbTLJ9oV=3sJ8JcL6ftvWa3_g@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: Make important drivers default
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Russell King <linux@armlinux.org.uk>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+	s=key1; t=1777321358;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=WBUWoNvxUkGv0blpLp4hLR3tQUEDpc81rOZHnN/VVUo=;
+	b=YMzhjdp5FNAhb4Z1tg0sSgl0PNTXf8kfwPTd2XHvmruWGEvC5xOYGB9qDihwT9c8ppRkdf
+	auEJ/Jb62RLQJMjSVjfAqylbKIyunq9CRr97vOKUK4iCvMlhjGmfETa2lLCJXm5v76NXdH
+	Qr7ltK+j2Fvzf9WvKqLWlf1QjdOiU+AgtoyWmwa/lerPKtMXvvIz/uPFCy5lbZDsWX+/0+
+	LHU62gM+poogk3Bbx9CS5YHM2mLia9wFcr1D0bkTVmjCYmhku/alA5Ij8xVe8xV9K5FcVZ
+	RQNGLfq2Q6tBzWF68Yzg8XCnHKOVzFMcT4VDvXLWkL/gg97+v0Vn2eW2k0FdCg==
+Date: Mon, 27 Apr 2026 20:22:31 +0000
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 9FD7B479F42
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Paul Sajna" <sajattack@postmarketos.org>
+Message-ID: <a0bbc97055846dae83db766e60a39899f09e1e91@postmarketos.org>
+TLS-Required: No
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm845-lg: Enable
+ qcom,snoc-host-cap-skip-quirk
+To: david@ixit.cz, "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Amit Pundir" <amit.pundir@linaro.org>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@oss.qualcomm.com>
+Cc: "Konrad Dybcio" <konradybcio@gmail.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org, "Konrad Dybcio"
+ <konrad.dybcio@oss.qualcomm.com>, "David Heidelberg" <david@ixit.cz>,
+ stable@vger.kernel.org
+In-Reply-To: <20260427-b4-skip-host-cam-qmi-req-fixup-v1-2-4398e94bde70@ixit.cz>
+References: <20260427-b4-skip-host-cam-qmi-req-fixup-v1-0-4398e94bde70@ixit.cz>
+ <20260427-b4-skip-host-cam-qmi-req-fixup-v1-2-4398e94bde70@ixit.cz>
+X-Migadu-Flow: FLOW_OUT
+X-Rspamd-Queue-Id: 740C8479F6E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[postmarketos.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[postmarketos.org:s=key1];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104829-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	TAGGED_FROM(0.00)[bounces-104830-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org,oss.qualcomm.com,ixit.cz];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,mail.gmail.com:mid]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sajattack@postmarketos.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[postmarketos.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 
-On Sat, Apr 25, 2026 at 5:55=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@oss.qualcomm.com> wrote:
+April 26, 2026 at 11:44 PM, "David Heidelberg via B4 Relay" <devnull+davi=
+d.ixit.cz@kernel.org mailto:devnull+david.ixit.cz@kernel.org?to=3D%22Davi=
+d%20Heidelberg%20via%20B4%20Relay%22%20%3Cdevnull%2Bdavid.ixit.cz%40kerne=
+l.org%3E > wrote:
 
-> The main SoC TLMM (Top-Level Multiplexer) pin controller drivers are
-> essential for booting up SoCs and are not really optional for a given
-> platform.  Kernel should not ask users choice of drivers when that
-> choice is obvious and known to the developers that answer should be
-> 'yes' or 'module'.
->
-> Switch all Qualcomm TLMM pin controller drivers to a default 'yes' for
-> ARCH_QCOM.  This has impact:
->
-> 1. arm64 defconfig: enable PINCTRL_SM7150 and PINCTRL_HAWI, which were
->    not selected before but should be, because these platforms need them
->    for proper boot.
->
-> 2. arm qcom_defconfig: no changes.
->
-> 3. arm multi_v7 defconfig: enable drivers necessary to boot ARM 32-bit
->    platforms, which are already enabled on qcom_defconfig.
->
-> 4. COMPILE_TEST builds: enable by default all drivers for arm or arm64
->    builds, whenever ARCH_QCOM is selected.  This has impact on build
->    time and feels logical, because if one selects ARCH_QCOM then
->    probably by default wants to build test it entirely.  Kernels with
->    COMPILE_TEST are not supposed to be used for booting.
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-Way better like this.
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-
-Yours,
-Linus Walleij
+>=20
+>=20From: Paul Sajna <sajattack@postmarketos.org>
+>=20
+>=20The WCN3990 firmware for judyln does not respond to the request for
+> host capabilities. Add the devicetree quirk to skip this request.
+>=20
+>=20Fixes: eb8fa3208526 ("arm64: dts: qcom: sdm845-lg: Add wifi nodes")
+> Cc: <stable@vger.kernel.org> # 7.1.x
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Reviewed-by: David Heidelberg <david@ixit.cz>
+> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
+>=20
+>=20diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/ar=
+m64/boot/dts/qcom/sdm845-lg-common.dtsi
+> index 71d070619ad73..2d02d77d35ea7 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> @@ -675,10 +675,12 @@ &venus {
+>=20=20
+>=20 &wifi {
+>  vdd-0.8-cx-mx-supply =3D <&vreg_l5a_0p8>;
+>  vdd-1.8-xo-supply =3D <&vreg_l7a_1p8>;
+>  vdd-1.3-rfa-supply =3D <&vreg_l17a_1p3>;
+>  vdd-3.3-ch0-supply =3D <&vreg_l25a_3p3>;
+>  vdd-3.3-ch1-supply =3D <&vreg_l23a_3p3>;
+>=20=20
+>=20+ qcom,snoc-host-cap-skip-quirk;
+> +
+>  status =3D "okay";
+>  };
+>=20
+>=20--=20
+> 2.53.0
+>
+Tested-By: Paul Sajna <sajattack@postmarketos.org>
 
