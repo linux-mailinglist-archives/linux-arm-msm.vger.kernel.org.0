@@ -1,138 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-104895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0FUUOehp8GkOTQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 10:03:52 +0200
+	id MKH9IaRp8GkOTQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 10:02:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDB2047F8E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 10:03:51 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EBF547F894
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 10:02:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 86FCE30D7CB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 07:43:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0B5CE314543A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 07:38:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF9DF3A9629;
-	Tue, 28 Apr 2026 07:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 279A63A0E8E;
+	Tue, 28 Apr 2026 07:38:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="exdndTXl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1775D3BC68A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 07:43:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A76346E5A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 07:38:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777362189; cv=none; b=p6mCECrazSfkxx43hXjH7No4pOkrFZh3Zkj4x8/0yPbuaNHtklRCWbEfnv2q2XG8tNDWb6moPnno7qtsjsCnXzX4D6Pg/R8HY1Ug12G9h9NJ5ERKqnGrSD8djQTQ+Kx0MhDIena7fOuKGU86wmPvSAcP7ZlYbnagixlX81dlM8Q=
+	t=1777361938; cv=none; b=EYgf8Cyr6RO+YJu0I/e90icF/cayiAg4zIEWbT5wePVCCv1yZVWFxHusWfi0FRdxOo+0YmgK5MWGKWyadvomJhY9jLqH73aUihbdY5h2NTXfLU8lFskoH069S/7CadKUYYWLADAm7rRHvM9WByJwF8LUbTeXC+AMUNySYt8VamA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777362189; c=relaxed/simple;
-	bh=hFnH/Nmv/MzL2of6ghhzBC0gm+bIkr3ghedOvXY4e3A=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Oc7IVF6vJXddP1km2ZTpp8da9IdxkOIh8llba8Nl4j+YTpj1lmP3PhCEW7WMM3fHvP7+VRPB79jKB/IsauMOoLBbGu+pJ0A+upT1ewTVcqp9XUdtDeC4yC/+CIygy7kd5sPopX2NCIhVOwn+YBLvYxSCMDCeTCSMJGRHVeqA1sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from localhost (unknown [124.16.138.129])
-	by APP-05 (Coremail) with SMTP id zQCowACHFgrzZPBpekTNDg--.36426S2;
-	Tue, 28 Apr 2026 15:42:43 +0800 (CST)
-From: Chen Ni <nichen@iscas.ac.cn>
-To: robin.clark@oss.qualcomm.com,
-	lumag@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch
-Cc: sean@poorly.run,
-	konradybcio@kernel.org,
-	akhilpo@oss.qualcomm.com,
-	abhinav.kumar@linux.dev,
-	jesszhan0024@gmail.com,
-	marijn.suijten@somainline.org,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	Chen Ni <nichen@iscas.ac.cn>
-Subject: [PATCH] drm/msm/a6xx: Check kzalloc return in a8xx_hfi_send_perf_table
-Date: Tue, 28 Apr 2026 15:35:58 +0800
-Message-Id: <20260428073558.1234238-1-nichen@iscas.ac.cn>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1777361938; c=relaxed/simple;
+	bh=M8+6UnX+4lN+I7hSH5w2HlitnXoe39zLUp85i19lW4k=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XpCt/9rR/lPdb72C+/ry92vxt7tzW9YruSZsTdXtdzeXPxQ32kTkbhbkyEp6hc2OifAXHgGPv5mn91OcYuQnkmC2N0Gk95PNH26WHgoW58zXIRFv+8FjnJUJn2gonXOeRlEGccwChOa3hhaECYDGPABOAVeArHOD/G8aqxpGTKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=exdndTXl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8456C2BCC6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 07:38:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777361937;
+	bh=M8+6UnX+4lN+I7hSH5w2HlitnXoe39zLUp85i19lW4k=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=exdndTXlRxThyJGPMZoGsrhIEXUARtyMvIjuf8op8WGky70Fh1CYQMazkjhVRT8Mh
+	 wfx5U+58ChM4CAl1f/qOYKYgrHhAtnnMOvXqLIzDxW534t1c5vFoCjVwOmEwg2Wa8D
+	 yW7geuXxgP/f9U2CiRDbXT+9WLp8ITQKYRubNXdx1DdRouyx7Xck4x1RCoU+Yc3R/a
+	 EKukhLU4h9yNp4cu6QO68X4VOFvzQtojmKBsxMiE3LCL8owm6/PfgfAqg/lVN3VyTn
+	 v6puGg+NRDEE/X4FaEAfmuLzBFLIvVLd/vEeni0dgKX8zPpsO1imHMsX+8no+Yj7XJ
+	 1DhvG2hQOD+LA==
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5a742b8b72eso2105333e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 00:38:57 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ/hgGDQ+4PksRA4yFMCrOp9A4zPTrd4XClWiXHRU8vSyluNeVZobTKtOUVIKWa+2daoa42XguSksHqymSjy@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx84p9oQeH6+ANsasS6T9dbYWga/XQ17ctU6/54LEUTuLilqsDt
+	aCgIf82uCT/LMLia4nrYYUoqj1VEvicDU54qBmcd89eA81CzyLam5u0rq8uFSl3iPeoTMKGbabV
+	Z6u5dx7FroW9a2HttKMUxchSMg2V94nhLs43/bSxzqQ==
+X-Received: by 2002:a05:6512:3f12:b0:5a4:17a6:9780 with SMTP id
+ 2adb3069b0e04-5a74660a971mr759395e87.14.1777361936359; Tue, 28 Apr 2026
+ 00:38:56 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 28 Apr 2026 00:38:55 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 28 Apr 2026 00:38:54 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260427-arm-psci-system_reset2-vendor-reboots-v21-2-dcf937775e73@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:zQCowACHFgrzZPBpekTNDg--.36426S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Xw1DJw4xJw1rXF1kGF47CFg_yoWfurb_uw
-	48WFZ3Gry2vF90vryxA393tFyIkr98ursavrnaq39aqryDXr1rur9rXryrZ39xuF4fAF90
-	yw4DAr13AwnrKjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUbTxFF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
-	Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s
-	1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0
-	cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8Jw
-	ACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxGxcIEc7CjxVA2Y2ka
-	0xkIwI1lc7CjxVAaw2AFwI0_Jw0_GFylc2xSY4AK67AK6r4xMxAIw28IcxkI7VAKI48JMx
-	C20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAF
-	wI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20x
-	vE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v2
-	0xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxV
-	W8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7VUbVHq3UUUUU==
-X-CM-SenderInfo: xqlfxv3q6l2u1dvotugofq/
-X-Rspamd-Queue-Id: CDB2047F8E4
+References: <20260427-arm-psci-system_reset2-vendor-reboots-v21-0-dcf937775e73@oss.qualcomm.com>
+ <20260427-arm-psci-system_reset2-vendor-reboots-v21-2-dcf937775e73@oss.qualcomm.com>
+Date: Tue, 28 Apr 2026 00:38:54 -0700
+X-Gmail-Original-Message-ID: <CAMRc=MevqR=ST_-WO_CAUc7stKmQU=_Qp7BTrewzvg40x=JiLw@mail.gmail.com>
+X-Gm-Features: AVHnY4IrhreEwlQ0Dtd2BuvGIlLYNK7-acJ0gJkWUG1j_5wLe4XWVKLYqD4Vmhg
+Message-ID: <CAMRc=MevqR=ST_-WO_CAUc7stKmQU=_Qp7BTrewzvg40x=JiLw@mail.gmail.com>
+Subject: Re: [PATCH v21 02/13] power: reset: reboot-mode: Add support for 64
+ bit magic
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	devicetree@vger.kernel.org, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, Andre Draszik <andre.draszik@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, 
+	Srinivas Kandagatla <srini@kernel.org>, Sebastian Reichel <sebastian.reichel@collabora.com>, 
+	Sebastian Reichel <sre@kernel.org>, Mark Rutland <mark.rutland@arm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Daniel Lezcano <daniel.lezcano@kernel.org>, Christian Loehle <christian.loehle@arm.com>, 
+	Ulf Hansson <ulfh@kernel.org>, Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Souvik Chakravarty <Souvik.Chakravarty@arm.com>, 
+	Andy Yan <andy.yan@rock-chips.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	John Stultz <john.stultz@linaro.org>, Moritz Fischer <moritz.fischer@ettus.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>, Sudeep Holla <sudeep.holla@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 7EBF547F894
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.04 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,ffwll.ch];
+	TAGGED_FROM(0.00)[bounces-104893-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,broadcom.com,kernel.org,oss.qualcomm.com,linaro.org,linuxfoundation.org,collabora.com,arm.com,arndb.de,rock-chips.com,gmail.com,ettus.com];
+	RCVD_COUNT_SEVEN(0.00)[7];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_NA(0.00)[iscas.ac.cn];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[36];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-104895-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[nichen@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[poorly.run,kernel.org,oss.qualcomm.com,linux.dev,gmail.com,somainline.org,vger.kernel.org,lists.freedesktop.org,iscas.ac.cn];
-	NEURAL_HAM(-0.00)[-0.995];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	R_DKIM_NA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,iscas.ac.cn:mid,iscas.ac.cn:email]
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 
-Check the return value of kzalloc() to prevent a NULL pointer
-dereference on allocation failure.
+On Mon, 27 Apr 2026 19:34:42 +0200, Shivendra Pratap
+<shivendra.pratap@oss.qualcomm.com> said:
+> Current reboot-mode supports a single 32-bit argument for any
+> supported mode. Some reboot-mode based drivers may require
+> passing two independent 32-bit arguments during a reboot
+> sequence, for uses-cases, where a mode requires an additional
+> argument. Such drivers may not be able to use the reboot-mode
+> driver. For example, ARM PSCI vendor-specific resets, need two
+> arguments for its operation =E2=80=93 reset_type and cookie, to complete
+> the reset operation. If a driver wants to implement this
+> firmware-based reset, it cannot use reboot-mode framework.
+>
+> Introduce 64-bit magic values in reboot-mode driver to
+> accommodate up-to two 32-bit arguments in below format.
+> |    Higher 32 bit  |   Lower 32 bit    |
+> |	 arg2	    | 	    arg1	|
+>
+> Update current reboot-mode drivers for 64-bit magic.
+>
+> Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> ---
 
-Fixes: 06cfbca0e1c6 ("drm/msm/a6xx: Share dependency vote table with GMU")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
----
- drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-index 487c2736f2b3..186a73c0b99c 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-@@ -289,6 +289,8 @@ static int a8xx_hfi_send_perf_table(struct a6xx_gmu *gmu)
- 		(gmu->nr_gpu_freqs * num_gx_votes * sizeof(gmu->gx_arc_votes[0])) +
- 		(gmu->nr_gmu_freqs * num_cx_votes * sizeof(gmu->cx_arc_votes[0]));
- 	tbl = kzalloc(size, GFP_KERNEL);
-+	if (!tbl)
-+		return -ENOMEM;
- 	tbl->type = HFI_TABLE_GPU_PERF;
- 
- 	/* First fill GX votes */
--- 
-2.25.1
-
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
