@@ -1,207 +1,264 @@
-Return-Path: <linux-arm-msm+bounces-105070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sFuLDjcP8WmXcQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 21:49:11 +0200
+	id KMAwBcYT8WlZcwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 22:08:38 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF34148B57C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 21:49:06 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id B10AE48B7AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 22:08:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C010A306A431
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 19:44:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9CD61309172E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 20:07:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FB70383C88;
-	Tue, 28 Apr 2026 19:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44EB73D3CFF;
+	Tue, 28 Apr 2026 20:07:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Eexcb2dt";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="fy/wrPpP"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="gCWlP4++"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f49.google.com (mail-dl1-f49.google.com [74.125.82.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE209379EF5
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 19:44:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F3837DEAE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 20:07:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777405457; cv=none; b=uxDu7N+tM3hzbC8Fw4/VR6elH/Ipg6xhwQWoY1k0n0otvLQMUE4HF6I6m41puF3i4zHSGxM+3goN+eRKrYoFmsXHEKwkla8u8JTj26dPUWAkHDPfgKNdW7ANCGolaqP5urm0859U8n+RBAmGTQVSGuBrhqWt8fWL5iKo/2ztGgQ=
+	t=1777406851; cv=none; b=W1C8pmLqQ6i9cQhvMHp0DJiPak1amgoAL3GcT5ASXsKW+FU7lmJqE7lWZdwry0Ib+aI2RBfknk0rSARJ1C0fjPTmS5NgpsJ3qYj09i7AeHzrjFx8wBQr755bpaSxMV2naUFIp5DiGyNpD9vb6zmdknA6yTMKMG1d2hzo8z1oZqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777405457; c=relaxed/simple;
-	bh=D2N+RdJsvuXrvspZ8hJeIUDpWcBWipQa9UtEyPXYIvg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YoP2QoGsm+6lZUMwk+ljKj51NhDqsL9HLOcWm06+PMei2vHTOWhdGwAgcQigbbfx+xseRmDiVKZ73n32/NFV2MA0OsAQZwD+B3BWjzts9H1ymgesiz4c7dj1kT0Za5u+bwki29alktMConNiG9u43ie0iHI5mDreZcjWzvAtmSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Eexcb2dt; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fy/wrPpP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63SGtADI2984630
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 19:44:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xN5+FvXyhjHZgxw/ab3OvPn3pd5vOjGOlb2vyCAzntI=; b=Eexcb2dtcnaAmQxg
-	FOBp+Kc+8StcMY4Dr58+F9Oq1wRQteIE1IyYof1H3ITr9bWPjdgK4q7jzwqsRWqo
-	v6w9nYIzg9shCshZYHpqQjrg9/D4XlXzFgttUiRyBtP+LUJptHzwJHHMPCBjmHvA
-	KdICCGUMH/IuUoEesGv5yvPcRdnt6E0LZi+iyU0pnU37KyvMiXL1wNK7znCAVkRw
-	gUdQQep3hbnIQbLY4RmGK++Fjfa0E8RKFR2z4C2I787LCQydIAMhctQCRmk4hFIJ
-	XhCQ1WKqDyDE0VOKR53J7bwcv+OwPnk2FZkO8MQ8089q5sUS6rQhZ9E1MuBu9dgX
-	d3k/cw==
-Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com [209.85.221.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4du0u1rka4-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 19:44:15 +0000 (GMT)
-Received: by mail-vk1-f199.google.com with SMTP id 71dfb90a1353d-56f71e90581so9899329e0c.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 12:44:14 -0700 (PDT)
+	s=arc-20240116; t=1777406851; c=relaxed/simple;
+	bh=ksXQeqM5axRgUsGjCWqfJTytSjsUbB4ll76rBVY/214=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DcMZ2qONL+mJl1qA8I2pqwQG/PWipQX2+/uyu4sFGxY1m6WFuZzvAwLzRIjN7MAv5Fhp3Dh2YVXp4QFvovH3xn7pQs+d7YK9GwGbn3Rk5qmafbtZt27QK0h1dzkp/CAnCAHlSc1KGAzFsHvqLqRHpA3CguZBT1dGbBv3y6Fpw+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=gCWlP4++; arc=none smtp.client-ip=74.125.82.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-dl1-f49.google.com with SMTP id a92af1059eb24-12c45281a06so16320408c88.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 13:07:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1777405454; x=1778010254; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xN5+FvXyhjHZgxw/ab3OvPn3pd5vOjGOlb2vyCAzntI=;
-        b=fy/wrPpP5LTgNMlpvPmKIjqbiRh+CbjOC7ioxeRnt1zJG8sFn5gf/Nb87k4udEebFf
-         DyEZz6CsQQlDDxs99a4oL54xj0kfRieF7MGOw5mogqN5ze3oX4PLRs7Qiu/xfWDBuwqU
-         9XwLgBpwJ6J/wSiqGYS2YT4m/MbQM1RZzcr1eNY8GXU5DU2jDdKO1e0qnHLnyhZo+5Nj
-         p5nQ4Nsu8ywV36T+7PQxMB6GKUyjrELE1N/zqYNKBBL0CKzd0tKU7DyfeWRIg36HOnwK
-         m+RYXycoU/+/gPB2uJZlO4XrEPOOVVCOM9VOo+x2q4fdHYsVtS3o/6ddg81RoE72KThR
-         0QkA==
+        d=chromium.org; s=google; t=1777406848; x=1778011648; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oKQRvM+woDu6KBLreGPcHmP1j9kbXpV/WZYBI8HqOII=;
+        b=gCWlP4++xcNr9+Gf+fqTnVbbgA8YOADh3IFpBiDZBsSn5havxoaKvL9GdHxwLKLxkb
+         zFVvECzbbn/CyuqATemdznWR14f6NLOH3Ym9iV/MhYVW/qYWL/D+PmltI62KSjKNKldh
+         sTwvpsTDTXXhYlZiGxNnSpDxvoDln+d4GWE/8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777405454; x=1778010254;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xN5+FvXyhjHZgxw/ab3OvPn3pd5vOjGOlb2vyCAzntI=;
-        b=SETwXi8JAJfWMR9PW8Tw2oKEs+WkpmXiv2Kg5n6dy737nMzKzj6BT0Q168tlKl+AEZ
-         dgBU5/E7yxud/YsTLzwx6F7AqQV7EXpY86iAVdD+xk2Hux+oxpB3VEdvSTAyfz66w++B
-         eZ9ZBLVP5S+FEQWqKjc53LMAJacDG0aH12ZoTjvr3XU/ITYPQTsWWz6A5X0OXBUKnlaX
-         Xwx7tDj7XI5yxb04RH9FQ3ixFf4DZo/jPudTRUJsNxWwLIjiYqy89tMiXse+34NdraDh
-         5dD1a6o3jR8i0seYSkP8hMCJay2LOak/fp2sM7uAqRozJMwlYuJ0sWqE4szYq/7xf0CM
-         4+Dw==
-X-Forwarded-Encrypted: i=1; AFNElJ9vsu7URa6+GukwS1D/IWsCx4Ch0MIH2g6x/Oo2yOReuo4IEIi8q+k0H1y+KgQfqLvkurIPPfHD7jcemevW@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcKht8XwBr8oKjXjA2kjSUiFLaxgKa1ZrWc2j5BuWUws5XO7qb
-	vz9zfwyiDKUXAXrHkM6ypWnRFm7fClKQ8T1/Ph1wD59Fx01TYTwsnfjhG4QJJtouGHxidstTVnE
-	OfeRXYFTMwwrSXUFg6Mje0Xv/swPGitMQleNtCvc9FyHcIlGRv1MnkciRD2I5QjqdqR0z
-X-Gm-Gg: AeBDieuwUCJlSY0QVsCFHnCneMiCoTCP0ajPJDwyH8/T0co1QSrMYxif9iSlZdzX3nm
-	/Kz+BeMPUGig0H6uqc7M3D27QCXEGJr8tC2JGq/zCjQsUyq7PizfckJfAI3MpTAqtdwkDSo2Kzb
-	8Pe4usY/qw1H6SNJdhXR1Z486HV2rWTnU8AwmL1cGw2IIExtmC3i1nRb5Ua/j5J3Bp/FwU8RFwO
-	KnUG2fZMq3DjKxrNLAEoWRF79b3e1rEYMQoevFBWZ8rYPEWp9vp8WOw3Rd/MwpQxAWk3k2KWP6q
-	HQSSgrZ1ExpV3crB90m6jKNcyjmwTPR3mdBjgSfizZw+UsHtvvqOvJpYJBEuIQ/D8WZX3B0j7H+
-	IT2RODqLjDaHq0/KRxYGaHmPnjDND659igqJg066K+GuJJRjpaL2aSqYCMnfDE7zvGXJJiBGyx1
-	pKrnxgXVxh2qfYGebfizYY3AIXFDBjyLTAVpSIiHRw0BaotA==
-X-Received: by 2002:a05:6122:3310:b0:570:f5d3:e499 with SMTP id 71dfb90a1353d-573a568ca94mr2636791e0c.10.1777405454007;
-        Tue, 28 Apr 2026 12:44:14 -0700 (PDT)
-X-Received: by 2002:a05:6122:3310:b0:570:f5d3:e499 with SMTP id 71dfb90a1353d-573a568ca94mr2636778e0c.10.1777405453562;
-        Tue, 28 Apr 2026 12:44:13 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3924d3ea4d6sm710461fa.41.2026.04.28.12.44.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2026 12:44:12 -0700 (PDT)
-Date: Tue, 28 Apr 2026 22:44:09 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>,
-        Simona Vetter <simona@ffwll.ch>, Kees Cook <kees@kernel.org>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Markus Schneider-Pargmann <msp@baylibre.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm: Don't use UTS_RELEASE directly
-Message-ID: <mv57z4zk7usobxokpn2xyevag5rzty5oawk3sojmtyjjypcegz@afqkudsy4xfn>
-References: <20260428144553.1103785-2-u.kleine-koenig@baylibre.com>
+        d=1e100.net; s=20251104; t=1777406848; x=1778011648;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oKQRvM+woDu6KBLreGPcHmP1j9kbXpV/WZYBI8HqOII=;
+        b=UJwE1fKhLLvmAEfQI5F+Mx1tLXfiRHtLOBK6fEYDwyOAltEC7GVVFrOHDICC7H5mYB
+         qtKE//VdBIAIDbRssyuVdNSYA7sW8hZU9gutZ91YFC36d29UOJIC4XiFKx0k6BHwC0r0
+         0owNeAMqcxHudpLbTcxx7L71OOubL6MFOPbhmw/UWCxs2r/ZGs4uzHY6S3il2n1p6KK8
+         gp4JzLiiECea3smeUxzo+iEzPXpvE4XmdYRL7E7SnP+37o0wVTLLUNOpGGy2w5LcAMsS
+         G6DC1Wsk8DsFcHPEx5A5wZKAq26uH7m3wwGYi/QkgA3Ht3CZuDM1X7kObxYrftV8YlJ0
+         UZCA==
+X-Forwarded-Encrypted: i=1; AFNElJ+R22lGe0wdPRfwbteC8xrKfeCP0+6w1/MkH0WUTeyAjFU+NYo71sYY1J0SwLEW19aZZ688oQAZE/Dwop5t@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5wXn1XuM7E6XPrVc0uvgCsqO1Elz4GWpJF/MBcEriMnT6NU6B
+	1PXDNhOgn2RHxWSO5WJeWiB+6sbw7CpDnLTU93vkqBEdunSUqkcB8AZUFM6y9VXjqw==
+X-Gm-Gg: AeBDievzhJAhKMQPvuN4K8OKyIHpB04VK9HZjEKOOlZsBnoCl2EH8osy8ZFyIn8sxDt
+	YbRlN17hUe2OWQwEGUV48gvWgqMLU+ZVhpniL+ggcNm+ejMdf8J3ByPvdWC1i4gy+M1OPjq3u9m
+	CASCeNr8mu+UMwG9dUdw+Xl3Mr3beXxgsDP6dTN5bxm8XWPFx4dB6gHsugcMb6pwrZybOHlyMHj
+	Za7aeJ8zbYAb6MdReMYANjjzWJFrjDrGyiI+6lb5f9YtJ3GrjUZ7KUdLPdqwV/HzGkppuam5yof
+	wbLDjT/23yxvg9NcQMDMrNbfHn07pkBfCmulF+Szx7L2mjbjS3j6LlOQHzPfa6AH/Z6VmV7sGv/
+	cLk69gdjS0xXbhyAhGFknUGh7mze8+buqQsooiIYDZJGrcnZEsq9Te8hO3p3y6n6weWAB1ztgh+
+	Oopp8gM7Pl2PaP/92mXhqEl5+ZeWYCAwACpXFzh90njmePc2nuGUGg6X+5PxsJwq6e41V5mNV3
+X-Received: by 2002:a05:7022:fe06:b0:12d:de3f:d84d with SMTP id a92af1059eb24-12dde3fdd97mr1431757c88.38.1777406848179;
+        Tue, 28 Apr 2026 13:07:28 -0700 (PDT)
+Received: from localhost ([2a00:79e0:2e7c:8:4ff5:9607:c7e5:48f3])
+        by smtp.gmail.com with UTF8SMTPSA id a92af1059eb24-12ddd93abadsm2784062c88.6.2026.04.28.13.07.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Apr 2026 13:07:27 -0700 (PDT)
+From: Brian Norris <briannorris@chromium.org>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Thierry Reding <thierry.reding@kernel.org>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: devicetree@vger.kernel.org,
+	Doug Anderson <dianders@chromium.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	chrome-platform@lists.linux.dev,
+	Brian Norris <briannorris@chromium.org>,
+	linux-rockchip@lists.infradead.org,
+	Julius Werner <jwerner@chromium.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	cros-qcom-dts-watchers@chromium.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/7] dts: Add /firmware/#{address,size}-cells to Chromium-based DTs
+Date: Tue, 28 Apr 2026 13:06:52 -0700
+Message-ID: <20260428200712.2660635-1-briannorris@chromium.org>
+X-Mailer: git-send-email 2.54.0.545.g6539524ca2-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260428144553.1103785-2-u.kleine-koenig@baylibre.com>
-X-Proofpoint-GUID: xB44nOJx4V9TU5RcLArXcT-prSDen941
-X-Proofpoint-ORIG-GUID: xB44nOJx4V9TU5RcLArXcT-prSDen941
-X-Authority-Analysis: v=2.4 cv=aPPAb79m c=1 sm=1 tr=0 ts=69f10e0f cx=c_pps
- a=+D9SDfe9YZWTjADjLiQY5g==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=IpJZQVW2AAAA:8
- a=EUspDBNiAAAA:8 a=Smz39SCUmq805RTcPQQA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
- a=zgiPjhLxNE0A:10 a=vmgOmaN-Xu0dpDh8OwbV:22 a=IawgGOuG5U0WyFbmm1f5:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDE5MiBTYWx0ZWRfX3zrxngoqVphL
- F+QxXgUZtPH9qDDoluPkMSthdKjZfxKd43ZIFb1ecI+47s/ZuZas1BetBHNXbJ3MRAQRuG0nYNB
- sU4QtU4R/KappeEOfHxJyehLK07ruKtQGEB4cOvASNNSsmnChxyY4gDovhg2ykba5zDHZjGMFIf
- vT31H9P2Ykt5KCw66uwWbmT0Ep5Uq4l3yaXDtH4WYi8b3ngejrJW+eEVcBNMi705Rcnh6YJAr+m
- gygEAkyozNk+midkaqwsiDQun49dWYZJbqPY059ohgBAn23z5zerkEZ0t06lY4dOHt0prsKcdTc
- dlEoCnHjT/OBRu02YJpD5C/Nq0F9hiEKsM5bAo8GQRZi+g9KubYUcm0uLveeLDdIRlSreothGIg
- UpbuCE6ZG2I68O91IGak+fTzl1wyKHGSR1DDDlmbQKbZ68nDaAjPMHuBT//DSr46IuEbd3J9Kyw
- t86pEd2BL3Liwj6vwdA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-28_05,2026-04-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 priorityscore=1501 adultscore=0 impostorscore=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604280192
-X-Rspamd-Queue-Id: CF34148B57C
+X-Rspamd-Queue-Id: B10AE48B7AE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105070-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,gmail.com,ffwll.ch,linux.intel.com,baylibre.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,baylibre.com:email,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim];
+	TAGGED_FROM(0.00)[bounces-105071-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[24];
 	MIME_TRACE(0.00)[0:+];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[kernel.org,nvidia.com,sntech.de,gmail.com,collabora.com];
+	DKIM_TRACE(0.00)[chromium.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[briannorris@chromium.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	NEURAL_HAM(-0.00)[-0.995];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[chromium.org:dkim,chromium.org:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,crrev.com:url]
 
-On Tue, Apr 28, 2026 at 04:45:53PM +0200, Uwe Kleine-König (The Capable Hub) wrote:
-> UTS_RELEASE evaluates to a static string and changes quite easily (e.g.
-> uncommitted changes in the source tree or new commits). So when checking
-> if a patch introduces changes to the resulting binary each usage of
-> UTS_RELEASE is source of annoyance.
-> 
-> Instead of using UTS_RELEASE directly use init_utsname()->release which
-> evaluates to the same string but with that a change of UTS_RELEASE
-> doesn't affect msm_disp_snapshot_util.o or msm_gpu.o.
-> 
-> Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
-> ---
->  drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 4 ++--
->  drivers/gpu/drm/msm/msm_gpu.c                     | 4 ++--
->  2 files changed, 4 insertions(+), 4 deletions(-)
-> 
+Chromium/Depthcharge bootloaders may dynamically add a few device nodes
+to a system's DTB under a /firmware node. A typical DT looks something
+like the following:
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+  ## From a RK3399 Gru/Kevin Chromebook:
+  # find /sys/firmware/devicetree/base/firmware
+  /sys/firmware/devicetree/base/firmware
+  /sys/firmware/devicetree/base/firmware/coreboot
+  /sys/firmware/devicetree/base/firmware/coreboot/ram-code
+  /sys/firmware/devicetree/base/firmware/coreboot/compatible
+  /sys/firmware/devicetree/base/firmware/coreboot/board-id
+  /sys/firmware/devicetree/base/firmware/coreboot/reg
+  /sys/firmware/devicetree/base/firmware/coreboot/name
+  /sys/firmware/devicetree/base/firmware/chromeos
+  /sys/firmware/devicetree/base/firmware/chromeos/readonly-firmware-version
+  /sys/firmware/devicetree/base/firmware/chromeos/active-ec-firmware
+  /sys/firmware/devicetree/base/firmware/chromeos/firmware-version
+  /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-storage
+  /sys/firmware/devicetree/base/firmware/chromeos/vboot-shared-data
+  /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-size
+  /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-offset
+  /sys/firmware/devicetree/base/firmware/chromeos/hardware-id
+  /sys/firmware/devicetree/base/firmware/chromeos/compatible
+  /sys/firmware/devicetree/base/firmware/chromeos/firmware-type
+  /sys/firmware/devicetree/base/firmware/chromeos/fmap-offset
+  /sys/firmware/devicetree/base/firmware/chromeos/name
+  /sys/firmware/devicetree/base/firmware/ranges
+  /sys/firmware/devicetree/base/firmware/name
 
+The /firmware node has an empty 'ranges', but does not have
+address/size-cells.
+
+Commit 6e5773d52f4a ("of/address: Fix WARN when attempting translating
+non-translatable addresses") started requiring #address-cells for a
+device's parent if we want to use the reg resource in a device node.
+This leads to errors like the following:
+
+[    7.763870] coreboot_table firmware:coreboot: probe with driver coreboot_table failed with error -22
+
+This series adds appropriate #{address,size}-cells to the device trees
+used on Arm Chromebooks to work around the problem.
+
+Note that Google provides bootloader updates for some devices that add
+{address,size}-cells [1], but these are only delivered via Google OS
+updates. Not all users receive Google software updates, and even if they
+do, not all devices still receive bootloader updates from Google.
+
+This problem was first noticed in OpenWrt, where some Chromium-based
+routers ran into the same issue:
+
+https://github.com/openwrt/openwrt/issues/21243
+
+Relevant OpenWrt fixes: https://github.com/openwrt/openwrt/pull/22951
+
+There is also discussion at [2].
+
+I've currently only tested:
+1) the aforementioned OpenWrt routers (with non-upstream DTS/DTB)
+2) RK3399 Gru/Kevin Chromebook (patch 1)
+3) Qualcomm SC7280 Herobrine (patch 7)
+
+I assume the others should follow the same pattern. I don't know if I've
+covered every relevant Depthcharge-using device, but I've made a good
+attempt to identify them all.
+
+I reviewed Depthcharge code history and found that this problematic
+bootloader behavior dates back to at least 2014, with the Tegra/Nyan
+device. Older devices may have similar DTB structures, but I'm not sure
+if they have the same address-cells problems. In any case, these changes
+shouldn't hurt even if a device was not affected.
+
+Brian
+
+[1] https://lore.kernel.org/all/20241209092809.GA3246424@google.com/
+    https://crrev.com/c/6051580 ("coreboot: Insert #address-cells and
+    #size-cells for firmware node")
+
+[2] [regression] of: mis-parsing Depthcharge's /firmware
+    https://lore.kernel.org/all/aeKlYzTiL0OB1y3g@google.com/
+
+
+Brian Norris (7):
+  arm64: dts: rockchip: Add #{address,size}-cells to Chromium-based
+    /firmware
+  ARM: dts: rockchip: Add #{address,size}-cells to Chromium-based
+    /firmware
+  ARM: dts: nvidia: Add #{address,size}-cells to Chromium-based
+    /firmware
+  ARM: dts: samsung: Add #{address,size}-cells to Chromium-based
+    /firmware
+  arm64: dts: mediatek: Add #{address,size}-cells to Chromium-based
+    /firmware
+  arm64: dts: nvidia: Add #{address,size}-cells to Chromium-based
+    /firmware
+  arm64: dts: qcom: Add #{address,size}-cells to Chromium-based
+    /firmware
+
+ arch/arm/boot/dts/nvidia/tegra124-nyan.dtsi           | 5 +++++
+ arch/arm/boot/dts/nvidia/tegra124-venice2.dts         | 5 +++++
+ arch/arm/boot/dts/rockchip/rk3288-veyron.dtsi         | 5 +++++
+ arch/arm/boot/dts/samsung/exynos5250-snow-common.dtsi | 5 +++++
+ arch/arm/boot/dts/samsung/exynos5250-spring.dts       | 5 +++++
+ arch/arm/boot/dts/samsung/exynos5420-peach-pit.dts    | 5 +++++
+ arch/arm/boot/dts/samsung/exynos5800-peach-pi.dts     | 5 +++++
+ arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi          | 5 +++++
+ arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi        | 5 +++++
+ arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi      | 5 +++++
+ arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi       | 5 +++++
+ arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi      | 5 +++++
+ arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi       | 5 +++++
+ arch/arm64/boot/dts/nvidia/tegra132-norrin.dts        | 5 +++++
+ arch/arm64/boot/dts/nvidia/tegra210-smaug.dts         | 5 +++++
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi          | 5 +++++
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi        | 5 +++++
+ arch/arm64/boot/dts/rockchip/rk3399-gru.dtsi          | 5 +++++
+ 18 files changed, 90 insertions(+)
 
 -- 
-With best wishes
-Dmitry
+2.54.0.545.g6539524ca2-goog
+
 
