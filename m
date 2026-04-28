@@ -1,103 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-105062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mF7IMcfv8Gn9bAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 19:35:03 +0200
+	id cHOcG/jv8Gn9bAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 19:35:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45E6B48A089
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 19:35:02 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4C5948A0C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 19:35:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7DBD53092352
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 17:32:55 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0E52630BE8ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 17:33:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E2B044D035;
-	Tue, 28 Apr 2026 17:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2500E44DB67;
+	Tue, 28 Apr 2026 17:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RW+wzwvA";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HfPeuKX7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="K5GBQs7d";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Fd0Dncwe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EEC44D01C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 17:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB32C44D022
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 17:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777397575; cv=none; b=gHXF3ke46k7J/zLJEtwZ1TXX5TMWD3S5EPM32rcfMaBMW5r/rd7HisJa3xSwdHRNMnl5ayDgSPNgvLlE/aMdmDss7bhO1TTbIzA6dm8n/PAX+wVLkAB5i9e0vGddQ3p7tAhXEcKDYxQx9GvtoAPolef24kIykJWtyN+a30DLGAg=
+	t=1777397578; cv=none; b=Zt0ULayfp1EE3M5BKT0LE8VU09GuFEhWWOsjVWaNPcLnFo58AiLu5m1kBuF2V8vZPt/+EL1B20ZqYBpbVImoQkWS7pMu8CagjyPiI/ghg3L3pZuc4vd8YmstggIVCiGpTuNSeTinGni3jW6mOoDAx7ly90cFfzMDZ3x/6S+EqhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777397575; c=relaxed/simple;
-	bh=yQAWJBywT6pwqGJLKFwuedfSMNGXnwkl9Ism4JarDpQ=;
+	s=arc-20240116; t=1777397578; c=relaxed/simple;
+	bh=lnRojrzUDGF3xytt+6kqTPBWEUZqfOPvXaupZ4RI+zc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bL4IWclcCLNvYboCrqU0+NtP6jaP79IqtRRBaSF9IFi/BI6qFeVyf3smEG9Pm88QoJ1LQTUQl19grLq7nonkuPxgoeEajOcYA+5WIIQtcRuvHIteRxL/dELX01+9hBdNGSNI+eq8wOHiHOhsn3f5gqxgR5hKf6Q4eGwQN2oxYv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RW+wzwvA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HfPeuKX7; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=A1BYjmW//ZkucvGx3k088ncuzBZQIl3wqsoNsxELRkqnyEbx/MABNCbKEwpWCnW4FnOlvzDSUmtlpHCFumM34MrqSwo/8OCDmihi9Tet+q4Zz72NFMxokdusihySWtBp+7tfyp+X+ctw8zrPdN7jasOWQ4DxEVYbLL+MYLj7b5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=K5GBQs7d; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Fd0Dncwe; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63SFsDtO3634398
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 17:32:47 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63SFsCTb3634377
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 17:32:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dEMWb3CKiGmBJqcMxJUz+Micd4CN6K2YYETwoBGc6kg=; b=RW+wzwvAfP4l9Asj
-	jGdz/TNLYxPDz3POML9mOfd3NOPug7kgVb5BMCFTV0fNSwc/qhCHYN+R1SVxuSlh
-	rg7HkTSucqC533H/g/aA6RRiwmUkaHIthCqGWIlNCtIzXGyQQILIbx94uv9ln8CZ
-	mMTwCa2ZoPBEK2VhXkBzGk8Rb58cf93RcWlSrVMJam+gxeLJhe5VahdYZwS145Qn
-	KA1dhEmacXL7RQrGFB4WQVsdk6Ng2huWA6YPcE86R0OsAWvp7BYq/JpH9v/qkJ16
-	Ms1/7qV0lIPlTCEu77jlCW/hP9/j+UPB+aB+ND6Eh2rf9SRgoPMkcdhogcOiiVJH
-	plIylg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dty87rm3b-1
+	eM3wqV1xUFVhxSiBOO41QTA+pPXWIIuZqz078+CSduQ=; b=K5GBQs7drY0uxuOf
+	gnR62s5/d20uBj/OgDijTzfHVxTJdKFbfaoiRGDgKzU3LqL4bmRWvQll+CYgoRiL
+	6Nizt4FU1ZIrOhXhkq97UqPTT0cEVkTKPNbW4GPsGKFTixwjdD3hGSdURIm7dkwo
+	FtcyqSFqBdBPkYCARTSho1YFkiQB0Fv4vMssGZva69NBZ8sJnZa9oYQDfEXLTVuv
+	aJAwfokTyUvJiHyEutlijc266BqmIJPsHT1FFUYQIcmDNgYHP3kOq/0TEr8u1TsA
+	zmv1kvuI4LtLa8mESMaFSsRra2xpwbJFUHwNFLBYjF4uy4/FtZtxEpOY+A+8YyVr
+	QJoaZg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dty87rm3g-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 17:32:47 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-50d826ed6f9so1634901cf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 10:32:47 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 17:32:49 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-50ea1a7a5d0so215163401cf.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 10:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1777397567; x=1778002367; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1777397569; x=1778002369; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dEMWb3CKiGmBJqcMxJUz+Micd4CN6K2YYETwoBGc6kg=;
-        b=HfPeuKX70Vr7Cf/DYE1AeN9a687ukk00j4zHo5NRNI2sVyR0mf1ZSF47NXFP7bAK9W
-         nl/WDUimen/PdXZj9T6BYJFlPKCBqhetSQI08F9xFrAIlGPPbv+AbLTYGywG7bqsJTxH
-         8ESoyEw41JWXOa/1zP08cg35gScAjcHnFo+y3OcoSFcQjnlm4TuzkxDjtvlZhyrhYIyK
-         bZL7LLBMwXS4I6721WXsLI6sfpRrUqxG5hWIZvGZvxVRhL5Ga6dwVhQlNGXpQVGB+DSm
-         hyP90xCvHAI6yl9veL5xlVpeCj+s/a7WbTRTT7cHiykgs0t7bMjsnO6ICIva6XGcCxgW
-         6Y3Q==
+        bh=eM3wqV1xUFVhxSiBOO41QTA+pPXWIIuZqz078+CSduQ=;
+        b=Fd0DncweHzhLGXxzvaw4aUAi+KA+MtYRSI+Ea4N5VAbu9KJ3dw67s1ovSjY1sQOlNF
+         sNDyIGEDr+sWPGjOsYJKCGhKGHTYYf+v2iojadTR9tbC2C0hk0cW6kluh37k5H32lWs0
+         qbAtUyEY7Mrs+gw2oNnHnbaJ4u3W9CkqwzZW8HyRfhDlE56AcFXrpQ9e0VQGjHX+s2Nq
+         G1cDrfysZoYQuJEo0BAhtQJ9IGgDWb9r1xwx7NXy1hE0plTdY+YLF4vb1MWvSoCoFfvW
+         KJnZ1Xl492IHC3BSPiiXrFnqlxm9I/8hllE4Q5U2pAoNPztw38rHosX2cnxvixAzkPkM
+         pH8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777397567; x=1778002367;
+        d=1e100.net; s=20251104; t=1777397569; x=1778002369;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=dEMWb3CKiGmBJqcMxJUz+Micd4CN6K2YYETwoBGc6kg=;
-        b=M3qmUmTqqo7YNEpROamNvPV8rfjS52NO5OltBcllrBd71r3NpOQW0gtaOhoaPtC6a2
-         GdMXmBs6f/sgFQrBFa5edu0wLyrZ0x07RpqDZNywFOfl8GosBqzupzfFOhleLlcjzLID
-         dbEdotGo5NhW3BmfmERh2i24PradA/G/DWUUiiOE2MeX+ssZaFGofk1502QAZ1ToSQZ3
-         uNaVEvaUBzwaaOxps6/KsoDDA0/yCLY98kX4iKDl9EuaaFQePeoMK1p1jA0dmDUgWdKX
-         ayTtZoeU6RKa2Rtddt5ywlY7SZwX4wZ+04cKjQtGZi49Z5rayjnjNnYMHawgSmFmaCtu
-         qE1g==
-X-Gm-Message-State: AOJu0Yy4kq12C7cGUpVbFQtSJpBmWwa/tFFhu8gNzx7yh4i/aTC6WKt9
-	7RhHMjlsFXKLk2s3OxG1qXoBtdmGeItMxwqjuTH5HNE/426dTgOaKWy3lw1p1xeZlOUshal9nZp
-	1Laj+FEJSD2uok2O1so4OFT0/E9vXd79AOQHv0Prc+P3+mZHZ1Ys528nk1VsAgHkWeTjQ
-X-Gm-Gg: AeBDieuX0ybt82WhSGFCwQbZNpeZpUvlfhcAI+QK1MjwkvVwe06jJ7FJh7wkZ1so+9T
-	9dOyoupMweckEkLm5MV4leTZ+Y1/jwfNMkSzUeF7b62mC5u7ilBcdTcjb/NilPoMOruWuo5M+0u
-	m8lqvox+luL/nVjJnww4/Uqdewy/xeylzAUbRHlgeWFs2dmB5dDqVaOjN7+b3p+OBdFUV6nAsHI
-	mpzddJrHWlOif60HBFi5IF5Rv9MwVDu0H5TNpLYqxUWqqsFQxdEK90HYgz+FJ6uqGO9s9uaMhqY
-	eDyoNjhvkua9MuHntYzC4HOm/hEgznEX7wLd5b558BCJ6sc7uWEfwu79zXqFmdyhPFIEkaes9Ol
-	Ldc6oWv8hJBpnh8Z7rlA00+eHpxr5shk9yio3HkHM1vKfVAd9W6iai6U=
-X-Received: by 2002:a05:622a:454:b0:50f:cba1:18c4 with SMTP id d75a77b69052e-5100da50fadmr52787461cf.26.1777397566850;
-        Tue, 28 Apr 2026 10:32:46 -0700 (PDT)
-X-Received: by 2002:a05:622a:454:b0:50f:cba1:18c4 with SMTP id d75a77b69052e-5100da50fadmr52786681cf.26.1777397566110;
-        Tue, 28 Apr 2026 10:32:46 -0700 (PDT)
+        bh=eM3wqV1xUFVhxSiBOO41QTA+pPXWIIuZqz078+CSduQ=;
+        b=ijF1E1CLedvvWB67lUEvEsYn3HNM4mQjrL8PlHD5C9angmRAaI/Sd4hY9zZ1CKawpJ
+         2hOGtIKQSeS0VoELWTgcED56rF7a2cQ6KlAt0k3zajzdy9/4kILVX3e9JlJWVWQdR3Eo
+         s2Ewy4YwPq/4HOqFYQeNdwT6xvaq87FSINv7+J4uTu/p8KF12sV3XA2+rkOa5J7wpKtg
+         c2jygOT7OY9ZY16Kvz5E7GtdyaXqy3XpdtZl/Pc5Ucp861bytgbAXfxpNm8yBwRdXOAG
+         zroKNymx/EMwXBamfDj+ZK+bihUQPMqtFCL0zQ93TvT5ka/ASVbDBJm3mp8zCaOt4qhX
+         zH7g==
+X-Gm-Message-State: AOJu0Yxuw6lSEUVBjHkKwkg02BDgli57Sa2iqsRGvvb8i8fWB3cwsl1F
+	TX3Z7O3rJSEzNxUbDgGzS7t+cTm0krkybffBPZ+Jd5WTAbZTPD0FcJ/FHqNrYoC4jjApanuVNQQ
+	2E3L1mprYnJ9q0HYagEwLDXL/SFSCjnIIHHNpKZI63j6OJUlgG51bxLxUkvLDWusBpg5K
+X-Gm-Gg: AeBDieurFA/jqRC8Xpo+GnNc7sRgRXnLa2zl26TNB4ALCywByZW0DV5xCgTFnbqnLpw
+	Wfl3xF5gLkCnK0qARnFIAtFuItBeOsyHTt+wm6Gy5Z1yTVDjVIaf7vlnEY3WUXSJzsio47Nxa+X
+	TvclZvJGhn682SgOyQ5gme0iZP6Zp3hHA4mvcCLZ3nlOROZHraWk25RQ61qACtq1u/7Lk/6LOlR
+	Fkk2plXI9dLp1+b5DdEGT7xMFpsx//UnUCGaO/2uAGJDfo0F1Uje/MzbKdHpU/Mghigra5IRsJA
+	ZGeMlfOs45KBpYsFONaO6WOPF21WJvWQnuZjWPNpsCRBXeBSAtc+XJDUl4/Rf6OCigL9uIp0Pwq
+	2y/TsoZ96XjGt6oa5pAZ5vpFhnxNCtVGTMJCr+VieMYo0EDGdTFbyb/o=
+X-Received: by 2002:a05:622a:4d45:b0:50f:c36a:3818 with SMTP id d75a77b69052e-5100e1eec7emr52738431cf.59.1777397568391;
+        Tue, 28 Apr 2026 10:32:48 -0700 (PDT)
+X-Received: by 2002:a05:622a:4d45:b0:50f:c36a:3818 with SMTP id d75a77b69052e-5100e1eec7emr52737761cf.59.1777397567777;
+        Tue, 28 Apr 2026 10:32:47 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.219.94])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a7b8ce444sm2089545e9.0.2026.04.28.10.32.44
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a7b8ce444sm2089545e9.0.2026.04.28.10.32.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2026 10:32:45 -0700 (PDT)
+        Tue, 28 Apr 2026 10:32:46 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Date: Tue, 28 Apr 2026 19:32:37 +0200
-Subject: [PATCH 1/3] interconnect: qcom: Fix indentation
+Date: Tue, 28 Apr 2026 19:32:38 +0200
+Subject: [PATCH 2/3] interconnect: qcom: Restrict drivers per ARM/ARM64
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,7 +106,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260428-interconnect-qcom-clean-arm64-v1-1-e6bc3f7832db@oss.qualcomm.com>
+Message-Id: <20260428-interconnect-qcom-clean-arm64-v1-2-e6bc3f7832db@oss.qualcomm.com>
 References: <20260428-interconnect-qcom-clean-arm64-v1-0-e6bc3f7832db@oss.qualcomm.com>
 In-Reply-To: <20260428-interconnect-qcom-clean-arm64-v1-0-e6bc3f7832db@oss.qualcomm.com>
 To: Georgi Djakov <djakov@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
@@ -115,39 +115,39 @@ Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1875;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=12403;
  i=krzysztof.kozlowski@oss.qualcomm.com; h=from:subject:message-id;
- bh=yQAWJBywT6pwqGJLKFwuedfSMNGXnwkl9Ism4JarDpQ=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBp8O83Fu3GfCGKF7sJQ/ZUFjiWtzMYyEhj5ZLnx
- s5fkhc6OpCJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCafDvNwAKCRDBN2bmhouD
- 1+CZD/wPHH6w2qnDNKJ3cBQTuiZ0KvF1tnVH9pGm6JRyFwmQUocpUUDXozSfHDJ16Q0UhryYLfk
- A5JafqUStvVzVHl1viKG6ZuOKZqRcOR5J1OIgeEKN4hGhlHFPeyJjubuaTJvm/mfeOSBN2OsE5I
- 1B75cRhoxwF4EJGI5OiJ872G84a2NstxA6DhTEew8mECqTvRGWHruVcABQhKtHliYuTIA9rGuuo
- Gk3Y3GsmbrLf8Z6Vo343qUc1R0QGvv6VBZs0kDjmZPRYGvn9RsDpaS904TrCOU4Y+lQAI88OHeO
- 4KbxDX8LeQaJtaTdwouk3dap8NdItPzjuMwBK1mcddXasD/7IP9HhRZNcdceus03uy9IoC6M6+l
- sgLoQRR5FPNzqzud/GWfx8NpwKepeA2BUiKoNPRtwXQmQA73u7hdHz1Z/M0ZuoyZ97f4eCDwLSb
- WrZmbFr1vqo8mKLZzz5h6vjuzwkEujZOZWhf0qEN3d/ZgqIopGiVK0Rvw2jpMrigGyFMFgr2Nj0
- 6uAaGXcRQ6fN1dYMQ14vVDddDBRjRkcjeOemM5e7X0L5TBYbLINcVgCfwiIzyLDADFr+Rh9XkIa
- J+iq2ejazlnlwTJ448iio0Wf84ZIOPsgWhPbtSN+xoq1KjUN8+CpB6kEm1HdcLOCCVG8eXbX/Vx
- fJ2Xv0ui4TNPodA==
+ bh=lnRojrzUDGF3xytt+6kqTPBWEUZqfOPvXaupZ4RI+zc=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBp8O84FmWchu9gppqtqL869FtkAfAS3T2v3t0gH
+ 2VchL1mPneJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCafDvOAAKCRDBN2bmhouD
+ 19J6D/4ku8cWUNdq/pKs8LQaJcxOXiZ+I8f9xcMPnsEKmWab4IVncVyGr53vknNIeAhuXZHJebQ
+ EQAjrLZZ+WivJFUwTHtJBUDNj3B7mmlcwAD0klBSVFXwMwdqrVmAndJTF+yAd4VHG0AzwmdNDDl
+ SVKNzE/ONeGULbIZvzoiQWy0dJNS7nagbxoN6//+ETFDIKuqEsXL/s7T4B/NiYwfxfJUE6CsOrY
+ Na4Ukp/P1qmW1/izUlY04plIhAVyz2RIH3aPFgNnO1osTN8X58Ttzzn70PcxX1z1n+/ZKqHczZR
+ CYwubvFQlfk2eGLA7jesnJ2YRZuis9pfsdFlCQ6MqP0Yixh2l/fLsjWMyqjAyPtl0gwY1celXpN
+ RzcGeVMut18ZZOr7GvTUoVk3ZKJC+d26jt80PHh8ljBpVaC9F+wBjLhQGTnlL7o5khpzFwpOZ+I
+ wy+h5ML/9Le5ayhOAHdv4hMnrEGGXXKtOn2YkdQ1cUvnTQ+lirJdDOiuEEWi4iZKJH3ks8A2Za6
+ BrKPPgWQmbcul915j78BeVbEdZuPoLvUHJuhxXuJFpFFrPFVouPwQYjkU8ABDqSLvhSMcPO8ecw
+ WmGWoORqyqNmfUHSoODTNX5ZLLlhoPVnicAJd4IUikbmBMp7lu1Yc1VI7tSd/YjqNSatgHjtIPi
+ 1+SmXDtGFqYz0sA==
 X-Developer-Key: i=krzysztof.kozlowski@oss.qualcomm.com; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-X-Authority-Analysis: v=2.4 cv=abJRWxot c=1 sm=1 tr=0 ts=69f0ef3f cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=gOEeR9iKwsj33Yj5oN/cWg==:17
+X-Authority-Analysis: v=2.4 cv=abJRWxot c=1 sm=1 tr=0 ts=69f0ef41 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=gOEeR9iKwsj33Yj5oN/cWg==:17
  a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=UCTw9GvNnafMAvUb21oA:9 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-GUID: m-mdomIHU9UgLtDJYZ5O8agtFBcBYrMi
-X-Proofpoint-ORIG-GUID: m-mdomIHU9UgLtDJYZ5O8agtFBcBYrMi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDE2OSBTYWx0ZWRfX/IVG0LHfBKK9
- GCoK+fHt3ehP/wQ2dcKCUc8HemWAKBADg7HwtiwaZcUolUBhJ92duLtNoyzP/cmkxvErBDMAWNV
- it+vHdYIW9xo2xICARalde/NEuXLAR+dvczQKsMxvvNCmqBx0q2+Q7znk01BZQFWya5IIB8bSWY
- shEo3Mp7GazirMYNmxCN7t/kuB/zBT/kSPXcQIza8TmxxrWtZ88pxuWnAVp/dL6ge874pLnTjqY
- yKK2iJp6V35VjMHX33Zli20Vgfdf7zxRC26VgUmdXT3W1SoEBVF6cuH3L8/jXLr5ioFXaTGMdbc
- zxUXD5q9wJLkKfS4qjTGykOFPEFbpHZc7TP4hPa/sdnHTkVCZ5buBEayeIBjQ22l0+VuSEuflDB
- RrCsJUaXCghamMBxrOcWS4noTiEQ/LFUkY7mZ0SdFdt6L91Z8VNP+LRX4zU3X/8cgmhiu9BBTi6
- un9hctkF+68xvxJtWHw==
+ a=EUspDBNiAAAA:8 a=2cCFUbKDXYVN_WJ3cWAA:9 a=dKjGhJZ7t35VoLMX:21
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-GUID: 6YRlZ0J_FHcSjAl7RsGsc8ml8ZLRvM1A
+X-Proofpoint-ORIG-GUID: 6YRlZ0J_FHcSjAl7RsGsc8ml8ZLRvM1A
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDE2OSBTYWx0ZWRfX6cnw3rp0U2Zz
+ Jl9auH1iVJgPcJ1cdDOYb1CkOruX8b+oMIuttVq/9x7T4LzrowI/tiEcpp90VvIxpYD/75XBjc7
+ T2dBSOkWwra0X9HsXhPQ7xxeTgiBkvI/QXjp7N09caBdmsKn/sTXvbXrlRjX4+8WRzvSYPA+MfH
+ 1Hy36k9uLmVGYoKvflgEziT/CeLSMCfc1j/PK04AxukureBLbMX05e1q59USekWal/6Ci5LLdPM
+ zl5igrbaWUbGuBx9k4nTIMyEfW8w+ybCdEMsIoCzxjz2rxyzqPwrI4DdDzsl2uOD9YzwuaLYvnU
+ 56ZtPwlcuO/mTK2EkukeuHlY0R2W1hjgASSYhWa5TzwE3GzmfLXA7N7m6cVv+QCSWpUyux9Sf8m
+ /DE3BkxUouerKjG7oORaaG44yU/6+f0Dpg/mYy8xsZ6vgZN3uRMNNlnKQ0kJa4G2zWLccHY3xrt
+ A7Za7CjNKhZCRG2wl5A==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-28_05,2026-04-28_01,2025-10-01_01
@@ -156,85 +156,359 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  phishscore=0 bulkscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604280169
-X-Rspamd-Queue-Id: 45E6B48A089
+X-Rspamd-Queue-Id: C4C5948A0C5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105062-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_FROM(0.00)[bounces-105064-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzysztof.kozlowski@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
 
-KConfig entries should be indented starting with one tab, so replace
-spaces with it.
+There is no point to allow selecting core SoC drivers like interconnects
+for Qualcomm ARMv7 SoCs when building ARM64 kernel, and vice versa.
+
+This makes kernel configuration more difficult as many do not remember
+the Qualcomm SoCs model names/numbers and their properties like
+architecture.  No features should be lost because:
+1. There won't be a single image for ARMv7 and ARMv8/9 SoCs.
+2. Newer ARMv8/9 SoCs won't be running in arm32 emulation mode.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 ---
- drivers/interconnect/qcom/Kconfig | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/interconnect/qcom/Kconfig | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
 diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
-index 786b4eda44b4..871663bfd094 100644
+index 871663bfd094..b2c4272ae48f 100644
 --- a/drivers/interconnect/qcom/Kconfig
 +++ b/drivers/interconnect/qcom/Kconfig
-@@ -9,22 +9,22 @@ config INTERCONNECT_QCOM_BCM_VOTER
- 	tristate
- 
+@@ -11,6 +11,7 @@ config INTERCONNECT_QCOM_BCM_VOTER
  config INTERCONNECT_QCOM_ELIZA
--       tristate "Qualcomm Eliza interconnect driver"
--       depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
--       select INTERCONNECT_QCOM_RPMH
--       select INTERCONNECT_QCOM_BCM_VOTER
--       help
--         This is a driver for the Qualcomm Network-on-Chip on Eliza-based
--         platforms.
-+	tristate "Qualcomm Eliza interconnect driver"
-+	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
-+	select INTERCONNECT_QCOM_RPMH
-+	select INTERCONNECT_QCOM_BCM_VOTER
-+	help
-+	  This is a driver for the Qualcomm Network-on-Chip on Eliza-based
-+	  platforms.
- 
+ 	tristate "Qualcomm Eliza interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -20,6 +21,7 @@ config INTERCONNECT_QCOM_ELIZA
  config INTERCONNECT_QCOM_GLYMUR
--       tristate "Qualcomm Glymur interconnect driver"
--       depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
--       select INTERCONNECT_QCOM_RPMH
--       select INTERCONNECT_QCOM_BCM_VOTER
--       help
--         This is a driver for the Qualcomm Network-on-Chip on glymur-based
--         platforms.
-+	tristate "Qualcomm Glymur interconnect driver"
-+	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
-+	select INTERCONNECT_QCOM_RPMH
-+	select INTERCONNECT_QCOM_BCM_VOTER
-+	help
-+	  This is a driver for the Qualcomm Network-on-Chip on glymur-based
-+	  platforms.
- 
+ 	tristate "Qualcomm Glymur interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -29,6 +31,7 @@ config INTERCONNECT_QCOM_GLYMUR
  config INTERCONNECT_QCOM_KAANAPALI
  	tristate "Qualcomm Kaanapali interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -39,6 +42,7 @@ config INTERCONNECT_QCOM_MSM8909
+ 	tristate "Qualcomm MSM8909 interconnect driver"
+ 	depends on INTERCONNECT_QCOM
+ 	depends on QCOM_SMD_RPM
++	depends on ARM || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_SMD_RPM
+ 	help
+ 	  This is a driver for the Qualcomm Network-on-Chip on msm8909-based
+@@ -75,6 +79,7 @@ config INTERCONNECT_QCOM_MSM8953
+ 	tristate "Qualcomm MSM8953 interconnect driver"
+ 	depends on INTERCONNECT_QCOM
+ 	depends on QCOM_SMD_RPM
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_SMD_RPM
+ 	help
+ 	  This is a driver for the Qualcomm Network-on-Chip on msm8953-based
+@@ -84,6 +89,7 @@ config INTERCONNECT_QCOM_MSM8974
+ 	tristate "Qualcomm MSM8974 interconnect driver"
+ 	depends on INTERCONNECT_QCOM
+ 	depends on QCOM_SMD_RPM
++	depends on ARM || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_SMD_RPM
+ 	help
+ 	 This is a driver for the Qualcomm Network-on-Chip on msm8974-based
+@@ -93,6 +99,7 @@ config INTERCONNECT_QCOM_MSM8976
+ 	tristate "Qualcomm MSM8976 interconnect driver"
+ 	depends on INTERCONNECT_QCOM
+ 	depends on QCOM_SMD_RPM
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_SMD_RPM
+ 	help
+ 	  This is a driver for the Qualcomm Network-on-Chip on msm8976-based
+@@ -102,6 +109,7 @@ config INTERCONNECT_QCOM_MSM8996
+ 	tristate "Qualcomm MSM8996 interconnect driver"
+ 	depends on INTERCONNECT_QCOM
+ 	depends on QCOM_SMD_RPM
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_SMD_RPM
+ 	help
+ 	  This is a driver for the Qualcomm Network-on-Chip on msm8996-based
+@@ -110,6 +118,7 @@ config INTERCONNECT_QCOM_MSM8996
+ config INTERCONNECT_QCOM_OSM_L3
+ 	tristate "Qualcomm OSM L3 interconnect driver"
+ 	depends on INTERCONNECT_QCOM || COMPILE_TEST
++	depends on ARM64 || COMPILE_TEST
+ 	help
+ 	  Say y here to support the Operating State Manager (OSM) interconnect
+ 	  driver which controls the scaling of L3 caches on Qualcomm SoCs.
+@@ -118,6 +127,7 @@ config INTERCONNECT_QCOM_QCM2290
+ 	tristate "Qualcomm QCM2290 interconnect driver"
+ 	depends on INTERCONNECT_QCOM
+ 	depends on QCOM_SMD_RPM
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_SMD_RPM
+ 	help
+ 	  This is a driver for the Qualcomm Network-on-Chip on qcm2290-based
+@@ -127,6 +137,7 @@ config INTERCONNECT_QCOM_QCS404
+ 	tristate "Qualcomm QCS404 interconnect driver"
+ 	depends on INTERCONNECT_QCOM
+ 	depends on QCOM_SMD_RPM
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_SMD_RPM
+ 	help
+ 	  This is a driver for the Qualcomm Network-on-Chip on qcs404-based
+@@ -135,6 +146,7 @@ config INTERCONNECT_QCOM_QCS404
+ config INTERCONNECT_QCOM_QCS615
+ 	tristate "Qualcomm QCS615 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -144,6 +156,7 @@ config INTERCONNECT_QCOM_QCS615
+ config INTERCONNECT_QCOM_QCS8300
+ 	tristate "Qualcomm QCS8300 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -155,6 +168,7 @@ config INTERCONNECT_QCOM_QCS8300
+ config INTERCONNECT_QCOM_QDU1000
+ 	tristate "Qualcomm QDU1000/QRU1000 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -178,6 +192,7 @@ config INTERCONNECT_QCOM_RPMH
+ config INTERCONNECT_QCOM_SA8775P
+ 	tristate "Qualcomm SA8775P interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -187,6 +202,7 @@ config INTERCONNECT_QCOM_SA8775P
+ config INTERCONNECT_QCOM_SAR2130P
+ 	tristate "Qualcomm SAR2130P interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -196,6 +212,7 @@ config INTERCONNECT_QCOM_SAR2130P
+ config INTERCONNECT_QCOM_SC7180
+ 	tristate "Qualcomm SC7180 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -205,6 +222,7 @@ config INTERCONNECT_QCOM_SC7180
+ config INTERCONNECT_QCOM_SC7280
+ 	tristate "Qualcomm SC7280 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -214,6 +232,7 @@ config INTERCONNECT_QCOM_SC7280
+ config INTERCONNECT_QCOM_SC8180X
+ 	tristate "Qualcomm SC8180X interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -223,6 +242,7 @@ config INTERCONNECT_QCOM_SC8180X
+ config INTERCONNECT_QCOM_SC8280XP
+ 	tristate "Qualcomm SC8280XP interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -232,6 +252,7 @@ config INTERCONNECT_QCOM_SC8280XP
+ config INTERCONNECT_QCOM_SDM660
+ 	tristate "Qualcomm SDM660 interconnect driver"
+ 	depends on INTERCONNECT_QCOM
++	depends on ARM64 || COMPILE_TEST
+ 	depends on QCOM_SMD_RPM
+ 	select INTERCONNECT_QCOM_SMD_RPM
+ 	help
+@@ -241,6 +262,7 @@ config INTERCONNECT_QCOM_SDM660
+ config INTERCONNECT_QCOM_SDM670
+ 	tristate "Qualcomm SDM670 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -250,6 +272,7 @@ config INTERCONNECT_QCOM_SDM670
+ config INTERCONNECT_QCOM_SDM845
+ 	tristate "Qualcomm SDM845 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -259,6 +282,7 @@ config INTERCONNECT_QCOM_SDM845
+ config INTERCONNECT_QCOM_SDX55
+ 	tristate "Qualcomm SDX55 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -268,6 +292,7 @@ config INTERCONNECT_QCOM_SDX55
+ config INTERCONNECT_QCOM_SDX65
+ 	tristate "Qualcomm SDX65 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -277,6 +302,7 @@ config INTERCONNECT_QCOM_SDX65
+ config INTERCONNECT_QCOM_SDX75
+ 	tristate "Qualcomm SDX75 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -287,6 +313,7 @@ config INTERCONNECT_QCOM_SM6115
+ 	tristate "Qualcomm SM6115 interconnect driver"
+ 	depends on INTERCONNECT_QCOM
+ 	depends on QCOM_SMD_RPM
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_SMD_RPM
+ 	help
+ 	  This is a driver for the Qualcomm Network-on-Chip on sm6115-based
+@@ -295,6 +322,7 @@ config INTERCONNECT_QCOM_SM6115
+ config INTERCONNECT_QCOM_SM6350
+ 	tristate "Qualcomm SM6350 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -304,6 +332,7 @@ config INTERCONNECT_QCOM_SM6350
+ config INTERCONNECT_QCOM_SM7150
+ 	tristate "Qualcomm SM7150 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -313,6 +342,7 @@ config INTERCONNECT_QCOM_SM7150
+ config INTERCONNECT_QCOM_MILOS
+ 	tristate "Qualcomm Milos interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -322,6 +352,7 @@ config INTERCONNECT_QCOM_MILOS
+ config INTERCONNECT_QCOM_SM8150
+ 	tristate "Qualcomm SM8150 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -331,6 +362,7 @@ config INTERCONNECT_QCOM_SM8150
+ config INTERCONNECT_QCOM_SM8250
+ 	tristate "Qualcomm SM8250 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -340,6 +372,7 @@ config INTERCONNECT_QCOM_SM8250
+ config INTERCONNECT_QCOM_SM8350
+ 	tristate "Qualcomm SM8350 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -349,6 +382,7 @@ config INTERCONNECT_QCOM_SM8350
+ config INTERCONNECT_QCOM_SM8450
+ 	tristate "Qualcomm SM8450 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -358,6 +392,7 @@ config INTERCONNECT_QCOM_SM8450
+ config INTERCONNECT_QCOM_SM8550
+ 	tristate "Qualcomm SM8550 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -367,6 +402,7 @@ config INTERCONNECT_QCOM_SM8550
+ config INTERCONNECT_QCOM_SM8650
+ 	tristate "Qualcomm SM8650 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -376,6 +412,7 @@ config INTERCONNECT_QCOM_SM8650
+ config INTERCONNECT_QCOM_SM8750
+ 	tristate "Qualcomm SM8750 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
+@@ -385,6 +422,7 @@ config INTERCONNECT_QCOM_SM8750
+ config INTERCONNECT_QCOM_X1E80100
+ 	tristate "Qualcomm X1E80100 interconnect driver"
+ 	depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
++	depends on ARM64 || COMPILE_TEST
+ 	select INTERCONNECT_QCOM_RPMH
+ 	select INTERCONNECT_QCOM_BCM_VOTER
+ 	help
 
 -- 
 2.51.0
