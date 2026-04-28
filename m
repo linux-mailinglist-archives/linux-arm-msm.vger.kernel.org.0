@@ -1,67 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-104960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mALvNLST8GnnVAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 13:02:12 +0200
+	id QBZnOPSS8GlvVAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 12:59:00 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id A299D483383
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 13:02:07 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A50D483238
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 12:59:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 444E83087613
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 10:53:05 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5764230B5B19
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 10:53:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0461C423A9E;
-	Tue, 28 Apr 2026 10:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66902426692;
+	Tue, 28 Apr 2026 10:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qwfN6GIu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SEA7yYMU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C8C423A9A;
-	Tue, 28 Apr 2026 10:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0BD42668B;
+	Tue, 28 Apr 2026 10:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372983; cv=none; b=uZVa0SrSzNBdUT29PR2IQlob1wa2FZc69i8YfDkRitSSVFPnvw7+2hznJCs2+YaKy9Eds02YMGnGEkjIidl3ZM5eQB4PhbRS2Z8rijCi408HHAeTgnG3fMT656jERy33H6qleEkPlwAM/Ncq7nioRWdv8LeeqnN8KMq2ubXT2RE=
+	t=1777372986; cv=none; b=KSaK03MyNi/e5S9meTyHuxOvkGXf2T+5dE0lLWFWSHe+xqglFDloM7Rgi4jFTgkaU3JFfnJ2CrXegzO54evPCXJg9HLwAk2MutOUrQMLQ6VsOCfVDk1eLSOZahi6f/kMjAc48cVtYir1vwb5NtJmf9k8AoU6dr41FoKeQs/v4jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372983; c=relaxed/simple;
-	bh=+ZRNSpMxbtL6pi+004vKl0lGTMAHazGZBWSYX+mLXR0=;
+	s=arc-20240116; t=1777372986; c=relaxed/simple;
+	bh=7h0htGL/PgzGwtzF3RJ112VpCA39Mricf2ZhIFLCSSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WCJhcGF8ncNAo5ltQG4KXy8KiwI3ggb3Up+uUYknR8FyzmJkKnF7OpkB7v5I6IEM5kBkfrM4weaenpiCOuSGgyp/VyA4N7xIfWvHPCE/Trgff+SVK/TO1U+bUVb5O+kSf3TpgTJfvLqRQSEL0Gi+lw9G/TyRxUQTeEExkdMuskM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qwfN6GIu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495F7C2BCB7;
-	Tue, 28 Apr 2026 10:43:02 +0000 (UTC)
+	 MIME-Version:Content-Type; b=rC6ANQp3npIB0UdN0QhV4Yxzpe0S/99iBArAaaacYnxI65d6nACc463Oxzh8nbL7go5O0RZcy0sxKxzwYPwvzuDfuL+ZZ01fEZ4Owx5ldjRwopZIywe3+i0NzkOn0DDkCz4gDjKanUJ8a86jxQdL0KBirFxl1dupTMLJLtv8mTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SEA7yYMU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC55C2BCB8;
+	Tue, 28 Apr 2026 10:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372983;
-	bh=+ZRNSpMxbtL6pi+004vKl0lGTMAHazGZBWSYX+mLXR0=;
+	s=k20201202; t=1777372986;
+	bh=7h0htGL/PgzGwtzF3RJ112VpCA39Mricf2ZhIFLCSSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwfN6GIuenPNQYzZ38EI2quHWFLfR8Eqvu20YmsSn1X9U3z4iK1LxIjPOBfUoFXAe
-	 6YJwtOW/MK1fcXT9SmrllL7zPC9XKk+8ZgpS6ko7aQCz/qxXhu7EaareypFmkDv/KB
-	 J4dYX68yNg9ChNdvtWZ6d/w9QO+kw/MgScedRxTuFUudbsYVSgV12yKZP0wCCh+ohw
-	 605Vem7+MfIa/PmPMiTtzrRQXCKM6bcS34N3K+vl9636LkKX7cnkOBwsXOKK8Hwp7P
-	 QPp8vbD3ZXxsC01VqcJc3vuVHmcbQhz2C6aeouV0GXUpf7JVoapr2hevH6hhIXGOJn
-	 hy4D2QRNW/v3g==
+	b=SEA7yYMUsKkLoALS9J9UsYh0twlfCZ3yfq3Rs0OpSLQVOh3e1VMn4fgc6kKv7KAEC
+	 RlGnocOyWnlilenHlJeGLqtdDKHF1+BiVezGW2PfYFi25JVpb3Xbjuv6m/LESPmRqu
+	 7y51Hs/xIG0/CXcjaDtheFBCmsE8kNqSFDbLTWJOzWlINIpEPY3i6mcFwsETGSqY1r
+	 WjDWH+jFi8U/6VEVfHwFpdLg+a+LaChBAvly5fjIp/SFOlnnFALVYF+Ekrx8uMFykC
+	 27ATi3//A5b0KnkggXvj27iH3xYA/apTo8BM4aornh7LC6fwDrvtXc6QBFi4F2o4pZ
+	 PRt9wV1+QjbUw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pengyu Luo <mitltlatltl@gmail.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	agross@kernel.org,
-	konrad.dybcio@linaro.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
+	mhi@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] clk: qcom: rcg2: expand frac table for mdss_pixel_clk_src
-Date: Tue, 28 Apr 2026 06:41:13 -0400
-Message-ID: <20260428104133.2858589-62-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 7.0-6.12] bus: mhi: host: pci_generic: Add Qualcomm SDX35 modem
+Date: Tue, 28 Apr 2026 06:41:15 -0400
+Message-ID: <20260428104133.2858589-64-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -76,7 +70,7 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: A299D483383
+X-Rspamd-Queue-Id: 5A50D483238
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.16 / 15.00];
@@ -84,352 +78,342 @@ X-Spamd-Result: default: False [-1.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-104960-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[gmail.com,oss.qualcomm.com,kernel.org,linaro.org,baylibre.com,vger.kernel.org];
-	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-104961-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	MAILSPIKE_FAIL(0.00)[172.232.135.74:query timed out];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[lore:url,qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,msgid.link:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 
-From: Pengyu Luo <mitltlatltl@gmail.com>
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 
-[ Upstream commit 0f5c8f03d990f9be9908a08a701c324e113554d2 ]
+[ Upstream commit 6a7084102bb9659f699005c420eb59eade6d3b4f ]
 
-Recently, when testing 10-bit dsi C-PHY panel, clks are different
-from the usual. (dsi0_phy_pll_out_dsiclk's parent is dsi0_pll_bit_clk
-now (dsiclk_sel = 0)) And we failed to set dsiclk's children.
+Add support for sdx35 modem. Similar to SDX75, SDX35 can take longer to
+transition to ready during power up, so use modem_qcom_v2_mhiv_config
+configurations.
 
-dsi_link_clk_set_rate_6g: Set clk rates: pclk=172992000, byteclk=108120000
+01:00.0 Unassigned class [ff00]: Qualcomm Device 011a
+            Subsystem: Qualcomm Device 011a
 
-byteclk was set first to 108120000, so the vco rate was set to
-108120000 * 7 * 1 * 1 = 756840000. When we was trying to set
-172992000 on mdss_pixel_clk_src later.
-
-Since there was no matched ratio, we failed to set it. And dsiclk
-divider ratio was set to 15:1 (wrong cached register value 0xf and
-didn't update), we finally got 50455997, apparently wrong.
-
-  dsi0vco_clk                1       1        0        756839941
-     dsi0_pll_out_div_clk    1       1        0        756839941
-        dsi0_pll_post_out_div_clk 0       0        0        216239983
-        dsi0_pll_bit_clk     2       2        0        756839941
-           dsi0_phy_pll_out_dsiclk 2       2        0        50455997
-              disp_cc_mdss_pclk1_clk_src 1       1        0        50455997
-           dsi0_pll_by_2_bit_clk 0       0        0        378419970
-           dsi0_phy_pll_out_byteclk 2       2        0        108119991
-              disp_cc_mdss_byte1_clk_src 2       2        0        108119991
-
-Downstream clk_summary shows the mdss_pixel_clk_src support the
-ratio(35:16)
-
- dsi0_phy_pll_out_dsiclk             2       2        0        378420000
-     disp_cc_mdss_pclk1_clk_src       1       1        0        172992000
- dsi0_phy_pll_out_byteclk            2       2        0        108120000
-     disp_cc_mdss_byte1_clk_src       2       2        0        108120000
-
-After checking downstream source, 15:4 also seems to be supported,
-add them two.
-
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260321095029.2259489-1-mitltlatltl@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260123-mhi_sdx35-v1-1-79440abf0c92@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information I need to complete this analysis.
-
-## Phase 1: COMMIT MESSAGE FORENSICS
-
-**Step 1.1 - Parse subject line:**
-- Subsystem: `clk: qcom: rcg2:`
-- Action verb: "expand" (non-standard fix verb, but describes adding
-  entries)
-- Record: Qualcomm Root Clock Generator 2 driver - expand fractional
-  ratio table for MDSS pixel clock source
-
-**Step 1.2 - Parse tags:**
-- Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com> (Qualcomm clock
-  expert, original author of prior frac-table update b527358cb4cd5)
-- Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> (msm
-  subsystem maintainer)
-- Link: lore.kernel.org reference to discussion
-- Signed-off-by: Bjorn Andersson <andersson@kernel.org> (Qualcomm SoC
-  maintainer, applied it)
-- **NO** Fixes: tag (expected absence - this is why it's being reviewed)
-- **NO** Cc: stable (expected absence)
-- **NO** Reported-by: (author found it while testing)
-
-**Step 1.3 - Analyze commit body:**
-- Bug: When using a 10-bit DSI C-PHY panel with `pclk=172992000,
-  byteclk=108120000`, `mdss_pixel_clk_src` fails to find a matching
-  ratio in `frac_table_pixel[]`.
-- Failure mode: `clk_pixel_determine_rate()` returns `-EINVAL`, the
-  divider register keeps a stale cached value (0xf = 15:1), so actual
-  pclk becomes ~50.4 MHz instead of required ~173 MHz — a ~3.4x wrong
-  clock rate. Display output is corrupted/broken.
-- Root cause: Table lacks the 16/35 and 4/15 ratios that downstream
-  Qualcomm driver supports.
-- Record: concrete runtime bug on real hardware; downstream driver
-  carries the needed ratios.
-
-**Step 1.4 - Hidden fix detection:** Subject says "expand" but the body
-clearly documents a failure mode. This is a bug fix disguised as an
-enhancement. The "expand" verb hides that `clk_set_rate()` completely
-fails without it.
-
-## Phase 2: DIFF ANALYSIS
-
-**Step 2.1 - Inventory:** 1 file (`drivers/clk/qcom/clk-rcg2.c`), +2 /
--0 lines. Single-file surgical change.
-
-**Step 2.2 - Code flow:**
-- Before: `frac_table_pixel[] = { {3,8}, {2,9}, {4,9}, {1,1}, {2,3}, {}
-  }`
-- After: adds `{16,35}` and `{4,15}` before the sentinel
-- Only affects `clk_pixel_determine_rate()` and `clk_pixel_set_rate()`
-  iteration logic
-
-**Step 2.3 - Bug mechanism:** Hardware workaround/enablement category.
-The table defines numerator/denominator pairs used to compute parent
-rate requests. Without the new entries, the iteration loop falls off the
-end and returns `-EINVAL` for specific legitimate hardware
-configurations.
-
-**Step 2.4 - Fix quality:**
-- Obviously correct: pure data table addition, cannot affect previously
-  working cases.
-- Cannot cause regression: iteration checks each entry in order, new
-  entries only kick in when existing ones don't match.
-- No risk of deadlock, UAF, etc.
-
-## Phase 3: GIT HISTORY INVESTIGATION
-
-**Step 3.1 - Blame:**
-- `frac_table_pixel[]` was introduced by `99cbd064b059f` ("clk: qcom:
-  Support display RCG clocks", May 2014)
-- Entry `{2, 3}` was added by `b527358cb4cd5` (Feb 2022, Taniya Das)
-  with a `Fixes:` tag
-
-**Step 3.2 - No Fixes: tag to follow.** The missing ratios have
-effectively been absent since original commit `99cbd064b059f` (2014,
-v3.17-era). Code exists in every active stable tree.
-
-**Step 3.3 - Related file history:** Prior similar fix (`b527358cb4cd5`,
-"Update the frac table for pixel clock") added a single entry and was
-backported broadly. Same author context (Taniya Das reviewed both).
-
-**Step 3.4 - Author:** Pengyu Luo is a regular contributor to qcom
-subsystem with multiple DSI-related fixes (`e4eb11b34d6c8`,
-`ac47870fd7955`, `fd941c787cbb4`). Patch reviewed by actual subsystem
-experts.
-
-**Step 3.5 - Dependencies:** Standalone, self-contained. No
-prerequisites.
-
-## Phase 4: MAILING LIST RESEARCH
-
-**Step 4.1 - `b4 dig -c 0f5c8f03d990f`:** Found thread at `https://lore.
-kernel.org/all/20260321095029.2259489-1-mitltlatltl@gmail.com/`. Single-
-patch, v1 only, applied as-is by Bjorn Andersson with "Applied,
-thanks!".
-
-**Step 4.2 - Reviewers:** Taniya Das (Qualcomm clock expert), Dmitry
-Baryshkov (msm maintainer), Konrad Dybcio (Qualcomm engineer). Proper
-maintainer review.
-
-**Step 4.3 - Discussion:** Konrad asked a clarifying question about
-whether these divider pairs are needed at all; Dmitry pointed to the
-Qualcomm downstream commit `f7aec4359448d25c8a8d21ad8e8733d61f6b69ab`
-confirming the ratios come from the vendor reference code. No NAK, no
-concerns about stability.
-
-**Step 4.4 - Series context:** Not part of a series.
-
-**Step 4.5 - Stable discussion:** None found in the thread.
-
-## Phase 5: CODE SEMANTIC ANALYSIS
-
-**Step 5.1 - Key data:** `frac_table_pixel[]` array only.
-
-**Step 5.2 - Callers:** `clk_pixel_ops` (set via `.set_rate =
-clk_pixel_set_rate` and `.determine_rate = clk_pixel_determine_rate`) is
-used by 17+ Qualcomm dispcc drivers: SDM845, SM6350, SM7150, SM8250,
-SM8450, SM8550, SM8750, X1E80100, SC7180, SC7280, SC8280XP, QCM2290,
-SM4450, SM6375, SA8775P (dispcc0/1), etc. This is a HIGH IMPACT SURFACE
-— affects display on almost every modern Qualcomm SoC.
-
-**Step 5.3 - Callees:** Pure table lookup.
-
-**Step 5.4 - Reachability:** Reached from `clk_set_rate()` on any MDSS
-pixel clock → userspace-triggerable via normal display driver operations
-(DRM probe, panel enable, mode set).
-
-**Step 5.5 - Similar patterns:** The `b527358cb4cd5` commit is the exact
-same pattern (add ratio to `frac_table_pixel`) and was backported to 8
-stable trees.
-
-## Phase 6: STABLE TREE ANALYSIS
-
-**Step 6.1 - Code exists in stable:** Verified `frac_table_pixel[]` is
-identical (`{3,8}, {2,9}, {4,9}, {1,1}, {2,3}`) on 5.10, 5.15, 6.1, 6.6,
-6.12, 6.18, 6.19. Every active stable tree has the same buggy state.
-
-**Step 6.2 - Backport complexity:** The `frac_table_pixel[]` array is in
-the same place across all trees. Will apply cleanly or with trivial
-context adjustment.
-
-**Step 6.3 - Related fixes in stable:** `b527358cb4cd5` (adding `{2,3}`)
-is in all stable trees. This new commit is the continuation.
-
-## Phase 7: SUBSYSTEM CONTEXT
-
-**Step 7.1 - Subsystem:** `drivers/clk/qcom/` - Qualcomm clock driver.
-Level: IMPORTANT (affects many SoC families, any user with a Qualcomm
-device using `clk_pixel_ops`).
-
-**Step 7.2 - Activity:** Actively maintained subsystem; regular flow of
-fixes.
-
-## Phase 8: IMPACT & RISK
-
-**Step 8.1 - Affected users:** Users of Qualcomm SoCs with DSI panels
-requiring the specific pixel clock ratios — explicitly 10-bit DSI C-PHY
-panels and other configurations where pclk/byteclk combinations force a
-16:35 or 4:15 ratio.
-
-**Step 8.2 - Trigger conditions:** Normal display operation with
-affected panels. No special privileges needed (display usage is common).
-
-**Step 8.3 - Failure mode severity:** HIGH — pixel clock is set to
-completely wrong rate (e.g., 50 MHz instead of 173 MHz, a 3.4x error).
-This causes visible display corruption / non-functional display on
-affected hardware. Not a crash, but user-visible broken functionality
-with no workaround.
-
-**Step 8.4 - Risk/benefit:**
-- Benefit: HIGH (fixes display for a class of panels across many SoCs)
-- Risk: VERY LOW (2 lines of data, table iteration is in-order; existing
-  ratios still match first)
-- Ratio: Strongly favors backport.
-
-## Phase 9: SYNTHESIS
-
-**Evidence FOR backporting:**
-- Fixes real observed runtime failure with detailed clk_summary evidence
-- Same pattern (adding ratio to `frac_table_pixel`) was previously
-  backported to 8 stable trees (`b527358cb4cd5` went to 4.9.y, 4.14.y,
-  4.19.y, 5.4.y, 5.10.y, 5.15.y, 5.16.y, 5.17.y)
-- Minimal 2-line change in a const data table
-- Zero functional risk (iteration is ordered; additions cannot break
-  existing cases)
-- Reviewed by two subsystem experts + applied by Qualcomm SoC maintainer
-- Falls into "hardware quirk/workaround" exception category (analogous
-  to device ID addition)
-- Code exists identically in all active stable trees
-- Used by 17+ SoC drivers → broad user impact
-
-**Evidence AGAINST backporting:**
-- No explicit Fixes: tag (though prior identical-pattern fix had one,
-  and absence of tag is explicitly not a signal per the guidelines)
-- Commit message uses "expand" instead of "fix" (but body describes
-  concrete failure)
-- No Cc: stable from the author
-
-**Stable rules check:**
-1. Obviously correct? YES — pure data addition
-2. Fixes real bug? YES — pixel clock misprogrammed to ~3.4x wrong rate
-3. Important? YES — broken display on affected hardware
-4. Small and contained? YES — 2 lines in one file
-5. No new features/APIs? YES — extends internal lookup table, not
-   exposed
-6. Applies to stable? YES — verified identical state across stable trees
-
-**Exception category:** Fits "hardware quirks/workarounds" — enables
-specific hardware configurations (10-bit DSI C-PHY panels) that were
-previously non-functional due to missing table entries, directly
-analogous to adding PCI/USB device IDs or codec quirks.
-
-## Verification
-
-- [Phase 1] Parsed tags: two Reviewed-by from Qualcomm experts, Link to
-  lore, no Fixes:/Cc:stable (expected)
-- [Phase 2] Diff analysis: 2-line const data addition to
-  `frac_table_pixel[]` before sentinel; no control-flow change
-- [Phase 3] `git log -- drivers/clk/qcom/clk-rcg2.c` + `git show
-  b527358cb4cd5`: confirmed precedent commit adding `{2,3}` was accepted
-  with Fixes: tag
-- [Phase 3] `git log --author="Pengyu Luo"`: confirmed author has
-  multiple legitimate DSI/Qualcomm fixes
-- [Phase 4] `b4 dig -c 0f5c8f03d990f`: returned
-  `lore.kernel.org/all/20260321095029.2259489-1-mitltlatltl@gmail.com/`
-- [Phase 4] `b4 dig -c 0f5c8f03d990f -a`: single v1, no revisions
-- [Phase 4] Thread contents via mbox: Taniya Das, Dmitry Baryshkov
-  Reviewed-by; Konrad asked a non-blocking question; Bjorn applied with
-  "Applied, thanks!"; no NAKs; no stable discussion
-- [Phase 5] `grep -rln "clk_pixel_ops" drivers/clk/qcom/`: 17+
-  dispcc/gcc drivers use the affected ops (SDM845, SM8250, SM8450,
-  SM8550, SM8750, X1E80100, SC7180, SC7280, SC8280XP, QCM2290, SM4450,
-  SM6350, SM6375, SM7150, SA8775P, etc.)
-- [Phase 6] Examined `drivers/clk/qcom/clk-rcg2.c` at for-greg/5.10-200,
-  5.15-200, 6.1-200, 6.6-200, 6.12-200, 6.18-200, 6.19-200:
-  `frac_table_pixel[]` identical across all trees — will apply cleanly
-- [Phase 6] `grep -rl "b527358cb4cd" /home/sasha/stable-
-  queue/releases/`: confirmed prior similar commit was backported to
-  4.9.311, 4.14.276, 4.19.238, 5.4.189, 5.10.110, 5.15.33, 5.16.19,
-  5.17.2
-- [Phase 8] Failure mode from commit body: pclk set to 50455997 Hz
-  instead of 172992000 Hz (3.4x off) on 10-bit DSI C-PHY panels — user-
-  visible display failure
+I have all the information needed. Let me now write the full analysis.
 
 ---
 
-This is a well-reviewed, minimal hardware-enablement fix (analogous to a
-hardware quirk) that addresses a documented, reproducible runtime
-failure on real hardware. The fix is a 2-line data-table extension with
-zero regression risk. There is strong precedent: a commit with the exact
-same pattern (`b527358cb4cd5`) was backported broadly to stable. The
-affected code is used by 17+ Qualcomm SoC drivers, giving wide user
-impact.
+## Complete Analysis
+
+### PHASE 1: COMMIT MESSAGE FORENSICS
+
+**Step 1.1: Subject line parsing**
+- Record: subsystem=`bus: mhi: host: pci_generic`, action=`Add`,
+  summary=`Qualcomm SDX35 modem support`
+
+**Step 1.2: Tag parsing**
+- Record: Signed-off-by: Krishna Chaitanya Chundru (author); Signed-off-
+  by: Manivannan Sadhasivam (MHI maintainer, who applied the patch);
+  Link: to patch.msgid.link. No Fixes:, no Cc: stable, no Reported-by:,
+  no syzbot references. Single-version patch (v1), applied directly by
+  the maintainer.
+
+**Step 1.3: Commit body analysis**
+- Record: Body states SDX35 (like SDX75) can take longer to transition
+  to ready during power up, hence using the existing
+  `modem_qcom_v2_mhiv_config` which has `ready_timeout_ms = 50000`.
+  Provides `lspci` output showing the device signature (vendor 0x17cb /
+  PID 0x011a). No stack traces, no bug symptoms — this is hardware
+  enablement, not a bug fix.
+
+**Step 1.4: Hidden bug fix detection**
+- Record: Not a hidden bug fix. Pure hardware enablement — new device
+  support for an existing driver. No "handle", "ensure", "initialize",
+  or "balance" language.
+
+### PHASE 2: DIFF ANALYSIS
+
+**Step 2.1: Inventory**
+- Record: Single file `drivers/bus/mhi/host/pci_generic.c`, +12/-0
+  lines. Adds one static `struct mhi_pci_dev_info mhi_qcom_sdx35_info`
+  (10 lines) and one entry in `mhi_pci_id_table[]` (2 lines). No
+  existing code modified. Single-file, purely additive.
+
+**Step 2.2: Code flow change**
+- Record: Before: PID 0x011a only matched specifically via
+  `PCI_DEVICE_SUB` for Telit FN920C04 (subvendor 0x1c5d, subdevice
+  0x2020); other SDX35 boards did not bind. After: the specific Telit
+  match stays (first in table → takes precedence), and any other
+  0x17cb:0x011a modem binds to a new generic SDX35 config that uses the
+  already-existing `modem_qcom_v2_mhiv_config`.
+
+**Step 2.3: Bug mechanism**
+- Record: Category (h) — hardware workaround / new device ID. No
+  locking, memory, refcount, or error-path changes.
+
+**Step 2.4: Fix quality**
+- Record: Obviously correct — follows the same pattern used for every
+  other MHI modem (SDX55, SDX65, SDX75, SDX72). Match ordering preserves
+  existing FN920C04 binding because `pci_match_id()` returns the first
+  matching entry. Zero risk to existing devices; only affects previously
+  unbound 0x011a hardware. Uses an already-upstream config
+  (`modem_qcom_v2_mhiv_config`, present since commit `5571519009d09` in
+  v6.8).
+
+### PHASE 3: GIT HISTORY INVESTIGATION
+
+**Step 3.1: git blame**
+- Record: The `modem_qcom_v2_mhiv_config` that this patch consumes was
+  introduced in `5571519009d09` ("bus: mhi: host: pci_generic: Add SDX75
+  based modem support", v6.8). The table and struct patterns being
+  extended are long-standing.
+
+**Step 3.2: Fixes: tag follow-up**
+- Record: N/A — no Fixes: tag. This is hardware enablement, not a bug
+  fix.
+
+**Step 3.3: File history**
+- Record: Recent `pci_generic.c` changes show a steady cadence of device
+  ID additions (Foxconn T99W760 `ac35e04f8000a`, FN990B40
+  `00559ba3ae740`, FE990B40 `6eaee77923ddf`, FN920C04 `6348f62ef7ecc`,
+  T99W696 `0d63055e1406c`, etc.). Each follows the same pattern: new
+  `mhi_pci_dev_info` struct + new PCI ID table entry. Self-contained,
+  standalone — no series.
+
+**Step 3.4: Author history**
+- Record: Krishna Chaitanya Chundru (Qualcomm) is a regular contributor
+  to MHI / Qcom PCIe subsystems. Co-signed and applied by Manivannan
+  Sadhasivam, the MHI maintainer. Authorial credibility is high.
+
+**Step 3.5: Dependencies**
+- Record: Depends only on `modem_qcom_v2_mhiv_config` (present since
+  v6.8). Applies standalone. No series prerequisites.
+
+### PHASE 4: MAILING LIST RESEARCH
+
+**Step 4.1: b4 dig**
+- Record: `b4 dig -c 6a7084102bb96` matched by patch-id and returned `ht
+  tps://lore.kernel.org/all/20260123-mhi_sdx35-v1-1-
+  79440abf0c92@oss.qualcomm.com/`. Single revision (v1). Read the full
+  thread via mbox.
+
+**Step 4.2: Review history**
+- Record: Only one reviewer comment — Konrad Dybcio noted the
+  "Unassigned class" in the lspci output looks like a separate issue;
+  Mani replied that this is a well-known Qcom-modem endpoint class issue
+  and he had posted a separate PCI quirk patch for it. No NAKs, no
+  concerns raised about this patch. No stable-tree nomination by any
+  reviewer. Maintainer applied as-is.
+
+**Step 4.3: Bug reports**
+- Record: N/A — no Reported-by, no bug-report Link.
+
+**Step 4.4: Series**
+- Record: Standalone single patch (v1-1-1).
+
+**Step 4.5: Stable ML**
+- Record: No stable@ list discussion relevant to this patch.
+
+### PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1-5.5:**
+- Record: No functions are modified. The change is data-only (two static
+  structures). `modem_qcom_v2_mhiv_config` is consumed by existing MHI
+  init paths (`mhi_register_controller()` via `mhi_pci_probe()`), which
+  are unchanged. No call-chain impact — the new data only activates the
+  existing, stable driver code paths for a previously-unbound PID.
+
+### PHASE 6: STABLE-TREE CROSS-REFERENCING
+
+**Step 6.1: Does the code exist in stable?**
+- Record: `pci_generic.c` and `modem_qcom_v2_mhiv_config` exist in
+  6.6.y, 6.12.y, 6.16.y, 6.17.y, and 7.0.y. The SDX75 commit that
+  introduced the v2 config entered mainline in v6.8, so trees at or
+  beyond 6.8 can apply this. For trees older than 6.8 (e.g. 6.6.y,
+  6.1.y, 5.15.y), `modem_qcom_v2_mhiv_config` does not exist and this
+  patch does not apply without additional backports.
+
+**Step 6.2: Backport complications**
+- Record: Clean apply expected for 6.12.y, 6.16.y, 6.17.y (the
+  `mhi_qcom_sdx55_info` anchor and the 0x011a table entry context both
+  exist in recent stable trees per `4e3297ec0c469` in 6.12.y which
+  backported the FN920C04 context). For trees before v6.8, would require
+  backporting the v2 config first — not worth it.
+
+**Step 6.3: Related fixes in stable**
+- Record: Similar device-ID additions in this exact file have routinely
+  been picked into stable via AUTOSEL: `4e3297ec0c469` (FN920C04 →
+  6.12.y), `bcaec58996672` (FN990B40 → 6.16.y), `df42e29132596` (T99W696
+  variants → 6.17.y), etc. Consistent precedent.
+
+### PHASE 7: SUBSYSTEM CONTEXT
+
+**Step 7.1: Subsystem / criticality**
+- Record: `drivers/bus/mhi/host/pci_generic.c` — MHI host stack, used by
+  Qualcomm PCIe modems (WWAN). PERIPHERAL in the sense that it affects
+  users of specific hardware, but popular hardware (laptops, routers, 5G
+  WWAN cards).
+
+**Step 7.2: Activity**
+- Record: Actively developed. The file receives multiple device-ID
+  additions per release cycle.
+
+### PHASE 8: IMPACT AND RISK
+
+**Step 8.1: Affected users**
+- Record: Users of SDX35-based modems that are NOT the Telit FN920C04.
+  Examples: Qcom reference designs, SDX35-based 5G/LTE cards from
+  various OEMs. Without this patch, those boards don't bind to the
+  driver at all.
+
+**Step 8.2: Trigger conditions**
+- Record: Device probe on the affected PCI card. Common, normal-path
+  code.
+
+**Step 8.3: Failure mode severity**
+- Record: WITHOUT patch: SDX35 modem does not bind → no WWAN
+  connectivity on affected hardware (functional loss for those users).
+  Not a crash/corruption — severity MEDIUM (feature not working), but it
+  is a real user-visible loss of function. WITH patch: existing devices
+  unaffected (FN920C04 keeps its specific entry first), new hardware
+  starts working.
+
+**Step 8.4: Risk vs benefit**
+- Record: Benefit = hardware enablement for SDX35 modems. Risk =
+  essentially zero: additive-only change, reuses an existing config,
+  match ordering keeps existing Telit FN920C04 behavior, no code paths
+  modified. Classic device-ID-add exception to stable rules.
+
+### PHASE 9: SYNTHESIS
+
+**Step 9.1: Evidence**
+- FOR: Exception category (new device ID to existing driver); tiny
+  additive change (+12 lines); reuses existing upstream infrastructure;
+  applied by the subsystem maintainer; no concerns raised in review;
+  consistent with precedent of similar MHI modem additions being picked
+  into stable (FN920C04, FN990B40, FE990B40, T99W696 variants).
+- AGAINST: No Fixes:/Cc: stable (expected per task instructions —
+  absence is not a negative signal); not a bug fix in the traditional
+  sense; won't apply to trees older than v6.8.
+- Unresolved: None of material weight.
+
+**Step 9.2: Stable-rules checklist**
+1. Obviously correct? YES — trivial additive data.
+2. Fixes a real issue? YES — enables hardware that currently does not
+   work.
+3. Important? MEDIUM — feature enablement (functional, not
+   catastrophic).
+4. Small and contained? YES — 12 lines, one file.
+5. No new features/APIs? YES — no new exported symbols, no new userspace
+   ABI.
+6. Applies to stable? YES for recent trees (v6.8+); NO for older trees.
+
+**Step 9.3: Exception category**
+- Record: DEVICE ID ADDITION to an existing driver — explicit stable-
+  rules exception.
+
+**Step 9.4: Decision**
+- The change meets the device-ID-addition exception. It uses
+  infrastructure already present in 6.8+, is minimal, is applied by the
+  maintainer, has no regression risk, and has strong precedent among
+  sibling MHI modem additions that have routinely been picked up by
+  stable.
+
+---
+
+### Verification
+
+- [Phase 1] Parsed tags from commit body: found Signed-off-by author +
+  MHI maintainer, Link: to lore, no Fixes:/Reported-by:/Cc: stable.
+- [Phase 2] Read the diff in the file context at
+  `drivers/bus/mhi/host/pci_generic.c` lines 900–948: confirmed the new
+  `PCI_DEVICE(0x17cb, 0x011a)` entry is placed AFTER the specific
+  `PCI_DEVICE_SUB(..., 0x1c5d, 0x2020)` for FN920C04, preserving
+  existing match.
+- [Phase 3] `git log -S "modem_qcom_v2_mhiv_config"`: confirmed config
+  introduced in `5571519009d09` (SDX75, v6.8).
+- [Phase 3] `git log -- drivers/bus/mhi/host/pci_generic.c`: confirmed
+  steady cadence of similar device-ID additions.
+- [Phase 4] `b4 dig -c 6a7084102bb96`: matched single-revision thread at
+  lore.kernel.org/all/20260123-mhi_sdx35-v1-1-
+  79440abf0c92@oss.qualcomm.com.
+- [Phase 4] Read full mbox thread: one review comment (Konrad re:
+  unrelated class quirk), Mani applied as-is. No NAKs, no stable
+  nomination.
+- [Phase 6] `git log stable/linux-6.12.y --grep=FN920C04`: confirmed
+  `4e3297ec0c469` backport present (precedent).
+- [Phase 6] `git log stable/linux-6.16.y --grep="Add Telit FN990B40"`:
+  confirmed `bcaec58996672` backport present (precedent).
+- [Phase 6] `git log stable/linux-6.17.y --grep="mhi.*pci_generic"`:
+  confirmed `df42e29132596` (T99W696 variants) backport present.
+- [Phase 6] Confirmed file exists in all active stable trees;
+  `modem_qcom_v2_mhiv_config` specifically requires v6.8+.
+- [Phase 7] File path `drivers/bus/mhi/host/pci_generic.c` → MHI host /
+  PCIe modem bus — peripheral hardware driver.
+- UNVERIFIED: Exact match behavior on every stable tree — presumed clean
+  apply for 6.12+ based on file structure; unverified for pre-6.8 trees
+  (but not applicable since v2 config doesn't exist there).
+
+This is a textbook device-ID addition to an existing driver — explicit
+stable-kernel-rules exception, minimal scope, zero regression risk,
+maintainer-applied, with clear precedent for sibling commits being
+backported.
 
 **YES**
 
- drivers/clk/qcom/clk-rcg2.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bus/mhi/host/pci_generic.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index fc696b66ccda9..6064a0e17d519 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1117,6 +1117,8 @@ static const struct frac_entry frac_table_pixel[] = {
- 	{ 4, 9 },
- 	{ 1, 1 },
- 	{ 2, 3 },
-+	{ 16, 35},
-+	{ 4, 15},
- 	{ }
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 0884a384b77fc..425362037830e 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -407,6 +407,16 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
+ 	.sideband_wake = false,
  };
  
++static const struct mhi_pci_dev_info mhi_qcom_sdx35_info = {
++	.name = "qcom-sdx35m",
++	.config = &modem_qcom_v2_mhiv_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.mru_default = 32768,
++	.sideband_wake = false,
++	.edl_trigger = true,
++};
++
+ static const struct mhi_pci_dev_info mhi_qcom_sdx24_info = {
+ 	.name = "qcom-sdx24",
+ 	.edl = "qcom/prog_firehose_sdx24.mbn",
+@@ -909,6 +919,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* Telit FN920C04 (sdx35) */
+ 	{PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x011a, 0x1c5d, 0x2020),
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fn920c04_info },
++	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x011a),
++		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx35_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx24_info },
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, PCI_VENDOR_ID_QCOM, 0x010c),
 -- 
 2.53.0
 
