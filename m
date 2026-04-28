@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-105005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AO7kBDK78GmFXwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 15:50:42 +0200
+	id iAcqIxa88GmFXwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 15:54:30 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D168486418
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 15:50:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 521D2486563
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 15:54:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id EB86C30B5784
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 13:42:10 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 7F035301EDA8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 13:47:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 357402C21E8;
-	Tue, 28 Apr 2026 13:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93DCE3F54CE;
+	Tue, 28 Apr 2026 13:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="qRLoVPjW"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="MaQ93KGS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A82392C46
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 13:40:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F231FDA61;
+	Tue, 28 Apr 2026 13:47:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777383614; cv=none; b=RRPUop4+eShA957Tbs9khKojweGkb3/svVOKzxv+fEOrRBO8oEY6R7DFILzgpgCN3E+sslie9j1/HZoD3Pm3mEbhSf9aW4yszF5xMEptav4fF+t5iFRWK3DEW1cQKIXn75ldR6BDcm0HXLGSK297QLRj/E+4AL6y2Vc1zVLggcI=
+	t=1777384075; cv=none; b=VPzf+ScLIOXGp0iHnGmjrK+QzTeO/9DiX0wMZB1mi0PHPlDhSwUEMP7YiG7bqCc9d5NurFB1kN6MQKkZku0qXSVsgef/dqrbSR3In/dsHRsXFWuhGZfyNWZ9bSeSLi2DFi+uyV03Rb6+nDNRELXTqtn7+eEvMI+io2sqBgHbmPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777383614; c=relaxed/simple;
-	bh=DY37OnpoYjjW+GFpmDYkzr+BXySsTF4/pHUAAopHjvA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:Subject:Cc:To:
-	 References:In-Reply-To; b=slL67D5Pb0oXGXNGd6GcDGDQ9SiSh4NCwHbWwmTxOvDwJzawFlIIiZwHrdRw6kNf+MF0tNQrguXOv/sOlQyFZud0kgNFQDTOGbLi4pnGrvUMtf2/PqEQdoXFadmgtWo9dRb7Stl2PP/lPNXthvDdP2tcREiR9paYYoV2kDr6Fpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=qRLoVPjW; arc=none smtp.client-ip=185.246.84.56
+	s=arc-20240116; t=1777384075; c=relaxed/simple;
+	bh=OeJCRKNITJXUXpnUeSXEqc/lLoySdj2P6GUYnAAEL+c=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
+	 References:In-Reply-To; b=W9atPEGNZIiOhw1VDpoDAq0WVwQ/rfQUhTkDXA1DkpsnAGGiGM2IaM2Ol8lNAXGofmOr0tP0UUKuPzth7NPZz3b71d/yQQs49ANm8hwnglBfnHc0euu3gSq5S7VPtQnMB1YOIceFOon4E1UAFUj52gLOcQhlXGqbQwRJnHpu3Pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=MaQ93KGS; arc=none smtp.client-ip=185.246.85.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 3B4EB1A3472;
-	Tue, 28 Apr 2026 13:40:10 +0000 (UTC)
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 936F14E42B56;
+	Tue, 28 Apr 2026 13:47:51 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 026AB601DF;
-	Tue, 28 Apr 2026 13:40:10 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C6AAE10728BFF;
-	Tue, 28 Apr 2026 15:39:43 +0200 (CEST)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 625B2601D0;
+	Tue, 28 Apr 2026 13:47:51 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id ACB6C10728C08;
+	Tue, 28 Apr 2026 15:47:42 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1777383605; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1777384070; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=DY37OnpoYjjW+GFpmDYkzr+BXySsTF4/pHUAAopHjvA=;
-	b=qRLoVPjWicMlOER4CBoXDyZ31IS3N9wzfHFsgyWbAAFF/gci+qsFmTs0vCeqFcMtumISls
-	Tj3oY/2Cdf6m/7gztcQrTJLdN0ggRvFVqgt+JH8FxO2/nx+GfiibBB7tr9VdYd2pRAyZX1
-	XAXF0QiFbh370lTIQPb7xonACEwx2kQTWqUUcXxmMBeCKnlqHPelpK3fTwkngZn/4NCD/d
-	KE58A7C2KizgbREMj4kyFapvuVzo03ASQ8lKHF89cbbYlD9WTUWuW4Ve1tF5Yw+ztjpBH4
-	MjEA//3NGYT7/zO8OOYAeAWTnaFj1l+B1bRPPqqwsMjaj7jeo7/wmSi84hXibw==
+	bh=8hH5f9pRWZjIKa7upLj6O1FMpKJtS+Zt3OkL4sYouao=;
+	b=MaQ93KGSH+Hk8abA6MbWHlda1aC2uqGX/4nTQBQA//FFqhT5t6lxHiZAYhudeVv24bAcD5
+	+G529G8DcjVQCvZ6Re1R8BX0iwjTpBm/zn6H4ufwwZu9XJZWY0o9lZJBOYADSOOX2eMsNg
+	O35B1w4pJ1d2XnuAlOPaVvL7Ur0NlIhodLk8jTJOzrDDLV4OH5CeU3InEdnDiS8kQ0S98H
+	0FCfEbRGWyo/1C5x3+YL2T4Z+YsB9IcvDrtlnIgcKhUhqsmOxqvTD+NWyf5q8B76mXUEN5
+	5oNzad17rT+3SHX03p3YtPB5IYEtUY88RnIRW9qAggvL74Ih7I506P8YyCBR1w==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,67 +59,40 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 28 Apr 2026 15:39:43 +0200
-Message-Id: <DI4TW9XECX53.17TEZPCSWTH1A@bootlin.com>
-From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
-Subject: Re: [PATCH v2 00/41] drm/display: bridge-connector: attach encoder
- to the connector
+Date: Tue, 28 Apr 2026 15:47:41 +0200
+Message-Id: <DI4U2DT3OBMR.23T3F7X8P75RU@bootlin.com>
+Subject: Re: [PATCH v2 08/11] drm/bridge: adv7511: switch to
+ of_drm_get_bridge_by_endpoint()
 Cc: "Hui Pu" <Hui.Pu@gehealthcare.com>, "Ian Ray"
  <ian.ray@gehealthcare.com>, "Thomas Petazzoni"
- <thomas.petazzoni@bootlin.com>, <dri-devel@lists.freedesktop.org>,
- <linux-kernel@vger.kernel.org>, <asahi@lists.linux.dev>,
- <imx@lists.linux.dev>, <linux-arm-kernel@lists.infradead.org>,
- <linux-mips@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
- <linux-amlogic@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
- <freedreno@lists.freedesktop.org>, <linux-rockchip@lists.infradead.org>,
- <linux-tegra@vger.kernel.org>, <linux-samsung-soc@vger.kernel.org>,
- <linux-renesas-soc@vger.kernel.org>
-To: "Icenowy Zheng" <zhengxingda@iscas.ac.cn>, "Dmitry Baryshkov"
- <dmitry.baryshkov@oss.qualcomm.com>, "Andrzej Hajda"
- <andrzej.hajda@intel.com>, "Neil Armstrong" <neil.armstrong@linaro.org>,
- "Robert Foss" <rfoss@kernel.org>, "Laurent Pinchart"
- <Laurent.pinchart@ideasonboard.com>, "Jonas Karlman" <jonas@kwiboo.se>,
- "Jernej Skrabec" <jernej.skrabec@gmail.com>, "Maarten Lankhorst"
+ <thomas.petazzoni@bootlin.com>, "dri-devel@lists.freedesktop.org"
+ <dri-devel@lists.freedesktop.org>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"
+ <linux-arm-msm@vger.kernel.org>, "freedreno@lists.freedesktop.org"
+ <freedreno@lists.freedesktop.org>, "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>
+To: "Biju Das" <biju.das.jz@bp.renesas.com>, "Maarten Lankhorst"
  <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>,
  "Thomas Zimmermann" <tzimmermann@suse.de>, "David Airlie"
- <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Sasha Finkelstein"
- <fnkl.kernel@gmail.com>, "Janne Grunau" <j@jannau.net>, "Liu Ying"
- <victor.liu@nxp.com>, "Douglas Anderson" <dianders@chromium.org>,
- "Laurentiu Palcu" <laurentiu.palcu@oss.nxp.com>, "Lucas Stach"
- <l.stach@pengutronix.de>, "Frank Li" <Frank.Li@nxp.com>, "Sascha Hauer"
- <s.hauer@pengutronix.de>, "Pengutronix Kernel Team"
- <kernel@pengutronix.de>, "Fabio Estevam" <festevam@gmail.com>, "Philipp
- Zabel" <p.zabel@pengutronix.de>, "Paul Cercueil" <paul@crapouillou.net>,
- "Anitha Chrisanthus" <anitha.chrisanthus@intel.com>, "Chun-Kuang Hu"
- <chunkuang.hu@kernel.org>, "Matthias Brugger" <matthias.bgg@gmail.com>,
- "AngeloGioacchino Del Regno" <angelogioacchino.delregno@collabora.com>,
- "Kevin Hilman" <khilman@baylibre.com>, "Jerome Brunet"
- <jbrunet@baylibre.com>, "Martin Blumenstingl"
- <martin.blumenstingl@googlemail.com>, "Rob Clark"
+ <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Rob Clark"
  <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
  "Abhinav Kumar" <abhinav.kumar@linux.dev>, "Jessica Zhang"
  <jesszhan0024@gmail.com>, "Sean Paul" <sean@poorly.run>, "Marijn Suijten"
- <marijn.suijten@somainline.org>, "Tomi Valkeinen"
- <tomi.valkeinen@ideasonboard.com>, "Sandy Huang" <hjc@rock-chips.com>,
- =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, "Andy Yan"
- <andy.yan@rock-chips.com>, "Thierry Reding" <thierry.reding@gmail.com>,
- "Mikko Perttunen" <mperttunen@nvidia.com>, "Jonathan Hunter"
- <jonathanh@nvidia.com>, "Jingoo Han" <jingoohan1@gmail.com>, "Inki Dae"
- <inki.dae@samsung.com>, "Seung-Woo Kim" <sw0312.kim@samsung.com>, "Kyungmin
- Park" <kyungmin.park@samsung.com>, "Krzysztof Kozlowski" <krzk@kernel.org>,
- "Alim Akhtar" <alim.akhtar@samsung.com>, "Laurent Pinchart"
- <laurent.pinchart+renesas@ideasonboard.com>, "Tomi Valkeinen"
- <tomi.valkeinen+renesas@ideasonboard.com>, "Kieran Bingham"
- <kieran.bingham+renesas@ideasonboard.com>, "Geert Uytterhoeven"
- <geert+renesas@glider.be>, "Magnus Damm" <magnus.damm@gmail.com>, "Biju
- Das" <biju.das.jz@bp.renesas.com>, "Marek Vasut" <marex@denx.de>, "Stefan
- Agner" <stefan@agner.ch>, "Jyri Sarha" <jyri.sarha@iki.fi>, "Michal Simek"
+ <marijn.suijten@somainline.org>, "Tian Tao" <tiantao6@hisilicon.com>,
+ "Xinwei Kong" <kong.kongxinwei@hisilicon.com>, "Sumit Semwal"
+ <sumit.semwal@linaro.org>, "John Stultz" <jstultz@google.com>, "Andrzej
+ Hajda" <andrzej.hajda@intel.com>, "Neil Armstrong"
+ <neil.armstrong@linaro.org>, "Robert Foss" <rfoss@kernel.org>,
+ "laurent.pinchart" <laurent.pinchart@ideasonboard.com>, "Jonas Karlman"
+ <jonas@kwiboo.se>, "Jernej Skrabec" <jernej.skrabec@gmail.com>,
+ "tomi.valkeinen" <tomi.valkeinen@ideasonboard.com>, "Michal Simek"
  <michal.simek@amd.com>
+From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
 X-Mailer: aerc 0.20.1
-References: <20260423-drm-bridge-connector-attach_encoder-v2-0-2ae6ca69b390@bootlin.com> <cf2c91396eb3017aa51dd9c840badffddca2f7ec.camel@iscas.ac.cn>
-In-Reply-To: <cf2c91396eb3017aa51dd9c840badffddca2f7ec.camel@iscas.ac.cn>
+References: <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-0-4300744a1c47@bootlin.com> <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-8-4300744a1c47@bootlin.com> <TY3PR01MB113466B70BFD2899AB0CF47AD86372@TY3PR01MB11346.jpnprd01.prod.outlook.com> <TY3PR01MB1134674FDD088299A4382D3D286372@TY3PR01MB11346.jpnprd01.prod.outlook.com> <DI4TGV2WURTY.39OXE7WWKRLA1@bootlin.com> <TY3PR01MB11346E82D19FBE8544F51624286372@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+In-Reply-To: <TY3PR01MB11346E82D19FBE8544F51624286372@TY3PR01MB11346.jpnprd01.prod.outlook.com>
 X-Last-TLS-Session-Version: TLSv1.3
-X-Rspamd-Queue-Id: 9D168486418
+X-Rspamd-Queue-Id: 521D2486563
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
@@ -127,144 +100,118 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
 	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105005-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-105006-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[32];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[bootlin.com:+];
-	FREEMAIL_TO(0.00)[iscas.ac.cn,oss.qualcomm.com,intel.com,linaro.org,kernel.org,ideasonboard.com,kwiboo.se,gmail.com,linux.intel.com,suse.de,ffwll.ch,jannau.net,nxp.com,chromium.org,oss.nxp.com,pengutronix.de,crapouillou.net,collabora.com,baylibre.com,googlemail.com,linux.dev,poorly.run,somainline.org,rock-chips.com,sntech.de,nvidia.com,samsung.com,glider.be,bp.renesas.com,denx.de,agner.ch,iki.fi,amd.com];
+	FREEMAIL_TO(0.00)[bp.renesas.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,hisilicon.com,linaro.org,google.com,intel.com,ideasonboard.com,kwiboo.se,amd.com];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.ceresoli@bootlin.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[bootlin.com:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCPT_COUNT_GT_50(0.00)[78];
-	NEURAL_HAM(-0.00)[-0.997];
+	PRECEDENCE_BULK(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	FROM_NEQ_ENVFROM(0.00)[luca.ceresoli@bootlin.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-0.990];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:url,bootlin.com:dkim,bootlin.com:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 
-Hello Icenowy,
+Hello,
 
-On Sat Apr 25, 2026 at 5:22 PM CEST, Icenowy Zheng wrote:
-> =E5=9C=A8 2026-04-23=E5=9B=9B=E7=9A=84 11:16 +0200=EF=BC=8CLuca Ceresoli=
-=E5=86=99=E9=81=93=EF=BC=9A
->> This series simplifies using the bridge-connector by removing the
->> need to
->> attach the newly created connector to the encoder.
+On Tue Apr 28, 2026 at 3:31 PM CEST, Biju Das wrote:
+>> >> > @@ -1251,10 +1251,9 @@ static int adv7511_probe(struct i2c_client
+>> >> > *i2c)
+>> >> >
+>> >> >  	memset(&link_config, 0, sizeof(link_config));
+>> >> >
+>> >> > -	ret =3D drm_of_find_panel_or_bridge(dev->of_node, 1, -1, NULL,
+>> >> > -					  &adv7511->next_bridge);
+>> >> > -	if (ret && ret !=3D -ENODEV)
+>> >> > -		return ret;
+>> >> > +	adv7511->bridge.next_bridge =3D of_drm_get_bridge_by_endpoint(dev=
+->of_node, 1, -1);
+>> >> > +	if (IS_ERR(adv7511->bridge.next_bridge) && PTR_ERR(adv7511->bridg=
+e.next_bridge) !=3D -ENODEV)
+>> >> > +		return PTR_ERR(adv7511->bridge.next_bridge);
+>> >>
+>> >> Does it crash, if the error is  -EPROBE_DEFER?
+>> >
+>> > I see a crash with patch [1], which is fixed by avoiding the direct as=
+signment.
 >>
->> =3D=3D Series description
+>> Ah, dammit! Good catch, thanks for the quick testing and follow-up!
 >>
->> Currently all users of the bridge-connector must call
->> drm_connector_attach_encoder() immediately after a successful
->> drm_bridge_connector_init().
+>> Indeed this driver assumes next_bridge is either NULL or a valid pointer=
+, but due to the 'if(IS_ERR()
+>> && some_other_condition)' now it can also be -ENODEV (not -EPROBE_DEFER,=
+ but that's irrelevant).
 >>
->> This is an unnecessary burden for users. Move the call to the end of
->> drm_bridge_connector_init() so all callers can be simplified.
+>> This affects the msm and zynqmp_dp patches equally.
 >>
->> =C2=A0* Patch 1 adds a drm_connector_attach_encoder() call at the end of
->> =C2=A0=C2=A0 drm_bridge_connector_init()
->> =C2=A0* The other patches remove drm_connector_attach_encoder() after al=
-l
->> =C2=A0=C2=A0 drm_bridge_connector_init() calls, ordered from the simples=
-t ones
->> =C2=A0=C2=A0 (only the last one is somewhat non-obvious)
+>> I'm sending a v3 soon with these fixed. I'm just not sure which approach=
+ to use to fix (same for all
+>> the 3 patches). Alternatives are:
 >>
->> The Cc list is huge due to the many drivers touched. I sent v1 to a
->> reduced
->> Cc list to ensure there is an agreement about the overall idea. That
->> seems
->> to be the case, so now it's time to copy all drivers maintainers.
+>>  1. -ENODEV is accepted, set next_bridge to NULL when it happens:
 >>
->> It would be nice to apply all of this series at once to avoid
->> duplicated
->> calls to drm_connector_attach_encoder() in the interim. That would be
->> harmless beacuse drm_connector_attach_encoder() is idempotent, but
->> unpleasant.
->>
->> =3D=3D Additional rationale (for the curious)
->>
->> Besides making the usage of the bridge-connector a bit simpler, this
->> series
->> is in preparation for DRM bridge hotplug. Here's why, feel free to
->> skip if
->> you don't care.
->>
->> The old bridge hotplug proposals I have sent in the past [1] were
->> based on
->> a hotplug-bridge driver to sit between the last fixed bridge and the
->> first
->> hotplugged bridge. Discussion with the community led to the need of
->> removing the hotplug-bridge and let common DRM code handle hotplug.
->> The
->> common place of code that appears the most suitable for hotplug
->> handling is
->> the bridge-connector, which is by now the recommended way to handle
->> connector instantiation after a bridge chain.
->>
->> So I'm in the process of extending the bridge-connector to be the
->> central
->> point to handle bridge hotplug. Turns out the need to call
->> drm_connector_attach_encoder() after drm_bridge_connector_init() has
->> returned is adding big headaches to such work. So I'm send this long
->> but
->> simple series to both simplify bridge-connector usage and remove one
->> obstacle from the bridge hotplug work. This series is relevant by
->> itself
->> anyway.
->>
->> [1]
->> https://lore.kernel.org/lkml/20250206-hotplug-drm-bridge-v6-26-9d6f2c9c3=
-058@bootlin.com/
->>
->> =3D=3D Grand plan
->>
->> This is part of the work to support hotplug of DRM bridges. The grand
->> plan
->> was discussed in [0].
+>>       -       if (IS_ERR(adv7511->bridge.next_bridge) && PTR_ERR(adv7511=
+->bridge.next_bridge) !=3D -
+>> ENODEV)
+>>       -               return PTR_ERR(adv7511->bridge.next_bridge);
+>>       +       if (IS_ERR(adv7511->bridge.next_bridge)) {
+>>       +               if (PTR_ERR(adv7511->bridge.next_bridge) =3D=3D -E=
+NODEV)
+>>       +                       adv7511->bridge.next_bridge =3D NULL;
+>>       +               else
+>>       +                       return PTR_ERR(adv7511->bridge.next_bridge=
+);
 >
-> Just see the bridge hotplugging thing, is it possible for DRM drivers
-> to declare bridges attached to themselves after this?
->
-> Loongson 7A1000 PCH can only output DPI signals, so nearly all products
-> with it are shipping with some kind of external bridges, but currently
-> drm/loongson does not support them (all display connectors are now seen
-> as DPI ones, and connectors behind non-transparent bridges won't work).
->
-> The bridges are going to be accessed by the DDC I2C busses of 7A1000,
-> and are not declared with device tree (systems with 7A1000 never ship
-> with device trees, and Linux currently matches a built-in device tree).
-> (Bridges being on the DDC I2C also introduces some dependency for them
-> to depend on the drm/loongson driver.)
->
-> Loongson have defined some kind of VBIOS declaring what bridge is
-> behind, and their non-mainline driver just contains driver codes for
-> all possible bridges. (Sui Jingfeng previously tried to mainline such
-> practice, and of course it's rejected because of code duplicity.)
+> The point is you cannot return PTR_ERR as it will lead to crash, if it is
+> direct assignment.
 
-I'm afraid your question goes a bit beyond my knowledge, the hotplug work
-I'm carrying on is focuses on DT platforms.
+It would definitely crash when the next_bridge is dereferenced (which
+happens in adv7511_bridge_attach()) but I don't see how it can crash
+here. Here it _can_ be assigned -ENODEV, but it would be immediately be
+cleared to NULL, or to enother error, but we'd immediately return. And in
+case of return, when next_bridge is cleared by __drm_bridge_free ->
+drm_bridge_put, the error value would be ignored thanks to patch 1.
 
-My limited understading of non-DT platforms is that a card driver must
-instantiate all components and tie them together, which assumes it has to
-know them somehow (ACPI, hardcoded, whatever). Others can probably comment
-better about this.
+>
+>    if (IS_ERR(adv7511->bridge.next_bridge)) {
+> 	int err =3D PTR_ERR(adv7511->bridge.next_bridge);
+> 	adv7511->bridge.next_bridge =3D NULL;
+> 	return err;
+>   }
 
-As a general principle, when devices can be mixed and matched by the board
-designer, hardcoding them is a bad design choice. Think of bad old board
-files written in C, which were unmanageable and got replaced exactly by
-device tree. So my opinion is that DRM encoders and bridges should know as
-little as possible about the following bridge, connector or panel that
-follows them.
+Is this if() condition wrong? The driver needs to accept the -ENODEV return
+value, the next_bridge is conditional in the curent driver code.
+
+>
+> Cheers,
+> Biju
+>
+>>  2. let nexxt_bridge hold -ENODEV but ignore it when it is used (only in
+>>     the attach op, for all 3 drivers):
+>>
+>>       -       if (adv->bridge.next_bridge) {
+>>       +       if (!IS_ERR_OR_NULL(adv->bridge.next_bridge)) {
+>>
+>> While the latter approach involves less code, it might let errors sneak =
+in in case new usages of
+>> next_bridge are added with just a NULL check.
+>>
+>> Opinions about the two?
 
 Luca
 
