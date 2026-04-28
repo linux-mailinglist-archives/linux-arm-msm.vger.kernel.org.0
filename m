@@ -1,156 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-104850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6IcEJRss8GmxPQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 05:40:11 +0200
+	id 6EYaIMYu8GkHPgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 05:51:34 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id F355C47D20E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 05:40:10 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2727E47D2DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 05:51:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E7861301944A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 03:40:09 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8F8293004610
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 03:51:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1732631A807;
-	Tue, 28 Apr 2026 03:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88D62320A34;
+	Tue, 28 Apr 2026 03:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PT8ZZz9u"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="om7wcb+v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80972DB7B4;
-	Tue, 28 Apr 2026 03:40:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCA824169D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 03:51:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777347609; cv=none; b=XvbvClEauLFGfm+96vG5pmJKf1OnUQOUBCqAk2sHpRur6FTE+ArqZiTBWvrsL4lQC6UDdSF8OtPXTmbhsWX+MZCtKC46ywfIzGG0+LvlPRM/FA2GWqE+UySQIqWg7Nk45sOsFSe8NIRI8YIIZ0RSl6RYtqiNQ4unbWotekLpuNs=
+	t=1777348290; cv=none; b=g1IU2tZ2ETjMVgtPOn7DjcF3Eisj37j03ldM4HTLC0eO/sVAuq0V+BeqDrKohBOWspj0vhjjuis1NmUdvKFs8TQESLC1WNZ4jSmjkmKRTqNRzyhKJjXzjt0kdCiJBZr6oqRcfDBVQUgsTc9xLziE7ZnzxQp16fk1rrau9FFsqYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777347609; c=relaxed/simple;
-	bh=tciipBfN6vxEQA++yDaPsZs/cffL7BXyOIjkrkOatdI=;
+	s=arc-20240116; t=1777348290; c=relaxed/simple;
+	bh=RQfjDmjDhFBZQeNCmuYx5MyE8j6k2g5d33MZmHmxCmg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ELnBJkDPVulb4c3S2mxoUhPvg/1pCFR41ptZkiTU8R3QyWOR8S5B9/AV7+ZqgI/rU7kGaUsL+nnTXUUZ6MKuTCoaKmkj51O6x6wlbixjX9nNuEXWkJSR+IkJ31zZNUqWzmkOinpdFWbqTsAt7cNVEBc2na+bCGznOdPUxbeh8a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PT8ZZz9u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB7AC2BCC4;
-	Tue, 28 Apr 2026 03:40:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777347608;
-	bh=tciipBfN6vxEQA++yDaPsZs/cffL7BXyOIjkrkOatdI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PT8ZZz9u58TmBScOUwl+aDVDYcfHPnDtU4fbPH0CvsxSic/gGROQ4Dua8gHDnub8j
-	 ZyQyn0IrCDw+DO8ofQ2uAEuCVs1Ga7FbgNLGouv3OBgf60vI3f2vC4Siv9e0L6dY5q
-	 FPXuyssUE1M6ZT9LxwLbAFg+jx96p16JsFqilLdr9R6qroqoGwuimKOZvSHCDdWGvu
-	 6hivtfaIuzoSZI8SfH9iXt8jskkM4MxGKFbEguKGwNRp5GgZ1fi7x3ycraRUpCr3sS
-	 CNyOBIIFdacjyE/m9MJQgd+PDe0TdpFqU4Jfh4SE32WTd5Y/UPfkBRcLF+Sy9H4x3P
-	 hp7He85FQqRkw==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id A55E51AC5840; Tue, 28 Apr 2026 04:40:05 +0100 (BST)
-Date: Tue, 28 Apr 2026 12:40:05 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Linus Walleij <linusw@kernel.org>
-Cc: Bartosz Golaszewski <brgl@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	linux-gpio@vger.kernel.org, linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] ASoC: wsa881x: Move custom workaround to gpiolib-of
-Message-ID: <afAsFcydwlCEgWZf@sirena.co.uk>
-References: <20260427-asoc-wsa881x-v2-1-9ef965f94624@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=iwFyspySj0J5AjOW04y2EY0+dKB8lWris9fp7NrHmhBXPJJMSy86YFibc0AJ2jgRY1/S/jU1LqfV0zT8dfIVZtETF5mNQe9lg3Q127axTuacZck4CWA3AOzCbyIpq+7/m0PV70j/efaDZrtoLFpw4o57lraKHuwYf2EnXIsGlLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=om7wcb+v; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8f15e900586so229408685a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 20:51:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777348288; x=1777953088; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=63f4GofBoWLfXQjvxrKaQNrlmvp+JGGyl1KjrPUdmXI=;
+        b=om7wcb+v6jOtI69VUjVTFihCYGBnZ5on48uPRzAVMvPTaqFaNcbrLl/6MkV5QW+DcB
+         kxPDH4bKZSsy5XmRm6RUPqu+fcooPzoHWEhtjRZAX44M6VDtYXsp9PJa0AlQ564ogkmu
+         022TOCX/89rPiIRSdYugVcf4FDmF2hozU9ZqVhVnuTB2Ex2JO9VFPkiLEV1CkoV/C1F+
+         CqvoYdDWOskf2ylBidvPs0a0KN4SQMrNQOTTlZ2uEPoEZNlvSQtV3HlOtYfy9h+v8X+9
+         0xdTds4jnVnlRDkYlkB2JIi604qcnCLwU4hZMjyQ39PogIL4lNHuMGTgg5w+drVjz7kS
+         RN/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777348288; x=1777953088;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=63f4GofBoWLfXQjvxrKaQNrlmvp+JGGyl1KjrPUdmXI=;
+        b=JBBoWSg3oMa7ZyeCav3uXuj5dV+ONYitviqJHq8loJ/ruHDax/ELXrG/reCf5ri3kE
+         CW9X86h7XjsxDWAUjfh4trdVZOH8LabYNJvh2GeHg60RRjJP7mHCsgn4mapybAj3pXff
+         +u4xAnHRrHoOoJTMMzJ7G8ulWKgT4lFoEPaEUxlSvZ5NUjJKMFNssP+nZKycBwqC36TU
+         7HlRMEY0ZKfYhyc3BeI3TxWHOSTErT40Mnmdjd32B6sQ+ZTYd15OrXwkEbjocnCWyL/H
+         xwU3TICQPc4bJQXPuN+9Zkv78DdFObfL4BRAbfdxN0gUQpjqxIP6uHs1h/tf0q1oXBEB
+         r+Ng==
+X-Forwarded-Encrypted: i=1; AFNElJ8Qf9u9L7Vg1Ng7lVzQ/PnLl2K29znwv7SQ7AWa0NMqtA8hQglDJpN4ZoDXOw/pXaqIDdieQ5zA/CD2sihq@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyj4EMT6+fyBWvDXxGZfUZ/gY4pPJIiZgBdgS1fIJvYjptOaX+A
+	MzJe98VcmmhbXFvw8pu9mIYwfmJkLGPNm5NLg4AzmCXP3qu3By3Rvoe5
+X-Gm-Gg: AeBDietZRQeukBnrG3Kp41cJBItooKIfjVx2MFldqYtInQlwKlT9otfZhV/tChwbbLX
+	3wuWq23KKTNU1Ye/DeuNDL+uisluTC6wfOIUfDe110fExLPfim9qaRznRWHJS/0kIslM6VRk6nl
+	2d6K72SBJdHXQ6pUgxp6cxrX5lwAU627lVVHPSaZS7Hskm67u+Nn8h5wJ9wr7eD2PrpqeWSkVn/
+	Rtqpiwd6IrHWdCbjZk0OqXqjO02QoAVZl1PJilAMC0QItEFUTfKTJ56hTroG+Vu4y3JcVSMlbLj
+	JHfS/J1pSGQhNNdIJTkk7WQFq5p0ob4bySJW2AE1Sr0J0Vo/zLEw5maxpw5L4dz1UJHmYsN+SmE
+	Wc3OSmThs/yG/TcIubod371e4VKlnldjqAKfc4MqM1Mhk+kQZ+HhjteQTBhtA2dfkt+DpTqoCmL
+	/Fo3V+z6NvVYvOcYxQ9rpasv7K3pJS1p3r6ZDs
+X-Received: by 2002:a05:620a:29c1:b0:8f0:f1a5:680c with SMTP id af79cd13be357-8f7d9016b82mr191945585a.29.1777348288133;
+        Mon, 27 Apr 2026 20:51:28 -0700 (PDT)
+Received: from localhost ([184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8f7c4dbcfbdsm100150285a.12.2026.04.27.20.51.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Apr 2026 20:51:27 -0700 (PDT)
+Date: Mon, 27 Apr 2026 23:52:10 -0400
+From: Richard Acayan <mailingradian@gmail.com>
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Tianshu Qiu <tian.shu.qiu@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Robert Mader <robert.mader@collabora.com>,
+	David Heidelberg <david@ixit.cz>, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v9 1/7] dt-bindings: media: qcom,sdm670-camss: Remove
+ clock-lanes requirement
+Message-ID: <afAu6ueMsjBY-yUB@rdacayan>
+References: <20260217002738.133534-1-mailingradian@gmail.com>
+ <20260217002738.133534-2-mailingradian@gmail.com>
+ <4898366c-108d-479e-93cb-f79b27ba811f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="u/1OWsNPlQcuGK2l"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260427-asoc-wsa881x-v2-1-9ef965f94624@kernel.org>
-X-Cookie: Victory uber allies!
-X-Rspamd-Queue-Id: F355C47D20E
+In-Reply-To: <4898366c-108d-479e-93cb-f79b27ba811f@linaro.org>
+X-Rspamd-Queue-Id: 2727E47D2DE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-4.26 / 15.00];
-	SIGNED_PGP(-2.00)[];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104850-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org];
 	RCVD_TLS_LAST(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	TAGGED_FROM(0.00)[bounces-104851-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,intel.com,linux.intel.com,vger.kernel.org,collabora.com,ixit.cz];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,sirena.co.uk:mid]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 
+On Wed, Apr 01, 2026 at 12:22:34AM +0300, Vladimir Zapolskiy wrote:
+> On 2/17/26 02:27, Richard Acayan wrote:
+> > The clock-lanes property has no effect on the hardware configuration, as
+> > of commit 336136e197e2 ("media: dt-bindings: media: camss: Remove
+> > clock-lane property"). Since boards with new camss support can omit the
+> > property, remove it from the required lists.
+> > 
+> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> 
+> If you send another v10 of the series, please remove 'clock-lanes'
+> property from the example as well.
 
---u/1OWsNPlQcuGK2l
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Mon, Apr 27, 2026 at 10:43:21AM +0200, Linus Walleij wrote:
-> The WSA881x codec driver has a local workaround for old device
-> trees that have the "powerdown" GPIO flagged as active high,
-> despite it is active low.
-
-The following changes since commit 254f49634ee16a731174d2ae34bc50bd5f45e731:
-
-  Linux 7.1-rc1 (2026-04-26 14:19:00 -0700)
-
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git tags/asoc-wsa881x-gpiolib-of
-
-for you to fetch changes up to bfa336cee3324f991e93e9e570e8b827273df97e:
-
-  ASoC: wsa881x: Move custom workaround to gpiolib-of (2026-04-28 07:39:15 +0900)
-
-----------------------------------------------------------------
-ASoC: wsa881x: Move custom workaround to gpiolib-of
-
-Move a workaround for misdescribed GPIOs from the wsa881x to use a
-generic implementation in gpiolib-of.
-
-----------------------------------------------------------------
-Linus Walleij (1):
-      ASoC: wsa881x: Move custom workaround to gpiolib-of
-
- drivers/gpio/gpiolib-of.c  |  8 ++++++++
- sound/soc/codecs/wsa881x.c | 35 ++++-------------------------------
- 2 files changed, 12 insertions(+), 31 deletions(-)
-
---u/1OWsNPlQcuGK2l
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnwLBQACgkQJNaLcl1U
-h9A8Fwf/RBYc3lgJ6uaIaetgHwkfNe97gFTvGfLt7aFB0Er09dp9xDlflChhSiVL
-q2+BA6a4Ea9NT4rpH6f6SrDn/IrmYX+doLtqUL3+jrivzV1J4HW00jLNrWJUn3CF
-2BFc1/hCOc/cdmVBc3iHresimI0LckOM+RvaBKBORZ32YZribLX2vLAq1nVj0GT6
-WK8QsNUBcndVRGOcE9xCas3b61qQJqkyEeBWRCBKtNDxnuOqEXmVR9JI76ZN7bWE
-O6JASY/cVzpK8mpU3p1umSao7jxX0EZi6xeInEu9C+9GzY4+poYk+YZoaZsXalj8
-53kpGKlqydYWv0Z0Dn9Mov3MWrKLKg==
-=wO9n
------END PGP SIGNATURE-----
-
---u/1OWsNPlQcuGK2l--
+I don't think I can send a new revision of this patch since it's already
+applied, though there may be an opportunity if clock-lanes requirements
+are removed in bulk.
 
