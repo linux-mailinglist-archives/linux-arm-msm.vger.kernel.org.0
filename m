@@ -1,65 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-104958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wFYyJXCU8GldVQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 13:05:20 +0200
+	id qMhXAOGX8GmrVQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 13:20:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1008C483486
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 13:05:19 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98A474838AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 13:19:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0252730BD49F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 10:50:35 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 8F6CB3050499
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 10:52:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E774B40FD86;
-	Tue, 28 Apr 2026 10:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35311423158;
+	Tue, 28 Apr 2026 10:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n9giBUEQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jSZMOcJl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5EC40FD80;
-	Tue, 28 Apr 2026 10:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039903F789C;
+	Tue, 28 Apr 2026 10:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777372961; cv=none; b=o2r+6LWqqqgcb9s0E4zRvhJyO/iU+hC30f0AOPBpYRazoNxlr3163Vd7xBMcZASoZUysI5BITLHDRYMVRcHkHMmfumHW2w+8MGb8gRoHKgK+po4iGcYSiq0yrZSfNC7gzw947SjLjBRfcbZ1LPSm65Yjq/r0TMqNjl+sqLHtdts=
+	t=1777372981; cv=none; b=Y/pJW4DRr4B2eSNjmlpqQvqDzkNR7Ac1vLwFLTny+PR9TS1boIg+UMhpT2RiHHTeTjXlc5C7Cp9LQuDP4Wlu20kVs8QJhZ5DsJUPBiBWwnbBiF4nP4hCRvkQ6ssjSHfqcSf371sZ8nEU7TQafBwXEV+F5dXptkUfLUxbptGAhVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777372961; c=relaxed/simple;
-	bh=twOlHH7KrcmO14xpMu62cZV8X4eA4YZRUPc+K8pXitY=;
+	s=arc-20240116; t=1777372981; c=relaxed/simple;
+	bh=4nR918EIDXWBQ6yZsT4PSXyTN+JKf8XyCWTAO00oxuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SLodn4ub8+3DN6ECNshYOWOEso7HxNQ7chRblygfyOk6OX2jeRDxpWIAc96nuQ17y0PdK7lWp+X5LPPmeF1dKt9Tlgf/5rYtdF8ElmGguTuzEk+caBSdkDTSD81Ezfb12VNrtvQLngfc03LSrlaLrYl7hWN/Sz9GNxnA+I+qKJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n9giBUEQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4B3C2BCAF;
-	Tue, 28 Apr 2026 10:42:40 +0000 (UTC)
+	 MIME-Version:Content-Type; b=qpyTgFjYWdNhfQx9FzEnU+7M7rXC4XcjA9LRz/FxaLHh2FswujQxsmUSEXIF2rXUgArAk6LwUteDEdLjT/OQp5IJrWUjs0jvOtBMMi0QS0uW0k5mqJVANhTFmhl+y+H07Bp8JxBVUoWXTKeL8+mdUMNBZjBNUVpUBN6y8V7rYlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jSZMOcJl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D35C4AF09;
+	Tue, 28 Apr 2026 10:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777372961;
-	bh=twOlHH7KrcmO14xpMu62cZV8X4eA4YZRUPc+K8pXitY=;
+	s=k20201202; t=1777372980;
+	bh=4nR918EIDXWBQ6yZsT4PSXyTN+JKf8XyCWTAO00oxuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9giBUEQgSc+6HD5OZub/GfOa57U3xAE2Pdv5HtyzZFRVD/9ZHbcgipmTK1F45QWn
-	 WM3AtT2nI+7jgx26UYW89+bnxrbhTe9dbuVdtHrZus0xcF4sAJQ1gem1y0k8ce/RgI
-	 bG6+ecj302G49b3orT/ickvts4ZqLC2MzpesfQcHWBnVDNsSs1/UULnzBiJYbA3vgF
-	 gMww6Xpr4lYfiAcjNRUCd3hNlmy7kE2biEuBNilaOIokvyEy3bwzQ1pCL5k5p7F/Jk
-	 igdz7io/aDULguQ75bXrtSqzt4IUpw6dwo6xeJGe/NH3AOKRtfTGfDHK+56vyoRP8t
-	 3mgSSVNgVeAVg==
+	b=jSZMOcJlfUZXchkHdcieRKFkp+ouh+3vi3ww9EnAHRE0JrJ8OEoLlzucj+DtwO4Kf
+	 scrvh8oyEVx7QSPBZmOcunlD9ZWhSXZD9MXFHxWfLVmaEHG9sQ1eiM6m/Shxvyfc2U
+	 0q2G5rQnq92LlDmUpVS9i9CELpRbCs4OkYJq+3/uF7MIPeWaZWSWvAGC13hcKx4WI8
+	 AKbBu5zr/pdJDzheC3BvEk4wSSxCDXd2lZP9/AIt0ZcITP0vGay/niR4V/tiyg05bg
+	 Np+EjzTWkQAnYw0KVZ5E3r8zec9z2GYwI98tQQUn8uNnIpPWfRCocTzheJuqNaq3q7
+	 IxZ3AGoDMUohg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Anup Kulkarni <anup.kulkarni@oss.qualcomm.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Daniele Palmas <dnlplm@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	agross@kernel.org,
-	andersson@kernel.org,
-	konrad.dybcio@linaro.org,
-	jirislaby@kernel.org,
+	mhi@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org
-Subject: [PATCH AUTOSEL 7.0-5.10] serial: qcom-geni: Fix RTS behavior with flow control
-Date: Tue, 28 Apr 2026 06:40:59 -0400
-Message-ID: <20260428104133.2858589-48-sashal@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 7.0-6.12] bus: mhi: host: pci_generic: Add Telit FE912C04 modem support
+Date: Tue, 28 Apr 2026 06:41:11 -0400
+Message-ID: <20260428104133.2858589-60-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428104133.2858589-1-sashal@kernel.org>
 References: <20260428104133.2858589-1-sashal@kernel.org>
@@ -74,443 +70,333 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 7.0.2
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 1008C483486
+X-Rspamd-Queue-Id: 98A474838AC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.16 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104958-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[gmail.com,oss.qualcomm.com,kernel.org,lists.linux.dev,vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-104959-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,msgid.link:url,linuxfoundation.org:email]
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,msgid.link:url,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,linux.dev:email]
 
-From: Anup Kulkarni <anup.kulkarni@oss.qualcomm.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit 0b1837c04d2335ec50b9a55b0282dcde7bc12439 ]
+[ Upstream commit ac12b852b4ead4a586299c8f68cdcbcaf1bf6cbc ]
 
-When userspace enables flow control (CRTSCTS), the driver
-deasserts RTS even when the receive buffer has space. This prevents the
-peer device from transmitting, causing communication to stall.
+Add SDX35 based modem Telit FE912C04, reusing FN920C04 configuration.
 
-The root cause is that the driver unconditionally uses manual RTS control
-regardless of flow control mode. When CRTSCTS is set, the hardware should
-automatically manage RTS based on buffer status, but the driver overrides
-this by setting manual control.
+01:00.0 Unassigned class [ff00]: Qualcomm Device 011a
+        Subsystem: Device 1c5d:2045
 
-Fix this by introducing port->manual_flow flag. In set_termios(), disable
-manual flow when CRTSCTS is set. In set_mctrl(), only assert
-SE_UART_MANUAL_RFR when manual_flow is active. Verified by enabling and
-disabling hardware flow control with stty.
-
-Signed-off-by: Anup Kulkarni <anup.kulkarni@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260310104155.339010-1-anup.kulkarni@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260323122837.3406521-1-dnlplm@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have enough information to complete the full analysis.
+Based on my analysis, this is a clear device-ID addition to an existing
+driver. Let me provide the comprehensive analysis.
 
-## Analysis
+## Phase 1: Commit Message Forensics
 
-### PHASE 1: COMMIT MESSAGE FORENSICS
+**Step 1.1 - Subject line parse:**
+Record: subsystem=`bus: mhi: host: pci_generic`, action verb=`Add`,
+summary=`Add Telit FE912C04 modem support`
 
-**Step 1.1: Subject line parse**
-- Record: [serial: qcom-geni:] [fix] [RTS behavior with hardware flow
-  control (CRTSCTS)]
+**Step 1.2 - Tag analysis:**
+- Signed-off-by: Daniele Palmas (author, repeat contributor for Telit
+  modems)
+- Signed-off-by: Manivannan Sadhasivam (MHI maintainer)
+- Link: lore.kernel.org thread
+  (`20260323122837.3406521-1-dnlplm@gmail.com`)
+- No Fixes:, no Cc: stable, no Reported-by:, no Tested-by:, no Reviewed-
+  by:, no syzbot
 
-**Step 1.2: Tag inventory**
-- Record: Signed-off-by: Anup Kulkarni (author, @oss.qualcomm.com),
-  Signed-off-by: Greg KH (applied to tty tree). Link: patch.msgid.link
-  URL. NO Fixes: tag, NO Cc: stable, NO Reported-by, NO Tested-by, NO
-  Reviewed-by, NO Acked-by. Only v1 of patch, no reviewer replies on
-  thread.
+Record: Standard maintainer-applied patch with no fix-related tags.
 
-**Step 1.3: Commit body analysis**
-- Record: Bug: "driver deasserts RTS even when the receive buffer has
-  space" when CRTSCTS is enabled, causing "communication to stall". Root
-  cause: driver unconditionally uses manual RTS control via
-  `UART_MANUAL_RFR_EN`, which overrides hardware's auto-flow control. No
-  stack trace or reproducer. Author verified fix "by enabling and
-  disabling hardware flow control with stty".
+**Step 1.3 - Commit body:**
+Single-paragraph body: states the device is SDX35-based, will reuse the
+existing FN920C04 configuration, and includes an `lspci` snippet
+confirming the PCI subsystem ID `1c5d:2045`. No bug description, no
+symptom, no crash trace.
 
-**Step 1.4: Hidden bug fix detection**
-- Record: Not hidden - commit message explicitly says "Fix RTS behavior"
-  and describes the bug clearly.
+Record: This is a hardware enablement commit, not a bug fix.
 
-### PHASE 2: DIFF ANALYSIS
+**Step 1.4 - Hidden bug fix detection:**
+The verb is "Add" with "modem support". No "handle", "ensure",
+"prevent", "fix", "clean up". The diff is a textbook device-ID addition
+reusing existing config. Not a hidden bug fix.
 
-**Step 2.1: Inventory**
-- Record: Single file `drivers/tty/serial/qcom_geni_serial.c`. +15/-4
-  lines. Modifies `qcom_geni_serial_set_mctrl()` (1 line guard added)
-  and `qcom_geni_serial_set_termios()` (restructured CRTSCTS branch).
-  Adds `bool manual_flow` to `struct qcom_geni_serial_port`. Scope:
-  surgical single-driver fix.
+Record: Pure hardware enablement - new PCI device ID + descriptor for an
+existing driver.
 
-**Step 2.2: Code flow change**
-- Record:
-  - set_mctrl BEFORE: `if (!(mctrl & TIOCM_RTS) && !uport->suspended)` →
-    enable manual RFR (`UART_MANUAL_RFR_EN | UART_RFR_NOT_READY`) then
-    unconditionally write.
-  - set_mctrl AFTER: Only enables manual RFR when `port->manual_flow` is
-    true AND RTS not set AND not suspended.
-  - set_termios BEFORE: Only toggles `UART_CTS_MASK` bit in TX config.
-  - set_termios AFTER: Also sets `port->manual_flow = false` when
-    CRTSCTS set (HW manages), `true` otherwise.
+## Phase 2: Diff Analysis
 
-**Step 2.3: Bug mechanism**
-- Record: Category (g) Logic/correctness fix. The mechanism: when
-  CRTSCTS is enabled, hardware should automatically drive RTS based on
-  RX FIFO fullness. But any call to `set_mctrl` with `!TIOCM_RTS` (which
-  happens during resume: `ops->set_mctrl(uport, 0)` at
-  serial_core.c:2421, at B0 baud transitions serial_core.c:1685, or on
-  ioctl TIOCMBIC) would cause the driver to write `UART_MANUAL_RFR_EN |
-  UART_RFR_NOT_READY`, forcing manual RTS deassertion and preventing the
-  peer from transmitting.
+**Step 2.1 - Inventory:**
+- Files: `drivers/bus/mhi/host/pci_generic.c` only
+- Total: +13 lines, -0 lines
+- Functions modified: none (only adds a static struct and a table entry)
+- Scope: single-file, surgical, additive
 
-**Step 2.4: Fix quality**
-- Record: Simple, easy to verify by reading. Logic is correct: when
-  hardware flow control is enabled, never override with manual mode. The
-  `manual_flow` flag is BSS-initialized to `false`, which matches
-  "hardware controls RTS" default. Small regression risk: before the
-  first `set_termios` call, any `set_mctrl(!TIOCM_RTS)` path now writes
-  0 instead of enabling manual mode; this is arguably more correct but
-  changes initial state. No public API changes, no lock changes.
+**Step 2.2 - Code flow change:**
+- Before: `mhi_pci_id_table[]` did not match PCI VID 0x17cb / SVID
+  `1c5d:2045`
+- After: PCI core probes → matches new entry → loads MHI driver with
+  `mhi_telit_fe912c04_info` (which uses already-existing
+  `modem_telit_fn920c04_config`)
 
-### PHASE 3: GIT HISTORY INVESTIGATION
+Record: Adds one new PCI table row + one descriptor struct. No
+behavioral change for any existing device.
 
-**Step 3.1: Blame the changed lines**
-- Record: The manual RFR logic in `set_mctrl` was added in
-  `8a8a66a1a18a1` (v4.19, July 2018) "tty: serial: qcom_geni_serial: Add
-  support for flow control". The early-return guard
-  `!uart_cts_enabled(uport)` was removed in `e8a6ca808c5ed` (v5.0) "tty:
-  serial: qcom_geni_serial: Allow mctrl when flow control is disabled" —
-  which actually made the bug more exposed (before that change, the
-  manual-mode code path was unreachable when CRTSCTS was off, but still
-  buggy when on).
+**Step 2.3 - Bug mechanism:**
+Not a bug fix. This is category (h) "Hardware workarounds → Device ID
+additions" from the stable rules exceptions.
 
-**Step 3.2: Follow the Fixes: tag**
-- Record: No Fixes: tag in this commit. Most likely should reference
-  `8a8a66a1a18a1` (v4.19) as the origin — the bug has existed since flow
-  control support was added to this driver.
+**Step 2.4 - Fix quality:**
+- Obviously correct: a new struct with same fields as
+  `mhi_telit_fe990b40_info`, reusing `modem_telit_fn920c04_config`
+  already proven for SDX35 hardware
+- Minimal/surgical: 13 lines, contained in tables only
+- Regression risk: nil for any user without that exact 1c5d:2045 device;
+  for users with it, there is no other code path (driver simply wouldn't
+  bind today)
 
-**Step 3.3: File history for related changes**
-- Record: Recent related fix `947cc4ecc06cb` "serial: qcom-geni: fix
-  soft lockup on sw flow control and suspend" (July 2024) was tagged
-  `Cc: stable # 4.17` — shows that flow-control-related bugs in this
-  driver have been deemed stable-worthy. Also `23f5f5debcaac` "serial:
-  qcom-geni: fix shutdown race" exists. No overlap/conflict with this
-  fix.
+## Phase 3: Git History Investigation
 
-**Step 3.4: Author commits**
-- Record: `git log --author="Anup Kulkarni"` shows only 1 other commit
-  (`4fcc287f3c692` "serial: qcom-geni: Enable support for half-duplex
-  mode"). Newer contributor but from @oss.qualcomm.com - this is the
-  vendor (Qualcomm) whose hardware this driver supports. Patch went
-  through Greg KH's tty tree.
+**Step 3.1 - git blame:** Not applicable - no existing buggy code is
+being fixed; only additions.
 
-**Step 3.5: Dependencies**
-- Record: No dependencies found. The fix is self-contained and
-  references only symbols that exist since the original flow control
-  support commit (v4.19).
+**Step 3.2 - Fixes: tag:** Not present (and not expected for a device-ID
+addition).
 
-### PHASE 4: MAILING LIST RESEARCH
+**Step 3.3 - File history (recent same-file commits):**
+```
+ac12b852b4ead Add Telit FE912C04 modem support       <- this commit
+6eaee77923ddf Add Telit FE990B40 modem support
+00559ba3ae740 Add Telit FN990B40 modem support
+6348f62ef7ecc Add Telit FN920C04 modem support
+```
+Record: This is the latest in a steady cadence of Telit modem device-ID
+additions. All prior siblings in this series were backported to stable
+(verified below).
 
-**Step 4.1: b4 dig**
-- Record: Single revision (v1) at https://patch.msgid.link/2026031010415
-  5.339010-1-anup.kulkarni@oss.qualcomm.com. Thread mbox retrieved. Only
-  one message in thread - just the patch itself, no replies, no NAK, no
-  explicit stable nomination.
+**Step 3.4 - Author history:**
+Daniele Palmas is a long-time Telit modem submitter; Manivannan
+Sadhasivam is the MHI subsystem maintainer who applied it.
 
-**Step 4.2: Who reviewed**
-- Record: `b4 dig -w` shows to/cc: gregkh, jirislaby (tty maintainers),
-  praveen.talari/viken.dadhaniya/zongjian/jseerapu (Qualcomm),
-  bryan.odonoghue (linaro), krzk (Krzysztof Kozlowski), linux-serial,
-  linux-arm-msm, linux-kernel. Appropriate maintainers were CC'd but no
-  one publicly replied on lore before Greg applied it.
+**Step 3.5 - Dependencies:**
+- Requires `modem_telit_fn920c04_config` (introduced by 6348f62ef7ecc,
+  backported to 6.12+).
+- Diff context anchored on `mhi_telit_fe990b40_info` (introduced by
+  6eaee77923ddf, backported to 6.12+).
+Both dependencies exist in stable 6.12.y, 6.18.y, 6.19.y, 7.0.y.
 
-**Step 4.3: Bug report search**
-- Record: No Reported-by or bug link in commit. Web search did not
-  surface a specific user report for this stall.
+## Phase 4: Mailing List Investigation
 
-**Step 4.4: Related patches/series**
-- Record: `b4 dig -a` shows v1 only; standalone single-patch submission.
+**Step 4.1 - b4 dig:**
+- `b4 dig -c ac12b852b4ead4a586299c8f68cdcbcaf1bf6cbc` matched by patch-
+  id and resolved to
+  https://lore.kernel.org/all/20260323122837.3406521-1-dnlplm@gmail.com/
+- Single revision (PATCH 1/1), no v2/v3.
+- Maintainer reply: "Applied, thanks!" - no review concerns, no NAKs, no
+  stable nomination requested.
 
-**Step 4.5: Stable list history**
-- Record: Nothing found discussing this specific fix on stable@.
+**Step 4.2 - Reviewers:** Patch sent to maintainer Manivannan
+Sadhasivam, mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org. Right
+people CC'd. Maintainer applied.
 
-### PHASE 5: CODE SEMANTIC ANALYSIS
+**Step 4.3 - Bug reports:** Not applicable; no Reported-by/Link to bug
+tracker.
 
-**Step 5.1: Functions modified**
-- Record: `qcom_geni_serial_set_mctrl`, `qcom_geni_serial_set_termios`.
+**Step 4.4 - Series context:** Standalone single-patch.
 
-**Step 5.2: Callers**
-- Record: Both are `uart_ops` callbacks registered in
-  `qcom_geni_console_pops`/`qcom_geni_uart_pops`. Called indirectly
-  through `port->ops->set_mctrl(...)` and `uport->ops->set_termios(...)`
-  from `drivers/tty/serial/serial_core.c`. Key caller sites for
-  `set_mctrl`: startup/shutdown, suspend/resume (lines 2333/2421), RS485
-  disable path (1483), B0 transitions (1685/1692), throttle/unthrottle
-  (with AUTORTS — not used here). This makes the bug reachable on every
-  resume and on any baud change to/from B0 when CRTSCTS is active — very
-  common paths.
+**Step 4.5 - Stable list:** No prior stable discussion (typical for a
+new device ID).
 
-**Step 5.3: Callees**
-- Record: set_mctrl only calls `writel(...)` to SE_UART_MANUAL_RFR. No
-  locking, no allocation. Minimal side effects.
+## Phase 5: Code Semantic Analysis
 
-**Step 5.4: Call chain reachability**
-- Record: Reachable from any userspace UART open with CRTSCTS, stty
-  changes, system suspend/resume, and B0 transitions. Definitely user-
-  reachable, exercised on every device with hardware flow control
-  enabled.
+**Step 5.1 - Functions:** None modified; only data-structure additions.
 
-**Step 5.5: Similar patterns**
-- Record: Verified driver does NOT advertise `UPSTAT_AUTORTS` (no hits
-  for that flag) - so auto-RTS tty layer logic doesn't apply; the driver
-  relies entirely on hardware register-level RFR management when CRTSCTS
-  is on. This confirms the issue: the driver's set_mctrl was silently
-  overriding hardware-managed RTS.
+**Step 5.2-5.4 - Reachability:** The new entry is reachable only when
+the PCI core enumerates a device with VID=QCOM(0x17cb), DID=0x011a,
+SVID=0x1c5d, SSID=0x2045. No other code path is affected.
 
-### PHASE 6: STABLE TREE ANALYSIS
+**Step 5.5 - Similar patterns:** The same pattern (adding
+`mhi_pci_dev_info` + `pci_device_id`) is used for FN920C04, FN990B40,
+FE990B40 - all backported.
 
-**Step 6.1: Does buggy code exist in stable?**
-- Record: Verified the identical buggy `set_mctrl` body exists in stable
-  6.17.y, 6.12.y, 6.6.y, 6.1.y, and 5.15.y. The same CRTSCTS branch `if
-  (termios->c_cflag & CRTSCTS) tx_trans_cfg &= ~UART_CTS_MASK; else
-  tx_trans_cfg |= UART_CTS_MASK;` is present in all of them. Bug has
-  existed since v4.19 → affects ALL currently supported stable trees.
+## Phase 6: Cross-Referencing & Stable Tree Analysis
 
-**Step 6.2: Backport complications**
-- Record: Low complexity backport. The struct has `bool cts_rts_swap` in
-  every stable branch (verified). Both hunks context-match. Minor
-  difference: 5.15 uses legacy `to_dev_port(uport, uport)` macro
-  (irrelevant to the hunk). Expected: clean apply or minor context
-  rewrap.
+**Step 6.1 - Buggy code in stable:** N/A (no bug being fixed).
 
-**Step 6.3: Related fixes already in stable**
-- Record: `947cc4ecc06cb` (flow control soft lockup fix) is already in
-  stable and addresses a different flow-control issue. No conflict with
-  this fix.
+**Step 6.2 - Backport feasibility:**
+- 7.0.y, 6.19.y, 6.18.y, 6.12.y: dependencies present → patch should
+  apply cleanly with at most trivial offset.
+- 6.6.y: `modem_telit_fn920c04_config` and `mhi_telit_fe990b40_info` are
+  NOT in `pci_generic.c` → patch will not apply cleanly. Backport for
+  6.6.y would require backporting prerequisites first (which were not
+  selected for 6.6.y).
 
-### PHASE 7: SUBSYSTEM CONTEXT
+**Step 6.3 - Related fixes already in stable:**
+- 6348f62ef7ecc (FN920C04) → backported as 4e3297ec0c469
+- 00559ba3ae740 (FN990B40) → backported as 1ee92e44c3316 / 7bce22989c7b7
+- 6eaee77923ddf (FE990B40) → backported as 9bef8beef1557 / 3a15c519d2b0f
 
-**Step 7.1: Subsystem criticality**
-- Record: Subsystem: `drivers/tty/serial/` — Qualcomm GENI serial
-  driver. Criticality: PERIPHERAL (driver-specific) but IMPORTANT for
-  the affected platforms (Qualcomm SoCs used in Chromebooks, embedded
-  devices, Android phones, etc., where hardware flow control to
-  Bluetooth/GPS/modem peripherals is critical).
+The pattern clearly establishes that every prior Telit/MHI device-ID
+addition in this file has been backported.
 
-**Step 7.2: Subsystem activity**
-- Record: Driver is actively maintained, with regular fixes going in.
-  This suggests real users.
+## Phase 7: Subsystem Context
 
-### PHASE 8: IMPACT AND RISK ASSESSMENT
+Subsystem: `drivers/bus/mhi/host/` - host-side MHI bus controllers,
+primarily for Qualcomm SoC modems used as PCIe-attached cellular cards.
+Criticality: PERIPHERAL (hardware-specific) but with real-world users
+(laptops, IoT, M2M deployments).
+Activity: Active and well-maintained.
 
-**Step 8.1: Who is affected**
-- Record: Users of Qualcomm SoCs running Linux that use UART with
-  `CRTSCTS` enabled — commonly Bluetooth HCI over UART, GPS modules,
-  baseband modems. Affects Android devices, Chromebooks, embedded
-  Qualcomm platforms.
+## Phase 8: Impact and Risk
 
-**Step 8.2: Trigger conditions**
-- Record: Trigger is any invocation of set_mctrl with RTS cleared while
-  CRTSCTS is active. Concrete triggers:
-  1. System suspend/resume cycle (very common on mobile/laptop)
-  2. B0 baud transitions (modem hangup)
-  3. Any direct ioctl(TIOCMBIC, &TIOCM_RTS)
-  Unprivileged? Root access to the tty device is typical for the
-trigger.
+**Step 8.1 - Affected users:** Owners of Telit FE912C04 modems (a real
+product). Without this patch the device will not bind to any kernel
+driver.
 
-**Step 8.3: Failure mode severity**
-- Record: Functional failure — communication stalls because RTS is stuck
-  deasserted and peer stops transmitting. No kernel crash, no data
-  corruption, no security hole. Severity: MEDIUM-HIGH — "communication
-  stall" is a real stability issue for devices depending on this UART
-  (e.g., Bluetooth dropouts, serial session lockups). Not a crash, but
-  noticeable and disruptive.
+**Step 8.2 - Trigger:** Plugging in the specific hardware. No security
+relevance, no unprivileged trigger.
 
-**Step 8.4: Risk-benefit**
-- Record:
-  - Benefit: MEDIUM — fixes a real functional bug on actively-used
-    hardware (Qualcomm platforms) with a clear reproduction path,
-    especially after resume.
-  - Risk: LOW — 15 lines, single file, trivial to audit, no
-    locking/memory changes, no API changes. The `manual_flow` field
-    defaults to `false` which aligns with hardware-managed mode (safe
-    default).
-  - Ratio: Favorable for backport. Very low risk of regression for
-    benefit of fixing real-world stalls.
+**Step 8.3 - Failure mode without patch:** Device simply doesn't work
+(no driver binds). With patch: device works using existing, tested
+FN920C04 channel/event configuration.
 
-### PHASE 9: FINAL SYNTHESIS
+**Step 8.4 - Risk-benefit:**
+- Benefit: enables hardware on stable users' systems - high for affected
+  users, none for others
+- Risk: ~0 - additive only, scoped to one specific PCI subsystem ID,
+  reuses already-validated config
 
-**Step 9.1: Evidence**
-- FOR: Real user-visible bug clearly described; present since v4.19 in
-  all stable trees; small surgical fix; touches only a driver callback;
-  correct logical direction (CRTSCTS means HW controls, manual mode
-  should be off); fix verified by author with stty; applies cleanly; no
-  API/feature additions; author is Qualcomm, i.e., the hardware vendor.
-- AGAINST: No Fixes: tag; no Cc: stable; no reviewer Ack/Reviewed-by; no
-  user bug report linked; single-revision patch with no lore discussion;
-  reachable in common paths but severity is functional (not
-  crash/security/corruption).
-- UNRESOLVED: Could not directly observe the reproduction trace (no
-  stack trace in commit).
+## Phase 9: Final Synthesis
 
-**Step 9.2: Stable rules checklist**
-1. Obviously correct? YES — straightforward logic; author tested.
-2. Fixes a real bug? YES — stated reproducer via stty.
-3. Important? MEDIUM — functional stall on Qualcomm platforms using flow
-   control (BT/GPS/modem), not a crash/security/corruption.
-4. Small and contained? YES — 15 lines, 1 file, 1 driver.
-5. No new features/APIs? YES — internal bool field only.
-6. Applies to stable? YES — verified code exists unchanged in 5.15.y
-   through 6.17.y.
+**Stable rules checklist:**
+1. Obviously correct? YES - reuses already-validated
+   `modem_telit_fn920c04_config`
+2. Fixes a real bug? Strictly no, but enables real hardware (explicit
+   stable exception)
+3. Important issue? Hardware enablement, qualifies under exception
+4. Small and contained? YES - 13 lines, single file
+5. No new features/APIs? YES - no userspace API change, no new module
+   behavior
+6. Applies to stable? YES for 6.12.y, 6.18.y, 6.19.y, 7.0.y; NO for
+   6.6.y (needs prerequisites)
 
-**Step 9.3: Exception categories**
-- Not strictly an exception, but closely aligned with a hardware
-  workaround in a mature driver.
+**Exception category:** "NEW DEVICE IDs" - explicitly listed as an
+allowed addition for stable.
 
-**Step 9.4: Decision**
-This is a real, reproducible bug fix in a driver used on widely-deployed
-Qualcomm hardware (Chromebooks, Android, embedded). The fix is tiny,
-purely internal, doesn't introduce APIs or affect other subsystems, and
-the logic is clearly correct (hardware flow control should not be
-overridden by manual RTS assertion). The bug is reachable in common
-operational paths (resume, B0 transitions). Backport risk is minimal.
+**Precedent:** All three sibling Telit MHI device-ID additions
+(FN920C04, FN990B40, FE990B40) have been backported to stable,
+establishing clear policy for this exact scenario.
 
 ## Verification
 
-- [Phase 1] Parsed tags from commit: only Signed-off-by (author + Greg
-  KH) and Link. No Fixes:, no Cc: stable, no Reported-by, no Reviewed-
-  by/Acked-by.
-- [Phase 2] Diff analysis confirmed on the actual patch text: 1-line
-  guard in set_mctrl, 2 branches expanded to set `manual_flow`, 1 new
-  struct field.
-- [Phase 3] `git log` on file showed history; `git show 8a8a66a1a18a1`
-  and `git show e8a6ca808c5ed` confirmed the code origin (v4.19 via git
-  describe) and the removal of the CTS-enabled guard (v5.0).
-- [Phase 3] `git describe --contains 8a8a66a1a18a1` →
-  v4.19-rc1~102^2~33; `e8a6ca808c5ed` → v5.0-rc4~20^2~1. Bug has been
-  present since v4.19.
-- [Phase 3] `git log --author="Anup Kulkarni"` → 2 commits total (this
-  one plus half-duplex mode). Relatively new contributor, Qualcomm
-  vendor author.
-- [Phase 3] `git log --grep="serial.*qcom.*flow"` → confirmed
-  `947cc4ecc06cb` (previous flow control fix, tagged `Cc: stable #
-  4.17`) is a precedent.
-- [Phase 4] `b4 dig -c 0b1837c04d233` → found single lore thread, v1
-  only, single message, no replies.
-- [Phase 4] `b4 dig -c 0b1837c04d233 -w` → recipients confirmed: gregkh,
-  jirislaby, Qualcomm team, bryan.odonoghue, krzk, linux-serial, linux-
-  arm-msm, linux-kernel.
-- [Phase 4] `b4 dig -c 0b1837c04d233 -a` → only v1 exists; went direct
-  to Greg's tree.
-- [Phase 4] Saved thread to /tmp/qcom_geni_thread.mbox; read contents -
-  confirmed no replies, no reviewer feedback.
-- [Phase 5] Grepped `UPSTAT_AUTORTS|UPSTAT_AUTOCTS` in
-  qcom_geni_serial.c → no matches. Driver does NOT use UPSTAT_AUTORTS,
-  so throttle/unthrottle don't clear RTS through set_mctrl path.
-- [Phase 5] Grepped `SE_UART_MANUAL_RFR|UART_MANUAL_RFR_EN` → only 2
-  writers: `qcom_geni_set_rs485_mode()` (only when RS485 enabled) and
-  `qcom_geni_serial_set_mctrl()` (the fixed function). No other paths
-  touch this register.
-- [Phase 5] Read `serial_core.c:2320-2451` → confirmed
-  `ops->set_mctrl(uport, 0)` is called at resume (2421) with
-  `uport->suspended` already 0, directly triggering the bug path when
-  CRTSCTS is active.
-- [Phase 5] Read `serial_core.c:1680-1694` → confirmed B0 transition
-  logic can cause set_mctrl with !TIOCM_RTS while CRTSCTS is active.
-- [Phase 6] `git show stable/linux-
-  {6.17,6.12,6.6,6.1,5.15}.y:drivers/tty/serial/qcom_geni_serial.c` →
-  verified identical buggy `set_mctrl` body and identical CRTSCTS
-  handling in set_termios in all five stable trees. Struct has
-  `cts_rts_swap` in all of them, so the `manual_flow` addition will fit
-  cleanly.
-- [Phase 8] Failure mode: communication stall (peer cannot transmit). No
-  crash. Severity: MEDIUM-HIGH functional. Trigger: common (resume, B0).
-- UNVERIFIED: Could not obtain a literal crash/stall reproducer from
-  commit message; the author's claim of verification via stty is the
-  only direct test evidence. Did not independently reproduce the bug.
+- [Phase 1] Read commit message: confirmed only Signed-off-by (author +
+  maintainer) and Link tags; no Fixes/Reported-by/Cc:stable/Tested-
+  by/Reviewed-by.
+- [Phase 2] `git show ac12b852b4ead`: confirmed +13/-0 lines, all in
+  `drivers/bus/mhi/host/pci_generic.c`; verified one new
+  `mhi_pci_dev_info` struct and one `pci_device_id` table entry.
+- [Phase 3.3] `git log --oneline -- drivers/bus/mhi/host/pci_generic.c`:
+  confirmed prior commits FN920C04, FN990B40, FE990B40.
+- [Phase 3.5] `grep modem_telit_fn920c04_config pci_generic.c`:
+  confirmed config struct exists at line 846 in current tree (introduced
+  by FN920C04 commit).
+- [Phase 4.1] `b4 dig -c ac12b852b4ead`: matched single-revision thread
+  at lore.kernel.org/all/20260323122837.3406521-1-dnlplm@gmail.com/;
+  saved mbox; read maintainer's "Applied, thanks!" reply with no
+  concerns.
+- [Phase 6.2] `git cat-file -p stable/linux-
+  {6.12,6.18,6.19,7.0}.y:drivers/bus/mhi/host/pci_generic.c`: confirmed
+  `modem_telit_fn920c04_config` and `mhi_telit_fe990b40_info` (anchor
+  lines for the diff) are present in 6.12.y, 6.18.y, 6.19.y, 7.0.y
+  stable trees.
+- [Phase 6.2] `git cat-file -p
+  stable/linux-6.6.y:drivers/bus/mhi/host/pci_generic.c`: confirmed
+  `modem_telit_fn920c04_config` is NOT in 6.6.y (only earlier modem
+  configs present); 6.6.y would need prerequisites.
+- [Phase 6.3] `git show 4e3297ec0c469 / 1ee92e44c3316 / 9bef8beef1557`:
+  confirmed these are stable backports of upstream commits
+  6348f62ef7ecc, 00559ba3ae740, 6eaee77923ddf with "[upstream] commit
+  ... upstream." in the body, signed by Greg KH.
+- [Phase 8] Diff inspection: no new module parameter, no sysfs, no
+  userspace ABI; only additions to two static tables.
+- UNVERIFIED: Could not verify without trying that the patch will apply
+  with zero context conflict on stable 6.12.y - but anchor-line
+  `mhi_telit_fe990b40_info` is present, so a clean apply is highly
+  likely.
 
-The fix is small, narrowly scoped, logically sound, and addresses a real
-functional bug that is triggered on common paths (resume, B0) in a
-driver used on widely-deployed hardware. It meets the stable kernel
-rules.
+The change is a textbook PCI device-ID addition for an existing driver,
+reusing already-validated configuration, with strong precedent that all
+three sibling device-ID additions in the same file have been accepted to
+stable. Risk is essentially nil; the benefit is enabling real hardware
+for stable users. It falls squarely under the explicitly documented "NEW
+DEVICE IDs" exception.
 
 **YES**
 
- drivers/tty/serial/qcom_geni_serial.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index e6b0a55f0cfb2..9854bb2406e3f 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -146,6 +146,7 @@ struct qcom_geni_serial_port {
- 	int wakeup_irq;
- 	bool rx_tx_swap;
- 	bool cts_rts_swap;
-+	bool manual_flow;
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 425362037830e..5db3df20088fd 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -892,6 +892,16 @@ static const struct mhi_pci_dev_info mhi_telit_fe990b40_info = {
+ 	.edl_trigger = true,
+ };
  
- 	struct qcom_geni_private_data private_data;
- 	const struct qcom_geni_device_data *dev_data;
-@@ -250,7 +251,7 @@ static void qcom_geni_serial_set_mctrl(struct uart_port *uport,
- 	if (mctrl & TIOCM_LOOP)
- 		port->loopback = RX_TX_CTS_RTS_SORTED;
- 
--	if (!(mctrl & TIOCM_RTS) && !uport->suspended)
-+	if (port->manual_flow && !(mctrl & TIOCM_RTS) && !uport->suspended)
- 		uart_manual_rfr = UART_MANUAL_RFR_EN | UART_RFR_NOT_READY;
- 	writel(uart_manual_rfr, uport->membase + SE_UART_MANUAL_RFR);
- }
-@@ -1401,11 +1402,21 @@ static void qcom_geni_serial_set_termios(struct uart_port *uport,
- 	else
- 		stop_bit_len = TX_STOP_BIT_LEN_1;
- 
--	/* flow control, clear the CTS_MASK bit if using flow control. */
--	if (termios->c_cflag & CRTSCTS)
-+	/* Configure flow control based on CRTSCTS flag.
-+	 * When CRTSCTS is set, use HW/auto flow control mode, where HW
-+	 * controls the RTS/CTS pin based FIFO state.
-+	 * When CRTSCTS is clear, the CTS pin value is ignored for TX
-+	 * path and RTS pin can be set/cleared using registers, for RX
-+	 * path.
-+	 */
++static const struct mhi_pci_dev_info mhi_telit_fe912c04_info = {
++	.name = "telit-fe912c04",
++	.config = &modem_telit_fn920c04_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.sideband_wake = false,
++	.mru_default = 32768,
++	.edl_trigger = true,
++};
 +
-+	if (termios->c_cflag & CRTSCTS) {
- 		tx_trans_cfg &= ~UART_CTS_MASK;
--	else
-+		port->manual_flow = false;
-+	} else {
- 		tx_trans_cfg |= UART_CTS_MASK;
-+		port->manual_flow = true;
-+	}
- 
- 	if (baud) {
- 		uart_update_timeout(uport, termios->c_cflag, baud);
+ static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
+ 	.name = "netprisma-lcur57",
+ 	.edl = "qcom/prog_firehose_sdx24.mbn",
+@@ -919,6 +929,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* Telit FN920C04 (sdx35) */
+ 	{PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x011a, 0x1c5d, 0x2020),
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fn920c04_info },
++	/* Telit FE912C04 (sdx35) */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x011a, 0x1c5d, 0x2045),
++		.driver_data = (kernel_ulong_t) &mhi_telit_fe912c04_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x011a),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx35_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
 -- 
 2.53.0
 
