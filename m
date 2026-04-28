@@ -1,210 +1,271 @@
-Return-Path: <linux-arm-msm+bounces-105025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0EFOIrDJ8GmfYgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 16:52:32 +0200
+	id VRtVNlPQ8GlVZAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 17:20:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7F434875AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 16:52:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F535487B5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 17:20:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 99F3A30D06F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 14:46:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C1BE13029267
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 15:19:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCECE43D50E;
-	Tue, 28 Apr 2026 14:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C89F639769A;
+	Tue, 28 Apr 2026 15:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b="m2/vRYhp"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="gVVwineO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18413FAE0B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 14:46:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6642A2264B0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 15:19:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777387571; cv=none; b=V/1asjoVA5VoVX0mMWDx1HAxv/wQm0cPFDD6t2rvWPzADt+JQQOFm6/SAenfzOkarTus/GOuleuw04Z3xe5MAQf6tkf3YlxqJZWgX8tOUjma4JScg44AydibW0WKMvLC3CSdmAKAVfYUBS7zVjLAObQe3CPUW4xVaPAFr853FV4=
+	t=1777389593; cv=none; b=q2xYR3UW2G1tBrm2ufZaJKvdwan7lCmhi1qYdgBir4beVPRNYPRIV9zYS6cAy56/x8QIw5ZQMgI7wj8P5OsHPU+LLQe+cuK5WXRFUAXz/AQEacOw0HiJ4pLWTzeNp1syqleul8pvmGc+W/27l2zJv4pkEPLpny2iG36/KA1s+2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777387571; c=relaxed/simple;
-	bh=f/dYGP07OBg9DiHyqQLx/Tm6yf1j3LG8UrwHVCI8ms0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=X7zT1u6sqU/sZgYcILQoi0U1R26AnmQOENJEAijD/bR/zKZDxO6I8g4K+slC/xVGmwUZ8i5xBVA3cn7igf3VN68gtTdqUWyinGK5/aUeV0LjQNY9HQIWgK83m1Zxh8LjRy5JU261Q/8etT1Mu/3y0B0P+tXDrjC+nT55Nv+bDsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20251104.gappssmtp.com header.i=@baylibre-com.20251104.gappssmtp.com header.b=m2/vRYhp; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4891e5b9c1fso100055955e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 07:46:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20251104.gappssmtp.com; s=20251104; t=1777387567; x=1777992367; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=qG2xEq+suvSHE4naeOi+PCYc+DbypH2YZR0qtvrl750=;
-        b=m2/vRYhplab9vt81q+bAex6YJgrM/iTeTcw5rWxZtziVJLpR11Gp2aHPrmzP21jy1j
-         pZEyycpXc1wxvNy8Eqvh++8d1c4St6M3SxcOEBJM6NY75cjdGDeXSP51sE4DzJ7Ovu4b
-         XdEjJrsVl5Dgd3NVXInusze/1mjhxUl8PJB6shHWI6OIJ6WH2c7Su51Y7YLa2HOeOGog
-         bWnS4/0EXCJ1tIntunEge8GT9os+Bx46HS0z6CGZhgGKqwuFWoucbd2hQ1DwCrgys5P+
-         PsR5e45saOh2iqY5BuFrV9fR2kuMhMWo4Q6P22sEK5JqrN9FEpBRvA/HyVMZiu6vk0ek
-         5v7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777387567; x=1777992367;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qG2xEq+suvSHE4naeOi+PCYc+DbypH2YZR0qtvrl750=;
-        b=l1jaeAgMMUsWfvyx8tXN+Gi1GlPboGeP6DNKyFCB41INPF3o0xCi7bLIgqpmDDgWQo
-         exjYFKnZbkROVP4lHMEoJEntSCcfzJ6YGkrJB1ymibkm8K4ZCuQs8fUYLUbLEKsD0RQ9
-         p3u4UvxkYOtM1it6Cip4QLAilzdNwvXb9X7r02vnPWx69JFDL1JHPptchdzgMrHuJsKO
-         rPrLy60hnns/m2G2Y2pjyE2Tuf9M586yX50KJHN/ncmusUEwwhDaa5yON/3GVxM870IG
-         uZSxShhp2RrmwLP0RTkZziZpez9L3d8EIRt3qFEMFV4RBbX2x7EenEUcIvoD0t7GD5mo
-         hJdA==
-X-Forwarded-Encrypted: i=1; AFNElJ9BGmqAAY/HGDVvTzbo5x4HXE1mi7IK5/pgXh/y5h1U8fjmnAb7NtmAqqdrIglv3QqNarVf98197o7+R1q+@vger.kernel.org
-X-Gm-Message-State: AOJu0YxTqF7r1s6iyNrGPQUtWR85eSY382eC26RCPIJdnEI7GGmKn6QK
-	TcZUZZY4DvTf2c//Qfw2rn3MlHHZGerP6lLe7GpGz+d6GzZGLnA0UA2LifpaPu0TZTM=
-X-Gm-Gg: AeBDietsYpfKwhRulli+rOdqM2pJ2MecW4eJisFmjtAoLga2iymfrSBeRcEj8kmK9EJ
-	QL/e/I4D0C0MDrJ/4Ard8G0KRcvDES64hZVgBYdRwuEbuwrEXnAtDLOxt7OEeVFDuUM1sRDci3J
-	q5FtkGZlYk/q7ujtYPkX0f7E0PxTRNf+uHoBxA8uIbfFRx9R6xK+Uy/SkH2Hl1TdEtQ3tulCRC0
-	DU5rtTDWl/R+d+SQD3xK6dAHrhxdE2N3NnQ+fk+RaknMYwhQA3SunG0yECA7EXcM33PgetlCpjJ
-	1T01G0ANeLzJxshAAaTjNDIdNozvHxKSl63jOBEa28YCiVsrsQFJs4cHlQV72plOojQdxfnB1DK
-	gn+aOkL9HvCTW1VcnEa2BOk+VomEJfb/tsd2w+k6zXQVmzu5dU2CQxpmrQ+Gg95XFvOKgvYIHtc
-	s9S3WsuPaYq/OyvZtR/Q9fO6CetVPGVi0pzSkHlAro+ibZqIfIJaqOsevL1d5M+uBKLTVzOv44O
-	76X3sSyf/M3en4fxzsT0WIXYw==
-X-Received: by 2002:a05:600c:8590:b0:489:a4:e555 with SMTP id 5b1f17b1804b1-48a77b19b5emr38612635e9.21.1777387567055;
-        Tue, 28 Apr 2026 07:46:07 -0700 (PDT)
-Received: from localhost (p200300f65f114e083adbfb3674088b9a.dip0.t-ipconnect.de. [2003:f6:5f11:4e08:3adb:fb36:7408:8b9a])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-48a775f56fcsm22197915e9.25.2026.04.28.07.46.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2026 07:46:06 -0700 (PDT)
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20=28The=20Capable=20Hub=29?= <u.kleine-koenig@baylibre.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Kees Cook <kees@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Markus Schneider-Pargmann <msp@baylibre.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm: Don't use UTS_RELEASE directly
-Date: Tue, 28 Apr 2026 16:45:53 +0200
-Message-ID: <20260428144553.1103785-2-u.kleine-koenig@baylibre.com>
-X-Mailer: git-send-email 2.47.3
+	s=arc-20240116; t=1777389593; c=relaxed/simple;
+	bh=GoLJksBZFS0/yrKnY/owI0vitDFLnsPaziXLl566C6c=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:To:From:Subject:
+	 References:In-Reply-To; b=fVaqYqz3SQXDB0TaH9Kk3tmHSW8kH0t/n5j+OOmwqMJwyZYfbcFrT+skTHrCybNn8tS23D1ml9wGU0bPVLptM8zmQQVuuQrdmj2nGYCWl+B6APU9BQiKIByHsPCBN+5LQHW+WvOpvBct0HvbTRyDJ+9++NvmKTWdDKWz9D1vft4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=gVVwineO; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 713CB1A3470;
+	Tue, 28 Apr 2026 15:19:48 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 405A9601D0;
+	Tue, 28 Apr 2026 15:19:48 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1450210728DF4;
+	Tue, 28 Apr 2026 17:19:33 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1777389585; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=RAgbK/PFrZxkYcwrI5Pr+C2og+72bnYc7J9cHzu5HUQ=;
+	b=gVVwineOM5SHRwLBuAnvbzeR1iW8sBeVyQOCO6ydDiC+I6Q6noSoS14xqbfcbsc6Bq+XMh
+	Jwt4B0Fpl3gGy3IymaPF/ZFT8FwKtuGn/v+SQ90iC48Uxw29etQeF8YLFXM3dVfjnyvU91
+	hg8zcXvJTlsYixVfQiKLFI+gcN+KJA7Kry+E1efUTE6iTJschzAPdGnz4DigimH/pzLS9X
+	KiRN1Qh6EHso0o/4V22kHeag1HWcNtY/MOmt7hj092mW1y6KB75TaUorTkoo2/VmrGw8xg
+	vKMzjq4xnXHQEXVNp/inBkeFygQdRZu48q2SMQElkOno5REAIgLdWi7rUD50ow==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2514; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=f/dYGP07OBg9DiHyqQLx/Tm6yf1j3LG8UrwHVCI8ms0=; b=owGbwMvMwMXY3/A7olbonx/jabUkhswPJ5Q+HL7Ty3Ps4TXJJ/8TctzLpjKnzthXfTTkh8fMG fdelVRKdTIaszAwcjHIiimy2DeuybSqkovsXPvvMswgViaQKQxcnAIwET5+9v+eXXtzPpbev5dm yy1691LNyRrFyaWioi+Lty3141+e/i7PpWTqppVnuM/3P0u9fzKpoNktwkqy4/6BkznPUuae4XI QfXj09r75oY17gl8dujCv2u2X0LKXenLlhmKWGkfdFwsvPPDjyeSjf7Rjtxzrb4jm1M+YqJ292v PzkpPvBbx1v6dWZAaXKIb+Epl3UiDXQFtovcLnbVrVwdlxObIOETOKGyZWayked8jQ0Dj8b/bbs kOfLqSxVxbLKGb2uMoqZsnphsj0lEYK5NxzY9+uKhjBdfzggTrFrqqvJf2mLUFZKuvf//LLDVVs ktL5ppndl+2aGNzb49hb0GPWV9Orw/o59th/ro3Tz94DAA==
-X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: D7F434875AF
+Date: Tue, 28 Apr 2026 17:19:32 +0200
+Message-Id: <DI4W0PE0FD0H.19OLT7KIRBT7H@bootlin.com>
+Cc: "Hui Pu" <Hui.Pu@gehealthcare.com>, "Ian Ray"
+ <ian.ray@gehealthcare.com>, "Thomas Petazzoni"
+ <thomas.petazzoni@bootlin.com>, "dri-devel@lists.freedesktop.org"
+ <dri-devel@lists.freedesktop.org>, "linux-kernel@vger.kernel.org"
+ <linux-kernel@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"
+ <linux-arm-msm@vger.kernel.org>, "freedreno@lists.freedesktop.org"
+ <freedreno@lists.freedesktop.org>, "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>
+To: "Biju Das" <biju.das.jz@bp.renesas.com>, "Maarten Lankhorst"
+ <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>,
+ "Thomas Zimmermann" <tzimmermann@suse.de>, "David Airlie"
+ <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Rob Clark"
+ <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
+ "Abhinav Kumar" <abhinav.kumar@linux.dev>, "Jessica Zhang"
+ <jesszhan0024@gmail.com>, "Sean Paul" <sean@poorly.run>, "Marijn Suijten"
+ <marijn.suijten@somainline.org>, "Tian Tao" <tiantao6@hisilicon.com>,
+ "Xinwei Kong" <kong.kongxinwei@hisilicon.com>, "Sumit Semwal"
+ <sumit.semwal@linaro.org>, "John Stultz" <jstultz@google.com>, "Andrzej
+ Hajda" <andrzej.hajda@intel.com>, "Neil Armstrong"
+ <neil.armstrong@linaro.org>, "Robert Foss" <rfoss@kernel.org>,
+ "laurent.pinchart" <laurent.pinchart@ideasonboard.com>, "Jonas Karlman"
+ <jonas@kwiboo.se>, "Jernej Skrabec" <jernej.skrabec@gmail.com>,
+ "tomi.valkeinen" <tomi.valkeinen@ideasonboard.com>, "Michal Simek"
+ <michal.simek@amd.com>
+From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
+Subject: Re: [PATCH v2 08/11] drm/bridge: adv7511: switch to
+ of_drm_get_bridge_by_endpoint()
+X-Mailer: aerc 0.20.1
+References: <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-0-4300744a1c47@bootlin.com> <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-8-4300744a1c47@bootlin.com> <TY3PR01MB113466B70BFD2899AB0CF47AD86372@TY3PR01MB11346.jpnprd01.prod.outlook.com> <TY3PR01MB1134674FDD088299A4382D3D286372@TY3PR01MB11346.jpnprd01.prod.outlook.com> <DI4TGV2WURTY.39OXE7WWKRLA1@bootlin.com> <TY3PR01MB11346E82D19FBE8544F51624286372@TY3PR01MB11346.jpnprd01.prod.outlook.com> <DI4U2DT3OBMR.23T3F7X8P75RU@bootlin.com> <TY3PR01MB113465B0308DE16ACC48D1E8186372@TY3PR01MB11346.jpnprd01.prod.outlook.com> <TY3PR01MB11346293C9AAF8BC4B3FCAD6586372@TY3PR01MB11346.jpnprd01.prod.outlook.com> <TY3PR01MB113466FD12513A25C0126A55F86372@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+In-Reply-To: <TY3PR01MB113466FD12513A25C0126A55F86372@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+X-Last-TLS-Session-Version: TLSv1.3
+X-Rspamd-Queue-Id: 5F535487B5F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
+	MV_CASE(0.50)[];
+	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[baylibre-com.20251104.gappssmtp.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-105026-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[32];
 	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[bp.renesas.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,hisilicon.com,linaro.org,google.com,intel.com,ideasonboard.com,kwiboo.se,amd.com];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	DMARC_NA(0.00)[baylibre.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,ffwll.ch,linux.intel.com];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-105025-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[baylibre-com.20251104.gappssmtp.com:+];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[u.kleine-koenig@baylibre.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[baylibre.com,linux.dev,gmail.com,poorly.run,somainline.org,kernel.org,oss.qualcomm.com,vger.kernel.org,lists.freedesktop.org];
-	NEURAL_HAM(-0.00)[-1.000];
+	DKIM_TRACE(0.00)[bootlin.com:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	PRECEDENCE_BULK(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	FROM_NEQ_ENVFROM(0.00)[luca.ceresoli@bootlin.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[baylibre-com.20251104.gappssmtp.com:dkim,baylibre.com:mid,baylibre.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-0.991];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:mid,bootlin.com:email,bootlin.com:dkim,bootlin.com:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,lists.freedesktop.org:email]
 
-UTS_RELEASE evaluates to a static string and changes quite easily (e.g.
-uncommitted changes in the source tree or new commits). So when checking
-if a patch introduces changes to the resulting binary each usage of
-UTS_RELEASE is source of annoyance.
+Hello Biju,
 
-Instead of using UTS_RELEASE directly use init_utsname()->release which
-evaluates to the same string but with that a change of UTS_RELEASE
-doesn't affect msm_disp_snapshot_util.o or msm_gpu.o.
+On Tue Apr 28, 2026 at 4:45 PM CEST, Biju Das wrote:
+> Hi Luca,
+>
+>> -----Original Message-----
+>> From: dri-devel <dri-devel-bounces@lists.freedesktop.org> On Behalf Of B=
+iju Das
+>> Sent: 28 April 2026 15:39
+>> Subject: RE: [PATCH v2 08/11] drm/bridge: adv7511: switch to of_drm_get_=
+bridge_by_endpoint()
+>>
+>>
+>>
+>> > -----Original Message-----
+>> > From: Biju Das
+>> > Sent: 28 April 2026 15:02
+>> > Subject: RE: [PATCH v2 08/11] drm/bridge: adv7511: switch to
+>> > of_drm_get_bridge_by_endpoint()
+>> >
+>> > Hi Luca,
+>> >
+>> > > -----Original Message-----
+>> > > From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+>> > > Sent: 28 April 2026 14:48
+>> > > Subject: Re: [PATCH v2 08/11] drm/bridge: adv7511: switch to
+>> > > of_drm_get_bridge_by_endpoint()
+>> > >
+>> > > Hello,
+>> > >
+>> > > On Tue Apr 28, 2026 at 3:31 PM CEST, Biju Das wrote:
+>> > > >> >> > @@ -1251,10 +1251,9 @@ static int adv7511_probe(struct
+>> > > >> >> > i2c_client
+>> > > >> >> > *i2c)
+>> > > >> >> >
+>> > > >> >> >  	memset(&link_config, 0, sizeof(link_config));
+>> > > >> >> >
+>> > > >> >> > -	ret =3D drm_of_find_panel_or_bridge(dev->of_node, 1, -1, N=
+ULL,
+>> > > >> >> > -					  &adv7511->next_bridge);
+>> > > >> >> > -	if (ret && ret !=3D -ENODEV)
+>> > > >> >> > -		return ret;
+>> > > >> >> > +	adv7511->bridge.next_bridge =3D of_drm_get_bridge_by_endpo=
+int(dev->of_node, 1, -1);
+>> > > >> >> > +	if (IS_ERR(adv7511->bridge.next_bridge) && PTR_ERR(adv7511=
+->bridge.next_bridge) !=3D -
+>> ENODEV)
+>> > > >> >> > +		return PTR_ERR(adv7511->bridge.next_bridge);
+>> > > >> >>
+>> > > >> >> Does it crash, if the error is  -EPROBE_DEFER?
+>> > > >> >
+>> > > >> > I see a crash with patch [1], which is fixed by avoiding the di=
+rect assignment.
+>> > > >>
+>> > > >> Ah, dammit! Good catch, thanks for the quick testing and follow-u=
+p!
+>> > > >>
+>> > > >> Indeed this driver assumes next_bridge is either NULL or a valid
+>> > > >> pointer, but due to the 'if(IS_ERR() && some_other_condition)'
+>> > > >> now it can also be -ENODEV (not -
+>> > > EPROBE_DEFER, but that's irrelevant).
+>> > > >>
+>> > > >> This affects the msm and zynqmp_dp patches equally.
+>> > > >>
+>> > > >> I'm sending a v3 soon with these fixed. I'm just not sure which
+>> > > >> approach to use to fix (same for all the 3 patches). Alternatives=
+ are:
+>> > > >>
+>> > > >>  1. -ENODEV is accepted, set next_bridge to NULL when it happens:
+>> > > >>
+>> > > >>       -       if (IS_ERR(adv7511->bridge.next_bridge) && PTR_ERR(=
+adv7511->bridge.next_bridge) !=3D
+>> -
+>> > > >> ENODEV)
+>> > > >>       -               return PTR_ERR(adv7511->bridge.next_bridge)=
+;
+>> > > >>       +       if (IS_ERR(adv7511->bridge.next_bridge)) {
+>> > > >>       +               if (PTR_ERR(adv7511->bridge.next_bridge) =
+=3D=3D -ENODEV)
+>> > > >>       +                       adv7511->bridge.next_bridge =3D NUL=
+L;
+>> > > >>       +               else
+>> > > >>       +                       return PTR_ERR(adv7511->bridge.next=
+_bridge);
+>> > > >
+>> > > > The point is you cannot return PTR_ERR as it will lead to crash,
+>> > > > if it is direct assignment.
+>> > >
+>> > > It would definitely crash when the next_bridge is dereferenced
+>> > > (which happens in
+>> > > adv7511_bridge_attach()) but I don't see how it can crash here. Here
+>> > > it _can_ be assigned -ENODEV, but it would be immediately be cleared
+>> > > to NULL, or to enother error, but we'd immediately return. And in
+>> > > case of return, when next_bridge is cleared by __drm_bridge_free ->
+>> > > drm_bridge_put, the error value would
+>> > be ignored thanks to patch 1.
+>> >
+>> > OK, I haven't noticed the newly introduced check in drm_bridge_put() i=
+n patch#1.
+>> >
+>> > I guess, we should avoid putting error values in bridge.next_bridge.
+>> > It should be either NULL or Valid pointer, not PTR_ERR.
+>>
+>> FTR, I get a crash in attach. I will apply the suggested changes and wil=
+l let you know the result.
+>>
+>> [   18.957324] pc : drm_bridge_attach+0x34/0x210 [drm]
+>> [   18.969425] lr : adv7511_bridge_attach+0x38/0xb8 [adv7511]
+>>
+>> [   18.969610]  drm_bridge_attach+0x34/0x210 [drm] (P)
+>> [   18.969845]  adv7511_bridge_attach+0x38/0xb8 [adv7511]
+>> [   18.969867]  drm_bridge_attach+0xf0/0x210 [drm]
+>> [   18.970042]  rzg2l_mipi_dsi_attach+0x24/0x3c [rzg2l_mipi_dsi]
+>> [   18.970064]  drm_bridge_attach+0xf0/0x210 [drm]
+>> [   18.970262]  rzg2l_du_encoder_init+0x9c/0x250 [rzg2l_du_drm]
+>> [   18.970293]  rzg2l_du_modeset_init+0x30c/0x4d0 [rzg2l_du_drm]
+>> [   18.970307]  rzg2l_du_probe+0xc8/0x174 [rzg2l_du_drm]
+>> [   18.970321]  platform_probe+0x5c/0xa4
+>> [   18.970336]  really_probe+0xbc/0x2c0
+>> [   18.970348]  __driver_probe_device+0x80/0x14c
+>> [   18.970359]  driver_probe_device+0x3c/0x164
+>> [   18.970369]  __driver_attach+0x90/0x1a4
+>> [   18.970379]  bus_for_each_dev+0x7c/0xdc
+>> [   18.970388]  driver_attach+0x24/0x30
+>> [   18.970397]  bus_add_driver+0xe4/0x208
+>> [   18.970406]  driver_register+0x68/0x130
+>> [   18.970416]  __platform_driver_register+0x24/0x30
+>>
+>
+> I confirm the crash is fixed by your suggested changes for V3.
 
-Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
----
- drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 4 ++--
- drivers/gpu/drm/msm/msm_gpu.c                     | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+Very quick feedback loop! Thanks a lot Biju.
 
-diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-index 427d3ee2b833..c6eda3cf2e62 100644
---- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-+++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
-@@ -5,7 +5,7 @@
- 
- #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
- 
--#include <generated/utsrelease.h>
-+#include <linux/utsname.h>
- 
- #include "msm_disp_snapshot.h"
- 
-@@ -79,7 +79,7 @@ void msm_disp_state_print(struct msm_disp_state *state, struct drm_printer *p)
- 	}
- 
- 	drm_printf(p, "---\n");
--	drm_printf(p, "kernel: " UTS_RELEASE "\n");
-+	drm_printf(p, "kernel: %s\n", init_utsname()->release);
- 	drm_printf(p, "module: " KBUILD_MODNAME "\n");
- 	drm_printf(p, "dpu devcoredump\n");
- 	drm_printf(p, "time: %ptSp\n", &state->time);
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 930e54d1b0a7..3f3925b11eea 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -13,11 +13,11 @@
- #include "msm_gpu_trace.h"
- //#include "adreno/adreno_gpu.h"
- 
--#include <generated/utsrelease.h>
- #include <linux/string_helpers.h>
- #include <linux/devcoredump.h>
- #include <linux/sched/task.h>
- #include <linux/sched/mm.h>
-+#include <linux/utsname.h>
- 
- /*
-  * Power Management:
-@@ -196,7 +196,7 @@ static ssize_t msm_gpu_devcoredump_read(char *buffer, loff_t offset,
- 	p = drm_coredump_printer(&iter);
- 
- 	drm_printf(&p, "---\n");
--	drm_printf(&p, "kernel: " UTS_RELEASE "\n");
-+	drm_printf(&p, "kernel: %s\n", init_utsname()->release);
- 	drm_printf(&p, "module: " KBUILD_MODNAME "\n");
- 	drm_printf(&p, "time: %ptSp\n", &state->time);
- 	if (state->comm)
+Sending v3 in a moment.
 
-base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
--- 
-2.47.3
+Luca
 
+--
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
