@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-104896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IO+aDzBo8GkITAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:56:32 +0200
+	id eCYHGc1o8GkITAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:59:09 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4DFD47F645
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:56:31 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id E693747F704
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:59:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id ADF06303B4F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 07:46:51 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 55A1930938EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 07:52:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F03C2DECC6;
-	Tue, 28 Apr 2026 07:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED41B2EDD69;
+	Tue, 28 Apr 2026 07:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZV0JPbxN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nJ5bcMez"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C042D3733
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 07:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3A12ED84A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 07:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777362408; cv=none; b=ba/Q2z/XKL/JdAEWYR+hLBft+baYYp1PdVWX50ZWgGKPe2ymaUTkpZ1jpNl9dNDXFiIpjRB5/Z76aRFATGDAAmd6TA8RzUfP75OIZzCdLzqQ6Fd7BgHPf4+UP/LIxH86X+ACtaCuJ6rHY9K7BzixjU1EQb7zaGSQwxEH3JFBak8=
+	t=1777362729; cv=none; b=YzuTiuvyqyOg/oaGeALXRwETjZxwGidlaAmdmHrtxDMXdn08/fKLPtJtkz0toC9E6SM953fRE2m5Uddz0TvvcM6+hbnajVBtm6S9DGP/IY36bq3n5EaxxDkZ9FZFsPrvLYZkfMehjqmo6mgOnZckqYV49vKoz/f5lFrEioNODRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777362408; c=relaxed/simple;
-	bh=ADg1FaAaQD046f4ZXKUeNs9WMlXZmKjJ9FxWyVIqZMw=;
+	s=arc-20240116; t=1777362729; c=relaxed/simple;
+	bh=vO5iuPARPBHlJ6G8aiSTUn1sOPHT2OcXMvj14NtRS+E=;
 	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mIQr6liocTThivD3O5AMDBASTVUvlTD29cM2xYoiSyoSK/4OMkiCAJI1DOTYN5xOBP7dQaXYXc8dfybjaIxnvRhieTb+/ARnZ5kwD19uueC7/enMsLb6ecDCEo81vvfxzvzbkVCt0eNSy3JKouASOhzDvuIzFaTAc609QdZ1F2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZV0JPbxN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D554C4AF09
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 07:46:47 +0000 (UTC)
+	 To:Cc:Content-Type; b=jUALeECfSfDJPxJXftCMeqnyMmY/tSJ2qTpAZlGt0UFGGfE8XZaNGYZYlgums8hp493vaOf1aSKrBRftP0TcyATexMuyFx4kCDjXZR02mSbm4WDjWmdBKlY3K7G7YGFhHraVYmbZjnOhPGk1zrazlCALKIbu27V/SuKakaDiBAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nJ5bcMez; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEC5C4AF14
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 07:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777362408;
-	bh=ADg1FaAaQD046f4ZXKUeNs9WMlXZmKjJ9FxWyVIqZMw=;
+	s=k20201202; t=1777362729;
+	bh=vO5iuPARPBHlJ6G8aiSTUn1sOPHT2OcXMvj14NtRS+E=;
 	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=ZV0JPbxN926AogNzlpDw8VwYRW/BKxLdzSOfm0sxwUkyI7a3Ve0WDoi6342BL4XcL
-	 Li/klvurMdG5TK/JWlp1Svtgmo6hfmwTzh5pL20oK63MPSTcLKwuu2+BBTJixoIZcE
-	 mPPevR9bvQ9KJvrJcIhiRDnEpcZzXW/mUCEhoKWkBituTpiduDdR1jCUdiESdNeWK/
-	 bZqt81VhzdK23m7WKfv3Y94inS2YC++NNi9dtYX6im5iB6wzsu/WR++s3etlZrVZMU
-	 bDlDGqiKE56qLDfnOd242tSROZcH9NsoEpKIXesowSZZdqSZd5dsp511W50lNxJF9G
-	 /51TTn+HZKDNw==
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5a1307438ddso9943917e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 00:46:47 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ+nryxT8BhMIjbFTyXxELj9zR3WTy6IrYbGct5DtRowlT3PD7wUMZq41fOnDvjoVTKSXjZhGe3p4+mCKST1@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw0jY+T0cp71wukxTNpoxVsh3qIVFqDHe2auKv3f9ZlFYfPd6S7
-	7L8KQEAPE/qEudmpZUl/uwE3XOZOzX4datcBm0LPdmhmycQVO/6Dn3qqIRspEEAKCDJsrHie0b4
-	DaXS+ioEGRGRDmw2X9d88767el9CCoAkBrT5wymcXAg==
-X-Received: by 2002:a05:6512:2381:b0:5a2:a13e:9082 with SMTP id
- 2adb3069b0e04-5a74662a7a2mr863095e87.35.1777362406607; Tue, 28 Apr 2026
- 00:46:46 -0700 (PDT)
+	b=nJ5bcMezxpRhVdnOQ1ZIzVJCCAs4mT1gXO2e/96+wx00hBqqGbqF8oHUyKDqraJYn
+	 uq9ZhihNeBjaI6arIcL6+iUSHyL8+M0R/WUAeeIwHfKk09lmDK8P7nmNERcU8ulC2Q
+	 bLvO52Nr1jQ5vVbsN24WJPHMU4Cp4P7JlWmtirbNnIhjYHL4dQVpLHeCKYaAbLf/ou
+	 lzJ9Yn1JZ5o23PNm1PoxKeTkCgHHdfowJjk4vCqqLyihUlO5e6usyu9hqkaCxYP0ze
+	 EPtXO9l8q2W1U+PZ9yTwjkJWN0v2IgEWQrkaITQpXEOlI5OgDvbVy8YHJReIv6pg+o
+	 LFlvlqjd8peKA==
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5a2c7427ad9so10778405e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 00:52:09 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ+bsnMSLGJPkrJps/jvCFD6ctNb3gxkPqzI4dDxgmcIepBvwCS2N7hHShDgQfXCxyqugBMrzjUYkrvGcCkW@vger.kernel.org
+X-Gm-Message-State: AOJu0YzBACGnhTy7uXfWxmz4wT89mE4JEgVAadMI4mPa7Ld+YtovPckB
+	pjtZM6GkJLUU0IWFBMKKjJY/RFusvnspotpxrOQ29RV//gFBhgW9wnvOA/8/7/ruS0n+x/1kgMK
+	iSYkM7mjgEqw85cfNmbGFM9MUWJ5Bv5BX/qbYO6PPPg==
+X-Received: by 2002:a05:6512:33c9:b0:5a2:a355:aa4e with SMTP id
+ 2adb3069b0e04-5a74662a809mr744576e87.31.1777362727843; Tue, 28 Apr 2026
+ 00:52:07 -0700 (PDT)
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 28 Apr 2026 00:46:45 -0700
+ HTTPREST; Tue, 28 Apr 2026 00:52:05 -0700
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 28 Apr 2026 00:46:45 -0700
+ HTTPREST; Tue, 28 Apr 2026 00:52:05 -0700
 From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20260427-arm-psci-system_reset2-vendor-reboots-v21-3-dcf937775e73@oss.qualcomm.com>
+In-Reply-To: <20260427-arm-psci-system_reset2-vendor-reboots-v21-5-dcf937775e73@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,13 +66,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260427-arm-psci-system_reset2-vendor-reboots-v21-0-dcf937775e73@oss.qualcomm.com>
- <20260427-arm-psci-system_reset2-vendor-reboots-v21-3-dcf937775e73@oss.qualcomm.com>
-Date: Tue, 28 Apr 2026 00:46:45 -0700
-X-Gmail-Original-Message-ID: <CAMRc=MfyCqZHYSoUKe3=c_VO61HAxydpwyHP3Ey6u08Pzx+OgQ@mail.gmail.com>
-X-Gm-Features: AVHnY4Lw8-kSbgaAsT6iClj8v0tvKXLizHPhM-T0oDDyli5y1-FS0QYWyggqmk4
-Message-ID: <CAMRc=MfyCqZHYSoUKe3=c_VO61HAxydpwyHP3Ey6u08Pzx+OgQ@mail.gmail.com>
-Subject: Re: [PATCH v21 03/13] power: reset: reboot-mode: Add support for
- predefined reboot modes
+ <20260427-arm-psci-system_reset2-vendor-reboots-v21-5-dcf937775e73@oss.qualcomm.com>
+Date: Tue, 28 Apr 2026 00:52:05 -0700
+X-Gmail-Original-Message-ID: <CAMRc=MezLiWcFvY2Qr35p0k8DU1kwo40HmLnuYqCQz848m5ZBQ@mail.gmail.com>
+X-Gm-Features: AVHnY4I9O30DLFnNY2LxEIaLNfI7TLSIX2zIHmZ9_yxAyEIE-ruCmhEnjgWZz0I
+Message-ID: <CAMRc=MezLiWcFvY2Qr35p0k8DU1kwo40HmLnuYqCQz848m5ZBQ@mail.gmail.com>
+Subject: Re: [PATCH v21 05/13] mfd: psci-mfd: Add PSCI MFD driver for
+ cpuidle-psci-domain cell
 To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
 Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
@@ -92,7 +92,7 @@ Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
 	John Stultz <john.stultz@linaro.org>, Moritz Fischer <moritz.fischer@ettus.com>, 
 	Bartosz Golaszewski <brgl@kernel.org>, Sudeep Holla <sudeep.holla@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Rspamd-Queue-Id: E4DFD47F645
+X-Rspamd-Queue-Id: E693747F704
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -100,13 +100,13 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-104896-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-104897-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,broadcom.com,kernel.org,oss.qualcomm.com,linaro.org,linuxfoundation.org,arm.com,arndb.de,rock-chips.com,gmail.com,ettus.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,mail.gmail.com:mid];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,mail.gmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[35];
@@ -121,62 +121,28 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_COUNT_SEVEN(0.00)[7]
 
-On Mon, 27 Apr 2026 19:34:43 +0200, Shivendra Pratap
+On Mon, 27 Apr 2026 19:34:45 +0200, Shivendra Pratap
 <shivendra.pratap@oss.qualcomm.com> said:
-> reboot-mode based drivers can define a reboot-mode by adding it under
-> the reboot-mode node in device tree. This limits such drivers, to define
-> any predefined reboot-modes statically within the driver and creates a
-> dependency on device-tree.
+> PSCI has multiple kernel consumers, such as cpuidle-psci-domain.
+> Currently, both the PSCI core driver and cpuidle-psci-domain bind
+> directly to the same PSCI node "arm,psci-1.0". Additional consumers, if
+> introduced, would also need to bind in the same way, leading to several
+> drivers attached to a single device node.
 >
-> Introduce a list for predefined modes in the reboot-mode framework and
-> process the predefined reboot-modes along with the device-tree defined
-> reboot-modes. Modify existing reboot-mode based drivers to initialize
-> the predefined list-head as empty.
+> Introduce a PSCI MFD driver that binds to "arm,psci-1.0" and registers
+> PSCI child cells. As the first user, register cpuidle-psci-domain as a
+> child cell.
 >
-> This patch enables a reboot mode driver to define reboot-modes through a
-> predefined static list, in addition to the device-tree based reboot-modes.
+> Update cpuidle-psci-domain to probe as an MFD child and use the parent
+> PSCI node for power-domain traversal.
 >
 > Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-> ---
->  drivers/power/reset/nvmem-reboot-mode.c  |  1 +
->  drivers/power/reset/qcom-pon.c           |  1 +
->  drivers/power/reset/reboot-mode.c        | 66 ++++++++++++++++++++------------
->  drivers/power/reset/syscon-reboot-mode.c |  1 +
->  include/linux/reboot-mode.h              |  8 ++++
->  5 files changed, 52 insertions(+), 25 deletions(-)
->
-> diff --git a/drivers/power/reset/nvmem-reboot-mode.c b/drivers/power/reset/nvmem-reboot-mode.c
-> index bd05d660490c686b43134f82f1eadd7665403d20..83a8d80fd7d1ccb1b736aee5f2d675246a63b8f8 100644
-> --- a/drivers/power/reset/nvmem-reboot-mode.c
-> +++ b/drivers/power/reset/nvmem-reboot-mode.c
-> @@ -53,6 +53,7 @@ static int nvmem_reboot_mode_probe(struct platform_device *pdev)
->
->  	nvmem_rbm->reboot.dev = &pdev->dev;
->  	nvmem_rbm->reboot.write = nvmem_reboot_mode_write;
-> +	INIT_LIST_HEAD(&nvmem_rbm->reboot.predefined_modes);
->
->  	nvmem_rbm->cell = devm_nvmem_cell_get(&pdev->dev, "reboot-mode");
->  	if (IS_ERR(nvmem_rbm->cell)) {
-> diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
-> index 57b36e6186f80aff947fd7f5aae5ce280c65dc6b..9d0e3fc621a6173438c6da4cce38394199451881 100644
-> --- a/drivers/power/reset/qcom-pon.c
-> +++ b/drivers/power/reset/qcom-pon.c
-> @@ -73,6 +73,7 @@ static int qcom_pon_probe(struct platform_device *pdev)
->  		pon->reboot_mode.dev = &pdev->dev;
->  		pon->reason_shift = reason_shift;
->  		pon->reboot_mode.write = qcom_pon_reboot_mode_write;
-> +		INIT_LIST_HEAD(&pon->reboot_mode.predefined_modes);
 
-Maybe unrelated to this series but we could use some centralized initializer
-for struct reboot_mode_driver as well as rename it to struct reboot_mode_device
-which it actually is.
+Shamelessly taking credit for the idea. :) Looks short and sweet LGTM.
 
-For now:
-
+Suggested-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-
-Bart
 
