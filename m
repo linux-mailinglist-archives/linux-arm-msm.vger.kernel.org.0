@@ -1,220 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-104843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8MhTKhAP8GnTNgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 03:36:16 +0200
+	id OHThA50Y8GmNOQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 04:17:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FD7447C71C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 03:36:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E70147CAB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 04:17:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D17C83022FA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 01:36:11 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F05313020AB7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 02:16:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D7BB1FDA61;
-	Tue, 28 Apr 2026 01:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9081838E5DA;
+	Tue, 28 Apr 2026 02:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N4CttKse";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NnjsHAik"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XOj2SBZe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89902D46C0
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 01:36:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6FE1B4223;
+	Tue, 28 Apr 2026 02:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777340171; cv=none; b=dhiOUf5oGwM5Ywekz1Lte1C6yMUq8RaHzRk5tYqj3E0jSGTmG27hdEy1P1Z0KePSU1hWQg3MGsAthZ8devT4k2KselTEIiLRd4tQjsu9c+95ZqzbzLVM6MX2byddzk1EazymogTZTxWp5Dkvkx3tQW0y1kyg6NiMK6+oRjXHzhU=
+	t=1777342618; cv=none; b=bDhn+/GtJ/z3XDr/gXihmYfmTs617bsOWLnDlx45qHuWgeR4LgHBJzVxX3+SuUdy4nyWiJBuRgnxbYjEZAdPlo45KOF8fDTqwIUwBzK+1KZCSDRjQEmo8NvLVCjWaUCmkSNxPJeSxiEWjDOVjYEIWe1uzWpw3uQhENbl+iqdRos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777340171; c=relaxed/simple;
-	bh=Y7gKuCFiPboEfKzDAf73jyDXFOaCi/weSrK7a2Kqvuk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hCcslpavdx8P6LLwd4knrbTdRTCKDxueBG/22Qaxb/x9s8bbs8C2PfDvOvLKf7vSHaM2fuq0dq6bqELZrU3XkI3AcDuwB0e7JPh2XJmQ7EC/DhwJXsw3YnLpF0YpmHeE/eZUy5jJm4Jt9b2M5gR6tOyI+Mc1AdxoNPP6VRxCqHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N4CttKse; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NnjsHAik; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63RIgORL2006190
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 01:36:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=kmuhBpsDaaHpjbrFXXWCLn7R
-	VHpczN9SgLXRDFkeWwo=; b=N4CttKse4inMTMby51Mb1YAxD5xM1/fxIfjRhTVS
-	iZno8VmHFOlMbCQVh1lFOWhaqm8tk0pluCgK13BzDyGZClkCKtyv0rltkqzDyZkR
-	qjQwIjNZrNoJi29dR8kNUzvlnxVh0cPFApFnQemBDdY9tpzBzrQdnm1zR1AlacZ6
-	/X7nsFhOFQDSnyJA2Tbmv7JqW2jWRjSOsXmz6OwqBmH1XnCZf0te4Z+O4DeCC1bQ
-	WJ5MFIvKNrGGEboTE2z/+4Ph7NHfZJlJVb7+1/JjlhKFZjUFksRcz9RdSgrHFAtb
-	s+rG6IiM4pZjnE0mnUEMx/MWvExHx0UMr8BwqibLi/o7Lw==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dt7gkjs79-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 01:36:08 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-2ddd8ef5343so10796922eec.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Apr 2026 18:36:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1777340168; x=1777944968; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kmuhBpsDaaHpjbrFXXWCLn7RVHpczN9SgLXRDFkeWwo=;
-        b=NnjsHAikA33BjHVi8SDVvQZRfPNka2MksUhwl7i/uaoDTakGNsMKepk89BDzkjj5jZ
-         AhK+rJF6OwUP+VThX9h+jz4Lrv3pADLzr33jzE3bhaaeIXxuIEzR8LqsxjMfNvPQBPee
-         KbwE109pCmSCCwspXSTUftjRxJTKhTpiqWR7HtX6J4v+yAd7V3HN9JosFE4/E9BL9hQq
-         UFVIAuH6c4H8Zs4uLVABkoNOL6kMmKNlLxpRW79N+8dDN9NnpgfDgxeqCo0WsfpKjed9
-         gIIBvYDLcM6yjKkSV1iRnzAOjMNfM93vOP5VMxfOPp1FnHkaM7VdEFkXiXjueK8HcJZp
-         cplA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777340168; x=1777944968;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kmuhBpsDaaHpjbrFXXWCLn7RVHpczN9SgLXRDFkeWwo=;
-        b=n5+zDQ6e4oR8CTZiwax5ndlzDg3U9GBJZOJCgvf/aal/tun/oEPlcg+OyddwaFugMx
-         qBGXIni3Ll/nYWYvF3+U4FTOfDoH+jV+ZEMzNHt+DVK6kIi5z+yn3VJj8ekB5a7l7ayD
-         O+HwMR/v9xyMMWnma9K+EcBmdvCBvlAOrKYediRrQjeTBr8Fk4XQ/uPzPufJ4w7bu8D9
-         U1GteXn1q8hMXvE5nIaUXvPLJYBkE9kEiTxXnsgWkxSXQxY+dq9XusouhBBjjuyRMOmn
-         mgmD8V6Ei45UgA198Nds2OLWbwxDnMVQyM8aANZD+xGJV2MUverj++Z110IaAi/GMQuI
-         +M4g==
-X-Forwarded-Encrypted: i=1; AFNElJ9CvsrUh+fbFDuJ2ulBPWRnaBcpT+dF6G4noItNcPbhR+G+fHVvzolXQO6DmxTBPlrlD7we8u3cUUAETipA@vger.kernel.org
-X-Gm-Message-State: AOJu0YzrHy+VoxWCHDQgDafNOH8e//6DrOaNo5M8+aL34qiQA1/GFwIm
-	k30eHhVMOYFNYxGeGv4uv+8K0+7XSSAzQRHQ6Xua/ASH1qKMHm4BbBT9Rd6El8G/DxSyJt43b40
-	N8CXaTa2HamqO27qpTBhzj+De5rncKzEDtT6fFTsphNtySuql14juDLElI86nFL8T/nB3
-X-Gm-Gg: AeBDietY1bd/hHk+KD2kbuWtbNXgglLsQaga8eMD0hh+XN30SsNjiKjz3cClSIaRFaQ
-	CrTvlKLpRDfUwBpz7hxPP1MixmFzw+v061A1otBUfG+dKnLBo7/qkermJR0lGkh75wdhoTV17Go
-	U96LxNzw632Tv9tgT0fidPHrPVXSUJhQDATIomD4Y6jgKNvIDmNDGcM/CrX3SxwDQ+WKZfdUre6
-	ToEAZsZ9wAxoR0W7e1P4zy6CRavDspCCVkPcGOAJz0fswDlpyB+rPgCPrd4egPBCYfSB1n5urs8
-	e0WuZ8Gl910CQLELVEJbBjAXIwlbN93z6hogn0l+hnUpPCMIHfGt3LHjugfeJTZqcYkFE8BuPsz
-	9yDGO/81UN3rnlj4GUkRC115UclTdMVRIMBtTj8QcyVpUwxlk+QfqBcyHmwPAFpCzGd/E8lVjYK
-	0=
-X-Received: by 2002:a05:7300:3247:b0:2c4:ec89:bc7 with SMTP id 5a478bee46e88-2ed0a00248bmr597106eec.10.1777340167664;
-        Mon, 27 Apr 2026 18:36:07 -0700 (PDT)
-X-Received: by 2002:a05:7300:3247:b0:2c4:ec89:bc7 with SMTP id 5a478bee46e88-2ed0a00248bmr597080eec.10.1777340167102;
-        Mon, 27 Apr 2026 18:36:07 -0700 (PDT)
-Received: from QCOM-aGQu4IUr3Y (i-global052.qualcomm.com. [199.106.103.52])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ed0a106524sm1074873eec.23.2026.04.27.18.36.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Apr 2026 18:36:06 -0700 (PDT)
-Date: Tue, 28 Apr 2026 09:36:00 +0800
-From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-To: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-        Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>,
-        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] dt-bindings: crypto: qcom,inline-crypto-engine:
- Document Nord ICE
-Message-ID: <afAPACSt4JoLuYLn@QCOM-aGQu4IUr3Y>
-References: <20260427010527.230473-1-shengchao.guo@oss.qualcomm.com>
- <f3e83bc2-36ef-4628-af1f-d9465eca72e3@oss.qualcomm.com>
+	s=arc-20240116; t=1777342618; c=relaxed/simple;
+	bh=gjtJSvuxk2+nAubxyRoH0u6RI7n2eEu+AkWiaaWBi04=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VisdKv4+uooqEIT50LlMzpdyRGFtbmInhylvHGY+jYH68tRkTZb1DQfurGEVXNsEirGBmP5V+1QlMVartqHSw2/M2dO91Y5d6kQfsGxrEcrctfy25Omyn8TczrqrMNSMijXx1Ijr2oO+9Y94eBHxbxyytDSNLTjjjJewIL473Ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XOj2SBZe; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63S0OIXJ440498;
+	Tue, 28 Apr 2026 02:16:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cV1BCnsuUa4ahFfJrpke28rGo2z4kYcKdI0ooHoKqtw=; b=XOj2SBZeqfUE/fwF
+	F2Ja1MLAbDZD/+DNg0P/tTZKFoCAJe2O463MXzNs9JA8trJA0e9A6e00TQtx5W/G
+	t2cRdVq6pCkdlDxEdlqvyoPHFaSrIDd8AXOC8S1Ywt25TZuTeZmIYbaIH8SfmPey
+	quxMAQplE3la4KUaWRJC2nEVkEGVPLCmXJqjAEeoTxiJHWGz6ZPl9MZ91W4iHx2m
+	PQKHomyCvk0gl3PhDvyJk6QnWEL6HYqUP0IQzNjQ4Aqz8bBl4ejNnLq2anRjMb5w
+	3XQK9GCJLMQz8qm8+Arq6dNqXl1gaFFi2Csq/a0MaXwfb9g0hG2VdMIxv0X1KdCS
+	bpJB6w==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dtac4264s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Apr 2026 02:16:48 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTPS id 63S2Gm53013124
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Apr 2026 02:16:48 GMT
+Received: from [10.233.71.148] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 27 Apr
+ 2026 19:16:45 -0700
+Message-ID: <d862f03e-87df-41fe-9ff9-6d2bfad1235e@quicinc.com>
+Date: Tue, 28 Apr 2026 10:16:43 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f3e83bc2-36ef-4628-af1f-d9465eca72e3@oss.qualcomm.com>
-X-Proofpoint-GUID: J98gOwXu0tjREkgaLPByNa_Q2zJHC1v9
-X-Proofpoint-ORIG-GUID: J98gOwXu0tjREkgaLPByNa_Q2zJHC1v9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDAxMyBTYWx0ZWRfX11dqWt+jMMmp
- Xp7mEGclWsZuPEuVddajQ7OPmIxTMxjxwUp9i38AP3TlBTgmS6+nc0cnozlTQo/fDR4Q3f4OnZ8
- ELRLHfmIBV+i1m4RDhxIHJY1wmYDRqofrnah2GSjASX8Q3wtm+4j2TjHrWcr+C/mdy6j/sKhrxH
- voaf4i5vo7friIcfkQ4vr23xoaxkwMIOo75Nm5DstjvPxjS4TQM8ifuLGfIR4bNSDmTqYsB+4ku
- GVjQ0w7Y20UH++jqU3qQRgvAwB6SF/cYJtA+5IyaxxPawH/klSqZV2eTRErSXz1p+eYYk6t3LWX
- 1F8/WarY8AzBZm+o7FvO+HzNS2uij/mJ1WvRlRMSz5WVOa3N6++wJWmc1XCNwc92+CbJFe21doC
- HdaejB/tX6k+05L4hNn1IlFG3NTgmJgk+zKXJh/SQyc1+IhMx5Na+u3QpmWhRC/0oMubhy9BPof
- wTodCE5KOJcdulgM+Ew==
-X-Authority-Analysis: v=2.4 cv=bJsm5v+Z c=1 sm=1 tr=0 ts=69f00f08 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=b9+bayejhc3NMeqCNyeLQQ==:17
- a=kj9zAlcOel0A:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KIcV2tIvfCGpu7CZsroA:9 a=CjuIK1q_8ugA:10
- a=PxkB5W3o20Ba91AHUih5:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 2/4] coresight: cti: encode trigger register index in
+ register offsets
+To: Leo Yan <leo.yan@arm.com>, Yingchao Deng <yingchao.deng@oss.qualcomm.com>
+CC: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@arm.com>, James Clark <james.clark@linaro.org>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Jinlong Mao <jinlong.mao@oss.qualcomm.com>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        Jie Gan
+	<jie.gan@oss.qualcomm.com>,
+        Yingchao Deng <quic_yingdeng@quicinc.com>
+References: <20260426-extended-cti-v8-0-23b900a4902f@oss.qualcomm.com>
+ <20260426-extended-cti-v8-2-23b900a4902f@oss.qualcomm.com>
+ <20260427174800.GB16537@e132581.arm.com>
+Content-Language: en-US
+From: "Yingchao Deng (Consultant)" <quic_yingdeng@quicinc.com>
+In-Reply-To: <20260427174800.GB16537@e132581.arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-GUID: 7a7ZrWO6uzj8_ad-ZFMd1I12SFGJw56S
+X-Authority-Analysis: v=2.4 cv=D7J37PRj c=1 sm=1 tr=0 ts=69f01890 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=IYfcq8Jd9aPnBDRZR34A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 7a7ZrWO6uzj8_ad-ZFMd1I12SFGJw56S
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDAyMCBTYWx0ZWRfX1lR7ktILEJsy
+ XYJp5HoC40j7ni5DylURFYEzMPERCGFoT39l6jy6B4s+cNswR5aNAQsYGQGj3aIlYL+OZkHJE6R
+ h2tEN7ZWCoZVahqNEOWoYu0LX/ydNnCfrgAXEB+RoO/6y706O7LhHFSkR2frLmupn3saPhJmIXN
+ TaAmKC+sC5C08Q8sVvJYKn3QD5jZCJPF85dBfG4uBGGrYUwDnCD4cycwCr5HD8lM1buLRzuvklY
+ aQZv/7nYgzewau1hys7utwcl0gXunTCGuzcIDvPZ9Tx2/H1lcwNjvjH/abiU+qDqQk5SPAu8aRJ
+ SY3Ev5DG1fWqLN4wK3Ww6KATTSnjoWgJAFR3tMPAY0XhMV/uRNyoJomzb0E3AscaZvPVpcPVf0r
+ /uV7b6gGI0gEgztmR8+6LrKPHZtPNC/tfIj1721P3TQwbmJ0qVAW789XMIvwKUaCc0S6b2NMuKv
+ P7aIjLJtvjFXuHFguAA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-27_04,2026-04-21_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 adultscore=0 suspectscore=0 malwarescore=0
- spamscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
+ impostorscore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 suspectscore=0 clxscore=1015 adultscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604280013
-X-Rspamd-Queue-Id: 4FD7447C71C
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604280020
+X-Rspamd-Queue-Id: 5E70147CAB9
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[quicinc.com,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[quicinc.com:s=qcppdkim1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-104843-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[14];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shengchao.guo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-104844-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[quicinc.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,quicinc.com:dkim,quicinc.com:mid];
+	TO_DN_SOME(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[quic_yingdeng@quicinc.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	PRECEDENCE_BULK(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
 
-On Mon, Apr 27, 2026 at 12:50:40PM +0530, Harshal Dev wrote:
-> Hi Shawn,
-> 
-> On 4/27/2026 6:35 AM, Shawn Guo wrote:
-> > Document Inline Crypto Engine (ICE) on Qualcomm Nord SoC which is
-> > compatible with 'qcom,inline-crypto-engine'.
-> > 
-> > Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-> > ---
-> > Changes in v2:
-> >  - Improve commit log to make the compatibility explicit
-> >  - Link to v1: https://lore.kernel.org/all/20260420073301.1250197-1-shengchao.guo@oss.qualcomm.com/
-> > 
-> >  .../devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml    | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-> > index 876bf90ed96e..9251db2b8fcd 100644
-> > --- a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-> > +++ b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-> > @@ -16,6 +16,7 @@ properties:
-> >            - qcom,eliza-inline-crypto-engine
-> >            - qcom,kaanapali-inline-crypto-engine
-> >            - qcom,milos-inline-crypto-engine
-> > +          - qcom,nord-inline-crypto-engine
-> 
-> Wanted to bring your attention to this patch we are hoping to send for 7.1 fixes window
-> which mandates the iface clock and power-domain for ICE (from Eliza/Milos onwards) to avoid issues
-> seen when these properties are missing:
-> https://lore.kernel.org/all/20260416-qcom_ice_power_and_clk_vote-v5-1-5ccf5d7e2846@oss.qualcomm.com/
-> 
-> While I won't ask you to adjust your patch immediately, if our patch is merged, would request you to
-> update this binding to comply with the newly introduced ones such that the iface clock and power-domain
-> are made mandatory for Nord as well.
 
-Thanks for the heads-up, Harshal!  Sure, I will update after your series
-hits linux-next.
+On 4/28/2026 1:48 AM, Leo Yan wrote:
+> On Sun, Apr 26, 2026 at 05:44:39PM +0800, Yingchao Deng wrote:
+>> Introduce a small encoding to carry the register index together with the
+>> base offset in a single u32, and use a common helper to compute the final
+>> MMIO address. This refactors register access to be based on the encoded
+>> (reg, nr) pair, reducing duplicated arithmetic and making it easier to
+>> support variants that bank or relocate trigger-indexed registers.
+>>
+>> Signed-off-by: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
+>> ---
+>>   drivers/hwtracing/coresight/coresight-cti-core.c  | 31 +++++++++++++++--------
+>>   drivers/hwtracing/coresight/coresight-cti-sysfs.c |  4 +--
+>>   drivers/hwtracing/coresight/coresight-cti.h       | 16 ++++++++++--
+>>   3 files changed, 36 insertions(+), 15 deletions(-)
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-cti-core.c b/drivers/hwtracing/coresight/coresight-cti-core.c
+>> index 4e7d12bd2d3e..c4cbeb64365b 100644
+>> --- a/drivers/hwtracing/coresight/coresight-cti-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-cti-core.c
+>> @@ -42,6 +42,14 @@ static DEFINE_MUTEX(ect_mutex);
+>>   #define csdev_to_cti_drvdata(csdev)	\
+>>   	dev_get_drvdata(csdev->dev.parent)
+>>   
+>> +static void __iomem *cti_reg_addr(struct cti_drvdata *drvdata, int reg)
+>> +{
+>> +	u32 offset = CTI_REG_CLR_NR(reg);
+>> +	u32 nr = CTI_REG_GET_NR(reg);
+>> +
+>> +	return drvdata->base + offset + sizeof(u32) * nr;
+>> +}
+> Could you try below change, which is more straightforward?
+>
+>    static void __iomem *__reg_addr(struct cti_drvdata *drvdata, int off,
+>                                    int index)
+>    {
+>    	return drvdata->base + offset + sizeof(u32) * index;
+>    }
+>
+>    #define reg_addr(drvdata, off)                 \
+>          __reg_addr((drvdata), (off), 0)
+>
+>    #define reg_index_addr(drvdata, off, i)        \
+>          __reg_addr((drvdata), (off), (i))
+>
+>> +
+>>   /* write set of regs to hardware - call with spinlock claimed */
+>>   void cti_write_all_hw_regs(struct cti_drvdata *drvdata)
+>>   {
+>> @@ -55,16 +63,17 @@ void cti_write_all_hw_regs(struct cti_drvdata *drvdata)
+>>   
+>>   	/* write the CTI trigger registers */
+>>   	for (i = 0; i < config->nr_trig_max; i++) {
+>> -		writel_relaxed(config->ctiinen[i], drvdata->base + CTIINEN(i));
+>> +		writel_relaxed(config->ctiinen[i],
+>> +			       cti_reg_addr(drvdata, CTI_REG_SET_NR(CTIINEN, i)));
+>                  writel_relaxed(config->ctiinen[i],
+>                                 reg_index_addr(drvdata, CTIINEN, i));
+>
+>>   		writel_relaxed(config->ctiouten[i],
+>> -			       drvdata->base + CTIOUTEN(i));
+>> +			       cti_reg_addr(drvdata, CTI_REG_SET_NR(CTIOUTEN, i)));
+>                  writel_relaxed(config->ctiouten[i],
+>                                 reg_index_addr(drvdata, CTIOUTEN, i));
+>
+> [...]
+Will try.
 
-Shawn
+Thanks,
+Yingchao
+>> +/*
+>> + * Encode CTI register offset and register index in one u32:
+>> + *   - bits[0:11]  : base register offset (0x000 to 0xFFF)
+>> + *   - bits[24:31] : register index (nr)
+>> + */
+>> +#define CTI_REG_NR_MASK			GENMASK(31, 24)
+>> +#define CTI_REG_GET_NR(reg)		FIELD_GET(CTI_REG_NR_MASK, (reg))
+>> +#define CTI_REG_SET_NR_CONST(reg, nr)	((reg) | FIELD_PREP_CONST(CTI_REG_NR_MASK, (nr)))
+>> +#define CTI_REG_SET_NR(reg, nr)		((reg) | FIELD_PREP(CTI_REG_NR_MASK, (nr)))
+>> +#define CTI_REG_CLR_NR(reg)		((reg) & (~CTI_REG_NR_MASK))
+> I know this might come from my suggestion, and it is also will be
+> heavily used in patch 04.  We can have strightforward way to
+> implement this, please drop these macros.
+>
+> I will reply in patch 04 separately.  Sorry my review might cause
+> extra effort.
+>
+> Thanks,
+> Leo
 
