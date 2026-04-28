@@ -1,126 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-104894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wPo8Axpl8GmWSwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:43:22 +0200
+	id IO+aDzBo8GkITAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:56:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id E689F47F1C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:43:20 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4DFD47F645
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:56:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 586C83007B22
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 07:41:40 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id ADF06303B4F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 07:46:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81A223AC0E7;
-	Tue, 28 Apr 2026 07:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F03C2DECC6;
+	Tue, 28 Apr 2026 07:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O9XI4NDl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZV0JPbxN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E54F3B5826;
-	Tue, 28 Apr 2026 07:41:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C042D3733
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 07:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777362096; cv=none; b=jGDsa/iEyijP5VQPcOQTQrc4tYrZE+hnDqL8ZJU0y/rqafGg7VPzvghngbgMqUccntgRjqdm2DEyAwXcIKbLVpzk/xaJwHhaE6CORTT+v5Q6BE1RTdznHV2cumkqj4capSyDfuxdXdut2TJmVNCEjgULxw5jJbacT56XdlDta4c=
+	t=1777362408; cv=none; b=ba/Q2z/XKL/JdAEWYR+hLBft+baYYp1PdVWX50ZWgGKPe2ymaUTkpZ1jpNl9dNDXFiIpjRB5/Z76aRFATGDAAmd6TA8RzUfP75OIZzCdLzqQ6Fd7BgHPf4+UP/LIxH86X+ACtaCuJ6rHY9K7BzixjU1EQb7zaGSQwxEH3JFBak8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777362096; c=relaxed/simple;
-	bh=UfYVcnjZ7Yd1VqbbHzwFGlt22qkE7sYoXn7cJY+5boY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b+xLFIAhUXo3L8jayvfCtgtYF8HPkN0rxn34o4o9Yrcq4NjIxZaNsQVLBV55LcGqb5Ouu39Nhz/hfuozPx/LDQDHsTX0LdlUNczUWWFI7yJa0+CUHimMm7CXTierQQWuzk4IqBgawHgEZAoHobWaSiWEOqprBXM3btWt6zAzQbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O9XI4NDl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7589DC2BCAF;
-	Tue, 28 Apr 2026 07:41:35 +0000 (UTC)
+	s=arc-20240116; t=1777362408; c=relaxed/simple;
+	bh=ADg1FaAaQD046f4ZXKUeNs9WMlXZmKjJ9FxWyVIqZMw=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mIQr6liocTThivD3O5AMDBASTVUvlTD29cM2xYoiSyoSK/4OMkiCAJI1DOTYN5xOBP7dQaXYXc8dfybjaIxnvRhieTb+/ARnZ5kwD19uueC7/enMsLb6ecDCEo81vvfxzvzbkVCt0eNSy3JKouASOhzDvuIzFaTAc609QdZ1F2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZV0JPbxN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D554C4AF09
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 07:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777362096;
-	bh=UfYVcnjZ7Yd1VqbbHzwFGlt22qkE7sYoXn7cJY+5boY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O9XI4NDlKQ4ouR8xO0xmvuukD3U+E8twBJIWuneFbU9ESgJxLDGAl+ejeQMerVlA8
-	 oKFpcaUBUVSpRiB1fs2UanW/pn3xZbb2t98eLegYJZZxY/laF0PW3w/hCosnp8tyDK
-	 w7mivNDfY76dP6IHKrEjwhP1YTtlMVhV228fzYPYrEq5YuEBKX08RAAkMQ8yabpXLY
-	 477mqFiYY4Xc3vSnEPNYsYkKp3DGBG9Ve7PhLkM1H6qy0KiuPz1hNkMaLKSwUadSNq
-	 yih7OWwLMGKiSLBZPwO3cP00Kqzzts+EHG4PhhN4HBZnV0hlXL3BCYZ2N00fff62X8
-	 Iunf09LYhxIVQ==
-Date: Tue, 28 Apr 2026 09:41:33 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Prabhakar <prabhakar.csengg@gmail.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Subject: Re: [PATCH] dt-bindings: display/msm: Fix typo in clock-names
- property
-Message-ID: <20260428-wise-rat-of-criticism-df0ea3@quoll>
-References: <20260427154658.276737-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
+	s=k20201202; t=1777362408;
+	bh=ADg1FaAaQD046f4ZXKUeNs9WMlXZmKjJ9FxWyVIqZMw=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=ZV0JPbxN926AogNzlpDw8VwYRW/BKxLdzSOfm0sxwUkyI7a3Ve0WDoi6342BL4XcL
+	 Li/klvurMdG5TK/JWlp1Svtgmo6hfmwTzh5pL20oK63MPSTcLKwuu2+BBTJixoIZcE
+	 mPPevR9bvQ9KJvrJcIhiRDnEpcZzXW/mUCEhoKWkBituTpiduDdR1jCUdiESdNeWK/
+	 bZqt81VhzdK23m7WKfv3Y94inS2YC++NNi9dtYX6im5iB6wzsu/WR++s3etlZrVZMU
+	 bDlDGqiKE56qLDfnOd242tSROZcH9NsoEpKIXesowSZZdqSZd5dsp511W50lNxJF9G
+	 /51TTn+HZKDNw==
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5a1307438ddso9943917e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 00:46:47 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ+nryxT8BhMIjbFTyXxELj9zR3WTy6IrYbGct5DtRowlT3PD7wUMZq41fOnDvjoVTKSXjZhGe3p4+mCKST1@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0jY+T0cp71wukxTNpoxVsh3qIVFqDHe2auKv3f9ZlFYfPd6S7
+	7L8KQEAPE/qEudmpZUl/uwE3XOZOzX4datcBm0LPdmhmycQVO/6Dn3qqIRspEEAKCDJsrHie0b4
+	DaXS+ioEGRGRDmw2X9d88767el9CCoAkBrT5wymcXAg==
+X-Received: by 2002:a05:6512:2381:b0:5a2:a13e:9082 with SMTP id
+ 2adb3069b0e04-5a74662a7a2mr863095e87.35.1777362406607; Tue, 28 Apr 2026
+ 00:46:46 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 28 Apr 2026 00:46:45 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 28 Apr 2026 00:46:45 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260427-arm-psci-system_reset2-vendor-reboots-v21-3-dcf937775e73@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260427154658.276737-1-prabhakar.mahadev-lad.rj@bp.renesas.com>
-X-Rspamd-Queue-Id: E689F47F1C5
+References: <20260427-arm-psci-system_reset2-vendor-reboots-v21-0-dcf937775e73@oss.qualcomm.com>
+ <20260427-arm-psci-system_reset2-vendor-reboots-v21-3-dcf937775e73@oss.qualcomm.com>
+Date: Tue, 28 Apr 2026 00:46:45 -0700
+X-Gmail-Original-Message-ID: <CAMRc=MfyCqZHYSoUKe3=c_VO61HAxydpwyHP3Ey6u08Pzx+OgQ@mail.gmail.com>
+X-Gm-Features: AVHnY4Lw8-kSbgaAsT6iClj8v0tvKXLizHPhM-T0oDDyli5y1-FS0QYWyggqmk4
+Message-ID: <CAMRc=MfyCqZHYSoUKe3=c_VO61HAxydpwyHP3Ey6u08Pzx+OgQ@mail.gmail.com>
+Subject: Re: [PATCH v21 03/13] power: reset: reboot-mode: Add support for
+ predefined reboot modes
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	devicetree@vger.kernel.org, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, Andre Draszik <andre.draszik@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, 
+	Srinivas Kandagatla <srini@kernel.org>, Sebastian Reichel <sre@kernel.org>, Mark Rutland <mark.rutland@arm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Daniel Lezcano <daniel.lezcano@kernel.org>, Christian Loehle <christian.loehle@arm.com>, 
+	Ulf Hansson <ulfh@kernel.org>, Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Souvik Chakravarty <Souvik.Chakravarty@arm.com>, 
+	Andy Yan <andy.yan@rock-chips.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	John Stultz <john.stultz@linaro.org>, Moritz Fischer <moritz.fischer@ettus.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>, Sudeep Holla <sudeep.holla@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Rspamd-Queue-Id: E4DFD47F645
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-104896-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,broadcom.com,kernel.org,oss.qualcomm.com,linaro.org,linuxfoundation.org,arm.com,arndb.de,rock-chips.com,gmail.com,ettus.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,mail.gmail.com:mid];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104894-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[22];
+	RCPT_COUNT_TWELVE(0.00)[35];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[gmail.com];
-	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de,quicinc.com,vger.kernel.org,lists.freedesktop.org,bp.renesas.com];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,renesas.com:email]
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-On Mon, Apr 27, 2026 at 04:46:58PM +0100, Prabhakar wrote:
-> From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-> 
-> Fix the typo "clocks-names" to "clock-names" in the allOf/if conditional
-> blocks.
-> 
-> Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+On Mon, 27 Apr 2026 19:34:43 +0200, Shivendra Pratap
+<shivendra.pratap@oss.qualcomm.com> said:
+> reboot-mode based drivers can define a reboot-mode by adding it under
+> the reboot-mode node in device tree. This limits such drivers, to define
+> any predefined reboot-modes statically within the driver and creates a
+> dependency on device-tree.
+>
+> Introduce a list for predefined modes in the reboot-mode framework and
+> process the predefined reboot-modes along with the device-tree defined
+> reboot-modes. Modify existing reboot-mode based drivers to initialize
+> the predefined list-head as empty.
+>
+> This patch enables a reboot mode driver to define reboot-modes through a
+> predefined static list, in addition to the device-tree based reboot-modes.
+>
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
 > ---
-> Note, patch applies on top of next-20260427.
+>  drivers/power/reset/nvmem-reboot-mode.c  |  1 +
+>  drivers/power/reset/qcom-pon.c           |  1 +
+>  drivers/power/reset/reboot-mode.c        | 66 ++++++++++++++++++++------------
+>  drivers/power/reset/syscon-reboot-mode.c |  1 +
+>  include/linux/reboot-mode.h              |  8 ++++
+>  5 files changed, 52 insertions(+), 25 deletions(-)
+>
+> diff --git a/drivers/power/reset/nvmem-reboot-mode.c b/drivers/power/reset/nvmem-reboot-mode.c
+> index bd05d660490c686b43134f82f1eadd7665403d20..83a8d80fd7d1ccb1b736aee5f2d675246a63b8f8 100644
+> --- a/drivers/power/reset/nvmem-reboot-mode.c
+> +++ b/drivers/power/reset/nvmem-reboot-mode.c
+> @@ -53,6 +53,7 @@ static int nvmem_reboot_mode_probe(struct platform_device *pdev)
+>
+>  	nvmem_rbm->reboot.dev = &pdev->dev;
+>  	nvmem_rbm->reboot.write = nvmem_reboot_mode_write;
+> +	INIT_LIST_HEAD(&nvmem_rbm->reboot.predefined_modes);
+>
+>  	nvmem_rbm->cell = devm_nvmem_cell_get(&pdev->dev, "reboot-mode");
+>  	if (IS_ERR(nvmem_rbm->cell)) {
+> diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
+> index 57b36e6186f80aff947fd7f5aae5ce280c65dc6b..9d0e3fc621a6173438c6da4cce38394199451881 100644
+> --- a/drivers/power/reset/qcom-pon.c
+> +++ b/drivers/power/reset/qcom-pon.c
+> @@ -73,6 +73,7 @@ static int qcom_pon_probe(struct platform_device *pdev)
+>  		pon->reboot_mode.dev = &pdev->dev;
+>  		pon->reason_shift = reason_shift;
+>  		pon->reboot_mode.write = qcom_pon_reboot_mode_write;
+> +		INIT_LIST_HEAD(&pon->reboot_mode.predefined_modes);
 
-No one can apply on top of next-20260427, there are no such maintainer
-trees.
+Maybe unrelated to this series but we could use some centralized initializer
+for struct reboot_mode_driver as well as rename it to struct reboot_mode_device
+which it actually is.
 
-Please add Fixes tag.
+For now:
 
-Best regards,
-Krzysztof
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
+Bart
 
