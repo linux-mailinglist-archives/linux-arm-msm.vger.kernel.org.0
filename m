@@ -1,59 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-104920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QMtCDIGE8GlwUQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 11:57:21 +0200
+	id +ChYIoqE8GlwUQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 11:57:30 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85A94482019
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 11:57:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F541482020
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 11:57:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9E56D31AEAA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:16:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F38E330E73D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:16:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F4202288C3D;
-	Tue, 28 Apr 2026 09:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BF7A344D9B;
+	Tue, 28 Apr 2026 09:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="L90hIb6J"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="1jlaI5Cj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9EE3168E1
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 09:16:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED863446C3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 09:16:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777367781; cv=none; b=O3psHbi81lc1hcQ3Wf6KK3/wZ5/pBHolhqorOQwiLIW1MKdny3GohII+zuIwS4TRRSkXl4jG1WQnsVrWcsRa3ECPxs9WTcp9oiyCRFHKZCjIGAymBf4UdlbOglvXrQ4llIgdWjfUQjeFHJwUg+KLBti4hCsYEOFDrOdikqblXj4=
+	t=1777367787; cv=none; b=JIJIUAuiciHuC1BONZYDY+wy4uux1ro1xlv8mkbJ0ZzsQc49Ius3YzSr36yij0dJTt0jPrJZv59o+rgu3pHqE7IbrlFDNSlhWmGRT8cSvgNUMb80krEyKYREAzJRAGfhoy/wYF0kD8Jy22LEdAsNU8hnEwK2VlYu5MqHZV3zkz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777367781; c=relaxed/simple;
-	bh=JgsLjY7N/cSTr84A5yekh+dYCMdOFfAOpvYNjwdXnhA=;
+	s=arc-20240116; t=1777367787; c=relaxed/simple;
+	bh=9KGZOIAdid4T8QowDC6fcWDXZTVef9rlIxxr85Nhs58=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uxYS0mxvQKhOcg9j4V5j+IX0mjGTUdd+AoVpThe4G0X/bgVIhAcXcKCMlWkkie7F7oOzPHFIQQT6p3f7U7EnbErnPgTHdEtNf6al6VLehlQi9grGO+ujr08De8IzKFxTPiFRs3GSgOjLzM0TDXfvxzQazKVGzBEbolhk5b+w9ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=L90hIb6J; arc=none smtp.client-ip=185.171.202.116
+	 In-Reply-To:To:Cc; b=JDE6Z3eosVhF9NzMhqpyyKf8d/+9oQ+NebBBUPc2kLtc88X8uRoj8bww/lvoMlKaPshORA/orIeBOGs/VknlRsCGI26Jz+v/TYqAm2Ap3HEgVJSyk0sBO3DTdvT6rz3fi7/odRFySA7vPkXJhollKEJFjr92ygTuqEkr4AMXf9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=1jlaI5Cj; arc=none smtp.client-ip=185.246.85.4
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 954D8C5EF07;
-	Tue, 28 Apr 2026 09:17:02 +0000 (UTC)
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 48B774E42B61;
+	Tue, 28 Apr 2026 09:16:24 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 0B0EA601D0;
-	Tue, 28 Apr 2026 09:16:19 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 7435310728630;
-	Tue, 28 Apr 2026 11:16:13 +0200 (CEST)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 1C9AC601D0;
+	Tue, 28 Apr 2026 09:16:24 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C4DEC107285BB;
+	Tue, 28 Apr 2026 11:16:17 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1777367777; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1777367782; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=xq600VuXUHTogNlvQ1+mRAnMWFVRAxScMNGq+qSiS0k=;
-	b=L90hIb6JmlBTYTGnRZQwH8tWTd1If+HhWAPcd00XDWFvfwSMCBQIbFetx9PA7PEKbzKIn5
-	XFXbEewQTyy66ZuOkSMlGgcI0BVh23fwzwPEV3ZJOvnrdiWvDYqPXDcQ4q4siwN4h7xaS4
-	Y4L+1hnzj1zwYz0W2zBIdOSIIxBZ97ebX6DwjJNvpBqZzqF3xhPMHvdV4CZ5WDGF6FfKPd
-	2rU6Ld8h8NUqZwbDYpqEhAORbLSEmUoW1MHLWYJABcFR2LXiV+Jb+de4bwNdS1OSPot2DK
-	7iUOU8xDJw2JaWmSosv9XFXZWSmAw+wKZRqL7wBNSp7AHHCmLzQavdIsNTFIqg==
+	bh=BcpOgdyt9d8XI/IOdZOfSLVbiB2evUamW2GZoPDUxSE=;
+	b=1jlaI5CjCQW6/fmhxYFHY8zVDTvDN8NwTtwS+uYlak7r59KqfJTiJsuf3n9aHX2uE6moLe
+	tTGikq4z0KCdU7x+IJmhwdsR2G9rE6Af9rRIGv7iNjZAXzXQ4c0QGy6QtcczOuhbAmGTz7
+	g/5JSJUSvLdF1ZCucpR+mHdGEZHjZnqgQWge5WbkB7g5Up3cExMC2x+l4SXY0UfNQrquHC
+	q8HBUIxTXjVJRULNmUGBfrFkUVH8N3QBtUlpel7LrCbICzZDzcF176VlVGN3D8g6Gc11QH
+	jJqpKInIdDgKZbnhMkkEKPxYKKZ++qPlU2PbwhEGPMoK5VTLaCRSul6b8ktMnQ==
 From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Date: Tue, 28 Apr 2026 11:15:48 +0200
-Subject: [PATCH v2 02/11] drm/bridge: add of_drm_get_bridge_by_endpoint()
+Date: Tue, 28 Apr 2026 11:15:49 +0200
+Subject: [PATCH v2 03/11] drm/msm/hdmi: switch to
+ of_drm_get_bridge_by_endpoint()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +63,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-2-4300744a1c47@bootlin.com>
+Message-Id: <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-3-4300744a1c47@bootlin.com>
 References: <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-0-4300744a1c47@bootlin.com>
 In-Reply-To: <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-0-4300744a1c47@bootlin.com>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
@@ -90,7 +91,7 @@ Cc: Hui Pu <Hui.Pu@gehealthcare.com>, Ian Ray <ian.ray@gehealthcare.com>,
  Luca Ceresoli <luca.ceresoli@bootlin.com>
 X-Mailer: b4 0.15.2
 X-Last-TLS-Session-Version: TLSv1.3
-X-Rspamd-Queue-Id: 85A94482019
+X-Rspamd-Queue-Id: 2F541482020
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -103,7 +104,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104920-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-104921-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,hisilicon.com,linaro.org,google.com,intel.com,ideasonboard.com,kwiboo.se,amd.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
@@ -123,120 +124,43 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,bootlin.com:email,bootlin.com:dkim,bootlin.com:mid]
 
-drm_of_find_panel_or_bridge() is widely used, but many callers pass NULL
-into the @panel or the @bridge arguments, thus making a very partial usage
-of this rather complex function.
+This driver calls drm_of_find_panel_or_bridge() with a NULL pointer in the
+@panel parameter, thus using a reduced feature set of that function.
+Replace this call with the simpler of_drm_get_bridge_by_endpoint().
 
-Besides, the bridge returned in @bridge is not refcounted, thus making this
-API unsafe when DRM bridge hotplug will be introduced.
-
-Solve both issues for the cases of calls to drm_of_find_panel_or_bridge()
-with a NULL @panel pointer by adding a new function that only looks for
-bridges (and is thus much simpler) and increments the refcount of the
-returned bridge.
-
-The new function is identical to drm_of_find_panel_or_bridge() except it:
-
- - handles bridge refcounting: uses of_drm_find_and_get_bridge() instead of
-   of_drm_find_bridge() internally to return a refcounted bridge
- - is simpler to use: just takes no @panel parameter, returns the pointer
-   in the return value instead of a double pointer argument
- - has a simpler implementation: it is equal to
-   drm_of_find_panel_or_bridge() after removing the code that becomes dead
-   when @panel == NULL
-
-Also add this function to drm_bridge.c and not drm_of.c because it returns
-bridges only.
+Since of_drm_get_bridge_by_endpoint() increases the refcount of the
+returned bridge, ensure it is put on removal.
 
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-
 ---
+ drivers/gpu/drm/msm/hdmi/hdmi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Changes in v2:
-- return the bridge in the return value, not a double pointer
----
- drivers/gpu/drm/drm_bridge.c | 41 +++++++++++++++++++++++++++++++++++++++++
- include/drm/drm_bridge.h     |  8 ++++++++
- 2 files changed, 49 insertions(+)
-
-diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-index cea5babbe99e..8a4141bb7b31 100644
---- a/drivers/gpu/drm/drm_bridge.c
-+++ b/drivers/gpu/drm/drm_bridge.c
-@@ -1582,6 +1582,47 @@ struct drm_bridge *of_drm_find_bridge(struct device_node *np)
- 	return bridge;
- }
- EXPORT_SYMBOL(of_drm_find_bridge);
-+
-+/**
-+ * of_drm_get_bridge_by_endpoint - return DRM bridge connected to a port/endpoint
-+ * @np: device tree node containing output ports
-+ * @port: port in the device tree node, or -1 for the first port found
-+ * @endpoint: endpoint in the device tree node, or -1 for the first endpoint found
-+ *
-+ * Given a DT node's port and endpoint number, find the connected node and
-+ * return the associated drm_bridge device.
-+ *
-+ * The refcount of the returned bridge is incremented. Use drm_bridge_put()
-+ * when done with it.
-+ *
-+ * Returns a pointer to the connected drm_bridge, or a negative error on failure
-+ */
-+struct drm_bridge *of_drm_get_bridge_by_endpoint(const struct device_node *np,
-+						 int port, int endpoint)
-+{
-+	struct drm_bridge *bridge;
-+
-+	/*
-+	 * of_graph_get_remote_node() produces a noisy error message if port
-+	 * node isn't found and the absence of the port is a legit case here,
-+	 * so at first we silently check whether graph presents in the
-+	 * device-tree node.
-+	 */
-+	if (!of_graph_is_present(np))
-+		return ERR_PTR(-ENODEV);
-+
-+	struct device_node *remote __free(device_node) =
-+		of_graph_get_remote_node(np, port, endpoint);
-+	if (!remote)
-+		return ERR_PTR(-ENODEV);
-+
-+	bridge = of_drm_find_and_get_bridge(remote);
-+	if (!bridge)
-+		return ERR_PTR(-EPROBE_DEFER);
-+
-+	return bridge;
-+}
-+EXPORT_SYMBOL_GPL(of_drm_get_bridge_by_endpoint);
- #endif
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+index 852abb2466f0..57c25a09b354 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -287,9 +287,9 @@ static int msm_hdmi_dev_probe(struct platform_device *pdev)
+ 	spin_lock_init(&hdmi->reg_lock);
+ 	mutex_init(&hdmi->state_mutex);
  
- /**
-diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
-index d6cd0f5af045..c96398460618 100644
---- a/include/drm/drm_bridge.h
-+++ b/include/drm/drm_bridge.h
-@@ -1327,6 +1327,8 @@ int drm_bridge_attach(struct drm_encoder *encoder, struct drm_bridge *bridge,
- #ifdef CONFIG_OF
- struct drm_bridge *of_drm_find_and_get_bridge(struct device_node *np);
- struct drm_bridge *of_drm_find_bridge(struct device_node *np);
-+struct drm_bridge *of_drm_get_bridge_by_endpoint(const struct device_node *np,
-+						 int port, int endpoint);
- #else
- static inline struct drm_bridge *of_drm_find_and_get_bridge(struct device_node *np)
- {
-@@ -1336,6 +1338,12 @@ static inline struct drm_bridge *of_drm_find_bridge(struct device_node *np)
- {
- 	return NULL;
- }
-+static inline int of_drm_get_bridge_by_endpoint(const struct device_node *np,
-+						int port, int endpoint,
-+						struct drm_bridge **bridge)
-+{
-+	return -ENODEV;
-+}
- #endif
+-	ret = drm_of_find_panel_or_bridge(dev_of_node(dev), 1, 0, NULL, &hdmi->next_bridge);
+-	if (ret && ret != -ENODEV)
+-		return ret;
++	hdmi->next_bridge = of_drm_get_bridge_by_endpoint(dev_of_node(dev), 1, 0);
++	if (IS_ERR(hdmi->next_bridge) && PTR_ERR(hdmi->next_bridge) != -ENODEV)
++		return PTR_ERR(hdmi->next_bridge);
  
- static inline bool drm_bridge_is_last(struct drm_bridge *bridge)
+ 	hdmi->mmio = msm_ioremap(pdev, "core_physical");
+ 	if (IS_ERR(hdmi->mmio))
+@@ -383,6 +383,7 @@ static void msm_hdmi_dev_remove(struct platform_device *pdev)
+ 	component_del(&pdev->dev, &msm_hdmi_ops);
+ 
+ 	msm_hdmi_put_phy(hdmi);
++	drm_bridge_put(hdmi->next_bridge);
+ }
+ 
+ static int msm_hdmi_runtime_suspend(struct device *dev)
 
 -- 
 2.53.0
