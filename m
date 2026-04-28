@@ -1,212 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-104947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KJo1IZ+K8GloUgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 12:23:27 +0200
+	id 0CwkNKiK8GloUgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 12:23:36 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBE08482850
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 12:23:26 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D4FB482859
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 12:23:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 01D513097E5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:47:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EAFDE31F8143
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:48:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 701BF3DA5CE;
-	Tue, 28 Apr 2026 09:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D144D3DA5C8;
+	Tue, 28 Apr 2026 09:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZKO4vWik"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fAvJ+9vB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33243DA5BA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 09:47:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB5C3D904F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 09:48:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777369678; cv=none; b=RyXjlMkCSESj4d6aLHAeUWqT6YiLTlPB8VPqO/2fmLWUamWG2fK+qXxO0AHZXw7EWSON/q1ussTTp8lG6q+bPYKXOP6hnW9l1iGzXndMStc01Gmn6nIk654UokPGzfIiahsTnEa7LBrs4g+dRxFL3fUG+oZQ+LtAq6BZlZx+Wg4=
+	t=1777369722; cv=none; b=Kpm1NLEAO5u1RQe4twuVYLkozCHQpueodaBnQbfbEVG9R9quKlQtH5n1hMR4R/Z1TEiC3LyzRYpJ1v7eAJ0SGEDpvt8CLgt1zxfmYOh4LAwBryCc+KklYW7LMUMi4VZPBdU1dOoZCvnOoYRKe30IY3nZjfCisjrMPcrdDWQmvk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777369678; c=relaxed/simple;
-	bh=1s3zoV2UGzWKIUYJTiOORY7/gFXs9hQgskCHHMAdMIY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uq1qRnWmQJiQqtF7SMfMQqmN/jQOMc5mN1YWI6zmp4liqkfxyD/ulPXgfpTPSg3JMEPKpYs3OJyhRAGHuWhIzuH5ICtT2mD3vlZeJYYkzKlXnV+7kgVYjuQwirYiM0PpSWRUgxSgX3AN4qcDjaA1196UIpGstW8PTrWSVUVTntQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZKO4vWik; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-7982c3b7da9so106179227b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 02:47:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777369675; x=1777974475; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rFFNaiD3e7rjmKA/oxd0MaN/8EMgqV0cx8JEjl2p0DY=;
-        b=ZKO4vWikvtUIE8J9qnJMqCLQWdKSWMUwhsxjk0E3wNfr8Z9nlt0cJG71SpOcZ/81Kb
-         nvPcRM7y9/SZVWbFZ894Im9obwBcHVuwMuTFLJIKg3rGdzi+ziMvdKVw+rc6hz9Qx/xE
-         Wmc5N0MZjRhPKsmdiTQ69ed431RhJUcpHggKT85MZRXBkZNm5feRhcLDqeuw3PRUUEA7
-         R2kcBT3tNdJFj3wi5x+hBhmiePzBUhch3iAZDsfZnXTH48hfkkhx6/jWNuf6YHvv/frk
-         cSfh3WQrMgO6Iuy7PYwYC0loPGAfCS9ldMRFCdjye37H5O/m733eNt35F3Okugn4Odi2
-         1Sag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777369676; x=1777974476;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rFFNaiD3e7rjmKA/oxd0MaN/8EMgqV0cx8JEjl2p0DY=;
-        b=sWoB//X80MJHL0vaQ4nXqrHn5nbCEy+G0poIj8XXUHRZjnFAbWpFdLMT6JgV8XacQI
-         cz9gEzXxQE15uLFvTorUGbBAZhLWIQw37zArpCx9M26jeFUNv3T0oj3pcCbI6XgwtggZ
-         dQsygu5XVpduh6UfUnvZmxzNxOqp1ayOzLx+0kQJAIeLoEqegvwk53HfQSY+p0LTGSXS
-         b5zDORRVJ257DXwecsvRA1ESkkiWYdC8c/HOVHCFbyNPpebJcsu9qvDKXQEbT1PVX1+m
-         LQIVmAQvPL0oX8AsQGYVQBA8sNFkXQOaLuWmDXHCPymRhCMjFeYFbRB1PmQjvHSsPUAD
-         DpSg==
-X-Forwarded-Encrypted: i=1; AFNElJ+aGWX1WVgr42RGeS+yGUB4jGbsV7U14iNu7838s++sX+LWxqToFVoIRl0XtJ8bT9aM5qDvakd+x9jlhOf3@vger.kernel.org
-X-Gm-Message-State: AOJu0YxMPcgaCKB65JZF/+5Tn1jpd3mCrYvrd5BwF8tCRv5Na5tgUwgN
-	TknZbxTvdJEQuKTqAKzTJbOe3JkvVkHXvoMMifLyq4/ANTyclh6YPVN1
-X-Gm-Gg: AeBDietQOrgXMRmDZ50PereDGcIdU2lMbIr2iEI56hnhJMPQuaE4oOT+ny75f+/gLDl
-	75Nr0X4Ydm2SNQZkp9ufFOrNUYxyZUUwK00EejlK4BkLrcOGV7RDHXVMchvVFo9apw/Ii/8T1cq
-	4g648OVgPl0vN0N6jbuXStKcJ+UMQ1bVrDitjPbZhUTe7Lxk2rOYp+tYTccGJKwjpifWW9e/oYX
-	7321P56/f3HapINLpLBOlyw0Y7GNDoEw1DGL5iK0JaKm8Rwnx9gpKUM+EgG49vAjLEwHaG34X5b
-	ouEX2SNpqQYvPlXMZUAGNjiGOjtZeVCuXymtoQgmj+RHHXPJ1sJodrtq2zr9LuypCHuwto+7e8l
-	wene3Rh3qr4/DazrMCYk/nnJfYhXPSspUu/eAi2nUHWrZm/+jPfJ6QZoozI3vmm4SDS2i9MGJgo
-	Gs+0sZb/5oiuSsp4iLp9LdaMwrYIYazhovAsKB
-X-Received: by 2002:a05:690c:6e86:b0:7ba:f2f1:86c7 with SMTP id 00721157ae682-7bcf50d07d7mr20810327b3.1.1777369675548;
-        Tue, 28 Apr 2026 02:47:55 -0700 (PDT)
-Received: from [192.168.0.39] ([79.133.247.80])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bcf05e4740sm14218867b3.14.2026.04.28.02.47.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Apr 2026 02:47:55 -0700 (PDT)
-Message-ID: <34627be5-75cc-469b-af23-f1f08ce29820@gmail.com>
-Date: Tue, 28 Apr 2026 12:47:48 +0300
+	s=arc-20240116; t=1777369722; c=relaxed/simple;
+	bh=c0/YaPJmLEANHBlX4oah5v9Xx+iQTIZ8FJT+UHuF+B8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=N4L2mqLUNcjBjtNBvmn7YZseRrWl99SbZ6msCPLNmE50FnLh2sML4JHPMVTJ8Eq5DPjO+VZK5B8ZF3rMtrHrfLvG74r77DTdIZA9qTsq2pPSkYRH2Fz0VPXnmdT9QeFZn35Ar2m3e656IABsRm01DgXlHPPV2ns7wUlZ1N0qoDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fAvJ+9vB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739ADC2BCAF
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 09:48:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777369722;
+	bh=c0/YaPJmLEANHBlX4oah5v9Xx+iQTIZ8FJT+UHuF+B8=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=fAvJ+9vBI/DfhEnxTkFITMxxKGbjoDLAmJOEl5RbNoaZkiO0c0gRJ8KzdBcfthkDO
+	 XvEZUQABSyw6wkPVWnay4tP1+whp/togbrX9PPyzoPgvgrn/lPYpO6jOu9uk5NHHKa
+	 1xJvzzy9G4nL4Npp243pA55opjfCH1M6EyNTZPQnRafjr47xsZGd/VWV+K7h7RrwE7
+	 NaG6TG4EiDP8I3EQri2bCdGfNSxsGdN2x0gl593FgWKOBdM3o5BD50qIdj8NdGnktL
+	 4r/quR7UzcQt61YPAzv84mkttzy0Kvr48Ojupdr9vPEZUY5Avgr0Di8Kiw2Res8p9Y
+	 yEY2WjJzCjv5g==
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-38dd9f11a09so99833471fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 02:48:42 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ/l7F3c2ErfrfvjwNZp6bhcbmD2JUr0TskCnpXRZ3v0A/13FygHNUTF4jxj5jzA8JSmZVYeuxQjFN7LlT4N@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJQlFzE+ulrI6Y9rFNvpPfE8jUtr8hJTyV/rsknuaLqFYyIGdO
+	qUQUQq3IGZsu8Zi2YSnW4kD8EDB/wB9he+0vi1kbcNdNJlFyvSbL9hXYQmFcDaKEMvL813aoLFD
+	OOLhDAtpbd1PeQ2Mrd9QtCoHSHW86yMk=
+X-Received: by 2002:a05:6512:234b:b0:5a4:194f:5fff with SMTP id
+ 2adb3069b0e04-5a74641609cmr990522e87.16.1777369721200; Tue, 28 Apr 2026
+ 02:48:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 04/11] arm64: dts: qcom: msm8939: Add venus node
-To: Bryan O'Donoghue <bod@kernel.org>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org
-References: <20260427-msm8939-venus-rfc-v3-0-288195bb7917@gmail.com>
- <Xfiq_WNTU9P-ThZLMs4plWE5hwtmwyVyKJc1bD5BKdhERGouucNpyuenIoKQiKfZKaRzP-PdamsNlQ8vezjrRg==@protonmail.internalid>
- <20260427-msm8939-venus-rfc-v3-4-288195bb7917@gmail.com>
- <56d609dd-62be-47eb-8ba3-c5d70d773113@kernel.org>
-Content-Language: en-US
-From: Erikas Bitovtas <xerikasxx@gmail.com>
-In-Reply-To: <56d609dd-62be-47eb-8ba3-c5d70d773113@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: DBE08482850
+References: <20260422083345.84443-2-krzysztof.kozlowski@oss.qualcomm.com>
+In-Reply-To: <20260422083345.84443-2-krzysztof.kozlowski@oss.qualcomm.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Tue, 28 Apr 2026 11:48:29 +0200
+X-Gmail-Original-Message-ID: <CAD++jLnr-M0fAjXRjNdvDveGEQe=iCK4a9wjzcbQZ+ucOtfrOg@mail.gmail.com>
+X-Gm-Features: AVHnY4J6lD9AUuGbhsok0dy_cMkoyrCYVoufVvHNaRD1_rjPUJ9Etr7muisBxtU
+Message-ID: <CAD++jLnr-M0fAjXRjNdvDveGEQe=iCK4a9wjzcbQZ+ucOtfrOg@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: Unify user-visible "Qualcomm" name
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Konrad Dybcio <konradybcio@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 3D4FB482859
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-104947-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-104948-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[xerikasxx@gmail.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCPT_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[pastebin.com:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 
+On Wed, Apr 22, 2026 at 10:33=E2=80=AFAM Krzysztof Kozlowski
+<krzysztof.kozlowski@oss.qualcomm.com> wrote:
 
+> Various names for Qualcomm as a company are used in user-visible config
+> options: QCOM, Qualcomm and Qualcomm Technologies.  Switch to unified
+> "Qualcomm" so it will be easier for users to identify the options when
+> for example running menuconfig.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-On 4/28/26 10:10 AM, Bryan O'Donoghue wrote:
-> On 27/04/2026 18:58, Erikas Bitovtas wrote:
->> +            video-decoder {
->> +                compatible = "venus-decoder";
->> +                clocks = <&gcc GCC_VENUS0_CORE0_VCODEC0_CLK>,
->> +                     <&gcc GCC_VENUS0_CORE1_VCODEC0_CLK>;
->> +                clock-names = "core0", "core1";
->> +                power-domains = <&gcc VENUS_CORE0_GDSC>,
->> +                        <&gcc VENUS_CORE1_GDSC>;
->> +                power-domain-names = "core0", "core1";
->> +            };
->> +
->> +            video-encoder {
->> +                compatible = "venus-encoder";
->> +                clocks = <&gcc GCC_VENUS0_CORE0_VCODEC0_CLK>,
->> +                     <&gcc GCC_VENUS0_CORE1_VCODEC0_CLK>;
->> +                clock-names = "core0", "core1";
->> +                power-domains = <&gcc VENUS_CORE0_GDSC>,
->> +                        <&gcc VENUS_CORE1_GDSC>;
->> +                power-domain-names = "core0", "core1";
->> +            };
-> 
-> So to be fair in this case you do have a reason to have an encoder and
-> decoder compatible here _but_ it should be the case that one one of the
-> sub-devices contains CORE0 related stuff and the other CORE1 related stuff.
-> 
-> Because in that case the sub-devices actually represent individual
-> hardware settings.
-> 
-> So listing power-domains and clocks for both cores in each node like
-> this militates against that.
-> 
-> The other thing is to double check of the encoder and decoder are inter-
-> changable here i.e. can either core be encoder or decoder or is it fixed ?
-> 
-> I believe on older generations - perhaps not on 8939 it is not
-> interchangable.
-> 
-I found this in LA.BR.1.2.9.1_rb1.5:
-https://github.com/msm8916-mainline/linux-downstream/blob/b20608408caff817ec874f325127b07609fbaeb8/arch/arm/boot/dts/qcom/msm8939-common.dtsi#L1589
-Only decoder bits are being set in bus configs. This suggests that the
-cores are not interchangeable.
-Then again, I never managed to get encoding working on MSM8939. Testing
-it with
-gst-launch-1.0 videotestsrc ! videoconvert ! v4l2vp8enc ! queue !
-v4l2vp8dec ! xvimagesink
-Fails with the following log: https://pastebin.com/nmZcLgPV
-And in dmesg it reports a firmware error:
-[  784.461031] qcom-venus 1d00000.video-codec: no valid instance(pkt
-session_id:dead, pkt:21001)
-[  784.461126] qcom-venus-decoder 1d00000.video-codec:video-decoder:
-dec: event session error 0
-[  784.461200] qcom-venus-encoder 1d00000.video-codec:video-encoder:
-enc: event session error 0
-[  784.468799] qcom-venus 1d00000.video-codec: SFR message from FW:
-QC_IMAGE_VERSION_STRING=VIDEO.VE.1.8-00099, Err_Fatal -
-Z:\b\venus\utils\src\vbuffer.c:1319:
-[  785.791641] qcom-venus 1d00000.video-codec: System error has
-occurred, recovery failed to init HFI
-[  787.018339] qcom-venus 1d00000.video-codec: System error has
-occurred, recovery failed to init HFI
-[  787.097253] qcom-venus 1d00000.video-codec: system error has occurred
-(recovered)
-This happens regardless of whether I enable the cores for encoding too
-or not. The same errors were happening on MSM8916 as well. So I can't
-tell if these cores are interchangeable just by testing.
+Patch applied, had to use some fuzz, then I also fixed up the
+just applied IPQ9650 so it is all tidy and clean. Check the result
+in -next please!
+
+Yours,
+Linus Walleij
 
