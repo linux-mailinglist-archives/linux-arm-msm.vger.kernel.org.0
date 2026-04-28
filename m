@@ -1,516 +1,278 @@
-Return-Path: <linux-arm-msm+bounces-105065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GAjeLm4B8WnubgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 20:50:22 +0200
+	id qCrtHLwC8WnubgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 20:55:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC0AF48AD8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 20:50:21 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD6B648AE60
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 20:55:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 1FE423039509
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 18:39:58 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 264C9306B408
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 18:55:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D08F247B43D;
-	Tue, 28 Apr 2026 18:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EF8E1DB551;
+	Tue, 28 Apr 2026 18:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZMSvImbf"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="or8t01Tz";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kjDiTBAP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C9947B42F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 18:39:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777401592; cv=none; b=RPh3xTO+oyP+4vZZl5D3zH+Vm9KCzwx53czMQjvTkYtR6s9dBv2MIs7vcOgrGZJkhNl/Za8lqNbsPQnyp+CaeUnFzpwPOHUPLo7PfKrsV0XAW8ANFDat44C3SJHfnMCPyQsTVvZgSo604KVD0VhDw7xaMmCASfxw73/Cz8D+Hp8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777401592; c=relaxed/simple;
-	bh=IxrxX1BrQIc8BraBVBGMy3JlOpCxfRsPNpWphWVJfy8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=fmnBHnb6Awv03NiF0/LvCPypHoBACjRauHwlCnzlvBEml+Ypa7z0t/Ied33v3dLFz8e+jhCJD0/utf8Bw3h3QIoThGmdTnTp3d/idymnYQsDyAcATUzyt8XQKL8oiL90/tFeJFF4fuPDztenx9MKlRVEmlGsupe99AmEpG4kUkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZMSvImbf; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-488b8bc6bc9so84857465e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 11:39:50 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16C5477E28
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 18:55:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.168.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777402515; cv=pass; b=BpxXLG0sLGkK619rIR/3gV5xC03hHAJm9WRUpYrAlKCapkq5deGr/HouKBefaGYoQryfzVD2uudNlOw2YB6Uz0S68mkfgmnl2yHoOhkrhIO4CpOazUJtuiFilTmoQw54FKjGVpfg2wyKE4setFEB8IuFChmyE1Mj9uYJz5vrbdU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777402515; c=relaxed/simple;
+	bh=48YB3Ndqy1orkOBGaDNajZ3kV1mp4TNcdrH+V5/Taa4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LWmurJ5G82cvwggNPefvaJBzWYceBNhvZ2aFZRJ7BhXFbshoyCLXvjR92RpOC6A1gtGTVg68Yedhk25rDQFZ2OPC/BqQl8OvCyKiTYpk2qS5s+39UK41i8CNVcwHxtut2SlLtVK2j6yZt4nPMkZmLv0cUfvtOIi0qNrckKSa2+o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=or8t01Tz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kjDiTBAP; arc=pass smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63SH0dVG831217
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 18:55:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=442/8iOej5uMFBsrBy8C8V1f
+	bre1zWZUcI0+Mu9/ZKE=; b=or8t01Tz4Y1qEm952d/nrUpv8nh2kDFsOPGBOH74
+	WfVes2r44YAE84N4PaJ4tcozPzqROiqVg2M11dEEwahBvY6am9IpItoHf/4RTweH
+	+por1ztFf97oGh9ef7rhH+6szEiGS+OTLab3yKfwI2AxYkA8JeN/POlHaXcoqsoK
+	ASoqQUjw73dh7hj8nInq9uhLDWVJ5X0zAg9kwANaoA6kyN67DZc8ECC2SBzpaMMv
+	5SCA+c2nkmepwnAV0FV8IynSkD2ZZ+taeUPnrKnHTzlJI/KgM0yOezh4pYYiUrcw
+	b49rgL5rw664VtPF2X6lX4voeYrGff9tMp2JZ+a6EjAFgg==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4du0wq8de7-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 18:55:12 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-82f6b0a7164so15623385b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 11:55:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777402512; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Yb1ERQe75K8ecoEAEVsw1o1Qr2bvQ9MBIKULiXXo3+aLqTV6QcKiJjBGc86OXNOrpS
+         dCdEFD1pD14zsPMyErAgKOqS7yJHqAoj5l8KcxlRDGmrYF7lergD2YrpySc2pCHmPJMI
+         muVwvXwquWe/ayhcD2LILIhKI4/SxsMj0Rj2qWs+lZU5B9n0rwZ3x7g1WIAA0lpbkyOQ
+         rwpfvSYG9GM+qGt14WE14m7gZUegKz/kJhP+edQmUwAjMgOdH9grg1uOhT4pSLxcJN6u
+         7DoIh94wJ8GzjmR0giDXrYzjLgMMBgfJdcvyvAkTgeGyGndbzV0Z88vdjY3OAQS0NfDh
+         hgng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=442/8iOej5uMFBsrBy8C8V1fbre1zWZUcI0+Mu9/ZKE=;
+        fh=4o6/z/7jcIzf7xIXo9hRPV6Z876r9xpQovK5gUDTT94=;
+        b=X3VSQZz/hFRjgEGCZXvFFk5ulI6d9R1BWeQpne2430JcAaNpEmFH4rEdarbtp9Lloe
+         Exc9DzC2EpTplcOtihJjnFPSQmW6ulqMSD1wDX0ed8N/AnP7QpYGyNkCqXnb5APz2lTO
+         kYc72zlLYj+KZUY2D7jz9Vv3/RwTJks+a9vbXffePWs88TLfw17oDWxDKBe5VjQx8a67
+         1jEr4bF3MG4C/g8BYOYPSZtiqbx1rT2JQHO6Ox9x/EvzfGns82KFz1c7SRDMpDHCEW9X
+         PeRXLb+8hErX7jl84pWkbvx0GyhDS7S1Fzsk0YadzIIWnBajuYe/EUrRMOZDtpmdKfz2
+         RoSw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1777401589; x=1778006389; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1J9ChVvAYhsNDwl0OoFtnw7HfmuTxcHM4sfxG0H8HRs=;
-        b=ZMSvImbf5pQtpoxGK7f8b4ZeTPhJJuTNXQ9VH229K5tzhUoNrAcSOIo4l7acsnhlgq
-         ioLoIt48gS0tlpxMu9ROm3gL5DoHFnY2I1ERV+wFGHx4JJlL5MjdpJMFpiUm8KrhQBbo
-         XbQ/6p3UQxcXZsNBbkdqIXF6/E6MZfVSv9rIYaue3f7ke8ZIzuL8PCnnJcWbk3rKjlqz
-         uMDUjB1phFzC3alUDepDXH1ILhlTQGTBMKsJFl7MaxMd6AGvOkJmDh0pVXcgMxeHeHxt
-         ZMkyGc9SHIKCR/wtF70XA6SpaWJaQDeVPhu1LutoHpFVRCxPZgVG/JSdaeQImoL8QOvG
-         Uwgg==
+        d=oss.qualcomm.com; s=google; t=1777402512; x=1778007312; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=442/8iOej5uMFBsrBy8C8V1fbre1zWZUcI0+Mu9/ZKE=;
+        b=kjDiTBAPpTpQfr8TvSyZy7jjcbwhWdx362hfAblCd0WaA8MQ8jd5roHCDkGxLef6Xf
+         w7it05j5t9s2CuJvWSXajPXD3l1iQhTlo8YvXu6MQYwwVmFYVyLxMC1A8fpy2/qsTLgJ
+         Bk0238zf+x7tHXRbjK9rUaYYLzYfvuATKRmP6y7pQeB2Mq74kbKTfaAyxb+0fRZnhauO
+         gVb9kG3vecz3AlBAcGljF7+MftxaKmzab7dKD2yp2uP7zRuukGQqC7m7nnDkLSEcbIJa
+         SoIETQTOjbMl3w0aPfUkFvwA6yz2TqzulIvs/1s5SVNC/iMahEnc02ZiVFpV1z/ilppw
+         xDKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777401589; x=1778006389;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1777402512; x=1778007312;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1J9ChVvAYhsNDwl0OoFtnw7HfmuTxcHM4sfxG0H8HRs=;
-        b=o3fkE0FpREuUGnQa0CVkhCGJpJ3VXM+rZUrzduxA2atwxHgCD1W9bSSSOAJvimnIjW
-         gRjOQE9i7RFJJSs4NebWZ3DuQqP8jnS2dK1qA7PnokVxAgVtENBWYLXgd9O93Z98fuoc
-         9GylyCo2wKCtGbyWr7DmMDVHaB4k8e7CtjJkHZ0GeKlOVVgDzNSBTTFvDMznp655ZIOc
-         JQ4kGuSjQSlUE8CBds9EikLH2N9RfooBAAozZJp8UftbXJYwZjGqRt9BA8V6lLN0NPY7
-         fCoz8idFkWOLmFNW61GBUYJeuXNq0OJrff10blEoXk2wewR0JheYLVDrFO9Shgj5Llcz
-         3xEg==
-X-Gm-Message-State: AOJu0YzDJFnX69GE/b1P1U7NGx/NHYw3wuq67osF3mE/cTNEkjMFhiY+
-	UZiemQoFyECNr0JJD6suuOan3SyYdwAOAyIXldpTuy4GJxbKU7iIHXuuS/cRTY/Laak=
-X-Gm-Gg: AeBDiesoUZ3uah/tvBZDyvQLz1pLzDMjPBVdormcgw6PIOkuswb4hskueD2nbrWcWK2
-	4e7eIMb1A7e0fGi9r9fFrNfNy/5vo69LpImvS4+psvUdQvKt1LwGnonLokSHsS3WbJOVVax/oe7
-	YGwwxp33krKYeKzSgxDo3qS3vM+SQFb5Sv/RX1v7RFCAWWugBkdcBRnYTgEZAV1JMHWCGGTBO6z
-	s5r2FKyS3LoQqFeHNTDOM6HVtGIXRF4r924QIjm830ptykucJ7r3iGfODf6yD1+5wtUdzvmk4vr
-	tTL6vU9I7gcJL86db5enzE4aO29cC9hP3LbtePojBT2q5z1CK7Bmaneiz6SSrSkiq85lOAIHUDs
-	4S0X1mBY1KT/l0YEyxUj1cXMwRmWpK2WG5zNS0JFG+e+lwywtxzQ6bStz/L8mGatmv+vY56QhoV
-	ST9C+C6VhmpNrSHfTa3E4k4yPXrKR9JdwiCMP7rtuKbQngMwwHQGyZ6qs=
-X-Received: by 2002:a05:600d:d:b0:480:1c69:9d36 with SMTP id 5b1f17b1804b1-48a77b1333fmr57804205e9.17.1777401589017;
-        Tue, 28 Apr 2026 11:39:49 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:106d:1080:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4463f4c0ab0sm7902798f8f.18.2026.04.28.11.39.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2026 11:39:48 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Tue, 28 Apr 2026 20:39:43 +0200
-Subject: [PATCH RFC] arm64: dts: qcom: sm8650-ayaneo-pocket-s2: add display
- nodes
+        bh=442/8iOej5uMFBsrBy8C8V1fbre1zWZUcI0+Mu9/ZKE=;
+        b=UD3NpEhskkxzT1r8LmhJEjiKF7tqUCjsFaV9dH3UAaRfneKQV5ZcjMPQsvYUjhac6q
+         YSkkzXNkjoM+ll+6+E08Rapz3sAwhV/OW7Kq3jWQoxMD8NqXiIOgNAOum00taBjW0mks
+         53u/xbSLMqK7WtGO4Tptv4an1sSMa4G9C2J4aFDvx+UyFTcMrQ7etNS/D62jRXUG5p8G
+         JzQYoN/JzLvYM5mZ4xt0WP6DttB/2XuWq2hFIvaQhD+So2k6DNKBw8FAXE+JNkENsy1J
+         0rat4Xd8O09htOYm0DG5Cwi5kO3inpaJjEWduvghQpY8gKUIzW+78XCTIKWxM3O2RpRG
+         0gBA==
+X-Forwarded-Encrypted: i=1; AFNElJ/fkpc0ZFTemqLqd5zQXxEonUWuc+1KU82v6WJTl1mZjqKlNstTtwIF/tJjNAYnln6IZCdcgTsv4HfBJlR9@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxe3pvHBa4qV+KHdVtqAEQoG27S7rtTiUTXNZZcRblsbISBDq1s
+	qkuZy8wtftAYh7havRcPl0GLp1MpuZXzCyjS9d10xL5eW8qQQ/ug+10YXHPO0qG/alsvfAtQwDp
+	jL1sfLm7QHW682uZP0m5R7bBekzQQKBR1uXsCFNR2Zb74Cq1IsapMADWKeJFnN9WAG4e/WcUTJr
+	Be8YayJ10m0Zi7BTih6wXtYthuhqYC/LXcNeDTlqoXEgo=
+X-Gm-Gg: AeBDievPLSVpLZQKAhsx7gGzPL0jS2qoCTpC+NAuUSaiww4bryjfscAlSH5Atma+4an
+	2uMlR/uV0V1Avkn+fnxndIqGsYYbmrinNlZFAJ5Dyf8wEUurRSAYWqXfq47pwqFlpLyr8FIelT7
+	jRcIhHi+qroaWs2O3ieBCXp0WAUuqKa5g3cO/lYF/vn5P0KbVkr20z5a8RZp2UX0sgAHM5udvD5
+	OW86Ajb1ptsZ4Q9LSR8ArwIhSJosS5H7GjAdfhRA26U2fme
+X-Received: by 2002:a05:6a00:4206:b0:82c:9223:cc95 with SMTP id d2e1a72fcca58-834ea57fb2cmr557838b3a.1.1777402511967;
+        Tue, 28 Apr 2026 11:55:11 -0700 (PDT)
+X-Received: by 2002:a05:6a00:4206:b0:82c:9223:cc95 with SMTP id
+ d2e1a72fcca58-834ea57fb2cmr557786b3a.1.1777402511417; Tue, 28 Apr 2026
+ 11:55:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260428-topic-sm8650-ayaneo-pocket-s2-display-dt-v1-1-ff132c00d076@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAO7+8GkC/52PQU7DMBBFrxLNmkG249hOtkgcgC3qInYmxZTEw
- XYjoqp3x0CEWFYs/+jr/TcXSBQ9JeiqC0RaffJhLoHfVeBe+vlI6IeSQTChmBQGc1i8wzQZ1TD
- st36mgEtwJ8qYBA4+LW/9hkPGpm6t1S1ZzVoouCXS6D++p57h6fEBDj/HdLav5PLXyF6L9H4uI
- nnv/np01Y0W6TjVhkk0WsmxSIgi0a0c/j51O2zTujFYM8OJ9MhJNP9mRVVL3iJpIZUmMVg27iz
- bJ0IXpsnnrlr1PcfoOByu108ejoYiogEAAA==
-X-Change-ID: 20260428-topic-sm8650-ayaneo-pocket-s2-display-dt-539bb79eb709
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Magnus Damm <magnus.damm@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
- KancyJoe <kancy2333@outlook.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8473;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=NjCVZ0MUAxxtiNkAuOdkmoloIeA5+2vc/DvtYYe3mGA=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBp8P7z55jmK99Lw1ZWLZ7Cl36b6DXaovw74PDdCfj7
- lVB1ZYmJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCafD+8wAKCRB33NvayMhJ0cabD/
- 0WoqXKWQUPx+EeLuXESbAe6FW9Ygov2S52dhJNFNvMJs0eeKvDaY1PxvSR+5Xz870y8UE4JDAFRb12
- rqQdG2CdGtZc60TkqLSUfUw2L6/ruFfRrIspSgXbdW2W9Ngug9Wj2d6azHM5tAAZAYyrqABZ7KXrS7
- lnmPzYnh8gCOLN0T3rMOSPX36jSY4wjdtIe3KDVQHR3MyMQTLB1OrJ/yPIUJ2w1AUUL2NpsQLK8mFH
- sUoaOsOZgbVoO6/kznPzCQScdg5sDUWIRv/vmGRfXf56KV3zEcHD//Ko6qa7kVDe7qL5j54zjpPerA
- o+AO4rPGi6TEcFsG+2e4+tfhvwLDd7EX/SnyBxDO0qHedy+eBsX8Rj26xFo2yyhHg1n1jOGHRVww6f
- B98YBR2LbZ1bu/trxn/7EA4d1vQrhkPKzLaJxDR16i6hhWx5gcche5TGkGodQcDhpO9lFvtHAEanb8
- lqEOzbeH25LIhILI+IntPtiYknJXJgjZwVAYja9yh3XLaIA5QJHwCUqsfkBmNDUyvRnf66CsnA5BPS
- BZ9hHocpbv5oT9oulyJ90FNBhfN767zsVqIEpBKzFMTlAz4jh2+rJSswv+zY1rYOdDfTVP7bxxg+Nm
- knhA6nk1Wv9CBTuvlmCxahSJIGxhpRl6ZHv5jgbjOcc8TN/REr7W4bvMJx4g==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
-X-Rspamd-Queue-Id: AC0AF48AD8F
+References: <20260420-cesta-sm870-dispcc-v1-0-eb27d845df9c@oss.qualcomm.com>
+ <20260420-cesta-sm870-dispcc-v1-10-eb27d845df9c@oss.qualcomm.com>
+ <vnil4gbkpenxo5o2a2df2ziuygqyyrzsj2bygqewm7n2rq5kbv@qbntqftfpsky> <008f2f0a-2367-4d8e-b6b7-2421a4de88cb@oss.qualcomm.com>
+In-Reply-To: <008f2f0a-2367-4d8e-b6b7-2421a4de88cb@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Tue, 28 Apr 2026 21:54:59 +0300
+X-Gm-Features: AVHnY4IiC0s9loCkcUtYnjwZYf6U05xc0VvVRDkF4BRux375tv-oGwdPaCptzn4
+Message-ID: <CAO9ioeXQHDYRPW6HYQ7XXsmf1ovpJyqaXgnGaDVnACb3PW7oOA@mail.gmail.com>
+Subject: Re: [PATCH 10/13] clk: qcom: dispcc-sm8750: Add support to control
+ MDP clocks using CESTA
+To: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>, Lee Jones <lee@kernel.org>,
+        Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Maulik Shah <maulik.shah@oss.qualcomm.com>,
+        Taniya Das <taniya.das@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-GUID: 9jqp0NcoBpil5485n3GuWDJFjjlsm7BP
+X-Proofpoint-ORIG-GUID: 9jqp0NcoBpil5485n3GuWDJFjjlsm7BP
+X-Authority-Analysis: v=2.4 cv=BfDoFLt2 c=1 sm=1 tr=0 ts=69f10290 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8 a=4jyo0phO276cF_ToP1MA:9
+ a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDE4MyBTYWx0ZWRfX+VW2CdBlKCCE
+ JvBeS9lmCWwC1FUn50xmsJNolTr+k6Fmjo8JLdmVVCdZKXuNgv1hsFPpwRz6qtnXP3GFMuISiDS
+ ZWN+nsh1WbNsmij54+W7fdmfMtS603xDBdy5ReCsimlsngzOFiE5M9fxcqauxmXNoyjZmknbjl9
+ w7o3pud8y0ll381MIe5kH2CE9RUQzOQB35snSgj8Fi4iWkxKex3CAyj1IOPXGIjWx2r/HnNcIS6
+ DxUP5wDaAqnQ0dGTRn9xFg9UyZTTUdDw+HZBgG9fUl/a4fVgfkOpOqW3cqu0mW94t9UwNpMfHuC
+ ci2oclCKBvXUhS/08ZnKEek6uA6DjSdbI6B954uMAhdZlNaaxRpmyaeIdsHDDQnpk/4os3CUaVe
+ 9FnJip265FEhNzXAtQo52SshzuiRnU9SkGszhjxl9OlfOPA216NhvyDk6lDIK731LURXUnSjsUf
+ VLTa138vp5zH8zruBNg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-28_05,2026-04-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604280183
+X-Rspamd-Queue-Id: CD6B648AE60
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [4.84 / 15.00];
-	SEM_URIBL(3.50)[0.0.0.0:email];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	BAD_REP_POLICIES(0.10)[];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105065-lists,linux-arm-msm=lfdr.de];
-	R_DKIM_ALLOW(0.00)[linaro.org:s=google];
-	GREYLIST(0.00)[pass,body];
-	FREEMAIL_CC(0.00)[vger.kernel.org,outlook.com,linaro.org];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	FREEMAIL_TO(0.00)[kernel.org,glider.be,gmail.com];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-105066-lists,linux-arm-msm=lfdr.de];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_POLICY_ALLOW(0.00)[linaro.org,none];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	NEURAL_SPAM(0.00)[0.884];
-	R_SPF_ALLOW(0.00)[+ip6:2600:3c15:e001:75::/64:c];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.1:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim]
 
-From: KancyJoe <kancy2333@outlook.com>
+On Tue, 28 Apr 2026 at 20:22, Jagadeesh Kona
+<jagadeesh.kona@oss.qualcomm.com> wrote:
+>
+>
+>
+> On 4/23/2026 12:03 AM, Dmitry Baryshkov wrote:
+> > On Mon, Apr 20, 2026 at 09:59:03PM +0530, Jagadeesh Kona wrote:
+> >> Add support to control the DISPCC MDSS MDP RCG and the associated display
+> >> PLL0 using display CESTA hardware on SM8750 platform. If display CRM is
+> >> enabled, the clock ops of these clocks will be updated by the common code
+> >> before registration to use CRM specific clock ops, allowing these clocks
+> >> to be controlled using display CRM (CESTA Resource Manager) hardware.
+> >>
+> >> Co-developed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> >> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> >> Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+> >> ---
+> >>  drivers/clk/qcom/dispcc-sm8750.c | 89 +++++++++++++++++++++++++---------------
+> >>  1 file changed, 56 insertions(+), 33 deletions(-)
+> >>
+> >> diff --git a/drivers/clk/qcom/dispcc-sm8750.c b/drivers/clk/qcom/dispcc-sm8750.c
+> >> index ca09da111a50e811481fd862b54d454de024d1c9..328e43b52192702dbbfd1ed65737520acdd4a649 100644
+> >> --- a/drivers/clk/qcom/dispcc-sm8750.c
+> >> +++ b/drivers/clk/qcom/dispcc-sm8750.c
+> >> @@ -71,6 +71,16 @@ enum {
+> >>      P_SLEEP_CLK,
+> >>  };
+> >>
+> >> +static struct clk_crm disp_crm = {
+> >> +    .max_perf_ol = 10,
+> >> +    .regs = {
+> >> +            .reg_cfg_rcgr_lut_base = 0xd8,
+> >> +            .reg_l_val_lut_base = 0xdc,
+> >> +            .vcd_offset = 0x268,
+> >> +            .lut_level_offset = 0x28,
+> >
+> > Seeing this configuration makes me even more sure. There is no separate
+> > CRM or disp-crm. The CRM resources should be consumed by dispcc.
+> >
+>
+> The CRM can be used by interconnect drivers also for BW voting via CESTA.
+> Hence it cannot be consumed by dispcc alone.
 
-Add nodes for the dual DSI panel, the SGM3804 regulator, the
-SY7758 backlight controller, the touch controller, and enable
-the GPU to enable full display support.
+At least mention it in the commit message, please. How is it going to
+be used by interconnect? Will it use the same API?
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: KancyJoe <kancy2333@outlook.com>
----
-Depends on bindings:
-- https://lore.kernel.org/all/20260428-topic-sm8650-ayaneo-pocket-s2-sgm3804-v1-1-1d8dc7620256@linaro.org/
-- https://lore.kernel.org/all/20260428-topic-sm8650-ayaneo-pocket-s2-sy7758-v1-1-0caade5fdb32@linaro.org/
-- https://lore.kernel.org/all/20260428-topic-sm8650-ayaneo-pocket-s2-r63419-v1-1-981eb5ab5a51@linaro.org/
+>
+> >> +    },
+> >> +};
+> >> +
+> >>  static const struct pll_vco pongo_elu_vco[] = {
+> >>      { 38400000, 38400000, 0 },
+> >>  };
+> >> @@ -89,21 +99,22 @@ static struct alpha_pll_config disp_cc_pll0_config = {
+> >>      .user_ctl_hi_val = 0x00000002,
+> >>  };
+> >>
+> >> +static struct clk_init_data disp_cc_pll0_init = {
+> >> +    .name = "disp_cc_pll0",
+> >> +    .parent_data = &(const struct clk_parent_data) {
+> >> +            .index = DT_BI_TCXO,
+> >> +    },
+> >> +    .num_parents = 1,
+> >> +    .flags = CLK_GET_RATE_NOCACHE,
+> >
+> > Why? It wasn't there beforehand.
+> >
+>
+> The PLL rate can be changed by CESTA outside of the PLL callbacks, when a perf level request
+> is sent via CRM API in RCG's prepare()/set_rate() callbacks. Having this flag ensures that the
+> PLL rate is recalculated from hardware every time when users query the PLL's clk_rate node,
+> providing the correct PLL rate configured by CESTA.
 
-Sent as RFC because the sgm3804 & r63419 bindinds needs the following fixes:
-Documentation/devicetree/bindings/display/panel/renesas,r63419.yaml
-   backlight: true
-   reset-gpios: true
-+  rotation: true
-   ports: true
+=> commit message.
 
-Documentation/devicetree/bindings/regulator/sgmicro,sgm3804.yaml
-   enable-gpios:
--    maxItems: 2
-+    minItems: 2
----
- .../boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts      | 243 +++++++++++++++++++++
- 1 file changed, 243 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts b/arch/arm64/boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts
-index 0dc994f4e48d..162c46fa923c 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts
-@@ -220,6 +220,22 @@ upd720201_vdd33_reg: upd720201-vdd33-regulator {
- 		pinctrl-names = "default";
- 	};
- 
-+	sy7758_vdd33_reg: sy7758-vdd33-regulator {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "sy7758_vdd33";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpios = <&tlmm 163 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		vin-supply = <&vph_pwr>;
-+
-+		pinctrl-0 = <&sy7758_vdd33>;
-+		pinctrl-names = "default";
-+	};
-+
- 	sound {
- 		compatible = "qcom,sm8650-sndcard", "qcom,sm8450-sndcard";
- 		model = "SM8650-APS2";
-@@ -986,6 +1002,14 @@ gpu7_active: trip-active {
- 	};
- };
- 
-+&gpu {
-+	status = "okay";
-+
-+	zap-shader {
-+		firmware-name = "qcom/sm8650/ayaneo/ps2/gen70900_zap.mbn";
-+	};
-+};
-+
- &i2c3 {
- 	clock-frequency = <100000>;
- 
-@@ -1016,6 +1040,30 @@ wcd_usbss_sbu_mux: endpoint {
- 	};
- };
- 
-+&i2c4 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	touchscreen@5d {
-+		compatible = "goodix,gt911";
-+		reg = <0x5d>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <162 IRQ_TYPE_EDGE_FALLING>;
-+
-+		reset-gpios = <&tlmm 161 GPIO_ACTIVE_HIGH>;
-+		VDDIO-supply = <&vreg_l14b_3p2>;
-+		AVDD28-supply = <&vreg_l14b_3p2>;
-+
-+		touchscreen-size-x = <1440>;
-+		touchscreen-size-y = <2560>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_reset_default>, <&ts_irq_default>;
-+	};
-+};
-+
- &i2c6 {
- 	clock-frequency = <100000>;
- 
-@@ -1053,6 +1101,51 @@ redriver_ss_in: endpoint {
- 	};
- };
- 
-+&i2c9 {
-+	status = "okay";
-+
-+	/* Screen power */
-+	regulator@3e {
-+		compatible = "sgmicro,sgm3804";
-+		reg = <0x3e>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&sgm3804_default>;
-+
-+		enable-gpios = <&tlmm 59 GPIO_ACTIVE_HIGH>,
-+			       <&tlmm 58 GPIO_ACTIVE_HIGH>;
-+
-+		vin-supply = <&vph_pwr>;
-+
-+		sgm3804_pos: pos {
-+			regulator-name = "panel-avdd-pos";
-+			regulator-min-microvolt = <5200000>;
-+			regulator-max-microvolt = <5200000>;
-+			regulator-active-discharge = <1>;
-+		};
-+
-+		sgm3804_neg: neg {
-+			regulator-name = "panel-avdd-neg";
-+			regulator-min-microvolt = <5200000>;
-+			regulator-max-microvolt = <5200000>;
-+			regulator-active-discharge = <1>;
-+		};
-+	};
-+
-+	/* Backlight */
-+	sy7758_backlight: sy7758@2e {
-+		compatible = "silergy,sy7758";
-+		reg = <0x2e>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&sy7758_default>;
-+
-+		vddio-supply = <&sy7758_vdd33_reg>;
-+		enable-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
-+
-+	};
-+};
-+
- &iris {
- 	status = "okay";
- };
-@@ -1065,6 +1158,93 @@ &mdss {
- 	status = "okay";
- };
- 
-+&mdss_dsi0 {
-+	vdda-supply = <&vreg_l3i_1p2>;
-+
-+	qcom,master-dsi;
-+	qcom,dual-dsi-mode;
-+	qcom,sync-dual-dsi;
-+
-+	status = "okay";
-+
-+	panel@0 {
-+		status = "okay";
-+		compatible = "ayaneo,wt0630-2k";
-+		reg = <0>;
-+
-+		pinctrl-names = "default", "sleep";
-+		pinctrl-0 = <&disp0_reset_n_active>;
-+		pinctrl-1 = <&disp0_reset_n_suspend>;
-+
-+		vddio-supply = <&vreg_l12b_1p8>;
-+		vdd-supply = <&vreg_l11b_1p2>;
-+		vsp-supply = <&sgm3804_pos>;
-+		vsn-supply = <&sgm3804_neg>;
-+		vci-supply = <&vreg_l13b_3p0>;
-+
-+		backlight = <&sy7758_backlight>;
-+
-+		reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
-+
-+		rotation = <90>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+				panel0_in_0: endpoint {
-+					remote-endpoint = <&mdss_dsi0_out>;
-+				};
-+			};
-+
-+			port@1{
-+				reg = <1>;
-+				panel0_in_1: endpoint {
-+					remote-endpoint = <&mdss_dsi1_out>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	remote-endpoint = <&panel0_in_0>;
-+
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vreg_l1i_0p88>;
-+
-+	status = "okay";
-+};
-+
-+&mdss_dsi1 {
-+	vdda-supply = <&vreg_l3i_1p2>;
-+
-+	assigned-clock-parents = <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
-+				 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>;
-+
-+	qcom,dual-dsi-mode;
-+	qcom,sync-dual-dsi;
-+
-+	status = "okay";
-+};
-+
-+&mdss_dsi1_out {
-+	remote-endpoint = <&panel0_in_1>;
-+
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi1_phy {
-+	vdds-supply = <&vreg_l1i_0p88>;
-+
-+	status = "okay";
-+};
-+
- &mdss_dp0 {
- 	status = "okay";
- };
-@@ -1390,6 +1570,20 @@ sw-ctrl-pins {
- 		};
- 	};
- 
-+	disp0_reset_n_active: disp0-reset-n-active-state {
-+		pins = "gpio133";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	disp0_reset_n_suspend: disp0-reset-n-suspend-state {
-+		pins = "gpio133";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
- 	fan_pwr_pins: fan-pwr-state {
- 		pins = "gpio125";
- 		function = "gpio";
-@@ -1411,6 +1605,20 @@ fan_int: fan-int-state {
- 		bias-pull-up;
- 	};
- 
-+	mdp_vsync_active: mdp-vsync-active-state {
-+		pins = "gpio86";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	mdp_vsync_suspend: mdp-vsync-suspend-state {
-+		pins = "gpio86";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
- 	upd720201_avdd33: upd720201-avdd33-state {
- 		pins = "gpio123";
- 		function = "gpio";
-@@ -1440,6 +1648,13 @@ gamepad_pwr_en: gamepad-pwr-en-active-state {
- 		output-high;
- 	};
- 
-+	sgm3804_default: sgm3804-default-state {
-+		pins = "gpio58", "gpio59";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
- 	spkr_23_sd_n_active: spkr-23-sd-n-active-state {
- 		pins = "gpio77";
- 		function = "gpio";
-@@ -1454,6 +1669,34 @@ spkr_01_sd_n_active: spkr-01-sd-n-active-state {
- 		bias-disable;
- 	};
- 
-+	sy7758_default: sy7758-default-state {
-+		pins = "gpio164";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	sy7758_vdd33: sy7758-vdd33-state {
-+		pins = "gpio163";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	ts_irq_default: ts-irq-active-state {
-+		pins = "gpio162";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	ts_reset_default: ts-reset-active-state {
-+		pins = "gpio161";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-down;
-+	};
-+
- 	wcd_default: wcd-reset-n-active-state {
- 		pins = "gpio107";
- 		function = "gpio";
-
----
-base-commit: 5e9b7d093f3f77cb0af4409559e3d139babfb443
-change-id: 20260428-topic-sm8650-ayaneo-pocket-s2-display-dt-539bb79eb709
-prerequisite-change-id: 20260428-topic-sm8650-ayaneo-pocket-s2-sgm3804-8764fbb72eb7:v1
-prerequisite-patch-id: ef33f9e777480b807445b34eb84091ef8e5bfd41
-prerequisite-patch-id: e58ac26057d85ca436bc58046bfa1117501f1447
-prerequisite-change-id: 20260428-topic-sm8650-ayaneo-pocket-s2-sy7758-3081ee7f1e25:v1
-prerequisite-patch-id: d14df8d3c4a5308e4a4ed6ac29d540493f3e828a
-prerequisite-patch-id: 9236410c66c1d5eadc34c58b93fe76447c308d60
-prerequisite-change-id: 20260428-topic-sm8650-ayaneo-pocket-s2-r63419-e72467e2db0f:v1
-prerequisite-patch-id: 5b961b83be948deea368f5d2a9dbe0ba938c0333
-prerequisite-patch-id: f87616917cce98b993cc61ca3086949852bd2055
-
-Best regards,
---  
-Neil Armstrong <neil.armstrong@linaro.org>
-
+-- 
+With best wishes
+Dmitry
 
