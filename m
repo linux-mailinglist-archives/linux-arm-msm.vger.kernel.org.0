@@ -1,103 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-105063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0Bm7CuXv8Gn9bAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 19:35:33 +0200
+	id GAjeLm4B8WnubgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 20:50:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B05F648A0A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 19:35:32 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC0AF48AD8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 20:50:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4257030ADF7C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 17:32:58 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 1FE423039509
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 18:39:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3932444D02F;
-	Tue, 28 Apr 2026 17:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D08F247B43D;
+	Tue, 28 Apr 2026 18:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cXO6su8t";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WkS7/U+9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZMSvImbf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 400C844D01D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 17:32:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C9947B42F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 18:39:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777397577; cv=none; b=ghb/bMRGyCvReOkmgxYD0+UdYW/rMUMw1xwC9ak8hABQ1bRZ6h0i7T17TmSxxNDNEJ3egYfNUddn+SE2i4jRWHrdCtj5FJ8DChbBJWbzDU6SQ3P72XXYfspl/9HPvvpBONNcbAPQ5gZfnp5JAAQekVOUmh8gTM23QNa8VBlKAU0=
+	t=1777401592; cv=none; b=RPh3xTO+oyP+4vZZl5D3zH+Vm9KCzwx53czMQjvTkYtR6s9dBv2MIs7vcOgrGZJkhNl/Za8lqNbsPQnyp+CaeUnFzpwPOHUPLo7PfKrsV0XAW8ANFDat44C3SJHfnMCPyQsTVvZgSo604KVD0VhDw7xaMmCASfxw73/Cz8D+Hp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777397577; c=relaxed/simple;
-	bh=rfVFsqmmJPTNTZeEO/Qr6YN70g0iVkVM45qtvX9E22k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=h97wQWxyqU/TeP668i0Wo708Z+Njhcx6i+ZWMQ0+TZN0woISAoaEVIAfIcfb6OwUV7qat8TIAUUzTeUASvbKK3cJB2Qv/cExw+2tnKAvIUZQXeHO3V0IVSyfqQVwjtrrjsZ9bKpPqf73INVc9NW5IMoTeUY8Ri10e/7j4N3duG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cXO6su8t; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WkS7/U+9; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63SFsIx43713149
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 17:32:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZqMEze76X1xNuYacnRcVl1H8LJPptNWPWYC9Sfl7TqU=; b=cXO6su8tscFV66Zv
-	9HpQrIGjUPgKemAm7AN+hy1OnacYkmXB9RA9jlKPE3A9AbDqkMPMRcX4tU7w3NXP
-	9iYK4k27lbS9Xl382KxrAm18RiPJS/xo/LzYTaRVS8ye1GY0R1pSKH6cW+GYdEkj
-	B246EY+94Hb63UaC+QfNlT1cJJicX+zYHklEXlhXE0TzoPtJQ8cYjpoRYLzqDkxF
-	xw098wTNQ+5RP2As6WoEoK2iv/BMuYQn7l91BYFe+pUlOdvu4LzuK72RtIm4ZNcy
-	BlEEweLM65DIWxvWn7Tr5yfMgbkKad87vFEQ7v359Onis4DU0IiuC/QA8vz2mqIZ
-	E5/QNg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dtxb50w2g-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 17:32:51 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-50edf0245b0so66502451cf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 10:32:51 -0700 (PDT)
+	s=arc-20240116; t=1777401592; c=relaxed/simple;
+	bh=IxrxX1BrQIc8BraBVBGMy3JlOpCxfRsPNpWphWVJfy8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=fmnBHnb6Awv03NiF0/LvCPypHoBACjRauHwlCnzlvBEml+Ypa7z0t/Ied33v3dLFz8e+jhCJD0/utf8Bw3h3QIoThGmdTnTp3d/idymnYQsDyAcATUzyt8XQKL8oiL90/tFeJFF4fuPDztenx9MKlRVEmlGsupe99AmEpG4kUkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZMSvImbf; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-488b8bc6bc9so84857465e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 11:39:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1777397570; x=1778002370; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZqMEze76X1xNuYacnRcVl1H8LJPptNWPWYC9Sfl7TqU=;
-        b=WkS7/U+9kkdMM+SL7MUa9ovBkPVMXjjAjVPimEPBj1i0lwZN8gfvuT6lFkAVqJBAHQ
-         PWlP9u30l96FxFkdI87BekQwPaXP9TGgO49DhqXubwdTfBCZ+UbLqCE4yOvgyre1H9Ow
-         td9NW6JqvCzifH70UPIHMiwQzHKDPFSXMu37CH0Yng/hliZxtpFQZ9HcOcj9cgEGNC+1
-         sY8jKF6J3xUu91OAmo36AHvMDe4y+cytNQr5X71VlyENPKSRXknwozEhUyRdSEUSRodG
-         8aWK8fqTKKu2glfjtxJoZSp2FTztTrs1uZUVTIXEhs9q8gGs0J4e9CNcBijymwzMCx/L
-         tzAA==
+        d=linaro.org; s=google; t=1777401589; x=1778006389; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1J9ChVvAYhsNDwl0OoFtnw7HfmuTxcHM4sfxG0H8HRs=;
+        b=ZMSvImbf5pQtpoxGK7f8b4ZeTPhJJuTNXQ9VH229K5tzhUoNrAcSOIo4l7acsnhlgq
+         ioLoIt48gS0tlpxMu9ROm3gL5DoHFnY2I1ERV+wFGHx4JJlL5MjdpJMFpiUm8KrhQBbo
+         XbQ/6p3UQxcXZsNBbkdqIXF6/E6MZfVSv9rIYaue3f7ke8ZIzuL8PCnnJcWbk3rKjlqz
+         uMDUjB1phFzC3alUDepDXH1ILhlTQGTBMKsJFl7MaxMd6AGvOkJmDh0pVXcgMxeHeHxt
+         ZMkyGc9SHIKCR/wtF70XA6SpaWJaQDeVPhu1LutoHpFVRCxPZgVG/JSdaeQImoL8QOvG
+         Uwgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777397570; x=1778002370;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZqMEze76X1xNuYacnRcVl1H8LJPptNWPWYC9Sfl7TqU=;
-        b=VKbHVCYnrBjYGdoWk3Rd48sJFD0FqVAM14Now7U/wIYs7ATytTgg1Uam2X8I3BbN8u
-         5RzaZ7lXH/D4Yhi707fLJGgefYlAFQziGtqzRupr+HZRbi9kA7erVMtMLYYiOgqBHIbu
-         2KIpGxxkT9/IHElMkncJJ7S13QnDWwe1JxC4J+KsyYHa+U/SUqo1tSQIrL0pX3clxY2W
-         XxYRHmTZ0y6slEslOhTdZXh4RsPEBQ38eoGk863tbydEP0CHhOr56PQ1goYXj6v4wqlA
-         bB/h+c3XlITb61CSQWMIyZ4qYPlMJfDOO2BFRJYlbi1gLyhYBdaJ/5/HwakppZXyHyq0
-         tlkg==
-X-Gm-Message-State: AOJu0Yw+M5Qa2JMCSzTgqdQHMzhUbpwBdQnlGe2/7HR8zkP6RVR2T7is
-	2darxYkxSy5oAPhBssw9J4rZHn3s/VbfMsqr/i6KR4RNOmgtq32V2d1VFKcaAAio/WjDynDycSC
-	LSkRmmICBc9GAabCzI4LYAADlj4PHSd5F2SA9y1gLkRJc9a09q8j7b/D2JuPOgGQ3ioGn
-X-Gm-Gg: AeBDiesoGSlQ2nr2SepcHAg47qLV2HcNL6Im4whnO7oBi9rnCWQTTiTPZFTnliCLoUl
-	S/wGy5a+5s8mA3JaKerG55K9TZxiEJOrufFAy0sgVbXzDXz5x9Osh/y1uM7aKlwzj1RKuIjBbf6
-	zof0XIyeJ0Wg80b/kFVDZ5jzrDMob9Oq7upE+QLiTYLcynJmPS2Rjp7RJ8gy6mRJUH58wPdZbE/
-	7svdpLVOCJC3IZj/Muf3ciYbAuOBoxvi2am/QCcX8wCKvdjdIu5uuANyJKW5pJBW9WnJbH4JObR
-	ls0tmFkf+dXPGUmz0TLFJcDfgmSYKvyOMN6U1iFR2uMbfRdNWBBs0lsbeaNkfhD18CMv+Ld70pG
-	3JBtIAXiQZAR6jrytP+/woK9Goj1+FdKXoUf4HLIdWF5tvZkBCOP0W+M=
-X-Received: by 2002:ac8:5912:0:b0:50f:b003:59d0 with SMTP id d75a77b69052e-5100e12587amr54650841cf.21.1777397570149;
-        Tue, 28 Apr 2026 10:32:50 -0700 (PDT)
-X-Received: by 2002:ac8:5912:0:b0:50f:b003:59d0 with SMTP id d75a77b69052e-5100e12587amr54650141cf.21.1777397569510;
-        Tue, 28 Apr 2026 10:32:49 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.219.94])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a7b8ce444sm2089545e9.0.2026.04.28.10.32.48
+        d=1e100.net; s=20251104; t=1777401589; x=1778006389;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1J9ChVvAYhsNDwl0OoFtnw7HfmuTxcHM4sfxG0H8HRs=;
+        b=o3fkE0FpREuUGnQa0CVkhCGJpJ3VXM+rZUrzduxA2atwxHgCD1W9bSSSOAJvimnIjW
+         gRjOQE9i7RFJJSs4NebWZ3DuQqP8jnS2dK1qA7PnokVxAgVtENBWYLXgd9O93Z98fuoc
+         9GylyCo2wKCtGbyWr7DmMDVHaB4k8e7CtjJkHZ0GeKlOVVgDzNSBTTFvDMznp655ZIOc
+         JQ4kGuSjQSlUE8CBds9EikLH2N9RfooBAAozZJp8UftbXJYwZjGqRt9BA8V6lLN0NPY7
+         fCoz8idFkWOLmFNW61GBUYJeuXNq0OJrff10blEoXk2wewR0JheYLVDrFO9Shgj5Llcz
+         3xEg==
+X-Gm-Message-State: AOJu0YzDJFnX69GE/b1P1U7NGx/NHYw3wuq67osF3mE/cTNEkjMFhiY+
+	UZiemQoFyECNr0JJD6suuOan3SyYdwAOAyIXldpTuy4GJxbKU7iIHXuuS/cRTY/Laak=
+X-Gm-Gg: AeBDiesoUZ3uah/tvBZDyvQLz1pLzDMjPBVdormcgw6PIOkuswb4hskueD2nbrWcWK2
+	4e7eIMb1A7e0fGi9r9fFrNfNy/5vo69LpImvS4+psvUdQvKt1LwGnonLokSHsS3WbJOVVax/oe7
+	YGwwxp33krKYeKzSgxDo3qS3vM+SQFb5Sv/RX1v7RFCAWWugBkdcBRnYTgEZAV1JMHWCGGTBO6z
+	s5r2FKyS3LoQqFeHNTDOM6HVtGIXRF4r924QIjm830ptykucJ7r3iGfODf6yD1+5wtUdzvmk4vr
+	tTL6vU9I7gcJL86db5enzE4aO29cC9hP3LbtePojBT2q5z1CK7Bmaneiz6SSrSkiq85lOAIHUDs
+	4S0X1mBY1KT/l0YEyxUj1cXMwRmWpK2WG5zNS0JFG+e+lwywtxzQ6bStz/L8mGatmv+vY56QhoV
+	ST9C+C6VhmpNrSHfTa3E4k4yPXrKR9JdwiCMP7rtuKbQngMwwHQGyZ6qs=
+X-Received: by 2002:a05:600d:d:b0:480:1c69:9d36 with SMTP id 5b1f17b1804b1-48a77b1333fmr57804205e9.17.1777401589017;
+        Tue, 28 Apr 2026 11:39:49 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:106d:1080:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4463f4c0ab0sm7902798f8f.18.2026.04.28.11.39.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Apr 2026 10:32:48 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Date: Tue, 28 Apr 2026 19:32:39 +0200
-Subject: [PATCH 3/3] interconnect: qcom: Make important drivers default
+        Tue, 28 Apr 2026 11:39:48 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Tue, 28 Apr 2026 20:39:43 +0200
+Subject: [PATCH RFC] arm64: dts: qcom: sm8650-ayaneo-pocket-s2: add display
+ nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,488 +85,432 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260428-interconnect-qcom-clean-arm64-v1-3-e6bc3f7832db@oss.qualcomm.com>
-References: <20260428-interconnect-qcom-clean-arm64-v1-0-e6bc3f7832db@oss.qualcomm.com>
-In-Reply-To: <20260428-interconnect-qcom-clean-arm64-v1-0-e6bc3f7832db@oss.qualcomm.com>
-To: Georgi Djakov <djakov@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=14546;
- i=krzysztof.kozlowski@oss.qualcomm.com; h=from:subject:message-id;
- bh=rfVFsqmmJPTNTZeEO/Qr6YN70g0iVkVM45qtvX9E22k=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBp8O858/RGFFrysltXJIcoNtgw9Yeq5SSSE7FxS
- KrN04rItF2JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCafDvOQAKCRDBN2bmhouD
- 168kD/46dTvJsKUr6UB5XcieG/9c8sU17R7oGE25JL5vPWEko/mOOLyCJNtlwaYfGhF+qLuVg05
- ERpHd64hh5ZmZ0+JUWV2w5bXTXgq+SUlYKpfaF8dujuaHUwb1ROlfbF6vfjkTqp9XIr7QtbRbmE
- zlyssgwVc/QQ0Ub6txaJV3/E8gBi/7LAClJIXuMyeO5PwN+GDc8+IXO3TpOY3RmvAXg+2rviiID
- vbF/jvpyvvvKgm673SeOZMOXJRkHz+Y/26uhY2ZlafySQw0QaQebQImRlktLA6LYNE63+Mfz2GU
- TN3OHhdisN1Rz+PuHm7KwjJF9DPWJ8Z8EP826vUPqMKj+HaZjDxcDjYjeDVxGdj6+aOYniNV/h/
- OUaqJP+y33foVFskfme+Q37atsDOxIGKiyhTuP0q4bf71c1c/RROH8uv2RYWknQK1bZUsQyxdme
- SjPyMVZF5isVCo0bpF0eQFksvzKMrlhHmVWIT3si6reG2KYIcoyxhWc9wJ0iszvr7bfnIKE0C/K
- moVb5angwYzYXDG0/kk0rpljP4QTgqC1eCKPrAolyoOmNF3lUkmcowhh1Q2FUd17Aic0pl5QN3m
- geuq/VkpxO0cogI/4NEW5rFR43Uu1Lp4tAVFscUuw/1PCxfAxbZZs/nMPGGUhirmZQJISiLOqP/
- aBZYR4xOVffodbg==
-X-Developer-Key: i=krzysztof.kozlowski@oss.qualcomm.com; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDE2OSBTYWx0ZWRfX0vidZ6r6t7ru
- 5XMmrLSlDjm8EP76n0U8EFON80r5qp0+PpcknuWHbjPJKWrUj2RZNIW1nmD3/W1zuhTymI/mJOW
- N/Hgwrux5I3wjKY1ZzlbKeQpxLZ02/jdNfeLJMl7Ekr+Jn+UwCjdYTEKvXT3cPFo87oURVS51WL
- amF0nnsTpVcP9vWrYuEqOGKIthqzSTluEQwARRxQIwhHQ3ovnTSePjtIXhv5lG8Nt9Epp2J7ict
- gWVkSQ77SYcKI7xBBFJ8YHd3NqBAgy1qKGA7Xrx+pNUVNjRMARcuSsdIjKp05Jz7ygSbBW7/ChL
- km1V73m8749jMsw8pdmFtg8zIew18+GbPNihOE1eN8G1dd/XByqSGkbG8rhuecHmoEWCffEUGaa
- X5qJLBIG7NkVFl7pbthkv1TBFiWUaQ/IM1rqhly8nkNtySuBUTilxgeghqiEqtRc9mTHyzgh8/9
- Z/DHtjDeffOXIIPtqAw==
-X-Proofpoint-ORIG-GUID: 2HeTQnOvO_2aOSTA_CAvoqXn6RN0v0-4
-X-Proofpoint-GUID: 2HeTQnOvO_2aOSTA_CAvoqXn6RN0v0-4
-X-Authority-Analysis: v=2.4 cv=A45c+aWG c=1 sm=1 tr=0 ts=69f0ef43 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=gOEeR9iKwsj33Yj5oN/cWg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=rDSDKITe4z-rceAv86YA:9 a=-wcPzy_K7TQbbHLX:21
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-28_05,2026-04-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604280169
-X-Rspamd-Queue-Id: B05F648A0A1
+Message-Id: <20260428-topic-sm8650-ayaneo-pocket-s2-display-dt-v1-1-ff132c00d076@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAO7+8GkC/52PQU7DMBBFrxLNmkG249hOtkgcgC3qInYmxZTEw
+ XYjoqp3x0CEWFYs/+jr/TcXSBQ9JeiqC0RaffJhLoHfVeBe+vlI6IeSQTChmBQGc1i8wzQZ1TD
+ st36mgEtwJ8qYBA4+LW/9hkPGpm6t1S1ZzVoouCXS6D++p57h6fEBDj/HdLav5PLXyF6L9H4uI
+ nnv/np01Y0W6TjVhkk0WsmxSIgi0a0c/j51O2zTujFYM8OJ9MhJNP9mRVVL3iJpIZUmMVg27iz
+ bJ0IXpsnnrlr1PcfoOByu108ejoYiogEAAA==
+X-Change-ID: 20260428-topic-sm8650-ayaneo-pocket-s2-display-dt-539bb79eb709
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Magnus Damm <magnus.damm@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+ KancyJoe <kancy2333@outlook.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.15.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8473;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=NjCVZ0MUAxxtiNkAuOdkmoloIeA5+2vc/DvtYYe3mGA=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBp8P7z55jmK99Lw1ZWLZ7Cl36b6DXaovw74PDdCfj7
+ lVB1ZYmJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCafD+8wAKCRB33NvayMhJ0cabD/
+ 0WoqXKWQUPx+EeLuXESbAe6FW9Ygov2S52dhJNFNvMJs0eeKvDaY1PxvSR+5Xz870y8UE4JDAFRb12
+ rqQdG2CdGtZc60TkqLSUfUw2L6/ruFfRrIspSgXbdW2W9Ngug9Wj2d6azHM5tAAZAYyrqABZ7KXrS7
+ lnmPzYnh8gCOLN0T3rMOSPX36jSY4wjdtIe3KDVQHR3MyMQTLB1OrJ/yPIUJ2w1AUUL2NpsQLK8mFH
+ sUoaOsOZgbVoO6/kznPzCQScdg5sDUWIRv/vmGRfXf56KV3zEcHD//Ko6qa7kVDe7qL5j54zjpPerA
+ o+AO4rPGi6TEcFsG+2e4+tfhvwLDd7EX/SnyBxDO0qHedy+eBsX8Rj26xFo2yyhHg1n1jOGHRVww6f
+ B98YBR2LbZ1bu/trxn/7EA4d1vQrhkPKzLaJxDR16i6hhWx5gcche5TGkGodQcDhpO9lFvtHAEanb8
+ lqEOzbeH25LIhILI+IntPtiYknJXJgjZwVAYja9yh3XLaIA5QJHwCUqsfkBmNDUyvRnf66CsnA5BPS
+ BZ9hHocpbv5oT9oulyJ90FNBhfN767zsVqIEpBKzFMTlAz4jh2+rJSswv+zY1rYOdDfTVP7bxxg+Nm
+ knhA6nk1Wv9CBTuvlmCxahSJIGxhpRl6ZHv5jgbjOcc8TN/REr7W4bvMJx4g==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Rspamd-Queue-Id: AC0AF48AD8F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+X-Spamd-Result: default: False [4.84 / 15.00];
+	SEM_URIBL(3.50)[0.0.0.0:email];
+	SUSPICIOUS_RECIPS(1.50)[];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	BAD_REP_POLICIES(0.10)[];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105063-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105065-lists,linux-arm-msm=lfdr.de];
+	R_DKIM_ALLOW(0.00)[linaro.org:s=google];
+	GREYLIST(0.00)[pass,body];
+	FREEMAIL_CC(0.00)[vger.kernel.org,outlook.com,linaro.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FREEMAIL_TO(0.00)[kernel.org,glider.be,gmail.com];
+	MIME_TRACE(0.00)[0:+];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MIME_TRACE(0.00)[0:+];
+	DMARC_POLICY_ALLOW(0.00)[linaro.org,none];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzysztof.kozlowski@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[8];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	NEURAL_SPAM(0.00)[0.884];
+	R_SPF_ALLOW(0.00)[+ip6:2600:3c15:e001:75::/64:c];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.1:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 
-The interconnect drivers for Qualcomm SoC Network-on-Chip are covering a
-basic or fundamental SoC feature: bandwidth management between internal
-SoC blocks.  SoC can boot without these, but power management or
-performance will be affected.  These drivers do not represent any sort
-of buses visible to the board designers/configurators, thus they should
-be always enabled, regardless how SoC is used in the final board.
+From: KancyJoe <kancy2333@outlook.com>
 
-Kernel configuration should not ask users choice of drivers when that
-choice is obvious and known to the developers that answer should be
-'yes' or 'module'.
+Add nodes for the dual DSI panel, the SGM3804 regulator, the
+SY7758 backlight controller, the touch controller, and enable
+the GPU to enable full display support.
 
-Switch all almost Qualcomm interconnect drivers to a default 'yes' for
-ARCH_QCOM.  This has impact:
-
-1. arm64 defconfig: enable as built-in INTERCONNECT_QCOM_SDM660,
-   INTERCONNECT_QCOM_SDM670, INTERCONNECT_QCOM_SM7150 and
-   INTERCONNECT_QCOM_SAR2130P, which were not selected before but should
-   be, because these platforms need them anyway.
-
-2. arm qcom_defconfig: no changes.
-
-3. arm multi_v7 defconfig: enable as modules drivers necessary to boot
-   ARM 32-bit platforms, which are already enabled on qcom_defconfig:
-   QCOM_RPMH, INTERCONNECT_QCOM_BCM_VOTER, INTERCONNECT_QCOM_MSM8974 and
-   INTERCONNECT_QCOM_SDX55.
-
-4. COMPILE_TEST builds: enable by default all drivers for arm or arm64
-   builds, whenever ARCH_QCOM is selected.  This has impact on build
-   time and feels logical, because if one selects ARCH_QCOM then
-   probably by default wants to build test it entirely.  Kernels with
-   COMPILE_TEST are not supposed to be used for booting.
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: KancyJoe <kancy2333@outlook.com>
 ---
+Depends on bindings:
+- https://lore.kernel.org/all/20260428-topic-sm8650-ayaneo-pocket-s2-sgm3804-v1-1-1d8dc7620256@linaro.org/
+- https://lore.kernel.org/all/20260428-topic-sm8650-ayaneo-pocket-s2-sy7758-v1-1-0caade5fdb32@linaro.org/
+- https://lore.kernel.org/all/20260428-topic-sm8650-ayaneo-pocket-s2-r63419-v1-1-981eb5ab5a51@linaro.org/
 
-I propose the change to go via interconnect tree.  It might conflict
-around defconfigs, though.
+Sent as RFC because the sgm3804 & r63419 bindinds needs the following fixes:
+Documentation/devicetree/bindings/display/panel/renesas,r63419.yaml
+   backlight: true
+   reset-gpios: true
++  rotation: true
+   ports: true
+
+Documentation/devicetree/bindings/regulator/sgmicro,sgm3804.yaml
+   enable-gpios:
+-    maxItems: 2
++    minItems: 2
 ---
- arch/arm/configs/qcom_defconfig   |  3 ---
- arch/arm64/configs/defconfig      | 31 -------------------------------
- drivers/interconnect/qcom/Kconfig | 37 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 37 insertions(+), 34 deletions(-)
+ .../boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts      | 243 +++++++++++++++++++++
+ 1 file changed, 243 insertions(+)
 
-diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
-index 29a1dea500f0..21d225836393 100644
---- a/arch/arm/configs/qcom_defconfig
-+++ b/arch/arm/configs/qcom_defconfig
-@@ -286,9 +286,6 @@ CONFIG_PHY_QCOM_USB_SNPS_FEMTO_V2=y
- CONFIG_PHY_QCOM_USB_HSIC=y
- CONFIG_NVMEM_QCOM_QFPROM=y
- CONFIG_INTERCONNECT=y
--CONFIG_INTERCONNECT_QCOM=y
--CONFIG_INTERCONNECT_QCOM_MSM8974=m
--CONFIG_INTERCONNECT_QCOM_SDX55=m
- CONFIG_EXT2_FS=y
- CONFIG_EXT2_FS_XATTR=y
- CONFIG_EXT4_FS=y
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index dd1ac01ee29b..3134e11da028 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1874,37 +1874,6 @@ CONFIG_INTERCONNECT_IMX8MM=m
- CONFIG_INTERCONNECT_IMX8MN=m
- CONFIG_INTERCONNECT_IMX8MQ=m
- CONFIG_INTERCONNECT_IMX8MP=y
--CONFIG_INTERCONNECT_QCOM=y
--CONFIG_INTERCONNECT_QCOM_ELIZA=y
--CONFIG_INTERCONNECT_QCOM_GLYMUR=y
--CONFIG_INTERCONNECT_QCOM_KAANAPALI=y
--CONFIG_INTERCONNECT_QCOM_MSM8916=m
--CONFIG_INTERCONNECT_QCOM_MSM8953=y
--CONFIG_INTERCONNECT_QCOM_MSM8996=y
--CONFIG_INTERCONNECT_QCOM_OSM_L3=m
--CONFIG_INTERCONNECT_QCOM_QCM2290=y
--CONFIG_INTERCONNECT_QCOM_QCS404=m
--CONFIG_INTERCONNECT_QCOM_QCS615=y
--CONFIG_INTERCONNECT_QCOM_QCS8300=y
--CONFIG_INTERCONNECT_QCOM_QDU1000=y
--CONFIG_INTERCONNECT_QCOM_SA8775P=y
--CONFIG_INTERCONNECT_QCOM_SC7180=y
--CONFIG_INTERCONNECT_QCOM_SC7280=y
--CONFIG_INTERCONNECT_QCOM_SC8180X=y
--CONFIG_INTERCONNECT_QCOM_SC8280XP=y
--CONFIG_INTERCONNECT_QCOM_SDM845=y
--CONFIG_INTERCONNECT_QCOM_SDX75=y
--CONFIG_INTERCONNECT_QCOM_SM6115=y
--CONFIG_INTERCONNECT_QCOM_SM6350=y
--CONFIG_INTERCONNECT_QCOM_MILOS=y
--CONFIG_INTERCONNECT_QCOM_SM8150=y
--CONFIG_INTERCONNECT_QCOM_SM8250=y
--CONFIG_INTERCONNECT_QCOM_SM8350=y
--CONFIG_INTERCONNECT_QCOM_SM8450=y
--CONFIG_INTERCONNECT_QCOM_SM8550=y
--CONFIG_INTERCONNECT_QCOM_SM8650=y
--CONFIG_INTERCONNECT_QCOM_SM8750=y
--CONFIG_INTERCONNECT_QCOM_X1E80100=y
- CONFIG_COUNTER=m
- CONFIG_TI_EQEP=m
- CONFIG_RZ_MTU3_CNT=m
-diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
-index b2c4272ae48f..56abd679e8be 100644
---- a/drivers/interconnect/qcom/Kconfig
-+++ b/drivers/interconnect/qcom/Kconfig
-@@ -2,6 +2,7 @@
- config INTERCONNECT_QCOM
- 	tristate "Qualcomm Network-on-Chip interconnect drivers"
- 	depends on ARCH_QCOM
-+	default ARCH_QCOM
- 	help
- 	  Support for Qualcomm's Network-on-Chip interconnect hardware.
+diff --git a/arch/arm64/boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts b/arch/arm64/boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts
+index 0dc994f4e48d..162c46fa923c 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts
++++ b/arch/arm64/boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts
+@@ -220,6 +220,22 @@ upd720201_vdd33_reg: upd720201-vdd33-regulator {
+ 		pinctrl-names = "default";
+ 	};
  
-@@ -14,6 +15,7 @@ config INTERCONNECT_QCOM_ELIZA
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on Eliza-based
- 	  platforms.
-@@ -24,6 +26,7 @@ config INTERCONNECT_QCOM_GLYMUR
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on glymur-based
- 	  platforms.
-@@ -34,6 +37,7 @@ config INTERCONNECT_QCOM_KAANAPALI
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on kaanapali-based
- 	  platforms.
-@@ -53,6 +57,7 @@ config INTERCONNECT_QCOM_MSM8916
- 	depends on INTERCONNECT_QCOM
- 	depends on QCOM_SMD_RPM
- 	select INTERCONNECT_QCOM_SMD_RPM
-+	default m if ARCH_QCOM && ARM64
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on msm8916-based
- 	  platforms.
-@@ -81,6 +86,7 @@ config INTERCONNECT_QCOM_MSM8953
- 	depends on QCOM_SMD_RPM
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_SMD_RPM
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on msm8953-based
- 	  platforms.
-@@ -91,6 +97,7 @@ config INTERCONNECT_QCOM_MSM8974
- 	depends on QCOM_SMD_RPM
- 	depends on ARM || COMPILE_TEST
- 	select INTERCONNECT_QCOM_SMD_RPM
-+	default m if ARCH_QCOM
- 	help
- 	 This is a driver for the Qualcomm Network-on-Chip on msm8974-based
- 	 platforms.
-@@ -111,6 +118,7 @@ config INTERCONNECT_QCOM_MSM8996
- 	depends on QCOM_SMD_RPM
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_SMD_RPM
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on msm8996-based
- 	  platforms.
-@@ -119,6 +127,7 @@ config INTERCONNECT_QCOM_OSM_L3
- 	tristate "Qualcomm OSM L3 interconnect driver"
- 	depends on INTERCONNECT_QCOM || COMPILE_TEST
- 	depends on ARM64 || COMPILE_TEST
-+	default m if ARCH_QCOM
- 	help
- 	  Say y here to support the Operating State Manager (OSM) interconnect
- 	  driver which controls the scaling of L3 caches on Qualcomm SoCs.
-@@ -129,6 +138,7 @@ config INTERCONNECT_QCOM_QCM2290
- 	depends on QCOM_SMD_RPM
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_SMD_RPM
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on qcm2290-based
- 	  platforms.
-@@ -139,6 +149,7 @@ config INTERCONNECT_QCOM_QCS404
- 	depends on QCOM_SMD_RPM
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_SMD_RPM
-+	default m if ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on qcs404-based
- 	  platforms.
-@@ -149,6 +160,7 @@ config INTERCONNECT_QCOM_QCS615
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on qcs615-based
- 	  platforms.
-@@ -159,6 +171,7 @@ config INTERCONNECT_QCOM_QCS8300
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Technologies, Inc. Network-on-Chip
- 	  on QCS8300-based platforms. The interconnect provider collects and
-@@ -171,6 +184,7 @@ config INTERCONNECT_QCOM_QDU1000
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on QDU1000-based
- 	  and QRU1000-based platforms.
-@@ -195,6 +209,7 @@ config INTERCONNECT_QCOM_SA8775P
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sa8775p-based
- 	  platforms.
-@@ -205,6 +220,7 @@ config INTERCONNECT_QCOM_SAR2130P
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on SAR2130P-based
- 	  platforms.
-@@ -215,6 +231,7 @@ config INTERCONNECT_QCOM_SC7180
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sc7180-based
- 	  platforms.
-@@ -225,6 +242,7 @@ config INTERCONNECT_QCOM_SC7280
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sc7280-based
- 	  platforms.
-@@ -235,6 +253,7 @@ config INTERCONNECT_QCOM_SC8180X
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sc8180x-based
- 	  platforms.
-@@ -245,6 +264,7 @@ config INTERCONNECT_QCOM_SC8280XP
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on SC8280XP-based
- 	  platforms.
-@@ -255,6 +275,7 @@ config INTERCONNECT_QCOM_SDM660
- 	depends on ARM64 || COMPILE_TEST
- 	depends on QCOM_SMD_RPM
- 	select INTERCONNECT_QCOM_SMD_RPM
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sdm660-based
- 	  platforms.
-@@ -265,6 +286,7 @@ config INTERCONNECT_QCOM_SDM670
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sdm670-based
- 	  platforms.
-@@ -275,6 +297,7 @@ config INTERCONNECT_QCOM_SDM845
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sdm845-based
- 	  platforms.
-@@ -285,6 +308,7 @@ config INTERCONNECT_QCOM_SDX55
- 	depends on ARM || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default m if ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sdx55-based
- 	  platforms.
-@@ -305,6 +329,7 @@ config INTERCONNECT_QCOM_SDX75
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sdx75-based
- 	  platforms.
-@@ -315,6 +340,7 @@ config INTERCONNECT_QCOM_SM6115
- 	depends on QCOM_SMD_RPM
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_SMD_RPM
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sm6115-based
- 	  platforms.
-@@ -325,6 +351,7 @@ config INTERCONNECT_QCOM_SM6350
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sm6350-based
- 	  platforms.
-@@ -335,6 +362,7 @@ config INTERCONNECT_QCOM_SM7150
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sm7150-based
- 	  platforms.
-@@ -345,6 +373,7 @@ config INTERCONNECT_QCOM_MILOS
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on Milos-based
- 	  platforms.
-@@ -355,6 +384,7 @@ config INTERCONNECT_QCOM_SM8150
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sm8150-based
- 	  platforms.
-@@ -365,6 +395,7 @@ config INTERCONNECT_QCOM_SM8250
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on sm8250-based
- 	  platforms.
-@@ -375,6 +406,7 @@ config INTERCONNECT_QCOM_SM8350
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on SM8350-based
- 	  platforms.
-@@ -385,6 +417,7 @@ config INTERCONNECT_QCOM_SM8450
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on SM8450-based
- 	  platforms.
-@@ -395,6 +428,7 @@ config INTERCONNECT_QCOM_SM8550
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on SM8550-based
- 	  platforms.
-@@ -405,6 +439,7 @@ config INTERCONNECT_QCOM_SM8650
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on SM8650-based
- 	  platforms.
-@@ -415,6 +450,7 @@ config INTERCONNECT_QCOM_SM8750
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on SM8750-based
- 	  platforms.
-@@ -425,6 +461,7 @@ config INTERCONNECT_QCOM_X1E80100
- 	depends on ARM64 || COMPILE_TEST
- 	select INTERCONNECT_QCOM_RPMH
- 	select INTERCONNECT_QCOM_BCM_VOTER
-+	default ARCH_QCOM
- 	help
- 	  This is a driver for the Qualcomm Network-on-Chip on X1E80100-based
- 	  platforms.
++	sy7758_vdd33_reg: sy7758-vdd33-regulator {
++		compatible = "regulator-fixed";
++
++		regulator-name = "sy7758_vdd33";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpios = <&tlmm 163 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		vin-supply = <&vph_pwr>;
++
++		pinctrl-0 = <&sy7758_vdd33>;
++		pinctrl-names = "default";
++	};
++
+ 	sound {
+ 		compatible = "qcom,sm8650-sndcard", "qcom,sm8450-sndcard";
+ 		model = "SM8650-APS2";
+@@ -986,6 +1002,14 @@ gpu7_active: trip-active {
+ 	};
+ };
+ 
++&gpu {
++	status = "okay";
++
++	zap-shader {
++		firmware-name = "qcom/sm8650/ayaneo/ps2/gen70900_zap.mbn";
++	};
++};
++
+ &i2c3 {
+ 	clock-frequency = <100000>;
+ 
+@@ -1016,6 +1040,30 @@ wcd_usbss_sbu_mux: endpoint {
+ 	};
+ };
+ 
++&i2c4 {
++	clock-frequency = <400000>;
++
++	status = "okay";
++
++	touchscreen@5d {
++		compatible = "goodix,gt911";
++		reg = <0x5d>;
++
++		interrupt-parent = <&tlmm>;
++		interrupts = <162 IRQ_TYPE_EDGE_FALLING>;
++
++		reset-gpios = <&tlmm 161 GPIO_ACTIVE_HIGH>;
++		VDDIO-supply = <&vreg_l14b_3p2>;
++		AVDD28-supply = <&vreg_l14b_3p2>;
++
++		touchscreen-size-x = <1440>;
++		touchscreen-size-y = <2560>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&ts_reset_default>, <&ts_irq_default>;
++	};
++};
++
+ &i2c6 {
+ 	clock-frequency = <100000>;
+ 
+@@ -1053,6 +1101,51 @@ redriver_ss_in: endpoint {
+ 	};
+ };
+ 
++&i2c9 {
++	status = "okay";
++
++	/* Screen power */
++	regulator@3e {
++		compatible = "sgmicro,sgm3804";
++		reg = <0x3e>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&sgm3804_default>;
++
++		enable-gpios = <&tlmm 59 GPIO_ACTIVE_HIGH>,
++			       <&tlmm 58 GPIO_ACTIVE_HIGH>;
++
++		vin-supply = <&vph_pwr>;
++
++		sgm3804_pos: pos {
++			regulator-name = "panel-avdd-pos";
++			regulator-min-microvolt = <5200000>;
++			regulator-max-microvolt = <5200000>;
++			regulator-active-discharge = <1>;
++		};
++
++		sgm3804_neg: neg {
++			regulator-name = "panel-avdd-neg";
++			regulator-min-microvolt = <5200000>;
++			regulator-max-microvolt = <5200000>;
++			regulator-active-discharge = <1>;
++		};
++	};
++
++	/* Backlight */
++	sy7758_backlight: sy7758@2e {
++		compatible = "silergy,sy7758";
++		reg = <0x2e>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&sy7758_default>;
++
++		vddio-supply = <&sy7758_vdd33_reg>;
++		enable-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
++
++	};
++};
++
+ &iris {
+ 	status = "okay";
+ };
+@@ -1065,6 +1158,93 @@ &mdss {
+ 	status = "okay";
+ };
+ 
++&mdss_dsi0 {
++	vdda-supply = <&vreg_l3i_1p2>;
++
++	qcom,master-dsi;
++	qcom,dual-dsi-mode;
++	qcom,sync-dual-dsi;
++
++	status = "okay";
++
++	panel@0 {
++		status = "okay";
++		compatible = "ayaneo,wt0630-2k";
++		reg = <0>;
++
++		pinctrl-names = "default", "sleep";
++		pinctrl-0 = <&disp0_reset_n_active>;
++		pinctrl-1 = <&disp0_reset_n_suspend>;
++
++		vddio-supply = <&vreg_l12b_1p8>;
++		vdd-supply = <&vreg_l11b_1p2>;
++		vsp-supply = <&sgm3804_pos>;
++		vsn-supply = <&sgm3804_neg>;
++		vci-supply = <&vreg_l13b_3p0>;
++
++		backlight = <&sy7758_backlight>;
++
++		reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
++
++		rotation = <90>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++				panel0_in_0: endpoint {
++					remote-endpoint = <&mdss_dsi0_out>;
++				};
++			};
++
++			port@1{
++				reg = <1>;
++				panel0_in_1: endpoint {
++					remote-endpoint = <&mdss_dsi1_out>;
++				};
++			};
++		};
++	};
++};
++
++&mdss_dsi0_out {
++	remote-endpoint = <&panel0_in_0>;
++
++	data-lanes = <0 1 2 3>;
++};
++
++&mdss_dsi0_phy {
++	vdds-supply = <&vreg_l1i_0p88>;
++
++	status = "okay";
++};
++
++&mdss_dsi1 {
++	vdda-supply = <&vreg_l3i_1p2>;
++
++	assigned-clock-parents = <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
++				 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>;
++
++	qcom,dual-dsi-mode;
++	qcom,sync-dual-dsi;
++
++	status = "okay";
++};
++
++&mdss_dsi1_out {
++	remote-endpoint = <&panel0_in_1>;
++
++	data-lanes = <0 1 2 3>;
++};
++
++&mdss_dsi1_phy {
++	vdds-supply = <&vreg_l1i_0p88>;
++
++	status = "okay";
++};
++
+ &mdss_dp0 {
+ 	status = "okay";
+ };
+@@ -1390,6 +1570,20 @@ sw-ctrl-pins {
+ 		};
+ 	};
+ 
++	disp0_reset_n_active: disp0-reset-n-active-state {
++		pins = "gpio133";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-disable;
++	};
++
++	disp0_reset_n_suspend: disp0-reset-n-suspend-state {
++		pins = "gpio133";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
++
+ 	fan_pwr_pins: fan-pwr-state {
+ 		pins = "gpio125";
+ 		function = "gpio";
+@@ -1411,6 +1605,20 @@ fan_int: fan-int-state {
+ 		bias-pull-up;
+ 	};
+ 
++	mdp_vsync_active: mdp-vsync-active-state {
++		pins = "gpio86";
++		function = "mdp_vsync";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
++
++	mdp_vsync_suspend: mdp-vsync-suspend-state {
++		pins = "gpio86";
++		function = "mdp_vsync";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
++
+ 	upd720201_avdd33: upd720201-avdd33-state {
+ 		pins = "gpio123";
+ 		function = "gpio";
+@@ -1440,6 +1648,13 @@ gamepad_pwr_en: gamepad-pwr-en-active-state {
+ 		output-high;
+ 	};
+ 
++	sgm3804_default: sgm3804-default-state {
++		pins = "gpio58", "gpio59";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-disable;
++	};
++
+ 	spkr_23_sd_n_active: spkr-23-sd-n-active-state {
+ 		pins = "gpio77";
+ 		function = "gpio";
+@@ -1454,6 +1669,34 @@ spkr_01_sd_n_active: spkr-01-sd-n-active-state {
+ 		bias-disable;
+ 	};
+ 
++	sy7758_default: sy7758-default-state {
++		pins = "gpio164";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	sy7758_vdd33: sy7758-vdd33-state {
++		pins = "gpio163";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	ts_irq_default: ts-irq-active-state {
++		pins = "gpio162";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-disable;
++	};
++
++	ts_reset_default: ts-reset-active-state {
++		pins = "gpio161";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-down;
++	};
++
+ 	wcd_default: wcd-reset-n-active-state {
+ 		pins = "gpio107";
+ 		function = "gpio";
 
--- 
-2.51.0
+---
+base-commit: 5e9b7d093f3f77cb0af4409559e3d139babfb443
+change-id: 20260428-topic-sm8650-ayaneo-pocket-s2-display-dt-539bb79eb709
+prerequisite-change-id: 20260428-topic-sm8650-ayaneo-pocket-s2-sgm3804-8764fbb72eb7:v1
+prerequisite-patch-id: ef33f9e777480b807445b34eb84091ef8e5bfd41
+prerequisite-patch-id: e58ac26057d85ca436bc58046bfa1117501f1447
+prerequisite-change-id: 20260428-topic-sm8650-ayaneo-pocket-s2-sy7758-3081ee7f1e25:v1
+prerequisite-patch-id: d14df8d3c4a5308e4a4ed6ac29d540493f3e828a
+prerequisite-patch-id: 9236410c66c1d5eadc34c58b93fe76447c308d60
+prerequisite-change-id: 20260428-topic-sm8650-ayaneo-pocket-s2-r63419-e72467e2db0f:v1
+prerequisite-patch-id: 5b961b83be948deea368f5d2a9dbe0ba938c0333
+prerequisite-patch-id: f87616917cce98b993cc61ca3086949852bd2055
+
+Best regards,
+--  
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
