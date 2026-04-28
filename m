@@ -1,120 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-104875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GCkBCS5U8Gk7RwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 08:31:10 +0200
+	id 6CHbLtdU8GnSRwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 08:33:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8624E47E118
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 08:31:09 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF64947E177
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 08:33:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 04E843012EBE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 06:31:08 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 432AD3017533
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 06:33:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 461EB346A01;
-	Tue, 28 Apr 2026 06:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79D4E346E7D;
+	Tue, 28 Apr 2026 06:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U4gAHyOz"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="S2Xn++cF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF96175A72;
-	Tue, 28 Apr 2026 06:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 993F1311959;
+	Tue, 28 Apr 2026 06:33:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777357867; cv=none; b=FrnbTtcyVUvdSTWblo5wSNlPTX9V2S9Ec5n7ObvZ+da0cg3hEWeFs+E04y7iyZhmemYaXMOOaLgaSCb/vs22rSFt8H9rIr92h50zn5uTlRSRl4V1vuI3DJlgeFshrg8XAp+E+iKwwARLV1PChmrQIA1zPJ7IhTA2vzrB4WwHLmY=
+	t=1777358036; cv=none; b=BUXkFd1hS3fhiuin8P0fPW6p9EKEorpQQa36sMBFuQgpEtfkgRCWj5zZ4VHH7YZdKtjoze36XuFLwmJ3E1wOB+gElrEr74Xn+Mq2mIJl6CNyy3PDiDoaTD1PtnECuRuRCVhgt5GgrO9Cpvpq2+YBSeO85NipyvnFZGQFSF5TpLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777357867; c=relaxed/simple;
-	bh=U5IVN05soJ83Vg4XNyOOzGVtO4/MTt4s8SsWskmBq80=;
+	s=arc-20240116; t=1777358036; c=relaxed/simple;
+	bh=YWZkQJ9h/l4InQ9uofXyJ+ye5Z9Xuqt0qS0AfrrKrA0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U7Nzy37ue+/jzAYG4xdKRHuHnqZb63m2AosoJhj49hyeZ4tWhleR3TJuYWn8Rqo7y1O9EcIx5iWf/NQKZr3gq9bnV6tPt+3oZ+p5p4kujTZzBTFS5g/f5mqUHhWfJrv47VaWk00f5DKe5wRULBvRI2Ky8nIgA1C8H5lC6IxZjkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U4gAHyOz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64195C2BCAF;
-	Tue, 28 Apr 2026 06:31:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777357867;
-	bh=U5IVN05soJ83Vg4XNyOOzGVtO4/MTt4s8SsWskmBq80=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=FU+R57A+0GFecUVn29xaKxskGtzlqx3qEA0jQFqlczTZ51vq1jjAkjoLh6n/coKT4bMNxVcK1veSz6IbKzr1YeHrAhTGtcRYm3Iy16tJXGA9QA1LpFMFO7o3/WA78MY4LuLUtWrYidU4tq3aqQ5/tTzTFz7FUp156vLpucAyukc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=S2Xn++cF; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CE0B11684;
+	Mon, 27 Apr 2026 23:33:46 -0700 (PDT)
+Received: from localhost (e132581.arm.com [10.1.196.87])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DA0303F763;
+	Mon, 27 Apr 2026 23:33:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1777358032; bh=YWZkQJ9h/l4InQ9uofXyJ+ye5Z9Xuqt0qS0AfrrKrA0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=U4gAHyOzAAv5vm/OTSjxgojsjYKK2OZRVd2/oz2iA+9gvH5HTIFQokDS57f0D/pjY
-	 ME7/VLU9HC8LWEM5ZgjZcMxWyOfO2CJ7Kaz6Dk17RvLuHnv2xSTg4M9ZyKd6pM58T9
-	 nanA+QQ/rHPtehp2xErbKVbN/KdhWjD5dWMggqUkJtWTrCvyRJZCcH9s7+b2QoskGD
-	 4+/lFWbkwKkUUGIurM99qQygQryf6Uwpp2c1xve7MzKMMwJAxcus5LxQ5wl/vg39HP
-	 Y1XFSLMFPkzhV9Q55fG1g5lzmFAShqe2MuWnbu8li9T0UFtBnD3Nj/W36IDnMqpvvI
-	 EZctDOxPbfnRA==
-Date: Tue, 28 Apr 2026 08:31:04 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
-	Bryan O'Donoghue <bod@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, devicetree@vger.kernel.org, laurent.pinchart@ideasonboard.com, 
-	kieran.bingham@ideasonboard.com
-Subject: Re: [PATCH v2 10/14] dt-bindings: media: qcom: Add CAMSS Offline
- Processing Engine (OPE)
-Message-ID: <20260428-merry-visionary-aardwolf-bec81f@quoll>
-References: <20260427-camss-isp-ope-v2-0-f430e7485009@oss.qualcomm.com>
- <20260427-camss-isp-ope-v2-10-f430e7485009@oss.qualcomm.com>
+	b=S2Xn++cFmmQu5248cOji44fY/eMi8BJevcEh3M2220AM7CaQvnqARY5FplvC+PS10
+	 4iz+okyCYpf0DlRtOwQYdzny5aSVGEYjdCRYKEDiF5c70/sYXZmuYUcqlHelxcYqf1
+	 KRe3lPH1nJVHXIoAJjsZr9rXaNM3RhkobsAhrKeY=
+Date: Tue, 28 Apr 2026 07:33:49 +0100
+From: Leo Yan <leo.yan@arm.com>
+To: "Yingchao Deng (Consultant)" <quic_yingdeng@quicinc.com>
+Cc: Yingchao Deng <yingchao.deng@oss.qualcomm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Jinlong Mao <jinlong.mao@oss.qualcomm.com>,
+	Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+	Jie Gan <jie.gan@oss.qualcomm.com>
+Subject: Re: [PATCH v8 1/4] coresight: cti: Convert trigger usage fields to
+ dynamic bitmaps and arrays
+Message-ID: <20260428063349.GD16537@e132581.arm.com>
+References: <20260426-extended-cti-v8-0-23b900a4902f@oss.qualcomm.com>
+ <20260426-extended-cti-v8-1-23b900a4902f@oss.qualcomm.com>
+ <20260427165913.GA16537@e132581.arm.com>
+ <b20a2f7c-4838-408f-94ed-ee9656d451c4@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260427-camss-isp-ope-v2-10-f430e7485009@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 8624E47E118
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b20a2f7c-4838-408f-94ed-ee9656d451c4@quicinc.com>
+X-Rspamd-Queue-Id: EF64947E177
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-104876-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104875-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	DKIM_TRACE(0.00)[arm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[leo.yan@arm.com,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,arm.com:dkim,e132581.arm.com:mid]
 
-On Mon, Apr 27, 2026 at 02:43:37PM +0200, Loic Poulain wrote:
-> Add Devicetree binding documentation for the Qualcomm Camera Subsystem
-> Offline Processing Engine (OPE) found on platforms such as Agatti.
-> The OPE is a memory-to-memory image processing block which operates
-> on frames read from and written back to system memory.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> ---
->  .../bindings/media/qcom,qcm2290-camss-ope.yaml     | 131 +++++++++++++++++++++
->  1 file changed, 131 insertions(+)
+On Tue, Apr 28, 2026 at 10:25:11AM +0800, Yingchao Deng (Consultant) wrote:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+[...]
 
-Best regards,
-Krzysztof
+> >    tg->used_mask = bitmap_zalloc(nr_filter_sigs, GFP_KERNEL);
 
+> "nr_filter_sigs" is the count of entries in the DT property array, if the DT
+> property is:
+>     arm,trig-filters = <22 23>;
+> Here nr_filter_sigs=2, so bitmap_zalloc(2) allocates only 1 unsigned long
+> (64 bits). set_bit(22/23, used_mask) still fits, but it's logically an OOB,
+> and any index >=64 would
+> write past the end.
+
+Thanks for explanation. It is correct for me.
 
