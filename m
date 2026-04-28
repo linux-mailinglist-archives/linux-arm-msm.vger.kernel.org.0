@@ -1,193 +1,275 @@
-Return-Path: <linux-arm-msm+bounces-105004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kMTnBLC/8GnSYAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 16:09:52 +0200
+	id AO7kBDK78GmFXwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 15:50:42 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FC17486963
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 16:09:51 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D168486418
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 15:50:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E0B20312371B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 13:39:37 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id EB86C30B5784
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 13:42:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BE1644CAF5;
-	Tue, 28 Apr 2026 13:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 357402C21E8;
+	Tue, 28 Apr 2026 13:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TQCh+V7X"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="qRLoVPjW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5348044BCBE;
-	Tue, 28 Apr 2026 13:36:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A82392C46
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 13:40:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777383413; cv=none; b=s0q+YgcpnhQkEAMPkQ9CRjTD9eS0bfs5NMZY2AEsYF3x7X+FoAboC+MrS+i2qT5B/YBA1IjH6YQdSsK6FVrRFJaDE29O+7h3WKua4usYxND5+WO4CIzf7OFvyRNhFewX0qLA7zzDFV8SHKvBulIWQqINoEVHMR2Y8XvTkFxqw3U=
+	t=1777383614; cv=none; b=RRPUop4+eShA957Tbs9khKojweGkb3/svVOKzxv+fEOrRBO8oEY6R7DFILzgpgCN3E+sslie9j1/HZoD3Pm3mEbhSf9aW4yszF5xMEptav4fF+t5iFRWK3DEW1cQKIXn75ldR6BDcm0HXLGSK297QLRj/E+4AL6y2Vc1zVLggcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777383413; c=relaxed/simple;
-	bh=SV/abDQ9GHMF1r7JuRQf6ccezy9MHlopkSctJDFMcm0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lsBRdu2EFu4uRLs1qXusGK7Rad0ivK1niV3dZ3NdBfIDKT5S8kIDXK/SRN/VwrxzQ6c3nLEuSmaHt99oPovV3cGl0hCvShYvha83TUxN4O29whrP7OhxSZgRyYHdLPvwttbHxsMy1ved12kWBzXczCOHL6gj8CLw3mzg3I6a+is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TQCh+V7X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD15C2BCAF;
-	Tue, 28 Apr 2026 13:36:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777383413;
-	bh=SV/abDQ9GHMF1r7JuRQf6ccezy9MHlopkSctJDFMcm0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=TQCh+V7XkKalFjhqFLnZNoiER1cm/2IHx7i6qSIQhKboGz5cU13NVK2zoPg1a3Kgb
-	 rs2jpke3ulloLBQX+zWbcGmjrmRsQLZ1w6M0GpeyMWWfTrqHcX3r/oTMJQq5dUfzU+
-	 06ZCug4Hh5myP99JcCzJmdFYixP1RX+MS2ekstaMvfVq0rqWolWC2TfQYJUjav88Rx
-	 yXduw3391pgOvi4qnylT1CfZLoIWNA/b+1kXJfpwBm60Xtb1efuJiDCnwfWVATXvbe
-	 Q7iFO2tjk2MwkH6gYZRCW1TrP9h/h9JOJhvFDK+G/mZ5wqBD/s8/3SyasoxJwCslF6
-	 SzEZkfZkXLOtg==
-Message-ID: <2846fc60-bf8c-43b3-ae64-58faad6aed2f@kernel.org>
-Date: Tue, 28 Apr 2026 14:36:47 +0100
+	s=arc-20240116; t=1777383614; c=relaxed/simple;
+	bh=DY37OnpoYjjW+GFpmDYkzr+BXySsTF4/pHUAAopHjvA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:Subject:Cc:To:
+	 References:In-Reply-To; b=slL67D5Pb0oXGXNGd6GcDGDQ9SiSh4NCwHbWwmTxOvDwJzawFlIIiZwHrdRw6kNf+MF0tNQrguXOv/sOlQyFZud0kgNFQDTOGbLi4pnGrvUMtf2/PqEQdoXFadmgtWo9dRb7Stl2PP/lPNXthvDdP2tcREiR9paYYoV2kDr6Fpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=qRLoVPjW; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 3B4EB1A3472;
+	Tue, 28 Apr 2026 13:40:10 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 026AB601DF;
+	Tue, 28 Apr 2026 13:40:10 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C6AAE10728BFF;
+	Tue, 28 Apr 2026 15:39:43 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1777383605; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=DY37OnpoYjjW+GFpmDYkzr+BXySsTF4/pHUAAopHjvA=;
+	b=qRLoVPjWicMlOER4CBoXDyZ31IS3N9wzfHFsgyWbAAFF/gci+qsFmTs0vCeqFcMtumISls
+	Tj3oY/2Cdf6m/7gztcQrTJLdN0ggRvFVqgt+JH8FxO2/nx+GfiibBB7tr9VdYd2pRAyZX1
+	XAXF0QiFbh370lTIQPb7xonACEwx2kQTWqUUcXxmMBeCKnlqHPelpK3fTwkngZn/4NCD/d
+	KE58A7C2KizgbREMj4kyFapvuVzo03ASQ8lKHF89cbbYlD9WTUWuW4Ve1tF5Yw+ztjpBH4
+	MjEA//3NGYT7/zO8OOYAeAWTnaFj1l+B1bRPPqqwsMjaj7jeo7/wmSi84hXibw==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 04/11] arm64: dts: qcom: msm8939: Add venus node
-To: Erikas Bitovtas <xerikasxx@gmail.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org
-References: <20260427-msm8939-venus-rfc-v3-0-288195bb7917@gmail.com>
- <Xfiq_WNTU9P-ThZLMs4plWE5hwtmwyVyKJc1bD5BKdhERGouucNpyuenIoKQiKfZKaRzP-PdamsNlQ8vezjrRg==@protonmail.internalid>
- <20260427-msm8939-venus-rfc-v3-4-288195bb7917@gmail.com>
- <56d609dd-62be-47eb-8ba3-c5d70d773113@kernel.org>
- <QRkqY_zK7EC4e0ZMoLVyLUhgI9A5RrBcJLm22d69xKT17HzJMXsEDdz_qodBN9qogvuS1XqN4zdemqcoByY5CA==@protonmail.internalid>
- <34627be5-75cc-469b-af23-f1f08ce29820@gmail.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bod@kernel.org>
-In-Reply-To: <34627be5-75cc-469b-af23-f1f08ce29820@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 4FC17486963
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 28 Apr 2026 15:39:43 +0200
+Message-Id: <DI4TW9XECX53.17TEZPCSWTH1A@bootlin.com>
+From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
+Subject: Re: [PATCH v2 00/41] drm/display: bridge-connector: attach encoder
+ to the connector
+Cc: "Hui Pu" <Hui.Pu@gehealthcare.com>, "Ian Ray"
+ <ian.ray@gehealthcare.com>, "Thomas Petazzoni"
+ <thomas.petazzoni@bootlin.com>, <dri-devel@lists.freedesktop.org>,
+ <linux-kernel@vger.kernel.org>, <asahi@lists.linux.dev>,
+ <imx@lists.linux.dev>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-mips@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+ <linux-amlogic@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+ <freedreno@lists.freedesktop.org>, <linux-rockchip@lists.infradead.org>,
+ <linux-tegra@vger.kernel.org>, <linux-samsung-soc@vger.kernel.org>,
+ <linux-renesas-soc@vger.kernel.org>
+To: "Icenowy Zheng" <zhengxingda@iscas.ac.cn>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@oss.qualcomm.com>, "Andrzej Hajda"
+ <andrzej.hajda@intel.com>, "Neil Armstrong" <neil.armstrong@linaro.org>,
+ "Robert Foss" <rfoss@kernel.org>, "Laurent Pinchart"
+ <Laurent.pinchart@ideasonboard.com>, "Jonas Karlman" <jonas@kwiboo.se>,
+ "Jernej Skrabec" <jernej.skrabec@gmail.com>, "Maarten Lankhorst"
+ <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>,
+ "Thomas Zimmermann" <tzimmermann@suse.de>, "David Airlie"
+ <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Sasha Finkelstein"
+ <fnkl.kernel@gmail.com>, "Janne Grunau" <j@jannau.net>, "Liu Ying"
+ <victor.liu@nxp.com>, "Douglas Anderson" <dianders@chromium.org>,
+ "Laurentiu Palcu" <laurentiu.palcu@oss.nxp.com>, "Lucas Stach"
+ <l.stach@pengutronix.de>, "Frank Li" <Frank.Li@nxp.com>, "Sascha Hauer"
+ <s.hauer@pengutronix.de>, "Pengutronix Kernel Team"
+ <kernel@pengutronix.de>, "Fabio Estevam" <festevam@gmail.com>, "Philipp
+ Zabel" <p.zabel@pengutronix.de>, "Paul Cercueil" <paul@crapouillou.net>,
+ "Anitha Chrisanthus" <anitha.chrisanthus@intel.com>, "Chun-Kuang Hu"
+ <chunkuang.hu@kernel.org>, "Matthias Brugger" <matthias.bgg@gmail.com>,
+ "AngeloGioacchino Del Regno" <angelogioacchino.delregno@collabora.com>,
+ "Kevin Hilman" <khilman@baylibre.com>, "Jerome Brunet"
+ <jbrunet@baylibre.com>, "Martin Blumenstingl"
+ <martin.blumenstingl@googlemail.com>, "Rob Clark"
+ <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
+ "Abhinav Kumar" <abhinav.kumar@linux.dev>, "Jessica Zhang"
+ <jesszhan0024@gmail.com>, "Sean Paul" <sean@poorly.run>, "Marijn Suijten"
+ <marijn.suijten@somainline.org>, "Tomi Valkeinen"
+ <tomi.valkeinen@ideasonboard.com>, "Sandy Huang" <hjc@rock-chips.com>,
+ =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, "Andy Yan"
+ <andy.yan@rock-chips.com>, "Thierry Reding" <thierry.reding@gmail.com>,
+ "Mikko Perttunen" <mperttunen@nvidia.com>, "Jonathan Hunter"
+ <jonathanh@nvidia.com>, "Jingoo Han" <jingoohan1@gmail.com>, "Inki Dae"
+ <inki.dae@samsung.com>, "Seung-Woo Kim" <sw0312.kim@samsung.com>, "Kyungmin
+ Park" <kyungmin.park@samsung.com>, "Krzysztof Kozlowski" <krzk@kernel.org>,
+ "Alim Akhtar" <alim.akhtar@samsung.com>, "Laurent Pinchart"
+ <laurent.pinchart+renesas@ideasonboard.com>, "Tomi Valkeinen"
+ <tomi.valkeinen+renesas@ideasonboard.com>, "Kieran Bingham"
+ <kieran.bingham+renesas@ideasonboard.com>, "Geert Uytterhoeven"
+ <geert+renesas@glider.be>, "Magnus Damm" <magnus.damm@gmail.com>, "Biju
+ Das" <biju.das.jz@bp.renesas.com>, "Marek Vasut" <marex@denx.de>, "Stefan
+ Agner" <stefan@agner.ch>, "Jyri Sarha" <jyri.sarha@iki.fi>, "Michal Simek"
+ <michal.simek@amd.com>
+X-Mailer: aerc 0.20.1
+References: <20260423-drm-bridge-connector-attach_encoder-v2-0-2ae6ca69b390@bootlin.com> <cf2c91396eb3017aa51dd9c840badffddca2f7ec.camel@iscas.ac.cn>
+In-Reply-To: <cf2c91396eb3017aa51dd9c840badffddca2f7ec.camel@iscas.ac.cn>
+X-Last-TLS-Session-Version: TLSv1.3
+X-Rspamd-Queue-Id: 9D168486418
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
+	MV_CASE(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105004-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[gmail.com,oss.qualcomm.com,kernel.org,apitzsch.eu,baylibre.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105005-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[bootlin.com:+];
+	FREEMAIL_TO(0.00)[iscas.ac.cn,oss.qualcomm.com,intel.com,linaro.org,kernel.org,ideasonboard.com,kwiboo.se,gmail.com,linux.intel.com,suse.de,ffwll.ch,jannau.net,nxp.com,chromium.org,oss.nxp.com,pengutronix.de,crapouillou.net,collabora.com,baylibre.com,googlemail.com,linux.dev,poorly.run,somainline.org,rock-chips.com,sntech.de,nvidia.com,samsung.com,glider.be,bp.renesas.com,denx.de,agner.ch,iki.fi,amd.com];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[luca.ceresoli@bootlin.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCPT_COUNT_GT_50(0.00)[78];
+	NEURAL_HAM(-0.00)[-0.997];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,pastebin.com:url]
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:url,bootlin.com:dkim,bootlin.com:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 
-On 28/04/2026 10:47, Erikas Bitovtas wrote:
-> 
-> 
-> On 4/28/26 10:10 AM, Bryan O'Donoghue wrote:
->> On 27/04/2026 18:58, Erikas Bitovtas wrote:
->>> +            video-decoder {
->>> +                compatible = "venus-decoder";
->>> +                clocks = <&gcc GCC_VENUS0_CORE0_VCODEC0_CLK>,
->>> +                     <&gcc GCC_VENUS0_CORE1_VCODEC0_CLK>;
->>> +                clock-names = "core0", "core1";
->>> +                power-domains = <&gcc VENUS_CORE0_GDSC>,
->>> +                        <&gcc VENUS_CORE1_GDSC>;
->>> +                power-domain-names = "core0", "core1";
->>> +            };
->>> +
->>> +            video-encoder {
->>> +                compatible = "venus-encoder";
->>> +                clocks = <&gcc GCC_VENUS0_CORE0_VCODEC0_CLK>,
->>> +                     <&gcc GCC_VENUS0_CORE1_VCODEC0_CLK>;
->>> +                clock-names = "core0", "core1";
->>> +                power-domains = <&gcc VENUS_CORE0_GDSC>,
->>> +                        <&gcc VENUS_CORE1_GDSC>;
->>> +                power-domain-names = "core0", "core1";
->>> +            };
->>
->> So to be fair in this case you do have a reason to have an encoder and
->> decoder compatible here _but_ it should be the case that one one of the
->> sub-devices contains CORE0 related stuff and the other CORE1 related stuff.
->>
->> Because in that case the sub-devices actually represent individual
->> hardware settings.
->>
->> So listing power-domains and clocks for both cores in each node like
->> this militates against that.
->>
->> The other thing is to double check of the encoder and decoder are inter-
->> changable here i.e. can either core be encoder or decoder or is it fixed ?
->>
->> I believe on older generations - perhaps not on 8939 it is not
->> interchangable.
->>
-> I found this in LA.BR.1.2.9.1_rb1.5:
-> https://github.com/msm8916-mainline/linux-downstream/blob/b20608408caff817ec874f325127b07609fbaeb8/arch/arm/boot/dts/qcom/msm8939-common.dtsi#L1589
-> Only decoder bits are being set in bus configs. This suggests that the
-> cores are not interchangeable.
-> Then again, I never managed to get encoding working on MSM8939. Testing
-> it with
-> gst-launch-1.0 videotestsrc ! videoconvert ! v4l2vp8enc ! queue !
-> v4l2vp8dec ! xvimagesink
-> Fails with the following log: https://pastebin.com/nmZcLgPV
-> And in dmesg it reports a firmware error:
-> [  784.461031] qcom-venus 1d00000.video-codec: no valid instance(pkt
-> session_id:dead, pkt:21001)
-> [  784.461126] qcom-venus-decoder 1d00000.video-codec:video-decoder:
-> dec: event session error 0
-> [  784.461200] qcom-venus-encoder 1d00000.video-codec:video-encoder:
-> enc: event session error 0
-> [  784.468799] qcom-venus 1d00000.video-codec: SFR message from FW:
-> QC_IMAGE_VERSION_STRING=VIDEO.VE.1.8-00099, Err_Fatal -
-> Z:\b\venus\utils\src\vbuffer.c:1319:
-> [  785.791641] qcom-venus 1d00000.video-codec: System error has
-> occurred, recovery failed to init HFI
-> [  787.018339] qcom-venus 1d00000.video-codec: System error has
-> occurred, recovery failed to init HFI
-> [  787.097253] qcom-venus 1d00000.video-codec: system error has occurred
-> (recovered)
-> This happens regardless of whether I enable the cores for encoding too
-> or not. The same errors were happening on MSM8916 as well. So I can't
-> tell if these cores are interchangeable just by testing.
+Hello Icenowy,
 
-Right so if you swap around the definition of which core is encoder and 
-which decoder do you get the same or different result ?
+On Sat Apr 25, 2026 at 5:22 PM CEST, Icenowy Zheng wrote:
+> =E5=9C=A8 2026-04-23=E5=9B=9B=E7=9A=84 11:16 +0200=EF=BC=8CLuca Ceresoli=
+=E5=86=99=E9=81=93=EF=BC=9A
+>> This series simplifies using the bridge-connector by removing the
+>> need to
+>> attach the newly created connector to the encoder.
+>>
+>> =3D=3D Series description
+>>
+>> Currently all users of the bridge-connector must call
+>> drm_connector_attach_encoder() immediately after a successful
+>> drm_bridge_connector_init().
+>>
+>> This is an unnecessary burden for users. Move the call to the end of
+>> drm_bridge_connector_init() so all callers can be simplified.
+>>
+>> =C2=A0* Patch 1 adds a drm_connector_attach_encoder() call at the end of
+>> =C2=A0=C2=A0 drm_bridge_connector_init()
+>> =C2=A0* The other patches remove drm_connector_attach_encoder() after al=
+l
+>> =C2=A0=C2=A0 drm_bridge_connector_init() calls, ordered from the simples=
+t ones
+>> =C2=A0=C2=A0 (only the last one is somewhat non-obvious)
+>>
+>> The Cc list is huge due to the many drivers touched. I sent v1 to a
+>> reduced
+>> Cc list to ensure there is an agreement about the overall idea. That
+>> seems
+>> to be the case, so now it's time to copy all drivers maintainers.
+>>
+>> It would be nice to apply all of this series at once to avoid
+>> duplicated
+>> calls to drm_connector_attach_encoder() in the interim. That would be
+>> harmless beacuse drm_connector_attach_encoder() is idempotent, but
+>> unpleasant.
+>>
+>> =3D=3D Additional rationale (for the curious)
+>>
+>> Besides making the usage of the bridge-connector a bit simpler, this
+>> series
+>> is in preparation for DRM bridge hotplug. Here's why, feel free to
+>> skip if
+>> you don't care.
+>>
+>> The old bridge hotplug proposals I have sent in the past [1] were
+>> based on
+>> a hotplug-bridge driver to sit between the last fixed bridge and the
+>> first
+>> hotplugged bridge. Discussion with the community led to the need of
+>> removing the hotplug-bridge and let common DRM code handle hotplug.
+>> The
+>> common place of code that appears the most suitable for hotplug
+>> handling is
+>> the bridge-connector, which is by now the recommended way to handle
+>> connector instantiation after a bridge chain.
+>>
+>> So I'm in the process of extending the bridge-connector to be the
+>> central
+>> point to handle bridge hotplug. Turns out the need to call
+>> drm_connector_attach_encoder() after drm_bridge_connector_init() has
+>> returned is adding big headaches to such work. So I'm send this long
+>> but
+>> simple series to both simplify bridge-connector usage and remove one
+>> obstacle from the bridge hotplug work. This series is relevant by
+>> itself
+>> anyway.
+>>
+>> [1]
+>> https://lore.kernel.org/lkml/20250206-hotplug-drm-bridge-v6-26-9d6f2c9c3=
+058@bootlin.com/
+>>
+>> =3D=3D Grand plan
+>>
+>> This is part of the work to support hotplug of DRM bridges. The grand
+>> plan
+>> was discussed in [0].
+>
+> Just see the bridge hotplugging thing, is it possible for DRM drivers
+> to declare bridges attached to themselves after this?
+>
+> Loongson 7A1000 PCH can only output DPI signals, so nearly all products
+> with it are shipping with some kind of external bridges, but currently
+> drm/loongson does not support them (all display connectors are now seen
+> as DPI ones, and connectors behind non-transparent bridges won't work).
+>
+> The bridges are going to be accessed by the DDC I2C busses of 7A1000,
+> and are not declared with device tree (systems with 7A1000 never ship
+> with device trees, and Linux currently matches a built-in device tree).
+> (Bridges being on the DDC I2C also introduces some dependency for them
+> to depend on the drm/loongson driver.)
+>
+> Loongson have defined some kind of VBIOS declaring what bridge is
+> behind, and their non-mainline driver just contains driver codes for
+> all possible bridges. (Sui Jingfeng previously tried to mainline such
+> practice, and of course it's rejected because of code duplicity.)
 
-i.e. is it because you are trying to get encoder running generally or 
-because of the core you are doing it on ?
+I'm afraid your question goes a bit beyond my knowledge, the hotplug work
+I'm carrying on is focuses on DT platforms.
 
-How about declaring both cores a decoder ?
+My limited understading of non-DT platforms is that a card driver must
+instantiate all components and tie them together, which assumes it has to
+know them somehow (ACPI, hardcoded, whatever). Others can probably comment
+better about this.
 
----
-bod
+As a general principle, when devices can be mixed and matched by the board
+designer, hardcoding them is a bad design choice. Think of bad old board
+files written in C, which were unmanageable and got replaced exactly by
+device tree. So my opinion is that DRM encoders and bridges should know as
+little as possible about the following bridge, connector or panel that
+follows them.
+
+Luca
+
+--
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
