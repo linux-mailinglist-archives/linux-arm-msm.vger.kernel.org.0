@@ -1,59 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-104919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-104920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cC1rM8Z78GkaUAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-104919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 11:20:06 +0200
+	id QMtCDIGE8GlwUQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-104920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 11:57:21 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A2574813B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 11:20:06 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85A94482019
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 11:57:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id D6CB13041CF7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:16:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9E56D31AEAA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Apr 2026 09:16:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9F6521FF30;
-	Tue, 28 Apr 2026 09:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F4202288C3D;
+	Tue, 28 Apr 2026 09:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="gZtWpc3Z"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="L90hIb6J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C251F31F980
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 09:16:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9EE3168E1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Apr 2026 09:16:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777367779; cv=none; b=KSNTgL4s/61ghXlHZB75/GPigcMbpgMsB7jPq+TRkytr24/5+m4/gk6MUVH/Z/2zBQbp+1bVa5LdwsF7ExtuXCisT05VYhpcbQK7zMJdNey7kkiYsMGGmaNT4IbGCKLSkJYc85yxEaqrXv0IEOdeF0SzDiuhUB5/+1ZV9n1D9No=
+	t=1777367781; cv=none; b=O3psHbi81lc1hcQ3Wf6KK3/wZ5/pBHolhqorOQwiLIW1MKdny3GohII+zuIwS4TRRSkXl4jG1WQnsVrWcsRa3ECPxs9WTcp9oiyCRFHKZCjIGAymBf4UdlbOglvXrQ4llIgdWjfUQjeFHJwUg+KLBti4hCsYEOFDrOdikqblXj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777367779; c=relaxed/simple;
-	bh=xVOmhULoDAvEOqJsplX3ItVdTcSPCL7yA/iwB9qwLI0=;
+	s=arc-20240116; t=1777367781; c=relaxed/simple;
+	bh=JgsLjY7N/cSTr84A5yekh+dYCMdOFfAOpvYNjwdXnhA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pI+YIU2Y2K6Yn42+bBBeOOtOcV1yd32jOqsxQsRbZJg/0FRNBt+Wg61J9Ms0YuLQNQyvY7RsUagLDDEeiAHafS9UKeEJRN36NGw2+RRGCcf86DC4XhCWt5BRylvnXfZ4Cv1DQhVxQo1U+ZpsPHJP3/u9oXK4GfDyP990eQMebsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=gZtWpc3Z; arc=none smtp.client-ip=185.246.84.56
+	 In-Reply-To:To:Cc; b=uxYS0mxvQKhOcg9j4V5j+IX0mjGTUdd+AoVpThe4G0X/bgVIhAcXcKCMlWkkie7F7oOzPHFIQQT6p3f7U7EnbErnPgTHdEtNf6al6VLehlQi9grGO+ujr08De8IzKFxTPiFRs3GSgOjLzM0TDXfvxzQazKVGzBEbolhk5b+w9ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=L90hIb6J; arc=none smtp.client-ip=185.171.202.116
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 505641A346B;
-	Tue, 28 Apr 2026 09:16:15 +0000 (UTC)
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 954D8C5EF07;
+	Tue, 28 Apr 2026 09:17:02 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 1C9D3601D0;
-	Tue, 28 Apr 2026 09:16:15 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 1E8C610728631;
-	Tue, 28 Apr 2026 11:16:08 +0200 (CEST)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 0B0EA601D0;
+	Tue, 28 Apr 2026 09:16:19 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 7435310728630;
+	Tue, 28 Apr 2026 11:16:13 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1777367772; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1777367777; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=9eo/paXSzW8BfmZpRrcP3BLHcobk12GzzlOo9kVEISI=;
-	b=gZtWpc3ZSRRnd4uPBXmVObuxc8b70mdizyNzto8rtZS1uImrEoGxPYW2eTiuMOOfzCqDjp
-	Gw8wYAtxuRZInF9j7CBINLwawUlx+8x6aem3/QfVJSj+bmiTPXWXg0kTLu3vZUieVtk2wM
-	n6ut4ZYM14a13BLpseFPBxKlMdcLVd88zkxJCzwIRgDx3f/fxoRgL02agg+PJ56wJPxsf1
-	vuXmJAoFzrhpr9gWE4FcL7Df2HczNsU97jnIx+AXD3Uw89/vzRdru5i8q3lVsrAgd5vMQn
-	0qdgr8ZQW+Fq2cevjahutli9RnM0D2qEv45DR87Eo1ZksS86gKaeuFbz1KsukA==
+	bh=xq600VuXUHTogNlvQ1+mRAnMWFVRAxScMNGq+qSiS0k=;
+	b=L90hIb6JmlBTYTGnRZQwH8tWTd1If+HhWAPcd00XDWFvfwSMCBQIbFetx9PA7PEKbzKIn5
+	XFXbEewQTyy66ZuOkSMlGgcI0BVh23fwzwPEV3ZJOvnrdiWvDYqPXDcQ4q4siwN4h7xaS4
+	Y4L+1hnzj1zwYz0W2zBIdOSIIxBZ97ebX6DwjJNvpBqZzqF3xhPMHvdV4CZ5WDGF6FfKPd
+	2rU6Ld8h8NUqZwbDYpqEhAORbLSEmUoW1MHLWYJABcFR2LXiV+Jb+de4bwNdS1OSPot2DK
+	7iUOU8xDJw2JaWmSosv9XFXZWSmAw+wKZRqL7wBNSp7AHHCmLzQavdIsNTFIqg==
 From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Date: Tue, 28 Apr 2026 11:15:47 +0200
-Subject: [PATCH v2 01/11] drm/bridge: drm_bridge_get/put(): ignore ERR_PTR
+Date: Tue, 28 Apr 2026 11:15:48 +0200
+Subject: [PATCH v2 02/11] drm/bridge: add of_drm_get_bridge_by_endpoint()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-1-4300744a1c47@bootlin.com>
+Message-Id: <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-2-4300744a1c47@bootlin.com>
 References: <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-0-4300744a1c47@bootlin.com>
 In-Reply-To: <20260428-drm-bridge-alloc-getput-panel_or_bridge-v2-0-4300744a1c47@bootlin.com>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
@@ -87,32 +87,30 @@ Cc: Hui Pu <Hui.Pu@gehealthcare.com>, Ian Ray <ian.ray@gehealthcare.com>,
  dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
  linux-arm-kernel@lists.infradead.org, 
- Luca Ceresoli <luca.ceresoli@bootlin.com>, 
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+ Luca Ceresoli <luca.ceresoli@bootlin.com>
 X-Mailer: b4 0.15.2
 X-Last-TLS-Session-Version: TLSv1.3
-X-Rspamd-Queue-Id: 7A2574813B4
+X-Rspamd-Queue-Id: 85A94482019
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-104919-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-104920-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,hisilicon.com,linaro.org,google.com,intel.com,ideasonboard.com,kwiboo.se,amd.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[34];
+	RCPT_COUNT_TWELVE(0.00)[32];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
@@ -123,84 +121,122 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email,ideasonboard.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,bootlin.com:email,bootlin.com:dkim,bootlin.com:mid]
 
-Most functions returning a struct drm_bridge pointer currently return a
-valid pointer or NULL, but this restricts their ability to return an error
-code describing the error kind.
+drm_of_find_panel_or_bridge() is widely used, but many callers pass NULL
+into the @panel or the @bridge arguments, thus making a very partial usage
+of this rather complex function.
 
-In preparation to have new APIs that can return a struct drm_bridge pointer
-holding an ERR_PTR (and for those which already do) make drm_bridge_get()
-and drm_bridge_put() ignore ERR_PTR values, just like they ignore NULL
-pointers.
+Besides, the bridge returned in @bridge is not refcounted, thus making this
+API unsafe when DRM bridge hotplug will be introduced.
 
-This will avoid annoying error checking in many places and the risk of
-missing error checks.
+Solve both issues for the cases of calls to drm_of_find_panel_or_bridge()
+with a NULL @panel pointer by adding a new function that only looks for
+bridges (and is thus much simpler) and increments the refcount of the
+returned bridge.
 
-Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/all/20260318152533.GA633439@killaraus.ideasonboard.com/
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/all/omlnswxukeqgnatzdvooaashgkfcacjevkvbkm6xt33itgua2k@jcmzll2w6kdq/
+The new function is identical to drm_of_find_panel_or_bridge() except it:
+
+ - handles bridge refcounting: uses of_drm_find_and_get_bridge() instead of
+   of_drm_find_bridge() internally to return a refcounted bridge
+ - is simpler to use: just takes no @panel parameter, returns the pointer
+   in the return value instead of a double pointer argument
+ - has a simpler implementation: it is equal to
+   drm_of_find_panel_or_bridge() after removing the code that becomes dead
+   when @panel == NULL
+
+Also add this function to drm_bridge.c and not drm_of.c because it returns
+bridges only.
+
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
 ---
 
-Patch added in v2
+Changes in v2:
+- return the bridge in the return value, not a double pointer
 ---
- drivers/gpu/drm/drm_bridge.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/drm_bridge.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ include/drm/drm_bridge.h     |  8 ++++++++
+ 2 files changed, 49 insertions(+)
 
 diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-index 986e4c79a4e0..cea5babbe99e 100644
+index cea5babbe99e..8a4141bb7b31 100644
 --- a/drivers/gpu/drm/drm_bridge.c
 +++ b/drivers/gpu/drm/drm_bridge.c
-@@ -282,7 +282,7 @@ static void __drm_bridge_free(struct kref *kref)
- 
- /**
-  * drm_bridge_get - Acquire a bridge reference
-- * @bridge: DRM bridge; if NULL this function does nothing
-+ * @bridge: DRM bridge; if NULL or an ERR_PTR this function does nothing
-  *
-  * This function increments the bridge's refcount.
-  *
-@@ -291,7 +291,7 @@ static void __drm_bridge_free(struct kref *kref)
-  */
- struct drm_bridge *drm_bridge_get(struct drm_bridge *bridge)
- {
--	if (bridge)
-+	if (!IS_ERR_OR_NULL(bridge))
- 		kref_get(&bridge->refcount);
- 
+@@ -1582,6 +1582,47 @@ struct drm_bridge *of_drm_find_bridge(struct device_node *np)
  	return bridge;
-@@ -300,7 +300,7 @@ EXPORT_SYMBOL(drm_bridge_get);
+ }
+ EXPORT_SYMBOL(of_drm_find_bridge);
++
++/**
++ * of_drm_get_bridge_by_endpoint - return DRM bridge connected to a port/endpoint
++ * @np: device tree node containing output ports
++ * @port: port in the device tree node, or -1 for the first port found
++ * @endpoint: endpoint in the device tree node, or -1 for the first endpoint found
++ *
++ * Given a DT node's port and endpoint number, find the connected node and
++ * return the associated drm_bridge device.
++ *
++ * The refcount of the returned bridge is incremented. Use drm_bridge_put()
++ * when done with it.
++ *
++ * Returns a pointer to the connected drm_bridge, or a negative error on failure
++ */
++struct drm_bridge *of_drm_get_bridge_by_endpoint(const struct device_node *np,
++						 int port, int endpoint)
++{
++	struct drm_bridge *bridge;
++
++	/*
++	 * of_graph_get_remote_node() produces a noisy error message if port
++	 * node isn't found and the absence of the port is a legit case here,
++	 * so at first we silently check whether graph presents in the
++	 * device-tree node.
++	 */
++	if (!of_graph_is_present(np))
++		return ERR_PTR(-ENODEV);
++
++	struct device_node *remote __free(device_node) =
++		of_graph_get_remote_node(np, port, endpoint);
++	if (!remote)
++		return ERR_PTR(-ENODEV);
++
++	bridge = of_drm_find_and_get_bridge(remote);
++	if (!bridge)
++		return ERR_PTR(-EPROBE_DEFER);
++
++	return bridge;
++}
++EXPORT_SYMBOL_GPL(of_drm_get_bridge_by_endpoint);
+ #endif
  
  /**
-  * drm_bridge_put - Release a bridge reference
-- * @bridge: DRM bridge; if NULL this function does nothing
-+ * @bridge: DRM bridge; if NULL or an ERR_PTR this function does nothing
-  *
-  * This function decrements the bridge's reference count and frees the
-  * object if the reference count drops to zero.
-@@ -310,7 +310,7 @@ EXPORT_SYMBOL(drm_bridge_get);
-  */
- void drm_bridge_put(struct drm_bridge *bridge)
+diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
+index d6cd0f5af045..c96398460618 100644
+--- a/include/drm/drm_bridge.h
++++ b/include/drm/drm_bridge.h
+@@ -1327,6 +1327,8 @@ int drm_bridge_attach(struct drm_encoder *encoder, struct drm_bridge *bridge,
+ #ifdef CONFIG_OF
+ struct drm_bridge *of_drm_find_and_get_bridge(struct device_node *np);
+ struct drm_bridge *of_drm_find_bridge(struct device_node *np);
++struct drm_bridge *of_drm_get_bridge_by_endpoint(const struct device_node *np,
++						 int port, int endpoint);
+ #else
+ static inline struct drm_bridge *of_drm_find_and_get_bridge(struct device_node *np)
  {
--	if (bridge)
-+	if (!IS_ERR_OR_NULL(bridge))
- 		kref_put(&bridge->refcount, __drm_bridge_free);
+@@ -1336,6 +1338,12 @@ static inline struct drm_bridge *of_drm_find_bridge(struct device_node *np)
+ {
+ 	return NULL;
  }
- EXPORT_SYMBOL(drm_bridge_put);
-@@ -319,8 +319,8 @@ EXPORT_SYMBOL(drm_bridge_put);
-  * drm_bridge_clear_and_put - Given a bridge pointer, clear the pointer
-  *                            then put the bridge
-  * @bridge_pp: pointer to pointer to a struct drm_bridge; ``bridge_pp``
-- *             must be non-NULL; if ``*bridge_pp`` is NULL this function
-- *             does nothing
-+ *             must be non-NULL; if ``*bridge_pp`` is NULL or an ERR_PTR
-+ *             this function does nothing
-  *
-  * Helper to put a DRM bridge, but only after setting its pointer to
-  * NULL. Useful when a struct drm_bridge reference must be dropped without
++static inline int of_drm_get_bridge_by_endpoint(const struct device_node *np,
++						int port, int endpoint,
++						struct drm_bridge **bridge)
++{
++	return -ENODEV;
++}
+ #endif
+ 
+ static inline bool drm_bridge_is_last(struct drm_bridge *bridge)
 
 -- 
 2.53.0
