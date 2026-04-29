@@ -1,199 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-105179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oJDVDY7e8Wn3kwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 12:33:50 +0200
+	id KI5cBgff8Wn3kwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 12:35:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9919493000
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 12:33:45 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3841493037
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 12:35:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0AB4D30300C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 10:33:40 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 92FB13004F1B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 10:35:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C15BF3E639A;
-	Wed, 29 Apr 2026 10:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C6623D9DCC;
+	Wed, 29 Apr 2026 10:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b="bb5egrAt"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EgAb0Lcy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726793EB7F0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2026 10:33:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C7130E85D;
+	Wed, 29 Apr 2026 10:35:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777458819; cv=none; b=lm6ukL2h823ZjGcuO0dsWPyv5aAPuSXgRs0wHM1N3xVaQC6XVoU1tGG5RfoVDnQwhfP7EuqiLz5bNcwO5VK3EGKXpl5/YRdT+pG9YboZ8z9mqMdv9F5t9lbe3kMk14Xrig76L3Tzo/QqhBvGHPSA9CjpI2bNVrxEiPTBOHvifjo=
+	t=1777458948; cv=none; b=bOpCFS2mmq82aMbdTwr3wB4GDqj6BX2XbEv2pvnioHfBMdma9UloHekmFBGBQpDyJP2of1kMN4JWKUn6sJJ8qc2cUDjot/Km3bozFIEEZqYhxLRTjfF0FGoz4uLsRs6VQjpPScwLRuaSvi0bwdHPpOnaEJ0QiIyPmcNG80j4KIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777458819; c=relaxed/simple;
-	bh=i2NtLLLhNCL83g0ecLJOBZbfQ33HYTTevueS7EHO/Vc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=G3TB4DZsAHQLhXOrKjQxlDPo9CUgnTbPZ8rmZy7XKsgguN3fc2MU2xxgTn6WWXiZY2kZ7miEMJyzx5UDAfBAqpcyewVKlJRTtjibljS/u6qELvTw+SSqt9MMYmqIgCEvPyABkrhWR8uPslfU91GVG6okoxD4u73SP3W0o44z6ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org; spf=pass smtp.mailfrom=quora.org; dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b=bb5egrAt; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quora.org
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-35da2d35eccso8605439a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2026 03:33:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quora.org; s=google; t=1777458818; x=1778063618; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8RTUgu04LfMLANwSoXjWoPf/4vksRgEvuPnPFzRPOsg=;
-        b=bb5egrAtSdlBmRUphTKddFPKFrDn+JTyUzfRDqq3oo7gBks9F7j7A3KNKngLOs5hWq
-         VNsmyy91BmjcbxipAf9JIUIp2AetgJMwBOm+0wlIdHuoAQmH3g2nyYfP4LTM63iMBfTr
-         PyuYNq+UWOPVpX1dYWaFiOs9oShDGLmMAVF80=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777458818; x=1778063618;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8RTUgu04LfMLANwSoXjWoPf/4vksRgEvuPnPFzRPOsg=;
-        b=N2gXnzgDP4qosUWYwcwUNyGXwjJA/44DpUS97Ag+vF/+7ZY/jbYjDeJmIqu1gYuzP+
-         Nd6+kl6szGhNQypZIVC2ZLov6UFH5X9Ko9jEgxDRybiHLiByua2BjhdM7Ys+dwC5M84X
-         m+bZrq1T049kskLRgeCkq4hs5Dp7R/SmTYZaMGgx+j9GaUYObUjGFC2vsPp/kVL9UC3C
-         DCpl5f+3q/4vCKmEGq7zw8jCSHUU8jRSbBZS4fMme5ibualJ/DUpGk+Wot9WOQnb6EkX
-         xTDsEi3hfbRMGokBbW4ApkQ6PYO9f5G+Qx5QwfdXACIszBvfAcc08lbbV0b3Lw+7FoPL
-         FYTQ==
-X-Gm-Message-State: AOJu0YzWW62ZYcLfNpG11qrWuM00LVW8bK3OYFBoHl6eyOB4DDkUrXAI
-	Bra5tLWw6A8vP3YU39Hv97LwEwnAgm7dURhKDCPZO+yKFXYVg+MsOawTagl1YM/DOf74i0XYmq2
-	In+a5oI7nfA==
-X-Gm-Gg: AeBDieuSN6LfU74tjY9UDJMmZOy9rDYarNca8OJ4r2lw9cyqm6l8/P/SAKLIqsR1H7V
-	qB8s41/RzaMVpv3SXwu2MowIR8Dm+7Kc+rUvxy6Liy2ZKfyUZ6Po6HHEB2Ar3yho4kNHj0iwwVd
-	MlShLXZ9BJrXttWkVhW9EEh46E6JzDacauP5AZD+kK/4HBeMv4RDg62yQVTXkWhWUzny8K31Dyo
-	d7f/Xk5ttQFDUd+4R2iEhBzrVDT6PGt01kSkut6x8Uh+pwQxrclxHiTDvdkXe3MifHpZ/hJoihY
-	EgSpALjZKaCDB40vTdUp1UrEfZffFqtZ8xxlZvjBuGX2m8afSUD7S5Kz+puM1ahDylILog0Hket
-	JTlC/ToNSR/7OiL0nmyR/z566OmL3AYr1zTUVDb9ttP6FKjFEqD8rqHzauP1yu4SDsQhp9fZdsX
-	maNeK1eVC8nXqIx+nXE8qNPf/rnNsPK4E26zgrFlJcfLPPbzathV2spaPlB0sgq9w6BNS18BBOk
-	0+CnuM+QPMIQqBirknk/yti90vpHoD4yf+i5bxIhU1ynvkT2EyxZEbj7WXQkhUt5LVHtdEV0WGU
-	DZncWkDX00lz5qqESnUkb9PxjiRXtl2OJamgbKGjS/4hCcpEB2hD0i7udqiN8gjHLkSoAnRt9LD
-	BSPg=
-X-Received: by 2002:a17:90b:2548:b0:35b:e52a:6fe5 with SMTP id 98e67ed59e1d1-36491f89c0cmr6867110a91.5.1777458817863;
-        Wed, 29 Apr 2026 03:33:37 -0700 (PDT)
-Received: from aegis ([138.84.66.135])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-364a41a230bsm1955948a91.8.2026.04.29.03.33.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Apr 2026 03:33:37 -0700 (PDT)
-From: Daniel J Blueman <daniel@quora.org>
-To: "Sibi Sankar" <sibi.sankar@oss.qualcomm.com>,
-	"Rob Herring" <robh@kernel.org>,
-	"Krzysztof Kozlowski" <krzk+dt@kernel.org>,
-	"Conor Dooley" <conor+dt@kernel.org>,
-	"Hans de Goede" <hansg@kernel.org>,
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-	"Bjorn Andersson" <andersson@kernel.org>,
-	"Konrad Dybcio" <konradybcio@kernel.org>,
-	"Randy Dunlap" <rdunlap@infradead.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
-	Maya Matuszczyk <maccraft123mc@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>,
-	Daniel J Blueman <daniel@quora.org>
-Subject: [PATCH] arm64: dts: qcom: slim7x: Add Embedded Controller node
-Date: Wed, 29 Apr 2026 18:32:58 +0800
-Message-ID: <20260429103301.17449-1-daniel@quora.org>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1777458948; c=relaxed/simple;
+	bh=19Rr29Idb4huD5A/su/DfBvHKDxafFYs9o48mQd/W1w=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=oGupCgKrpwnFcfSZGnStmXNW+AXk65LAuyiPe3Jo1JSCxIA/abBp1BpugKZQVcBy3yWKFPvZG5CESNBMcc1WqROTNlapVUFofwgL6yGVEkyvfRCx1RFQtPgeW60mRgu+0dVTlVfVfQOZA4KHi5Nbhx63ZIrZS1Y+Ek/1U4JjSrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EgAb0Lcy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63T8pxOM963224;
+	Wed, 29 Apr 2026 10:35:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=mMhgb2w3UUprI9puCgN9jd
+	6YY1J9HQUZQkJdF2fVHOw=; b=EgAb0LcyYbdPjy6eut5IbPyaO+yLXwPNsq1UKc
+	cjvsH5GASQcihPYw1E1THuhsYWr+uGXeiYXlhM1P94BK6Cn7jhGJD0uy+hbZBHx4
+	o+Fvr37M1Czu7cYSaAEsRSO0oRAYNLobxKoj/35f/ED8DlDnx36OvVun7kTnYVN8
+	um82VNi35yiJzA0/xS0JCq9PCwZOWvRB2cyzDMQPtxBkD2f6rVElDqFBnia4G3pC
+	b8/MMsDZ6OhHs85OIx1EccJmfqgAkWlqINJCY8bRloEjXoJg9O/GbL6GRHrEKzXQ
+	nt5mVvgzUw2m6pA5C0uaJfduizIOEhz5HoYOVYwm8mDao6PA==
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4du2m4u05b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Apr 2026 10:35:43 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 63TAZeCA026210;
+	Wed, 29 Apr 2026 10:35:40 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4ds69w9497-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Apr 2026 10:35:40 +0000 (GMT)
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 63TAZeWN026203;
+	Wed, 29 Apr 2026 10:35:40 GMT
+Received: from shuaz-gv.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 63TAZdDa026202
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Apr 2026 10:35:40 +0000 (GMT)
+Received: by shuaz-gv.ap.qualcomm.com (Postfix, from userid 4467449)
+	id E8F445EE; Wed, 29 Apr 2026 18:35:38 +0800 (CST)
+From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        cheng.jiang@oss.qualcomm.com, quic_chezhou@quicinc.com,
+        wei.deng@oss.qualcomm.com, jinwang.li@oss.qualcomm.com,
+        mengshi.wu@oss.qualcomm.com, shuai.zhang@oss.qualcomm.com
+Subject: [PATCH v2] arm64: dts: monaco-arduino-monza: Add Bluetooth UART node
+Date: Wed, 29 Apr 2026 18:35:37 +0800
+Message-Id: <20260429103537.1282497-1-shuai.zhang@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: C9919493000
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDEwNyBTYWx0ZWRfX8kXWsYx5ueqC
+ alR78zWuc+9l9xBtmL2h6QGhM2VVq68hHIDErfcYA2IKhbFM4j4PSexeoLshzgroWb0moOt74P7
+ LO+4lnhp/NNo+J/qa4hkU8it9OPEH/ukewljq/gwJGAoVjmW810lmpG+bqODlLmEjSyVdterzT+
+ N/zTwWUv381Az/mfmwTt1NFmNHoNELsSfOVNNFjdbPJMReNXgMzo0YLPv04uhwOqq+dEjqUVuCu
+ Hn7moSOKu/eJXIBk7eRbaJdS/AeYpxwa586Ej39xsFlkcwSO9pwIj5gGE2HW3Fs95oxyAMtePpC
+ N4v8m/jJpNwSHYvPu4lbScHswq6IuPA8EXu6ZIg0uPyh8a5RvOSF7Cnxjdfh8sMZEU/fjm+NlcR
+ N4AhUjTJcl52ALaFCkkrXdY3EraYy/PYdGt/z0wnNYucXfjwldCfjeedO5UrS3qbwe0bm33F5Ts
+ QbKoMx5fmHTPc34OXlw==
+X-Proofpoint-GUID: V8HNL5CDLmsms53d3p9eVpky0zQvwdz3
+X-Authority-Analysis: v=2.4 cv=MuFiLWae c=1 sm=1 tr=0 ts=69f1deff cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=hEndWF4aPVnrLPyaUrQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: V8HNL5CDLmsms53d3p9eVpky0zQvwdz3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-28_05,2026-04-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 lowpriorityscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604290107
+X-Rspamd-Queue-Id: A3841493037
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [1.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[quora.org:s=google];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	TAGGED_FROM(0.00)[bounces-105180-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,gmail.com,quora.org];
-	RCPT_COUNT_TWELVE(0.00)[21];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105179-lists,linux-arm-msm=lfdr.de];
-	DMARC_NA(0.00)[quora.org];
-	DKIM_TRACE(0.00)[quora.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.969];
-	DBL_PROHIBIT(0.00)[0.0.0.76:email];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[shuai.zhang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+];
+	PRECEDENCE_BULK(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	NEURAL_HAM(-0.00)[-1.000];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[10]
 
-The Lenovo Slim7x uses the same Embedded Controller as the Qualcomm
-Hamoa Customer Reference Device (X1). Wire it up for fan control,
-thermal sensor and suspend behaviour.
+The QCA2066 Bluetooth chip is powered by a board-level 3.3 V supply
+provided by the hardware. This change connects the Bluetooth
+controller via UART10, and the corresponding GPIO is used to enable
+the Bluetooth chip.
 
-Dependencies:
-https://lore.kernel.org/all/20260427-add-driver-for-ec-v8-0-702f74e495f7@oss.qualcomm.com/
+basic function test step:
+ - bluetoothctl power on/off
+ - bluetoothctl scan bredr/le
+ - bluetoothctl pair <remote device address>
+ - bluetoothctl connect <remote device address>
 
-Signed-off-by: Daniel J Blueman <daniel@quora.org>
+low-state test and state:
+ - rtcwake -d /dev/rtc0 -m no -s 30 && systemctl suspend
+
+cat /sys/kernel/debug/suspend_stats
+success: 1
+fail: 0
+failed_freeze: 0
+failed_prepare: 0
+failed_suspend: 0
+failed_suspend_late: 0
+failed_suspend_noirq: 0
+failed_resume: 0
+failed_resume_early: 0
+failed_resume_noirq: 0
+failures:
+  last_failed_dev:
+
+  last_failed_errno:    0
+                        0
+  last_failed_step:
+
+Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
 ---
- .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Changes v2:
+- Fix board name typo from "monac" to "monaco".
+- Clarify that Bluetooth is connected via UART10.
+- Add detailed testing steps, including suspend/resume and low-power validation.
+- Document that the QCA2066 Bluetooth chip is powered by a board-level, hardware-provided 3.3 V supply, and that the GPIO is used only to enable the Bluetooth chip.
+- Add the required sleep clock to satisfy the qcom,qca2066-bt DT binding and run dtbs_check.
+- Fix DTS formatting issues and drop redundant status properties.
+- Update authorship
+- Link to v6
+  https://lore.kernel.org/all/20260428025652.662502-1-shuai.zhang@oss.qualcomm.com/
+---
+ arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-index beb1475d7fa0..22c4ad34a2a4 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-@@ -951,6 +951,22 @@ retimer_ss0_con_sbu_out: endpoint {
+diff --git a/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts b/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
+index ca14f0ea4..379b796f2 100644
+--- a/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
++++ b/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
+@@ -21,6 +21,7 @@ aliases {
+ 		ethernet0 = &ethernet0;
+ 		i2c1 = &i2c1;
+ 		serial0 = &uart7;
++		serial1 = &uart10;
  	};
+ 
+ 	chosen {
+@@ -454,6 +455,16 @@ &uart7 {
+ 	status = "okay";
  };
  
-+&i2c5 {
-+	clock-frequency = <400000>;
-+
++&uart10 {
 +	status = "okay";
 +
-+	embedded-controller@76 {
-+		compatible = "qcom,glymur-crd-ec", "qcom,hamoa-crd-ec";
-+		reg = <0x76>;
-+
-+		interrupts-extended = <&tlmm 66 IRQ_TYPE_EDGE_FALLING>;
-+
-+		pinctrl-0 = <&ec_int_n_default>;
-+		pinctrl-names = "default";
++	bluetooth: bluetooth {
++		compatible = "qcom,qca2066-bt";
++		enable-gpios = <&tlmm 55 GPIO_ACTIVE_HIGH>;
++		clocks = <&sleep_clk>;
 +	};
 +};
 +
- &i2c7 {
- 	clock-frequency = <400000>;
- 
-@@ -1352,6 +1368,12 @@ &tlmm {
- 			       <44 4>, /* SPI (TPM) */
- 			       <238 1>; /* UFS Reset */
- 
-+	ec_int_n_default: ec-int-n-state {
-+		pins = "gpio66";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
- 	edp_reg_en: edp-reg-en-state {
- 		pins = "gpio70";
- 		function = "gpio";
+ &usb_1 {
+ 	status = "okay";
+ };
 -- 
-2.53.0
+2.34.1
 
 
