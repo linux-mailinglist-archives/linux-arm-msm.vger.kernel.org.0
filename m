@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-105270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eCW2KQR38mkHrgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 23:24:20 +0200
+	id 2PQ1IFt88ml2rwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 23:47:07 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D743F49A922
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 23:24:19 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF21249AAFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 23:47:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3334B3011C72
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 21:24:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 93E9A301CD94
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 21:47:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 740173A874D;
-	Wed, 29 Apr 2026 21:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DDBF379EEF;
+	Wed, 29 Apr 2026 21:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gkg/HS3p"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lFs6JYIW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A984D3939AE;
-	Wed, 29 Apr 2026 21:23:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C022749D6;
+	Wed, 29 Apr 2026 21:46:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777497839; cv=none; b=RYjBApKpv4ZRBrS4T83IFu3U4W4LIHHuH8g1wqNkd9qzNwkt5LaAP81/7Xzu74Dimwr4HoUI0ClBakWZa6DD0YcJ20nlWSONU6rzrPNxj/1XgGbDa6flaoEKITWS/HBSXGcQ8mlZIoDAsrGV6f2EWE952tsfF3mth4+kQzwQCzI=
+	t=1777499221; cv=none; b=Dssu3m6rAry5+jIdA9QVEZdb0kU8AG4JzFFZO4dlST9VZtZFKIBa8B0GpUw5sj4NY4kcohRVXfzT2wN8Z12qRp/+94mqiY6Rp8fnAD+hCt16FAB6/VyEAkl/fxTueCyp2yqS7D2RVoTDN/5PloJBY4N1ljVix8wvMaPJCFiBTXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777497839; c=relaxed/simple;
-	bh=XGfI1KD8DtydVr0FNfE/k4FUZDiwOjIIhcZY5jB1c7c=;
+	s=arc-20240116; t=1777499221; c=relaxed/simple;
+	bh=RKADrjlZxdvKzWuwSS/wN7ViwlvtwGzupRWk4o1EfP0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=buSbv9KdOOnHmZMyV5sJMputBe1TwllfkvEy4G34kAebkDxznwmCrECAoZJ+YIPsW5ZH4QPrF/LSgo8yI0vifMkgi1Vz4ynPbKavUk/qxEENFm4RlzqhWRVJiNTAde2yKVOi7jwGMR+gU4ef1TZv5e/KBoU2uUNzZXQK9j7j8Js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gkg/HS3p; arc=none smtp.client-ip=198.175.65.19
+	 Content-Type:Content-Disposition:In-Reply-To; b=mYHmkkQnA/PQQ0IykhUQCJhx8+yu7uthvlg68nQK7vlzeyi1K/wAF1ssUsBTqCK7eMdSunuAzXbZCPsvScM5wC1loee8P+jbS4d7Iqdrq2SF7g97pkW6EOH7ZgpawTevrPZ5qD/EphxWJH3nHh5GvfE53NT6y1gtrZ+m4v5X7qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lFs6JYIW; arc=none smtp.client-ip=198.175.65.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1777497837; x=1809033837;
+  t=1777499220; x=1809035220;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=XGfI1KD8DtydVr0FNfE/k4FUZDiwOjIIhcZY5jB1c7c=;
-  b=gkg/HS3p9UhIFdQtkkp8p2z4REUuxeqsBgOx2n57SHQJhTXpSYa1/Q7h
-   SsYkoWxpi8kHtIa0kv9JOqmopmAXPNfWidjaIlhHVBYB4mXXL6h3VHzg6
-   PjXWdyyCHs8yzuk0kul+Ejl7AWfQ8r6fu35X2NSUecK5czPQyjD4QsX1A
-   ILROe0FTkBL2ndlwlB+Ac6LhhLxH+17/B65dxDa6VabSLPrjiBj1GRXGJ
-   C5+geKyeeqa0gMoxapBbrZ/ujAOjnxAc8dN3TptihK2ZBareYo4HWHvnJ
-   poSoCd4ESne4QE1ianO2A4eU3vIEterPl4/Blzpha+LSjP/BaiGydbrFz
-   g==;
-X-CSE-ConnectionGUID: 1n3skWgGSIGGDTZGoQvxsg==
-X-CSE-MsgGUID: xCgw04TyTM67IOKEUoQYsw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="78358416"
+  bh=RKADrjlZxdvKzWuwSS/wN7ViwlvtwGzupRWk4o1EfP0=;
+  b=lFs6JYIWHbQTb0Q9n0zxWYDVbJfRIMbyOJywgRswsihHJC1+ZypSb9gt
+   0JTAy70jH65uI2XtcbQYHOiT+9JdP71ExapJj2A7lLwEQJagIVibEyu5G
+   CenuGJBNkAfK6cC8AT2meelf/Y0t0aASwzqayXNWEtHIftkU3FTpQt+x1
+   myPfLoXM6yv40C4VTTdc5WKJcFw421OuFhLwFkkYcTxGl8ykZTLlVfPxC
+   wCYdeHE+KuJXLWrzqvV55kdUEk2cwZtJFvu/haGl1dX6p4irGj+uHXH2s
+   TCSGPF01T/znocIQm5qH6J93iwghPtA3dO9hUMxVy3OFeIhvM0/u6XOiQ
+   A==;
+X-CSE-ConnectionGUID: PORmGPyMQrKUopao8KYJsQ==
+X-CSE-MsgGUID: NmpB1gFlQXyEO4296bilRg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="88751148"
 X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
-   d="scan'208";a="78358416"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 14:23:57 -0700
-X-CSE-ConnectionGUID: LQgLPGanRPa9vXmI1M2ucw==
-X-CSE-MsgGUID: n5KkpAWPSc2gy/lnPaiJ3A==
+   d="scan'208";a="88751148"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Apr 2026 14:46:59 -0700
+X-CSE-ConnectionGUID: h2jE8+PaQ4K3VP8aSOXY4g==
+X-CSE-MsgGUID: M5SMprO9RGuiaeMJ9cmd4A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,206,1770624000"; 
-   d="scan'208";a="233541641"
+   d="scan'208";a="234266688"
 Received: from lkp-server01.sh.intel.com (HELO aa799cca880d) ([10.239.97.150])
-  by orviesa010.jf.intel.com with ESMTP; 29 Apr 2026 14:23:53 -0700
+  by orviesa008.jf.intel.com with ESMTP; 29 Apr 2026 14:46:56 -0700
 Received: from kbuild by aa799cca880d with local (Exim 4.98.2)
 	(envelope-from <lkp@intel.com>)
-	id 1wICNp-00000000BYS-3jfU;
-	Wed, 29 Apr 2026 21:23:49 +0000
-Date: Thu, 30 Apr 2026 05:23:26 +0800
+	id 1wICk8-00000000BZW-3OJr;
+	Wed, 29 Apr 2026 21:46:52 +0000
+Date: Thu, 30 Apr 2026 05:46:28 +0800
 From: kernel test robot <lkp@intel.com>
 To: Jianping Li <jianping.li@oss.qualcomm.com>, srini@kernel.org,
 	amahesh@qti.qualcomm.com, arnd@arndb.de, gregkh@linuxfoundation.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+Cc: oe-kbuild-all@lists.linux.dev,
 	Jianping Li <jianping.li@oss.qualcomm.com>,
 	thierry.escande@linaro.org, linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
@@ -77,7 +77,7 @@ Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
 	stable@kernel.org
 Subject: Re: [PATCH] misc: fastrpc: fix UAF and kernel panic during cleanup
  on process abort
-Message-ID: <202604300542.cRI7jldQ-lkp@intel.com>
+Message-ID: <202604300523.sGVh9WHp-lkp@intel.com>
 References: <20260427105310.4056-1-jianping.li@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -88,34 +88,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20260427105310.4056-1-jianping.li@oss.qualcomm.com>
-X-Rspamd-Queue-Id: D743F49A922
+X-Rspamd-Queue-Id: EF21249AAFF
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.16 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105270-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-105271-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[intel.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[6];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	TO_DN_SOME(0.00)[]
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[01.org:url,intel.com:email,intel.com:dkim,intel.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 
 Hi Jianping,
 
@@ -131,27 +132,28 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Jianping-Li/misc-fastrpc-
 base:   char-misc/char-misc-testing
 patch link:    https://lore.kernel.org/r/20260427105310.4056-1-jianping.li%40oss.qualcomm.com
 patch subject: [PATCH] misc: fastrpc: fix UAF and kernel panic during cleanup on process abort
-config: arm64-randconfig-002-20260430 (https://download.01.org/0day-ci/archive/20260430/202604300542.cRI7jldQ-lkp@intel.com/config)
-compiler: clang version 23.0.0git (https://github.com/llvm/llvm-project 5bac06718f502014fade905512f1d26d578a18f3)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260430/202604300542.cRI7jldQ-lkp@intel.com/reproduce)
+config: csky-randconfig-001-20260430 (https://download.01.org/0day-ci/archive/20260430/202604300523.sGVh9WHp-lkp@intel.com/config)
+compiler: csky-linux-gcc (GCC) 15.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260430/202604300523.sGVh9WHp-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202604300542.cRI7jldQ-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202604300523.sGVh9WHp-lkp@intel.com/
 
 All errors (new ones prefixed by >>):
 
->> drivers/misc/fastrpc.c:437:7: error: call to undeclared function 'FASTRPC_PHYS'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   drivers/misc/fastrpc.c: In function 'fastrpc_buf_free':
+>> drivers/misc/fastrpc.c:437:35: error: implicit declaration of function 'FASTRPC_PHYS' [-Wimplicit-function-declaration]
      437 |                                   FASTRPC_PHYS(buf->phys));
-         |                                   ^
->> drivers/misc/fastrpc.c:437:25: error: no member named 'phys' in 'struct fastrpc_buf'
+         |                                   ^~~~~~~~~~~~
+>> drivers/misc/fastrpc.c:437:51: error: 'struct fastrpc_buf' has no member named 'phys'
      437 |                                   FASTRPC_PHYS(buf->phys));
-         |                                                ~~~  ^
-   drivers/misc/fastrpc.c:465:70: error: no member named 'phys' in 'struct fastrpc_buf'
+         |                                                   ^~
+   drivers/misc/fastrpc.c: In function '__fastrpc_buf_alloc':
+   drivers/misc/fastrpc.c:465:82: error: 'struct fastrpc_buf' has no member named 'phys'
      465 |                 buf->virt = dma_alloc_coherent(dev, buf->size, (dma_addr_t *)&buf->phys, GFP_KERNEL);
-         |                                                                               ~~~  ^
-   3 errors generated.
+         |                                                                                  ^~
 
 
 vim +/FASTRPC_PHYS +437 drivers/misc/fastrpc.c
