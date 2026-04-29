@@ -1,169 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-105178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2HLJBEXd8Wn3kwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 12:28:21 +0200
+	id oJDVDY7e8Wn3kwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 12:33:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39C4B492E8C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 12:28:16 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9919493000
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 12:33:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 3A0FD3003BEF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 10:27:10 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 0AB4D30300C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Apr 2026 10:33:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAD483D3D13;
-	Wed, 29 Apr 2026 10:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C15BF3E639A;
+	Wed, 29 Apr 2026 10:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DFkH8doX"
+	dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b="bb5egrAt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A663D348B;
-	Wed, 29 Apr 2026 10:27:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726793EB7F0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2026 10:33:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777458428; cv=none; b=Vs9+ETFS0OqER/InKXEpTkPxls+95U2FL3BInJiH4vPml0Syj1TO1NdBWS/RZk4BtkReLjizsJ4zgIq0cGHS0+/phh928cpO/oQWkkL1XSverwGlx1iJ5M6cPCAuIkkUZyBLoVRWabpSqKtEVuU7kFKJoTWXxe8Pcs/eIj0QxYA=
+	t=1777458819; cv=none; b=lm6ukL2h823ZjGcuO0dsWPyv5aAPuSXgRs0wHM1N3xVaQC6XVoU1tGG5RfoVDnQwhfP7EuqiLz5bNcwO5VK3EGKXpl5/YRdT+pG9YboZ8z9mqMdv9F5t9lbe3kMk14Xrig76L3Tzo/QqhBvGHPSA9CjpI2bNVrxEiPTBOHvifjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777458428; c=relaxed/simple;
-	bh=DlpxBcfc3bnKCpxJ5lHCdxUsFOlwBNR9X5HKYoOV/X8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZHdneErKNKEdXdt0ceDuYs73eGFXP+8wh823ai5K2f155tvAbBqIEgQDKxQdjIpTF/ZpfPmjDsUJsQdgahrhVDv7B+M+kMLzK3PMLZShsKQthb2N4u2En7ZuUAP1lV9MVepZO2MIo56lCiL6yY2Z1p/ppAAsd18XALd1HctvPPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DFkH8doX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C303C19425;
-	Wed, 29 Apr 2026 10:27:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777458428;
-	bh=DlpxBcfc3bnKCpxJ5lHCdxUsFOlwBNR9X5HKYoOV/X8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DFkH8doXUAfGNsg3KhrRMqTgnBnC+h5WHzRkzRhTrO8aPl9dgNJ1/4kz7kHrHZXfM
-	 dej4vM9QiKj29HXOYDn+dh61ybGAyV2T7DLplY+8ZsaVRDKhkWeSZ8KZYINzUMEf7g
-	 cLroP+KtXhgPLvjjncb7lllWrn9M1hKsInOrDJ8tM2xaQZdsjPS7a4bobzwGFm+KdD
-	 jn3ARACYKHpj3EGcWWpT1SbhAlM4ZqVpe4oj8EuXdTNgjeW1m8hIM3aSpHl6PD0iY6
-	 SekUQ8uTOVqr0FlSg1kDZTY4+tfjp8cnPos/QO4rCQIZd5hJObFudUhP64T5xYiZJo
-	 uaYiKYqbIbp1A==
-Date: Wed, 29 Apr 2026 11:27:03 +0100
-From: Simon Horman <horms@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-	Johannes Berg <johannes@sipsolutions.net>, netdev@vger.kernel.org,
+	s=arc-20240116; t=1777458819; c=relaxed/simple;
+	bh=i2NtLLLhNCL83g0ecLJOBZbfQ33HYTTevueS7EHO/Vc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=G3TB4DZsAHQLhXOrKjQxlDPo9CUgnTbPZ8rmZy7XKsgguN3fc2MU2xxgTn6WWXiZY2kZ7miEMJyzx5UDAfBAqpcyewVKlJRTtjibljS/u6qELvTw+SSqt9MMYmqIgCEvPyABkrhWR8uPslfU91GVG6okoxD4u73SP3W0o44z6ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org; spf=pass smtp.mailfrom=quora.org; dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b=bb5egrAt; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quora.org
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-35da2d35eccso8605439a91.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Apr 2026 03:33:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=quora.org; s=google; t=1777458818; x=1778063618; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8RTUgu04LfMLANwSoXjWoPf/4vksRgEvuPnPFzRPOsg=;
+        b=bb5egrAtSdlBmRUphTKddFPKFrDn+JTyUzfRDqq3oo7gBks9F7j7A3KNKngLOs5hWq
+         VNsmyy91BmjcbxipAf9JIUIp2AetgJMwBOm+0wlIdHuoAQmH3g2nyYfP4LTM63iMBfTr
+         PyuYNq+UWOPVpX1dYWaFiOs9oShDGLmMAVF80=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777458818; x=1778063618;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8RTUgu04LfMLANwSoXjWoPf/4vksRgEvuPnPFzRPOsg=;
+        b=N2gXnzgDP4qosUWYwcwUNyGXwjJA/44DpUS97Ag+vF/+7ZY/jbYjDeJmIqu1gYuzP+
+         Nd6+kl6szGhNQypZIVC2ZLov6UFH5X9Ko9jEgxDRybiHLiByua2BjhdM7Ys+dwC5M84X
+         m+bZrq1T049kskLRgeCkq4hs5Dp7R/SmTYZaMGgx+j9GaUYObUjGFC2vsPp/kVL9UC3C
+         DCpl5f+3q/4vCKmEGq7zw8jCSHUU8jRSbBZS4fMme5ibualJ/DUpGk+Wot9WOQnb6EkX
+         xTDsEi3hfbRMGokBbW4ApkQ6PYO9f5G+Qx5QwfdXACIszBvfAcc08lbbV0b3Lw+7FoPL
+         FYTQ==
+X-Gm-Message-State: AOJu0YzWW62ZYcLfNpG11qrWuM00LVW8bK3OYFBoHl6eyOB4DDkUrXAI
+	Bra5tLWw6A8vP3YU39Hv97LwEwnAgm7dURhKDCPZO+yKFXYVg+MsOawTagl1YM/DOf74i0XYmq2
+	In+a5oI7nfA==
+X-Gm-Gg: AeBDieuSN6LfU74tjY9UDJMmZOy9rDYarNca8OJ4r2lw9cyqm6l8/P/SAKLIqsR1H7V
+	qB8s41/RzaMVpv3SXwu2MowIR8Dm+7Kc+rUvxy6Liy2ZKfyUZ6Po6HHEB2Ar3yho4kNHj0iwwVd
+	MlShLXZ9BJrXttWkVhW9EEh46E6JzDacauP5AZD+kK/4HBeMv4RDg62yQVTXkWhWUzny8K31Dyo
+	d7f/Xk5ttQFDUd+4R2iEhBzrVDT6PGt01kSkut6x8Uh+pwQxrclxHiTDvdkXe3MifHpZ/hJoihY
+	EgSpALjZKaCDB40vTdUp1UrEfZffFqtZ8xxlZvjBuGX2m8afSUD7S5Kz+puM1ahDylILog0Hket
+	JTlC/ToNSR/7OiL0nmyR/z566OmL3AYr1zTUVDb9ttP6FKjFEqD8rqHzauP1yu4SDsQhp9fZdsX
+	maNeK1eVC8nXqIx+nXE8qNPf/rnNsPK4E26zgrFlJcfLPPbzathV2spaPlB0sgq9w6BNS18BBOk
+	0+CnuM+QPMIQqBirknk/yti90vpHoD4yf+i5bxIhU1ynvkT2EyxZEbj7WXQkhUt5LVHtdEV0WGU
+	DZncWkDX00lz5qqESnUkb9PxjiRXtl2OJamgbKGjS/4hCcpEB2hD0i7udqiN8gjHLkSoAnRt9LD
+	BSPg=
+X-Received: by 2002:a17:90b:2548:b0:35b:e52a:6fe5 with SMTP id 98e67ed59e1d1-36491f89c0cmr6867110a91.5.1777458817863;
+        Wed, 29 Apr 2026 03:33:37 -0700 (PDT)
+Received: from aegis ([138.84.66.135])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-364a41a230bsm1955948a91.8.2026.04.29.03.33.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Apr 2026 03:33:37 -0700 (PDT)
+From: Daniel J Blueman <daniel@quora.org>
+To: "Sibi Sankar" <sibi.sankar@oss.qualcomm.com>,
+	"Rob Herring" <robh@kernel.org>,
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+	"Conor Dooley" <conor+dt@kernel.org>,
+	"Hans de Goede" <hansg@kernel.org>,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	"Bjorn Andersson" <andersson@kernel.org>,
+	"Konrad Dybcio" <konradybcio@kernel.org>,
+	"Randy Dunlap" <rdunlap@infradead.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	=Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] net: Unify user-visible "Qualcomm" name
-Message-ID: <20260429102703.GX900403@horms.kernel.org>
-References: <20260427070127.18471-2-krzysztof.kozlowski@oss.qualcomm.com>
- <20260428161444.GU900403@horms.kernel.org>
- <ac91a635-4aeb-4fa2-a00a-0e3425caaea4@oss.qualcomm.com>
+	Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
+	Maya Matuszczyk <maccraft123mc@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>,
+	Daniel J Blueman <daniel@quora.org>
+Subject: [PATCH] arm64: dts: qcom: slim7x: Add Embedded Controller node
+Date: Wed, 29 Apr 2026 18:32:58 +0800
+Message-ID: <20260429103301.17449-1-daniel@quora.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ac91a635-4aeb-4fa2-a00a-0e3425caaea4@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 39C4B492E8C
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: C9919493000
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [1.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[quora.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105178-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,oss.qualcomm.com,gmail.com,sipsolutions.net,vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[horms@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,gmail.com,quora.org];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105179-lists,linux-arm-msm=lfdr.de];
+	DMARC_NA(0.00)[quora.org];
+	DKIM_TRACE(0.00)[quora.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.969];
+	DBL_PROHIBIT(0.00)[0.0.0.76:email];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 
-On Tue, Apr 28, 2026 at 06:28:24PM +0200, Krzysztof Kozlowski wrote:
-> On 28/04/2026 18:14, Simon Horman wrote:
-> > On Mon, Apr 27, 2026 at 09:01:27AM +0200, Krzysztof Kozlowski wrote:
-> >> Various names for Qualcomm as a company are used in user-visible config
-> >> options: QCOM, Qualcomm and Qualcomm Technologies.  Switch to unified
-> >> "Qualcomm" so it will be easier for users to identify the options when
-> >> for example running menuconfig.
-> >>
-> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> > 
-> > ...
-> > 
-> >> diff --git a/drivers/net/wwan/Kconfig b/drivers/net/wwan/Kconfig
-> >> index 88df55d78d90..958dbc7347fa 100644
-> >> --- a/drivers/net/wwan/Kconfig
-> >> +++ b/drivers/net/wwan/Kconfig
-> >> @@ -38,7 +38,7 @@ config WWAN_HWSIM
-> >>  	  called wwan_hwsim.  If unsure, say N.
-> >>  
-> >>  config MHI_WWAN_CTRL
-> >> -	tristate "MHI WWAN control driver for QCOM-based PCIe modems"
-> >> +	tristate "MHI WWAN control driver for Qualcomm-based PCIe modems"
-> >>  	depends on MHI_BUS
-> >>  	help
-> >>  	  MHI WWAN CTRL allows QCOM-based PCIe modems to expose different modem
-> > 
-> > Hi Krzysztof,
-> > 
-> > Sashiko points out that QCOM is still used on the line above.
-> > 
-> >> @@ -51,7 +51,7 @@ config MHI_WWAN_CTRL
-> >>  	  called mhi_wwan_ctrl.
-> >>  
-> >>  config MHI_WWAN_MBIM
-> >> -        tristate "MHI WWAN MBIM network driver for QCOM-based PCIe modems"
-> >> +        tristate "MHI WWAN MBIM network driver for Qualcomm-based PCIe modems"
-> >>          depends on MHI_BUS
-> >>          help
-> >>            MHI WWAN MBIM is a WWAN network driver for QCOM-based PCIe modems.
-> > 
-> > And here too.
-> 
-> Yes, I did not unify every single text because I believe that might be
-> more churn and not that much benefit. I think it is more important to
-> have a list of drivers in xconfig or menuconfig nicely organized and the
-> help message matters less.
-> 
-> But if you wish, I can replace it there as well.
+The Lenovo Slim7x uses the same Embedded Controller as the Qualcomm
+Hamoa Customer Reference Device (X1). Wire it up for fan control,
+thermal sensor and suspend behaviour.
 
-Thanks for clarifying.
+Dependencies:
+https://lore.kernel.org/all/20260427-add-driver-for-ec-v8-0-702f74e495f7@oss.qualcomm.com/
 
-I have no strong preference and am happy with this patch as-is.
+Signed-off-by: Daniel J Blueman <daniel@quora.org>
+---
+ .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 22 +++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-Reviewed-by: Simon Horman <horms@kernel.org>
-
-I see this was marked as changes requested.
-Presumably due to my previous email.
-Let's see if this helps.
-
-pw-bot: under-review
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+index beb1475d7fa0..22c4ad34a2a4 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+@@ -951,6 +951,22 @@ retimer_ss0_con_sbu_out: endpoint {
+ 	};
+ };
+ 
++&i2c5 {
++	clock-frequency = <400000>;
++
++	status = "okay";
++
++	embedded-controller@76 {
++		compatible = "qcom,glymur-crd-ec", "qcom,hamoa-crd-ec";
++		reg = <0x76>;
++
++		interrupts-extended = <&tlmm 66 IRQ_TYPE_EDGE_FALLING>;
++
++		pinctrl-0 = <&ec_int_n_default>;
++		pinctrl-names = "default";
++	};
++};
++
+ &i2c7 {
+ 	clock-frequency = <400000>;
+ 
+@@ -1352,6 +1368,12 @@ &tlmm {
+ 			       <44 4>, /* SPI (TPM) */
+ 			       <238 1>; /* UFS Reset */
+ 
++	ec_int_n_default: ec-int-n-state {
++		pins = "gpio66";
++		function = "gpio";
++		bias-disable;
++	};
++
+ 	edp_reg_en: edp-reg-en-state {
+ 		pins = "gpio70";
+ 		function = "gpio";
+-- 
+2.53.0
 
 
