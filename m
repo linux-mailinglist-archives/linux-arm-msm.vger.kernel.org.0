@@ -1,209 +1,263 @@
-Return-Path: <linux-arm-msm+bounces-105307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mISGNFQd82kvxQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 11:13:56 +0200
+	id 6HXIGqIe82kvxQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 11:19:30 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7572349FB1D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 11:13:56 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1DFA49FC32
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 11:19:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EF5EC3016EC8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 09:12:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 419BF301456A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 09:19:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3642390204;
-	Thu, 30 Apr 2026 09:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DF433A16AA;
+	Thu, 30 Apr 2026 09:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rMjAOFy9"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="jl75Y6bE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E23B3921CE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 09:12:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F81B3A0B1F;
+	Thu, 30 Apr 2026 09:18:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777540353; cv=none; b=XKz8ZO75iqM0siuAoIhdzVx2KDH7T7aia9dk9c/leo134B8Vq6WVCJMPFFQseXRgWwk88mTEnEVxHiseIWRWD0M8JXiwnjCQZGdf/+5iR1jvmesof+gg/ps2uAIcfW63Vsr/eO6HY8gMdAYViTcfLOsSPvrEL364AS0oEcWuN5Q=
+	t=1777540739; cv=none; b=OSdG4d/FRqwbpm5kH2e3La/S0PzAPD6dCzJt+q4g87LTrfZaOx4Dc0PmkjD0GEjCDuhyxbSYSD2d0mJzXz7kp0D4WusEwAc0R8/V0Zx7/yt1Kur83G//gUtVBfK1PyY1qpgl9CUaiUs8ON7NZif3DCJ2CAcFeH3LNNAoWCNA8wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777540353; c=relaxed/simple;
-	bh=2tcHBZdgLu+Id73c9frQue9C59SGcYJBPtlBAQQ9eo8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ys/kRhC7RqRywgCmtv0RpuqzbfIX/YUutBo+VPAobRSe464kKJ8flM+2ZBCnminryejoEBICHwpA8BRTxw769QXPewR8cAFLR8rCke7acmgWzjF7QOJ5KDFQJ5IoF5N1id8cL+9mJMJc05CLyFNqKLnK43YUoZqRur3Pkaa9w3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rMjAOFy9; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4891f625344so7270995e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 02:12:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1777540348; x=1778145148; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZXwiU5e9+FBK2pxQninpsC9pqc7dd0IMCHk0/eRjISw=;
-        b=rMjAOFy9u9IYwRyqtf1SYJwM13G2z7HE2RP7Fp9BBLgZZ5azf161xuq95W4mZ9v1HX
-         pxDGaD24tZf6DWEfFNIGLWwZzCxLoBu6nzbbXr8YZwFbMXT24qftWbpEu6b+8OnZtsiN
-         oYfrQBTYIcoAAplEfiSu73+nrStLYwlGBy++zMlle8LbNkRKzlCVk5zIByAcFlHsZKy/
-         PCkb/5IWhhZdxkuUzOmmU3nY7VO0fOqVJClHYggFbBOejV5gWu0SA8cbVtqq9I7VF82y
-         7/fYCUsT156Zrc+iFe/+AbQQ/sCAvK7uiEQPO8ENMuQ8Z0f4ZJr09sAZQZ7ox7ZY+tQp
-         K2Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777540348; x=1778145148;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZXwiU5e9+FBK2pxQninpsC9pqc7dd0IMCHk0/eRjISw=;
-        b=e01xA1MiiHVk6NkRfwFwPK0/3ff4UnS3YiXOlleW55QwkoTrO3Lwoy+F5wtTmAKUFz
-         y9Ue8IObxHa3Or4+k7TEXfkUeyyaQyebzle4vS9Gl/tWlRgYVPgrCGoToRj1MuLHW4JF
-         VNRwpuB5u/ytHR+ruW9moiA46cbMMXVEPIu8k0RSQq/tER+hnUpEgN/+uYBk7u2kyr1p
-         KLpWy69zs5jkn2S0NZv1Ktk5lVQRA2xoHMx9nfHr/oeMAtDlVCB/HyFaWeEXljguN+PD
-         ycPKLX/z+aMUfo0ZnZjGiVjmia+ZGn4waFTAgov6FOICEF6GPuq5N+jbTJZJuSPHMpJN
-         PSvA==
-X-Gm-Message-State: AOJu0Yy/A22W1XwGDou1reIAkjb6G1y3Wa3h8VORjgN15Xdjy5kahlq3
-	k0Ap7HHlu/7E2pJ/M9dxUmnTAPnQmMwY9MLDZ9yFXS05sGteq0mDaHIY1DVu6IGnslo=
-X-Gm-Gg: AeBDiev3ncczEwtLsnFB8njm1AE79EVbIGE1q3KCjxddEzza3dHfADRfh6QHRkqChBu
-	Zlo8UpZQbHIbnR2iMciVEk5zX2v2mgxaDS3vaX7vssoaMvJZ+3/B+qYNwMlBfeE05FmzAF4DMES
-	d0gen1apIQMo+oHZfyl15mSgi+HmpI0GgcXG32l+/m0Mj84C9irQ6jfLFs5gVf3VBuOR7DCiiEW
-	J33HVUdoAcfYR3NiqT+mLSF9h5eBVxWsETCQMSe5HNr7yBXl0GdA/XvyAJTaie8oSut5sXDjk8h
-	mS5L1/fkxU66wp8EqWz7zBG2FKDJOD9uCypWRlWEXyD5h2BpoaTcVc887iuZ+VLOS2HhyCVWzpC
-	RLBSnX1LjI06DEL2PJzPjvWv2B1Vql2UmYog5lDwkmZAKKCqd+DUkPcZxStA97dOuG9PPoPz10U
-	TsuptswVY3knLcBKunepTz0hcNuCSWOUHhrvO/Y/eE5z19Dz3GAQkWUkPUdtaZsjdC8rUmFmk1Q
-	Tf/fxOn8rYRDnaBYQ==
-X-Received: by 2002:a05:600c:c098:b0:489:1d7a:4537 with SMTP id 5b1f17b1804b1-48a85e172e2mr19009335e9.3.1777540347367;
-        Thu, 30 Apr 2026 02:12:27 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:6dcc:3980:fe87:c6ae? ([2a01:e0a:106d:1080:6dcc:3980:fe87:c6ae])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a82307f7csm53496155e9.12.2026.04.30.02.12.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Apr 2026 02:12:26 -0700 (PDT)
-Message-ID: <444ff296-fa63-4704-bb4d-1940ca0a28ff@linaro.org>
-Date: Thu, 30 Apr 2026 11:12:25 +0200
+	s=arc-20240116; t=1777540739; c=relaxed/simple;
+	bh=UJL6OelUXsdUY30x9NgFXQIVtEbTmLIWMXWCnrTOyiM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Lo3FxxM7A834zVlJ8gkHzMuAwHo27VYJFK/L7l+0TnEB1zK1Pc0brFn1PsUbF1zT8mUD9MorcnxUN1lSivRK4DL1V4Y/6sO8LNdYay704ng0+N6/LGT3/YzA3+ra+CKrsjdJ1IugQM9fXgLizdh6meAC9yu5nrwyl8VtRIxqHvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=jl75Y6bE; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 8F667C5CD62;
+	Thu, 30 Apr 2026 09:19:34 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id E9B706053C;
+	Thu, 30 Apr 2026 09:18:49 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E3A8E1072B84F;
+	Thu, 30 Apr 2026 11:18:24 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1777540726; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=kPzFTYl8s/0qzQL977XUmLm+EjuPVHwAvy6zvNV2190=;
+	b=jl75Y6bEL+7XH1zwiNW+c6qdRlqqlGGwLUpQ85RtTJdu9EpHAcCly7th2dkRJqgvBNtrOi
+	m2QfOXlLwq71dPBT0OgjxI68dJM3R2cB+iqkYi+0XspHjpHCoF+EBBUkZg5KaK9Ge507iz
+	kqv6ZoGGXkW8Sf95ZaByPAT/w9zxdFH418OSOYfew2Xz2glDUB3n85brvXZfGs5i95VpeD
+	3qzwbW2V/v/ub1Uw3wAAOmhwm9AQuiqFqc4ERnz9TZ2T+PdNiUahf2hsk6fdwzSWKMnhlC
+	YsCVptaZkFgjdrCmR7033Fh8MbPK2PhMdRWJYtWVA5m52jQShDFOY9mIO9MHIA==
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Andrzej Hajda <andrzej.hajda@intel.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Janne Grunau <j@jannau.net>, Liu Ying <victor.liu@nxp.com>, 
+ Douglas Anderson <dianders@chromium.org>, 
+ Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>, 
+ Lucas Stach <l.stach@pengutronix.de>, Frank Li <Frank.Li@nxp.com>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+ Paul Cercueil <paul@crapouillou.net>, 
+ Anitha Chrisanthus <anitha.chrisanthus@intel.com>, 
+ Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+ Sandy Huang <hjc@rock-chips.com>, 
+ =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
+ Andy Yan <andy.yan@rock-chips.com>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Mikko Perttunen <mperttunen@nvidia.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, 
+ Icenowy Zheng <zhengxingda@iscas.ac.cn>, Jingoo Han <jingoohan1@gmail.com>, 
+ Inki Dae <inki.dae@samsung.com>, Seung-Woo Kim <sw0312.kim@samsung.com>, 
+ Kyungmin Park <kyungmin.park@samsung.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, 
+ Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, 
+ Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>, 
+ Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Magnus Damm <magnus.damm@gmail.com>, Biju Das <biju.das.jz@bp.renesas.com>, 
+ Marek Vasut <marex@denx.de>, Stefan Agner <stefan@agner.ch>, 
+ Jyri Sarha <jyri.sarha@iki.fi>, Michal Simek <michal.simek@amd.com>, 
+ Sasha Finkelstein <k@chaosmail.tech>, 
+ Luca Ceresoli <luca.ceresoli@bootlin.com>
+Cc: Hui Pu <Hui.Pu@gehealthcare.com>, Ian Ray <ian.ray@gehealthcare.com>, 
+ Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ asahi@lists.linux.dev, imx@lists.linux.dev, 
+ linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
+ linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+ linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org, 
+ linux-samsung-soc@vger.kernel.org, linux-renesas-soc@vger.kernel.org
+In-Reply-To: <20260423-drm-bridge-connector-attach_encoder-v2-0-2ae6ca69b390@bootlin.com>
+References: <20260423-drm-bridge-connector-attach_encoder-v2-0-2ae6ca69b390@bootlin.com>
+Subject: Re: [PATCH v2 00/41] drm/display: bridge-connector: attach encoder
+ to the connector
+Message-Id: <177754070456.1321073.15208749896191583310.b4-ty@b4>
+Date: Thu, 30 Apr 2026 11:18:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 0/3] Add ADC support for lemans and monaco
-To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Ayyagari Ushasreevalli <aushasre@qti.qualcomm.com>,
- Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-References: <20260430-adc5_gen3_dt-v1-0-ab2bb40fd490@oss.qualcomm.com>
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20260430-adc5_gen3_dt-v1-0-ab2bb40fd490@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 7572349FB1D
+X-Mailer: b4 0.15.2
+X-Last-TLS-Session-Version: TLSv1.3
+X-Rspamd-Queue-Id: E1DFA49FC32
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
+	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105307-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:mid,linaro.org:dkim,linaro.org:replyto,qualcomm.com:email];
 	MIME_TRACE(0.00)[0:+];
-	HAS_ORG_HEADER(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105308-lists,linux-arm-msm=lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,intel.com,linaro.org,kernel.org,ideasonboard.com,kwiboo.se,gmail.com,linux.intel.com,suse.de,ffwll.ch,jannau.net,nxp.com,chromium.org,oss.nxp.com,pengutronix.de,crapouillou.net,collabora.com,baylibre.com,googlemail.com,linux.dev,poorly.run,somainline.org,rock-chips.com,sntech.de,nvidia.com,iscas.ac.cn,samsung.com,glider.be,bp.renesas.com,denx.de,agner.ch,iki.fi,amd.com,chaosmail.tech,bootlin.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[luca.ceresoli@bootlin.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[bootlin.com:+];
+	RCPT_COUNT_GT_50(0.00)[79];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	REPLYTO_EQ_FROM(0.00)[]
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,bootlin.com:dkim,bootlin.com:email]
 
-Hi,
 
-On 4/30/26 10:58, Jishnu Prakash wrote:
-> This patch series adds Gen3 ADC channel macro definitions, with basic ADC
-> support for lemans and monaco.
+On Thu, 23 Apr 2026 11:16:54 +0200, Luca Ceresoli wrote:
+> This series simplifies using the bridge-connector by removing the need to
+> attach the newly created connector to the encoder.
 > 
-> Patch 1 adds ADC virtual channel macro definitions, which are used in
-> the "reg" property of individual ADC channels and also by ADC clients
-> to reference channels. These are a combination of PMIC SID and HW ADC
-> channel number, which are parsed in the driver to identify the intended
-> PMIC and channel under it.
+> == Series description
 > 
-> Patch 2 adds ADC nodes with channels under the PMIC instances on lemans.
+> Currently all users of the bridge-connector must call
+> drm_connector_attach_encoder() immediately after a successful
+> drm_bridge_connector_init().
 > 
-> Patch 3 adds ADC nodes with channels under the PMIC instances on monaco.
+> [...]
 
-I sent https://lore.kernel.org/all/20260427-topic-sm8x50-adc5-gen3-v1-0-8a70f7b90a75@linaro.org/
-which has a similar goal.
+Applied, thanks!
 
-Thanks,
-Neil
+[01/41] drm/display: bridge-connector: attach the encoder to the created connector
+        commit: dcad6dd16e87a6dcc78ab05f64c704cec2809db9
+[02/41] drm: adp: remove now-redundant call to drm_connector_attach_encoder()
+        commit: f96e621e90dfeb35676604b223f42f721e7c364f
+[03/41] drm/bridge: adv7511: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 4f88126e09160fa5c226e786982d433aba0345c4
+[04/41] drm/bridge: ite-it6263: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 7ecf62396ed7883eda3bb949df7f95e5a1048b17
+[05/41] drm/bridge: ti-sn65dsi86: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 1977688f60eab4c92dca15c8b7e6b19635902ee0
+[06/41] drm/imx/dcss: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 4b29d25b55fc28ab6065500a60693b093ad05366
+[07/41] drm/imx: ldb: remove now-redundant call to drm_connector_attach_encoder()
+        commit: dd7784328061fba1fba919d8879ed65ea30feeae
+[08/41] drm/imx: parallel-display: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 5c18883f8050b1f6fdb35050cf9dad64779f6ee9
+[09/41] drm/imx/lcdc: remove now-redundant call to drm_connector_attach_encoder()
+        commit: b490bc69f1c11d8335dbd628d5e32db8986f848c
+[10/41] drm/ingenic: remove now-redundant call to drm_connector_attach_encoder()
+        commit: bc9e6392403e316c9d6e337b7cf28543051cb28e
+[11/41] drm/kmb/dsi: remove now-redundant call to drm_connector_attach_encoder()
+        commit: d731d87126d43936ab74804785446f67a2d60d0c
+[12/41] drm/mediatek: mtk_dpi: remove now-redundant call to drm_connector_attach_encoder()
+        commit: c21f9adc83c5edf0b990cd068283d3c831b43074
+[13/41] drm/mediatek: mtk_dsi: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 41bfe06bb3cae68c0b3e21c5181c49f68db67e18
+[14/41] drm/meson: encoder_cvbs: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 82da98ea371dff7a9ece58083846556b043bec9a
+[15/41] drm/meson: encoder_hdmi: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 013adec1a93dcd052c6eb1769609eee661983ca9
+[16/41] drm/msm/dp: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 6108b5b7219e3f3f947922f4faa8ccbc570210d2
+[17/41] drm/msm/hdmi: remove now-redundant call to drm_connector_attach_encoder()
+        commit: f7ed1d3dde56b98e065b950d1044a0f655b194ba
+[18/41] drm/omapdrm: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 7b229305be6300c90e6f005784f9f53d4d23d579
+[19/41] rm/rockchip: cdn-dp: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 86909f184b4f045f4d85dd2ca957811c1184aa1c
+[20/41] drm/rockchip: rk3066_hdmi: remove now-redundant call to drm_connector_attach_encoder()
+        commit: d5304653b60edb79bfb71209ebbd4b57001ab003
+[21/41] drm/tegra: hdmi: remove now-redundant call to drm_connector_attach_encoder()
+        commit: c0670fc1e75782a9dd0cd94acb7b262077b3f720
+[22/41] drm/tegra: rgb: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 04ce2e375f6dde267f53995d81c48ab31dc06b52
+[23/41] drm/tests: bridge: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 6d303956b41f870240a23d4896ec12e420026637
+[24/41] drm: verisilicon: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 6d65baa60f0d7c305eb63b738163c1e35d0eef20
+[25/41] drm/exynos: exynos_dp: remove now-redundant call to drm_connector_attach_encoder()
+        commit: d627f7e6318906da2b95ac60616af7501d5145a5
+[26/41] drm: rcar-du: encoder: remove now-redundant call to drm_connector_attach_encoder()
+        commit: fa38bb8dc2e852e2979593b965779b8cca532014
+[27/41] drm: renesas: rz-du: rzg2l_du_encoder: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 88bcd924cd85a29658a60418f6e60a0f912f990c
+[28/41] drm/rockchip: analogix_dp: remove now-redundant call to drm_connector_attach_encoder()
+        commit: b7e25e250ea405f1c65256494b56e0f6443cc96a
+[29/41] drm/rockchip: dw_dp: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 8015bfccca36672e412dae4240886c71278c5b3c
+[30/41] drm/rockchip: dw_hdmi_qp: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 14a25df41b19aba228e66c0d9578e6e6b3cc58f9
+[31/41] drm/rockchip: inno-hdmi: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 6db094d4ce87fb4caf90db9863bb6a8b427b15c9
+[32/41] drm/msm/mdp4: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 4e833e078f3d40d4f4a24c162210a1b7855f1539
+[33/41] drm/msm/dsi: remove now-redundant call to drm_connector_attach_encoder()
+        commit: f9274ba1dff8b0adff22e8d877ec1e85bb14d0c3
+[34/41] drm/mxsfb/lcdif: remove now-redundant call to drm_connector_attach_encoder()
+        commit: da3918b645a5efe6fad2aa53b84a4d98c3df999c
+[35/41] drm/rockchip: lvds: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 24202edb689ead20411568251792a31103b9bde0
+[35/41] drm/rockchip: lvds: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 24202edb689ead20411568251792a31103b9bde0
+[37/41] drm/tilcdc: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 055673da01cdb130732ee556db58f7408392c1b8
+[38/41] drm: zynqmp_kms: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 42ccccb38ca8bac394faeb30c924ad542f5f1bee
+[39/41] drm/imx: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 2b727270b955b72cf6f47c5883bdc6f997f0e06f
+[40/41] drm/rockchip: rgb: remove now-redundant call to drm_connector_attach_encoder()
+        commit: d5d8e04dc0557437b19039206012305166df2bf7
+[41/41] drm: renesas: shmobile: remove now-redundant call to drm_connector_attach_encoder()
+        commit: 6533278b0deb14de860035dd1913e1e55e781e60
 
-> 
-> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-> ---
-> Ayyagari Ushasreevalli (2):
->        arm64: dts: qcom: lemans-pmics: Add ADC support for PMM8654au
->        arm64: dts: qcom: monaco-pmics: Add ADC support for PMM8620AU
-> 
-> Jishnu Prakash (1):
->        arm64: dts: qcom: Add header file for ADC5 Gen3 channel macros
-> 
->   arch/arm64/boot/dts/qcom/lemans-pmics.dtsi | 93 ++++++++++++++++++++++++++++++
->   arch/arm64/boot/dts/qcom/monaco-pmics.dtsi | 43 ++++++++++++++
->   arch/arm64/boot/dts/qcom/qcom-adc5-gen3.h  | 88 ++++++++++++++++++++++++++++
->   3 files changed, 224 insertions(+)
-> ---
-> base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
-> change-id: 20260430-adc5_gen3_dt-f0434155ee25
-> 
-> Best regards,
-> --
-> Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-> 
+Best regards,
+-- 
+Luca Ceresoli <luca.ceresoli@bootlin.com>
 
 
