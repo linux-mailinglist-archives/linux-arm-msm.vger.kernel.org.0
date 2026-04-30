@@ -1,69 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-105320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YGQOMsop82lsxwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105320-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 12:07:06 +0200
+	id kJ6eLQos82n7xwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 12:16:42 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 896174A0802
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 12:07:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 480974A0A4F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 12:16:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 72C26304A870
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 09:59:40 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id CB097301B160
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 10:12:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A07453A784F;
-	Thu, 30 Apr 2026 09:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 098913E5594;
+	Thu, 30 Apr 2026 10:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cVWSe6fk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HsF9TxgL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE1139BFFF;
-	Thu, 30 Apr 2026 09:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D379D3ACA65;
+	Thu, 30 Apr 2026 10:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777543176; cv=none; b=Y6/U6DPtKtRAs6FR8wMqa5k7JE2CUcgC0bJHJifk6as9dg8rzc3HXh0nrgcdCITAY69wq9vPFjACihw8tj9my0MFS9UpeYMKtS8EDmqiJJ5LNef0uKizCGlvtslGyHk75Rnix2e4n0ZL6TxcQ5qCvG9/6RfpwTgRIhgvbtA/yFk=
+	t=1777543932; cv=none; b=BYoYHqaSovj/fGgzQE9Anj7V1oYKV4eaHF2MRvf2t0XfgdCk9YclcLvsNnjLmpoJSFD0vOsTdeOvAqU9PpIi9kHWm3kFMAIpoOmRqSHlNixQcZix0qOmo/t14A6OIitI2XZKSftJ1E1bHN6bHzWpE+jjEkmUPGeGsPtGdM1AXC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777543176; c=relaxed/simple;
-	bh=r5OekOuIfqXKaIzcdDYrquzLVq5admxf1CUW3+qBysU=;
+	s=arc-20240116; t=1777543932; c=relaxed/simple;
+	bh=rzHdmnYTUdONY66bBJjqqsOWqkMIUbSR7F6vgZuhok0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y+E1N2IFFa5stypSUh7WlDcZyAda4d49F/Lyr3NtaiBGta+0eHe/lSrg82IgZHJyrFhrbM7w5+JnMg471oyaK/qTDNQ+O54BjZDj9qdUL+Sj6rrdqhu99BZaYjQ4YERe0TMFtrigmiseLzMzOGIJ/V7KzYT3wybIG2aba65vw/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cVWSe6fk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844D9C2BCB3;
-	Thu, 30 Apr 2026 09:59:35 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=C0EHpRSuVCWyOKXY+TdvijHv98wJFYVtGZNyPR/Q2zicIC4VqMiRTTR38Ez0WjbBzY1GwTaxmZqBkQEhqw16f2+nHr6RIndEYSenojO8T1yNohGZuaeJGYF2Cj8e8gx/oX3p/WEhGP/HXe9usY9kG+CPKr1akhgGul1fFO/NgwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HsF9TxgL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E7BC2BCB3;
+	Thu, 30 Apr 2026 10:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777543176;
-	bh=r5OekOuIfqXKaIzcdDYrquzLVq5admxf1CUW3+qBysU=;
+	s=k20201202; t=1777543932;
+	bh=rzHdmnYTUdONY66bBJjqqsOWqkMIUbSR7F6vgZuhok0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cVWSe6fkTBOARjXulhsALwZx0VxGML7gFmK9AkttqSJxT8GozkeUV3NLeGt4ntj0j
-	 VIIYIb8TGgxN06TV9G8Pnasoc8D3Z0mxmfc2O08Zn7e7zA85vy58dQ6ddiBn0FtyP8
-	 hYfs4q+oVeZCdmYKcmn2iyTtRmCTNf8qVZevNHNNvqvFWZX4LndhykI+pILkN1y1eY
-	 R+spRbUuXD04AppQrxySrBSdYd/Wm7S69RAdJ0W+ZoWWxaTtCS6azjPgfwW6Tte/J+
-	 C3S6uyKU3BPuEaVjGJuqHQ7+VQSKd3qOS17kBwu/kG+h9V1kLMNuiLLl8WbPzWjsW5
-	 RWfpE98i9berA==
-Date: Thu, 30 Apr 2026 11:59:33 +0200
+	b=HsF9TxgLrJfH7gWzTKDNkbm9Mnaiq6QQGL7MKjIY31Qt4BfIhnxJXYxit6JBpTz/p
+	 F1v9GlyONXAw7OeTbWv1174rUpO5jpMfTft4xcD8X4e74lFXqsgnAxno1iCwEMXAis
+	 HpMaWUPcB3U6HDib/tiZEK+9hgfRjwUsSc9PNmGUgS3szIJaMs2RRSJRZsPtOGgUOp
+	 cP9Sl4+rLq2buTEvKh6NOusVBwTD9v/rJpwS0V0C2VxEw6piAyeG4tMzJ/df1RqDxs
+	 /JBJ1uHDLxvOBUpb2ETCBJvrMbHtUx2y6kVrHCm/BZQDt95t+6zmjHw6yFL8o/A6zt
+	 OUDiVS3E0tKPw==
+Date: Thu, 30 Apr 2026 12:12:09 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Ulf Hansson <ulfh@kernel.org>, Rob Herring <robh@kernel.org>, 
+To: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Jens Axboe <axboe@kernel.dk>, Johannes Berg <johannes@sipsolutions.net>, 
-	Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
-	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-block@vger.kernel.org, linux-wireless@vger.kernel.org, 
-	ath10k@lists.infradead.org, linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, 
-	daniel@makrotopia.org
-Subject: Re: [PATCH 1/9] dt-bindings: mmc: Document support for nvmem-layout
-Message-ID: <20260430-bird-of-sheer-ampleness-744e7f@quoll>
-References: <20260428-block-as-nvmem-v1-0-6ad23e75190a@oss.qualcomm.com>
- <20260428-block-as-nvmem-v1-1-6ad23e75190a@oss.qualcomm.com>
+	Richard Cochran <richardcochran@gmail.com>, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Document Shikra Top
+ Level Mode Multiplexer
+Message-ID: <20260430-esoteric-badger-from-hyperborea-1049ef@quoll>
+References: <20260429-shikra-pinctrl-v1-0-1b4bb2b3a8d6@oss.qualcomm.com>
+ <20260429-shikra-pinctrl-v1-1-1b4bb2b3a8d6@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,8 +65,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260428-block-as-nvmem-v1-1-6ad23e75190a@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 896174A0802
+In-Reply-To: <20260429-shikra-pinctrl-v1-1-1b4bb2b3a8d6@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 480974A0A4F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
@@ -86,17 +79,17 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105320-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-105321-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[30];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kernel.org,kernel.dk,sipsolutions.net,holtmann.org,gmail.com,quicinc.com,davemloft.net,google.com,redhat.com,vger.kernel.org,lists.infradead.org,makrotopia.org];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.985];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
@@ -104,33 +97,29 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.17.48:email,0.0.21.24:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 
-On Tue, Apr 28, 2026 at 04:23:06PM +0200, Loic Poulain wrote:
-
-> +                    compatible = "fixed-layout";
+On Wed, Apr 29, 2026 at 06:41:56PM +0530, Komal Bajaj wrote:
+> +properties:
+> +  compatible:
+> +    const: qcom,shikra-tlmm
 > +
-> +                    #address-cells = <1>;
-> +                    #size-cells = <1>;
+> +  reg:
+> +    maxItems: 1
 > +
-> +                    mac-addr@4400 {
-> +                        reg = <0x4400 0x6>;
-
-This looks incomplete. Why isn't this mac-base type of entry? And how do
-you address it from NVMEM consumer?
-
-> +                    };
+> +  interrupts:
+> +    maxItems: 1
 > +
-> +                    bd-addr@5400 {
-> +                        reg = <0x5400 0x6>;
-> +                    };
-> +                };
-> +            };
->          };
->      };
->  
-> 
-> -- 
-> 2.34.1
-> 
+> +  gpio-reserved-ranges:
+> +    minItems: 1
+> +    maxItems: 83
+> +
+> +  gpio-line-names:
+> +    maxItems: 165
+
+Further pattern said you have 166 GPIOs.
+
+Best regards,
+Krzysztof
+
 
