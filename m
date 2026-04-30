@@ -1,100 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-105430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kEv2OsPr82lg8wEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 01:54:43 +0200
+	id OG3rBfLr82lg8wEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 01:55:30 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9650D4A9007
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 01:54:43 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DBFD4A9041
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 01:55:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 90AB83012CBB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 23:54:42 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A209F30072A6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 23:54:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EED4D3D9DB3;
-	Thu, 30 Apr 2026 23:54:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A75C93DCD8C;
+	Thu, 30 Apr 2026 23:54:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="JkAJLzSb"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="cBUCLzB1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 671A93D9DAA
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 23:54:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9496A3D9DAA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 23:54:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777593280; cv=none; b=OI1E9DCTrLo8smyjdHd1vHfHzWFhigG5sb2LOVLioo6yh1vk5s07qolPFQ5b/wflDXRvBCMjbQBIe4ST56AlYXEfGok18PNTykIfqyJ4QBqOw5nCHCuK8EoZV9VsV/gaD7AzwiYBfaF/+2wk0bndsEZFyBgTbSFWsNmTCfYLm+s=
+	t=1777593293; cv=none; b=YMzgZsvJicOxW1kEBZPXockMhyXN7jI7qLfxuECAXiVKt8eI/axu/VyUuxJU+MA17NDVqz2SKpKYa5KWQEy1kFcloAL/EafUyNnN/QYXA0VC8+/yxpZRVgrJfJoLmiP2zpl8hvbk9vutE1RasDBuVXyswU8+ueyFBMOstK/q3Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777593280; c=relaxed/simple;
-	bh=rWDl9l88s5smH4oJB25R8ZD9EUfLZO6b7a2lfjBov+o=;
+	s=arc-20240116; t=1777593293; c=relaxed/simple;
+	bh=E5GkC4G7rtGBz2MILCU8/hEbtGwGymi8oc5Ct4p7lLs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=coylSnecVGhzcXshWd6RDH04TwE4P8AEqz1xUAp5mD5TGmcM46kSNTYGJIsKI7mfTZigh6+dUbDWCkrIp4wPoMXzla7dMo03Qv+6sl8yuu3JEi8SO1yQS0ulKY2phHaISMRzPsRr2hAZ4EAAGqFma5k8CWx8ga4hst001cPbjt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=JkAJLzSb; arc=none smtp.client-ip=209.85.218.43
+	 To:Cc:Content-Type; b=T2+awFQ+V2xNI/JgvqO9o8KWYMaQYEaTuvnkN9l9D69xNYyxhRyFg4d7sd2UM6wqYJy9PIJ+VcwzeCaRjKyOkx1qMJuU7oGwGf6ALhUitAFcyky4jgVOxlcPadoI1dLNcdP1eezhnomzaaF2/G001GP74XrLns2x0Sblw5pL7Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=cBUCLzB1; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-baa8c78ac7fso194849666b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 16:54:39 -0700 (PDT)
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-bad54961385so243998266b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 16:54:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1777593277; x=1778198077; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1777593286; x=1778198086; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=o6F0Zles587cKnPSm5xIL1UTxvPC2KivgOEAzPu9dSY=;
-        b=JkAJLzSbbpgpkNtOrjlmzFA69wlgD7N0BDyH2VNaINmq9LmZatuVZBHyCHmtuKZXqM
-         mjIB9eePuB9qw2bKi2djMi7gL+wnFGnJAFvfObC+RGFoJluZnCh/hmj+YlkFHiCxe9y4
-         /tm+NT/yrRQMw6Q8L172qD+1EvM/iWbnIGjlk=
+        bh=FVHhCQMUid03F9iDcHc+WtyXeEQi+bjBCIpWQi6kbrQ=;
+        b=cBUCLzB1HrCXcWxAfvO6XkzllsrPwLo6f/tOv+0rpiA0CsZr2SPSTIX9miPXBbvZDU
+         5ha40MY1pWOQmTgyuOlxo5aBh+rdrhYtKKxp2jGOS9iqSUbNTPjlx4Pgm2vl1pgW3Ce9
+         7029ykc6/+mVFJb7ClwodXRpyxDnZneYGurOE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777593277; x=1778198077;
+        d=1e100.net; s=20251104; t=1777593286; x=1778198086;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=o6F0Zles587cKnPSm5xIL1UTxvPC2KivgOEAzPu9dSY=;
-        b=acSvKlsJqBlZPZV/W0pqiYbXaFzK9x8Ab4dEBKuIGLRIU2yqV281tU9N/95BPZxH2p
-         8QAvpRjZG+JoqvoIDftP7RKa5W7d7G3ZEErRKjxfcaRQCTOv7sUMVu+0YhRznib1bVsD
-         MMIYM/U7bs0BnV18Qs0PugAnAnib2tJ4jcxgEytY6QTh5AgX+5dnO24sS6SU37kTKKYE
-         1KYbEFeMYw1wx0Fmc5frsnGYCyp4TBQsTyRtLZqQPPywx1s8ZEQwJogQWAUscqDEtzV3
-         iWPqp6YpVW2Gk2gn4hCLc7AAa2MfOJsjFlqHt8S/EAQ8res5RoNqcTaOJDzebNpQWUek
-         h/8g==
-X-Forwarded-Encrypted: i=1; AFNElJ/Uro0CWt9vyQiAbi39ZdENStpcMh+w6h6KT49SrtIgXm82nJepUVguaUJ035icncnMIwKEY0AgAQks/pAr@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzpPgppzPBONqm38M++YruRxW8UuviOC4wbRqhUc1fDfVo1+0K
-	5YYJXFR8yUEP8Sy9SFX6Kffmci4t1Sf7Hn1UTzQ5R/QZ4T8gakwUWpt9LEsgc/AhpDMVNY4r5uq
-	GflU8PA==
-X-Gm-Gg: AeBDietuq1Qni99Vx0BstRKNmKMKmILLjfW9c+w+Tf3uKDohhvoMzyvI6yx0Cp2eAdD
-	Lt6PeJWTHcxUDASs9+JiKviwOrbT73YPHPFKsAaUi5y6BUm71PCTa9H0IsyeVX32VMAtrimN6HH
-	1STo9I4g7KnBB3n4jl1IRwE6KhKPM9S03l9zeN5RYapeJWkH69aNGA+Kx8ubXlwDhjDpFJX8dls
-	3TJTF1yKZrV6K8sbXf1zPLiMtXd1hECLYg2SDE019Bb+9Gmmq9cWL1Q5/o8joTIB5xugJRfml6/
-	/Vd+jG7xXIck3dPwzrjkrkm/fRX6iwIGhFOeAQuNi1JiX6miYiBEa3f0D+noYLyw0PmqJZtSrmB
-	8u7e+w9gDyUeNaA+vC2Gljtzmhnjlldkbrs5x68iSE3jh1FoiPdaWtc/TwdSnPGv2FRl0xDGB3P
-	ElopBRwYokgDUkEXJwXKSbBWyeCE1ELZenqEAi1f8YxyHRJt/PuU9u1ULMGEFzU0KeorPrZm/R
-X-Received: by 2002:a17:907:980d:b0:bab:f5f6:d700 with SMTP id a640c23a62f3a-bbac7c92172mr327695666b.38.1777593277179;
-        Thu, 30 Apr 2026 16:54:37 -0700 (PDT)
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com. [209.85.128.54])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bbe6a64d8c2sm50852566b.17.2026.04.30.16.54.36
+        bh=FVHhCQMUid03F9iDcHc+WtyXeEQi+bjBCIpWQi6kbrQ=;
+        b=kC3tPlJoy4WA7fPZqWNrMTEj6oeCCg1xuoSwdIoGDOCqjmP9BpI1XJ0y72VsASeKV1
+         1VUx9UjRpDDf1k8pLewCVaYdaVSOWrc/G9QtOGTCaZGRMO3qhxiVbFwiuIXh1lwUiCWa
+         BXBb8exAN5idFc+SM+1v+EHME7CsJR/aACgclvQYXfWn1BL5ffSLcNC4Wf6I/ZV68Aiq
+         Zu2Q+Hmny2k+AXKGn2W6yUmD0SiDUWpJxTEIrKfRum9nhOsh9f7ApFIxSLkMtkHFVDoF
+         TesoUeglMDjJOJQqkgdgW0eBtQUbg18KKDlxMAHZAW0qGVOPPETD5RZ7edEgb+NmKrwV
+         jjcg==
+X-Forwarded-Encrypted: i=1; AFNElJ8VKKOI2PGI4q1/pQheEdlZ2U85hmABGuFYPoDZ7VfICbpEtoUreRoVe/lWQeSeu5J1xWdEVIy1Cy3OtZ/r@vger.kernel.org
+X-Gm-Message-State: AOJu0YwChcSyzLlbCTi2b6q3H4TYtXG9/zhiI4Iy/JK99ef7zm8vaBOV
+	kUflqruBeWznBLfcYqG51JnmoFwr6AMsDm0DQSfd3z15TcvPk2mKbVSSzzjev4ySzbceu6iUCN7
+	fHgr56Q==
+X-Gm-Gg: AeBDiesmT9S5scFq/EJaEn4e0CBd4KUUQJdJKUqNevXz20FPbzzQmTY94V8uHPdmlh7
+	zcQ6/7SGL0pxHggcClxoUtdOaISTUHaxpNV3ZNSOZbTSdpGGueTn8FtZlmxVtt4dBlObquI5yWh
+	cmMoLU7WcmBzRzdoIgcJFDoN2+W3/WIJmaBOYN8j74m7FXPzL9geOo/Kst9QMpd89c3quw322Tp
+	5Po6f9Wrr/lNPG16ttFjcmQRO6KPNHdxPk4U3X54n4L664AuO3KS8mIuqU7zZg6wU8uXek3ioop
+	qyHcIcUdXB3HVXV28mlUS5Gs6U3DQzNuJ9VcUlDpCDxdZEo7qs460V1FGRdDiAzBPs8o/xgqRe/
+	PZaLArqOySs2ZgCORnLTdJ4uGeo2ul+Dtu0uq+AQqM1TQlnDChw8R0CxRomkCXVb+A/z+58/wwo
+	R7cm7cVtRhRsaQ0UJmgP55t7ghTR/Y7S2/+5HQgKqDWh0Lk3QxSpiyjK3s7BJIhZCKzYCaO75X
+X-Received: by 2002:a17:907:d8a:b0:ba7:62f:9fa6 with SMTP id a640c23a62f3a-bbac46d3942mr324993266b.2.1777593285580;
+        Thu, 30 Apr 2026 16:54:45 -0700 (PDT)
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com. [209.85.221.53])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bbe6d668435sm48437166b.42.2026.04.30.16.54.41
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Apr 2026 16:54:36 -0700 (PDT)
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4891cd41959so12952215e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 16:54:36 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ/SCrM9vLZsnmH9al9DzBnEToCGaeGHMDVYxCGyh73CGFg4poK51Q5vU84qFpAKzrhUPZ7wkqQIdBw4WNfa@vger.kernel.org
-X-Received: by 2002:a5d:584a:0:b0:43d:6a0c:9571 with SMTP id
- ffacd0b85a97d-4493dcd3c71mr8939823f8f.11.1777593275557; Thu, 30 Apr 2026
- 16:54:35 -0700 (PDT)
+        Thu, 30 Apr 2026 16:54:44 -0700 (PDT)
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-43d7645adbdso1009619f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 16:54:41 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ/ZNQyLf4beUlGI8VHvlqI4UWo+crNGwxVIP4RKrWFLhuq+OKrooVRqvIGclGz5JOxv1eqXpmGzyLcsDzZF@vger.kernel.org
+X-Received: by 2002:a05:6000:2385:b0:43d:7ba4:6b5a with SMTP id
+ ffacd0b85a97d-4493f814094mr7876169f8f.22.1777593281177; Thu, 30 Apr 2026
+ 16:54:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260428200712.2660635-1-briannorris@chromium.org> <20260428200712.2660635-3-briannorris@chromium.org>
-In-Reply-To: <20260428200712.2660635-3-briannorris@chromium.org>
+References: <20260428200712.2660635-1-briannorris@chromium.org> <20260428200712.2660635-4-briannorris@chromium.org>
+In-Reply-To: <20260428200712.2660635-4-briannorris@chromium.org>
 From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 30 Apr 2026 16:54:24 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VFCEEBKYY8Wnt6JEK_N4NaUvvhWXYR1pbt6teLL=zYeA@mail.gmail.com>
-X-Gm-Features: AVHnY4Kl-1ca-wbSwPcS9uBBAU6zbdhWLbd9Fj0fAjnpUI5H2rQOrfd8cK8P088
-Message-ID: <CAD=FV=VFCEEBKYY8Wnt6JEK_N4NaUvvhWXYR1pbt6teLL=zYeA@mail.gmail.com>
-Subject: Re: [PATCH 2/7] ARM: dts: rockchip: Add #{address,size}-cells to
+Date: Thu, 30 Apr 2026 16:54:29 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Wzk3BW7qOQHm3zait9p=K+pTNVviMgUF1dfdqw9rimnw@mail.gmail.com>
+X-Gm-Features: AVHnY4Lf_-e67ZfLDh6j0F0tOI3LrjkSTUbSwaFXekuSrX2ugdsS_RxN4nbO7Qo
+Message-ID: <CAD=FV=Wzk3BW7qOQHm3zait9p=K+pTNVviMgUF1dfdqw9rimnw@mail.gmail.com>
+Subject: Re: [PATCH 3/7] ARM: dts: nvidia: Add #{address,size}-cells to
  Chromium-based /firmware
 To: Brian Norris <briannorris@chromium.org>
 Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -111,7 +111,7 @@ Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 9650D4A9007
+X-Rspamd-Queue-Id: 1DBFD4A9041
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -119,11 +119,11 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
 	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105430-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-105431-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -141,8 +141,8 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,chromium.org:dkim,chromium.org:email,mail.gmail.com:mid]
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[chromium.org:dkim,chromium.org:email,mail.gmail.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 
 Hi,
 
@@ -192,10 +192,6 @@ ot_table failed with error -22
 > Fixes: 6e5773d52f4a ("of/address: Fix WARN when attempting translating no=
 n-translatable addresses")
 > Signed-off-by: Brian Norris <briannorris@chromium.org>
-> ---
->
->  arch/arm/boot/dts/rockchip/rk3288-veyron.dtsi | 5 +++++
->  1 file changed, 5 insertions(+)
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
