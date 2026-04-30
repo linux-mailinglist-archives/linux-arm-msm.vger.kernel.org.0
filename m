@@ -1,79 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-105370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iCKaGmZZ82lfzwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 15:30:14 +0200
+	id sP7WOExb82lfzwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 15:38:20 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 625C74A3767
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 15:30:12 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 735874A3900
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 15:38:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 28141300D573
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 13:21:52 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D8F973056790
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Apr 2026 13:21:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EC934219E7;
-	Thu, 30 Apr 2026 13:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21D19426D2E;
+	Thu, 30 Apr 2026 13:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arduino.cc header.i=@arduino.cc header.b="imfRiAs2"
+	dkim=pass (1024-bit key) header.d=arduino.cc header.i=@arduino.cc header.b="CUbp5VcX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756E64266A1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 13:21:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5CD40B6F5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 13:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777555310; cv=none; b=MH4/r7ttv5F1lJc+MvmE/t9r75AaVzG8YAC8vhGCt8FiTrgt9KOSU19IBNnR5zNUWukE35c0AQHMbbsItjfA1uxcUoGocimA7CGxk/Lwd68smctgEimad2JxHAAcgoiTM37LN9rc5d4kDiy7uPvZifoJe4b9wYvBV+EmhDtOLbo=
+	t=1777555312; cv=none; b=rRrEvaNh+CeseoJdRra6dWrGOQXXN5nE1Lvtey+5UzTtJtjgo8CkQL6IYOjv9GhLjBLNFZNwWKmMwRPgxD2gZiKJfQsYK/tPAlCpxN7XWF2Wt3QXCrfQRDOU30iD/XrrtofRc49+H2+lABRpZzEm2GX5r6BkX8Oinc93LHEVt+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777555310; c=relaxed/simple;
-	bh=GqRGrNLZXVzhBSOIsCYxa32HgZ4zBg0+yUDiq0uerkw=;
+	s=arc-20240116; t=1777555312; c=relaxed/simple;
+	bh=dB3yigQ6YUHEcC9mAWpx6FOMHhhRXxfxkIG0pTelrcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSQ9M59edlaMUSZJ48OdxMjvLA8ganUR+LH3/ZYhFPUGgN8p5dAI7cYMhkcyVtq6/CVb3l7nsJmDl7wQW0sZ3BHDqJ4Y6a2YAeKxgCancWUnEMwTwZJZj6JbssvAHBGvdCV9+Se8j48qgRljDSbo5JMfPyOQBp/TMBsPgSU7nxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=arduino.cc; spf=pass smtp.mailfrom=arduino.cc; dkim=pass (1024-bit key) header.d=arduino.cc header.i=@arduino.cc header.b=imfRiAs2; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version; b=pHNicYlLg9BiEZ5Ms5gzmiZg33adp0EFihqpZNHtmQ5Y76O/dqor02EAzC1e7gxvcYL2t2YMiGMGp/jLzNHP6Sqo+9zAhz8m59vLeEt9yYoROaYIQlwqM7WS4M/NFVjOvxhylFi8OjhXJu2Tu4XtSXy+zh95bLjBXm3TjHOKYrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=arduino.cc; spf=pass smtp.mailfrom=arduino.cc; dkim=pass (1024-bit key) header.d=arduino.cc header.i=@arduino.cc header.b=CUbp5VcX; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=arduino.cc
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arduino.cc
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-488b3f8fa2bso20140015e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 06:21:48 -0700 (PDT)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-488e1a8ac40so9136975e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Apr 2026 06:21:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=arduino.cc; s=google; t=1777555307; x=1778160107; darn=vger.kernel.org;
+        d=arduino.cc; s=google; t=1777555308; x=1778160108; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4V2mrc16hrnhb507yXsAugmx8ywjiAaffpYxLf0PPSI=;
-        b=imfRiAs29jnWpf/BBtEO8wB8Wqz5ZtHnOmHwJqzMfxAFANrUvruIMt+tuQRPBptE6G
-         o11oficBhc0WLyZCCV7Gq6j0TNF1ACV5moUSR7zPZbLHhk5TbH/+E4bu7S7hHe1x85fd
-         Cqm9ajErfkq4P2AADB50FlfegCgr0sFUHtr9o=
+        bh=3MkL0qgeSar4YBymhXUpa8B2jXGEQhu5KS9oOv9c4/s=;
+        b=CUbp5VcXSwInSuANVSVdgedAUSNsqOXqJCxFjuPFJqE2A9k83s2oAqE+usRkClRk0K
+         DWWRySS+l6ciUz1KqEQwpRZt3S+yaiwAmNj96vfvOJESzlkbrFfWIAN1vuMVgdkijTu8
+         YPrjKpU94n3OnmYxZRaSqYwh++duTvLBItDxw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777555307; x=1778160107;
+        d=1e100.net; s=20251104; t=1777555308; x=1778160108;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=4V2mrc16hrnhb507yXsAugmx8ywjiAaffpYxLf0PPSI=;
-        b=WY2bR/iCGu9ZG4yef+XglfVrI3UaBhibuqtr/u5U6ie2YuUOaanVGpif6ch/AE3fZ4
-         9+ZIJRxah+Zv/oov4pmAaMhbqjK3g7EQ3i0W9qIkzTxgbBdPgN3p3CtUWLBciwwaJKJ4
-         eSJAXG/5Ww63MlkMFjr0Zym85OCBs3sY46gd4PMo4VitYHT2W0BoDPh+65fQ2lZRHuHx
-         T/cske9K9IR2bF74A/7sjOLeX0p6wrivzuIcl7D+i9eNRkLkSprka2oJbvKUzV3nVSUW
-         2qTgWqLsRRpWFPM463EfxmQdk91Cqe3ZJSqnDEFAWBjnLZHcL+Rlzts27jyeTuOGz4IS
-         NhVw==
-X-Forwarded-Encrypted: i=1; AFNElJ8/qXw3byP6Zjz9tMIbvXYtTM4Ti2A6Zgvjg3PYlR7z4aESizDqOjeqWX4TASxC4P/8Oq4QKQpCN1J4xMwQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YyhtafDg94JbYwW8b9nixVbIu2PkzaCHZhbmDsnNu08d/hBQ1t6
-	A3lr6xTHEY567ZcfeEgvQU1StNrGq4WVjKBbmtnGYSeYLRoN7UYPEVQJmSNQp/Mp1W0=
-X-Gm-Gg: AeBDievmyZ+Sae+8ZSa5SVmP98FSJAkL3vOD2S49+/NPOnjarkwQC3ss0FwVsy7G6uD
-	Sf8OiaM5NmA8UiNk+mLdVKD8ArkaTCkKdff7SYFHsPC/q+k1uJ27HxNUd8vzLY3E3QOlB7Nc0kU
-	IVB1ksZ9C2z1J9Ibd7WU1gAfL4hPa1kyzOVJGZ6EL2e/9rn7wWa0HhaKbfLq6VZZQmUGaz/unyY
-	jnrSd/M0IyQzGNBNCfIZEPGkspDc96DxdlVgZyA3NvfTbWHNf1HteuM+xC0lLG/nu8VAntbuV7d
-	FoKMsb+Io9QEp0wio4uxtNr378g18aqNuOpnHzSv5PdJzJpq6uKpkJg0cktD1mMiCLLF7eLuVCZ
-	8EeVTC4Rr8Nv0uGIWS4cyK2u8B0d90nHPRI4H5Ktnb85D/BVjGK4bxFDC2YAO90Mnz6pJQXlLWR
-	h8RboYVdRrypJVXilVwkViel579u7rSLPQz//YBqJwbIsmwKMMC8/gvzLFTNcn2njkP/lQ1CTae
-	TjlAA==
-X-Received: by 2002:a05:600c:5286:b0:486:faa8:9e4 with SMTP id 5b1f17b1804b1-48a86085131mr40450345e9.12.1777555306711;
-        Thu, 30 Apr 2026 06:21:46 -0700 (PDT)
+        bh=3MkL0qgeSar4YBymhXUpa8B2jXGEQhu5KS9oOv9c4/s=;
+        b=pN/9k5aFvIblgIU5ryyDhk0sxPiynY9X+pdoCCU6gz7gM/YDfDkDZcQlxjUBTRU4uL
+         1Izrr/b9DHiTS8804FbXb0xFvUNPgI+fZXdEkfYBXVI4YYmCZMEjF2Cyhr87pDKwZSkC
+         FvNT9E15Syzc5SHCq3TGnaePpDYzX1dikas/Q+KAtIhqacCVew1nnniAGnjBBHse7Yii
+         qq818c6bkJlUJ8WTURFrdY0pZJZY0DgvemQ4h9qmoRDaR4lLTsQtQK3zdwbuotQWGrtR
+         Knw8Fu+TPIismvR5nLt4k+gMjg9Rohe/7TJ/eYdHMJ945MqXSvnZrDdwpn7GsCkDHtM3
+         FI/w==
+X-Forwarded-Encrypted: i=1; AFNElJ9tS3ArvoKFKs/NcwhdHTluyG3rwEwX7aEBW0+Z0u4kO9OcJlK08HaQbooEOAUezoBMBofBVS7jTcp0SMUb@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4Snbx3vASzEFFtOM3mkOnZZIcC8FsUq/yiHQnRiv8Y6LM2ZCc
+	4TSMOervDgC0IyML+Z8hap2Dnfi0ac/nJrFaIKab4MSY9fGbKKTkiOjjc3+/2evY+xI=
+X-Gm-Gg: AeBDievDGUNk7BsN9qfYgVndVmZsc5f5mNp2GOwd7DQL0+Gr3yRR6yAxzQb4UWm4GAt
+	o0y3r3Fpk6M67Ue1iYNu6Vkw34d1xHN+jqshJB++NhZr/gGU/8lNyxFytmFxrK/B1QRLdAmfUZY
+	9/zZmDqtG26XXn/nU/pAAmU1Ng9aukU0bjnr4k8WY69qiJwcdGZOTZzKEj6r07NjjDBxLPszrjJ
+	pAcLdL9XvwUIqIjIi4sT4dnsymfS6KryohWEhS1UyQVqYNGxJ2m9QSYvC0/j7aR+FeFIAywCYtC
+	P2B7G55lnV3XFICfWyRooEwvQMQHcYIXL+GGP96b0IsFUaH7OtiSbQkw0JZg8Zg2m+c9oPsa53Z
+	nzAja+zXU+HQB12x4SPLXBVA9b32iRr4GtNDy3cD8Ijj55rUnjzJvgYd5pJOq1On5730SGLDoOW
+	r6RUJyjt8hvF79ekoE8hfsdSj9P/MYku389GR6AWbri5uZRciXuuXoBY3W67Ykw1WDQ8c=
+X-Received: by 2002:a05:600c:8289:b0:48a:592c:e632 with SMTP id 5b1f17b1804b1-48a8444495cmr53979535e9.16.1777555308060;
+        Thu, 30 Apr 2026 06:21:48 -0700 (PDT)
 Received: from riccardo-work (public.toolboxoffice.it. [213.215.163.27])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a82307f28sm106210325e9.13.2026.04.30.06.21.45
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a82307f28sm106210325e9.13.2026.04.30.06.21.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Apr 2026 06:21:46 -0700 (PDT)
+        Thu, 30 Apr 2026 06:21:47 -0700 (PDT)
 From: Riccardo Mereu <r.mereu.kernel@arduino.cc>
 To: andersson@kernel.org,
 	konradybcio@kernel.org,
@@ -99,9 +98,9 @@ Cc: linux@roeck-us.net,
 	dmitry.baryshkov@oss.qualcomm.com,
 	loic.poulain@oss.qualcomm.com,
 	Riccardo Mereu <r.mereu@arduino.cc>
-Subject: [PATCH 2/3] arm64: qcom: imola: Move analogix video/audio output to dtso
-Date: Thu, 30 Apr 2026 15:21:39 +0200
-Message-ID: <20260430132140.30369-3-r.mereu.kernel@arduino.cc>
+Subject: [PATCH 3/3] arm64: dts: qcom: imola: add support for media carrier board
+Date: Thu, 30 Apr 2026 15:21:40 +0200
+Message-ID: <20260430132140.30369-4-r.mereu.kernel@arduino.cc>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260430132140.30369-1-r.mereu.kernel@arduino.cc>
 References: <20260430132140.30369-1-r.mereu.kernel@arduino.cc>
@@ -112,302 +111,677 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 625C74A3767
-X-Rspamd-Action: add header
+X-Rspamd-Queue-Id: 735874A3900
+X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [6.34 / 15.00];
-	SEM_URIBL(3.50)[0.0.0.0:email];
+X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[arduino.cc,quarantine];
+	R_DKIM_ALLOW(-0.20)[arduino.cc:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
-	BAD_REP_POLICIES(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[roeck-us.net,huawei.com,yeah.net,9elements.com,amd.com,analog.com,gmail.com,linux.ibm.com,vger.kernel.org,lists.linux.dev,arduino.cc,oss.qualcomm.com];
-	TAGGED_FROM(0.00)[bounces-105370-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	R_DKIM_ALLOW(0.00)[arduino.cc:s=google];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	GREYLIST(0.00)[pass,body];
-	RCPT_COUNT_TWELVE(0.00)[24];
 	MIME_TRACE(0.00)[0:+];
-	DMARC_POLICY_ALLOW(0.00)[arduino.cc,quarantine];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[roeck-us.net,huawei.com,yeah.net,9elements.com,amd.com,analog.com,gmail.com,linux.ibm.com,vger.kernel.org,lists.linux.dev,arduino.cc,oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-105371-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[arduino.cc:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	FROM_NEQ_ENVFROM(0.00)[r.mereu.kernel@arduino.cc,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[arduino.cc:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.997];
+	DBL_PROHIBIT(0.00)[0.0.0.45:email,0.0.0.10:email];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	NEURAL_SPAM(0.00)[0.794];
-	R_SPF_ALLOW(0.00)[+ip6:2600:3c15:e001:75::/64:c];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.58:email,arduino.cc:email,arduino.cc:dkim,arduino.cc:mid,0.0.0.18:email,0.0.0.0:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Spam: Yes
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.26:email,0.0.0.0:email,0.0.0.1:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,arduino.cc:email,arduino.cc:dkim,arduino.cc:mid]
 
 From: Riccardo Mereu <r.mereu@arduino.cc>
 
-This is done in order to support different video output over DSI.
-Since audio part is linked to Analogix USB-C controller it is moved to
-the same DTSO.
+Media Carrier is an expansion board for Arduino UNO Q.
+It adds two CSI connector, one DSI connector, 3 jack connectors for
+headphones, earphone and lineout and 4 RGB LEDs.
+
+Current devicetree overlays support:
+ - imx219 based cameras (both with 4 lanes and 2 lanes)
+ - Waveshare 5" and 8" touch A DSI displays.
+
+As can be noticed DTBOs are split and no overlay is performed in the
+Makefile. Overlaying is handled in user-space guiding users to configure
+the system matching what it is connected to the Media Carrier.
 
 Signed-off-by: Riccardo Mereu <r.mereu@arduino.cc>
 ---
- arch/arm64/boot/dts/qcom/Makefile             |   5 +
- ...ola.dts => qrb2210-arduino-imola-base.dts} | 122 +++++++++++++++---
- ...rb2210-arduino-imola-video_sound-usbc.dtso |  61 +++++++++
- 3 files changed, 168 insertions(+), 20 deletions(-)
- rename arch/arm64/boot/dts/qcom/{qrb2210-arduino-imola.dts => qrb2210-arduino-imola-base.dts} (85%)
- create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-video_sound-usbc.dtso
+ arch/arm64/boot/dts/qcom/Makefile             |   8 ++
+ ...rrier-media-camera-imx219-csi0-2lanes.dtso |  49 +++++++
+ ...rrier-media-camera-imx219-csi0-4lanes.dtso |  49 +++++++
+ ...rrier-media-camera-imx219-csi1-2lanes.dtso |  49 +++++++
+ ...rrier-media-camera-imx219-csi1-4lanes.dtso |  49 +++++++
+ ...10-arduino-imola-carrier-media-common.dtsi |  46 ++++++
+ ...a-carrier-media-panel-5in_touch_a-dsi.dtso |  80 +++++++++++
+ ...a-carrier-media-panel-8in_touch_a-dsi.dtso |  80 +++++++++++
+ .../qrb2210-arduino-imola-carrier-media.dtso  | 131 ++++++++++++++++++
+ 9 files changed, 541 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi0-2lanes.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi0-4lanes.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi1-2lanes.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi1-4lanes.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-common.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-panel-5in_touch_a-dsi.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-panel-8in_touch_a-dsi.dtso
+ create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media.dtso
 
 diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 4ba8e7306419..e89a0e77072b 100644
+index e89a0e77072b..441a217371ac 100644
 --- a/arch/arm64/boot/dts/qcom/Makefile
 +++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -193,6 +193,11 @@ qcs9100-ride-r3-el2-dtbs := qcs9100-ride-r3.dtb lemans-el2.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-el2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3-el2.dtb
+@@ -195,6 +195,14 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3-el2.dtb
  dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-base.dtb
-+
-+dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-video_sound-usbc.dtbo
-+
-+qrb2210-arduino-imola-dtbs := qrb2210-arduino-imola-base.dtb qrb2210-arduino-imola-video_sound-usbc.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-base.dtb
  
-diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-base.dts
-similarity index 85%
-rename from arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
-rename to arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-base.dts
-index bf088fa9807f..fb22effb9a35 100644
---- a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-base.dts
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
- /*
-- * Copyright (c) 2025, Arduino SRL
-+ * Copyright (c) 2026, Arduino SRL
-  */
++dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-carrier-media.dtbo
++dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-carrier-media-camera-imx219-csi0-2lanes.dtbo
++dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-carrier-media-camera-imx219-csi0-4lanes.dtbo
++dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-carrier-media-camera-imx219-csi1-2lanes.dtbo
++dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-carrier-media-camera-imx219-csi1-4lanes.dtbo
++dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-carrier-media-panel-10in_touch_a-dsi.dtbo
++dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-carrier-media-panel-8in_touch_a-dsi.dtbo
++dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-carrier-media-panel-5in_touch_a-dsi.dtbo
+ dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-arduino-imola-video_sound-usbc.dtbo
  
- /dts-v1/;
-@@ -110,6 +110,106 @@ multi-led {
- 		leds = <&ledr>, <&ledg>, <&ledb>;
- 	};
- 
-+	sound: sound {
-+		compatible = "qcom,qrb2210-sndcard";
-+		model = "Arduino-Imola-HPH-LOUT";
-+		audio-routing =	"IN1_HPHL", "HPHL_OUT",
-+				"IN2_HPHR", "HPHR_OUT",
-+				"AMIC2", "MIC BIAS2";
-+
-+		mm1-dai-link {
-+			link-name = "MultiMedia1";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
-+			};
-+		};
-+
-+		mm2-dai-link {
-+			link-name = "MultiMedia2";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
-+			};
-+		};
-+
-+		mm3-dai-link {
-+			link-name = "MultiMedia3";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA3>;
-+			};
-+		};
-+
-+		mm4-dai-link {
-+			link-name = "MultiMedia4";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai  MSM_FRONTEND_DAI_MULTIMEDIA4>;
-+			};
-+		};
-+
-+		hph-playback-dai-link {
-+			link-name = "HPH Playback";
-+			cpu {
-+				sound-dai = <&q6afedai RX_CODEC_DMA_RX_0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6routing>;
-+			};
-+
-+			codec {
-+				sound-dai = <&pmic4125_codec 0>, <&swr1 0>, <&rxmacro 0>;
-+			};
-+		};
-+
-+		lo-playback-dai-link {
-+			link-name = "LO Playback";
-+			cpu {
-+				sound-dai = <&q6afedai RX_CODEC_DMA_RX_0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6routing>;
-+			};
-+
-+			codec {
-+				sound-dai = <&pmic4125_codec 0>, <&swr1 0>, <&rxmacro 0>;
-+			};
-+		};
-+
-+		ear-playback-dai-link {
-+			link-name = "Ear Playback";
-+			cpu {
-+				sound-dai = <&q6afedai RX_CODEC_DMA_RX_0>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6routing>;
-+			};
-+
-+			codec {
-+				sound-dai = <&pmic4125_codec 0>, <&swr1 0>, <&rxmacro 0>;
-+			};
-+		};
-+
-+		hph-capture-dai-link {
-+			link-name = "HP Capture";
-+			cpu {
-+				sound-dai = <&q6afedai TX_CODEC_DMA_TX_3>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6routing>;
-+			};
-+
-+			codec {
-+				sound-dai = <&pmic4125_codec 1>, <&swr0 0>, <&txmacro 0>;
-+			};
-+		};
-+	};
-+
- 	vreg_anx_30: regulator-anx-30 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "anx30";
-@@ -165,6 +265,7 @@ anx7625: encoder@58 {
- 		analogix,lane1-swing = /bits/ 8 <0x14 0x54 0x64 0x74>;
- 
- 		pinctrl-0 = <&anx7625_int_pin>, <&anx7625_cable_det_pin>;
-+		#sound-dai-cells = <1>;
- 
- 		connector {
- 			compatible = "usb-c-connector";
-@@ -198,20 +299,6 @@ anx_ss_in: endpoint {
- 				};
- 			};
- 		};
--
--		ports {
--			#address-cells = <1>;
--			#size-cells = <0>;
--
--			port@0 {
--				reg = <0>;
--
--				anx_dsi0_in: endpoint {
--					remote-endpoint = <&mdss_dsi0_out>;
--					data-lanes = <0 1 2 3>;
--				};
--			};
--		};
- 	};
- };
- 
-@@ -225,11 +312,6 @@ &mdss_dsi0 {
- 	status = "okay";
- };
- 
--&mdss_dsi0_out {
--	remote-endpoint = <&anx_dsi0_in>;
--	data-lanes = <0 1 2 3>;
--};
--
- &mdss_dsi0_phy {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-video_sound-usbc.dtso b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-video_sound-usbc.dtso
+ qrb2210-arduino-imola-dtbs := qrb2210-arduino-imola-base.dtb qrb2210-arduino-imola-video_sound-usbc.dtbo
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi0-2lanes.dtso b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi0-2lanes.dtso
 new file mode 100644
-index 000000000000..6fb256498cd1
+index 000000000000..5b1d3cdc693a
 --- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-video_sound-usbc.dtso
-@@ -0,0 +1,61 @@
++++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi0-2lanes.dtso
+@@ -0,0 +1,49 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
 +/*
-+ * Copyright (c) 2025, Arduino SA
++ * Copyright (c) 2026, Arduino SRL
 + */
 +
 +/dts-v1/;
 +/plugin/;
 +
-+#include <dt-bindings/sound/qcom,q6asm.h>
-+#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
++#include <dt-bindings/gpio/gpio.h>
++#include "qrb2210-arduino-imola-carrier-media-common.dtsi"
 +
-+&anx7625 {
++&camss {
 +	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
 +		port@0 {
-+			reg = <0>;
-+			anx_dsi0_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
++			csiphy0_ep: endpoint {
++				data-lanes = <0 1>;
++				remote-endpoint = <&imx219_0_ep>;
++			};
++		};
++	};
++};
++
++&cci_i2c0 {
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	sensor@10 {
++		compatible = "sony,imx219";
++		reg = <0x10>;
++		clocks = <&cam24m>;
++		status = "okay";
++
++		VDIG-supply = <&cam_pwr_csi0>;
++		VANA-supply = <&cam_pwr_csi0>;
++		VDDL-supply = <&cam_pwr_csi0>;
++
++		reset-gpios = <&pca9555 0 GPIO_ACTIVE_HIGH>;
++
++		port {
++			/* MIPI CSI-2 bus endpoint */
++			imx219_0_ep: endpoint {
++				remote-endpoint = <&csiphy0_ep>;
++				clock-lanes = <0>;
++				data-lanes = <1 2>;
++				link-frequencies = /bits/ 64 <456000000>;
++			};
++		};
++	};
++};
+\ No newline at end of file
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi0-4lanes.dtso b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi0-4lanes.dtso
+new file mode 100644
+index 000000000000..0d76786bd925
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi0-4lanes.dtso
+@@ -0,0 +1,49 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
++/*
++ * Copyright (c) 2026, Arduino SRL
++ */
++
++/dts-v1/;
++/plugin/;
++
++#include <dt-bindings/gpio/gpio.h>
++#include "qrb2210-arduino-imola-carrier-media-common.dtsi"
++
++&camss {
++	ports {
++		port@0 {
++			csiphy0_ep: endpoint {
 +				data-lanes = <0 1 2 3>;
++				remote-endpoint = <&imx219_0_ep>;
++			};
++		};
++	};
++};
++
++&cci_i2c0 {
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	sensor@10 {
++		compatible = "sony,imx219";
++		reg = <0x10>;
++		clocks = <&cam24m>;
++		status = "okay";
++
++		VDIG-supply = <&cam_pwr_csi0>;
++		VANA-supply = <&cam_pwr_csi0>;
++		VDDL-supply = <&cam_pwr_csi0>;
++
++		reset-gpios = <&pca9555 0 GPIO_ACTIVE_HIGH>;
++
++		port {
++			/* MIPI CSI-2 bus endpoint */
++			imx219_0_ep: endpoint {
++				remote-endpoint = <&csiphy0_ep>;
++				clock-lanes = <0>;
++				data-lanes = <1 2 3 4>;
++				link-frequencies = /bits/ 64 <364000000>;
++			};
++		};
++	};
++};
+\ No newline at end of file
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi1-2lanes.dtso b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi1-2lanes.dtso
+new file mode 100644
+index 000000000000..d74b63876e87
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi1-2lanes.dtso
+@@ -0,0 +1,49 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
++/*
++ * Copyright (c) 2026, Arduino SRL
++ */
++
++/dts-v1/;
++/plugin/;
++
++#include <dt-bindings/gpio/gpio.h>
++#include "qrb2210-arduino-imola-carrier-media-common.dtsi"
++
++&camss {
++	ports {
++		port@1 {
++			csiphy1_ep: endpoint {
++				data-lanes = <0 1>;
++				remote-endpoint = <&imx219_1_ep>;
++			};
++		};
++	};
++};
++
++&cci_i2c1 {
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	sensor@10 {
++		compatible = "sony,imx219";
++		reg = <0x10>;
++		clocks = <&cam24m>;
++		status = "okay";
++
++		VDIG-supply = <&cam_pwr_csi1>;
++		VANA-supply = <&cam_pwr_csi1>;
++		VDDL-supply = <&cam_pwr_csi1>;
++
++		reset-gpios = <&pca9555 2 GPIO_ACTIVE_HIGH>;
++
++	   port {
++			/* MIPI CSI-2 bus endpoint */
++			imx219_1_ep: endpoint {
++				remote-endpoint = <&csiphy1_ep>;
++				clock-lanes = <0>;
++				data-lanes = <1 2>;
++				link-frequencies = /bits/ 64 <456000000>;
++			};
++		};
++	};
++};
+\ No newline at end of file
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi1-4lanes.dtso b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi1-4lanes.dtso
+new file mode 100644
+index 000000000000..87db9ed386af
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-camera-imx219-csi1-4lanes.dtso
+@@ -0,0 +1,49 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
++/*
++ * Copyright (c) 2026, Arduino SRL
++ */
++
++/dts-v1/;
++/plugin/;
++
++#include <dt-bindings/gpio/gpio.h>
++#include "qrb2210-arduino-imola-carrier-media-common.dtsi"
++
++&camss {
++	ports {
++		port@1 {
++			csiphy1_ep: endpoint {
++				data-lanes = <0 1 2 3>;
++				remote-endpoint = <&imx219_1_ep>;
++			};
++		};
++	};
++};
++
++&cci_i2c1 {
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	sensor@10 {
++		compatible = "sony,imx219";
++		reg = <0x10>;
++		clocks = <&cam24m>;
++		status = "okay";
++
++		VDIG-supply = <&cam_pwr_csi1>;
++		VANA-supply = <&cam_pwr_csi1>;
++		VDDL-supply = <&cam_pwr_csi1>;
++
++		reset-gpios = <&pca9555 2 GPIO_ACTIVE_HIGH>;
++
++		port {
++			/* MIPI CSI-2 bus endpoint */
++			imx219_1_ep: endpoint {
++				remote-endpoint = <&csiphy1_ep>;
++				clock-lanes = <0>;
++				data-lanes = <1 2 3 4>;
++				link-frequencies = /bits/ 64 <364000000>;
++			};
++		};
++	};
++};
+\ No newline at end of file
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-common.dtsi b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-common.dtsi
+new file mode 100644
+index 000000000000..9670fecf6a89
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-common.dtsi
+@@ -0,0 +1,46 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
++/*
++ * Copyright (c) 2026, Arduino SRL
++ */
++
++#include <dt-bindings/gpio/gpio.h>
++
++&{/} {
++	cam_pwr_csi0: cam-pwr-csi0 {
++		compatible = "regulator-fixed";
++		regulator-name = "cam-pwr";
++		startup-delay-us = <100000>;
++		gpio = <&pca9555 1 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
++
++	cam_pwr_csi1: cam-pwr-csi1 {
++		compatible = "regulator-fixed";
++		regulator-name = "cam-pwr";
++		startup-delay-us = <100000>;
++		gpio = <&pca9555 3 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
++
++	clocks {
++		cam24m: cam-clk {
++			compatible = "fixed-clock";
++			#clock-cells = <0>;
++			clock-frequency = <24000000>;
++			clock-output-names = "cam24m";
++		};
++	};
++};
++
++&cci_i2c0 {
++	clock-frequency = <100000>;
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	pca9555: gpio@26 {
++		compatible = "nxp,pca9555";
++		reg = <0x26>;
++		gpio-controller;
++		#gpio-cells = <2>;
++	};
++};
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-panel-5in_touch_a-dsi.dtso b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-panel-5in_touch_a-dsi.dtso
+new file mode 100644
+index 000000000000..cd9c533ad3a4
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-panel-5in_touch_a-dsi.dtso
+@@ -0,0 +1,80 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
++/*
++ * Copyright (c) 2026, Arduino SRL
++ */
++
++ /dts-v1/;
++/plugin/;
++
++#include <dt-bindings/gpio/gpio.h>
++#include "qrb2210-arduino-imola-carrier-media-common.dtsi"
++
++&{/} {
++	panel_avdd: regulator-panel-avdd {
++		compatible = "regulator-fixed";
++		regulator-name = "panel-avdd";
++		gpios = <&wsgpio 0 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
++
++	panel_iovcc: regulator-panel-iovcc {
++		compatible = "regulator-fixed";
++		regulator-name = "panel-iovcc";
++		gpios = <&wsgpio 4 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
++
++	panel_vcc: regulator-panel-vcc {
++		compatible = "regulator-fixed";
++		regulator-name = "panel-vcc";
++		gpios = <&wsgpio 8 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		regulator-always-on;
++	};
++};
++
++&cci_i2c0 {
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	wsgpio: gpio@45 {
++		compatible = "waveshare,dsi-touch-gpio";
++		reg = <0x45>;
++		gpio-controller;
++		#gpio-cells = <2>;
++	};
++
++	touch: goodix@5d {
++		compatible = "goodix,gt9271";
++		reg = <0x5d>;
++		reset-gpio = <&wsgpio 9 GPIO_ACTIVE_HIGH>;
++	};
++};
++
++&mdss_dsi0 {
++	vdda-supply = <&pm4125_l5>;
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	status = "okay";
++
++	dsi_panel: dsi_panel@0 {
++		reg = <0>;
++		compatible = "waveshare,5.0-dsi-touch-a", "himax,hx8399c";
++		reset-gpio = <&wsgpio 1 GPIO_ACTIVE_LOW>;
++		iovcc-supply = <&panel_iovcc>;
++		vcc-supply = <&panel_avdd>;
++		backlight = <&wsgpio>;
++
++		port {
++			panel_in: endpoint {
++				remote-endpoint = <&mdss_dsi0_out>;
 +			};
 +		};
 +	};
 +};
 +
 +&mdss_dsi0_out {
-+	remote-endpoint = <&anx_dsi0_in>;
++	remote-endpoint = <&panel_in>;
 +	data-lanes = <0 1 2 3>;
 +};
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-panel-8in_touch_a-dsi.dtso b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-panel-8in_touch_a-dsi.dtso
+new file mode 100644
+index 000000000000..41e7a254dbe7
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media-panel-8in_touch_a-dsi.dtso
+@@ -0,0 +1,80 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
++/*
++ * Copyright (c) 2026, Arduino SRL
++ */
 +
-+&q6afedai {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	#sound-dai-cells = <1>;
-+	dai@18 {
-+		reg = <SECONDARY_MI2S_RX>;
-+		qcom,sd-lines = <0>;
++ /dts-v1/;
++/plugin/;
++
++#include <dt-bindings/gpio/gpio.h>
++#include "qrb2210-arduino-imola-carrier-media-common.dtsi"
++
++&{/} {
++	panel_avdd: regulator-panel-avdd {
++		compatible = "regulator-fixed";
++		regulator-name = "panel-avdd";
++		gpios = <&wsgpio 0 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
++
++	panel_iovcc: regulator-panel-iovcc {
++		compatible = "regulator-fixed";
++		regulator-name = "panel-iovcc";
++		gpios = <&wsgpio 4 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++	};
++
++	panel_vcc: regulator-panel-vcc {
++		compatible = "regulator-fixed";
++		regulator-name = "panel-vcc";
++		gpios = <&wsgpio 8 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		regulator-always-on;
 +	};
 +};
 +
-+&sound {
-+	pinctrl-0 = <&lpi_i2s2_active>;
-+	pinctrl-names = "default";
++&cci_i2c0 {
++	#address-cells = <1>;
++	#size-cells = <0>;
 +
-+	hdmi-i2s-dai-link {
-+		link-name = "HDMI/I2S Playback";
++	wsgpio: gpio@45 {
++		compatible = "waveshare,dsi-touch-gpio";
++		reg = <0x45>;
++		gpio-controller;
++		#gpio-cells = <2>;
++	};
 +
-+		cpu {
-+			sound-dai = <&q6afedai SECONDARY_MI2S_RX>;
++	touch: goodix@5d {
++		compatible = "goodix,gt9271";
++		reg = <0x5d>;
++		reset-gpio = <&wsgpio 9 GPIO_ACTIVE_HIGH>;
++	};
++};
++
++&mdss_dsi0 {
++	vdda-supply = <&pm4125_l5>;
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	status = "okay";
++
++	dsi_panel: dsi_panel@0 {
++		reg = <0>;
++		compatible = "waveshare,8.0-dsi-touch-a", "jadard,jd9365da-h3";
++		reset-gpio = <&wsgpio 1 GPIO_ACTIVE_LOW>;
++		vccio-supply = <&panel_iovcc>;
++		vdd-supply = <&panel_avdd>;
++		backlight = <&wsgpio>;
++
++		port {
++			panel_in: endpoint {
++				remote-endpoint = <&mdss_dsi0_out>;
++			};
 +		};
++	};
++};
 +
-+		platform {
-+			sound-dai = <&q6routing>;
-+		};
++&mdss_dsi0_out {
++	remote-endpoint = <&panel_in>;
++	data-lanes = <0 1 2 3>;
++};
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media.dtso b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media.dtso
+new file mode 100644
+index 000000000000..217a84199e9f
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola-carrier-media.dtso
+@@ -0,0 +1,131 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
++/*
++ * Copyright (c) 2026, Arduino SRL
++ */
 +
-+		codec {
-+			sound-dai = <&anx7625 0>;
-+		};
++/dts-v1/;
++/plugin/;
++
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/leds/common.h>
++#include "qrb2210-arduino-imola-carrier-media-common.dtsi"
++
++&camss {
++	status = "okay";
++
++	vdda-csiphy-1p2-supply = <&pm4125_l5>;
++	vdda-pll-1p8-supply = <&pm4125_l13>;
++};
++
++&cci {
++	status= "okay";
++};
++
++&leds {
++	led1-blue {
++		label = "media-carrier:blue1";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_BLUE>;
++		gpios = <&pca9555 14 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
++	};
++
++	led1-green {
++		label = "media-carrier:green1";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_GREEN>;
++		gpios = <&pca9555 15 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
++	};
++
++	led1-red {
++		label = "media-carrier:red1";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_RED>;
++		gpios = <&pca9555 13 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
++	};
++	led2-blue {
++		label = "media-carrier:blue2";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_BLUE>;
++		gpios = <&pca9555 11 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
++	};
++
++	led2-green {
++		label = "media-carrier:green2";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_GREEN>;
++		gpios = <&pca9555 12 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
++	};
++
++	led2-red {
++		label = "media-carrier:red2";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_RED>;
++		gpios = <&pca9555 10 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
++	};
++
++	led3-blue {
++		label = "media-carrier:blue3";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_BLUE>;
++		gpios = <&pca9555 8 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
++	};
++
++	led3-green {
++		label = "media-carrier:green3";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_GREEN>;
++		gpios = <&pca9555 9 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
++	};
++
++	led3-red {
++		label = "media-carrier:red3";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_RED>;
++		gpios = <&pca9555 7 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
++	};
++
++	led4-blue {
++		label = "media-carrier:blue4";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_BLUE>;
++		gpios = <&pca9555 5 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
++	};
++
++	led4-green {
++		label = "media-carrier:green4";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_GREEN>;
++		gpios = <&pca9555 6 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
++	};
++
++	led4-red {
++		label = "media-carrier:red4";
++		function = LED_FUNCTION_INDICATOR;
++		color = <LED_COLOR_ID_RED>;
++		gpios = <&pca9555 4 GPIO_ACTIVE_LOW>;
++		linux,default-trigger = "none";
++		default-state = "off";
 +	};
 +};
 -- 
