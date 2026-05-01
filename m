@@ -1,85 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-105448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CO5hKmhT9GmsAgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 09:16:56 +0200
+	id QF8eFQdU9GnDAgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 09:19:35 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 274334AAE6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 09:16:55 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F195E4AAF17
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 09:19:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 09D2C30552A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 07:15:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0E1E9301F19B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 07:16:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B66B935E93E;
-	Fri,  1 May 2026 07:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E090D363C53;
+	Fri,  1 May 2026 07:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="3IK/U6Xi"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Cm9EcFcR";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SyQDj3S0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8333365A1D
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 07:15:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C84F35838A
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 07:15:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777619749; cv=none; b=Qyp+JRPbaZ7Nj9X4Bgqbdl/CxYRdp0zGS3ef9iDjPLc5MLHaBoSSe+i3Vw6Qww6Ozi1wegqk7665+AOmzYUCsrDMrxj2kryNLgfRZiidA7TXzilvmmxobQoCyWrnDI9noJdWtoscL5E3AAj2FycO75rlVAxnKTGTcDvZtkxkUG0=
+	t=1777619759; cv=none; b=JgvL9XFdEFjp12Z+zbD29GA3zkJkykbyQxXb5YaK6L+05j3IxC0xj9KWhWNVGsVShvN9wUlfkRAfqMxjlZUdW0DzImZR3yZ8oK9xPuy6Sv0xj+SDlr0HPkeI0tdnT3/8ID/ZPcXtGUh5XFFZdo4j8BNbEI0WTq/D3LVVItR9E0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777619749; c=relaxed/simple;
-	bh=ObeaTI9oGiLe42YJXwSvm93zhEz3BDcXzX0FYlJcloY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OhieLUtqZBUMZiu8vzccteVMCrnwtq1xKVdn2Zw6RGpSDTCguKOqkWS2EqLbXfDxSpro7Hqpxe8KT/UMSC8NkJR2W6s8AKnhECa3RQ4c+93/wYo6c6xsaRNh56LEBIfsoD2YTq9sDk1Ss0JiU/isDXUEFdoCPSIPWrlMpZDqqh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=3IK/U6Xi; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4891f625344so18176705e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 00:15:42 -0700 (PDT)
+	s=arc-20240116; t=1777619759; c=relaxed/simple;
+	bh=Fr+3q/m8eQdZKnKkiBfMq+f+wZxUQm+q5ZEQU3G7Fjc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XiqcNZz7UHLNcAzL58F9gQ1egdQzRcE7M2dldHgakpmz9Iu/ndJq1zSCeuu2IREdDruj0VhF2WBtBkcmRSi/vaPHMrD2YLVKWDErlT8M4CIHVsYXz+U2uAHNycaL5qvz2kt0v7Z/SA3mCMSTxxTTjkcJr8/AP96Zna8xAWbK9IA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Cm9EcFcR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SyQDj3S0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6413t1s01988442
+	for <linux-arm-msm@vger.kernel.org>; Fri, 1 May 2026 07:15:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=KhFirPZNgW5encf6J90dux
+	StBhWjPPuiggwSFINADfg=; b=Cm9EcFcRDVsv3ek6IFzzrWfUF4zNIljnAPNXhc
+	bdMok3LPMXjI0HEnysFLuX8sQGSueWCFvfN0gy4BDUoLxJ/BmVDAlTT6nHDcF1at
+	Wyzc8xIHfNhP4LOItrwhS1DSdOzYQUlhBXNS3fjrH58KQsQTyjImzxOHQ5gnWlKq
+	V1Pc6148c9UPcjg+ed+QEnPcy77FFJ4ELoA7Mm6szfYGakA5sSD1I3LjGtOoGlYJ
+	9CYBQg06nQk3E0GX5dv4+NDPjag3SjrQqCwgdqb3oRnisZml4w5RiCeA2ccS9iLI
+	uKNQxbEJNVdxIAi5vuqE48o0ls8LPGKCmXqhaFDxk4LqCktw==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dvc459yw8-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 07:15:57 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-35da4795b3cso3957144a91.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 00:15:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1777619741; x=1778224541; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=o5V6knZIhB7/WOjEgsyLqxPXBwOa+O33dpe+cxcVxdw=;
-        b=3IK/U6Xi5D5FH9mZlpGwMMJ/J9liogtgB2A9hPCQu7UdPnEqYeNSzS62e2piHXAqSK
-         HXd4OnQQ8hpCmxmZK3hqR83U6NjIGzpj+OQZiN2YMA7sLayj8jPZ/5Vb0VJXJi8ceVDh
-         Lv+sphcfCdVg0gZ+UCTn4lXEzJVFXaN9oyaNHaPeNek0djiyFN1OcHYPBnAvsuFOo92u
-         oG9BL7cvf1O+//2667MsU2xg3hFTbfkUL7GQl7whc76zjAlo1pVjX6h4BCNHmdgZ+HqQ
-         qTcSfYUgGDxWxG6kGym7WIoyj3nFYcE4cRXp9pOO1s+YtrDjVv5Kq1SdQyZLAqxxJJKa
-         kUwA==
+        d=oss.qualcomm.com; s=google; t=1777619756; x=1778224556; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KhFirPZNgW5encf6J90duxStBhWjPPuiggwSFINADfg=;
+        b=SyQDj3S0DqBSN6lByw3nzbIyNi+mPKBPrV+Y+bODY4Vhf4jAbuiTaZqADyRM76Ox7I
+         syA7s26rXBmkpgQKcBdLVUup5vuQGiIz8O61IJpQTIElpCEbeXWtUhvd8UOzILgAeZ/0
+         h5Gdnh4AKVP0ttyYiZvIDhTLsz4bTBk4gu9TagtGxgzw1m2Dc93nJPJhSQ5ljXU0P036
+         iJVVIrbQvYoaL8kLeXlgQz1ZSwntVRN7f4qMLEeLoq0LT8MuKfgV/3iCcIqTG7dQi5Vu
+         mnT1CxCZ2OcS7Tk7Jmvamy7QAsAskiBuudrbEqFktiO/PbJWouxW/TSGAH/fNPGHiewc
+         SKuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777619741; x=1778224541;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=o5V6knZIhB7/WOjEgsyLqxPXBwOa+O33dpe+cxcVxdw=;
-        b=WyP3nw+sqSI9NsVJxhL71eD7HKkAx184w3N70vHpAGKHe/yqvDQM7jkBksEyiYYgDj
-         47hIKE/msc3V0mCSsu4n/BkL2jFgineTXHh2P0+ywDNcC6dxqwO3d6YBj5l4laNjSuxT
-         Y8V7kYzW/2yLNFxL37mz3pTZOvVbTvg13SXDUBE6PYVk6CmSMWlNCXx6QZyOOtjWuUF4
-         mT9+jDECZnaFF720R56+VJsGU+wMJgEGLQ5i4xZwO3Vu76XcYejlJJlo5KoSEVjfDhaf
-         U09As4nCQJEYGnR+W4GcySc3D22zcfo7g0EeiiK3HBUSCHfGuFOKRXt+4bYVWxQ+CmFS
-         H/YA==
-X-Forwarded-Encrypted: i=1; AFNElJ/8BdAhTPk43g2OjAOLGXGTjI6DyvNuEMaAJ/1j3ehY5Fi4Z90v6fzg9Np/WzH4VF2IEJ/R/RcnmUMKo9o7@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2g/UjNEi3kqeTn9bccfANlQUxd2UpRHjMRK92TCFC6H431Nwx
-	xCsZjPl/+JekNS2gAc4oNxx5BS29XdfwvnSuTct9uRIDfPwfum2iOji0WCyY3IIKF7M=
-X-Gm-Gg: AeBDievx/2PsYnXBASvwpUg0/fLNXtL7eI9xs6sL9lZd9weJzeSxsGcFttqcUEAJm/F
-	WqpUcGpkszgMyOYWmDR1gflYvyQl57197OkAmjN8ZwfbeVvcGuZpGOVJ9gmD508aDBCFoLSj/xd
-	XzG3R7zW2+9+vDQJTeQlB0EGgp5yhMI1veTPQjlJvXmu86/KjXtpsecA7uAujHU3ca8ujGoxES6
-	oQ6HU0UCI1FYqE5zphdoe1qSW8orQO8P3o/Ni8ENboMb8FLNbLuJwymDWt40wOd0u9bW6IpZg3v
-	PJtzkaoWMSlZLWjkvoNeerkW87n/gz4pi7GMljOfF3pJLhAbtWE5MHVcZPi2SAQB3jzIroOAMXa
-	NrtOI+HH+We2JP7lzWWdeLOm3u/ZTjgS0Mzsm/YvIAva/4jDAjcRYzKG51o8+S+qWL0/qI+YNFC
-	5vIctmRX1zwetPCEeC2whuy2uauTujNeVvZflwB75rHLETfa/X3hBgeeEFoynPqanf5HAgvhz5E
-	kUJC55k
-X-Received: by 2002:a05:600c:8707:b0:489:1baf:8c03 with SMTP id 5b1f17b1804b1-48a86084573mr100270135e9.11.1777619741165;
-        Fri, 01 May 2026 00:15:41 -0700 (PDT)
-Received: from [192.168.178.36] (046124199213.public.t-mobile.at. [46.124.199.213])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a8eba8487sm29668085e9.11.2026.05.01.00.15.39
+        d=1e100.net; s=20251104; t=1777619756; x=1778224556;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KhFirPZNgW5encf6J90duxStBhWjPPuiggwSFINADfg=;
+        b=Z0yEK95RnljTHtpoKIVUiEm/oUHXgguXLZxbDs0fNj7fs0B6vV7Uy8u9igewhmtukq
+         bBjs0gfdcWM0f4M8/XgwWbbFMyzGwn5PSrwxkAp8NRT8ClBSLbIR/njOY0oV0zuYJBP9
+         ojNmY6lrjI46xtsODaISiG53S8t+KJEiAhmdclUjqDtPlspwHlgoG5XjMnTktDRmd5xu
+         wpqfzqRpYLmzrDGwDemMWC1MET/Rs6hUWBjBVAmIqBvyGCG562NbddicqcPKs+l4/sOJ
+         6xHSQJ1GgeXcrXeHpdyTWqMjg7YQjL6NpAsSvT0uGqC0geArc4nezAG86rhUqPqbCZVC
+         gGwA==
+X-Forwarded-Encrypted: i=1; AFNElJ8RlI8TzaTVStrKetkobhutcPnUtdk4A2rdosI21V15Vp581RRiI7deUu4an69//+zZI705mXRRINlJbcKS@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz94gITEZ0J9luKS/VF49L1+UzdprK/BWhImoyRzwmX9WJisvOc
+	u2xMKSBmgjVQ4vWqsmsfZAQa1QGawdzefWvj8J1Pl5qca48P3VMLWpjAzWAcWctaoUGTdRVg82X
+	swIW8RKaNyIOuhioAmbwR/Al8Koj5zbYz00hoPCj4o+l2NTctQda+ySkp1yvz6w9LArxS
+X-Gm-Gg: AeBDievksAS0ZqAnLQE0ONJQ6bP0nNxoPlJ9NeTlDZgppsgqqbMs6t1RvjnHCvuha4L
+	1a64vJ3G/ehNm8IaYAAJX9c8txW21LQqsJnkKul9fojy2wmKmkL1+O5uh0hRz45zsB+b3SNaBr8
+	apLpnxA3knbl12N81/5UUS3zTc6xjZLMxJNu5NexkyFcFR/6cMv7E0Xv/zo+IgDjSStC8871yy7
+	Lo+UVwOE5gozWrP7ThypevcS+mGJ7NRmtFXpUmdYZAEaGoL5HgHp5Qg5HeKwguZ1k34Xy0S8LYJ
+	sh4+cJEIGVvIf/JDSEUbPuqVh6qL2nVui3jubsNC73+2VArmNr3yj+pNQx8PM6uQDRyYNHhpdNr
+	paHYFxhQVF/KYHZ0ofV/SVpLakzWHkhAw0+Ife4MJu0GY0/DCGDpEsJ+bqqH6Edg=
+X-Received: by 2002:a17:90b:2d0b:b0:356:2c7b:c026 with SMTP id 98e67ed59e1d1-364ef67a4acmr1762301a91.23.1777619756412;
+        Fri, 01 May 2026 00:15:56 -0700 (PDT)
+X-Received: by 2002:a17:90b:2d0b:b0:356:2c7b:c026 with SMTP id 98e67ed59e1d1-364ef67a4acmr1762272a91.23.1777619755945;
+        Fri, 01 May 2026 00:15:55 -0700 (PDT)
+Received: from hu-imrashai-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-364ec00b094sm1424265a91.9.2026.05.01.00.15.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 00:15:40 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 01 May 2026 09:14:51 +0200
-Subject: [PATCH v3 9/9] arm64: dts: qcom: milos: Add display (MDSS)
+        Fri, 01 May 2026 00:15:55 -0700 (PDT)
+From: Imran Shaik <imran.shaik@oss.qualcomm.com>
+Subject: [PATCH 0/2] Add cpufreq scaling support for Qualcomm Shikra SoC
+Date: Fri, 01 May 2026 12:45:43 +0530
+Message-Id: <20260501-shikra-cpufreq-scaling-v1-0-c78b95f53b91@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,321 +105,95 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260501-milos-mdss-v3-9-58bfc58c0e13@fairphone.com>
-References: <20260501-milos-mdss-v3-0-58bfc58c0e13@fairphone.com>
-In-Reply-To: <20260501-milos-mdss-v3-0-58bfc58c0e13@fairphone.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Jonathan Marek <jonathan@marek.ca>, 
- Krishna Manikandan <quic_mkrishn@quicinc.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Alexander Koskovich <akoskovich@pm.me>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- devicetree@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1777619720; l=6617;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=ObeaTI9oGiLe42YJXwSvm93zhEz3BDcXzX0FYlJcloY=;
- b=zj1t8gQVCHYk3oC6SAPsn7UO6RJgw4YGPsdhnB/J6RQCEAF3yS3JGy0esTz0d8UzNpzwjw6y9
- /8Tr3iiNnzrB7vU0rwmU1M7pWpceKfc99fqrABHozUciNc0mu9Oc+Qv
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
-X-Rspamd-Queue-Id: 274334AAE6E
+X-B4-Tracking: v=1; b=H4sIAB9T9GkC/x3MQQqEMAxA0atI1hOIVgp6FXFRaqpBqZoww4B4d
+ 4vLt/j/AmMVNuirC5R/YrLngvpTQVxCnhllKoaGGk+tI7RFVg0Yj29SPtFi2CTPGFLyHdWOyDs
+ o8aGc5P+Oh/G+Hw0ID+9oAAAA
+X-Change-ID: 20260430-shikra-cpufreq-scaling-aff690130063
+To: "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Taniya Das <taniya.das@oss.qualcomm.com>,
+        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDA2NyBTYWx0ZWRfX9tMl5N19sRzO
+ lMwCewqYnHyIFw644CunERuz3C2ePRtIin30yRoCYuP0e1C7LnXK+fQngLyMnRRVPoTNo3bsTZL
+ 4VVFVvKKFB7Iu08ulzQa9LcbYKMxGz7OwJBK3/jDuHI4rJi16tTODa9k1gT2y7efxlaQ8Bhh9mb
+ /+Ji78aSkmShxR3C8eXcHt7MIo7wEzCbT9tfY3EvevrVfMGKO7pxpGxVvlKol//TdThrEmU8ojg
+ 3E1GTcGOANds1HN21v7mSIkkzzr+titu1Tca0NpCjBUWB6SVqs1MYyExlzKsslpwN6ic0qRcVOd
+ u2gTxRoy0kDryXpQ79/8zyuSKwLBxMyFPIFuPh2EjklMWmBOooghuliYzfEToLPQvhioP3LQlWz
+ I9oxcFNp9ldtS7HJop4Vd3UBEfh8Q3ZVfOwOkJFWr17yqcyp6uEkv/fO/ixQa7L1kvZXksdHtYf
+ pKTtdRS0OUoq+URuKnQ==
+X-Authority-Analysis: v=2.4 cv=DP+/JSNb c=1 sm=1 tr=0 ts=69f4532d cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=qdwp8Cu8RznD16sri-gA:9 a=QEXdDO2ut3YA:10
+ a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-ORIG-GUID: CCkxh09E4b4M74VfETJS1H41Xj3fKYz2
+X-Proofpoint-GUID: CCkxh09E4b4M74VfETJS1H41Xj3fKYz2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-01_01,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0
+ adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605010067
+X-Rspamd-Queue-Id: F195E4AAF17
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [4.84 / 15.00];
-	SEM_URIBL(3.50)[0.0.0.0:email];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
-	BAD_REP_POLICIES(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105448-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	R_DKIM_ALLOW(0.00)[fairphone.com:s=fair];
-	GREYLIST(0.00)[pass,meta];
-	DMARC_POLICY_ALLOW(0.00)[fairphone.com,quarantine];
-	RCPT_COUNT_TWELVE(0.00)[29];
-	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de,marek.ca,quicinc.com,linaro.org,pm.me];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	TAGGED_FROM(0.00)[bounces-105450-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[fairphone.com:+];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.686];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	R_SPF_ALLOW(0.00)[+ip4:172.105.105.114:c];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[imran.shaik@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-Add device nodes for display: MDSS, DPU, DSI and DSI PHY.
+This series adds cpufreq scaling support on Qualcomm Shikra SoC.
 
-DisplayPort is not added for now.
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/milos.dtsi | 211 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 209 insertions(+), 2 deletions(-)
+Imran Shaik (1):
+      dt-bindings: cpufreq: qcom-hw: Document Shikra CPUFREQ Hardware
 
-diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom/milos.dtsi
-index 4a64a98a434b..1a9b72d61688 100644
---- a/arch/arm64/boot/dts/qcom/milos.dtsi
-+++ b/arch/arm64/boot/dts/qcom/milos.dtsi
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2025, Luca Weiss <luca.weiss@fairphone.com>
-  */
- 
-+#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
- #include <dt-bindings/clock/qcom,milos-camcc.h>
- #include <dt-bindings/clock/qcom,milos-dispcc.h>
- #include <dt-bindings/clock/qcom,milos-gcc.h>
-@@ -1928,6 +1929,212 @@ camcc: clock-controller@adb0000 {
- 			#power-domain-cells = <1>;
- 		};
- 
-+		mdss: display-subsystem@ae00000 {
-+			compatible = "qcom,milos-mdss";
-+			reg = <0x0 0x0ae00000 0x0 0x1000>;
-+			reg-names = "mdss";
-+
-+			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH 0>;
-+
-+			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+				 <&gcc GCC_DISP_HF_AXI_CLK>,
-+				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
-+
-+			resets = <&dispcc DISP_CC_MDSS_CORE_BCR>;
-+
-+			interconnects = <&mmss_noc MASTER_MDP QCOM_ICC_TAG_ALWAYS
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-+					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &cnoc_main SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			interconnect-names = "mdp0-mem",
-+					     "cpu-cfg";
-+
-+			power-domains = <&dispcc DISP_CC_MDSS_CORE_GDSC>;
-+
-+			iommus = <&apps_smmu 0x1c00 0x2>;
-+
-+			interrupt-controller;
-+			#interrupt-cells = <1>;
-+
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+
-+			status = "disabled";
-+
-+			mdss_mdp: display-controller@ae01000 {
-+				compatible = "qcom,milos-dpu";
-+				reg = <0x0 0x0ae01000 0x0 0x8f000>,
-+				      <0x0 0x0aeb0000 0x0 0x3000>;
-+				reg-names = "mdp",
-+					    "vbif";
-+
-+				interrupts-extended = <&mdss 0>;
-+
-+				clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
-+					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
-+					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
-+					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+				clock-names = "nrt_bus",
-+					      "iface",
-+					      "lut",
-+					      "core",
-+					      "vsync";
-+
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
-+				assigned-clock-rates = <19200000>;
-+
-+				operating-points-v2 = <&mdp_opp_table>;
-+
-+				power-domains = <&rpmhpd RPMHPD_CX>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+
-+						dpu_intf1_out: endpoint {
-+							remote-endpoint = <&mdss_dsi0_in>;
-+						};
-+					};
-+				};
-+
-+				mdp_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-200000000 {
-+						opp-hz = /bits/ 64 <200000000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-342000000 {
-+						opp-hz = /bits/ 64 <342000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-402000000 {
-+						opp-hz = /bits/ 64 <402000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-535000000 {
-+						opp-hz = /bits/ 64 <535000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+
-+					opp-600000000 {
-+						opp-hz = /bits/ 64 <600000000>;
-+						required-opps = <&rpmhpd_opp_nom_l1>;
-+					};
-+
-+					opp-630000000 {
-+						opp-hz = /bits/ 64 <630000000>;
-+						required-opps = <&rpmhpd_opp_turbo>;
-+					};
-+				};
-+			};
-+
-+			mdss_dsi0: dsi@ae94000 {
-+				compatible = "qcom,milos-dsi-ctrl", "qcom,mdss-dsi-ctrl";
-+				reg = <0x0 0x0ae94000 0x0 0x1000>;
-+				reg-names = "dsi_ctrl";
-+
-+				interrupts-extended = <&mdss 4>;
-+
-+				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
-+					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_DISP_HF_AXI_CLK>;
-+				clock-names = "byte",
-+					      "byte_intf",
-+					      "pixel",
-+					      "core",
-+					      "iface",
-+					      "bus";
-+
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
-+				assigned-clock-parents = <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
-+							 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>;
-+
-+				operating-points-v2 = <&mdss_dsi_opp_table>;
-+
-+				power-domains = <&rpmhpd RPMHPD_CX>;
-+
-+				phys = <&mdss_dsi0_phy>;
-+				phy-names = "dsi";
-+
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				status = "disabled";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+
-+						mdss_dsi0_in: endpoint {
-+							remote-endpoint = <&dpu_intf1_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+
-+						mdss_dsi0_out: endpoint {
-+						};
-+					};
-+				};
-+
-+				mdss_dsi_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-187500000 {
-+						opp-hz = /bits/ 64 <187500000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-300000000 {
-+						opp-hz = /bits/ 64 <300000000>;
-+						required-opps = <&rpmhpd_opp_svs>;
-+					};
-+
-+					opp-358000000 {
-+						opp-hz = /bits/ 64 <358000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+				};
-+			};
-+
-+			mdss_dsi0_phy: phy@ae95000 {
-+				compatible = "qcom,milos-dsi-phy-4nm";
-+				reg = <0x0 0x0ae95000 0x0 0x200>,
-+				      <0x0 0x0ae95200 0x0 0x300>,
-+				      <0x0 0x0ae95500 0x0 0x400>;
-+				reg-names = "dsi_phy",
-+					    "dsi_phy_lane",
-+					    "dsi_pll";
-+
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&rpmhcc RPMH_CXO_CLK>;
-+				clock-names = "iface",
-+					      "ref";
-+
-+				#clock-cells = <1>;
-+				#phy-cells = <0>;
-+
-+				status = "disabled";
-+			};
-+		};
-+
- 		dispcc: clock-controller@af00000 {
- 			compatible = "qcom,milos-dispcc";
- 			reg = <0x0 0x0af00000 0x0 0x20000>;
-@@ -1936,8 +2143,8 @@ dispcc: clock-controller@af00000 {
- 				 <&sleep_clk>,
- 				 <&gcc GCC_DISP_AHB_CLK>,
- 				 <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>,
--				 <0>, /* dsi0_phy_pll_out_byteclk */
--				 <0>, /* dsi0_phy_pll_out_dsiclk */
-+				 <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
-+				 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
- 				 <0>, /* dp0_phy_pll_link_clk */
- 				 <0>; /* dp0_phy_pll_vco_div_clk */
- 
+Taniya Das (1):
+      cpufreq: qcom: Add cpufreq scaling support for Qualcomm Shikra SoC
 
+ .../bindings/cpufreq/cpufreq-qcom-hw.yaml          |  7 +++++++
+ drivers/cpufreq/qcom-cpufreq-hw.c                  | 23 +++++++++++++++++++---
+ 2 files changed, 27 insertions(+), 3 deletions(-)
+---
+base-commit: 0787c45ea08a13b5482e701fabc741877cf681f6
+change-id: 20260430-shikra-cpufreq-scaling-aff690130063
+
+Best regards,
 -- 
-2.54.0
+Imran Shaik <imran.shaik@oss.qualcomm.com>
 
 
