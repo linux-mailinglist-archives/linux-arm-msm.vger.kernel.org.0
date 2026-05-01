@@ -1,85 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-105449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YMtlMmpT9GmsAgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 09:16:58 +0200
+	id CO5hKmhT9GmsAgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 09:16:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7AFD94AAE75
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 09:16:58 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 274334AAE6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 09:16:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A98593036EAC
+	by tor.lore.kernel.org (Postfix) with ESMTP id 09D2C30552A2
 	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 07:15:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F28E365A0A;
-	Fri,  1 May 2026 07:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B66B935E93E;
+	Fri,  1 May 2026 07:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="gwMD32sD"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="3IK/U6Xi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D848D3603FC
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 07:15:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8333365A1D
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 07:15:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777619750; cv=none; b=Jfh8nzEUySa1JQn+n/g+JCny1cBWd0pFvY4m7JMtU3gQ6Me6WcXrEW2pkt0yA4ryU+T4oXcIT1JLlt/O1HIOac+E+hhHk0PFJ+AJZ+dqCIklW/u/ViE5TyNTCa9EuNECjJ4NYV8t6an61yMVTw0ZX7h6eHa9TE1+LWNkqtDINKk=
+	t=1777619749; cv=none; b=Qyp+JRPbaZ7Nj9X4Bgqbdl/CxYRdp0zGS3ef9iDjPLc5MLHaBoSSe+i3Vw6Qww6Ozi1wegqk7665+AOmzYUCsrDMrxj2kryNLgfRZiidA7TXzilvmmxobQoCyWrnDI9noJdWtoscL5E3AAj2FycO75rlVAxnKTGTcDvZtkxkUG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777619750; c=relaxed/simple;
-	bh=2nJzs+ggM8UNo2NDd0LLZQ8cBS+aAGJpwl8JxlC8yxg=;
+	s=arc-20240116; t=1777619749; c=relaxed/simple;
+	bh=ObeaTI9oGiLe42YJXwSvm93zhEz3BDcXzX0FYlJcloY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SfjcXhzisTGB2OATrqPVyjtHoIcq80buBiHk2gKISGNI0G7I/89dslB1FAMu2Bb0mNl62nrWrtSOXm7NJnFoxjiwMj25xSm/veqKHgwSGB3urQxnQGvQtSnI47pJkNBqY/Gn6W1doMhoLht4QCJ5LxJ37PMOhn1GKY95d3fGDOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=gwMD32sD; arc=none smtp.client-ip=209.85.128.47
+	 In-Reply-To:To:Cc; b=OhieLUtqZBUMZiu8vzccteVMCrnwtq1xKVdn2Zw6RGpSDTCguKOqkWS2EqLbXfDxSpro7Hqpxe8KT/UMSC8NkJR2W6s8AKnhECa3RQ4c+93/wYo6c6xsaRNh56LEBIfsoD2YTq9sDk1Ss0JiU/isDXUEFdoCPSIPWrlMpZDqqh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=3IK/U6Xi; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-488b3f8fa2bso26619945e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 00:15:40 -0700 (PDT)
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4891f625344so18176705e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 00:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1777619739; x=1778224539; darn=vger.kernel.org;
+        d=fairphone.com; s=fair; t=1777619741; x=1778224541; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=p40yQ0N4gw3cKX8I+3VHHK+y5Obu99UMNK8dsColTtQ=;
-        b=gwMD32sDzzvEu2G7ixU7naDyEgQcMhVD+r5mEzQPZtjBvSmz/+EuJ6HjgfCZ8CuW8O
-         vHR4FK/wTxDhkRfJviJAreHEahKO1dkujzLQJLKYIom3qYS2iwQOEcQbfAZJSn0gccKz
-         DDZGDiBdbF/di9mbUOANc90SvB0dYCu83Akdtbug6QquSCnpXFMoHQLIan6QNaYCn937
-         CMaMV8f68TFD0jnIMx1Aynm/dpNKEFTjRxX5qrfTg/dTSn5LJwbZuP6fV0N0elDXGm1r
-         PqbQq1lpaFlkXCMtoxHKQxiRo5vldNkkTaqpWgfqtOBnFPeG8vAOZ7GeXODZ5yeIZV3L
-         fEWA==
+        bh=o5V6knZIhB7/WOjEgsyLqxPXBwOa+O33dpe+cxcVxdw=;
+        b=3IK/U6Xi5D5FH9mZlpGwMMJ/J9liogtgB2A9hPCQu7UdPnEqYeNSzS62e2piHXAqSK
+         HXd4OnQQ8hpCmxmZK3hqR83U6NjIGzpj+OQZiN2YMA7sLayj8jPZ/5Vb0VJXJi8ceVDh
+         Lv+sphcfCdVg0gZ+UCTn4lXEzJVFXaN9oyaNHaPeNek0djiyFN1OcHYPBnAvsuFOo92u
+         oG9BL7cvf1O+//2667MsU2xg3hFTbfkUL7GQl7whc76zjAlo1pVjX6h4BCNHmdgZ+HqQ
+         qTcSfYUgGDxWxG6kGym7WIoyj3nFYcE4cRXp9pOO1s+YtrDjVv5Kq1SdQyZLAqxxJJKa
+         kUwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777619739; x=1778224539;
+        d=1e100.net; s=20251104; t=1777619741; x=1778224541;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=p40yQ0N4gw3cKX8I+3VHHK+y5Obu99UMNK8dsColTtQ=;
-        b=okSU2DxpN9PnjvmCf0bULYhi6K28BAS1KTmtoc3dO8DBZpfkzUVrsNmiy0waKVxiRm
-         01m6foNSFyUknojicDV5PIzBypbFnX1HjX9aJoqLo7UR1G9T1sCjiIfeLENcJsnB0vjn
-         pgd3twCbrOWOY9JDQQYMR+2/RQa2NGh2EOJYIrUwyubZafHiCA3D1B+SXDeARdJfXQtI
-         U/Tpjb+TBP45az406H1CkWZg2ytpxgaKuuawwo+nzSrLLMUymq8cYNPljPEGbWBF6WuI
-         84uJSH2RGoGaDwkltNSHlcKlUzzs6n6HfTBYVrqfz82kgQ9eaByS/ZkEldpgB2FKxwWJ
-         kCsw==
-X-Forwarded-Encrypted: i=1; AFNElJ95MiM3EMcR7vN8z1oazF+4QpNB0uGNRqxdlCc3jHg3XbnyGpmIoiU3d14uZZ+hE3QWu4EnEJqqwREYFyAK@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZPrTlhoKipoYivI8M1hnoBIp0kClfg6+BW+XLovSfhg+DWE/z
-	us3sJtG0wgq0zUT8jGcPDmeHSv8tO35uZAbwY6ND/nEShThdaNU3rNVB9fyx5Gb91Po=
-X-Gm-Gg: AeBDiesS5woe0IBtrgWqINZ2r1iH0l2zGvlbCdgxHE0bklqXZTdxBXD2D7PSAuUXkT4
-	eMPsDxIzyXKSJUllYkdH96aJcTuvpFYfdXMZeOWM4qHtPPcnScjQKu8vbpOEzSGohe35POKOqIG
-	Fq+eWIXOzsmwEzTfv/NtSK5Ygi5PZJDt1WattMMxHmhrreMFe3J7rY+Tim9b+aFgZntlJjPMtVT
-	GYZwwVxlezQj6mhPxYmpX90T797Ov/tVMURM4rBQb+qJ8PfICDo35yS/x4qz9dE3QawRlTR+i3G
-	c+C3+DsPuYS1ozNtMCPC9HIHsPNkLoV1ek1puCXw2vzIF3H4Yvmt6nJ13FA3b1kScfMUaaD5570
-	d/3I5feapJorlQdrQCnhCReHkN9pqOnjf2vnMRwWKL+uQ8vLvcblzBU+9h8jGjVlsL+0Zt9Cwti
-	m1hIpnzXaaKbL0iUa+v0QOREd6DEb9XmINXJ550meCY+Eusw8ctWabmwlL+GKBAup8Uee7R9n7M
-	jyfOjH4
-X-Received: by 2002:a05:600c:4f52:b0:489:32b:ac0b with SMTP id 5b1f17b1804b1-48a85e684a8mr84080665e9.6.1777619739248;
-        Fri, 01 May 2026 00:15:39 -0700 (PDT)
+        bh=o5V6knZIhB7/WOjEgsyLqxPXBwOa+O33dpe+cxcVxdw=;
+        b=WyP3nw+sqSI9NsVJxhL71eD7HKkAx184w3N70vHpAGKHe/yqvDQM7jkBksEyiYYgDj
+         47hIKE/msc3V0mCSsu4n/BkL2jFgineTXHh2P0+ywDNcC6dxqwO3d6YBj5l4laNjSuxT
+         Y8V7kYzW/2yLNFxL37mz3pTZOvVbTvg13SXDUBE6PYVk6CmSMWlNCXx6QZyOOtjWuUF4
+         mT9+jDECZnaFF720R56+VJsGU+wMJgEGLQ5i4xZwO3Vu76XcYejlJJlo5KoSEVjfDhaf
+         U09As4nCQJEYGnR+W4GcySc3D22zcfo7g0EeiiK3HBUSCHfGuFOKRXt+4bYVWxQ+CmFS
+         H/YA==
+X-Forwarded-Encrypted: i=1; AFNElJ/8BdAhTPk43g2OjAOLGXGTjI6DyvNuEMaAJ/1j3ehY5Fi4Z90v6fzg9Np/WzH4VF2IEJ/R/RcnmUMKo9o7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2g/UjNEi3kqeTn9bccfANlQUxd2UpRHjMRK92TCFC6H431Nwx
+	xCsZjPl/+JekNS2gAc4oNxx5BS29XdfwvnSuTct9uRIDfPwfum2iOji0WCyY3IIKF7M=
+X-Gm-Gg: AeBDievx/2PsYnXBASvwpUg0/fLNXtL7eI9xs6sL9lZd9weJzeSxsGcFttqcUEAJm/F
+	WqpUcGpkszgMyOYWmDR1gflYvyQl57197OkAmjN8ZwfbeVvcGuZpGOVJ9gmD508aDBCFoLSj/xd
+	XzG3R7zW2+9+vDQJTeQlB0EGgp5yhMI1veTPQjlJvXmu86/KjXtpsecA7uAujHU3ca8ujGoxES6
+	oQ6HU0UCI1FYqE5zphdoe1qSW8orQO8P3o/Ni8ENboMb8FLNbLuJwymDWt40wOd0u9bW6IpZg3v
+	PJtzkaoWMSlZLWjkvoNeerkW87n/gz4pi7GMljOfF3pJLhAbtWE5MHVcZPi2SAQB3jzIroOAMXa
+	NrtOI+HH+We2JP7lzWWdeLOm3u/ZTjgS0Mzsm/YvIAva/4jDAjcRYzKG51o8+S+qWL0/qI+YNFC
+	5vIctmRX1zwetPCEeC2whuy2uauTujNeVvZflwB75rHLETfa/X3hBgeeEFoynPqanf5HAgvhz5E
+	kUJC55k
+X-Received: by 2002:a05:600c:8707:b0:489:1baf:8c03 with SMTP id 5b1f17b1804b1-48a86084573mr100270135e9.11.1777619741165;
+        Fri, 01 May 2026 00:15:41 -0700 (PDT)
 Received: from [192.168.178.36] (046124199213.public.t-mobile.at. [46.124.199.213])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a8eba8487sm29668085e9.11.2026.05.01.00.15.37
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a8eba8487sm29668085e9.11.2026.05.01.00.15.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 00:15:38 -0700 (PDT)
+        Fri, 01 May 2026 00:15:40 -0700 (PDT)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 01 May 2026 09:14:50 +0200
-Subject: [PATCH v3 8/9] drm/msm/dpu: Add Milos support
+Date: Fri, 01 May 2026 09:14:51 +0200
+Subject: [PATCH v3 9/9] arm64: dts: qcom: milos: Add display (MDSS)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260501-milos-mdss-v3-8-58bfc58c0e13@fairphone.com>
+Message-Id: <20260501-milos-mdss-v3-9-58bfc58c0e13@fairphone.com>
 References: <20260501-milos-mdss-v3-0-58bfc58c0e13@fairphone.com>
 In-Reply-To: <20260501-milos-mdss-v3-0-58bfc58c0e13@fairphone.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -110,421 +110,297 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- devicetree@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+ devicetree@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1777619720; l=12018;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777619720; l=6617;
  i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=2nJzs+ggM8UNo2NDd0LLZQ8cBS+aAGJpwl8JxlC8yxg=;
- b=b2SahVTBr4uO7zxZ84BCmcmRUcCZ+qp/Zvhs6/vLHtrng9Peqs0+TG/50ya3Qgahzud6rqz4D
- 2z6yc5GibQJC63pjITBKLtDF6H8o2ISaNMRxnV6wPa6Y5Fw3KUIkoXy
+ bh=ObeaTI9oGiLe42YJXwSvm93zhEz3BDcXzX0FYlJcloY=;
+ b=zj1t8gQVCHYk3oC6SAPsn7UO6RJgw4YGPsdhnB/J6RQCEAF3yS3JGy0esTz0d8UzNpzwjw6y9
+ /8Tr3iiNnzrB7vU0rwmU1M7pWpceKfc99fqrABHozUciNc0mu9Oc+Qv
 X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
  pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
-X-Rspamd-Queue-Id: 7AFD94AAE75
+X-Rspamd-Queue-Id: 274334AAE6E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [4.84 / 15.00];
+	SEM_URIBL(3.50)[0.0.0.0:email];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
+	BAD_REP_POLICIES(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105449-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de,marek.ca,quicinc.com,linaro.org,pm.me];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105448-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[28];
+	R_DKIM_ALLOW(0.00)[fairphone.com:s=fair];
+	GREYLIST(0.00)[pass,meta];
+	DMARC_POLICY_ALLOW(0.00)[fairphone.com,quarantine];
+	RCPT_COUNT_TWELVE(0.00)[29];
+	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de,marek.ca,quicinc.com,linaro.org,pm.me];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[fairphone.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.686];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
+	R_SPF_ALLOW(0.00)[+ip4:172.105.105.114:c];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:email,fairphone.com:dkim,fairphone.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 
-Add definitions for the display hardware used on the Qualcomm Milos
-platform.
+Add device nodes for display: MDSS, DPU, DSI and DSI PHY.
 
+DisplayPort is not added for now.
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_10_2_milos.h | 279 +++++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  29 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
- 4 files changed, 310 insertions(+)
+ arch/arm64/boot/dts/qcom/milos.dtsi | 211 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 209 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_2_milos.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_2_milos.h
-new file mode 100644
-index 000000000000..1aa8aea4e352
---- /dev/null
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_2_milos.h
-@@ -0,0 +1,279 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) 2022. Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2015-2018, 2020 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2026, Luca Weiss <luca.weiss@fairphone.com>
-+ */
-+
-+#ifndef _DPU_10_2_MILOS_H
-+#define _DPU_10_2_MILOS_H
-+
-+static const struct dpu_caps milos_dpu_caps = {
-+	.max_mixer_width = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
-+	.max_mixer_blendstages = 0x7,
-+	.has_src_split = true,
-+	.has_dim_layer = true,
-+	.has_idle_pc = true,
-+	.has_3d_merge = true,
-+	.max_linewidth = 8192,
-+	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-+};
-+
-+static const struct dpu_mdp_cfg milos_mdp = {
-+	.name = "top_0",
-+	.base = 0, .len = 0x494,
-+	.clk_ctrls = {
-+		[DPU_CLK_CTRL_REG_DMA] = { .reg_off = 0x2bc, .bit_off = 20 },
-+	},
-+};
-+
-+static const struct dpu_ctl_cfg milos_ctl[] = {
-+	{
-+		.name = "ctl_0", .id = CTL_0,
-+		.base = 0x15000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
-+	}, {
-+		.name = "ctl_1", .id = CTL_1,
-+		.base = 0x16000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 10),
-+	}, {
-+		.name = "ctl_2", .id = CTL_2,
-+		.base = 0x17000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 11),
-+	}, {
-+		.name = "ctl_3", .id = CTL_3,
-+		.base = 0x18000, .len = 0x1000,
-+		.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 12),
-+	},
-+};
-+
-+static const struct dpu_sspp_cfg milos_sspp[] = {
-+	{
-+		.name = "sspp_0", .id = SSPP_VIG0,
-+		.base = 0x4000, .len = 0x344,
-+		.features = VIG_SDM845_MASK_SDMA,
-+		.sblk = &dpu_vig_sblk_qseed3_3_3,
-+		.xin_id = 0,
-+		.type = SSPP_TYPE_VIG,
-+	}, {
-+		.name = "sspp_8", .id = SSPP_DMA0,
-+		.base = 0x24000, .len = 0x344,
-+		.features = DMA_SDM845_MASK_SDMA,
-+		.sblk = &dpu_dma_sblk,
-+		.xin_id = 1,
-+		.type = SSPP_TYPE_DMA,
-+	}, {
-+		.name = "sspp_9", .id = SSPP_DMA1,
-+		.base = 0x26000, .len = 0x344,
-+		.features = DMA_SDM845_MASK_SDMA,
-+		.sblk = &dpu_dma_sblk,
-+		.xin_id = 5,
-+		.type = SSPP_TYPE_DMA,
-+	}, {
-+		.name = "sspp_10", .id = SSPP_DMA2,
-+		.base = 0x28000, .len = 0x344,
-+		.features = DMA_SDM845_MASK_SDMA,
-+		.sblk = &dpu_dma_sblk,
-+		.xin_id = 9,
-+		.type = SSPP_TYPE_DMA,
-+	},
-+};
-+
-+static const struct dpu_lm_cfg milos_lm[] = {
-+	{
-+		.name = "lm_0", .id = LM_0,
-+		.base = 0x44000, .len = 0x400,
-+		.features = MIXER_MSM8998_MASK,
-+		.sblk = &sdm845_lm_sblk,
-+		.pingpong = PINGPONG_0,
-+		.dspp = DSPP_0,
-+	}, {
-+		.name = "lm_2", .id = LM_2,
-+		.base = 0x46000, .len = 0x400,
-+		.features = MIXER_MSM8998_MASK,
-+		.sblk = &sdm845_lm_sblk,
-+		.lm_pair = LM_3,
-+		.pingpong = PINGPONG_2,
-+	}, {
-+		.name = "lm_3", .id = LM_3,
-+		.base = 0x47000, .len = 0x400,
-+		.features = MIXER_MSM8998_MASK,
-+		.sblk = &sdm845_lm_sblk,
-+		.lm_pair = LM_2,
-+		.pingpong = PINGPONG_3,
-+	},
-+};
-+
-+static const struct dpu_dspp_cfg milos_dspp[] = {
-+	{
-+		.name = "dspp_0", .id = DSPP_0,
-+		.base = 0x54000, .len = 0x1800,
-+		.sblk = &sdm845_dspp_sblk,
-+	},
-+};
-+
-+static const struct dpu_pingpong_cfg milos_pp[] = {
-+	{
-+		.name = "pingpong_0", .id = PINGPONG_0,
-+		.base = 0x69000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
-+	}, {
-+		.name = "pingpong_2", .id = PINGPONG_2,
-+		.base = 0x6b000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_1,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
-+	}, {
-+		.name = "pingpong_3", .id = PINGPONG_3,
-+		.base = 0x6c000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+		.merge_3d = MERGE_3D_1,
-+		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
-+	}, {
-+		.name = "pingpong_cwb_0", .id = PINGPONG_CWB_0,
-+		.base = 0x66000, .len = 0,
-+		.sblk = &sc7280_pp_sblk,
-+	},
-+};
-+
-+static const struct dpu_merge_3d_cfg milos_merge_3d[] = {
-+	{
-+		.name = "merge_3d_1", .id = MERGE_3D_1,
-+		.base = 0x4f000, .len = 0x8,
-+	},
-+};
-+
-+/*
-+ * NOTE: Each display compression engine (DCE) contains dual hard
-+ * slice DSC encoders so both share same base address but with
-+ * its own different sub block address.
-+ */
-+static const struct dpu_dsc_cfg milos_dsc[] = {
-+	{
-+		.name = "dce_0_0", .id = DSC_0,
-+		.base = 0x80000, .len = 0x6,
-+		.features = BIT(DPU_DSC_NATIVE_42x_EN),
-+		.sblk = &milos_dsc_sblk_0,
-+	}, {
-+		.name = "dce_0_1", .id = DSC_1,
-+		.base = 0x80000, .len = 0x6,
-+		.features = BIT(DPU_DSC_NATIVE_42x_EN),
-+		.sblk = &milos_dsc_sblk_1,
-+	},
-+};
-+
-+static const struct dpu_wb_cfg milos_wb[] = {
-+	{
-+		.name = "wb_2", .id = WB_2,
-+		.base = 0x65000, .len = 0x2c8,
-+		.features = WB_SDM845_MASK,
-+		.format_list = wb2_formats_rgb_yuv,
-+		.num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
-+		.xin_id = 6,
-+		.maxlinewidth = 4096,
-+		.intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
-+	},
-+};
-+
-+static const struct dpu_cwb_cfg milos_cwb[] = {
-+	{
-+		.name = "cwb_0", .id = CWB_0,
-+		.base = 0x66200, .len = 0x8,
-+	},
-+};
-+
-+static const struct dpu_intf_cfg milos_intf[] = {
-+	{
-+		.name = "intf_0", .id = INTF_0,
-+		.base = 0x34000, .len = 0x300,
-+		.type = INTF_DP,
-+		.controller_id = MSM_DP_CONTROLLER_0,
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
-+	}, {
-+		.name = "intf_1", .id = INTF_1,
-+		.base = 0x35000, .len = 0x300,
-+		.type = INTF_DSI,
-+		.controller_id = MSM_DSI_CONTROLLER_0,
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
-+		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2),
-+	}, {
-+		.name = "intf_3", .id = INTF_3,
-+		.base = 0x37000, .len = 0x300,
-+		.type = INTF_DP,
-+		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
-+		.prog_fetch_lines_worst_case = 24,
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
-+	},
-+};
-+
-+static const struct dpu_perf_cfg milos_perf_data = {
-+	.max_bw_low = 7100000,
-+	.max_bw_high = 9800000,
-+	.min_core_ib = 2500000,
-+	.min_llcc_ib = 0,
-+	.min_dram_ib = 1600000,
-+	.min_prefill_lines = 40,
-+	/* FIXME: lut tables */
-+	.danger_lut_tbl = {0x3ffff, 0x3ffff, 0x0},
-+	.safe_lut_tbl = {0xff00, 0xfff0, 0x0fff},
-+	.qos_lut_tbl = {
-+		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
-+		.entries = sc7180_qos_linear
-+		},
-+		{.nentry = ARRAY_SIZE(sc7180_qos_macrotile),
-+		.entries = sc7180_qos_macrotile
-+		},
-+		{.nentry = ARRAY_SIZE(sc7180_qos_nrt),
-+		.entries = sc7180_qos_nrt
-+		},
-+		/* TODO: macrotile-qseed is different from macrotile */
-+	},
-+	.cdp_cfg = {
-+		{.rd_enable = 1, .wr_enable = 1},
-+		{.rd_enable = 1, .wr_enable = 0}
-+	},
-+	.clk_inefficiency_factor = 105,
-+	.bw_inefficiency_factor = 120,
-+};
-+
-+static const struct dpu_mdss_version milos_mdss_ver = {
-+	.core_major_ver = 10,
-+	.core_minor_ver = 2,
-+};
-+
-+const struct dpu_mdss_cfg dpu_milos_cfg = {
-+	.mdss_ver = &milos_mdss_ver,
-+	.caps = &milos_dpu_caps,
-+	.mdp = &milos_mdp,
-+	.cdm = &dpu_cdm_5_x,
-+	.ctl_count = ARRAY_SIZE(milos_ctl),
-+	.ctl = milos_ctl,
-+	.sspp_count = ARRAY_SIZE(milos_sspp),
-+	.sspp = milos_sspp,
-+	.mixer_count = ARRAY_SIZE(milos_lm),
-+	.mixer = milos_lm,
-+	.dspp_count = ARRAY_SIZE(milos_dspp),
-+	.dspp = milos_dspp,
-+	.pingpong_count = ARRAY_SIZE(milos_pp),
-+	.pingpong = milos_pp,
-+	.dsc_count = ARRAY_SIZE(milos_dsc),
-+	.dsc = milos_dsc,
-+	.merge_3d_count = ARRAY_SIZE(milos_merge_3d),
-+	.merge_3d = milos_merge_3d,
-+	.wb_count = ARRAY_SIZE(milos_wb),
-+	.wb = milos_wb,
-+	.cwb_count = ARRAY_SIZE(milos_cwb),
-+	.cwb = milos_cwb,
-+	.intf_count = ARRAY_SIZE(milos_intf),
-+	.intf = milos_intf,
-+	.vbif = &milos_vbif,
-+	.perf = &milos_perf_data,
-+};
-+
-+#endif
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index bb4fd5fa4b22..2e10add84fd7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -454,6 +454,16 @@ static const struct dpu_dsc_sub_blks dsc_sblk_1 = {
- 	.ctl = {.name = "ctl", .base = 0xF80, .len = 0x10},
- };
+diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom/milos.dtsi
+index 4a64a98a434b..1a9b72d61688 100644
+--- a/arch/arm64/boot/dts/qcom/milos.dtsi
++++ b/arch/arm64/boot/dts/qcom/milos.dtsi
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2025, Luca Weiss <luca.weiss@fairphone.com>
+  */
  
-+static const struct dpu_dsc_sub_blks milos_dsc_sblk_0 = {
-+	.enc = {.name = "enc", .base = 0x100, .len = 0x100},
-+	.ctl = {.name = "ctl", .base = 0xF00, .len = 0x80},
-+};
-+
-+static const struct dpu_dsc_sub_blks milos_dsc_sblk_1 = {
-+	.enc = {.name = "enc", .base = 0x200, .len = 0x100},
-+	.ctl = {.name = "ctl", .base = 0xF80, .len = 0x80},
-+};
-+
- static const struct dpu_dsc_sub_blks sm8750_dsc_sblk_0 = {
- 	.enc = {.name = "enc", .base = 0x100, .len = 0x100},
- 	.ctl = {.name = "ctl", .base = 0xF00, .len = 0x24},
-@@ -513,6 +523,23 @@ static const struct dpu_vbif_dynamic_ot_cfg msm8998_ot_rdwr_cfg[] = {
- 	},
- };
++#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
+ #include <dt-bindings/clock/qcom,milos-camcc.h>
+ #include <dt-bindings/clock/qcom,milos-dispcc.h>
+ #include <dt-bindings/clock/qcom,milos-gcc.h>
+@@ -1928,6 +1929,212 @@ camcc: clock-controller@adb0000 {
+ 			#power-domain-cells = <1>;
+ 		};
  
-+static const struct dpu_vbif_cfg milos_vbif = {
-+	.len = 0x1074,
-+	.features = BIT(DPU_VBIF_QOS_REMAP),
-+	.xin_halt_timeout = 0x4000,
-+	.qos_rp_remap_size = 0x40,
-+	.qos_rt_tbl = {
-+		.npriority_lvl = ARRAY_SIZE(sdm845_rt_pri_lvl),
-+		.priority_lvl = sdm845_rt_pri_lvl,
-+		},
-+	.qos_nrt_tbl = {
-+		.npriority_lvl = ARRAY_SIZE(sdm845_nrt_pri_lvl),
-+		.priority_lvl = sdm845_nrt_pri_lvl,
-+		},
-+	.memtype_count = 16,
-+	.memtype = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-+};
++		mdss: display-subsystem@ae00000 {
++			compatible = "qcom,milos-mdss";
++			reg = <0x0 0x0ae00000 0x0 0x1000>;
++			reg-names = "mdss";
 +
- static const struct dpu_vbif_cfg msm8996_vbif = {
- 	.len = 0x1040,
- 	.default_ot_rd_limit = 32,
-@@ -754,6 +781,8 @@ static const struct dpu_qos_lut_entry sc7180_qos_nrt[] = {
- #include "catalog/dpu_9_2_x1e80100.h"
++			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH 0>;
++
++			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++				 <&gcc GCC_DISP_HF_AXI_CLK>,
++				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
++
++			resets = <&dispcc DISP_CC_MDSS_CORE_BCR>;
++
++			interconnects = <&mmss_noc MASTER_MDP QCOM_ICC_TAG_ALWAYS
++					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
++					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
++					 &cnoc_main SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
++			interconnect-names = "mdp0-mem",
++					     "cpu-cfg";
++
++			power-domains = <&dispcc DISP_CC_MDSS_CORE_GDSC>;
++
++			iommus = <&apps_smmu 0x1c00 0x2>;
++
++			interrupt-controller;
++			#interrupt-cells = <1>;
++
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			status = "disabled";
++
++			mdss_mdp: display-controller@ae01000 {
++				compatible = "qcom,milos-dpu";
++				reg = <0x0 0x0ae01000 0x0 0x8f000>,
++				      <0x0 0x0aeb0000 0x0 0x3000>;
++				reg-names = "mdp",
++					    "vbif";
++
++				interrupts-extended = <&mdss 0>;
++
++				clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
++					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
++					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
++					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				clock-names = "nrt_bus",
++					      "iface",
++					      "lut",
++					      "core",
++					      "vsync";
++
++				assigned-clocks = <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
++				assigned-clock-rates = <19200000>;
++
++				operating-points-v2 = <&mdp_opp_table>;
++
++				power-domains = <&rpmhpd RPMHPD_CX>;
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						dpu_intf1_out: endpoint {
++							remote-endpoint = <&mdss_dsi0_in>;
++						};
++					};
++				};
++
++				mdp_opp_table: opp-table {
++					compatible = "operating-points-v2";
++
++					opp-200000000 {
++						opp-hz = /bits/ 64 <200000000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++					};
++
++					opp-342000000 {
++						opp-hz = /bits/ 64 <342000000>;
++						required-opps = <&rpmhpd_opp_svs>;
++					};
++
++					opp-402000000 {
++						opp-hz = /bits/ 64 <402000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++
++					opp-535000000 {
++						opp-hz = /bits/ 64 <535000000>;
++						required-opps = <&rpmhpd_opp_nom>;
++					};
++
++					opp-600000000 {
++						opp-hz = /bits/ 64 <600000000>;
++						required-opps = <&rpmhpd_opp_nom_l1>;
++					};
++
++					opp-630000000 {
++						opp-hz = /bits/ 64 <630000000>;
++						required-opps = <&rpmhpd_opp_turbo>;
++					};
++				};
++			};
++
++			mdss_dsi0: dsi@ae94000 {
++				compatible = "qcom,milos-dsi-ctrl", "qcom,mdss-dsi-ctrl";
++				reg = <0x0 0x0ae94000 0x0 0x1000>;
++				reg-names = "dsi_ctrl";
++
++				interrupts-extended = <&mdss 4>;
++
++				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
++					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
++					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
++					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
++					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&gcc GCC_DISP_HF_AXI_CLK>;
++				clock-names = "byte",
++					      "byte_intf",
++					      "pixel",
++					      "core",
++					      "iface",
++					      "bus";
++
++				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
++						  <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
++				assigned-clock-parents = <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
++							 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>;
++
++				operating-points-v2 = <&mdss_dsi_opp_table>;
++
++				power-domains = <&rpmhpd RPMHPD_CX>;
++
++				phys = <&mdss_dsi0_phy>;
++				phy-names = "dsi";
++
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						mdss_dsi0_in: endpoint {
++							remote-endpoint = <&dpu_intf1_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						mdss_dsi0_out: endpoint {
++						};
++					};
++				};
++
++				mdss_dsi_opp_table: opp-table {
++					compatible = "operating-points-v2";
++
++					opp-187500000 {
++						opp-hz = /bits/ 64 <187500000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++					};
++
++					opp-300000000 {
++						opp-hz = /bits/ 64 <300000000>;
++						required-opps = <&rpmhpd_opp_svs>;
++					};
++
++					opp-358000000 {
++						opp-hz = /bits/ 64 <358000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++				};
++			};
++
++			mdss_dsi0_phy: phy@ae95000 {
++				compatible = "qcom,milos-dsi-phy-4nm";
++				reg = <0x0 0x0ae95000 0x0 0x200>,
++				      <0x0 0x0ae95200 0x0 0x300>,
++				      <0x0 0x0ae95500 0x0 0x400>;
++				reg-names = "dsi_phy",
++					    "dsi_phy_lane",
++					    "dsi_pll";
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&rpmhcc RPMH_CXO_CLK>;
++				clock-names = "iface",
++					      "ref";
++
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++
++				status = "disabled";
++			};
++		};
++
+ 		dispcc: clock-controller@af00000 {
+ 			compatible = "qcom,milos-dispcc";
+ 			reg = <0x0 0x0af00000 0x0 0x20000>;
+@@ -1936,8 +2143,8 @@ dispcc: clock-controller@af00000 {
+ 				 <&sleep_clk>,
+ 				 <&gcc GCC_DISP_AHB_CLK>,
+ 				 <&gcc GCC_DISP_GPLL0_DIV_CLK_SRC>,
+-				 <0>, /* dsi0_phy_pll_out_byteclk */
+-				 <0>, /* dsi0_phy_pll_out_dsiclk */
++				 <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
++				 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
+ 				 <0>, /* dp0_phy_pll_link_clk */
+ 				 <0>; /* dp0_phy_pll_vco_div_clk */
  
- #include "catalog/dpu_10_0_sm8650.h"
-+#include "catalog/dpu_10_2_milos.h"
-+
- #include "catalog/dpu_12_0_sm8750.h"
- #include "catalog/dpu_12_2_glymur.h"
- #include "catalog/dpu_12_4_eliza.h"
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index ba04ac24d5a9..f45faf87333e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -766,6 +766,7 @@ struct dpu_mdss_cfg {
- extern const struct dpu_mdss_cfg dpu_eliza_cfg;
- extern const struct dpu_mdss_cfg dpu_glymur_cfg;
- extern const struct dpu_mdss_cfg dpu_kaanapali_cfg;
-+extern const struct dpu_mdss_cfg dpu_milos_cfg;
- extern const struct dpu_mdss_cfg dpu_msm8917_cfg;
- extern const struct dpu_mdss_cfg dpu_msm8937_cfg;
- extern const struct dpu_mdss_cfg dpu_msm8953_cfg;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 35f7af4743d7..7c37bd51f934 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1483,6 +1483,7 @@ static const struct of_device_id dpu_dt_match[] = {
- 	{ .compatible = "qcom,eliza-dpu", .data = &dpu_eliza_cfg, },
- 	{ .compatible = "qcom,glymur-dpu", .data = &dpu_glymur_cfg, },
- 	{ .compatible = "qcom,kaanapali-dpu", .data = &dpu_kaanapali_cfg, },
-+	{ .compatible = "qcom,milos-dpu", .data = &dpu_milos_cfg, },
- 	{ .compatible = "qcom,msm8917-mdp5", .data = &dpu_msm8917_cfg, },
- 	{ .compatible = "qcom,msm8937-mdp5", .data = &dpu_msm8937_cfg, },
- 	{ .compatible = "qcom,msm8953-mdp5", .data = &dpu_msm8953_cfg, },
 
 -- 
 2.54.0
