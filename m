@@ -1,220 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-105453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YG+BImZZ9GkvAwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 09:42:30 +0200
+	id 9pPGME9u9GltBQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 11:11:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 864144AB02E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 09:42:29 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 406784AB2C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 11:11:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7E6F83007AF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 07:42:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7036E30151F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 09:11:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20553369998;
-	Fri,  1 May 2026 07:42:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 828B237D136;
+	Fri,  1 May 2026 09:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=alex-min.fr header.i=@alex-min.fr header.b="BHPV6KbV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="irqP4X/n"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cSiqoBZZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3501D3624C3;
-	Fri,  1 May 2026 07:42:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D51F366DB5;
+	Fri,  1 May 2026 09:11:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777621342; cv=none; b=BMAI0sXmEu6kb0jqKmNUzjhdotc9YXoJ1VrzV8IpKtFnwDXQDyl/O29PFOprPEHIMTYBbdDf4GNuYTYNMjp/OAsHaGSoq6CwMVnI4UzWaYWcLgZuLZeEP/rQ5mLVE5lv6ZHeORt2GOWg0dajAqTJ4YCdg1Mv4IPh5WSkWhBvAqQ=
+	t=1777626700; cv=none; b=XhT1JyNB1xYZbC2/g/uOtVI/OdshNc9FnGdSU6ZZDVgtO53l2C5/bSl8B73RzzlfOVbnvO3HLf16unKzBAaa8xLISlx6VwMyOMY3qXDRcVGqh+jfxfIZAFWAsO64M1KRijq5aVfaWR9RhwNZZwxwOit2Khwt0ckSvE/eUAeSQNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777621342; c=relaxed/simple;
-	bh=hBnzokI6KHxyl17lpS6jXZPBgbFHczeNt0+6RC6qwUQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=XsyO3N76JC6o1rMGGuMJM8HwJ1iHL+p59W1ibpwXQHJqiu7pywZe92xVR5OMPdpFH7jWdN36DYiPQ1h+gFlG4gGvE8Vfaykza9r/WwT0R0EpiwrcdXsY02i8PWimDK6lXL84PUYE7S5yY78VMVo+6EINbzWZjFdbdaefMig02yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alex-min.fr; spf=pass smtp.mailfrom=alex-min.fr; dkim=pass (2048-bit key) header.d=alex-min.fr header.i=@alex-min.fr header.b=BHPV6KbV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=irqP4X/n; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alex-min.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alex-min.fr
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 693B7EC0128;
-	Fri,  1 May 2026 03:42:18 -0400 (EDT)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-04.internal (MEProxy); Fri, 01 May 2026 03:42:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alex-min.fr; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1777621338;
-	 x=1777707738; bh=Zg5eNZ5CCvS7Z24O3/xznVWLB3OXF7Zf2PatPh9o7WU=; b=
-	BHPV6KbVLBP0+ivN2+rBflpqymNvZEB8JHTB/+2kMQ2YMULpzEa0v5X/oaiKIvuY
-	1ZiGrLXpEPKPn44sNmiuB/tWmkTaYhk9fwAPduJKL8Rk+SQpydwQuBasjZdaC3TK
-	wSor3iQYk80x0iDLRvx7iRbY5J6LojfFXpqWnKVybO3bym1UCZcOu9Gpq9AsK0UL
-	0ZGXvj0zSw92gFtPXuC9jaq8zcDiK7hG6y8TerWgokP90rXAuJHjDz80KwlfcHeq
-	uv2waobLwrHNNAe5P7+ct/o82jiN49PxYw224G/K0hzFGINpPE9pmTsoCEovjUkY
-	5RlmyggfZAdBC2GYYeHCYg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1777621338; x=
-	1777707738; bh=Zg5eNZ5CCvS7Z24O3/xznVWLB3OXF7Zf2PatPh9o7WU=; b=i
-	rqP4X/ncZgoXaUTrrxnDaN/aelca1i0lZ0zJfz7xE7WuREsyKyT7wvrI7tbr0Nuw
-	gtGBlPzug8vrNzwRywLY4ipBKJGE0/Cm977OIU0eQLAbXyum/9wLY2LjxSrVzvr9
-	R1QhvBkBuMFYzGyfC2WQNBE+L2rqsRSMMx8sgngvnPq4touiaS5VVqDJSzeLs3Gs
-	bEpVHBef+R1BXlCZAHk++sY9azs738d8jWx9KnQVlcWklT7Pu9j+IVuY3K6rGkO5
-	o+JpkmcuBT5vnXNx8BWAuGqDn10GC2SAKCoGG/HnXt4gY4XCwt1svIli20Vukzhs
-	kw5rTxy80EDEJ5Fw8Ll6A==
-X-ME-Sender: <xms:WVn0aY4gDNgx1dcpRRVIp8lt74QaDBil9eyJL_JCr3GpcLZzMX7afw>
-    <xme:WVn0aUtE4ORcwKnHixp5KMa-J16fLMsKtI5yAMAIx9DfKkdIyEskC0CrvPClNJ1y5
-    frR1opxLb6ADFCW3xZ9hRulIzeHwnt8Azx5vgFYUrGRFiCwrpXeXw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekleeifecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfokffpgffv
-    vffgucetlhgvgigrnhgurhgvfdcuoegtohhnthgrtghtsegrlhgvgidqmhhinhdrfhhrqe
-    enucggtffrrghtthgvrhhnpedtuedtfedtuddugedtuefggedtieekhefhteefvdetueev
-    heeghefhfeetfeejhfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpegtohhnthgrtghtsegrlhgvgidqmhhinhdrfhhrpdhnsggprhgtphhtthho
-    pedvfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhorhhoseeksgihthgvsh
-    drohhrghdprhgtphhtthhopehrohgsihhnrdhmuhhrphhhhiesrghrmhdrtghomhdprhgt
-    phhtthhopehlihhnuhigsehguhhruhgurghsrdguvghvpdhrtghpthhtohepghhpihgttg
-    holhhisehighgrlhhirgdrtghomhdprhgtphhtthhopehtohhnhidrlhhutghksehinhht
-    vghlrdgtohhmpdhrtghpthhtoheprghnuggvrhhsshhonheskhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtoheptghonhhorhdoughtsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehk
-    vggvsheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhonhhrrgguhigstghioheskh
-    gvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:WVn0aQDL2F-AF40KutzE8NRagdkt1s25sLDUepaJP0Gs399YZg6Cmw>
-    <xmx:WVn0ad-A-bhFR3otixkBEP5ojjstOyloATJVnAQUC-jKDeusgcIcAQ>
-    <xmx:WVn0aSRfiWvouhwJlWsYNAvzmrscLTvS6O7T06L6KZn77W59DrXRKQ>
-    <xmx:WVn0aT4JynqPYm-SJt6gJd55t9PXNGsTdxsUfcZTFxgOeMErILBOgw>
-    <xmx:Wln0acDKOmxMLmcQjSxJrVoRGxGmFxeG8awHyg1rwKf6ZrKBakyUQahQ>
-Feedback-ID: i72694427:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id B2479700065; Fri,  1 May 2026 03:42:17 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1777626700; c=relaxed/simple;
+	bh=8NE3gWGYnFaVUlsJLjhktxC9sF6clIn1F8f80pRPo1Q=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=sx62/JL1c3smbJrPzMGXAOjN5FijKCliGzyr6eNHlH+fCW/+LaPiHzKe4wmo79KyLECxsdqx2V46BQ2DnYFFpQ6WdPMLZOvGUnsYnfRdfQG/C04m6fPN0mjc4wSaE90PRolcbsoz5IlcpEA7ZS3upGM30PicH9IFO02I2DyJt70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cSiqoBZZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E4BFCC2BCB4;
+	Fri,  1 May 2026 09:11:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777626699;
+	bh=8NE3gWGYnFaVUlsJLjhktxC9sF6clIn1F8f80pRPo1Q=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=cSiqoBZZWYStHiiq2FrwGX0l2NqJjgBYItoeXLLvi8LdwCzr6pXgSpBRWyuGBFmim
+	 PzYyjkeXK2w1WCI32SV7lD24sJAMUB2hN7mg/RdSRRfJhka0f5yAsZ0bBGETdWcP5W
+	 7D5H7pHmZvz3wbiH8eTTbWH1owdZDxvC48+DpRJXZK4DYtxEeZnt9XGTtmKWjLNLY4
+	 WDjBK7VWdqyOy2L63xPkutELQHt0VXIwQaTEBVFk7L+SYU44/JtkazqsjMleYR6pdM
+	 qD4tPLBpgmczq2EDEkV+LF1LspfvWfpTwizeY52QZxAFZ66EFRr7S8Ow9x1l0uHhIK
+	 VdCuMxA8oS3Lw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8CF9CD3424;
+	Fri,  1 May 2026 09:11:39 +0000 (UTC)
+From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
+Date: Fri, 01 May 2026 11:11:29 +0200
+Subject: [PATCH] arm64: dts: qcom: sc8280xp-blackrock: switch to uefi rtc
+ offset
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: A0acSZ0bucxw
-Date: Fri, 01 May 2026 09:41:09 +0200
-From: "MINETTE Alexandre" <contact@alex-min.fr>
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>,
- "Bjorn Andersson" <andersson@kernel.org>,
- "Konrad Dybcio" <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>,
- "MyungJoo Ham" <myungjoo.ham@samsung.com>,
- "Chanwoo Choi" <cw00.choi@samsung.com>,
- "Guru Das Srinagesh" <linux@gurudas.dev>,
- "Linus Walleij" <linusw@kernel.org>,
- "Rob Clark" <robin.clark@oss.qualcomm.com>, "Joerg Roedel" <joro@8bytes.org>,
- "Will Deacon" <will@kernel.org>, "Robin Murphy" <robin.murphy@arm.com>,
- "Kees Cook" <kees@kernel.org>, "Tony Luck" <tony.luck@intel.com>,
- "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
- iommu@lists.linux.dev, phone-devel@vger.kernel.org
-Message-Id: <edbaf71e-6a47-4294-a8c6-6b356bc336ed@app.fastmail.com>
-In-Reply-To: <97969bf9-8eb2-4498-90bd-9973fb2bd638@oss.qualcomm.com>
-References: <20260427-mainline-send-v1-sending-v2-0-dcaa9178007b@alex-min.fr>
- <20260427-mainline-send-v1-sending-v2-8-dcaa9178007b@alex-min.fr>
- <97969bf9-8eb2-4498-90bd-9973fb2bd638@oss.qualcomm.com>
-Subject: Re: [PATCH v2 8/8] ARM: dts: qcom: Add Samsung Galaxy S4
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 864144AB02E
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260501-blackrock-rtc-v1-1-bddf3e37fa94@oldschoolsolutions.biz>
+X-B4-Tracking: v=1; b=H4sIAEBu9GkC/x3M0QpAMBSH8VfRubaaxcSryMXMHydCZ5LS3t1y+
+ bv4vpcChBGozV4S3Bz42BOKPCO/uH2G4jGZjDZWV7pQw+b8KodflVxeGUyoHRoHW1JqTsHEz//
+ r+hg/WILRP18AAAA=
+X-Change-ID: 20260501-blackrock-rtc-2efe7ae9ae64
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777626698; l=2425;
+ i=jens.glathe@oldschoolsolutions.biz; s=20240919;
+ h=from:subject:message-id;
+ bh=tDNNxwtejUYdaPAby/1L+xoKUke9uWqBJlZ4wJWTrYY=;
+ b=QLmw6GvnBSprPtboyVQDUmTXvT3P8+o1OoUgdHW47BtpgmxO+wiJSKesDiW5WC0ir0TSOHEEF
+ U1US5Wev/LUCBehjoMxx1+XpYnJl1RJpuzW1RMOOs/dnlUfJEeqS3Gl
+X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
+ pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
+X-Endpoint-Received: by B4 Relay for
+ jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
+X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reply-To: jens.glathe@oldschoolsolutions.biz
+X-Rspamd-Queue-Id: 406784AB2C4
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.15 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[alex-min.fr:s=fm1,messagingengine.com:s=fm3];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-105454-lists,linux-arm-msm=lfdr.de,jens.glathe.oldschoolsolutions.biz];
 	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[alex-min.fr];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105453-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[contact@alex-min.fr,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[alex-min.fr:+,messagingengine.com:+];
-	RCVD_COUNT_FIVE(0.00)[6];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	HAS_REPLYTO(0.00)[jens.glathe@oldschoolsolutions.biz];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,0.0.0.144:email,oldschoolsolutions.biz:email,oldschoolsolutions.biz:replyto,oldschoolsolutions.biz:mid,bc:email]
 
-Thanks a lot for the suggestion, I checked the downstream board files
-and it does not look like these buses are wired for GSBI.
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-There, the MAX77693 bus is instantiated as a dedicated i2c-gpio bus on
-GPIO 22/23, and the AN30259A LED bus as a dedicated i2c-gpio bus on
-GPIO 6/7. The native APQ8064 GSBI2/GSBI3 I2C pins are different
-(GPIO 24/25 and GPIO 8/9), so these two buses do not seem to be wired
-to the GSBI controllers on jflte.
+On many Qualcomm platforms the PMIC RTC control and time registers are
+read-only so that the RTC time can not be updated. Instead an offset
+needs be stored in some machine-specific non-volatile memory, which a
+driver can take into account.
 
-Regards,
---=20
-  MINETTE Alexandre
-  contact@alex-min.fr
+On platforms where the offset is stored in a Qualcomm specific UEFI
+variable the variables are also accessed in a non-standard way, which
+means that the OS cannot assume that the variable service is available
+by the time the RTC driver probes.
 
-Mar 28 avr 2026, =C3=A0 10:57, Konrad Dybcio a =C3=A9crit=E2=80=AF:
-> On 4/27/26 9:34 PM, Alexandre MINETTE via B4 Relay wrote:
->> From: Alexandre MINETTE <contact@alex-min.fr>
->>=20
->> Add a device tree for the Samsung Galaxy S4, codenamed jflte.
->>=20
->> This has been tested on a Samsung Galaxy S4 GT-I9505. The initial sup=
-port
->> covers UART, USB peripheral mode with USB networking, the front LED a=
-nd
->> the physical buttons.
->>=20
->> Signed-off-by: Alexandre MINETTE <contact@alex-min.fr>
->> ---
->>  arch/arm/boot/dts/qcom/Makefile                    |   1 +
->>  .../boot/dts/qcom/qcom-apq8064-samsung-jflte.dts   | 485 +++++++++++=
-++++++++++
->>  2 files changed, 486 insertions(+)
->>=20
->> diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom=
-/Makefile
->> index 32a44b02d2fa..c23c961f79e3 100644
->> --- a/arch/arm/boot/dts/qcom/Makefile
->> +++ b/arch/arm/boot/dts/qcom/Makefile
->> @@ -12,6 +12,7 @@ dtb-$(CONFIG_ARCH_QCOM) +=3D \
->>  	qcom-apq8064-ifc6410.dtb \
->>  	qcom-apq8064-sony-xperia-lagan-yuga.dtb \
->>  	qcom-apq8064-asus-nexus7-flo.dtb \
->> +	qcom-apq8064-samsung-jflte.dtb \
->>  	qcom-apq8064-lg-nexus4-mako.dtb \
->
-> 'l'g < 's'amsung
->
-> [...]
->
->> +	i2c-led {
->> +		compatible =3D "i2c-gpio";
->> +		sda-gpios =3D <&tlmm_pinmux 6 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)=
->;
->> +		scl-gpios =3D <&tlmm_pinmux 7 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)=
->;
->
-> Have you tried setting up the I2C-GPIO busses as GSBI devices, like
-> I think I suggested the last time? This will potentially bring power
-> and latency benefits, since there's an actual bus controller
-> connected to these pins
->
-> Konrad
+Use the new 'qcom,uefi-rtc-info' property to indicate that the offset is
+stored in a UEFI variable so that the OS can determine whether to wait
+for it to become available.
+
+[1]: https://lore.kernel.org/r/20250423075143.11157-4-johan+linaro@kernel.org
+
+Fixes: 16a7fed11714 ("arm64: dts: qcom: sc8280xp-blackrock: dt definition for WDK2023")
+
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+---
+This is the first of a small series of incremental updates for the
+Microsoft Windows Dev Kit 2023 (sc8280xp-blackrock / Project Volterra).
+
+Subsequent patches will address:
+  - USB-C DP altmode support on the rear port (USB0)
+  - Audio on all three DisplayPort-capable connectors
+  - A few other cleanups cherry-picked from the Lenovo X13s
+
+The goal is to keep changes small and reviewable.
+
+base-commit: b9303e6bff706758c167af686b5315ad00233bf8
+---
+ arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
+index 00bbeeef6f14dd89de506e33742f8f73435ac021..3dc3d7ae928d0a509c564a32908e33f5ca934c98 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
+@@ -763,20 +763,11 @@ &pmk8280_pon_resin {
+ };
+ 
+ &pmk8280_rtc {
+-	nvmem-cells = <&rtc_offset>;
+-	nvmem-cell-names = "offset";
++	qcom,uefi-rtc-info;
+ 
+ 	status = "okay";
+ };
+ 
+-&pmk8280_sdam_6 {
+-	status = "okay";
+-
+-	rtc_offset: rtc-offset@bc {
+-		reg = <0xbc 0x4>;
+-	};
+-};
+-
+ &pmk8280_vadc {
+ 	channel@144 {
+ 		reg = <PM8350_ADC7_AMUX_THM1_100K_PU(1)>;
+
+---
+base-commit: b9303e6bff706758c167af686b5315ad00233bf8
+change-id: 20260501-blackrock-rtc-2efe7ae9ae64
+
+Best regards,
+-- 
+Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
+
 
