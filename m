@@ -1,152 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-105486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YFilLoO79GkwEAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 16:41:07 +0200
+	id 5x83H4jG9GlyEgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 17:28:08 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B582B4AD549
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 16:41:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E5F44AD894
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 17:28:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B6611300602C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 14:41:03 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id CB639300533D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 15:28:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D34D3CBE7A;
-	Fri,  1 May 2026 14:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F75A3CF051;
+	Fri,  1 May 2026 15:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RQrgPpYN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OVthTsFX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771383C8735
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 14:40:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF042E5B2A
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 15:28:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777646461; cv=none; b=Cb6WQFGVZLbei2Ai+bpYLwbJ+jrKyUncV5EAZbDheWriuNC7/6tibq9UntkbFlrs9G+X3yQNA+8LFFRdbB4seEbr/sMSk8YGbyEMHAom0pXMzpKbeiYcYqd5LZQKu8cLG0oJBSkQ84/0z/A72o6q2XvawOT0t4jGAs+8GeTusuM=
+	t=1777649282; cv=none; b=qQk3KjenG51Cfazs71tVdEiA9baZN91xqRUXk032xIZDunER1Ww4/9UQfMCBj/NA39/Tv1iMVFr8unSkAhDprCu/sObyGrHuDPZr7Bd130CWtILgOlab0LvWRmqgfRTgXMS9Ux0cDMm2yiFNldet/LeRF/zadgKugn4WxJSL8cU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777646461; c=relaxed/simple;
-	bh=axhZE7iq4V4NfKtkFtOnf9unIcr5Q6pw8mBt6qvrky4=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=hiQiucXSX49vN6UaMtRfXwxuRT4hrskh5IPC2si9apA/pWK93xTgv5MJAgnfm3o9B1oIVL8qN3kLy9NyxtlMcLAp4CLYAv7cnu+U+X1oDIoUTWoMDmgKO+vIx1f9S3MCtfyrfBFM9Jjtc0DWX2wwllkowW157Nzx96rPV21cdL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RQrgPpYN; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-8b5de17382cso2661546d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 07:40:58 -0700 (PDT)
+	s=arc-20240116; t=1777649282; c=relaxed/simple;
+	bh=ztIheWCEenfSMV+AtYcqS3UltJIMz6ZxwFIk+z5VCbA=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=ZtQLT3OcyCkpIxRkJkFYQKYRh+Vp2ZTo7h7bEPH8LPON+l56oyqEooqIYZbTmougCOALGJOSYEAM18UFfGluHnHLccHG+NNnFCXdqMZgsv8UPBvNjh5/VoWgzLmckRqrgbIMTJwQWCyqO857QZvUl8Nhn3zK38TcGax0TFbRWiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OVthTsFX; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-488b8bc6bc9so12848595e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 08:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777646457; x=1778251257; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=axhZE7iq4V4NfKtkFtOnf9unIcr5Q6pw8mBt6qvrky4=;
-        b=RQrgPpYNGtyAbT/hwsUN3smG0TtRk0ER4qeekKs0D+bIj7LZeSm0DlKbbwBr8eRLX3
-         +UO1uCxCSRwlW3+dylrKI9R85XtCJuQb8I5y6/nu8AJyQuAQ40txrLggKxFARwqYwhVS
-         GJRgalO40GCtI1NYOm2xRoLH6/bU3D5d5fPPWpohoAFloWGHQZRehhw8m2dQGK6pju+e
-         3WI5N+2CB/CnXhXDo8xwtkcvELyNCoJgv8bR2SM/fg7A7wxMHjs4Z5LtoQYaBSwA64Kg
-         UiwCpcpUQP3T5haqHUQjRkNNB4GoO0yIRfPyJUGSI5ZnlB7vx38Agy7rz8Tx46WVlwTD
-         rd9A==
+        d=linaro.org; s=google; t=1777649279; x=1778254079; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ztIheWCEenfSMV+AtYcqS3UltJIMz6ZxwFIk+z5VCbA=;
+        b=OVthTsFXq0VlH+qTMhiaQMjpb0CcQSOAgd1O1nPXMt7MnKDPiRgBzRVCrDRR7UJf6I
+         KohjaodJW+EHPpl7Y/oHkVtERxtGMMlFhdSBEf8pVAl8ERg6pIkTQzYnL9RoKa97ZtTF
+         VhFOwcDHqXsIYxU/BhfqUMtvrqwyJRJYfV2tebnhQEB9xH/DSNDXYdewmfM5eILXTS05
+         4NvUWXu+0WvwFJb9wtd2YuIUgUdq7oAyJkZJemq+TzIDhhatLcpaVyNiPHz/Io/635lv
+         0RY2wHdpzDvYgK2Rg6OFaOyC+koO88/FrVLL0OsQSuAxgHcrXdNMM0Hk/v0NXhrB1Yqj
+         zmkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777646457; x=1778251257;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=axhZE7iq4V4NfKtkFtOnf9unIcr5Q6pw8mBt6qvrky4=;
-        b=RviCJi2uOocnTVIuZepEdQsFMlvZSWzmFSEW0pjmDMTkLEIaGus+/klU4awm3UXKlF
-         +Wt6B5H2+iQHY2UsV2TMfKddT/DfaLuFxfs62pxPHOf72KIBZEdL7E0envyRNZcTpisc
-         eCCwcSXt/lM7/Tn7PNA//QUCxukhCsAbf1rJDIw7uoMMXeKU5SiuC7lskU/vUWI6bV3Y
-         /dUAEC3bkjWk8GChyasxB+unpaBst42Jg4KZEukzoImCk7xpM4daFXGuUygD/v46M6k4
-         h58i2D2gktMsIMva7pul4lNk+ViXK5f46Qt696zMKoURelpN3dXkbc0u6Af+wHTMpvbz
-         2WpA==
-X-Forwarded-Encrypted: i=1; AFNElJ+tX83x7HMIbuqlrz7u9jV/TaQoFJkqFZmP13yyWzKdc6tqu9RNEpZnzzxvqS6tQxCgB9dYOJj9RCGALXtr@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx7gW3izBaWS1F9ONaDtsMue98sp4pVmJi9fXBUyx13nZblXlRW
-	Albeo+oP2aSIlw02bmdVuklcbhg8PhZleZp+v1bv9n6r/44eosbLuVZl
-X-Gm-Gg: AeBDieuN7dTRaYstGCkTcWb4x1isV3JfEiVmtbjrtqaMprOmQDLZEbAKCp60/acXTs9
-	pIr+edhmCZi6IyKSPIG4F4T4uDf/x9qehhQDYWvqhoTjql2G8bkSR7vxjfrv1mr9hlJfSOq7EnP
-	5xgiQRRgDac9lale0CNtDL9bE5Kc2D+VCACZeoiKDIyC1oH/kH3c9QIN4egbvnu6Lyb94XZjKwi
-	1qc9zItPL4aiF1YG8v8UL5Rn2Urq+b6bsKAsvyvwfKKuDDw+61oMUd2PNIQ9eY6GL1olsF4eEyA
-	IVGnY2D8ahgFE4UQ5MbOusiEVqiOGNcQhbJhYadXBpbupQoiMMJPefxIZJ/uKNV/1kDPuhfrecK
-	4gssRIq7blGh+UDU04zwyvf4SA8qTcyL2lSt5GLr23FKy2ADZPt03DIGV0K9ODaz49fMq9YCwkD
-	foDJSEx+swcW0UHFaCCooCsWaXBTTWG+t53wbvm4hUXWF0FmyJkey/QmPJP1b8iLh/7AttVnIcT
-	KbyUrhSCs4FlgQXSq1ciSbb7vsAMuls+FxG
-X-Received: by 2002:a05:6214:3012:b0:8a1:3ba4:9832 with SMTP id 6a1803df08f44-8b3fe766b5cmr104223706d6.16.1777646457024;
-        Fri, 01 May 2026 07:40:57 -0700 (PDT)
-Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b5395c5b4csm26439146d6.16.2026.05.01.07.40.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 07:40:56 -0700 (PDT)
-Date: Fri, 1 May 2026 10:41:49 -0400
-From: Richard Acayan <mailingradian@gmail.com>
-To: Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Richard Acayan <mailingradian@gmail.com>,
-	Kees Cook <kees@kernel.org>, Joris Verhaegen <verhaegen@google.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: ASoC q6asm race condition when stopping and preparing the stream
-Message-ID: <afS7rTHdc9TyIeLx@rdacayan>
+        d=1e100.net; s=20251104; t=1777649279; x=1778254079;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ztIheWCEenfSMV+AtYcqS3UltJIMz6ZxwFIk+z5VCbA=;
+        b=IZnL9vJuibs9fu6zWsd/479aNOovpNV7TPf7xaIxkrCm/gC906ZZnne3sYGeRrlqYf
+         AeFjYsjfFUbhtfsRM6qCCyhpQY4VQ4of5w2f3bwk2TEF/0VcUcn1MXxuuufwIe4y0hlY
+         fEsBcyRFprZgdXJRNwSmVl/m2EN7Z3zSdmBweBIGwXOxJ+auP7Q/HXUq2qnXeQeWjLzr
+         jHkSXt78hiRueLAKcEJR7nv9S/u9DUjKGC9RYoiLdkqhNh5OmvZAcgS+BnHEF7mz5D3c
+         53YI7atwKcPpiMzKoakNL59XlzbsRqSF4cogeSmr+I824PnoO4IiGLadFAlKT6vtBkxI
+         uVYA==
+X-Forwarded-Encrypted: i=1; AFNElJ+/QdCeyty8z0c4OBpE+4SRTInHq9n8Nqoz5Uu8KXFK2t7mJxjMdWP2qZa2HyjAs7tR5Glo7pazcH+kxSFI@vger.kernel.org
+X-Gm-Message-State: AOJu0YyyGgzlBY/LcqCexdE7gxPJ0vZGYTPsBH9aGhrvd3h34cKmwgCI
+	kJJw/ShHeutJxPrX6T6Lb6Pdvg5qithjgFQjsSAUW5Qg/nzu+xw8waoucj4mdrMzVzs=
+X-Gm-Gg: AeBDiesnFO3qdXC+iLS03FCE4HFAHNVNvMbuEtNbcnmCWXwXmsTASenQnYKvkMCVq78
+	i6Mxq83Aj29dJkvEqBVtuFlisDZNRyAAwcC0FkCJ6x5EMcXLFCzZKaTX72TmkovoUtuGCrBZvTP
+	agS/hd/yInPAqJ7PiE7j0BPEfA/oEnNIFb/LDChNK9B+xSPXCMGLRh1MpPgA0+RJPHzN91iBRtb
+	2CsQMKrLOJDHyGjm7WXqSAGdQfGUybhcGA2Id+52QS5ZcrEWbO8TqBZEKp0FnVjcalPnHjNcW57
+	G4dJmq16klXW5Wxi2EsTYC25nJXuXqX+9oz+pBXwyKWia+6qHddUxtd9VP4o54jIMC9jtQ/5GMX
+	n5kcbUudfANBIB/7tAj03qr7zJatCqbQZNJMd4qxycT4KV1YAc8UdFbAx0UWy49lpPFoThCQWjb
+	AwvG3ksZ6VVs6tCT+QLuKynKfbZInGtru14yaH2Dq4WG58kYpv4SKziEA+tb85qeTKaq6KTMuQx
+	uaqrz3lSQLW3YLpp03LAb0hsEZJhy7zoeo=
+X-Received: by 2002:a05:600c:4e88:b0:48a:55d8:7882 with SMTP id 5b1f17b1804b1-48a844438f5mr111793475e9.9.1777649279314;
+        Fri, 01 May 2026 08:27:59 -0700 (PDT)
+Received: from localhost ([94.4.195.193])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48a822be902sm151439305e9.6.2026.05.01.08.27.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 May 2026 08:27:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Rspamd-Queue-Id: B582B4AD549
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 01 May 2026 16:27:57 +0100
+Message-Id: <DI7G2SF71B39.22LPDZWBG87O9@linaro.org>
+Subject: Re: ASoC q6asm race condition when stopping and preparing the
+ stream
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Richard Acayan" <mailingradian@gmail.com>, "Srinivas Kandagatla"
+ <srini@kernel.org>, "Liam Girdwood" <lgirdwood@gmail.com>, "Mark Brown"
+ <broonie@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai"
+ <tiwai@suse.com>, "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, "Kees
+ Cook" <kees@kernel.org>, "Joris Verhaegen" <verhaegen@google.com>,
+ "Kuninori Morimoto" <kuninori.morimoto.gx@renesas.com>,
+ <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.21.0
+References: <afS7rTHdc9TyIeLx@rdacayan>
+In-Reply-To: <afS7rTHdc9TyIeLx@rdacayan>
+X-Rspamd-Queue-Id: 6E5F44AD894
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	MV_CASE(0.50)[];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com,linuxfoundation.org,google.com,renesas.com,vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-105487-lists,linux-arm-msm=lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-105486-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	FREEMAIL_TO(0.00)[gmail.com,kernel.org,perex.cz,suse.com,linuxfoundation.org,google.com,renesas.com,vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[alexey.klimov@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 
-Hi,
+On Fri May 1, 2026 at 3:41 PM BST, Richard Acayan wrote:
+> Hi,
+>
+> There seems to be a race condition in q6asm when stopping the stream
+> (with uncompressed PCM). When receiving SNDRV_PCM_TRIGGER_STOP, the
+> driver sets the state to Q6ASM_STREAM_STOPPED and sends CMD_EOS to the
+> ADSP. If userspace decides to prepare the stream again in
+> q6asm_dai_prepare before receiving ASM_CLIENT_EVENT_CMD_EOS_DONE, the
+> memory-mapped region appears to still be in use and fails to map again.
+>
+> I believe this race was observed since commit 81c53b52de21 ("ASoC: qcom:
+> qdsp6: q6asm-dai: set 10 ms period and buffer alignment."), but would
+> need to verify. On sdm670, we are coping downstream by keeping the state
+> as Q6ASM_STREAM_RUNNING until receiving CMD_EOS_DONE.
 
-There seems to be a race condition in q6asm when stopping the stream
-(with uncompressed PCM). When receiving SNDRV_PCM_TRIGGER_STOP, the
-driver sets the state to Q6ASM_STREAM_STOPPED and sends CMD_EOS to the
-ADSP. If userspace decides to prepare the stream again in
-q6asm_dai_prepare before receiving ASM_CLIENT_EVENT_CMD_EOS_DONE, the
-memory-mapped region appears to still be in use and fails to map again.
+Do you have a reproducer or specific steps to test/reproduce the issue?
 
-I believe this race was observed since commit 81c53b52de21 ("ASoC: qcom:
-qdsp6: q6asm-dai: set 10 ms period and buffer alignment."), but would
-need to verify. On sdm670, we are coping downstream by keeping the state
-as Q6ASM_STREAM_RUNNING until receiving CMD_EOS_DONE.
 
-Can the ADSP emit DATA_WRITE_DONE or DATA_READ_DONE before CMD_EOS_DONE?
-We might need an extra stopping state between CMD_EOS and CMD_EOS_DONE
-so the driver doesn't request more data transfers.
+> Can the ADSP emit DATA_WRITE_DONE or DATA_READ_DONE before CMD_EOS_DONE?
+> We might need an extra stopping state between CMD_EOS and CMD_EOS_DONE
+> so the driver doesn't request more data transfers.
+
+Thanks,
+Alexey
 
