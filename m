@@ -1,80 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-105505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OPlhJi3N9GkDFAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 17:56:29 +0200
+	id KKy8CknN9GkDFAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 17:56:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F7AA4ADCA7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 17:56:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B2FAA4ADCCF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 17:56:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id CA783303778B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 15:54:35 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 69343305711B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 15:54:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 747393D1712;
-	Fri,  1 May 2026 15:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4042D3D3CE7;
+	Fri,  1 May 2026 15:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="uZUGjoJq"
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="fMtk1Sre"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11F03D1CA1
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 15:54:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490053D332F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 15:54:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777650871; cv=none; b=LZq4ygEy/FYxq09rkvO7loBs7zfNxEURkg4s9mLMfdsq0pVTZcqf6Mc6qiPmY+gqcNNeF+z+Dyt7zScZvP+UEJs+RtP6rhcGFEEgIVq8LyEzf+a/qIhL0X9LnE7KD/QIr8DPpoqjwrI/kyWqtUf5Hg//lcRy0FDvHss170jrSFI=
+	t=1777650874; cv=none; b=HPo4q+YgHyr9KCdDnBPzGguIwqu2pwPGr3xlbd4Oo3+iXS9auM7KyFEScxtXjAjL1Eu33/7JDiEkFTb0KP/0U8jHisrGBhQl78AWOBCTConobu0kN2lJFVuXZCJ5sX1dO1lV7vaPNQGrLlhkX581cHAlSrPrkogVk7kJFFM/QuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777650871; c=relaxed/simple;
-	bh=er84+EL1LCRrKcCTeLU8j/iTzDlY+KZoIM5wKUiIGjA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IkvrzfshOa2/axTkgaYQCV3GHULJv9Z9MGFLvXwyuK6NB/3s5NL6HuHU4dbJG0LJZHFoNehJ4MW5HCs8VWU7kMfpy7zGy0Yp4Nu4PTBB68zbdFol0cAwTTMDgLOSiHvlCCfw/90hms9MayR9qrNWCKe61yeiSZLNxUzIOruidbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=uZUGjoJq; arc=none smtp.client-ip=209.85.219.43
+	s=arc-20240116; t=1777650874; c=relaxed/simple;
+	bh=aDKuyOACGE1gNZqDJy0tqBgdZCQkU/jSoB8ed5fRm2I=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=SC/XZ9B5VDOYNsS2wG10APhFgsJlp317gt8F1oF2B4YqADz+p4RHl4GYmaWixvcoj0wF11UeGfGNU6jaGCQ/TOBYD2d1t3elPSSi8UaK6fcFFtvj/Htpdwl6Zrapu/lTMvRSPuGj7JSkEFydiwiqChH65GO6e5bW7wGZdPcxzaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=fMtk1Sre; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8a15ebb3abbso25850216d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 08:54:28 -0700 (PDT)
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-8b45dff1eebso16678306d6.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 08:54:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1777650868; x=1778255668; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8otWr85W9XMyDBNKDSXuSyml6J7KaSXr45sNqDPMQHs=;
-        b=uZUGjoJqg7OutEGNDHTI2oMO/F77B/t+zmO9ScW5BqOPO4pjUMny6sz8jXr64r/Mtr
-         FXVYrtoTb6MTnx7Y4I7jdCgudX1nSsGStGmnBRoQxdgBI1QrtTp6CxbVgB0I2wDEe0Gg
-         frnyIctANylsD2cgsz1CH5/Qc5agEdgGDFsApF4a+ur2pYGKndCc5CrAsg2hg3VCKTIP
-         V77hNekiCuo+wffUB4J9DrNMhGpqN7HoWDLqKls2p8Nv7m7x/NEHcMY5DDtape3WvDrL
-         Gk1QXtA8z6RmZRMbWDXmFuHMoPw3jYwtSrx9kVr7b3VRh508/IHuqB8vaVTF3cE6ib/Y
-         Q93A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777650868; x=1778255668;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1777650871; x=1778255671; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8otWr85W9XMyDBNKDSXuSyml6J7KaSXr45sNqDPMQHs=;
-        b=rhriZYNkQEDefphDrhhqMH4HL4CP+JfAUMOhIIMsixHYdxotuXAeWG43UUNy/kWnSe
-         oXrhkiYxQLfW1MGJXPMWDqu69NQEsR2Uj3G//l04Ln3oN9CSQzLxtg15I/A5I3eX60h+
-         3tc2hDqsRSR1ydrmhepJCgmnGuHn8otR/xL/5LWQ2CIJN2912QD+c/jTnpVbJBIDVmnc
-         0IHNtUginlfRSEuGkH3uSsrVZx1MMCAxMXM1tCIQF5QWZPQCcm8mzsyG5zvwVN6r74Zo
-         bbTX1L1cPXfDFAFmagKj4x0SjwcGojeY20+T+hWf32hOrgHfLTey3TPp23p2pfXG5EnP
-         Q+YA==
-X-Forwarded-Encrypted: i=1; AFNElJ91awF5qKSVsuV3/ma4LDdPzQzcdSJFpNRJJ+I6w8avIfA/tHMBm5wQD6OKv6bxnWZ6yHroqTO1D1yd7e0J@vger.kernel.org
-X-Gm-Message-State: AOJu0YzicYe2IWdBvdJutYgAapVurooASXP0nwp6jd7/eDpLJAfssWTO
-	wMFrkR0+uv2zY9+vXW045UPVJfufFpuv24cNWUKxyS7RaW9H0GrGoLFS3qkhJcBjPfw=
-X-Gm-Gg: AeBDiet5L7CjHVFAp+KSImmbB9515W+OSMl4sznQDJD3wBs+HzLDQkeHrPME0NcuArj
-	pH9aKp2zkb0vvTQ9q85llx3Vihopx9ZTymzkGR6HNs39Cjy9fJmSIragqLv8kQX3dPwzNzXqEpD
-	QwxHaoMdthRA6BJ+TkWfiYV6/hqvkA+8hUnh6f2pBNP1/mfCpS9QkulU0nTsnxMdZE6TDjQcCk/
-	FCxwp47x/Yt7QyyYD2upG6Z7wPi8HO4Wr4PDSCqkszYIT8KjfZvATKNZP6cPgqkKKPQNdDjCfaC
-	QXhBF9OSER4UfGUFMVQ9gu/p/2Ujrk670rPVGG+lUCSMi8feaHi4+WfOFcXe2KmG85viJE7PpBA
-	LTj2kXXM5ty0K9Pzft6b4XD3C13K/Z6eRfLdwXNoBRcvSHdSwKUxcHJXF2JSjEgB87ywgUfU4Ig
-	haC0fLabtarYYkkJ+XzyaH7VyFUzFBCzWQrrF0xcrJCZJdmiT1POySZ4BvnAefWjLUOqJt6lWHY
-	+gZKQ==
-X-Received: by 2002:a05:6214:4c8f:b0:89a:173d:9c5c with SMTP id 6a1803df08f44-8b6686383cfmr363016d6.32.1777650867766;
-        Fri, 01 May 2026 08:54:27 -0700 (PDT)
+        bh=KFcS3U32PymUNY1RdncskmbPJS8yXxMzYT9xI+/9Gm4=;
+        b=fMtk1SreB86rwdZGjIcNe4L88MESDiLdwzL2hEN8M6lap7/SBDpeCiJqKTw3rMZuRa
+         ooCBx9tKT6+v+VVCqqaHnHI1GbFcoUUZl2IGpKZUUtBRQEbKUogIOu/gL/DeeFcOXrSa
+         sTMU3VRF4+jsL9r3egqMEdKIIQcbr2o73xPUEkZoCcAu994iyGR0Wg54RW4ZJPNjRmcm
+         yRIOsO4td7jtDAn7uMe+kyL1dXmmAgvMEuy5+xxvawtYFycwSLCDW6oZhGHpkWtzgFVN
+         7d39T2F4wRmV8h3uwPQ/e7rR9U7ddRrhjP+gOdkC1HxZQMnhN5LKHnXsmHKffbgp+Zpa
+         tNAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777650871; x=1778255671;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=KFcS3U32PymUNY1RdncskmbPJS8yXxMzYT9xI+/9Gm4=;
+        b=HM1gHgM5cUbHJupv6Vr0pwd/f9lXj0NT9UM+XvSuWIgqox0dnzp4suPpBmkGMkxodp
+         v/sDwsjAfQq3QqabiiPEpsri+8jvsgMa9OqGHq+xv8f1R0Epu3mweQhpc1sjzAGJE0cp
+         uQ3JyPQ16D5bHXgTdnaB5MDfErSLgsACXXmeSe0sJXpIp1mASUSdvD2q1VZJKILtyL3l
+         DJTMLaiMrrPUGcaJFQJMsywudqZ5ztAnsqg7loLV7TqjRVFUw8CZHw0agXX2rMtSkCfw
+         wiITd9i/RYxmZBiI17phJr5MlJX5iHvpSiko2P2ZIsdwpO9HADAajIYpUvDnxjzq88i8
+         So4Q==
+X-Forwarded-Encrypted: i=1; AFNElJ+yFd2nHlYK5ZbbJKduQWpQjEKVC1DcIwBC9A5f6z8h0d9h0av3iBYdzsjaDfZqPQN0j4jLJVZJHNu8MR58@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxpzt91Jzee58JAJL3kVK/4ssAlpo3SVNFC8wYQh2VFI2b+lbqO
+	Ykr6Q1v5zhcrWQMwL8s92yfEPdcQzMN4PWqinDdcR1kc8h0QG0xUgzlN9bl/JYI+eQU=
+X-Gm-Gg: AeBDies3TfjmRWXhB6R1HXy+3gyZahiRhtpNHZ/ptDbQuahALfX3yhBRy8j0STf+lbT
+	gVX/L2176DwNIMEq4Gz8o8aaJZhnweGdiXMKpB5/GQglar8ks6SS6x3EaA5S7020wqfMakCjo4Q
+	yOjOmQOUBetlrqhnpGBDBQyhX1/okvFC64WtZAaqJmN6EG2GqD3H6K3PhJq3ljUYO38g6v6Lgcn
+	nHYDt9kX+oXISE/zMPaZNJU38aGNk843oDCRVjces0bFvd9qTuFLYdHpdE/P0+MNAG/ZpqG7rr7
+	0eHotDlH93KgP5+G4dvHwdWttwXlp+OW9OfxDXYm00dL6DsQ0RkKkLVhmHDVN/uisXcjmhtc1nW
+	e5poea6RiBMTdSxbREbeBTWqJksQB7vVCd1Milbdzh8N1uG1Hfx86kFYjfIqHId643i67zMO9Jp
+	bEbbTWEhQGoSbW2U9VHRMXPA50zGSfoAZmJfDt1m+cX6db9hXAnwLYBHC1l62bKf8gvmawC6b+8
+	2vX7vwKpI15y0gl
+X-Received: by 2002:a05:6214:4c88:b0:8a6:1216:fb6f with SMTP id 6a1803df08f44-8b667a83663mr713716d6.32.1777650871067;
+        Fri, 01 May 2026 08:54:31 -0700 (PDT)
 Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b539aa7293sm26615406d6.22.2026.05.01.08.54.24
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b539aa7293sm26615406d6.22.2026.05.01.08.54.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 08:54:27 -0700 (PDT)
+        Fri, 01 May 2026 08:54:30 -0700 (PDT)
 From: Alex Elder <elder@riscstar.com>
 To: andrew+netdev@lunn.ch,
 	davem@davemloft.net,
@@ -92,7 +94,7 @@ To: andrew+netdev@lunn.ch,
 	brgl@kernel.org,
 	arnd@arndb.de,
 	gregkh@linuxfoundation.org
-Cc: daniel@riscstar.com,
+Cc: Daniel Thompson <daniel@riscstar.com>,
 	elder@riscstar.com,
 	mohd.anwar@oss.qualcomm.com,
 	a0987203069@gmail.com,
@@ -126,10 +128,12 @@ Cc: daniel@riscstar.com,
 	linux-stm32@st-md-mailman.stormreply.com,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 00/12] net: enable TC956x support
-Date: Fri,  1 May 2026 10:54:08 -0500
-Message-ID: <20260501155421.3329862-1-elder@riscstar.com>
+Subject: [PATCH net-next 01/12] net: pcs: pcs-xpcs-regmap: support XPCS memory-mapped MDIO bus via regmap
+Date: Fri,  1 May 2026 10:54:09 -0500
+Message-ID: <20260501155421.3329862-2-elder@riscstar.com>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260501155421.3329862-1-elder@riscstar.com>
+References: <20260501155421.3329862-1-elder@riscstar.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -137,7 +141,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 1F7AA4ADCA7
+X-Rspamd-Queue-Id: B2FAA4ADCCF
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [1.44 / 15.00];
@@ -145,213 +149,304 @@ X-Spamd-Result: default: False [1.44 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,kernel.org,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
-	DKIM_TRACE(0.00)[riscstar-com.20251104.gappssmtp.com:+];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105505-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[elder@riscstar.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105506-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,kernel.org,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
+	MIME_TRACE(0.00)[0:+];
+	FROM_NEQ_ENVFROM(0.00)[elder@riscstar.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	NEURAL_HAM(-0.00)[-0.997];
 	RCPT_COUNT_GT_50(0.00)[50];
+	DKIM_TRACE(0.00)[riscstar-com.20251104.gappssmtp.com:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
-	TO_DN_NONE(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[riscstar.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,riscstar-com.20251104.gappssmtp.com:dkim]
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,riscstar-com.20251104.gappssmtp.com:dkim,riscstar.com:mid,riscstar.com:email]
 
-This series introduces stmmac driver support for the Toshiba TC9564
-(also known as Qualcomm QPS615).  This is an Ethernet-AVB/TSN bridge IC
-that provides a high-speed connection between a host SoC and Ethernet
-devices on a network.  It incorporates a PCIe switch, and implements
-two 10 Gbps capable Ethernet MACs (along with other IP blocks), and
-is essentially a small and highly-specialized SoC.  The TC9564 is a
-member of a family of similar chips, and the driver code uses "tc956x"
-to reflect this.
+From: Daniel Thompson <daniel@riscstar.com>
 
-TC956x chips incorporate a PCIe gen 3 switch, with one upstream and
-three downstream ports.  Its PCIe functionality is already supported
-upstream, including a power control driver that performs some early
-configuration of the PCI ports ("pci-pwrctrl-tc9563.c").
+In some DesignWare XPCS implementatons the memory-mapped MDIO bus is
+allocated to a register window that does not align to a page boundary.
+This makes iomapping the registers problematic.
 
-One of the PCIe switch's downstream ports has an internal PCIe endpoint,
-which implements two PCIe functions, each of which has an Ethernet MAC
-(eMAC) subsystem. The eMAC is composed of a Synopsis Designware XGMAC
-combined with an XPCS and PMA.  Each MAC is capable of operating at
-10M/100M/1G/2.5G/5Gps and 10Gps.  The initial target platform is the
-Qualcomm RB3gen2, which supports a 10Gbps Marvell PHY on port A, and
-a 2.5Gbps Qualcomm PHY on port B.  (The Marvell PHY is not populated on
-all RB3gen2 boards, and only 2.5 Gbps support is included initially.)
+For example the Toshiba TC9564 (a PCIe Ethernet-AVB/TSN bridge) provides
+an "eMAC" subsystem with the XPCS base address cuddled up to XGMAC
+registers.
 
-TC956x chips also implement several other blocks of functionality,
-including a GPIO controller, interrupt controllers (MSIGEN), I2C
-and SPI, a UART, and an Arm Cortex M3 CPU with 128KB SRAM.  The GPIO
-interface exposes several lines to manage external resets.  The
-interrupt controllers are used internally by the MAC functions.  The
-UART, SPI, microcontroller, and SRAM are currently unused.
+Let's introduce helpers to allow the driver that owns the eMAC to register
+an XPCS using is regmap for the memory-mapped MDIO bus.
 
-              ----------------------------------
-              |              Host              |
-              ------+...+----------+........+---
-                    |i2c|          |  PCIe  |
-    ----------------+...+----------+........+------
-    | TC956x        |I2C|          |upstream|     |
-    |               -----        --+--------+---  |
-    |  -----  ------  -------    | PCIe switch |  |
-    |  |SPI|  |GPIO|  |reset|    |             |  |
-    |  -----  ------  |clock|    | DS3 DS2 DS1 |  |
-    |                 -------    ---++--++--++--  |
-    |  -----  ------     downstream//    \\  \\   |  downstream
-    |  |MCU|  |SRAM|    /==========/      \\  \===== PCIe port 1
-    |  -----  ------   //PCIe port 3       \\     |
-    |                  ||                   \======= downstream
-    |  ----+-----------++-----------+----         |  PCIe port 2
-    |  | M | internal PCIe endpoint | M |         |
-    |  | S |------------------------| S |  ------ |
-    |  | I |   PCIe   |  |   PCIe   | I |  |UART| |
-    |  | G |function 0|  |function 1| G |  ------ |
-    |  | E |----++----|  |----++----| E |         |
-    |  | N |  eMAC 0  |  |  eMAC 1  | N |         |
-    --------+.......+------+.....+-----------------
-            |USXGMII|      |SGMII|
-          --+.......+--  --+.....+--
-          |  ARQ113C  |  | QEP8121 |
-          |    PHY    |  |   PHY   |
-          -------------  -----------
-
-The primary objective for this series is to support the Ethernet
-functionality provided by the TC956x.  The code providing this
-support has been structured into three distinct modules.
-  - A driver for the GPIO controller
-  - Code enabling the TC956x-specific eMAC/MSIGEN hardware
-  - A "chip" driver, associated with the PCIe functions
-
-The GPIO driver is implemented separately because in some hardware
-configurations, these GPIO lines are used to manage resets for
-external Ethernet PHYs.  We describe these PHYs via devicetree,
-where the GPIO-based reset signals are defined using phandles.
-
-The code for the eMAC/MSIGEN consists of a new source file that
-populates hardware-specific details about the two MACs, and integrates
-with the existing stmmac driver.  This also required implementing some
-enhancements to the core stmmac driver, described further below.
-
-To manage the common functionality (including configuring address
-translation and controlling internal reset and clock signals), a
-"chip" driver is implemented.  This chip driver is associated with
-the PCIe function *itself*, not the eMAC associated with the function.
-
-The driver binds to the internal PCI functions 0 and 1, and creates
-a shared data structure describing the common chip elements the two
-driver instances share.  Three auxiliary bus devices are created to
-represent the GPIO controller and the two Synopsys MAC controllers.
-
-The driver instance for PCIe function 0 has responsibility for
-controlling the common chip functionality--creating the GPIO
-controller auxiliary device, configuring address translation
-between PCIe address space and internal addresses, and controlling
-clocks and resets.  It creates a data structure--shared via its
-platform data pointer with PCIe function 1--to represent shared
-"chip" information.  In addition, PCIe function 0 creates an
-auxiliary device to represent its attached eMAC.  It allocates
-IRQs and maps BAR address ranges for use by the stmmac driver,
-passing them in a structure via the auxiliary device's platform
-data.
-
-PCIe function 1 defers probing until after PCIe function 0 has
-created the shared data structure.  After that its only job is
-to set up IRQs and mapped memory and create the eMAC1 auxiliary
-device.
-
-The version of the Synopsys MAC IP is 3.01, which is largely compatible
-with version 2.20.  The core stmmac driver required several changes to
-enable support for the TC956x.
-  - A change to dwxgmac2 support changes the interrupt mode when
-    multi_msi_en is enabled.
-  - While most support for version 3.01 simply uses the 2.20 code,
-    an erratum related to the RX ring length is implemented for
-    3.01 DMA operations.
-  - Having the PCIe device be separate from an auxiliarly device
-    implementing the eMAC required allowing a distinct DMA device
-    to be maintained for an stmmac interface.
-
-In addition:
-  - A new source file provides memory-mapped access to XPCS using
-    regmap.  The alignment of the TC956x MDIO registers aren't
-    suitable for using simple MMIO.
-  - Two additional XPCS changes are implemented that provides
-    support for the XPCS as implemented in the TC956x.
-
-This series is available here:
-  https://github.com/riscstar/linux/tree/tc956x/stmmac-v1
-
-					-Alex (and Daniel)
-
-Alex Elder (3):
-  net: stmmac: dma: create a separate dma_device pointer
-  gpio: tc956x: add TC956x/QPS615 support
-  misc: tc956x_pci: add TC956x/QPS615 support
-
-Daniel Thompson (9):
-  net: pcs: pcs-xpcs-regmap: support XPCS memory-mapped MDIO bus via
-    regmap
-  net: pcs: pcs-xpcs: select operating mode for 10G-baseR capable PCS
-  net: pcs: pcs-xpcs: Preserve BMCR_ANENBLE during link up
-  net: stmmac: dwxgmac2: Add multi MSI interrupt mode
-  net: stmmac: dwxgmac2: Add XGMAC 3.01a support
-  net: stmmac: dwxgmac2: export symbols for XGMAC 3.01a DMA
-  dt-bindings: net: toshiba,tc965x-dwmac: add TC956x Ethernet bridge
-  net: stmmac: tc956x: add TC956x/QPS615 support
-  arm64: dts: qcom: qcs6490-rb3gen2: enable TC9564 with a single QCS8081
-    phy
-
- .../bindings/net/toshiba,tc956x-dwmac.yaml    | 111 +++
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  |  45 +-
- drivers/gpio/Kconfig                          |  11 +
- drivers/gpio/Makefile                         |   1 +
- drivers/gpio/gpio-tc956x.c                    | 209 +++++
- drivers/misc/Kconfig                          |  10 +
- drivers/misc/Makefile                         |   1 +
- drivers/misc/tc956x_pci.c                     | 667 +++++++++++++++
- drivers/net/ethernet/stmicro/stmmac/Kconfig   |  13 +
- drivers/net/ethernet/stmicro/stmmac/Makefile  |   2 +
- .../net/ethernet/stmicro/stmmac/chain_mode.c  |  12 +-
- .../ethernet/stmicro/stmmac/dwmac-tc956x.c    | 791 ++++++++++++++++++
- .../net/ethernet/stmicro/stmmac/dwxgmac2.h    |  12 +
- .../ethernet/stmicro/stmmac/dwxgmac2_core.c   |   1 +
- .../ethernet/stmicro/stmmac/dwxgmac2_descs.c  |   1 +
- .../ethernet/stmicro/stmmac/dwxgmac2_dma.c    |  78 +-
- .../net/ethernet/stmicro/stmmac/ring_mode.c   |  12 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac.h  |   1 +
- .../net/ethernet/stmicro/stmmac/stmmac_main.c |  59 +-
- .../net/ethernet/stmicro/stmmac/stmmac_xdp.c  |   2 +-
- drivers/net/pcs/Makefile                      |   4 +-
- drivers/net/pcs/pcs-xpcs-regmap.c             | 203 +++++
- drivers/net/pcs/pcs-xpcs.c                    |  43 +-
- include/linux/pcs/pcs-xpcs-regmap.h           |  20 +
- include/linux/stmmac.h                        |   1 +
- include/soc/toshiba/tc956x-dwmac.h            |  84 ++
- 26 files changed, 2341 insertions(+), 53 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/net/toshiba,tc956x-dwmac.yaml
- create mode 100644 drivers/gpio/gpio-tc956x.c
- create mode 100644 drivers/misc/tc956x_pci.c
- create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
+Signed-off-by: Daniel Thompson <daniel@riscstar.com>
+Signed-off-by: Alex Elder <elder@riscstar.com>
+---
+ drivers/net/pcs/Makefile            |   4 +-
+ drivers/net/pcs/pcs-xpcs-regmap.c   | 203 ++++++++++++++++++++++++++++
+ include/linux/pcs/pcs-xpcs-regmap.h |  20 +++
+ 3 files changed, 225 insertions(+), 2 deletions(-)
  create mode 100644 drivers/net/pcs/pcs-xpcs-regmap.c
  create mode 100644 include/linux/pcs/pcs-xpcs-regmap.h
- create mode 100644 include/soc/toshiba/tc956x-dwmac.h
 
-
-base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
+diff --git a/drivers/net/pcs/Makefile b/drivers/net/pcs/Makefile
+index 4f7920618b900..565f1b63fce0b 100644
+--- a/drivers/net/pcs/Makefile
++++ b/drivers/net/pcs/Makefile
+@@ -1,8 +1,8 @@
+ # SPDX-License-Identifier: GPL-2.0
+ # Makefile for Linux PCS drivers
+ 
+-pcs_xpcs-$(CONFIG_PCS_XPCS)	:= pcs-xpcs.o pcs-xpcs-plat.o \
+-				   pcs-xpcs-nxp.o pcs-xpcs-wx.o
++pcs_xpcs-$(CONFIG_PCS_XPCS)	:= pcs-xpcs.o pcs-xpcs-nxp.o pcs-xpcs-regmap.o \
++				   pcs-xpcs-plat.o pcs-xpcs-wx.o
+ 
+ obj-$(CONFIG_PCS_XPCS)		+= pcs_xpcs.o
+ obj-$(CONFIG_PCS_LYNX)		+= pcs-lynx.o
+diff --git a/drivers/net/pcs/pcs-xpcs-regmap.c b/drivers/net/pcs/pcs-xpcs-regmap.c
+new file mode 100644
+index 0000000000000..20a54a3605951
+--- /dev/null
++++ b/drivers/net/pcs/pcs-xpcs-regmap.c
+@@ -0,0 +1,203 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Synopsys DesignWare XPCS regmap helpers
++ *
++ * Copyright (C) 2026 RISCstar Solutions.
++ * Copyright (C) 2024 Serge Semin
++ */
++
++#include <linux/device.h>
++#include <linux/kernel.h>
++#include <linux/mdio.h>
++#include <linux/pcs/pcs-xpcs.h>
++#include <linux/pcs/pcs-xpcs-regmap.h>
++#include <linux/regmap.h>
++
++#include "pcs-xpcs.h"
++
++/* Page select register for the indirect MMIO CSRs access */
++#define DW_VR_CSR_VIEWPORT		0xff
++
++struct dw_xpcs_regmap {
++	struct device *dev;
++	struct mii_bus *bus;
++	struct regmap *regmap;
++	bool reg_indir;
++};
++
++static ptrdiff_t xpcs_regmap_addr_format(int dev, int reg)
++{
++	return FIELD_PREP(0x1f0000, dev) | FIELD_PREP(0xffff, reg);
++}
++
++static u16 xpcs_regmap_addr_page(ptrdiff_t csr)
++{
++	return FIELD_GET(0x1fff00, csr);
++}
++
++static ptrdiff_t xpcs_regmap_addr_offset(ptrdiff_t csr)
++{
++	return FIELD_GET(0xff, csr);
++}
++
++static int xpcs_regmap_read_reg_indirect(struct dw_xpcs_regmap *pxpcs, int dev,
++					 int reg)
++{
++	ptrdiff_t csr, ofs;
++	unsigned int val;
++	u16 page;
++	int res;
++
++	csr = xpcs_regmap_addr_format(dev, reg);
++	page = xpcs_regmap_addr_page(csr);
++	ofs = xpcs_regmap_addr_offset(csr);
++
++	res = regmap_write(pxpcs->regmap, DW_VR_CSR_VIEWPORT, page);
++	if (res < 0)
++		return res;
++
++	res = regmap_read(pxpcs->regmap, ofs, &val);
++	if (res < 0)
++		return res;
++
++	return val & 0xffff;
++}
++
++static int xpcs_regmap_write_reg_indirect(struct dw_xpcs_regmap *pxpcs, int dev,
++					  int reg, u16 val)
++{
++	ptrdiff_t csr, ofs;
++	u16 page;
++	int res;
++
++	csr = xpcs_regmap_addr_format(dev, reg);
++	page = xpcs_regmap_addr_page(csr);
++	ofs = xpcs_regmap_addr_offset(csr);
++
++	res = regmap_write(pxpcs->regmap, DW_VR_CSR_VIEWPORT, page);
++	if (res < 0)
++		return res;
++
++	return regmap_write(pxpcs->regmap, ofs, val);
++}
++
++static int xpcs_regmap_read_reg_direct(struct dw_xpcs_regmap *pxpcs, int dev,
++				       int reg)
++{
++	unsigned int val;
++	ptrdiff_t csr;
++	int res;
++
++	csr = xpcs_regmap_addr_format(dev, reg);
++	res = regmap_read(pxpcs->regmap, csr, &val);
++	if (res < 0)
++		return res;
++
++	return val & 0xffff;
++}
++
++static int xpcs_regmap_write_reg_direct(struct dw_xpcs_regmap *pxpcs, int dev,
++					int reg, u16 val)
++{
++	ptrdiff_t csr = xpcs_regmap_addr_format(dev, reg);
++
++	return regmap_write(pxpcs->regmap, csr, val);
++}
++
++static int xpcs_regmap_read_c22(struct mii_bus *bus, int addr, int reg)
++{
++	struct dw_xpcs_regmap *pxpcs = bus->priv;
++
++	if (addr != 0)
++		return -ENODEV;
++
++	if (pxpcs->reg_indir)
++		return xpcs_regmap_read_reg_indirect(pxpcs, MDIO_MMD_VEND2, reg);
++	else
++		return xpcs_regmap_read_reg_direct(pxpcs, MDIO_MMD_VEND2, reg);
++}
++
++static int xpcs_regmap_write_c22(struct mii_bus *bus, int addr, int reg, u16 val)
++{
++	struct dw_xpcs_regmap *pxpcs = bus->priv;
++
++	if (addr != 0)
++		return -ENODEV;
++
++	if (pxpcs->reg_indir)
++		return xpcs_regmap_write_reg_indirect(pxpcs, MDIO_MMD_VEND2, reg, val);
++	else
++		return xpcs_regmap_write_reg_direct(pxpcs, MDIO_MMD_VEND2, reg, val);
++}
++
++static int xpcs_regmap_read_c45(struct mii_bus *bus, int addr, int dev, int reg)
++{
++	struct dw_xpcs_regmap *pxpcs = bus->priv;
++
++	if (addr != 0)
++		return -ENODEV;
++
++	if (pxpcs->reg_indir)
++		return xpcs_regmap_read_reg_indirect(pxpcs, dev, reg);
++	else
++		return xpcs_regmap_read_reg_direct(pxpcs, dev, reg);
++}
++
++static int xpcs_regmap_write_c45(struct mii_bus *bus, int addr, int dev,
++				 int reg, u16 val)
++{
++	struct dw_xpcs_regmap *pxpcs = bus->priv;
++
++	if (addr != 0)
++		return -ENODEV;
++
++	if (pxpcs->reg_indir)
++		return xpcs_regmap_write_reg_indirect(pxpcs, dev, reg, val);
++	else
++		return xpcs_regmap_write_reg_direct(pxpcs, dev, reg, val);
++}
++
++struct dw_xpcs *devm_xpcs_regmap_register(struct device *dev,
++					  const struct xpcs_regmap_config *config)
++{
++	static atomic_t id = ATOMIC_INIT(-1);
++	struct dw_xpcs_regmap *pxpcs;
++	int ret;
++
++	pxpcs = devm_kzalloc(dev, sizeof(*pxpcs), GFP_KERNEL);
++	if (!pxpcs)
++		return ERR_PTR(-ENOMEM);
++
++	pxpcs->dev = dev;
++	pxpcs->regmap = config->regmap;
++	pxpcs->reg_indir = config->reg_indir;
++
++	pxpcs->bus = devm_mdiobus_alloc_size(dev, 0);
++	if (!pxpcs->bus)
++		return ERR_PTR(-ENOMEM);
++
++	pxpcs->bus->name = "DW XPCS MCI/APB3";
++	pxpcs->bus->read = xpcs_regmap_read_c22;
++	pxpcs->bus->write = xpcs_regmap_write_c22;
++	pxpcs->bus->read_c45 = xpcs_regmap_read_c45;
++	pxpcs->bus->write_c45 = xpcs_regmap_write_c45;
++	pxpcs->bus->phy_mask = ~0;
++	pxpcs->bus->parent = dev;
++	pxpcs->bus->priv = pxpcs;
++
++	snprintf(pxpcs->bus->id, MII_BUS_ID_SIZE,
++		 "dwxpcs-%x", atomic_inc_return(&id));
++
++	/* MDIO-bus here serves as just a back-end engine abstracting out
++	 * the MDIO and MCI/APB3 IO interfaces utilized for the DW XPCS CSRs
++	 * access.
++	 */
++	ret = devm_mdiobus_register(dev, pxpcs->bus);
++	if (ret) {
++		dev_err(dev, "Failed to create MDIO bus\n");
++		return ERR_PTR(ret);
++	}
++
++	return xpcs_create_mdiodev(pxpcs->bus, 0);
++}
++EXPORT_SYMBOL_GPL(devm_xpcs_regmap_register);
+diff --git a/include/linux/pcs/pcs-xpcs-regmap.h b/include/linux/pcs/pcs-xpcs-regmap.h
+new file mode 100644
+index 0000000000000..19c99d4160365
+--- /dev/null
++++ b/include/linux/pcs/pcs-xpcs-regmap.h
+@@ -0,0 +1,20 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++
++#ifndef __LINUX_PCS_XPCS_REGMAP_H
++#define __LINUX_PCS_XPCS_REGMAP_H
++
++#include <linux/types.h>
++
++struct device;
++struct regmap;
++struct dw_xpcs;
++
++struct xpcs_regmap_config {
++	struct regmap *regmap;
++	bool reg_indir;
++};
++
++struct dw_xpcs *devm_xpcs_regmap_register(
++		struct device *dev, const struct xpcs_regmap_config *config);
++
++#endif /* __LINUX_PCS_XPCS_REGMAP_H */
 -- 
 2.51.0
 
