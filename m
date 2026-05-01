@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-105507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IEI2Ie3M9GkDFAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 17:55:25 +0200
+	id TWMJIJbN9GkAFQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 17:58:14 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 117034ADC5E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 17:55:24 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02A574ADCEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 17:58:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id DFCF33016538
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 15:54:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3DEDE306559F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 15:55:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3895F3D3002;
-	Fri,  1 May 2026 15:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE5933D3485;
+	Fri,  1 May 2026 15:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="tNcg/P1P"
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="Z5pLDII9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BF23D5649
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 15:54:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A563D6682
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 15:54:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777650877; cv=none; b=WNp8reH4QQdjAO/lNymcOI+n5pAbPmZ72YDTaLm22YZdWgZdGhgwM8xxUQ1320vJv0zmv6hLasMFjby9ETZ00WqtAcVYPRiUDWkv6fQGFWpsnrC0amCRB6h5ZdMr0XT9a3NZhzbt/2lo8p0dHBHFw/GF0OoxQT5PQOXworNiWcs=
+	t=1777650880; cv=none; b=ILI3HZaOX/3GDU7i2XBETh/+RjpkQvt99XlxbVbTk0GxoI5iLsq3iYYptpRejqx0QtyOggKm4TYlFlQs9N+aS3szyqS4VCL+xqM6tNNjgLFraM87aN/nVFvBZH69LDoD+8QGNUn3AWSQ1DbBagVYNAxn5IbQyjKzyyrMvaO7SSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777650877; c=relaxed/simple;
-	bh=FecQt5wh6wqUypR7GIOTL8vQl1Ce+BG0nyhOWnwbzHk=;
+	s=arc-20240116; t=1777650880; c=relaxed/simple;
+	bh=vSMz0fMwD5nvE28rW2N/JHi9BJvlZF2OiadS95iYJ7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvGvduVkjH+I4Gx6Jq+y4FPJJxRZhfgp0UuWlK0bX9hvMuH4LM3NH4ozan6O9jNBr5ujj75ZFqy8a2Tswy0EDVV9Exq297H2kVzd1u/HjsAUTyIi2u2CHkSupg9FVmY2Secla3/80ayp4D3SRy2097SIUa44Omui2KbP6VYVcHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=tNcg/P1P; arc=none smtp.client-ip=209.85.219.51
+	 MIME-Version; b=ce6D7cZBOAe2NhpquiNI7ylFF5VOpfnzb2josi+J1oH8Mly04g6/2djKMVk2C52s2cMG2yI1zXBm7UU3497UA01evq7Iglgy0yl7ckXNyjeXeJv+VdEfAHa/BsXi2eYP5dd3BlrufwQFi468H2LPXB0KHc8LbQ+xBBrs6tK/hM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=Z5pLDII9; arc=none smtp.client-ip=209.85.219.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-899d6b7b073so21010186d6.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 08:54:35 -0700 (PDT)
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-8aca6bd57cfso18494966d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 08:54:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1777650875; x=1778255675; darn=vger.kernel.org;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1777650878; x=1778255678; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/HU0BdifEzvMmdb0M7vix3Brd2gKsWcYWwUTy3bx7+E=;
-        b=tNcg/P1PC+kwjWrj+0nDkm12iH83g+0LHIXYlZK9eJvfzDn6Fbx2ejBpmXkXWEbJzi
-         dx/ij0rAWyHvUW4t3j57Lz9to9iqAvr7Kb/rbWAmZSR604/Wh4NQ14zcJxh0t8PSpdhr
-         3TsOZJxn6w1Hy0Vgf6LaQdO8Ce7xKOmPUzRYOHsuj99wMrM2L5S2Q5VhreaIDRppxEG5
-         xc0C8J9QL3TlM9akv6ha8pEaXilam+JPmyVG2IZP/Locgn5ZauqbTgbhqbKPDMkbQZye
-         qqpYKADzZgQb2uDeCn6UUt3OSuUNzwKqW3z5MrQEo/NxhQdC7jeVuUqna/uqMsmHIqZ2
-         mhnA==
+        bh=aVr8Clh+n9i4UIz8+5GUPFBuftN5UkiMGfqWWtAa7So=;
+        b=Z5pLDII9inAZIYRk3mHwRycVsXtkdv+tJIEvThfg1icNH8qCTRn+9tTfuMPeovkW7P
+         aQyfaIEH442Fs0eM8ndBTO2CA74qq3PvbpncoYETsKlrO1XAZ+Aa/TUPukzfqc0z42dg
+         bjLWAYawkJmCx/oTfbXnbGm1HowNQ1loVD+lWT9od8pPZFGuQmtJJn10620MKicg1cXp
+         brPPS5wXGQWUUmaMzR8555yBCFcstfLYTEsZN6RqjSP+ev8ympE/3h8ThKfQfkvZoZ9G
+         nHyRUL0Afm51WMx/9vtY0l+lbCP7perMn1H3HIk+UUBm8ab9lrekzEb3fdpREmkWP5Y+
+         4C/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777650875; x=1778255675;
+        d=1e100.net; s=20251104; t=1777650878; x=1778255678;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/HU0BdifEzvMmdb0M7vix3Brd2gKsWcYWwUTy3bx7+E=;
-        b=oRyBMPfwW/EOhPkKApt+g39MtuvVfmMDoLL6KtOEGGXjIStML0REBCVfu57iV5NaMm
-         Z8JbmAw8mAARSONYCamhcTq6/BGyyefiGV78C44f6UaPBhyBQvDN51UUiyWmuLnKHLQv
-         02Kot6CTu+utlAD1qpH/6icnLhl50yA8mcl3OU35hiiEXGOMt/IKU9XSB8zobBJLigJq
-         xa31NhDD+nKMUHmVG6u5KcnBB8mkdoBIW6bOnMrN2GzZ3LpH5JxTgnd51r9oJY7M36xX
-         TY+h1eLjjC75tlBlwijatg9Qw7k+kATIC92nu17DOiQ7pYyLpOHKpm5gX0KCJIlSFF3z
-         B09Q==
-X-Forwarded-Encrypted: i=1; AFNElJ+EXOO1tCBFLNk918ZsU+8gwEArWkKYwfKN7VGIV+mZGXZbIIM0sX8AAWeVpfP7wy8BaTrkBhNp2M6axNhT@vger.kernel.org
-X-Gm-Message-State: AOJu0Yymck1XynNWvdGUOuNWVF2ZQl5Ys8Y1mgKgkwzfQC+9AHPH8x6N
-	HFlSPyihdCUYRBQtUKoSEHREqEDtNBUZJTJR6VKNBp7FMQIY93AKBplk4oX2JeHwgsI=
-X-Gm-Gg: AeBDieuslKOcr5PHI2ysx8u9907oUjX8cYFHBuYMqsluDllzHPSFM5F3K5fO4VPfzBc
-	AWIXIeTLCnrkLJ6596oO86bfIniNmPvlbRebYicEH6xXkxCeAHI31KNHLMkr7/FIGOw1mHKy/km
-	8Gl+Z8L0EGxi5P9jyjbnJ4t0v+m49PwX5eEYUB4NxtD5c0lToCCry4QH8OZk9dmzRVkgFZXGyu0
-	QYEknto1hIatLQru5lwEFsZExj78yPX5SRrbSlIuXrxjItz2VDwqr5L3Eaknht1SrHsksYd2loP
-	ifV0mNeoYRmx9zAiYJkJw5lIdqocrzxNrDdG58HMXL13mcxMBxNG2YNhRTGiYl3g+AI8XaSPpcX
-	V3WHcpcR/jY1S2JuKzdFsjiNMhnj+wD4R3VGdM92PdM75abKkhGlUlN3Hzb3fZXecq8wMOqBh4A
-	NLSLM6kstRHnumuGKe7uVi8WLj4V/HOZhNZchF/rTWEvmZLKmc91asIi+i4DqApLkJAQo5adBkn
-	DiYRK1nIs5xyRMp
-X-Received: by 2002:a05:6214:3d9e:b0:8ac:b63e:72eb with SMTP id 6a1803df08f44-8b6660063bbmr1282856d6.12.1777650874598;
-        Fri, 01 May 2026 08:54:34 -0700 (PDT)
+        bh=aVr8Clh+n9i4UIz8+5GUPFBuftN5UkiMGfqWWtAa7So=;
+        b=HT/5+eBDKwfDUdVr/zGnPipW21f8yM6C4+8etTZQTBsG2pMwgVDd529LCP864Z1v1d
+         jXpuoHDc/CGvAtjXs1IGgOpskrTA8rtMMYZHi9+dnmPr+o47Cwv56pY95DO92dK3OstB
+         M2zG2h0sS9v5SdED83iX4z6JvAbA4XL13uUi/tTpZ10WVTEm9SNcxFenCNbmt5N7lpCI
+         taSR0zj9omV+pQmeXlxia5MM7XRKcCiP3g2rvm2vuVYkLd1zz/Wow8xXVMS4yFC1fbHb
+         XPjNQwcuje1UUSnrsuFO0ptQlsc+ovAGzxSCdVzmdKhJRqw3xWW1ODyBke6UQkH5CGXC
+         xhKg==
+X-Forwarded-Encrypted: i=1; AFNElJ+f1m3Xs4w+KWwu/WJpvcmaofO9A3E64P8V+mogy853uESEXe/ndolM5tdy+huonXaX8Z/lEfdHEieB1tvA@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy7ZHdsFkk6s6eosjMZQwDSVuHRuw01Vl3IAXNgy7XN5PsHRf0R
+	eO7sppvId3Gkj8c2XwHjx4Os+w765ATOcuWit30brDjDg8Q0jUy4EyHPfOptAVP3Gws=
+X-Gm-Gg: AeBDievJ1BeA+x2w+VflGgJK4ntauDoveulIBIrFIg3PN3E7FN5JfNw8uKlDuf8mhax
+	2anYhMguWDei/9lwpI2WeZkpacItrJUyZr4ySaf6dIw+JkmgZaOQqvjMkneqZMQAYe6ly5StgHV
+	aQ28JISzrmvg88/m2AUL1kBqjC9OlZhPFptxli9LADt8nGsUHVkjpPrIsNZYhqekkxm0iqS8Cqt
+	Q+uakswo6R+72z+yOFfgjYBEPJ5Hya6aR+OdTRVYWbUbIsVHpume++hhYr/M7j4t8O2Ubb+/msX
+	KZzXNOtr9SaeIbvcST01dyBi0gIA/416ERtLWwwRn05Meu6kKsXXBLvOh0s+oQR3mdaexiNddnE
+	JTS+CQqaS0XiThUiUYBZoDP20bxDzhaE1D7KbECSJcWGS4j4JSobVkZFhQO4hztBy3ApGpzODOv
+	kyRJT6cxclkZ4Rp1SMUiphicuSx01HnAhMSaKGv2Fav/t9TcCpJZjAukDJJZsR2vPwPvgLwIITY
+	7C5Bw==
+X-Received: by 2002:a05:6214:483:b0:8ac:bb62:fe4a with SMTP id 6a1803df08f44-8b665f02857mr1068856d6.5.1777650878062;
+        Fri, 01 May 2026 08:54:38 -0700 (PDT)
 Received: from zippy.localdomain (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b539aa7293sm26615406d6.22.2026.05.01.08.54.31
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b539aa7293sm26615406d6.22.2026.05.01.08.54.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 08:54:34 -0700 (PDT)
+        Fri, 01 May 2026 08:54:37 -0700 (PDT)
 From: Alex Elder <elder@riscstar.com>
 To: andrew+netdev@lunn.ch,
 	davem@davemloft.net,
@@ -128,9 +128,9 @@ Cc: Daniel Thompson <daniel@riscstar.com>,
 	linux-stm32@st-md-mailman.stormreply.com,
 	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 02/12] net: pcs: pcs-xpcs: select operating mode for 10G-baseR capable PCS
-Date: Fri,  1 May 2026 10:54:10 -0500
-Message-ID: <20260501155421.3329862-3-elder@riscstar.com>
+Subject: [PATCH net-next 03/12] net: pcs: pcs-xpcs: Preserve BMCR_ANENBLE during link up
+Date: Fri,  1 May 2026 10:54:11 -0500
+Message-ID: <20260501155421.3329862-4-elder@riscstar.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260501155421.3329862-1-elder@riscstar.com>
 References: <20260501155421.3329862-1-elder@riscstar.com>
@@ -141,7 +141,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 117034ADC5E
+X-Rspamd-Queue-Id: 02A574ADCEC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [1.44 / 15.00];
@@ -150,14 +150,14 @@ X-Spamd-Result: default: False [1.44 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
 	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
 	FROM_HAS_DN(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105507-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-105508-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_FIVE(0.00)[5];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_CC(0.00)[riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,kernel.org,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
@@ -171,92 +171,58 @@ X-Spamd-Result: default: False [1.44 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[riscstar.com:mid,riscstar.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,riscstar.com:mid,riscstar.com:email,riscstar-com.20251104.gappssmtp.com:dkim]
 
 From: Daniel Thompson <daniel@riscstar.com>
 
-Currently the XPCS found on Toshiba TC9564 (a.k.a. Qualcomm QPS615)
+Currently the XCPS found on Toshiba TC9564 (a.k.a. Qualcomm QPS615)
 is unable to operate at 1000base-X and slower with a PHY connected
-using SGMII/2500base-X (in our case a Qualcomm QCA8081).
+using SGMII/2500base-X (in our case a Qualcomm QCA8081). The link
+negotiates speed correctly but the MAC can't get any packets out.
 
-The problem arises when the XPCS supports 10Gbase-R. That means that
-the reset value of SR_XS_PCS_CTRL2:PCS_TYPE_SEL (0) is valid and this
-suppresses the modal switching based on bit 13 of SR_PMA_CTRL1 or
-SR_XS_PCS_CTRL1.
+This attracted attention to the ANENABLE bit and we observed that the
+bit is currently set during config and cleared during link up.
+Preserving the bit during link up allows the system to work as expected.
 
-The reported XPCS dev ID on a TC9564 is exactly the same as every other
-XPCS supported by the kernel so we can't use the dev ID to automatically
-determine what operating mode to select. However we can use the feature
-bits in SR_XS_PCS_STS2 to detect 10Gbase-R support.
-
-Rather than introduce a quirk let's attempt to solve this generically by
-setting SR_XS_PCS_CTRL2:PCS_TYPE_SEL to a reserved value when we detect
-the right we detect the right combination of phy interface and XPCS
-feature support.
+Perhaps I lack the imagination but I couldn't come up with any reason
+why keeping the ANENABLE bit set would break things for other XPCS
+implementations. Let's ensure link up sets the bit for SGMII interfaces.
 
 Signed-off-by: Daniel Thompson <daniel@riscstar.com>
 Signed-off-by: Alex Elder <elder@riscstar.com>
 ---
- drivers/net/pcs/pcs-xpcs.c | 38 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ drivers/net/pcs/pcs-xpcs.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
-index e69fa2f0a0e8d..b2c84b7e1e113 100644
+index b2c84b7e1e113..1d62d5b31c61c 100644
 --- a/drivers/net/pcs/pcs-xpcs.c
 +++ b/drivers/net/pcs/pcs-xpcs.c
-@@ -747,6 +747,40 @@ static void xpcs_pre_config(struct phylink_pcs *pcs, phy_interface_t interface)
- 	xpcs->need_reset = false;
- }
- 
-+static int xpcs_config_operating_mode(struct dw_xpcs *xpcs, int an_mode)
-+{
-+	int mdio_stat2, ret;
-+
-+	switch (an_mode) {
-+	case DW_AN_C37_SGMII:
-+	case DW_AN_C37_1000BASEX:
-+	case DW_2500BASEX:
-+		mdio_stat2 = xpcs_read(xpcs, MDIO_MMD_PCS, MDIO_STAT2);
-+		if (mdio_stat2 < 0)
-+			return mdio_stat2;
-+
-+		/*
-+		 * If this XPCS supports 10Gbase-R then it will be the default
-+		 * which prevents 1000base-X and slower from working correctly.
-+		 *
-+		 * Why are we writing MDIO_PCS_CTRL2_TYPE + 1? We want the modal
-+		 * behaviour that comes when we pick a reserved value. XPCS
-+		 * allocates extra bits to this field and allocates values from
-+		 * 15 down so MDIO_PCS_CTRL2_TYPE + 1 is the value likely to
-+		 * be allocated last (and hopefully never).
-+		 */
-+		if (mdio_stat2 & MDIO_PCS_STAT2_10GBR) {
-+			ret = xpcs_write(xpcs, MDIO_MMD_PCS, MDIO_CTRL2,
-+					 MDIO_PCS_CTRL2_TYPE + 1);
-+			if (ret < 0)
-+				return ret;
-+		}
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
- static int xpcs_config_aneg_c37_sgmii(struct dw_xpcs *xpcs,
- 				      unsigned int neg_mode)
+@@ -1263,11 +1263,14 @@ static void xpcs_link_up_sgmii_1000basex(struct dw_xpcs *xpcs,
+ 					 phy_interface_t interface,
+ 					 int speed, int duplex)
  {
-@@ -919,6 +953,10 @@ static int xpcs_do_config(struct dw_xpcs *xpcs, phy_interface_t interface,
- 	if (!compat)
- 		return -ENODEV;
++	u16 an_enable;
+ 	int ret;
  
-+	ret = xpcs_config_operating_mode(xpcs, compat->an_mode);
-+	if (ret < 0)
-+		return ret;
+ 	if (neg_mode == PHYLINK_PCS_NEG_INBAND_ENABLED)
+ 		return;
+ 
++	an_enable = (interface == PHY_INTERFACE_MODE_SGMII ? BMCR_ANENABLE : 0);
 +
- 	if (xpcs->info.pma == WX_TXGBE_XPCS_PMA_10G_ID) {
- 		/* Wangxun devices need backplane CL37 AN enabled for
- 		 * SGMII and 1000base-X
+ 	if (interface == PHY_INTERFACE_MODE_1000BASEX) {
+ 		if (speed != SPEED_1000) {
+ 			dev_err(&xpcs->mdiodev->dev,
+@@ -1283,7 +1286,7 @@ static void xpcs_link_up_sgmii_1000basex(struct dw_xpcs *xpcs,
+ 	}
+ 
+ 	ret = xpcs_write(xpcs, MDIO_MMD_VEND2, MII_BMCR,
+-			 mii_bmcr_encode_fixed(speed, duplex));
++			 mii_bmcr_encode_fixed(speed, duplex) | an_enable);
+ 	if (ret)
+ 		dev_err(&xpcs->mdiodev->dev, "%s: xpcs_write returned %pe\n",
+ 			__func__, ERR_PTR(ret));
 -- 
 2.51.0
 
