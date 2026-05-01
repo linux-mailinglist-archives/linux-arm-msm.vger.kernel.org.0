@@ -1,81 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-105485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2F23Equ09GlaDwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 16:11:55 +0200
+	id YFilLoO79GkwEAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 16:41:07 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C3624AD214
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 16:11:54 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B582B4AD549
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 01 May 2026 16:41:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2B091300290B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 14:11:51 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id B6611300602C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 14:41:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 424183BFE3F;
-	Fri,  1 May 2026 14:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D34D3CBE7A;
+	Fri,  1 May 2026 14:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HxgY0soV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RQrgPpYN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCD63A6EFF;
-	Fri,  1 May 2026 14:11:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771383C8735
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 14:40:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777644710; cv=none; b=ckRJVAa08IryTJntWqlnPSnMiUk3ZT/6x8GY6okV32GLK2N3gwVeiLfLba6nUZzB83p8sepGJarjXMmu5K2bDFGI+fOmAEc0Q5MLNHFGiYYCsjmqZW8Rn1wqE2t0nn03KlRJJ9A0HXkBHH3c+bMjfgT9hM+T3/WBRFWikIYzzSo=
+	t=1777646461; cv=none; b=Cb6WQFGVZLbei2Ai+bpYLwbJ+jrKyUncV5EAZbDheWriuNC7/6tibq9UntkbFlrs9G+X3yQNA+8LFFRdbB4seEbr/sMSk8YGbyEMHAom0pXMzpKbeiYcYqd5LZQKu8cLG0oJBSkQ84/0z/A72o6q2XvawOT0t4jGAs+8GeTusuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777644710; c=relaxed/simple;
-	bh=hcyctBNRRAQk+0InkpxlCS1lfZhqWYkgfIjb+wBB1nw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WCAnlhmzY/WOyMTU3pSHd27Snq6E8nvf4UdGESxThaYSqwwfBQ5SrwZuJu95bVg8XcAGfsL9gs3RfO03m8l4xHNM7+9jR3GOb9XM36WT5CYwKg7/Hik1dEmaDMATtnMObdpbhtQ+TQ8xxsdWFhlghV6c8KGgxVqP+cSRPo0TNs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HxgY0soV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B196C2BCB4;
-	Fri,  1 May 2026 14:11:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777644709;
-	bh=hcyctBNRRAQk+0InkpxlCS1lfZhqWYkgfIjb+wBB1nw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HxgY0soVS2v6o2/czfldpnU5z90SDBiFfUg0+Lx9jN4IzjA78vFM0PA7EuR7QtUXv
-	 KTzVa20tzAgAgsyr+quSek2TYMS0jvllCBPIqOuE8JJ3IGSigLNnPV4LJT72OGMwmA
-	 0uWuf+WHwYuQXVvG+9BEibd7pyALC0voy0vyK9NtFGm0frPZm/vioEzems/XFfz7Rz
-	 +nriz1HsGO4t63crYPzKRzCKKyOO6qieoVJ3y+aVRM/FqhfouayJevY3ERPy6ePxm4
-	 3NcvH7LktzUYWJ/2wD4b0MC2sn3fxEj9Y8ue3HQ7RHle5pMlGmSxk1lUPCj8Xq1+o4
-	 Bv8gyJQsH346Q==
-Date: Fri, 1 May 2026 19:41:32 +0530
-From: Sumit Garg <sumit.garg@kernel.org>
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-media@vger.kernel.org, netdev@vger.kernel.org,
-	linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
-	linux-remoteproc@vger.kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org,
-	robin.clark@oss.qualcomm.com, sean@poorly.run,
-	akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
-	jesszhan0024@gmail.com, marijn.suijten@somainline.org,
-	airlied@gmail.com, simona@ffwll.ch, vikash.garodia@oss.qualcomm.com,
-	dikshita.agarwal@oss.qualcomm.com, bod@kernel.org,
-	mchehab@kernel.org, elder@kernel.org, andrew+netdev@lunn.ch,
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-	pabeni@redhat.com, jjohnson@kernel.org, mathieu.poirier@linaro.org,
-	trilokkumar.soni@oss.qualcomm.com, pavan.kondeti@oss.qualcomm.com,
-	jorge.ramirez@oss.qualcomm.com, tonyh@qti.qualcomm.com,
-	vignesh.viswanathan@oss.qualcomm.com,
-	srinivas.kandagatla@oss.qualcomm.com,
-	amirreza.zarrabi@oss.qualcomm.com, jens.wiklander@linaro.org,
-	op-tee@lists.trustedfirmware.org, apurupa@qti.qualcomm.com,
-	skare@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v4 10/15] drm/msm: Switch to generic PAS TZ APIs
-Message-ID: <afS0lAnzVW9jHsxi@sumit-xelite>
-References: <20260427095603.1157963-1-sumit.garg@kernel.org>
- <20260427095603.1157963-11-sumit.garg@kernel.org>
- <20260429135954.nvr6nyfadsjeymyt@hu-mojha-hyd.qualcomm.com>
+	s=arc-20240116; t=1777646461; c=relaxed/simple;
+	bh=axhZE7iq4V4NfKtkFtOnf9unIcr5Q6pw8mBt6qvrky4=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=hiQiucXSX49vN6UaMtRfXwxuRT4hrskh5IPC2si9apA/pWK93xTgv5MJAgnfm3o9B1oIVL8qN3kLy9NyxtlMcLAp4CLYAv7cnu+U+X1oDIoUTWoMDmgKO+vIx1f9S3MCtfyrfBFM9Jjtc0DWX2wwllkowW157Nzx96rPV21cdL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RQrgPpYN; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-8b5de17382cso2661546d6.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 07:40:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777646457; x=1778251257; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=axhZE7iq4V4NfKtkFtOnf9unIcr5Q6pw8mBt6qvrky4=;
+        b=RQrgPpYNGtyAbT/hwsUN3smG0TtRk0ER4qeekKs0D+bIj7LZeSm0DlKbbwBr8eRLX3
+         +UO1uCxCSRwlW3+dylrKI9R85XtCJuQb8I5y6/nu8AJyQuAQ40txrLggKxFARwqYwhVS
+         GJRgalO40GCtI1NYOm2xRoLH6/bU3D5d5fPPWpohoAFloWGHQZRehhw8m2dQGK6pju+e
+         3WI5N+2CB/CnXhXDo8xwtkcvELyNCoJgv8bR2SM/fg7A7wxMHjs4Z5LtoQYaBSwA64Kg
+         UiwCpcpUQP3T5haqHUQjRkNNB4GoO0yIRfPyJUGSI5ZnlB7vx38Agy7rz8Tx46WVlwTD
+         rd9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777646457; x=1778251257;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=axhZE7iq4V4NfKtkFtOnf9unIcr5Q6pw8mBt6qvrky4=;
+        b=RviCJi2uOocnTVIuZepEdQsFMlvZSWzmFSEW0pjmDMTkLEIaGus+/klU4awm3UXKlF
+         +Wt6B5H2+iQHY2UsV2TMfKddT/DfaLuFxfs62pxPHOf72KIBZEdL7E0envyRNZcTpisc
+         eCCwcSXt/lM7/Tn7PNA//QUCxukhCsAbf1rJDIw7uoMMXeKU5SiuC7lskU/vUWI6bV3Y
+         /dUAEC3bkjWk8GChyasxB+unpaBst42Jg4KZEukzoImCk7xpM4daFXGuUygD/v46M6k4
+         h58i2D2gktMsIMva7pul4lNk+ViXK5f46Qt696zMKoURelpN3dXkbc0u6Af+wHTMpvbz
+         2WpA==
+X-Forwarded-Encrypted: i=1; AFNElJ+tX83x7HMIbuqlrz7u9jV/TaQoFJkqFZmP13yyWzKdc6tqu9RNEpZnzzxvqS6tQxCgB9dYOJj9RCGALXtr@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7gW3izBaWS1F9ONaDtsMue98sp4pVmJi9fXBUyx13nZblXlRW
+	Albeo+oP2aSIlw02bmdVuklcbhg8PhZleZp+v1bv9n6r/44eosbLuVZl
+X-Gm-Gg: AeBDieuN7dTRaYstGCkTcWb4x1isV3JfEiVmtbjrtqaMprOmQDLZEbAKCp60/acXTs9
+	pIr+edhmCZi6IyKSPIG4F4T4uDf/x9qehhQDYWvqhoTjql2G8bkSR7vxjfrv1mr9hlJfSOq7EnP
+	5xgiQRRgDac9lale0CNtDL9bE5Kc2D+VCACZeoiKDIyC1oH/kH3c9QIN4egbvnu6Lyb94XZjKwi
+	1qc9zItPL4aiF1YG8v8UL5Rn2Urq+b6bsKAsvyvwfKKuDDw+61oMUd2PNIQ9eY6GL1olsF4eEyA
+	IVGnY2D8ahgFE4UQ5MbOusiEVqiOGNcQhbJhYadXBpbupQoiMMJPefxIZJ/uKNV/1kDPuhfrecK
+	4gssRIq7blGh+UDU04zwyvf4SA8qTcyL2lSt5GLr23FKy2ADZPt03DIGV0K9ODaz49fMq9YCwkD
+	foDJSEx+swcW0UHFaCCooCsWaXBTTWG+t53wbvm4hUXWF0FmyJkey/QmPJP1b8iLh/7AttVnIcT
+	KbyUrhSCs4FlgQXSq1ciSbb7vsAMuls+FxG
+X-Received: by 2002:a05:6214:3012:b0:8a1:3ba4:9832 with SMTP id 6a1803df08f44-8b3fe766b5cmr104223706d6.16.1777646457024;
+        Fri, 01 May 2026 07:40:57 -0700 (PDT)
+Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8b5395c5b4csm26439146d6.16.2026.05.01.07.40.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 May 2026 07:40:56 -0700 (PDT)
+Date: Fri, 1 May 2026 10:41:49 -0400
+From: Richard Acayan <mailingradian@gmail.com>
+To: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Richard Acayan <mailingradian@gmail.com>,
+	Kees Cook <kees@kernel.org>, Joris Verhaegen <verhaegen@google.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: ASoC q6asm race condition when stopping and preparing the stream
+Message-ID: <afS7rTHdc9TyIeLx@rdacayan>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,149 +98,55 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260429135954.nvr6nyfadsjeymyt@hu-mojha-hyd.qualcomm.com>
-X-Rspamd-Queue-Id: 4C3624AD214
+X-Rspamd-Queue-Id: B582B4AD549
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105485-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,lists.freedesktop.org,lists.infradead.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
-	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com,linuxfoundation.org,google.com,renesas.com,vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	TAGGED_FROM(0.00)[bounces-105486-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[50];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
-	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 
-On Wed, Apr 29, 2026 at 07:29:54PM +0530, Mukesh Ojha wrote:
-> On Mon, Apr 27, 2026 at 03:25:58PM +0530, Sumit Garg wrote:
-> > From: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> > 
-> > Switch drm/msm client drivers over to generic PAS TZ APIs. Generic PAS
-> > TZ service allows to support multiple TZ implementation backends like QTEE
-> > based SCM PAS service, OP-TEE based PAS service and any further future TZ
-> > backend service.
-> > 
-> > Acked-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> > ---
-> >  drivers/gpu/drm/msm/Kconfig             |  1 +
-> >  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  4 ++--
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 11 ++++++-----
-> >  3 files changed, 9 insertions(+), 7 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gdrivers/gpu/drm/msm/Kconfigpu/drm/msm/Kconfig
-> > index 250246f81ea9..09469d56513b 100644
-> > --- a/drivers/gpu/drm/msm/Kconfig
-> > +++ b/drivers/gpu/drm/msm/Kconfig
-> > @@ -21,6 +21,7 @@ config DRM_MSM
-> >  	select SHMEM
-> >  	select TMPFS
-> >  	select QCOM_SCM
-> 
-> do we need this ?
+Hi,
 
-Yeah we do..
+There seems to be a race condition in q6asm when stopping the stream
+(with uncompressed PCM). When receiving SNDRV_PCM_TRIGGER_STOP, the
+driver sets the state to Q6ASM_STREAM_STOPPED and sends CMD_EOS to the
+ADSP. If userspace decides to prepare the stream again in
+q6asm_dai_prepare before receiving ASM_CLIENT_EVENT_CMD_EOS_DONE, the
+memory-mapped region appears to still be in use and fails to map again.
 
-> 
-> > +	select QCOM_PAS
-> >  	select QCOM_UBWC_CONFIG
-> >  	select WANT_DEV_COREDUMP
-> >  	select SND_SOC_HDMI_CODEC if SND_SOC
-> > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> > index 79acae11154a..b556da823897 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-> > @@ -5,7 +5,7 @@
-> >  #include <linux/kernel.h>
-> >  #include <linux/types.h>
-> >  #include <linux/cpumask.h>
-> > -#include <linux/firmware/qcom/qcom_scm.h>
-> > +#include <linux/firmware/qcom/qcom_pas.h>
-> >  #include <linux/pm_opp.h>
-> >  #include <linux/nvmem-consumer.h>
-> >  #include <linux/slab.h>
-> > @@ -653,7 +653,7 @@ static int a5xx_zap_shader_resume(struct msm_gpu *gpu)
-> >  	if (adreno_is_a506(adreno_gpu))
-> >  		return 0;
-> >  
-> > -	ret = qcom_scm_set_remote_state(SCM_GPU_ZAP_SHADER_RESUME, GPU_PAS_ID);
-> > +	ret = qcom_pas_set_remote_state(SCM_GPU_ZAP_SHADER_RESUME, GPU_PAS_ID);
-> >  	if (ret)
-> >  		DRM_ERROR("%s: zap-shader resume failed: %d\n",
-> >  			gpu->name, ret);
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > index 66f80f2d12f9..6d68edf0578c 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > @@ -8,6 +8,7 @@
-> >  
-> >  #include <linux/ascii85.h>
-> >  #include <linux/interconnect.h>
-> > +#include <linux/firmware/qcom/qcom_pas.h>
-> >  #include <linux/firmware/qcom/qcom_scm.h>
-> 
-> do we need this ?
-> 
+I believe this race was observed since commit 81c53b52de21 ("ASoC: qcom:
+qdsp6: q6asm-dai: set 10 ms period and buffer alignment."), but would
+need to verify. On sdm670, we are coping downstream by keeping the state
+as Q6ASM_STREAM_RUNNING until receiving CMD_EOS_DONE.
 
-..needed for qcom_scm_set_gpu_smmu_aperture() API.
-
-> >  #include <linux/kernel.h>
-> >  #include <linux/of_reserved_mem.h>
-> > @@ -146,10 +147,10 @@ static int zap_shader_load_mdt(struct msm_gpu *gpu, const char *fwname,
-> >  		goto out;
-> >  
-> >  	/* Send the image to the secure world */
-> > -	ret = qcom_scm_pas_auth_and_reset(pasid);
-> > +	ret = qcom_pas_auth_and_reset(pasid);
-> >  
-> >  	/*
-> > -	 * If the scm call returns -EOPNOTSUPP we assume that this target
-> > +	 * If the pas call returns -EOPNOTSUPP we assume that this target
-> >  	 * doesn't need/support the zap shader so quietly fail
-> >  	 */
-> >  	if (ret == -EOPNOTSUPP)
-> > @@ -175,9 +176,9 @@ int adreno_zap_shader_load(struct msm_gpu *gpu, u32 pasid)
-> >  	if (!zap_available)
-> >  		return -ENODEV;
-> >  
-> > -	/* We need SCM to be able to load the firmware */
-> > -	if (!qcom_scm_is_available()) {
-> > -		DRM_DEV_ERROR(&pdev->dev, "SCM is not available\n");
-> > +	/* We need PAS to be able to load the firmware */
-> > +	if (!qcom_pas_is_available()) {
-> > +		DRM_DEV_ERROR(&pdev->dev, "Qcom PAS is not available\n");
-> >  		return -EPROBE_DEFER;
-> >  	}
-> >  
-> > -- 
-> > 2.51.0
-> > 
-> 
-> Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com> 
-> 
-
-Thanks.
-
--Sumit
+Can the ADSP emit DATA_WRITE_DONE or DATA_READ_DONE before CMD_EOS_DONE?
+We might need an extra stopping state between CMD_EOS and CMD_EOS_DONE
+so the driver doesn't request more data transfers.
 
