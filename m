@@ -1,98 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-105574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gPWcFR/09WnwQgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 14:54:55 +0200
+	id qE5MIXL09WnwQgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 14:56:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C6EE4B20E0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 14:54:54 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 016E54B20E8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 14:56:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id C9D413004623
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 12:49:07 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EA537300B3CB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 12:56:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44C8937FF5F;
-	Sat,  2 May 2026 12:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B13153806A7;
+	Sat,  2 May 2026 12:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dYWQL83L"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hbv8Vg9L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D892F290B
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 May 2026 12:49:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FDE3803CE
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 May 2026 12:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.42
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777726146; cv=pass; b=U9SH1pF44ksgLS7JQpKhy58NsyAbZny6gcDuxAXfrSYUYX4Fd0qy//ltrn2kFVi7bEfNF5rYdVefNNNrt8zaLXVusJvl8iQ/5kjKwdEmjuwda3we6X8MlWdGB2C79e0yWeAxhWl9n9EzIWeasOx0lCwKtHF1CExSPz6sGyDMxoE=
+	t=1777726575; cv=pass; b=U+unNkVVRmK96lgkq+C1rkkVfYTx7KEnrY+bG6tZt4dZlDoWl171m4sezf8l6smMyF6Rmir2NbEYi3ognHH3R6iAp5zr8m2BOs/1VJ/wU3duiulHmYz9HMpBEPRrn7iMPfZw/bX9XnmA35Mb0kICkG8hAHXOESQUu1N0k8eAd9k=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777726146; c=relaxed/simple;
-	bh=YqkIYV8cNWNmgCtYbJHQsgHrfW9WsU5mBWE9NnUagG0=;
+	s=arc-20240116; t=1777726575; c=relaxed/simple;
+	bh=inxHJ4hNpFRRZqlUmBHzDKjh6vCBzL3rqVbm4R6BHQ4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jfoEDBH4TEm4/wlYSdKF5XCxx3eXjbvlu6hH73UqlyzUeHC08cNXeaumVJTSRO74ZAB0ep6EwVq0HFhg838p8EJgpxcW6tTWJ6pJ8P+YE7zrWS6IAd+lHirAHvS9lQ+3weWfrOZTmJkJc45dbM994sfSvSI1hU66c9GrQj5gs2I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dYWQL83L; arc=pass smtp.client-ip=209.85.221.174
+	 To:Cc:Content-Type; b=t6IcdOv2fXq4q4oBj7JyzckxVLUTrEhWlGfIk97k3rlZVVhQuOS3rPKHXUXZe4eP427YPBGmibBugkxVMX98X7Pr2HrKnoDBHFzv+BrklyYO5KYpZPvH59CyBmAGGdT3tOJf0Vnr1wqRE1OMuAXAetpqPstky7TzubTd5rDa4kI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hbv8Vg9L; arc=pass smtp.client-ip=209.85.217.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-56f8c77ca6aso1969829e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 May 2026 05:49:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777726143; cv=none;
+Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-60fee2fa3b8so995811137.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 May 2026 05:56:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777726572; cv=none;
         d=google.com; s=arc-20240605;
-        b=BcocfSPG9uIT8CUbjaBJ3cxbL5Q3oGWo4Famt7FQRzniFH31AbItcoGxdWa61kqMsI
-         Yeki6+iVq9V6T+udSW1e9LHdcUCwPzSikUPadCmhx/8K2aEJ2DT9RbhqQpBzR1Urcyil
-         Xe+qmP7/oESH+DKtEvqOdT1Dk1KNnZJq7oGfQTlYrBcVzdZHqINlqQjDA4aRwKBWyOWU
-         8Hx1lkJXx4dAUgG7AE1fae5WyxCtw36NaMEFxJZNCkLEET0jOk+UUvDaT3KnUiB2S5qu
-         3AOaJiAvPnab98+cqAvXCaWz2O9y00O71NGnETlkjqN3uypUObQcHuPZsspteYBE183f
-         JkwA==
+        b=jGUEcXJPTLklfcrbJAQj4GyW3P05w2GSaffvQTMkJtfOX2LqsxSx7Ps5m0BmoFQCM0
+         i6GYC6y+hhTbIoPHGuqI7+9AZPG/oAORsT9H1r3cKG9QoPSioHjIdCOSdeF0+F9HDA2Z
+         scgM7nWev3oK6fl5B38WeIJbflOVv6gr4MZyI5jxIAHxt2sJWRT79NBrD+BWYmBn1FJt
+         KNMW+hTM/6Z1Be7kITI+HNMdnLAC1scQTwh1bbuQ8Ttyd4FfQ42g/8ZI6iCo4RGsSUmd
+         zXDB5Fttb8NZGo1Ivop9PxL+OIqQf3CPYK/5PSOVDefAks8zamXdRigOYIhstzLw86Sb
+         k/WQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=R7OUMLqe1F0hQew+1PgjE381683yz3ZbZVDG8z/RRHs=;
-        fh=IVVKb9MwuAaof8ORonFMKJwAfe7YkzjOtm9Q00Nq88w=;
-        b=gmQeRhYEFTOrgjiRuvHHn2HLwOIyzS41keapZESa17vWtbNz0Vrg/KobCn1tXB+2cA
-         /j6eLtYNGMiJP41RgwtaDHvOEs7hz/HLSP6S2upwetXVKmZva1DAJDzGJqtDLBfeaJZR
-         ai2HN7gCl3YWg0ABxkB3uaKFKrqQqHHNo/SA9wl5aRAXEyDoiCfOML9+y+lX6Oo3Dt8c
-         FSpnJdcLJqd3nFhxNqAjvp29CQsrGDsG/XEKmv3bZqM7A82sT9a7q+4oqwqN8+s51Fd0
-         AuvEDX0FriLA4y13C4L1zwEMaQ95Vv7j1aCbmESg+o8LtK33rwlrVzifZWTTlAoOLhGs
-         Okcg==;
+        bh=rQ/9hJH4xIefWRJxKO3VdMr8VIxS31cte1uAKqxVPuc=;
+        fh=ZufiWGti4DUCja3OjdrZUta0Z4/E520z7tAEDPFHmgg=;
+        b=eOpcZT2I/k+MqEgQobeVRKmyaXKtfHQ0MondqxglpBaZCoVk43qlAYRHT4pXHmaHev
+         indSyTvva/0cbkHBcw7adijbAjfWgazGnPsCURHqjrpUevmGxEUvi/d3P2b84O6axCrK
+         Eut3nNW7EJEcl+a7XdlcaoV8ZJANjZ0dDVC4NmfI3gQ7m+nSvh9PMEQDEnClCz3U6+Fh
+         4FcM14CPWs3k3Zako9seaIvfyA4fjRNPq5AvISv48HywDX2HP84K/br+FYrvjezMAMF6
+         qgVzdr2lAbefp5yKT8D6t77PNiV7qwRLZ6ORaWCrzq2VhoSI67jgZDD6EXCwpCARaebb
+         ZanQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777726143; x=1778330943; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1777726572; x=1778331372; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=R7OUMLqe1F0hQew+1PgjE381683yz3ZbZVDG8z/RRHs=;
-        b=dYWQL83L083zXeZFangrho/fE5Q1p2HB8UA7Tm1vJn6qBpoNy2fOXDqghn/DfoBKUb
-         lZHA2ZTCkdGeJqmIJHZyC3yCkC4N5W4BUueBR/Qgo/tuJrXTPeUfvL1OHMDBhCMfh6D7
-         pLZpDJzifdakop7xJ7aPOKbFbWIidQQn7oNSGspJ7EQJssQOYVOmuUpPCxuz39ZjzuME
-         IbTTLoItpjNvfWaSWU2ZGyxiE61h93TccZGk3YV0efwvBPt1CIS1aQbDTp3mtKaAburp
-         4IgNIu12fY9KCEqUpJ/sX0hY9nkSRFcZe8dp53tsadkNt7k62a4zwE36zuC+lPne+iIg
-         /t3A==
+        bh=rQ/9hJH4xIefWRJxKO3VdMr8VIxS31cte1uAKqxVPuc=;
+        b=Hbv8Vg9Lq7VSIjcBxIfMDTYRPS7vkuu4RsKlrkO4CDhdLpNsOorAwXct8Jqj1CPJFZ
+         CJqRoi8uQ6YhDwX6as/MgTwlkG8GJC8BtimCt4G2Yb8RgDTshs3k6h6LGHWfZCYu7qua
+         TziLpunQQemiLuZ+atsVurWWpZ6Gj9uxPw9wTwn8qID6n1+0O1uj6Mr7EhfsCbZuXjzQ
+         TstBOkS10Qa7GalntzfBmsZ+6IagDBO0ae5r3xYRQTIIhseMlsm8J8NynmaK0wqVJ8T2
+         algLW+CxwI5Xh4K91ZmPWY3yz8BD/ezwSw7ogh10n1kT8UrT3EBH12I3tEH9arOKc177
+         +RbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777726143; x=1778330943;
+        d=1e100.net; s=20251104; t=1777726572; x=1778331372;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=R7OUMLqe1F0hQew+1PgjE381683yz3ZbZVDG8z/RRHs=;
-        b=htsaHX9VFvYNnZKzNyGnfrP4Z7Vgp6DZyUDckoEA9SsEexw2mZ/cEgHGSXqprg62nq
-         eoWrg1eCdR9B2oim3PkITd8voMeRT8CZng0PO0tRIWfSs/wkd8a6zB8do9Kk0CBSk8MW
-         OsAqWTiTm6LtM8HBxmdTc42KxZyJm6uXag9y9dOtPuK4tgFASBmXdqjg9PhQW06b21I7
-         VuTh7K+ZYf1GxiNCLUZvMQAde9IoCf7GoCmDLGdagku+QYC3Fg+c9RIZhmcDR9JWrQZI
-         a2EgvuZocAOY9/vpAMq++SMMX+E99jZqyPnrMf04MwH81uaDATMFzkFYYvgDhwISKrSB
-         Nbyg==
-X-Forwarded-Encrypted: i=1; AFNElJ+ILk5K0xPg4EHT2wmYzjldZ+aXemDlvAz6OQ4x/kx60AA42KU53TRIyU+w9U4Q92faQFcMpgeR4qyrfCEj@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywc7yytV1i3/YvJs7y5Co9X2ebDXoGPp1sXC7+biU7Q9WBk510i
-	QOBe40LuqnbYztXze4awda3ApzLt9t4L3SUvs/+C5so0oUQb7vvqxZwC+iNholXBdk8V9dEfqd2
-	lC8ubj7YV7RIoeJ+axMxR39nzgcL6xRY=
-X-Gm-Gg: AeBDievavow9FvkOXSXE2WFKe7tBaFjdAubV9Ogpi57wKEe/B+zG5m//+AA9Z7Vttea
-	2U7SV2Lh6JKesjY9X/kUyeDFDYKpxxem+O5PYF3sg72z+4N4B43xYBeadnEqIc9r1TgFsSahcYM
-	vtu73GcjCdXyBL+yUq8clMKmp8Rnoppis5REft5iW3dXmbsYYmz+UBjo5LPvwB9pPqAlwsliFQn
-	5t0gnoVk6eBMoPYilwVaVeGk6DIZn6c3X6LfN/tajt+QonaRI0c4lFyirRgfmGiPx8B2KJyVK1S
-	WvQEhta2h6ErkAZo2g==
-X-Received: by 2002:a05:6122:230:b0:56b:579c:82e with SMTP id
- 71dfb90a1353d-5750c55253cmr1356656e0c.5.1777726142894; Sat, 02 May 2026
- 05:49:02 -0700 (PDT)
+        bh=rQ/9hJH4xIefWRJxKO3VdMr8VIxS31cte1uAKqxVPuc=;
+        b=NMH2ZCDlU9f+3uQAth8WY3xHqTLB2UykHHYmPU+vDAuBch4bN0AQDZwnndxZ576WlC
+         ranFVOQBU7oMISIYAofhCH8rgPBv6+z2hsWNKkC5jmvpIQ1WgKKcTMexswGeYvSpMLvq
+         pxP2Ja+2y9QykKu0eEvt7m25UbOLsCcO73V27jROlXHstztpKqcU4A8D9tnQf7JDTnMn
+         EsUTD+NafisLXRbUyx7w5VzX1sTAup8/COZ12WY1PBFkDpeLcGwI/KCB/q/tsndPyVMx
+         6qy+eKG/Nh5tmE3fWKspPN2eI3djuSywdiSX8zap19P9agU8IkT/l+lkLWPhLBo6cwrs
+         3w6w==
+X-Forwarded-Encrypted: i=1; AFNElJ/tZCZVEW2S8hgYsrpXOVGgtecKQBindEqUq+TzSqzESN0ZvDfJ4wO3IHSDGyoKDkBhxQjDzrloucH6/NcD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz//f/tUW+vNoWfMxPySTHrRxd7E4r1qh4wk60Vt4Qydtu/7hNX
+	na6y+WDX+mJ6fryV78jsua3nLv4E965N5MwKqrWXznU2DOTWAKVmqSF+IoAJTstoS4HRQhbjUuY
+	z+nidJu1ZSkpxKuPDO8ZqmbpDNw50TiI=
+X-Gm-Gg: AeBDies5KRAnohHB4I8li5lvcNz+FGQB/ZSMkRzXTBkPHJF4d++U6Ln4KkMncUj2Bg0
+	NM7ob4z7xnVsTlvioXlOwwOh3tbdevWp/az0S/kSF/8rUOSY6YT8g3tw1/9C+8zIgOHBhGiwwQN
+	x9asZJ9ZvLDvdkkCIxwuRIToaEiah6SWCPvcMFKI2DEhKxXTJaScIBlYzk7Zh6dvpfgt48Q5wVc
+	KPY2hP3TFa/XzUNZIvmRfjM1JtNKe8hF/P2uaZUswK6cZj0DYiRuI2LnJ3GgpwhnLuO/DIxnJei
+	dqG2cDohSvSxI8PoVA==
+X-Received: by 2002:a05:6102:2c86:b0:60f:928f:bf98 with SMTP id
+ ada2fe7eead31-62d86a1e1f0mr1004752137.17.1777726571912; Sat, 02 May 2026
+ 05:56:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,14 +100,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260425105300.745044-1-mitltlatltl@gmail.com>
- <20260425105300.745044-4-mitltlatltl@gmail.com> <c26246c1-0f90-499f-ba32-34159baa5dfb@linaro.org>
-In-Reply-To: <c26246c1-0f90-499f-ba32-34159baa5dfb@linaro.org>
+ <20260425105300.745044-5-mitltlatltl@gmail.com> <db441eb6-195e-4018-a84d-77b2d1531243@linaro.org>
+In-Reply-To: <db441eb6-195e-4018-a84d-77b2d1531243@linaro.org>
 From: Pengyu Luo <mitltlatltl@gmail.com>
-Date: Sat, 2 May 2026 20:48:06 +0800
-X-Gm-Features: AVHnY4K16i5cKZ_0rbW-GAXuM8aAKgyRuR3CHBayAt2hHZFEeoyWFZSvSMYLo7M
-Message-ID: <CAH2e8h4Y-x_4BAcgjytNj_NxZKnF1=y9GuaUnWdjzJ-MQLyCng@mail.gmail.com>
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc8280xp: gaokun3: add front camera
- sensor node
+Date: Sat, 2 May 2026 20:55:19 +0800
+X-Gm-Features: AVHnY4JEamCgQAP8597TEs_qCW9Vb36Gn6E1ihfX1x2hcEUZDfZo_fx-C5F4roI
+Message-ID: <CAH2e8h4TYEMhjP9Vx7yYpKHAOR627Ovy2QZMT574oZPVDJX1oA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc8280xp: gaokun3: describe rear
+ camera module information as musch as possible
 To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
 	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
@@ -118,7 +118,7 @@ Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.or
 	linux-media@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 4C6EE4B20E0
+X-Rspamd-Queue-Id: 016E54B20E8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [4.84 / 15.00];
@@ -128,11 +128,11 @@ X-Spamd-Result: default: False [4.84 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	BAD_REP_POLICIES(0.10)[];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105574-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105575-lists,linux-arm-msm=lfdr.de];
 	R_DKIM_ALLOW(0.00)[gmail.com:s=20251104];
-	GREYLIST(0.00)[pass,body];
+	GREYLIST(0.00)[pass,meta];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -141,246 +141,224 @@ X-Spamd-Result: default: False [4.84 / 15.00];
 	DMARC_POLICY_ALLOW(0.00)[gmail.com,none];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.3:email];
-	NEURAL_HAM(-0.00)[-0.477];
+	NEURAL_HAM(-0.00)[-0.957];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	R_SPF_ALLOW(0.00)[+ip6:2600:3c15:e001:75::/64:c];
-	MISSING_XM_UA(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.50:email,0.0.0.0:email,mail.gmail.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,c6200000:email]
+	R_SPF_ALLOW(0.00)[+ip4:172.105.105.114:c];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 
-On Thu, Apr 30, 2026 at 6:49=E2=80=AFPM Vladimir Zapolskiy
+On Thu, Apr 30, 2026 at 7:00=E2=80=AFPM Vladimir Zapolskiy
 <vladimir.zapolskiy@linaro.org> wrote:
 >
-> On 4/25/26 13:52, Pengyu Luo wrote:
-> > Hi846 is found on my Gaokun3, descripting it.
->
-> To the best of my knowledege there is no 'descripting' word.
->
-> Say it simpler like
->
->         Describe Hi846 camera sensor found on Gaokun3.
->
-
-Ack
-
+> On 4/25/26 13:53, Pengyu Luo wrote:
+> > The rear sensor is S5K3L6, describing it but dropping compatible
+> > string, since there is no upstream driver. A funcitonal downstream
+> > driver is in comment.
 > >
-> > Note that it seems that only Goakun3(3.0GHz) version is equipped with
-> > Hi846. Goakun3(2.69GHz) version is equipped with S5K4H7.
+> > The VCM is dw9714, describe it.
 > >
 > > Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
 > > ---
-> >   .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 128 +++++++++++++++++=
-+
-> >   1 file changed, 128 insertions(+)
+> > Please take this patch as a RFC, I am not sure, how much I am allowed
+> > to add without a sensor driver.
+> > ---
+> >   .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 129 +++++++++++++++++=
+-
+> >   1 file changed, 123 insertions(+), 6 deletions(-)
 > >
 > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts b/arc=
 h/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-> > index 9819454abe13..39e559e91289 100644
+> > index 39e559e91289..76b1ecb3819d 100644
 > > --- a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
 > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-> > @@ -15,6 +15,7 @@
-> >   #include <dt-bindings/gpio/gpio.h>
-> >   #include <dt-bindings/input/gpio-keys.h>
-> >   #include <dt-bindings/input/input.h>
-> > +#include <dt-bindings/leds/common.h>
-> >   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> >   #include <dt-bindings/phy/phy.h>
+> > @@ -22,12 +22,18 @@
+> >   #include "sc8280xp.dtsi"
+> >   #include "sc8280xp-pmics.dtsi"
 > >
-> > @@ -27,6 +28,7 @@ / {
+> > +/* remove due to gpio pins collision, skip 2nd instance won't break th=
+ings */
+> > +/delete-node/ &cci1_i2c1;
+> > +/delete-node/ &cci1_i2c1_default;
+> > +/delete-node/ &cci1_i2c1_sleep;
+>
+> Instead of removal 'cci1_default' and 'cci1_sleep' nodes shall be rewritt=
+en
+> by excluding 'cci1_i2c1_default' and 'cci1_i2c1_sleep' from them.
+>
+
+Should we register an unused node?
+
+> > +
+> >   / {
+> >       chassis-type =3D "tablet";
+> >       model =3D "Matebook E Go";
 > >       compatible =3D "huawei,gaokun3", "qcom,sc8280xp";
 > >
 > >       aliases {
-> > +             i2c2 =3D &cci2_i2c1;
+> > +             i2c1 =3D &cci1_i2c0;
 >
-> I don't think that it makes big sense to add this I2C alias, please
-> consider to remove it.
+> Likely this I2C alias can be removed.
 >
-
-Ack
-
+> >               i2c2 =3D &cci2_i2c1;
 > >               i2c4 =3D &i2c4;
 > >               i2c15 =3D &i2c15;
-> >               serial1 =3D &uart2;
-> > @@ -47,6 +49,21 @@ framebuffer0: framebuffer@c6200000 {
-> >               };
-> >       };
+> > @@ -52,9 +58,17 @@ framebuffer0: framebuffer@c6200000 {
+> >       leds {
+> >               compatible =3D "gpio-leds";
 > >
-> > +     leds {
-> > +             compatible =3D "gpio-leds";
-> > +
-> > +             pinctrl-0 =3D <&cam_indicator_en>;
-> > +             pinctrl-names =3D "default";
-> > +
-> > +             privacy_led: privacy-led {
-> > +                     function =3D LED_FUNCTION_INDICATOR;
+> > -             pinctrl-0 =3D <&cam_indicator_en>;
+> > +             pinctrl-0 =3D <&cam_indicator_en>, <&camera_flash_en>;
+> >               pinctrl-names =3D "default";
+> >
+> > +             camera_flash: led {
+> > +                     function =3D LED_FUNCTION_FLASH;
 > > +                     color =3D <LED_COLOR_ID_WHITE>;
-> > +                     gpios =3D <&tlmm 34 GPIO_ACTIVE_HIGH>;
+> > +                     gpios =3D <&tlmm 93 GPIO_ACTIVE_HIGH>;
+> > +                     linux,default-trigger =3D "none";
 > > +                     default-state =3D "off";
-> > +                     panic-indicator;
 > > +             };
-> > +     };
 > > +
-> >       wcd938x: audio-codec {
-> >               compatible =3D "qcom,wcd9380-codec";
-> >
-> > @@ -98,6 +115,20 @@ switch-mode {
-> >               };
+> >               privacy_led: privacy-led {
+> >                       function =3D LED_FUNCTION_INDICATOR;
+> >                       color =3D <LED_COLOR_ID_WHITE>;
+> > @@ -129,6 +143,18 @@ vreg_camf_1p2: regulator-camf-1p2 {
+> >               pinctrl-names =3D "default";
 > >       };
 > >
-> > +     vreg_camf_1p2: regulator-camf-1p2 {
+> > +     vreg_camr: regulator-camr {
 > > +             compatible =3D "regulator-fixed";
 > > +
-> > +             regulator-name =3D "vreg_camf_1p2";
-> > +             regulator-min-microvolt =3D <1200000>;
-> > +             regulator-max-microvolt =3D <1200000>;
+> > +             regulator-name =3D "vreg_camr";
 > > +
-> > +             gpio =3D <&tlmm 44 GPIO_ACTIVE_HIGH>;
+> > +             gpio =3D <&tlmm 92 GPIO_ACTIVE_HIGH>;
 > > +             enable-active-high;
 > > +
-> > +             pinctrl-0 =3D <&camf_1p2_reg_en>;
+> > +             pinctrl-0 =3D <&camr_reg_en>;
 > > +             pinctrl-names =3D "default";
 > > +     };
 > > +
 > >       vreg_misc_3p3: regulator-misc-3p3 {
 > >               compatible =3D "regulator-fixed";
 > >
-> > @@ -462,6 +493,13 @@ vreg_l8c: ldo8 {
-> >                                                  RPMH_REGULATOR_MODE_HP=
-M>;
+> > @@ -387,8 +413,8 @@ vreg_l1b: ldo1 {
+> >
+> >               vreg_l2b: ldo2 {
+> >                       regulator-name =3D "vreg_l2b";
+> > -                     regulator-min-microvolt =3D <1904000>;
+> > -                     regulator-max-microvolt =3D <1904000>;
+> > +                     regulator-min-microvolt =3D <1800000>;
+> > +                     regulator-max-microvolt =3D <2800000>;
+> >                       regulator-initial-mode =3D <RPMH_REGULATOR_MODE_H=
+PM>;
 > >               };
 > >
-> > +             vreg_l11c: ldo11 {
-> > +                     regulator-name =3D "vreg_l11c";
+> > @@ -433,10 +459,9 @@ vreg_l6b: ldo6 {
+> >
+> >               vreg_l7b: ldo7 {
+> >                       regulator-name =3D "vreg_l7b";
+> > -                     regulator-min-microvolt =3D <1800000>;
+> > -                     regulator-max-microvolt =3D <1800000>;
 > > +                     regulator-min-microvolt =3D <2800000>;
 > > +                     regulator-max-microvolt =3D <2800000>;
-> > +                     regulator-initial-mode =3D <RPMH_REGULATOR_MODE_H=
+> >                       regulator-initial-mode =3D <RPMH_REGULATOR_MODE_H=
 PM>;
-> > +             };
-> > +
-> >               vreg_l12c: ldo12 {
-> >                       regulator-name =3D "vreg_l12c";
-> >                       regulator-min-microvolt =3D <1800000>;
-> > @@ -577,6 +615,66 @@ vreg_l10d: ldo10 {
-> >       };
-> >   };
+> > -                     regulator-boot-on;
+> >               };
+>
+> ldo2 and ldo7 changes shall be done in separate commits.
+>
+
+Ack
+
 > >
-> > +&camss {
-> > +     vdda-phy-supply =3D <&vreg_l6b>;
-> > +     vdda-pll-supply =3D <&vreg_l3b>;
-> > +
-> > +     status =3D "okay";
-> > +
-> > +     ports {
-> > +             port@3 {
-> > +                     csiphy3_ep: endpoint@0 {
+> >               vreg_l9b: ldo9 {
+> > @@ -622,6 +647,16 @@ &camss {
+> >       status =3D "okay";
+> >
+> >       ports {
+> > +             port@0 {
+> > +                     csiphy0_ep: endpoint@0 {
 > > +                             reg =3D <0>;
 > > +
 > > +                             clock-lanes =3D <7>;
 >
-> Please remove 'clock-lanes' property from above.
+> Please remove 'clock-lanes' property here.
 >
-
-Is it unused? I saw it on some devices and v4l2 related source file.
-
 > > +                             data-lanes =3D <0 1 2 3>;
-> > +                             remote-endpoint =3D <&hi846_ep>;
+> > +                             remote-endpoint =3D <&s5k3l6_ep>;
 > > +                     };
 > > +             };
-> > +     };
-> > +};
 > > +
-> > +&cci2 {
+> >               port@3 {
+> >                       csiphy3_ep: endpoint@0 {
+> >                               reg =3D <0>;
+> > @@ -634,6 +669,58 @@ csiphy3_ep: endpoint@0 {
+> >       };
+> >   };
+> >
+> > +&cci1 {
 > > +     status =3D "okay";
 > > +};
 > > +
-> > +&cci2_i2c1 {
-> > +     /* On Goakun3(2.69GHz), S5K4H7@2d, image quality is better than h=
-i846 */
-> > +     camera_front: camera@20 {
->
-> 'camera_front' label is unused and should be removed.
->
-
-Ack
-
-> > +             compatible =3D "hynix,hi846";
-> > +             reg =3D <0x20>;
+> > +&cci1_i2c0 {
+> > +     voice_coil_motor: vcm@c {
+> > +             compatible =3D "dongwoon,dw9714";
+> > +             reg =3D <0xc>;
+> > +             vcc-supply =3D <&vreg_l7b>; /* FIXME: require l2c on firs=
+t */
+> > +     };
 > > +
-> > +             pinctrl-0 =3D <&camf_rgb_default>;
+> > +     /*
+> > +      * https://source.puri.sm/Librem5/linux/-/blob/pureos/latest/driv=
+ers/media/i2c/s5k3l6xx.c
+> > +      *
+> > +      * This sensor has never been detected on Goakun3(2.69GHz)
+> > +      */
+> > +     camera_rear: camera@10 {
+> > +             reg =3D <0x10>;
+> > +
+> > +             pinctrl-0 =3D <&camr_rgb_default>;
 > > +             pinctrl-names =3D "default";
 > > +
-> > +             clocks =3D <&camcc CAMCC_MCLK3_CLK>;
+> > +             clocks =3D <&camcc CAMCC_MCLK4_CLK>;
+> > +             clock-names =3D "mclk";
+> > +             clock-frequency =3D <24000000>;
 > > +
-> > +             assigned-clocks =3D <&camcc CAMCC_MCLK3_CLK>;
-> > +             assigned-clock-rates =3D <24000000>;
+> > +             rstn-gpios =3D <&tlmm 7 GPIO_ACTIVE_LOW>;
 > > +
-> > +             reset-gpios =3D <&tlmm 15 GPIO_ACTIVE_LOW>;
-> > +             vddio-supply =3D <&vreg_l2c>;
-> > +             vdda-supply =3D <&vreg_l11c>;
-> > +             vddd-supply =3D <&vreg_camf_1p2>;
+> > +             vddio-supply =3D <&vreg_camr>;
+> > +             vdda-supply =3D <&vreg_l2b>;
+> > +             vddd-supply =3D <&vreg_l2c>;
 > > +
+> > +             /* &camera_flash can't be enabled directly for now */
 > > +             leds =3D <&privacy_led>;
 > > +             led-names =3D "privacy";
 > > +
-> > +             orientation =3D <0>;      /* Front facing */
-> > +             rotation =3D <0>;
->
-> Both properties above can be removed as the default ones.
->
-
-Ack
-
+> > +             lens-focus =3D <&voice_coil_motor>;
+> > +
+> > +             orientation =3D <1>;
+> > +             rotation =3D <180>;
 > > +
 > > +             port {
-> > +                     hi846_ep: endpoint {
+> > +                     s5k3l6_ep: endpoint {
 > > +                             data-lanes =3D <1 2 3 4>;
-> > +                             link-frequencies =3D /bits/ 64 <80000000 =
-144000000 200000000 288000000>;
-> > +                             remote-endpoint =3D <&csiphy3_ep>;
+> > +                             remote-endpoint =3D <&csiphy0_ep>;
 > > +                     };
 > > +             };
 > > +     };
 > > +
-> > +     /* actuator???@58, Goakun3(2.69GHz) only, eeprom@50 */
+> > +     /* eeprom@50/51 */
 > > +};
-> > +
-> >   &dispcc0 {
-> >       status =3D "okay";
-> >   };
-> > @@ -1318,6 +1416,36 @@ hstp-sw-ctrl-pins {
-> >               };
-> >       };
-> >
-> > +     cam_indicator_en: cam-indicator-en-state {
-> > +             pins =3D "gpio34";
-> > +             function =3D "gpio";
-> > +             drive-strength =3D <2>;
-> > +             bias-disable;
-> > +     };
-> > +
-> > +     camf_1p2_reg_en: camf-1p2-reg-en-state {
-> > +             pins =3D "gpio44";
-> > +             function =3D "gpio";
-> > +             drive-strength =3D <2>;
-> > +             bias-disable;
-> > +     };
-> > +
-> > +     camf_rgb_default: camf-rgb-default-state {
-> > +             mclk-pins {
-> > +                     pins =3D "gpio17";
-> > +                     function =3D "cam_mclk";
-> > +                     drive-strength =3D <6>;
-> > +                     bias-disable;
-> > +             };
 >
-> cam_mclk pad function descriptions on all 8 pads supporting this function
-> shall be added to the platform in a separate commit to sc8280xp.dtsi
+> I believe it is unacceptable to add device tree nodes like this one
+> without a compatible property. While the motivation behind it is clear,
+> unfortunately it has to be removed.
 >
 
 Ack
@@ -389,8 +367,47 @@ Best wishes,
 Pengyu
 
 > > +
+> >   &cci2 {
+> >       status =3D "okay";
+> >   };
+> > @@ -1423,6 +1510,13 @@ cam_indicator_en: cam-indicator-en-state {
+> >               bias-disable;
+> >       };
+> >
+> > +     camera_flash_en: camera-flash-en-state {
+> > +             pins =3D "gpio93";
+> > +             function =3D "gpio";
+> > +             drive-strength =3D <2>;
+> > +             bias-disable;
+> > +     };
+> > +
+> >       camf_1p2_reg_en: camf-1p2-reg-en-state {
+> >               pins =3D "gpio44";
+> >               function =3D "gpio";
+> > @@ -1446,6 +1540,29 @@ sc-rgb-xshut-n-pins {
+> >               };
+> >       };
+> >
+> > +     camr_reg_en: camr-reg-en-state {
+> > +             pins =3D "gpio92";
+> > +             function =3D "gpio";
+> > +             drive-strength =3D <2>;
+> > +             bias-disable;
+> > +     };
+> > +
+> > +     camr_rgb_default: camr-rgb-default-state {
+> > +             mclk-pins {
+> > +                     pins =3D "gpio6";
+> > +                     function =3D "cam_mclk";
+> > +                     drive-strength =3D <6>;
+> > +                     bias-disable;
+> > +             };
+>
+> MCLK pad function shoul be a part of the change to sc8280xp.dtsi
+>
+> > +
 > > +             sc-rgb-xshut-n-pins {
-> > +                     pins =3D "gpio15";
+> > +                     pins =3D "gpio7";
 > > +                     function =3D "gpio";
 > > +                     drive-strength =3D <2>;
 > > +                     bias-disable;
