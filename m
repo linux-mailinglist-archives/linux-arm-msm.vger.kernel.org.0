@@ -1,124 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-105578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MKZqKJkq9mk+SwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 18:47:21 +0200
+	id gBBJAxuJ9mkUWAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 01:30:35 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C24C74B2E05
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 18:47:20 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F5354B3A67
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 01:30:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id DFC6E3003837
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 16:47:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E3B633002FB5
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 23:28:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38487382F2E;
-	Sat,  2 May 2026 16:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16D0A3115AE;
+	Sat,  2 May 2026 23:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C2a0Vi3Q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mqUe9wmo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1439A1E633C;
-	Sat,  2 May 2026 16:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AFE29BDBF;
+	Sat,  2 May 2026 23:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777740436; cv=none; b=M3KBxGmFqdA5NpwjHUnpkflCSrO9IO4Dnnj8NNNhQLU8CXmvT/pTcwzx7hKH4owvg9dO6fMz6Je7eHUC51CPLkEA91UdXneXP0wulEPPtWrazd1Qf2t6T9H2vK5vhjqltRufgbMk9umdFJnXyL8X3r7ZI5FHqW+i2rxF+SH+O94=
+	t=1777764537; cv=none; b=JM2f6wCteeIEskUakpXoVbeyC9PPuRgBaMU8tnNE9fiiVV3kAYuGq65seJXhmWCb4YG1QzzowIcwBi3NQ7pFI/+JKPuJnV9p2ZkvKluDYloAywfMrvE7vgCEKjQv2Er5V+Nzq+H53JLLUd1pwQauZ4WPPEKJoMmTI6QHZ3sfAkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777740436; c=relaxed/simple;
-	bh=zymvXjOjeTSggFeuoM050BBTeP4ivuV+K0ZODz63sG8=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uQp/EtTLnNkk6qAMz66zeq5u8bLcgc7gi8wrAoFshW7+AHXdhc+kDwSNZEWFTNXhW7JLLozTeXWJtTpGMRkOBRRbDdhvOW4GXBErqetZDvhMhUn7orn+AcF/05DwP/1X+KVdJ7TaruX8ym+xExD/CznlrcIjYO+HX/QORvE+8DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C2a0Vi3Q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4943CC19425;
-	Sat,  2 May 2026 16:47:13 +0000 (UTC)
+	s=arc-20240116; t=1777764537; c=relaxed/simple;
+	bh=Lw9jBOvvJjT4+4Jivn2cnbDip5QLiTDpLvRZx+ZQYJ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NW+Yq1Fs+urcZncl9BGwe/vAFcNFYfH690wOE7viV2bAyQwp15kMXXRJzqB8tkPcfKGfvrZjmkPmVOFsc2ktbqFXR9UXdY6OM6xv+zJEKUbaOkzoMKwtxkgT4kG8pODnh8ysxDDIx1Ua9mf+ROm4MXYHKuzyjwtdNZg+V9Q1esw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mqUe9wmo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5140FC19425;
+	Sat,  2 May 2026 23:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777740435;
-	bh=zymvXjOjeTSggFeuoM050BBTeP4ivuV+K0ZODz63sG8=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=C2a0Vi3QX0WD3xutTIXFvjrVMuUqle24NF4BAQHxyUpWgq77agsQiQDARZ48oGEr8
-	 zWeFVrQ+2yNo3XsQXXseVTkoumlvbwMcqRQ9Yrv9/oCfoJJfiKSyfy/R/1KWeM8Ejx
-	 j3kgXK8lc2stL15qKUXCkaF9uBbZyYkkj9ca4JUpNJEbRoD1qD1piUoN2e5hAWLFZo
-	 hmI8PjcAL1L79x9BIkN1E2eRROzi9GCkLp+6y/VFSfpgKhQs2XFoSYrQPXb4whpnxD
-	 2Fh+iykG/8DvSFLTzfAlLeLNrYwBZESP4BuukCRYY4PUWPAJsNa9OBiyeLZcaDz2BO
-	 p7nB8soAtHKMg==
-Date: Sat, 2 May 2026 09:47:12 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
- pabeni@redhat.com, maxime.chevallier@bootlin.com,
- rmk+kernel@armlinux.org.uk, andersson@kernel.org, konradybcio@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- linusw@kernel.org, brgl@kernel.org, arnd@arndb.de,
- gregkh@linuxfoundation.org, daniel@riscstar.com,
- mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com,
- alexandre.torgue@foss.st.com, ast@kernel.org, boon.khai.ng@altera.com,
- chenchuangyu@xiaomi.com, chenhuacai@kernel.org, daniel@iogearbox.net,
- hawk@kernel.org, hkallweit1@gmail.com, inochiama@gmail.com,
- john.fastabend@gmail.com, julianbraha@gmail.com, livelycarpet87@gmail.com,
- matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
- prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
- rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
- weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
- bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next 00/12] net: enable TC956x support
-Message-ID: <20260502094712.69b29dc8@kernel.org>
-In-Reply-To: <20260501155421.3329862-1-elder@riscstar.com>
-References: <20260501155421.3329862-1-elder@riscstar.com>
+	s=k20201202; t=1777764536;
+	bh=Lw9jBOvvJjT4+4Jivn2cnbDip5QLiTDpLvRZx+ZQYJ8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mqUe9wmosAe2fwai+2Udb81wJW1nyket5qcrfupCVzkLAfVuEYehO9gK8/8+/HFoL
+	 9uX24NrGHpEmaAJsQ8cl+iA0tLjYq6vfypzT1Z6GH5z2725XXK1exOlbdlCzbQjM+/
+	 lYSE3WcXipBljMfblr5D0IBPhDYphWUSdutCSTBEHCOSGpEyTVQax9Pf7bMK3yu/iV
+	 m6SNQ1iDAKa/ALF/KtrDzBfvkyn3Uw/ZIeY/V4UgRSu/bldWOe73IUfY46NWMM3bfU
+	 2xrjFy+5hUfIeguSNiJxASXyJyJaOGwwJLz5+QdyPQrtNmwfqxvBXDxxaAqoTofuc9
+	 jjAh+yHurmE6g==
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+	id A0A141AC5863; Sun, 03 May 2026 00:28:53 +0100 (BST)
+Date: Sun, 3 May 2026 08:28:53 +0900
+From: Mark Brown <broonie@kernel.org>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	Nickolay Goppen <setotau@mainlining.org>,
+	Adam Skladowski <a39.skl@gmail.com>,
+	Vladimir Lypak <vladimir.lypak@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Johan Hovold <johan@kernel.org>, Kees Cook <kees@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Subject: Re: [PATCH v4 08/15] ASoC: qdsp6: q6afe-dai: add internal mi2s
+ support
+Message-ID: <afaItZPyanmoWraa@sirena.co.uk>
+References: <20260501153128.8152-1-mailingradian@gmail.com>
+ <20260501153128.8152-9-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: C24C74B2E05
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="QptKJDS25bihgyZY"
+Content-Disposition: inline
+In-Reply-To: <20260501153128.8152-9-mailingradian@gmail.com>
+X-Cookie: 667:
+X-Rspamd-Queue-Id: 5F5354B3A67
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-2.76 / 15.00];
+	SIGNED_PGP(-2.00)[];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105578-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-105579-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[lunn.ch,davemloft.net,google.com,redhat.com,bootlin.com,armlinux.org.uk,kernel.org,arndb.de,linuxfoundation.org,riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
-	RCPT_COUNT_TWELVE(0.00)[49];
-	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,oss.qualcomm.com,vger.kernel.org,mainlining.org,quicinc.com,linuxfoundation.org,opensource.cirrus.com,renesas.com];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
 	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kuba@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 
-On Fri,  1 May 2026 10:54:08 -0500 Alex Elder wrote:
->  create mode 100644 Documentation/devicetree/bindings/net/toshiba,tc956x-dwmac.yaml
->  create mode 100644 drivers/gpio/gpio-tc956x.c
->  create mode 100644 drivers/misc/tc956x_pci.c
->  create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
->  create mode 100644 drivers/net/pcs/pcs-xpcs-regmap.c
->  create mode 100644 include/linux/pcs/pcs-xpcs-regmap.h
->  create mode 100644 include/soc/toshiba/tc956x-dwmac.h
 
-Please add an entry to MAITNAINERS for tx956x stuff?
+--QptKJDS25bihgyZY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Fri, May 01, 2026 at 11:31:21AM -0400, Richard Acayan wrote:
+> Add the internal MI2S ports found on the SDM660 internal sound card.
+
+> +	SND_SOC_DAPM_AIF_IN("INT0_MI2S_RX", "NULL",
+> +		0, SND_SOC_NOPM, 0, 0),
+
+Why are we using the string "NULL" rather than a NULL pointer here?
+
+--QptKJDS25bihgyZY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmn2iLQACgkQJNaLcl1U
+h9CacQf7BJ+OXeV0F/HUONNiI6qJ9Rfx4EuyUKXePmMeyD3Y85OUjCUsdbJGDLsI
+ZiDHv16WxKCH5CFjkgsNfpxncz5Bd6OpRf+ZpMVewXB5Yx8kmGT7YZlY6gjV5m9+
+d6Ge3mZUuRLjCWNH43RDTboRu0/UuT6TnJW/P4Sa5eZfaVHS2ygUUZm6JDQ+Cjv8
+P9ChYSrLEspda58wDRlL4Zdkl851TLXnwh7nqG4goOLPLiJHBd5XWPJ/jnkPz2y9
+ctw1BtCwUh6lUMKeEm4Oe2L50oKdBlNdf7auO64JPbhoT68egrjKH2SbVgtd7IcB
+PYGC1H9WK7isPM0WCJFN6Ub/scZ2lA==
+=T+yC
+-----END PGP SIGNATURE-----
+
+--QptKJDS25bihgyZY--
 
