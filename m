@@ -1,303 +1,331 @@
-Return-Path: <linux-arm-msm+bounces-105572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aAfuFV6x9WlYOAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 10:10:06 +0200
+	id mCXmOFHK9WkwPAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 11:56:33 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 514AD4B16CE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 10:10:04 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 931964B19C6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 11:56:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 78B783008D20
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 08:08:55 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DF1533011876
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 09:56:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 464DA2DB79E;
-	Sat,  2 May 2026 08:08:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77E2A30FC39;
+	Sat,  2 May 2026 09:56:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="NXiCwGFo"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="buot97HA";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="A7PWPwVl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-43100.protonmail.ch (mail-43100.protonmail.ch [185.70.43.100])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE68013C9C4;
-	Sat,  2 May 2026 08:08:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0341F7916
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 May 2026 09:56:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777709334; cv=none; b=fVcWtUmyjgVVzzKNnVWtSL62iBwu+AIKk5RWJGBHKXJKdoxvK3/Op+0fEvgU4fE5mu4m67hXythG+NR8TBqQFCrUknKhh+bV71OlPKj4DdlBQZJyrZDapqryHCdpeyXHQ7k+HS5Fv2UPqAX2lgUmbLDCIWwjvqMhAideikZFWy8=
+	t=1777715786; cv=none; b=paFc+YJF2FAX5FyXXOAo8DA1sNwTP6SMKoi4w9OWr0RAWPzTL1EufyFTXdX1Lha26ZSNmHFUI/xKqaYSM7G7IKl5oLAbBv+QUSQmedRGLr6H9yFdwlHlOuQsn0C/evbMJMLxUvViaHjspTtln4VO45hHSMsPQaHbh6f9hIbyvKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777709334; c=relaxed/simple;
-	bh=h7AEzBRS3YTKXYG+Toi/ixN1cZlJk+f6KhH4CxNE+o8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ASGFlgjHYBJ/mV85Yn5FZMSCVMcYB7jhJesLHeclThxEqnIIo91UUzY9o65S3+Xmt+sg2wWKEazotYA0rndamA3lxSvYmcD0CYDzSbzxh19F1Qt/UcTaujjogf62M/gqGpiemV4xk29MY9DIi3BII/HKIJ18tjiCgx0GPIOv9rc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=NXiCwGFo; arc=none smtp.client-ip=185.70.43.100
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1777709330; x=1777968530;
-	bh=H9/dN9JQ0opis5ZXvIbrrfzVzxE6erQCi4soV3ChoA0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=NXiCwGFoy0ostmDVGbYiHwnvjCg4XOXcPtD3++byOhGWJsNsG2poMug+dVQljK19Z
-	 iJUiYDNrc75DdHX7BerCwoN2oAmrUUtfhOoS2fUxhN33bida7Pb1myu++f05VJX30Y
-	 Q1Rfcj+VdlLF924A6aRNDlneNU43xSi4mWEoBenFKut4vR8HYoxMYuEPap5aE+rQ0c
-	 VVF/T5tFc4tq62M3DkR3GeOZg/ArAc4ezepFb3GYXwPRsNlCQyqrOyoEBGzG69qF0G
-	 I5bSbR8XJNta90xgpVopyER6awuAKGetnujL2ufu3xLpTD9nEWDkg1Ku2BcfxabwGB
-	 /jDjZoafo74nQ==
-Date: Sat, 02 May 2026 08:08:42 +0000
-To: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH RFC v5 7/7] arm64: dts: qcom: milos: Add Adreno 810 GPU and GMU nodes
-Message-ID: <20260502-adreno-810-v5-7-bc9fd2bb788d@pm.me>
-In-Reply-To: <20260502-adreno-810-v5-0-bc9fd2bb788d@pm.me>
-References: <20260502-adreno-810-v5-0-bc9fd2bb788d@pm.me>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 9c0e36f14d1266e456c686d8a01c46349c4b5f0c
+	s=arc-20240116; t=1777715786; c=relaxed/simple;
+	bh=Cx+joeBc+rdcVoqFpJms6AZ1GOMKvcbhmc/Ksf/0Zug=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XEmWW34M7dHzI3vLefd5+WBJ5vEO/OOJbXarEFqvlQQxTpStLEdvXy3nQdMx8D6G9/HxgY5HN0ulFttQPghmSmGAUdazVb9iyB4ASfW7hmeD1Jjq8BYX9bKxS4x83iIjH78xo7AMU3c8qbHlv5dbJbpT2HKeBAY71m1Uj52AmjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=buot97HA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=A7PWPwVl; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6423Y0vD2745315
+	for <linux-arm-msm@vger.kernel.org>; Sat, 2 May 2026 09:56:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=17E1Cq1J3JMEZ4+HCKxcenEnYbEZ7i1+KzW
+	P4uYC3j4=; b=buot97HAKC3hozGmR+Zs5eFM+zBC39ZbBPB+Aeq6GxNRIAZ/lsx
+	GCj1Z2bE9/Z1AkE5W/aswlRKXEXNe31tGeRNlX9IxCa9l+ztn7km85zGIcoE0rWm
+	AXnO/tR8Z4Z1UeQPrq4NNk5TFvbm2pkqruNeOkJLwktqYPonXPhpUgHB+cFnD7+V
+	/3oFRXxIaHfTlQ2fiTezyHt/AQETRKtZ9zWZ/DBKfdKsQEjR+uFGRKs3nB3CSsap
+	Br5fYloMip4PtSNZbwBbQpZxiUaQ65KbexN6qbs3IWhtkulHfGeNZDh+qJX3G29T
+	/Wv7aY3IG1Jsd3cim5Z4oawon+Zh5+/StIg==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dw87s8qyd-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 02 May 2026 09:56:24 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-35daf3d3030so3245740a91.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 May 2026 02:56:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1777715784; x=1778320584; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=17E1Cq1J3JMEZ4+HCKxcenEnYbEZ7i1+KzWP4uYC3j4=;
+        b=A7PWPwVlmBEz7NR4Qkza9WLUjFHsVbHyiBRNo6C5a1M12N62p8+N4VN+kPhFwIhjXK
+         xNtDWIjzwiQEhYN+REiEOcAmHpiuHqSU/GLqkoSsxFRBowHUfTuiq7hHL18s7z5Cdo/j
+         jW23d9hdWnI/snXqJQAbFDh9m/dddtv5HBboItgBJBBHhGiYGk5ue0Co0S2y78r/ZWGR
+         BoTysSJ6SB+bDwreG574pgMpaFoaEMIbvG/31Ps2Y4JHodqrVHZ1O754uGKH6yFkaArc
+         kMP4z7Tpv1BsHR+3q3X4T2fqAohkJWC5iLWiLkKWCRN0OCbbmTEU1mqzqvtUpIYUWEyD
+         91qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777715784; x=1778320584;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=17E1Cq1J3JMEZ4+HCKxcenEnYbEZ7i1+KzWP4uYC3j4=;
+        b=PQIH9t6vU2Ox1v0SrN3w7mKgSO66A0lUgQ8DxAtymcujeimavbD6Mr3Zbv6jCQhUO0
+         /u7HZQexeB+czs6ZnRvcgZ+oF9q1+nd+hd5mB6LqF+Jig4EjT+hjuvhBBngjq6wa8C3/
+         g4rFyXXZO9lJmo79IUprwQSMI6Hbs5A7ri8UCzOCjbsKwHgsIEIi09d4vIMaSOdmDp0Z
+         PJXx3DwJfFLUs59MRwzA4+Zwfih9If4DmNjDreQ9ndbvEXCDu4AyOvutcsrnfddpo9B6
+         gOwSGg7rYpm1OMxfrwOP9yhJ2sEE/gtqh/ec3F192P/yXjMwZi1oDX9wWU22VKKAQ7Z7
+         FG5w==
+X-Gm-Message-State: AOJu0YwFh46jkmThE0vV6ONQynjHOkJdk3rm9RwFfji/TTWeI2nIKhEW
+	iVOlabbi42xqrxf1m0/y3+fLB85SU0rM8tdRG7Wqzjc+ADee12nALFGxtdbsS6fIhl0LRbomB6J
+	1OvbDuRRX66TypHI0uPFUoxtoYPYY7VXETjoPqhts0+nM7aK6zQMcaK2Ahjo4ENYJwzqXVzuMuL
+	Hi
+X-Gm-Gg: AeBDieuBmAKn64UQ+PH+rO56xC3ybaxzGyIbBCE2vWGwY0Ffw0Lh6R/5XvZ2tNw/2/3
+	GQUGyGNXWMPfCaPK8ah8H0INZp2a6Cqq9uXlfMehKETNIBCvT0dQfkDhvYVvZX9Im/CR2WzZq+C
+	R8JDTmwpmF/fEw4LNEn5eikMyPX5SSXSJTBjIVjc1pVnXwsfMriu3iCuISnjjtD8ZPn9CGK+KPv
+	t9j1Gnf8o0DjALOISGc7n+U62D+ftVehKeuSz0SY4DpGespCZn6XGtG5M3DEhhykx9YN1PMJju2
+	ZvRkjijGKZL85iTV3/s6RgxEmy6VVxoP7fEWdsp0ouOGRWtX5ZQpATCGW7lH++JttsucWhnszFv
+	lS7qCxlc2X90CQ79w4dfdzQGKpIauzRi8PibP52Uf1c71QmXli+lcxPCfJRKPdEhzwFv+Fy22W6
+	cF6BjQxZKQV80uzdkyPHPnflURCg==
+X-Received: by 2002:a05:6300:218d:b0:398:4bf2:4285 with SMTP id adf61e73a8af0-3a7f1a955b8mr2520319637.16.1777715783551;
+        Sat, 02 May 2026 02:56:23 -0700 (PDT)
+X-Received: by 2002:a05:6300:218d:b0:398:4bf2:4285 with SMTP id adf61e73a8af0-3a7f1a955b8mr2520287637.16.1777715782870;
+        Sat, 02 May 2026 02:56:22 -0700 (PDT)
+Received: from hu-kriskura-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c801bccee15sm170506a12.9.2026.05.02.02.56.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 May 2026 02:56:22 -0700 (PDT)
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+To: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Subject: [PATCH] usb: dwc3: qcom: Modify interrupt handling for EUSB2 Phy targets
+Date: Sat,  2 May 2026 15:26:16 +0530
+Message-Id: <20260502095616.666938-1-krishna.kurapati@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 514AD4B16CE
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: w523vBCniMxVyaMU4sHe-Aq3NZugMgZk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAyMDA5OCBTYWx0ZWRfX5ndvHbRLhUJQ
+ /fNGafiaG19L7Vq68X41QKBB5T9yv3AdFEAf907isv2nGWt6/G5s2ZJMojYJdQFtn6I0P7ZsuD9
+ zdaZrfnADJ+H12cQlvKrcfH20NOGZnbkyOKHKuNDTX13L66MoxjP7LRaJIooyTfmacF8UN+f+Zm
+ VVLt0qu4yDrgNuUW9Hm0AxZakmtoQK8ygdtM7N8qSyBXfPCRmjo9AtEAY7Y/7gxUzspy5lvrqFa
+ oSYb1GO/H+sx1NnpihifYSMzeo9YkgIEWUBzIcJiXqFcJm5AzPvwn0d74AKF6LAISiletEExdoH
+ LagSh4lw//xGw4xrsHye5CxSh+DWAgRjME6oNVO5/y0+3m4RKRZUe5uXi9kdjH1bDROVHFqDVIv
+ 1jSmDj/j3kag85lw9NT1pcWjpVL4STsNrvVp4wCJoQppQFPUW95NUjUnsK470RPQV9UMNBKpftT
+ 3UB2NAWBImoFnHRz5Ag==
+X-Authority-Analysis: v=2.4 cv=O4IJeh9W c=1 sm=1 tr=0 ts=69f5ca48 cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
+ a=wyrcdbDR-kVNaWTReRsA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-GUID: w523vBCniMxVyaMU4sHe-Aq3NZugMgZk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-02_02,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 clxscore=1015 suspectscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 phishscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605020098
+X-Rspamd-Queue-Id: 931964B19C6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105572-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de];
+	TAGGED_FROM(0.00)[bounces-105573-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	RCPT_COUNT_TWELVE(0.00)[25];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	FROM_NEQ_ENVFROM(0.00)[krishna.kurapati@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[pm.me:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[3d37000:email,qualcomm.com:email,3c40000:email,pm.me:email,pm.me:dkim,pm.me:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,fairphone.com:email,3d00000:email,3d64000:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-1.000];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCPT_COUNT_FIVE(0.00)[6];
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-Add GPU and GMU devicetree nodes for the Adreno 810 GPU found on
-Qualcomm SM7635 (Milos) based devices.
+Modify interrupt handling for EUSB2 Phy targets. Enable DP Interrupt
+when an Low speed device is connnected and enable DM interrupt when
+a High Speed/ Full Speed device is connected.
 
-The qcom,kaanapali-gxclkctl.h header can be reused here because
-Milos uses the same driver and the GX_CLKCTL_GX_GDSC definition
-is identical.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/milos.dtsi | 166 ++++++++++++++++++++++++++++++++=
-++++
- 1 file changed, 166 insertions(+)
+Tested remote wakeupon Glymur device by button press from a headset
+connected to both Type-C and Type-A ports.
 
-diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom=
-/milos.dtsi
-index 0e7cfc12b0d2..4abaef42d7d4 100644
---- a/arch/arm64/boot/dts/qcom/milos.dtsi
-+++ b/arch/arm64/boot/dts/qcom/milos.dtsi
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2025, Luca Weiss <luca.weiss@fairphone.com>
-  */
-=20
-+#include <dt-bindings/clock/qcom,kaanapali-gxclkctl.h>
- #include <dt-bindings/clock/qcom,milos-camcc.h>
- #include <dt-bindings/clock/qcom,milos-dispcc.h>
- #include <dt-bindings/clock/qcom,milos-gcc.h>
-@@ -1554,6 +1555,171 @@ lpass_ag_noc: interconnect@3c40000 {
- =09=09=09qcom,bcm-voters =3D <&apps_bcm_voter>;
- =09=09};
-=20
-+=09=09gpu: gpu@3d00000 {
-+=09=09=09compatible =3D "qcom,adreno-44010000", "qcom,adreno";
-+=09=09=09reg =3D <0x0 0x03d00000 0x0 0x40000>,
-+=09=09=09      <0x0 0x03d9e000 0x0 0x2000>,
-+=09=09=09      <0x0 0x03d61000 0x0 0x800>;
-+=09=09=09reg-names =3D "kgsl_3d0_reg_memory",
-+=09=09=09=09    "cx_mem",
-+=09=09=09=09    "cx_dbgc";
-+
-+=09=09=09interrupts =3D <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH 0>;
-+
-+=09=09=09iommus =3D <&adreno_smmu 0 0x0>;
-+
-+=09=09=09operating-points-v2 =3D <&gpu_opp_table>;
-+
-+=09=09=09nvmem-cells =3D <&gpu_speed_bin>;
-+=09=09=09nvmem-cell-names =3D "speed_bin";
-+
-+=09=09=09qcom,gmu =3D <&gmu>;
-+=09=09=09#cooling-cells =3D <2>;
-+
-+=09=09=09interconnects =3D <&gem_noc MASTER_GFX3D QCOM_ICC_TAG_ALWAYS
-+=09=09=09=09=09 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-+=09=09=09interconnect-names =3D "gfx-mem";
-+
-+=09=09=09status =3D "disabled";
-+
-+=09=09=09gpu_zap_shader: zap-shader {
-+=09=09=09=09memory-region =3D <&gpu_microcode_mem>;
-+=09=09=09};
-+
-+=09=09=09gpu_opp_table: opp-table {
-+=09=09=09=09compatible =3D "operating-points-v2-adreno",
-+=09=09=09=09=09     "operating-points-v2";
-+
-+=09=09=09=09opp-264000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <264000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
-+=09=09=09=09=09opp-peak-kBps =3D <2136718>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0xc8295ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-362000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <362000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+=09=09=09=09=09opp-peak-kBps =3D <2136718>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0xc02c5ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-510000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <510000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS>;
-+=09=09=09=09=09opp-peak-kBps =3D <3972656>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0x882b5ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-644000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <644000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+=09=09=09=09=09opp-peak-kBps =3D <5285156>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0x882a5ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-688000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <688000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS_L2>;
-+=09=09=09=09=09opp-peak-kBps =3D <6074218>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0x882a5ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-763000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <763000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_NOM>;
-+=09=09=09=09=09opp-peak-kBps =3D <6671875>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0xa8295ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-895000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <895000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+=09=09=09=09=09opp-peak-kBps =3D <8171875>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0x88295ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-960000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <960000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_TURBO>;
-+=09=09=09=09=09opp-peak-kBps =3D <8171875>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0xa8285ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-1050000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <1050000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_TURBO_L1>;
-+=09=09=09=09=09opp-peak-kBps =3D <18597656>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0x88285ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-1150000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <1150000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_TURBO_L2>;
-+=09=09=09=09=09opp-peak-kBps =3D <18597656>;
-+=09=09=09=09=09opp-supported-hw =3D <0x3>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0xa02f5ffd>;
-+=09=09=09=09};
-+=09=09=09};
-+=09=09};
-+
-+=09=09gmu: gmu@3d37000 {
-+=09=09=09compatible =3D "qcom,adreno-gmu-810.0", "qcom,adreno-gmu";
-+=09=09=09reg =3D <0x0 0x03d37000 0x0 0x68000>;
-+=09=09=09reg-names =3D "gmu";
-+
-+=09=09=09interrupts =3D <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH 0>,
-+=09=09=09=09     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH 0>;
-+=09=09=09interrupt-names =3D "hfi", "gmu";
-+
-+=09=09=09clocks =3D <&gpucc GPU_CC_AHB_CLK>,
-+=09=09=09=09 <&gpucc GPU_CC_CX_GMU_CLK>,
-+=09=09=09=09 <&gpucc GPU_CC_CXO_CLK>,
-+=09=09=09=09 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
-+=09=09=09=09 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-+=09=09=09=09 <&gpucc GPU_CC_HUB_CX_INT_CLK>;
-+=09=09=09clock-names =3D "ahb",
-+=09=09=09=09      "gmu",
-+=09=09=09=09      "cxo",
-+=09=09=09=09      "axi",
-+=09=09=09=09      "memnoc",
-+=09=09=09=09      "hub";
-+
-+=09=09=09power-domains =3D <&gpucc GPU_CC_CX_GDSC>,
-+=09=09=09=09=09<&gxclkctl GX_CLKCTL_GX_GDSC>;
-+=09=09=09power-domain-names =3D "cx",
-+=09=09=09=09=09     "gx";
-+
-+=09=09=09iommus =3D <&adreno_smmu 5 0x0>;
-+
-+=09=09=09qcom,qmp =3D <&aoss_qmp>;
-+
-+=09=09=09operating-points-v2 =3D <&gmu_opp_table>;
-+
-+=09=09=09gmu_opp_table: opp-table {
-+=09=09=09=09compatible =3D "operating-points-v2";
-+
-+=09=09=09=09opp-350000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <350000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-650000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <650000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS>;
-+=09=09=09=09};
-+=09=09=09};
-+=09=09};
-+
- =09=09gxclkctl: clock-controller@3d64000 {
- =09=09=09compatible =3D "qcom,milos-gxclkctl";
- =09=09=09reg =3D <0x0 0x03d64000 0x0 0x6000>;
+ drivers/usb/dwc3/dwc3-qcom.c | 63 ++++++++++++++++++++++++++++++------
+ 1 file changed, 54 insertions(+), 9 deletions(-)
 
---=20
-2.53.0
-
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index f43f73ac36ff..5956821eab45 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -60,6 +60,10 @@ static const u32 pwr_evnt_irq_stat_reg[DWC3_QCOM_MAX_PORTS] = {
+ 	0x238,
+ };
+ 
++struct dwc3_qcom_platform_data {
++	bool			uses_eusb2_phy;
++};
++
+ struct dwc3_qcom_port {
+ 	int			qusb2_phy_irq;
+ 	int			dp_hs_phy_irq;
+@@ -85,6 +89,7 @@ struct dwc3_qcom {
+ 	struct icc_path		*icc_path_apps;
+ 
+ 	enum usb_role		current_role;
++	bool			uses_eusb2_phy;
+ };
+ 
+ #define to_dwc3_qcom(d) container_of((d), struct dwc3_qcom, dwc)
+@@ -272,15 +277,21 @@ static void dwc3_qcom_disable_wakeup_irq(int irq)
+ 	disable_irq_nosync(irq);
+ }
+ 
+-static void dwc3_qcom_disable_port_interrupts(struct dwc3_qcom_port *port)
++static void dwc3_qcom_disable_port_interrupts(struct dwc3_qcom *qcom, int i)
+ {
++	struct dwc3_qcom_port *port = &qcom->ports[i];
++
+ 	dwc3_qcom_disable_wakeup_irq(port->qusb2_phy_irq);
+ 
+ 	if (port->usb2_speed == USB_SPEED_LOW) {
+-		dwc3_qcom_disable_wakeup_irq(port->dm_hs_phy_irq);
++		dwc3_qcom_disable_wakeup_irq(qcom->uses_eusb2_phy ?
++					     port->dp_hs_phy_irq :
++					     port->dm_hs_phy_irq);
+ 	} else if ((port->usb2_speed == USB_SPEED_HIGH) ||
+ 			(port->usb2_speed == USB_SPEED_FULL)) {
+-		dwc3_qcom_disable_wakeup_irq(port->dp_hs_phy_irq);
++		dwc3_qcom_disable_wakeup_irq(qcom->uses_eusb2_phy ?
++					     port->dm_hs_phy_irq :
++					     port->dp_hs_phy_irq);
+ 	} else {
+ 		dwc3_qcom_disable_wakeup_irq(port->dp_hs_phy_irq);
+ 		dwc3_qcom_disable_wakeup_irq(port->dm_hs_phy_irq);
+@@ -289,8 +300,10 @@ static void dwc3_qcom_disable_port_interrupts(struct dwc3_qcom_port *port)
+ 	dwc3_qcom_disable_wakeup_irq(port->ss_phy_irq);
+ }
+ 
+-static void dwc3_qcom_enable_port_interrupts(struct dwc3_qcom_port *port)
++static void dwc3_qcom_enable_port_interrupts(struct dwc3_qcom *qcom, int i)
+ {
++	struct dwc3_qcom_port *port = &qcom->ports[i];
++
+ 	dwc3_qcom_enable_wakeup_irq(port->qusb2_phy_irq, 0);
+ 
+ 	/*
+@@ -303,11 +316,19 @@ static void dwc3_qcom_enable_port_interrupts(struct dwc3_qcom_port *port)
+ 	 */
+ 
+ 	if (port->usb2_speed == USB_SPEED_LOW) {
+-		dwc3_qcom_enable_wakeup_irq(port->dm_hs_phy_irq,
++		dwc3_qcom_enable_wakeup_irq(qcom->uses_eusb2_phy ?
++					    port->dp_hs_phy_irq :
++					    port->dm_hs_phy_irq,
++					    qcom->uses_eusb2_phy ?
++					    IRQ_TYPE_EDGE_RISING :
+ 					    IRQ_TYPE_EDGE_FALLING);
+ 	} else if ((port->usb2_speed == USB_SPEED_HIGH) ||
+ 			(port->usb2_speed == USB_SPEED_FULL)) {
+-		dwc3_qcom_enable_wakeup_irq(port->dp_hs_phy_irq,
++		dwc3_qcom_enable_wakeup_irq(qcom->uses_eusb2_phy ?
++					    port->dm_hs_phy_irq :
++					    port->dp_hs_phy_irq,
++					    qcom->uses_eusb2_phy ?
++					    IRQ_TYPE_EDGE_RISING :
+ 					    IRQ_TYPE_EDGE_FALLING);
+ 	} else {
+ 		dwc3_qcom_enable_wakeup_irq(port->dp_hs_phy_irq,
+@@ -324,7 +345,7 @@ static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
+ 	int i;
+ 
+ 	for (i = 0; i < qcom->num_ports; i++)
+-		dwc3_qcom_disable_port_interrupts(&qcom->ports[i]);
++		dwc3_qcom_disable_port_interrupts(qcom, i);
+ }
+ 
+ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
+@@ -332,7 +353,7 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
+ 	int i;
+ 
+ 	for (i = 0; i < qcom->num_ports; i++)
+-		dwc3_qcom_enable_port_interrupts(&qcom->ports[i]);
++		dwc3_qcom_enable_port_interrupts(qcom, i);
+ }
+ 
+ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
+@@ -609,6 +630,7 @@ struct dwc3_glue_ops dwc3_qcom_glue_ops = {
+ 
+ static int dwc3_qcom_probe(struct platform_device *pdev)
+ {
++	const struct dwc3_qcom_platform_data *pdata;
+ 	struct dwc3_probe_data	probe_data = {};
+ 	struct device		*dev = &pdev->dev;
+ 	struct dwc3_qcom	*qcom;
+@@ -624,6 +646,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 
+ 	qcom->dev = &pdev->dev;
+ 
++	pdata = device_get_match_data(dev);
++	if (pdata)
++		qcom->uses_eusb2_phy = pdata->uses_eusb2_phy;
++
+ 	qcom->resets = devm_reset_control_array_get_optional_exclusive(dev);
+ 	if (IS_ERR(qcom->resets)) {
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(qcom->resets),
+@@ -838,8 +864,27 @@ static const struct dev_pm_ops dwc3_qcom_dev_pm_ops = {
+ 	.prepare = pm_sleep_ptr(dwc3_qcom_prepare),
+ };
+ 
++static const struct dwc3_qcom_platform_data dwc3_qcom_pdata = {
++	.uses_eusb2_phy = false,
++};
++
++static const struct dwc3_qcom_platform_data dwc3_qcom_glymur_pdata = {
++	.uses_eusb2_phy = true,
++};
++
+ static const struct of_device_id dwc3_qcom_of_match[] = {
+-	{ .compatible = "qcom,snps-dwc3" },
++	{
++		.compatible = "qcom,snps-dwc3",
++		.data = &dwc3_qcom_pdata,
++	},
++	{
++		.compatible = "qcom,glymur-dwc3",
++		.data = &dwc3_qcom_glymur_pdata,
++	},
++	{
++		.compatible = "qcom,glymur-dwc3-mp",
++		.data = &dwc3_qcom_glymur_pdata,
++	},
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, dwc3_qcom_of_match);
+-- 
+2.34.1
 
 
