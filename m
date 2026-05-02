@@ -1,57 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-105566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iAHZBt6w9WldOAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 10:07:58 +0200
+	id LgKvF92w9WldOAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 10:07:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id F37DE4B15E1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 10:07:57 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAC904B15D0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 10:07:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 5726730041C3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 08:07:57 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5C9CB300382B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 08:07:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E20612FE042;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0A072DECC6;
 	Sat,  2 May 2026 08:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="lB03v+0D"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="DbW6Ypz7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-07.mail-europe.com (mail-07.mail-europe.com [188.165.51.139])
+Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE37D21771B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE641FC7C5;
 	Sat,  2 May 2026 08:07:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777709273; cv=none; b=Sq9EAZVv85avBg/JC8M+mVjJui+ONxXzy4mQ8zGNS15Vywvd0Pzyh08JzwVULRGHdJuBM55EF8A7OFp/uOCahFUvUcVJCnHqI8a8S3VPkXyoWZ3j/gx+SnOKX4R5H4QvqvrORjFYhAE8FVBHAUgJNpYChOsA/WPcJHwSP5TUmjc=
+	t=1777709273; cv=none; b=hOn7ET6cimbcQYulwRAw6boPMNRZuHwjWD5u1Y7hBy+Spjq5n5kH6p6vP4fQLuVN8HSX/7qwp+aRimvcdD9/bFVQwur2G3AgHKPmdUCjEq1RzX0tJ+5HvIzMOdNe/LG8h+YEF0L0PC5tWKplfO6/rO/DCXRmZn5rQm1rizUKZg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1777709273; c=relaxed/simple;
-	bh=PrNsMyqaXJSDoyHBA49iMo6gC4O11Sf92zVA6QSykvk=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=oHIAD6xLUxzKD6Uf6BlEgbv5zuB1WyE+cMFLeTbBcufMdUQCyqc2UXnlt39F8tBfIqSE/R3mLIybU+0ejubCR4LvFd4HEFllHsEVrgHGVRxfmpz0qWTEGqbG6oLGKgsL8Ln/ZUHiPYBijIUkqNdJ9SFm1RWAAvBi96IzD3E37j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=lB03v+0D; arc=none smtp.client-ip=188.165.51.139
+	bh=ZPDzxzNkMskjLOEcF6bpBPV7fYkrTOkqVFWAURsyI6s=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Nf/84vOSEyjY0SjVtrzZ2YUbO6TrdxfLLbeatVBycz5IipEN+YirezsGIbGHZZa5UHuYEXYEtsKOsqwskGFrBTgKTzpdQZmq/CfC6VAvVvGWbDmsvCFEPoa2aPNHMUe6JQm7QqiOcFu4gZ7KAvQDR7/wsc6e6U8nLgkUhvf4YRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=DbW6Ypz7; arc=none smtp.client-ip=185.70.43.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1777709255; x=1777968455;
-	bh=6MaFy1JIEkr0wsybZqzwyI8zZR6m1tzW5QVq3zs+KOU=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=lB03v+0DZe6dMU/86CAj8534ZqhphmIiTCumQON3ScxucLwTx9tBCdaSIBbuvhIjg
-	 1ly7qy2xN6rre7R1wv/yxIlEmLpMW7oMXtsPULJ2xw47WvN6Q1I4M+xi4rbXXJYTIY
-	 vGwZ/FS1aFVZZPccMc6Yq9qrwETG0Mj1AjSt6c5HSiEFvUWXPu6IIpPNsDTRk48+Wo
-	 /rAAlt46ienmqRsL3STUrJr7sL3KMkZllXQDXphWpf98Wf6POFJ1MB+UiVv312XF4o
-	 hZ0farZED7pVLeKuOljUV+2LZRNYASklHdctYnmkoWRCkcPgZHGtKlzZz4GTwu9fEY
-	 fBKbJclnccIKw==
-Date: Sat, 02 May 2026 08:07:25 +0000
+	s=protonmail3; t=1777709263; x=1777968463;
+	bh=pv/F1PPV1Zi+/q9n2GNINyeWZvEso37phWI69dlZ4Wg=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=DbW6Ypz7cMERn7NZvaan47jbXH2SfO+RklE7/KHxTbAoRB8nBBnWmePQqlvpsdZO/
+	 ANCvQfZ8t2wyWRBtymt/F9oQGq6VvzLfsgzGX3bszo0T76e+jyqaZqxy0KytAKuZcl
+	 r8kem7LDe/H1wnR5SnUJpfHdVjwwLbk9fkiLuS0fuc8WX52v3PnI8y9LzTgOyo8DPv
+	 ndMvi2b/qQlM5aHeM/hiTHa5YNaGCVDCRkVSqruypRRO9Im6Kxn1AY4wYknQd+62lf
+	 eR1zZGA00oYc0WnltCHPhPqGz1TWNjSmFEBoDdvP6eAzpuS+t5LGm7MGBYxCCPMKsx
+	 DVDYWyB40fnpg==
+Date: Sat, 02 May 2026 08:07:37 +0000
 To: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
 From: Alexander Koskovich <akoskovich@pm.me>
-Cc: Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>, Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH RFC v5 0/7] Add support for Adreno 810 GPU
-Message-ID: <20260502-adreno-810-v5-0-bc9fd2bb788d@pm.me>
+Cc: Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>, Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: [PATCH RFC v5 1/7] dt-bindings: display/msm/gmu: Document Adreno 810 GMU
+Message-ID: <20260502-adreno-810-v5-1-bc9fd2bb788d@pm.me>
+In-Reply-To: <20260502-adreno-810-v5-0-bc9fd2bb788d@pm.me>
+References: <20260502-adreno-810-v5-0-bc9fd2bb788d@pm.me>
 Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 62446312e6647a598473eb76cb083cd2f4c7615c
+X-Pm-Message-ID: 31b52ab53df712912f5798c2eac1b51c4bcdf22b
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,7 +64,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: F37DE4B15E1
+X-Rspamd-Queue-Id: EAC904B15D0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -68,12 +72,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
 	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105566-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-105565-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[3];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de];
@@ -86,92 +90,65 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[pm.me:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_TWELVE(0.00)[27];
+	RCPT_COUNT_TWELVE(0.00)[25];
 	TO_DN_SOME(0.00)[]
 
-Adreno 810 is present in the Milos SoC and is the first GPU to be released =
-in
-the A8x family.
+Document Adreno 810 GMU in the dt-binding specification.
 
-This series is marked as RFC because it depends on a few other in review
-series, GPU GX GDSC handling [1], QFPROM efuse for Milos [2] and the GXCLKC=
-TL
-block for Milos [3].
-
-[1]: https://lore.kernel.org/linux-arm-msm/20260427-gfx-clk-fixes-v2-0-797e=
-54b3d464@oss.qualcomm.com
-[2]: https://lore.kernel.org/linux-arm-msm/20260331-milos-qfprom-v1-0-36017=
-cc642db@pm.me
-[3]: https://lore.kernel.org/linux-arm-msm/20260417-milos-gxclkctl-v3-0-08f=
-5988c43a2@fairphone.com
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 ---
-Changes in v5:
-- Sync with latest kgsl
-- Link to v4: https://lore.kernel.org/r/20260416-adreno-810-v4-0-61676e073f=
-8a@pm.me
-
-Changes in v4:
-- Add 1150MHz speedbin
-- Rebase on next-20260415
-- Add dep on efuse patchset
-- Link to v3: https://lore.kernel.org/r/20260407-adreno-810-v3-0-30cb7f196e=
-d4@pm.me
-
-Changes in v3:
-- Drop DEMET from GMU clocks (not required on A810)
-- Document qcom,adreno-44010000 compatible (regex is gone in 7.0+)
-- Drop zeroed out CP_PROTECT_REG[46, 62] range, not required
-- Add a810_protect to __build_asserts
-- Add UCHE_CCHE_TRAP_BASE_[LO|HI] and UCHE_CCHE_WRITE_THRU_BASE_[LO|HI] to =
-a810_pwrup_reglist_regs
-- Move TPL1 registers to a810_pwrup_reglist_regs
-- Include all protect registers in a810_ifpc_reglist_regs
-- Revert pipe reg comment, just copied it from downstream but original also=
- works
-- Link to v2: https://lore.kernel.org/r/20260402-adreno-810-v2-0-ce337ca87a=
-9e@pm.me
-
-Changes in v2:
-- Mark as RFC due to dependency on in-review changes
-- Explain in DTS commit why qcom,kaanapali-gxclkctl.h and not qcom,milos-gx=
-clkctl.h
-- cx_mmio -> cx_misc_mmio
-- Sync a810_nonctxt_regs with GRAPHICS.LA.14.0.r5-03100-lanai.0
-- Link to v1: https://lore.kernel.org/r/20260331-adreno-810-v1-0-725801dbb1=
-2b@pm.me
-
----
-Alexander Koskovich (7):
-      dt-bindings: display/msm/gmu: Document Adreno 810 GMU
-      dt-bindings: display/msm/gpu: Document A810 GPU
-      drm/msm/adreno: rename llc_mmio to cx_misc_mmio
-      drm/msm/adreno: set cx_misc_mmio regardless of if platform has LLCC
-      drm/msm/a8xx: use pipe protect slot 15 for last-span-unbound feature
-      drm/msm/adreno: add Adreno 810 GPU support
-      arm64: dts: qcom: milos: Add Adreno 810 GPU and GMU nodes
-
- .../devicetree/bindings/display/msm/gmu.yaml       |  30 +++
- .../devicetree/bindings/display/msm/gpu.yaml       |   1 +
- arch/arm64/boot/dts/qcom/milos.dtsi                | 166 ++++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c          | 298 +++++++++++++++++=
+ .../devicetree/bindings/display/msm/gmu.yaml       | 30 ++++++++++++++++++=
 ++++
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |   8 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |  44 ++-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |  14 +-
- drivers/gpu/drm/msm/adreno/a8xx_gpu.c              |   6 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   5 +
- 9 files changed, 534 insertions(+), 38 deletions(-)
----
-base-commit: 968e97b00af4380a718e0badc978470e4587a50b
-change-id: 20260330-adreno-810-5a47525522cd
+ 1 file changed, 30 insertions(+)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/display/msm/gmu.yaml b/Docum=
+entation/devicetree/bindings/display/msm/gmu.yaml
+index 93e5e6e19754..8578c2f8122e 100644
+--- a/Documentation/devicetree/bindings/display/msm/gmu.yaml
++++ b/Documentation/devicetree/bindings/display/msm/gmu.yaml
+@@ -300,6 +300,36 @@ allOf:
+       required:
+         - qcom,qmp
+=20
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: qcom,adreno-gmu-810.0
++    then:
++      properties:
++        reg:
++          items:
++            - description: Core GMU registers
++        reg-names:
++          items:
++            - const: gmu
++        clocks:
++          items:
++            - description: GPU AHB clock
++            - description: GMU clock
++            - description: GPU CX clock
++            - description: GPU AXI clock
++            - description: GPU MEMNOC clock
++            - description: GMU HUB clock
++        clock-names:
++          items:
++            - const: ahb
++            - const: gmu
++            - const: cxo
++            - const: axi
++            - const: memnoc
++            - const: hub
++
+   - if:
+       properties:
+         compatible:
+
 --=20
-Alexander Koskovich <akoskovich@pm.me>
+2.53.0
 
 
 
