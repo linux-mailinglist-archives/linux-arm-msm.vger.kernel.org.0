@@ -1,202 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-105563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id LSNfEU+b9WlyNAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 08:35:59 +0200
+	id iCW/M2+c9WmSNAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 08:40:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAE794B128A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 08:35:58 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C6384B12BB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 08:40:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C78FA3020024
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 06:35:56 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 710B4300B3E6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 06:40:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00CAC285CB3;
-	Sat,  2 May 2026 06:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 165AA2D6409;
+	Sat,  2 May 2026 06:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b="qzWjWPv5"
+	dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b="d5ihMMXS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0753BA34
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 May 2026 06:35:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777703755; cv=none; b=PzVy3fXMXZ17zRV9uUJbBR2Yr1MNMpsw/c9TdMC/yZ7q+yC4auuvJnsM3ne870RpN/GSiayttexOSn4iporSAzCd00oAc5b0jyTPGM9SDMtuckx+P5rfddBmwpKlQAl6X0ZGN4drkDr02mK2MttMbX0k7cf5JZmVl2rWvp+Qs9Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777703755; c=relaxed/simple;
-	bh=deSn5Xt5tw22V/d31H1pgAVTJOwNWODnuOnfe+76xvE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=u7hecG+FWeLJ9CPaS++kY4rlp+kLY5fCMQQxyi/qzO77JR/BKN0JMylmLNS2Z3aInSCWmA4fuR/ZrJJJxKY74d57sIhGC8btDar/CENMPPjBpQHUu8FZP7NFSHrQB/CSX0XtRuT0MJBZTenIXtjVtJ9X3YOBWYvfOjyU2Y6My+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org; spf=pass smtp.mailfrom=quora.org; dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b=qzWjWPv5; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B581EFFA1
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 May 2026 06:40:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1777704043; cv=pass; b=SZ+YwurviEXIv5GdhLGhHV5yxe+43huR6PWQN++6fnWxseEfICiw+ft+ppJfCQR3dj4mi+3tXQ9L1o1/PszIv3RbbnR+LYayjUCi0HeCjct3vH0bOhn04T3T0vH9PHnD9uyV3AaL0PgBdNW0T2jrgyE7rN9TfptWPDPvctvgktA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1777704043; c=relaxed/simple;
+	bh=QnUGDy9vOmiW6AGUw5tco79uLy1dgFjJxw7sFBwnGP0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=cK41/ntMzNH5F2yDn0DdMUtjaGixqPtGsmEuyese7bbSBYuWirePT6mzkB3Sti+q385IlHWSmrV1uYCHsxqs6iAE8Bo+iwUvnJZXzTVPfiosTDeTv5EoMr7JyMStTOouX6kQbvSeXjPynN9XtFEKLj0T+Y8daQUWzSyzdc2VhtM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org; spf=pass smtp.mailfrom=quora.org; dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b=d5ihMMXS; arc=pass smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quora.org
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-35dac556bb2so2031643a91.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 23:35:54 -0700 (PDT)
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2b941cd869cso15120525ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 23:40:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777704041; cv=none;
+        d=google.com; s=arc-20240605;
+        b=lDII88OPY8gF9/o+COmb1EO8HEdOFJbG3PTw2tMkrHT6HfIo34FMPQ2PeygHxkG6TA
+         7V4nHiXX5/IFhstV5xDblk8A5nh9EnLwhHWClhaZ95J8XuF4JeomwWNSLmANNsf8XDQO
+         L1GtI6SYFeeXRUvVWh7wItTszTet3BvK82i3l2bRpR6RbRTbRQxu7G2ISeUBB6RUDzw4
+         t9SsqEosRf7bzrU1DBf8XG+PWYi9kELAE0ODA4Pf4Hv3Qmyi+4Azx8LY4wU/lZf5AE3r
+         NFMUSsXWFQ8VQN0x2RIYVWTlpacWGxua0sQkHNhU1P7LZo6aaTJdlOe1ydRzwFaUkAAJ
+         WxGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=6P9sTgt6bNnGgSvDZzNunjjig+XiK5tMd74kW3KCPl4=;
+        fh=LcG/ztp7blF/eFNbWLok/nv4lenB+BBpM046gST5EnU=;
+        b=VeK57r4WQO1MDtYd+WXzWSTn/nso05uoAP3OHySqpBk+LbYgIBeNdjv2SDE5KQcKGw
+         MlPcXA5MctlGB3m/0juOhptasLPsk1v6gzIBzb5KJmJ02Hqfi+7oDKSem3G+YipKBtLS
+         z5Ib43P8ThIq84/W/eq87MC+wYsEKU0gRpT9AIOuyoE4PeXPyDigJtt2vzEISFsse0OS
+         yzm0KFS3kirxnLQp3b7vYM5j6S646VkguniHdpLkJjXs6m8bS16sTPN5JI7w0Ty/jygm
+         DJAc2dHKs0xyamagiYsXuNH4PqP/JsLI9Y2bVe30I+I6rpdB4r99DsXVl4N2qMGmxMFi
+         ke+g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=quora.org; s=google; t=1777703754; x=1778308554; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3eiLhT2Xek0PquJfvL2goLYfKOInax72e42XoBPjztE=;
-        b=qzWjWPv5If6zkBM1z3KqEnlckI98W30hnjSESRNbLlS8R0DUqIjl4/4huw1HiCso/0
-         vFib8Tl884cSavjKU+XOiI/YBR/O7m3Ih9OYYmhXJNdJKQjc0T8AhARwPpsmHsvHAKx0
-         EngZ3eX5X3wXTh0aJr812Kn3++/yelI+TRJcM=
+        d=quora.org; s=google; t=1777704041; x=1778308841; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6P9sTgt6bNnGgSvDZzNunjjig+XiK5tMd74kW3KCPl4=;
+        b=d5ihMMXSVcoc4fV7W0uNsSAAo/KkY+tRqbd7ir3Q61ILJJDyprpefpEhQ5t3j40xGI
+         sTZnWWcBc71E6b2zf2/vs0bI1pyKb9+l2Gk5T9SXWHU/v0E+vzt2WGHXjHE6thLcYTbw
+         MzEI5yGhVE15fUY+PBSzhZN8Bcvy23nH3UTS0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777703754; x=1778308554;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3eiLhT2Xek0PquJfvL2goLYfKOInax72e42XoBPjztE=;
-        b=dqIWw/e0GZ4Rhqw7qmyfTGvhHAyev7XakZfZeBFufLNMBg4olQDIApF38Vwxf7QbJt
-         W5ewLdwWnHe8Iw73JnWYNwU2pnLgEqsQUhtqTcQnWr9mrVccUK78+JtqOgLZZjQfSbe4
-         KLQu2zkqpMU6eKDgGTMsgdFzOORbKAUms2SiYcbpkr4wIWGWgHFVOYYMm3JDA7oAyhHI
-         p0k6QKFAnc7N4KkRI8FZ64NDLztBst6W5yQOA1b39J5cbnqmYnh0hWIqRLqxQW5o0ZGl
-         kA33X4HOsmUZSSHqexOE260Fi8kQ0An6FQWt1DXEoTAuoQD5vzdhXb8pLdK6fG/UkDZx
-         PFzA==
-X-Gm-Message-State: AOJu0YzHxdPe8qLXTkVY8RdCTZ23+RogI2ZKKsZFmGBWMn27tOoXp8v3
-	a62ZzzIc3ll8AQc7b/2VdMOVsTf/jxjjooVEKOJfYCaV4j1LrgMx5b9jmUflVdpFHZE=
-X-Gm-Gg: AeBDievRLi5FdmivcmjdULmwDWKseSObwM+x4u5Y+N7Wsv8DMlR+yqFpX/zVwfzMb3t
-	aMChKsZFpKhdBKW+EdCPd7VUDdn4GepW68cxrkVK5XK+Hv/jGBzZ/xIkGWSRQiYoyQr0A8XO47q
-	SshjGQOtDF5ZQyplsPu3V8aHcgv0QH7+gC3qFVFFn1ejWPfR5CAIrjYWb/sq1IewySNknqiHjTd
-	pJWl6H3+kBLSuB4i9eon6H2tYp02NBDKpFHJWmHhnLLSDfMS/s03yUX2T2Enej9vBQIIlJQvmOn
-	nByLMB2PtywYHYWCy3+L8W/TZIbWoiomr4zdK47hRsPPtZC1+meRiz0xAzUAZb19j7uVHB8V+zO
-	GIVQUjIFNq7hW2K9fsRkk3EUOym3Z4pUnC1PYgpRJQsXsuEaxzKlfTbufhq+4r5l9aBW3dW7eVD
-	mCu8nH2dS5ybqGJlSGBTcO1iiaDwlfDt+VTvNOP6EHMZftrv2pwVevYeVRC4BpV+0ly8dm93rxg
-	VxKfrjonTw8i4hhGV5JPu+JEr8Q1v6a3hSKy5xX+7pukoW2v+tlVhV+1W4YLrmqaLwZ2OrK0j0T
-	p0Uw5mvATQfUtWeig8cgzs+aKKeEtZHiVuTdWNJT+KD3wxk8zMczZIsu9vHh88chhY2iFyVa65A
-	=
-X-Received: by 2002:a17:903:2a8d:b0:2b0:60db:7927 with SMTP id d9443c01a7336-2b9f25fad82mr16490825ad.28.1777703754179;
-        Fri, 01 May 2026 23:35:54 -0700 (PDT)
-Received: from aegis ([2001:fd8:4d00:5302:f723:328c:6ae4:ddd6])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b9caa7e827sm36859575ad.1.2026.05.01.23.35.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 23:35:53 -0700 (PDT)
-From: Daniel J Blueman <daniel@quora.org>
-To: "Sibi Sankar" <sibi.sankar@oss.qualcomm.com>,
-	"Rob Herring" <robh@kernel.org>,
-	"Krzysztof Kozlowski" <krzk+dt@kernel.org>,
-	"Conor Dooley" <conor+dt@kernel.org>,
-	"Hans de Goede" <hansg@kernel.org>,
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-	"Bjorn Andersson" <andersson@kernel.org>,
-	"Konrad Dybcio" <konradybcio@kernel.org>,
-	"Randy Dunlap" <rdunlap@infradead.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
-	Maya Matuszczyk <maccraft123mc@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>,
-	Daniel J Blueman <daniel@quora.org>
-Subject: [PATCH v2] arm64: dts: qcom: slim7x: Add Embedded Controller node
-Date: Sat,  2 May 2026 14:35:17 +0800
-Message-ID: <20260502063518.15153-1-daniel@quora.org>
-X-Mailer: git-send-email 2.53.0
+        d=1e100.net; s=20251104; t=1777704041; x=1778308841;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6P9sTgt6bNnGgSvDZzNunjjig+XiK5tMd74kW3KCPl4=;
+        b=bDGo94xzX1YMP27ecztg+EisYyYsflJVltmeTP7Pe/hDtnYCVGnVIP1blxS1hN2jSV
+         wVg52r8RAuhL933h00H/KreIjHN8ceg6dmVHYF1wroWUDUjnw08uFcGGfGbSwy2zFsqg
+         eWMvv0+ws0+R5ppBY1VqokPN1I2qw13ISnM0GQnbOKPzpHvulsYvF09+gMLwC+noHv9c
+         XFmiBrNOEshDUgCkWY4gcaJ4bw1cUK2oj4WlMpPhII5d0Xl++55excvctaway8dASDa8
+         lUFselh/TNz3feotVKipvBwpMQ/JVHElm0CdB5Dktm8Qo1A7GsmiUeWAZj9nmUwrhFHO
+         g2kg==
+X-Forwarded-Encrypted: i=1; AFNElJ9hlq/xEJGU8VG5zd4tDVmzinaDPmYyB01hgq9NNMclKzyf1qktYLhxpSXKIPiAnWO4QClXgtxHjkNc2+Ea@vger.kernel.org
+X-Gm-Message-State: AOJu0Yya2Unq38PwSUjLBBXeApIeVyzlzM5zquRAs0Y3AIekBcjV7C3T
+	Tr25dhoQcTmNrF0M10FKca0HSxkwm0SNNIvl7fYN1aXb3bJxIL4y//ohCb7t+ENxEIVOs8wEyuD
+	9QVSSR06RRRlX7GwwEw/rJxtAVLsn96zd0gcPPpqjPw==
+X-Gm-Gg: AeBDieuQDiI0MB0nq04tSKOlfI67G51boFRARfZ4YI71GHdpNKIWFZQJ+SWFmM8no14
+	xhAfhwSvHM2foOIIxHxhnr39UEsuk6rfll45hmrasQ81pVRzSu+LVSfj/33FgKamaySmtU2VLIh
+	XYz7yT53pbBcxY5Dxgg5PTBCja8F1yjGHiQJfCMDrpcKF+D1tfMlazumxO54qK4/2yiCVfUqphc
+	ufoUUUUxfzKLv3pzNfqZNb4SydGPizXjjHf+QYbc6kQLv+drooyDoo/NMQ3AI7AMx2RMJKvhGFi
+	np7ymeMzDFOUyTpcGk48NH9POt61lUHHAnMWKMtaxq8wwWY4K/MdopUFFjtAgggjs7D+wkN96YA
+	IeAUOFEIvLNUPoQHUnXxAYQ2PIZeCpCbqDopxFb+Ux6L/ZBzcnaHspzrJ5oveiIv9stK9V5rdSw
+	sZrcHqbyMoDUkPikYrh4ba5v8/+ve86P2aPq/J5CyZGpovD4gLkw+tnzZ1X3v41ODiqbhgwcc0S
+	EgWx2g3/zpYpPWyYsqH
+X-Received: by 2002:a17:902:f087:b0:2b2:ebed:7af8 with SMTP id
+ d9443c01a7336-2b9f252f63amr14597745ad.1.1777704041251; Fri, 01 May 2026
+ 23:40:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: AAE794B128A
+From: Daniel J Blueman <daniel@quora.org>
+Date: Sat, 2 May 2026 14:40:30 +0800
+X-Gm-Features: AVHnY4KG0MAC71QfRSpCx26yLu5YPmowJSH5TFquWMsTeiQuLtPwKy0Qi0Yfg28
+Message-ID: <CAMVG2su+V5fcZ9LOC0Qm3bpfnhpbmQdJackc7-RvfztDL_dajw@mail.gmail.com>
+Subject: [7.1-rc1 BUG] System hang when reading clock controller sysfs
+ 'registers' files
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>, Taniya Das <taniya.das@oss.qualcomm.com>, 
+	Abel Vesa <abel.vesa@oss.qualcomm.com>, Imran Shaik <imran.shaik@oss.qualcomm.com>, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org, 
+	Bjorn Andersson <andersson@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Rspamd-Queue-Id: 4C6384B12BB
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [1.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[quora.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,gmail.com,quora.org];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105563-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	DMARC_NA(0.00)[quora.org];
+	TAGGED_FROM(0.00)[bounces-105564-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[quora.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	MISSING_XM_UA(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.999];
-	DBL_PROHIBIT(0.00)[0.0.0.76:email];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[quora.org:email,quora.org:dkim,quora.org:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,quora.org:dkim,1.252.0.0:email]
 
-The Lenovo Slim7x uses the same Embedded Controller as the Qualcomm
-Hamoa Customer Reference Device (X1). Wire it up for fan control,
-thermal sensor and suspend behaviour.
+On a Qualcomm X1 Hamoa-based Lenovo Slim7x with upstream 7.1-rc1, when
+reading any of the /sys/kernel/debug/regmap/*clock*/registers files
+[1] (which could happen inadvertently with grep), we see a complete
+and immediate system hang.
 
-Signed-off-by: Daniel J Blueman <daniel@quora.org>
----
-Changes in v2:
-- corrected DT compatible node
-- v1 link: https://lore.kernel.org/all/20260429103301.17449-1-daniel@quora.org/
+If this relates to clock/power gating, it could be avoided by
+inhibiting that prior to the read. It also reproduces when booted with
+"clk_ignore_unused pd_ignore_unused".
 
-Dependencies:
-https://lore.kernel.org/all/20260427-add-driver-for-ec-v8-0-702f74e495f7@oss.qualcomm.com/
+Thanks,
+  Dan
 
- .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
+-- [1]
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-index beb1475d7fa0..1ee2a2296129 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-@@ -951,6 +951,22 @@ retimer_ss0_con_sbu_out: endpoint {
- 	};
- };
- 
-+&i2c5 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	embedded-controller@76 {
-+		compatible = "qcom,hamoa-crd-ec";
-+		reg = <0x76>;
-+
-+		interrupts-extended = <&tlmm 66 IRQ_TYPE_EDGE_FALLING>;
-+
-+		pinctrl-0 = <&ec_int_n_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
- &i2c7 {
- 	clock-frequency = <400000>;
- 
-@@ -1352,6 +1368,12 @@ &tlmm {
- 			       <44 4>, /* SPI (TPM) */
- 			       <238 1>; /* UFS Reset */
- 
-+	ec_int_n_default: ec-int-n-state {
-+		pins = "gpio66";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
- 	edp_reg_en: edp-reg-en-state {
- 		pins = "gpio70";
- 		function = "gpio";
--- 
-2.53.0
-
+/sys/kernel/debug/regmap/100000.clock-controller/registers
+/sys/kernel/debug/regmap/1fc0000.clock-controller/registers
+/sys/kernel/debug/regmap/3d90000.clock-controller/registers
+/sys/kernel/debug/regmap/6b6c000.clock-controller-lpass-audio-csr/registers
+/sys/kernel/debug/regmap/6ea0000.clock-controller-lpass-tcsr/registers
+/sys/kernel/debug/regmap/aaf0000.clock-controller/registers
+/sys/kernel/debug/regmap/af00000.clock-controller/registers
+/sys/kernel/debug/regmap/dummy-clock-controller@0x0000000001fc0000/registers
+--
+Daniel J Blueman
 
