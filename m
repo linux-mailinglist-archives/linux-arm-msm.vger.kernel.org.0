@@ -1,158 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-105562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mIikIfM89WkIJwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 01:53:23 +0200
+	id LSNfEU+b9WlyNAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 08:35:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74C0C4B067C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 01:53:22 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAE794B128A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 02 May 2026 08:35:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 54526300440A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 May 2026 23:53:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C78FA3020024
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 06:35:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD07937DEAB;
-	Fri,  1 May 2026 23:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00CAC285CB3;
+	Sat,  2 May 2026 06:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="racDQXss"
+	dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b="qzWjWPv5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7201537268C
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 May 2026 23:53:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0753BA34
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 May 2026 06:35:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777679597; cv=none; b=hGKdxTVHkZ+9mHsDJFjik31JjdQWHwOJrTk/2gYb7YYloXUzjDLqZoggxRivkonMxPxN83pO//wu+2v+w0CQF0h/PlrhhsX8lMOFeRbpSLP45xByp92l/ktzIXojVUNHLertZo7GWzUpiZ2hfo4qTE7LragdKSBy275dxKfdUG0=
+	t=1777703755; cv=none; b=PzVy3fXMXZ17zRV9uUJbBR2Yr1MNMpsw/c9TdMC/yZ7q+yC4auuvJnsM3ne870RpN/GSiayttexOSn4iporSAzCd00oAc5b0jyTPGM9SDMtuckx+P5rfddBmwpKlQAl6X0ZGN4drkDr02mK2MttMbX0k7cf5JZmVl2rWvp+Qs9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777679597; c=relaxed/simple;
-	bh=sTLTPWbkkR+J79wA5XET+FhSZQxeeBxgYYs31m8y0as=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uHJIMfe/wiNfQaDU9SzALGYP9TInWiLJdd2dFVy+ah2OCQcOXXIjlUuHmrDwVDhyhF86UP7alr7MfOY04Ca430w5AIg9G3YDuZLrCxB4H3uhYs6eFBm9u/fARGywa6c0tn1+FB06GkqQ2PhcT52VN7rKa+rFpjfIganBtmkEtJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=racDQXss; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8d736211595so170443985a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 16:53:16 -0700 (PDT)
+	s=arc-20240116; t=1777703755; c=relaxed/simple;
+	bh=deSn5Xt5tw22V/d31H1pgAVTJOwNWODnuOnfe+76xvE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=u7hecG+FWeLJ9CPaS++kY4rlp+kLY5fCMQQxyi/qzO77JR/BKN0JMylmLNS2Z3aInSCWmA4fuR/ZrJJJxKY74d57sIhGC8btDar/CENMPPjBpQHUu8FZP7NFSHrQB/CSX0XtRuT0MJBZTenIXtjVtJ9X3YOBWYvfOjyU2Y6My+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org; spf=pass smtp.mailfrom=quora.org; dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b=qzWjWPv5; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quora.org
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-35dac556bb2so2031643a91.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 May 2026 23:35:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777679595; x=1778284395; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=auq8XZ/n50n6kobbrJwVjj4F1ZYF7RNuGE7nh7nDocM=;
-        b=racDQXssdAUjh1mCnK3JhFd2oA65ibXLnTVq8SB3N2nPXCCcZDc6QultUq+SpZheNv
-         LumrafoaaZS7oOimJgqoNpepfjG0tC7WlyCb4rxg8jE2lT0qQAmP/7Gj3TJOwE4RBtU6
-         CwlN1Wrf8kgNjRL70W83RR8Xm4mEuKvSWy34mxcnd3K4maHG6871LL+nL5f2Rt2QBQk4
-         XbSPciH4fTsbvaiWFu/Yt2X4Kmv/vd5q09xOoDtbqcKMkfd2OVrOaVkHNwDzdlAaYkkh
-         0xCx0O1rPYwnfpvX/S2ZHodRETG2ZeJ+XLgGmOWH9bK1Ox9a5NpmfkEm5uNxnaadekIy
-         3jnQ==
+        d=quora.org; s=google; t=1777703754; x=1778308554; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3eiLhT2Xek0PquJfvL2goLYfKOInax72e42XoBPjztE=;
+        b=qzWjWPv5If6zkBM1z3KqEnlckI98W30hnjSESRNbLlS8R0DUqIjl4/4huw1HiCso/0
+         vFib8Tl884cSavjKU+XOiI/YBR/O7m3Ih9OYYmhXJNdJKQjc0T8AhARwPpsmHsvHAKx0
+         EngZ3eX5X3wXTh0aJr812Kn3++/yelI+TRJcM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777679595; x=1778284395;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=auq8XZ/n50n6kobbrJwVjj4F1ZYF7RNuGE7nh7nDocM=;
-        b=ZB2MGImD69HmLSIKEmWDPm1Lu7e36qtxeT8uVifspseNrb6loaWtX7zX+77nbp2dXw
-         +itU3uBOvTO4VkuFvZnwt7K5PtxS3yP47m38mFLPv/n6GSpW1QUiIJ/9ykl/a29c9HXa
-         ia6uQiY578P+5eDYAQ8k21PsLy5h9rxnoRBQyKBy+973PUGepGb5F6ZBGQA/1I5nlbi8
-         KzV8uH9/U3n0q6slFOiDtEA6HgQDCYbtpkYNx7BmnxTrhgxDdsFK0rbZWnV2K7UwU9dR
-         weaGfwCv+zJgIVnTtMjoop+wGvW80/T+2vqShfRtv75Tq84XYt4mCgA2uKYfJeYhJPes
-         M2AQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+Ha0c6wB718Ddi3ONiRFTIRLXfu99J3xABJcHlIPPg/O/bOfjZAdoRxL0AoXgEn5rrME8Y6dvpPLVDS+lP@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxh8VeJ0a6RjmIZPVWcVM4xMU8uMo2I1r2kyB0eRoDxAH/1DFR6
-	TZeeTehXUtc/VAsl8/QAjydNJGkH3KtTQLfHI8lwiBDmcL7y5C3QeTMv
-X-Gm-Gg: AeBDieuNWwfc8z37RW/ujHZBSiez+f74sMG3/uDGogAXlfdGXzw9aS+mNXb2Yz46/aG
-	RZ9aJ+ImujmIXXWgPutMnWCGxxY67yKqo73zG2FazKjweQad5QdYkgLaFAIxgUsWOJwMJVp8PSE
-	Fj1UFvmnt6PD5wl1pMbzPq4AxZL9WD7i2/QDAenmfAleZedPwTu0WvzNxbNPNSp7oUZfW7qDswK
-	CJtVRn4rvvkpE4Uu3ZjzQg8qv9qK8vSnswBur522lnDt0yK3F16TXp/g448zbR7Yx03swA53geP
-	gj3w9OBhzuZOWPt4WcNl50SH2aJxuuuRreVingzoq4n9xFLGvXN4BYxNTPJHXI9xh6XFeL5eBsx
-	RfjlZF+4bfUZr56RAGh7ia8S+whbyvYEEA6DANXwov/txeV6e4BVsnIiYsc33+hFyMO5J7l6GyG
-	nzEB2abiL5B+wRNJacMj6yGOTUYnWqoZUEUqn4
-X-Received: by 2002:a05:622a:17c7:b0:50f:b821:9c3f with SMTP id d75a77b69052e-5104c16c480mr21543551cf.60.1777679595414;
-        Fri, 01 May 2026 16:53:15 -0700 (PDT)
-Received: from localhost ([184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51040b8174csm32094481cf.25.2026.05.01.16.53.13
+        d=1e100.net; s=20251104; t=1777703754; x=1778308554;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3eiLhT2Xek0PquJfvL2goLYfKOInax72e42XoBPjztE=;
+        b=dqIWw/e0GZ4Rhqw7qmyfTGvhHAyev7XakZfZeBFufLNMBg4olQDIApF38Vwxf7QbJt
+         W5ewLdwWnHe8Iw73JnWYNwU2pnLgEqsQUhtqTcQnWr9mrVccUK78+JtqOgLZZjQfSbe4
+         KLQu2zkqpMU6eKDgGTMsgdFzOORbKAUms2SiYcbpkr4wIWGWgHFVOYYMm3JDA7oAyhHI
+         p0k6QKFAnc7N4KkRI8FZ64NDLztBst6W5yQOA1b39J5cbnqmYnh0hWIqRLqxQW5o0ZGl
+         kA33X4HOsmUZSSHqexOE260Fi8kQ0An6FQWt1DXEoTAuoQD5vzdhXb8pLdK6fG/UkDZx
+         PFzA==
+X-Gm-Message-State: AOJu0YzHxdPe8qLXTkVY8RdCTZ23+RogI2ZKKsZFmGBWMn27tOoXp8v3
+	a62ZzzIc3ll8AQc7b/2VdMOVsTf/jxjjooVEKOJfYCaV4j1LrgMx5b9jmUflVdpFHZE=
+X-Gm-Gg: AeBDievRLi5FdmivcmjdULmwDWKseSObwM+x4u5Y+N7Wsv8DMlR+yqFpX/zVwfzMb3t
+	aMChKsZFpKhdBKW+EdCPd7VUDdn4GepW68cxrkVK5XK+Hv/jGBzZ/xIkGWSRQiYoyQr0A8XO47q
+	SshjGQOtDF5ZQyplsPu3V8aHcgv0QH7+gC3qFVFFn1ejWPfR5CAIrjYWb/sq1IewySNknqiHjTd
+	pJWl6H3+kBLSuB4i9eon6H2tYp02NBDKpFHJWmHhnLLSDfMS/s03yUX2T2Enej9vBQIIlJQvmOn
+	nByLMB2PtywYHYWCy3+L8W/TZIbWoiomr4zdK47hRsPPtZC1+meRiz0xAzUAZb19j7uVHB8V+zO
+	GIVQUjIFNq7hW2K9fsRkk3EUOym3Z4pUnC1PYgpRJQsXsuEaxzKlfTbufhq+4r5l9aBW3dW7eVD
+	mCu8nH2dS5ybqGJlSGBTcO1iiaDwlfDt+VTvNOP6EHMZftrv2pwVevYeVRC4BpV+0ly8dm93rxg
+	VxKfrjonTw8i4hhGV5JPu+JEr8Q1v6a3hSKy5xX+7pukoW2v+tlVhV+1W4YLrmqaLwZ2OrK0j0T
+	p0Uw5mvATQfUtWeig8cgzs+aKKeEtZHiVuTdWNJT+KD3wxk8zMczZIsu9vHh88chhY2iFyVa65A
+	=
+X-Received: by 2002:a17:903:2a8d:b0:2b0:60db:7927 with SMTP id d9443c01a7336-2b9f25fad82mr16490825ad.28.1777703754179;
+        Fri, 01 May 2026 23:35:54 -0700 (PDT)
+Received: from aegis ([2001:fd8:4d00:5302:f723:328c:6ae4:ddd6])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b9caa7e827sm36859575ad.1.2026.05.01.23.35.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 May 2026 16:53:14 -0700 (PDT)
-Date: Fri, 1 May 2026 19:53:57 -0400
-From: Richard Acayan <mailingradian@gmail.com>
-To: Alexey Klimov <alexey.klimov@linaro.org>
-Cc: Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Kees Cook <kees@kernel.org>, Joris Verhaegen <verhaegen@google.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: ASoC q6asm race condition when stopping and preparing the stream
-Message-ID: <afU9FQnWKgRtV6mW@rdacayan>
-References: <afS7rTHdc9TyIeLx@rdacayan>
- <DI7G2SF71B39.22LPDZWBG87O9@linaro.org>
+        Fri, 01 May 2026 23:35:53 -0700 (PDT)
+From: Daniel J Blueman <daniel@quora.org>
+To: "Sibi Sankar" <sibi.sankar@oss.qualcomm.com>,
+	"Rob Herring" <robh@kernel.org>,
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+	"Conor Dooley" <conor+dt@kernel.org>,
+	"Hans de Goede" <hansg@kernel.org>,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	"Bjorn Andersson" <andersson@kernel.org>,
+	"Konrad Dybcio" <konradybcio@kernel.org>,
+	"Randy Dunlap" <rdunlap@infradead.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
+	Maya Matuszczyk <maccraft123mc@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>,
+	Daniel J Blueman <daniel@quora.org>
+Subject: [PATCH v2] arm64: dts: qcom: slim7x: Add Embedded Controller node
+Date: Sat,  2 May 2026 14:35:17 +0800
+Message-ID: <20260502063518.15153-1-daniel@quora.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DI7G2SF71B39.22LPDZWBG87O9@linaro.org>
-X-Rspamd-Queue-Id: 74C0C4B067C
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: AAE794B128A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [1.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[quora.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105562-lists,linux-arm-msm=lfdr.de];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,linuxfoundation.org,google.com,renesas.com,vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,gmail.com,quora.org];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105563-lists,linux-arm-msm=lfdr.de];
+	DMARC_NA(0.00)[quora.org];
+	DKIM_TRACE(0.00)[quora.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	NEURAL_HAM(-0.00)[-0.999];
+	DBL_PROHIBIT(0.00)[0.0.0.76:email];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[quora.org:email,quora.org:dkim,quora.org:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 
-On Fri, May 01, 2026 at 04:27:57PM +0100, Alexey Klimov wrote:
-> On Fri May 1, 2026 at 3:41 PM BST, Richard Acayan wrote:
-> > Hi,
-> >
-> > There seems to be a race condition in q6asm when stopping the stream
-> > (with uncompressed PCM). When receiving SNDRV_PCM_TRIGGER_STOP, the
-> > driver sets the state to Q6ASM_STREAM_STOPPED and sends CMD_EOS to the
-> > ADSP. If userspace decides to prepare the stream again in
-> > q6asm_dai_prepare before receiving ASM_CLIENT_EVENT_CMD_EOS_DONE, the
-> > memory-mapped region appears to still be in use and fails to map again.
-> >
-> > I believe this race was observed since commit 81c53b52de21 ("ASoC: qcom:
-> > qdsp6: q6asm-dai: set 10 ms period and buffer alignment."), but would
-> > need to verify. On sdm670, we are coping downstream by keeping the state
-> > as Q6ASM_STREAM_RUNNING until receiving CMD_EOS_DONE.
-> 
-> Do you have a reproducer or specific steps to test/reproduce the issue?
+The Lenovo Slim7x uses the same Embedded Controller as the Qualcomm
+Hamoa Customer Reference Device (X1). Wire it up for fan control,
+thermal sensor and suspend behaviour.
 
-I don't really have an easy way to reproduce. On a device with a
-Qualcomm SoC and q6asm, running postmarketOS with Phosh and without the
-workaround, waiting a few hours usually reproduces it.
+Signed-off-by: Daniel J Blueman <daniel@quora.org>
+---
+Changes in v2:
+- corrected DT compatible node
+- v1 link: https://lore.kernel.org/all/20260429103301.17449-1-daniel@quora.org/
+
+Dependencies:
+https://lore.kernel.org/all/20260427-add-driver-for-ec-v8-0-702f74e495f7@oss.qualcomm.com/
+
+ .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 22 +++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+index beb1475d7fa0..1ee2a2296129 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+@@ -951,6 +951,22 @@ retimer_ss0_con_sbu_out: endpoint {
+ 	};
+ };
+ 
++&i2c5 {
++	clock-frequency = <400000>;
++
++	status = "okay";
++
++	embedded-controller@76 {
++		compatible = "qcom,hamoa-crd-ec";
++		reg = <0x76>;
++
++		interrupts-extended = <&tlmm 66 IRQ_TYPE_EDGE_FALLING>;
++
++		pinctrl-0 = <&ec_int_n_default>;
++		pinctrl-names = "default";
++	};
++};
++
+ &i2c7 {
+ 	clock-frequency = <400000>;
+ 
+@@ -1352,6 +1368,12 @@ &tlmm {
+ 			       <44 4>, /* SPI (TPM) */
+ 			       <238 1>; /* UFS Reset */
+ 
++	ec_int_n_default: ec-int-n-state {
++		pins = "gpio66";
++		function = "gpio";
++		bias-disable;
++	};
++
+ 	edp_reg_en: edp-reg-en-state {
+ 		pins = "gpio70";
+ 		function = "gpio";
+-- 
+2.53.0
+
 
