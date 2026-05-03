@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-105600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EDQ0MhBY92mCgQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 16:13:36 +0200
+	id gBEnGlFY92mbgQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 16:14:41 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAAD84B5F2F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 16:13:35 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFFF04B5F52
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 16:14:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 984BC3001A55
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2026 14:13:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7D292300579E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2026 14:14:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6EF23CC9E2;
-	Sun,  3 May 2026 14:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 905633C73F7;
+	Sun,  3 May 2026 14:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ietjBR0X"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SpgWqvz6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD743C9EE8;
-	Sun,  3 May 2026 14:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4A21B6CE9;
+	Sun,  3 May 2026 14:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777817609; cv=none; b=sMKOCxB7UlqSs42BKgoRPi3GKBx5ynjqvlmv1VVMwdzmpdCoU5Q9ldT1/z5rngT5pMxbkqPXkn3DMCwliM3cJrdobS2zRnjugPCNfSRpOSy3FNEVh0cVrWcnTmLp6xfhjEpH/lBDRl/IGAbX/n065VWfDrYkQxSVpN02uc7j87s=
+	t=1777817677; cv=none; b=eq4w15RUgFRzxYP2NTZMATDnr7mF2mjbAVcO+CwJYVMIfdISsswWTaDTVEoG4KK/zXGPCeu50lU8E6HtDZKUbAZpE6/I7ynaU6Kd1GFl62IN7shCBem9InnfU1iHsqH5J4pWS+DKV6Xc3P+kDah3pSIakXIXy5FZVMDttVoj2fM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777817609; c=relaxed/simple;
-	bh=1ST9XV4LMOXMe4/he8iKw0GhBWS35jnfov7RdAVrs7g=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=fBKNw6aMcVDq/E5Q8xMy+rfhHkgiQWyXvz7E3irnhRt8jFuZT/AotjxfBnXlnzo9znL46fReDbWEeznoxdGAfM5gHI0TJJHzSApm4LNw258aRZ1a7W+uDM6xVC6OD4Pib1f3KTIHb/FDbf8BtgBxbyNmHCLq1m04kGr2t9vlT30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ietjBR0X; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85956C2BCB4;
-	Sun,  3 May 2026 14:13:24 +0000 (UTC)
+	s=arc-20240116; t=1777817677; c=relaxed/simple;
+	bh=w+XumufJ+urmRmPlLSVa7SCdJmGpgHIduK3W5odNrMU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QNzmC48kGmtUJKFTPzUKWjPkl1RX0LRKTOf3Qd/H3Gr2Q/1LKLi2Gm7FFX1aAi2XFWjnEh5SjKoUsPh6U/iTXWTCKJgkM8DuMzQiaquziHdgf95A1aCMBIqG0+jyTo9tvkKetA5P91fLiLAyuntBbns+uVIvaP6uAIKJoaTHp+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SpgWqvz6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC19C2BCB4;
+	Sun,  3 May 2026 14:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777817609;
-	bh=1ST9XV4LMOXMe4/he8iKw0GhBWS35jnfov7RdAVrs7g=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=ietjBR0Xp/+GKV6T44H2v8Zr0bhZ3vEkRnxbp64LcC1NqWzpmCrJ17D3EnNBnMmam
-	 23shw2+DeF3uOD4JUAZuS6q/4Ret56X0ibCtlNJYpJo0aGAEDXiSsEbTAwVfB2gV9O
-	 hmflftYHy6Cj/HZGAkw6QLvEhwgVThmEgx593HKEz803FD2BCPIGu17Vg+rKDtZ85n
-	 5t7deC/cqduQYmfFv6Mvh6t1SC23J+PD2uk267mV+BrR0LkAtoPTqwy+N9FFGVyU/N
-	 ZCE5TDvsuJqjEkNhbr6IUQnD+AM6Ov4iEMzE4R9uxovzK2rTCOWR9iY+Cp83/Z5tz4
-	 6/sC+vfT7Yodg==
-Message-ID: <1136c1e1-749d-455b-9176-5e71fc1fe18c@kernel.org>
-Date: Sun, 3 May 2026 16:13:22 +0200
+	s=k20201202; t=1777817677;
+	bh=w+XumufJ+urmRmPlLSVa7SCdJmGpgHIduK3W5odNrMU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SpgWqvz6htMtkRRVB7KqTUWkVgI4gjCOJLFojgkRUX9ZAG58KL/RXnQW4a5tbrFFA
+	 wOOW4acmup+xTrlEKXuQ62czCDvWSHfeGyH1LnlPgw/Huub794LhZf+MInikSHb5Wc
+	 UfpGBLrHyTQ0JfiUpbx2AkKNOb9a+uC64vB1oCww2DgtJEaXB6NOd4aa2rZRhZJQpm
+	 z5MpSiC4IT47wR+ViFRprb/zRqcNRSqzo48/otpq3Ut+H8PBI/G6zYEqx+kCaEKPkd
+	 yxIe37pEtATkYuI6hx5omXxzro2COFL7XVADoZlJplzKBk/DuAFytw+CLk2HFkedep
+	 UjllketTrVngg==
+Message-ID: <ecf6f144-0873-4f75-81db-c11f4bbfa679@kernel.org>
+Date: Sun, 3 May 2026 16:14:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,11 +53,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: display/msm: gpu: Document Adreno
- X2-185
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v2 2/4] dt-bindings: arm-smmu: Update the description for
+ Glymur GPU SMMU
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>,
@@ -67,13 +66,13 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
  Marijn Suijten <marijn.suijten@somainline.org>,
  David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
  Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org
 References: <20260501-glymur-gpu-dt-v2-0-2f128b5596bb@oss.qualcomm.com>
- <20260501-glymur-gpu-dt-v2-1-2f128b5596bb@oss.qualcomm.com>
- <20260503-resourceful-walrus-of-bloom-3ec6f4@quoll>
+ <20260501-glymur-gpu-dt-v2-2-2f128b5596bb@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -118,10 +117,10 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260503-resourceful-walrus-of-bloom-3ec6f4@quoll>
+In-Reply-To: <20260501-glymur-gpu-dt-v2-2-2f128b5596bb@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: BAAD84B5F2F
+X-Rspamd-Queue-Id: EFFF04B5F52
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -129,15 +128,15 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105600-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-105601-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,linux.intel.com,suse.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,linux.intel.com,suse.de,vger.kernel.org,lists.freedesktop.org];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCPT_COUNT_TWELVE(0.00)[22];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
@@ -150,27 +149,20 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email]
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 
-On 03/05/2026 16:10, Krzysztof Kozlowski wrote:
-> On Fri, May 01, 2026 at 10:40:37PM +0530, Akhil P Oommen wrote:
->> Adreno X2-185 GPU found in Glymur chipsets belongs to the A8x family.
->> It features a new slice architecture with 4 slices, significantly higher
->> bandwidth throughput compared to mobile counterparts, raytracing support,
->> and the highest GPU Fmax seen so far on an Adreno GPU (1850 Mhz), among
->> other improvements. Update the dt bindings documentation to describe this
->> GPU.
->>
->> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->> ---
->>  Documentation/devicetree/bindings/display/msm/gpu.yaml | 1 +
->>  1 file changed, 1 insertion(+)
+On 01/05/2026 19:10, Akhil P Oommen wrote:
+> Add the interconnects property to the common SMMU properties and extend
+
+But why? And why SDX55 (or any other device) has it for example?
+
+> the sm8750 clock description section to also cover Glymur since it uses
+> the same single "hlos" vote clock.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> ---
 
-I was a bit too fast and did not notice that this is only one if out of
-two required. Where are the constraints for the rest of flexible properties?
 
 Best regards,
 Krzysztof
