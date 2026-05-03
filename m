@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-105592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EJCKL0s792kidwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 14:10:51 +0200
+	id gPCxI5M792kddwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 14:12:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 633074B5834
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 14:10:51 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id C133E4B58BA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 14:12:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DF1273018AF3
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2026 12:10:06 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 05680300251A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2026 12:11:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 891103AE6FA;
-	Sun,  3 May 2026 12:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EED63AEF3B;
+	Sun,  3 May 2026 12:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h74OIVBx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nSKr5iZ4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65FDB3AD53B;
-	Sun,  3 May 2026 12:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04E71C5D44;
+	Sun,  3 May 2026 12:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777810206; cv=none; b=qiC9ZkRtBNiIM7bis5+S9ySLgQcyfLMpzMCV/hvSedXD4XQX2b9jMrK4ir/o1cH5Gdczutbfh+I59Y+6AIzDYLsLMoMrN8Kgr9tHoD5E9lFFIKPcMZWOXqYPw7oHaRtEGMiM4wvyv4ksecYd0dqbBqizRWWBpWOJuBS50QeAgHI=
+	t=1777810294; cv=none; b=S2G+YCOy3udf95EEtArZr3ORlh3LxlqPDegDHUZT+wcX3ZVq2u8ML96TtpvfJ2AgcKw5ROm22bm/jQfm9oxJ8yt78XsqEmC7PqM3VO3J8wqG59D4J7qtg1R/eq553hsu6zfOqKe768oheOve2GKBBgzrsSmQ4rCp8r0YhZfvrJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777810206; c=relaxed/simple;
-	bh=TrwSYASiwAn2wXslbk9LoH560GwPVOU2ySn9whSb3ZI=;
+	s=arc-20240116; t=1777810294; c=relaxed/simple;
+	bh=jxUMgcbkcksArszPbK0H0q0KV9QPN28u1wNry0icvPI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EcSSZl56e+5cTS6ZuVONb4e6bXN+B5cQNDeNtGGidWEHgi6KnJcbDRVZKaZiWEqN1eVfgYBH+rpbB9SFcH9REPUibb6mh4uDAVQ7nyYyPPjblJu2R+WnxMzvF3OI+qtBQqoiBdH3gItTNJAMpYnboC0+x5zTbLQqSMsUvAWybOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h74OIVBx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F47C4AF09;
-	Sun,  3 May 2026 12:10:05 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=i7kSkOV3/zyz7z9u2q8kGFVsYVPV2vt9txccjPu6TRSpVLhMsAGLx6O7WDyMVSfMO4k2mMVypAYeKJFCaIchpBWPUH6aJAeM33Ocsu/u6M6g4amTsuVgVSy2p5MY68HpF3DUaiE8hSp7OXXAPFQ7zWnqztUCPd7Pa2vlZ3pD1Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nSKr5iZ4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AFBC2BCB4;
+	Sun,  3 May 2026 12:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777810206;
-	bh=TrwSYASiwAn2wXslbk9LoH560GwPVOU2ySn9whSb3ZI=;
+	s=k20201202; t=1777810293;
+	bh=jxUMgcbkcksArszPbK0H0q0KV9QPN28u1wNry0icvPI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=h74OIVBxEJJ70d8sD4ScGR36Bzs9m7qcUszUgEQD+E7cKxe2OrsaG+EeVL7htji0B
-	 HQrUI/XHgjS65e3COBkuYHwpTBc0c8nUFvPf/Eeer5YyUuqtoWgOF7z9E5W/2+CEfv
-	 XMyFDd2UPNiigJoMLgPk18E/7jyTR8ywBFtUxunmRKAnDoiBlu5pyEqGNS11kETK45
-	 Z9baCnhuZM3dUb4+e2fss9Ipzpc4lxPYwCII8fPBkvImDAHNoWsuAS5RqGxXw2aM2B
-	 f4HzLRoQGnsH1uabc5Hi3kF4lQiicwwLCKYTC25O1ykxLP0eJQ/WTvftFKJlmg2IcE
-	 l/My6HJKHQQCg==
-Date: Sun, 3 May 2026 14:10:03 +0200
+	b=nSKr5iZ4CN3h4mdXGLDlPlvDDCVWEcUVG3tyW14uaG0CcWQaEvkPjshSrmYo6xSLe
+	 n2LyYRYrZGsppIfzkDHQ+1wFDmaLaM9tPeY7VLxqgH8yqd2qAbzZ8eg9WA/m8IiQMa
+	 0ChOHFPCtoTUAlcIiVn2A8QAwH27ru3BXX53h1l9o+EECTlISbFvcjTqiAX01+wIsZ
+	 12u1FOJlDiQ3m6NJEUjpJcQmA6d1CXp3YuLgmwBOcCTtNrpl6qd6Sdwl1h1mAxG90t
+	 9nYI6DQNd9WTp51ya9XTa7wwmcwcqrSe5pwpaomNjcOy5iJCmr66o/flKzP/E+Dk1V
+	 QTn2AXr1e3tkA==
+Date: Sun, 3 May 2026 14:11:31 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Richard Acayan <mailingradian@gmail.com>
 Cc: Srinivas Kandagatla <srini@kernel.org>, 
@@ -58,11 +58,11 @@ Cc: Srinivas Kandagatla <srini@kernel.org>,
 	Wesley Cheng <quic_wcheng@quicinc.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
 	Johan Hovold <johan@kernel.org>, Kees Cook <kees@kernel.org>, 
 	Charles Keepax <ckeepax@opensource.cirrus.com>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Subject: Re: [PATCH v4 03/15] ASoC: dt-bindings: pm8916-wcd-analog-codec:
- Document pm8950/pm8953
-Message-ID: <20260503-furry-attractive-stallion-0d9d83@quoll>
+Subject: Re: [PATCH v4 02/15] ASoC: dt-bindings: qcom: q6dsp: add internal
+ mi2s support
+Message-ID: <20260503-devout-mamba-of-sorcery-d4ecb2@quoll>
 References: <20260501153128.8152-1-mailingradian@gmail.com>
- <20260501153128.8152-4-mailingradian@gmail.com>
+ <20260501153128.8152-3-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,8 +71,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260501153128.8152-4-mailingradian@gmail.com>
-X-Rspamd-Queue-Id: 633074B5834
+In-Reply-To: <20260501153128.8152-3-mailingradian@gmail.com>
+X-Rspamd-Queue-Id: C133E4B58BA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
@@ -81,13 +81,13 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105592-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-105593-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[24];
 	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_TO(0.00)[gmail.com];
@@ -100,25 +100,24 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,oss.qualcomm.com,vger.kernel.org,mainlining.org,quicinc.com,linuxfoundation.org,opensource.cirrus.com,renesas.com];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 
-On Fri, May 01, 2026 at 11:31:16AM -0400, Richard Acayan wrote:
-> From: Adam Skladowski <a39.skl@gmail.com>
+On Fri, May 01, 2026 at 11:31:15AM -0400, Richard Acayan wrote:
+> The internal MI2S ports are found on devices with the internal sound
+> card for Snapdragon 660. Add support for them.
 > 
-> Document pm8950 and pm8953 analog audio codecs.
-> 
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> [richard: add back empty line]
 > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > ---
->  .../bindings/sound/qcom,pm8916-wcd-analog-codec.yaml         | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>  .../bindings/sound/qcom,q6dsp-lpass-ports.yaml     |  4 ++--
+>  include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h | 14 ++++++++++++++
+>  2 files changed, 16 insertions(+), 2 deletions(-)
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Same feedback as last time. DO NOT send next versions, untill you reply
+or address the feedback.
 
 Best regards,
 Krzysztof
