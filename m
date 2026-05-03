@@ -1,163 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-105580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mOfAMiiJ9mkUWAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 01:30:48 +0200
+	id oJ7xAdmo9mmgXQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 03:46:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1258D4B3A7B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 01:30:48 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 332874B40A7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 03:46:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6E35C300CE63
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 May 2026 23:30:07 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 33CCD3002514
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2026 01:45:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0DC7313E0D;
-	Sat,  2 May 2026 23:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07181255F2C;
+	Sun,  3 May 2026 01:45:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iRsBz1Fm"
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="jiEwwJEI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7743128B0;
-	Sat,  2 May 2026 23:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666F0239E80
+	for <linux-arm-msm@vger.kernel.org>; Sun,  3 May 2026 01:45:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777764606; cv=none; b=eCLVDINsmUOTngFnjvLIYEXPDgs5KCLaDT4fVTXdwW2wGY4+Nu3M2AUtZ7NLYqS28db1unXaFR3bIbT90OkKBc0H/wWBVpHaMZ7yGjVmtczlvu8xYr+u71XzqkbFzWL3CITisT1+OUd1ctDWkBbv05GiBvbC79tA6kQT+JJbMPU=
+	t=1777772755; cv=none; b=BE2QGrQ5z6rRTjRHV4/khgl52Onn98glVaKDjCM1SZGa7K/g+FCz1MvjGBdwZgxbTlViLRBSN7DQqm6JgsQLZjX85fhQJ+RgwLixw+yqTEh80OzcqqvWXYYnnZMrbW1PcYEKMAotHnUP5gln0FUdK9gmx2DKFZj9GgsHLReX1Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777764606; c=relaxed/simple;
-	bh=c8tSNJ5FwoK/bo93cmcfDUrwcAE4yfvaA0eLewWAF+4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NmUwAysVOAybehc2jP5tFR5Tv8o02LUhNP3xq7bnsvsba7G4RoMtEICjXEC8iXmA2RyrgIh8IVG2cYUlMiKb5wDHOZWxz2hoAWRwKvm0ROHypcthT+MJm5SUwAtjDAKDkzgB+Oe/dqgZXah0iPm/2bRSUJmyWqYblL0PygdGXPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iRsBz1Fm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36734C19425;
-	Sat,  2 May 2026 23:30:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777764606;
-	bh=c8tSNJ5FwoK/bo93cmcfDUrwcAE4yfvaA0eLewWAF+4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iRsBz1FmTh2Q5Q9XJsOjM0ygtpRp9u2sJUjsTJfmAlT6BAX+BtRLC3qPbG7otsIUz
-	 oUUrtRV9UrXSsTYiCA1o6D8yKDHrgXknTDVAF1m2sT+ylQ5QUHbkmqZUubRHnWu19j
-	 FDwOmuZM2by3QWCYyxjwZHvC/vg+6KmK9WO2mI+GYKMMMs+CqOenrqjH9/ryJs20Ge
-	 vLx5kFi3mB5WMD36ZZoepeJECjmRe0+MlgsAZXSyZoE7cYmzIDMRxBpxDcvcMdG3Wc
-	 4v+97CSntQKrvVNjLYqThpe8PF2sQys/tUGl5RGskDEmi3sezgIYwuauqq1puT67sS
-	 /0gKm8mQ7idGQ==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id 1D14D1AC5863; Sun, 03 May 2026 00:30:04 +0100 (BST)
-Date: Sun, 3 May 2026 08:30:04 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Richard Acayan <mailingradian@gmail.com>
-Cc: Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
-	Konrad Dybcio <konradybcio@kernel.org>, linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	Nickolay Goppen <setotau@mainlining.org>,
-	Adam Skladowski <a39.skl@gmail.com>,
-	Vladimir Lypak <vladimir.lypak@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Johan Hovold <johan@kernel.org>, Kees Cook <kees@kernel.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Subject: Re: [PATCH v4 11/15] ASoC: qcom: sm8250: add support for
- INT0_MI2S_RX and INT3_MI2S_TX
-Message-ID: <afaI_FuIq7Pb0kYh@sirena.co.uk>
-References: <20260501153128.8152-1-mailingradian@gmail.com>
- <20260501153128.8152-12-mailingradian@gmail.com>
+	s=arc-20240116; t=1777772755; c=relaxed/simple;
+	bh=YKj28Q85niDGU70q6VNatHef1IVTl7zI9IJbJKkrDqg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hT1b4EUvHwdPb07xfCOOH6GNN5b+oRbCRCuO5yXOoYVm/wiL4kg7pfcabmkcZajIdZLsa1/Q8D7NHuaxwI9ZCRZvjYMbqmtWpcBRH6/4+hZeS9r7t8jg9g1y/7y1q/pbaM1wnHN2y06taXI96mwEj8skE6yV82N/qRZwF3JYLWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=jiEwwJEI; arc=none smtp.client-ip=209.85.222.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8cb20bcff5aso288061185a.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 May 2026 18:45:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1777772753; x=1778377553; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=k2VDIdBulUU5TGbhBANhJGFN/QeEIFSIYNJHL/TT6dc=;
+        b=jiEwwJEIidVBpn5VKvdaqyut0STQFn5mUin1j0c7CPH3JyqMyIemYiIdKm9lx22P81
+         sv3BQST9ufNYY5RSEqNxV3ydmGcdP1P9DKRRfCF/5VLCbkV6KzJqtEfwrP7XxN7jBkVY
+         3jU+aJxY9wP68cm09MacVfg8HbSfAvnFojocv4c4fv1kJ3r4vGRF693QpbgFbJZNZYHm
+         J9+kpgPA04Up0whIt4myKwa9Jrr13USBrhogdKpVf+nKoicoHY/Mhr+9Yzv6lxXfccbY
+         PLOCKahXZZEwa6PRj9NvYXtyz1209AcMuvvlNoRYrWPVFUrhTtGhdFrtL1ARQTGX/ijI
+         b60w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777772753; x=1778377553;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k2VDIdBulUU5TGbhBANhJGFN/QeEIFSIYNJHL/TT6dc=;
+        b=UIL3t8zGYYx7cJ0crCJPNtVLSnQsA4n+6/ihdHsi/PHM9SQq7yjvkopdt9nzlayY9v
+         jxaS4faCuB8oSEjF0DAWHQi+xd3H9ckzHmBckcysu+1MIG62dWyqiPnaCgOHtWCqpZcN
+         7aroowhZKhT6Skg0SGdAIvDDQZ3MH4e9a6ph3NMilOCQ8H+QfSgGAkreyJVDCuT9ZRG4
+         Jy940f+bkKxlzh5sAJZiXN1IWPl1C7OmStyMKlsyscgRGPKPAj5NB/TveBqIG+7Wcnjc
+         4DAHO8oqVbVCKfBZbrvxcG4ps8BZWFgu1euB6t70kya7H4tOCRF84b5XewJ1olpbI5Vw
+         NxHw==
+X-Forwarded-Encrypted: i=1; AFNElJ9qLCev8QDD0OMPE34UKHSsUDE2dsDU04kKUKKEnSES2KVlha9jMg0an0QeMb4nQEZ9aOCtKHQAyNf1RgJC@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywe3kFCKDFxJLQXpuCzMNA3CpmoXvc/GU7mxj7C/hDKlhWq/Pz5
+	3NEOCpH9popP/5sm+QDtcT6Qo2xcRvaZZtYs4LZu+7oONu44JWrPDgOrh6s+2BOeyuk=
+X-Gm-Gg: AeBDievrwhqRIsu2uIEZ0XPsNr/9t3+CH6UvUPJM8AwpDkEFszQnLqNd4hykGu8lw19
+	CK5Trimy4KtKxCtlkYd59tDbTcf/efLdSMa9MBVyqCZiA6x5eP3XR0ozPoIZ888viQpNMpHJ/70
+	afBWq91iz7jg8IDX7/GWjhJCvwqjVS7ghCKkXKWr2cws/6QjnM0NHL4IPU1wnPswg+w3NKqNf/5
+	GYNYuvEcGG3H6ORH/CwKUMPTS0QQSAfiQD76Di+KEc2eIn6fK+Jtmx5rHx/qNno33e187dDIaKv
+	BG4E9hcCvdM8z0EOFE6rqiVhl+OA8v/jSuxEUnfFpo3fPaZNSXgepGtbm4qCCMZnqNfFLldg6jL
+	PtD4uDjsJxXN25xN4bsXsouXKdR8nX6vEQ0Jg4FzLWg35aU6DjdQVX+ioM4b/HRqy7fXdJ74N4k
+	Qeke/tY2syWeFoGpsNlPEwHceM+DhSEA2v2nVVp5s9w8qD9Qr5OV8/+3/ZivQQ5eZNguSakiGEh
+	w==
+X-Received: by 2002:a05:620a:284a:b0:8eb:10d4:a471 with SMTP id af79cd13be357-8fd17e4b6c1mr769719785a.43.1777772753243;
+        Sat, 02 May 2026 18:45:53 -0700 (PDT)
+Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c9229c8sm680230385a.36.2026.05.02.18.45.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 02 May 2026 18:45:52 -0700 (PDT)
+Message-ID: <30cec7dd-ac3c-47ab-896a-c29992bd5ba5@riscstar.com>
+Date: Sat, 2 May 2026 20:45:48 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5TVXTFgvmuU5e6Ml"
-Content-Disposition: inline
-In-Reply-To: <20260501153128.8152-12-mailingradian@gmail.com>
-X-Cookie: 667:
-X-Rspamd-Queue-Id: 1258D4B3A7B
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 09/12] gpio: tc956x: add TC956x/QPS615 support
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, maxime.chevallier@bootlin.com,
+ rmk+kernel@armlinux.org.uk, andersson@kernel.org, konradybcio@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, linusw@kernel.org,
+ brgl@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
+ daniel@riscstar.com, mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com,
+ alexandre.torgue@foss.st.com, ast@kernel.org, boon.khai.ng@altera.com,
+ chenchuangyu@xiaomi.com, chenhuacai@kernel.org, daniel@iogearbox.net,
+ hawk@kernel.org, hkallweit1@gmail.com, inochiama@gmail.com,
+ john.fastabend@gmail.com, julianbraha@gmail.com, livelycarpet87@gmail.com,
+ matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
+ prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
+ rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
+ weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
+ bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20260501155421.3329862-1-elder@riscstar.com>
+ <20260501155421.3329862-10-elder@riscstar.com>
+ <736fb3b7-c88a-4ec4-96ad-d1b79cc48d30@lunn.ch>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <736fb3b7-c88a-4ec4-96ad-d1b79cc48d30@lunn.ch>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 332874B40A7
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.76 / 15.00];
-	SIGNED_PGP(-2.00)[];
+X-Spamd-Result: default: False [-0.06 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105580-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,oss.qualcomm.com,vger.kernel.org,mainlining.org,quicinc.com,linuxfoundation.org,opensource.cirrus.com,renesas.com];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105581-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[riscstar-com.20251104.gappssmtp.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[elder@riscstar.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	RCPT_COUNT_GT_50(0.00)[50];
+	MID_RHS_MATCH_FROM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[riscstar.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 
+On 5/1/26 1:36 PM, Andrew Lunn wrote:
+>> + * There is a TC956X PCI power controller driver that accesses the
+>> + * direction and output value registers for GPIOs 2 and 3.  These
+>> + * GPIOs control the reset signal for the two downstream PCIe ports.
+>> + * Their values will never change during operation of this driver, and
+>> + * this driver reserves these two GPIOS.
+> 
+> Why doesn't this power controller driver actually use this driver to
+> control the GPIOs? Chicken/egg?
 
---5TVXTFgvmuU5e6Ml
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I am not the one with authority on this, but yes, that's my
+understanding.  *Something* about this chip requires that the
+PCIe ports need to have some configuration done on them *before*
+PCIe is powered up.  So that driver uses the I2C interface to
+apply these settings.  Meanwhile this driver uses the PCIe-mapped
+memory to manage the GPIO registers.
 
-On Fri, May 01, 2026 at 11:31:24AM -0400, Richard Acayan wrote:
+> Maybe add a comment why gpio-regmap.c cannot be used. You probably
+> need to instantiate it twice, but i still think you will end up with
+> less code.
 
-> The INT0_MI2S_RX and INT3_MI2S_TX ports on SDM660 can be connected to
-> the digital and analog WCD codecs. They can be supported with the same
-> logic for other ports, but just need to be explicitly stated. Add
-> support for these ports.
+It's possible gpio-regmap.c *could* be used.  We started with
+vendor code and this code got separated at some point along
+the way.  It was working, and I don't think I pursued other
+options at that point.  I'll look at this possibility before we
+send out the next version.
 
-> +	case INT0_MI2S_RX:
-> +		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
-> +		snd_soc_dai_set_sysclk(cpu_dai,
-> +			Q6AFE_LPASS_CLK_ID_INT0_MI2S_IBIT,
-> +			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
-> +		snd_soc_dai_set_fmt(cpu_dai, fmt);
-> +		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
-> +		break;
-> +	case INT3_MI2S_TX:
-> +		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
-> +		snd_soc_dai_set_sysclk(cpu_dai,
-> +			Q6AFE_LPASS_CLK_ID_INT3_MI2S_IBIT,
-> +			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+What do you mean instantiate it twice?
 
-Should these both be using SNDRV_PCM_STREAM_PLAYBACK?
+					-Alex
 
---5TVXTFgvmuU5e6Ml
-Content-Type: application/pgp-signature; name="signature.asc"
+> 
+> 	Andrew
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmn2iPsACgkQJNaLcl1U
-h9A9wAf/ZF5dVK3iNZz2v38moW57Dc4bSRh94ogb4y6SZk1Swr1DMnHrZPXj3uTD
-4nktAqqUvy/uMN3PGDbrNZRYIQIqgQ0i+YqNQZ9Pb53nKXWDe9iKCo9dEK8Hd1Ay
-ANSTdkxFheOSEYhYqmlYmNiieMgdba65OYCRtDrhiVYwn5gRHF+HIC8R71f+ATdk
-3/wqdpQzSStf0LA6tycbZv6mMtGTiapUry7uOQtiveSptW4ZAQvxy3IqXGrD313x
-jiYzhDEmpN9W8WzIyhtE44ODZJWTvx4XDbMMUNZeLCMkC99OiUVeFMMRqn21HrAO
-gSgKrRKqd5VnvuLTd34syj+4cC5Vow==
-=p9nj
------END PGP SIGNATURE-----
-
---5TVXTFgvmuU5e6Ml--
 
