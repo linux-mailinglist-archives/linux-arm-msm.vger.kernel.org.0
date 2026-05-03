@@ -1,203 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-105612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oOMdGCGx92k1lAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 22:33:37 +0200
+	id GNieJZO192l7lQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 22:52:35 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEC9D4B753F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 22:33:36 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10B434B7638
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 22:52:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 43B2C300E274
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2026 20:30:13 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id E5B823001BEC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2026 20:52:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 818743A6B90;
-	Sun,  3 May 2026 20:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EBB636923B;
+	Sun,  3 May 2026 20:52:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GUHmQrQ8"
+	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="SlN0zT8U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-06.mail-europe.com (mail-06.mail-europe.com [85.9.210.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D6B39B94A
-	for <linux-arm-msm@vger.kernel.org>; Sun,  3 May 2026 20:30:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3642641C6
+	for <linux-arm-msm@vger.kernel.org>; Sun,  3 May 2026 20:52:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.9.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777840212; cv=none; b=MasVf7Ldva+GKjloWB+rUqYJ1Jh0vxQPU1Aiu7Z3AStwnF4KDez/TSKpsF6R57m78RVgWm+tAODMTIFCrEWAGEZU0CtS04jHDiPJZJbaDI0RUS7AISbjScIv+zDU1QeIyEt1MlSqrPaHxd3VM7DMqfxnZTkYoOIOQikgrAF+Pxo=
+	t=1777841551; cv=none; b=jxA+K/BqTqSpCJ1J+HVW0RwDv0/x/Dz3rl+WZGIyMDmk/6q7eiJ551MsXjBpfKhJP0tN+wWMooR4kLxPe0LUfKuA3ftACqd4V1WCUIdDbspoE0DxPHgBP6NE7vu60nskrLz7xhJQUZKtm5M97gSTZmXtOegpmDz9wL4PNkGJDbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777840212; c=relaxed/simple;
-	bh=bcezSkZUVFmq8awrbtFKLKUmQEyY8sZzF9XzM732STE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Benb3iUqZjOrGDK7YoowuX+9h+0vAwjx4TmnP/336K2XKy9OOtvBLu3hJty1G8Fsum8dhX/ZmDB2z48vRtLUbn9bM/CPFaRI1HRj9RqDAA7iszWhw6kr6ObB3tMQP3bwBPp08MN9dckXWt5cDC4qozRq8whi/VCcgZxOfwOlOAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GUHmQrQ8; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-79827d28fc4so29842037b3.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 May 2026 13:30:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1777840210; x=1778445010; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=utFZGAmkY5HSapsYpTO/OWvfTIFdh3s3Nz41thxW7Qs=;
-        b=GUHmQrQ8hKWDTJOwRtc08rGvp+UVgi9NH61NCQCxliZna/4NcN2ejglHqVXhHK/9Ue
-         jc4HuXxuBU+qWr5YEHdT2rv3RLh882BuKFXp51MIakVF/BCMB9fLMaW8n9QRmK+GFrRk
-         RnR9uKyIr5vtMsqlfSjAgZa53AHrGvgznnYGBlGb4j3kiY8+qg32h/ejVc14Nj+QS/bJ
-         QVqTN7RtFvUs3KrVhspsrM7Vgk8tT9Y0Jtnac26gHjs0WJdTGfDr50cw8Go1jHi54iaC
-         1SNVGNt0eMe8VKNtC1Mz3nCjQumjmedxjX7S+2qYdIqCsmohQgZPiAGAETxYdy4iVcLn
-         SF4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777840210; x=1778445010;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=utFZGAmkY5HSapsYpTO/OWvfTIFdh3s3Nz41thxW7Qs=;
-        b=BJUZbIZEcKrHc/tmomyBrcYpmJUsalEx83BIyoeBBgmMxjsQFjFYl8EGB93EOkIHxr
-         +VMWr1ixPfvGfGBSyYQE888TQQfIE32xIvY9PXmVCSgm/Wf6WqXPJbJOPbY3La1lKR2d
-         encmCFQJkjjL1XmQAniAZnFDRgBUo9iXtdfjCFNrGMGg3uWCz/c++FLWFKk49nTQzoKI
-         lVLHFqNn4/m9Cq2Z9fnvKuOYhQGu8uSgkDneFhde3+uCTVlAhs0hyKjKsi/4X0F43VsB
-         3rK7I6mqzmKLrX2nJT0MWFtfYLsxNmvEIcybkl09cd1PkpLAjGYnz+mNfaRFhfmhItpY
-         4QWw==
-X-Forwarded-Encrypted: i=1; AFNElJ83j7IvNAxb6QfELUHnthRfP9t9qfp/X4gG3wwH5Ko2N+YSGE6KKvmkjEIWo/pDUIPSQZJIopWoBA6Ydtyn@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2krz5mp0enmGw/1MBYP7q7DatWv+cTyFhEz66h9f3FvECnPqy
-	tNCQbcyOWFBTB/kbs0x4Ej5BLb2Fn+a7/YcDwzTnlEhuGuWwX5qxefTF
-X-Gm-Gg: AeBDiessWpwK73Yig6SmBbK1/AScTxgwR/gkB0YldsLurJxtHmCJ6S9LgWiZRE/QG4/
-	1Q5oNHTrw6hG8c45KRNi19/80BQV6XVpA/yf+H8AQczbtzxp5crESP+7/SWC8JOaCSDV5WWKWEZ
-	LT0+0Egxsbsv9BV0jYzbVdyiuWX0bskLXvUTBlBMMcStv+e8CsP4HGChdciQKl3Ton9QI3iL9iQ
-	ICvMAewvqAtFvTAsvD3MWZOWvOS0AVQJGdsAB3O9/GCN9gyMvOiOxK2b4aU8ZNLEWy1a6dbA1zZ
-	QDTFn9NMyJQnBqhAhAx1/ZTErVdMgBiizK/ISP4mqbTkCGVpAfChbqWWULx8NXHPfhSAld5WCof
-	sr5vmQ+XeibykjPVxiSW4cifeUqXsZOBZYI7rbd0LdYDSWV/FB4n1Oa3OohW7wbUsRbYs4R4c0D
-	q6pJcHbNIGhyecfhHg7xzOaebIe3F7Q6WZiDDx00PPv79/YcLKEw+bVNA8Zd7/widpdWswzJUmy
-	ACYo/9FsQ==
-X-Received: by 2002:a05:690c:c4f6:b0:79a:40fb:9346 with SMTP id 00721157ae682-7bd76fabc9emr76374857b3.20.1777840209910;
-        Sun, 03 May 2026 13:30:09 -0700 (PDT)
-Received: from localhost (104-48-214-220.lightspeed.snantx.sbcglobal.net. [104.48.214.220])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd66525651sm40140327b3.3.2026.05.03.13.30.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 May 2026 13:30:09 -0700 (PDT)
-From: Steev Klimaszewski <threeway@gmail.com>
-To: krishna.chundru@oss.qualcomm.com
-Cc: bhelgaas@google.com,
-	bjorn.andersson@oss.qualcomm.com,
-	jingoohan1@gmail.com,
-	jonathanh@nvidia.com,
-	kwilczynski@kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	lpieralisi@kernel.org,
-	mani@kernel.org,
-	robh@kernel.org,
-	will@kernel.org
-Subject: Re: PCI: qcom: Add D3cold support
-Date: Sun,  3 May 2026 15:30:06 -0500
-Message-ID: <20260503203008.287559-1-threeway@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260429-d3cold-v5-0-89e9735b9df6@oss.qualcomm.com>
-References: <20260429-d3cold-v5-0-89e9735b9df6@oss.qualcomm.com>
+	s=arc-20240116; t=1777841551; c=relaxed/simple;
+	bh=DL6iXssMye2iStZHF5R+d5ll77LHBL24xwuWkbhRKiQ=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mwjt6xNTdlQzC9gOeknBEdIkwvLAY/ZBCvisqw2MVJYBY612QlUNhSrfgX0S+yP6oODqmCOqGgSgTNDFdVKF/AJc37UvAJzDmmICyYeExkYe+zY4sv/FmSu0T8Ndz7I29BsepTyhomVdwAv3Mgu1GPiWyOI9ckw/v9XyhBQxkVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=SlN0zT8U; arc=none smtp.client-ip=85.9.210.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
+	s=protonmail2; t=1777841532; x=1778100732;
+	bh=guOoOc13MjwplIgspUQvArsTLRGkdL6MLiDfDOg1uzE=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=SlN0zT8UPlQeuUWbPqJ+WbjmoojFB6gv7TDr+DJMA8DjgvzpBaEFr7aL6VLDDqZ7i
+	 vpd7m7ynf7gHAhE34/H1wMEd5rSHwUCk1agzu05FUOzkfHpmBRNsyFXWkJfc6Sq70O
+	 mnljgA8ZyIQBena9+jyk0Fu4MoB7FgO9K6oDB2oNV1wfjnHoiRYzDv23WVwkrXbUgJ
+	 HCWjHy5AD14oGTqX9aiCxVZ3sIbUl9PCpqjMVJpCzp7F1wWHKF9EfeBrfkGIAmkX0G
+	 26rLW7WAIse2M4xbki31I83SRiEc7HvsRfrakYTqNaWV3g4fftA5ty+hN9zbRBOXci
+	 JAj1be+aKyn/Q==
+Date: Sun, 03 May 2026 20:52:08 +0000
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Aleksandrs Vinarskis <alex@vinarskis.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>, =?utf-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org, laurentiu.tudor1@dell.com, Abel Vesa <abel.vesa@oss.qualcomm.com>, Tobias Heider <tobias.heider@canonical.com>, Val Packett <val@packett.cool>
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: x1e80100-dell-xps13-9345: introduce EC
+Message-ID: <XS2TSjsgj8nSwvw0hbt_xwMfuWcEyYZvBidHnSY_HeRjxejaryUEs8stsGFDkclozp8h58fyPEqe3w91rmt3h8vxAN6fTSG_-y8dgWUKeqs=@vinarskis.com>
+In-Reply-To: <38233a55-d313-4ad1-ad5b-b33011f2d345@oss.qualcomm.com>
+References: <20260404-dell-xps-9345-ec-v2-0-c977c3caa81f@vinarskis.com> <20260404-dell-xps-9345-ec-v2-4-c977c3caa81f@vinarskis.com> <38233a55-d313-4ad1-ad5b-b33011f2d345@oss.qualcomm.com>
+Feedback-ID: 158356072:user:proton
+X-Pm-Message-ID: 7755c9543d3d6321c8573abdd9bae1fe310a6bd2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: BEC9D4B753F
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 10B434B7638
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[vinarskis.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[vinarskis.com:s=protonmail2];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105612-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[google.com,oss.qualcomm.com,gmail.com,nvidia.com,kernel.org,lists.infradead.org,vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105613-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[threeway@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	TO_DN_NONE(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	NEURAL_HAM(-0.00)[-1.000];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[alex@vinarskis.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[vinarskis.com:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
 
-Hi Krishna,
+On Tuesday, April 14th, 2026 at 16:12, Konrad Dybcio <konrad.dybcio@oss.qua=
+lcomm.com> wrote:
 
-> This series adds support for putting Qualcomm PCIe host bridges into D3cold
-> when downstream conditions allow it, and introduces a small common helper
-> to determine D3cold eligibility based on endpoint state.
+> On 4/4/26 2:55 PM, Aleksandrs Vinarskis wrote:
+> > Describe embedded controller, its interrupt and required thermal zones.
+> > Add EC's reset GPIO to reserved range, as triggering it during device
+> > operation leads to unrecoverable and unusable state.
+> >
+> > Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
+> > ---
+>=20
+> [...]
+>=20
+> > +=09ec_int_n_default: ec-int-n-state {
+> > +=09=09pins =3D "gpio66";
+> > +=09=09function =3D "gpio";
+> > +=09=09bias-disable;
+>=20
+> Did you check what Windows configures here? bias-pull-up would be
+> customary for active-low interrupts (although there may be a
+> separate PU resistor connected too)
 
-> On Qualcomm platforms, PCIe host controllers are currently kept powered
-> even when there are no active endpoints (i.e. all endpoints are already in
-> PCI_D3hot). This prevents the SoC from entering deeper low‑power states
-> such as CXPC.
+There is an external pull-up resistor on the board,
+Alex
 
-> While PCIe D3cold support exists in the PCI core, host controller drivers
-> lack a common mechanism to determine whether it is safe to power off the
-> host bridge without breaking active devices or wakeup functionality.
-> As a result, controllers either avoid entering D3cold or depend on rough,
-> driver‑specific workarounds.
-
-> This series addresses that gap.
-
-> 1. Introduces pci_host_common_can_enter_d3cold(), a helper that determines
->    whether a host bridge may enter D3cold based on downstream PCIe endpoint
->    state. The helper permits D3cold only when all *active* endpoints are
->    already in PCI_D3hot, and any wakeup‑enabled endpoint supports PME
->    from D3cold.
-
-> 2. Updates the Designware PCIe host driver to use this helper in the
->    suspend_noirq() path, replacing the existing heuristic that blocked
->    D3cold whenever L1 ASPM was enabled.
-
-> 3. Enables D3cold support for Qualcomm PCIe controllers by wiring them into
->    the DesignWare common suspend/resume flow and explicitly powering down
->    controller resources when all endpoints are in D3hot.
-
-> The immediate outcome of this series is that Qualcomm PCIe host bridges can
-> enter D3cold when all endpoints are in D3hot.
-
-> This is a necessary but not sufficient step toward unblocking CXPC. With
-> this series applied, CXPC can be achieved on systems with no attached NVMe
-> devices. Support for NVMe‑attached systems requires additional changes
-> in NVMe driver, which are being worked on separately.
-
-> Tested on:
->   - Qualcomm Lemans EVK, Monaco & sc7280 platforms.
-
-> Validation steps:
->   - Boot without NVMe attach:
->       * PCIe host enters D3cold during suspend
->       * SoC is able to reach CXPC provided other drivers also remove
-> 	their votes as part of suspend.
-
-I have been testing this patchset with Mani's patchset that is supposed to be
-related to NVMe on the Thinkpad X13s found at:
-
-https://lore.kernel.org/all/20260414-l1ss-fix-v1-0-adbb4555b5ab@oss.qualcomm.com/
-
-v4 of this patchset *boots* along with Mani's patchset, however, v5 does not,
-and unfortunately, the machine does not seem to get to a point where I can even
-get logs from it.  Do you know what I might be missing?  I have *not* attempted
-to remove the nvme drive and boot off USB to test it.
-
--- steev
+>=20
+> Konrad
+> 
 
