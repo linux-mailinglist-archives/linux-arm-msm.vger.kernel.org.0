@@ -1,177 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-105614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mClqFQO692l1lgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 23:11:31 +0200
+	id oBU4NUq892m5lgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 23:21:14 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6F834B76C9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 23:11:30 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5838A4B779B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 03 May 2026 23:21:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 1B1473005583
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2026 21:11:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id DCA6D30053BA
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 May 2026 21:21:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B94B93A6EF8;
-	Sun,  3 May 2026 21:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 131F437CD20;
+	Sun,  3 May 2026 21:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="VC/n+2KU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NZYqlfX5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-07.mail-europe.com (mail-07.mail-europe.com [188.165.51.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6A63A63F7;
-	Sun,  3 May 2026 21:11:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAF02C21F8
+	for <linux-arm-msm@vger.kernel.org>; Sun,  3 May 2026 21:21:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777842686; cv=none; b=n+7D4kKRHr3EsCjxK+9M44A+JGWIjnIMgiV4UvNoFkLpxfK6m0HNsxAIdhAsX+jigb4CrpkQZ9Li40nQvtrggVYC0GNmoy8qOmq8VobTu2S+7qHMs11hd6ujv5Sk5s5zZJ1yFkJrW2gGlnbg7kO7eMofkE5FR9uyPGHujmfHDKw=
+	t=1777843271; cv=none; b=hkQYV2S9NRq2RTqxAglZBz1tgbSzVJYETAVylZw4yv1t9wA0AQmbC1kSrS3fBN6lECYjuGEDPU4O712fBV3qOd9Tf3g3d47bOYBaO21pPgZhLS3Mr6f2yOPguj/WxK77bquUrJK+lDvY2mtxjCQvSZ4C7MsMCwD41SmVJAxw3qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777842686; c=relaxed/simple;
-	bh=4IY6zgCE3t6xCxKy1+7cS+LAlfFK2OEbPo6snkCIKPE=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qv5S4alhVmm9IWnzHLuFWDGoDaj7Zhd+62pTJS3Xo5vqku+HUnE1bv+NKGj7gSNnnQstxOFQu9u2ksbNVhQMqASZulxE9dhtv+tlASGOlT7y5amD6rV8uHEzE4MJg3HBjJ6JnX7JTZhjhghZj76cDj5MUxgdYDlSAIkOtPJF2Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=VC/n+2KU; arc=none smtp.client-ip=188.165.51.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
-	s=protonmail2; t=1777842674; x=1778101874;
-	bh=Mze8pJ2Bv3rPQ71TmtY8/Gn2r4+/ykkYhDlYmX5zZSg=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=VC/n+2KU2ttk3svh9BYuOP1zgLWk73DcXL1aoKA5zoHj+MwFD8RluqgH4rXKgtTir
-	 KivuJLThb8r/nLxuE6IoiUhENRTmsS3WePxAbw+TShxRhr8X9zSFKMKbqEisJRI0hm
-	 kqdb68aKkSJmXcVBWVNRMvKg/JdCH3yE8/IpaKuVDsHYEMduSS09Otx9zg23J6osOl
-	 l51AqfNOYGFPy1qs82ppH39IqXpkyWmOjQlXoojevMDcKYsiVzHMxUpXKq5DVw1Usu
-	 h6PoJmn+YIi+nMgJ5SYjPfOXPq1Wmbt3HdXenPKtr0FTQYGII91xpgXSrKbbF8yiLc
-	 J5e2XGbGyVD6w==
-Date: Sun, 03 May 2026 21:11:08 +0000
-To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-From: Aleksandrs Vinarskis <alex@vinarskis.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>, =?utf-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org, laurentiu.tudor1@dell.com, Abel Vesa <abel.vesa@oss.qualcomm.com>, Tobias Heider <tobias.heider@canonical.com>, Val Packett <val@packett.cool>
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: hamoa-pmics: define VADC for pmk8550
-Message-ID: <41zGfbkQbjrQfSqKbnaZNz8B-Vm_xJV8SsscGw_vLVygnw87MkVHK-bjR2TA1oKrLO9zk6DRTaGCrQj8duw3bCBpDK-FX6400Mhh1-sOd1o=@vinarskis.com>
-In-Reply-To: <c7cd7cf8-6f2b-4db8-a51a-04e7aad07863@oss.qualcomm.com>
-References: <20260404-dell-xps-9345-ec-v2-0-c977c3caa81f@vinarskis.com> <20260404-dell-xps-9345-ec-v2-3-c977c3caa81f@vinarskis.com> <c7cd7cf8-6f2b-4db8-a51a-04e7aad07863@oss.qualcomm.com>
-Feedback-ID: 158356072:user:proton
-X-Pm-Message-ID: 9a62b55032b81d364ff60b0d1031a224e850489f
+	s=arc-20240116; t=1777843271; c=relaxed/simple;
+	bh=WtL8OS1YnNGjQgVNOCpLNO9Uttl/pmSrIlnfIUeuAns=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VhQQQr1lK4zPr2jD/q6e0lFQqo4IcFjxHr0Ntx4ztPtzEhKua8m0FbcDSl6u1pJqbw0+x91X/zAsSv4syBE44ZI70tRPtMF06t0OMd2MmLkJjji9bNrIpbt0hkzZc+afmzteTRkTbqBWIay3mEDnyI7YcpLwqj/AEozn0Uo98CA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NZYqlfX5; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-50faeb8317bso26535751cf.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 May 2026 14:21:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777843269; x=1778448069; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=o0QNlGrqaDI4UYp6C7qqj/fd9cv+jSvpWhH3Jn8vqzI=;
+        b=NZYqlfX5Nq8zcfXaB5rwTQWs+aLqAZ1E+2DkRWXbigD9LGo/H2mgc3BQ2/KgK6uPGN
+         DUO0SJ5pNjZkFR2cuiv0Sr7rI8uwLDCj0hhtVg4tKu2/p1r70d4wS3DxXXoswM/6jE3Z
+         3zNxd/xXrbYzoFBWXmR2m3Ppc+ziuvQLyC9QeRHvEdyE4Cp4dNzf97yq3Vd1Kyqu4wQQ
+         XFC8Kb2xSE/IFzK95Q466JChNhfy27tYEBukUglKWiErqpvnvJuGaxq6Yr2mIJehiCXI
+         p/ikV66ybXXIbZY/jy5rdCVz02xZEimYjEoAUoCDtaqpmMUMo7zKvcAuGtP3Kvt/FQ3s
+         Zq5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777843269; x=1778448069;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o0QNlGrqaDI4UYp6C7qqj/fd9cv+jSvpWhH3Jn8vqzI=;
+        b=MAlumr+ZlO2SJYHrAJXuKJH7GGka/mgGUlbPVJn4Ue2gNSLPILxuyDHZ3qA5r53ujK
+         w42z/TjC1rAl299Fl28rv+BQ5hsjATUDmrslnFMs+xq1pEoV0Vg73JvRU0oEsb569kAx
+         MHqGGY7+9ZzZ543ITIdMtpaFU6lrqUUiTA24k3t2xN4SZnDP0p7t95tN6Ebl3p8VKnJ6
+         QELFp8SaaeZpj2r3F7N78Mg8z8//XVF3KSBG2WSPU8chZo7z/8lgCneTjajgACsxzbUQ
+         w/noWOLmF8FsXzJpFbr8o4hZXIPkBhOtwkcBAF1G9FbRJDfhUMe59uRk1lp3YTQTIYbB
+         s09A==
+X-Forwarded-Encrypted: i=1; AFNElJ/SaTGcoSCyDBFRdZuy4XWjox+vtWaWfjjIwqe19cqIkFOcQcuFTbRvWfW9toKK6y9CeyiLaEZ6VRuhQPIk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyxd27M7eqlkWK/XjGnx/7npk/76LGd3CKW/R1gyPgKcmAiZi5F
+	AfQaoKw7b0jlgkMDhLrfMAcsJ6whJyzRbZOMEvYNhN6c6LVkxcyPN4e+
+X-Gm-Gg: AeBDieu4eL1BpJ3h3j3irT+Afi1Hq2vh37Oz9KYfulNUeaCcBv1vkUVmGxUA8s31wbG
+	G119gaGNkfImNQW6M+orpBtUAa7ejjocHOSBcsPal7PnqPFCrVwxennb94WH5l80IdWcM9XE1KV
+	2dWyQO6UTqpqwgFkhlSwZefNhW8Fb5Ys71UW/EyOah6I6omYdm3u/p0kAZL4PWPymxIKQy30LaZ
+	jqYoqr5F1nG9R7UaN3t0Mdw/rXW5Jnu5YVQk5JgqI/BT/3Zhnudxxl5dSU9maBqB4FJihS0VnEM
+	UKHliwCdTiZFG/dQ5QqBTfxLJ26L0lqCDphASAy5drHl8TRtLNNlVo9G/D0CE/OZMHKbvRqYdVk
+	e3a3+B7zeThjuksK2PqlqELKJO5CfUsedT1nA5OAimDx4S0wOgBBqtm0Eu4ssnLOkL9+HqMD+Ki
+	SdwEYkA+VvLzoPzZOslVYQ/vExkHkq0s9eEhj7
+X-Received: by 2002:ac8:59d1:0:b0:50f:ca25:fb48 with SMTP id d75a77b69052e-5104bfade50mr120133951cf.55.1777843268706;
+        Sun, 03 May 2026 14:21:08 -0700 (PDT)
+Received: from localhost ([184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51040b5e8b4sm86548111cf.23.2026.05.03.14.21.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 May 2026 14:21:07 -0700 (PDT)
+Date: Sun, 3 May 2026 17:21:49 -0400
+From: Richard Acayan <mailingradian@gmail.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	Nickolay Goppen <setotau@mainlining.org>,
+	Adam Skladowski <a39.skl@gmail.com>,
+	Vladimir Lypak <vladimir.lypak@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Johan Hovold <johan@kernel.org>, Kees Cook <kees@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Subject: Re: [PATCH v4 02/15] ASoC: dt-bindings: qcom: q6dsp: add internal
+ mi2s support
+Message-ID: <afe8bQ3SIAu9rP1S@rdacayan>
+References: <20260501153128.8152-1-mailingradian@gmail.com>
+ <20260501153128.8152-3-mailingradian@gmail.com>
+ <20260503-devout-mamba-of-sorcery-d4ecb2@quoll>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: E6F834B76C9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260503-devout-mamba-of-sorcery-d4ecb2@quoll>
+X-Rspamd-Queue-Id: 5838A4B779B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[vinarskis.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[vinarskis.com:s=protonmail2];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105614-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	TAGGED_FROM(0.00)[bounces-105615-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[vinarskis.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.3:email,0.0.35.40:email,0.0.23.212:email];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[alex@vinarskis.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,oss.qualcomm.com,vger.kernel.org,mainlining.org,quicinc.com,linuxfoundation.org,opensource.cirrus.com,renesas.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,0.0.0.44:email]
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 
-
-On Friday, April 17th, 2026 at 07:27, Jishnu Prakash <jishnu.prakash@oss.qu=
-alcomm.com> wrote:
-
-> On 4/4/2026 6:25 PM, Aleksandrs Vinarskis wrote:
-> > Follow pattern of pmk8350 to add missing pmk8550 VADC to hamoa.
-> > Register address of 0x9000 matches example schema for spmi-adc5-gen3.
-> >
-> > Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
+On Sun, May 03, 2026 at 02:11:31PM +0200, Krzysztof Kozlowski wrote:
+> On Fri, May 01, 2026 at 11:31:15AM -0400, Richard Acayan wrote:
+> > The internal MI2S ports are found on devices with the internal sound
+> > card for Snapdragon 660. Add support for them.
+> > 
+> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > > ---
-> >  arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi | 26 +++++++++++++++++++++++=
-+++
-> >  1 file changed, 26 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi b/arch/arm64/boo=
-t/dts/qcom/hamoa-pmics.dtsi
-> > index 6a31a0adf8be472badea502a916cdbc9477e9f2b..cc69d299bc356d90aa1483f=
-347f5eee43b853e45 100644
-> > --- a/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi
-> > @@ -218,6 +218,32 @@ pon_resin: resin {
-> >  =09=09=09};
-> >  =09=09};
-> >
-> > +=09=09pmk8550_vadc: adc@9000 {
-> > +=09=09=09compatible =3D "qcom,spmi-adc5-gen3";
-> > +=09=09=09reg =3D <0x9000>, <0x9100>;
-> > +=09=09=09#address-cells =3D <1>;
-> > +=09=09=09#size-cells =3D <0>;
-> > +=09=09=09interrupts =3D <0x0 0x90 0x1 IRQ_TYPE_EDGE_RISING>,
-> > +=09=09=09=09     <0x0 0x91 0x1 IRQ_TYPE_EDGE_RISING>;
-> > +=09=09=09#io-channel-cells =3D <1>;
-> > +=09=09=09#thermal-sensor-cells =3D <1>;
-> > +
-> > +=09=09=09channel@3 {
-> > +=09=09=09=09reg =3D <0x3>;
-> > +=09=09=09=09label =3D "pmk8550_die_temp";
-> > +=09=09=09=09qcom,pre-scaling =3D <1 1>;
-> > +=09=09=09};
-> > +
-> > +=09=09=09channel@44 {
-> > +=09=09=09=09reg =3D <0x44>;
-> > +=09=09=09=09label =3D "pmk8550_xo_therm";
-> > +=09=09=09=09qcom,pre-scaling =3D <1 1>;
-> > +=09=09=09=09qcom,ratiometric;
-> > +=09=09=09=09qcom,hw-settle-time =3D <200>;
-> > +=09=09=09=09qcom,adc-tm;
->
-> There's a small problem here - if you add the "qcom,adc-tm" property
-> under any channels, the auxiliary TM driver will be loaded to handle
-> this functionality and it will attempt to register such channels as
-> thermal devices. Since there is no thermal-zone node added for this
-> channel, you will get an error from here.
->
-> If you intend this channel to be used for ADC_TM functionality, a
-> thermal zone node for this channel has to be added. If this functionality
-> is not needed, it's better to remove the "qcom,adc-tm" property.
+> >  .../bindings/sound/qcom,q6dsp-lpass-ports.yaml     |  4 ++--
+> >  include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h | 14 ++++++++++++++
+> >  2 files changed, 16 insertions(+), 2 deletions(-)
+> 
+> Same feedback as last time. DO NOT send next versions, untill you reply
+> or address the feedback.
 
-Thanks for catching this, I did not realize it. It would be nice to add
-thermal zone node in the future, currently I am missing required
-information to do that. For now I will drop "qcom,adc-tm" property as
-you suggested.
+Ok, I believe this is about [1] and [2] with reference to the patches
+already in v7.1-rc1 [3].
 
-Alex
+My patches add INT0_MI2S_RX through INT6_MI2S_TX, which correspond to
+q6afe port IDs 0x102e - 0x103b. Srini's patches add LPI_MI2S_RX_0
+through LPI_MI2S_TX_4, but no q6afe port IDs.
 
->
-> Thanks,
-> Jishnu
->
-> > +=09=09=09};
-> > +=09=09};
-> > +
-> >  =09=09pmk8550_rtc: rtc@6100 {
-> >  =09=09=09compatible =3D "qcom,pmk8350-rtc";
-> >  =09=09=09reg =3D <0x6100>, <0x6200>;
-> >
->
->
+I asked if the LPI_MI2S ports have q6afe port IDs to check if we're
+referring to the same ports, but apparently q6afe is too old to have it
+[4]:
+
+	> Is the LPI MI2S on Q6AFE? I don't see the AFE port ID.
+	I think the older SOCs did not have this I guess,
+
+Even if there's already an allocation of dt-bindings ports for LPI_MI2S,
+they can't just be reused for INT_MI2S. There are allegedly INT5_MI2S
+and INT6_MI2S (each RX and TX) but LPI_MI2S only counts to 4.
+
+[1] https://lore.kernel.org/r/20260305-fluorescent-gainful-unicorn-4f8d7e@quoll/
+[2] https://lore.kernel.org/r/20260305-gigantic-gay-boar-86db8a@quoll/
+[3] https://lore.kernel.org/r/20260402081118.348071-1-srinivas.kandagatla@oss.qualcomm.com/
+[4] https://lore.kernel.org/r/23434dcf-5f45-4d16-95fb-a13021331de6@oss.qualcomm.com/
 
