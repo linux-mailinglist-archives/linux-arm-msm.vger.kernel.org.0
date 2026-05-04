@@ -1,336 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-105641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 9d2NJbRA+GnCrwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 08:46:12 +0200
+	id yCsKAppB+GnCrwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 08:50:02 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E214F4B8FB3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 08:46:11 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A007B4B9001
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 08:50:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A094330053AE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2026 06:46:10 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 7A7693001859
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2026 06:49:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE1AA24BBF4;
-	Mon,  4 May 2026 06:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 367AA23D7FF;
+	Mon,  4 May 2026 06:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jmV7dOud"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gd+8XP1Q";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="A1Jolmrb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216251A9FAA
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2026 06:46:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CF3194C95
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2026 06:49:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777877168; cv=none; b=bpVtfIAVaP9V4bDRDpeICfBdzJNU3STggQQ6Z0MjFX/l2k9uzB7H0xXEhZSblKJeLSPlY6MhVSaqw2OMYPVUCcZDX+Pi+paemjEafFqHHeZiW+AH4VBgd5Xily7X/9n/aeWY5wQTzNSe5sfusegFGbKij725uli+xL7UB4oytWI=
+	t=1777877395; cv=none; b=UyYg+OFwPQAAMwhTMVZcH4p9Yofo78W6hskoCBHx8La1uejxbv2SszuetRjXDf206fa5mmuqcuaj5kl/0ONCX3f40cKaHzqV4knU3UUX/ie9USILUW6y6wWmbDiJieWuEFikdlns3uVo1hzvtApoxCqI8cEuTd3IVOCP9qMbj+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777877168; c=relaxed/simple;
-	bh=WOUTFRQXY7u4mCgzjAgnVT8wNzDI/PXA4wTabljAAkk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m4t1jQtLXURLorMbMozrWoWnWDFdFoxLBa8Q/3kaYIWi3tZdzUsNPoRsDYs7BOaTmC3nDFGWeYSochqLJkvPxg1CwwafFcqIS26CyKpu2LILKJCLelcYbvWozIGQGFUy/nRxw72HokiCW14eijPqNdkF7gFlIVQn/eeD3unbAP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jmV7dOud; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-44985f4ab0fso1516276f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 May 2026 23:46:06 -0700 (PDT)
+	s=arc-20240116; t=1777877395; c=relaxed/simple;
+	bh=7RiyzX+zuh5Q9zvm7IyARRktAwMs7ElUM7tDz5Wv/bc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=bClP/vU7tohnJRN5Z8YiHmeo3JUoPn4rlZRqdJ7XfhA7kLzK9Yea+5DyjreEfs75SyoEiwhqiasDxStURpXuwk0RQwy9zb/0wsTGhKsiJumwzRcAAQ+o7ugjo//sNniQpQeL5uxCVfFGunPeLFDUw/6ERPK+MkBv5rsk/L70cL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gd+8XP1Q; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=A1Jolmrb; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6446DCSM4174294
+	for <linux-arm-msm@vger.kernel.org>; Mon, 4 May 2026 06:49:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=yVsm+TRR/LSV+0LR5+0IS9wjC6UrD1tiA6O
+	29Yv9hMw=; b=gd+8XP1QQwumofoAFeptFe3Xo8Gthg3QAhRJhRGuv5urXRPfIU7
+	7VAo0VOgErV5RoAZTfIBWS9xuz8Gji7EP5jexQnOg1blTjDayRWkZRGIPga7hlwj
+	yimQfTcEqZT5AoNp6/RPa2Up2N02JkMFAbHz/OaUVdiAMBTeGGcKch9NWVW+ye2l
+	uCi99nP0zMdM76iOx2or+R57PW8CUQvPLYmDv70AU67tQLIGeFx3xPKHqmtqnTse
+	s57k1QnxARNCVlZxK12Mxw83vxrvqOHnQWkVa4YU8GmZVvj5UMr0h9jEonnSNAec
+	JAqyOVCcOUs1wAwLKXXzxT34b42W7Fuc9CQ==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dw9n8cha8-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2026 06:49:47 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-8230d6d54a5so3005327b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 May 2026 23:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1777877165; x=1778481965; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EOccawuCoFWsjijYdwToilKKz9XDVnegxFTh6EZHPuU=;
-        b=jmV7dOudGI90beUFDyMX3vQJyJCJf8b62/jkvuM0i9UFQQR13b3SU1AmvrK0xM50sC
-         vFPZvy5tC5+XeXznxOXM/LBNdBawkGwjMP5B5J+a9jn/V0ZHxjjzgz3EhFeNOeaxamMq
-         KS202Wwavbvdo48XMjpJ3TZKSOsLA0TvSiOoTEvEXEL7vZAnvriLPw/2QhJ//Nuurhys
-         Hw1YMSfO/YFRMp0lRpk6881pyNk6s93t1TnMDevL5EFFw//mrH4J8MFZj/8GCH5yBqUH
-         faUz1HI7KgOGbbSLvflMCPkGI9EzFzVt9357IzfVB5X46SQ2+NVNhWcxD2a6DsJoJHtn
-         xtoQ==
+        d=oss.qualcomm.com; s=google; t=1777877385; x=1778482185; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yVsm+TRR/LSV+0LR5+0IS9wjC6UrD1tiA6O29Yv9hMw=;
+        b=A1Jolmrb1xTiwW6xpdsCL+ZAcsoo+8MIVg8NQm8G92zETOvnloJBPESwtYDynVBkdL
+         8c3SaIFDVIHcXscBPXWM5Rm8JuLdV2YnWDQ33L95qyhdoiACp8O8n3/oFXEUyIMIBaGd
+         PFTacgBwZIyS3jQHDppUy2tDaYZhoNqol8ww9P1G+IxVmo5eWe7Z/Dd51KkmkZBTC2RD
+         i+88K0ixhcTsA4QDWSlrTolhDsFbmCTdNrAxFOJtvUCZIKgBSRRmHJSYhx+2Kk2Z9lMO
+         ZZGB41gmc1l04kSOuljdeCADGR9Zv9mdnlRgyl5Y8bJgjgrEbZg/9T3kuO8Qp7gzNLOX
+         KvZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777877165; x=1778481965;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:from:references:cc:to:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EOccawuCoFWsjijYdwToilKKz9XDVnegxFTh6EZHPuU=;
-        b=Rw0SER1+jsnf4wZdNaEix8jwRRQJOlf3Gs7bbtB3uKg0ESTrzsdcZ63IFOkfFOzpwB
-         /UXxuFMpOPrTQV+1jhfU7MpepqUWfmOhfRdAFZQ5AHI7pQAHw5/kK5bi7nBAFftyQn3V
-         21THrZHciTXnFr1mfXpgTIDt3x10mscWw8JnO8aMNPgkVDZJca0lkOyvmj03ssu8i4+w
-         5WlpXCXVhSsb/Xjc8y8Vpi+Je77u3030PSyaK/dtypQI5jl/tNhT57f6O69fgBPjx47i
-         wk8lpomvX8ecnXEVyysmzHdq3j9TLfhfkW6XcLqLAvXF3/2C8HHNnlhgrqXlWk7fLKD1
-         KEDg==
-X-Gm-Message-State: AOJu0YzlRRdKMkugVvBqgl4MVxshZCCezsiEUisl1yFmz5tmrXg8cl3O
-	6RMybJ7BjKjeLPjYpXs+ifOXAgwju+TIVNbvDnTGHFsNJLWWsf7jXYxjuKPLCKhaxOIXvJEheGk
-	YiLlPVWc=
-X-Gm-Gg: AeBDietCQ5XIBWDUb/CI2CyT5+NnQmraakvnRaHok5nOMvbx67ab6xvsa+dQgVV/BgC
-	B1yTTLkv2t8ENiLflixOAwnz3uDIXhbFsN7FJU5UFzQctQ+EcmAcPDQs+OmF7nBRlCHdmu0LrMZ
-	vdbdEOMKUP+9Bh3pHP1616RcfezEwazkzjdL8WOz/qY4G1jXP4eE1UC48KU02vjTLHAeg1Vpmhn
-	0i5WQgdkBCLYmdS/zbfO6Yx+vx/Baw/GAgn6vYgDZeknxGV9lkimsJPDv1JdlgFC/AbeOeGqulM
-	gDhOg5Ikjs2wyx+skjXJYfpzZLhOhd5brNb9ziAnTW+4UbXsaNjSR2JPHbEzLNDto7QTCwi87pk
-	4/0GP+w6MdhiFedh92h3pcMDz679ov7HTbb/RAyYuSAtA/Us9+nF08/9L4Jsx3C1b0cV51MOevH
-	WuqwYPhHWxvZ5i9IBy4QUxnfu475f1D0xtIZJE5ZQ3POD9N6XIudVKlrD5LOe79/xsdtAguMSv4
-	q3Xe7dXaSsGECzjiA==
-X-Received: by 2002:a05:6000:2003:b0:44a:2509:fbf with SMTP id ffacd0b85a97d-44bb63f5834mr12677316f8f.21.1777877165312;
-        Sun, 03 May 2026 23:46:05 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:4245:af61:1735:3752? ([2a01:e0a:106d:1080:4245:af61:1735:3752])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-44a8ef50e59sm22923096f8f.10.2026.05.03.23.46.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 03 May 2026 23:46:04 -0700 (PDT)
-Message-ID: <d774b2f2-75f8-485f-830f-2a7a5dac1c23@linaro.org>
-Date: Mon, 4 May 2026 08:46:08 +0200
+        d=1e100.net; s=20251104; t=1777877385; x=1778482185;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yVsm+TRR/LSV+0LR5+0IS9wjC6UrD1tiA6O29Yv9hMw=;
+        b=PGqGMX5Dm3Pd/xDMjY9MxHCz/s4dVSqPC2iYg+DauH/aYbdmYP9893nKLucs/vwh4i
+         OyR4v56/Pb6kWzpnQ24iq2E3rSsmFws9du30F//aJas4s1ICzXU5U5N4psUfQhArw14s
+         XWWDBBMesVCylWKjI1+36Gki7sB0xSNHT1Ozo0/6qjL5GkSlgMj/Z/t1qNwZOLOna0VN
+         4F7zcDOmvZCOupybJUZyI+n15BoUXssBKO/cyDaBCPtc0o75y8bRKxstGofjQ8tmcRHq
+         +01X16+1IROgS9RWzK7Z66nI10bCVlEPyqVCG4q7DdxdOuWNuLAU5EHqHnxihwKdPk6E
+         3zIQ==
+X-Gm-Message-State: AOJu0YyyVZS0oGx5sDD2RXQ+L58LRW8mHVWOmbX79dxwwsLUSBN5MEmM
+	kkpADIIEvvHmkytl+E+N80tW8hNMQiPsTnPcak7EvuvJewiX0BV9n03yFzdTaa8ZGkly95MzE72
+	CVH8LspubARrJjkHb+X6lxGkgqRo0wtNFeQYJnaTSM2IfQm7hX5ldJBzK0ANKPFyqtQnx
+X-Gm-Gg: AeBDievY3Bt0mZ5szXmIyCypoEbf78UvgPEfM0IOlTaBAOdvhDskobGPHe8+Ir2ORJo
+	wQacL0GtIjkV0CI5TvjbVhjjBwxGbpqeof7smZEEPuXGCMFJ6y30+4AP6tg0zFnt2WSHXIYji5f
+	Pp+Gls5XacdG8H+RofbSZPq4AMLev7+RoJCQ9oWx7OEOJh6D1apqlSLgo0YeLbNqz7w+CRyIMlt
+	GmJ6YoQhAV6ec0LS0VOBYuiF1+mup31m17++OynajJBuCsG+UMo0kMHDP6p8HJ5IURe3S51QRJN
+	AutA6ulmiWE34cVcw6ejQj84O6n6U61Vs5mvYOxvxVYUgi2A8NWV073d4sZXFrbI74aKsg43fyy
+	CiOwv+tADX/+AEdgUbRtQn5iyrfvJy5hW4Hw+QSizF7aIjB89ToqtQ0epIWLOmOuFlw==
+X-Received: by 2002:a05:6a20:6a26:b0:3a3:21db:8ef1 with SMTP id adf61e73a8af0-3a7f00dc3f9mr7117001637.4.1777877384587;
+        Sun, 03 May 2026 23:49:44 -0700 (PDT)
+X-Received: by 2002:a05:6a20:6a26:b0:3a3:21db:8ef1 with SMTP id adf61e73a8af0-3a7f00dc3f9mr7116989637.4.1777877384060;
+        Sun, 03 May 2026 23:49:44 -0700 (PDT)
+Received: from hu-swatagar-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c7ffbba73e1sm8470681a12.1.2026.05.03.23.49.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 May 2026 23:49:43 -0700 (PDT)
+From: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+Subject: [PATCH v3] dt-bindings: pinctrl: qcom: move gpio-hog schema to tlmm-common
+Date: Mon,  4 May 2026 12:19:36 +0530
+Message-Id: <20260504064936.2754570-1-swati.agarwal@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH] usb: dwc3: qcom: Modify interrupt handling for EUSB2 Phy
- targets
-To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260502095616.666938-1-krishna.kurapati@oss.qualcomm.com>
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20260502095616.666938-1-krishna.kurapati@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: E214F4B8FB3
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: vTn1QIrOhS_Fj9rk2RWKCbI9OSqVP8t9
+X-Proofpoint-ORIG-GUID: vTn1QIrOhS_Fj9rk2RWKCbI9OSqVP8t9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDA3MSBTYWx0ZWRfXw64B1br6jRMv
+ 1zypwo4/MVahF44lNv9YFEvsTaByZ4LYT745APVjVHChiJUddEb6oUmHNHIl617MXo0QtJ3qEPR
+ 2By8o6S2AKLY7lZ7G6XApHMjsyzbyeZiONzJZ9rDOmMAXlZNdnkZmkG1fOzYcJmT1aFSpTuy+Tw
+ ocgJDVW5O3w8CUZeoBZZO1GFAWJ1FjYm4vLLnYPW46lGaKvUbdfHlDBmgZlpw8jMOvenP82mCVA
+ AobuFxpsLmzFRXkvqgc/OWAVVf+lu5s1qpwJ4rDMwdC1f+OcRJfm4zJ8t0pAfSDTRadiomSzFvW
+ +oaIC/O0TSlpQUnocsOII5mKoM2CDuxztfpLN11NtQhVu6+j6H3bB/CmEnGuTkoaGZGPDHXxrRj
+ GTOLFApcXTk/Wfsp1wulrghXNRIEaBTyEquxnBCFtQtMv+pvic7OyXUJcx4iHkVIWn/kgDYeqcH
+ jd5PyOnTEI58A8hbGjg==
+X-Authority-Analysis: v=2.4 cv=ScjHsPRu c=1 sm=1 tr=0 ts=69f8418d cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=nYjtv9ulD0oZlCtruZkA:9 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-04_02,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 malwarescore=0
+ impostorscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605040071
+X-Rspamd-Queue-Id: A007B4B9001
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105641-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
-	MIME_TRACE(0.00)[0:+];
-	HAS_ORG_HEADER(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[swati.agarwal@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
-	REPLYTO_EQ_FROM(0.00)[]
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105642-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	NEURAL_HAM(-0.00)[-0.999];
+	PRECEDENCE_BULK(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-Hi,
+Qualcomm TLMM-based pin controllers share the same gpio-hog binding
+semantics across multiple SoCs. The gpio-hog pattern currently defined in
+qcom,ipq4019-pinctrl.yaml and qcom,sdm845-pinctrl.yaml are not SOC specific
+and applies to all TLMM controllers.
 
-On 5/2/26 11:56, Krishna Kurapati wrote:
-> Modify interrupt handling for EUSB2 Phy targets. Enable DP Interrupt
-> when an Low speed device is connnected and enable DM interrupt when
-> a High Speed/ Full Speed device is connected.
+Move the gpio-hog patternProperties definition to qcom,tlmm-common.yaml so
+that it can be reused by other Qualcomm TLMM pinctrl bindings and avoid
+schema duplication.
 
-Could you explain _why_ and not the content of the patch ?
+Signed-off-by: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+---
+Changes in v3:
+Move the gpio-hog patternProperties for qcom,ipq4019-pinctrl.yaml to
+qcom,tlmm-common.yaml.
 
-> 
-> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-> ---
-> Tested remote wakeupon Glymur device by button press from a headset
-> connected to both Type-C and Type-A ports.
-> 
->   drivers/usb/dwc3/dwc3-qcom.c | 63 ++++++++++++++++++++++++++++++------
->   1 file changed, 54 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index f43f73ac36ff..5956821eab45 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -60,6 +60,10 @@ static const u32 pwr_evnt_irq_stat_reg[DWC3_QCOM_MAX_PORTS] = {
->   	0x238,
->   };
->   
-> +struct dwc3_qcom_platform_data {
-> +	bool			uses_eusb2_phy;
-> +};
-> +
->   struct dwc3_qcom_port {
->   	int			qusb2_phy_irq;
->   	int			dp_hs_phy_irq;
-> @@ -85,6 +89,7 @@ struct dwc3_qcom {
->   	struct icc_path		*icc_path_apps;
->   
->   	enum usb_role		current_role;
-> +	bool			uses_eusb2_phy;
->   };
->   
->   #define to_dwc3_qcom(d) container_of((d), struct dwc3_qcom, dwc)
-> @@ -272,15 +277,21 @@ static void dwc3_qcom_disable_wakeup_irq(int irq)
->   	disable_irq_nosync(irq);
->   }
->   
-> -static void dwc3_qcom_disable_port_interrupts(struct dwc3_qcom_port *port)
-> +static void dwc3_qcom_disable_port_interrupts(struct dwc3_qcom *qcom, int i)
->   {
-> +	struct dwc3_qcom_port *port = &qcom->ports[i];
-> +
->   	dwc3_qcom_disable_wakeup_irq(port->qusb2_phy_irq);
->   
->   	if (port->usb2_speed == USB_SPEED_LOW) {
-> -		dwc3_qcom_disable_wakeup_irq(port->dm_hs_phy_irq);
-> +		dwc3_qcom_disable_wakeup_irq(qcom->uses_eusb2_phy ?
-> +					     port->dp_hs_phy_irq :
-> +					     port->dm_hs_phy_irq);
->   	} else if ((port->usb2_speed == USB_SPEED_HIGH) ||
->   			(port->usb2_speed == USB_SPEED_FULL)) {
-> -		dwc3_qcom_disable_wakeup_irq(port->dp_hs_phy_irq);
-> +		dwc3_qcom_disable_wakeup_irq(qcom->uses_eusb2_phy ?
-> +					     port->dm_hs_phy_irq :
-> +					     port->dp_hs_phy_irq);
->   	} else {
->   		dwc3_qcom_disable_wakeup_irq(port->dp_hs_phy_irq);
->   		dwc3_qcom_disable_wakeup_irq(port->dm_hs_phy_irq);
-> @@ -289,8 +300,10 @@ static void dwc3_qcom_disable_port_interrupts(struct dwc3_qcom_port *port)
->   	dwc3_qcom_disable_wakeup_irq(port->ss_phy_irq);
->   }
->   
-> -static void dwc3_qcom_enable_port_interrupts(struct dwc3_qcom_port *port)
-> +static void dwc3_qcom_enable_port_interrupts(struct dwc3_qcom *qcom, int i)
->   {
-> +	struct dwc3_qcom_port *port = &qcom->ports[i];
-> +
->   	dwc3_qcom_enable_wakeup_irq(port->qusb2_phy_irq, 0);
->   
->   	/*
-> @@ -303,11 +316,19 @@ static void dwc3_qcom_enable_port_interrupts(struct dwc3_qcom_port *port)
->   	 */
->   
->   	if (port->usb2_speed == USB_SPEED_LOW) {
-> -		dwc3_qcom_enable_wakeup_irq(port->dm_hs_phy_irq,
-> +		dwc3_qcom_enable_wakeup_irq(qcom->uses_eusb2_phy ?
-> +					    port->dp_hs_phy_irq :
-> +					    port->dm_hs_phy_irq,
-> +					    qcom->uses_eusb2_phy ?
-> +					    IRQ_TYPE_EDGE_RISING :
->   					    IRQ_TYPE_EDGE_FALLING);
->   	} else if ((port->usb2_speed == USB_SPEED_HIGH) ||
->   			(port->usb2_speed == USB_SPEED_FULL)) {
-> -		dwc3_qcom_enable_wakeup_irq(port->dp_hs_phy_irq,
-> +		dwc3_qcom_enable_wakeup_irq(qcom->uses_eusb2_phy ?
-> +					    port->dm_hs_phy_irq :
-> +					    port->dp_hs_phy_irq,
-> +					    qcom->uses_eusb2_phy ?
-> +					    IRQ_TYPE_EDGE_RISING :
->   					    IRQ_TYPE_EDGE_FALLING);
->   	} else {
->   		dwc3_qcom_enable_wakeup_irq(port->dp_hs_phy_irq,
-> @@ -324,7 +345,7 @@ static void dwc3_qcom_disable_interrupts(struct dwc3_qcom *qcom)
->   	int i;
->   
->   	for (i = 0; i < qcom->num_ports; i++)
-> -		dwc3_qcom_disable_port_interrupts(&qcom->ports[i]);
-> +		dwc3_qcom_disable_port_interrupts(qcom, i);
->   }
->   
->   static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
-> @@ -332,7 +353,7 @@ static void dwc3_qcom_enable_interrupts(struct dwc3_qcom *qcom)
->   	int i;
->   
->   	for (i = 0; i < qcom->num_ports; i++)
-> -		dwc3_qcom_enable_port_interrupts(&qcom->ports[i]);
-> +		dwc3_qcom_enable_port_interrupts(qcom, i);
->   }
->   
->   static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
-> @@ -609,6 +630,7 @@ struct dwc3_glue_ops dwc3_qcom_glue_ops = {
->   
->   static int dwc3_qcom_probe(struct platform_device *pdev)
->   {
-> +	const struct dwc3_qcom_platform_data *pdata;
->   	struct dwc3_probe_data	probe_data = {};
->   	struct device		*dev = &pdev->dev;
->   	struct dwc3_qcom	*qcom;
-> @@ -624,6 +646,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
->   
->   	qcom->dev = &pdev->dev;
->   
-> +	pdata = device_get_match_data(dev);
-> +	if (pdata)
-> +		qcom->uses_eusb2_phy = pdata->uses_eusb2_phy;
-> +
->   	qcom->resets = devm_reset_control_array_get_optional_exclusive(dev);
->   	if (IS_ERR(qcom->resets)) {
->   		return dev_err_probe(&pdev->dev, PTR_ERR(qcom->resets),
-> @@ -838,8 +864,27 @@ static const struct dev_pm_ops dwc3_qcom_dev_pm_ops = {
->   	.prepare = pm_sleep_ptr(dwc3_qcom_prepare),
->   };
->   
-> +static const struct dwc3_qcom_platform_data dwc3_qcom_pdata = {
-> +	.uses_eusb2_phy = false,
-> +};
-> +
-> +static const struct dwc3_qcom_platform_data dwc3_qcom_glymur_pdata = {
+Changes in v2:
+Move the gpio-hog patternProperties definition to qcom,tlmm-common.yaml
 
-SM8550 was the first QCom upstream SoC to use eUSB, should it be covered as well like SM8650, X1, ... ?
+Link to v2:
+https://lore.kernel.org/all/20260430140118.3684018-1-swati.agarwal@oss.qualcomm.com/
 
-Thanks,
-Neil
+Link to v1:
+https://lore.kernel.org/all/20260417152014.3000797-1-swati.agarwal@oss.qualcomm.com/
+---
+ .../devicetree/bindings/pinctrl/qcom,ipq4019-pinctrl.yaml   | 5 -----
+ .../devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml    | 5 -----
+ .../devicetree/bindings/pinctrl/qcom,tlmm-common.yaml       | 6 ++++++
+ 3 files changed, 6 insertions(+), 10 deletions(-)
 
-> +	.uses_eusb2_phy = true,
-> +};
-> +
->   static const struct of_device_id dwc3_qcom_of_match[] = {
-> -	{ .compatible = "qcom,snps-dwc3" },
-> +	{
-> +		.compatible = "qcom,snps-dwc3",
-> +		.data = &dwc3_qcom_pdata,
-> +	},
-> +	{
-> +		.compatible = "qcom,glymur-dwc3",
-> +		.data = &dwc3_qcom_glymur_pdata,
-> +	},
-> +	{
-> +		.compatible = "qcom,glymur-dwc3-mp",
-> +		.data = &dwc3_qcom_glymur_pdata,
-> +	},
->   	{ }
->   };
->   MODULE_DEVICE_TABLE(of, dwc3_qcom_of_match);
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq4019-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,ipq4019-pinctrl.yaml
+index cc5de9f77680..de9a3e67e1bb 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,ipq4019-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,ipq4019-pinctrl.yaml
+@@ -36,11 +36,6 @@ patternProperties:
+             $ref: "#/$defs/qcom-ipq4019-tlmm-state"
+         additionalProperties: false
+ 
+-  "-hog(-[0-9]+)?$":
+-    type: object
+-    required:
+-      - gpio-hog
+-
+ $defs:
+   qcom-ipq4019-tlmm-state:
+     type: object
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
+index 4fcac2e55b55..3b33daedc018 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm845-pinctrl.yaml
+@@ -42,11 +42,6 @@ patternProperties:
+             $ref: "#/$defs/qcom-sdm845-tlmm-state"
+         additionalProperties: false
+ 
+-  "-hog(-[0-9]+)?$":
+-    type: object
+-    required:
+-      - gpio-hog
+-
+ $defs:
+   qcom-sdm845-tlmm-state:
+     type: object
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
+index aae3dcf6cac8..aec72e8c0621 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
+@@ -51,6 +51,12 @@ properties:
+       should not be accessed by the OS. Please see the ../gpio/gpio.txt for more
+       information.
+ 
++patternProperties:
++  "-hog(-[0-9]+)?$":
++    type: object
++    required:
++      - gpio-hog
++
+ allOf:
+   - $ref: pinctrl.yaml#
+ 
+-- 
+2.34.1
 
 
