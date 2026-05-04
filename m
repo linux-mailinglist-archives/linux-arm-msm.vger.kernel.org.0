@@ -1,420 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-105724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MK6YLkaV+GnnwgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 14:47:02 +0200
+	id mMjONO2W+GknwwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 14:54:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4182E4BD2F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 14:47:02 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DE5E4BD448
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 14:54:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E76293018BF0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2026 12:47:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id AE830300427A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2026 12:54:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5931A3D6497;
-	Mon,  4 May 2026 12:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AFE3378818;
+	Mon,  4 May 2026 12:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gypJRpE0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gDRtmbkw";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WA1DjeZY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0049B3D331A
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2026 12:46:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCF33793D2
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2026 12:54:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777898820; cv=none; b=MkfICDH6aoLpZGEPY461mJMIAKaETQ3oG6hJrsaZGSFA7TqajjbPcURWxgmirvWl2+OC6BMZBlmndB/yTobu60QVOmXKA6wlg8vJ6qOoHGKYZKLnOA2yPpsyYzHMCnAabwCAOS06Dud5EjFqYMhy1sctAJGSYKOu9x46TBgTp5I=
+	t=1777899243; cv=none; b=EQlRHBsLeqtPfxM3HeNaI/BgjIpgLavx6x6zPilDEX760/gWHhrDInMnO2tsSJHBaTIgbPX+1CCBfWdZnikGTzApjnS6mAvAovKVcoyEDr6g9dl0SuMzlpOjwabmTVZmpBRUgdusVOJ0qNTMnznbdqbCdieOdkwReqTbDFoPKIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777898820; c=relaxed/simple;
-	bh=rqUjvxcIwiqSouVgzp0n5ZgMfAUUu7DpPnpF7Rlw/9s=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RSBKtWIUkPAs0IB9vJpUqlbE5CVOVzRtC1Q/B0jPN+mKOaeTuuR43Ri5zvIlv3G4kZqQxxIPKuLHVnVWimbrO6s3RAM8cKdP+Ii+tdM3x0qrU5LRfSgcT6onfVPicAafiITXj4Vv6rYooVt0uUPiFN+m+uywALBYlGlXFvNqqFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gypJRpE0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3CB2C2BCF5
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2026 12:46:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777898819;
-	bh=rqUjvxcIwiqSouVgzp0n5ZgMfAUUu7DpPnpF7Rlw/9s=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=gypJRpE0BfdEBK4I3Qaai/ZVuSdx7fxVmEsfkAuxMqhr7judDppscPP+smLIbOCL8
-	 7VggIg101zBN7Ohj3RcanMfV5/5JI9HzN3U62nGZDWOFKrFq3+Q+zCX8rnQmB7W/3o
-	 L4wVCbIozUEg6Km7qcklUZVhysyhCnckl63WgY6Ajv8cB+bViVRw5VM//09ml15VM/
-	 AEiJ89XAGwx1dZaFemSGY8Z83Entm2Uwu6YnDloAYLMGnbfke2WX9ug2rjdrDi63ty
-	 zUwFEOqAef0QWOP4tzdLTCbRjuTEdZlaEiPfITK7Rr5plVcufuXs4TVyoUcfVmMzyq
-	 mW1OF/lYZeLsw==
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-393800f638bso14545181fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2026 05:46:59 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ9nSywShhbie0DT1aXmP30BaZVwz7SwQp9b4mKfYaLpBLVY3eCpXSS/7/kzoElFgxT6jJRLCt+Px82JIoXF@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz4SjQ2ltwTzSzdHANWnFQMKQC2x2evH/xgkd8XpRsaQ8CiUkcz
-	SqaiO4uK/hpbTTn1xr7t3ph7STXXYKd3uSU/+EzjaM/E+urTm5a6WirhHjcV1NbJwOShHMMr+DG
-	siSOhHPLhP2E4axD1TjEvXCxRcUNWwEbeIirvg2iDNw==
-X-Received: by 2002:a2e:bc85:0:b0:38e:dd8e:d213 with SMTP id
- 38308e7fff4ca-393785df5ebmr29416331fa.27.1777898818194; Mon, 04 May 2026
- 05:46:58 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 4 May 2026 12:46:56 +0000
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 4 May 2026 12:46:56 +0000
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20260501155421.3329862-10-elder@riscstar.com>
+	s=arc-20240116; t=1777899243; c=relaxed/simple;
+	bh=bUE5xlfJ8aUvjxSfillnSt6bWESVidtjA+1zJccVmAk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CLk2H3a2a0qPhbh8uuuB4BUPixB7rfOHoZAwhOSZjs3Tg/5oD03U1E4ux0qcWgAi/4FfNOHdov2U1K7kWZ5dSVzYBGK/wnjMHazUiyixuefkghBUpBgPrkc49Iavr/y7/S07YlA21kqNCCLLPbJZtLoRBbz4SLhzdwa5/o5dvcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gDRtmbkw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WA1DjeZY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 644B43KS4160055
+	for <linux-arm-msm@vger.kernel.org>; Mon, 4 May 2026 12:54:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Ix2NDymW/i1FV+tC3k75uMGr7xSTvQjTuPjMK1bZkvs=; b=gDRtmbkwEhkUDzcH
+	mjoewCBoxt73SG8T1jqSGd0VmB1AMVGHnh0cZ6lo6CeO+ZjSU541VjSomLatDA6w
+	Bse7Z8o/Qe/3ucolMkiwW+cbtR8qr7PNmnhNiQQyfgsB/L9EeobUrQ1MkGaxm1RM
+	0JP9E7Dbu+Sz9lz8azWj9gJUNIpPDdHqWgKZxoNc3yMmHqornXVstu3iTKsY5pBQ
+	8R6TMnPAAxomOkefcnZ0m2gXjjig4Pr5zLbgBmsB3VB8LxN41/EcMZGN1M0WyP48
+	cCJaWLA/Y0TrVobOWelyG0sV5PsCZyulclmYPS8OpxCSaaaUJQXSYHmOG7U6gxd5
+	Yyz/8w==
+Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com [209.85.221.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dw6yfe0vt-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2026 12:54:01 +0000 (GMT)
+Received: by mail-vk1-f197.google.com with SMTP id 71dfb90a1353d-56f6ee26adbso337573e0c.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2026 05:54:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1777899241; x=1778504041; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ix2NDymW/i1FV+tC3k75uMGr7xSTvQjTuPjMK1bZkvs=;
+        b=WA1DjeZY7m/YTCTtzevlB5NBdzIOTTDDm8v/afgiqtCQRkZdALSinhh2lAVc4e11DV
+         q+sVaHdBNheD9TNZzpiDifmsNGWz3GE4X0qJPVDuIogs1L4KGazKjPMfeI6aXpSxjQN7
+         6OETS3G11pXM2uyOuX2Qu/pi/JC9q+AYq145ZF8UkAzASKgFEz34GljYVLr7WfYmpLo0
+         4QMbfNqCXwDfDjipL8KLrNB2jlnrXmJ0JOqXhiq2Cay8f7KnjFvc6iDpW5GeL93G58cb
+         Mi1iGFiu/9iiPHg3OowFJIkvopD6RmnQRFdSl+IDmwg9xz+SWjHPQGfEeYNweqpu2G0s
+         U1ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777899241; x=1778504041;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ix2NDymW/i1FV+tC3k75uMGr7xSTvQjTuPjMK1bZkvs=;
+        b=POxMtTsUXCJxFGDEi3F0/y2nffL5kY3zno66anlW5e3WP7E/Y35rp5yIqhtv6T2teq
+         62A0Ng9+b2uGhK7Tq8/gRvMFejg703oFwtRHl4OLFrgeG8A4qkFZNP1dfN0JQM7dhi6Q
+         qb7PlCk8I5dqgaPRFJfldeC8LH6j1G2Vv4ToXhAM/p5lmfxod/f6mkELiBUYp2kOrdL7
+         5sKLsd8P6i+BAe/154YvEwVM3BSjo+zKaDPzDlsIpKFVH2GaYAkxuVViY+6E54RIqHNK
+         /keCRnZ+drb0aLEP5TNpouIouNLyELkl00U7guN4qYDNaKmZgjdOZ0PlLG4oMOrTIcgJ
+         UVgQ==
+X-Gm-Message-State: AOJu0YyCgaxKqVLPAgI4o+zrjwXsTJ4yWj+l+gPxp5WkapNhDAGLv1nt
+	RPmqN/fUuanTkyV1nsKApxtQYqMif3MjNOpC33dzc0nW6KJRnmNzi8OLlTrAiqDeyh9Xcndxlwc
+	ghrWcHEkUJddJJMp51NpwtX3ypwBrcUkP2wt2nNvJ3xQiqb1dPxMtnD7W49g7uIqTaNWH
+X-Gm-Gg: AeBDiesMIilWxUE6R9VM8EG4fCnGHsl/AWK4w55L2x/SBMIwIqozDL6FMUOU8KouCnA
+	HC/i/FB2TAw/UYQjCYxa435LOPqCOxWZFpdS8XSsAcvc4Mw2bWjHDGTZAAKALGnJSdVB37a2Cm3
+	Miqzh6UiFJVWMi3jQJ1RXafl859dqZlKkVE6N6Ys6OSJQrIogRIaALGUzhYv0dBXxYuxpsiL/ib
+	qNOxFVvq4fRj0cd4CHYLN7HZ9t6+NLWakUctpZ5kC40sTR5bQbjFyoQCY3a0I5SG6tuHBu5mlpV
+	7Rl6mHwN+pcpXjpjIuO7d8+JV6j0pnYQMsErGUEolI89PQuKRKm1c9OTS+NZr9PDJP4qWNVKq3b
+	L8tR8bJikuceDhn5F4Wt7yOcXHS0DmtJ3Crt99g8YWZ1pWk1oPeia2MfPdrBNKtdkp/lbG45XV1
+	4RbzGeRuCNAdHFJw==
+X-Received: by 2002:ac5:c912:0:b0:56f:7eee:1914 with SMTP id 71dfb90a1353d-5750c517e6cmr1271330e0c.1.1777899240574;
+        Mon, 04 May 2026 05:54:00 -0700 (PDT)
+X-Received: by 2002:ac5:c912:0:b0:56f:7eee:1914 with SMTP id 71dfb90a1353d-5750c517e6cmr1271322e0c.1.1777899240208;
+        Mon, 04 May 2026 05:54:00 -0700 (PDT)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bc1dd343108sm139715066b.63.2026.05.04.05.53.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 May 2026 05:53:59 -0700 (PDT)
+Message-ID: <0edacb23-a132-4f9c-be4f-ea3326c8d8a2@oss.qualcomm.com>
+Date: Mon, 4 May 2026 14:53:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260501155421.3329862-1-elder@riscstar.com> <20260501155421.3329862-10-elder@riscstar.com>
-Date: Mon, 4 May 2026 12:46:56 +0000
-X-Gmail-Original-Message-ID: <CAMRc=McWXCqyv1LmWMuEMmE3HqaURx_eMD8rkDs9AJT+7W2aYw@mail.gmail.com>
-X-Gm-Features: AVHnY4L8JCAMw1XcvfyTBeV19iii982i6k_b0CsUw3tYvQ3XSnjDUNr1XEgVtqw
-Message-ID: <CAMRc=McWXCqyv1LmWMuEMmE3HqaURx_eMD8rkDs9AJT+7W2aYw@mail.gmail.com>
-Subject: Re: [PATCH net-next 09/12] gpio: tc956x: add TC956x/QPS615 support
-To: Alex Elder <elder@riscstar.com>
-Cc: daniel@riscstar.com, mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com, 
-	alexandre.torgue@foss.st.com, ast@kernel.org, boon.khai.ng@altera.com, 
-	chenchuangyu@xiaomi.com, chenhuacai@kernel.org, daniel@iogearbox.net, 
-	hawk@kernel.org, hkallweit1@gmail.com, inochiama@gmail.com, 
-	john.fastabend@gmail.com, julianbraha@gmail.com, livelycarpet87@gmail.com, 
-	matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc, 
-	prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com, 
-	rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn, 
-	weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org, 
-	bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com, 
-	kuba@kernel.org, pabeni@redhat.com, maxime.chevallier@bootlin.com, 
-	rmk+kernel@armlinux.org.uk, andersson@kernel.org, konradybcio@kernel.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, linusw@kernel.org, 
-	brgl@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org
-Content-Type: text/plain; charset="UTF-8"
-X-Rspamd-Queue-Id: 4182E4BD2F2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/4] arm64: dts: qcom: monaco: Add monaco-ac EVK board
+To: Umang Chheda <umang.chheda@oss.qualcomm.com>, andersson@kernel.org,
+        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, richardcochran@gmail.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Faruque Ansari <faruque.ansari@oss.qualcomm.com>
+References: <20260427170505.1494703-1-umang.chheda@oss.qualcomm.com>
+ <20260427170505.1494703-4-umang.chheda@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260427170505.1494703-4-umang.chheda@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: aH9ZpYvSBxrnR3GYVK_2LKxct1ZuOC46
+X-Proofpoint-GUID: aH9ZpYvSBxrnR3GYVK_2LKxct1ZuOC46
+X-Authority-Analysis: v=2.4 cv=QY5WeMbv c=1 sm=1 tr=0 ts=69f896e9 cx=c_pps
+ a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=1dUBD55Cnpq4SFnWJt8A:9 a=QEXdDO2ut3YA:10 a=tNoRWFLymzeba-QzToBc:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDEzNiBTYWx0ZWRfX7I1cD8ycnAIf
+ n4uedKzKHjPyhfdQSKwITOLm1aifOv9Za/LGL4NO5wGxuWEzEGPHozXwVvY4+UhyH9MRNdrf/dk
+ n36fnfpLl4kKKUCxKE5GjJaWg9G6h22GfblBuIT4mAXFKhYa9x2tSkIfM50AUN3z1GPVx+ofH0I
+ 0LI3oQ3irqDPmypFmIdRKiG2vZlTVZqLmAMibuyEtay7b4nTF37Cw8kEUEKeCrE5GOj5EPaH9ZP
+ 5MmUMItFrHsKzcRm7vEL0Ygl3+x79AyZcRX2srqLk8EjS+UnvOdocsK06/hRZzpHBBcwHtxfeZ3
+ xdk016VL3DrtrlGUhNFNCfTxOdaP4k/jhZCwqb7UdP+fFBLc2oJrRIvuUhvYUVL1MtPr7afYF5u
+ OfNA/xprRpO8sOh5EVgGJrE2RU6IROSPt9jxde5VvcQnKJkmdl5cQoSfFYJ72T8rnpChQ2x5tzo
+ Q13pKjloNo1+B8MNF5g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-04_04,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
+ bulkscore=0 clxscore=1015 adultscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605040136
+X-Rspamd-Queue-Id: 4DE5E4BD448
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,kernel.org,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,lunn.ch,davemloft.net,google.com,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,riscstar.com:email];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-105724-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_FROM(0.00)[bounces-105725-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[50];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 
-On Fri, 1 May 2026 17:54:17 +0200, Alex Elder <elder@riscstar.com> said:
-> Toshiba TC956x is an Ethernet-AVB/TSN bridge and is essentially
-> a small and highly-specialized SoC.  TC956x includes a GPIO block that
-> can be accessed, alongside several other peripherals, via two PCIe
-> endpoint functions.  The PCIe function driver creates an auxiliary
-> device for the GPIO block, and that device gets bound to this auxiliary
-> device driver.
->
-> Co-developed-by: Daniel Thompson <daniel@riscstar.com>
-> Signed-off-by: Daniel Thompson <daniel@riscstar.com>
-> Signed-off-by: Alex Elder <elder@riscstar.com>
-> ---
->  drivers/gpio/Kconfig       |  11 ++
->  drivers/gpio/Makefile      |   1 +
->  drivers/gpio/gpio-tc956x.c | 209 +++++++++++++++++++++++++++++++++++++
->  3 files changed, 221 insertions(+)
->  create mode 100644 drivers/gpio/gpio-tc956x.c
->
-> diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-> index 020e51e30317a..746cedea7e91d 100644
-> --- a/drivers/gpio/Kconfig
-> +++ b/drivers/gpio/Kconfig
-> @@ -1646,6 +1646,17 @@ config GPIO_TC3589X
->  	  This enables support for the GPIOs found on the TC3589X
->  	  I/O Expander.
->
-> +config GPIO_TC956X
-> +	tristate "Toshiba TC956X GPIO support"
-> +	depends on TOSHIBA_TC956X_PCI
-> +	default m if TOSHIBA_TC956X_PCI
-> +	help
-> +	  This enables support for the GPIO controller embedded in the Toshiba
-> +	  TC956X (and Qualcomm QPS615).  This device connects to the host
-> +	  via PCIe port, which is the upstream port on an internal PCIe
-> +	  switch.  On some platforms, a few of the GPIO lines are used to
-> +	  manage external resets.
-> +
->  config GPIO_TIMBERDALE
->  	bool "Support for timberdale GPIO IP"
->  	depends on MFD_TIMBERDALE
-> diff --git a/drivers/gpio/Makefile b/drivers/gpio/Makefile
-> index b267598b517de..c3584e7cba9b4 100644
-> --- a/drivers/gpio/Makefile
-> +++ b/drivers/gpio/Makefile
-> @@ -178,6 +178,7 @@ obj-$(CONFIG_GPIO_SYSCON)		+= gpio-syscon.o
->  obj-$(CONFIG_GPIO_TANGIER)		+= gpio-tangier.o
->  obj-$(CONFIG_GPIO_TB10X)		+= gpio-tb10x.o
->  obj-$(CONFIG_GPIO_TC3589X)		+= gpio-tc3589x.o
-> +obj-$(CONFIG_GPIO_TC956X)		+= gpio-tc956x.o
->  obj-$(CONFIG_GPIO_TEGRA186)		+= gpio-tegra186.o
->  obj-$(CONFIG_GPIO_TEGRA)		+= gpio-tegra.o
->  obj-$(CONFIG_GPIO_THUNDERX)		+= gpio-thunderx.o
-> diff --git a/drivers/gpio/gpio-tc956x.c b/drivers/gpio/gpio-tc956x.c
-> new file mode 100644
-> index 0000000000000..12221d8f812d9
-> --- /dev/null
-> +++ b/drivers/gpio/gpio-tc956x.c
-> @@ -0,0 +1,209 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +
-> +/*
-> + * Copyright (C) 2026 by RISCstar Solutions Corporation.  All rights reserved.
-> + */
-> +
-> +/*
-> + * The Toshiba TC956X implements a PCIe Gen 3 switch that connects an
-> + * upstream x4 port to two downstream PCIe x2 ports.  It incorporates
-> + * an internal endpoint on a internal PCIe port that implements two
-> + * Synopsys XGMAC Ethernet interfaces.
-> + *
-> + * 35 GPIOs are also implemented by an embedded GPIO controller.  Three
-> + * registers control the first 32 GPIOs (other than 20 and 21, which are
-> + * reserved).  Three other registers control GPIOs 32 through 36. GPIOs
-> + * 22-24, 27-28, 31, and 34 are treated as "input only".
-> + *
-> + * There is a TC956X PCI power controller driver that accesses the
-> + * direction and output value registers for GPIOs 2 and 3.  These
-> + * GPIOs control the reset signal for the two downstream PCIe ports.
-> + * Their values will never change during operation of this driver, and
-> + * this driver reserves these two GPIOS.
-> + */
-> +
-> +#include <linux/auxiliary_bus.h>
-> +#include <linux/dev_printk.h>
+On 4/27/26 7:05 PM, Umang Chheda wrote:
+> Add initial device tree support for monaco-ac EVK board, based
+> on Qualcomm's monaco-ac (QCS8300-AC) variant SoC.
 
-This is implied by device.h which is guarnteed by platform_device.h. Please
-drop it.
+[...]
 
-> +#include <linux/gpio/driver.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +
-> +#define DRIVER_NAME		"tc956x-gpio"
-> +
-> +#define TC956X_GPIO_COUNT	37	/* Number of GPIOs (20-21 reserved) */
-> +
-> +/* The GPIO offsets are relative to 0x1200 in TC956X SFR space */
-> +#define GPIO_IN0_OFFSET		0x00		/* Input value (0-31) */
-> +#define GPIO_EN0_OFFSET		0x08		/* 0: out; 1: in (0-31) */
-> +#define GPIO_OUT0_OFFSET	0x10		/* Output value (0-31) */
-> +
-> +#define GPIO_IN1_OFFSET		0x04		/* Input value (32-36) */
-> +#define GPIO_EN1_OFFSET		0x0c		/* 0: out; 1: in (32-36) */
-> +#define GPIO_OUT1_OFFSET	0x14		/* Output value (32-36) */
-> +
-> +/*
-> + * struct tc956x_gpio - Information related to the embedded GPIO controller
-> + * @chip:		GPIO chip structure
-> + * @regmap:		MMIO register map for SFR GPIO region access
-> + * @input_only:		Bitmap indicating which GPIOs are input-only
-> + */
-> +struct tc956x_gpio {
-> +	struct gpio_chip chip;
-> +	struct regmap *regmap;
-> +	DECLARE_BITMAP(input_only, TC956X_GPIO_COUNT);
-> +};
-> +
-> +static int tc956x_gpio_get_direction(struct gpio_chip *gc, unsigned int offset)
-> +{
-> +	struct tc956x_gpio *gpio = gpiochip_get_data(gc);
-> +	u32 reg;
-> +	u32 val;
-> +
-> +	if (test_bit(offset, gpio->input_only))
-> +		return GPIO_LINE_DIRECTION_IN;
-> +
-> +	reg = offset < 32 ? GPIO_EN0_OFFSET : GPIO_EN1_OFFSET;
-> +
-> +	regmap_read(gpio->regmap, reg, &val);
-> +	if (val & BIT(offset % 32))
-> +		return GPIO_LINE_DIRECTION_IN;
-> +
-> +	return GPIO_LINE_DIRECTION_OUT;
-> +}
-> +
-> +static int tc956x_gpio_direction_input(struct gpio_chip *gc,
-> +				       unsigned int offset)
-> +{
-> +	u32 reg = offset < 32 ? GPIO_EN0_OFFSET : GPIO_EN1_OFFSET;
-> +	struct tc956x_gpio *gpio = gpiochip_get_data(gc);
-> +	u32 mask = BIT(offset % 32);
-> +
-> +	return regmap_update_bits(gpio->regmap, reg, mask, mask);
-> +}
-> +
-> +static int tc956x_gpio_direction_output(struct gpio_chip *gc,
-> +					unsigned int offset, int value)
-> +{
-> +	struct tc956x_gpio *gpio = gpiochip_get_data(gc);
-> +	u32 vreg;
-> +	u32 dreg;
-> +	u32 mask;
-> +
-> +	if (test_bit(offset, gpio->input_only))
-> +		return -EINVAL;
-> +
-> +	if (offset < 32) {
-> +		vreg = GPIO_OUT0_OFFSET;
-> +		dreg = GPIO_EN0_OFFSET;
-> +	} else {
-> +		vreg = GPIO_OUT1_OFFSET;
-> +		dreg = GPIO_EN1_OFFSET;
-> +	}
-> +	mask = BIT(offset % 32);
-> +
-> +	/* Set output value first, then direction */
-> +	regmap_update_bits(gpio->regmap, vreg, mask, value ? mask : 0);
-> +
-> +	return regmap_update_bits(gpio->regmap, dreg, mask, 0);
-> +}
-> +
-> +static int tc956x_gpio_get(struct gpio_chip *gc, unsigned int offset)
-> +{
-> +	u32 reg = offset < 32 ? GPIO_IN0_OFFSET : GPIO_IN1_OFFSET;
-> +	struct tc956x_gpio *gpio = gpiochip_get_data(gc);
-> +	u32 val;
-> +
-> +	regmap_read(gpio->regmap, reg, &val);
-> +
-> +	return val & BIT(offset % 32) ? 1 : 0;
-> +}
-> +
-> +static int tc956x_gpio_set(struct gpio_chip *gc, unsigned int offset, int value)
-> +{
-> +	u32 reg = offset < 32 ? GPIO_OUT0_OFFSET : GPIO_OUT1_OFFSET;
-> +	struct tc956x_gpio *gpio = gpiochip_get_data(gc);
-> +	u32 mask = BIT(offset % 32);
-> +
-> +	return regmap_update_bits(gpio->regmap, reg, mask, value ? mask : 0);
-> +}
-> +
-> +static int tc956x_gpio_init_valid_mask(struct gpio_chip *gc,
-> +				       unsigned long *valid_mask,
-> +				       unsigned int ngpios)
-> +{
-> +	/*
-> +	 * GPIOs 2 and 3 are used by the PCI power control driver, and
-> +	 * we don't allow them to be used.  GPIOs 20 and 21 are reserved
-> +	 * (and not usable).
-> +	 */
-> +	bitmap_fill(valid_mask, ngpios);
-> +	bitmap_clear(valid_mask, 2, 2);
-> +	bitmap_clear(valid_mask, 20, 2);
-> +
-> +	return 0;
-> +}
-> +
-> +static int tc956x_gpio_probe(struct auxiliary_device *adev,
-> +			     const struct auxiliary_device_id *id)
-> +{
-> +	struct device *dev = &adev->dev;
-> +	struct tc956x_gpio *gpio;
-> +	struct gpio_chip *gc;
-> +
-> +	if (!dev->platform_data)
-> +		return -EINVAL;
-> +
-> +	gpio = devm_kzalloc(dev, sizeof(*gpio), GFP_KERNEL);
-> +	if (!gpio)
-> +		return -ENOMEM;
 
-Add newline.
+> +&apps_rsc {
+> +	regulators-0 {
+> +		vreg_s4a: smps4 {
+> +			regulator-name = "vreg_s4a";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s9a: smps9 {
+> +			regulator-name = "vreg_s9a";
+> +			regulator-min-microvolt = <1352000>;
+> +			regulator-max-microvolt = <1352000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
 
-> +	gpio->regmap = dev->platform_data;
+Since these are on a PMIC that is present on both full and lite SKUs,
+are these rails also connected on the other one (perhaps with a
+different voltage setting)? Currently they're completely absent
 
-It's not clear whether this is an mmio regmap or a slow-bus one that can fail.
-In the code above you're checking the return values of regmap operations quite
-inconsistently. Could you please verify if you need it and either always check
-them or not at all?
-
-> +
-> +	/* Mark GPIOs 22, 23, 24, 27, 28, 31, and 34 as input only */
-> +	bitmap_set(gpio->input_only, 22, 3);
-> +	bitmap_set(gpio->input_only, 27, 2);
-> +	set_bit(31, gpio->input_only);
-> +	set_bit(34, gpio->input_only);
-> +
-> +	gc = &gpio->chip;
-> +
-> +	gc->label = DRIVER_NAME;
-> +	gc->parent = dev->parent;
-> +
-> +	gc->get_direction = tc956x_gpio_get_direction;
-> +	gc->direction_input = tc956x_gpio_direction_input;
-> +	gc->direction_output = tc956x_gpio_direction_output;
-> +	gc->get = tc956x_gpio_get;
-> +	gc->set = tc956x_gpio_set;
-> +	gc->init_valid_mask = tc956x_gpio_init_valid_mask;
-> +
-> +	gc->base = -1;
-> +	gc->ngpio = TC956X_GPIO_COUNT;
-> +	gc->can_sleep = false;
-
-This makes me think this is an MMIO regmap after all.
-
-> +
-> +	dev_set_drvdata(dev, gpio);
-
-There's no corresponding dev_get_drvdata().
-
-> +
-> +	return devm_gpiochip_add_data(dev, gc, gpio);
-> +}
-> +
-> +static const struct auxiliary_device_id tc956x_gpio_ids[] = {
-> +	{ .name = "tc956x_pci.tc9564-gpio", },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(auxiliary, tc956x_gpio_ids);
-> +
-> +static struct auxiliary_driver tc956x_gpio_driver = {
-> +	.name		= DRIVER_NAME,
-> +	.probe          = tc956x_gpio_probe,
-> +	.id_table       = tc956x_gpio_ids,
-> +	.driver = {
-> +		.name		= DRIVER_NAME,
-> +		.owner		= THIS_MODULE,
-> +		.probe_type	= PROBE_PREFER_ASYNCHRONOUS,
-> +	},
-> +};
-> +module_auxiliary_driver(tc956x_gpio_driver);
-> +
-> +MODULE_DESCRIPTION("Toshiba TC956X PCIe GPIO Driver");
-> +MODULE_LICENSE("GPL");
-> +MODULE_ALIAS("auxiliary:" DRIVER_NAME);
-> --
-> 2.51.0
->
->
-
-There are a few minor issues but overall looks good!
-
-Bart
+Konrad
 
