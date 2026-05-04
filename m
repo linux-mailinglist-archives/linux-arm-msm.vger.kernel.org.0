@@ -1,180 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-105764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +EToJVG7+Gnh0AIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 17:29:21 +0200
+	id SCtFLru5+Gnh0AIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 17:22:35 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AA2B4C0AFC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 17:29:21 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 134174C09D9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 17:22:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 776303012C77
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2026 15:27:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C05293004633
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2026 15:22:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 529513E025A;
-	Mon,  4 May 2026 15:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8186D3DFC94;
+	Mon,  4 May 2026 15:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wp.pl header.i=@wp.pl header.b="AcKMmLWK"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="GHXtwh5T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx3.wp.pl (mx3.wp.pl [212.77.101.9])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26DA3E022A
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2026 15:27:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.77.101.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF1F18A6CF;
+	Mon,  4 May 2026 15:22:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777908478; cv=none; b=Kfyu3aJUp2NNH7IVw5x9JXh4aH/a0Zgwr++lcBf+/5L8f9HYJEleotObmxP/g7sGWsOf5rerzlxhWu+/pb1FYtf1vVOajRnVkY1/X7apT6KWBKmBSkkKna2udlqGNhNjXjR3qpqQO/mddwMFUBVwo6VMgaoNRaSV3tZ6ZBVKADo=
+	t=1777908152; cv=none; b=LIVEZfpDX1MRsL9Jpcg/JmabHWApsZaMUDcHr6cB/irLldxWp3naFUI6oPpxfQ9hZViCDo398F5pHMnFVkDDF9eagiQ3WoMIZbA3Cj4DqViu0sIdwQtySCKR0DjBhruaVGipM2zHiNnQ+sA6/t5wk7qzbZ9Yv2AU+/vxykXy/ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777908478; c=relaxed/simple;
-	bh=9tXj5jzx0LJOIKHtlQ53NKu8/mNJfmhfr35XqM4lZdU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lVxujSLE3xjjpGhBmsNmS6BmoB2u8ekXScpscuzCU45HgTDaWPouE154KU1mhFfUOBxga9n5xeXWKg7IA5CTVcao4AdLp8AXH8o6krY07Z3/uZA17DBh1pC3dLh4zAcISR2GzU6VEZXP1pfLPCCZLPWUvMT3T1sq9DK1YA/74Gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wp.pl; spf=pass smtp.mailfrom=wp.pl; dkim=pass (2048-bit key) header.d=wp.pl header.i=@wp.pl header.b=AcKMmLWK; arc=none smtp.client-ip=212.77.101.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wp.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wp.pl
-Received: (wp-smtpd smtp.wp.pl 2671 invoked from network); 4 May 2026 17:27:47 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wp.pl; s=20241105;
-          t=1777908467; bh=1muykjFIIU6vgtZLfl4vZjG8zzlzTdgA63NBX5Jm6yI=;
-          h=From:To:Cc:Subject;
-          b=AcKMmLWKE21+r6LqDh3oZUDfmyZqDEmyB4TKvUNs2bRGhHR3q73nTtxOJH29dDc55
-           wPwC9pYSo9HMv/LlAISEDMGFJJGmGXEMigKN03D1Bs39oAr489I4H1U7lPyqKrUATs
-           B5fRNs4YopqY9JO32s5Zh2V+5AdS5N7A2MhCBqKQyiBgU3MvCU/r2xcHO+MtYIGQqa
-           bT0gpD3Oguma/bgwY+o/U07jUMm2KTyB2woJwRhHGbDUG2KHdj/OxgocRBeHDGw4Ce
-           ziSo2+TJiRb6gRarY6cqQaDJk9hbriqaJPkjavPoxl6GvzCJc1wpiobIrGTsWPTvFU
-           mGhYmR55hNLfQ==
-Received: from pub-142.188.multiplay.pl (HELO ad-Inspiron-14-5441) (adamszyma@wp.pl@[178.219.142.188])
-          (envelope-sender <adamszyma@wp.pl>)
-          by smtp.wp.pl (WP-SMTPD) with TLS_AES_256_GCM_SHA384 encrypted SMTP
-          for <linux-arm-msm@vger.kernel.org>; 4 May 2026 17:27:47 +0200
-From: Adam Szyma <adamszyma@wp.pl>
-To: linux-arm-msm@vger.kernel.org
-Cc: devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	robh@kernel.org,
-	conor+dt@kernel.org,
-	andersson@kernel.org,
-	quic_bjorande@quicinc.com,
-	val@packett.cool,
-	Adam Szyma <adamszyma@wp.pl>
-Subject: [PATCH] arm64: dts: qcom: Add Dell Inspiron 14 Plus 5441
-Date: Mon,  4 May 2026 17:08:12 +0200
-Message-ID: <20260504150812.15385-1-adamszyma@wp.pl>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1777908152; c=relaxed/simple;
+	bh=zqH6L+EG9wUTO7Qoyz4neBCPa6T/Ac/tjYvnTvOAB7Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lZtdD8bdcVGcgIRYH7s2qF4xWvQWVFCy/xxxmN1Ci7W+0gez/5+zNVBF5XeqKSzc2EM3LDvkE0403OgA/Rk2WdfrYT+BitRB05hXglhTm4lA5ysQ8Jg93szgjD8GWnMA5W1/LPPYXS8MSlSvSzmrEBzAECLAt0BbWSq2OATqS58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=GHXtwh5T; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from killaraus.ideasonboard.com (2001-14ba-703d-e500--2a1.rev.dnainternet.fi [IPv6:2001:14ba:703d:e500::2a1])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 183FC175;
+	Mon,  4 May 2026 17:22:26 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1777908146;
+	bh=zqH6L+EG9wUTO7Qoyz4neBCPa6T/Ac/tjYvnTvOAB7Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GHXtwh5T5BDC8Q9lFPK/5JEuWFjkhO2o8t8eJUO5EnQigc23poa+JjvgYhTAKT0fZ
+	 2WAfqiKfoaQQcpeFgC0FcTCWmZWo3te0QcHcWFshgYdHWgitgFsqCdYFkqpJQIapQY
+	 LQ0xWLVZ2ygWK/cNBfWeyY0dm7tXSECuDWeQGXVI=
+Date: Mon, 4 May 2026 18:22:26 +0300
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>, Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	John Stultz <jstultz@google.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Hui Pu <Hui.Pu@gehealthcare.com>,
+	Ian Ray <ian.ray@gehealthcare.com>,
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v4 08/11] drm/bridge: adv7511: switch to
+ of_drm_get_bridge_by_endpoint()
+Message-ID: <20260504152226.GB1455860@killaraus.ideasonboard.com>
+References: <20260504-drm-bridge-alloc-getput-panel_or_bridge-v4-0-b578c3daaf10@bootlin.com>
+ <20260504-drm-bridge-alloc-getput-panel_or_bridge-v4-8-b578c3daaf10@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-WP-DKIM-Status: good (id: wp.pl)                                                      
-X-WP-MailID: 4d69c8ef495984d62e34a26ec3d5f04b
-X-WP-AV: skaner antywirusowy Poczty Wirtualnej Polski
-X-WP-SPAM: NO 0000000 [8WM9]                               
-X-Rspamd-Queue-Id: 2AA2B4C0AFC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260504-drm-bridge-alloc-getput-panel_or_bridge-v4-8-b578c3daaf10@bootlin.com>
+X-Rspamd-Queue-Id: 134174C09D9
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[wp.pl,none];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[wp.pl:s=20241105];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[ideasonboard.com,none];
+	R_DKIM_ALLOW(-0.20)[ideasonboard.com:s=mail];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,quicinc.com,packett.cool,wp.pl];
-	TAGGED_FROM(0.00)[bounces-105764-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105760-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[wp.pl];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[adamszyma@wp.pl,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[intel.com,linaro.org,kernel.org,kwiboo.se,gmail.com,linux.intel.com,suse.de,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,google.com,ideasonboard.com,amd.com,gehealthcare.com,bootlin.com,lists.freedesktop.org,vger.kernel.org,lists.infradead.org,bp.renesas.com];
+	RCPT_COUNT_TWELVE(0.00)[31];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[wp.pl:+];
-	NEURAL_HAM(-0.00)[-0.993];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[laurent.pinchart@ideasonboard.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[ideasonboard.com:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,bootlin.com:email,renesas.com:email,ideasonboard.com:dkim,ideasonboard.com:email,qualcomm.com:email,killaraus.ideasonboard.com:mid]
 
-Add device tree for the Dell Inspiron 14 Plus 5441 laptop which uses
-the Qualcomm Snapdragon X Plus X1P64100 SoC. The device shares the
-same platform (Thena) as the Dell Inspiron 14 Plus 7441 and Dell
-Latitude 7455, and reuses the x1-dell-thena.dtsi include.
+Hi Luca,
 
-Signed-off-by: Adam Szyma <adamszyma@wp.pl>
----
- arch/arm64/boot/dts/qcom/Makefile             |  1 +
- .../x1p64100-dell-inspiron-14-plus-5441.dts   | 42 +++++++++++++++++++
- 2 files changed, 43 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/x1p64100-dell-inspiron-14-plus-5441.dts
+Thank you for the patch.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 4ba8e7306..8fb09ec5b 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -449,3 +449,4 @@ x1p42100-lenovo-thinkbook-16-el2-dtbs	:= x1p42100-lenovo-thinkbook-16.dtb x1-el2
- dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-lenovo-thinkbook-16.dtb x1p42100-lenovo-thinkbook-16-el2.dtb
- x1p64100-microsoft-denali-el2-dtbs	:= x1p64100-microsoft-denali.dtb x1-el2.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= x1p64100-microsoft-denali.dtb x1p64100-microsoft-denali-el2.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1p64100-dell-inspiron-14-plus-5441.dtb
-diff --git a/arch/arm64/boot/dts/qcom/x1p64100-dell-inspiron-14-plus-5441.dts b/arch/arm64/boot/dts/qcom/x1p64100-dell-inspiron-14-plus-5441.dts
-new file mode 100644
-index 000000000..d38febdc4
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/x1p64100-dell-inspiron-14-plus-5441.dts
-@@ -0,0 +1,42 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2026 Adam Szyma <adamszyma@wp.pl>
-+ */
-+/dts-v1/;
-+#include "hamoa.dtsi"
-+#include "x1-dell-thena.dtsi"
-+
-+/ {
-+	model = "Dell Inspiron 14 Plus 5441";
-+	compatible = "dell,inspiron-14-plus-5441",
-+		     "qcom,x1p64100", "qcom,x1e80100";
-+};
-+
-+&sound {
-+	model = "X1E80100-Dell-Inspiron-14p-5441";
-+};
-+
-+&gpu {
-+	status = "okay";
-+};
-+
-+&gpu_zap_shader {
-+	firmware-name = "qcom/x1e80100/dell/inspiron-14-plus-5441/qcdxkmsuc8380.mbn";
-+};
-+
-+&iris {
-+	firmware-name = "qcom/x1e80100/dell/inspiron-14-plus-5441/qcvss8380.mbn";
-+	status = "okay";
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/x1e80100/dell/inspiron-14-plus-5441/qcadsp8380.mbn",
-+			"qcom/x1e80100/dell/inspiron-14-plus-5441/adsp_dtbs.elf";
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/x1e80100/dell/inspiron-14-plus-5441/qccdsp8380.mbn",
-+			"qcom/x1e80100/dell/inspiron-14-plus-5441/cdsp_dtbs.elf";
-+	status = "okay";
-+};
+On Mon, May 04, 2026 at 12:45:11PM +0200, Luca Ceresoli wrote:
+> This driver calls drm_of_find_panel_or_bridge() with a NULL pointer in the
+> @panel parameter, thus using a reduced feature set of that function.
+> Replace this call with the simpler of_drm_get_bridge_by_endpoint().
+> 
+> Since of_drm_get_bridge_by_endpoint() increases the refcount of the
+> returned bridge, ensure it is put on removal. To achieve this, instead of
+> adding an explicit drm_bridge_put(), migrate to the bridge::next_bridge
+> pointer which is automatically put when the bridge is eventually freed.
+> 
+> Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+
+> ---
+> Changes in v3:
+> - fix ERR_PTR deref when -ENODEV is returned
+> ---
+>  drivers/gpu/drm/bridge/adv7511/adv7511.h     |  1 -
+>  drivers/gpu/drm/bridge/adv7511/adv7511_drv.c | 15 +++++++++------
+>  2 files changed, 9 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511.h b/drivers/gpu/drm/bridge/adv7511/adv7511.h
+> index 8be7266fd4f4..12c95198d9a4 100644
+> --- a/drivers/gpu/drm/bridge/adv7511/adv7511.h
+> +++ b/drivers/gpu/drm/bridge/adv7511/adv7511.h
+> @@ -354,7 +354,6 @@ struct adv7511 {
+>  	enum drm_connector_status status;
+>  	bool powered;
+>  
+> -	struct drm_bridge *next_bridge;
+>  	struct drm_display_mode curr_mode;
+>  
+>  	unsigned int f_tmds;
+> diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+> index f318080f1139..8304978535e4 100644
+> --- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+> +++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+> @@ -849,8 +849,8 @@ static int adv7511_bridge_attach(struct drm_bridge *bridge,
+>  	struct adv7511 *adv = bridge_to_adv7511(bridge);
+>  	int ret = 0;
+>  
+> -	if (adv->next_bridge) {
+> -		ret = drm_bridge_attach(encoder, adv->next_bridge, bridge,
+> +	if (adv->bridge.next_bridge) {
+> +		ret = drm_bridge_attach(encoder, adv->bridge.next_bridge, bridge,
+>  					flags | DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+>  		if (ret)
+>  			return ret;
+> @@ -1249,10 +1249,13 @@ static int adv7511_probe(struct i2c_client *i2c)
+>  
+>  	memset(&link_config, 0, sizeof(link_config));
+>  
+> -	ret = drm_of_find_panel_or_bridge(dev->of_node, 1, -1, NULL,
+> -					  &adv7511->next_bridge);
+> -	if (ret && ret != -ENODEV)
+> -		return ret;
+> +	adv7511->bridge.next_bridge = of_drm_get_bridge_by_endpoint(dev->of_node, 1, -1);
+> +	if (IS_ERR(adv7511->bridge.next_bridge)) {
+> +		if (PTR_ERR(adv7511->bridge.next_bridge) == -ENODEV)
+> +			adv7511->bridge.next_bridge = NULL;
+> +		else
+> +			return PTR_ERR(adv7511->bridge.next_bridge);
+> +	}
+>  
+>  	if (adv7511->info->link_config)
+>  		ret = adv7511_parse_dt(dev->of_node, &link_config);
+
 -- 
-2.53.0
+Regards,
 
+Laurent Pinchart
 
