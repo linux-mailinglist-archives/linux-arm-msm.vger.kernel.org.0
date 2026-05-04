@@ -1,217 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-105758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WPsgLG61+Gn1zAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 17:04:14 +0200
+	id sEGOKoe2+Gn1zAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 17:08:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE4DF4C05D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 17:04:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E9C004C06E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 17:08:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 639DA3041A1A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2026 14:57:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 803F43002107
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2026 15:03:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCF5A34252C;
-	Mon,  4 May 2026 14:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 187C03DF015;
+	Mon,  4 May 2026 15:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IEMKsAgw";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GlXdY5w5"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="XkIKiM0a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E83F3E0236
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 May 2026 14:57:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0833DF009;
+	Mon,  4 May 2026 15:03:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777906641; cv=none; b=utdGMVEDV5YprrgEk+j5qy+uzIUZ38mCoiT1gMKSgxdwfBMna6/SHk2U3zIR2vo7BEq7w5ti9vjKN3Ju7Fa9Bxtf78Kfa0IEna0MkEPcI5KP/0XjOPyHXQ+qrMeDh6/AkHLiNwMiErOU02R3gKhAgSgjC7cJysnJX9YgVBLcUVQ=
+	t=1777907030; cv=none; b=B1kDm1ystX92Dv0jlm9l5ImrZggr/DWzT88OE9yX/ys7SD9KOZeAabze/x6tWRoDqBGmAQho/0F34P0HVjsAjC+vLY6gCC98fUSYarm5Bdle0tRRtvotryGYa6EHJkxhhsoL4P20bcRJxTE+CwlaEA9M/jJEQ9JPE8Oggn62E0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777906641; c=relaxed/simple;
-	bh=t8CHaF375ZqJzhYzOnhS2X05bGUB34JV6zSqsa5XjfU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=b9oNq3TOJ62Qp4x0wUQ0Q2uoYUimd1QrQs8c5i+ZPfG0C8tCnJHLK2We+fjE1g/4yYNY0eCA1R24XgMpZECs5nPlfBLaNupApWtnS4WgidTd2q5ZGWeafOQyLb/ggWuQ/yupEUVaI7mIZapTZDpoRtyEv6d/lC3KW5hbleI75mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IEMKsAgw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GlXdY5w5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 644B4FTt4128847
-	for <linux-arm-msm@vger.kernel.org>; Mon, 4 May 2026 14:57:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=9Ea0e9ZD9RnZuTqbEH/FSIarRYUkOP881sI
-	vSBU+P4c=; b=IEMKsAgwL0AAG1YUYvdvbpSd/gbQPLRgbqupujlQYVpAR20q/ec
-	YkXRzbCtilf5koEZIOm7Q2nLEsLuil7JSoGwZ0MkuPicGAq1ZazS84blLNAw9llG
-	u+0XIN3PfjCxEYw3ih8D05WRTzsd6MvZt/MUegvNVS9RyDTlgSCuW020AZvXfnd/
-	WT83q4EivwcGknwC0OdUNMrqUejX3vSiQIT0pz6JakpB3nFI8rO3+hghp4d1uywj
-	0VIOjmQU1g3C/PzZHpEfAZT+X6N9jKgcDVOqdWE8PYX2/YkiKHdfYAjdtNpJ2TMN
-	bYk9LAFYKKURM3sNRW3TCIUuISIyhALQ7VQ==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dxsdw0wav-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2026 14:57:19 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2a90510a6d1so30157565ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 May 2026 07:57:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1777906638; x=1778511438; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9Ea0e9ZD9RnZuTqbEH/FSIarRYUkOP881sIvSBU+P4c=;
-        b=GlXdY5w5yRgq2JaMNghV610rqcFCMubzG03z/y7aRkCYLWBmIJpcytTaLRdwEfB1yr
-         uxjPNXp5z/D+tHW1mMmyIzuJhX85MHAVsUIDR/YjLAzWflFRi317aCBigGxgvPuoPB4X
-         tJS6MMEQJHDyu6ADIOyZ8PQ/3ure0aWCpXDxSW/vBFaS0NE3A/E69QyoAEvYNbuS8qRZ
-         lOsx0ZQciaWRqeAaF03ckWlAbsMI4Y7YvFLExlvDLXj/Ww/xhYIPc4GP8GR5AKnYJIAT
-         g+lk1tXpo9OL9GESOK+zdYOqvon3F59VNSTAxhIcBX0SWvjllirEIRQMfNKykum2Svkq
-         QfWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777906638; x=1778511438;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9Ea0e9ZD9RnZuTqbEH/FSIarRYUkOP881sIvSBU+P4c=;
-        b=Hw/N3z5iUqu56Si+wvb5BLLHKOB1gCfkH2+eWdQlhQlgZ4NUR8IHLB0yE6jq62ypOx
-         5hR4PEYIsn+To4PwwP56Edn+myUWGRKYGAqTt3r5p+eGw4QZICHfq4uVOo5QhvIdGrwc
-         +9ppjVzKGBSVsNq0IfA/+C+nkQifVtbHJ3LVMle0JxFEklC2Y9Nnsn4qkK+AgKllQyfv
-         r9vkzrcw0pAhRT/PsnaJ01FGxIqG9vO9IzVRRtyAAPeYiicCPAQTFAC6Ws7Bj3nhSBkU
-         PvI0QA8+YEOA7jQXRSphrqoUhpiC+vEAvOw/cydEOe6zNCR/B8SH5nClAtn0LzZX5ty7
-         UckA==
-X-Gm-Message-State: AOJu0YyB+Lfum5D7SDmPF5s5fe2+cjKceSOdhrayCoAAwhqAZHHTLh53
-	N0Z570pm5oRG5jEHoxAYLV4QXLJrJ62meO4ekX72HQCECamnM+S1OBxooN1clknYvB972vJAcXw
-	9mU0vGXe5KfPWYP5fHynTFyIRSlp8jv9vg8BTeqJB6TZdzNd5PP5cwE5UvoN7qnBN8NRq
-X-Gm-Gg: AeBDietMOUZ2LUcdT8A3jl+kdBpUI1KRImo0dK/df9pWIRoIW3VMa1xJ0DtHIpqEeN4
-	IgaAEPIOQVNGkk2wNF8Idl8WPPzfKMRr8HPD6wFksUZvB40rMww2WXfrSqw57M3hWQYmzGLF5q9
-	YDwlKFRSUCmqyFxbw8d4bWrsETdn0wZX7k92u5LFR73WaUdW2w2WloOtaWgbPzlu8aqlwJiXPC5
-	vLPWx8SpcRU+Pnkubh7FUgZNLty4N3oZAMkbMf0YZqZJWpNGAMHexR+4DwHw3W16moHYFfChbxd
-	Av5RI/Fd1ONQ+JRlOA5V8OdDByiwK7q4cONLBQte693sDH7GE/g/RtdJrNOeEP46X6JtGZRtbTR
-	63xZaZnix/RiODe+6tZoiypE2KrB4QBxJE5xQdjQfk5VaSnbADkPtidm8CvBFrKYDPdk+3nO6Rf
-	a6jPYSCwS6uA9JPmY/FvmYbUtXzQ==
-X-Received: by 2002:a17:902:9683:b0:2b9:cabe:ce37 with SMTP id d9443c01a7336-2b9cabecf0emr73829935ad.1.1777906638264;
-        Mon, 04 May 2026 07:57:18 -0700 (PDT)
-X-Received: by 2002:a17:902:9683:b0:2b9:cabe:ce37 with SMTP id d9443c01a7336-2b9cabecf0emr73829755ad.1.1777906637711;
-        Mon, 04 May 2026 07:57:17 -0700 (PDT)
-Received: from hu-kriskura-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b9cae11fc3sm128863145ad.47.2026.05.04.07.57.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 May 2026 07:57:17 -0700 (PDT)
-From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-To: Rob Herring <robh@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Subject: [PATCH v2] dt-bindings: usb: qcom,snps-dwc3: Add Shikra compatible
-Date: Mon,  4 May 2026 20:27:10 +0530
-Message-Id: <20260504145710.257211-1-krishna.kurapati@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1777907030; c=relaxed/simple;
+	bh=xUVTNK9V9VBZk+F6OvH1sU2Qc63Gu0lATZ4zgEeWGXQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
+	 References:In-Reply-To; b=YK7vn1WmUucRXRQteLZo00AYGuyTCtFkosPoagkSpzQLN7GhwxnZjD49Aw3YBx6J8jO4jbBPHPrelkP2KaBGAhV8+31mDYH/7ByUnS7/GITXE+6aJpJRllZqHfzR4ODogXx3Vz6teeGSxLTeIabqgfLhTB+ZILybx265pE4y3mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=XkIKiM0a; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id C5406C5EF23;
+	Mon,  4 May 2026 15:04:32 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 490865FD5F;
+	Mon,  4 May 2026 15:03:46 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E428E11AD030A;
+	Mon,  4 May 2026 17:03:34 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1777907024; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=2UgC8WCIU3g3zHl7eHsXA9bSH7zl0jYSgtkDdHvTGK4=;
+	b=XkIKiM0aiss5klmOs9rA4cy7qNODpkMXkOD6DEJTfXTUPx3dV8Kk7o77Qs4bVgp1OgUu9X
+	WT2B/fTXaV0AT/4e1o5QS7JICDJ7KT87zdrVDfUDzm7PE0UtdaQvbzwQNSl/ReZRAiXtYp
+	qzBEtJeWMGMEM3pgNG925NDcvtAfuXqy0ueg/0bfiWwU9z9kJHWZZcs4eBnpDyLyEidgV/
+	fob3dCiVjpaSUy/s156XUWMyxekxnvAIc8u/VMtHJhq3dwOu8yZU8OWnE2Mf6/iBRB6Q3+
+	1e6iOkVWoIbkDrLC3OXrqRxzK+VOCoG/72PRThDii1kNsZUUXebgh+RQIA4dWg==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=a7AAM0SF c=1 sm=1 tr=0 ts=69f8b3cf cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=mkQ1ARZptfdP9UuQ85IA:9 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-GUID: kFEw6n4rhVLt4IRnBwub_G59jlhS2Ya5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDE1MSBTYWx0ZWRfX19uLrIbFGIct
- pJxutD1nJkRsQgkqhKZ6H3TXXvi9RQ7V9IWrlzNiAmZ4VmnUu41afYqqGZsyRMMiyjJb2z+HrcN
- OL345ProUfO6hV4sLvn/PWuIaaQB7l8hlOV973ABytqmD1XW1SZqNpZSSxcwp9c02XQ9Omhfl/8
- KazAYALP/ejfkGLIbLZIAcx2tiSrIqv9hMDsXyorOXdgzy2dbPJLV9rFFOdmfevZGxHFSq89xnv
- uGrCC5Gpn5ze9EfnFHAyWAYJSWPnkqYthy2zue5HW9VlYS29Xv9ROB8b6gjLszrVZM3gmb3Q73i
- 2+qyvbfim/CFDGuvnddmQhGELR0oiLymUxmapNnAZz5D3XEFvMM1U2jJCmGfy7hoGoNCY+DH3qx
- lDJ64vVO+aQxuTWaSUwwVzxvYB64Vk5fcQRXjkq8cp3D0fBzrHjLneJKYXAMTtploqvJ77TeBUu
- uBsp3J3PQN44OLNGpgw==
-X-Proofpoint-ORIG-GUID: kFEw6n4rhVLt4IRnBwub_G59jlhS2Ya5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-04_05,2026-04-30_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 spamscore=0 adultscore=0 clxscore=1015
- suspectscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605040151
-X-Rspamd-Queue-Id: BE4DF4C05D7
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 04 May 2026 17:03:34 +0200
+Message-Id: <DI9ZFQUNMSBU.214AU8467OK76@bootlin.com>
+Subject: Re: [PATCH v4 02/11] drm/bridge: add
+ of_drm_get_bridge_by_endpoint()
+Cc: "Andrzej Hajda" <andrzej.hajda@intel.com>, "Neil Armstrong"
+ <neil.armstrong@linaro.org>, "Robert Foss" <rfoss@kernel.org>, "Jonas
+ Karlman" <jonas@kwiboo.se>, "Jernej Skrabec" <jernej.skrabec@gmail.com>,
+ "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>, "Maxime Ripard"
+ <mripard@kernel.org>, "Thomas Zimmermann" <tzimmermann@suse.de>, "David
+ Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Rob Clark"
+ <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
+ "Abhinav Kumar" <abhinav.kumar@linux.dev>, "Jessica Zhang"
+ <jesszhan0024@gmail.com>, "Sean Paul" <sean@poorly.run>, "Marijn Suijten"
+ <marijn.suijten@somainline.org>, "Sumit Semwal" <sumit.semwal@linaro.org>,
+ "John Stultz" <jstultz@google.com>, "Tomi Valkeinen"
+ <tomi.valkeinen@ideasonboard.com>, "Michal Simek" <michal.simek@amd.com>,
+ "Hui Pu" <Hui.Pu@gehealthcare.com>, "Ian Ray" <ian.ray@gehealthcare.com>,
+ "Thomas Petazzoni" <thomas.petazzoni@bootlin.com>,
+ <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+ <linux-arm-kernel@lists.infradead.org>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@oss.qualcomm.com>
+To: "Laurent Pinchart" <laurent.pinchart@ideasonboard.com>
+From: "Luca Ceresoli" <luca.ceresoli@bootlin.com>
+X-Mailer: aerc 0.20.1
+References: <20260504-drm-bridge-alloc-getput-panel_or_bridge-v4-0-b578c3daaf10@bootlin.com> <20260504-drm-bridge-alloc-getput-panel_or_bridge-v4-2-b578c3daaf10@bootlin.com> <20260504145536.GA1455860@killaraus.ideasonboard.com>
+In-Reply-To: <20260504145536.GA1455860@killaraus.ideasonboard.com>
+X-Last-TLS-Session-Version: TLSv1.3
+X-Rspamd-Queue-Id: E9C004C06E6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
+	MV_CASE(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_NEQ_ENVFROM(0.00)[krishna.kurapati@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105758-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-105759-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[intel.com,linaro.org,kernel.org,kwiboo.se,gmail.com,linux.intel.com,suse.de,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,google.com,ideasonboard.com,amd.com,gehealthcare.com,bootlin.com,lists.freedesktop.org,vger.kernel.org,lists.infradead.org];
+	RCPT_COUNT_TWELVE(0.00)[30];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	NEURAL_HAM(-0.00)[-0.997];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[luca.ceresoli@bootlin.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[bootlin.com:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-1.000];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ideasonboard.com:email,bootlin.com:mid,bootlin.com:email,bootlin.com:dkim,bootlin.com:url,qualcomm.com:email]
 
-Introduce the compatible definition for Shikra QCOM SNPS DWC3. Shikra SoC
-has two usb controllers and the secondary controller is high-speed only
-capable.
+Hi Laurent,
 
-Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
----
-Link to v1:
-https://lore.kernel.org/all/20260430-shikra-usb-v1-1-c9c108536fdc@oss.qualcomm.com/
+On Mon May 4, 2026 at 4:55 PM CEST, Laurent Pinchart wrote:
+> On Mon, May 04, 2026 at 12:45:05PM +0200, Luca Ceresoli wrote:
+>> drm_of_find_panel_or_bridge() is widely used, but many callers pass NULL
+>> into the @panel or the @bridge arguments, thus making a very partial usa=
+ge
+>> of this rather complex function.
+>>
+>> Besides, the bridge returned in @bridge is not refcounted, thus making t=
+his
+>> API unsafe when DRM bridge hotplug will be introduced.
+>>
+>> Solve both issues for the cases of calls to drm_of_find_panel_or_bridge(=
+)
+>> with a NULL @panel pointer by adding a new function that only looks for
+>> bridges (and is thus much simpler) and increments the refcount of the
+>> returned bridge.
+>>
+>> The new function is identical to drm_of_find_panel_or_bridge() except it=
+:
+>>
+>>  - handles bridge refcounting: uses of_drm_find_and_get_bridge() instead=
+ of
+>>    of_drm_find_bridge() internally to return a refcounted bridge
+>>  - is simpler to use: just takes no @panel parameter, returns the pointe=
+r
+>>    in the return value instead of a double pointer argument
+>>  - has a simpler implementation: it is equal to
+>>    drm_of_find_panel_or_bridge() after removing the code that becomes de=
+ad
+>>    when @panel =3D=3D NULL
+>>
+>> Also add this function to drm_bridge.c and not drm_of.c because it retur=
+ns
+>> bridges only.
+>>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+>> ---
+>> Changes in v4:
+>> - update function declaration in non-OF case
+>>
+>> Changes in v2:
+>> - return the bridge in the return value, not a double pointer
+>> ---
+>>  drivers/gpu/drm/drm_bridge.c | 41 +++++++++++++++++++++++++++++++++++++=
+++++
+>>  include/drm/drm_bridge.h     |  7 +++++++
+>>  2 files changed, 48 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+>> index 6fb71de6d22a..01f9e0426648 100644
+>> --- a/drivers/gpu/drm/drm_bridge.c
+>> +++ b/drivers/gpu/drm/drm_bridge.c
+>> @@ -1582,6 +1582,47 @@ struct drm_bridge *of_drm_find_bridge(struct devi=
+ce_node *np)
+>>  	return bridge;
+>>  }
+>>  EXPORT_SYMBOL(of_drm_find_bridge);
+>> +
+>> +/**
+>> + * of_drm_get_bridge_by_endpoint - return DRM bridge connected to a por=
+t/endpoint
+>> + * @np: device tree node containing output ports
+>> + * @port: port in the device tree node, or -1 for the first port found
+>> + * @endpoint: endpoint in the device tree node, or -1 for the first end=
+point found
+>> + *
+>> + * Given a DT node's port and endpoint number, find the connected node =
+and
+>> + * return the associated drm_bridge device.
+>> + *
+>> + * The refcount of the returned bridge is incremented. Use drm_bridge_p=
+ut()
+>> + * when done with it.
+>> + *
+>> + * Returns a pointer to the connected drm_bridge, or a negative error o=
+n failure
+>> + */
+>> +struct drm_bridge *of_drm_get_bridge_by_endpoint(const struct device_no=
+de *np,
+>> +						 int port, int endpoint)
+>> +{
+>> +	struct drm_bridge *bridge;
+>> +
+>> +	/*
+>> +	 * of_graph_get_remote_node() produces a noisy error message if port
+>> +	 * node isn't found and the absence of the port is a legit case here,
+>> +	 * so at first we silently check whether graph presents in the
+>
+> s/graph presents/graph is present/
 
-Changes in v2:
-- Updated commit text.
-- Separated this patch out from phy patches.
+Oh, wow. I copied this comment from elsewhere, meaning the same typo is
+there too. I'm taking a note to fix those too.
 
- Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+> Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-diff --git a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
-index 8201656b41ed..68d0491dc653 100644
---- a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
-+++ b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
-@@ -60,6 +60,7 @@ properties:
-           - qcom,sdx55-dwc3
-           - qcom,sdx65-dwc3
-           - qcom,sdx75-dwc3
-+          - qcom,shikra-dwc3
-           - qcom,sm4250-dwc3
-           - qcom,sm6115-dwc3
-           - qcom,sm6125-dwc3
-@@ -386,6 +387,7 @@ allOf:
-         compatible:
-           contains:
-             enum:
-+              - qcom,shikra-dwc3
-               - qcom,sm8350-dwc3
-     then:
-       properties:
-@@ -456,6 +458,7 @@ allOf:
-               - qcom,msm8996-dwc3
-               - qcom,qcs404-dwc3
-               - qcom,sdm660-dwc3
-+              - qcom,shikra-dwc3
-               - qcom,sm4250-dwc3
-               - qcom,sm6115-dwc3
-               - qcom,sm6125-dwc3
--- 
-2.34.1
+Thanks!
 
+Luca
+
+--
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
