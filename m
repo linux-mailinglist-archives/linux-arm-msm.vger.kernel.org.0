@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-105813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8ODYKPf/+Gko4AIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105813-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 22:22:15 +0200
+	id cJKfK4MG+WkW4gIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 22:50:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0408F4C3831
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 22:22:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2821C4C3BEE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 04 May 2026 22:50:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C86883069EAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2026 20:19:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D959530B915C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 May 2026 20:46:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E061430E853;
-	Mon,  4 May 2026 20:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35A9B330B10;
+	Mon,  4 May 2026 20:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CfBYXHu8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AE2Z52Pe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4212F2607;
-	Mon,  4 May 2026 20:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9594232F757;
+	Mon,  4 May 2026 20:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777925995; cv=none; b=OFAnaNTKWk7H2VKuAi4ba1OJ91rPMFYIh6bfiSyhxvsxQDogf541yB/pa0Tu5mmILBDQUdbbp45KXdZJsxo4lwtk2MwHm+oXfXi6e6w7DwA+BUZ9ujBX5QybeFE7A6Q5+aMOi4RYsSWSpXHJyKUBtqrhI4/VC54CYwI6iVknbME=
+	t=1777927547; cv=none; b=CyNVso0ZDmjN88VGjMPIzIgTW43OuLXe1pjoloQ9N8O1CJ/TkK++FPnIkcmW49XRMWc/FHqVXVc9kRf74BzuzA8H4nggPujueYW9CWappkhJycb6qBKVkBV7XeUGK3o7qui2cpLFHUi61TlV7IcPyh9k9cnOwWD4BVFSgJgcwiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777925995; c=relaxed/simple;
-	bh=RZjRMBUvteVfcBcvWC92zO6Uwu/jRF4NZPRcaMv6rCM=;
+	s=arc-20240116; t=1777927547; c=relaxed/simple;
+	bh=6VmnF/xDyfENF11j8ggk+IvN36+HVqf4Q9Npk+oX3Xs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GwwADniNV+ViVgVOY1fq5bT8AOUjjUBchFTysko4jyLnzALMu1gaJKM+HzHpap6YADbHa1YxRJyDK/uZnq+65Yh/OQRhBlFBbvXJIHOjdwQ3ROxPbmtsxKV313BJ445aRr1a15jotaHnjCdAU1swL9MHIKJOAYXmeS2x2qD9psE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CfBYXHu8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0093C2BCB8;
-	Mon,  4 May 2026 20:19:52 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=i5dFnkhGd7GFu5VT3QcS7q2lh+0zvMbkWQ/bBIiTE/d75t3SrlBpvAY/ODinEh6Fboddd5Dbg8qyWRp9AZUGXEa/SskVjVsVdUF+hZfvkcNlGQ2Z6hnipspdwpGHeE88tGST0J0a66SqmraUGst1x8rBzHW4kiUvJZVXidsIMO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AE2Z52Pe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AD0C2BCC4;
+	Mon,  4 May 2026 20:45:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777925995;
-	bh=RZjRMBUvteVfcBcvWC92zO6Uwu/jRF4NZPRcaMv6rCM=;
+	s=k20201202; t=1777927546;
+	bh=6VmnF/xDyfENF11j8ggk+IvN36+HVqf4Q9Npk+oX3Xs=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CfBYXHu8GrvhUmdFfPln1AR4BRTSzBXmkz7cG4nERmcL+zNPVVjfEVgAVlx0UU0UB
-	 7WoTe89QKv2D6/eAvfJ7lXhgDOW7XbmSS0xXEM915JkcIIVPUjdYsL5dZbQN0ZxTqN
-	 hAoJiJLjJoiatwHITrTTxyFOCF6CCH2W2u3uLmebCsBBWtLBmWR3jLmmhOlusHy/El
-	 eoqok9mrRRRj5yHiKp+doeHDDcNMfoj/1GioxJ78vqhNjFADXICQoXnkTdxxnTI3wR
-	 4T9+57QhtnP1EXQQO9FRXyOBOTDWYdIt43h4dRBYF/j5r81EDkyqgMELLmZ/ZeujVe
-	 HYiZeUZhRxSPQ==
-Message-ID: <4a41079d-4e3a-438c-9996-c756206c0c3a@kernel.org>
-Date: Mon, 4 May 2026 22:19:50 +0200
+	b=AE2Z52Pe6BXD0Om+orDgHP153pmS1aRqYU2ykGLSvtctGGmJ2HIfQGx6znyslMZTF
+	 ws97C6v0Mzt/eDd0wH0CEMo4pDYarOotysap7DKpsG4AM4ywdwRGzRvBRE/bHLtY03
+	 nclVT9GqnsSTseVRzvCPVeDi3X+3DX7mhL3q7+B2O9URnKs5J27XNYPDFIdE451MY0
+	 1DbCE6mfSht8tEIU/jbA41tuvXtkX1lqO21EbYotQpHCMxBM7n7dy57O3hd0EoDQu/
+	 iKxWDh4Xau0TgqKDiAbi8HOPa6PRX079Vj/cD+EPkrj+5bKkPO2996+PDCaTg20mJu
+	 X/3B5ThEPWK6Q==
+Message-ID: <a2444df4-abf1-4b56-8556-7efb238bc677@kernel.org>
+Date: Mon, 4 May 2026 22:45:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,17 +53,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] arm64: dts: qcom: monaco-evk: Extract common EVK
- hardware into shared dtsi
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Umang Chheda <umang.chheda@oss.qualcomm.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, richardcochran@gmail.com
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260427170505.1494703-1-umang.chheda@oss.qualcomm.com>
- <20260427170505.1494703-2-umang.chheda@oss.qualcomm.com>
- <9ece279f-2f57-466a-9af1-9fc8670c8ef9@oss.qualcomm.com>
+Subject: Re: [PATCH 1/4] dt-bindings: display: panel: Add Novatek NT37705
+To: Luca Weiss <luca.weiss@fairphone.com>, Conor Dooley <conor@kernel.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <jesszhan0024@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20260501-fp6-panel-v1-0-e09cb05651cc@fairphone.com>
+ <20260501-fp6-panel-v1-1-e09cb05651cc@fairphone.com>
+ <20260501-yogurt-wise-2a2884e3ec59@spud>
+ <DI9XL1VYYTY7.19IRSM8VIDO53@fairphone.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,60 +115,110 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <9ece279f-2f57-466a-9af1-9fc8670c8ef9@oss.qualcomm.com>
+In-Reply-To: <DI9XL1VYYTY7.19IRSM8VIDO53@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 0408F4C3831
+X-Rspamd-Queue-Id: 2821C4C3BEE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105813-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-105814-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[linaro.org,gmail.com,linux.intel.com,kernel.org,suse.de,ffwll.ch,lists.sr.ht,vger.kernel.org,lists.freedesktop.org];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[devicetree.org:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,fairphone.com:email]
 
-On 04/05/2026 14:57, Konrad Dybcio wrote:
-> On 4/27/26 7:05 PM, Umang Chheda wrote:
->> The monaco-ac EVK is a new board variant which shares the majority of
->> its hardware description with the existing monaco-evk board.
->>
->> In preparation for adding this variant, extract the common hardware
->> nodes from monaco-evk.dts into a new shared monaco-evk-common.dtsi
->> include file, and update monaco-evk.dts to include it and keep only
->> board-specific overrides.
->>
->> No functional change intended.
->>
->> Signed-off-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
->> ---
+On 04/05/2026 15:36, Luca Weiss wrote:
+> Hi Conor,
 > 
-> The patch is a bit difficult to view as-is, but the gist of it is that
-> the resulting monaco-evk.dts is:
+> On Fri May 1, 2026 at 5:51 PM CEST, Conor Dooley wrote:
+>> On Fri, May 01, 2026 at 03:52:45PM +0200, Luca Weiss wrote:
+>>> Novatek NT37705 is a display driver IC used to drive AMOLED DSI panels.
+>>>
+>>> Describe it and the panel in the Fairphone (Gen. 6) (BJ631JHM-T71-D900
+>>> from BOE) using it.
+>>>
+>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>> ---
+>>>  .../bindings/display/panel/novatek,nt37705.yaml    | 72 ++++++++++++++++++++++
+>>>  1 file changed, 72 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/display/panel/novatek,nt37705.yaml b/Documentation/devicetree/bindings/display/panel/novatek,nt37705.yaml
+>>> new file mode 100644
+>>> index 000000000000..1c796599f6fc
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/display/panel/novatek,nt37705.yaml
+>>> @@ -0,0 +1,72 @@
+>>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/display/panel/novatek,nt37705.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Novatek NT37705-based DSI display panels
+>>> +
+>>> +maintainers:
+>>> +  - Luca Weiss <luca.weiss@fairphone.com>
+>>> +
+>>> +description:
+>>> +  The Novatek NT37705 is a generic DSI Panel IC used to control AMOLED panels.
+>>> +
+>>> +allOf:
+>>> +  - $ref: panel-common.yaml#
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    contains:
+>>> +      const: boe,bj631jhm-t71-d900
+>>
+>> Compatible doesn't match the filename, nor does the commit message match
+>> what you've got here. Sounds like you're missing a fallback to
+>> $filename.
+> 
+> The last times I was upstreaming panel drivers (Feb 2024 and June 2025),
+> this was the requested way of doing things.
 
-Diff should be fixed and since this is not even b4, than producing
-proper patch detecting rename is trivial. :/
+So this was requested that time and is requested now. What is here
+uncertain?
+
+> 
+> Compatible being the company and model number making the actual panel
+> assembly (driver IC + touchscreen + glass etc), while the rest being
+> named after the driver IC manufacturer & number.
+
+So exactly what was asked for...
+
+> 
+> As seen in
+> * himax,hx83112b + djn,98-03057-6598b-i (Fairphone 3)
+> * himax,hx83112a + djn,9a-3r063-1102b (Fairphone 4)
+> 
+> Fairphone 5 panel (raydium,rm692e5) was upstreamed earlier and follows
+> different naming.
+
+
 
 Best regards,
 Krzysztof
