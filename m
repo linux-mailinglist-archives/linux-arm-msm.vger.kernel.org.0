@@ -1,525 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-105976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EBT4Lkr2+Wk/FgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 15:53:14 +0200
+	id wJPxAKb2+WliFgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 15:54:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 407FD4CEE18
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 15:53:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 72BAE4CEE8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 15:54:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B51CF3050E8C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 13:52:13 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 33FBB302773A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 13:53:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C42A947ECEC;
-	Tue,  5 May 2026 13:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65FAF47ECE8;
+	Tue,  5 May 2026 13:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ptxa99jZ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YwIBM+5k";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BQkYYwV4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0A2342C98;
-	Tue,  5 May 2026 13:52:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F8047ECD1
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 13:53:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777989130; cv=none; b=EQdR0BHePWLVQ+7rPv+6M5V5uPRctGcxTvkVMA2BlLG3k7W7dqMfFJdiP2DqdM/btKiFTMN1nnD9ZQQytOjPTOGXGVj/Eb/90EjskRgxoWhS0TPZuGG/J7zgcDvWgk1hGxAFxIEoNiiDF3ISJDC+JRuTfAfRc0+hDEl8LF64/Us=
+	t=1777989194; cv=none; b=HwNH9Rx3NEQXso0edMKMM0Q5dKWl3eeOrR7zxjOqXOlicsOF3NOkgHheRO03Ac29OQnnN2sJeFPareUpzcPmSmiYVQIXd47/o2zmADOXEkHTuD95ludOoVc0CF6604TsU5FGBo+GGJ8nHbkiOnEUdphx0/WjE4fE4ZPn8w/dk8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777989130; c=relaxed/simple;
-	bh=AxlCswKfc/LK2kcQYROwSBWwehhkMVLWSy/Qv72FKGQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mucgH5Ckcp6wjNqyCiC6qnjKpBluu66xMvatSI1zuAAlOdE0uFUeyea9gy32bxElQe5Binlsy5WsJ1OAhGRaax0/lqu+UFbL/3gbxzE6iQ+SmwUPr668dg8GZ2kan2THcxhhfIJcr0Lnq1bnuZ5dDUsN3L67Xf5eQR6MuqKudKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ptxa99jZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 608E9C2BCF7;
-	Tue,  5 May 2026 13:52:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777989130;
-	bh=AxlCswKfc/LK2kcQYROwSBWwehhkMVLWSy/Qv72FKGQ=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=ptxa99jZBjUvHp3tU9yuySF2Q4qCczLTrFl91HpVqiVo1GWVsC9MVnBJxTlhYANVh
-	 d7t/vdfqdiVAuh7eVh47dPBiay7LX+7aTwaajaE4AMjPfZqL0yqMmxRL0QyycLQ+eR
-	 c48L6CT9k7bwuyzSF1OQGZ9gIOWp7+60Rml87c5Sg4RIr+Q0owSZcqzszqXe8tPPIl
-	 sdbvhuT2tbKFsAhmRmWmivdi2uHm6g1ObMAWPeILYpvp9icyUL+Tyra6UV2B6Hj1mU
-	 lDaPKKZlO3SOrD6n9hF77QUIf5sBMIHZ6iVZJALIHkdVwSesReGJD/SXaKgDt9p6lH
-	 7dT1RCZmX+6Mg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51026CD343F;
-	Tue,  5 May 2026 13:52:10 +0000 (UTC)
-From: David Wales via B4 Relay <devnull+daviewales.disroot.org@kernel.org>
-Date: Tue, 05 May 2026 23:51:42 +1000
-Subject: [PATCH v3 2/2] ARM: dts: qcom: Support Motorola Moto G2 (2014)
+	s=arc-20240116; t=1777989194; c=relaxed/simple;
+	bh=TNhWjzdEghFHJNAFmjOMhfHZQ8f2WLJBYXhEETPqwrY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MKufKQD40lAN9oM8VapcouEmGZ77/MjwWMMTC99XmAAyZtLDVwV0i4mkOCzW0wFU8OtsdN10peEdJjl9BH3zDkA3EAoRCXsjS+X2SvBPvkQeQtJSE/0lOQ+Uq05DHWPcaYgiU5Ng/8V9w61qKKEeuYxxIqg7gMgiW0Von8y8Css=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YwIBM+5k; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BQkYYwV4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 645A4OXh3741190
+	for <linux-arm-msm@vger.kernel.org>; Tue, 5 May 2026 13:53:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ytR2on/u6KptxUeENDxG4kfoJZLPo0FnB1HrFH3+m8A=; b=YwIBM+5kVjS3yA3K
+	M0kE87hEd5NrtTvr0wlV2AFAAp/4W5TmE9d4XDwpKV8WAZOxVMhkvku1Ge+4FqwE
+	iAhCG/AcFpM/65IEdsf3aO4cI70GRRI/nSsCPBNjRsoMleB1caCaiyhxv0UdbOxG
+	fm+fG0kvu2b/tyD1oi1uLY71No/zBqjuTwvroCwaPyQmWgx7Zhr3Iu0MEVLqY4hw
+	tjbMEGfS1gW2G+UhWALeqqFpzwDTo4ChgGgq4BDXn30pvECcCp3NrBLMEJQwPBYI
+	lWN4Fy3BJepkWiSYxsXKoLo3RcM97SkNgiHDI0PY82skUy/0bP8aNobZmETTM3ED
+	6BtLmQ==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dyefq8vwp-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 13:53:11 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-82717caafccso890777b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 06:53:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1777989191; x=1778593991; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ytR2on/u6KptxUeENDxG4kfoJZLPo0FnB1HrFH3+m8A=;
+        b=BQkYYwV4zARZRcmrqyw9ty1sgAGlg1PPyZqf3mTPUxm6SyId9I3nwf8ZfDz5In1uem
+         3yNBv7/XZZIveFBdzqC72+NMMGqvhSlSwf+sWnn2rmM3eb2qL4ifHlHVypj8g2/tDO+c
+         T3CJX2NWi1Pt1Mn/FUXNywrYDw7qw67uXhBApLETFvSiv7w5klKzRM5ASX3ed9iWY5Q2
+         hPw+Dfm6qYOce6d+fKaBvCpHE75Glm+wdEg5PDVhdWwIV8ICNNsU4rUysjwoW1Df7Xdy
+         EtRZjglZGOlONJds0lQYUcUXR6Pfat2jUa27lb1eLrVL2/lgJJ8R2INIAUVcvcqcOKdU
+         cXJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777989191; x=1778593991;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ytR2on/u6KptxUeENDxG4kfoJZLPo0FnB1HrFH3+m8A=;
+        b=L47hryPcuUgY1lyW9N8SfOOK2qyMKjapv+DPr3O6q098gNbeLuJEVBG6OY3bkYYgnQ
+         2gzAFVVRxhH5SZAVj5LLq4RNfcxbC3FJvlr7eD5lfqFMrdSPGYMQSrQARxGSUYqnaGVg
+         c3tO1+ZxD6Eg7TJpdkz/BkRGDTc3BE+Pkq2C/Bu+Gc6Kckh9cS7ehunLEQ4gj+3NLEdR
+         1FEfUB1hoXnQcMgsmksb0fzrZIs0mt2p+yLvoeL5SlaDFlSYvfe4tH7RmfijaCdqzUjT
+         dgNkmkMOU0WiAimOrSaR48SCIYkFjte6nVFPFv/i1KFN3fXW1L93QLIVOWUUViGOmMsn
+         m5jA==
+X-Gm-Message-State: AOJu0YznYz59sSihZvfDFHRu+hdSOnb3ACrOjLLOc+39Ywvbl6DvRMDN
+	MYtEvY06+uaEWdyrBGQNHENvEq2h7FsmGebfKCvuKYrI+kmZ1zjctYdmOAOeA5BmYxlIC+lGy9y
+	vfdAi0/2BnF3EBxeVkM/RHccAib+80rC1WZYByLCb4eoO9oawxTjEAuYsOFkvVavhUI7S
+X-Gm-Gg: AeBDieuXsO6XSl/X0Yst0xHcTDYL1tx68fdpctpczSKt+WVSPrmZerqNZSfVsZ6mwUh
+	cx+hSDMRR6ABvr8eK13mMjLfWvpIJXWrrXesAAjTFQBYGoREKw8zP5if5L/xXwFpLKEXvlIf8eB
+	3g1NBBBczXb3uTxBPaoB2bBHjigZDxX23f27b38Yf2JfB8DZQCD0SsQ9Ivb7GnijRVEZux5/Fr3
+	QUCVhSLJJ8UTYjRDXe8t6cLFU+hK+vl3d2ZyiHjLmlFacwtSBD4vtkjib8G5IjkB380bveu4UXk
+	C1hpTHuDLODKWudexbNQXc63xo/7vP/lsYK655JysIr7k6PSDTkprrX5uNDeAibFDBerwCr72Lc
+	peiAK58ZR/NbmJzPG0VmX4hhqwI3LfoGINO8dfEDoZpyCbMRjna1eA8an7yZ7
+X-Received: by 2002:a05:6a00:760d:b0:835:36f2:7332 with SMTP id d2e1a72fcca58-83536f27ff9mr4928776b3a.2.1777989190688;
+        Tue, 05 May 2026 06:53:10 -0700 (PDT)
+X-Received: by 2002:a05:6a00:760d:b0:835:36f2:7332 with SMTP id d2e1a72fcca58-83536f27ff9mr4928753b3a.2.1777989190057;
+        Tue, 05 May 2026 06:53:10 -0700 (PDT)
+Received: from [192.168.0.5] ([49.204.27.125])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-839682a4bffsm2164299b3a.56.2026.05.05.06.53.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 May 2026 06:53:09 -0700 (PDT)
+Message-ID: <f759f97f-1231-48bf-8d2f-6c13ccc841e8@oss.qualcomm.com>
+Date: Tue, 5 May 2026 19:23:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260505-device-motorola-titan-mainline-v3-2-8fcfa280e5d0@disroot.org>
-References: <20260505-device-motorola-titan-mainline-v3-0-8fcfa280e5d0@disroot.org>
-In-Reply-To: <20260505-device-motorola-titan-mainline-v3-0-8fcfa280e5d0@disroot.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, David Wales <daviewales@disroot.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9310;
- i=daviewales@disroot.org; h=from:subject:message-id;
- bh=C/9Lk9jCm7/qLU0xG1iGLWtXQJWcu0ArMxLO6iwEOxY=;
- b=owEBbQGS/pANAwAKAW1jV4FG9KFmAcsmYgBp+fYI//vscJZwTMrux+lgoYRbXnanijQRm/r4Q
- bJSj5/S2quJATMEAAEKAB0WIQTXikd3yUPmOPWSLPJtY1eBRvShZgUCafn2CAAKCRBtY1eBRvSh
- ZttnB/9IyT69xDTatlYCxLEOy+DVSOIw+Yrc2VgMFM/qC+rZsAdNF5rtg/DGrXOqli4LNfSea+D
- p7DNIJZsTBpCL/M2arJxgh0QyQ93m924qngchnNpkjVauoQUehlyTDLIKWl2So9Bq7ncCj4dQRu
- R384s0ILhu1S+u9DoP34jB/YG5sG/7/vOYJdbC2K3GrEe+NVg2ZHcttO3EdtZQkAAGlBeGv07gm
- 55wJ+VJF7zsyXHg2+TXFG4mrUdCxP/u5fj+XZxG06DIcNLCgHfh7bIvCL2/Fi0jyhsUHTfk9rX8
- 9xZl8NOJouT6DA+up/TEuZA8tA33Yamzt4KSoxgu3Kh6Q/92
-X-Developer-Key: i=daviewales@disroot.org; a=openpgp;
- fpr=8F5BAFB15444A769DC3B61684022B817D275D037
-X-Endpoint-Received: by B4 Relay for daviewales@disroot.org/default with
- auth_id=737
-X-Original-From: David Wales <daviewales@disroot.org>
-Reply-To: daviewales@disroot.org
-X-Rspamd-Queue-Id: 407FD4CEE18
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/4] arm64: dts: qcom: monaco-evk: Extract common EVK
+ hardware into shared dtsi
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
+        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, richardcochran@gmail.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260427170505.1494703-1-umang.chheda@oss.qualcomm.com>
+ <20260427170505.1494703-2-umang.chheda@oss.qualcomm.com>
+ <9ece279f-2f57-466a-9af1-9fc8670c8ef9@oss.qualcomm.com>
+ <4a41079d-4e3a-438c-9996-c756206c0c3a@kernel.org>
+Content-Language: en-US
+From: Umang Chheda <umang.chheda@oss.qualcomm.com>
+In-Reply-To: <4a41079d-4e3a-438c-9996-c756206c0c3a@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA1MDEzMiBTYWx0ZWRfX5ChjS/lTQGLw
+ ESG6Gp9xaT8ob6kVPFqzAkxy4fFLpeHIlCOjXRB6Fh/z4E8BFXupbR87+yCiE+nq0xf5WvW/xN2
+ 1R0zc9XfEZl9bUOLx4z/+AbagbdL572SVNRwul3O83tCdyXqBBx5MpJy8GGZ3h/zuhDVmyig1lH
+ laWG/RY7Xh9QWFTIbuTF108gVx29wmdgacNteqEFtHphfB1CbnUSSchVPZCi0aaPt2aTLCWFAVv
+ nKMT/Ta7+gcyiSQBJHNA/l2CLRnd0tJrX8EVL48ro1XXb26B6wNgI+UMY3Nuh1HNQhIK3UF3kwl
+ ZEjcBqmsb9/nx2zpD1VSilOCR6h6xXtj8WkmF5F6lcjRscnTlbChIyKmXXp614SjduydGHUPbCk
+ rpH1Uv6ZChmt70FXntlRDJgzlXqcFzZZ8/Zbx84YMm2YRrH9Hi7GazrNfmTN11tNn7FPA4Cu/l3
+ RwOsrsCsZO362YWjqdQ==
+X-Proofpoint-ORIG-GUID: yl7b_8C8lKzlhdLvRLXoXep5w7X3soQ2
+X-Proofpoint-GUID: yl7b_8C8lKzlhdLvRLXoXep5w7X3soQ2
+X-Authority-Analysis: v=2.4 cv=edoNubEH c=1 sm=1 tr=0 ts=69f9f647 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=9uzW0PS53YT52NB8YZ7Mfg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=7p7hMAAamFtOh5F3elAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-05_02,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605050132
+X-Rspamd-Queue-Id: 72BAE4CEE8F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-105976-lists,linux-arm-msm=lfdr.de,daviewales.disroot.org];
-	FROM_HAS_DN(0.00)[];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,gmail.com];
+	TAGGED_FROM(0.00)[bounces-105978-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	HAS_REPLYTO(0.00)[daviewales@disroot.org];
-	RCVD_COUNT_FIVE(0.00)[5];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	FROM_NEQ_ENVFROM(0.00)[umang.chheda@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,0.48.212.0:email]
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-From: David Wales <daviewales@disroot.org>
+Hello Krzysztof,
 
-Add device tree for Motorola Moto G2 (2014) (motorola-titan) smartphone
-based on the Qualcomm MSM8226 SoC.
+On 5/5/2026 1:49 AM, Krzysztof Kozlowski wrote:
+> On 04/05/2026 14:57, Konrad Dybcio wrote:
+>> On 4/27/26 7:05 PM, Umang Chheda wrote:
+>>> The monaco-ac EVK is a new board variant which shares the majority of
+>>> its hardware description with the existing monaco-evk board.
+>>>
+>>> In preparation for adding this variant, extract the common hardware
+>>> nodes from monaco-evk.dts into a new shared monaco-evk-common.dtsi
+>>> include file, and update monaco-evk.dts to include it and keep only
+>>> board-specific overrides.
+>>>
+>>> No functional change intended.
+>>>
+>>> Signed-off-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
+>>> ---
+>>
+>> The patch is a bit difficult to view as-is, but the gist of it is that
+>> the resulting monaco-evk.dts is:
+> 
+> Diff should be fixed and since this is not even b4, than producing
+> proper patch detecting rename is trivial. :/
 
-Initially supported features:
-  - Buttons (Volume Down/Up, Power)
-  - eMMC
-  - Hall Effect Sensor
-  - Simple framebuffer display
-  - Vibrator
+I acknowledge it's hard to review the patch this way.
 
-Based on device tree for similar device msm8226-motorola-falcon.
-Initial commit for falcon notes that dhob and shob reserved-memory
-regions seem to be related to a Motorola specific mechanism. [1]
+I’ll rework the patch to use a proper rename (git mv) and keep the
+follow-up changes minimal, so the diff cleanly shows the extraction into
+monaco-evk-common.dtsi.
 
-[1] https://github.com/LineageOS/android_kernel_motorola_msm8226/blob/cm-14.1/Documentation/devicetree/bindings/misc/hob_ram.txt
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: David Wales <daviewales@disroot.org>
----
- arch/arm/boot/dts/qcom/Makefile                   |   1 +
- arch/arm/boot/dts/qcom/msm8226-motorola-titan.dts | 357 ++++++++++++++++++++++
- 2 files changed, 358 insertions(+)
+> 
+> Best regards,
+> Krzysztof
 
-diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
-index c7873dcef154..de311293ce16 100644
---- a/arch/arm/boot/dts/qcom/Makefile
-+++ b/arch/arm/boot/dts/qcom/Makefile
-@@ -1,6 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
- dtb-$(CONFIG_ARCH_QCOM) += \
- 	msm8226-motorola-falcon.dtb \
-+	msm8226-motorola-titan.dtb \
- 	qcom-apq8016-sbc.dtb \
- 	qcom-apq8026-asus-sparrow.dtb \
- 	qcom-apq8026-huawei-sturgeon.dtb \
-diff --git a/arch/arm/boot/dts/qcom/msm8226-motorola-titan.dts b/arch/arm/boot/dts/qcom/msm8226-motorola-titan.dts
-new file mode 100644
-index 000000000000..73d414b1ddcf
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom/msm8226-motorola-titan.dts
-@@ -0,0 +1,357 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2026, David Wales <daviewales@disroot.org>
-+ */
-+
-+/dts-v1/;
-+
-+#include "qcom-msm8226.dtsi"
-+#include "pm8226.dtsi"
-+
-+/delete-node/ &smem_region;
-+
-+/ {
-+	model = "Motorola Moto G2 (2014)";
-+	compatible = "motorola,titan", "qcom,msm8226";
-+	chassis-type = "handset";
-+
-+	aliases {
-+		mmc0 = &sdhc_1; /* eMMC */
-+	};
-+
-+	chosen {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		framebuffer@3200000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x03200000 0x800000>;
-+			width = <720>;
-+			height = <1280>;
-+			stride = <(720 * 3)>;
-+			format = "r8g8b8";
-+			vsp-supply = <&reg_lcd_pos>;
-+			vsn-supply = <&reg_lcd_neg>;
-+			vddio-supply = <&vddio_disp_vreg>;
-+
-+			clocks = <&mmcc MDSS_AHB_CLK>,
-+				 <&mmcc MDSS_AXI_CLK>,
-+				 <&mmcc MDSS_BYTE0_CLK>,
-+				 <&mmcc MDSS_ESC0_CLK>,
-+				 <&mmcc MDSS_MDP_CLK>,
-+				 <&mmcc MMSS_MISC_AHB_CLK>,
-+				 <&mmcc MDSS_PCLK0_CLK>,
-+				 <&mmcc MDSS_VSYNC_CLK>;
-+			power-domains = <&mmcc MDSS_GDSC>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		event-hall-sensor {
-+			label = "Hall Effect Sensor";
-+			gpios = <&tlmm 109 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			linux,can-disable;
-+		};
-+
-+		key-volume-down {
-+			label = "Volume Down";
-+			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			debounce-interval = <15>;
-+		};
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			gpios = <&tlmm 106 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	vddio_disp_vreg: regulator-vddio-disp {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vddio_disp";
-+
-+		gpio = <&tlmm 10 GPIO_ACTIVE_HIGH>;
-+		startup-delay-us = <300>;
-+		enable-active-high;
-+		regulator-boot-on;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		framebuffer@3200000 {
-+			reg = <0x03200000 0xfa0000>;
-+			no-map;
-+		};
-+
-+		dhob@f500000 {
-+			reg = <0x0f500000 0x40000>;
-+			no-map;
-+		};
-+
-+		shob@f540000 {
-+			reg = <0x0f540000 0x2000>;
-+			no-map;
-+		};
-+
-+		smem_region: smem@fa00000 {
-+			reg = <0x0fa00000 0x100000>;
-+			no-map;
-+		};
-+
-+		reserved@fb00000 {
-+			reg = <0x0fb00000 0x400000>;
-+			no-map;
-+		};
-+	};
-+};
-+
-+&blsp1_i2c4 {
-+	status = "okay";
-+
-+	regulator@3e {
-+		compatible = "ti,tps65132";
-+		reg = <0x3e>;
-+
-+		pinctrl-0 = <&reg_lcd_default>;
-+		pinctrl-names = "default";
-+
-+		reg_lcd_pos: outp {
-+			regulator-name = "outp";
-+			regulator-min-microvolt = <5400000>;
-+			regulator-max-microvolt = <5600000>;
-+			regulator-active-discharge = <1>;
-+			regulator-boot-on;
-+			enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
-+		};
-+
-+		reg_lcd_neg: outn {
-+			regulator-name = "outn";
-+			regulator-min-microvolt = <5400000>;
-+			regulator-max-microvolt = <5600000>;
-+			regulator-active-discharge = <1>;
-+			regulator-boot-on;
-+			enable-gpios = <&tlmm 13 GPIO_ACTIVE_HIGH>;
-+		};
-+	};
-+};
-+
-+&pm8226_vib {
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators {
-+		compatible = "qcom,rpm-pm8226-regulators";
-+
-+		pm8226_s3: s3 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		pm8226_s4: s4 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2200000>;
-+		};
-+
-+		pm8226_s5: s5 {
-+			regulator-min-microvolt = <1150000>;
-+			regulator-max-microvolt = <1150000>;
-+		};
-+
-+		pm8226_l1: l1 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8226_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l3: l3 {
-+			regulator-min-microvolt = <750000>;
-+			regulator-max-microvolt = <1337500>;
-+		};
-+
-+		pm8226_l4: l4 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l5: l5 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l6: l6 {
-+			/* Hall effect sensor */
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-always-on;
-+		};
-+
-+		pm8226_l7: l7 {
-+			regulator-min-microvolt = <1850000>;
-+			regulator-max-microvolt = <1850000>;
-+		};
-+
-+		pm8226_l8: l8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l9: l9 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8226_l10: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l14: l14 {
-+			regulator-min-microvolt = <2750000>;
-+			regulator-max-microvolt = <2750000>;
-+		};
-+
-+		pm8226_l15: l15 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8226_l16: l16 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3350000>;
-+		};
-+
-+		pm8226_l17: l17 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l18: l18 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l19: l19 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+		};
-+
-+		pm8226_l20: l20 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+		};
-+
-+		pm8226_l21: l21 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8226_l22: l22 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l23: l23 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l24: l24 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8226_l25: l25 {
-+			regulator-min-microvolt = <1775000>;
-+			regulator-max-microvolt = <2125000>;
-+		};
-+
-+		pm8226_l26: l26 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8226_l27: l27 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8226_l28: l28 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3400000>;
-+			regulator-boot-on;
-+		};
-+
-+		pm8226_lvs1: lvs1 {
-+			/* Pull-up for I2C lines */
-+			regulator-always-on;
-+		};
-+	};
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8226_l17>;
-+	vqmmc-supply = <&pm8226_l6>;
-+	bus-width = <8>;
-+	non-removable;
-+
-+	status = "okay";
-+};
-+
-+&smbb {
-+	qcom,fast-charge-safe-current = <2000000>;
-+	qcom,fast-charge-current-limit = <1900000>;
-+	qcom,fast-charge-safe-voltage = <4400000>;
-+	qcom,minimum-input-voltage = <4300000>;
-+
-+	status = "okay";
-+};
-+
-+&usb {
-+	extcon = <&smbb>;
-+	dr_mode = "peripheral";
-+
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&smbb>;
-+	v1p8-supply = <&pm8226_l10>;
-+	v3p3-supply = <&pm8226_l20>;
-+};
-+
-+&tlmm {
-+	reg_vddio_disp_default: reg-vddio-disp-default-state {
-+		pins = "gpio10";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	reg_lcd_default: reg-lcd-default-state {
-+		pins = "gpio12", "gpio13";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+};
-
--- 
-2.54.0
-
+Thanks,
+Umang
 
 
