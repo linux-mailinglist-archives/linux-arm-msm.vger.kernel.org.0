@@ -1,252 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-105974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iK0xOQv1+WksFgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 15:47:55 +0200
+	id YG/PFUv2+WlYFgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 15:53:15 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 492B04CEC42
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 15:47:54 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A1AE4CEE1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 15:53:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 921453023DDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 13:47:29 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1703330531D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 13:52:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 717E347DFB8;
-	Tue,  5 May 2026 13:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C49EA47ECEF;
+	Tue,  5 May 2026 13:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="d+21tP3w";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Gh3/rHO8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eq5VI6mt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA7247ECD2
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 13:47:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1DD47ECD6;
+	Tue,  5 May 2026 13:52:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777988849; cv=none; b=B3T67Cxys1b91cd1fAK+Na9n4G1Lnra9V0RML4bUUJ7Z5h3v+2IymxlQJE7dlzXWkLSDYQ4+doq+kmIaWUQscK0gdQpQ2qBBoDDg2nbarySGJBD1acUxS+NyGifm6bdxbPw2pYEdVRAuMiRWIPhYaBYL9K0PxskB+PJc7vczaHw=
+	t=1777989130; cv=none; b=RRUp/KMe5ngzlwYBJH/HTGm42LxIGjlSWjD3zDVanxUVAk6llP1Qk5sYHo0ICAPxglEdK8iXBumOQu0zN+zLyqUqDZCaGcmwCNzh8M7XvgzdHKgbcjVghLMeR+GE4sT7ZQqoAiu4PjHEOMOK35ophD9hOuywCQ7tGglsUVKXifA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777988849; c=relaxed/simple;
-	bh=X0lJ93HuV+UQAuwXDcwrBvXaZUotHEOYc3plzcPp+u0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D8RNCIQipyoeFHrg2VxpZjpvIvqWBw7kkPVBf3qElxEiqZ2umFl6oui7BLw/wjPHrEnLGDwNaXItSDZLwKeTCHQ5vQ+qWUeqRzl7XZxeNV2bT6Low0FiRcLnvXsyUNLfgm2m9vglXwcdmToqx2QRaKu6yyNRvPDwd4mgCUWEzxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=d+21tP3w; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Gh3/rHO8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 645D0sfY331109
-	for <linux-arm-msm@vger.kernel.org>; Tue, 5 May 2026 13:47:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rl0ti4q20LzWc0i4p3ljvY3l3C/vISHSfDt1Ly+KG44=; b=d+21tP3wBchLVwVP
-	/FbQD14AwZdOxm2vroESniRXZHTZ3948vZ0VRZwGTDQuEDuWlrSqB7XvaEbcF8B8
-	e8tW4RHT5csriqWL2lhWDr83ps1uyjvdlOJy7d3JZK8YZ0wiCARAYTLr5ZftSGF0
-	6y9qtjbSx9p6pcmHAK3ejCV6kt/djny8rTQCdoYSh/4IBvrpzpYJAtvw0zfoWO3U
-	8zcAReSSM5F37RgovsPDzNSAo1JVEPuxhhVzg8SiolqUV7ioRu8GZsD9zD8GWgrf
-	Y1fL5JMAzXEHLqyxQPdExzoiUmjCuxxgmeesLHBVu51I1/rBEoamfu7JVbb0rqAX
-	9pBM/w==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dxvr1cr2e-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 13:47:27 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-35fb22422efso1493765a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 06:47:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1777988846; x=1778593646; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rl0ti4q20LzWc0i4p3ljvY3l3C/vISHSfDt1Ly+KG44=;
-        b=Gh3/rHO8xtkdO6M/JPOYvYfQ+7JmQ6cPhB1XjJCyU2zcinMqh5lGxMJ6jPKJDgBnbe
-         WUl3bztX6m0vt8lMzfKViE5mdRuh6lqan/eYY70UirMAp9997DejTuP6O5ieHNzO1j4B
-         3q4uyc0epcnJ4/0cmB1oW8R+CiA27w4OSDiAT/34ZtNrHC/DtbQqJlYJnNUAIK6SJgvX
-         brJk5EFRCaKIzUy6XKgexIfnK4QwOMDdtgBCwF+I9G63p5rNBRtWuXYJ6yQ11Ftr9voq
-         ExeCjn2g5iZjtGo+Am2Becyor9KtcOpt0Ubmx31LjvGfCNOCu2auv4IpLb2j6r4FiUyS
-         QoVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777988846; x=1778593646;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rl0ti4q20LzWc0i4p3ljvY3l3C/vISHSfDt1Ly+KG44=;
-        b=NTKuC65MM73VN07MQ9m1srK3DxTiyzdIf0etftAW4t+IEVWCYYCNnAl42w7IUl6a4P
-         d8Re0lpwdGybVVDuwvjd7jiQ7HXhb5aPertGlIzo8r5LOhZtWyjkbULVpgIrgePEwILo
-         iFJDXzRT6hIfNWbP4m8t7xGOfGgnvdkZ+c+R60EOU3K9rsVU1g5b9V123O2mSlEf45DN
-         MklQ4tQ/QufA0hojPZniiozyUrKosE4FUqL9Z/YqgTO5dEI9Y7+OZ5iUW+tSULgXCqDs
-         OaXwW0bboP/5ijYhFml4EOlQYpWP/uLu56mjAOohulm0hUon3C/b/kYvuxNw/ilHlISG
-         dDFw==
-X-Forwarded-Encrypted: i=1; AFNElJ/8g9vgqZJ8o7K4+WwBF6wbKetThzD6D42T9v6JxU+mc7RtXNjifcl6q9gP9d/ai9vasrh4s75XmHkWpfvQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxDxZSyqeg3fbLp6BKP9XCgXGR7TLP6eCQWW5wbIVAQJk3cIbWT
-	QvptAo5okVMlihcxfoh0gKqggLZ+X3wFHu8+uvmt8E+QB4HGkw4S3SjfUyJ0tY930y+HZJ1YvQ1
-	6fB2hnWY1RXI5r6K6S/3auNUXfnXXAUhnp4Mk3M6imN0eGFaT9MomhuAKYhGIBvEGBsy7bQHm4d
-	lb
-X-Gm-Gg: AeBDiesJPn9r98CzOx7LpKqDAMnvY6xoYqjwsYSSdcnlIMTfDkc1BKYKyTkbpFl9spY
-	mxAHaZe21y/SyAR16o3zEaRjtbp7HGHrohCjXaB5CgIye/uxpRCEn0FWuTIiYQy3mTw3B4Rg8Ui
-	5NBflKpkROmYpvlpZH6cdowhX1FyVSEOnIjnEcRHze7aVCRuzxZ7+ORQwH2UwhqsRWNxOkyeF9E
-	ObwArQBU1AOXKMC9KVQ2cLwr9u12sz8B2sbuuWaG6m82+YssT3ZTWoQBjsgb32N+VUHPfjp7tSw
-	eqUfbPbLk1vIIOX2PCRwziRaM/QJtaIajaXUqdQ68IvKHLojLkHuGaosMW5PjtVyk+Q9FQ+wT7g
-	jf8jyA32dUHMphI72o8obkKFf5GUD8gsDN+1VSjETFvrkkCoYLiF1K3m0BNYH
-X-Received: by 2002:a17:90b:3d12:b0:35f:b204:c62c with SMTP id 98e67ed59e1d1-3650cb63481mr7629127a91.0.1777988845035;
-        Tue, 05 May 2026 06:47:25 -0700 (PDT)
-X-Received: by 2002:a17:90b:3d12:b0:35f:b204:c62c with SMTP id 98e67ed59e1d1-3650cb63481mr7629063a91.0.1777988843143;
-        Tue, 05 May 2026 06:47:23 -0700 (PDT)
-Received: from [192.168.0.5] ([49.204.27.125])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c8024ffdef6sm7653976a12.29.2026.05.05.06.47.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 May 2026 06:47:22 -0700 (PDT)
-Message-ID: <7461207d-aa05-4272-a9c0-360e6abfb0a6@oss.qualcomm.com>
-Date: Tue, 5 May 2026 19:17:17 +0530
+	s=arc-20240116; t=1777989130; c=relaxed/simple;
+	bh=ZWIongSi2sHc0KkDpAKN24XGWS3ZeBA/lRfNTAcOLT4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=PZYEgWu3YBygdSixWp82uumkp4uJzVF9AyOOdZPdpcyiNvN0AAiUwfo3ufbSg9rUAN/FX9Ol3BVJ8c06DOvMHRpZAads93fc0lzmnOY6cuwAIDPe4appXZE6EVkA3LHZLe+Wslo6UkOYCR1sp8ynFGrSMHcyxxZU5LSLyzgaON0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eq5VI6mt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 44E8FC2BCB4;
+	Tue,  5 May 2026 13:52:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777989130;
+	bh=ZWIongSi2sHc0KkDpAKN24XGWS3ZeBA/lRfNTAcOLT4=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=eq5VI6mtZXu4eRP43OoaLYy16/viZ+OFOC9+dvAWoC/MhpKcdDBakRCC8xcWUmh/+
+	 rNm4xAthULbOBOLiDNMvVN2UGNJSD0wpFtWE8VwFWaYagxwwH/bQScfvhTCJKowr/S
+	 u+u3w+duwgk1QhNhl3F9Oux6ERoPQXXAO2kbYYpcyvipopRprCF19Efamc892d/DDD
+	 TjeRxJ0PQfCQzHQyHQZJVetH2ZtgPVA1FvNYLYKZaFRPG7Kl4fUM6ynuCa4Dn1hOSJ
+	 3yrZGmh7lARHnlLxeUXcuNOTluz0ilABI88UY37UEoOHTU/jk+f4Xjev4HiOmxoavp
+	 bFDIfosPndk4g==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31F9ECD3436;
+	Tue,  5 May 2026 13:52:10 +0000 (UTC)
+From: David Wales via B4 Relay <devnull+daviewales.disroot.org@kernel.org>
+Subject: [PATCH v3 0/2] Add initial device tree for Motorola Moto G (2014)
+Date: Tue, 05 May 2026 23:51:40 +1000
+Message-Id: <20260505-device-motorola-titan-mainline-v3-0-8fcfa280e5d0@disroot.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] arm64: dts: qcom: monaco-evk: Extract common EVK
- hardware into shared dtsi
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, richardcochran@gmail.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260427170505.1494703-1-umang.chheda@oss.qualcomm.com>
- <20260427170505.1494703-2-umang.chheda@oss.qualcomm.com>
- <36ghmwuwqgm3d432nkklw4igl6wpr5snug7jpha6ioz52qev7f@4g5pxcjxx5rg>
- <6cea3306-280b-4f01-be46-28e546cebbda@oss.qualcomm.com>
- <uxklfc663dzdjxd5e7gd6mftddty2nxqypoandbwakydgrjhaa@s5mskp2tlfch>
-Content-Language: en-US
-From: Umang Chheda <umang.chheda@oss.qualcomm.com>
-In-Reply-To: <uxklfc663dzdjxd5e7gd6mftddty2nxqypoandbwakydgrjhaa@s5mskp2tlfch>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 4ZwzabK7374G0EPSAYPpQpQhHqTP_QvA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA1MDEzMSBTYWx0ZWRfXxAbPo8m3O73I
- 7ysXdm+cArTY6Ddk65S/LS4Kvkw961xTvS5FkypR89AHezAXvrahyetSyBBSUtlM6gB/qnSliYC
- ygD8+E69kJmzXaT/RtpLB3oA6K7FUMtv+yQrMLkJBUzfqZusDo5NaNExVWhI0Er5Lp7JwRrVG1e
- 4msdA6O6DsrBjda6ULfx8ar1d9hA3edZBZWEX19kPQJMaAmSATN9u/94y+QaPr36AxJ5Svhu95K
- RIdWAfQnVKpM4iZY6MOd06Q5sl+WeXx9kDUBUryMKobINihsGwY4k1m/cjTsbXBO5kLUmd6k07C
- XkLVezZ9iYQB9vloTTwvPXWFs4DSaIugLFrGdPNRo1YSsI/NNVzEs748YB7XH6Dyb/7dI7+Vhyq
- 3aI4dPtV94+CMbFD/6cHTh4L8ASXcI9nBIIETEBve5kCWmsUUaLsiDvpYOYaHgo2j7NqfoeVLJg
- QCP9XsC/dP4HAWGVDbw==
-X-Proofpoint-GUID: 4ZwzabK7374G0EPSAYPpQpQhHqTP_QvA
-X-Authority-Analysis: v=2.4 cv=RvL16imK c=1 sm=1 tr=0 ts=69f9f4ef cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=9uzW0PS53YT52NB8YZ7Mfg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=7OoR382vXO5eJJLDGIEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-05_02,2026-04-30_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
- impostorscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605050131
-X-Rspamd-Queue-Id: 492B04CEC42
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WOywrCMBBFf6VkbSSZPnXlf4iLmE7akZpIEotS+
+ u+mVRBXLg9czrkTC+gJA9tnE/M4UiBnE+SbjOle2Q45tYkZCKhEIQreppFGfnXReTcoHikqy6+
+ K7EAWuTFV1ZgcygoMS5KbR0OPNXA8vTnczxfUcbEui55CUj3XB6Ncdp8Y5P9io+SCo2xkrgQ0W
+ jeHloJ3Lm6d79iSG+ErLAX8FUIS6nonoa51XQj1K5zn+QXJJjkLMQEAAA==
+X-Change-ID: 20260404-device-motorola-titan-mainline-ff668f32562f
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, David Wales <daviewales@disroot.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1418;
+ i=daviewales@disroot.org; h=from:subject:message-id;
+ bh=ZWIongSi2sHc0KkDpAKN24XGWS3ZeBA/lRfNTAcOLT4=;
+ b=owEBbQGS/pANAwAKAW1jV4FG9KFmAcsmYgBp+fYDtsh6c0D6MTX5TZ/FaZu87Vt6A22Yz/mIU
+ pkVNHm8hPWJATMEAAEKAB0WIQTXikd3yUPmOPWSLPJtY1eBRvShZgUCafn2AwAKCRBtY1eBRvSh
+ ZpyoB/9rIGoZkdaH4kIEMPWptwYrA3OXiR3YgdAcqATr1gaKXt4jfQkwUPzQ5ZsgyES3d73vyuu
+ n/FqWlfT7L/b3az1GytJtLUmY7Ii2toaBWBaZHMsRrjdMOjcysa9mSQXpMcxewTv1DiAQTmR3X6
+ NCb7yi2jnKtBtt/l39jhX/z84iKPU9JeW2dbrJrovR5h8kF9Sx451Ycc0NOvpxuXJZOK3dbu7D6
+ uag9kYJsitqshOU99+WOu6yd9cJhjVSRMP3nOoDdS0dy/5F3IHt9rJHmr6oBt30brFA5bATPWcm
+ XPbetOSCgC12auRfRjLr+pn1rQzP2MhzlFNs2VjFFx8HFuQq
+X-Developer-Key: i=daviewales@disroot.org; a=openpgp;
+ fpr=8F5BAFB15444A769DC3B61684022B817D275D037
+X-Endpoint-Received: by B4 Relay for daviewales@disroot.org/default with
+ auth_id=737
+X-Original-From: David Wales <daviewales@disroot.org>
+Reply-To: daviewales@disroot.org
+X-Rspamd-Queue-Id: 1A1AE4CEE1F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-105975-lists,linux-arm-msm=lfdr.de,daviewales.disroot.org];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	TAGGED_FROM(0.00)[bounces-105974-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[umang.chheda@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.999];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	RCPT_COUNT_SEVEN(0.00)[11];
+	HAS_REPLYTO(0.00)[daviewales@disroot.org];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,disroot.org:email,disroot.org:replyto,disroot.org:mid,msgid.link:url]
 
-Hi Dmitry,
+The Motorola Moto G (2014) is the second device in the Moto G series,
+with codename motorola-titan.
 
-On 5/5/2026 4:58 AM, Dmitry Baryshkov wrote:
-> On Tue, May 05, 2026 at 12:56:15AM +0530, Umang Chheda wrote:
->> Hello Dmitry,
->>
->>
->> On 5/5/2026 12:14 AM, Dmitry Baryshkov wrote:
->>> On Mon, Apr 27, 2026 at 10:35:02PM +0530, Umang Chheda wrote:
->>>> The monaco-ac EVK is a new board variant which shares the majority of
->>>> its hardware description with the existing monaco-evk board.
->>>
->>> No, this is not a good reason. Is there a common PCB? There was a long
->>> discussion for it for the Hamoa / Purwa EVK.
->>
->> PCB is not common for these 2 boards.
->>
->> Also, not sure if I mis-understood you - You had mentioned to have a
->> common file for both the variants [1] in the earlier version of patch
->> hence refactored it this way.
-> 
-> There was an explicit question if PCB is the same as a prerequisite for
-> the unification of DTS
+This series documents the motorola-titan, and adds an initial device
+tree.
 
+These patches have been previously discussed and merged into the
+downstream msm8226-mainline fork:
+https://github.com/msm8226-mainline/linux/pull/18
 
-Thanks for the clarification.
+Signed-off-by: David Wales <daviewales@disroot.org>
+---
+Changes in v3:
+- Add missing trailers to commits
+- Link to v2: https://patch.msgid.link/20260502-device-motorola-titan-mainline-v2-0-c791277c740a@disroot.org
 
-This was discussed in the earlier v2 [1] — even though the PCB is not
-common, the majority of the hardware blocks and their wiring are
-functionally identical between monaco-evk and monaco-ac-evk, with only
-difference in H/W being 4 PMIC in monaco-evk v/s 2 PMIC on monaco-ac-evk
-and the rail which is supplied to the SDHC controller.
+Changes in v2:
+- Remove active-high from reg_lcd_default.
+- Add reg_vddio_disp_default, which I somehow missed in the last version.
+  (Assuming this also shouldn't use active-high)
+- Link to v1: https://patch.msgid.link/20260423-device-motorola-titan-mainline-v1-0-e1813a028cc8@disroot.org
 
-The intent here is to avoid duplication across the two boards rather
-than imply a shared PCB, similar to what was discussed earlier.
+---
+David Wales (2):
+      dt-bindings: arm: qcom: Add Motorola Moto G2 (2014)
+      ARM: dts: qcom: Support Motorola Moto G2 (2014)
 
-If this approach is still not acceptable without a common PCB, can I
-drop the refactoring and keep the DTS files fully separate ?
+ Documentation/devicetree/bindings/arm/qcom.yaml   |   1 +
+ arch/arm/boot/dts/qcom/Makefile                   |   1 +
+ arch/arm/boot/dts/qcom/msm8226-motorola-titan.dts | 357 ++++++++++++++++++++++
+ 3 files changed, 359 insertions(+)
+---
+base-commit: 028ef9c96e96197026887c0f092424679298aae8
+change-id: 20260404-device-motorola-titan-mainline-ff668f32562f
 
-[1]
-https://lore.kernel.org/all/8f79000d-ccbb-403c-871c-7a36423c9eee@oss.qualcomm.com/
-
-> 
->>
->> [1]
->> https://lore.kernel.org/lkml/7r6373fo56alzqa4e2zzdnsgwfhgdkmbhxe4cvdo4p7fg3zren@eyiml4uedfbn/
->>
->>>
->>>>
->>>> In preparation for adding this variant, extract the common hardware
->>>> nodes from monaco-evk.dts into a new shared monaco-evk-common.dtsi
->>>> include file, and update monaco-evk.dts to include it and keep only
->>>> board-specific overrides.
->>>>
->>>> No functional change intended.
->>>>
->>>> Signed-off-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
->>>> ---
->>>
->>
->> Thanks,
->> Umang
->>
-> 
-
-Thanks,
-Umang
+Best regards,
+--  
+David Wales <daviewales@disroot.org>
 
 
 
