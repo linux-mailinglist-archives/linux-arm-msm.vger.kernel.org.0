@@ -1,167 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-106019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IGh3I3RV+mlPMgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 22:39:16 +0200
+	id ELAOJxJl+mmaOgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 23:45:54 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A92B04D3B70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 22:39:15 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7B964D3FAA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 23:45:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 0785530229FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 20:39:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 748BC303F050
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 21:45:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7B353DBD7E;
-	Tue,  5 May 2026 20:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 828E54949EE;
+	Tue,  5 May 2026 21:45:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mjGy5GtZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.chunchunmaru.org (mail.chunchunmaru.org [45.79.219.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8465C3D301B;
-	Tue,  5 May 2026 20:39:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.79.219.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4F7344DA0
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 21:45:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778013551; cv=none; b=OrfaFtxc81uov4ANQofe/EidbkpUylseH/YPdcm4SLK23Uip4bXK+9jGau8UQos17Y81pvYIoPTrdyHHkmuiMGJTaFo5pPJSAfbAnKUM3LBmNskfGds3nG3NfIF/ea94FobiMTvmHCSL1ysGDzU19iHAw8ZVv2QrCQ6OJi6WGQE=
+	t=1778017548; cv=none; b=glRJCWLVa0Ei8RuZruahpXYdCdDbxWjWW+klGr99Vh0+7153AKjA/x0dJlAzMTBFRGK4n9KLKhBWjNGS5nxQi4uaHQM4vncBHfW5sEUGEhb2MDBuHe3Y/qfT99Cdd25rT+epZYBOCKHXUUyieLbrLRX52SEyZow9ShThjlWMIbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778013551; c=relaxed/simple;
-	bh=LoZYKDXmXk/erFMj8M0WtuE3pGeMtUbiRFysQf3t+jQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lj5mjRYoM6GihCNz4VrldGBTXWuR3K6widnXeHmUyQ0uXI5fHgZhvWUwA01bPvh+OCdtMKATQOd9eAGXcOPgiYCKq+c4Zo1j9yBoO3Jwfv4jCVGV8yQ9UKFD879F6i49/HJcHAQsE0VKGhgqTRkvUkHtGDgDdGMV3e39CsSqCxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=floorchan.org; spf=none smtp.mailfrom=floorchan.org; arc=none smtp.client-ip=45.79.219.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=floorchan.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=floorchan.org
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 7A287325374;
-	Tue,  5 May 2026 20:39:09 +0000 (EDT)
-From: "Catherine A. Frederick" <serenity@floorchan.org>
-To: andersson@kernel.org,
-	sboyd@kernel.org,
-	krzk+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	"Catherine A. Frederick" <serenity@floorchan.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: Add initial support for MSM8920
-Date: Tue,  5 May 2026 16:38:41 -0400
-Message-ID: <20260505203845.192140-3-serenity@floorchan.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260505203845.192140-1-serenity@floorchan.org>
-References: <20260505203845.192140-1-serenity@floorchan.org>
+	s=arc-20240116; t=1778017548; c=relaxed/simple;
+	bh=tz9TKjvpW5yv5IQqViiNUGslOdXSE7VzOMqTIfHhwZc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=UHnles5zUrhfAdCahLv+CWDoKSFh+/QpX8N6vUMrQcaNQmhKKVtp+2rCH2Wp2m+7H0jlllvLhyx4rdjNXB8AGqmN/iK98R7ERlDE75TR301Ovdn5zDFSupx0IoCu/bucZh+MFfQ25xuUQMStNYtnyhhrvyjzy79FLcTzF2bc4Ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mjGy5GtZ; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-79a46260385so70280877b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 14:45:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778017546; x=1778622346; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vB9JuHPq64gwku260f6WsJRIkrCIdonLJv2lthmb0uo=;
+        b=mjGy5GtZD+eX/tCjYTDreRsExscXcFpp0S1AFncZRHoT9CTWA2qcrjp0Vwb1ItsYd3
+         AkKnZSnmSvGh9enFUn61Fln1Ou6lxxLpo+aEJc7L4QMy9Ea4bLxH01l45MXv25/tvg1a
+         6boXzwgK5loVNiytyxcCQv93balQwW70OlLUHw6h9AwTK/FFDsBv1lIoIWfqafmug63u
+         8LPjCd8SFX7zThWLBCm6sWG7+jkQsPJRagBzRVW5RsPyIDPyQcAINQIttbo3/7S9DGNV
+         yEqqcCqKczg7jZVe4b4aJM8jOqzf2fHusxWBqvaolVZbGLaqyPOvOfRUN2l91qktuxrf
+         RmdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778017546; x=1778622346;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vB9JuHPq64gwku260f6WsJRIkrCIdonLJv2lthmb0uo=;
+        b=QdMc1RLdj20eqLWTSENHf8vdhvOz92TgQJjQlbrXxoq+rWARwuEFyOYQyV4JPbG1mV
+         8Caw3pOLLbwbVHrDgicYEXNlW8OFX13tWUb8OStviyKc0aL4lzX7zEhJ8uISvW1HkOop
+         expcX9cYOSG0vo0farDAEt1r6SjtcxxX27tVQBOrRMPZCrcpWcHRmyyI1j8dD+YWdVe6
+         KlEyhKUBCabg4NzNVTQ7oxytSKgtjUrWnZuTPTsnC419FYQwT3burUVWIpmBie533B+Q
+         vpBwd38dhFCHO8B09C6pXdlyTV7VTtedRUrUs3ajpRidBSt3EoigMJWjLOONzgUx73+h
+         amMw==
+X-Forwarded-Encrypted: i=1; AFNElJ+JeXU6v9rbGh3kMxoqzpiMoVATGB9vSZmlPNm36x3i7MjOte63A7OMg7HgSNOQYFfU2Vq2yOZLQzFtWob5@vger.kernel.org
+X-Gm-Message-State: AOJu0YwwQuVJqnWV3CGKP/vcgtuAOwqo69zPanibOROGmGpE/brewyYj
+	HOdt61XlRchI+3FJ0QtlIjLwchZhjIlHTLOoz23rS4VODlLsQD3AsmQx
+X-Gm-Gg: AeBDieso8udWRdlcUlKmB3jqiU3qz9wAN00eegln/oD2ts9wBo8PLcbwJ06sEQ/kyZ6
+	BCLO6Djw8IrGgY/nd4HrX92dSiIBBRz8d1okg0yL9hOQ6G2GysnH2eyF3ZmDPycU7l1unkCbgZG
+	gOU1sbUV736J6NazeYJkEl7LFzJXT3bdhsLQULHyTxO3BWlRumWLQ9qOhPU8xT/T3lzH6JDa/0A
+	HnEHkInNeEU0PEvzkBgK8eWb3Sg3gonErUGhskll8VHsao+7lz2S4Mv5bTiQkpINpj5TkxRoH5e
+	PslUVGQQHMsElqzVZD1SwNbUiVJSx/NP3cP/X8R6YMQBXLscRP2Eyg66Ka27U8TziXDs1NaQ+hX
+	BdTi6p6mlc4RfxfU62uH5qwKOx5OpaEkzNe9aJi1NDI95ujEo1EdjZ1a8oRhnP3isRnhJaeRApM
+	NRjonrV+CqFMWqK5ym05M3bFEk4DnqRnZISYQN
+X-Received: by 2002:a05:690c:e3cd:b0:7bd:577f:56bf with SMTP id 00721157ae682-7bdf5eccfcemr11720867b3.33.1778017545971;
+        Tue, 05 May 2026 14:45:45 -0700 (PDT)
+Received: from [192.168.0.39] ([79.133.247.80])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7bd6656542bsm70158767b3.20.2026.05.05.14.45.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 May 2026 14:45:45 -0700 (PDT)
+From: Erikas Bitovtas <xerikasxx@gmail.com>
+Subject: [PATCH v4 0/9] media: qcom: venus: add MSM8939 support
+Date: Wed, 06 May 2026 00:44:37 +0300
+Message-Id: <20260506-msm8939-venus-rfc-v4-0-994f5eb22acb@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
-X-Rspamd-Queue-Id: A92B04D3B70
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/33NTQ6CMBCG4auQrq1pp/zVlfcwLmCYSo2AabXRE
+ O5uwQ0a4/JNvnlmZJ6cJc92ycgcBevt0MdINwnDtupPxG0Tm4GAXKQy553vSq00D9TfPXcGOQr
+ IMMUiNRWxeHd1ZOxjMQ/Hd/t7fSa8zdC8aK2/De65PA1y3v3zg+SCV0IbNICgGrM/dZW9bHHo2
+ OwHWAmQ/RIgCibXlEGtchDFt6DWQvFLUFGAspQ6q+tCyw9hmqYXDKNBoEgBAAA=
+X-Change-ID: 20260416-msm8939-venus-rfc-c025c4c74fae
+To: Bryan O'Donoghue <bod@kernel.org>, 
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+ phone-devel@vger.kernel.org, Erikas Bitovtas <xerikasxx@gmail.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.15.2
+X-Rspamd-Queue-Id: E7B964D3FAA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.04 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106019-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-106020-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[floorchan.org];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[serenity@floorchan.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,gmail.com,oss.qualcomm.com];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_PROHIBIT(0.00)[0.120.139.96:email,0.0.70.80:email];
-	R_DKIM_NA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[xerikasxx@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	NEURAL_HAM(-0.00)[-0.999];
-	BLOCKLISTDE_FAIL(0.00)[45.79.219.101:server fail,100.90.174.1:server fail,2600:3c09:e001:a7::12fc:5321:server fail];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 
-Add initial support for MSM8920, which is essentially MSM8917 with
-an MSM8953 modem glued onto it.
+This patch series adds support for Venus on MSM8939. It is mostly
+similar to MSM8916 Venus, except it needs two additional cores to be
+powered on before it can start decoding.
 
-Signed-off-by: Catherine A. Frederick <serenity@floorchan.org>
+As per Dmitry's request, I am attaching Fluster results and
+v4l2-compliance output. Fluster results were very inconsistent and
+caused power collapse fails.
+H.264: https://pastebin.com/C15qeq5W
+H.265 (HEVC): https://pastebin.com/WDsnxvuk
+VP8: https://pastebin.com/egAgEm15
+v4l2-compliance: https://pastebin.com/VpBhEFc1
+Power collapse fail log: https://pastebin.com/rTivMcpK
+
+Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8920.dtsi | 55 +++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8920.dtsi
+Changes in v4:
+- Removed vcodec{0,1}_pmdomains and merged vcodec{0,1}_clks into
+  vcodec_clks instead for MSM8939.
+- Inlined video decoder and encoder device tree nodes in the driver and
+  removed them from the binding.
+- Kept vdec and venc methods for HFI v3 separate from HFI v1.
+- {vdec,venc}_get() are now called as early as before, since it is no
+  longer needed for us to attach power domains to dev_dec and dev_enc.
+- Link to v3: https://patch.msgid.link/20260427-msm8939-venus-rfc-v3-0-288195bb7917@gmail.com
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8920.dtsi b/arch/arm64/boot/dts/qcom/msm8920.dtsi
-new file mode 100644
-index 000000000000..943cae72227a
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8920.dtsi
-@@ -0,0 +1,55 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2026, Catherine A. Frederick <serenity@floorchan.org>
-+ */
-+
-+#include "msm8917.dtsi"
-+
-+&adsp_mem {
-+	size = <0x0 0x1100000>;
-+};
-+
-+&gps_mem {
-+	size = <0x0 0x200000>;
-+};
-+
-+&mba_mem {
-+	size = <0x0 0x100000>;
-+};
-+
-+&venus_mem {
-+	size = <0x0 0x400000>;
-+};
-+
-+&wcnss_mem {
-+	size = <0x0 0x700000>;
-+};
-+
-+&apps_iommu {
-+	/* IPA */
-+	iommu-ctx@18000 {
-+		compatible = "qcom,msm-iommu-v1-ns";
-+		reg = <0x18000 0x1000>;
-+		interrupts = <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>;
-+	};
-+};
-+
-+&rpmcc {
-+	compatible = "qcom,rpmcc-msm8920", "qcom,rpmcc";
-+};
-+
-+&soc {
-+	ipa: ipa@7900000 {
-+		compatible = "qcom,ipa-lite-v2.6";
-+		reg = <0x7900000 0x47000>;
-+		clocks = <&rpmcc RPM_SMD_IPA_CLK>;
-+		interrupts = <GIC_SPI 228 IRQ_TYPE_EDGE_RISING>,
-+			     <GIC_SPI 230 IRQ_TYPE_LEVEL_HIGH>;
-+		interrupt-names = "ipa", "dma";
-+		iommus = <&apps_iommu 0x18>;
-+		modem-remoteproc = <&modem>;
-+
-+		status = "disabled";
-+	};
-+
-+};
--- 
-2.53.0
+Changes in v3:
+- Added missing vcodec1_clks to resource struct.
+- Removed enc_nodename from resource struct since we include
+  video-decoder now.
+- Link to v2: https://patch.msgid.link/20260425-msm8939-venus-rfc-v2-0-f69e52b36207@gmail.com
+
+Changes in v2:
+- Enabled GDSCs during encoding as well.
+- Merged vcodec{0,1}_pmdomains_num into vcodec_pmdomains_num.
+- Reworded commit for marking GDSCs as hardware controlled. Same
+  situation as in cdc59600bccf ("clk: qcom: gcc-msm8953: fix stuck venus0_core0 clock")
+- Clarified the reason for missing firmware-name property in device
+  tree.
+- Clarified the reason for moving vdec_get and venc_get for later.
+- Link to v1: https://patch.msgid.link/20260416-msm8939-venus-rfc-v1-0-a09fcf2c23df@gmail.com
+
+To: Bryan O'Donoghue <bod@kernel.org>
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+To: Mauro Carvalho Chehab <mchehab@kernel.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: André Apitzsch <git@apitzsch.eu>
+To: Erikas Bitovtas <xerikasxx@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>
+To: Stephen Boyd <sboyd@kernel.org>
+To: Brian Masney <bmasney@redhat.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-media@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-clk@vger.kernel.org
+
+---
+André Apitzsch (4):
+      media: dt-bindings: venus: Add qcom,msm8939 schema
+      media: qcom: venus: Add msm8939 resource struct
+      arm64: dts: qcom: msm8939: Add venus node
+      arm64: dts: qcom: msm8939-longcheer-l9100: Enable venus node
+
+Erikas Bitovtas (5):
+      media: qcom: venus: add common clocks used by both vdec and venc
+      arm64: dts: qcom: msm8939-asus-z00t: add Venus
+      clk: qcom: gcc-msm8939: mark Venus core GDSCs as hardware controlled
+      media: qcom: venus: add power domain enable logic for Venus cores
+      media: qcom: venus: Enable HEVC decoding for MSM8939
+
+ .../bindings/media/qcom,msm8939-venus.yaml         | 75 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts     |  8 +++
+ .../boot/dts/qcom/msm8939-longcheer-l9100.dts      |  8 +++
+ arch/arm64/boot/dts/qcom/msm8939.dtsi              | 19 +++++
+ drivers/clk/qcom/gcc-msm8939.c                     |  4 ++
+ drivers/media/platform/qcom/venus/core.c           | 42 ++++++++++++
+ drivers/media/platform/qcom/venus/core.h           |  3 +
+ drivers/media/platform/qcom/venus/hfi_parser.c     |  3 +-
+ drivers/media/platform/qcom/venus/pm_helpers.c     | 80 +++++++++++++++++++++-
+ 9 files changed, 239 insertions(+), 3 deletions(-)
+---
+base-commit: 21060ea19dc56e72ca183c99e9b39e52c147bed4
+change-id: 20260416-msm8939-venus-rfc-c025c4c74fae
+
+Best regards,
+--  
+Erikas Bitovtas <xerikasxx@gmail.com>
 
 
