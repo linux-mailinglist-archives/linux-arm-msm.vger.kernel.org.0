@@ -1,95 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-105982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6I2zCKn9+WkqFwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 16:24:41 +0200
+	id Fb+QDJ78+WleFwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 16:20:14 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84A2A4CF563
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 16:24:40 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90D424CF419
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 16:20:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C333730AB2FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 14:16:20 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2A566300AC3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 14:20:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6179144BC93;
-	Tue,  5 May 2026 14:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58CBD2F0661;
+	Tue,  5 May 2026 14:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arduino.cc header.i=@arduino.cc header.b="esEJqhKd"
+	dkim=pass (1024-bit key) header.d=arduino.cc header.i=@arduino.cc header.b="Br9qflOo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C894A361662
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 14:16:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11EC44BC93
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 14:20:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.51
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777990580; cv=pass; b=epETZyMCzYdodjgagfjVKD9nIOcTPTEBKpTBgNoSR960535KB6fXJDIfeVWwjnrcftM/y6FWh2UVF3BSnPpi/tiswltDLTFI3vufvvyqn7b4tN/3w05h4PxwR5TVz+KgsLmp0MOoGyyywAL7J3zLtztPaC18HIhuF5sC8u/rNbo=
+	t=1777990810; cv=pass; b=tT207WMSUvWKPQn9OZESKLYy++hHmBJE40fPJ7rsMohLNkBhMSDN8XJugz3A1Sznc6VSPvEr1NQUtamf91EX4Y5C14S/agWpAkiWVsFBhFuZVm1F9vBSeWTXC3HWe4+lLjEqq3o4adMUTW35V1x3ZMEhmw2nCMQk6LDJiTAHolk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777990580; c=relaxed/simple;
-	bh=EZrw+Ff5wgZp12c9wE92Aku4Sa+D6FECWmw9grbidJc=;
+	s=arc-20240116; t=1777990810; c=relaxed/simple;
+	bh=ChyoarYNml6Xd8oWHPc66ogwgww3Zb1C5cukHDM5eVA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=N0oSxe5P2XnrDDn1AtJSVU/uUMsiet0rGGvn8LKjV1vSpZUmJI8pcZP6WGvoHMHEHsOhmayJbLHmBVf4KepQXF/T6QOtEkgB+kvZf/Bjqu100Tzut4+W1kkXMi302Zs6G5gEXpT1V7Z+NHsN64/at+2LZkEpBTlfWz9FQw/ywwM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=arduino.cc; spf=pass smtp.mailfrom=arduino.cc; dkim=pass (1024-bit key) header.d=arduino.cc header.i=@arduino.cc header.b=esEJqhKd; arc=pass smtp.client-ip=209.85.167.50
+	 To:Cc:Content-Type; b=gEyZSV15rrT1lJLzmg1GYzav1ty0mKblnpbgoecg+E2KA+uaG1GKdPBh0g3J5w55Ed5bet8ctI2gQTAw63YDREMqgvCsTc7UGSexAcrYNrfj+RNe6+sJGzGG53lJ1CLSfZtcK7fQCi3MRgIMhSZrJ7YDoGUurlBMR7E+xj/YCSk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=arduino.cc; spf=pass smtp.mailfrom=arduino.cc; dkim=pass (1024-bit key) header.d=arduino.cc header.i=@arduino.cc header.b=Br9qflOo; arc=pass smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=arduino.cc
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arduino.cc
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5a41099fa86so6382650e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 07:16:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777990577; cv=none;
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5a87782588cso2670964e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 07:20:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777990807; cv=none;
         d=google.com; s=arc-20240605;
-        b=MAiW9QTA8kEgXKA69UqYwcfVzqXVBWLQvvuU1B1IpN+OKnG8FfeYIADeXh71DgvYif
-         pzlqqpjODCGMVjJoQW6gt7frJx85zvVTeifOgyJgzKfUqI4ehZrStxbfxP+SVYHYlMGr
-         qqCniqaG+Z1ruev2wfuX3hLZPs3YtWAM7lJItjF/1ckwN1xihi4izwk4PKz9NHlXEB1B
-         k+LTZ81v8e7yJOZKGA6cOvbwl0GNYiGrjp4yQEavdiw5SS8u9r68cJTrWdM8Uvw0LTtx
-         D1OzRi1L54jyEVe+plMLsHujnvmmaoUy266Q7RzVoAI2Am2XQ3J7CeQfr7B/QnpvP3DH
-         s4ew==
+        b=bSQiE5gJSF5hisUCcZB1xOIsTsEeFvoE1dnlesDYtXk+mpWzShCFHqbW08YO9szIvp
+         OsbeqR+dXWL4hF+e/XF+Gj+R4fxZ/hYAENdYqPEoD1PegZR4lbFGa4NS9PNJrNMuPHKU
+         LJwVIKRLGs5oJVTJxdodwTWDV2c6Vj2vTSblTnvntECaVgKJJlMn/8xxPZ6OSNEktfZI
+         zuE707XnU2WwvHPU6Cicfk9BGvyV8Op4yCyVVdTUjeOLIpJufGfLC0t8akO9OC1M9+gb
+         lEMMAcTLhIR4M6JpvvgCCXwKH1JV7bwX/N/XEob4RipC69DtzCy354lz717eZrBYc41r
+         DIsQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=aFHux40IRBs1/yWZDcql5ry1rXvUTT6afmUx2GtPhjQ=;
-        fh=z1p/oGL1D4iFXTe6FTcHe6sWyIKDKsz0PHk4ogrcRks=;
-        b=LNhcIxQTE43ix3MJPCbtIEYaALGkhPPUTrzPc7z86KYSuo6izy/oVq1ahT0StiqwLW
-         8C7ggdjADwn954uRtPVCKhjs4bt8XCXDW/hIL7Gu/yWJSecsvuT/Ymucc01wgNDool0H
-         vrvWh+mXyTylCf/oTo9cHtoQ3IC6tzbB4h1vahDHaCDWUiYy4CIJWUMFo+GTgZsWlzs+
-         FiB8Uaf80VrCaCmRmF3V4Xno1jEBgAtOIEE6a4NsrEqyJmCouPvMtLfk7hVOF8co19S9
-         sp6OsVP0Wek9qbBPAvqqXHr0B5Mjz2xpd64L0+LFlqgew2imBHM1pQBCEt2i++AQAIl3
-         3nGw==;
+        bh=vh8m0B9MgA5fRoS19D8lLgMin3oijQepyIo3JhQlmkA=;
+        fh=Ldn7rsrtD5ewPtwkkNaqHfJQPaOecQgsTQK4AffEv64=;
+        b=UUcDAbNYiCfz6tEAnaRU+ayxDm15J3Z05QLJ+K2o/ySzrqXX7BQysM3EAO3IeUKSLT
+         NYPgjr+EAMmhVNwYjcBtCO6Sh897lhOcsOyiVFFWGy/Wo0+gkVFcKferHsP85ftcQR/j
+         LNlLN8pRPIpS51xll7nzaKW8nPov7jNEUui7yNqK3++h8qKh6wGYtA8KO+WINRSvkqLe
+         z4cLrNWwHxBI6hJQFnPxVaWzY4ghwpCyVEEosyQvZf7aAvFJ/CiJhBIfp0TstCKl2PXz
+         WZWj/KIyZM3ho2ivR6ZeDXJ+ehLBg9HRCIHZy+07vxNMN6u7QdvZXptNowuP7+1rl7oD
+         ZBIg==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=arduino.cc; s=google; t=1777990577; x=1778595377; darn=vger.kernel.org;
+        d=arduino.cc; s=google; t=1777990807; x=1778595607; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aFHux40IRBs1/yWZDcql5ry1rXvUTT6afmUx2GtPhjQ=;
-        b=esEJqhKdToH7Sg5/UqrdOLMO0NIEy1FRIO5Q0fHx3A3ZjB1c1FZ1kff8vps7x5G7uG
-         UdX1mQRv7ogr3fnSRi62rvt4qJTB4aJgDU4+lfOEMVpQBUb5y6BgHsxo8Ay8lsgi0lp3
-         fWQZ6OCVhgf0oxq6geAdv8/Gv6XCWEkM/ifDk=
+        bh=vh8m0B9MgA5fRoS19D8lLgMin3oijQepyIo3JhQlmkA=;
+        b=Br9qflOoswHibnoOG+TnewUu0+IGSfTQC0EWEOAr8EVus+VrhvJhME7QhOto7zfn3F
+         kweQ7aa2LqyaKEzQiH0hLHDTy3GX0R2Eh+5qZuuRDQogCUHDwLRH/jS4d6N6ImAeypOS
+         xAmJ21HuIxxtEsTDnQvNaNIBFExD9wlVGgAlY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1777990577; x=1778595377;
+        d=1e100.net; s=20251104; t=1777990807; x=1778595607;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=aFHux40IRBs1/yWZDcql5ry1rXvUTT6afmUx2GtPhjQ=;
-        b=dsAcJ4x+VVMPY2+ABWRRZGG9/kDDzRr5knqpq9jcvAJDH24xIu+qBlnCr9M7bpgwfw
-         eW2MKlJ/Nlj3Wr+coUEBs4Y2BNHlPk3sAC3NgVUZpCaA1bQuEIHoG4WrHzvK2Ij4ly4l
-         nuZKaSQboNC98WNa0SbeU2hAjkdqS6eJgdl0LlqB5qhv++Ra4pQBSJa9AOtXfzLtYGVG
-         zubbQ5mqYm0Llro4X5xJ8tL5HDKCXIxOVS+SHzv5PFK4hfp3R67vEw5BJ76qUItZHaSy
-         PhS7/vt5ggKZJP4q+wj7YcbSCM4OTH+Xc4rNa8yn+HYA61Ltw+TrRZYN2eYUdyAVU1AG
-         IRdQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/yX5lkxJFTpGB8Nmc6sfTPRUvKXTIO5rJlThw733kgs0YbgND5TEHIec6ZR9icCe/tdN6gtu1NqRGGs53j@vger.kernel.org
-X-Gm-Message-State: AOJu0YxgPafzHMUxbgeDzDvjlib5M6bGznD0qwA6ruxZrZSYy11PSkl+
-	lH6b5kKsv9j2Z8G2hEDLio+6Ned1r+FPR3P+XLUCAth9NnLYYUEpzgUBuurtonEeAAjJR6ES/SF
-	U/SzL1JPKLwfp429AEkujxhEkEydkGzLiZgN1XT4MsQ==
-X-Gm-Gg: AeBDievffKkdXSYVtbkPJEq2F45JOF+ord4SR4hb7YESYYZHB7bEg1a32arQYvYRLGw
-	YxRN3XcubYSXyxKVka93ArWH+RMiKZkA//CuAscz8csEOcTyXhI1oPA9uzaZ568OZp8ChNnkRFA
-	0NaJNoWcoivwnqYXQa4DYQXbETcAL3acZIEYrXM9epapazq+ZhiTR1p5WKTug2Cj/A2NYHkUgnD
-	RfVnWWsk1JZVrVSW51e4fNZuovWS2cxLnLFZqW3h175tnpoL5Xj4GheysVHnrH53El2gZeuFQG+
-	nFW/EGzNK0kj8Ugsmrk=
-X-Received: by 2002:a05:6512:238e:b0:5a8:64a4:2bb8 with SMTP id
- 2adb3069b0e04-5a87f1e9f56mr1369841e87.23.1777990576919; Tue, 05 May 2026
- 07:16:16 -0700 (PDT)
+        bh=vh8m0B9MgA5fRoS19D8lLgMin3oijQepyIo3JhQlmkA=;
+        b=FUUyaEw7ug3EnF89ugYjI1nUyZ8vGecqNU7DT4x6WQm6FoiljnqYcieE3SGCyTYWj4
+         sZ1tH/L8morQ2uq5zuDr4wyryfMAYzVUeAyHRDXnu4nD3YBSA6qtescouheZY5vKncv1
+         Mszcok6i93j/gz6aMFByEQublA95dm1fDdHKxF7l1VwCBpaI5ZfmU23s/RCDJSRm5dqX
+         XV9tWXVjlaRZ0vxXdi9pcqAR9NvnlbPbfkFlm+iEJztZey3Yfnv3zvzjfrtZsm7O6xuB
+         Q681PVNo0TdenkXvt/BFoEN9aN4QHVtpd6wvyLXioLorzRX42JWUgs1xEXK6b2odGXlg
+         nPVA==
+X-Forwarded-Encrypted: i=1; AFNElJ9j1J8qyqecU+rruQkIKE6Q4AEKQpZQ0mp0NfWHDlq1QT5o6RboJn2Tsza0+eQ3f+QfWAPRamvD22Uz+2Zb@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxn3nA1ofDs/AEMg0vzUlYZD41NwKvMhWU8izRdDrCmslJmPyio
+	Uj/Pmn/5CMQSLezY32K0PqeHA4eV6jlCwpvSK49hbgbniXB/rLsV8QDXNS6/6S9KFbyuuZefhUF
+	PttiUnQ9z6Hqb/SuicN7IAr2FViPIr4jbd4I7KNmS4Q==
+X-Gm-Gg: AeBDieuMe30EkeXSmvpQq33iP+A3grdpZ9/RkFPxzAZpukI/y9vJyGq5N6BPF0Op1ke
+	vxZgW/qL1N6OEyqdN9WxV3lZtYqMValaC0z+QtpqIQC7KwFHvJoY1Jn5o+usHvnlbalcyRnIwlK
+	eIo0brv/T0L+Ja1QHj2rXWip5R+9WjI76/08Uo4AFAqGX9td4703AUej8rWQHiyCE/CtrvWD27m
+	9z/RvMBArvD9pbGYkLR6zEiyKuGril08Cv+4FROqPEAyVPfUaR7f2WDGjSRoB//QhWWXCVCdMd5
+	OngLzXJclycu8Y9ZGPnBqKSXuaG39g==
+X-Received: by 2002:a05:6512:2301:b0:5a8:750c:2f79 with SMTP id
+ 2adb3069b0e04-5a8750c311amr3197990e87.3.1777990806894; Tue, 05 May 2026
+ 07:20:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,14 +97,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260430132140.30369-1-r.mereu.kernel@arduino.cc>
- <20260430132140.30369-3-r.mereu.kernel@arduino.cc> <db701e8b-a405-4105-9b5e-b2add3827d83@oss.qualcomm.com>
-In-Reply-To: <db701e8b-a405-4105-9b5e-b2add3827d83@oss.qualcomm.com>
+ <20260430132140.30369-4-r.mereu.kernel@arduino.cc> <6e46514e-91de-4d1c-8eb0-d1688e0a3821@oss.qualcomm.com>
+In-Reply-To: <6e46514e-91de-4d1c-8eb0-d1688e0a3821@oss.qualcomm.com>
 From: Riccardo Mereu Linux Kernel <r.mereu.kernel@arduino.cc>
-Date: Tue, 5 May 2026 16:16:04 +0200
-X-Gm-Features: AVHnY4JUaPaP1Nq1wsangmykEfeEzNjOrLYJgeSdNs9jlx43Fmpe3DuNJWlc_mY
-Message-ID: <CAKA1JhbaB8NjHE-Ez98d1b2QaBkrvpndA0d+GfbZ+uHW1BXruQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] arm64: qcom: imola: Move analogix video/audio output
- to dtso
+Date: Tue, 5 May 2026 16:19:55 +0200
+X-Gm-Features: AVHnY4Ly1akqLwjBLxTf-Z_CJJjy9OcQWTWkDUXFiYZUdxwPPlqgokETeSK1n84
+Message-ID: <CAKA1JhZzsB0HH_szK74ii+wVkAzNG=a8B6ceT9mrwbxV1d9=ww@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: imola: add support for media
+ carrier board
 To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
 	krzk+dt@kernel.org, conor+dt@kernel.org, broonie@kernel.org, 
@@ -117,20 +117,20 @@ Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
 	loic.poulain@oss.qualcomm.com, Riccardo Mereu <r.mereu@arduino.cc>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 84A2A4CF563
+X-Rspamd-Queue-Id: 90D424CF419
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
 	DMARC_POLICY_ALLOW(-0.50)[arduino.cc,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[arduino.cc:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105982-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-105983-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
@@ -143,47 +143,56 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[r.mereu.kernel@arduino.cc,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[arduino.cc:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,arduino.cc:dkim,arduino.cc:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,mail.gmail.com:mid,qualcomm.com:email]
 
-On Thu, Apr 30, 2026 at 4:10=E2=80=AFPM Konrad Dybcio
+On Thu, Apr 30, 2026 at 4:11=E2=80=AFPM Konrad Dybcio
 <konrad.dybcio@oss.qualcomm.com> wrote:
 >
 > On 4/30/26 3:21 PM, Riccardo Mereu wrote:
 > > From: Riccardo Mereu <r.mereu@arduino.cc>
 > >
-> > This is done in order to support different video output over DSI.
-> > Since audio part is linked to Analogix USB-C controller it is moved to
-> > the same DTSO.
+> > Media Carrier is an expansion board for Arduino UNO Q.
+> > It adds two CSI connector, one DSI connector, 3 jack connectors for
+> > headphones, earphone and lineout and 4 RGB LEDs.
+> >
+> > Current devicetree overlays support:
+> >  - imx219 based cameras (both with 4 lanes and 2 lanes)
+> >  - Waveshare 5" and 8" touch A DSI displays.
+> >
+> > As can be noticed DTBOs are split and no overlay is performed in the
+> > Makefile. Overlaying is handled in user-space guiding users to configur=
+e
+> > the system matching what it is connected to the Media Carrier.
 > >
 > > Signed-off-by: Riccardo Mereu <r.mereu@arduino.cc>
 > > ---
+> >  arch/arm64/boot/dts/qcom/Makefile             |   8 ++
+> >  ...rrier-media-camera-imx219-csi0-2lanes.dtso |  49 +++++++
+> >  ...rrier-media-camera-imx219-csi0-4lanes.dtso |  49 +++++++
+> >  ...rrier-media-camera-imx219-csi1-2lanes.dtso |  49 +++++++
+> >  ...rrier-media-camera-imx219-csi1-4lanes.dtso |  49 +++++++
 >
-> [...]
+> Are the 2ln DTs actually useful in practice?
+
+Yes, all the cases are covered for the supported camera since
+inexperienced users are guided in the configuration of cameras
+without the need to perform overlays or write their own DTSO.
+This is done via a GUI soon to be released.
+That's why I covered all the possible cases for camera connection.
+
+> >  ...10-arduino-imola-carrier-media-common.dtsi |  46 ++++++
+> >  ...a-carrier-media-panel-5in_touch_a-dsi.dtso |  80 +++++++++++
+> >  ...a-carrier-media-panel-8in_touch_a-dsi.dtso |  80 +++++++++++
 >
-> > +     sound: sound {
-> > +             compatible =3D "qcom,qrb2210-sndcard";
-> > +             model =3D "Arduino-Imola-HPH-LOUT";
-> > +             audio-routing =3D "IN1_HPHL", "HPHL_OUT",
-> > +                             "IN2_HPHR", "HPHR_OUT",
-> > +                             "AMIC2", "MIC BIAS2";
->
-> The commit message doesn't mention wiring this up, please split adding
-> new features
+> The waveshare,dsi-touch-gpio compatible is absent upstream and I
+> would imagine it'll take a considerable amount of time for that to
+> change, let's focus on the other bits for now
 
-Sorry for that, part of this is in a series that I was sure was added.
-I'll make the dependence explicit in V2 cover letter.
-
-> some of these have a double-space, please fix them up
-[...]
-> Let's keep a \n between the last property and the following subnode, file=
--wide
-[...]
-> 'co'dec < 'cp'u < 'p'latform, please
-
-Thanks for the feedback, will fix this in V2
+Ok, I was hoping that mentioning dependencies in the cover letter
+would suffice. I'll drop panels DTSOs in V2.
 
 Best regards,
 Riccardo
