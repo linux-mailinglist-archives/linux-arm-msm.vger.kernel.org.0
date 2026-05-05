@@ -1,57 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-106008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KN0+L8g5+mnHKwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 20:41:12 +0200
+	id aTgBC1w++mngLAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 21:00:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62C104D2C84
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 20:41:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 964BD4D2FA2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 21:00:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 54C7630733DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 18:36:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A70D4302AD32
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 18:50:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD2E33C8729;
-	Tue,  5 May 2026 18:36:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCEA33E95A3;
+	Tue,  5 May 2026 18:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="FlNdiboT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i4NCLeUN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6A5309F1D;
-	Tue,  5 May 2026 18:36:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D393CCFA8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 18:50:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778006213; cv=none; b=j63+8jOYFFka6cvmV+nxKkNp9tHbCQfCFJNOntMQvEFJyksfA8EQV++r81pvaDwRhMzRdNA31DDba6sjFyOZCTxDZh+PyXor6sj68LpMDu96R+GC9/M5dLpdcYLWrp1yy/aIZd+uxemk5slXxHbH7XpZjBJgafWf74NZwFUl69k=
+	t=1778007058; cv=none; b=eFQdhla2dOTh+ik4QB1QGz3Yok7/SZW5O3wgWmg8pDM2P8s/NRNAtrt5owgenoClPgUrZHEk19TS/HCBTTUYNVa+nuC/o5n8/Za4Xs5EZtWqiYBa8qhNXq09+KctQlF8tgKNQm4uo2OC1uKwwDjAqkviGR7Zx5j6+ltDxS9j/xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778006213; c=relaxed/simple;
-	bh=o++R2kdIsGcoEgZOQS/gVadcVMIJ9Ue5B/7IYTA3YXA=;
+	s=arc-20240116; t=1778007058; c=relaxed/simple;
+	bh=v8iGX/lK8aQ2P7nXaRjT3kEbed4ilCzF/7HTS4aXDT0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SWzqbZlFhUJKjXqtVsjIDiyXXd6XVWrRnxBnL1wOIgAqTucxi58xfTiYkiTICN8PxXPC2WAuhjMXIUCBJG/6tOBlx2aKVICbKkzk8/r+DRYuzD9iGmi9TmLM/sezktH7FUPURsEb4GHpRC4rY3uknUb8TL+I29y4EETnt8nJPpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com; spf=pass smtp.mailfrom=Igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=FlNdiboT; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=Igalia.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=0wouRkC7R6R6za9vKUGUIKSOanWTfI6K8Vjgu6fhaJA=; b=FlNdiboThWj2nJU5anXICAiYK/
-	36hxMKS+lEATI1venbZfWbtLPV3XLJ67PTiLl1F7EVQwmzjxBYyrqITl/hxY6wmh5WFbdHjqauFBc
-	r7t1JGAPeXhKql9vyI7t+BA5Fi7Wf4qBlR/cbNNvux8Fv2Z/jmS/kcVNRHg0db2wVJWJ0eWS3fA4m
-	w6wwPRy/+ZBqzkNDiwvNkY6ZeZGT2byLfHvUBlPXqwR8r6wtn1EzklNl0L4IU/RzpV/pmQZwOrubS
-	B7GY3flB3hsh4a63lQQCmyJwgsRehd40KmbAvvjWV5Viv53elLTia7pxNoHBhn0Nl5ib1A3s7E4+b
-	+mYc+XPQ==;
-Received: from c-73-157-168-91.hsd1.or.comcast.net ([73.157.168.91] helo=[192.168.1.133])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1wKKck-006ZHM-Py; Tue, 05 May 2026 20:36:02 +0200
-Message-ID: <8c429335-2516-49a0-b2dc-4a09fd14749e@Igalia.com>
-Date: Tue, 5 May 2026 11:35:51 -0700
+	 In-Reply-To:Content-Type; b=EDcbQasCqGtBynlj/iLjv8Ss+pFDMilQTp41UeurxenwfHQDOTgI6ty8pNRuaN0r4dRi34/rs8z+q7l+PxIBZT/8ngnhCeW3GYlK3LNfrRE6r2Ezl9bOXBBvbFpIP2RkbFbzP7BE5JFe1t39iZKT8BcjPfNj+/SZMQeRpr7xXKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i4NCLeUN; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-38e9653b53cso4622451fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 11:50:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1778007056; x=1778611856; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zWfIK+4R3Bk95cHMFqzFQqOhwZinnDbYjtH4XgP9PxA=;
+        b=i4NCLeUNUHr0E0M+OteFwvdviHFXUnCieUEXLc7fp4Y3I/hZK0Rml77Oi4TIW3j+l9
+         lTp9/O8Nox4tvn/RV5mCbkrasbXsiAEKEvFW1jjAForIpFfPxv/SbdwxnmPsCQIt6dcp
+         0UWH4REYIL53UT014m85NV/BO4spok40cjv335Ycd/64yAqbYLy6t2vTEhycLuShNGht
+         rlNqZhXBR755+3ww2ftkC2+ej/RmNfwECpTYFIq1MUTrOBrTB5ussG9orij9Dak+e9oM
+         0gDnFiEFeaeoCa8cmnRvm6GUDoCGgilWbnnRTg1K/+e6H6tkea0q0bZHaONcJlQFcdmv
+         KG6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778007056; x=1778611856;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zWfIK+4R3Bk95cHMFqzFQqOhwZinnDbYjtH4XgP9PxA=;
+        b=LRmZ8QoJlLSzyM2vO0vfcPo6dnnhccgvFsd1cvSYlSs/tCwsMVedsWANt5BJOKFCAp
+         PuLZ6Yskd6g5WIaFBQlxZOlXqlB5Yh/qgScwtYkcnMM8qypIs6wKidU4CCFstP4w0fy8
+         0pvcPt9xJLL9cr2I535mTxFgZ7dinCOJ+xt7BuES3imusYkbdp8Yg49orsHLC1FUpnF2
+         es4Vx02Imhh7ZdDOXs9FRy0E8kpsXm/f1ypb0fndTpb4Kx3aUzvOIEmDnurR0duUIX2J
+         IlPG3ITQK1J14r/68Zy23/a6LssCNJrAxPp2PvQFFuFiGgDq5juKYCHxfAkty3Q8nwI+
+         3IfA==
+X-Forwarded-Encrypted: i=1; AFNElJ8J9UJJCYK0CFmJORlTmFh5pjcIRQGQSJ5z6q0fVgsKhWO79lCZAeoIyrH0PXEoVJs0IN3cf5K29ZH70xrq@vger.kernel.org
+X-Gm-Message-State: AOJu0YxD5MT3YTGm95j0RV5HplHeRHoEQX2AjtXLrUjLTFkiro/ws6B7
+	4cjX+EAEezzVcDaXyXJvU0JjCiDeAgnxMsmnMeqZPA+Qe7012i+9XBG/5vuV2BT61XVDo0ct1g1
+	ev7W1
+X-Gm-Gg: AeBDieuXn6I6gPbNC4pda443AyBvu4sIPhFK5RB30i1MYhv4ltKNwOlSQ+s5blnaXON
+	2Hk0GP7VcDs3YQvQkmjl6Ag4lYNAk9DrCzltoMGLgZRMT+VEyk+MFJNG6EHUih+qvN9hIgoAOtb
+	1snZ2CGq5KGbmen/SiWI0NUFvcp0QG4PdeN4+NRHzWH6O2CPJU/xBh263Y+81QcOXQdh3KtM2Ap
+	YG6Ysr5abCo9pMEJa5CC4uzOQUwdwSoJYDzTIBTAdKE7/BQ125iiCQyCzkCgz+R00Sr5VXXbOTq
+	ZpFkJ2zBijpkO7hjaNU7vgPIryyhkmUXV3FjHByuKCvrQauLqFqaTDjkU4ufAHX6uJIWbqkP43t
+	1kwCrrIDmjSWumCNrAQlr5kZSq6cEbA6CaYf/0rypEuzINVNeaXNdxslDaXh2TXfG0Gz3z9X0kT
+	c7EfA9qy2OGvEPhyKMD4D6ESUVFGzAhAIqAYWiQOUCQOU19oRtKUxOpiGUjpyJkrnQoNTJgo7j0
+	nmn+jwCybWQOEAb
+X-Received: by 2002:a05:651c:4103:b0:393:c17d:9cfa with SMTP id 38308e7fff4ca-393c435d22cmr388041fa.5.1778007055403;
+        Tue, 05 May 2026 11:50:55 -0700 (PDT)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3936135e578sm45101711fa.38.2026.05.05.11.50.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 May 2026 11:50:55 -0700 (PDT)
+Message-ID: <eaff3bd9-0b75-409c-bc5a-5013f9ce1495@linaro.org>
+Date: Tue, 5 May 2026 21:50:48 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,126 +87,103 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/8] drm/msm/dpu: don't mix devm and drmm functions
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- "Kandpal, Suraj" <suraj.kandpal@intel.com>,
- Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>,
- Rodrigo Siqueira <siqueira@igalia.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Liviu Dudau <liviu.dudau@arm.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
- Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
- Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>,
- Dave Stevenson <dave.stevenson@raspberrypi.com>,
- =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
- Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
- Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
- Jessica Zhang <jesszhan0024@gmail.com>,
- Louis Chauvet <louis.chauvet@bootlin.com>
-Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
- kernel-dev@igalia.com
-References: <20260505-wb-drop-encoder-v5-0-42567b7c7af2@oss.qualcomm.com>
- <20260505-wb-drop-encoder-v5-1-42567b7c7af2@oss.qualcomm.com>
-Content-Language: en-GB
-From: John Harrison <John.Harrison@Igalia.com>
-In-Reply-To: <20260505-wb-drop-encoder-v5-1-42567b7c7af2@oss.qualcomm.com>
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc8280xp: gaokun3: add front camera
+ sensor node
+To: Pengyu Luo <mitltlatltl@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Martin Kepplinger-Novakovic <martink@posteo.de>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hverkuil@kernel.org>,
+ Martin Kepplinger <martin.kepplinger@puri.sm>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
+References: <20260425105300.745044-1-mitltlatltl@gmail.com>
+ <20260425105300.745044-4-mitltlatltl@gmail.com>
+ <c26246c1-0f90-499f-ba32-34159baa5dfb@linaro.org>
+ <CAH2e8h4Y-x_4BAcgjytNj_NxZKnF1=y9GuaUnWdjzJ-MQLyCng@mail.gmail.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <CAH2e8h4Y-x_4BAcgjytNj_NxZKnF1=y9GuaUnWdjzJ-MQLyCng@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 62C104D2C84
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 964BD4D2FA2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [1.14 / 15.00];
+X-Spamd-Result: default: False [4.84 / 15.00];
+	SEM_URIBL(3.50)[0.0.0.0:email];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
+	BAD_REP_POLICIES(0.10)[];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106008-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-106009-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,linux.intel.com,intel.com,amd.com,igalia.com,gmail.com,ffwll.ch,arm.com,kernel.org,suse.de,linux.dev,poorly.run,somainline.org,ideasonboard.com,glider.be,raspberrypi.com,wanadoo.fr,bootlin.com];
+	R_DKIM_ALLOW(0.00)[linaro.org:s=google];
+	FREEMAIL_TO(0.00)[gmail.com];
+	GREYLIST(0.00)[pass,body];
+	MIME_TRACE(0.00)[0:+];
+	DMARC_POLICY_ALLOW(0.00)[linaro.org,none];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCPT_COUNT_TWELVE(0.00)[37];
-	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.862];
-	FROM_NEQ_ENVFROM(0.00)[John.Harrison@Igalia.com,linux-arm-msm@vger.kernel.org];
-	PRECEDENCE_BULK(0.00)[];
-	DKIM_TRACE(0.00)[igalia.com:-];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	NEURAL_SPAM(0.00)[0.151];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	RCVD_COUNT_FIVE(0.00)[5];
 	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	R_SPF_ALLOW(0.00)[+ip6:2600:3c0a:e001:db::/64:c];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	TO_DN_SOME(0.00)[]
 
-On 5/4/26 17:24, Dmitry Baryshkov wrote:
-> Mixing devm and drmm functions will result in a use-after-free on msm
-> driver teardown if userspace keeps a reference on the drm device:
-> The WB connector data will be destroyed because of the use of
-> devm_kzalloc()), while the usersoace still can try interacting with the
-extra ) on devm_kzalloc())
-typo: userspace
+On 5/2/26 15:48, Pengyu Luo wrote:
+> On Thu, Apr 30, 2026 at 6:49 PM Vladimir Zapolskiy
+> <vladimir.zapolskiy@linaro.org> wrote:
+>>
+>> On 4/25/26 13:52, Pengyu Luo wrote:
+>>> Hi846 is found on my Gaokun3, descripting it.
+>>
+>> To the best of my knowledege there is no 'descripting' word.
+>>
+>> Say it simpler like
+>>
+>>          Describe Hi846 camera sensor found on Gaokun3.
+>>
+> 
+> Ack
+> 
 
-Otherwise the description looks good to me and the two typos can be 
-fixed when merging, so:
-Reviewed-by: John.Harrison@Igalia.com
+...
 
-But should wait for at least an ack from Laurent as the person 
-originally requesting an extended description.
+>>> +&camss {
+>>> +     vdda-phy-supply = <&vreg_l6b>;
+>>> +     vdda-pll-supply = <&vreg_l3b>;
+>>> +
+>>> +     status = "okay";
+>>> +
+>>> +     ports {
+>>> +             port@3 {
+>>> +                     csiphy3_ep: endpoint@0 {
+>>> +                             reg = <0>;
+>>> +
+>>> +                             clock-lanes = <7>;
+>>
+>> Please remove 'clock-lanes' property from above.
+>>
+> 
+> Is it unused? I saw it on some devices and v4l2 related source file.
+> 
 
-John.
+It is unused, and its selected value here is bogus.
 
-> WB connector (which uses drmm_ functions).
->
-> Change dpu_writeback_init() to use drmm_.
->
-> Fixes: 0b37ac63fc9d ("drm/msm/dpu: use drmm_writeback_connector_init()")
-> Reported-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-> Closes: https://lore.kernel.org/r/78c764b8-44cf-4db5-88e7-807a85954518@wanadoo.fr
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-> index 7545c0293efb..6f2370c9dd98 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
-> @@ -5,6 +5,7 @@
->   
->   #include <drm/drm_edid.h>
->   #include <drm/drm_framebuffer.h>
-> +#include <drm/drm_managed.h>
->   
->   #include "dpu_writeback.h"
->   
-> @@ -125,7 +126,7 @@ int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
->   	struct dpu_wb_connector *dpu_wb_conn;
->   	int rc = 0;
->   
-> -	dpu_wb_conn = devm_kzalloc(dev->dev, sizeof(*dpu_wb_conn), GFP_KERNEL);
-> +	dpu_wb_conn = drmm_kzalloc(dev, sizeof(*dpu_wb_conn), GFP_KERNEL);
->   	if (!dpu_wb_conn)
->   		return -ENOMEM;
->   
->
-
+-- 
+Best wishes,
+Vladimir
 
