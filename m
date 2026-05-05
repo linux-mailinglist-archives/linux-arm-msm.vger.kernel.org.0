@@ -1,85 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-106009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aTgBC1w++mngLAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 21:00:44 +0200
+	id yFZMHLs9+mmjLAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 20:58:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 964BD4D2FA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 21:00:43 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEE854D2F39
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 20:58:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A70D4302AD32
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 18:50:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E589D30103B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 18:55:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCEA33E95A3;
-	Tue,  5 May 2026 18:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80A9635A938;
+	Tue,  5 May 2026 18:55:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i4NCLeUN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J5HoPn+l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D393CCFA8
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 18:50:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F329D4A33E9
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 18:55:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778007058; cv=none; b=eFQdhla2dOTh+ik4QB1QGz3Yok7/SZW5O3wgWmg8pDM2P8s/NRNAtrt5owgenoClPgUrZHEk19TS/HCBTTUYNVa+nuC/o5n8/Za4Xs5EZtWqiYBa8qhNXq09+KctQlF8tgKNQm4uo2OC1uKwwDjAqkviGR7Zx5j6+ltDxS9j/xs=
+	t=1778007345; cv=none; b=XS/lwGbQJD+74aW51CCV7FRYwMRH55ciQX3j1ISd9pydwReyge85/HyStvkdBLaUsATYd4umCpb+pyjscDBHG90n+4JDj9c1KXjhnoOXOP+N0IvraX2dZa/0onwEe9bi0jtQJ0h858dQq8CPmPwLUPFtDmiFpJMnhsvQ8yyNn38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778007058; c=relaxed/simple;
-	bh=v8iGX/lK8aQ2P7nXaRjT3kEbed4ilCzF/7HTS4aXDT0=;
+	s=arc-20240116; t=1778007345; c=relaxed/simple;
+	bh=Qrih9tbIxMYK3cVffn8rChfomShm6TcW+n2OQ6LGqGA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EDcbQasCqGtBynlj/iLjv8Ss+pFDMilQTp41UeurxenwfHQDOTgI6ty8pNRuaN0r4dRi34/rs8z+q7l+PxIBZT/8ngnhCeW3GYlK3LNfrRE6r2Ezl9bOXBBvbFpIP2RkbFbzP7BE5JFe1t39iZKT8BcjPfNj+/SZMQeRpr7xXKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=i4NCLeUN; arc=none smtp.client-ip=209.85.208.172
+	 In-Reply-To:Content-Type; b=Qnp1NFP7B4w77fYws9X4Od4F/Zd+Nq3li+0oS5X1+FQ11UI7XS6uHHPGWCJRAfSopcvxdgXH2oE3okVILLrLllu8QPR+fmctZ+yNfb/Yq6i255Y5GkrlGzyWGG8/YryOsYZoLy+NEoTjSIaSUxCdg8XpWFraywLK0IpNyEAmqmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J5HoPn+l; arc=none smtp.client-ip=209.85.208.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-38e9653b53cso4622451fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 11:50:57 -0700 (PDT)
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-393933b8c6dso4642151fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 11:55:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1778007056; x=1778611856; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1778007342; x=1778612142; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zWfIK+4R3Bk95cHMFqzFQqOhwZinnDbYjtH4XgP9PxA=;
-        b=i4NCLeUNUHr0E0M+OteFwvdviHFXUnCieUEXLc7fp4Y3I/hZK0Rml77Oi4TIW3j+l9
-         lTp9/O8Nox4tvn/RV5mCbkrasbXsiAEKEvFW1jjAForIpFfPxv/SbdwxnmPsCQIt6dcp
-         0UWH4REYIL53UT014m85NV/BO4spok40cjv335Ycd/64yAqbYLy6t2vTEhycLuShNGht
-         rlNqZhXBR755+3ww2ftkC2+ej/RmNfwECpTYFIq1MUTrOBrTB5ussG9orij9Dak+e9oM
-         0gDnFiEFeaeoCa8cmnRvm6GUDoCGgilWbnnRTg1K/+e6H6tkea0q0bZHaONcJlQFcdmv
-         KG6A==
+        bh=gWLCp8e9dyR6o6t0FMX093JcFxR+HkBbCVvJsU9sLHM=;
+        b=J5HoPn+l6jV5hGSLKn4NHP9KvSnHq7N0LYbPkufjlgcYzDMkKr0IfithL78JM9fbbg
+         85ArIY0QlT6L0cjsX/6JBxZUaJ6FAwSxFBoj1S2D5G7dxbHpojgU7BiqL3CUhXP8aGpW
+         BcLEkXU7X95iiI9Qymp5qZ3Z28ktdMzSSdGwoIFTOAPlTCkz5BhLS3yW+7oKF6yul/AX
+         GcziERwiYn9d1/gBgIFIPrFoF48f87RgXuOO+63m29PbG7DVb+SdyoTf2Bw+BDRxdFMt
+         QjBiTuia3vTIj2qPCUnwL4Uo6AYhRHcAhmHbel0tm9zfctTQ/ifBoeXfb2+HuUzBFCrK
+         S0FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778007056; x=1778611856;
+        d=1e100.net; s=20251104; t=1778007342; x=1778612142;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
          :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zWfIK+4R3Bk95cHMFqzFQqOhwZinnDbYjtH4XgP9PxA=;
-        b=LRmZ8QoJlLSzyM2vO0vfcPo6dnnhccgvFsd1cvSYlSs/tCwsMVedsWANt5BJOKFCAp
-         PuLZ6Yskd6g5WIaFBQlxZOlXqlB5Yh/qgScwtYkcnMM8qypIs6wKidU4CCFstP4w0fy8
-         0pvcPt9xJLL9cr2I535mTxFgZ7dinCOJ+xt7BuES3imusYkbdp8Yg49orsHLC1FUpnF2
-         es4Vx02Imhh7ZdDOXs9FRy0E8kpsXm/f1ypb0fndTpb4Kx3aUzvOIEmDnurR0duUIX2J
-         IlPG3ITQK1J14r/68Zy23/a6LssCNJrAxPp2PvQFFuFiGgDq5juKYCHxfAkty3Q8nwI+
-         3IfA==
-X-Forwarded-Encrypted: i=1; AFNElJ8J9UJJCYK0CFmJORlTmFh5pjcIRQGQSJ5z6q0fVgsKhWO79lCZAeoIyrH0PXEoVJs0IN3cf5K29ZH70xrq@vger.kernel.org
-X-Gm-Message-State: AOJu0YxD5MT3YTGm95j0RV5HplHeRHoEQX2AjtXLrUjLTFkiro/ws6B7
-	4cjX+EAEezzVcDaXyXJvU0JjCiDeAgnxMsmnMeqZPA+Qe7012i+9XBG/5vuV2BT61XVDo0ct1g1
-	ev7W1
-X-Gm-Gg: AeBDieuXn6I6gPbNC4pda443AyBvu4sIPhFK5RB30i1MYhv4ltKNwOlSQ+s5blnaXON
-	2Hk0GP7VcDs3YQvQkmjl6Ag4lYNAk9DrCzltoMGLgZRMT+VEyk+MFJNG6EHUih+qvN9hIgoAOtb
-	1snZ2CGq5KGbmen/SiWI0NUFvcp0QG4PdeN4+NRHzWH6O2CPJU/xBh263Y+81QcOXQdh3KtM2Ap
-	YG6Ysr5abCo9pMEJa5CC4uzOQUwdwSoJYDzTIBTAdKE7/BQ125iiCQyCzkCgz+R00Sr5VXXbOTq
-	ZpFkJ2zBijpkO7hjaNU7vgPIryyhkmUXV3FjHByuKCvrQauLqFqaTDjkU4ufAHX6uJIWbqkP43t
-	1kwCrrIDmjSWumCNrAQlr5kZSq6cEbA6CaYf/0rypEuzINVNeaXNdxslDaXh2TXfG0Gz3z9X0kT
-	c7EfA9qy2OGvEPhyKMD4D6ESUVFGzAhAIqAYWiQOUCQOU19oRtKUxOpiGUjpyJkrnQoNTJgo7j0
-	nmn+jwCybWQOEAb
-X-Received: by 2002:a05:651c:4103:b0:393:c17d:9cfa with SMTP id 38308e7fff4ca-393c435d22cmr388041fa.5.1778007055403;
-        Tue, 05 May 2026 11:50:55 -0700 (PDT)
+        bh=gWLCp8e9dyR6o6t0FMX093JcFxR+HkBbCVvJsU9sLHM=;
+        b=VEYSHDICB262sIx81r7t9VKnD973WWyAorC1+CFUbPOxRg7UJqb1NqHR6aBOCnmXh+
+         qyKzgEO+hqAOMdBk5JYkdIMCXoHTkkQ749aVkW2KdkDoPkImjsVCQnc5xFTh7UtvFaq+
+         nWYR/0jxqSgA9dZeTGEUato5SVWRrnUchVrYVZccqNG8oezDjBacRSslGrZZ7S5esohp
+         /Sd924PfAX2Sb/hmdm82UDfthi1/vqTl4s1WCwVGy7pV0Ff2ejVEyqDpq2BOg5AVtBf5
+         lvEwi1AbuNnENvWV9JfKPkMbXscrMgC7E1OLdooBnTsI393IDPfeLs8E8eqUQyUn43Rn
+         kkGg==
+X-Forwarded-Encrypted: i=1; AFNElJ+A5sJnAQH5n7qajai768PpBqBLm1/8qka7C3BEb53nmBmir5xnvjD88nPevdN6vm1Kr5Kp0BHWvnw0aRXg@vger.kernel.org
+X-Gm-Message-State: AOJu0YxjdJhgXrlOutmLbtGybs++9l8y0WlSA+FDGOFZ1+3H8mrzEOwM
+	qBX6sAetRLhMBBc6MeLyRbKm1eUP3iI8XUr/tjQlfT513d6S+jodvVZUKXG1lvCbngd+60ZyaKi
+	PaLei
+X-Gm-Gg: AeBDievyy2Un7W6A48S882wdzIJPQB+97RWmReVXvHGlaUWJwlTIT22HRWv6T7HulSW
+	kPAOdQVLc+iUXRHjr2LTaBqoRmyPtCVZNS9Jx8R7z3l7QDKXncCpNejrPJ9SejOEfGpwI96YH90
+	OShzH0ulN/lTmegEqRcr5Mg6+lL9XZh4o14lTMBYAV8KQLatgoP2fTS0JzwVD7nu5HFE6CBqgc/
+	HsdihKd+yevy2wW/0gSlIpneV1LrY4ftnQ0JHkZGeRjEXG3El3oZhz715CpLbbp+L8/Gd2Zk1p/
+	tLAZWy631S2ALYFdcygYJYHUfX6JCq5jgXzUz/0WrWJcykIhDNwjC1nov702rQRZJlF1Yr1Fo5P
+	NvIEzT8DD6OudwmwITn0oMQqPBeO+6PjPVdCEULUvC5ODhW423bqIBZVUMRu6eWEcHJ8/FDAg6H
+	9N+IUsovByH2bdyUdbjbgdh09NQgxRiXTFagUNGxpJ4vCPekntVAAL9Ia7vp6sBskz5o8DF5UX4
+	Do30l+ATz55O/q+
+X-Received: by 2002:a05:6512:1056:b0:5a7:4912:1a3e with SMTP id 2adb3069b0e04-5a8631b8d40mr1976270e87.3.1778007342013;
+        Tue, 05 May 2026 11:55:42 -0700 (PDT)
 Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3936135e578sm45101711fa.38.2026.05.05.11.50.54
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a882e3589dsm654744e87.30.2026.05.05.11.55.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 May 2026 11:50:55 -0700 (PDT)
-Message-ID: <eaff3bd9-0b75-409c-bc5a-5013f9ce1495@linaro.org>
-Date: Tue, 5 May 2026 21:50:48 +0300
+        Tue, 05 May 2026 11:55:41 -0700 (PDT)
+Message-ID: <9da6d544-97f6-4915-8d53-e3fde7339695@linaro.org>
+Date: Tue, 5 May 2026 21:55:41 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,8 +87,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc8280xp: gaokun3: add front camera
- sensor node
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc8280xp: gaokun3: describe rear
+ camera module information as musch as possible
 To: Pengyu Luo <mitltlatltl@gmail.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -101,87 +101,88 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-media@vger.kernel.org
 References: <20260425105300.745044-1-mitltlatltl@gmail.com>
- <20260425105300.745044-4-mitltlatltl@gmail.com>
- <c26246c1-0f90-499f-ba32-34159baa5dfb@linaro.org>
- <CAH2e8h4Y-x_4BAcgjytNj_NxZKnF1=y9GuaUnWdjzJ-MQLyCng@mail.gmail.com>
+ <20260425105300.745044-5-mitltlatltl@gmail.com>
+ <db441eb6-195e-4018-a84d-77b2d1531243@linaro.org>
+ <CAH2e8h4TYEMhjP9Vx7yYpKHAOR627Ovy2QZMT574oZPVDJX1oA@mail.gmail.com>
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <CAH2e8h4Y-x_4BAcgjytNj_NxZKnF1=y9GuaUnWdjzJ-MQLyCng@mail.gmail.com>
+In-Reply-To: <CAH2e8h4TYEMhjP9Vx7yYpKHAOR627Ovy2QZMT574oZPVDJX1oA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 964BD4D2FA2
+X-Rspamd-Queue-Id: DEE854D2F39
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [4.84 / 15.00];
-	SEM_URIBL(3.50)[0.0.0.0:email];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	BAD_REP_POLICIES(0.10)[];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106009-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-106010-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	R_DKIM_ALLOW(0.00)[linaro.org:s=google];
 	FREEMAIL_TO(0.00)[gmail.com];
-	GREYLIST(0.00)[pass,body];
-	MIME_TRACE(0.00)[0:+];
-	DMARC_POLICY_ALLOW(0.00)[linaro.org,none];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[linaro.org:+];
-	NEURAL_SPAM(0.00)[0.151];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCPT_COUNT_TWELVE(0.00)[15];
 	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	R_SPF_ALLOW(0.00)[+ip6:2600:3c0a:e001:db::/64:c];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	TO_DN_SOME(0.00)[]
 
-On 5/2/26 15:48, Pengyu Luo wrote:
-> On Thu, Apr 30, 2026 at 6:49 PM Vladimir Zapolskiy
+On 5/2/26 15:55, Pengyu Luo wrote:
+> On Thu, Apr 30, 2026 at 7:00 PM Vladimir Zapolskiy
 > <vladimir.zapolskiy@linaro.org> wrote:
 >>
->> On 4/25/26 13:52, Pengyu Luo wrote:
->>> Hi846 is found on my Gaokun3, descripting it.
+>> On 4/25/26 13:53, Pengyu Luo wrote:
+>>> The rear sensor is S5K3L6, describing it but dropping compatible
+>>> string, since there is no upstream driver. A funcitonal downstream
+>>> driver is in comment.
+>>>
+>>> The VCM is dw9714, describe it.
+>>>
+>>> Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+>>> ---
+>>> Please take this patch as a RFC, I am not sure, how much I am allowed
+>>> to add without a sensor driver.
+>>> ---
+>>>    .../boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 129 +++++++++++++++++-
+>>>    1 file changed, 123 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
+>>> index 39e559e91289..76b1ecb3819d 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
+>>> @@ -22,12 +22,18 @@
+>>>    #include "sc8280xp.dtsi"
+>>>    #include "sc8280xp-pmics.dtsi"
+>>>
+>>> +/* remove due to gpio pins collision, skip 2nd instance won't break things */
+>>> +/delete-node/ &cci1_i2c1;
+>>> +/delete-node/ &cci1_i2c1_default;
+>>> +/delete-node/ &cci1_i2c1_sleep;
 >>
->> To the best of my knowledege there is no 'descripting' word.
->>
->> Say it simpler like
->>
->>          Describe Hi846 camera sensor found on Gaokun3.
+>> Instead of removal 'cci1_default' and 'cci1_sleep' nodes shall be rewritten
+>> by excluding 'cci1_i2c1_default' and 'cci1_i2c1_sleep' from them.
 >>
 > 
-> Ack
+> Should we register an unused node?
 > 
 
-...
-
->>> +&camss {
->>> +     vdda-phy-supply = <&vreg_l6b>;
->>> +     vdda-pll-supply = <&vreg_l3b>;
->>> +
->>> +     status = "okay";
->>> +
->>> +     ports {
->>> +             port@3 {
->>> +                     csiphy3_ep: endpoint@0 {
->>> +                             reg = <0>;
->>> +
->>> +                             clock-lanes = <7>;
->>
->> Please remove 'clock-lanes' property from above.
->>
-> 
-> Is it unused? I saw it on some devices and v4l2 related source file.
-> 
-
-It is unused, and its selected value here is bogus.
+I believe unused nodes are found everywhere marked by status = "disabled"
+or if they do not produce a conflict for resources. I understand that a CCI
+IP with two ports are special, but likely (not always though) it should be
+acceptable to keep its device tree node as is.
 
 -- 
 Best wishes,
