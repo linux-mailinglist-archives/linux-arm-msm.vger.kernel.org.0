@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-106034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0FbLF7B8+mmKPQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 01:26:40 +0200
+	id IGGqM11++mmlPQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 01:33:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9EAF4D4AFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 01:26:39 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D5F54D4BE6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 01:33:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 88ED7302F77E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 23:26:38 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D59FA301D271
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 23:33:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BBAD33710F;
-	Tue,  5 May 2026 23:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98A7B338596;
+	Tue,  5 May 2026 23:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ly7iJ3s6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJbcnDez"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A1717AE11;
-	Tue,  5 May 2026 23:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7290417AE11;
+	Tue,  5 May 2026 23:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778023595; cv=none; b=r3TZovwiBFRYPB57+IT2jXL8NNQeykeTwaNf54QDFP411/XfS1qEbZhHbbblx+lP3xFlMxjoOOUnnlyFUGhJOxsUMgRXcCIRBJ2gV4wOzE8PXNMtsrKhzzisJZ+2J6w7H7rSDzmgVaaDXJ/K3jfL5ePN+FoGiiYGUre5/WQ1Ss0=
+	t=1778024025; cv=none; b=kK4MZglc/foUOucgB9e0XZ4l8o7LTJO6BKaNAr46WmEfjmTphfAz+6xIwI9cTt4wdjag3SAuUu3GrgjiAz3D3GIsOTv0CBzZRWSIl9TbyE9cVPUao635HW7RmvfB0u8h++I1mXjZij0NHuB+NAwxsnvnHUkcWqJdjzmQGfSe0wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778023595; c=relaxed/simple;
-	bh=B/ISt8+mgOM4AATuwsddiV0cq3vKFSKoFsczFF1NBzM=;
+	s=arc-20240116; t=1778024025; c=relaxed/simple;
+	bh=Fh+pc8iiwZvkDlM/WcbsplroNBSMDu4Ciha4LqkRgOY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jJv6gxWREDMOp8uyJ/jvvT5ChlolkI2vdfBnxi9s5xaKrO4SygutyJi5tUR8juzE63M0ItTNXRqB0fXOn5V+VrotwdB2iC+Exvlp5ttqyhCnG06Ji2ANxuORP5xrlTosohmiOdTM8kNvlWdLMmemKWf1majzhRz/2XxC1IH4yo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ly7iJ3s6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C43C2BCB4;
-	Tue,  5 May 2026 23:26:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=LqKVU/bdXyLulu1QIVXOh3SPepirp2h0ltxSDdMVyvgz6AiidrEOZ6UfR7k7qi29KRk5E1EmrcyDskbykzK5BamN+jYrBkO1+9td1XayNbsk/6HrOgCwsoJq+U0oSfxg44QS44KY48GIzx1RExOmQDI6v4TmkYI5Ke+DGmrCLHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BJbcnDez; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E73EC2BCB4;
+	Tue,  5 May 2026 23:33:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778023594;
-	bh=B/ISt8+mgOM4AATuwsddiV0cq3vKFSKoFsczFF1NBzM=;
+	s=k20201202; t=1778024025;
+	bh=Fh+pc8iiwZvkDlM/WcbsplroNBSMDu4Ciha4LqkRgOY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ly7iJ3s6BNcWv7puCeuJvU9OEF33Nkfss6IZ9B7C6JJ1+QXXRaQVKNDDWybxMb6zB
-	 n4ts2CwBgyXTqJjfWhlEAYeBi6oqOqWo6moYksw5PA2PQnS7ZeHyFJQxYPkoW4ejxI
-	 Ljobc94ALDtUHiptLO6wDB2M146Ynx+4+FJBTuYeE5x7yGgqDwa3oRh5uoZWyEN9lu
-	 vxyLxnfeyiKJwJW37W5oOss5TGEXIxL28fpOGUrBaPkvtKIRAM71BU1empIlnxoeyh
-	 sQFoyT0e1dm+i9G3/3pzGnLBgjBZUWeuqSeGewTaoIFLzOM/3KjbtzRAviFB9tsMow
-	 4b/DRQvjQpzIQ==
-Message-ID: <71c7b953-c7f0-4a77-8314-86f6ceba8b77@kernel.org>
-Date: Wed, 6 May 2026 00:26:28 +0100
+	b=BJbcnDezKubf1NhExDoT/qbCbfgj3/fkiaeVhzgpCjvaWIujV2V73Nndbr/qMneUT
+	 yNGJgrV5qx2N4oFW4U06bCJChiAr57LnDHFHQy3av2yucCwY/6Hr3lLIN2O9LCKcqd
+	 NGIsxFYQCFBEdlYJqNlXpubVz+Wz6ug8ohOh0lWchA0Bb8rKHBGUT1wiMyvwJ9qmVe
+	 2PRZqb5AoiMe8TozSp48UrrFLY5ZxgyU0N5nx+RmNhmWfVyZ+ZIAojdqSEyS1om4cX
+	 wdg7RIQ1+Htcmkh0tDsAFc4ypCbBBOYcQLF6ajxb8ko/ph13SD6xgCqlRBUl9zG4i0
+	 QafU9kNcRtvuA==
+Message-ID: <108401cb-040a-441c-b463-b69df195378e@kernel.org>
+Date: Wed, 6 May 2026 00:33:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/9] media: dt-bindings: venus: Add qcom,msm8939 schema
+Subject: Re: [PATCH v4 3/9] media: qcom: venus: Add msm8939 resource struct
 To: Erikas Bitovtas <xerikasxx@gmail.com>,
  Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
  Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
@@ -67,10 +67,11 @@ To: Erikas Bitovtas <xerikasxx@gmail.com>,
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org
+ phone-devel@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 References: <20260506-msm8939-venus-rfc-v4-0-994f5eb22acb@gmail.com>
- <B6fgpyuDuUlENNCLd5NVhl8Hq5vKEAmy9CrWRZJVHPf6munyxxn3eR0aiEkjkyPLcPIP-eH7KJE-zWrGSXcqOQ==@protonmail.internalid>
- <20260506-msm8939-venus-rfc-v4-1-994f5eb22acb@gmail.com>
+ <0TaxINYCitQd2DsGsbhRviwmrQkaaVMaE9vABS3gSsSPNfrgS3JPTIo_kvTzyEhGOAZuMVq-k-5T8mqDM7dnIw==@protonmail.internalid>
+ <20260506-msm8939-venus-rfc-v4-3-994f5eb22acb@gmail.com>
 From: Bryan O'Donoghue <bod@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=bod@kernel.org; keydata=
@@ -116,10 +117,10 @@ Autocrypt: addr=bod@kernel.org; keydata=
  LKSGEglMpiX07M1AotgvylN5C8fjbouoK+/RAMsXkk8jba6rPfuuXPaDjCyyKn6zSVHETnHW
  3AJbgVY50T8STpnxayBQvWbCvu+6NOEjXCbyaOJig+5l0zlGN9XHjdANXC5HnwmyaGRL9YDq
  Jh2nVXVJDincOdQRdKcJjYLqaOAoWrYWSDi1iZGspHBTDrnOvfMQzzHY
-In-Reply-To: <20260506-msm8939-venus-rfc-v4-1-994f5eb22acb@gmail.com>
+In-Reply-To: <20260506-msm8939-venus-rfc-v4-3-994f5eb22acb@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: C9EAF4D4AFE
+X-Rspamd-Queue-Id: 7D5F54D4BE6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -127,20 +128,20 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106034-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-106035-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[gmail.com,oss.qualcomm.com,kernel.org,apitzsch.eu,baylibre.com,redhat.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[21];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
@@ -148,16 +149,23 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	TO_DN_SOME(0.00)[]
 
 On 05/05/2026 22:44, Erikas Bitovtas wrote:
-> +required:
-> +  - compatible
-> +  - iommus
+> +	.vcodec_clks = { "core0", "core1" },
+> +	.vcodec_clks_num = 2,
 
-This required list looks sparse, patch #8 makes power-domain-names 
-required here.
+This smells a bit dodgy to me.
+
+You already have
+
+struct clk *vcodec0_clks[VIDC_VCODEC_CLKS_NUM_MAX];
+struct clk *vcodec1_clks[VIDC_VCODEC_CLKS_NUM_MAX];
+
+so why add vcodec_clks and put core0 and core1 into a new array. 
+vcodec0_clks and vcodec1_clks seem like a very natural place for core0 
+and core1 clocks to live ?
 
 ---
 bod
