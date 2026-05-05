@@ -1,126 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-105960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-105961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QFNQDWTp+WnWFAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-105960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 14:58:12 +0200
+	id qOuOIy3r+WkLFQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-105961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 15:05:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 903F24CE0CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 14:58:11 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 887EB4CE253
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 15:05:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 714493038BA3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 12:52:41 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 23AAF30215B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 12:54:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E80FC39A075;
-	Tue,  5 May 2026 12:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3E57397E8A;
+	Tue,  5 May 2026 12:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nLOudbTe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DiuMh/PX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BE8397E8A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 12:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15D9355F4E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 12:54:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777985559; cv=none; b=l4X5+Mho7M3z052TsJraBeroMbodR3AJNBI1qjwu35whwBKYckkQD7EtYAPlGjwseXXh4Q9o8AIPicAFPgurxMdYCcKFaRKWywdifaK/Q+Fa+maO1NVgi/FbjX5XZB7LF0S/VGi6rQm+jeFduVtkPJXA4o/k9I0wfJcNNsTBb30=
+	t=1777985696; cv=none; b=ZqEKOIPtYX9LZZ9TOu71bGgPZaWdmqQKDFav8EmMnKyIt65QwCwGsJXkKF6GuzgUy7iGfHTfNujdL0PsvInNEQILl/tkcvatwBJYRN3GuwY6wQ+k8G7SI87M/OOtDYXDj0LKUOQU/O8zqmKwpyBhvMcl23QIet64ci7Fwi30+x4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777985559; c=relaxed/simple;
-	bh=fy13KQEvuLTD/Lo2loN/ITnGeHnIFPaaAbYKituuXEM=;
+	s=arc-20240116; t=1777985696; c=relaxed/simple;
+	bh=Sh28J4VTj/Gu7tafyIE7Eggfn+Ua5Ea/FbQ2l5rPXB4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DFenqoJB6V3Jl4Th10kbiGGQK9ErYrKX4tq1NZqItseUUII05tWjnO7CRllKSEGqwsZa5q13gDkTheiXnxWSWfCjhasaKQYBYMKGF9b3EgLCj5VYdcnrhZsZYiozsaVM/6XcaZEB+JiexS6EH0UTbWmqmw3k1nQFTUklEsKGWo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nLOudbTe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F28BC2BCB4
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 12:52:39 +0000 (UTC)
+	 To:Cc:Content-Type; b=BjECTLUw1beDyyVXrOXibsvSknsZhHHsFYFMMEfiuYpP35dYzCKXxuZDOMvW9Jc+LOG0l0aimqPCSZ/tb9sdBUh3KAHatRf8OrSuB5HM1F5GkTY2ByzqMb0hfVdP47V+NGwjnF2Wj4cc0EyNa2s8iwyQbhUTtnZbWAdQBAZAnsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DiuMh/PX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65485C2BCB4
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 May 2026 12:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777985559;
-	bh=fy13KQEvuLTD/Lo2loN/ITnGeHnIFPaaAbYKituuXEM=;
+	s=k20201202; t=1777985696;
+	bh=Sh28J4VTj/Gu7tafyIE7Eggfn+Ua5Ea/FbQ2l5rPXB4=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=nLOudbTeZ6y6L6hAaGOW3oBaCe49nWLMnKk+uvDMPm/UZr3OHttWsNMNmZiy6D+cZ
-	 OO8OgFHlNZfTZk9POi7Fps2C0hPxkcjOraVg4BSAGIxdaJqx/XGh3mqKntJPkPdQNZ
-	 +BqkzjcNAM0WIMDsfroSYVx8TY2TDbsVCojurZEoX2t9XuBNDaBi2pxUbQGNSkNuR5
-	 qukLuPexF9MhwaiRuJrkpsY7qndrcARVkwxMmhB9tjr0zO7tDM5Bcw9hGfM9WRtiJ0
-	 jQqsQTpxAWmK2kH8Wdmxy6WCGaqursUuPEVEvWlEpbQ9v91TYzHYo3tNxcB6CGfjxo
-	 3sSV0bjDhRWRw==
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-38e7d983f91so56076981fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 05:52:39 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ/dM/dCrLjQGeW9CTuyHF/CKqrzpObP7oVMAH4RDcWhfQkRBsij2iyrzqRmDtXcgij3nK5DYbZ/C8CmVqe2@vger.kernel.org
-X-Gm-Message-State: AOJu0YwnNOxrpkLhBg1B+fEi5nWcNMWVcPzTWzL2dNe4ZQ4ztiYQOyqm
-	77jyUEorDt4MQRI/OmkuWCrQ4NQqbzW4ZwCxX+3yBniqYtSx63b5b6QAqhjk2DKp7adDLzdZIxY
-	VfF9bhmkV1MfVoVvU8ITxpxqQ7Vl4IeY=
-X-Received: by 2002:a2e:9815:0:b0:393:9b5d:f801 with SMTP id
- 38308e7fff4ca-3939b5df982mr29781371fa.15.1777985558239; Tue, 05 May 2026
- 05:52:38 -0700 (PDT)
+	b=DiuMh/PX4rQDUL+GxhBPE72jr0WyPeizrZujrEZW8hl5fijkxZwoPkcvbpER5gqF4
+	 9ksCEYEWKOGqB3kei7omj1RCAcuwpidRTh/sXQXZ0P7FdbCZguTICdCCnwQINI9ABz
+	 q2jXgexKYJtQv40Yd7I97mt97QV3vQpX2FSWeNxKnwqZrWXT5jxl+feg7ElxUnn39z
+	 wPJ6Xd48trnC4Q98851hw0Gipbmszn0MYrS1i4ESQAqngLRY2tjaqYYZa9b1vNU5pU
+	 Ie125EabuZCIfu+MZ0JSDCQq/1k0vBOabQv5ov/rUgnGoOLebxVWwaWTKj2N+nyVag
+	 6JT4LzNNsvbUQ==
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5a40b2bc96dso5750475e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 May 2026 05:54:56 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ9/ELJqotdyZQA/vqQOv5YbOgAGCi11mfrk2knAZYG4h7VAMO8wISKU0jjZ9bDXwDINO7A7SEcitBT+c95z@vger.kernel.org
+X-Gm-Message-State: AOJu0YyKVjsQfBaYph9us9ejkta1JxV71xKXkYpyQvD0uROCrX6WmLos
+	i+XhbqDrCRyKDko899cTk6CFRMGfCw1aUGyRL9kBJIXGQ9dbftreYRG0JJs0ulfqnEI/p31qZBb
+	++R/6+k1aKODROqdIyIKj7CzTaUDI3EE=
+X-Received: by 2002:a05:6512:1093:b0:5a3:fe60:471c with SMTP id
+ 2adb3069b0e04-5a862fc123emr5138835e87.16.1777985695146; Tue, 05 May 2026
+ 05:54:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260504064936.2754570-1-swati.agarwal@oss.qualcomm.com>
-In-Reply-To: <20260504064936.2754570-1-swati.agarwal@oss.qualcomm.com>
+References: <20260505093444.61336-2-krzysztof.kozlowski@oss.qualcomm.com>
+In-Reply-To: <20260505093444.61336-2-krzysztof.kozlowski@oss.qualcomm.com>
 From: Linus Walleij <linusw@kernel.org>
-Date: Tue, 5 May 2026 14:52:26 +0200
-X-Gmail-Original-Message-ID: <CAD++jLkent4ecVKsw=Jz=oVvstMH391-Tpkhb7ATwqK9OSQ29A@mail.gmail.com>
-X-Gm-Features: AVHnY4Iphv0DR5tfqaVoRpRom3m07D2-njUdmmkx0r5hOdGebq0cUmNRfTzPaR8
-Message-ID: <CAD++jLkent4ecVKsw=Jz=oVvstMH391-Tpkhb7ATwqK9OSQ29A@mail.gmail.com>
-Subject: Re: [PATCH v3] dt-bindings: pinctrl: qcom: move gpio-hog schema to tlmm-common
-To: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
+Date: Tue, 5 May 2026 14:54:43 +0200
+X-Gmail-Original-Message-ID: <CAD++jLmftqH4dZ-KUuWAy7rCNHv+88rFhaKOgQrsjRVhP8_RqA@mail.gmail.com>
+X-Gm-Features: AVHnY4JZvQcynYlsHpntup0LWb0piRJ3MjZc6fGn30J0Ndq_DorGjjph723QHzw
+Message-ID: <CAD++jLmftqH4dZ-KUuWAy7rCNHv+88rFhaKOgQrsjRVhP8_RqA@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: Move MODULE_DEVICE_TABLE next to the table itself
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 903F24CE0CB
+X-Rspamd-Queue-Id: 887EB4CE253
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-105961-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-105960-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCPT_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,mail.gmail.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 
-On Mon, May 4, 2026 at 8:49=E2=80=AFAM Swati Agarwal
-<swati.agarwal@oss.qualcomm.com> wrote:
+On Tue, May 5, 2026 at 11:34=E2=80=AFAM Krzysztof Kozlowski
+<krzysztof.kozlowski@oss.qualcomm.com> wrote:
 
-> Qualcomm TLMM-based pin controllers share the same gpio-hog binding
-> semantics across multiple SoCs. The gpio-hog pattern currently defined in
-> qcom,ipq4019-pinctrl.yaml and qcom,sdm845-pinctrl.yaml are not SOC specif=
-ic
-> and applies to all TLMM controllers.
+> By convention MODULE_DEVICE_TABLE() immediately follows the ID table it
+> exports, because this is easier to read and verify.  It also makes more
+> sense since #ifdef for ACPI or OF could hide both of them.
 >
-> Move the gpio-hog patternProperties definition to qcom,tlmm-common.yaml s=
-o
-> that it can be reused by other Qualcomm TLMM pinctrl bindings and avoid
-> schema duplication.
+> Some Qualcomm pin controller drivers already have this correctly placed,
+> so adjust the other drivers.  No functional impact.
 >
-> Signed-off-by: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-Patch applied!
+Patch applied.
+
+Some newly merged drivers may be missed, check linux-next.
 
 Yours,
 Linus Walleij
