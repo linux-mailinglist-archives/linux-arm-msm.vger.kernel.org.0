@@ -1,158 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-106007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wG3kH8A0+mlLKwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 20:19:44 +0200
+	id KN0+L8g5+mnHKwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 20:41:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 101BC4D2911
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 20:19:43 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62C104D2C84
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 05 May 2026 20:41:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0CC1F304E0D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 18:19:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 54C7630733DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 May 2026 18:36:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F97B4A3408;
-	Tue,  5 May 2026 18:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD2E33C8729;
+	Tue,  5 May 2026 18:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sntech.de header.i=@sntech.de header.b="eveGNBOR"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="FlNdiboT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A861539B952;
-	Tue,  5 May 2026 18:19:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.11.138.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6A5309F1D;
+	Tue,  5 May 2026 18:36:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778005167; cv=none; b=VVE1zf+ErPvFfq1ZeHWjcQXVtbrhmxis9sCzO96EsG21FSf5BLd5xrqkn01gUhqaiNpbFoAUSiPyJrv13owQL/PP6hpS4D4KMLrsD5Svxn2vzU/77qY7wnNj5kF6oLy0PF6TsjHLAyXDqv3rVh4uCvUulbXNh2BozP/0nEzDZQw=
+	t=1778006213; cv=none; b=j63+8jOYFFka6cvmV+nxKkNp9tHbCQfCFJNOntMQvEFJyksfA8EQV++r81pvaDwRhMzRdNA31DDba6sjFyOZCTxDZh+PyXor6sj68LpMDu96R+GC9/M5dLpdcYLWrp1yy/aIZd+uxemk5slXxHbH7XpZjBJgafWf74NZwFUl69k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778005167; c=relaxed/simple;
-	bh=pBxc7D93t0f0QZtmD0TKOUx/5ScHJ9VgFzmhUFh8+P0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Az9oP1CGSF8B5qWp1x7y/91wAggP/FI1j5a/0HgNZncJsWPJXtTgoAOwCirn+CFA4Gjqjk1onBdpHR9CvQPPRvje/Q60/+L1k70nCr/0B+8+THeUzcgUbrPCniKHe+i4LRaYqDd690hRrov+M5yP4a8SUHpXiEbK75LO2P3bx+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=sntech.de; spf=pass smtp.mailfrom=sntech.de; dkim=pass (2048-bit key) header.d=sntech.de header.i=@sntech.de header.b=eveGNBOR; arc=none smtp.client-ip=185.11.138.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=sntech.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sntech.de
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sntech.de;
-	s=gloria202408; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
-	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Reply-To;
-	bh=CZieGdswKQbAOybvHi0PMqwJLD1M3MBzPazARBFonZA=; b=eveGNBORgDJ20PJlLoNRQhaMgV
-	cts1zTnfdjoMi0WghO+3TnFOgTrS0fd173ms8UnoRGUIhXCNlsz/uIDZ89vOiYo7dEQM633M23WHo
-	DxyysTzdgLniY+9H/XYKgpFj/oRx2KB1p+4fIUhoR3ncoFa5zhNscugF7TsQNlEuX9a83b22cQcdm
-	fxuzxHLN9ks+Os1DVlGI/r0WnBZczEBlt+yJoCCh+WXpyI8UKIDh2MqcrOkvjRy7WX2tIxNnajgRg
-	eoCBwkS7QYJ7ZZ719f8TKMjYuclU9iXoPPKUY258ND2tPTJbIKVGWeMg+Yo0ZY9lVAFtMe0FwAZ+4
-	OWL0bNTg==;
-From: Heiko Stuebner <heiko@sntech.de>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Brian Norris <briannorris@chromium.org>
-Cc: Heiko Stuebner <heiko@sntech.de>,
-	devicetree@vger.kernel.org,
-	Doug Anderson <dianders@chromium.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	chrome-platform@lists.linux.dev,
-	linux-rockchip@lists.infradead.org,
-	Julius Werner <jwerner@chromium.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	cros-qcom-dts-watchers@chromium.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-tegra@vger.kernel.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH 0/7] dts: Add /firmware/#{address,size}-cells to Chromium-based DTs
-Date: Tue,  5 May 2026 20:19:08 +0200
-Message-ID: <177800448363.3286457.17373798042642521210.b4-ty@sntech.de>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260428200712.2660635-1-briannorris@chromium.org>
-References: <20260428200712.2660635-1-briannorris@chromium.org>
+	s=arc-20240116; t=1778006213; c=relaxed/simple;
+	bh=o++R2kdIsGcoEgZOQS/gVadcVMIJ9Ue5B/7IYTA3YXA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SWzqbZlFhUJKjXqtVsjIDiyXXd6XVWrRnxBnL1wOIgAqTucxi58xfTiYkiTICN8PxXPC2WAuhjMXIUCBJG/6tOBlx2aKVICbKkzk8/r+DRYuzD9iGmi9TmLM/sezktH7FUPURsEb4GHpRC4rY3uknUb8TL+I29y4EETnt8nJPpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com; spf=pass smtp.mailfrom=Igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=FlNdiboT; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=Igalia.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=0wouRkC7R6R6za9vKUGUIKSOanWTfI6K8Vjgu6fhaJA=; b=FlNdiboThWj2nJU5anXICAiYK/
+	36hxMKS+lEATI1venbZfWbtLPV3XLJ67PTiLl1F7EVQwmzjxBYyrqITl/hxY6wmh5WFbdHjqauFBc
+	r7t1JGAPeXhKql9vyI7t+BA5Fi7Wf4qBlR/cbNNvux8Fv2Z/jmS/kcVNRHg0db2wVJWJ0eWS3fA4m
+	w6wwPRy/+ZBqzkNDiwvNkY6ZeZGT2byLfHvUBlPXqwR8r6wtn1EzklNl0L4IU/RzpV/pmQZwOrubS
+	B7GY3flB3hsh4a63lQQCmyJwgsRehd40KmbAvvjWV5Viv53elLTia7pxNoHBhn0Nl5ib1A3s7E4+b
+	+mYc+XPQ==;
+Received: from c-73-157-168-91.hsd1.or.comcast.net ([73.157.168.91] helo=[192.168.1.133])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1wKKck-006ZHM-Py; Tue, 05 May 2026 20:36:02 +0200
+Message-ID: <8c429335-2516-49a0-b2dc-4a09fd14749e@Igalia.com>
+Date: Tue, 5 May 2026 11:35:51 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 101BC4D2911
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/8] drm/msm/dpu: don't mix devm and drmm functions
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ "Kandpal, Suraj" <suraj.kandpal@intel.com>,
+ Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>,
+ Rodrigo Siqueira <siqueira@igalia.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Liviu Dudau <liviu.dudau@arm.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+ Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+ Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>,
+ Dave Stevenson <dave.stevenson@raspberrypi.com>,
+ =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
+ Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+ Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+ Jessica Zhang <jesszhan0024@gmail.com>,
+ Louis Chauvet <louis.chauvet@bootlin.com>
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
+ kernel-dev@igalia.com
+References: <20260505-wb-drop-encoder-v5-0-42567b7c7af2@oss.qualcomm.com>
+ <20260505-wb-drop-encoder-v5-1-42567b7c7af2@oss.qualcomm.com>
+Content-Language: en-GB
+From: John Harrison <John.Harrison@Igalia.com>
+In-Reply-To: <20260505-wb-drop-encoder-v5-1-42567b7c7af2@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 62C104D2C84
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [1.14 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[sntech.de,quarantine];
-	R_DKIM_ALLOW(-0.20)[sntech.de:s=gloria202408];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-106008-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106007-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,linux.intel.com,intel.com,amd.com,igalia.com,gmail.com,ffwll.ch,arm.com,kernel.org,suse.de,linux.dev,poorly.run,somainline.org,ideasonboard.com,glider.be,raspberrypi.com,wanadoo.fr,bootlin.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,nvidia.com,gmail.com,collabora.com,chromium.org];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCPT_COUNT_TWELVE(0.00)[37];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[24];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.862];
+	FROM_NEQ_ENVFROM(0.00)[John.Harrison@Igalia.com,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[heiko@sntech.de,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[sntech.de:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DKIM_TRACE(0.00)[igalia.com:-];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 
+On 5/4/26 17:24, Dmitry Baryshkov wrote:
+> Mixing devm and drmm functions will result in a use-after-free on msm
+> driver teardown if userspace keeps a reference on the drm device:
+> The WB connector data will be destroyed because of the use of
+> devm_kzalloc()), while the usersoace still can try interacting with the
+extra ) on devm_kzalloc())
+typo: userspace
 
-On Tue, 28 Apr 2026 13:06:52 -0700, Brian Norris wrote:
-> Chromium/Depthcharge bootloaders may dynamically add a few device nodes
-> to a system's DTB under a /firmware node. A typical DT looks something
-> like the following:
-> 
->   ## From a RK3399 Gru/Kevin Chromebook:
->   # find /sys/firmware/devicetree/base/firmware
->   /sys/firmware/devicetree/base/firmware
->   /sys/firmware/devicetree/base/firmware/coreboot
->   /sys/firmware/devicetree/base/firmware/coreboot/ram-code
->   /sys/firmware/devicetree/base/firmware/coreboot/compatible
->   /sys/firmware/devicetree/base/firmware/coreboot/board-id
->   /sys/firmware/devicetree/base/firmware/coreboot/reg
->   /sys/firmware/devicetree/base/firmware/coreboot/name
->   /sys/firmware/devicetree/base/firmware/chromeos
->   /sys/firmware/devicetree/base/firmware/chromeos/readonly-firmware-version
->   /sys/firmware/devicetree/base/firmware/chromeos/active-ec-firmware
->   /sys/firmware/devicetree/base/firmware/chromeos/firmware-version
->   /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-storage
->   /sys/firmware/devicetree/base/firmware/chromeos/vboot-shared-data
->   /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-size
->   /sys/firmware/devicetree/base/firmware/chromeos/nonvolatile-context-offset
->   /sys/firmware/devicetree/base/firmware/chromeos/hardware-id
->   /sys/firmware/devicetree/base/firmware/chromeos/compatible
->   /sys/firmware/devicetree/base/firmware/chromeos/firmware-type
->   /sys/firmware/devicetree/base/firmware/chromeos/fmap-offset
->   /sys/firmware/devicetree/base/firmware/chromeos/name
->   /sys/firmware/devicetree/base/firmware/ranges
->   /sys/firmware/devicetree/base/firmware/name
-> 
-> [...]
+Otherwise the description looks good to me and the two typos can be 
+fixed when merging, so:
+Reviewed-by: John.Harrison@Igalia.com
 
-Applied, thanks!
+But should wait for at least an ack from Laurent as the person 
+originally requesting an extended description.
 
-[1/7] arm64: dts: rockchip: Add #{address,size}-cells to Chromium-based /firmware
-      commit: 0b74f1a037672980c477bbe6b3848fb5341eb4f1
-[2/7] ARM: dts: rockchip: Add #{address,size}-cells to Chromium-based /firmware
-      commit: 98461edf564a35ee00a97a64f5463eaece586546
+John.
 
-Best regards,
--- 
-Heiko Stuebner <heiko@sntech.de>
+> WB connector (which uses drmm_ functions).
+>
+> Change dpu_writeback_init() to use drmm_.
+>
+> Fixes: 0b37ac63fc9d ("drm/msm/dpu: use drmm_writeback_connector_init()")
+> Reported-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+> Closes: https://lore.kernel.org/r/78c764b8-44cf-4db5-88e7-807a85954518@wanadoo.fr
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> index 7545c0293efb..6f2370c9dd98 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_writeback.c
+> @@ -5,6 +5,7 @@
+>   
+>   #include <drm/drm_edid.h>
+>   #include <drm/drm_framebuffer.h>
+> +#include <drm/drm_managed.h>
+>   
+>   #include "dpu_writeback.h"
+>   
+> @@ -125,7 +126,7 @@ int dpu_writeback_init(struct drm_device *dev, struct drm_encoder *enc,
+>   	struct dpu_wb_connector *dpu_wb_conn;
+>   	int rc = 0;
+>   
+> -	dpu_wb_conn = devm_kzalloc(dev->dev, sizeof(*dpu_wb_conn), GFP_KERNEL);
+> +	dpu_wb_conn = drmm_kzalloc(dev, sizeof(*dpu_wb_conn), GFP_KERNEL);
+>   	if (!dpu_wb_conn)
+>   		return -ENOMEM;
+>   
+>
+
 
