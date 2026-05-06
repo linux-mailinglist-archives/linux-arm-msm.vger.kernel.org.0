@@ -1,224 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-106143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GNlPBUVs+2miawMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:28:53 +0200
+	id QP4HCjBs+2miawMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:28:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DC544DE1CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:28:51 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0CD84DE1B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:28:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 75E203009CD7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 16:25:17 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id C353A3006826
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 16:28:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CC2D3ED107;
-	Wed,  6 May 2026 16:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5739F43E4A1;
+	Wed,  6 May 2026 16:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="SnK+kHR9"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="m+4PBVCj";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TXIWUcjo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C553F0ABC;
-	Wed,  6 May 2026 16:25:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B2141B34C
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2026 16:28:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778084716; cv=none; b=njkHYgA8NPXWg0D8MzaFkvOhfg7mI+8LC1zc9llJ5HjhzUQZ23D3bEvcOqMAIkQsXq1236+CczrPIIndbxDawgXJdiHyhuB5NNdWP9MGzHHiljyDTPFemRWUMFgIeBiEuAyVa2C67dgOOrQN6LcWv67SPPkEYiTd4YL6l2Q/Ssc=
+	t=1778084907; cv=none; b=VyX7VY6jQnLDY9/ASS9xgQC/9W04bfBV/r55SW77tpyl0Ls56WXiF+/E6guiwi1+fgDPzpKVKXB4WYimqTqYx2MsI0bm/g58a4CpPCzXIi7caBaWdkcDpp8cHdv254IkUQcxOABb8bvuUrrnJh4L+0B+AScJ/o+2TdBbriQM78w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778084716; c=relaxed/simple;
-	bh=aEwby3hiBqgi8nQZsciVDDvsXj0kYmX+laF5UjXUEVg=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=scZkxghvq8LX4Hr1kdj3TFEo3Z7GhM63Gg8McVu2EDL3+SOTA9zokVrgUBHVyB0z4gscbbCjG8GteuzfqLr1d6zeM5+SsEE9gPc1MeO+lkJiDXKt1GhHn+iEp41tgBHwQJSaI2frTHtCXndW3zU9UxVwcKrTiXvaJEXVZIWIOik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=SnK+kHR9; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1778084713;
-	bh=aEwby3hiBqgi8nQZsciVDDvsXj0kYmX+laF5UjXUEVg=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=SnK+kHR945GSMVWTHitLyP5YzUUC+Qab+3fG5NC2Z26bG+xuOvlr/PRHlKxMgnDlz
-	 HKQR4cJav6qPwr3wgPZoWIThhRtZHykxEkCLGsEc+Mzk0Pfx3LBkOrXYB4IKMyq1uD
-	 j6wYINvzl+ZG7dxF5bkuyEgKbhilySGoH71+pYiXf+5RHd9235Uovays0WXmBLUCJS
-	 /x2AUxprmTwu1L7zr/QkGZRMhjvJj1CUxWY3xBmXQ6Cym812zep4LdrEHgT7Q4kHe4
-	 jHyWzzlrBXwgHWsEr8Em6dn9D69o38CNxcQDQSTGWlFMN1PKooi0s4My9NgdtT09yx
-	 yQ3PeyNbJTGcg==
-Received: from fedora (unknown [100.64.0.11])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bbrezillon)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 40B6217E124B;
-	Wed,  6 May 2026 18:25:12 +0200 (CEST)
-Date: Wed, 6 May 2026 18:25:06 +0200
-From: Boris Brezillon <boris.brezillon@collabora.com>
-To: Steven Price <steven.price@arm.com>
-Cc: Liviu Dudau <liviu.dudau@arm.com>, Dmitry Osipenko
- <dmitry.osipenko@collabora.com>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Akash Goel <akash.goel@arm.com>, Chia-I Wu
- <olvaffe@gmail.com>, Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry
- Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn
- Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] drm/panthor: Don't use the racy
- drm_gem_lru_remove() helper
-Message-ID: <20260506182506.204a1ed2@fedora>
-In-Reply-To: <23c69bee-868d-4142-a96e-36de61f23f4f@arm.com>
-References: <20260506-panthor-shrinker-fixes-v1-0-e7721526de96@collabora.com>
-	<20260506-panthor-shrinker-fixes-v1-1-e7721526de96@collabora.com>
-	<23c69bee-868d-4142-a96e-36de61f23f4f@arm.com>
-Organization: Collabora
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1778084907; c=relaxed/simple;
+	bh=QYVtzd/xc7fLQtZMy6ElulTvtzvDpcvThePe9t+u1iU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NFDD0qb98lLL2swOs9Nh5XrIPbBuyCIh+LK/F+NDFlqeOMG55CIwz0J0JmiXCD0YzU3MS8rgn6YI9DllPN0eFYNSZmD8e9BxqcUQR81kJ5DkLS+QCaTtqipCtDmmn1jMbLjZmBsJF+vWMthR1C1yMvsRljDWTsPPZ8d/pfYUlNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=m+4PBVCj; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TXIWUcjo; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 646EGAMt3309052
+	for <linux-arm-msm@vger.kernel.org>; Wed, 6 May 2026 16:28:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QYVtzd/xc7fLQtZMy6ElulTvtzvDpcvThePe9t+u1iU=; b=m+4PBVCjRBUt8x9Y
+	1V4nTnB8Xt8sh0FUCkGcY6iMdibhGGM6ZCSfLGsXjpgwBpzNbBJqfigCaWNSfgA7
+	fkdoh+95AtuqpBEhTd4EwB7rt0ZSCnDVfYLZZynMPrtVmBJ/T/4FbcTnyMONpYnc
+	+cEoGx1eBHT7GJKL402X4JQZBh5EQbW8kUGja2razBFLZB6Rq+ukNtNi6hgH29Df
+	8Ug154SyyiHoBpX2pDqdVJlyBC1pVPJdANWUFRjVzVSXtnGhabx8y7im4iDrkjHr
+	es8/Uq90zcIswIcITlJGHHgJ5P/92WUd/S+EJT/Zq+X/JC5QwcAG1uOBmgvwWdMY
+	6x0MhQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e078sgj0s-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 16:28:25 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2b2d83e7461so120821955ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 09:28:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1778084904; x=1778689704; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QYVtzd/xc7fLQtZMy6ElulTvtzvDpcvThePe9t+u1iU=;
+        b=TXIWUcjoe4geql5Ai417M/q/XK+yCH9Brllg6CiYIi4BFM89EJ+YzUuiSRRxqctTS0
+         vwIfbTDaXvT/84wLp/EqADvKPXUxYXTecgvpD3iR8fmN3+0BESOh/CRrN/88/pLf/gsg
+         swemlmejF74r1Yo5hhsXfnPmks2+g7ztjcKZ4oDNH0vysp52BIVrZA1K2kZ/orPi/7sJ
+         MADndAQCS39fPlDk7opAd3Pd+GvlccB1HfELfI16lt8+5cAsJU0IQkFU8s39g2LjOj32
+         GSWTYRdx0HymVmp8X2zrMRbqQXCwJYxRz2fAaCbziRCl28bXtBDVI7ieVFMF19MaTKEr
+         MOiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778084904; x=1778689704;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QYVtzd/xc7fLQtZMy6ElulTvtzvDpcvThePe9t+u1iU=;
+        b=DAdyB+rmM6as/mGYxf55Cic8zOm34GwTkRDpGPUyS9ZFDjc/azdGuTXmHaI+uwHIdr
+         FcTPAw/KrcDY/2tgi6UfloMru5hqrtvIHekG3WAcANx1gaJ++EhhIFXSzPRz8Uirnedw
+         06ghlhuk8ugZ+SUhzzkfF1L96Mltpt9ErsnbM7HglEZUiD8VfMguauG2LQd888+iM5RO
+         4je2G57zH9q3GG9EXSJn7dcAmaMeQXVTIrO9mPj40u7cEZS0ZiiFrJ1iqPJz2tob2Mef
+         HPDPI04WwB6oQgxnPz5j4zvnYDaZYGFPJY524eyVzuSGnOg+tHfILOX8HRKKSK4K/8gC
+         8haA==
+X-Forwarded-Encrypted: i=1; AFNElJ8FXWx69yPtOFfIlMkQCjwXptk63lW+FbrUDvCh7A5cijEYv6VwqnFN8riWV4Ae869/X7ccOiwbKMlqPt7X@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVLWly+Z4R6P38VQt+IWRqgD8xIPwu9zEattke5MoJF5lElv5e
+	bgUKijFVpXxjPOdk6+FJsZBFzNWk7jJnQb9NnNr7CS3RdpgRI4+EUZqSuvV94AcAPDs5L7LVCql
+	52sGmgCdaXPLckJU3AQVHpQ4dqLisfno4Q2jKHDwgf5I3/Yq/2jngsN6p2AOFCCBIzGsz
+X-Gm-Gg: AeBDievXQGLB5s+AjCVQtYwwqPA+Raj6IZh0nJdKunLNy+RYTnn/h8ns1XFfmYpNpJ4
+	caRoYmFR8sOEAQyd4TF3tb4qKBGAEk3APUIk2Qc/yLN67bG0yewFTj3lyNpCUpXgdB2FkssiooT
+	TIc8GNupaUzbpeJrgqLeJfrDnJn0vJM/vser2i30H9w3aEB5UYjoB7vSJpnZMkaV21Dt/mkRzFK
+	cQMEA6v8AbbPLApoivBlwWLoTgJYnaCOJc4K/oxCxug3MRHnyuoV28rCNYefH43WgqYoQ9Euolp
+	Vs8+IZ9Sxbg3lNQRb0cZIHYlgg1XWpeonsercM7h5vcPsLdSjywsPM9OySsmT2ilbV4ewOxsjMY
+	FRBZGdYL+Be8+pzscWSo9Jsot6TOG707M2DemwfUeiIsvSpTj+WU6PSvSJOZmsi6y
+X-Received: by 2002:a17:902:ebc3:b0:2b2:3eec:c75f with SMTP id d9443c01a7336-2ba798a9396mr43246915ad.28.1778084904324;
+        Wed, 06 May 2026 09:28:24 -0700 (PDT)
+X-Received: by 2002:a17:902:ebc3:b0:2b2:3eec:c75f with SMTP id d9443c01a7336-2ba798a9396mr43246545ad.28.1778084903722;
+        Wed, 06 May 2026 09:28:23 -0700 (PDT)
+Received: from [10.206.105.200] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ba7ca106e8sm32048405ad.62.2026.05.06.09.28.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 May 2026 09:28:23 -0700 (PDT)
+Message-ID: <bb008913-1100-9b8a-c7f5-1194df33eea8@oss.qualcomm.com>
+Date: Wed, 6 May 2026 21:58:15 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v4 02/13] dt-bindings: media: qcom,venus: Remove clock,
+ power-domain, and iommus from common schema
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil@kernel.org>,
+        Stefan Schmidt <stefan.schmidt@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, iommu@lists.linux.dev
+References: <20260505-glymur-v4-0-17571dbd1caa@oss.qualcomm.com>
+ <20260505-glymur-v4-2-17571dbd1caa@oss.qualcomm.com>
+ <20260506-inquisitive-wondrous-lori-a9e639@quoll>
+ <455376f9-48c2-e663-3be3-fd310afb7f7f@oss.qualcomm.com>
+ <333ba4cd-8168-41f1-afdc-348f99ed0611@kernel.org>
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+In-Reply-To: <333ba4cd-8168-41f1-afdc-348f99ed0611@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 6DC544DE1CA
+X-Authority-Analysis: v=2.4 cv=Lc8MLDfi c=1 sm=1 tr=0 ts=69fb6c29 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=Ao3bqe3Qqjuf2QKdZGMA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDE2MCBTYWx0ZWRfX7vrL+IFzMXky
+ a1Nj9Q+EkkyF+qd2Ee15QLKpD33WqFziSFPCRP9HcpyTv8+tADWMLMC69zuxenG8Z0koUPTYgqz
+ M3CBF/w/RYB233pV0plJiSKomZPd3wnwA+oVFW+Yb2Pat6DM17KZS61BWT0fc8AMvwsmfJhc9ez
+ BofV9hQOquCvT7DnrMdxBftcu349s34hRU/ZMTFGtIyCmKyg9wXRM7AZQBlO0Kd5zITZcPKr/pP
+ CE1napfg0X3RKqK27S+u22hpzD6lPx5bqKhJDRKU2HoIybZ9WPGCw51VsaFi6nGaodd3hYiOyg8
+ mEn/gNKhI2wxI/Sm1eT5w7tAhZZb0zn4Lsg/HbmEJwuaki6EDOhpjenKW9ZD3byjDPtFMwe1NJ6
+ JlxLn6o0h1YnVDXAJ30W3kjch60rV/Ty9q0qCCPfLqVi8/QKEhs6dik/SqDdBoDTAQBnl/6Y26k
+ lpoA4zKrZHRd2uyjEqA==
+X-Proofpoint-ORIG-GUID: LlHwqb_58owUjWuFWirIADE8mdZdec4P
+X-Proofpoint-GUID: LlHwqb_58owUjWuFWirIADE8mdZdec4P
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-06_01,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 clxscore=1015
+ impostorscore=0 bulkscore=0 suspectscore=0 malwarescore=0 phishscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605060160
+X-Rspamd-Queue-Id: C0CD84DE1B1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106143-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	HAS_ORG_HEADER(0.00)[];
-	FREEMAIL_CC(0.00)[arm.com,collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,linux.dev,kernel.org,linaro.org,gmail.com,8bytes.org,arm.com,vger.kernel.org,lists.linux.dev];
+	TAGGED_FROM(0.00)[bounces-106144-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[boris.brezillon@collabora.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[busanna.reddy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[collabora.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[arm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,collabora.com:dkim,collabora.com:email]
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-On Wed, 6 May 2026 16:40:22 +0100
-Steven Price <steven.price@arm.com> wrote:
 
-> On 06/05/2026 13:16, Boris Brezillon wrote:
-> > drm_gem_lru_remove() dereference stores drm_gem_object::lru in a local
-> > variable that's then dereferenced to acquire the LRU lock. Because this
-> > assignment in done without the LRU lock held, it can race with  
-> s/in/is/     ^^
-> > drm_gem_lru_scan() where drm_gem_object::lru is temporarily assigned
-> > a stack-allcated LRU that goes away when leaving the function. By
-> > the time we dereference this local lru variable, the object might already
-> > be gone.
-> > 
-> > It feels like drm_gem_lru_move_tail() was never meant to be used this
-> > way, because there's no easy way we can avoid this race unless we defer
-> > the locking to the caller. Let's add an explicit LRU for unreclaimable
-> > BOs instead, and have all BOs added to this LRU at creation time.
-> > 
-> > Fixes: fb42964e2a76 ("drm/panthor: Add a GEM shrinker")
-> > Reported-by: Chia-I Wu <olvaffe@gmail.com>
-> > Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
-> > Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-> > Reviewed-by: Chia-I Wu <olvaffe@gmail.com>  
-> 
-> With minor typos fixed
-> 
-> Reviewed-by: Steven Price <steven.price@arm.com>
-> 
-> Although an alternative would be to expose drm_gem_lru_remove_locked()
-> in some form (maybe a wrapper which requires passing in the lock?)
+On 5/6/2026 6:39 PM, Krzysztof Kozlowski wrote:
+> On 06/05/2026 11:32, Vishnu Reddy wrote:
+>> On 5/6/2026 12:11 PM, Krzysztof Kozlowski wrote:
+>>> On Tue, May 05, 2026 at 12:29:23PM +0530, Vishnu Reddy wrote:
+>>>> The common schema defines minItems and maxItems for clocks, power-domains,
+>>>> and iommus. This suggests that the number of these resources can vary,
+>>>> while in reality they are fixed constraints per platform.
+>>> OK, that's interesting approach. I am fine with it, but then you need to
+>>> remove these from "required:" list as well, because requiring properties
+>>> which are not defined here is not the most readable.
+>> Ack, I will remove them from "required:" in the next revision.
+>>
+>>> I still do not understand though why you cannot just grow the properties
+>>> here. The point of this schema is to define common set for range of
+>>> devices, because all of these devices are supposed to be veri similar.
+>> If a new platform schema uses this common schema but does not explicitly
+>> re-declare clocks or power-domains, it will inherit minItems and maxItems
+> But new platform MUST define them, because each platform has both clocks
+> and power domains.
+>
+>> range from the common schema. This gives the false impression that the
+>> resource count is flexible for that platform, when in reality it should
+>> be a fixed constraints.
+>>
+>> If a new platform requires more resources than the current maxItems (e.g.,
+>> Glymur due to its dual vcodec core design), we need to keep bumping maxItems
+>> in the common schema every time a new platform exceeds the previous limit.
+>> That makes the common schema a moving target driven by platform specific.
+> That's pretty expected, I don't see a problem in that.
 
-I considered that too, but I thought it was less invasive to just have
-a default LRU to start in at creation time, and end in there's nothing
-left to reclaim. It's also what MSM does, so I figured I'd do that too.
+I am fine with increasing maxItems in the common schema. I can set it to a
+reasonable value (for example, up to 20) so that it accommodates future
+platforms without frequent changes. Anyway, each platform schema must define
+fixed constraints, since clocks and power-domains are mandatory per platform.
 
-> 
-> > ---
-> >  drivers/gpu/drm/panthor/panthor_device.h | 10 ++++++++++
-> >  drivers/gpu/drm/panthor/panthor_gem.c    |  5 ++++-
-> >  2 files changed, 14 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/gpu/drm/panthor/panthor_device.h b/drivers/gpu/drm/panthor/panthor_device.h
-> > index 4e4607bca7cc..45b71546f83c 100644
-> > --- a/drivers/gpu/drm/panthor/panthor_device.h
-> > +++ b/drivers/gpu/drm/panthor/panthor_device.h
-> > @@ -190,6 +190,16 @@ struct panthor_device {
-> >  		/** @reclaim.lock: Lock protecting all LRUs */
-> >  		struct mutex lock;
-> >  
-> > +		/**
-> > +		 * @reclaim.unreclaimable: unreclaimable BOs
-> > +		 *
-> > +		 * Either the BO is unreclaimable because it has no pages allocated,
-> > +		 * or it's unreclaimable because pages are pinned.
-> > +		 *
-> > +		 * All BOs start in that list at creation time.  
-> s/that/this/                        ^^^^
-> 
-> Thanks,
-> Steve
-> 
-> > +		 */
-> > +		struct drm_gem_lru unreclaimable;
-> > +
-> >  		/**
-> >  		 * @reclaim.unused: BOs with unused pages
-> >  		 *
-> > diff --git a/drivers/gpu/drm/panthor/panthor_gem.c b/drivers/gpu/drm/panthor/panthor_gem.c
-> > index 13295d7a593d..8e31740126e7 100644
-> > --- a/drivers/gpu/drm/panthor/panthor_gem.c
-> > +++ b/drivers/gpu/drm/panthor/panthor_gem.c
-> > @@ -204,7 +204,7 @@ void panthor_gem_update_reclaim_state_locked(struct panthor_gem_object *bo,
-> >  		drm_gem_lru_move_tail(&ptdev->reclaim.gpu_mapped_shared, &bo->base);
-> >  		break;
-> >  	case PANTHOR_GEM_UNRECLAIMABLE:
-> > -		drm_gem_lru_remove(&bo->base);
-> > +		drm_gem_lru_move_tail(&ptdev->reclaim.unreclaimable, &bo->base);
-> >  		break;
-> >  	default:
-> >  		drm_WARN(&ptdev->base, true, "invalid GEM reclaim state (%d)\n", new_state);
-> > @@ -994,6 +994,7 @@ static struct panthor_gem_object *
-> >  panthor_gem_create(struct drm_device *dev, size_t size, uint32_t flags,
-> >  		   struct panthor_vm *exclusive_vm, u32 usage_flags)
-> >  {
-> > +	struct panthor_device *ptdev = container_of(dev, struct panthor_device, base);
-> >  	struct panthor_gem_object *bo;
-> >  	int ret;
-> >  
-> > @@ -1026,6 +1027,7 @@ panthor_gem_create(struct drm_device *dev, size_t size, uint32_t flags,
-> >  	}
-> >  
-> >  	panthor_gem_debugfs_set_usage_flags(bo, usage_flags);
-> > +	drm_gem_lru_move_tail(&ptdev->reclaim.unreclaimable, &bo->base);
-> >  	return bo;
-> >  
-> >  err_put:
-> > @@ -1551,6 +1553,7 @@ int panthor_gem_shrinker_init(struct panthor_device *ptdev)
-> >  		return ret;
-> >  
-> >  	INIT_LIST_HEAD(&ptdev->reclaim.vms);
-> > +	drm_gem_lru_init(&ptdev->reclaim.unreclaimable, &ptdev->reclaim.lock);
-> >  	drm_gem_lru_init(&ptdev->reclaim.unused, &ptdev->reclaim.lock);
-> >  	drm_gem_lru_init(&ptdev->reclaim.mmapped, &ptdev->reclaim.lock);
-> >  	drm_gem_lru_init(&ptdev->reclaim.gpu_mapped_shared, &ptdev->reclaim.lock);
-> >   
-> 
+At the same time, I am also fine with the alternative approach of removing
+these properties from the common schema entirely, since the fixed constraints
+are already defined in each platform schema.
 
+I'm fine with both approaches.
+Could you please let me know which one you would prefer going forward?
+
+Thanks,
+Vishnu Reddy
+
+> Best regards,
+> Krzysztof
 
