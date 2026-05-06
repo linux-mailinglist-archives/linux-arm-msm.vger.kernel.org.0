@@ -1,190 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-106182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SD2pCK2N+2lvcgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 20:51:25 +0200
+	id 4Gt0JiuW+2ladAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 21:27:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E7454DF883
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 20:51:24 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 999154DFBE1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 21:27:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 24D2830069BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 18:51:21 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 87E573008D03
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 19:27:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B2C64BC038;
-	Wed,  6 May 2026 18:51:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DF33318ED6;
+	Wed,  6 May 2026 19:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="yqlozRSf"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="GCMEKaL8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8C448BD42
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2026 18:51:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51922D8376
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2026 19:27:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778093479; cv=none; b=hI9LHR+SSZPtFjkyqOQNMrA01LJw2a5Xi/rKWVe6Koh2OoMaEdc2442Kh8x/P4a+8Pm0vCh86cAqrGPX/z/rpIbiu2E7MkoQ7+De59oXtaWsqBpAk9PMya5VeoHonhAOSjSgLVu/9UZhdLHuKdFTsA7acxnTng9SBw/Mube5ZxI=
+	t=1778095653; cv=none; b=oO01NmN+gRyzLO9kjpobHoTGrHijZP5pLURmPE0aTy9XzSV5t11jHp+nxD/4+gRIEyod5qK+7z0Q45YtgbqKavBFCreuatYuTOW6zRumnA6wUSLoLiO95zQvYpI8CjJL6CknRnnSi+PT2Dn1yr0I1XP4DNnv1tuwZJ1xFe1fn/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778093479; c=relaxed/simple;
-	bh=s8SojpSoc+YK02FQkvYYyW4yXNu4hN2c6ETT93ArWJQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=V3X9f/LhACEhTsjBndmucT6rL8sfMNvUVPt0pgmEzyZIr4qJgBxD9WyL8M1MmaqExzo5lp5KZQIRruvii7C/f0AJB5f5Yze33JN/D79tlIXoa4tmtzp4i1kukldbOaRXJb6/IKd70XMYgsET5CAC1xA/xVl4QsukfxR3UGu1lCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=yqlozRSf; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8f984bddf4eso2145685a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 11:51:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1778093477; x=1778698277; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qVXRMaORBAm1p+hmPERIzD3vaX/XPR3tJcXrI0tApsg=;
-        b=yqlozRSfuCUJJ9D/wW3WpVlAitl6p+MalJd4d+qGeBPP7HHYOs15Ifo4zv4JyQM3RY
-         oHUbujbmeUjmk/O4VeGR+RGnA5ACtoV1slnTP6zjtIbj9FGxzvsCksN3JeAJuUeQBmX1
-         nRTiF8ZF9styqnDRIE7ecUgF92XqjybzmU2tpys//cSjNx11JXVgSmQFJy+B++GX2ZOC
-         u6zWm0k2NWbcK/N5MW1WjdBqxvdMsVhpGXTL2VLC3zGDINTcSdycmkw83ftcdERHrH5w
-         WiRYxhwO/qEdWGPjZdrnDZShFy8obFYV9aNveGpk9ZuEsT82efZmnwLdExxspdhvUjsj
-         3Z3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778093477; x=1778698277;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qVXRMaORBAm1p+hmPERIzD3vaX/XPR3tJcXrI0tApsg=;
-        b=UsvfLMAGGG75IfPYfrrAzTc8YUADPxkMJJb5v/zDJxswa7RtKNqXi98jFIdXxwJCsR
-         JzfHptINbGVaklIDyTTk3yp6MROl09qYGliOMGDi/uq/B658NQMC2O7kvIKAEt4/Data
-         WJ9uO36qRJgFP+CIH8Ot+G3XDJFe0vRaX4Z4dgg1bSYsW8jlxM1QoxplAsKH3KBCVaqQ
-         XSkAa3iMAajaXYfwJyYEZS1lbxxYb92FkG9Ci9v4cv2X8rKIIxgoO/Jh/UT807fIXASJ
-         AOYTQ7GWNg2Mzzov4aayttP9MvxAqi6uxmQkaU2l+5J4L06TlHN9WzvrR2unp+AbR7jf
-         G6MA==
-X-Forwarded-Encrypted: i=1; AFNElJ99kUhPZiVtj+mh1c2lBozxWxeDQZUgyjrgLzfGBKoWsVwj6W0dnw8Js6x6QCYvhfB3/iKghr7BvuxbDJVo@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzs9p4DprbVOap2hk47yGnnHpWz0oGBV6TzawGv2mfkgNpEcZ4S
-	rXV2m2/8FjTBAb4uoOcWfrvtSU03N4SCVTrijCoCtJyBFDaLg7fKUbxGWUgYN48vycU=
-X-Gm-Gg: AeBDietFx2YTkskLodoTlpU6k0wU4UvFr/BsUhFI8DZLeJM8PqyVw7gr+lZKIBMaWic
-	KAedEe3CweTWaZ1rfh3h6/VKF9U5ExTKs20sWhcTQ39TSYfNSxO7EDfoJhzJYTOAzqKvScj5HlK
-	hA/lCRmSxZ8j3a5jmo/nkZS8vZDRpUvRSnINgDcKYI7F9Drvti83/iyBnFBUPg5PraqfrcnkAH0
-	vlgcZ4frRzZjuenQF3msLc25i3MNnFJ4DNR4k3N4W6nOdT5rwyLyHOP44rQDfzH9mfTfAAQoFH9
-	K9s6NBjhXgaDKsnBfc/6ZEALa/INhq2qbSTWNIrunqk4rSI0ITQF6Zn6Joe7G7IXTKiT+b13mDC
-	DYyDx4Vg8gUDrhTxyqYuARqQZIz5hD/SmGXy+1j2KXcQSS7AFrPEge3AkclHlK+v7NhsNU9111y
-	85URMTeVh1dreu+r/yZRFf9osUlwjXOpEWUqam5a2yF88uum1SIU9dnPK+Fh6GJ5PNhHLVJnD9c
-	w==
-X-Received: by 2002:a05:620a:1a13:b0:8cf:d804:456a with SMTP id af79cd13be357-904d4c54265mr713100885a.20.1778093476942;
-        Wed, 06 May 2026 11:51:16 -0700 (PDT)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc293837b5sm1889639085a.10.2026.05.06.11.51.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 May 2026 11:51:16 -0700 (PDT)
-Message-ID: <a52659e8-0382-4eb2-ab2f-5563bbb73fcc@riscstar.com>
-Date: Wed, 6 May 2026 13:51:12 -0500
+	s=arc-20240116; t=1778095653; c=relaxed/simple;
+	bh=QGj+mIQaddN+4zVF0BNaRZGhmxIUMET7GfRlpZ6SmRM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LSOWUDeVV9SIUN3JUilhCKbimDpEFJRyTRnzV0ZRojMKL5wBz2KBTgvlptFhGAnv/7YLzPhRSyQ8CrtttH5Vjr4UJPdlE0EebNAY2MZAIozStyCgBGMUtxsOprY2ybldy2t3Icaqs3YKIAt+tD/65HOvRGIcfq5iQa7gVjaRYQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=GCMEKaL8; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=bJqPJBF9SekaGU8cT1ZSfs50O5CZ6j8t03exIfnIX5g=; b=GCMEKaL8BImfivcNvz2qWGWCNU
+	3ag8PoZDocq3DiBG+dLvm+gh/PMQpK2UeDzzn+KX8AlaBLMbO08ZXrgaz3FgSO23WlNRMV20EZ1Mx
+	y7BqQ9hWfuMzRHRQo+fVjEfxqwK4qoA4uVCCs3l+oDttuEDmHY6ky0+twzYNq/jFSnqDSyEQVTDp+
+	EXldSNHoQroC1oi3xGZoopFrdGQRFok4C1xdY3Ga4gSmS5h6VnN47pZetENXJSmxChNANkw6sqSHw
+	H3innj188AQd5inku2jK8gH+XUBhsokQezhDU7YldUZuc8BYINqYiU3Hktlv9x3nM8QJFKlUH9iuF
+	Bp5D+vXA==;
+Received: from [186.208.73.228] (helo=killbill.home)
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1wKhtR-0072dZ-Q5; Wed, 06 May 2026 21:26:49 +0200
+From: Melissa Wen <mwen@igalia.com>
+To: airlied@gmail.com,
+	alexander.deucher@amd.com,
+	christian.koenig@amd.com,
+	harry.wentland@amd.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	simona@ffwll.ch,
+	siqueira@igalia.com,
+	sunpeng.li@amd.com,
+	tzimmermann@suse.de
+Cc: Alex Hung <alex.hung@amd.com>,
+	Simon Ser <contact@emersion.fr>,
+	Uma Shankar <uma.shankar@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Xaver Hugl <xaver.hugl@kde.org>,
+	Pekka Paalanen <pekka.paalanen@collabora.com>,
+	Louis Chauvet <louis.chauvet@bootlin.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	amd-gfx@lists.freedesktop.org,
+	kernel-dev@igalia.com,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH v5 0/6] drm/atomic: track individual colorop updates
+Date: Wed,  6 May 2026 16:23:46 -0300
+Message-ID: <20260506192633.16066-1-mwen@igalia.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 09/12] gpio: tc956x: add TC956x/QPS615 support
-To: Julian Braha <julianbraha@gmail.com>, andrew+netdev@lunn.ch,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, maxime.chevallier@bootlin.com,
- rmk+kernel@armlinux.org.uk, andersson@kernel.org, konradybcio@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, linusw@kernel.org,
- brgl@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org
-Cc: daniel@riscstar.com, mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com,
- alexandre.torgue@foss.st.com, ast@kernel.org, boon.khai.ng@altera.com,
- chenchuangyu@xiaomi.com, chenhuacai@kernel.org, daniel@iogearbox.net,
- hawk@kernel.org, hkallweit1@gmail.com, inochiama@gmail.com,
- john.fastabend@gmail.com, livelycarpet87@gmail.com,
- matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
- prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
- rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
- weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
- bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20260501155421.3329862-1-elder@riscstar.com>
- <20260501155421.3329862-10-elder@riscstar.com>
- <1fe6bcb7-b5c0-454f-ad54-5014006edab5@gmail.com>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <1fe6bcb7-b5c0-454f-ad54-5014006edab5@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 1E7454DF883
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 999154DFBE1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.06 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [1.14 / 15.00];
+	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106182-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org];
+	FREEMAIL_TO(0.00)[gmail.com,amd.com,linux.intel.com,kernel.org,ffwll.ch,igalia.com,suse.de];
+	TAGGED_FROM(0.00)[bounces-106184-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[amd.com,emersion.fr,intel.com,kde.org,collabora.com,bootlin.com,linux.dev,lists.freedesktop.org,igalia.com,oss.qualcomm.com,kernel.org,gmail.com,poorly.run,somainline.org,vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[49];
-	FREEMAIL_CC(0.00)[riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,kernel.org,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCPT_COUNT_TWELVE(0.00)[29];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[elder@riscstar.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[riscstar-com.20251104.gappssmtp.com:+];
-	NEURAL_HAM(-0.00)[-0.999];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[igalia.com:-];
+	NEURAL_HAM(-0.00)[-0.815];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[riscstar.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,riscstar-com.20251104.gappssmtp.com:dkim]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,igalia.com:mid]
 
-On 5/2/26 10:42 PM, Julian Braha wrote:
-> On 5/1/26 16:54, Alex Elder wrote:
->> +config GPIO_TC956X
->> +	tristate "Toshiba TC956X GPIO support"
->> +	depends on TOSHIBA_TC956X_PCI
->> +	default m if TOSHIBA_TC956X_PCI
-> 
-> Hi Alex,
-> 
-> In your Kconfig changes, this condition 'if TOSHIBA_TC956X_PCI' is dead
-> code. Since you have the dependency on TOSHIBA_TC956X_PCI, you can just
-> make the 'default m' unconditional - assuming this is what you intended.
+This series aims to track updates for each individual color operation,
+allowing the driver to react accordingly.
 
-I'm not sure I'd call it "dead" but you're right, it's not
-necessary because it already depends on that symbol.
+- Patches 1 and 2 make colorop update process more consistent and
+  optimized by only keeping colorop states from active color pipelines.
 
-> Perhaps you would prefer to use 'default TOSHIBA_TC956X_PCI', which
-> would have GPIO_TC956X default to 'm' or 'y' when TOSHIBA_TC956X_PCI is
-> 'm' or 'y', respectively.
+- Patches 3 and 4 make lut1d_interpolation and lut3d_interpolation
+  colorops correctly behave as mutable, handling their changes via
+  drm_colorop_state.
 
-Yeah that might be better.  I'd like to eventually include
-COMPILE_TEST as well, and that might need the "if" on the
-default.  I'll find out whenever I test that.
+- Finally, patches 5 and 6 track colorop updates of a given plane color
+  pipeline by setting plane `color_mgmt_changed` flag, similar to what
+  is done for tracking CRTC color mgmt property changes with CRTC
+  `color_mgmt_changed` flag. The flag also tracks when a different color
+  pipeline is set to a given plane. That way, the driver can react
+  accordingly and update their color blocks.
 
-This GPIO feature should still be a module even if
-TOSHIBA_TC956X_PCI is y, because it's not always
-necessary to enable the GPIO driver (depending on
-how devicetree defines the PHY resets).
+It also fixes shaper/3D LUT updates when changing night mode settings on
+gamescope with a custom branch that supports `COLOR_PIPELINE`:
+- https://github.com/ValveSoftware/gamescope/pull/2113
 
-So:  In drivers/gpio/Kconfig it will be "default m", and
-for drivers/net/ethernet/stmicro/stmmac/Kconfig it will be
-default TOSHIBA_TC956X_PCI (at least for now).
+v1: https://lore.kernel.org/dri-devel/20260318162348.299807-1-mwen@igalia.com/
+Changes:
+- include linux types for function's bool return type (kernel bot on MSM
+  driver)
+- add Harry's r-b tags
 
-Thanks a lot for the suggestion.
+v2: https://lore.kernel.org/dri-devel/20260323131942.494217-1-mwen@igalia.com/
+Changes:
+- [NEW] two patches to only consider colorop updates from active color
+  pipelines (Chaitanya)
+- [NEW] make lut interpolation properties mutable + Alex H patch for
+  kernel docs
+- track lut(1/3)d_interpolation updates (Chaitanya)
+- rebase changes according to new patches
 
-					-Alex
+v3: https://lore.kernel.org/dri-devel/20260403135909.214378-1-mwen@igalia.com/
+Changes: rebase on drm-misc-next
 
-> - Julian Braha
+v4: https://lore.kernel.org/dri-devel/20260501132527.522320-1-mwen@igalia.com/
+Changes: fix kernel doc (kernel bot)
+
+Melissa Wen
+
+Alex Hung (1):
+  drm/colorop: Remove read-only comments from interpolation fields
+
+Melissa Wen (5):
+  drm/atomic: only add colorop state from active color pipeline
+  drm/atomic: don't set colorop properties of inactive color pipelines
+  drm/colorop: make lut(1/3)d_interpolation mutable
+  drm/atomic: track individual colorop updates
+  drm/amd/display: use plane color_mgmt_changed to track colorop changes
+
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  6 +-
+ drivers/gpu/drm/drm_atomic.c                  | 43 +++++----
+ drivers/gpu/drm/drm_atomic_helper.c           |  9 +-
+ drivers/gpu/drm/drm_atomic_uapi.c             | 93 +++++++++++++++----
+ drivers/gpu/drm/drm_colorop.c                 | 16 +++-
+ include/drm/drm_atomic.h                      |  2 +-
+ include/drm/drm_atomic_uapi.h                 |  4 +-
+ include/drm/drm_colorop.h                     | 34 ++++---
+ 8 files changed, 136 insertions(+), 71 deletions(-)
+
+-- 
+2.53.0
 
 
