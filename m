@@ -1,489 +1,265 @@
-Return-Path: <linux-arm-msm+bounces-106070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wCNzJnPz+mnfUgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:53:23 +0200
+	id mO63Gz/0+mkTUwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:56:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB2014D7780
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:53:22 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 305314D77E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:56:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5AE4F3010509
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 07:53:05 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 80337302A1A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 07:56:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC6B23CCFB5;
-	Wed,  6 May 2026 07:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2041B3E025E;
+	Wed,  6 May 2026 07:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k3kTkBZ0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QJzVOnlT";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="O/s536bx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A738A2F12C6;
-	Wed,  6 May 2026 07:53:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED56306B31
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2026 07:56:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778053984; cv=none; b=EzEtE9nZyq1o3WWaxIhaxTyYRQdFuLyXAK8T568ZFWcZGDMjWHD3i+1rv/HNpTU4zLtbeqpCdFUn3W14vbf7YcEJSDamEb0zlh0Fr8UsGQ7IvruQl8VpzlHPLca7CHA/4/kLb5Ynw6oUs/wR+S2exjzMIr60d3tG1sEUedZMqKQ=
+	t=1778054200; cv=none; b=colsHthzL9KVAxqjysSgge9Apo+4cN4LRQ0dZVdi5+JPy84lVP1Sx8IyFMDUV+mywnig5ds9J2P1h3YZRau8NTgdrgyQAjH9OCyz67pkowQqv52Eae+0VEgGWfaQG+PmxXLSWKPZVoJXbLR5u4eEZZdQ5JT8Z4Tml0pufM9dpY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778053984; c=relaxed/simple;
-	bh=ujoMgw0KTaFRI5Rhg7nsyMJfTN2kAJDhrQY8gy4rLM4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G3bBfQnZbvQGRFTRFkgEqXBIUnr83STI/xPgNKuIw7948KRFA+/zAgz9OgoZlO7A5zjCuodHJ9SDL7vMGFJdr1I7wkbn4SVh8uI5RYvbR91zmPkgde8TKG9ILjeq48SJMf68Qt8FK8JLYhOATJ0naQS3M3ef2tkDoe3ly81I5+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k3kTkBZ0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35B8C2BCB8;
-	Wed,  6 May 2026 07:53:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778053984;
-	bh=ujoMgw0KTaFRI5Rhg7nsyMJfTN2kAJDhrQY8gy4rLM4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=k3kTkBZ0g34L2cGHZDCgLzsx8aC1kw4htLAG+xnIbz9hEzUSmXfQ6EwuNoXmrwUQI
-	 McBO4I+Lk0ea7MijSdiATtcMVn+1fsUSfLr5ZRXS/kG4Sm38/bCb2WU80QPFQ3CRCq
-	 DA0ys+PFliTp3y1BxGdcxDGM4CytH4/fQdlHK5U9s9FcaBdineuFtlsjaSc+IRl36X
-	 lxQ6sdDhtYFXhlkbMhCkRGKy9dpGgqlDtgYbqEa2lisRQzFYEPA/sB5uCJaeU+mD5C
-	 7SdD5+cGR7TQMJc6B5m+mACGKI2guhGO4wKZHKeGpx10g25hQE7q2mypiSb7ZbJNzv
-	 4aUz5bun6i/kQ==
-Date: Wed, 6 May 2026 09:53:01 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: William Bright <william.bright@imd-tec.com>
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: Add IMDT QCS8550 SBC
-Message-ID: <20260506-aquatic-shrew-of-engineering-09fbe8@quoll>
-References: <20260505-imdt-qcs8550-sbc-rfc-v2-0-b4767d0dd421@imd-tec.com>
- <20260505-imdt-qcs8550-sbc-rfc-v2-4-b4767d0dd421@imd-tec.com>
+	s=arc-20240116; t=1778054200; c=relaxed/simple;
+	bh=pz4s/1/oJMi9iKJkDVcTfZKyKF6zjrnyeoMtyBSkst0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KI99ARv26ys60+YJVX9IVwJNAa9DLsk7lx1w65v1iHxJSPPj2pHKoCC/w6VGIKunPgaAg7yfCFoivg6o/7n4HQzXPCY7jAWdsxTIzFXiunsjoWmJETcXVBqSvZDvxvwDqiDY7dtXxL1n5AsskqXsjjJv3HMcRPqSzLIROtUNYIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QJzVOnlT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=O/s536bx; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6467Cch31527783
+	for <linux-arm-msm@vger.kernel.org>; Wed, 6 May 2026 07:56:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=VNDSHHfgjfrPvXuQV8MhERJkwZXDzFJPFjc
+	aPzMVfUE=; b=QJzVOnlTpiHkh/j93PlOF4LVWhmIBNTMd34GiveaXDCVyoxXn20
+	/gODzRb4xFnlVeYmj0Z7Duvj5PdwN3VyEIbKB0JNVNb93bJmyDsRBbli6kMdaLol
+	ZNDsxtT6FZKff2x5DhupBPzZPje8sn4+RKFFiShTSVkTsig8KINz2Jf5PTHY0gqd
+	VfgqCY9cUCYoEuxunaDvRqetMYbDcQy6u7ywEx5bkqqMp2jbmMwpdVbx4my1V9xN
+	NbRK9Y0BRmi35j0R7a6E24H48xKW/LFSKuXjX4P4lytv87KFxn2T8ZCKvli2UeYE
+	rZMFF4+TKZGx1LTAU6soPGOPkHWOTRTArSw==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e012885rr-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 07:56:37 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2ba838d3fa4so2989365ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 00:56:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1778054196; x=1778658996; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VNDSHHfgjfrPvXuQV8MhERJkwZXDzFJPFjcaPzMVfUE=;
+        b=O/s536bxla8EAULAGzxD5y2ah5bHZK4PAhcEmQRCoupnX6B8h50E+tobxiV2srVulJ
+         kHTGWoRSjm5yNcx4/Vabv5KF/h4A9EyPzp6qNzm5VSmfblM0xpW1BtiF2at+D8kZyR40
+         rHdylGgcrF4Ad0JVQSs5LfvfcAmttvsaDxuhAL7OTEjJMixXHJDFnZERYgD4nUDu8Tub
+         32a8f7xzQJsFUXuNs3pm7AeBZxcTizvdU8wW4iaAS2It8tQGmjJ0B7usy+nDq/s7Tm5C
+         UKllKZfDu0vmnVMHSfajrUvUGqc/q9DKoMn8iXvdypM9vg8l33EBZTEerjIUmIKggHE4
+         go2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778054196; x=1778658996;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VNDSHHfgjfrPvXuQV8MhERJkwZXDzFJPFjcaPzMVfUE=;
+        b=JH91dprDmzlv9cQZzF/bKAIotclQESI1obnm5AJMqpKsft8VeUeECVA7DL0ZosSlJ5
+         r3CyDxHEUpc/zVZGsWv3HWK7UQ3xV0KVWuZuIAZ7c8z+57fNLTKOktx2ph0K5jeCN4p9
+         YCnukTIRfPP02na94/6808W+WVQKpKHbv9iQ8m0fC/Mei+j771a20AaTJzOhSocm6jB3
+         ZaxatMqML5b9G7xUwtlwS7L7/aW6Bgu4Yjpd2k78v69XPEeRSkKEpMTe6x2GpMS4B+4R
+         sF0cLNHcsUNZgEWmrsHXYyCd7/k8Ea2E9zn+EwZ8H3aYIiUUVjzb4ymS+xuOIdXiBh6i
+         Tawg==
+X-Forwarded-Encrypted: i=1; AFNElJ+gQ1dUZUndjn3Zu5o/Sa6pBLki1UfqcEUQLL4HNcZ6uUt/on7nieY9VO7t4imPCgprbjz8rAeAHy1MhEE5@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrYSEC6WD38qP5ckhUlf+ibm9H/Jyn2cSLEg/Xno5Uei8ag0uL
+	wDjeQ2biPInrjV5BTSsglbp4K1ztcMOoONIF+ZgxbiMIJaVivNuW/iSLu54qmhcrdmfMWGK8w7V
+	ftiiO48ra7rOR0PSqdFhPnrMAxrLkIQba2vc0TOwxSh4LKcmIHpPnFBLsZypw4zpK0Iih
+X-Gm-Gg: AeBDies08npc8QHck2n+2yXvcuUk5wkLtBT9otx3jXg0Z2H48RM5+Y46eDVef07O051
+	lDLfgCCuJ+F7XbLrQT1KbIT4OoeRKm3GF9q+mC8pG/WchG3WOsXfuJPtu7jSWZmG1uF/ayfqsw9
+	rYP+agPJZtaZDR8nyBVIXmVVeuNLLgxiyYoPIU4+hP37oaMHGoIuC1sOPVzXqNijWNkcLdtQ1Qe
+	rRw1EBWmSPGy8obgJJbX5igq7NG/Yr9onQ/pDuUI2JoOItApbZxTKyiKgJZ6o2G2K4nbrR7XhCf
+	pkLOhbw3Kl3bwdz36KnsLSPDVGGUGsfGJ7/uD+xWW9J08BTL2MzC4pSsWlYJxsYTz7zWX6Qlrtg
+	JNLOMuJ33muiQ6swaA/pqjn7wblVpU/V4v4NAbZnxd2mwGBA=
+X-Received: by 2002:a17:902:ebc9:b0:2b0:445a:8c7b with SMTP id d9443c01a7336-2ba7928e644mr23775595ad.15.1778054196355;
+        Wed, 06 May 2026 00:56:36 -0700 (PDT)
+X-Received: by 2002:a17:902:ebc9:b0:2b0:445a:8c7b with SMTP id d9443c01a7336-2ba7928e644mr23775225ad.15.1778054195788;
+        Wed, 06 May 2026 00:56:35 -0700 (PDT)
+Received: from work ([120.60.67.236])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ba7ca216a9sm15914205ad.70.2026.05.06.00.56.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 May 2026 00:56:34 -0700 (PDT)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+To: robh@kernel.org, saravanak@kernel.org
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        konrad.dybcio@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
+        linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH v2] of: property: Create devlink between PCI Host bridge and Root Port supplies
+Date: Wed,  6 May 2026 13:26:25 +0530
+Message-ID: <20260506075625.8490-1-manivannan.sadhasivam@oss.qualcomm.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260505-imdt-qcs8550-sbc-rfc-v2-4-b4767d0dd421@imd-tec.com>
-X-Rspamd-Queue-Id: EB2014D7780
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: OlK3lSvp157aoU3aebz6gIQK01pnpAEY
+X-Proofpoint-ORIG-GUID: OlK3lSvp157aoU3aebz6gIQK01pnpAEY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDA3MiBTYWx0ZWRfX8K4PME/3wgnX
+ M48qA7wxuQp9BDPwHGNclokCikcFCmClSaT30ruOUFDPGTE8wzKXpf5vu3Z0eb6HhKVerOOqgTe
+ Ju+o5ir5jyRysOwIvoVAO3WQE2/meLrUo4ZTiSZKCfz0sFyE5v1uCvKaUUEIUrzQAp95fGaIuC+
+ BSFe1lBoWUxNWqurYp2tlmMQm9VSfpKLCWrV+9MGuBM/3i+MfdJ2/BlmH51uc5eUM0SK5AS3Z2s
+ CUVfpfqSlp9nBzShCCTTqqX3fXcrV1cnlSCDZVmOJy1HL/4ArAA1YpwmU2VVOwcydzTJApDiMP1
+ 5Oi36eS7xZsLNa4ZBvF+/vMrZawFDtDBmDeJDZj2A2b6Fcy7/OfzWuTpSNGGYzUxp3fZqxFg8P5
+ a8FzT/Nl9jbjX/p0Y104yYFeey5kkThPiaAtDe4mzGY0DC7yUy7GqXUrc9JzZH0mDUZWXaLvx4e
+ 1vkIQQIlkSClzujqpNA==
+X-Authority-Analysis: v=2.4 cv=A8xc+aWG c=1 sm=1 tr=0 ts=69faf435 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=SQtj7D3ryojUavkWoQJ0Rg==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=n9glyVbX8GFbeWSgBHEA:9 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-05_03,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 adultscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605060072
+X-Rspamd-Queue-Id: 305314D77E9
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106070-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-106071-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.43:email];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[manivannan.sadhasivam@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-On Tue, May 05, 2026 at 09:09:54PM +0100, William Bright wrote:
-> +#include "qcs8550-imdt-som.dtsi"
-> +
-> +/ {
-> +	model = "IMDT QCS8550 SBC";
-> +	compatible = "imdt,qcs8550-sbc", "imdt,qcs8550-som",
-> +		     "qcom,qcs8550", "qcom,sm8550";
-> +	chassis-type = "embedded";
-> +
-> +	aliases {
-> +		serial0 = &uart7;
-> +		serial1 = &uart14;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-> +	backlight: backlight {
-> +		compatible = "gpio-backlight";
-> +		gpios = <&pm8550_gpios 6 GPIO_ACTIVE_HIGH>;
-> +		default-on;
-> +	};
-> +
-> +	cam_1v2_reg: regulator-cam-1v2 {
+Recently, devicetree started to represent the PCI Host bridge supplies like
+PHY in the Root Port nodes as seen in commit 38fcbfbd4207
+("dt-bindings: PCI: qcom: Move PHY & reset GPIO to Root Port node"). But
+the Host bridge drivers still control the Root Port supplies as a part of
+their controller initialization/deinitialization sequence.
 
-This is not used. Drop regulator completely.
+So the Host bridge drivers end up parsing the Root Port supplies in their
+probe() and control them. A downside to this approach is that the devlink
+dependency between the suppliers and Host bridge is completely broken. Due
+to this, the driver core probes the Host bridge drivers even if the
+supplies are not ready, causing probe deferrals and setup teardowns in
+Host bridge probe().
 
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "cam_1v2_reg";
-> +		regulator-min-microvolt = <1200000>;
-> +		regulator-max-microvolt = <1200000>;
-> +		vin-supply = <&hr_cam_pwr>;
-> +	};
-> +
-> +	cam_1v8_reg: regulator-cam-1v8 {
+These probe deferrals sometime happen over 1000 times (as reported in Qcom
+Glymur platform) leading to a waste of CPU resources and increase in boot
+time. So to fix these unnecessary deferrals, create devlink between the
+Host bridge and Root Port supplies in of_fwnode_add_links(). This will
+allow the driver core to probe the Host bridge drivers only when all Root
+Port supplies are available.
 
-Same here
+Reported-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+---
 
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "cam_1v8_reg";
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +		vin-supply = <&hr_cam_pwr>;
-> +	};
-> +
-> +	cam_2v8_reg: regulator-cam-2v8 {
+Changes in v2:
 
-Same here
+* Reworded the commit message slightly
+* Dropped the "linux,pci-domain" property and used PCI node parent check to
+  identify the Host bridge node as suggested by Rob.
 
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "cam_2v8_reg";
-> +		regulator-min-microvolt = <2800000>;
-> +		regulator-max-microvolt = <2800000>;
-> +		vin-supply = <&hr_cam_pwr>;
-> +	};
-> +
-> +	cam_3v3_reg: regulator-cam-3v3 {
+ drivers/of/property.c | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-Same here
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "cam_3v3_reg";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +		vin-supply = <&hr_cam_pwr>;
-> +	};
-> +
-> +	display_panel_pwr_en: regulator-display-panel-en {
-
-Again, unused
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "display_panel_pwr_en";
-> +		regulator-min-microvolt = <8000000>;
-> +		regulator-max-microvolt = <8000000>;
-> +		startup-delay-us = <10000>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&panel_en_default>;
-> +
-> +		gpio = <&tlmm 123 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		vin-supply = <&som_vph_pwr>;
-> +	};
-> +
-> +	/* 5V VIN to backlight LED driver PMIC */
-> +	dsi_5v_en: regulator-dsi-5v-en {
-
-Also unused.
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "dsi_5v_en";
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&dsi_5v_en_default>;
-> +
-> +		gpio = <&tlmm 140 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		vin-supply = <&som_vph_pwr>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	/* Enables 1V2, 1V8_CAM and 3V3_CAM */
-> +	hr_cam_pwr: regulator-hr-cam-pwr {
-
-And this becames unused after dropping fake regulators. Why don't you
-have proper users of these controllable supplies?
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "hr_cam_pwr";
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&hr_cam_en_default>;
-> +
-> +		gpio = <&tlmm 146 GPIO_ACTIVE_LOW>;
-> +
-> +		vin-supply = <&som_vph_pwr>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	/* Enables V2MB_3V8 and V2ME_3V3 */
-> +	m2_pd_pwr: regulator-m2-pd-pwr {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "m2_pd_pwr";
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&m2_pd_en_default>;
-> +
-> +		gpio = <&tlmm 144 GPIO_ACTIVE_LOW>;
-> +
-> +		vin-supply = <&som_vph_pwr>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +
-> +		gpio-open-drain;
-> +	};
-> +
-> +	per_1v8_reg: regulator-per-1v8 {
-
-Drop node
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "per_1v8_reg";
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +		vin-supply = <&per_pwr>;
-> +	};
-> +
-> +	per_3v3_reg: regulator-per-3v3 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "per_3v3_reg";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +		vin-supply = <&per_pwr>;
-> +	};
-> +
-> +	per_5v_reg: regulator-per-5v {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "per_5v_reg";
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-> +		vin-supply = <&per_pwr>;
-> +	};
-
-Drop all these
-
-> +
-> +	/* Enables 5V_PER, 3V3_PER and 1V8_PER */
-> +	per_pwr: regulator-per-pwr {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "per_pwr";
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&pwr_per_en_default>;
-> +
-> +		gpio = <&tlmm 142 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		vin-supply = <&som_vph_pwr>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	sdhci_2_vqmmc: regulator-sdhci-2-vqmmc {
-> +		compatible = "regulator-gpio";
-> +
-> +		regulator-name = "sdhci_2_vqmmc";
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <3300000>;
-> +		regulator-type = "voltage";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&sd_vset_default>;
-> +
-> +		gpios = <&tlmm 4 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		gpios-states = <0>;
-> +		states = <3300000 0>,
-> +			 <1800000 1>;
-> +
-> +		startup-delay-us = <10000>;
-> +	};
-> +
-> +	sdhci_4_vqmmc: regulator-sdhci-4-vqmmc {
-
-Even more completely redundant nodes.
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "sdhci_4_vqmmc";
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	som_vph_pwr: regulator-som-vph-pwr {
-
-Not used (usage by other redundant nodes does not count). Drop.
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "som_vph_pwr";
-> +		regulator-min-microvolt = <3900000>;
-> +		regulator-max-microvolt = <3900000>;
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	vph_pwr: regulator-vph-pwr {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	vsys_sd_3v3_reg: regulator-vsys-sd-3v3 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vsys_sd_3v3_reg";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
-> +	vsys_wlan_3v3_reg: regulator-vsys-wlan-3v3 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vsys_wlan_3v3_reg";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-
-Probably most of them are to be dropped :/
-
-> +
-> +	wifi_pwrseq: wifi-pwrseq {
-> +		compatible = "mmc-pwrseq-simple";
-> +		/*
-> +		 * NXP IW416 chip enables: PMIC_EN (master) and WLAN_EN.
-> +		 * Held asserted (low) before SDHC4 powers up, then
-> +		 * released after vmmc/vqmmc are stable.
-> +		 */
-> +		reset-gpios = <&tlmm 19 GPIO_ACTIVE_LOW>,
-> +			      <&tlmm 5 GPIO_ACTIVE_LOW>;
-> +		post-power-on-delay-ms = <50>;
-> +	};
-> +};
-> +
-> +&apps_rsc {
-> +	regulators-0 {
-> +		vdd-bob1-supply = <&vph_pwr>;
-> +		vdd-bob2-supply = <&vph_pwr>;
-> +	};
-> +
-> +	regulators-3 {
-> +		vdd-s4-supply = <&vph_pwr>;
-> +		vdd-s5-supply = <&vph_pwr>;
-> +	};
-> +
-> +	regulators-4 {
-> +		vdd-s4-supply = <&vph_pwr>;
-> +	};
-> +
-> +	regulators-5 {
-> +		vdd-s1-supply = <&vph_pwr>;
-> +		vdd-s2-supply = <&vph_pwr>;
-> +		vdd-s3-supply = <&vph_pwr>;
-> +		vdd-s4-supply = <&vph_pwr>;
-> +		vdd-s5-supply = <&vph_pwr>;
-> +		vdd-s6-supply = <&vph_pwr>;
-> +	};
-> +};
-> +
-> +&gpi_dma1 {
-> +	status = "okay";
-> +};
-> +
-> +&gpu {
-> +	status = "okay";
-> +};
-> +
-> +&gpu_zap_shader {
-> +	firmware-name = "qcom/sm8550/a740_zap.mbn";
-> +	/* Zap shader doesn't load so is disabled */
-> +	status = "disabled";
-> +};
-> +
-> +&i2c_master_hub_0 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c_hub_2 {
-> +	clock-frequency = <400000>;
-> +	status = "okay";
-> +
-> +	ptn3222: redriver@43 {
-> +		compatible = "nxp,ptn3222";
-> +		reg = <0x43>;
-> +		#phy-cells = <0>;
-> +
-> +		vdd1v8-supply = <&vreg_l15b_1p8>;
-> +		vdd3v3-supply = <&vreg_l5b_3p1>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&eusb2_repeater_reset_default>;
-> +
-> +		reset-gpios = <&pm8550vs_d_gpios 4 GPIO_ACTIVE_LOW>;
-> +	};
-> +};
-> +
-> +&ipa {
-> +	qcom,gsi-loader = "self";
-> +	memory-region = <&ipa_fw_mem>;
-> +	firmware-name = "qcom/sm8550/ipa_fws.mbn";
-> +	status = "okay";
-> +};
-> +
-> +&iris {
-> +	status = "okay";
-> +};
-> +
-> +&lpass_rxmacro {
-> +	status = "disabled";
-> +};
-> +
-> +&lpass_tlmm {
-> +	status = "disabled";
-> +};
-> +
-> +&lpass_txmacro {
-> +	status = "disabled";
-> +};
-> +
-> +&lpass_vamacro {
-> +	status = "disabled";
-> +};
-> +
-> +&lpass_wsa2macro {
-> +	status = "disabled";
-> +};
-> +
-> +&lpass_wsamacro {
-> +	status = "disabled";
-> +};
-
-Why are all these LPASS codecs disabled?
-
-Best regards,
-Krzysztof
+diff --git a/drivers/of/property.c b/drivers/of/property.c
+index 136946f8b746..6aa1d3fc2165 100644
+--- a/drivers/of/property.c
++++ b/drivers/of/property.c
+@@ -1561,6 +1561,7 @@ static const struct supplier_bindings of_supplier_bindings[] = {
+ /**
+  * of_link_property - Create device links to suppliers listed in a property
+  * @con_np: The consumer device tree node which contains the property
++ * @parent_np: Optional parent device tree node requiring child's supplies
+  * @prop_name: Name of property to be parsed
+  *
+  * This function checks if the property @prop_name that is present in the
+@@ -1577,7 +1578,8 @@ static const struct supplier_bindings of_supplier_bindings[] = {
+  * device tree nodes even when attempts to create a link to one or more
+  * suppliers fail.
+  */
+-static int of_link_property(struct device_node *con_np, const char *prop_name)
++static int of_link_property(struct device_node *con_np, struct device_node *parent_np,
++			    const char *prop_name)
+ {
+ 	struct device_node *phandle;
+ 	const struct supplier_bindings *s = of_supplier_bindings;
+@@ -1598,6 +1600,10 @@ static int of_link_property(struct device_node *con_np, const char *prop_name)
+ 			matched = true;
+ 			i++;
+ 			of_link_to_phandle(con_dev_np, phandle, s->fwlink_flags);
++
++			/* Link the child's supplies to parent if needed */
++			if (parent_np)
++				of_link_to_phandle(parent_np, phandle, s->fwlink_flags);
+ 			of_node_put(phandle);
+ 		}
+ 		s++;
+@@ -1656,7 +1662,26 @@ static int of_fwnode_add_links(struct fwnode_handle *fwnode)
+ 		return -EINVAL;
+ 
+ 	for_each_property_of_node(con_np, p)
+-		of_link_property(con_np, p->name);
++		of_link_property(con_np, NULL, p->name);
++
++	/*
++	 * Since the host bridge drivers parse and control the Root Port
++	 * supplies, create a devlink between host bridge and Root Port
++	 * supplies. This will prevent the host bridge drivers from being
++	 * probed before the supplies become available.
++	 *
++	 * For checking the host bridge node, first ensure that it is a PCI node
++	 * and its parent is not a PCI node. Only host bridge nodes will have
++	 * this structure.
++	 */
++	if (of_node_is_type(con_np, "pci") && !of_node_is_type(con_np->parent, "pci")) {
++		for_each_available_child_of_node_scoped(con_np, child) {
++			if (of_node_is_type(child, "pci")) {
++				for_each_property_of_node(child, p)
++					of_link_property(child, con_np, p->name);
++			}
++		}
++	}
+ 
+ 	return 0;
+ }
+-- 
+2.51.0
 
 
