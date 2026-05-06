@@ -1,192 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-106123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WMieDhdV+2n+ZQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 16:49:59 +0200
+	id AKn3IhNV+2n+ZQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 16:49:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2027E4DC95B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 16:49:57 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A3414DC94C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 16:49:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id A0406304ABE3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 14:34:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C4758304C11A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 14:36:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8589C44DB76;
-	Wed,  6 May 2026 14:34:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="IUsp6/vZ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F9D4481223;
+	Wed,  6 May 2026 14:35:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02769426EB1;
-	Wed,  6 May 2026 14:34:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF71143D518;
+	Wed,  6 May 2026 14:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778078046; cv=none; b=LHjsw4Flj3RejmabW3wCroQQyHa1f/z2/lnvPdo9mbjDmcBXK7z8gDFXI16OErpw09UP9SMG90DqT/t/jC+e5/qki9aKXi7d1SyCgMkFCPZ19MpdqMrgNHg8U6R4BsNgN8oaaUObKYuE0X3r7aurqgL3MhwNeyt8xuihcXDrQEc=
+	t=1778078159; cv=none; b=JH7mkSU85AN33ixMiBK6KNkMq/I9QsYDZpDbas8VlQZd3fFo2UGuGKgsRjB1G/4e4yyAk/hA4PWz77nhSqlge3H6SrJAkn8fyPKB5yb6zMEWyGJuTYD+aEjQha9lUbFNGm2bC4EVnHounTxcNADHI7Apixy8MBS76vktd1uh3+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778078046; c=relaxed/simple;
-	bh=hgvN1jV6xsRIZYoJS/nwWzGkDdd5X1ml/V1oqoZcQcs=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ORbEx67c7olsFHN7SHCAaVKqnhuPIoBNPPiUHs8FhNIBTJHqvSNqigiaIo8rcyhf5G1s5qVy6bOV6lZtuqsqK6azb5gNHS5/M/+4XJXaD+lkbKR+7nO1aszM/m/oyvJS/EBC+U6wXo4tZIgxwmzZHjuB+XFYxdl1l/zbghWU3II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=IUsp6/vZ; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1778078043;
-	bh=hgvN1jV6xsRIZYoJS/nwWzGkDdd5X1ml/V1oqoZcQcs=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=IUsp6/vZTnL428w38dQ33J4n60kD/ExAAsffIhADT5i8y64f55SvhQtXraAGvm21A
-	 ntW/h7Sd5brHtRWAR5EC/b6lIsBiQPrLv0AN82sr0IeoW3KoPBrpiScSzopTUchpIN
-	 +q2j7tZr8KShGYv6Lii9IUW0Uue/VAA+noI7oZklTezHeG6s2/+BLOowpKDQZoyRtZ
-	 HIkTbEDGszR9FA8hzXAoX4KidtHXHCmxhzly1PMLwTW7CoaJmLh0BHcY5x36uUhcwS
-	 eYtTqP+tZ5ZRtZG2FAHSU7P+PvjXDDpOkosvB3SoTcEUdB1zjArla4/xa+rNloDyjt
-	 TaWtC581dNciQ==
-Received: from fedora (unknown [100.64.0.11])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bbrezillon)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 4697917E0610;
-	Wed,  6 May 2026 16:34:02 +0200 (CEST)
-Date: Wed, 6 May 2026 16:33:56 +0200
-From: Boris Brezillon <boris.brezillon@collabora.com>
-To: Rob Clark <rob.clark@oss.qualcomm.com>
-Cc: Steven Price <steven.price@arm.com>, Liviu Dudau <liviu.dudau@arm.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Akash Goel <akash.goel@arm.com>, Chia-I Wu
- <olvaffe@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
- <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean
- Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] drm/gem: Fix a race between drm_gem_lru_scan() and
- drm_gem_object_release()
-Message-ID: <20260506163356.3287ce42@fedora>
-In-Reply-To: <CACSVV01sJqXCK8Lx5+bSPqzbNv7ALAbcA3P2RiJEOPOX_4Jmxw@mail.gmail.com>
-References: <20260506-panthor-shrinker-fixes-v1-0-e7721526de96@collabora.com>
-	<20260506-panthor-shrinker-fixes-v1-2-e7721526de96@collabora.com>
-	<CACSVV01sJqXCK8Lx5+bSPqzbNv7ALAbcA3P2RiJEOPOX_4Jmxw@mail.gmail.com>
-Organization: Collabora
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+	s=arc-20240116; t=1778078159; c=relaxed/simple;
+	bh=Zur84kG6Cnp4wreiG5CN4FgwbW1EIdYLvjwk+4rMp9I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hWh+kVXWcOL6nEfYH8GlMmyqT6g3PusCZecvtgvYgDkf+O4HoyEPXhyFfqKQAowJoijKvO/vEj1yRx3xkksoZj49nFqi/yy+yLpY05y+97ug9HsRThpcwBpl8GEb4OWIjgeaAiOHdItNX3PD2GbWFP6FX4jwxCUG+8uU7xEaT1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.207.19.206
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpgz9t1778078124tfdb3498a
+X-QQ-Originating-IP: HLf/KqKvl4iUx55Y9dX5tREX5GHA3CKBaEkxPVPPjPc=
+Received: from [127.0.0.1] ( [116.234.74.217])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 06 May 2026 22:35:19 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 7518115279056366694
+Message-ID: <4C0D95BC59F1A4ED+53f3be85-2cdd-4058-8950-57970027d481@radxa.com>
+Date: Wed, 6 May 2026 22:35:18 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 2027E4DC95B
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 10/12] net: stmmac: tc956x: add TC956x/QPS615
+ support
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Alex Elder <elder@riscstar.com>, andrew+netdev@lunn.ch,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, maxime.chevallier@bootlin.com,
+ rmk+kernel@armlinux.org.uk, andersson@kernel.org, konradybcio@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, linusw@kernel.org,
+ brgl@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
+ Daniel Thompson <daniel@riscstar.com>, mohd.anwar@oss.qualcomm.com,
+ a0987203069@gmail.com, alexandre.torgue@foss.st.com, ast@kernel.org,
+ boon.khai.ng@altera.com, chenchuangyu@xiaomi.com, chenhuacai@kernel.org,
+ daniel@iogearbox.net, hawk@kernel.org, hkallweit1@gmail.com,
+ inochiama@gmail.com, john.fastabend@gmail.com, julianbraha@gmail.com,
+ livelycarpet87@gmail.com, matthew.gerlach@altera.com,
+ mcoquelin.stm32@gmail.com, me@ziyao.cc,
+ prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
+ rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
+ weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
+ bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20260501155421.3329862-1-elder@riscstar.com>
+ <20260501155421.3329862-11-elder@riscstar.com>
+ <224E233C593EF171+8c8a43dd-5061-40f8-9eb7-f360eabf2ecc@radxa.com>
+ <4015f47a-af62-441d-b1b8-a8598f963970@lunn.ch>
+Content-Language: en-US
+From: Xilin Wu <sophon@radxa.com>
+In-Reply-To: <4015f47a-af62-441d-b1b8-a8598f963970@lunn.ch>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: OfvHCbuEslM3Ck5szwuuQAkL7b1wZdWKW5s8yTwsBXMt0g7JWSmtLq5z
+	GeqGX+SvAzYkXuUOHu0oZS1KcuPOB7YBUdOFze6JBifAKzTWQiSYoOFU8mP12whoplFDt5R
+	0vrN3lnq1jUm9vvtu78UuasMewHcoRlx/XVkUfpbM6Rpuwc9p0ZEb1S9o1wIoD4coV4wm4X
+	qoWyyx9iFZ4L6VwVQTOmk6aF1py0JsFAiDCJRkvby+pvEWLB+cHnAbcNK87AKUcvmMfO5XR
+	8wqVOOG57Oc3EboSM6cIjXGlKeaEGVGrzL9nKILgRvvp+HFkIsgmYHftsqrWbua3ZfharTU
+	sFHYbNPuzEYd/YPYwQgP6lLL5Fv4jJOgbp69v7lqp/QOhFgBHF1O0t4+CgIVMlmVPXH3rP7
+	HSf4PL5Vu6oASDITs91M1rTnDrlf/iBvE1t73lBwR78h6gfKV2WIemvvb8ag5KgX2o7S3cH
+	Rn4jFLVJImGVSv2o8ry0grQlS2JLeIV+qZRMOl8FrxFIyP+kPuxz69UvJDBKZJyni1piSaQ
+	Up21qbkJjGqxW/ShWB3OOl7ezSX/y4ca10qw0vr3DB8zHhJkcXoGERyAzKp8tUaN7dShEuQ
+	LyX1BOwyIcAj9VwTf/XQ8WYEsWg+/INTigOOVsmmIldH92kr4ZUlKmZF3A++16LWX8LkCmF
+	1fVf+m+CXvR/Hj2Q7fuaVJgjnxBPYqrXd1Vk04rFe4oPvNIGut7/P7ksDs7dQRL55rUdjg3
+	WHtsSvHSBA/RmyseO2kpPgkisxGcYTklXDM4hP7R2XvapIdgRqA4ujjZ1T2HFWHnXwg/LtG
+	lm3TtAsAHV14yezknyUT8nl+KBhjiJZ92JRUyUyXhZMiY9d7rudY2wr3RZx9SiKh9CYstFF
+	8MvJTinKwRpw4NdmF16h1kgvc+FJxeN1j9TA7pF2MhvpaUlEWZc54M5OE6iIg/F9GNsYQze
+	N5CzIBeWkys2UFo8YOUDNHCn0S62D1uw9Vq23fce78sGFIB0huepiu4RCUO0XObQa3vt6Y7
+	IpRES9DP2aXTxbEYqqTLAxnVWZo/KZEV4QWT7ikpMl/HoOpdIs7xjrUg41rUsvkJmAUkouP
+	Y0klfgQdeZ5hs3vrHwsWLw=
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
+X-Rspamd-Queue-Id: 2A3414DC94C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [0.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-106123-lists,linux-arm-msm=lfdr.de];
+	FORGED_MUA_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-106124-lists,linux-arm-msm=lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	FREEMAIL_CC(0.00)[riscstar.com,lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
 	RCVD_TLS_LAST(0.00)[];
-	HAS_ORG_HEADER(0.00)[];
-	FREEMAIL_CC(0.00)[arm.com,collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[boris.brezillon@collabora.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[collabora.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_TWELVE(0.00)[20];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_GT_50(0.00)[51];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.982];
+	MID_RHS_MATCH_FROM(0.00)[];
+	R_DKIM_NA(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
 	TO_DN_SOME(0.00)[]
 
-On Wed, 6 May 2026 06:21:42 -0700
-Rob Clark <rob.clark@oss.qualcomm.com> wrote:
+On 5/6/2026 10:19 PM, Andrew Lunn wrote:
+> On Wed, May 06, 2026 at 08:59:01PM +0800, Xilin Wu wrote:
+>> On 5/1/2026 11:54 PM, Alex Elder wrote:
+>>> +	/* AXI Configuration */
+>>> +	axi = &td->axi;
+>>> +	axi->axi_lpi_en = 1;
+>>> +	axi->axi_wr_osr_lmt = 31;
+>>> +	axi->axi_rd_osr_lmt = 31;
+>>> +	/* All sizes (2^2..2^8) are supported */
+>>> +	axi->axi_blen_regval = DMA_AXI_BLEN_MASK;
+>>> +	plat->axi = axi;
+>>> +
+>>> +	plat->mac_port_sel_speed = speed;
+>>> +	plat->flags = STMMAC_FLAG_MULTI_MSI_EN | STMMAC_FLAG_TSO_EN;
+>>
+>> I got WoL working only after adding STMMAC_FLAG_USE_PHY_WOL here. I guess
+>> it's required, since the driver clocks down the MAC/PMA/XPCS in its suspend
+>> hook?
+> 
+> Nice to see somebody testing WoL.
+> 
+> In your testing, is it the PHY doing the WoL, or the MAC? I assume
+> PHY.
+> 
+> If i remember the DT correctly, the PHY interrupt is connected to a
+> SoC GPIO, not a GPIO of this chip. So for your board, it is the SoCs
+> GPIO controllers ability to perform the wake which is
+> important. However, where the PHY interrupt is connected is a board
+> design issue. Could the PHY interrupt be connected to the chip? Would
+> the chip be able to wake the system? Should STMMAC_FLAG_USE_PHY_WOL be
+> conditional?
+> 
+> 	Andrew
+> 
 
-> On Wed, May 6, 2026 at 5:16=E2=80=AFAM Boris Brezillon
-> <boris.brezillon@collabora.com> wrote:
-> >
-> > The following race can currently happen:
-> >
-> > | Thread 0 in `drm_gem_lru_scan`               | Thread 1 in `drm_gem_o=
-bject_release` |
-> > | -                                            | -                     =
-               |
-> > | move obj1 with refcount=3D=3D0 to `still_in_lru` |                   =
-                   |
-> > | move obj2 with refcount!=3D0 to `still_in_lru` |                     =
-                 |
-> > | mutex_unlock                                 |                       =
-               |
-> > | shrink obj2                                  |                       =
-               |
-> > |                                              | lru =3D obj1->lru; // =
-`still_in_lru`   |
-> > | mutex_lock                                   |                       =
-               |
-> > | move obj1 back to the original lru           |                       =
-               |
-> > | mutex_unlock                                 |                       =
-               |
-> > | return                                       |                       =
-               |
-> > |                                              | dereference `still_in_=
-lru`           |
-> >
-> > Move the drm_gem_lru_move_tail_locked() after the
-> > kref_get_unless_zero() check so that we don't end up with a
-> > vanishing LRU when we hit drm_gem_object_release(). We also need to
-> > remove the skipped object from its LRU, otherwise we'll keep hitting
-> > it on subsequent loop iterations until it's actually removed from the
-> > list in the drm_gem_release().
-> >
-> > Fixes: e7c2af13f811 ("drm/gem: Add LRU/shrinker helper")
-> > Reported-by: Chia-I Wu <olvaffe@gmail.com>
-> > Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
-> > Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-> > Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
-> > ---
-> >  drivers/gpu/drm/drm_gem.c | 14 +++++++++-----
-> >  1 file changed, 9 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-> > index fca42949eb2b..97cf63de0112 100644
-> > --- a/drivers/gpu/drm/drm_gem.c
-> > +++ b/drivers/gpu/drm/drm_gem.c
-> > @@ -1660,15 +1660,19 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
-> >                 if (!obj)
-> >                         break;
-> >
-> > -               drm_gem_lru_move_tail_locked(&still_in_lru, obj);
-> > -
-> >                 /*
-> >                  * If it's in the process of being freed, gem_object->f=
-ree()
-> > -                * may be blocked on lock waiting to remove it.  So just
-> > -                * skip it.
-> > +                * may be blocked on lock waiting to remove it.  So jus=
-t remove
-> > +                * it from its current LRU and skip it.
-> >                  */
-> > -               if (!kref_get_unless_zero(&obj->refcount))
-> > +               if (!kref_get_unless_zero(&obj->refcount)) {
-> > +                       if (obj->lru)
-> > +                               drm_gem_lru_remove_locked(obj); =20
->=20
-> if we are iterating a LRU.. and lru->lock is held, shouldn't obj->lru
-> always be non-null?
+Hi Andrew,
 
-Right, the !=3D NULL check is not needed here.
+Yes, the PHY is doing the WoL. And I guess this makes sense as it allows 
+the MAC to power down during suspend to save power.
+
+The INTN pin of QCA8081 is connected to the ETH_0_INT_N of QPS615. And 
+the INTN_WOL pin is connected to a SoC GPIO.
+
+Without this change, I can't get WoL to work. I have a working branch 
+for our board here:
+https://github.com/strongtz/linux-radxa-qcom/commits/v7.0.2-8280-wip/
+
+-- 
+Best regards,
+Xilin Wu <sophon@radxa.com>
 
