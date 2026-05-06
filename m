@@ -1,104 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-106150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IP4FHahy+2lgbQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:56:08 +0200
+	id eNYIDb1y+2lgbQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:56:29 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1667B4DE6ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:56:08 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B59934DE721
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:56:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5031830AD7F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 16:51:48 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1C58530B7A06
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 16:51:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70B854ADD9B;
-	Wed,  6 May 2026 16:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 310B94ADDB5;
+	Wed,  6 May 2026 16:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="K4GuygyQ";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TyYryf90"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kqrAhnF0";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HqnQ3yrB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D1A4A1399
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B2E4A13BC
 	for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2026 16:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778086300; cv=none; b=nHQVkUsPtuLzdOw0yK9VtgXVsTqvk7HCeKBy4mAf3ioQc/7dWQvgQ6P0bHc7HPzONCr64YdrU79oGU6crx6lKd0uKiR3iVU+Z66EmvsEXNva6vOVVZTT+p98BJ8CaYDWpn1e8WqPJBHH4Hmy7N8LaGsYRNppws+a/HeMLK55R2w=
+	t=1778086301; cv=none; b=SOXmj8sVBKGXFgotodHod5Yu5bMKciSh6Nnk5RIY9V5cqT6P9fXXCLnwLQV7WxxLlnsDUI43AEutEpPHWMajrTknxSJdQoFk0tWNtllHbjJg7xpBlhM2c5VPedXXcvRcgYkKYlWqnlapgvR3MWuDp3ej2GszW9kypaH5BJeA1LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778086300; c=relaxed/simple;
-	bh=40NxVXovUiixWCXyomPxXiMim4vp3tig+MiKVM0oErA=;
+	s=arc-20240116; t=1778086301; c=relaxed/simple;
+	bh=ZnNgSpO+rDe+yjBS+MiU11AXoaRoAFc5EaHISqIfggw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=k4WYmYgg+NUbXLv7VSu+TOr1YzI4kHwQNSBf45BrQaC6/e/Zo0BwMmWQ/ORM+/U6/5hkXgAAr3p7zV7dNVqw0XzVberrDnsYJsADGQ0iU5h5omlKjldAuHBHw6OfuR3k21ZFLRWj9mvMD1rqQTha1UAvwM7FYc5+/6ndo6/QTL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=K4GuygyQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TyYryf90; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=N7YfJqDfD9AyHPyxDNWKdnQIJdqyr9bpsH0oS42vgMSPYavDN+UVl41RIw5+L/txZY8Ffdws7QGHfoU+gBGbzEyATRaoQusZmHYf4Tz5668V6aIlEzmjVOlNNnZy6Q6Z5RuFhiU6jeqMBtfy3phiaTm/9WPw4JBiVhET9ObgmNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kqrAhnF0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HqnQ3yrB; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 646EFlDf2427624
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 646FcEhs443091
 	for <linux-arm-msm@vger.kernel.org>; Wed, 6 May 2026 16:51:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IzNYzFHoxvD46pWkAWSFVcW4/RTuh1Ic/IvgIy3sPcw=; b=K4GuygyQva6PX61I
-	xQEL8/0NtzhsXP7i3SOXqrGXW8baguTS6SH7A2a0XUdZLVEPDdnNv6MuSHXfaKmX
-	7Wd/aioOwZ/aBZRXyB++licGlu7XzaY6JcBOhNObeOWoRVFCxUnhdBKepUowUZWf
-	9YKN1SRulMpgOipbACXr4v3ZMOb26sLD2CB0pBz1eo4D5RG4q6GBalz8wS3K6ZnA
-	1QYx6PFsRYzUDo1G6pe/7Y4CNBCoZQ9pYObQ+7YVqDQ2HPZm12pHWB5Sn3S9CM1M
-	Ich/tQ9gb3xT9JYUr+ACHI6yYmxTj0JZRxbvNsq3zyDyNn5ZKwjpBUDtRU/WfWtF
-	8LxsGQ==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e01ph23e8-1
+	rkow89ZOZQzN7WmylajJzM+goCRPh33PqTU7SObuX2c=; b=kqrAhnF0ScuIkR5L
+	efSWmJ5lD+OfBT0DLzrkol1gkwPGUjfiFIfuoBtruVBxlhsUPpvwuGF6T1GxnNfL
+	a9QtdcvShTD9OpMbjaT+bIIH9OPF5iccLYtmes85/1bwnsZnzwDXW3++SOd/wfic
+	eRMp2GRRzb5pWJHZM7VyNz3zVdG+qkyYl1/MhmDrImAcJCDDT4F8MI4IHw6GaI6/
+	moD9U4EeLbVn/tuhN6PqUpCIbYljIWBLS/7C+YJr0oniNt/iH6HeJVwUrzHU/RUS
+	r+0rKf9U3nlymyjz4WDr6AqmoZhu9q8/ZwSMcFnUGC2b3vSmk+v55TSeCTqRirMf
+	YSLQIA==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0299husy-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 16:51:36 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id a92af1059eb24-12dba1e866dso940068c88.1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 16:51:35 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id a92af1059eb24-1309f4ee9a3so3211570c88.1
         for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 09:51:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=oss.qualcomm.com; s=google; t=1778086295; x=1778691095; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=IzNYzFHoxvD46pWkAWSFVcW4/RTuh1Ic/IvgIy3sPcw=;
-        b=TyYryf90ouM9yxdY6vIGOsqcBAvhL+oOJbqheggO1pe8xFRuHid+7mjA/NezIzRrTU
-         aoN2V9tjYCg5mHyKwSXzsXPJlwriofTwFpQDE9KtC88j2hLgZcGWj8H2AWx9jCG3SGe/
-         7kPOfpLjgCWKbUtC8sb5uXG0i8Vb4tRV+zu6NdSCgByAF8jkEGGThuKArLqPo8VlFunX
-         aDHqVqPKrizi9eTaIzvkRpytb8F2NJwrpi+uLaPnxfDxbpucoqL/VCegI/Wmqvylb2Sl
-         ulli7jpTBC81H08y0hHj7nT9PR8ej1iUAKouRrrjkM2duvwvZKpVya5nUQw51tRdcpdK
-         F2+A==
+        bh=rkow89ZOZQzN7WmylajJzM+goCRPh33PqTU7SObuX2c=;
+        b=HqnQ3yrBzOnvpiydn5G6PTYHqk65PVcaKOyveV1MQpujxozohPbpO21RVCFtCkvVxp
+         6AYIULEGgviVMim7u1oRjta/2CWW3TVRPABe7cD3hC845v3zF/PGLdTkWhQcjNu49EgS
+         LiTD7NZW4SFja8V7jqVEZ4ClDp+co965KGFOMG84sOR0GvcuSJof5ts24ddF0n37TE9K
+         ktUmM8Y7tdvFF9GGiiig5D7lOjjpr69jRnCrIw3AmlUBkSsZqJsZyZsqBz2U0el9vacL
+         CNe+jobMMIg8liwfG8DPJpB8lcqRip6KNBVow8u1bElMtwqYWQOb4n3eaBAEOkpHNWzA
+         qaXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20251104; t=1778086295; x=1778691095;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=IzNYzFHoxvD46pWkAWSFVcW4/RTuh1Ic/IvgIy3sPcw=;
-        b=qxws37BdNhL+5qpBYMOR8dvfX8wVSozxn9EOntsEa5HSeGL9W4URm/qvg1tB8n3vUH
-         39jh4WpjQnWWajWaGOce4qVLIsATEPe0jOtclQR3ku3QzbKEHhnJ89zlqGf/cCpiRxrs
-         K0iJRxFBdGw/NPVO/aM9UNAnc9voqzECpdojoxrmtC3eY3gFxVLBa00qu5tXQd6hutim
-         YQsYFZVO5RvjLGz7aG3aQLNTtn48cFknlSBQmMK6Vq+JVZFl3X8QZAWO9Ey4obWBpqFI
-         AkkKD3fGsjTDm0EYWbm+y0hiUM4o+zhEmcxu8vHKRsk6z7dBqZmvL30ZNmGYbRByRFnG
-         Kl0w==
-X-Gm-Message-State: AOJu0YwyNtq9Q5N9Gq3uC0o+wauMxonp2Fk1e4iy7Of2/h6bLJOcKSAd
-	eSrNR0z204AheNXYR5EoPoTFJGfsTNDzrUv3nZjx50M8rNM/VMxe8w8hvF13G75thY+p3HUbQlE
-	s8PYErLy91tA+FwYMNGjZP8Q+Jm0JZvisD4rhTSe21JpSEQuX9BH2YkUGvWFtY2N8LbSx
-X-Gm-Gg: AeBDievorunwJ0i8qYlp/mGTowdQ7Vek0MrIeHCKjlJJgMr+wrg6WLenedBlI84ixVH
-	ejD0xuVPxOfQaopCCx6w2sjcZvmgBVw36y9KUUV94bdtqIEd45RxTdKVFhWag6j7BJXFOqHS62B
-	9/FiBR1f2SpfPCWJFmWaI2mIk1mf2JipDpAQ3ubUMeD8ZVWtEZtcCapcPW3+q87RbNrQPEoTSc2
-	XBidv5JZbnwg4+Q+d1BuvrPbsRJyfMV3dXD9iuUtwJFw47Rf4fCPFIwDXuJHTK/hQo+lG2mNQyA
-	acgCW8L/n66Q//762BNDbOdM3+fw6b1Jul5EcT5hNQK0e4gs3w5CHOgcmAAVmICTyY7uB8MCzoo
-	oFBGPBzxUep9FV0oS7bXIfSLx8DiHH5axVaqfCOI6tG0frG9IExz1sQWEwm5+pMj1R+aFj6H+R8
-	rgt+ag80qI2nQ=
-X-Received: by 2002:a05:7022:6187:b0:128:ceac:6db4 with SMTP id a92af1059eb24-131acfeec10mr1995893c88.6.1778086295060;
-        Wed, 06 May 2026 09:51:35 -0700 (PDT)
-X-Received: by 2002:a05:7022:6187:b0:128:ceac:6db4 with SMTP id a92af1059eb24-131acfeec10mr1995832c88.6.1778086293088;
+        bh=rkow89ZOZQzN7WmylajJzM+goCRPh33PqTU7SObuX2c=;
+        b=mGERZJu3Iw63gIB1EYHfLrMZMHOE5ZPyxI/zgtFOVfuir3aVJojTQtTatNmkkiwh0z
+         EkXTBJTEJ7foEIvelyC4XqEmXVSj240pF5o3mF9d45aOoug36piD5Y2gfobaOwvpFHHj
+         u9NZYQoWcoHR/0aBDGtSpE8YSAcPuZtmA41CsW8rsfUHqBomt0LmW7uxBN1wxyt8DsZs
+         JzCIMVJefA6MNHIoX2MzMonoqxRBBUXYzgfQCvsKhinDKSYGD6q47bzxN9WR/2BEUow3
+         WlCpPWnlXeQmnfjVMQ+0fCWb/aEEY1gfHTIAi++fsFu8C1XksNqY263xUej8SX/IV021
+         GKpA==
+X-Gm-Message-State: AOJu0Yy3NU4yK5fHqtCsXdNe7jPhWaBBueyaKOzcZOryV5dvCpW950WX
+	W29RvtDvr+w1nCn+wLe/1JSIVpvppgXSj+xaD/VsmTDxmW/iL0JQ+Ckn3rsJRpoF/Fo9VoW71Ob
+	pRARii7znVPfH7fQ/r6Fe4zoAymOncscfHnzWXz3VrAncVTEyV3WHkzH8Ttk6s/iJaF++
+X-Gm-Gg: AeBDieuJGgcZISnsRB7aSMkwdQKNx9gsAtZuptgzEOm4/F7pxlGDJr1C5kLq/4uOPjd
+	5FmxbtN7NMllEiSksQb1VZ3iIicBwF5WbON4TtnM36x2sPEygy+bqxp10XL1z8XQtWJfpRwjffn
+	SIvMJtIvpWaxX6zxfqzgRIv4Myjs49KAO6CLbOVDmXxmifN6Uh8hPIHELwODTVy8EsydyjlkGXw
+	sBLxjnUlUqm4V1wZAX2jS4onxX7rD4tcs4x3BzSgjBSZDkQLVlgRaaI+OfcuEPjhPyhQAMSFBw1
+	uWVZBLyn9vYhytzlNh7p8jGZR7+E5g7T4lzawBCMhgm+gP7rj38j1qhvwUDAOCYpoHRKqOWHogb
+	17EXilxv7hhURwpNmkVz9B9CgqRkIGXuoupbBzKqxEs+sDM6WtbqTFiOaH2MYqcV0t6OwuDnjcN
+	4Rf++pwXM2pzo=
+X-Received: by 2002:a05:7022:fa9:b0:12f:1f67:e744 with SMTP id a92af1059eb24-1318eb518a7mr2029535c88.44.1778086294613;
+        Wed, 06 May 2026 09:51:34 -0700 (PDT)
+X-Received: by 2002:a05:7022:fa9:b0:12f:1f67:e744 with SMTP id a92af1059eb24-1318eb518a7mr2029498c88.44.1778086293914;
         Wed, 06 May 2026 09:51:33 -0700 (PDT)
 Received: from hu-viveka-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1320f16b189sm2696087c88.12.2026.05.06.09.51.32
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1320f16b189sm2696087c88.12.2026.05.06.09.51.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 May 2026 09:51:32 -0700 (PDT)
+        Wed, 06 May 2026 09:51:33 -0700 (PDT)
 From: Vivek Aknurwar <vivek.aknurwar@oss.qualcomm.com>
-Date: Wed, 06 May 2026 09:50:43 -0700
-Subject: [PATCH v3 4/7] clk: qcom: rpmh: Add support for Hawi RPMH clocks
+Date: Wed, 06 May 2026 09:50:44 -0700
+Subject: [PATCH v3 5/7] clk: qcom: Add Hawi TCSR clock controller driver
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,7 +107,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260506-clk-hawi-v3-4-530b538679f1@oss.qualcomm.com>
+Message-Id: <20260506-clk-hawi-v3-5-530b538679f1@oss.qualcomm.com>
 References: <20260506-clk-hawi-v3-0-530b538679f1@oss.qualcomm.com>
 In-Reply-To: <20260506-clk-hawi-v3-0-530b538679f1@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -123,46 +123,46 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         Vivek Aknurwar <vivek.aknurwar@oss.qualcomm.com>,
         Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778086289; l=3051;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1778086289; l=6233;
  i=vivek.aknurwar@oss.qualcomm.com; s=20260311; h=from:subject:message-id;
- bh=40NxVXovUiixWCXyomPxXiMim4vp3tig+MiKVM0oErA=;
- b=c+XjCtSNJc7nTfD5N5hOh1UxYyN1MjW9YZnKBJdKoT3KT1btu5w/rV3cZYHyqMrigGOepk9Sp
- Bv45AU3OTYUCUcCDBup/23udKJtQGIElky4t+5gLSD43FiJlG2Vj6zJ
+ bh=ZnNgSpO+rDe+yjBS+MiU11AXoaRoAFc5EaHISqIfggw=;
+ b=44uPQNXToTXGtWBY/tywIrO8ReAZNvLxKXceYuJyPBmp2C1Q+wEJMvU0Bu4aGdrKk0kheMv32
+ m1r8amzszbVB/3sWciX5Bcm7pUsbUFIYzC21YgMBfJbT3UCr5UqQ6Ys
 X-Developer-Key: i=vivek.aknurwar@oss.qualcomm.com; a=ed25519;
  pk=WIVIbn3nJR9YRWNRyJiEbvpgoHhNyYrmVqMUXWqAIC0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDE2NCBTYWx0ZWRfXyi2O7dFyaMyH
- Md/JR/l4XxNrq/K2wmAqcAwidhjU6FJfBINRrfM/jqRhbbGCDn8ZxLfyYPF9mnDY/t1bjPHlXY2
- gmxiPx2DfBc4aRtO5Ycqa0/rgpn3KFd89MTFPekXmes+fEOjptYo0oyorSgkdoeBmq246yWS/tf
- VZs7b++DylGPwL5Zn8xAiv7fS+COt4SciAageo2CfBbUWJc9KyeDcIndwf+62ySDaY8nqSn3gTs
- dF1Dx/KXpfmp8fT/rou+dxyKrenBmlnjDNkqNJgE233wjU7HdN1aMPDHXWyqj401pU2Oyc3GPJG
- 6MUELxI2ojikxxzdqfyZHKDH+gMSmHlz/zDLuD+hSnU1RdA2axsBsGvkxy/7uEC9FMSwa/numCa
- NTITfYisidh1ruSIPI571lbTrXpB0PDdFw/u6KzvgIqHxXafB2kzmjSuHIJn+qHcwrZpBsbFObT
- VM2PsHSmcJsVCRYhLsQ==
-X-Proofpoint-GUID: CF3Aua9Bx6InvMdfJyCMQVGp8TWfDfVN
-X-Proofpoint-ORIG-GUID: CF3Aua9Bx6InvMdfJyCMQVGp8TWfDfVN
-X-Authority-Analysis: v=2.4 cv=MYhcfZ/f c=1 sm=1 tr=0 ts=69fb7198 cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Authority-Analysis: v=2.4 cv=fMMJG5ae c=1 sm=1 tr=0 ts=69fb7197 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=oFwqGCNmLK_XFdElRrAA:9 a=QEXdDO2ut3YA:10
- a=Fk4IpSoW4aLDllm1B1p-:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=8uJ8VFNcneawzIKLpTsA:9 a=QEXdDO2ut3YA:10
+ a=vr4QvYf-bLy2KjpDp97w:22
+X-Proofpoint-ORIG-GUID: stQKD6lJ8dFK3VYpINYiJWDJ95kDPNsj
+X-Proofpoint-GUID: stQKD6lJ8dFK3VYpINYiJWDJ95kDPNsj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDE2NCBTYWx0ZWRfX99qUK0A0NZM7
+ eIA2165YmhmfE0UesPGGrl2NxIVokSmFAAIXmOZgrpnoc9WQfkveuicLyvlQ36Or+K8RA2Op314
+ 4KxKrqh8GKdr+ZvVg/2ae2Z8aBLBOvOSerJ+d/1kiBC/G7S7hCo4eMhaitm6FKntomCUhiL6pxU
+ exYw8Q97S3OAGWoX0NqHYXBnDGmvRqfgs47gbdbS/grrqP8O1qF16bIKgtFpzA2EeYv4lbmc4UL
+ ztKM3YKraToVP3kywjkC86tBJSWqgGpUZbenUyf2viGWqGt2KbLK9n80RYsJQupUI3sgjlvuHqF
+ vEF7Jr96h1Hau53eFXYVDiIPlrto7O8S010kLCKCsgUUy0Psg9zG7LXMD+sUbt1bixbIGpOSyWA
+ Q+He2ulWbwe0VUlkQUgvFvaiLa+cv3gXgty597gZwRdcWe1APEwWlOguVisCtx4r+TfJd9qWuE1
+ EL5iWCUZjquPO4rnbLw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-06_01,2026-05-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 clxscore=1015 impostorscore=0 adultscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ adultscore=0 phishscore=0 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 spamscore=0 malwarescore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
  definitions=main-2605060164
-X-Rspamd-Queue-Id: 1667B4DE6ED
+X-Rspamd-Queue-Id: B59934DE721
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -170,7 +170,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[16];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106150-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-106152-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -179,82 +179,221 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[vivek.aknurwar@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
 
-Add RPMH clocks present in Qualcomm Hawi SoC.
+Add support for the TCSR clock controller found on the Qualcomm Hawi SoC.
+This controller provides reference clocks for various peripherals
+including PCIe, UFS, and USB.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Mike Tipton <mike.tipton@oss.qualcomm.com>
 Signed-off-by: Vivek Aknurwar <vivek.aknurwar@oss.qualcomm.com>
 ---
- drivers/clk/qcom/clk-rpmh.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ drivers/clk/qcom/Kconfig       |   7 ++
+ drivers/clk/qcom/Makefile      |   1 +
+ drivers/clk/qcom/tcsrcc-hawi.c | 158 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 166 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 339a6bbcdc4c..8eae6fccc127 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -409,7 +409,9 @@ DEFINE_CLK_RPMH_VRM(clk5, _a2_e0, "C5A_E0", 2);
- DEFINE_CLK_RPMH_VRM(clk6, _a2_e0, "C6A_E0", 2);
- DEFINE_CLK_RPMH_VRM(clk7, _a2_e0, "C7A_E0", 2);
- DEFINE_CLK_RPMH_VRM(clk8, _a2_e0, "C8A_E0", 2);
-+DEFINE_CLK_RPMH_VRM(clk9, _a2_e0, "C9A_E0", 2);
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index df21ef5ffd68..86914bab79c9 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -296,6 +296,13 @@ config QCOM_CLK_RPMH
+ 	 Say Y if you want to support the clocks exposed by RPMh on
+ 	 platforms such as SDM845.
  
-+DEFINE_CLK_RPMH_VRM(clk7, _a4_e0, "C7A_E0", 4);
- DEFINE_CLK_RPMH_VRM(clk11, _a4_e0, "C11A_E0", 4);
- 
- DEFINE_CLK_RPMH_BCM(ce, "CE0");
-@@ -984,6 +986,36 @@ static const struct clk_rpmh_desc clk_rpmh_nord = {
- 	.num_clks = ARRAY_SIZE(nord_rpmh_clocks),
- };
- 
-+static struct clk_hw *hawi_rpmh_clocks[] = {
-+	[RPMH_CXO_CLK]		= &clk_rpmh_bi_tcxo_div2.hw,
-+	[RPMH_CXO_CLK_A]	= &clk_rpmh_bi_tcxo_div2_ao.hw,
-+	[RPMH_DIV_CLK1]		= &clk_rpmh_clk11_a4_e0.hw,
-+	[RPMH_LN_BB_CLK1]	= &clk_rpmh_clk6_a2_e0.hw,
-+	[RPMH_LN_BB_CLK1_A]	= &clk_rpmh_clk6_a2_e0_ao.hw,
-+	[RPMH_LN_BB_CLK2]	= &clk_rpmh_clk7_a4_e0.hw,
-+	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_clk7_a4_e0_ao.hw,
-+	[RPMH_LN_BB_CLK3]	= &clk_rpmh_clk8_a2_e0.hw,
-+	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_clk8_a2_e0_ao.hw,
-+	[RPMH_LN_BB_CLK4]	= &clk_rpmh_clk9_a2_e0.hw,
-+	[RPMH_LN_BB_CLK4_A]	= &clk_rpmh_clk9_a2_e0_ao.hw,
-+	[RPMH_RF_CLK1]		= &clk_rpmh_clk1_a1_e0.hw,
-+	[RPMH_RF_CLK1_A]	= &clk_rpmh_clk1_a1_e0_ao.hw,
-+	[RPMH_RF_CLK2]		= &clk_rpmh_clk2_a1_e0.hw,
-+	[RPMH_RF_CLK2_A]	= &clk_rpmh_clk2_a1_e0_ao.hw,
-+	[RPMH_RF_CLK3]		= &clk_rpmh_clk3_a2_e0.hw,
-+	[RPMH_RF_CLK3_A]	= &clk_rpmh_clk3_a2_e0_ao.hw,
-+	[RPMH_RF_CLK4]		= &clk_rpmh_clk4_a2_e0.hw,
-+	[RPMH_RF_CLK4_A]	= &clk_rpmh_clk4_a2_e0_ao.hw,
-+	[RPMH_RF_CLK5]		= &clk_rpmh_clk5_a2_e0.hw,
-+	[RPMH_RF_CLK5_A]	= &clk_rpmh_clk5_a2_e0_ao.hw,
-+	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
++config CLK_HAWI_TCSRCC
++	tristate "Hawi TCSR Clock Controller"
++	depends on ARM64 || COMPILE_TEST
++	help
++	  Support for the TCSR clock controller on Hawi devices.
++	  Say Y if you want to use peripheral devices such as PCIe, USB, UFS.
++
+ config APQ_GCC_8084
+ 	tristate "APQ8084 Global Clock Controller"
+ 	depends on ARM || COMPILE_TEST
+diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+index 89d07c35e4d9..282b1dbe2585 100644
+--- a/drivers/clk/qcom/Makefile
++++ b/drivers/clk/qcom/Makefile
+@@ -29,6 +29,7 @@ obj-$(CONFIG_CLK_GLYMUR_GCC) += gcc-glymur.o
+ obj-$(CONFIG_CLK_GLYMUR_GPUCC) += gpucc-glymur.o gxclkctl-kaanapali.o
+ obj-$(CONFIG_CLK_GLYMUR_TCSRCC) += tcsrcc-glymur.o
+ obj-$(CONFIG_CLK_GLYMUR_VIDEOCC) += videocc-glymur.o
++obj-$(CONFIG_CLK_HAWI_TCSRCC) += tcsrcc-hawi.o
+ obj-$(CONFIG_CLK_KAANAPALI_CAMCC) += cambistmclkcc-kaanapali.o camcc-kaanapali.o
+ obj-$(CONFIG_CLK_KAANAPALI_DISPCC) += dispcc-kaanapali.o
+ obj-$(CONFIG_CLK_KAANAPALI_GCC) += gcc-kaanapali.o
+diff --git a/drivers/clk/qcom/tcsrcc-hawi.c b/drivers/clk/qcom/tcsrcc-hawi.c
+new file mode 100644
+index 000000000000..c942b0c8e09f
+--- /dev/null
++++ b/drivers/clk/qcom/tcsrcc-hawi.c
+@@ -0,0 +1,158 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
++
++#include <linux/clk-provider.h>
++#include <linux/mod_devicetable.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/platform_device.h>
++#include <linux/regmap.h>
++
++#include <dt-bindings/clock/qcom,hawi-tcsrcc.h>
++
++#include "clk-alpha-pll.h"
++#include "clk-branch.h"
++#include "clk-pll.h"
++#include "clk-rcg.h"
++#include "clk-regmap.h"
++#include "clk-regmap-divider.h"
++#include "clk-regmap-mux.h"
++#include "common.h"
++#include "reset.h"
++
++enum {
++	DT_BI_TCXO_PAD,
 +};
 +
-+static const struct clk_rpmh_desc clk_rpmh_hawi = {
-+	.clks = hawi_rpmh_clocks,
-+	.num_clks = ARRAY_SIZE(hawi_rpmh_clocks),
++static struct clk_branch tcsr_pcie_0_clkref_en = {
++	.halt_reg = 0x4c,
++	.halt_check = BRANCH_HALT_DELAY,
++	.clkr = {
++		.enable_reg = 0x4c,
++		.enable_mask = BIT(0),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "tcsr_pcie_0_clkref_en",
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_BI_TCXO_PAD,
++			},
++			.num_parents = 1,
++			.ops = &clk_branch2_ops,
++		},
++	},
 +};
 +
- static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
- 					 void *data)
- {
-@@ -1075,6 +1107,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
- static const struct of_device_id clk_rpmh_match_table[] = {
- 	{ .compatible = "qcom,eliza-rpmh-clk", .data = &clk_rpmh_eliza},
- 	{ .compatible = "qcom,glymur-rpmh-clk", .data = &clk_rpmh_glymur},
-+	{ .compatible = "qcom,hawi-rpmh-clk", .data = &clk_rpmh_hawi},
- 	{ .compatible = "qcom,kaanapali-rpmh-clk", .data = &clk_rpmh_kaanapali},
- 	{ .compatible = "qcom,milos-rpmh-clk", .data = &clk_rpmh_milos},
- 	{ .compatible = "qcom,nord-rpmh-clk", .data = &clk_rpmh_nord},
++static struct clk_branch tcsr_pcie_1_clkref_en = {
++	.halt_reg = 0x0,
++	.halt_check = BRANCH_HALT_DELAY,
++	.clkr = {
++		.enable_reg = 0x0,
++		.enable_mask = BIT(0),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "tcsr_pcie_1_clkref_en",
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_BI_TCXO_PAD,
++			},
++			.num_parents = 1,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch tcsr_ufs_clkref_en = {
++	.halt_reg = 0x10,
++	.halt_check = BRANCH_HALT_DELAY,
++	.clkr = {
++		.enable_reg = 0x10,
++		.enable_mask = BIT(0),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "tcsr_ufs_clkref_en",
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_BI_TCXO_PAD,
++			},
++			.num_parents = 1,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch tcsr_usb2_clkref_en = {
++	.halt_reg = 0x18,
++	.halt_check = BRANCH_HALT_DELAY,
++	.clkr = {
++		.enable_reg = 0x18,
++		.enable_mask = BIT(0),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "tcsr_usb2_clkref_en",
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_BI_TCXO_PAD,
++			},
++			.num_parents = 1,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_branch tcsr_usb3_clkref_en = {
++	.halt_reg = 0x8,
++	.halt_check = BRANCH_HALT_DELAY,
++	.clkr = {
++		.enable_reg = 0x8,
++		.enable_mask = BIT(0),
++		.hw.init = &(const struct clk_init_data) {
++			.name = "tcsr_usb3_clkref_en",
++			.parent_data = &(const struct clk_parent_data){
++				.index = DT_BI_TCXO_PAD,
++			},
++			.num_parents = 1,
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
++static struct clk_regmap *tcsr_cc_hawi_clocks[] = {
++	[TCSR_PCIE_0_CLKREF_EN] = &tcsr_pcie_0_clkref_en.clkr,
++	[TCSR_PCIE_1_CLKREF_EN] = &tcsr_pcie_1_clkref_en.clkr,
++	[TCSR_UFS_CLKREF_EN] = &tcsr_ufs_clkref_en.clkr,
++	[TCSR_USB2_CLKREF_EN] = &tcsr_usb2_clkref_en.clkr,
++	[TCSR_USB3_CLKREF_EN] = &tcsr_usb3_clkref_en.clkr,
++};
++
++static const struct regmap_config tcsr_cc_hawi_regmap_config = {
++	.reg_bits = 32,
++	.reg_stride = 4,
++	.val_bits = 32,
++	.max_register = 0x4c,
++	.fast_io = true,
++};
++
++static const struct qcom_cc_desc tcsr_cc_hawi_desc = {
++	.config = &tcsr_cc_hawi_regmap_config,
++	.clks = tcsr_cc_hawi_clocks,
++	.num_clks = ARRAY_SIZE(tcsr_cc_hawi_clocks),
++};
++
++static const struct of_device_id tcsr_cc_hawi_match_table[] = {
++	{ .compatible = "qcom,hawi-tcsrcc" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, tcsr_cc_hawi_match_table);
++
++static int tcsr_cc_hawi_probe(struct platform_device *pdev)
++{
++	return qcom_cc_probe(pdev, &tcsr_cc_hawi_desc);
++}
++
++static struct platform_driver tcsr_cc_hawi_driver = {
++	.probe = tcsr_cc_hawi_probe,
++	.driver = {
++		.name = "tcsrcc-hawi",
++		.of_match_table = tcsr_cc_hawi_match_table,
++	},
++};
++
++module_platform_driver(tcsr_cc_hawi_driver);
++
++MODULE_DESCRIPTION("QTI TCSRCC HAWI Driver");
++MODULE_LICENSE("GPL");
 
 -- 
 2.34.1
