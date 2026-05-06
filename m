@@ -1,144 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-106063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MEjmDxTn+mlIUAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:00:36 +0200
+	id uJJLD0rr+mkZUQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:18:34 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F26FB4D6E70
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:00:34 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D12B24D71DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:18:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id C9AB5300B8D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 07:00:31 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 95ECB301AF4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 07:18:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AAED369972;
-	Wed,  6 May 2026 07:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8406E373BEC;
+	Wed,  6 May 2026 07:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gurudas.dev header.i=@gurudas.dev header.b="Z5SXtAUM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n3DFZTal"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-13.smtp.spacemail.com (out-13.smtp.spacemail.com [63.250.43.96])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5B736C582;
-	Wed,  6 May 2026 07:00:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=63.250.43.96
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2B936C0BD;
+	Wed,  6 May 2026 07:18:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778050829; cv=none; b=epYHDyo4WS1pP1CWWz1VR3YQTL2m30tCJ6j2LY4TiY6t+W29Y3SnRJon41bhS7XKwRLAkKy27kZbmx6rllfPk8N90kVYsTdXTLiIId1si8BgEalfpJwTqiIQnVPGrWcEYLIy/xgMDXtCsrYnQ9x1fohGpZ5Y+pZ/s31Ath3P2RA=
+	t=1778051909; cv=none; b=ax2WzVQdqaV4pk++Fpwh/agJz3yfyDT9NVv3b+CcfKZCCtd15/8GldJcOeklRu3Um4BPVU44aTNVEHwVgkPbbZaMvU4d9rmCwVeSqcdgfiziJTTNSVc5aHvgF+9VVI8cNI1quBplEJ23xYHwyQKBPQyw6X8rsGbB88OuygJI1A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778050829; c=relaxed/simple;
-	bh=DDF15fig5HtBB4tclAb/u/AQ4KrJU8SHxLxa1mKtko4=;
+	s=arc-20240116; t=1778051909; c=relaxed/simple;
+	bh=ONKe/eIzUUymE7iswii2KO1/a80BKGXzB3QWRpPSTAE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aM7qxZo/BiHeIwwKE/BKtz7W3Miwmw7LCah8j4EV04yKxbrVrQJrO2CAf+gtEJAVf+mbDh/W0ICiHcVxYVXCCK4lJtGImT7HzyDUrVPdSVafJls9xueRrjnkHWVZzfBOPi9SJsNPkhF4zlkt63z8R2v7xBn3pW0cOmGeA7MQNHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gurudas.dev; spf=pass smtp.mailfrom=gurudas.dev; dkim=pass (2048-bit key) header.d=gurudas.dev header.i=@gurudas.dev header.b=Z5SXtAUM; arc=none smtp.client-ip=63.250.43.96
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gurudas.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gurudas.dev
-Received: from shakti (107-194-158-19.lightspeed.sntcca.sbcglobal.net [107.194.158.19])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.spacemail.com (Postfix) with ESMTPSA id 4g9R8y4x2Sz8sWS;
-	Wed, 06 May 2026 07:00:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gurudas.dev;
-	s=spacemail; t=1778050818;
-	bh=sn8dL4Ww0aZC3QoLFXZNQQRE4Tu2kQ1cejaqSf1FHCk=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=m7k7zHL4OZ7aXxWjJtUw+YhJ29IrwVqatDUv9X0rchpSB6sKwd92vQ7kc8jkydb+/pApHYlIcFASAo/Cgq/bFjMV6xn9Z/bg7dYB3tBXEh+sUW7RTHZwbxkc+osh0O2ZtnjM/IDyJSjj1mmnrN0Z6T5Qd0+J2Ylq1MyGRbCtXMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n3DFZTal; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B739C2BCB8;
+	Wed,  6 May 2026 07:18:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778051908;
+	bh=ONKe/eIzUUymE7iswii2KO1/a80BKGXzB3QWRpPSTAE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Z5SXtAUMcHMb6c9BvVieH+WnfTuuiBwCmoMXyFstVH9Scf4OmVkXUVjAnD029OZJR
-	 Z8QoxSqHSaC695T8noD2gR1q3I8XF5hRmaKhSF5KuJX//balBby21iiI0CL3w0O7Wc
-	 xOAgDw1sMONpOAIY144sF33oC6YgztYBjvIJcd8P3gPM5zaJqnVqiYZO9+RLDlv4Zo
-	 uOmC0TzVPH8rqWLohJckyU4cGt0CnwyNXMkTrsYtvSGEr1XDwMbi7+AdoFOqdCUhu/
-	 uuHFmfE0LSOZm5vQAnJHrz+G5cc11+BaMl54rKOGhRE7GOISaQVOItyjp1IS6JyMBK
-	 dSI5LGM5eYNNA==
-Date: Wed, 6 May 2026 00:00:17 -0700
-From: Guru Das Srinagesh <linux@gurudas.dev>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Lee Jones <lee@kernel.org>, linux-kernel@vger.kernel.org,
-	=Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] mfd: qcom: Unify user-visible "Qualcomm" name
-Message-ID: <afrnAfTVdcVoH2l4@shakti>
-References: <20260427070109.18271-2-krzysztof.kozlowski@oss.qualcomm.com>
+	b=n3DFZTalp2r3toNOeZRw6LdPkJKEDEVKRy/LH4pn3Iouj/pN8c8ySr1lbM3M5weAY
+	 Q5tZFm0hR1FLz8hmFsl59ieKupJ3vVJh8s7Bg74Z+1IgDBcPhUuuAPm5tpcSwXfRwC
+	 G9Hd33e8Gb883QEjj4C17dW2tZuQIj+TRj2sijmWawMuJ7MXbmZIKFzwihQg9rWRQI
+	 ARAxlANAPvdZOovSQCdk8TIxVaVgqZFyJB28egMXDnGypf8MzIYH/TJZ94jMxKkVoJ
+	 Vw9HpnR+nDqwXXFrsfhsl1jBokzV3nLfTvaR9uCfTaSl7StNEA1PGyyFiWKgAJIR60
+	 2DD8I3CxJeJTQ==
+Date: Wed, 6 May 2026 09:18:26 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Bryan O'Donoghue <bod@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Hans Verkuil <hverkuil@kernel.org>, Stefan Schmidt <stefan.schmidt@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, 
+	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, iommu@lists.linux.dev
+Subject: Re: [PATCH v4 03/13] dt-bindings: media: qcom,glymur-iris: Add
+ glymur video codec
+Message-ID: <20260506-neat-deer-from-tartarus-49a95d@quoll>
+References: <20260505-glymur-v4-0-17571dbd1caa@oss.qualcomm.com>
+ <20260505-glymur-v4-3-17571dbd1caa@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260427070109.18271-2-krzysztof.kozlowski@oss.qualcomm.com>
-X-Envelope-From: linux@gurudas.dev
-X-Rspamd-Queue-Id: F26FB4D6E70
+In-Reply-To: <20260505-glymur-v4-3-17571dbd1caa@oss.qualcomm.com>
+X-Rspamd-Queue-Id: D12B24D71DE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[gurudas.dev:s=spacemail];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
-	DMARC_NA(0.00)[gurudas.dev];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-106064-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[22];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-106063-lists,linux-arm-msm=lfdr.de];
-	MISSING_XM_UA(0.00)[];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,linux.dev,kernel.org,linaro.org,gmail.com,8bytes.org,arm.com,vger.kernel.org,lists.linux.dev];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linux@gurudas.dev,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gurudas.dev:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
 
-On Mon, Apr 27, 2026 at 09:01:10AM +0200, Krzysztof Kozlowski wrote:
-> Various names for Qualcomm as a company are used in user-visible config
-> options: QCOM, Qualcomm and Qualcomm Technologies.  Switch to unified
-> "Qualcomm" so it will be easier for users to identify the options when
-> for example running menuconfig.
+On Tue, May 05, 2026 at 12:29:24PM +0530, Vishnu Reddy wrote:
+> Add device tree binding for the Qualcomm Glymur Iris video codec. Glymur
+> is a new generation of video IP that introduces a dual-core architecture.
+> The second core brings its own power domain, clocks, and reset lines,
+> requiring additional power domains and clocks in the power sequence.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
-Acked-by: Guru Das Srinagesh <linux@gurudas.dev>
-
-> 
+> Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 > ---
-> 
-> And "Qualcomm Technologies" has even variations over the tree:
-> Qualcomm Technologies
-> Qualcomm Technologies Inc.
-> Qualcomm Technologies, Inc.
-> 
-> I am doing this tree wide:
-> https://lore.kernel.org/all/?q=f%3Akrzysztof+s%3A%22Unify+user-visible%22+s%3AQualcomm
-> ---
->  drivers/mfd/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
-> index 7192c9d1d268..b9ad6cc5cee6 100644
-> --- a/drivers/mfd/Kconfig
-> +++ b/drivers/mfd/Kconfig
-> @@ -2388,7 +2388,7 @@ config MFD_ACER_A500_EC
->  	  customized for the specific needs of the Acer A500 hardware.
->  
->  config MFD_QCOM_PM8008
-> -	tristate "QCOM PM8008 Power Management IC"
-> +	tristate "Qualcomm PM8008 Power Management IC"
->  	depends on I2C && OF
->  	select MFD_CORE
->  	select REGMAP_I2C
-> -- 
-> 2.51.0
-> 
+>  .../bindings/media/qcom,glymur-iris.yaml           | 205 +++++++++++++++++++++
+>  include/dt-bindings/media/qcom,glymur-iris.h       |  11 ++
+>  2 files changed, 216 insertions(+)
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
+Best regards,
+Krzysztof
+
 
