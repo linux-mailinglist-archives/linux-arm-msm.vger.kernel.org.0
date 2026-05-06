@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-106066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6H2eBYHv+mlGUgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:36:33 +0200
+	id 8FIHMwXw+mlGUgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:38:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6654B4D74D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:36:32 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41BDD4D753D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 09:38:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A60803011F2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 07:33:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DF4FB300463E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 07:37:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E432A3B774A;
-	Wed,  6 May 2026 07:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FC903C7DE8;
+	Wed,  6 May 2026 07:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HCGrX+GH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZmED6XV2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE553B6366;
-	Wed,  6 May 2026 07:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139A73C660C;
+	Wed,  6 May 2026 07:37:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778052821; cv=none; b=cDiGwZvu5ms/l/GR6d/GwZSkMXinwrlz/Y1zBANvn+TVya39UTM2IOkRfZXd3Yvyh2pYWRUVl56pa1aoBtThvk5BBuzxhigzYNTZNm6lNvx7sSR/+2csBob7N3ocso+09vYaVpivN54GQ6QdhJC5ld2XI4UoC2sPVem0RrYE84A=
+	t=1778053024; cv=none; b=MP3a573USsE13PeoH4YlAAAMk+9rvHjWFIM2rhmsXi5OoydvzripWcPdsrvFTcmTCEmWSanzudNRAeiQpYwLxcnYH9Uy7+TP8aXCGAZqyeKbNwjiPI52U9MSO76zhcnFFybKqpToWio1zHjXdr1022Y0j2mCL84w2b2xLUc6dts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778052821; c=relaxed/simple;
-	bh=F2Y0rkFfu8WpYJn2WFscZsjiOa2h76q/1wFRyrGfSi8=;
+	s=arc-20240116; t=1778053024; c=relaxed/simple;
+	bh=t+wddImILhiRlLgm7OAy3vy+PnBWb2TY1blk6nX8kIY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pB8w63Sh9CnIWhzWu5jvOHof2iq0R4FMKAJlg/R/YS8bHITBc+yOU3G0DROldstK9Agcao7GVjHAjRBDNmrpPkAYwJzsvmawM89EMN1xnXXM9g9/Q3A78+Wrkm9YuEbGrYZUK1MEIykSFp5Wyregy8l6OjnPbUcEDQBIHBResMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HCGrX+GH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D310CC2BCB8;
-	Wed,  6 May 2026 07:33:40 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=VWPG6XZXX0Wrhiy9ZpMqb7br053mDLwC9AvOc63Y8iuMnh1n8cEKZTXqtcBRVzfVJhWEvMSrP0WQPFULMmAHrG6k3pvEfKrTWYUfyWeP9qWGOGfdwEvRcpieAFkpTlNz97ICNhjVt+PtztXLJxxYvaYTiTFpOGNpH6e2e3V32YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZmED6XV2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD502C2BCB8;
+	Wed,  6 May 2026 07:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778052821;
-	bh=F2Y0rkFfu8WpYJn2WFscZsjiOa2h76q/1wFRyrGfSi8=;
+	s=k20201202; t=1778053023;
+	bh=t+wddImILhiRlLgm7OAy3vy+PnBWb2TY1blk6nX8kIY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HCGrX+GHCUYy+ayJnjE8RaOFP8GmHrTBXZ5dOScZTUNJK3S5URWnzKRucVzda7Ai+
-	 YmeFXEXyLK8f6jabvhnXTpckMgSHiZJVj+rwhgnR1ag6s0Tjzkl0koSGg9qSiAYWJ/
-	 3M6MLiBK0bO9z+xL09iF3XYSHE+3ZaU46vxo0ys6agLBjN+2TZgVqo2pUr4CcG0vjJ
-	 +QhJ0cR3F6cC9LHjVLhoCsAEL4tkuKSixFw6ZaiHmjeL83+KcnyAFxB0iOcA71E6J3
-	 Jye9koB3/Jd3IKeWPXiLP5YrjqzU6u18/GR0c7Ahw3bmPiAxGh3LOrNxinJANfIOL2
-	 pYJlJFsZPXmgg==
-Date: Wed, 6 May 2026 09:33:38 +0200
+	b=ZmED6XV2+ULPkYL97gNRIrfEvbbr8etLa5fwvtT90bqO0hhu0wBFDd5py4itOXmjj
+	 rlXu2TsdXII7CU5OM4hgOMPuA4wZIVk/9tlxJbYPmKLA/RzTHlm3WryF6DThmUOSHk
+	 fScFwLkL9gUVEILcRvh7+bBbSEWRp1Mjwfl0sd+qH/gzuZsBmIAj/Pt+qtRCiqbcXZ
+	 /daGg1p0Ole8/5d1s5hx6GhiPtN1eMb9AnSrI0S6+ec+kgeqXq7zueqBTU4mwlD+qN
+	 +TIUcZ0CBjE2qMgEuRuon4Q4Vs2r5nFsMSbwxTgBBJVghNa7y/Ijf+137Zefz5P4Vo
+	 40TggBcsnnl1Q==
+Date: Wed, 6 May 2026 09:37:00 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Erikas Bitovtas <xerikasxx@gmail.com>
 Cc: Bryan O'Donoghue <bod@kernel.org>, 
@@ -57,10 +57,11 @@ Cc: Bryan O'Donoghue <bod@kernel.org>,
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
 	phone-devel@vger.kernel.org
-Subject: Re: [PATCH v4 1/9] media: dt-bindings: venus: Add qcom,msm8939 schema
-Message-ID: <20260506-magic-greedy-caterpillar-ea5ad8@quoll>
+Subject: Re: [PATCH v4 2/9] media: qcom: venus: add common clocks used by
+ both vdec and venc
+Message-ID: <20260506-hypersonic-belligerent-prawn-8150db@quoll>
 References: <20260506-msm8939-venus-rfc-v4-0-994f5eb22acb@gmail.com>
- <20260506-msm8939-venus-rfc-v4-1-994f5eb22acb@gmail.com>
+ <20260506-msm8939-venus-rfc-v4-2-994f5eb22acb@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,9 +70,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260506-msm8939-venus-rfc-v4-1-994f5eb22acb@gmail.com>
-X-Rspamd-Queue-Id: 6654B4D74D2
+In-Reply-To: <20260506-msm8939-venus-rfc-v4-2-994f5eb22acb@gmail.com>
+X-Rspamd-Queue-Id: 41BDD4D753D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
@@ -80,13 +80,13 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106066-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-106067-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[21];
 	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_TO(0.00)[gmail.com];
@@ -99,124 +99,43 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[devicetree.org:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,apitzsch.eu:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 
-On Wed, May 06, 2026 at 12:44:38AM +0300, Erikas Bitovtas wrote:
-> From: Andr=C3=A9 Apitzsch <git@apitzsch.eu>
->=20
-> Add a schema description for the Venus video decoder/encoder IP in
-> MSM8939.
->=20
-> Signed-off-by: Andr=C3=A9 Apitzsch <git@apitzsch.eu>
+On Wed, May 06, 2026 at 12:44:39AM +0300, Erikas Bitovtas wrote:
+> Add clocks which are enabled during both decode and encode. This shall
+> be used in newer bindings for Venus, where subnodes for video decoder
+> and video encoder are not included and clocks are not differentiated
+> between decode and encode.
+> 
 > Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
 > ---
->  .../bindings/media/qcom,msm8939-venus.yaml         | 75 ++++++++++++++++=
-++++++
->  1 file changed, 75 insertions(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8939-venus.y=
-aml b/Documentation/devicetree/bindings/media/qcom,msm8939-venus.yaml
-> new file mode 100644
-> index 000000000000..5bbc7cfb61c0
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/qcom,msm8939-venus.yaml
-> @@ -0,0 +1,75 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/media/qcom,msm8939-venus.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm MSM8939 Venus video encode and decode accelerators
-> +
-> +maintainers:
-> +  - Andr=C3=A9 Apitzsch <git@apitzsch.eu>
-> +  - Erikas Bitovtas <xerikasxx@gmail.com>
-> +
-> +description: |
+>  drivers/media/platform/qcom/venus/core.h | 3 +++
+>  1 file changed, 3 insertions(+)
 
-Do not need '|' unless you need to preserve formatting.
+I still do not understand why this patchset has such mixed arrangement.
+First media patches, then SoC, then clock, then again media.
 
-> +  The Venus IP is a video encode and decode accelerator present
-> +  on Qualcomm platforms
-> +
-> +allOf:
-> +  - $ref: qcom,venus-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,msm8939-venus
-> +
-> +  power-domains:
-> +    maxItems: 3
-> +
-> +  power-domain-names:
-> +    items:
-> +      - const: venus
-> +      - const: core0
+Please follow submitting patches in DT - DTS CANNOT be stuffed in the
+middle.
 
-vcodec0
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index 7506f5d0f609..c1d772c7ae9b 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -77,6 +77,7 @@ struct venus_resources {
+>  	const struct hfi_ubwc_config *ubwc_conf;
+>  	const char * const clks[VIDC_CLKS_NUM_MAX];
+>  	unsigned int clks_num;
+> +	const char * const vcodec_clks[VIDC_VCODEC_CLKS_NUM_MAX];
 
-> +      - const: core1
-
-vcodec1
-
-> +
-> +  clocks:
-> +    maxItems: 5
-> +
-> +  clock-names:
-> +    items:
-> +      - const: core
-> +      - const: iface
-> +      - const: bus
-> +      - const: core0
-
-vcodec0_core
-
-> +      - const: core1
-
-vcodec1_core
-
-To match other bindings.
-
-> +
-> +  iommus:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - iommus
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/clock/qcom,gcc-msm8939.h>
-> +
-> +    video-codec@1d00000 {
-> +      compatible =3D "qcom,msm8939-venus";
-> +      reg =3D <0x01d00000 0xff000>;
-> +      interrupts =3D <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
-> +      clocks =3D <&gcc GCC_VENUS0_VCODEC0_CLK>,
-> +               <&gcc GCC_VENUS0_AHB_CLK>,
-> +               <&gcc GCC_VENUS0_AXI_CLK>,
-> +               <&gcc GCC_VENUS0_CORE0_VCODEC0_CLK>,
-> +               <&gcc GCC_VENUS0_CORE1_VCODEC0_CLK>;
-> +      clock-names =3D "core", "iface", "bus", "core0", "core1";
-> +      power-domains =3D <&gcc VENUS_GDSC>,
-> +                      <&gcc VENUS_CORE0_GDSC>,
-> +                      <&gcc VENUS_CORE1_GDSC>;
-> +      power-domain-names =3D "venus", "core0", "core1";
-> +      iommus =3D <&apps_iommu 5>;
-> +      memory-region =3D <&venus_mem>;
-> +      status =3D "disabled";
-
-Examples cannot be disabled. Please add here complete example.
+This is dead code. Drop or organize your patches correctly, so there
+will be user of this. Each patch is one logical change. Adding dead code
+is not a logical change, because it is unused, thus completely
+redundant.
 
 Best regards,
 Krzysztof
