@@ -1,300 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-106176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gPajOqR7+2n0bgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 19:34:28 +0200
+	id YErfAmV++2mEbwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 19:46:13 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D9FB4DEE53
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 19:34:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DFDB4DEF96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 19:46:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C0D603082333
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 17:30:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0E054301C169
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 17:44:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F0883EF64C;
-	Wed,  6 May 2026 17:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 235104B8DED;
+	Wed,  6 May 2026 17:44:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DPueg81i";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ATm08dYu"
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="A/tWM9I+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59004A341B
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2026 17:30:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74414BC011
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2026 17:44:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778088603; cv=none; b=M6+aAXZRgDDjd8kWN185dk/DUfhzYPeUOZvASw9dgQ6IXYnUzqik1U79CYzsjbPTRYyfzR2webmQK0OhOigfUWK/AIZ+/zj01GfoZgSYZHfwib4Z/wAPF6tm84ZaxCbGXRoVR3SBf0ZDYT3pz8WB0n7aoCDbKdKm3DNHYbvpQ9E=
+	t=1778089478; cv=none; b=ReBfl6NernM+2LyRTw+GVvvSYbaeP56TRg4cKeYGADOprPYl8aP/MGsyIabNLiOYNmvAQNO5vV7t5BoHmTjVMU4I6g8yboqrEm0UDfcXfh7F8PQaypBzJ4SYXqgTqEZ/REUZ3vUQO26naX86EQuJH9ZMUHxSUgwUMYNLIfzv+C8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778088603; c=relaxed/simple;
-	bh=koNBStVdcC5+4m4qVXikoLETuVjLx01Mbb0BXniq3oE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EsuqA9v6hI3c7dZzg0w20yosqNHEPPS4wPY+qF5XBGX3BujdantaYCmdLnp/cU5t9hrALANsUGT1BwYrJYWmtYUFL+b6UT2wSX3qV/MRAG3mRM0B3FWBl9HHYqzk7f7HApHvJ2RDZO/CLnwEed1GMEwjez/YUM6eoQ/VdncOZ3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DPueg81i; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ATm08dYu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 646GPwTn1953203
-	for <linux-arm-msm@vger.kernel.org>; Wed, 6 May 2026 17:30:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	n7Bu5I4Phk3bl5hOaeKMU154m5IfQGip+W4DHvInroQ=; b=DPueg81iv9D64n0l
-	ZnY2CukN9YYlkOrFnAa/ITV1SlSgOBpceWbXPTTe105wiRZRdSjymCeGi8GQg1SM
-	tQ90kW4Ze6xrNTHJwOYYok+TYi+EC0dQ+dKFS4DkSUo7zkBRbnwqF1ilHmPrLMtB
-	o3ruVI8i938sQWwtZqF2YD9oDxra5Vjh1JRYjDRgRIC/dGsxkDUWX+SVVSFtqtA+
-	jd2FZemBdmi6UBwzd4lODZMzip9OmeuQv7DstwOzApx85cT9W25b5LPJf+dJ3N8h
-	cDqYJc77thd1O9Aoi0Gc4VaiYJA7jUWBiHnDsE0q34A9Pc3rDoMLXg6Jfh+cJ0/M
-	Nni9rg==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e03jc1pv5-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 17:30:00 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-35fbaada2f3so12150433a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 10:30:00 -0700 (PDT)
+	s=arc-20240116; t=1778089478; c=relaxed/simple;
+	bh=/YjFQWxNpMQZ2f2KytppViSRzU0yZJvUee9ryGQwSOQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LeGTMQSVS0xLtoITtsTftjaz8SQMsBZR1HRE2fsX5Ro/1HGdZObbdsCuAVQTNBeXsgUUOuHH8edaqm0AL5TV2/jBdkTdiwrqVPFut7PkItpCKtuVjxMq5Rlww8rycDtw2cKaJBGjnQo0HasmLy2PQ8nF3Ri9PNLFBzukOceVbV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=A/tWM9I+; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8eae9229110so1064530285a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 10:44:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1778088599; x=1778693399; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n7Bu5I4Phk3bl5hOaeKMU154m5IfQGip+W4DHvInroQ=;
-        b=ATm08dYu2Y/q8ONs3KjP1mb6swlECGBw4lO+Xzj46C7mguWrO7qbTTir26+V38a2CK
-         DSvIwqlKJyONjCj08KZqwvUBEK3thUfU1sO63WSmPcP2De72Y4eDSyvD6b9VdLknf5oK
-         pGeeNWcMDaacpD9S/S/bwTNQezKe8P6qa3RhoIxtwbQqQtwHzA3SaAJO1daJqT+OPbyY
-         5xkqG6Wz8EzPvxesA2MpsNdDjyTd/zLGzVhuhJ5MT1agygTOfqRGfdhKKjqCmw9EbWJz
-         146cYgmSO/AtOQ1744ntpbzMFbcF3s6cA7DjDk9GQforvzXhYo0MbqPQmFESwH6XeKIN
-         eX2g==
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1778089473; x=1778694273; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=k6wXO6STmxH+YsbEuPXhWzzsM6OvvesRxD9MxXwGEOY=;
+        b=A/tWM9I+MidkfGgsZV3URMJGGeCgr+x0pwX/vDmp9qjFxG3qTM0C7yaPymIneMJsak
+         00eo6ukEIws+rAbKxilEt8PE3bBQl/bdeIR843LD5oyHIoQlulo6XQ2P7r5eu8hR4feO
+         KEVy7WEU2p/Ey/PiAiRMaz+tmrsQkdVuICkapNuYK1QpbWLQoF14Yl0qTNN55VLq3nHj
+         tbr9KV5I1Xt75WkkNjVUdlujZzYhGTnfDX4KghuHirRo+pcUytReOCCL8DveJ7DESIQB
+         UXqEHuL//GRfLjdNZXXg54F1QEu0gFapghqGj2IZcfZ9iImftmoCfFv33sIOaKewB+a6
+         47XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778088599; x=1778693399;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=n7Bu5I4Phk3bl5hOaeKMU154m5IfQGip+W4DHvInroQ=;
-        b=gVh4oJQu6oGKxKLZ09977VetuDk7Wwlg6/5pX91/83ZgvoiU5EOOUUa9yJOLRgH2gv
-         k6xTV+ZAfqhZ8ykCV2obuF21Qzd24xkvP8oowyGsBMdtff5vYKWbp7mtvWaeZ5qydFO8
-         VJGEdj1PJiRqhq9hw1DqGq1kU2Ix6Ga18BFxTrCfJJnyZkSynv2JAz+zoRGh8UkvglTw
-         7S8yZftlq0h2/0EMI6qMKw2xn5Y0cJvhegcAYP+wbS1ColHTUIwwFVNdXm2udlqBNci8
-         71OeC4H+MA9xRKv931wpQEorz4Vhos8tX86M1+kC5/0fnuvupALppcswwgpBV29k5m1a
-         Ke3Q==
-X-Forwarded-Encrypted: i=1; AFNElJ9FP8M81WSU1yJK4dagdwOGqiSOzOeOY00wy46vVmd5tQo/coYeenE4d+34ETv11C+Y66OMOl7Ee7vA7Oxy@vger.kernel.org
-X-Gm-Message-State: AOJu0YxxP3NBEH8FGPYLKpt/nImAo+FfkfQd2YWSKg2ji3X/C0DfOOKp
-	3JvyJso+StVcd+Txleu+Ge6s765hyzbfJT4i3E2wpim8QIEswlqD5IQqp20dqj3aj6KJgIEc0bQ
-	MOw0UxwIS7vl3PhupFpFVymir8JC501wpL3ZwfWOMFLbvS/Nyi2VGoWvfSYYdwSRLS3eD
-X-Gm-Gg: AeBDievqnw6BLkOcEV3AWOgn+eHpE7iiHCAMINqErOvcCxe3axrSqm1izLNKlhZ3Da8
-	2J26sI82p3UfBovnFhHF5wy4K7bCmaJuhR7sMIbGvZU/LiknVV8ew1e3G9o2SZgrkbpOzdiQyT/
-	yKIrdZPVQdWoD6bp+xOyBYSA6TVhoMFfBg0Yvx3Cd4Ntea29FXD+AW4rJwdHhrQbyGJQdqXz8qu
-	ZFPAv2GOej5EH9U5fgv2/n23LsgMPCfEMzNL4TA4iAZSTlSbAj0whM0XG2RooBwCMgEQ+nmO5Oa
-	JKDwIu/t6z4rz1fKK23b7c9BwQUBHmAv+5h3d8GPheoUdDF3fE9upwo79l2jZg2RZgcBEX9+2nw
-	FHjAFJxdgKR4CPM7lNffVApob1+lX549P3ERqoLeQVbxlEvMSlAIg4caWnnS8/AlTOA==
-X-Received: by 2002:a17:90a:d886:b0:35b:8d89:719b with SMTP id 98e67ed59e1d1-365ab3e592amr4675129a91.1.1778088599507;
-        Wed, 06 May 2026 10:29:59 -0700 (PDT)
-X-Received: by 2002:a17:90a:d886:b0:35b:8d89:719b with SMTP id 98e67ed59e1d1-365ab3e592amr4675085a91.1.1778088598917;
-        Wed, 06 May 2026 10:29:58 -0700 (PDT)
-Received: from hu-ptalari-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-365c25f8cf9sm3370143a91.4.2026.05.06.10.29.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 May 2026 10:29:58 -0700 (PDT)
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Date: Wed, 06 May 2026 22:59:43 +0530
-Subject: [PATCH v1 2/2] spi: qcom-geni: Add trace events for Qualcomm GENI
- SPI driver
+        d=1e100.net; s=20251104; t=1778089473; x=1778694273;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k6wXO6STmxH+YsbEuPXhWzzsM6OvvesRxD9MxXwGEOY=;
+        b=D7GbXtwH2A3RbekzdCBlP87AS8CJLakAUe+jRxwFLLlH4HfpnoguMFAC9zjPPjsbaF
+         HpHkRk7WupOwBy7MbGwgD8Zc8w4dJAvkOE02L8TAp+CcSobB4PejsBqiaCH3FOHhdkq2
+         PS+2lpMSfi7FToRXXEWMlnXPWmvrvYgRa/h5x/kdrAjxoTb9MZG2oGXUI2EIG0FPSRJH
+         7HCHq+V89Qj0gkx7/7t/Ng0xufJGd9pzpMf38p9OLqHnhLgvuKHnZ0TXWcH648s8Wu5A
+         3xgbTMoTXJ3hI70X4lhOTI7Fu7Gfk3g6C5GypdOsJd45wou/X+mpP0cqGRmsgCutG8q3
+         3NRg==
+X-Forwarded-Encrypted: i=1; AFNElJ8oYmZg+siNdYDnpPn32kEhvaXAdJFCoLSNM4RYsTW4KSAHH+bb6FxyW5nXwwz7RBSnciY0VyQ3moIEs5w5@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxe7KMUVL7Q/dHWRf1LfxLy+NRnX9XfQ1Ou//hLrB3MYCHO0m9z
+	4E6hwTGuJGdiq8l34jtJczMB/FVZoVefmTuRcHLsk8+vojPWDnMwkzxB0uyqInuGyvE=
+X-Gm-Gg: AeBDiet1q5B6IdgK1RPyIiDnFD32xk1HBzz5DmtTNFYLOxCXHf7coofyaC7xfonB6Dk
+	2c84wfuSV7nJa1OJvWpqPmvxUpseduN9dW14WnvBqymTGBfMpUWTO+CHSRxd7/LopwK4dKcsX3E
+	kCqx9kZPfyoJ24oPgZ4NA2pOHWHbR/xcmpE54zj5yK6m/jmC3P6b9sZ8Zk3h3fLQ0KH87jpP/3Y
+	PGZzw5+Tutxhlt0K1raKSjgBNiFBG8Zk0NpKPkyrIm/DbV8kyfvcwoO2vp5BYtr3l9McXIX/PJn
+	DLrVqmgZ7ag413iR07A0LxEcRi2UCuo+x3vfbt17CnWl0Yfrv+8QTLxUdtWHxLneRduSSbFIJOb
+	WUYgOdhbaScT+RQoF1zqU16E95bZzhEbmmJOuzjsMrgyLWJk53WCm7ITXwy138pGqjllIBO/5fR
+	F+i3mFVYVq7Doq6U3nmVhIw9jizC+7it4DWrCeAn8+brRFESdzNxA7KxL6gOFehX7dDvmvUEj2D
+	w==
+X-Received: by 2002:a05:620a:f0c:b0:8f1:9e59:220e with SMTP id af79cd13be357-904d63e7a90mr642596485a.39.1778089473124;
+        Wed, 06 May 2026 10:44:33 -0700 (PDT)
+Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2c91cdfbsm1736572285a.34.2026.05.06.10.44.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 May 2026 10:44:32 -0700 (PDT)
+Message-ID: <7f3a0f16-5159-4bbc-8b15-9b5841603bf6@riscstar.com>
+Date: Wed, 6 May 2026 12:44:28 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260506-add-tracepoints-for-qcom-geni-spi-v1-2-c957cfe712d1@oss.qualcomm.com>
-References: <20260506-add-tracepoints-for-qcom-geni-spi-v1-0-c957cfe712d1@oss.qualcomm.com>
-In-Reply-To: <20260506-add-tracepoints-for-qcom-geni-spi-v1-0-c957cfe712d1@oss.qualcomm.com>
-To: Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-        Mark Brown <broonie@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        "Mukesh Kumar Savaliya mukesh.savaliya"@oss.qualcomm.com,
-        "Aniket Randive aniket.randive"@oss.qualcomm.com,
-        chandana.chiluveru@oss.qualcomm.com, jyothi.seerapu@oss.qualcomm.com,
-        Praveen Talari <praveen.talari@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778088585; l=4307;
- i=praveen.talari@oss.qualcomm.com; s=20251114; h=from:subject:message-id;
- bh=koNBStVdcC5+4m4qVXikoLETuVjLx01Mbb0BXniq3oE=;
- b=HN2AHHhrUfmFpmtaj+zY4KZuBKKeyAYcKBVexa6xYvmnaDePfMzl7tTUvARJk0ibqY1YoAq8U
- +4IlZ5Qp4C2AJHTIpRU41t4GqgyC0VeNvyBB8+j7gjM5bdCkPltx1Z1
-X-Developer-Key: i=praveen.talari@oss.qualcomm.com; a=ed25519;
- pk=NGK/88fjyHXgfhIKwag7+uIytOmyOypvZ/hDFaYPEss=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDE3MCBTYWx0ZWRfX8buYC6NXzOJf
- wv8AWScUq8Rk5tJgzDY4pJ6og2UmHqfOfHnWDah3iniyaa4RErZW2jxdOKCgJMc6jjTYoJ+t46S
- ZTW3VJeUu9s+fs7dhe216yNfEfwkzZfSnCzid570xxalI+X0rcgt0ZlIZYtiyH1KMPfooAnp3yk
- nblS5+xOtflWFgjN9YE26C2vs09KvObqK1am+zqVnqPsWYwmDMv+znoGdKpXCgQV1Lp1FiHTxOt
- mL/ycfU9n0YGOnGGq86Ue02gRg829mnSOtxxuQuKIhtXsj1nBC3vmMMczaRmlHw4a+ku0UnyIXK
- 40Jn8FV5iwoPbWuGvaaiKYq9iCfWEKxcd21C1a0mp7+PiEiEvdEYatN06ZhEjMmILIT7fxX/brV
- AeocVT6yWcFreWWKMkK1vuQ3GJbmkA4UlZcFJ6HVj0ZNNjx9rF3BDioz4QSAOHAN+GaiG04dKhE
- uBgu+2Ykp9FL3X91oHQ==
-X-Proofpoint-ORIG-GUID: OhZnToUlvsojoIStMItvzm-_SiK0D1tj
-X-Proofpoint-GUID: OhZnToUlvsojoIStMItvzm-_SiK0D1tj
-X-Authority-Analysis: v=2.4 cv=EpHiaycA c=1 sm=1 tr=0 ts=69fb7a98 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=YigI2Qbdxp8Yt7aqB9kA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-06_01,2026-05-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605060170
-X-Rspamd-Queue-Id: 8D9FB4DEE53
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 10/12] net: stmmac: tc956x: add TC956x/QPS615
+ support
+To: Xilin Wu <sophon@radxa.com>, andrew+netdev@lunn.ch, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ maxime.chevallier@bootlin.com, rmk+kernel@armlinux.org.uk,
+ andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, linusw@kernel.org, brgl@kernel.org,
+ arnd@arndb.de, gregkh@linuxfoundation.org
+Cc: Daniel Thompson <daniel@riscstar.com>, mohd.anwar@oss.qualcomm.com,
+ a0987203069@gmail.com, alexandre.torgue@foss.st.com, ast@kernel.org,
+ boon.khai.ng@altera.com, chenchuangyu@xiaomi.com, chenhuacai@kernel.org,
+ daniel@iogearbox.net, hawk@kernel.org, hkallweit1@gmail.com,
+ inochiama@gmail.com, john.fastabend@gmail.com, julianbraha@gmail.com,
+ livelycarpet87@gmail.com, matthew.gerlach@altera.com,
+ mcoquelin.stm32@gmail.com, me@ziyao.cc,
+ prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
+ rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
+ weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
+ bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20260501155421.3329862-1-elder@riscstar.com>
+ <20260501155421.3329862-11-elder@riscstar.com>
+ <DD71CDEABC7C16D5+02d052ff-13bb-4712-a847-91416f76c578@radxa.com>
+Content-Language: en-US
+From: Alex Elder <elder@riscstar.com>
+In-Reply-To: <DD71CDEABC7C16D5+02d052ff-13bb-4712-a847-91416f76c578@radxa.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 5DFDB4DEF96
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.06 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	TAGGED_FROM(0.00)[bounces-106176-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,kernel.org,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-106177-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[riscstar-com.20251104.gappssmtp.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[praveen.talari@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[elder@riscstar.com,linux-arm-msm@vger.kernel.org];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_GT_50(0.00)[50];
 	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[riscstar.com:mid,riscstar.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,riscstar-com.20251104.gappssmtp.com:dkim]
 
-Add tracepoints to the Qualcomm GENI (Generic Interface) SPI driver.
-These trace events enable runtime debugging and performance analysis
-of SPI operations.
+On 5/5/26 9:30 PM, Xilin Wu wrote:
+> On 5/1/2026 11:54 PM, Alex Elder wrote:
+>> From: Daniel Thompson <daniel@riscstar.com>
+>>
+>> Toshiba TC956x is an Ethernet AVB/TSN bridge and is essentially a
+>> small and highly-specialized SoC. TC956x includes an "eMAC" subsystem
+>> that can be accessed, along with several other peripherals, via two
+>> PCIe endpoint functions. There is a main driver for the endpoint that
+>> decomposes things and creates auxiliary bus devices to model the SoC.
+>>
+>> The eMAC consists of a Designware XGMAC, XPCS and PMA. Each eMAC is
+>> supported by an MSIGEN that bridges TC956x level interrupts to PCIe
+>> MSIs.
+>>
+>> Add a driver for the eMAC/MSIGEN combination.
+>>
+>> Co-developed-by: Alex Elder <elder@riscstar.com>
+>> Signed-off-by: Alex Elder <elder@riscstar.com>
+>> Signed-off-by: Daniel Thompson <daniel@riscstar.com>
+>> ---
+>>   drivers/net/ethernet/stmicro/stmmac/Kconfig   |  13 +
+>>   drivers/net/ethernet/stmicro/stmmac/Makefile  |   2 +
+>>   .../ethernet/stmicro/stmmac/dwmac-tc956x.c    | 791 ++++++++++++++++++
+>>   include/soc/toshiba/tc956x-dwmac.h            |  84 ++
+>>   4 files changed, 890 insertions(+)
+>>   create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
+>>   create mode 100644 include/soc/toshiba/tc956x-dwmac.h
+>>
+>> diff --git a/drivers/net/ethernet/stmicro/stmmac/Kconfig b/drivers/ 
+>> net/ethernet/stmicro/stmmac/Kconfig
+>> index e3dd5adda5aca..66bcfaccbe21f 100644
+>> --- a/drivers/net/ethernet/stmicro/stmmac/Kconfig
+>> +++ b/drivers/net/ethernet/stmicro/stmmac/Kconfig
+>> @@ -404,6 +404,19 @@ config DWMAC_MOTORCOMM
+>>         This enables glue driver for Motorcomm DWMAC-based PCI Ethernet
+>>         controllers. Currently only YT6801 is supported.
+>> +config DWMAC_TC956X
+>> +    tristate "Toshiba TC956X DWMAC support"
+>> +    depends on PCI
+>> +    depends on COMMON_CLK
+>> +    depends on TOSHIBA_TC956X_PCI
+>> +    default m if TOSHIBA_TC956X_PCI
+> 
+> Hi Alex,
+> 
+> I think GENERIC_IRQ_CHIP should be selected here.
 
-The trace events capture SPI clock configuration, FIFO parameters,
-transfer details, interrupt status, and actual transmitted/received
-data in hexadecimal format.
+Yes there are a number of things missing in the Kconfig definitions
+and I'm working through them this week.  And yes, since we use
+irq_generic_chip_ops we must ensure CONFIG_GENERIC_IRQ_CHIP is
+enabled here.
 
-Usage examples:
+> Thank you for the driver.
 
-Enable all SPI traces:
-  echo 1 > /sys/kernel/debug/tracing/events/qcom_geni_spi/enable
-  cat /sys/kernel/debug/tracing/trace_pipe
+Thank you for your feedback (this and others I see).
 
-Example trace output:
+					-Alex
 
-71.364028: geni_spi_fifo_params: 888000.spi: cs=0 mode=0x00000020
-   mode_changed=0x00000020 cs_changed=0
-71.364054: geni_spi_clk_cfg: 888000.spi: req_hz=10000000
-   sclk_hz=100000000 clk_idx=5 clk_div=10 bpw=8
-71.364095: geni_spi_transfer: 888000.spi: len=16 m_cmd=0x00000003
-71.364096: geni_spi_tx_data: 888000.spi: tx_len=16 tx_rem=0 data=56 f1
-   0d 95 c1 09 33 d2 27 e7 ec 9d 9c e2 11 ff
-71.364121: geni_spi_irq: 888000.spi: m_irq=0x08000081 dma_tx=0x00000000
-   dma_rx=0x00000000
-71.364126: geni_spi_rx_data: 888000.spi: rx_len=16 rx_rem=0 data=56 f1
-   0d 95 c1 09 33 d2 27 e7 ec 9d 9c e2 11 ff
-
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
----
- drivers/spi/spi-geni-qcom.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
-
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index d5fb0edc8e0c..4da888359cfc 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -1,6 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- // Copyright (c) 2017-2018, The Linux foundation. All rights reserved.
- 
-+#define CREATE_TRACE_POINTS
-+#include <trace/events/qcom_geni_spi.h>
-+
- #include <linux/clk.h>
- #include <linux/dmaengine.h>
- #include <linux/dma-mapping.h>
-@@ -332,6 +335,9 @@ static int geni_spi_set_clock_and_bw(struct spi_geni_master *mas,
- 	writel(clk_sel, se->base + SE_GENI_CLK_SEL);
- 	writel(m_clk_cfg, se->base + GENI_SER_M_CLK_CFG);
- 
-+	trace_geni_spi_clk_cfg(mas->dev, clk_hz, mas->cur_sclk_hz, idx, div,
-+			       mas->cur_bits_per_word);
-+
- 	/* Set BW quota for CPU as driver supports FIFO mode only. */
- 	se->icc_paths[CPU_TO_GENI].avg_bw = Bps_to_icc(mas->cur_speed_hz);
- 	ret = geni_icc_set_bw(se);
-@@ -366,6 +372,9 @@ static int setup_fifo_params(struct spi_device *spi_slv,
- 	if ((mode_changed & SPI_CS_HIGH) || (cs_changed && (spi_slv->mode & SPI_CS_HIGH)))
- 		writel((spi_slv->mode & SPI_CS_HIGH) ? BIT(chipselect) : 0, se->base + SE_SPI_DEMUX_OUTPUT_INV);
- 
-+	trace_geni_spi_fifo_params(mas->dev, chipselect, spi_slv->mode,
-+				   mode_changed, cs_changed);
-+
- 	return 0;
- }
- 
-@@ -717,6 +726,7 @@ static bool geni_spi_handle_tx(struct spi_geni_master *mas)
- 		max_bytes = mas->tx_rem_bytes;
- 
- 	tx_buf = mas->cur_xfer->tx_buf + mas->cur_xfer->len - mas->tx_rem_bytes;
-+
- 	while (i < max_bytes) {
- 		unsigned int j;
- 		unsigned int bytes_to_write;
-@@ -729,6 +739,7 @@ static bool geni_spi_handle_tx(struct spi_geni_master *mas)
- 		iowrite32_rep(se->base + SE_GENI_TX_FIFOn, &fifo_word, 1);
- 	}
- 	mas->tx_rem_bytes -= max_bytes;
-+	trace_geni_spi_tx_data(mas->dev, tx_buf, max_bytes, mas->tx_rem_bytes);
- 	if (!mas->tx_rem_bytes) {
- 		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
- 		return false;
-@@ -778,6 +789,8 @@ static void geni_spi_handle_rx(struct spi_geni_master *mas)
- 			rx_buf[i++] = fifo_byte[j];
- 	}
- 	mas->rx_rem_bytes -= rx_bytes;
-+
-+	trace_geni_spi_rx_data(mas->dev, rx_buf, rx_bytes, mas->rx_rem_bytes);
- }
- 
- static int setup_se_xfer(struct spi_transfer *xfer,
-@@ -861,6 +874,8 @@ static int setup_se_xfer(struct spi_transfer *xfer,
- 	spin_lock_irq(&mas->lock);
- 	geni_se_setup_m_cmd(se, m_cmd, m_params);
- 
-+	trace_geni_spi_transfer(mas->dev, len, m_cmd);
-+
- 	if (mas->cur_xfer_mode == GENI_SE_DMA) {
- 		if (m_cmd & SPI_RX_ONLY)
- 			geni_se_rx_init_dma(se, sg_dma_address(xfer->rx_sg.sgl),
-@@ -915,6 +930,8 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
- 	if (!m_irq && !dma_tx_status && !dma_rx_status)
- 		return IRQ_NONE;
- 
-+	trace_geni_spi_irq(mas->dev, m_irq, dma_tx_status, dma_rx_status);
-+
- 	if (m_irq & (M_CMD_OVERRUN_EN | M_ILLEGAL_CMD_EN | M_CMD_FAILURE_EN |
- 		     M_RX_FIFO_RD_ERR_EN | M_RX_FIFO_WR_ERR_EN |
- 		     M_TX_FIFO_RD_ERR_EN | M_TX_FIFO_WR_ERR_EN))
-
--- 
-2.34.1
 
 
