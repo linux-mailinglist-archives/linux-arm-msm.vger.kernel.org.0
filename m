@@ -1,270 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-106178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OAg5IrWG+2kscQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 20:21:41 +0200
+	id cO/JF8SK+2mWcQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 20:39:00 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80F804DF422
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 20:21:40 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id C50754DF6C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 20:38:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id A7B593005159
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 18:21:37 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 44F6630166F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 18:38:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11C8F4BCABD;
-	Wed,  6 May 2026 18:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E75C84C0421;
+	Wed,  6 May 2026 18:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="MXQ1ByoQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PzVnkXD9";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="R61mfW34"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DECF4B8DDC
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2026 18:21:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826B93EF0B7
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2026 18:38:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778091695; cv=none; b=KPlyQOMsE+sgsIscd8nBmjiact7PzKiNUbG7wpdTwsiACP3OjZ5ub14qKNSt2UHTcIDUk8zeF7uRWlLGi4T12p/y+2uaR9LZ/ZDAMBgFk/uhHGSzeKSdcbwzTuNJGF7eFLfRqk6e7nNqNUvL5qp8HqnT2T6RG+u9FA2bNCbivdM=
+	t=1778092733; cv=none; b=pe6PJLDHm83G9eCcD5s/ZcktliWH5EOd/GdKg6WB9ozQX/77DTNmtRZRD3n/iq9t4A8b374w2lTSc7dji+NeY1UIx0B19GbNn+sEiQHo9wzad3ku5i64AptH9hDPGv3AyU8249P2FPnwy3wKhd4Yx81sye5RxTCrjfqhsA1SSkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778091695; c=relaxed/simple;
-	bh=l9RL6ffZ0V6p/nZhYhiJ/k+Ncl3ace6QHYzBN675cRE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VxBl1Amk410itfZKMsDfqZ1RfX+1w5NUiXMOnM6uzEfvYS/+oPwFxwBVyA/aAcWxS+PCnx6ZZ1UNLp4gCtHnK5kij8sqOTeLUDJ7TzcnWdHBMZh5yBJkgyClSzvndZjo0CZ0W6vTRm4msU/jPwQPONh5sBVMrAVmtWY0NvAHrQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=MXQ1ByoQ; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8ef2118b478so419885a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 11:21:34 -0700 (PDT)
+	s=arc-20240116; t=1778092733; c=relaxed/simple;
+	bh=96jOQ38DKHlJwyQEUSdRWVCI2RgSf5udNbyTMFN2/pg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dNETUlsUOh8xQKq9l5ZFvNGgUh4LdV1ZOIIt4hnCUBjvhSWjg+YDIhHQiA3myvR6XkNhBZrLhIHGNXPhJHDDrMWYRYvkrszud/YsxkyjFhOUHbdZqWuCx4RiRGlPDVuK1bnn2AQPqUDlcM95eBC0svZuMhjxKePfMe4QLESUJ7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PzVnkXD9; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=R61mfW34; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 646FFR28442580
+	for <linux-arm-msm@vger.kernel.org>; Wed, 6 May 2026 18:38:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=u5i73O2TeW40M4e0REO3mU
+	O4IV+MciKckhAqv2Nzlgk=; b=PzVnkXD9hjtghoCbgomISbLX4MPW2knRx9DGpH
+	MOMAT5ueFuKxzpuncFbb3m73ub2TTo7JIu0Cd6+D0WEnmehjEubRgbABWY2CidI4
+	dWmm7fJT0mh/l4FHZk7g6aUx4QmTbF8of2/SilFjRqkujnup/l3oaCDn8g6OoM+K
+	vAEqpJTF4Htt0fV1kVFGjGTc968iMYKuHEbKI5GcajCZMQpenYGe0xl4WEKfcJge
+	LBx+OXnPFrWU7dt5LscWE+iun2i4ecR4eaoecHgenPH/QM/alBP6wmJZd+aT2R+e
+	PC8IUtzn5InpS5lAN4ldbZvalUoyDoTfIYcKEUS3kq7mdczw==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0299j865-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 18:38:51 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-2c16233ee11so5734eec.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 11:38:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1778091693; x=1778696493; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5oBqOeQFggE8v+cavTTn16m1Xk99yYA0Xp28tAkW6v4=;
-        b=MXQ1ByoQInRWPvTL/VCZ1IQuPvW37sz9uZec9IY6HESSYPe434OaNktzL4FV46P8hy
-         GUHNPZdb3PM+G9O981LjNDaf5vwazehHtDvvz3JMB4QTAFsTeVjeN0c8Y9ebS64Zwkx+
-         CrQoawpsKZHIL3PepkgbpA5SemfLG/37+pA7nvC0UnvYN/kw9kY1icXlnELq6tkGiPs4
-         yBxYhbZqdPumQCerXDNlJlqHnb9GnlMkvq3oHVRKbjDVWkYoCIrr+80sI1ReDp94/9Ig
-         SYYiZqxGJiZmFPHseAQ49nWXI7UuneIUnVf4t3XyDYo/rg/4vkeJMPgIar/acqRQOZF6
-         cpxg==
+        d=oss.qualcomm.com; s=google; t=1778092730; x=1778697530; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=u5i73O2TeW40M4e0REO3mUO4IV+MciKckhAqv2Nzlgk=;
+        b=R61mfW34mJYjFBv/0Wf8EUYsO7N8FB1y3bd8QX/KsCLLjOrTsbbsfOLyEGT9VG1CAz
+         Lq/nRTdg9cRw2gL6uPAlsYE22aE25TYFvroaoC3UsXf2bQ3BaICE1K4t6zvhgtd1WzvE
+         a533LXmo2l12QNcnpJEU/6NC9EhtHrRA/KsfA0UPJ5xpBvXLX/k7+p+sSARYbjhYJDiO
+         hiNQHSEZUzzJtgo+dJnYdToVry2kjkl0pctJ0LppUgaJNOJnZ5UFyaNYwuiIaXP+rZL/
+         WND5DaYKZFJvfw3xIxyAvunJfTrR7J23vspbbKGyVYg8nWKgbQmzs6heaURcRgfkkuU9
+         8mgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778091693; x=1778696493;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5oBqOeQFggE8v+cavTTn16m1Xk99yYA0Xp28tAkW6v4=;
-        b=J77DAvPjmED47JLvZGazmgbtXMn9UJAF+naG5ob/xqrgxLgmO1pgXAw+Njtayo3m7G
-         yk7j93EkkFl/1AToeaQfcvhj2xp3uofdWjlOexb+7DhJaUjOa6moO2SL9VoMl1yCCNFe
-         4CWFjJI6WXx+obiocMmp5diCFIh4zp4ENOSQcbR+RVngqDazZHE0n0lk29+4v/URq8y4
-         s13twcjUpbfqcGd4lsjNdovisRN7Mn/DxNYJh/K/YLuxoaL4AMbiRQGZE2LEnvVCn4tM
-         RDD05B2Q62T069Y6X4obFffoA6iRdb/SjtGqRJOZTz7JmRYdTo6eh6vgxmu0ksXY00oB
-         Oriw==
-X-Forwarded-Encrypted: i=1; AFNElJ/0Y0ufPd3Mm8QJ5cYxPjsLjuyeqVzAPYAa83izvjyAD78opn3/fpm1IIzHPGRLzvCU/mj210Nr++NaJwjn@vger.kernel.org
-X-Gm-Message-State: AOJu0YyzOZTM/D5T5Z0rVKXI71HlqzrAeyiwWOcwP5ogjab85nGgLeg+
-	9xH1OjWqQspVMr2m/YMgmmsMyDaPWiK2thlz5uuBvapDOmrCIaBGIaIdG/jsXQPSb4c=
-X-Gm-Gg: AeBDieuMgLDDVxdWuvaWBpx8boERzuv4NpcKsJXqpOnnx7cHvRIL8OvWQhrEYJw7l9n
-	MYJARURY2XCC6Ycj7xL1/qedKB7mZN/jYqbENU8zlgJrXLJsPctMu3+6mo0wtFxOrA0ULpmQejx
-	XtsKa0BGOfFVPr0DrZBR5UG+odXOe+M3jCi8m/eLoTcvpaPtxBCfeAJwOdIu9pvXgFSEyxhdS7z
-	RFxSrlQr2ToPIwrQotf/G5N/dJtfFZ0Ewb3tl9ixUqNGqeO7PK3Lp3rHCxhdjBu5fagZbAMNNQj
-	BpV6AMz/BM95kCa+BlXkPAVKhFONvfvh5vphrAYU7dsG4M1FzJRXYIZSBSOuKBYnluyLz4MabBs
-	jP/MI7asbwd1Mj1O3OJJRpJehS24crvZDQ2fVtHKawP1trcpu7XpYiJhz3lQrcamaDwJbHm1ZBH
-	C77KpmGTu5PpM+e2/QmBOH7If32Rd16ZzcE47I95t+cSurmywr9NtHAEmaIJWhywF7tylBgIVWl
-	w==
-X-Received: by 2002:a05:620a:29c1:b0:8ef:12de:1337 with SMTP id af79cd13be357-904d60f5233mr705172585a.38.1778091693050;
-        Wed, 06 May 2026 11:21:33 -0700 (PDT)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8fc2cd057acsm1895096485a.47.2026.05.06.11.21.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 May 2026 11:21:32 -0700 (PDT)
-Message-ID: <0751a051-9894-45be-92d6-0d46f2c39293@riscstar.com>
-Date: Wed, 6 May 2026 13:21:29 -0500
+        d=1e100.net; s=20251104; t=1778092730; x=1778697530;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=u5i73O2TeW40M4e0REO3mUO4IV+MciKckhAqv2Nzlgk=;
+        b=qEp4u5t1uEee0M6ORB69z9gRP+PuTZqEVA5ER21NsgljzM4iiJsSQ5Eu+W8G0ZT88P
+         tg4vwt8i1yLLUJMWw/qjKIcRpBT6M5/cOz+ghbbRyVpFOEiPt54/0svykPhECpI0hbzr
+         a1trfz6cgK9sbDdqwgP/R/V8YrSv91dHYzmbMY22dolcHs8hG/B/s49z9elAnvWq6M8e
+         OIl2Hk7WUybCvtAanNjYJOujHeqinShO9m3qhFsw9RE6eKGzQ82Jzx1EX5Hk36xZ1RNb
+         r8CoDLSTFf8Xyo9BcYxNXLr56dcm65N54JQWaiCOp92ojDDjoVI7BMBkL6Hqe76Pwf9I
+         FLzA==
+X-Gm-Message-State: AOJu0Ywo0ZoQB+u2/t9mpqurFcmyCFIdutmFiKVfvdWU8qarz1xoaXMJ
+	+W9NNu2NV6Nsb87uHrtqtkZC3W1BtZeWRZJH49X25jMIboZRJpJNv4T3FIUw7u9cf+yXn0O+Ttk
+	K12WYH9TAI6BfBn1YkL+MKIeQqb/BFMpP/SxOqmqbAfXd82R06K89lvw542Uxshd44PBQ0QUhmh
+	uo
+X-Gm-Gg: AeBDievyT3qYoss9ZLIaqv9nJnLRjxjkBPiTTRIF1FliH+7Bu5fkAgDU1oHXS3wrWON
+	6sSsULxzGofzpWRMcYCBTwCevxjFF7yOAqrzbEtD8tLjSm1HLYk7rtTl2Z89sr5HYp2bOJzqfzN
+	06TpGYZHnhTX65oXVwLJwc2q3jDtvNd5Pyi1ccBToSz2Usu0vpj50L57WL0rPUrtWsp5nUvYcXq
+	SsxfOOWQASlqvCQet/CyuVe8ewfURSrbllcRD909IkXqN4tHZqeGdswqY4IkgnpC2B16knot2MQ
+	qvmHU68dPhaWkQ+aVHDhusuoygkJ9UV65Nuo34i08GnqHtXnztx2jVQ7d8bQA1a3MA3wpyCXuMB
+	M24/iU899PY37KdUr9/4klnRgzhdF7E0bp5A+7lU8cS4qqfXoXqq89EjIKS4QRVg3O02iPSx1Yc
+	zNCbSH8Mm3ATk=
+X-Received: by 2002:a05:7300:818d:b0:2f2:5c68:5074 with SMTP id 5a478bee46e88-2f548e95c62mr2289989eec.13.1778092730194;
+        Wed, 06 May 2026 11:38:50 -0700 (PDT)
+X-Received: by 2002:a05:7300:818d:b0:2f2:5c68:5074 with SMTP id 5a478bee46e88-2f548e95c62mr2289970eec.13.1778092729569;
+        Wed, 06 May 2026 11:38:49 -0700 (PDT)
+Received: from hu-viveka-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f56fd92780sm4958372eec.23.2026.05.06.11.38.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 May 2026 11:38:49 -0700 (PDT)
+From: Vivek Aknurwar <vivek.aknurwar@oss.qualcomm.com>
+Subject: [PATCH v4 0/2] interconnect: qcom: Add support for upcoming Hawi
+ SoC
+Date: Wed, 06 May 2026 11:38:45 -0700
+Message-Id: <20260506-icc-hawi-v4-0-35447fdc482b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 09/12] gpio: tc956x: add TC956x/QPS615 support
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, maxime.chevallier@bootlin.com,
- rmk+kernel@armlinux.org.uk, andersson@kernel.org, konradybcio@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, linusw@kernel.org,
- brgl@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
- daniel@riscstar.com, mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com,
- alexandre.torgue@foss.st.com, ast@kernel.org, boon.khai.ng@altera.com,
- chenchuangyu@xiaomi.com, chenhuacai@kernel.org, daniel@iogearbox.net,
- hawk@kernel.org, hkallweit1@gmail.com, inochiama@gmail.com,
- john.fastabend@gmail.com, julianbraha@gmail.com, livelycarpet87@gmail.com,
- matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
- prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
- rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
- weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
- bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20260501155421.3329862-1-elder@riscstar.com>
- <20260501155421.3329862-10-elder@riscstar.com>
- <736fb3b7-c88a-4ec4-96ad-d1b79cc48d30@lunn.ch>
- <30cec7dd-ac3c-47ab-896a-c29992bd5ba5@riscstar.com>
- <3666e3e6-e6f3-4cbf-b9fe-caa394fbab7c@lunn.ch>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <3666e3e6-e6f3-4cbf-b9fe-caa394fbab7c@lunn.ch>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 80F804DF422
+X-B4-Tracking: v=1; b=H4sIALWK+2kC/3XM0Q6CIBTG8VdpXIfjgCB21Xu0LuiAyZZSUlZzv
+ nvo2vSibtg+dn7/gUTXeRfJbjOQzvU++tCmkW83BGvTnh31Nm3CGVdMAFCPSGvz9NQqi6BkpUs
+ hSTq/dq7yrzl1OKZd+3gP3Xsu9zD9fiOCLZEeKKP5SeamdIUVGvchxuz2MBcMTZOlh0ytni8+Z
+ 2rlefIKK+d0YcBy+ceLtS9XXiSvJaBB4EaD/eHHcfwA0TyHfCcBAAA=
+X-Change-ID: 20260311-icc-hawi-d6dc165f8935
+To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mike Tipton <mike.tipton@oss.qualcomm.com>,
+        Vivek Aknurwar <vivek.aknurwar@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1778092728; l=1559;
+ i=vivek.aknurwar@oss.qualcomm.com; s=20260311; h=from:subject:message-id;
+ bh=96jOQ38DKHlJwyQEUSdRWVCI2RgSf5udNbyTMFN2/pg=;
+ b=sg4fhKMVcehnEw9zYXwuwp6i/tpPNQZfOAc55nKz+OfKKCSQqYA80uLGSRsnpCiSE7JbKwsQz
+ viSptHDSwf5Dt6RDr3bJSihCTAuRPkOM6kJ7BGwo/Gc5dZJHbFzrBX2
+X-Developer-Key: i=vivek.aknurwar@oss.qualcomm.com; a=ed25519;
+ pk=WIVIbn3nJR9YRWNRyJiEbvpgoHhNyYrmVqMUXWqAIC0=
+X-Authority-Analysis: v=2.4 cv=fMMJG5ae c=1 sm=1 tr=0 ts=69fb8abb cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ZFe9A1L9f2-jg8me1oMA:9 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-ORIG-GUID: b9eD0K2Et915E44VR9CoPIREW-3Z5cu2
+X-Proofpoint-GUID: b9eD0K2Et915E44VR9CoPIREW-3Z5cu2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDE4MiBTYWx0ZWRfX86pRICjoKYQj
+ SySNizjR6COrUv0sLQDJasxmEHXFZvZWoDnrJSOoXH+07qSDVZqgJnVJs6X7TlS0vwR1FKDWZbL
+ e8Bu6uUHmPx6u5MJkiQ6sdscG9MbDYC/5uROXEiymLmWUtH3INaWJrQnCUe1TfUwE17FBpE+fOP
+ NCbGX8VLE3L/hbfuLbJ9vIwcusKG2BYYpMwbkl0WFk6/733GHrtYHx5+f3QfmoNQ7TMutFmPYC+
+ 0RbWV3BAuwPYF2EDAyN7uIn9gksfZRcllZ26DVqm4pfVQwSkI1dqPY1eW6sRk8nn91h9LrPRvdM
+ u57xRtTobmt5U6UP1d+0Bn7kNWCloVslW4UosYQRIYrvfiLqEdMYpUUZP7ARYVhNW4TVFdco4m/
+ A+5IjYCka+h+MnUv8ZHqBNbScSpdRmB3xMKMj0kLxyjepeX+4XHUBrVQVcL77GBJ16/qAJKPLnb
+ +D+H1T8weFpMSmdlkWQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-06_01,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 phishscore=0 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 spamscore=0 malwarescore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605060182
+X-Rspamd-Queue-Id: C50754DF6C2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.06 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-106179-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106178-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[riscstar-com.20251104.gappssmtp.com:+];
 	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[elder@riscstar.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	RCPT_COUNT_GT_50(0.00)[50];
+	FROM_NEQ_ENVFROM(0.00)[vivek.aknurwar@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[riscstar.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	RCVD_COUNT_SEVEN(0.00)[7]
 
-On 5/2/26 10:05 PM, Andrew Lunn wrote:
-> On Sat, May 02, 2026 at 08:45:48PM -0500, Alex Elder wrote:
->> On 5/1/26 1:36 PM, Andrew Lunn wrote:
->>>> + * There is a TC956X PCI power controller driver that accesses the
->>>> + * direction and output value registers for GPIOs 2 and 3.  These
->>>> + * GPIOs control the reset signal for the two downstream PCIe ports.
->>>> + * Their values will never change during operation of this driver, and
->>>> + * this driver reserves these two GPIOS.
->>>
->>> Why doesn't this power controller driver actually use this driver to
->>> control the GPIOs? Chicken/egg?
->>
->> I am not the one with authority on this, but yes, that's my
->> understanding.  *Something* about this chip requires that the
->> PCIe ports need to have some configuration done on them *before*
->> PCIe is powered up.  So that driver uses the I2C interface to
->> apply these settings.  Meanwhile this driver uses the PCIe-mapped
->> memory to manage the GPIO registers.
-> 
-> The diagram you have is:
-> 
-> 
->                ----------------------------------
->                |              Host              |
->                ------+...+----------+........+---
->                      |i2c|          |  PCIe  |
->      ----------------+...+----------+........+------
->      | TC956x        |I2C|          |upstream|     |
->      |               -----        --+--------+---  |
->      |  -----  ------  -------    | PCIe switch |  |
->      |  |SPI|  |GPIO|  |reset|    |             |  |
->      |  -----  ------  |clock|    | DS3 DS2 DS1 |  |
->      |                 -------    ---++--++--++--  |
->      |  -----  ------     downstream//    \\  \\   |  downstream
->      |  |MCU|  |SRAM|    /==========/      \\  \===== PCIe port 1
->      |  -----  ------   //PCIe port 3       \\     |
->      |                  ||                   \======= downstream
->      |  ----+-----------++-----------+----         |  PCIe port 2
->      |  | M | internal PCIe endpoint | M |         |
->      |  | S |------------------------| S |  ------ |
->      |  | I |   PCIe   |  |   PCIe   | I |  |UART| |
->      |  | G |function 0|  |function 1| G |  ------ |
->      |  | E |----++----|  |----++----| E |         |
->      |  | N |  eMAC 0  |  |  eMAC 1  | N |         |
->      --------+.......+------+.....+-----------------
->              |USXGMII|      |SGMII|
->            --+.......+--  --+.....+--
->            |  ARQ113C  |  | QEP8121 |
->            |    PHY    |  |   PHY   |
->            -------------  -----------
-> 
-> The two Ethernet controllers are hanging off port 3 of the
-> switch. However, the GPIO block is just floating in space. What
-> address space is it in?
+Add interconnect bindings and RPMh-based interconnect
+driver support for the upcoming Qualcomm Hawi SoC.
 
-Well, that isn't easily representable.
+Signed-off-by: Vivek Aknurwar <vivek.aknurwar@oss.qualcomm.com>
+---
+Changes in v4:
+- Address review comment by adding missing SLAVE_PCIE_1 node
+  and corresponding PCIe path.
+- Link to v3: https://lore.kernel.org/r/20260409-icc-hawi-v3-0-851cac12a81d@oss.qualcomm.com
 
-In fact, the GPIO (and UART and eMACs, etc.) is accessible
-multiple ways.   They are in a single "SFR" range of memory
-within the TC956x, which is partitioned into sub-ranges for
-the separate IP blocks.
+Changes in v3:
+- Fix alignment of macros in the binding header.
+- Update binding header commit summary and description to mention
+  Qualcomm SoC.
+- Collected missing Reviewed-bys.
+- Link to v2: https://lore.kernel.org/r/20260406-icc-hawi-v2-0-6cfee87a1d25@oss.qualcomm.com
 
-E.g:
-0x40000000	Bootup config registers (size 0x1000)
-0x40006000	UART registers (size 0x1000)
-0x40020000	PCIe registerfs (size 0x00010000)
-0x40040000	EMAC0 (size 0x8000)
-and others.
+Changes in v2:
+- Fix warning reported by dt_binding_check.
+- Collected Acked-bys.
+- Link to v1: https://lore.kernel.org/r/20260330-icc-hawi-v1-0-4b54a9e7d38c@oss.qualcomm.com
 
-The MCU has access to this SFR space.  The host CPU can
-access it via the I2C interface (as the PCIe power control
-driver does).  The PCIe power control driver actually
-touches the GPIO registers to be able to assert reset
-on the two downstream PCIe ports.
+---
+Vivek Aknurwar (2):
+      dt-bindings: interconnect: qcom: document the RPMh NoC for Hawi SoC
+      interconnect: qcom: add Hawi interconnect provider driver
 
-In addition, BAR4 for both PCIe functions has access to the
-same SFR space.  So in fact, both of these functions are
-capable of controlling GPIOs.  We are having just one of
-them (function 0) be responsible for that.
+ .../bindings/interconnect/qcom,hawi-rpmh.yaml      |  131 ++
+ drivers/interconnect/qcom/Kconfig                  |    9 +
+ drivers/interconnect/qcom/Makefile                 |    2 +
+ drivers/interconnect/qcom/hawi.c                   | 2028 ++++++++++++++++++++
+ include/dt-bindings/interconnect/qcom,hawi-rpmh.h  |  165 ++
+ 5 files changed, 2335 insertions(+)
+---
+base-commit: 4cd074ae20bbcc293bbbce9163abe99d68ae6ae0
+change-id: 20260311-icc-hawi-d6dc165f8935
 
-> I'm wondering if the GPIO controller should be a device/driver of its
-> own? It probes first. The PCI power controller driver then probes, and
-> has phandles to the GPIO controller so it can activate ports 1 and
-> 2. Parallel to that the Ethernet driver(s) can probe, also using
-> phandles to the GPIO they need.
-> 
-> Looking at this diagram, putting the GPIO controller within one of the
-> port 3 functions is wrong. But maybe the diagram is not accurate.
-
-When the PCIe power controller was implemented, the GPIO
-functionality was not separated out.  That driver simply
-touches two registers to manage asserting reset on the two
-downstream PCIe ports.  (It changes these only during the
-appropriate times during power-up and power-down of the ports.)
-
-It's possible *that* work could have implemented a separate
-GPIO driver.  We did not pursue modifying the power control
-driver to work that way.
-
-Instead, we modeled it starting with the STMMAC driver (which
-is how the Toshiba vendor driver works).  But we separated
-the GPIO functionality into a separate (auxiliary) device,
-which has its own driver.
-
-Because the internal endpoint won't operate until the PCIe
-power controller has enabled power, this GPIO driver and
-the PCIe power control driver won't interfere with each
-other's access to the shared registers.
-
-In short, because this "SFR" space is available in various
-ways, there are several ways the GPIO (and other) IP can
-be managed and represented.
-
-					-Alex
-
-> 
->       Andrew
+Best regards,
+-- 
+Vivek Aknurwar <vivek.aknurwar@oss.qualcomm.com>
 
 
