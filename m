@@ -1,188 +1,224 @@
-Return-Path: <linux-arm-msm+bounces-106142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UNTINTRp+2miawMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:15:48 +0200
+	id GNlPBUVs+2miawMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:28:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id E17EC4DDF38
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:15:47 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DC544DE1CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 06 May 2026 18:28:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 004C53015089
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 16:14:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 75E203009CD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 May 2026 16:25:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCE074963AD;
-	Wed,  6 May 2026 16:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CC2D3ED107;
+	Wed,  6 May 2026 16:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oqAg1DQL"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="SnK+kHR9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB72A4921B6
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 May 2026 16:14:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C553F0ABC;
+	Wed,  6 May 2026 16:25:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778084063; cv=none; b=NnFy5rIoAa2lEQXmJSVvicdFOTojuNYhrKowA62OO9c5rMvdBZcErQt5hDstjTn7ASwZCoS6/uEoZZIHcf4OyJ+pdpWB0DC3XnQMAICKy9rsrm3kr5He/5tfPB3mmQBn5IlyvkRah83+JXh1k7qMFl2M/0pLZQn7AxBlwPKKBok=
+	t=1778084716; cv=none; b=njkHYgA8NPXWg0D8MzaFkvOhfg7mI+8LC1zc9llJ5HjhzUQZ23D3bEvcOqMAIkQsXq1236+CczrPIIndbxDawgXJdiHyhuB5NNdWP9MGzHHiljyDTPFemRWUMFgIeBiEuAyVa2C67dgOOrQN6LcWv67SPPkEYiTd4YL6l2Q/Ssc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778084063; c=relaxed/simple;
-	bh=T+hwVHoy+/HW70H4b4ny1tz+u9z10JcY5ob6OwvauXQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=i09QBIsaUcFudWskchTf1axjdDl0rgYoue9bFk+E+o4XsrBwHgorjdFUkYnyPN1ZoWx/Rl4W+7sxO0w3P9ygf271UjJXOYfvdNDnFg3kG8uXOS6cO2t6EuQAXFhySbQqpiFWgu1yb+VUtVZeK7Wddiu3JhDI/86q2Kw+JqrsObM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=oqAg1DQL; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5a887ebb416so1128259e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 May 2026 09:14:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778084056; x=1778688856; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QpS9p5To8P4BftdAlsDaBegfX21bw2fBoqWrx1dYiXE=;
-        b=oqAg1DQLyT1XmAPaltQ+v5D5NGDIUFmqL8DMIIgdEXMsXXu8D11qsPAtu7mycGuWIN
-         u2jGvpcEqLaxG2CqMcsBt6HFrhfmjqQJif2P/CjuB1e2CLyomhLQ58/A/mq3aBtNC0ra
-         FjL4kjdxZh9uUrx97XmXVPvgxEb2You1mx9bPwdAekIi8rnbh77547Htce3/Pm+T8af/
-         4ArDZwLqL/XaEKpR9AT7GlNzyACVwwrpT49MNaVbgGO2Viku2SMFqhM4OGfTKkd3aAuL
-         LMqZdQ0GKmgsiOZszGaknj/YovO8af3f65RcEoq+gAFf8t0gTMSOvEYDv3PX8huWQQdR
-         rEWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778084056; x=1778688856;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QpS9p5To8P4BftdAlsDaBegfX21bw2fBoqWrx1dYiXE=;
-        b=d8VVquXS0onNVxuCPfdXAcKlbg7FpznjSDqpK2N6S4Nyr/IWr2NZI6A8VTNe1XXN3f
-         o85ObL5N6+mC4DFO8QhSgof3U1yfwGFg4Y/v5Ko3oFpjF9qTZgtspHbZVrQyzrcZRZLA
-         fesHgp+bi3R90rgPmw9Ttlp4Hkfwq1ZVfVgefZtzlxwElPkmxx2SShfaC+4QvvUpKi1X
-         qNEVVWParPvnENMvN9jwx+It3WA9O2hgYk1zcKoqdEII6K2mPsQg3zj4hn1xuQlQj/rv
-         sF0crNFMdF0UuZ0j8p9mfeZpcH8A2TspUQRju0bPavUuSq76ofiW7OROJ0Sw3du8Zz9h
-         2png==
-X-Forwarded-Encrypted: i=1; AFNElJ/92ZpoN4gS/PbsCurLfLex3OjBgxKj3a1jfWpUiL2fG3DpIWmPo9/YlZMv9R6yy7wK7eYbxAM8r4SSBPT8@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJqF7eBpCP/zmu+m17VplZI8xrmG2pQ/vwXNB/u/RYSBqYKQEt
-	9IhB7ifQmxXqUGN5SiynZEmsnxKqpTF2lv1/wJXZ+CDzEHq33g8Doly2
-X-Gm-Gg: AeBDietxDdx6kRmKZc/cMjFaxwYvtzX5VtodbGY2pmVIOG75YVT6vG9DQuA7dlpYWkn
-	wnX2IHkpEdhd1VuSeqmAVGyz21idjCFFArRvnLrlF4TYXjcBZgj1puY4ghZBQYLnkHPlKtS1rAk
-	mr4doWSjJJoJO2eQ6YNhl0ODQp4MASzDXyysLolayiG4jnumxYc0VHoZD/oJpepmPH/LwnYvlhd
-	/4/FDtOwmCh7JEzCK3w1myq8lckNiYr5SQgHUQDi7QbbrTFxdl9n1IEvMDJeo0OV0A7ZPk3OIQv
-	VVaMvFhFYrMdXGw13cTHMjOlMVr1sdWmJcMH9/6RKeSbILzNyihpb92PzB+U4LmuDGmRTkWPmmK
-	OnvVHMl08mXPBbHhoC6S7UiF5qhqlJNFhQEMXSwDjwx7AyJQVWG9LEs84Q6tdnH8hO9A3mmPSyg
-	laDRSR5sUTgRx9MNGBub3iJDwowUPDOFzXTZqnfbZg6sxzevr+su+t/FFnPXZtYjA4M5Ho5RgtF
-	Q==
-X-Received: by 2002:a05:6512:308b:b0:5a8:89c5:2c0f with SMTP id 2adb3069b0e04-5a889c52e35mr1306160e87.25.1778084055726;
-        Wed, 06 May 2026 09:14:15 -0700 (PDT)
-Received: from [192.168.2.20] (109-252-156-195.dynamic.spd-mgts.ru. [109.252.156.195])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a86aa3d540sm3844372e87.17.2026.05.06.09.14.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 May 2026 09:14:14 -0700 (PDT)
-Message-ID: <9af23def-ffa7-4f68-8aa1-ab080b6c1c4f@gmail.com>
-Date: Wed, 6 May 2026 19:14:07 +0300
+	s=arc-20240116; t=1778084716; c=relaxed/simple;
+	bh=aEwby3hiBqgi8nQZsciVDDvsXj0kYmX+laF5UjXUEVg=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=scZkxghvq8LX4Hr1kdj3TFEo3Z7GhM63Gg8McVu2EDL3+SOTA9zokVrgUBHVyB0z4gscbbCjG8GteuzfqLr1d6zeM5+SsEE9gPc1MeO+lkJiDXKt1GhHn+iEp41tgBHwQJSaI2frTHtCXndW3zU9UxVwcKrTiXvaJEXVZIWIOik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=SnK+kHR9; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1778084713;
+	bh=aEwby3hiBqgi8nQZsciVDDvsXj0kYmX+laF5UjXUEVg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=SnK+kHR945GSMVWTHitLyP5YzUUC+Qab+3fG5NC2Z26bG+xuOvlr/PRHlKxMgnDlz
+	 HKQR4cJav6qPwr3wgPZoWIThhRtZHykxEkCLGsEc+Mzk0Pfx3LBkOrXYB4IKMyq1uD
+	 j6wYINvzl+ZG7dxF5bkuyEgKbhilySGoH71+pYiXf+5RHd9235Uovays0WXmBLUCJS
+	 /x2AUxprmTwu1L7zr/QkGZRMhjvJj1CUxWY3xBmXQ6Cym812zep4LdrEHgT7Q4kHe4
+	 jHyWzzlrBXwgHWsEr8Em6dn9D69o38CNxcQDQSTGWlFMN1PKooi0s4My9NgdtT09yx
+	 yQ3PeyNbJTGcg==
+Received: from fedora (unknown [100.64.0.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bbrezillon)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 40B6217E124B;
+	Wed,  6 May 2026 18:25:12 +0200 (CEST)
+Date: Wed, 6 May 2026 18:25:06 +0200
+From: Boris Brezillon <boris.brezillon@collabora.com>
+To: Steven Price <steven.price@arm.com>
+Cc: Liviu Dudau <liviu.dudau@arm.com>, Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>, Maarten Lankhorst
+ <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Akash Goel <akash.goel@arm.com>, Chia-I Wu
+ <olvaffe@gmail.com>, Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry
+ Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn
+ Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] drm/panthor: Don't use the racy
+ drm_gem_lru_remove() helper
+Message-ID: <20260506182506.204a1ed2@fedora>
+In-Reply-To: <23c69bee-868d-4142-a96e-36de61f23f4f@arm.com>
+References: <20260506-panthor-shrinker-fixes-v1-0-e7721526de96@collabora.com>
+	<20260506-panthor-shrinker-fixes-v1-1-e7721526de96@collabora.com>
+	<23c69bee-868d-4142-a96e-36de61f23f4f@arm.com>
+Organization: Collabora
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] media: nvidia: tegra-vde: Fix iommu_map_sgtable()
- return value check
-To: Mikko Perttunen <mperttunen@nvidia.com>,
- Thierry Reding <thierry.reding@gmail.com>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>, Jonathan Hunter <jonathanh@nvidia.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20260421-iommu_map_sgtable-return-v1-0-fb484c07d2a1@nvidia.com>
- <20260421-iommu_map_sgtable-return-v1-4-fb484c07d2a1@nvidia.com>
-From: Dmitry Osipenko <digetx@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20260421-iommu_map_sgtable-return-v1-4-fb484c07d2a1@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: E17EC4DDF38
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 6DC544DE1CA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
+	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106142-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-106143-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	HAS_ORG_HEADER(0.00)[];
+	FREEMAIL_CC(0.00)[arm.com,collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[nvidia.com,gmail.com,ffwll.ch,kernel.org,oss.qualcomm.com,linux.dev,poorly.run,somainline.org];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[digetx@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[boris.brezillon@collabora.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[collabora.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,nvidia.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[arm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,collabora.com:dkim,collabora.com:email]
 
-21.04.2026 07:02, Mikko Perttunen пишет:
-> Commit "iommu: return full error code from iommu_map_sg[_atomic]()"
-> changed iommu_map_sgtable() to return an ssize_t and negative values
-> in error cases, rather than a size_t and a zero.
+On Wed, 6 May 2026 16:40:22 +0100
+Steven Price <steven.price@arm.com> wrote:
+
+> On 06/05/2026 13:16, Boris Brezillon wrote:
+> > drm_gem_lru_remove() dereference stores drm_gem_object::lru in a local
+> > variable that's then dereferenced to acquire the LRU lock. Because this
+> > assignment in done without the LRU lock held, it can race with  
+> s/in/is/     ^^
+> > drm_gem_lru_scan() where drm_gem_object::lru is temporarily assigned
+> > a stack-allcated LRU that goes away when leaving the function. By
+> > the time we dereference this local lru variable, the object might already
+> > be gone.
+> > 
+> > It feels like drm_gem_lru_move_tail() was never meant to be used this
+> > way, because there's no easy way we can avoid this race unless we defer
+> > the locking to the caller. Let's add an explicit LRU for unreclaimable
+> > BOs instead, and have all BOs added to this LRU at creation time.
+> > 
+> > Fixes: fb42964e2a76 ("drm/panthor: Add a GEM shrinker")
+> > Reported-by: Chia-I Wu <olvaffe@gmail.com>
+> > Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
+> > Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+> > Reviewed-by: Chia-I Wu <olvaffe@gmail.com>  
 > 
-> Update tegra_vde_iommu_map() to correctly check for errors from
-> iommu_map_sgtable.
+> With minor typos fixed
 > 
-> Fixes: ad8f36e4b6b1 ("iommu: return full error code from iommu_map_sg[_atomic]()")
-> Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-> ---
->  drivers/media/platform/nvidia/tegra-vde/iommu.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+> Reviewed-by: Steven Price <steven.price@arm.com>
 > 
-> diff --git a/drivers/media/platform/nvidia/tegra-vde/iommu.c b/drivers/media/platform/nvidia/tegra-vde/iommu.c
-> index b1d9d841d944..824d2aa80a43 100644
-> --- a/drivers/media/platform/nvidia/tegra-vde/iommu.c
-> +++ b/drivers/media/platform/nvidia/tegra-vde/iommu.c
-> @@ -25,6 +25,7 @@ int tegra_vde_iommu_map(struct tegra_vde *vde,
->  	unsigned long shift;
->  	unsigned long end;
->  	dma_addr_t addr;
-> +	ssize_t map_err;
->  
->  	end = vde->domain->geometry.aperture_end;
->  	size = iova_align(&vde->iova, size);
-> @@ -36,11 +37,11 @@ int tegra_vde_iommu_map(struct tegra_vde *vde,
->  
->  	addr = iova_dma_addr(&vde->iova, iova);
->  
-> -	size = iommu_map_sgtable(vde->domain, addr, sgt,
-> -				 IOMMU_READ | IOMMU_WRITE);
-> -	if (!size) {
-> +	map_err = iommu_map_sgtable(vde->domain, addr, sgt,
-> +				    IOMMU_READ | IOMMU_WRITE);
-> +	if (map_err < 0) {
->  		__free_iova(&vde->iova, iova);
-> -		return -ENXIO;
-> +		return map_err;
->  	}
->  
->  	*iovap = iova;
+> Although an alternative would be to expose drm_gem_lru_remove_locked()
+> in some form (maybe a wrapper which requires passing in the lock?)
+
+I considered that too, but I thought it was less invasive to just have
+a default LRU to start in at creation time, and end in there's nothing
+left to reclaim. It's also what MSM does, so I figured I'd do that too.
+
+> 
+> > ---
+> >  drivers/gpu/drm/panthor/panthor_device.h | 10 ++++++++++
+> >  drivers/gpu/drm/panthor/panthor_gem.c    |  5 ++++-
+> >  2 files changed, 14 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/gpu/drm/panthor/panthor_device.h b/drivers/gpu/drm/panthor/panthor_device.h
+> > index 4e4607bca7cc..45b71546f83c 100644
+> > --- a/drivers/gpu/drm/panthor/panthor_device.h
+> > +++ b/drivers/gpu/drm/panthor/panthor_device.h
+> > @@ -190,6 +190,16 @@ struct panthor_device {
+> >  		/** @reclaim.lock: Lock protecting all LRUs */
+> >  		struct mutex lock;
+> >  
+> > +		/**
+> > +		 * @reclaim.unreclaimable: unreclaimable BOs
+> > +		 *
+> > +		 * Either the BO is unreclaimable because it has no pages allocated,
+> > +		 * or it's unreclaimable because pages are pinned.
+> > +		 *
+> > +		 * All BOs start in that list at creation time.  
+> s/that/this/                        ^^^^
+> 
+> Thanks,
+> Steve
+> 
+> > +		 */
+> > +		struct drm_gem_lru unreclaimable;
+> > +
+> >  		/**
+> >  		 * @reclaim.unused: BOs with unused pages
+> >  		 *
+> > diff --git a/drivers/gpu/drm/panthor/panthor_gem.c b/drivers/gpu/drm/panthor/panthor_gem.c
+> > index 13295d7a593d..8e31740126e7 100644
+> > --- a/drivers/gpu/drm/panthor/panthor_gem.c
+> > +++ b/drivers/gpu/drm/panthor/panthor_gem.c
+> > @@ -204,7 +204,7 @@ void panthor_gem_update_reclaim_state_locked(struct panthor_gem_object *bo,
+> >  		drm_gem_lru_move_tail(&ptdev->reclaim.gpu_mapped_shared, &bo->base);
+> >  		break;
+> >  	case PANTHOR_GEM_UNRECLAIMABLE:
+> > -		drm_gem_lru_remove(&bo->base);
+> > +		drm_gem_lru_move_tail(&ptdev->reclaim.unreclaimable, &bo->base);
+> >  		break;
+> >  	default:
+> >  		drm_WARN(&ptdev->base, true, "invalid GEM reclaim state (%d)\n", new_state);
+> > @@ -994,6 +994,7 @@ static struct panthor_gem_object *
+> >  panthor_gem_create(struct drm_device *dev, size_t size, uint32_t flags,
+> >  		   struct panthor_vm *exclusive_vm, u32 usage_flags)
+> >  {
+> > +	struct panthor_device *ptdev = container_of(dev, struct panthor_device, base);
+> >  	struct panthor_gem_object *bo;
+> >  	int ret;
+> >  
+> > @@ -1026,6 +1027,7 @@ panthor_gem_create(struct drm_device *dev, size_t size, uint32_t flags,
+> >  	}
+> >  
+> >  	panthor_gem_debugfs_set_usage_flags(bo, usage_flags);
+> > +	drm_gem_lru_move_tail(&ptdev->reclaim.unreclaimable, &bo->base);
+> >  	return bo;
+> >  
+> >  err_put:
+> > @@ -1551,6 +1553,7 @@ int panthor_gem_shrinker_init(struct panthor_device *ptdev)
+> >  		return ret;
+> >  
+> >  	INIT_LIST_HEAD(&ptdev->reclaim.vms);
+> > +	drm_gem_lru_init(&ptdev->reclaim.unreclaimable, &ptdev->reclaim.lock);
+> >  	drm_gem_lru_init(&ptdev->reclaim.unused, &ptdev->reclaim.lock);
+> >  	drm_gem_lru_init(&ptdev->reclaim.mmapped, &ptdev->reclaim.lock);
+> >  	drm_gem_lru_init(&ptdev->reclaim.gpu_mapped_shared, &ptdev->reclaim.lock);
+> >   
 > 
 
-Acked-by: Dmitry Osipenko <digetx@gmail.com>
 
