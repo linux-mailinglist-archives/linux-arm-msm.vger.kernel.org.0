@@ -1,69 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-106519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wMk5MrT4/GmxVwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 22:40:20 +0200
+	id wH+rKMb4/GmxVwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 22:40:38 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35FF14EEC37
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 22:40:19 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 506AA4EEC4E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 22:40:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 71D7E30A7A21
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 20:36:39 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3F07330AAB7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 20:36:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EFD348C40C;
-	Thu,  7 May 2026 20:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67C8D48C8CE;
+	Thu,  7 May 2026 20:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qGfl1bu1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GpsvdSEh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDD548C3FB;
-	Thu,  7 May 2026 20:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437D23264E7;
+	Thu,  7 May 2026 20:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778186091; cv=none; b=U08nrjsr3pWdS6d9RMfHp6IhQeClkRvGCOdZIBnoFdB+0YeDjqZOlu/Padto871mvFjBJaqsYCixF+zOBKKcT0alnJF1bO1NDA+Ml9yNQpIs0bNP+t4+JjXWSb8ackQXGJlk8ssLuQCwiuF/7MTzp5blEjFMIX9E3HWmZNyk24Q=
+	t=1778186093; cv=none; b=l9bCm1tqUlobdb/YkuhQAaNu2X5uyQjcgOoPrPwb27150fnN1TbOGjf3uArY8zOTNHaSYsjds9wPdFXpCw5P7CxB0Pbfn7eQXpfDmNLtHyuUItfxW7QmB7EjHlVLbFehle5nLgWCTxgyairBEslLLksz09rYlhJ+bjO4tPMHYDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778186091; c=relaxed/simple;
-	bh=vJpujULvu2R4dMJFierq+vxTCy/9SAK8xjiblP2q/Vk=;
+	s=arc-20240116; t=1778186093; c=relaxed/simple;
+	bh=16jqoewHM6BKoPp/s7nhS3uNZKEN2BrqgUO6WqrSbbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KplRJ46953BITNYMsstUqLLKOpMf0g3SlVuaeZ3Wit0KV4BlkbO0MLFWQYlwMlLI6wm2sFk5lr/YBKF6cSbSomqugvdO24FW6Mc35Z4h9T44kXKVgyuzEvB7/+u7fk/UFn+m7q3QPy2vUYYL0eWJ9kBrDxQLmUEcKMxyOtoClS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qGfl1bu1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9461C4AF14;
-	Thu,  7 May 2026 20:34:49 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Ww4iZf0snUGaTvoAZ1wnSnL3Zl28PLg87WxNQ4xwtH4GnO91OUzjeHXeSGJsjR+mx4gHVUIrbXCUJEwAu821wl12emmiv7p4itG6uXbSBT9vzeqRFZiaoPOAODTer/jBX+ZwK6JurlgLF05KKbA1Tz7XMEhTl1poZtjlCCSpv9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GpsvdSEh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E4CC4DDE3;
+	Thu,  7 May 2026 20:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778186091;
-	bh=vJpujULvu2R4dMJFierq+vxTCy/9SAK8xjiblP2q/Vk=;
+	s=k20201202; t=1778186093;
+	bh=16jqoewHM6BKoPp/s7nhS3uNZKEN2BrqgUO6WqrSbbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qGfl1bu157JKU5AbcGdpkUm7fgOEEytPrGVh/nv/J2eK+wd972mwmHuCK36eirVdY
-	 6321CPvhvqEohlsfl210eIwCg9buM8SjFepn6S+Q+mwXpaR7yy3vLqP4T3ATy3E/d0
-	 B9fE8Z0zWqInSINMgDqlu/6M9g7V9psDtMI6cFp/2ZG4kWqyDSwWYLng+wOPViFztB
-	 ldpAotq4WRv+LufQaur9NLIOqZGJYBemGCzyL8OP9gvnraGtF1W0EMMxTzERR7i7wD
-	 LIrT+aawAmwc1kIfbwGUAFnLYwqGAlk2OHq2gMbA2xSw6ak10M/zNd8Hx4UN3Xg21R
-	 1aduUhmq0fvDg==
+	b=GpsvdSEhSKEUsVe/eLbHFLzybNzfutPQUqotnhiT6V+AYaFJNJNY07LqjRwCZ8utQ
+	 g7t36PWYCuIHiVuoTOgxSTovMssQutiU6uLbH+iAkWO3BC2q6GkvdpD5Y806rAZF/u
+	 Fdpc6p8PwFX9JThfdG0uZkPcQS9NenMnfrH60qDRiMMY9ry0rzsRzZMfg1JIeRbeA7
+	 A65syZBjIetbZ8sDMsnmzSrRk/qdDpJK6kPjd3sCNvSjbAcizC/O1HJQASlHK7UJ6h
+	 C8RFaceJGU5UHwJAMdBsNY6GEMbHQLvc/0yvpx4AT0sc3FLRBX5oJR0NLXRMhuEjW5
+	 ZqTS7+ir3LOEQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Sam Day <me@samcday.com>,
-	Dzmitry Sankouski <dsankouski@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	David Heidelberg <david@ixit.cz>
-Cc: linux-arm-msm@vger.kernel.org,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
+Cc: linux-input@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	phone-devel@vger.kernel.org,
-	Petr Hodina <petr.hodina@protonmail.com>
-Subject: Re: [PATCH v4 0/4] Add framebuffer on Xiaomi Poco F1 and disable the MDSS on tianma panel variant
-Date: Thu,  7 May 2026 15:34:17 -0500
-Message-ID: <177818606017.73000.3325751231222513886.b4-ty@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v4 0/4] Add support for Awinic AW86938 haptic driver
+Date: Thu,  7 May 2026 15:34:18 -0500
+Message-ID: <177818605993.73000.16772057162907380051.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260402-beryllium-fb-v4-0-46170004da28@ixit.cz>
-References: <20260402-beryllium-fb-v4-0-46170004da28@ixit.cz>
+In-Reply-To: <20260302-aw86938-driver-v4-0-92c865df9cca@fairphone.com>
+References: <20260302-aw86938-driver-v4-0-92c865df9cca@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,28 +73,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 35FF14EEC37
+X-Rspamd-Queue-Id: 506AA4EEC4E
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106519-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com,kernel.org,fairphone.com];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FREEMAIL_TO(0.00)[kernel.org,samcday.com,gmail.com,oss.qualcomm.com,ixit.cz];
+	TAGGED_FROM(0.00)[bounces-106520-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,protonmail.com];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
@@ -101,31 +100,25 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Action: no action
 
 
-On Thu, 02 Apr 2026 00:39:34 +0200, David Heidelberg wrote:
-> Enable framebuffer for early console output.
+On Mon, 02 Mar 2026 11:50:24 +0100, Griffin Kroah-Hartman wrote:
+> Add devicetree bindings and driver support for the AW86938 haptic driver
+> chip, and add it to the devicetree for the Fairphone (Gen. 6) smartphone.
 > 
-> Due to broken panel driver on tianma and no visual output it's better
-> to disable the MDSS so the framebuffer stays on.
-> 
-> In case second patch gets rejected, please apply the first one standalone
+> This haptics chip is quite similar to the AW86927, and shares many core
+> features but has some notable differences, including some extra
+> features.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/4] arm64: dts: qcom: sdm845-xiaomi-beryllium: Introduce framebuffer
-      commit: a4f6959661f0c8542e5a89aaaef27fc4ac9408a6
-[2/4] arm64: dts: qcom: sdm845-oneplus: Drop address from framebuffer node
-      commit: b379bb1470d864659ae9522b72f241a15255dce6
-[3/4] arm64: dts: qcom: sdm845-shift-axolotl: Convert fb to use memory-region
-      commit: 15520f868651d6b03c603918bade78f4799df7ca
-[4/4] arm64: dts: qcom: sdm845-samsung-starqltechn: Convert fb to use memory-region
-      commit: 2eae029f7d38c5fc03a778f483b5079d0e355472
+[4/4] arm64: dts: qcom: milos-fairphone-fp6: Add vibrator support
+      commit: 66fb209e6035ed90cbff71c48c60124803da5c63
 
 Best regards,
 -- 
