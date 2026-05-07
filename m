@@ -1,243 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-106413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EKDVKV6a/Gk6RwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 15:57:50 +0200
+	id kJHfJqCb/Gk6RwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 16:03:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EB164E9B47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 15:57:49 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 483654E9C88
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 16:03:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 5C9B53006939
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 13:57:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DC5B0305E36E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 13:58:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85AFE3FB7F4;
-	Thu,  7 May 2026 13:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4678D3FAE19;
+	Thu,  7 May 2026 13:58:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lJjfZPXm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgau2.qq.com (smtpbgau2.qq.com [54.206.34.216])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438933F7A93;
-	Thu,  7 May 2026 13:57:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.34.216
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226543F7A93;
+	Thu,  7 May 2026 13:58:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778162264; cv=none; b=C7Xi0dpaS+fHbsARkHUSqI2JjjMBMAMlvHWSZvOfy/QfObY/2lCvU+RmjoRTZY/VYvsYnGUgpsV6NbN2Ew6NWok1j2Ma8f64vfAoOMn+Br4wrWZQLjDVAEjewjs2TmK6ipN44BItOZmHsaYFKRjdl+V1H+3xeA2sJSl3KUahfJQ=
+	t=1778162286; cv=none; b=oGXrC2RVP9CGFNGl7h37GyXMFBsT3CGv6qSy8bJB/9/josBhzal44UgcLVHIKgrEIgdJcR1Uxf7DLfZiZ08b4kafdJTGRj82+YjnQFMF1IXKx69WpEiAe4KzdqUlGOIYKt6zSdPhrPlfJeG2yUP6RjRCM202Lz9PosiqPQqdn00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778162264; c=relaxed/simple;
-	bh=RrvyEgcHRqqCMyU2TKBmBS7TG/av5sEF0ZDxFme6H7w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AI6RyjRwNcXudRUIBvvn1L7VeIjaUgVEa6fJrRksUPU0vZuKfHzGL6+KFLWMZ+MHW1UpweRWNgHtdkx4v1xJ+3b+ICh1yzNH965r3OeC/0OdC11ZojEEjTOJViHDnLAPu7uoyIJPmbqEqRVKeN1jfKNKKBKy6wrZLQ+h+YaFRUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.206.34.216
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: esmtpgz13t1778162251tb46c22e2
-X-QQ-Originating-IP: p1YkURIHeJrROEemiAkk20u/XtKBsAHtUI9xGIh+rLI=
-Received: from [127.0.0.1] ( [116.234.74.217])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 07 May 2026 21:57:26 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 16399775298209443856
-Message-ID: <3A5C0389E7C0D241+21a4f16b-1af8-46ac-8831-0c1b49694df0@radxa.com>
-Date: Thu, 7 May 2026 21:57:26 +0800
+	s=arc-20240116; t=1778162286; c=relaxed/simple;
+	bh=OlGWb/di+cIBNs760oUnufgVHfwkGavGdQINZlG0LKA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ol8ewF3TX6Dj9EfHJBKFeuA0IY8DFwKub3y9tsKifVd0okO3NISav/rQQjHUJsNB8dREMMJYZmsmV+lpn46X9pOWy3QeF3T3HfkqztNB3UeE95iJuAgo2fKvn+Gmhuu9tfw2m6eGX3LKzopBuBCqRClTz1rpzq1+kJPuhxzhTD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lJjfZPXm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED736C2BCB2;
+	Thu,  7 May 2026 13:58:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778162285;
+	bh=OlGWb/di+cIBNs760oUnufgVHfwkGavGdQINZlG0LKA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lJjfZPXmhfVpQlVDJ50qS0HwTavca/aac71YEzV7zSRAWaiW1pDWIDyj3huXu3XV0
+	 9F99a+KXGZvY+3zWNrV0M65YyByrB5NWad7HbndONYpNc9L824KmP+2o3WkQbyo144
+	 eoWrTnerscA3nffXz6DcIdqJkwfme3BCQ2jC+vNgRm60vQoExIDt7Bo+yDSGWrdrIV
+	 HHbdfDGLbJwwo1nQLrkRyg81VFiSiY5SiRAVAsNpMjU/CnuOqbFaO57vL/gVAG37ky
+	 LrO0oRA1sTeSYpVHoC+C4tuXbfY43zU0VqB4sDqjBdemFekrLhaEqLsxi6m7/zNlL6
+	 tEdjCRCBZb1pQ==
+Date: Thu, 7 May 2026 08:58:01 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Qian Zhang <qian.zhang@oss.qualcomm.com>
+Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1] arm64: dts: qcom: Add fixed regulators for WLAN
+ supplies
+Message-ID: <afyYaCSFXy-Fm7DR@baldur>
+References: <20260501051918.1990713-1-qian.zhang@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 10/12] net: stmmac: tc956x: add TC956x/QPS615
- support
-To: Alex Elder <elder@riscstar.com>, andrew+netdev@lunn.ch,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, maxime.chevallier@bootlin.com,
- rmk+kernel@armlinux.org.uk, andersson@kernel.org, konradybcio@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, linusw@kernel.org,
- brgl@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org
-Cc: Daniel Thompson <daniel@riscstar.com>, mohd.anwar@oss.qualcomm.com,
- a0987203069@gmail.com, alexandre.torgue@foss.st.com, ast@kernel.org,
- boon.khai.ng@altera.com, chenchuangyu@xiaomi.com, chenhuacai@kernel.org,
- daniel@iogearbox.net, hawk@kernel.org, hkallweit1@gmail.com,
- inochiama@gmail.com, john.fastabend@gmail.com, julianbraha@gmail.com,
- livelycarpet87@gmail.com, matthew.gerlach@altera.com,
- mcoquelin.stm32@gmail.com, me@ziyao.cc,
- prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
- rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
- weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
- bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20260501155421.3329862-1-elder@riscstar.com>
- <20260501155421.3329862-11-elder@riscstar.com>
- <DD71CDEABC7C16D5+02d052ff-13bb-4712-a847-91416f76c578@radxa.com>
- <7f3a0f16-5159-4bbc-8b15-9b5841603bf6@riscstar.com>
-Content-Language: en-US
-From: Xilin Wu <sophon@radxa.com>
-In-Reply-To: <7f3a0f16-5159-4bbc-8b15-9b5841603bf6@riscstar.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: M4KskqzZmkYy+CtMFd0wtJAPEtfXJ1C6cQnPhB+E3Wyt8z65shOIUuPY
-	8fPhgltw0VSOiI8lWTRpbmL2XRSOBLkXTTrZoLsPDzhP8+yaaOY05Fz7uDkT5CYKinAnhUv
-	POjyUcce8Cg1WE7qDEafq/6m2vM3rf/REiya/RO12HfujuuHDJ2hMnL0pe5FP9zTnOFOGhV
-	hJftK21jwxsr1/HzlxkZ5NWpRvU6oD965eKJJe0cksbX7YKrJy9G7SEnYRoa4aRftEO8MVy
-	2qwPOQAzTKnXjOfXay58q/NqwWiMVWUaiIzh1Qi0+MxIFuCWrAO9Po1MRE7A47axBlPdhUw
-	Dn155ow1/NO4LogW7S3KIS2IgqhpQDfOmvEh14ufQDPJPSHdyeV6Jj0GEdC5GF40GvVZ6kZ
-	IY0Bt/iL1VjL4GTd0JYq7Qc19fcvsW+MMCpXuvlvid9Lhs4QjCiyA7q8yySZOZNtcE0/ccw
-	8jCdfLAKta3kJ+UYMX8LS8OiWLQfVtagxrpA3N0AiGojnVy2G1lyA8ZudsPHTjg1z9bz1nK
-	T6ubH6EyO+W/TxRkuRcZJ00tRrvkwDzNL+zbFXRx6pcxW/oLEJNPGazlMhLpJ7ayP1Xzytg
-	juVgILybDwBep8U5XjZEXAwuLwBjKLVShhgCmXRdBufIJJ99ncp9rN70pNtW5YonroML8up
-	24HhBzeI8vwLP9mEzEZlncifswTi47B2/vE3VIwCUkPGfvqPspUJvg4UT43iBby/GYog+RI
-	rTr3/q7VzeOKpIKr4e/sxJhdjA/Iy3CzPK8QHKLkxknYOFgrqjH4g65XiqUtquOLnc8RR9Z
-	bfCb8eigZ6g7SLBg1KG40GYVGc8GBaVP9UsbwPXP/wjXI7D3V4QiyR6Qwp7oiVd1BvHZ2j3
-	iYAxKnDDti+oPZJp4mX4yIHIvuE2i1as1zAg5MfVO/8bBIBt3hi9o6zyY8zV8umP8tp09xx
-	IeDDzfDJzXrYjC9v2hT0upCx7it1wbnp57lAtw+2+qJiaQ1JDMM4OXjnLOBeM52W4k2l1I4
-	EoVXwxc+smkt1KevVs
-X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
-X-QQ-RECHKSPAM: 0
-X-Rspamd-Queue-Id: 9EB164E9B47
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260501051918.1990713-1-qian.zhang@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 483654E9C88
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.14 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106413-lists,linux-arm-msm=lfdr.de];
-	FORGED_MUA_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-106414-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,kernel.org,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[50];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.975];
-	MID_RHS_MATCH_FROM(0.00)[];
-	R_DKIM_NA(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,radxa.com:email,radxa.com:mid]
+	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On 5/7/2026 1:44 AM, Alex Elder wrote:
-> On 5/5/26 9:30 PM, Xilin Wu wrote:
->> On 5/1/2026 11:54 PM, Alex Elder wrote:
->>> From: Daniel Thompson <daniel@riscstar.com>
->>>
->>> Toshiba TC956x is an Ethernet AVB/TSN bridge and is essentially a
->>> small and highly-specialized SoC. TC956x includes an "eMAC" subsystem
->>> that can be accessed, along with several other peripherals, via two
->>> PCIe endpoint functions. There is a main driver for the endpoint that
->>> decomposes things and creates auxiliary bus devices to model the SoC.
->>>
->>> The eMAC consists of a Designware XGMAC, XPCS and PMA. Each eMAC is
->>> supported by an MSIGEN that bridges TC956x level interrupts to PCIe
->>> MSIs.
->>>
->>> Add a driver for the eMAC/MSIGEN combination.
->>>
->>> Co-developed-by: Alex Elder <elder@riscstar.com>
->>> Signed-off-by: Alex Elder <elder@riscstar.com>
->>> Signed-off-by: Daniel Thompson <daniel@riscstar.com>
->>> ---
->>>   drivers/net/ethernet/stmicro/stmmac/Kconfig   |  13 +
->>>   drivers/net/ethernet/stmicro/stmmac/Makefile  |   2 +
->>>   .../ethernet/stmicro/stmmac/dwmac-tc956x.c    | 791 ++++++++++++++++++
->>>   include/soc/toshiba/tc956x-dwmac.h            |  84 ++
->>>   4 files changed, 890 insertions(+)
->>>   create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
->>>   create mode 100644 include/soc/toshiba/tc956x-dwmac.h
->>>
->>> diff --git a/drivers/net/ethernet/stmicro/stmmac/Kconfig b/drivers/ 
->>> net/ethernet/stmicro/stmmac/Kconfig
->>> index e3dd5adda5aca..66bcfaccbe21f 100644
->>> --- a/drivers/net/ethernet/stmicro/stmmac/Kconfig
->>> +++ b/drivers/net/ethernet/stmicro/stmmac/Kconfig
->>> @@ -404,6 +404,19 @@ config DWMAC_MOTORCOMM
->>>         This enables glue driver for Motorcomm DWMAC-based PCI Ethernet
->>>         controllers. Currently only YT6801 is supported.
->>> +config DWMAC_TC956X
->>> +    tristate "Toshiba TC956X DWMAC support"
->>> +    depends on PCI
->>> +    depends on COMMON_CLK
->>> +    depends on TOSHIBA_TC956X_PCI
->>> +    default m if TOSHIBA_TC956X_PCI
->>
->> Hi Alex,
->>
->> I think GENERIC_IRQ_CHIP should be selected here.
+On Fri, May 01, 2026 at 01:19:18PM +0800, Qian Zhang wrote:
+
+There shouldn't be a "v1" tag in your subject, and the subject prefix
+should be:
+
+arm64: dts: qcom: monaco-arduino-monza: ...
+
+> Add GPIO-controlled fixed regulators for the WLAN power rails on the
+> Arduino VENTUNO Q board:
 > 
-> Yes there are a number of things missing in the Kconfig definitions
-> and I'm working through them this week.  And yes, since we use
-> irq_generic_chip_ops we must ensure CONFIG_GENERIC_IRQ_CHIP is
-> enabled here.
+>   - wlan_reg_3v3: 3.3V supply controlled by GPIO54 (wlan_rf_kill)
+>   - wlan_reg_1v8: 1.8V supply controlled by GPIO56 (wlan_en)
+
+Those really sounds like gpios, rather than regulators. Why are they
+represented as regulators. Please start your commit message by
+describing the "problem" that you're solving.
+
 > 
->> Thank you for the driver.
+> Both regulators are enabled at boot to support WLAN initialization.
 > 
-> Thank you for your feedback (this and others I see).
+> Signed-off-by: Qian Zhang <qian.zhang@oss.qualcomm.com>
+> ---
+> Changes in v1:
+
+What do you mean? Changes since version 0?
+
+>   - Clarified GPIO roles: GPIO54 for wlan_rf_kill, GPIO56 for wlan_en
+>   - Improved commit message readability with bullet list format
+
+It's impossible for me to know if the regulator vs gpio was already
+discussed, because you didn't include a link to the previous version.
+
+Use b4 instead of doing your own thing, it will handle the versioning
+for you and it will provide links to previous versions.
+
 > 
->                      -Alex
+>  .../boot/dts/qcom/monaco-arduino-monza.dts    | 21 +++++++++++++++++++
+>  1 file changed, 21 insertions(+)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts b/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
+> index ca14f0ea4dae..1a40ac5bb4bb 100644
+> --- a/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
+> +++ b/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
+> @@ -153,6 +153,27 @@ vreg_nvme: regulator-3p3-m2 {
+>  		enable-active-high;
+>  		startup-delay-us = <20000>;
+>  	};
+> +
+> +	wlan_reg_3v3: wlan-3v3-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "wlan_3v3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +		gpio = <&tlmm 54 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +		regulator-boot-on;
+> +	};
+> +
+> +	wlan_reg_1v8: wlan-1v8-regulator {
+
+Shouldn't these two regulators be referenced from a WiFi or PMU node?
+
+Regards,
+Bjorn
+
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "wlan_1v8";
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +		gpio = <&tlmm 56 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +		regulator-boot-on;
+> +	};
+> +
+>  };
+>  
+>  &ethernet0 {
+> -- 
+> 2.34.1
 > 
-> 
-
-Hi Alex,
-
-Do you think if a shutdown callback like this is required? It looks like 
-the driver sometimes does a MDIO MMIO read when the PCIe link is down, 
-causing the board to reset due to SoC side PCIe NoC timeout.
-
-After this change, the board can always shutdown gracefully.
-
-
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c 
-b/drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
-index 4e8b4a185583..34b8e3fe1b51 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
-@@ -767,6 +767,17 @@ static void tc956x_dwmac_remove(struct 
-auxiliary_device *adev)
-         tc956x_mac_disable(td);
-  }
-
-+static void tc956x_dwmac_shutdown(struct auxiliary_device *adev)
-+{
-+       struct device *dev = &adev->dev;
-+       int ret;
-+
-+       ret = stmmac_suspend(dev);
-+       if (ret)
-+               dev_warn(dev, "failed to suspend MAC during shutdown: %d\n",
-+                        ret);
-+}
-+
-  static const struct auxiliary_device_id tc956x_dwmac_ids[] = {
-         { .name = TC956X_PCIE_DRIVER_NAME "." TC956X_XGMAC_DEV_NAME, },
-         { },
-@@ -777,6 +788,7 @@ static struct auxiliary_driver tc956x_dwmac_driver = {
-         .name           = DRIVER_NAME,
-         .probe          = tc956x_dwmac_probe,
-         .remove         = tc956x_dwmac_remove,
-+       .shutdown       = tc956x_dwmac_shutdown,
-         .id_table       = tc956x_dwmac_ids,
-         .driver = {
-                 .name   = DRIVER_NAME,
-
--- 
-Best regards,
-Xilin Wu <sophon@radxa.com>
-
 
