@@ -1,355 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-106440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wK5kNp2i/Gn2SAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 16:33:01 +0200
+	id 0GbPCFqi/Gn2SAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 16:31:54 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A73E4EA3FF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 16:33:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 709434EA3C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 16:31:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6413E30A27F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 14:26:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AD7F130A1BA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 14:26:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 920D14014A0;
-	Thu,  7 May 2026 14:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8558D40627F;
+	Thu,  7 May 2026 14:26:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="adwB2c9Y";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hawI4Ic3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8969340FD80;
-	Thu,  7 May 2026 14:26:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E6C3A9615
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 14:26:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778163981; cv=none; b=nw2MAXeX0OKtNNq2+QfdNuJllfCTBvrZC6SGLUz61pFfQRBKihU9J3HR/bZmPlPMMmRdejQcTk12s2LNePvyS2xgscrxHH9cbNxPwzaCzxLofvZrdeM7Hx7FB2aRV8UaigAfD2vBbcmwE4gwMihrjWZfnvWP+8mmOrla15dWBX0=
+	t=1778163964; cv=none; b=hbcvp0nZYHxN4UYkvfKSVRccqfKTC8bhxTT8pJfgG8IcihAcQouZczgGxLnIGaXiZlgRSMJdhrvCuuNNTgpubGDKvEuCjsvtbo2o9NjlBr/MEIr9aNnj3mMPBkEpzV0aJYeXzQ49QdTaUOMr+eyupQWRXqA/FmRMCBR0S27gTgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778163981; c=relaxed/simple;
-	bh=s1q8Z2zLk379tlyeuEzoNaf2j3FUEhXmKv5Jezkio8k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qUitmJd3onPm8gzwGLgyCfuoxbiwJOYXc4Ojd/rjPfmqiKL3mehWb6FiJ1N1XE1Atll9BiuMs7Jr6IO+V3fhWjpPp7rajYTAiRZQEw3A0HrhluLm8TwJAQ9D/LcAJKgJwKn16PS7KWUj4dcIjPLSCXBbtbGYLzvCaw8GNOammrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.254.200.128
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: esmtpgz12t1778163927tf302c174
-X-QQ-Originating-IP: 6pNkx+/7pJSdKrmK5R1qZXvcMjj4jKpdhHhLnPpID5o=
-Received: from [192.168.30.32] ( [116.234.74.217])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 07 May 2026 22:25:26 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7635637047860514937
-EX-QQ-RecipientCnt: 11
-From: Xilin Wu <sophon@radxa.com>
-Date: Thu, 07 May 2026 22:25:14 +0800
-Subject: [PATCH 3/3] arm64: dts: qcom: sc8280xp: Add reg and clocks for QoS
- configuration
+	s=arc-20240116; t=1778163964; c=relaxed/simple;
+	bh=yxxFW0lGHLlrJIKZ+qN8cjJC/Uz3gM3CTDcnUzHMmGc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=X8yHPV5c0Z1y68FPQx0Zxt02ycRoOvcMyOsBv8uyCOfn1AYTv0Z/KzcTYu7ZkxI6Pd28slAZxW62l6LZ33qb45W6vKRbyeNmw+yIpbpjCZoNNNZ6aTHE0vZ+ZONpbdAfOY64PWkuw6myu/3wTZmc5xwz4SmuZjkjwy4NfMfK6t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=adwB2c9Y; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hawI4Ic3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 647C5W1q1971666
+	for <linux-arm-msm@vger.kernel.org>; Thu, 7 May 2026 14:26:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dZS4Z+n5yl3239JmhoNbCdzxJTz/lzr+NgykezCYlEg=; b=adwB2c9YM0FDWiD0
+	cmohKfPby6lxzA0BsnDT284VXkXuOkgeUt5AL4J5FGwrvvEM6YasblgKxrPUt6fB
+	wFIaK0JJyyuoqRO76/NMXdt1SExdMQkustWMCOkLNI4jUxE8kGTFkgsgFxqPwhu4
+	Wm4og2BspTUhFWN93HSR7QYIG6USP0YGUNpCMqhVmJon7if0RT0DRZM49T9BJHPN
+	F7vMDK/XkgFrS+oi/owf9+Q9zdE1cjlNkMLU27Mv+Ff+O7YsVeoRqoY/xc/2/VN2
+	299HCLLyclAf2rrOmJZHBx9ji+oRbaxrHxvFEzCXwVcEtGEhsv/0bkXNkkz8ROPf
+	+q/QIQ==
+Received: from mail-yx1-f71.google.com (mail-yx1-f71.google.com [74.125.224.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0tej8hbe-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 14:26:00 +0000 (GMT)
+Received: by mail-yx1-f71.google.com with SMTP id 956f58d0204a3-65c21049da9so716621d50.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 07:26:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1778163960; x=1778768760; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dZS4Z+n5yl3239JmhoNbCdzxJTz/lzr+NgykezCYlEg=;
+        b=hawI4Ic3F263ZK7hg9FQyVYFuUZJo0cpP3uRMXS8QnV9l+ci1GExatWWo3HvYUHCHv
+         JHQGVszVsEDsJbjbL+bGPstUSsYAOV+9vl+/wj+s7+bwokMXMzLhKgwzamfF0lFf+C0D
+         Ximqy6NzMef7fWhwcPiEIgEi3YDI2aCxy6tS5Bn0twDi84srxw32VpmYGbzKrsBJRA9D
+         tSv8BXu1bN+SY4q043RtrVYxP73l/ZR7lui2ojw75AU3ppT1+T+QWfdZACYUEWTuROd5
+         NSa8vy0e3xG6vt9dm8hdXKLyZTXMxN3SYqmdxdN8fccIh9cCHVZRBx/fKocNduejnrZa
+         biBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778163960; x=1778768760;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dZS4Z+n5yl3239JmhoNbCdzxJTz/lzr+NgykezCYlEg=;
+        b=DRDk7A2PwcflpeWJMfMIPFbe0u2LHHovfDpODzOPAaC6ZyPx+4+pw6bL5Wo6c+8P9A
+         l46WlIJCkQWevdfGWSfwCR+q4W0/OiNiyLfqqqKCbSaWJQOh7ju/gioveYPPkQWNe7Fz
+         arZyuHE0bWRNNat7FljrD69t8G2nHGIhfRUOJbSgzDZEacIaQqpy1+wxtTzF3TemGqnj
+         53461efouIJek18pb8aFz9VvUxQ4+5Wi+kPur+1s4u2TBzD651vi+GfAsJ7BSc8HMm9h
+         6i1TcVVUtaHozRI20hWxqNnbHAlcHzX7Hevv55iSfMh4JSLjdw4vdktR2kx5LIow4Lnm
+         7MxQ==
+X-Gm-Message-State: AOJu0YwOrhMZ+wrdPW/pnXiK2yPnr33zrLRjZg6F4wZmX9gZ/hWzC/cc
+	VbBqo2Bqiejc70z+g5gwEEY63a9AiDVRpNyl0dU9HKTtncygX9ZuZhwXQEx3DqHSx4DQQSajrMq
+	WBjfZc7iqxCwuw/AjbCU/4BzsARoSNGFALazzDL8/rZhhXFI162H+4lVlSy1f1pKvoheW
+X-Gm-Gg: Acq92OHL7peHA+W5BaNt9xJ9XGbDa+8QhcJtzByJMIM+Yzdx7W+pVvelT2U8btWUg4T
+	cRgVGx1Y1QFov625CtEwihglynZ9igrRPkc7L/OTBf/ebX9qyWP3tx9ZPzmyVToYf05M+W6xo2R
+	/fOGV+UjCdFN+QlEfh4dk/Bdcb+xxIe2+ktLrll8TldqZ+y+0zbWgiurEpJi4pmO/TJcfdcshdg
+	KPLiJDg0K7/gFwJJCCG1CSnVee6EgrXgZSC///SdTGc4naYD3zZ9bCpC+Dd9DbU37flwcOHiFmI
+	tLmk/pq0CXvi4W7TQ3cCgyPJ3s/sCOhjlof+D7P6U7mPlflZv2x7axWGUfH70sB8Hg610T7NDOx
+	3AyMZn67L4WZnSeveCohmnKO5vi1v4k8W8DlD/5N2VVhzb7dyW5pMqeU=
+X-Received: by 2002:a05:690e:4846:b0:655:5ec1:59ba with SMTP id 956f58d0204a3-65c79e60c5bmr5123323d50.32.1778163959707;
+        Thu, 07 May 2026 07:25:59 -0700 (PDT)
+X-Received: by 2002:a05:690e:4846:b0:655:5ec1:59ba with SMTP id 956f58d0204a3-65c79e60c5bmr5123287d50.32.1778163959303;
+        Thu, 07 May 2026 07:25:59 -0700 (PDT)
+Received: from [10.206.103.12] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-65c7adeb830sm2719495d50.5.2026.05.07.07.25.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 May 2026 07:25:59 -0700 (PDT)
+Message-ID: <8fd04ec6-1337-4d26-b20e-02d3429d7196@oss.qualcomm.com>
+Date: Thu, 7 May 2026 19:55:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 16/29] drm/msm/adreno: write reserved UBWC-related bits
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20260507-ubwc-rework-v4-0-c19593d20c1d@oss.qualcomm.com>
+ <20260507-ubwc-rework-v4-16-c19593d20c1d@oss.qualcomm.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260507-ubwc-rework-v4-16-c19593d20c1d@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260507-sc8280xp-qos-v1-3-15135858cd98@radxa.com>
-References: <20260507-sc8280xp-qos-v1-0-15135858cd98@radxa.com>
-In-Reply-To: <20260507-sc8280xp-qos-v1-0-15135858cd98@radxa.com>
-To: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Xilin Wu <sophon@radxa.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6485; i=sophon@radxa.com;
- h=from:subject:message-id; bh=s1q8Z2zLk379tlyeuEzoNaf2j3FUEhXmKv5Jezkio8k=;
- b=owGbwMvMwCVmdFg0fe08Iz/G02pJDJl/Fpw9mCc9Oyk0sXTFFobP0hNKWSPaTMI38X80V77xP
- zJu1WfHjlIWBjEuBlkxRRaFeIa57JW5156KlerBzGFlAhnCwMUpABNpXM3w35Gh4foRLqV7L3x3
- 9emV99+1F9Hbnpqj5fv/Zx7johnvuBgZJmdxG20u03Litv0mFed6dcrVMIecoM2/FR/2CP6Yqyr
- LDwA=
-X-Developer-Key: i=sophon@radxa.com; a=openpgp;
- fpr=205F009D07796DD6E516752E32C31567AD9E324E
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: MLY6kX+APjAQ3XvEyTG3A63TZMprpixo0rLkwGVpgV89wUgZlq80gsoY
-	trJji5sKrFe9T+X1v4Td+aWT40V/Jo7SplzX0Rg78P4eQICRlMEH6pc44zqqzah7lV9bS6P
-	M38gjS2l0s9iKQSiW4wQNoFfF/RB9F0UlrrFvCszLpYUQqZjZ2tS6k/MnVokeSbp0b6BYVc
-	dz6l2kSWUBfSV44CmWOdlsHenM67fTHjpCm8JCPJU5beswC0CcOOg3ZsLhmRos2r4CpCKlH
-	XZHs9iOET5lcogIZ4JjwIqKDooUudiSWUdPv39+u8LjJm6OTKSN+v4N80c0SkfxkRKo1GPs
-	5l3vqNxPpQE5Ako6nZqn8cuGAc7w49E9duNcSlM3rmMT9HxcikO1+IPZDcVk4H1XkINFuCU
-	H3q4PyNTAKqqCyJCrDH7StZMjK6uaSriL9Ml0DSUvnGQqELAgYBsKEC68UtyTuKzqB75ZHC
-	C7BCmT2uLHrrT1/Jrdy5QSgrOP9+EQytpryW2Y7RjnoJA4f9Ulae5PcOLd70s6C9+owd2AA
-	NHU8W/48LBrlDI5BjIgt6FVrXo4rYW8xhC+5RfksE+P2+rkEgvgXfX/BdgXwhoTNn5Qma+3
-	QTfYVZqMRJTwP5/t8fVJnXLCV7EgF/MlePmoSJxWyfE47/FOrREzKFzf1VdCSRFWOlRj/ZC
-	eHkX+xrOImIAseSz1v5zigad43JfgMBkjgO8Tgk6w0xeOaH8zHO4KCCrKo0S3AruM2p8d0F
-	/xsS7BYkcP1Zmx8oOkdrlVVn5Sv+R5opWDy5U1HxutGlPrY/FvF3TFa0fDh55yVrK3fQwpI
-	em0YS7PJZMV1ymTTRlz13b7FpfA+tDd4zc96EuU2U4lV2Egw+Ntln3f+00tBB6uPOSeaOoP
-	MTjmi11hxg78jfkrgSaNsHx1WDSz1tDZUFfFHYPV5VJALy+nfpkhzADd9LzOR0pz5zBoR1g
-	LrXKDVzpTdjZsiwqWQpW3gMghQnGnwv4aTzF1JzYlTc5NRam7blmabRAMLjxlC0OE5TlC9t
-	/MC+OH6qwlJ8qES3YfpJD2E/PW845zg3BsWjDKflwKZlHZPyelgVmrwAusmTYwRZrXj1Xk3
-	qTF0c0WOmFh
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
-X-QQ-RECHKSPAM: 0
-X-Rspamd-Queue-Id: 3A73E4EA3FF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDE0NSBTYWx0ZWRfXyCfJIrZVzh0x
+ YWeKWL2LgM4kKFG80FLsGVcznBjpl+qk8SbihCWQWpuryfCOb9h3y1IA0rYM04b/O5dbRu2aNCH
+ zue8YfNffmOI81G6+NfDhFns3B+WWUu9svTFagrgB6vQNekiA62oE9CkYNw2VBO2LoNzlMItF//
+ VnDHevGUdHXTjHpsAQa+cdKCfnitnEp2y23dNYeWYucP71tWatRVlrsYj0K10AO87iL0zDPyWQA
+ jEQwNRyFOFYUIbhfksjMlXBb3Z2hNtgKCMqQGA1p13lApETMzkOWu9TrG9TTChJOlsE8IOz7hmM
+ /tePj62j9ki2KhO9WnQrFnuzCIsAAvSl/POKxTejpg4ziYNGv1jkuTzh0SVD7nekjV3Z4G2+Tvo
+ 3UNyo+KCGxZlcdir0pAZYFz5J4gFmLSWObIxAnz9VvMYI+bWwFTYK8SJBqUh1f6YSJisVzvP6ze
+ EbZuWjWX1Y5wu/qa+nw==
+X-Proofpoint-GUID: E-Hfn3tTbF81Dm-FarnT3XvL7AstN0rV
+X-Authority-Analysis: v=2.4 cv=VNbtWdPX c=1 sm=1 tr=0 ts=69fca0f8 cx=c_pps
+ a=ngMg22mHWrP7m7pwYf9JkA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=EUspDBNiAAAA:8 a=ZswEv4b9r44Tze3PQiwA:9 a=QEXdDO2ut3YA:10
+ a=yHXA93iunegOHmWoMUFd:22
+X-Proofpoint-ORIG-GUID: E-Hfn3tTbF81Dm-FarnT3XvL7AstN0rV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-07_01,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605070145
+X-Rspamd-Queue-Id: 709434EA3C8
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.36 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-0.991];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_COUNT_THREE(0.00)[4];
-	R_DKIM_NA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	PRECEDENCE_BULK(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106440-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-106439-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[]
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[akhilpo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-Add register ranges for the SC8280XP interconnect providers so the driver
-can program the NoC QoS registers.
+On 5/7/2026 6:33 PM, Dmitry Baryshkov wrote:
+> On the latest A8xx Adreno chips several of the bits in the UBWC-related
+> registers are now hardwired to 1. Currently the driver doesn't write
+> them because there is no side-effect. In the preparation for the
+> refactoring in the next patch, write '1' to those bits anyway.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-Move the real NoC providers under soc@0, keep clk_virt and mc_virt as
-virtual top-level providers, and add the clocks required for QoS
-programming on aggre1_noc and aggre2_noc.
+Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-Signed-off-by: Xilin Wu <sophon@radxa.com>
----
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 157 ++++++++++++++++++++-------------
- 1 file changed, 97 insertions(+), 60 deletions(-)
+-Akhil
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 761f229e8f47..8e64db07a9e9 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -314,78 +314,18 @@ scm: scm {
- 		};
- 	};
- 
--	aggre1_noc: interconnect-aggre1-noc {
--		compatible = "qcom,sc8280xp-aggre1-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	aggre2_noc: interconnect-aggre2-noc {
--		compatible = "qcom,sc8280xp-aggre2-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
- 	clk_virt: interconnect-clk-virt {
- 		compatible = "qcom,sc8280xp-clk-virt";
- 		#interconnect-cells = <2>;
- 		qcom,bcm-voters = <&apps_bcm_voter>;
- 	};
- 
--	config_noc: interconnect-config-noc {
--		compatible = "qcom,sc8280xp-config-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	dc_noc: interconnect-dc-noc {
--		compatible = "qcom,sc8280xp-dc-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	gem_noc: interconnect-gem-noc {
--		compatible = "qcom,sc8280xp-gem-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	lpass_noc: interconnect-lpass-ag-noc {
--		compatible = "qcom,sc8280xp-lpass-ag-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
- 	mc_virt: interconnect-mc-virt {
- 		compatible = "qcom,sc8280xp-mc-virt";
- 		#interconnect-cells = <2>;
- 		qcom,bcm-voters = <&apps_bcm_voter>;
- 	};
- 
--	mmss_noc: interconnect-mmss-noc {
--		compatible = "qcom,sc8280xp-mmss-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	nspa_noc: interconnect-nspa-noc {
--		compatible = "qcom,sc8280xp-nspa-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	nspb_noc: interconnect-nspb-noc {
--		compatible = "qcom,sc8280xp-nspb-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	system_noc: interconnect-system-noc {
--		compatible = "qcom,sc8280xp-system-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
- 	memory@80000000 {
- 		device_type = "memory";
- 		/* We expect the bootloader to fill in the size */
-@@ -2152,6 +2092,63 @@ rng: rng@10d3000 {
- 			clock-names = "core";
- 		};
- 
-+		config_noc: interconnect@1500000 {
-+			compatible = "qcom,sc8280xp-config-noc";
-+			reg = <0 0x01500000 0 0x2c000>;
-+
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		system_noc: interconnect@1680000 {
-+			compatible = "qcom,sc8280xp-system-noc";
-+			reg = <0 0x01680000 0 0x1a400>;
-+
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre1_noc: interconnect@16c0000 {
-+			compatible = "qcom,sc8280xp-aggre1-noc";
-+			reg = <0 0x016c0000 0 0x3af80>;
-+
-+			clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB3_SEC_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB3_MP_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB4_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB4_1_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB_NOC_SOUTH_AXI_CLK>,
-+				 <&rpmhcc RPMH_IPA_CLK>;
-+
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre2_noc: interconnect@1700000 {
-+			compatible = "qcom,sc8280xp-aggre2-noc";
-+			reg = <0 0x01700000 0 0x3af80>;
-+
-+			clocks = <&gcc GCC_AGGRE_NOC_PCIE0_TUNNEL_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_NOC_PCIE1_TUNNEL_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_NOC_PCIE_4_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_NOC_PCIE_SOUTH_SF_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_UFS_CARD_AXI_CLK>,
-+				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
-+				 <&gcc GCC_DDRSS_PCIE_SF_TBU_CLK>;
-+
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		mmss_noc: interconnect@1740000 {
-+			compatible = "qcom,sc8280xp-mmss-noc";
-+			reg = <0 0x01740000 0 0x1fa80>;
-+
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		pcie4: pcie@1c00000 {
- 			device_type = "pci";
- 			compatible = "qcom,pcie-sc8280xp";
-@@ -3352,6 +3349,14 @@ lpasscc: clock-controller@33e0000 {
- 			#reset-cells = <1>;
- 		};
- 
-+		lpass_noc: interconnect@3c40000 {
-+			compatible = "qcom,sc8280xp-lpass-ag-noc";
-+			reg = <0 0x03c40000 0 0xf080>;
-+
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		gpu: gpu@3d00000 {
- 			compatible = "qcom,adreno-690.0", "qcom,adreno";
- 
-@@ -3927,6 +3932,22 @@ opp-6 {
- 			};
- 		};
- 
-+		dc_noc: interconnect@90e0000 {
-+			compatible = "qcom,sc8280xp-dc-noc";
-+			reg = <0 0x090e0000 0 0x5080>;
-+
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		gem_noc: interconnect@9100000 {
-+			compatible = "qcom,sc8280xp-gem-noc";
-+			reg = <0 0x09100000 0 0xb8400>;
-+
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		system-cache-controller@9200000 {
- 			compatible = "qcom,sc8280xp-llcc";
- 			reg = <0 0x09200000 0 0x58000>, <0 0x09280000 0 0x58000>,
-@@ -5977,6 +5998,14 @@ cpufreq_hw: cpufreq@18591000 {
- 			#clock-cells = <1>;
- 		};
- 
-+		nspa_noc: interconnect@1b0c0000 {
-+			compatible = "qcom,sc8280xp-nspa-noc";
-+			reg = <0 0x1b0c0000 0 0x10000>;
-+
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		remoteproc_nsp0: remoteproc@1b300000 {
- 			compatible = "qcom,sc8280xp-nsp0-pas";
- 			reg = <0 0x1b300000 0 0x10000>;
-@@ -6112,6 +6141,14 @@ compute-cb@14 {
- 			};
- 		};
- 
-+		nspb_noc: interconnect@210c0000 {
-+			compatible = "qcom,sc8280xp-nspb-noc";
-+			reg = <0 0x210c0000 0 0x10000>;
-+
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		remoteproc_nsp1: remoteproc@21300000 {
- 			compatible = "qcom,sc8280xp-nsp1-pas";
- 			reg = <0 0x21300000 0 0x10000>;
-
--- 
-2.54.0
+> ---
+>  drivers/gpu/drm/msm/adreno/a8xx_gpu.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+> index 53def136e0fc..7a6223ddd8cf 100644
+> --- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+> @@ -288,6 +288,8 @@ static void a8xx_set_ubwc_config(struct msm_gpu *gpu)
+>  	switch (ubwc_version) {
+>  	case UBWC_6_0:
+>  		yuvnotcomptofc = true;
+> +		amsbc = true;
+> +		rgb565_predicator = true;
+>  		break;
+>  	case UBWC_5_0:
+>  		amsbc = true;
+> 
 
 
