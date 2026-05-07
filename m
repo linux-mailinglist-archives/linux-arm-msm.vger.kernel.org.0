@@ -1,152 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-106557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QAd6FjEa/WntXgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 01:03:13 +0200
+	id CBonAm0l/WlEYQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 01:51:09 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2FB94F00C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 01:03:12 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E6854F05B4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 01:51:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0C0AA3044A7A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 23:02:51 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5FB97302BDFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 23:39:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E2CB34D916;
-	Thu,  7 May 2026 23:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E726372691;
+	Thu,  7 May 2026 23:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vIZsPB9L"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QvtxiuAs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE4933F5AA;
-	Thu,  7 May 2026 23:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEEC37104A
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 23:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778194970; cv=none; b=DJ4+XPa0Mgrhdixu56e6icv57rU0y+K3IFpGYww42NjeQxCq2r3Z+P58nrvWFyMWbo0z+/YJR5QtdGUoP29tscS0PG9yAmqm72Sn2RmboqhD+xqqzIwznswV6/vhQcPgJTrueh0109wz68DE7clniz2fNXBA2BPM8/kgs758X00=
+	t=1778197190; cv=none; b=me8Dk7RY7MVj6fOovt22ERLTPt2GlE2vqC1WY4sUgN/ii+gUPKSjoRoaJf81fEb78r+dqpx2eT4a7K4Zxc1DTCg+m8FuWmFH9JbAOiV1lM5hjpF5ZSvtegX7ep2N9aIVbK+GmkTsf68HfntsEKhxEdMvluAMnFYWGk90LLCZoFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778194970; c=relaxed/simple;
-	bh=v7ZawboY1tagenWamPRS78LGMs+Lnkdb67PDXmvdElg=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=RoZ23VwCesNk5yJidh8rSToFyGcxB6zkVgnGyPlHsWOBZRYox6BUYzKZlCOSKLVbqU6W58RZvx91aNSpU1/UUrm6SQvsAVPiotf8uXf2h4BFf6P/O/ADwWxS6eedHzS11IteOxteM78Q6l7nHbfs1fD3birXjhP8OM+LO/yRshc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vIZsPB9L; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED565C2BCB2;
-	Thu,  7 May 2026 23:02:49 +0000 (UTC)
+	s=arc-20240116; t=1778197190; c=relaxed/simple;
+	bh=vFH+WCKmJFo+oFxj5WEkyqvJ7Aj4l64pwYaHYcrT4og=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V4cLHbkJxgnJcUsZzh3IHebhHyj1PesKkFiJ2mLxjVY3sA2rUnVWA6vz1Wk4mpRB3jukUEW4/ar8GNSxHAzi9xG+hpv7jquKOz2l/VRwi1Uhx9sWZUTAIjjzmI8KhJkh/NDOrgiXiyZD1IQ5TLi8rtp87jv5fRBZ2HKYTUmlBV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QvtxiuAs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25C4C2BCC9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 23:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778194970;
-	bh=v7ZawboY1tagenWamPRS78LGMs+Lnkdb67PDXmvdElg=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=vIZsPB9LCVDbo33b//MxiLgxtLZpOOrDM+qB7b1QJ1yi+YHUCwaHeHZ/ut3j65dlZ
-	 zFU33X6uHrGA39g+3x8+ePsw1fobbJjhbgF8ZJYOas0FsRLAe4Qv1gl5EK7U/thQy2
-	 Eor+jZCAIcTfzAA2tYMzs+1680r6Zb8Q2mQ+0J1wb3abk9kxh3wZzBX51J1t/qydYG
-	 zZO3U+ZQ6UBVs1fT6c8M+Q/6nyoub66hE56cbqgQNVA0uVERnIpgh3Dr3YOsuBuOdn
-	 Fu6uvTy8HkYxWu7IAhUeXR25b6w7dY9yCvEypTiX7ir+ceXK+jHDnjHZEqy+2hpSTp
-	 L+NOqjTMeg3jQ==
-Date: Thu, 7 May 2026 18:02:48 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Keith Busch <kbusch@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	"Rafael J. Wysocki" <rafael@kernel.org>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-nvme@lists.infradead.org
-Subject: Re: [PATCH 1/4] PCI: Introduce an API to check if RC/platform can
- retain device context during suspend
-Message-ID: <20260507230248.GA51586@bhelgaas>
+	s=k20201202; t=1778197190;
+	bh=vFH+WCKmJFo+oFxj5WEkyqvJ7Aj4l64pwYaHYcrT4og=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=QvtxiuAs5eVQPns7jJlqtGTfdl0EJbsvK9NI8npq8OMLSMiSWuCojWaz5XpXCmsan
+	 Wrki/Tmn5sP1n1hrh9a2tAMgBvgvMEetyZYlRhkxOrQVeYBuNqQAl5EXhaTsb/gSNR
+	 N3tDJQnEgUpi+Ise+Rk6oQ7UnD9f6R7jz6KRO3R1A/xImq8iYtkSFjrHRyKlIJgIL5
+	 ASW+UJLGkyWDkDPCeYIjie9iYtMbF/4k/99cseI+aVLIVKfYiQesyhpsoJ+guYxgOD
+	 it0716QbosCqZPJKCq+d0pprmnZzhD3cOjygZs+ebux/Q4N4ntZL4+fwJKlOkXvmkE
+	 QFWR3BZF83oDA==
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-67da63ae541so2359837a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 16:39:50 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ/vkpjYX6jOdmj0mPM2FypRtAcO9uNofRD5yYJnNDWfwF45Uq0uF9gqUOi9WDVagKL9GZKW14BNm/moFsdZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzKPlD3/WJdk9JJkov2uBhmgiqXOLJFUsy0EPqXeimwIRvrafew
+	va5Qp9gVFKzgrYS6hO142D4NtTA3qPyZNRnf51bPwXoF+bC8OR4MaUof/d6fx6tfxfejG4bul8B
+	3e5wznQGgtfy4WooyjFDuwwtHkZAmfA==
+X-Received: by 2002:a05:6402:2113:b0:67c:1ed6:2793 with SMTP id
+ 4fb4d7f45d1cf-67d648a74e5mr5797376a12.22.1778197188726; Thu, 07 May 2026
+ 16:39:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xqwvjygt3bgttbipe6hhnpkfwauczxpoiyfbbakdyzesz6ydcd@en54522wjnar>
-X-Rspamd-Queue-Id: B2FB94F00C6
+References: <20260501155421.3329862-1-elder@riscstar.com> <20260501155421.3329862-9-elder@riscstar.com>
+ <1f34cbce-e2dd-4e80-b136-55d0efa50002@lunn.ch> <967c1d96-9a48-48de-b7d9-58b63e782aee@riscstar.com>
+In-Reply-To: <967c1d96-9a48-48de-b7d9-58b63e782aee@riscstar.com>
+From: Rob Herring <robh@kernel.org>
+Date: Thu, 7 May 2026 18:39:37 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKayEDa2-FDoxM_JU3Yvevd-Gs_eFKCQ8NY8A8oBsD13w@mail.gmail.com>
+X-Gm-Features: AVHnY4K23N33ivg6cLD9mNxL7odw3uUNL3DiEAJ7jfws_C2Zwld0dAM-keay8pI
+Message-ID: <CAL_JsqKayEDa2-FDoxM_JU3Yvevd-Gs_eFKCQ8NY8A8oBsD13w@mail.gmail.com>
+Subject: Re: [PATCH net-next 08/12] dt-bindings: net: toshiba,tc965x-dwmac:
+ add TC956x Ethernet bridge
+To: Alex Elder <elder@riscstar.com>
+Cc: Andrew Lunn <andrew@lunn.ch>, andrew+netdev@lunn.ch, davem@davemloft.net, 
+	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, 
+	maxime.chevallier@bootlin.com, rmk+kernel@armlinux.org.uk, 
+	andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, linusw@kernel.org, brgl@kernel.org, arnd@arndb.de, 
+	gregkh@linuxfoundation.org, Daniel Thompson <daniel@riscstar.com>, 
+	mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com, 
+	alexandre.torgue@foss.st.com, ast@kernel.org, boon.khai.ng@altera.com, 
+	chenchuangyu@xiaomi.com, chenhuacai@kernel.org, daniel@iogearbox.net, 
+	hawk@kernel.org, hkallweit1@gmail.com, inochiama@gmail.com, 
+	john.fastabend@gmail.com, julianbraha@gmail.com, livelycarpet87@gmail.com, 
+	matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc, 
+	prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com, 
+	rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn, 
+	weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org, 
+	bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 6E6854F05B4
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+X-Spamd-Result: default: False [4.84 / 15.00];
+	SEM_URIBL(3.50)[0.0.0.0:email];
+	SUSPICIOUS_RECIPS(1.50)[];
 	MAILLIST(-0.15)[generic];
+	BAD_REP_POLICIES(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106557-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-106558-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
+	R_DKIM_ALLOW(0.00)[kernel.org:s=k20201202];
+	GREYLIST(0.00)[pass,body];
+	MIME_TRACE(0.00)[0:+];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_SPAM(0.00)[0.695];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_GT_50(0.00)[50];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	R_SPF_ALLOW(0.00)[+ip4:172.234.253.10:c];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[riscstar.com:email,mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,1c:email,0.0.0.0:email]
 X-Rspamd-Action: no action
 
-On Fri, Apr 17, 2026 at 04:41:09PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Apr 16, 2026 at 02:18:55PM -0500, Bjorn Helgaas wrote:
-> > On Tue, Apr 14, 2026 at 09:29:39PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > 
-> > > Currently, the PCI endpoint drivers like NVMe checks whether the device
-> > > context will be retained or not during system suspend, with the help of
-> > > pm_suspend_via_firmware() API.
-> > > 
-> > > But it is possible that the device context might be lost due to some
-> > > platform limitation as well. Having those checks in the endpoint drivers
-> > > will not scale and will cause a lot of code duplication.
-> ...
+On Thu, May 7, 2026 at 5:17=E2=80=AFPM Alex Elder <elder@riscstar.com> wrot=
+e:
+>
+> On 5/1/26 12:38 PM, Andrew Lunn wrote:
+> > Why not add an subnodes for the ethernet interfaces?
+>
+> We will define "ethernet" devicetree subnodes of the PCIe functions
+> in the next version of the series.  Something like what's below.
 
-> > > + * pci_dev_suspend_retention_supported - Check if the platform can retain the device
-> > > + *					 context during system suspend
-> > > + * @pdev: PCI device to check
-> > > + *
-> > > + * Returns true if the platform can guarantee to retain the device context,
-> > > + * false otherwise.
-> > > + */
-> > > +bool pci_dev_suspend_retention_supported(struct pci_dev *pdev)
-> > 
-> > This doesn't seem like the right name.  This isn't a property of the
-> > *device*; that's all determined by the PCI spec (devices must retain
-> > all internal state in D0, D1, and D2, they retain it in D3hot if
-> > No_Soft_Reset, and they never do in D3cold).
-> > 
-> > So this seems like something to do with the *platform* behavior.  It
-> > sounds like this is basically a way to learn whether the device might
-> > be put in D3cold on system suspend.
-> 
-> That's correct. But I wanted to keep it device specific, since apart
-> from pm_suspend_via_firmware() there could be other issues causing
-> context to be lost. Like the issue with RC, brought up in the
-> successive patches. There could be chances that only one hierarchy
-> might be affected. So making it device specific would give us the
-> granularity.
+Are they PCIe functions? As in bus, dev, function addresses. How to do
+functions is already defined by the PCI binding.
 
-OK, a device-specific API is fine.
+>                                         -Alex
+>
+> pci@0,1 {
 
-Maybe it could be something like "pci_suspend_preserves_context()"?
+The 0 here is devnum and the 1 is function.
 
-Is it the case that suspend never uses D3cold?  If suspend ever uses
-D3cold, *every* device put in D3cold will lose its context.
-
-How would this work if suspend can use D3cold?  Can a driver (or this
-API) learn whether D3cold might be used?
+>          compatible =3D "pci1179,0220";
+>          reg =3D <0x50100 0x0 0x0 0x0 0x0>;
+>          #address-cells =3D <3>;
+>          #size-cells =3D <2>;
+>          device_type =3D "pci";
+>          ranges;
+>
+>          ethernet {
+>                  phy-mode =3D "sgmii";
+>                  phy-handle =3D <&tc956x_emac1_phy>;
+>
+>                  mdio {
+>                          compatible =3D "snps,dwmac-mdio";
+>                          #address-cells =3D <1>;
+>                          #size-cells =3D <0>;
+>
+>                          tc956x_emac1_phy: ethernet-phy@1c {
+>                                  compatible =3D "ethernet-phy-id004d.d101=
+";
+>                                 ...
+>                         };
+>                 };
+>         };
+> };
 
