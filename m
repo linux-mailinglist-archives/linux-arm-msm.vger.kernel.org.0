@@ -1,51 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-106314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EFP4DSVZ/GnMOQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 11:19:33 +0200
+	id QD24H75Z/GndOQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 11:22:06 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93F214E5AEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 11:19:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D74FA4E5B7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 11:22:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 79B2731557A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 08:56:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 02D4C31A063E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 08:59:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AED63B4E9F;
-	Thu,  7 May 2026 08:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A52B3B19B9;
+	Thu,  7 May 2026 08:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gnB/MgOX"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="X1gDRLoh";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RX7z+Res"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAC83B3896;
-	Thu,  7 May 2026 08:54:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97ED3A75B7
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 08:57:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778144087; cv=none; b=gFo7NMdKpTaZKO84JBwq8XaztWb74pB6lQfT9vbOZ6Vgfc4NFKKnRPS/de8dWM2d1XzVK8qwu62HMqLt35Tm+o5j+6EuggSJueAWJVzN3ZSslMLAjwxKC8D3kajrsHyxj4gP2hYu4s1Yhulp5A07kPppY4hNnrjP5pS7BtT62hc=
+	t=1778144257; cv=none; b=uEOwos2RhPwAFirf9Zy6cnUUxZaJz4Xp4Fq5v1EHMmHyV6J80w/JM5ygNZ1iPUYOGGqydXT95/NJlXzP3f87oht2+Ek5Ft50SAJQOihy1+ojHWbd6WMI7WbdLTpXt9ZUkXQ0v17qlKtolFSJX8nYHVArHC1muXwv4FVLYWh+yIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778144087; c=relaxed/simple;
-	bh=9I/b7IRfwwWi99bjyBFU/nqYZGroxFsK28KayedLwfM=;
+	s=arc-20240116; t=1778144257; c=relaxed/simple;
+	bh=+WoGGFhtYcbQJjAFrWKoyIYd7RIh1Y7qXYNblfctVHI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A7MiS8TEXoheCgpE1xL1SrmEOomlpMJXm9ua/OCrVbO8nzi2eNsAxVW73XDYtDomTRcl0c7d74pQwH9RLbA0QlApgBvBGvTNtP4IAHJOEybItR6yLMyW54wQ8KoKTr8+VjdX5HypTw/49tjOGq1IhJ1WB8HhVNHg58GqemybLTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gnB/MgOX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A60DC2BCB8;
-	Thu,  7 May 2026 08:54:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778144087;
-	bh=9I/b7IRfwwWi99bjyBFU/nqYZGroxFsK28KayedLwfM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gnB/MgOXV01G4EpeJhMg4wmQYMD1aLB3aRXXRBy1IiX4kV9AGRRJj3MV9fX+aVDVR
-	 ZczRzfgVAYfR/bBTk7z0mW82VgeqldyD4modZC5EK/XaWLslB1429cqQAq4NvaWIi4
-	 TSwJPO6Kekc8HEwDMe9/RS2AI7dSwdnDZEF8HF8FHf6ti5FHhQnod0cedalBLffuAO
-	 /iN/88Hl5tINjM9rzqgfK/NB53ipNK0CFvoGOTomHPxtDJv1GK7aRqqwOWOmT7sxKt
-	 la1To9AdTIyNt4sLYjSy74ywlMvvNzgflkXBiteJ4lbQE9FOaNsm0UQmCfwJjrDtDr
-	 +Nq1HwB+YgH5A==
-Message-ID: <5d55e1c7-ec2f-4ad4-93b9-4dc821cb2f22@kernel.org>
-Date: Thu, 7 May 2026 09:54:42 +0100
+	 In-Reply-To:Content-Type; b=VsDup6ZPZiLjpYi6VZV1hmGut3JPiuepfIghsAZc5zgxze5JoUtijwHYRcrrgS0O9SnlnFIryHaiShLfMfCmNuaWPuxLiZeOHOocbwPozFHREp0VdzNjZjoggyZzVNC4CSZdj3MnF6WRKSuxVxTAajtLhJRUa/KoXh36w5quMIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=X1gDRLoh; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RX7z+Res; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6472CLac260344
+	for <linux-arm-msm@vger.kernel.org>; Thu, 7 May 2026 08:57:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	HwnTa+6y8iyblD7EtUXT7iF9f1ove6W57rU238ZGCj8=; b=X1gDRLohyveGUNtG
+	mlNMvk8XAuiAbp+n+u3A3xRxNeXCWIF0JJQbY1bWuo9ryItdV1h8WclUaOq3/E2D
+	3+/qrK74OZjqor/mSUq+jGKl7oBl6d0kZixzIi0KtdE4fYM4qytFju6dM1AgLflk
+	9viD/2rwnnoGAAYMqKm7QKx3iPZjyA6iOa4kEPqYTTSNwc4XFUoDw2Ep4kDC7Hqa
+	Tmrsyeb9l80N9bFDelBbWSl/HPEWhdCVpZxnPPiW/9clVfjLBxsBfWxQDY1PPSJO
+	/eiBLn9p4pNG8sp8sDgQBQG2bHXns0BjHV0QoXDGZEkE+TRXTkQOF8OlS4YFYkyt
+	kDbwuA==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0hr8sbbb-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 08:57:23 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-8b1f39c5827so11205346d6.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 01:57:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1778144243; x=1778749043; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HwnTa+6y8iyblD7EtUXT7iF9f1ove6W57rU238ZGCj8=;
+        b=RX7z+ResmH83kUOm8V10wAXRrGiwUoLGVby0Ku8f+i4EY4TgJwHd4OTpErtQLnt5qp
+         3KvSljMfuzXfR/P0ZUPeqRAZ1jSQvT7m/nv2YYBDTKDFhzA+/X/hpBdaFYQdFvT3nHo6
+         uUaSeZLwORyW/QbC/cFq1Tdkqt/F45zv21p9ZA48qfyYHWVOiXR2yjQcbwGfhqebreW/
+         7IwoPnTgTyypBtwtjnuOWAKHAyf0OIW/hwSfovSpqztUE+QSl2WMJEZ5SmjrayiYTbqb
+         0VnL1y813Xwp3AghW3JiAII1ynFYW/ZCtEWwWYEgX+V2ZfLAMu4Cn0NVjPoed4wYj4Ii
+         HcbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778144243; x=1778749043;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HwnTa+6y8iyblD7EtUXT7iF9f1ove6W57rU238ZGCj8=;
+        b=XE1ChSmfNiTbaMgCYlo2cWjGWJ1efAXeeVBUza4Grb37iPKRIA0JLMgFgSVGplMy5k
+         B1M1MY9PGUNGuwCns8HAbK6LM4oXY4B89k5gwkQ4QmvXnsRqb7CEhqd2Bx8hiVgqzIgY
+         YAisN8xUKP95AxQw1j1021mw5W/6D4GxCFl6NvUQOJmkRtGRP+rlTfBQTv2wy2WrX6l2
+         wxpT/zPR13ub/L6x2g313jr0eXJx/aDtX0Nhk4OZAsYN8JoQQf/3osc3PgJe8Jm+7y9Z
+         Y7GZ3Uztiwv4p67jL3eBQVQYHfh0sTZgS09IxyPV0vzpfHwUAp8NfZGu2t6qxKRIQhMI
+         pd2Q==
+X-Forwarded-Encrypted: i=1; AFNElJ9l7EAYwdxShhLNmxVNsm0FzPqLijxAsu0ckynPRZfqVwZh68vUYKqUwnHz8gjcMGccXFGkf5v9nMCitzeg@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywa9IGqy9X/1Xy2+SdHGzHLud377FNC3EdNOsGrkMsTGA4tO+3j
+	+0Lr0gk7DpWbzrnn32kweqlvXn7/PYGISOlTStai4lUHPmT9aqoidK3p9UTzzgh95Mkd3/ZpDd8
+	RZGK/D4bSh/u0z4EnaT+IYfmgo4kmnpqeuSmSfVWnPhyEeWVekWJa5o9qNje8kVs3NVHs
+X-Gm-Gg: AeBDieuwXpKKiz3jQmJGj2LGG5O7LOiiillBYo+aW7EUdtDgdJoEe5ILIH82Wnu/Yfb
+	aHnqV4561YKa/ckevdGB8VB0oxgUpYxfhzYdZeljbgXbQXXsnXytEnblIBlXH+cUcX2np9QztXO
+	scLYaCdebk76lsyYyngYYKR+73dn1xOxsUwwNsBDZKS0cur37GhqL/Hi3REi5DuP093hd3EzW6N
+	hcvG56fext29ckZCrpHz+KZy8/W6VPNZnLPHA8emevF5+JdLD86KZ6aiiSrimDyhs+2g5o2jQMm
+	1Q96xhknfyQo1aJrbWYuweszUxFT0Z6o2mGq+VJXJ0TCZO6RpxqfCYNtvLxIfesauFJOeeGQhlZ
+	UwghFbsXb6KMgc7F5+4cWUKPsj0W3rMHY7Ybv/1GPApKRrrgsHVv+8r4/2tE=
+X-Received: by 2002:a05:622a:1813:b0:50f:bcfe:e8dd with SMTP id d75a77b69052e-51461be0535mr98108111cf.8.1778144242712;
+        Thu, 07 May 2026 01:57:22 -0700 (PDT)
+X-Received: by 2002:a05:622a:1813:b0:50f:bcfe:e8dd with SMTP id d75a77b69052e-51461be0535mr98107161cf.8.1778144241048;
+        Thu, 07 May 2026 01:57:21 -0700 (PDT)
+Received: from [192.168.68.112] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-48e538b26a3sm201855315e9.9.2026.05.07.01.57.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 May 2026 01:57:20 -0700 (PDT)
+Message-ID: <dd0e22ed-e464-4d61-b354-b396f9694976@oss.qualcomm.com>
+Date: Thu, 7 May 2026 08:57:19 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,136 +106,327 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/8] arm64: dts: qcom: msm8939-asus-z00t: add Venus
-To: Erikas Bitovtas <xerikasxx@gmail.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org
-References: <20260507-msm8939-venus-rfc-v5-0-d7b5ea2ce591@gmail.com>
- <biMH8X_chA16K-MAiAtASagmIW1M0rIiBC_MViD0_XltZKnZCxDWSWPk_qZiZXV_qc3zrf9qjf7p3oltpAdqng==@protonmail.internalid>
- <20260507-msm8939-venus-rfc-v5-4-d7b5ea2ce591@gmail.com>
-From: Bryan O'Donoghue <bod@kernel.org>
+Subject: Re: [PATCH v2 5/6] ASoC: qcom: sm8250: shut down MI2S/TDM AFE port
+ clocks
+To: Val Packett <val@packett.cool>, Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+Cc: Bhushan Shah <bhushan.shah@machinesoul.in>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Antoine Bernard <zalnir@proton.me>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260506204142.659778-1-val@packett.cool>
+ <20260506204142.659778-6-val@packett.cool>
 Content-Language: en-US
-Autocrypt: addr=bod@kernel.org; keydata=
- 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
-In-Reply-To: <20260507-msm8939-venus-rfc-v5-4-d7b5ea2ce591@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20260506204142.659778-6-val@packett.cool>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 93F214E5AEF
+X-Proofpoint-ORIG-GUID: BjsuNDZLVHLdKEjy3YVdrvpPhvOMMKr8
+X-Authority-Analysis: v=2.4 cv=caHiaHDM c=1 sm=1 tr=0 ts=69fc53f3 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=OxOCmRKzI9gie0uB-wgA:9 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-GUID: BjsuNDZLVHLdKEjy3YVdrvpPhvOMMKr8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDA4OCBTYWx0ZWRfX+LknACwUT3CR
+ uMv65bRQB/tl+jUEWn7MF3hUIWWGiJYYoN7dTrAiE716dn9lvqVgK0yM3sRii50puGKp8qDkk48
+ 4Lbrlj2lHVPOcLVzRqkoOk4GiEWSmNFp+UjsE7QUzO5kUe965jCDwdgjfV/6zCYfGm2hxZ76j6u
+ +U+dEcZVTo6eD4HgVAZFZGEnrPbvkUZc8So2x7m6oobjhu2hItqh5R5QZInjwSkM8Mv7Y7330Lf
+ GAShBiqJ/Xma02hkKYENsob8AH0PaOyzTL+ehMwTTdltRT49jbO4s4XoAfoy3P3K8gGevE1cI03
+ 8yozNFO83/6JkfOiWdYUKZkxXfQCra7JIPVurCh2Z/8aTGSo4f7VEIwn5e1BItUmbkhBK/CDrnG
+ yHHH4dCJxsxc182vBxr5Zka0pFvSb50e130uu54wy5mHoTgrdcZwkSmLsrh5jpGxxzSH1uGbr/e
+ gAlka+l0RW9Ma2D2u+A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-06_02,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 suspectscore=0 bulkscore=0 priorityscore=1501
+ adultscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605070088
+X-Rspamd-Queue-Id: D74FA4E5B7F
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-106315-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106314-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[packett.cool,kernel.org,gmail.com,perex.cz,suse.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,oss.qualcomm.com,kernel.org,apitzsch.eu,baylibre.com,redhat.com];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,packett.cool:email,qualcomm.com:dkim];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[srinivas.kandagatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	TO_DN_SOME(0.00)[]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-On 07/05/2026 09:32, Erikas Bitovtas wrote:
-> Enable Venus video encoder/decoder for Asus ZenFone 2 Laser/Selfie.
+On 5/6/26 8:33 PM, Val Packett wrote:
+> These port clocks were never being turned off, leading to increased
+> power consumption after a sound was played through any of these ports
+> for the first time. Use enable counters to disable the clocks in the
+> shutdown callback, similar to how it's done for sdm845.
 > 
-> Default firmware paths work on Asus ZenFone 2 Laser/Selfie, which
-> means firmware-name property can be left out.
-> 
-> Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
+> Signed-off-by: Val Packett <val@packett.cool>
 > ---
->   arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts | 8 ++++++++
->   1 file changed, 8 insertions(+)
+>  sound/soc/qcom/sm8250.c | 150 +++++++++++++++++++++++++++++++---------
+>  1 file changed, 119 insertions(+), 31 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts b/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
-> index 90e966242720..231a3e9c1929 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
-> @@ -267,6 +267,14 @@ &usb_hs_phy {
->   	extcon = <&usb_id>;
->   };
-> 
-> +&venus {
-> +	status = "okay";
-> +};
+> diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
+> index b64fd3970ba1..9f0f846a14bb 100644
+> --- a/sound/soc/qcom/sm8250.c
+> +++ b/sound/soc/qcom/sm8250.c
+> @@ -24,6 +24,7 @@ static unsigned int tdm_slot_offset[8] = {0, 4, 8, 12, 16, 20, 24, 28};
+>  
+>  struct sm8250_snd_data {
+>  	bool stream_prepared[AFE_PORT_MAX];
+> +	uint32_t clk_count[AFE_PORT_MAX];
+
+In your setup are you sharing BE dais to multiple FE?
+
+if not you would really not need the count, startup and shutdown are
+paired for single PCM stream.
+
+If yes, then you need some protection against these counters.
+
+
+
+>  	struct snd_soc_card *card;
+>  	struct snd_soc_jack jack;
+>  	struct snd_soc_jack usb_offload_jack;
+> @@ -163,83 +164,95 @@ static int sm8250_snd_startup(struct snd_pcm_substream *substream)
+>  	unsigned int fmt = SND_SOC_DAIFMT_BP_FP;
+>  	unsigned int codec_dai_fmt = SND_SOC_DAIFMT_BC_FC;
+>  	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+> +	struct snd_soc_card *card = rtd->card;
+> +	struct sm8250_snd_data *data = snd_soc_card_get_drvdata(card);
+>  	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+>  	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(rtd, 0);
+>  
+>  	switch (cpu_dai->id) {
+>  	case PRIMARY_MI2S_RX:
+>  		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+> -		snd_soc_dai_set_sysclk(cpu_dai,
+> -			Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT,
+> -			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		if (++(data->clk_count[PRIMARY_MI2S_RX]) == 1)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT,
+> +				MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+>  		snd_soc_dai_set_fmt(cpu_dai, fmt);
+>  		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>  		break;
+>  	case SECONDARY_MI2S_RX:
+>  		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+> -		snd_soc_dai_set_sysclk(cpu_dai,
+> -			Q6AFE_LPASS_CLK_ID_SEC_MI2S_IBIT,
+> -			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		if (++(data->clk_count[SECONDARY_MI2S_RX]) == 1)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_SEC_MI2S_IBIT,
+> +				MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+>  		snd_soc_dai_set_fmt(cpu_dai, fmt);
+>  		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>  		break;
+>  	case TERTIARY_MI2S_RX:
+>  		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+> -		snd_soc_dai_set_sysclk(cpu_dai,
+> -			Q6AFE_LPASS_CLK_ID_TER_MI2S_IBIT,
+> -			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		if (++(data->clk_count[TERTIARY_MI2S_RX]) == 1)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_TER_MI2S_IBIT,
+> +				MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+>  		snd_soc_dai_set_fmt(cpu_dai, fmt);
+>  		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>  		break;
+>  	case QUINARY_MI2S_RX:
+>  		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+> -		snd_soc_dai_set_sysclk(cpu_dai,
+> -			Q6AFE_LPASS_CLK_ID_QUI_MI2S_IBIT,
+> -			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		if (++(data->clk_count[QUINARY_MI2S_RX]) == 1)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_QUI_MI2S_IBIT,
+> +				MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+>  		snd_soc_dai_set_fmt(cpu_dai, fmt);
+>  		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>  		break;
+>  	case SENARY_MI2S_RX:
+>  		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+> -		snd_soc_dai_set_sysclk(cpu_dai,
+> -			Q6AFE_LPASS_CLK_ID_SEN_MI2S_IBIT,
+> -			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		if (++(data->clk_count[SENARY_MI2S_RX]) == 1)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_SEN_MI2S_IBIT,
+> +				MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+>  		snd_soc_dai_set_fmt(cpu_dai, fmt);
+>  		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>  		break;
+>  	case PRIMARY_TDM_RX_0:
+>  		codec_dai_fmt |= SND_SOC_DAIFMT_IB_NF | SND_SOC_DAIFMT_DSP_B;
+> -		snd_soc_dai_set_sysclk(cpu_dai,
+> -			Q6AFE_LPASS_CLK_ID_PRI_TDM_IBIT,
+> -			TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		if (++(data->clk_count[PRIMARY_TDM_RX_0]) == 1)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_PRI_TDM_IBIT,
+> +				TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+>  		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>  		break;
+>  	case SECONDARY_TDM_RX_0:
+>  		codec_dai_fmt |= SND_SOC_DAIFMT_IB_NF | SND_SOC_DAIFMT_DSP_B;
+> -		snd_soc_dai_set_sysclk(cpu_dai,
+> -			Q6AFE_LPASS_CLK_ID_SEC_TDM_IBIT,
+> -			TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		if (++(data->clk_count[SECONDARY_TDM_RX_0]) == 1)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_SEC_TDM_IBIT,
+> +				TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+>  		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>  		break;
+>  	case TERTIARY_TDM_RX_0:
+>  		codec_dai_fmt |= SND_SOC_DAIFMT_IB_NF | SND_SOC_DAIFMT_DSP_B;
+> -		snd_soc_dai_set_sysclk(cpu_dai,
+> -			Q6AFE_LPASS_CLK_ID_TER_TDM_IBIT,
+> -			TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		if (++(data->clk_count[TERTIARY_TDM_RX_0]) == 1)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_TER_TDM_IBIT,
+> +				TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+>  		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>  		break;
+>  	case QUATERNARY_TDM_RX_0:
+>  		codec_dai_fmt |= SND_SOC_DAIFMT_IB_NF | SND_SOC_DAIFMT_DSP_B;
+> -		snd_soc_dai_set_sysclk(cpu_dai,
+> -			Q6AFE_LPASS_CLK_ID_QUAD_TDM_IBIT,
+> -			TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		if (++(data->clk_count[QUATERNARY_TDM_RX_0]) == 1)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_QUAD_TDM_IBIT,
+> +				TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+>  		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>  		break;
+>  	case QUINARY_TDM_RX_0:
+>  		codec_dai_fmt |= SND_SOC_DAIFMT_IB_NF | SND_SOC_DAIFMT_DSP_B;
+> -		snd_soc_dai_set_sysclk(cpu_dai,
+> -			Q6AFE_LPASS_CLK_ID_QUIN_TDM_IBIT,
+> -			TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		if (++(data->clk_count[QUINARY_TDM_RX_0]) == 1)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_QUIN_TDM_IBIT,
+> +				TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+>  		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>  		break;
+>  	default:
+> @@ -249,6 +262,81 @@ static int sm8250_snd_startup(struct snd_pcm_substream *substream)
+>  	return qcom_snd_sdw_startup(substream);
+>  }
+>  
+> +static void sm8250_snd_shutdown(struct snd_pcm_substream *substream)
+> +{
+> +	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+> +	struct snd_soc_card *card = rtd->card;
+> +	struct sm8250_snd_data *data = snd_soc_card_get_drvdata(card);
+> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
 > +
-> +&venus_mem {
-> +	status = "okay";
-> +};
+> +	switch (cpu_dai->id) {
+> +	case PRIMARY_MI2S_RX:
+> +		if (--(data->clk_count[PRIMARY_MI2S_RX]) == 0)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT,
+> +				0, SNDRV_PCM_STREAM_PLAYBACK);
+> +		break;
+> +	case SECONDARY_MI2S_RX:
+> +		if (--(data->clk_count[SECONDARY_MI2S_RX]) == 0)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_SEC_MI2S_IBIT,
+> +				0, SNDRV_PCM_STREAM_PLAYBACK);
+> +		break;
+> +	case TERTIARY_MI2S_RX:
+> +		if (--(data->clk_count[TERTIARY_MI2S_RX]) == 0)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_TER_MI2S_IBIT,
+> +				0, SNDRV_PCM_STREAM_PLAYBACK);
+> +		break;
+> +	case QUINARY_MI2S_RX:
+> +		if (--(data->clk_count[QUINARY_MI2S_RX]) == 0)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_QUI_MI2S_IBIT,
+> +				0, SNDRV_PCM_STREAM_PLAYBACK);
+> +		break;
+> +	case SENARY_MI2S_RX:
+> +		if (--(data->clk_count[SENARY_MI2S_RX]) == 0)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_SEN_MI2S_IBIT,
+> +				0, SNDRV_PCM_STREAM_PLAYBACK);
+> +		break;
+> +	case PRIMARY_TDM_RX_0:
+> +		if (--(data->clk_count[PRIMARY_TDM_RX_0]) == 0)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_PRI_TDM_IBIT,
+> +				0, SNDRV_PCM_STREAM_PLAYBACK);
+> +		break;
+> +	case SECONDARY_TDM_RX_0:
+> +		if (--(data->clk_count[SECONDARY_TDM_RX_0]) == 0)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_SEC_TDM_IBIT,
+> +				0, SNDRV_PCM_STREAM_PLAYBACK);
+> +		break;
+> +	case TERTIARY_TDM_RX_0:
+> +		if (--(data->clk_count[TERTIARY_TDM_RX_0]) == 0)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_TER_TDM_IBIT,
+> +				0, SNDRV_PCM_STREAM_PLAYBACK);
+> +		break;
+> +	case QUATERNARY_TDM_RX_0:
+> +		if (--(data->clk_count[QUATERNARY_TDM_RX_0]) == 0)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_QUAD_TDM_IBIT,
+> +				0, SNDRV_PCM_STREAM_PLAYBACK);
+> +		break;
+> +	case QUINARY_TDM_RX_0:
+> +		if (--(data->clk_count[QUINARY_TDM_RX_0]) == 0)
+> +			snd_soc_dai_set_sysclk(cpu_dai,
+> +				Q6AFE_LPASS_CLK_ID_QUIN_TDM_IBIT,
+> +				0, SNDRV_PCM_STREAM_PLAYBACK);
+> +		break;
+> +	default:
+> +		break;
+> +	}
 > +
->   &wcnss {
->   	status = "okay";
->   };
-> 
-> --
-> 2.54.0
-> 
-Reviewed-by: Bryan O'Donoghue <bod@kernel.org>
+> +	qcom_snd_sdw_shutdown(substream);
+> +}
+> +
+>  static int sm8250_snd_prepare(struct snd_pcm_substream *substream)
+>  {
+>  	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+> @@ -287,7 +375,7 @@ static int sm8250_snd_hw_params(struct snd_pcm_substream *substream,
+>  
+>  static const struct snd_soc_ops sm8250_be_ops = {
+>  	.startup = sm8250_snd_startup,
+> -	.shutdown = qcom_snd_sdw_shutdown,
+> +	.shutdown = sm8250_snd_shutdown,
+>  	.hw_free = sm8250_snd_hw_free,
+>  	.hw_params = sm8250_snd_hw_params,
+>  	.prepare = sm8250_snd_prepare,
+
 
