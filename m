@@ -1,208 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-106332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0GXqBz9n/GmpPgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 12:19:43 +0200
+	id cBm9GFRn/GnPPgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 12:20:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBD8F4E6ACC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 12:19:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E079C4E6ADA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 12:20:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id EFBD53022556
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 10:18:32 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6425930173BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 10:19:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49DA63E6DE6;
-	Thu,  7 May 2026 10:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D06CA3E6DF3;
+	Thu,  7 May 2026 10:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nnP8XNFL";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="a/fi/1Ny"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="iBnAcFu3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B4635C19B
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 10:18:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 428E83D9DA4
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 10:19:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778149110; cv=none; b=uN/FLFM7+idVIC87wo0UIDLJgM93QhSEDSZCxkhOpOYoeJ0F7fswdmHomAYe6+zqLFC8+ruwgorxJONQzbTKz5M0x7LOXlXQvoXP0kqmZA25CxS2s10ZQFGRZB81SN/rnhBMK6ct2Z9tc9oY04qV5GyK4AEc5fgkxTH/JWvjd+A=
+	t=1778149160; cv=none; b=I2T+AKY3xOieFFArGzPZXkYTkY0ZxkRcfYstKQG3/pFcL4NvqYYRsuwhFywowLiL57qqanKpjcT4mhw4F81SHm+XmHmMk09Catu7KHmeAcVcBZm1duEQAW1Xw7IwoETTDv0+TGktidNPFFuwnRVe1Q7tHxKnzZuIaOSRGrXOqyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778149110; c=relaxed/simple;
-	bh=WJ4j0x9GW04ERTNK0FkSquraH3iSYTfeLo7uY4ZPx8w=;
+	s=arc-20240116; t=1778149160; c=relaxed/simple;
+	bh=TG08dbsdevsuUuKiOfCppaUESy80nCb00HkxvqnrU2A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ND+MkY7rcF2qoyh7tQ5/bqkVCGqrAjWJiH9P5B9qgKUzNhLva484wekZBJFG4XtROGTwMVyk/hz8vBaOit5diONdMFrMz+FasNUK2J8Z0M/E5FiSlzk9VhwGrm/xyQ48Au9llvpPkCoXL/bsrLLXjNpA12RjiAJmHaTZbAJjPyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nnP8XNFL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=a/fi/1Ny; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64797j0e258795
-	for <linux-arm-msm@vger.kernel.org>; Thu, 7 May 2026 10:18:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=HJOb+Cy7FbzagNYzj2J8jHKc
-	+MgECHMNcJszAtwtqdI=; b=nnP8XNFL6jDE09OBAgBaLtLFbwekGI+ikhx+JZEi
-	v9B3lsa6kANyXx/3UWjk4s7qMhOLFjj71OZJ4oPUrIHEfdDLnx3E7p5I8zPdS/6A
-	Z/92aoRt3B45KGSPUh9005A0AL+veO6FYOSyKi3mQBCMj57aLM4JjPBuHXZLgdd7
-	bJRgDTLItZrUmX7t/SDMHeIES8Qip+lUQp5Uu6wE1rbyIrKbPPbHAaSqsp8jY2MO
-	DAMGg3byN/YjzHtWw4SIsJO216qDzKCVtwNV8NKw0M9jitGtEiPNsahYGDxV6Bk5
-	sx0M82ByBcbnPH4/2/YzgoJoOLQhVsnvWPkld3urvc6sOg==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0hr8spd3-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 10:18:28 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3650a4eb60dso752477a91.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 03:18:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1778149107; x=1778753907; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HJOb+Cy7FbzagNYzj2J8jHKc+MgECHMNcJszAtwtqdI=;
-        b=a/fi/1NycT9mUCmyChPDirug/oNxsMDFbbIp2PaPd+R+UNJOL2e9GNdAY5VhIkaedG
-         nbEAG2XvVw/+L+sD94Of3Kvo4WV3Iw4UbAV5PL5vsdbkah/uXP2/+F5tovE7VQOGmxum
-         lnDAGmDrBTRJkLkklbqyfH3TCnXnawdbVgdf9UlMCtyqF609mMS8gmEt60J5WChTSD4l
-         GQ1JMc0vmRRjPwzvFlm5h8Je8ydcLEgJIW43awNAhI2GkQ+ORttzCO95sfIlpY7AsUYs
-         HqIa12xQcj9NhSJtihNuJOz79S05ue7uiVdPNT69WLK8xiubLc1TLCN0pAKbEkpS1RFd
-         hOLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778149107; x=1778753907;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HJOb+Cy7FbzagNYzj2J8jHKc+MgECHMNcJszAtwtqdI=;
-        b=eDei8lhvwAfDoe2BGwfF0QtKj9CVCsQkl146yYFtOqj06IjO6lBuEZf/k+UYdE5g8I
-         xIDa7JS4SV1FOr5x7SacOTCtG4yef6majKlKkrAvwXR8BJrkJu03Gw87bu3bZFC6QNBd
-         +nvzeeNrET0QQNIrQgp6kqL+GZjPB1W2wvjvOAzjgAaM2CwfoqFKCaDVt3Hg5nHQ5YPB
-         DMv9HWq5icOrL0jDsxG1gqHjJS5IJnr1vmn8SAPF5G93VXGsfyI6SgJDopRmtn53y+7L
-         B63i0AYyUsIjiPr22qKZcUVW9PfNSdaSOcAc7pRb9+d2VIRQA0afl8yCrW6EbCdjtBn0
-         UQwg==
-X-Gm-Message-State: AOJu0YwBRxRnSTE9rOrlbMq/biaIygouv/Lri8S1cKWHv+c/agh0jlg6
-	ENjZUkKs2pLuZaIg5hiL0AHk73hp9htfCmTovWewNSBcDjPZ43p0EJXm/D+uHUA6gXOaqCkOwws
-	H+Cg/AOvUVljo7sO72B1t6WWW4kyzwtByZQeGME60WxroYMgpcf8yt+BeZoDbSU1KNnms
-X-Gm-Gg: AeBDievfkgAypEyU/TeEEhiwM/7MEiDYuCB4Ao3hLsZICkdklFMSi5C3FXwICQ6WS8p
-	6jp8Mx75O2xISKd+roL84OtyDpHQsWIdfTn1lOcjp1HMAdLcvGooZyR9tbVppRPIDPzDVY+XHOB
-	+++cfzU9L4R2qVjTATOFVRHKMi/55C1Dz0VuA21mnU0/LcryLTcfOAHydbywmyoY6/oQwlxd8Jk
-	JYhd1IgQBsrH/DAFva0hr2IWVTgaYCNWswCZ/mt5om+bT+y07aNTDTk2LUrrWAlGs/jDJ6sliSQ
-	rJYA90IuggLJ08Xi9dqL5f9rm6iF7/W8AkdLLeaQjX/BbZaLwJX4K6t4kzuBLCq4aZPy70ZKtf+
-	+AtaXPpoeT1excZI0hH0evc4upg+tA1mKPV2jjWGmpAKigDUqWLm9OrzNpt4=
-X-Received: by 2002:a05:6a20:472a:b0:3a8:2af3:ce8b with SMTP id adf61e73a8af0-3aa5a94e12dmr6038611637.14.1778149107298;
-        Thu, 07 May 2026 03:18:27 -0700 (PDT)
-X-Received: by 2002:a05:6a20:472a:b0:3a8:2af3:ce8b with SMTP id adf61e73a8af0-3aa5a94e12dmr6038586637.14.1778149106721;
-        Thu, 07 May 2026 03:18:26 -0700 (PDT)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83967dbcfc0sm10237193b3a.42.2026.05.07.03.18.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2026 03:18:26 -0700 (PDT)
-Date: Thu, 7 May 2026 15:48:20 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Robert Marko <robimarko@gmail.com>,
-        Guru Das Srinagesh <linux@gurudas.dev>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH 0/4] firmware: qcom: scm: Add minidump SRAM destination
- support
-Message-ID: <20260507101820.bshppmp6pbqezrap@hu-mojha-hyd.qualcomm.com>
-References: <20260507080727.3227367-1-mukesh.ojha@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=LyyEAF+tF05JVpa7LVM6Bb8ejbTM4QhOSwF8XgShuRqyMEWiJifhgh0RuSs3TbgOr4hcnWA4Ir+f6Ndjn3qeSZ6PC+ztcBJ8VLOYxS/snN7t4eUrsff+tJ8VXcFwa+HGUxXkVnqJyyIRfV64Foe/0ZIwllqD4gh7go1k0nGZTFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=iBnAcFu3; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 35467315F
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 03:19:13 -0700 (PDT)
+Received: from [192.168.0.1] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 3A3863F836
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 03:19:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1778149158; bh=TG08dbsdevsuUuKiOfCppaUESy80nCb00HkxvqnrU2A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iBnAcFu37UChXB39xVb+wUAErH59B0BvPzIc7ziaoWyPze0GTU1qFpJL0bH26/s1L
+	 IFb5ymEob7OvgAgP5wzamyw70f8KdEmEm6XsZe8V6+2dAdro87aO+kt4QH2VkjQV19
+	 ePRoXU05cLR9LkWIt9IniUREZzRd+CILYwdIEHDQ=
+Date: Thu, 7 May 2026 11:18:55 +0100
+From: Liviu Dudau <liviu.dudau@arm.com>
+To: Boris Brezillon <boris.brezillon@collabora.com>
+Cc: Steven Price <steven.price@arm.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Akash Goel <akash.goel@arm.com>, Chia-I Wu <olvaffe@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] drm/gem: Fix a race between drm_gem_lru_scan() and
+ drm_gem_object_release()
+Message-ID: <afxnD-YhUsLdLmWN@e142607>
+References: <20260506-panthor-shrinker-fixes-v1-0-e7721526de96@collabora.com>
+ <20260506-panthor-shrinker-fixes-v1-2-e7721526de96@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260507080727.3227367-1-mukesh.ojha@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: eCIC-KDnUpXYOSoPcyOjy_gDLi3szNhH
-X-Authority-Analysis: v=2.4 cv=caHiaHDM c=1 sm=1 tr=0 ts=69fc66f4 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=y6rW8TDjuTIuaxCCkQgA:9 a=CjuIK1q_8ugA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-GUID: eCIC-KDnUpXYOSoPcyOjy_gDLi3szNhH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDEwMiBTYWx0ZWRfX2UBwoHIB+dVb
- Lx4MN5YsUmvEk458RzICmzvvcR7dRQsq+6OCWgGVUig2xVjR/xw6phEJcL/81/VEsI0YWuVGnDE
- uP7rp2iMv4hTt3qhhzsrZ335bdi8sRi8lTxH0atlcV3nEBpyRBdIacdfEMDET8Y5JLPIJ0qsI97
- uNIW7Kt5R/tNeg/R62JcjXJOIeYi6FFWAHoKY3GpHgUGuuzky/dmprs7CONqAlKj3jeZm/unnnl
- tfb84dobeFOdag4vyad1ydfM+QyT2WuDpo4jLvSEILKX64hokpttJ8eZ93Ss0wBbgifxAUVSQxX
- FEbbqb8Qi+0dGZ+jVTvwxEjP5h4YxHoo9lwyHAD2LQQRL/DsYk79tHHGNrX15kRfQDMN1QsAz+2
- ikia/1NKwA1J1mKIl+LVxEcpdYVOeAY2ayo2K8x0EALlflqHumcQpifGG+Stj7NAng1AKdu7xB8
- 4dhDovUIG7rxNisyrmw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-06_02,2026-05-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 suspectscore=0 bulkscore=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605070102
-X-Rspamd-Queue-Id: CBD8F4E6ACC
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260506-panthor-shrinker-fixes-v1-2-e7721526de96@collabora.com>
+X-Rspamd-Queue-Id: E079C4E6ADA
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
+	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-106333-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[arm.com,collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
+	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,gurudas.dev];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106332-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	DKIM_TRACE(0.00)[arm.com:+];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:dkim,hu-mojha-hyd.qualcomm.com:mid];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[liviu.dudau@arm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.freedesktop.org:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,collabora.com:email,arm.com:email,arm.com:dkim]
 X-Rspamd-Action: no action
 
-On Thu, May 07, 2026 at 01:37:16PM +0530, Mukesh Ojha wrote:
-> On most Qualcomm SoCs where minidump is supported, a word in always-on
-> SRAM is shared between the kernel and boot firmware. Before DDR is
-> initialised on the warm reset following a crash, firmware reads this
-> word to decide if minidump is enabled and collect a minidump and where
-> to deliver it (USB upload to a host, or save to local storage).
+On Wed, May 06, 2026 at 02:16:27PM +0200, Boris Brezillon wrote:
+> The following race can currently happen:
 > 
-> This series wires that mechanism into the SCM driver:
+> | Thread 0 in `drm_gem_lru_scan`               | Thread 1 in `drm_gem_object_release` |
+> | -                                            | -                                    |
+> | move obj1 with refcount==0 to `still_in_lru` |                                      |
+> | move obj2 with refcount!=0 to `still_in_lru` |                                      |
+> | mutex_unlock                                 |                                      |
+> | shrink obj2                                  |                                      |
+> |                                              | lru = obj1->lru; // `still_in_lru`   |
+> | mutex_lock                                   |                                      |
+> | move obj1 back to the original lru           |                                      |
+> | mutex_unlock                                 |                                      |
+> | return                                       |                                      |
+> |                                              | dereference `still_in_lru`           |
 > 
->   - The SRAM word location is described via a 'sram'/'sram-names'
->     phandle pair on the SCM DT node, keeping it decoupled from the
->     driver and extensible to future SoCs.
+> Move the drm_gem_lru_move_tail_locked() after the
+> kref_get_unless_zero() check so that we don't end up with a
+> vanishing LRU when we hit drm_gem_object_release(). We also need to
+> remove the skipped object from its LRU, otherwise we'll keep hitting
+> it on subsequent loop iterations until it's actually removed from the
+> list in the drm_gem_release().
 > 
->   - A 'minidump_dest' module parameter (default: usb) selects the
->     destination.  Custom kernel_param_ops expose it as the human-
->     readable strings "usb" or "storage".
-> 
->   - Add the support for Kaanapali.
-> 
-> Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Link: https://lore.kernel.org/lkml/b33938e9-bb5c-4743-866d-4cdccf808a02@oss.qualcomm.com/
-> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
->
+> Fixes: e7c2af13f811 ("drm/gem: Add LRU/shrinker helper")
+> Reported-by: Chia-I Wu <olvaffe@gmail.com>
+> Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
+> Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+> Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
 
-I meant this to be RFC., would fix the minor schema error if this
-suggestion received well.
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
 
+Best regards,
+Liviu
 
--Mukesh
+> ---
+>  drivers/gpu/drm/drm_gem.c | 14 +++++++++-----
+>  1 file changed, 9 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
+> index fca42949eb2b..97cf63de0112 100644
+> --- a/drivers/gpu/drm/drm_gem.c
+> +++ b/drivers/gpu/drm/drm_gem.c
+> @@ -1660,15 +1660,19 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
+>  		if (!obj)
+>  			break;
+>  
+> -		drm_gem_lru_move_tail_locked(&still_in_lru, obj);
+> -
+>  		/*
+>  		 * If it's in the process of being freed, gem_object->free()
+> -		 * may be blocked on lock waiting to remove it.  So just
+> -		 * skip it.
+> +		 * may be blocked on lock waiting to remove it.  So just remove
+> +		 * it from its current LRU and skip it.
+>  		 */
+> -		if (!kref_get_unless_zero(&obj->refcount))
+> +		if (!kref_get_unless_zero(&obj->refcount)) {
+> +			if (obj->lru)
+> +				drm_gem_lru_remove_locked(obj);
+> +
+>  			continue;
+> +		}
+> +
+> +		drm_gem_lru_move_tail_locked(&still_in_lru, obj);
+>  
+>  		/*
+>  		 * Now that we own a reference, we can drop the lock for the
+> 
+> -- 
+> 2.54.0
+> 
 
 -- 
--Mukesh Ojha
+====================
+| I would like to |
+| fix the world,  |
+| but they're not |
+| giving me the   |
+ \ source code!  /
+  ---------------
+    ¯\_(ツ)_/¯
 
