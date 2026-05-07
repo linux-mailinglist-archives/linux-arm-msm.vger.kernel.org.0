@@ -1,569 +1,391 @@
-Return-Path: <linux-arm-msm+bounces-106309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OO4lGPFQ/GkqOQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 10:44:33 +0200
+	id 6Lo8Jd9V/GlOOAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 11:05:35 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9C374E5099
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 10:44:32 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECB524E57FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 11:05:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9005F30CD1BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 08:37:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D74A330FC3C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 08:51:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4234137F8D6;
-	Thu,  7 May 2026 08:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A8A439A07E;
+	Thu,  7 May 2026 08:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=imd-tec.com header.i=@imd-tec.com header.b="On1h2+mf"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N1fLM1Z0";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZyNNntsW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBBF37B3F7
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 08:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9AB39EF27
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 08:51:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778143030; cv=none; b=CeG8qTACgrzuxYgKhGZGstGUyNFxGCXCDmAhurmxSgbHN+/3/F8Jn19kjGNPb33AaAPH+5fubQu5J8Bzkjm3R7RSfsx0F609vXTawgHT/utJTuvhxSv9+0DJXEnikdB/Lm9mb22/O7+Wpmy7PKemhk/iwVMr7QCMWP42diJqaRs=
+	t=1778143915; cv=none; b=TztqvxK4XFbdgIOIGrPZ17QHjw9+sEXEO2Vt4A5EY+XN7Lczfe96rsJs78Z3nJvFpSoPNTQ+Sz2jITZqIMVCmmurBxvxPsByG90p39Oa4/Qc7jg+GhpdFAtzeQDTCtZJI6U3abyy4yOl8j+XqlYhcyNrQ2Be4CbjAyG7FSj+Ako=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778143030; c=relaxed/simple;
-	bh=20qUqU6geRNwJ62IweCmRJasPofIl9FVMLlclkwe14Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=g2VU89l5YorK+0kFfTMzljMrxK9yHavgToYS4WRKrucgKeQ3uo9SRtB22i/QHQsS90NSLt2TzkK2bb5v3wC77ciRMyrMe4nf6EbakWtjCjd4gaHQi4Mt3CZcqf/vUr9G+xnG7RSmwbpk6VDfnU8EiBCn2daBaGi0X688gw90lKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=imd-tec.com; spf=pass smtp.mailfrom=imd-tec.com; dkim=pass (2048-bit key) header.d=imd-tec.com header.i=@imd-tec.com header.b=On1h2+mf; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=imd-tec.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=imd-tec.com
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-48909558b3aso6563395e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 01:37:02 -0700 (PDT)
+	s=arc-20240116; t=1778143915; c=relaxed/simple;
+	bh=Kd56bN3gu6uxbWvn3bhH3wHcIlXHeWTPMbpY4iQk8u8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=btojhkaCmSStlrHeuc2P8pSRu4knEt89A1Ah0RkYKeiTK1Vt1ktRLdBsgl6sy3tU3R87dc5te9CW4OxTvpA13OFrPL06z/hNR9X3wYAFoHw9Ioy0nPxzhgwlRqfPcrI0CFjAnEyvDsD7uczBQwreqTJb/7IOU3RiqekBSP5KMzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N1fLM1Z0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZyNNntsW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6473eSaV026471
+	for <linux-arm-msm@vger.kernel.org>; Thu, 7 May 2026 08:51:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cP3rLsoC5XmxHXQhD/dEud8ZcY5y3tuze8ltsJwAUjE=; b=N1fLM1Z0z+T1sCHU
+	K6ANun0LFiP6FEB/8ZqKww0q1U9nHLArx7YZiOR93LjsaKjNn5iEG95fRBcIgzzS
+	NvmNM5NHropjSbZxKI7KlbaiKdrwFPFelhCXK4ZipjHPMiU2K4tXJMexSHjqJctn
+	XNP6eVQsxNLhVbBNNta9Ma29hXwash9VCbgVT0J7KiiX7mnaLnPwzEyufwSzEcyn
+	wy4xnFgBtLbMS7Ee58d350tGjCLmNzxt6iBlqkG88vz1FbqXXhnI33jzPDy/8wOT
+	3Q2daECDpExqQxHK1gTYbDgAbYxoUzac/o2ArDg0xTVN+0CGLVUR45BEAAgIComf
+	xH+D9Q==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0k1t12ac-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 08:51:46 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-50fb3c7b989so9374841cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 01:51:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=imd-tec.com; s=google; t=1778143017; x=1778747817; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xfSjGuOkPoRJ5r3nwPfmYiEvK6vbaE1rWL+hI81uFn0=;
-        b=On1h2+mfLI5ftdmLa2w20mHIPOVNrbmA3APX/9DdfRRrhCmOvfe1UdjYnc/co5YRNZ
-         RBS7f3iiskvipHH+uSaHj2ymNwdHOuaGc7efowz2kPbyTqtOzDNhOa6IzZTNh8HoJF5p
-         AyNoF1PG2BqTc1AgKOBH02cEX5s0ozX955nLpoT6eJwLa6EyqCfaMPSf9YfjQsXu9PFX
-         cRO9uX7/G84afXZNoBhD3FpTvviVeZW33R4IuTS0bwJuJutq3rlAGInHMhfs3GI9ebJ4
-         jG8dgdN36ZUq91g8x1nl0ut1C7lVDOD7iNqYoOqdrsHxrQIUSSAvwDUCpp1r9rW06gqO
-         L+6Q==
+        d=oss.qualcomm.com; s=google; t=1778143906; x=1778748706; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cP3rLsoC5XmxHXQhD/dEud8ZcY5y3tuze8ltsJwAUjE=;
+        b=ZyNNntsWPIwAbgw0URxu/nIwcurE9yuSb7N8mOyekYlZrhxvxNz2cFnpRfVHSYavFF
+         o42CIUTC5blyQU/CexIMC5nqYGY7QZri/odzuTHvupgc/B0w2TuB/udh5K/SlgtArtkf
+         c1mv2JCRL1tisuYrzPS7phwLu9afMDtoKnQ3wamT2eA6XvtUQC44BO+l7TmVCbPdCZJW
+         K4sa8IWdA0BJbgaNNsE/+Z5jJv4yDu+2RIgSy/MvVIG86bgsLrsh7X4tu4/5KC05etoy
+         Ekwi5YVuR/BQSlcPBhAT+nF1uae+4oZSioV8VxjNTpFAFmpUvjJFhx/GoswOQtplXhbQ
+         MJsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778143017; x=1778747817;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xfSjGuOkPoRJ5r3nwPfmYiEvK6vbaE1rWL+hI81uFn0=;
-        b=SeAs9EluGE5tn+mz6c2Cyxj86AQ8Bv6uz6/qp1TRys+/oE6sPraVGV1a6G/ZSbP0oA
-         BzRBuQl+EzJjQmJO7EJvJIQ2zhQJs9OnEasKWYc5iycWKP7w8RMjmTS15UeET0aVuLAo
-         bBoFmPSmbRZIulnEw5dFctI9Y7AgiADZFN+HzGb4bneu9V8wXq+a5rRIhI8tvkSpOVjH
-         psm/8Gjs3Out+mqpM4EdQz2eEWF1DwJY/JE0bTo2gapmcMazgsX4LLXzVrEXYLOrXb0P
-         o5WI4EOqqXK/XOhq7bziRkLedULArj8rn5CtdZHWqjunWaY2C3d+XYnXVnDV6fBIMjQJ
-         fSAA==
-X-Forwarded-Encrypted: i=1; AFNElJ+jcxBDMb2fsNosN2/awMu0y1jiLCyo1Fak1+2OtPAKVNkAvDwC9meIx6wEE1Kv9R3CHhfyZs+Z8IMZCaRe@vger.kernel.org
-X-Gm-Message-State: AOJu0YyFopfdcsXHR0WfABQ4ghgV/+E8QYxj9pouo3CD05890GezyDY7
-	GZ+BGwpVIu0QAMeOtm4apAa3MANX/gKajGYf9R2a6oC3Aq2K+UDpi0TgXqBLr5ysqPU=
-X-Gm-Gg: AeBDietw4R8ydD2YD7AWSpfVJfwlVu0XnqDiRp/1XrxC/KCGBPP4H2PU3s2V6H9mRDI
-	fLWk7VuoAN0UnBt27QuBkAGigDCo4xAHOxwfUDcWLMsY4b+EC/bK+RH0cr68F4fA1S8Gl38JK3U
-	nyquSUJhlxMQXv002KB5anHI+oh9P3Dvg6xXh5opXflpjVWbMIdMa0xJ+jz9hBQz6MRoSarVT/S
-	k7HCSKM4/IFmdIVCx6LivQ3oSCbzEGrN5/VDgdgofgLkf0em7WIq20aD8vgl33JjwqFryzRYEyB
-	9jKCU2rCWh8416Wu19NPC/86KU1SaPPbHP0KKdm9LzjbV9REWsG/VlqxzoZ4cHrrEWwvyZNubra
-	Y3fKt126UJRDuUgkyKjqQa0rd7zYkVbVbzoRGZXz0euYt6PN5gEDR0uSHb6yb+nGx7S+YpMiFVv
-	+JzQX80Y+05ob3n7aP7o7Kvkul+Ig7imlTi+cShuzIaq5tajGLT0WQY0CrT0TGmm1lILmxoTKoc
-	/DOJdR/kpbTUHg63KWT3lpzZ300HLVPok60wv5zpLZq0A==
-X-Received: by 2002:a05:600c:26c8:b0:48a:9562:7a30 with SMTP id 5b1f17b1804b1-48e51f4934cmr69840305e9.24.1778143016552;
-        Thu, 07 May 2026 01:36:56 -0700 (PDT)
-Received: from [127.0.1.1] ([2a00:23c6:2736:8e01:cfa9:e812:def6:e9af])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e5313a158sm35602705e9.24.2026.05.07.01.36.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2026 01:36:56 -0700 (PDT)
-From: William Bright <william.bright@imd-tec.com>
-Date: Thu, 07 May 2026 09:36:43 +0100
-Subject: [PATCH v3 4/4] arm64: dts: qcom: Add IMDT QCS8550 SBC
+        d=1e100.net; s=20251104; t=1778143906; x=1778748706;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cP3rLsoC5XmxHXQhD/dEud8ZcY5y3tuze8ltsJwAUjE=;
+        b=YefrchDlG/7Vog7fM6o6sZM/jgGXAgnflagW76A+DHr3Hj9EM4IycBcHdF8M7E1ACt
+         hfMXkljuSie5Jt0JUHIMP6VZ388qgJkSionOrmYbr5kRzbkqUi+8dVTeZDMgpm0FWDQ6
+         DERU2E4Goz5Vtv9j6DFS5f+bXXQrB0IJHq/mLxiHgjwgl3NVql5XCmiYt/gCuzDLZhhb
+         ks3Zm+OWhAw9ELKU+aYc8EPlto9P7+9UkIHOCwthD/ezLlAK9YWi8Ja6ifQOwWhpnDYg
+         pjuYkC2/s5xlnzgOagpQxmr5HGTcEPdGGgBlny7l+NwuwGxlXfXwK328wU966Vk5XdOz
+         5xyA==
+X-Forwarded-Encrypted: i=1; AFNElJ9L9qPaQ0b1z16GyrdSFptO1yDjyVuqwh53ulT+kHEMCKgKhZV9pabACGzzBOXvGPw2WCPtv5VxtUwzsMpT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxe0Oed68V7eW05FV1karCYlBYXmuGQAJPwLoxxdekjjrEzQaPO
+	tqzxfQ61XqEosISrAdyv14nCmEgYk+wtKSJ37wiKsYJgW3XSxcY4F9Yq/U8WIR8FXRkew8zhtv6
+	9ykiswZuVcSNYx9luBhqWDoGzHoKlUlwvk1+dF49Mpk/UHW4HR/xb1OJaze9T/o7vJ9ff
+X-Gm-Gg: AeBDies4xvwIABDvkpeQskT4pJMCIfDVpUMq2/g4XmlcAmHhG6iCZAjlrGzzM30dfz5
+	8lL2dOmfyzwI2zk6Bmnm3zoUPeNehlWYbbm3Ygz/O0f0pZFIKEUY2OYUCu0baASJAD/Koywx6oV
+	ieFSNf+bFNc94DHVNba6tP/oAgUZhw3NXLMyNecKaM8Gcz1+9gCcA/Es+sR7+2YQ5gyk/7BdZrQ
+	L5yJjU2CFHPvGMZoq4ilu9SXer7l27PGv14sBcHmRx7+kIsM34xuI7Xqpn4AbxrZ3sWgsHG9gU9
+	D6rKwcyLPg7UswKKskMEO/d1aONtSvHRNP73s87dmnos3ZSEzK437Trje3wOwH39cejfxiMDfNa
+	5hCvWQ5xZdQRTq9iW0sqVAhaSEaFSRQcmPk42yQnwcybLEvQx9p5/K7KNJKQ=
+X-Received: by 2002:ac8:5807:0:b0:50b:3357:7e70 with SMTP id d75a77b69052e-51461fb3815mr95896761cf.28.1778143905774;
+        Thu, 07 May 2026 01:51:45 -0700 (PDT)
+X-Received: by 2002:ac8:5807:0:b0:50b:3357:7e70 with SMTP id d75a77b69052e-51461fb3815mr95896411cf.28.1778143905251;
+        Thu, 07 May 2026 01:51:45 -0700 (PDT)
+Received: from [192.168.68.112] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-48e530b05d9sm48930755e9.3.2026.05.07.01.51.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 May 2026 01:51:44 -0700 (PDT)
+Message-ID: <6338e51d-da58-410e-b10a-4a565d467f1f@oss.qualcomm.com>
+Date: Thu, 7 May 2026 08:51:42 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/6] ASoC: qcom: sm8250: add TDM RX support
+To: Val Packett <val@packett.cool>, Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
+Cc: Bhushan Shah <bhushan.shah@machinesoul.in>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Antoine Bernard <zalnir@proton.me>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260506204142.659778-1-val@packett.cool>
+ <20260506204142.659778-5-val@packett.cool>
+Content-Language: en-US
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20260506204142.659778-5-val@packett.cool>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260507-imdt-qcs8550-sbc-rfc-v3-4-47d3d3372b33@imd-tec.com>
-References: <20260507-imdt-qcs8550-sbc-rfc-v3-0-47d3d3372b33@imd-tec.com>
-In-Reply-To: <20260507-imdt-qcs8550-sbc-rfc-v3-0-47d3d3372b33@imd-tec.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, William Bright <william.bright@imd-tec.com>
-X-Mailer: b4 0.15.2
-X-Rspamd-Queue-Id: B9C374E5099
+X-Authority-Analysis: v=2.4 cv=EoPiaycA c=1 sm=1 tr=0 ts=69fc52a2 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=fdbe8OLCKT6xAC55-esA:9 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: qP7vd05pw9u6-oS_VQxkOoWELtp9TVQs
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDA4NyBTYWx0ZWRfX4TYp0/0Y+mnt
+ EwxzT/nSZ+c0WtwWB3Dq6zH9r+9PM3/fwi/ZKqaWeqlrvlznHwsync7HnAWu2cN9b5O/LkRlAKE
+ pnVDla00xF5h2lT5EjD+sjfzqXvZmLkJSJaH/2EVORxJ+vAdyRTJAdSRIkCUVV0S2JahEySbZ1V
+ I0SszIq4N3PKTcF8OmuCO7dv8qQEjtNkZUD0Zyac+df/J+iPRSl+MG7KXou6uwoivgf+eo7K+Xu
+ 9+WAsCmZaX51pf44eyArrEwZTWRmESk3uJ5In+qjXz2BVFon/kWf92pmxw9pxbu+/RD2bp85YzW
+ Yoto2ZUY8LwNShrb/17RzSOPh3wUnN71dVDvQSHybKWBV+5RP4Ao/80m+a8lsFs8AKNmmGArNk9
+ WbHRi8Jz5BjE/7q0gLO/rCAW1iRS9jTkQKDgSjZV+YE+Rb0DtQJlkkEIS2IHCi1Oj3uMGKSAO5p
+ DnMWr4hi+oreeMVC8Rg==
+X-Proofpoint-GUID: qP7vd05pw9u6-oS_VQxkOoWELtp9TVQs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-06_02,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
+ phishscore=0 malwarescore=0 priorityscore=1501 clxscore=1015 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605070087
+X-Rspamd-Queue-Id: ECB524E57FC
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[imd-tec.com,none];
-	R_DKIM_ALLOW(-0.20)[imd-tec.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106309-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DKIM_TRACE(0.00)[imd-tec.com:+];
+	TAGGED_FROM(0.00)[bounces-106310-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[packett.cool,kernel.org,gmail.com,perex.cz,suse.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_FIVE(0.00)[5];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim,packett.cool:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[william.bright@imd-tec.com,linux-arm-msm@vger.kernel.org];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[srinivas.kandagatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-The IMDT QCS8550 SBC is a two-board design from IMD Technologies Ltd
-built around the Qualcomm QCS8550 SoC. An IMDT QCS8550 SoM is soldered
-onto the IMDT QCS8550 carrier board that supplies VPH_PWR and exposes
-the off-module peripherals.
+On 5/6/26 8:33 PM, Val Packett wrote:
+> Add support for TDM RX DAIs which are used on some devices to send audio
+> data to speaker amplifiers. Channels are assigned based on the codec
+> DAI names for a quad-speaker setup such as on the xiaomi-pipa tablet.
+> 
+> Signed-off-by: Val Packett <val@packett.cool>
+> ---
+>  sound/soc/qcom/sm8250.c | 141 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 141 insertions(+)
+> 
+> diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
+> index a675913da943..b64fd3970ba1 100644
+> --- a/sound/soc/qcom/sm8250.c
+> +++ b/sound/soc/qcom/sm8250.c
+> @@ -17,6 +17,10 @@
+>  #include "sdw.h"
+>  
+>  #define MI2S_BCLK_RATE		1536000
+> +#define TDM_BCLK_RATE		6144000
+> +#define NUM_TDM_SLOTS		8
+> +
+> +static unsigned int tdm_slot_offset[8] = {0, 4, 8, 12, 16, 20, 24, 28};
+static const ?
 
-With this DTS, the board can boot to shell with a UFS rootfs with
-debugging through uart7. USB and ethernet also are fully functional.
+>  
+>  struct sm8250_snd_data {
+>  	bool stream_prepared[AFE_PORT_MAX];
+> @@ -55,6 +59,89 @@ static void sm8250_snd_exit(struct snd_soc_pcm_runtime *rtd)
+>  
+>  }
+>  
+> +static int sm8250_tdm_snd_hw_params(struct snd_pcm_substream *substream,
+> +					struct snd_pcm_hw_params *params)
+> +{
+> +	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+> +	struct snd_soc_dai *codec_dai;
+> +	unsigned int rx_mask;
+> +	int ret = 0, j;
+> +	int channels, slot_width;
+> +
+> +	switch (params_format(params)) {
+> +	case SNDRV_PCM_FORMAT_S16_LE:
+> +		slot_width = 16;
+> +		break;
 
-Features enabled are:
-- On-board regulators
-- uSD
-- UART
-- UFS
-- PCIe0
-- PCIe1
-- USB (gadget only)
-- Ethernet via LAN7430 (PCIe1)
-- ADSP, CDSP
+Any reason only S16?
 
-Assisted-by: Claude:claude-opus-4.7
-Signed-off-by: William Bright <william.bright@imd-tec.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- arch/arm64/boot/dts/qcom/qcs8550-imdt-sbc.dts | 392 ++++++++++++++++++++++++++
- 2 files changed, 393 insertions(+)
+> +	default:
+> +		dev_err(rtd->dev, "%s: invalid param format 0x%x\n",
+> +				__func__, params_format(params));
+> +		return -EINVAL;
+> +	}
+> +
+> +	channels = params_channels(params);
+> +
+> +	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
+> +		ret = snd_soc_dai_set_tdm_slot(cpu_dai, 0, 0x3,
+Please define the magic constants like 0x3 here.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 88c5c0c1cb8e..d38fb3c43c13 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -181,6 +181,7 @@ qcs8300-ride-el2-dtbs := qcs8300-ride.dtb monaco-el2.dtbo
- 
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs8300-ride-el2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-imdt-sbc.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
- 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8550-imdt-sbc.dts b/arch/arm64/boot/dts/qcom/qcs8550-imdt-sbc.dts
-new file mode 100644
-index 000000000000..e8afe683c962
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/qcs8550-imdt-sbc.dts
-@@ -0,0 +1,392 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2026 IMD Technologies Ltd
-+ */
-+
-+/dts-v1/;
-+
-+#include "qcs8550-imdt-som.dtsi"
-+
-+/ {
-+	model = "IMDT QCS8550 SBC";
-+	compatible = "imdt,qcs8550-sbc", "imdt,qcs8550-som",
-+		     "qcom,qcs8550", "qcom,sm8550";
-+	chassis-type = "embedded";
-+
-+	aliases {
-+		serial0 = &uart7;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	/* Enables 5V_PER, 3V3_PER and 1V8_PER rails. These rails
-+	 * aren't used by anything within the device-tree but are used
-+	 * for on board logic level conversion and as rails for
-+	 * pull-ups.
-+	 */
-+	per_pwr: regulator-per-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "per_pwr";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&pwr_per_en_default>;
-+
-+		gpio = <&tlmm 142 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	sdhci_2_vqmmc: regulator-sdhci-2-vqmmc {
-+		compatible = "regulator-gpio";
-+
-+		regulator-name = "sdhci_2_vqmmc";
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <3300000>;
-+		regulator-type = "voltage";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&sd_vset_default>;
-+
-+		gpios = <&tlmm 4 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		gpios-states = <0>;
-+		states = <3300000 0>,
-+			 <1800000 1>;
-+
-+		startup-delay-us = <10000>;
-+	};
-+
-+	vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		vdd-bob1-supply = <&vph_pwr>;
-+		vdd-bob2-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-3 {
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-4 {
-+		vdd-s4-supply = <&vph_pwr>;
-+	};
-+
-+	regulators-5 {
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+	};
-+};
-+
-+&gpi_dma1 {
-+	status = "okay";
-+};
-+
-+&gpu {
-+	status = "okay";
-+};
-+
-+&gpu_zap_shader {
-+	firmware-name = "qcom/sm8550/a740_zap.mbn";
-+	/* Zap shader doesn't load so is disabled */
-+	status = "disabled";
-+};
-+
-+&i2c_master_hub_0 {
-+	status = "okay";
-+};
-+
-+&i2c_hub_2 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	ptn3222: redriver@43 {
-+		compatible = "nxp,ptn3222";
-+		reg = <0x43>;
-+		#phy-cells = <0>;
-+
-+		vdd1v8-supply = <&vreg_l15b_1p8>;
-+		vdd3v3-supply = <&vreg_l5b_3p1>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&eusb2_repeater_reset_default>;
-+
-+		reset-gpios = <&pm8550vs_d_gpios 4 GPIO_ACTIVE_LOW>;
-+	};
-+};
-+
-+&ipa {
-+	qcom,gsi-loader = "self";
-+	memory-region = <&ipa_fw_mem>;
-+	firmware-name = "qcom/sm8550/ipa_fws.mbn";
-+	status = "okay";
-+};
-+
-+&iris {
-+	status = "okay";
-+};
-+
-+&pcie0 {
-+	wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
-+	perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
-+
-+	/*
-+	 * pcie0 hosts the M.2 Key-E slot. Apply the SDIO
-+	 * reset de-assert here so any module's chip enable is settled
-+	 * before pcie0 trains its link.
-+	 */
-+	pinctrl-0 = <&pcie0_default_state>, <&m2e_sdio_resetn_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie0_phy {
-+	vdda-phy-supply = <&vreg_l1e_0p88>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&pcie1 {
-+	wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-+	perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+
-+	/*
-+	 * pcie_switch_sel_default and gbe_reset_default are board-init
-+	 * lines that must be stable before pcie1 trains its link: the
-+	 * PCIe switch needs its mode-select strap settled, and the
-+	 * downstream LAN743x must be out of reset to enumerate.
-+	 * Applying them via pcie1's pinctrl-0 fires them during
-+	 * qcom-pcie probe, before bus enumeration.
-+	 */
-+	pinctrl-0 = <&pcie1_default_state>,
-+		    <&pcie_switch_sel_default>,
-+		    <&gbe_reset_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie1_phy {
-+	vdda-phy-supply = <&vreg_l3c_0p9>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+	vdda-qref-supply = <&vreg_l1e_0p88>;
-+
-+	status = "okay";
-+};
-+
-+&pm8550_gpios {
-+	sd_card_detect_default: sd-card-detect-default-state {
-+		pins = "gpio12";
-+		function = "normal";
-+		input-enable;
-+		output-disable;
-+		bias-disable;
-+		power-source = <1>; /* 1.8 V */
-+	};
-+};
-+
-+&pm8550vs_d_gpios {
-+	eusb2_repeater_reset_default: eusb2-repeater-reset-default-state {
-+		pins = "gpio4";
-+		function = "normal";
-+
-+		input-enable;
-+		output-enable;
-+		bias-disable;
-+
-+		drive-push-pull;
-+		power-source = <1>; /* 1.8V */
-+		qcom,drive-strength = <3>;
-+	};
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/sm8550/adsp.mbn",
-+			"qcom/sm8550/adsp_dtb.mbn";
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/sm8550/cdsp.mbn",
-+			"qcom/sm8550/cdsp_dtb.mbn";
-+	status = "okay";
-+};
-+
-+&sdc2_default {
-+	clk-pins {
-+		drive-strength = <16>;
-+	};
-+
-+	cmd-pins {
-+		/delete-property/ bias-pull-up;
-+		bias-disable;
-+		drive-strength = <16>;
-+	};
-+
-+	data-pins {
-+		/delete-property/ bias-pull-up;
-+		bias-disable;
-+		drive-strength = <16>;
-+	};
-+};
-+
-+&sdhc_2 {
-+	cd-gpios = <&pm8550_gpios 12 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-0 = <&sdc2_default>, <&sd_card_detect_default>;
-+	pinctrl-1 = <&sdc2_default>, <&sd_card_detect_default>;
-+	pinctrl-names = "default", "sleep";
-+
-+	vqmmc-supply = <&sdhci_2_vqmmc>;
-+
-+	bus-width = <4>;
-+	no-sdio;
-+	no-mmc;
-+
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	/* Reserved I/Os for NFC */
-+	gpio-reserved-ranges = <32 8>;
-+
-+	pwr_per_en_default: pwr-per-en-default-state {
-+		pwr-per-en-pins {
-+			pins = "gpio142";
-+			function = "gpio";
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+	};
-+
-+	sd_vset_default: sd-vset-default-state {
-+		sd-vset-pins {
-+			pins = "gpio4";
-+			function = "gpio";
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+	};
-+
-+	/*
-+	 * Drive LAN743x reset high (de-asserted) when pcie1 probes,
-+	 * so the PHY enumerates on the bus.
-+	 */
-+	gbe_reset_default: gbe-reset-default-state {
-+		pins = "gpio138";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-high;
-+	};
-+
-+	/*
-+	 * We drive this GPIO physically high on the M2 Key-E connector
-+	 * to make sure the module is enabled. An M2 Key-E module could
-+	 * be using this pin as a chip enable.
-+	 */
-+	m2e_sdio_resetn_default: m2e-sdio-resetn-default-state {
-+		pins = "gpio41";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-high;
-+	};
-+
-+	/* Force the on-board PCIe switch to select the GbE upstream
-+	 * port.
-+	 */
-+	pcie_switch_sel_default: pcie-switch-sel-default-state {
-+		pins = "gpio16";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
-+
-+&uart7 {
-+	status = "okay";
-+};
-+
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l17b_2p5>;
-+	vcc-max-microamp = <1300000>;
-+	vccq-supply = <&vreg_l1g_1p2>;
-+	vccq-max-microamp = <1200000>;
-+	vdd-hba-supply = <&vreg_l3g_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vreg_l1d_0p88>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	/delete-property/ usb-role-switch;
-+	dr_mode = "peripheral";
-+
-+	status = "okay";
-+};
-+
-+&usb_1_hsphy {
-+	vdd-supply = <&vreg_l1e_0p88>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	phys = <&ptn3222>;
-+
-+	status = "okay";
-+};
-+
-+&usb_dp_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3f_0p88>;
-+
-+	status = "okay";
-+};
+> +				8, slot_width);
+> +		if (ret < 0) {
+> +			dev_err(rtd->dev, "%s: failed to set tdm slot, err:%d\n",
+> +					__func__, ret);
+> +			goto end;
+> +		}
+> +
+> +		ret = snd_soc_dai_set_channel_map(cpu_dai, 0, NULL,
+> +				channels, tdm_slot_offset);
+> +		if (ret < 0) {
+> +			dev_err(rtd->dev, "%s: failed to set channel map, err:%d\n",
+> +					__func__, ret);
+> +			goto end;
+> +		}
+> +	} else {
+> +		ret = snd_soc_dai_set_tdm_slot(cpu_dai, 0xf, 0,
+> +				8, slot_width);
+> +		if (ret < 0) {
+> +			dev_err(rtd->dev, "%s: failed to set tdm slot, err:%d\n",
+> +					__func__, ret);
+> +			goto end;
+> +		}
+> +
+> +		ret = snd_soc_dai_set_channel_map(cpu_dai, channels,
+> +				tdm_slot_offset, 0, NULL);
 
--- 
-2.43.0
+> +		if (ret < 0) {
+> +			dev_err(rtd->dev, "%s: failed to set channel map, err:%d\n",
+> +					__func__, ret);
+> +			goto end;
+> +		}
+> +	}
+> +
+> +	for_each_rtd_codec_dais(rtd, j, codec_dai) {
+> +		if (strstr(codec_dai->component->name_prefix, "PL")) {
+name prefix can be null.
+
+> +			rx_mask = BIT(0);
+> +		} else if (strstr(codec_dai->component->name_prefix, "PR")) {
+name prefix comparision is fragile design, this will break very soon.
+and this is not a binding too.
+
+
+This also raises question about the using this generic driver for such
+specific combination. Can these be made specific to compatible ?
+
+
+> +			rx_mask = BIT(1);
+> +		} else if (strstr(codec_dai->component->name_prefix, "SL")) {
+> +			rx_mask = BIT(2);
+> +		} else if (strstr(codec_dai->component->name_prefix, "SR")) {
+> +			rx_mask = BIT(3);
+> +		} else {
+> +			rx_mask = 0;
+> +			dev_warn(rtd->dev, "%s: codec DAI name '%s' not recognized\n",
+> +				__func__, codec_dai->component->name_prefix);
+> +		}
+> +		ret = snd_soc_dai_set_tdm_slot(codec_dai, 0, rx_mask,
+> +				NUM_TDM_SLOTS, slot_width);
+
+
+
+> +		if (ret < 0) {
+Can we handle -ENOSUPP?
+
+> +			dev_err(rtd->dev, "%s: failed to set TDM slot, err:%d\n",
+> +				__func__, ret);
+> +			goto end;
+> +		}
+> +	}
+> +
+> +end:
+> +	return ret;
+> +}
+> +
+>  static int sm8250_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
+>  				     struct snd_pcm_hw_params *params)
+>  {
+> @@ -120,6 +207,41 @@ static int sm8250_snd_startup(struct snd_pcm_substream *substream)
+>  		snd_soc_dai_set_fmt(cpu_dai, fmt);
+>  		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>  		break;
+> +	case PRIMARY_TDM_RX_0:
+> +		codec_dai_fmt |= SND_SOC_DAIFMT_IB_NF | SND_SOC_DAIFMT_DSP_B;
+> +		snd_soc_dai_set_sysclk(cpu_dai,
+> +			Q6AFE_LPASS_CLK_ID_PRI_TDM_IBIT,
+> +			TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+> +		break;
+> +	case SECONDARY_TDM_RX_0:
+> +		codec_dai_fmt |= SND_SOC_DAIFMT_IB_NF | SND_SOC_DAIFMT_DSP_B;
+> +		snd_soc_dai_set_sysclk(cpu_dai,
+> +			Q6AFE_LPASS_CLK_ID_SEC_TDM_IBIT,
+> +			TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+> +		break;
+> +	case TERTIARY_TDM_RX_0:
+> +		codec_dai_fmt |= SND_SOC_DAIFMT_IB_NF | SND_SOC_DAIFMT_DSP_B;
+> +		snd_soc_dai_set_sysclk(cpu_dai,
+> +			Q6AFE_LPASS_CLK_ID_TER_TDM_IBIT,
+> +			TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+> +		break;
+> +	case QUATERNARY_TDM_RX_0:
+> +		codec_dai_fmt |= SND_SOC_DAIFMT_IB_NF | SND_SOC_DAIFMT_DSP_B;
+> +		snd_soc_dai_set_sysclk(cpu_dai,
+> +			Q6AFE_LPASS_CLK_ID_QUAD_TDM_IBIT,
+> +			TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+> +		break;
+> +	case QUINARY_TDM_RX_0:
+> +		codec_dai_fmt |= SND_SOC_DAIFMT_IB_NF | SND_SOC_DAIFMT_DSP_B;
+> +		snd_soc_dai_set_sysclk(cpu_dai,
+> +			Q6AFE_LPASS_CLK_ID_QUIN_TDM_IBIT,
+> +			TDM_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+> +		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+> +		break;
+>  	default:
+>  		break;
+>  	}
+> @@ -145,10 +267,29 @@ static int sm8250_snd_hw_free(struct snd_pcm_substream *substream)
+>  	return qcom_snd_sdw_hw_free(substream, &data->stream_prepared[cpu_dai->id]);
+>  }
+>  
+> +static int sm8250_snd_hw_params(struct snd_pcm_substream *substream,
+> +				struct snd_pcm_hw_params *params)
+> +{
+> +	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+> +	int ret = 0;
+> +
+> +	switch (cpu_dai->id) {
+> +	case PRIMARY_TDM_RX_0...QUINARY_TDM_TX_7:
+> +		ret = sm8250_tdm_snd_hw_params(substream, params);
+> +		break;
+> +	default:
+> +		break;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+>  static const struct snd_soc_ops sm8250_be_ops = {
+>  	.startup = sm8250_snd_startup,
+>  	.shutdown = qcom_snd_sdw_shutdown,
+>  	.hw_free = sm8250_snd_hw_free,
+> +	.hw_params = sm8250_snd_hw_params,
+>  	.prepare = sm8250_snd_prepare,
+>  };
+>  
 
 
