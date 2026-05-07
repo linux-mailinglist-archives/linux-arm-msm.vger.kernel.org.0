@@ -1,224 +1,284 @@
-Return-Path: <linux-arm-msm+bounces-106474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iL4EBbS4/GlNTAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 18:07:16 +0200
+	id SKXfCqm4/GlLTAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 18:07:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 658124EBD3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 18:07:15 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 986C74EBD19
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 18:07:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1AFB630B8BCB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 15:59:44 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D8449301231C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 16:03:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8120F43E9FF;
-	Thu,  7 May 2026 15:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9FF63EF64A;
+	Thu,  7 May 2026 16:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LATo3EpI";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ewo0zEQr"
+	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="hFgK90QU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4306244D00A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 15:59:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3F43B47C1
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 16:03:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778169583; cv=none; b=GQ9Jo8Yu6aOjJFLA7RpK0fogU/RnPlygMs+BLzgo1xEJ55BgbAvgtEIlusCInJ8edYJ0OrnWodwxY1bYLhvrJJ5j6gMc5YRqFD+nYF0TXFl94EPEkHE8vbgrTOjRyqTUSY2ufsFeGrrTABzbVnsWvoJf4sQ4PMFTsIsr+d+1Na0=
+	t=1778169833; cv=none; b=GU1TviNCS180OC2Xd+iWPzfwGnp7FeO15agCCSDhtBCX+wgJ4Fe34/UFOk+nAeQV1nI+bx138HBWmGYgPpU5xysQj/tcrY/hoGJPeuxZJ70AoyFYMBTq98hCJZbiAiNMOXcDzPn4+r8/mEatVIOeugbBo42YGpGj4HRnnmtUaRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778169583; c=relaxed/simple;
-	bh=9+S2zxMvCv67KnGXE8yesBqn08LbdyThK/csdr0U9FQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fXZuMcJnwXejWPx6//qrt1OfdSR2xQa0PdXNUZnq2N+9VjxMRahdSInGZMRjujWk9G5mLjyQea5L44LlwgAb6DjmnNlpzYzsMkSmcWe+b0lY6IsgMPwrKeaxmvhkdyarXCD+n191VMM8p+X5pS5JlhkJcePK7KiPXCqxRU9KbV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LATo3EpI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ewo0zEQr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 647B0l0J682775
-	for <linux-arm-msm@vger.kernel.org>; Thu, 7 May 2026 15:59:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gGu2wFTIajaPBghQ0FihXQpYUWio1degOPuerHJdNKs=; b=LATo3EpI9rT6o28r
-	KCoPbI3+MQtZievPhb720w5ihgtyGXjJZKsB69pAmEbfuCcRR8V+7lLuUTZZo99q
-	lsRjkZmMwSxGPNcNZb8QJ/h/bM/DGv4/26XhxIxFvf1mi4/ep/5/xDGhe5mEvxat
-	WsF8q0rOfUc9eaY+UXkzfbdtSYhjXWwjoxcym5g0nQwIzuuQicoGDzONhVtndOjM
-	Y89yNz6vhdtitpewPXX3ZiudNR1QY9rb3VGesJm6SNyeXWj+WLZJWPkb1IOTm5UY
-	rNmIRkOEA2rszmMvaE5MHz84IG3o2832IOAIzTckyjRuOMLnzoyllHVlQo8HYrRW
-	8uNfuA==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0mhatej5-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 15:59:41 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2adef9d486bso10847575ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 08:59:41 -0700 (PDT)
+	s=arc-20240116; t=1778169833; c=relaxed/simple;
+	bh=nyA8o2NvivXKk37nVK14Jn6/jPyU2MxLgg1j2S3M6kM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jcn2Wy7D8GrYh4Gy1ndh5ZqcXc04HOEX984eqBfRbkrgVeXAPNgnI+rkadcHzppjk1Wkb5RQVgRx3ehVugYgdbRX9uLpYLTSO2MC38vByxPDHB9MYhydXoL1d8pBOdiV78krmle2EeVa1XPGtUDfWENRlR61+pJLrZCdVgPl5S0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=hFgK90QU; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4896c22fcbaso10648605e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 09:03:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1778169581; x=1778774381; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gGu2wFTIajaPBghQ0FihXQpYUWio1degOPuerHJdNKs=;
-        b=ewo0zEQrU/EbXZ4MTy5/lW8inso1w3s1Lg0P0Pfx/uKLR/dX23w3zhJlBc2cKVpHXa
-         EfQ+/ek3z66Io9UCRg/b8BnQh/a9yQYKfRt08oTuOTNlg5fx5AEFGieQkU8PUr7XX6dF
-         BjH1w6qr72KzjzGLnVVSSRRP2MKlH7+WIYuFtWaFEiDL/FuoWXjbIWgqfOSEL4z0Q85V
-         v4eq8nuznRshmZP1O5Er4bcWUkJCjPDSknkw0IcDgnUu213yOw3VGQYl3M1XTywXfMIn
-         JFycgb8L5rFJScB5WprB83An4+ZYDMS3gFbG00e0p7k9aCSK1al2AxBklmECvNgKAP9A
-         LoGA==
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1778169830; x=1778774630; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6okPXnC/tZolkk3p3FjZk+KFTlmCOhId/0Ru10JUIvc=;
+        b=hFgK90QU4XWmKPmS4CWDYrSGByvZLoscsIY0nW0tBy+BlO4DjblFwX4HF9Bhuh4yrz
+         6mn7QxC+9WocUW/FdrDGKSeYDZm5kjv3YqsZN3S13sP7+TPTbS53eCXXJmruLW7r61xL
+         4MPPktTzvFe+ZNzpCpHLWszfcCPcpxV9+JTKydNY9m0SJhZ5qwa0Ij2S/giithN9imy1
+         sQJ0rrYawyX4nV8ed8Ub3tH5Ztw2D/lFfYhyEkPqGeE6c0veVE89ZIbkHGW+nI8lz3AS
+         3XO5Om+heBk0f8feSYf7sAUkVxX2qNEOOTwWJ+UtbdCyZmEkD749Pm0+iDD5r9xavaMe
+         WENA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778169581; x=1778774381;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gGu2wFTIajaPBghQ0FihXQpYUWio1degOPuerHJdNKs=;
-        b=KPgI/FAhfn6EEoOT6887FGmZUWKVsTRAZ0N1v3Unog6Y1iNfCW+M3XQvaDxWPvoo9J
-         Q7CopcaLao3JLOyQ1iRyRi/o9qzn1hcUKvUF7NakqpW1ni+QqbL/B0oIsXN4PAo+giMW
-         n1HHjWOaxmI6FiS33ovIZKg5aZXydn2fWjxCzrDExG+TlOEsm4j0Hrnq3GDEQSUcx6WZ
-         Wv7/Q7DSNORkD+TrLIUymkLsr6iFrDfLQxJZD51fXRPjQTXmyOsBnm2pnwlfW08N36hR
-         dbrhhXB0iyWgjI9ymPlOy0nioS7OBEedM57hCnBp5WoMJ/yzn98akchOfizz4grAEeEv
-         oujA==
-X-Forwarded-Encrypted: i=1; AFNElJ9nU6wo100tyAFiN91FOIKwon4rCzVmByYtAv/UcZ7MH4VJzUf3ng0u/U5PUeygMcKO1EA6lXtUBgBEfriC@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUa7qQ2ArC9R8/blGWxpeQw5k4RvlZ39bgnZsyUYr1ZeDZjQeg
-	FlLa7xXS6fLDCpZdXopdNb/QHz5TQ8aVsrHze1S3nZXay3E5HwfDPLVPhUF6K7neygvOA/EuxX6
-	Bxi7jlhaq+rE1Jn4PFttn9zc4s1vbxEdDPL/BivYXX7hGFPwqxU0jK0oVCEFyaZB9OcyJ
-X-Gm-Gg: Acq92OFeGPDlik7yPuBGeq1WxUuQ4XsIlKZ/FWbgmgXnvlFKVsLHUPQoFP+Fg0rqP3f
-	+6lYAzjWXrYrK0ECwlLUIKKkxNp5EGmYdaxuBuE43A5/6YSaCe9Yuxz2DSLi7uw7WxIdQgnSajh
-	fMErhgm3ABDEd9e7YsP4593QCUzJVNt3Ln8o3Tp+TAzZcvpAvhl5B5JYOHFScRPdXxn9fF2h6Sh
-	VJbJnqFIj0ES/n0w1PfOpoPSNBh4ow5qyBR+fMQXSeu8oOsKYm7vfJkjPLE5Sg4PN4KMbeBlTKG
-	qbHTu4Y5M069amjNFQbI6IJoCX4itUFW7UnOnsEUfphqHXsYBA8UXwO8G8zUpbxaC5Uja9LM+8P
-	/AdwTJKQRLeEdr8C0ebHAeixFKRPAwX4X3BK19p6Vb3hoCUw9E5/nR4k=
-X-Received: by 2002:a17:903:38cd:b0:2ba:be5f:cabc with SMTP id d9443c01a7336-2babe5fcdd5mr36392195ad.32.1778169580366;
-        Thu, 07 May 2026 08:59:40 -0700 (PDT)
-X-Received: by 2002:a17:903:38cd:b0:2ba:be5f:cabc with SMTP id d9443c01a7336-2babe5fcdd5mr36391845ad.32.1778169579854;
-        Thu, 07 May 2026 08:59:39 -0700 (PDT)
-Received: from [10.206.103.12] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bae7854891sm1194865ad.57.2026.05.07.08.59.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 May 2026 08:59:39 -0700 (PDT)
-Message-ID: <2efe667a-c3fa-45de-88fc-ecded1f34543@oss.qualcomm.com>
-Date: Thu, 7 May 2026 21:29:30 +0530
+        d=1e100.net; s=20251104; t=1778169830; x=1778774630;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6okPXnC/tZolkk3p3FjZk+KFTlmCOhId/0Ru10JUIvc=;
+        b=C3vMIYfAJdLmHyOG8p7I5/JGZ4Q07Iw1XcVDK7CN9Yo2Be5Eq8RiR8Dd1y8ghX6NR4
+         /Pld45IxSW4NQcGEQKtrt5/I3t/Hp4KbRroOaifpvMd3G06rzAS2ELlCbLOjcQSc0GRL
+         z5FoiRFVdHAOSb59Q8xQveuBqPtoVK+mK9ujLHJEWx19U+wBsfU8l3gDCiraIyF7WN2t
+         5Yf47Gcl4PDfUSuj9mP8bObQaCAt2TCjEYLidRCwIWVeORHPeZAAmQJuPiJQFXSuJoFB
+         +yPsM5ibX+fIxbvSsw0iAqASetE2hgiwyR9A7MZnWQn6K0Li93/bVplVUWFRrcXcxoj0
+         5csg==
+X-Forwarded-Encrypted: i=1; AFNElJ/As+DHx2floTQhtchJmQ6K6YGCvL6IUzfhb7VuLSpTRFA9lDZDlW46mxPDWbHagGyeAG0cDWUPWkPhnHP2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXPSbl7fXYDwzRXRycrvaKHnI8jBURirDi/P69jKuDXe29GbR4
+	NbaoieGXwUJnzHxvUvrSd1Xuthgll89QFZsHL9tAtKgdb1bqh7xdJ23sn0S1CfyGBrA=
+X-Gm-Gg: AeBDieudtPmzkzeqrDr0jdX9ygflkuKQPTC6+mn2hTeTtL2QeAGl9T62HlcY5ZQxtBl
+	FUG4PBo2LonuikY9ps08ZFnDR2ZhX8CrHPWdadbuSf8M8+b0HR1p24t41rO1+gHKzZ0ggkUcdYY
+	Y1FZr4WdrBXRDb2UHbtFfYIAn/TYmSWmWUhm/jZDCQYmUNoPphcxtGu+VkMbyxgvNxaI8VjIljS
+	KoJfhD8vAGk+rlHeuLqvJ7k/qjY2LWPP3h0g6DtAIJnkrs/wyYL7AFMjfrCiOU9lEmOvnbIfky2
+	QdT749oQknVzeObh3dLBgkyG+MYtXejg1w5I6w+15W9zdtBnez51eZXCQbxmxf6nqOGWcYCKhc+
+	IU0xaoCQNAc1Oy9d48x7eZX/T0rKKhKTLvwZ34gtenliZsJ8m4PBxeiPMHudXHFywbXPbehGXG2
+	eq00ayBxa31723PIHc8+Y6KCWF5RHdGgVuGcekVfKPt5q5Qk+DZCEMCYnnIn04/8lfIVv3mu4/9
+	GEwlS35AFpizM6QXMgPl8d7aYE5Y2N9rANlTpcY/J1Vc3nQONHctmhUak9DxHKo61vZtgFbGUHT
+	YRWriqar
+X-Received: by 2002:a05:600c:a404:b0:488:a824:fdff with SMTP id 5b1f17b1804b1-48e51f3e0f8mr128948435e9.22.1778169830360;
+        Thu, 07 May 2026 09:03:50 -0700 (PDT)
+Received: from aspen.lan (aztw-34-b2-v4wan-166919-cust780.vm26.cable.virginm.net. [82.37.195.13])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e53907e8asm130198325e9.13.2026.05.07.09.03.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 May 2026 09:03:49 -0700 (PDT)
+Date: Thu, 7 May 2026 17:03:46 +0100
+From: Daniel Thompson <daniel@riscstar.com>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Alex Elder <elder@riscstar.com>, andrew+netdev@lunn.ch,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, maxime.chevallier@bootlin.com,
+	rmk+kernel@armlinux.org.uk, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, linusw@kernel.org, brgl@kernel.org,
+	arnd@arndb.de, gregkh@linuxfoundation.org,
+	mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com,
+	alexandre.torgue@foss.st.com, ast@kernel.org,
+	boon.khai.ng@altera.com, chenchuangyu@xiaomi.com,
+	chenhuacai@kernel.org, daniel@iogearbox.net, hawk@kernel.org,
+	hkallweit1@gmail.com, inochiama@gmail.com, john.fastabend@gmail.com,
+	julianbraha@gmail.com, livelycarpet87@gmail.com,
+	matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
+	prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
+	rohan.g.thomas@altera.com, sdf@fomichev.me,
+	siyanteng@cqsoftware.com.cn, weishangjuan@eswincomputing.com,
+	wens@kernel.org, netdev@vger.kernel.org, bpf@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 10/12] net: stmmac: tc956x: add TC956x/QPS615
+ support
+Message-ID: <afy34kj2hPxIlArO@aspen.lan>
+References: <20260501155421.3329862-1-elder@riscstar.com>
+ <20260501155421.3329862-11-elder@riscstar.com>
+ <2ce5897d-5bbb-486a-b0f0-0e30e54b451a@lunn.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: display/msm: gpu: Document Adreno
- X2-185
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20260501-glymur-gpu-dt-v2-0-2f128b5596bb@oss.qualcomm.com>
- <20260501-glymur-gpu-dt-v2-1-2f128b5596bb@oss.qualcomm.com>
- <20260503-resourceful-walrus-of-bloom-3ec6f4@quoll>
- <1136c1e1-749d-455b-9176-5e71fc1fe18c@kernel.org>
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <1136c1e1-749d-455b-9176-5e71fc1fe18c@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDE2MCBTYWx0ZWRfX3U7CzZCbV6ZE
- 2UZ+JZJfrJ0Vmx0LgG+vO6Ef8GteJIn7owBP6G7eBRX+yC62XFjtijpFZ//2q02Hzzx0ZfN6OTo
- pu1YY6PIoGFLymiiOYizFdrWIEyzWGV5Kwt65/adoXnevkXTcAR4dirF8jyjkUDAEty7rHq2vrT
- IxXWSoepRxCNDWdlYU06hs5VtTiVRz0TTkYmnbKq8jHfqlEgXDt04XutZArewl034SjOMtHdEbd
- 3+MyEmVNTde/KV2nQgDQ5aeTVKwhSSwO6lolYpgx5MOJ+3mUQUhLHb1BQ/zn1KHhNe9pkEKO0Jt
- 6FLo6a/i68npSHYLYmvcdAGa5oPilkUS9yYjwwO4dMm+xcR5ohEWQexLxbCzcVj+dRv7zdOQ1gN
- RA7ntCkmMe67Rwh+gz7Y50Pp6RtS6BbeSZAUL0ZJy/6+g/ujx88XZ+Bv4JFTW+WUe8Zo8p/+pe9
- nulhzUBEsFoCGGql/Rw==
-X-Proofpoint-ORIG-GUID: AO1Jz9UwBDQOQqcREwNJX0ModsxJ5ko5
-X-Proofpoint-GUID: AO1Jz9UwBDQOQqcREwNJX0ModsxJ5ko5
-X-Authority-Analysis: v=2.4 cv=ReWgzVtv c=1 sm=1 tr=0 ts=69fcb6ed cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=i7vGOPbq9zpShFDyuUEA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-07_01,2026-05-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 impostorscore=0 lowpriorityscore=0
- spamscore=0 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2605070160
-X-Rspamd-Queue-Id: 658124EBD3E
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2ce5897d-5bbb-486a-b0f0-0e30e54b451a@lunn.ch>
+X-Rspamd-Queue-Id: 986C74EBD19
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.06 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,linux.intel.com,suse.de,vger.kernel.org,lists.freedesktop.org];
-	TAGGED_FROM(0.00)[bounces-106474-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akhilpo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[riscstar.com,lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
+	TAGGED_FROM(0.00)[bounces-106475-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[riscstar-com.20251104.gappssmtp.com:+];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[daniel@riscstar.com,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[50];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[aspen.lan:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,dgc_info.name:url]
 X-Rspamd-Action: no action
 
-On 5/3/2026 7:43 PM, Krzysztof Kozlowski wrote:
-> On 03/05/2026 16:10, Krzysztof Kozlowski wrote:
->> On Fri, May 01, 2026 at 10:40:37PM +0530, Akhil P Oommen wrote:
->>> Adreno X2-185 GPU found in Glymur chipsets belongs to the A8x family.
->>> It features a new slice architecture with 4 slices, significantly higher
->>> bandwidth throughput compared to mobile counterparts, raytracing support,
->>> and the highest GPU Fmax seen so far on an Adreno GPU (1850 Mhz), among
->>> other improvements. Update the dt bindings documentation to describe this
->>> GPU.
->>>
->>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->>> ---
->>>  Documentation/devicetree/bindings/display/msm/gpu.yaml | 1 +
->>>  1 file changed, 1 insertion(+)
->>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> 
-> I was a bit too fast and did not notice that this is only one if out of
-> two required. Where are the constraints for the rest of flexible properties?
-> 
+On Fri, May 01, 2026 at 09:04:58PM +0200, Andrew Lunn wrote:
+> > +static struct tc956x_mac_speed mac_speed[] = {
+> > +	{ PHY_INTERFACE_MODE_2500BASEX,	SPEED_2500,  SP_SEL_SGMII_2500M, },
+> > +	{ PHY_INTERFACE_MODE_SGMII,	SPEED_2500,  SP_SEL_SGMII_2500M, },
+> > +	{ PHY_INTERFACE_MODE_SGMII,	SPEED_1000,  SP_SEL_SGMII_1000M, },
+>
+> That looks odd. Some vendors implemented 2500BaseX using SGMII
+> overclocked. But that is not strictly 2500BaseX. Having the 2500BASEX
+> entry suggests you have real 2500BASEX, so why have an SGMII entry
+> with SPEED_2500?
 
-I will add a new entry under 'allOf' for Glymur to describe a constraint
-for the 'reg' property.
+This is a consequence of the code that uses this lookup table being
+called both during initialization and from the fix_mac_speed() callback.
 
--Akhil
+During initialization we only have the value in plat->phy_interface to
+go on so we run the lookup table using plat->phy_interface (which is
+typically PHY_INTERFACE_MODE_SGMII) and with the maximum permitted
+speed.
+
+I haven't got detailed enough notes to allow me to double check but I
+think there were problems completing the initial MAC reset if we didn't
+write something sensible to the hardware during initialization.
+
+During fix_max_speed() we get told to adopt 2500base-x. Reviewing the
+code I can see we don't propagate that and just use
+plat->phy_interface for fix_mac_speed(). I will fix the code to that
+the requested interface propagates properly to the lookup table but I
+think we would still rely on the SGMII entry to get sane initial values
+to write to the hardware.
 
 
-> Best regards,
-> Krzysztof
+> > +/* We have one IRQ chip instance with 25 IRQs in its domain */
+>
+> One per MAC, or one overall?
 
+One per MAC.
+
+
+> > +static struct irq_domain *
+> > +tc956x_msigen_irq_domain_instantiate(struct tc956x_data *td)
+> > +{
+> > +	struct irq_domain_chip_generic_info dgc_info;
+> > +	struct irq_domain_info info;
+> > +
+> > +	dgc_info.name = "tc956x-msigen";
+>
+> If it is one per MAC, maybe this name should indicate which instance
+> of the MAC this is.
+
+Will do.
+
+
+> > +static int tc956x_mac_setup(void *apriv, struct mac_device_info *mac)
+> > +{
+> > +	struct stmmac_priv *priv = apriv;
+> > +	struct stmmac_desc_ops *desc;
+> > +	struct stmmac_dma_ops *dma;
+> > +	struct tc956x_data *td;
+> > +
+> > +	td = priv->plat->bsp_priv;
+> > +
+> > +	/* dwxgmac301_dma_ops needs extending to provide DMA address translation */
+> > +	dma = &td->dma;
+> > +	*dma = dwxgmac301_dma_ops;
+> > +	dma->init_rx_chan = tc956x_dma_init_rx_chan;
+> > +	dma->init_tx_chan = tc956x_dma_init_tx_chan;
+> > +	mac->dma = dma;
+>
+> I could be reading this wrong....
+>
+> dma points to the global dwxgmac301_dma_ops, which you added a few
+> patches back.
+>
+> You then modify it, changing two values in it.
+>
+> Doesn't that break any other dwxgmac301 in the system? Shouldn't you
+> be making a copy of the global structure, and then making
+> modifications to your copy? mac->dma then points to your copy?
+
+That's exactly what this code does.
+
+`*dma = dwxgmac301_dma_ops` is a structure copy, we never take a pointer
+to dwxgmac301_dma_ops (and if we did, dwxgmac301_dma_ops is const so I
+think we'd get a kernel oops if we tried to write to rodata).
+
+Would to code be easier to read if we dropped the local `dma` variable
+since that would make it clearer that td->dma is not a pointer? More
+like:
+
++       /* dwxgmac301_dma_ops needs extending to provide DMA address translation */
++       td->dma = dwxgmac301_dma_ops;
++       td->dma.init_rx_chan = tc956x_dma_init_rx_chan;
++       td->dma.init_tx_chan = tc956x_dma_init_tx_chan;
++       mac->dma = &dma;
+
+
+>
+> > +	/* dwxgmac210_desc_ops also needs extending for the same reason */
+> > +	desc = &td->desc;
+> > +	*desc = dwxgmac210_desc_ops;
+> > +	desc->set_addr = tc956x_desc_set_addr;
+> > +	desc->set_sec_addr = tc956x_desc_set_sec_addr;
+> > +	mac->desc = desc;
+>
+> And the same problem here?
+>
+> > +/* Called by tc956x_dwmac_probe(); return errors with dev_err_probe() */
+> > +static int tc956x_dwmac_parse_dt(struct tc956x_data *td)
+> > +{
+> > +	struct device_node *mdio_node;
+> > +	struct device *dev = td->dev;
+> > +	struct device_node *np;
+> > +
+> > +	np = dev_of_node(dev);
+> > +	if (!np)
+> > +		return dev_err_probe(dev, -EINVAL, "no devicetree node\n");
+> > +
+> > +	/* Find the MDIO bus */
+> > +	for_each_child_of_node(np, mdio_node) {
+> > +		if (of_device_is_compatible(mdio_node,
+> > +					    "snps,dwmac-mdio"))
+> > +			break;
+> > +	}
+>
+> It looks like if you put the ethernet properties into an ethernet node
+> in DT, this might go away? Or at least allow you to use
+> stmmac_of_get_mdio().
+
+Alex has started looking into adding an ethernet node.
+
+
+Daniel.
 
