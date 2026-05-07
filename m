@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-106558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CBonAm0l/WlEYQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 01:51:09 +0200
+	id cH+3K1Qj/Wn6YAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 01:42:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E6854F05B4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 01:51:08 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B86ED4F0311
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 01:42:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5FB97302BDFB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 23:39:52 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id BBF3A300F7B2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 23:42:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E726372691;
-	Thu,  7 May 2026 23:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E57CC372B51;
+	Thu,  7 May 2026 23:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QvtxiuAs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XVSXDHrp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEEC37104A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 23:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13C433123D
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 23:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778197190; cv=none; b=me8Dk7RY7MVj6fOovt22ERLTPt2GlE2vqC1WY4sUgN/ii+gUPKSjoRoaJf81fEb78r+dqpx2eT4a7K4Zxc1DTCg+m8FuWmFH9JbAOiV1lM5hjpF5ZSvtegX7ep2N9aIVbK+GmkTsf68HfntsEKhxEdMvluAMnFYWGk90LLCZoFg=
+	t=1778197324; cv=none; b=imswCLO21ZkBRi00P09Fvp68kVBZO5tGVvB6WxBzpfpLSgPOeGTytWQfqO1zvjuhHAICDgrPi8krUoYebvPev1rJaPrUNOSZ0IcZE+JsRQ7MPwqkYZ0+pX2aiEwLHY62qA9L+hI/RBZ0IYAqyzUkkgNjvHkQVEZ8CLQISpOkIAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778197190; c=relaxed/simple;
-	bh=vFH+WCKmJFo+oFxj5WEkyqvJ7Aj4l64pwYaHYcrT4og=;
+	s=arc-20240116; t=1778197324; c=relaxed/simple;
+	bh=p7Rx6qNuAwgaIK8zmFad1PXiQo0SfDFYMCJz06kHD8g=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=V4cLHbkJxgnJcUsZzh3IHebhHyj1PesKkFiJ2mLxjVY3sA2rUnVWA6vz1Wk4mpRB3jukUEW4/ar8GNSxHAzi9xG+hpv7jquKOz2l/VRwi1Uhx9sWZUTAIjjzmI8KhJkh/NDOrgiXiyZD1IQ5TLi8rtp87jv5fRBZ2HKYTUmlBV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QvtxiuAs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25C4C2BCC9
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 23:39:50 +0000 (UTC)
+	 To:Cc:Content-Type; b=j5plIRglc1u/Jjd6EpvqAOfLgMz91XO8CwnUwcNkuHb7fyqXib0iuE8ThyGoC8ZWICzmotlNoFpcP+ADLyh3Dpw/XrNwGNXcWEyLGuUokulxgm8Rcn8+vcp6k5lEnhqRN/lWRz8tu72fcoQgJlgVGksC0hfcV4TLiyNDqlgytn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XVSXDHrp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13CFC2BD01
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 May 2026 23:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778197190;
-	bh=vFH+WCKmJFo+oFxj5WEkyqvJ7Aj4l64pwYaHYcrT4og=;
+	s=k20201202; t=1778197324;
+	bh=p7Rx6qNuAwgaIK8zmFad1PXiQo0SfDFYMCJz06kHD8g=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=QvtxiuAs5eVQPns7jJlqtGTfdl0EJbsvK9NI8npq8OMLSMiSWuCojWaz5XpXCmsan
-	 Wrki/Tmn5sP1n1hrh9a2tAMgBvgvMEetyZYlRhkxOrQVeYBuNqQAl5EXhaTsb/gSNR
-	 N3tDJQnEgUpi+Ise+Rk6oQ7UnD9f6R7jz6KRO3R1A/xImq8iYtkSFjrHRyKlIJgIL5
-	 ASW+UJLGkyWDkDPCeYIjie9iYtMbF/4k/99cseI+aVLIVKfYiQesyhpsoJ+guYxgOD
-	 it0716QbosCqZPJKCq+d0pprmnZzhD3cOjygZs+ebux/Q4N4ntZL4+fwJKlOkXvmkE
-	 QFWR3BZF83oDA==
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-67da63ae541so2359837a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 16:39:50 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ/vkpjYX6jOdmj0mPM2FypRtAcO9uNofRD5yYJnNDWfwF45Uq0uF9gqUOi9WDVagKL9GZKW14BNm/moFsdZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKPlD3/WJdk9JJkov2uBhmgiqXOLJFUsy0EPqXeimwIRvrafew
-	va5Qp9gVFKzgrYS6hO142D4NtTA3qPyZNRnf51bPwXoF+bC8OR4MaUof/d6fx6tfxfejG4bul8B
-	3e5wznQGgtfy4WooyjFDuwwtHkZAmfA==
-X-Received: by 2002:a05:6402:2113:b0:67c:1ed6:2793 with SMTP id
- 4fb4d7f45d1cf-67d648a74e5mr5797376a12.22.1778197188726; Thu, 07 May 2026
- 16:39:48 -0700 (PDT)
+	b=XVSXDHrpJKD3xum7FnwZCCrA8iQEYbbX5GpPhqtER+Kb6ORUOY3o6PbYdaH27ErrQ
+	 kOT8v1aEKkqxk3pXWvcFlkpl9WqFtXYrCXYyzwY9QlBKenIv8N4ArqaqEbDr34fGlc
+	 v6s6uH/QYfdQQkmL6JKXVMxYqW1O2LOnJAsCod7JH6RB4mWoJSrBAIcwEzGXRaVPa6
+	 9V2lo8OCSID8OvbS0r0xvh7WvOtEv0WIpowa09YfkGNLYVEfEfbosRNN2LybFa7EfU
+	 UsV+GtnDWNlb2e/HbImt4blT9TVNkcaoufYLk3uCSmoQJLcp/3Fwxc2xjxD0jGNocb
+	 Tq1eNGpBaQ4ZA==
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-67e9e343b22so760278a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 16:42:04 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ8zZnDe5vig+8PxNEqXQUsNFNP5UjTBfVTRcdIUyuWGq4iZVKRURUqnY4aBl6bis496BJsx+pMWvdquyWY9@vger.kernel.org
+X-Gm-Message-State: AOJu0YwcGoAxGVwC9A4SmIFE7wY/DFTGVA21Hbz3WsL3GZ2JyxGJYeGZ
+	8QdirJB29G4NuDG+1EvQP0+WL8EcVA3ZejGRJ12/tK7t0wJtjgWOa3S/+IRnr8aSNHoQcc3Oddu
+	ndprVJogitUPemkNSJ6flWRzxwaGt4A==
+X-Received: by 2002:aa7:da02:0:b0:66e:e024:1a08 with SMTP id
+ 4fb4d7f45d1cf-67d646b082bmr4114635a12.24.1778197322778; Thu, 07 May 2026
+ 16:42:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,23 +60,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260501155421.3329862-1-elder@riscstar.com> <20260501155421.3329862-9-elder@riscstar.com>
- <1f34cbce-e2dd-4e80-b136-55d0efa50002@lunn.ch> <967c1d96-9a48-48de-b7d9-58b63e782aee@riscstar.com>
-In-Reply-To: <967c1d96-9a48-48de-b7d9-58b63e782aee@riscstar.com>
+In-Reply-To: <20260501155421.3329862-9-elder@riscstar.com>
 From: Rob Herring <robh@kernel.org>
-Date: Thu, 7 May 2026 18:39:37 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKayEDa2-FDoxM_JU3Yvevd-Gs_eFKCQ8NY8A8oBsD13w@mail.gmail.com>
-X-Gm-Features: AVHnY4K23N33ivg6cLD9mNxL7odw3uUNL3DiEAJ7jfws_C2Zwld0dAM-keay8pI
-Message-ID: <CAL_JsqKayEDa2-FDoxM_JU3Yvevd-Gs_eFKCQ8NY8A8oBsD13w@mail.gmail.com>
+Date: Thu, 7 May 2026 18:41:49 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+GY5O-ygTHDOA8pVBDi_aKcmcJ0yt-3Rv4a4=Ygk66uQ@mail.gmail.com>
+X-Gm-Features: AVHnY4JOM9jN3mcHfPknCHd75ZrjDOMLe5cKzgxlMhp-0Ek9NIaM4mPgQRK3hWI
+Message-ID: <CAL_Jsq+GY5O-ygTHDOA8pVBDi_aKcmcJ0yt-3Rv4a4=Ygk66uQ@mail.gmail.com>
 Subject: Re: [PATCH net-next 08/12] dt-bindings: net: toshiba,tc965x-dwmac:
  add TC956x Ethernet bridge
 To: Alex Elder <elder@riscstar.com>
-Cc: Andrew Lunn <andrew@lunn.ch>, andrew+netdev@lunn.ch, davem@davemloft.net, 
-	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, 
-	maxime.chevallier@bootlin.com, rmk+kernel@armlinux.org.uk, 
-	andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, linusw@kernel.org, brgl@kernel.org, arnd@arndb.de, 
-	gregkh@linuxfoundation.org, Daniel Thompson <daniel@riscstar.com>, 
-	mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com, 
+Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com, 
+	kuba@kernel.org, pabeni@redhat.com, maxime.chevallier@bootlin.com, 
+	rmk+kernel@armlinux.org.uk, andersson@kernel.org, konradybcio@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, linusw@kernel.org, brgl@kernel.org, 
+	arnd@arndb.de, gregkh@linuxfoundation.org, 
+	Daniel Thompson <daniel@riscstar.com>, mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com, 
 	alexandre.torgue@foss.st.com, ast@kernel.org, boon.khai.ng@altera.com, 
 	chenchuangyu@xiaomi.com, chenhuacai@kernel.org, daniel@iogearbox.net, 
 	hawk@kernel.org, hkallweit1@gmail.com, inochiama@gmail.com, 
@@ -91,82 +89,111 @@ Cc: Andrew Lunn <andrew@lunn.ch>, andrew+netdev@lunn.ch, davem@davemloft.net,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 6E6854F05B4
+X-Rspamd-Queue-Id: B86ED4F0311
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [4.84 / 15.00];
-	SEM_URIBL(3.50)[0.0.0.0:email];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
-	BAD_REP_POLICIES(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-106559-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106558-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
-	FROM_HAS_DN(0.00)[];
-	R_DKIM_ALLOW(0.00)[kernel.org:s=k20201202];
-	GREYLIST(0.00)[pass,body];
-	MIME_TRACE(0.00)[0:+];
-	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_SPAM(0.00)[0.695];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
+	RCPT_COUNT_TWELVE(0.00)[49];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	RCPT_COUNT_GT_50(0.00)[50];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	R_SPF_ALLOW(0.00)[+ip4:172.234.253.10:c];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[riscstar.com:email,mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,1c:email,0.0.0.0:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,devicetree.org:url,riscstar.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On Thu, May 7, 2026 at 5:17=E2=80=AFPM Alex Elder <elder@riscstar.com> wrot=
-e:
+On Fri, May 1, 2026 at 10:55=E2=80=AFAM Alex Elder <elder@riscstar.com> wro=
+te:
 >
-> On 5/1/26 12:38 PM, Andrew Lunn wrote:
-> > Why not add an subnodes for the ethernet interfaces?
+> From: Daniel Thompson <daniel@riscstar.com>
 >
-> We will define "ethernet" devicetree subnodes of the PCIe functions
-> in the next version of the series.  Something like what's below.
+> Add devicetree bindings for the Toshiba TC956x family of Ethernet-AVB/TSN
+> bridges.
+>
+> Signed-off-by: Daniel Thompson <daniel@riscstar.com>
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> ---
+>  .../bindings/net/toshiba,tc956x-dwmac.yaml    | 111 ++++++++++++++++++
+>  1 file changed, 111 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/toshiba,tc956x-=
+dwmac.yaml
+>
+> diff --git a/Documentation/devicetree/bindings/net/toshiba,tc956x-dwmac.y=
+aml b/Documentation/devicetree/bindings/net/toshiba,tc956x-dwmac.yaml
+> new file mode 100644
+> index 0000000000000..d95d22a3761da
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/toshiba,tc956x-dwmac.yaml
+> @@ -0,0 +1,111 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/toshiba,tc956x-dwmac.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Toshiba TC956x Ethernet-AVB/TSN Controller
+> +
+> +maintainers:
+> +  - Alex Elder <elder@riscstar.com>
+> +  - Daniel Thompson <daniel@riscstar.com>
+> +
+> +description: |
+> +  This node provides properties for configuring the Ethernet PCI functio=
+ns
+> +  that are attached to the internal downstream port of the TC956x's PCIe
+> +  switch.
+> +
+> +  TC956x are a family of Ethernet-AVB/TSN bridge chips that combine a PC=
+Ie
+> +  switch together with a number of Ethernet controllers. These bindings
+> +  cover only the Ethernet functions of these devices.
+> +
+> +allOf:
+> +  - $ref: /schemas/pci/pci-bus-common.yaml#
+> +  - $ref: /schemas/pci/pci-device.yaml#
+> +
+> +unevaluatedProperties: false
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - pci1179,0220 # Toshiba TC9564 (a.k.a. Qualcomm QPS615)
+> +
+> +  "#gpio-cells":
+> +    const: 2
+> +
+> +  gpio-controller: true
+> +
+> +  # We can't allOf reference Ethernet-controller.yaml because we end up =
+with
+> +  # contradictory $nodename rules (`ethernet@` versus `pci@`). Happily o=
+nly a
+> +  # small number of the properties are useful on TC956x so we can just r=
+eference
+> +  # what we need.
 
-Are they PCIe functions? As in bus, dev, function addresses. How to do
-functions is already defined by the PCI binding.
+That would be due to the error sashiko pointed out. 'pci' is for PCI
+bridges (host or PCI-PCI).
 
->                                         -Alex
->
-> pci@0,1 {
-
-The 0 here is devnum and the 1 is function.
-
->          compatible =3D "pci1179,0220";
->          reg =3D <0x50100 0x0 0x0 0x0 0x0>;
->          #address-cells =3D <3>;
->          #size-cells =3D <2>;
->          device_type =3D "pci";
->          ranges;
->
->          ethernet {
->                  phy-mode =3D "sgmii";
->                  phy-handle =3D <&tc956x_emac1_phy>;
->
->                  mdio {
->                          compatible =3D "snps,dwmac-mdio";
->                          #address-cells =3D <1>;
->                          #size-cells =3D <0>;
->
->                          tc956x_emac1_phy: ethernet-phy@1c {
->                                  compatible =3D "ethernet-phy-id004d.d101=
-";
->                                 ...
->                         };
->                 };
->         };
-> };
+Rob
 
