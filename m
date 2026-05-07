@@ -1,82 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-106531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QM/uC1/5/GkrWAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 22:43:11 +0200
+	id qJXHDoH5/GkrWAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 22:43:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4DB04EED39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 22:43:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A8EC34EED6F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 07 May 2026 22:43:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 87F283081416
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 20:38:15 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id AC132308479C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 May 2026 20:38:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 722BA4A3415;
-	Thu,  7 May 2026 20:35:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB6454ADDB6;
+	Thu,  7 May 2026 20:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qGlsqKZA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S/joN8l4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA734A33FC;
-	Thu,  7 May 2026 20:35:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AD24ADDA9;
+	Thu,  7 May 2026 20:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778186114; cv=none; b=JBAVzDlzuabwBUfDs4n4eGWsrJ6tdz3MRi0CtzwOdhr8vpIOo9wnGmAC4ffyLHN/Bz/b2IXEu8IXikI8L4DXUMWTCub7yahTJ5HQqIhegQt60qOCeoOBQJUX8Om/fbegZ0csBkt5HRVwUY1mxpBl3t/o7COVi4G4+xx6NHOcdRI=
+	t=1778186115; cv=none; b=d6h/7bVjzWAZrKXljREK35H5ldeAHybi06o7hDPaP09oN3d1VycbUhm35oYPOkG/Fw5NDoFayxeuygFh2kTFGEjJnwpXH01Kuifla1/dImTlKrxSUc22hwcxAMuX9DxCUGF+6aCED6kdnvZ0+wKsGsn0EBxxPHjEXi9V8pImPaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778186114; c=relaxed/simple;
-	bh=HILlO92SW0znJjse5gzT1MtszGLFwhctmq0VpKqP2ys=;
+	s=arc-20240116; t=1778186115; c=relaxed/simple;
+	bh=sazAP2oVGZXfkGTv+FhIqQYVwPUI1cGv6nC8EixNI4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=icQTwww0ZFFNvXNEDim6zvarmFb3/KbmRLvGwWv4Qtmp8iZ+LfMcKW4tubRFP2jlq57Z2tGALnysGNljKf/Xb/ZIUGjwtqLJr1T5KCUoNIp6oQ5dPPsrQ7X6/jDCdE90X0jhprChgquYiqrQtkPVAg/hLR4QVKimP62oKELxRL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qGlsqKZA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75CBC2BCB8;
-	Thu,  7 May 2026 20:35:11 +0000 (UTC)
+	 MIME-Version:Content-Type; b=GuARWeCXgfw2RQWG7zuU8krnsGCQcaiADGdiejHS4u2H5XYQjBI4OsVGadGlEORjBv/36xK29G/8wS031RHXcz7w7jxAvsyai97xAH2IUI8FK//MvCKxlOXhB9md15PZEwkbCcsr4mQyTg3tO07A2Ts39EFXYvhO1g38rCREv7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S/joN8l4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6F3C2BCB2;
+	Thu,  7 May 2026 20:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778186114;
-	bh=HILlO92SW0znJjse5gzT1MtszGLFwhctmq0VpKqP2ys=;
+	s=k20201202; t=1778186115;
+	bh=sazAP2oVGZXfkGTv+FhIqQYVwPUI1cGv6nC8EixNI4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qGlsqKZA1KlBsAHUd49GRZdVlrNae7YNtkTdd3WArm0Q/g989C8iv5y0Sl4yKUZyJ
-	 B8zBdXhynXDjhTk3wx3GMOxwxqIuvSRDf5INdw1Vx0wsOrbyC/rivhvGHZf5AflsGd
-	 hUz/OGck7kEVxUye8PwjgCA6PL9XG+6M20zTlOTO9vEIkzgPIZiHm2Y+0UZdoFeZlH
-	 2IRRfacVK1ik82yN7ZJxpWVHV5kWhhiVObv96nqOVtESkgMvA9Y6ftcHcJiWrCOIML
-	 h9nY5c1nlI9ecEVYjbb7gFKg8al07/WHxLYSWRRv4OOxZQNEKr6aUz7N69AKd75H2M
-	 mKKXKfzo/Ts0Q==
+	b=S/joN8l4Ed94NcKBj/YtnyDm7Bhn8NeTTrroS+UzsBnuymweS0q0IGkRghxODj5es
+	 ksz/CIEws6E1xYFb1GMZUPpqhHfYke09+5FUw+hw8utQgr0wARu/E0Jxx3suK0HMa1
+	 YeULbwsxN5BXxqlVMpgiTH6dFS4IDclnqJ0xxBWQtFdDzpknsFNURkcLOkaWzNGLh1
+	 I7xh0BJrqF6Am1KP/YLx0YsDHatH3rGunRvOwiBnypxIh2NcULg7eskutly9WhEgJn
+	 2oKCEZO7FdKyS3q+UDH0sut5jgjehAVZL2TVWFhZeGMretoIBCwk3Ji2rJE3kZsqNw
+	 rDmANMZyj8nJA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: dmitry.baryshkov@oss.qualcomm.com,
-	marijn.suijten@somainline.org,
-	swboyd@chromium.org,
-	mripard@kernel.org,
-	konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	robin.clark@oss.qualcomm.com,
-	abhinav.kumar@linux.dev,
-	sean@poorly.run,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	alex.vinarskis@gmail.com,
-	Abel Vesa <abelvesa@kernel.org>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Mani Chandana Ballary Kuntumalla <quic_mkuntuma@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Val Packett <val@packett.cool>
+Cc: ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	freedreno@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	quic_rajeevny@quicinc.com,
-	quic_vproddut@quicinc.com,
-	quic_riteshk@quicinc.com
-Subject: Re: [PATCH v5 0/3] Enable mdss1 Display Port for Qualcomm lemans-ride platform
-Date: Thu,  7 May 2026 15:34:29 -0500
-Message-ID: <177818606044.73000.3306386577026904945.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v2 1/2] dt-bindings: arm: qcom: Add SM7325 Motorola Edge 30 (dubai)
+Date: Thu,  7 May 2026 15:34:30 -0500
+Message-ID: <177818606041.73000.17657106462085102010.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260402095003.3758176-1-quic_mkuntuma@quicinc.com>
-References: <20260402095003.3758176-1-quic_mkuntuma@quicinc.com>
+In-Reply-To: <20260403054417.167917-1-val@packett.cool>
+References: <20260403054417.167917-1-val@packett.cool>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,53 +70,50 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: B4DB04EED39
+X-Rspamd-Queue-Id: A8EC34EED6F
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106531-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,somainline.org,chromium.org,kernel.org,linux.dev,poorly.run,gmail.com,ffwll.ch,quicinc.com];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	TAGGED_FROM(0.00)[bounces-106532-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[26];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Action: no action
 
 
-On Thu, 02 Apr 2026 15:20:00 +0530, Mani Chandana Ballary Kuntumalla wrote:
-> This series adds the DPTX0 and DPTX1 nodes, as a part of mdss1
-> on Qualcomm lemans SoC. It also enables Display Port on Qualcomm
-> lemans-ride and lemans-evk-ifp-mezzanine platforms.
+On Fri, 03 Apr 2026 02:33:08 -0300, Val Packett wrote:
+> Motorola Edge 30 (motorola,dubai) is a smartphone based on the
+> SM7325 SoC.
+> 
 > 
 
 Applied, thanks!
 
-[1/3] arm64: dts: qcom: lemans: add mdss1 display device nodes
-      commit: 3e6cd0c43cdf678622c19210bd1a70b04c8a79af
-[2/3] arm64: dts: qcom: lemans-ride: Enable mdss1 display Port
-      commit: fcc1a19f5bd5623c448e54b2ea6d50249abea77a
-[3/3] arm64: dts: qcom: lemans-evk-ifp-mezzanine: Enable mdss1 display Port
-      commit: f0b64466e2896020ff2bcaa512bbcc4fea847635
+[1/2] dt-bindings: arm: qcom: Add SM7325 Motorola Edge 30 (dubai)
+      commit: 839d20f9f3da93f65c000187ee68387598bdecb5
+[2/2] arm64: dts: qcom: Add Motorola Edge 30 (dubai) DTS
+      commit: dd1316efdbc5a998b901b1c5f27da73d45060795
 
 Best regards,
 -- 
