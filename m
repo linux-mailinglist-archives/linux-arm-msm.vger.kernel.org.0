@@ -1,138 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-106687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sN8PH87n/WkPkgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 15:40:30 +0200
+	id UHMeGXPp/WkPkgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 15:47:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FDCC4F730B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 15:40:30 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D59F74F74F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 15:47:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8CBDD30080B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 13:34:26 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 55505307B854
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 13:36:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 456DA346A08;
-	Fri,  8 May 2026 13:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC48B3ECBD9;
+	Fri,  8 May 2026 13:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hQeKVyBq"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="dEsn2jJk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60873E4C9A;
-	Fri,  8 May 2026 13:31:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22233351C20;
+	Fri,  8 May 2026 13:35:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778247088; cv=none; b=mf7OKWHDOPUUbVxrfR5O9lE1JXXBhiOTk9WCbk4udZeJX1hZDowrbBUsh8vwbJC7dMVzVWXnrYGZxjkJ6r6c7nocACJ/xaqXtjZSxdp2EUVMSnhs9MKwUudAj+WIbtTsrpvDppcUevYAnlr010GVSV53NwCnp92XBD2tlQtaI+M=
+	t=1778247340; cv=none; b=iF73xTxMiSDHX8AtB3J8BLkocA4Yy0XI1QjN62dhZzdXH1NYMar1z5mag0mDW/otTtNSD8Fl4cEBlb2SFUcE0FWLxj6iUTzZsjymI59EQY8SNHbRj16T4C/bjoDSf/ewDY6shUOGTcK8nXfmuX1aQOepsSeWlQy9CeR/tff335Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778247088; c=relaxed/simple;
-	bh=2F1QozlQG7T09kRSpbf+cVE38mgMF7pF8fSdN6iJDHY=;
+	s=arc-20240116; t=1778247340; c=relaxed/simple;
+	bh=W5z+ZvjeraSq0lSpTjZEb81FwbkIx92nnUKXxoZ2Y9E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NZvHuwesHonhCsIEY/DcmIIzkNymUBselSltdpE3QLKcnF1aWoaTNGD91R9lBeBN7GxY7IJD++HuOl1NG9M1SOnVEBpL27iW60tBNilV7iO5fkQynaANFrDCpzKTIXbcmIxOcaDiAzBIhMp9O77ArqV4qXrQa3vPl2RV+mi0fPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hQeKVyBq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71663C2BCB0;
-	Fri,  8 May 2026 13:31:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778247086;
-	bh=2F1QozlQG7T09kRSpbf+cVE38mgMF7pF8fSdN6iJDHY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hQeKVyBqTs7KE2qNbk1uC4Rzcs/YG2OwSwWDS4g19ozR51U2JOUQqcWZx0DV0v6Px
-	 W1jfdvA39ttzChD9WABRxO3XBPld2NHC6NtIkRvmOAcpBHEA1gzDJwZssJMvGrMbtk
-	 5ihebRHR6IEeOMLr52VTmAp9haSSAZNZu6bXH74c0+OHJ9hU9JTOur8XtlU3kZQwdL
-	 ECzKeAXP7jCuUuxXq0BWEVb4d3KRgFkZGaf9UXfjaY4WocQw3zDB/L/nu1CMmnLXFb
-	 yyBJgFRLJolGWPGiG5otrLlyb9o3P4De9/1dy8GFDopl8dbP6H+F3yhEeex93pXlT/
-	 qhRAvIVUZfAQQ==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id 682A51AC5895; Fri, 08 May 2026 14:31:24 +0100 (BST)
-Date: Fri, 8 May 2026 22:31:24 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>, linux-input@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH RFC 1/4] regulator: add devm_fwnode family of functions
-Message-ID: <af3lrPf3Mc7xf4A2@sirena.co.uk>
-References: <20260508-gpiokeys-vdd-supply-v1-0-0bb32e8e6428@fairphone.com>
- <20260508-gpiokeys-vdd-supply-v1-1-0bb32e8e6428@fairphone.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=odcV2bX9+06ON+qPVdFnCN7oadKgVTZ2tUSYVejHrM2TjcN6vnR0gWMp+aFBCbQ0WEw1VnJDjgdLOkCl4FegI3h32jJsXG9FdMmyxf4zZdbr5AzkNsuc2Ks37zABswqbCrKnoZ9iWc+imuwtFrhkDa8vWoSdFfvDchmiFHk0HQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=dEsn2jJk; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=uRlWfI16RymHotfKoKopTsF4SVqazk8teSam4cHD0H0=; b=dEsn2jJkfn0vWzDqmxpz/dpbvV
+	9/vq5HjVqavwgrmrWiobypSOnn3E2jm6DDa+Bi4CXBt5amdylGIbVxVkQACH2LcKGMBM+VrFtnd5O
+	DYHzi0irzD7tE0L8DU/LxjfhmbgByTU0+VR5bhkzErWpUKXV/KmeOrnFv5Kub5qE4Jp4=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1wLLLm-001yZO-4f; Fri, 08 May 2026 15:34:42 +0200
+Date: Fri, 8 May 2026 15:34:42 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Daniel Thompson <daniel@riscstar.com>
+Cc: Alex Elder <elder@riscstar.com>, andrew+netdev@lunn.ch,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, maxime.chevallier@bootlin.com,
+	rmk+kernel@armlinux.org.uk, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, linusw@kernel.org, brgl@kernel.org,
+	arnd@arndb.de, gregkh@linuxfoundation.org,
+	mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com,
+	alexandre.torgue@foss.st.com, ast@kernel.org,
+	boon.khai.ng@altera.com, chenchuangyu@xiaomi.com,
+	chenhuacai@kernel.org, daniel@iogearbox.net, hawk@kernel.org,
+	hkallweit1@gmail.com, inochiama@gmail.com, john.fastabend@gmail.com,
+	julianbraha@gmail.com, livelycarpet87@gmail.com,
+	matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
+	prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
+	rohan.g.thomas@altera.com, sdf@fomichev.me,
+	siyanteng@cqsoftware.com.cn, weishangjuan@eswincomputing.com,
+	wens@kernel.org, netdev@vger.kernel.org, bpf@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 10/12] net: stmmac: tc956x: add TC956x/QPS615
+ support
+Message-ID: <f15e2fe2-88c9-409d-b953-cdc94aee4e16@lunn.ch>
+References: <20260501155421.3329862-1-elder@riscstar.com>
+ <20260501155421.3329862-11-elder@riscstar.com>
+ <2ce5897d-5bbb-486a-b0f0-0e30e54b451a@lunn.ch>
+ <afy34kj2hPxIlArO@aspen.lan>
+ <ef6df85f-11ac-404d-958a-8cf69b3b6bb6@lunn.ch>
+ <af3IKKkjl0jK8GGB@aspen.lan>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="4buaXrfzRTzWsrHF"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260508-gpiokeys-vdd-supply-v1-1-0bb32e8e6428@fairphone.com>
-X-Cookie: Truckers welcome.
-X-Rspamd-Queue-Id: 0FDCC4F730B
+In-Reply-To: <af3IKKkjl0jK8GGB@aspen.lan>
+X-Rspamd-Queue-Id: D59F74F74F5
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-4.26 / 15.00];
-	SIGNED_PGP(-2.00)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[lunn.ch,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
+	R_DKIM_ALLOW(-0.20)[lunn.ch:s=20171124];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,fairphone.com,vger.kernel.org];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106687-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[riscstar.com,lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-106688-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[lunn.ch:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[50];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andrew@lunn.ch,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Action: no action
 
+> BTW if you are bothered by SP_SEL_SGMII_2500M, that name comes directly
+> from the TRM and I'd prefer to keep it if I can. The enumerated value
+> we have to write into the SP_SEL for 2500base-X is "SGMII 2500M".
 
---4buaXrfzRTzWsrHF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+We try to avoid anything to do with SGMII and 2500 because it is
+technically wrong. Cisco never defined SGMII for 2500, it is something
+silicon vendors have made up, without any foundation in any
+standardisation. We much prefer to refer to it as 2500BaseX with
+broken signalling, which is a much more accurate description.
 
-On Fri, May 08, 2026 at 02:53:13PM +0200, Griffin Kroah-Hartman wrote:
-> Add devm_fwnode_regulator_get and variants.
->=20
-> These function wrappers allow regulators to be accessed from the fwnode
-> struct without any casts.
+The TRM is also not a public document. If it was, i could see some
+value in keeping with the naming, but since ~0 developers have the
+document, this is less useful.
 
-Why?
-
---4buaXrfzRTzWsrHF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmn95asACgkQJNaLcl1U
-h9AKSgf8DQ01KnkkqxDIQTlrHuCkEn16D+Yr4k9m4rmRwL4e7A47S7WKsH9DjRRD
-f4cRTZmvm5al8qv/3cWT6hZ+y6PwQ/NCY01JaPF+N3quqISkZoQvrHxt5Ms7dNQl
-ndM1zQ09iyUlenJASTMv4d3qzkwU4++gnQiSauEFUGyxWmlE5SvASuUs/dv2GvgK
-mC8LYWLlatTvP2Jr+avWDesJJlRQO2vxJEIK1fUH1BMJmINABotmY9OvG8arS06a
-ZwSIDuawL5GLo5KgmFemxDGaewKBK+XWPLIZ3OmqKXY0assRepeQYzAobqNeYDjm
-Mtvpn7Ei0chyE52y0f+hfx9DWmPHYQ==
-=RGuJ
------END PGP SIGNATURE-----
-
---4buaXrfzRTzWsrHF--
+	Andrew
 
