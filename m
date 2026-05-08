@@ -1,278 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-106701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aJBpFpf7/WnYlQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 17:04:55 +0200
+	id 0JIZM+cA/mkTlwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 17:27:35 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBF7C4F8478
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 17:04:54 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 376544F8A9A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 17:27:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AA59830A4D86
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 15:01:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A7265301C16C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 15:25:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C6063624B3;
-	Fri,  8 May 2026 15:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A2963F23D5;
+	Fri,  8 May 2026 15:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="bDraT/pH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ctz1wJui"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECAB53D1705
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 15:01:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142393D47CC
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 15:25:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778252473; cv=none; b=k8Yj0gKPdEfCdr6XFXi6gJuL9auKWO3XW0KmLuN8EHmIaFuKJQRQW9C4PPeYKoL+4amiTL8Xu9Md/Ho5yAGjAW7QEb8c2FX2tZ7o2RnBNgVdkLzGLVvIUcr7DZ25kbcCFnYofuJAbMJneM+bfcsSuovrbHGs9NXEIFptnDc2WS4=
+	t=1778253923; cv=none; b=MYn/1F+NVk64qk1OtU6/w8DKk39co00de8HuUIklra1XfYua74trgfksCh6Wt58/zTDf+qT6wOfEBZOzDpV6wD5W+VPELVuBwZWw4lz5MyYMigDZ5WEoZjdEjbyVT/SvFXqYAculhcwswfPA1NI51aLMgn9pEZF9epjU7jrMDiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778252473; c=relaxed/simple;
-	bh=tBSLp4TFWnzxz3eHgUik+or3IqdAn5knLKmt0L5xo5M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bng+/1nmqms1K2x6NYSIyzPDmBcaeW9GIl1sfYuMlS01f1zXBPVed8FIPmlekjGiwhrlHWuy7SZYe9zvDvwDLQZlXuza0gGS4rb16onxec16pI+0sf3+0pBdmUL3+qW1WOLFYqB4opDJgDX+91B4WIOaT3RFVNi8GWMAr+ZVdFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=bDraT/pH; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D2FB83595
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 08:01:04 -0700 (PDT)
-Received: from [192.168.0.1] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id E8D293F763
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 08:01:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1778252470; bh=tBSLp4TFWnzxz3eHgUik+or3IqdAn5knLKmt0L5xo5M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bDraT/pHkcbZ0bQVqGw+Hjq3KZWAsaUEojhtX2G17fhz7e6+9mAma/JC0Ld0LRNrY
-	 xxtEyBsSreyFqr6YjZgXrSfLbCEAmtqfdVPKebQfTo6fnHCfrMYqp9LTO7pXECXFjv
-	 1spBYz6HnJmzGgYidmu5mcvxGGYfSQ4nD9UknUe0=
-Date: Fri, 8 May 2026 16:00:51 +0100
-From: Liviu Dudau <liviu.dudau@arm.com>
-To: Boris Brezillon <boris.brezillon@collabora.com>
-Cc: Steven Price <steven.price@arm.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Akash Goel <akash.goel@arm.com>, Chia-I Wu <olvaffe@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] drm/gem: Stop exposing the racy/unsafe
- drm_gem_lru_remove() helper
-Message-ID: <af36o8diwtmA4z8K@e142607>
-References: <20260508-panthor-shrinker-fixes-v2-0-39cdb7d577c9@collabora.com>
- <20260508-panthor-shrinker-fixes-v2-3-39cdb7d577c9@collabora.com>
+	s=arc-20240116; t=1778253923; c=relaxed/simple;
+	bh=RSPgHsHKv3HIrehtClGsNwtFl5zAlbG9AEbp2U8tqtA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=a7kbChOiqeqQh+ywgDxhj25Ut4SyRB20BciK5agZusOi3AaeSirqamqKtMqLHGLT6dCU39iIAhdK2N9wtDs3/YUGxOMLFttgTwUhkFz1inlq2qEw6fJ7B8lGAlhD4/8Jbma3PbyWv/Cg5jUR7ndMG7T/XM+4qPJbHJq4wLXlG0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ctz1wJui; arc=none smtp.client-ip=74.125.82.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-2ef38cf04f0so2326449eec.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2026 08:25:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778253921; x=1778858721; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TRoQ+3Yekl1sBGcIilVshMHtKIfsx7cqVK42rev6z2U=;
+        b=ctz1wJuimUDdg7t0nXpjXKv8S4b97HhfvkiXTBKoS96VabLDxZkXDJPAxDxsgmK1sP
+         ZVN2fIdgx9PB354V2okPs062GUhanMOokn3hWu3XGWHwF2dNkPZtsLCmq7cOLIUFjXeJ
+         V9IiVH7lrJMhlNZ1T7PbCIlasYlZOjqrxTKV1yihr4SzwvwPPwEi7cr951pg4TpHGzss
+         lc5i7yipQD5BAF3RbvJ41QMN1+LHJr+syk5iQm9r+qKascxOkpchGlPtXACNGpTqXSMZ
+         EdJ3Rpaa7kK9QRuy5+WJwUdVkmmbVTESUrGU7ltvSC46mKYInT01PdUocsGQmaNUvgTo
+         Imdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778253921; x=1778858721;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TRoQ+3Yekl1sBGcIilVshMHtKIfsx7cqVK42rev6z2U=;
+        b=bwjsPqIbTD4uBQHrLtQCSJwOKX2284nvqRzP68eK82liyfP/Tf7GXXjaHEaLdDwShR
+         T/nSjz0MffTYwhlfWqCEo+K0QKUqm2rrJ8YYQ2OM/zQDKLNrHIFUJQezJTOl8Pi032pr
+         hGu+LxClGXvBoPWy/umUzjS5w3DcNOubLmNY/n/hLF2d+DzeczLnxSyvr34eoP5jued7
+         +fcRtBSofJozBNKKpMzbF8yTCWtm5Ij8Fz424ifz9i7FiR+Ezrc+U4DriHzaXKLMM5W/
+         NOXt7tdOfIzMvv5b1b/bTnaGetmiXPWFGERjba+LQj3h3vg5puss9Fla1yO9Xs59pbvM
+         4TAg==
+X-Forwarded-Encrypted: i=1; AFNElJ9YS34JhCdx9zRzlVlhphmMDA01Ssu/9yd5BV3LwYSmm6hr99ZgFTldVvURc7Ublu9xPcYRMi8CYYvcoZI0@vger.kernel.org
+X-Gm-Message-State: AOJu0YweC/zAvXSGNjzhwh14ZplPIS5h5x2O82WUbOlQfzuRBJwNRXW3
+	z91Hf9dnSU8SawMo1lPReg7lZevx2E+KXeU7oBjalR6ExNu85+zUj2/U
+X-Gm-Gg: Acq92OFgzL62yfyVhjT0IZa3cnH9onDT9KW6AJqSKhQr5b+2IdPVGi5EcT95+Mkc4aH
+	+3IBd6T+M08zInFXXjqznTvMYoID0ph1ktU3IQOkIYk9y8SPsI1FtUndEDaoWD9xXQQ6x+LvEIg
+	lwSrn6Tc8KoooJ9BggttfqrrDGcx1Baidwf08vu1l7qFBE5yGHGDBmam4BVU5G6/cXyq6g0gus+
+	JDg7PkdycWad/zDD8i0uvh9yr1XyPbqXp7PI04a7EbgqzzXHmO88hY+JOVrhpYYjTCAvrKjSonf
+	eiL8VSIct+vr4nD4tfQDg8kAoB2NOaN0hsK2BNT0qp4I/IJ2YXQwde2NWqwFa/y0IXIjuSoEfvz
+	CLqSV5ZKcGvBdO9bhvc7TUAozDZtJTKT3YoL8rnHBMmKqw15CVHg+QV5EdSLDW4psHNJc4PuV5P
+	85kQMbhmA5SQOB4eiw41NDJCYesIpx9PeSVNJJ7W453+wWmRA=
+X-Received: by 2002:a05:7300:d70d:b0:2d9:6373:ad10 with SMTP id 5a478bee46e88-2f548065445mr6402720eec.7.1778253921033;
+        Fri, 08 May 2026 08:25:21 -0700 (PDT)
+Received: from arch.localdomain ([2409:8a28:a53:11:5d6e:9aed:ce1b:4ae9])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2f8862d43b4sm2535486eec.11.2026.05.08.08.25.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 May 2026 08:25:20 -0700 (PDT)
+From: Jun Yan <jerrysteve1101@gmail.com>
+To: Lee Jones <lee@kernel.org>,
+	Pavel Machek <pavel@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory Clement <gregory.clement@bootlin.com>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Vincent Knecht <vincent.knecht@mailoo.org>,
+	Grant Feng <von81@163.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Baruch Siach <baruch@tkos.co.il>,
+	Nick Hawkins <nick.hawkins@hpe.com>,
+	Robert Marko <robert.marko@sartura.hr>
+Cc: Jun Yan <jerrysteve1101@gmail.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	linux-leds@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH 0/5] leds: is31fl319x: Fix shutdown GPIO and update DT bindings
+Date: Fri,  8 May 2026 23:24:17 +0800
+Message-ID: <20260508152435.21389-1-jerrysteve1101@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260508-panthor-shrinker-fixes-v2-3-39cdb7d577c9@collabora.com>
-X-Rspamd-Queue-Id: CBF7C4F8478
+X-Rspamd-Queue-Id: 376544F8A9A
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
-	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106701-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[arm.com,collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
+	FREEMAIL_CC(0.00)[gmail.com,ucw.cz,kernel.org,vger.kernel.org,lists.infradead.org];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	TAGGED_FROM(0.00)[bounces-106702-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	DKIM_TRACE(0.00)[arm.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[liviu.dudau@arm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[26];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[kernel.org,lunn.ch,bootlin.com,gmail.com,mailoo.org,163.com,arm.com,linaro.org,tkos.co.il,hpe.com,sartura.hr];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jerrysteve1101@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,collabora.com:email,arm.com:email,arm.com:dkim]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On Fri, May 08, 2026 at 12:40:49PM +0200, Boris Brezillon wrote:
-> The only place where it's safe to call drm_gem_lru_remove() is when
-> we know the drm_gem_object::lru field can't be concurrently updated,
-> which we know is the case when the drm_gem_object is destroyed.
-> 
-> Rather than trying to make that safe, let's kill the function and inline
-> its content in drm_gem_object_release().
-> 
-> Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+This series fixes incorrect shutdown GPIO polarity and improves
+shutdown-gpios description in DT bindings.
 
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Patch 1 adds detailed shutdown-gpios description and fixes example
+in DT bindings.
 
-Best regards,
-Liviu
+Patch 2 fixes shutdown GPIO initial state and removes redundant
+startup toggling.
 
-> ---
->  drivers/gpu/drm/drm_gem.c | 90 ++++++++++++++++++++---------------------------
->  include/drm/drm_gem.h     |  1 -
->  2 files changed, 39 insertions(+), 52 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-> index 0e087c770883..c85a39b8b163 100644
-> --- a/drivers/gpu/drm/drm_gem.c
-> +++ b/drivers/gpu/drm/drm_gem.c
-> @@ -1108,6 +1108,15 @@ drm_gem_release(struct drm_device *dev, struct drm_file *file_private)
->  	idr_destroy(&file_private->object_idr);
->  }
->  
-> +static void
-> +drm_gem_lru_remove_locked(struct drm_gem_object *obj)
-> +{
-> +	obj->lru->count -= obj->size >> PAGE_SHIFT;
-> +	WARN_ON(obj->lru->count < 0);
-> +	list_del(&obj->lru_node);
-> +	obj->lru = NULL;
-> +}
-> +
->  /**
->   * drm_gem_object_release - release GEM buffer object resources
->   * @obj: GEM buffer object
-> @@ -1118,13 +1127,42 @@ drm_gem_release(struct drm_device *dev, struct drm_file *file_private)
->  void
->  drm_gem_object_release(struct drm_gem_object *obj)
->  {
-> +	struct drm_gem_lru *lru;
-> +
->  	if (obj->filp)
->  		fput(obj->filp);
->  
->  	drm_gem_private_object_fini(obj);
->  
->  	drm_gem_free_mmap_offset(obj);
-> -	drm_gem_lru_remove(obj);
-> +
-> +	/*
-> +	 * We do the lru != NULL check without the lru->lock held, which
-> +	 * means we might end up with a stale lru value by the time the
-> +	 * lock is acquired.
-> +	 *
-> +	 * This is deemed safe because:
-> +	 * 1. the LRU is assumed to outlive any GEM object it was attached
-> +	 *    (LRUs are usually bound to a drm_device). So even if obj->lru
-> +	 *    has become NULL, it still point to a valid object that can
-> +	 *    safely be dereferenced to get the lock.
-> +	 *
-> +	 * 2. all LRUs a GEM object might be attached to must share the same
-> +	 *    lock (lock that's usually part of the driver-specific device
-> +	 *    object), so taking the lock on the 'old' LRU is equivalent
-> +	 *    to taking it on the new one (if any)
-> +	 */
-> +	lru = obj->lru;
-> +	if (lru) {
-> +		guard(mutex)(lru->lock);
-> +
-> +		/* Check a second time with the lock held to make sure we're
-> +		 * not racing with the drm_gem_lru_remove_locked() call in
-> +		 * drm_gem_lru_scan().
-> +		 */
-> +		if (obj->lru)
-> +			drm_gem_lru_remove_locked(obj);
-> +	}
->  }
->  EXPORT_SYMBOL(drm_gem_object_release);
->  
-> @@ -1552,56 +1590,6 @@ drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock)
->  }
->  EXPORT_SYMBOL(drm_gem_lru_init);
->  
-> -static void
-> -drm_gem_lru_remove_locked(struct drm_gem_object *obj)
-> -{
-> -	obj->lru->count -= obj->size >> PAGE_SHIFT;
-> -	WARN_ON(obj->lru->count < 0);
-> -	list_del(&obj->lru_node);
-> -	obj->lru = NULL;
-> -}
-> -
-> -/**
-> - * drm_gem_lru_remove - remove object from whatever LRU it is in
-> - *
-> - * If the object is currently in any LRU, remove it.
-> - *
-> - * @obj: The GEM object to remove from current LRU
-> - */
-> -void
-> -drm_gem_lru_remove(struct drm_gem_object *obj)
-> -{
-> -	struct drm_gem_lru *lru = obj->lru;
-> -
-> -	/*
-> -	 * We do the lru != NULL check without the lru->lock held, which
-> -	 * means we might end up with a stale lru value by the time the
-> -	 * lock is acquired.
-> -	 *
-> -	 * This is deemed safe because:
-> -	 * 1. the LRU is assumed to outlive any GEM object it was attached
-> -	 *    (LRUs are usually bound to a drm_device). So even if obj->lru
-> -	 *    has become NULL, it still point to a valid object that can
-> -	 *    safely be dereferenced to get the lock.
-> -	 *
-> -	 * 2. all LRUs a GEM object might be attached to must share the same
-> -	 *    lock (lock that's usually part of the driver-specific device
-> -	 *    object), so taking the lock on the 'old' LRU is equivalent
-> -	 *    to taking it on the new one (if any)
-> -	 */
-> -	if (!lru)
-> -		return;
-> -
-> -	mutex_lock(lru->lock);
-> -	/* Check a second time with the lock held to make sure we're not racing
-> -	 * with another drm_gem_lru_remove[_locked]() call.
-> -	 */
-> -	if (obj->lru)
-> -		drm_gem_lru_remove_locked(obj);
-> -	mutex_unlock(lru->lock);
-> -}
-> -EXPORT_SYMBOL(drm_gem_lru_remove);
-> -
->  /**
->   * drm_gem_lru_move_tail_locked - move the object to the tail of the LRU
->   *
-> diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
-> index 86f5846154f7..d527df98d142 100644
-> --- a/include/drm/drm_gem.h
-> +++ b/include/drm/drm_gem.h
-> @@ -611,7 +611,6 @@ int drm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
->  			    u32 handle, u64 *offset);
->  
->  void drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock);
-> -void drm_gem_lru_remove(struct drm_gem_object *obj);
->  void drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj);
->  void drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj);
->  unsigned long
-> 
-> -- 
-> 2.54.0
-> 
+Patches 3-5 correct shutdown GPIO polarity in board DTS files.
+
+Jun Yan (5):
+  dt-bindings: leds: issi,is31fl319x: Add description for the
+    shutdown-gpios property
+  leds: is31fl319x: Fix shutdown GPIO initial state and remove redundant
+    startup pulse
+  arm64: dts: qcom: msm8916-alcatel-idol347: Fix sn3190 shutdown GPIO
+    polarity
+  ARM: dts: qcom: msm8974-oneplus-bacon: Fix sn3193 shutdown GPIO
+    polarity
+  arm64: dts: marvell: armada-7040-mochabin: Fix is31fl3199 shutdown
+    GPIO polarity
+
+ .../devicetree/bindings/leds/issi,is31fl319x.yaml        | 9 +++++++--
+ arch/arm/boot/dts/qcom/qcom-msm8974pro-oneplus-bacon.dts | 2 +-
+ arch/arm64/boot/dts/marvell/armada-7040-mochabin.dts     | 2 +-
+ arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts     | 2 +-
+ drivers/leds/leds-is31fl319x.c                           | 8 +-------
+ 5 files changed, 11 insertions(+), 12 deletions(-)
 
 -- 
-====================
-| I would like to |
-| fix the world,  |
-| but they're not |
-| giving me the   |
- \ source code!  /
-  ---------------
-    ¯\_(ツ)_/¯
+2.54.0
+
 
