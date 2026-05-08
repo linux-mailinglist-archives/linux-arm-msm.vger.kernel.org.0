@@ -1,262 +1,278 @@
-Return-Path: <linux-arm-msm+bounces-106700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4IT7NU72/Wn5lAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 16:42:22 +0200
+	id aJBpFpf7/WnYlQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 17:04:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id E287E4F7EFC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 16:42:21 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBF7C4F8478
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 17:04:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 8356930189AE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 14:41:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AA59830A4D86
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 15:01:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28B56370D55;
-	Fri,  8 May 2026 14:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C6063624B3;
+	Fri,  8 May 2026 15:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RGkdlTJw";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NQ0KEhOg"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="bDraT/pH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECD23ED5A3
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 14:41:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECAB53D1705
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 15:01:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778251315; cv=none; b=Yo/LSC80viK5haXUQtL1GkfgZSjvSok3iJR6JaWWKaU4tfp4KKq5GYUV7ta+8pkWN1WtITIMmyoIoSPYs1uCq3/1uoVlK4NUZ6cp/yRA+sMSTV5+Ua32KEk2Dj63P/tD3PxD6yhroLarhCNRJlPusKV2ybnYvqjUkFOgwiPtijE=
+	t=1778252473; cv=none; b=k8Yj0gKPdEfCdr6XFXi6gJuL9auKWO3XW0KmLuN8EHmIaFuKJQRQW9C4PPeYKoL+4amiTL8Xu9Md/Ho5yAGjAW7QEb8c2FX2tZ7o2RnBNgVdkLzGLVvIUcr7DZ25kbcCFnYofuJAbMJneM+bfcsSuovrbHGs9NXEIFptnDc2WS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778251315; c=relaxed/simple;
-	bh=pr96u8fpX27t/b9mvJO/e3weEQIF9Gqfw+8cGBAORNY=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=aOReDVmWksg1gb5OrwYiHPXZ32l7sFOgJWVlSLdCN4ngorhGe5R2178SuSqcs0DCDtAOMmYwLFeOSoTFmohnzjG7VwJM0MC2d3B+YGtcadLbeKXz8nLPjpkoBCnYquBh4tX5UWYe75I4HJ+oyM2K330mDgL6V4t/fRbVsiRW3o4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RGkdlTJw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NQ0KEhOg; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 648AlM262199585
-	for <linux-arm-msm@vger.kernel.org>; Fri, 8 May 2026 14:41:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wIVVKibPHGx2DZJ1/yR4RDqxK0+CG0k31mIdHaLooRE=; b=RGkdlTJw6nwQwk2N
-	1L1ixZMmBw/Mi1FGQ+YdLhNLYgz0OnG7tcromWyV5cIBu4VxeO2vHJGMOXGHzjbJ
-	/FtkYtFcoidwWmlQ6KcOBKrd80UpwZWdWJ2uApl18wLFZWRylv6jZEmN97aPTe1M
-	qjSJWXn5W3KGa8XqexlxXBc+nJAUZxNly51f+VyJqUVSNMYrEK3Tn8COLZHj1HPt
-	0SqDSguMxsYiKWLNltkTOL9njUESG+YIMY8PZEaWVIIM8kZu/oycoGFvsK53UC/a
-	dpEVVwTWiGEqWHJYa387u7HA9bP1P4rgVSl7uIyDVUXSHhlC18tFmmlYMD9wn36I
-	qL5Xng==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e119skuxv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2026 14:41:52 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-354c44bf176so2562173a91.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2026 07:41:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1778251311; x=1778856111; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=wIVVKibPHGx2DZJ1/yR4RDqxK0+CG0k31mIdHaLooRE=;
-        b=NQ0KEhOgTZDSXyqwQ8jENoigrzrYI+b8JTW7I4qNhgvAD1CTRQ6rgHb4PfqUYrJyLu
-         YuY08pAZvjI8WD6NIzmmenU8ODB1WErBVuaP15nSFJ6AVmqVJqxuSKgA2t1McUd4y+WK
-         S208SMJUFdbC6ge/3kbZWq+6XgTCU5CjN7NtLMJvc6LsAXwg1YMSn9tDGyZdtlYSCZv0
-         YwzXTfhs4gx/66aqq0PJf94Oo8DAnS1QHLa19LTuic3VfcSHvpgq1AHxsnHtEty6zKn7
-         ScXnwvX3uKMUzn7Hu62nf54V5EhFQpk+M8OjwKInKCX9F/tc9YX6R9BNWe3g0a4wyvqW
-         H1+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778251311; x=1778856111;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wIVVKibPHGx2DZJ1/yR4RDqxK0+CG0k31mIdHaLooRE=;
-        b=eVGzffyJQ8oWNRDd9WDpRYstukoK+bDMEdVUXM9hXBf/zjiOsiJzn3v5vZ5LK2V3Zq
-         +GgwK8WbLExWXJ/XBZGQY97F3owHzp3amgHL5VLGSPK6KvVdB8ZlPGChctDPMS0MJdx2
-         AnnvClIVdag3DdgYvVtK1+ts+Di0+vy7PiyQnZ6q5cclXQMDozfNcXgJmhr2VRT5uU2O
-         BoX3gP84LoViLH6zT1wZFGMK6mYDx47B0EYjoolHsgLXNSrpKoAT0m/fHURTl5xkuGDv
-         tICqC5j0vovFUSpZ6tIW/S8w6THudbt/Mmzx59xRYYnqeR/f16w4ukMexzOLIISkKMUO
-         BjpQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/IoeAKiisLLlIw8sD+WYezpFmJL1jCfRBudxN9IucQKzJd22CEyidKq7h1MDaED76kd6ID79wviyJpXDyT@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZ+z3ewCyZWZs2sjabVrVhldi71+vJIeUJ/YqkRDEOHURyA5ry
-	Ls60dANHfNOh3Dge7WnWdcJwxu9YQj4HP7cG48ttsxDChBGrDLe/aL4d3Y7vxh+YTWXTGkl2bHM
-	KszuPI4A2K8805bu8B7Ooz2Rs824QqP0nx+QmUQADdpHK5P7lUuhZyqcyaJjgXFWmvJiG
-X-Gm-Gg: Acq92OFo8Ij8J26HnN02vkWIcbEoh5cgC/1cAElCvGXK+6gkpn5P92Jmrw5/6Jwtdlz
-	LcD94l7CRsj63Y3OtHNpZWFiRioAikg+6fONgpv8TtgsOBBsmWQE8qnW4Ay/QL6WuxlANuL7b3/
-	111aF16raN6pEJVHlF7ZMh211GlZNu0CLa2q1Ug0JDQ2lkhyZohFOn9VMzvHX2Hc1bqqf61eySa
-	K+cLNmBknj0Flftkb9STIXDkur+fhFeC9loBBSH0aQKPhQcbsxnZQh6JJzfqPVc8dqgA2elfJK1
-	tmbgzjNrZ//H2qEZVYvSG0tHFqct/r04vUxKEOFW31gUBKsVgftV3BL3ZGR68LHRcc76/cw6fNu
-	WpnzbnYD28ahcmCD4Ax6KC2n64hFe2H7GaRKuJUTC2SVX4RU=
-X-Received: by 2002:a17:90b:164d:b0:366:346a:6891 with SMTP id 98e67ed59e1d1-366346a6cf8mr5460382a91.16.1778251311182;
-        Fri, 08 May 2026 07:41:51 -0700 (PDT)
-X-Received: by 2002:a17:90b:164d:b0:366:346a:6891 with SMTP id 98e67ed59e1d1-366346a6cf8mr5460312a91.16.1778251310566;
-        Fri, 08 May 2026 07:41:50 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([2409:40f0:1188:45b6:d004:fdff:fedc:161b])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-367be8be938sm109356a91.4.2026.05.08.07.41.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 May 2026 07:41:50 -0700 (PDT)
-Date: Fri, 08 May 2026 20:11:45 +0530
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>
-CC: "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-        cros-qcom-dts-watchers@chromium.org,
-        Eric Biggers <ebiggers@google.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-        Tengfei Fan <tengfei.fan@oss.qualcomm.com>,
-        Bartosz Golaszewski <brgl@kernel.org>,
-        David Wronek <davidwronek@gmail.com>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Alexander Koskovich <akoskovich@pm.me>,
-        Abel Vesa <abelvesa@kernel.org>, Brian Masney <bmasney@redhat.com>,
-        Neeraj Soni <neeraj.soni@oss.qualcomm.com>,
-        Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v5_01/13=5D_dt-bindings=3A_crypto=3A_qco?=
- =?US-ASCII?Q?m=2Cice=3A_Fix_missing_power-domain_and_iface_clk?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <b8805117-d54f-4e42-a7d4-6fa18af63e69@oss.qualcomm.com>
-References: <20260416-qcom_ice_power_and_clk_vote-v5-0-5ccf5d7e2846@oss.qualcomm.com> <20260416-qcom_ice_power_and_clk_vote-v5-1-5ccf5d7e2846@oss.qualcomm.com> <afmuncmBrrvddHTU@gondor.apana.org.au> <b8805117-d54f-4e42-a7d4-6fa18af63e69@oss.qualcomm.com>
-Message-ID: <CC0E438D-5544-4BB8-8512-7F93A7FA4DC1@oss.qualcomm.com>
+	s=arc-20240116; t=1778252473; c=relaxed/simple;
+	bh=tBSLp4TFWnzxz3eHgUik+or3IqdAn5knLKmt0L5xo5M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bng+/1nmqms1K2x6NYSIyzPDmBcaeW9GIl1sfYuMlS01f1zXBPVed8FIPmlekjGiwhrlHWuy7SZYe9zvDvwDLQZlXuza0gGS4rb16onxec16pI+0sf3+0pBdmUL3+qW1WOLFYqB4opDJgDX+91B4WIOaT3RFVNi8GWMAr+ZVdFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=bDraT/pH; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D2FB83595
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 08:01:04 -0700 (PDT)
+Received: from [192.168.0.1] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id E8D293F763
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 08:01:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1778252470; bh=tBSLp4TFWnzxz3eHgUik+or3IqdAn5knLKmt0L5xo5M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bDraT/pHkcbZ0bQVqGw+Hjq3KZWAsaUEojhtX2G17fhz7e6+9mAma/JC0Ld0LRNrY
+	 xxtEyBsSreyFqr6YjZgXrSfLbCEAmtqfdVPKebQfTo6fnHCfrMYqp9LTO7pXECXFjv
+	 1spBYz6HnJmzGgYidmu5mcvxGGYfSQ4nD9UknUe0=
+Date: Fri, 8 May 2026 16:00:51 +0100
+From: Liviu Dudau <liviu.dudau@arm.com>
+To: Boris Brezillon <boris.brezillon@collabora.com>
+Cc: Steven Price <steven.price@arm.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Akash Goel <akash.goel@arm.com>, Chia-I Wu <olvaffe@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/4] drm/gem: Stop exposing the racy/unsafe
+ drm_gem_lru_remove() helper
+Message-ID: <af36o8diwtmA4z8K@e142607>
+References: <20260508-panthor-shrinker-fixes-v2-0-39cdb7d577c9@collabora.com>
+ <20260508-panthor-shrinker-fixes-v2-3-39cdb7d577c9@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDE1MCBTYWx0ZWRfX0T2o2riMhlRp
- fsyiqu8oUJ7ysnlUlZagR3EvDbBWMZEscwXQ+zM9c9BlGpAxICM6GEMwrlU9tXz39P5pPfFbwXM
- +63UGQ43DIrZBUIpVuTzBcVhrCDIBsCr9jbkTeqlCn1puaX6mhS1HGEsejUn3c4tel0kaAL3t15
- hMP/+h/T+utukLKWxxY7b71KTTCjcUmPG2I3D1RElgEYdq/tlkysdEZRjKfJXdLAnQVjYdvIEUH
- l6pbSA1YVs7s4IaIE8FON5RZOE9NMivgmQTrDuhW7YN0p2Kpu+J2mEB8sjzxTV9wP/WyfIijGAB
- jEZz0CBvcSXq/EyiWEZpEEXK/526lk2En+LTLWLbOh3oFwMKF8Eidlv16q66dRlZnaUq9gW26Yi
- 3r8odRBknqpyJ/T4pBdr61atZ61w88pi72ho1ntLj9smIE2giUoWFFklsxGQgKXB/kuB0AAq/Wa
- oNG1FPShms65Gzs3gLw==
-X-Proofpoint-ORIG-GUID: lT1iK6vyM2Ihc_wLoLu1oeMiWS5wYQIk
-X-Proofpoint-GUID: lT1iK6vyM2Ihc_wLoLu1oeMiWS5wYQIk
-X-Authority-Analysis: v=2.4 cv=Dd4nbPtW c=1 sm=1 tr=0 ts=69fdf630 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=NGcC8JguVDcA:10 a=puQWGBksFvoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=5CtyM_Wnw1_u-mjX28QA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-07_02,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
- suspectscore=0 spamscore=0 impostorscore=0 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605080150
-X-Rspamd-Queue-Id: E287E4F7EFC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260508-panthor-shrinker-fixes-v2-3-39cdb7d577c9@collabora.com>
+X-Rspamd-Queue-Id: CBF7C4F8478
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.55 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	SUBJ_EXCESS_QP(1.20)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
+	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	XM_UA_NO_VERSION(0.01)[];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[32];
-	FREEMAIL_CC(0.00)[davemloft.net,kernel.org,oss.qualcomm.com,chromium.org,google.com,gmail.com,fairphone.com,linaro.org,quicinc.com,pm.me,redhat.com,vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-106701-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[arm.com,collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
 	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106700-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	DKIM_TRACE(0.00)[arm.com:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[harshal.dev@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[liviu.dudau@arm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,collabora.com:email,arm.com:email,arm.com:dkim]
 X-Rspamd-Action: no action
 
-Hi Herbert,=20
+On Fri, May 08, 2026 at 12:40:49PM +0200, Boris Brezillon wrote:
+> The only place where it's safe to call drm_gem_lru_remove() is when
+> we know the drm_gem_object::lru field can't be concurrently updated,
+> which we know is the case when the drm_gem_object is destroyed.
+> 
+> Rather than trying to make that safe, let's kill the function and inline
+> its content in drm_gem_object_release().
+> 
+> Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 
-On 7 May 2026 3:50:21 pm IST, Harshal Dev <harshal=2Edev@oss=2Equalcomm=2E=
-com> wrote:
->Hi Bjorn,
->
->On 5/5/2026 2:17 PM, Herbert Xu wrote:
->> On Thu, Apr 16, 2026 at 05:29:18PM +0530, Harshal Dev wrote:
->>> The DT bindings for inline-crypto engine do not specify the UFS_PHY_GD=
-SC
->>> power-domain and iface clock=2E Without enabling the iface clock and t=
-he
->>> associated power-domain the ICE hardware cannot function correctly and
->>> leads to unclocked hardware accesses being observed during probe=2E
->>>
->>> Fix the DT bindings for inline-crypto engine to require the UFS_PHY_GD=
-SC
->>> power-domain and iface clock for new devices (Eliza and Milos) introdu=
-ced
->>> in the current release (7=2E1) with yet-to-stabilize ABI, while preser=
-ving
->>> backward compatibility for older devices=2E
->>>
->>> Fixes: 618195a7ac3df ("dt-bindings: crypto: qcom,inline-crypto-engine:=
- Document the Eliza ICE")
->>> Fixes: 85faec1e85555 ("dt-bindings: crypto: qcom,inline-crypto-engine:=
- document the Milos ICE")
->>> Reviewed-by: Kuldeep Singh <kuldeep=2Esingh@oss=2Equalcomm=2Ecom>
->>> Reviewed-by: Krzysztof Kozlowski <krzysztof=2Ekozlowski@oss=2Equalcomm=
-=2Ecom>
->>> Signed-off-by: Harshal Dev <harshal=2Edev@oss=2Equalcomm=2Ecom>
->>> ---
->>>  =2E=2E=2E/bindings/crypto/qcom,inline-crypto-engine=2Eyaml | 35 +++++=
-++++++++++++++++-
->>>  1 file changed, 34 insertions(+), 1 deletion(-)
->>=20
->> Patch applied=2E  Thanks=2E
->
->Herbert has pulled out of picking this patch from his tree=2E
->As discussed, since this DT binding update relies on DTS changes in commi=
-ts 12 and 13
->of these series, they should all go through the same tree=2E
->
->Can we aim to pick this series via the qcom-soc tree to ensure the bindin=
-g and DTS changes
->are applied together? Since the 7=2E1 fixes window is open, I am hoping f=
-or this to be
->picked up this week or the next=2E
->
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
 
-Can you please confirm for Bjorn once
-that you're not picking this up and he
-can pick it from his tree?=20
+Best regards,
+Liviu
 
-Many thanks,=20
-Harshal
+> ---
+>  drivers/gpu/drm/drm_gem.c | 90 ++++++++++++++++++++---------------------------
+>  include/drm/drm_gem.h     |  1 -
+>  2 files changed, 39 insertions(+), 52 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
+> index 0e087c770883..c85a39b8b163 100644
+> --- a/drivers/gpu/drm/drm_gem.c
+> +++ b/drivers/gpu/drm/drm_gem.c
+> @@ -1108,6 +1108,15 @@ drm_gem_release(struct drm_device *dev, struct drm_file *file_private)
+>  	idr_destroy(&file_private->object_idr);
+>  }
+>  
+> +static void
+> +drm_gem_lru_remove_locked(struct drm_gem_object *obj)
+> +{
+> +	obj->lru->count -= obj->size >> PAGE_SHIFT;
+> +	WARN_ON(obj->lru->count < 0);
+> +	list_del(&obj->lru_node);
+> +	obj->lru = NULL;
+> +}
+> +
+>  /**
+>   * drm_gem_object_release - release GEM buffer object resources
+>   * @obj: GEM buffer object
+> @@ -1118,13 +1127,42 @@ drm_gem_release(struct drm_device *dev, struct drm_file *file_private)
+>  void
+>  drm_gem_object_release(struct drm_gem_object *obj)
+>  {
+> +	struct drm_gem_lru *lru;
+> +
+>  	if (obj->filp)
+>  		fput(obj->filp);
+>  
+>  	drm_gem_private_object_fini(obj);
+>  
+>  	drm_gem_free_mmap_offset(obj);
+> -	drm_gem_lru_remove(obj);
+> +
+> +	/*
+> +	 * We do the lru != NULL check without the lru->lock held, which
+> +	 * means we might end up with a stale lru value by the time the
+> +	 * lock is acquired.
+> +	 *
+> +	 * This is deemed safe because:
+> +	 * 1. the LRU is assumed to outlive any GEM object it was attached
+> +	 *    (LRUs are usually bound to a drm_device). So even if obj->lru
+> +	 *    has become NULL, it still point to a valid object that can
+> +	 *    safely be dereferenced to get the lock.
+> +	 *
+> +	 * 2. all LRUs a GEM object might be attached to must share the same
+> +	 *    lock (lock that's usually part of the driver-specific device
+> +	 *    object), so taking the lock on the 'old' LRU is equivalent
+> +	 *    to taking it on the new one (if any)
+> +	 */
+> +	lru = obj->lru;
+> +	if (lru) {
+> +		guard(mutex)(lru->lock);
+> +
+> +		/* Check a second time with the lock held to make sure we're
+> +		 * not racing with the drm_gem_lru_remove_locked() call in
+> +		 * drm_gem_lru_scan().
+> +		 */
+> +		if (obj->lru)
+> +			drm_gem_lru_remove_locked(obj);
+> +	}
+>  }
+>  EXPORT_SYMBOL(drm_gem_object_release);
+>  
+> @@ -1552,56 +1590,6 @@ drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock)
+>  }
+>  EXPORT_SYMBOL(drm_gem_lru_init);
+>  
+> -static void
+> -drm_gem_lru_remove_locked(struct drm_gem_object *obj)
+> -{
+> -	obj->lru->count -= obj->size >> PAGE_SHIFT;
+> -	WARN_ON(obj->lru->count < 0);
+> -	list_del(&obj->lru_node);
+> -	obj->lru = NULL;
+> -}
+> -
+> -/**
+> - * drm_gem_lru_remove - remove object from whatever LRU it is in
+> - *
+> - * If the object is currently in any LRU, remove it.
+> - *
+> - * @obj: The GEM object to remove from current LRU
+> - */
+> -void
+> -drm_gem_lru_remove(struct drm_gem_object *obj)
+> -{
+> -	struct drm_gem_lru *lru = obj->lru;
+> -
+> -	/*
+> -	 * We do the lru != NULL check without the lru->lock held, which
+> -	 * means we might end up with a stale lru value by the time the
+> -	 * lock is acquired.
+> -	 *
+> -	 * This is deemed safe because:
+> -	 * 1. the LRU is assumed to outlive any GEM object it was attached
+> -	 *    (LRUs are usually bound to a drm_device). So even if obj->lru
+> -	 *    has become NULL, it still point to a valid object that can
+> -	 *    safely be dereferenced to get the lock.
+> -	 *
+> -	 * 2. all LRUs a GEM object might be attached to must share the same
+> -	 *    lock (lock that's usually part of the driver-specific device
+> -	 *    object), so taking the lock on the 'old' LRU is equivalent
+> -	 *    to taking it on the new one (if any)
+> -	 */
+> -	if (!lru)
+> -		return;
+> -
+> -	mutex_lock(lru->lock);
+> -	/* Check a second time with the lock held to make sure we're not racing
+> -	 * with another drm_gem_lru_remove[_locked]() call.
+> -	 */
+> -	if (obj->lru)
+> -		drm_gem_lru_remove_locked(obj);
+> -	mutex_unlock(lru->lock);
+> -}
+> -EXPORT_SYMBOL(drm_gem_lru_remove);
+> -
+>  /**
+>   * drm_gem_lru_move_tail_locked - move the object to the tail of the LRU
+>   *
+> diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
+> index 86f5846154f7..d527df98d142 100644
+> --- a/include/drm/drm_gem.h
+> +++ b/include/drm/drm_gem.h
+> @@ -611,7 +611,6 @@ int drm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
+>  			    u32 handle, u64 *offset);
+>  
+>  void drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock);
+> -void drm_gem_lru_remove(struct drm_gem_object *obj);
+>  void drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj);
+>  void drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj);
+>  unsigned long
+> 
+> -- 
+> 2.54.0
+> 
 
->Regards,
->Harshal
->
+-- 
+====================
+| I would like to |
+| fix the world,  |
+| but they're not |
+| giving me the   |
+ \ source code!  /
+  ---------------
+    ¯\_(ツ)_/¯
 
