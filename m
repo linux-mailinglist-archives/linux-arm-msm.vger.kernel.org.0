@@ -1,185 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-106685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4KL4CxPe/Wn0jwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 14:58:59 +0200
+	id sD1gFpjg/WkhkQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 15:09:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A683C4F6A60
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 14:58:58 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA0064F6CD0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 15:09:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C0547308C2AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 12:53:37 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id CCA8A301945D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 13:09:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1858C3E0C52;
-	Fri,  8 May 2026 12:53:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="cEcX/+L+"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0746B3E0C52;
+	Fri,  8 May 2026 13:09:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3204F3E0C6F
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 12:53:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936C41F8691;
+	Fri,  8 May 2026 13:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778244813; cv=none; b=svkYS9iK86DGV4X2Wk9a/gyOaYuIUSLKi4cGkOstuwc4S5vZp+gHAqcfPd9ODWCm05lqskv7jOtsEAcnhnNRGMtU/v2MMr3kNrW7ktFpN5pTue14JPP0zGzQ5dds8f5oSb+EYCLiKJ6iD2BUT6xkig2uY9WLwfWULnZst1Ywq7E=
+	t=1778245781; cv=none; b=cRID1vfVWmeytbb6zeY9cfEztyJbVK1ejFaS1jH57wpO+538JgrQAtKPefzfoqfP44NpZYTybX9Cr3OC+KHX2EB+Z7jHOd4k3qFa9cnIJUyz3EjpcQeFGVHJPDV1piDEppJGSzzeiNNe+WD66QiYg3PSlBkq0E6qozAl40MlodU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778244813; c=relaxed/simple;
-	bh=tIDX7JUVBtImT75drxZOT43afatjq2eglYC9uyAHIeQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Mi4sNYBxAeKo5QCswoF5yu7RkkYNCNTVcAmI0ACeNMMHkrXHlBacLO6G0lNDvw+J61M5vyQiS0+bE2JLCzWVnxyB8DH31pC1c4xqnLqQ38Ncigi/fLANZrtVykAWCm0RGsFIjPTFpSg9s2UgP4+j3FazU/ihrhUPXG5fHksSyxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=cEcX/+L+; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-67b6da5a618so2879847a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2026 05:53:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1778244810; x=1778849610; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iH/xL0hFptFpdB14N/xJEwQzcQQr4/b2TTbHc4T4Jhk=;
-        b=cEcX/+L+g5ORSMeyQLW6lp1Ef/OqGNZsYt0zrqfPkq5DXVDyRlKfHLii4fwVuawRtv
-         NxLwffnwWNa5OssvUelV6bhOnVj0DLL+N7hLWvVz5/8RKLv2ZyByO82NvUYVnYrWlcx2
-         Pl18QswAYqEME8d4zn5FaFdYL5BiqhC+oJ08Pmawl35ma9+nx2hYRAg2i+3574B8zXt4
-         hdLKCgfwzlT1scygv5/gFVqobxxPo8c5jHBhqkUV8CU0ILfQiH487w88/d59VhnSkvIu
-         eOz3cVwtupsqIAgf0QKD/ucDUnbWo7gcBMt87Gx5bCtrTG5UvqK5YUi8HIYUibu5uk29
-         hkpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778244810; x=1778849610;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=iH/xL0hFptFpdB14N/xJEwQzcQQr4/b2TTbHc4T4Jhk=;
-        b=gIGTAEMonrW/6Ro3a0im1GS6Cq55d9QNmpo65GOCF8He8aSKVtkuCTTrBOtwzeNLXG
-         VVEMnKhltQqi5B2Tmubb2dnfvlpziSz+pFFBM8DR5hOesRt8xf1s4kfDUqSnFwSUwP/d
-         rMQXqCeuDpsmbxNfOjY7IRN2EfDpjCy3/si3RjcwMuJxr4Sn2eYLyQ/tsHvksUGlHWvT
-         +wJwedOlr5QU6BJFXYfS/NlE60Z55Rx0OJ+zs82/NqdNw+YHFvF+Qr7gUs1/EBGw71BU
-         vCD6Kmph0CoLIoHVvH+NnTbe8GKHjU3a2+sBEQoAEE7YSzEQnTpQDTkHmnLlq8r35LJ+
-         Clsw==
-X-Forwarded-Encrypted: i=1; AFNElJ901UvnyQtc1S0cmYVEcPHf9LI7YiJkxoW2kxllChgh4uZ5M6XmVjkVf21j4+OPoM0EzgIfUFjazbnYqWj8@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQTLJpbuS8e45uxsyU+gtF/ESgoiX3it/h8MMbNUfi+JPGClEj
-	Lx4B+IESYpyNHBYGv4ohS8qdgQpmT2KU7YJ89vRfZPyPMUYl7smaob7D4YlqoslmwTg=
-X-Gm-Gg: AeBDieu3cwA2cHWSACupLfKT/Vwzavzr9dFhaWnMQjcDpUyP0ycQHhyMP+N+GEzPgsD
-	MjLyigukwXzTZtrCv9xPuc3HhyGS1NZQ8HaLtaJIB00QFcCb4v6Wg9mPmMK3rqnxff3IP8XvphT
-	bJsBAtC+ruR458FJDhl2U74QOVRNLpPny1tRMwWIYLCJu5o5qlNXUWtH2f6rn5QFcd9gcEzFfgn
-	BWXpIhpJzu8us85QW+ip0DsvONpNnGHzR4ET0zenlhdAbl5JYL0HzwGTFOo+K/Mofixd3kpc1a5
-	+UfEfQiKz53IQBm744860fgCcVzibrljM5ZVM3SClEQJG5vLOv6c+qecLzNBxkoh5FSFnU9mYIq
-	jEgx+4kNtuNcKt3pu6BF3OXF2e8qkTsjFk8qOhzFn5S04ASpbysc1G+da5U69TFqjxoWrrK4Ocn
-	d6HmajXIipjcne5QcgYvZTnEUsh/5G9OoAPIfI6fX6IAuLQD0ekxSdKK56r724ls1olsklxhZWQ
-	T5ptRGokA==
-X-Received: by 2002:a17:907:fd8a:b0:bba:3bd7:17c7 with SMTP id a640c23a62f3a-bc56ac3654amr669181666b.7.1778244809659;
-        Fri, 08 May 2026 05:53:29 -0700 (PDT)
-Received: from [172.16.220.224] (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bcb94415c94sm800266b.53.2026.05.08.05.53.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 May 2026 05:53:29 -0700 (PDT)
-From: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
-Date: Fri, 08 May 2026 14:53:16 +0200
-Subject: [PATCH RFC 4/4] arm64: dts: qcom: milos-fairphone-fp6: add supply
- for Hall Effect sensor
+	s=arc-20240116; t=1778245781; c=relaxed/simple;
+	bh=6S4huXMF9Eta3Yguft6rRPtDlnuPmLRdDWOyNOIjQWk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Zly17A7dUA3i8SjBCZCD42yJB0qiqzBM/lcDacpaeSUAVI7MeywJg6v4DGWzAKt7RP+JmtPSQ1oC2nvxz/6+EsDm0iVmzUOFz9L0RFst8EgoE42cQHDQNfMwSBs+n1kK8X3cwSBrhy8l41RLDU/2kDoEQ6Smtxmo1kTmSu09q9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.206.16.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: esmtpsz21t1778245760te8ff9860
+X-QQ-Originating-IP: oDfTC3UmzXvWtX1d3MtBp/Xfjq9qMy3Zm4+IG/bmLQ4=
+Received: from [127.0.0.1] ( [116.234.74.217])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 08 May 2026 21:09:14 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 10512550886452153488
+Message-ID: <6744F8FEFD290FFD+4973b8ba-7d3b-45e4-8478-0b3334b81960@radxa.com>
+Date: Fri, 8 May 2026 21:09:12 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260508-gpiokeys-vdd-supply-v1-4-0bb32e8e6428@fairphone.com>
-References: <20260508-gpiokeys-vdd-supply-v1-0-0bb32e8e6428@fairphone.com>
-In-Reply-To: <20260508-gpiokeys-vdd-supply-v1-0-0bb32e8e6428@fairphone.com>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>
-Cc: linux-input@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778244804; l=1397;
- i=griffin.kroah@fairphone.com; s=20250804; h=from:subject:message-id;
- bh=tIDX7JUVBtImT75drxZOT43afatjq2eglYC9uyAHIeQ=;
- b=KT7bF/QDdLpdfF7n1XKRTlGsLTboMP/ClM4Ln/rj5O8mk+AT0De3KpscYOUGknrVFyaVp40Vd
- MR0dqPY85ufC++wlLpRWg937MPDzmsW/GsazLjn2qSNoZCrgHWb1vNG
-X-Developer-Key: i=griffin.kroah@fairphone.com; a=ed25519;
- pk=drSBvqKFiR+xucmLWONHSq/wGrW+YvcVtBXFYnYzn8U=
-X-Rspamd-Queue-Id: A683C4F6A60
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 10/12] net: stmmac: tc956x: add TC956x/QPS615
+ support
+To: Alex Elder <elder@riscstar.com>, andrew+netdev@lunn.ch,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, maxime.chevallier@bootlin.com,
+ rmk+kernel@armlinux.org.uk, andersson@kernel.org, konradybcio@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, linusw@kernel.org,
+ brgl@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org
+Cc: Daniel Thompson <daniel@riscstar.com>, mohd.anwar@oss.qualcomm.com,
+ a0987203069@gmail.com, alexandre.torgue@foss.st.com, ast@kernel.org,
+ boon.khai.ng@altera.com, chenchuangyu@xiaomi.com, chenhuacai@kernel.org,
+ daniel@iogearbox.net, hawk@kernel.org, hkallweit1@gmail.com,
+ inochiama@gmail.com, john.fastabend@gmail.com, julianbraha@gmail.com,
+ livelycarpet87@gmail.com, matthew.gerlach@altera.com,
+ mcoquelin.stm32@gmail.com, me@ziyao.cc,
+ prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
+ rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
+ weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
+ bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20260501155421.3329862-1-elder@riscstar.com>
+ <20260501155421.3329862-11-elder@riscstar.com>
+ <224E233C593EF171+8c8a43dd-5061-40f8-9eb7-f360eabf2ecc@radxa.com>
+ <ae90a4c9-f027-4373-a378-d0d4b7796ff3@riscstar.com>
+Content-Language: en-US
+From: Xilin Wu <sophon@radxa.com>
+In-Reply-To: <ae90a4c9-f027-4373-a378-d0d4b7796ff3@riscstar.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: Nt+z/y60tPnUntNr0h37IREVots3RaLwrPULh0GA79jGtOpfwKEdcvBB
+	vGDhDCFVCVDGkxyRE2OTvoJ3BAC5PxlqIDN/JJD4AXSK/ikl0jyX/GSVQGKFFkz4ENdEUSS
+	jVXeX8iIz18DyrTydrM2dT8KiFby0YfBminxUOL4J5AlH5kCMgkXuyKePKNiHWGlFK+yBQv
+	SRVy4V6iARJyXlvbI1rbJ1Dngayn4XErNHsXR0Kg6smHfZQdkinU29+j+A6LtvM6yZUbS4t
+	QVQptLZzaaJ4WQvRP74OndQJsbw1vv1nmsXyg0PvpJnR4E3kbenRf7lh2UQrWCAfnYWhxcG
+	hTAd64lSERlfpmuk9ijl7MHnkLFb+kT+JhDfn0EbwWHpNLpnzJlzMszqlfuaXd1hwc4nDs4
+	Ptr2Y85lsLV/akVhLZ1+rrmVHL5PiC3YijY+AWaatV34T0VxlBj6F8/QWgEBQSR7nOH8bXQ
+	XHo4x+A7+OOLAYUoEpxHHu2jQBnq4W40kBbHQZFQcx2uX3k9qxLStign4ItRLp83ezdKGG3
+	rXIy7z63D4JRXnth+L/LMCgCOPIZX6UbSeKhC9UhQunoQKllBcQEkKDh5ygpTooEHPICCWN
+	v0NJ3AVXTCKg6RKp5kRQji0h3ubCOuk69Ca/CWOhkExCsuc7W4Gt18DmMOI73hWUNVt/ZpJ
+	Xegb8FAgVlmlXrGb9znklqo0dwEPFirhVlvSBYtwqFD0A+8ja53Su/2ws9tOkRBaTVgwQ8y
+	9A52Vd9IzSmDXvRutmZ56mbDo0QML6AmH+JXOF1+N98BQ6kl+Oroy003IPxqdeoroKdzWoW
+	7ajNQ78e3UhIMmJwN0Vzj9r/TIEN0VSKF89diPqkVlE0OitsvnUNFQHnnw96hl+q0o7uSQx
+	qPUMp9N0FI5EOZQjZweOFJ9azZ8DPpS884uDoNmmdcnERsJD7LQeKa9uc/wF/706zGwfDfE
+	NvYT+qtbE9RcFiJA28y7jSs17ND2F9A/LO72INNmSpnullpo/DF8C5pCvK/V+oUxNUDaK1L
+	Pplxx2FKqdHoQ5JbP002M+X2JYw0kTRtD1WNuV8r1C1HA66FuZ
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
+X-Rspamd-Queue-Id: DA0064F6CD0
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106685-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-106686-lists,linux-arm-msm=lfdr.de];
+	FORGED_MUA_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org,fairphone.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[fairphone.com:+];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,kernel.org,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_GT_50(0.00)[50];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[griffin.kroah@fairphone.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.962];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,fairphone.com:email,fairphone.com:mid,fairphone.com:dkim]
+	R_DKIM_NA(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-Add vdd-supply for the Hall Effect sensor in gpio-keys so that power for
-the sensor will be enabled when it's in use.
+On 5/8/2026 2:44 AM, Alex Elder wrote:
+> On 5/6/26 7:59 AM, Xilin Wu wrote:
+>> On 5/1/2026 11:54 PM, Alex Elder wrote:
+>>> +    /* AXI Configuration */
+>>> +    axi = &td->axi;
+>>> +    axi->axi_lpi_en = 1;
+>>> +    axi->axi_wr_osr_lmt = 31;
+>>> +    axi->axi_rd_osr_lmt = 31;
+>>> +    /* All sizes (2^2..2^8) are supported */
+>>> +    axi->axi_blen_regval = DMA_AXI_BLEN_MASK;
+>>> +    plat->axi = axi;
+>>> +
+>>> +    plat->mac_port_sel_speed = speed;
+>>> +    plat->flags = STMMAC_FLAG_MULTI_MSI_EN | STMMAC_FLAG_TSO_EN;
+>>
+>> I got WoL working only after adding STMMAC_FLAG_USE_PHY_WOL here. I 
+>> guess it's required, since the driver clocks down the MAC/PMA/XPCS in 
+>> its suspend hook?
+> 
+> I just want to respond to this with a summary of our plans.
+> 
+> We will *not* be implementing wake-on-LAN (WoL) initially.  We
+> will work to get support for the eMACs upstream for TC956x, and
+> then as a separate step, we will enable WoL.
+> 
+> It's great to know you have it working, and our plan is to
+> implement it via the PHYs and not involve the MAC.  It seems
+> it will be relatively easy, but we have no plans to add it to
+> the current series.
+> 
+>                      -Alex
+> 
 
-With this, we can drop the regulator-always-on for vreg_l10b.
+Hi Alex,
 
-Signed-off-by: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
----
- arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Maybe I missed something, but I already have WoL working *without* 
+changes in the tc956x driver.
 
-diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-index c1899db46e714137d7849b3b043062fe8b05cc42..ae6900c3f75c64ea5b4feadf38df101abb43c1ea 100644
---- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-+++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-@@ -32,13 +32,13 @@ gpio-keys {
- 		pinctrl-0 = <&volume_up_default>, <&hall_sensor_default>;
- 		pinctrl-names = "default";
- 
--		/* Powered by the always-on vreg_l10b */
- 		event-hall-sensor {
- 			label = "Hall Effect Sensor";
- 			gpios = <&tlmm 70 GPIO_ACTIVE_LOW>;
- 			linux,input-type = <EV_SW>;
- 			linux,code = <SW_LID>;
- 			linux,can-disable;
-+			vdd-supply = <&vreg_l10b>;
- 			wakeup-source;
- 		};
- 
-@@ -326,8 +326,6 @@ vreg_l10b: ldo10 {
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--			/* Hall sensor VDD */
--			regulator-always-on;
- 		};
- 
- 		vreg_l11b: ldo11 {
+https://lore.kernel.org/all/859776B5671B36B9+577c19e4-3e66-4036-b26f-fe20287a1d43@radxa.com/
+
 
 -- 
-2.43.0
-
+Best regards,
+Xilin Wu <sophon@radxa.com>
 
