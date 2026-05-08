@@ -1,238 +1,224 @@
-Return-Path: <linux-arm-msm+bounces-106565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kI55A/xL/WmUaAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 04:35:40 +0200
+	id 8GovAlRO/Wm1aQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 04:45:40 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DB3D4F0DBA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 04:35:39 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1AFC4F0E76
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 04:45:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0BBF6302835E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 02:30:20 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D472A30089A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 02:45:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05F64280CC1;
-	Fri,  8 May 2026 02:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52CC6282F08;
+	Fri,  8 May 2026 02:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QRvQyng4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ODWmQijR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A87262FFC
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 02:30:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66F626A1AF
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 02:45:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778207418; cv=none; b=rTnyImRTAdRkxepnBOgfcfS3FygkyHtdVKwLLEWOooV+11bzWXzS6r2H9iYaN0dToxCV1ZoU1r1mpPpp7aMHIv5OHtw/3oJqaNtEtFDFt6ef3FYLYa+3MPq0+Fw2UjI7/0y9XfZZrlc9BrQZoEoxXsfA2XI1O5oPL0sISFy34wo=
+	t=1778208335; cv=none; b=re2pailwn7jVH0RURnI94HSmXE1DeBYcFThxlygsrr+BWYq1blkGCqJC5EvONOaNs/NZaqmfE28X/xk2MQUEZ8oqgfUCaypmES7Al1pHO7c+0qNPmWpPjw7De2uHlSahJBrQaWkCkF2bXOqLC0bMrgTTDDddJGN5G/xB9l4bJcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778207418; c=relaxed/simple;
-	bh=Bi5rTiz6sS6VYbktgkLsGAorKRiZb8L2whtZyNLeSHI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=q6NVP8Oo1YPBTTRxA2BpGxJlAexvDSfPSXL/0uAaMIFmX/2aR5Ox8BWqUcm8oc7BiKc61h/RVtlGe9YO8v5/3KYhlUOZFlQamwdenMoFwqGDx44cjlF9et+MKxQywSk9h9IpBVmYr3Kd7wzPp/3SMseqyo8cFKXlqVVpB4vpPrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QRvQyng4; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4891e86fabeso18202585e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 19:30:16 -0700 (PDT)
+	s=arc-20240116; t=1778208335; c=relaxed/simple;
+	bh=oEnT/UCXWeDB9vAKPoyngIcFubAI8zzoEf1ZMRsfegE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qjeG0sbFgQkon5T+hoj9/hmViYsDSYmtmU/jvWua2Opy5F2YYrC00j9UwZvRaeWjTV0EGYJ5PS6gYWEalF0Q8iBJBg0j4wksnET9lc6ogMcMQXeMGn8hOsjNI0imRsQMoLtQ1HzTtjmO8zKREaio/lKkbJEYqMon16LScam2Pfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ODWmQijR; arc=none smtp.client-ip=209.85.160.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-42fc6923f38so1849220fac.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 May 2026 19:45:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1778207415; x=1778812215; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=DWFAHdWdNfgetWCnV9jGKJb1CsJQxtNeKq4Xom3RGVw=;
-        b=QRvQyng4+lfb3j0beMhNA8ju//5xED5bBV1b7bepD60Bs6cFJgfHzLRLgPwk0FdEbt
-         BfSxevnoR75m+xOqeqNKySbdEb6C5ewD8JcTIWEyT5nKB0tvpDoG97FSBLFB3GXCH2YR
-         IhOV3x4UgMx1EEXJJchsswYGez0a5wbLTIb+S4wD2evq1M8vgnNeeR6JIfQH10PqDs8Z
-         qH9xftIF9deddOkwramq30d076PeoSKtBR49K2LZsQoLAqPuLhGZfDr5JDl282jiG1GQ
-         yHx5dd9ZjAawfvz1Oy/NoEYtRXSohwBmbEorO4Qj6bF2ed3Q0csrmpBwlEki1qtPfY3t
-         GWcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778207415; x=1778812215;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1778208333; x=1778813133; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DWFAHdWdNfgetWCnV9jGKJb1CsJQxtNeKq4Xom3RGVw=;
-        b=PlllNV6mafc0ywsJLloCmse17OqHn6islkEmFfLi4E5kNqladRbAfQS9kta3WSQiLu
-         k1o+elnrussw26LpeDlkqqnmoPDmNWhHEJdXMBPay6ttTRoXUUVl4X3UYu7O2xxSi8zR
-         A1w/6r6y5fwki93buoSd0Nq8CjdWpgXDUzo7/C5TIUNQgo8FPcoKiLZsnRQWFvcXQ2WP
-         Mt3R+P6qSzAhpgA7FPPfIacx+f+oJ1qeRpN71ZFBBXguNe5Qhd5VCiYtHBXnj5TT4aNP
-         XqbSjoybqTZJo1Rx5Q2N6Q9u3B9SSZq/7UPnSG+enuGi47zSHqUuvQsrRwCuQdNLlqVs
-         AwbA==
-X-Gm-Message-State: AOJu0Yzdd4EntVg6v0x1gjVsDnB59dB8fpZtLWY0/IYr01aI0RTGi6z4
-	oP/sJYVjl+ngcn2u8j/LGy+UtcI4PrrBSm5EXXM/wJtFyv2sINbdFGzxq0V6M2ye2e0=
-X-Gm-Gg: AeBDietJDmIgCnBE7s0TpK/EXB0OWesoUnWwbKBHmuQ0ID8mvPvLQ49Wl/OOyhlxyIO
-	6sYixneSiLHRiicckN0JsbLpJRDdL5TAc5eiTcywfZFyee58UtFKE5joFDgm2/5C2ktDOoPJ+6w
-	C1CV9ju0111MjW2wA6uT1YjooILCftvUvuVwbSYSY/58DPE9Td+G5DciEnrm8gEdatR2ivAihvQ
-	fQkSVZXiDKajZqpOHo/uA9gSGCABSPVMVNeCEhhsnWF6zLE71o4ggWZ7UgFudclnEiJ1fjaH/jr
-	oryA/Rc+xpxVxRnXOcz89pOXTzVPPa4qQjeZQysU0lzjroB4LD9uO0yf+f3I9N9fDywpjVmPHs3
-	RWjX7C7JOCnRbanEj5TdgFy/RJaRI6x1bfoUbOB3F0LBV6cFf7vIZdo3+aT3Nf41rqzbxC1CrdT
-	YmE0RYfQLGkLXohpsU2USc5pn20A1m610KbqbTp0pn7vDZzJ/EUeCaQfR74N1zQsMctl+ju01yb
-	/KTYjTboDLD1w2hXekK0/4=
-X-Received: by 2002:a05:600d:d:b0:489:1ff5:edda with SMTP id 5b1f17b1804b1-48e51e08240mr141109125e9.6.1778207415092;
-        Thu, 07 May 2026 19:30:15 -0700 (PDT)
-Received: from localhost (host86-170-11-80.range86-170.btcentralplus.com. [86.170.11.80])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e68eb85d7sm1697905e9.7.2026.05.07.19.30.14
+        bh=oEnT/UCXWeDB9vAKPoyngIcFubAI8zzoEf1ZMRsfegE=;
+        b=ODWmQijR/5g1OUlUvDpypgfpilBU8K602ai2NUyBrr9M/7scQhKmf615y/89uP6LZI
+         KwqoY0I8Lxafcj8e/nkm+RgQAOEsZ39CG0rS51thfr0gU6w2fDjYJbqWQFgYZqprL1Aj
+         JYSwzIdont/o9HPqVk49HyV+GKKO2s19Kts29KeTuWIobkNsTTFZ4pKA7n/AF11b4HmH
+         X4ZX+IrFe5D1i8v09UAPhbV3uYwR9quHdjy3lcYTl9eW9tahlqRawaHOWR5f0kQ5WPTD
+         p9mb+xO+5WnnBpxg3M2maFnTYjYu5b75oS+DI9gsVxkukHyPhhnjQ/6cP3MTxGQzbtmn
+         JNMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778208333; x=1778813133;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=oEnT/UCXWeDB9vAKPoyngIcFubAI8zzoEf1ZMRsfegE=;
+        b=JV2TMhuWQ2dN1JiP/rdH0MD+ePFgmyQ+wLXBqiPj63sNONcnI66Gn1dUwMLQSXPnSc
+         hlj+kGS/7SyGwG30qmd+WWYKBF7CUd3FoZpf8qSzdFLEyE8gNKNbifi6Z0qBEUynWnZn
+         Gx8KDPMV3aHuofPGU7ZgQRor1iYdr4hpLxfLC2vq9id/kV583b4h6nkILXq+5LKllPJO
+         GOkMZiaxS1Ml6g0GexvlIv3RGWbGCAJBUDU+FtKFbFATtv+qaRYcDXM2xcgN96mYWN1t
+         eLbQ7b0E6xV2/8o3BXnJhcEA3XRxRdxsS4sfpqNbPvsZpQrcxgIwwoM2mjvGZ5ZB7hIo
+         OTeQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+8DFXK2L4gu1nzg34frajQRtfCjwT0YmPPI5WRzq7UVB/bx3409ujigdiPnLJkLRwODeH8QA7rMp+NOFf2@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6dmfiBgfreM942KCuIXtXK3ToAxLnMdWbjv38vLV72FNPo/P4
+	cJ6C1Z17yvZ7V3GoBkfcDNhH85iLcGYeQp5mz0WOlKQDJgbCjDO5aSnY
+X-Gm-Gg: AeBDiesmHEOBr0huNbCtGLysrLLhlA/96U9aYtz5h+qRW9CR2lFsUWUW3PPEBiJaEpA
+	4pN/74DP1fibp/tbK02DhL68OMx9HyRX6+RS34umw2d99mZMEAfLdsWYB4Ey5/o7fKar3OoGDSO
+	/W1nKa6TFXrvpbwwllkGQHwoTvllBVBM8cYzQrbP1q0UmBMrOw3QM7rDMMzbpf0UhP1BoWaZbl6
+	/Qc7tQs3HDuqlQ9MsHGY4g0euxsr4+1Cf5nANKdSfIsWE79nlu2fky35ZCsvQQMWJ/j62DDHqDt
+	PFBJfIzSegId36dwd6Dr4ztvgpM8i7GBwYNhSUjhRFfQ1QGRUf5HFTPPwQAOxveSiczUav/SOqP
+	eH5gZms7w7z7N3xouYKvVWn/XabV5clLTDLjCawgS6+Zns1xTIQNq8SAox5+o0iQ32a2VVHZ/Fi
+	re3Z1altrtKcUZh6GnewzCVEIfnaL7taWRbDuSZ8tJnWagOb9TbFKdDociQGM14vjjTu7ekuUpf
+	RunA3ac4nKj8QoPOegURhv8973KsODORjKhsR9wTGyekVoc
+X-Received: by 2002:a05:6820:190a:b0:696:1a98:bd5 with SMTP id 006d021491bc7-699ab62e838mr2720265eaf.19.1778208332600;
+        Thu, 07 May 2026 19:45:32 -0700 (PDT)
+Received: from nukework.gtech (c-98-34-199-138.hsd1.tx.comcast.net. [98.34.199.138])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-69b25c767d0sm349447eaf.5.2026.05.07.19.45.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 May 2026 19:30:14 -0700 (PDT)
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Fri, 08 May 2026 03:30:06 +0100
-Subject: [PATCH v2] arm64: dts: qcom: msm8996: add blsp2_spi5 node
+        Thu, 07 May 2026 19:45:31 -0700 (PDT)
+From: "Alex G." <mr.nuke.me@gmail.com>
+To: andersson@kernel.org, krzk+dt@kernel.org, mturquette@baylibre.com,
+ linux-remoteproc@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: mathieu.poirier@linaro.org, robh@kernel.org, conor+dt@kernel.org,
+ konradybcio@kernel.org, sboyd@kernel.org, p.zabel@pengutronix.de,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Subject:
+ Re: [PATCH v2 0/9] remoteproc: qcom_q6v5_wcss: add native ipq9574 support
+Date: Thu, 07 May 2026 21:45:29 -0500
+Message-ID: <6525179.vuYhMxLoTh@nukework.gtech>
+In-Reply-To: <1397ecd5-89a6-4666-bfe9-014ff8553a97@oss.qualcomm.com>
+References:
+ <20260109043352.3072933-1-mr.nuke.me@gmail.com>
+ <27098742.6Emhk5qWAg@nukework.gtech>
+ <1397ecd5-89a6-4666-bfe9-014ff8553a97@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260508-wip-obbardc-msm8996-blsp2_spi4-v2-1-8b81a95b1ed7@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAK1K/WkC/42NQQ6CMBAAv0J6dk1ZWqCe/IchBkqFTYA2W4Maw
- t+tvMDjzGFmE9ExuSgu2SbYrRTJLwnwlAk7tsvggPrEAiWWskADLwrgu67l3sIc59qYEropBrz
- HQAqq2qDSymqprEiRwO5B72NwaxKPFJ+eP8dvzX/27/SaQw66N1hJLLQzeJ1oadmfPQ+i2ff9C
- /FpWvvNAAAA
-X-Change-ID: 20260329-wip-obbardc-msm8996-blsp2_spi4-7892454c504c
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Christopher Obbard <christopher.obbard@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2834;
- i=christopher.obbard@linaro.org; h=from:subject:message-id;
- bh=Bi5rTiz6sS6VYbktgkLsGAorKRiZb8L2whtZyNLeSHI=;
- b=owEBbQKS/ZANAwAKAWNNxPBocEb4AcsmYgBp/UqxRkhiTxIL3jEZY15xAb3u7oMG5ixnQ3GsP
- O5Uub+PQV+JAjMEAAEKAB0WIQTxi9yLbCX5CqI9UXRjTcTwaHBG+AUCaf1KsQAKCRBjTcTwaHBG
- +HPED/93hEUzRULqU1+Ec/TAwuuKM29vq4ZXYqPGssodSvkHg4MFNR1IDhie9nIzzYKfMnwJuBU
- J+aXiTB/XkhoiJYxAelyF+4iMBFqwoY5j/aikJ7C03zmQ1xlHivB4BcnBc864plfzfGn3XcFluz
- cp9y59L5ED9MtbyRJWJr7YHHoUBTse++GuO3HtqqAvDtg4kXLWPEBeV4/mnGsL+isYXVKwH3fMn
- Hv1Cz/jmPB/bvWHIRK+HFddcmMdyRfQYmCNk69dju6T9oBGKbuKP3sd11rQ+l5e9FXY02jB35Wc
- Y/8QCmbmtEI3X5pYvg4YV5LEqa37YUa22s4WpEErPp1+WFnVBuq18/uDcVYJ5fE8LWeZykdeDVn
- tplq39HHdNSjfJVmnq0RdBkoiUvB5B9MUslVCUtZlgI9rlnOEgyB14p8NWoNhKakoq4C4FJguEv
- ylqae8cTVIYXS9vAKtlIzpML/KBfdAZ8ByuGWQc9Y6O69jKDD7MnuEu+wRpDKSeXooaDG3AiXhn
- PORrVCmpYMz8HxIPLNrc+vVdCZAS2GpO/fwnUrl9bcRMaFVhYEVj8Uv1TDr8v08It92XTnchMFP
- UqL7vr4Vdo7+juudgPrWxPdAQOmnH9z9lgFNOJjtNy9sXhyFreYXFiAIoaRkFxkU4Kye8Y6LYWx
- VzVWSFm6Hu5Vwrg==
-X-Developer-Key: i=christopher.obbard@linaro.org; a=openpgp;
- fpr=F18BDC8B6C25F90AA23D5174634DC4F0687046F8
-X-Rspamd-Queue-Id: 5DB3D4F0DBA
+X-Rspamd-Queue-Id: E1AFC4F0E76
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	TAGGED_FROM(0.00)[bounces-106565-lists,linux-arm-msm=lfdr.de];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-106566-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[christopher.obbard@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[mrnukeme@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[75b9000:email,linaro.org:email,linaro.org:mid,linaro.org:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,75ba000:email]
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[nukework.gtech:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-Add the blsp2_spi5 SPI controller node together with its default and sleep
-pinctrl states.
+On Friday, April 24, 2026 7:17:05=E2=80=AFAM Central Daylight Time Konrad D=
+ybcio=20
+wrote:
+> On 1/15/26 6:27 AM, Alex G. wrote:
+> > On Wednesday, January 14, 2026 4:26:36 AM CST Konrad Dybcio wrote:
+> >> On 1/14/26 4:54 AM, Alex G. wrote:
+> >>> On Tuesday, January 13, 2026 8:28:11 AM CST Konrad Dybcio wrote:
+> >>>> On 1/9/26 5:33 AM, Alexandru Gagniuc wrote:
+> >>>>> Support loading remoteproc firmware on IPQ9574 with the qcom_q6v5_w=
+css
+> >>>>> driver. This firmware is usually used to run ath11k firmware and
+> >>>>> enable
+> >>>>> wifi with chips such as QCN5024.
+> >>>>>=20
+> >>>>> When submitting v1, I learned that the firmware can also be loaded =
+by
+> >>>>> the trustzone firmware. Since TZ is not shipped with the kernel, it
+> >>>>> makes sense to have the option of a native init sequence, as not all
+> >>>>> devices come with the latest TZ firmware.
+> >>>>>=20
+> >>>>> Qualcomm tries to assure us that the TZ firmware will always do the
+> >>>>> right thing (TM), but I am not fully convinced
+> >>>>=20
+> >>>> Why else do you think it's there in the firmware? :(
+> >>>=20
+> >>> A more relevant question is, why do some contributors sincerely belie=
+ve
+> >>> that the TZ initialization of Q6 firmware is not a good idea for their
+> >>> use case?
+> >>>=20
+> >>> To answer your question, I think the TZ initialization is an
+> >>> afterthought
+> >>> of the SoC design. I think it was only after ther the design stage th=
+at
+> >>> it was brought up that a remoteproc on AHB has out-of-band access to
+> >>> system memory, which poses security concerns to some customers. I thi=
+nk
+> >>> authentication was implemented in TZ to address that. I also think th=
+at
+> >>> in order to prevent clock glitching from bypassing such verification,
+> >>> they had to move the initialization sequence in TZ as well.
+> >>=20
+> >> I wouldn't exactly call it an afterthought.. Image authentication (as =
+in,
+> >> verifying the signature of the ELF) has always been part of TZ, because
+> >> doing so in a user-modifiable context would be absolutely nonsensical
+> >>=20
+> >> qcom_scm_pas_auth_and_reset() which configures and powers up the rproc
+> >> has been there for a really long time too (at least since the 2012 SoCs
+> >> like MSM8974) and I would guesstimate it's been there for a reason - n=
+ot
+> >> all clocks can or should be accessible from the OS (from a SW standpoi=
+nt
+> >> it would be convenient to have a separate SECURE_CC block where all the
+> >> clocks we shouldn't care about are moved, but the HW design makes more
+> >> sense as-is, for the most part), plus there is additional access contr=
+ol
+> >> hardware on the platform that must be configured from a secure context
+> >> (by design) which I assume could be part of this sequence, based on
+> >> the specifics of a given SoC
+> >=20
+> > What was the original use case for the Q6 remoteproc? I see today's use
+> > case is as a conduit for ath11k firmware to control PCIe devices. Was
+> > that always the case? I imagine a more modern design would treat the
+> > remoteproc as untrusted by putting it under a bridge or IOMMU with more
+> > strict memory access control, so that firmware couldn't access OS memor=
+y.
+>=20
+> There is an SMMU on this SoC.
+>=20
+> I don't know the original backstory, but if anything, the through-Q6
+> approach is probably *more* secure, since there's additional access
+> control hardware inbetween
 
-Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
----
-Changes in v2:
-- Rebase onto qcom/for-next.
-- Rename node to blsp2_spi5 (Dmitry).
-- Move blsp2_spi5 node in alphabetical order after blsp2_i2c5 (Dmitry).
-- Rename pinctrl nodes for blsp2_spi5.
-- Move pinctrl nodes in alphabetical order after blsp2_i2c5_default.
-- Remove superfluous register property from blsp2_spi5.
-- Remove superfluous interrupt property from blsp2_spi5.
-- Add dmas & dma-names properties to blsp2_spi5.
-- Change blsp2_spi5_default cs-pins function to blsp_spi11.
-- Link to v1: https://lore.kernel.org/r/20260329-wip-obbardc-msm8996-blsp2_spi4-v1-1-5d9270235e92@linaro.org
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 41 +++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+My question is what to do with this series? I think I present a valid appro=
+ach=20
+which has its use cases, irrespective of which approach is better for a giv=
+en=20
+use case.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 2f67e665996f..818e5660df91 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1632,6 +1632,30 @@ blsp2_i2c5_default: blsp2-i2c5-state {
- 
- 			/* Sleep state for BLSP2_I2C5 is missing.. */
- 
-+			blsp2_spi5_default: blsp2-spi5-default-state {
-+				spi-pins {
-+					pins = "gpio58", "gpio59", "gpio61";
-+					function = "blsp_spi11";
-+					drive-strength = <12>;
-+					bias-disable;
-+				};
-+
-+				cs-pins {
-+					pins = "gpio60";
-+					function = "blsp_spi11";
-+					drive-strength = <16>;
-+					bias-disable;
-+					output-high;
-+				};
-+			};
-+
-+			blsp2_spi5_sleep: blsp2-spi5-sleep-state {
-+				pins = "gpio58", "gpio59", "gpio60", "gpio61";
-+				function = "gpio";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
-+
- 			cdc_reset_active: cdc-reset-active-state {
- 				pins = "gpio64";
- 				function = "gpio";
-@@ -3433,6 +3457,23 @@ blsp2_i2c5: i2c@75b9000 {
- 			status = "disabled";
- 		};
- 
-+		blsp2_spi5: spi@75b9000 {
-+			compatible = "qcom,spi-qup-v2.2.1";
-+			reg = <0x75b9000 0x600>;
-+			interrupts = <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&gcc GCC_BLSP2_QUP5_SPI_APPS_CLK>,
-+				 <&gcc GCC_BLSP2_AHB_CLK>;
-+			clock-names = "core", "iface";
-+			pinctrl-names = "default", "sleep";
-+			pinctrl-0 = <&blsp2_spi5_default>;
-+			pinctrl-1 = <&blsp2_spi5_sleep>;
-+			dmas = <&blsp2_dma 20>, <&blsp2_dma 21>;
-+			dma-names = "tx", "rx";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			status = "disabled";
-+		};
-+
- 		blsp2_i2c6: i2c@75ba000 {
- 			compatible = "qcom,i2c-qup-v2.2.1";
- 			reg = <0x75ba000 0x1000>;
+Alex
 
----
-base-commit: ef5930fa9d5d5a1734e9e065d3e29bf1a064cbc3
-change-id: 20260329-wip-obbardc-msm8996-blsp2_spi4-7892454c504c
+> Konrad
 
-Best regards,
--- 
-Christopher Obbard <christopher.obbard@linaro.org>
+
+
 
 
