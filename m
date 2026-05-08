@@ -1,675 +1,273 @@
-Return-Path: <linux-arm-msm+bounces-106712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OPjQF5we/mkRnAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 19:34:20 +0200
+	id GLSIAAwv/mmvngAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 20:44:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEFBA4FA04C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 19:34:19 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A1C94FABBD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 08 May 2026 20:44:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A5873301A41D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 17:34:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 56F023015CB7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 May 2026 18:43:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E94F03FB045;
-	Fri,  8 May 2026 17:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD27B33F38A;
+	Fri,  8 May 2026 18:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="i47AIltY"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WR0Iykff";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ac938Y0u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9DA3F20F3;
-	Fri,  8 May 2026 17:34:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9183DA5B1
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 May 2026 18:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778261657; cv=none; b=V8SRbp7mJRaNPziaG6mZGWb8pdmN4AKv8rWilRZI7IpibNw7Y8/prOJE6/kBe0H4u2dh6zx+Ce4qEKeniXP/JptHbHuFP6NmoQs4OUEwONZHtV2MIwAs5g8dMArelg82vCWi6DgBKV/E8qWSMmVedKM4omvY54pcB9y+4CsKpI0=
+	t=1778265822; cv=none; b=VXYHQ4aV1IfXaiyl1QFdUQ+QOjYZcAidrHLJT+FR3SVXYooEQRpCzTnHNnCp6vHPkGhaNX0LXnYr0VQ3vH/fWfB9X37yf0w3vHQH2Femx6dKUZd77dp/D6RtJlTiTcSvWScwDrShpJePCNNHN7d7ip62U05vPbcsXdrQoFTOPZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778261657; c=relaxed/simple;
-	bh=kum1kXn7D+yiHjfmv0I98ohIZ1nHdpT+yba/2v4E9fQ=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=P0ZvwLEsL/dM8GQ+iPZlmQzoqBqkQLEpcsLazG0TEzMKv4CRtE5+B6WTTr/sjoORv1KkPgwTQQ6URmf2N3cRuShlNHNmAgRNR1ocjs3tt4RjJ4wBshqyoKtC6rSNLLBYwuS617w1jBPEmvoH/I+qnV0d6IMd5hCv1A2pUZZnO0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=i47AIltY; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1778261656; x=1809797656;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=kum1kXn7D+yiHjfmv0I98ohIZ1nHdpT+yba/2v4E9fQ=;
-  b=i47AIltYVGzvITR/En9NbM79XLlt/keRB/pHOcP3eXxhuaaC3fr9Tora
-   BnAhF6w98fqcYoC6XpZvchAo/U/JfdxFPKYICtlwPED8pQev0fezT/Zpn
-   8vSMAPGICxRHo0ZT0NhgVlHJedOlFQMerFMbzPQu2aGP3qXa5ztCcS0KR
-   SKZRAzau5mLLZpErvyyerz9Qon5OmnI7Gy3vHgCZoz3aKWoRXnBpH28y+
-   yFhrwO3Qpd3QHnlQLNUf211f9Nbqum/8Ok/6l5L9OcTHNl1ptsvPRcfs0
-   cdF/btGQJAA8Bvxntey6YMRWDVBfz6XvUubsXeII2fQYFbMTMdcVqSYvG
-   A==;
-X-CSE-ConnectionGUID: tWVzMvl+TYa0XEFsmMHDmw==
-X-CSE-MsgGUID: JGY8/1noTE+/IsebZvlR+g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11780"; a="90617481"
-X-IronPort-AV: E=Sophos;i="6.23,223,1770624000"; 
-   d="scan'208";a="90617481"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2026 10:34:15 -0700
-X-CSE-ConnectionGUID: /qSlW7whTz+MHJuVFILkNg==
-X-CSE-MsgGUID: eAv3OtrzQvO+rYtk/oWYFA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,223,1770624000"; 
-   d="scan'208";a="241785364"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.100])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2026 10:33:48 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Fri, 8 May 2026 20:33:45 +0300 (EEST)
-To: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
-cc: Sibi Sankar <sibi.sankar@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, 
-    Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-    Conor Dooley <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>, 
-    Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-    Bjorn Andersson <andersson@kernel.org>, 
-    Konrad Dybcio <konradybcio@kernel.org>, 
-    Randy Dunlap <rdunlap@infradead.org>, linux-arm-msm@vger.kernel.org, 
-    devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-    platform-driver-x86@vger.kernel.org, 
-    Maya Matuszczyk <maccraft123mc@gmail.com>, 
-    Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-    Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-    Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Subject: Re: [PATCH v8 2/6] platform: arm64: Add driver for EC found on
- Qualcomm reference devices
-In-Reply-To: <20260427-add-driver-for-ec-v8-2-702f74e495f7@oss.qualcomm.com>
-Message-ID: <91523c61-bd03-2d96-823e-78ecd9e3798f@linux.intel.com>
-References: <20260427-add-driver-for-ec-v8-0-702f74e495f7@oss.qualcomm.com> <20260427-add-driver-for-ec-v8-2-702f74e495f7@oss.qualcomm.com>
+	s=arc-20240116; t=1778265822; c=relaxed/simple;
+	bh=qPub8tKLs1R69fRcf6P8Spqyr2ma76n13zw9peIcGnY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fLxZdzXZucDv0BnpbYqQ6kb86LrCJ3adZSIOn/vpfV2aJdcPnWQMX4uWoFelCcpHxTzFuYwHJWHqs3d9if9TZRi4Ba7lcnD+Vbvi0i6dtERvQvj2fhmhll8DeAotMQl+qd6r245AOsuAbXF97b6ci4b4v1AeyIfz7TLAkFK8rIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WR0Iykff; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ac938Y0u; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 648BgZ8Q1173965
+	for <linux-arm-msm@vger.kernel.org>; Fri, 8 May 2026 18:43:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=y+uqtVLmFUCNQVUxTe/oua21
+	5OO0zK52yL+pzUl8BNA=; b=WR0Iykffq66Bzco9V06J0clPwQQqWiJ7T6GBC40i
+	aaI/R+4yQqoVgDeivQlPSPR0t/zBQnr3BbV45qER6y7859VN3Cb1AziCTtdQxf5P
+	dEnJmYrcEszkSPXwdO8rdIHs1c7Fw8feC1xmDXrvySkitQNV1/zJheDgy8O5/9rF
+	vTmmkR/y9j6HgFbUMNCvjS1PxDnUi8mRVrKN/VLZgDhSflypaXKHUiBBZ/aJauc5
+	Gp3hloRIbJbT7qsfDWFtfbUNBIGufbuy23H7qece9dWfkWVUDUEWCyLWKsQeeUF0
+	rxQZzCywUbp5k6s0JuAK4spTAoNOYnwo34F7HynZGFsW3A==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e132hcb65-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2026 18:43:33 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-50fb6d713ddso39448321cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 May 2026 11:43:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1778265813; x=1778870613; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=y+uqtVLmFUCNQVUxTe/oua215OO0zK52yL+pzUl8BNA=;
+        b=Ac938Y0uZCgPHpOlvwAgiut9DFyiHOu5jo02HYG9CAL5MiMp5cE0zeHPLmPZltETEq
+         t0PCHWSNO42gFbMmPfw8ozkp07nefnD/8lUsyOpfxPYtnxbZ/Y+GuWOngIiFhAxbi2mC
+         fwc2nyZGv4nGXJDfDI6ZHvZJeY2dI5RC69gR2YMGuY1Ywsz41bM1lZizKQTEkjYU8sfs
+         EFJNsHEBGPgu108SH/xUqxXniijsf/uth9s2C9ZS0xZQRfDElK6sonuEdJLdgm2/eFQ2
+         tSpoPPdplQwHLpbnAvW1udp4veAPOlE+0MDdo1XcdeXuniRIcNAoYu0XjiIyOHzT46YP
+         FTlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778265813; x=1778870613;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=y+uqtVLmFUCNQVUxTe/oua215OO0zK52yL+pzUl8BNA=;
+        b=Pgl3U0JQeQY17Ta66KFSt9OPfpH5491V8qxRIHG32mxhJR9WnqM11tSabNZr0wbDr3
+         GffRgF533lgpxXGN3rICuJ1yRmemxRJMWRL98TMO+Nz8jzvUy3c3KIcrTuOqAvP+05UW
+         L2IR9CoSzily8CRlAKOwdpb+GYdpomEyLeyqaABE2mO/1uEtKB31Ick/wbDF403xryWa
+         eLor7uhN6f2GxvOWIr/Q/dPbVCF+Z6sEHU9N2bxAhsXYWr+rDsY4GsVqhqlS02ilsOD7
+         o2zcFWX4PZm6AbBBajx6ps2kZNXzcMzJHLFdzGWQBd0ImL2sOsggBCEqj+bX1JZshKKP
+         6Zlg==
+X-Forwarded-Encrypted: i=1; AFNElJ+xG++injIFXP2VUHfubWor3yji5gGsNe89SkVhhRqdHl8ZRpbRSdP/QKgKHIDv3h33hNkp/vQHHFqPFxth@vger.kernel.org
+X-Gm-Message-State: AOJu0YwZdoR3hKXnd4662r7CoSDyc3R2a5+3NX9xRRx15v/r6RKder33
+	IC/lZFo5m0vewLICXLEC66ZlDZVt+HCaLIafwAN6aGjXcjmcrU6ur++5KWQV35buZoPQyklSpIT
+	gFpSwlUOgV8pR6x5elasWiEk5hlNhCGO3gAJfmNAhc0WWrYeFG++kp9rbKZbJJSAVr37K
+X-Gm-Gg: AeBDieuUAyh7+th5eCaOOr5/Zk5psX55Ok7kp6tDjCrQM2H+Hqp8AUXyThwKVUMZxFV
+	H30sughJUS2ZSqGpNI4M+gZzpHaXuctUdnxTgnK7JpF2S3ofV4gOzfeofPC8ZyVAkYsTl9MuMXG
+	MRFamyT13ErkuopEBshLowFswFaGta7ojXYl/I3qPtXr2Z+kkTPMtO+upiw8MHx1+VGyAtTDkZV
+	DzH2YLsuudYNRYvIYOAeSnNdtxHom9AnnhIL5/+CccJg/L4dUHg2S2mP3PAM4+j2vsDTCWLywk6
+	0N9e3/BbUwpsgH1ZKCCIi0xdFB1mM7b+9R3av15DSVFeidOmU5iFKK5Hibmcn8J/e4Lh7MydmtS
+	3gxhgD2c04/2eL4inNEplD8GDi5iK6eHdEIp5PNhbk/U7R145Ven4aRdVISycNvxb5b0oGzv+Nd
+	VYZCX93E7Gyi/8xy1HAqbOVGYlvJrw7/aaERA=
+X-Received: by 2002:a05:622a:6096:b0:50d:7c44:e144 with SMTP id d75a77b69052e-51461be0b74mr190178881cf.11.1778265813100;
+        Fri, 08 May 2026 11:43:33 -0700 (PDT)
+X-Received: by 2002:a05:622a:6096:b0:50d:7c44:e144 with SMTP id d75a77b69052e-51461be0b74mr190178231cf.11.1778265812631;
+        Fri, 08 May 2026 11:43:32 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-393f62693f8sm6884831fa.38.2026.05.08.11.43.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 May 2026 11:43:29 -0700 (PDT)
+Date: Fri, 8 May 2026 21:43:27 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        John Stultz <jstultz@google.com>,
+        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+        Michal Simek <michal.simek@amd.com>, Hui Pu <Hui.Pu@gehealthcare.com>,
+        Ian Ray <ian.ray@gehealthcare.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v5 03/11] drm/msm/hdmi: switch to
+ of_drm_get_bridge_by_endpoint()
+Message-ID: <qfjsg5r2doqoi5dwwpgccbrasnacwcshtshddwoiwyrndyrwyz@6xfmctnfem47>
+References: <20260507-drm-bridge-alloc-getput-panel_or_bridge-v5-0-472b913b5cb7@bootlin.com>
+ <20260507-drm-bridge-alloc-getput-panel_or_bridge-v5-3-472b913b5cb7@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Rspamd-Queue-Id: BEFBA4FA04C
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260507-drm-bridge-alloc-getput-panel_or_bridge-v5-3-472b913b5cb7@bootlin.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDE4NyBTYWx0ZWRfX7dvlhhXDd9wp
+ 8sviZFm7V5IK8KjiUJ7ampxa7vtLKFqdR0rHlFykJbWaWXWHrs5jWgVN3WnuSxuwfMAz8PLPzJv
+ oaRXjkljQRR815ajdfHHemLAbCdU8cDFw0Ok6o3pZKq+uCy2oyGuh2zLoF6nZ2yTiuauoTdcAJ6
+ QfQ2bFIJWcz3vrMecjSeQxVv+1TkGy65qG6w4jIKR16uJ3HP0xQ3f04qpxqx8vGR6uIZXjG1mCJ
+ bvZQBjv0ALKxGtvGoa2Y7y+NCHT84VNnhWNMIJ9bGahOwJwz/TfbGLIV/Yewnw8jgwm8vAbvlSj
+ J3FTZobyfz9G0H+rKkb2qaFhQZMTYdF6UsM648PiWbaWH0BzZqdtka7bE/LT0h5AoNCG54jKOXM
+ Ai2ysPc+aUL2lLV8lyPC3SETKT+fe84/nP2HUy2qXEMDWplU95OzNaKFaXhchcencqEqLQMePhW
+ OKgU8eN2Cbh5X8j0Hzg==
+X-Proofpoint-ORIG-GUID: 7NnniEmGDQyqnLO1IpMIkF-y9vZ9Ni1H
+X-Proofpoint-GUID: 7NnniEmGDQyqnLO1IpMIkF-y9vZ9Ni1H
+X-Authority-Analysis: v=2.4 cv=McxcfZ/f c=1 sm=1 tr=0 ts=69fe2ed5 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=P-IC7800AAAA:8
+ a=UZaUIiQ-CiS0E6Nlr5MA:9 a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22
+ a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-07_02,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 lowpriorityscore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605080187
+X-Rspamd-Queue-Id: 4A1C94FABBD
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linaro.org,infradead.org,vger.kernel.org,gmail.com];
-	TAGGED_FROM(0.00)[bounces-106712-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	TAGGED_FROM(0.00)[bounces-106713-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[30];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[intel.com:+];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[intel.com,linaro.org,kernel.org,ideasonboard.com,kwiboo.se,gmail.com,linux.intel.com,suse.de,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,google.com,amd.com,gehealthcare.com,bootlin.com,lists.freedesktop.org,vger.kernel.org,lists.infradead.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
 	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ilpo.jarvinen@linux.intel.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email,linux.intel.com:mid]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-On Mon, 27 Apr 2026, Anvesh Jain P wrote:
-
-> From: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+On Thu, May 07, 2026 at 03:45:21PM +0200, Luca Ceresoli wrote:
+> This driver calls drm_of_find_panel_or_bridge() with a NULL pointer in the
+> @panel parameter, thus using a reduced feature set of that function.
+> Replace this call with the simpler of_drm_get_bridge_by_endpoint().
 > 
-> Add Embedded controller driver support for Hamoa/Purwa/Glymur qualcomm
-> reference boards. It handles fan control, temperature sensors, access
-> to EC state changes and supports reporting suspend entry/exit to the
-> EC.
-
-Thanks, this seems mostly ready now. A few minor things still noted below.
-
-> Co-developed-by: Maya Matuszczyk <maccraft123mc@gmail.com>
-> Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
-> Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Tested-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> Co-developed-by: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
-> Signed-off-by: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
+> Since of_drm_get_bridge_by_endpoint() increases the refcount of the
+> returned bridge, ensure it is put on removal.
+> 
+> Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+> 
 > ---
->  MAINTAINERS                            |   8 +
->  drivers/platform/arm64/Kconfig         |  13 +
->  drivers/platform/arm64/Makefile        |   1 +
->  drivers/platform/arm64/qcom-hamoa-ec.c | 452 +++++++++++++++++++++++++++++++++
->  4 files changed, 474 insertions(+)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 62b89d0013d2..0bf0d6d55550 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -21980,6 +21980,14 @@ F:	Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
->  F:	drivers/misc/fastrpc.c
->  F:	include/uapi/misc/fastrpc.h
->  
-> +QUALCOMM HAMOA EMBEDDED CONTROLLER DRIVER
-> +M:	Anvesh Jain P <anvesh.p@oss.qualcomm.com>
-> +M:	Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-> +L:	linux-arm-msm@vger.kernel.org
-> +S:	Maintained
-> +F:	Documentation/devicetree/bindings/embedded-controller/qcom,hamoa-crd-ec.yaml
-> +F:	drivers/platform/arm64/qcom-hamoa-ec.c
-> +
->  QUALCOMM HEXAGON ARCHITECTURE
->  M:	Brian Cain <brian.cain@oss.qualcomm.com>
->  L:	linux-hexagon@vger.kernel.org
-> diff --git a/drivers/platform/arm64/Kconfig b/drivers/platform/arm64/Kconfig
-> index 10f905d7d6bf..e32e01b2a9bd 100644
-> --- a/drivers/platform/arm64/Kconfig
-> +++ b/drivers/platform/arm64/Kconfig
-> @@ -90,4 +90,17 @@ config EC_LENOVO_THINKPAD_T14S
->  
->  	  Say M or Y here to include this support.
->  
-> +config EC_QCOM_HAMOA
-> +	tristate "Embedded Controller driver for Qualcomm Hamoa/Glymur reference devices"
-> +	depends on ARCH_QCOM || COMPILE_TEST
-> +	depends on I2C
-> +	depends on THERMAL || THERMAL=n
-> +	help
-> +	  Say M or Y here to enable the Embedded Controller driver for Qualcomm
-> +	  Snapdragon-based Hamoa/Glymur reference devices. The driver handles fan
-> +	  control, temperature sensors, access to EC state changes and supports
-> +	  reporting suspend entry/exit to the EC.
-> +
-> +	  This driver currently supports Hamoa/Purwa/Glymur reference devices.
-> +
->  endif # ARM64_PLATFORM_DEVICES
-> diff --git a/drivers/platform/arm64/Makefile b/drivers/platform/arm64/Makefile
-> index 60c131cff6a1..7681be4a46e9 100644
-> --- a/drivers/platform/arm64/Makefile
-> +++ b/drivers/platform/arm64/Makefile
-> @@ -9,3 +9,4 @@ obj-$(CONFIG_EC_ACER_ASPIRE1)	+= acer-aspire1-ec.o
->  obj-$(CONFIG_EC_HUAWEI_GAOKUN)	+= huawei-gaokun-ec.o
->  obj-$(CONFIG_EC_LENOVO_YOGA_C630) += lenovo-yoga-c630.o
->  obj-$(CONFIG_EC_LENOVO_THINKPAD_T14S) += lenovo-thinkpad-t14s.o
-> +obj-$(CONFIG_EC_QCOM_HAMOA) += qcom-hamoa-ec.o
-> diff --git a/drivers/platform/arm64/qcom-hamoa-ec.c b/drivers/platform/arm64/qcom-hamoa-ec.c
-> new file mode 100644
-> index 000000000000..253f927c9aca
-> --- /dev/null
-> +++ b/drivers/platform/arm64/qcom-hamoa-ec.c
-> @@ -0,0 +1,452 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2024 Maya Matuszczyk <maccraft123mc@gmail.com>
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +
-> +#include <linux/bitfield.h>
-> +#include <linux/bits.h>
-> +#include <linux/device.h>
-> +#include <linux/dev_printk.h>
-> +#include <linux/err.h>
-> +#include <linux/i2c.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/pm.h>
-> +#include <linux/slab.h>
-> +#include <linux/thermal.h>
-> +
-> +#define EC_SCI_EVT_READ_CMD	0x05
-> +#define EC_FW_VERSION_CMD	0x0e
-> +#define EC_MODERN_STANDBY_CMD	0x23
-> +#define EC_FAN_DBG_CONTROL_CMD	0x30
-> +#define EC_SCI_EVT_CONTROL_CMD	0x35
-> +#define EC_THERMAL_CAP_CMD	0x42
-> +
-> +#define EC_FW_VERSION_RESP_LEN	4
-> +#define EC_THERMAL_CAP_RESP_LEN	3
-> +#define EC_FAN_DEBUG_CMD_LEN	6
-> +#define EC_FAN_SPEED_DATA_SIZE	4
-> +
-> +#define EC_MODERN_STANDBY_ENTER	0x01
-> +#define EC_MODERN_STANDBY_EXIT	0x00
-> +
-> +#define EC_FAN_DEBUG_MODE_OFF   0
-> +#define EC_FAN_DEBUG_MODE_ON    BIT(0)
-> +#define EC_FAN_ON               BIT(1)
-> +#define EC_FAN_DEBUG_TYPE_PWM   BIT(2)
-> +#define EC_MAX_FAN_CNT		2
-> +#define EC_FAN_NAME_SIZE	20
-> +#define EC_FAN_MAX_PWM		255
-> +
-> +enum qcom_ec_sci_events {
-> +	EC_FAN1_STATUS_CHANGE_EVT = 0x30,
-> +	EC_FAN2_STATUS_CHANGE_EVT,
-> +	EC_FAN1_SPEED_CHANGE_EVT,
-> +	EC_FAN2_SPEED_CHANGE_EVT,
-> +	EC_NEW_LUT_SET_EVT,
-> +	EC_FAN_PROFILE_SWITCH_EVT,
-> +	EC_THERMISTOR_1_THRESHOLD_CROSS_EVT,
-> +	EC_THERMISTOR_2_THRESHOLD_CROSS_EVT,
-> +	EC_THERMISTOR_3_THRESHOLD_CROSS_EVT,
-> +	/* Reserved: 0x39 - 0x3c/0x3f */
-> +	EC_RECOVERED_FROM_RESET_EVT = 0x3d,
-> +};
-> +
-> +struct qcom_ec_version {
-> +	u8 main_version;
-> +	u8 sub_version;
-> +	u8 test_version;
-> +};
-> +
-> +struct qcom_ec_thermal_cap {
-> +#define EC_THERMAL_FAN_CNT(x)		(FIELD_GET(GENMASK(1, 0), (x)))
-> +#define EC_THERMAL_FAN_TYPE(x)		(FIELD_GET(GENMASK(4, 2), (x)))
-> +#define EC_THERMAL_THERMISTOR_MASK(x)	(FIELD_GET(GENMASK(7, 0), (x)))
-> +	u8 fan_cnt;
-> +	u8 fan_type;
-> +	u8 thermistor_mask;
-> +};
-> +
-> +struct qcom_ec_cooling_dev {
-> +	struct thermal_cooling_device *cdev;
-> +	struct device *parent_dev;
-> +	u8 fan_id;
-> +	u8 state;
-> +};
-> +
-> +struct qcom_ec {
-> +	struct qcom_ec_cooling_dev *ec_cdev;
-> +	struct qcom_ec_thermal_cap thermal_cap;
-> +	struct qcom_ec_version version;
-> +	struct i2c_client *client;
-> +};
-> +
-> +static int qcom_ec_read(struct qcom_ec *ec, u8 cmd, u8 resp_len, u8 *resp)
-> +{
-> +	int ret;
-> +
-> +	ret = i2c_smbus_read_i2c_block_data(ec->client, cmd, resp_len, resp);
-> +
-> +	if (ret < 0)
-
-Call and its error handling belong together so please remove the empty line.
-
-> +		return ret;
-> +	else if (ret == 0 || ret == 0xff)
-> +		return -EOPNOTSUPP;
-> +
-> +	if (resp[0] >= resp_len)
-> +		return -EINVAL;
-> +
-> +	return 0;
-> +}
-> +
-> +/*
-> + * EC Device Firmware Version:
-> + *
-> + * Read Response:
-> + * ----------------------------------------------------------------------
-> + * | Offset	| Name		| Description				|
-> + * ----------------------------------------------------------------------
-> + * | 0x00	| Byte count	| Number of bytes in response		|
-> + * |		|		| (excluding byte count)		|
-> + * ----------------------------------------------------------------------
-> + * | 0x01	| Test-version	| Test-version of EC firmware		|
-> + * ----------------------------------------------------------------------
-> + * | 0x02	| Sub-version	| Sub-version of EC firmware		|
-> + * ----------------------------------------------------------------------
-> + * | 0x03	| Main-version	| Main-version of EC firmware		|
-> + * ----------------------------------------------------------------------
-> + *
-> + */
-> +static int qcom_ec_read_fw_version(struct device *dev)
-> +{
-> +	struct i2c_client *client = to_i2c_client(dev);
-> +	struct qcom_ec *ec = i2c_get_clientdata(client);
-> +	struct qcom_ec_version *version = &ec->version;
-> +	u8 resp[EC_FW_VERSION_RESP_LEN];
-> +	int ret;
-> +
-> +	ret = qcom_ec_read(ec, EC_FW_VERSION_CMD, EC_FW_VERSION_RESP_LEN, resp);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	version->main_version = resp[3];
-> +	version->sub_version = resp[2];
-> +	version->test_version = resp[1];
-> +
-> +	dev_dbg(dev, "EC Version %d.%d.%d\n",
-> +		version->main_version, version->sub_version, version->test_version);
-> +
-> +	return 0;
-> +}
-> +
-> +/*
-> + * EC Device Thermal Capabilities:
-> + *
-> + * Read Response:
-> + * ------------------------------------------------------------------------------
-> + * | Offset		| Name		| Description				|
-> + * ------------------------------------------------------------------------------
-> + * | 0x00		| Byte count	| Number of bytes in response		|
-> + * |			|		| (excluding byte count)		|
-> + * ------------------------------------------------------------------------------
-> + * | 0x02 (LSB)	| EC Thermal	| Bit 0-1: Number of fans		|
-> + * | 0x03		| Capabilities	| Bit 2-4: Type of fan			|
-> + * |			|		| Bit 5-6: Reserved			|
-> + * |			|		| Bit 7: Data Valid/Invalid		|
-> + * |			|		|	 (Valid - 1, Invalid - 0)	|
-> + * |			|		| Bit 8-15: Thermistor 0 - 7 presence	|
-> + * |			|		|	    (1 present, 0 absent)	|
-> + * ------------------------------------------------------------------------------
-> + *
-> + */
-> +static int qcom_ec_thermal_capabilities(struct device *dev)
-> +{
-> +	struct i2c_client *client = to_i2c_client(dev);
-> +	struct qcom_ec *ec = i2c_get_clientdata(client);
-> +	struct qcom_ec_thermal_cap *cap = &ec->thermal_cap;
-> +	u8 resp[EC_THERMAL_CAP_RESP_LEN];
-> +	int ret;
-> +
-> +	ret = qcom_ec_read(ec, EC_THERMAL_CAP_CMD, EC_THERMAL_CAP_RESP_LEN, resp);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	cap->fan_cnt = min(EC_MAX_FAN_CNT, EC_THERMAL_FAN_CNT(resp[1]));
-> +	cap->fan_type = EC_THERMAL_FAN_TYPE(resp[1]);
-> +	cap->thermistor_mask = EC_THERMAL_THERMISTOR_MASK(resp[2]);
-> +
-> +	dev_dbg(dev, "Fan count: %d Fan Type: %d Thermistor Mask: %x\n",
-> +		cap->fan_cnt, cap->fan_type, cap->thermistor_mask);
-> +
-> +	return 0;
-> +}
-> +
-> +static irqreturn_t qcom_ec_irq(int irq, void *data)
-> +{
-> +	struct qcom_ec *ec = data;
-> +	struct device *dev = &ec->client->dev;
-> +	int val;
-> +
-> +	val = i2c_smbus_read_byte_data(ec->client, EC_SCI_EVT_READ_CMD);
-> +	if (val < 0) {
-> +		dev_err_ratelimited(dev, "Failed to read EC SCI Event: %d\n", val);
-> +		return IRQ_HANDLED;
-> +	}
-> +
-> +	switch (val) {
-> +	case EC_FAN1_STATUS_CHANGE_EVT:
-> +		dev_dbg_ratelimited(dev, "Fan1 status changed\n");
-> +		break;
-> +	case EC_FAN2_STATUS_CHANGE_EVT:
-> +		dev_dbg_ratelimited(dev, "Fan2 status changed\n");
-> +		break;
-> +	case EC_FAN1_SPEED_CHANGE_EVT:
-> +		dev_dbg_ratelimited(dev, "Fan1 speed crossed low/high trip point\n");
-> +		break;
-> +	case EC_FAN2_SPEED_CHANGE_EVT:
-> +		dev_dbg_ratelimited(dev, "Fan2 speed crossed low/high trip point\n");
-> +		break;
-> +	case EC_NEW_LUT_SET_EVT:
-> +		dev_dbg_ratelimited(dev, "New LUT set\n");
-> +		break;
-> +	case EC_FAN_PROFILE_SWITCH_EVT:
-> +		dev_dbg_ratelimited(dev, "FAN Profile switched\n");
-> +		break;
-> +	case EC_THERMISTOR_1_THRESHOLD_CROSS_EVT:
-> +		dev_dbg_ratelimited(dev, "Thermistor 1 threshold crossed\n");
-> +		break;
-> +	case EC_THERMISTOR_2_THRESHOLD_CROSS_EVT:
-> +		dev_dbg_ratelimited(dev, "Thermistor 2 threshold crossed\n");
-> +		break;
-> +	case EC_THERMISTOR_3_THRESHOLD_CROSS_EVT:
-> +		dev_dbg_ratelimited(dev, "Thermistor 3 threshold crossed\n");
-> +		break;
-> +	case EC_RECOVERED_FROM_RESET_EVT:
-> +		dev_dbg_ratelimited(dev, "EC recovered from reset\n");
-> +		break;
-> +	default:
-> +		dev_notice_ratelimited(dev, "Unknown EC event: %d\n", val);
-> +		break;
-> +	}
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static int qcom_ec_sci_evt_control(struct device *dev, bool enable)
-> +{
-> +	struct i2c_client *client = to_i2c_client(dev);
-> +
-> +	return i2c_smbus_write_byte_data(client, EC_SCI_EVT_CONTROL_CMD, !!enable);
-
-This converts bool -> u8 using C's implicit conversion rules (plus on top 
-of that does unnecessary !!). Please write the conversion explicitly, you 
-can use ?: syntax for brevity.
-
-> +}
-> +
-> +static int qcom_ec_fan_get_max_state(struct thermal_cooling_device *cdev, unsigned long *state)
-> +{
-> +	*state = EC_FAN_MAX_PWM;
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_ec_fan_get_cur_state(struct thermal_cooling_device *cdev, unsigned long *state)
-> +{
-> +	struct qcom_ec_cooling_dev *ec_cdev = cdev->devdata;
-> +
-> +	*state = ec_cdev->state;
-> +
-> +	return 0;
-> +}
-> +
-> +/*
-> + * Fan Debug control command:
-> + *
-> + * Command Payload:
-> + * --------------------------------------------------------------------------------------
-> + * | Offset		| Name		| Description					|
-> + * --------------------------------------------------------------------------------------
-> + * | 0x00		| Command	| Fan control command				|
-> + * --------------------------------------------------------------------------------------
-> + * | 0x01		| Fan ID	| 0x1 : Fan 1					|
-> + * |			|		| 0x2 : Fan 2					|
-> + * --------------------------------------------------------------------------------------
-> + * | 0x02		| Byte count = 4| Size of data to set fan speed			|
-> + * --------------------------------------------------------------------------------------
-> + * | 0x03		| Mode		| Bit 0: Debug Mode On/Off (0 - OFF, 1 - ON )	|
-> + * |			|		| Bit 1: Fan On/Off (0 - Off, 1 - ON)		|
-> + * |			|		| Bit 2: Debug Type (0 - RPM, 1 - PWM)		|
-> + * --------------------------------------------------------------------------------------
-> + * | 0x04 (LSB)	| Speed in RPM	| RPM value, if mode selected is RPM		|
-> + * | 0x05		|		|						|
-> + * --------------------------------------------------------------------------------------
-> + * | 0x06		| Speed in PWM	| PWM value, if mode selected is PWM (0 - 255)	|
-> + * ______________________________________________________________________________________
-> + *
-> + */
-> +static int qcom_ec_fan_debug_mode_off(struct qcom_ec_cooling_dev *ec_cdev)
-> +{
-> +	struct device *dev = ec_cdev->parent_dev;
-> +	struct i2c_client *client = to_i2c_client(dev);
-> +	u8 request[6] = { ec_cdev->fan_id, EC_FAN_SPEED_DATA_SIZE,
-> +			  EC_FAN_DEBUG_MODE_OFF, 0, 0, 0 };
-> +	int ret;
-> +
-> +	ret = i2c_smbus_write_i2c_block_data(client, EC_FAN_DBG_CONTROL_CMD,
-> +					     sizeof(request), request);
-> +	if (ret) {
-> +		dev_err(dev, "Failed to turn off fan%d debug mode: %d\n",
-> +			ec_cdev->fan_id, ret);
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static int qcom_ec_fan_set_cur_state(struct thermal_cooling_device *cdev, unsigned long state)
-> +{
-> +	struct qcom_ec_cooling_dev *ec_cdev = cdev->devdata;
-> +	struct device *dev = ec_cdev->parent_dev;
-> +	struct i2c_client *client = to_i2c_client(dev);
-> +	u8 request[6] = { ec_cdev->fan_id, EC_FAN_SPEED_DATA_SIZE,
-> +			  EC_FAN_DEBUG_MODE_ON | EC_FAN_ON | EC_FAN_DEBUG_TYPE_PWM,
-> +			  0, 0, state };
-> +	int ret;
-> +
-> +	ret = i2c_smbus_write_i2c_block_data(client, EC_FAN_DBG_CONTROL_CMD,
-> +					     sizeof(request), request);
-> +	if (ret) {
-> +		dev_err(dev, "Failed to set fan pwm: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	ec_cdev->state = state;
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct thermal_cooling_device_ops qcom_ec_thermal_ops = {
-> +	.get_max_state = qcom_ec_fan_get_max_state,
-> +	.get_cur_state = qcom_ec_fan_get_cur_state,
-> +	.set_cur_state = qcom_ec_fan_set_cur_state,
-> +};
-> +
-> +static int qcom_ec_resume(struct device *dev)
-> +{
-> +	struct i2c_client *client = to_i2c_client(dev);
-> +
-> +	return i2c_smbus_write_byte_data(client, EC_MODERN_STANDBY_CMD,
-> +					 EC_MODERN_STANDBY_EXIT);
-> +}
-> +
-> +static int qcom_ec_suspend(struct device *dev)
-> +{
-> +	struct i2c_client *client = to_i2c_client(dev);
-> +
-> +	return i2c_smbus_write_byte_data(client, EC_MODERN_STANDBY_CMD,
-> +					 EC_MODERN_STANDBY_ENTER);
-> +}
-> +
-> +static int qcom_ec_probe(struct i2c_client *client)
-> +{
-> +	struct device *dev = &client->dev;
-> +	struct qcom_ec *ec;
-> +	unsigned int i;
-> +	int ret;
-> +
-> +	ec = devm_kzalloc(dev, sizeof(*ec), GFP_KERNEL);
-> +	if (!ec)
-> +		return -ENOMEM;
-> +
-> +	ec->client = client;
-> +
-> +	ret = devm_request_threaded_irq(dev, client->irq, NULL, qcom_ec_irq,
-> +					IRQF_ONESHOT, "qcom_ec", ec);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	i2c_set_clientdata(client, ec);
-> +
-> +	ret = qcom_ec_read_fw_version(dev);
-> +	if (ret < 0)
-> +		return dev_err_probe(dev, ret, "Failed to read EC firmware version\n");
-> +
-> +	ret = qcom_ec_sci_evt_control(dev, true);
-> +	if (ret < 0)
-> +		return dev_err_probe(dev, ret, "Failed to enable SCI events\n");
-> +
-> +	ret = qcom_ec_thermal_capabilities(dev);
-> +	if (ret < 0)
-> +		return dev_err_probe(dev, ret, "Failed to read thermal capabilities\n");
-> +
-> +	if (ec->thermal_cap.fan_cnt == 0) {
-> +		dev_warn(dev, FW_BUG "Failed to get fan count, firmware update required\n");
-> +		return 0;
-> +	}
-> +
-> +	ec->ec_cdev = devm_kcalloc(dev, ec->thermal_cap.fan_cnt, sizeof(*ec->ec_cdev), GFP_KERNEL);
-> +	if (!ec->ec_cdev)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < ec->thermal_cap.fan_cnt; i++) {
-> +		struct qcom_ec_cooling_dev *ec_cdev = &ec->ec_cdev[i];
-> +		char name[EC_FAN_NAME_SIZE];
-> +
-> +		scnprintf(name, sizeof(name), "qcom_ec_fan_%u", i);
-> +		ec_cdev->fan_id = i + 1;
-> +		ec_cdev->parent_dev = dev;
-> +
-> +		ec_cdev->cdev = devm_thermal_of_cooling_device_register(dev, NULL, name, ec_cdev,
-> +									&qcom_ec_thermal_ops);
-> +		if (IS_ERR(ec_cdev->cdev)) {
-> +			return dev_err_probe(dev, PTR_ERR(ec_cdev->cdev),
-> +					     "Failed to register fan%d cooling device\n", i);
-> +		}
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void qcom_ec_remove(struct i2c_client *client)
-> +{
-> +	struct qcom_ec *ec = i2c_get_clientdata(client);
-> +	struct device *dev = &client->dev;
-> +	int ret;
-> +
-> +	ret = qcom_ec_sci_evt_control(dev, false);
-> +	if (ret < 0)
-> +		dev_err(dev, "Failed to disable SCI events: %d\n", ret);
-> +
-> +	for (int i = 0; i < ec->thermal_cap.fan_cnt; i++) {
-> +		struct qcom_ec_cooling_dev *ec_cdev = &ec->ec_cdev[i];
-> +
-> +		qcom_ec_fan_debug_mode_off(ec_cdev);
-> +	}
-> +}
-> +
-> +static const struct of_device_id qcom_ec_of_match[] = {
-> +	{ .compatible = "qcom,hamoa-crd-ec" },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, qcom_ec_of_match);
-> +
-> +static const struct i2c_device_id qcom_ec_i2c_id_table[] = {
-> +	{ "qcom-hamoa-ec", },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(i2c, qcom_ec_i2c_id_table);
-> +
-> +static DEFINE_SIMPLE_DEV_PM_OPS(qcom_ec_pm_ops,
-> +		qcom_ec_suspend,
-> +		qcom_ec_resume);
-> +
-> +static struct i2c_driver qcom_ec_i2c_driver = {
-> +	.driver = {
-> +		.name = "qcom-hamoa-ec",
-> +		.of_match_table = qcom_ec_of_match,
-> +		.pm = &qcom_ec_pm_ops
-
-Please always add comma to any non-terminating entry.
-
-> +	},
-> +	.probe = qcom_ec_probe,
-> +	.remove = qcom_ec_remove,
-> +	.id_table = qcom_ec_i2c_id_table,
-> +};
-> +module_i2c_driver(qcom_ec_i2c_driver);
-> +
-> +MODULE_DESCRIPTION("QCOM Hamoa Embedded Controller");
-> +MODULE_LICENSE("GPL");
+> Changes in v5:
+> - simplify error management code flow
 > 
+> Changes in v4:
+> - ensure next_bridge is put on later probe failures
+> 
+> Changes in v3:
+> - fix ERR_PTR deref when -ENODEV is returned
+> ---
+>  drivers/gpu/drm/msm/hdmi/hdmi.c | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> index d9491aac1a89..3640be8c1bf9 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+> @@ -285,9 +285,14 @@ static int msm_hdmi_dev_probe(struct platform_device *pdev)
+>  	spin_lock_init(&hdmi->reg_lock);
+>  	mutex_init(&hdmi->state_mutex);
+>  
+> -	ret = drm_of_find_panel_or_bridge(dev_of_node(dev), 1, 0, NULL, &hdmi->next_bridge);
+> -	if (ret && ret != -ENODEV)
+> -		return ret;
+> +	struct drm_bridge *next_bridge __free(drm_bridge_put) =
+> +		of_drm_get_bridge_by_endpoint(dev_of_node(dev), 1, 0);
+> +	if (IS_ERR(next_bridge)) {
+> +		if (PTR_ERR(next_bridge) != -ENODEV)
+> +			return PTR_ERR(next_bridge);
+> +
+> +		next_bridge = NULL;
+> +	}
+>  
+>  	hdmi->mmio = msm_ioremap(pdev, "core_physical");
+>  	if (IS_ERR(hdmi->mmio))
+> @@ -367,6 +372,8 @@ static int msm_hdmi_dev_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto err_put_phy;
+>  
+> +	hdmi->next_bridge = no_free_ptr(next_bridge);
+
+Following the question on IRC. Yes, this seems to be too late. So, I'd
+suggest keeping the current assignment place (and call drm_bridge_put()
+accordingly). I'll rework that to use bridge.next_bridge afterwards.
+
+> +
+>  	return 0;
+>  
+>  err_put_phy:
+> @@ -381,6 +388,7 @@ static void msm_hdmi_dev_remove(struct platform_device *pdev)
+>  	component_del(&pdev->dev, &msm_hdmi_ops);
+>  
+>  	msm_hdmi_put_phy(hdmi);
+> +	drm_bridge_put(hdmi->next_bridge);
+>  }
+>  
+>  static int msm_hdmi_runtime_suspend(struct device *dev)
+> 
+> -- 
+> 2.53.0
 > 
 
 -- 
- i.
-
+With best wishes
+Dmitry
 
