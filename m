@@ -1,239 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-106769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aBoAD/Eh/2mu2gAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 09 May 2026 14:00:49 +0200
+	id UU57JnUm/2mE2wAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 09 May 2026 14:20:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EBB24FF860
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 09 May 2026 14:00:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ECCA84FF915
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 09 May 2026 14:20:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4E6293018092
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2026 12:00:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 030A1300E3A0
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 May 2026 12:20:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A217371899;
-	Sat,  9 May 2026 12:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B359433D4E4;
+	Sat,  9 May 2026 12:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A7TN+NgJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XhcFoNnO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D670830E821
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 May 2026 12:00:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E17630FF1D;
+	Sat,  9 May 2026 12:20:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778328041; cv=none; b=Q3waSnui0CqOTGC0Mrqx1bG66v2FVqf+/0fC/S/di/lsEs2e29/RaD8H8uzUs+wg2y9SCCNAEux/4vYxh74d1dY3+VVgu6dFjgpG3Hn7SoGi9k4i6KU2pdrZM7VsIPlWIzwJ2FwLfLTLj2UJht2+UX8UTAJNBFri/mMsyBwZ/0A=
+	t=1778329201; cv=none; b=rQ3BCVSjSfRY5fBmAcQSLOZw+7C+hKDwugYJelF45HKA2rZMPEvS7VGBKkcAwn1oSVo/Mg58la8GOMGdZgRqZ36qxntjoKFA6pq4Bl1xjxYpJZfm2wvOQOx9gqEtfM/AZ/0kl/AInLWqbxUQR+ejGjKghXfxpYEMXgz7AvAbq1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778328041; c=relaxed/simple;
-	bh=iemCui2l8qqvzux3lam3RV5hSucVjjAACXX7LzCZHcA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=K7lbEElEqM/2zOL7c+RjE5AEqxV0y5UBDdrkJCpSWU8Ged5L6FH9stnIlIZ5thBKfqAWp53dHNgoX1gXR+kSOs9bpqef055K5I0hzpZV+vA/gqRQ/o1lJ+xklfFvZtuTTPx5qUzSNIs+GwTlRpDW0ISG74uVRueEdm7dMfjUpFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A7TN+NgJ; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-b9d9971d059so433895166b.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 May 2026 05:00:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778328038; x=1778932838; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zmUf6SNpF4clO18ErlUoo6BNS+Vk6nKV8PcksNLHfkQ=;
-        b=A7TN+NgJDOiROdSbAmP7uh/zrwBSV+nGEFjf6F2Gp9Wbx1FCzxQxNvTT9cfw7JLzmd
-         gq+isEPxiAl7kKjsjKvZEYOxPBv/446cLEKUun52UKzI4zCbw/0tw8UmDSWANXcgP4y3
-         Cf8UcV3gdKmhKzUp9TTd4ZbngpmyZo8eDl7s3tQ+xGlbyf6qxMCBsSxkGH23W3oIHAcX
-         nP/fcModN7+s0dVCP4b9YtD4khIqFG5uoZDQa9ofKOTpmFHNyJ/ijVodp1PeU9K+6y9e
-         C4ZQECaBbPzW/XubM7Ijk4gG0JG5cfyg85ToHzxwqdi4i3UM01T4gaStKNbEzQYNc5Uw
-         yGlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778328038; x=1778932838;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zmUf6SNpF4clO18ErlUoo6BNS+Vk6nKV8PcksNLHfkQ=;
-        b=SaSE0S8xfdz2uKtS7JkvSD7wbFkyrJ7PhV8/5gUiKWrPFXHI/MDb2M9m9k1Mi/jQKI
-         4RB06UVy9Hfa6f4Oi8kXYuIbf341AWUlIDZ4PRzo1y2yTIa2JCRxw36ZhKa9JY5/Auaj
-         qPbwOeU6VJn8H2yb2jyPeiEuxBlmKaXjt6L+Vry6rP+YenjUc8wc5zWTcbYWVZPUm2Dh
-         vJC2iyRLQ3B71s00dKGQCfIdXrClE3jrA2L9RLZ1tZM02FUX98NF4Y1Hrzthjfnp4fHm
-         dSLUvZhxZHo4/cCUmViyd6DHJFVxicHYNa1TcpR6C8wG/qXsH2pfJXKyRT9AtvoDmBg+
-         suaA==
-X-Forwarded-Encrypted: i=1; AFNElJ80+fYWCshcnoM4NE9XLB9El81Y1GQRWMsJ7vljTfGF2w9a/n6JZapmk5pZpdqc/KvhDvnmOJbJUF1HzLTu@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBm/KmtaOMUYmGm8W4Cjt7TqKOXzP2Mx/kMHKV2zb8E2tpPx/V
-	giUJD6xUF1XuiR13EZvdUI0eBZ9Ub9wVqx2fOYxhy6d71MYy2qae+Pxs
-X-Gm-Gg: Acq92OGgX6plx9aP6wFQROdxlFFFo7s2/usU6ZEtNzXj/ahi2tGD7vgVyDtbUssGIoo
-	PfScuCiJF4br0GQOm8f70vGieCKZGt8i/P5ffli9KOuq03CIgaeF4AObIUOIorAKuFxmBLOD4zq
-	fwymh6GWQNWghYTIIPlTakOgK+PIRdr9dNa8nrqtOeUKqjr3X5QQgELwk7iLG4NuPUlkIawmoDc
-	ZCSorx+VELh8GGcUuoduIVjTR6Rj2r1LoivgOyeo74w4a+FA+taSvgIv1pqw2BFLc05FeFrUAE9
-	0ZNQCea0pulMrnOfPXfDC7waci2xueWAWgNnjtkqU9aPLkcIoTc5GiYO4DhMceM/iTPGAt6Q2Qn
-	KIDX78T3BdI5iUg6D2iLtkiaIqgGxZ6QRt3L8/A9ZQbeMb6mPXdaFHsqjBB827tPd88dNlcUbn+
-	LKoN53+HQ1HAOd+XoE8d4ixW8f0/AelDhJN6qYS6954zvoziJD4kYzIM7DtaycsGk9Ivku
-X-Received: by 2002:a17:907:c817:b0:bae:456f:fbb2 with SMTP id a640c23a62f3a-bc56cd3b1ccmr1054228966b.23.1778328037744;
-        Sat, 09 May 2026 05:00:37 -0700 (PDT)
-Received: from ?IPV6:2a00:f502:160:4e2:a099:cad9:2ecd:93de? ([2a00:f502:160:4e2:a099:cad9:2ecd:93de])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bcac4359ea4sm219872166b.50.2026.05.09.05.00.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 May 2026 05:00:37 -0700 (PDT)
-Message-ID: <69f9a6b7-7431-442a-82a2-6305635a508a@gmail.com>
-Date: Sat, 9 May 2026 15:00:34 +0300
+	s=arc-20240116; t=1778329201; c=relaxed/simple;
+	bh=Cq7/QM49XQIon1SXcxU39hmlYFljvekcg/7oaZVUPos=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LJ/GxbLchSu6LdBwTeIGokhzUHs640ZBQeKfZDLj3po95sXVkSvka61PWKUWMRiSTM6fEyRnkRc0W4FcBFH3TGuJk2PJl9B9OOX23ar7EHcPz9cN/8cd4omPiGPH3K5og9esXHUsqGVL4oBausJCAUdUWwQviTVT94F5Z3R6Yao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XhcFoNnO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD15C2BCB2;
+	Sat,  9 May 2026 12:19:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778329201;
+	bh=Cq7/QM49XQIon1SXcxU39hmlYFljvekcg/7oaZVUPos=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XhcFoNnOLchiOyp+IpFy1WAwrUu4KBrpYvJztnKdW0Fn5ebQPp9EmbiZ4y1NxEsxT
+	 XG4bho/mW5xFbcUaMPIP/k2s7GadqLGLbR8/vaC9HDU6d5Ar13ATXwawARlLZHJ84k
+	 TwfB3jjeIp3g/FD7k2sk4mRvnzprCP8t3blehYM48Q5A9uqy1/eVf2AMgwiX2wA9dj
+	 VXk5IIUzNABErG86Ak8X6EjAWhg9vk2yhffE8xSS17c1O9BOZUVdlH4i9XqDQ7hzVg
+	 VEhuaSywM7P/1ln4541/Ucc97rcSGO2u4yAPdRdyH5ClLKijctKTxB/Umi1FhUSSrn
+	 hGDT+AgvS6NXw==
+Date: Sat, 9 May 2026 13:19:56 +0100
+From: Sudeep Holla <sudeep.holla@kernel.org>
+To: Jack Matthews <jack@jackmatthe.ws>
+Cc: Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, regressions@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: Regression in split ARM MMIO timer driver
+Message-ID: <20260509-ruddy-dragonfly-of-poetry-45e9f1@sudeepholla>
+References: <46A20F89-E208-4091-8B6E-B5C38BF82B42@jackmatthe.ws>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/8] clk: qcom: gcc-msm8939: mark Venus core GDSCs as
- hardware controlled
-To: Bryan O'Donoghue <bod@kernel.org>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org
-References: <20260507-msm8939-venus-rfc-v5-0-d7b5ea2ce591@gmail.com>
- <f5TsKnC12rLsH63vAi01aN4oXUFLrfgIhn14IQFDb9gcac6anLzzhJdkGNdQ2dRs4vYbFKUptfEgWuKdgIgGsQ==@protonmail.internalid>
- <20260507-msm8939-venus-rfc-v5-5-d7b5ea2ce591@gmail.com>
- <17c4626e-8926-4cad-842d-a1b171d1e962@kernel.org>
- <CYaHtccGOWlaUtl3QIKva44ybJiRHsPOZmHEkl2KKGmnDxJ8vTH-SVNMGbL7bjkYjI692nplORzOhpfjs3XJfg==@protonmail.internalid>
- <4f1ab5b8-3bfe-43a6-8b91-317456188544@gmail.com>
- <7df3bff7-b872-4b20-8e7c-698157a41f33@kernel.org>
- <tawGGT4rtpw22Ng-MgM--GhoEihBU7tY_TrFUHf8raMKApyqTcSkKHyfSuRIL_bqNp_5zWD4SBG_C4c8CB7_6Q==@protonmail.internalid>
- <18998766-62fe-4a5e-95d8-1bfae712d8fb@gmail.com>
- <614a087d-d219-49cb-85ee-772044558649@kernel.org>
- <Jxt4BbN1dL8VKh_Zjah1xecAjz3c9VfbhKSm4a0K2D1MNKfJKIFnCPLj2VvdW1q4LnMIQy8bCzV3YoVnLFYUlA==@protonmail.internalid>
- <0cee27b6-f566-4958-8634-2c43e099281e@gmail.com>
- <dd435489-0cf7-4274-99bf-a591a15e91e4@kernel.org>
-Content-Language: en-US
-From: Erikas Bitovtas <xerikasxx@gmail.com>
-In-Reply-To: <dd435489-0cf7-4274-99bf-a591a15e91e4@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 6EBB24FF860
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <46A20F89-E208-4091-8B6E-B5C38BF82B42@jackmatthe.ws>
+X-Rspamd-Queue-Id: ECCA84FF915
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106769-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-106770-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	DKIM_TRACE(0.00)[gmail.com:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[xerikasxx@gmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sudeep.holla@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On 5/8/26 6:55 PM, Bryan O'Donoghue wrote:
-> On 07/05/2026 16:51, Erikas Bitovtas wrote:
->>
->>
->> On 5/7/26 4:37 PM, Bryan O'Donoghue wrote:
->>> v4l2-ctl --verbose --set-fmt-video-
->>> out=width=1280,height=720,pixelformat=NV12 --set-selection-output
->>> target=crop,top=0,left=0,width=1280,height=720 --set-fmt-
->>> video=pixelformat=H264 --stream-mmap --stream-out-mmap --stream-
->>> from=cyclists_1280x720_92frames.yuv --stream-to=/tmp/
->>> cyclists_1280x720_92frames.h264 -d /dev/video1
->>
->> With the patch kept:
->> v4l2-ctl --verbose
->> --set-fmt-video-out=width=1280,height=720,pixelformat=NV12
->> --set-selection-output target=crop,top=0,left=0,width=1280,height=720
->> --set-fmt-video=pixelformat=H26
->> 4 --stream-mmap --stream-out-mmap
->> --stream-from=cyclists_1280x720_92frames.yuv
->> --stream-to=/tmp/cyclists_1280x720_92frames.h264 -d /dev/video1
->> VIDIOC_QUERYCAP: ok
->> VIDIOC_G_FMT: ok
->> VIDIOC_S_FMT: ok
->> Format Video Capture Multiplanar:
->>     Width/Height      : 1280/736
->>     Pixel Format      : 'H264' (H.264)
->>     Field             : None
->>     Number of planes  : 1
->>     Flags             :
->>     Colorspace        : Default
->>     Transfer Function : Default
->>     YCbCr/HSV Encoding: Default
->>     Quantization      : Default
->>     Plane 0           :
->>        Bytes per Line : 0
->>        Size Image     : 708608
->> VIDIOC_G_FMT: ok
->> VIDIOC_S_FMT: ok
->> Format Video Output Multiplanar:
->>     Width/Height      : 1280/736
->>     Pixel Format      : 'NV12' (Y/UV 4:2:0)
->>     Field             : None
->>     Number of planes  : 1
->>     Flags             :
->>     Colorspace        : Default
->>     Transfer Function : Default
->>     YCbCr/HSV Encoding: Default
->>     Quantization      : Default
->>     Plane 0           :
->>        Bytes per Line : 1280
->>        Size Image     : 1425408
->> VIDIOC_G_SELECTION: ok
->> VIDIOC_S_SELECTION: ok
->>         VIDIOC_G_FMT returned 0 (No error information)
->>         VIDIOC_G_FMT returned 0 (No error information)
->>         VIDIOC_G_FMT returned 0 (No error information)
->>         VIDIOC_REQBUFS returned -1 (Invalid argument)
->>
->> With the patch reverted:
->> v4l2-ctl --verbose
->> --set-fmt-video-out=width=1280,height=720,pixelformat=NV12
->> --set-selection-output target=crop,top=0,left=0,width=1280,height=720
->> --set-fmt-video=pixelformat=H26
->> 4 --stream-mmap --stream-out-mmap
->> --stream-from=cyclists_1280x720_92frames.yuv
->> --stream-to=/tmp/cyclists_1280x720_92frames.h264 -d /dev/video1
->> VIDIOC_QUERYCAP: ok
->> VIDIOC_G_FMT: ok
->> The pixelformat 'H264' is invalid
->> VIDIOC_G_FMT: ok
->> The pixelformat 'NV12' is invalid
->>
->> Decoding breaks if I revert the patch as well, it fails with a power
->> collapse fail.
-> 
-> If you declare both as decoders can you successfully decode @ video0 and
-> video1 ?
-> Apparently device nodes for encoder and decoder are not persistent
-across reboots, so when I reverted the patch, I was actually testing
-against decoder, not encoder.
+On Fri, May 08, 2026 at 03:48:14PM -0400, Jack Matthews wrote:
+> Hello,
+>
+> I am working on mainlining an old chip, Qualcomm's MDM9625 modem.
+> I had previously booted 6.17-rc3 before putting this project to the side,
+> but when I restarted work on 7.0 I was unable to boot. 
+> I have bisected this to commit 0f67b56d84b4c49adfd61f19f81f84ec613ab51a
+> (https://lore.kernel.org/all/20250814154622.10193-4-maz@kernel.org/) and
+> reverting this commit makes the device boot successfully. Unfortunately I do
+> not have access to low level debugging such as UART so I have not been able
+> to pinpoint exactly what is missing.
+> My changes for this chip are all available here in case it is an issue of my
+> own doing: https://github.com/jackmthws/linux/commits/mdm9625-latest/.
 
-So, the result is the same when the patch is applied, when it is
-reverted, and when testing against v1 where the cores are enabled only
-for decoding.
+Looking briefly into the DTS file, I couldn't find the sysreg based arch
+timer node in the DT. It could be just an overlook unless there is some
+issue with it that it's not added. After the above mentioned commit, the
+MMIO timer gets initialised bit late in the boot and could be the reason
+for boot failure. Unless you have intentionally not added it, I would
+suggest to add it and try.
+
+-- 
+Regards,
+Sudeep
 
