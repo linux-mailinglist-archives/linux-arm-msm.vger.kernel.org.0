@@ -1,76 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-106791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mJuZCprs/2ljAQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 04:25:30 +0200
+	id C4RvCEz7/2lNBQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 05:28:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 796DA502461
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 04:25:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B2B75025F9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 05:28:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6AEDB300EF6A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 02:25:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 85CC330160E5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 03:28:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 354E723D291;
-	Sun, 10 May 2026 02:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8666F2248A0;
+	Sun, 10 May 2026 03:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e79y6hL/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h9OPIIG4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C06263CB;
-	Sun, 10 May 2026 02:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B749175A7C;
+	Sun, 10 May 2026 03:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778379925; cv=none; b=VYNBMYSQ5yCZIX+afyPaDhFPED4GwsworXwI7soW4z2isHHpgA9Gr49zwwJF3FMi4t+2tKYpnyi7ss8dykUJyNVpOtVb/pEcf6tp8T7LP2sxOcP+EaM23UpgvbKAV8DZmP5epr7FIPUs3yCA/JcM6gV4M8MzTPD0kSRIeb/yta8=
+	t=1778383686; cv=none; b=KLS07+Ix/mWmc8SRzG2sggQnnhxkJ7hdIq7KzpJ2eXVqYtZr1YtEfS3YP7ftg2hyIzP8uixqqUN82Wx0+Rf9vbiBUeRl5Rgt8S11GTrJa9eMO2BC3N4PfFaDVpGThi5V0vioOsI66PHnahz16DKuuMT8g8hNxaawr/721kKrBM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778379925; c=relaxed/simple;
-	bh=DuPHI1LqOFfQCPwSGvE4XxVWrva8Uk84ODEwZHi72xU=;
+	s=arc-20240116; t=1778383686; c=relaxed/simple;
+	bh=YWPSVrJSk9to5+GJb6slS1Gcg11UmRRBr3afpfQuQoU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qDthOCx1hjB4wtUbH7QD+lhf7laJs3isYUsV3b3L1hoeQEgpV433gt0fFA2if/beEMC2+EmfPzx7fcPnLVYaR1+okP72/SU3Jyo+fxZ6A+uEVz+oPVhZFfM3tcOdBIhp0geQGDdWmQOmKEHxKFeJmJqJyk9RMi7sKhntecFsmX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e79y6hL/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DAE5C2BCC7;
-	Sun, 10 May 2026 02:25:20 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=bJ2E1A6XVKoWGzTgK7j0o2bMvignkKk6o/GY4PCyKftRlaRpAWBzkYjsbUacw9poms+/fi6qifuCIiKjd5WK5XUAWsc0N98wtYMIAmFZ1oGE0BEXoBOT7kiRDyzoWWfEduRL7bZV0N622qfhU/KaKVqQ6lHBoBf6zEHyrQumpCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h9OPIIG4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B55C2BCF5;
+	Sun, 10 May 2026 03:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778379924;
-	bh=DuPHI1LqOFfQCPwSGvE4XxVWrva8Uk84ODEwZHi72xU=;
+	s=k20201202; t=1778383685;
+	bh=YWPSVrJSk9to5+GJb6slS1Gcg11UmRRBr3afpfQuQoU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=e79y6hL/mgDvOZD8UHrjx/yvvGE14Vi42uRup1vVa+BwGGuz0tI3FboKrX6KCcHYW
-	 RzREP9nAcxXgbOLsICt59PEujBZfc43refGEy/MqJqsWO96s+Q3AgEvXjdaDOJlAAS
-	 iXt5onlnEIiRTPA221E7iqjKkNnVa/ou5prZT51yvrxvmamwRnnTONClO46LkwR6wZ
-	 t2IFlN52kGo0lvKsca1tHoXbtX8d3ZNYB/HRYPyRw5jkTtawLddwbKxR+1rJEj3vIi
-	 eoZSgqm4WxQI4AKYACjQH26b7yHJFcZfpkAvmuGCkgkL1k/4LZuGB+A3395nol8DbQ
-	 i0nDH3HyM9r4g==
-Date: Sat, 9 May 2026 21:25:16 -0500
+	b=h9OPIIG4EctLH09eTqvIiPF4HhyGkw4eKml9aBTYtMgNl9g42K4fdxPjYfzH31MZW
+	 0qSiYMvbMfP82ZzVIYn51+2K/Hr+8vFdxXGEOfyk9oRyJM7PMVFst5fFZlnIijQP2Y
+	 xp3E0BBCgL2vVVp/Uu/S0c6rQDauPhW7UR7kXG+JwhpSr9TmVEa5e1jsXocB8U4JsY
+	 N124cTZjD6N/5JxGQ8hUjNCCY+6j1HQ4QEES2I8KTjZ6tSjxiL4X+I7aDREFc0iIGJ
+	 dWzAc1BFUUhs5wJAN6g7d+SXX8vcMb3U61ysF0eqISAPjhzIuQsw+AZFQULEfHUMo8
+	 XgDb3ae+U0aZA==
+Date: Sat, 9 May 2026 22:28:01 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Alex Elder <elder@riscstar.com>
-Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com, 
-	kuba@kernel.org, pabeni@redhat.com, maxime.chevallier@bootlin.com, 
-	rmk+kernel@armlinux.org.uk, konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, linusw@kernel.org, brgl@kernel.org, arnd@arndb.de, 
-	gregkh@linuxfoundation.org, Daniel Thompson <daniel@riscstar.com>, 
-	mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com, alexandre.torgue@foss.st.com, 
-	ast@kernel.org, boon.khai.ng@altera.com, chenchuangyu@xiaomi.com, 
-	chenhuacai@kernel.org, daniel@iogearbox.net, hawk@kernel.org, hkallweit1@gmail.com, 
-	inochiama@gmail.com, john.fastabend@gmail.com, julianbraha@gmail.com, 
-	livelycarpet87@gmail.com, matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, 
-	me@ziyao.cc, prabhakar.mahadev-lad.rj@bp.renesas.com, 
-	richardcochran@gmail.com, rohan.g.thomas@altera.com, sdf@fomichev.me, 
-	siyanteng@cqsoftware.com.cn, weishangjuan@eswincomputing.com, wens@kernel.org, 
-	netdev@vger.kernel.org, bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next 08/12] dt-bindings: net: toshiba,tc965x-dwmac:
- add TC956x Ethernet bridge
-Message-ID: <af_sarCs9E5M7NLE@baldur>
-References: <20260501155421.3329862-1-elder@riscstar.com>
- <20260501155421.3329862-9-elder@riscstar.com>
- <afycOwz5TpkegkZd@baldur>
- <3c78f48c-6478-46d0-87c2-581bb58637dd@riscstar.com>
+To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: glymur: Add psci reboot-mode edl
+Message-ID: <af_49utiHCPDlbEd@baldur>
+References: <20260505-glymur_reboot_mode-v1-1-59fe3e9a6868@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,11 +61,10 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3c78f48c-6478-46d0-87c2-581bb58637dd@riscstar.com>
-X-Rspamd-Queue-Id: 796DA502461
+In-Reply-To: <20260505-glymur_reboot_mode-v1-1-59fe3e9a6868@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 7B2B75025F9
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
@@ -92,79 +73,122 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106791-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-106792-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[49];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On Thu, May 07, 2026 at 01:37:09PM -0500, Alex Elder wrote:
-> On 5/7/26 9:12 AM, Bjorn Andersson wrote:
-> > On Fri, May 01, 2026 at 10:54:16AM -0500, Alex Elder wrote:
-> > > diff --git a/Documentation/devicetree/bindings/net/toshiba,tc956x-dwmac.yaml b/Documentation/devicetree/bindings/net/toshiba,tc956x-dwmac.yaml
-> > [..]
-> > > +
-> > > +  gpio-controller: true
-> > 
-> > I don't have any concern with the use of a proper gpio driver to model
-> > the implementation, but if I understand correctly this relationship
-> > between gpio controller and gpio consumer is strictly internal to "the
-> > PCI device".
-> 
-> (I think you're already cool with this but I still wanted to respond.)
-> 
+On Tue, May 05, 2026 at 07:07:27PM +0530, Pankaj Patil wrote:
+> Add PSCI SYSTEM_RESET2 reboot-modes for glymur to be invoked by the psci
 
-Thank you for the further clarifications, and added details, Alex. This
-does look reasonable to me.
+"Glymur"
+
+> reboot-mode driver.
+
+https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+states that you should start your commit message by describing the
+"problem" your patch is addressing. This commit message fully assumes
+that the reader already knows everything about this topic and why this
+should be added.
+
+> 
+> The following modes are defined:
+> - edl: reboot into emergency download mode for image loading via
+> the Firehose protocol.
+
+I presume that would be the Sahara protocol, but you don't need to be
+specific about how that implementation works. It's sufficient to say
+that "edl" reboots the device into "emergency download mode (EDL)".
+
+> 
+> Support for these modes is dependent on the psci firmware
+
+What are the implications of that?
+
+> 
+> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/glymur-crd.dtsi | 6 ++++++
+>  arch/arm64/boot/dts/qcom/glymur.dtsi     | 2 +-
+>  2 files changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/glymur-crd.dtsi b/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
+> index 2852d257ac8c..397519e95ca1 100644
+> --- a/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
+> @@ -560,6 +560,12 @@ &pon_resin {
+>  	status = "okay";
+>  };
+>  
+> +&psci {
+> +	reboot-mode {
+> +		mode-edl = <0x80000000 0x1>;
+
+Does the statement about "psci firmware" somehow relate to the fact that
+this is defined in the crd.dtsi?
+
+> +	};
+> +};
+> +
+>  &tlmm {
+>  	gpio-reserved-ranges = <4 4>, /* EC TZ Secure I3C */
+>  			       <10 2>, /* OOB UART */
+> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> index f23cf81ddb77..7f426efe40ab 100644
+> --- a/arch/arm64/boot/dts/qcom/glymur.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> @@ -382,7 +382,7 @@ pmu {
+>  		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
+>  	};
+>  
+> -	psci {
+> +	psci: psci {
+>  		compatible = "arm,psci-1.0";
+>  		method = "smc";
+>  
+> 
+> ---
+> base-commit: 9d0d467c3572e93c5faa2e5906a8bbcd70b24efd
+> change-id: 20260407-glymur_reboot_mode-4441770e6a8a
+> prerequisite-message-id: <20260427-arm-psci-system_reset2-vendor-reboots-v21-0-dcf937775e73@oss.qualcomm.com>
+
+As far as I can tell from the discussion, that's not settled yet.
+Not sure what you want me to do with this patch then...
 
 Regards,
 Bjorn
 
-> That is not correct.  These GPIO lines are used two ways for the
-> RB3gen2:
-> - drivers/pci/pwrctrl/pci-pwrctrl-tc9563.c uses GPIOs 2 and 3 to
->   assert/deassert the reset lines associated with the two exposed
->   downstream PCIe ports on the PCIe switch within the TC956x.
+> prerequisite-patch-id: 70829f19896a982ef4ac19fa82bf571b9eb6defa
+> prerequisite-patch-id: 600337ba5717c51204c4f426acb28bd6287e56ec
+> prerequisite-patch-id: e7a6e85c94e35b71c9813c322e811a270233c854
+> prerequisite-patch-id: 7bb3e4b151f32129e8ce5d3c1015150cbd741d13
+> prerequisite-patch-id: a61561c5070b9485399a840ff48252842393f01a
+> prerequisite-patch-id: c7f5c86cf5f88c6d5dd576565bcce25ee3848b19
+> prerequisite-patch-id: e4d851cd0a6dfb96d62e4c9d3ebfa1422b9571a6
+> prerequisite-patch-id: e6ffbbec586e6c4b508bd366615e33928a910190
+> prerequisite-patch-id: 8ae267aee51f48992d2232f18dc5795b08fd8e54
+> prerequisite-patch-id: 10b585e49a96767c3324c9e3c623a4716a641fda
+> prerequisite-patch-id: 5abbfae8b6577899e0423b36b4690adf1046cac2
+> prerequisite-patch-id: edb89ac23b7a3d5ade9b9cc1e1a77ee4d1a663cf
+> prerequisite-patch-id: 555f1b64be3631d6286f2f1e140dc38c6935d646
 > 
-> - Each of the Ethernet PHYs has a reset GPIO.  On the RB3gen2, the
->   GPIOs used for the purpose come from the GPIO controller embedded
->   in the TC9564 (00 and 01).
-> 
-> These are therefore "exposed" (they are *not* strictly internal).
-> 
-> > Is this connection variable or is the link merely expressed in
-> > DeviceTree to mitigate the fact that you choose to implement the
-> > responsibilities of the two parts split into two device drivers?
-> 
-> It is variable.  These resets might be implemented by other GPIO
-> controllers on other platforms.
-> 
-> > Are there other consumers of these TC956x gpios which would result in a
-> > board designer (and hence dts author) to ever reference this
-> > gpio-controller in a different way?
-> 
-> They could.  Nine of these GPIOs are exposed by the TC956x pins
-> (GPIO00-06, GPIO12, GPIO35 and GPIO36).  The RB3gen2 uses 00-03
-> (and possibly 04 but that's for a PHY we haven't tested yet).
-> 
-> 					-Alex
-> 
-> > Regards,
-> > Bjorn
+> Best regards,
+> -- 
+> Pankaj Patil <pankaj.patil@oss.qualcomm.com>
 > 
 
