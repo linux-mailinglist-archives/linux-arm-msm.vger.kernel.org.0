@@ -1,120 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-106821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oDkzID17AGqaJQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 14:34:05 +0200
+	id +D5nEYp8AGrJJQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 14:39:38 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25987503F13
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 14:34:05 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05743503FF4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 14:39:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 036FA300ED82
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 12:32:40 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1EF7B300A7F1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 12:37:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DE61382F0C;
-	Sun, 10 May 2026 12:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49504371D13;
+	Sun, 10 May 2026 12:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SgU8zTnL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ixRwwxCy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774BE381AF9;
-	Sun, 10 May 2026 12:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247CA263F44;
+	Sun, 10 May 2026 12:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778416332; cv=none; b=jCMMMPf6iEtV0I3wc5OhKQOJxHYlT2XVEVrjGNQ6KRFkzJubIm1ILEBqjHiPeTsT6OIoA2rRL1cU+VC5XOBPL7PwAPY27zv3S40+1xz6cj32Y7y2ODv5EB7rEUFgK1g6tv6rHEDcvXaWUcMjMB7TToEK4EG45sPey46Ip3aSGZ4=
+	t=1778416645; cv=none; b=VPGjwVLbIPDcnWg1izEgkc/O5tccZA7PkWu4XIUM7/P0HfpzaEIcQ7kI/jRTqNzI1D5Bt2c0NKxSWF53MGA0VSlm8N+po3rF748Fv3hKykMFuu8+zo+9JpPa1oEkLpuE0hCY6krcDhtcwfZBK2falLsbT7ZABMEuVH3WbB0Xg3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778416332; c=relaxed/simple;
-	bh=ZOZPfRpmqg2BpdWh35bkdnOWkhQ00IiCGj8t0cYKe7A=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=Il4m0lWaq5fQsWYxTi9PT9OKX/FNBuBOiMabYsEegkOd7Ij8KkXP85rq9wrVkSDjOsA01Xqp+AOsgJ5xu6+kuunFJUabTM0qtTA1u6knpbm2RLHXXT4iF7Q57OdW49AZ4An7PaNoH6sHTPEGktm8GlCmf4srcUxKjKB+lBzCAXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SgU8zTnL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441A9C2BCB8;
-	Sun, 10 May 2026 12:32:08 +0000 (UTC)
+	s=arc-20240116; t=1778416645; c=relaxed/simple;
+	bh=vu3Y5hebGHlbs8Wwwwd0v6O6dDNlPkMvQPdXO/9L2Jw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kXFguTeaFnQdQ/jPUXfiki1gAcX3JtUKsusRtt4xvh2MBlPA6vL2/2vSiBLdYLnpeJcR8goyR1hxt0FoXOFBO23+vNsIa/yGpHPg0A0xPqunghBMYQz8PxPv8smhn0RvBLLg0tLJ76yaQ48Dqbrn8UAEbCeGmVfgf8U3eR3UScQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ixRwwxCy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95607C2BCB8;
+	Sun, 10 May 2026 12:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778416332;
-	bh=ZOZPfRpmqg2BpdWh35bkdnOWkhQ00IiCGj8t0cYKe7A=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=SgU8zTnLL/JXvHJ5bv8R5pixRuqmE4WiGOcbTIh/I4Kff4y5lqaDcb2jEOz2mzI5R
-	 7e5E0VVCWSbVFeM+9lfhgKkXz/OzgtKGsvr/8BZStj8kGAU4oIzaZxcHuPdPTkyrg1
-	 G41/3WPaSR1BKQyvHVwqBkBMspt5+2HizMgvl8l47svQF7bpiow9nXvL4vAGrK0QZn
-	 lvne5yuO7i1zf6wF0w/gxCSuStzX49t1AVdsf5ek0a4kX6osd0Dvch9Jaj8DJgev/5
-	 z3x0Inm69lFK18fL8qWHPg/bekE8YdfeOuvtDOa58s64q5VHsqfxRheZdYTxdP5QkC
-	 P6BR/0LDvkKLw==
-From: Vinod Koul <vkoul@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260318-eliza-bindings-qmp-phy-v1-1-96a0d529ad2d@oss.qualcomm.com>
-References: <20260318-eliza-bindings-qmp-phy-v1-1-96a0d529ad2d@oss.qualcomm.com>
-Subject: Re: [PATCH] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy: Add
- Eliza QMP PHY
-Message-Id: <177841632882.434434.6283185972129859697.b4-ty@kernel.org>
-Date: Sun, 10 May 2026 18:02:08 +0530
+	s=k20201202; t=1778416644;
+	bh=vu3Y5hebGHlbs8Wwwwd0v6O6dDNlPkMvQPdXO/9L2Jw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ixRwwxCympUFtP7RHFxl/EOSwCmlcpAzxybNlwYSM2R3Wb6h7BlnhndIvPe5W9zfp
+	 tmwo6vR1lFg0A5sbhBlbe/Ju8LnwHC1DGtZpRWqFuFTXQFTW3ZBsed5pDLPJOfyXpU
+	 4VqoKR3EYIJ1YJgp9eF78/tvE0dPndpwN14ecJdyryXJxpBicbbTjadLh20iDwRuTk
+	 K7nqToyp0k6mOMr2SF0FqNI/oveLpTizprnvCjUeE2weHyCrepfUFUcpXBqQN1MpG0
+	 4RP7CqwZK9+TUG5jQ1ut+xSg9zYCp4Wqu740QLqduvOXKvedueCnYjQDLA+Kg4lAPD
+	 5mXeLfqt0L15w==
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+	id 5F9D61AC5898; Sun, 10 May 2026 13:37:22 +0100 (BST)
+Date: Sun, 10 May 2026 21:37:22 +0900
+From: Mark Brown <broonie@kernel.org>
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+	MukeshKumarSavaliyamukesh.savaliya@oss.qualcomm.com,
+	AniketRandiveaniket.randive@oss.qualcomm.com,
+	chandana.chiluveru@oss.qualcomm.com,
+	jyothi.seerapu@oss.qualcomm.com
+Subject: Re: [PATCH v1 1/2] spi: qcom-geni: trace: Add trace events for
+ Qualcomm GENI SPI
+Message-ID: <agB8AgF3qVqDw60Z@sirena.co.uk>
+References: <20260506-add-tracepoints-for-qcom-geni-spi-v1-0-c957cfe712d1@oss.qualcomm.com>
+ <20260506-add-tracepoints-for-qcom-geni-spi-v1-1-c957cfe712d1@oss.qualcomm.com>
+ <afvkiT50ZUEXZ-YO@sirena.co.uk>
+ <e4651363-7c1c-4ae0-a97b-b64841424c83@oss.qualcomm.com>
+ <afxJmZ9MkP5eJkQC@sirena.co.uk>
+ <59e36f20-891d-4a58-8cc4-6822d03daa23@oss.qualcomm.com>
+ <af3spostNgoRU0Vv@sirena.co.uk>
+ <4d90b061-95ab-40d4-83d2-13425e992d4d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
-X-Rspamd-Queue-Id: 25987503F13
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FoKVK1Ec5vCNkjz/"
+Content-Disposition: inline
+In-Reply-To: <4d90b061-95ab-40d4-83d2-13425e992d4d@oss.qualcomm.com>
+X-Cookie: Truckers welcome.
+X-Rspamd-Queue-Id: 05743503FF4
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-4.26 / 15.00];
+	SIGNED_PGP(-2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106821-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-106822-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vkoul@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,sirena.co.uk:mid]
 X-Rspamd-Action: no action
 
 
-On Wed, 18 Mar 2026 11:54:36 +0200, Abel Vesa wrote:
-> Document the compatible for the USB QMP PHY found on the Qualcomm Eliza
-> SoC.
-> 
-> It is fully compatible with the one found on Qualcomm SM8650, so add it
-> with the SM8650 as fallback.
-> 
-> 
-> [...]
+--FoKVK1Ec5vCNkjz/
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Applied, thanks!
+On Sat, May 09, 2026 at 07:37:26AM +0530, Praveen Talari wrote:
 
-[1/1] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy: Add Eliza QMP PHY
-      commit: d67a337d28a2d852ff539e983ad6790caf9c95f5
+> Could you also please review the changes made in spi.c ?
+> I would appreciate any feedback or suggestions you may have.
 
-Best regards,
--- 
-~Vinod
+Please just sumbmit normal patches instead of sending partial patches in
+reply to another thread unless something is really unclear.
 
+> @@ -1658,6 +1658,11 @@ static int spi_transfer_one_message(struct
+> spi_controller *ctlr,
+>=20
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 trace_spi_transfer_stop(msg, xfer);
+>=20
+> +=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (spi_valid_txbuf(msg, xfer))
+> +=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0trace_spi_tx_data(msg->sp=
+i, xfer->tx_buf,
+> xfer->len);
+> +=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (spi_valid_rxbuf(msg, xfer))
+> +=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0trace_spi_rx_data(msg->sp=
+i, xfer->rx_buf,
+> xfer->len);
 
+It feels like it'd be more helpful to log the transmit data before we do
+the send.
+
+--FoKVK1Ec5vCNkjz/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmoAfAEACgkQJNaLcl1U
+h9BTLgf+LemCv9sfC+554JjNQ/7vHm63lfC60glScUyFOhUKHr/MFtzddYoZ5hmH
+bOgBlNZ/wFXCKh24+CkI/2o92t59d6JFk+JVy2VcoHC/UA32rFkEkN+F4otq/wpk
+veDDZRtbTkgMdg5hJXjUvab1gX895fTjizvlj9XUcfLlfI2UgI2ffiv0OJ0CS6Lm
+TFjYwKhkfu2eQ+wawV4iPCUp0jfYUQH1k0tAdji9dRwDRzhtrceWfbOzIH4yWSjA
+fVC+4NyoCXQSGh8RIGNOcmEwBZxC2JPqmmACfzKOWhN1LqFTIbo6kt8v9XBZpluH
+5+kKCG4TYV1kdieuqerU4iCMs+EinA==
+=+Ysd
+-----END PGP SIGNATURE-----
+
+--FoKVK1Ec5vCNkjz/--
 
