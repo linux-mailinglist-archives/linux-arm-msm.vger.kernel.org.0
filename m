@@ -1,161 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-106822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +D5nEYp8AGrJJQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 14:39:38 +0200
+	id EqQtI/CsAGpMLgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 18:06:08 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05743503FF4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 14:39:37 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E99F504FA0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 18:06:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1EF7B300A7F1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 12:37:29 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 056A53002505
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 May 2026 16:06:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49504371D13;
-	Sun, 10 May 2026 12:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 783313ACEE3;
+	Sun, 10 May 2026 16:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ixRwwxCy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DG8I9DV2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247CA263F44;
-	Sun, 10 May 2026 12:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7BD3ACA6A;
+	Sun, 10 May 2026 16:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778416645; cv=none; b=VPGjwVLbIPDcnWg1izEgkc/O5tccZA7PkWu4XIUM7/P0HfpzaEIcQ7kI/jRTqNzI1D5Bt2c0NKxSWF53MGA0VSlm8N+po3rF748Fv3hKykMFuu8+zo+9JpPa1oEkLpuE0hCY6krcDhtcwfZBK2falLsbT7ZABMEuVH3WbB0Xg3A=
+	t=1778429161; cv=none; b=pTGYq/F2fVTfet3oISDS1sNDl8aWUcJQb2mnqu7wjV1lIu90GSDGTfRdRIc4//wGSRLyq9QFTB4BnpxggNcorx7IwTZ50i80njxYTnvJQlPn7qd/zSxydHJvJF/CHH0qLhtEzzji/9iC7KOVWGaAq94WSMAQjIMYmYyig2FiC04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778416645; c=relaxed/simple;
-	bh=vu3Y5hebGHlbs8Wwwwd0v6O6dDNlPkMvQPdXO/9L2Jw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kXFguTeaFnQdQ/jPUXfiki1gAcX3JtUKsusRtt4xvh2MBlPA6vL2/2vSiBLdYLnpeJcR8goyR1hxt0FoXOFBO23+vNsIa/yGpHPg0A0xPqunghBMYQz8PxPv8smhn0RvBLLg0tLJ76yaQ48Dqbrn8UAEbCeGmVfgf8U3eR3UScQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ixRwwxCy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95607C2BCB8;
-	Sun, 10 May 2026 12:37:24 +0000 (UTC)
+	s=arc-20240116; t=1778429161; c=relaxed/simple;
+	bh=zWM0yjWhrBGeyNEsiYlhIjWmf8MR0q9DFMYfprO6DpQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=lt6ewYcVSuWDL816Akf2WJ0LgERZfbmVYWFLPGW3AmOSDGCrb4sjbk94hzibjezztKS0xnJN65yQhpqNswz9RyiEvsGxaNTyFhP9ZLxQoIsIen5bvjk0BQL6G0YCgkmT7QDQXiSifRlTjL0ywLaIpV2B9Yk5L6wZFNFB//najHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DG8I9DV2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DE9F0C2BCFA;
+	Sun, 10 May 2026 16:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778416644;
-	bh=vu3Y5hebGHlbs8Wwwwd0v6O6dDNlPkMvQPdXO/9L2Jw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ixRwwxCympUFtP7RHFxl/EOSwCmlcpAzxybNlwYSM2R3Wb6h7BlnhndIvPe5W9zfp
-	 tmwo6vR1lFg0A5sbhBlbe/Ju8LnwHC1DGtZpRWqFuFTXQFTW3ZBsed5pDLPJOfyXpU
-	 4VqoKR3EYIJ1YJgp9eF78/tvE0dPndpwN14ecJdyryXJxpBicbbTjadLh20iDwRuTk
-	 K7nqToyp0k6mOMr2SF0FqNI/oveLpTizprnvCjUeE2weHyCrepfUFUcpXBqQN1MpG0
-	 4RP7CqwZK9+TUG5jQ1ut+xSg9zYCp4Wqu740QLqduvOXKvedueCnYjQDLA+Kg4lAPD
-	 5mXeLfqt0L15w==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id 5F9D61AC5898; Sun, 10 May 2026 13:37:22 +0100 (BST)
-Date: Sun, 10 May 2026 21:37:22 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-	MukeshKumarSavaliyamukesh.savaliya@oss.qualcomm.com,
-	AniketRandiveaniket.randive@oss.qualcomm.com,
-	chandana.chiluveru@oss.qualcomm.com,
-	jyothi.seerapu@oss.qualcomm.com
-Subject: Re: [PATCH v1 1/2] spi: qcom-geni: trace: Add trace events for
- Qualcomm GENI SPI
-Message-ID: <agB8AgF3qVqDw60Z@sirena.co.uk>
-References: <20260506-add-tracepoints-for-qcom-geni-spi-v1-0-c957cfe712d1@oss.qualcomm.com>
- <20260506-add-tracepoints-for-qcom-geni-spi-v1-1-c957cfe712d1@oss.qualcomm.com>
- <afvkiT50ZUEXZ-YO@sirena.co.uk>
- <e4651363-7c1c-4ae0-a97b-b64841424c83@oss.qualcomm.com>
- <afxJmZ9MkP5eJkQC@sirena.co.uk>
- <59e36f20-891d-4a58-8cc4-6822d03daa23@oss.qualcomm.com>
- <af3spostNgoRU0Vv@sirena.co.uk>
- <4d90b061-95ab-40d4-83d2-13425e992d4d@oss.qualcomm.com>
+	s=k20201202; t=1778429160;
+	bh=zWM0yjWhrBGeyNEsiYlhIjWmf8MR0q9DFMYfprO6DpQ=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=DG8I9DV2QdCtrpKsYOtl51qqd+m5rjCh12nh6LXvS5HRu/KCqWIJJPUSK1F6e+yMJ
+	 0F1JYD1beooKWmOr+eqGNZqVJXmka536TCtVtkvCNaIUg7IsOVtAtrviMb/35J6Tff
+	 ay/MjV2l2et62wFm5xuUyPVV5/ebeAF5azBJorIpf2SH2F765lmTYrS2AKtnK8GsvL
+	 1J2ci1pO3ju1OUEEj24CpASjumYMuO7T1H1hcUwqlN4M5hYgZzFoeI1jYONWNw5KCM
+	 VlhycbYqfQywi/TZsCGqZQM76p+yjeb/haywdN4zcpq1PxHJF2kgys6e5dc9oiqQj5
+	 9DcJB4Kv+2uVw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6300CD37B2;
+	Sun, 10 May 2026 16:06:00 +0000 (UTC)
+From: Alexandre Hamamdjian via B4 Relay <devnull+azkali.limited.gmail.com@kernel.org>
+Subject: [PATCH 0/2] arm64: qcom: add Ayaneo Pocket DS gaming console
+Date: Sun, 10 May 2026 23:05:55 +0700
+Message-Id: <20260510-pocketds-v1-0-cf05acec06af@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="FoKVK1Ec5vCNkjz/"
-Content-Disposition: inline
-In-Reply-To: <4d90b061-95ab-40d4-83d2-13425e992d4d@oss.qualcomm.com>
-X-Cookie: Truckers welcome.
-X-Rspamd-Queue-Id: 05743503FF4
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXM0QpAQBSE4VfRuba1CK1XkQvW4FBoD1Ly7haXX
+ /0zFwkcQ6gILnI4WHiZPaIwIDvUcw/FrTfFOs50Gmm1LnbC1oqCRt4YY7skM+Tz1aHj87sqq9+
+ yNyPs9u7pvh9tj0WwbAAAAA==
+X-Change-ID: 20260510-pocketds-e0e7b99cf369
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Alexandre Hamamdjian <azkali.limited@gmail.com>, 
+ Teguh Sobirin <teguh@sobir.in>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1778429157; l=1248;
+ i=azkali.limited@gmail.com; s=20260510; h=from:subject:message-id;
+ bh=zWM0yjWhrBGeyNEsiYlhIjWmf8MR0q9DFMYfprO6DpQ=;
+ b=pAr7WUGqunWuaodzubJ4K97YlUN6/wr7s/x78Tdh18R7mtAjc6EJbe0vIoF7nnuqe6MooiF2E
+ JqqvhAk/kNeCDO+uA+uhpbJLwpl1cPbuiMJhevB43lJ2z35qlK4gVui
+X-Developer-Key: i=azkali.limited@gmail.com; a=ed25519;
+ pk=I0Z0IdCdQJqNGX+FQUnXhrHg950u3cM6Xzz3YT6JOyQ=
+X-Endpoint-Received: by B4 Relay for azkali.limited@gmail.com/20260510 with
+ auth_id=774
+X-Original-From: Alexandre Hamamdjian <azkali.limited@gmail.com>
+Reply-To: azkali.limited@gmail.com
+X-Rspamd-Queue-Id: 7E99F504FA0
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-4.26 / 15.00];
-	SIGNED_PGP(-2.00)[];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106822-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-106825-lists,linux-arm-msm=lfdr.de,azkali.limited.gmail.com];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_REPLYTO(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,sobir.in];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	HAS_REPLYTO(0.00)[azkali.limited@gmail.com];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,sirena.co.uk:mid]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
+This series adds initial support for the Ayaneo Pocket DS, a handheld
+gaming console built around the Qualcomm QCS8550 SoC.
 
---FoKVK1Ec5vCNkjz/
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This introduces the device tree itself, split into:
+- qcs8550-ayaneo-pocket-common.dtsi: shared QCS8550 board base
+  intended to be reused by future siblings in the same family.
+- qcs8550-ayaneo-pocketds.dts: This device's DTS
 
-On Sat, May 09, 2026 at 07:37:26AM +0530, Praveen Talari wrote:
+Only the basics are wired up at this stage (boot to console, core
+peripherals enabled in the common dtsi); additional functionality
+will follow in later submissions.
 
-> Could you also please review the changes made in spi.c ?
-> I would appreciate any feedback or suggestions you may have.
+Signed-off-by: Alexandre Hamamdjian <azkali.limited@gmail.com>
+---
+Teguh Sobirin (2):
+      dt-bindings: arm: qcom: document the Ayaneo Pocket DS
+      arm64: dts: qcom: add basic devicetree for Ayaneo Pocket DS gaming console
 
-Please just sumbmit normal patches instead of sending partial patches in
-reply to another thread unless something is really unclear.
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    6 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ .../dts/qcom/qcs8550-ayaneo-pocket-common.dtsi     | 1596 ++++++++++++++++++++
+ .../boot/dts/qcom/qcs8550-ayaneo-pocketds.dts      |  170 +++
+ 4 files changed, 1773 insertions(+)
+---
+base-commit: e98d21c170b01ddef366f023bbfcf6b31509fa83
+change-id: 20260510-pocketds-e0e7b99cf369
 
-> @@ -1658,6 +1658,11 @@ static int spi_transfer_one_message(struct
-> spi_controller *ctlr,
->=20
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 trace_spi_transfer_stop(msg, xfer);
->=20
-> +=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (spi_valid_txbuf(msg, xfer))
-> +=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0trace_spi_tx_data(msg->sp=
-i, xfer->tx_buf,
-> xfer->len);
-> +=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (spi_valid_rxbuf(msg, xfer))
-> +=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0trace_spi_rx_data(msg->sp=
-i, xfer->rx_buf,
-> xfer->len);
+Best regards,
+--  
+Alexandre Hamamdjian <azkali.limited@gmail.com>
 
-It feels like it'd be more helpful to log the transmit data before we do
-the send.
 
---FoKVK1Ec5vCNkjz/
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmoAfAEACgkQJNaLcl1U
-h9BTLgf+LemCv9sfC+554JjNQ/7vHm63lfC60glScUyFOhUKHr/MFtzddYoZ5hmH
-bOgBlNZ/wFXCKh24+CkI/2o92t59d6JFk+JVy2VcoHC/UA32rFkEkN+F4otq/wpk
-veDDZRtbTkgMdg5hJXjUvab1gX895fTjizvlj9XUcfLlfI2UgI2ffiv0OJ0CS6Lm
-TFjYwKhkfu2eQ+wawV4iPCUp0jfYUQH1k0tAdji9dRwDRzhtrceWfbOzIH4yWSjA
-fVC+4NyoCXQSGh8RIGNOcmEwBZxC2JPqmmACfzKOWhN1LqFTIbo6kt8v9XBZpluH
-5+kKCG4TYV1kdieuqerU4iCMs+EinA==
-=+Ysd
------END PGP SIGNATURE-----
-
---FoKVK1Ec5vCNkjz/--
 
