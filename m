@@ -1,174 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-106972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kGAnC/YKAmqknQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 18:59:34 +0200
+	id EMxpHo8DAmrknAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 18:27:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4D97512DAE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 18:59:33 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 157455121F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 18:27:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 245503090754
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 16:27:34 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 206D73014172
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 16:27:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3EBD426ECF;
-	Mon, 11 May 2026 16:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B578B42B751;
+	Mon, 11 May 2026 16:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="XugNropA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MFPorXmO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80352407562
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 16:27:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B3F3FFAB2;
+	Mon, 11 May 2026 16:27:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778516853; cv=none; b=rUB8rV1oKSwYaC/F2gjO0RdbIGd1E8M5OEy0KFfNOECPPXLlYz8lUuK/dQvyRD3Al23DS0ApHiyS5ZfrzmdUb0tTF+0grsrB4ktdj0TelxoetQgSouJ/+ikf6rh2vhsJaYwq4B81vDAqGjzIh3VGLTIphTh9OfXDhhiC9XbPNn4=
+	t=1778516860; cv=none; b=t+GNN/xZyLkaPDBEugrw6zCWPIVkKSeIFLrU86jKwAJwf20NIA597w9ayhenImDKEbQnCU8+3zbqy8KmTWYQ9Z9X5EWch5A9UKpmmCcq0Hu86Pyob/DGBHEUuusdVFGkb2eIHy7/4HA2MqOQFqefk1pPV+NLiLs+8P6kAJvhEEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778516853; c=relaxed/simple;
-	bh=YonN8VL2BLEr4Q2OyxUKcgv3XivnvGDz2zoMI7+3kf0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N+5q04OkhmpClflWPKaIj3PsblnCdisfXuZIvl6loka8YOjUdyVQE59Z0nxSPSWM1x+8VeHbjDa5w6MdqTGjDnq8K2uXKyhbnZaMSviGomUGONu17+6Fk8YuIK0nPJ76ma8HKvC2zuqcRv/OspjVDnaccL5D4jzvZkQ64PuSmSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=XugNropA; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 85A5516F2
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 09:27:26 -0700 (PDT)
-Received: from [192.168.0.1] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 83D003F85F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 09:27:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1778516851; bh=YonN8VL2BLEr4Q2OyxUKcgv3XivnvGDz2zoMI7+3kf0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XugNropA7jzUFum6bLhlgSbM3I22IBjetzpO/DArm5cw5XNIpay3/ws/QMLxRB1JH
-	 9X7H1EP/ormLrjfpDSWQB85VfW0fDi/5wLr5FTKJh8ZR+YrJQDj8iTmsnqgItVmytT
-	 Tfz6GClcatTTqSMBt+gtMpsO4EXmxU4HZBPvJpZ0=
-Date: Mon, 11 May 2026 17:27:13 +0100
-From: Liviu Dudau <liviu.dudau@arm.com>
-To: Rob Clark <rob.clark@oss.qualcomm.com>
-Cc: Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Akash Goel <akash.goel@arm.com>, Chia-I Wu <olvaffe@gmail.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] drm/gem: Make the GEM LRU lock part of drm_device
-Message-ID: <agIDYZlOpZB5eZke@e142607>
-References: <20260508-panthor-shrinker-fixes-v2-0-39cdb7d577c9@collabora.com>
- <20260508-panthor-shrinker-fixes-v2-4-39cdb7d577c9@collabora.com>
- <CACSVV00NdUKe6-05U3g0q5X3tw4zmqO_s2gk-KZxQVykpydvAA@mail.gmail.com>
- <20260511174429.35afcdee@fedora>
- <CACSVV02HQ-ci8mHg4os7e-yaf51hdHyQ6cFa9tGOpc9=keL28Q@mail.gmail.com>
+	s=arc-20240116; t=1778516860; c=relaxed/simple;
+	bh=BBVqtaERJSrNr2MANl4kxg7k3rO7Ou9Ei8riFRQh3vs=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=LhENF8wWRNpBlK995kc9vftTwkqfayPNrkOiI5V12wix+2+I0GNk42v9REiHNAeS+addrBU9aEvIJGVrzAKC4XjpNWBOyeHqIA7h+/W+CSLZALVfWZ6GJvb78FTO+QhMcNgt+afnHW5gIoHWbjNXcxvHk21xMO59rL/IH3zKXQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MFPorXmO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41102C2BCC9;
+	Mon, 11 May 2026 16:27:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778516860;
+	bh=BBVqtaERJSrNr2MANl4kxg7k3rO7Ou9Ei8riFRQh3vs=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=MFPorXmOLEjjxToQ0+xb6E7fMYWMiz65K1Wk6QuX5leUjLdaCn6CZkLGebPyTlUFt
+	 zR+tY22uUl3P2VYjkAKKTjyk2J9UCtTPSMNCVFwLcwYx2vRe47QyMAkKotNuIWFyT3
+	 Fxf6PK8W+SdRM7XLnucnvNxHUiWrIr0kuF0geibyB8xqQp8TkP5BaWEi3lhyqaU7Lm
+	 byAtYabatex0I6JRa+XWLWq7mwPccp3BjLLal6Br9PIK9pTOZbBVPM1ygNxrG7Y0F0
+	 TRXOAzisU91gYrG1pdYJwgttUbjR7+DHoUpco2x+CApcSx6gOX8VuxyO0PU3lCcF12
+	 7z3B07Fi82xTQ==
+Date: Mon, 11 May 2026 17:27:29 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Antony Kurniawan Soemardi <linux@smankusors.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
+ <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, David
+ Lechner <dlechner@baylibre.com>, Nuno =?UTF-8?B?U8Oh?=
+ <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>, Linus Walleij
+ <linusw@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-iio@vger.kernel.org, phone-devel@vger.kernel.org, Konrad Dybcio
+ <konrad.dybcio@oss.qualcomm.com>, Dmitry Baryshkov
+ <dmitry.baryshkov@oss.qualcomm.com>, Andy Shevchenko
+ <andriy.shevchenko@intel.com>
+Subject: Re: [PATCH v6 0/4] iio: adc: qcom-pm8xxx-xoadc: add support for
+ reading channel labels from DT
+Message-ID: <20260511172729.42407b1d@jic23-huawei>
+In-Reply-To: <20260510-pm8xxx-xoadc-label-v6-0-49700fd03005@smankusors.com>
+References: <20260510-pm8xxx-xoadc-label-v6-0-49700fd03005@smankusors.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACSVV02HQ-ci8mHg4os7e-yaf51hdHyQ6cFa9tGOpc9=keL28Q@mail.gmail.com>
-X-Rspamd-Queue-Id: B4D97512DAE
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 157455121F8
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
-	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106972-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[collabora.com,arm.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
+	TAGGED_FROM(0.00)[bounces-106973-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	DKIM_TRACE(0.00)[arm.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[liviu.dudau@arm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,collabora.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,arm.com:dkim]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[smankusors.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On Mon, May 11, 2026 at 09:16:49AM -0700, Rob Clark wrote:
-> On Mon, May 11, 2026 at 8:44 AM Boris Brezillon
-> <boris.brezillon@collabora.com> wrote:
-> >
-> > On Mon, 11 May 2026 06:18:44 -0700
-> > Rob Clark <rob.clark@oss.qualcomm.com> wrote:
-> >
-> > > On Fri, May 8, 2026 at 3:41 AM Boris Brezillon
-> > > <boris.brezillon@collabora.com> wrote:
-> > > >
-> > > > Recently, a few races have been discovered in the GEM LRU logic, all
-> > > > of them caused by the fact the LRU lock is accessed through
-> > > > gem->lru->lock, and that lock itself also protects changes to
-> > > > gem->lru, leading to situations where gem->lru needs to first be
-> > > > accessed without the lock held, to then get the lru to access the lock
-> > > > through and finally take the lock and do the expected operation.
-> > > >
-> > > > Currently, the two drivers making use of this API declare device-wide
-> > > > locks, and there's no clue that we will ever have a driver that wants
-> > > > different pools of LRUs protected by different locks under the same
-> > > > drm_device. So we're better off moving this lock to drm_device and
-> > > > always locking it through obj->dev->gem_lru_mutex, or directly through
-> > > > dev->gem_lru_mutex.
-> > > >
-> > > > If anyone ever needs more fine-grained locking, this can be revisited
-> > > > to pass some drm_gem_lru_pool object represent the pool of LRUs under
-> > > > a specific lock, but for now, the per-device lock seems to be enough.
-> > > >
-> > > > Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-> > >
-> > > Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
-> >
-> > If every one is happy with patch 4, I'm tempted to drop patch 1 and 3,
-> > since they are irrelevant if the locking is fixed the way it is in this
-> > patch. Question is, do we care about patch 2 being backported to stable
-> > kernels then?
-> 
-> Or backport patch 4?  It's a bit bigger, but mostly mechanical.. with
-> only issue being backporting across addition of panthor shrinker, I
-> guess?
+On Sun, 10 May 2026 07:01:29 +0000 (UTC)
+Antony Kurniawan Soemardi <linux@smankusors.com> wrote:
 
-I'm agreeing with Rob here, but it makes a mess of the backport. Maybe split
-patch 4 into the drm_gem.c and msm changes and make another one for panthor,
-as that is still in linux-next?
+> This series adds support for reading channel labels from the device tree
+> in the Qualcomm PM8xxx XOADC driver, along with the corresponding DT
+> updates for the PM8921 PMIC. Also removes the redundant error logs when
+> reading values, as returning -EINVAL and -ETIMEDOUT are sufficient to
+> report failures.
+>=20
+> This series also includes minor refactoring, such as removing redundant
+> error loggings.
+>=20
+> Tested on Sony Xperia SP (PM8921):
+> > cat /sys/bus/iio/devices/iio\:device0/in_voltage7_label =20
+> usb_vbus
+> > cat /sys/bus/iio/devices/iio\:device0/in_temp12_label =20
+> ref_muxoff
+> > sensors =20
+> iio_hwmon-isa-0000
+> Adapter: ISA adapter
+> vbat:        267.86 V
+> dcin:          4.82 kV
+> ...
+> chg_temp:    +1071.4=C2=B0C
+>=20
+> Note: the sensor readings above are incorrect due to pending calibration
+> fixes are not included in this series. This patch only addresses label
+> visibility. The values are expected to be wrong until the calibration
+> fixes lands separately.
+Applied patches 3 and 4 to the testing branch of iio.git.
 
-Best regards,
-Liviu
+When I get caught up with the backlog and the tests finish I'll push that
+out as togreg for linux-next to pick up.
 
-> 
-> BR,
-> -R
+Thanks,
 
--- 
-====================
-| I would like to |
-| fix the world,  |
-| but they're not |
-| giving me the   |
- \ source code!  /
-  ---------------
-    ¯\_(ツ)_/¯
+Jonathan
 
