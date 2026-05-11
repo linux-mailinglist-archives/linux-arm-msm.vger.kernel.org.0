@@ -1,59 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-106982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GIsCFPcIAmqknQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 18:51:03 +0200
+	id oLlHJ3QPAmplngEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 19:18:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1102512A99
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 18:51:02 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D82B513428
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 19:18:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id A251A3033CF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 16:43:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8979C302E40D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 16:43:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78DC93D300D;
-	Mon, 11 May 2026 16:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7596E43CEC1;
+	Mon, 11 May 2026 16:41:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="hj1eeppa"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="khJWpo1c"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2070644BC92
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 16:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEF343D51D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 16:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778517657; cv=none; b=h6+xCkXFot2hHhASBWHTvQiLwOSC9A1Fjp6DDM13tMOqxItKRibkqfaMh8Nt16tIZpQtrVTDcDMk47epGZeRT61pWFTvHTS/5yBJrPfzQR+WVOTXgGo84LGigXD5PnoV1CLuKjlehAhHMXIAhdrgeHcWEPsyFXuCwMc+IomeQxY=
+	t=1778517662; cv=none; b=oMr63gUVFnKG1VfrYISMBqSGDc1GdUDSxP2tkZM2CfTmTMRXvSPhjRxEPCqOTz+j2Opv/GHdDaLS7pVw4JL0Izat/BSSrqRCud8Cq7Ds+uEIF/xLF5/fWsFQFoSleSPjcEv8iDgYd+K/ziNJNXVEWW5WDtgs/vqneNcE5IKV2yY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778517657; c=relaxed/simple;
-	bh=GHjfR71AMR0n3PcVfZo2YDCc2397+0sTdvTC5OpDP3w=;
+	s=arc-20240116; t=1778517662; c=relaxed/simple;
+	bh=6bsQ+A/teVFlCjC9RvwNOW0pxRFPJ/Hwoz6F67C1Pdk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cEI5gtUqh3fjW3N/pPgvR3TICqTCtINeftnjV9tGHpDE9GrZz5Jh1vm1ipyP8eZ/7ddVUhB/v9O0kw7E72oyP2msTnL7D0Ho/3nWk2XY41Md3MwBpx8bU0rhUJ2LYNLkPllpiKbtFOgQmtItYz7So/UcgGr6gAs4w01PfCAxp68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=hj1eeppa; arc=none smtp.client-ip=185.246.84.56
+	 In-Reply-To:To:Cc; b=RhBajxWC/hSX3X6j0ADB2v/OgxE+mKJZ+N3amrj7Hb/uJRKlOAfH2Z3NcsOGmQwMKTXsCcwsw/ysl4irk2CCgapQs18mKV82FarvXz5/6v7mI4egkgFlKpEkASKTeGbmo1SY+u3aT2RFfznO8c5zNMWcJtik30cH4LudDFoO9lQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=khJWpo1c; arc=none smtp.client-ip=185.246.84.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id D4F171A3526;
-	Mon, 11 May 2026 16:40:54 +0000 (UTC)
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 9ED531A3528;
+	Mon, 11 May 2026 16:40:59 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id A75B160646;
-	Mon, 11 May 2026 16:40:54 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 4B1F811AF9F78;
-	Mon, 11 May 2026 18:40:49 +0200 (CEST)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 6BA6760646;
+	Mon, 11 May 2026 16:40:59 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 90F2D11AF9F73;
+	Mon, 11 May 2026 18:40:53 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1778517652; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1778517657; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=8MehjA850sW25thLd7/45pWDvM6QQu8N+rXW6HdhVww=;
-	b=hj1eeppaOing1rwGNbz9hq5zBAbwXirYllsco8lmcQKnJr+8+lALjqlOl9jZiaZmL9fGkT
-	ZH7vgFxiAP+wsq4UlgZaNsSYwi3nhjNxyhgk1YwYlTE8VHlR9PzHGXkHKQyoijk/npBQp7
-	bOrjKtZRsD14zx4d0cN/D9gqRSXbRkrlu5gNZ36iVcQilws/7GYmcjqzW5rUAYA9p5fzGG
-	C2WKBIIHOxnNW8ilsQV0Kvu9U2pWYfee4oXugQ89IQynA1F8alCJbUZ0wAU/KL2wsefE7O
-	imEsBJLmkjR2Hw8Ou1/iRy3i243AqyMvVOpd8C2QWeKIwtrAyYaxFjkFGsZe9g==
+	bh=+aSetamBxog1tXfF9WLBiQFhYUb4rpTgh/j1AEW1jos=;
+	b=khJWpo1cf1yA6oHhgJQYvcuTOkZyfKPxUGJpfDwJA4GCuxOq38sbIs4ojR0QkP878DuooF
+	DEc9uIW0jQnJdUzKEf08Eojizb4uvXrR/0NGlwbHBdj8INRXOfr2Ze4nx6ctsGLrpS6xik
+	XaDZirI9CUsnTw3vFIe0vx6ZMeBRvGuULK3/hK8+/8h+9BT9LXYsAv4IJ0oV60qBtZOgZV
+	hNBWh82ei5QnFyfCnk8ERnrDtOafkXYHnGlZWjNUFc7C7o5AqZzywpuT+3tDGYw5Z1lRg0
+	hhjDXB23D0iq/16+QC0UI601wWUm0VctQqSAR4sJR5OnU8lou9JHO476F5nsFA==
 From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Date: Mon, 11 May 2026 18:40:10 +0200
-Subject: [PATCH v6 06/11] drm/bridge: lontium-lt9611uxc: switch to
+Date: Mon, 11 May 2026 18:40:11 +0200
+Subject: [PATCH v6 07/11] drm/bridge: lt9611: switch to
  of_drm_get_bridge_by_endpoint()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -63,7 +63,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260511-drm-bridge-alloc-getput-panel_or_bridge-v6-6-f61c9e498b3f@bootlin.com>
+Message-Id: <20260511-drm-bridge-alloc-getput-panel_or_bridge-v6-7-f61c9e498b3f@bootlin.com>
 References: <20260511-drm-bridge-alloc-getput-panel_or_bridge-v6-0-f61c9e498b3f@bootlin.com>
 In-Reply-To: <20260511-drm-bridge-alloc-getput-panel_or_bridge-v6-0-f61c9e498b3f@bootlin.com>
 To: Andrzej Hajda <andrzej.hajda@intel.com>, 
@@ -90,26 +90,26 @@ Cc: Hui Pu <Hui.Pu@gehealthcare.com>, Ian Ray <ian.ray@gehealthcare.com>,
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
 X-Last-TLS-Session-Version: TLSv1.3
-X-Rspamd-Queue-Id: E1102512A99
+X-Rspamd-Queue-Id: 1D82B513428
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106982-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-106983-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[intel.com,linaro.org,kernel.org,ideasonboard.com,kwiboo.se,gmail.com,linux.intel.com,suse.de,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,google.com,amd.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[31];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
@@ -120,7 +120,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,bootlin.com:email,bootlin.com:mid,bootlin.com:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,bootlin.com:email,bootlin.com:mid,bootlin.com:dkim,qualcomm.com:email]
 X-Rspamd-Action: no action
 
 This driver calls drm_of_find_panel_or_bridge() with a NULL pointer in the
@@ -135,43 +135,43 @@ pointer which is automatically put when the bridge is eventually freed.
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 9 ++++++---
+ drivers/gpu/drm/bridge/lontium-lt9611.c | 9 ++++++---
  1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-index 11aab07d88df..9427cc2358ae 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-@@ -35,7 +35,6 @@
- struct lt9611uxc {
+diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
+index 0f49b13193b9..21305296e111 100644
+--- a/drivers/gpu/drm/bridge/lontium-lt9611.c
++++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
+@@ -37,7 +37,6 @@
+ struct lt9611 {
  	struct device *dev;
  	struct drm_bridge bridge;
 -	struct drm_bridge *next_bridge;
  
  	struct regmap *regmap;
- 	/* Protects all accesses to registers by stopping the on-chip MCU */
-@@ -284,7 +283,7 @@ static int lt9611uxc_bridge_attach(struct drm_bridge *bridge,
- {
- 	struct lt9611uxc *lt9611uxc = bridge_to_lt9611uxc(bridge);
  
--	return drm_bridge_attach(encoder, lt9611uxc->next_bridge,
-+	return drm_bridge_attach(encoder, lt9611uxc->bridge.next_bridge,
+@@ -761,7 +760,7 @@ static int lt9611_bridge_attach(struct drm_bridge *bridge,
+ {
+ 	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
+ 
+-	return drm_bridge_attach(encoder, lt9611->next_bridge,
++	return drm_bridge_attach(encoder, lt9611->bridge.next_bridge,
  				 bridge, flags);
  }
  
-@@ -487,7 +486,11 @@ static int lt9611uxc_parse_dt(struct device *dev,
+@@ -1058,7 +1057,11 @@ static int lt9611_parse_dt(struct device *dev,
  
- 	lt9611uxc->dsi1_node = of_graph_get_remote_node(dev->of_node, 1, -1);
+ 	lt9611->ac_mode = of_property_read_bool(dev->of_node, "lt,ac-mode");
  
--	return drm_of_find_panel_or_bridge(dev->of_node, 2, -1, NULL, &lt9611uxc->next_bridge);
-+	lt9611uxc->bridge.next_bridge = of_drm_get_bridge_by_endpoint(dev->of_node, 2, -1);
-+	if (IS_ERR(lt9611uxc->bridge.next_bridge))
-+		return PTR_ERR(lt9611uxc->bridge.next_bridge);
+-	return drm_of_find_panel_or_bridge(dev->of_node, 2, -1, NULL, &lt9611->next_bridge);
++	lt9611->bridge.next_bridge = of_drm_get_bridge_by_endpoint(dev->of_node, 2, -1);
++	if (IS_ERR(lt9611->bridge.next_bridge))
++		return PTR_ERR(lt9611->bridge.next_bridge);
 +
 +	return 0;
  }
  
- static int lt9611uxc_gpio_init(struct lt9611uxc *lt9611uxc)
+ static int lt9611_gpio_init(struct lt9611 *lt9611)
 
 -- 
 2.54.0
