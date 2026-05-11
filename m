@@ -1,202 +1,419 @@
-Return-Path: <linux-arm-msm+bounces-106899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IJOKMFa5AWocjAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 13:11:18 +0200
+	id WCxXM9e+AWqdjQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 13:34:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3618650C842
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 13:11:17 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6862850CD33
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 13:34:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 905E93025F75
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 11:11:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 09B86301918F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 11:27:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1ACB366067;
-	Mon, 11 May 2026 11:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E8B0372680;
+	Mon, 11 May 2026 11:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="P4PJgDo2";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GDaRh/ez"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u0Qisebm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C1E364046
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 11:11:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A865371049
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 11:27:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778497875; cv=none; b=qKQcodePjgMz9f/JSJ1us5a5vfxMZrp4392As4bMZU/72wjvf+Yx7HdSjHG3fszGIsAdO3Ea9KUFe/RwdUUVtQgJfrKuw9fe4mo6XvwXfdsNuleYqzMmob5dPLOhyaojckXCTK8N9AUiwk2zJ4CqKoAiSJImQ8GjfMYYmI7+vL0=
+	t=1778498868; cv=none; b=JOOm8BhYzq4fLCUUBFVxut4CWftQTz1wEaAZmjAxFv1fbOtDt6w5/yIOWBR26jDxQ44/rRM9N6PkgPw9+rw5+DHZyIrX8o+8mPWJgSf3o/q2NRn/GmKhvH5KOAUieXItzt+wKDVP+SfdWx/oz2bCWnqPzV2PlioNnrqYyWjo0zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778497875; c=relaxed/simple;
-	bh=ixaIdq8s9sK/X9KuhLH5Xt/Pe3ZCxPqzdLBgPPRcCGQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hj5OsN5TVS0DtPcfWpDBob6k2AVnm+RiOWyIOrYr6GC4AcamRYm6Rx/1I9IKbtrNC96392+4MxS07cye2aEJBKqivVHVl7SY1vwiVUI73PJYLZBv5n8nhl27D2R0dH5rNkwJIpqSeJamWWv2pdBSa9gA0kMiAiiH6DXpq4jKuS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=P4PJgDo2; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GDaRh/ez; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64B8Eh5R1358568
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 11:11:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6U2NCm6PjqK+2xwlJVZjMlcHV/JWJdYIbSn1GNodfVw=; b=P4PJgDo2Uhn4mh4n
-	FLcJF6RN2rBlTrMQ0rlLB0IqaK3O9sM7GY7PQ0FiUnjwo739C0TxM+fgtkfmfVjf
-	LMAgJxqGj2XQLDcq0RyhwxeQDE+JPnzlT5Rf53E0iDR7VE61gnxY5ozxD36apvgp
-	iY+9bIANyf4vIahXNoUNTRiiNqxIxhFSCGKeuOfZ5IpNyfOXyJGVPA0ksIkEtlFr
-	IUTv+2ehe2KsMx8bwlvjR5bAplpUz//MBWpHx+QDiZ3tT9Wt3Zw0TAwHlM0CuZKA
-	ItvvQJsSw5d9O79lus/9/BwnefTrPzXAh4u/qrYPCULrZgNyXjZ6LJ88iz3PbQe7
-	ufHyDg==
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com [209.85.221.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e240h4xtd-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 11:11:13 +0000 (GMT)
-Received: by mail-vk1-f197.google.com with SMTP id 71dfb90a1353d-57535a51589so403474e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 04:11:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1778497873; x=1779102673; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6U2NCm6PjqK+2xwlJVZjMlcHV/JWJdYIbSn1GNodfVw=;
-        b=GDaRh/ezip1EJE2k+oDqN0KD4iZQIDVkfE+HdSoIAJIOrg07Tz7uCk5VrgnWGx7+VV
-         Y1nZqbfHjkweM8ZS/W7iVxT+YqYRhlsAAmR8ZAzXl7D2EPRSbFv3sG6mbvgOf5C0S5FM
-         jr8/LcoSEGD0RcKveKb4N6ECbOuE0Do1WnlYwyyOGu/11M+0MXy/t+j9U194gu1rSdKr
-         8dXaq+ZQ2EVB485yciTnb5MVOzKaFg7F1q/eu/CfspuenBUGhGeneqbYCWkL6albDkb7
-         odd+c6RQYBbJhT0GXIJHyXCWG+WWal7G+EmqwCndrzkJZlR3F8ra+IbqQcYTNQ8OeN81
-         bBLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778497873; x=1779102673;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6U2NCm6PjqK+2xwlJVZjMlcHV/JWJdYIbSn1GNodfVw=;
-        b=gr9mxRzt9t8jLN3tE+mnapXnIY0l6XOTbaei2yQVuxR0q4rorP/fFfI1Pt+UZfAC0a
-         uYeTSB+vlTGuTTaHO8fKlYVXYYX5gR9ELMbRA9+ru0DnwE8C/voS7txlKltIl6E6Eqaj
-         xp8i3MWzCRfhU/LefipLs2/Aaa0hLZqPFnVVE500LskPpqRY+4Oa8AMpQbBcqgN2tcdM
-         9iIOfnwU3+d+Kicqzp2nVU1cN1x+IOQjovVWXFpYxsR13o3WJbnF3uJtl694mXht0o+B
-         /zetGXxxQWhFluIpSX5HCQWC2uMZ1J5VT9QyzmKfDngGFzAruMr00lS1GVygT+yGGQf2
-         HLXw==
-X-Gm-Message-State: AOJu0Yxk0SdlZb72R5rhergXQ/4gDIZ1LFSj9LI9H4hdgWF8EPuC5bKV
-	eoZIy8i88fqoYDMraDj9x6uDmtiHn5X3rhNcuzY4SDLyy4yTpgQKm/u56OIhN0n/YKfOb2OAM64
-	NNEPoHkI8BwB95tcZd4OMehlOB83SFUwVbV5B05Spxk0TIRnm8PE+r4pjQ/Cv+5MZ6qYltDzcMr
-	UY
-X-Gm-Gg: Acq92OHzW6TQv/D69H01zN4bc6uhjiefqdKhWX8GVqgkTRUasCLy59Hwa60PU7p1gg0
-	V4LkulC27wtrEz7EZzD4Dx8Mftp3AZjAuRFX2EjQ9ITh0ON8V/C5plI3Sn1635kWdF5xZQO7l6I
-	J5+UlDxzZdC7T/Q++g/pMVBQ35wA5regCKB6GNlfNBwU5HGsr1FAEdDmZQmNmc5xnNc9Ijlp1Ck
-	WrjjAnn6PPGTk7rf7hPGHas0Nu2kDOFstXQWD6Hh1pM2tTyHc2NLpLrmMnvBHsmYkyIgMXir2aR
-	0OG9JjWXoOqhv3WRS5Xgd37018qDEZlPmdSO+aRoNRKZ+wSVSon9bpOUSzWKeCQFZ6bla91D8w0
-	C6L+G8lYks7emfmN2HbmXetXJJJsam11/59h2OPprLfeog9Vu3bWQig0tD5EL8g/ujMAGXCDPqB
-	RlNjk=
-X-Received: by 2002:a05:6102:a12:b0:631:25ab:8bbe with SMTP id ada2fe7eead31-63125ab9e94mr2488690137.5.1778497872886;
-        Mon, 11 May 2026 04:11:12 -0700 (PDT)
-X-Received: by 2002:a05:6102:a12:b0:631:25ab:8bbe with SMTP id ada2fe7eead31-63125ab9e94mr2488680137.5.1778497872298;
-        Mon, 11 May 2026 04:11:12 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bcf44d53fa2sm173758366b.23.2026.05.11.04.11.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 May 2026 04:11:11 -0700 (PDT)
-Message-ID: <66d8dd2e-05f8-4f58-bfb4-fd290dde1ebe@oss.qualcomm.com>
-Date: Mon, 11 May 2026 13:11:09 +0200
+	s=arc-20240116; t=1778498868; c=relaxed/simple;
+	bh=eROQJdvZzpzP6omZV4CYaxT1ro01gZWOXGEjjxJfLDg=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SKyUJpbzdHM4gzO6nGybyJlWjeAv9d5PG1GvYcBYrCjTk3MWOS0r9z1L0CBVfWsFJsxI5Hn8doqFHHYBFtFEBE3GW6hfnnR2y9C2j9l3RKkNLT+sN5nl6Jjvg60BVXHf5Hb2iOUdTY2PKlrPme+wqGYYlZooRiT7G1XFn9z6sFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u0Qisebm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F993C2BCFF
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 11:27:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778498868;
+	bh=eROQJdvZzpzP6omZV4CYaxT1ro01gZWOXGEjjxJfLDg=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=u0QisebmC3wF3QsbrB29zEqJaZFBryPw0PYH3Qgps6fXb9lvX/LN4jmohJ05yxDnp
+	 KzRFWKiHgBsr6XCzm2kn4FmDe79zFpgDG9HYBsVbvCMNEtt//EZB01GuX9Ds36RKqU
+	 ODRV7vAIhZClvNKkRUdCCTmzF92cDPJ6psIXYoJxI3xH5vRZulchwhj6aqAu9kKMzS
+	 lW8cBUq8T7aimtlfmDuhOBXTWFqU7DY9174tJvsamHIDXngQNf42FsGaifPIZbgsHF
+	 aTxYlf5y5Sca2JdzATd9olwtIs/5vv/A8tHTz3Qp4TeDf/AEcfNd6JqBXJzDmnCVJY
+	 Mboodu7MlmSug==
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-393a44854d2so32436951fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 04:27:48 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ8P7OkQiZfZkptgHPErCL6JLL1JZGQxV3lOpHYtwwpgWPwS1DJDlkmElO1MyLtzGfGnaAAkW5lnu8azFxTB@vger.kernel.org
+X-Gm-Message-State: AOJu0YwN0d3QY3TjQNC0JjFSrciI4iDtQ/ERBblZWzFFFkR5tpwCKfil
+	zYN9lULb0WYqvT8ahp12HuXua/8K73SLxJsI9uKfPtYsp69qcTHd/V7VnJnJYdfLmQdrM2mTob/
+	vMzdLfgmMUziIda6OJQrW90dRtZc78fKAPdVtZjrKqw==
+X-Received: by 2002:a05:6512:acf:b0:5a3:eb4b:37a7 with SMTP id
+ 2adb3069b0e04-5a8b6c9c525mr2447446e87.6.1778498866753; Mon, 11 May 2026
+ 04:27:46 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 11 May 2026 04:27:44 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 11 May 2026 04:27:44 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260507-block-as-nvmem-v2-4-bf17edd5134e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] ASoC: codecs: lpass-wsa-macro: Use
- devm_clk_hw_register() for MCLK output
-To: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-sound@vger.kernel.org
-References: <20260508113503.3550647-1-ajay.nandam@oss.qualcomm.com>
- <20260508113503.3550647-4-ajay.nandam@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260508113503.3550647-4-ajay.nandam@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDEyNCBTYWx0ZWRfX+bRH1j95/Pu0
- FEDSxA+iyZZs63mjCiRICVBlzy8Uva0Ss/WS/tA9DIzYupMBvDlHln9NJznUaXnco895XpgGjE3
- gAB+KuNTqwLr1Z/Nbcw5B1Tfd7Bvo+dXCSF4fpCG2dASWIy0NlU9+JsYBl6JwpcAOobhXCM1ApW
- BPCVYWGL2AxDZ8zfLVxMyoPcGaFgQqn9+iuleBs+RUnnU0XQJH8Vw1NZSplc6pAqrid5xZaOIT3
- 1ZZiEA59pJRAMZcZRwq3V++uRkHYrajfXxjC4MJHI6vdBQoIH6In/e/+od/1AWWvzkClmmAt22j
- 5rmTnsFhWGvO5hdT3NgrYqrOqGcxkmIPpu3VVxKohIrd1vsPYhuWmqH+92i5+XRMs7OLSFKpd7I
- UC/Iy1UpLP8lyeCFviwQ55G8I2EsbyPRHQdCHikFPXNTMujQNgnf9yESas47wJj13pDs58K9FDN
- 5cNDIw0DJ7hGMC7I24A==
-X-Proofpoint-GUID: moB__MAajsO33Tea0s0fl2qTuYu4UNkC
-X-Authority-Analysis: v=2.4 cv=X5Bi7mTe c=1 sm=1 tr=0 ts=6a01b951 cx=c_pps
- a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=bpY43GGW-Kl_9GUVYIEA:9 a=QEXdDO2ut3YA:10
- a=tNoRWFLymzeba-QzToBc:22
-X-Proofpoint-ORIG-GUID: moB__MAajsO33Tea0s0fl2qTuYu4UNkC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_03,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
- malwarescore=0 bulkscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110124
-X-Rspamd-Queue-Id: 3618650C842
+References: <20260507-block-as-nvmem-v2-0-bf17edd5134e@oss.qualcomm.com> <20260507-block-as-nvmem-v2-4-bf17edd5134e@oss.qualcomm.com>
+Date: Mon, 11 May 2026 04:27:44 -0700
+X-Gmail-Original-Message-ID: <CAMRc=MdOJtb2Jc-qXs3qBG+DGeSx=xmeZ0go9zn3gkyMBFnRCA@mail.gmail.com>
+X-Gm-Features: AVHnY4K8k1k3RamLldv5ZwT4_Dz11oLIMFN3mMB1glD0JB_d179ZxB8TasJQaQQ
+Message-ID: <CAMRc=MdOJtb2Jc-qXs3qBG+DGeSx=xmeZ0go9zn3gkyMBFnRCA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/8] block: implement NVMEM provider
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-block@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	ath10k@lists.infradead.org, linux-bluetooth@vger.kernel.org, 
+	netdev@vger.kernel.org, daniel@makrotopia.org, Ulf Hansson <ulfh@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Jens Axboe <axboe@kernel.dk>, Johannes Berg <johannes@sipsolutions.net>, 
+	Jeff Johnson <jjohnson@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, Rocky Liao <quic_rjliao@quicinc.com>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Andrew Lunn <andrew@lunn.ch>, 
+	Heiner Kallweit <hkallweit1@gmail.com>, Russell King <linux@armlinux.org.uk>, 
+	Saravana Kannan <saravanak@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Rspamd-Queue-Id: 6862850CD33
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	TAGGED_FROM(0.00)[bounces-106899-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,perex.cz,suse.com];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-106900-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,makrotopia.org,kernel.org,kernel.dk,sipsolutions.net,holtmann.org,gmail.com,quicinc.com,davemloft.net,google.com,redhat.com,lunn.ch,armlinux.org.uk];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[makrotopia.org:email,qualcomm.com:email,mail.gmail.com:mid,config.name:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,config.id:url,config.dev:url];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[35];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-On 5/8/26 1:35 PM, Ajay Kumar Nandam wrote:
-> The WSA macro driver registers the MCLK output clock using
-> clk_hw_register(), but does not explicitly unregister it in the remove
-> path or on probe failure.
-> 
-> Switch to devm_clk_hw_register() to make the registration resource-managed
-> so the clk_hw is automatically unregistered when the device is unbound or
-> probe fails. This avoids lifetime and cleanup issues and simplifies error
-> handling.
-> 
-> No functional change intended.
-
-This is a bit of a semantic argument, but the driver will now behave
-differently, since as you explained above, .remove does not currently
-unregister the clock (but devres will now do that)
-
-> Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+On Thu, 7 May 2026 17:24:39 +0200, Loic Poulain
+<loic.poulain@oss.qualcomm.com> said:
+> From: Daniel Golle <daniel@makrotopia.org>
+>
+> On embedded devices using an eMMC it is common that one or more partitions
+> on the eMMC are used to store MAC addresses and Wi-Fi calibration EEPROM
+> data. Allow referencing the partition in device tree for the kernel and
+> Wi-Fi drivers accessing it via the NVMEM layer.
+>
+> To safely defer the freeing of the provider private data until all
+> consumers have released their cells, a nvmem_dev() accessor is added to
+> the NVMEM core to expose the struct device embedded in struct nvmem_device.
+> This allows registering a devm action on the nvmem device itself, ensuring
+> the private data outlives any active cell references.
+>
+> Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+> Co-developed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 > ---
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+...
 
-Konrad
+> diff --git a/block/blk-nvmem.c b/block/blk-nvmem.c
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..96c0ffc51b1862a75644f3f94add35d59577d86b
+> --- /dev/null
+> +++ b/block/blk-nvmem.c
+> @@ -0,0 +1,188 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +/*
+> + * block device NVMEM provider
+> + *
+> + * Copyright (c) 2024 Daniel Golle <daniel@makrotopia.org>
+> + *
+> + * Useful on devices using a partition on an eMMC for MAC addresses or
+> + * Wi-Fi calibration EEPROM data.
+> + */
+> +
+> +#include "blk.h"
+
+Local includes typically go after system-wide ones. I thought that maybe it's
+a block subsystem thing but no, it too goes after here.
+
+> +#include <linux/nvmem-provider.h>
+> +#include <linux/nvmem-consumer.h>
+> +#include <linux/of.h>
+> +#include <linux/pagemap.h>
+> +#include <linux/property.h>
+> +
+> +static void blk_nvmem_free(void *data)
+> +{
+> +	kfree(data);
+> +}
+> +
+> +/* List of all NVMEM devices */
+> +static LIST_HEAD(nvmem_devices);
+> +static DEFINE_MUTEX(devices_mutex);
+> +
+> +struct blk_nvmem {
+> +	struct nvmem_device	*nvmem;
+> +	dev_t			devt;
+> +	bool			removed;
+> +	struct list_head	list;
+> +};
+> +
+> +static int blk_nvmem_reg_read(void *priv, unsigned int from,
+> +			      void *val, size_t bytes)
+> +{
+> +	blk_mode_t mode = BLK_OPEN_READ | BLK_OPEN_RESTRICT_WRITES;
+> +	unsigned long offs = from & ~PAGE_MASK, to_read;
+> +	pgoff_t f_index = from >> PAGE_SHIFT;
+> +	struct blk_nvmem *bnv = priv;
+> +	size_t bytes_left = bytes;
+> +	struct file *bdev_file;
+> +	struct folio *folio;
+> +	void *p;
+> +	int ret = 0;
+> +
+> +	if (bnv->removed)
+> +		return -ENODEV;
+> +
+> +	bdev_file = bdev_file_open_by_dev(bnv->devt, mode, priv, NULL);
+> +	if (!bdev_file)
+> +		return -ENODEV;
+> +
+> +	if (IS_ERR(bdev_file))
+> +		return PTR_ERR(bdev_file);
+> +
+> +	while (bytes_left) {
+> +		folio = read_mapping_folio(bdev_file->f_mapping, f_index++, NULL);
+> +		if (IS_ERR(folio)) {
+> +			ret = PTR_ERR(folio);
+> +			goto err_release_bdev;
+> +		}
+> +		to_read = min_t(unsigned long, bytes_left, PAGE_SIZE - offs);
+> +		p = folio_address(folio) + offset_in_folio(folio, offs);
+> +		memcpy(val, p, to_read);
+> +		offs = 0;
+> +		bytes_left -= to_read;
+> +		val += to_read;
+> +		folio_put(folio);
+> +	}
+> +
+> +err_release_bdev:
+> +	fput(bdev_file);
+> +
+> +	return ret;
+> +}
+> +
+> +static int blk_nvmem_register(struct device *dev)
+> +{
+> +	struct device_node *np = dev_of_node(dev);
+> +	struct block_device *bdev = dev_to_bdev(dev);
+> +	struct nvmem_config config = {};
+> +	struct blk_nvmem *bnv;
+> +
+> +	/* skip devices which do not have a device tree node */
+> +	if (!np)
+> +		return 0;
+> +
+> +	/* skip devices without an nvmem layout defined */
+> +	if (!of_get_child_by_name(np, "nvmem-layout"))
+> +		return 0;
+> +
+> +	/*
+> +	 * skip block device too large to be represented as NVMEM devices
+> +	 * which are using an 'int' as address
+> +	 */
+> +	if (bdev_nr_bytes(bdev) > INT_MAX)
+> +		return -EFBIG;
+> +
+> +	bnv = kzalloc_obj(*bnv);
+> +	if (!bnv)
+> +		return -ENOMEM;
+> +
+> +	config.id = NVMEM_DEVID_NONE;
+> +	config.dev = &bdev->bd_device;
+> +	config.name = dev_name(&bdev->bd_device);
+> +	config.owner = THIS_MODULE;
+> +	config.priv = bnv;
+> +	config.reg_read = blk_nvmem_reg_read;
+> +	config.size = bdev_nr_bytes(bdev);
+> +	config.word_size = 1;
+> +	config.stride = 1;
+> +	config.read_only = true;
+> +	config.root_only = true;
+> +	config.ignore_wp = true;
+> +	config.of_node = to_of_node(dev->fwnode);
+> +
+> +	bnv->devt = bdev->bd_device.devt;
+> +	bnv->nvmem = nvmem_register(&config);
+> +	if (IS_ERR(bnv->nvmem)) {
+> +		dev_err_probe(&bdev->bd_device, PTR_ERR(bnv->nvmem),
+> +			      "Failed to register NVMEM device\n");
+> +
+> +		kfree(bnv);
+> +		return PTR_ERR(bnv->nvmem);
+> +	}
+> +
+> +	/*
+> +	 * Free bnv only when the nvmem device is fully released (i.e. when
+> +	 * its kref hits zero), not at unregister time. This prevents a
+> +	 * use-after-free if a consumer still holds an nvmem_cell reference
+> +	 * when the block device is removed: nvmem_unregister() only does a
+> +	 * kref_put(), so reg_read could still be called with bnv as priv
+> +	 * until the last consumer drops its cell.
+> +	 */
+> +	if (devm_add_action(nvmem_dev(bnv->nvmem), blk_nvmem_free, bnv)) {
+> +		nvmem_unregister(bnv->nvmem);
+> +		kfree(bnv);
+> +		return -ENOMEM;
+> +	}
+
+Please take a look at the series[1] I sent, it seems to address this issue at
+the nvmem core level. Help reviewing it is appreciated. :)
+
+In any case: I don't think it will work the way you intend it to: the devres
+action will be executed when the nvmem device is "unbound" not when it's
+"released". Not only that but the device you retrieve here is not the "parent"
+device that's actually bound to the driver but the "logical" nvmem device, the
+nvmem core creates to back the struct nvmem_device's functionality and reference
+counting. In other words: I believe the devres action will never be called.
+
+In general, it's a very bad idea to schedule devres actions on devices you
+don't control and in context different than at probe() time.
+
+> +
+> +	mutex_lock(&devices_mutex);
+> +	list_add_tail(&bnv->list, &nvmem_devices);
+> +	mutex_unlock(&devices_mutex);
+> +
+> +	return 0;
+> +}
+> +
+> +static void blk_nvmem_unregister(struct device *dev)
+> +{
+> +	struct blk_nvmem *bnv_c, *bnv = NULL;
+> +
+> +	mutex_lock(&devices_mutex);
+> +	list_for_each_entry(bnv_c, &nvmem_devices, list) {
+> +		if (bnv_c->devt == dev_to_bdev(dev)->bd_device.devt) {
+> +			bnv = bnv_c;
+> +			break;
+> +		}
+> +	}
+> +
+> +	if (!bnv) {
+> +		mutex_unlock(&devices_mutex);
+> +		return;
+> +	}
+> +
+> +	list_del(&bnv->list);
+> +	mutex_unlock(&devices_mutex);
+> +	bnv->removed = true;
+> +	nvmem_unregister(bnv->nvmem);
+> +}
+> +
+> +static struct class_interface blk_nvmem_bus_interface __refdata = {
+> +	.class = &block_class,
+> +	.add_dev = &blk_nvmem_register,
+> +	.remove_dev = &blk_nvmem_unregister,
+> +};
+> +
+> +static int __init blk_nvmem_init(void)
+> +{
+> +	int ret;
+> +
+> +	ret = class_interface_register(&blk_nvmem_bus_interface);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return 0;
+> +}
+> +device_initcall(blk_nvmem_init);
+> diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+> index 311cb2e5a5c02d2c6979d7c9bbb7f94abdfbdad1..ee3481229c20b3063c86d0dd66aabbf6b5e29169 100644
+> --- a/drivers/nvmem/core.c
+> +++ b/drivers/nvmem/core.c
+> @@ -2154,6 +2154,19 @@ const char *nvmem_dev_name(struct nvmem_device *nvmem)
+>  }
+>  EXPORT_SYMBOL_GPL(nvmem_dev_name);
+>
+> +/**
+> + * nvmem_dev() - Get the struct device of a given nvmem device.
+> + *
+> + * @nvmem: nvmem device.
+> + *
+> + * Return: pointer to the struct device of the nvmem device.
+> + */
+> +struct device *nvmem_dev(struct nvmem_device *nvmem)
+> +{
+> +	return &nvmem->dev;
+> +}
+> +EXPORT_SYMBOL_GPL(nvmem_dev);
+> +
+
+That should be done in a separate patch but see my response above.
+
+>  /**
+>   * nvmem_dev_size() - Get the size of a given nvmem device.
+>   *
+> diff --git a/include/linux/nvmem-consumer.h b/include/linux/nvmem-consumer.h
+> index 34c0e58dfa26636d2804fcc7e0bc4a875ee73dae..ce387c89dc8e4bc1241f3b6f36be8c6c95e282ed 100644
+> --- a/include/linux/nvmem-consumer.h
+> +++ b/include/linux/nvmem-consumer.h
+> @@ -82,6 +82,7 @@ int nvmem_device_cell_write(struct nvmem_device *nvmem,
+>
+>  const char *nvmem_dev_name(struct nvmem_device *nvmem);
+>  size_t nvmem_dev_size(struct nvmem_device *nvmem);
+> +struct device *nvmem_dev(struct nvmem_device *nvmem);
+>
+>  void nvmem_add_cell_lookups(struct nvmem_cell_lookup *entries,
+>  			    size_t nentries);
+> @@ -220,6 +221,11 @@ static inline const char *nvmem_dev_name(struct nvmem_device *nvmem)
+>  	return NULL;
+>  }
+>
+> +static inline struct device *nvmem_dev(struct nvmem_device *nvmem)
+> +{
+> +	return NULL;
+> +}
+> +
+>  static inline void
+>  nvmem_add_cell_lookups(struct nvmem_cell_lookup *entries, size_t nentries) {}
+>  static inline void
+>
+> --
+> 2.34.1
+>
+>
+
+Thanks,
+Bartosz
+
+[1] https://lore.kernel.org/all/20260429-nvmem-unbind-v3-0-2a694f95395b@oss.qualcomm.com/
 
