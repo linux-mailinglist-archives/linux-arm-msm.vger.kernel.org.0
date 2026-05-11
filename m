@@ -1,193 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-106994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EPtXODsaAmognwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 20:04:43 +0200
+	id nZ7PH0wmAmq+oQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 20:56:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F48E5140A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 20:04:43 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21BE5514BE3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 20:56:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id ECB513038D35
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 18:04:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 21F183028016
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 18:56:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0084C47884E;
-	Mon, 11 May 2026 18:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD7E54C9542;
+	Mon, 11 May 2026 18:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ts1dnUUL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gsXWUjby"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B25477981;
-	Mon, 11 May 2026 18:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F014C9012
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 18:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778522675; cv=none; b=ngVS5WlbSnipA4QdUEzf/NIuUZLebbYQSYoUxGhcF6YUyPht1OkqAAkqI98Qcp01q/1BBsdJdVC3GVdAUKh0OqHGa7qsOQPg3ntB7L27pcjYw+czEdphstmy2cLUt4cOGpo2S9Td/6vrW3GifzBSSJoZympYry1GR/YRKqw2vA4=
+	t=1778525760; cv=none; b=eO3tZWBsearE4+kcS2B/y6xVsPF6F59ltx2dM/+N+97q/UlV/PJ3IBKKU8WFfwbrIXAYVWR8R99/tlUFXvUebpu5nPnUnA6OKHP+oxtvH5PD4N7LoPlOM1x+jAAR+QeQ7ZneR4/JydXa8MNEFfj3W2n/tGuxyr61q2k98Rw2rB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778522675; c=relaxed/simple;
-	bh=5DDXjZwKmfb4MfZeTjaL80NJLxAk06ehb8Ek4HeG/mU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qQhvHxLaBcX+tVRqQRVZ4ng69vsvbNAOKSmgZjVVZym5XxwkKPaONG0daDgqG7WwcarU2Llbp6s10W+RR20jP7E8eoF8PpRLaCoTl2dKdTdKp8bVNjVHtCvL4h9mBQwAf3DF1US5kqpjKVJZlhIUZnXy3v6alwQMS07mMvtNGiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ts1dnUUL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802CAC2BCB0;
-	Mon, 11 May 2026 18:04:34 +0000 (UTC)
+	s=arc-20240116; t=1778525760; c=relaxed/simple;
+	bh=zIB79Xk6boPPhMmzQH/JqpB68ofRCBiWIY7ln6Jka+I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ST3jdktf93y/8BrWkWq8XtAEDV1sSHqCvE2sleiw3w185pLUENJjqJrw04CbWtPCE+0oOwGPDSUlVcY5rWdgP01P6Dujuzj39uunfUqWBTeSFxZAvgvqVMynCbFe67HhREJKO6tccBaPrr5+dzKEfzRI1nMe/Ya6qYvTELrTbZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gsXWUjby; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892D2C4AF0B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 18:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778522675;
-	bh=5DDXjZwKmfb4MfZeTjaL80NJLxAk06ehb8Ek4HeG/mU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ts1dnUULzU9zFWKjj9emjX/Tm1WS5BunucS/Ej7tr4CY95wvcWrQU3gCv+VavWxml
-	 WHgNdSfyK5t5hCN9muEQ+IIW0wdYUXZN3WHozApVrNCjgMM9zTpI9INMGfWLta2y2e
-	 f7MYrSJo/FZ1V7jkaZteAjpJLSQZmjDKJsBJwZ/jvQSnGOAJqeQXh3K0iNAp4aROyY
-	 e0qKaRJ6mSD2oaCmbGvzbD+3p8XvSb7lG9P5VhOR0Nw9YgzuwC5sNeIMyR+cwfGXrA
-	 WVPICvMe+EbtQole5FseQH0D9MVPUtwcNkEvnp2dXuTwlBHqrGwLHqKV7Pc+q+CfOt
-	 Uq2M23vqmjxXg==
-Date: Mon, 11 May 2026 13:04:31 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Alexander Koskovich <akoskovich@pm.me>
-Cc: Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Abel Vesa <abel.vesa@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 4/4] pinctrl: qcom: eliza: Split QUP1_SE4 lanes
-Message-ID: <agIZOAa6nYSb5PWX@baldur>
-References: <20260423-fix-eliza-pinctrl-v3-0-68b24893ae63@pm.me>
- <20260423-fix-eliza-pinctrl-v3-4-68b24893ae63@pm.me>
+	s=k20201202; t=1778525760;
+	bh=zIB79Xk6boPPhMmzQH/JqpB68ofRCBiWIY7ln6Jka+I=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=gsXWUjbyow7NEAQM0X0NALFGmQpalpbS9xBt2Q8RvtDLJbAfXJJkychRH7mExvXH3
+	 wLvWHyJefAS26wLfKstTSKg4fpYzXUzP9z8dBvpeunIG7OR8L+kw39IhzmarZrdw/h
+	 btm81FfGDWtRy7mD9/ufgpqgi4b5BojlFQrrwerXbOl2YVC1Ogd4soD3R18nrQrEhG
+	 nDr0emt/gHeMqaLpCF0fBYUdU7KS4/fQWh/w8yFK16D23lmWQHLQ/HbuI5h5SUrqtG
+	 w7slVsBwfjrHsBXY80jeoLoXsCFsndGoqWJdNItHUlKljlND4E3ff8s1IBMBD4kXtw
+	 okmwUrKGPyRTw==
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5a8c94cefcdso1232093e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 11:56:00 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ/ftghb7ecUPZoCxL3OIuqt6yHhvHwGULNc5EeuZkMzv3lb4zULwCOIoVjFzAU6hD5noQzGj7l7A+1MxkJ9@vger.kernel.org
+X-Gm-Message-State: AOJu0YxSjfUtazDpTQcWW/QX0nNiRYQGs+/qzMfz717JU2YaGiUPmbp8
+	nrgZVgauURygzoCJ16o1PSYuECNn18HN9L6rioEa7Sr/vgJh1LBrUizHMOilXkRQdXwHI4EZlfT
+	6r/d4jsGoFNiRMmJXGkO7XM4j0SaU+UE=
+X-Received: by 2002:a05:6512:3ba4:b0:5a8:63e0:cd92 with SMTP id
+ 2adb3069b0e04-5a8b709be01mr3083162e87.33.1778525758018; Mon, 11 May 2026
+ 11:55:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260423-fix-eliza-pinctrl-v3-4-68b24893ae63@pm.me>
-X-Rspamd-Queue-Id: 5F48E5140A4
+References: <20260511165942.2774868-1-robh@kernel.org>
+In-Reply-To: <20260511165942.2774868-1-robh@kernel.org>
+From: Linus Walleij <linusw@kernel.org>
+Date: Mon, 11 May 2026 20:55:46 +0200
+X-Gmail-Original-Message-ID: <CAD++jLkmoN3iY=d5TgkLswgEt4Dgx_j3BAJPX-ASL+VnF_EzHw@mail.gmail.com>
+X-Gm-Features: AVHnY4LWa20oUaE1F0JxYrIcNTXFA3pQESxY2XotgaPrY2W88xHdQsN2xv93t9I
+Message-ID: <CAD++jLkmoN3iY=d5TgkLswgEt4Dgx_j3BAJPX-ASL+VnF_EzHw@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: Consolidate "sram" property definition
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Liu Ying <victor.liu@nxp.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Frank Li <Frank.Li@nxp.com>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Vinod Koul <vkoul@kernel.org>, 
+	Nas Chung <nas.chung@chipsnmedia.com>, Jackson Lee <jackson.lee@chipsnmedia.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Mirela Rabulea <mirela.rabulea@nxp.com>, 
+	Detlev Casanova <detlev.casanova@collabora.com>, 
+	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, Heiko Stuebner <heiko@sntech.de>, 
+	Hugues Fruchet <hugues.fruchet@foss.st.com>, Alain Volmat <alain.volmat@foss.st.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	MD Danish Anwar <danishanwar@ti.com>, Roger Quadros <rogerq@kernel.org>, 
+	Parvathi Pudi <parvathi@couthit.com>, Mohan Reddy Putluru <pmohan@couthit.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
+	Jerome Brunet <jbrunet@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Michal Simek <michal.simek@amd.com>, 
+	Mark Brown <broonie@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Lorenzo Bianconi <lorenzo@kernel.org>, Felix Fietkau <nbd@nbd.name>, "Andrew F. Davis" <afd@ti.com>, 
+	Hussain Khaja <basharath@couthit.com>, Suman Anna <s-anna@ti.com>, 
+	Ben Levinsky <ben.levinsky@amd.com>, Tanmay Shah <tanmay.shah@amd.com>, 
+	Erwan Leray <erwan.leray@foss.st.com>, Fabrice Gasnier <fabrice.gasnier@foss.st.com>, 
+	Roger Quadros <rogerq@ti.com>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, dmaengine@vger.kernel.org, 
+	linux-media@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, linux-amlogic@lists.infradead.org, 
+	linux-spi@vger.kernel.org, linux-mediatek@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 21BE5514BE3
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106994-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[nxp.com,pengutronix.de,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,poorly.run,linux.dev,somainline.org,chipsnmedia.com,collabora.com,vanguardiasur.com.ar,sntech.de,foss.st.com,lunn.ch,davemloft.net,google.com,redhat.com,ti.com,couthit.com,linaro.org,baylibre.com,googlemail.com,amd.com,nbd.name,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,lists.infradead.org,st-md-mailman.stormreply.com];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-106995-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[79];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On Thu, Apr 23, 2026 at 04:43:46AM +0000, Alexander Koskovich wrote:
-> QUP1_SE4 shares GPIO_36 & GPIO_37 for both L0/L1 and L3/L2 so the
-> function name cannot be the same or the alternate function cannot
-> be selected.
-> 
-> Split them up into individual lane functions so boards can specify.
-> 
+On Mon, May 11, 2026 at 6:59=E2=80=AFPM Rob Herring (Arm) <robh@kernel.org>=
+ wrote:
 
-This works, but it forces the DeviceTree source author to write a state
-per pin even though these are typically configured in pairs.
+> The "sram" property has become a de facto standard property, so create a
+> common schema for it and drop all the duplicated definitions.
+>
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 
-What we did for hawi was to use the naming: qup1_se4_01 and qup1_se4_23
-to express the two possible function pairs.
+I like it.
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 
-
-I don't have any strong opinions on how to proceed with this platform
-(eliza), but I'm hoping we can follow the pair-wise scheme going
-forward.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-> ---
->  drivers/pinctrl/qcom/pinctrl-eliza.c | 30 ++++++++++++++++++++++++------
->  1 file changed, 24 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-eliza.c b/drivers/pinctrl/qcom/pinctrl-eliza.c
-> index 8f74756771b8..40e263e35b45 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-eliza.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-eliza.c
-> @@ -568,7 +568,10 @@ enum eliza_functions {
->  	msm_mux_qup1_se2_l3_mira,
->  	msm_mux_qup1_se2_l3_mirb,
->  	msm_mux_qup1_se3,
-> -	msm_mux_qup1_se4,
-> +	msm_mux_qup1_se4_l0,
-> +	msm_mux_qup1_se4_l1,
-> +	msm_mux_qup1_se4_l2,
-> +	msm_mux_qup1_se4_l3,
->  	msm_mux_qup1_se5,
->  	msm_mux_qup1_se6,
->  	msm_mux_qup1_se6_l1_mira,
-> @@ -1017,8 +1020,20 @@ static const char *const qup1_se3_groups[] = {
->  	"gpio44", "gpio45", "gpio46", "gpio47",
->  };
->  
-> -static const char *const qup1_se4_groups[] = {
-> -	"gpio36", "gpio37", "gpio37", "gpio36",
-> +static const char *const qup1_se4_l0_groups[] = {
-> +	"gpio36",
-> +};
-> +
-> +static const char *const qup1_se4_l1_groups[] = {
-> +	"gpio37",
-> +};
-> +
-> +static const char *const qup1_se4_l2_groups[] = {
-> +	"gpio37",
-> +};
-> +
-> +static const char *const qup1_se4_l3_groups[] = {
-> +	"gpio36",
->  };
->  
->  static const char *const qup1_se5_groups[] = {
-> @@ -1321,7 +1336,10 @@ static const struct pinfunction eliza_functions[] = {
->  	MSM_PIN_FUNCTION(qup1_se2_l3_mira),
->  	MSM_PIN_FUNCTION(qup1_se2_l3_mirb),
->  	MSM_PIN_FUNCTION(qup1_se3),
-> -	MSM_PIN_FUNCTION(qup1_se4),
-> +	MSM_PIN_FUNCTION(qup1_se4_l0),
-> +	MSM_PIN_FUNCTION(qup1_se4_l1),
-> +	MSM_PIN_FUNCTION(qup1_se4_l2),
-> +	MSM_PIN_FUNCTION(qup1_se4_l3),
->  	MSM_PIN_FUNCTION(qup1_se5),
->  	MSM_PIN_FUNCTION(qup1_se6),
->  	MSM_PIN_FUNCTION(qup1_se6_l1_mira),
-> @@ -1418,8 +1436,8 @@ static const struct msm_pingroup eliza_groups[] = {
->  	[33] = PINGROUP(33, qup1_se1, ibi_i3c, host2wlan_sol, gcc_gp3, _, _, _, _, _, _, _),
->  	[34] = PINGROUP(34, qup1_se1, qup1_se5, tb_trig_sdc1, ddr_bist_start, qdss_gpio_tracedata, _, _, _, _, _, _),
->  	[35] = PINGROUP(35, qup1_se1, qup1_se5, tb_trig_sdc2, gcc_gp2, qdss_gpio_tracedata, _, _, _, _, _, _),
-> -	[36] = PINGROUP(36, qup1_se4, qup1_se4, ibi_i3c, _, _, _, _, _, _, _, _),
-> -	[37] = PINGROUP(37, qup1_se4, qup1_se4, ibi_i3c, _, _, _, _, _, _, _, _),
-> +	[36] = PINGROUP(36, qup1_se4_l0, qup1_se4_l3, ibi_i3c, _, _, _, _, _, _, _, _),
-> +	[37] = PINGROUP(37, qup1_se4_l1, qup1_se4_l2, ibi_i3c, _, _, _, _, _, _, _, _),
->  	[38] = PINGROUP(38, _, _, _, _, _, _, _, _, _, _, _),
->  	[39] = PINGROUP(39, _, _, _, _, _, _, _, _, _, _, _),
->  	[40] = PINGROUP(40, qup1_se6, qup1_se2, qup1_se6_l3_mira, _, qdss_gpio_tracedata, gnss_adc1, ddr_pxi1, _, _, _, _),
-> 
-> -- 
-> 2.53.0
-> 
-> 
+Yours,
+Linus Walleij
 
