@@ -1,193 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-106835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +AAAFrFmAWpvXwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 07:18:41 +0200
+	id ONgcKMZpAWrRYQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 07:31:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD4785081FB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 07:18:40 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EF7D5082E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 07:31:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C06F93006F2E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 05:18:39 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 1327C3001332
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 05:31:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D0EA36654F;
-	Mon, 11 May 2026 05:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5F3436605A;
+	Mon, 11 May 2026 05:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A0IPhONn"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KIeNlnzo";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CroqFvqq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DD72E63C;
-	Mon, 11 May 2026 05:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5690B353ED9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 05:31:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778476717; cv=none; b=N8CeBkoHSEQwKpChSrpRrzPa7hfuK6tIE83vcfH9HqVdb4U5ORxareL9fIhZqj489JLD3MByevtOwFPEwl0bH36Dr4fouNLwNhIm09Se7mjqh3czg2aQUlJdyeHdBPiu+HcFSLP6jTMP36poxqvJUeAPFhY7j5YrROB6y5M+YW4=
+	t=1778477506; cv=none; b=IDKTfNNtH1njpx2B+t3cmwCWZEUEjhag0KS3nXRSxMZLeXJcaEQ5JREm+wUKXOHNPDbBUS0xRF17xiWdQMfcfaDzTpykq4eX23lo9KwcXpPx8nKQjg9bJe0A2mjcfwauVDd8KaXsOkp8XSNZsXy+focbXnSlc/lZu2J0WtcQpXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778476717; c=relaxed/simple;
-	bh=DlsXme9lwoqKsJyGSBaGtI+ozuQkDWi5uzvbU8C2c5I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QB49FcpI5Tlzf0hQEdMDb1kLODH+vIxCcFehjB9eeRTsPdC5EJ6n3ZMQ6ERYPr5pwnquKvWZRNT0J2Lqwj5HWKaKB1CuSoW7MwFFeK/dtZISddaTsat41GYyQiCxxlBadkKc42SU5Es6lwlDv7F1uJBTPWg2NN87LUsdbLUWfD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A0IPhONn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31ABC2BCB0;
-	Mon, 11 May 2026 05:18:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778476717;
-	bh=DlsXme9lwoqKsJyGSBaGtI+ozuQkDWi5uzvbU8C2c5I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=A0IPhONnhKqguTZYEEPJfmmarergtLTe7mSrEWz5PN6QF7cnCSYkd/psKMt4cjrOA
-	 iPMZg2uf0DMUlg80+8RIvT6HZyor+xgMmBfmWNyMmJMfIDrRn9Dt7l/BQpjFalaRxn
-	 H7UXcyE2WHjJMAVqakihPkV1OUbFTRvxNK6I16Vcb6e3rL6der9faCerOOxCyiFn6C
-	 sxeaPKDNEjql2Hzl93lyBYKXl9/ShZTiBz6jAoAzt5uhiyhs756PQ2ybYTYgJGs6uI
-	 SiAI5AQKrpi7bWoZ+YmwJPK+xeL3gnS8t2PuKFUvZjdbLOxWJ07vze0/pdsRPsoXFS
-	 A/cGX5Bsb1I6w==
-Date: Mon, 11 May 2026 10:48:23 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: Bjorn Helgaas <helgaas@kernel.org>, 
-	manivannan.sadhasivam@oss.qualcomm.com, Thierry Reding <treding@nvidia.com>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	"David E. Box" <david.e.box@linux.intel.com>, Kai-Heng Feng <kai.heng.feng@canonical.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
-	Chia-Lin Kao <acelan.kao@canonical.com>, "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>, 
-	Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@lst.de>, 
-	Sagi Grimberg <sagi@grimberg.me>, linux-nvme@lists.infradead.org
-Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
- set by BIOS for devicetree platforms
-Message-ID: <fb6uzh3jfes3hky6fblpsh2vvg3daij5ogecydiuhmytxbglcb@tdqjcoxuymsk>
-References: <20260122152903.GA1247682@bhelgaas>
- <8d8b2244-2bf0-48cf-8fb8-9e47e197a62d@nvidia.com>
+	s=arc-20240116; t=1778477506; c=relaxed/simple;
+	bh=x1m/G9nmNnkUnlKOrvcAt6Xtf2zAg0FiFZK9a39pDM4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GotyHo+TdGuauVOJPvDluAeZxispgRdoo9cJpMnh4jCiWuhTr3vzO6ZV6uQNvHHXBo8kZJMVf708yP7H/v8yiVg+BpyVAAy+vKsHu1r2rvryR7YCZmiQlFvC3jY7ir3EAKFCpjusElb1usH96SmTAF4ADz5Qu+RkO1qnSSQAQx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KIeNlnzo; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CroqFvqq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64ANual4682408
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 05:31:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QmMPoRGigEI/xvrNZWGAsPqPg/OsxQyRAFXhN57HcOE=; b=KIeNlnzo36SBceP9
+	dIi8uGZu8bKunJJtyhE/9l4AGi0vP1NbKiQKCM2I/85vR+cinX024F9BE0x1hlNX
+	HxTEHGCtKpyNytfOZE+Qg8aFHHP6GxQ5YCrVha4n3AsuJ+jZoE3Q71gcuKV56kHA
+	2r5++q1PKo+a+mLOwA0Wro1kxd3oEvg0zqIwZjpVwrc3nhaDHCc2CHLuCAYpjkuw
+	LXiN0lxfxL3UEn/kvNuyoGXRc65igkw6cBPgQWGQudvMzYcrhAT8R4JE1CpzSl4W
+	v7Nu5tXAeOBKTQWQOkdQb+lfwhoXc0H51MLOKu58J3AqgxTZQF4/UV/mMDESD9RH
+	yk5bWg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e1wpechtk-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 05:31:44 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2ba268cb5e6so28176345ad.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 May 2026 22:31:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1778477504; x=1779082304; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QmMPoRGigEI/xvrNZWGAsPqPg/OsxQyRAFXhN57HcOE=;
+        b=CroqFvqqp58MMnXVLCydD+rA43yIjP1bThVH+9zRSR91zgwKefmfxWTKcIuUmrckq/
+         EnMV6FG9qfqw/OaqgZH+cKA2XzSch+bb2zEpcPbo2J+Z58+x6oq5fWgfmFproz0aZdg3
+         ch6+ZtTCJKoog2zhc93hI2sQGaH3ca8rT0hvimFuhwTpB80pTX4pVmet3sIna47UQE+e
+         HsBZC8EHh4f+NOFrfKEDzKA36GMWtyby8FIejg4vJ+cskGzZdcac/r3V0Mn2DraNxyAb
+         pnbJi48ugqBQUXIe9fr+La3ZCLYRDKvaKzCZ1zEdA9aNEl7aWc4eukhaTW1bUU4gzrKY
+         TiNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778477504; x=1779082304;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QmMPoRGigEI/xvrNZWGAsPqPg/OsxQyRAFXhN57HcOE=;
+        b=M5ISDFMYrM0uFJW86QiOi4SCIExvwzlrFrQZHy0xraYJy8ipgKnvA+zTLp9rKixEOG
+         rqn0Hd2VKex6DiiwJE8g+GD7Q0thNZRJU2SK76bl7sK5AWlwylJvQQUhcchCYC7s0oxH
+         pvfVsODulHGBTqlKiFy5Llgi1UtBiwbRebwm/BYsF+6T/QPwafW4Ey+hv5PDJRU105dn
+         vVyr2aqHD1wB7Rlt0XXOHB/HAcF3f8BYlpk0rtXVxWnp2aOlYJA+kccphxw5o/pY3g4R
+         Nc4PV8kXyfyohx917n1ASi7XdYhLulcgZfbFDcHvJHp4cqCaTkgUmRWyvYPwz2kK7xl0
+         8V1Q==
+X-Forwarded-Encrypted: i=1; AFNElJ8fNkgn23pGYcLXdJXbgXDbUpW6BDda3uDWiAjuyOBHWoq3uYRe4k4vwJbd/wA15plUsWK7Wu01Z81KZ9jx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxbh39KKnbaOCjA2ft1LoL54+iNye02bCJriGu4CjzJfkDxN5AZ
+	H+XxIqLSQB9+B8GNtMZVYieINOclDz4AGoHvC0CeRNYOXn/YaSNmvO4oprSrGj+wqMxQSLevfy6
+	BgdaMuvc6FbHrsof2xj0ptImvcqCnffCFvB96sWr6OhPb9Q79ZWufM0TyjtoVFfmtNwz6
+X-Gm-Gg: Acq92OF7tlbX5c0zF7mZOXbrVdvxv/vgHACXnRZG3qlSUVEbi7EF9Xy+GIMcRaYW46h
+	OCHCatjAOt6npP/ElbEd6lS+Szc3DUI3MFHlPX0HugQ9VY42LiYKbjINsa/GIx5t6n5xfYRh6vm
+	gVTmAKpKubcS/Xgqb4luhR2H5zIHmwE+DNoPUvENhPTxq/LLyzYIf61xeoLalXn+fyccAGUQzr0
+	QHAbfd9Wc87GZkirTFCYFplS0JP83F0X+RtdI/a8u78f83iF9ecjUzZ+3s6cXznZIKg42+NwVW/
+	/wqZyMONwj6CepoXFzlHf4rjtZDkE0e/Te9MAxqnXHPN/TQUfeMIXv08Spvuvl/V/W16yNWH5t3
+	yP7HOIgM8M0HWi1yQ9rgpoMOgmrGbqmakffLXaTpfCXvr/U3HdoIo3V4u+XlyuJfi
+X-Received: by 2002:a17:902:8d81:b0:2b4:65f6:e24a with SMTP id d9443c01a7336-2ba78b30c65mr155311455ad.4.1778477503908;
+        Sun, 10 May 2026 22:31:43 -0700 (PDT)
+X-Received: by 2002:a17:902:8d81:b0:2b4:65f6:e24a with SMTP id d9443c01a7336-2ba78b30c65mr155311145ad.4.1778477503348;
+        Sun, 10 May 2026 22:31:43 -0700 (PDT)
+Received: from [10.206.105.200] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2baf1d40597sm87503005ad.22.2026.05.10.22.31.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 May 2026 22:31:42 -0700 (PDT)
+Message-ID: <fba91089-6fff-1633-bec7-8815dcd02004@oss.qualcomm.com>
+Date: Mon, 11 May 2026 11:01:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8d8b2244-2bf0-48cf-8fb8-9e47e197a62d@nvidia.com>
-X-Rspamd-Queue-Id: CD4785081FB
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 01/16] media: iris: Skip UBWC configuration when not
+ supported
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+References: <20260507-iris-ar50lt-v1-0-d22cccedc3e2@oss.qualcomm.com>
+ <20260507-iris-ar50lt-v1-1-d22cccedc3e2@oss.qualcomm.com>
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+In-Reply-To: <20260507-iris-ar50lt-v1-1-d22cccedc3e2@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: e788yze7ZZFkmk7tDVLx6-szh8aYnkiB
+X-Proofpoint-ORIG-GUID: e788yze7ZZFkmk7tDVLx6-szh8aYnkiB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDA1NyBTYWx0ZWRfXxCFm6PQoQE+p
+ Y3mlUfpAiBLlxcNCc6ENfhep9JJ5N8S0fAtDUm0KuwwR48d647TJvmJdmE5PuNFpwxzOAOtFoAV
+ qJKgVPNvy63oTxY5Lfil3LNZFi3QIANH1tZQClC2+XtDaT6oBXV2D8LQoNJiKXkZZWfNu/YMwtu
+ KxQZkml+EMxfYxnLEE3pNfAPfHLmTZWj7j8gVNB7xX2S+0LNM+4jot4CpXjYM4DWNjMuQ9tRHbx
+ y1510CiHWE5BfliB2cYugJtJ4hvHrpvyJRBVsjzGjXDrFL//3ed62Zowgm4/+6uWxfaLaoklnWS
+ EkV1c0fAMSZ2WqKicDCqgMLrEogOcjdt6LvA+rbPrnS2stY0TEHEfC/FkmHjXvfYFiWgFJA08iA
+ Rc9GPVzLcPDEkgM71em2So/Qnxtjh9Ci42PcbnQ8zXe9ygai3+DVsxiwLG7ogpOF8KjHHJdoi4r
+ 6Fxm7rw9JiLsMuUvhzA==
+X-Authority-Analysis: v=2.4 cv=EeD4hvmC c=1 sm=1 tr=0 ts=6a0169c0 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=IaWEfZ5NjuzTEUi6muUA:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-11_01,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110057
+X-Rspamd-Queue-Id: 3EF7D5082E2
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-106835-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,nvidia.com,google.com,vger.kernel.org,linux.intel.com,canonical.com,gmail.com,kernel.dk,lst.de,grimberg.me,lists.infradead.org];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	TAGGED_FROM(0.00)[bounces-106836-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[busanna.reddy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TO_DN_SOME(0.00)[]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-On Thu, May 07, 2026 at 11:25:23AM +0100, Jon Hunter wrote:
-> Hi Bjorn, Mani,
-> 
-> On 22/01/2026 15:29, Bjorn Helgaas wrote:
-> > [+cc NVMe folks]
-> > 
-> > On Thu, Jan 22, 2026 at 12:12:42PM +0000, Jon Hunter wrote:
-> > > ...
-> > 
-> > > Since this commit was added in Linux v6.18, I have been observing a suspend
-> > > test failures on some of our boards. The suspend test suspends the devices
-> > > for 20 secs and before this change the board would resume in about ~27 secs
-> > > (including the 20 sec sleep). After this change the board would take over 80
-> > > secs to resume and this triggered a failure.
-> > > 
-> > > Looking at the logs, I can see it is the NVMe device on the board that is
-> > > having an issue, and I see the reset failing ...
-> > > 
-> > >   [  945.754939] r8169 0007:01:00.0 enP7p1s0: Link is Up - 1Gbps/Full -
-> > >    flow control rx/tx
-> > >   [ 1002.467432] nvme nvme0: I/O tag 12 (400c) opcode 0x9 (Admin Cmd) QID
-> > >    0 timeout, reset controller
-> > >   [ 1002.493713] nvme nvme0: 12/0/0 default/read/poll queues
-> > >   [ 1003.050448] nvme nvme0: ctrl state 1 is not RESETTING
-> > >   [ 1003.050481] OOM killer enabled.
-> > >   [ 1003.054035] nvme nvme0: Disabling device after reset failure: -19
-> > > 
-> > >  From the above timestamps the delay is coming from the NVMe. I see this
-> > > issue on several boards with different NVMe devices and I can workaround
-> > > this by disabling ASPM L0/L1 for these devices ...
-> > > 
-> > >   DECLARE_PCI_FIXUP_HEADER(0x15b7, 0x5011, quirk_disable_aspm_l0s_l1);
-> > >   DECLARE_PCI_FIXUP_HEADER(0x15b7, 0x5036, quirk_disable_aspm_l0s_l1);
-> > >   DECLARE_PCI_FIXUP_HEADER(0x1b4b, 0x1322, quirk_disable_aspm_l0s_l1);
-> > >   DECLARE_PCI_FIXUP_HEADER(0xc0a9, 0x540a, quirk_disable_aspm_l0s_l1);
-> > > 
-> > > I am curious if you have seen any similar issues?
-> > > 
-> > > Other PCIe devices seem to be OK (like the realtek r8169) but just
-> > > the NVMe is having issues. So I am trying to figure out the best way
-> > > to resolve this?
-> > 
-> > For context, "this commit" refers to f3ac2ff14834, modified by
-> > df5192d9bb0e:
-> > 
-> >    f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for devicetree platforms")
-> >    df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
-> > 
-> > The fact that this suspend issue only affects NVMe reminds me of the
-> > code in dw_pcie_suspend_noirq() [1] that bails out early if L1 is
-> > enabled because of some NVMe expectation:
-> > 
-> >    dw_pcie_suspend_noirq()
-> >    {
-> >      ...
-> >      /*
-> >       * If L1SS is supported, then do not put the link into L2 as some
-> >       * devices such as NVMe expect low resume latency.
-> >       */
-> >      if (dw_pcie_readw_dbi(pci, offset + PCI_EXP_LNKCTL) & PCI_EXP_LNKCTL_ASPM_L1)
-> >        return 0;
-> >      ...
-> > 
-> > That suggests there's some NVMe/ASPM interaction that the PCI core
-> > doesn't understand yet.
-> > 
-> > [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/controller/dwc/pcie-designware-host.c?id=v6.18#n1146
-> 
-> 
-> I want to revisit this issue. From my perspective low-power suspend has now
-> been broken on some of our Tegra platforms (that have NVMe devices) since
-> v6.19 and so far this is no resolution to this issue. The patch that was
-> proposed to fix this [0] has been rejected by qualcomm and although this
-> does workaround the issue, my confidence that this is the right fix is now
-> low.
-> 
+On 5/7/2026 12:12 PM, Dmitry Baryshkov wrote:
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_packet.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_packet.c
+> index 0d05dd2afc07..6e04175eb904 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_packet.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_packet.c
+> @@ -140,6 +140,9 @@ void iris_hfi_gen2_packet_sys_init(struct iris_core *core, struct iris_hfi_heade
+>  				    &payload,
+>  				    sizeof(u32));
+>  
+> +	if (!ubwc->ubwc_enc_version)
+> +		return;
+> +
+>  	payload = qcom_ubwc_macrotile_mode(ubwc) ? 8 : 4;
+>  	iris_hfi_gen2_create_packet(hdr,
+>  				    HFI_PROP_UBWC_MAX_CHANNELS,
 
-The referenced patch is now merged into arm-soc for v7.2:
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=7602c0ec0bbfd3985d49f4f0cad281c1414008c9
-
-I hope this takes care of the issue you are dealing with.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 
