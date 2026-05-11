@@ -1,262 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-106872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ABWBHriiAWpKhAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 11:34:48 +0200
+	id ON3MDhilAWpKhAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 11:44:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id C05FE50AFDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 11:34:47 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA29C50B323
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 11:44:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 1D915308A68F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 09:21:18 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 806493025C7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 09:28:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3971E3C343B;
-	Mon, 11 May 2026 09:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 403853BE17D;
+	Mon, 11 May 2026 09:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="adzzzydg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ddzs1Sb0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F86E3BD65A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 09:20:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CDE83BD63D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 09:28:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778491240; cv=none; b=AaJ5Gvx6IXaF83Ge2LVWh6f/2VuIy2RgMUYdzoY7dKC27YC523BX3CxErSTh5NbwBiWqe+ZPY1ZzkBjcEiU2fvvzQqeQVgi3gLu0USWzBMaWLonbdbz8vECAPBiUrLSVqbmVNY628SlBNQhmBVRK9GCv/FGZxnQAumBBSBUCZLU=
+	t=1778491712; cv=none; b=LSsFtgRXxWaRvMztxNZX7Cg0ejypbY+1pRSvmayBXs1E4knTISq7eEcZzwCtvJpaBHO80YX90M9xiI0bz8aECDhsYzBolQ+qv5rAIrycdt90DCI4HAxMocfhqOw4U5DGTIQyJQk6ktoOBIUcix1sq70UUuvEcovdBJI/hwOXqOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778491240; c=relaxed/simple;
-	bh=0XXM8SATZX5xddyNGVmVrzd/1VHNcnt9h/bLvxKqu7w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JhJamb1N34BJQElyxXHlyl0ydI40ypCVsfVM/Af2chwd1og/2sCG094tT1rH69Mh9rJcrTKGz7zZBgG3OQTHop69izka6nAEtT9ByOjchow9lqmrWMJrG1gC0G8QBt5wLYwheQNk6H3sSLd7vww4XpOAl9jPk3Bg1ojAtb4F9gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=adzzzydg; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-452169ae568so3099684f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 02:20:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1778491235; x=1779096035; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=P3AzCwGuPnUfKtYTICegT0okxDHwk/H/9i6HDV/B1Ww=;
-        b=adzzzydgm+FBvGd37deGXznKfTbxPVIk1U8u2hvdwT7qcDcsd/P3Rur4xl5CeyBDzj
-         jeQUeNKwTbke+S7k/3DhXotn8gnQGJZVfnHciWSEwarm9ABRJz5VEFE1hgzwW8HBS0g4
-         /HULEctAxqrkksy6O7d5QGhYPutxaQC4AnWxYpjDmKxmVuknlFNgmf19HqD1nE7+k0L8
-         oakR/rEjNaTjZfKEUsPC6digGYR9ijEOsxFtuabMLbkgQ/D/wfPgFVokVxtKtePc4GmZ
-         30lE3d3sgCXRYeOdZp2lamkjWfhzJ2xElLFQ9fmNVK7AIV1XHh8bYACj6FZhAPIEy6YB
-         c5pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778491235; x=1779096035;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=P3AzCwGuPnUfKtYTICegT0okxDHwk/H/9i6HDV/B1Ww=;
-        b=AEDCYLpWA5ehqooXNs8Aae3dolKUHTWexkn0Fryq3HVUHPNnAiGAPSFXsBHCRXL2Hs
-         PkRF2zNSxrYkKxEez9o0XuaUOQUZvs2QmisOHCjXKQrIoV8th5Z9FPxhXotxJ+E/7wDA
-         vMnVzr2e6I5EdnI6ARewn2iJIxIVzfPxAEMsy0lWO5AnC7DTpLR9RC+R+G3QaMJXAvLc
-         Hzw22iC9RuFtKd2jzd1P7diQNoJc56ZkAMq6daZunGrzeAmQZfAOdKtfVgU2i3lfY+M0
-         GXvXj9otv/7WSB5gKX59sgbAuyk3fl1kx7Sf62gHulhdyyFgL9P3DciZUSZwg334V8Ac
-         8Odw==
-X-Forwarded-Encrypted: i=1; AFNElJ+suesv8b3CmNzt3oAnBO98DcvSq8BPrvqP4edP7RWxYV3VGWatfYh7soQUea15EhsypEPsnS46oUS92iGP@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOgPMBhNx/SoOkBwHrFFqEGmf6zMGGxXT7dTbBVtUWgVIN1SL5
-	/o37dt8LD0HReZdCf6LG6sufDl2suqQRAKeVQXkDwOLmv7L5V78Inqvbgq2qs5fLuQg=
-X-Gm-Gg: Acq92OGlrhxxY+c/OmjVRODvsq8o7n/qupoBXZ3gFVIEdYoVf/0RT3n2LAjRC9Ma2mr
-	EC+CLiOmSmoRya+8qvc3wV+0q/CWO1mtlaDnFUMralEIvnMnsc9NXvQpcDVcIHaEcoHH0fZ+Sf4
-	tTntyWPEGdZvAgIdRzoWhygX77L7d9AhVTLkO4QsPLopBmx+UkCjODfSe8/C+nt0n7iXKJmgsqd
-	8kZVKnXaWLPJYw3y70jZ7w20gt6Yl5IzEEN8KuCnWmIi6Z35nTI+8BmvCEUBDlhWVh+eOmYzL69
-	yYTxJUhETzn9YmNBO5BbS6M91mqwN/NumMDygWK2sXIDYaSs2X/5YTPqetRvAyE6xM8CU8SmGSa
-	cV31BybdDvgVRFiApjkzKbUAaxE+m5roGQUrkEcW3GOFoJ9Vi6UUEnr5cUe50IE46DT/1aMqRit
-	HXFyuNlxjiv5HGKAxwQa2moyOkAIAixjmmYQYBTa79ZXkW
-X-Received: by 2002:a5d:5f42:0:b0:455:460a:33a5 with SMTP id ffacd0b85a97d-455460a3511mr16709478f8f.34.1778491235232;
-        Mon, 11 May 2026 02:20:35 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:106d:1080:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4549120ec0asm23743240f8f.17.2026.05.11.02.20.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 May 2026 02:20:34 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Mon, 11 May 2026 11:20:31 +0200
-Subject: [PATCH v3 6/6] media: qcom: iris: vdec: allow GEN2 decoding into
- 10bit format
+	s=arc-20240116; t=1778491712; c=relaxed/simple;
+	bh=cfOlR5qjLH6F0mgDNpFieNzkfYgGlRYjxfxkEfFlJtA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=G60dCGuR28QFnx0YA/bMvcbXAUXQPnhKSV0WfpzJBd3t584m9Fq3aVV+m1VBK1HJ8ETjQqK2RiQGIPyM1tUimO5o8cG6Af4T5IEnUJNojLR2fRSFI0NhfYmHRJTLsOzODxm5/teoiT7IXj6tYFuBWafpglGhpgv3z0U5s+OQ4uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ddzs1Sb0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C893DC2BCFD
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 09:28:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778491711;
+	bh=cfOlR5qjLH6F0mgDNpFieNzkfYgGlRYjxfxkEfFlJtA=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=ddzs1Sb086my6dIKZgqiN/EeFZmQdx9QlBz4tkAhzs9PZXmbaHLiF7sWqczuM5tsQ
+	 +Jc3sMKvi1qSkYHDCF6vqLNtpJbXJZm2B8kxVlFGD+giXkH9tNJXm1LS22OmJ28DZ1
+	 8Ectj6WSv7i+IHManOlkReOjRZn0q/6AKs9b86FDZ2L+i9Yq0HycktBw+kf2Lm0PPD
+	 mkqrTG5cXeF017qzQdsW1B48ZmCRatV6SJUnTyQ4rZ5MUKPBlOx8252TdgtZZ/GTzz
+	 4uCk600DmzEIu3w6ZlhDDNpUaxPCvv9PTms+7p/ftctTZbLnADDwNy8zRWYFNJzqjq
+	 40xes1uR0PMqw==
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5a74ac8b40aso3690826e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 02:28:31 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ8o8XexbezaQb7kJBOTPrvkueKhIIBxIgeM0mP/QG5BNoWcgUtd04S8xD0Kk+cv5sV3MN8Y005Dlsf4c+pl@vger.kernel.org
+X-Gm-Message-State: AOJu0YzyYf2JGKqkL89IHxKGPEa4f9MBNAFUY2FokzCRGmxkDyTJaEPR
+	X07RM5YtVMkj8CEiTCAyPzmPxvvq0nYw9kJ56g1hPO1mHFq3H4fwoY8HmDZZtj4jLXW6eyW1skS
+	cVuAuhGh+H2HR2RQX6UnLcKdPFAMS91E=
+X-Received: by 2002:a05:6512:3c87:b0:5a8:6f4a:6a62 with SMTP id
+ 2adb3069b0e04-5a8b729150emr1970564e87.41.1778491710434; Mon, 11 May 2026
+ 02:28:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260511-topic-sm8x50-iris-10bit-decoding-v3-6-7fc049b93042@linaro.org>
-References: <20260511-topic-sm8x50-iris-10bit-decoding-v3-0-7fc049b93042@linaro.org>
-In-Reply-To: <20260511-topic-sm8x50-iris-10bit-decoding-v3-0-7fc049b93042@linaro.org>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4832;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=0XXM8SATZX5xddyNGVmVrzd/1VHNcnt9h/bLvxKqu7w=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBqAZ9dmMvT6hxbqJ8xf2FZ3uINwpHDW5NYpaS6MkGv
- sFkDMASJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCagGfXQAKCRB33NvayMhJ0YfND/
- 0eZA0rBVDpF0xsJITUqLEN4s4R1NjLiUYG703AB9PtoNS/8zULIbatBdTuQ4q5kwB7jDeZsYOfgOTE
- xqJO2B6z3mvAnrWrE/juPT72gx4TnUYDxfg/JFMlo25n9Q0RPaErIFBW7aIdyytsqvMRHAdDX4hJ0S
- WRS0c7xPMSC/hAoCZf0RrPBV5DCuZFei7wqzGnFpqHy7FousNfmSXCvk0OZQnQZf53SZfXj6pzXV7N
- UIwH7y3jFNfspWFjsUYkpheX2iasvybuaobxsadqJTWXTjph643M1xOLhCv8znQDlVtBU1XH6zptjp
- QXOTTDinNK9mkrkh5iDYPOSNQBqnKNZB5YxmerCHKQfYudeG1YRop66Z8v0pgyXjihXxEufEDrOk/1
- JBTRRZPi0WlzEIvZbrsDIVxtG4lg9YxVH6RU/mgHoXx5iGZEUpcVNxNrw9UJkFsHUsNB1Cr2Pzoqyx
- +mHgwqiyBuKkDK63Png/ZqKjiYJEZEPbF9hU02CZ+BgA9Nhd0o1Bx1Av9VYLCkAZxsAKiRsnSU5bhs
- dAKu3/6mYi3gWwvcDW8Jkdjg5MrIZz9jRK8nhTqIeZVk/DJTa2MGVgKwkC1Egk+YAYPpdhKTJ8JXnZ
- X7rOqW68j0p5mcv1Th4uM11VFNFDAoTCxtcqIVSFFhyV/2+RikDilsmTh06A==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
-X-Rspamd-Queue-Id: C05FE50AFDC
+References: <20260510-pm8xxx-xoadc-label-v6-0-49700fd03005@smankusors.com> <20260510-pm8xxx-xoadc-label-v6-1-49700fd03005@smankusors.com>
+In-Reply-To: <20260510-pm8xxx-xoadc-label-v6-1-49700fd03005@smankusors.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Mon, 11 May 2026 11:28:18 +0200
+X-Gmail-Original-Message-ID: <CAD++jLkEsw1EHQ1bBp3R-0N7ABL6P9Wz7Kd2CEQcyXYPshTF7g@mail.gmail.com>
+X-Gm-Features: AVHnY4IhqEH9lgst_x7YrGT_DKgqpsvJ-gMtJBV52g5yHUpPfofeDWqPW--0Ep4
+Message-ID: <CAD++jLkEsw1EHQ1bBp3R-0N7ABL6P9Wz7Kd2CEQcyXYPshTF7g@mail.gmail.com>
+Subject: Re: [PATCH v6 1/4] dt-bindings: iio: adc: qcom,pm8018-adc: add label
+ property for ADC channels
+To: Antony Kurniawan Soemardi <linux@smankusors.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jonathan Cameron <jic23@kernel.org>, David Lechner <dlechner@baylibre.com>, 
+	=?UTF-8?B?TnVubyBTw6E=?= <nuno.sa@analog.com>, 
+	Andy Shevchenko <andy@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org, 
+	phone-devel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: AA29C50B323
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	TAGGED_FROM(0.00)[bounces-106873-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106872-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,linaro.org:mid,linaro.org:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,smankusors.com:email,mail.gmail.com:mid]
 X-Rspamd-Action: no action
 
-Add the necessary bits into the gen2 platforms tables and handlers
-to allow decoding streams into 10bit pixel formats.
+On Sun, May 10, 2026 at 9:04=E2=80=AFAM Antony Kurniawan Soemardi
+<linux@smankusors.com> wrote:
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- .../media/platform/qcom/iris/iris_hfi_gen2_response.c    | 16 +++++++++++++++-
- drivers/media/platform/qcom/iris/iris_instance.h         |  2 ++
- drivers/media/platform/qcom/iris/iris_platform_gen2.c    |  8 +++++---
- drivers/media/platform/qcom/iris/iris_vdec.c             |  8 ++++++++
- 4 files changed, 30 insertions(+), 4 deletions(-)
+> Add a new optional label property for ADC channels to help users
+> identify each channel when reading values from the sysfs interface.
+>
+> Signed-off-by: Antony Kurniawan Soemardi <linux@smankusors.com>
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-index 0541e02d7507..b6d815c01f1d 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-@@ -542,6 +542,15 @@ static void iris_hfi_gen2_read_input_subcr_params(struct iris_inst *inst)
- 	pixmp_ip->width = width;
- 	pixmp_ip->height = height;
- 
-+	if (subsc_params.bit_depth == BIT_DEPTH_8 &&
-+	    pixmp_op->pixelformat != V4L2_PIX_FMT_NV12 &&
-+	    pixmp_op->pixelformat != V4L2_PIX_FMT_QC08C)
-+		pixmp_op->pixelformat = V4L2_PIX_FMT_NV12;
-+	else if (subsc_params.bit_depth == BIT_DEPTH_10 &&
-+		 pixmp_op->pixelformat != V4L2_PIX_FMT_P010 &&
-+		 pixmp_op->pixelformat != V4L2_PIX_FMT_QC10C)
-+		pixmp_op->pixelformat = V4L2_PIX_FMT_P010;
-+
- 	switch (pixmp_op->pixelformat) {
- 	case V4L2_PIX_FMT_P010:
- 		pixmp_op->width = ALIGN(width, 128);
-@@ -625,7 +634,12 @@ static void iris_hfi_gen2_read_input_subcr_params(struct iris_inst *inst)
- 	inst->fw_caps[POC].value = subsc_params.pic_order_cnt;
- 	inst->fw_caps[TIER].value = subsc_params.tier;
- 
--	if (subsc_params.bit_depth != BIT_DEPTH_8 ||
-+	if (subsc_params.bit_depth == BIT_DEPTH_8)
-+		inst->fw_caps[BIT_DEPTH].value = BIT_DEPTH_8;
-+	else
-+		inst->fw_caps[BIT_DEPTH].value = BIT_DEPTH_10;
-+
-+	if ((subsc_params.bit_depth != BIT_DEPTH_8 && subsc_params.bit_depth != BIT_DEPTH_10) ||
- 	    !(subsc_params.coded_frames & HFI_BITMASK_FRAME_MBS_ONLY_FLAG)) {
- 		dev_err(core->dev, "unsupported content, bit depth: %x, pic_struct = %x\n",
- 			subsc_params.bit_depth, subsc_params.coded_frames);
-diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
-index 16965150f427..16424d1e94a6 100644
---- a/drivers/media/platform/qcom/iris/iris_instance.h
-+++ b/drivers/media/platform/qcom/iris/iris_instance.h
-@@ -25,6 +25,8 @@ enum iris_fmt_type_out {
- enum iris_fmt_type_cap {
- 	IRIS_FMT_NV12,
- 	IRIS_FMT_QC08C,
-+	IRIS_FMT_TP10,
-+	IRIS_FMT_QC10C,
- };
- 
- struct iris_fmt {
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-index 5da90d47f9c6..ceed4b5d96ca 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-+++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-@@ -56,9 +56,10 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8550_dec[] = {
- 	{
- 		.cap_id = PROFILE_HEVC,
- 		.min = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
--		.max = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE,
-+		.max = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_10,
- 		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN) |
--				BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE),
-+				BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_10),
- 		.value = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
- 		.hfi_id = HFI_PROP_PROFILE,
- 		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-@@ -287,7 +288,7 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8550_dec[] = {
- 	{
- 		.cap_id = BIT_DEPTH,
- 		.min = BIT_DEPTH_8,
--		.max = BIT_DEPTH_8,
-+		.max = BIT_DEPTH_10,
- 		.step_or_mask = 1,
- 		.value = BIT_DEPTH_8,
- 		.hfi_id = HFI_PROP_LUMA_CHROMA_BIT_DEPTH,
-@@ -866,6 +867,7 @@ static const u32 sm8550_vdec_output_config_params[] = {
- 	HFI_PROP_OPB_ENABLE,
- 	HFI_PROP_COLOR_FORMAT,
- 	HFI_PROP_LINEAR_STRIDE_SCANLINE,
-+	HFI_PROP_UBWC_STRIDE_SCANLINE,
- };
- 
- static const u32 sm8550_venc_output_config_params[] = {
-diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
-index f4d9951ed04c..65cf509e4aef 100644
---- a/drivers/media/platform/qcom/iris/iris_vdec.c
-+++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-@@ -70,6 +70,14 @@ static const struct iris_fmt iris_vdec_formats_cap[] = {
- 		.pixfmt = V4L2_PIX_FMT_QC08C,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
- 	},
-+	[IRIS_FMT_TP10] = {
-+		.pixfmt = V4L2_PIX_FMT_P010,
-+		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
-+	},
-+	[IRIS_FMT_QC10C] = {
-+		.pixfmt = V4L2_PIX_FMT_QC10C,
-+		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
-+	},
- };
- 
- static const struct iris_fmt *
+Makes sense to me, nice with some roadsigns in this djungle.
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 
--- 
-2.34.1
-
+Yours,
+Linus Walleij
 
