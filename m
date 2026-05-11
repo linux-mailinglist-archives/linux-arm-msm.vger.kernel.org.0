@@ -1,321 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-106949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SEwbAFHiAWq1lwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 16:06:09 +0200
+	id eIUkFfniAWoEmAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 16:08:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9804D50FA45
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 16:06:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EDF4750FBE3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 16:08:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 0AF1F301DF6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 14:00:36 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 7D9213003602
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 14:02:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0366D3FE35B;
-	Mon, 11 May 2026 13:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4E453F54AE;
+	Mon, 11 May 2026 14:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eIlmWjfd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F98Hcl7P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CC53FCB03;
-	Mon, 11 May 2026 13:59:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBAE3F54AB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 14:02:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778507966; cv=none; b=GvepRp0ayyeU7pf0E/rQl1OBQBhMamhiF6YnXEfMkDyxIQFCcmvcs8Pl8ZKiVdXogIYXnAdd5V9Zu3KaX5B1qzNd38X1akcan44cAvyErQ6GsL2vynl03Obt/TbS+1ug1QfB/UYZALjHOR17RTNLgp1kyLSQtJSF/6AYur/fdt4=
+	t=1778508171; cv=none; b=T5T/vF8FfhNAY4yidv2QSvh3Rk1WYu4da/LIezwf7o2cCT1nCOl1oCgDeehRGD/Zc/iKoCf3XXgeWbTF58rWk0DKlvv2i1rEedqqxE/XpxgJdW/cmupP2/L+3PEuslOaFlXbsHiJ0rsbRRcPeOCPySRsIxHFYRK5y/jZdyI952k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778507966; c=relaxed/simple;
-	bh=GxJylG5lOVTB/ixztFRmzwzVGtHfePl2rp5kNd9TTjc=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=nvDUaZrEDIsqGsf2a80qIM/1d0ik9EBEwjAJLbZQsxuR7UMDyQxqVmDYZ9vliRvYWXMoY22xP6InPtkZWJcjXCXt1i4D3VJdmap+K10215s+G4NTYOND4lN38USb+PuQpV/VaSPN6IYYuP6wVZ8+G98SzJ9sarC+vyhirKg9R28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eIlmWjfd; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64BDHPVu1258415;
-	Mon, 11 May 2026 13:58:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=NDkR/w65DS253ceti+YfW4LrgkR4RO8h2d7
-	atfEUTOk=; b=eIlmWjfdcUKJDt0HRIj4DFjd7kTp7DNTjAz2T+O1lYZqk63XoJT
-	/Z2UBtege8dVhDAFWHBofqgiGpswxh7NQNBwEj7UTXtFR4HmgTfEkchRf/G2kO/E
-	NADA4Awdbo7UAIHGbEh9As5LG3taxAXbpk/Kv/1NEgT5BdxdphI4NDxQZ33mQtt7
-	n7rZShbqEdLub0gv05/5n6vpRv3ygRHtybBRTaixejApwwNRwxH/tHOQwT+eTpsK
-	+3TpSh8xllTsCrzbP3yCVhmEyw+SCz8C/8urCPencK6OTT9VzPFOWx91r3zlOalM
-	f7j2IUjtI2N1W5+c94Bj/M0Jeojml8H2Auw==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e3ag21e1d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 May 2026 13:58:59 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 64BDwvcL025065;
-	Mon, 11 May 2026 13:58:57 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4e1x0hx240-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 May 2026 13:58:57 +0000 (GMT)
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64BDwvZD025059;
-	Mon, 11 May 2026 13:58:57 GMT
-Received: from shuaz-gv.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 64BDwuUH025055
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 May 2026 13:58:57 +0000 (GMT)
-Received: by shuaz-gv.ap.qualcomm.com (Postfix, from userid 4467449)
-	id C0E2B5EB; Mon, 11 May 2026 21:58:55 +0800 (CST)
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-To: Bartosz Golaszewski <brgl@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
-        quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com,
-        jinwang.li@oss.qualcomm.com, mengshi.wu@oss.qualcomm.com,
-        shuai.zhang@oss.qualcomm.com, stable@vger.kernel.org,
-        Paul Menzel <pmenzel@molgen.mpg.de>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH v6] Bluetooth: hci_qca: Convert timeout from jiffies to ms
-Date: Mon, 11 May 2026 21:58:37 +0800
-Message-Id: <20260511135837.3967550-1-shuai.zhang@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1778508171; c=relaxed/simple;
+	bh=xBV3ooU7HJctQKbetHsRzhQj9tWOVcLJfxWQJUIu/0c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iaxMWJiiywiO1mIS1/5FrZj9yLW+TFxJjBDNpnXL4NEEEG4JUVX5xqhn065KYbXBtb8Zvv/vgPx63e3/LYAlQ74wTgGBHEqBpZANZiYZH+it1XRzcA82IOMXU+wdPBz7s24AEzyKiHvIvrHDcrLAPbMrFn7QRZrblGkca4iAivg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F98Hcl7P; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-48e72b02bf6so2322445e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 07:02:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778508169; x=1779112969; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=H7fD4bUEAsspIYeU1XCz4Z33/IVcGrlxp4VIfHS9bo8=;
+        b=F98Hcl7P/GkVx3S8DlAQ2HIHM6O3zIUhgefhoVCXHywg10M+KAV4jY2v/gG1j3Y6FB
+         pag212h5+/SsIneZhImK9MTjSiIzfJIu8bELI8Wg9bYe5oOR7u5FhBo/PynNbrzglwN/
+         I9oV4sR2ojElUyfJhzi87XwzxwgkIAh0F6SKGwBpkY90d3e8eBvLSpvQtPcbK9fFN6W5
+         tcdrpnZUZTD5AZHtPyQ6bcWRUp+eYtgQLOHHk+SR5bM2kdRrJYpPNDIIFt0dQA5eJdWW
+         aFM4xkFINvevdkN+02k8YDpxYWqRG0i1U0Mf7mkj0gJBr6ZgsBnbn0Yo2Ni0u1zUYtI7
+         6o0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778508169; x=1779112969;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=H7fD4bUEAsspIYeU1XCz4Z33/IVcGrlxp4VIfHS9bo8=;
+        b=tLLvOk9bWjyybA9Fj3b52JjtSUjdU/rFj6wkwmNqiKaNvoRsSora3xY00e70QROB6J
+         1P05dFeTepb2sxBsV92XvbeAGmQK5F9PqDxkll3TWKfZxPriL9R3r3Wdcn1akFeqRwSG
+         z3L+3xoq7jDBy4HmphN4nitsbhGLYjO1YOtFnSlKPirUBCwQjIcwyZLgoNsDlKqcQ9Uj
+         NrXJBMOmbm4F/GaHHvXrBTcu6YkFDAendyKn86WvpdzMa8dbMIbYoYtShHWofjI6kUPQ
+         7vfJiZzAxYnb9Aw4/KXyng0lJIbloRhFEH++DSc78EfDnT/u6oB+wBEUV8ZI0SXBmm5m
+         aBDQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8uJju4w1vPkWmsm7bwapYgj8c5KuVCgcCLKjzLANvQLOa3r1FHh2o4+thoMv0/Lq4tdjKK/mw/N0XyPgnv@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5FmInDHsTNws6x0AiBMXdm0IZSkJJRXtG/+jAa8IY2sSfESa8
+	LLCJZDHglYfhQwye6WQti0GmKgdw0f4h5tClxz4ID9mhqfia5EuJuZ9f
+X-Gm-Gg: Acq92OHJMTVz3K417oPN8yMRNWKXhazF2cTsDUW7Esiz9YIPvbhzlHNHMSQvG15L4/4
+	f8WXv4Lu5QEmfoU97xe/V6T0PpIR5TU0YodYX8izabT73j2PF0mwwP95IU/+K3Q8aU1ZvpUVd0n
+	mvAHqPoW/i9Zzdw2SSShwzNV2ebGuGxHj5Hy62Pp4iNRJl4hiaGPdTNSdpNn8dwmdvz+9JJlPW4
+	eMmh0q4zQMOYutG1Yd69YxJAEXVimMpGLPjZMnD+WPMGBbSoekLGDbqsMMnjryJOMkhdOtATMIi
+	lB8Tt/JQWPbjQXGEmAtLdMtXn4oN+q4MtQnMPY4qKLoXjd+bOKTTXrpzhKzdp3H44rAKgOqaXj6
+	7yMi5O/yHIAEFP5Y+SfeEEvXP+nfUrKM2K8B8U1UO0B/xZcQRtL/Q1OWUvoRTlKQ09Oh+rlil0i
+	2iyQFGQCP4nYC05KY=
+X-Received: by 2002:a05:600c:4510:b0:48a:79da:c87 with SMTP id 5b1f17b1804b1-48e5310852amr175491285e9.8.1778508168488;
+        Mon, 11 May 2026 07:02:48 -0700 (PDT)
+Received: from skbuf ([2a02:2f04:d403:cf00:a128:7a98:678b:6a30])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48e6fff9c91sm201254695e9.1.2026.05.11.07.02.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 May 2026 07:02:47 -0700 (PDT)
+Date: Mon, 11 May 2026 17:02:45 +0300
+From: Vladimir Oltean <olteanv@gmail.com>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, dmitry.baryshkov@oss.qualcomm.com,
+	neil.armstrong@linaro.org, konrad.dybcio@oss.qualcomm.com
+Subject: Re: [PATCH v3 0/5] phy: qcom: Fix possible NULL-deref and runtime PM
+ race conditions
+Message-ID: <20260511140245.5gftwzynmke6m5ro@skbuf>
+References: <20260205160240.748371-1-loic.poulain@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-ORIG-GUID: xNSjKJLpVvRvDCfc9sx-4d770aIsYqW7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTExMDE1NCBTYWx0ZWRfX1LdYHKOQyKrR
- re52YML+hwNLgOObgWWxbtDkOGzrGQ1q6M/vHyjM4wJbjhoZdCuM2g+i3PUqWAdyqMs8OO2Xfjf
- O5L2ZKAwcTUPuGZ0lBrmH7NSDOn6Od+J19WyQiR66GEH5GUP00HhjZSARycA1TDk3D9z2F/bD+d
- gY85HHnJGAcS5ffWYVmDDzG/ljEtyxfz/FLwOINtx1/I3LaJuXMGCKcIk6rC3CyBFhGfETVzpn8
- gUQEtPEmqG31hK6NdhJFDVaQ2zaT5h9CFThjJ351kO8AbfBabNjfgdj6jy00c6uIRtCv+NAENQn
- r/csJv3EgrDbLZvWFZVsh8IE8nOAA+ytEZ99fXNc0EglTcUWEpfpdIlaYSDlhwz59TD3Su7DgSp
- b0DqIZuy99/IhWbvWC9PgKEbjSxIqyggB/a9G4IwkMw+11VAyWIynb9+QGHK0FxqpMwKdhFHxlF
- ZWzgGh5kPXUP8DGnnHw==
-X-Proofpoint-GUID: xNSjKJLpVvRvDCfc9sx-4d770aIsYqW7
-X-Authority-Analysis: v=2.4 cv=NODlPU6g c=1 sm=1 tr=0 ts=6a01e0a3 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=3WHJM1ZQz_JShphwDgj5:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
- a=KKAkSRfTAAAA:8 a=HmGob9d6dpwOpU2T9dAA:9 a=TjNXssC_j7lpFel5tvFf:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-11_04,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 adultscore=0 suspectscore=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 spamscore=0 phishscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605110154
-X-Rspamd-Queue-Id: 9804D50FA45
+In-Reply-To: <20260205160240.748371-1-loic.poulain@oss.qualcomm.com>
+X-Rspamd-Queue-Id: EDF4750FBE3
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_TO(0.00)[kernel.org,holtmann.org,gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	TAGGED_FROM(0.00)[bounces-106950-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-106949-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shuai.zhang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,mpg.de:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,oss.qualcomm.com:mid,qualcomm.com:email,qualcomm.com:dkim];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-0.991];
 	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[10]
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[olteanv@gmail.com,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-Since the timer uses jiffies as its unit rather than ms, the timeout value
-must be converted from ms to jiffies when configuring the timer. Otherwise,
-the intended 8s timeout is incorrectly set to approximately 33s.
+On Thu, Feb 05, 2026 at 05:02:35PM +0100, Loic Poulain wrote:
+> Address potential NULL pointer dereferences and race conditions related
+> to runtime PM in several Qualcomm PHY drivers. In all cases, enabling
+> runtime PM before the PHY instance is fully initialized can lead to
+> crashes during early runtime suspend callbacks.
+> 
+> - Attach driver data before enabling runtime PM.
+> - Introduce initialization flags where needed to avoid dereferencing
+> uninitialized pointers.
+> - Reorder pm_runtime_enable() and pm_runtime_forbid() calls to prevent
+> unnecessary suspend/resume cycles during driver probe.
+> - Use devres-managed PM runtime helpers for proper cleanup.
+> 
+> Changes in V3:
+> Rebase on next and remove 2/6 (obsolete)
+> 
+> Changes in V2:
+> Split patches 2/4 and 3/4 so that the null‑pointer dereference fix and
+> the runtime‑PM enable/forbid reordering are logically separated.
 
-To improve readability, embed msecs_to_jiffies() directly in the macro
-definitions and drop the _MS suffix from macros that now yield jiffies
-values: MEMDUMP_TIMEOUT, FW_DOWNLOAD_TIMEOUT, IBS_DISABLE_SSR_TIMEOUT,
-CMD_TRANS_TIMEOUT, and IBS_BTSOC_TX_IDLE_TIMEOUT.
-
-IBS_WAKE_RETRANS_TIMEOUT_MS and IBS_HOST_TX_IDLE_TIMEOUT_MS are
-intentionally left unchanged. Their values are stored in the struct fields
-wake_retrans and tx_idle_delay, which hold ms values at runtime and can be
-modified via debugfs. The msecs_to_jiffies() conversion happens at each
-call site against the field value, so it cannot be embedded in the macro.
-
-Wake timer depends on commit c347ca17d62a
-
-Cc: stable@vger.kernel.org
-Fixes: d841502c79e3 ("Bluetooth: hci_qca: Collect controller memory dump during SSR")
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
----
-Changes v6:
-- Move msecs_to_jiffies() into macro definitions instead of wrapping
-  each call site
-- Rename macros by dropping the _MS suffix to reflect that they now yield jiffies values.
-- Change wait_timeout from u32 to unsigned long to properly hold jiffies values.
-- Link to v5:
-  https://lore.kernel.org/all/20260429123802.1310681-1-shuai.zhang@oss.qualcomm.com/
-
-Changes v5:
-- add depends on commit
-- Link to v4
-  https://lore.kernel.org/all/20260327082941.1396521-1-shuai.zhang@oss.qualcomm.com/
-
-Changes v4:
-- add review-by signoff
-- Link to v3
-  https://lore.kernel.org/all/20251107033924.3707495-1-quic_shuaz@quicinc.com/
-
-Changes v3:
-- add Fixes tag
-- Link to v2
-  https://lore.kernel.org/all/20251106140103.1406081-1-quic_shuaz@quicinc.com/
-
-Changes v2:
-- Split timeout conversion into a separate patch.
-- Clarified commit messages and added test case description.
-- Link to v1
-  https://lore.kernel.org/all/20251104112601.2670019-1-quic_shuaz@quicinc.com/
----
- drivers/bluetooth/hci_qca.c | 33 ++++++++++++++++-----------------
- 1 file changed, 16 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index cd1834246..ed280399b 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -48,13 +48,12 @@
- #define HCI_MAX_IBS_SIZE	10
- 
- #define IBS_WAKE_RETRANS_TIMEOUT_MS	100
--#define IBS_BTSOC_TX_IDLE_TIMEOUT_MS	200
-+#define IBS_BTSOC_TX_IDLE_TIMEOUT	msecs_to_jiffies(200)
- #define IBS_HOST_TX_IDLE_TIMEOUT_MS	2000
--#define CMD_TRANS_TIMEOUT_MS		100
--#define MEMDUMP_TIMEOUT_MS		8000
--#define IBS_DISABLE_SSR_TIMEOUT_MS \
--	(MEMDUMP_TIMEOUT_MS + FW_DOWNLOAD_TIMEOUT_MS)
--#define FW_DOWNLOAD_TIMEOUT_MS		3000
-+#define CMD_TRANS_TIMEOUT		msecs_to_jiffies(100)
-+#define MEMDUMP_TIMEOUT			msecs_to_jiffies(8000)
-+#define FW_DOWNLOAD_TIMEOUT		msecs_to_jiffies(3000)
-+#define IBS_DISABLE_SSR_TIMEOUT		(MEMDUMP_TIMEOUT + FW_DOWNLOAD_TIMEOUT)
- 
- /* susclk rate */
- #define SUSCLK_RATE_32KHZ	32768
-@@ -1096,7 +1095,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 
- 			queue_delayed_work(qca->workqueue,
- 					   &qca->ctrl_memdump_timeout,
--					   msecs_to_jiffies(MEMDUMP_TIMEOUT_MS));
-+					   MEMDUMP_TIMEOUT);
- 			skb_pull(skb, sizeof(qca_memdump->ram_dump_size));
- 			qca_memdump->current_seq_no = 0;
- 			qca_memdump->received_dump = 0;
-@@ -1369,7 +1368,7 @@ static int qca_set_baudrate(struct hci_dev *hdev, uint8_t baudrate)
- 
- 	if (hu->serdev)
- 		serdev_device_wait_until_sent(hu->serdev,
--		      msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS));
-+		      CMD_TRANS_TIMEOUT);
- 
- 	/* Give the controller time to process the request */
- 	switch (qca_soc_type(hu)) {
-@@ -1401,8 +1400,8 @@ static inline void host_set_baudrate(struct hci_uart *hu, unsigned int speed)
- 
- static int qca_send_power_pulse(struct hci_uart *hu, bool on)
- {
-+	int timeout = CMD_TRANS_TIMEOUT;
- 	int ret;
--	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
- 	u8 cmd = on ? QCA_WCN3990_POWERON_PULSE : QCA_WCN3990_POWEROFF_PULSE;
- 
- 	/* These power pulses are single byte command which are sent
-@@ -1607,7 +1606,7 @@ static void qca_wait_for_dump_collection(struct hci_dev *hdev)
- 	struct qca_data *qca = hu->priv;
- 
- 	wait_on_bit_timeout(&qca->flags, QCA_MEMDUMP_COLLECTION,
--			    TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT_MS);
-+			    TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT);
- 
- 	clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
- }
-@@ -2591,7 +2590,7 @@ static void qca_serdev_remove(struct serdev_device *serdev)
- static void qca_serdev_shutdown(struct serdev_device *serdev)
- {
- 	int ret;
--	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
-+	int timeout = CMD_TRANS_TIMEOUT;
- 	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
- 	struct hci_uart *hu = &qcadev->serdev_hu;
- 	struct hci_dev *hdev = hu->hdev;
-@@ -2648,7 +2647,7 @@ static int __maybe_unused qca_suspend(struct device *dev)
- 	bool tx_pending = false;
- 	int ret = 0;
- 	u8 cmd;
--	u32 wait_timeout = 0;
-+	unsigned long wait_timeout = 0;
- 
- 	set_bit(QCA_SUSPENDING, &qca->flags);
- 
-@@ -2669,15 +2668,15 @@ static int __maybe_unused qca_suspend(struct device *dev)
- 	if (test_bit(QCA_IBS_DISABLED, &qca->flags) ||
- 	    test_bit(QCA_SSR_TRIGGERED, &qca->flags)) {
- 		wait_timeout = test_bit(QCA_SSR_TRIGGERED, &qca->flags) ?
--					IBS_DISABLE_SSR_TIMEOUT_MS :
--					FW_DOWNLOAD_TIMEOUT_MS;
-+					IBS_DISABLE_SSR_TIMEOUT :
-+					FW_DOWNLOAD_TIMEOUT;
- 
- 		/* QCA_IBS_DISABLED flag is set to true, During FW download
- 		 * and during memory dump collection. It is reset to false,
- 		 * After FW download complete.
- 		 */
- 		wait_on_bit_timeout(&qca->flags, QCA_IBS_DISABLED,
--			    TASK_UNINTERRUPTIBLE, msecs_to_jiffies(wait_timeout));
-+			    TASK_UNINTERRUPTIBLE, wait_timeout);
- 
- 		if (test_bit(QCA_IBS_DISABLED, &qca->flags)) {
- 			bt_dev_err(hu->hdev, "SSR or FW download time out");
-@@ -2729,7 +2728,7 @@ static int __maybe_unused qca_suspend(struct device *dev)
- 
- 	if (tx_pending) {
- 		serdev_device_wait_until_sent(hu->serdev,
--					      msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS));
-+					      CMD_TRANS_TIMEOUT);
- 		serial_clock_vote(HCI_IBS_TX_VOTE_CLOCK_OFF, hu);
- 	}
- 
-@@ -2738,7 +2737,7 @@ static int __maybe_unused qca_suspend(struct device *dev)
- 	 */
- 	ret = wait_event_interruptible_timeout(qca->suspend_wait_q,
- 			qca->rx_ibs_state == HCI_IBS_RX_ASLEEP,
--			msecs_to_jiffies(IBS_BTSOC_TX_IDLE_TIMEOUT_MS));
-+			IBS_BTSOC_TX_IDLE_TIMEOUT);
- 	if (ret == 0) {
- 		ret = -ETIMEDOUT;
- 		goto error;
--- 
-2.34.1
-
+Evicting this set from Patchwork, which does not even apply on linux-phy/next.
+Loic, please follow up with an updated set if you want a different form
+of this to be merged.
 
