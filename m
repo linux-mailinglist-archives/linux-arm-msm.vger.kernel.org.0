@@ -1,114 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-106995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-106996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id nZ7PH0wmAmq+oQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-106995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 20:56:12 +0200
+	id CEzvAnguAmq/ogEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-106996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 21:31:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21BE5514BE3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 20:56:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E9C1515234
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 21:31:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 21F183028016
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 18:56:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B677C3019198
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 May 2026 19:31:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD7E54C9542;
-	Mon, 11 May 2026 18:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DE572F617C;
+	Mon, 11 May 2026 19:31:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gsXWUjby"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QpLt2h8z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F014C9012
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 18:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8792BDC0F;
+	Mon, 11 May 2026 19:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778525760; cv=none; b=eO3tZWBsearE4+kcS2B/y6xVsPF6F59ltx2dM/+N+97q/UlV/PJ3IBKKU8WFfwbrIXAYVWR8R99/tlUFXvUebpu5nPnUnA6OKHP+oxtvH5PD4N7LoPlOM1x+jAAR+QeQ7ZneR4/JydXa8MNEFfj3W2n/tGuxyr61q2k98Rw2rB4=
+	t=1778527860; cv=none; b=LeoRJy2FK/2hIjwWq5+IY71s2AgwedvnWTAa5fbbLUIv+zdgBmP12+xw1g2VeVLXBV05WkQTey5OrAZGIokXJv0rXB5n1yHcmXabFdHKyrMD3LhXe6mDcAkXemTuvkAfuQArXEhUp+8W4MBe67F+sWIAMe8rQLWVujsOwPwHd8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778525760; c=relaxed/simple;
-	bh=zIB79Xk6boPPhMmzQH/JqpB68ofRCBiWIY7ln6Jka+I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ST3jdktf93y/8BrWkWq8XtAEDV1sSHqCvE2sleiw3w185pLUENJjqJrw04CbWtPCE+0oOwGPDSUlVcY5rWdgP01P6Dujuzj39uunfUqWBTeSFxZAvgvqVMynCbFe67HhREJKO6tccBaPrr5+dzKEfzRI1nMe/Ya6qYvTELrTbZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gsXWUjby; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892D2C4AF0B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 18:56:00 +0000 (UTC)
+	s=arc-20240116; t=1778527860; c=relaxed/simple;
+	bh=wbDsHXH35zMX/reUbV3yQziB4Q55GyKhc/O1wSDXsDM=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=f/AlkLrLnNIn7TUzuvPvOgWAtmDBJuDX8j7mHeuhWAds1mvWkO/8n4I/zJvLejJvavuSgjhcMxHBR4Gdc6aE+lhC8QXNNn/6j3usWGubmsPCqAVplxfRjZdJ4mrydaAomh0DgnzJ9NL1MXFKRxEvDcbMdi7vRA15gWp58eAI3JI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QpLt2h8z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD75BC2BCB0;
+	Mon, 11 May 2026 19:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778525760;
-	bh=zIB79Xk6boPPhMmzQH/JqpB68ofRCBiWIY7ln6Jka+I=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=gsXWUjbyow7NEAQM0X0NALFGmQpalpbS9xBt2Q8RvtDLJbAfXJJkychRH7mExvXH3
-	 wLvWHyJefAS26wLfKstTSKg4fpYzXUzP9z8dBvpeunIG7OR8L+kw39IhzmarZrdw/h
-	 btm81FfGDWtRy7mD9/ufgpqgi4b5BojlFQrrwerXbOl2YVC1Ogd4soD3R18nrQrEhG
-	 nDr0emt/gHeMqaLpCF0fBYUdU7KS4/fQWh/w8yFK16D23lmWQHLQ/HbuI5h5SUrqtG
-	 w7slVsBwfjrHsBXY80jeoLoXsCFsndGoqWJdNItHUlKljlND4E3ff8s1IBMBD4kXtw
-	 okmwUrKGPyRTw==
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5a8c94cefcdso1232093e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 May 2026 11:56:00 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ/ftghb7ecUPZoCxL3OIuqt6yHhvHwGULNc5EeuZkMzv3lb4zULwCOIoVjFzAU6hD5noQzGj7l7A+1MxkJ9@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSjfUtazDpTQcWW/QX0nNiRYQGs+/qzMfz717JU2YaGiUPmbp8
-	nrgZVgauURygzoCJ16o1PSYuECNn18HN9L6rioEa7Sr/vgJh1LBrUizHMOilXkRQdXwHI4EZlfT
-	6r/d4jsGoFNiRMmJXGkO7XM4j0SaU+UE=
-X-Received: by 2002:a05:6512:3ba4:b0:5a8:63e0:cd92 with SMTP id
- 2adb3069b0e04-5a8b709be01mr3083162e87.33.1778525758018; Mon, 11 May 2026
- 11:55:58 -0700 (PDT)
+	s=k20201202; t=1778527859;
+	bh=wbDsHXH35zMX/reUbV3yQziB4Q55GyKhc/O1wSDXsDM=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=QpLt2h8zbugvP9IG9Ifwe5KB0+cxisbwVmanFoLqUfGHZGjL0Mo3jlLaqlzCN82mF
+	 oGxoIGH6sAYxX1z+08unarJMPEnuuXWoBV1Quwf9nY3DRrb5lqcPW0hs47IYu2TFdd
+	 pipE6duAY5/jpXNe//EuDDuDFVfmpNkhFKxUXKA6GZU/8yQ9vavGOBYGw8d64zrtoT
+	 MQXULL5hbW2Thj5rJWS+THqfXC9tBdmMD8+tOZzZ87kqDM7qmxTCVNcbYo+upCLW9R
+	 A2hWlI4Th6iS4jh4IdduIun0YTyJDSVdbXjDjG0iQLBcws0JGemgJzzVoVpLikuFT2
+	 5Irs4/9LW1qHA==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 02D3639307A2;
+	Mon, 11 May 2026 19:30:06 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260511165942.2774868-1-robh@kernel.org>
-In-Reply-To: <20260511165942.2774868-1-robh@kernel.org>
-From: Linus Walleij <linusw@kernel.org>
-Date: Mon, 11 May 2026 20:55:46 +0200
-X-Gmail-Original-Message-ID: <CAD++jLkmoN3iY=d5TgkLswgEt4Dgx_j3BAJPX-ASL+VnF_EzHw@mail.gmail.com>
-X-Gm-Features: AVHnY4LWa20oUaE1F0JxYrIcNTXFA3pQESxY2XotgaPrY2W88xHdQsN2xv93t9I
-Message-ID: <CAD++jLkmoN3iY=d5TgkLswgEt4Dgx_j3BAJPX-ASL+VnF_EzHw@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: Consolidate "sram" property definition
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Liu Ying <victor.liu@nxp.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Frank Li <Frank.Li@nxp.com>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Vinod Koul <vkoul@kernel.org>, 
-	Nas Chung <nas.chung@chipsnmedia.com>, Jackson Lee <jackson.lee@chipsnmedia.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Mirela Rabulea <mirela.rabulea@nxp.com>, 
-	Detlev Casanova <detlev.casanova@collabora.com>, 
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, Heiko Stuebner <heiko@sntech.de>, 
-	Hugues Fruchet <hugues.fruchet@foss.st.com>, Alain Volmat <alain.volmat@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	MD Danish Anwar <danishanwar@ti.com>, Roger Quadros <rogerq@kernel.org>, 
-	Parvathi Pudi <parvathi@couthit.com>, Mohan Reddy Putluru <pmohan@couthit.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
-	Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Michal Simek <michal.simek@amd.com>, 
-	Mark Brown <broonie@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Lorenzo Bianconi <lorenzo@kernel.org>, Felix Fietkau <nbd@nbd.name>, "Andrew F. Davis" <afd@ti.com>, 
-	Hussain Khaja <basharath@couthit.com>, Suman Anna <s-anna@ti.com>, 
-	Ben Levinsky <ben.levinsky@amd.com>, Tanmay Shah <tanmay.shah@amd.com>, 
-	Erwan Leray <erwan.leray@foss.st.com>, Fabrice Gasnier <fabrice.gasnier@foss.st.com>, 
-	Roger Quadros <rogerq@ti.com>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, dmaengine@vger.kernel.org, 
-	linux-media@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, linux-amlogic@lists.infradead.org, 
-	linux-spi@vger.kernel.org, linux-mediatek@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 21BE5514BE3
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v6] Bluetooth: hci_qca: Convert timeout from jiffies to ms
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <177852780480.2428736.14134229951295592073.git-patchwork-notify@kernel.org>
+Date: Mon, 11 May 2026 19:30:04 +0000
+References: <20260511135837.3967550-1-shuai.zhang@oss.qualcomm.com>
+In-Reply-To: <20260511135837.3967550-1-shuai.zhang@oss.qualcomm.com>
+To: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+Cc: brgl@kernel.org, marcel@holtmann.org, luiz.dentz@gmail.com,
+ linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+ linux-kernel@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
+ quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com,
+ jinwang.li@oss.qualcomm.com, mengshi.wu@oss.qualcomm.com,
+ stable@vger.kernel.org, pmenzel@molgen.mpg.de, bartosz.golaszewski@linaro.org
+X-Rspamd-Queue-Id: 4E9C1515234
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -119,38 +80,53 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[nxp.com,pengutronix.de,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,poorly.run,linux.dev,somainline.org,chipsnmedia.com,collabora.com,vanguardiasur.com.ar,sntech.de,foss.st.com,lunn.ch,davemloft.net,google.com,redhat.com,ti.com,couthit.com,linaro.org,baylibre.com,googlemail.com,amd.com,nbd.name,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,lists.infradead.org,st-md-mailman.stormreply.com];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-106995-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-106996-lists,linux-arm-msm=lfdr.de,bluetooth];
+	FREEMAIL_CC(0.00)[kernel.org,holtmann.org,gmail.com,vger.kernel.org,oss.qualcomm.com,quicinc.com,molgen.mpg.de,linaro.org];
+	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NO_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[79];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On Mon, May 11, 2026 at 6:59=E2=80=AFPM Rob Herring (Arm) <robh@kernel.org>=
- wrote:
+Hello:
 
-> The "sram" property has become a de facto standard property, so create a
-> common schema for it and drop all the duplicated definitions.
->
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-I like it.
-Reviewed-by: Linus Walleij <linusw@kernel.org>
+On Mon, 11 May 2026 21:58:37 +0800 you wrote:
+> Since the timer uses jiffies as its unit rather than ms, the timeout value
+> must be converted from ms to jiffies when configuring the timer. Otherwise,
+> the intended 8s timeout is incorrectly set to approximately 33s.
+> 
+> To improve readability, embed msecs_to_jiffies() directly in the macro
+> definitions and drop the _MS suffix from macros that now yield jiffies
+> values: MEMDUMP_TIMEOUT, FW_DOWNLOAD_TIMEOUT, IBS_DISABLE_SSR_TIMEOUT,
+> CMD_TRANS_TIMEOUT, and IBS_BTSOC_TX_IDLE_TIMEOUT.
+> 
+> [...]
 
-Yours,
-Linus Walleij
+Here is the summary with links:
+  - [v6] Bluetooth: hci_qca: Convert timeout from jiffies to ms
+    https://git.kernel.org/bluetooth/bluetooth-next/c/c2f0079e8c42
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
 
