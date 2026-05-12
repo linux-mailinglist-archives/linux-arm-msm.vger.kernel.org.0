@@ -1,190 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-107017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ADPUOZR4AmpotQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 02:47:16 +0200
+	id gMDwBWp+AmrCtgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 03:12:10 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69C45517F8C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 02:47:16 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 949245180ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 03:12:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E0FB430205CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 00:47:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3D797301571E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 01:12:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0783E237713;
-	Tue, 12 May 2026 00:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6728246783;
+	Tue, 12 May 2026 01:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tt9OVl51"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tu53em73"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45DA1A9B24;
-	Tue, 12 May 2026 00:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814E821146C;
+	Tue, 12 May 2026 01:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778546820; cv=none; b=XQcDod4XDqe39k4L8dukYxYQYLsxRtVP90A3U7IY2ziEv8NlYV80Sc2bSMOnc4w3a0f3a1NzPaDXtJQlKdlTd7HJ9Cb1f25OJPQDCuUPlAhoNEZ94NuTiYFmshLSuU9kRnVK12r2CEncdNDjbGI87TNNCI2PGizoXQePWLa/fZA=
+	t=1778548326; cv=none; b=rmb+yorGXek+pCR03F9pEFT8W10Lq/T3WwEC8pmJR0qSU/ObJhk9TkUDffa/hLqqbGLUUOfPTlte8IV29iDzBWZrOtfq3/i4beza+yxJcMNJwXXFonVG0uaxaJnSB3XO0HbxhyfHBp1xxsB89csfeQB7PMqetZ4KQrHbX4XbU9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778546820; c=relaxed/simple;
-	bh=nAStgxDrILHcHBeKraq8IhW1NnoPOLY/Yn9N0sOuGOg=;
+	s=arc-20240116; t=1778548326; c=relaxed/simple;
+	bh=gR8Xad+Bnfc+qAKzBc7L8CKzJpi6ksY2SQ9rHR1oW8U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g2SnKnj1C0DN/pRE7Hei0A+v9bHzzpGmOY3/qk2IFciZtE9DNtXvsY3cOUXN7s/5fAE2U1lKvi2PrwK4Ba5QqQ4Nb3sL+esmF8spknOrm+yhVbHJk0O1s+bJkd9hCLDcCnHEBMFhoUmiMvBH3AEhC5DpAtYtvjCARjmToY6VJt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tt9OVl51; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79FC7C2BCB0;
-	Tue, 12 May 2026 00:47:00 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZI2ExdI4Xi+L3klD9OevvhiCqiUOp/wP6VUQjAa+hZjsHedHP4JEI9Z4xzMBeCyky++UFuGG5sQEz7umgxRrLwxMkIzPPqs+Fxn0613xZT86irHlvCbmf6zWrAZ3yipyEyBKd1XnnRSVBheaFpo/2qaCEdzwmMZSXtZlwgGqbzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tu53em73; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56314C2BCB0;
+	Tue, 12 May 2026 01:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778546820;
-	bh=nAStgxDrILHcHBeKraq8IhW1NnoPOLY/Yn9N0sOuGOg=;
+	s=k20201202; t=1778548326;
+	bh=gR8Xad+Bnfc+qAKzBc7L8CKzJpi6ksY2SQ9rHR1oW8U=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tt9OVl510AUmHO0p1IfBYvhOgGKzbIKfpqfHYBsKz13+FMYMBmLpLpVBOmYAcwyQI
-	 Vy+EKK4zr/+vGU07Js65Hyo4aDbG+6QaHrEFOUB1TXFH+naRL1H1Uhw1KD6+aHWT23
-	 /LdGTZO90nGqF6+J9xhNmNUVGqv7ns5XsLMZq8M5Ax399+7RKgCmTtMHJ7AWL8Gt6I
-	 2mqWct4eRPEY0bxDP6ePKqAHat1g6xoJl7HHI8It4lQOgChMCaIzm7+PnR5enBxcj0
-	 ms6krrI/cN7bLEWOKOrdAlrlFSYkd5I84c3JRoZZ4fJYR7TDmR8mYyHrQN2TfkYcXs
-	 rO51hs5zz4rjQ==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id 75C0B1AC58C2; Tue, 12 May 2026 01:46:57 +0100 (BST)
-Date: Tue, 12 May 2026 09:46:57 +0900
-From: Mark Brown <broonie@kernel.org>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Liu Ying <victor.liu@nxp.com>, Philipp Zabel <p.zabel@pengutronix.de>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Frank Li <Frank.Li@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
-	Jackson Lee <jackson.lee@chipsnmedia.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Mirela Rabulea <mirela.rabulea@nxp.com>,
-	Detlev Casanova <detlev.casanova@collabora.com>,
-	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Hugues Fruchet <hugues.fruchet@foss.st.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	MD Danish Anwar <danishanwar@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Parvathi Pudi <parvathi@couthit.com>,
-	Mohan Reddy Putluru <pmohan@couthit.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Lorenzo Bianconi <lorenzo@kernel.org>, Felix Fietkau <nbd@nbd.name>,
-	"Andrew F. Davis" <afd@ti.com>,
-	Hussain Khaja <basharath@couthit.com>, Suman Anna <s-anna@ti.com>,
-	Ben Levinsky <ben.levinsky@amd.com>,
-	Tanmay Shah <tanmay.shah@amd.com>,
-	Erwan Leray <erwan.leray@foss.st.com>,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Roger Quadros <rogerq@ti.com>, dri-devel@lists.freedesktop.org,
-	devicetree@vger.kernel.org, imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	dmaengine@vger.kernel.org, linux-media@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org, linux-amlogic@lists.infradead.org,
-	linux-spi@vger.kernel.org, linux-mediatek@lists.infradead.org
-Subject: Re: [PATCH] dt-bindings: Consolidate "sram" property definition
-Message-ID: <agJ4gfH0HgmbOr5X@sirena.co.uk>
-References: <20260511165942.2774868-1-robh@kernel.org>
+	b=tu53em73kF7B6rmK0gkuqQSR7uB/PXP/A8YfIxIxk9f8HuuXREs3luNo02d23IchQ
+	 NmJaDwZvN0+88NzEm14Xh0OeOXEu4VUvif8QLmiBfoP8Z1KyXATIXei/ZM8wRMeBva
+	 vX7LtEc/3EQ/7/xxspn148tSi/DSV2NLZZ/6B9a8j2BwzN/FMd1W7Byt05HZ8klPxX
+	 TrnrFv9aTG9EfWu+ND8AQy0crAmvfsnVAORAH/C51OOsP14P0fr0rNf7rRd6rmvL6P
+	 M9r6c43l8p+t9lbEkS0ZpUgy5QCEZxZ0ZeQydFkITw1IKEPfD7wSwPn4CcNoC2kyFo
+	 XSlHbij8ozRpg==
+Date: Mon, 11 May 2026 20:12:01 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: Add device tree for Nord SoC series
+Message-ID: <agJ-Qc71PloUM1pI@baldur>
+References: <20260427023455.236410-1-shengchao.guo@oss.qualcomm.com>
+ <20260427023455.236410-2-shengchao.guo@oss.qualcomm.com>
+ <20260428-dangerous-garnet-collie-dacccf@quoll>
+ <e1a84d37-04a1-4c36-b6c3-f8830df9a744@kernel.org>
+ <afCxhUaxLEcbosvV@QCOM-aGQu4IUr3Y>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3xlBjuC8zHYeQx3+"
-Content-Disposition: inline
-In-Reply-To: <20260511165942.2774868-1-robh@kernel.org>
-X-Cookie: Truckers welcome.
-X-Rspamd-Queue-Id: 69C45517F8C
-X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.76 / 15.00];
-	SIGNED_PGP(-2.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	MAILLIST(-0.15)[generic];
-	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[nxp.com,pengutronix.de,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,poorly.run,linux.dev,somainline.org,chipsnmedia.com,collabora.com,vanguardiasur.com.ar,sntech.de,foss.st.com,lunn.ch,davemloft.net,google.com,redhat.com,ti.com,couthit.com,linaro.org,baylibre.com,googlemail.com,amd.com,nbd.name,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,lists.infradead.org,st-md-mailman.stormreply.com];
-	TAGGED_FROM(0.00)[bounces-107017-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[79];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
-	NEURAL_HAM(-0.00)[-1.000];
-	TO_DN_SOME(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,sirena.co.uk:mid]
-X-Rspamd-Action: no action
-
-
---3xlBjuC8zHYeQx3+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <afCxhUaxLEcbosvV@QCOM-aGQu4IUr3Y>
+X-Rspamd-Queue-Id: 949245180ED
+X-Rspamd-Server: lfdr
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
+	HAS_LIST_UNSUB(-0.01)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-107018-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Action: no action
 
-On Mon, May 11, 2026 at 11:59:36AM -0500, Rob Herring (Arm) wrote:
-> The "sram" property has become a de facto standard property, so create a
-> common schema for it and drop all the duplicated definitions.
+On Tue, Apr 28, 2026 at 09:09:25PM +0800, Shawn Guo wrote:
+> On Tue, Apr 28, 2026 at 09:28:47AM +0200, Krzysztof Kozlowski wrote:
+> > On 28/04/2026 09:24, Krzysztof Kozlowski wrote:
+> > > On Mon, Apr 27, 2026 at 10:34:52AM +0800, Shawn Guo wrote:
+> ...
+> > >> diff --git a/arch/arm64/boot/dts/qcom/nord.dtsi b/arch/arm64/boot/dts/qcom/nord.dtsi
+[..]
+> > >> +			compatible = "qcom,oryon-1-5";
+> > > 
+> > > I asked you to send this binding WITH the user, because they go via
+> > > the same tree. I see the user, but no binding for it in the patchset.
+> > 
+> > And few others like SCM are also missing. I am talking about this many
+> > times already, to multiple vendors, and I am still surprised why people
+> > on purpose give more work to the maintainer. Well, not my tree, so not
+> > my work, but if you ever wonder why your patches are not applied for
+> > longer time, that could be one of the reasons.
+> 
+> Yes, I should have sent all those bindings targeting Bjorn as part of
+> this series to make it easier for Bjorn.  But I'm not sure cpus.yaml
+> change is one of them, as I'm sending it to Rob.
+> 
 
-Acked-by: Mark Brown <broonie@kernel.org>
+Not sure if you have settled this by now, but I can merge such binding
+change together with the dts change.
 
---3xlBjuC8zHYeQx3+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmoCeIAACgkQJNaLcl1U
-h9CAeQf/d29Uvfn8GPawCZ+l4UnMHO/18slnjGlircCx5bFlOKWLyqPq14JkP32t
-feVK/h8PnpOWbJCebOgL+As1iNYcMRPjw2C4eq+HfdBppx/1NZ7FK7CmBQjRgccv
-yKyirduSqH7pUKJ3lNom3Q0qkCjzezWH9fFxqic/P9T3aEsx6rjZ+y9zAl3pskdi
-LaMYflOJv7ca2tEWSY+RNNjsmfq2JIsZAwkMRlWtFK4maNWi0dw84s6d5egY76oJ
-6ZI//3nGXP8Xy3i48UmCoJDpNhMA3+1PW9i1ylSGK9F0KOttz/cmIG3cUleEVd9f
-WXPmJksEzyt97BKPha3/6IKICQtmdw==
-=XKlR
------END PGP SIGNATURE-----
-
---3xlBjuC8zHYeQx3+--
+Regards,
+Bjorn
 
