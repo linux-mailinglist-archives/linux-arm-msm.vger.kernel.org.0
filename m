@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-107065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eD6YFZjuAmqUywEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 11:10:48 +0200
+	id SAqJLtvvAmrAywEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 11:16:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C331851D50F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 11:10:47 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEEE851D74C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 11:16:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 421253178E3F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 09:02:37 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 34AA030B3835
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 May 2026 09:03:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34FC13A875B;
-	Tue, 12 May 2026 09:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E92839EF34;
+	Tue, 12 May 2026 09:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nP8SWvbK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tf7LNR3t"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9DD39E17D;
-	Tue, 12 May 2026 09:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD6E3AC0F1;
+	Tue, 12 May 2026 09:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778576421; cv=none; b=BSgSIkD9rvS1KIYEx7clYVuEAFQPIFoaWI7rS3Lz30Gtxy2+xClVAHoSwp6hScOQ1Dc+h8I4P1gdORNa7xckxlznk6FLifxpjYTlH2kzrWxJhkhKI6YxlXyeJasXkyML2M8k3tt6sOTtJiqzE1eX/+FiwV74Yw8OadqOrwg806k=
+	t=1778576508; cv=none; b=roOt0OqEpTuTMjlgo2DRbht9lVDgo3U9FTn0UxKyLggsYnttPaBPYP/+qRl03hkdQ7t/AvztILo2QPAbpA3ve0c5ygh+qJHeCGDFLueroMCJIytVCpxjGqwq9QgGxWQ7A9AWzU4L0NuWR0QikPBPOuuCeUNvaY4UXVYwGDf/E58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778576421; c=relaxed/simple;
-	bh=5bqGgGSebfEX6Sb7r2I/sm4aqEGiHt6EX5Vf7eIA2gc=;
+	s=arc-20240116; t=1778576508; c=relaxed/simple;
+	bh=eAzHhiiPWSg3PWo3TcqS7PW8QVjCvfpJc/kAsWYgKlU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bnTD7x7TEQ1DgRxmiNOwQYYAsOzVPprD3SdXQW7qaSNpZ2sClwJYLGHxLb8hf+l3wQfCA1wQwBRvbxuu/79Qke9KQCUsUGxrxaaQBBZQGaDM0PlnbsisWaKkqisfq574djzD+lde/FCK+2GJ8LUD6z/89FuuPlq2gKPPTCT4Cuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nP8SWvbK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B17C2BCB0;
-	Tue, 12 May 2026 09:00:18 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=o+s79rfmBqkqVhfInJexPoP6OKOjXFhsCHkjjqVAG9QlgZ40pyXcTc0Rbh6okOD/TZdutdA9mGF0wwRsjPNuS6baE/ui31MSTyIbpSSeCSJNsBU3qvBrJ/vV4fzEMuoTAUvpWMon99XfFeG4+IF/jZafkeVxFwwrgnZVEDiiXls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tf7LNR3t; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADC6C2BCB0;
+	Tue, 12 May 2026 09:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778576421;
-	bh=5bqGgGSebfEX6Sb7r2I/sm4aqEGiHt6EX5Vf7eIA2gc=;
+	s=k20201202; t=1778576507;
+	bh=eAzHhiiPWSg3PWo3TcqS7PW8QVjCvfpJc/kAsWYgKlU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nP8SWvbKY5zZP0krkbSvGkUqVYSsen9JoEvqZ2JMCy40rMRxs0cRlGH3vvA9DenOa
-	 ssQEZRZe+VecpzxAImwvVVqMuppc5L5860JnC+gUpt9g/xWz1izMn7WXYjAoBynWGR
-	 RIbDOyZuI9RbmbFzHyW7St9c7vJKcbxiqJoFuNsuHm0bCoortuSYDXYn6ileQBG4HU
-	 iwkfC6xDgGHix3ZhvRCm6mlvN/BmRV3y2Qu2RuU1nhGBO7qAh2uZAY6Vh21BgTdbC8
-	 otzJEGK2X3PGjwwfzJpk4pq9DqhREUpdwHTYlvb39NqSmlXvZJiuHJQ0jOQph2O+3v
-	 sVYe/ARQ5ObYw==
-Message-ID: <8a75ce66-8fa3-4c39-92d7-1b23919922e5@kernel.org>
-Date: Tue, 12 May 2026 10:00:17 +0100
+	b=Tf7LNR3tDghk6trvcBJqQ5HUwytDQT318lLo2qNesuX256XLi0C8AalS2AI/ePJWx
+	 x1YNUiHZiZ2HPZziXRGJHk6DlwvMlGLZ+iIX79dllwmK6eoxAZlGDyjStfwca2Eqf0
+	 JOM3LwDvC5OILjbNKGVishnXYzYgZrZXKtzd/twe08YKJWg1C7yowLGQHS+GkFIkl0
+	 SP9c7hyV2VOYI7AaKZpUM+q0IOaiZr9YYDfgb1q+hN7h8Pbuq2o0VnPSS9VrzMJ4EE
+	 NDozBpsKnhJ5nDGX5vE3EGSxbQMsPjx3XCygmCdI7+N/hZTh2XOYRdGoN94YxtYAO9
+	 0fBMHKafEIu8A==
+Message-ID: <61bd3cff-a163-44fa-897e-202912b70192@kernel.org>
+Date: Tue, 12 May 2026 10:01:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,17 +53,31 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/6] media: qcom: iris: encoder feature enhancements
- batch2
-To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-References: <AeTY6px6rgEkRtdav105VvaVqOXn4ANY-7FkwVUXdoipWmEG0iNRHi3qX4YK3yYKjWgEOIBc4iCohfNbuDxa5w==@protonmail.internalid>
- <20260512-batch2_features-v7-0-4954e3b4df84@oss.qualcomm.com>
+Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: eliza: Add support for MM clock
+ controllers
+To: Taniya Das <taniya.das@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+ Imran Shaik <imran.shaik@oss.qualcomm.com>,
+ Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org
+References: <20260409-eliza_mm_cc_v2-v2-0-bc0c6dd77bc5@oss.qualcomm.com>
+ <20260409-eliza_mm_cc_v2-v2-8-bc0c6dd77bc5@oss.qualcomm.com>
+ <cb5a40e8-e2e3-4ed9-a9c6-0daa9f408710@nxsw.ie>
+ <Z8a4y73p6MgF8gQkVtottkgG2Ok8-Vhm8zzckWEbiU_DUO84x2VlwPt-VBL2g0utw3ZwZK0aUvI4ev-p_YRGoQ==@protonmail.internalid>
+ <328b388c-438e-4f91-9384-0dad903355a5@oss.qualcomm.com>
+ <b280ad04-d4ae-4904-9e99-3d057e3d221b@kernel.org>
+ <IiyxizU467TNqMEwRaTlleMBKNEK2DMzxVCeG80fBWFmSRr7bRf0HHbnJDAA4N_q1QrCXkO_xwSt1XM5u4yNpA==@protonmail.internalid>
+ <f649f4a8-df16-4fed-b1ca-4362680252a4@oss.qualcomm.com>
 From: Bryan O'Donoghue <bod@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=bod@kernel.org; keydata=
@@ -109,56 +123,54 @@ Autocrypt: addr=bod@kernel.org; keydata=
  LKSGEglMpiX07M1AotgvylN5C8fjbouoK+/RAMsXkk8jba6rPfuuXPaDjCyyKn6zSVHETnHW
  3AJbgVY50T8STpnxayBQvWbCvu+6NOEjXCbyaOJig+5l0zlGN9XHjdANXC5HnwmyaGRL9YDq
  Jh2nVXVJDincOdQRdKcJjYLqaOAoWrYWSDi1iZGspHBTDrnOvfMQzzHY
-In-Reply-To: <20260512-batch2_features-v7-0-4954e3b4df84@oss.qualcomm.com>
+In-Reply-To: <f649f4a8-df16-4fed-b1ca-4362680252a4@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: C331851D50F
+X-Rspamd-Queue-Id: BEEE851D74C
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-107065-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-107066-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,baylibre.com,gmail.com,foss.st.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On 12/05/2026 09:55, Wangao Wang wrote:
-> Changes in v7:
-> - Rebase.
-> - Link to v6:https://lore.kernel.org/r/20260401-batch2_iris_encoder_enhancements- 
-> v6-0-7022af3401ff@oss.qualcomm.com
+On 12/05/2026 09:52, Taniya Das wrote:
+> The clock controller drivers only request the minimum operating level
+> for the power domains. Since the cx and mx rails are already at the
+> minimum operating level when APPS is active, explicit voting for these
+> power domains is not required from camcc.
 > 
-> Changes in v6:
-> - Rebase.
-> - Link to v5:https://lore.kernel.org/r/20260206-batch2_iris_encoder_enhancements- 
-> v5-0-fb75ed8fa375@oss.qualcomm.com
+> --
+> Thanks,
+> Taniya Das
 
-Unless you need to update your code as a result of a rebase, there's no 
-need to publish a rebase.
+Great, I'll drop those references.
 
-i.e. a rebase for the sake of it, is unnecessary. If a rebase is 
-necessary then please state "rebase because commit-x affect my code in 
-way y"
+Thank you for the information.
 
 ---
 bod
