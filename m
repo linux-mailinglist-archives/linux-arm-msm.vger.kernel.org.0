@@ -1,75 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-107461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CEg1L+jMBGrMPAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:11:36 +0200
+	id 2AvoGvfMBGrMPAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:11:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2D05539A9E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:11:36 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BB14539AC6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:11:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C895C30449B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 19:10:03 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 334B43046328
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 19:10:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4246B3B19B1;
-	Wed, 13 May 2026 19:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32D4C3B52EB;
+	Wed, 13 May 2026 19:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RDx8LXVd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QcqrNxGI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9E73AEF53;
-	Wed, 13 May 2026 19:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBCF3B47FF;
+	Wed, 13 May 2026 19:09:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778699380; cv=none; b=PqDUPrT1OePB9NOP4lmzlrUQJvgaeD3XEt3JnwoSOYQwBSOL7BEeKnclV0P6bTflag9rV7E18/yOIphstng9AE0VBptzMzSGdab4lyjDbyilXOkbLtpX6+B9jifmgjaWdo2N2h9odDEPkndNkfQxmsxd8G/Ij/fOtxwIrOvFrfI=
+	t=1778699381; cv=none; b=pVkZKBqRwX+iatf06JGqXGJrYqX5f2rH4vjO4aEPUEi9SzU+aRntApb83zt0GUaNo6rRx9YgIv8K2rFUvCDnnL6MK+KUa63BEUIZTJm3ufcMNBRoipY50kEVAJ6dMKlGjTRwyPH+y7J8+KgJ5H8vfOb1IDSSnDU/Ig0q2KoU9F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778699380; c=relaxed/simple;
-	bh=GjXTErhWfgaViTlNzBXlqACYyaRYirJ3JqvibeBV9eU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LsfpLfREHvoZPfFRLSYbtcU3smkhzGIZiGuuX2b9PQ6Zl9o25TID4OxgRpee+Xp6JrEMv9DI9rhKNdQN8pEw78pIdfaRpk8Mo3rKZoVrOyJb6NJk/azz58+V91lM8BER2Z6keSCfEKgcR4djzA+/SON+NnBEoNQy8rChBDf6FY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RDx8LXVd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5ECFC19425;
-	Wed, 13 May 2026 19:09:37 +0000 (UTC)
+	s=arc-20240116; t=1778699381; c=relaxed/simple;
+	bh=B52P1bZ2z5CzZy2FhrIEMSN226fOFh0i/6RmSCve6UY=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nsfBkBHgHOyqCjnAHDBnmB6WQs/TvDTq2VvJlvmnexq0qgKMn55L3R20DjnfHb9jIoGOJC9425v7BuxoisiXERF1hW/uv+ZNOWw9GtRdhYJgu5Gt/p9gi3MiLwH5EDHfWiMhQernhOBg+0m9Fq0i9z5MCqEXIrv5PynjuW272I4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QcqrNxGI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6F6C2BCC6;
+	Wed, 13 May 2026 19:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778699379;
-	bh=GjXTErhWfgaViTlNzBXlqACYyaRYirJ3JqvibeBV9eU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RDx8LXVdyCWSk60gIZ8HyyGN9yWDKYQgTJG8nYiO/eDtE/ijvo+vO4hiucPUE03jx
-	 +h2G1sDuxi0Y3sTkIlR0JB/xbZF7rRX5AIZBbDlh+yC3XYsbwiffBbYeS0j5Fz18vF
-	 J+AXDuf2FzgMDwmpWcqoau0IN6JtXCiKVFTBJ6sLDXsQvAxUKNApz4Ucb+S04vwQqF
-	 WrYSFO0xbAlnyp5u6+HEvl734RYD3XoTMNPD51As/uKRXGoUw5wLvIFTrxlOBfvqfS
-	 hgzNuf9dli5Mi5LvUsY7i5dayjKHfB1/HJyEjBwoN61y001LSnasOc+RFnaGo1IAYh
-	 FpP6zATEVOumw==
+	s=k20201202; t=1778699380;
+	bh=B52P1bZ2z5CzZy2FhrIEMSN226fOFh0i/6RmSCve6UY=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=QcqrNxGIgfgw4gPtwXv1LoFSajy5PCddqYZV+GJYwF8TiH45P50KetJLQQ6zsjr0E
+	 TVuBhKvfNkDAdg3+x6CfNxoSP30QlK4ABQMYLdbScShZQpLb1xhpLp3iEqSqdK0pnf
+	 n8bL/FU9HVL1Jqr70WtTmzl7pWE9K/V/QSHzZPKXOfDr0uidhcvnK6fTnB9NP+s6SZ
+	 UoMItOvwcTeTY0RrGIjdnmeCzh7YMyuxTTTxfT9aOBT9tMimU9axHpCFsZvc6uxsPP
+	 LOhHnIsvnBm5gpyn7PLql4MTROB9LytxL8sCwzNR/bHBzkOe8AzSjU7Z5ABws9AUoM
+	 YHSjZFfIUxohg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Luo Jie <quic_luoj@quicinc.com>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Luo Jie <jie.luo@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	quic_kkumarcs@quicinc.com,
-	quic_linchen@quicinc.com,
-	quic_leiwei@quicinc.com,
-	quic_pavir@quicinc.com,
-	quic_suruchia@quicinc.com,
+	linux-kernel@vger.kernel.org,
 	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v2 0/5] Add CMN PLL clock controller support for IPQ5332
-Date: Wed, 13 May 2026 14:09:20 -0500
-Message-ID: <177869936432.1496622.9030891427127725229.b4-ty@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8750: Fix DSI1 phy reference clock rate
+Date: Wed, 13 May 2026 14:09:21 -0500
+Message-ID: <177869936443.1496622.2068508194790536289.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260106-qcom_ipq5332_cmnpll-v2-0-f9f7e4efbd79@oss.qualcomm.com>
-References: <20260106-qcom_ipq5332_cmnpll-v2-0-f9f7e4efbd79@oss.qualcomm.com>
+In-Reply-To: <20260331165645.233965-2-krzysztof.kozlowski@oss.qualcomm.com>
+References: <20260331165645.233965-2-krzysztof.kozlowski@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,55 +68,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: A2D05539A9E
+X-Rspamd-Queue-Id: 4BB14539AC6
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-107462-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107461-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
 
-On Tue, 06 Jan 2026 21:35:09 -0800, Luo Jie wrote:
-> This patch series adds support for the CMN PLL block on the IPQ5332 SoC.
-> The CMN PLL implementation in IPQ5332 is largely similar to that of
-> IPQ9574, which is already supported by the driver. The primary difference
-> is that the fixed output clocks to PPE from the CMN PLL operate at 200 MHz.
+On Tue, 31 Mar 2026 18:56:46 +0200, Krzysztof Kozlowski wrote:
+> The DSI PHY CXO clock input is the SoC CXO divided by two.  DSI0 already
+> uses correct one, but DSI1 got copy-paste from SM8650.  Wrong clock
+> parent will cause incorrect DSI1 PHY PLL frequencies to be used making
+> the DSI panel non-working, although there is no upstream user of DSI1.
 > 
-> Additionally, IPQ5332 provides a single 50 MHz clock to both UNIPHY (PCS)
-> instances, which in turn supply either 25 MHz or 50 MHz to the connected
-> Ethernet PHY or switch.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/5] clk: qcom: cmnpll: Account for reference clock divider
-      commit: 88c543fff756450bcd04ec4560c4440be36c9e75
-[3/5] clk: qcom: cmnpll: Add IPQ5332 SoC support
-      commit: 1dcbf4195a262d57f4da812248cdbbcdc81bf8d8
+[1/1] arm64: dts: qcom: sm8750: Fix DSI1 phy reference clock rate
+      commit: f4d7c5875a215cd3989b59d13a9c30cec9f0a33b
 
 Best regards,
 -- 
