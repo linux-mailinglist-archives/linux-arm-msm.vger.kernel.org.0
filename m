@@ -1,122 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-107312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UHEpMyh1BGqdJwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 14:57:12 +0200
+	id QJqNLuN3BGqpKAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 15:08:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FB36533705
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 14:57:12 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 261B1533A10
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 15:08:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id E7BD2302EA36
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 12:57:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E531731BB3A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 12:57:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EAEA477986;
-	Wed, 13 May 2026 12:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3253426EA3;
+	Wed, 13 May 2026 12:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sZJQtIfC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uJ5I5+Yk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A12E3F2113;
-	Wed, 13 May 2026 12:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD9D3822A2;
+	Wed, 13 May 2026 12:54:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778676808; cv=none; b=REjV8cVt4W/4QK7Oftvp6ANHiZLwTPff6AyXvahGJqlJUUfp1ChvflwXoHbiFP3Z9jXHiCV7K2KAGMA4eduajdh4/b/8XxMmEFFM7FHMBVftaYSfmCaxb87KENNlNIUZtv2UjOrkNVlWz40QBacOL8od9tmTcWMbR8q3lhCYsFs=
+	t=1778676859; cv=none; b=AwMxg/I84PUB1UTw9GQVwnsY5Omkg47C7AXXhb2VaM6EV5ruvq8yggecyAj7bMUDHL7ttgvBeIjgblejyljuzccv9a0ZcaBwgYbONoOzx1JLkLuaCgr9RhtVpJ3ysYnKa47cKVyQopRhVslPXRlfiyMIx5/yjWLs4Hw6djoP7lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778676808; c=relaxed/simple;
-	bh=o1OfZey8PrTu/5v4iQXkQku7LPC7G/T9iYyY5bzOpLA=;
+	s=arc-20240116; t=1778676859; c=relaxed/simple;
+	bh=OJsyPInWocERSlgb3lGrySA04TNXJ5H6Jbb87o9N/Cc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FQ6m3Vv0tkI2BeWTruQ6p5pWP/vKF7tVuIoXZ5PHy4FUDweqCLsJczD9zF2x7psSRzF/wXmNyo7tDEJkQnNpKEEyhHAl5Vr4FP+Tlu9tYnWdj/8pjJwvk29gAaaMYv+G2QIjgyiboPqjs9bK0yfvuywzekS3/dgUw6rHUJOw6NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sZJQtIfC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C52C2BCB7;
-	Wed, 13 May 2026 12:53:27 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=GNe6RmhoYFiDISr+yXKHvwXQKFbdPoD7/kYD/6g1ddDOqiUdoPakOovMV1xR+WTbIGjeEu1rPBN9c0Vy6lJhikKHFNd50HdpZkdZhtzMQCt9q5KKo77qrhPhD8faCU/x73bySicqjHfJaowqTVcICjQk6GNNBI+LJl2/c0RhtUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uJ5I5+Yk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29595C2BCB7;
+	Wed, 13 May 2026 12:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778676808;
-	bh=o1OfZey8PrTu/5v4iQXkQku7LPC7G/T9iYyY5bzOpLA=;
+	s=k20201202; t=1778676859;
+	bh=OJsyPInWocERSlgb3lGrySA04TNXJ5H6Jbb87o9N/Cc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sZJQtIfCEATfPTgS7RYqjgkcC84NC0ZJugyHFdRqEfmRZakEbRB14LiWoycYRO+91
-	 HXeJd1ASMGMsAwQhuAA/bTL42PwbZ85k9aWn/PoDNRdv3tLma5HmK4ZZf9jRJjqvqz
-	 J6VP/5otjb/g21I2kk6mtg1iDYT6838/XuTK7rfJ4UmGf9zFhLg65fYLajv9BGMy3i
-	 dVV0b5KvLsAd0i0mUN9YDopByL2ZP2Cu5Kn0TcKAyVrj5vTjcL8wVUVLBsy9eMlGRo
-	 G7DJFKWzvX90kW7epticeCUsDfeOqLm5Aug2NRbZql91R/TTV83CBAOupGefdnQ6dc
-	 tJNm9dDH/vlkg==
-Date: Wed, 13 May 2026 07:53:25 -0500
-From: Rob Herring <robh@kernel.org>
-To: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] dt-bindings: interrupt-controller: Document PDC for
- Qualcomm Nord SoC
-Message-ID: <20260513125325.GA594921-robh@kernel.org>
-References: <20260504080703.825328-1-shengchao.guo@oss.qualcomm.com>
+	b=uJ5I5+YkGU5icYwDDOor0lyCEDnpEp9LhRrSFFDCoFEPgE7JNApXC/WnfYN9qDUFp
+	 UyQfvZN2TMo8HJFly1mwz4+SgD3uL9ZZvXx1pwHH+5h1QHMh2NxS6bNMkF+OmKeP8I
+	 rlL0+1JqNzY8+zCXpVRxwrUO2GqQUOswEIfv9huNf+vAky0KtTcv5FS81DzG9g663z
+	 BWwLdOH2h0RotH8thYCc+ge9nUuRA2iBL6IUOaDglUKYHS9cBILFMKo9A770dw7gFt
+	 Kk0GpPngRw677wuxR0CwEZbZPLdxWXf65LpifrmDUendiZRMq44u/DsIMXs4mGdZ/c
+	 Q6IAwNDfQ4JjA==
+Date: Wed, 13 May 2026 18:24:08 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	LKML <linux-kernel@vger.kernel.org>, mayank.rana@oss.qualcomm.com, quic_vbadigan@quicinc.com, 
+	Shawn Lin <shawn.lin@rock-chips.com>
+Subject: Re: [PATCH v5 1/3] PCI/ASPM: Add helper to encode L1SS T_POWER_ON
+ fields
+Message-ID: <krw54q4tkodjfoatbqtccxj6q3v5dg62uv2ipybnp3vjshqkus@kernwmwlqepy>
+References: <20260428-t_power_on_fux-v5-0-f1ef926a91ff@oss.qualcomm.com>
+ <20260428-t_power_on_fux-v5-1-f1ef926a91ff@oss.qualcomm.com>
+ <bc3a5f58-676a-3634-6b8f-bffc91d25265@linux.intel.com>
+ <28c30ddb-f46a-458d-9680-eac1ce8c5b68@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260504080703.825328-1-shengchao.guo@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 6FB36533705
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <28c30ddb-f46a-458d-9680-eac1ce8c5b68@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 261B1533A10
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-107312-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-107313-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
+	FREEMAIL_CC(0.00)[linux.intel.com,kernel.org,google.com,gmail.com,vger.kernel.org,oss.qualcomm.com,quicinc.com,rock-chips.com];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
 X-Rspamd-Action: no action
 
-On Mon, May 04, 2026 at 04:07:03PM +0800, Shawn Guo wrote:
-> Document Power Domain Controller on Qualcomm Nord SoC.
+On Wed, Apr 29, 2026 at 08:34:58AM +0530, Krishna Chaitanya Chundru wrote:
 > 
-> Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-> ---
-> Changes in v3:
->  - Improve commit log to drop "compatible with" part
->  - Link to v2: https://lore.kernel.org/all/20260427010922.230586-1-shengchao.guo@oss.qualcomm.com/
 > 
-> Changes in v2:
->  - Improve commit log to make the compatibility explicit
->  - Link to v1: https://lore.kernel.org/all/20260420024733.1240249-1-shengchao.guo@oss.qualcomm.com/
+> On 4/28/2026 2:57 PM, Ilpo Järvinen wrote:
+> > On Tue, 28 Apr 2026, Krishna Chaitanya Chundru wrote:
+> >
+> >> Add a shared helper to encode the PCIe L1 PM Substates T_POWER_ON
+> >> parameter into the T_POWER_ON Scale and T_POWER_ON Value fields.
+> >>
+> >> This helper can be used by the controller drivers to change the
+> >> default/wrong value of T_POWER_ON in L1ss capability register to
+> >> avoid incorrect calculation of LTR_L1.2_THRESHOLD value.
+> >>
+> >> The helper converts a T_POWER_ON time specified in microseconds into
+> >> the appropriate scale/value encoding defined by the PCIe spec r7.0,
+> >> sec 7.8.3.2. Values that exceed the maximum encodable range are clamped
+> >> to the largest representable encoding.
+> >>
+> >> Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
+> >> Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+> >> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> >> ---
+> >>  drivers/pci/pci.h       |  6 ++++++
+> >>  drivers/pci/pcie/aspm.c | 40 ++++++++++++++++++++++++++++++++++++++++
+> >>  2 files changed, 46 insertions(+)
+> >>
+> >> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+> >> index 4a14f88e543a..c379befe1ebe 100644
+> >> --- a/drivers/pci/pci.h
+> >> +++ b/drivers/pci/pci.h
+> >> @@ -1110,6 +1110,7 @@ void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked);
+> >>  void pcie_aspm_powersave_config_link(struct pci_dev *pdev);
+> >>  void pci_configure_ltr(struct pci_dev *pdev);
+> >>  void pci_bridge_reconfigure_ltr(struct pci_dev *pdev);
+> >> +void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value);
+> >>  #else
+> >>  static inline void pcie_aspm_remove_cap(struct pci_dev *pdev, u32 lnkcap) { }
+> >>  static inline void pcie_aspm_init_link_state(struct pci_dev *pdev) { }
+> >> @@ -1118,6 +1119,11 @@ static inline void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked)
+> >>  static inline void pcie_aspm_powersave_config_link(struct pci_dev *pdev) { }
+> >>  static inline void pci_configure_ltr(struct pci_dev *pdev) { }
+> >>  static inline void pci_bridge_reconfigure_ltr(struct pci_dev *pdev) { }
+> >> +static inline void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value)
+> >> +{
+> >> +	*scale = 0;
+> >> +	*value = 0;
+> >> +}
+> >>  #endif
+> >>  
+> >>  #ifdef CONFIG_PCIE_ECRC
+> >> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> >> index 925373b98dff..457d469b8d49 100644
+> >> --- a/drivers/pci/pcie/aspm.c
+> >> +++ b/drivers/pci/pcie/aspm.c
+> >> @@ -525,6 +525,46 @@ static u32 calc_l12_pwron(struct pci_dev *pdev, u32 scale, u32 val)
+> >>  	return 0;
+> >>  }
+> >>  
+> >> +/**
+> >> + * pcie_encode_t_power_on - Encode T_POWER_ON into scale and value fields
+> >> + * @t_power_on_us: T_POWER_ON time in microseconds
+> >> + * @scale: Encoded T_POWER_ON Scale (0..2)
+> >> + * @value: Encoded T_POWER_ON Value
+> >> + *
+> >> + * T_POWER_ON is encoded as:
+> >> + *   T_POWER_ON(us) = scale_unit(us) * value
+> >> + *
+> >> + * where scale_unit is selected by @scale:
+> >> + *   0: 2us
+> >> + *   1: 10us
+> >> + *   2: 100us
+> >> + *
+> >> + * If @t_power_on_us exceeds the maximum representable value, the result
+> >> + * is clamped to the largest encodable T_POWER_ON.
+> >> + *
+> >> + * See PCIe r7.0, sec 7.8.3.2.
+> >> + */
+> >> +void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value)
+> > Hi,
+> >
+> > I don't know how the type for t_power_on_us was picked but if it was 
+> > arbitrary decision, I suggest you just go with 32-bit input.
+> The maximum value of the T power ON is 3100us, so we are using u16 here.
 > 
->  .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml       | 1 +
->  1 file changed, 1 insertion(+)
 
-Applied, thanks.
+FWIW, I made sure dt-binding restricts the max value to 3100us:
+https://github.com/devicetree-org/dt-schema/commit/3579443c5d2f5a8bbedd1ad8e6cc634ce0aa02e3
 
-Rob
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
