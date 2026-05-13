@@ -1,71 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-107495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GPEJEM72BGrUQwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 00:10:22 +0200
+	id mMCECVz5BGqNRAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 00:21:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDDB453B479
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 00:10:21 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD12D53B626
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 00:21:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AD35F307EDAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 22:07:35 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3A6F13047759
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 22:20:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 525CE3CA499;
-	Wed, 13 May 2026 22:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1E8B38F658;
+	Wed, 13 May 2026 22:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hnqLuwCb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="foHy/YLN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD6C2030A;
-	Wed, 13 May 2026 22:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3858638F64E;
+	Wed, 13 May 2026 22:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778710054; cv=none; b=BWgFb9PG/Y3EbkV6guqyp6u0/NoAGiSO3zBvWeUz9QDYQNp2rxge8K92IMfDSdSJE/yeVHUMeSbAA8uoqX6sPgT4is4L2B2I8RadpX4uidQpAWIsY6IgwmSdl/dAxnNXkCO2I5wYm0VZ+zlv4sUrxIsjfq2VsAEDFWBa35UbL0c=
+	t=1778710839; cv=none; b=AQiCllTgKZFZhITimblWnRj/xJbPDmW59J/+HAtU/iSKQEsZBFctxwYAy/eO3ad7+Zn2yhiPpuEe4Znh4BGElzGN/yKyf1+z//NwcJalNtonhubAvfhZnPD47piW4GG7Df5UcXULYn1qiUrYyYfPMR3p7VWE58R11pZvdwFqV+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778710054; c=relaxed/simple;
-	bh=qxYEL17WgtGKdezKMo72o3uhWcYyAT3bdLLlvUkXHmY=;
+	s=arc-20240116; t=1778710839; c=relaxed/simple;
+	bh=pofwpBvhx7QxWA5OOoSTblEq/FMPXaqokvwjXkTXxa8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pal69GnUkqELTsYpG6lCqw1pBDcWdY23Lyv3VPLcKv7R2VPBnpWvkNZDW5gotrRk0Fil3LVG1aqNHRRQ+k3rTLMGU0F7lnr6VVyv2dOlOU5g6SJUxa7TLiD90pd8AN6/P6HWkBXibqnxKelDgKQ/wznlnJg1UXEW25NOu579fqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hnqLuwCb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C77C19425;
-	Wed, 13 May 2026 22:07:33 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=NJR4HCdz593GvOmAxV6xYZYRIKhhQB2ApIaJo5D0kiZgq4t+ipXZtS+MWILUG+NYw7Fq6LLYuVGwmRhJKRrF4TztUV8+bcGkVvG+g8vgEh8y6tl2Y8CmQ206EehBotZreXMYoQZzQQQd/X+r+17kLuszXwtFYJwIWAwMxIZfA80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=foHy/YLN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC06DC19425;
+	Wed, 13 May 2026 22:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778710054;
-	bh=qxYEL17WgtGKdezKMo72o3uhWcYyAT3bdLLlvUkXHmY=;
+	s=k20201202; t=1778710837;
+	bh=pofwpBvhx7QxWA5OOoSTblEq/FMPXaqokvwjXkTXxa8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hnqLuwCbGKxQLNU7jMPdPF9c7bFzOdKFx53JOS7rBBsfQXS/xugnzc9M6LIBe6g4c
-	 6rb8EXbmUKyaQQLeFGj8EpkAgAi3MBOBfOG8hSec+gJW3IigvfGHAgJpcL8aIkDuJX
-	 +0zH3bUDLLQS8mbCEL2J+6PmBkdap4IU5iSjsuhnqEkPjEhe5fkAmlzEoIodw1VcIv
-	 6CiP53gNFoXZugyrYLampFhKBMnekiicpxs7eFHUM66xHllhUoMAELpja1dK4UxSU3
-	 0gbeQZgOS/FncFaNJ3weg0Xdc4mb2cq3tOKxCCle8/PUl/gA/ZgfBekNl0dqAN7ELL
-	 ak1hi4dTD4azQ==
-Date: Wed, 13 May 2026 17:07:31 -0500
-From: Rob Herring <robh@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Bryan O'Donoghue <bod@kernel.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+	b=foHy/YLNXuxuYGq4hlmw1bZoyt15rDuQoiHIH42tfmBIhaTKv3caUvdVeRdAuk4tg
+	 nI83Y5tcJktDPph1a2r0qlgNJREU7eOx0X7nyMgQm1CXSniRqYuq1pGbR3Uap0Hnp/
+	 kP1qK39wEjYV0SGLqNs2tEtzq+ZlX1dP/W9Mr4i1Ful5YusrO24JrbDBlbFnC+kAqN
+	 58X8fsr/bZjenmK7jQ2+/B5KIPvHnjSBx2jLEJ0fO/II9WBhbHerbEgsca8711EEGQ
+	 lLDfZ0zq8Yacq1nlRAtB7LFHpZkzHDTe6xC53Y21xBqGO8WBK2G4o48u8EpbETVqD2
+	 uT2115LDjxWoQ==
+Date: Wed, 13 May 2026 17:20:34 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: William Bright <william.bright@imd-tec.com>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/4] media: dt-bindings: qcom,qcm2290-venus: add Venus on
- SM6115
-Message-ID: <20260513220731.GA1733125-robh@kernel.org>
-References: <20260507-iris-sm6115-v1-0-0b082ad8eea8@oss.qualcomm.com>
- <20260507-iris-sm6115-v1-2-0b082ad8eea8@oss.qualcomm.com>
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>
+Subject: Re: [PATCH v3 1/4] dt-bindings: vendor-prefixes: Add IMDT
+Message-ID: <177871083365.2029064.7527788282135458599.robh@kernel.org>
+References: <20260507-imdt-qcs8550-sbc-rfc-v3-0-47d3d3372b33@imd-tec.com>
+ <20260507-imdt-qcs8550-sbc-rfc-v3-1-47d3d3372b33@imd-tec.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,70 +65,48 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260507-iris-sm6115-v1-2-0b082ad8eea8@oss.qualcomm.com>
-X-Rspamd-Queue-Id: DDDB453B479
+In-Reply-To: <20260507-imdt-qcs8550-sbc-rfc-v3-1-47d3d3372b33@imd-tec.com>
+X-Rspamd-Queue-Id: CD12D53B626
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.16 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107495-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-107496-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,imd-tec.com:email]
 X-Rspamd-Action: no action
 
-On Thu, May 07, 2026 at 10:08:10AM +0300, Dmitry Baryshkov wrote:
-> The Qualcomm SM6115 platform contains the AR50_Lite core similar to the
-> one found on the QCM2290. Define new platform-specific compatible, while
-> using QCM2290 as a fallback.
+
+On Thu, 07 May 2026 09:36:40 +0100, William Bright wrote:
+> Add IMDT (IMD Technologies Ltd) to the vendor prefixes list.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: William Bright <william.bright@imd-tec.com>
 > ---
->  Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+>  Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-> index 7e6dc410c2d2..5c5933082f82 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
-> @@ -18,7 +18,11 @@ allOf:
->  
->  properties:
->    compatible:
-> -    const: qcom,qcm2290-venus
-> +    oneOf:
-> +      - items:
-> +        - const: qcom,sm6115-venus
-> +        - const: qcom,qcm2290-venus
-> +      - const: qcom,sm6115-venus
 
-I think you meant qcm2290 here.
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
->  
->    power-domains:
->      maxItems: 3
-> 
-> -- 
-> 2.47.3
-> 
 
