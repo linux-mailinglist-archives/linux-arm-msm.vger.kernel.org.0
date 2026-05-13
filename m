@@ -1,574 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-107471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uGS3IerRBGr0PQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107471-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:32:58 +0200
+	id EJIDB5TOBGr0PQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:18:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF8A2539FDA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:32:57 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0A96539C78
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:18:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B96DD31F8237
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 19:12:06 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8349F3039704
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 19:12:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7227D3AA1BD;
-	Wed, 13 May 2026 19:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 090043B2FEA;
+	Wed, 13 May 2026 19:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EXvZRzOd";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SY78sHOX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tSEh8ebP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61303B47FF
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2026 19:10:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206793B1009;
+	Wed, 13 May 2026 19:12:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778699441; cv=none; b=pDVaZ9Q3cMLx5Q+Sq+3u+Rj+xbpIUu0v1W4X7LAt+twLYGNfLA0HkIVSfHWMLFDInt/UAhnX7gtDLcl0vku1EinpwNw+5UYMOf8cwEn8ufcsIDpBa8Adg08dK5GHxVv3m5sFo47v6yywytLLiRc/8+t38VGyXs7hkDeulJEIl6A=
+	t=1778699571; cv=none; b=Ik00sltpuJN/T+5P+yjHvQvnLagvsJLQwPbrRQ8TNznLUC7Vitd09ygCfoRQLUK5+y2i8lrJh1+yjdN2/Th8uqaKbfCBuzMMK6Y+OJmfc46IynVA0N6wkgSvex1P7RONzuf0LVqw5lkBbmF4u8i4s8BaiyOgtBnTXeG20BMWgCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778699441; c=relaxed/simple;
-	bh=V2CDtU2sApYLQL60WrBZhaKK/T+UY76Ll5JaE52GJ/8=;
+	s=arc-20240116; t=1778699571; c=relaxed/simple;
+	bh=ByO3UDk1bD7UWyiAS+/7bd2l/UItToX1RFnexJVVuBY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bTWbWER1aa3LWXXVoOTbYiUBiwYzqLrQNz6A0My3xWivMG/U5KcuUQF9xSNg0myAVaA0QSsDVZh4g6xHKiqNTDt+8Oc4laYEx9fE7wPdp84m9EgrrIXQJY/OE/7ZzmK2NzgUFeaCa/y5eoWSzGxiulDXQfyVzEZK2OLrenR2M8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EXvZRzOd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SY78sHOX; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64DJ45Ut2965484
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2026 19:10:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=ij7RA1HzN2SRpHABYetDfbRP
-	MtfVR0mnxi1AJWG5/18=; b=EXvZRzOdK4sZa7UTTq4mGuOgX7aEfog2+0ysKWvq
-	0Mfc8dCGNGLRZx8Y9qPGwPhdV5YTBtOp+SLqmDT4TTZ49Wuw5Cl/bTxfZDLRJUym
-	jy1ChXHxOZgt/0sZ3PMHfrpcUZlGH00wEZU7TYpiQtI/eI0uuOhJssD2lxP9ZRWk
-	/xHLcO5bmU5spq9/XIU8q5WOno/GyGjWD595WxEcdF4C1DMzfW2JaecfAdrK500G
-	itTcYqevG7dWOFBkJqptHsPDe4EiTqQ5+oGOJm/IFqrJRhojSD7MQiLgqKAiLkUy
-	gPuAui66cYvu3EQOPXD2M0Fbmc8pSiuJCOVZgfKxEe+I2g==
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com [209.85.217.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e4ma5b18b-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2026 19:10:35 +0000 (GMT)
-Received: by mail-vs1-f72.google.com with SMTP id ada2fe7eead31-6322654bb6eso5820577137.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2026 12:10:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1778699434; x=1779304234; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ij7RA1HzN2SRpHABYetDfbRPMtfVR0mnxi1AJWG5/18=;
-        b=SY78sHOXL1ZARS+kwaK3kDEzoBFA54Mq1t28omtVOEgS9iETyhRwVPMbeXdhiSicHH
-         jFLyAmlpBEq7BLp2S6iGtGds2DVr4ul0abRcN/48UgKVXgJ41Fh4rpSvIAcQ42zlmvad
-         TnR8osNWlXPbOeUstyg91p/hw6uZHZg7gzIJ9Oflec3DiJhqpTt/EgMrrwco2kVhQUFF
-         7bT0RvCnWjJeVG/8lLjT/koXmARSb/2s567A6CK0cI6pB95KtgoNC3U6yA/UuOuXDoi8
-         g4i0jJv0FYPKK9ckm4Ndb5PkTatbxRRL+deagv4pJecqGBHX/1e4KddxCUi8APHKpMwd
-         PvHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778699434; x=1779304234;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ij7RA1HzN2SRpHABYetDfbRPMtfVR0mnxi1AJWG5/18=;
-        b=Tfz+nlVegUEl45mT0RFjhIi8qE5C6lhC4mepNXDqwOPN9v20tAjskJDlBRTv3ZYx9g
-         lnkAtPi6SuVNql2bMmEjP+YWHyVqsNfLWsV1zR/OzQaLW/X/nHZV8CuTkpUmb9gswdQA
-         olSU7sMn/fv0caSK+iKlFBE4gVhVVHGW0hz1YTIbKyM1ulvMPrtz162qRhga545ySc8I
-         yAJIgFrgiBDPG+Mp7gwxM391pKe+45j/nOEWMVXS1fuRnEkcD7ltGS2J7i4tQoyjMEEA
-         XLLEW8Q1Cj2ll6S17ib2sc+/5Z6Yk/EIyLD/pgNgxH5eytO95ROPsN9uoPLHCLmmLc5S
-         qxSA==
-X-Forwarded-Encrypted: i=1; AFNElJ9nh7BUEflInluo8OT4qo3jsw2pINSaCKOF8qpZvyH2kNF48/pR9nkEjgKNCH1cLfSRozWoY9eued1+L15d@vger.kernel.org
-X-Gm-Message-State: AOJu0YymOGoFT9TfVEcDgBRD4JxAZmfxF2DQT3IDhsrFv42v48c4H0eG
-	0jMZ21He4HWbU65HELs2AFzIVNbVRO/SEJVY+p7egl8aELgUpXNqX80658eLOzl3HwLDF9zVO3E
-	uVIAjoLh9T+suv2V9t6+lmP4w6KPXAFz8xm4tO8EOVtD1V4zW8fhi4WU8GbbfKHmbeB1L
-X-Gm-Gg: Acq92OElbM4x9GAoF8LTc+oh8pGf/9gnaxDv2ddal1lWlFGsX46bsfnHjDmkLz4fcwW
-	3p7NUAGtpirRYU1JH2jTEEFt8GDISJGOm7YjQk9iuIjHubZTmD8Bw16SiuUeQTYIMHX41T/PDqj
-	f0HnMDZTzMEhGBVwMIimt/1A0QR5u2mM54m+W9VtrOLIu3A9KmaADJp3edbVv96sXc52fabWiGG
-	k8MA0pEoup7fJg3SjxVzwPiAuRfzRyXrIcgDCSB4ixOwinyntEY6P7PuJu3bI20B8peHdo+ARQ+
-	Ec9twzpTJG7dfNPp+LDVMRSHs5ChwdR+VObIGan74vdZYC64Mo/LD4AJ226SgL/47EVQERGDvbk
-	2raGW9dS7nN+FpwgQ3t7HOeBOWthCVjjJJJ08rw6VCBAySMpKZDHR8UtZ6lG3N72FupZMsgbUNr
-	2djUnTqqNzS2v60nkeu9r/C3V29pKAD2YCNdEogOVj+PLFTg==
-X-Received: by 2002:a05:6102:14a8:b0:634:8685:d335 with SMTP id ada2fe7eead31-637aa01fd9dmr2325402137.14.1778699433787;
-        Wed, 13 May 2026 12:10:33 -0700 (PDT)
-X-Received: by 2002:a05:6102:14a8:b0:634:8685:d335 with SMTP id ada2fe7eead31-637aa01fd9dmr2325377137.14.1778699433128;
-        Wed, 13 May 2026 12:10:33 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a8a955e163sm4351293e87.44.2026.05.13.12.10.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 May 2026 12:10:31 -0700 (PDT)
-Date: Wed, 13 May 2026 22:10:30 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Hans Verkuil <hverkuil@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
-        Del Regno <angelogioacchino.delregno@collabora.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux.dev, Krzysztof Kozlowski <krzk@kernel.org>,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v5 11/14] media: iris: Add support to select core for
- dual core platforms
-Message-ID: <urpdhb6svgprfvo3drmpr5pusy4vjqf3hom3vtvf6kket3fqcw@lrad6xcrbzex>
-References: <20260509-glymur-v5-0-7fbb340c5dbd@oss.qualcomm.com>
- <20260509-glymur-v5-11-7fbb340c5dbd@oss.qualcomm.com>
- <qodaq4xoi6whna4phhrfbdfanfm43y7vmg4qxjuke5m3qgxozn@h2ot2a7w36xh>
- <a9658e1e-70ed-0c30-28d9-28966242a4eb@oss.qualcomm.com>
- <uujvaqpr72vmdl7w6kjh4xggci4pnhfwukatdj2x63hewfhawa@muzebwimx4oi>
- <fa2eb472-92f9-9bf0-be62-93a88785b405@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=GaH0z1YG5oLL48P5XasSfDIPkKrHq/e4luNUMuq6ogu0KmiEOp48PZbCf/w0kqLN2euyBtyfwrR/2daGWnJLEHTkKXgCqqm4fmQsqLqJXLLkKp9vLtKqT1IYQfoyAu6MyrWh17ZfDiTN9D/eeZCXf887PjsuUMhxBAzhy2tjvvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tSEh8ebP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B321C19425;
+	Wed, 13 May 2026 19:12:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778699570;
+	bh=ByO3UDk1bD7UWyiAS+/7bd2l/UItToX1RFnexJVVuBY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tSEh8ebPPoDvLCOivTGQDD8UQC5ue9skRt3JrfoTA0akFw3dOfbuxpHQCw7HA5Fqt
+	 lB4PhZNnZosJJVyIi32Oy47qxcdy6fjvmotJP6MPAGewetYNPlKleLjLOckHLNRBcj
+	 jB0gmJv0Aj/mvztLiYYFhsLICOmOyJWoOORpYDwaF1VHEDpZRBx9/QUpgU3YKle8Jd
+	 w8e9viTEtG4MmNMGzOOE6TM2Jhg2RuWfnhTV9HnnUQrMNcBBwav16nsRAz16SQA1fZ
+	 xC68DodgS3DpMu/oP9s9VSm5R4fThueU5fl5P4PLFX48E4gk7sSzuQUgqSIWeWlMKy
+	 5T4qGMwQexIXg==
+Date: Wed, 13 May 2026 14:12:46 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Akash Kumar <akash.kumar@oss.qualcomm.com>
+Cc: Elson Serrao <elson.serrao@oss.qualcomm.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-usb@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: lemans: Enable eud support
+Message-ID: <agTMzwEX1Nw-dZht@baldur>
+References: <20260512091422.1395490-1-akash.kumar@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <fa2eb472-92f9-9bf0-be62-93a88785b405@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTEzMDE4OSBTYWx0ZWRfX7QFqvkVJUtGZ
- DK2UXzIC6HjBoNnBuPt1JovUXt/zRGE6OFom8dYYS3spwGHBM2ZLEIZ51YmDkM+SafuN2z9FRsK
- RUPXUeMucxFzDLEG3Ie6N9GQi2HdS+ACY1qcd4X2xPPr12A5OPo9oJ1SgviErTj0JnGbIWfCZjH
- Mx8W100s7PH6naVzmMb8jRXFqR9dUXmhWrkPK5KwdzWD1/Wi3T307Q7SpmZifWfuadabh9ifAHJ
- CL/NHEImuW1UCjMIVs6oaGHGSk4fP+sBWcEqoKg8ibNzGaWQH2sDaJWnX69DXLKZ8ptMgq9fhhd
- F9ZPoHlFKVOXcUI3758TRi4Lbl4xsgOz1ak9QlG52mZC6tYFd3638URI4nPc57xtpRsvSWbHbZH
- H/06BFs0OteD7gABOHo4ilDY4SW37h4hDJUPDzecW0rMc3V7eS8UCW0RYHfTfnT5pWxXQYv2397
- BunE+KP6K8ixVSgdplg==
-X-Proofpoint-ORIG-GUID: jySM8rJBG8VmC8Kc73ZvH9j4HIP6sm_A
-X-Authority-Analysis: v=2.4 cv=TJZ1jVla c=1 sm=1 tr=0 ts=6a04ccab cx=c_pps
- a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
- a=PtqXx7cjCSzpcFS0k_QA:9 a=CjuIK1q_8ugA:10 a=-aSRE8QhW-JAV6biHavz:22
-X-Proofpoint-GUID: jySM8rJBG8VmC8Kc73ZvH9j4HIP6sm_A
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-13_02,2026-05-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
- impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605130189
-X-Rspamd-Queue-Id: CF8A2539FDA
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260512091422.1395490-1-akash.kumar@oss.qualcomm.com>
+X-Rspamd-Queue-Id: A0A96539C78
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-107471-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[25];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-107472-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:url,0.0.0.0:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,0.0.0.1:email,88e1000:email]
 X-Rspamd-Action: no action
 
-On Thu, May 14, 2026 at 12:25:58AM +0530, Vishnu Reddy wrote:
+On Tue, May 12, 2026 at 02:39:26PM +0530, Akash Kumar wrote:
+> Add the EUD controller node in lemans.dtsi and update the USB HS
+> endpoint routing on lemans-evk to pass through EUD instead of linking
+> the connector directly to usb_0_dwc3_hs.
 > 
-> On 5/13/2026 7:21 PM, Dmitry Baryshkov wrote:
-> > On Mon, May 11, 2026 at 09:42:43PM +0530, Vishnu Reddy wrote:
-> >> On 5/9/2026 2:30 AM, Dmitry Baryshkov wrote:
-> >>> On Sat, May 09, 2026 at 12:30:00AM +0530, Vishnu Reddy wrote:
-> >>>> On platforms with dual vcodec cores, select the hardware core for a
-> >>>> session based on current load. Assign the session to vcodec0 if its
-> >>>> MBPF/MBPS capacity allows it, otherwise assign to vcodec1. Communicate
-> >>>> the selected core to firmware using the new HFI_PROP_CORE_ID property.
-> >>>>
-> >>>> Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-> >>>> ---
-> >>>>  drivers/media/platform/qcom/iris/iris_common.c     | 10 +++
-> >>>>  drivers/media/platform/qcom/iris/iris_common.h     |  1 +
-> >>>>  drivers/media/platform/qcom/iris/iris_core.h       |  5 ++
-> >>>>  drivers/media/platform/qcom/iris/iris_hfi_common.h |  1 +
-> >>>>  .../platform/qcom/iris/iris_hfi_gen2_command.c     | 19 ++++++
-> >>>>  .../platform/qcom/iris/iris_hfi_gen2_defines.h     |  1 +
-> >>>>  drivers/media/platform/qcom/iris/iris_instance.h   |  2 +
-> >>>>  .../platform/qcom/iris/iris_platform_common.h      |  1 +
-> >>>>  drivers/media/platform/qcom/iris/iris_power.c      | 11 ++--
-> >>>>  drivers/media/platform/qcom/iris/iris_utils.c      | 75 ++++++++++++++++------
-> >>>>  drivers/media/platform/qcom/iris/iris_vb2.c        |  4 ++
-> >>>>  drivers/media/platform/qcom/iris/iris_vidc.c       |  6 +-
-> >>>>  12 files changed, 113 insertions(+), 23 deletions(-)
-> >>>>
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_common.c b/drivers/media/platform/qcom/iris/iris_common.c
-> >>>> index 7f1c7fe144f7..3b3fc482e194 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_common.c
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_common.c
-> >>>> @@ -46,6 +46,16 @@ void iris_set_ts_metadata(struct iris_inst *inst, struct vb2_v4l2_buffer *vbuf)
-> >>>>  	inst->metadata_idx++;
-> >>>>  }
-> >>>>  
-> >>>> +int iris_set_core_id(struct iris_inst *inst)
-> >>>> +{
-> >>>> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-> >>>> +
-> >>>> +	if (!inst->core->iris_platform_data->dual_core)
-> >>>> +		return 0;
-> >>>> +
-> >>>> +	return hfi_ops->session_set_core_id(inst, inst->core_id);
-> >>>> +}
-> >>>> +
-> >>>>  int iris_process_streamon_input(struct iris_inst *inst)
-> >>>>  {
-> >>>>  	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_common.h b/drivers/media/platform/qcom/iris/iris_common.h
-> >>>> index b2a27b781c9a..34e32c60f768 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_common.h
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_common.h
-> >>>> @@ -11,6 +11,7 @@ struct iris_buffer;
-> >>>>  
-> >>>>  int iris_vb2_buffer_to_driver(struct vb2_buffer *vb2, struct iris_buffer *buf);
-> >>>>  void iris_set_ts_metadata(struct iris_inst *inst, struct vb2_v4l2_buffer *vbuf);
-> >>>> +int iris_set_core_id(struct iris_inst *inst);
-> >>>>  int iris_process_streamon_input(struct iris_inst *inst);
-> >>>>  int iris_process_streamon_output(struct iris_inst *inst);
-> >>>>  int iris_session_streamoff(struct iris_inst *inst, u32 plane);
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
-> >>>> index b396c8cf595e..54a8649841e4 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_core.h
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_core.h
-> >>>> @@ -30,6 +30,11 @@ enum domain_type {
-> >>>>  	DECODER	= BIT(1),
-> >>>>  };
-> >>>>  
-> >>>> +enum iris_vcodec_core_id {
-> >>>> +	IRIS_VCODEC0 = 1,
-> >>>> +	IRIS_VCODEC1,
-> >>>> +};
-> >>>> +
-> >>>>  /**
-> >>>>   * struct iris_core - holds core parameters valid for all instances
-> >>>>   *
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_common.h b/drivers/media/platform/qcom/iris/iris_hfi_common.h
-> >>>> index 3edb5ae582b4..fbaf852a6b99 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_hfi_common.h
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_common.h
-> >>>> @@ -124,6 +124,7 @@ struct iris_hfi_command_ops {
-> >>>>  	int (*session_drain)(struct iris_inst *inst, u32 plane);
-> >>>>  	int (*session_resume_drain)(struct iris_inst *inst, u32 plane);
-> >>>>  	int (*session_close)(struct iris_inst *inst);
-> >>>> +	int (*session_set_core_id)(struct iris_inst *inst, u32 core_id);
-> >>>>  };
-> >>>>  
-> >>>>  struct iris_hfi_response_ops {
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> >>>> index 30bfd90d423b..9d9fae587297 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-> >>>> @@ -1300,6 +1300,24 @@ static int iris_hfi_gen2_session_release_buffer(struct iris_inst *inst, struct i
-> >>>>  					inst_hfi_gen2->packet->size);
-> >>>>  }
-> >>>>  
-> >>>> +static int iris_hfi_gen2_set_core_id(struct iris_inst *inst, u32 core_id)
-> >>>> +{
-> >>>> +	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
-> >>>> +	u32 payload = core_id;
-> >>>> +
-> >>>> +	iris_hfi_gen2_packet_session_command(inst,
-> >>>> +					     HFI_PROP_CORE_ID,
-> >>>> +					     HFI_HOST_FLAGS_NONE,
-> >>>> +					     HFI_PORT_NONE,
-> >>>> +					     inst->session_id,
-> >>>> +					     HFI_PAYLOAD_U32,
-> >>>> +					     &payload,
-> >>>> +					     sizeof(u32));
-> >>>> +
-> >>>> +	return iris_hfi_queue_cmd_write(inst->core, inst_hfi_gen2->packet,
-> >>>> +					inst_hfi_gen2->packet->size);
-> >>>> +}
-> >>>> +
-> >>>>  static const struct iris_hfi_command_ops iris_hfi_gen2_command_ops = {
-> >>>>  	.sys_init = iris_hfi_gen2_sys_init,
-> >>>>  	.sys_image_version = iris_hfi_gen2_sys_image_version,
-> >>>> @@ -1317,6 +1335,7 @@ static const struct iris_hfi_command_ops iris_hfi_gen2_command_ops = {
-> >>>>  	.session_drain = iris_hfi_gen2_session_drain,
-> >>>>  	.session_resume_drain = iris_hfi_gen2_session_resume_drain,
-> >>>>  	.session_close = iris_hfi_gen2_session_close,
-> >>>> +	.session_set_core_id = iris_hfi_gen2_set_core_id,
-> >>>>  };
-> >>>>  
-> >>>>  void iris_hfi_gen2_command_ops_init(struct iris_core *core)
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-> >>>> index cecf771c55dd..600e9dc07669 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-> >>>> @@ -56,6 +56,7 @@
-> >>>>  #define HFI_PROP_BUFFER_HOST_MAX_COUNT		0x03000123
-> >>>>  #define HFI_PROP_BUFFER_FW_MIN_OUTPUT_COUNT	0x03000124
-> >>>>  #define HFI_PROP_PIC_ORDER_CNT_TYPE		0x03000128
-> >>>> +#define HFI_PROP_CORE_ID			0x030001a9
-> >>>>  
-> >>>>  enum hfi_rate_control {
-> >>>>  	HFI_RC_VBR_CFR		= 0x00000000,
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
-> >>>> index 16965150f427..dd341ca5be57 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_instance.h
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
-> >>>> @@ -37,6 +37,7 @@ struct iris_fmt {
-> >>>>   *
-> >>>>   * @list: used for attach an instance to the core
-> >>>>   * @core: pointer to core structure
-> >>>> + * @core_id: specifies the hardware core on which the session runs
-> >>>>   * @session_id: id of current video session
-> >>>>   * @ctx_q_lock: lock to serialize queues related ioctls
-> >>>>   * @lock: lock to seralise forward and reverse threads
-> >>>> @@ -79,6 +80,7 @@ struct iris_fmt {
-> >>>>  struct iris_inst {
-> >>>>  	struct list_head		list;
-> >>>>  	struct iris_core		*core;
-> >>>> +	u32				core_id;
-> >>>>  	u32				session_id;
-> >>>>  	struct mutex			ctx_q_lock;/* lock to serialize queues related ioctls */
-> >>>>  	struct mutex			lock; /* lock to serialize forward and reverse threads */
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> >>>> index 8995136ad29e..502d7099085c 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> >>>> @@ -258,6 +258,7 @@ struct iris_platform_data {
-> >>>>  	const struct tz_cp_config *tz_cp_config_data;
-> >>>>  	u32 tz_cp_config_data_size;
-> >>>>  	u32 core_arch;
-> >>>> +	bool dual_core;
-> >>>>  	u32 hw_response_timeout;
-> >>>>  	struct ubwc_config_data *ubwc_config;
-> >>>>  	u32 num_vpp_pipe;
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_power.c b/drivers/media/platform/qcom/iris/iris_power.c
-> >>>> index 91aa21d4070e..b72ce5b596b8 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_power.c
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_power.c
-> >>>> @@ -77,9 +77,9 @@ static int iris_vote_interconnects(struct iris_inst *inst)
-> >>>>  
-> >>>>  static int iris_set_clocks(struct iris_inst *inst)
-> >>>>  {
-> >>>> +	u64 vcodec0_freq = 0, vcodec1_freq = 0;
-> >>>>  	struct iris_core *core = inst->core;
-> >>>>  	struct iris_inst *instance;
-> >>>> -	u64 freq = 0;
-> >>>>  	int ret;
-> >>>>  
-> >>>>  	mutex_lock(&core->lock);
-> >>>> @@ -87,11 +87,14 @@ static int iris_set_clocks(struct iris_inst *inst)
-> >>>>  		if (!instance->max_input_data_size)
-> >>>>  			continue;
-> >>>>  
-> >>>> -		freq += instance->power.min_freq;
-> >>>> +		if (instance->core_id == IRIS_VCODEC0)
-> >>>> +			vcodec0_freq += instance->power.min_freq;
-> >>>> +		else
-> >>>> +			vcodec1_freq += instance->power.min_freq;
-> >>>>  	}
-> >>>>  
-> >>>> -	core->power.clk_freq = freq;
-> >>>> -	ret = iris_opp_set_rate(core->dev, freq);
-> >>>> +	core->power.clk_freq = max(vcodec0_freq, vcodec1_freq);
-> >>>> +	ret = iris_opp_set_rate(core->dev, core->power.clk_freq);
-> >>>>  	mutex_unlock(&core->lock);
-> >>>>  
-> >>>>  	return ret;
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_utils.c b/drivers/media/platform/qcom/iris/iris_utils.c
-> >>>> index cfc5b576ec56..da8a89d3dd41 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_utils.c
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_utils.c
-> >>>> @@ -90,40 +90,79 @@ struct iris_inst *iris_get_instance(struct iris_core *core, u32 session_id)
-> >>>>  	return NULL;
-> >>>>  }
-> >>>>  
-> >>>> -int iris_check_core_mbpf(struct iris_inst *inst)
-> >>>> +static u32 iris_get_mbps(struct iris_inst *inst)
-> >>>>  {
-> >>>> -	struct iris_core *core = inst->core;
-> >>>> +	u32 fps = max(inst->frame_rate, inst->operating_rate);
-> >>>> +
-> >>>> +	return iris_get_mbpf(inst) * fps;
-> >>>> +}
-> >>>> +
-> >>>> +static int iris_check_and_assign_core(struct iris_inst *inst, bool mbpf)
-> >>>> +{
-> >>>> +	const struct iris_platform_data *platform_data = inst->core->iris_platform_data;
-> >>>> +	u32 max_load = mbpf ? platform_data->max_core_mbpf : platform_data->max_core_mbps;
-> >>>> +	u32 max_session_cnt = platform_data->max_session_count;
-> >>>> +	u32 core0_session_cnt = 0, core1_session_cnt = 0;
-> >>>> +	bool dual_core = platform_data->dual_core;
-> >>> num_cores
-> >> A num_cores field would require updating all platform data entries. For two
-> > I was thinking about adding num_cores to platform_data and to iris_inst
-> > (or iris_core) and setting it to 1 if the value is unset in
-> > platform_data.
-> >
-> > A better option would be to move all these multi-core functions to a
-> > separate file.
+> Wire the OF graph endpoints between the connector, EUD and DWC3 HS
+> controller to enable the EUD path on lemans EVK.
 > 
-> Thanks for your point, Adding num_cores to platform_data makes sense if the
-> number of cores grows beyond two. For now, since we only handle single and
-> dual core, the current logic feels simpler and sufficient to cover both cases.
-> Happy to adopt the num_cores approach in the future if we have any platform
-> with more than dual core.
-
-Again, an alternative approach is to get all the platform specifics into
-the corresponding iris_vpuXX.c file.
-
+> This change is part of series "Improve Qualcomm EUD driver and
+> platform support" and has been validated on the Qualcomm Dragonwing platform
+> (RB8 board), confirming successful OpenOCD connectivity to the EUD
+> interface. For detailed usage instructions, refer to Qualcomm’s Linux
+> kernel debugging guide:
+> https://docs.qualcomm.com/bundle/publicresource/topics/80-70020-12/debugging_linux_kernel.html#debug-using-openocd
 > 
-> >> cores, a simple boolean flag feels sufficient here.
-> >>
-> >>>> +	u32 core0_load = 0, core1_load = 0;
-> >>>> +	bool select_core0, select_core1;
-> >>>>  	struct iris_inst *instance;
-> >>>> -	u32 total_mbpf = 0;
-> >>>> +	u32 load, new_load;
-> >>>>  
-> >>>> -	mutex_lock(&core->lock);
-> >>>> -	list_for_each_entry(instance, &core->instances, list)
-> >>>> -		total_mbpf += iris_get_mbpf(instance);
-> >>>> -	mutex_unlock(&core->lock);
-> >>>> +	inst->core_id = 0;
-> >>>>  
-> >>>> -	if (total_mbpf > core->iris_platform_data->max_core_mbpf)
-> >>>> +	list_for_each_entry(instance, &inst->core->instances, list) {
-> >>>> +		load = mbpf ? iris_get_mbpf(instance) : iris_get_mbps(instance);
-> >>>> +
-> >>>> +		if (instance->core_id == IRIS_VCODEC0) {
-> >>>> +			core0_load += load;
-> >>>> +			core0_session_cnt++;
-> >>>> +		} else if (instance->core_id == IRIS_VCODEC1) {
-> >>>> +			core1_load += load;
-> >>>> +			core1_session_cnt++;
-> >>> Arrays, please.
-> >> Since we only have two cores, explicit variables feel cleaner and easier to
-> >> read than arrays.
-> >>
-> >>>> +		}
-> >>>> +	}
-> >>>> +
-> >>>> +	new_load = mbpf ? iris_get_mbpf(inst) : iris_get_mbps(inst);
-> >>>> +
-> >>>> +	select_core0 = core0_load + new_load <= max_load && core0_session_cnt < max_session_cnt;
-> >>>> +	select_core1 = dual_core && core1_load + new_load <= max_load &&
-> >>>> +		     core1_session_cnt < max_session_cnt;
-> >>>> +
-> >>>> +	if (select_core0 && select_core1)
-> >>>> +		inst->core_id = (core0_load <= core1_load) ? IRIS_VCODEC0 : IRIS_VCODEC1;
-> >>>> +	else if (select_core0)
-> >>>> +		inst->core_id = IRIS_VCODEC0;
-> >>>> +	else if (select_core1)
-> >>>> +		inst->core_id = IRIS_VCODEC1;
-> >>>> +	else
-> >>>>  		return -ENOMEM;
-> >>>>  
-> >>>>  	return 0;
-> >>>>  }
-> >>>>  
-> >>>> -int iris_check_core_mbps(struct iris_inst *inst)
-> >>>> +int iris_check_core_mbpf(struct iris_inst *inst)
-> >>>>  {
-> >>>>  	struct iris_core *core = inst->core;
-> >>>> -	struct iris_inst *instance;
-> >>>> -	u32 total_mbps = 0, fps = 0;
-> >>>> +	int ret;
-> >>>>  
-> >>>>  	mutex_lock(&core->lock);
-> >>>> -	list_for_each_entry(instance, &core->instances, list) {
-> >>>> -		fps = max(instance->frame_rate, instance->operating_rate);
-> >>>> -		total_mbps += iris_get_mbpf(instance) * fps;
-> >>>> -	}
-> >>>> +	ret = iris_check_and_assign_core(inst, true);
-> >>>>  	mutex_unlock(&core->lock);
-> >>>>  
-> >>>> -	if (total_mbps > core->iris_platform_data->max_core_mbps)
-> >>>> -		return -ENOMEM;
-> >>>> +	return ret;
-> >>>> +}
-> >>>>  
-> >>>> -	return 0;
-> >>>> +int iris_check_core_mbps(struct iris_inst *inst)
-> >>>> +{
-> >>>> +	struct iris_core *core = inst->core;
-> >>>> +	int ret;
-> >>>> +
-> >>>> +	mutex_lock(&core->lock);
-> >>>> +	ret = iris_check_and_assign_core(inst, false);
-> >>>> +	mutex_unlock(&core->lock);
-> >>>> +
-> >>>> +	return ret;
-> >>>>  }
-> >>>>  
-> >>>>  bool is_rotation_90_or_270(struct iris_inst *inst)
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c b/drivers/media/platform/qcom/iris/iris_vb2.c
-> >>>> index bf0b8400996e..5a05f7d65501 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_vb2.c
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_vb2.c
-> >>>> @@ -176,6 +176,10 @@ int iris_vb2_start_streaming(struct vb2_queue *q, unsigned int count)
-> >>>>  	if (ret)
-> >>>>  		goto error;
-> >>>>  
-> >>>> +	ret = iris_set_core_id(inst);
-> >>>> +	if (ret)
-> >>>> +		goto error;
-> >>>> +
-> >>>>  	if (V4L2_TYPE_IS_OUTPUT(q->type)) {
-> >>>>  		if (inst->domain == DECODER)
-> >>>>  			ret = iris_vdec_streamon_input(inst);
-> >>>> diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
-> >>>> index 5eb1786b0737..a1ce3cd524a3 100644
-> >>>> --- a/drivers/media/platform/qcom/iris/iris_vidc.c
-> >>>> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
-> >>>> @@ -41,16 +41,20 @@ static void iris_v4l2_fh_deinit(struct iris_inst *inst, struct file *filp)
-> >>>>  
-> >>>>  static void iris_add_session(struct iris_inst *inst)
-> >>>>  {
-> >>>> +	u32 max_session_count = inst->core->iris_platform_data->max_session_count;
-> >>>>  	struct iris_core *core = inst->core;
-> >>>>  	struct iris_inst *iter;
-> >>>>  	u32 count = 0;
-> >>>>  
-> >>>> +	if (inst->core->iris_platform_data->dual_core)
-> >>>> +		max_session_count *= 2;
-> >>> max_session_count *= num_cores.
-> >>>
-> >>>> +
-> >>>>  	mutex_lock(&core->lock);
-> >>>>  
-> >>>>  	list_for_each_entry(iter, &core->instances, list)
-> >>>>  		count++;
-> >>>>  
-> >>>> -	if (count < core->iris_platform_data->max_session_count)
-> >>>> +	if (count < max_session_count)
-> >>>>  		list_add_tail(&inst->list, &core->instances);
-> >>>>  
-> >>>>  	mutex_unlock(&core->lock);
-> >>>>
-> >>>> -- 
-> >>>> 2.34.1
-> >>>>
+> Signed-off-by: Akash Kumar <akakum@qti.qualcomm.com>
 
--- 
-With best wishes
-Dmitry
+Is this based on the work by Elson at
+https://lore.kernel.org/all/20260501170635.2641748-1-elson.serrao@oss.qualcomm.com/#t
+?
+
+Help Elson to conclude (get merged) his efforts by code reviewing and
+adopting the improved bindings before reposting this.
+
+Regards,
+Bjorn
+
+> ---
+>  arch/arm64/boot/dts/qcom/lemans-evk.dts | 12 ++++++++++--
+>  arch/arm64/boot/dts/qcom/lemans.dtsi    | 26 +++++++++++++++++++++++++
+>  2 files changed, 36 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> index c665db6a4595..96d316867c0e 100644
+> --- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> +++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> @@ -55,7 +55,7 @@ port@0 {
+>  				reg = <0>;
+>  
+>  				usb0_con_hs_ep: endpoint {
+> -					remote-endpoint = <&usb_0_dwc3_hs>;
+> +					remote-endpoint = <&eud_con>;
+>  				};
+>  			};
+>  
+> @@ -510,6 +510,14 @@ queue3 {
+>  	};
+>  };
+>  
+> +&eud_ep {
+> +	remote-endpoint = <&usb_0_dwc3_hs>;
+> +};
+> +
+> +&eud_con {
+> +	remote-endpoint = <&usb0_con_hs_ep>;
+> +};
+> +
+>  &gpi_dma0 {
+>  	status = "okay";
+>  };
+> @@ -985,7 +993,7 @@ &usb_0 {
+>  };
+>  
+>  &usb_0_dwc3_hs {
+> -	remote-endpoint = <&usb0_con_hs_ep>;
+> +	remote-endpoint = <&eud_ep>;
+>  };
+>  
+>  &usb_0_dwc3_ss {
+> diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
+> index fe6e76351823..a8ab11681476 100644
+> --- a/arch/arm64/boot/dts/qcom/lemans.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
+> @@ -4003,6 +4003,32 @@ opp-384000000 {
+>  			};
+>  		};
+>  
+> +		eud: eud@88e1000 {
+> +			compatible = "qcom,sc7280-eud", "qcom,eud";
+> +			reg = <0 0x88e1000 0 0x2000>,
+> +				<0 0x88e3000 0 0x1000>;
+> +			interrupts-extended = <&pdc 11 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +			port@0 {
+> +					reg = <0>;
+> +
+> +					eud_ep: endpoint {
+> +					};
+> +			};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +
+> +					eud_con: endpoint {
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+>  		usb_0_hsphy: phy@88e4000 {
+>  			compatible = "qcom,sa8775p-usb-hs-phy",
+>  				     "qcom,usb-snps-hs-5nm-phy";
+> -- 
+> 2.43.0
+> 
+> base-commit: https://lore.kernel.org/all/20260501170635.2641748-1-elson.serrao@oss.qualcomm.com/
+> change-id: Improve Qualcomm EUD driver and platform support
 
