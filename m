@@ -1,66 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-107464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UJ5bHyvNBGrMPAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:12:43 +0200
+	id kE6xM7bOBGr0PQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:19:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 348F5539AF9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:12:42 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36A1B539CD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 21:19:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id ECBA7301B6ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 19:10:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AEB4231B01F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 19:10:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C89163B83FE;
-	Wed, 13 May 2026 19:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 120FB3B777C;
+	Wed, 13 May 2026 19:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EFg901xG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cQyfqJi+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57FE3B83E3;
-	Wed, 13 May 2026 19:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEB63B27E9;
+	Wed, 13 May 2026 19:09:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778699383; cv=none; b=qh9lj2LDJavIx/KijxcZZJU2me4h7eBAK99aN/uS9z5vZchmFABrPA540lWclWMMj4n7+xzNZMG38Rx566fxazHXanuYeEht4zfj0qmzOsCsPldL5OOH14MI+rckCXwBB01grPzrJc7NeAVzwjIIL3hhAZx0lgYtRkxsLA0SxmM=
+	t=1778699385; cv=none; b=NGyUkkZI9iM8VtVGP+fisKieZbYbjAnMkkunCK+q1TEVWwI+fXNhORP5LYsGv0x/FGJLzbNVbnQDqwSchnEJJuB2w3Bj/4loE6uB0NuKsya2L/qMd5RZJ22x6UgodnwXBOlt/nTgsiWG/Uf1ETWWTlF+c/fRGHJbRhlcMItULbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778699383; c=relaxed/simple;
-	bh=3DRuXLO/vyTluuUCVKw2ymdDOt5XQVOglfZYZ92JnBY=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sFrNnf7FvG5y4jbbUwElmTkcJSzp9pIcr1R6kWihz+GR/2w9RwZgk1bSfZEAqT63tyqm2GCojubCRQhqcHyIOHzgwdL3Wg+AVeu/946kgeZqCEpovhYqA34x7veoZaPKKTnT8uSPcwVlusKGpdVVJdD27bkVuHd5Ei/bWlZeaCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EFg901xG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDA6C2BCB7;
-	Wed, 13 May 2026 19:09:42 +0000 (UTC)
+	s=arc-20240116; t=1778699385; c=relaxed/simple;
+	bh=ZrxSSOGRwTmT5lYy+RYdzMYoYwrG122Z6wsIuaPplk4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=JWZfF4XGAuyzJYKiaCATSYqGF7BZqFDNyEHVwWRy2rs7r6kEJ9ko4xmTEWKi+/KBa5n5SVNBHdlR5/tHVQv3g48Jy4cdjsiFaeyszLpcLG1H1jxfBR603NNb3/awwoMrEvkozLsH+9ycELsXzzyHD1v7vFlopDOdpKj9dEH46ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cQyfqJi+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A367EC2BCC6;
+	Wed, 13 May 2026 19:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778699383;
-	bh=3DRuXLO/vyTluuUCVKw2ymdDOt5XQVOglfZYZ92JnBY=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=EFg901xG0VaYftg7nXx2corijT7wrLLdQjVFMBwfhqTzup8tgWRKfyI+Ck1CrQIkh
-	 VYHub00FBpFUapPM4oMVGdyxoOUp90Bvj55wEBn2KMspbQJAtkq+l4o9YyzlrkarWa
-	 z+1FdT9skGvnGm859LZi7f8jXqrckBjs/Z0HydrvZ14hp5z3eea2wCnyflS+XaPZA9
-	 hll7FNYADUJ02/dx/L6To9CeOREN9X1N+77iY3OSCN2HKM0bSVbvnW64NyHDKxDTTd
-	 lyA8z7UKL4Xk+CeegslPOF58FhHmxQjhF5tp6dB6HT2knNs4oXo+4bultgkZTPLEQs
-	 ragDuSjSqcmOA==
+	s=k20201202; t=1778699385;
+	bh=ZrxSSOGRwTmT5lYy+RYdzMYoYwrG122Z6wsIuaPplk4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cQyfqJi+Y8I6p4u+Wi2u8asITSWWgtP/YVeAUjh4L6dAshDsOzOlC1dvczbFLQV/0
+	 BXNmS9b9Ep42mp/ML7azHJWg85osuYjkbo7TA2HRriDAKgjhir9X2k5QQapgAkNs3z
+	 mZ1McfvPt15s7Rqx98eJYyRaSenBo2xq3CB4q2O6N+vz1zhTHocF4bec4Hm0tLNHND
+	 QPgd/a0++4e6kQdbsFufACQ8VFfyaSrx8X1dzIvCdvKHSUS6oFSllCQEWi59ua6FS+
+	 sXZW1vDkav6uPw451Om17fuHm6LqOiJwiuDc5Y/XQQE3GxthWMa+5mjU2zpe5hJOL7
+	 vWdIRudyri4Zw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Linus Walleij <linusw@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
+	Lee Jones <lee@kernel.org>,
+	Pavel Machek <pavel@kernel.org>,
+	Sean Young <sean@mess.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Martin Botka <martin.botka@somainline.org>,
+	Biswapriyo Nath <nathbappai@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	Richard Acayan <mailingradian@gmail.com>
-Subject: Re: (subset) [PATCH v5 0/4] SDM670 LPASS LPI pin controller support
-Date: Wed, 13 May 2026 14:09:23 -0500
-Message-ID: <177869936446.1496622.13590516840997637362.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-leds@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	kernel test robot <lkp@intel.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v3 0/7] Add vibrator, IR transmitter and USB-C handling in xiaomi-ginkgo
+Date: Wed, 13 May 2026 14:09:24 -0500
+Message-ID: <177869936442.1496622.16143301143443320986.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260331200658.1306-1-mailingradian@gmail.com>
-References: <20260331200658.1306-1-mailingradian@gmail.com>
+In-Reply-To: <20260330-ginkgo-add-usb-ir-vib-v3-0-c4b778b0d7f8@gmail.com>
+References: <20260330-ginkgo-add-usb-ir-vib-v3-0-c4b778b0d7f8@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,55 +81,54 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 348F5539AF9
+X-Rspamd-Queue-Id: 36A1B539CD2
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-107464-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[kernel.org,vger.kernel.org,gmail.com];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-107465-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[kernel.org,mess.org,baylibre.com,somainline.org,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
 
-On Tue, 31 Mar 2026 16:06:54 -0400, Richard Acayan wrote:
-> This adds support for the LPASS LPI pin controller on SDM670, which
-> controls some audio pins (e.g. TDM or PDM busses). The ADSP patches are
-> not sent yet.
+On Mon, 30 Mar 2026 10:13:47 +0000, Biswapriyo Nath wrote:
+> This patch series add support for various components in Xiaomi Redmi
+> Note 8.
 > 
-> Dependencies:
-> - SDM670 Basic SoC thermal zones (devicetree nodes are touching)
->   https://lore.kernel.org/r/20260310002037.1863-1-mailingradian@gmail.com
-> - Support for the Pixel 3a XL with the Tianma panel (for reserved GPIOs)
->   https://lore.kernel.org/r/20260310002606.16413-1-mailingradian@gmail.com
+> Most notably:
+> - IR transmitter
+> - USB-C OTG
+> - Vibrator
 > 
 > [...]
 
 Applied, thanks!
 
-[4/4] arm64: dts: qcom: sdm670: add lpi pinctrl
-      commit: c4b423835ee7529854ab39b50cf766bc4c6b4d66
+[2/7] dt-bindings: clock: qcom,sm6125-dispcc: reference qcom,gcc.yaml
+      commit: dbabf6a32ffb69a604f966ec01a20a060836939d
 
 Best regards,
 -- 
