@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-107637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2PdPJoTYBWoncQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:13:24 +0200
+	id ePLCCUDYBWqacAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:12:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3677D542DF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:13:24 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3AD3542D70
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:12:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 03698304FC4E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 14:10:16 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 68425304038C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 14:09:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A33A7410D19;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66AEB40FD81;
 	Thu, 14 May 2026 14:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H1pI++AU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eagQIRcw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B58E40B6C5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7643F7A9E;
 	Thu, 14 May 2026 14:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778767765; cv=none; b=NTwiiIcBEonay9z4UuoKXpkXwGT2/9/TqEnyJcj47XUWbGpmXa//7LVXjMMbEGPFWhA/Hw56Yc76ODgdbgDF7eNL+EXc/3TBsQ/O5vh6/glRRx50SQf5qhGKRbK3pA9hXJRaOgC+sSrANBYouszWFGzf/tsWogU4STQdSVy2Roc=
+	t=1778767765; cv=none; b=m39cbygWmwMORcKFDU3lk6TX/89Leq8SEdSajmFA+iQAhk75WmdGqPc8woAsZGNUDt8p2Ern9Z2IeNyg19MBfabiWk57ItVeDLRd+/Xwd4yKVJ1Cbx5B2F6H5W3iBRoUdWFkmihOUJQNl2mkodB555LY7JFIZNcXwMtoDzji9vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1778767765; c=relaxed/simple;
-	bh=vrnATAN3+lVD+dHrZWu1YRbolbPciScbSaHrT34pu7M=;
+	bh=imDz6p80dCh3VtmVa0YE/zlu1TE/BKPaeKtmZOiuRqY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UcQ7eNql2eKMHXgr3iYEW5N/QGW6igFw8OF9mgObrv+n654nAL0YIctFzx1KMtB9hnID/zf6HdrEMZZLyUFMFNwWTXSZbeBjzci2qcIo7ZMMctoE9lqjjRv7YmH8bRDLwbj6YzudAJTsVedFDtwFTjXSClisrfSUIUux6gM6rS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H1pI++AU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D8386C2BCF6;
-	Thu, 14 May 2026 14:09:24 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=Q1SZoSnB+Zk4PqyALV0vDOiutRZGCWb0u8kLUiUvMjDo9v/UNOtXqsOGC5+ZoO9YZnRMg+izobuB/wcxcocNK7iYi22lre5e1N78Iw27U8fYX1Hm2O3eJhVloPC1ZeNYuWAAg0MMBZmhHNIYEk678B1NXJFAbOrUXvl33sAKOpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eagQIRcw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 35454C2BCB3;
+	Thu, 14 May 2026 14:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778767764;
-	bh=vrnATAN3+lVD+dHrZWu1YRbolbPciScbSaHrT34pu7M=;
+	s=k20201202; t=1778767765;
+	bh=imDz6p80dCh3VtmVa0YE/zlu1TE/BKPaeKtmZOiuRqY=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=H1pI++AU3N2GP1NQtUqUpfUWCoy4aCU5pQTmmT+uroE3boab8/Ke98ir8nH8cpL1W
-	 h4777oOR1K1p4rAcjwuXKW3I6o6j9DMI994kEWVChHwD+tmtbRF+wfXrkR1PxKYdVB
-	 SCGWiynlFN1X7eC2+A3jo9+KWZk61zgjHIIeEBAul8eMZZ7hsQsbQOkY8Vt+nLqOy1
-	 XJ0pWnLKqwzsq9M/yo7I/KsGvcUUV0NwWicbhJVSlrrFjEazTKUfIa2DI2nIQ4hvLp
-	 U0ZkjXWfd/IZ2MiNH2QLAvUh/304VipO3o1ySaWVeVp+WjV8SWdX/zwO1ZG+gnb8sl
-	 Zb+X5D8OiMSyg==
+	b=eagQIRcwYEteNpSBprz4SmhcyQB+xkxXJVT/YkK9IQQPpgn+0tvUSshTvT9qhO7MW
+	 gwezQgFDXBeTa2YJJ1NPfxYDZPqkIkKtnUWXgXVT7egMsKGgmDPpHKp/nItQW2ELja
+	 tPX4Sx35b/rOFkZs1MwLPl1P+LwrEVejm3xtuW3AJU5D3QLfCfZ5opHmMF4NNw0JBN
+	 esyIlbOdRpFSmsFlKE6vKc19rCgig/uIRzAAZ4VNPmgJhZfJ6gqZlFtDY1bfdyano9
+	 ADqpWe0BYHcatdDSc7mXzGmzuzMSzj0NYRKkH4oPgGeodYP84srlAvmLD0B0lG6SPk
+	 44qy3+pfDqrYg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C642DCD4F3D;
-	Thu, 14 May 2026 14:09:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B36ACD4F3C;
+	Thu, 14 May 2026 14:09:25 +0000 (UTC)
 From: Antony Kurniawan Soemardi via B4 Relay <devnull+linux.smankusors.com@kernel.org>
-Date: Thu, 14 May 2026 21:08:32 +0700
-Subject: [PATCH v2 03/10] mfd: qcom_rpm: add msm8960 QDSS clock resource
+Date: Thu, 14 May 2026 21:08:33 +0700
+Subject: [PATCH v2 04/10] clk: qcom: clk-rpm: add msm8960 compatible
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +58,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260514-msm8960-wifi-v2-3-7cbae45dab5e@smankusors.com>
+Message-Id: <20260514-msm8960-wifi-v2-4-7cbae45dab5e@smankusors.com>
 References: <20260514-msm8960-wifi-v2-0-7cbae45dab5e@smankusors.com>
 In-Reply-To: <20260514-msm8960-wifi-v2-0-7cbae45dab5e@smankusors.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -73,30 +73,30 @@ Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org,
  Rudraksha Gupta <guptarud@gmail.com>, 
  Antony Kurniawan Soemardi <linux@smankusors.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778767762; l=915;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1778767762; l=1065;
  i=linux@smankusors.com; s=20250609; h=from:subject:message-id;
- bh=AgmB2laCl0GbrLmySaaFvH5zEfoQVILWo5cDVyOQJOw=;
- b=dW9TPkeVXwEXImUIL0KUpY4QC7ZkGE/qqNjWjSlWtluazaBbai+c6RZaLhStzTOsh0iV2OPdZ
- Aq1XtDNLytRASQepKRL893Ll8wJgnnqHzUTCPamQYugTlXMk1m/PST2
+ bh=lm6L9ISuVUk452Tk3hf1nHmfNzhGhKGjXfsugz6Twlw=;
+ b=fvx+9E2AlaLa0kl8dq0B4GZz3kS6zQ05PrFlNJ6EWYrFjgLy/EtuV5ortCNccyvO2GVFFyoTp
+ 8BWRQYqbYdbDdGGE2gy00Uy4Dd/4cOFVw33y04R95dHN7PwnK+nDBP9
 X-Developer-Key: i=linux@smankusors.com; a=ed25519;
  pk=65wTy06fJl2/h/EJwjr704YG+yjHFhZObJBWzzK+N00=
 X-Endpoint-Received: by B4 Relay for linux@smankusors.com/20250609 with
  auth_id=733
 X-Original-From: Antony Kurniawan Soemardi <linux@smankusors.com>
 Reply-To: linux@smankusors.com
-X-Rspamd-Queue-Id: 3677D542DF5
+X-Rspamd-Queue-Id: E3AD3542D70
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107637-lists,linux-arm-msm=lfdr.de,linux.smankusors.com];
+	TAGGED_FROM(0.00)[bounces-107638-lists,linux-arm-msm=lfdr.de,linux.smankusors.com];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[16];
@@ -110,37 +110,39 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	HAS_REPLYTO(0.00)[linux@smankusors.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[smankusors.com:email,smankusors.com:mid,smankusors.com:replyto,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,smankusors.com:email,smankusors.com:mid,smankusors.com:replyto]
 X-Rspamd-Action: no action
 
 From: Antony Kurniawan Soemardi <linux@smankusors.com>
 
-The msm8960 RPM resource table is missing the QDSS clock entry (resource
-ID 209) that is present in the android-msm-mako-3.4 downstream kernel.
-Add it so that RPM clock initialization succeeds.
+Add support for the "qcom,rpmcc-msm8960" compatible string to the
+RPM clock driver.
+
+msm8960 uses the same RPM clock descriptions as apq8064, so reuse
+rpm_clk_apq8064 for this compatible.
 
 Tested-by: Rudraksha Gupta <guptarud@gmail.com>
 Signed-off-by: Antony Kurniawan Soemardi <linux@smankusors.com>
 ---
- drivers/mfd/qcom_rpm.c | 1 +
+ drivers/clk/qcom/clk-rpm.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mfd/qcom_rpm.c b/drivers/mfd/qcom_rpm.c
-index 27446f43e3f3..0defb3279af1 100644
---- a/drivers/mfd/qcom_rpm.c
-+++ b/drivers/mfd/qcom_rpm.c
-@@ -324,6 +324,7 @@ static const struct qcom_rpm_resource msm8960_rpm_resource_table[] = {
- 	[QCOM_RPM_USB_OTG_SWITCH] =		{ 205, 119, 82, 1 },
- 	[QCOM_RPM_HDMI_SWITCH] =		{ 206, 120, 83, 1 },
- 	[QCOM_RPM_DDR_DMM] =			{ 207, 121, 84, 2 },
-+	[QCOM_RPM_QDSS_CLK] =			{ 209, ~0, 7, 1 },
- };
- 
- static const struct qcom_rpm_data msm8960_template = {
+diff --git a/drivers/clk/qcom/clk-rpm.c b/drivers/clk/qcom/clk-rpm.c
+index be0145631197..601f60274113 100644
+--- a/drivers/clk/qcom/clk-rpm.c
++++ b/drivers/clk/qcom/clk-rpm.c
+@@ -502,6 +502,7 @@ static const struct rpm_clk_desc rpm_clk_ipq806x = {
+ static const struct of_device_id rpm_clk_match_table[] = {
+ 	{ .compatible = "qcom,rpmcc-msm8660", .data = &rpm_clk_msm8660 },
+ 	{ .compatible = "qcom,rpmcc-apq8060", .data = &rpm_clk_msm8660 },
++	{ .compatible = "qcom,rpmcc-msm8960", .data = &rpm_clk_apq8064 },
+ 	{ .compatible = "qcom,rpmcc-apq8064", .data = &rpm_clk_apq8064 },
+ 	{ .compatible = "qcom,rpmcc-ipq806x", .data = &rpm_clk_ipq806x },
+ 	{ }
 
 -- 
 2.34.1
