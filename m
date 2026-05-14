@@ -1,216 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-107679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iI+7Dvz1BWpVdwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 18:19:08 +0200
+	id 2NnkDu/1BWpVdwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 18:18:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DDA85448EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 18:19:07 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id D43145448D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 18:18:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A24F73030EB7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:17:28 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7B486301386E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:18:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E275C3346A0;
-	Thu, 14 May 2026 16:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4074D175A6D;
+	Thu, 14 May 2026 16:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="logxfDzj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kHXvUjOD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF814332918;
-	Thu, 14 May 2026 16:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9293F4132;
+	Thu, 14 May 2026 16:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778775447; cv=none; b=nilLFrGlFKZNjR3jiGz8JS0Kpfg83DqOglGlZgloMzlt6/31OeaDgjO9KgzUN0hER4HfrQi8x2+cXqtQINclFrkrRG+LEj7aVjp5Zxyz5jEZJNbrJZSOtdcedm4gn1c83ubLACgL1ZXLCOGVdTFNqgeAav8dQXxvutSzFlEAPFM=
+	t=1778775488; cv=none; b=rOkqOkWZuQPHaXGfVlLqLcmX9VT5ZHgmMr+5yCtJFtpQyjEtnXJxJAj5aOr9T7g3Wsc6KeXr6GESEmU1JJCoTdNhBgQPch084GeZ/942WEySqlDVdMyMXhof79Vr5l9ga+m72dGd8cH1r5Z+/MJ1YM+KYqYWlp9OC8gtfwDtJz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778775447; c=relaxed/simple;
-	bh=RvGt7xzCKb5ab0L4qvb3B3VgFWaWGcvjCCWa3BCtM1w=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=rWMoFhO9D30zUMI8NKIob6eg7UOivw/9ium4+QO6wxPz7EAeOc9QgdZifSZEaTSwbdEPBAetCtBK7CRMLUoYQ5IZkoJYzfG7UafMsMqAQaGmKrVPRAASNYONRMasEwrbTe2PRCnZCDbHL3IJUo1WrijtlZr9wyvHuyBbFkboQGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=logxfDzj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22163C2BCB3;
-	Thu, 14 May 2026 16:17:27 +0000 (UTC)
+	s=arc-20240116; t=1778775488; c=relaxed/simple;
+	bh=7YYdKtGlfnKHsAP2aKZIZJDNPvZ1jULG4/aw9QNQLgU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=kA9HvdenMv7lchDK2+GFJzgIts//K62K2ljzUPGcPGQlUBJ62UrHfPCY92ny0enSbUVDmZ49+xvlLjJAUIZ6/pHr9SwiDXAV1qUZh6W6Q5qemOTwcGLXOivK7GtUyGg4645dT2g5JGsA6MRAS40L31md+uotFHmeVzBRzF7Qsz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kHXvUjOD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D361C2BCC9;
+	Thu, 14 May 2026 16:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778775447;
-	bh=RvGt7xzCKb5ab0L4qvb3B3VgFWaWGcvjCCWa3BCtM1w=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=logxfDzjoFZizX2yTSwW4rlluM1guJiabvuymI2f/hPWypRxBAgHQ4ANKslgCSmT+
-	 1M4KYB6CHus/Qa6UP81JUxTO4M4ENlUUt2RkR4/SpvqZSI4Ckln95yrfzz3Olg/e7d
-	 7VjPK4VIHtJVDq05xgjmMMIvHFNFn+YY42XgzbDCyd8npkxoVrbqB6MRvG4ps7q1+2
-	 aKFEUO6zlbwQrlWNL7oYeJFTuMPa+Il5zQJAV/8Eqz+VVGrJz3H0UHck9YIECRjWfB
-	 jmDonRkuPMYm4ic5R28rK6j6QbeMepOk2N0zzpnpVhmZIRX1gd2XP9nmAT2veBhMTV
-	 IkP2psv5dWqOQ==
-Date: Thu, 14 May 2026 11:17:25 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mayank.rana@oss.qualcomm.com, quic_vbadigan@quicinc.com,
-	Shawn Lin <shawn.lin@rock-chips.com>
-Subject: Re: [PATCH v5 1/3] PCI/ASPM: Add helper to encode L1SS T_POWER_ON
- fields
-Message-ID: <20260514161725.GA408115@bhelgaas>
+	s=k20201202; t=1778775487;
+	bh=7YYdKtGlfnKHsAP2aKZIZJDNPvZ1jULG4/aw9QNQLgU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=kHXvUjODb/DDtyVekllZYuJqqWrI+mT5LlGzje2hciMqsSHyuPQmR+mqlAm51Cv90
+	 X1LahNWQpmT917+2zrPnG/1a0HL111QdvuEFQIrNirB8nq+2B+doyuYOjrfiOac9H4
+	 m0C+xzoHtOdl/NcDw/BYFYkZ3MVmaOvddsko65jJzMRKUCbYUPtsWsTQCna4HtAVek
+	 AmjjqdfVm2bJG37skAXQV1pfFWI1xsqQ/9DmYfHHymdLO6CbUBzdpr0n6UV41n7QNx
+	 G+f7JLbEAVFIfhnDJaNP/alZJ2u0nChxK+ZiJut+EH2XO7b513Q03kyOnEkOAP9n+j
+	 3uiq2rrlxfmOg==
+From: Vinod Koul <vkoul@kernel.org>
+To: linux-phy@lists.infradead.org, Rosen Penev <rosenp@gmail.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20260315214930.4621-1-rosenp@gmail.com>
+References: <20260315214930.4621-1-rosenp@gmail.com>
+Subject: Re: [PATCH] phy: qcom-usb-hs: use flexible array member
+Message-Id: <177877548580.1092446.11009102114814879783.b4-ty@kernel.org>
+Date: Thu, 14 May 2026 21:48:05 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260428-t_power_on_fux-v5-1-f1ef926a91ff@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 8DDA85448EC
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
+X-Rspamd-Queue-Id: D43145448D7
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107679-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[lists.infradead.org,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,google.com,gmail.com,vger.kernel.org,oss.qualcomm.com,quicinc.com,rock-chips.com];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-107680-lists,linux-arm-msm=lfdr.de];
+	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[vkoul@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,rock-chips.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_FIVE(0.00)[5];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On Tue, Apr 28, 2026 at 02:07:15PM +0530, Krishna Chaitanya Chundru wrote:
-> Add a shared helper to encode the PCIe L1 PM Substates T_POWER_ON
-> parameter into the T_POWER_ON Scale and T_POWER_ON Value fields.
-> 
-> This helper can be used by the controller drivers to change the
-> default/wrong value of T_POWER_ON in L1ss capability register to
-> avoid incorrect calculation of LTR_L1.2_THRESHOLD value.
-> 
-> The helper converts a T_POWER_ON time specified in microseconds into
-> the appropriate scale/value encoding defined by the PCIe spec r7.0,
-> sec 7.8.3.2. Values that exceed the maximum encodable range are clamped
-> to the largest representable encoding.
-> 
-> Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
-> Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-
-I do agree with Ilpo's suggestion of using u32 for t_power_on_us to
-avoid some implicit conversions.  The DT binding restriction is good,
-but it's far removed from the code and doesn't necessarily cover all
-callers.
-
-I think it's also helpful to include the actual function name in the
-subject instead of just "helper" because it can help identify
-dependencies when backporting patches that use it.
-
-s/L1ss/L1SS/ for consistency.
-
-> ---
->  drivers/pci/pci.h       |  6 ++++++
->  drivers/pci/pcie/aspm.c | 40 ++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 46 insertions(+)
+On Sun, 15 Mar 2026 14:49:30 -0700, Rosen Penev wrote:
+> Simplify allocation by removing kmalloc_array and just doing kzalloc.
 > 
-> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-> index 4a14f88e543a..c379befe1ebe 100644
-> --- a/drivers/pci/pci.h
-> +++ b/drivers/pci/pci.h
-> @@ -1110,6 +1110,7 @@ void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked);
->  void pcie_aspm_powersave_config_link(struct pci_dev *pdev);
->  void pci_configure_ltr(struct pci_dev *pdev);
->  void pci_bridge_reconfigure_ltr(struct pci_dev *pdev);
-> +void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value);
->  #else
->  static inline void pcie_aspm_remove_cap(struct pci_dev *pdev, u32 lnkcap) { }
->  static inline void pcie_aspm_init_link_state(struct pci_dev *pdev) { }
-> @@ -1118,6 +1119,11 @@ static inline void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked)
->  static inline void pcie_aspm_powersave_config_link(struct pci_dev *pdev) { }
->  static inline void pci_configure_ltr(struct pci_dev *pdev) { }
->  static inline void pci_bridge_reconfigure_ltr(struct pci_dev *pdev) { }
-> +static inline void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value)
-> +{
-> +	*scale = 0;
-> +	*value = 0;
-> +}
->  #endif
->  
->  #ifdef CONFIG_PCIE_ECRC
-> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> index 925373b98dff..457d469b8d49 100644
-> --- a/drivers/pci/pcie/aspm.c
-> +++ b/drivers/pci/pcie/aspm.c
-> @@ -525,6 +525,46 @@ static u32 calc_l12_pwron(struct pci_dev *pdev, u32 scale, u32 val)
->  	return 0;
->  }
->  
-> +/**
-> + * pcie_encode_t_power_on - Encode T_POWER_ON into scale and value fields
-> + * @t_power_on_us: T_POWER_ON time in microseconds
-> + * @scale: Encoded T_POWER_ON Scale (0..2)
-> + * @value: Encoded T_POWER_ON Value
-> + *
-> + * T_POWER_ON is encoded as:
-> + *   T_POWER_ON(us) = scale_unit(us) * value
-> + *
-> + * where scale_unit is selected by @scale:
-> + *   0: 2us
-> + *   1: 10us
-> + *   2: 100us
-> + *
-> + * If @t_power_on_us exceeds the maximum representable value, the result
-> + * is clamped to the largest encodable T_POWER_ON.
-> + *
-> + * See PCIe r7.0, sec 7.8.3.2.
-> + */
-> +void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value)
-> +{
-> +	u8 maxv = FIELD_MAX(PCI_L1SS_CAP_P_PWR_ON_VALUE);
-> +
-> +	/* T_POWER_ON_Value ("value") is a 5-bit field with max value of 31. */
-> +	if (t_power_on_us <= 2 * maxv) {
-> +		*scale = 0; /* Value times 2us */
-> +		*value = DIV_ROUND_UP(t_power_on_us, 2);
-> +	} else if (t_power_on_us <= 10 * maxv) {
-> +		*scale = 1; /* Value times 10us */
-> +		*value = DIV_ROUND_UP(t_power_on_us, 10);
-> +	} else if (t_power_on_us <= 100 * maxv) {
-> +		*scale = 2; /* value times 100us */
-> +		*value = DIV_ROUND_UP(t_power_on_us, 100);
-> +	} else {
-> +		*scale = 2;
-> +		*value = maxv;
-> +	}
-> +}
-> +EXPORT_SYMBOL(pcie_encode_t_power_on);
-> +
->  /*
->   * Encode an LTR_L1.2_THRESHOLD value for the L1 PM Substates Control 1
->   * register.  Ports enter L1.2 when the most recent LTR value is greater
 > 
-> -- 
-> 2.34.1
-> 
+
+Applied, thanks!
+
+[1/1] phy: qcom-usb-hs: use flexible array member
+      commit: deb281cec3cbef5f02c6bc29fa5cd51f6d5be10f
+
+Best regards,
+-- 
+~Vinod
+
+
 
