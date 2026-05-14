@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-107664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UM/kLZngBWr4cwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:47:53 +0200
+	id 8bGxJljhBWqNdAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:51:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35797543716
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:47:53 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 096FA5437CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:51:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 658DF30F0B61
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 14:39:23 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id E76203048624
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 14:43:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B322340B6EB;
-	Thu, 14 May 2026 14:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 028AF40DFBE;
+	Thu, 14 May 2026 14:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CQM4bx0s"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e4WmqPBF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD813FFAAE;
-	Thu, 14 May 2026 14:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24B33E5A09;
+	Thu, 14 May 2026 14:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778769562; cv=none; b=gagkXK5r9SDKt2kKw6vdBEess+gdKKhAaYsL/+emyJXWPSqGywhuwtfj0NXafUShs2AbrIhT+ISTg3P5SpenpezkHZUBAO+omOUGrsNGjbKk16iEu4rMDuRMOQk+ZzT6Wri67cnXf5JWYU/xCkc+45qYuEgU+TiIs/fmHLcv0/Y=
+	t=1778769813; cv=none; b=nldwxwYWF9VdPlJVomyn22wVP36xjb1U7e5uj2a33opCYMalW+RgwjAeZ3HASE2Qq9GsGCzAt8VwB0dDukRWdzrhij+A6O51cAmpr2FVOQmKIaxN9rxfc8kq6Fi6BqP0Wg2L4qiq4UjXsP6mAinlkPbOm/UHnRh2SCGry74jXJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778769562; c=relaxed/simple;
-	bh=2eLDu+cIB6WpZJ+7MDE6H6VTqgwPFx5S6MkD59FtGV4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nPmXa0FI/NY1WWm36Krjx2N+bQWQrjUefb5Rm/vDlyi1z/c+9EbzRW0NHQ0muCpXuVbilayzw+qMHzZmQH8pEK/sv96ukyV4sacaN1vIHFeYTYGoYFuII6vLzdP4QrFNlvLu2iiIL6arl5TnUA9ZSwpkn2DFogOy9tdCUYGlS/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CQM4bx0s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B94EC2BCB3;
-	Thu, 14 May 2026 14:39:19 +0000 (UTC)
+	s=arc-20240116; t=1778769813; c=relaxed/simple;
+	bh=i/jK49CxT9oEICFn8p23oUEK5wmemyon/94BmVW39cs=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=sxPqbfPLDr5YEF2jHhBYetDVHkEMTpDHnvfVcr1FzsWfhyqqQo3EOYkdBUlORO8qm3Wlqq0Z73Lu0NAFPkpFVDVeUoKBr/A9Wg+iU5Q9vaLqFFgOi9DycpLeDIYmQTObs+0QusguRhMDPkRatQf1HcUWI0/dArYAFB0Fkqr2bH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e4WmqPBF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF92C2BCB8;
+	Thu, 14 May 2026 14:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778769562;
-	bh=2eLDu+cIB6WpZJ+7MDE6H6VTqgwPFx5S6MkD59FtGV4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CQM4bx0sTTQjRRH48096Desv5d5lyA5WrCx/XTR0bcq9ZZ+UKVS+hOcK3oqX6BdEi
-	 ygoGZmI1I+80cb8SarcPcwYDXxLKCvEu6SlNB/dGs4aVk6+iW0WLBvmodgQYRJQAAM
-	 NmF2T5q6cdm7gw0t41tpIeYiQEMPfm5yoELezcpiTt72ViR5/BNoFvMrVUXknE20fa
-	 evqU5PDJAzPSb+wldiCPl1l9IEfvHLWbPZPEVjSGXPU9sBaseOkkube/Vf3DcJCSrU
-	 +5oAJBsvifMhAcwnZaDPn1LVyZzQ3MkAZSdl2S53C3PSB/HqKoKnr9r+eJIuxC6ygw
-	 1FFHe7YxXpBWg==
-Message-ID: <27cc44d7-b3d1-4610-8257-4aad4115cd36@kernel.org>
-Date: Thu, 14 May 2026 16:39:17 +0200
+	s=k20201202; t=1778769813;
+	bh=i/jK49CxT9oEICFn8p23oUEK5wmemyon/94BmVW39cs=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=e4WmqPBFGltctSkP7hkYFoILiyVQ0CjDHtUNMhKg5NzJqYCpJqw+AfpzetBt+H9PF
+	 Pq9L0rDbvja/SVfyJA/3OQMFFk29B/2pHmYkcpAC4XP04mDB+ZBIjO0iL9TU62R9rz
+	 3Om9EVgx9+YsBG99PI2ub+4l8BO7QHzlsN7EoU94slfxpYZgRjZS8uHjveFoQRczSa
+	 sT2NieiwSrmHkWKBeAwQ5P3h/O35h5FLJUz4rXgxX8yaLjkiNo/1w9XH47Hr9HVnyL
+	 CmdIrQar5YLvQyBlV/dckBnpzR9pb+Det6ZcHOZHLuYPKLGAv2qv/1PFQ/nxOPWONJ
+	 GCjZAyz5yIJXQ==
+Message-ID: <e5552777-a449-4640-993f-5cf9bacbda56@kernel.org>
+Date: Thu, 14 May 2026 16:43:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,6 +55,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/2] dt-bindings: cpufreq: qcom-hw: Document Shikra
  CPUFREQ Hardware
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Imran Shaik <imran.shaik@oss.qualcomm.com>
 Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
  Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>,
@@ -71,7 +72,7 @@ References: <20260501-shikra-cpufreq-scaling-v1-0-c78b95f53b91@oss.qualcomm.com>
  <8101e2c8-0593-4325-a701-84f776dd4b0a@oss.qualcomm.com>
  <eebae734-3b03-4848-a728-a29d8a210e57@kernel.org>
  <dfc3039b-c45c-44d3-85c0-0d131bb5e55a@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <27cc44d7-b3d1-4610-8257-4aad4115cd36@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -116,28 +117,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <dfc3039b-c45c-44d3-85c0-0d131bb5e55a@oss.qualcomm.com>
+In-Reply-To: <27cc44d7-b3d1-4610-8257-4aad4115cd36@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 35797543716
+X-Rspamd-Queue-Id: 096FA5437CD
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107664-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-107665-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[14];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
@@ -149,74 +150,94 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On 08/05/2026 18:03, Imran Shaik wrote:
-> 
-> 
-> On 05-05-2026 02:23 pm, Krzysztof Kozlowski wrote:
->> On 05/05/2026 10:50, Imran Shaik wrote:
->>>
->>>
->>> On 04-05-2026 03:53 pm, Krzysztof Kozlowski wrote:
->>>> On Fri, May 01, 2026 at 12:45:44PM +0530, Imran Shaik wrote:
->>>>> The Qualcomm Shikra cpufreq hardware is functionally identical to EPSS,
->>>>> but supports only up to 12 frequency lookup table (LUT) entries. Introduce
->>>>> qcom,cpufreq-epss-lite to represent this constrained EPSS variant.
->>>>
->>>> The entire point of having a generic compatible is that it MUST match
->>>> all devices. If it does not, then it is pointless to push that generic
->>>> compatible.
->>>>
->>>> I am speaking about qcom,cpufreq-epss.
->>>>
->>>> That's nothing new, I was arguing about it already, but now you have
->>>> confirmation of the mess introduced by generic compatibles. Solution is
->>>> not to add more generic compatibles, because what will be next?
->>>> qcom,cpufreq-epss-lighter?
->>>> qcom,cpufreq-epss-more-lite?
->>>> qcom,cpufreq-epss-high?
->>>>
->>>> Same was here:
->>>> https://lore.kernel.org/all/20240828203721.2751904-17-quic_nkela@quicinc.com/
->>>>
->>>> So that's second time I object and do object for every new instance. No
->>>> to generic compatibles, they are proven to be wrong at least for
->>>> Qualcomm.
->>>>
->>>> Best regards,
->>>> Krzysztof
->>>>
->>>
->>> Hi Krzysztof,
->>>
->>> There is no functional change to the latest EPSS hardware
->>> (qcom,cpufreq-epss) in this case. The Shikra platform uses the CPU
->>> frequency scaling block, which is a predecessor of EPSS and is referred
->>> to as EPSS‑lite. The only difference between EPSS‑lite and EPSS is the
->>> maximum number of frequency look up table (LUT) entries.
->>>
->>> This constrained EPSS block is not specific to Shikra and can be reused
->>> by other SoCs that implement the same hardware. Hence, we have added a
->>> separate epss-lite compatible and reused the existing bindings, as all
->>> other aspects of the hardware behavior and interface remain identical.
+On 14/05/2026 16:39, Krzysztof Kozlowski wrote:
+> On 08/05/2026 18:03, Imran Shaik wrote:
 >>
->> I don't understand how any of this is relevant to my comment. I know
->> what you did.
 >>
+>> On 05-05-2026 02:23 pm, Krzysztof Kozlowski wrote:
+>>> On 05/05/2026 10:50, Imran Shaik wrote:
+>>>>
+>>>>
+>>>> On 04-05-2026 03:53 pm, Krzysztof Kozlowski wrote:
+>>>>> On Fri, May 01, 2026 at 12:45:44PM +0530, Imran Shaik wrote:
+>>>>>> The Qualcomm Shikra cpufreq hardware is functionally identical to EPSS,
+>>>>>> but supports only up to 12 frequency lookup table (LUT) entries. Introduce
+>>>>>> qcom,cpufreq-epss-lite to represent this constrained EPSS variant.
+>>>>>
+>>>>> The entire point of having a generic compatible is that it MUST match
+>>>>> all devices. If it does not, then it is pointless to push that generic
+>>>>> compatible.
+>>>>>
+>>>>> I am speaking about qcom,cpufreq-epss.
+>>>>>
+>>>>> That's nothing new, I was arguing about it already, but now you have
+>>>>> confirmation of the mess introduced by generic compatibles. Solution is
+>>>>> not to add more generic compatibles, because what will be next?
+>>>>> qcom,cpufreq-epss-lighter?
+>>>>> qcom,cpufreq-epss-more-lite?
+>>>>> qcom,cpufreq-epss-high?
+>>>>>
+>>>>> Same was here:
+>>>>> https://lore.kernel.org/all/20240828203721.2751904-17-quic_nkela@quicinc.com/
+>>>>>
+>>>>> So that's second time I object and do object for every new instance. No
+>>>>> to generic compatibles, they are proven to be wrong at least for
+>>>>> Qualcomm.
+>>>>>
+>>>>> Best regards,
+>>>>> Krzysztof
+>>>>>
+>>>>
+>>>> Hi Krzysztof,
+>>>>
+>>>> There is no functional change to the latest EPSS hardware
+>>>> (qcom,cpufreq-epss) in this case. The Shikra platform uses the CPU
+>>>> frequency scaling block, which is a predecessor of EPSS and is referred
+>>>> to as EPSS‑lite. The only difference between EPSS‑lite and EPSS is the
+>>>> maximum number of frequency look up table (LUT) entries.
+>>>>
+>>>> This constrained EPSS block is not specific to Shikra and can be reused
+>>>> by other SoCs that implement the same hardware. Hence, we have added a
+>>>> separate epss-lite compatible and reused the existing bindings, as all
+>>>> other aspects of the hardware behavior and interface remain identical.
+>>>
+>>> I don't understand how any of this is relevant to my comment. I know
+>>> what you did.
+>>>
+>>
+>> Hi Krzysztof,
+>>
+>> The intent behind proposing an epss-lite compatible was to describe a 
+>> common hardware variant and avoid introducing SoC‑specific handling in 
+>> the cpufreq driver.
 > 
-> Hi Krzysztof,
+> And I already objected. Look:
 > 
-> The intent behind proposing an epss-lite compatible was to describe a 
-> common hardware variant and avoid introducing SoC‑specific handling in 
-> the cpufreq driver.
+> "So that's second time I object and do object for every new instance. No
+> to generic compatibles"
+> 
+> I provided arguments for that in the past.
+> 
+> NAK
+> 
+> Best regards,
 
-And I already objected. Look:
+I already provided the arguments here:
 
-"So that's second time I object and do object for every new instance. No
-to generic compatibles"
+"The entire point of having a generic compatible is that it MUST match
+all devices. If it does not, then it is pointless to push that generic
+compatible."
 
-I provided arguments for that in the past.
+so if you have generic compatible, IT MUST be used. You cannot keep
+adding more generic compatibles just because existing generic compatible
+is not generic enough!
 
-NAK
+I gave you detailed reasoning and even example why this approach is
+getting ridiculous, but you just have to keep pushing your solution to
+maintainers and keep asking the same.
+
+You were given the answer and the argument. Now you are just wasting
+maintainers time.
 
 Best regards,
 Krzysztof
