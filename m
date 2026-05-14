@@ -1,79 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-107507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6EQlOr0IBWoMRwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 01:26:53 +0200
+	id yCBoBN8dBWoASwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 02:57:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D28753BFA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 01:26:53 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A6C653C7A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 02:57:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 0E9353019559
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 May 2026 23:26:53 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 264693014109
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 00:57:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 157803B635F;
-	Wed, 13 May 2026 23:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 322612F5A12;
+	Thu, 14 May 2026 00:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gzRCoaHw"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LDEltaer"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E61DC379C5F;
-	Wed, 13 May 2026 23:26:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACC92F3600;
+	Thu, 14 May 2026 00:56:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778714809; cv=none; b=OK5y3Dg19tIXXacGufmnlmwpXtzs4FEMy9kfymt+bPcSJpFPMqAOs6JNIZopu+dSfrMijXB/liytQ/U9ffxhDmprl8xtY6hu6LUXHA1/UYMofzuN9/GS3yC06dYJByW8hJsOfT9E32SQp++b0GhoA01PRZIkfTh84vrAZagLWdU=
+	t=1778720219; cv=none; b=d9x7KCH5rspuELVD59efCTuMvXKUDzezborHub/hpfwvxrD5yVWBashBfzTieHab4vt4YwYhsrbF2H2mVECXulARlqvWvUUlIyXHRm2UzKJQsW7gmGtLIL3qiuVy7HfPBlJ5X04/HPSx+RANWddNJ5cgK08oXyB3QGR32fT2N+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778714809; c=relaxed/simple;
-	bh=q3i21lJvhVy9opCji1T4ar4kNcI5PZwWn8BflTqdQ3s=;
+	s=arc-20240116; t=1778720219; c=relaxed/simple;
+	bh=vyu57ovXPjleRJ4YGZDfKQBeE3LjznYEnTFJmwS3NkA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dDv23wZqixtV/9R8P1v1uUNbtpdJob0zimuj7NDkk2Ye+beCcQcqOafyPV7JqiMgJTw5nfiwRil1SnL18KIv6WI59xlsHzWb/sHfuyTjGcHMzpVnKwX0ogn/dSCcnEcBn+8i0AJXl6KLww+yDGmec++q9WeXxvebgVvC6rcnuQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gzRCoaHw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0CEC19425;
-	Wed, 13 May 2026 23:26:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778714808;
-	bh=q3i21lJvhVy9opCji1T4ar4kNcI5PZwWn8BflTqdQ3s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gzRCoaHwgfpMxXtV5i7hcsOfWpF4L1ft/Q9VIAyK5ZJzkTiS454hh2sAIGpggmoIS
-	 B9j0knU5zEFe/qnB7P0JctaEghBvxW6W76RHLeddbrQ1CdZ6VYJDEjfnHpsZ/Qa8Th
-	 jKP3jJrqVwoINxJbxqY10pEHStpSlELHor+xoC79qPymPpXbzTaIZB0WXChSoYmsPY
-	 Lt10Kj5huXqpAvdKD88ox8f7uLKY9cVwUHH+ie6+argLgDZZDAugk3f902RWGX1eAN
-	 dTnan5PrrRuN4doIBw1aRAoURp3Z/3JPBI3LxwY4jeWjo7vesG0WPAFL6SoEkvC7bB
-	 1e87ClxSOCDqw==
-Date: Wed, 13 May 2026 18:26:35 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Jun Yan <jerrysteve1101@gmail.com>
-Cc: Andrew Lunn <andrew@lunn.ch>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Jesper Nilsson <jesper.nilsson@axis.com>,
-	Paul Barker <paul.barker@sancloud.com>, Grant Feng <von81@163.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Robert Marko <robert.marko@sartura.hr>, Lee Jones <lee@kernel.org>,
-	Vincent Knecht <vincent.knecht@mailoo.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Enric Balletbo i Serra <eballetbo@gmail.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Pavel Machek <pavel@kernel.org>, linux-leds@vger.kernel.org,
-	Gregory Clement <gregory.clement@bootlin.com>,
-	Conor Dooley <conor+dt@kernel.org>, Peter Rosin <peda@axentia.se>,
-	Baruch Siach <baruch@tkos.co.il>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH 1/5] dt-bindings: leds: issi,is31fl319x: Add description
- for the shutdown-gpios property
-Message-ID: <177871479468.2298897.389759358706715014.robh@kernel.org>
-References: <20260508152435.21389-1-jerrysteve1101@gmail.com>
- <20260508152435.21389-2-jerrysteve1101@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=io0N2MOPgr8llo3LpGcCNMaXs329H/aNzu8FFlZiJ9N/3YT7do+QFzqbhvtAjMBg6ghiFQrbBcRN2rjsvsRec6MwRSciXHj4rAJje5usUfalDkBIDg56CoHxSsOBNVaeMWYNZ9Icw/xVyf59sOkFx5JstA0hzkbcFszMKfZaNPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LDEltaer; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1778720217; x=1810256217;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=vyu57ovXPjleRJ4YGZDfKQBeE3LjznYEnTFJmwS3NkA=;
+  b=LDEltaer7gtxMnMWal+L5LbgJz2lYSeW0kCkVm3AuAysbqDMg6koG1cM
+   1hORC2ut/WnR59YZqVJEgDgodDa3hSxCsD7cCEp7tLyNMn3lJmXvDGghS
+   t3bH2OmkXjIwv4La3qoNALHC+P6r3zB36nFoU3ao7qx8vt4BIaLDU0dB8
+   pV+4s2NiG5LORzBEoqjZbOPkHXswbwJXxR9teARH/PcpjdBpnsEhaJjTc
+   /psTyP5VTlBHxv+NYJ/H104YaQT3ngW+DOcmetHQH5H4M9Dk+Xqxh1fyC
+   2GW5gsWdpK2gN3rlAH9/Ilr3E3DNyKZLohhsZ2lQ2K2PFKUes2SBxS1LI
+   g==;
+X-CSE-ConnectionGUID: sBMIr/rdSX+HGnR3OiWkwQ==
+X-CSE-MsgGUID: N6gFCRF/QC6O4dVjTGntTA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11785"; a="83507945"
+X-IronPort-AV: E=Sophos;i="6.23,233,1770624000"; 
+   d="scan'208";a="83507945"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2026 17:56:56 -0700
+X-CSE-ConnectionGUID: IB6DiO87RHO8nISzs2kFBg==
+X-CSE-MsgGUID: Y7bWg4vrTXaryqD/8ip2/Q==
+X-ExtLoop1: 1
+Received: from lkp-server01.sh.intel.com (HELO dca79079c3eb) ([10.239.97.150])
+  by fmviesa003.fm.intel.com with ESMTP; 13 May 2026 17:56:52 -0700
+Received: from kbuild by dca79079c3eb with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1wNKNd-000000005S3-0imQ;
+	Thu, 14 May 2026 00:56:49 +0000
+Date: Thu, 14 May 2026 08:55:57 +0800
+From: kernel test robot <lkp@intel.com>
+To: Boris Brezillon <bbrezillon@kernel.org>,
+	Steven Price <steven.price@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>
+Cc: oe-kbuild-all@lists.linux.dev,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Akash Goel <akash.goel@arm.com>, Chia-I Wu <olvaffe@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] drm/gem: Make the GEM LRU lock part of drm_device
+Message-ID: <202605140848.SHAmSWp0-lkp@intel.com>
+References: <20260512-panthor-shrinker-fixes-v3-1-3bf066259471@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,58 +93,64 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260508152435.21389-2-jerrysteve1101@gmail.com>
-X-Rspamd-Queue-Id: 9D28753BFA7
+In-Reply-To: <20260512-panthor-shrinker-fixes-v3-1-3bf066259471@collabora.com>
+X-Rspamd-Queue-Id: 2A6C653C7A1
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107507-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[28];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-107508-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[lists.linux.dev,collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,arm.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
+	RCPT_COUNT_TWELVE(0.00)[22];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[lunn.ch,vger.kernel.org,kernel.org,axis.com,sancloud.com,163.com,gmail.com,sartura.hr,mailoo.org,linaro.org,ucw.cz,arm.com,lists.infradead.org,bootlin.com,axentia.se,tkos.co.il];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,01.org:url,intel.com:email,intel.com:mid,intel.com:dkim]
 X-Rspamd-Action: no action
 
+Hi Boris,
 
-On Fri, 08 May 2026 23:24:18 +0800, Jun Yan wrote:
-> The IS31FL319X series features an SDB shutdown pin.
-> Driving it low (active low) places the chip into hardware shutdown
-> mode for power saving, while all register contents are preserved
-> and registers are not reset.
-> 
-> Add description for the shutdown down (SDB) pin and fix the example
-> device tree binding.
-> 
-> Fixes: dbc801b472c1 ("dt-bindings: leds: Convert is31fl319x to dtschema")
-> Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
-> ---
->  .../devicetree/bindings/leds/issi,is31fl319x.yaml        | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
-> 
+kernel test robot noticed the following build warnings:
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+[auto build test WARNING on b2ed01e7ad3de80333e9b962a44024b094bc0b2b]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Boris-Brezillon/drm-gem-Make-the-GEM-LRU-lock-part-of-drm_device/20260514-051749
+base:   b2ed01e7ad3de80333e9b962a44024b094bc0b2b
+patch link:    https://lore.kernel.org/r/20260512-panthor-shrinker-fixes-v3-1-3bf066259471%40collabora.com
+patch subject: [PATCH v3] drm/gem: Make the GEM LRU lock part of drm_device
+config: csky-randconfig-r071-20260514 (https://download.01.org/0day-ci/archive/20260514/202605140848.SHAmSWp0-lkp@intel.com/config)
+compiler: csky-linux-gcc (GCC) 15.2.0
+smatch: v0.5.0-9185-gbcc58b9c
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260514/202605140848.SHAmSWp0-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202605140848.SHAmSWp0-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> Warning: drivers/gpu/drm/drm_gem.c:1643 function parameter 'dev' not described in 'drm_gem_lru_scan'
+>> Warning: drivers/gpu/drm/drm_gem.c:1643 function parameter 'dev' not described in 'drm_gem_lru_scan'
+
+--
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
