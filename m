@@ -1,110 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-107666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SOZsCnXkBWoAdQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:04:21 +0200
+	id QOdzCs/oBWqPdQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:22:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DD77543B20
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:04:20 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id D480B543EFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:22:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id C2D71307F0C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 14:49:54 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3AEAB3012CEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 15:15:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A815A426D3C;
-	Thu, 14 May 2026 14:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B67A347F2C1;
+	Thu, 14 May 2026 15:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YWxDfgVi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d6e1zB+Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852D0426699;
-	Thu, 14 May 2026 14:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237C9436370;
+	Thu, 14 May 2026 15:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778770174; cv=none; b=dx9yYpFvfQSsBbyZGv0sSrHOjW771NitoRhxXNELwtkhLLJ6YYBHArdG0FQeAVjmoz+6IbfHVXOulILot/lHgD2wyJ/RjSTuEA8Lb2TZ/VZ+q4wdfOONJffOGuETxz0wkSC6aMi0RWYZdKcS/IeY5yVtClZ6XdPLggyP5NRaVrY=
+	t=1778771485; cv=none; b=H+mej5JkW4Om3g1TxzccW142ZLD0aTtGpts28tDSc0Gs3JAT7KnVfwmW6lHaL/y9forRVY+mGWJL0PCeFkWaNoOxzA6fvHh5Tq4YSc8LOQHWgE8ZQBPAmB1S3fH4YXK3mr4AR9pnpSamWYiRjotClWIbHHYEC0X/QdtOUQRMHh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778770174; c=relaxed/simple;
-	bh=miWqwuXW4uXn7hP5kXnio9l83Z0PIMZVknVLD+RZEsc=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=MfhJ/0YmvtkQ4Jp1M/wMM5SJk4KE76PP+i6nf425qddHKQ0QJ/THvaWwBvzRwk+3Hz7dutayKMxwUfuwSm659Mc0I5GwI4gm4ShBgTB3HQzFmhYluZLqLfiiu+F68e2QaZSzJdyeqzIAVzbiRcgy4xCR+NOpm7JplZwyGakYeaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YWxDfgVi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FEDEC2BCB8;
-	Thu, 14 May 2026 14:49:33 +0000 (UTC)
+	s=arc-20240116; t=1778771485; c=relaxed/simple;
+	bh=hozAw0rEPrOq8LRlaqbe/lv3mLiyhX6RyL3aLIPpo+c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MRvRRAcmaRxs6WHkAYmAAQfmrbl1q0wXIrtXbzdXCloTDmhNHLD4ot4SbIUMCHEXSf9uRBmBMg/QGGF1PPurOB+Ao8XQEGB+2yq9kVWlJFThcIIKZenuyxlNO4DIU2QJvxNvIFhZ2H3+DBx29tAU/DxLLJwxACt5jrlahQILmZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d6e1zB+Z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F04C2BCB3;
+	Thu, 14 May 2026 15:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778770174;
-	bh=miWqwuXW4uXn7hP5kXnio9l83Z0PIMZVknVLD+RZEsc=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=YWxDfgViCkqYN3jJyyecDYTNh2tiJpTlFd9lZdEhsTkcTN9Q4D/EfS0gpSLrua5JR
-	 E0bf76Bnzpix4v7ycJOxKxP2SvRnbVf/IVJxatP2zxwiQjIbqcd1HQi7RQzxYb+Zir
-	 uMVKDt9b5+inMQ4JVMmUxvczTNSuKJWpV1bjFQkwsp5jsbYDL86v8z3EaRGV4NfIK+
-	 NDFULWkiCH4c/8yFUPl/FkGW5RGrDblTZILrBB7vI30nY039PRCBEJujXBh2JrIXw+
-	 zL8WcTq0Kzm8Hv1FEN80/ZyK0uMf0/jLsy4+V+M3b/NIGa2kqgRCvmr1/TiUdclPPO
-	 4lELGujZ5r5dg==
-From: Lee Jones <lee@kernel.org>
-To: Lee Jones <lee@kernel.org>, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: =Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org
-In-Reply-To: <20260427070109.18271-2-krzysztof.kozlowski@oss.qualcomm.com>
-References: <20260427070109.18271-2-krzysztof.kozlowski@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH] mfd: qcom: Unify user-visible "Qualcomm" name
-Message-Id: <177877017297.2799073.11189624330763951508.b4-ty@b4>
-Date: Thu, 14 May 2026 15:49:32 +0100
+	s=k20201202; t=1778771484;
+	bh=hozAw0rEPrOq8LRlaqbe/lv3mLiyhX6RyL3aLIPpo+c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=d6e1zB+Z2U3ZKOLAXZGNXOymdfqOhsVQiU7tH6xzvehhkecwNID9tf5GGum6vWgHE
+	 IEdluTVOKmAGhLV6piProU2wXkZHQrbCs190J7AMp3bbC4R2u0u+vCMUtrKtfEuUTi
+	 9ysLKtvpZ+FXoJg7imltNnF1XeDzwKLlFvLf28bICokhgN4oPTkq39m+oYbOQtL4F/
+	 E0+WBuDm1bj67U2Zb1aWDsjr9lnQuZFRZgsCwxGhiW/0gcyWk+iw/t3BwPEdAf9a4Y
+	 04MwWseJ04cgKYwlZIhsRGKv/SWe+tARJXSFgvQgsFtcFGMDTBbtLvj/uNMEeNMlni
+	 ktyWHbzrhU+5A==
+Message-ID: <81a3c207-4d8f-490f-8e2a-6f3f4c2acd35@kernel.org>
+Date: Thu, 14 May 2026 17:11:17 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.16-dev-ad80c
-X-Rspamd-Queue-Id: 6DD77543B20
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] dt-bindings: display: panel: Add Novatek NT37705
+To: Luca Weiss <luca.weiss@fairphone.com>, Conor Dooley <conor@kernel.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <jesszhan0024@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20260501-fp6-panel-v1-0-e09cb05651cc@fairphone.com>
+ <20260501-fp6-panel-v1-1-e09cb05651cc@fairphone.com>
+ <20260501-yogurt-wise-2a2884e3ec59@spud>
+ <DI9XL1VYYTY7.19IRSM8VIDO53@fairphone.com>
+ <a2444df4-abf1-4b56-8556-7efb238bc677@kernel.org>
+ <DIAJCURQ37FA.1CNEKX6QM6ZO8@fairphone.com>
+ <dd7ebb25-014c-4983-ae31-6a6cbd24e628@kernel.org>
+ <DID4LW3GMLDV.338VDV2L2IPL@fairphone.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
+ QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
+ +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
+ ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
+ 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
+ hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
+ tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
+ 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
+ naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
+ hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
+ whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
+ qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
+ RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
+ Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
+ H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
+ dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
+ AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
+ jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
+ zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
+ XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <DID4LW3GMLDV.338VDV2L2IPL@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: D480B543EFA
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-107667-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107666-lists,linux-arm-msm=lfdr.de];
-	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[linaro.org,gmail.com,linux.intel.com,kernel.org,suse.de,ffwll.ch,lists.sr.ht,vger.kernel.org,lists.freedesktop.org];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lee@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On Mon, 27 Apr 2026 09:01:10 +0200, Krzysztof Kozlowski wrote:
-> Various names for Qualcomm as a company are used in user-visible config
-> options: QCOM, Qualcomm and Qualcomm Technologies.  Switch to unified
-> "Qualcomm" so it will be easier for users to identify the options when
-> for example running menuconfig.
+On 08/05/2026 09:44, Luca Weiss wrote:
+> Hi Krzysztof,
+> 
+> On Tue May 5, 2026 at 9:25 AM CEST, Krzysztof Kozlowski wrote:
+>> On 05/05/2026 08:40, Luca Weiss wrote:
+>>>>>>> +  compatible:
+>>>>>>> +    contains:
+>>>>>>> +      const: boe,bj631jhm-t71-d900
+>>>>>>
+>>>>>> Compatible doesn't match the filename, nor does the commit message match
+>>>>>> what you've got here. Sounds like you're missing a fallback to
+>>>>>> $filename.
+>>>>>
+>>>>> The last times I was upstreaming panel drivers (Feb 2024 and June 2025),
+>>>>> this was the requested way of doing things.
+>>>>
+>>>> So this was requested that time and is requested now. What is here
+>>>> uncertain?
+>>>>
+>>>>>
+>>>>> Compatible being the company and model number making the actual panel
+>>>>> assembly (driver IC + touchscreen + glass etc), while the rest being
+>>>>> named after the driver IC manufacturer & number.
+>>>>
+>>>> So exactly what was asked for...
+>>>
+>>> I don't quite understand what is asked for now, that's my issue.
+>>>
+>>> 1. Change the filename to boe,bj631jhm-t71-d900.yaml and leave the rest
+>>>    as-is.
+>>>
+>>> 2. Add a fallback compatible for novatek,nt37705. IIRC last time it was
+>>>    argued that a "generic" nt37705 driver will never be correct for a
+>>>    specific panel since it's missing a bunch of panel-specific init. So
+>>>    that's why there should not be a fallback to nt37705.
+>>
+>> To my limited knowledge the (2) with fallback describing the specific IC
+>> is preferred, because that compatible although not currently usable is
+>> still specific and describes actual IC used. I imagine that such
+>> fallback still could be useful to some SW implementation to determine
+>> the IC and act based on that.
+>>
+>> If you have sources of other preference, please share, but I just gave
+>> same review to Neil for his ayaneo,wt0600-2k panels.
+> 
+> I found the discussion from 2024 for the Fairphone 4 panel:
+> 
+> https://lore.kernel.org/lkml/f9164049-6529-42c1-a35a-e91132c823b9@linaro.org/
+> 
+> (quoting)
+> 
+> '''
+>   Not sure if "himax,hx83112a" is needed here, the "djn,9a-3r063-1102b"
+>   is enough to know the IC is hx83112a.
+> 
+>   I don't think you'll ever find a "djn,9a-3r063-1102b" with another
+>   controller IC ?
+> 
+>   And "himax,hx83112a" alone as fallback is not enough to describe the
+>   panel hardware, so I think it should be dropped.
+> '''
+> 
+> With Konrad replying "+1" to that.
 
-Applied, thanks!
+The arguments from Linux drivers point of view are correct. And you can
+apply the same to board-level compatibles. Each most-specific board
+level compatible already defines the soc, thus soc-compatible fallback
+is redundant, right?
 
-[1/1] mfd: qcom: Unify user-visible "Qualcomm" name
-      commit: e3071bdd833d6152d8bfc87182e5ceb7eb0eebfe
+And also the soc-compatible fallback is too generic to be used alone by
+the SW in many cases.
 
---
-Lee Jones [李琼斯]
+Yet we use it. Same here. Why? For the same reasons as we use for
+board-level compatibles. Because that's convenient way for defining
+quirks for the controller IC which otherwise would need to match all
+panel compatibles.
 
+I do not insist on this (for panels, of course), however I would prefer
+consistency in the code and in the reviews. Heh, I bet you too would
+prefer consistency. :) All my recent reviews were proposing to have the
+fallback, thus I consistently propose one here, but I won't object for
+the patch in current form, thus:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
+But please also add Link to this exact email I am writing.
+
+( Link: ....)
+
+Best regards,
+Krzysztof
 
