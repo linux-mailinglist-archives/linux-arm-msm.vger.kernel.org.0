@@ -1,667 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-107671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ME1kKBXvBWpWdgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:49:41 +0200
+	id berrNLLvBWq3dgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:52:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AED4544431
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:49:40 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 447AB5444C8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:52:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id E4C4830091C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 15:44:26 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 962B9300B752
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 15:51:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EC58427A1D;
-	Thu, 14 May 2026 15:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54D83313E34;
+	Thu, 14 May 2026 15:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Nm/iTiOh"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UNzKZ0SB";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CgqhVL/w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C909425CE1;
-	Thu, 14 May 2026 15:44:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B0B314B95
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2026 15:51:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778773465; cv=none; b=bINFvRMFgdNy71CHVgVt2OKlqxwws0Qw1Smb8Itfb4E3L4NB4Mu+2HWXnpuo9Qf6lDo7ea1rvuZaGWXnFwhOIbWRw7mejO5PVDVBB6+daDrwFNJDlTuc50vJXiW/BHKABOeVUS7VBn6BrqOkmGF/lcjPvTrP3v6WuXXiL9xr3Z8=
+	t=1778773864; cv=none; b=FKO+Qip4bGSyMPHvJIXScw/tAO8Fc4BQZPx5F2A0tpNxAzfDXrNGGVHxMCN25te3ARWUeudtyNKy+hKFCHMvTw30CtTwVpNJI6u36oNmiPuzAxkCFAiqYs4KrGPBNnOaNFJBNXSvFMDho98sBeeJATGybSfEFX+thvb9Xjd2yeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778773465; c=relaxed/simple;
-	bh=ZXTe1nLJTuLAiWEkSBh53GqRFQNXjqgExh4lDd4Oz9k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=V+imqYZmCTZDUqBrbb32V0CKkLTpyBH2Bqsd8kdB655Y5E8OnZCwYmc2PGCpalKi7vSfa8jDMLolSTiCqPCdOaZyW7dus5LXOnGniFOkmv28vBpJ/Q2/Ffrsr16iw11yGx9W9yzn4AoUykRmnWUlOy+Gn40BykARyFekDqf74wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Nm/iTiOh; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C8BE51BF3;
-	Thu, 14 May 2026 08:44:14 -0700 (PDT)
-Received: from [10.1.37.28] (e122027.cambridge.arm.com [10.1.37.28])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AB5323F836;
-	Thu, 14 May 2026 08:44:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1778773460; bh=ZXTe1nLJTuLAiWEkSBh53GqRFQNXjqgExh4lDd4Oz9k=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Nm/iTiOhYaFoHlarhn0irtBzHzDfxIEVwqXAn1F8Kr03ssDh1+1dP8LgJ7EZn40p9
-	 3hgOLaV2E9hxbZxZOE6X/vMs0l9SvhmJJ/Xur6Q8n2pONhvl8BC+P1Y5cXxiH7lEmd
-	 J/NhWbgXMNWviiYATjQW1VQT054ZbeQTLhWahcfE=
-Message-ID: <903b21e7-5a44-431d-ab21-93726b2e97ac@arm.com>
-Date: Thu, 14 May 2026 16:44:12 +0100
+	s=arc-20240116; t=1778773864; c=relaxed/simple;
+	bh=fRJ2Fev4fjEht897lEm/0Hbw3BqK0zB9DFzNm0cCzmU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KYNEaSwj9oael8xffhC1iDYR5XQwDXVDI1uLq870f1OpMAX8usNJcg6FDKHrNtxfsR5slejJPZp8VE38YGq8KOEQcAsQwifrcypF800TGIWW5tEEf4WidwoGvk78semTbZL+Erq5g+FxcaZ8mlqcdhGy1wkxgKLBpGHlDUS8fhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UNzKZ0SB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CgqhVL/w; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64EBeQMq2841032
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2026 15:50:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=JaM+TEwHtLfC7f5MRaUoz5B2nc6Vq24PRov
+	VUO5ViaM=; b=UNzKZ0SBnwOr8y6A2EYVtqGqXeujCGwhwJAIvS8akYiPjn64bFk
+	KJvh/xUB7238qJAwBe0wweihJe7nSpH0YYKbX6Ci6eYNF3kAI+C++o0jgd1S59VF
+	kXRSo2KYJAzmidnt8eYOv0uiwo99b/Z/GXzLba8g2gc4HEPasLnxiVoevL2mPDSO
+	W/FTEoy5a6W1cEnl8XOhDQ+oxv1CvzF5FWYmFO7GJdgjTPfzYD4jMOgvb/zVwkp9
+	Ovft0HY6EjP31oPHl8f/0kI+ivHrENiizYMgABrU6QjRGPyRCDmKJ86rtumfVEMs
+	ob35aQlu0h37hd+rQUGrsf0u4YLDZZTZ7TQ==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com [209.85.217.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e5899t4wu-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2026 15:50:58 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id ada2fe7eead31-6332db4182dso5709433137.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2026 08:50:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1778773858; x=1779378658; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JaM+TEwHtLfC7f5MRaUoz5B2nc6Vq24PRovVUO5ViaM=;
+        b=CgqhVL/w99SunYZ7bm9TUb0Y1ei3VdlNHuh6cOz0htk4M//yit7PT38FMAwPXxCOCM
+         dABO0qNMSO5HESN/VGof34hLTcTkWqEeXE8fvj6O/6OvrZo2QKTFbvM62kzMwgeQDjvC
+         8nSPH6IK65SkeN5GmExSFGbQ6Pq1GhEaMoiDZgLR/pue+My+uWp1TkBL6OkvAPzUuFK+
+         S9K5Hq+/4+gUsS8z6DcNuj1+RwyANjv/B2E6jitASp+viFSwq70lkB3tNk/sQaHev/gC
+         f1cDo9tTlF1DKkDzsQ/3wNFo/2SYOC61OTRt60rspToUcodNTQrbGNqk3fYoCqV+njWA
+         U8Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778773858; x=1779378658;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JaM+TEwHtLfC7f5MRaUoz5B2nc6Vq24PRovVUO5ViaM=;
+        b=a+4Qys19ZpocvOPxR6ZPOgnVhHltOIo6gs7EnJrPbt1YRJJ+rpTK2oKwGwZkthC0Tr
+         CQBkfMauBozNfEt6tQTxiVBOX6PbhE+v4wq1x8twsEsZz1jC0eO4XPIjE5m0M1X7vZbg
+         Dh9CcJbYTGWztgzSsEpOBsxV5KMBqp3sz/9HShZWpqPKJtyK7PrgHjKRS1s7LtKwT3kV
+         KKqO9BBD5jxVN30eIoo7ixTTs0HYGEMumbYojpnlgxt7+f/VSVrtPhNLvk2EP3XiSI9P
+         geFCTRkUWDD8bIkcC92L+OnhAvIy5/zhU9njdp0iiMMKVESB51UM2i/Q+7kkzeNr7gLJ
+         awvA==
+X-Forwarded-Encrypted: i=1; AFNElJ+spdcoNxNE9hITwjlisz4Qy759ZdWPy77ZNsWpqNwWQMvjUhMJijmblhMwAcLQvFfjTsMMutaFYHuAQvBO@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQS9mTAkV2qgXTZXpPnG06Btj2+t3+ZCpU+ibPv0ZaHTdrwja4
+	IV5iXPuxUYCQ6UTDQzTvVlT4lEWQYKfAD1jSXUPEyS3rIYG/PLhnsuZlxiRNRRbadYadVW2pCTQ
+	ZhmgudS6MSpVdYnCi9q6Xlc8onHuRbNbjvxwT715hd5B8iXvBtkw4wvm6xd0PKEDhptcJ
+X-Gm-Gg: Acq92OGPLIDhjmjPG1N6g48qPm78hUAq//0f3uIKvhLWJ5tx81+WkmhFKm3g+QbiFdy
+	fSDj+dc31U7quxFV0PvKNESuydddtfvJ7NO9jxpWp5KNG7Kpx8kH9hohzfQHdYpbHe31yaMgQUU
+	1DXMPYBunlOLOKzL2qBBtOxkgYAdUXvzktbD+y4KiKxclwYWVYHdNlfDInuZ8KkLfQdF2uEnOf9
+	I9fLsn77Ej5sIGB71O9RVoiQWt8ur1KdglQ20J8TTPTGIWcIXyzBFitZeuC+zO2TYo3oAmTxN+p
+	s/2uy3y6WrZuuLdU4ZvTc1W5z/E10tL8c7x3CXmuzCnETOYH1hDJmIQBZQM1mUREdRtLeGSmeZH
+	Vi1RJ4fvACqmybwf22I8HzaSCc96862TtY/2pF0WERSI3bOeiluecp2k=
+X-Received: by 2002:a05:6102:3e0b:b0:637:ad7:f57 with SMTP id ada2fe7eead31-637aaa5a6f5mr4188402137.25.1778773858165;
+        Thu, 14 May 2026 08:50:58 -0700 (PDT)
+X-Received: by 2002:a05:6102:3e0b:b0:637:ad7:f57 with SMTP id ada2fe7eead31-637aaa5a6f5mr4188381137.25.1778773857763;
+        Thu, 14 May 2026 08:50:57 -0700 (PDT)
+Received: from localhost.localdomain ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45da15a666fsm6967067f8f.36.2026.05.14.08.50.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 May 2026 08:50:56 -0700 (PDT)
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+To: andersson@kernel.org
+Cc: srini@kernel.org, konradybcio@kernel.org, linux-sound@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Subject: [PATCH 0/3] soc: qcom: apr: improve RX processing
+Date: Thu, 14 May 2026 15:50:48 +0000
+Message-ID: <20260514155051.2593354-1-srinivas.kandagatla@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] drm/gem: Make the GEM LRU lock part of drm_device
-To: Boris Brezillon <boris.brezillon@collabora.com>,
- Liviu Dudau <liviu.dudau@arm.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Akash Goel <akash.goel@arm.com>, Chia-I Wu <olvaffe@gmail.com>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- Rob Clark <rob.clark@oss.qualcomm.com>
-References: <20260512-panthor-shrinker-fixes-v3-1-3bf066259471@collabora.com>
-From: Steven Price <steven.price@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20260512-panthor-shrinker-fixes-v3-1-3bf066259471@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 9AED4544431
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDE2MCBTYWx0ZWRfX6SEvtN9XOV8j
+ xTqKCYOdq7/W6XA6honCtt5xQfyh/EQdpaDRNXNeKYRsaqC4mB/IzsYz3ebgMUMaDRqhk959swg
+ bELnM1I5z6uUzH489oe3TzuLJuyUvX0hiCFupICk8Mtvg6z2NmQXEV6dlUiWBBEjcviHRo4zYJ+
+ YLxjEnd3RSH4j7gGkPBBO6rsC6KtIPlMTJ2HK82bLSaLpwNbPhjwXF1CIiT2Se7IT1Nz7UCTDaw
+ aTHYMuveohvR8WCfQUtXAXRLrDYn2tW2Ldp0InLNbd7hyx54HsuTibsAg6AHK3F8ZuHeTypcPzU
+ 0XtsWZHToH7bIxL4ZGzd9kVnZPeIlmBx5SlmomJDjgejT11Afs2KcSa8KVrD6Sl8keSpZXmJl6t
+ WDZLeJXmbEFYqLbCnhCEtnrkdUALTr279KvIqM1RqI/9c76A3HZSNmZVUuW7Hj6LAaEJHbc0adV
+ arJbiHnbSe5YQo0+hTQ==
+X-Proofpoint-ORIG-GUID: YomcVRvdN3UO1KkDhFBPj6Pf45laj14I
+X-Authority-Analysis: v=2.4 cv=N6AZ0W9B c=1 sm=1 tr=0 ts=6a05ef62 cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=1WW9EnxB1D7kN0UGs5oA:9
+ a=ODZdjJIeia2B_SHc_B0f:22
+X-Proofpoint-GUID: YomcVRvdN3UO1KkDhFBPj6Pf45laj14I
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-14_04,2026-05-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 bulkscore=0 malwarescore=0 clxscore=1015
+ impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605050000 definitions=main-2605140160
+X-Rspamd-Queue-Id: 447AB5444C8
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	FREEMAIL_CC(0.00)[collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,arm.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-107671-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[arm.com:+];
+	TAGGED_FROM(0.00)[bounces-107672-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[steven.price@arm.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[srinivas.kandagatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim];
+	RCPT_COUNT_SEVEN(0.00)[7];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,gitlab.freedesktop.org:url,collabora.com:email]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-On 12/05/2026 07:59, Boris Brezillon wrote:
-> Recently, a few races have been discovered in the GEM LRU logic, all
-> of them caused by the fact the LRU lock is accessed through
-> gem->lru->lock, and that very same lock also protects changes to
-> gem->lru, leading to situations where gem->lru needs to first be
-> accessed without the lock held, to then get the lru to access the lock
-> through and finally take the lock and do the expected operation.
-> 
-> Currently, the only driver making use of this API (MSM) declares a
-> device-wide lock, and the user we're about to add (panthor) will
-> do the same. There's no evidence that we will ever have a driver
-> that wants different pools of LRUs protected by different locks under
-> the same drm_device. So we're better off moving this lock to drm_device
-> and always locking it through obj->dev->gem_lru_mutex, or directly
-> through dev->gem_lru_mutex.
-> 
-> If anyone ever needs more fine-grained locking, this can be revisited
-> to pass some drm_gem_lru_pool object representing the pool of LRUs
-> under a specific lock, but for now, the per-device lock seems to be
-> enough.
-> 
-> Fixes: e7c2af13f811 ("drm/gem: Add LRU/shrinker helper")
-> Reported-by: Chia-I Wu <olvaffe@gmail.com>
-> Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
-> Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
-> Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-> Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Hi all,
 
-As the kernel test robot points out there's some kerneldoc above
-drm_gem_lru_scan() which needs fixing. Also drm_gem_lru_init().
+This series contains a couple of APR enhancements and a rework of the RX
+processing path.
 
-But with that fixed the non-msm parts are:
+The first two patches makes code more robust for trival issues in the APR core.
 
-Reviewed-by: Steven Price <steven.price@arm.com>
+Remove stale service entries from the IDR when apr_add_device()
+fails before the device is registered.
+Validate incoming packet lengths using the header size appropriate
+for the active packet router type (APR or GPR).
+
+The final patch moves RX buffering and work items from the packet
+router to individual services.
+
+Today all incoming packets are serialized through a single work item and
+a global RX queue. If one service callback blocks or takes a long time
+to complete, packet processing for all other services is delayed. This
+can lead to command timeouts when responses are stuck behind unrelated
+work.
+
+With this change, packets are queued and processed on a per-service
+basis, preserving message ordering within each service while allowing
+unrelated services to make progress independently. Since queued packets
+may outlive service removal, a reference count is added to keep the
+service object alive until all queued packets have been processed.
+
+The shared APR workqueue is also converted to an unbound reclaim
+workqueue so multiple services can process packets in parallel.
 
 Thanks,
-Steve
+Srini
 
-> ---
-> As reported by Chia-I [1], a race exists between drm_gem_lru_remove()
-> and drm_gem_lru_scan(), causing a UAF on a stack-allocated object.
-> 
-> This new version only keeps the last patch of the series that
-> addresses the problem more generically by moving the LRU lock to the
-> drm_device object.
-> 
-> [1]https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
-> ---
-> Changes in v3:
-> - Only keep patch 4 and flag it for backport
-> - Rebase on drm-misc-fixes
-> - Link to v2: https://lore.kernel.org/r/20260508-panthor-shrinker-fixes-v2-0-39cdb7d577c9@collabora.com
-> 
-> Changes in v2:
-> - Collect R-b
-> - Drop a useless obj->lru != NULL check in drm_gem_lru_scan()
-> - Fix another race introduced in patch 2
-> - Document why the lru != NULL check done without the lru lock held
->   in drm_gem_lru_remove() is safe
-> - Add a patch to sanitize the GEM LRU locking: lock is now part of
->   drm_device, meaning we don't have this chicken/egg problem where
->   the lock that needs to acquired is under gem->lru->lock, and
->   gem->lru is also supposed to be accessed with the lru->lock held
-> - Fix typos in commit messages and comments
-> - Link to v1: https://lore.kernel.org/r/20260506-panthor-shrinker-fixes-v1-0-e7721526de96@collabora.com
-> ---
->  drivers/gpu/drm/drm_drv.c              |  2 ++
->  drivers/gpu/drm/drm_gem.c              | 34 +++++++++++++++-------------------
->  drivers/gpu/drm/msm/msm_drv.c          | 11 +++++------
->  drivers/gpu/drm/msm/msm_drv.h          |  7 -------
->  drivers/gpu/drm/msm/msm_gem.c          | 32 ++++++++++++++++----------------
->  drivers/gpu/drm/msm/msm_gem_shrinker.c |  4 ++--
->  drivers/gpu/drm/msm/msm_gem_submit.c   |  6 +++---
->  drivers/gpu/drm/msm/msm_gem_vma.c      | 12 ++++++------
->  drivers/gpu/drm/msm/msm_ringbuffer.c   |  6 +++---
->  include/drm/drm_device.h               |  7 +++++++
->  include/drm/drm_gem.h                  | 20 +++++++++-----------
->  11 files changed, 68 insertions(+), 73 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-> index 985c283cf59f..675675480da4 100644
-> --- a/drivers/gpu/drm/drm_drv.c
-> +++ b/drivers/gpu/drm/drm_drv.c
-> @@ -697,6 +697,7 @@ static void drm_dev_init_release(struct drm_device *dev, void *res)
->  	mutex_destroy(&dev->master_mutex);
->  	mutex_destroy(&dev->clientlist_mutex);
->  	mutex_destroy(&dev->filelist_mutex);
-> +	mutex_destroy(&dev->gem_lru_mutex);
->  }
->  
->  static int drm_dev_init(struct drm_device *dev,
-> @@ -738,6 +739,7 @@ static int drm_dev_init(struct drm_device *dev,
->  	INIT_LIST_HEAD(&dev->vblank_event_list);
->  
->  	spin_lock_init(&dev->event_lock);
-> +	mutex_init(&dev->gem_lru_mutex);
->  	mutex_init(&dev->filelist_mutex);
->  	mutex_init(&dev->clientlist_mutex);
->  	mutex_init(&dev->master_mutex);
-> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-> index d6424267260b..2b1ac2b02b14 100644
-> --- a/drivers/gpu/drm/drm_gem.c
-> +++ b/drivers/gpu/drm/drm_gem.c
-> @@ -1544,9 +1544,8 @@ EXPORT_SYMBOL(drm_gem_unlock_reservations);
->   * @lock: The lock protecting the LRU
->   */
->  void
-> -drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock)
-> +drm_gem_lru_init(struct drm_gem_lru *lru)
->  {
-> -	lru->lock = lock;
->  	lru->count = 0;
->  	INIT_LIST_HEAD(&lru->list);
->  }
-> @@ -1571,14 +1570,10 @@ drm_gem_lru_remove_locked(struct drm_gem_object *obj)
->  void
->  drm_gem_lru_remove(struct drm_gem_object *obj)
->  {
-> -	struct drm_gem_lru *lru = obj->lru;
-> -
-> -	if (!lru)
-> -		return;
-> -
-> -	mutex_lock(lru->lock);
-> -	drm_gem_lru_remove_locked(obj);
-> -	mutex_unlock(lru->lock);
-> +	mutex_lock(&obj->dev->gem_lru_mutex);
-> +	if (obj->lru)
-> +		drm_gem_lru_remove_locked(obj);
-> +	mutex_unlock(&obj->dev->gem_lru_mutex);
->  }
->  EXPORT_SYMBOL(drm_gem_lru_remove);
->  
-> @@ -1593,7 +1588,7 @@ EXPORT_SYMBOL(drm_gem_lru_remove);
->  void
->  drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj)
->  {
-> -	lockdep_assert_held_once(lru->lock);
-> +	lockdep_assert_held_once(&obj->dev->gem_lru_mutex);
->  
->  	if (obj->lru)
->  		drm_gem_lru_remove_locked(obj);
-> @@ -1617,9 +1612,9 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail_locked);
->  void
->  drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj)
->  {
-> -	mutex_lock(lru->lock);
-> +	mutex_lock(&obj->dev->gem_lru_mutex);
->  	drm_gem_lru_move_tail_locked(lru, obj);
-> -	mutex_unlock(lru->lock);
-> +	mutex_unlock(&obj->dev->gem_lru_mutex);
->  }
->  EXPORT_SYMBOL(drm_gem_lru_move_tail);
->  
-> @@ -1640,7 +1635,8 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail);
->   * @ticket: Optional ww_acquire_ctx context to use for locking
->   */
->  unsigned long
-> -drm_gem_lru_scan(struct drm_gem_lru *lru,
-> +drm_gem_lru_scan(struct drm_device *dev,
-> +		 struct drm_gem_lru *lru,
->  		 unsigned int nr_to_scan,
->  		 unsigned long *remaining,
->  		 bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket),
-> @@ -1650,9 +1646,9 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
->  	struct drm_gem_object *obj;
->  	unsigned freed = 0;
->  
-> -	drm_gem_lru_init(&still_in_lru, lru->lock);
-> +	drm_gem_lru_init(&still_in_lru);
->  
-> -	mutex_lock(lru->lock);
-> +	mutex_lock(&dev->gem_lru_mutex);
->  
->  	while (freed < nr_to_scan) {
->  		obj = list_first_entry_or_null(&lru->list, typeof(*obj), lru_node);
-> @@ -1675,7 +1671,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
->  		 * rest of the loop body, to reduce contention with other
->  		 * code paths that need the LRU lock
->  		 */
-> -		mutex_unlock(lru->lock);
-> +		mutex_unlock(&dev->gem_lru_mutex);
->  
->  		if (ticket)
->  			ww_acquire_init(ticket, &reservation_ww_class);
-> @@ -1709,7 +1705,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
->  
->  tail:
->  		drm_gem_object_put(obj);
-> -		mutex_lock(lru->lock);
-> +		mutex_lock(&dev->gem_lru_mutex);
->  	}
->  
->  	/*
-> @@ -1721,7 +1717,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
->  	list_splice_tail(&still_in_lru.list, &lru->list);
->  	lru->count += still_in_lru.count;
->  
-> -	mutex_unlock(lru->lock);
-> +	mutex_unlock(&dev->gem_lru_mutex);
->  
->  	return freed;
->  }
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index 195f40e331e5..cc2bcd14b1c2 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -128,11 +128,10 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv,
->  	/*
->  	 * Initialize the LRUs:
->  	 */
-> -	mutex_init(&priv->lru.lock);
-> -	drm_gem_lru_init(&priv->lru.unbacked, &priv->lru.lock);
-> -	drm_gem_lru_init(&priv->lru.pinned,   &priv->lru.lock);
-> -	drm_gem_lru_init(&priv->lru.willneed, &priv->lru.lock);
-> -	drm_gem_lru_init(&priv->lru.dontneed, &priv->lru.lock);
-> +	drm_gem_lru_init(&priv->lru.unbacked);
-> +	drm_gem_lru_init(&priv->lru.pinned);
-> +	drm_gem_lru_init(&priv->lru.willneed);
-> +	drm_gem_lru_init(&priv->lru.dontneed);
->  
->  	/* Initialize stall-on-fault */
->  	spin_lock_init(&priv->fault_stall_lock);
-> @@ -140,7 +139,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv,
->  
->  	/* Teach lockdep about lock ordering wrt. shrinker: */
->  	fs_reclaim_acquire(GFP_KERNEL);
-> -	might_lock(&priv->lru.lock);
-> +	might_lock(&ddev->gem_lru_mutex);
->  	fs_reclaim_release(GFP_KERNEL);
->  
->  	if (priv->kms_init) {
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index 6d847d593f1a..617b3c4b42c0 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -150,13 +150,6 @@ struct msm_drm_private {
->  		 * DONTNEED state (ie. can be purged)
->  		 */
->  		struct drm_gem_lru dontneed;
-> -
-> -		/**
-> -		 * lock:
-> -		 *
-> -		 * Protects manipulation of all of the LRUs.
-> -		 */
-> -		struct mutex lock;
->  	} lru;
->  
->  	struct notifier_block vmap_notifier;
-> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> index 2cb3ab04f125..070f5fc4bc17 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.c
-> +++ b/drivers/gpu/drm/msm/msm_gem.c
-> @@ -177,11 +177,11 @@ static void update_lru_locked(struct drm_gem_object *obj)
->  
->  static void update_lru(struct drm_gem_object *obj)
->  {
-> -	struct msm_drm_private *priv = obj->dev->dev_private;
-> +	struct drm_device *dev = obj->dev;
->  
-> -	mutex_lock(&priv->lru.lock);
-> +	mutex_lock(&dev->gem_lru_mutex);
->  	update_lru_locked(obj);
-> -	mutex_unlock(&priv->lru.lock);
-> +	mutex_unlock(&dev->gem_lru_mutex);
->  }
->  
->  static struct page **get_pages(struct drm_gem_object *obj)
-> @@ -292,11 +292,11 @@ void msm_gem_pin_obj_locked(struct drm_gem_object *obj)
->  
->  static void pin_obj_locked(struct drm_gem_object *obj)
->  {
-> -	struct msm_drm_private *priv = obj->dev->dev_private;
-> +	struct drm_device *dev = obj->dev;
->  
-> -	mutex_lock(&priv->lru.lock);
-> +	mutex_lock(&dev->gem_lru_mutex);
->  	msm_gem_pin_obj_locked(obj);
-> -	mutex_unlock(&priv->lru.lock);
-> +	mutex_unlock(&dev->gem_lru_mutex);
->  }
->  
->  struct page **msm_gem_pin_pages_locked(struct drm_gem_object *obj)
-> @@ -487,16 +487,16 @@ int msm_gem_pin_vma_locked(struct drm_gem_object *obj, struct drm_gpuva *vma)
->  
->  void msm_gem_unpin_locked(struct drm_gem_object *obj)
->  {
-> -	struct msm_drm_private *priv = obj->dev->dev_private;
-> +	struct drm_device *dev = obj->dev;
->  	struct msm_gem_object *msm_obj = to_msm_bo(obj);
->  
->  	msm_gem_assert_locked(obj);
->  
-> -	mutex_lock(&priv->lru.lock);
-> +	mutex_lock(&dev->gem_lru_mutex);
->  	msm_obj->pin_count--;
->  	GEM_WARN_ON(msm_obj->pin_count < 0);
->  	update_lru_locked(obj);
-> -	mutex_unlock(&priv->lru.lock);
-> +	mutex_unlock(&dev->gem_lru_mutex);
->  }
->  
->  /* Special unpin path for use in fence-signaling path, avoiding the need
-> @@ -507,10 +507,10 @@ void msm_gem_unpin_locked(struct drm_gem_object *obj)
->   */
->  void msm_gem_unpin_active(struct drm_gem_object *obj)
->  {
-> -	struct msm_drm_private *priv = obj->dev->dev_private;
-> +	struct drm_device *dev = obj->dev;
->  	struct msm_gem_object *msm_obj = to_msm_bo(obj);
->  
-> -	GEM_WARN_ON(!mutex_is_locked(&priv->lru.lock));
-> +	GEM_WARN_ON(!mutex_is_locked(&dev->gem_lru_mutex));
->  
->  	msm_obj->pin_count--;
->  	GEM_WARN_ON(msm_obj->pin_count < 0);
-> @@ -797,12 +797,12 @@ void msm_gem_put_vaddr(struct drm_gem_object *obj)
->   */
->  int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
->  {
-> -	struct msm_drm_private *priv = obj->dev->dev_private;
-> +	struct drm_device *dev = obj->dev;
->  	struct msm_gem_object *msm_obj = to_msm_bo(obj);
->  
->  	msm_gem_lock(obj);
->  
-> -	mutex_lock(&priv->lru.lock);
-> +	mutex_lock(&dev->gem_lru_mutex);
->  
->  	if (msm_obj->madv != __MSM_MADV_PURGED)
->  		msm_obj->madv = madv;
-> @@ -814,7 +814,7 @@ int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
->  	 */
->  	update_lru_locked(obj);
->  
-> -	mutex_unlock(&priv->lru.lock);
-> +	mutex_unlock(&dev->gem_lru_mutex);
->  
->  	msm_gem_unlock(obj);
->  
-> @@ -839,10 +839,10 @@ void msm_gem_purge(struct drm_gem_object *obj)
->  
->  	put_pages(obj);
->  
-> -	mutex_lock(&priv->lru.lock);
-> +	mutex_lock(&dev->gem_lru_mutex);
->  	/* A one-way transition: */
->  	msm_obj->madv = __MSM_MADV_PURGED;
-> -	mutex_unlock(&priv->lru.lock);
-> +	mutex_unlock(&dev->gem_lru_mutex);
->  
->  	drm_gem_free_mmap_offset(obj);
->  
-> diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-> index 31fa51a44f86..c07af9602fee 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-> @@ -186,7 +186,7 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
->  		if (!stages[i].cond)
->  			continue;
->  		stages[i].freed =
-> -			drm_gem_lru_scan(stages[i].lru, nr,
-> +			drm_gem_lru_scan(priv->dev, stages[i].lru, nr,
->  					 &stages[i].remaining,
->  					 stages[i].shrink,
->  					 &ticket);
-> @@ -255,7 +255,7 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
->  	unsigned long remaining = 0;
->  
->  	for (idx = 0; lrus[idx] && unmapped < vmap_shrink_limit; idx++) {
-> -		unmapped += drm_gem_lru_scan(lrus[idx],
-> +		unmapped += drm_gem_lru_scan(priv->dev, lrus[idx],
->  					     vmap_shrink_limit - unmapped,
->  					     &remaining,
->  					     vmap_shrink,
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> index 26ea8a28be47..3c6bc90c3d48 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -352,7 +352,7 @@ static int submit_fence_sync(struct msm_gem_submit *submit)
->  
->  static int submit_pin_objects(struct msm_gem_submit *submit)
->  {
-> -	struct msm_drm_private *priv = submit->dev->dev_private;
-> +	struct drm_device *dev = submit->dev;
->  	int i, ret = 0;
->  
->  	for (i = 0; i < submit->nr_bos; i++) {
-> @@ -381,11 +381,11 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
->  	 * get_pages() which could trigger reclaim.. and if we held the LRU lock
->  	 * could trigger deadlock with the shrinker).
->  	 */
-> -	mutex_lock(&priv->lru.lock);
-> +	mutex_lock(&dev->gem_lru_mutex);
->  	for (i = 0; i < submit->nr_bos; i++) {
->  		msm_gem_pin_obj_locked(submit->bos[i].obj);
->  	}
-> -	mutex_unlock(&priv->lru.lock);
-> +	mutex_unlock(&dev->gem_lru_mutex);
->  
->  	submit->bos_pinned = true;
->  
-> diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-> index 1a952b171ed7..c4cfe036066b 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_vma.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-> @@ -702,7 +702,7 @@ static struct dma_fence *
->  msm_vma_job_run(struct drm_sched_job *_job)
->  {
->  	struct msm_vm_bind_job *job = to_msm_vm_bind_job(_job);
-> -	struct msm_drm_private *priv = job->vm->drm->dev_private;
-> +	struct drm_device *dev = job->vm->drm;
->  	struct msm_gem_vm *vm = to_msm_vm(job->vm);
->  	struct drm_gem_object *obj;
->  	int ret = vm->unusable ? -EINVAL : 0;
-> @@ -745,13 +745,13 @@ msm_vma_job_run(struct drm_sched_job *_job)
->  	if (ret)
->  		msm_gem_vm_unusable(job->vm);
->  
-> -	mutex_lock(&priv->lru.lock);
-> +	mutex_lock(&dev->gem_lru_mutex);
->  
->  	job_foreach_bo (obj, job) {
->  		msm_gem_unpin_active(obj);
->  	}
->  
-> -	mutex_unlock(&priv->lru.lock);
-> +	mutex_unlock(&dev->gem_lru_mutex);
->  
->  	/* VM_BIND ops are synchronous, so no fence to wait on: */
->  	return NULL;
-> @@ -1305,7 +1305,7 @@ vm_bind_job_pin_objects(struct msm_vm_bind_job *job)
->  			return PTR_ERR(pages);
->  	}
->  
-> -	struct msm_drm_private *priv = job->vm->drm->dev_private;
-> +	struct drm_device *dev = job->vm->drm;
->  
->  	/*
->  	 * A second loop while holding the LRU lock (a) avoids acquiring/dropping
-> @@ -1314,10 +1314,10 @@ vm_bind_job_pin_objects(struct msm_vm_bind_job *job)
->  	 * get_pages() which could trigger reclaim.. and if we held the LRU lock
->  	 * could trigger deadlock with the shrinker).
->  	 */
-> -	mutex_lock(&priv->lru.lock);
-> +	mutex_lock(&dev->gem_lru_mutex);
->  	job_foreach_bo (obj, job)
->  		msm_gem_pin_obj_locked(obj);
-> -	mutex_unlock(&priv->lru.lock);
-> +	mutex_unlock(&dev->gem_lru_mutex);
->  
->  	job->bos_pinned = true;
->  
-> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-> index 30ddb5351e98..2d6b930b766e 100644
-> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-> @@ -16,13 +16,13 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
->  	struct msm_gem_submit *submit = to_msm_submit(job);
->  	struct msm_fence_context *fctx = submit->ring->fctx;
->  	struct msm_gpu *gpu = submit->gpu;
-> -	struct msm_drm_private *priv = gpu->dev->dev_private;
-> +	struct drm_device *dev = gpu->dev;
->  	unsigned nr_cmds = submit->nr_cmds;
->  	int i;
->  
->  	msm_fence_init(submit->hw_fence, fctx);
->  
-> -	mutex_lock(&priv->lru.lock);
-> +	mutex_lock(&dev->gem_lru_mutex);
->  
->  	for (i = 0; i < submit->nr_bos; i++) {
->  		struct drm_gem_object *obj = submit->bos[i].obj;
-> @@ -32,7 +32,7 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
->  
->  	submit->bos_pinned = false;
->  
-> -	mutex_unlock(&priv->lru.lock);
-> +	mutex_unlock(&dev->gem_lru_mutex);
->  
->  	/* TODO move submit path over to using a per-ring lock.. */
->  	mutex_lock(&gpu->lock);
-> diff --git a/include/drm/drm_device.h b/include/drm/drm_device.h
-> index bc78fb77cc27..768a8dae83c5 100644
-> --- a/include/drm/drm_device.h
-> +++ b/include/drm/drm_device.h
-> @@ -375,6 +375,13 @@ struct drm_device {
->  	 * Root directory for debugfs files.
->  	 */
->  	struct dentry *debugfs_root;
-> +
-> +	/**
-> +	 * @gem_lru_mutex:
-> +	 *
-> +	 * Lock protecting movement of GEM objects between LRUs.
-> +	 */
-> +	struct mutex gem_lru_mutex;
->  };
->  
->  void drm_dev_set_dma_dev(struct drm_device *dev, struct device *dma_dev);
-> diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
-> index 86f5846154f7..8a704f6a65c1 100644
-> --- a/include/drm/drm_gem.h
-> +++ b/include/drm/drm_gem.h
-> @@ -245,17 +245,11 @@ struct drm_gem_object_funcs {
->   * for lockless &shrinker.count_objects, and provides
->   * &drm_gem_lru_scan for driver's &shrinker.scan_objects
->   * implementation.
-> + *
-> + * Any access to this kind of object must be done with
-> + * drm_device::gem_lru_mutex held.
->   */
->  struct drm_gem_lru {
-> -	/**
-> -	 * @lock:
-> -	 *
-> -	 * Lock protecting movement of GEM objects between LRUs.  All
-> -	 * LRUs that the object can move between should be protected
-> -	 * by the same lock.
-> -	 */
-> -	struct mutex *lock;
-> -
->  	/**
->  	 * @count:
->  	 *
-> @@ -453,6 +447,9 @@ struct drm_gem_object {
->  	 * @lru:
->  	 *
->  	 * The current LRU list that the GEM object is on.
-> +	 *
-> +	 * Access to this field must be done with drm_device::gem_lru_mutex
-> +	 * held.
->  	 */
->  	struct drm_gem_lru *lru;
->  };
-> @@ -610,12 +607,13 @@ void drm_gem_unlock_reservations(struct drm_gem_object **objs, int count,
->  int drm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
->  			    u32 handle, u64 *offset);
->  
-> -void drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock);
-> +void drm_gem_lru_init(struct drm_gem_lru *lru);
->  void drm_gem_lru_remove(struct drm_gem_object *obj);
->  void drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj);
->  void drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj);
->  unsigned long
-> -drm_gem_lru_scan(struct drm_gem_lru *lru,
-> +drm_gem_lru_scan(struct drm_device *dev,
-> +		 struct drm_gem_lru *lru,
->  		 unsigned int nr_to_scan,
->  		 unsigned long *remaining,
->  		 bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket),
-> 
-> ---
-> base-commit: b2ed01e7ad3de80333e9b962a44024b094bc0b2b
-> change-id: 20260506-panthor-shrinker-fixes-58c1f45cfc41
-> 
-> Best regards,
+Srinivas Kandagatla (3):
+  soc: qcom: apr: Remove service from IDR before registration failure
+  soc: qcom: apr: Check response packet length by router type
+  soc: qcom: apr: Process RX messages using per-service work items
+
+ drivers/soc/qcom/apr.c       | 283 ++++++++++++++++++++++++-----------
+ include/linux/soc/qcom/apr.h |   6 +
+ 2 files changed, 200 insertions(+), 89 deletions(-)
+
+-- 
+2.47.3
 
 
