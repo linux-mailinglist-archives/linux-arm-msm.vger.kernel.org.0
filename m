@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-107646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sEMGEIzcBWokcgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:30:36 +0200
+	id 4G1oIWfcBWokcgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:29:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0C64543203
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:30:35 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C27F5431DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:29:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6B1503153DF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 14:16:06 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id B328D305E733
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 14:16:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 320AA406295;
-	Thu, 14 May 2026 14:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC14540B6F2;
+	Thu, 14 May 2026 14:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BQRKMup7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PYT8qG6B"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EE340628C;
-	Thu, 14 May 2026 14:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9D940B6C1;
+	Thu, 14 May 2026 14:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778767863; cv=none; b=CFNCGsTDIRpZKjMrGo95ftJR9JxWCVRRGg/syBgKG0v5k0w9OSwcvn69sZf84p2uUqKwnV2CAnurUkjk28OGlzcYOJA4O/nx1HzAH822wkSPe27g+yP1qXfEg77hLNQdg2omnnqvKk3qzO4iA0HY3G4BiL0suZGjG3d/1Ka9UVo=
+	t=1778767889; cv=none; b=kj19W261h8MYRQEckJYPl/Qh3bvAdz4bOSqyuQhY7i0l4BC9HXBskSn5tNzuPjO+8VMw+gYn8brATrLDu+QwqrHKkFvHaoVIDy3fQ8LbWr7HsdZujHZ/tUEazt/bJuH9NQJ57fsA08hZY7ewP3TTL9YEzSo6n5WmULvKxUpttxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778767863; c=relaxed/simple;
-	bh=Eb3yilG2zJLt6dCUkKYSALXmf14zWbmqZbpR+g9L2tk=;
+	s=arc-20240116; t=1778767889; c=relaxed/simple;
+	bh=I90ugSTDqC3i5Qb8RlL8yHxbAD05AxDdMg4jyucu8Fo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mx72f1K/D1/EB5id1DxMoyz6uU7kyz01Iw9uJPtueZw8Qd977ZLfkdP0Tdbh0KmsI81jlfsSyAn5r+Dn/ofrO0ITeJfzwKVOtHjcDuH3XQWimyowD4kG2Y+65twlrYq49iqs4mFz7rFNOJPG6xuCyJbDbKt4zk3WyaSMddzMJLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BQRKMup7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8FBC2BCC7;
-	Thu, 14 May 2026 14:10:59 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=OSUlm587SYAR0wK9LUQbvvSuELs8yTjb3FbEXHW9qkzG9xWs7uxT3I7k+/KVF9D2kwiSbS48KJeiWei8r6X+p8LZvfa49lIP8cToUhfsZLG/mNNFxV/M5MufT34E50tKsaPTVIYDXlLLaPPhguNxu5DKeERr2dnmtYE4q8/GVSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PYT8qG6B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F714C2BCB3;
+	Thu, 14 May 2026 14:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778767862;
-	bh=Eb3yilG2zJLt6dCUkKYSALXmf14zWbmqZbpR+g9L2tk=;
+	s=k20201202; t=1778767889;
+	bh=I90ugSTDqC3i5Qb8RlL8yHxbAD05AxDdMg4jyucu8Fo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=BQRKMup7d8y3bAympiMGk9ViozsHxtoeNsEJsPLUPiHHuleBOXQtF4EL3yRDCdUos
-	 5hKTStYzslccsz3ScwHEzJspFa+ByDD/CLvJcgZoMr62ROzdgArQ//N3ZznDZbuZaf
-	 6TxIg0cDNxVUzAsWdEyiurEksYs1uWc/oR3uUmNf+WWsKqd1YUjmHumeJcqlsB7i2e
-	 NPONNgnf5hRdQXg85Qdlrp2X9xdMVg7fc6Wbe6nwSWmd3Z4nPuYq+SRNtJZWKmD37l
-	 X3IG5ZpFCZBZrqyWugpqRZD6C8d5BjMMH7uvZe4DdrzVMm2xdlneRlISZcdXq+REM2
-	 hc8E6iZeHhOQA==
-Message-ID: <dd2d258e-ca0d-4132-acc7-c81324963493@kernel.org>
-Date: Thu, 14 May 2026 16:10:58 +0200
+	b=PYT8qG6BvMuoztTX+BLMKb97Jyi7Y+qfFA/F0BDtL3MQAZ3XPaHTFv/OFGhFS3GxK
+	 jGHxRlGgwqFxMuIY4T8ACvBlTl6nKQFLG2dQo8OtYpCvEMHH/+7aR8l3VoPA3cHR1s
+	 T+h6MCKTgN5wk5182uxtG7B/P6eM9foD7GWb3LtKi0pDCdvq5HA0ijal2rXdDNrIni
+	 2exoydCRb1uvbrv8SoyuB6sgJvN2LuitJAe7P9ErlFi6Dhf6ClZ0KLOR/YQGpY9mkl
+	 EewovErdVu3hNmG3UQj4m3ldM1Qrls1IoFlGbk0h8qfTlpSuhN5zmi72wt3Vjnkj28
+	 x++NfcYJeiKVQ==
+Message-ID: <ad9b3e17-db5d-4543-b58c-7dfd40c49390@kernel.org>
+Date: Thu, 14 May 2026 16:11:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,21 +55,15 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/2] dt-bindings: cache: qcom,llcc: Document Eliza LLCC
  block
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
+To: Abel Vesa <abel.vesa@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>,
  Jonathan Cameron <jic23@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 References: <20260504-eliza-llcc-v1-0-d7006c899812@oss.qualcomm.com>
  <20260504-eliza-llcc-v1-1-d7006c899812@oss.qualcomm.com>
- <20260506-imported-emerald-quoll-fd1ef8@quoll>
- <0028dd41-d039-4ef5-a9f7-deb730a05b0b@oss.qualcomm.com>
- <319fc5ac-1211-4845-9a66-79f1a3026126@kernel.org>
- <486d6b30-8762-4f14-aa19-7c5497cba00f@oss.qualcomm.com>
- <2920e0bc-3f60-49bf-969c-9c049b080703@kernel.org>
- <0e0b9933-f753-4a79-b4ed-dc992733a387@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,20 +109,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <0e0b9933-f753-4a79-b4ed-dc992733a387@oss.qualcomm.com>
+In-Reply-To: <20260504-eliza-llcc-v1-1-d7006c899812@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: C0C64543203
+X-Rspamd-Queue-Id: 8C27F5431DD
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-107646-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-107647-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -140,57 +134,26 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On 07/05/2026 12:47, Konrad Dybcio wrote:
-> On 5/6/26 2:15 PM, Krzysztof Kozlowski wrote:
->> On 06/05/2026 12:47, Konrad Dybcio wrote:
->>> On 5/6/26 11:56 AM, Krzysztof Kozlowski wrote:
->>>>>>> +    then:
->>>>>>> +      properties:
->>>>>>> +        reg:
->>>>>>> +          items:
->>>>>>> +            - description: LLCC0 base register region
->>>>>>> +            - description: LLCC2 base register region
->>>>>>
->>>>>> LLCC1?
->>>>>
->>>>> Unfortunately not
->>>>
->>>> Then let's just skip the names, because it will cause unnecessary
->>>> confusion when name is llcc1 (since it is the NEXT entry) but it points
->>>> to block called LLCC2 in the manual.
->>>
->>> I don't think skipping the names is a good idea, especially since if
->>> we keep them, we could teach the driver what channel the region actually
->>> corresponds to
->>
->> You still can do it, because indices are fixed. Names are only helper
->> and makes that easier.
->>
->> The problem looks to me purely doc-related, because this is logically
->> second channel, so LLCC1, just like qcom,sc7280-llcc or
->> qcom,sdm670-llcc. Does naming it as third channel (LLCC2) is relevant
->> for programming interface? Imagine driver taking LLCCx and using the 'x'
->> as offset?
->>
->> I tried to find something in HPG but no luck.
+On 04/05/2026 12:00, Abel Vesa wrote:
+> Document the Last Level Cache Controller on Eliza SoC. Eliza LLCC has 2
+> base register regions and an additional AND, OR broadcast region, total 4
+> register regions.
 > 
-> On recent platforms, channels 0/2 and 1/3 are paired, perhaps that's
-> where it comes from
+> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> ---
+>  .../devicetree/bindings/cache/qcom,llcc.yaml       | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
 
-Yes and since there is no 1 and 3, what are the pairs here? No pairs.
-It's only first (LLCC0) and second (LLCC1), even though the docs call it
-differently.
-
-However as Abel suggested better to stay consistent with the manual, so
-I guess LLCC2 makes more sense.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
