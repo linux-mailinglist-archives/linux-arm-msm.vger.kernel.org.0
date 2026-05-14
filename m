@@ -1,200 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-107514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CNGTH/tHBWpDUAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 05:56:43 +0200
+	id gJA/D5RIBWpDUAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 05:59:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2103B53D6D3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 05:56:43 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4114353D773
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 05:59:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 799533014375
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 03:56:42 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id BE5493027FCA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 03:58:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89CB83A2561;
-	Thu, 14 May 2026 03:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE3113AB273;
+	Thu, 14 May 2026 03:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HYZ+A3Ew"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jCMZ1dGY";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ea79RGEY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18BB22989B5;
-	Thu, 14 May 2026 03:56:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F073A7F6E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2026 03:58:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778731001; cv=none; b=gEghFgiqB92NfrHcPq8x3BAPDG6HzZIcAkdk5q77zEqGCYlYFDRAxwRoicK7pn6fQYDIUd2d38FHYf4dpEEgFhiU+eQIoGNDzpOkGc8k3s5ercU3d6fvSzT5pUuS9h6tclQwz/I4WHoshReQYTf/Kd5BTfTRhXDiBlIC4iJV5Tw=
+	t=1778731119; cv=none; b=SpyRuuASXgIaYy+KZrG2UKbpuG5qJ6LDfPVwcqk2NLYJr2RkHgOr9RZUSumzb46suAhtMo6JPzTY3oOnNyAU0N8cB82F0N88+6hjr0AC7Y70FOy7Cf/HcHD0eFlyeI6hiiKpFJyYPoP4jju/wMW92F3f3QRmX1EXX/SJXFeZklU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778731001; c=relaxed/simple;
-	bh=nNXzELtutpEq+OmJxmrD51XitSjV4T7MrHzTWpLXGqs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q7coakjMEtgpeXqTHD1QKYfc9kxMCL/3kDbXQKmnvOApX+MGAqGkcTI4nwgvulr6RqvZCFyRKnNNS6FrdAogsEBCAIjZIo78CDIyG6MiPI//CRVWyaBkHC5AwtJ0x/Ljr7trfdBKWGhgUQR9hbK9+PV6a/XWTrjAkb0DfpmriDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HYZ+A3Ew; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1778731000; x=1810267000;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=nNXzELtutpEq+OmJxmrD51XitSjV4T7MrHzTWpLXGqs=;
-  b=HYZ+A3EwF52lVNkBtMJjiUPbi4kwcKUltDHunEyzMIQHF11CiqXyQWv2
-   lpy0J/JenKlAxjZKTVSt34aPuhD+bwn3KvhiKBXms45FE3N8/i4EI8A2C
-   hyEKLOUXMTls/fXQt+jN/rcWgQ3WofG8yJ9C0RQ7BafD1+JyoidhQcggQ
-   OPSFpWxTsjBEyx6XV8MHdt0Ao2GHCdHDTB1/UmfwNsEZCAzini6+7iX+L
-   A5TfBnqUe1eQYZwc1pTwGAlaYZ+CmBDfjO6BnTwUwcrd+hsiGlcajRPe6
-   wRsEoSi0VhRZOsPwq3o0tpBsZvRFcfZIyUA/n6GFtLRny28tSOogINkqs
-   g==;
-X-CSE-ConnectionGUID: dfI9W93vQ3mq7FcsOpCOOw==
-X-CSE-MsgGUID: nLaPdbwCQaq+9dk0J8/JGA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11785"; a="79564429"
-X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; 
-   d="scan'208";a="79564429"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 May 2026 20:56:39 -0700
-X-CSE-ConnectionGUID: ZFJEVrqUR0CG+RnG12WEVg==
-X-CSE-MsgGUID: DhVLug9hRyiwfjGsvKVn5w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,234,1770624000"; 
-   d="scan'208";a="243251014"
-Received: from lkp-server01.sh.intel.com (HELO dca79079c3eb) ([10.239.97.150])
-  by orviesa005.jf.intel.com with ESMTP; 13 May 2026 20:56:35 -0700
-Received: from kbuild by dca79079c3eb with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1wNNBX-000000005mN-0hyq;
-	Thu, 14 May 2026 03:56:31 +0000
-Date: Thu, 14 May 2026 11:56:05 +0800
-From: kernel test robot <lkp@intel.com>
-To: Boris Brezillon <bbrezillon@kernel.org>,
-	Steven Price <steven.price@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Akash Goel <akash.goel@arm.com>, Chia-I Wu <olvaffe@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] drm/gem: Make the GEM LRU lock part of drm_device
-Message-ID: <202605141138.kI3vechU-lkp@intel.com>
-References: <20260512-panthor-shrinker-fixes-v3-1-3bf066259471@collabora.com>
+	s=arc-20240116; t=1778731119; c=relaxed/simple;
+	bh=6O/bG6e3vMsFCbLsi/7u2c8deVs4V79kNnaTmQ94xEQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=E9w3RNeir67XayCEluPgnX7B+DtMZmOQDBKTiz5vrcCc795VdrGAOpvNM7VIILn4ZToy4kanktzIOU4LTD8pjoyFYYgnO5I6tDvtEosir/gDt7pFHkpjKYurGNmte7A/941BwI8gLeWozF2LrkseWlLw3qXEm6JAdaRIbpjS9Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jCMZ1dGY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ea79RGEY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64DNxKks4160087
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2026 03:58:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=TSbDzdAE8ptqW0SfenM4rB
+	SaW0jC2PEUuRNQdXSt2gQ=; b=jCMZ1dGYwnJhzqEltTALw1P+Bz2QEP8y7doYYE
+	aUVBOmmEgvhf43BpXH4nyTYTGOQngvBn4hsh1ctXqPk1oZK5eccFGPa0FTxiCIOy
+	ytaY42FQiPJmsnAUWIKG/uDLaY/aotprxRywE5fQ+/P+4VzOYs1/6ITVxNxb4dol
+	QXaMazMe3LplhQ6f2QdqndqNjULt6vBRddiv6mjFY3TXwlwsIYV5jC2wZtndrWQr
+	f8+9Ebe7LC1L0axhlPEo96MY2GRlbiNgNGHeqWIlyGUZtXA/+4ctYlXvwUCH00j3
+	c9947sg+mxFNVh+qftgeOErWLPtrhhtBqKwLATVPyfJqp6vA==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e4p91uyd5-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2026 03:58:36 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2bd1dbcccf6so40124515ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 May 2026 20:58:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1778731116; x=1779335916; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TSbDzdAE8ptqW0SfenM4rBSaW0jC2PEUuRNQdXSt2gQ=;
+        b=ea79RGEY5IiOn2dyzeRt18gNtqE7Icej/SN3SNeTeG8JpVuNPC8A035ezy4n4DRmKd
+         JPoSzNh8g60ZJfI0xkt0S8Mgvb17XzZEMi+OqadJzhNsFtD0v+dNOjFYnp0o/7rd3KlG
+         7X6NBQfQS2TRm1CmuEyHQZzzdiGWUwTqqY9cFc909AXcqnBsEZ8PnP7w5hGZXl596U/U
+         RthYLbyyxzUGkNcRlJ5YQp/eX8QzH3fUzA6/ZU411bVQd9DJt1Wy+7SW5fkaDLRpdOlT
+         f+CIxb8YLimpi68Lzj0XhbaDMUk+OgGOc3fP5AnOruJVQAiNUHlvR3263IpjFQytHhwh
+         8jrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778731116; x=1779335916;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TSbDzdAE8ptqW0SfenM4rBSaW0jC2PEUuRNQdXSt2gQ=;
+        b=hUfj4yLemJrTalJBozrxfQKOfXp6umP+8ebWHQ67z8ubae7cLm+DJI6Fk8NneB5TTq
+         ukingGFF2HvMP68BAUElMi+IwVpJKvZYxyfT8fAoDhYeLrkRaqX0C/pcxoppH0DDkR3u
+         SiMZ8ER0QteJNqpptaSjCPDsI6FhIo892bZert4WCyPhCJFEToIOyn4SM7hGBZ199Ofh
+         ymSgLbx9qI7H+hWp6LyihuXy2CzLUzBJe2xzZHAYx2JNiuZdtcN7RJgiu/qr/FP9K6Vn
+         CGsDtPpfSlQnQkAdbN1y7SQvqyxhnSi9PVV8m1frbwmcXqGrxQYpfQZFm+MkHxOKlCGB
+         IabQ==
+X-Gm-Message-State: AOJu0Yy6wVN8rSW0079Nv+M2SDA6jSetbs6EcFEkBLHso/dbgYd6gxf9
+	vX9+YPeQLacUZ+//DWAJZ3+H7n0CClgbjDWn7LvxSRV6rBKYe3IA3WsTmQA/AOJ4qqtm5FWsDMH
+	Ah2ZIDtWOCxkQXwfxQho9qETWB8VGCp23p5FWkdEsWZqg/gm3kkIDVXzC9i0J7BRzmLN1
+X-Gm-Gg: Acq92OHYuizop4eoGDqOiYZFvnE4ob80r/Dfq1j5HZFnNr50cL99AyD4Nv5sKWFOQTE
+	jf2jdLz1UUDbomSB8NfyrJ2X6++GcPASHgpdpGxrWmTQlhWEuzfdRmDyOE/815aEf9bWtxUGHnu
+	BPNS+9Z9a5d5g7rF6dFWJ39zd3QQSNiNFrt2KvPn1j4oUmQ3n8Y91PR3V4oZE7ITsn+0B1y1vT8
+	+beITVNy1b/E8Do1WDD3O4O4GDLHow4docrr2YFuwDb+EiWQS/Tzy9KCer73tohuGBX/iSh+Xz2
+	b9xp5jWjCuuqcq8CyFSWh99WLTBOT2Pl+0eUt45a6aYsBjJ7KSmooISdCZ014eic050DQ/cx7wt
+	2sB+hc6foJhjYzmrjh/KSA2AEpU/UZ5A6/CbEQwU1caZmFfH6rRWPhvWfOcFHuDQmirMz9oZinl
+	0a7u2AvY2Lpc6BGqgyZ1zCN6+C3cfi1l9fDwPXCMw6e/87lD8GuCA=
+X-Received: by 2002:a17:903:1b4e:b0:2bd:417:8ad with SMTP id d9443c01a7336-2bd30210d8amr59213545ad.20.1778731115621;
+        Wed, 13 May 2026 20:58:35 -0700 (PDT)
+X-Received: by 2002:a17:903:1b4e:b0:2bd:417:8ad with SMTP id d9443c01a7336-2bd30210d8amr59213175ad.20.1778731115124;
+        Wed, 13 May 2026 20:58:35 -0700 (PDT)
+Received: from hu-varada-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5bd5fe44sm8313965ad.11.2026.05.13.20.58.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 May 2026 20:58:34 -0700 (PDT)
+From: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+Subject: [PATCH 0/2] Enable the QMP PCIe PHY present in Qualcomm ipq5210
+ SoC
+Date: Thu, 14 May 2026 09:28:27 +0530
+Message-Id: <20260514-pci-phy-v1-0-482429192746@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260512-panthor-shrinker-fixes-v3-1-3bf066259471@collabora.com>
-X-Rspamd-Queue-Id: 2103B53D6D3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGNIBWoC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDU0MT3YLkTN2CjEpdY4vUZMskw2TTREsDJaDqgqLUtMwKsEnRsbW1AGM
+ MCntZAAAA
+X-Change-ID: 20260514-pci-phy-38ec9b1c5a90
+To: Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Proofpoint-ORIG-GUID: VQgYATEMsb-uRsvABg6NDPklxTHBIx0n
+X-Proofpoint-GUID: VQgYATEMsb-uRsvABg6NDPklxTHBIx0n
+X-Authority-Analysis: v=2.4 cv=G9Ys1dk5 c=1 sm=1 tr=0 ts=6a05486c cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=WjzJGeGmWMr_TuVvyBQA:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE0MDAzNiBTYWx0ZWRfX+vvmbEsAn9tq
+ hms1AuuUczSpBdsg3BZ1843yUR50NxxnWBVD79guqvM0x/8ebt5Vh56/m11Pz3OnGVTc4IEv8kQ
+ CUvGx5eDoI11AxXN25z9FM08t5BKhLt8nn4zu8aRsXe2Z+M+gCjSj+jn35aMus9mubAWZUJrkH3
+ myY7ecjltLClmxCv/XUlFsOmXJw64aUi8pgkLSYtcr4PEZPVJzfUDxVFpMuPIfhGwlr4FXGMhE4
+ 5Tb/UonKxRinoii5zk1I94UZH5zMMq/6t9tcU0bwjB7OuAVhAo9NSiesnyECny69kDjiba3vP7e
+ ehRCtvNvBNEpo8s9FBg/cU/jBR6lf0xJNXrqG1qrxPHsaoG3BcvkuRlZBIz1SI076aW7Tx3okZx
+ UukPwYlxQyRob8c53PgGuD1pKGhfuII4Gf4LRHm3AVtbw2tnsVACra9PC3fVdg8a2fI3KGdmhAz
+ yyUs3oSn69fCtyZynVg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-14_01,2026-05-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 adultscore=0 spamscore=0 phishscore=0
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605050000
+ definitions=main-2605140036
+X-Rspamd-Queue-Id: 4114353D773
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-107514-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[lists.linux.dev,collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,arm.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-107515-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[intel.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,intel.com:mid,intel.com:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,01.org:url]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[varadarajan.narayanan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-Hi Boris,
+Document the bindings and update the driver to support
+the PCIe phy present in Qualcomm ipq5210 SoC.
 
-kernel test robot noticed the following build warnings:
+Signed-off-by: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+---
+Varadarajan Narayanan (2):
+      dt-bindings: phy: qcom,ipq8074-qmp-pcie: Document the ipq5210 QMP PCIe PHY
+      phy: qcom-qmp-pcie: Add support for ipq5210 PCIe phys
 
-[auto build test WARNING on b2ed01e7ad3de80333e9b962a44024b094bc0b2b]
+ .../bindings/phy/qcom,ipq8074-qmp-pcie-phy.yaml    |   3 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           | 152 +++++++++++++++++++++
+ 2 files changed, 155 insertions(+)
+---
+base-commit: e98d21c170b01ddef366f023bbfcf6b31509fa83
+change-id: 20260514-pci-phy-38ec9b1c5a90
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Boris-Brezillon/drm-gem-Make-the-GEM-LRU-lock-part-of-drm_device/20260514-051749
-base:   b2ed01e7ad3de80333e9b962a44024b094bc0b2b
-patch link:    https://lore.kernel.org/r/20260512-panthor-shrinker-fixes-v3-1-3bf066259471%40collabora.com
-patch subject: [PATCH v3] drm/gem: Make the GEM LRU lock part of drm_device
-config: arm-randconfig-002-20260514 (https://download.01.org/0day-ci/archive/20260514/202605141138.kI3vechU-lkp@intel.com/config)
-compiler: clang version 23.0.0git (https://github.com/llvm/llvm-project 5bac06718f502014fade905512f1d26d578a18f3)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260514/202605141138.kI3vechU-lkp@intel.com/reproduce)
+Best regards,
+-- 
+Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202605141138.kI3vechU-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/gpu/drm/msm/msm_gem.c:827:26: warning: unused variable 'priv' [-Wunused-variable]
-     827 |         struct msm_drm_private *priv = obj->dev->dev_private;
-         |                                 ^~~~
-   1 warning generated.
-
-
-vim +/priv +827 drivers/gpu/drm/msm/msm_gem.c
-
-4cd33c48ea25ba1 Rob Clark             2016-05-17  823  
-599089c6af68300 Rob Clark             2020-10-23  824  void msm_gem_purge(struct drm_gem_object *obj)
-68209390f116034 Rob Clark             2016-05-17  825  {
-68209390f116034 Rob Clark             2016-05-17  826  	struct drm_device *dev = obj->dev;
-6c7c8fb863f7c31 Rob Clark             2023-03-20 @827  	struct msm_drm_private *priv = obj->dev->dev_private;
-68209390f116034 Rob Clark             2016-05-17  828  	struct msm_gem_object *msm_obj = to_msm_bo(obj);
-68209390f116034 Rob Clark             2016-05-17  829  
-d4d7d3630d703ff Rob Clark             2022-08-02  830  	msm_gem_assert_locked(obj);
-90643a24a7bfbe9 Rob Clark             2021-04-05  831  	GEM_WARN_ON(!is_purgeable(msm_obj));
-68209390f116034 Rob Clark             2016-05-17  832  
-20d0ae2f8c72e36 Rob Clark             2021-04-05  833  	/* Get rid of any iommu mapping(s): */
-0b4339c55ef59ff Rob Clark             2025-06-29  834  	put_iova_spaces(obj, NULL, false, "purge");
-0e08270a1f01bce Sushmita Susheelendra 2017-06-13  835  
-599089c6af68300 Rob Clark             2020-10-23  836  	msm_gem_vunmap(obj);
-68209390f116034 Rob Clark             2016-05-17  837  
-81d4d597d4faadb Rob Clark             2021-04-05  838  	drm_vma_node_unmap(&obj->vma_node, dev->anon_inode->i_mapping);
-81d4d597d4faadb Rob Clark             2021-04-05  839  
-68209390f116034 Rob Clark             2016-05-17  840  	put_pages(obj);
-68209390f116034 Rob Clark             2016-05-17  841  
-c20ad1ee88c074c Boris Brezillon       2026-05-12  842  	mutex_lock(&dev->gem_lru_mutex);
-6c7c8fb863f7c31 Rob Clark             2023-03-20  843  	/* A one-way transition: */
-68209390f116034 Rob Clark             2016-05-17  844  	msm_obj->madv = __MSM_MADV_PURGED;
-c20ad1ee88c074c Boris Brezillon       2026-05-12  845  	mutex_unlock(&dev->gem_lru_mutex);
-68209390f116034 Rob Clark             2016-05-17  846  
-68209390f116034 Rob Clark             2016-05-17  847  	drm_gem_free_mmap_offset(obj);
-68209390f116034 Rob Clark             2016-05-17  848  
-68209390f116034 Rob Clark             2016-05-17  849  	/* Our goal here is to return as much of the memory as
-68209390f116034 Rob Clark             2016-05-17  850  	 * is possible back to the system as we are called from OOM.
-68209390f116034 Rob Clark             2016-05-17  851  	 * To do this we must instruct the shmfs to drop all of its
-68209390f116034 Rob Clark             2016-05-17  852  	 * backing pages, *now*.
-68209390f116034 Rob Clark             2016-05-17  853  	 */
-68209390f116034 Rob Clark             2016-05-17  854  	shmem_truncate_range(file_inode(obj->filp), 0, (loff_t)-1);
-68209390f116034 Rob Clark             2016-05-17  855  
-68209390f116034 Rob Clark             2016-05-17  856  	invalidate_mapping_pages(file_inode(obj->filp)->i_mapping,
-68209390f116034 Rob Clark             2016-05-17  857  			0, (loff_t)-1);
-68209390f116034 Rob Clark             2016-05-17  858  }
-68209390f116034 Rob Clark             2016-05-17  859  
-
---
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
