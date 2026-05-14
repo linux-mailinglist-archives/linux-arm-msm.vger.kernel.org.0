@@ -1,365 +1,667 @@
-Return-Path: <linux-arm-msm+bounces-107670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kK7HAw3sBWpAdgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:36:45 +0200
+	id ME1kKBXvBWpWdgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:49:41 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4A23544215
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:36:44 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AED4544431
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 17:49:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6A292308BCB9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 15:24:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id E4C4830091C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 15:44:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C957F42849E;
-	Thu, 14 May 2026 15:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EC58427A1D;
+	Thu, 14 May 2026 15:44:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="pgvz75ge"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="Nm/iTiOh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2595E4266BE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2026 15:23:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C909425CE1;
+	Thu, 14 May 2026 15:44:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778772229; cv=none; b=rVldVucgatQKM12NvLkm0lmlvSMB6ASex+zL3G8xZuz54Rekfv6FbtlQAxuQHo0bm21kcsOoLZdyoVzdqlrcmSmOIMwTuvJfZbyCv+mrofkqyDxOXBQWAmKM1Rqnhpmk9RwGNTRYBPJrnwmdEcKYm8TGF9ULWHf5z6nnZ+874rE=
+	t=1778773465; cv=none; b=bINFvRMFgdNy71CHVgVt2OKlqxwws0Qw1Smb8Itfb4E3L4NB4Mu+2HWXnpuo9Qf6lDo7ea1rvuZaGWXnFwhOIbWRw7mejO5PVDVBB6+daDrwFNJDlTuc50vJXiW/BHKABOeVUS7VBn6BrqOkmGF/lcjPvTrP3v6WuXXiL9xr3Z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778772229; c=relaxed/simple;
-	bh=UOMIBF6IJOiBHJ031b0CiERDKfflOx7IIddTWub9PkI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pYW5QVkxWPXlNSKqzMu4yExJwZCDmOrrLGrJ9Zyu/Fj/KIL/QzeHxIQcn/wu3Yu3jccEmYWiOBG9iCaa9eyz+nGGtGkq1q2yvYhGAhXCxpQ9xaH6/UbESw9LaULQzOWudt6jtl4sV6rcbJJ21aq5HeAXoUlaA5BIErICdqYlwT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=pgvz75ge; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-488e1a8ac40so77418165e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2026 08:23:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1778772226; x=1779377026; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+gKCjNZN7Myh92wsTwdDyQ4hRCAPzb5zU67ocdyFfL8=;
-        b=pgvz75ge3T3pHSXjcn5SK35lIsvHyNnjvKxGsk1OE1n1+GkVrHDOlAel/reR/ffZ66
-         8Qcdr5EqrphM+swYHeUSFA0GNDCG2n2v8Ht4+kZsD/D+aLdhS4Jc2O6vt+l4yIiw3Rj3
-         9GKlGwBgqAl+t/5vIS5AwdiEyHuRgQ7dTWqGGjIBzPC1Y86UcpVcuIlT7VjpEgyc8Bv9
-         guo3BZGH5CowE/Pqdi94y423KthAb2trDX0vSUI4sxMAeZ54t28gIi5OFFTCcGqurkAp
-         TO/ZucoFQWaqi9yUErHCg6U+LQz+sNZdi27KukZJJCYEMXBVFvrfXb62CHBPyOshjyhy
-         dLzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778772226; x=1779377026;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+gKCjNZN7Myh92wsTwdDyQ4hRCAPzb5zU67ocdyFfL8=;
-        b=Tx/lm0rbFqosFU76O2R99I518f7lIkN9P1zoQfk7qP3eZtD7O3Gf/tN9/cqAB8k9xG
-         hbV243shBs4F0Ymo91eXOEXvgPXzpFTJEIJlZz/Dz0VyGZUJloFaI4+3YE5JsSDLbz6O
-         UKaw2N1MK+exGzjORLiw70nm6UfG+GogYcfNSEX8Ci6FiHaB065jWUF7s12KNprVLduR
-         aB/Yk5oBWYTFxwceWdkCitYnia9cfb0wsEYZ2LqhezciLAfIuadUkC/zOPG0sxrYS3Wo
-         /T8tXd6eKrmOAgJaTbjkZtoeDBerNKIx8++5GORUBQwI1Yavpmfk3Py6pXBYXpfWOMXa
-         p8sA==
-X-Forwarded-Encrypted: i=1; AFNElJ9OplJbKMKrCPhXkImtFwv8DIEayWfPf4/NTgkS/xks9HK7dBMgaqkH/jJlyT/LSalgzE5aLNqUGHyiwszv@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYQU+a50PrHBK2//XHtMCXfKnVT7SzK3MqYcCfld2lfxNO8YLr
-	pc2TeMfm+s0FY+Q128kfPXB7iBhM5eEp8GxEPh+FC+XbH72hXgNoDay+Q7uGajcIgQ8=
-X-Gm-Gg: Acq92OGvhPcPMHHaH6l12PF5qomcbdwLTGbwQGZx6IILF9K6c4YLRmpy3S6QZXragr0
-	V4DO2zrMN3temmjvymX1kbMyVdqUOBl4Xf0OBcTV/PHN8OmUkgtV14sOSacOPCBBSjcUzLubZh1
-	sRRFGaKJ2vqLHHR0YawWe9uVw2KtPgymLTh778xzRl2D6NwlTTMzeD6uoMwSq39znZk94tsLQRT
-	rUBSd206rr3BiDPgWpVQUHl/iFZEfpyX3Fe128R9zzNt3MREljDa1P+QeeU97JTjnmW5E31lJGe
-	NXcSSXYncNssUn7nj5UxuI2sjWvaBvt8jP71ryIEJWayQkdRYcfm38uG21cDlv5/FaT9g8OYcqa
-	tTx9sj0C8sanw/zYxuP3u3r92YWkB+UIDnED7Rq+GCRiZcjX4pdG3zNENv/2Qu4fcBJp6vOmpLY
-	9cYOJSdgEWff1SNsxQ9X8UzlgVR/bR4CBficvelNlg+58Z2L8w5FCZ6triLnboTwcP8yYrtV44p
-	IL2WTcjChF5Xb0r9QOtdv//7ZbUiPNnkyjx8bZhgl3VJkAaoepx5gPClsDdBQ1LmuroawOQ8yEZ
-	7vA4Wrs6tC4AV1PBv5c=
-X-Received: by 2002:a05:600c:c104:b0:48f:e230:2a25 with SMTP id 5b1f17b1804b1-48fe2302b27mr16709485e9.32.1778772225397;
-        Thu, 14 May 2026 08:23:45 -0700 (PDT)
-Received: from aspen.lan (aztw-34-b2-v4wan-166919-cust780.vm26.cable.virginm.net. [82.37.195.13])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45d9ec39806sm7358296f8f.9.2026.05.14.08.23.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 May 2026 08:23:44 -0700 (PDT)
-Date: Thu, 14 May 2026 16:23:41 +0100
-From: Daniel Thompson <daniel@riscstar.com>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Alex Elder <elder@riscstar.com>, andrew+netdev@lunn.ch,
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-	pabeni@redhat.com, maxime.chevallier@bootlin.com,
-	rmk+kernel@armlinux.org.uk, andersson@kernel.org,
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, linusw@kernel.org, brgl@kernel.org,
-	arnd@arndb.de, gregkh@linuxfoundation.org,
-	mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com,
-	alexandre.torgue@foss.st.com, ast@kernel.org,
-	boon.khai.ng@altera.com, chenchuangyu@xiaomi.com,
-	chenhuacai@kernel.org, daniel@iogearbox.net, hawk@kernel.org,
-	hkallweit1@gmail.com, inochiama@gmail.com, john.fastabend@gmail.com,
-	julianbraha@gmail.com, livelycarpet87@gmail.com,
-	matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
-	prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
-	rohan.g.thomas@altera.com, sdf@fomichev.me,
-	siyanteng@cqsoftware.com.cn, weishangjuan@eswincomputing.com,
-	wens@kernel.org, netdev@vger.kernel.org, bpf@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next 12/12] arm64: dts: qcom: qcs6490-rb3gen2: enable
- TC9564 with a single QCS8081 phy
-Message-ID: <agXo_evi1oFLBJoo@aspen.lan>
-References: <20260501155421.3329862-1-elder@riscstar.com>
- <20260501155421.3329862-13-elder@riscstar.com>
- <01d6ea18-e022-41c7-a642-ac0321957923@oss.qualcomm.com>
- <agRzai1UoHEIotZe@aspen.lan>
- <3c6e7ec5-f600-44ee-a97a-211a99102744@lunn.ch>
+	s=arc-20240116; t=1778773465; c=relaxed/simple;
+	bh=ZXTe1nLJTuLAiWEkSBh53GqRFQNXjqgExh4lDd4Oz9k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=V+imqYZmCTZDUqBrbb32V0CKkLTpyBH2Bqsd8kdB655Y5E8OnZCwYmc2PGCpalKi7vSfa8jDMLolSTiCqPCdOaZyW7dus5LXOnGniFOkmv28vBpJ/Q2/Ffrsr16iw11yGx9W9yzn4AoUykRmnWUlOy+Gn40BykARyFekDqf74wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=Nm/iTiOh; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C8BE51BF3;
+	Thu, 14 May 2026 08:44:14 -0700 (PDT)
+Received: from [10.1.37.28] (e122027.cambridge.arm.com [10.1.37.28])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id AB5323F836;
+	Thu, 14 May 2026 08:44:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1778773460; bh=ZXTe1nLJTuLAiWEkSBh53GqRFQNXjqgExh4lDd4Oz9k=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Nm/iTiOhYaFoHlarhn0irtBzHzDfxIEVwqXAn1F8Kr03ssDh1+1dP8LgJ7EZn40p9
+	 3hgOLaV2E9hxbZxZOE6X/vMs0l9SvhmJJ/Xur6Q8n2pONhvl8BC+P1Y5cXxiH7lEmd
+	 J/NhWbgXMNWviiYATjQW1VQT054ZbeQTLhWahcfE=
+Message-ID: <903b21e7-5a44-431d-ab21-93726b2e97ac@arm.com>
+Date: Thu, 14 May 2026 16:44:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3c6e7ec5-f600-44ee-a97a-211a99102744@lunn.ch>
-X-Rspamd-Queue-Id: B4A23544215
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] drm/gem: Make the GEM LRU lock part of drm_device
+To: Boris Brezillon <boris.brezillon@collabora.com>,
+ Liviu Dudau <liviu.dudau@arm.com>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Akash Goel <akash.goel@arm.com>, Chia-I Wu <olvaffe@gmail.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ Rob Clark <rob.clark@oss.qualcomm.com>
+References: <20260512-panthor-shrinker-fixes-v3-1-3bf066259471@collabora.com>
+From: Steven Price <steven.price@arm.com>
+Content-Language: en-GB
+In-Reply-To: <20260512-panthor-shrinker-fixes-v3-1-3bf066259471@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 9AED4544431
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.06 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,riscstar.com,lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
-	TAGGED_FROM(0.00)[bounces-107670-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[riscstar-com.20251104.gappssmtp.com:+];
-	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	FREEMAIL_CC(0.00)[collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,arm.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-107671-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[arm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[daniel@riscstar.com,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[51];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
+	FROM_NEQ_ENVFROM(0.00)[steven.price@arm.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,aspen.lan:mid,1c:email,riscstar-com.20251104.gappssmtp.com:dkim]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,gitlab.freedesktop.org:url,collabora.com:email]
 X-Rspamd-Action: no action
 
-On Wed, May 13, 2026 at 04:35:13PM +0200, Andrew Lunn wrote:
-> > However the real reason we jammed this on is because I couldn't find a
-> > way to get the phy/mdio code to turn one on. However it is possible to
-> > add regulator support to MDIO devices by extending their existing logic
-> > to manage resets so it can also manage a regulator. It comes out fairly
-> > clean so we can add that to the patch set and remove the
-> > regulator-always-on.
->
-> We, I have rejected this before. It might look clean and easy, but it
-> is not. How do you determine the order of enabling reset, regulators
-> clocks? How do you specify the need sleeps in between these different
-> operations?
+On 12/05/2026 07:59, Boris Brezillon wrote:
+> Recently, a few races have been discovered in the GEM LRU logic, all
+> of them caused by the fact the LRU lock is accessed through
+> gem->lru->lock, and that very same lock also protects changes to
+> gem->lru, leading to situations where gem->lru needs to first be
+> accessed without the lock held, to then get the lru to access the lock
+> through and finally take the lock and do the expected operation.
+> 
+> Currently, the only driver making use of this API (MSM) declares a
+> device-wide lock, and the user we're about to add (panthor) will
+> do the same. There's no evidence that we will ever have a driver
+> that wants different pools of LRUs protected by different locks under
+> the same drm_device. So we're better off moving this lock to drm_device
+> and always locking it through obj->dev->gem_lru_mutex, or directly
+> through dev->gem_lru_mutex.
+> 
+> If anyone ever needs more fine-grained locking, this can be revisited
+> to pass some drm_gem_lru_pool object representing the pool of LRUs
+> under a specific lock, but for now, the per-device lock seems to be
+> enough.
+> 
+> Fixes: e7c2af13f811 ("drm/gem: Add LRU/shrinker helper")
+> Reported-by: Chia-I Wu <olvaffe@gmail.com>
+> Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
+> Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
+> Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+> Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 
-I agree it is only easy for the easy cases. I can even be specific
-that, for me, the easy cases mean enabling a single regulator and where
-power-on reset is not significantly slower than reset-pin reset
-meaning we don’t need to distinguish between a power-cycling reset and
-a reset-pin reset).
+As the kernel test robot points out there's some kerneldoc above
+drm_gem_lru_scan() which needs fixing. Also drm_gem_lru_init().
 
-However I think that complex cases cannot be handled by generic MDIO
-code. I think these cases are best solved from the MDIO probe method of
-individual PHY drivers.
+But with that fixed the non-msm parts are:
 
+Reviewed-by: Steven Price <steven.price@arm.com>
 
-> There is nothing in particular MDIO specific here, and there is
-> generic power sequencing code in the kernel. And a while back,
-> somebody said they would look at what is needed to make MDIO busses
-> and Ethernet PHYs make use of that generic power sequencing code. That
-> is the better way to do this.
+Thanks,
+Steve
 
-I’d love to know if they got anywhere. I’ve reviewed the pwrseq
-subsystem and I don’t think it is intended to solve the problems
-presented by the ethernet phys on a rb3gen2. Let me try to explain my
-reasoning. Maybe someone will be able to point out what I have missed!
+> ---
+> As reported by Chia-I [1], a race exists between drm_gem_lru_remove()
+> and drm_gem_lru_scan(), causing a UAF on a stack-allocated object.
+> 
+> This new version only keeps the last patch of the series that
+> addresses the problem more generically by moving the LRU lock to the
+> drm_device object.
+> 
+> [1]https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
+> ---
+> Changes in v3:
+> - Only keep patch 4 and flag it for backport
+> - Rebase on drm-misc-fixes
+> - Link to v2: https://lore.kernel.org/r/20260508-panthor-shrinker-fixes-v2-0-39cdb7d577c9@collabora.com
+> 
+> Changes in v2:
+> - Collect R-b
+> - Drop a useless obj->lru != NULL check in drm_gem_lru_scan()
+> - Fix another race introduced in patch 2
+> - Document why the lru != NULL check done without the lru lock held
+>   in drm_gem_lru_remove() is safe
+> - Add a patch to sanitize the GEM LRU locking: lock is now part of
+>   drm_device, meaning we don't have this chicken/egg problem where
+>   the lock that needs to acquired is under gem->lru->lock, and
+>   gem->lru is also supposed to be accessed with the lru->lock held
+> - Fix typos in commit messages and comments
+> - Link to v1: https://lore.kernel.org/r/20260506-panthor-shrinker-fixes-v1-0-e7721526de96@collabora.com
+> ---
+>  drivers/gpu/drm/drm_drv.c              |  2 ++
+>  drivers/gpu/drm/drm_gem.c              | 34 +++++++++++++++-------------------
+>  drivers/gpu/drm/msm/msm_drv.c          | 11 +++++------
+>  drivers/gpu/drm/msm/msm_drv.h          |  7 -------
+>  drivers/gpu/drm/msm/msm_gem.c          | 32 ++++++++++++++++----------------
+>  drivers/gpu/drm/msm/msm_gem_shrinker.c |  4 ++--
+>  drivers/gpu/drm/msm/msm_gem_submit.c   |  6 +++---
+>  drivers/gpu/drm/msm/msm_gem_vma.c      | 12 ++++++------
+>  drivers/gpu/drm/msm/msm_ringbuffer.c   |  6 +++---
+>  include/drm/drm_device.h               |  7 +++++++
+>  include/drm/drm_gem.h                  | 20 +++++++++-----------
+>  11 files changed, 68 insertions(+), 73 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
+> index 985c283cf59f..675675480da4 100644
+> --- a/drivers/gpu/drm/drm_drv.c
+> +++ b/drivers/gpu/drm/drm_drv.c
+> @@ -697,6 +697,7 @@ static void drm_dev_init_release(struct drm_device *dev, void *res)
+>  	mutex_destroy(&dev->master_mutex);
+>  	mutex_destroy(&dev->clientlist_mutex);
+>  	mutex_destroy(&dev->filelist_mutex);
+> +	mutex_destroy(&dev->gem_lru_mutex);
+>  }
+>  
+>  static int drm_dev_init(struct drm_device *dev,
+> @@ -738,6 +739,7 @@ static int drm_dev_init(struct drm_device *dev,
+>  	INIT_LIST_HEAD(&dev->vblank_event_list);
+>  
+>  	spin_lock_init(&dev->event_lock);
+> +	mutex_init(&dev->gem_lru_mutex);
+>  	mutex_init(&dev->filelist_mutex);
+>  	mutex_init(&dev->clientlist_mutex);
+>  	mutex_init(&dev->master_mutex);
+> diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
+> index d6424267260b..2b1ac2b02b14 100644
+> --- a/drivers/gpu/drm/drm_gem.c
+> +++ b/drivers/gpu/drm/drm_gem.c
+> @@ -1544,9 +1544,8 @@ EXPORT_SYMBOL(drm_gem_unlock_reservations);
+>   * @lock: The lock protecting the LRU
+>   */
+>  void
+> -drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock)
+> +drm_gem_lru_init(struct drm_gem_lru *lru)
+>  {
+> -	lru->lock = lock;
+>  	lru->count = 0;
+>  	INIT_LIST_HEAD(&lru->list);
+>  }
+> @@ -1571,14 +1570,10 @@ drm_gem_lru_remove_locked(struct drm_gem_object *obj)
+>  void
+>  drm_gem_lru_remove(struct drm_gem_object *obj)
+>  {
+> -	struct drm_gem_lru *lru = obj->lru;
+> -
+> -	if (!lru)
+> -		return;
+> -
+> -	mutex_lock(lru->lock);
+> -	drm_gem_lru_remove_locked(obj);
+> -	mutex_unlock(lru->lock);
+> +	mutex_lock(&obj->dev->gem_lru_mutex);
+> +	if (obj->lru)
+> +		drm_gem_lru_remove_locked(obj);
+> +	mutex_unlock(&obj->dev->gem_lru_mutex);
+>  }
+>  EXPORT_SYMBOL(drm_gem_lru_remove);
+>  
+> @@ -1593,7 +1588,7 @@ EXPORT_SYMBOL(drm_gem_lru_remove);
+>  void
+>  drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj)
+>  {
+> -	lockdep_assert_held_once(lru->lock);
+> +	lockdep_assert_held_once(&obj->dev->gem_lru_mutex);
+>  
+>  	if (obj->lru)
+>  		drm_gem_lru_remove_locked(obj);
+> @@ -1617,9 +1612,9 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail_locked);
+>  void
+>  drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj)
+>  {
+> -	mutex_lock(lru->lock);
+> +	mutex_lock(&obj->dev->gem_lru_mutex);
+>  	drm_gem_lru_move_tail_locked(lru, obj);
+> -	mutex_unlock(lru->lock);
+> +	mutex_unlock(&obj->dev->gem_lru_mutex);
+>  }
+>  EXPORT_SYMBOL(drm_gem_lru_move_tail);
+>  
+> @@ -1640,7 +1635,8 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail);
+>   * @ticket: Optional ww_acquire_ctx context to use for locking
+>   */
+>  unsigned long
+> -drm_gem_lru_scan(struct drm_gem_lru *lru,
+> +drm_gem_lru_scan(struct drm_device *dev,
+> +		 struct drm_gem_lru *lru,
+>  		 unsigned int nr_to_scan,
+>  		 unsigned long *remaining,
+>  		 bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket),
+> @@ -1650,9 +1646,9 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
+>  	struct drm_gem_object *obj;
+>  	unsigned freed = 0;
+>  
+> -	drm_gem_lru_init(&still_in_lru, lru->lock);
+> +	drm_gem_lru_init(&still_in_lru);
+>  
+> -	mutex_lock(lru->lock);
+> +	mutex_lock(&dev->gem_lru_mutex);
+>  
+>  	while (freed < nr_to_scan) {
+>  		obj = list_first_entry_or_null(&lru->list, typeof(*obj), lru_node);
+> @@ -1675,7 +1671,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
+>  		 * rest of the loop body, to reduce contention with other
+>  		 * code paths that need the LRU lock
+>  		 */
+> -		mutex_unlock(lru->lock);
+> +		mutex_unlock(&dev->gem_lru_mutex);
+>  
+>  		if (ticket)
+>  			ww_acquire_init(ticket, &reservation_ww_class);
+> @@ -1709,7 +1705,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
+>  
+>  tail:
+>  		drm_gem_object_put(obj);
+> -		mutex_lock(lru->lock);
+> +		mutex_lock(&dev->gem_lru_mutex);
+>  	}
+>  
+>  	/*
+> @@ -1721,7 +1717,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
+>  	list_splice_tail(&still_in_lru.list, &lru->list);
+>  	lru->count += still_in_lru.count;
+>  
+> -	mutex_unlock(lru->lock);
+> +	mutex_unlock(&dev->gem_lru_mutex);
+>  
+>  	return freed;
+>  }
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 195f40e331e5..cc2bcd14b1c2 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -128,11 +128,10 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv,
+>  	/*
+>  	 * Initialize the LRUs:
+>  	 */
+> -	mutex_init(&priv->lru.lock);
+> -	drm_gem_lru_init(&priv->lru.unbacked, &priv->lru.lock);
+> -	drm_gem_lru_init(&priv->lru.pinned,   &priv->lru.lock);
+> -	drm_gem_lru_init(&priv->lru.willneed, &priv->lru.lock);
+> -	drm_gem_lru_init(&priv->lru.dontneed, &priv->lru.lock);
+> +	drm_gem_lru_init(&priv->lru.unbacked);
+> +	drm_gem_lru_init(&priv->lru.pinned);
+> +	drm_gem_lru_init(&priv->lru.willneed);
+> +	drm_gem_lru_init(&priv->lru.dontneed);
+>  
+>  	/* Initialize stall-on-fault */
+>  	spin_lock_init(&priv->fault_stall_lock);
+> @@ -140,7 +139,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv,
+>  
+>  	/* Teach lockdep about lock ordering wrt. shrinker: */
+>  	fs_reclaim_acquire(GFP_KERNEL);
+> -	might_lock(&priv->lru.lock);
+> +	might_lock(&ddev->gem_lru_mutex);
+>  	fs_reclaim_release(GFP_KERNEL);
+>  
+>  	if (priv->kms_init) {
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index 6d847d593f1a..617b3c4b42c0 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -150,13 +150,6 @@ struct msm_drm_private {
+>  		 * DONTNEED state (ie. can be purged)
+>  		 */
+>  		struct drm_gem_lru dontneed;
+> -
+> -		/**
+> -		 * lock:
+> -		 *
+> -		 * Protects manipulation of all of the LRUs.
+> -		 */
+> -		struct mutex lock;
+>  	} lru;
+>  
+>  	struct notifier_block vmap_notifier;
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+> index 2cb3ab04f125..070f5fc4bc17 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -177,11 +177,11 @@ static void update_lru_locked(struct drm_gem_object *obj)
+>  
+>  static void update_lru(struct drm_gem_object *obj)
+>  {
+> -	struct msm_drm_private *priv = obj->dev->dev_private;
+> +	struct drm_device *dev = obj->dev;
+>  
+> -	mutex_lock(&priv->lru.lock);
+> +	mutex_lock(&dev->gem_lru_mutex);
+>  	update_lru_locked(obj);
+> -	mutex_unlock(&priv->lru.lock);
+> +	mutex_unlock(&dev->gem_lru_mutex);
+>  }
+>  
+>  static struct page **get_pages(struct drm_gem_object *obj)
+> @@ -292,11 +292,11 @@ void msm_gem_pin_obj_locked(struct drm_gem_object *obj)
+>  
+>  static void pin_obj_locked(struct drm_gem_object *obj)
+>  {
+> -	struct msm_drm_private *priv = obj->dev->dev_private;
+> +	struct drm_device *dev = obj->dev;
+>  
+> -	mutex_lock(&priv->lru.lock);
+> +	mutex_lock(&dev->gem_lru_mutex);
+>  	msm_gem_pin_obj_locked(obj);
+> -	mutex_unlock(&priv->lru.lock);
+> +	mutex_unlock(&dev->gem_lru_mutex);
+>  }
+>  
+>  struct page **msm_gem_pin_pages_locked(struct drm_gem_object *obj)
+> @@ -487,16 +487,16 @@ int msm_gem_pin_vma_locked(struct drm_gem_object *obj, struct drm_gpuva *vma)
+>  
+>  void msm_gem_unpin_locked(struct drm_gem_object *obj)
+>  {
+> -	struct msm_drm_private *priv = obj->dev->dev_private;
+> +	struct drm_device *dev = obj->dev;
+>  	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+>  
+>  	msm_gem_assert_locked(obj);
+>  
+> -	mutex_lock(&priv->lru.lock);
+> +	mutex_lock(&dev->gem_lru_mutex);
+>  	msm_obj->pin_count--;
+>  	GEM_WARN_ON(msm_obj->pin_count < 0);
+>  	update_lru_locked(obj);
+> -	mutex_unlock(&priv->lru.lock);
+> +	mutex_unlock(&dev->gem_lru_mutex);
+>  }
+>  
+>  /* Special unpin path for use in fence-signaling path, avoiding the need
+> @@ -507,10 +507,10 @@ void msm_gem_unpin_locked(struct drm_gem_object *obj)
+>   */
+>  void msm_gem_unpin_active(struct drm_gem_object *obj)
+>  {
+> -	struct msm_drm_private *priv = obj->dev->dev_private;
+> +	struct drm_device *dev = obj->dev;
+>  	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+>  
+> -	GEM_WARN_ON(!mutex_is_locked(&priv->lru.lock));
+> +	GEM_WARN_ON(!mutex_is_locked(&dev->gem_lru_mutex));
+>  
+>  	msm_obj->pin_count--;
+>  	GEM_WARN_ON(msm_obj->pin_count < 0);
+> @@ -797,12 +797,12 @@ void msm_gem_put_vaddr(struct drm_gem_object *obj)
+>   */
+>  int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
+>  {
+> -	struct msm_drm_private *priv = obj->dev->dev_private;
+> +	struct drm_device *dev = obj->dev;
+>  	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+>  
+>  	msm_gem_lock(obj);
+>  
+> -	mutex_lock(&priv->lru.lock);
+> +	mutex_lock(&dev->gem_lru_mutex);
+>  
+>  	if (msm_obj->madv != __MSM_MADV_PURGED)
+>  		msm_obj->madv = madv;
+> @@ -814,7 +814,7 @@ int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
+>  	 */
+>  	update_lru_locked(obj);
+>  
+> -	mutex_unlock(&priv->lru.lock);
+> +	mutex_unlock(&dev->gem_lru_mutex);
+>  
+>  	msm_gem_unlock(obj);
+>  
+> @@ -839,10 +839,10 @@ void msm_gem_purge(struct drm_gem_object *obj)
+>  
+>  	put_pages(obj);
+>  
+> -	mutex_lock(&priv->lru.lock);
+> +	mutex_lock(&dev->gem_lru_mutex);
+>  	/* A one-way transition: */
+>  	msm_obj->madv = __MSM_MADV_PURGED;
+> -	mutex_unlock(&priv->lru.lock);
+> +	mutex_unlock(&dev->gem_lru_mutex);
+>  
+>  	drm_gem_free_mmap_offset(obj);
+>  
+> diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+> index 31fa51a44f86..c07af9602fee 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+> @@ -186,7 +186,7 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+>  		if (!stages[i].cond)
+>  			continue;
+>  		stages[i].freed =
+> -			drm_gem_lru_scan(stages[i].lru, nr,
+> +			drm_gem_lru_scan(priv->dev, stages[i].lru, nr,
+>  					 &stages[i].remaining,
+>  					 stages[i].shrink,
+>  					 &ticket);
+> @@ -255,7 +255,7 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
+>  	unsigned long remaining = 0;
+>  
+>  	for (idx = 0; lrus[idx] && unmapped < vmap_shrink_limit; idx++) {
+> -		unmapped += drm_gem_lru_scan(lrus[idx],
+> +		unmapped += drm_gem_lru_scan(priv->dev, lrus[idx],
+>  					     vmap_shrink_limit - unmapped,
+>  					     &remaining,
+>  					     vmap_shrink,
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index 26ea8a28be47..3c6bc90c3d48 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -352,7 +352,7 @@ static int submit_fence_sync(struct msm_gem_submit *submit)
+>  
+>  static int submit_pin_objects(struct msm_gem_submit *submit)
+>  {
+> -	struct msm_drm_private *priv = submit->dev->dev_private;
+> +	struct drm_device *dev = submit->dev;
+>  	int i, ret = 0;
+>  
+>  	for (i = 0; i < submit->nr_bos; i++) {
+> @@ -381,11 +381,11 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
+>  	 * get_pages() which could trigger reclaim.. and if we held the LRU lock
+>  	 * could trigger deadlock with the shrinker).
+>  	 */
+> -	mutex_lock(&priv->lru.lock);
+> +	mutex_lock(&dev->gem_lru_mutex);
+>  	for (i = 0; i < submit->nr_bos; i++) {
+>  		msm_gem_pin_obj_locked(submit->bos[i].obj);
+>  	}
+> -	mutex_unlock(&priv->lru.lock);
+> +	mutex_unlock(&dev->gem_lru_mutex);
+>  
+>  	submit->bos_pinned = true;
+>  
+> diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+> index 1a952b171ed7..c4cfe036066b 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_vma.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+> @@ -702,7 +702,7 @@ static struct dma_fence *
+>  msm_vma_job_run(struct drm_sched_job *_job)
+>  {
+>  	struct msm_vm_bind_job *job = to_msm_vm_bind_job(_job);
+> -	struct msm_drm_private *priv = job->vm->drm->dev_private;
+> +	struct drm_device *dev = job->vm->drm;
+>  	struct msm_gem_vm *vm = to_msm_vm(job->vm);
+>  	struct drm_gem_object *obj;
+>  	int ret = vm->unusable ? -EINVAL : 0;
+> @@ -745,13 +745,13 @@ msm_vma_job_run(struct drm_sched_job *_job)
+>  	if (ret)
+>  		msm_gem_vm_unusable(job->vm);
+>  
+> -	mutex_lock(&priv->lru.lock);
+> +	mutex_lock(&dev->gem_lru_mutex);
+>  
+>  	job_foreach_bo (obj, job) {
+>  		msm_gem_unpin_active(obj);
+>  	}
+>  
+> -	mutex_unlock(&priv->lru.lock);
+> +	mutex_unlock(&dev->gem_lru_mutex);
+>  
+>  	/* VM_BIND ops are synchronous, so no fence to wait on: */
+>  	return NULL;
+> @@ -1305,7 +1305,7 @@ vm_bind_job_pin_objects(struct msm_vm_bind_job *job)
+>  			return PTR_ERR(pages);
+>  	}
+>  
+> -	struct msm_drm_private *priv = job->vm->drm->dev_private;
+> +	struct drm_device *dev = job->vm->drm;
+>  
+>  	/*
+>  	 * A second loop while holding the LRU lock (a) avoids acquiring/dropping
+> @@ -1314,10 +1314,10 @@ vm_bind_job_pin_objects(struct msm_vm_bind_job *job)
+>  	 * get_pages() which could trigger reclaim.. and if we held the LRU lock
+>  	 * could trigger deadlock with the shrinker).
+>  	 */
+> -	mutex_lock(&priv->lru.lock);
+> +	mutex_lock(&dev->gem_lru_mutex);
+>  	job_foreach_bo (obj, job)
+>  		msm_gem_pin_obj_locked(obj);
+> -	mutex_unlock(&priv->lru.lock);
+> +	mutex_unlock(&dev->gem_lru_mutex);
+>  
+>  	job->bos_pinned = true;
+>  
+> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
+> index 30ddb5351e98..2d6b930b766e 100644
+> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
+> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+> @@ -16,13 +16,13 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+>  	struct msm_gem_submit *submit = to_msm_submit(job);
+>  	struct msm_fence_context *fctx = submit->ring->fctx;
+>  	struct msm_gpu *gpu = submit->gpu;
+> -	struct msm_drm_private *priv = gpu->dev->dev_private;
+> +	struct drm_device *dev = gpu->dev;
+>  	unsigned nr_cmds = submit->nr_cmds;
+>  	int i;
+>  
+>  	msm_fence_init(submit->hw_fence, fctx);
+>  
+> -	mutex_lock(&priv->lru.lock);
+> +	mutex_lock(&dev->gem_lru_mutex);
+>  
+>  	for (i = 0; i < submit->nr_bos; i++) {
+>  		struct drm_gem_object *obj = submit->bos[i].obj;
+> @@ -32,7 +32,7 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+>  
+>  	submit->bos_pinned = false;
+>  
+> -	mutex_unlock(&priv->lru.lock);
+> +	mutex_unlock(&dev->gem_lru_mutex);
+>  
+>  	/* TODO move submit path over to using a per-ring lock.. */
+>  	mutex_lock(&gpu->lock);
+> diff --git a/include/drm/drm_device.h b/include/drm/drm_device.h
+> index bc78fb77cc27..768a8dae83c5 100644
+> --- a/include/drm/drm_device.h
+> +++ b/include/drm/drm_device.h
+> @@ -375,6 +375,13 @@ struct drm_device {
+>  	 * Root directory for debugfs files.
+>  	 */
+>  	struct dentry *debugfs_root;
+> +
+> +	/**
+> +	 * @gem_lru_mutex:
+> +	 *
+> +	 * Lock protecting movement of GEM objects between LRUs.
+> +	 */
+> +	struct mutex gem_lru_mutex;
+>  };
+>  
+>  void drm_dev_set_dma_dev(struct drm_device *dev, struct device *dma_dev);
+> diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
+> index 86f5846154f7..8a704f6a65c1 100644
+> --- a/include/drm/drm_gem.h
+> +++ b/include/drm/drm_gem.h
+> @@ -245,17 +245,11 @@ struct drm_gem_object_funcs {
+>   * for lockless &shrinker.count_objects, and provides
+>   * &drm_gem_lru_scan for driver's &shrinker.scan_objects
+>   * implementation.
+> + *
+> + * Any access to this kind of object must be done with
+> + * drm_device::gem_lru_mutex held.
+>   */
+>  struct drm_gem_lru {
+> -	/**
+> -	 * @lock:
+> -	 *
+> -	 * Lock protecting movement of GEM objects between LRUs.  All
+> -	 * LRUs that the object can move between should be protected
+> -	 * by the same lock.
+> -	 */
+> -	struct mutex *lock;
+> -
+>  	/**
+>  	 * @count:
+>  	 *
+> @@ -453,6 +447,9 @@ struct drm_gem_object {
+>  	 * @lru:
+>  	 *
+>  	 * The current LRU list that the GEM object is on.
+> +	 *
+> +	 * Access to this field must be done with drm_device::gem_lru_mutex
+> +	 * held.
+>  	 */
+>  	struct drm_gem_lru *lru;
+>  };
+> @@ -610,12 +607,13 @@ void drm_gem_unlock_reservations(struct drm_gem_object **objs, int count,
+>  int drm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
+>  			    u32 handle, u64 *offset);
+>  
+> -void drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock);
+> +void drm_gem_lru_init(struct drm_gem_lru *lru);
+>  void drm_gem_lru_remove(struct drm_gem_object *obj);
+>  void drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj);
+>  void drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj);
+>  unsigned long
+> -drm_gem_lru_scan(struct drm_gem_lru *lru,
+> +drm_gem_lru_scan(struct drm_device *dev,
+> +		 struct drm_gem_lru *lru,
+>  		 unsigned int nr_to_scan,
+>  		 unsigned long *remaining,
+>  		 bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket),
+> 
+> ---
+> base-commit: b2ed01e7ad3de80333e9b962a44024b094bc0b2b
+> change-id: 20260506-panthor-shrinker-fixes-58c1f45cfc41
+> 
+> Best regards,
 
-I’m afraid this must be necessarily long but to help navigate the
-general structure is:
-
- 1. Quick review of the pwrseq subsystem
- 2. Quick review of the PCI power control driver, both the concept and
-    to note why some PCI power control drivers do not use pwrseq
- 3. Summarize how this works on DT
- 4. Introduce a description of an qca8081 in “modern devicetree”
- 5. Examine whether pwrseq or the power control driver concept would
-    make writing MDIO device drivers easier than “just doing it in the
-    probe method”
-
-pwrseq is only generic in the sense that has a compact consumer API and
-that it provides reusable tools that allow *specific* power sequencing
-drivers to be written relatively easily. The specific drivers created
-with these tools typically bind to something concrete in the DT (e.g.
-compatible = "pcie-m2-m-connector" or "qcom,wcn6855-pmu"): things you
-can point to such as the M.2 slot or a special purpose power management
-unit in a combo chip.
-
-The pwrseq core allows each driver to register a .match() method to
-allow pwrseq driver recognise that another driver has asked for its
-help to enable a pwrseq target. They usually match, not by compatible
-but by traversing the phandle relationships from the device’s DT node
-to verify that they link back to the pwrseq driver in the expected
-manner.
-
-For ethernet phys I'm doubtful pwrseq offers any benefit because most
-phys are standalone and therefore just get a bunch of board level
-regulators: there isn’t anything concrete in the DT for which we can
-instantiate a pwrseq device. Without a device it is difficult to fire
-up a driver that is responsible for knowing what power sequence is
-needed to activate the phy. It is therefore better to encode this
-knowledge in the phy driver instead.
-
-Another related-but-different concept is PCI power control drivers.
-When pwrseq was introduced the first client was a PCI power control
-driver. PCI power control drivers are used to solve chicken-and-egg bus
-enumeration problems. They work binding a platform bus driver to any
-PCI device with a compatible string (e.g. compatible = "pci17cb,1103")
-before attempting to enumerate the real device. The platform device
-driver responsible for turning on the power ready for enumeration but
-does not drive the actual PCI device. This ensures the device can
-respond to enumeration requests and, eventually, probe the “real” PCI
-driver.
-
-Note that the PCI power control drivers do not have to use the pwrseq
-framework to turn the power on. There are examples of both in the
-current tree:
-
-* pci-pwrctrl-pwrseq.c uses pwrseq and is, at it's core, just table of
-  compatible strings and pwrseq target names. This allows it recognize,
-  from the compatible string what pwrseq target to request.
-  For example on wcn6855 it can request that only the WLAN hardware
-  be enabled (BT power-on is requested separately before using the
-  HCI UART).
-
-* pci-pwrctrl-tc9563.c is the power controller driver for the
-  TC956x PCIe switch. This is an example of the case where there
-  is nothing for a pwrseq driver to bind to. TC956x just gets a bunch
-  of individual regulators and a reset line. For that reason
-  pci-pwrctrl-tc9563 just uses the regular C code to grab everything
-  is needs, relying on things like the bulk regulator helpers keep the
-  code as compact as possible.
-
-One key insight about the above is that there are three separate device
-drivers parsing specific properties of the node. Having all the
-properties related to a device in a single node was very strongly
-pushed for by Rob H[1] and AFAIK is a key expectation for new DT
-bindings. This strongly influences the scope of pwrseq and PCI power
-control (and power domains) and discourages giving DT a generic means
-to express power sequencing. That knowledge is handed to us implicitly
-by the compatible string!
-
-For example, in the case of WCN6855[2] we have:
-
-1. pci-pwrctrl-pwrseq which uses the compatible string to get itself
-   bound and to decide what pwrseq target to enable.
-2. pwrseq-qcom-wcn which reads all the *-supply properties together
-   with a couple of clocks and enable lines. It ensures we don't
-   enable anything until the power lines have settled.
-3. ath11k[_pci] which isn’t probed until the device is “on” and
-   then reads the remaining properties such as qcom,calibration-variant
-
-[1]: https://lore.kernel.org/all/CAL_JsqLAnJqZ95_bf6_fFmPJFMjuy43UfP2UxzEmFMNnG_t-Ug@mail.gmail.com/
-[2]: https://github.com/torvalds/linux/blob/master/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts#L987C1-L1004C3
-
-In short, the pwrseq client API is beguilingly simple but that does not
-mean the providers are generic. In the above example there must still
-be something, written in C, that contains knowledge of how to turn on a
-wcn6855.
-
-Let’s turn our attention to MDIO.
-
-Following the pattern above where all the links related to power come
-from the main device node, then the phy node for the qca8081 in an
-rb3gen2 would look like something like this:
-
-    tc956x_emac1_phy: ethernet-phy@1c {
-        compatible = "ethernet-phy-id004d.d101";
-        reg = <0x1c>;
-
-        reset-gpios = <&tc956x_emac0 1 GPIO_ACTIVE_LOW>;
-        # On RB3gen2 all supplies are controlled by a single GPIO
-        # so we link all supplies to that single regulator
-        avdd-supply = <&qep_1p8>;
-        avdd18-supply = <&qep_1p8>;
-        vdd-supply = <&qep_1p8>;
-        vddldo-supply = <&qep_1p8>;
-        vdd18-supply = <&qep_1p8>;
-        vdd125-supply = <&qep_1p8>;
-
-        pinctrl-names = "default";
-        pinctrl-0 = <&qep_irq_pin>;
-        interrupts-extended = <&tlmm 101 IRQ_TYPE_LEVEL_LOW>;
-    };
-
-Once we have established what the DT looks like then the question
-becomes where to put "something, written in C [or Rust], that contains
-burned in knowledge of how to turn on a wcn6855^H^H^H^H^H^H^Hqca8081"?
-
-The qca8081 on rb3gen2 just gets a bunch of individual regulators and a
-reset. As in the pci-pwrctrl-tc9563 example above, this means there is
-nothing in the DT for a pwrseq driver to bind to. Even if we could find
-a way to do that, it is not obviously useful to decouple how to turn on
-an MDIO device from how to drive it. Thus I think the right answer to
-that is to put the code to fire up the regulators into the qca808x.c
-driver and it looks to me like the existing probe/remove methods would
-already work perfectly well as the place to put it.
-
-Does MDIO bus code need to know about pwrseq at all? I don't think so.
-Perhaps there are phys that are suitable to be managed via pwrseq
-because they are part of a larger ethernet chip with some kind of PMU,
-but that doesn’t require it to be exposed outside the driver. The
-drivers for such a phy can simply call the pwrseq APIs from its probe
-method.
-
-Do we need something equivalent to PCI power control for the MDIO bus?
-I don't think the same chicken-and-egg problem actually exists for MDIO
-bus. If a subnode with a compatible string (and regulators) exists we
-don't need to scan that address because we already know enough about
-the bus to probe the driver and therefore can let the driver handle
-turning on the power (just like we do for I2C or SPI drivers).
-
-MDIO does have bus scanning but we only need to scan for things we
-don’t know about and must do so on the assumption they are already
-powered on. That’s because when we don’t know what’s there then your
-earlier question ("How do you determine the order of enabling reset,
-regulators clocks?") is impossible to answer. There could be a generic
-bus-supply property to handle easy cases where a single regulator
-activates everything on the bus although this isn’t needed on RB3gen2
-since we statically know what is on the bus.
-
-If you've got this far and not found a fatal mistake in the reasoning
-then perhaps it sounds like an awful lot of churn to have to modify
-each PHY driver every time that PHY is used in an embedded platform
-with software controlled regulators!
-
-That, in a nutshell, is why I was tempted to copy the phy-supply
-property to cover the "easy cases" we discussed at the outset. Doing so
-does nothing to impede the hard cases since the code for that would
-still work fine from the MDIO probe method. At worst a driver might
-have to register with a flag to suppress any generic power/reset logic
-from the core (since it's obviously wrong to wait for a reset to
-complete on a device that isn't powered up).
-
-To be clear I’m very happy to back away from phy-supply. We use the same
-patterns we see in I2C and SPI drivers and rely purely on probe methods
-instead to turn on regulators. However I don’t see how to exploit power
-sequencing code to help describe these things generically.
-
-
-Daniel.
 
