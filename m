@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-107663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MKVDMrTfBWr4cwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:44:04 +0200
+	id UM/kLZngBWr4cwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:47:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 417775435C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:44:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 35797543716
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:47:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7D38F30C78F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 14:38:01 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 658DF30F0B61
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 14:39:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36D8C421EFF;
-	Thu, 14 May 2026 14:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B322340B6EB;
+	Thu, 14 May 2026 14:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rZ8WJmD3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CQM4bx0s"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118E740FD9B;
-	Thu, 14 May 2026 14:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD813FFAAE;
+	Thu, 14 May 2026 14:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778769460; cv=none; b=pL7GPM+2pLbCNX2xEXBrCdaezOI+kyj33ZfJclwnpRBqq9VjsFRVE4ePl6Qu4481OEXd1fbUFWpSUjRs2RA2ksbJyS6kVHmyf3/twXyZRjuNh6/ua4CssDfhdq38u2sYVlElV/MDwV3Ohuf8REqZaOaUbDrhPFBXkLy3qpeTS8g=
+	t=1778769562; cv=none; b=gagkXK5r9SDKt2kKw6vdBEess+gdKKhAaYsL/+emyJXWPSqGywhuwtfj0NXafUShs2AbrIhT+ISTg3P5SpenpezkHZUBAO+omOUGrsNGjbKk16iEu4rMDuRMOQk+ZzT6Wri67cnXf5JWYU/xCkc+45qYuEgU+TiIs/fmHLcv0/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778769460; c=relaxed/simple;
-	bh=5OPhjYvg1XCLhMTe0Zoo3kYdgFxqiwicl5MN1s+nxC0=;
+	s=arc-20240116; t=1778769562; c=relaxed/simple;
+	bh=2eLDu+cIB6WpZJ+7MDE6H6VTqgwPFx5S6MkD59FtGV4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=r2wC/cmRSjAd6huVC9jEJtrYtAaJX2FxMTGNglizq76GPHi6hKS+Q8Z3guy9k8/MiC2gRAPsaD3cH2QNY4mimWEtTLa7UjEwZh8EnMsAw9wZ4BAxZyzPyzJJJBaefPfZb0SB4ZBWrIZngqfY+gP0WjIVW6/V0oD/RvcZJAjGqBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rZ8WJmD3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67720C2BCB8;
-	Thu, 14 May 2026 14:37:36 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=nPmXa0FI/NY1WWm36Krjx2N+bQWQrjUefb5Rm/vDlyi1z/c+9EbzRW0NHQ0muCpXuVbilayzw+qMHzZmQH8pEK/sv96ukyV4sacaN1vIHFeYTYGoYFuII6vLzdP4QrFNlvLu2iiIL6arl5TnUA9ZSwpkn2DFogOy9tdCUYGlS/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CQM4bx0s; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B94EC2BCB3;
+	Thu, 14 May 2026 14:39:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778769459;
-	bh=5OPhjYvg1XCLhMTe0Zoo3kYdgFxqiwicl5MN1s+nxC0=;
+	s=k20201202; t=1778769562;
+	bh=2eLDu+cIB6WpZJ+7MDE6H6VTqgwPFx5S6MkD59FtGV4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rZ8WJmD3jE5YEH9Nmylv1lmcebcTp8GQx+2H1dIqhq6E2D/1K6/+MriHPngsNDx/l
-	 wazb+mXIH0R64f0HVkJ+H/wi0i9DhIU944fG/UoAmkSj2QKQHrYiDLq9IJsWBt1IIb
-	 PFVGUJIP7x5CmBhCmkb7LDq/NG1tiiyvHOZ1Da/+gvd+Sh1uEAwa72//OkezihkhJ/
-	 g1z/5RMVJzTAmTWm8Kl1sZzImPOGYJ2+Gc18kHFwR59yhtK1aYf3RHn4Jn5LPfr2Pz
-	 6KRX7yWhOwIoiuBBR6gQHI9m8LTWterJCiWEdLUWzvG0GUMovP7bN9ojTwrLza11Fu
-	 yBFBCJhpZ4zGg==
-Message-ID: <9ed7c714-07c1-48de-8d27-cbe24356c606@kernel.org>
-Date: Thu, 14 May 2026 16:37:34 +0200
+	b=CQM4bx0sTTQjRRH48096Desv5d5lyA5WrCx/XTR0bcq9ZZ+UKVS+hOcK3oqX6BdEi
+	 ygoGZmI1I+80cb8SarcPcwYDXxLKCvEu6SlNB/dGs4aVk6+iW0WLBvmodgQYRJQAAM
+	 NmF2T5q6cdm7gw0t41tpIeYiQEMPfm5yoELezcpiTt72ViR5/BNoFvMrVUXknE20fa
+	 evqU5PDJAzPSb+wldiCPl1l9IEfvHLWbPZPEVjSGXPU9sBaseOkkube/Vf3DcJCSrU
+	 +5oAJBsvifMhAcwnZaDPn1LVyZzQ3MkAZSdl2S53C3PSB/HqKoKnr9r+eJIuxC6ygw
+	 1FFHe7YxXpBWg==
+Message-ID: <27cc44d7-b3d1-4610-8257-4aad4115cd36@kernel.org>
+Date: Thu, 14 May 2026 16:39:17 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,32 +53,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: Add
- support for Shikra
-To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Vinod Koul
- <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH 1/2] dt-bindings: cpufreq: qcom-hw: Document Shikra
+ CPUFREQ Hardware
+To: Imran Shaik <imran.shaik@oss.qualcomm.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
+ Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>,
- Johan Hovold <johan+linaro@kernel.org>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>,
- Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260504170659.282532-1-krishna.kurapati@oss.qualcomm.com>
- <20260504170659.282532-3-krishna.kurapati@oss.qualcomm.com>
- <20260505-gifted-salamander-of-prowess-5107a6@quoll>
- <8cd564af-9646-40c5-a8ef-c7197fb3cfe9@kernel.org>
- <95b567cc-b83c-4154-9520-e624555f1882@oss.qualcomm.com>
- <29571bdd-23bf-42a7-a9e3-918a28c79700@kernel.org>
- <62161822-2365-4ec7-80f7-8660bdadb177@oss.qualcomm.com>
- <40b5e0f6-bc61-4750-9560-bdcc268f0fe3@kernel.org>
- <d52c5039-9431-44ed-9f3b-bb00d03ae176@oss.qualcomm.com>
- <5baeeeed-7c18-46f7-82a3-5bb299ba05ef@kernel.org>
- <42ba6ac7-306a-419f-96b6-3427c51ef567@oss.qualcomm.com>
+ <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
+ Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+ Taniya Das <taniya.das@oss.qualcomm.com>,
+ Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20260501-shikra-cpufreq-scaling-v1-0-c78b95f53b91@oss.qualcomm.com>
+ <20260501-shikra-cpufreq-scaling-v1-1-c78b95f53b91@oss.qualcomm.com>
+ <20260504-fuzzy-wapiti-of-ampleness-d8bc13@quoll>
+ <8101e2c8-0593-4325-a701-84f776dd4b0a@oss.qualcomm.com>
+ <eebae734-3b03-4848-a728-a29d8a210e57@kernel.org>
+ <dfc3039b-c45c-44d3-85c0-0d131bb5e55a@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -124,138 +116,107 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <42ba6ac7-306a-419f-96b6-3427c51ef567@oss.qualcomm.com>
+In-Reply-To: <dfc3039b-c45c-44d3-85c0-0d131bb5e55a@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 417775435C7
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 35797543716
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107663-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-107664-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,linaro];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On 14/05/2026 08:22, Krishna Kurapati wrote:
+On 08/05/2026 18:03, Imran Shaik wrote:
 > 
 > 
-> On 5/14/2026 12:26 AM, Krzysztof Kozlowski wrote:
->> On 07/05/2026 13:37, Krishna Kurapati wrote:
+> On 05-05-2026 02:23 pm, Krzysztof Kozlowski wrote:
+>> On 05/05/2026 10:50, Imran Shaik wrote:
 >>>
 >>>
->>> On 5/5/2026 7:30 PM, Krzysztof Kozlowski wrote:
->>>> On 05/05/2026 15:57, Krishna Kurapati wrote:
->>>>>
->>>>>
->>>>> On 5/5/2026 6:59 PM, Krzysztof Kozlowski wrote:
->>>>>> On 05/05/2026 15:27, Krishna Kurapati wrote:
->>>>>>>
->>>>>>>
->>>>>>> On 5/5/2026 4:22 PM, Krzysztof Kozlowski wrote:
->>>>>>>> On 05/05/2026 12:49, Krzysztof Kozlowski wrote:
->>>>>>>>> On Mon, May 04, 2026 at 10:36:57PM +0530, Krishna Kurapati wrote:
->>>>>>>>>> Declare the USB-C QMP PHY present on the Qualcomm Shikra platform.
->>>>>>>>>>
->>>>>>>>>> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
->>>>>>>>>> ---
->>>>>>>>>>      .../devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml      | 2 ++
->>>>>>>>>>      1 file changed, 2 insertions(+)
->>>>>>>>>
->>>>>>>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
->>>>>>>>
->>>>>>>> ... and then I looked at the driver. So un-reviewed. Devices are clearly
->>>>>>>> compatible. If not, explain what is not compatible.
->>>>>>>>
->>>>>>> Talos uses GCC_USB3_PRIM_PHY_AUX_CLK.
->>>>>>>
->>>>>>> In Shikra, we are using GCC_USB3_PRIM_PHY_COM_AUX_CLK. We don't have
->>>>>>> GCC_USB3_PRIM_PHY_AUX_CLK.
->>>>>>>
->>>>>>> Hence, I didn't use a fallback compatible.
->>>>>>
->>>>>> This still explains nothing. How different clock makes interface for SW
->>>>>> incompatible exactly?
->>>>>>
->>>>> So I went by the naming. AUX vs COM_AUX.
+>>> On 04-05-2026 03:53 pm, Krzysztof Kozlowski wrote:
+>>>> On Fri, May 01, 2026 at 12:45:44PM +0530, Imran Shaik wrote:
+>>>>> The Qualcomm Shikra cpufreq hardware is functionally identical to EPSS,
+>>>>> but supports only up to 12 frequency lookup table (LUT) entries. Introduce
+>>>>> qcom,cpufreq-epss-lite to represent this constrained EPSS variant.
 >>>>
->>>> The naming does not matter. If the clock is called
->>>> "no_one_expects_spanish_inquisition", does that make software
->>>> incompatible? Why would the name itself matter?
+>>>> The entire point of having a generic compatible is that it MUST match
+>>>> all devices. If it does not, then it is pointless to push that generic
+>>>> compatible.
 >>>>
->>>>>
->>>>> Can I use a fallback compatible and in DT vote for "COM_AUX" clock with
->>>>> clock-names mentioning "aux" ?
+>>>> I am speaking about qcom,cpufreq-epss.
 >>>>
->>>> I don't know, I asked what is different in software interface.
+>>>> That's nothing new, I was arguing about it already, but now you have
+>>>> confirmation of the mess introduced by generic compatibles. Solution is
+>>>> not to add more generic compatibles, because what will be next?
+>>>> qcom,cpufreq-epss-lighter?
+>>>> qcom,cpufreq-epss-more-lite?
+>>>> qcom,cpufreq-epss-high?
+>>>>
+>>>> Same was here:
+>>>> https://lore.kernel.org/all/20240828203721.2751904-17-quic_nkela@quicinc.com/
+>>>>
+>>>> So that's second time I object and do object for every new instance. No
+>>>> to generic compatibles, they are proven to be wrong at least for
+>>>> Qualcomm.
+>>>>
+>>>> Best regards,
+>>>> Krzysztof
 >>>>
 >>>
 >>> Hi Krzysztof,
 >>>
->>>    I checked with the hw team here and found out two things.
+>>> There is no functional change to the latest EPSS hardware
+>>> (qcom,cpufreq-epss) in this case. The Shikra platform uses the CPU
+>>> frequency scaling block, which is a predecessor of EPSS and is referred
+>>> to as EPSS‑lite. The only difference between EPSS‑lite and EPSS is the
+>>> maximum number of frequency look up table (LUT) entries.
 >>>
->>>    1. Shikra is a spinoff of Agatti and its sw interface (clocks used and
->>> regulators used) is the same as agatti.
->>>
->>>    2. I thought we could use qcm2290 as a fallback since the phy register
->>> init sequence is the same for Talos/Shikra/Agatti. The difference
->>> between Talos and agatti when checked in the driver was the init load
->>> settings. I checked with the hw team and they suggested using the init
->>> load settings which talos was using.
->>>
->>>    Hence both these compatibles (qcm2290 and qcs615) cannot be used as
->>> fallback for Shikra.
+>>> This constrained EPSS block is not specific to Shikra and can be reused
+>>> by other SoCs that implement the same hardware. Hence, we have added a
+>>> separate epss-lite compatible and reused the existing bindings, as all
+>>> other aspects of the hardware behavior and interface remain identical.
 >>
->> Then I do not understand why you are using qcs615_usb3phy_cfg for
->> Shikra. You say that the initialization is different, but you use
->> exactly the same initialization. So in a meaning of compatibility
->> between hardware for Devicetree they are compatible.
+>> I don't understand how any of this is relevant to my comment. I know
+>> what you did.
 >>
+> 
 > Hi Krzysztof,
 > 
->   There are 3 things:
-> 
-> 1. Clocks used:
-> -> Talos supports AUX Clock since it supports DP over USB.
-> -> Agatti and Shikra use COM_AUX clock since they dont support DP over USB.
-> 
-> 2. Phy register Init sequence - same for all 3 targets
-> 
-> 3. Regulator init load:
-> -> Different for both Talos and Agatti
-> -> Recommendation is to use Talos regulator load values.
-> 
-> SW interface wise, shikra is comaptible with agatti. If we use agatti as 
-> fallback, we would end up using the platform data of Agatti where the 
-> regulator init load is not suitable for Shikra. Hence not using Agatti 
-> as fallback.
-> 
-> Coming to driver changes, I used qcs615_cfg because it has required phy 
-> register sequence and regulator init load as needed by shikra.
+> The intent behind proposing an epss-lite compatible was to describe a 
+> common hardware variant and avoid introducing SoC‑specific handling in 
+> the cpufreq driver.
 
-So is it compatible with QCS615? If not, then something is incomplete or
-confusing. The driver uses the same software interface.
+And I already objected. Look:
+
+"So that's second time I object and do object for every new instance. No
+to generic compatibles"
+
+I provided arguments for that in the past.
+
+NAK
 
 Best regards,
 Krzysztof
