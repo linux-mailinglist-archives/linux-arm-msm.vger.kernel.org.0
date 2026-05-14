@@ -1,55 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-107537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eCwqE+RzBWocXQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 09:04:04 +0200
+	id +F2tAehzBWocXQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 09:04:08 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BB2753EA7A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 09:04:03 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0461253EA9D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 09:04:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 715B33016B64
+	by sin.lore.kernel.org (Postfix) with ESMTP id EF00830171CB
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 07:04:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47EAC3C199E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 497923D0BE4;
 	Thu, 14 May 2026 07:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NdHQZFOg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xzd1pJ15"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238403F4110;
-	Thu, 14 May 2026 07:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238E73A6F1C;
+	Thu, 14 May 2026 07:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778742242; cv=none; b=SdLH7XcVY9oeNQC0jhlFlyE4FODYvJGHx/WFfqhJZjLIUul/Q5IE9ajtDZ9ydZxtofvzMOVpLFEk/3sOmK7XgotaeibrekWfJGiBGP0gbgZYLgYHiFy8SDwkNm1NR7gZ+5sFadYhVtzQixnXO0xQJQBBEhvDvvc5hS/3zr1/mz4=
+	t=1778742242; cv=none; b=dtbeZcrFDWI6TReFtbHz8CfE2bWbwLyIXJ5YCgaNQkdPeCYHuEKOy7XwCfrKYLKiXztEaNs4Q8e3YAocbiL46xgLhymb07JTnXKqJEqdn7yTVh4hMnMKoZ6M12Eywlz244qEQt8PIUCZUo5kY+f8eOHAWtM5Ay71Grea7q3QEB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1778742242; c=relaxed/simple;
-	bh=elyyTlHLLfNzd6l3H0FL9Cz6LRQxDUIlfmi0kRxxO9E=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=LGbvbx3MsJr7RtAYbY92kQVTVJUUtVljm2SJEbqt/G2aiFVMtkyyZF7Lpe5iKtUw56B+DAan44eoBOKWHVKbEOsQK57XUi+3fveJJfgzog7hpeq5obuI9+hnLkDBHNri0O7BGBgIO/33Jj/0y7TWIpw51TE+NB2aN3Dd851XTsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NdHQZFOg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C0425C2BCB7;
+	bh=gnBNB2f/S7tRA17HfkNyztEuzXrqrHY6BCF9ckDYP48=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=e5GfmLrtCaNgqPR9iiJL87z4qBwzrJuoEitvAEUh/kJjVJeGyA7h6JYHqjFAGhM1/KhNmlAkLbIIuYPC/rwZol5YREGnJTSXaUtNGS0TeUg8sFE6m8f4Wk9i41lZSqkIv5JNGnuYZBWAL8m7aBCwJSxYMQtiQPNNXPm0RPhC1uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xzd1pJ15; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D3CEEC2BCC6;
 	Thu, 14 May 2026 07:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1778742241;
-	bh=elyyTlHLLfNzd6l3H0FL9Cz6LRQxDUIlfmi0kRxxO9E=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=NdHQZFOg4fvaeuLVIuVuF6WqqBCI5SP6PNoVASTucmcjqvEzhMpy3rGLC3UygvLsp
-	 Ey+VwbHKQin+vUd0pkzQ6u13qsvjNb0Dnlk4464zpHAGA1zS021rh2JXxduBeABoTh
-	 cXOxmf26FXQpMCK+YMy/zawFaDqZHZmaN+2bFdkehY4m1Grnq4OfeB1Ioh7lKhk1LR
-	 to58mpjtC+rI2NtXfjWZR5t45LPYaQa5ZXAXq4LKHqH0sm1Sh9LlrWlkiiC15oBw5a
-	 WuWCQihbP3kMIIZDHgDCf2CpA8yQm8T/+VhRZHWkaCTnazmNiqAnkiVFXeSidOPKWC
-	 hXxa+gEIbAL9Q==
+	bh=gnBNB2f/S7tRA17HfkNyztEuzXrqrHY6BCF9ckDYP48=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=Xzd1pJ15eSBSN/5GwUPQXWlqBPYSDgGgtd2MlkJlTP8mJaUeGWww2i2KSv2cApewU
+	 /7MVXabedbI8Fw8ZhDKA1u+ECJMmgiWUNVMGrjw9DSVuhEeAg7tGxOAHTxAJ7Oxpyg
+	 Krv35TFv2updKCw5bOqI+J9W0CeE81j8kLZfZBq3RqPf8dHFL9LLY3NIy6qxZKUPlZ
+	 +n7zufpNdZlK0iFtYOLDOS8n8STXk6lvgr4Q/Lb5cWl8W9k7Ok6pA2MdJwCmEyDP/L
+	 qmC/hMD69tRp7vNSxYuVvM80asJtquzgFMvkN/8fys2F9bhlfh2ScQzVX4UEAWhLeY
+	 zQ36+9Sn3A3qw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF8BDCD4F39;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3937CD4F25;
 	Thu, 14 May 2026 07:04:01 +0000 (UTC)
 From: Rudraksha Gupta via B4 Relay <devnull+guptarud.gmail.com@kernel.org>
-Subject: [PATCH 0/3] Add cpufreq to MSM8960
-Date: Thu, 14 May 2026 00:03:59 -0700
-Message-Id: <20260514-expressatt_cpufreq-v1-0-487fd2d78859@gmail.com>
+Date: Thu, 14 May 2026 00:04:00 -0700
+Subject: [PATCH 1/3] dt-bindings: soc: qcom: saw2: Rename MSM8960 SAW2
+ compatible to v1.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,12 +59,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4XN0W6DIBTG8VcxXO80oILVLMveY2kMwkHJpHaAp
- EvTdx/Wm2Y3vfyT7/y4kYDeYiBdcSMekw12OedgbwVRkzyPCFbnJiUtBeWsArxePIYgY+zVZTU
- ef0AIUR0HedSMC5IP88DY6wP9Ou2dZ2u24/5I3CY87K5432n6TENcVjV94y8kBgxMozXXg6iR6
- s/RSTsf1OI+tr9eSb2SDr3szSzDBIkDhZbzsuZUyKZtX2o1Zc+aWXHux3XbpGqzRFMro+jAZfn
- PGmRAyOFs7IrUHCg53e9/5tTtTHABAAA=
-X-Change-ID: 20260513-expressatt_cpufreq-66638ba8d156
+Message-Id: <20260514-expressatt_cpufreq-v1-1-487fd2d78859@gmail.com>
+References: <20260514-expressatt_cpufreq-v1-0-487fd2d78859@gmail.com>
+In-Reply-To: <20260514-expressatt_cpufreq-v1-0-487fd2d78859@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -71,30 +69,30 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1778742241; l=3190;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1778742241; l=1155;
  i=guptarud@gmail.com; s=20240916; h=from:subject:message-id;
- bh=elyyTlHLLfNzd6l3H0FL9Cz6LRQxDUIlfmi0kRxxO9E=;
- b=adAQ86t2E9Pn6umm47Qn+rUyfPMy/OFEixbhV9nt3P7UFwHbRLRI7fNOuINyw84yMC7CwDYRk
- g2c6AIttcVaCAJIZP/EIUG6prgzQQ06VhHUwO/PmytSB5CscdM7y1qt
+ bh=kNjii0mqGqmFn4GGiHWFBoaRtbaipmmzXSF2oiS82cc=;
+ b=oHPl67Wu2/1eEYL7Ap56R6la/LoJQOJlgUWbNVXT9BpjaTveGN63qmGT5W00v6e06kE2IVR5Q
+ JB0al5j5FOODpa+vw1qPw7WDP2OEMQ/CeLcSbil6uAoeK3731gsNqkO
 X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
  pk=ETrudRugWAtOpr0OhRiheQ1lXM4Kk4KGFnBySlKDi2I=
 X-Endpoint-Received: by B4 Relay for guptarud@gmail.com/20240916 with
  auth_id=211
 X-Original-From: Rudraksha Gupta <guptarud@gmail.com>
 Reply-To: guptarud@gmail.com
-X-Rspamd-Queue-Id: 1BB2753EA7A
+X-Rspamd-Queue-Id: 0461253EA9D
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107537-lists,linux-arm-msm=lfdr.de,guptarud.gmail.com];
+	TAGGED_FROM(0.00)[bounces-107538-lists,linux-arm-msm=lfdr.de,guptarud.gmail.com];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_REPLYTO(0.00)[gmail.com];
@@ -112,90 +110,40 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-Similar to APQ8064, cpufreq is enabled with this small patch series.
+From: Rudraksha Gupta <guptarud@gmail.com>
 
-Tests:
+Rename qcom,msm8960-saw2-cpu to qcom,msm8960-saw2-v1.1-cpu to follow
+the naming convention used by other SAW2 compatibles that include the
+hardware version (e.g. qcom,apq8064-saw2-v1.1-cpu).
 
-// Show available frequencies
-$ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies
-384000 486000 594000 702000 810000 918000 1026000 1080000 1134000 1242000 1350000 1512000
-$ cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_available_frequencies
-384000 486000 594000 702000 810000 918000 1026000 1080000 1134000 1242000 1350000 1512000
- 
-// Show current governor
-$ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-schedutil
-$ cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
-schedutil
- 
-// set low freq
-$ echo 384000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-$ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
-384000
- 
-// set mid freq
-$ echo 1026000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-$ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
-1026000
- 
-// set max freq
-$ echo 1512000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-$ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
-1512000
- 
-// set low freq
-$ echo 384000 > /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
-$ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
-384000
- 
-// set mid freq
-$ echo 1026000 > /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
-$ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
-1026000
- 
-// set max freq
-$ echo 1512000 > /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
-$ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
-1512000
- 
-// SAW2 regulators
-$ cat /sys/class/regulator/regulator.*/microvolts 2>/dev/null | head -2
-1200000
-1150000
+The MSM8960 uses SAW2 v1.1, the same hardware version as the APQ8064.
 
+Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
 ---
-Rudraksha Gupta (3):
-      dt-bindings: soc: qcom: saw2: Rename MSM8960 SAW2 compatible to v1.1
-      soc: qcom: spm: Add MSM8960 SAW2 CPU support
-      ARM: dts: qcom: msm8960: Add CPU frequency scaling support
+ Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- .../devicetree/bindings/soc/qcom/qcom,saw2.yaml    |   2 +-
- arch/arm/boot/dts/qcom/qcom-msm8960.dtsi           | 133 ++++++++++++++++++++-
- drivers/soc/qcom/spm.c                             |  20 +++-
- 3 files changed, 151 insertions(+), 4 deletions(-)
----
-base-commit: 3131ff5a117498bb4b9db3a238bb311cbf8383ce
-change-id: 20260513-expressatt_cpufreq-66638ba8d156
-prerequisite-message-id: <20260503-expressatt-touchkey-v1-1-f7dd5db64e0d@gmail.com>
-prerequisite-patch-id: 8de4de7909722ccaf385c4224f25a623eaa72c28
-prerequisite-message-id: <20260503-expressatt_camera_flash-v5-0-95524506a799@gmail.com>
-prerequisite-patch-id: ab8b8d87fd2d518c4c5b5dace3f22238d1abbe49
-prerequisite-patch-id: a6ab585bad167db61d13b10c3912018ec94cdfd9
-prerequisite-patch-id: 7ef7df61e7ef6476a35811d765f522f793d9ecc7
-prerequisite-message-id: <20260401-expressatt_fuel_guage-v3-0-9674cfc0b5a2@gmail.com>
-prerequisite-patch-id: 27c37aa51fe76043b4998137d106689ed5ae6c91
-prerequisite-patch-id: e477ee37abf167c55659f5e591b070b176187ca7
-prerequisite-patch-id: 9680b63831f2be63607bff2175639c1987af5e85
-prerequisite-patch-id: ee275dc3aec6159072d0a9efb66d18468a72ad57
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+index c2f1f5946cfa..ff0e2697a7c6 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+@@ -37,7 +37,7 @@ properties:
+           - qcom,msm8939-saw2-v3.0-cpu
+           - qcom,msm8226-saw2-v2.1-cpu
+           - qcom,msm8226-saw2-v2.1-l2
+-          - qcom,msm8960-saw2-cpu
++          - qcom,msm8960-saw2-v1.1-cpu
+           - qcom,msm8974-saw2-v2.1-cpu
+           - qcom,msm8974-saw2-v2.1-l2
+           - qcom,msm8976-gold-saw2-v2.3-l2
 
-Best regards,
 -- 
-Rudraksha Gupta <guptarud@gmail.com>
+2.54.0
 
 
 
