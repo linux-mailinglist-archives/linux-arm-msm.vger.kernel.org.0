@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-107662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yCz/KUnhBWpsdAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:50:49 +0200
+	id MKVDMrTfBWr4cwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:44:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1E525437A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:50:48 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 417775435C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:44:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id DD86D303358F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 14:35:04 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7D38F30C78F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 14:38:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8458340F8F4;
-	Thu, 14 May 2026 14:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36D8C421EFF;
+	Thu, 14 May 2026 14:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GEEEmAqS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rZ8WJmD3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA7840DFA0;
-	Thu, 14 May 2026 14:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118E740FD9B;
+	Thu, 14 May 2026 14:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778769279; cv=none; b=O+ywljqIBMmXGAeaehd24zYh0ovfLGtIct761BleoBIyz81ny2ummcSzdE8s5A80Oll92Mc+yBpfAw7VkPctS4UT3YkLDeSfvMBptbPCjLC15VkE5EOLRD2oP0WaRn/icN6pSC0/5AfBmrkAIjVO008PmAbbP72BHV0/YdQnzA4=
+	t=1778769460; cv=none; b=pL7GPM+2pLbCNX2xEXBrCdaezOI+kyj33ZfJclwnpRBqq9VjsFRVE4ePl6Qu4481OEXd1fbUFWpSUjRs2RA2ksbJyS6kVHmyf3/twXyZRjuNh6/ua4CssDfhdq38u2sYVlElV/MDwV3Ohuf8REqZaOaUbDrhPFBXkLy3qpeTS8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778769279; c=relaxed/simple;
-	bh=sIm7xyoGq/3jQyavKbDg6WxX1bxs1qeDt2+PDlTROoc=;
+	s=arc-20240116; t=1778769460; c=relaxed/simple;
+	bh=5OPhjYvg1XCLhMTe0Zoo3kYdgFxqiwicl5MN1s+nxC0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DanVAKkOF9S8RiLG3SY2NgqZQfNoj7jZuqreOgXc4nmRaF3nECdQnHczkDy2Z68e48HuWXgte920Wgx1oI2Ip0Rkb4QITekSG+H+Cei4fZlomD5qXenAWRQVmbywdEkHCFNwcGHU+g5BcRgdIrBQlZmwb3cWZcb5mCXIUDElnPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GEEEmAqS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CBDC2BCB3;
-	Thu, 14 May 2026 14:34:33 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=r2wC/cmRSjAd6huVC9jEJtrYtAaJX2FxMTGNglizq76GPHi6hKS+Q8Z3guy9k8/MiC2gRAPsaD3cH2QNY4mimWEtTLa7UjEwZh8EnMsAw9wZ4BAxZyzPyzJJJBaefPfZb0SB4ZBWrIZngqfY+gP0WjIVW6/V0oD/RvcZJAjGqBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rZ8WJmD3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67720C2BCB8;
+	Thu, 14 May 2026 14:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778769279;
-	bh=sIm7xyoGq/3jQyavKbDg6WxX1bxs1qeDt2+PDlTROoc=;
+	s=k20201202; t=1778769459;
+	bh=5OPhjYvg1XCLhMTe0Zoo3kYdgFxqiwicl5MN1s+nxC0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=GEEEmAqSwkI9NSzSJvGgB6wN7trGDIJ+ORtGRNF2fxyRc+Iqz6iRg45Z8foHpqsla
-	 Ip1H9upOtoUUFWjwBhVYogWIiSIribnF68I+rEiDlCsgLoekpENS+MhU1+RpYDOorX
-	 b1gdudOe2+p7OA2kklmLpjmcI0whPWfDuWA3ocKVpfK+FnB78o2oJW0VEkqU5RAZ2v
-	 bK3QaaMap+T4YQh3so6G5UoTqOTUXslzw/1AEqOGjSsmg+GbG/wrbFnqnWNgHAbV4l
-	 Y1WnknSMqrw4Q4YVWPPEvNdVohIVkxRPtb9Jez1sfnNBx8qOPHmNhAwyOmfoWLctH0
-	 IYh2z2nTTvRZA==
-Message-ID: <a4b317cd-2ed1-46c1-b66e-675a56d3308c@kernel.org>
-Date: Thu, 14 May 2026 16:34:31 +0200
+	b=rZ8WJmD3jE5YEH9Nmylv1lmcebcTp8GQx+2H1dIqhq6E2D/1K6/+MriHPngsNDx/l
+	 wazb+mXIH0R64f0HVkJ+H/wi0i9DhIU944fG/UoAmkSj2QKQHrYiDLq9IJsWBt1IIb
+	 PFVGUJIP7x5CmBhCmkb7LDq/NG1tiiyvHOZ1Da/+gvd+Sh1uEAwa72//OkezihkhJ/
+	 g1z/5RMVJzTAmTWm8Kl1sZzImPOGYJ2+Gc18kHFwR59yhtK1aYf3RHn4Jn5LPfr2Pz
+	 6KRX7yWhOwIoiuBBR6gQHI9m8LTWterJCiWEdLUWzvG0GUMovP7bN9ojTwrLza11Fu
+	 yBFBCJhpZ4zGg==
+Message-ID: <9ed7c714-07c1-48de-8d27-cbe24356c606@kernel.org>
+Date: Thu, 14 May 2026 16:37:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,31 +53,32 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/14] dt-bindings: media: qcom,venus: Remove clock,
- power-domain, and iommus from common schema
-To: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Hans Verkuil <hverkuil@kernel.org>,
- Stefan Schmidt <stefan.schmidt@linaro.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v2 2/4] dt-bindings: phy: qcom,msm8998-qmp-usb3-phy: Add
+ support for Shikra
+To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, Vinod Koul
+ <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
- Del Regno <angelogioacchino.delregno@collabora.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- iommu@lists.linux.dev, devicetree@vger.kernel.org
-References: <20260509-glymur-v5-0-7fbb340c5dbd@oss.qualcomm.com>
- <20260509-glymur-v5-4-7fbb340c5dbd@oss.qualcomm.com>
- <35zfskmyogpazxy7wsw2jg36fvpnnc7hng23j4heq2jy5ookai@q7d2vl7nn7ck>
- <fc188af5-ec7e-bebb-2654-62312d79e60f@oss.qualcomm.com>
- <kdbo5d2wibjfnchfw7xn3wcgcp5r6ff7pw3ibkpbqzjgfhkovp@v4er4hdiytks>
- <f1fe6e8c-9a16-3103-fbe8-de772bc4728a@oss.qualcomm.com>
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>,
+ Johan Hovold <johan+linaro@kernel.org>,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>,
+ Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260504170659.282532-1-krishna.kurapati@oss.qualcomm.com>
+ <20260504170659.282532-3-krishna.kurapati@oss.qualcomm.com>
+ <20260505-gifted-salamander-of-prowess-5107a6@quoll>
+ <8cd564af-9646-40c5-a8ef-c7197fb3cfe9@kernel.org>
+ <95b567cc-b83c-4154-9520-e624555f1882@oss.qualcomm.com>
+ <29571bdd-23bf-42a7-a9e3-918a28c79700@kernel.org>
+ <62161822-2365-4ec7-80f7-8660bdadb177@oss.qualcomm.com>
+ <40b5e0f6-bc61-4750-9560-bdcc268f0fe3@kernel.org>
+ <d52c5039-9431-44ed-9f3b-bb00d03ae176@oss.qualcomm.com>
+ <5baeeeed-7c18-46f7-82a3-5bb299ba05ef@kernel.org>
+ <42ba6ac7-306a-419f-96b6-3427c51ef567@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -123,28 +124,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <f1fe6e8c-9a16-3103-fbe8-de772bc4728a@oss.qualcomm.com>
+In-Reply-To: <42ba6ac7-306a-419f-96b6-3427c51ef567@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: A1E525437A6
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 417775435C7
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107662-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-107663-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[25];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
@@ -152,48 +153,109 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,linaro];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
 X-Rspamd-Action: no action
 
-On 13/05/2026 20:54, Vishnu Reddy wrote:
+On 14/05/2026 08:22, Krishna Kurapati wrote:
 > 
-> On 5/13/2026 6:59 PM, Dmitry Baryshkov wrote:
->> On Sat, May 09, 2026 at 10:34:15PM +0530, Vishnu Reddy wrote:
->>> On 5/9/2026 12:52 AM, Dmitry Baryshkov wrote:
->>>> On Sat, May 09, 2026 at 12:29:53AM +0530, Vishnu Reddy wrote:
->>>>> The common schema defines minItems and maxItems for clocks, power-domains,
->>>>> and iommus. This suggests that the number of these resources can vary,
->>>>> while in reality they are fixed constraints per platform.
->>>> It really doesn't. It provides common definitions, while individual
->>>> platform schemas tighten those.
->>> If a new platform requires more resources than the current maxItems listed in
->>> the common-schema (e.g.,Glymur due to its dual vcodec core design), we need
->>> to keep bumping maxItems in the common schema every time a new platform exceeds
->>> the previous limit. That makes the common schema a moving target driven by
->>> platform specific.
+> 
+> On 5/14/2026 12:26 AM, Krzysztof Kozlowski wrote:
+>> On 07/05/2026 13:37, Krishna Kurapati wrote:
 >>>
->>> I am fine with increasing maxItems in the common schema instead of removing.
->>> I can set it to a reasonable value (for example, up to 20) so that it
->>> accommodates future platforms without frequent changes. Anyway, each platform
->>> schema must define fixed constraints, since clocks and power-domains are
->>> mandatory per platform.
 >>>
->>> Could you please let me know which one you would prefer going forward?
->> Just touch venus-common when new platform requires bigger lists.
+>>> On 5/5/2026 7:30 PM, Krzysztof Kozlowski wrote:
+>>>> On 05/05/2026 15:57, Krishna Kurapati wrote:
+>>>>>
+>>>>>
+>>>>> On 5/5/2026 6:59 PM, Krzysztof Kozlowski wrote:
+>>>>>> On 05/05/2026 15:27, Krishna Kurapati wrote:
+>>>>>>>
+>>>>>>>
+>>>>>>> On 5/5/2026 4:22 PM, Krzysztof Kozlowski wrote:
+>>>>>>>> On 05/05/2026 12:49, Krzysztof Kozlowski wrote:
+>>>>>>>>> On Mon, May 04, 2026 at 10:36:57PM +0530, Krishna Kurapati wrote:
+>>>>>>>>>> Declare the USB-C QMP PHY present on the Qualcomm Shikra platform.
+>>>>>>>>>>
+>>>>>>>>>> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+>>>>>>>>>> ---
+>>>>>>>>>>      .../devicetree/bindings/phy/qcom,msm8998-qmp-usb3-phy.yaml      | 2 ++
+>>>>>>>>>>      1 file changed, 2 insertions(+)
+>>>>>>>>>
+>>>>>>>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+>>>>>>>>
+>>>>>>>> ... and then I looked at the driver. So un-reviewed. Devices are clearly
+>>>>>>>> compatible. If not, explain what is not compatible.
+>>>>>>>>
+>>>>>>> Talos uses GCC_USB3_PRIM_PHY_AUX_CLK.
+>>>>>>>
+>>>>>>> In Shikra, we are using GCC_USB3_PRIM_PHY_COM_AUX_CLK. We don't have
+>>>>>>> GCC_USB3_PRIM_PHY_AUX_CLK.
+>>>>>>>
+>>>>>>> Hence, I didn't use a fallback compatible.
+>>>>>>
+>>>>>> This still explains nothing. How different clock makes interface for SW
+>>>>>> incompatible exactly?
+>>>>>>
+>>>>> So I went by the naming. AUX vs COM_AUX.
+>>>>
+>>>> The naming does not matter. If the clock is called
+>>>> "no_one_expects_spanish_inquisition", does that make software
+>>>> incompatible? Why would the name itself matter?
+>>>>
+>>>>>
+>>>>> Can I use a fallback compatible and in DT vote for "COM_AUX" clock with
+>>>>> clock-names mentioning "aux" ?
+>>>>
+>>>> I don't know, I asked what is different in software interface.
+>>>>
+>>>
+>>> Hi Krzysztof,
+>>>
+>>>    I checked with the hw team here and found out two things.
+>>>
+>>>    1. Shikra is a spinoff of Agatti and its sw interface (clocks used and
+>>> regulators used) is the same as agatti.
+>>>
+>>>    2. I thought we could use qcm2290 as a fallback since the phy register
+>>> init sequence is the same for Talos/Shikra/Agatti. The difference
+>>> between Talos and agatti when checked in the driver was the init load
+>>> settings. I checked with the hw team and they suggested using the init
+>>> load settings which talos was using.
+>>>
+>>>    Hence both these compatibles (qcm2290 and qcs615) cannot be used as
+>>> fallback for Shikra.
+>>
+>> Then I do not understand why you are using qcs615_usb3phy_cfg for
+>> Shikra. You say that the initialization is different, but you use
+>> exactly the same initialization. So in a meaning of compatibility
+>> between hardware for Devicetree they are compatible.
+>>
+> Hi Krzysztof,
 > 
-> In the v3 series, I followed same approach — bumping maxItems in venus-common
-> schema to accommodate the Glymur platform while keeping fixed constraints in
-> the Glymur-specific schema:
-> https://lore.kernel.org/all/20260428-glymur-v3-2-8f28930f47d3@oss.qualcomm.com/
+>   There are 3 things:
 > 
+> 1. Clocks used:
+> -> Talos supports AUX Clock since it supports DP over USB.
+> -> Agatti and Shikra use COM_AUX clock since they dont support DP over USB.
+> 
+> 2. Phy register Init sequence - same for all 3 targets
+> 
+> 3. Regulator init load:
+> -> Different for both Talos and Agatti
+> -> Recommendation is to use Talos regulator load values.
+> 
+> SW interface wise, shikra is comaptible with agatti. If we use agatti as 
+> fallback, we would end up using the platform data of Agatti where the 
+> regulator init load is not suitable for Shikra. Hence not using Agatti 
+> as fallback.
+> 
+> Coming to driver changes, I used qcs615_cfg because it has required phy 
+> register sequence and regulator init load as needed by shikra.
 
-The approach taken at v3 was correct and I ONLY commented about very
-confusing commit msg which told that you relaxed constraints. You must
-not relax constraints, so commit msg claiming that you relax them is
-obviously incorrect. Each device must have a fixed, as in non-relaxed,
-constraints, thus making them relaxed (not fixed) is wrong.
+So is it compatible with QCS615? If not, then something is incomplete or
+confusing. The driver uses the same software interface.
 
 Best regards,
 Krzysztof
