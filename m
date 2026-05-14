@@ -1,213 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-107678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CB7qEif1BWpVdwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 18:15:35 +0200
+	id iI+7Dvz1BWpVdwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 18:19:08 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA89C544867
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 18:15:34 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DDA85448EC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 18:19:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A8E643013A6B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:15:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A24F73030EB7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 May 2026 16:17:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6861334C39;
-	Thu, 14 May 2026 16:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E275C3346A0;
+	Thu, 14 May 2026 16:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="MHb8489x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="logxfDzj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C703F4132;
-	Thu, 14 May 2026 16:15:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF814332918;
+	Thu, 14 May 2026 16:17:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778775313; cv=none; b=Lt6ep+PUnTp/gcDmLn2KKCW6s0SPvbXVw377QNbhqFj8BuVtif3uHVQOHKVzfW2qThlZjWwSzJDzGfiHTKIGjCVZjbykr4e9xu5uAWnDRUTTMxXZIgJJWDDfcBFRHX19jsLOnBTTMma2gpw/IXkh/8yuZAiqq3WjOhKYnVtQCnU=
+	t=1778775447; cv=none; b=nilLFrGlFKZNjR3jiGz8JS0Kpfg83DqOglGlZgloMzlt6/31OeaDgjO9KgzUN0hER4HfrQi8x2+cXqtQINclFrkrRG+LEj7aVjp5Zxyz5jEZJNbrJZSOtdcedm4gn1c83ubLACgL1ZXLCOGVdTFNqgeAav8dQXxvutSzFlEAPFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778775313; c=relaxed/simple;
-	bh=QaLPJbfJQww7S7O77K7IbSknP+7RC/p4rdgdP9IQW+g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tJAldRmjrycVvEo2Le90JlonF6bXVElj4mqUyIpUDf/U9sP2VHqIFxQ5vm6Fng20emk6z/ZUc5ZTOsdKhPf1LN4et/Qnu1xrZnsh2LDt+FsWhbYAsjTmubnwDnPRjoDRNFmJIiCklcexaIdXEX6cjIjEJjdGp/IYQEf+T3qZAgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=MHb8489x; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Transfer-Encoding:Content-Disposition:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:
-	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Content-Disposition:
-	In-Reply-To:References; bh=/0vlkD0eChacF5ETVs9gmQqQ0rk59QxBVpBmKOtfWuM=; b=MH
-	b8489xnA2ZxWUKc2vcNPg4J9fYfFtGzkdsdG0R2HUXd3IdFjthQWSwF9nbq0QRP0ufXfJArwfA0nB
-	B3GM5alMzhJoYuJLsJqMjxhoA+Fl1XFy0QStBr/zLnR/6LqkhTy5nd/UWuARxD6XpBBnKlm05OKqh
-	mMq21XRqy3xEaP8=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1wNYhL-002vrb-Oy; Thu, 14 May 2026 18:14:07 +0200
-Date: Thu, 14 May 2026 18:14:07 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Daniel Thompson <daniel@riscstar.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Alex Elder <elder@riscstar.com>, andrew+netdev@lunn.ch,
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-	pabeni@redhat.com, maxime.chevallier@bootlin.com,
-	rmk+kernel@armlinux.org.uk, andersson@kernel.org,
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, linusw@kernel.org, brgl@kernel.org,
-	arnd@arndb.de, gregkh@linuxfoundation.org,
-	mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com,
-	alexandre.torgue@foss.st.com, ast@kernel.org,
-	boon.khai.ng@altera.com, chenchuangyu@xiaomi.com,
-	chenhuacai@kernel.org, daniel@iogearbox.net, hawk@kernel.org,
-	hkallweit1@gmail.com, inochiama@gmail.com, john.fastabend@gmail.com,
-	julianbraha@gmail.com, livelycarpet87@gmail.com,
-	matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
-	prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
-	rohan.g.thomas@altera.com, sdf@fomichev.me,
-	siyanteng@cqsoftware.com.cn, weishangjuan@eswincomputing.com,
-	wens@kernel.org, netdev@vger.kernel.org, bpf@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next 12/12] arm64: dts: qcom: qcs6490-rb3gen2: enable
- TC9564 with a single QCS8081 phy
-Message-ID: <f113752b-b351-4a14-af6d-1e2751f0913d@lunn.ch>
-References: <20260501155421.3329862-1-elder@riscstar.com>
- <20260501155421.3329862-13-elder@riscstar.com>
- <01d6ea18-e022-41c7-a642-ac0321957923@oss.qualcomm.com>
- <agRzai1UoHEIotZe@aspen.lan>
- <3c6e7ec5-f600-44ee-a97a-211a99102744@lunn.ch>
- <agXo_evi1oFLBJoo@aspen.lan>
+	s=arc-20240116; t=1778775447; c=relaxed/simple;
+	bh=RvGt7xzCKb5ab0L4qvb3B3VgFWaWGcvjCCWa3BCtM1w=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=rWMoFhO9D30zUMI8NKIob6eg7UOivw/9ium4+QO6wxPz7EAeOc9QgdZifSZEaTSwbdEPBAetCtBK7CRMLUoYQ5IZkoJYzfG7UafMsMqAQaGmKrVPRAASNYONRMasEwrbTe2PRCnZCDbHL3IJUo1WrijtlZr9wyvHuyBbFkboQGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=logxfDzj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22163C2BCB3;
+	Thu, 14 May 2026 16:17:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778775447;
+	bh=RvGt7xzCKb5ab0L4qvb3B3VgFWaWGcvjCCWa3BCtM1w=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=logxfDzjoFZizX2yTSwW4rlluM1guJiabvuymI2f/hPWypRxBAgHQ4ANKslgCSmT+
+	 1M4KYB6CHus/Qa6UP81JUxTO4M4ENlUUt2RkR4/SpvqZSI4Ckln95yrfzz3Olg/e7d
+	 7VjPK4VIHtJVDq05xgjmMMIvHFNFn+YY42XgzbDCyd8npkxoVrbqB6MRvG4ps7q1+2
+	 aKFEUO6zlbwQrlWNL7oYeJFTuMPa+Il5zQJAV/8Eqz+VVGrJz3H0UHck9YIECRjWfB
+	 jmDonRkuPMYm4ic5R28rK6j6QbeMepOk2N0zzpnpVhmZIRX1gd2XP9nmAT2veBhMTV
+	 IkP2psv5dWqOQ==
+Date: Thu, 14 May 2026 11:17:25 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mayank.rana@oss.qualcomm.com, quic_vbadigan@quicinc.com,
+	Shawn Lin <shawn.lin@rock-chips.com>
+Subject: Re: [PATCH v5 1/3] PCI/ASPM: Add helper to encode L1SS T_POWER_ON
+ fields
+Message-ID: <20260514161725.GA408115@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <agXo_evi1oFLBJoo@aspen.lan>
-X-Rspamd-Queue-Id: BA89C544867
+In-Reply-To: <20260428-t_power_on_fux-v5-1-f1ef926a91ff@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 8DDA85448EC
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[lunn.ch,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[lunn.ch:s=20171124];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,riscstar.com,lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
-	TAGGED_FROM(0.00)[bounces-107678-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-107679-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[lunn.ch:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[51];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andrew@lunn.ch,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[kernel.org,google.com,gmail.com,vger.kernel.org,oss.qualcomm.com,quicinc.com,rock-chips.com];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,1c:email,lunn.ch:mid,lunn.ch:dkim]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,rock-chips.com:email]
 X-Rspamd-Action: no action
 
-M> I’m afraid this must be necessarily long but to help navigate the
-> general structure is:
-
-Thanks for the long email.
-
-> Let’s turn our attention to MDIO.
+On Tue, Apr 28, 2026 at 02:07:15PM +0530, Krishna Chaitanya Chundru wrote:
+> Add a shared helper to encode the PCIe L1 PM Substates T_POWER_ON
+> parameter into the T_POWER_ON Scale and T_POWER_ON Value fields.
 > 
-> Following the pattern above where all the links related to power come
-> from the main device node, then the phy node for the qca8081 in an
-> rb3gen2 would look like something like this:
+> This helper can be used by the controller drivers to change the
+> default/wrong value of T_POWER_ON in L1ss capability register to
+> avoid incorrect calculation of LTR_L1.2_THRESHOLD value.
 > 
->     tc956x_emac1_phy: ethernet-phy@1c {
->         compatible = "ethernet-phy-id004d.d101";
->         reg = <0x1c>;
+> The helper converts a T_POWER_ON time specified in microseconds into
+> the appropriate scale/value encoding defined by the PCIe spec r7.0,
+> sec 7.8.3.2. Values that exceed the maximum encodable range are clamped
+> to the largest representable encoding.
 > 
->         reset-gpios = <&tc956x_emac0 1 GPIO_ACTIVE_LOW>;
->         # On RB3gen2 all supplies are controlled by a single GPIO
->         # so we link all supplies to that single regulator
->         avdd-supply = <&qep_1p8>;
->         avdd18-supply = <&qep_1p8>;
->         vdd-supply = <&qep_1p8>;
->         vddldo-supply = <&qep_1p8>;
->         vdd18-supply = <&qep_1p8>;
->         vdd125-supply = <&qep_1p8>;
+> Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
+> Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+
+I do agree with Ilpo's suggestion of using u32 for t_power_on_us to
+avoid some implicit conversions.  The DT binding restriction is good,
+but it's far removed from the code and doesn't necessarily cover all
+callers.
+
+I think it's also helpful to include the actual function name in the
+subject instead of just "helper" because it can help identify
+dependencies when backporting patches that use it.
+
+s/L1ss/L1SS/ for consistency.
+
+> ---
+>  drivers/pci/pci.h       |  6 ++++++
+>  drivers/pci/pcie/aspm.c | 40 ++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 46 insertions(+)
 > 
->         pinctrl-names = "default";
->         pinctrl-0 = <&qep_irq_pin>;
->         interrupts-extended = <&tlmm 101 IRQ_TYPE_LEVEL_LOW>;
->     };
+> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+> index 4a14f88e543a..c379befe1ebe 100644
+> --- a/drivers/pci/pci.h
+> +++ b/drivers/pci/pci.h
+> @@ -1110,6 +1110,7 @@ void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked);
+>  void pcie_aspm_powersave_config_link(struct pci_dev *pdev);
+>  void pci_configure_ltr(struct pci_dev *pdev);
+>  void pci_bridge_reconfigure_ltr(struct pci_dev *pdev);
+> +void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value);
+>  #else
+>  static inline void pcie_aspm_remove_cap(struct pci_dev *pdev, u32 lnkcap) { }
+>  static inline void pcie_aspm_init_link_state(struct pci_dev *pdev) { }
+> @@ -1118,6 +1119,11 @@ static inline void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked)
+>  static inline void pcie_aspm_powersave_config_link(struct pci_dev *pdev) { }
+>  static inline void pci_configure_ltr(struct pci_dev *pdev) { }
+>  static inline void pci_bridge_reconfigure_ltr(struct pci_dev *pdev) { }
+> +static inline void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value)
+> +{
+> +	*scale = 0;
+> +	*value = 0;
+> +}
+>  #endif
+>  
+>  #ifdef CONFIG_PCIE_ECRC
+> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> index 925373b98dff..457d469b8d49 100644
+> --- a/drivers/pci/pcie/aspm.c
+> +++ b/drivers/pci/pcie/aspm.c
+> @@ -525,6 +525,46 @@ static u32 calc_l12_pwron(struct pci_dev *pdev, u32 scale, u32 val)
+>  	return 0;
+>  }
+>  
+> +/**
+> + * pcie_encode_t_power_on - Encode T_POWER_ON into scale and value fields
+> + * @t_power_on_us: T_POWER_ON time in microseconds
+> + * @scale: Encoded T_POWER_ON Scale (0..2)
+> + * @value: Encoded T_POWER_ON Value
+> + *
+> + * T_POWER_ON is encoded as:
+> + *   T_POWER_ON(us) = scale_unit(us) * value
+> + *
+> + * where scale_unit is selected by @scale:
+> + *   0: 2us
+> + *   1: 10us
+> + *   2: 100us
+> + *
+> + * If @t_power_on_us exceeds the maximum representable value, the result
+> + * is clamped to the largest encodable T_POWER_ON.
+> + *
+> + * See PCIe r7.0, sec 7.8.3.2.
+> + */
+> +void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value)
+> +{
+> +	u8 maxv = FIELD_MAX(PCI_L1SS_CAP_P_PWR_ON_VALUE);
+> +
+> +	/* T_POWER_ON_Value ("value") is a 5-bit field with max value of 31. */
+> +	if (t_power_on_us <= 2 * maxv) {
+> +		*scale = 0; /* Value times 2us */
+> +		*value = DIV_ROUND_UP(t_power_on_us, 2);
+> +	} else if (t_power_on_us <= 10 * maxv) {
+> +		*scale = 1; /* Value times 10us */
+> +		*value = DIV_ROUND_UP(t_power_on_us, 10);
+> +	} else if (t_power_on_us <= 100 * maxv) {
+> +		*scale = 2; /* value times 100us */
+> +		*value = DIV_ROUND_UP(t_power_on_us, 100);
+> +	} else {
+> +		*scale = 2;
+> +		*value = maxv;
+> +	}
+> +}
+> +EXPORT_SYMBOL(pcie_encode_t_power_on);
+> +
+>  /*
+>   * Encode an LTR_L1.2_THRESHOLD value for the L1 PM Substates Control 1
+>   * register.  Ports enter L1.2 when the most recent LTR value is greater
 > 
-> Once we have established what the DT looks like then the question
-> becomes where to put "something, written in C [or Rust], that contains
-> burned in knowledge of how to turn on a wcn6855^H^H^H^H^H^H^Hqca8081"?
+> -- 
+> 2.34.1
 > 
-> The qca8081 on rb3gen2 just gets a bunch of individual regulators and a
-> reset. As in the pci-pwrctrl-tc9563 example above, this means there is
-> nothing in the DT for a pwrseq driver to bind to.
-
-I don't understand that. We have a node in device tree for the PHY. We
-can put the needed properties there somehow. Maybe similar to how
-pinctrl works. Before probing the device, the driver core looks for
-the pinctrl- properties, and activates them. We could have similar
-properties for power sequencing, before enumerating an address, do
-whatever the pwrseq-names requests? It might need help for the driver
-actually enumerating the bus, to point to core at the node.
-
-> Even if we could find
-> a way to do that, it is not obviously useful to decouple how to turn on
-> an MDIO device from how to drive it. Thus I think the right answer to
-> that is to put the code to fire up the regulators into the qca808x.c
-> driver and it looks to me like the existing probe/remove methods would
-> already work perfectly well as the place to put it.
-
-But you have a chicken/egg. Same as with PCI, with Ethernet PHYs, you
-ask the device what it is, and then find a driver to drive it, and
-then call the probe function. However, if its clock is off, its GPIO
-reset is held in reset, its power regulators are switch off, it never
-answers when you ask it, what are you? If you have no idea what it is,
-you cannot probe it. And if you cannot probe it, the probe function
-cannot turn all these things on.
-
-The standard reply we have is, ignore the fact the device can be
-enumerated, hard code in DT what its ID is. And that is what you have
-above in your DT fragment. But you also need to live with the
-consequences of it being wrong, since that driver is going to be
-loaded, no questions asked. And don't think about having a rev A board
-and a rev B board which have different pin compatible PHYs, and want
-to use the enumeration to get the correct driver loaded.
-
-DT developers continually want to make use of the enumeration feature,
-since it is there, part of 802.3, it is how it was done for the first
-20 years of networking, etc. And they keep trying to extend the
-current code to get the PHY running to allow it to be enumerated.  And
-i keep rejecting it.
-
-Ideally, i would like some generic core code which can be given a list
-of resources, probably phandles, and timing information. And it will
-walk the list and turn them on, inserting the requested delays. And
-then we can enumerate the device.
-
-Until such code exists, i agree, forget the device is enumerable, hard
-code the ID, and get the probe function to enable the regulators, take
-the device out of reset, enable the clocks, etc. And repeat that in
-every PHY driver.
-
-       Andrew
-
 
