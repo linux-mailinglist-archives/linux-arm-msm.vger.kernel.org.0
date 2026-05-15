@@ -1,120 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-107771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KIdyBoP2Bmo4pgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 12:33:39 +0200
+	id yO09AgX2Bmo4pgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 12:31:33 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82ED954D67F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 12:33:38 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75A4E54D615
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 12:31:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 15F423114D94
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 10:11:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id ECD1830E4544
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 10:12:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0E9543E9F9;
-	Fri, 15 May 2026 10:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0D813F167C;
+	Fri, 15 May 2026 10:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b="U1zZsmma"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vA7TQKVL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408F044102D;
-	Fri, 15 May 2026 10:10:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=180.181.231.80
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA27E38758B;
+	Fri, 15 May 2026 10:12:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778839858; cv=none; b=gKq8JGndCvXdV5+YYM39M9qgAjt0nAGMuwbizl3D2pA9DKKZDt7xNHhZQP12+UdDKi/XGirtvZYwEStazxEvZPrelu22GES0VHB+Y8L+684wsDM3EewBaQSzchVhBlc2MOXKyt4CS4wyL1qUrxFVhxtTBEdR3sUGb7O9fN9A3lc=
+	t=1778839943; cv=none; b=aBof0cCnbd31S9gdzZaa2GZQYDwm+GS+WMGTJhXwiDqfAc+8tBJTC3nyXw7gp7F+DdqqbOC7tGI5eD1xm9eAfvGgqtsTvNn8uiaVEU9PM+xMJhexErVa/VrIfVBmusQGXHf6kkKWsujUMlsEWgyneourn27lktemAZIOkREYkmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778839858; c=relaxed/simple;
-	bh=Rv/BPwvCCWxXgKgh7kO8KUYntokXQbfbIeW+VrpEnvo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mo8ZWjRA+nxT6/etOv007rdDayivT0cgotKw825MH1LWz0ohFB68Bh/0cOA4l7IkJVKRTx+edCEQehEfjooddNVHm/JF7JdcgigT6vTkpr2MlJPIwbhwOP4o10XnrDQ2ACQr479FhUL+qTxnFZMTb69FlT0ZyoBtz7LPrOV7YKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b=U1zZsmma; arc=none smtp.client-ip=180.181.231.80
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
-	from:content-type:reply-to; bh=UQFQqUVIKap8MG/Do78U3BfChHfkr0qaaj0pyefbYAQ=; 
-	b=U1zZsmmaIHkjZeec3R1pEc7opy1GKVIUXkPI6Yx2/FNuUP1+u2KsOw9qtHyX2Xma+RZZiSNALMz
-	ghu9VQ2X0ZVgeZFNgV+qRrDrDvRkEm5aXPbzfy/nyT7MRVHcy3uyEHGCUnGEgnHQ5lbj7PYnd4552
-	Q38Hn5eLAleeGdpwguJi7GsbVt8l88IoXUD5vgbVogenMDVlvj0EwMW1VhmErYv36iqmr9+b8Bgs2
-	YNhkIyyG6UfDEo3DM3ENNTpyxFmWZh9QiGF6jhAMso1SKkQxZrZz/oWCgYZvStpiJHcPfWpx6fBdA
-	VNhV20z61amEhCsQYsUai+6i2DBnis3XsyKQ==;
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
-	id 1wNpVH-00EOD3-1z;
-	Fri, 15 May 2026 18:10:48 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 15 May 2026 18:10:47 +0800
-Date: Fri, 15 May 2026 18:10:47 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Thara Gopinath <thara.gopinath@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: crypto: qcom-qce: document the Nord crypto
- engine
-Message-ID: <agbxJ12oAXZ7h89S@gondor.apana.org.au>
-References: <20260429081021.16380-1-bartosz.golaszewski@oss.qualcomm.com>
+	s=arc-20240116; t=1778839943; c=relaxed/simple;
+	bh=CJpMY3tHzSY8tr8SczeT/FwK364A8eTMr//a6e5L68Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tLBxFEfzSsMYh0w7qo8JY1en3kG0DWfMPn5wyG3t7OKfgiujMS001Tn73L8nI0uG0JZIQ8MQ7VxdvFPeQ31i8OUW0R0t6k4miZmesyl4f1OPetsUoup6IYAxJlTSx5OFOGYAhBbpYFEsIyFTWzekR3nqWYQuba3eMF/I254yHPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vA7TQKVL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DB2C2BCB0;
+	Fri, 15 May 2026 10:12:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778839943;
+	bh=CJpMY3tHzSY8tr8SczeT/FwK364A8eTMr//a6e5L68Q=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=vA7TQKVLUu3UCuI+zGpDI5gTxShb7Icr03WPjznPuJNdfjziPZJ9kh5ZJjKJkoBMs
+	 gu3l0jXESe6SBVn6kediufuuP/5m6qUNUyQnzIIIhaqsUTulfGQjRtQtmYKcalhcfP
+	 0WkXlX6+HsLOBd2+d7mMOYF0mNUgKdr1lWuQ7ho1N5CaNdGnS+oUu5o+7N6aEtN98b
+	 Rpi4zigFRLIS4VLhzj/bBodSUm8kOZdBBxbumwYiHqJlh38RRVllNaXse66F2h/BcE
+	 Y7E2tWnXtzWk7aH2wHiib7B0h+MSfYGwrrJmp0ydKxz1mJEbDlitVLKa9v345GhrTQ
+	 bkCM46PcGn/4Q==
+Message-ID: <4b097256-8037-42f6-b6ff-50c2b4d4934c@kernel.org>
+Date: Fri, 15 May 2026 11:12:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260429081021.16380-1-bartosz.golaszewski@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 82ED954D67F
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 7/8] media: qcom: venus: add codec blacklist mechanism
+To: Erikas Bitovtas <xerikasxx@gmail.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, =?UTF-8?Q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org
+References: <20260514-msm8939-venus-rfc-v7-0-33c6c6fb9285@gmail.com>
+ <iHh6S4aUTs0UPI-sDvO4X-nqs7ktCXcJBnIhrKJg3BertZDxgrDjadgvfbqirXGrWWNT0BRx4FcZgqI--RNh-A==@protonmail.internalid>
+ <20260514-msm8939-venus-rfc-v7-7-33c6c6fb9285@gmail.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=bod@kernel.org; keydata=
+ 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
+In-Reply-To: <20260514-msm8939-venus-rfc-v7-7-33c6c6fb9285@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 75A4E54D615
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[apana.org.au,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[gondor.apana.org.au:s=h01];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[gmail.com,davemloft.net,kernel.org,vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-107772-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107771-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[gmail.com,oss.qualcomm.com,kernel.org,apitzsch.eu,baylibre.com,redhat.com];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[gondor.apana.org.au:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[herbert@gondor.apana.org.au,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Action: no action
 
-On Wed, Apr 29, 2026 at 10:10:20AM +0200, Bartosz Golaszewski wrote:
-> Document the crypto engine on the Qualcomm Nord Platform.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> ---
->  Documentation/devicetree/bindings/crypto/qcom-qce.yaml | 1 +
->  1 file changed, 1 insertion(+)
+On 13/05/2026 22:24, Erikas Bitovtas wrote:
+>   	case HFI_VIDEO_CODEC_H263:
+> @@ -684,6 +686,8 @@ static const struct venus_resources msm8916_res = {
+>   	.vmem_addr = 0,
+>   	.dma_mask = 0xddc00000 - 1,
+>   	.fwname = "qcom/venus-1.8/venus.mbn",
+> +	.dec_codec_blacklist = HFI_VIDEO_CODEC_HEVC | HFI_VIDEO_CODEC_SPARK,
+> +	.enc_codec_blacklist = HFI_VIDEO_CODEC_HEVC,
 
-Patch applied.  Thanks.
--- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+This should be separate from the addition of the mechanism.
+
+This is enumeration of a particular plaform and you might want for 
+example to revert the 8916 stuff in isolation without yanking the logic 
+that goes with it.
+
+--
+bod
 
