@@ -1,82 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-107980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IKSYB0CvB2qrCQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 May 2026 01:41:52 +0200
+	id SAd2EjevB2qrCQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 May 2026 01:41:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6418559678
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 May 2026 01:41:51 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA7AC559659
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 May 2026 01:41:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5381E302414C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 23:41:35 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2FD86301F5D9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 23:41:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 336E03F86ED;
-	Fri, 15 May 2026 23:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F0BD3F86FC;
+	Fri, 15 May 2026 23:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VdIm4L7o"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vbcc/ABJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B21C3F6C5C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 23:41:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE0938D3EE
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 23:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778888495; cv=none; b=oF31vh4cSGDELYxWKf4BPoFU/jc6CQ9OzgzTWdAvLfMVrY/DNG0VYyjtB6OqXaxFou80DRe/VPOjFzv8vC3eaqQXI4l2FOuy5FPgbrZNUIwr8DVOc+/V5hgE/Dfr6yRvq2YYUtNo5hkUa7rthZ2JDGqyT/vdfG6lcedMjettf4w=
+	t=1778888494; cv=none; b=VqR57Rz8UZ/rKIqiBf1iCMEMqWdBJ/2GXKCSGj47Ti0iIlzasi7bx1cH2oRyYTlUINUAccounc9HANAt8elHnNJQ23dGCA87yQjJDmeaBr5ohCEDaiXXW/BsqsoMJKlNKspa/y1LKItidp9yJ5DCsbAJgoyqIOv+gt5OE1fRDUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778888495; c=relaxed/simple;
-	bh=aw//OWk7ekdLqz6+NXAqRiETHV/evtXwY9fM3TOle1Q=;
+	s=arc-20240116; t=1778888494; c=relaxed/simple;
+	bh=rW5n7OqbSCAqxVhlwKXH9xQUGgQISNsL2fWviW3pC1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AfWH4DE8LCBq6VwAckgBDa9NnEtiYFg5CtAOEDdhJ7uKrTQvHfBjA4hC0vkcoFu87dxiJHWrqvNBb7G0qqTg7arDHJlmyrHpYLcvWjwATzjniV0tZHDsjBoeDbMB5Fa6ViLTAEejLhaB5oiqEMNiZkg+T8o0WQHSXFRYNWSqShU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VdIm4L7o; arc=none smtp.client-ip=209.85.167.47
+	 MIME-Version; b=gKr+qIovKAgs+Y1d74L1aKzXLeOl96xNnbhquLWvlyY9rDdl7PjMGhFnm4LSd7wutzrZhMe42MbQVYjpjyy6FP11VReoqcc/evFa4S24QUUH4qbW86tE0YEb1CFpyaFVMZTDQN2PuZtwRrAgbahEbE/CuntrPKJ9fHv+vhiAQzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vbcc/ABJ; arc=none smtp.client-ip=209.85.208.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5a8ccfcbb3fso34261e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 16:41:31 -0700 (PDT)
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-38ec6e3de84so608021fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 16:41:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1778888490; x=1779493290; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1778888491; x=1779493291; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+Y5rcd8ol/OODf2w+e7bAV3jzDI3zj+SkdCDhFbr/Ws=;
-        b=VdIm4L7oVzeVWzk/zmjH2JYH6nOx07Xz3Yy14wh7WeBCij5ZHvMgGlhKLbFIkaKZUG
-         josOW4Z+tDeJqk/eh4BCl0m084V4Wb3cffgq6tOCGeeCXhqHl5rx8WsqKtW/ZzEVjdpF
-         gP53+j3fhJGpW/wNMrODZoscku+4+HUtuBt7QBzF9XKau3b37taU7SNXJlNa6hpjJeOP
-         6mpDHlLNdaN1EwHfT3pfXfa8ntyOfFCF+Tkyrp+exn4XoORP/KTI6KWUVOlPRoHqrZtU
-         wt7cm4Gsgiu9MSO5KKKFGTDcYxfqzGfVJqb2PI7i2K629pxq5WnQXgTARhOYApJc+qXd
-         bzaw==
+        bh=oKAOTSOlzS3MEHwcMlGimMeAY+aTNXac4GDWI+Xw68c=;
+        b=vbcc/ABJmUb0mQ9J4gbqCau2XP8jJ+N11i+s6OA1qYdtipxq+1R8YmTjKiI31HVkG4
+         +KtoXaVUYA2NzDdo6EaRF6xwi3kujihU2rIP2ILOw805fbNdlH+w7oP5goVpidcsFVdM
+         w4lW7NVf1PS55cpvNUU1+0ZnAyR5nLoPQNY+qH6RsZWJ4HD6RpzJrnVmNb82w+n6XAFm
+         fvakLmr0Oxrzlxh5JriBwc715Y5EvCIDbas0OdN11tsPEjhn80CApBxRkaRjqTUfRz9n
+         4PDnBPlBMsT+g9Dee4wSQ77KXK1SXu+U+OZKSPJw1HaFCo5fD6/wMuP0S9s+kmq0VKFi
+         R1mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778888490; x=1779493290;
+        d=1e100.net; s=20251104; t=1778888491; x=1779493291;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=+Y5rcd8ol/OODf2w+e7bAV3jzDI3zj+SkdCDhFbr/Ws=;
-        b=iG3vGdQJAVQ+AzGRktenkpHWttovMok0Q46wP4Dr6NoDq+enUBtUAZ+WiKd5o0dCWp
-         ieuB7VL/UrSYAy42TMXevKkC/7yePkmFeiams+c2nwl+ILwIx8soIbrLGEzieVea6eJz
-         o6YK2+2p/zBqjaA2RCBQUV8TgBu9rRv8+D3iWTk0yUtKRCjYPw9kAOsPA6/DlI/JQpxg
-         jiIBhO1+lwCL3wdB3hiw9H4xNaZ4BCwB1UgRXNfKzaM27orntMgxOkSpvME4OOcvpR8V
-         64jSQ2Hr0yvidce1JcdPKJiHB3mDdKmv+819EvNojzsRQWBsD8k22tPdtKcP7lgGlkFx
-         iOrw==
-X-Forwarded-Encrypted: i=1; AFNElJ9xcbpTdfyoDZ0lW6FeTyE+8/haOZqQ8TizRVp3UD6WXCd5NvTV536RtICY27liPtALRMf6SFlXXBQTqKmM@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzkmtrm/dhFyjMSLdVsfmAkC65+uL5lmQgNa717wUQmBkZyXuzx
-	njzZ/WwqalP9ApwQZMZvtHIYmILSrgf8qSqpbmuyQsxorItA9TlY7cWCqeUZgMUYU70=
-X-Gm-Gg: Acq92OECDlGxAT506iYeAPOzy9cItRO3iG2GadqzZH5XsEo/tmyMOkecfesznEznkM/
-	wJFQrudmDGILV1iGBsjthQCL86J81JgT0fj8nlqilzEv4DNw1Q1V1DbgwN5Wsq3Ek70mgJ5Bzcw
-	Iu35RLwifWV9xFjebDFT0/+mUkHRch6QXFGTkUqUDcFM7phoozNHQNWqJZ+C2x4UiUOAuKHxU7d
-	UFE3YO0VvXJneEWvHwqIjeyqvLnWvPst746D+i36fEzAlmSehgkHZsBEJPHeK3GaXIDclC95Vsw
-	lWnIWVZ+RLrrl4m+4RaBmCvhOggMJooPhuxHvG3uTXjGdX9599abaOa9v7f9XoxgdXlT1+cOBV1
-	Sz4nE2Znd9JXyw1zEjBG4cCQ9zoZtaBZneFfYtc4QSJJaAhn84cST/GQSXtqV7Tr71EXOp44pZV
-	som28xuV5+qfjktS2tzPmlmHv7Qh/rLjjQSZdf66fm7QGY6wUolixOstdRAhegKSVEWiTV+03XR
-	vLW
-X-Received: by 2002:a05:6512:1085:b0:5a7:4048:af21 with SMTP id 2adb3069b0e04-5aa0e7470b9mr831580e87.7.1778888489796;
-        Fri, 15 May 2026 16:41:29 -0700 (PDT)
+        bh=oKAOTSOlzS3MEHwcMlGimMeAY+aTNXac4GDWI+Xw68c=;
+        b=qhGn/4fFgQDOpGXacrxuHCs3JtIQj4CczL4WNtUkUqvBBIsW9Rl7nr2nEdzS1vqA2S
+         pL2z4bqnti3MEWaMuO7BSQAt1aM2N8yAp83G/CGqFylFrgHr9f+54Inwr3QfX3ZFPwXq
+         OwBnAbMub5wfYhamcfHUyk/7iOHvwMiLWJOW+9RNTag5hKb7riAGUQ0Ip4XEvUHF1uJx
+         yiuWSKT2g0VH86plVr3SNZ1WS4ajI/g73UZyvwa2fO2lsTDwi8pSmiJ4VE7aQl9dvKSK
+         9VPEeRGxb9IC+Pb5AoNgSIdUFYya7lZdE8FMPl9ZAS1t+7FPmcyUa3ixHBTBznNQaRUv
+         x9hg==
+X-Forwarded-Encrypted: i=1; AFNElJ/Tg9mjfcRqq13YUCqcek9CYLTHCbjy7kbO7Ct1OKkhC47Il8dXB6zcxpZqDZmeflbXyWvrOmsINeswarba@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhU2WeMHs8B99PWFhZ9BlmJ05PjQihMgfk63Ae/fAfe81x2ONo
+	/5K8LkQ5RZkxug99Jm8IcioIaSAVmO0Z2ti95vdvHPxVNpfPtU8Yk4ikvwebMItpPqc=
+X-Gm-Gg: Acq92OGMKJhSaCO5V6C8dAvOWDepYLpVmHJPScYd4g193yMYJ+LyfdB8zg3FnUhL8GY
+	zwYB89M637Luxec8Cf4P5ej8AulYUqPVv+bmOPUa0jvZEMg5BgH+3GE3tFrHqJYMiqi2CBCNS7Z
+	RTKl9FO0+vPkRFRIiEa49uDPhANys2yMWYA3qYqUOVvSsvP2oNbv490qTGHQJcmff52l5G3/wZR
+	LBCrhih7R9DmXRDNTbwRu1VWbz5z+7VD3nOcyQwnDH/241/ZOU9YfBxeckSOOeYMW4c3nhj0Qd8
+	f/Ki56LjX8TJEafmYrOLeb3Vvj1kEsYWYAbcMBAASi7WF0xridQ0xIjbJkemTy7PqjsfVcGnNit
+	do5+lJPLt3YyEGw+YDjxzl1q4yPrb299IQZVi/Y1pLciEDBCTx1bywTDWcVuNA4EOQkNTYMdxhw
+	pPcncRA8OqjLWdoU2CcMQbHK77dxDZd6/cW50/iFKeRCMM4VZgYZUdQe05vxpHTwc4yg==
+X-Received: by 2002:a05:6512:3409:b0:5a4:1099:b16a with SMTP id 2adb3069b0e04-5aa0e5d8440mr743152e87.0.1778888490651;
+        Fri, 15 May 2026 16:41:30 -0700 (PDT)
 Received: from thyme.. (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
         by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a90f10c710sm1631384e87.7.2026.05.15.16.41.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 May 2026 16:41:29 -0700 (PDT)
+        Fri, 15 May 2026 16:41:30 -0700 (PDT)
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
 	Robert Foss <rfoss@kernel.org>,
@@ -84,9 +83,9 @@ To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
 Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-i2c@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 2/4] i2c: qcom-cci: Do not check return value of cci_init()
-Date: Sat, 16 May 2026 02:41:19 +0300
-Message-ID: <20260515234121.1607425-3-vladimir.zapolskiy@linaro.org>
+Subject: [PATCH v2 3/4] i2c: qcom-cci: Move cci_init() under cci_reset() function
+Date: Sat, 16 May 2026 02:41:20 +0300
+Message-ID: <20260515234121.1607425-4-vladimir.zapolskiy@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260515234121.1607425-1-vladimir.zapolskiy@linaro.org>
 References: <20260515234121.1607425-1-vladimir.zapolskiy@linaro.org>
@@ -97,7 +96,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: B6418559678
+X-Rspamd-Queue-Id: EA7AC559659
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
@@ -105,18 +104,18 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107980-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-107978-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
 	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCPT_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
@@ -129,47 +128,91 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-The cci_init() function is not supposed to fail, and it never returns
-a non-zero, so it'd make sense to convert its signature to void.
+On probe or runtime errors cci_reset() is called and it should be coupled
+with cci_init(), instead of doing this on caller's side, embed cci_init()
+directly into the cci_reset() function.
+
+This is a non-functional change, cci_reset() and cci_init() function
+bodies are reordered.
 
 Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
- drivers/i2c/busses/i2c-qcom-cci.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/i2c/busses/i2c-qcom-cci.c | 41 +++++++++++++++----------------
+ 1 file changed, 20 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
-index 01e440b6585d..be41a53e30c6 100644
+index be41a53e30c6..2d73903f14d3 100644
 --- a/drivers/i2c/busses/i2c-qcom-cci.c
 +++ b/drivers/i2c/busses/i2c-qcom-cci.c
-@@ -243,7 +243,7 @@ static int cci_reset(struct cci *cci)
+@@ -225,24 +225,6 @@ static int cci_halt(struct cci *cci, u8 master_num)
  	return 0;
  }
  
--static int cci_init(struct cci *cci)
-+static void cci_init(struct cci *cci)
- {
- 	u32 val = CCI_IRQ_MASK_0_I2C_M0_RD_DONE |
- 			CCI_IRQ_MASK_0_I2C_M0_Q0_REPORT |
-@@ -284,8 +284,6 @@ static int cci_init(struct cci *cci)
- 		val = hw->scl_stretch_en << 8 | hw->trdhld << 4 | hw->tsp;
- 		writel(val, cci->base + CCI_I2C_Mm_MISC_CTL(i));
- 	}
+-static int cci_reset(struct cci *cci)
+-{
+-	/*
+-	 * we reset the whole controller, here and for implicity use
+-	 * master[0].xxx for waiting on it.
+-	 */
+-	reinit_completion(&cci->master[0].irq_complete);
+-	writel(CCI_RESET_CMD_MASK, cci->base + CCI_RESET_CMD);
+-
+-	if (!wait_for_completion_timeout(&cci->master[0].irq_complete,
+-					 CCI_TIMEOUT)) {
+-		dev_err(cci->dev, "CCI reset timeout\n");
+-		return -ETIMEDOUT;
+-	}
 -
 -	return 0;
+-}
+-
+ static void cci_init(struct cci *cci)
+ {
+ 	u32 val = CCI_IRQ_MASK_0_I2C_M0_RD_DONE |
+@@ -286,6 +268,26 @@ static void cci_init(struct cci *cci)
+ 	}
  }
  
++static int cci_reset(struct cci *cci)
++{
++	/*
++	 * we reset the whole controller, here and for implicity use
++	 * master[0].xxx for waiting on it.
++	 */
++	reinit_completion(&cci->master[0].irq_complete);
++	writel(CCI_RESET_CMD_MASK, cci->base + CCI_RESET_CMD);
++
++	if (!wait_for_completion_timeout(&cci->master[0].irq_complete,
++					 CCI_TIMEOUT)) {
++		dev_err(cci->dev, "CCI reset timeout\n");
++		return -ETIMEDOUT;
++	}
++
++	cci_init(cci);
++
++	return 0;
++}
++
  static int cci_run_queue(struct cci *cci, u8 master, u8 queue)
-@@ -611,9 +609,7 @@ static int cci_probe(struct platform_device *pdev)
+ {
+ 	u32 val;
+@@ -302,7 +304,6 @@ static int cci_run_queue(struct cci *cci, u8 master, u8 queue)
+ 		dev_err(cci->dev, "master %d queue %d timeout\n",
+ 			master, queue);
+ 		cci_reset(cci);
+-		cci_init(cci);
+ 		return -ETIMEDOUT;
+ 	}
+ 
+@@ -609,8 +610,6 @@ static int cci_probe(struct platform_device *pdev)
  	if (ret < 0)
  		goto error;
  
--	ret = cci_init(cci);
--	if (ret < 0)
--		goto error;
-+	cci_init(cci);
- 
+-	cci_init(cci);
+-
  	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
  	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_set_active(dev);
 -- 
 2.49.0
 
