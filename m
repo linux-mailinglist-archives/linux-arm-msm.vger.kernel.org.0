@@ -1,361 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-107964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kIs0GXxkB2q90wIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 20:22:52 +0200
+	id oH8sO4NlB2qE1gIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 20:27:15 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DABE255618C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 20:22:51 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9747A5562DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 20:27:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 257123068876
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 17:59:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BD92831301C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 18:08:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E1533F99E2;
-	Fri, 15 May 2026 17:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D4103F8EAE;
+	Fri, 15 May 2026 18:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b="qVh7ugvm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U0iYix8s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964F63F9A03
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 17:59:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61B930F7F2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 18:08:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778867976; cv=none; b=sdC89KcdvPtHkldk9IGbPMjPViE8Y5dWUun4JTy9s4AjA0uKJmbkPU61gWTfhXePjG6E3ZwoUqkGfzEspVC/ajlgW+E2SVzHTkPRkrSQ5Bda3yIQ/k4pwvwlZH0HmCyt+cOolTvfrEcz2y9j6W5/3qLDUWRXM6/yZziIWLB4P14=
+	t=1778868510; cv=none; b=mobzijD30ecabKGiYVHMbAORyIxEFNnB9fUsi5bDib3GP/UbWJr/0GPnGw6yv4Gw6PnIUyyqiU2sSGBI2ep4q74Q55CYkl+ORwZrWK0NmKH7LdJURjgfoq2clVzR0ZIB44AqLWIGJnrjGyAjVeOS6rwqEJ2E185STuek435EmEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778867976; c=relaxed/simple;
-	bh=4ZM/T/Iol4GdBJ3vAdj/xlPSEBECPVnDvDzu8h7m9FQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mABKZqJTAkCo6BkvHfa3elDzKIGomM57PjZ6Ej4iHieJz+Lgj44SnafxjefqK2s7Eo2v+yUvN3VTdurRJ1qA9D/RUUh9iRRbyGnQy7nvLOkhxje41J/R+imLA+dCBYK6G9qucrLHi1zyJtIacWC5JgR6piSNdLxSqXVTi/taujo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=qVh7ugvm; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8ca12973e15so590146d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 10:59:33 -0700 (PDT)
+	s=arc-20240116; t=1778868510; c=relaxed/simple;
+	bh=uZ7ygsnr96oe6CK9wJ9zGBwa1AUV6F/q7+OBvaywCn0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WNgePW5Ia/ITkWBhZzBPwvW9OD4GnuoAmOmSN2jlxY94QOgDXcwFiTqQC3/wIFhV6jjx5N3xkAHiZxsjkf5Hmplqwi1cHq54rSDAauKDPjGLpYKTqBQcMLvvHJTTtkDLDLkd8Todhw2o77ZrZoON6sjH0cwZlP0avvXoESXkuKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U0iYix8s; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-bd4f81505ccso6374866b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 11:08:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1778867972; x=1779472772; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=d8SB7g/SQE94W836Nonq8Wq3k7Nj7c32M69MG7wU2+o=;
-        b=qVh7ugvmRPA8oUMn5B7aXPu//lBgoxkU+3CwDEXgSDMYUalqHGG/1XK3IbP5KUPikc
-         d/1H867qtVCJ60jgRjrgnXJNtf/PIk0OlnHz6Cs4+NYvh5SA/hU7Wr1qR0XbJl1TnNG8
-         tFVsSwteK9QKyqljdA6Go6NBSe+i5WHMVUImzeR4rnOIpgEEmdA33eLOrgyIfkcjKQsl
-         wIyW69xAs/j3mlBoDiOxd7c9AbI0xsj/eRsw4/eQJl/JOG0c8xon1u66cNYaYOBv3Pby
-         CVeh6W0l4CqSbHYDvBZl9DWxa2rARflP4HbiJhTLYIWVKg/l3RhDcHAABTgueqYYVLLZ
-         Vskg==
+        d=gmail.com; s=20251104; t=1778868507; x=1779473307; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=la+O/bFtpnyaY0c5pxjy6SLIjk1Ilk22rZ0fIeKn2mA=;
+        b=U0iYix8s4BlXPNZghhnrG2fXfB2g4UqzAjTJFPYT82FOcQ5WbjPVrMPQKmb1L9SjrK
+         EO4omDBZ9OdpRa+vNTJfqWl1UXepKYlPSxTOJxeswmSu732E/5yzPGWzEfk2frDFmHVk
+         p+C15GIfwSJcNevKfX+lUcUUzZkGWcQbfsfUeNNag0mom4c80kxLIIob/O5/twwQArpj
+         J2ez2w9Kqh5PqYhcP22X0A9YX9+pWAK2gbat9rrFdbGgGqFR2gH9fyd7LNqBxwEix36H
+         vnGo7CiMYVfgwKcOdWnJLxvxs4Gwg8UQRX6Ic06KonTylMPsFMpHf3T0vqJAD42DMMeA
+         V2iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778867972; x=1779472772;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=d8SB7g/SQE94W836Nonq8Wq3k7Nj7c32M69MG7wU2+o=;
-        b=EvgdCdiVqNvVcb28ItQEP0xv2tlJifWgJXVIQ7eDQoIPcMwhr7yAz+oFbmJutjFta6
-         e/KASil9ZnY4Oi/WxGitE1Adm85g4m8efMlkUyj85QhUA/9GW3rG1UaHKqOpSVpgsqsT
-         yTgovntIkj2GKht+Kcejc3RSk+/iQhTtP8lpi1VU+2U3EORYbAuUSHsVOOdQRt3TVXeq
-         Mddip6x+/vr/Z9Uws9UOExJyW9eiDv5hqfBovZRWsAZYbrWBx9NUV/Wt0pKQYCagKP0S
-         VgMGZN3le4Sk6o4KG76+0/CfESLEmh9hNjxxJh9PekU/jBWp7UL+lQLkSzdp0asktJl6
-         wMig==
-X-Forwarded-Encrypted: i=1; AFNElJ8X0vPxsXcxVZPt7AErCjoReO0a0vqNoC3GwzSHgzXQxNXdRzEx85cBiIAhKxyyyiZJkla0a8CxiJpiYVBQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzybjqlK0fkAKUTCm/iULuxlwTQmLE4NJgPULP7lUVSVAogKyT1
-	YG88dTpKx1/C5VShIFOxKRvFm/QMlJEikYX3VbCUf3W1ejaKialjuRfq5zFHweOPmiA=
-X-Gm-Gg: Acq92OE/rnOqwgEIVNnjgCsiOO3ZmJuXrFeg/4dWSoomutmIIgiAC7NELCUk5NXWoOf
-	4Ulw/S88JxvNrjfwZmNUX0BHc6svPiHiac3fnxU+ZQCgw0FVEGR2txu8hOxLCNDgDjBNEHF+M+V
-	HL7vrUg/Pq2sYtClfC7uQ1PyExivAejFM+4e6vqGJTv/819CPo2O0TTR8m4eiRwgEopJT7EJ2/g
-	wwhUDlwJdm7k3K8ZpZzIzTKcxUP98z/53psiwfV8A6m8TRqwrbK/kCLyR3cnq7iTquopVUYaDbN
-	Ztjd52gJUEnTQnVtwtKjc+3fETBJTdD/GoTLNvlFT07DEnImKKkrUuUlwvdAQV2eG521u7dTE3N
-	WsIgb5bFh6B5v9BzzWSczPhvpV9vQSfOxE8CX97Gx1h+VuOkzBWmEExAJ2y3DFzQMA5FHn6MNiO
-	WQT2z6n7UZyOLFgERFK8zSnjCUVdU22EmPpd3iHqrOcx8GcUjC8p5whagBp74+7iM=
-X-Received: by 2002:a05:6214:5541:b0:8be:143c:955f with SMTP id 6a1803df08f44-8ca0f710315mr86073156d6.49.1778867972151;
-        Fri, 15 May 2026 10:59:32 -0700 (PDT)
-Received: from [172.22.22.28] (c-75-72-117-212.hsd1.mn.comcast.net. [75.72.117.212])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8c90bf6720asm62107926d6.39.2026.05.15.10.59.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 May 2026 10:59:31 -0700 (PDT)
-Message-ID: <2414c9e9-0672-417a-a3d1-993bd06d62db@riscstar.com>
-Date: Fri, 15 May 2026 12:59:27 -0500
+        d=1e100.net; s=20251104; t=1778868507; x=1779473307;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=la+O/bFtpnyaY0c5pxjy6SLIjk1Ilk22rZ0fIeKn2mA=;
+        b=qTY8xgbInRU1Q2ttvVKc0E6TdkTh0lq3EkJWA5fvDjg51F5/wzN085Tk+d+kM4Vepg
+         Go4fZtQkSLD5DThLhdbwmbcAH/y6PQrPtT20El/kqQb233qr44mYypDfi82L46gntBk+
+         cuFitorEnkct3LNfVSHhDwJKAC5NDD2yC27B3hfFsH5wiY+PlS0lTKBtWrshgIauaS/z
+         k0tYr/MldF2GdRFCX9YfN3UA1TSHkETOOak4AidN1lt4U8ixwus7NGnub8o25QCounIw
+         s7YqqKrdR5CRcR5KCrunqD9xXCqXM2oR8lpe92jbt3WmTIM/m7POXqeinnuO0WUDZMlo
+         59kw==
+X-Forwarded-Encrypted: i=1; AFNElJ8dGTQE0oyr26JkwXexT+erVOOvlIpm6PFpVWnm+x+ZkyX5ETEsiKd/0cCUugusAtzKbhudPHq2Zx9Sh3Zn@vger.kernel.org
+X-Gm-Message-State: AOJu0YyEuuoS9CCY9H3RvOFlZ9zu/WIFN8c4XtgMdTCzUQE3WDbSSGnI
+	4CzBGwuJ/3apJA0XaPVYJketbRpr+Tld3J7Mm2KOUel1187oJUD2o/M9
+X-Gm-Gg: Acq92OG+Ri6pxyR21sHP+/HGhhPzFI9QwPl7S4BNJ2Fuiro3+rDGvOyP3MZsahjhdCJ
+	hO2lhJ+AvOdQoODO9yI1NTGQD630X4c73wC0usNLoU5JnQwpefdTPJ8BS+m92PXXArwolJdW+T3
+	5p4G1mEiF22yWIAz7rOx7WgXoWEOPXUotmJfkAQUBk+x83Qa5HCFtLmw8r/2lEh1RoMzXT5xj6T
+	F5lDaxRkaR+AlZQA0dDjHEWwNkJhz4I4PkTFNtVHmMJm+tVj4wv9jmXZQFieB0rnqwS6cbFdgzv
+	p34yAoPoH0d3IMZBlrPvwkFxlfMVC/jkaMC98Biao3zpkdN3WvjKKhXXQv9aWqGhaqg5Sb3Ckqt
+	sXxCZM8b16HN/DnsaZrCb7VKzrOopDHfBFGPvq6BHZ1IxkfeTQ0cb8RcUYNGsunQLM/i1GmThBh
+	V1ChrRXXq0whQ1S4oGJsUbpvlF4hD8YxJe
+X-Received: by 2002:a17:906:6185:b0:bd0:6dbe:22b1 with SMTP id a640c23a62f3a-bd5177ec5dfmr278321866b.12.1778868506983;
+        Fri, 15 May 2026 11:08:26 -0700 (PDT)
+Received: from pc-oliwiera ([2a02:2a40:4bf0:bd00:6130:de6:bb7:addf])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bd4f4bd1bc9sm263471566b.9.2026.05.15.11.08.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 May 2026 11:08:26 -0700 (PDT)
+From: Oli R <sigmatwojastara@gmail.com>
+To: Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	James Clark <james.clark@linaro.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Boqun Feng <boqun@kernel.org>,
+	linux-arm-msm@vger.kernel.org (open list:DRM DRIVER for Qualcomm display hardware),
+	dri-devel@lists.freedesktop.org (open list:DRM DRIVER for Qualcomm display hardware),
+	freedreno@lists.freedesktop.org (open list:DRM DRIVER for Qualcomm display hardware),
+	linux-kernel@vger.kernel.org (open list),
+	linux-crypto@vger.kernel.org (open list:AMD CRYPTOGRAPHIC COPROCESSOR (CCP) DRIVER - DB...),
+	linux-perf-users@vger.kernel.org (open list:PERFORMANCE EVENTS SUBSYSTEM),
+	linux-kselftest@vger.kernel.org (open list:KERNEL SELFTEST FRAMEWORK)
+Cc: Oli R <sigmatwojastara@gmail.com>
+Subject: [PATCH] treewide: replace /usr/bin/python3 shebangs with env python3
+Date: Fri, 15 May 2026 20:07:59 +0200
+Message-ID: <20260515180806.246914-1-sigmatwojastara@gmail.com>
+X-Mailer: git-send-email 2.54.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 00/12] net: enable TC956x support
-To: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, maxime.chevallier@bootlin.com,
- rmk+kernel@armlinux.org.uk, andersson@kernel.org, konradybcio@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, linusw@kernel.org,
- brgl@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org
-Cc: daniel@riscstar.com, mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com,
- alexandre.torgue@foss.st.com, ast@kernel.org, boon.khai.ng@altera.com,
- chenchuangyu@xiaomi.com, chenhuacai@kernel.org, daniel@iogearbox.net,
- hawk@kernel.org, hkallweit1@gmail.com, inochiama@gmail.com,
- john.fastabend@gmail.com, julianbraha@gmail.com, livelycarpet87@gmail.com,
- matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
- prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
- rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
- weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
- bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20260501155421.3329862-1-elder@riscstar.com>
-Content-Language: en-US
-From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20260501155421.3329862-1-elder@riscstar.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: DABE255618C
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 9747A5562DE
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.06 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.16 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,kernel.org,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107964-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[riscstar-com.20251104.gappssmtp.com:+];
+	FREEMAIL_CC(0.00)[gmail.com];
+	TAGGED_FROM(0.00)[bounces-107965-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,amd.com,infradead.org,redhat.com,arm.com,linux.intel.com,google.com,intel.com,linaro.org,efficios.com,vger.kernel.org,lists.freedesktop.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[31];
 	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[49];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[elder@riscstar.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_NONE(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sigmatwojastara@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[riscstar-com.20251104.gappssmtp.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,riscstar.com:mid]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On 5/1/26 10:54 AM, Alex Elder wrote:
-> This series introduces stmmac driver support for the Toshiba TC9564
-> (also known as Qualcomm QPS615).  This is an Ethernet-AVB/TSN bridge IC
-> that provides a high-speed connection between a host SoC and Ethernet
-> devices on a network.  It incorporates a PCIe switch, and implements
-> two 10 Gbps capable Ethernet MACs (along with other IP blocks), and
-> is essentially a small and highly-specialized SoC.  The TC9564 is a
-> member of a family of similar chips, and the driver code uses "tc956x"
-> to reflect this.
+Use /usr/bin/env python3 instead of hardcoded interpreter paths
+to improve portability across environments where python3 is not
+installed in /usr/bin.
 
-I'm writing now to just state what the plan is for version 2
-of this series.  I had hoped to get something out this week,
-but it won't be available today, so I wanted to at least let
-people know what to expect.
+No functional changes intended.
 
-First, we received a great deal of really good feedback on
-this series.  I/we sincerely appreciate it, and have already
-addressed almost all of the suggestions people have made.
+Signed-off-by: Oli R <sigmatwojastara@gmail.com>
+---
+ drivers/gpu/drm/msm/registers/gen_header.py                     | 2 +-
+ scripts/macro_checker.py                                        | 2 +-
+ tools/crypto/ccp/dbc.py                                         | 2 +-
+ tools/crypto/ccp/dbc_cli.py                                     | 2 +-
+ tools/crypto/ccp/test_dbc.py                                    | 2 +-
+ tools/perf/tests/shell/lib/perf_json_output_lint.py             | 2 +-
+ .../selftests/devices/probe/test_discoverable_devices.py        | 2 +-
+ tools/testing/selftests/rseq/rseq-slice-hist.py                 | 2 +-
+ 8 files changed, 8 insertions(+), 8 deletions(-)
 
-Andrew Lunn asked a number of questions about the way that
-the TC956x device is represented, and in particular questioned
-whether having the GPIO controller as a device subordinate to
-a PCIe function even made sense.  This led to some additional
-discussion, including some offline work exploring what other
-options might be reasonable.
-
-The plan for version 2 is to submit it fairly soon, to include
-updates that address *most* of the feedback received so far.
-(I have sent e-mail with clear confirmation of what we intend
-to do--and these changes would be incorporated in version 2).
-
-However, because there remain other outstanding issues,
-including "big picture" questions about how to represent the
-hardware, the series will be sent as RFC.
-
-This will allow others to see the changes we made based on
-feedback, but also makes it clear there is more work that
-needs to be done before we're confident in our final proposal.
-
-					-Alex
-
-> TC956x chips incorporate a PCIe gen 3 switch, with one upstream and
-> three downstream ports.  Its PCIe functionality is already supported
-> upstream, including a power control driver that performs some early
-> configuration of the PCI ports ("pci-pwrctrl-tc9563.c").
-> 
-> One of the PCIe switch's downstream ports has an internal PCIe endpoint,
-> which implements two PCIe functions, each of which has an Ethernet MAC
-> (eMAC) subsystem. The eMAC is composed of a Synopsis Designware XGMAC
-> combined with an XPCS and PMA.  Each MAC is capable of operating at
-> 10M/100M/1G/2.5G/5Gps and 10Gps.  The initial target platform is the
-> Qualcomm RB3gen2, which supports a 10Gbps Marvell PHY on port A, and
-> a 2.5Gbps Qualcomm PHY on port B.  (The Marvell PHY is not populated on
-> all RB3gen2 boards, and only 2.5 Gbps support is included initially.)
-> 
-> TC956x chips also implement several other blocks of functionality,
-> including a GPIO controller, interrupt controllers (MSIGEN), I2C
-> and SPI, a UART, and an Arm Cortex M3 CPU with 128KB SRAM.  The GPIO
-> interface exposes several lines to manage external resets.  The
-> interrupt controllers are used internally by the MAC functions.  The
-> UART, SPI, microcontroller, and SRAM are currently unused.
-> 
->                ----------------------------------
->                |              Host              |
->                ------+...+----------+........+---
->                      |i2c|          |  PCIe  |
->      ----------------+...+----------+........+------
->      | TC956x        |I2C|          |upstream|     |
->      |               -----        --+--------+---  |
->      |  -----  ------  -------    | PCIe switch |  |
->      |  |SPI|  |GPIO|  |reset|    |             |  |
->      |  -----  ------  |clock|    | DS3 DS2 DS1 |  |
->      |                 -------    ---++--++--++--  |
->      |  -----  ------     downstream//    \\  \\   |  downstream
->      |  |MCU|  |SRAM|    /==========/      \\  \===== PCIe port 1
->      |  -----  ------   //PCIe port 3       \\     |
->      |                  ||                   \======= downstream
->      |  ----+-----------++-----------+----         |  PCIe port 2
->      |  | M | internal PCIe endpoint | M |         |
->      |  | S |------------------------| S |  ------ |
->      |  | I |   PCIe   |  |   PCIe   | I |  |UART| |
->      |  | G |function 0|  |function 1| G |  ------ |
->      |  | E |----++----|  |----++----| E |         |
->      |  | N |  eMAC 0  |  |  eMAC 1  | N |         |
->      --------+.......+------+.....+-----------------
->              |USXGMII|      |SGMII|
->            --+.......+--  --+.....+--
->            |  ARQ113C  |  | QEP8121 |
->            |    PHY    |  |   PHY   |
->            -------------  -----------
-> 
-> The primary objective for this series is to support the Ethernet
-> functionality provided by the TC956x.  The code providing this
-> support has been structured into three distinct modules.
->    - A driver for the GPIO controller
->    - Code enabling the TC956x-specific eMAC/MSIGEN hardware
->    - A "chip" driver, associated with the PCIe functions
-> 
-> The GPIO driver is implemented separately because in some hardware
-> configurations, these GPIO lines are used to manage resets for
-> external Ethernet PHYs.  We describe these PHYs via devicetree,
-> where the GPIO-based reset signals are defined using phandles.
-> 
-> The code for the eMAC/MSIGEN consists of a new source file that
-> populates hardware-specific details about the two MACs, and integrates
-> with the existing stmmac driver.  This also required implementing some
-> enhancements to the core stmmac driver, described further below.
-> 
-> To manage the common functionality (including configuring address
-> translation and controlling internal reset and clock signals), a
-> "chip" driver is implemented.  This chip driver is associated with
-> the PCIe function *itself*, not the eMAC associated with the function.
-> 
-> The driver binds to the internal PCI functions 0 and 1, and creates
-> a shared data structure describing the common chip elements the two
-> driver instances share.  Three auxiliary bus devices are created to
-> represent the GPIO controller and the two Synopsys MAC controllers.
-> 
-> The driver instance for PCIe function 0 has responsibility for
-> controlling the common chip functionality--creating the GPIO
-> controller auxiliary device, configuring address translation
-> between PCIe address space and internal addresses, and controlling
-> clocks and resets.  It creates a data structure--shared via its
-> platform data pointer with PCIe function 1--to represent shared
-> "chip" information.  In addition, PCIe function 0 creates an
-> auxiliary device to represent its attached eMAC.  It allocates
-> IRQs and maps BAR address ranges for use by the stmmac driver,
-> passing them in a structure via the auxiliary device's platform
-> data.
-> 
-> PCIe function 1 defers probing until after PCIe function 0 has
-> created the shared data structure.  After that its only job is
-> to set up IRQs and mapped memory and create the eMAC1 auxiliary
-> device.
-> 
-> The version of the Synopsys MAC IP is 3.01, which is largely compatible
-> with version 2.20.  The core stmmac driver required several changes to
-> enable support for the TC956x.
->    - A change to dwxgmac2 support changes the interrupt mode when
->      multi_msi_en is enabled.
->    - While most support for version 3.01 simply uses the 2.20 code,
->      an erratum related to the RX ring length is implemented for
->      3.01 DMA operations.
->    - Having the PCIe device be separate from an auxiliarly device
->      implementing the eMAC required allowing a distinct DMA device
->      to be maintained for an stmmac interface.
-> 
-> In addition:
->    - A new source file provides memory-mapped access to XPCS using
->      regmap.  The alignment of the TC956x MDIO registers aren't
->      suitable for using simple MMIO.
->    - Two additional XPCS changes are implemented that provides
->      support for the XPCS as implemented in the TC956x.
-> 
-> This series is available here:
->    https://github.com/riscstar/linux/tree/tc956x/stmmac-v1
-> 
-> 					-Alex (and Daniel)
-> 
-> Alex Elder (3):
->    net: stmmac: dma: create a separate dma_device pointer
->    gpio: tc956x: add TC956x/QPS615 support
->    misc: tc956x_pci: add TC956x/QPS615 support
-> 
-> Daniel Thompson (9):
->    net: pcs: pcs-xpcs-regmap: support XPCS memory-mapped MDIO bus via
->      regmap
->    net: pcs: pcs-xpcs: select operating mode for 10G-baseR capable PCS
->    net: pcs: pcs-xpcs: Preserve BMCR_ANENBLE during link up
->    net: stmmac: dwxgmac2: Add multi MSI interrupt mode
->    net: stmmac: dwxgmac2: Add XGMAC 3.01a support
->    net: stmmac: dwxgmac2: export symbols for XGMAC 3.01a DMA
->    dt-bindings: net: toshiba,tc965x-dwmac: add TC956x Ethernet bridge
->    net: stmmac: tc956x: add TC956x/QPS615 support
->    arm64: dts: qcom: qcs6490-rb3gen2: enable TC9564 with a single QCS8081
->      phy
-> 
->   .../bindings/net/toshiba,tc956x-dwmac.yaml    | 111 +++
->   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  |  45 +-
->   drivers/gpio/Kconfig                          |  11 +
->   drivers/gpio/Makefile                         |   1 +
->   drivers/gpio/gpio-tc956x.c                    | 209 +++++
->   drivers/misc/Kconfig                          |  10 +
->   drivers/misc/Makefile                         |   1 +
->   drivers/misc/tc956x_pci.c                     | 667 +++++++++++++++
->   drivers/net/ethernet/stmicro/stmmac/Kconfig   |  13 +
->   drivers/net/ethernet/stmicro/stmmac/Makefile  |   2 +
->   .../net/ethernet/stmicro/stmmac/chain_mode.c  |  12 +-
->   .../ethernet/stmicro/stmmac/dwmac-tc956x.c    | 791 ++++++++++++++++++
->   .../net/ethernet/stmicro/stmmac/dwxgmac2.h    |  12 +
->   .../ethernet/stmicro/stmmac/dwxgmac2_core.c   |   1 +
->   .../ethernet/stmicro/stmmac/dwxgmac2_descs.c  |   1 +
->   .../ethernet/stmicro/stmmac/dwxgmac2_dma.c    |  78 +-
->   .../net/ethernet/stmicro/stmmac/ring_mode.c   |  12 +-
->   drivers/net/ethernet/stmicro/stmmac/stmmac.h  |   1 +
->   .../net/ethernet/stmicro/stmmac/stmmac_main.c |  59 +-
->   .../net/ethernet/stmicro/stmmac/stmmac_xdp.c  |   2 +-
->   drivers/net/pcs/Makefile                      |   4 +-
->   drivers/net/pcs/pcs-xpcs-regmap.c             | 203 +++++
->   drivers/net/pcs/pcs-xpcs.c                    |  43 +-
->   include/linux/pcs/pcs-xpcs-regmap.h           |  20 +
->   include/linux/stmmac.h                        |   1 +
->   include/soc/toshiba/tc956x-dwmac.h            |  84 ++
->   26 files changed, 2341 insertions(+), 53 deletions(-)
->   create mode 100644 Documentation/devicetree/bindings/net/toshiba,tc956x-dwmac.yaml
->   create mode 100644 drivers/gpio/gpio-tc956x.c
->   create mode 100644 drivers/misc/tc956x_pci.c
->   create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
->   create mode 100644 drivers/net/pcs/pcs-xpcs-regmap.c
->   create mode 100644 include/linux/pcs/pcs-xpcs-regmap.h
->   create mode 100644 include/soc/toshiba/tc956x-dwmac.h
-> 
-> 
-> base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
+diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
+index 2acad951f1e2..10316f517a7d 100644
+--- a/drivers/gpu/drm/msm/registers/gen_header.py
++++ b/drivers/gpu/drm/msm/registers/gen_header.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3
++#!/usr/bin/env python3
+ #
+ # Copyright © 2019-2024 Google, Inc.
+ #
+diff --git a/scripts/macro_checker.py b/scripts/macro_checker.py
+index ba550982e98f..7dbb114a57d5 100755
+--- a/scripts/macro_checker.py
++++ b/scripts/macro_checker.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3
++#!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ # Author: Julian Sun <sunjunchao2870@gmail.com>
+ 
+diff --git a/tools/crypto/ccp/dbc.py b/tools/crypto/ccp/dbc.py
+index 2b91415b1940..cd56a63aa8ce 100644
+--- a/tools/crypto/ccp/dbc.py
++++ b/tools/crypto/ccp/dbc.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3
++#!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ 
+ import ctypes
+diff --git a/tools/crypto/ccp/dbc_cli.py b/tools/crypto/ccp/dbc_cli.py
+index bf52233fd038..bfe34f01e619 100755
+--- a/tools/crypto/ccp/dbc_cli.py
++++ b/tools/crypto/ccp/dbc_cli.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3
++#!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ import argparse
+ import binascii
+diff --git a/tools/crypto/ccp/test_dbc.py b/tools/crypto/ccp/test_dbc.py
+index bb0e671be96d..0ee3da6c6be7 100755
+--- a/tools/crypto/ccp/test_dbc.py
++++ b/tools/crypto/ccp/test_dbc.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3
++#!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ import unittest
+ import os
+diff --git a/tools/perf/tests/shell/lib/perf_json_output_lint.py b/tools/perf/tests/shell/lib/perf_json_output_lint.py
+index dafbde56cc76..dccafd507bb7 100644
+--- a/tools/perf/tests/shell/lib/perf_json_output_lint.py
++++ b/tools/perf/tests/shell/lib/perf_json_output_lint.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python3
+ # SPDX-License-Identifier: (LGPL-2.1 OR BSD-2-Clause)
+ # Basic sanity check of perf JSON output as specified in the man page.
+ 
+diff --git a/tools/testing/selftests/devices/probe/test_discoverable_devices.py b/tools/testing/selftests/devices/probe/test_discoverable_devices.py
+index d7a2bb91c807..72a94bbfbc7b 100755
+--- a/tools/testing/selftests/devices/probe/test_discoverable_devices.py
++++ b/tools/testing/selftests/devices/probe/test_discoverable_devices.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3
++#!/usr/bin/env python3
+ # SPDX-License-Identifier: GPL-2.0
+ #
+ # Copyright (c) 2023 Collabora Ltd
+diff --git a/tools/testing/selftests/rseq/rseq-slice-hist.py b/tools/testing/selftests/rseq/rseq-slice-hist.py
+index b7933eeaefb9..2c43b2e2bf0d 100644
+--- a/tools/testing/selftests/rseq/rseq-slice-hist.py
++++ b/tools/testing/selftests/rseq/rseq-slice-hist.py
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python3
++#!/usr/bin/env python3
+ 
+ #
+ # trace-cmd record -e hrtimer_start -e hrtimer_cancel -e hrtimer_expire_entry -- $cmd
+-- 
+2.54.0
 
 
