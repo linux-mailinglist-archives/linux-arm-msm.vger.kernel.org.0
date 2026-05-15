@@ -1,325 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-107937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CN/BEPYxB2qQswIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 16:47:18 +0200
+	id OFszOTsyB2qQswIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 16:48:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1251551A64
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 16:47:17 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 898ED551A93
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 16:48:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9563E3040AA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 14:43:23 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 2A28F3002B08
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 14:48:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7353A3B3C0E;
-	Fri, 15 May 2026 14:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFFDD38C400;
+	Fri, 15 May 2026 14:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="DH72HnBH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bLs6IJYr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96433B4EA0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 14:43:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E2A2DFF04;
+	Fri, 15 May 2026 14:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778856203; cv=none; b=eRcXn7cJHiSRxBGuKZffdpezhyqE146KwTiTIb7kiAJix0CLUHgt9fUBeN2WMMeUnfcDOSvaOZz9GdNpGEiXjlPuHcMY6nX+ccPCVKe+h3YWjf36JVtvq5KrpGmOvYPFczDeVzlYBL0NsO3rfokUSl+0CRmA91ItCdRfM00Ef/k=
+	t=1778856498; cv=none; b=PI32Hh+uf8JwYTcP3LJihjMcLLTgLNsrr/UuVMjKRQRdGuflAxjTCvLfIyzU7yBedHUiQe1NDPqNUS74aIaHGFtvqQG5ZdMM+gaXfZGqayDwyQa+AksGHA8RPT0Z4ETTuK3uWN+jKnkg0BY/RGRjbtCI1Gko90vkE9W/KPjf7XI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778856203; c=relaxed/simple;
-	bh=BrDnglcPpHdF17/XDXh0A5c13ePXd2Eol2zpQw9zZuM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=ks9PNbZB03VRd49zU86V+WlQvihSyIXuYpooWl/an7oREm2HdH0w87Q9I9Yd2ak/v/44Ouo3teOYEjHwfnZHDQHqDe4Dp2x61ubCi6kolisNItaPFEioFaPymr8+BnUNHnK0V+AOIOrM0ps2zN9r1k0mtFiBnaBTQuUm5HvVIaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=DH72HnBH; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-bd11a3729e8so823903266b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 07:43:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1778856199; x=1779460999; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D0Bn3ek7iAddkL4KNYP43/nukBKzdDN3DwlzCPpyg8I=;
-        b=DH72HnBH0jyYKk9Yl3mn7COLlJKZxPbrs7Shr5k655sITNyb3U2tKoOwXSD6wH1lTi
-         VlV0snFF8l+aIaa1yi4wu6Z+2eQL3oodtXs9QIMen5XIqtCzQWeqKf1zpA2Ju7MuBYXM
-         FS/uBPqyoWVC5UxXjqTX2uCQW8+WQU2uEB/TA7D55FdIweaZmX2JuLkx+IpjBMr2ZbjT
-         /wPSgdMhqLbHCSW/UMeMpGv1Jry9492ciAApdbc+BntTM+0NPRfxOMoqnb4WbHBciQ6p
-         X4GTW2eeuLJ6tIHh/bPxGe8p6QZrh3WuQcAzauU9ZqBVJBJWyJ5EPhWWCTRbQ4qmIGhO
-         E65g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778856199; x=1779460999;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=D0Bn3ek7iAddkL4KNYP43/nukBKzdDN3DwlzCPpyg8I=;
-        b=H34Jtl9Fc5mp+pFSmGRdEAjrXLBcjM+BLNhaVQKhkmATKIiAWAWfvQpsPcDACNDKb9
-         96e0erjx1UHrLGhECUm1sDiJlE4mCVAVV4nHleoEzModCPN8gfODXZFq4G0245d4pcD0
-         zkfNyT5EOUwJo3u2fzPP5/fBJOMs2jtIjG8AJE3lPqL9mty73EKEyL8DQUX0g4rTKBsf
-         dTQ8SGv++fDwqm6P6RbW72KnCsIOCxG/WMAsAM8/FUZOojqxEKxy2aLsAb5nRxT7rNsI
-         pS7eZ/FPQmXAKaOTT//L44qmSAQ6KsAKq1tTiHtRvsacP9fpvldlnBLpD8R9auHlg/TD
-         6Fug==
-X-Forwarded-Encrypted: i=1; AFNElJ9hlRMaSN05g2oCCNUnGs6Ue9INEkuOQpJawgf2hQ7G/3dI7+kF5q9CJdiGQeysCh6iFCoqX/4qQvsNQpbu@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKmzUy4qIKI66wfWK9WRhU7Oi+h9KefZc1uujvOv6LjvjvDqBj
-	0isT6tvX6SCvL01NZO598Bckw3/9OXqB5QeKtEpKCDeNBUoG1v9g/NxR0/QbpQSnu4Y=
-X-Gm-Gg: Acq92OGyZQUUWYKBqomn+wIjsgCSikeQpRz0zJS4V8VlaUulFfGzEr1qGn2YGta7ubc
-	pS79bzcminTDZotzEtcFNJvz50b9Qdp+FpAjNVoZVcZ6YPmz7rW9QPN8GrSF+T+rtdUjqh67rlC
-	WSo6SHl+bPk0PCkQYc4h548/itjzORhI+/LcQrNttqKNYGRDe/cRTQeUhgAGnDrmqdKqO/xFGyp
-	Vqe9lf+HaSAYePTrNGutw7f35If1n+Cdim4XziyBvwIbPhMAxHUkBY6Zop/W2wbW0AUHJshIbHM
-	KuaJsGJ9MRDXHWfx6ofPB2mOILgPVr/VgTLxjAtRX5f6NNyBIKgjkpDeEivZQyQJHtp3S9jopAP
-	6ysW7fw+Gl/GBHgI9ABJq/lSmKeE9u/Mw/EvTyk7TI/z9c3K6+e9lX9EjK85icTbdM9mqpYYauu
-	VdxJOC40aNKP3Qhxaw3F8TdGHJEm5jv8qUwaqIc+7znwS2qXy+obmF/KmYCIEo47N7mELUGQQnJ
-	qb074A=
-X-Received: by 2002:a17:907:7287:b0:bd1:9f5c:abbf with SMTP id a640c23a62f3a-bd51798eb09mr231759966b.43.1778856199218;
-        Fri, 15 May 2026 07:43:19 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bd4f4e60a76sm236571966b.53.2026.05.15.07.43.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 May 2026 07:43:18 -0700 (PDT)
+	s=arc-20240116; t=1778856498; c=relaxed/simple;
+	bh=o17vMuYjKsLRjXfW7PBkXxDGIdqEtydbCUMZil2l8Z4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UuUgm4PMVtQ5FN8zprC03ySuGUWBhJ5h95ddhT8ZCPFhl3MnRccd7l5W5zxNDdTglxn93hAbxBHvzmQ67wdyHcphJAEdpKDI2wCyLoP2qsHBqfXzjzLcpYPRCXz9baSfRid8XpfNrYR85ew3Xi2zbi45AIFbaDxOEmAQ71+7Dlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bLs6IJYr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42823C2BCB0;
+	Fri, 15 May 2026 14:48:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778856498;
+	bh=o17vMuYjKsLRjXfW7PBkXxDGIdqEtydbCUMZil2l8Z4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=bLs6IJYr6lcA4flbAaVgWg/P4X1jxUlL4xwMFPvQw+EM2UaUNPRXtqKlkpWZO5lZj
+	 k6OBQq1OJNnTco0mqSu8+ibE4Yu/r+Yi7RexdsevMHyz10ksTOcpd1G6SyxSA3hyBu
+	 WZKp3op+N/Pnr6qallc3iyNWN9bAi4/yA3ap8GXyarw/OnXqa1L5mNNky/vO3tKPSk
+	 nC3Mp8QwxfOZ+7iv90fHlHm0DN0lbgZg5KTGCaT466ZSU7wJ59HoY6w3kgBz4Y3aoY
+	 wEIre0DI3NtM6vSaOiXYk5+bUeUY8CvTt1P2h3bIBJdGEZRfH6s5fGT88UaKKf6UzH
+	 JNUFFfqJgogLQ==
+Message-ID: <f0b90edc-6584-4b30-a2d1-e72139983fdb@kernel.org>
+Date: Fri, 15 May 2026 16:48:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] soc: qcom: ice: Enable PM runtime for ICE driver
+To: Linlin Zhang <linlin.zhang@oss.qualcomm.com>,
+ Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S . Miller" <davem@davemloft.net>, devicetree@vger.kernel.org,
+ linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Neeraj Soni <neeraj.soni@oss.qualcomm.com>,
+ Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>,
+ bjorn.andersson@oss.qualcomm.com
+References: <20260512033750.3393050-1-linlin.zhang@oss.qualcomm.com>
+ <20260512033750.3393050-3-linlin.zhang@oss.qualcomm.com>
+ <b07a3634-a7a6-4f28-994b-fc900be26879@kernel.org>
+ <01578e6a-d10a-46df-bb32-fd45ecb365d7@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <01578e6a-d10a-46df-bb32-fd45ecb365d7@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 15 May 2026 16:43:18 +0200
-Message-Id: <DIJBW80W84I8.27QBZZD2BGAKO@fairphone.com>
-To: "Thomas Zimmermann" <tzimmermann@suse.de>, "Luca Weiss"
- <luca.weiss@fairphone.com>, "Neil Armstrong" <neil.armstrong@linaro.org>,
- "Jessica Zhang" <jesszhan0024@gmail.com>, "Maarten Lankhorst"
- <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>,
- "David Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <dri-devel@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 2/4] drm/panel: Add driver for Novatek NT37705 panel
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260501-fp6-panel-v1-0-e09cb05651cc@fairphone.com>
- <20260501-fp6-panel-v1-2-e09cb05651cc@fairphone.com>
- <c06623ba-b19c-471a-becb-2fafddb3583c@suse.de>
- <DIJBNGDNXE0L.2I0H4PBDDODOP@fairphone.com>
- <4d4e8090-3216-4a41-9a7d-3d2c0998121a@suse.de>
-In-Reply-To: <4d4e8090-3216-4a41-9a7d-3d2c0998121a@suse.de>
-X-Rspamd-Queue-Id: E1251551A64
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 898ED551A93
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107937-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[suse.de,fairphone.com,linaro.org,gmail.com,linux.intel.com,kernel.org,ffwll.ch];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
+	TAGGED_FROM(0.00)[bounces-107938-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[fairphone.com:+];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-1.000];
-	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:email,fairphone.com:mid,fairphone.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On Fri May 15, 2026 at 4:36 PM CEST, Thomas Zimmermann wrote:
-> Hi
->
-> Am 15.05.26 um 16:31 schrieb Luca Weiss:
->> On Fri May 8, 2026 at 10:06 AM CEST, Thomas Zimmermann wrote:
->>> Hi
->>>
->>> Am 01.05.26 um 15:52 schrieb Luca Weiss:
->>>> Add support for the 2484x1116 AMOLED panel from BOE (BJ631JHM-T71-D900=
-)
->>>> bundled with a NT37705 driver IC, as found on the Fairphone (Gen. 6)
->>>> smartphone.
->>>>
->>>> The panel can also be configured in 10-bit (RGB101010) mode, however
->>>> currently it's configured in 8-bit (RGB888) since there's some issues =
-in
->>>> the Qualcomm DPU driver when driving this panel in 10-bit.
->>>>
->>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>>> ---
->>>>    drivers/gpu/drm/panel/Kconfig                 |  11 +
->>>>    drivers/gpu/drm/panel/Makefile                |   1 +
->>>>    drivers/gpu/drm/panel/panel-novatek-nt37705.c | 413 +++++++++++++++=
-+++++++++++
->>>>    3 files changed, 425 insertions(+)
->>>>
->>>> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kco=
-nfig
->>>> index 979109c27b9b..59ab3f29d8ef 100644
->>>> --- a/drivers/gpu/drm/panel/Kconfig
->>>> +++ b/drivers/gpu/drm/panel/Kconfig
->>>> @@ -624,6 +624,17 @@ config DRM_PANEL_NOVATEK_NT37700F
->>>>    	  Say Y here if you want to enable support for Novatek NT37700F DS=
-I
->>>>    	  panel module. The panel has a resolution of 1080x2160.
->>>>   =20
->>>> +config DRM_PANEL_NOVATEK_NT37705
->>>> +	tristate "Novatek NT37705-based DSI panel"
->>>> +	depends on OF
->>>> +	depends on DRM_MIPI_DSI
->>>> +	depends on BACKLIGHT_CLASS_DEVICE
->>>> +	select DRM_KMS_HELPER
->>>> +	help
->>>> +	  Say Y here if you want to enable support for Novatek NT37705-based
->>>> +	  display panels, such as the one found in the The Fairphone (Gen. 6=
-)
->>> Duplicate 'the'
->> Marketing really wanted to have it be "The Fairphone". Will change and
->> make it saner.
->
-> How about "as the one found in Gen. 6 of The Fairphone." ?
+On 15/05/2026 16:22, Linlin Zhang wrote:
+> 
+> Hi Krzysztof,
+> 
+> Thanks for the review.
+> 
+> For the SCMI-based platforms (e.g. sa8255p), the ICE resources such as
+> clocks are not controlled directly by the ICE driver. Instead, they are
+> managed by remote firmware and exposed to Linux via power domains. As a
+> result, the ICE driver cannot use clk_prepare_enable() directly to
+> control the hardware clock.
+> 
+> The intention of moving the clock handling into runtime PM callbacks is
+> to align the ICE driver with the power domain framework used on these
+> platforms. When the ICE device is attached to a power domain, invoking
+> pm_runtime_resume_and_get() will trigger the provider (remote firmware
+> via SCMI) to power up the device, which in turn enables the underlying
+> clock and other resources.
+> 
+> This design follows the guidance where the runtime PM framework is
+> used as the common mechanism to abstract both:
+>   - direct clock control on non-SCMI platforms, and
+>   - firmware-controlled resources via power domains on SCMI platforms.
+> 
+> In both cases, the runtime PM callbacks are responsible for performing
+> the actual resource enable/disable:
+>   - for legacy platforms: clk_prepare_enable()/disable_unprepare()
+>   - for SCMI platforms: power domain on/off handled by firmware
+> 
+> So while it may look like an additional layer on legacy platforms, this
+> approach provides a unified mechanism without requiring separate driver
+> entry points or special handling in the upper layers (e.g. UFS driver).
+> 
+> That said, I understand your concern that introducing runtime PM solely
+> for clock gating can be seen as unnecessary overhead on existing
+> platforms. I will revisit the implementation to ensure that:
+>   - the runtime PM integration does not introduce regressions for legacy
+>     platforms, and
+>   - the design clearly justifies the common abstraction for both SCMI
+>     and non-SCMI cases.
+> 
+> In addition, I rewrite the commit message as the following to make the
+> intention more clear.
+> 
+>   On some platforms the ICE device is placed in a firmware-managed power
+>   domain. In those cases the ICE core resources (including the clock) are
+>   not directly controllable by Linux and are instead toggled by the power
+>   domain provider (e.g. remote firmware via SCMI).
+> 
+>   Wire the ICE device into runtime PM so that a single pm_runtime
+>   transition is used to bring the ICE device up/down. When the device is
+>   attached to a PM domain, pm_runtime_resume_and_get()/pm_runtime_put_sync()
+>   will invoke the PM domain callbacks and let the provider manage the
+>   resources. On platforms without a PM domain the runtime PM callbacks
+>   continue to perform the existing clock enable/disable locally.
+> 
+>   No functional change is intended for non-firmware-managed platforms; the
+>   change provides a common control point that allows ICE to operate when
+>   resources are owned by a PM domain provider.
+> 
 
-I'll just make it
 
-  display panels, such as the one found in the Fairphone (Gen. 6)
-  smartphone.
+Nothing here resolves the comments. Also, it's top posted. Honestly, I
+won't be talking through you with LLM, so consider patch NAKed.
 
->>>> +	  smartphone.
->>>> +
->>>>    config DRM_PANEL_NOVATEK_NT37801
->>>>    	tristate "Novatek NT37801/NT37810 AMOLED DSI panel"
->>>>    	depends on OF
->>>> diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Ma=
-kefile
->>>> index 0d694acbfbb6..94639bc58ca8 100644
->>>> --- a/drivers/gpu/drm/panel/Makefile
->>>> +++ b/drivers/gpu/drm/panel/Makefile
->>>> @@ -61,6 +61,7 @@ obj-$(CONFIG_DRM_PANEL_NOVATEK_NT36523) +=3D panel-n=
-ovatek-nt36523.o
->>>>    obj-$(CONFIG_DRM_PANEL_NOVATEK_NT36672A) +=3D panel-novatek-nt36672=
-a.o
->>>>    obj-$(CONFIG_DRM_PANEL_NOVATEK_NT36672E) +=3D panel-novatek-nt36672=
-e.o
->>>>    obj-$(CONFIG_DRM_PANEL_NOVATEK_NT37700F) +=3D panel-novatek-nt37700=
-f.o
->>>> +obj-$(CONFIG_DRM_PANEL_NOVATEK_NT37705) +=3D panel-novatek-nt37705.o
->>>>    obj-$(CONFIG_DRM_PANEL_NOVATEK_NT37801) +=3D panel-novatek-nt37801.=
-o
->>>>    obj-$(CONFIG_DRM_PANEL_NOVATEK_NT39016) +=3D panel-novatek-nt39016.=
-o
->>>>    obj-$(CONFIG_DRM_PANEL_MANTIX_MLAF057WE51) +=3D panel-mantix-mlaf05=
-7we51.o
->>>> diff --git a/drivers/gpu/drm/panel/panel-novatek-nt37705.c b/drivers/g=
-pu/drm/panel/panel-novatek-nt37705.c
->>>> new file mode 100644
->>>> index 000000000000..27bd8072ccd1
->>>> --- /dev/null
->>>> +++ b/drivers/gpu/drm/panel/panel-novatek-nt37705.c
->>>> @@ -0,0 +1,413 @@
->>>> +// SPDX-License-Identifier: GPL-2.0-only
->>>> +/*
->>>> + * Generated with linux-mdss-dsi-panel-driver-generator from vendor d=
-evice tree.
->>>> + * Copyright (c) 2026 Luca Weiss <luca.weiss@fairphone.com>
->>>> + */
->>>> +
->>>> +#include <linux/backlight.h>
->>>> +#include <linux/delay.h>
->>>> +#include <linux/gpio/consumer.h>
->>>> +#include <linux/mod_devicetable.h>
->>>> +#include <linux/module.h>
->>>> +#include <linux/regulator/consumer.h>
->>>> +
->>>> +#include <video/mipi_display.h>
->>>> +
->>>> +#include <drm/display/drm_dsc.h>
->>>> +#include <drm/display/drm_dsc_helper.h>
->>> IIRC this requires
->>>
->>>   =C2=A0select DRM_DISPLAY_DSC_HELPER
->>>
->>> in the Kconfig. Maybe double-check.
->> Will check. Always difficult to figure out the proper dependencies in a
->> fully-featured defconfig build.
->>
->>>> +#include <drm/drm_mipi_dsi.h>
->>>> +#include <drm/drm_modes.h>
->>>> +#include <drm/drm_panel.h>
->>>> +#include <drm/drm_probe_helper.h>
->>>> +
->>>> +struct nt37705_panel {
->>>> +	struct drm_panel panel;
->>>> +	struct mipi_dsi_device *dsi;
->>>> +	struct drm_dsc_config dsc;
->>>> +	struct regulator_bulk_data *supplies;
->>>> +	struct gpio_desc *reset_gpio;
->>>> +};
->>>> +
->>>> +static const struct regulator_bulk_data nt37705_supplies[] =3D {
->>>> +	{ .supply =3D "vddio" },
->>>> +	{ .supply =3D "dvdd" },
->>>> +	{ .supply =3D "vci" },
->>>> +};
->>>> +
->>>> +static inline struct nt37705_panel *to_nt37705_panel(struct drm_panel=
- *panel)
->>>> +{
->>>> +	return container_of_const(panel, struct nt37705_panel, panel);
->>> Either just use container_of or build something that respects the
->>> input's const-ness.
->> I really don't get what you mean here? Why is container_of_const() bad
->> here?
->
-> Because nothing is const here. It looks like an oversight or as if=20
-> something should be const.
-
-I checked and include/linux/container_of.h states:
-
-  Do not use container_of() in new code.
-
-and
-
-  Always prefer container_of_const() instead of container_of() in new code.
-
-So sounds like using container_of_const() is the correct way.
-
->>>> +
->>>> +	ret =3D regulator_bulk_enable(ARRAY_SIZE(nt37705_supplies), ctx->sup=
-plies);
->>>> +	if (ret < 0) {
->>> Common style is to check for errors with
->>>
->>>   =C2=A0 if (ret)
->>>
->>> Here and everywhere else.
->> At least for regulator_bulk_enable() "ret < 0" is actually more popular
->> than just "ret".
->>
->> Kernel doc says "Return: 0 on success or a negative error number on
->> failure." so a positive integer should in theory never happen so they're
->> equivalent.
->>
->> (git grep -h -A2 regulator_bulk_enable | grep if | sed 's|^[ \t]\+||' | =
-sed 's| {$||' | sort | uniq -c)
->
-> It's just nitpicking, not a blocker.
-
-I was also curious so I dug around a bit :)
-
-Regards
-Luca
+Best regards,
+Krzysztof
 
