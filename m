@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-107820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8BxvODsAB2qVqgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 13:15:07 +0200
+	id SAgNIG4BB2qVqgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 13:20:14 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43F5354E370
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 13:15:07 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D911154E4B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 13:20:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 97C8631C4AD7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 10:59:16 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D2CBC3205834
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 10:59:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 763A246AF2F;
-	Fri, 15 May 2026 10:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2E1E477E31;
+	Fri, 15 May 2026 10:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N9Ngp25i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MrtVMJWx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E9C44D018;
-	Fri, 15 May 2026 10:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FACB477E2B;
+	Fri, 15 May 2026 10:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778842702; cv=none; b=auJV5WDKNQkPS6ChdP6F3G/chCfw1KfalJJRP4zYDXG9JhGFT9mI3kBsKSSPeC7qkKOCQcqM+wk1UiMbaIkr/wmZnXZgnxzp2Ul0298k7esFtBheqV5GG7KvzvFkVs2TecwemCrX9fu5eD19RDPWdlQDAXyJSm4n/hfKffl/TGI=
+	t=1778842752; cv=none; b=JBf6+Oov/ri94WFLij4Nfil1le3xtWN+Bwsp8Yk3JGGyM8vgle5W00mW64k2PDqOVP9PbgzIBY5DgC8wlbAQN7Fw0SKFslYDViciqct/ddpbD9JHGYDmiZlSY7QOZ87nE/Q7qdIPTs3J7XRiw0XKneSA4fMYZC/ncYukE6MDlH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778842702; c=relaxed/simple;
-	bh=/eB9+0ySYJg6AO90guQIMsZOV7IaVx8WW9dg2ssULmQ=;
+	s=arc-20240116; t=1778842752; c=relaxed/simple;
+	bh=MGPuJpNRn9FOipTBakkjr5Fc0lscvUuuVtT1R27weBQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uxhRaSfOh+QmnNijEr/64DBpbib7kklXpMRHnx5P5ySykxys0HHzKMF3NzxnEFdnIFqtweo5K6s9IqO7ArJlleeH8JQPwroSoC8MP0Zb8MdIor9QsRqPTRZEzPaUoUUc1SpL27jdbMknlFHcGskE50SwXvYvCBCPzLLEIGmw9TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N9Ngp25i; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A91FC2BCB0;
-	Fri, 15 May 2026 10:58:21 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=BK7fXRpM3zfF5OSykYE6pz6AC0dHqQg2e4L8MDbVCWVT0H0j3cn+yXftR7WbquxoEh23aXrz4jvfKQ2zZxbT9/Jo/RFiFLMwxBumDFHgU8dD7x8T3tePKAjubfIokmJ7+2OSzlGs0aeSE94icU0kq+kCUJjHACvEdpAPoGI5h+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MrtVMJWx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11B3C2BCB0;
+	Fri, 15 May 2026 10:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778842702;
-	bh=/eB9+0ySYJg6AO90guQIMsZOV7IaVx8WW9dg2ssULmQ=;
+	s=k20201202; t=1778842752;
+	bh=MGPuJpNRn9FOipTBakkjr5Fc0lscvUuuVtT1R27weBQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=N9Ngp25i72JRKbMTHMrgId0bn+ib3IocjtV5zKV17jMRerLvBJcWoPwOgA9vCivEj
-	 oA3/sFdVE8N9H5QPfLTM9YzHMjneXbTX25Abv3cN/vxvdI4W4FSq5fE9geFW55vuCU
-	 Y/xcL7MnIP0hRCqTLtk74NHs1wcwzNsqMF4rWhr6XMBtBUTDJb9hA5zq+9qgMoHtNU
-	 k51ofmvRzIcFW0l8dcxLKoW5DcsEgXlr3EGAK3UTUAa3sOzFZ7mZOp9pH+Yghga8E+
-	 6q2+s6R+MPGo+lmWoKEW2tcb6LaeJjUTWmo6GH1I1Lzz6o3K+kkTlFY52Q2o4ps3Do
-	 3KyWTRGWf8gFQ==
-Date: Fri, 15 May 2026 12:58:19 +0200
+	b=MrtVMJWxkZI7KzrRYSGCKuGAtOFoBlgktoCUtEkgS/k64afbllHVr5hIx9i5hHvao
+	 kA31XKlXTIf2Kgt66PEcfYlwihc62PIop/8HSwChYO7bm05/gPVsIAbiVcsSVfzIDU
+	 FQlcKDZNSF7wOAGnWiOZSHaKRSGbwepyA3QZAdSvchwpVAXIuOQ5DtQnECsMw6TT3S
+	 Oj/p1NC9GUBrZrC8LKOso32EwsLOc1WJGfRB3Ca0qgG9xJLsJx/oYK0SFSjRdhBrrt
+	 U+ElJOiCrdD7chpPyQji7sGDRHrHwlSbijErP8eTFqVRk7N9ooY98wZiL2jPZDjXAV
+	 E8OYDeF55y0kg==
+Date: Fri, 15 May 2026 12:59:09 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Rudraksha Gupta <guptarud@gmail.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -52,11 +52,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: soc: qcom: saw2: Rename MSM8960 SAW2
- compatible to v1.1
-Message-ID: <20260515-rustling-spiked-shrew-020dff@quoll>
+Subject: Re: [PATCH 3/3] ARM: dts: qcom: msm8960: Add CPU frequency scaling
+ support
+Message-ID: <20260515-succinct-auspicious-eagle-27f6d4@quoll>
 References: <20260514-expressatt_cpufreq-v1-0-487fd2d78859@gmail.com>
- <20260514-expressatt_cpufreq-v1-1-487fd2d78859@gmail.com>
+ <20260514-expressatt_cpufreq-v1-3-487fd2d78859@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,52 +65,52 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260514-expressatt_cpufreq-v1-1-487fd2d78859@gmail.com>
-X-Rspamd-Queue-Id: 43F5354E370
+In-Reply-To: <20260514-expressatt_cpufreq-v1-3-487fd2d78859@gmail.com>
+X-Rspamd-Queue-Id: D911154E4B7
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-107820-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-107821-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_TO(0.00)[gmail.com];
 	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	DBL_PROHIBIT(0.00)[0.0.1.148:email];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	RCPT_COUNT_SEVEN(0.00)[10];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,0.31.220.64:email,0.31.224.40:email]
 X-Rspamd-Action: no action
 
-On Thu, May 14, 2026 at 12:04:00AM -0700, Rudraksha Gupta wrote:
-> Rename qcom,msm8960-saw2-cpu to qcom,msm8960-saw2-v1.1-cpu to follow
-> the naming convention used by other SAW2 compatibles that include the
-> hardware version (e.g. qcom,apq8064-saw2-v1.1-cpu).
-> 
-> The MSM8960 uses SAW2 v1.1, the same hardware version as the APQ8064.
-> 
-> Assisted-by: Claude:claude-opus-4.6
+On Thu, May 14, 2026 at 12:04:02AM -0700, Rudraksha Gupta wrote:
+>  			tsens_calib: calib@404 {
+>  				reg = <0x404 0x10>;
+>  			};
+> @@ -348,7 +477,7 @@ acc0: clock-controller@2088000 {
+>  		};
+>  
+>  		saw0: power-manager@2089000 {
+> -			compatible = "qcom,msm8960-saw2-cpu", "qcom,saw2";
+> +			compatible = "qcom,msm8960-saw2-v1.1-cpu", "qcom,saw2";
 
-And Claude should tell you that's a NAK. If you throw AI slop at us,
-don't expect useful review.
-
-NAK, ABI impact without any reason.
+NAK, impacts users without explanation/justification.
 
 Best regards,
 Krzysztof
