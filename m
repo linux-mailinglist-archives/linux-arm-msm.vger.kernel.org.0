@@ -1,104 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-107759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iAxcHrfrBmqCowIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 11:47:35 +0200
+	id QApfECjvBmr1owIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 12:02:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 24A6E54CB44
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 11:47:34 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B773254CF07
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 12:02:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 6CE75308E2C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 09:30:42 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 12CD631363CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 09:35:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C03DD32BF41;
-	Fri, 15 May 2026 09:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15A9643D510;
+	Fri, 15 May 2026 09:35:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nUwwcI8i";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Gj1E4WXV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ljEUs9m6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682B6383C7F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 09:30:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E5842B733;
+	Fri, 15 May 2026 09:35:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778837440; cv=none; b=bMWxH6lwP/NtIqyeU5rtwRn4Rqvq1I6DGhZrdVK8bHwg9RCSWSFldDpV9Ph419e/2i2QKsgJQD5VpzYkJ0Pj9QmRdjAPnAhtnOC9oMgH7PXxbmdGH96P4wd7+x9tuWAP1F2U5m1pa/cVno5yN/Dq2wugkanxgrX5iHf4naOlNwI=
+	t=1778837713; cv=none; b=WcZRrhjtUjZx7b5c4XaRDDcQWhmgibSkWtle6uihDFYI5ASR6K/lGxw+dc6wZSmzHB7ELej/pC0zgQVHmcunpK/9mbaVigiJL1eQFDhdZsWVpOCbUwbSfDytn41IDRTt+U4WVOyx49C4TuQRX2cMhlPFtHSrpAIgVRDr0vPnKDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778837440; c=relaxed/simple;
-	bh=Y4BSPp0dDK26mTaTR0n/dia2UU9V4N6M5EHqaz7EZ98=;
+	s=arc-20240116; t=1778837713; c=relaxed/simple;
+	bh=6+Z2hFPm2CGaDDYAFq6XLOFDhDpjRJ6rarPLFafTKqk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=u/EiZhgji6dGNnIS/sqamPjmt//KyKfhURrQpQ3pRwaLLFPWwxz9Yl8P1Jcb8kv2jBpPfPlJxtvGZTeIts3ijrULnBZ3ws2q43bc6emAaGJ2pwKYSZvHBTuXn+bVlxiO7XEjSmO0EMt4pa6XCt5WvZ4dFA/DQS6ae5tGnsLUUFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nUwwcI8i; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Gj1E4WXV; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64F5I3O33670906
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 09:30:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CUhAyNz1XFXKod2vcUNqCBCCnku0MrI8ZdXb0C+8GzE=; b=nUwwcI8iMJ4KmfvQ
-	G5qGhL6/oacw/Zc9sK9e8ZscpjkNdUX4ejU/6jJhYJYOu+kDL8hyrIixu1EHsT69
-	cWxU2elMilteNuTN1eTqYLZoa3Wgg7EQKJV2qz2Hcx27TPGkYVJRRNbDgytwO364
-	kbtxRpRbSmP5BIDtPXoR1p3p8p7USQQGRiyRFDvWvcqrrxHe1m7unNH/SO9xxRnk
-	wBg39cgqLWs4iTPHt7CPPCRw19cxffuZ98jWSIPsfLcb6a2y8rylKuJ4HYryCnA3
-	ojBI6CXU3rYphWbl2iJ/W64K2hUFVw18tMxfZEjHm7kaey9FJRMYT0aiZDmtdUAS
-	thF3TQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e5m1s2p58-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 09:30:38 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-50de6db1eabso20263041cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 02:30:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1778837438; x=1779442238; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CUhAyNz1XFXKod2vcUNqCBCCnku0MrI8ZdXb0C+8GzE=;
-        b=Gj1E4WXV82mGnf6tl45c3A1qG8oIOWFRwWL2/GfzocWc0GpPz53Cegu17kz62LRJ8H
-         JnTfXE3qwDYZTeGLuDUj463VyRc0IaV3HMzl75peu4uRoCgW3Ewa7Da1E4K3vVkWxK/1
-         apto8iPT4HR/euGE/7OrGk6FznCVWSWtOxSANcK2Y0U3i3d4fiEu4biZGEBOpMZgqADG
-         YrzCg4s4xdxU5uJtCIdGVmzSCNdQCYXhlr9mWU/7EC6dwlkXbm4DoYgOA6OjUG0Uy1qq
-         Mf3bGGZIEzoNCIjiL61o2WY4PClqPeit0HCDp9QdpLRwrTPeIdBfqorlDBmamfGT0El4
-         IN6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778837438; x=1779442238;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CUhAyNz1XFXKod2vcUNqCBCCnku0MrI8ZdXb0C+8GzE=;
-        b=FaAaHg/emcQUTTH1/GWC7b8Y+BN5YrJEJZfngnzuwdFQgaWOkGOMDaiJMB58aKGHVE
-         ESJMufAIvxKVuko9q5pYJ35q//v50megYEBl6qE1F7eiZ/EPhPqe5v75wdXUtVVi+YME
-         7C8uTW+ZEvtd18V8pN+VjSCvR0p4ufaG0Ci3YBgWKAkmiE71Cdbz2ZtV7MPfdAMW2JE3
-         /RhINKJ6i9zuWSpwR9nEy2vQEj07fXXF7DUQ/VshJI8+UkuMGddLWaeTI8ppmTWgzaPh
-         hjqf1t8VdFEehZwra1hp9nvrTOG9zfj47hduvegK+i2+I1gHx3IDvYA/kChlxjx/e7ts
-         68tA==
-X-Gm-Message-State: AOJu0Yxn21wYqiEHIhXye4PFJvbClm9Kx1DklyyJEcOq1AWOEjtkCAuv
-	nLKduJTvpkfQZG/Wa82O7erqojajtzRERnMj8E7DSUYpuwmg/7M7CJydlDBT7apNTmkhX6F7gIP
-	q6zbYAhZ2T/4EZl2aDjDp8LFUnSRUdFRZ0idvTS037qX5WfMncUoYaNTndhofCYblmozM
-X-Gm-Gg: Acq92OGUVPV4dWXspRHr9zR57e3hhRlRr1hcbb0U5GvbOd67Vf3Nw/Nqesa2VUdJVvh
-	46rPdG0FASvNNIuHHuvik3HToVVxRn5D6M2+tWLd9vFVXZYxtiULr+lKZ04UMVNRk2X9HZyfNiQ
-	BwflSggKzRKzTrk4kgksZMLwkXuVvfME6u6xAmQOM7d9JKv9aDoNGpR11k1RqV3SVufqVZP/VfK
-	2uk8D0VS1FpnngZVtKz7YFWxQrOMUFG3tUJOOKn8rNBmhyHAoa484vHf58r7qVZn4m+NQX42EwR
-	CTj2negcO0fdr0cLmFtXcY6huPn7+Wb3qsHbuh4m7GPyBC6TH8XGGeN5OeePhttKZRSPSCH1Hi4
-	zTF2l44wFDkVszKEdIsgPhA+Yycmp5QPWUAU+uiZ4DpPK+/+74mFpyDfTdrhOXPlh8i6vTXb89p
-	vcoKrTCNbv0o1uLw==
-X-Received: by 2002:a05:622a:1207:b0:50f:bea5:52a with SMTP id d75a77b69052e-51659e99e40mr30151881cf.0.1778837437761;
-        Fri, 15 May 2026 02:30:37 -0700 (PDT)
-X-Received: by 2002:a05:622a:1207:b0:50f:bea5:52a with SMTP id d75a77b69052e-51659e99e40mr30151451cf.0.1778837437113;
-        Fri, 15 May 2026 02:30:37 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-68310d510fasm1765815a12.11.2026.05.15.02.30.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 May 2026 02:30:35 -0700 (PDT)
-Message-ID: <1bf1558f-19b8-4052-9609-52039f820bbb@oss.qualcomm.com>
-Date: Fri, 15 May 2026 11:30:33 +0200
+	 In-Reply-To:Content-Type; b=JEUClb1ChChX5tfwSiFKTiohDj/03syjZW6B2DKtgvB4bwNHND2n+6fploVsXRcZmPkU7WuQhBd3qk8nZaOwxbz7qPMoNy/u8ktu06mQ4kxwndhLFGkV/FZMrRcXbMg5gCvSvFUS9TNGKyOxHnpUc6QKGMIeNiOPd950c5/U5Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ljEUs9m6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9604C2BCB3;
+	Fri, 15 May 2026 09:35:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778837712;
+	bh=6+Z2hFPm2CGaDDYAFq6XLOFDhDpjRJ6rarPLFafTKqk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ljEUs9m6V8tA1WOak8gM1zqbVrzmI1ancVge9Ngh4ZCS1BtpCy7eK3NR3GOe9neg4
+	 mbIJ2Yo8eQqNy22ykzf9GhHoQvJvFhc1drgCI18bscYSuxtGTi64rnYmMxGjZaSzxZ
+	 SeS62KX8LQnTdBGxhsaRliikorTxuv9WTil5cVtzYTt+iABqWhbDswGONmsq5MhI1s
+	 tH24npT9bji90xbFRn5aBJzCdkzmilBXcpzs059o4Hk8Fv/MUtOoIx3dH6cSMp1jI6
+	 uEAV3W3FwBNEEaL/GUSXYKPksBYM72P+lhtfV/+3UgO9EW/Dy/cAzWEEjtxikN2LQl
+	 By5o1LFMcl5bw==
+Message-ID: <11e79f8b-9401-4e56-87b2-8d8148e05232@kernel.org>
+Date: Fri, 15 May 2026 10:35:05 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,107 +53,149 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] soc: qcom: spm: Add MSM8960 SAW2 CPU support
-To: guptarud@gmail.com, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260514-expressatt_cpufreq-v1-0-487fd2d78859@gmail.com>
- <20260514-expressatt_cpufreq-v1-2-487fd2d78859@gmail.com>
+Subject: Re: [PATCH v3 0/6] media: qcom: iris: add support for decoding 10bit
+ formats
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <5Yg7em0Xca9girDZT52cxZaTg93xJtZD7C2ExswhAkholGSsMsWXMWxtbtsWmkGeJWjp56SmJlLhj55vO4e0nw==@protonmail.internalid>
+ <20260511-topic-sm8x50-iris-10bit-decoding-v3-0-7fc049b93042@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260514-expressatt_cpufreq-v1-2-487fd2d78859@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE1MDA5NCBTYWx0ZWRfX04B62aKlnVv9
- uuhPSpf6nfpunvv6odG/JbBo+ysolnD51/KcTssxOg5r/Np4UvA01bPtUi6ETfxRIrW50uADYUK
- UJDsOS9kYe5hSH0qEbFi01RrrrEt9qTRwnayFzWE6PYekT2D6SbLNzIF7Z7tToAPaCXXDfi0G90
- gba2CdDOQ3g5V0sK53RdTLXb3uJXJQsQCgzOcqVCzukGGi03rq9/xyX7GUleOPa/nf+JFi7EeSM
- wI4+h4uZss62WTtEtbWq5wSdBOEnCB6C4K5Mc2IU1+dchQn6mfBCEXZN3MTNDTQkOKBFg+9iNWZ
- QHffcO3LXEY59Fi8mZPmKL/QVWTD1YaETTAsv1VI5HXfmW78zhqxuU4rD8R37WjoWRSKaE+oWbT
- HXwMtM7Ke6a5C9IBhPwygTJDm+/1ais0O0gAKRwO8y47oCSvci3IXsjj9Fqhf7pe4+eDvx1Qvjf
- QyYvgYqMhom9HsLtunw==
-X-Authority-Analysis: v=2.4 cv=Md5cfZ/f c=1 sm=1 tr=0 ts=6a06e7be cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=oA5LrNwOAAAA:20 a=pGLkceISAAAA:8 a=CuIG2ROkbE135izgqDAA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-GUID: lxOLlzx1lo8rnKlr5l2zOlHObQnsEBo1
-X-Proofpoint-ORIG-GUID: lxOLlzx1lo8rnKlr5l2zOlHObQnsEBo1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-15_02,2026-05-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 adultscore=0 phishscore=0 spamscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605150094
-X-Rspamd-Queue-Id: 24A6E54CB44
+From: Bryan O'Donoghue <bod@kernel.org>
+In-Reply-To: <20260511-topic-sm8x50-iris-10bit-decoding-v3-0-7fc049b93042@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: B773254CF07
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-107759-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_FROM(0.00)[bounces-107760-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	MIME_TRACE(0.00)[0:+];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[]
 X-Rspamd-Action: no action
 
-On 5/14/26 9:04 AM, Rudraksha Gupta via B4 Relay wrote:
-> From: Rudraksha Gupta <guptarud@gmail.com>
-> 
-> The MSM8960 uses SAW2 v1.1, the same hardware version as the APQ8064.
-> Add SPM register data so that the SAW2 driver can program the correct
-> SPM sequences and PMIC parameters for MSM8960 CPUs.
-> 
-> The register layout, SPM sequences, voltage range, and regulator
-> parameters are shared with APQ8064. The only difference is pmic_dly:
-> 0x03020004 on MSM8960 vs 0x02020004 on APQ8064.
-> 
-> Link: https://github.com/CyanogenMod/android_kernel_samsung_d2/blob/0dbe2b56847b304d30b809dfd08ba3b4a61d9af8/arch/arm/mach-msm/board-express.c#L3353-L3381
-> Assisted-by: Claude:claude-opus-4.6
-> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
-> ---
 
-[...]
+Can you rebase off of:
 
-> +static const struct spm_reg_data spm_reg_8960_cpu = {
-> +	.reg_offset = spm_reg_offset_v1_1,
-> +	.spm_cfg = 0x1F,
-> +	.pmic_dly = 0x03020004,
-> +	.pmic_data[0] = 0x0084009C,
-> +	.pmic_data[1] = 0x00A4001C,
+https://gitlab.freedesktop.org/linux-media/media-committers/-/tree/next
 
-Let's use lowercase hex
+and ideally make sure everything applies against
 
-> +	.seq = { 0x03, 0x0F, 0x00, 0x24, 0x54, 0x10, 0x09, 0x03, 0x01,
-> +		0x10, 0x54, 0x30, 0x0C, 0x24, 0x30, 0x0F },
+https://gitlab.freedesktop.org/linux-media/users/bodonoghue/-/tree/next+fixes
 
-I can't see these values anywhere downstream
+bod-media-committers-next-plaform-qcom(next-smoketest*)$ b4 shazam 
+20260511-topic-sm8x50-iris-10bit-decoding-v3-0-7fc049b93042@linaro.org
+Grabbing thread from 
+lore.kernel.org/all/20260511-topic-sm8x50-iris-10bit-decoding-v3-0-7fc049b93042@linaro.org/t.mbox.gz
+Checking for newer revisions
+Grabbing search results from lore.kernel.org
+Analyzing 25 messages in the thread
+Analyzing 12 code-review messages
+Checking attestation on all messages, may take a moment...
+---
+   ✓ [PATCH v3 1/6] media: qcom: iris: add helpers for 8bit and 10bit 
+formats
+     + Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+   ✓ [PATCH v3 2/6] media: qcom: iris: add QC10C & P010 buffer size 
+calculations
+   ✓ [PATCH v3 3/6] media: qcom: iris: gen2: add support for 10bit decoding
+     + Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+   ✓ [PATCH v3 4/6] media: qcom: iris: vdec: update size and stride 
+calculations for 10bit formats
+     + Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+   ✓ [PATCH v3 5/6] media: qcom: iris: vdec: update find_format to 
+handle 8bit and 10bit formats
+     + Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+   ✓ [PATCH v3 6/6] media: qcom: iris: vdec: allow GEN2 decoding into 
+10bit format
+     + Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+   ---
+   ✓ Signed: openpgp/neil.armstrong@linaro.org
+   ---
+   NOTE: install dkimpy for DKIM signature verification
+---
+Total patches: 6
+---
+  Base: base-commit 76671814f2843482d97feca12e95c06f0b05bc8a not known, 
+ignoring
+Applying: media: qcom: iris: add helpers for 8bit and 10bit formats
+Applying: media: qcom: iris: add QC10C & P010 buffer size calculations
+Applying: media: qcom: iris: gen2: add support for 10bit decoding
+Applying: media: qcom: iris: vdec: update size and stride calculations 
+for 10bit formats
+Applying: media: qcom: iris: vdec: update find_format to handle 8bit and 
+10bit formats
+Applying: media: qcom: iris: vdec: allow GEN2 decoding into 10bit format
+Patch failed at 0006 media: qcom: iris: vdec: allow GEN2 decoding into 
+10bit format
+error: drivers/media/platform/qcom/iris/iris_platform_gen2.c: does not 
+exist in index
 
-Konrad
+that file got zapped in:
+
+commit 53a5e095636acbab817a7fb98a67ce76cac59fdf
+Author: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date:   Sun Mar 29 02:33:10 2026 +0200
+
+     media: qcom: iris: split platform data from firmware data
+
+     Finalize the logical separation of the software and hardware interface
+     descriptions by moving hardware properties to the files specific to the
+     particular VPU version.
+
+     Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+     Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+     Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+
+diff --git a/drivers/media/platform/qcom/iris/Makefile 
+b/drivers/media/platform/qcom/iris/Makefile
+index 2fde45f817276..48e415cbc4390 100644
+--- a/drivers/media/platform/qcom/iris/Makefile
++++ b/drivers/media/platform/qcom/iris/Makefile
+@@ -4,14 +4,16 @@ qcom-iris-objs += iris_buffer.o \
+               iris_ctrls.o \
+               iris_firmware.o \
+               iris_hfi_common.o \
++             iris_hfi_gen1.o \
+               iris_hfi_gen1_command.o \
+               iris_hfi_gen1_response.o \
++             iris_hfi_gen2.o \
+               iris_hfi_gen2_command.o \
+               iris_hfi_gen2_packet.o \
+               iris_hfi_gen2_response.o \
+               iris_hfi_queue.o \
+-             iris_platform_gen1.o \
+-             iris_platform_gen2.o \
++             iris_platform_vpu2.o \
++             iris_platform_vpu3x.o \
+               iris_power.o \
+               iris_probe.o \
+               iris_resources.o \
+
+---
+bod
 
