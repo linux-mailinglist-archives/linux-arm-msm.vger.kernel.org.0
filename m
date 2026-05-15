@@ -1,308 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-107707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OKYSMq2qBmrxmAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 07:10:05 +0200
+	id iMpfNN+tBmrImgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 07:23:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 877DF54978B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 07:10:04 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96053549827
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 07:23:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id AAA103017075
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 05:09:48 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id E6821302CEF0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 05:23:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 746593DEAC5;
-	Fri, 15 May 2026 05:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E973D31A556;
+	Fri, 15 May 2026 05:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="YaurQTow"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YXS/9HyI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7FE3CF67D;
-	Fri, 15 May 2026 05:09:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902032868B4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 15 May 2026 05:23:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778821786; cv=none; b=Voant33VBaq/laiD5fXG9gTunUnAjFrzZu5iVOXCibOIYn/o5RPg1SOFCgk4wgBimkanU8xXsLmc2MLrCXQosV3mMPvcfliEtv2Dajpve3XV4gAUTH+jkIXzjJmxfU+7DDIpHhMB0PXXoJF+e/d9wVFdqCZcSl1lfaSYaJpq3IM=
+	t=1778822621; cv=none; b=rmkp/oR/mmH/mONzgLWqnOPNgPWcXq3nFonMXVi+CyCpt5Z1KxPDAqWtsvwdRXAd+yDNqfFbUWNuVNs7gK8Ibq5PabpezAF8OtaFYyGXbX1IeJ/+KNQXpKBnCbUUVLuUN6v+1xEpOxJZhflx7YUR1PAxhE0GHeZ73ybxAqtAx/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778821786; c=relaxed/simple;
-	bh=Cfj6Kdku0tU800nUbQXw10WWZBj5xuPKkeF75TEEHbE=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vj5t1xfQMK5i57owJ1tSJizxAVFf9bS4Ti6QKikrHWoXxwc3cnp67pQfwcSUIpHBqfFvRvSaZ5SDaERHgV8bMJqmSJf3dFHRibgPBHx47ssVLq9cNvs5QHrDjYuJlgtgTzcHvoJIHTwyyOXouNkFNUSm/j6ccRoYKHCaOkOm56A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=YaurQTow; arc=none smtp.client-ip=185.70.43.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1778821776; x=1779080976;
-	bh=IxMsmPSaPOk0vBCYQ+CxfWsGFzgB1P7pojoC1AoVBt0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=YaurQTowSzgN81y6wm/EOwicJoIN6hYsFDPUs4y7oGqDjoK4egnhm79zw3AKKeLMm
-	 1EONSjDmepmKuxK+WbF/EnP2HK2ol6pZTaQW91Y8+RzjfqFQywX5KJEwqC7av0BKCV
-	 Xi14GJKm235EFJQAxc0jiN3DWcv67BSp+Ct/fdhGf63RYwdudqWIG/qBhcD5ZlNCI0
-	 FgU4BeawHSoWjiur1xUEdEocQVeJEvnuLra4FDXAOki3V/hGPNIPtcE23aX7ZYCvFX
-	 5jtuwu/oEFYwXbETN+0PtPqYbMNiP2B19mxKI9f70w+Q7zY1ZChalC05lwem6ELD/c
-	 QTxAmhrMB/Sgg==
-Date: Fri, 15 May 2026 05:09:31 +0000
-To: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH RFC v6 7/7] arm64: dts: qcom: milos: Add Adreno 810 GPU and GMU nodes
-Message-ID: <20260515-adreno-810-v6-7-fbe04c7203e1@pm.me>
-In-Reply-To: <20260515-adreno-810-v6-0-fbe04c7203e1@pm.me>
-References: <20260515-adreno-810-v6-0-fbe04c7203e1@pm.me>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 11c52e0db622ce0c31f0dd66b9456ab0f070a5f0
+	s=arc-20240116; t=1778822621; c=relaxed/simple;
+	bh=ixr6UTkPaqIoywLFWnbYraaAvOuKOaos+d5WnYABLqg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gmg//RIOQeV1iIOBtATydskOqNsFJ70YK4H85YFk99Eo+0wP03n7Pxr+PY4ZbhvaBedGsf0q5wd7JE5/rX5WCwIB2v4eQyIhyWNP8LqbypjLCWbUkDCYFko49/8fScLaoxKW8eyu2SdqiyR0U4hLEy8DTdkYdncgqk1zYLYRo9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YXS/9HyI; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-8367df48711so4180982b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 May 2026 22:23:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778822620; x=1779427420; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=GpC4Sy2ohSEgf27E/5DP9PBOmyJ/jHfS/ZObuxuM5HM=;
+        b=YXS/9HyII+gjNAw7nos9AiSFiNG/l83Aq/THq5ma6LQjB33zPfZfPVLZT1CwaLTT78
+         vNg+93x8CIAiQ0+hndlVgdTgnRY+2H8SUnfqh/Hna0bPe+aBzDY4baPFDW6DYrBwvJvd
+         JT0QFjAEFLchJ3bHGUHdTfaBRKZdtBSBpZsSUMGi0k5EMhfXk1601zulPaaduWrEyffZ
+         5n1/C6vH9NBPuWMbexIbKR7jU/Z7b9xgSugJVTvG3xrza3oY4g21yLzFlXuNlRWrIaDE
+         MhKeUQhkBg9Dvh4hk5S/FP/oLymazQb8ipDlE5rgpdeGASqpPATlMG7ctfnhgDpAlBCy
+         tGPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778822620; x=1779427420;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GpC4Sy2ohSEgf27E/5DP9PBOmyJ/jHfS/ZObuxuM5HM=;
+        b=H0vFDDFv/Gi/4/NaF5SMxggSTytPjpvq9pe34pwrKBBOsg/mCc68x/UMfdypglbk7E
+         2GB0fmqPL+4s15lGgwVBlwUmf+evOZ12lBtYTXcOyLCUcK/bdagp3xwLzovrTlj7IuF9
+         3XHuvyhPhT+odRntdzqhRdjdsOcKKzYoTh9hVrd4tAG76e8L9e2ON4ydOTBGm/pj3RV6
+         HBB+7RgS4nsjL5IaEjgOkQxzBWV+b76KLlqNHA5tvFIimbbLk4ufgdgHYsmSzuqV8tXx
+         76XEWqwhr6stxVtgQJDXdCyyYT4LNEXKUGlRMLPQmVRqOu905Z46nAnrYXQO3q+gghIs
+         h29A==
+X-Forwarded-Encrypted: i=1; AFNElJ/BipVBbwSY8/7KmJZnxtOpVfBHcStE9c/8RXQ1AJGpNXbtesCqGL2GE4DE23FapdVumQNvbkHHjOCOtoa4@vger.kernel.org
+X-Gm-Message-State: AOJu0YySzm2SHYFRRYleJJt7TQPgBHe2mIy/37uOtwOcfzTVyhczb8GG
+	xyIuPh9+KzD2I7IP1wKK4mNRbeSpOTXLWvGR7SyAyc1dt6T1snsGatAD
+X-Gm-Gg: Acq92OEEIz2rhS47i3JhgPb9O0gPu/13qxZCBD5V/I1kP5grkNMcNSUryHv/MR5ep1M
+	y7RtT4rPtlOXSVMCNukVxfDrNzf8sLBPvYwglXu3yl38Qka91PnG5vs3IKVfVNHvs3f/tcoOk1z
+	aC6lVQoeAmNN6gZ3FPhqJzosceVd3kDxNfutgaukiesBm85GRGmGOYXInziC6LEciYcHWcs5+2H
+	EMos7wYSTAFrvGeHgFJvybleF5a5uqPx4lXekoyyB7/4XhKbXLglqwP3VA4focpUi9SgczZI8LX
+	/R5fa9K3XmSQk1xYyK9GVaWqUeJfTZP+uqw8ox7tli7hxGyojluUwPfjeiY9JjBFsziaLLPI5Zy
+	dSUwuUvigssrNuUJy7GR8riCIiWEkUzOGauAXzvKg0F9y2vpC0//6TITSh0cJhBKJ8BU3ns4oQJ
+	2FnYuSEcHG8KE7Ct/XIDx5rgDaJWM=
+X-Received: by 2002:a05:6a00:2a08:b0:82f:72e6:ed4 with SMTP id d2e1a72fcca58-83f33a18fcdmr2722540b3a.0.1778822619721;
+        Thu, 14 May 2026 22:23:39 -0700 (PDT)
+Received: from soyboi ([2402:8780:1073:dc10:22f6:2ac0:a51b:5d77])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f1942a83fsm4766005b3a.0.2026.05.14.22.23.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 May 2026 22:23:39 -0700 (PDT)
+Date: Fri, 15 May 2026 12:23:34 +0700
+From: Robertus Diawan Chris <robertusdchris@gmail.com>
+To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Cc: jens.wiklander@linaro.org, sumit.garg@kernel.org,
+	linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
+	linux-kernel@vger.kernel.org,
+	linux-kernel-mentees@lists.linuxfoundation.org,
+	skhan@linuxfoundation.org, me@brighamcampbell.com
+Subject: Re: [PATCH] tee: qcomtee: add missing va_end in early return
+ qcomtee_object_user_init()
+Message-ID: <agat1sBHqkGWKzOD@soyboi>
+References: <20260513091031.145826-1-robertusdchris@gmail.com>
+ <8182784b-b6c2-4136-af8d-3aea4f5a4662@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 877DF54978B
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8182784b-b6c2-4136-af8d-3aea4f5a4662@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 96053549827
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-107709-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107707-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	RCPT_COUNT_TWELVE(0.00)[24];
-	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[pm.me:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[robertusdchris@gmail.com,linux-arm-msm@vger.kernel.org];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[3d6c000:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,3d64000:email,pm.me:email,pm.me:mid,pm.me:dkim,fairphone.com:email,3c40000:email,3d00000:email,3d90000:email]
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-Add GPU and GMU devicetree nodes for the Adreno 810 GPU found on
-Qualcomm SM7635 (Milos) based devices.
+Hello Amir,
 
-The qcom,kaanapali-gxclkctl.h header can be reused here because
-Milos uses the same driver and the GX_CLKCTL_GX_GDSC definition
-is identical.
+On Fri, May 15, 2026 at 11:31:50AM +1000, Amirreza Zarrabi wrote:
+> On 5/13/2026 7:10 PM, Robertus Diawan Chris wrote:
+> > qcomtee_object_user_init() is a variadic function and when the function
+> > return because there's no dispatch callback in QCOMTEE_OBJECT_TYPE_CB
+> > case, there's no va_end to cleanup "ap" object initialized by va_start
+> > and that can cause undefined behavior. So make sure to use va_end before
+> > returning the error code when there's no dispatch callback.
+> >
+> > This is reported by Coverity Scan as "Missing varargs init or cleanup".
+> >
+> > Fixes: d6e290837e50 ("tee: add Qualcomm TEE driver")
+> > Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
+> > ---
+> > I don't have the device, so I am not sure how to test this change.
+> > Thank you.
+> >
+> >  drivers/tee/qcomtee/core.c | 8 ++++++--
+> >  1 file changed, 6 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/tee/qcomtee/core.c b/drivers/tee/qcomtee/core.c
+> > index b1cb50e434f0..901a31e8201f 100644
+> > --- a/drivers/tee/qcomtee/core.c
+> > +++ b/drivers/tee/qcomtee/core.c
+> > @@ -306,8 +306,10 @@ int qcomtee_object_user_init(struct qcomtee_object *object,
+> >  		break;
+> >  	case QCOMTEE_OBJECT_TYPE_CB:
+> >  		object->ops = ops;
+> > -		if (!object->ops->dispatch)
+> > -			return -EINVAL;
+> > +		if (!object->ops->dispatch) {
+> > +			ret = -EINVAL;
+> > +			goto out;
+> > +		}
+> >
+> >  		/* If failed, "no-name". */
+> >  		object->name = kvasprintf_const(GFP_KERNEL, fmt, ap);
+> > @@ -320,6 +322,8 @@ int qcomtee_object_user_init(struct qcomtee_object *object,
+> >  	default:
+> >  		ret = -EINVAL;
+> >  	}
+> > +
+> > +out:
+> >  	va_end(ap);
+> >
+> >  	return ret;
+> >
+> > base-commit: 5d6919055dec134de3c40167a490f33c74c12581
+>
+> Hi,
+>
+> Forgot to mention: how about using a break instead of a goto.
 
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
----
- arch/arm64/boot/dts/qcom/milos.dtsi | 165 ++++++++++++++++++++++++++++++++=
-++++
- 1 file changed, 165 insertions(+)
+Oh right. In this case, using "break" statement is enough. I will send
+the v2 of the patch. Maybe something like this:
 
-diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom=
-/milos.dtsi
-index 0e7cfc12b0d2..71fff0f35093 100644
---- a/arch/arm64/boot/dts/qcom/milos.dtsi
-+++ b/arch/arm64/boot/dts/qcom/milos.dtsi
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2025, Luca Weiss <luca.weiss@fairphone.com>
-  */
-=20
-+#include <dt-bindings/clock/qcom,kaanapali-gxclkctl.h>
- #include <dt-bindings/clock/qcom,milos-camcc.h>
- #include <dt-bindings/clock/qcom,milos-dispcc.h>
- #include <dt-bindings/clock/qcom,milos-gcc.h>
-@@ -1554,6 +1555,121 @@ lpass_ag_noc: interconnect@3c40000 {
- =09=09=09qcom,bcm-voters =3D <&apps_bcm_voter>;
- =09=09};
-=20
-+=09=09gpu: gpu@3d00000 {
-+=09=09=09compatible =3D "qcom,adreno-44010000", "qcom,adreno";
-+=09=09=09reg =3D <0x0 0x03d00000 0x0 0x6c000>,
-+=09=09=09      <0x0 0x03d9e000 0x0 0x2000>;
-+=09=09=09reg-names =3D "kgsl_3d0_reg_memory",
-+=09=09=09=09    "cx_mem";
-+
-+=09=09=09interrupts =3D <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH 0>;
-+
-+=09=09=09iommus =3D <&adreno_smmu 0 0x0>;
-+
-+=09=09=09operating-points-v2 =3D <&gpu_opp_table>;
-+
-+=09=09=09nvmem-cells =3D <&gpu_speed_bin>;
-+=09=09=09nvmem-cell-names =3D "speed_bin";
-+
-+=09=09=09qcom,gmu =3D <&gmu>;
-+=09=09=09#cooling-cells =3D <2>;
-+
-+=09=09=09interconnects =3D <&gem_noc MASTER_GFX3D QCOM_ICC_TAG_ALWAYS
-+=09=09=09=09=09 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-+=09=09=09interconnect-names =3D "gfx-mem";
-+
-+=09=09=09status =3D "disabled";
-+
-+=09=09=09gpu_zap_shader: zap-shader {
-+=09=09=09=09memory-region =3D <&gpu_microcode_mem>;
-+=09=09=09};
-+
-+=09=09=09gpu_opp_table: opp-table {
-+=09=09=09=09compatible =3D "operating-points-v2-adreno",
-+=09=09=09=09=09     "operating-points-v2";
-+
-+=09=09=09=09opp-264000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <264000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
-+=09=09=09=09=09opp-peak-kBps =3D <2136718>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0xc8295ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-362000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <362000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+=09=09=09=09=09opp-peak-kBps =3D <2136718>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0xc02c5ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-510000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <510000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS>;
-+=09=09=09=09=09opp-peak-kBps =3D <3972656>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0x882b5ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-644000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <644000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+=09=09=09=09=09opp-peak-kBps =3D <5285156>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0x882a5ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-688000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <688000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS_L2>;
-+=09=09=09=09=09opp-peak-kBps =3D <6074218>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0x882a5ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-763000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <763000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_NOM>;
-+=09=09=09=09=09opp-peak-kBps =3D <6671875>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0xa8295ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-895000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <895000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+=09=09=09=09=09opp-peak-kBps =3D <8171875>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0x88295ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-960000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <960000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_TURBO>;
-+=09=09=09=09=09opp-peak-kBps =3D <8171875>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0xa8285ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-1050000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <1050000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_TURBO_L1>;
-+=09=09=09=09=09opp-peak-kBps =3D <18597656>;
-+=09=09=09=09=09opp-supported-hw =3D <0x7>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0x88285ffd>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-1150000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <1150000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_TURBO_L2>;
-+=09=09=09=09=09opp-peak-kBps =3D <18597656>;
-+=09=09=09=09=09opp-supported-hw =3D <0x3>;
-+=09=09=09=09=09qcom,opp-acd-level =3D <0xa02f5ffd>;
-+=09=09=09=09};
-+=09=09=09};
-+=09=09};
-+
- =09=09gxclkctl: clock-controller@3d64000 {
- =09=09=09compatible =3D "qcom,milos-gxclkctl";
- =09=09=09reg =3D <0x0 0x03d64000 0x0 0x6000>;
-@@ -1564,6 +1680,55 @@ gxclkctl: clock-controller@3d64000 {
- =09=09=09#power-domain-cells =3D <1>;
- =09=09};
-=20
-+=09=09gmu: gmu@3d6c000 {
-+=09=09=09compatible =3D "qcom,adreno-gmu-810.0", "qcom,adreno-gmu";
-+=09=09=09reg =3D <0x0 0x03d6c000 0x0 0x32000>;
-+=09=09=09reg-names =3D "gmu";
-+
-+=09=09=09interrupts =3D <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH 0>,
-+=09=09=09=09     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH 0>;
-+=09=09=09interrupt-names =3D "hfi",
-+=09=09=09=09=09  "gmu";
-+
-+=09=09=09clocks =3D <&gpucc GPU_CC_AHB_CLK>,
-+=09=09=09=09 <&gpucc GPU_CC_CX_GMU_CLK>,
-+=09=09=09=09 <&gpucc GPU_CC_CXO_CLK>,
-+=09=09=09=09 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
-+=09=09=09=09 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-+=09=09=09=09 <&gpucc GPU_CC_HUB_CX_INT_CLK>;
-+=09=09=09clock-names =3D "ahb",
-+=09=09=09=09      "gmu",
-+=09=09=09=09      "cxo",
-+=09=09=09=09      "axi",
-+=09=09=09=09      "memnoc",
-+=09=09=09=09      "hub";
-+
-+=09=09=09power-domains =3D <&gpucc GPU_CC_CX_GDSC>,
-+=09=09=09=09=09<&gxclkctl GX_CLKCTL_GX_GDSC>;
-+=09=09=09power-domain-names =3D "cx",
-+=09=09=09=09=09     "gx";
-+
-+=09=09=09iommus =3D <&adreno_smmu 5 0x0>;
-+
-+=09=09=09qcom,qmp =3D <&aoss_qmp>;
-+
-+=09=09=09operating-points-v2 =3D <&gmu_opp_table>;
-+
-+=09=09=09gmu_opp_table: opp-table {
-+=09=09=09=09compatible =3D "operating-points-v2";
-+
-+=09=09=09=09opp-350000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <350000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+=09=09=09=09};
-+
-+=09=09=09=09opp-650000000 {
-+=09=09=09=09=09opp-hz =3D /bits/ 64 <650000000>;
-+=09=09=09=09=09opp-level =3D <RPMH_REGULATOR_LEVEL_SVS>;
-+=09=09=09=09};
-+=09=09=09};
-+=09=09};
-+
- =09=09gpucc: clock-controller@3d90000 {
- =09=09=09compatible =3D "qcom,milos-gpucc";
- =09=09=09reg =3D <0x0 0x03d90000 0x0 0x9800>;
+	if (!object->ops->dispatch) {
+		ret = -EINVAL;
+		break;
+	}
 
---=20
-2.53.0
+and then remove the "out" label.
 
+> Then feel free to add Reviewed-by.
 
+I want to confirm first, if I changed the patch using "break" statement,
+do I need to add "Reviewed-by" tag in the v2 of the patch or not? I am
+still not sure when to add "Reviewed-by" tag, like can we add
+"Reviewed-by" tag when we changed the patch?
+
+Thank you.
+
+Best regards,
+Robertus Diawan Chris
 
