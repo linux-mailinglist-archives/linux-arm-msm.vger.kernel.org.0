@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-107823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EHAkM60CB2qVqgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 13:25:33 +0200
+	id SPyYCW3+BmpiqgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 13:07:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7147254E5F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 13:25:33 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB02954E126
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 13:07:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D3CFF312C460
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 11:00:32 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5AEBC30352CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 15 May 2026 11:00:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9D813D1AA6;
-	Fri, 15 May 2026 11:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93361472766;
+	Fri, 15 May 2026 11:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NW3TpOxM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dsMwrSyY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CB0386C28;
-	Fri, 15 May 2026 11:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F20D3D1AA6;
+	Fri, 15 May 2026 11:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778842831; cv=none; b=mUkGPgkmUyVnQ0qlOTbyV57ovtqAocNNhxuQqi28wl5OMoWBQErtZIF7yWoDSdm2JiIR2BFEJXpCjnn/GS2q23tSCQwQk3d6apkmjwseaNm21jlcruwjN2w7hDK4u6A9PSnBdkBdrhhdSeD5gU7VUv6b76DGaCnvN3SvJQnIl5k=
+	t=1778842838; cv=none; b=cT9jbKFVqDWLYJw6eEjj0BXkQdxaNaYKSkFULPsI5OE4vtlFK3cnEbvVAiJMZ6e65bvL4xQKgNQBUuITXrJEgcnIRr1vcX+ZI054dKO+Rxz5ITSj7Y5Mi4FaFbVCuyauLQyfezC3G30ywvjn7cUdEdm+RxSi+0WzLcekIM2Dmrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778842831; c=relaxed/simple;
-	bh=wiZUCEGzgg1qIbW2WAuSFpbyLoaOhpzh/4wanZJHJC0=;
+	s=arc-20240116; t=1778842838; c=relaxed/simple;
+	bh=hhU1pmlijHznyJLgeNtITD2nuPPDjmHc+sAx6gBKbH8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZC/5D5aF81H8VLLM1PaTuqVRcFT5bsR118Jgxwo1uPUdKsQhEreyabP/BwpAr/y1erx4v/hs9oJEZwavMY0JuyYs06J+JCmkeImQ8l9eVuXknIW81Ho2MOjdebokRBgAGAGH6WRDRZm9VYTaGbnVv0D9oqZDRubU8fZMdiZBm+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NW3TpOxM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D623C2BCB0;
-	Fri, 15 May 2026 11:00:27 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=lFnCeljiMYWYUFVKafkCkbbOigqPublgJT51VkJ9Cxwfk15cBKno19J20jZH0B0ORI11tr0oho6q9FZK5JErxeqfA4plp75JxhloEuAhJH33495zfAJOe7ZRd+rM4l1FjU2pwfWfpdfjIPv6DW57TdVLvZ7DYeDfAPB7ASgUI5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dsMwrSyY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CAD8C2BCB0;
+	Fri, 15 May 2026 11:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778842831;
-	bh=wiZUCEGzgg1qIbW2WAuSFpbyLoaOhpzh/4wanZJHJC0=;
+	s=k20201202; t=1778842838;
+	bh=hhU1pmlijHznyJLgeNtITD2nuPPDjmHc+sAx6gBKbH8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=NW3TpOxM7+N5yQdN186msJOTwJEBG+3Gbi8BSDW6K8B0LnHOZyi0AvJ7U+EsD1DC+
-	 ylNO1VtYDBNxzzw+1h8g6+Kyl0tETyDNAU7onOhf0OxT2AEdziUFcSikyW9+9Wy6H4
-	 sy+kPqv17QY4Ra4DFmT2bMmpQteXEPGXoORhCImCKspIFlWyINYhWfyRaL88cZWvri
-	 DxDWmMxGfL4+RTAHhIq3xZWQp67rHYHX/I74huqqwqJ7ozfGlcbvCTgepzDFJKxgd6
-	 /X/KMISo6M4JSyAO7aHJ0rQtvJNE8023tbta1Ju8H7ZtGVDyeZKSu4YOzeOjLSExvT
-	 c8AWN1KDu8vFA==
-Message-ID: <181abfec-a6f9-49d3-9428-21a169a94246@kernel.org>
-Date: Fri, 15 May 2026 13:00:25 +0200
+	b=dsMwrSyYmDDhdMnYGmYpMuzFwNLJQhzIQZe4946i2fmNa7sCqEGxGk5XUJOk+ea6H
+	 iJgItBwszRuNtHW2iT0szYJ2WQAZ+EbSP7ou9pvdz45URTezLnOUVlmUv3hNl0dAae
+	 qpae+aoHAJ9LrwAWEF8tHT/nQjC8d+NDis5K7/9rDvwA7KVe31BQWYtiqDyA5AlOrH
+	 Rx/nAT0wn//FGiYo5yWGLmtq2JiZRKEnufmy5yYkrKpF4uUPdsHZQIg8AV87tBZa+2
+	 IhwEW4YmwVGP1kfOs/0zD0SHW9hyHZ8ZarE66J5HqwsV1T/NhKEw1s3o/5SqFxP8N3
+	 AKivQoYH6kvOw==
+Message-ID: <5567c195-da47-4acb-bc5a-ee6269282910@kernel.org>
+Date: Fri, 15 May 2026 13:00:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,21 +53,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: crypto: qcom-qce: Document the Shikra
- crypto engine
+Subject: Re: [PATCH 1/2] dt-bindings: crypto: qcom,prng: Document Shikra TRNG
 To: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
- Thara Gopinath <thara.gopinath@gmail.com>,
  Herbert Xu <herbert@gondor.apana.org.au>,
  "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@kernel.org>
+ <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- dmaengine@vger.kernel.org
-References: <20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com>
- <20260515-shikra_qcrypto-v1-1-80f07b345c29@oss.qualcomm.com>
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260514-shikra_rng-v1-0-4ea721a1429a@oss.qualcomm.com>
+ <20260514-shikra_rng-v1-1-4ea721a1429a@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,30 +110,29 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260515-shikra_qcrypto-v1-1-80f07b345c29@oss.qualcomm.com>
+In-Reply-To: <20260514-shikra_rng-v1-1-4ea721a1429a@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 7147254E5F5
+X-Rspamd-Queue-Id: BB02954E126
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107823-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,gmail.com,gondor.apana.org.au,davemloft.net,kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-107824-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[17];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
@@ -144,20 +140,20 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On 14/05/2026 21:23, Kuldeep Singh wrote:
-> Document the crypto engine on the Shikra platform.
+On 14/05/2026 15:16, Kuldeep Singh wrote:
+> Document shikra compatible for the True Random Number Generator.
 > 
 > Signed-off-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
 > ---
+>  Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-Same comments as for IPQ, Nord. I gave the same feedback internally more
-than once.
 
-NAK
+Same problems.
 
 Best regards,
 Krzysztof
