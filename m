@@ -1,163 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-107981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-107982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cNfTFuXWB2qILAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-107981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 May 2026 04:31:01 +0200
+	id MNQPKJ3bB2ovMAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-107982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 May 2026 04:51:09 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52B9C559E6C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 May 2026 04:30:59 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14395559F5D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 May 2026 04:51:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B0D8E3003820
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 May 2026 02:30:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5CF203019813
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 16 May 2026 02:47:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD4D41DF26E;
-	Sat, 16 May 2026 02:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E7CF1FDE31;
+	Sat, 16 May 2026 02:47:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X1r75yAl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EzC2RnTt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86DF4CB5B;
-	Sat, 16 May 2026 02:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EECE01F1534;
+	Sat, 16 May 2026 02:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778898645; cv=none; b=Mp1GGj1/cq1GRVfNFY/wDGtq7xZpaeb702ddzP8LPWtJb5u+KQePzs92Z9OM2qGViY5JUkDpbUT05Ko4tiKq+lWc6y+15tInP30TRXhCNkPDrcuhLt0f2b77NvtgqyZv6ivsJHsm0aLm9cOTuYKTYGH7ALbuSOqNXWOE3W3fK4Q=
+	t=1778899627; cv=none; b=ApMHFFawcxOMEICkS1deR9o0gRBwPp49LEvv5zKvGWWxFL8jk6woANkJsvAk4VwyAsfmlLOWZt5NDCFQZKjlwFogOFTXwyHOb5rVM/FpC9b2/E2Lu4/1RvwPuiluZI6lhRYcPUPpCqgACnNmAPWGtLHW+gt9qMT6L074MQCkoUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778898645; c=relaxed/simple;
-	bh=fXauv6pXRzSARsUh5lGbdtmEN6s8FRglmNcydc9LiIc=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=EBDmXJEj3xIEbSkQZUL3jg5uNci0NNFxbDQS7X1aqTbqbj7lpXDpDKA5EJh4ik4ctvgtGF+LHQMIXSVTcafRKJh1blR3oXrcZJi82Cp6OjwPd/G3V2Q2InNGtpcL+AT6NXDTeFN8O4tU25433CrOvzc+OAtkL8KGqx3omxYKlDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X1r75yAl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B63C2BCB0;
-	Sat, 16 May 2026 02:30:44 +0000 (UTC)
+	s=arc-20240116; t=1778899627; c=relaxed/simple;
+	bh=63M8icfMSKVH2q6Sy2tT4HIRMKohcXCKulLzUbzwl3I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ey5zO+IsGCxV+SVMkk7IOEODzuTlN8fg4uf9DbSCSmPje6MMI3Qce3U11Ih2kORfH7Rmd8UXJrIyFGTzzqxSZu0erU+o8wfKOBYcCN1DRBaBgBT3YhgRUX72lAPsgRITPx/1Kbd5aUX42wq+25NE7e57XtWlII04LldztJEYVBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EzC2RnTt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59406C2BCB0;
+	Sat, 16 May 2026 02:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1778898645;
-	bh=fXauv6pXRzSARsUh5lGbdtmEN6s8FRglmNcydc9LiIc=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=X1r75yAly27zWMpcuML/U2rhPS7KlWcCKMVwJ02XGYyAh65pN8uzBoELWtEQCmUie
-	 DClCSqcA7Vt2ejiwL8LLQU2b3Pxy43WwVQGU/Sbinv4dl1Cw3hiL89xTqEcDA974dO
-	 FbtwzTwU1FobIwQiBKT8P++aQOVVi3qB61/MQ+N1ec2cJ5FEwETzndDT/2paHnFYvW
-	 hsMsaATfyguGgbqNQRRGPd/GBQ0N+5IrMRQ7cwIU/i438tPo7Zx5vaxDZNR2LGIKIp
-	 bj2ZQGnvEoQB/ZX+2HvJwwibmEnhP3vS56o+S6xSAfrc85td69CtPsVAiTrlLQnOT8
-	 bZ9CerOYXZNAw==
-Date: Fri, 15 May 2026 21:30:43 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1778899626;
+	bh=63M8icfMSKVH2q6Sy2tT4HIRMKohcXCKulLzUbzwl3I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EzC2RnTtN/m0qfQSt+emZOpBvOnlFtc/EbUJHfK/nAh9dw0JOd6WIEBmKH0cdemvY
+	 UBtnIAzgShi3kTgW2yOvqUesUk4KhQlrgdyDHunytdBCgkg6c7csR4p8KhwBxVn0hE
+	 pY3qpm5sYpzQ8viaENQo7O5Er/oISfIgz6wcFvkXz1743d1tzdtkdSoRqi3BdBx2Dm
+	 evH0RFbpAwbhnUEKh9/TiNBjak38Z0I3KJZzMT9G3VoMnWiB0sFBr604/yR1fqrbiy
+	 6EYzH9rJNfA8BseAICPjcKxJcO0YmxXbhpsA9g4K7secmPjfgPeYWx0MO8JgQkcTGQ
+	 9EOxTCuBX4YOg==
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+	id 3478E1AC5A48; Sat, 16 May 2026 03:47:03 +0100 (BST)
+Date: Sat, 16 May 2026 11:47:03 +0900
+From: Mark Brown <broonie@kernel.org>
+To: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>, linux-input@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH RFC 3/4] Input: gpio-keys - add regulator to gpio_keys
+Message-ID: <agfap1YZnT_DbSoc@sirena.co.uk>
+References: <20260508-gpiokeys-vdd-supply-v1-0-0bb32e8e6428@fairphone.com>
+ <20260508-gpiokeys-vdd-supply-v1-3-0bb32e8e6428@fairphone.com>
+ <af3oqSshbXrUYMnz@sirena.co.uk>
+ <21308d1e-712b-4d3b-b083-251c8d755470@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Bryan O'Donoghue <bod@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- afilipov@quicinc.com, Hariram Purushothaman <hariramp@quicinc.com>, 
- Gjorgji Rosikopulos <grosikop@quicinc.com>, linux-media@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Kapatrala Syed <akapatra@quicinc.com>
-To: Atanas Filipov <atanas.filipov@oss.qualcomm.com>
-In-Reply-To: <20260515-qcom-jpeg-v4l2-v1-1-f38c2e1b3555@oss.qualcomm.com>
-References: <20260515-qcom-jpeg-v4l2-v1-0-f38c2e1b3555@oss.qualcomm.com>
- <20260515-qcom-jpeg-v4l2-v1-1-f38c2e1b3555@oss.qualcomm.com>
-Message-Id: <177889864336.2704850.15815754320818996790.robh@kernel.org>
-Subject: Re: [PATCH 1/3] media: dt-bindings: qcom: add JPEG encoder binding
-X-Rspamd-Queue-Id: 52B9C559E6C
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="PkL8tipO6e686OeJ"
+Content-Disposition: inline
+In-Reply-To: <21308d1e-712b-4d3b-b083-251c8d755470@fairphone.com>
+X-Cookie: Truckers welcome.
+X-Rspamd-Queue-Id: 14395559F5D
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-4.26 / 15.00];
+	SIGNED_PGP(-2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-107981-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	TAGGED_FROM(0.00)[bounces-107982-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,fairphone.com,vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,sirena.co.uk:mid]
 X-Rspamd-Action: no action
 
 
-On Fri, 15 May 2026 14:46:59 +0300, Atanas Filipov wrote:
-> Add YAML device tree binding for the Qualcomm JPEG encoder
-> hardware. This binding is used by the newly added driver and
-> describes all required resources, including clocks, power domains,
-> IOMMU mappings and interconnect paths.
-> 
-> Signed-off-by: Atanas Filipov <atanas.filipov@oss.qualcomm.com>
-> ---
->  .../bindings/media/qcom,jpeg-encoder.yaml          | 122 +++++++++++++++++++++
->  1 file changed, 122 insertions(+)
-> 
+--PkL8tipO6e686OeJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-My bot found errors running 'make dt_binding_check' on your patch:
+On Fri, May 15, 2026 at 01:41:38PM +0200, Griffin Kroah-Hartman wrote:
+> On 5/8/26 15:44, Mark Brown wrote:
+> > On Fri, May 08, 2026 at 02:53:15PM +0200, Griffin Kroah-Hartman wrote:
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/media/qcom,jpeg-encoder.yaml:20:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
-./Documentation/devicetree/bindings/media/qcom,jpeg-encoder.yaml:44:5: [warning] wrong indentation: expected 6 but found 4 (indentation)
+> > > +		if (fwnode_property_present(child, "vdd-supply")) {
+> > > +			button->regulator = devm_fwnode_regulator_get_optional(dev, child, "vdd");
+> > > +			if (IS_ERR(button->regulator)) {
 
-dtschema/dtc warnings/errors:
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:31.27-34 Unexpected 'GIC_SPI'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:31.39-59 Unexpected 'IRQ_TYPE_EDGE_RISING'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:32.37-58 Unexpected 'CAM_CC_TITAN_TOP_GDSC'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:43.23-44 Unexpected 'GCC_CAMERA_HF_AXI_CLK'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:44.23-44 Unexpected 'GCC_CAMERA_SF_AXI_CLK'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:45.25-44 Unexpected 'CAM_CC_CORE_AHB_CLK'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:46.25-44 Unexpected 'CAM_CC_CPAS_AHB_CLK'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:47.25-46 Unexpected 'CAM_CC_CAMNOC_AXI_CLK'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:48.25-40 Unexpected 'CAM_CC_JPEG_CLK'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:55.27-44 Unexpected 'MASTER_APPSS_PROC'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:55.54-70 Unexpected 'SLAVE_CAMERA_CFG'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:56.28-44 Unexpected 'MASTER_CAMNOC_HF'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:56.56-66 Unexpected 'SLAVE_EBI1'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:57.28-44 Unexpected 'MASTER_CAMNOC_SF'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:57.56-66 Unexpected 'SLAVE_EBI1'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:58.28-45 Unexpected 'MASTER_CAMNOC_ICP'
-Lexical error: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dts:58.57-67 Unexpected 'SLAVE_EBI1'
-FATAL ERROR: Syntax error parsing input tree
-make[2]: *** [scripts/Makefile.dtbs:140: Documentation/devicetree/bindings/media/qcom,jpeg-encoder.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1639: dt_binding_check] Error 2
-make: *** [Makefile:248: __sub-make] Error 2
+> > As well as the issue I mentioned on a prior thread with this assigning a
+> > non-physical "vdd" name to the single supply that these components can
+> > have (which has had issues in the past
 
-doc reference errors (make refcheckdocs):
+> Our Hall Effect sensor IC does have a named "vdd" pin, but we are totally
+> open to changing this to power-supply or whatever best follows the standard.
 
-See https://patchwork.kernel.org/project/devicetree/patch/20260515-qcom-jpeg-v4l2-v1-1-f38c2e1b3555@oss.qualcomm.com
+The problem is that there is no standard here, this is not specific to a
+particular consumer device.  Your device has one supply called VDD but
+some other device might have some other name, and another might have two
+supplies.
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+> > painful) the fact that this is fwnode means that this opens up support
+> > for using this with ACPI which is very problematic given that ACPI has a
+> > strong model of how regulators should work which is that they should not
+> > be OS visible at all.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+> Would it be more appropriate to drop the devm_fwnode_regulator_get() and
+> replace it with a type-casted devm_of_regulator_get()?
 
-pip3 install dtschema --upgrade
+I'd feel a lot more comfortable with that.
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+--PkL8tipO6e686OeJ
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmoH2qYACgkQJNaLcl1U
+h9AxbQf/e3lrh6JHJwjEeIXtX0YE2/0n1nF8ce+0pqdWNdeuzYCeMLG5l3c/a16H
+Gpl3JRpch2QmD4nAdFMvnBkQleXAUTJTzK82OAI9wQWFoGvLLEguX6UYcPGzb5/A
+46nO3wLHPl7/3MEnG4t8ptXNCbPyQ9ssVwPeH09+b+tUZpBDt/2foANPecPe7m2x
+RBsMIqhULVuRVtDyc5UAFMsSJ2myhz6tudTzJwdUXZBKkYKciGsCjS3OOcmCZaXG
++AiWyc/Jw4jD9n3MIRZ0Eay5KnOTIZYSPD9yrqqWQuYfbQuU0ehd2yRe8Y6fJWI1
+c4ENkv9n7FDmAqHA2au23iKyZHxBsg==
+=Kh3N
+-----END PGP SIGNATURE-----
+
+--PkL8tipO6e686OeJ--
 
