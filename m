@@ -1,212 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-108030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id fLFrBratCWrAkwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 13:59:50 +0200
+	id uzd1Bzq/CWrDnwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 15:14:34 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D042560DF9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 13:59:45 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id A90DA561228
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 15:14:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 06720300A12D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 11:59:44 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 0E7AB3004D33
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 13:14:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 110BD363096;
-	Sun, 17 May 2026 11:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56A8F391E7E;
+	Sun, 17 May 2026 13:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gCMMVceB";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SSVTB+Gt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oUKCW9Lv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F1B3064AE
-	for <linux-arm-msm@vger.kernel.org>; Sun, 17 May 2026 11:59:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC0838F929;
+	Sun, 17 May 2026 13:14:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779019182; cv=none; b=gxD4ewWMXtkY53kRqRuKlU8wV0BbaohHVNLeBDdjkN07xoaCn5bbI4hrhKVpzbVrGQZvhuZZ5JGeswzAcm+5r79tdJm58DelEf15JaqeZypqlVXghhl2/o0wbRNJYquD5T3NVUOadfLrpw2Zsk4R+yGp6xtQRTqn8yzpEsP3g6o=
+	t=1779023665; cv=none; b=mPzaMWSFzoMxWpZn9yR/xLuCQ0Ih9pSFwS3MXBiSUzbmn8GMAnjTsYzNoap/fyqQ9aoy8N5jEdUokx6Yw+6CGJaAMVQBPhMXmneoUijAVlpBlCzIGO3+7InvjJIpvFRngmy8G/BWPWKiv26i+1+7oF1udS1V9nK7MnxrnKJdezU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779019182; c=relaxed/simple;
-	bh=uwcAosqgeuh/Ws6oeipHKBE9NRJcqMoNk+g2JvGoW4Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G5Rrv3x2uHLoqZ+KcDb8HtVusjiJ5Pm/TC1vga7Akf/jeDIlIUKN4Dvdh5tfwapjigyOQQbYB40koog0/7k0aLz0MzVAwhKaWOkPaj3jeW7Z5z8HAZWDeybjxUelWieFWful7VG86cXEEGgcfuyGyPCa9yyBRdxrgpMy9+aTf84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gCMMVceB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SSVTB+Gt; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64HANRdH1888240
-	for <linux-arm-msm@vger.kernel.org>; Sun, 17 May 2026 11:59:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=If2VTiwv89luQR2PmL2+TW4D
-	swboSIiiteX2/ZQl/m8=; b=gCMMVceB2mNUoUVgavly643igLSb0diRz+I/5fG/
-	yeyEUfH+7xIe63WEAAOXYKMG5oztK9rIF3qAcFJucuXK0dUjL/IPjYsolSOJSuhh
-	dD7qkD6Sej3ZDU9hGqMgRGzfmFqbK8mmtjbxodB6RJL+hBBtFZT1Z54yh4JCIi6g
-	vMj0MtaSuhXgCWGevgIXn1mxZDM8gsyb8/k8v9Vl0XJGjERKwOB/wKXhF6NHryXJ
-	LdQ9h+19UtuoBiwaP01lLJZjBVFdz8yClM2JcRSbGMhQTCaLG7X6kEnzOU435MsF
-	cxLo/xkPPQiOhjhdsIKWlFd2RVh0jIXRFSwHlq2SeS2v1w==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e6gwmasg3-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 17 May 2026 11:59:39 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-50d6bf346adso35792801cf.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 17 May 2026 04:59:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779019179; x=1779623979; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=If2VTiwv89luQR2PmL2+TW4DswboSIiiteX2/ZQl/m8=;
-        b=SSVTB+Gt7uOyfDkKdLUok4S4JBWIaoQChoie6nJRjPk1eVt53mCl1wdtQRAoxON+z/
-         5wRDy7Ej3MX2+6ciBMfgf/GbIntA04NWhx3dMbTOvubRrYoAepKa46GoX2foY1+49WIz
-         RBHFn8v1CsCfXzfsEShIbMyOmGjPwmdhnVbDHSuhV6H1a1+0g/eCENvnOVV6fSE/q3kv
-         OwJ608dGgNVP5ki96xxcBzGRv8un8XTMWCwnY0Vh49hG5t52WSmQrpkonRD2MQL7lM8i
-         w3LuzawqEo/H0lcMPaKsUe05NYclYf+gZQKAE+B/VFmVE2IfJFnpKIz3ISBkeNI/5tiX
-         5TCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779019179; x=1779623979;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=If2VTiwv89luQR2PmL2+TW4DswboSIiiteX2/ZQl/m8=;
-        b=FkLHf8GrnHFI+3Lh8ScFwRbJKMqKSyGKhc0MnRW81bglSUV4W3qhXQVh58l97VG0aI
-         MVXlZplxZ+DXTeRh3Fqn1cnwmRV9f/0M7qb6qqj5qMDmgG1pNw1BKOvCSSFdmdszJW/B
-         i8Urt9Hwi6JyHREOgQZ7JJVI/Y+Tqd3LkCkeZ2za16oej5JHTU2sv36Cabwe0afhzRkH
-         i2sTKCbQJ+vsPk91MfoLB7apTKLyOx+c7B9REdj7hIRn47AxaxlvSDpSf9yZ14SjValA
-         nnxaFDZbfeBNEDGb2X3XoTQpADWu3u7R5dFv4pKgI0bxt5B9NzTm3BK3pHfiW07wEVFT
-         MCJw==
-X-Forwarded-Encrypted: i=1; AFNElJ/Yo6PfOmMKwMc+Ois0CqaD2bxWypC2SNWVoh9OEfUn05+lzxF7b5tzpHV0AXyxMjYQfkOkT46mhlK6JDa6@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzl3fknjCelD8JnhVugAUil4re4o4ju6yjXw3UC/JI4A4pUURAA
-	8+KLa5Vskspof1J1PFquzHUc+YAOqf/6+IXHp/pFpd2SBJYaLTgQQuceLB69x8yHCDQWYimhxrL
-	38+0xUbys006W6g4MwTFdGj0gbLcMm0aSRDQXB9vAmjq3K7tw/qrqpT4P9JEIw3FjzVKn
-X-Gm-Gg: Acq92OHofwYZnc00YzvMt1ZCLgbu+rAwXuWP4FJuWTniDBL0Ppi//8s2k9/ah98qYM1
-	y4SrYXv6/TmtZcCv5GN9dBu78rU1dKIxyY2+DpiuwFyaoZLGo4iy7B8ysv3/tEls/dXzsaagCwE
-	YqkXleNyc8iVboItL8t/y5AqggD+YAiXXjWQAxhexUeMRmH+1PUXx28TqnVKn9M13psmAV8Jgu8
-	kIEDrvpUgjPFpRWmznqqVpLq+6EhhtNZUOPD7zV0Cxb+U112rXbCx7JRsu7TrtTQgAvvFkZNyuc
-	OCdWtyJK8/nhJZKMLolItfYiJpVt5Jo1J+8MR3Zda7Nejc6wvjGFCGcgDOs/dfJis/HqWMK7HCr
-	yzYtFmkHcqOC82eMWkxq4LUxSv+9x3uwx3ioJt/FFBw/WVXK6agagQBAra/5OLH+ZlwfDhF/0mG
-	Gj90gnBzuZJ7lF3vL6BasijP2Mj4wc95M6Iyw=
-X-Received: by 2002:ac8:5cc9:0:b0:50f:c117:1c52 with SMTP id d75a77b69052e-5165a012712mr142397701cf.4.1779019178805;
-        Sun, 17 May 2026 04:59:38 -0700 (PDT)
-X-Received: by 2002:ac8:5cc9:0:b0:50f:c117:1c52 with SMTP id d75a77b69052e-5165a012712mr142397551cf.4.1779019178357;
-        Sun, 17 May 2026 04:59:38 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-395882c0c67sm4769841fa.10.2026.05.17.04.59.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 May 2026 04:59:37 -0700 (PDT)
-Date: Sun, 17 May 2026 14:59:35 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: jens.glathe@oldschoolsolutions.biz
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Subject: Re: [PATCH] dt: arm64: qcom: sc8280xp-blackrock: amend usb0-sbu-mux
- enable gpio
-Message-ID: <dlpgdby6m5zsl6onu7rqzzatbq3jiqm5r5gvtxoh5k6lmuzqzo@gk4clmoa762b>
-References: <20250609-blackrock-usb0-mux-v1-1-7903c3b071e4@oldschoolsolutions.biz>
+	s=arc-20240116; t=1779023665; c=relaxed/simple;
+	bh=sgYaZc2jrbgHscXICpyw9V4m4a+P3iP44DuYc5/fTJA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=oLXTALg5biWSYBhqGc5IAkgsycdyfsDdCM1rlFzMOQt8rOzbCtT8OslyXln3ssTzAuXdfrXmFwnQCj+ULRqID8DKDsO3jmMx9iuDEmSBdMBeJn094k94cXCvgL2m6KV1Hf/muN/pUFgchVAiZY81WF1IQPNRwRQvrP/f6D2rhZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oUKCW9Lv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EEF4CC2BCC6;
+	Sun, 17 May 2026 13:14:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779023663;
+	bh=sgYaZc2jrbgHscXICpyw9V4m4a+P3iP44DuYc5/fTJA=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=oUKCW9Lv+0iBC4b2XSuOL6a/ypq3tE8dZFTJfC+JBgp+xqFRT1mVlJX9JlR4KRzOV
+	 Y3Af4oduk7at0HRF0UPLUirJIHAU2ETFrzkozmKOOmHpOGvVBbszs221KlM2+hxkvQ
+	 dMaK8NqdrqAirGfVQltP3TUeivRKswhVGjzavWivLSGOqQUYaOUUHhCdxTjnFjrsCG
+	 SuN7uaE41CuahINhfF6vxCbn8YHuWL99Wa3ZaxCI3Oxrz666MEq/xa9hbuSqOwA2ny
+	 HoYcKDa2GvMW0jI0VwFL0Ll4QMrGygurDPv/2neqT1UbLF4GQ7OYMCFEnfaqRk9fsj
+	 V/XuimuB9uXnA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD8ECCD4F3D;
+	Sun, 17 May 2026 13:14:22 +0000 (UTC)
+From: Alexandre Hamamdjian via B4 Relay <devnull+azkali.limited.gmail.com@kernel.org>
+Subject: [PATCH v3 0/4] arm64: qcom: add Ayaneo Pocket DS gaming console
+Date: Sun, 17 May 2026 20:14:19 +0700
+Message-Id: <20260517-pocketds-v3-0-d5910c801756@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250609-blackrock-usb0-mux-v1-1-7903c3b071e4@oldschoolsolutions.biz>
-X-Proofpoint-ORIG-GUID: ufs6npBunDrbxRu00IeyrAKeuu4Of1jm
-X-Proofpoint-GUID: ufs6npBunDrbxRu00IeyrAKeuu4Of1jm
-X-Authority-Analysis: v=2.4 cv=W/AIkxWk c=1 sm=1 tr=0 ts=6a09adab cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=gxl3bz0cAAAA:8 a=OKCoC0DIYrHrkD67fT4A:9 a=CjuIK1q_8ugA:10
- a=uxP6HrT_eTzRwkO_Te1X:22 a=kiRiLd-pWN9FGgpmzFdl:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE3MDEyOCBTYWx0ZWRfX4/itV+zOZ6P6
- mem/hybWHe+7ycDRNNJbk8nETRbFjngFLBxRStnOC2SW8PU8t2uK5aiTCgP0Mma6g6UfaEX7Sa/
- 8qeH5V7l2YX1tvNJBXo/Yv2em3+4gdddlx0lY8vErikEj8vOpI9kHTAayxgo36LsHL3owz+uar/
- h0sBK2rE1lO9s6ggpBVhbuYOMT1hzwQXDDfziAcw7kWx3qgbKr1iAJWv4NSvndvXuwCimfuulu6
- b+hgpEnivlwnK5HRx91CQiOPuP/zU3l1vAChXNhsWmPCXmXXimlJUM5pY+BRPE9TNn7+nwR2Umm
- Hvgqh6cR5cIJ1qGVgNFXjSQ6ejbvw58zmcK/BGgQDRr1Ho8Ex4NLun54v+dgnOTccB7XMM3h5eS
- Y1TWNMMsgrOo9qbgVbE0faL+AyX44LdYLviW63NwfYssabHUMOS5cibXGahbsRSNfxHHYLaf7cH
- kI9BZ8dMzZ3xbQsXcaw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-17_02,2026-05-15_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 adultscore=0 clxscore=1015
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605170128
-X-Rspamd-Queue-Id: 9D042560DF9
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22Nyw7CIBQFf6VhLYbSV3DlfxgX9HJpUVsaqETT9
+ N+FuqmJy0nOzFmIR2fQk1O2EIfBeGPHCMUhI9DLsUNqVGTCGa9ZlTM6WbjjrDxFhk0rBOiiFiT
+ OJ4favLbU5fpl/2xvCHPy06I3frbuvX2FPO3+ZENOGQXNKgkIrJb63A3SPI5gB5Kyge/FfCfyK
+ HIhlCp52Wj+I67r+gEwPo0H6wAAAA==
+X-Change-ID: 20260510-pocketds-e0e7b99cf369
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Alexandre Hamamdjian <azkali.limited@gmail.com>, 
+ Teguh Sobirin <teguh@sobir.in>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779023659; l=3953;
+ i=azkali.limited@gmail.com; s=20260510; h=from:subject:message-id;
+ bh=sgYaZc2jrbgHscXICpyw9V4m4a+P3iP44DuYc5/fTJA=;
+ b=FLHTQYk6KJTQIcyIF9YexupL/BpiCdbWDZybfo8Ryk9D4LP/0GYu/vJ4T35bZNOLmOJ1hBV9R
+ s/OcadF+wQyD1DFQTMhqPOZjmMudncENJvDhZwS5bLVgawKc0ghBjLc
+X-Developer-Key: i=azkali.limited@gmail.com; a=ed25519;
+ pk=I0Z0IdCdQJqNGX+FQUnXhrHg950u3cM6Xzz3YT6JOyQ=
+X-Endpoint-Received: by B4 Relay for azkali.limited@gmail.com/20260510 with
+ auth_id=774
+X-Original-From: Alexandre Hamamdjian <azkali.limited@gmail.com>
+Reply-To: azkali.limited@gmail.com
+X-Rspamd-Queue-Id: A90DA561228
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,gmail.com];
-	TAGGED_FROM(0.00)[bounces-108030-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oldschoolsolutions.biz:email,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:dkim];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-108034-lists,linux-arm-msm=lfdr.de,azkali.limited.gmail.com];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_REPLYTO(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,sobir.in];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_COUNT_FIVE(0.00)[5];
+	DBL_PROHIBIT(0.00)[0.0.0.20:email];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	HAS_REPLYTO(0.00)[azkali.limited@gmail.com];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,msgid.link:url]
 X-Rspamd-Action: no action
 
-On Mon, Jun 09, 2025 at 10:53:56PM +0200, Jens Glathe via B4 Relay wrote:
-> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> 
-> The usb0 port didn't switch to dp altmode, investigation into DSDT
-> UCS0 device resulted into GPIO 100.
-> 
-> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> ---
-> This patch amends the enable gpio for the usb0-sbu-mux to the one
-> found in the DSDT file for this box. It shows a list of GPIOs in 
-> a certain order, and it has 2 buffers with conflicting values. 
-> The one deviating is in the second buffer, at the place where one 
-> would expect the GPIO for the select pin of USB0 (by pattern 
-> application from USB1). The GPIO previously used is also there, but 
-> at the end of the UCS0 buffer structure). Changing it resulted in 
-> a working dp altmode functionality on usb0.
-> 
-> This debug effort is a result of work / testing of the 4-lanes patch
-> [1] on all available devices. Independent of it, it enables dp 
-> altmode on usb0, and with it, also 4 lanes, making it even more useful.
-> 
-> [1]: https://lore.kernel.org/all/20250527-topic-4ln_dp_respin-v3-0-f9a0763ec289@oss.qualcomm.com/
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
+This series adds initial support for the Ayaneo Pocket DS, a handheld
+gaming console built around the Qualcomm QCS8550 SoC. It has UFS
+storage, WiFi/Bluetooth, gaming buttons, microSD, dual displays, and
+USB-C with DisplayPort. Game controls are exposed through a Renesas
+uPD720201 PCIe USB 3.0 host controller hung off PCIe1, while a
+dedicated gamepad MCU is reached over UART11.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+The series is structured as:
 
-P.S. Might it be that you need to set both GPIOs? Might the other GPIO
-be related to USB4 tunnelling?
+  1. dt-bindings entry for the new qcom,qcs8550-ayaneo-pocketds
+     compatible.
+  2. sm8550.dtsi: add labels for the cpuss/cpu/gpuss thermal zones so
+     the board can extend them with trip points and cooling maps via
+     &label overrides instead of redeclaring zones by path.
+  3. The Pocket DS board device tree itself, with the root-level
+     nodes alphabetised and the fixed regulators named per the
+     "<name>-regulator" convention.
+  4. sm8550.dtsi: add the QUP2 SE3 (UART11) controller node and its
+     default pinctrl, so the board can enable it as &uart11 instead
+     of open-coding the controller in the board dts.
 
--- 
-With best wishes
-Dmitry
+Only the basics are wired up at this stage (boot to console, core
+peripherals, USB-C and DP); the display panel will follow in a later
+submission.
+
+Signed-off-by: Alexandre Hamamdjian <azkali.limited@gmail.com>
+---
+Changes in v3:
+- New prerequisite patch adding the QUP2 SE3 (UART11) controller node
+  and the qup_uart11_default pinctrl state to sm8550.dtsi, so the
+  board can enable the gamepad MCU UART via &uart11 instead of
+  duplicating the controller node in the board dts.
+- Alphabetised the root-level nodes in the board dts and renamed the
+  fixed regulators to the "<name>-regulator" node-name convention.
+- Link to v2: https://patch.msgid.link/20260511-pocketds-v2-0-299dd4247f2f@gmail.com
+
+Changes in v2:
+- Inlined the board into a single qcs8550-ayaneo-pocketds.dts, matching
+  the sm8650-ayaneo-pocket-s2 layout
+- Added qcom,qcs8550 to the compatible chain
+- Prerequisite patch labelling the sm8550 thermal zones so the board
+  can extend them via &label overrides (and refactored the board's
+  thermal-zones to use them)
+- Added the Renesas uPD720201 USB 3.0 controller as a child of pcie1
+  with proper avdd33 / vdd10 / vdd33 regulators
+- Moved gamepad_pwr_en off &pcie1's pinctrl-0 and onto the
+  usb-controller node
+- Split the lumped upd720201_active pinctrl into per-regulator states
+- Fixed mdss_dp0_out data-lanes to <0 1 2 3> (all four wired)
+- Fixed gpio-reserved-ranges to <32 4> (gpio 38-39 drive the Goodix
+  touchscreen)
+- Renamed nodes with underscores (llcc-lpi-region, splash-region,
+  gpio@20) per DT conventions
+- Reordered pinctrl-names after pinctrl-N file-wide
+- Dropped the unused cont_splash_region label
+- Link to v1: https://patch.msgid.link/20260510-pocketds-v1-0-cf05acec06af@gmail.com
+
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+
+---
+Alexandre Hamamdjian (3):
+      dt-bindings: arm: qcom: document the Ayaneo Pocket DS
+      arm64: dts: qcom: sm8550: add labels for thermal zones
+      arm64: dts: qcom: sm8550: add UART11 node
+
+Teguh Sobirin (1):
+      arm64: dts: qcom: add basic devicetree for Ayaneo Pocket DS gaming console
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    6 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ .../boot/dts/qcom/qcs8550-ayaneo-pocketds.dts      | 1883 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               |   52 +-
+ 4 files changed, 1929 insertions(+), 13 deletions(-)
+---
+base-commit: e98d21c170b01ddef366f023bbfcf6b31509fa83
+change-id: 20260510-pocketds-e0e7b99cf369
+
+Best regards,
+--  
+Alexandre Hamamdjian <azkali.limited@gmail.com>
+
+
 
