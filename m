@@ -1,153 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-108022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YFEKDWFpCWouYwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 09:08:17 +0200
+	id AAv5LQV8CWo4cAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 10:27:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8355D55F9A9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 09:08:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DC9C55FF4B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 10:27:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 240883009F92
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 07:08:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CA1373007AD8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 17 May 2026 08:27:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E6B63064AE;
-	Sun, 17 May 2026 07:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6EF73368BF;
+	Sun, 17 May 2026 08:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UwToY7f+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nbDljtzO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110A8282F12;
-	Sun, 17 May 2026 07:08:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C4378F39;
+	Sun, 17 May 2026 08:27:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779001694; cv=none; b=G3bOghUsXszqbb/hrFbslBFUdAqRV9NWqPSjdUS9/kMvjAjlqn3QHUqClVWzIwHIYC79sQzzcDpBZnrNMVJGWZg+zE/ESM16RatfKTxuFw1IVb4h8FZ8IWJTc5ofPPnl/XrrY6UuwqJ8Z1PnlLfBdOZhH3h+CSFg+Tpr2Tolqlk=
+	t=1779006466; cv=none; b=RHyVTJR4O2DlxK5jpIEW4gN8fzozXrM9OAT2ADsu4dGosQeYUdw3B0sSTe44GhW6mqB5VtFppJ0n9poU7KWOREr+XA51HoMiYiEwdOk43NDQ0NzLSeQ9CP/qFrcJZiC8ESZFvHXDppZH9I7hp+OcvQYug2fDoVCnrKfvNhuj4iQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779001694; c=relaxed/simple;
-	bh=sPRnTzU+dJcq83qSDb71XWGiExHcCE/eGd012FRHJKU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q5BQ0WvGRywuv9GON8thCZdIYjAAIz6fvFOJxIH7EBAQRPMbwmXx9Va1lpRk9NsEu6t9Iuj8Yrm6WoJ8qLcBKMgpQHIDemQVMUKlBxdBffGtgeWzglxhuNMrG4CF5jjYMzFbSI/rHxtTZP285FNLzHWq8qS8Qhy2CgoXUTW7D80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UwToY7f+; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779001693; x=1810537693;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=sPRnTzU+dJcq83qSDb71XWGiExHcCE/eGd012FRHJKU=;
-  b=UwToY7f+bO/xIDvN/AaFTwvwdnyQFOas/CPyZNdHyLHRNZkNrPhDOR+8
-   vTlnvdlvl9SnJ2m00AY/156zohsXtURmU1Tvu92z6IlxEGVRg0rmgLAml
-   PJseGfMKFvjp4El18+TSHkO8LH5bqnq64Z0S7T/wkndloUxN2AVPkMKhd
-   jb4AIB31ESnNh1aVZO7XQd6hoXXIXNL0Ia4JNBNxzRizKYD0B533ayFfp
-   B/GBqkM3ofFKuiAmm5icgMCSwlHdIOH9Jypd8vd50plQ4JYdvBsCvFKpu
-   aM0KVaHXLNnPehTRXOgQffjudxvUTxVgW5YaGzYz/NpUN+d1cR6DX6Wqv
-   A==;
-X-CSE-ConnectionGUID: DFT/Xy0+QAqO8piqrX+WYw==
-X-CSE-MsgGUID: no54KeLkSm2SrtzOw+eMNw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11788"; a="90200207"
-X-IronPort-AV: E=Sophos;i="6.23,239,1770624000"; 
-   d="scan'208";a="90200207"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2026 00:08:12 -0700
-X-CSE-ConnectionGUID: zLs4LkmzQBexprDyHCQS+g==
-X-CSE-MsgGUID: pzUDhFfCT0y15UOy96bdsw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,239,1770624000"; 
-   d="scan'208";a="262635385"
-Received: from slindbla-desk.ger.corp.intel.com (HELO localhost) ([10.245.245.182])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2026 00:08:08 -0700
-Date: Sun, 17 May 2026 10:08:05 +0300
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-Cc: Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>, Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-	David Collins <david.collins@oss.qualcomm.com>,
-	Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>
-Subject: Re: [PATCH 1/2] iio: adc: qcom-spmi-adc5-gen3: Share SDAM0 IRQ with
- ADC_TM auxiliary driver
-Message-ID: <aglpVX2NeQ8jxN6Y@ashevche-desk.local>
-References: <20260515-gen3_adc_tm-v1-0-39ba29f9b4ab@oss.qualcomm.com>
- <20260515-gen3_adc_tm-v1-1-39ba29f9b4ab@oss.qualcomm.com>
+	s=arc-20240116; t=1779006466; c=relaxed/simple;
+	bh=TkXa2plHaTy8FdH9xHBYQ1KXuU8I1xR2SgjbAKvMc9E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=E/g0ACZ0l63BsHLvmN9qANLO2lAnKtsQm4oOyX3ZME/2O/iZBVw71FscSf/oh0TGUGSOCfZeFaUNsYZbRJ6bbU260bMbnIiq96Cn+syTJEnnqq1zxh/nB6e/T7Y/sqtIBwYRwTM7G+lyLw08Vnp8sECHT5aaGUFS9BwCwCFuo9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nbDljtzO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F71C2BCB0;
+	Sun, 17 May 2026 08:27:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779006466;
+	bh=TkXa2plHaTy8FdH9xHBYQ1KXuU8I1xR2SgjbAKvMc9E=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=nbDljtzOPfJHAt4PnuNlAYHPPDDbY5fOtF2gj5nyX8I5xCFgA1rmuLrb0Hx9arCui
+	 /HvFq9r8NtSmJ/bIgfQ16Avte0hSuCYp4yUG9drkJVFsszBwi4f4P6BtEhZsv+unFP
+	 GmnysJGCgXnP7BDih+DR+1endMmeXFgjYepz/m7q/GmdVLD5ky2CZw7BHCy3Fv5Qr7
+	 1jpuIs6N2/KexQy5YSymBfmOezTUAjCS29xpIzVd5lcyP3/6B4Z52LRQdm2or+dna1
+	 KirRzAjfmNbqo4eYdxFeo8KAJABZJD5H3AFcubydn7wJ4wNLx2f+StdcfOX3GTwrXH
+	 +7aaicBKPAvZA==
+Message-ID: <408f587b-76c2-4fdd-bbe1-89414270b4ee@kernel.org>
+Date: Sun, 17 May 2026 10:27:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260515-gen3_adc_tm-v1-1-39ba29f9b4ab@oss.qualcomm.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
-X-Rspamd-Queue-Id: 8355D55F9A9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] dt-bindings: clock: qcom: Add QREF regulator
+ supplies for glymur
+To: Qiang Yu <qiang.yu@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Taniya Das
+ <taniya.das@oss.qualcomm.com>, Konrad Dybcio <konradybcio@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ krishna.chundru@oss.qualcomm.com
+References: <20260506-qref_vote_0506-v3-0-5ab71d2e6f16@oss.qualcomm.com>
+ <20260506-qref_vote_0506-v3-1-5ab71d2e6f16@oss.qualcomm.com>
+ <20260514-outgoing-literate-dove-2e2a73@quoll>
+ <aglUmonGmr2goyOI@hu-qianyu-lv.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <aglUmonGmr2goyOI@hu-qianyu-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 1DC9C55FF4B
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,analog.com,gmail.com,intel.com,arm.com,vger.kernel.org,oss.qualcomm.com,linaro.org];
-	TAGGED_FROM(0.00)[bounces-108022-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	HAS_ORG_HEADER(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
+	TAGGED_FROM(0.00)[bounces-108023-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[intel.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@intel.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-0.999];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ashevche-desk.local:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Action: no action
 
-On Fri, May 15, 2026 at 02:23:44PM +0530, Jishnu Prakash wrote:
-> The SDAM0 IRQ can be triggered for both EOC (end of conversion) events for
-> immediate ADC reads done in this driver and for threshold violation events,
-> based on ADC_TM thresholds configured from the auxiliary ADC_TM driver on
-> TM channels on the first SDAM.
+On 17/05/2026 07:39, Qiang Yu wrote:
+> On Thu, May 14, 2026 at 12:22:17PM +0200, Krzysztof Kozlowski wrote:
+>> On Wed, May 06, 2026 at 01:43:51AM -0700, Qiang Yu wrote:
+>>> Add regulator supply properties for the Glymur TCSR QREF/REFGEN blocks
+>>> required by clkref clocks.
+>>>
+>>> The vdda-qreftx*, vdda-qrefrpt*, and vdda-qrefrx* supplies map to common
+>>> QREF TX/RPT/RX components, while SoC-specific topology and instance count
+>>> differ. Document them here for qcom,glymur-tcsr.
+>>>
+>>> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+>>> ---
+>>>  .../bindings/clock/qcom,sm8550-tcsr.yaml           | 57 ++++++++++++++++++++++
+>>>  1 file changed, 57 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+>>> index 1ccdf4b0f5dd..57921cb63230 100644
+>>> --- a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+>>> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+>>> @@ -51,6 +51,63 @@ properties:
+>>>    '#reset-cells':
+>>>      const: 1
+>>>  
+>>> +  vdda-refgen-0p9-supply: true
+>>> +  vdda-refgen-1p2-supply: true
+>>> +  vdda-qrefrx0-0p9-supply: true
+>>> +  vdda-qrefrx1-0p9-supply: true
+>>> +  vdda-qrefrx2-0p9-supply: true
+>>> +  vdda-qrefrx4-0p9-supply: true
+>>> +  vdda-qrefrx5-0p9-supply: true
+>>> +  vdda-qreftx0-0p9-supply: true
+>>> +  vdda-qreftx0-1p2-supply: true
+>>> +  vdda-qreftx1-0p9-supply: true
+>>> +  vdda-qrefrpt0-0p9-supply: true
+>>> +  vdda-qrefrpt1-0p9-supply: true
+>>> +  vdda-qrefrpt2-0p9-supply: true
+>>> +  vdda-qrefrpt3-0p9-supply: true
+>>> +  vdda-qrefrpt4-0p9-supply: true
+>>
+>> Either I do not understand your previous explanation:
+>> CXO -> TX0 -> RPT0 -> RPT1 -> RPT2 -> RX2 -> PCIe4_PHY
+>>
+>> or this is still wrong. There is no TCSR here, so this proves nothing.
+>> If TCSR is TX0, then you do not have five of them...
+>>
+>> My previous comment stay - you are not describing the actual hardware
+>> here.
+>>
+> The CXO network "-> TX0 -> RPT0 -> RPT1 -> RPT2 -> RX2 ->" is referred to
+> as the QREF block, and each component is controlled by the tcsr_clkref_en
+> registers.
+
+Still no clue what this -> relation is. Again, describe the hardware.
+
 > 
-> At present, this interrupt is handled only in the ISR in the main ADC driver.
-> When the ISR is triggered for an ADC_TM event, this driver notifies the ADC_TM
-> driver by calling a notifier callback exposed from it for this purpose.
-> 
-> To simplify the interrupt handling in both drivers, share the interrupt between
-> the drivers. With this, ADC_TM interrupts on SDAM0 will be handled directly in
+> If a PHY receives its reference clock from QREF, it will have a clkref_en
+> register. However, this register may be located in different regions
+> depending on the target. On glymur it resides in TCSR, so I added these
+> LDOs QREF required in tcsr yaml.
+Registers are not described as supplies.
 
-"will"?! Do you mean this patch deliberately breaks the working setups?
-
-> the ADC_TM driver, so remove the notifier callback and all TM interrupt
-> handling in the main ADC ISR.
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Best regards,
+Krzysztof
 
