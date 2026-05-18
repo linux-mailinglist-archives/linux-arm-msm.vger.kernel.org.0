@@ -1,53 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-108156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qE7PIBvyCmpv+AQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 13:03:55 +0200
+	id KAELDTvwCmpv+AQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 12:55:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E1FC56B2FC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 13:03:54 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A60B856B0D1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 12:55:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 061D7307371A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 10:34:11 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6181430815F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 10:34:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A73543EFFB4;
-	Mon, 18 May 2026 10:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E16AF3EFD09;
+	Mon, 18 May 2026 10:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hpjC0vNG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZJPqUXk9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37063ED5B6;
-	Mon, 18 May 2026 10:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D373E95B2;
+	Mon, 18 May 2026 10:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779100375; cv=none; b=JytD4rxbsYO2sgxo1Z48Ec5xH1O5HOTa29mr6co8L3JF3C/5vti+WRqA2oi2ycX09Hh1iyFaJKOnPKkBgbFsOL2y2uocMtP441PPN9qM8Yxy/ZpddKgs/R9Vb5Qx0eKmayK2gjes8TPUnYH9R47revZociDj+dHIXG8wlugwITY=
+	t=1779100381; cv=none; b=qTc1SSjksl8+R5DAJTEllFIJhcQNi6R1kl5eg6R9u1IfQEatfJ+ccC/u/owMUq6CoyQw2vcXw4Jjuprh5e8qz/bOGmaOf7WT3a/PvwzyMPGggVtSRB0Ovo0pSbNF/nAZh+nXGRLQS8lvX0iRP7lqWl/SpTEKLh4jezObhuYGun4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779100375; c=relaxed/simple;
-	bh=Bx+uK0De2e8QKsDbMgINkrI+kBC4yYhtPUn60fv3ne0=;
+	s=arc-20240116; t=1779100381; c=relaxed/simple;
+	bh=u4mlMQuiRSVOJoZk0W9VqXiNcwQBWqJwQpwyGvpon/w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aZb3m1IhjcrWgGIJvaRO4Awbqw5wvauK8fG6iC0BvCkf2XORGRrVNxRb+AIH/FQB34RPP1rc87s0ZlYg/6hciRcVlH7oVNMGebZjhKI6R92hiHMykLBhsJjfcXKntzE8Rj7lMVGi0wDlcvgHOCw5V7ob7s/RmPnPclcnBqa6vrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hpjC0vNG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2DBEC2BCB8;
-	Mon, 18 May 2026 10:32:49 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=Ru12k/9LW8U52ynUWEmnlU5AQYkNIGfy5ncIupAgCRc2Nq4jyHbogDMRIB9nZA+utQgvq4t4ZJwKf3nlEZyhxVG2Nik5Tj+Ty8zQK8GXIiMWZGdFTGwRhDQffNbxJ2OZZB1mQeNuaUVXZ4Dbs2bJ6BLUZuzgdeoVsNPrXyAmzi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZJPqUXk9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2286C2BCC6;
+	Mon, 18 May 2026 10:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779100375;
-	bh=Bx+uK0De2e8QKsDbMgINkrI+kBC4yYhtPUn60fv3ne0=;
+	s=k20201202; t=1779100380;
+	bh=u4mlMQuiRSVOJoZk0W9VqXiNcwQBWqJwQpwyGvpon/w=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=hpjC0vNGT49oMapbw3QF4sY1siLZmwzxAKWYJZZAbbqd9tK4YVApCi5160gwA51B1
-	 rlTXJsCRxTZqS34ni3XF+w8RofJ0tP4GQpyLQ0rPwotL3difYOXs7QPvYTXtnVd7w3
-	 0BRjHT5dEzA1kZ+nJ4qqQm/Ru7JLKjGnrHAZHXzaYJbPU/zTwIXJh0n2v5lEo5LSOs
-	 OQBq+4tkHTRyEmeBzGDh+/NrnoyjXMgW9y9AKYOxbFrPlQy5aP2M5wonS4KdK/d9GF
-	 b0SsLF1MIDtut0K7NdHDmesq/4SjoTptSkoaSj/hyLgzmn9IusmX3091rywq0zv7N4
-	 9BQEAd+PX1hvA==
+	b=ZJPqUXk9C7D6Skr2TewVA109U1nl6rojJkb3hOnerw8JaFH01t7Jp0RxNIwADMh+L
+	 gcyI0My5UXZFeWnFGu9DEwpbDtJy8ySc2xY5Zs6glEeeibD0WalAaLP7qQhMBRi6QG
+	 LLt0CdJpCx45pk+mFaSIzyee30qnNghStmR1a20KYwoH9oDfGpjjaq1E6PoTR1RLoU
+	 DO3l6ohZZQMfs6+0ndlpYSjD9J5RwJQ+XpKN7qGuUWpWPsYM4LZWCipo3KB7nwgrom
+	 Fr0pbXNUau8GHVDBC57KvT1e+tSeK8BweVTh+PxpWlvYTMTv4TIXKkcwP9QEvBx+N6
+	 gWM/EwdAAqu+g==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 18 May 2026 12:29:48 +0200
-Subject: [PATCH 1/5] dt-bindings: phy: qcom,qmp-usb3-dp: Extend X1E
- description for USB4
+Date: Mon, 18 May 2026 12:29:49 +0200
+Subject: [PATCH 2/5] phy: core: Define TBT phy_mode
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,7 +55,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-topic-usb4phy-v1-1-71d827c49dca@oss.qualcomm.com>
+Message-Id: <20260518-topic-usb4phy-v1-2-71d827c49dca@oss.qualcomm.com>
 References: <20260518-topic-usb4phy-v1-0-71d827c49dca@oss.qualcomm.com>
 In-Reply-To: <20260518-topic-usb4phy-v1-0-71d827c49dca@oss.qualcomm.com>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -71,26 +70,26 @@ Cc: linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
  Mika Westerberg <westeri@kernel.org>, Sven Peter <sven@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779100365; l=1927;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779100365; l=1765;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=pSMLt5sTaDAUG12dp7QckV1kipkrWLzLV1rYLCisTNU=;
- b=RhurK+mAgHAvX0Ecu9GE8VFqhRDtVVBt+tphD/OVy7nmVSYy3fz4Qn/qL6Z2RB/dmk8ubTDtl
- IBDNDYMUm3DDrSzq1NtOmWtfRNYOEzhplY34C1qxGn6oa6s9GNPhVAV
+ bh=RMwhfzMTBEbqo12DI9ixrBoeEOqCH1NR2RKBf/hbieM=;
+ b=AlyKt6pSJ+eYUl4BNy94aQsgcx84VvCq8TLQuBoxvud08RayFKVzo9wrDoixbllXq8g/RVP2d
+ DdYg++MadnIDHHLqs0yjHVPDGwobA/FTD3UPon58ucRoFN5ESPsdOX/
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Rspamd-Queue-Id: 7E1FC56B2FC
+X-Rspamd-Queue-Id: A60B856B0D1
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108156-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-108157-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -104,60 +103,71 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,oss.qualcomm.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid]
 X-Rspamd-Action: no action
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Some instances of the QMP combo PHY (called USB43DP) feature a third
-functional sub-block, responsible for USB4/Thunderbolt 3 communication.
+There exist OS-accessible USB4 and Thunderbolt PHYs that need specific
+configuration. Define a new phy_mode for them.
 
-Compared to the today's state of the binding, one more clock (P2RR2P -
-PHY-to-Router, Router-to-PHY) needs to be enabled for the PHY to be
-able to switch to USB4 mode. Allow that for X1E.
+Currently, USB4 and TBT3 are defined as submodes, because they're quite
+distinct, most visibly in the electrical/analog aspects (slightly
+different frequencies, timings, etc.). This results in a need to make
+the PHY aware of the actual mode needed (at least in the Qualcomm
+implementation, but I believe that'll be a general need).
 
-Also, add a bindings define to let consumers access it.
+Newer versions of TBT are basically supersets of USB4 with higher
+host-side requirements, so these are not defined. This can always be
+changed as necessary.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         | 3 ++-
- include/dt-bindings/phy/phy-qcom-qmp.h                                 | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ include/linux/phy/phy-tbt.h | 14 ++++++++++++++
+ include/linux/phy/phy.h     |  2 ++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-index 3d537b7f9985..eba4bee474fb 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
-@@ -52,7 +52,7 @@ properties:
-       - const: ref
-       - const: com_aux
-       - const: usb3_pipe
--      - const: cfg_ahb
-+      - enum: [ p2rr2p_pipe, cfg_ahb ]
+diff --git a/include/linux/phy/phy-tbt.h b/include/linux/phy/phy-tbt.h
+new file mode 100644
+index 000000000000..5f48059814e1
+--- /dev/null
++++ b/include/linux/phy/phy-tbt.h
+@@ -0,0 +1,14 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
++
++#ifndef __PHY_TBT_H_
++#define __PHY_TBT_H_
++
++enum tbt_phy_submode {
++	PHY_SUBMODE_TBT3,
++	PHY_SUBMODE_USB4,
++};
++
++#endif
+diff --git a/include/linux/phy/phy.h b/include/linux/phy/phy.h
+index ea47975e288a..26a91c070f8c 100644
+--- a/include/linux/phy/phy.h
++++ b/include/linux/phy/phy.h
+@@ -20,6 +20,7 @@
+ #include <linux/phy/phy-hdmi.h>
+ #include <linux/phy/phy-lvds.h>
+ #include <linux/phy/phy-mipi-dphy.h>
++#include <linux/phy/phy-tbt.h>
  
-   power-domains:
-     maxItems: 1
-@@ -186,6 +186,7 @@ allOf:
-           enum:
-             - qcom,sc7180-qmp-usb3-dp-phy
-             - qcom,sdm845-qmp-usb3-dp-phy
-+            - qcom,x1e80100-qmp-usb3-dp-phy
-     then:
-       properties:
-         clocks:
-diff --git a/include/dt-bindings/phy/phy-qcom-qmp.h b/include/dt-bindings/phy/phy-qcom-qmp.h
-index 6b43ea9e0051..1c3ce0c02b0c 100644
---- a/include/dt-bindings/phy/phy-qcom-qmp.h
-+++ b/include/dt-bindings/phy/phy-qcom-qmp.h
-@@ -16,6 +16,7 @@
- /* QMP USB4-USB3-DP PHYs */
- #define QMP_USB43DP_USB3_PHY		0
- #define QMP_USB43DP_DP_PHY		1
-+#define QMP_USB43DP_USB4_PHY		2
+ struct phy;
  
- /* QMP PCIE PHYs */
- #define QMP_PCIE_PIPE_CLK		0
+@@ -45,6 +46,7 @@ enum phy_mode {
+ 	PHY_MODE_LVDS,
+ 	PHY_MODE_DP,
+ 	PHY_MODE_HDMI,
++	PHY_MODE_TBT,
+ };
+ 
+ enum phy_media {
 
 -- 
 2.54.0
