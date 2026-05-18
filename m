@@ -1,203 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-108166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2ItbJ9LwCmqv+AQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 12:58:26 +0200
+	id 2BOODTz3CmpZ+QQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 13:25:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F14956B18D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 12:58:26 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACB4956B837
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 13:25:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id AC031300752A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 10:58:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2BBDC30A33BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 11:05:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04D393F0AB1;
-	Mon, 18 May 2026 10:58:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 617073F44F5;
+	Mon, 18 May 2026 11:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MTFjmCJ/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QYync8jG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B281A3EFFC1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 10:58:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDE7D3F39F8;
+	Mon, 18 May 2026 11:05:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779101897; cv=none; b=E3G9DMNvXR9pjp58XfgHko6MnI2D1b7+7Tx4yCTFEI/F6+lR5mtaPMUCWoqEbRODnuufHQh08mZftc0DsFYVTxIZgi2nj90C5b4bckXX8z74AHVylRp70K/87IN/zlf+IxKtmxRhyhGnkE7x1foxBpWxpYlVIhlzD/BUSs/n2TU=
+	t=1779102331; cv=none; b=JQoXNotuYSEHxekgmn1Fd5VXIXu7rRO9k0KtepW6giYxiEGihSgwhWedp6V2f2WtVJXmtW9gXy/d0Z0ALcpzoJA/m9YCKFTZDWR4qertha863ntkBp3au0YdDXRSjmty+nTLsnGqR8+CEsIs9C2VKTB0fpaqbYADzaqYJS3LyMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779101897; c=relaxed/simple;
-	bh=O9YNQzI1HHIKBIBkzsKm32RBLUqeyNJY3cFZr5m9atE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=asMlpYUoeyV0l24ecfkLxudgv96kBoKs03GNv97J7gj8jTxQEKmRWA/usDVT02WTg4OGMueeG5fN6EjlnQ7lBA2+RfNsCblQxgZiBRC1f2+bZ8AUgQACruzCydVXiBWPCJ23Hm1rWxwLJ2U7iXLPshb2mYfSdXXxWSHYUXBt9nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MTFjmCJ/; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-837dfccd950so903566b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 03:58:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779101890; x=1779706690; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2bedMT/1wLJU6lQZbrg2nG4yNZCN3FiqAaO+Q+eV5ME=;
-        b=MTFjmCJ/8qpHXrmlMsZG0zxmJiaNApJthbgELgKyeGFNuphiV5oHL4GhlDzuQZi6De
-         QrSUDQ5LM1bXGHrAU8kfeDW8JYaBigDMEhrljIYoJFhnqlKOYmrd7k4tDLdYCd+MIr1M
-         USAn3zHhtACtx4TdUXquMHXjtWtCUx0cDM8Mp0gZVfNin3IwhDTIMhBjIS53SPXDm3qV
-         IkhLcZTvjEopiXOjNNQWZMzbKMrbSIEXR696AjEv5JqsULcn2zrxnyNG7DBJA3/Upxs+
-         bXo8oEpu9KO82YeGhARrprAkaziMLdMdO+qQUYkSn5KhIiFUiDpRwqonF/YOMQ3kkIKA
-         Gs7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779101890; x=1779706690;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2bedMT/1wLJU6lQZbrg2nG4yNZCN3FiqAaO+Q+eV5ME=;
-        b=JSJToH7vhJiHcIUU+B/dq9fFQzzFph25XveW+NJAKGnDy6aqDj4Fvd5XqZTDTaScXz
-         fooyOqskMNJbjqoMuj9wxnyd+f8X+EWyTthddsnh5R3m2+SlXaBfhvyjx9BiQBnkZHcr
-         K059TvQ0bAZ/kuxa8dQa94l4dCML27CTzMifaocKBJ1t9CwHi5YGAtaXG0PkJkcvrnK8
-         Uck42OlS266t7Gj4xHq/dFtRGKpJZFA6Ba0o+bnQ/Ht/4xrBep4as84uugzL/HE1spKH
-         DP9JqLurOIbPFeQBWrSMJZ8f0TncTOSOzt2Z4FZco/aRxo6gkYgBVwmp7BxSYG1I3TbD
-         EJpA==
-X-Forwarded-Encrypted: i=1; AFNElJ/nTsEzZl427k2nQRqCWtlI6BC5ek5irxGH+PNTTm4TmriQrH5LgvsALcpC6Ti+PGmeUjRzt6xFnsAQJ0al@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywmpg7DF24oxJrkygfgOKOeASY533RbXMe92XdL7vSdhpvy9Ebu
-	F2QepSeKBjvAd+YD7ph5JQ74/2tw6W3E4mTeSn1GNH1FlQXHCLlWK6HE
-X-Gm-Gg: Acq92OEi3GMV9EhAH3fgXPztROS58QxcmrZS+sNmsaTt3sMg6gJgGXygGabCMFEhROQ
-	H7dXKrTurwbdtt5VxIihM78UpZtkns0Q34vkbOPatWYHGzQXyFBnEby2dhLHA0jO+xeyGec5Z2M
-	vRy6svmzEAjdwX31jr99ATt5dMerzxMpD+pO3RLfNVKzTZhMG1/iedS/O8TLGcHrR9dtgU90V9F
-	su5jn29n01hx/th4uAQOMWcxmXGIyNNjwL3DhuGuNlzEUIXLqY+H2bIIx+nb499UEEdExMCkg0z
-	dfmilUtY/MC9TGHIYYzsb0tmPIByyMN5UqEdazyfNcOh2VQpwodB2tjV7WrL+4d5IoAl6+wXB24
-	g5xYlANEZgjyBvuBdDyAsft/edMCgf54J2hK+YYJgKvWkK+6hD/O6rN8VhuI027np4kjKP0AuEH
-	y55nBlgZO6gTDKkw==
-X-Received: by 2002:a05:6a00:4403:b0:834:e882:3280 with SMTP id d2e1a72fcca58-83f33cef68amr14145948b3a.31.1779101890282;
-        Mon, 18 May 2026 03:58:10 -0700 (PDT)
-Received: from lgs.. ([101.36.109.157])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f196818efsm17201275b3a.16.2026.05.18.03.58.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 03:58:09 -0700 (PDT)
-From: Guangshuo Li <lgs201920130244@gmail.com>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	"Bryan O'Donoghue" <bod@kernel.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hverkuil@kernel.org>,
-	Stefan Schmidt <stefan.schmidt@linaro.org>,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Guangshuo Li <lgs201920130244@gmail.com>
-Subject: [PATCH] media: qcom: iris: avoid double free on video register failure
-Date: Mon, 18 May 2026 18:57:55 +0800
-Message-ID: <20260518105755.988961-1-lgs201920130244@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1779102331; c=relaxed/simple;
+	bh=UZ97L/KZ4eYqPgLughWBBH00R3zXkGppr8qwNHi4vqk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=VQAp8slBWG+nzfyKjy0czxVG57cxr5mPcnUcMQpGXHeuXwqnDtUsesiCrsk3dRRO4pJjSHq0Wt/ua6UUkiPnRTwMIpOzSEFk9/epkrMaSugA0WMk4ut7tMW5YIzD9lc+JdorV5YFpq1cm4tqd62e5i3fGq5p6bVyFOhuyOu809w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QYync8jG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64I7g6s92190258;
+	Mon, 18 May 2026 11:05:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=jsNFcYj7rd9sHRTCfVbvAE
+	eO9/X5C0HMzuGPDw9W7wA=; b=QYync8jGkR6OUOlslOExXfjOPGIaan0WYrwA+R
+	6Q24D7qlzIM/PnFi3SOghSryWKb4dDz/JXxx28gv0JNykxCTG503xrcRWxt+TRiO
+	/RBceR5VxTiEibrxvrQmOI4ifqZ2DQkDH3bIjCS325i433BFIUssXhettQjyacQt
+	/YwxfOQ7hgtPHD29Fq7GGizkY5/0tNHKDvQfmuJ/yABOr1dgvG7sh0GeLBeucdOg
+	PckbFK4FtcOhJ7euE7Y6XdTjD1dlER+lspW1OFXery9YVKPHn4IT/cRqKCp93Z+V
+	0YczlKPtUWbLXsSSZHAbA2PCkuYQT2P3T3t4itDB+3FmA6jQ==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e7xkuguxy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 May 2026 11:05:06 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 64IB52PX032185;
+	Mon, 18 May 2026 11:05:02 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4e716d13up-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 May 2026 11:05:02 +0000 (GMT)
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64IB51dP032156;
+	Mon, 18 May 2026 11:05:02 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-arpisain-hyd.qualcomm.com [10.147.248.17])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 64IB51nl032144
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 18 May 2026 11:05:01 +0000 (GMT)
+Received: from hu-arpisain-hyd.qualcomm.com (localhost [127.0.0.1])
+	by hu-devc-hyd-u22-c.qualcomm.com (Postfix) with ESMTP id 870EF60D;
+	Mon, 18 May 2026 16:35:00 +0530 (+0530)
+From: Arpit Saini <arpit.saini@oss.qualcomm.com>
+Subject: [PATCH 0/2] drm/panel: Add driver for DLC DLC0697 DSI panel
+Date: Mon, 18 May 2026 16:34:11 +0530
+Message-Id: <20260518-ili7807s-panel-v1-0-d7b048163b1c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 6F14956B18D
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACvyCmoC/x3MQQqAIBBA0avErBNUMK2rRAvNqQbERCEC8e5Jy
+ 7f4v0LBTFhgGSpkfKjQHTvEOMB+2XgiI98NksuJK2EYBdKG68KSjRiYUbP0Vgkn0EGPUsaD3n+
+ 4bq19bPkIK2AAAAA=
+X-Change-ID: 20260518-ili7807s-panel-8592da51b1eb
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Ayushi Makhija <ayushi.makhija@oss.qualcomm.com>,
+        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
+        Arpit Saini <arpit.saini@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779102300; l=1225;
+ i=arpit.saini@oss.qualcomm.com; s=20260518; h=from:subject:message-id;
+ bh=UZ97L/KZ4eYqPgLughWBBH00R3zXkGppr8qwNHi4vqk=;
+ b=5mbGvAbStsFREPK/hQ04+Yep7Q9am+yoCf8VecvNANOa8GRe+QvxrtqDKjVmiIEct4OFwoVHI
+ Y3ykR+3z+64AX2an8tX1hy+bGQQxVNju4TcoYIj7dWmk4hEiO/Ch2+M
+X-Developer-Key: i=arpit.saini@oss.qualcomm.com; a=ed25519;
+ pk=OGOh7FGwrnkILHNlcTTABbBMQxxo319duzbTg0YPDAc=
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDEwNiBTYWx0ZWRfXxQUi7MTZM4Ts
+ FU41xGTyHlvHbpDe7ZpMws1tD+P7Ru+i2f6dhgl73y4gPklf7XYhYOmbNG+9zBNp3jZRY12VAoS
+ IJ6rYp0veS6wH1zevReAMCYdvQPBnMP63C4mOTTprhdS1OJKtUxKmaI0y3/k3umBCSQCbU1e4bq
+ V+a/g7x5bbw+qMavZQQrW/CVT9M0YAW9dQ3FWEXI42dtW2yjvzL07ytyWHjA2b19w1jiEwt8pf5
+ gKEt4/mNH+VQl/RFfyK5C1dzKqxkf9MZ+teYL7a/40GlIPbrJQIrtPSdc0EFui/AJMnBeZuqPpd
+ kIoKsLtCgHMevS0mUf9zBZg01CiMZUzpcHp4O8ecEQL884qrS1/uZg/GtsNeLrfSUE3OMhi9PUa
+ qdisq5He0qTUhCxeYriF+DiiTzmQobzShflX7x4RfUYe/jJXjP6y+fYGDO8zeVehD0Fjui0Ru3h
+ 0EH125Ta+Hovqz2Ef0A==
+X-Proofpoint-GUID: Uxre5ScLFqTtnRAkZcIiaeL7ZXQkBMZ0
+X-Proofpoint-ORIG-GUID: Uxre5ScLFqTtnRAkZcIiaeL7ZXQkBMZ0
+X-Authority-Analysis: v=2.4 cv=FsY1OWrq c=1 sm=1 tr=0 ts=6a0af262 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
+ a=x7m1sqbGGMxIV0qBVDEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-18_02,2026-05-15_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 clxscore=1011 phishscore=0 priorityscore=1501
+ malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605180106
+X-Rspamd-Queue-Id: ACB4956B837
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-108173-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-108166-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lgs201920130244@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,60hz:email];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	FROM_NEQ_ENVFROM(0.00)[arpit.saini@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[10]
 X-Rspamd-Action: no action
 
-iris_register_video_device() allocates a video_device with
-video_device_alloc() and releases it from the err_vdev_release error path
-if video_register_device() fails.
+This series adds support for the DLC DLC0697 1080x1920@60Hz MIPI DSI
+panel which uses the Ilitek ILI7807S display controller.
 
-This can double free the video_device when __video_register_device()
-reaches device_register() and that call fails:
+The panel operates in video burst mode with four data lanes using
+RGB888 pixel format. Backlight brightness is controlled by sending
+DCS commands directly over DSI.
 
-  video_register_device()
-    -> __video_register_device()
-       -> device_register() fails
-          -> put_device(&vdev->dev)
-             -> v4l2_device_release()
-                -> vdev->release(vdev)
-                   -> video_device_release(vdev)
+A panel_desc descriptor struct is used to describe the panel-specific
+init sequence and display mode, allowing additional ILI7807S-based
+panels to be added in the future.
 
-  iris_register_video_device()
-    -> err_vdev_release
-       -> video_device_release(vdev)
-
-Use video_device_release_empty() while registering the device so that
-registration failure paths do not free vdev through vdev->release().
-iris_register_video_device() then releases vdev exactly once from
-err_vdev_release. Restore video_device_release() after successful
-registration so the registered device keeps its normal lifetime handling.
-
-Clear the cached decoder or encoder video_device pointer on failure since
-it is assigned before video_register_device().
-
-This issue was found by a static analysis tool I am developing.
-
-Fixes: 38506cb7e8d2 ("media: iris: add platform driver for iris video device")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Arpit Saini <arpit.saini@oss.qualcomm.com>
 ---
- drivers/media/platform/qcom/iris/iris_probe.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+Arpit Saini (2):
+      dt-bindings: display: panel: add Ilitek ILI7807S panel controller
+      drm/panel: add Ilitek ILI7807S panel driver
 
-diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
-index ddaacda523ec..0d259f9b22a1 100644
---- a/drivers/media/platform/qcom/iris/iris_probe.c
-+++ b/drivers/media/platform/qcom/iris/iris_probe.c
-@@ -151,7 +151,7 @@ static int iris_register_video_device(struct iris_core *core, enum domain_type t
- 	if (!vdev)
- 		return -ENOMEM;
- 
--	vdev->release = video_device_release;
-+	vdev->release = video_device_release_empty;
- 	vdev->fops = core->iris_v4l2_file_ops;
- 	vdev->vfl_dir = VFL_DIR_M2M;
- 	vdev->v4l2_dev = &core->v4l2_dev;
-@@ -174,11 +174,17 @@ static int iris_register_video_device(struct iris_core *core, enum domain_type t
- 	if (ret)
- 		goto err_vdev_release;
- 
-+	vdev->release = video_device_release;
- 	video_set_drvdata(vdev, core);
- 
- 	return 0;
- 
- err_vdev_release:
-+	if (core->vdev_dec == vdev)
-+		core->vdev_dec = NULL;
-+	if (core->vdev_enc == vdev)
-+		core->vdev_enc = NULL;
-+
- 	video_device_release(vdev);
- 
- 	return ret;
+ .../bindings/display/panel/ilitek,ili7807s.yaml    |  80 +++++
+ MAINTAINERS                                        |   7 +
+ drivers/gpu/drm/panel/Kconfig                      |  12 +
+ drivers/gpu/drm/panel/Makefile                     |   1 +
+ drivers/gpu/drm/panel/panel-ilitek-ili7807s.c      | 328 +++++++++++++++++++++
+ 5 files changed, 428 insertions(+)
+---
+base-commit: 61680cdf162e59a3c7cde3a2b026a448e1b65a53
+change-id: 20260518-ili7807s-panel-8592da51b1eb
+
+Best regards,
 -- 
-2.43.0
+Arpit Saini <arpit.saini@oss.qualcomm.com>
 
 
