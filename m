@@ -1,190 +1,328 @@
-Return-Path: <linux-arm-msm+bounces-108221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WAIjKB0mC2pAEAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 16:45:49 +0200
+	id SN7FLFQpC2pAEAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 16:59:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 046EE56F241
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 16:45:48 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 301EC56F663
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 16:59:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9B30D304C8A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 14:37:35 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3EA113006F02
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 14:52:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38CF145BD6C;
-	Mon, 18 May 2026 14:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C578D264A97;
+	Mon, 18 May 2026 14:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JG96G61W";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UKP/evWm"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="mt2HnBar"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC652436365
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 14:36:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0B32701C4;
+	Mon, 18 May 2026 14:52:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779114999; cv=none; b=sxFdAcP272EyWgWUFOhN/B2m+FF01kt+Hmqu03qw9ZGghtxECqmd36Bj4FR1W1i8VXOQW4lGe+nBz+ktmfXzDkHBnHRLFsHOvov3ehJWk2mYxp1nq+PoJdlqelGJ6wu/+frb7zkveANsVay13BPTr3tP0RmAyOBNTEs+vYlALrM=
+	t=1779115954; cv=none; b=LbALjfipfExvX+niskyR/OJWxpdIuvOerJDfLf1f5NwOPalHa8cX6St+f5L3odVzMJZyBT5vPpq0oHuuRlI8Wn08tzk2g3eURsdRFb6IfNJ99ZliBwDCZXVgJC8Bab8wZO9tBlqQkhGNCdq8oDGqB5iWVYspNtnjRqKyOI0ofGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779114999; c=relaxed/simple;
-	bh=mrpjJ1xHCm6ZFYwwlJdMwjDopr2Sv4DPvW85D5MbBjc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pPK0j1G1OUHMr+PwugjnYB/tCTu63KvaA82S9UIQ3IfHzOF1GpF8hMF1fl5ig2L6JCl8dxYsYSHpZk7Nk9cupNtwKGT85NCQHG/xGiX7pmmHhYmUVNEuZoDCsBPLgNrCQDZBgQsZafAfUvolhVFt8fe3Bc776muHAEXV1ZCyBQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JG96G61W; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UKP/evWm; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64IAp4YY2083413
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 14:36:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mrpjJ1xHCm6ZFYwwlJdMwjDopr2Sv4DPvW85D5MbBjc=; b=JG96G61WhRcPHfvc
-	cPvSR6iIxeI+JicTQSeXwXnOKEmApx2Kb0APkcCCPRyjMahmGl4RPe1osyoWQ3KO
-	SQTnQvvmANJPVYGfWK7FzkwScHBoKbUhFSKT6Piqhk6d7lOLn914X+9RZsQ0VJQN
-	OGUzqvwEGjzFM42N7nkewCsvp7jAXUfnGW0yI2ogQrBtHmejPbkvkmK8LNt6fPz/
-	pnRSNkWntmhiw1OM8Fxuk2j56X9FMH7JhMpVIjM3Zqb1nNadhqM72JFZdvDWbCTj
-	P5lKsk0qG2elAwq75P5e1q81+zL9Q7WlF3tVLw/Opso1H9Dlg5hvoWMPpQEWioS2
-	jWrHJA==
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com [209.85.217.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e81ch8vqh-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 14:36:36 +0000 (GMT)
-Received: by mail-vs1-f70.google.com with SMTP id ada2fe7eead31-6314bbea08dso91289137.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 07:36:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779114996; x=1779719796; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mrpjJ1xHCm6ZFYwwlJdMwjDopr2Sv4DPvW85D5MbBjc=;
-        b=UKP/evWmZ8vB+fFXLFqhytIAe5eLyDRtB8SoQ9OhTWErOzfHPwlwlDu+V02pMgDTDI
-         YMUjE+rq+uNVicDXGxHurjopFrCxIR/CRAPilyH4Ua2HE2PvktX/LP4pBAnA4go7x7mO
-         X5AIpbHXBa9m9J2UtD5lbV9p2Wz7C0Li7RY2XcaLerAEmEu20F6Ulk/xVXmGW3OndDlO
-         OCFj2G+HBz4E/CgcIaN0bAkF27KWSLJsfTgUWJMKJcdnvivRbNoLG2owJfPlB5Lox3yG
-         Z4pWp/s0ZkKA/iU2Bv1lkmNYUuq3btXOFssaU5BtZ9nAn6wDc/3qrinRoCi8mmxGJJJu
-         tBHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779114996; x=1779719796;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mrpjJ1xHCm6ZFYwwlJdMwjDopr2Sv4DPvW85D5MbBjc=;
-        b=DcJSZMCAB+KMUeds2zweMAb8o/g/oDjZwstJOXhfhly3xd0EULKylw9wVd2Wo4SGbJ
-         wnJ02bzs58extVK5WeBIVb16A2AkrJBSgYdydTeOzJzBIbEWNctqNYu1roQTL+93XZ6P
-         IgGIpX7OswAWxOEPdV22XW5MF4HkMbgpo3vFHp/LEwOq62563DJv3a0Y1vJAo+imAOIa
-         lkZcuFoR163vCI6CLQMIrcaO5oaLqCILImiscwfkXXAwXDgTxNV69wWHod3jVkbZ4rUA
-         PBA+3idxTE4FKQxAPMNVk3BEgABid+EdeqRtmSU/4CN68qKUpY/o8RYh6UcFp4PNp4nH
-         DfVA==
-X-Gm-Message-State: AOJu0Yx3Q8cQ27hMQlGfL+ymo5KYIZVRrcYg5nk8xqk8wTczatP26o5M
-	cwOFGFTjtfBbf3ElVHmDjCGK7ef+Hdc3dZxcalba3zNKn69OTwe1MB2E99S3sI7L5Gu1rXyKfgT
-	NZ48Yc9f920f0Ye7Kdq8/vkLIeJkG8mz6XsCx77QFiPQSEVqq5cTXL5J6QRolYTXryd+5hx7wDC
-	dj
-X-Gm-Gg: Acq92OEPmqsIcYY3eFlSclF5BNkC+L1dcFUUe1Hx4Jgdb4W1wUELJcGjiD0Z6kfxCM3
-	7UbCcvdVWXe/HW88MT0dvRPyhXyNdnJIiHz8JWqgJEtUt8rB4i8/i0mRXOqZ3X2UmWbpGmCT1kL
-	eDfB2li/S7IH9932A1311L4rxsruZN10RSR3002uv2s5KwH+pbCj5i27T2nPXmqgdgHdSlDaGEI
-	dGeqQaTXydsNafvR8UXwGYOGwKAGX0i4y+xP68Q8D0LCR2haIAXzmCVErt3VkHEIdNMqzeU6b83
-	JDjPBXANKF2hZ7C+hQyYJSqCok2fz65tam/CEAZbZFJ8Pv5Cj0/dlhWJq1zGFIZLQkhWmcSFWt0
-	4R4rk/Zg+DSJC8iwaAdd1AUcWa+HUWrVYKN1Bls4E3/KphH3gWU0QAPa6zmBH4LYnFNq68d/3Bc
-	3uTxE=
-X-Received: by 2002:a05:6102:951:b0:636:c122:8583 with SMTP id ada2fe7eead31-63a40cb117amr3123959137.7.1779114996257;
-        Mon, 18 May 2026 07:36:36 -0700 (PDT)
-X-Received: by 2002:a05:6102:951:b0:636:c122:8583 with SMTP id ada2fe7eead31-63a40cb117amr3123956137.7.1779114995789;
-        Mon, 18 May 2026 07:36:35 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bd4f4eb6320sm571591966b.59.2026.05.18.07.36.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 May 2026 07:36:34 -0700 (PDT)
-Message-ID: <56a54a34-1040-44ae-92e2-ce65a3d3acb5@oss.qualcomm.com>
-Date: Mon, 18 May 2026 16:36:32 +0200
+	s=arc-20240116; t=1779115954; c=relaxed/simple;
+	bh=K+iL/pi8OSQkkMq+iTjqo5yjay+NlemXowI/8kFxv6E=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mc08mg2vudD97rf3iBFJpI4pbZZF9RFBxhLnUE97SrdNcgjmYBEg5UVRgcz6Ph8+BsxMz4EYf60uAgvhB/YDJLuN1eZTru8fvJ0EqpUPO9bRPAgmaUZnaiikygPtcsh+ynem6uetFD20RWVNt+XMbFMeAYuTP1q0c8hqJ3i75Fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=mt2HnBar; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1779115951;
+	bh=K+iL/pi8OSQkkMq+iTjqo5yjay+NlemXowI/8kFxv6E=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=mt2HnBarAn5ms+dVTfb+WDhkcY90oxDoZacMgykZNJLsaaCTUAvWmBjRKHQSqT289
+	 6bcrK6UbWWc+yKkDpR1eNkuV+1q0WRRTU32/iNsv/VzucCFHz90bAu+nnyHSmGYyY+
+	 11wOGVLAiI9QNCRLBba3+F//ZWGtM50/ew9Vquhfd8YEB9K+eMihv7xQGqShUzHMof
+	 s2RU7R9wWEpTSJ/aTXHjQsrFYMsaQdSHxBAX3LbvolklkT7L/la9oS/UemdHg1S3ST
+	 V6OkImu9QTf36HL/67Cb718DihD47ZS60yplOuT4KZevX6nnpx+QiVaGlz+Xp1RAuS
+	 wCkdLPJdlAD5A==
+Received: from fedora (unknown [100.64.0.11])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bbrezillon)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 3D82017E0566;
+	Mon, 18 May 2026 16:52:30 +0200 (CEST)
+Date: Mon, 18 May 2026 16:52:25 +0200
+From: Boris Brezillon <boris.brezillon@collabora.com>
+To: Steven Price <steven.price@arm.com>, Liviu Dudau <liviu.dudau@arm.com>,
+ Boris Brezillon <boris.brezillon@collabora.com>, Mark Brown
+ <broonie@kernel.org>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>, Maarten Lankhorst
+ <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Akash Goel <akash.goel@arm.com>, Chia-I Wu
+ <olvaffe@gmail.com>, Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry
+ Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn
+ Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, Rob Clark <rob.clark@oss.qualcomm.com>
+Subject: Re: [PATCH v4] drm/gem: Make the GEM LRU lock part of drm_device
+Message-ID: <20260518165225.145175b1@fedora>
+In-Reply-To: <20260518-panthor-shrinker-fixes-v4-1-1920234470d5@collabora.com>
+References: <20260518-panthor-shrinker-fixes-v4-1-1920234470d5@collabora.com>
+Organization: Collabora
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] qcom_battmgr: Add batteryless DC-adapter MAINS
- support
-To: Rakesh Kota <rakesh.kota@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20260518-add_dc_in_support-v1-0-31fbaa329879@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260518-add_dc_in_support-v1-0-31fbaa329879@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=a4MAM0SF c=1 sm=1 tr=0 ts=6a0b23f4 cx=c_pps
- a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=kDyHj_zsKyADgF95HkcA:9 a=QEXdDO2ut3YA:10 a=crWF4MFLhNY0qMRaF8an:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDE0MiBTYWx0ZWRfXzOjtYHY+Y/ar
- nYbkYFsntruCGnZF+7EmobsHs0omI6uxy20pCCCwzmmUW3hZ0RNMOTirgVLJs8OpJ7fgA/8GBeq
- l9DTtLql6pyFsmTGm76zFHpf25/25uUFGHzCXPtmk0MXl/BbNgvAXD11ZvetSP7Arti/3SHl2x+
- JBdWTsDNI85SSG+a82IPcBfz8p/noI0h13j8nfFbN0sfnI/lZwUL7ZOpiBerdJaFjbivvAO5VcA
- /SrXTwHo94+fIq+BXTngeVTES/RR77PpN0uC1/Txp1L1ADwH6pfrXLz0Af5hFAMdsfPCP2aSGha
- fnyNe9vZvsMZLng78i7CeuwIe8Ox2AstM0sxPkBqxX9QDdTZ3ph373oiO4XNC7rZ5Eq93XD4jA6
- avyBsH02z4YEQJ2doYy3AJA4+7Cunh7NVBIm4cbDyMBtw0PW8vy/p09tLbgwgCZYhtjeRldqSsN
- zoE7O8K2hn2fwY2/ahw==
-X-Proofpoint-ORIG-GUID: okBIRr8rVguSrUt8akmno2m1GMGcrOSI
-X-Proofpoint-GUID: okBIRr8rVguSrUt8akmno2m1GMGcrOSI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-18_03,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015 priorityscore=1501
- impostorscore=0 suspectscore=0 spamscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605180142
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	TAGGED_FROM(0.00)[bounces-108221-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-108222-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	HAS_ORG_HEADER(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	FREEMAIL_CC(0.00)[collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,arm.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[boris.brezillon@collabora.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DKIM_TRACE(0.00)[collabora.com:+];
 	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 046EE56F241
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,arm.com:email,collabora.com:email,collabora.com:dkim,gitlab.freedesktop.org:url,qualcomm.com:email]
+X-Rspamd-Queue-Id: 301EC56F663
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 5/18/26 3:49 PM, Rakesh Kota wrote:
-> On batteryless boards powered by 12V DC adapters, registering the
-> power supply as BATTERY causes userspace to incorrectly trigger
-> battery power-saving sequences.
++Mark for the silent conflict resolution needed to reconcile
+drm-misc-fixes and drm-next/drm-misc-next.
 
-Does battman really offer no way of differentiating whether a battery
-is *actually* present in such cases?
+On Mon, 18 May 2026 13:41:45 +0200
+Boris Brezillon <boris.brezillon@collabora.com> wrote:
 
-What boards are affected?
+> Recently, a few races have been discovered in the GEM LRU logic, all
+> of them caused by the fact the LRU lock is accessed through
+> gem->lru->lock, and that very same lock also protects changes to
+> gem->lru, leading to situations where gem->lru needs to first be
+> accessed without the lock held, to then get the lru to access the lock
+> through and finally take the lock and do the expected operation.
+> 
+> Currently, the only driver making use of this API (MSM) declares a
+> device-wide lock, and the user we're about to add (panthor) will
+> do the same. There's no evidence that we will ever have a driver
+> that wants different pools of LRUs protected by different locks under
+> the same drm_device. So we're better off moving this lock to drm_device
+> and always locking it through obj->dev->gem_lru_mutex, or directly
+> through dev->gem_lru_mutex.
+> 
+> If anyone ever needs more fine-grained locking, this can be revisited
+> to pass some drm_gem_lru_pool object representing the pool of LRUs
+> under a specific lock, but for now, the per-device lock seems to be
+> enough.
+> 
+> Fixes: e7c2af13f811 ("drm/gem: Add LRU/shrinker helper")
+> Reported-by: Chia-I Wu <olvaffe@gmail.com>
+> Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
+> Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
+> Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+> Reviewed-by: Steven Price <steven.price@arm.com>
+> Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
+> Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 
-Konrad
+Queued to drm-misc-next.
+
+Note for the linux-next maintainers: below is the conflict
+resolution currently stored in drm-tip.
+
+Note for the drm-misc maintainers: we'll need a backmerge of the
+next -rc into drm-misc-next so we can resolve the conflict there.
+
+--->8---
+diff --git a/drivers/gpu/drm/panthor/panthor_device.h b/drivers/gpu/drm/panthor/panthor_device.h
+index 4e4607bca7cc..a412a50eec76 100644
+--- a/drivers/gpu/drm/panthor/panthor_device.h
++++ b/drivers/gpu/drm/panthor/panthor_device.h
+@@ -187,9 +187,6 @@ struct panthor_device {
+ 		/** @reclaim.shrinker: Shrinker instance */
+ 		struct shrinker *shrinker;
+ 
+-		/** @reclaim.lock: Lock protecting all LRUs */
+-		struct mutex lock;
+-
+ 		/**
+ 		 * @reclaim.unused: BOs with unused pages
+ 		 *
+diff --git a/drivers/gpu/drm/panthor/panthor_gem.c b/drivers/gpu/drm/panthor/panthor_gem.c
+index 13295d7a593d..abe0c5bb1bca 100644
+--- a/drivers/gpu/drm/panthor/panthor_gem.c
++++ b/drivers/gpu/drm/panthor/panthor_gem.c
+@@ -1495,13 +1495,13 @@ panthor_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+ 	if (!can_swap())
+ 		goto out;
+ 
+-	freed += drm_gem_lru_scan(&ptdev->reclaim.unused,
++	freed += drm_gem_lru_scan(&ptdev->base, &ptdev->reclaim.unused,
+ 				  sc->nr_to_scan - freed, &remaining,
+ 				  panthor_gem_try_evict_no_resv_wait, NULL);
+ 	if (freed >= sc->nr_to_scan)
+ 		goto out;
+ 
+-	freed += drm_gem_lru_scan(&ptdev->reclaim.mmapped,
++	freed += drm_gem_lru_scan(&ptdev->base, &ptdev->reclaim.mmapped,
+ 				  sc->nr_to_scan - freed, &remaining,
+ 				  panthor_gem_try_evict_no_resv_wait, NULL);
+ 	if (freed >= sc->nr_to_scan)
+@@ -1515,7 +1515,7 @@ panthor_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+ 	if (freed >= sc->nr_to_scan)
+ 		goto out;
+ 
+-	freed += drm_gem_lru_scan(&ptdev->reclaim.gpu_mapped_shared,
++	freed += drm_gem_lru_scan(&ptdev->base, &ptdev->reclaim.gpu_mapped_shared,
+ 				  sc->nr_to_scan - freed, &remaining,
+ 				  panthor_gem_try_evict, NULL);
+ 
+@@ -1544,21 +1544,16 @@ panthor_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
+ int panthor_gem_shrinker_init(struct panthor_device *ptdev)
+ {
+ 	struct shrinker *shrinker;
+-	int ret;
+-
+-	ret = drmm_mutex_init(&ptdev->base, &ptdev->reclaim.lock);
+-	if (ret)
+-		return ret;
+ 
+ 	INIT_LIST_HEAD(&ptdev->reclaim.vms);
+-	drm_gem_lru_init(&ptdev->reclaim.unused, &ptdev->reclaim.lock);
+-	drm_gem_lru_init(&ptdev->reclaim.mmapped, &ptdev->reclaim.lock);
+-	drm_gem_lru_init(&ptdev->reclaim.gpu_mapped_shared, &ptdev->reclaim.lock);
++	drm_gem_lru_init(&ptdev->reclaim.unused);
++	drm_gem_lru_init(&ptdev->reclaim.mmapped);
++	drm_gem_lru_init(&ptdev->reclaim.gpu_mapped_shared);
+ 	ptdev->reclaim.gpu_mapped_count = 0;
+ 
+ 	/* Teach lockdep about lock ordering wrt. shrinker: */
+ 	fs_reclaim_acquire(GFP_KERNEL);
+-	might_lock(&ptdev->reclaim.lock);
++	might_lock(&ptdev->base.gem_lru_mutex);
+ 	fs_reclaim_release(GFP_KERNEL);
+ 
+ 	shrinker = shrinker_alloc(0, "drm-panthor-gem");
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index 452d0b6d4668..9d4500850561 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -715,10 +715,10 @@ int panthor_vm_active(struct panthor_vm *vm)
+ 	 * never became active in the first place will be reclaimed last, but
+ 	 * that's an acceptable trade-off.
+ 	 */
+-	mutex_lock(&ptdev->reclaim.lock);
++	mutex_lock(&ptdev->base.gem_lru_mutex);
+ 	if (vm->reclaim.lru.count)
+ 		list_move_tail(&vm->reclaim.lru_node, &ptdev->reclaim.vms);
+-	mutex_unlock(&ptdev->reclaim.lock);
++	mutex_unlock(&ptdev->base.gem_lru_mutex);
+ 
+ 	/* Make sure we don't race with lock/unlock_region() calls
+ 	 * happening around VM bind operations.
+@@ -1962,9 +1962,9 @@ static void panthor_vm_free(struct drm_gpuvm *gpuvm)
+ 	struct panthor_vm *vm = container_of(gpuvm, struct panthor_vm, base);
+ 	struct panthor_device *ptdev = vm->ptdev;
+ 
+-	mutex_lock(&ptdev->reclaim.lock);
++	mutex_lock(&ptdev->base.gem_lru_mutex);
+ 	list_del_init(&vm->reclaim.lru_node);
+-	mutex_unlock(&ptdev->reclaim.lock);
++	mutex_unlock(&ptdev->base.gem_lru_mutex);
+ 
+ 	mutex_lock(&vm->heaps.lock);
+ 	if (drm_WARN_ON(&ptdev->base, vm->heaps.pool))
+@@ -2360,11 +2360,11 @@ void panthor_vm_update_bo_reclaim_lru_locked(struct panthor_gem_object *bo)
+ 		drm_WARN_ON(&ptdev->base, vm);
+ 		vm = container_of(vm_bo->vm, struct panthor_vm, base);
+ 
+-		mutex_lock(&ptdev->reclaim.lock);
++		mutex_lock(&ptdev->base.gem_lru_mutex);
+ 		drm_gem_lru_move_tail_locked(&vm->reclaim.lru, &bo->base);
+ 		if (list_empty(&vm->reclaim.lru_node))
+ 			list_move(&vm->reclaim.lru_node, &ptdev->reclaim.vms);
+-		mutex_unlock(&ptdev->reclaim.lock);
++		mutex_unlock(&ptdev->base.gem_lru_mutex);
+ 	}
+ }
+ 
+@@ -2774,7 +2774,7 @@ panthor_vm_create(struct panthor_device *ptdev, bool for_mcu,
+ 	vm->kernel_auto_va.start = auto_kernel_va_start;
+ 	vm->kernel_auto_va.end = vm->kernel_auto_va.start + auto_kernel_va_size - 1;
+ 
+-	drm_gem_lru_init(&vm->reclaim.lru, &ptdev->reclaim.lock);
++	drm_gem_lru_init(&vm->reclaim.lru);
+ 	INIT_LIST_HEAD(&vm->reclaim.lru_node);
+ 	INIT_LIST_HEAD(&vm->node);
+ 	INIT_LIST_HEAD(&vm->as.lru_node);
+@@ -3140,7 +3140,7 @@ panthor_mmu_reclaim_priv_bos(struct panthor_device *ptdev,
+ 	LIST_HEAD(remaining_vms);
+ 	LIST_HEAD(vms);
+ 
+-	mutex_lock(&ptdev->reclaim.lock);
++	mutex_lock(&ptdev->base.gem_lru_mutex);
+ 	list_splice_init(&ptdev->reclaim.vms, &vms);
+ 
+ 	while (freed < nr_to_scan) {
+@@ -3156,12 +3156,13 @@ panthor_mmu_reclaim_priv_bos(struct panthor_device *ptdev,
+ 			continue;
+ 		}
+ 
+-		mutex_unlock(&ptdev->reclaim.lock);
++		mutex_unlock(&ptdev->base.gem_lru_mutex);
+ 
+-		freed += drm_gem_lru_scan(&vm->reclaim.lru, nr_to_scan - freed,
++		freed += drm_gem_lru_scan(&ptdev->base, &vm->reclaim.lru,
++					  nr_to_scan - freed,
+ 					  remaining, shrink, NULL);
+ 
+-		mutex_lock(&ptdev->reclaim.lock);
++		mutex_lock(&ptdev->base.gem_lru_mutex);
+ 
+ 		/* If the VM is still in the temporary list, remove it so we
+ 		 * can proceed with the next VM.
+@@ -3177,11 +3178,11 @@ panthor_mmu_reclaim_priv_bos(struct panthor_device *ptdev,
+ 				list_add_tail(&vm->reclaim.lru_node, &remaining_vms);
+ 		}
+ 
+-		mutex_unlock(&ptdev->reclaim.lock);
++		mutex_unlock(&ptdev->base.gem_lru_mutex);
+ 
+ 		panthor_vm_put(vm);
+ 
+-		mutex_lock(&ptdev->reclaim.lock);
++		mutex_lock(&ptdev->base.gem_lru_mutex);
+ 	}
+ 
+ 	/* Re-insert VMs with remaining data to reclaim at the beginning of
+@@ -3192,7 +3193,7 @@ panthor_mmu_reclaim_priv_bos(struct panthor_device *ptdev,
+ 	 */
+ 	list_splice_tail(&vms, &remaining_vms);
+ 	list_splice(&remaining_vms, &ptdev->reclaim.vms);
+-	mutex_unlock(&ptdev->reclaim.lock);
++	mutex_unlock(&ptdev->base.gem_lru_mutex);
+ 
+ 	return freed;
+ }
 
