@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-108091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IPRIIMu4CmqY6gQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 08:59:23 +0200
+	id wN1UJkS5CmqY6gQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 09:01:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25023567101
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 08:59:22 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1F695671B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 09:01:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 11AD23003D36
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 06:59:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8D686301544E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 07:00:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37D383CDBAA;
-	Mon, 18 May 2026 06:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 867853DEFF3;
+	Mon, 18 May 2026 07:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yw5oJjvi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h5q9MbOj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1311130EF84;
-	Mon, 18 May 2026 06:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDB73DEAFA;
+	Mon, 18 May 2026 07:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779087560; cv=none; b=CsHL1mjQygEHI5D7NG/xoj5YeGbhdP5iXX2BiJi3bi9HBeLADewcgha5+LAX8nXh7A8WYBcCqZgAyvKw0hprNKC+Y+rnRxLXLUWM1DQ9V0NwdGh8812fLwkaAShWdr65SiHZXA1Dao1Alr3ehuHSjFriZrVPrz7hxt7p4SY9yC4=
+	t=1779087639; cv=none; b=nkoemHXAAnfJKUN5zZeawNs9ySymhDB5xlxqP10UO8IXMqJjTjgG1I5NdBq63884/4l5oVq34yJPW8qZ7YTN2BVS7t7aT05vGhNomaaDr16bMilRR+/fBchYtS5VDhci500EjgCSNsJ5N8MrpAkw2//2WOxsA9oqhE3LzH3xKqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779087560; c=relaxed/simple;
-	bh=mJa2fIsKGbObKnKnn6ED0BDuVO4OC7l0bfrdvngyKPc=;
+	s=arc-20240116; t=1779087639; c=relaxed/simple;
+	bh=lelqDmyTg+5CXbISPM5moYnepKJes/RZlk8bJJ8cNDY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A0l9kzEKroPleb0sjynrORLw1v+mI10Dxyl8PDNuX9MmGg8K0heII3LkxgHfxI7CJWanJ/trgnKB6A2KFZE2k1ZcXQXdINcMAJqT0O5eOeXhuJsQz2udbLQuGwPg640HUHa8uiqEwhrZ7chnvagBNw81HRLcV3n+YWxaevZ0zZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yw5oJjvi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A7CC2BCC6;
-	Mon, 18 May 2026 06:59:16 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=tCXkpH0Q5aGq67Kc27EW8VQB4GmhkaLDpwwComwNKZCxNVVA3iK67mQ7rde0zshjzav9uItg9QqsCS/hiqbtF5OqbDXVGIZ4hz3M5oU3CIHjyQOCqY3k3K1SAx41Biy0gcyqDaVlIDLQnSbK3BPgMwlVrNraC+A8lh66uolRuBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h5q9MbOj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720B6C2BCB7;
+	Mon, 18 May 2026 07:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779087559;
-	bh=mJa2fIsKGbObKnKnn6ED0BDuVO4OC7l0bfrdvngyKPc=;
+	s=k20201202; t=1779087638;
+	bh=lelqDmyTg+5CXbISPM5moYnepKJes/RZlk8bJJ8cNDY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Yw5oJjvia6/E8IR5lymqEjDUR2UACJCBRdK8rSx18wD5GDVUi0cwB1ZUmIkOzUmTG
-	 hNZQhl7jCe/e4i+7FsW2pptQP+6dX0EQk/frtH1zUDAdiYE629ezLyI0BIzjiWQtpT
-	 gxlk7begv9dK+pL+hzmaSDJTULye09Vu5Xbmmm1nqiNo+K5fRp9Mk3zYn0Q1/hpHiW
-	 fM0V2qcgoIvuXSNvEv63pqLygEuxVQjVAqJW2ntsyPyhL7+UutFDsxDPi4zLXLjgLq
-	 K1oLhOTMF7k6IG/oqK16rJN2eP8xMcPw+XugivlByxO8WjwiZxsGdcdmyRZYCwhsYl
-	 EQ8bNGUBPty6A==
-Message-ID: <5ad0685b-9ba4-4ada-863f-4e5a24a761ff@kernel.org>
-Date: Mon, 18 May 2026 08:59:14 +0200
+	b=h5q9MbOjdh4olgCXG1BFaG463QsXkHevGJRiyCAGpJKX7mqipj8BWMBMM1IV8Yfyf
+	 nhmkE62DjE+xKrnlsFeMlceD//GQGzRZBHtvhtBjRp3plw7L3gMvNoDJ0ZxlHtLETx
+	 BvtSZ5l4hVmWv9IWCeN2bCj3tj/J5C7lZ0AL2yK7LKydDp1h7NyJ68UYa7yPDt2BU3
+	 MYoXZWhyKp3w9B3A0NxJl+TSVeq5jGZUqrOzwe5uDvn9hA4n49Q/T3Uk2sM264ORIp
+	 /PlVLhB1GJgPCbbFTSBaT86PUir+GqRNu8htNOIZgR9pINeZ2bYJKWSqXgvdqeuZbe
+	 jzweZfy1j55xA==
+Message-ID: <bbd5e74d-99c0-4a18-bc80-b3658b235bf6@kernel.org>
+Date: Mon, 18 May 2026 09:00:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,10 +68,9 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 References: <20260506-qref_vote_0506-v3-0-5ab71d2e6f16@oss.qualcomm.com>
  <20260506-qref_vote_0506-v3-1-5ab71d2e6f16@oss.qualcomm.com>
  <20260514-outgoing-literate-dove-2e2a73@quoll>
- <e495cf7c-a76c-4ecc-aa95-36fb0ee54b80@kernel.org>
- <aglY9of/4714us2o@hu-qianyu-lv.qualcomm.com>
- <e72e2f53-caba-4c53-b494-3c284eec54b4@kernel.org>
- <agqJCmQRmFwhFClV@hu-qianyu-lv.qualcomm.com>
+ <aglUmonGmr2goyOI@hu-qianyu-lv.qualcomm.com>
+ <408f587b-76c2-4fdd-bbe1-89414270b4ee@kernel.org>
+ <agqMgkRwKqr05rms@hu-qianyu-lv.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -117,28 +116,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <agqJCmQRmFwhFClV@hu-qianyu-lv.qualcomm.com>
+In-Reply-To: <agqMgkRwKqr05rms@hu-qianyu-lv.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 25023567101
+X-Rspamd-Queue-Id: F1F695671B6
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108091-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-108092-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[15];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
@@ -148,83 +147,88 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
 X-Rspamd-Action: no action
 
-On 18/05/2026 05:35, Qiang Yu wrote:
-> On Sun, May 17, 2026 at 10:28:48AM +0200, Krzysztof Kozlowski wrote:
->> On 17/05/2026 07:58, Qiang Yu wrote:
->>> On Thu, May 14, 2026 at 12:35:19PM +0200, Krzysztof Kozlowski wrote:
->>>> On 14/05/2026 12:22, Krzysztof Kozlowski wrote:
->>>>> On Wed, May 06, 2026 at 01:43:51AM -0700, Qiang Yu wrote:
->>>>>> Add regulator supply properties for the Glymur TCSR QREF/REFGEN blocks
->>>>>> required by clkref clocks.
->>>>>>
->>>>>> The vdda-qreftx*, vdda-qrefrpt*, and vdda-qrefrx* supplies map to common
->>>>>> QREF TX/RPT/RX components, while SoC-specific topology and instance count
->>>>>> differ. Document them here for qcom,glymur-tcsr.
->>>>>>
->>>>>> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
->>>>>> ---
->>>>>>  .../bindings/clock/qcom,sm8550-tcsr.yaml           | 57 ++++++++++++++++++++++
->>>>>>  1 file changed, 57 insertions(+)
->>>>>>
->>>>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
->>>>>> index 1ccdf4b0f5dd..57921cb63230 100644
->>>>>> --- a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
->>>>>> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
->>>>>> @@ -51,6 +51,63 @@ properties:
->>>>>>    '#reset-cells':
->>>>>>      const: 1
->>>>>>  
->>>>>> +  vdda-refgen-0p9-supply: true
->>>>>> +  vdda-refgen-1p2-supply: true
->>>>>> +  vdda-qrefrx0-0p9-supply: true
->>>>>> +  vdda-qrefrx1-0p9-supply: true
->>>>>> +  vdda-qrefrx2-0p9-supply: true
->>>>>> +  vdda-qrefrx4-0p9-supply: true
->>>>>> +  vdda-qrefrx5-0p9-supply: true
->>>>>> +  vdda-qreftx0-0p9-supply: true
->>>>>> +  vdda-qreftx0-1p2-supply: true
->>>>>> +  vdda-qreftx1-0p9-supply: true
->>>>>> +  vdda-qrefrpt0-0p9-supply: true
->>>>>> +  vdda-qrefrpt1-0p9-supply: true
->>>>>> +  vdda-qrefrpt2-0p9-supply: true
->>>>>> +  vdda-qrefrpt3-0p9-supply: true
->>>>>> +  vdda-qrefrpt4-0p9-supply: true
+On 18/05/2026 05:50, Qiang Yu wrote:
+> On Sun, May 17, 2026 at 10:27:39AM +0200, Krzysztof Kozlowski wrote:
+>> On 17/05/2026 07:39, Qiang Yu wrote:
+>>> On Thu, May 14, 2026 at 12:22:17PM +0200, Krzysztof Kozlowski wrote:
+>>>> On Wed, May 06, 2026 at 01:43:51AM -0700, Qiang Yu wrote:
+>>>>> Add regulator supply properties for the Glymur TCSR QREF/REFGEN blocks
+>>>>> required by clkref clocks.
 >>>>>
->>>>> Either I do not understand your previous explanation:
->>>>> CXO -> TX0 -> RPT0 -> RPT1 -> RPT2 -> RX2 -> PCIe4_PHY
+>>>>> The vdda-qreftx*, vdda-qrefrpt*, and vdda-qrefrx* supplies map to common
+>>>>> QREF TX/RPT/RX components, while SoC-specific topology and instance count
+>>>>> differ. Document them here for qcom,glymur-tcsr.
 >>>>>
->>>>> or this is still wrong. There is no TCSR here, so this proves nothing.
->>>>> If TCSR is TX0, then you do not have five of them...
+>>>>> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+>>>>> ---
+>>>>>  .../bindings/clock/qcom,sm8550-tcsr.yaml           | 57 ++++++++++++++++++++++
+>>>>>  1 file changed, 57 insertions(+)
 >>>>>
->>>>> My previous comment stay - you are not describing the actual hardware
->>>>> here.
+>>>>> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+>>>>> index 1ccdf4b0f5dd..57921cb63230 100644
+>>>>> --- a/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-tcsr.yaml
+>>>>> @@ -51,6 +51,63 @@ properties:
+>>>>>    '#reset-cells':
+>>>>>      const: 1
+>>>>>  
+>>>>> +  vdda-refgen-0p9-supply: true
+>>>>> +  vdda-refgen-1p2-supply: true
+>>>>> +  vdda-qrefrx0-0p9-supply: true
+>>>>> +  vdda-qrefrx1-0p9-supply: true
+>>>>> +  vdda-qrefrx2-0p9-supply: true
+>>>>> +  vdda-qrefrx4-0p9-supply: true
+>>>>> +  vdda-qrefrx5-0p9-supply: true
+>>>>> +  vdda-qreftx0-0p9-supply: true
+>>>>> +  vdda-qreftx0-1p2-supply: true
+>>>>> +  vdda-qreftx1-0p9-supply: true
+>>>>> +  vdda-qrefrpt0-0p9-supply: true
+>>>>> +  vdda-qrefrpt1-0p9-supply: true
+>>>>> +  vdda-qrefrpt2-0p9-supply: true
+>>>>> +  vdda-qrefrpt3-0p9-supply: true
+>>>>> +  vdda-qrefrpt4-0p9-supply: true
 >>>>
->>>> And it should not be my task BUT YOURS to verify this in hardware
->>>> programming guide or manual, but nevertheless I did verify and the
->>>> manual DOES NOT mention these supplies. For Glymur, it mentions 8 reset
->>>> ports and 5 clock ports.
+>>>> Either I do not understand your previous explanation:
+>>>> CXO -> TX0 -> RPT0 -> RPT1 -> RPT2 -> RX2 -> PCIe4_PHY
 >>>>
->>>> No supplies at all.
+>>>> or this is still wrong. There is no TCSR here, so this proves nothing.
+>>>> If TCSR is TX0, then you do not have five of them...
 >>>>
->>>> Then I went to QREF and it does mention few supplies but completely
->>>> different, like mx, cx, px 0.88 and px1.2, so none of this matches QREF
->>>> either.
+>>>> My previous comment stay - you are not describing the actual hardware
+>>>> here.
 >>>>
+>>> The CXO network "-> TX0 -> RPT0 -> RPT1 -> RPT2 -> RX2 ->" is referred to
+>>> as the QREF block, and each component is controlled by the tcsr_clkref_en
+>>> registers.
+>>
+>> Still no clue what this -> relation is. Again, describe the hardware.
+>>
 >>>
->>> Honestly, I couldn't find QREF LDO-related information in HPG either.
->>> However, you can find it on IPCAT. For example, in the glymur power grid,
->>> these LDOs are clearly documented under the LDOs required by each PHY,
->>
->> How is that relevant here? This is not PHY here. You are adding supplies
->> to TCSR. Do you understand what a supply is?
->>
+>>> If a PHY receives its reference clock from QREF, it will have a clkref_en
+>>> register. However, this register may be located in different regions
+>>> depending on the target. On glymur it resides in TCSR, so I added these
+>>> LDOs QREF required in tcsr yaml.
+>> Registers are not described as supplies.
 > 
-> I'm telling you the fact that I see from power grid table.
+> I'm not descirbing register as supply.
+> 
+>     tx0-0p9/1p2  rpt0-0p9   rpt1-0p9    rpt2-0p9    rx2-0p9
+>        |             |           |        |           |
+>        |             |           |        |           |
+> CXO -> TX0 -------> RPT0 ------> RPT1 -> RPT2 -----> RX2 -> PCIe4_PHY
+>        |             |           |        |           |
+>        |             |           |        |           |
+>        ---------------------------------------------------tcsr_clkref_en
+> 
+> These components(TX/RTP/RX) can be disabled/enabled by tcsr_clkref_en
+> register, and they require power supplies.
 
-So you see supplies in phy, then add them to the phy.
+So I told you more than once - none of these are supplies to the TCSR.
+You clearly misunderstand what a supply is.
+
 
 Best regards,
 Krzysztof
