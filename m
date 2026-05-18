@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-108252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SIUgCM5MC2o7FQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 19:30:54 +0200
+	id 2J5VJPRMC2rhFQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 19:31:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95023571A04
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 19:30:53 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB210571A36
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 19:31:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 79F11301BA5A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 17:30:52 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id ACB44300E390
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 17:30:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D77AE380FFE;
-	Mon, 18 May 2026 17:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BAD4382365;
+	Mon, 18 May 2026 17:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W2YNnay5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="amVoc7Az"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2A12367D9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 17:30:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC6F2E22B5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 17:30:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779125451; cv=none; b=QaAcPKiern/xxD4YRb7Je+bUMp6gGJmods9CTb/XW9EXhMOTVrgzyt2C/gBxEl1IOZFV8btVkpl7eHKjzTS4+t8bjEQ3ay6sdFrz9Gb7p/flv9w+OthVzy4MsZeE+hvuve7mDk1EDuDpj0Or/sWIm4FRgcVDIiNTTx7OWPXjYJ8=
+	t=1779125456; cv=none; b=jvy8DPcOYGnDkuuk8R25ghp9lmoNs6zt4zX93wL7991XZ7KUJCAKGL8jWFP1hxrOJWHJSQ0ywHU/uMMk8L/7QLyayEXuJfkc1pMJMRqpsVgTGB3D9+HvqVCkXaZAPMwsjQjHcadNAJVLC/R+wsxDKDH3hRyuopd2LLhrvBE8b3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779125451; c=relaxed/simple;
-	bh=xxm5uRHiBjFOoidP1IRVOoUHiKnUXvtH8p3F1Td9iKo=;
+	s=arc-20240116; t=1779125456; c=relaxed/simple;
+	bh=cVR6h3rkGrL9zNSGot5yOVYOujBEvnXGWmyJCWYxP7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sEKYGFgWg3r95RqEZl5AtHmcqmhyNEuZSKt6/3l0QxZODcLWO64PfVDdBDZfazLlANyhA3E22KihlICIHNKjBS175PDYU/T0iiV2zaYfAtsbFu0nTg11+UNH2gs8koAAYALHvVEwQ4YKmcL4orPu9faW3mpVZrzy7IMVy/AHZ68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W2YNnay5; arc=none smtp.client-ip=209.85.215.181
+	 MIME-Version; b=Iz72mAxm+Y97FDy9oLXL+f2xB6s35ALh2wG7eA1mbE1JfkACEHJV+rimL4W8w9ib+CipPew86AVBSl1uLeYMjLYD2+AaBv1g1nPSzkuWN38w1qJi66wmjgiANU785ixLQqTgo0hcCkBaxGZSGDAtYA8+f+LO9jUXvQSxZ0OFiM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=amVoc7Az; arc=none smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c80170db7d6so1077598a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 10:30:50 -0700 (PDT)
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-367cbac9cb1so2449550a91.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 10:30:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779125450; x=1779730250; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779125454; x=1779730254; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kY2Amf5TmkwuaOKL8bqWWAMF2lfr2aUkj6b4cqTGIP4=;
-        b=W2YNnay5FMp3/jscE+x+wYdtw5GrOpaARjNKeTm1gOHUvfZ+C2+hYjKPOk2NFEnGl+
-         HuiLMfXk2cirg54XTGMUjJpGBgafnHNioItY2afLIdqFWCBOHsggb4drsufsPJPse8T1
-         zrk9K5QI9Thrs5nAopgcB7wc1WYGIG+rcYjHUnxXt10sS/N3/PV/hdIAt1ntQr4heBXb
-         e/t6S7rJKWu5xt1xaXqqOWxOiqs2nqLs2fTdFuqgNY59y0Y+UDYTomvRUaDKK/ub2C7T
-         q80zQNuQdAmIqaFe3ZArWMqR18BwhcPh7rBetO+JFaOm3KtxNa9utlQyncrkvYbuILzH
-         d4DQ==
+        bh=XWw2oT1MTBc+8KoSj6yzkVCq1ZSMsbmsrBxPiF/hchU=;
+        b=amVoc7Azj6n8G/WN8yGXwY0tUOGp2ZpHr6g2ctq+vjwitrL8DNpEJH+YqAF/jhmfoB
+         CW4F7Sdr/04Ls8pxS40FaTHRm6nXaXgLWUH5aGMxgN6ooDqxl1NwmLxsVKlgyOpkBuIh
+         bWEPQiPFNY9jLz32Yij0NcxJlxQXxrPDVOL+1GEqiKoMr92NCAwqBVTnwObmfIvG3BRY
+         XunkTAs2q1TciGTo/vF/OQH9/FxSPqwMne4wsrc9DJwmSDIbxea35mRVLrlXslBwWBQD
+         ym/j5AQu8uCF5aiXXKzyfX7RBtf1GtXJ2QMeRr+7sTHbZGjnfeAaiiw3gUxbhuI0229C
+         LRZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779125450; x=1779730250;
+        d=1e100.net; s=20251104; t=1779125454; x=1779730254;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=kY2Amf5TmkwuaOKL8bqWWAMF2lfr2aUkj6b4cqTGIP4=;
-        b=AZzxNWLoMc2V2ql62x46zHrn1fsBgwicJt6e5aT0bAUiJWbAFBs5ogw/m0kqf5T79D
-         vhxXZrBizjWk9zoSNjDGo9TxLlUHAjvHd0PfqL2+zTFhh5LzYyab2W2ttse1VE4tMrZ6
-         ou5BER0jnDVTpLuAA3r3q1pYTvUQQl/UjT4twIiWT8+UcZ/ysdofq2stkHGWlgelwFeh
-         oeJq3KWyPVi0cZoBeetzNrZ1t2+PVZDH6Pf5MTePOOJ53l5gyP89NSX4GecjZuxhKfUt
-         VTXA3PfXLg/eND0tFUQig56IgXsklGzDQz0ECl2X/yuWOZUg+bAhHKvhm+vYgWCkwGp4
-         DsWQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+pBPJvfX2h4DZx5pKSXeRdEgVPKSb3LNtgmAOiRphk+Z08i4ALmkSNnxF4120CRK5CrC6wKuEFeGcNPSl8@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHrObPzoIjnvpXhcK3MkQSocNfhrnjxXPhvM1MOccN7/8uXbmE
-	ZWiEcX3j5IjHM/odzK/lnV8G/5omnEhXHqvBAeIjB++rlfwA3LLICq+y
-X-Gm-Gg: Acq92OE3Jc0ZI0miCOZ8V+A5VtDpNPZMNnIF1NR7ANG7YK8I15lpWWm1MO2W1iuqEYE
-	TXc8TABP8WoOcLllarKhqk58zcL4oqTpfTeA+NlI5ASKv8S9kEsc7bJBvszTQ9JOqXRn8Uigzec
-	nwisJWHmD970AQhkv4/SMxiap5vBrS4ksqI1GsV14E7sQsgB82hHFAbldzJP1tE9CwSNaodrQWJ
-	ciwW7TWOBoMsbaZFDZ1vO+kX+HGeIGMXZMtnMwCNi2KdfR1YDG2iUQT3fco2ES+e0xVMkZI5o3q
-	B+gtXEZr47XzQa0+7syRU3GXzkU82XsKi2RtOQFZxgPXHcy3EcIF26IkZg42DlKjom7N8DVfpfl
-	ZoY+nG0vZqyNMejbHfgpJxzAZ1TUFKhfdmVAt+BITdKpn51Yd1LsCLTZ9vuK6J9EYfCpLl7p7Kz
-	pAK2xZPWvi2pK/Rl9w2cfgVMO24nxbR2uK6kxubGEMrSUnvCdR6MEZZ3XQLdU0
-X-Received: by 2002:a05:6a21:e097:b0:39b:ba95:b128 with SMTP id adf61e73a8af0-3b22ecf5a75mr17218091637.50.1779125449986;
-        Mon, 18 May 2026 10:30:49 -0700 (PDT)
+        bh=XWw2oT1MTBc+8KoSj6yzkVCq1ZSMsbmsrBxPiF/hchU=;
+        b=kUWbyMqSojJTrZurLfc7NNoaUGiBluxi3gQwPbAx0b8n1W5qFBkNRF2S3TVT4eeKLS
+         GxifCHLVbr5XXGx3xUNhHogIPSXGLvbfvxRVKx8zPdxTYAGZMiMU8XpNo3RQGq9yPQ/x
+         OAXLH3ewU9hYAcDktv49vTTXK/hbBNOV0FTW5DBWdo8OnfSU3kf4s0fnDMKFWzP5vc8B
+         wZxgJ7yhZkwVsvBZhbMnJN6AFqN+hSiGfdCrzdlM/e+t2ZA9n7LLUqw5CLQZb2PxWZja
+         766i9nn7vZx4kKc3nUJ14qFV5NV6p2R3TJQGsscqw9wcFunUfdbsO1PnnYa+5nOu7qpb
+         bNMQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/t/vdwHH8/ZzXujubTjBoRnhlaxabj2sxkGw0ARfqLOeZGQ+xSzdgKMX3Q/muudHM6vboj3IxOavQkQf2y@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzv5qXdB3i29agHsS7cFlS4lmF4bLQbfJN+dxGhl+2hGWTit2Eo
+	kCjw1zpILj4Jwx7g1ipVSBuuBfpONDY93LTQ/SOYqUR2QruAkNz42LIW
+X-Gm-Gg: Acq92OEKeTZqg31bK4Izq8HQ3YPGaiDrHlkVqH3d9kSTNzGn/NnhiUGiyzdlBA+tDM+
+	bbeYhwox+psC7n3Hg6gt98FKejD4BqSMIEPWCbc/HkAQAL8e46xecXRxF+410Iof5AUSwywyWGb
+	zyW7ycsyMMwkYK8IV5CwFw2aNWyrXdoXNa1adwCNIf/veHO7+gO+xrDQpn7JipngY/EU5RkF1mR
+	9GKZxCvUOKIlzBsfC8kwKuAgG+6XwQaN+CL2hkIk/h6jfGMVAOkJb6N2BgA695HFWEnkgTK6cqA
+	ZdLHyXGRlCnrpVysZ5sKPTPM1A0gXm3qUImzy6VKzDKXLIpGFc5hWFL7HwhASxdgp/knthjupLG
+	l2ibVRs+n3IGbX3EKbaJPLGPtTQqpyruZb22ZcGlxubyj9AEYnfAd0rxNd8IwbVPLMHYj50dGr2
+	FF6ss4DQZzfERKts3RsuOJXMYpbyV9FQ3cXQ8AZTuwVYjG59Xk0DEBno7QeTfiWFrGCgp19q4=
+X-Received: by 2002:a17:90b:5904:b0:369:1dcf:4a56 with SMTP id 98e67ed59e1d1-36951ca8d1amr16086188a91.21.1779125454436;
+        Mon, 18 May 2026 10:30:54 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:88b5:f305:5cbe:64f9:8c32:7cd8])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c82bb116860sm14118696a12.25.2026.05.18.10.30.45
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c82bb116860sm14118696a12.25.2026.05.18.10.30.50
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 18 May 2026 10:30:49 -0700 (PDT)
+        Mon, 18 May 2026 10:30:53 -0700 (PDT)
 From: Ajit Singh <blfizzyy@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
@@ -86,9 +86,9 @@ Cc: Rob Herring <robh@kernel.org>,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Ajit Singh <blfizzyy@gmail.com>
-Subject: [PATCH v2 0/3] arm64: dts: qcom: Add Vicharak Axon Mini
-Date: Mon, 18 May 2026 23:00:36 +0530
-Message-ID: <20260518173039.20592-1-blfizzyy@gmail.com>
+Subject: [PATCH v2 1/3] dt-bindings: vendor-prefixes: Add prefix for Vicharak
+Date: Mon, 18 May 2026 23:00:37 +0530
+Message-ID: <20260518173039.20592-2-blfizzyy@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260518110435.16262-1-blfizzyy@gmail.com>
 References: <20260518110435.16262-1-blfizzyy@gmail.com>
@@ -105,7 +105,7 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -113,10 +113,10 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,gmail.com];
 	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-108252-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-108253-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[blfizzyy@gmail.com,linux-arm-msm@vger.kernel.org];
@@ -127,48 +127,35 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	RCPT_COUNT_SEVEN(0.00)[9];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 95023571A04
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vicharak.in:url,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: EB210571A36
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add initial support for the Vicharak Axon Mini, a QCS6490-based
-single-board computer.
+Vicharak develops computing platforms and manufactures single-board
+computers, including FPGA-integrated SBCs. Add a vendor prefix for
+them.
 
-This series adds the Vicharak vendor prefix, documents the board
-compatible, and adds the initial board DTS.
+Link: https://vicharak.in/
 
-Tested:
-- debug UART
-- eMMC
-- UFS
-- SDIO WLAN
-- USB 2.0 host
-- PCIe
+Signed-off-by: Ajit Singh <blfizzyy@gmail.com>
+---
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Changes in v2:
-- Drop unused Type-C VBUS regulator.
-- Drop invalid camera thermal zone.
-- Drop incorrect PM8350C thermal alarm override.
-- Fix PCIe1 3.3 V regulator name.
-- Drop redundant EUD disable override.
-- Keep ICE disabled due to fatal SError during qcom_ice_create().
-- Fix pinctrl property ordering.
-- Sort top-level label references.
-- Add blank lines before status properties.
-
-Ajit Singh (3):
-  dt-bindings: vendor-prefixes: Add prefix for Vicharak
-  dt-bindings: arm: qcom: Add Vicharak Axon Mini
-  arm64: dts: qcom: Add Vicharak Axon Mini
-
- .../devicetree/bindings/arm/qcom.yaml         |    1 +
- .../devicetree/bindings/vendor-prefixes.yaml  |    2 +
- arch/arm64/boot/dts/qcom/Makefile             |    1 +
- .../dts/qcom/qcs6490-vicharak-axon-mini.dts   | 1055 +++++++++++++++++
- 4 files changed, 1059 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-vicharak-axon-mini.dts
-
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index ee7fd3cfe203..1948356337b9 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -1767,6 +1767,8 @@ patternProperties:
+     description: VIA Technologies, Inc.
+   "^vialab,.*":
+     description: VIA Labs, Inc.
++  "^vicharak,.*":
++    description: Vicharak Computers Pvt. Ltd.
+   "^vicor,.*":
+     description: Vicor Corporation
+   "^videostrong,.*":
 -- 
 2.50.1 (Apple Git-155)
 
