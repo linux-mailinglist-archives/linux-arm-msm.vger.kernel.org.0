@@ -1,149 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-108297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UGbLACWOC2p1IwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 00:09:41 +0200
+	id BgjVCvePC2rjJQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 00:17:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 743815744E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 00:09:40 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77D1A5745D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 00:17:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5C6FA302D192
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 22:09:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 322903011874
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 22:17:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA4713A6F11;
-	Mon, 18 May 2026 22:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 636B2395DBE;
+	Mon, 18 May 2026 22:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eK3sTkB0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DRMe8GJ9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B9A3A1681
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 22:09:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8D12F7EF5;
+	Mon, 18 May 2026 22:17:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779142173; cv=none; b=SynnEMWuryuL1NHIgHH+1dtS8OGgKSQ0ycKNh70YDLMcItOxHOhS/hxvAdLS13z10qnM2KsyOpvrOz2NNydjyQ/8PFdBD28CH3UlXkIR2TNCnpQttetZPb1h+8jhLq2BtC80fLZOXYd+kmZ7sPA7/KnULf0BpggldOHlgL86BJQ=
+	t=1779142644; cv=none; b=ZkjWJ2HJtpH9AY3XfnkDUP1dd+Wr3JAOJTR/fYGTqJTCxh4FIyeonnjq5Ql0UOqayZrYPBwqJWGRzZRV9uEz6k3QopH8ogPB7MEeyrxDrtgmDJ5WUSAYV9V+8NQQVR2L45FTsLK+ilHEPAfeaPoqPUsUK6vXDVWUvwMKltiCo4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779142173; c=relaxed/simple;
-	bh=m+DvEjh5e50QoZEQpu7fp79r2/ZAEXh0/plL42oC1Sc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=JNwgD9Hbll2j17lDKU6dsIbpPT8vVG4sXEAMZfUYiTxiTQNJ1TJeD3HAlFvoJdJ19V6r/1YWyemJTJm1w8i1fF5u3pvGNaNI9euLvqB8Ob2Hy20FIHejqgFqXZ78qyrBSE+EkKEYFtl49jDvy5YRPP5+jURTa0enSUFtajeNsxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eK3sTkB0; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-43d7e23defbso1569153f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 15:09:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1779142170; x=1779746970; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=m+DvEjh5e50QoZEQpu7fp79r2/ZAEXh0/plL42oC1Sc=;
-        b=eK3sTkB0sKSAzuCtT4Z7dWAH5fCV3TYyKfBmnnUCiZtCfy4nNpGEJX3Z3rwBhIhF4n
-         /Mzv9ZOmwfAWqiHbBGXRd3RGonI51Vht+OFix6aRPU47gZZgfxYEyRO6ZoWc9osT/OPy
-         noLDcT74HnlSm4Cyr+CcwNZJBm+KCLhJl8uVQGkVSs7rwN7O66GTV2oOVBT/FivLqRca
-         rty/be4/21VTvr9BpvhoNWud4JwJyRVD0dovjpEcvveIxIMuFwZW3oiu+JNec3crO31P
-         e2nCNAxzS6eL2e/Fy1MT835XM9hd36eBNtdZ/hiRLC961nGlYYQCYnZ1ewxtWoarYUQ2
-         xijA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779142170; x=1779746970;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m+DvEjh5e50QoZEQpu7fp79r2/ZAEXh0/plL42oC1Sc=;
-        b=Z9owzYPRMrK+T/CAIBna94WWgeHKsw1HV+X8jUJz3zuoI1Mt8a1omsVDZ8bj0X88Ed
-         FrDbDLfF0yXVC5PeRwUkx6rAYAw1U+PTu4ZaVemXq9CCNUvrAtA7f2UkzRwfjPLwHrns
-         ltNeAtuk8g3CyKTA766/Hz/hEMfcj+1NdpExVI7SBWjfDLlXEXzlK0M/n/fjSCSPF8ai
-         8QgZ9TaEPxQ01Haafz8nWPuervTjvGDkVb6vC3in36DLbtudWrKnOhZFxLA8b6cqRGZc
-         BdJ8/+LwXysdwdOqamStty50d/8ptkUhlFSh8mVo8YE8tO7xdQlqFZwxR4iipcu/i2hP
-         NnOw==
-X-Gm-Message-State: AOJu0YzsSlwAI4e+gpWMdJ4Z4cG1pm0u5zukT6WDRfKvQvrJf3HlUXrY
-	B+ERQGtV/Q+9GSTuVh8mBxW88cpyvAP00QOMxYWDAFSgxsHdma4mCqWe2yHESuvbZ0M=
-X-Gm-Gg: Acq92OEhIXMB6IYLoDdJ2JstBSfb9p3hI5IYwumWf+ZMz50+SB7lSbuXWEIoEBEOtYv
-	neH1icr5gMVo0kKCkmzPGSzlcbOlGz+rvuivBN+Yy+aQT7hQ3n7d0UkOiN7lcEqFOiEaAn75eoB
-	sVJv8zkpPZRdA0ya5tRn5GLwpQ+lj2Iuq3USotnBiq1QarXpay3sYqiFlyF8MotzStFNEQD3e52
-	re1eAlK8LvKFAo1l4LFWIm2oBL9kB6J61MgGHkxie3DobVquNRrskIe0tQ0fuXh1FFa+CTFuNEJ
-	6GugIwqZbr+ogo0dmG8Fh2frE7UVf87WIJmLse4iiUmrt2e1e9YVrnQ+tPt/SuW10QGhfd29dHn
-	2N2rkaYLAnRGxPR13e11G2Q9hchZHbDS2TNgF57wLhcAJZTwKQysHApJlzewfT8LCWxGnrLmY2p
-	ygGZtOPMC2nyPgDgaY4xDSsauIR4M7ILzij/+3YDHWZn0=
-X-Received: by 2002:a05:600c:4e02:b0:48a:906a:9050 with SMTP id 5b1f17b1804b1-48fe5fdb076mr267945245e9.10.1779142170621;
-        Mon, 18 May 2026 15:09:30 -0700 (PDT)
-Received: from [192.168.0.35] ([64.43.40.255])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48feb00bbe4sm91333105e9.12.2026.05.18.15.09.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 May 2026 15:09:29 -0700 (PDT)
-Message-ID: <c1b0347e-0f90-422a-93d1-eb1122de2292@linaro.org>
-Date: Mon, 18 May 2026 23:09:27 +0100
+	s=arc-20240116; t=1779142644; c=relaxed/simple;
+	bh=2byBZ7K9TFGi279fR4cU+LvkzjbAdmFJbPPXhJHi/og=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Wp/94AfYpcRfq1rWMJqSef8P0KDfRbiBBEQdxT3Wsu+gvMlahRC51lQcDNMLGfztSletklec1DPkn9YLhpPtgyygjRmN7CFy+y0luwL+pFGxy9RdiSHNCBQJRiusZwWUgb0ngIGE7fPbWqDhIOEvA0Rn4hJv3lpqasi1DLcQlIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DRMe8GJ9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32911C2BCB7;
+	Mon, 18 May 2026 22:17:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779142643;
+	bh=2byBZ7K9TFGi279fR4cU+LvkzjbAdmFJbPPXhJHi/og=;
+	h=From:Date:Subject:To:Cc:From;
+	b=DRMe8GJ9sRVOyuVrnmUVJ7QxRmRD1w9H4qhOiYdA4yCgrvGUT2+wnMMgrG+1jJRpz
+	 QVZbXcKKqelR3ILk8NZuvOkQQaH5ppyjXs9LUwYrPTzazw/AAxRRv65Qb00mn1uh13
+	 L8uZAeY18nqUnhO+UR/b179QmBGPXRFYkS9fR3cZNuWyFrjGq3WkFQs9G9o79fpbYm
+	 POWoXgsAfIBZaoQC+5ZoyjGEEUkgA3esSdC95Mcahtb0V2DA/5kbREtKBHopnWw++B
+	 6OTsH2g6WBIzxQUDiWQVxmit1WEOaABhp0MFwmD6RYiGUP2lJBhk78cP5cyV7UDeAh
+	 6TK/m0MxpmLdQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 18 May 2026 15:17:14 -0700
+Subject: [PATCH] drm/msm: Restore second parameter name in purge() and
+ evict()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] usb: typec: add Qualcomm PMI8998 role-switch driver
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- taygoth <taygoth@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Wesley Cheng <quic_wcheng@quicinc.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Casey Connolly <casey.connolly@linaro.org>,
- Luca Weiss <luca.weiss@fairphone.com>
-References: <cover.1779127507.git.taygoth@gmail.com>
- <6fedbcd344505b63de72037f69ea94f916255f03.1779127507.git.taygoth@gmail.com>
- <zm7buc6djok2743bs6ghvlr3bpc4lld4qpgs3ggwjsy45f4l75@kua4xtj6b3wd>
- <d15b138d-8c6b-430b-bfc3-f410b05e4835@linaro.org>
-Content-Language: en-US
-In-Reply-To: <d15b138d-8c6b-430b-bfc3-f410b05e4835@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Message-Id: <20260518-drm-msm-fix-c23-extensions-v1-1-0833559418c7@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMUQrCMBCE4auUfXahSYwUryI+mHRat5Ao2VYKp
+ Xc31ccfZr6NFEWgdG02KviIyivXMKeG4vORR7D0tcm29tJ603FfEidNPMjK0TrGOiMfL2UTog/
+ mbOGdowq8C+rqh9/u/9YlTIjzIdK+fwE754OxfgAAAA==
+X-Change-ID: 20260518-drm-msm-fix-c23-extensions-1bc5b142e533
+To: Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Daniel J Blueman <daniel@quora.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ llvm@lists.linux.dev, stable@vger.kernel.org, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2746; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=2byBZ7K9TFGi279fR4cU+LvkzjbAdmFJbPPXhJHi/og=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDFnc/R9UrV9GMav3RZuWpCmsMiiZVRIY+H/fZ9XTS/9MT
+ vhxZd3WjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRCZcY/ml9OSycliWrHVmz
+ Zvbxu3eSTNWVD7Hu0tp0yMmnJfzbjdWMDLunm57Se1ptwLOwe8rj8u+7bCeb63boFNiHRokl1bv
+ E8AEA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-108297-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,gmail.com];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,quora.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com,quicinc.com,linuxfoundation.org,linux.intel.com,linaro.org,fairphone.com];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	TAGGED_FROM(0.00)[bounces-108298-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	FROM_NEQ_ENVFROM(0.00)[nathan@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:mid,linaro.org:dkim,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 743815744E6
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 77D1A5745D4
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 18/05/2026 23:07, Bryan O'Donoghue wrote:
-> along side the pmi8998 logic.
+After commit 3392291fc509 ("drm/msm: Fix shrinker deadlock"), all
+supported versions of clang warn (or error with CONFIG_WERROR=y):
 
-*pm8150b
+  drivers/gpu/drm/msm/msm_gem_shrinker.c:105:58: error: omitting the parameter name in a function definition is a C23 extension [-Werror,-Wc23-extensions]
+    105 | purge(struct drm_gem_object *obj, struct ww_acquire_ctx *)
+        |                                                          ^
+  drivers/gpu/drm/msm/msm_gem_shrinker.c:117:58: error: omitting the parameter name in a function definition is a C23 extension [-Werror,-Wc23-extensions]
+    117 | evict(struct drm_gem_object *obj, struct ww_acquire_ctx *)
+        |                                                          ^
+  2 errors generated.
+
+With older but supported versions of GCC, this is an unconditional hard error:
+
+  drivers/gpu/drm/msm/msm_gem_shrinker.c: In function 'purge':
+  drivers/gpu/drm/msm/msm_gem_shrinker.c:105:35: error: parameter name omitted
+   purge(struct drm_gem_object *obj, struct ww_acquire_ctx *)
+                                     ^~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/msm/msm_gem_shrinker.c: In function 'evict':
+  drivers/gpu/drm/msm/msm_gem_shrinker.c:117:35: error: parameter name omitted
+   evict(struct drm_gem_object *obj, struct ww_acquire_ctx *)
+                                     ^~~~~~~~~~~~~~~~~~~~~~~
+
+Restore the parameter name to clear up the warnings, renaming it
+"unused" to make it clear it is only needed to satisfy the prototype of
+drm_gem_lru_scan().
+
+Cc: stable@vger.kernel.org
+Fixes: 3392291fc509 ("drm/msm: Fix shrinker deadlock")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/msm/msm_gem_shrinker.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+index 6e39e4e578bb..8f118b5185a1 100644
+--- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
++++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
+@@ -102,7 +102,7 @@ with_vm_locks(void (*fn)(struct drm_gem_object *obj),
+ }
+ 
+ static bool
+-purge(struct drm_gem_object *obj, struct ww_acquire_ctx *)
++purge(struct drm_gem_object *obj, struct ww_acquire_ctx *unused)
+ {
+ 	if (!is_purgeable(to_msm_bo(obj)))
+ 		return false;
+@@ -114,7 +114,7 @@ purge(struct drm_gem_object *obj, struct ww_acquire_ctx *)
+ }
+ 
+ static bool
+-evict(struct drm_gem_object *obj, struct ww_acquire_ctx *)
++evict(struct drm_gem_object *obj, struct ww_acquire_ctx *unused)
+ {
+ 	if (is_unevictable(to_msm_bo(obj)))
+ 		return false;
 
 ---
-bod
+base-commit: db339b6bc9f234b4883eb02946ea01d8d9faa11c
+change-id: 20260518-drm-msm-fix-c23-extensions-1bc5b142e533
+
+Best regards,
+--  
+Cheers,
+Nathan
+
 
