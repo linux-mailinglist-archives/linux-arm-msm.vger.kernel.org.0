@@ -1,700 +1,361 @@
-Return-Path: <linux-arm-msm+bounces-108179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4NeNCrb7CmqB+wQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 13:44:54 +0200
+	id EigYNFn9Cmop/AQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 13:51:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F65056BD83
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 13:44:53 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F095F56BFB7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 13:51:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3D2C23051E8C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 11:42:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 88771300BC78
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 11:42:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A55B34678E;
-	Mon, 18 May 2026 11:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AD37372B51;
+	Mon, 18 May 2026 11:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="YIdGWLYh"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FYIkWky8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8693A10F2;
-	Mon, 18 May 2026 11:42:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779104527; cv=none; b=ZyoQtgC+FFMnBnfp0ZK5TAa52Br5bGrR6/ACeB/2q+FB6PPQzL8WIbslFJiw3DVkQr7wZljDIKeM+nl/amrpNvkdH7l6PotR0h5znoJPea0yBv/ZsnBlR7E/YPbnbTcGWvKkcgcsC4kSNhugBaWEp0xdXxMf0uQGcpoSxPGr0Mc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779104527; c=relaxed/simple;
-	bh=cr2oqzXS3gHluswCA1BHs35iMm5stHWXnuCk3LvTPBE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=QQPn3xhx+3Sb81iLNvcfY2Ws+o8u+/mrwiwy5IazWbuLxRJhhnK36Ol26+zj1qv4V3heztLq2H4t7nILl5UZu3d/cf+fXEUgyopEb/cPPTJR9rokqjob8MfsLMdfYAmn4v2KrmkjBvEfiqMGiC5PaVu/6toOn7/eY4Ye4kvnfhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=YIdGWLYh; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1779104523;
-	bh=cr2oqzXS3gHluswCA1BHs35iMm5stHWXnuCk3LvTPBE=;
-	h=From:Date:Subject:To:Cc:From;
-	b=YIdGWLYhq5fXT7dSBSMG0E84Eypd0jSOC4FQ+fThxwyOHev2P58aCGiKeduvnjk3+
-	 sswQV0zRKGqhbE4/qJoV6v/I81b1VekNrQbFPM9fPGadLcFjD0HMnoVg9I4uX5Mtr2
-	 31E7GklCR9eJoM/Wacqexz0OIEynybzB34Cqj0k6xfUgedIIVfPYegY3oIXTDPyZsN
-	 IVt5/3tiSyFZTX1z81hXCm6CcMm+Mc8VRV/m+XLhrBH+wIoGXdlY4iCryXmlzItHCo
-	 aQEIpKuBig3UOuxPPpJROYhlQU+B4oOS6SQFru3/z89pTt3SmVP92INKqxq9sPd4u7
-	 +kdEIbmCryMmA==
-Received: from [100.64.0.11] (unknown [100.64.0.11])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bbrezillon)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id C846B17E01C2;
-	Mon, 18 May 2026 13:42:02 +0200 (CEST)
-From: Boris Brezillon <boris.brezillon@collabora.com>
-Date: Mon, 18 May 2026 13:41:45 +0200
-Subject: [PATCH v4] drm/gem: Make the GEM LRU lock part of drm_device
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA9E330D22
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 11:42:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779104541; cv=fail; b=sbcyn+6vNgDt9LiJmpFp5SnUUwVdxBlzeO4l4X5T0EVrbyWCnLkFo6izGoD3Rc1/RTT3Yg8WXy6KohpQUawCroexvR1A5fOI4mGhqGI2zLxqQXag+v1E5wJ1v5ii+XvgVfBJeL9NW8rJtqFKfJ6CK80NRORDu4kbCFCy75a7YOE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779104541; c=relaxed/simple;
+	bh=BrlSTYfjgMCA/011OjlMRzjnVyOLuEfy9fAvYEedAog=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=HWEcxpXcOAWf4V7RxMrU28uMlL1WqiIc3dmF5kFG1j5DQbNKnI1+LBwwqrjAIt1uyQDxWa7ivUs61YILEApoi3NZmi7pjTGd/O6oMV5CobvtE+euNZuDBDj6JJxmXQRJpvnCFBipv/TAkJSz9AhLS32d1ipiCi9NnbvSplfHSWM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FYIkWky8; arc=fail smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1779104540; x=1810640540;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=BrlSTYfjgMCA/011OjlMRzjnVyOLuEfy9fAvYEedAog=;
+  b=FYIkWky8xAcf2cpoPmeC5Yel8HEoRaPoDoBSA7daANiQb8ISM9B8pmD/
+   ep2ISKh1E3LK1M2iBquEsHXmZzPGAGIAKdOhNHHByOU4byhhISs323qj3
+   4y/49k/RbGdpTlTA7iBlThHfzFcQYvkRebNtGdFmL1ZDVFEKf8TuSuebe
+   z1lVka7lflCrR9wBBtFDn+2qQg44ehwj/8+XAVeAtFzMRflPrHfd5PAVK
+   4A5g5+YZfwDQAgCx04fJcPioDC3iorVu/Xo+7Wt+4uirnGKPX0lTup/1W
+   MKGLWgvZ2a0P0Pj3NAc4OnKwTAdggpsvSWLUOU8BVoJTS4mBlcOUgtA+l
+   g==;
+X-CSE-ConnectionGUID: 3TM8UPUfQqCiXjMpVls7tw==
+X-CSE-MsgGUID: CmkAgd42Rimmn67P0MQPIg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11789"; a="83807063"
+X-IronPort-AV: E=Sophos;i="6.23,241,1770624000"; 
+   d="scan'208";a="83807063"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2026 04:42:19 -0700
+X-CSE-ConnectionGUID: dcdClMwbRvuBQCWXgZzCjQ==
+X-CSE-MsgGUID: SCeHobM7T22DLe9Ftki7vQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,241,1770624000"; 
+   d="scan'208";a="244385613"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 May 2026 04:42:19 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Mon, 18 May 2026 04:42:18 -0700
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Mon, 18 May 2026 04:42:18 -0700
+Received: from DM5PR21CU001.outbound.protection.outlook.com (52.101.62.59) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Mon, 18 May 2026 04:42:18 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cZKkYSEtgURVpwdcEGRziKDR5LbPbPbPPi/awxY7xlbcjB9Ay8rhOVe0CjmB1qN1+5iUsqCBDcC3cSPuL4vUHYi7ICu7zSqeRDeBiE/ThjqzGdw8H2eoAj3yCT9e0KG3kgXWve/idAst8eYcKjm4+Mnjj+xV3VLhSyWqm3xea1DbnthIss1HUCBPsFNsnqBWfR9t3hsCm6wtLmhvWWUPCZM3uEL74t5JwD5saK7qBIrgMz4cMnki9DeCL72KkpItukvxoM12SaVBVjbx/0fBY66Tb0aqfwxeahQIDF4hgPzibVa3gSAf7Trb6Yt2ukZ19mxES0gtenMmhxFTY2+GmA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NFGItQi5sol9tiXCN4K9hj9iRgf854JOf6VEKFVyhBA=;
+ b=LQlHtnh4/cOGiELJk8UxG2OB/9KP3oRbNnu/Cte0fjv9T13pDBDqo3D7Aamlk2tLnTARD36aacBKuHwElzw7ZK3n8IFoPplCJ/08lwjM3UwG0xdPnJdkGOJWXbM2PT6BQQMzf+kkmYhGjNGliezIDp/jde6wpIgIFEvmh7WVeU2HECo12W/biXmlfPYZ9qBxTEDPzRi7uUrbN5tSsyMGfJV341yqaIvXrxpnf8JlIff7GkcFuhyV496uNzVP+XRQdKn/gx30YgoKMmD9kwppDL2ABvOaLA2Di9d3/oZmkC1/y2jW1s9TfrJ9/qFl0s7OIebsyrPl2/NaqR+vr/BbNQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ1PR11MB6129.namprd11.prod.outlook.com (2603:10b6:a03:488::12)
+ by DM4PR11MB6214.namprd11.prod.outlook.com (2603:10b6:8:ac::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.25.24; Mon, 18 May 2026 11:42:14 +0000
+Received: from SJ1PR11MB6129.namprd11.prod.outlook.com
+ ([fe80::45f:5907:efdb:cb5b]) by SJ1PR11MB6129.namprd11.prod.outlook.com
+ ([fe80::45f:5907:efdb:cb5b%3]) with mapi id 15.21.0025.023; Mon, 18 May 2026
+ 11:42:13 +0000
+Message-ID: <9fca1948-d30d-4c7d-8e8b-a0cb8c5b3ce6@intel.com>
+Date: Mon, 18 May 2026 17:12:00 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/6] drm/atomic: only add colorop state from active
+ color pipeline
+Content-Language: en-GB
+To: Melissa Wen <mwen@igalia.com>, <airlied@gmail.com>,
+	<alexander.deucher@amd.com>, <christian.koenig@amd.com>,
+	<harry.wentland@amd.com>, <maarten.lankhorst@linux.intel.com>,
+	<mripard@kernel.org>, <simona@ffwll.ch>, <siqueira@igalia.com>,
+	<sunpeng.li@amd.com>, <tzimmermann@suse.de>
+CC: Alex Hung <alex.hung@amd.com>, Simon Ser <contact@emersion.fr>, "Uma
+ Shankar" <uma.shankar@intel.com>, Xaver Hugl <xaver.hugl@kde.org>, "Pekka
+ Paalanen" <pekka.paalanen@collabora.com>, Louis Chauvet
+	<louis.chauvet@bootlin.com>, Matthew Schwartz <matthew.schwartz@linux.dev>,
+	<amd-gfx@lists.freedesktop.org>, <kernel-dev@igalia.com>, Rob Clark
+	<robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, "Abhinav
+ Kumar" <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>,
+	"Sean Paul" <sean@poorly.run>, Marijn Suijten
+	<marijn.suijten@somainline.org>, <linux-arm-msm@vger.kernel.org>,
+	<freedreno@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>
+References: <20260506192633.16066-1-mwen@igalia.com>
+ <20260506192633.16066-2-mwen@igalia.com>
+From: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>
+In-Reply-To: <20260506192633.16066-2-mwen@igalia.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA5P287CA0118.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:1d0::11) To SJ1PR11MB6129.namprd11.prod.outlook.com
+ (2603:10b6:a03:488::12)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-panthor-shrinker-fixes-v4-1-1920234470d5@collabora.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4XQwW7DIAwG4FeJOM8TOAGSnvYeUw8BzILWhhbSa
- FPVd5/bXqpp1Y4/1v8h+ywqlURVbJqzKLSmmvLMoXtphJ/G+YMgBc4CJRqppYHDOC9TLlCnkuZ
- PKhDTF1XQvVex0z76TgkuHwrdBtx933KeUl1y+b79s6rr67/kqkACWYtKowk0mDefd7vR5TK++
- rwXV3bFR6p/SiFT7eCDs0Fb64e/qPaBUviUakFB66I0BvXQWfWbuty3L3Q88TWX+wmEGysBz/d
- p2TQk0fFOGAP2XLj8AP5+MOSGAQAA
-X-Change-ID: 20260506-panthor-shrinker-fixes-58c1f45cfc41
-To: Steven Price <steven.price@arm.com>, Liviu Dudau <liviu.dudau@arm.com>, 
- Boris Brezillon <boris.brezillon@collabora.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Akash Goel <akash.goel@arm.com>, Chia-I Wu <olvaffe@gmail.com>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Rob Clark <rob.clark@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779104522; l=20662;
- i=boris.brezillon@collabora.com; s=20260429; h=from:subject:message-id;
- bh=cr2oqzXS3gHluswCA1BHs35iMm5stHWXnuCk3LvTPBE=;
- b=MDmHaAzeYkr7P/ulr9wTUZFgRK8qtSyxkVezoGIx/aGDcz2D2tMI5n9IuXSbByQZrM3MeoBfa
- PudMipkd6fcDY/PAcnsk7xwoimaqA4GX8IzrNHbXAGX5A9S/R0Sv6om
-X-Developer-Key: i=boris.brezillon@collabora.com; a=ed25519;
- pk=eN+ORdOgQY7d5U+0kA8h5bf67XdD8bhKbjD/TCHexSY=
-X-Rspamd-Queue-Id: 8F65056BD83
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PR11MB6129:EE_|DM4PR11MB6214:EE_
+X-MS-Office365-Filtering-Correlation-Id: 42d08131-f7be-4813-44aa-08deb4d28114
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016|11063799003|4143699003|56012099003|22082099003|18002099003|921020;
+X-Microsoft-Antispam-Message-Info: +dd1uQWFhdMy3IB72cEwJHYtjN/qYRSR13u3E+pKYQ5pj9+67S9JnJDJenX8le5aA4M9h1+WszYIdR3s1FlpEZk4qyEV60RzZ4/dqCig+B779JHSQIEe/DKJsvXFnqK6/iEAWzk9xTSmHVsjLQVTx2TtzcWH3snQzIKaz+CrCq3UtxfqRfTNp6cyJOj9xLW/EZY7aC53hMKl7gqJ9UZzvJjzTFCOXdjjCDCqSsy7qpmvIU4pH/m6nRU6xNdKWu9OM0+4fa5xbGisvJdoVa6CvOUc5YkM7G48wuiyoFi/nCJ9Ov3xfGxWSEuHUP1iB7cBuaxbuvhE+lBO4oBNpF5iled1DuTcaUy1F6P1g4OVBOeDuJjeTS355pJ+MZQf4h8jAkxpSSK9w2nD5mRmTXYyxUhmn0mYZ7tkO0CfthgJv8zT4TYnJWCphBoKdSMdp+OLkY/xzguu9npEPE3SfLJ7dBA8vSjhKISbOsuM/oMLVTjS6dOItJxVs2GEbo8VJkOzj0lkAPGyTb6ZT01WA5e6Fmc+o7a3ktm7zmuNFXhFZWDshxXD8WcYSAi2KaGSqWLT64hmvTg5+s9pqv6ENRqRfRd206ocpw9UIxax7K6cFhYYn8HP4TyhfYVjant+tF7Qi6wXhTzA7UMuG8b5QldGfDW0XMPmzAw8xpH3N4L9i94o1r8lA+uC1Bgz3ogKgw3oPlghjPaQMHYrqU/vhZPT0vG0pFlczQ6S5jQIy+Uzzuc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6129.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016)(11063799003)(4143699003)(56012099003)(22082099003)(18002099003)(921020);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VFRjYkJCeGFQY2tNbDl6SkhMVkRWMzZsQ3pVMjlEVUFKWjh4R0RONUdRTkdV?=
+ =?utf-8?B?VkJCQmFCbzNqelZOeUtXRUVNTmQvSHJueGduQ1IyaFVvR0QzOC8rMWtXYlRG?=
+ =?utf-8?B?WFJQZ2Ftdk9FL29CZkVTNVlBc0krOWxYeFM2SVd0UDduL2c4TXVNUzIzMlA3?=
+ =?utf-8?B?UFN0TmFSallTK243M04zYzNwRXMrbnJ0eWk0Vnc0dnRyL092TkR1TkM0Rzlu?=
+ =?utf-8?B?RWJIZXBWODVpaUx0eWIzRjFEWE9IVElVZlEzM084MXhWY0QvcDRnN1g1Sito?=
+ =?utf-8?B?dEQ2V1JhUzNGcDYrNzB0MnpERjlUU0Rad3dkMGliRWZzMUZqN2F1OUhiQkla?=
+ =?utf-8?B?ODh2MWoxSUdqdEdvZ0Z6WVlxUG9SR2JhNC94RzRNaTQzYnVLRzI3aURDd29j?=
+ =?utf-8?B?bEFyL2laV3hnQTlrVE4xaWNhRjUvZ3NzWkdDak9iZkJXYmVOR3d0YjQwT1VQ?=
+ =?utf-8?B?Vms4dFpjWVNWQXc2VTdxVUFyYVN5b3FkUTZmVjRLcXkvcFZ4aG1zUmNaR280?=
+ =?utf-8?B?L1dHTTU0UWF3U2RNSXJtcW9KZVlkUFJ2M1djOVJLeG1xMWp2TVgrdGtsWTNv?=
+ =?utf-8?B?eXRFd1hCWERBOUptRW9HODc5WGFQclYwSmJNb3J5N3g3aHRJWHNJaGMwRzhm?=
+ =?utf-8?B?dXBrQlhqeC95Wm9Sa0hEcE9xODJCQmRHdE41dGR2Mnl2eGRyV1o3d3RHeHlO?=
+ =?utf-8?B?M0d2T2lMMmUwaUVmZTJ1RGhnRlA2eDVJSEFlcE9keXI1ZzRLMFk5NXN3OGR3?=
+ =?utf-8?B?M0YvOGpRTDVNRU81ZzdnL1ZmZG1UK3FWWFV4RGFDLzVleWFIWGZxN2RMejFR?=
+ =?utf-8?B?c1JzaWpicSsyQjhEM2x6OG8yMGxiMFVRaDVUSEtvSkdOa2lpc0dRejBrMlB4?=
+ =?utf-8?B?RmFvb3FlL0lmYXQrWXc3WnFBeHU2d05KbUFPVm9nR3BscDhTRnVZMTVYbytl?=
+ =?utf-8?B?c3ZNTnVGQkNGbDNJNjUxVGhTU25ybG1rZUFzTklvWEV0REp6a0pRNlN3eWsz?=
+ =?utf-8?B?WkVhSnIvMCtrZU9xWHlFazlZcDN4S0ZMM3NPNHU0SEFZZkFJRStJZFFCM252?=
+ =?utf-8?B?NWdlRTBjNVpDQTgxeFB4a2xGZlZ5eE1hUmVXNkpoaS8xczFYaDcxcm9QZkNB?=
+ =?utf-8?B?dFErOXhJUmNXTVA3TlpNYStGbzFCZ0diYWY4K0ovNUtoaXVoWFJnQitkdG9N?=
+ =?utf-8?B?RGxsUjVjQnhZSmg0RjdrM2RMcmNmbkJpWHVWRld1TUhSYWVQQnFXMUdGWGJZ?=
+ =?utf-8?B?SWwzRWxWS3k0TFAzaVhSRTVXT1hNVjN2cHVKYjQzd0Fvc1c4dG1qSy8vbUV5?=
+ =?utf-8?B?RFJrT0xnSGJsWUdNYmcrK29KYktzbDV2bkZqQ2FCcUJmSjNOUHdtd0hYWTJ0?=
+ =?utf-8?B?aDVrMFUrd1FsV0tzdkNwa3EyNlQzUFlybXVNZ0xiNlI3VGR4OWFOM2VWU0lU?=
+ =?utf-8?B?aGpWNThxbnNGdzBoUGJnWFE3cjJWcm9MQ1pNU1VlYmFSM1I1ZHpQbmE3ZzFl?=
+ =?utf-8?B?d2d5WWJzTzQzT0ZPYURlRmJSTnJHcDlua21PUlhoRVBEbUM2WW85UHpaZnly?=
+ =?utf-8?B?UmZreld0NExLb2k0VkxKbmQ2dDdyZFdtZFRGbHA0eUxkUUhyT1UvZzMwV0xl?=
+ =?utf-8?B?M0QrSzE4bXhrSXBJQ3c2WEF1SnNXcEp0Z1F3bG11dmh4SGl2TkQ5VlVWQk5p?=
+ =?utf-8?B?cFI3T3R3WlplNXNBcVpVcHdBdlpRcVQvK2pwRW9KTUlxeVZrdGFRNWorN3h6?=
+ =?utf-8?B?dldsS2J3Q3hGMEorQXd4cFBNSk9lc1J6TUgwektRUFM0aENJc2RBK3VDZlRz?=
+ =?utf-8?B?UjdOazR0TDdINk1XeDdha2lsMkJJUittOVdXVHlGWVN5N3hhRjkrZVVBSkRY?=
+ =?utf-8?B?MFdNKzg4WXZpT2xUK0wxdndyVWRQZ0hWcVBBTnJWRElkajRhS3VGQWpjcnMv?=
+ =?utf-8?B?SURtdW5GQS9QbFhnY1E2TDljaFJTWk1qeG51aHlQVjBNZFQyTzNLdU1YTFQ2?=
+ =?utf-8?B?SjJQTjFzTkVBTDhnS25YZWkvUjI4cDN4Y1FOVG9DMU5VYXY2MkdTdVNqSFlR?=
+ =?utf-8?B?QVFNTXp6aW5WUXhJcmpCMmJneUc1QTMwZHVKVkV4U3ZMbjNGaHZGOGVYRGE0?=
+ =?utf-8?B?cXMxTkhMdHJDR3pJZDUvWkJPN1gwcjFYOWZOc2VaVFdZdm0vNXhWWG96bk1Q?=
+ =?utf-8?B?WTFObHAzOThCaUlSUWFlVHJHODFheG1maEpUZ0NaUFE5VllUKzJ2aW9uT0R5?=
+ =?utf-8?B?b1BoZGlraFFLby8zL1RUL2dGZnhrbnFYYXRiWXYycUZUQ05rbjBHMCtNMmJ1?=
+ =?utf-8?B?cVVlUUJrWnhudERVS2tqNVh2TjNBRmhMakFrSWpTMDNuRERaZXBQRTNZTW13?=
+ =?utf-8?Q?LtKyZqJWANzukSQI=3D?=
+X-Exchange-RoutingPolicyChecked: s3sqz0xYhAYZrZPXVwSvnewfoqpQy4hJQFi1m45FTm2y3wcDsNyCHH7TGodckoYreNkUQODZOLpNqthkuq14W+6Mm4tV5SIDBiyuGKIThQTsMs/i0ckkodn5vCDdLHjSfNkLWcCoOk0B4mX/9lHbvLoU4PjEHEcA47TzR0KG3I748CzxTJ4SUHv4i2NX3ILeQtcLVdSoWzM6CO7n8x8FPM2lCyB1SRscsqEtL5uYC9mFgK1PP5BEQarBCETKuQWPSLiw77SdCnPUtkx+v1nsxUVy1iUMbO7Zo3XjVFQaH7fS+LMnoGaFnFsAD+xWONBIFepnwV1xeKefyVTe1zudvg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 42d08131-f7be-4813-44aa-08deb4d28114
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6129.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 May 2026 11:42:13.7885
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: kqgoQ0AIe7DU3yynVghcF23wlODqCdF6rL2TToCWWN/7u9bjMXzyxZnE07yiOGEXIxXU0/b6+bnmdkLg+yDafnJLam3fUMVSPmUVo6LFcRs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB6214
+X-OriginatorOrg: intel.com
+X-Rspamd-Queue-Id: F095F56BFB7
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-108180-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108179-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[igalia.com,gmail.com,amd.com,linux.intel.com,kernel.org,ffwll.ch,suse.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[collabora.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,arm.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
-	RCPT_COUNT_TWELVE(0.00)[22];
+	FREEMAIL_CC(0.00)[amd.com,emersion.fr,intel.com,kde.org,collabora.com,bootlin.com,linux.dev,lists.freedesktop.org,igalia.com,oss.qualcomm.com,kernel.org,gmail.com,poorly.run,somainline.org,vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[29];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[igalia.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,intel.com:email,intel.com:mid,intel.com:dkim];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[boris.brezillon@collabora.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[collabora.com:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.freedesktop.org:url,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,arm.com:email]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[chaitanya.kumar.borah@intel.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[10]
 X-Rspamd-Action: no action
 
-Recently, a few races have been discovered in the GEM LRU logic, all
-of them caused by the fact the LRU lock is accessed through
-gem->lru->lock, and that very same lock also protects changes to
-gem->lru, leading to situations where gem->lru needs to first be
-accessed without the lock held, to then get the lru to access the lock
-through and finally take the lock and do the expected operation.
 
-Currently, the only driver making use of this API (MSM) declares a
-device-wide lock, and the user we're about to add (panthor) will
-do the same. There's no evidence that we will ever have a driver
-that wants different pools of LRUs protected by different locks under
-the same drm_device. So we're better off moving this lock to drm_device
-and always locking it through obj->dev->gem_lru_mutex, or directly
-through dev->gem_lru_mutex.
 
-If anyone ever needs more fine-grained locking, this can be revisited
-to pass some drm_gem_lru_pool object representing the pool of LRUs
-under a specific lock, but for now, the per-device lock seems to be
-enough.
+On 5/7/2026 12:53 AM, Melissa Wen wrote:
+> Instead of adding colorop state of all colorops of a given plane, only
+> get those from an active color pipeline of this plane.
+> 
+> Signed-off-by: Melissa Wen <mwen@igalia.com>
+> 
+> ---
+> v5: fix kernel-doc for plane_state (kernel bot)
+> ---
+>   drivers/gpu/drm/drm_atomic.c        | 39 ++++++++++++++---------------
+>   drivers/gpu/drm/drm_atomic_helper.c |  9 +++----
+>   include/drm/drm_atomic.h            |  2 +-
+>   3 files changed, 23 insertions(+), 27 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+> index 54bab7e9f935..8eb519673fc5 100644
+> --- a/drivers/gpu/drm/drm_atomic.c
+> +++ b/drivers/gpu/drm/drm_atomic.c
+> @@ -1591,26 +1591,25 @@ drm_atomic_add_affected_planes(struct drm_atomic_state *state,
+>   		if (IS_ERR(plane_state))
+>   			return PTR_ERR(plane_state);
+>   
+> -		if (plane_state->color_pipeline) {
+> -			ret = drm_atomic_add_affected_colorops(state, plane);
+> -			if (ret)
+> -				return ret;
+> -		}
+> +		ret = drm_atomic_add_affected_colorops(plane_state, plane);
+> +		if (ret)
+> +			return ret;
+>   	}
+>   	return 0;
+>   }
+>   EXPORT_SYMBOL(drm_atomic_add_affected_planes);
+>   
+>   /**
+> - * drm_atomic_add_affected_colorops - add colorops for plane
+> - * @state: atomic state
+> + * drm_atomic_add_affected_colorops - add active colorops for plane
+> + * @plane_state: DRM plane state
+>    * @plane: DRM plane
+>    *
+>    * This function walks the current configuration and adds all colorops
+> - * currently used by @plane to the atomic configuration @state. This is useful
+> - * when an atomic commit also needs to check all currently enabled colorop on
+> - * @plane, e.g. when changing the mode. It's also useful when re-enabling a plane
+> - * to avoid special code to force-enable all colorops.
+> + * currently used by an active color pipeline set for a @plane to the atomic
+> + * configuration @state.
 
-Fixes: e7c2af13f811 ("drm/gem: Add LRU/shrinker helper")
-Reported-by: Chia-I Wu <olvaffe@gmail.com>
-Closes: https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
-Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
----
-As reported by Chia-I [1], a race exists between drm_gem_lru_remove()
-and drm_gem_lru_scan(), causing a UAF on a stack-allocated object.
+nit: The documention sounds a bit wonky to me.
 
-This new version only keeps the last patch of the series that
-addresses the problem more generically by moving the LRU lock to the
-drm_device object.
+Also s/@state/@plane_state
 
-[1]https://gitlab.freedesktop.org/panfrost/linux/-/work_items/86
----
-Changes in v4:
-- Fix kernel docs
-- Drop unused var in msm_gem_purge()
-- Link to v3: https://lore.kernel.org/r/20260512-panthor-shrinker-fixes-v3-1-3bf066259471@collabora.com
+This is useful when an atomic commit also needs to
+> + * check all currently enabled colorop on @plane, e.g. when changing the mode.
+> + * It's also useful when re-enabling a plane to avoid special code to
+> + * force-enable all colorops.
+>    *
+>    * Since acquiring a colorop state will always also acquire the w/w mutex of the
+>    * current plane for that colorop (if there is any) adding all the colorop states for
+> @@ -1622,23 +1621,23 @@ EXPORT_SYMBOL(drm_atomic_add_affected_planes);
+>    * sequence must be restarted. All other errors are fatal.
+>    */
+>   int
+> -drm_atomic_add_affected_colorops(struct drm_atomic_state *state,
+> +drm_atomic_add_affected_colorops(struct drm_plane_state *plane_state,
+>   				 struct drm_plane *plane)
+>   {
+>   	struct drm_colorop *colorop;
+>   	struct drm_colorop_state *colorop_state;
+>   
+> -	WARN_ON(!drm_atomic_get_new_plane_state(state, plane));
+> +	if (!plane_state || !plane_state->color_pipeline)
+> +		return 0;
+>   
+>   	drm_dbg_atomic(plane->dev,
+> -		       "Adding all current colorops for [PLANE:%d:%s] to %p\n",
+> -		       plane->base.id, plane->name, state);
+> +		       "Adding all current active colorops for [PLANE:%d:%s] to %p\n",
+> +		       plane->base.id, plane->name, plane_state->state);
+>   
+> -	drm_for_each_colorop(colorop, plane->dev) {
+> -		if (colorop->plane != plane)
+> -			continue;
+> -
+> -		colorop_state = drm_atomic_get_colorop_state(state, colorop);
+> +	for (colorop = plane_state->color_pipeline;
+> +	     colorop;
+> +	     colorop = colorop->next) {
+> +		colorop_state = drm_atomic_get_colorop_state(plane_state->state, colorop);
+>   		if (IS_ERR(colorop_state))
+>   			return PTR_ERR(colorop_state);
+>   	}
+> diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
+> index a768398a1884..c8dadbf5c319 100644
+> --- a/drivers/gpu/drm/drm_atomic_helper.c
+> +++ b/drivers/gpu/drm/drm_atomic_helper.c
+> @@ -3752,12 +3752,9 @@ drm_atomic_helper_duplicate_state(struct drm_device *dev,
+>   			goto free;
+>   		}
+>   
+> -		if (plane_state->color_pipeline) {
+> -			err = drm_atomic_add_affected_colorops(state, plane);
+> -			if (err)
+> -				goto free;
+> -		}
+> -
+> +		err = drm_atomic_add_affected_colorops(plane_state, plane);
+> +		if (err)
+> +			goto free;
+>   	}
+>   
+>   	drm_connector_list_iter_begin(dev, &conn_iter);
+> diff --git a/include/drm/drm_atomic.h b/include/drm/drm_atomic.h
+> index 8883290cd014..8916923f32b8 100644
+> --- a/include/drm/drm_atomic.h
+> +++ b/include/drm/drm_atomic.h
+> @@ -919,7 +919,7 @@ int __must_check
+>   drm_atomic_add_affected_planes(struct drm_atomic_state *state,
+>   			       struct drm_crtc *crtc);
+>   int __must_check
+> -drm_atomic_add_affected_colorops(struct drm_atomic_state *state,
+> +drm_atomic_add_affected_colorops(struct drm_plane_state *state,
 
-Changes in v3:
-- Only keep patch 4 and flag it for backport
-- Rebase on drm-misc-fixes
-- Link to v2: https://lore.kernel.org/r/20260508-panthor-shrinker-fixes-v2-0-39cdb7d577c9@collabora.com
+s/state/plane_state
 
-Changes in v2:
-- Collect R-b
-- Drop a useless obj->lru != NULL check in drm_gem_lru_scan()
-- Fix another race introduced in patch 2
-- Document why the lru != NULL check done without the lru lock held
-  in drm_gem_lru_remove() is safe
-- Add a patch to sanitize the GEM LRU locking: lock is now part of
-  drm_device, meaning we don't have this chicken/egg problem where
-  the lock that needs to acquired is under gem->lru->lock, and
-  gem->lru is also supposed to be accessed with the lru->lock held
-- Fix typos in commit messages and comments
-- Link to v1: https://lore.kernel.org/r/20260506-panthor-shrinker-fixes-v1-0-e7721526de96@collabora.com
----
- drivers/gpu/drm/drm_drv.c              |  2 ++
- drivers/gpu/drm/drm_gem.c              | 36 +++++++++++++++-------------------
- drivers/gpu/drm/msm/msm_drv.c          | 11 +++++------
- drivers/gpu/drm/msm/msm_drv.h          |  7 -------
- drivers/gpu/drm/msm/msm_gem.c          | 33 +++++++++++++++----------------
- drivers/gpu/drm/msm/msm_gem_shrinker.c |  4 ++--
- drivers/gpu/drm/msm/msm_gem_submit.c   |  6 +++---
- drivers/gpu/drm/msm/msm_gem_vma.c      | 12 ++++++------
- drivers/gpu/drm/msm/msm_ringbuffer.c   |  6 +++---
- include/drm/drm_device.h               |  7 +++++++
- include/drm/drm_gem.h                  | 20 +++++++++----------
- 11 files changed, 69 insertions(+), 75 deletions(-)
+Otherwise, LGTM. (needs a rebase though)
 
-diff --git a/drivers/gpu/drm/drm_drv.c b/drivers/gpu/drm/drm_drv.c
-index 985c283cf59f..675675480da4 100644
---- a/drivers/gpu/drm/drm_drv.c
-+++ b/drivers/gpu/drm/drm_drv.c
-@@ -697,6 +697,7 @@ static void drm_dev_init_release(struct drm_device *dev, void *res)
- 	mutex_destroy(&dev->master_mutex);
- 	mutex_destroy(&dev->clientlist_mutex);
- 	mutex_destroy(&dev->filelist_mutex);
-+	mutex_destroy(&dev->gem_lru_mutex);
- }
- 
- static int drm_dev_init(struct drm_device *dev,
-@@ -738,6 +739,7 @@ static int drm_dev_init(struct drm_device *dev,
- 	INIT_LIST_HEAD(&dev->vblank_event_list);
- 
- 	spin_lock_init(&dev->event_lock);
-+	mutex_init(&dev->gem_lru_mutex);
- 	mutex_init(&dev->filelist_mutex);
- 	mutex_init(&dev->clientlist_mutex);
- 	mutex_init(&dev->master_mutex);
-diff --git a/drivers/gpu/drm/drm_gem.c b/drivers/gpu/drm/drm_gem.c
-index d6424267260b..b95b015d2983 100644
---- a/drivers/gpu/drm/drm_gem.c
-+++ b/drivers/gpu/drm/drm_gem.c
-@@ -1541,12 +1541,10 @@ EXPORT_SYMBOL(drm_gem_unlock_reservations);
-  * drm_gem_lru_init - initialize a LRU
-  *
-  * @lru: The LRU to initialize
-- * @lock: The lock protecting the LRU
-  */
- void
--drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock)
-+drm_gem_lru_init(struct drm_gem_lru *lru)
- {
--	lru->lock = lock;
- 	lru->count = 0;
- 	INIT_LIST_HEAD(&lru->list);
- }
-@@ -1571,14 +1569,10 @@ drm_gem_lru_remove_locked(struct drm_gem_object *obj)
- void
- drm_gem_lru_remove(struct drm_gem_object *obj)
- {
--	struct drm_gem_lru *lru = obj->lru;
--
--	if (!lru)
--		return;
--
--	mutex_lock(lru->lock);
--	drm_gem_lru_remove_locked(obj);
--	mutex_unlock(lru->lock);
-+	mutex_lock(&obj->dev->gem_lru_mutex);
-+	if (obj->lru)
-+		drm_gem_lru_remove_locked(obj);
-+	mutex_unlock(&obj->dev->gem_lru_mutex);
- }
- EXPORT_SYMBOL(drm_gem_lru_remove);
- 
-@@ -1593,7 +1587,7 @@ EXPORT_SYMBOL(drm_gem_lru_remove);
- void
- drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj)
- {
--	lockdep_assert_held_once(lru->lock);
-+	lockdep_assert_held_once(&obj->dev->gem_lru_mutex);
- 
- 	if (obj->lru)
- 		drm_gem_lru_remove_locked(obj);
-@@ -1617,9 +1611,9 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail_locked);
- void
- drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj)
- {
--	mutex_lock(lru->lock);
-+	mutex_lock(&obj->dev->gem_lru_mutex);
- 	drm_gem_lru_move_tail_locked(lru, obj);
--	mutex_unlock(lru->lock);
-+	mutex_unlock(&obj->dev->gem_lru_mutex);
- }
- EXPORT_SYMBOL(drm_gem_lru_move_tail);
- 
-@@ -1633,6 +1627,7 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail);
-  * of the shrink callback to check for this (ie. dma_resv_test_signaled())
-  * or if necessary block until the buffer becomes idle.
-  *
-+ * @dev: DRM device the LRU belongs to
-  * @lru: The LRU to scan
-  * @nr_to_scan: The number of pages to try to reclaim
-  * @remaining: The number of pages left to reclaim, should be initialized by caller
-@@ -1640,7 +1635,8 @@ EXPORT_SYMBOL(drm_gem_lru_move_tail);
-  * @ticket: Optional ww_acquire_ctx context to use for locking
-  */
- unsigned long
--drm_gem_lru_scan(struct drm_gem_lru *lru,
-+drm_gem_lru_scan(struct drm_device *dev,
-+		 struct drm_gem_lru *lru,
- 		 unsigned int nr_to_scan,
- 		 unsigned long *remaining,
- 		 bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket),
-@@ -1650,9 +1646,9 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
- 	struct drm_gem_object *obj;
- 	unsigned freed = 0;
- 
--	drm_gem_lru_init(&still_in_lru, lru->lock);
-+	drm_gem_lru_init(&still_in_lru);
- 
--	mutex_lock(lru->lock);
-+	mutex_lock(&dev->gem_lru_mutex);
- 
- 	while (freed < nr_to_scan) {
- 		obj = list_first_entry_or_null(&lru->list, typeof(*obj), lru_node);
-@@ -1675,7 +1671,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
- 		 * rest of the loop body, to reduce contention with other
- 		 * code paths that need the LRU lock
- 		 */
--		mutex_unlock(lru->lock);
-+		mutex_unlock(&dev->gem_lru_mutex);
- 
- 		if (ticket)
- 			ww_acquire_init(ticket, &reservation_ww_class);
-@@ -1709,7 +1705,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
- 
- tail:
- 		drm_gem_object_put(obj);
--		mutex_lock(lru->lock);
-+		mutex_lock(&dev->gem_lru_mutex);
- 	}
- 
- 	/*
-@@ -1721,7 +1717,7 @@ drm_gem_lru_scan(struct drm_gem_lru *lru,
- 	list_splice_tail(&still_in_lru.list, &lru->list);
- 	lru->count += still_in_lru.count;
- 
--	mutex_unlock(lru->lock);
-+	mutex_unlock(&dev->gem_lru_mutex);
- 
- 	return freed;
- }
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 195f40e331e5..cc2bcd14b1c2 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -128,11 +128,10 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv,
- 	/*
- 	 * Initialize the LRUs:
- 	 */
--	mutex_init(&priv->lru.lock);
--	drm_gem_lru_init(&priv->lru.unbacked, &priv->lru.lock);
--	drm_gem_lru_init(&priv->lru.pinned,   &priv->lru.lock);
--	drm_gem_lru_init(&priv->lru.willneed, &priv->lru.lock);
--	drm_gem_lru_init(&priv->lru.dontneed, &priv->lru.lock);
-+	drm_gem_lru_init(&priv->lru.unbacked);
-+	drm_gem_lru_init(&priv->lru.pinned);
-+	drm_gem_lru_init(&priv->lru.willneed);
-+	drm_gem_lru_init(&priv->lru.dontneed);
- 
- 	/* Initialize stall-on-fault */
- 	spin_lock_init(&priv->fault_stall_lock);
-@@ -140,7 +139,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv,
- 
- 	/* Teach lockdep about lock ordering wrt. shrinker: */
- 	fs_reclaim_acquire(GFP_KERNEL);
--	might_lock(&priv->lru.lock);
-+	might_lock(&ddev->gem_lru_mutex);
- 	fs_reclaim_release(GFP_KERNEL);
- 
- 	if (priv->kms_init) {
-diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-index 6d847d593f1a..617b3c4b42c0 100644
---- a/drivers/gpu/drm/msm/msm_drv.h
-+++ b/drivers/gpu/drm/msm/msm_drv.h
-@@ -150,13 +150,6 @@ struct msm_drm_private {
- 		 * DONTNEED state (ie. can be purged)
- 		 */
- 		struct drm_gem_lru dontneed;
--
--		/**
--		 * lock:
--		 *
--		 * Protects manipulation of all of the LRUs.
--		 */
--		struct mutex lock;
- 	} lru;
- 
- 	struct notifier_block vmap_notifier;
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index 2cb3ab04f125..efd3d3c9a449 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -177,11 +177,11 @@ static void update_lru_locked(struct drm_gem_object *obj)
- 
- static void update_lru(struct drm_gem_object *obj)
- {
--	struct msm_drm_private *priv = obj->dev->dev_private;
-+	struct drm_device *dev = obj->dev;
- 
--	mutex_lock(&priv->lru.lock);
-+	mutex_lock(&dev->gem_lru_mutex);
- 	update_lru_locked(obj);
--	mutex_unlock(&priv->lru.lock);
-+	mutex_unlock(&dev->gem_lru_mutex);
- }
- 
- static struct page **get_pages(struct drm_gem_object *obj)
-@@ -292,11 +292,11 @@ void msm_gem_pin_obj_locked(struct drm_gem_object *obj)
- 
- static void pin_obj_locked(struct drm_gem_object *obj)
- {
--	struct msm_drm_private *priv = obj->dev->dev_private;
-+	struct drm_device *dev = obj->dev;
- 
--	mutex_lock(&priv->lru.lock);
-+	mutex_lock(&dev->gem_lru_mutex);
- 	msm_gem_pin_obj_locked(obj);
--	mutex_unlock(&priv->lru.lock);
-+	mutex_unlock(&dev->gem_lru_mutex);
- }
- 
- struct page **msm_gem_pin_pages_locked(struct drm_gem_object *obj)
-@@ -487,16 +487,16 @@ int msm_gem_pin_vma_locked(struct drm_gem_object *obj, struct drm_gpuva *vma)
- 
- void msm_gem_unpin_locked(struct drm_gem_object *obj)
- {
--	struct msm_drm_private *priv = obj->dev->dev_private;
-+	struct drm_device *dev = obj->dev;
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
- 
- 	msm_gem_assert_locked(obj);
- 
--	mutex_lock(&priv->lru.lock);
-+	mutex_lock(&dev->gem_lru_mutex);
- 	msm_obj->pin_count--;
- 	GEM_WARN_ON(msm_obj->pin_count < 0);
- 	update_lru_locked(obj);
--	mutex_unlock(&priv->lru.lock);
-+	mutex_unlock(&dev->gem_lru_mutex);
- }
- 
- /* Special unpin path for use in fence-signaling path, avoiding the need
-@@ -507,10 +507,10 @@ void msm_gem_unpin_locked(struct drm_gem_object *obj)
-  */
- void msm_gem_unpin_active(struct drm_gem_object *obj)
- {
--	struct msm_drm_private *priv = obj->dev->dev_private;
-+	struct drm_device *dev = obj->dev;
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
- 
--	GEM_WARN_ON(!mutex_is_locked(&priv->lru.lock));
-+	GEM_WARN_ON(!mutex_is_locked(&dev->gem_lru_mutex));
- 
- 	msm_obj->pin_count--;
- 	GEM_WARN_ON(msm_obj->pin_count < 0);
-@@ -797,12 +797,12 @@ void msm_gem_put_vaddr(struct drm_gem_object *obj)
-  */
- int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
- {
--	struct msm_drm_private *priv = obj->dev->dev_private;
-+	struct drm_device *dev = obj->dev;
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
- 
- 	msm_gem_lock(obj);
- 
--	mutex_lock(&priv->lru.lock);
-+	mutex_lock(&dev->gem_lru_mutex);
- 
- 	if (msm_obj->madv != __MSM_MADV_PURGED)
- 		msm_obj->madv = madv;
-@@ -814,7 +814,7 @@ int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
- 	 */
- 	update_lru_locked(obj);
- 
--	mutex_unlock(&priv->lru.lock);
-+	mutex_unlock(&dev->gem_lru_mutex);
- 
- 	msm_gem_unlock(obj);
- 
-@@ -824,7 +824,6 @@ int msm_gem_madvise(struct drm_gem_object *obj, unsigned madv)
- void msm_gem_purge(struct drm_gem_object *obj)
- {
- 	struct drm_device *dev = obj->dev;
--	struct msm_drm_private *priv = obj->dev->dev_private;
- 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
- 
- 	msm_gem_assert_locked(obj);
-@@ -839,10 +838,10 @@ void msm_gem_purge(struct drm_gem_object *obj)
- 
- 	put_pages(obj);
- 
--	mutex_lock(&priv->lru.lock);
-+	mutex_lock(&dev->gem_lru_mutex);
- 	/* A one-way transition: */
- 	msm_obj->madv = __MSM_MADV_PURGED;
--	mutex_unlock(&priv->lru.lock);
-+	mutex_unlock(&dev->gem_lru_mutex);
- 
- 	drm_gem_free_mmap_offset(obj);
- 
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index 31fa51a44f86..c07af9602fee 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -186,7 +186,7 @@ msm_gem_shrinker_scan(struct shrinker *shrinker, struct shrink_control *sc)
- 		if (!stages[i].cond)
- 			continue;
- 		stages[i].freed =
--			drm_gem_lru_scan(stages[i].lru, nr,
-+			drm_gem_lru_scan(priv->dev, stages[i].lru, nr,
- 					 &stages[i].remaining,
- 					 stages[i].shrink,
- 					 &ticket);
-@@ -255,7 +255,7 @@ msm_gem_shrinker_vmap(struct notifier_block *nb, unsigned long event, void *ptr)
- 	unsigned long remaining = 0;
- 
- 	for (idx = 0; lrus[idx] && unmapped < vmap_shrink_limit; idx++) {
--		unmapped += drm_gem_lru_scan(lrus[idx],
-+		unmapped += drm_gem_lru_scan(priv->dev, lrus[idx],
- 					     vmap_shrink_limit - unmapped,
- 					     &remaining,
- 					     vmap_shrink,
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 26ea8a28be47..3c6bc90c3d48 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -352,7 +352,7 @@ static int submit_fence_sync(struct msm_gem_submit *submit)
- 
- static int submit_pin_objects(struct msm_gem_submit *submit)
- {
--	struct msm_drm_private *priv = submit->dev->dev_private;
-+	struct drm_device *dev = submit->dev;
- 	int i, ret = 0;
- 
- 	for (i = 0; i < submit->nr_bos; i++) {
-@@ -381,11 +381,11 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
- 	 * get_pages() which could trigger reclaim.. and if we held the LRU lock
- 	 * could trigger deadlock with the shrinker).
- 	 */
--	mutex_lock(&priv->lru.lock);
-+	mutex_lock(&dev->gem_lru_mutex);
- 	for (i = 0; i < submit->nr_bos; i++) {
- 		msm_gem_pin_obj_locked(submit->bos[i].obj);
- 	}
--	mutex_unlock(&priv->lru.lock);
-+	mutex_unlock(&dev->gem_lru_mutex);
- 
- 	submit->bos_pinned = true;
- 
-diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
-index 1a952b171ed7..c4cfe036066b 100644
---- a/drivers/gpu/drm/msm/msm_gem_vma.c
-+++ b/drivers/gpu/drm/msm/msm_gem_vma.c
-@@ -702,7 +702,7 @@ static struct dma_fence *
- msm_vma_job_run(struct drm_sched_job *_job)
- {
- 	struct msm_vm_bind_job *job = to_msm_vm_bind_job(_job);
--	struct msm_drm_private *priv = job->vm->drm->dev_private;
-+	struct drm_device *dev = job->vm->drm;
- 	struct msm_gem_vm *vm = to_msm_vm(job->vm);
- 	struct drm_gem_object *obj;
- 	int ret = vm->unusable ? -EINVAL : 0;
-@@ -745,13 +745,13 @@ msm_vma_job_run(struct drm_sched_job *_job)
- 	if (ret)
- 		msm_gem_vm_unusable(job->vm);
- 
--	mutex_lock(&priv->lru.lock);
-+	mutex_lock(&dev->gem_lru_mutex);
- 
- 	job_foreach_bo (obj, job) {
- 		msm_gem_unpin_active(obj);
- 	}
- 
--	mutex_unlock(&priv->lru.lock);
-+	mutex_unlock(&dev->gem_lru_mutex);
- 
- 	/* VM_BIND ops are synchronous, so no fence to wait on: */
- 	return NULL;
-@@ -1305,7 +1305,7 @@ vm_bind_job_pin_objects(struct msm_vm_bind_job *job)
- 			return PTR_ERR(pages);
- 	}
- 
--	struct msm_drm_private *priv = job->vm->drm->dev_private;
-+	struct drm_device *dev = job->vm->drm;
- 
- 	/*
- 	 * A second loop while holding the LRU lock (a) avoids acquiring/dropping
-@@ -1314,10 +1314,10 @@ vm_bind_job_pin_objects(struct msm_vm_bind_job *job)
- 	 * get_pages() which could trigger reclaim.. and if we held the LRU lock
- 	 * could trigger deadlock with the shrinker).
- 	 */
--	mutex_lock(&priv->lru.lock);
-+	mutex_lock(&dev->gem_lru_mutex);
- 	job_foreach_bo (obj, job)
- 		msm_gem_pin_obj_locked(obj);
--	mutex_unlock(&priv->lru.lock);
-+	mutex_unlock(&dev->gem_lru_mutex);
- 
- 	job->bos_pinned = true;
- 
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-index 30ddb5351e98..2d6b930b766e 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-@@ -16,13 +16,13 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
- 	struct msm_gem_submit *submit = to_msm_submit(job);
- 	struct msm_fence_context *fctx = submit->ring->fctx;
- 	struct msm_gpu *gpu = submit->gpu;
--	struct msm_drm_private *priv = gpu->dev->dev_private;
-+	struct drm_device *dev = gpu->dev;
- 	unsigned nr_cmds = submit->nr_cmds;
- 	int i;
- 
- 	msm_fence_init(submit->hw_fence, fctx);
- 
--	mutex_lock(&priv->lru.lock);
-+	mutex_lock(&dev->gem_lru_mutex);
- 
- 	for (i = 0; i < submit->nr_bos; i++) {
- 		struct drm_gem_object *obj = submit->bos[i].obj;
-@@ -32,7 +32,7 @@ static struct dma_fence *msm_job_run(struct drm_sched_job *job)
- 
- 	submit->bos_pinned = false;
- 
--	mutex_unlock(&priv->lru.lock);
-+	mutex_unlock(&dev->gem_lru_mutex);
- 
- 	/* TODO move submit path over to using a per-ring lock.. */
- 	mutex_lock(&gpu->lock);
-diff --git a/include/drm/drm_device.h b/include/drm/drm_device.h
-index bc78fb77cc27..768a8dae83c5 100644
---- a/include/drm/drm_device.h
-+++ b/include/drm/drm_device.h
-@@ -375,6 +375,13 @@ struct drm_device {
- 	 * Root directory for debugfs files.
- 	 */
- 	struct dentry *debugfs_root;
-+
-+	/**
-+	 * @gem_lru_mutex:
-+	 *
-+	 * Lock protecting movement of GEM objects between LRUs.
-+	 */
-+	struct mutex gem_lru_mutex;
- };
- 
- void drm_dev_set_dma_dev(struct drm_device *dev, struct device *dma_dev);
-diff --git a/include/drm/drm_gem.h b/include/drm/drm_gem.h
-index 86f5846154f7..8a704f6a65c1 100644
---- a/include/drm/drm_gem.h
-+++ b/include/drm/drm_gem.h
-@@ -245,17 +245,11 @@ struct drm_gem_object_funcs {
-  * for lockless &shrinker.count_objects, and provides
-  * &drm_gem_lru_scan for driver's &shrinker.scan_objects
-  * implementation.
-+ *
-+ * Any access to this kind of object must be done with
-+ * drm_device::gem_lru_mutex held.
-  */
- struct drm_gem_lru {
--	/**
--	 * @lock:
--	 *
--	 * Lock protecting movement of GEM objects between LRUs.  All
--	 * LRUs that the object can move between should be protected
--	 * by the same lock.
--	 */
--	struct mutex *lock;
--
- 	/**
- 	 * @count:
- 	 *
-@@ -453,6 +447,9 @@ struct drm_gem_object {
- 	 * @lru:
- 	 *
- 	 * The current LRU list that the GEM object is on.
-+	 *
-+	 * Access to this field must be done with drm_device::gem_lru_mutex
-+	 * held.
- 	 */
- 	struct drm_gem_lru *lru;
- };
-@@ -610,12 +607,13 @@ void drm_gem_unlock_reservations(struct drm_gem_object **objs, int count,
- int drm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
- 			    u32 handle, u64 *offset);
- 
--void drm_gem_lru_init(struct drm_gem_lru *lru, struct mutex *lock);
-+void drm_gem_lru_init(struct drm_gem_lru *lru);
- void drm_gem_lru_remove(struct drm_gem_object *obj);
- void drm_gem_lru_move_tail_locked(struct drm_gem_lru *lru, struct drm_gem_object *obj);
- void drm_gem_lru_move_tail(struct drm_gem_lru *lru, struct drm_gem_object *obj);
- unsigned long
--drm_gem_lru_scan(struct drm_gem_lru *lru,
-+drm_gem_lru_scan(struct drm_device *dev,
-+		 struct drm_gem_lru *lru,
- 		 unsigned int nr_to_scan,
- 		 unsigned long *remaining,
- 		 bool (*shrink)(struct drm_gem_object *obj, struct ww_acquire_ctx *ticket),
+Reviewed-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
----
-base-commit: e02b5262fd288cc235f14e12233ea54e78c04611
-change-id: 20260506-panthor-shrinker-fixes-58c1f45cfc41
-
-Best regards,
--- 
-Boris Brezillon <boris.brezillon@collabora.com>
+>   				 struct drm_plane *plane);
+>   
+>   int __must_check drm_atomic_check_only(struct drm_atomic_state *state);
 
 
