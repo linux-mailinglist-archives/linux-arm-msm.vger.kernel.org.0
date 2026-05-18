@@ -1,219 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-108299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QPdNAhqZC2qOJwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 00:56:26 +0200
+	id MC8nM3ulC2qRKQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 01:49:15 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61F5D574D2F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 00:56:25 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90826575272
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 01:49:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1D9EE30067A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 22:56:24 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 22337302A2E1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 23:44:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C90862F8EAB;
-	Mon, 18 May 2026 22:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D202833EB0E;
+	Mon, 18 May 2026 23:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jQV00PvO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ccsrn69V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778F926A0D5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 22:56:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC2A33D6D8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 23:43:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779144982; cv=none; b=J/dCxtyU0rkQARyRk14J6RFMQ2at5rb2gqBS5sQZXP+swV8zPCavnL7GPAUDrEvnp8pGb74iKECYqE2syG5ZqrKk4uKOAjSDfV0J68Q57z1TCWjjhhjXss3ebqQiWC9iYT+ZA4Jl1ysvsWCh+uf1qoviRon/T7Bf60V860cSq0k=
+	t=1779147798; cv=none; b=W4v16oR3OBaMGFF/EzENTQRbDcMoufjn8YBGROhHwEnkamODsauO01EvxMu3WbcZZGSmWRVCGtPsADUTSPjFuAY2Dxy5lo7I01wYieVZPyxdeD5xU7zMWTToIvsVhF7FcUdGT2Xd6UT2nfx/kWZxNGTmKz7/r+iwh0ey5MYynvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779144982; c=relaxed/simple;
-	bh=IUdRJC56RBzqNCM1DPww5KqL+egKKwzZHSppoHwXz1w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q8dHg5fpz9M+hD4FsGQdkGUBtYT9zbXJ9/GxQtE7pkzZgET4QQKbdwrIctRobApEG6ajhsGu2ds5dUzeCPVB8o6/t5oEVtg/doZgZftR6xGXfLAp2gZH+hHDGFwymKBaQvL8zyeQ1Ya2vDAx8mvV4sc1htrq6ZCGbRtgQt5lg/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jQV00PvO; arc=none smtp.client-ip=209.85.215.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c70c112cb61so2357005a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 15:56:21 -0700 (PDT)
+	s=arc-20240116; t=1779147798; c=relaxed/simple;
+	bh=ebvesQ8qFlXiPs2rj2qY2O62rXHnvh6W40TORpD1fUg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nadusdij+Yk3Xht5Kjfnt6RVtHQVgY5Eux1hYnt5p9digSgypqMG2lVqV5JVUK3OOgeYoCVhRtz1FfoNxwiRok0HXgl9KT5XyoYcS9lanWjsJxrnyJO4GLJj74yNFyARjMu0Xd3i1zazmdB5mhwQvq3UNWeTY+ipoeg2e21d8x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ccsrn69V; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-48e8132c6d0so18507755e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 16:43:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779144981; x=1779749781; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=T7+IeU1q4KF73mOQ7FypKUKAYVqW8+sQGdeWvAZi1Ts=;
-        b=jQV00PvO1x7KvgjiFebPB5kgvKjzuXx1dJ+2wh68+17twJ4MikCG3FV4LYk1PBc4ez
-         sRokYixVAr7t6CGMsL0U9ngTCccN63OYrVBKrD3TmxKHiUK72UrVN3aKwIHGWBZcmK9x
-         RduVF+3p33qS+1FLZ7z8RYpGQhlOgnQx5sMepq6dXh6XaRTdETD8yIOsYkokDYxCh5ET
-         QdanPdlN0ruy72kXzYaTeneULLyGrvHvRC9CUD3kMrdkv8eYtl29M8gPgTq/avB6kPhJ
-         rqexW1jy9KZhCobtp3fTfEDd3y3WZoi/kknK72yYVZC6CksSPbxVO5D2u0CYtvkA60Bf
-         1wHA==
+        d=linaro.org; s=google; t=1779147795; x=1779752595; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZEoPrUHKxysLWOASnPxB7i564xWUA+RRCTSF/dKDla0=;
+        b=Ccsrn69VKHwxYPp+RUGCy8T3gGSPytVDFcv4W1QpogcqETajHsEJsC+dghGqHNMCj8
+         y5rWTYdrqIS6P/dMF1l0LvrJvuaVPoAhds4GcRJvPWyS1ollmSHNW7EjL7h5KJopKnP/
+         fvJIPjSVVIeAhLwAULACwYtKUj9Az0aA4dNxwWt/cxIeX30j74o+HA0uSrHSAifWGeQ7
+         Wu1sGc37l7kssKj+K/rWsFq4zvjBDmoJ9m7GfHiJeR65FMeQ0ZulRR1sNoWo9DLKXHvR
+         E6BqEgklMuDCMPY95kM2nst5+jm52/XtQFEf65uyaaePRNoMOUlAYArvLehFAfdz3Evr
+         JO4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779144981; x=1779749781;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T7+IeU1q4KF73mOQ7FypKUKAYVqW8+sQGdeWvAZi1Ts=;
-        b=WZ4bxyZCWP5hBToBjQVjsFv3ySW9BzUHZ/n1hEluhNe2NJcoC1+BxJqRSwwi33WFrv
-         YONTDjw0ZVOglPZI5LxYx2ipdk+w3mOopMzIES/IX7t8d3l7Jk9XmOkdN4mj/Yiq/WHW
-         SzXyZ220XrxHPFFKLDciqfkZ2CadG88oiUHsUAh6YkeYnD+OSxGhYgxmf5oARuRxEcpc
-         HzcvYJTF69pOomoh4yVR9HnXVoy8CXb2GQDneq0yevsXkUEfnGlymr7DGgpIgzvKVnca
-         2lNFiT2vWxCQ/pPaQT9BxISJTZeHCEJQekDBRh7hc5UZ11BgfkH+hFJaaB9ZmY/cUPbS
-         gGbw==
-X-Forwarded-Encrypted: i=1; AFNElJ9hMpWg/5Ks3nTLSvf6WWsT5bGg4YC4iF2f48yIVr5MvvuHD8gFmKjN80h7mefmhbRMHpqje4g2zyrQcHMn@vger.kernel.org
-X-Gm-Message-State: AOJu0YxsNjPBApX3VSuB7Ev2gsJNGfEiqHDKf2R7CocpCMXXqn7S0kIl
-	UCJYi4EYXtoJdEI7OHtzkwCoUuW3O2ONAsDbpzikjAdhmZRnrooG7PcA
-X-Gm-Gg: Acq92OFOBunXCLkDe/e005lMuJKJVNWdOdNib50szeXAIeXSplW5eu4XNndL/AWubm1
-	I1GZqd7vIowgbROCjiF5JFaD875vUpXMCfwb+3BvNBRwokGvVAN2HkRksemEj2Rz1Wh37c7xlkK
-	aDEFfrc7Ilv8JH/w6g3+5n1c9pEOkUA+kdoY6oqs3aS5zK7Gc0xNky6AFV5UsPcMrvBDdjrsFMV
-	enxYF5bTBr/wpob5EGyar+z++ghk7I22j95OOXldi3/cKM+3JXG4GpNeF0iC/pVqCLksn0/w9K7
-	1rlVzN8PSpDZAaLY+ijZ7b6HWxufngeKbI+hUGWwG7KM9Hmp2mKKSX9F+w1CadD0wVX/l82oUz5
-	0yuFhE4aiTdOJZd96Kx9m/JucIXNnp9LPLgWiQSD16uw6e5C6vXEnFEhA1sNlTN19WoPf422Pdy
-	cF0zJE+7xBYrvVLbN7wIHXQpF9bYc=
-X-Received: by 2002:a17:903:2c47:b0:2bc:e62a:979b with SMTP id d9443c01a7336-2bd7e933cafmr193650485ad.30.1779144980702;
-        Mon, 18 May 2026 15:56:20 -0700 (PDT)
-Received: from soyboi ([2402:8780:1073:dc10:22f6:2ac0:a51b:5d77])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5bd5f2dcsm161487735ad.13.2026.05.18.15.56.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 15:56:20 -0700 (PDT)
-Date: Tue, 19 May 2026 05:56:15 +0700
-From: Robertus Diawan Chris <robertusdchris@gmail.com>
-To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Cc: jens.wiklander@linaro.org, sumit.garg@kernel.org,
-	linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
-	linux-kernel@vger.kernel.org,
-	linux-kernel-mentees@lists.linuxfoundation.org,
-	skhan@linuxfoundation.org, me@brighamcampbell.com
-Subject: Re: [PATCH] tee: qcomtee: add missing va_end in early return
- qcomtee_object_user_init()
-Message-ID: <aguZD_vcJCwXY--l@soyboi>
-References: <20260513091031.145826-1-robertusdchris@gmail.com>
- <8182784b-b6c2-4136-af8d-3aea4f5a4662@oss.qualcomm.com>
- <agat1sBHqkGWKzOD@soyboi>
- <e626963b-7f20-43fd-b3e0-e16d9b6f13f8@oss.qualcomm.com>
+        d=1e100.net; s=20251104; t=1779147795; x=1779752595;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZEoPrUHKxysLWOASnPxB7i564xWUA+RRCTSF/dKDla0=;
+        b=bljkb9PQSluW33Jnwa3yBEndPp0lzUfcilhOo/c2AFeY9zNy2UABNotOQx5FgGEuju
+         H0jJUlkaOOlYka6zsQKLCY7gSHP1ADcm19Sbd+E8/ErGqgOFV9pUvL+l4ZKpYEXvEAEG
+         Sg4PnLYo0w4mXYVez8HHocZhEcGOS+H0sUyNJpWozzNBjabwpH4nA8yiLoZxoXwfh387
+         jxkCyFD8y+2btKzxKuXP2/g5/LZ4pIzqOnUlCXoJ4DJJYh4RCMrQ3YEt1zCEpFA8Xn/6
+         +dRRtJv/0KE7oW6CWs/oFN8i914mPzq9YqspIZ7aJ1RFiLrPGpdvIwd6NNdY8+gxQ5/q
+         jlqw==
+X-Gm-Message-State: AOJu0YyvuckaybyF8pDoMIVosTpLFAvpbGdZznjKHhW6NT+VS2eMt/6B
+	zOPo2K3ztLncj17MWw+Hk2G0KQfgWFptb0K4tWK7wENMtebjLrH6BctkQxB6bsp5tg0=
+X-Gm-Gg: Acq92OHMq7MKK8cEm3WKKgiIKafEQz5pBdgyM33nfF2d3VvEK8LCAvfqKpNNagZtdjM
+	b4ExNb0p9Hk/1R8jHP99IG9y/NRgP3R4AV2a/n2vSVyjiexbuKsnPF3RrAHqt5XEArmz7ikITsR
+	vEjBkPU9mee4cDFAuf17XFrinbnFbnNpCjJ9gWpgNWS33cWMjFj37IShpQdOMcDo6aU7QiS0oXn
+	JXYYeiwqmQ3B12KklV4U8fKaZqvaQ70ctIj4r4l2XTn9UTqwrJ4ZFy/tGX/N6d8DXbxtwm3wAiF
+	Rgkck+GZWKOAW9Gz0cyWVAsgVwaG3dEUAUBhZnr6xvl7A6z5GdBo4ASMmwViCas+eepnLpJDbuk
+	lbjZJyC//FUlqne+j+m/mnkMldZsa5dYRkozliX/iNhdnidMVUWjOhdsYZ1EGVpLtzo6teP+r7F
+	89YW7ujQPI0Ma7fQdqR4hFRfusOEJiFlQRSlZUWtE67m4=
+X-Received: by 2002:a05:600c:34d4:b0:48f:e230:c3fa with SMTP id 5b1f17b1804b1-48fe6626a58mr269207245e9.32.1779147795601;
+        Mon, 18 May 2026 16:43:15 -0700 (PDT)
+Received: from [192.168.0.35] ([64.43.40.255])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45d9ed30110sm44562460f8f.13.2026.05.18.16.43.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 May 2026 16:43:15 -0700 (PDT)
+Message-ID: <ee9061ea-8f70-4b54-af87-420179da9c06@linaro.org>
+Date: Tue, 19 May 2026 00:43:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e626963b-7f20-43fd-b3e0-e16d9b6f13f8@oss.qualcomm.com>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] usb: typec: add Qualcomm PMI8998 USB Type-C
+ role-switch support
+To: =?UTF-8?B?0JzQsNC60YHQuNC8INCk0YPRgNC80LDQvQ==?= <taygoth@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Wesley Cheng <quic_wcheng@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Casey Connolly <casey.connolly@linaro.org>
+References: <cover.1779127507.git.taygoth@gmail.com>
+ <918adf8c-14d0-4d9b-93d8-d34592aa04a9@linaro.org>
+ <CAFPzRonyVt9Kd+Sc0ooNz8By6b-Zr_jHr0sBXv-M25dQ0w9Cjg@mail.gmail.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <CAFPzRonyVt9Kd+Sc0ooNz8By6b-Zr_jHr0sBXv-M25dQ0w9Cjg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-108300-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108299-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com,quicinc.com,linuxfoundation.org,linux.intel.com,linaro.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robertusdchris@gmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 61F5D574D2F
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:mid,linaro.org:dkim,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 90826575272
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hello Amir,
+On 19/05/2026 00:37, Максим Фурман wrote:
+> Three shapes for adding a second port handler to the existing driver:
+>    (a) extracted ops -- pmic_typec_port_ops with chip-specific get_cc /
+>        get_vbus / set_mode / set_vconn / start_toggling, refactor PM8150B
+>        code into the ops, add parallel PMI8998 implementation
+>    (b) parallel port file -- keep PM8150B code untouched, add a sibling
+>        source file with the same tcpc_dev callback surface
+>    (c) per-chip register table + per-chip decode helpers in the same file
+> 
+> Bryan, do you have a preference? I'd rather match your taste than guess,
+> since you'll be maintaining the merged result.
 
-On Mon, May 18, 2026 at 04:36:20PM +1000, Amirreza Zarrabi wrote:
-> Hi,
->
-> On 5/15/2026 3:23 PM, Robertus Diawan Chris wrote:
-> > Hello Amir,
-> >
-> > On Fri, May 15, 2026 at 11:31:50AM +1000, Amirreza Zarrabi wrote:
-> >> On 5/13/2026 7:10 PM, Robertus Diawan Chris wrote:
-> >>> qcomtee_object_user_init() is a variadic function and when the function
-> >>> return because there's no dispatch callback in QCOMTEE_OBJECT_TYPE_CB
-> >>> case, there's no va_end to cleanup "ap" object initialized by va_start
-> >>> and that can cause undefined behavior. So make sure to use va_end before
-> >>> returning the error code when there's no dispatch callback.
-> >>>
-> >>> This is reported by Coverity Scan as "Missing varargs init or cleanup".
-> >>>
-> >>> Fixes: d6e290837e50 ("tee: add Qualcomm TEE driver")
-> >>> Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
-> >>> ---
-> >>> I don't have the device, so I am not sure how to test this change.
-> >>> Thank you.
-> >>>
-> >>>  drivers/tee/qcomtee/core.c | 8 ++++++--
-> >>>  1 file changed, 6 insertions(+), 2 deletions(-)
-> >>>
-> >>> diff --git a/drivers/tee/qcomtee/core.c b/drivers/tee/qcomtee/core.c
-> >>> index b1cb50e434f0..901a31e8201f 100644
-> >>> --- a/drivers/tee/qcomtee/core.c
-> >>> +++ b/drivers/tee/qcomtee/core.c
-> >>> @@ -306,8 +306,10 @@ int qcomtee_object_user_init(struct qcomtee_object *object,
-> >>>  		break;
-> >>>  	case QCOMTEE_OBJECT_TYPE_CB:
-> >>>  		object->ops = ops;
-> >>> -		if (!object->ops->dispatch)
-> >>> -			return -EINVAL;
-> >>> +		if (!object->ops->dispatch) {
-> >>> +			ret = -EINVAL;
-> >>> +			goto out;
-> >>> +		}
-> >>>
-> >>>  		/* If failed, "no-name". */
-> >>>  		object->name = kvasprintf_const(GFP_KERNEL, fmt, ap);
-> >>> @@ -320,6 +322,8 @@ int qcomtee_object_user_init(struct qcomtee_object *object,
-> >>>  	default:
-> >>>  		ret = -EINVAL;
-> >>>  	}
-> >>> +
-> >>> +out:
-> >>>  	va_end(ap);
-> >>>
-> >>>  	return ret;
-> >>>
-> >>> base-commit: 5d6919055dec134de3c40167a490f33c74c12581
-> >>
-> >> Hi,
-> >>
-> >> Forgot to mention: how about using a break instead of a goto.
-> >
-> > Oh right. In this case, using "break" statement is enough. I will send
-> > the v2 of the patch. Maybe something like this:
-> >
-> > 	if (!object->ops->dispatch) {
-> > 		ret = -EINVAL;
-> > 		break;
-> > 	}
-> >
-> > and then remove the "out" label.
-> >
-> >> Then feel free to add Reviewed-by.
-> >
-> > I want to confirm first, if I changed the patch using "break" statement,
-> > do I need to add "Reviewed-by" tag in the v2 of the patch or not? I am
-> > still not sure when to add "Reviewed-by" tag, like can we add
-> > "Reviewed-by" tag when we changed the patch?
-> >
->
-> This is a small change. You can add the tag when sending your v2
-> as long as you include the change.
+Taste - loaded with honey, chilli and salt please chef and add the whole 
+clove of garlic....
 
-I see. Alright, I will send the patch v2 with the change and the
-"Reviewed-by" tag later. Thanks.
+My feeling is sibling file but please use your own taste/discretion.
 
-Best regards,
-Robertus Diawan Chris
+---
+bod
 
