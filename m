@@ -1,308 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-108118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wNh2HVvECmoI7gQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 09:48:43 +0200
+	id qHx/MwDGCmqa7wQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 09:55:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22C86568183
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 09:48:42 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48575568325
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 09:55:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C3762300B198
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 07:44:33 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 585CB302F40B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 07:50:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CC9B3DFC95;
-	Mon, 18 May 2026 07:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 707A33DFC67;
+	Mon, 18 May 2026 07:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QBFC1mp3"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gb+4VQqk";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="N9qzpSmX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B393AF666;
-	Mon, 18 May 2026 07:44:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5C33DC4DC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 07:50:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779090270; cv=none; b=H+P72Bi3Zvpg/XH222MrlMmHSCE3unqAHMFVePnxYApKl8HpGX1XdErO1EKSnOzTFLea+rs2+pc5wCzfNTf3/giXubjOHlvf9SszmtT4XfLRVmYTtufc4/9UuIlV6NSyZMgUF4gpVHOUr4sd/Cn+A5XA3mgT0x9HHCEtcyHQpyQ=
+	t=1779090638; cv=none; b=QklmWiPw2iZdnINCMHn5Ay5T5ttcstHXAhjnkYLZWxwPngqDkf/Yrh1JAe9LIbOi817JFbl3kfDiNELOCEaXvg5gElpMlqgWuw/4WUce1XShNvHNrFRCNcZqf70h4wDUCK434g/I7zG5tFc3XRAvxGMUCD/TZs4YXFBSRbHGPMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779090270; c=relaxed/simple;
-	bh=2VgfqRzwkyb5bRCypLGDNrZHPZPUmDh1p0S4IvBWaA0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EwSRjgSCuBYtS/jYH0KxWE4hG+K+2aqABR/uWjYXDc8SOevW95OqEY8h4rU15s4w0sNWcIF4x9Cc+gIInP318y24uVjDwhpmx847FYXLu0gtMPDibWv1GWYO739/+CnGJIrZzbLnbCcFkz9+8CfENn/0gV/Ecaa6os0BKc1AxrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QBFC1mp3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEABFC2BCB7;
-	Mon, 18 May 2026 07:44:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779090269;
-	bh=2VgfqRzwkyb5bRCypLGDNrZHPZPUmDh1p0S4IvBWaA0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QBFC1mp3CcT7A19F66kJxDLr/EwzcxFYyB54RQgNL6HJN90bbyxiIi1rVk8oNYmjW
-	 N7pkQjsG/+FJJrlvVNGlHWEGy7se1TxSu6KZy7K+7E+wZQXS/IeZ9wxlPYV9Qh520z
-	 tF3L46YTZbdEwuPeMbgS4uAMVc8ag5tiw8vB13KNQSyPFFSqbZqDegfvvZVivFQ6Mc
-	 9CopzrMSyHYPLAZbl108nRjMfWutLPptrqdvSU5zJmh18l1VyT1kuqCtr1GZvIsCKQ
-	 FZ9L0xvHZfBPuVzOK3neMz+v7hFl2OwzvUctTjjeOaECUjpT7NsuxTBbg0zMwOLRhZ
-	 Cd9EP5GLpeXzw==
-Date: Mon, 18 May 2026 13:14:12 +0530
-From: Sumit Garg <sumit.garg@kernel.org>
-To: andersson@kernel.org, konradybcio@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-media@vger.kernel.org, netdev@vger.kernel.org,
-	linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
-	linux-remoteproc@vger.kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org,
-	robin.clark@oss.qualcomm.com, sean@poorly.run,
-	akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
-	jesszhan0024@gmail.com, marijn.suijten@somainline.org,
-	airlied@gmail.com, simona@ffwll.ch, vikash.garodia@oss.qualcomm.com,
-	dikshita.agarwal@oss.qualcomm.com, bod@kernel.org,
-	mchehab@kernel.org, elder@kernel.org, andrew+netdev@lunn.ch,
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-	pabeni@redhat.com, jjohnson@kernel.org, mathieu.poirier@linaro.org,
-	trilokkumar.soni@oss.qualcomm.com, mukesh.ojha@oss.qualcomm.com,
-	pavan.kondeti@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
-	tonyh@qti.qualcomm.com, vignesh.viswanathan@oss.qualcomm.com,
-	srinivas.kandagatla@oss.qualcomm.com,
-	amirreza.zarrabi@oss.qualcomm.com, jens.wiklander@linaro.org,
-	op-tee@lists.trustedfirmware.org, apurupa@qti.qualcomm.com,
-	skare@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>
-Subject: Re: [PATCH v5 00/16] firmware: qcom: Add OP-TEE PAS service support
-Message-ID: <agrDTB5ewEgibQLJ@sumit-xelite>
-References: <20260504130603.1474043-1-sumit.garg@kernel.org>
- <agSAL-z6NUV1p2kH@sumit-xelite>
+	s=arc-20240116; t=1779090638; c=relaxed/simple;
+	bh=e42XBPD10MnyssBj+iInx905f6nD7LR/IYxUEpTUH+c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iBi3cqGJLz8TevfrEOgvJV0Qev3mRPoG4xmXuTbCqr7DL0e0+AGsxLeX01bJuwRtAf9WEDqUBpffVzudBpr0EZeEJPVBrgTM56V6FosiXZ6t8RwLo0D0OYq/KCvq7ucnot2x8CNbgL29hnu4awFjvRg0e+mT5SH6yZNs7xW/PLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gb+4VQqk; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=N9qzpSmX; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64I6bUad421525
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 07:50:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	lJBnHUl957hvKo+iTLPq/Vl5eWX75Ini9s2OOopk20Q=; b=gb+4VQqk4SDMUVAP
+	8X2nIptoppQf4gkU6AIYiy4R0F3qV/gQYIl1eEqsnfKjXrOAq/EJbLFCAWM6p3id
+	J6ajsxsIGRYxC3VbhLhACTWgUq42gvRyWnstqSPUD0VHRgUL6gLejmBBOQ1lK2K9
+	aJW99VWZsoeVSnENfGjQt4JLpypoSS2skuMVDCMnorY0zlgs56UnWDyjjcaAOGRv
+	q8H6DP1QmtLBDBAJn/YzuTsfZyd08vqulpz8vgYF6vbXUeHPFfZVhkfBzQqEmPaQ
+	LQp0LlFrWV7qOG9UZ9sMX9gIz1UMn7EjHdUTpplvl+vk23PsrsQw8SAjI0ruy0sH
+	Ho5Fhw==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e6tvcm5j1-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 07:50:32 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-90f04f07227so27504485a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 00:50:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1779090631; x=1779695431; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lJBnHUl957hvKo+iTLPq/Vl5eWX75Ini9s2OOopk20Q=;
+        b=N9qzpSmX7FI2E7/3x9w5qM+R1cLO1wmWCIMKkKaiplYG+9qcwGD8NoeVUCFGRa+Wx/
+         u80TAG1fT7dyER57tFl2pgsrppoCHdACYyY9rOUvNjWvlK7GB0gPhNyOlwqxvCt2CXr1
+         omCtBsG4VizmQjeRhdTM+U2IkE09VmDVFBbnC/hXJj7zenp3RTTHnpWe3Xa1EZfW0yoM
+         IEpWTLraLkcCmKzyBktv/kB22sLygA4i5z3WWUO7613+jODRJgNhKWzMMiDEbYKTQ1Pq
+         LmVYjmezaEz0UmzC4trDmufbAsf1jDqWfkNT+xNUUZaxOImdRHULmiYqztYRGNECaN5G
+         lWHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779090631; x=1779695431;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lJBnHUl957hvKo+iTLPq/Vl5eWX75Ini9s2OOopk20Q=;
+        b=Ijss2RsFrludcL3pRKbFl4LkE9Ud0uCIb0lMgafrIPxQU6cQQO53Q8AA3Pavvjb+CA
+         PqNc7s0jBH1u88mH6eQeacEyMQy3wPOLeQp9iskyDpQqsOJdS5dBPJTEydDFrT2pUMIv
+         4BaNmCBpN4isXdt/chKq8AC4ZDJSbPnplR855UqeFdubnuAsoFm5aVFHsdI628wgAsmi
+         8IDxHZHfgS5FQBi+PWdkp1KA3WD5/aAA4wAHWyrCOH0js4TcKV+IlVa2fV3f8l9B5ziy
+         I7t0tVKwuRW79M5WfAp8XHrf/4OmkUx+oFgEZlaafi/vH1lSmzmhwLUv7WWy30+5KOO7
+         pwcw==
+X-Forwarded-Encrypted: i=1; AFNElJ86bYO0NF1PYopJ9jiD7pcz92PGncMm/vw0lhTgqBHCZ52ejwK3Zj88/nQKOQ8IIf2KHEkRiD6h/Feou043@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyebci7naqmhPe8sjbM5EN7PrnYO7VnEUVS8Q8+Rj9oHdJzBOig
+	NmyqUgbx+Ypp03EDfczr0srP7aQQ4pjAsBKqHU9WMK6/J4eZkV5iHcdWVAdDutYWCkrkcO9BPBl
+	Jh4E6rDbyMwjhdo8K4ybu2sU+ljDjsA3YvWl27Zif17JZMhgm/nsOC64GE/v65E5tmZUg
+X-Gm-Gg: Acq92OHXbRfCIqgLxnZBb3EMhy3MuLYOW7OqKiaehSXhsqQYwI4IhDvGIoANOHMImcl
+	qJp0SpMQTSvDEG6cHg7liqNPCQNJ7BnQQZI30pXO2cxE+wFpzr2NzyhVe6DXbsBRPK/Viz5mDvK
+	9rhemr7OWqcMTdoX46spHoyzcMrYD3z/4NnJuqGP1/I1/vRKx/GhPdhcASatmgFBcsGPW++X5DD
+	bzbuTHC170eA7lAROOhuFLjvt0MqAZdkwwkGLvYKltpkb6eRCr0Mx3/1QCX66+oTzfK+p9nUER9
+	eXmLlPXQ/Tp19NGqpQiRc8Eutdluxdye+yvNyMrlDxmZyhM/jQcaDdSXsCR4A9acOAcrzrIjGpc
+	KF+l/9HwNF78DemQrZfhiJWG/FuLpiY2b9LQNeheNnbbe4Mo6NtOO8JAj/knhI0q5e6hYQO6Cgs
+	9hijk=
+X-Received: by 2002:a05:620a:1996:b0:8ee:7878:af34 with SMTP id af79cd13be357-911cda511e2mr1481345885a.1.1779090631454;
+        Mon, 18 May 2026 00:50:31 -0700 (PDT)
+X-Received: by 2002:a05:620a:1996:b0:8ee:7878:af34 with SMTP id af79cd13be357-911cda511e2mr1481343685a.1.1779090630941;
+        Mon, 18 May 2026 00:50:30 -0700 (PDT)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6834ba6af5dsm4592787a12.14.2026.05.18.00.50.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 May 2026 00:50:29 -0700 (PDT)
+Message-ID: <a7278ad1-8315-4efa-86a3-c42307ba041f@oss.qualcomm.com>
+Date: Mon, 18 May 2026 09:50:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <agSAL-z6NUV1p2kH@sumit-xelite>
-X-Rspamd-Queue-Id: 22C86568183
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt: arm64: qcom: sc8280xp-blackrock: amend usb0-sbu-mux
+ enable gpio
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        jens.glathe@oldschoolsolutions.biz
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+References: <20250609-blackrock-usb0-mux-v1-1-7903c3b071e4@oldschoolsolutions.biz>
+ <dlpgdby6m5zsl6onu7rqzzatbq3jiqm5r5gvtxoh5k6lmuzqzo@gk4clmoa762b>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <dlpgdby6m5zsl6onu7rqzzatbq3jiqm5r5gvtxoh5k6lmuzqzo@gk4clmoa762b>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: WZr__Y62k9AbWq__qbVge4dHduFXxmeZ
+X-Authority-Analysis: v=2.4 cv=UIDt2ify c=1 sm=1 tr=0 ts=6a0ac4c8 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=gxl3bz0cAAAA:8 a=S0HaN-TvR45hvm6jBKcA:9
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22 a=kiRiLd-pWN9FGgpmzFdl:22
+X-Proofpoint-GUID: WZr__Y62k9AbWq__qbVge4dHduFXxmeZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDA3NCBTYWx0ZWRfX4EJk/dfy2thG
+ rOiV8DM5pJJVA4biL4qVHb1oiclIBKB17B9pWnqhOoyQLc4JkSG0HYhmZu47OHQlMwIY728W/gv
+ DCpdF2K9Xrum8Rsu6hmbW3FEOO63UML5ooKZPyz9blz66SDsEXz/BOrRFXqZxFurB9dd2BvM2gP
+ rUx0TWwbJl5pH4/YSjYaiw0cOQIU0vMHuDrmCoJkd5hVX3XyJqUDTH/Yj1M9NG5Ccp+Nhvf/mV8
+ Df0HGPN0cwIHvxQhIwjgNU5JGSDSHQoMhl1AoKJEzoxJCGbzXq+5mkoAl5xjlazEMaaXi+zWkYc
+ eZb3/JxT9LWDecrT5GaheGPtx+eUd+1DHwEe53OaYeBK0FR79O2YbiEFOzPhgE4KHAP/K9b/BS/
+ ezTJamn4TQyR41GfeQFDN6ejw5XjSdzp3zUs4nUpACfVUaMKDZQYaQw5DYktNtp8M3Lqqjxh+pj
+ DXX3k1tFdb4XxXFYgkQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-18_02,2026-05-15_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ bulkscore=0 suspectscore=0 malwarescore=0 spamscore=0 clxscore=1015
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605180074
+X-Rspamd-Queue-Id: 48575568325
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-108118-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[49];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_FROM(0.00)[bounces-108119-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,lists.infradead.org,kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-On Wed, May 13, 2026 at 07:14:15PM +0530, Sumit Garg wrote:
-> Hi Bjorn,
+On 5/17/26 1:59 PM, Dmitry Baryshkov wrote:
+> On Mon, Jun 09, 2025 at 10:53:56PM +0200, Jens Glathe via B4 Relay wrote:
+>> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>>
+>> The usb0 port didn't switch to dp altmode, investigation into DSDT
+>> UCS0 device resulted into GPIO 100.
+>>
+>> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>> ---
+>> This patch amends the enable gpio for the usb0-sbu-mux to the one
+>> found in the DSDT file for this box. It shows a list of GPIOs in 
+>> a certain order, and it has 2 buffers with conflicting values. 
+>> The one deviating is in the second buffer, at the place where one 
+>> would expect the GPIO for the select pin of USB0 (by pattern 
+>> application from USB1). The GPIO previously used is also there, but 
+>> at the end of the UCS0 buffer structure). Changing it resulted in 
+>> a working dp altmode functionality on usb0.
+>>
+>> This debug effort is a result of work / testing of the 4-lanes patch
+>> [1] on all available devices. Independent of it, it enables dp 
+>> altmode on usb0, and with it, also 4 lanes, making it even more useful.
+>>
+>> [1]: https://lore.kernel.org/all/20250527-topic-4ln_dp_respin-v3-0-f9a0763ec289@oss.qualcomm.com/
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
 > 
-> Just a gentle reminder for any further reviews for this series. If not
-> then please help to pick it up this merge window since we have got acks
-> from corresponding subsystem maintainer too. There were few minor comments
-> addressed by following diff on top of this series. Let me know if you
-> need a new version for that or can they be folded in when you pick this
-> series?
->
-
-Okay, so I went ahead with v6 [1] for this series including below fixes.
-Let me know if I miss anything to get this into linux-next.
-
-[1] https://lore.kernel.org/all/20260518072856.22790-1-sumit.garg@kernel.org/
-
--Sumit
-
-> diff --git a/drivers/firmware/qcom/qcom_pas.c b/drivers/firmware/qcom/qcom_pas.c
-> index 025308adf553..bc6c42f2b3c6 100644
-> --- a/drivers/firmware/qcom/qcom_pas.c
-> +++ b/drivers/firmware/qcom/qcom_pas.c
-> @@ -181,7 +181,7 @@ EXPORT_SYMBOL_GPL(qcom_pas_auth_and_reset);
->   * qcom_pas_prepare_and_auth_reset() - Prepare, authenticate, and reset the
->   *                                    remote processor
->   *
-> - * @ctx:       Context saved during call to qcom_scm_pas_context_init()
-> + * @ctx:       Context saved during call to devm_qcom_pas_context_alloc()
->   *
->   * This function performs the necessary steps to prepare a PAS subsystem,
->   * authenticate it using the provided metadata, and initiate a reset sequence.
-> diff --git a/drivers/net/wireless/ath/ath12k/ahb.c b/drivers/net/wireless/ath/ath12k/ahb.c
-> index c5ba91e6f95e..dff7fa7027c5 100644
-> --- a/drivers/net/wireless/ath/ath12k/ahb.c
-> +++ b/drivers/net/wireless/ath/ath12k/ahb.c
-> @@ -488,7 +488,7 @@ static void ath12k_ahb_power_down(struct ath12k_base *ab, bool is_suspend)
->                 ret = qcom_pas_shutdown(pasid);
->                 if (ret)
->                         ath12k_err(ab, "pas shutdown failed for userPD%d: %d\n",
-> -                                  ab_ahb->userpd_id);
-> +                                  ab_ahb->userpd_id, ret);
->         }
->  }
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > 
-> -Sumit
-> 
-> On Mon, May 04, 2026 at 06:35:47PM +0530, Sumit Garg wrote:
-> > From: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> > 
-> > Qcom platforms has the legacy of using non-standard SCM calls
-> > splintered over the various kernel drivers. These SCM calls aren't
-> > compliant with the standard SMC calling conventions which is a
-> > prerequisite to enable migration to the FF-A specifications from Arm.
-> > 
-> > OP-TEE as an alternative trusted OS to Qualcomm TEE (QTEE) can't
-> > support these non-standard SCM calls. And even for newer architectures
-> > using S-EL2 with Hafnium support, QTEE won't be able to support SCM
-> > calls either with FF-A requirements coming in. And with both OP-TEE
-> > and QTEE drivers well integrated in the TEE subsystem, it makes further
-> > sense to reuse the TEE bus client drivers infrastructure.
-> > 
-> > The added benefit of TEE bus infrastructure is that there is support
-> > for discoverable/enumerable services. With that client drivers don't
-> > have to manually invoke a special SCM call to know the service status.
-> > 
-> > So enable the generic Peripheral Authentication Service (PAS) provided
-> > by the firmware. It acts as the common layer with different TZ
-> > backends plugged in whether it's an SCM implementation or a proper
-> > TEE bus based PAS service implementation.
-> > 
-> > The TEE PAS service ABI is designed to be extensible with additional API
-> > as PTA_QCOM_PAS_CAPABILITIES. This allows to accommodate any future
-> > extensions of the PAS service needed while still maintaining backwards
-> > compatibility.
-> > 
-> > Currently OP-TEE support is being added to provide the backend PAS
-> > service implementation which can be found as part of this PR [1].
-> > This implementation has been tested on Kodiak/RB3Gen2 board with lemans
-> > EVK board being the next target. In addition to that WIN/IPQ targets
-> > planning to use OP-TEE will use this service too. Surely the backwards
-> > compatibility is maintained and tested for SCM backend.
-> > 
-> > Note that kernel PAS service support while running in EL2 is at parity
-> > among OP-TEE vs QTEE. Especially the media (venus/iris) support depends
-> > on proper IOMMU support being worked out on the PAS client end.
-> > 
-> > Patch summary:
-> > - Patch #1: adds Kodiak EL2 overlay since boot stack with TF-A/OP-TEE
-> >   only allow UEFI and Linux to boot in EL2.
-> > - Patch #2: adds generic PAS service.
-> > - Patch #3: migrates SCM backend to generic PAS service.
-> > - Patch #4: adds TEE/OP-TEE backend for generic PAS service.
-> > - Patch #5-#14: migrates all client drivers to generic PAS service.
-> > - Patch #15: drops legacy PAS SCM exported APIs.
-> > 
-> > The patch-set is based on v7.1-rc1 tag and can be found in git tree here
-> > [2].
-> > 
-> > Merge strategy:
-> > 
-> > It is expected due to APIs dependency, the entire patch-set to go via
-> > the Qcom tree. All other subsystem maintainers, it will be great if I
-> > can get acks for the corresponding subsystem patches.
-> > 
-> > [1] https://github.com/OP-TEE/optee_os/pull/7721 (already merged)
-> > [2] https://git.kernel.org/pub/scm/linux/kernel/git/sumit.garg/linux.git/log/?h=qcom-pas-v5
-> > 
-> > ---
-> > Changes in v5:
-> > - Incorporated misc. comments from Mukesh.
-> > - Split up patch #11 into 2 to add an independent commit for passing
-> >   proper PAS ID to set_remote_state API.
-> > - Picked up tags.
-> > 
-> > Changes in v4:
-> > - Incorporate misc. comments on patch #4.
-> > - Picked up an ack for patch #10.
-> > - Clarify in cover letter about state of media support.
-> > 
-> > Changes in v3:
-> > - Incorporated some style and misc. comments for patch #2, #3 and #4.
-> > - Add QCOM_PAS Kconfig dependency for various subsystems.
-> > - Switch from pseudo TA to proper TA invoke commands.
-> > 
-> > Changes in v2:
-> > - Fixed kernel doc warnings.
-> > - Polish commit message and comments for patch #2.
-> > - Pass proper PAS ID in set_remote_state API for media firmware drivers.
-> > - Added Maintainer entry and dropped MODULE_AUTHOR.
-> > 
-> > Mukesh Ojha (1):
-> >   arm64: dts: qcom: kodiak: Add EL2 overlay
-> > 
-> > Sumit Garg (15):
-> >   firmware: qcom: Add a generic PAS service
-> >   firmware: qcom_scm: Migrate to generic PAS service
-> >   firmware: qcom: Add a PAS TEE service
-> >   remoteproc: qcom_q6v5_pas: Switch over to generic PAS TZ APIs
-> >   remoteproc: qcom_q6v5_mss: Switch to generic PAS TZ APIs
-> >   soc: qcom: mdtloader: Switch to generic PAS TZ APIs
-> >   remoteproc: qcom_wcnss: Switch to generic PAS TZ APIs
-> >   remoteproc: qcom: Select QCOM_PAS generic service
-> >   drm/msm: Switch to generic PAS TZ APIs
-> >   media: qcom: Switch to generic PAS TZ APIs
-> >   media: qcom: Pass proper PAS ID to set_remote_state API
-> >   net: ipa: Switch to generic PAS TZ APIs
-> >   wifi: ath12k: Switch to generic PAS TZ APIs
-> >   firmware: qcom_scm: Remove SCM PAS wrappers
-> >   MAINTAINERS: Add maintainer entry for Qualcomm PAS TZ service
-> > 
-> >  MAINTAINERS                                   |   9 +
-> >  arch/arm64/boot/dts/qcom/Makefile             |   2 +
-> >  arch/arm64/boot/dts/qcom/kodiak-el2.dtso      |  35 ++
-> >  drivers/firmware/qcom/Kconfig                 |  19 +
-> >  drivers/firmware/qcom/Makefile                |   2 +
-> >  drivers/firmware/qcom/qcom_pas.c              | 291 +++++++++++
-> >  drivers/firmware/qcom/qcom_pas.h              |  50 ++
-> >  drivers/firmware/qcom/qcom_pas_tee.c          | 476 ++++++++++++++++++
-> >  drivers/firmware/qcom/qcom_scm.c              | 302 ++++-------
-> >  drivers/gpu/drm/msm/Kconfig                   |   1 +
-> >  drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |   4 +-
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  11 +-
-> >  drivers/media/platform/qcom/iris/Kconfig      |  25 +-
-> >  .../media/platform/qcom/iris/iris_firmware.c  |   9 +-
-> >  drivers/media/platform/qcom/venus/Kconfig     |   1 +
-> >  drivers/media/platform/qcom/venus/firmware.c  |  11 +-
-> >  drivers/net/ipa/Kconfig                       |   2 +-
-> >  drivers/net/ipa/ipa_main.c                    |  13 +-
-> >  drivers/net/wireless/ath/ath12k/Kconfig       |   2 +-
-> >  drivers/net/wireless/ath/ath12k/ahb.c         |   8 +-
-> >  drivers/remoteproc/Kconfig                    |   4 +-
-> >  drivers/remoteproc/qcom_q6v5_mss.c            |   5 +-
-> >  drivers/remoteproc/qcom_q6v5_pas.c            |  51 +-
-> >  drivers/remoteproc/qcom_wcnss.c               |  12 +-
-> >  drivers/soc/qcom/mdt_loader.c                 |  12 +-
-> >  include/linux/firmware/qcom/qcom_pas.h        |  43 ++
-> >  include/linux/firmware/qcom/qcom_scm.h        |  29 --
-> >  include/linux/soc/qcom/mdt_loader.h           |   6 +-
-> >  28 files changed, 1117 insertions(+), 318 deletions(-)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/kodiak-el2.dtso
-> >  create mode 100644 drivers/firmware/qcom/qcom_pas.c
-> >  create mode 100644 drivers/firmware/qcom/qcom_pas.h
-> >  create mode 100644 drivers/firmware/qcom/qcom_pas_tee.c
-> >  create mode 100644 include/linux/firmware/qcom/qcom_pas.h
-> > 
-> > -- 
-> > 2.51.0
-> > 
-> > 
-> 
+> P.S. Might it be that you need to set both GPIOs? Might the other GPIO
+> be related to USB4 tunnelling?
+
+On the CRD8280 schematic, GPIO_100 is N/C and there's a comment that
+at some point SBU_SW_OE_N was moved from 100 to 101
+
+Konrad
 
