@@ -1,177 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-108298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id BgjVCvePC2rjJQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 00:17:27 +0200
+	id QPdNAhqZC2qOJwUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 00:56:26 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77D1A5745D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 00:17:26 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61F5D574D2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 00:56:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 322903011874
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 22:17:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1D9EE30067A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 22:56:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 636B2395DBE;
-	Mon, 18 May 2026 22:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C90862F8EAB;
+	Mon, 18 May 2026 22:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DRMe8GJ9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jQV00PvO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8D12F7EF5;
-	Mon, 18 May 2026 22:17:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778F926A0D5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 22:56:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779142644; cv=none; b=ZkjWJ2HJtpH9AY3XfnkDUP1dd+Wr3JAOJTR/fYGTqJTCxh4FIyeonnjq5Ql0UOqayZrYPBwqJWGRzZRV9uEz6k3QopH8ogPB7MEeyrxDrtgmDJ5WUSAYV9V+8NQQVR2L45FTsLK+ilHEPAfeaPoqPUsUK6vXDVWUvwMKltiCo4I=
+	t=1779144982; cv=none; b=J/dCxtyU0rkQARyRk14J6RFMQ2at5rb2gqBS5sQZXP+swV8zPCavnL7GPAUDrEvnp8pGb74iKECYqE2syG5ZqrKk4uKOAjSDfV0J68Q57z1TCWjjhhjXss3ebqQiWC9iYT+ZA4Jl1ysvsWCh+uf1qoviRon/T7Bf60V860cSq0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779142644; c=relaxed/simple;
-	bh=2byBZ7K9TFGi279fR4cU+LvkzjbAdmFJbPPXhJHi/og=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Wp/94AfYpcRfq1rWMJqSef8P0KDfRbiBBEQdxT3Wsu+gvMlahRC51lQcDNMLGfztSletklec1DPkn9YLhpPtgyygjRmN7CFy+y0luwL+pFGxy9RdiSHNCBQJRiusZwWUgb0ngIGE7fPbWqDhIOEvA0Rn4hJv3lpqasi1DLcQlIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DRMe8GJ9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32911C2BCB7;
-	Mon, 18 May 2026 22:17:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779142643;
-	bh=2byBZ7K9TFGi279fR4cU+LvkzjbAdmFJbPPXhJHi/og=;
-	h=From:Date:Subject:To:Cc:From;
-	b=DRMe8GJ9sRVOyuVrnmUVJ7QxRmRD1w9H4qhOiYdA4yCgrvGUT2+wnMMgrG+1jJRpz
-	 QVZbXcKKqelR3ILk8NZuvOkQQaH5ppyjXs9LUwYrPTzazw/AAxRRv65Qb00mn1uh13
-	 L8uZAeY18nqUnhO+UR/b179QmBGPXRFYkS9fR3cZNuWyFrjGq3WkFQs9G9o79fpbYm
-	 POWoXgsAfIBZaoQC+5ZoyjGEEUkgA3esSdC95Mcahtb0V2DA/5kbREtKBHopnWw++B
-	 6OTsH2g6WBIzxQUDiWQVxmit1WEOaABhp0MFwmD6RYiGUP2lJBhk78cP5cyV7UDeAh
-	 6TK/m0MxpmLdQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 18 May 2026 15:17:14 -0700
-Subject: [PATCH] drm/msm: Restore second parameter name in purge() and
- evict()
+	s=arc-20240116; t=1779144982; c=relaxed/simple;
+	bh=IUdRJC56RBzqNCM1DPww5KqL+egKKwzZHSppoHwXz1w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q8dHg5fpz9M+hD4FsGQdkGUBtYT9zbXJ9/GxQtE7pkzZgET4QQKbdwrIctRobApEG6ajhsGu2ds5dUzeCPVB8o6/t5oEVtg/doZgZftR6xGXfLAp2gZH+hHDGFwymKBaQvL8zyeQ1Ya2vDAx8mvV4sc1htrq6ZCGbRtgQt5lg/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jQV00PvO; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-c70c112cb61so2357005a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 15:56:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779144981; x=1779749781; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=T7+IeU1q4KF73mOQ7FypKUKAYVqW8+sQGdeWvAZi1Ts=;
+        b=jQV00PvO1x7KvgjiFebPB5kgvKjzuXx1dJ+2wh68+17twJ4MikCG3FV4LYk1PBc4ez
+         sRokYixVAr7t6CGMsL0U9ngTCccN63OYrVBKrD3TmxKHiUK72UrVN3aKwIHGWBZcmK9x
+         RduVF+3p33qS+1FLZ7z8RYpGQhlOgnQx5sMepq6dXh6XaRTdETD8yIOsYkokDYxCh5ET
+         QdanPdlN0ruy72kXzYaTeneULLyGrvHvRC9CUD3kMrdkv8eYtl29M8gPgTq/avB6kPhJ
+         rqexW1jy9KZhCobtp3fTfEDd3y3WZoi/kknK72yYVZC6CksSPbxVO5D2u0CYtvkA60Bf
+         1wHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779144981; x=1779749781;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T7+IeU1q4KF73mOQ7FypKUKAYVqW8+sQGdeWvAZi1Ts=;
+        b=WZ4bxyZCWP5hBToBjQVjsFv3ySW9BzUHZ/n1hEluhNe2NJcoC1+BxJqRSwwi33WFrv
+         YONTDjw0ZVOglPZI5LxYx2ipdk+w3mOopMzIES/IX7t8d3l7Jk9XmOkdN4mj/Yiq/WHW
+         SzXyZ220XrxHPFFKLDciqfkZ2CadG88oiUHsUAh6YkeYnD+OSxGhYgxmf5oARuRxEcpc
+         HzcvYJTF69pOomoh4yVR9HnXVoy8CXb2GQDneq0yevsXkUEfnGlymr7DGgpIgzvKVnca
+         2lNFiT2vWxCQ/pPaQT9BxISJTZeHCEJQekDBRh7hc5UZ11BgfkH+hFJaaB9ZmY/cUPbS
+         gGbw==
+X-Forwarded-Encrypted: i=1; AFNElJ9hMpWg/5Ks3nTLSvf6WWsT5bGg4YC4iF2f48yIVr5MvvuHD8gFmKjN80h7mefmhbRMHpqje4g2zyrQcHMn@vger.kernel.org
+X-Gm-Message-State: AOJu0YxsNjPBApX3VSuB7Ev2gsJNGfEiqHDKf2R7CocpCMXXqn7S0kIl
+	UCJYi4EYXtoJdEI7OHtzkwCoUuW3O2ONAsDbpzikjAdhmZRnrooG7PcA
+X-Gm-Gg: Acq92OFOBunXCLkDe/e005lMuJKJVNWdOdNib50szeXAIeXSplW5eu4XNndL/AWubm1
+	I1GZqd7vIowgbROCjiF5JFaD875vUpXMCfwb+3BvNBRwokGvVAN2HkRksemEj2Rz1Wh37c7xlkK
+	aDEFfrc7Ilv8JH/w6g3+5n1c9pEOkUA+kdoY6oqs3aS5zK7Gc0xNky6AFV5UsPcMrvBDdjrsFMV
+	enxYF5bTBr/wpob5EGyar+z++ghk7I22j95OOXldi3/cKM+3JXG4GpNeF0iC/pVqCLksn0/w9K7
+	1rlVzN8PSpDZAaLY+ijZ7b6HWxufngeKbI+hUGWwG7KM9Hmp2mKKSX9F+w1CadD0wVX/l82oUz5
+	0yuFhE4aiTdOJZd96Kx9m/JucIXNnp9LPLgWiQSD16uw6e5C6vXEnFEhA1sNlTN19WoPf422Pdy
+	cF0zJE+7xBYrvVLbN7wIHXQpF9bYc=
+X-Received: by 2002:a17:903:2c47:b0:2bc:e62a:979b with SMTP id d9443c01a7336-2bd7e933cafmr193650485ad.30.1779144980702;
+        Mon, 18 May 2026 15:56:20 -0700 (PDT)
+Received: from soyboi ([2402:8780:1073:dc10:22f6:2ac0:a51b:5d77])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5bd5f2dcsm161487735ad.13.2026.05.18.15.56.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 May 2026 15:56:20 -0700 (PDT)
+Date: Tue, 19 May 2026 05:56:15 +0700
+From: Robertus Diawan Chris <robertusdchris@gmail.com>
+To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Cc: jens.wiklander@linaro.org, sumit.garg@kernel.org,
+	linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org,
+	linux-kernel@vger.kernel.org,
+	linux-kernel-mentees@lists.linuxfoundation.org,
+	skhan@linuxfoundation.org, me@brighamcampbell.com
+Subject: Re: [PATCH] tee: qcomtee: add missing va_end in early return
+ qcomtee_object_user_init()
+Message-ID: <aguZD_vcJCwXY--l@soyboi>
+References: <20260513091031.145826-1-robertusdchris@gmail.com>
+ <8182784b-b6c2-4136-af8d-3aea4f5a4662@oss.qualcomm.com>
+ <agat1sBHqkGWKzOD@soyboi>
+ <e626963b-7f20-43fd-b3e0-e16d9b6f13f8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260518-drm-msm-fix-c23-extensions-v1-1-0833559418c7@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMUQrCMBCE4auUfXahSYwUryI+mHRat5Ao2VYKp
- Xc31ccfZr6NFEWgdG02KviIyivXMKeG4vORR7D0tcm29tJ603FfEidNPMjK0TrGOiMfL2UTog/
- mbOGdowq8C+rqh9/u/9YlTIjzIdK+fwE754OxfgAAAA==
-X-Change-ID: 20260518-drm-msm-fix-c23-extensions-1bc5b142e533
-To: Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Daniel J Blueman <daniel@quora.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- llvm@lists.linux.dev, stable@vger.kernel.org, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.16-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2746; i=nathan@kernel.org;
- h=from:subject:message-id; bh=2byBZ7K9TFGi279fR4cU+LvkzjbAdmFJbPPXhJHi/og=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDFnc/R9UrV9GMav3RZuWpCmsMiiZVRIY+H/fZ9XTS/9MT
- vhxZd3WjlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRCZcY/ml9OSycliWrHVmz
- Zvbxu3eSTNWVD7Hu0tp0yMmnJfzbjdWMDLunm57Se1ptwLOwe8rj8u+7bCeb63boFNiHRokl1bv
- E8AEA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e626963b-7f20-43fd-b3e0-e16d9b6f13f8@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,quora.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108298-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-108299-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[nathan@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robertusdchris@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 77D1A5745D4
+X-Rspamd-Queue-Id: 61F5D574D2F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-After commit 3392291fc509 ("drm/msm: Fix shrinker deadlock"), all
-supported versions of clang warn (or error with CONFIG_WERROR=y):
+Hello Amir,
 
-  drivers/gpu/drm/msm/msm_gem_shrinker.c:105:58: error: omitting the parameter name in a function definition is a C23 extension [-Werror,-Wc23-extensions]
-    105 | purge(struct drm_gem_object *obj, struct ww_acquire_ctx *)
-        |                                                          ^
-  drivers/gpu/drm/msm/msm_gem_shrinker.c:117:58: error: omitting the parameter name in a function definition is a C23 extension [-Werror,-Wc23-extensions]
-    117 | evict(struct drm_gem_object *obj, struct ww_acquire_ctx *)
-        |                                                          ^
-  2 errors generated.
+On Mon, May 18, 2026 at 04:36:20PM +1000, Amirreza Zarrabi wrote:
+> Hi,
+>
+> On 5/15/2026 3:23 PM, Robertus Diawan Chris wrote:
+> > Hello Amir,
+> >
+> > On Fri, May 15, 2026 at 11:31:50AM +1000, Amirreza Zarrabi wrote:
+> >> On 5/13/2026 7:10 PM, Robertus Diawan Chris wrote:
+> >>> qcomtee_object_user_init() is a variadic function and when the function
+> >>> return because there's no dispatch callback in QCOMTEE_OBJECT_TYPE_CB
+> >>> case, there's no va_end to cleanup "ap" object initialized by va_start
+> >>> and that can cause undefined behavior. So make sure to use va_end before
+> >>> returning the error code when there's no dispatch callback.
+> >>>
+> >>> This is reported by Coverity Scan as "Missing varargs init or cleanup".
+> >>>
+> >>> Fixes: d6e290837e50 ("tee: add Qualcomm TEE driver")
+> >>> Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
+> >>> ---
+> >>> I don't have the device, so I am not sure how to test this change.
+> >>> Thank you.
+> >>>
+> >>>  drivers/tee/qcomtee/core.c | 8 ++++++--
+> >>>  1 file changed, 6 insertions(+), 2 deletions(-)
+> >>>
+> >>> diff --git a/drivers/tee/qcomtee/core.c b/drivers/tee/qcomtee/core.c
+> >>> index b1cb50e434f0..901a31e8201f 100644
+> >>> --- a/drivers/tee/qcomtee/core.c
+> >>> +++ b/drivers/tee/qcomtee/core.c
+> >>> @@ -306,8 +306,10 @@ int qcomtee_object_user_init(struct qcomtee_object *object,
+> >>>  		break;
+> >>>  	case QCOMTEE_OBJECT_TYPE_CB:
+> >>>  		object->ops = ops;
+> >>> -		if (!object->ops->dispatch)
+> >>> -			return -EINVAL;
+> >>> +		if (!object->ops->dispatch) {
+> >>> +			ret = -EINVAL;
+> >>> +			goto out;
+> >>> +		}
+> >>>
+> >>>  		/* If failed, "no-name". */
+> >>>  		object->name = kvasprintf_const(GFP_KERNEL, fmt, ap);
+> >>> @@ -320,6 +322,8 @@ int qcomtee_object_user_init(struct qcomtee_object *object,
+> >>>  	default:
+> >>>  		ret = -EINVAL;
+> >>>  	}
+> >>> +
+> >>> +out:
+> >>>  	va_end(ap);
+> >>>
+> >>>  	return ret;
+> >>>
+> >>> base-commit: 5d6919055dec134de3c40167a490f33c74c12581
+> >>
+> >> Hi,
+> >>
+> >> Forgot to mention: how about using a break instead of a goto.
+> >
+> > Oh right. In this case, using "break" statement is enough. I will send
+> > the v2 of the patch. Maybe something like this:
+> >
+> > 	if (!object->ops->dispatch) {
+> > 		ret = -EINVAL;
+> > 		break;
+> > 	}
+> >
+> > and then remove the "out" label.
+> >
+> >> Then feel free to add Reviewed-by.
+> >
+> > I want to confirm first, if I changed the patch using "break" statement,
+> > do I need to add "Reviewed-by" tag in the v2 of the patch or not? I am
+> > still not sure when to add "Reviewed-by" tag, like can we add
+> > "Reviewed-by" tag when we changed the patch?
+> >
+>
+> This is a small change. You can add the tag when sending your v2
+> as long as you include the change.
 
-With older but supported versions of GCC, this is an unconditional hard error:
-
-  drivers/gpu/drm/msm/msm_gem_shrinker.c: In function 'purge':
-  drivers/gpu/drm/msm/msm_gem_shrinker.c:105:35: error: parameter name omitted
-   purge(struct drm_gem_object *obj, struct ww_acquire_ctx *)
-                                     ^~~~~~~~~~~~~~~~~~~~~~~
-  drivers/gpu/drm/msm/msm_gem_shrinker.c: In function 'evict':
-  drivers/gpu/drm/msm/msm_gem_shrinker.c:117:35: error: parameter name omitted
-   evict(struct drm_gem_object *obj, struct ww_acquire_ctx *)
-                                     ^~~~~~~~~~~~~~~~~~~~~~~
-
-Restore the parameter name to clear up the warnings, renaming it
-"unused" to make it clear it is only needed to satisfy the prototype of
-drm_gem_lru_scan().
-
-Cc: stable@vger.kernel.org
-Fixes: 3392291fc509 ("drm/msm: Fix shrinker deadlock")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/gpu/drm/msm/msm_gem_shrinker.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem_shrinker.c b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-index 6e39e4e578bb..8f118b5185a1 100644
---- a/drivers/gpu/drm/msm/msm_gem_shrinker.c
-+++ b/drivers/gpu/drm/msm/msm_gem_shrinker.c
-@@ -102,7 +102,7 @@ with_vm_locks(void (*fn)(struct drm_gem_object *obj),
- }
- 
- static bool
--purge(struct drm_gem_object *obj, struct ww_acquire_ctx *)
-+purge(struct drm_gem_object *obj, struct ww_acquire_ctx *unused)
- {
- 	if (!is_purgeable(to_msm_bo(obj)))
- 		return false;
-@@ -114,7 +114,7 @@ purge(struct drm_gem_object *obj, struct ww_acquire_ctx *)
- }
- 
- static bool
--evict(struct drm_gem_object *obj, struct ww_acquire_ctx *)
-+evict(struct drm_gem_object *obj, struct ww_acquire_ctx *unused)
- {
- 	if (is_unevictable(to_msm_bo(obj)))
- 		return false;
-
----
-base-commit: db339b6bc9f234b4883eb02946ea01d8d9faa11c
-change-id: 20260518-drm-msm-fix-c23-extensions-1bc5b142e533
+I see. Alright, I will send the patch v2 with the change and the
+"Reviewed-by" tag later. Thanks.
 
 Best regards,
---  
-Cheers,
-Nathan
-
+Robertus Diawan Chris
 
