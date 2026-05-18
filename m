@@ -1,105 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-108201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yIn5HWsXC2o5/wQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 15:43:07 +0200
+	id sFUVDZwXC2o5/wQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 15:43:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAA5356DDA7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 15:43:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D962156DE11
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 15:43:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 2ED9F302BCC3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 13:42:03 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 582A330465ED
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 18 May 2026 13:42:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37A2B481FCB;
-	Mon, 18 May 2026 13:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82FE5372EE4;
+	Mon, 18 May 2026 13:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XvsvNBvh";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Y/VxpBFx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RAzIwqGz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71393793D3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 13:41:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68294378833
+	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 13:42:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779111720; cv=none; b=Jo5kmvQ5TySjc05KY8Ju/wA/r5ZjNpoS5eX5uz5sKv1Ehxve6o6gBjObnquxc/4zBcy64fd7z2uoGiP+mjYNt4kOUIOOU2c1Rm6cDJr0l9cmxkDju7afCf3z4rJ4fDJbBxI7xtoZKl4i6/UX+neSInquHK94/WSDe9w6oKm/ajg=
+	t=1779111740; cv=none; b=GpoO1UWqcks/0/SfnpmnioIGXOH0xy7FZ5xraA3pvgIYZ0+Z8slj9H2UO4Tf2uJmLqwncGDI4zAx4GYwN09bGN6e+e8FSrNvowuoln6zs/XjcvGnsEV/+GM8IdxzRfVBo3bUr3TJxvI+CIaQwPsnkmEREOkgahUxfa8M+P5UBG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779111720; c=relaxed/simple;
-	bh=ERa9KGcfFMbzXPZhSgeHUPTZ1z2PRDKTu5+uRwX8ig4=;
+	s=arc-20240116; t=1779111740; c=relaxed/simple;
+	bh=phicAUtLwfBEBApbvqLfhBVzebPJnXcW5f7izh+9EyQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Fvxfd0m4CZQDCPYTP6xnThrKqBKF5ImifUJdIdoKI5Dlx6tr1n3puncT8fw2woGA+tVLGSiE7EJelJagVTf1RBNVldbhHvLi0YN+bK1gyt2M0WGzgDB6omp5xfxdMC9vZmLeap2cln+Ba9s/JGfQ3yP7yvGiTJiSoUlsjfE2hIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XvsvNBvh; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Y/VxpBFx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64IAonwL2083011
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 13:41:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jOQ2L+lUTrqPio0b+Bre2mbX+LErk3gfKwpcIuQXOGQ=; b=XvsvNBvh+ImGM9dN
-	EdvOrrKes25dpNpUss/uQAOFvfr0/xfL0bzSQ3sbYtXci5su81V//SSSZoBWRNlR
-	jGFVn7vYFxOyaQ/GmY+rWyHbwWi/exKMmBUZAhCGJzWKBXLmdMRcz09KsmR/gY/Y
-	hsYk+nlcDcNHpRZieUfsWMkOX2zxRdaVqZizSkz/jWPjiwqPKzglUG0Yq7qTEc5u
-	KchQBnfbhuRleGWfJ1TIelvBETpmr8Nsrhzt2Q/WtZuYkqdpiBDRvFqFEltKgppX
-	JjNt6ZPLNJIh089N7+TElhTnk3V8AKshR52I5SkxIuL9JiLLdB5kdtdjN12MAu98
-	ymo+dQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e81ch8nmm-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 13:41:56 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-50d840206c3so8694031cf.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 06:41:56 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=SQ4bI2tsYZ4OqUiNO0n/WNUemxrkZGnRyRsAlA8PoVaEVELRJQfw2AhaOc767XJYHR3ON6RRZFlwO1BGUFAX84YHonLTlwIKJyQYr8w1e1UBoHrocntVm+kGsxYAGea/AxNjxcYQcibrudqoclHUNntFMhbJoGO8LMa+84wjxkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RAzIwqGz; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-488b0e1b870so34616525e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 06:42:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779111715; x=1779716515; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jOQ2L+lUTrqPio0b+Bre2mbX+LErk3gfKwpcIuQXOGQ=;
-        b=Y/VxpBFxQbFyjfpc+EGAwWIlEIKvWl67tCv8rf2VKXqRL4Mr+woYMp2U3aFBTlVQlr
-         wMfVN+Y9qKWIUBuJTbDnnt+xb9s9iQkwELaLJKc9+xRluxJcO0whCJcoVoP1OMxJMCcO
-         qcKDP6DuPZWuTPPT1DA0PdA35fwSwlNyaP6r5Rbe2bEi2VeLKLhBgfuFXWj1nZglLrHN
-         aA1lDUrKhfepCHGWGKt1lQX+0BG6JvUYBcSK3h0OFN3ZeU6NcgOeKDqsIaGtZERlJE8/
-         qm5CaDhKZbjBGaqf2fFI/b74YGtssnc4oUB4PY0yoMqfLXoKMfLCn+pUsljkshiTMzYG
-         gDiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779111715; x=1779716515;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1779111732; x=1779716532; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=jOQ2L+lUTrqPio0b+Bre2mbX+LErk3gfKwpcIuQXOGQ=;
-        b=Wls/9U2MpIOzEu9j0vMCLU+o4ilAYzUp+CzkRoa1fRwaiDHUaevfECMegY3Vh++oQ7
-         VWuRl97fzMabJm3UQX2pErJ4nQHk4EQPriKDgO+SKlTYbb4GKHlOYdSN9Gf4ruSUDL5Z
-         GKwKwqU2k+VAi3KQ/9tqJp+IiVmnp2oSzf80HnZ6TFwYTqcsYqq/VO3fgemfpyBvMxKV
-         VSWaV5WlZnmxvL5wdrlXfkfLKHJSN6E/wsRF0REa5DrT9gCZUCqGrJvSR0JyqDP9vqy+
-         onw8eXOVZk6iPlR2heaJmFKFzh165nWiJoaOCcRLcw4XqGsF9vVYHQt4DOsj4e+DU2+T
-         rp/w==
-X-Forwarded-Encrypted: i=1; AFNElJ9Wj1n/qtehGkSwW8lpiFfE5sVFS8IIQzXmF05okWjPj4mrWxooJCQUq0Wq5ZYipV4IJvlejeQMjV50oTl4@vger.kernel.org
-X-Gm-Message-State: AOJu0YyhTWLGbjW4okaTp1RNmOzkCGfeGnQTESeRuc8ItlZMDU1Zwu4z
-	E2n1YLS13a2SgurtCnzgtXobMUMIqWh9f1buosrnlWlTLdGrX/dgX0UUK9/U8SKr39Ur0HNBK2w
-	3J5tTFn2dBqrK32eQ0IDXKSYwVZBN2m1gwfdiBphSVyCnrtXb9CLZ8/FjOOUqfasVY0no
-X-Gm-Gg: Acq92OE6JhRw4bpfDa2JfbQGK4Qu/4xUOaqwUObj5crJiwUIC8aqFaQFwgGC+9ZpCRT
-	iQTviv/bftjrAKRq47HVGh+6wg4YPsxuVZbSYXCk40fOEIo86+rRcKJsoa0dzYd23iS3l0sREpc
-	Fo0Wkk6UqGOjufvLxxpxdbDLqQfgw+atQge24EI6cjjn1T8boiOBtUIh5ciU5onmcD8DB+q6T8T
-	dKC+YM7Hot2ZImuYqMEVw9tKA+mGI2BaDCYWpMhzYr2vfLHNv9DW1SXzkoxQvnex4xVZfiL56z2
-	PJs9dbLCQccdrpK4Xuv1iOampSZuZZijKTxCALGhd6l/4knHeJ1BunJMQbJF/1giBHj3FRHy9O9
-	6fhlXJMahUgSjowcqoMUrumBadN04zzYFeMa7HhvzoIupGMpmP2LGJNg3rC1AEsHvbcIXH0iaI8
-	MK4rU=
-X-Received: by 2002:a05:622a:111:b0:50d:5af1:65bb with SMTP id d75a77b69052e-5165a1e7299mr143825101cf.5.1779111715504;
-        Mon, 18 May 2026 06:41:55 -0700 (PDT)
-X-Received: by 2002:a05:622a:111:b0:50d:5af1:65bb with SMTP id d75a77b69052e-5165a1e7299mr143824661cf.5.1779111715037;
-        Mon, 18 May 2026 06:41:55 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bd4f4dea94bsm563155866b.33.2026.05.18.06.41.52
+        bh=qrl7X6LWp+Kwsf0LGx75Q3m3WXWBZnBJCVNbzcnpWzM=;
+        b=RAzIwqGz8gpb1/5THhI4UZVFL8mw91OhGcwSuLGDMsI3Qc/lIGDh4YCZC95yc5hBUI
+         2p9RbxVj4BteytuknJfsz3ZLac6IguWd4z/CSpvjnjFO5cQZHvk32dZmQoYs9p2Wz/Cy
+         X+i5xZpi9LvwkprtxTlD8AL6waUVVSgCyDRIvNjmelQ40lXqBqzlZ2MS/tC7fKcjTPYh
+         pMQVbMc9Ir77mP36P0PoMAisRUZP/fup91z74AD0M21Z6Rr5XRe3ot0CBFzSzfjHSNaW
+         ZRR+wwomGYRacFjURL4BlFfROOlpmk8oZarDXyf+hTVPXFncsThpaTVCGW/ELejEgshi
+         Z97w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779111732; x=1779716532;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qrl7X6LWp+Kwsf0LGx75Q3m3WXWBZnBJCVNbzcnpWzM=;
+        b=oGLnZWOoJinULN3j8gKpE6h1ZOOYDST0DfyJhcxNJHcZvhJL/3F7cVHFSq/OA/dVzI
+         XVqke8cH5xJ9SrmFN+VP/pH+d06qn5g1VLkqjH4d3TpSCqncihVuEy1GdVWvzdPo40JK
+         IwzrFNo1xyi7teAqqEedgmbcfWe4/Z4PuJyZXqh5Bj6FjsbotGNh5nMyjW/gVI9vxvU/
+         a5lCWzMDhDuSHqxwuomWJAVnvU6/ufqB0fTTT2DFLCZA5Zbct5PTj1TfFVuW87k0bqU0
+         RUwL91Zi+HedNkBOF57tBYGwFvlsuvX1zGVE3+IPrJgXLm9WslytOm4lhK+NupznNvFO
+         fz4Q==
+X-Gm-Message-State: AOJu0YwmvfxEx7niPPPas0m/t20RDvkPbgEEV7Z5OoyoW+OlAyykDnJi
+	75//g4ERTJF5fAGG6Hv8xYPB7d27lUL4qaoR5pkoFNP8BguUMC2ykWPrKWWOtCK9A6g=
+X-Gm-Gg: Acq92OHzIVl9F9nTiH2jR0/EyhoKcyuHf0UsVrE13lrgqtcBjwXC/Cblrad5vpEe88o
+	GBER1kzZNzxXaXo07ZGtU9e07ajbWRXzJSP7E+kKKlDZREHwB+BqzrdC7c9Uuo3yHn1OrwC8Wdb
+	5l4i86MXahQotpL2Xg422dYcMWo7RQ+033GkKrme4yFC3vd+xv4Vljjd0NhKQKIRbx2QSPRp/35
+	+n5g8woOHgDzyBuzHnkXF5DSQLqf0XGfpJI1sajzcp2a48BQGYhbkafYdacxdDaYhwBpi8VU1B2
+	9aMJvpC34LjeH3WtP/D0v0eMHATd+VjuXSrJ+AibBA6Nx/WiL17U1MXTpNudHOZ+RrHMvv446sM
+	hweT8YN/bB3ZXb7wmzC9u/eKD5sO99o+62h33pA5vpE07wgOAwNZJlx4SNvMw99wtGhhhcgZN7O
+	irU4VFdVnIFPN/pzWxOVDzBystNZBVFq5OmBT3+pGl4yTFNSygLodriJkPEvr0TOWTgGYu89iL0
+	T21zVQ=
+X-Received: by 2002:a05:600c:c10e:b0:48a:65a5:750f with SMTP id 5b1f17b1804b1-48fe63265ddmr176315985e9.21.1779111732344;
+        Mon, 18 May 2026 06:42:12 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:1029:e3c5:362e:1250? ([2a01:e0a:106d:1080:1029:e3c5:362e:1250])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48febe5bc94sm151219645e9.4.2026.05.18.06.42.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 May 2026 06:41:54 -0700 (PDT)
-Message-ID: <a5cbe0f6-bb58-4d73-a5d9-5680accb25b9@oss.qualcomm.com>
-Date: Mon, 18 May 2026 15:41:51 +0200
+        Mon, 18 May 2026 06:42:11 -0700 (PDT)
+Message-ID: <6fca9806-3707-468d-b4ef-12e92d9480a5@linaro.org>
+Date: Mon, 18 May 2026 15:42:11 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,124 +87,611 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] serial: qcom-geni: Add tracepoints for Qualcomm
- GENI serial driver
-To: Praveen Talari <praveen.talari@oss.qualcomm.com>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu
- <mhiramat@kernel.org>,
-        Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-        Aniket Randive <aniket.randive@oss.qualcomm.com>,
-        chandana.chiluveru@oss.qualcomm.com, jyothi.seerapu@oss.qualcomm.com
-References: <20260512-add-tracepoints-for-qcom-geni-serial-v2-0-a5726421b3af@oss.qualcomm.com>
- <20260512-add-tracepoints-for-qcom-geni-serial-v2-2-a5726421b3af@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260512-add-tracepoints-for-qcom-geni-serial-v2-2-a5726421b3af@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v3 3/4] arm64: dts: qcom: add basic devicetree for Ayaneo
+ Pocket DS gaming console
+To: azkali.limited@gmail.com, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Teguh Sobirin <teguh@sobir.in>
+References: <20260517-pocketds-v3-0-d5910c801756@gmail.com>
+ <20260517-pocketds-v3-3-d5910c801756@gmail.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260517-pocketds-v3-3-d5910c801756@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=a4MAM0SF c=1 sm=1 tr=0 ts=6a0b1724 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=Vhne2ItbJHd0rvwzwroA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE4MDEzNCBTYWx0ZWRfX3Emf5AfjAG67
- XFuSrCZVWpzu8DpQ2tos+P0YbjhWKP9SBtVCBOwp9X9m36mchFAHEgKzkKifhE9uMAl8yIYjwBF
- VbGgdQ3mJZsoTDWv7tpevswV1h2rv4v9j559W2S3XIjasgmcK7XnYj95gngV5skZWWTU3tnAkXl
- etqQBEcfYbWRbM+gZeOtgBX1WCcFap1xTpAXeoU81ukSOMA7+bSGG2rdhKma8iNyB11i6BKcBS7
- LCSs2i2FgRgd4kYzS/J32qbFfCep5try/XFugQpt6fE0CE9qRkEq/2rEi651VZU6zwxe2IfSl4D
- DvB4iRtwD/wdyZVJkNK0DjMex+0EGeSCckIjm2Ng7KKOKY3uT3GR5ojWhD/UnnkeBx59uzIOjSo
- 23lD0cKwB3foZHaRGVqvGn0Az7POjiF8k2peybGv1xp704vTQeaVkPSC2rkVh2hYA+tDWx2YFmH
- /BIW4yCAihj5n5UCzhw==
-X-Proofpoint-ORIG-GUID: qMXh7R_1Pua7iUFubEmhdNAntSzQOMeM
-X-Proofpoint-GUID: qMXh7R_1Pua7iUFubEmhdNAntSzQOMeM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-18_03,2026-05-15_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015 priorityscore=1501
- impostorscore=0 suspectscore=0 spamscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605180134
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	PRECEDENCE_BULK(0.00)[];
+	TAGGED_FROM(0.00)[bounces-108202-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108201-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	HAS_ORG_HEADER(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[gmail.com,kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+]
-X-Rspamd-Queue-Id: CAA5356DDA7
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Rspamd-Queue-Id: D962156DE11
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 5/12/26 7:14 PM, Praveen Talari wrote:
-> Add tracing to the Qualcomm GENI serial driver to improve runtime
-> observability.
+On 5/17/26 15:14, Alexandre Hamamdjian via B4 Relay wrote:
+> From: Teguh Sobirin <teguh@sobir.in>
 > 
-> Trace hooks are added at key points including termios and clock
-> configuration, manual control get/set, interrupt handling, and data
-> TX/RX paths.
+> Add initial Device Tree for the Ayaneo Pocket DS gaming console based
+> on the Qualcomm QCS8550 platform.
 > 
-> Usage examples:
+> The design is similar to a phone without the modem, the game control
+> is handled via a standalone controller connected to a Renesas uPD720201
+> PCIe USB 3.0 host controller. DisplayPort is muxed over the USB-C
+> connector with all four lanes wired.
 > 
-> Enable all serial traces:
->   echo 1 > /sys/kernel/debug/tracing/events/qcom_geni_serial/enable
->   cat /sys/kernel/debug/tracing/trace_pipe
+> Display panel support will be added in a second time.
 > 
-> Example trace output:
+> Co-developed-by: Alexandre Hamamdjian <azkali.limited@gmail.com>
+> Signed-off-by: Alexandre Hamamdjian <azkali.limited@gmail.com>
+> Signed-off-by: Teguh Sobirin <teguh@sobir.in>
+> ---
+>   arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+>   .../boot/dts/qcom/qcs8550-ayaneo-pocketds.dts      | 1883 ++++++++++++++++++++
+>   2 files changed, 1884 insertions(+)
 > 
-> 2517.938432: geni_serial_clk_cfg: a94000.serial: desired_rate=1843200
->      clk_rate=7372800 clk_div=4 clk_idx=0
-> 2517.938753: geni_serial_irq: a94000.serial: m_irq=0x88800000
->      s_irq=0x08000111 dma_tx=0x00000000 dma_rx=0x00000000
-> 2517.938803: geni_serial_set_termios: a94000.serial: baud=115200 bpc=8
->      tx_trans=0x00000002 tx_par=0x00000000 rx_trans=0x00000000
-> rx_par=0x00000000 stop=0
-> 2517.938807: geni_serial_set_mctrl: a94000.serial: mctrl=0x8006
->      uart_manual_rfr=0x00000000
-> 2517.938818: geni_serial_get_mctrl: a94000.serial: mctrl=0x0160
->      geni_ios=0x00000001
-> 2517.939165: geni_serial_irq: a94000.serial: m_irq=0x00400000
->      s_irq=0x00000000 dma_tx=0x00000000 dma_rx=0x00000000
-> 2517.939592: geni_serial_tx_data: a94000.serial: tx_len=8 data=61 62 63
->      64 65 66 67 68
-> 2517.940610: geni_serial_irq: a94000.serial: m_irq=0x00000001
->      s_irq=0x00000000 dma_tx=0x00000003 dma_rx=0x00000000
-> 2517.942174: geni_serial_irq: a94000.serial: m_irq=0x08000000
->      s_irq=0x08000100 dma_tx=0x00000000 dma_rx=0x00000003
-> 2517.942323: geni_serial_rx_data: a94000.serial: rx_len=8 data=61 62 63
->      64 65 66 67 68
-> 2517.942680: geni_serial_set_mctrl: a94000.serial: mctrl=0x8000
->      uart_manual_rfr=0x80000002
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index cc42829f92eb..45859e977bc9 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -185,6 +185,7 @@ qcs8300-ride-el2-dtbs := qcs8300-ride.dtb monaco-el2.dtbo
+>   
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs8300-ride-el2.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-ayaneo-pocketds.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
+>   
+> diff --git a/arch/arm64/boot/dts/qcom/qcs8550-ayaneo-pocketds.dts b/arch/arm64/boot/dts/qcom/qcs8550-ayaneo-pocketds.dts
+> new file mode 100644
+> index 000000000000..416399a4179b
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qcs8550-ayaneo-pocketds.dts
+> @@ -0,0 +1,1883 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2025, Teguh Sobirin.
+> + * Copyright (c) 2025, ROCKNIX (https://github.com/ROCKNIX)
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include <dt-bindings/leds/common.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include "qcs8550.dtsi"
+> +#include "pm8550.dtsi"
+> +#include "pm8550b.dtsi"
+> +#define PMK8550VE_SID 5
+> +#include "pm8550ve.dtsi"
+> +#include "pm8550vs.dtsi"
+> +#include "pmk8550.dtsi"
+> +
+> +/delete-node/ &aop_image_mem;
+> +/delete-node/ &aop_config_mem;
+> +/delete-node/ &camera_mem;
+> +/delete-node/ &ipa_fw_mem;
+> +/delete-node/ &ipa_gsi_mem;
+> +/delete-node/ &mpss_dsm_mem;
+> +/delete-node/ &mpss_mem;
+> +/delete-node/ &q6_mpss_dtb_mem;
+> +/delete-node/ &cdsp_mem;
+> +/delete-node/ &q6_cdsp_dtb_mem;
+> +
+> +/delete-node/ &remoteproc_mpss;
+> +/delete-node/ &remoteproc_cdsp;
+> +
+> +/ {
+> +	model = "AYANEO Pocket DS";
+> +	compatible = "ayaneo,pocketds", "qcom,qcs8550", "qcom,sm8550";
+> +	rocknix-u-boot-dt-id = "u-boot-pocket-ds";
 
-I think the example (or at least the data that it produces) could go
-under the --- line, there's plenty of docs regarding tracing on
-docs.kernel.org
+Seems you completely ignored Sahisko & my comments on top:
+https://lore.kernel.org/all/1d04c00d-ee66-4467-b60e-f36326b90f11@linaro.org/
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> +
+> +	aliases {
+> +		serial0 = &uart7;
+> +		serial1 = &uart14;
+> +		hsuart0 = &uart11;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +
+> +	pmic-glink {
+> +		compatible = "qcom,sm8550-pmic-glink", "qcom,pmic-glink";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		orientation-gpios = <&tlmm 11 GPIO_ACTIVE_HIGH>;
+> +
+> +		connector@0 {
+> +			compatible = "usb-c-connector";
+> +
+> +			reg = <0>;
+> +
+> +			power-role = "dual";
+> +			data-role = "dual";
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +
+> +					pmic_glink_hs_in: endpoint {
+> +						remote-endpoint = <&usb_1_dwc3_hs>;
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +
+> +					pmic_glink_ss_in: endpoint {
+> +						remote-endpoint = <&redriver_ss_out>;
+> +					};
+> +				};
 
-Konrad
+Ditto
+
+> +			};
+> +		};
+> +	};
+> +
+> +	pwm_fan: pwm-fan {
+> +		compatible = "pwm-fan";
+> +
+> +		pinctrl-0 = <&fan_pwm_active>, <&fan_int>;
+> +		pinctrl-names = "default", "sleep";
+> +
+> +		fan-supply = <&vdd_fan_5v0>;
+> +		pwms = <&pm8550_pwm 3 40000>;
+> +
+> +		interrupt-parent = <&tlmm>;
+> +		interrupts = <64 IRQ_TYPE_EDGE_FALLING>;
+> +
+> +		#cooling-cells = <2>;
+> +		cooling-levels = <0 30 45 60 70 90 120 150>;
+> +	};
+> +
+
+<snip>
+
+> +
+> +	sound {
+> +		compatible = "qcom,sm8550-sndcard", "qcom,sm8450-sndcard";
+> +		model = "SM8550-APS";
+> +
+> +		audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
+> +				"SpkrRight IN", "WSA_SPK2 OUT",
+> +				"VA DMIC0", "vdd-micb",
+> +				"VA DMIC1", "vdd-micb";
+
+Ditto
+
+> +
+> +		wsa-dai-link {
+> +			link-name = "WSA Playback";
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&spk_amp_l>,
+> +					    <&spk_amp_r>,
+> +					    <&swr0 0>,
+> +					    <&lpass_wsamacro 0>;
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +
+> +		va-dai-link {
+> +			link-name = "VA Capture";
+> +
+> +			cpu {
+> +				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
+> +			};
+> +
+> +			codec {
+> +				sound-dai = <&lpass_vamacro 0>;
+> +			};
+> +
+> +			platform {
+> +				sound-dai = <&q6apm>;
+> +			};
+> +		};
+> +	};
+> +
+
+<snip>
+
+> +};
+> +
+> +&cpu7_top_thermal {
+> +	polling-delay = <200>;
+> +
+> +	trips {
+> +		cpu7_top_fan0: trip-point2 {
+> +			temperature = <70000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+
+Ditto
+
+> +
+> +		cpu7_top_fan1: trip-point3 {
+> +			temperature = <75000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpu7_top_fan2: trip-point4 {
+> +			temperature = <80000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +	};
+> +};
+> +
+> +&cpuss0_thermal {
+> +	polling-delay = <200>;
+> +
+> +	trips {
+> +		cpuss0_fan0: trip-point2 {
+> +			temperature = <40000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss0_fan1: trip-point3 {
+> +			temperature = <50000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss0_fan2: trip-point4 {
+> +			temperature = <60000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss0_fan3: trip-point5 {
+> +			temperature = <65000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss0_fan4: trip-point6 {
+> +			temperature = <70000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss0_fan5: trip-point7 {
+> +			temperature = <75000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss0_fan6: trip-point8 {
+> +			temperature = <80000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +	};
+> +};
+> +
+> +&cpuss1_thermal {
+> +	polling-delay = <200>;
+> +
+> +	trips {
+> +		cpuss1_fan0: trip-point2 {
+> +			temperature = <40000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss1_fan1: trip-point3 {
+> +			temperature = <50000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss1_fan2: trip-point4 {
+> +			temperature = <60000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss1_fan3: trip-point5 {
+> +			temperature = <65000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss1_fan4: trip-point6 {
+> +			temperature = <70000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss1_fan5: trip-point7 {
+> +			temperature = <75000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss1_fan6: trip-point8 {
+> +			temperature = <80000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +	};
+> +};
+> +
+> +&cpuss2_thermal {
+> +	polling-delay = <200>;
+> +
+> +	trips {
+> +		cpuss2_fan0: trip-point2 {
+> +			temperature = <40000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss2_fan1: trip-point3 {
+> +			temperature = <50000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss2_fan2: trip-point4 {
+> +			temperature = <60000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss2_fan3: trip-point5 {
+> +			temperature = <65000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss2_fan4: trip-point6 {
+> +			temperature = <70000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss2_fan5: trip-point7 {
+> +			temperature = <75000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss2_fan6: trip-point8 {
+> +			temperature = <80000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +	};
+> +};
+> +
+> +&cpuss3_thermal {
+> +	polling-delay = <200>;
+> +
+> +	trips {
+> +		cpuss3_fan0: trip-point2 {
+> +			temperature = <40000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss3_fan1: trip-point3 {
+> +			temperature = <50000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss3_fan2: trip-point4 {
+> +			temperature = <60000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss3_fan3: trip-point5 {
+> +			temperature = <65000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss3_fan4: trip-point6 {
+> +			temperature = <70000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss3_fan5: trip-point7 {
+> +			temperature = <75000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +
+> +		cpuss3_fan6: trip-point8 {
+> +			temperature = <80000>;
+> +			hysteresis = <3000>;
+> +			type = "passive";
+> +		};
+> +	};
+> +};
+> +
+> +&gpi_dma1 {
+> +	status = "okay";
+> +};
+> +
+> +&gpi_dma2 {
+> +	status = "okay";
+> +};
+> +
+> +&gpu {
+> +	status = "okay";
+> +};
+> +
+> +&gpu_opp_table {
+> +	opp-719000000 {
+> +		opp-hz = /bits/ 64 <719000000>;
+> +		opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
+> +		opp-peak-kBps = <10687500>;
+> +		qcom,opp-acd-level = <0x882e5ffd>;
+> +	};
+> +
+> +	opp-746000000 {
+> +		opp-hz = /bits/ 64 <746000000>;
+> +		opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+> +		opp-peak-kBps = <10687500>;
+> +		qcom,opp-acd-level = <0x882e5ffd>;
+> +	};
+> +
+> +	opp-794000000 {
+> +		opp-hz = /bits/ 64 <794000000>;
+> +		opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+> +		opp-peak-kBps = <14398438>;
+> +		qcom,opp-acd-level = <0xa82d5ffd>;
+> +	};
+> +
+> +	opp-827000000 {
+> +		opp-hz = /bits/ 64 <827000000>;
+> +		opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
+> +		opp-peak-kBps = <16500000>;
+> +		qcom,opp-acd-level = <0xa82d5ffd>;
+> +	};
+> +
+> +	opp-860000000 {
+> +		opp-hz = /bits/ 64 <860000000>;
+> +		opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
+> +		opp-peak-kBps = <16500000>;
+> +		qcom,opp-acd-level = <0x882d5ffd>;
+> +	};
+> +
+> +	opp-1000000000 {
+> +		opp-hz = /bits/ 64 <1000000000>;
+> +		opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L2>;
+> +		opp-peak-kBps = <16500000>;
+> +		qcom,opp-acd-level = <0x882d5ffd>;
+> +	};
+> +};
+
+Please drop this until we properly implement support for detecting those dynamically
+
+> +};
+> +
+> +&mdss {
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dp0 {
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dp0_out {
+> +	remote-endpoint = <&panel0_in>;
+> +
+> +	data-lanes = <0 1 2 3>;
+> +};
+> +
+> +&mdss_dsi0 {
+> +	vdda-supply = <&vreg_l3e_1p2>;
+> +
+> +	status = "okay";
+> +
+> +	display_panel: panel@0 {
+> +		reg = <0>;
+> +
+> +		pinctrl-0 = <&sde_dsi_active>, <&sde_te_active>;
+> +		pinctrl-1 = <&sde_dsi_suspend>, <&sde_te_suspend>;
+> +		pinctrl-names = "default", "sleep";
+> +	};
+
+Ditto, again, drop all Display related nodes until the display bindings are
+reviewed, don't keep a node without compatible.
+
+> +};
+> +
+> +&mdss_dsi0_phy {
+> +	vdds-supply = <&vreg_l1e_0p88>;
+> +
+> +	status = "okay";
+> +};
+> +
+
+<snip>
+
+> 
+
+And again, don't submit v4 _without_ testing the DT against the bindings so it returns 0 errors:
+
+arch/arm64/boot/dts/qcom/sm8550.dtsi:3878.30-3881.9: ERROR (phandle_references): /soc@0/display-subsystem@ae00000/displayport-controller@ae90000/ports/port@1/endpoint: Reference to non-existent node or label "panel0_in"
+
+   also defined at arch/arm64/boot/dts/qcom/qcs8550-ayaneo-pocketds.dts:1381.15-1385.3
+arch/arm64/boot/dts/qcom/sm8550.dtsi:4056.31-4057.9: ERROR (phandle_references): /soc@0/display-subsystem@ae00000/dsi@ae96000/ports/port@1/endpoint: Reference to non-existent node or label "panel1_in"
+
+Neil
 
