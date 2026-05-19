@@ -1,37 +1,37 @@
-Return-Path: <linux-arm-msm+bounces-108607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qEaJHm3SDGosnAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 23:13:17 +0200
+	id WA2oFR/SDGrImQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 23:11:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7F2D58514F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 23:13:16 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0242458507C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 23:11:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F1DEE301B916
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 21:12:01 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5D0A53023E46
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 21:11:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A370347FCD;
-	Tue, 19 May 2026 21:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4394B30C608;
+	Tue, 19 May 2026 21:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="QSTzYNdd"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="OKuD5zxU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A073BD225
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 21:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EF62147F9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 21:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779225121; cv=none; b=adRMUWsHJC0M8+jlPm/GEEA/X+SQ/ylDU1SZECnkbk/XGGpLoNPNJPB2dk6CKx26Vahj7I+S3XXD+5JnHNWGpHtxlM8/xDzx5UL6oLao8E2gHHGDOjhp3aJ4HpBEhH7qIN24cafpFEC8gk380OTfVbKe73rNnj6IDqFmqvY13M4=
+	t=1779225117; cv=none; b=IHLrlaQC9UqpVWmtt6FEJfts7GpewRwRuwWws3m4yHgj0BTRwRJqbCOdW2pZG2c6t39xmLtpFN3VYWthGLjXugcsg9jwjYskiJqU88hlvd8fv+UBUy6HX9BAItKuyUt/Yn294TKk3LOZYdkeS/cs6C6YrBuJuaDqNPlqCRdprPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779225121; c=relaxed/simple;
-	bh=Tw3Mg3HwI+kvIeJbirQf+eO5cQWaJEo3CH+16VVhhd4=;
+	s=arc-20240116; t=1779225117; c=relaxed/simple;
+	bh=oCX401crVI3DolScCcZ088PfI5EaucpvPbfHXj9Kpv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U7+t/WnjsuksEZPJ/Com5cqYirkJ4BmN5xD5zfub/P3zDQnA61fkB+iw2m8ymhsRRJloi1sVsXcDf1kEY8NnH3olq0NnE/XzatpUB1PScx2Jih94uaWLEvUb000uZZ2G/Ag3NFHh2AbBsN9V8zoHRqoNv3HkmWx7Kd+La+4VT88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=QSTzYNdd; arc=none smtp.client-ip=213.97.179.56
+	 MIME-Version; b=fMcxmfFbQ6OE5zPxkmj869funmtbPPNGkPjI9gRQAuezho2csD7shwyplIkG6YJImoZ1CBjP9sIpj3UI1efqFQPNp6CwfrwqIyiExp1wCsEUto8ASxdr/EXU3HKn4qgjeiAdHVJb0e7JYJiJhwIx3Kv63rO2OSV+Qy+xDP8HMeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=OKuD5zxU; arc=none smtp.client-ip=213.97.179.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
@@ -40,16 +40,16 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
 	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
 	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
 	List-Post:List-Owner:List-Archive;
-	bh=fv3F4vcs7w0hgz7fUYNfTQhxOQaYZd+KTTBptaKiGRU=; b=QSTzYNddf/6fZPFDEGvw75Gohu
-	pCJjDZWm4UQDk4IgQaeFCsUbaDgjMqICW3aSnxxwReGNLoLzJQ22U0mF1Fh5N0npG69Obenq0I9NF
-	YH33xljHHvOY9LoynE6DsrirGVIu3dwo/4RBoUl2HuCPerFh+WgGWXRv5rpbjjP8XwEbWHfshbJ9c
-	+R/xQQJt17mZ2t2Th5ZyO9UrRxqu7BYMjsPynZMQuytHHIVzODGGuV6402F2pARdZZUOO6Y/phLYD
-	lIvakZYd/o2NNpwFsbfKpLtUwNFNvHF29Ss5lMp/xsCSIacG8KCW9EKNEygZycJx0WrALupZCXDrH
-	f9zau6cg==;
+	bh=bTFNlB2lEIz390/U2GSGLhZNHA23YFC+d55K4R2kv+A=; b=OKuD5zxUjmAdgz51Pg+aKaDqWQ
+	+yCcn51wtmv1P285dqFEx97ix+33OCjw20DnviyM/s2dRK1k27m6dcwBml+rV+q+htXz4xzl5h5Xa
+	ZFzP404UbRsTVkIpK6M0qQcS8UrOIRjEKlfqPziw/d5BqwIM1AkIg3lBVY1EL6/qFflMIaO2KHPVu
+	SXo9St2Z6RVBlCE1UO32QEV3W0fCkyTSKK7yK2+ggoiJFzvVraxMqYWgmFBDOCb6nNRA7R2WtC8u+
+	ggVGUflYE+RuekRg2xwY7DAL6X0vZcW0RZ110Gd/l2f7qKmICgJxM8UBo41HlrZqUDtnrHCGXuNvm
+	Z768QwrA==;
 Received: from [79.117.146.159] (helo=killbill.home)
 	by fanzine2.igalia.com with esmtpsa 
 	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1wPRin-003Ppa-3y; Tue, 19 May 2026 23:11:25 +0200
+	id 1wPRio-003Ppa-QN; Tue, 19 May 2026 23:11:26 +0200
 From: Melissa Wen <mwen@igalia.com>
 To: airlied@gmail.com,
 	alexander.deucher@amd.com,
@@ -80,9 +80,9 @@ Cc: Alex Hung <alex.hung@amd.com>,
 	linux-arm-msm@vger.kernel.org,
 	freedreno@lists.freedesktop.org,
 	dri-devel@lists.freedesktop.org
-Subject: [PATCH v6 2/6] drm/atomic: reject colorop update from inactive color pipeline
-Date: Tue, 19 May 2026 23:09:05 +0200
-Message-ID: <20260519211111.228303-3-mwen@igalia.com>
+Subject: [PATCH v6 3/6] drm/colorop: Remove read-only comments from interpolation fields
+Date: Tue, 19 May 2026 23:09:06 +0200
+Message-ID: <20260519211111.228303-4-mwen@igalia.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260519211111.228303-1-mwen@igalia.com>
 References: <20260519211111.228303-1-mwen@igalia.com>
@@ -98,12 +98,12 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-108607-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-108604-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[29];
 	MIME_TRACE(0.00)[0:+];
@@ -116,91 +116,65 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.944];
+	NEURAL_HAM(-0.00)[-0.927];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	FROM_HAS_DN(0.00)[]
-X-Rspamd-Queue-Id: E7F2D58514F
+X-Rspamd-Queue-Id: 0242458507C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Only allow updates on colorops that are part of an active pipeline.
-Check if a colorop in a new state belongs to a color pipeline which was
-set as a plane color_pipeline property and therefore is an active color
-pipeline. If not, reject the atomic state. Performing this check later
-in drm_atomic_check_only() to remove the ordering dependency that would
-exist if done at the time of colorop property setting.
+From: Alex Hung <alex.hung@amd.com>
 
-Suggested-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Signed-off-by: Melissa Wen <mwen@igalia.com>
+The lut1d_interpolation and lut3d_interpolation fields and their
+associated properties were marked as read-only, but userspace
+can set them via drm_atomic_colorop_set_property().
+
+Reviewed-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
 ---
- drivers/gpu/drm/drm_atomic.c | 38 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
+ include/drm/drm_colorop.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-index 28831a548b0c..659cf56150e5 100644
---- a/drivers/gpu/drm/drm_atomic.c
-+++ b/drivers/gpu/drm/drm_atomic.c
-@@ -812,6 +812,33 @@ static int drm_atomic_plane_check(const struct drm_plane_state *old_plane_state,
- 	return 0;
- }
+diff --git a/include/drm/drm_colorop.h b/include/drm/drm_colorop.h
+index c873199c60da..53a2148082d5 100644
+--- a/include/drm/drm_colorop.h
++++ b/include/drm/drm_colorop.h
+@@ -309,7 +309,6 @@ struct drm_colorop {
+ 	/**
+ 	 * @lut1d_interpolation:
+ 	 *
+-	 * Read-only
+ 	 * Interpolation for DRM_COLOROP_1D_LUT
+ 	 */
+ 	enum drm_colorop_lut1d_interpolation_type lut1d_interpolation;
+@@ -317,7 +316,6 @@ struct drm_colorop {
+ 	/**
+ 	 * @lut3d_interpolation:
+ 	 *
+-	 * Read-only
+ 	 * Interpolation for DRM_COLOROP_3D_LUT
+ 	 */
+ 	enum drm_colorop_lut3d_interpolation_type lut3d_interpolation;
+@@ -325,7 +323,7 @@ struct drm_colorop {
+ 	/**
+ 	 * @lut1d_interpolation_property:
+ 	 *
+-	 * Read-only property for DRM_COLOROP_1D_LUT interpolation
++	 * Property for DRM_COLOROP_1D_LUT interpolation
+ 	 */
+ 	struct drm_property *lut1d_interpolation_property;
  
-+/**
-+ * drm_atomic_colorop_check - check new colorop state
-+ * @new_colorop_state: new colorop state to check
-+ *
-+ * Ensure that the colorop in @new_colorop_state belongs to an active color
-+ * pipeline, i.e. it's in the chain of colorops set to the color_pipeline
-+ * property of a plane state.
-+ *
-+ * Returns: 0 on success, -EINVAL otherwise.
-+ */
-+static int drm_atomic_colorop_check(const struct drm_colorop_state *new_colorop_state)
-+{
-+	struct drm_colorop *colorop, *color_pipeline;
-+	struct drm_plane_state *new_plane_state;
-+
-+	new_plane_state = drm_atomic_get_new_plane_state(new_colorop_state->state,
-+							 new_colorop_state->colorop->plane);
-+	color_pipeline = new_plane_state ? new_plane_state->color_pipeline :
-+			 new_colorop_state->colorop->plane->state->color_pipeline;
-+
-+	for (colorop = color_pipeline; colorop; colorop = colorop->next)
-+		if (colorop == new_colorop_state->colorop)
-+			return 0;
-+
-+	return -EINVAL;
-+}
-+
- static void drm_atomic_colorop_print_state(struct drm_printer *p,
- 					   const struct drm_colorop_state *state)
- {
-@@ -1665,6 +1692,8 @@ int drm_atomic_check_only(struct drm_atomic_commit *state)
- 	struct drm_plane *plane;
- 	struct drm_plane_state *old_plane_state;
- 	struct drm_plane_state *new_plane_state;
-+	struct drm_colorop *colorop;
-+	struct drm_colorop_state *new_colorop_state;
- 	struct drm_crtc *crtc;
- 	struct drm_crtc_state *old_crtc_state;
- 	struct drm_crtc_state *new_crtc_state;
-@@ -1681,6 +1710,15 @@ int drm_atomic_check_only(struct drm_atomic_commit *state)
- 			requested_crtc |= drm_crtc_mask(crtc);
- 	}
+@@ -353,7 +351,7 @@ struct drm_colorop {
+ 	/**
+ 	 * @lut3d_interpolation_property:
+ 	 *
+-	 * Read-only property for DRM_COLOROP_3D_LUT interpolation
++	 * Property for DRM_COLOROP_3D_LUT interpolation
+ 	 */
+ 	struct drm_property *lut3d_interpolation_property;
  
-+	for_each_new_colorop_in_state(state, colorop, new_colorop_state, i) {
-+		ret = drm_atomic_colorop_check(new_colorop_state);
-+		if (ret) {
-+			drm_dbg_atomic(dev, "[COLOROP:%d:%d] is not part of an active color pipeline.\n",
-+				       colorop->base.id, colorop->type);
-+			return ret;
-+		}
-+	}
-+
- 	for_each_oldnew_plane_in_state(state, plane, old_plane_state, new_plane_state, i) {
- 		ret = drm_atomic_plane_check(old_plane_state, new_plane_state);
- 		if (ret) {
 -- 
 2.53.0
 
