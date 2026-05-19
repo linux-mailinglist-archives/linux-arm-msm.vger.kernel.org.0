@@ -1,104 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-108594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6DCWBUq1DGrClAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 21:08:58 +0200
+	id WAS5CHq1DGrClAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 21:09:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 734F558407A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 21:08:57 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40B7F584090
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 21:09:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0E030306BAB9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 19:05:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7072C30F3E91
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 19:05:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBA2D2848AA;
-	Tue, 19 May 2026 19:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EC2B3DB30B;
+	Tue, 19 May 2026 19:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Q6b8drNk";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XkyLd6MB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="L5+zLoYj";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NL+P9C1y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304E23AFD0D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 19:05:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947F231F99D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 19:05:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779217525; cv=none; b=XTHtIGT/kuD0M3JlXw3fPMDJkjHEAAzuaqAEqqap0eKD+HJ416vXpm6SwVoVFxx29lE7xq7YLuv++khswuqyUBCecxmhj+mh+YqXiSEJWqKiBKcb26f4QW3JQOY16XFeSnNygsOhPzpDljmOrSuOWfyFm1487UQzCIVnQdbiias=
+	t=1779217533; cv=none; b=rA296qFqEbXudzF7BLVxZWxmC9zWdGjw2+DC4hU+kT6e/1E9cjffPsuxmr8Gl3ULyJcfgcTgpS2wUpCw924vXe9B9aDZNlL4kdeXHZUSm9sUlC1CQnXfkIZLqgMb8ACk6icjnBqhmCiOXgqt1SHFl3Lca/h6119xPZkYBlfrdRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779217525; c=relaxed/simple;
-	bh=FswLjexa4W/19cOLQDCspqJYNyI5kjTklXut13h725o=;
+	s=arc-20240116; t=1779217533; c=relaxed/simple;
+	bh=0nJ5cuYmgNR1GXW+ovUrU1Nk0Oy9Hy/TWxUGuvD0/rI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aeOVlH5vaGHhV7mOjpgSlOuWTFzfBoplYb6mm79mR/ZVeJ4BbC3jIpMMRt8mPC1cjJWuoCNXUv8KaroY0PMb5HVLmT63d/vzhbiK+iSU15T4bCIv7qEilCxsAYOapGG0zOUN0oWYE+GuZ5jhvGIn17/uLaVhKSScpIo9vdlmHQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q6b8drNk; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XkyLd6MB; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=medaObvvGyiDvi7Y7eWK0BEvOOBUuCJQe+eNVWTlchEwnnDpDmQeMfFn7ghWL4T53Q9iZ8VRjVu45rj8O+xfRVAcGnf1Gczm17+R3vjqR9un9JP4MRGqqgmIz8ARz9LfUVR+OPstC6y1xkMetNV5a0mbXn5Wk17d8uP9P5kbCKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=L5+zLoYj; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NL+P9C1y; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64JEx4am2867811
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 19:05:23 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64JExMxX1963690
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 19:05:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gHAPpvkbvRI2RnEglKIra6lXC/2fx7JbZmYyoLMJzkg=; b=Q6b8drNkWgalir8q
-	qSifjUkbQahQkJKS/9lDriMXkn8wZnsz2aGwTUyi/VwTIhr2C1FrVyAMA+ipaW/d
-	6AYFlFl28LHF1D9gPEJ7r8zTwOitRT2hDn97S21/l1zrnaHpE6F31Idgb5i4obke
-	EcyQO5GCWeJglRQGCT/d/VIVrud6NdBZ9I3EIoAG3y+DGygCUbcldfFwdH4pQmIJ
-	NPHHFilkReR8fs8T/Ncd/uLNIdObCRdGaKuNxbWWg2uzcOE4EJgV6kwp3ggUPOrf
-	osZv9xxULK+KfEjxnXj4jzC+IHr9L/OfqevTcnxOPYWgo+upzWK+vGJvfMKKOJS+
-	4FZDCQ==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8t3w92y2-1
+	e5POHKLczdfKTAqg1xTtu+Qh+k2SCbUWnBpov+SLib0=; b=L5+zLoYjEugRlEZZ
+	IV4HZhJK0H5BlbWqcX9JgNhLy2Y820oWNMeAM7cpRo6XzEsEzUdPPlMCqa7BOwdt
+	WPX/mvBhq5TShDAB+yTElbUNceQtvKoPQR4mMpvzTBzK+KhbqnC7QnFqClO6yDO4
+	CCkee7cXSgRWpm6bEqWsSuxEOZL0k9c0sCGD4D0Pdu8rVwsd1B+A8tKPR1Igx/Aa
+	UsCusQhfPcBJMc7w5f7J8gjwGoMhWhZMcKZnDFVsk4ePSD6tmtbjFTK9cUETTHpQ
+	nF8LC3Wyu3f1NvEg6cw0wf38SaiuHL1GzMXrkiH5H0is9UVspQZP5znvySQykWuX
+	pFfldg==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8t3t12xc-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 19:05:23 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c827bda3052so6246485a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 12:05:23 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 19:05:29 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-836cfd84728so1970334b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 12:05:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779217523; x=1779822323; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1779217528; x=1779822328; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=gHAPpvkbvRI2RnEglKIra6lXC/2fx7JbZmYyoLMJzkg=;
-        b=XkyLd6MBys6SpwD/3YdJErNtOAuoZp60mSiWQkebEfJ94bIp+pTqQyOkUppf5YIy9/
-         GRBJY86qSeLSUy9WMBeWbCm8mDF6KibGCbWPSKjol6ki1F69whHvwIVz73dQgW4ZviZj
-         4u4ifbXmf4R36IQCxeJzlaniw/iwHlm+tfWjpDGlLplGfdmfipIGZaQ+boX4tjv0fKGv
-         7Lo9y0/iwm2OaKxzo1oz5cN1x0c/Pu4uqb2+MFVTbql1AW0AEZ0tQ/rf68dMARSseAP4
-         J4JNyxX23JbKWtIw1gGGn/wn8C/XGW51GMN1aB7zfmcZKIsBXxsd18HouV1K1JsvWO9v
-         jngA==
+        bh=e5POHKLczdfKTAqg1xTtu+Qh+k2SCbUWnBpov+SLib0=;
+        b=NL+P9C1yaH9I7SWwLKdUSDC5oapdBrpIUM/FJ4KFBYAVIaaOjNZ5+h8SPqZHVhat+h
+         8QKZ9oc85OXcK5gm5Tsgt9XiZJNyl7uvZLQgp8QluBqDA7fWDEezmU88Cv0e5f1ULuYu
+         TtX3anCRbkJdog5zfGSPDFLHt95JVV1tvIe/WmVnp0YM8pdwY4Bnqpibm/cAfznB5Bn3
+         GhluNtUluTmG6YHoFSm09w5iSSQFAl4NUH//CKQacnbCustYfLwDP7DHG+mojGxzVPVy
+         +RmijbtJtOvSS9oAS9J1u59yTrLBtePhKvi7kltrhKMxhjY2mCX2Q4enwmAnwVAKrP99
+         ACpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779217523; x=1779822323;
+        d=1e100.net; s=20251104; t=1779217528; x=1779822328;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=gHAPpvkbvRI2RnEglKIra6lXC/2fx7JbZmYyoLMJzkg=;
-        b=FfWyklrNe+2l4D6SLnJkxEOKq0PXJ1zArkPybOrPtFBq9xACYEb00EwJWQPzAAE37S
-         XjI3n8Iuk/e5CEfA1vV8AlzwSHi1W2PEg1neL1kqNR5uuCOS4pD4oKMY5HSeQLMwDm58
-         c/oid9C6+hU2muT7y5mUgb0M0XFbv3bXAGbzvrmfkwW7x8+E6xs6SKtBUS9nT6iaOfM3
-         pFYFMaRu7xqQauNnPL5MxBFS1+uJDa1mfIZmK902hWhrr0Ib8up2Gv8WSYVQHWsp/OgG
-         EuuBLc9wT1tJZs6ZAxBWhk9hI7QyiCwQHGQ5gt/5Bs3rI6EIwJYge6hP3bEk7F4ny16g
-         DFrQ==
-X-Gm-Message-State: AOJu0YwGnfGOUL16xDDuEkdIup8YGwNSKHM1UGXPt4KDMvIwIxWtlXTH
-	DK5iLMfxa9ASU8DU674RiF2Fejf44mUP9LwGoLsQtR9jdELgfYvGxcTU8Cv+YGjzkTJZD6r1RlO
-	BGXq2qbrbveOj5giQkMz6EwigaFzdpeoIGq38TyFgBNUmVwQ/A5GrxXTNrqdLK08UAYwr
-X-Gm-Gg: Acq92OGpWJRi+BsCCw3HpBlh+Slgxgx28R3I8gtHYu6X+NDp7PDrKfh1BKUs6+pygck
-	y+piU90FvoMVVoUlE6R6Jsy7AWJMnY0EAkvULHfM5BbqCQQc0Kd5IaFSKgyvi9aDNocvNA7juE4
-	VAndbba3FQfEAcLkJncSCsJ3DaI5/QJx/EQmImzDpORdlhLumBx0YNW8hnAoqSjm+mFjKYSnOi1
-	GFTFRJIdN6zQ19V11t+tWYhg1OCqLc/xtxRMVKhDeiap/9sPQVpxUJ7LlFFUTlRuBgA09Y9TajE
-	o80DxftzmBypi+N3G4RJFBJXIj9scP4COfCttIffUlacPhZuYEK/Qbz7qkn2PrKbDVSc+IoItei
-	v6TqIv5pdhQ//rzrycDD1RM5A6eb1c1vLwOBciz7ut4SxdpKohpIVVMkPStg5IFlfAmX0aIxFM6
-	Sd1E9DOjP+PWl8pxfD4EGDRZcn/oZFXrNGOwfTqex9Dnt8lToxQxY=
-X-Received: by 2002:a05:6a20:9188:b0:3a2:e089:ae56 with SMTP id adf61e73a8af0-3b22ee36135mr24018342637.52.1779217522701;
-        Tue, 19 May 2026 12:05:22 -0700 (PDT)
-X-Received: by 2002:a05:6a20:9188:b0:3a2:e089:ae56 with SMTP id adf61e73a8af0-3b22ee36135mr24018308637.52.1779217522069;
-        Tue, 19 May 2026 12:05:22 -0700 (PDT)
+        bh=e5POHKLczdfKTAqg1xTtu+Qh+k2SCbUWnBpov+SLib0=;
+        b=QyRtMz4NlyXNTeBI/JTNhF+OKxvZqLxiptohhmOTe66G4ERFlMh3+X0y6vkhJC1bCY
+         IZHTGoBmeXp7RsDal63LOllpU07jBM+HfPkMW6fi9Bf+LkXSadr/JJ6xc2bvQ+tFKg6U
+         XmsHo2oH5RvLC/PPrE3qFBR22YO/Atd/WDZ7Y7RCIAYpOm7s4beKwCJ1PiJAkSx1+xCq
+         Vq+hT/LjDZ8iqUzSWNYE4O3UemR7PgR17yezjOka3fFB8l4AdlWU/A3rO7qjLXsmUi5B
+         e7pzaTdcDUyiw4Uizrs34RXb7dkBxNd1BgaqH9sQRwRAtugg3uRy0dDquJxWZpjftBf/
+         260g==
+X-Gm-Message-State: AOJu0Yz2uQmLsTSReRzafK6dPBW9GJQ0mGiJCYF69sQTnSCeeR6tH6eO
+	d4982wXBXGSq1LigEQ2eNXLmghHa8kP9a1VPzcxGY77+eOXx73dK+meN8fM+pLs6GO9xQaU58VJ
+	BM5ZhoVoTVge+qTYsyTZUc4yr7InrUqvPmCNmz6fu6l5Zf2WjAkl6GS1z+CUsE3AyB8I+
+X-Gm-Gg: Acq92OE47CGZiL8mVHyQPSYJb8uJ3mOePHoBEIxkiw/K9UaSpGLvunaHf7S3/ns5vet
+	F7/mRiERdIZrwB89mDPePAEW6GCm2BQRXcK3mkCRYIeRo9w8RWlIt/RXGAgKnBDwxbD9UmtRug/
+	bH0gIyL57q6vhDf4wOEU6UbXTq4p6SrCHsf9o+8naCK7TNaDqUjm+8A5LtPPklYW20NdY3srXoS
+	+zkA9ez+bF1lkEB+M42vHmtANlw+caDWatm4kANXiQQ05t58xfOIBkc5pfEJCAInJF/B7LJhGf5
+	AOREUFGPfivtFquMb+YQaFNo0QYPjsKdASjCaanxInQSXEVlQdH427dNEXt0qjxM+EYTUmfoqzn
+	dqZ3se3nacodeHyeidEHbZwjOUV5dFket/iFzRrkHLu6KiouloUErfVAvcx8fEL+pjdYOnvIT/C
+	oA9z9+3eD2F9TJnNm/FQlespeC1VTVmn8ul3A1KWM2h0nS8WSNSZQ=
+X-Received: by 2002:a05:6a00:3a24:b0:834:e24c:3f9c with SMTP id d2e1a72fcca58-83f18e7662fmr20565780b3a.22.1779217527512;
+        Tue, 19 May 2026 12:05:27 -0700 (PDT)
+X-Received: by 2002:a05:6a00:3a24:b0:834:e24c:3f9c with SMTP id d2e1a72fcca58-83f18e7662fmr20565737b3a.22.1779217526646;
+        Tue, 19 May 2026 12:05:26 -0700 (PDT)
 Received: from hu-viswanat-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19794e6esm17423401b3a.25.2026.05.19.12.05.18
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19794e6esm17423401b3a.25.2026.05.19.12.05.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 12:05:21 -0700 (PDT)
+        Tue, 19 May 2026 12:05:26 -0700 (PDT)
 From: Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
-Date: Wed, 20 May 2026 00:35:09 +0530
-Subject: [PATCH 1/2] dt-bindings: soc: qcom: Document CDSP Power Management
+Date: Wed, 20 May 2026 00:35:10 +0530
+Subject: [PATCH 2/2] soc: qcom: Add CDSP power management driver
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,8 +106,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260520-cdsp-power-v1-1-85eb9501a1cd@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260520-cdsp-power-v1-2-85eb9501a1cd@oss.qualcomm.com>
 References: <20260520-cdsp-power-v1-0-85eb9501a1cd@oss.qualcomm.com>
 In-Reply-To: <20260520-cdsp-power-v1-0-85eb9501a1cd@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -117,225 +117,1209 @@ To: Bjorn Andersson <andersson@kernel.org>,
         Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
         Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org,
+        Praveenkumar I <praveenkumar.i@oss.qualcomm.com>,
+        Manikanta Mylavarapu <manikanta.mylavarapu@oss.qualcomm.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779217514; l=5161;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779217514; l=39344;
  i=vignesh.viswanathan@oss.qualcomm.com; s=20260518;
- h=from:subject:message-id; bh=FswLjexa4W/19cOLQDCspqJYNyI5kjTklXut13h725o=;
- b=R/5ABYELjlk9wnZSNkHlXqO9inFOaDo6atAm1JPNGo2b1bxoEK8e21KAIv9zuc8/jpap//BlT
- kOHtpjS8SwAAsG92mxeQQh3I5aLQaZRx85GVpGmQrV5W3+HNmLHna9W
+ h=from:subject:message-id; bh=I7fNLM4cZMHz1yzcQlS+hGvENR35Q/4zn9e4ogIUBRs=;
+ b=SKtaz2zDORn3u2wi2tQ9dDl5KPR24Zm+FWwb15lKam7H5H1arac/7b+ejKVpa4DGKw9IYNYZE
+ LoWOpR4gUjwAvPIfWBTLTKqhn56Z4R8pCqnZD8NttBugu/am+bPSapq
 X-Developer-Key: i=vignesh.viswanathan@oss.qualcomm.com; a=ed25519;
  pk=/lHspsTTqZQg546ZudgrbywCsk3Whx/C0XNVUevaKNk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDE5MCBTYWx0ZWRfXxqI2hpFmnqzF
- TozlzlgzOBIDX7nPTNwG/0j59Y82jMgTlQdUri0FpyimEa4kDm300hQJCLj1C/y4UfG8wWnDLS/
- lGruvp+QB7FX5st2vgwQs9gnvYYCaeXy3dcjRxfbIUXCMN7/Nl9DHoSkAQ9I/5A8Y3FkNcpongB
- JXPKrW6LchN7xMNeyNceGvoGn03gA2xtU1HZViIGiQuTDYSUyTsu21oIp60Jyr6h2ivkd6Oo9ur
- FkV3MEZ81xlnf2Pixvv26pel9ceJp+ZpRIwOVqghQX7RaHqnwCpaeAbibQKgKUblu204l8TFHBz
- j4FF9F+gVjAjVabrXRi0YRknbwrJsiX2uPubbaz28MVICUg/nEAkq/fa7XYdeahU4OcvKYDMzR1
- P0f9Xf53NKFfN3ukgco1TeT4spY6DaCjdA4whW4Fg3If9e7J8BCwoclR7vYEdqy6O2cCmkoraEH
- mdRf5XBeBvEBWf7LyuQ==
-X-Authority-Analysis: v=2.4 cv=Q/viJY2a c=1 sm=1 tr=0 ts=6a0cb473 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+X-Proofpoint-ORIG-GUID: tpK5U5YvIcDy22QSlYAa5lBZiJaDi7OD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDE5MCBTYWx0ZWRfX4KhEYuDnz1wl
+ MO16r8vyDNayW4JnMM/IAJA0xZjEJJcXOrr033ju4swVwScWwt1tLFRGTH1dn8cRj0Y4uZv0URQ
+ Xzr941QUQr+gQOh2+g6/fgQntTMK/20ggPpVpX76oB11vrEqbkVekzuyzsN/xiFwNNCisQRjbH1
+ u1FXS7LKaMcJnoFAv0eMd8nUYj60jiwXZSfk5vKacz9VNhTEN+PlTh2+DBLycWf9vQ9ijjy/b5z
+ DABXjDIg+OxlHFA/QgxqUMpnElZDTRhwr9Ug1cYpBTb6t5bt4QH8CaQwQrEjdpOk55e7fp41g+O
+ sGUb6ho9xkEH8iWWgAQVMdvlBF35S95xAmG65Fccp2XFL0E62l3ErG8RONvBkIEc78jzrykWw2g
+ bkYkNGCiPluR74neRCnikLokU7Mhtaj++j8OvT3oNtIVkuV9n0IfNaJuSHp9dElRvGTMKqDb4Nw
+ +Xjwod821XRqZdXEAlA==
+X-Authority-Analysis: v=2.4 cv=Y/bIdBeN c=1 sm=1 tr=0 ts=6a0cb479 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8 a=85UeY_1I7I5IrrPC5DQA:9 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22 a=sptkURWiP4Gy88Gu7hUp:22
-X-Proofpoint-GUID: rUrGLiflK4k0eBJ78RSS4eGe-32o6tHR
-X-Proofpoint-ORIG-GUID: rUrGLiflK4k0eBJ78RSS4eGe-32o6tHR
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=uuWAtIs7gR2RaXFyqDYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-GUID: tpK5U5YvIcDy22QSlYAa5lBZiJaDi7OD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-19_05,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 impostorscore=0 priorityscore=1501 suspectscore=0
- spamscore=0 clxscore=1015 phishscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605190190
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+ spamscore=0 suspectscore=0 bulkscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 clxscore=1015
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605190190
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,oss.qualcomm.com];
-	TAGGED_FROM(0.00)[bounces-108594-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_FROM(0.00)[bounces-108595-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,oss.qualcomm.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,devicetree.org:url,qualcomm.com:email,qualcomm.com:dkim,4ae000:email];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[vignesh.viswanathan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 734F558407A
+X-Rspamd-Queue-Id: 40B7F584090
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add documentation for the CDSP Power Management driver, which handles
-Dynamic Clock and Voltage Scaling (DCVS) requests via SMEM, manages Low
-Power Mode (LPM) transitions via MPM handshake, and provides virtual
-regulators for the remoteproc driver to control CDSP power rails.
+From: Praveenkumar I <praveenkumar.i@oss.qualcomm.com>
 
+On platforms like IPQ9650, the CDSP subsystem cannot manage its own power
+rails and requires the APSS to handle power management on its behalf. Add a
+platform driver to fulfill this role.
+
+Handle LPM (Low Power Mode) by executing hardware isolation and restoration
+sequences via MPM register programming, coordinated with the NSP Q6 through
+a handshake protocol. Support both FULL_PC (CX+MX collapse) and LONG_APCR
+(CX-only) modes, detected dynamically at runtime.
+
+Handle DCVS (Dynamic Clock and Voltage Scaling) requests from the NSP Q6
+received via a shared SMEM channel. Apply voltages via the regulator
+framework and write responses back to SMEM.
+
+Expose virtual cdsp-vdd-cx and cdsp-vdd-mx regulators so that the PAS
+remoteproc driver can control the NSP power rails through the standard
+regulator framework.
+
+Signed-off-by: Praveenkumar I <praveenkumar.i@oss.qualcomm.com>
+Signed-off-by: Manikanta Mylavarapu <manikanta.mylavarapu@oss.qualcomm.com>
 Signed-off-by: Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
 ---
- .../bindings/soc/qcom/qcom,cdsp-power.yaml         | 138 +++++++++++++++++++++
- 1 file changed, 138 insertions(+)
+ drivers/soc/qcom/Kconfig      |   17 +
+ drivers/soc/qcom/Makefile     |    1 +
+ drivers/soc/qcom/cdsp_power.c | 1065 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 1083 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cdsp-power.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cdsp-power.yaml
+diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
+index 2caadbbcf830..f4b9204d4e9a 100644
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -26,6 +26,23 @@ config QCOM_COMMAND_DB
+ 	  resource on a RPM-hardened platform must use this database to get
+ 	  SoC specific identifier and information for the shared resources.
+ 
++config QCOM_CDSP_POWER
++	tristate "Qualcomm CDSP Power Management driver"
++	depends on ARCH_QCOM || COMPILE_TEST
++	depends on QCOM_SMEM
++	depends on REGULATOR
++	help
++	  This driver manages power for the CDSP (Compute DSP) subsystem on
++	  Qualcomm platforms. It handles DCVS (Dynamic Clock and Voltage Scaling)
++	  for voltage scaling via SMEM/SMP2P, and LPM (Low Power Mode) for power
++	  collapse/restore via MPM handshake.
++
++	  The driver coordinates with the cdsp_rproc driver for shared regulator
++	  access and provides runtime voltage scaling and power management for
++	  the CDSP subsystem.
++
++	  Say M here if you want to include support for CDSP power management.
++
+ config QCOM_GENI_SE
+ 	tristate "QCOM GENI Serial Engine Driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
+diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+index b7f1d2a57367..f3490a437cb8 100644
+--- a/drivers/soc/qcom/Makefile
++++ b/drivers/soc/qcom/Makefile
+@@ -40,3 +40,4 @@ qcom_ice-objs			+= ice.o
+ obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom_ice.o
+ obj-$(CONFIG_QCOM_PBS) +=	qcom-pbs.o
+ obj-$(CONFIG_QCOM_UBWC_CONFIG) += ubwc_config.o
++obj-$(CONFIG_QCOM_CDSP_POWER) += cdsp_power.o
+diff --git a/drivers/soc/qcom/cdsp_power.c b/drivers/soc/qcom/cdsp_power.c
 new file mode 100644
-index 000000000000..f0f89fdeba4e
+index 000000000000..97aff858b139
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom,cdsp-power.yaml
-@@ -0,0 +1,138 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/soc/qcom/qcom,cdsp-power.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/drivers/soc/qcom/cdsp_power.c
+@@ -0,0 +1,1065 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ *
++ * CDSP Power Management Driver for IPQ9650
++ *
++ * Regulator ownership hierarchy:
++ *   PAS remoteproc (cx-supply / mx-supply)
++ *       -> cdsp-vdd-cx / cdsp-vdd-mx  (virtual, provided by this driver)
++ *           -> vdd-cx / vdd-mx        (voltage regulators, consumed by this driver)
++ */
 +
-+title: Qualcomm CDSP Power Management
++#include <linux/delay.h>
++#include <linux/interrupt.h>
++#include <linux/iopoll.h>
++#include <linux/ktime.h>
++#include <linux/mailbox_client.h>
++#include <linux/module.h>
++#include <linux/mutex.h>
++#include <linux/of.h>
++#include <linux/platform_device.h>
++#include <linux/regmap.h>
++#include <linux/regulator/consumer.h>
++#include <linux/regulator/driver.h>
++#include <linux/regulator/machine.h>
++#include <linux/soc/qcom/smem.h>
++#include <linux/workqueue.h>
 +
-+maintainers:
-+  - Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
++/* SMEM Protocol Definitions */
++/* NSP Q6 SMEM host ID */
++#define CDSP_SMEM_NSP_HOST_ID	5
++/* hdr(64) + request_area(1024) + response_area(256) */
++#define CDSP_SMEM_SIZE		1344
++/* Protocol magic number 'RPMH' */
++#define CDSP_SMEM_MAGIC		0x52504D48
++/* Protocol version v1.0 */
++#define CDSP_SMEM_VERSION	0x00010001
++#define CDSP_MSG_ID_REQUEST	0x01
++#define CDSP_MSG_ID_RESPONSE	0x02
++#define CDSP_RESP_MSG_SIZE	24
++#define CDSP_MAX_KVP		64
 +
-+description:
-+  The CDSP Power Management driver provides power management services for the
-+  Qualcomm Compute DSP (CDSP) subsystem. It handles Dynamic Clock and Voltage
-+  Scaling (DCVS) requests via SMEM, manages Low Power Mode (LPM) transitions
-+  via MPM handshake, and provides virtual regulators that are consumed by the
-+  CDSP remoteproc driver.
++/* SMEM layout fixed offsets (relative to start of SMEM item) */
++#define CDSP_SMEM_REQUEST_OFFSET	64
++#define CDSP_SMEM_REQUEST_SIZE		1024
++#define CDSP_SMEM_RESPONSE_OFFSET	1088
++#define CDSP_SMEM_RESPONSE_SIZE		256
 +
-+properties:
-+  compatible:
-+    const: qcom,cdsp-power
++/* NSP CX voltage rail resource ID */
++#define CDSP_RESOURCE_ID_CX	0x03
++/* NSP MX voltage rail resource ID */
++#define CDSP_RESOURCE_ID_MX	0x04
 +
-+  reg:
-+    items:
-+      - description: MPM (Modem Power Manager) register region
-+      - description: RSCC (RSC Configuration) register region
++/* MPM Register Offsets */
++#define RSC_HDSHK_IRQ_STAT		0x0004
++#define CLIENT_RSC_HDSHK(n)		(0x0010 + (n) * 0x10)
++#define CLIENT_RSC_IRQ_STAT(n)		(0x0014 + (n) * 0x10)
++#define CLIENT_RSC_IRQ_CLR(n)		(0x0018 + (n) * 0x10)
++#define VDD_RAIL_ISO_CTRL(n)		(0x0330 + (n) * 0x4)
 +
-+  reg-names:
-+    items:
-+      - const: mpm
-+      - const: rscc
++/* RSCC Register Offsets */
++#define RSCC_BR_EVENT			0x0
++#define RSCC_BR_EVENT_PC_MODE		BIT(3)
 +
-+  interrupts-extended:
-+    items:
-+      - description: LPM (Low Power Mode) interrupt from MPM
-+      - description: DCVS (Dynamic Clock and Voltage Scaling) interrupt from IPCC
++/* MPM Handshake Bits */
++#define MPM_SHUTDOWN_REQ		BIT(0)
++#define MPM_SHUTDOWN_ACK		BIT(1)
++#define MPM_BRINGUP_REQ			BIT(2)
++#define MPM_BRINGUP_ACK			BIT(3)
 +
-+  interrupt-names:
-+    items:
-+      - const: lpm
-+      - const: dcvs
++/* MPM Isolation Control Bits */
++#define ISO_CLK_DIS			BIT(0)
++#define ISO_CLK_DIS_ACK			BIT(1)
++#define ISO_INPUT			BIT(8)
++#define ISO_INPUT_DFT			BIT(9)
++#define ISO_INPUT_CLKS			BIT(10)
++#define ISO_CLAMP_MEM			BIT(11)
++#define ISO_RET_0PIN			BIT(16)
++#define ISO_SAVE_FF			BIT(17)
++#define ISO_RESTORE_FF			BIT(18)
++#define ISO_FREEZE_OUTPUT		BIT(24)
++#define ISO_PWR_UP_RESET		BIT(25)
 +
-+  mboxes:
-+    maxItems: 1
-+    description: IPCC mailbox channel for sending DCVS responses to CDSP
++/* MXC rail mapped to isolation control register index 0 */
++#define VDD_RAIL_MX			0
++/* NSP/CX rail mapped to isolation control register index 1 */
++#define VDD_RAIL_CX			1
 +
-+  qcom,smem-item:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description:
-+      SMEM item ID used for DCVS communication channel between APSS and CDSP.
-+      This is a platform-specific value that identifies the shared memory region.
++/* Power States */
++#define CDSP_POWER_OFF			0
++#define CDSP_POWER_ON			1
 +
-+  vdd-cx-supply:
-+    description:
-+      Phandle to the CX voltage regulator. This is the actual hardware regulator
-+      (e.g., from MP8899 PMIC) that supplies power to the CDSP CX rail.
++/* Timeouts */
++#define MPM_POLL_TIMEOUT_US		10000
++#define MPM_POLL_SLEEP_US		10
 +
-+  vdd-mx-supply:
-+    description:
-+      Phandle to the MX voltage regulator. This is the actual hardware regulator
-+      (e.g., from MP8899 PMIC) that supplies power to the CDSP MX rail. Optional
-+      on boards where MX rail is always-on or not present.
++/* Virtual regulator IDs */
++enum cdsp_virt_reg_id {
++	CDSP_VIRT_NSP_CX = 0,
++	CDSP_VIRT_NSP_MX = 1,
++	CDSP_VIRT_MAX,
++};
 +
-+  regulators:
-+    type: object
-+    description:
-+      Virtual regulators provided by this driver for consumption by the CDSP
-+      remoteproc driver. These virtual regulators pass through enable/disable
-+      requests to the actual hardware regulators (vdd-cx-supply, vdd-mx-supply).
++/**
++ * struct cdsp_smem_channel_hdr - SMEM channel header (64 bytes, at offset 0x000)
++ * @magic:             Protocol magic number (0x52504D48 = 'RPMH')
++ * @version:           Protocol version (0x00010001 = v1.0)
++ * @cdsp_state:        NSP Q6 readiness flag; 0 = not ready, 1 = ready (written by NSP)
++ * @apss_state:        APSS readiness flag; 0 = not ready, 1 = ready (written by APSS)
++ * @request_offset:    Byte offset of the request area from the start of the SMEM item
++ * @request_size:      Size of the request area in bytes
++ * @response_offset:   Byte offset of the response area from the start of the SMEM item
++ * @response_size:     Size of the response area in bytes
++ * @request_in_flight: Channel busy flag; 0 = idle, 1 = busy (NSP sets, APSS clears)
++ * @cdsp_to_apss_irq:  IPCC signal ID used for NSP-to-APSS interrupts
++ * @apss_to_cdsp_irq:  IPCC signal ID used for APSS-to-NSP interrupts
++ * @cdsp_tx_count:     Number of DCVS requests sent by NSP
++ * @cdsp_rx_count:     Number of DCVS responses received by NSP
++ * @apss_tx_count:     Number of DCVS responses sent by APSS
++ * @apss_rx_count:     Number of DCVS requests received by APSS
++ * @reserved:          Reserved, must be zero
++ *
++ * Fixed at offset 0x000 in the SMEM item. Matches rpmh_smem_channel_header_t
++ * on the NSP Q6 side. APSS initialises this at probe time; NSP Q6 reads it
++ * to discover the request/response area offsets and to synchronise readiness.
++ */
++struct cdsp_smem_channel_hdr {
++	u32 magic;
++	u32 version;
++	u32 cdsp_state;
++	u32 apss_state;
++	u32 request_offset;
++	u32 request_size;
++	u32 response_offset;
++	u32 response_size;
++	u32 request_in_flight;
++	u32 cdsp_to_apss_irq;
++	u32 apss_to_cdsp_irq;
++	u32 cdsp_tx_count;
++	u32 cdsp_rx_count;
++	u32 apss_tx_count;
++	u32 apss_rx_count;
++	u32 reserved;
++} __packed;
 +
-+    properties:
-+      cdsp-vdd-cx:
-+        type: object
-+        $ref: /schemas/regulator/regulator.yaml#
-+        description: Virtual CX regulator for CDSP
-+        unevaluatedProperties: false
++/**
++ * struct cdsp_kvp - Key-Value-Pair entry in a DCVS request
++ * @key:    Resource identifier; upper 16 bits = CDSP_RESOURCE_ID_CX or _MX
++ * @length: Length of the value field in bytes (always 4)
++ * @value:  Requested voltage in microvolts
++ */
++struct cdsp_kvp {
++	u32 key;
++	u32 length;
++	u32 value;
++} __packed;
 +
-+      cdsp-vdd-mx:
-+        type: object
-+        $ref: /schemas/regulator/regulator.yaml#
-+        description: Virtual MX regulator for CDSP
-+        unevaluatedProperties: false
++/**
++ * struct cdsp_smem_request - DCVS request message written by NSP Q6, read by APSS
++ * @msg_size:     Total message size in bytes
++ * @sequence:     Monotonically increasing sequence number
++ * @msg_id:       Message type; CDSP_MSG_ID_REQUEST (0x01) for DCVS requests
++ * @req_id:       Request identifier echoed in the response
++ * @set:          Power set being requested (ACTIVE / SLEEP / WAKE)
++ * @num_commands: Number of KVP entries that follow
++ * @timestamp_us: Request timestamp in microseconds
++ * @kvp:          Array of key-value-pair voltage commands (up to CDSP_MAX_KVP)
++ */
++struct cdsp_smem_request {
++	u32 msg_size;
++	u32 sequence;
++	u32 msg_id;
++	u32 req_id;
++	u32 set;
++	u32 num_commands;
++	u32 timestamp_us;
++	struct cdsp_kvp kvp[CDSP_MAX_KVP];
++} __packed;
 +
-+    additionalProperties: false
++/**
++ * struct cdsp_smem_response - DCVS response message written by APSS, read by NSP Q6
++ * @msg_size:     Total message size in bytes (CDSP_RESP_MSG_SIZE = 24)
++ * @sequence:     Echo of the request sequence number
++ * @msg_id:       Message type; CDSP_MSG_ID_RESPONSE (0x02)
++ * @status:       Result code; 0 on success, negative errno on failure
++ * @data:         Actual voltage applied in microvolts (valid when status == 0)
++ * @timestamp_us: Completion timestamp in microseconds
++ */
++struct cdsp_smem_response {
++	u32 msg_size;
++	u32 sequence;
++	u32 msg_id;
++	u32 status;
++	u32 data;
++	u32 timestamp_us;
++} __packed;
 +
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - interrupts-extended
-+  - interrupt-names
-+  - mboxes
-+  - qcom,smem-item
-+  - vdd-cx-supply
-+  - regulators
++/**
++ * struct cdsp_smem_region - Full SMEM item layout (1344 bytes total)
++ * @hdr:       Channel header at offset 0x000 (64 bytes)
++ * @request:   DCVS request area at offset 0x040 (padded to 1024 bytes)
++ * @_req_pad:  Padding to align response area to offset 0x440
++ * @response:  DCVS response area at offset 0x440 (padded to 256 bytes)
++ * @_resp_pad: Padding to complete the 256-byte response area
++ *
++ * Layout matches the rpmh_smem_channel_header_t offsets on the NSP Q6 side.
++ */
++struct cdsp_smem_region {
++	struct cdsp_smem_channel_hdr hdr;
++	struct cdsp_smem_request  request;
++	u8 _req_pad[228];
++	struct cdsp_smem_response response;
++	u8 _resp_pad[232];
++} __packed;
 +
-+additionalProperties: false
++/**
++ * struct cdsp_power_driver - Main driver context
++ * @dev: Device pointer
++ * @smem: Pointer to SMEM region
++ * @dcvs_mbox_client: Mailbox client for DCVS response interrupt (APSS->NSP)
++ * @dcvs_mbox_chan: Mailbox channel for DCVS response interrupt
++ * @dcvs_irq: DCVS interrupt number (NSP->APSS IPCC PING)
++ * @dcvs_work: Work structure for DCVS processing
++ * @mpm_regmap: Regmap for MPM handshake registers
++ * @lpm_irq: LPM interrupt number
++ * @lpm_work: Work structure for LPM processing
++ * @rscc_regmap: Regmap for RSCC power mode detection register
++ * @vdd_cx: CX voltage regulator (consumer handle)
++ * @vdd_mx: MX voltage regulator (consumer handle, NULL if absent on this board)
++ * @power_state: Current NSP power state (CDSP_POWER_ON / CDSP_POWER_OFF)
++ * @lock: Mutex serialising DCVS and LPM work
++ */
++struct cdsp_power_driver {
++	struct device *dev;
 +
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/mailbox/qcom-ipcc.h>
++	/* SMEM for DCVS */
++	struct cdsp_smem_region *smem;
 +
-+    soc {
-+        #address-cells = <2>;
-+        #size-cells = <2>;
++	/* Mbox for DCVS response (APSS -> NSP via IPCC PING) */
++	struct mbox_client dcvs_mbox_client;
++	struct mbox_chan   *dcvs_mbox_chan;
 +
-+        cdsp_power: cdsp-power@4ae000 {
-+            compatible = "qcom,cdsp-power";
-+            reg = <0x0 0x004ae000 0x0 0x1000>,
-+                  <0x0 0x26018018 0x0 0x4>;
-+            reg-names = "mpm", "rscc";
++	int dcvs_irq;
++	struct work_struct dcvs_work;
 +
-+            interrupts-extended = <&intc GIC_SPI 65 IRQ_TYPE_EDGE_RISING 0>,
-+                                  <&ipcc IPCC_CLIENT_CDSP
-+                                         IPCC_MPROC_SIGNAL_PING
-+                                         IRQ_TYPE_EDGE_RISING>;
-+            interrupt-names = "lpm", "dcvs";
++	/* MPM for LPM */
++	struct regmap *mpm_regmap;
++	int lpm_irq;
++	struct workqueue_struct *lpm_wq;
++	struct work_struct lpm_work;
 +
-+            mboxes = <&ipcc IPCC_CLIENT_CDSP IPCC_MPROC_SIGNAL_PING>;
++	/* RSCC for power mode detection */
++	struct regmap *rscc_regmap;
 +
-+            qcom,smem-item = <503>;
++	/* PMIC regulator consumer handles */
++	struct regulator *vdd_cx;
++	struct regulator *vdd_mx;
 +
-+            vdd-cx-supply = <&ipq9650_s2>;
-+            vdd-mx-supply = <&ipq9650_s4>;
++	/* State tracking */
++	atomic_t power_state;
++	/* Mutex serialising DCVS and LPM work */
++	struct mutex lock;
++};
 +
-+            regulators {
-+                cdsp_vdd_cx: cdsp-vdd-cx {
-+                    regulator-name = "cdsp-vdd-cx";
-+                };
++/**
++ * cdsp_virt_reg_enable() - Enable a virtual NSP regulator
++ * @rdev: Regulator device
++ *
++ * Passes the enable request through to the underlying PMIC consumer handle
++ * (vdd_cx or vdd_mx). Returns 0 immediately if the MX rail is absent on
++ * this board.
++ *
++ * Return: 0 on success, negative error code on failure
++ */
++static int cdsp_virt_reg_enable(struct regulator_dev *rdev)
++{
++	struct cdsp_power_driver *drv = rdev_get_drvdata(rdev);
++	int id = rdev_get_id(rdev);
++	struct regulator *reg = (id == CDSP_VIRT_NSP_CX) ? drv->vdd_cx : drv->vdd_mx;
 +
-+                cdsp_vdd_mx: cdsp-vdd-mx {
-+                    regulator-name = "cdsp-vdd-mx";
-+                };
-+            };
-+        };
-+    };
++	if (!reg)
++		return 0;
++	return regulator_enable(reg);
++}
++
++/**
++ * cdsp_virt_reg_is_enabled() - Check if a virtual NSP regulator is enabled
++ * @rdev: Regulator device
++ *
++ * Queries the enable state of the underlying PMIC consumer handle (vdd_cx
++ * or vdd_mx). Returns 1 if the MX rail is absent on this board, since the
++ * MX hardware rail is always on in that configuration.
++ *
++ * Return: 1 if enabled (or absent), 0 if disabled, negative error code on failure
++ */
++static int cdsp_virt_reg_is_enabled(struct regulator_dev *rdev)
++{
++	struct cdsp_power_driver *drv = rdev_get_drvdata(rdev);
++	int id = rdev_get_id(rdev);
++	struct regulator *reg = (id == CDSP_VIRT_NSP_CX) ? drv->vdd_cx : drv->vdd_mx;
++
++	if (!reg)
++		return 1;
++	return regulator_is_enabled(reg);
++}
++
++/**
++ * cdsp_virt_reg_disable() - Disable a virtual NSP regulator
++ * @rdev: Regulator device
++ *
++ * Passes the disable request through to the underlying PMIC consumer handle
++ * (vdd_cx or vdd_mx). Returns 0 immediately if the MX rail is absent on
++ * this board.
++ *
++ * Return: 0 on success, negative error code on failure
++ */
++static int cdsp_virt_reg_disable(struct regulator_dev *rdev)
++{
++	struct cdsp_power_driver *drv = rdev_get_drvdata(rdev);
++	int id = rdev_get_id(rdev);
++	struct regulator *reg = (id == CDSP_VIRT_NSP_CX) ? drv->vdd_cx : drv->vdd_mx;
++
++	if (!reg)
++		return 0;
++
++	/* Disable the regulator if it's enabled */
++	if (cdsp_virt_reg_is_enabled(rdev))
++		return regulator_disable(reg);
++
++	return 0;
++}
++
++static const struct regulator_ops cdsp_virt_reg_ops = {
++	.enable      = cdsp_virt_reg_enable,
++	.disable     = cdsp_virt_reg_disable,
++	.is_enabled  = cdsp_virt_reg_is_enabled,
++};
++
++static const struct regulator_desc cdsp_virt_reg_descs[CDSP_VIRT_MAX] = {
++	[CDSP_VIRT_NSP_CX] = {
++		.id              = CDSP_VIRT_NSP_CX,
++		.name            = "cdsp-vdd-cx",
++		.of_match        = "cdsp-vdd-cx",
++		.regulators_node = "regulators",
++		.ops             = &cdsp_virt_reg_ops,
++		.type            = REGULATOR_VOLTAGE,
++		.owner           = THIS_MODULE,
++	},
++	[CDSP_VIRT_NSP_MX] = {
++		.id              = CDSP_VIRT_NSP_MX,
++		.name            = "cdsp-vdd-mx",
++		.of_match        = "cdsp-vdd-mx",
++		.regulators_node = "regulators",
++		.ops             = &cdsp_virt_reg_ops,
++		.type            = REGULATOR_VOLTAGE,
++		.owner           = THIS_MODULE,
++	},
++};
++
++/**
++ * cdsp_is_full_pc_mode() - Check if FULL_PC mode is selected
++ * @drv: Driver context
++ *
++ * Reads the CDSP RSCC_BR_EVENT register to determine power collapse mode.
++ * Bit 3: 0 = FULL_PC (collapse both CX and MX)
++ *        1 = LONG_APCR (collapse only CX)
++ *
++ * Return: true if FULL_PC mode, false if LONG_APCR mode
++ */
++static bool cdsp_is_full_pc_mode(struct cdsp_power_driver *drv)
++{
++	u32 br_event;
++	int ret;
++
++	ret = regmap_read(drv->rscc_regmap, RSCC_BR_EVENT, &br_event);
++	if (ret) {
++		dev_err(drv->dev, "Failed to read RSCC_BR_EVENT: %d\n", ret);
++		return true; /* Default to FULL_PC on error */
++	}
++
++	/* Bit 3: 0 = FULL_PC (collapse both CX and MX)
++	 *        1 = LONG_APCR (collapse only CX)
++	 */
++	return !(br_event & RSCC_BR_EVENT_PC_MODE);
++}
++
++/**
++ * cdsp_dcvs_irq_handler() - DCVS interrupt handler
++ * @irq: Interrupt number
++ * @data: Driver context
++ *
++ * Called when CDSP sends a DCVS request via IPCC PING interrupt.
++ * Schedules work to process the request.
++ *
++ * Return: IRQ_HANDLED
++ */
++static irqreturn_t cdsp_dcvs_irq_handler(int irq, void *data)
++{
++	struct cdsp_power_driver *drv = data;
++
++	/* Schedule work to process DCVS request */
++	schedule_work(&drv->dcvs_work);
++
++	return IRQ_HANDLED;
++}
++
++/**
++ * cdsp_dcvs_work_fn() - Process a DCVS voltage scaling request from the NSP Q6
++ * @work: Work structure embedded in struct cdsp_power_driver
++ *
++ * Reads the KVP request from the SMEM channel, validates the resource ID and
++ * voltage, applies the voltage via the regulator framework, writes the response
++ * back to SMEM, and signals the NSP Q6 via the IPCC PING mailbox channel.
++ */
++static void cdsp_dcvs_work_fn(struct work_struct *work)
++{
++	struct cdsp_power_driver *drv = container_of(work,
++						     struct cdsp_power_driver,
++						     dcvs_work);
++	struct cdsp_smem_region *smem = drv->smem;
++	u32 sequence, num_commands;
++	int ret = 0, actual_uv = 0;
++	int i;
++
++	mutex_lock(&drv->lock);
++
++	/* Drop DCVS requests while the NSP Q6 is powered off */
++	if (atomic_read(&drv->power_state) == CDSP_POWER_OFF) {
++		dev_warn(drv->dev, "DCVS request while powered off, dropping\n");
++		mutex_unlock(&drv->lock);
++		return;
++	}
++
++	/* Read request header from SMEM */
++	rmb();
++	sequence     = smem->request.sequence;
++	num_commands = smem->request.num_commands;
++
++	/* Validate message type — only process DCVS requests */
++	if (smem->request.msg_id != CDSP_MSG_ID_REQUEST) {
++		dev_err(drv->dev, "Unexpected msg_id: 0x%x (expected 0x%x)\n",
++			smem->request.msg_id, CDSP_MSG_ID_REQUEST);
++		ret = -EINVAL;
++		goto send_response;
++	}
++
++	dev_dbg(drv->dev, "DCVS request: seq=%u, num_commands=%u, timestamp=%u us\n",
++		sequence, num_commands, smem->request.timestamp_us);
++
++	if (num_commands > CDSP_MAX_KVP) {
++		dev_err(drv->dev, "Too many KVP commands: %u (max %d)\n",
++			num_commands, CDSP_MAX_KVP);
++		ret = -EINVAL;
++		goto send_response;
++	}
++
++	/* Process each KVP: key=resource_type, value=voltage_uv */
++	for (i = 0; i < num_commands; i++) {
++		u32 key        = smem->request.kvp[i].key;
++		u32 voltage_uv = smem->request.kvp[i].value;
++		/* Upper 16 bits of the KVP key encode the resource ID */
++		u32 resource_id = (key >> 16) & 0xFFFF;
++		struct regulator *reg;
++		int uv;
++
++		if (resource_id == CDSP_RESOURCE_ID_CX) {
++			reg = drv->vdd_cx;
++		} else if (resource_id == CDSP_RESOURCE_ID_MX) {
++			if (!drv->vdd_mx) {
++				dev_dbg(drv->dev,
++					"KVP[%d]: MX rail not available on this board\n",
++					i);
++				ret = -EINVAL;
++				goto send_response;
++			}
++			reg = drv->vdd_mx;
++		} else {
++			dev_err(drv->dev, "KVP[%d]: unknown key 0x%x\n", i, key);
++			ret = -EINVAL;
++			goto send_response;
++		}
++
++		/* Set voltage; the regulator framework enforces DTS constraints */
++		ret = regulator_set_voltage(reg, voltage_uv, voltage_uv);
++		if (ret) {
++			dev_err(drv->dev, "KVP[%d]: failed to set %s voltage %u uV: %d\n",
++				i, resource_id == CDSP_RESOURCE_ID_CX ? "CX" : "MX",
++				voltage_uv, ret);
++			goto send_response;
++		}
++
++		/* Read back actual voltage */
++		uv = regulator_get_voltage(reg);
++		if (uv < 0) {
++			dev_warn(drv->dev, "KVP[%d]: failed to read back voltage: %d\n",
++				 i, uv);
++			uv = voltage_uv;
++		}
++		/* Track the last successfully set voltage to report in the response */
++		actual_uv = uv;
++
++		dev_dbg(drv->dev, "DCVS: Set %s to %d uV (requested %u uV)\n",
++			resource_id == CDSP_RESOURCE_ID_CX ? "CX" : "MX",
++			actual_uv, voltage_uv);
++	}
++
++send_response:
++	/* Write response to SMEM response area */
++	smem->response.msg_size     = CDSP_RESP_MSG_SIZE;
++	smem->response.sequence     = sequence;
++	smem->response.msg_id       = CDSP_MSG_ID_RESPONSE;
++	smem->response.status       = ret;
++	smem->response.data         = (ret == 0) ? actual_uv : 0;
++	smem->response.timestamp_us = ktime_to_us(ktime_get());
++
++	/*
++	 * Update header statistics and clear in-flight flag.
++	 * Order: write response data -> clear request_in_flight -> wmb ->
++	 * send interrupt. NSP Q6 checks request_in_flight == 0 to know
++	 * the response is ready.
++	 */
++	smem->hdr.apss_rx_count++;
++	smem->hdr.apss_tx_count++;
++	/* Mark channel idle before sending the interrupt */
++	WRITE_ONCE(smem->hdr.request_in_flight, 0);
++	/* Ensure response data is visible before sending interrupt to NSP Q6 */
++	wmb();
++
++	/* Send IPCC PING interrupt to NSP Q6 */
++	mbox_send_message(drv->dcvs_mbox_chan, NULL);
++	mbox_client_txdone(drv->dcvs_mbox_chan, 0);
++
++	mutex_unlock(&drv->lock);
++}
++
++/**
++ * cdsp_execute_isolation_sequence() - Execute isolation and power-down sequence
++ * @drv: Driver context
++ *
++ * Executes the isolation sequence for power collapse as defined in
++ * the MPM power collapse specification, followed by regulator disable.
++ * Processes NSP/CX rail first (always), then MXC/MX rail (FULL_PC mode only).
++ */
++static void cdsp_execute_isolation_sequence(struct cdsp_power_driver *drv)
++{
++	/*
++	 * When vdd_mx is absent (board has no MX regulator handle), always
++	 * execute FULL_PC isolation for both CX and MX rails regardless of
++	 * what the Q6 requested.
++	 */
++	int num_rails = (!drv->vdd_mx || cdsp_is_full_pc_mode(drv)) ? 2 : 1;
++	unsigned int iso_regs[] = {
++		VDD_RAIL_ISO_CTRL(VDD_RAIL_CX),  /* NSP/CX rail - always processed */
++		VDD_RAIL_ISO_CTRL(VDD_RAIL_MX),  /* MXC/MX rail - FULL_PC only */
++	};
++	struct regulator *regulators[] = { drv->vdd_cx, drv->vdd_mx };
++	struct regmap *mpm_map = drv->mpm_regmap;
++	int ret, i;
++	u32 val;
++
++	for (i = 0; i < num_rails; i++) {
++		unsigned int iso = iso_regs[i];
++
++		/* Step 1: Disable clocks */
++		regmap_update_bits(mpm_map, iso, ISO_CLK_DIS, ISO_CLK_DIS);
++
++		/* Poll CLK_DIS_ACK only for NSP/CX rail (MXC CLK_DIS_ACK is tied to 0) */
++		if (i == 0) {
++			ret = regmap_read_poll_timeout(mpm_map, iso, val,
++						       (val & ISO_CLK_DIS_ACK),
++						       MPM_POLL_SLEEP_US, MPM_POLL_TIMEOUT_US);
++			if (ret)
++				dev_err(drv->dev, "Timeout waiting for NSP CLK_DIS_ACK\n");
++		}
++
++		/* Step 2: Isolate inputs */
++		regmap_update_bits(mpm_map, iso,
++				   ISO_INPUT | ISO_INPUT_CLKS | ISO_INPUT_DFT,
++				   ISO_INPUT | ISO_INPUT_CLKS | ISO_INPUT_DFT);
++		/* Step 3: Clamp memories */
++		regmap_update_bits(mpm_map, iso, ISO_CLAMP_MEM, ISO_CLAMP_MEM);
++		/* Step 4: Enable 0-pin retention */
++		regmap_update_bits(mpm_map, iso, ISO_RET_0PIN, ISO_RET_0PIN);
++		/* Step 5: Save to balloon latch (low-high-low pulse) */
++		regmap_update_bits(mpm_map, iso, ISO_SAVE_FF, 0x0);
++		regmap_update_bits(mpm_map, iso, ISO_SAVE_FF, ISO_SAVE_FF);
++		regmap_update_bits(mpm_map, iso, ISO_SAVE_FF, 0x0);
++		/* Step 6: Prepare restore signal (low-high) */
++		regmap_update_bits(mpm_map, iso, ISO_RESTORE_FF, ISO_RESTORE_FF);
++		/* Step 7: Freeze outputs */
++		regmap_update_bits(mpm_map, iso, ISO_FREEZE_OUTPUT, ISO_FREEZE_OUTPUT);
++
++		/* Step 8: Turn off regulator */
++		if (regulators[i]) {
++			ret = regulator_disable(regulators[i]);
++			if (ret)
++				dev_err(drv->dev, "Failed to disable %s rail: %d\n",
++					i == 0 ? "CX" : "MX", ret);
++			else
++				usleep_range(8000, 10000);
++		}
++	}
++
++	dev_dbg(drv->dev, "Isolation sequence complete (%s mode)\n",
++		num_rails > 1 ? "FULL_PC" : "LONG_APCR");
++}
++
++/**
++ * cdsp_execute_restoration_sequence() - Execute 9-step restoration sequence
++ * @drv: Driver context
++ *
++ * Executes the restoration sequence for power restore as defined in
++ * the MPM power collapse specification.
++ * FULL_PC: Restores MXC (MX) rail first, then NSP (CX) rail
++ * LONG_APCR: Restores NSP (CX) rail only
++ */
++static void cdsp_execute_restoration_sequence(struct cdsp_power_driver *drv)
++{
++	/*
++	 * When vdd_mx is absent, always restore both CX and MX rails
++	 * (FULL_PC), but skip regulator_enable for MX (no handle).
++	 */
++	int start_rail = (!drv->vdd_mx || cdsp_is_full_pc_mode(drv)) ? 0 : 1;
++	unsigned int iso_regs[] = {
++		VDD_RAIL_ISO_CTRL(VDD_RAIL_MX),  /* MXC/MX rail - FULL_PC only, restored first */
++		VDD_RAIL_ISO_CTRL(VDD_RAIL_CX),  /* NSP/CX rail - always restored */
++	};
++	struct regulator *regulators[] = { drv->vdd_mx, drv->vdd_cx };
++	struct regmap *mpm_map = drv->mpm_regmap;
++	static const char * const rail_names[] = { "MX", "CX" };
++	int ret, i;
++
++	for (i = start_rail; i < ARRAY_SIZE(iso_regs); i++) {
++		unsigned int iso = iso_regs[i];
++
++		/* Step 1: Assert power-up reset */
++		regmap_update_bits(mpm_map, iso, ISO_PWR_UP_RESET, ISO_PWR_UP_RESET);
++
++		/* Step 2: Enable power rail while reset is asserted (skip if no handle) */
++		if (regulators[i]) {
++			ret = regulator_enable(regulators[i]);
++			if (ret)
++				dev_err(drv->dev, "Failed to enable %s: %d\n", rail_names[i], ret);
++			else
++				usleep_range(8000, 10000);
++		}
++
++		/* Step 3: Clear power-up reset */
++		regmap_update_bits(mpm_map, iso, ISO_PWR_UP_RESET, 0);
++		/* Step 4: Restore from balloon latch */
++		regmap_update_bits(mpm_map, iso, ISO_RESTORE_FF, 0);
++		/* Step 5: Remove memory clamp */
++		regmap_update_bits(mpm_map, iso, ISO_CLAMP_MEM, 0);
++		/* Step 6: Restore from 0-pin retention */
++		regmap_update_bits(mpm_map, iso, ISO_RET_0PIN, 0);
++		/* Step 7: Remove output freeze */
++		regmap_update_bits(mpm_map, iso, ISO_FREEZE_OUTPUT, 0);
++		/* Step 8: Remove input isolation */
++		regmap_update_bits(mpm_map, iso, ISO_INPUT | ISO_INPUT_DFT | ISO_INPUT_CLKS, 0);
++		/* Step 9: Enable clocks */
++		regmap_update_bits(mpm_map, iso, ISO_CLK_DIS, 0);
++	}
++
++	dev_dbg(drv->dev, "Restoration sequence complete (%s mode)\n",
++		start_rail == 0 ? "FULL_PC" : "LONG_APCR");
++}
++
++/**
++ * cdsp_lpm_shutdown_sequence() - Execute LPM shutdown sequence
++ * @drv: Driver context
++ *
++ * Handles power collapse request from CDSP:
++ * 1. Completes MPM 4-phase handshake
++ * 2. Executes isolation sequence
++ * 3. Disables regulators
++ *
++ * The regulator_disable() calls here are balanced against the
++ * regulator_enable() calls made by PAS remoteproc via the virtual
++ * vdd-cx/vdd-mx regulators (which pass through to vdd_cx/vdd_mx).
++ */
++static void cdsp_lpm_shutdown_sequence(struct cdsp_power_driver *drv)
++{
++	struct regmap *mpm_map = drv->mpm_regmap;
++	bool is_full_pc = cdsp_is_full_pc_mode(drv);
++	u32 hdshk_status;
++	int ret;
++
++	dev_dbg(drv->dev, "LPM: Starting power collapse sequence\n");
++
++	/* Phase 1: Acknowledge shutdown request */
++	regmap_update_bits(mpm_map, CLIENT_RSC_HDSHK(0), MPM_SHUTDOWN_ACK, MPM_SHUTDOWN_ACK);
++
++	/* Phase 2: Wait for request de-assertion */
++	ret = regmap_read_poll_timeout(mpm_map, CLIENT_RSC_HDSHK(0), hdshk_status,
++				       !(hdshk_status & MPM_SHUTDOWN_REQ),
++				       MPM_POLL_SLEEP_US, MPM_POLL_TIMEOUT_US);
++	if (ret) {
++		dev_err(drv->dev, "Timeout waiting for shutdown_req clear\n");
++		return;
++	}
++
++	/* Phase 3: Clear acknowledgment */
++	regmap_update_bits(mpm_map, CLIENT_RSC_HDSHK(0), MPM_SHUTDOWN_ACK, 0x0);
++
++	/* Phase 4: Execute isolation sequence */
++	cdsp_execute_isolation_sequence(drv);
++
++	atomic_set(&drv->power_state, CDSP_POWER_OFF);
++
++	dev_dbg(drv->dev, "LPM: Power collapse complete (%s mode)\n",
++		is_full_pc ? "FULL_PC" : "LONG_APCR");
++}
++
++/**
++ * cdsp_lpm_restore_sequence() - Execute LPM restore sequence
++ * @drv: Driver context
++ *
++ * Handles power restore request from CDSP:
++ * 1. Executes restoration sequence (includes regulator enable)
++ * 2. Completes MPM bringup handshake
++ */
++static void cdsp_lpm_restore_sequence(struct cdsp_power_driver *drv)
++{
++	struct regmap *mpm_map = drv->mpm_regmap;
++	u32 hdshk_status;
++	int ret;
++
++	dev_dbg(drv->dev, "LPM: Starting power restore sequence\n");
++
++	/* Execute restoration sequence (includes regulator enable) */
++	cdsp_execute_restoration_sequence(drv);
++
++	/* Assert BRINGUP_ACK */
++	regmap_update_bits(mpm_map, CLIENT_RSC_HDSHK(0), MPM_BRINGUP_ACK, MPM_BRINGUP_ACK);
++
++	/* Wait for BRINGUP_REQ to de-assert */
++	ret = regmap_read_poll_timeout(mpm_map, CLIENT_RSC_HDSHK(0), hdshk_status,
++				       !(hdshk_status & MPM_BRINGUP_REQ),
++				       MPM_POLL_SLEEP_US, MPM_POLL_TIMEOUT_US);
++	if (ret) {
++		dev_err(drv->dev, "Timeout waiting for BRINGUP_REQ clear\n");
++		return;
++	}
++
++	/* Clear BRINGUP_ACK */
++	regmap_update_bits(mpm_map, CLIENT_RSC_HDSHK(0), MPM_BRINGUP_ACK, 0);
++
++	atomic_set(&drv->power_state, CDSP_POWER_ON);
++
++	dev_dbg(drv->dev, "LPM: Power restore complete\n");
++}
++
++/**
++ * cdsp_lpm_irq_handler() - LPM interrupt handler
++ * @irq: Interrupt number
++ * @data: Driver context
++ *
++ * Called when CDSP sends an LPM request via MPM.
++ * Schedules work to process the request.
++ *
++ * Return: IRQ_HANDLED
++ */
++static irqreturn_t cdsp_lpm_irq_handler(int irq, void *data)
++{
++	struct cdsp_power_driver *drv = data;
++	unsigned int client_rsc_hdsk_irq_val;
++	unsigned int rsc_hdsk_irq_val;
++
++	regmap_read(drv->mpm_regmap, RSC_HDSHK_IRQ_STAT, &rsc_hdsk_irq_val);
++	regmap_read(drv->mpm_regmap, CLIENT_RSC_IRQ_STAT(0), &client_rsc_hdsk_irq_val);
++	if (!client_rsc_hdsk_irq_val || !rsc_hdsk_irq_val)
++		return IRQ_NONE;
++
++	/* Schedule work to process LPM request */
++	queue_work(drv->lpm_wq, &drv->lpm_work);
++
++	return IRQ_HANDLED;
++}
++
++/**
++ * cdsp_lpm_work_fn() - LPM work function
++ * @work: Work structure
++ *
++ * Processes LPM requests from CDSP by reading MPM handshake status
++ * and executing appropriate shutdown or restore sequence.
++ */
++static void cdsp_lpm_work_fn(struct work_struct *work)
++{
++	struct cdsp_power_driver *drv = container_of(work,
++						      struct cdsp_power_driver,
++						      lpm_work);
++	u32 hdshk_status;
++	bool is_shutdown;
++
++	mutex_lock(&drv->lock);
++
++	/* Read MPM handshake status */
++	regmap_read(drv->mpm_regmap, CLIENT_RSC_HDSHK(0), &hdshk_status);
++
++	/* Clear the interrupt */
++	regmap_write(drv->mpm_regmap, CLIENT_RSC_IRQ_CLR(0), 0x0);
++	regmap_write(drv->mpm_regmap, CLIENT_RSC_IRQ_CLR(0), 0x1);
++	regmap_write(drv->mpm_regmap, CLIENT_RSC_IRQ_CLR(0), 0x0);
++
++	/* Determine if this is shutdown or bringup */
++	is_shutdown = !!(hdshk_status & MPM_SHUTDOWN_REQ);
++
++	if (is_shutdown) {
++		if (atomic_read(&drv->power_state) == CDSP_POWER_OFF) {
++			dev_warn(drv->dev, "Spurious shutdown request, already powered off\n");
++			goto out_unlock;
++		}
++		cdsp_lpm_shutdown_sequence(drv);
++	} else {
++		if (atomic_read(&drv->power_state) == CDSP_POWER_ON) {
++			dev_warn(drv->dev, "Spurious bringup request, already powered on\n");
++			goto out_unlock;
++		}
++		cdsp_lpm_restore_sequence(drv);
++	}
++
++out_unlock:
++	mutex_unlock(&drv->lock);
++}
++
++static const struct regmap_config cdsp_rscc_regmap_config = {
++	.reg_bits       = 32,
++	.reg_stride     = 4,
++	.val_bits       = 32,
++	.max_register   = 0x4,
++	.fast_io        = true,
++};
++
++static const struct regmap_config cdsp_regmap_config = {
++	.reg_bits       = 32,
++	.reg_stride     = 4,
++	.val_bits       = 32,
++	.max_register   = 0x1000,
++	.fast_io        = true,
++};
++
++/**
++ * cdsp_power_probe() - Probe the CDSP power management driver
++ * @pdev: Platform device
++ *
++ * Acquires the PMIC regulator consumer handles, registers the virtual
++ * cdsp-vdd-cx (and optionally cdsp-vdd-mx) regulator providers, maps the
++ * MPM and RSCC register regions, and registers the DCVS and LPM interrupt
++ * handlers.
++ *
++ * Return: 0 on success, negative error code on failure
++ */
++static int cdsp_power_probe(struct platform_device *pdev)
++{
++	struct regulator_config virt_cfg = {};
++	struct cdsp_power_driver *drv;
++	struct regulator_dev *rdev;
++	void __iomem *rscc_base;
++	void __iomem *mpm_base;
++	size_t smem_size;
++	u32 smem_id;
++	int ret;
++
++	/* Allocate driver context */
++	drv = devm_kzalloc(&pdev->dev, sizeof(*drv), GFP_KERNEL);
++	if (!drv)
++		return -ENOMEM;
++
++	drv->dev = &pdev->dev;
++	mutex_init(&drv->lock);
++	atomic_set(&drv->power_state, CDSP_POWER_ON);
++
++	/* Get SMEM item ID from device tree */
++	ret = of_property_read_u32(pdev->dev.of_node, "qcom,smem-item", &smem_id);
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "Failed to get SMEM item ID\n");
++
++	/* Create SMEM entry for DCVS */
++	ret = qcom_smem_alloc(CDSP_SMEM_NSP_HOST_ID, smem_id, CDSP_SMEM_SIZE);
++	if (ret && ret != -EEXIST)
++		return dev_err_probe(&pdev->dev, ret, "Failed to allocate SMEM\n");
++
++	/* Get SMEM pointer and validate size */
++	drv->smem = qcom_smem_get(CDSP_SMEM_NSP_HOST_ID, smem_id, &smem_size);
++	if (IS_ERR(drv->smem))
++		return dev_err_probe(&pdev->dev, PTR_ERR(drv->smem),
++				     "Failed to get SMEM\n");
++
++	if (smem_size < CDSP_SMEM_SIZE)
++		return dev_err_probe(&pdev->dev, -EINVAL,
++				     "SMEM region too small: got %zu, expected %u\n",
++				     smem_size, CDSP_SMEM_SIZE);
++
++	/*
++	 * Initialise the SMEM channel header.
++	 * Zero the entire region first so all padding and reserved fields
++	 * are clean, then fill in the fixed protocol fields.
++	 * apss_state is set to 1 last (after wmb) so NSP Q6 only sees a
++	 * fully-populated header once APSS is ready.
++	 */
++	memset(drv->smem, 0, sizeof(*drv->smem));
++	drv->smem->hdr.magic           = CDSP_SMEM_MAGIC;
++	drv->smem->hdr.version         = CDSP_SMEM_VERSION;
++	drv->smem->hdr.request_offset  = CDSP_SMEM_REQUEST_OFFSET;
++	drv->smem->hdr.request_size    = CDSP_SMEM_REQUEST_SIZE;
++	drv->smem->hdr.response_offset = CDSP_SMEM_RESPONSE_OFFSET;
++	drv->smem->hdr.response_size   = CDSP_SMEM_RESPONSE_SIZE;
++	/* Signal APSS readiness to NSP Q6 */
++	WRITE_ONCE(drv->smem->hdr.apss_state, 1);
++	/* Ensure SMEM header is fully written before NSP Q6 reads it */
++	wmb();
++
++	/*
++	 * Get voltage regulator consumer handles.
++	 * These are the actual NSP_CX and NSP_MX voltage rails.
++	 * The virtual regulator ops pass through to these handles.
++	 */
++	drv->vdd_cx = devm_regulator_get(&pdev->dev, "vdd-cx");
++	if (IS_ERR(drv->vdd_cx))
++		return dev_err_probe(&pdev->dev, PTR_ERR(drv->vdd_cx),
++				     "Failed to get vdd-cx regulator\n");
++
++	drv->vdd_mx = devm_regulator_get_optional(&pdev->dev, "vdd-mx");
++	if (IS_ERR(drv->vdd_mx)) {
++		if (PTR_ERR(drv->vdd_mx) != -ENODEV)
++			return dev_err_probe(&pdev->dev, PTR_ERR(drv->vdd_mx),
++					     "Failed to get vdd-mx regulator\n");
++		drv->vdd_mx = NULL;
++		dev_dbg(&pdev->dev, "No vdd-mx regulator, MX rail absent on this board\n");
++	}
++
++	/*
++	 * Register virtual regulator provider.
++	 *
++	 * Expose vdd-cx and vdd-mx virtual regulators so that PAS remoteproc
++	 * can consume them via cx-supply / mx-supply DTS properties.
++	 * The enable/disable ops pass through to vdd_cx / vdd_mx above,
++	 * making CDSP the sole hardware power manager for the NSP subsystem.
++	 */
++	virt_cfg.dev         = &pdev->dev;
++	virt_cfg.driver_data = drv;
++	virt_cfg.of_node     = pdev->dev.of_node;
++
++	INIT_WORK(&drv->dcvs_work, cdsp_dcvs_work_fn);
++	INIT_WORK(&drv->lpm_work, cdsp_lpm_work_fn);
++
++	drv->lpm_wq = alloc_ordered_workqueue("cdsp_lpm_wq", 0);
++	if (!drv->lpm_wq) {
++		mbox_free_channel(drv->dcvs_mbox_chan);
++		return dev_err_probe(&pdev->dev,
++				     -ENOMEM,
++				     "failed to allocate cdsp lpm workqueue\n");
++	}
++
++	rdev = devm_regulator_register(&pdev->dev,
++				       &cdsp_virt_reg_descs[CDSP_VIRT_NSP_CX],
++				       &virt_cfg);
++	if (IS_ERR(rdev))
++		return dev_err_probe(&pdev->dev, PTR_ERR(rdev),
++				     "Failed to register cdsp-vdd-cx virtual regulator\n");
++
++	if (drv->vdd_mx) {
++		rdev = devm_regulator_register(&pdev->dev,
++					       &cdsp_virt_reg_descs[CDSP_VIRT_NSP_MX],
++					       &virt_cfg);
++		if (IS_ERR(rdev))
++			return dev_err_probe(&pdev->dev, PTR_ERR(rdev),
++					     "Failed to register cdsp-vdd-mx virtual regulator\n");
++	}
++
++	/* Register DCVS interrupt */
++	drv->dcvs_irq = platform_get_irq_byname(pdev, "dcvs");
++	if (drv->dcvs_irq < 0)
++		return dev_err_probe(&pdev->dev, drv->dcvs_irq,
++				     "Failed to get DCVS IRQ\n");
++
++	ret = devm_request_threaded_irq(&pdev->dev, drv->dcvs_irq,
++					NULL, cdsp_dcvs_irq_handler,
++					IRQF_ONESHOT, "cdsp-dcvs", drv);
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret,
++				     "Failed to request DCVS IRQ\n");
++
++	/* Setup MPM for LPM */
++	mpm_base = devm_platform_ioremap_resource_byname(pdev, "mpm");
++	if (IS_ERR(mpm_base))
++		return dev_err_probe(&pdev->dev, PTR_ERR(mpm_base),
++				     "Failed to map MPM registers\n");
++
++	drv->mpm_regmap = devm_regmap_init_mmio(&pdev->dev, mpm_base, &cdsp_regmap_config);
++	if (IS_ERR(drv->mpm_regmap))
++		return dev_err_probe(&pdev->dev, PTR_ERR(drv->mpm_regmap),
++				     "Failed to init MPM regmap\n");
++
++	/* Setup RSCC for power mode detection */
++	rscc_base = devm_platform_ioremap_resource_byname(pdev, "rscc");
++	if (IS_ERR(rscc_base))
++		return dev_err_probe(&pdev->dev, PTR_ERR(rscc_base),
++				     "Failed to map RSCC registers\n");
++
++	drv->rscc_regmap = devm_regmap_init_mmio(&pdev->dev, rscc_base, &cdsp_rscc_regmap_config);
++	if (IS_ERR(drv->rscc_regmap))
++		return dev_err_probe(&pdev->dev, PTR_ERR(drv->rscc_regmap),
++				     "Failed to init RSCC regmap\n");
++
++	drv->lpm_irq = platform_get_irq_byname(pdev, "lpm");
++	if (drv->lpm_irq < 0)
++		return dev_err_probe(&pdev->dev, drv->lpm_irq,
++				     "Failed to get LPM IRQ\n");
++
++	ret = devm_request_threaded_irq(&pdev->dev, drv->lpm_irq,
++					NULL, cdsp_lpm_irq_handler,
++					IRQF_ONESHOT, "cdsp-lpm", drv);
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret,
++				     "Failed to request LPM IRQ\n");
++
++	/* Setup mbox for DCVS response */
++	drv->dcvs_mbox_client.dev = &pdev->dev;
++	drv->dcvs_mbox_client.knows_txdone = true;
++	drv->dcvs_mbox_chan = mbox_request_channel(&drv->dcvs_mbox_client, 0);
++	if (IS_ERR(drv->dcvs_mbox_chan))
++		return dev_err_probe(&pdev->dev, PTR_ERR(drv->dcvs_mbox_chan),
++				     "Failed to get dcvs mbox channel\n");
++
++	platform_set_drvdata(pdev, drv);
++
++	dev_dbg(&pdev->dev, "CDSP power driver initialized\n");
++
++	return 0;
++}
++
++static void cdsp_power_remove(struct platform_device *pdev)
++{
++	struct cdsp_power_driver *drv = platform_get_drvdata(pdev);
++
++	/* Cancel any pending work */
++	cancel_work_sync(&drv->dcvs_work);
++	cancel_work_sync(&drv->lpm_work);
++
++	if (drv->lpm_wq)
++		destroy_workqueue(drv->lpm_wq);
++
++	mbox_free_channel(drv->dcvs_mbox_chan);
++}
++
++static const struct of_device_id cdsp_power_of_match[] = {
++	{ .compatible = "qcom,cdsp-power" },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, cdsp_power_of_match);
++
++static struct platform_driver cdsp_power_driver = {
++	.probe = cdsp_power_probe,
++	.remove = cdsp_power_remove,
++	.driver = {
++		.name = "cdsp-power",
++		.of_match_table = cdsp_power_of_match,
++	},
++};
++
++module_platform_driver(cdsp_power_driver);
++
++MODULE_DESCRIPTION("CDSP Power Management Driver");
++MODULE_LICENSE("GPL");
 
 -- 
 2.43.0
