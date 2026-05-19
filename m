@@ -1,412 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-108572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EB88EnOYDGrWjgUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 19:05:55 +0200
+	id mK1aFJqYDGphjgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 19:06:34 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9799A582D45
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 19:05:54 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 579CE582D6D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 19:06:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3836A306BFE0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 16:58:04 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id C5FB8300532F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 17:00:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E843409135;
-	Tue, 19 May 2026 16:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E83A8367B85;
+	Tue, 19 May 2026 17:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Id2Pr/L8"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="XaO/NlCv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A393409124;
-	Tue, 19 May 2026 16:58:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06336409106;
+	Tue, 19 May 2026 16:59:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779209882; cv=none; b=RBqMq3kF7LYBDg+pfHYU7/slRe6U0bYMmQeasGiWeNQOr1Qa86BTmOucxZM1l5zKxjeGdjIyaolpnn1z2a6gnswbtSwxxV+nDr7BtAkEdzGRl/sb+eE9F6seCzM3SpG5B+1saklaRjf88SIBqqIXGXdhAXLNOwY7Zxj9lnC4qYs=
+	t=1779210000; cv=none; b=DsJdru3W8nZZZn/vF/1QO0Y7shFyYqLsS+Z0MjIYI57c/h0VCquvrSYpIq3KP3GIFRDY4znJBQFZDHtNhqp0UCGnSd93BEnn1eq/FEOT5QuxIh2fFdhzYt53HbV2Eh1Q8aQxojEaeHjyh73Xy5LM0L+nBR4yhWdyM93cLILynlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779209882; c=relaxed/simple;
-	bh=pbdFPfSxGxtk+Z8PGKP7qPo4paDw4Vb+7CQIHqf1zCs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ubDOUpS+kcTFV8AqSotqC6Q8WXdwPjl9UG7uyDGivhPYZMmFrJFUWNyh03mMicXcfyziazBIFQTe5lEd11+6uMKuQldpY6WiKA0KL1EI1dgRhi/HFqQLw8oFrd9+qXL9j+8mUBu/CvBRDouRfy9m85IRu96TPydbhPk/8/IIzF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Id2Pr/L8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2A8C2BCB3;
-	Tue, 19 May 2026 16:57:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779209880;
-	bh=pbdFPfSxGxtk+Z8PGKP7qPo4paDw4Vb+7CQIHqf1zCs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Id2Pr/L8WatPzLEHnjIS8qTBlB/asKnjN0CfwP5fDSlT/Sy4XjgudyAYFFwNyYIkt
-	 eE5jQ/b4sfJNk90sBIuHFv/UFtoBMhxjghO3/YPNjV0tI4iUjm90Fgwa64nBvtIpB+
-	 jyT1QJwhh9gfNmfEkLxhj3V6e8nDwONX4I9k/mh83GNOPUNgoR05ZSqzGDZ5OfZ0+y
-	 +kR2mS2ur7pi48lksdaGa2ku/NpXapmqpMsmqwU5AvWlBLl9JW+vh8x6T1h4FKaJ5h
-	 Ls+Yzc6r+wlTBdz0F7AK+OMdKBfPR/OK5W4x2PiXWk/zuIf8j9eLy2k0d9R/HeNpH5
-	 +c9GmmG6jMu7Q==
-Date: Tue, 19 May 2026 22:27:52 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq5210: Enable PCIe support
-Message-ID: <ihx6s76exbaaabevhvbn33sxxjae5fqzj4ai2yyvtqbk2xpnbf@sohbcb5zzvjt>
-References: <20260514-pci-ipq5210-v1-0-a09436200b35@oss.qualcomm.com>
- <20260514-pci-ipq5210-v1-2-a09436200b35@oss.qualcomm.com>
+	s=arc-20240116; t=1779210000; c=relaxed/simple;
+	bh=6nqlPL/Z+9cM2PfQjhS+wS9TuQuu4MgYO54FjQBAN+s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ctVyLa51KBgEayQE1lFVcADdpfdkyMJmwVIvdSPGN8+OPeE5Aj22yGjndyMnp7/6TVN1gfBIu3+ja81YYOTez+RB1taG2y8mGi+kIiRluRh+MS2rijqGSOrIyxMU0nLFAfxxJXpy0jjKsas4ZIUJAJYF87nFeZ29mmgbdyoDxMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com; spf=pass smtp.mailfrom=Igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=XaO/NlCv; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=Igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=Igalia.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Hp7+EIkRbnyy03IIX7pmZkir0cv4vk2JcR+C9KZzo2Q=; b=XaO/NlCv59zOW942ddRcqWltw6
+	Kp9raJ4qx1l76AkXpNrPB3FMtwqtye/6Vg39R2y/ZewG/S06ujHhWp9mTTwedRA3AGVn5ib4x9HNc
+	YMdpYh4HTMRe5cNDIoBMFWA1z+E1ZYtTLG/h6pviiB7HSFcedSA1JyPu8o45lfCiWIy8jkTSp8d3+
+	HrRJL9/iNzOXGyaDJjiIRpmdoKjq9SzvkgyBioHy7VFxnQ3WdVSBAFai7mR5zemH59dlXNUamRb2o
+	Su0PClXWN4TdJum1K1aayDz9ifRzqb1Wx3zEK7NB5ODJNmCQZsAEctzvZihvpEO7fsFaE5dRZnLcW
+	xB8FGZGg==;
+Received: from c-73-157-168-91.hsd1.or.comcast.net ([73.157.168.91] helo=[192.168.1.133])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1wPNmi-003Hri-6j; Tue, 19 May 2026 18:59:12 +0200
+Message-ID: <8fc45730-b2e3-4ba8-b80a-9b30557e810b@Igalia.com>
+Date: Tue, 19 May 2026 09:59:00 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260514-pci-ipq5210-v1-2-a09436200b35@oss.qualcomm.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/8] drm: writeback: clean up writeback connector
+ initialization
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Jani Nikula <jani.nikula@linux.intel.com>,
+ "Kandpal, Suraj" <suraj.kandpal@intel.com>,
+ Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>,
+ Rodrigo Siqueira <siqueira@igalia.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Liviu Dudau <liviu.dudau@arm.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+ Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+ Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>,
+ Dave Stevenson <dave.stevenson@raspberrypi.com>,
+ =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
+ Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+ Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+ Jessica Zhang <jesszhan0024@gmail.com>,
+ Louis Chauvet <louis.chauvet@bootlin.com>
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org
+References: <20260505-wb-drop-encoder-v5-0-42567b7c7af2@oss.qualcomm.com>
+ <177894506978.2448625.17152574519326512949.b4-ty@b4>
+Content-Language: en-GB
+From: John Harrison <John.Harrison@Igalia.com>
+In-Reply-To: <177894506978.2448625.17152574519326512949.b4-ty@b4>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [1.14 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108572-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-108573-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,linux.intel.com,intel.com,amd.com,igalia.com,gmail.com,ffwll.ch,arm.com,kernel.org,suse.de,linux.dev,poorly.run,somainline.org,ideasonboard.com,glider.be,raspberrypi.com,wanadoo.fr,bootlin.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	RCPT_COUNT_TWELVE(0.00)[36];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[John.Harrison@Igalia.com,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DKIM_TRACE(0.00)[igalia.com:-];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,b128000:email,0.0.0.0:email,2.250.240.128:email,0.15.66.64:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 9799A582D45
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[Igalia.com:mid,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,gitlab.freedesktop.org:url]
+X-Rspamd-Queue-Id: 579CE582D6D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, May 14, 2026 at 09:43:02AM +0530, Varadarajan Narayanan wrote:
-> Add DT entries to enable the PCIe controllers found in ipq5210.
-> 
-> Signed-off-by: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq5210-rdp504.dts |  43 +++++
->  arch/arm64/boot/dts/qcom/ipq5210.dtsi       | 261 +++++++++++++++++++++++++++-
->  2 files changed, 302 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5210-rdp504.dts b/arch/arm64/boot/dts/qcom/ipq5210-rdp504.dts
-> index 941f866ecfe9..5e599a1cea3f 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5210-rdp504.dts
-> +++ b/arch/arm64/boot/dts/qcom/ipq5210-rdp504.dts
-> @@ -5,6 +5,7 @@
->  
->  /dts-v1/;
->  
-> +#include <dt-bindings/gpio/gpio.h>
->  #include "ipq5210.dtsi"
->  
->  / {
-> @@ -20,6 +21,32 @@ chosen {
->  	};
->  };
->  
-> +&pcie0_phy {
-> +	status = "okay";
-> +};
-> +
-> +&pcie0_rp {
-> +	reset-gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
-> +};
-> +
-> +&pcie0 {
-> +	pinctrl-0 = <&pcie0_default_state>;
-> +	status = "okay";
-> +};
-> +
-> +&pcie1_phy {
-> +	status = "okay";
-> +};
-> +
-> +&pcie1_rp {
-> +	reset-gpios = <&tlmm 29 GPIO_ACTIVE_LOW>;
-> +};
-> +
-> +&pcie1 {
-> +	pinctrl-0 = <&pcie1_default_state>;
-> +	status = "okay";
-> +};
-> +
->  &sdhc {
->  	max-frequency = <192000000>;
->  	bus-width = <4>;
-> @@ -36,6 +63,22 @@ &sleep_clk {
->  };
->  
->  &tlmm {
-> +	pcie0_default_state: pcie0-default-state {
-> +		pins = "gpio32";
-> +		function = "gpio";
-> +		drive-strength = <6>;
-> +		bias-pull-down;
-> +		output-low;
-> +	};
-> +
-> +	pcie1_default_state: pcie1-default-state {
-> +		pins = "gpio29";
-> +		function = "gpio";
-> +		drive-strength = <6>;
-> +		bias-pull-down;
-> +		output-low;
-> +	};
-> +
->  	qup_uart1_default_state: qup-uart1-default-state {
->  		pins = "gpio38", "gpio39";
->  		function = "qup_se1";
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5210.dtsi b/arch/arm64/boot/dts/qcom/ipq5210.dtsi
-> index 3761eb03ab24..ec1c9a8c08e0 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5210.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5210.dtsi
-> @@ -5,6 +5,7 @@
->  
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/clock/qcom,ipq5210-gcc.h>
-> +#include <dt-bindings/interconnect/qcom,ipq5210.h>
->  #include <dt-bindings/reset/qcom,ipq5210-gcc.h>
->  
->  / {
-> @@ -13,6 +14,18 @@ / {
->  	interrupt-parent = <&intc>;
->  
->  	clocks {
-> +		pcie30_phy0_pipe_clk: pcie30_phy0_pipe_clk {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <250000000>;
-> +			#clock-cells = <0>;
-> +		};
-> +
-> +		pcie30_phy1_pipe_clk: pcie30_phy1_pipe_clk {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <250000000>;
-> +			#clock-cells = <0>;
-> +		};
-> +
->  		sleep_clk: sleep-clk {
->  			compatible = "fixed-clock";
->  			#clock-cells = <0>;
-> @@ -130,6 +143,54 @@ soc@0 {
->  		dma-ranges = <0 0 0 0 0x10 0>;
->  		ranges = <0 0 0 0 0x10 0>;
->  
-> +		pcie0_phy: phy@84000 {
-> +			compatible = "qcom,ipq5210-qmp-gen3x1-pcie-phy",
-> +				     "qcom,ipq9574-qmp-gen3x1-pcie-phy";
-> +			reg = <0x0 0x00084000 0x0 0x1000>;
-> +
-> +			clocks = <&gcc GCC_PCIE0_AUX_CLK>,
-> +				 <&gcc GCC_PCIE0_AHB_CLK>,
-> +				 <&gcc GCC_PCIE0_PIPE_CLK>;
-> +			clock-names = "aux", "cfg_ahb", "pipe";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE0_AUX_CLK>;
-> +			assigned-clock-rates = <20000000>;
-> +
-> +			resets = <&gcc GCC_PCIE0_PHY_BCR>,
-> +				 <&gcc GCC_PCIE0PHY_PHY_BCR>;
-> +			reset-names = "phy", "common";
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "gcc_pcie0_pipe_clk_src";
-> +
-> +			#phy-cells = <0>;
-> +			status = "disabled";
-> +		};
-> +
-> +		pcie1_phy: phy@f4000 {
-> +			compatible = "qcom,ipq5210-qmp-gen3x2-pcie-phy",
-> +				     "qcom,ipq9574-qmp-gen3x2-pcie-phy";
-> +			reg = <0x0 0x000f4000 0x0 0x2000>;
-> +
-> +			clocks = <&gcc GCC_PCIE1_AUX_CLK>,
-> +				 <&gcc GCC_PCIE1_AHB_CLK>,
-> +				 <&gcc GCC_PCIE1_PIPE_CLK>;
-> +			clock-names = "aux", "cfg_ahb", "pipe";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE1_AUX_CLK>, <&gcc GCC_PCIE1_AHB_CLK>;
-> +			assigned-clock-rates = <20000000>, <100000000>;
-> +
-> +			resets = <&gcc GCC_PCIE1_PHY_BCR>,
-> +				 <&gcc GCC_PCIE1PHY_PHY_BCR>;
-> +			reset-names = "phy", "common";
-> +
-> +			#clock-cells = <0>;
-> +			clock-output-names = "gcc_pcie1_pipe_clk_src";
-> +
-> +			#phy-cells = <0>;
-> +			status = "disabled";
-> +		};
-> +
->  		tlmm: pinctrl@1000000 {
->  			compatible = "qcom,ipq5210-tlmm";
->  			reg = <0x0 0x01000000 0x0 0x300000>;
-> @@ -146,8 +207,8 @@ gcc: clock-controller@1800000 {
->  			reg = <0x0 0x01800000 0x0 0x40000>;
->  			clocks = <&xo_board>,
->  				 <&sleep_clk>,
-> -				 <0>,
-> -				 <0>,
-> +				 <&pcie30_phy0_pipe_clk>,
-> +				 <&pcie30_phy1_pipe_clk>,
->  				 <0>,
->  				 <0>;
->  			#clock-cells = <1>;
-> @@ -299,6 +360,202 @@ frame@b128000 {
->  				status = "disabled";
->  			};
->  		};
-> +
-> +		pcie1: pcie@50000000 {
-> +			compatible = "qcom,pcie-ipq5210", "qcom,pcie-ipq9574";
-> +			reg = <0x0 0x50000000 0x0 0xf1c>,
-> +			      <0x0 0x50000f20 0x0 0xa8>,
-> +			      <0x0 0x50001000 0x0 0x1000>,
-> +			      <0x0 0x000f0000 0x0 0x3000>,
-> +			      <0x0 0x50100000 0x0 0x1000>,
-> +			      <0x0 0x000f6000 0x0 0x1000>;
-> +			reg-names = "dbi",
-> +				    "elbi",
-> +				    "atu",
-> +				    "parf",
-> +				    "config",
-> +				    "mhi";
-> +			device_type = "pci";
-> +			linux,pci-domain = <1>;
-> +			bus-range = <0x00 0xff>;
-> +			num-lanes = <2>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +
-> +			ranges = <0x81000000 0x0 0x50200000 0x0 0x50200000 0x0 0x00100000>,
-> +				 <0x82000000 0x0 0x50300000 0x0 0x50300000 0x0 0x0fd00000>;
+On 5/16/26 08:25, Dmitry Baryshkov wrote:
+> On Tue, 05 May 2026 03:24:57 +0300, Dmitry Baryshkov wrote:
+>> Drivers using drm_writeback_connector_init() / _with_encoder() don't
+>> perform cleanup in a manner similar to drmm_writeback_connector_init()
+>> (see drm_writeback_connector_cleanup()). Migrate all existing drivers
+>> to use drmm_writeback_connector_init(), drop
+>> drm_writeback_connector_init() and drm_writeback_connector::encoder
+>> (it's unused afterwards).
+>>
+>> [...]
+> Applied to msm-fixes, thanks!
+>
+> [1/8] drm/msm/dpu: don't mix devm and drmm functions
+>        https://gitlab.freedesktop.org/lumag/msm/-/commit/c0c70a11365c
+>
+> Best regards,
+That is only the first patch of the series, yes?
 
-<0x01000000 0x0 0x0 0x0 0x50200000 0x0 0x00100000>,
-<0x02000000 0x0 0x0 0x0 0x50300000 0x0 0x0fd00000>;
+What is happening with the rest? Can they all be merged to drm-next now? 
+As I understand it, only the first patch was still being discussed, the 
+others have all been reviewed some time ago.
 
-> +
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 200 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 2 &intc 0 0 GIC_SPI 201 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 3 &intc 0 0 GIC_SPI 202 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 4 &intc 0 0 GIC_SPI 203 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			interrupts = <GIC_SPI 191 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 192 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 193 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 194 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 195 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 196 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 197 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 198 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi0",
-> +					  "msi1",
-> +					  "msi2",
-> +					  "msi3",
-> +					  "msi4",
-> +					  "msi5",
-> +					  "msi6",
-> +					  "msi7";
-> +
-> +			clocks = <&gcc GCC_PCIE1_AXI_M_CLK>,
-> +				 <&gcc GCC_PCIE1_AXI_S_CLK>,
-> +				 <&gcc GCC_PCIE1_AXI_S_BRIDGE_CLK>,
-> +				 <&gcc GCC_PCIE1_RCHNG_CLK>,
-> +				 <&gcc GCC_PCIE1_AHB_CLK>,
-> +				 <&gcc GCC_PCIE1_AUX_CLK>;
-> +
-> +			clock-names = "axi_m",
-> +				      "axi_s",
-> +				      "axi_bridge",
-> +				      "rchng",
-> +				      "ahb",
-> +				      "aux";
-> +
-> +			resets = <&gcc GCC_PCIE1_PIPE_ARES>,
-> +				 <&gcc GCC_PCIE1_CORE_STICKY_RESET>,
-> +				 <&gcc GCC_PCIE1_AXI_S_STICKY_RESET>,
-> +				 <&gcc GCC_PCIE1_AXI_S_ARES>,
-> +				 <&gcc GCC_PCIE1_AXI_M_STICKY_RESET>,
-> +				 <&gcc GCC_PCIE1_AXI_M_ARES>,
-> +				 <&gcc GCC_PCIE1_AUX_ARES>,
-> +				 <&gcc GCC_PCIE1_AHB_ARES>;
-> +
-> +			reset-names = "pipe",
-> +				      "sticky",
-> +				      "axi_s_sticky",
-> +				      "axi_s",
-> +				      "axi_m_sticky",
-> +				      "axi_m",
-> +				      "aux",
-> +				      "ahb";
-> +
-> +			interconnects = <&gcc MASTER_CNOC_PCIE1 &gcc SLAVE_CNOC_PCIE1>,
-> +					<&gcc MASTER_SNOC_PCIE1 &gcc SLAVE_SNOC_PCIE1>;
-> +			interconnect-names = "pcie-mem", "cpu-pcie";
-> +
-> +			status = "disabled";
-> +
-> +			pcie1_rp: pcie@0 {
-> +				device_type = "pci";
-> +				reg = <0x0 0x0 0x0 0x0 0x0>;
-> +				bus-range = <0x01 0xff>;
-> +				phys = <&pcie1_phy>;
-> +
-> +				#address-cells = <3>;
-> +				#size-cells = <2>;
-> +				ranges;
-> +			};
-> +		};
-> +
-> +		pcie0: pcie@70000000 {
-> +			compatible = "qcom,pcie-ipq5210", "qcom,pcie-ipq9574";
-> +			reg = <0x0 0x70000000 0x0 0xf1c>,
-> +			      <0x0 0x70000f20 0x0 0xa8>,
-> +			      <0x0 0x70001000 0x0 0x1000>,
-> +			      <0x0 0x00080000 0x0 0x3000>,
-> +			      <0x0 0x70100000 0x0 0x1000>,
-> +			      <0x0 0x00086000 0x0 0x1000>;
-> +			reg-names = "dbi",
-> +				    "elbi",
-> +				    "atu",
-> +				    "parf",
-> +				    "config",
-> +				    "mhi";
-> +			device_type = "pci";
-> +			linux,pci-domain = <0>;
-> +			bus-range = <0x00 0xff>;
-> +			num-lanes = <1>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +
-> +			ranges = <0x81000000 0x0 0x70200000 0x0 0x70200000 0x0 0x00100000>,
-> +				 <0x82000000 0x0 0x70300000 0x0 0x70300000 0x0 0x0fd00000>;
+Thanks,
+John.
 
-Same as above.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
