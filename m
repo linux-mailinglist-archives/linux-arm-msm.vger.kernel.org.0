@@ -1,55 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-108395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OGf+ArgcDGoYWgUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:18:00 +0200
+	id OHO6DTEcDGpJWQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:15:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C2AE579D2C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:17:59 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D714E579C9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:15:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E25643019128
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7AEEE303ADDA
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 08:11:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 537CF3E022A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F99C3E0226;
 	Tue, 19 May 2026 08:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VwiqMkK3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UobQu251"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B56E3DCDBB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4D62F1FC9;
 	Tue, 19 May 2026 08:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779178290; cv=none; b=Q6YMRUu0yXd0IyfnmX364W9DsVnEg+BC2/B4rUc4grcE+MOVyLkHQrQJOgtiKbbQROd1rJxgTzjKlk55pJt3httU8H3s0OeOk4ETnJmu1BMj3ILYg5nnWc0YoOn86cCT5SZfHOXT1GFt3/RUfDRFfRX2Pi4svdP4joc8EnYBvPA=
+	t=1779178290; cv=none; b=mBmMj4E4oOcDk4xDgiMhoGlrS6YYyVq365J4NSZuy01jGT/WWIMT4drlb8Ysz+97F+7C+6ouAiJlKrujCQ19IFVF0urUfadYoq3EhESBkXn4/iWva6wSUD/SG8RuoajrDwGv3SxNxdJOrAFzYxjLqV4jCxe76OTYGUNDToGMCv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779178290; c=relaxed/simple;
-	bh=5xjo82f3ie4CuJPJXkiVNG3j7U7ZB0tOBqMF+qD1aFs=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=u524JBQVd70nOF2N8MzH7YF1+gkNVIsBS/MBUxqUXb/4Zz/IwDfXE8NrMSNgXd2z5Ms57LctCHwigYUo6qWvCh02XlINFMAT7XZinRguYXjEDgsHxTa3s2Ddm/yHoZqkM1uEyIOxD+wnT3Mun4sTqKMzEibtdlCntUdWCDEZakE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VwiqMkK3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id AA094C2BCB3;
+	bh=8Mdt3/GWa2sg390lqPrV0qlXMeJMMHF/DVq+JKN5gRA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=A0cUCzAGICcxpJtDHvhJFNV2mYCODdBlXI+XQwEwtNx7mkk7FViPADAjZhnGQNStVZ5NgjgodiPlpRapuBdV36VtsMJWBV6o2EY+TwoyUjEHMEU7DCGgTshF2rkAvJ2tXrCHSuyN8ASDh4h//ltGEjYgUPAHaRuph4c89oznGAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UobQu251; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C62FCC2BCC9;
 	Tue, 19 May 2026 08:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1779178289;
-	bh=5xjo82f3ie4CuJPJXkiVNG3j7U7ZB0tOBqMF+qD1aFs=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=VwiqMkK3ygOVcmD05/x3EcrJzM/opiB1d5fPx6XXiPkHAU6K6L4xS4eVI33gUN3n8
-	 GndEmo4TcaZnSE6xiJEa2VAumzbOxrkd0Vsd5w27CaMpVfD7831MSUajt22kDWmjFd
-	 MccW6Dwvo8YAQuRGVtA/EfjLWG93UPayNIC0VnsPqDIS07b9ZFwLTQku7SFf1ZJmqW
-	 DzZQ91H4k68WS0dIWUeWD6so1ZLNzH2bYoAvF6uFQSDpzEpu3YmRkZodnxQRwCLZsA
-	 Qgzvq3D6e5pQs0rPIXdTOi/6BM9t9D2Mgb360h3QVE321/dYebIBlUZ1+lqAnYw0nt
-	 vblUf/q993qZg==
+	bh=8Mdt3/GWa2sg390lqPrV0qlXMeJMMHF/DVq+JKN5gRA=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=UobQu251i7SddwN2yOu1ip5kbHSsvCPD18IxjvUBvN3TGoK0tdA/AipbismpUcUQj
+	 95EyzIb7DKTaZsqcKpYoUrQDkg18/KjLWNYn4Rot9uK3zCzaodg97EHg05N75Mwufk
+	 dbQ0VXENqlJo3l+6UFkp/mExpAoYk0qfm63FWJTX6j5gyOD4a1bSyuvQF94hL3HtkJ
+	 77ATVotyJ4pLq85gyPnE9eKi+0uYqUJKYa1vG5L3ALAi06cuuOiWDajAbpTcA5q21X
+	 cbTHS8efsQXWIh50xgbl6l6Bx/DELgNHtCxGOgj//H8M91lMf/X0FvCwNVA9NzUKkk
+	 OVnKsdBraZpOg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EAE6CD4F57;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4650CD4851;
 	Tue, 19 May 2026 08:11:29 +0000 (UTC)
 From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Subject: [PATCH v2 0/4] PCI: Introduce pci_suspend_retains_context() API
-Date: Tue, 19 May 2026 13:41:19 +0530
-Message-Id: <20260519-l1ss-fix-v2-0-b2c3a4bdeb15@oss.qualcomm.com>
+Date: Tue, 19 May 2026 13:41:20 +0530
+Subject: [PATCH v2 1/4] PCI: Introduce an API to check if RC/platform can
+ retain device context during suspend
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,10 +59,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACcbDGoC/yXMUQ5AMBAE0KvIfmuizWpSVxEf1GJFkC4iEXdXf
- L7JzFwgFJgEiuSCQAcLL3OESRPwQz33pLiNBpMZm6FGNWkR1fGprHe+M5hrhwixvgaK8XdVVr9
- lb0by27uH+34A/GF7UGwAAAA=
-X-Change-ID: 20260414-l1ss-fix-6c9cf2451944
+Message-Id: <20260519-l1ss-fix-v2-1-b2c3a4bdeb15@oss.qualcomm.com>
+References: <20260519-l1ss-fix-v2-0-b2c3a4bdeb15@oss.qualcomm.com>
+In-Reply-To: <20260519-l1ss-fix-v2-0-b2c3a4bdeb15@oss.qualcomm.com>
 To: Bjorn Helgaas <bhelgaas@google.com>, 
  Manivannan Sadhasivam <mani@kernel.org>, 
  Lorenzo Pieralisi <lpieralisi@kernel.org>, 
@@ -73,16 +73,16 @@ Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-nvme@lists.infradead.org, 
  Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2479;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3173;
  i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=5xjo82f3ie4CuJPJXkiVNG3j7U7ZB0tOBqMF+qD1aFs=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBqDBst/hoKrDTpdPRjYYJTCX+++TyvGSE6NanlW
- am4jXQ1szSJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCagwbLQAKCRBVnxHm/pHO
- 9eNGCACK2TWsgGvWcO0DSokv8etGLWLJwfMz66K1J0+8xc+cXK6Hfcx6lIBquWAnY2If3N3FtPj
- HUHTew/QYyZEZSKRV6PKMmVkYll6OGW2zbtFy+11qfr8ACFPQPF/bjtGoYwsTLtIR7CrIIFCfB4
- bexAzn9xOMAK9AsIdxrXNWKC3VR0/LsiIU8mXQxG+UqmVktjQv3LZZsd2zMBDuIsU2zVPdnxRbX
- 5osUT2sxTvC1OVweFzzuQqRFIwol9Fs9htH2Uo7xxDM+duLEEXSjMZa0bnTFlPBl5dsFrH1oTAK
- gj7MNU/SHHucR5B6oNbyuZ8Yzlm+UwsMhpG5OfD4PbbdV7u2
+ bh=4Dttv4RJQFd7HvyHdhLrZ9fHK7lOnfb6oJIEtWxnp+c=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBqDBsuFVWnfdQVfhPVZySomdr2OjOwStn053I2Z
+ V4Eo3R7/NGJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCagwbLgAKCRBVnxHm/pHO
+ 9Z0GB/9iuKAuXAoMUZ/KkPcuOGdOcNzL1Y1aGn2iqt/VN50isEVX+qRKyeYF+1/+goyuFmH6K0+
+ dFET7Yc3dQ0FfZ5KPJZM7N86HQIDiPIuDPyB9R5jyCBw+RlYdw4pmWmBbyXhUwt6bct1TbGvt6p
+ zrcbhftJao2sBzyTROAZBoSf+zTJy0Tq0YTCr52wYMM2hW6+q9bvKpHu21xs7dRCih4wpI1hRVG
+ iUE6TZHmn0Gp26LMSW6jXW91hURIHgqB+9g0sAqlTGO2mk9hfOLzJJzksiuXtxk4LETN555O9jI
+ 4BUrcusPE6A0t5RF+LnNd1++s1JxgcH9Kw6KWQ3eJQYYYS37
 X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 X-Endpoint-Received: by B4 Relay for
@@ -92,12 +92,12 @@ Reply-To: manivannan.sadhasivam@oss.qualcomm.com
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-108395-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-108394-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -111,71 +111,112 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_COUNT_FIVE(0.00)[5];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:replyto]
-X-Rspamd-Queue-Id: 8C2AE579D2C
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:replyto,qualcomm.com:email]
+X-Rspamd-Queue-Id: D714E579C9A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi all,
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-This series introduces a new PCI API, pci_suspend_retains_context() to
-let the client drivers know whether they can expect context retention across
-suspend/resume or not and uses it in the NVMe PCI host driver.
+Currently, the PCI endpoint drivers like NVMe checks whether the device
+context will be retained or not during system suspend, with the help of
+pm_suspend_via_firmware() API.
 
-This new API is targeted to abstract the PCI power management details away from
-the client drivers. This is needed because client drivers like NVMe make use of
-APIs such as pm_suspend_via_firmware() and decide to keep the device in low
-power mode if this API returns 'false'. But some platforms may have other
-limitations like in the case of Qcom, where if the RC driver removes the PCIe RC
-resource vote to allow the SoC to enter low power mode, it cannot reliably exit
-the L1ss state when the endpoint asserts CLKREQ#. So in this case also, the
-client drivers cannot keep the device in low power state during suspend and
-expect context retention.
+But it is possible that the device context might be lost due to some
+platform limitation as well. Having those checks in the endpoint drivers
+will not scale and will cause a lot of code duplication.
 
-And these limitations may just keep adding in the future. Without a unified
-API, the client drivers have to implement their own logic which may cause code
-duplication and may also lead to drivers missing some of the platform
-limitations.
+So introduce an API that acts as a sole point of truth that the endpoint
+drivers can rely on to check whether they can expect the device context
+to be retained or not.
 
-Once this series gets merged, we can extend this API usage to other client
-drivers as well.
+If the API returns 'false', then the client drivers need to prepare for
+context loss by performing actions such as resetting the device, saving
+the context, shutting it down etc... If it returns 'true', then the drivers
+do not need to perform any special action and can leave the device in
+active state.
 
-Testing
-=======
-
-This series is tested on Qualcomm Hamoa based Lenovo Thinkpad T14s latop with
-NVMe drive.
+Right now, this API only incorporates the pm_suspend_via_firmware() check.
+But will be extended in the future commits.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 ---
-Changes in v2:
-- Renamed the API to pci_suspend_retains_context()
-- Reworded the commit messages to include L10_REFCLK_ON + T_COMMONMODE as the
-  L1ss exit latency
-- Rebased on top of v7.1-rc1
+ drivers/pci/pci.c   | 23 +++++++++++++++++++++++
+ include/linux/pci.h |  7 +++++++
+ 2 files changed, 30 insertions(+)
 
----
-Manivannan Sadhasivam (4):
-      PCI: Introduce an API to check if RC/platform can retain device context during suspend
-      PCI: Indicate context lost if L1ss exit is broken during resume from system suspend
-      PCI: qcom: Indicate broken L1ss exit during resume from system suspend
-      nvme-pci: Use pci_suspend_retains_context() API during suspend
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 8f7cfcc00090..38cc5172d259 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -33,6 +33,7 @@
+ #include <asm/dma.h>
+ #include <linux/aer.h>
+ #include <linux/bitfield.h>
++#include <linux/suspend.h>
+ #include "pci.h"
+ 
+ DEFINE_MUTEX(pci_slot_mutex);
+@@ -2899,6 +2900,28 @@ void pci_config_pm_runtime_put(struct pci_dev *pdev)
+ 		pm_runtime_put_sync(parent);
+ }
+ 
++/**
++ * pci_suspend_retains_context - Check if the platform can retain the device
++ *				 context during system suspend
++ * @pdev: PCI device to check
++ *
++ * Returns true if the platform can guarantee to retain the device context,
++ * false otherwise.
++ */
++bool pci_suspend_retains_context(struct pci_dev *pdev)
++{
++	/*
++	 * If the platform firmware (like ACPI) is involved at the end of system
++	 * suspend, device context may not be retained.
++	 */
++	if (pm_suspend_via_firmware())
++		return false;
++
++	/* Assume that the context is retained by default */
++	return true;
++}
++EXPORT_SYMBOL_GPL(pci_suspend_retains_context);
++
+ static const struct dmi_system_id bridge_d3_blacklist[] = {
+ #ifdef CONFIG_X86
+ 	{
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 2c4454583c11..f60f9e4e7b39 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -2086,6 +2086,8 @@ pci_release_mem_regions(struct pci_dev *pdev)
+ 			    pci_select_bars(pdev, IORESOURCE_MEM));
+ }
+ 
++bool pci_suspend_retains_context(struct pci_dev *pdev);
++
+ #else /* CONFIG_PCI is not enabled */
+ 
+ static inline void pci_set_flags(int flags) { }
+@@ -2244,6 +2246,11 @@ pci_alloc_irq_vectors(struct pci_dev *dev, unsigned int min_vecs,
+ static inline void pci_free_irq_vectors(struct pci_dev *dev)
+ {
+ }
++
++static inline bool pci_suspend_retains_context(struct pci_dev *pdev)
++{
++	return true;
++}
+ #endif /* CONFIG_PCI */
+ 
+ /* Include architecture-dependent settings and functions */
 
- drivers/nvme/host/pci.c                |  3 ++-
- drivers/pci/controller/dwc/pcie-qcom.c | 12 ++++++++++++
- drivers/pci/pci.c                      | 34 ++++++++++++++++++++++++++++++++++
- include/linux/pci.h                    |  9 +++++++++
- 4 files changed, 57 insertions(+), 1 deletion(-)
----
-base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
-change-id: 20260414-l1ss-fix-6c9cf2451944
-
-Best regards,
 -- 
-Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+2.48.1
 
 
 
