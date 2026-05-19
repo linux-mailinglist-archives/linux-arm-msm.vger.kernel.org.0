@@ -1,51 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-108439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mOQ1KqM3DGoKaAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 12:12:51 +0200
+	id 8LsGEXE5DGq2aAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 12:20:33 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33C7C57BF81
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 12:12:51 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF65657C15F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 12:20:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E7F2230661A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:10:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B4C78308E705
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:14:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F148B48AE3C;
-	Tue, 19 May 2026 10:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 176B14A2E23;
+	Tue, 19 May 2026 10:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h21upgNJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Dfa7yMlZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3283E8324;
-	Tue, 19 May 2026 10:09:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EAE24A2E03
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 10:14:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779185399; cv=none; b=lElp2bR9VlS/cXWK2skTlWx1tHgeuSeWr4NSRFmAFl+YfV3Hk8iKs1AIUqsVHNXVi7ZvbHAcXuGKOS++X/k4azWT03jUJOdbSl+MBE41BTkW8K7keca+bUd1WFtbpxZzDu713Ls/Inb2pSa58p3Ja4aJoEG95chezXOFAHrRquM=
+	t=1779185670; cv=none; b=CaEWEl1QjHuiNieEA5avm6YJzo9aMkMbNPxufOyMAy1FJxlsQNkticSyTXKHz32ynxswar2Ec+yrg49kfD1ygrUW05gi/11z417iuoeyVQ3FTO016G8X1FMhKULyDl9Y2TcGZj6h0H49pQngQddAx4uotnDL67m5OObD+lKD3NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779185399; c=relaxed/simple;
-	bh=gqTwg04iG1VCtmCJgZsODsu191AL/onfsPNz5zC9wIk=;
+	s=arc-20240116; t=1779185670; c=relaxed/simple;
+	bh=MlZzsCiCJz/qU1zTGyvtf9iZTc9M1v0MuPCcay3MIV0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=IvpsaOZZCVm7hwAmFgDf29MxH4Ah/EedT4V9ITOW2pcLUdannyVFeYdRYqXBOtwhJTKWOQJRyrMkRtzMJ1Gw4J2iy2y76bXlT1EmbIkp/kOL5Bdeb0fEjNtiDLwgHS6K+x0wi6LHGkHY7mEOSrp1YbWeI5iwJYG+dGS3qZ97dPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h21upgNJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCEFDC2BCB3;
-	Tue, 19 May 2026 10:09:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779185399;
-	bh=gqTwg04iG1VCtmCJgZsODsu191AL/onfsPNz5zC9wIk=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=h21upgNJ1EqHXXTEy6Y2/NnPCwbiiJ0yBEKQzY1s7/lfuDGf/VehNwgUU+PwzUJCe
-	 o5xLjyotanBKBS6oJTbHExJK3v34vrehvEJSmq6q1faE/1OZsglciPMv+KSgfiR+XN
-	 m1GS5Rrthqt/OLgOwFUpLym/qo87mCA85fGkVVnrbJhiwFkaG6e3yFocRe1h6UBukK
-	 jk/uPOOu62HHc/WkTJb9f1kXUGOoukqgockNPap46bNFsldb+BsR9VupyzHH4KwERO
-	 mOCA9/lwWjMBbZCTmnhEWOVXmh77wQjkBX7QSjq+/Q/A6ptkfjS0XOvPnCeH7P7IWp
-	 93z/Np7dEBlNw==
-Message-ID: <8787ea87-aa75-4fb5-a729-cd2b54d2ff8a@kernel.org>
-Date: Tue, 19 May 2026 11:09:56 +0100
+	 In-Reply-To:Content-Type; b=Z+d8acdaOvAq9/bb6wrypY2NPYdmtTLFTEF3oPnYnibd1oJ1Y1iW72uzhXJpU1ZmKanoRg4saWvFU9uq+r4LU0J+svnvCPwfTwamsBgVPWWhnabqotcyx4XtPaI6Vl4OfYJViwkkcz3kBeTtvDaNhDuDoO80kByCnMXQljTMeSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Dfa7yMlZ; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4891c00e7aeso24311465e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 03:14:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1779185661; x=1779790461; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=68UC5v88IYbqRoSyuw3awSX++kyoya+p9VCms7nJOuE=;
+        b=Dfa7yMlZhiDDdJG1CoBkmsZlBIG5QtQ2+LwnK0D1vZNbwDN7OChr2wewIbaU0x1vfy
+         ojN5Y+uxuSo9g9fTh4nOpBLS+f41tntgzH39bBFX03l5eU+RhLvEJ1rMsq7DrgWWtAuE
+         3vgh1YDSQheGGs+yX7wlo4HHzMUjWDQxZOHx4/4SKaAm3xVXxgQgRx6Oh0BPsj2HFbmk
+         JoJEq2tld03RdB/TG+UJjrOB6is2a+juejyfhGe+0M7pWE5MnpkPnp+r+vb+3dAyrU1v
+         V7Zr9TI/9560UXge1JLK9dE2FBXLn0hnZFlzlb2Piln6XhToil0kzWp3eqBiAl2DFXKu
+         HrVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779185661; x=1779790461;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=68UC5v88IYbqRoSyuw3awSX++kyoya+p9VCms7nJOuE=;
+        b=Zw0OZmu1+0pdHwll3rvKtWmHpMgMYAaotip+seth9aiYejS4KtPdt33k2ZkXNuv17N
+         P3dtqiUAd87Sf8CaanJmKvrXyGLxdn40I+WN2Lh0dGl92vnTOoRoHublGSK4Gw/JBs7B
+         aUDbobBFzAaNXVwyGhk+lfDH22qJ2ziuzVNJQMEZq6gfjMFoqo0oRL/FXZnf6fm6NmW5
+         UZwPaZ8kK31y/grvjK+so6GymIXOP56o8Oxi4DFFwykfoj2BYEIEMwiX1zDsyqO2GxPj
+         aloBpUYT2D28gtzdao/1JL3PyECqSGVcD1DNQt4yN9tvgTZF88NVmAOdDRQZWvii2Un5
+         gYow==
+X-Forwarded-Encrypted: i=1; AFNElJ9wUdFC3+ofOoAU2oh3oeg8SVGgU0NggXm/3ZHVBjgaF+iDSyik2DNH90bPKfSNRwwyfdfEm3xEhgjZm/6n@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZMZtfzLUBhzGGg82kmzdKV6j7scjOv1Bm7K7cUd2HnxesOGWB
+	LDPXgpTwxhFyT0wfjzcLK9yxj/X9i7l0YHcUcFt3LRWJm8J1C26s8qYjyggj6tPXxjU=
+X-Gm-Gg: Acq92OHVtytkDE1VGm318AfZKMlLcAUOmO8ea/Ge9eHG/nduTuaYi15iPTAXOZmr+4S
+	OBBBvg0z3LxilPuQHW4crPNPnPsaxkodthP1f57XIhs6dBeluG5udixWJ0ZaYJtOgoyz55eiLXd
+	+d0PGB5OD+VZcstC5neLVd8HiI/3GPFNQEmB4wAl54F4F6/0yZmDFNa22UF0pAJj+cWyG+s3NRJ
+	tZ7IWJDdgy6ucS0tYrH7UBG/Jo7cwLHcdl3pV23bVCCBPBoId3RZxm+6T2dM4vL2WuAupaP92NX
+	IX52HLqp45+1+zs+4nWxcyC1hRIr4k8dRC4aeoNsb7bOQ9J9HxRUy8t9R7PCeyRdXH6HudnbCSZ
+	sDaiB1UoS12Ma8A8VTtBKXXGcnpG63qJ508gey19QExN6d/a4tERUOEfZ1W2Px9Scjiw3sblA6c
+	LILg3wncZfxU379rJU5MOieVXEzrwQUKG1kA==
+X-Received: by 2002:a05:600c:6383:b0:489:1c1f:35f9 with SMTP id 5b1f17b1804b1-48fe60ea4ebmr288426235e9.9.1779185661151;
+        Tue, 19 May 2026 03:14:21 -0700 (PDT)
+Received: from [192.168.0.35] ([51.37.145.233])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45d9ec39ff1sm47579782f8f.10.2026.05.19.03.14.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 May 2026 03:14:20 -0700 (PDT)
+Message-ID: <f8bda354-ca64-433e-9e9a-4eabeb9a7169@linaro.org>
+Date: Tue, 19 May 2026 11:14:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,136 +86,86 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: venus: venc: avoid double free on video register
- failure
-To: Guangshuo Li <lgs201920130244@gmail.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- Hans Verkuil <hans.verkuil@cisco.com>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <xMdPPQAJ2BbtNwnxmf1CN7FGbdhSJM7NIXkRCxzFvXv0g01tuvNPvAacsFJaDyBc3cIkIAEfi44ewZ3OGGAcDg==@protonmail.internalid>
- <20260519090819.1041314-1-lgs201920130244@gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: usb: qcom,pmic-typec: Drop redundant
+ port
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260519100014.282058-3-krzysztof.kozlowski@oss.qualcomm.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bod@kernel.org>
-In-Reply-To: <20260519090819.1041314-1-lgs201920130244@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20260519100014.282058-3-krzysztof.kozlowski@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108439-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,oss.qualcomm.com,kernel.org,linaro.org,cisco.com,vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-108440-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 33C7C57BF81
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,linaro.org:email,linaro.org:mid,linaro.org:dkim,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: AF65657C15F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 19/05/2026 10:08, Guangshuo Li wrote:
-> venc_probe() allocates a video_device with video_device_alloc() and
-> releases it from the err_vdev_release error path if
-> video_register_device() fails.
+On 19/05/2026 11:00, Krzysztof Kozlowski wrote:
+> The binding defines both "port" and "connector" properties, where the
+> "port" is claimed to be for "data-role switching messages".  There is no
+> such dedicated data port for this device and role switching is part of
+> connector ports - the port going to the USB controller.
 > 
-> This can double free the video_device when __video_register_device()
-> reaches device_register() and that call fails:
+> The driver does not use the "port" property and there is no upstream DTS
+> which would have it.  It looks like it's left-over of early versions of
+> this patchset and is completely redundant now, so let's drop it.
 > 
->    video_register_device()
->      -> __video_register_device()
->         -> device_register() fails
->            -> put_device(&vdev->dev)
->               -> v4l2_device_release()
->                  -> vdev->release(vdev)
->                     -> video_device_release(vdev)
-> 
->    venc_probe()
->      -> err_vdev_release
->         -> video_device_release(vdev)
-> 
-> Use video_device_release_empty() while registering the device so that
-> registration failure paths do not free vdev through vdev->release().
-> venc_probe() then releases vdev exactly once from err_vdev_release.
-> Restore video_device_release() after successful registration so the
-> registered device keeps its normal lifetime handling.
-> 
-> This issue was found by a static analysis tool I am developing.
-> 
-> Fixes: aaaa93eda64b ("[media] media: venus: venc: add video encoder files")
-> Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 > ---
->   drivers/media/platform/qcom/venus/venc.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml | 5 -----
+>   1 file changed, 5 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index bf53267cb68d..9a5a025607fb 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -1579,7 +1579,7 @@ static int venc_probe(struct platform_device *pdev)
->   		return -ENOMEM;
-> 
->   	strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
-> -	vdev->release = video_device_release;
-> +	vdev->release = video_device_release_empty;
->   	vdev->fops = &venc_fops;
->   	vdev->ioctl_ops = &venc_ioctl_ops;
->   	vdev->vfl_dir = VFL_DIR_M2M;
-> @@ -1590,6 +1590,7 @@ static int venc_probe(struct platform_device *pdev)
->   	if (ret)
->   		goto err_vdev_release;
-> 
-> +	vdev->release = video_device_release;
->   	core->vdev_enc = vdev;
->   	core->dev_enc = dev;
-> 
-> --
-> 2.43.0
-> 
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+> index 6d3fa2bc9cee..975032ba6004 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,pmic-typec.yaml
+> @@ -84,11 +84,6 @@ properties:
+>     vdd-pdphy-supply:
+>       description: VDD regulator supply to the PDPHY.
+>   
+> -  port:
+> -    $ref: /schemas/graph.yaml#/properties/port
+> -    description:
+> -      Contains a port which produces data-role switching messages.
+> -
+>   required:
+>     - compatible
+>     - reg
 
-OK so this will get the same feedback as the Iris version which is 
-please fix the cleanup path.
+True, the ports are in the connector now.
 
-If we look at drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c we can see
-
-         ret = video_register_device(jpeg->dec_vdev, VFL_TYPE_VIDEO, -1);
-         if (ret) {
-                 dev_err(dev, "failed to register video device\n");
-                 goto err_vdev_register;
-         }
-<snip>
-
-err_vdev_register:
-         /* Only release if allocation succeeded but registration failed */
-         if (jpeg->dec_vdev)
-                 video_device_release(jpeg->dec_vdev);
-
-So for Venus and Iris
-
-err_vdev_release:
-	if(vdev)
-		video_device_release(vdev);
-
-i.e. only release the video device on the error path if the vdev pointer 
-is non-NULL.
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 ---
 bod
