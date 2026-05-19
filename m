@@ -1,180 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-108611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uAUcOijSDGosnAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 23:12:08 +0200
+	id oLL5DSTSDGosnAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 23:12:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65F7E585126
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 23:12:08 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E30265850DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 23:12:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5A868300D6A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 21:12:07 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id CF50E303AFA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 21:12:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D8312147F9;
-	Tue, 19 May 2026 21:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A1B42147F9;
+	Tue, 19 May 2026 21:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="vHmBAQyo"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="GocHRlgH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1103D9049;
-	Tue, 19 May 2026 21:12:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B096E3B38BD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 21:11:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779225126; cv=none; b=e8qG/yrSVtq1NZPRpSDuRwkXPl0cVTsJHCp+5rjTh4CXySVMRr6ZIZGNCg7z5hM+0pIj0zmlwDrNCdJDKkoNjQk/Po1ZnGQTA+Ga2psLD45QVpFaUPO+2fLe6hxQsVWY9c5bQhc382qdZ88bBK3MKGFRTTG4pmeKR7Q4ykLIcFU=
+	t=1779225122; cv=none; b=n7uTyVJU7Hy8YmOoWzPFpLyzcjeba+pkWjbS94/seO9buDqCHJNEOqVd7xXGOZxqy1FhIcacDe84w2khZ3kGlNPxhd44ypgo2Y1YY4ho3DIuuGWDNVMz/gBUQrUgCOhPdRJZwB0vhEXSl4FnoALIEkGjKCCh/oZ+GgkxWei2WtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779225126; c=relaxed/simple;
-	bh=9JMwSSLgNyfL49CsTnVSIMP671ydxjgXM0HUrJM8lAU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FjOFEjJepShTZhHI5hkMlSY15A2ZtQAnK6pLGTxPaQ9Qh8yW2onZTidC22ZnsfaZ5epBXzWPK02Tk6bGwe1+H9j6CfyzVh/Ao3r8kb7+U2ICP+SButYYhEXptGnYM3G97smwIpR0Xl+f0hHiWq/db313H9PM9qDJMBVXBfTNN+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=vHmBAQyo; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.88.125.21])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 9E11A5341058;
-	Tue, 19 May 2026 23:03:00 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1779224582;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=MyMPIRDqjJPenGSERvDWs7fwWFvgDp+zAyYF2uoU87c=;
-	b=vHmBAQyoXrNPyA90hE9zPjAoRy72HDF3k1U4R8aWTgpAcFl9jTh4zJ7Pnb4hlaT4CFM9l/
-	HCanuYqjnscmJ4xK9IxZJNQjqD4CcPsEjrww9HHn4BCrNO3kz7kOyH77n1MAWeHGs/XXNh
-	daa2b9KByZ2HZpl8fi9n9R8P0w7PFN8=
-Message-ID: <4b797a3f-01c9-4b02-be98-7b82099c2e0e@ixit.cz>
-Date: Tue, 19 May 2026 23:03:00 +0200
+	s=arc-20240116; t=1779225122; c=relaxed/simple;
+	bh=IhB82l+hTLUHRSSUEDQyS1YmK9EZ2X+4cpMN2coBRrk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AzYYaziHYEhKqT2MJD+CJA6SkjpQLwqH8HxyQuX98PIXFKw538W+TPB6+L1K51Hfe5on+hqXy2sSK5+nIIi5D99mgb9hSLlOyJLsPvfNuIA4564L37KdMs8FLRUvVnE0FGH9dU3N8rwpHP5UaxhXTf04XRDAZ0QcjDbfndKhH+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=GocHRlgH; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=Aq7k3h4npuDsLJfbzbJU3l5pvZiBDBBR5UulR/fDIRU=; b=GocHRlgHYv6Aebp+h6TR1vN3Ho
+	FdxXxd39xWQb8wjI04EhC0spElxmdQKZss2hj8icumLyBjRzDCKU6UePsh6nkix47QUMy0NUxSTce
+	AB9Y3vXVwMjH03xAuVFR1lzuUUFmJeFP4eEmYrzXTPiHNf7j2/frls0YCv7D8StbHrDb8jypsgktK
+	pMU4YSIBnK56Mv7+PsU3I6CftfXcuqOKtEsFkZU2hFNRgIi8VjQXorv1h1S1tH8g8gKlU7l7vxmc1
+	jYJcQktKlXih4dwXIcc9xX6utVoLYFvOxPvbF6yqchQ98bYGQgCP40x/4jrTbbdGmNi7DdYGJITyS
+	vU+taoug==;
+Received: from [79.117.146.159] (helo=killbill.home)
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1wPRij-003Ppa-MT; Tue, 19 May 2026 23:11:21 +0200
+From: Melissa Wen <mwen@igalia.com>
+To: airlied@gmail.com,
+	alexander.deucher@amd.com,
+	christian.koenig@amd.com,
+	harry.wentland@amd.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	simona@ffwll.ch,
+	siqueira@igalia.com,
+	sunpeng.li@amd.com,
+	tzimmermann@suse.de
+Cc: Alex Hung <alex.hung@amd.com>,
+	Simon Ser <contact@emersion.fr>,
+	Uma Shankar <uma.shankar@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Xaver Hugl <xaver.hugl@kde.org>,
+	Pekka Paalanen <pekka.paalanen@collabora.com>,
+	Louis Chauvet <louis.chauvet@bootlin.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	amd-gfx@lists.freedesktop.org,
+	kernel-dev@igalia.com,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH v6 0/6] drm/atomic: track individual colorop updates
+Date: Tue, 19 May 2026 23:09:03 +0200
+Message-ID: <20260519211111.228303-1-mwen@igalia.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/8] pinctrl: qcom: Register functions before enabling
- pinctrl
-To: MINETTE Alexandre <contact@alex-min.fr>, Linus Walleij <linusw@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, MyungJoo Ham <myungjoo.ham@samsung.com>,
- Chanwoo Choi <cw00.choi@samsung.com>, Guru Das Srinagesh
- <linux@gurudas.dev>, Rob Clark <robin.clark@oss.qualcomm.com>,
- Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>, Kees Cook <kees@kernel.org>,
- Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli"
- <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, iommu@lists.linux.dev,
- phone-devel@vger.kernel.org
-References: <20260519-mainline-send-v1-sending-v3-0-3dd7aa125353@alex-min.fr>
- <20260519-mainline-send-v1-sending-v3-3-3dd7aa125353@alex-min.fr>
- <CAD++jLm=BxHsPJ4rgqwY8SvaefZUO+Pfv8E8xizqPsdJZw5weA@mail.gmail.com>
- <298550eb-1bdf-4d7c-8111-8b8f0b5dc056@app.fastmail.com>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <298550eb-1bdf-4d7c-8111-8b8f0b5dc056@app.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [1.14 / 15.00];
+	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
-	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-108611-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-108608-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[29];
 	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[gmail.com,amd.com,linux.intel.com,kernel.org,ffwll.ch,igalia.com,suse.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[ixit.cz:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[amd.com,emersion.fr,intel.com,kde.org,collabora.com,bootlin.com,linux.dev,lists.freedesktop.org,igalia.com,oss.qualcomm.com,kernel.org,gmail.com,poorly.run,somainline.org,vger.kernel.org];
+	DKIM_TRACE(0.00)[igalia.com:-];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.960];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 65F7E585126
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FROM_HAS_DN(0.00)[]
+X-Rspamd-Queue-Id: E30265850DD
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 19/05/2026 10:48, MINETTE Alexandre wrote:
-> Thanks a lot Linus!
-> 
-> This patch is required for my Samsung Galaxy S4 GT-I9505 to boot but I also
-> have confirmation from another contributor that the same pinctrl patch
-> helped boot the ASUS Nexus 7 (2013), codenamed flo, which is also based
-> on APQ8064.
-> 
+This series aims to track updates for each individual color operation,
+allowing the driver to react accordingly.
 
-Hello Alex,
+- Patches 1 and 2 make colorop update process more consistent and
+  optimized by only keeping colorop states from active color pipelines.
+  Due to ordering dependency, attempts to update inactive colorops are
+  not rejected at property setting time, but only later during atomic
+  check.
 
-if what you wrote about asus-flo/deb is true, then this patch should have 
-`Fixes: ` tag, as I remember it was booting with few limited patches ~5 years 
-back then (only one serious was hack for proper clock bringup).
+- Patches 3 and 4 make lut1d_interpolation and lut3d_interpolation
+  colorops correctly behave as mutable, handling their changes via
+  drm_colorop_state.
 
-David
+- Finally, patches 5 and 6 track colorop updates of a given plane color
+  pipeline by setting plane `color_mgmt_changed` flag, similar to what
+  is done for tracking CRTC color mgmt property changes with CRTC
+  `color_mgmt_changed` flag. The flag also tracks when a different color
+  pipeline is set to a given plane. That way, the driver can react
+  accordingly and update their color blocks.
+
+It also fixes shaper/3D LUT updates when changing night mode settings on
+gamescope with a custom branch that supports `COLOR_PIPELINE`:
+- https://github.com/ValveSoftware/gamescope/pull/2113
+
+v1: https://lore.kernel.org/dri-devel/20260318162348.299807-1-mwen@igalia.com/
+Changes:
+- include linux types for function's bool return type (kernel bot on MSM
+  driver)
+- add Harry's r-b tags
+
+v2: https://lore.kernel.org/dri-devel/20260323131942.494217-1-mwen@igalia.com/
+Changes:
+- [NEW] two patches to only consider colorop updates from active color
+  pipelines (Chaitanya)
+- [NEW] make lut interpolation properties mutable + Alex H patch for
+  kernel docs
+- track lut(1/3)d_interpolation updates (Chaitanya)
+- rebase changes according to new patches
+
+v3: https://lore.kernel.org/dri-devel/20260403135909.214378-1-mwen@igalia.com/
+Changes: rebase on drm-misc-next
+
+v4: https://lore.kernel.org/dri-devel/20260501132527.522320-1-mwen@igalia.com/
+Changes: fix kernel doc (kernel bot)
+
+v5: https://lore.kernel.org/dri-devel/20260506192633.16066-1-mwen@igalia.com/
+Changes:
+- rebase on drm-misc-next
+- fix kernel-doc and correctly reword (atomic) state to plane_state (Chaitanya)
+- reject inactive colorop updates in atomic check time, instead of
+  during property's setup, to avoid ordering dependency as pointed out by Chaitanya
+- use `|= replaced` for consistency (Chaitanya)
+- add Chaitanya's r-b tags to patches 1,3-5
+
+Melissa Wen
+
+Alex Hung (1):
+  drm/colorop: Remove read-only comments from interpolation fields
+
+Melissa Wen (5):
+  drm/atomic: only add colorop state from active color pipeline
+  drm/atomic: reject colorop update from inactive color pipeline
+  drm/colorop: make lut(1/3)d_interpolation mutable
+  drm/atomic: track individual colorop updates
+  drm/amd/display: use plane color_mgmt_changed to track colorop changes
+
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  6 +-
+ drivers/gpu/drm/drm_atomic.c                  | 82 ++++++++++++++-----
+ drivers/gpu/drm/drm_atomic_helper.c           |  9 +-
+ drivers/gpu/drm/drm_atomic_uapi.c             | 68 +++++++++++----
+ drivers/gpu/drm/drm_colorop.c                 | 16 +++-
+ include/drm/drm_atomic.h                      |  2 +-
+ include/drm/drm_atomic_uapi.h                 |  4 +-
+ include/drm/drm_colorop.h                     | 34 ++++----
+ 8 files changed, 155 insertions(+), 66 deletions(-)
 
 -- 
-David Heidelberg
+2.53.0
 
 
