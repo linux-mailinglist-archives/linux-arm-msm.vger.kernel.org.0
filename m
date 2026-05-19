@@ -1,210 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-108578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eCgrDOibDGq8jwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 19:20:40 +0200
+	id UA08AiucDGq8jwUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 19:21:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94B34582F30
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 19:20:39 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D223582F6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 19:21:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 14DAF30C26FB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 17:16:04 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 6259C300D754
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 17:20:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97A35409125;
-	Tue, 19 May 2026 17:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8DC63DB31D;
+	Tue, 19 May 2026 17:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Yg9oOiyi";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kSjcuV93"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XbBBzI6B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8811C400DE2
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 17:15:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857073DB33A;
+	Tue, 19 May 2026 17:19:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779210953; cv=none; b=rJAqZv99AvQYtTuNrGG0flvUyyn/yYNvN8TwRSYSRovZN5o4Vv8Aact++BbHdc50Y0nVn49TS7EF9kosqh13CdyA3KW9ShFUQG1VUJRb0zCdFEL5msGdKwt9vdYokvyVZzvNIQseHNhTNUIEQUGGBvsiLzF5jgS+d/Uudmnxsvg=
+	t=1779211199; cv=none; b=id0zaNGTNPi7Ty9tGUoUMhee6ncN6jy/+gOhJJ3RPiRZexZXT7XzH6ekiFJk9wsqDIh/6N4R46CMprTef6lwz6Eo/vKS2/xrf/vLNWaG6PgUnSpmZCitbzcICREWbXGQV31r0X3YhS54yndPdt1id+4H5EkzE+KBN4h2Z8mvTPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779210953; c=relaxed/simple;
-	bh=KI+58/ONAYxQ6op8vnR01ldyxV8090Z36iFsslPUisM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EAXRBBvjhvDQxdOvhRT+wcX/LzGRUXSsNxLPDLHFkhUQ8R2RUjjg+bpRYVjf3E/WyAq5duA8DRZKO/OjtIySZDhLQ5MdJuN1Jtauhwupr8DLxORiuG8xJGT0wJfeE2xrfIZEkH0EkoilJay3CBe81JKui7mqW953+3qIHMbuecY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Yg9oOiyi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kSjcuV93; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64JEwlob1636916
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 17:15:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=lfKVHCmUtRu
-	10BDgmOnebTByINr9r0sGsNkJtT8G/r4=; b=Yg9oOiyi+y5eLhnGUIJI5a4hY7T
-	c4+gZWxznsB8Vf74Pyr0+59E922Ee4i+f7zqu3HiYK56EXU3DRVpTueDlRs/8tim
-	c8pnDDshlnTfPis/zXQlyYMZ42R9r4rua1v1g1ljX3h8UzN2BknabuQkWdg5ZReC
-	97FDoxX0UcEK4zQCG80pfs5vyGKpmHVbrKV/L6+laccCExqPkCe2K4ltiz+1JPsf
-	f+K1eBSq9D/aJDmhBrLWzv+i68pxHmwee3l1idTou4NWzcAF3sZ2DmNlM+CmVe+W
-	xiJxVKJ04lMN/Zd+Qtj6MnmeUzWRIaIVlzGlBgV7MB7rBR5J+jxiUeypYtw==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8t3s8ntw-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 17:15:50 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-82fa5ecd760so2137857b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 10:15:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779210949; x=1779815749; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lfKVHCmUtRu10BDgmOnebTByINr9r0sGsNkJtT8G/r4=;
-        b=kSjcuV93WQqxfDLWCQsMaJVcTjM35jocDwqRHeEnnCRgB0PMCj24GbQX2dEvFFraKj
-         4XxBiBgBiJj2FInZ4pu0vnacMIMKevGNcDxz5vGs7UETQNcFnFc1xANPPleSWfJVgEdX
-         ZB/YkxlKBaLZfU1hDhiFkKhu+A+DeYK+0nomgghLz2DV9N/pTvNSrZ4cG0CdObj0dDQa
-         HgHNDc7WJh1kXzWK+oYjndPjkHHVzzNgD8XKFgCLenDq9brspYAvYtlIO6yNfr2LBjiH
-         CehRqHypJf8G44UfbycsFGQc4YsKXLIXxI++V8+rZH7w8hrF+M2nfDvatkQrPNvfWqE+
-         AfSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779210949; x=1779815749;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=lfKVHCmUtRu10BDgmOnebTByINr9r0sGsNkJtT8G/r4=;
-        b=cHpa2cMzKSiwd0bJa2JNz3LwvwGx9xYLYCY9U/lce5lNA67O2QZCDhO+LF24SQljXo
-         41bfVm61CP5peBlRV3fssogiM8tzev53ve+QHynhqZUIYeGgvyyadKK3h64rI+f7CPEk
-         O9zUZmmbWsvDtOQGfOHNJM6d1+4GOrV9anETCHKLYLNEDOdNcELinVio701ajE6OiZEQ
-         SbYOkwB2aqiapJFYX4TkuUFz2JYswkZw0Ve9s7qcghzYhoehkK7ELKkBvNa5ClyHNuf/
-         CaOvllV7krFXFRKiPe67Un/2PXhdM4BCLuX6oOfLbjTcflaJozVb8bPOfDOV/hXTtHe+
-         Zqdg==
-X-Gm-Message-State: AOJu0YwkT+Y5UAYMFJP/NAThNv/dsN2SPPTumuFEjYx3qDmJpdJKu9fU
-	HD7kyzEmLlWCl+AZQevmpIPwFvHpL4MzI6uwi2ewM21NDgOWxI8vAioyvqiydeXInzO6NeDiRev
-	QZ8mqIdciqGpan6s9BSk6zledMBnffHIRJ9pUSoz29vk1jDNHcmCkO6G1zgMWulcW2rUs
-X-Gm-Gg: Acq92OGUZFhxFeLGjIn67iMlYffR3aikV+X9tyG7XFFrgTFXkfWGg0iujcwioMK9p1x
-	rr9m+BmNWsF/PkM/KGlTKjNyvp5Vwd3cE+YDLQkFYlD6DJUVlfG/0IZ/Ye8pS8mJmfJ9hCSqwqn
-	9PpxcCTT3LdosSmYkmmlQKkaGI9N2jsK5sU+CcJ9L/AcPYeSuUP2RNwzrGx9xfby8SkkuEjMat6
-	K8WAEYYO/z4xiyJEOZ34yqFXrvAdNCR3panBzp6XOLAbNS6g10GAWjcCLn6QFWwRvbvBdfhIx6G
-	M8i2yS4KYwa1VShMfEK1JpenEKebg/331Gs++RD5aJFUFL91KrGNcct5+pGCtb5Cnet6HcNmBG5
-	EZ19MaBMO8Qo2k8g/RKDlylPO6dUpJcL9gRl9rk5n+T5rmuCX
-X-Received: by 2002:a05:6a00:4397:b0:837:8ae9:6c30 with SMTP id d2e1a72fcca58-83f33d8c21cmr20246544b3a.29.1779210949128;
-        Tue, 19 May 2026 10:15:49 -0700 (PDT)
-X-Received: by 2002:a05:6a00:4397:b0:837:8ae9:6c30 with SMTP id d2e1a72fcca58-83f33d8c21cmr20246501b3a.29.1779210948532;
-        Tue, 19 May 2026 10:15:48 -0700 (PDT)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19c77822sm18634720b3a.41.2026.05.19.10.15.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 10:15:48 -0700 (PDT)
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Robert Marko <robimarko@gmail.com>,
-        Guru Das Srinagesh <linux@gurudas.dev>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Subject: [PATCH v2 4/4] arm64: dts: qcom: kaanapali: Add minidump SRAM config to SCM node
-Date: Tue, 19 May 2026 22:44:42 +0530
-Message-ID: <20260519171442.1582987-5-mukesh.ojha@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260519171442.1582987-1-mukesh.ojha@oss.qualcomm.com>
-References: <20260519171442.1582987-1-mukesh.ojha@oss.qualcomm.com>
+	s=arc-20240116; t=1779211199; c=relaxed/simple;
+	bh=PcQgZeciD6zTFbc/Al2Qw1LpZV+52E8Gj2OSIzC9Qss=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tzTW7HLDSqriiWWKPtWUhuT5dxbDUf3/DHp9RTNSK0ZPvMxp+HjYiNmy5U8vqAeVwNeXz3SQG7z/Ih67jE2aJjqvJV/4RALWKCjE6KqlI/k5KdUVxShuzs9NnZrv4zFZQfhLGO/aznt9rrn2kuuTkAh/wnluUwD/zs/wJ0RGXas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XbBBzI6B; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE02BC2BCB3;
+	Tue, 19 May 2026 17:19:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779211198;
+	bh=PcQgZeciD6zTFbc/Al2Qw1LpZV+52E8Gj2OSIzC9Qss=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XbBBzI6BMmc2qi3CO/PJ03L/0BLjVUWyHeawfD9cL5/Zzfr6WScpP28XVy2zTPt2a
+	 ljZxJD6N9ASkopYjKp67ifLM3nvk+x3bNgJjQ3DEk+H1XdQoY5pVyxFITJh/YqBggM
+	 /7KGybNccUvfeB0gUVw/ZKhWVoQwjtBHNrtclXL7HSsCBMRekKdsE56dzcCpTohR21
+	 p+DQfqk6jZLV2LDjGtesHbn1XRL0vzBGFqNoE6wXGIwVw8slCzZUQsO1BZgApb5mii
+	 Cb0kl7/79jR/btL5zrqnIi3y47jE3yZzzRC0fdAju6hYf6U5Zf98CCl3/IBjZZJ0ex
+	 NqYjdckOwMG0w==
+Date: Tue, 19 May 2026 19:19:51 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Lukas Wunner <lukas@wunner.de>, Richard Zhu <hongxing.zhu@nxp.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Wilson Ding <dingwei@marvell.com>, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v7 0/4] PCI: Add support for resetting the Root Ports in
+ a platform specific way
+Message-ID: <agybt3onTAJO2Dl9@ryzen>
+References: <20260310-pci-port-reset-v7-0-9dd00ccc25ab@oss.qualcomm.com>
+ <abFMa6DCGGLUHddA@fedora>
+ <dp2rem4gj7zhfgykvekmcrhq4ticm6m6ido6tbgflwzfcuuwkl@4wuxgle27eyx>
+ <srdn3bspgwff7f7tnst7wzg4us4buifrv7o3ylo527hmuciyl3@6ioyrl6rfhaz>
+ <abk3rU2EDKjkefUD@ryzen>
+ <tgsh3cum6qxrqjzbdeqjsp6bf7cqedj7il77hww3oxecadndin@idjnwib7cz4z>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDE3MiBTYWx0ZWRfX/3CGvguTKe9D
- //oQjH0ZlV19UWfL6k2CsQaPPm/IKLqldDPp0b7VAyl5N4MU7giLCgjRCYORZMPzbKLsxIsW7m2
- bsanNPspbVRK006e+MPZcZeoDcBnmZUGGaEh75v3T805s7Ui4IWcyxdiHuCCIaZcdLjNMtO0Wa9
- gyUhEdFHeCTO44e76FVRFG0Hg7YZPUL0Ufvz66OvwdVB+uIt8rp+mPLTJ4i347WpHcpIhVVLQGG
- 2GBxpRIYhMUFILv+E2EIc6+TEfXGKoiRFv1au6+gZUAx8phiauRzhXfQ2vj5eFAqJcc25Tc6AHW
- Kgv1ojM5DE+Mx6VYfAX0F+LWNMQT6R3gNioc3ijXJjMvuLY9Z0xi+I0nv316klW7VFa7ZftCt80
- erhRxhFkJ8tUTGWZjt2wiRsUSooHMuTCKpOjL/gyFWKs5KXfunyHe8uO4763HMslZ4FryoQ1P+K
- qXpoGpytvC/AJL4szbQ==
-X-Authority-Analysis: v=2.4 cv=Oc6oyBTY c=1 sm=1 tr=0 ts=6a0c9ac6 cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
- a=ZJQsJAtiAu0WCEyc7p8A:9 a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-GUID: hjB8hOJkVGay16Fp4A9UcxuCpuyr8iYb
-X-Proofpoint-ORIG-GUID: hjB8hOJkVGay16Fp4A9UcxuCpuyr8iYb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-19_04,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 clxscore=1015 bulkscore=0 malwarescore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605190172
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <tgsh3cum6qxrqjzbdeqjsp6bf7cqedj7il77hww3oxecadndin@idjnwib7cz4z>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-108579-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,gurudas.dev];
-	TAGGED_FROM(0.00)[bounces-108578-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,google.com,linux.ibm.com,gmail.com,kernel.org,sntech.de,pengutronix.de,vger.kernel.org,lists.ozlabs.org,lists.infradead.org,wdc.com,wunner.de,nxp.com,chromium.org,marvell.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,0.223.255.192:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email,qualcomm.com:dkim,94c:email,1c:email];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	FROM_NEQ_ENVFROM(0.00)[cassel@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 94B34582F30
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 0D223582F6C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Point the SCM node at the minidump config slot in the always-on SRAM.
-Boot firmware reads this word before DDR is initialised on a warm reset
-to decide where to deliver the minidump.
+Hello Mani,
 
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/kaanapali.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+On Mon, May 18, 2026 at 11:51:56AM +0530, Manivannan Sadhasivam wrote:
+> > 
+> > With the patch above. There is zero difference before/after reset, and all
+> > the BAR tests pass. However, MSI/MSI-X tests still fail with:
+> > 
+> > # pci_endpoint_test.c:143:MSI_TEST:Expected 0 (0) == ret (-110) 
+> > # pci_endpoint_test.c:143:MSI_TEST:Test failed for MSI1
+> > 
+> > ETIMEDOUT.
+> > 
+> > This suggests that pci_endpoint_test on the host side did not receive an
+> > interrupt.
+> > 
+> > I don't know why, but considering that lspci output is now (with the
+> > save+restore) identical, I assume that the problem is not related to
+> > the host. Unless somehow the host will use a new/different MSI address
+> > after the root port has been reset, and we restore the old MSI address,
+> > but looking at the code, dw_pcie_msi_init() is called by
+> > dw_pcie_setup_rc(), so I would expect the MSI address to be the same.
+> > 
+> 
+> Hi Niklas,
+> 
+> When I rebased this series on top of v7.1-rc1, I ended up seeing the issue what
+> you described here (not sure why I didn't see it earlier). So after the Root
+> Port reset, MSI tests fail, but BAR tests succeed. Also, I got IOMMU faults on
+> the host after endpoint triggers MSI.
+> 
+> I investigated it and found that the MSI iATU mapping gets cleared in hw after
+> LDn happens. But the host continues to use the same address/size for the
+> endpoint MSI even after reset. Due to this, the existing checks in
+> dw_pcie_ep_raise_msi_irq() don't pass and the stale MSI iATU mapping gets
+> reused.
+> 
+> The fix would be to clear the mapping in dw_pcie_ep_cleanup(), which gets called
+> as part of the PERST# assert/deassert sequence post LDn and also set
+> msi_iatu_mapped flag to 'false'. This will force dw_pcie_ep_raise_msi_irq() to
+> use fresh iATU mapping when it gets called for the first time:
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> index d4dc3b24da60..4ae0e1b55f39 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+> @@ -1035,6 +1035,11 @@ void dw_pcie_ep_cleanup(struct dw_pcie_ep *ep)
+>  {
+>         struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+>  
+> +       if (ep->msi_iatu_mapped) {
+> +               dw_pcie_ep_unmap_addr(ep->epc, 0, 0, ep->msi_mem_phys);
+> +               ep->msi_iatu_mapped = false;
+> +       }
+> +
+>         dwc_pcie_debugfs_deinit(pci);
+>         dw_pcie_edma_remove(pci);
+>  }
+> 
+> With this change, MSI works after Root Port reset without any issues on our Qcom
+> endpoint/host setup.
+> 
+> Please test this change on your rockchip setup as well. You have to make sure
+> that dw_pcie_ep_cleanup() is called during PERST# assert/deassert.
+> 
+> I'm going to respin the series with this fix. If you confirm it works for you,
+> then we can merge your Rockchip Root Port change.
 
-diff --git a/arch/arm64/boot/dts/qcom/kaanapali.dtsi b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
-index bcd1cee31356..425b532c53be 100644
---- a/arch/arm64/boot/dts/qcom/kaanapali.dtsi
-+++ b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
-@@ -224,6 +224,7 @@ scm: scm {
- 			qcom,dload-mode = <&tcsr 0x19000>;
- 			interconnects = <&aggre_noc MASTER_CRYPTO QCOM_ICC_TAG_ALWAYS
- 					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-+			sram = <&minidump_config>;
- 		};
- 
- 		scmi: scmi {
-@@ -5448,6 +5449,10 @@ sram@14680000 {
- 			#address-cells = <1>;
- 			#size-cells = <1>;
- 
-+			minidump_config: minidump-sram@1c {
-+				reg = <0x1c 0x4>;
-+			};
-+
- 			pil-sram@94c {
- 				compatible = "qcom,pil-reloc-info";
- 				reg = <0x94c 0xc8>;
--- 
-2.53.0
+I am happy to hear that you managed to find the root cause!
 
+Hopefully your series can finally move forward :)
+
+While e.g. RK3588 does have a PERST# input GPIO, so it could theoretically
+add a perst_deassert()/assert() function. However, when the EPC support was
+added, you did not want that, since I remember that you said that you only
+wanted that for drivers that required an external refclock.
+
+Thus, for drivers that do not require an external refclock, should we
+perhaps add your suggested code in dw_pcie_ep_linkdown()?
+
+E.g. pcie-tegra194.c does not call dw_pcie_ep_linkdown(), so I'm not
+sure if we can simply move it from dw_pcie_ep_cleanup() to
+dw_pcie_ep_linkdown() either...
+
+Perhaps we need the code in both functions?
+
+(pcie-qcom-ep.c seems to be the only function that will call both
+dw_pcie_ep_linkdown() and dw_pcie_ep_cleanup().)
+
+
+Kind regards,
+Niklas
 
