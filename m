@@ -1,213 +1,275 @@
-Return-Path: <linux-arm-msm+bounces-108316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kvmrK1PiC2p2QAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 06:08:51 +0200
+	id YG0nOA3jC2qdQAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 06:11:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FC2857721A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 06:08:50 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45A4357724F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 06:11:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 94203302AF04
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 04:08:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1AE33302E923
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 04:10:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F42A2F0C62;
-	Tue, 19 May 2026 04:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACD842F7F0F;
+	Tue, 19 May 2026 04:10:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ctLjxadB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SX+keWtm";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jjyhiN8T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yx1-f48.google.com (mail-yx1-f48.google.com [74.125.224.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E873C24E4AF
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 04:08:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779163728; cv=pass; b=qyipyI9WbNgZfRxf5KCybirPyoa/pAdklBlx2GuOt8gwq8XEnZ23CTa+7RPPYN+PYr9OUMPvU+eVWs3tR06Tz2Q6+zZfLGv8e9KkhA8w2Wc9n1GLlju5rCMvDktkFPFZWAZmqeZIHFoaBmUgF7E572b31AbirSOFaYBPNRz9y68=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779163728; c=relaxed/simple;
-	bh=t2cMNU2aA1KxvxZx7gAR15pb3MDXwlSILsNYkZLsYZw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U8D87K0bjXby42nPiHuEgFuSMyfCXLW+szK3y8sOtacbz+MkXbLxCc0AJMBonYWtoNOgz/TOXUTj29ohPh2jPEXZHsvYSjta1UjL1FueyFxXFy3as6wTXf4VQdJI33t69ak7R9VyvR+9PlQwl8jZZrKm7U99EN2mwbVL4MSGbC8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ctLjxadB; arc=pass smtp.client-ip=74.125.224.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yx1-f48.google.com with SMTP id 956f58d0204a3-6587cee8b57so3728180d50.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 21:08:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779163726; cv=none;
-        d=google.com; s=arc-20240605;
-        b=bmea9RH7VQM5q0XTmv5J8ub6HV+kQsc5YGTUNBXPwz58YR3Akpm8oAs8EGtcihAa2X
-         tBP8nhrSAQ2jhlEVRe/4D8LAvGfUazJtzec9Ealtl23M02VaOBVKGq1SG7F+s9mJBq3S
-         CZ6uUPcBHGhC+nOTS+rfpDZgzaHwC0yzPuFpTj0VPQdHbxaC7Iyk3c2kuknkdVkK4mTJ
-         ebUGwXmtTKzSV35rRHWVv1k+UdRt3wC2VKxd6KgguBAqi8xu9leeqia5Uycy3lBX7Cp+
-         1iBaK+WpQpuDN/u0gSYUnXx4UrRtGBB3VB35cXngF8RRLwVZOziIhHD7u8Y4j0hOZ2o7
-         guIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=7kA2hMel3rxxxc6CCqPFQDCtKlIGXB83OzM5cTPXrbQ=;
-        fh=jXGxPf5KfCQe22m8eR/UMjv328dfDuy2jH2Np8dZtsk=;
-        b=exwfOTI2nrm/336xoQT3+28DQfMa452jCTQw1pcRn875kptsrVjdMtnRxcdw1iihn3
-         +D9mNMtXGmqLX4rL29Gw9oZE6z0M5xuSV6ljwpeD2lWLyg+u2/hvujMFfs+EUYrsijk2
-         pjp46IGHLDxzjPxvV5bwowG/wX9+JysSJkuNPSjT5t9Uba55gSkvqpDk0LRJmQOLMQwf
-         B1bD2rVvS7+r4xmfoVkPsBwbOalvvXUwWhug5nFWwTnrSSV3YlZIX/1Ha0ES06p2vgF8
-         FafzraCkzwpuAWy9kf2uZO83YC/eGcSOrU4O4BbD44JLRA3Gow+j40c5sxOOZmje1G4M
-         bi/A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483602C11CB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 04:10:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779163857; cv=none; b=b+2XMI4sowm9Y1wDT+gUf+cDW2QmdTjsSX2gvWXChVFaG8aYpXkrJbQ0EN0QlmXG8DkD3H8ItxLcxIriAqjwhZiDwk71gAaMJ/4tt3i1fBiQzPUbT9TfhjSuiMDPtImNXe3TUV8+eCJ5tzaOptc4XpiLHW6/NwEWV2bwy/sCk9Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779163857; c=relaxed/simple;
+	bh=YD5pRqb32Rg6/ph47dYp8qW1E2jdfQ9SNzh5AXty/Bs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RAF7Q9mKwq5ePcLDyFZObwYIXZVa2c8jKLici0zX4uqE4rfrAVMoAQEGnu5SaUalDNwq90jy8MwBDDMAXvWlhs22HHIrgBjpurDynX2ANRoSxur6dUS5ST0MmUxzjs8Kg937cqxRd3Lv55D7yTZVj/s2IdnoeDfKd+Hoo6Siw60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SX+keWtm; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jjyhiN8T; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64J3ACt32083455
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 04:10:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	F41BO6haCztjrV3WpmCmogDphocXyTbUMlCrviX1MQQ=; b=SX+keWtm/wEaYrJ3
+	dDX4B0kuyajaNJSdt/DcKCb3dNc80Ip1L2gJOHABUig/ew+3PFbvHMyzju68P4Lc
+	yJHIRTH5Ho/v0HRnnnGQuSvOOAlJnzQIoozIg6l9lAEVJJWTJ4wselBR3giX9v9E
+	xVwF5zBbErP2sZ6rMz/mpQd2G525H5MjjRwUiU5pEsIFOf+0LU06bZsnguVWNk+H
+	wMLsTZp+KQTugkjWEZWEjdJNYDjZ5NSWI9NQ/RjTEAeQeheY/MI5UQuEKbARWDPS
+	gW2Bet+Zk0dH2orNMLOC2c2mMTUloT18IMjZT6siQ4wWQeKEuvsMEqSfLVmFrDd9
+	aMKIEw==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e81chbdxt-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 04:10:55 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c8024fc7032so1760256a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 21:10:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779163726; x=1779768526; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7kA2hMel3rxxxc6CCqPFQDCtKlIGXB83OzM5cTPXrbQ=;
-        b=ctLjxadBju125+KfH1+ocvwxvruILyh9VtI3nsbuDRjgBQpn+LB63NRdTyhapIFsBL
-         hAslfpwPwY3Yzg3Swn2bOTpcif2fjuVWoNMXdAqr5133PB6mVcXvXZIFJDUTjTLljHuP
-         gKvlzgeCjWmCiIrzjvqwz1BZZZbxp4ghhseG5UAy6I4jTTpdUEjNaQz8sjgbQ3tFY6XU
-         k4B2jDCf5p8+XIuy6kmLqvF0EPWUGVZfqD5+UmBtP4Wwwe41pFV7kyEiX1sxZfUQdhwQ
-         2eiNhX/DuCRG4uBfXF2/4dr8TH2rv/Xh//ZFsB9JRf/WhpnjQHJcevR84B6mwBjw1t2W
-         R9XQ==
+        d=oss.qualcomm.com; s=google; t=1779163854; x=1779768654; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=F41BO6haCztjrV3WpmCmogDphocXyTbUMlCrviX1MQQ=;
+        b=jjyhiN8T2qd3tPovWup9RCTDXg59pAVJ62jdUnTOXqzCGKmJ39Y/YStdKQ+F4Fj8Lb
+         5itXis5Xqnc9zwKrMsYYyhHNbqKPO0c/xik+s1gDLVd8PFtAitIKsmH0Hn3X1qA9CNcI
+         +zJ1t4oaUkZ2GZWD5VOm95y/rtHG2GvG1beky6Wwjwc300GdNLtw+/auPwD5GM9RwIfR
+         IWHK2M97ptASFevZqPCGynmauMU+YrmTkl5pyBqzX+x3MK9PDXgkURf59Hqr/8i5fps+
+         IGgQnkAPI4BVq4GOyW6CdRbefxcqfmU5bdSHS/uPfg3zkknYOEIpKMH7WPW8foYgNaUP
+         kSNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779163726; x=1779768526;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7kA2hMel3rxxxc6CCqPFQDCtKlIGXB83OzM5cTPXrbQ=;
-        b=sllAs1BjgxAvZuGVJs91raST1/rMcR9bPyGc5PHFwHG6aYwTQO6OsrO31QN9oHUtwY
-         89BLtk2BkjWy908K5L9NciCIGfCeaEyq2GLQUQBvOdzsyYzO6hMQyk7PFZnFaMRNU+/q
-         YaXKxGFEIKFTIgmGW2Vlr47iXqG1YJxHMhmkT5//+ih+enRcgEYnUfmJVKC5eqjG3GDK
-         v5LDa5Jo2veGWPIfJLqr0CJin0Yo8F5yNkvssMY+1PBuVrAvzGLHwa3lbmIj6Y+a6xj7
-         U/qEGgMmLHGDiCUFYd0SAct3isxdwlKhwVDKaaETE3PQUDDXXJibSr7ICH2XnzG+jevV
-         djbQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8LK/t8/m8//x5Ds5V5fAKUrNkZd6x3HIiHXdpjYrBc5ko/lnqKZlgtrJgO8avm9D9pkjvSfZ2dS9mq0FXX@vger.kernel.org
-X-Gm-Message-State: AOJu0YyNKlAGR4mfRiSouOewm83SviNtvSDDejsm89XFF05HyQYsVVyj
-	D2lTV5zW1jKTgD8ssWzNiKR4YcqTGpM/imxr/ZJN2Kbk8hiNINdji4heHVAoNKlseG3zv7OcG3g
-	24PIH1GE99qHXxe7g4weJCXBrSMgvL0Ied+YaPuCB3Q==
-X-Gm-Gg: Acq92OGgl7zokRAkcrzU1nMtsXBgBxuQalN8mrH9p7Z0NVezLnP1sfyzFTNb6bOuUAG
-	CLKsxb/5lkb/fm2CcDV8cpQLmGFui9oTgRuHSMmovDWIGQa6Sqi33IkGd9jTSBwZn71qmVLXiS7
-	k5AIosTqlEd3jhobgFtUY2/1wYo85t7w0HCsuzftmZ5R9VpN/s5k6oy/qptgUBHNmoTTilSgDw2
-	P9RopY1eM7vKpzoNTFlVchS8cyWsQAs8wIyyhcE6H4kMhyi99LjAldaclQQtkTnjoQKnXNy6Zfv
-	IqTwkz9m
-X-Received: by 2002:a05:690e:4192:b0:651:c642:92a6 with SMTP id
- 956f58d0204a3-65e2276af55mr14893597d50.21.1779163726061; Mon, 18 May 2026
- 21:08:46 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1779163854; x=1779768654;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F41BO6haCztjrV3WpmCmogDphocXyTbUMlCrviX1MQQ=;
+        b=cFcuV8s6VoJuVZqzjCM6y/ODg04MAxniCUClPydNEjxli/AG97gbAbOeE6iaiILxTx
+         onZbKkT8EYBECoCJK2rIRMw+PwuYDKeaIx4mrDbI5KhCw3fkno05+jD/s/7F1yIN+rg1
+         mqH5raik1kbDiQFKUQrQ35qNAXJaHncT+erwqRJiqR7sa8mM32zkqRbG/+R7Bl6Kg6hu
+         7Ww7d3G15RjWgOehzXFhl0bd8qfFCzB4CbSPgMCX9rTS8kW7ntCyzzgJCVMbRtljaPJo
+         7ecfAOBHZsy/sMQtN+jAi9JlBMOICJ34tFh0W5A6mC/CBLtDEzSlkpGrAdXSZdiliHwm
+         IK4w==
+X-Forwarded-Encrypted: i=1; AFNElJ+nUmY2W+HMwZXKVsvNsMAY2Fe3ITCmAIq4DrMV/DrG7MUXrwM29iXiKSTaGJveI9ZJhAGJyGFcSjaDZ2en@vger.kernel.org
+X-Gm-Message-State: AOJu0YyUOTvTwEaFE8Qh+91ZJXwW2zT+Nr7mmsnbMuZ2vpigyaVM/uts
+	kt7iq0hhTpMLJ25dAFKcX2poDMFzMXavGFz9oc7YmWoPJGp+A9uggS2ovzc01U4Beh838wZDuO/
+	2lN0FiMGH9VsjSKt4+eUtCuzPhwpwLRZdzi2MOHPmEd6QgXED9iR2StcskecGB9zEn0pP
+X-Gm-Gg: Acq92OHO0Yidq2eds1SE1qBR1bw6HeI6GTJNcezBr2Jm2RiFMItMOTUWmmF610zlQWb
+	B5IDJ84Q5tuaMbvpIKEZFRv/NiYlbjWiwg02MAasuuLLtkjriWMFwAV46D5SsU4sa6eI97IWO26
+	ZXDkqX3joEtv5TzW1NIhnyjh9bohpWTZ2KUEdybLrHkmCgluegoM3RyVXWPsnB4eT9GfH8embBB
+	0//QWLpeKQ8dB5deUaRn7pgtFGakHRC51v9M2MGQ0ENwQC9UPDG9hUODXwLkRdyxFHQBBW8sQ4D
+	O2PNdTqNwLgYcqcW0bzNmlc3Iw2zv8klb1kOM30mssD1XcjVVACAViyIH+RHpuKOO+nk2Wb7KuL
+	KMbpFBVm+pYMi01TEqewZvkoY41dD+YF8zbEv3oUNRokbVrjTqwg=
+X-Received: by 2002:a05:6a20:3d1d:b0:3b1:6649:e524 with SMTP id adf61e73a8af0-3b22ebdbb2fmr20201319637.33.1779163854292;
+        Mon, 18 May 2026 21:10:54 -0700 (PDT)
+X-Received: by 2002:a05:6a20:3d1d:b0:3b1:6649:e524 with SMTP id adf61e73a8af0-3b22ebdbb2fmr20201274637.33.1779163853488;
+        Mon, 18 May 2026 21:10:53 -0700 (PDT)
+Received: from [10.217.198.242] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c82bb0ff0edsm15579177a12.20.2026.05.18.21.10.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 May 2026 21:10:53 -0700 (PDT)
+Message-ID: <a6a69bb8-79a9-4e12-888f-0b16da9c989d@oss.qualcomm.com>
+Date: Tue, 19 May 2026 09:40:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260518105755.988961-1-lgs201920130244@gmail.com> <voc7mqvhim4gfaar4n6v3b3xkttzij7uaqs7lh7jriatyonoi4@tle3syly3hbi>
-In-Reply-To: <voc7mqvhim4gfaar4n6v3b3xkttzij7uaqs7lh7jriatyonoi4@tle3syly3hbi>
-From: Guangshuo Li <lgs201920130244@gmail.com>
-Date: Tue, 19 May 2026 12:08:33 +0800
-X-Gm-Features: AVHnY4Kmevscl33_As9WRlCBA6NKiL2y-AhAuAVokGZCmpYURKETKpE7xfV4szc
-Message-ID: <CANUHTR_VrfH44KB6Nng+yeGqLgBst+Xz0AsPp0J0Pap_rOF-OQ@mail.gmail.com>
-Subject: Re: [PATCH] media: qcom: iris: avoid double free on video register failure
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	"Bryan O'Donoghue" <bod@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, Hans Verkuil <hverkuil@kernel.org>, 
-	Stefan Schmidt <stefan.schmidt@linaro.org>, linux-media@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] pinctrl: qcom: Replace open coded eoi call with
+ irq_chip_eoi_parent()
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Linus Walleij <linusw@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260514-pinctrl_msm_irq_eoi-v1-1-2d152f8695f8@oss.qualcomm.com>
+ <agvW8hetKSsPAXgv@baldur> <agvXluPCLIQlq267@baldur>
+Content-Language: en-US
+From: "Maulik Shah (mkshah)" <maulik.shah@oss.qualcomm.com>
+In-Reply-To: <agvXluPCLIQlq267@baldur>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=a4MAM0SF c=1 sm=1 tr=0 ts=6a0be2cf cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ShOtjy6-wzECGNJG7jUA:9 a=QEXdDO2ut3YA:10
+ a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDAzNyBTYWx0ZWRfXwo6NIjQfJL2X
+ zcMW/GirNc0oV2gClHBET7LruWA4bsk3uzhtekDLI2NiCWo3RucK4rVb5Fhhf1GB20Jf3Mkhr/Q
+ hnD07M2kKPjtHoahAT7H+nuw0hoyiMsU6iz59fhkMwhkvxUQUmN4f90Z6TJIBCvVNpamH1cElew
+ zv/us51mvKOegftxx8DUgR3fpdR+lY4iFF68a6GfFL/xsDOT5UjoevrQSAX3WU0K3IKXj4JwGyT
+ vmzMh3Q9Zs0onIrkuhXPNzq09p2eC0WwkCCqLoqKf/FL7ggp3AgHvI1EjCdHvUvhp95U7AWdlNm
+ mUKhM3sDQWZTIWF3nGK5QepTzjUuxONoFL9HpfhwKHfK2FlSECdZvHa7EAhOiDSw6TCHzKswL9s
+ H8ejDCN9WhYOjj9qErhL7UW/Q2kX7B1YsX4LKxn8re1ChesMTOg+J6W4gAlxm+tzw5kAbLnSx/p
+ XMDrkDG+e2q8Vp8Jr5g==
+X-Proofpoint-ORIG-GUID: EYqXAdAsNU1bFdXjv6KNnzGN0gP5F4kA
+X-Proofpoint-GUID: EYqXAdAsNU1bFdXjv6KNnzGN0gP5F4kA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-19_01,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 suspectscore=0 spamscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605190037
 X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108316-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-108317-lists,linux-arm-msm=lfdr.de];
+	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MISSING_XM_UA(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lgs201920130244@gmail.com,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	RCPT_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[maulik.shah@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	PRECEDENCE_BULK(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: 1FC2857721A
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 45A4357724F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Dmitry,
 
-Thanks for reviewing.
 
-On Tue, 19 May 2026 at 01:12, Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On Mon, May 18, 2026 at 06:57:55PM +0800, Guangshuo Li wrote:
-> > iris_register_video_device() allocates a video_device with
-> > video_device_alloc() and releases it from the err_vdev_release error path
-> > if video_register_device() fails.
-> >
-> > This can double free the video_device when __video_register_device()
-> > reaches device_register() and that call fails:
-> >
-> >   video_register_device()
-> >     -> __video_register_device()
-> >        -> device_register() fails
-> >           -> put_device(&vdev->dev)
-> >              -> v4l2_device_release()
-> >                 -> vdev->release(vdev)
-> >                    -> video_device_release(vdev)
-> >
-> >   iris_register_video_device()
-> >     -> err_vdev_release
-> >        -> video_device_release(vdev)
-> >
-> > Use video_device_release_empty() while registering the device so that
-> > registration failure paths do not free vdev through vdev->release().
-> > iris_register_video_device() then releases vdev exactly once from
-> > err_vdev_release. Restore video_device_release() after successful
-> > registration so the registered device keeps its normal lifetime handling.
->
-> This is definitely not the correct way to handle the issue. Fix the
-> error path instead.
->
+On 5/19/2026 9:03 AM, Bjorn Andersson wrote:
+> On Mon, May 18, 2026 at 10:20:55PM -0500, Bjorn Andersson wrote:
+>> On Thu, May 14, 2026 at 02:08:25PM +0530, Maulik Shah wrote:
+>>> Replace open coded eoi call to parent irqchip with irq_chip_eoi_parent().
+>>>
+>>> No functional impact.
+>>>
+>>
+>> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+>>
+> 
+> On second though, I'm not sure I want to r-b this patch.
+> 
+> The commit message explains the action of the patch, not the reasons for
+> the patch. From the description I inferred that irq_chip_eoi_parent()
+> does implement what is open coded here, and a quick glance confirms
+> that.
+> 
+> I'm guessing that irq_chip_eoi_parent() didn't exist when
+> msm_gpio_irq_eoi() was written? Or was it not used for some reason?
 
-I had also considered fixing this by changing the error path, but I am
-a bit concerned about the interaction with the device_register()
-failure path in __video_register_device().
+irq_chip_eoi_parent() did exist before msm_gpio_irq_eoi() and msmgpio irqchip was using same
+with a condition that pctrl->irq_chip.irq_eoi was only initialized to point irq_chip_eoi_parent()
+for the cases where the gpio had a parent pdc/mpm irq number.
 
-Commit 2a934fdb01db ("media: v4l2-dev: fix error handling in
-__video_register_device()") added put_device() after device_register()
-fails, because after calling device_register(), the device must be
-released with put_device() even if device_register() returns an error.
-Otherwise the reference initialized by the driver core is not dropped,
-which can cause a memory leak.
+Later via [1] (as part to make irqchip immutable) pctrl->irq_chip.irq_eoi callback was updated to
+use for each gpio interrupt and hence requiring the check like below inside eoi call to invoke only
+if parent data (PDC/MPM) is valid.
 
-On the other hand, if I simply remove video_device_release() from the
-video_register_device() failure path in iris_register_video_device(),
-then earlier failures in __video_register_device() would leak the
-video_device. Those earlier failures happen before device_register()
-is called, so put_device() is not used and vdev->release() is not
-invoked. In that case, the video_device allocated by
-video_device_alloc() is still owned by the caller and still needs to
-be released by video_device_release().
+   d = d->parent_data;
+   if (d)
+      d->chip->irq_eoi(d);
 
-So there seem to be two different failure cases:
+[1] https://lore.kernel.org/all/20220419141846.598305-8-maz@kernel.org/ 
 
-before device_register(): caller still needs video_device_release()
+> 
+>> Regards,
+>> Bjorn
+>>
+>>> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+>>> ---
+>>>  drivers/pinctrl/qcom/pinctrl-msm.c | 6 ++----
+>>>  1 file changed, 2 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+>>> index 45b3a2763eb8..6771f5eb29e4 100644
+>>> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+>>> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+>>> @@ -1012,10 +1012,8 @@ static void msm_gpio_irq_ack(struct irq_data *d)
+>>>  
+>>>  static void msm_gpio_irq_eoi(struct irq_data *d)
+>>>  {
+>>> -	d = d->parent_data;
+>>> -
+>>> -	if (d)
+>>> -		d->chip->irq_eoi(d);
+>>> +	if (d->parent_data)
+> 
+> "I know that irq_chip_eoi_parent() will peak into d->parent_data, so
+> let's peek into the object first to avoid it dereferencing a NULL
+> pointer".
+> 
+> I see one other caller to irq_chip_eoi_parent() doing this, most
+> everyone else just register irq_chip_eoi_parent directly in the ops
+> struct.
+> 
+> Are we doing it right?
 
-device_register() failure: __video_register_device() calls
-put_device(), which may already invoke vdev->release()
+Yes, because some gpios may not be wake up capable (they don't have their PDC / MPM interrupt)
+and for such cases irq_domain_trim_hierarchy() makes irqd->parent_data = NULL, so this has to be
+checked using if (d->parent_data) before invoking irq_chip_eoi_parent(), since internally
+irq_chip_eoi_parent() de-references without a valid pointer check.
 
-Would you please share any suggestions on how to fix this issue properly?
+one can argue that the valid pointer check should be taken care inside irq_chip_eoi_parent()
+(and all other irq_chip_*_parent() APIs) but i guess not all irqchip have cases where
+irq_domain_trim_hierarchy() may be invoked and it would be overhead for them.
 
-Best regards,
-Guangshuo
+Thanks,
+Maulik
+
+> 
+> Regards,
+> Bjorn
+> 
+>>> +		irq_chip_eoi_parent(d);
+>>>  }
+>>>  
+>>>  static bool msm_gpio_needs_dual_edge_parent_workaround(struct irq_data *d,
+>>>
+>>> ---
+>>> base-commit: e98d21c170b01ddef366f023bbfcf6b31509fa83
+>>> change-id: 20260514-pinctrl_msm_irq_eoi-ab736e16d411
+>>>
+>>> Best regards,
+>>> --  
+>>> Maulik Shah <maulik.shah@oss.qualcomm.com>
+>>>
+>>
+
 
