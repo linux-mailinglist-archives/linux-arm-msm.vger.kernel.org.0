@@ -1,92 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-108304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aLpzKAvGC2qWMQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 04:08:11 +0200
+	id 4C+jC8HNC2oaOQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 04:41:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 338935764B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 04:08:10 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 092D25767E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 04:41:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2E18E3081321
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 02:05:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2DA67301F1A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 02:41:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B4872FFF90;
-	Tue, 19 May 2026 02:05:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eFwIi0vp"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A5B7320A04;
+	Tue, 19 May 2026 02:41:01 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B35E307AF4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 02:05:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8BC1ABEDE;
+	Tue, 19 May 2026 02:40:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779156336; cv=none; b=BUP5xsEbmDcimy+Atx3zZoHjmyMxQ/BWUyxzfNwu1PSHRllbSfO3pZEaM6KlRkKtkG5zvx8r/QBqKHF3Ylv+xqh2c6BkPi6n+I0Qd5b7OCXjwbcHrKaeyULggR4glC3yZJAGFTMtcVUheEjyF+STCSvbqbiK2rtoh8M+8/idHKo=
+	t=1779158461; cv=none; b=B6SuZOoFG1OjmxGPbj/72a+Ryx0ByCK7TZQ9ANOlizqCt6y6WCp9JroP03/SBNE8TrHzcHOoofHPaNseDg+pkm5pH4u9sZR2YcHggNluAS++jATuxPqE/6sWFhJepzTb/wxpoYkLLKZ/qTNZKNK7MVqAcwe9modJrYuIgD9potA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779156336; c=relaxed/simple;
-	bh=pa0C9yhdgRhLGWznz7JUIUCYN54IH05uEVvyc4UBRSY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ljdC9uK/czcGnPiyLdSrYoX+BzL3HptGeykJEr2ul3+BO2isHNxTZaghda/SkXc9c4GIPDmB00KYJGsgRot0CHgA+bQUf0hJsTcQ8/PXIfqYzwnEvcEUuBa9Wf74ciTv09ZJ/Oxvoj0FPRxwp/xQRUw6YppVtgX9qt5SwFNa+5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eFwIi0vp; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2b9ec9443c2so20062395ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 18 May 2026 19:05:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779156335; x=1779761135; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XFGMV7mqlPtrUKnFCz1Two2EamH1z04Y7KnQTcbEHDs=;
-        b=eFwIi0vpLbd3t0XDTdyVSQY6J/2mQPgSf7Q+66fqoyYoo25kdrs4uLpiBZ7YnBGQil
-         ECpfAgHl8VZdBaJQ7LhB6z6kyBQY7I64kljL2BizanLzYHC7bTvoX7xIALz+RGIo7BpR
-         WkdvrAm9wJZDPgTRsb9DD7iJGA4hD9iBpVw00yhrj8P6tgcz4WErudE/DT3TFbsrI5qV
-         FKtwr2i7c27GiGMIzKlcMdjbJbD8ASh6VjTQmVJsDUpN6NAsYt7HDFX9Y9sMgW6/VeJ4
-         /39pmcQ1pALpslNGVOQhqU0loXj1LTBOJnPq6r85Plq4ffzmPxmmGNeD0bAa3GKzTutz
-         Ajuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779156335; x=1779761135;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XFGMV7mqlPtrUKnFCz1Two2EamH1z04Y7KnQTcbEHDs=;
-        b=KISp64luzS90jqtDCAV/LDB1g6YkByDYEnaYz5/oLFFfFbtFPQhT5morUwaUvGzHbe
-         35ZXN53CWcaySRTCvg0fFWLt2n/ZX7iBsj7xtd8FrSrczWaNrsejLA3ONqa59+lHHTxP
-         Cy/7OGPx1f7foJy2iaeoc8J7NY9RKamHTe9vY7hRe8j+AsC4CdEdrFvbeLjuZTIWDKUj
-         QPQ959biMytERkysDEW9ZQ0U/KZqPWncqXpaVbT/ZmvywmlGQkG7INmRVTuESbOMkt6j
-         Px8uQi3nfUo25mj4rvjewvx+6LA1bTzV2wrvBzypDjOIXKaV9of96ZcrQ2cXu+OHVsqI
-         o+/A==
-X-Gm-Message-State: AOJu0YxolGG1L95jw9TT8F29LVwcXfifrvwEAbI2ZiXuz36/NzTYX695
-	fDGraoGUojSdMhNGoYyL/wRa3X4vCl4ArMW4pAlaVAuJQ3atF2K9s+Pp
-X-Gm-Gg: Acq92OGQJh3qnTIH01jtlWVU4NtmDTlF3E1g6vhuUnF+4Kag5vOtR2DvJ05+OO9AnMF
-	4/ycAnPxFOdB8IGoGvENzsHY3BsmbaDuZBubZRFRYhMnk6oRFcMGO7NHjumw5gxqG2gC3xUvL/z
-	yiAclCdgkuz7WN5kpXkECZXO0PxyCQLg5dFcY+0YJmy7/G+Tf+j0DPuA23fFysxm+eNCJmosHyc
-	PWVN4jnNk+ZijovNOMR88ceoggHidZBIkm+ypHy5P6p/DGGRaxXqLx1v5I7oBzOaA6JNGl7auXU
-	T2yOXC1gtir/NXP+r9olZjLP6+3gdfA7fMiw+U22AS/vjWwnbfsXxYIjQWA+Whz0BJy/1NwzD3M
-	ujpbPC/3HwAZYPjmL2q1L/Z4m47qt/Tnkcp7AdDxPShyQ/yQHQmd1oOzdKlC3jc3vbJzfCZwx8c
-	xHi9iOlXmnQgJocjbzJ+sbN08s5Xs=
-X-Received: by 2002:a17:903:388b:b0:2bd:8c03:2efe with SMTP id d9443c01a7336-2bd8c0334f8mr135999395ad.26.1779156334703;
-        Mon, 18 May 2026 19:05:34 -0700 (PDT)
-Received: from soyboi ([2402:8780:1073:dc10:22f6:2ac0:a51b:5d77])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5cfe7270sm163125925ad.50.2026.05.18.19.05.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 May 2026 19:05:34 -0700 (PDT)
-From: Robertus Diawan Chris <robertusdchris@gmail.com>
-To: amirreza.zarrabi@oss.qualcomm.com,
-	jens.wiklander@linaro.org,
-	sumit.garg@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	op-tee@lists.trustedfirmware.org,
+	s=arc-20240116; t=1779158461; c=relaxed/simple;
+	bh=7JxvAl9CIXS8ZTik+QhYqNRRPBJeSplKp1j3iS3/bNw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WhU8nsdmZJkI85V/9WSQt1v5wcOSYGv3if76zLLPYkjx+mZ25DiWh2Kh3pGrmw2hEUOgLVDhy5DzkunlN3g2YXWJAhRtkH6sqNHrG7Gnxq4zIn7u/a5Ai9i4fJREodoA6Cseza+Obpa1Wvn4kHZNJX2AWO+9ciwyUftN/6hRYpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from localhost (unknown [36.110.52.2])
+	by APP-01 (Coremail) with SMTP id qwCowAAn0m22zQtqBD22EA--.6871S2;
+	Tue, 19 May 2026 10:40:54 +0800 (CST)
+From: Chen Ni <nichen@iscas.ac.cn>
+To: andersson@kernel.org,
+	konradybcio@kernel.org
+Cc: francisco.ruiz@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-kernel-mentees@lists.linuxfoundation.org,
-	skhan@linuxfoundation.org,
-	me@brighamcampbell.com
-Subject: [PATCH v2] tee: qcomtee: add missing va_end in early return qcomtee_object_user_init()
-Date: Tue, 19 May 2026 09:05:28 +0700
-Message-ID: <20260519020528.133623-1-robertusdchris@gmail.com>
-X-Mailer: git-send-email 2.54.0
+	Chen Ni <nichen@iscas.ac.cn>
+Subject: [PATCH] soc: qcom: llcc-qcom: Fix error check for devm_memremap()
+Date: Tue, 19 May 2026 10:38:41 +0800
+Message-Id: <20260519023841.1995542-1-nichen@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,84 +52,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-CM-TRANSID:qwCowAAn0m22zQtqBD22EA--.6871S2
+X-Coremail-Antispam: 1UD129KBjvdXoWrZFyrtry8CrW7tF4xuFy8Krg_yoWDWFX_Kr
+	sYyryxWry3Cr4Du3WkKr4akrWv9F40vwn2v3yaqw1fAry7Jw1xJFWDZrn0grW7ZF43GFyr
+	AwsIvFWIv3WUAjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUb48FF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
+	Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26F4UJV
+	W0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
+	AVWUtwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14
+	v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkG
+	c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4U
+	MIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7VUjO6pDUUUU
+	U==
+X-CM-SenderInfo: xqlfxv3q6l2u1dvotugofq/
+X-Spamd-Result: default: False [0.04 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	TAGGED_FROM(0.00)[bounces-108304-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	DMARC_NA(0.00)[iscas.ac.cn];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robertusdchris@gmail.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-108305-lists,linux-arm-msm=lfdr.de];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCPT_COUNT_FIVE(0.00)[6];
+	FROM_NEQ_ENVFROM(0.00)[nichen@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	TO_DN_NONE(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email]
-X-Rspamd-Queue-Id: 338935764B6
+	R_DKIM_NA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 092D25767E2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-qcomtee_object_user_init() is a variadic function and when the function
-return because there's no dispatch callback in QCOMTEE_OBJECT_TYPE_CB
-case, there's no va_end to cleanup "ap" object initialized by va_start
-and that can cause undefined behavior. So make sure to use va_end before
-returning the error code when there's no dispatch callback.
+The devm_memremap() function returns an error pointer on failure, not
+NULL. Fix the check to use IS_ERR() and return PTR_ERR() to correctly
+handle allocation failures.
 
-This is reported by Coverity Scan as "Missing varargs init or cleanup".
-
-Fixes: d6e290837e50 ("tee: add Qualcomm TEE driver")
-Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
-Reviewed-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Fixes: ac23106a9b9a ("soc: qcom: llcc-qcom: get SCT descriptors from fw-populated memory")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
 ---
-v1 -> v2:
-- Use "break" statement instead of "goto" statement. There's va_end
-  outside of switch-case, so we only need to go out from switch-case
-  instead of using a label (suggested by Amirreza Zarrabi).
-- Add "Reviewed-by" tag from Amirreza Zarrabi.
+ drivers/soc/qcom/llcc-qcom.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-v1:
-https://lore.kernel.org/all/20260513091031.145826-1-robertusdchris@gmail.com/
-
-I don't have the device, so I am not sure how to test this change.
-Thank you.
-
- drivers/tee/qcomtee/core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/tee/qcomtee/core.c b/drivers/tee/qcomtee/core.c
-index b1cb50e434f0..60fe3b5776e3 100644
---- a/drivers/tee/qcomtee/core.c
-+++ b/drivers/tee/qcomtee/core.c
-@@ -306,8 +306,10 @@ int qcomtee_object_user_init(struct qcomtee_object *object,
- 		break;
- 	case QCOMTEE_OBJECT_TYPE_CB:
- 		object->ops = ops;
--		if (!object->ops->dispatch)
--			return -EINVAL;
-+		if (!object->ops->dispatch) {
-+			ret = -EINVAL;
-+			break;
-+		}
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index dcc08f63e020..2006bfe198ea 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -5231,9 +5231,9 @@ static int qcom_llcc_get_fw_config(struct platform_device *pdev)
+ 	}
  
- 		/* If failed, "no-name". */
- 		object->name = kvasprintf_const(GFP_KERNEL, fmt, ap);
-
-base-commit: 5200f5f493f79f14bbdc349e402a40dfb32f23c8
+ 	slc_mem = devm_memremap(dev, res.start, resource_size(&res), MEMREMAP_WB);
+-	if (!slc_mem) {
++	if (IS_ERR(slc_mem)) {
+ 		dev_err(dev, "Failed to memremap SLC shared memory\n");
+-		return -ENOMEM;
++		return PTR_ERR(slc_mem);
+ 	}
+ 
+ 	ret = qcom_llcc_verify_fw_config(dev, slc_mem);
 -- 
-2.54.0
+2.25.1
 
 
