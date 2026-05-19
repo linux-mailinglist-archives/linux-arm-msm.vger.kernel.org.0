@@ -1,125 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-108463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oH9FIppEDGrQcQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 13:08:10 +0200
+	id 2K3AMfdDDGrQcQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 13:05:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE27557D339
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 13:08:09 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8611857D297
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 13:05:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6D1963098710
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:53:24 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 4C7AF30A83EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:53:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD6474ADD86;
-	Tue, 19 May 2026 10:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87CE23F1AB7;
+	Tue, 19 May 2026 10:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eKPVXE0k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l0rxXUDu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803D93F4DF1;
-	Tue, 19 May 2026 10:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D441032B107;
+	Tue, 19 May 2026 10:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779187864; cv=none; b=Rx4Mkm0GUmDi1n3iT4somzTWfU3M0bCHJTl1fjGdBPGMGdKth3XaVYR61QC8BIX/qdNfz7XoyWXY3gbuEwTkb2YKsV7XRcNkkiHFisyXoDI8XbESl43ltu4ZxGjokkeuF1IefbU4tN8hY/SJ/PApZKbNc6MLMeEZMbkCO8NrDmU=
+	t=1779187908; cv=none; b=t+ODc8AaXmYqwizOlRBYc8VIt7cm9VvsAyMK8UkmrUqHqtfBx+XnZjolACTNajvzV/6i7cQGsLXejtlEthtdGUHwnu3ubl8H9sJV4AsH10v857SzYETtG6r9dEUILZ/wBT3rXNWxWvqUo1SfpAo5MTmO5IRr8U7OBkjTme3jEq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779187864; c=relaxed/simple;
-	bh=XZelrUIsw6mRLO3EbBQPPgeGG9TmcGjbNjoZX/8V70k=;
+	s=arc-20240116; t=1779187908; c=relaxed/simple;
+	bh=+f/VsvcvDGarTr6mOhk+WMyELgLXSSutUe7AMovdBhU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RGSCDhQszdKFyvHmEdDodwwZDcU4smY3neZu2tWeNZGLayP9I5UyZd/PLOfINbrL800itvAdbzJxog21fVVcIPzAUTg8vhqZyAqPms53UV31I6QYpuzjUEWPI0Na9XcTl6zZo2ye4+cm/S9ncAFRvOH8Vxh5jqMDY3rfGK8PrR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eKPVXE0k; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D441C2BCB8;
-	Tue, 19 May 2026 10:51:02 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=VlPIO0yIDIWEFSODuJCP5PRYtXLaVgw4BlGLqLgbff62IxFJ8aHFkRXEylZCKqN8xGHHKzKJTTd89VK5sF2v0IhVSHdplDENoz70kpPj5q77yDsLysc1mifrg8nT75RUYH2TQm1/nDBSo+nysrYVQUcJcwV2S8KOrrpJ559FhYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l0rxXUDu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE59BC2BCB8;
+	Tue, 19 May 2026 10:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779187863;
-	bh=XZelrUIsw6mRLO3EbBQPPgeGG9TmcGjbNjoZX/8V70k=;
+	s=k20201202; t=1779187907;
+	bh=+f/VsvcvDGarTr6mOhk+WMyELgLXSSutUe7AMovdBhU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eKPVXE0k6tlVcr1HQrzv8iNSED0lQYgW0TF+25DbmgXpILQInwSk55c7PbzQhVxMt
-	 gmltD6sn1yJ1RsNSYiISAyTfEqtryBHrSY5PfAOdhqMD5Qc+ECpMdu4+7DUCNHN61M
-	 OMWUwsJzDDEYoj15sNemVP+7H0dQyvnUSnAwUlB04ihL88DuCpGYJfrpmI2Jza3JhZ
-	 dRPZs2dsLvO3lQi2iWbFO0fK1OFVhuRyC/lIc6x4bnVaVW08mi8t+HA3BIaW/FI445
-	 LbDW6YI0DWlm6rARdf6mE4jS3tHxORl7y6d8sQuLheUrgy+YS99JZx63FQ++ER69VS
-	 +65qOg4VDGmxA==
-Date: Tue, 19 May 2026 12:51:01 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: taygoth <taygoth@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Wesley Cheng <quic_wcheng@quicinc.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Casey Connolly <casey.connolly@linaro.org>
-Subject: Re: [PATCH 1/6] dt-bindings: regulator: qcom,usb-vbus-regulator: add
- PMI8998
-Message-ID: <20260519-spirited-vengeful-crane-dc32a0@quoll>
-References: <cover.1779127507.git.taygoth@gmail.com>
- <2a3c65bbfb85d944110b14b40ef375f238ca3932.1779127507.git.taygoth@gmail.com>
+	b=l0rxXUDuOsUSbU+QlYvPudkg/DArq5zNpx9nSWrdFVclNGaiIsqcmy6FtDeIG63zw
+	 pxEoqA5u6er2jC6qAp1OVAQL7gUJXS7ROYf6H0qQn7RsxgbgW20X5JDM9FAJf3Vc+a
+	 v3cbZu67ZOFQVmjAtW3/QtK3cK+RPCJ5HB+N6tDqTOvghBE7ftlJsWDKgbBNOwZqXA
+	 zb8GGNInVS7jmiILnPIJ8Yg4E5vfSkSQp3cvlLXpheXKRvmPVvsQjiexhKR2F26DsZ
+	 6ZsXGhQFqzDKnQ/rnNASQcKWzd2O/uITzZ3rwx4XbOK5i+dzCiZUSadswjb5IUYKFb
+	 ImdwQ8lH0mkpQ==
+Date: Tue, 19 May 2026 11:51:42 +0100
+From: Will Deacon <will@kernel.org>
+To: Hans Zhang <18255117159@163.com>
+Cc: robin.murphy@arm.com, joro@8bytes.org, iommu@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 0/2] iommu/arm-smmu: Use FIELD_MODIFY() for bitfield
+ operations
+Message-ID: <agxAvl02rcPoEHaq@willie-the-truck>
+References: <20260430164545.49637-1-18255117159@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2a3c65bbfb85d944110b14b40ef375f238ca3932.1779127507.git.taygoth@gmail.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+In-Reply-To: <20260430164545.49637-1-18255117159@163.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[gmail.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108463-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	FREEMAIL_TO(0.00)[163.com];
+	TAGGED_FROM(0.00)[bounces-108464-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com,quicinc.com,linuxfoundation.org,linux.intel.com,linaro.org];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: AE27557D339
+	RCPT_COUNT_SEVEN(0.00)[7];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[will@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 8611857D297
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, May 19, 2026 at 01:22:46AM +0500, taygoth wrote:
-> The Qualcomm PMI8998 PMIC integrates a USB OTG VBUS boost converter
-> inside its SMB2 charger block at offset 0x1100. The OTG control
-> register layout (CMD_OTG at +0x40, OTG_CURRENT_LIMIT_CFG at +0x52,
-> OTG_CFG at +0x53) matches the PM8150B SMB5 block, so the existing
-> qcom_usb_vbus-regulator driver can drive it without code changes via
-> compatible cascade.
+On Fri, May 01, 2026 at 12:45:43AM +0800, Hans Zhang wrote:
+> Replace open-coded bitfield modifications with the standard FIELD_MODIFY()
+> macro. This improves code readability and adds type/range checking without
+> functional changes.
+
+Does it _really_ improve the readability? '&=' and '|=' patterns are
+pretty idiomatic C code, if you ask me.
+
+> FIELD_MODIFY() internally performs the same mask-clear + set operation but
+> eliminates repetitive boilerplate.
 > 
-> Verified by inspecting the downstream qpnp-smb2 driver and reading
-> live register values on a OnePlus 6T (sdm845-oneplus-fajita) running
-> mainline Linux.
-> 
-> Signed-off-by: taygoth <taygoth@gmail.com>
+> ---
+> Hi, If the Maintainers think it's not necessary, please ignore it.
 
-Incomplete identity. Please use real names. We do not accept anonymous
-contributions.
+I don't really mind the code either way, so I think I'd prefer to leave
+it as-is unless somebody wants to convince me otherwise...
 
-Best regards,
-Krzysztof
-
+Will
 
