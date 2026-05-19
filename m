@@ -1,50 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-108568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yNJcCLOPDGqMjAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 18:28:35 +0200
+	id eL5IA3CSDGrfjAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 18:40:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BD745825F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 18:28:35 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AABD358284D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 18:40:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 767A730039AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 16:28:34 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 28819301443C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 16:34:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A138F3EA961;
-	Tue, 19 May 2026 16:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11BEE495525;
+	Tue, 19 May 2026 16:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="mkAQ+9qg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NcHfjwmg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.5])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CB640961F;
-	Tue, 19 May 2026 16:28:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5D73176E4;
+	Tue, 19 May 2026 16:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779208112; cv=none; b=TMBQY4PN79CiaOJR31xzCplJLqUehkRpX9cOQ1RSLURlza/ofejONiUIswtxTeFcgrP8ZxA0HXZSWw0W0RFiupU8wVGpiVdy3AdbzbznhQvpexWvTDkQI1A2kU4QHqfa+YfZKQ+Qhq6z7xIfScsVP4CaljUcq3sBg8oncrQ/B7s=
+	t=1779208497; cv=none; b=aEfRvLwiMC7BG22Js9CFSG3v6v5uIzCyHrTplG2+6ZfHjJIWiW+l4GPl20pv62Lfz7trIg5W1Q3Aflio26LP/dQ135lFzNH3HS7AYtp0wjXaehx47qrEyhe5bA+0KQyRnzj7GAgn6k9SCVBs1p/Qt+UX3DTOfO16Bx+NMQbElL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779208112; c=relaxed/simple;
-	bh=FeiTM+7OVHfbYXfRZDgT8Q3Gkd/oBE3Iw726clnjCxs=;
+	s=arc-20240116; t=1779208497; c=relaxed/simple;
+	bh=IJrR8ek2DJ5ocuSXC/edY4ouAMq+cEwGE3AGeG+Kkko=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G0yHcc6bdGY7s+a35R6HsPfGeV+2t9B/ZBrNjlr9PvHxtiiPXGGMI5IyajpPlxRS2qmSPJvH/qfTsv+IX2xbOS0eE9pl4QTkjh7I2N3gR0A9dLykJ4lhippjUr0dV9pkym1FixGFX7tJbJ6c9utJ/wNbwigjPFHmEJsboaT7pN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=mkAQ+9qg; arc=none smtp.client-ip=220.197.31.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=HEzVodalGePwQa0r0A0yc+dOQ9J8DF1f8pqfWHrsuSk=;
-	b=mkAQ+9qgGabS1i8OItgzH9nPB22PSXb1+d91WzICOmsEtS/r6QFeeHtqKA1W5/
-	m9VrN7fmFjkpo6vTEdLqaVrbjqtXsvmwIJodwhdIl3IMv7T2BavKmxqxify2H8uO
-	PjyXtOG+aBdv1+ITi0wqxv/8WztCkfwZOUJRUZNCESIyk=
-Received: from [IPV6:240e:b8f:91b3:d000:9130:b3d8:6241:39fd] (unknown [])
-	by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id _____wDXEFBpjwxq6iYtCQ--.55083S2;
-	Wed, 20 May 2026 00:27:22 +0800 (CST)
-Message-ID: <3464ded9-721a-4eb2-afb6-bbca6fdc8a46@163.com>
-Date: Wed, 20 May 2026 00:27:21 +0800
+	 In-Reply-To:Content-Type; b=YjqqCI000D2xbfPfGUjryqnaosOUFsk76+fZ4KSnfktNSZPzCmIvuMai/c/6a3vBXXCPbU9oVNBXmHYQSwxB0fxpNh0cUHEJ1c9KlnN/GGfrBtnyHAVtNPbu3f0rXCssnAVzJMpMIjaAJPsDWEYFXRgQhLF11TOhl1wXyhVv1+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NcHfjwmg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612BCC2BCB3;
+	Tue, 19 May 2026 16:34:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779208496;
+	bh=IJrR8ek2DJ5ocuSXC/edY4ouAMq+cEwGE3AGeG+Kkko=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=NcHfjwmgtEpocA9Ggfxb7KO7+LJd6xWLRbUHiHuflxwJtxQZ9RXU9MuGdL7tDbNa8
+	 cJZuCRXLLV4cdgEZPk6m2MVU0/qyoELOXDOHs9p4GX6CiNnRgWTobCpMemjaHs2tO7
+	 UrlCxurN/ShAQModA8APDT4nOt4w+qlLBTt6McmFtqR7XZ8F7CUt2botDHxU4zn7BU
+	 TJ6KhV3kU7zJCCNU6dFIzK/II6BIM0lbPjyweG0t8Rxl/EDDrR/O+R376HJK/nEeHW
+	 tGwoU4JbS3yO5RWpKfe4FQEMH/DaC+4LJtaWM6bcbjJLLumJzY9mgVyVMNRvTNR8S3
+	 oEJNOVf37aJzw==
+Message-ID: <cfb76181-4d59-43b3-a45b-a344a71fdfbf@kernel.org>
+Date: Tue, 19 May 2026 17:34:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,126 +53,114 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] PCI: dwc: Cache PCIe capability offset and simplify
- drivers
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
- jingoohan1@gmail.com, mx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
- linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, sophgo@lists.linux.dev,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-tegra@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260509135152.2241235-1-18255117159@163.com>
- <beqy5ykxgo4ianya6r4mahkkyujs6lly475u26vqaemgqsdnhp@2pn5ipczwc34>
- <5cc6fbcc-98eb-4da5-b123-2c04c4d39326@163.com>
- <bejh7em2a67a6wohtakovbg6wqwhjoxkuqtdompsexfm5bbzrf@yqwcqeg6yugq>
+Subject: Re: [PATCH] media: venus: venc: avoid double free on video register
+ failure
+To: Guangshuo Li <lgs201920130244@gmail.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Hans Verkuil <hans.verkuil@cisco.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <xMdPPQAJ2BbtNwnxmf1CN7FGbdhSJM7NIXkRCxzFvXv0g01tuvNPvAacsFJaDyBc3cIkIAEfi44ewZ3OGGAcDg==@protonmail.internalid>
+ <20260519090819.1041314-1-lgs201920130244@gmail.com>
+ <8787ea87-aa75-4fb5-a729-cd2b54d2ff8a@kernel.org>
+ <ihn1XgQJPFsYvuTtWPxpZWwaQBVXHDmJ6Kp6i4DmDowTcRQITZXJlaVsbtkW-bpWydiYGAyyh6c9QLs4Nsn6lA==@protonmail.internalid>
+ <CANUHTR9g6vRkKfPeHBQ4_9YR-sZQ_UZBX3+8CiKPYp-XPcp1CQ@mail.gmail.com>
+ <d7082ea8-3b3d-468d-ba27-4d3ba5103a3a@kernel.org>
+ <ZdheLnLujnIRGAGLFiz1lwSwxaUCArec6sbk_VkixDGjsuPYnMT4_YCSMTbwBWI5-b62G90Qia9lQ90pyFvjBA==@protonmail.internalid>
+ <CANUHTR99NHPRP3ooEXEBHf4Fksy0B96vdoV3=mzoMBawVgek+w@mail.gmail.com>
 Content-Language: en-US
-From: Hans Zhang <18255117159@163.com>
-In-Reply-To: <bejh7em2a67a6wohtakovbg6wqwhjoxkuqtdompsexfm5bbzrf@yqwcqeg6yugq>
+From: Bryan O'Donoghue <bod@kernel.org>
+In-Reply-To: <CANUHTR99NHPRP3ooEXEBHf4Fksy0B96vdoV3=mzoMBawVgek+w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wDXEFBpjwxq6iYtCQ--.55083S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxJr47Gw4rWF47AFy3tr43Jrb_yoW8uryfpa
-	y3JF1Syr48XF4fXan2va1rZF4xt3ZxArWUZ395Cryavr9I9Fy3JrsY9ryYkF9rCFs2yr15
-	uF4Yqry29r15AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRiiSJUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbCxAubP2oMj2sFdQAA3Z
+Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[163.com,none];
-	R_DKIM_ALLOW(-0.20)[163.com:s=s110527];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-108569-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
+	FREEMAIL_TO(0.00)[gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_FROM(0.00)[163.com];
-	TAGGED_FROM(0.00)[bounces-108568-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[163.com:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[18255117159@163.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[google.com,kernel.org,gmail.com,lists.linux.dev,lists.ozlabs.org,lists.infradead.org,vger.kernel.org];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 0BD745825F9
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: AABD358284D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-
-
-On 5/20/26 00:15, Manivannan Sadhasivam wrote:
-> On Wed, May 20, 2026 at 12:09:28AM +0800, Hans Zhang wrote:
->>
->>
->> On 5/19/26 21:57, Manivannan Sadhasivam wrote:
->>> On Sat, May 09, 2026 at 09:51:49PM +0800, Hans Zhang wrote:
->>>> The DWC PCIe core and its many platform drivers repeatedly call
->>>> dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) to obtain the offset of the
->>>> PCI Express Capability structure. This is wasteful and makes the code
->>>> verbose. And some even search for the PCI_CAP_ID_EXP offset value within
->>>> the suspend/resume functions.
->>>>
->>>
->>> Sashiko has flagged some real issues with this series in accessing DBI space
->>> very early and 'pci->pcie_cap' being 0.
->>
->>
->> Hi Mani,
->>
->> We have discussed this issue in the Cadence driver. I think it won't cause
->> any problems. Specifically as follows:
->>
->> https://lore.kernel.org/linux-pci/5823faec-d972-4c77-90ec-a215c686e0a8@163.com/
->> """
->> As per PCIe r7.0, sec 7.5.1.1.11, Since all PCI Express Functions are
->> required to implement the PCI Express Capability structure, which
->> must be included somewhere in this linked list.
->> """
->>
->>
->>
->> Bjorn also responded as follows:
->> https://lore.kernel.org/linux-pci/20260505212306.GA744158@bhelgaas/
->> """
->> It's true that all Root Ports must have a PCIe Capability.
->> """
->>
+On 19/05/2026 15:58, Guangshuo Li wrote:
+> Hi Bryan,
 > 
-> Ok, what about reading the DBI registers very early?
+> On Tue, 19 May 2026 at 21:20, Bryan O'Donoghue <bod@kernel.org> wrote:
+>>
+>> Yes I take your point.
+>>
+>> So what you are describing is an error in the software contract from
+>> video_register_device() - if we look throughout the usage of that
+>> function we see either the pattern we already have - not checking for
+>> NULL or checking for NULL - not the double free case you are addressing.
+>>
+>> So really the fix - the place to litigate this is not in Venus or Iris
+>> but in video_register_device's cleanup path.
+>>
+>> ---
+>> bod
+> 
+> Thanks, I agree.
+> 
+> This should probably be handled in the video_register_device() failure
+> path rather than in each individual driver.
+> 
+> I do not have a good idea yet for how to fix that cleanly in the v4l2
+> core. Do you have any suggestion?
 
-Hi Mani,
+So if we look at how video_register_device() is used by drivers we have 
+two different behaviours.
 
-Yes. I have performed the DBI read register operation at the very 
-beginning of the following code.
+1. Trap the error and release the device
+2. Trip the error - check for NULL and release the device
 
+Either way the _users_ of video_register_device() right now expect to 
+have to call video_device_release().
 
-dw_pcie_ep_init()
-   dw_pcie_get_pcie_cap(pci);
+So... it seems to me video_register_device() also calling 
+video_release() on some but not all of its error path is not the 
+expected software contract.
 
-dw_pcie_host_init
-   dw_pcie_get_pcie_cap(pci);
+So I suggest two things.
 
+1. Audit all users of video_register_device() and confirm the hypothesis
+    That is callers expect to own vdev and currently everybody tries
+    to clean it up.
 
-However, for some glue drivers, they need to configure the registers of 
-the PCIe Express Capability earlier than calling 
-dw_pcie_host_init()/dw_pcie_ep_init(). So, for example, in the file: 
-drivers/pci/controller/dwc/pcie-tegra194.c. Here, it is necessary to 
-find the value of 'pci->pcie_cap' earlier. Then, 
-dw_pcie_host_init()/dw_pcie_ep_init() will no longer search for the 
-offset value of the PCIe Express Capability.
+2. If 1 is true then fix video_register_device() to not call
+    video_device_release()
 
+It either needs to be that or fully delegate ownership of vdev to 
+video_device_register() _and_ update all of the callers.
 
-Best regards,
-Hans
+It may be that < 100% of callers if that is low single digits then 
+worthwhile updating those drivers to match the new semantic.
 
+€0.02
+
+---
+bod
 
