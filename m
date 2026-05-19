@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-108393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kPaPNDAcDGpJWQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:15:44 +0200
+	id MF0bETwcDGpJWQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:15:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 634CD579C99
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:15:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A4677579CC1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 10:15:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 65192302EE8C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 08:11:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 76F0B30887E1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 08:11:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33C743E00A2;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 647143E022B;
 	Tue, 19 May 2026 08:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mFXmoOpT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lp5wju6t"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103FE3DBD53;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C603E008D;
 	Tue, 19 May 2026 08:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779178290; cv=none; b=JpLOlTqZ/tv873nkwP48rvXycbh5rnWpGs/mt1+grQt+c/jGJprUgGFkcXophqTfxIdpobk6jI5hFTU8Mbi7X3kZj4MTh6E6EkRqggDiHpW9LA2MuG4Lc2joguXhfZ3o1DVWEX+VOwHhZ+VYUiQupZBwvXQnEnWC9NdCrEI2HKA=
+	t=1779178290; cv=none; b=p8cik2viZfC3VcdaGfec8RAN9PZG0dgdKyrzpb3DHrIZponQXssBtBcRPj+r4p6sfIuKMwDppcEWkQyyp9z8OKF6C73NeAjABn7mdNwwo8MTmqwCiRfKyKTLU6DCFqj5lo/cG4YWmiYs6XgpAJDIQxKfIIbxftSNcq7YRM9Jhvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779178290; c=relaxed/simple;
-	bh=PmS/34wZTUEclLy38J2UNnMJbx75CroBjayhiRypQDQ=;
+	bh=qXJScNk3YRJbkOeo/nHdymfprwkUxpkIqqIeHa8xNSM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=g/XNxrzQlHHOlibx4SDxKAsePKhxIyFV+uoYHR+6FuU12Y/L2hWNvQLJHatJdf9tgzP+Uzh0Oe/iBybLHv7BpzZK0SeVrMcKKHuN2b9cd6NAfqUe65IZGhFSFVt5avG5CMpmFzXNCIc/YW9MXDzzWsQ9tXPFaMR6bKQt2LFXM/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mFXmoOpT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D125EC2BCF6;
+	 In-Reply-To:To:Cc; b=LvgqK7mfyAr1ZqEKyFU56bHRwrIFLvjvReCtpIUAJn0Q+Ltmph1e4vviLf/ZvSlRx1qGT8zPWv16fjQ76V+iICC9HfYvrSXlcV7XPh58N1qMN6W2jW1vO82QeIFwOo/ozivVPB5WIlO6mnR9Bo11rxqK/fAzWSv5PQ8mjNXRsFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lp5wju6t; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E981BC2BCF5;
 	Tue, 19 May 2026 08:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779178289;
-	bh=PmS/34wZTUEclLy38J2UNnMJbx75CroBjayhiRypQDQ=;
+	s=k20201202; t=1779178290;
+	bh=qXJScNk3YRJbkOeo/nHdymfprwkUxpkIqqIeHa8xNSM=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=mFXmoOpTeHKivWfGt5voXr4DAQV6h0PisXVLHX2TaM3Wh/DAQf5GBXDseFdAS4v0z
-	 LpGmzSs1DWLKhwhK02WGM3kREIq8UDJrBjaOKDlBKYKF7qo3pt5xa6q18LsQJWxcF4
-	 LwMeT35RzmBbkbdlIbyegHsokN7opbrk+YPaLwV6q5wqpDpbc7gcbfXPl5U0jeE+Wk
-	 ear+QoMbx68Sd6fHfrDphdVN85vJMl+LprDBKORg8JxaC5iaTag7nvafc+HSeB2Niu
-	 EoLCSOsFQW/1gBWgq59RcXYNTUl395rMdgXE60evoNCUeu6hGS3uVEHSBNQRsXW6ZO
-	 I/Eq57IMK5auQ==
+	b=lp5wju6tR63uiINitSzPpgTAqXH7zBzLoDmrZNMnS4P1uHxmIZYhZcxMjxitRNKEb
+	 5hFG2009GunEYv325ANCoRwgYyh5FzQopMfDMKy+6zvRA2LbyUcl+nHnIHVNFFoDGR
+	 q7VtnhOcAwJ8d5o9vYh6g4rQ08KkAee2ggWb/hFK2Dy+oX0qhZ1cKelVmTdpvSkjSA
+	 L6zIl2rlzC+uaekI3ibBx3Hmf+2X7Fj8Sn7GMksgMIGtTGTmJ1lsdZR6PcFG8Z+uEu
+	 ADj+zeMSw/EI7BLuuVQWWYNwU6Mzg57J3OTYarJdekMu3Ln9NKiwQQyEVGARC0rUXD
+	 pyn4mmHFPqDTw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7740CD4F57;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC065CD4F52;
 	Tue, 19 May 2026 08:11:29 +0000 (UTC)
 From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Tue, 19 May 2026 13:41:21 +0530
-Subject: [PATCH v2 2/4] PCI: Indicate context lost if L1ss exit is broken
- during resume from system suspend
+Date: Tue, 19 May 2026 13:41:22 +0530
+Subject: [PATCH v2 3/4] PCI: qcom: Indicate broken L1ss exit during resume
+ from system suspend
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260519-l1ss-fix-v2-2-b2c3a4bdeb15@oss.qualcomm.com>
+Message-Id: <20260519-l1ss-fix-v2-3-b2c3a4bdeb15@oss.qualcomm.com>
 References: <20260519-l1ss-fix-v2-0-b2c3a4bdeb15@oss.qualcomm.com>
 In-Reply-To: <20260519-l1ss-fix-v2-0-b2c3a4bdeb15@oss.qualcomm.com>
 To: Bjorn Helgaas <bhelgaas@google.com>, 
@@ -73,16 +73,16 @@ Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-nvme@lists.infradead.org, 
  Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3331;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2479;
  i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=i4F4KqDqI8ZgLEsx/6SfOqEOrYP4clWeClm6r9uw2Sw=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBqDBsu9LB32B5u3ZCMkU0ywL6Z6k7E2oqPKkwRu
- TYsXoIlHFCJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCagwbLgAKCRBVnxHm/pHO
- 9ajKB/9hpUS2Zav/YkZSgcq7hl0iPI4PWX8Sk9I2fk3P2k64zuuVkojILMR+viEzxHyNSotRMOc
- 0Txl2uQB8/Bo0qTbabhE/WuBwz61iAbuhfnY4jaTQ0ib8W6DIZ7pgZ4d7vQzfIFwNO+ooYB6Ppp
- U45/+ZkZVO7IrpdavoJ25W6nWOK/MFCaCCcPl2AstgWXl2br1kMAU52nXFlvEKmU6t9GOS53kKm
- Rng7b/dTbgpfXyBSX/Y/nWLzTDwkdMp6XfdCy1tlR8Ru8sIvKdfCm2xHLhqs/E90m+AYodybBNd
- vZPQHCcJQVWN/QP3V4uk8UH1PrPWtn9PxYgZm8fhhcs2jQbQ
+ bh=y499Pb7zoLK+/udVcJtznAhDtKMFUzOh5Tw56dDMzxk=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBqDBsvNeZWUkJrvgPF7k+PNMJzHdHt/RSCZqK8x
+ Qf+xyUOgQiJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCagwbLwAKCRBVnxHm/pHO
+ 9Xk5B/92+ApuG55mF/aPaeTLK+7CrJ7fvmHEBpTfY9oqxuv8czAP/eFwmjC9+E8FjZLdbupYSa0
+ nFtuwlnXzbXAbKJA1QgWgKz66AwR0S+dOfN/M9umM1UcGDGvdVWweXXK8vxnIKpauOK21+RpuXh
+ 2p6PvOju2h8egnqj2wuYPx7GGHIlsClgRGB8bmJ2iOQ2GjVLsksf3LF5ImAZR5Xwz0IAmY/SWfZ
+ dMJxXraK5vN4CQYDhiftL85bv1iKT36K/qgibj26kX15a8pvdtz6bPV2EN/+ZeFi2iodHfpff4a
+ uz468V+gXcSzofs30BVZyoU8r0lWrqLboPfi8nrHlbi7rBZK
 X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 X-Endpoint-Received: by B4 Relay for
@@ -97,7 +97,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-108393-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-108397-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -115,86 +115,62 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:replyto,qualcomm.com:email]
-X-Rspamd-Queue-Id: 634CD579C99
+X-Rspamd-Queue-Id: A4677579CC1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-The PCIe spec v7.0, sec 5.5.3.3.1, states that for exiting L1.2 due to an
-endpoint asserting CLKREQ# signal, the refclk must be turned on no earlier
-than TL10_REFCLK_ON, and within the latency advertised in the LTR message.
-This same behavior applies to L1.1 as well.
+Qcom PCIe RCs can successfully exit from L1ss during OS runtime. However,
+during system suspend, the Qcom PCIe RC driver may remove all resource
+votes and turns off the PHY to maximize power savings.
 
-On some platforms like Qcom, these requirements are satisfied during OS
-runtime, but not while resuming from the system suspend. This happens
-because the PCIe RC driver may remove all resource votes and turns off the
-analog circuitry of PHY during suspend to maximize power savings while
-keeping the link in L1ss.
+Consequently, when the host is in system suspend with the link in L1ss and
+the endpoint asserts CLKREQ#, the OS must first wake up and the RC driver
+must restore the PHY and enable the refclk. This recovery process causes
+the strict L1ss exit latency time to be exceeded (roughly L10_REFCLK_ON +
+T_COMMONMODE). If the RC driver were to retain all votes during suspend,
+L1ss exit would succeed without issue, but at the expense of higher power
+consumption.
 
-Consequently, when the endpoint asserts CLKREQ# to wake up, the OS must
-first resume and the RC driver must restore the PHY and enable the REFCLK.
-When this recovery process exceeds the L1ss exit latency time (roughly
-L10_REFCLK_ON + T_COMMONMODE), the endpoint may treat it as a fatal
-condition and triger Link Down (LDn). If the endpoint device is used to
-host the RootFS, it will result in an OS crash. For other endpoints, it
-may result in a complete device reset/recovery.
+So when the host fails to move the link from L1ss to L0 within the
+L10_REFCLK_ON + T_COMMONMODE time, the endpoint may treat it as a fatal
+condition and trigger Link Down (LDn) during resume. This LDn can crash the
+OS if the endpoint hosts the RootFS, and for other types of devices, it may
+result in a full device reset/recovery.
 
-So to indicate this platform limitation to the client drivers, introduce a
-new flag 'pci_host_bridge::broken_l1ss_resume' and check it in the
-pci_suspend_retains_context() API. If the flag is set by the RC driver, the
-API will return 'false' indicating the client drivers that the device
-context may not be retained and the drivers must be prepared for context
-loss.
+So to ensure that the client drivers can properly handle this scenario, let
+them know about this platform limitation by setting the
+'pci_host_bridge::broken_l1ss_resume' flag.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 ---
- drivers/pci/pci.c   | 11 +++++++++++
- include/linux/pci.h |  2 ++
- 2 files changed, 13 insertions(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 38cc5172d259..a7d2cb69b42e 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -2910,6 +2910,8 @@ void pci_config_pm_runtime_put(struct pci_dev *pdev)
-  */
- bool pci_suspend_retains_context(struct pci_dev *pdev)
- {
-+	struct pci_host_bridge *bridge = pci_find_host_bridge(pdev->bus);
-+
- 	/*
- 	 * If the platform firmware (like ACPI) is involved at the end of system
- 	 * suspend, device context may not be retained.
-@@ -2917,6 +2919,15 @@ bool pci_suspend_retains_context(struct pci_dev *pdev)
- 	if (pm_suspend_via_firmware())
- 		return false;
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index af6bf5cce65b..75bb6cb5e35e 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1368,6 +1368,18 @@ static void qcom_pcie_host_post_init(struct dw_pcie_rp *pp)
+ 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+ 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
  
 +	/*
-+	 * Some host bridges power off the PHY to enter deep low-power modes
-+	 * during system suspend. Exiting L1 PM Substates from this condition
-+	 * violates strict timing requirements and results in Link Down (LDn).
-+	 * On such platforms, the endpoint must be prepared for context loss.
++	 * During system suspend, the Qcom RC driver may turn off the analog
++	 * circuitry of PHY and remove controller votes to save power. If the
++	 * link is in L1ss and the endpoint asserts CLKREQ# to exit L1ss, the
++	 * time required to wake the system and restore the PHY/refclk will
++	 * exceed the strict L1ss exit timing (L10_REFCLK_ON + T_COMMONMODE),
++	 * resulting in Link Down (LDn) condition. Set this flag to indicate
++	 * this limitation to client drivers so that they can avoid relying on
++	 * L1ss during system suspend.
 +	 */
-+	if (bridge && bridge->broken_l1ss_resume)
-+		return false;
++	pp->bridge->broken_l1ss_resume = true;
 +
- 	/* Assume that the context is retained by default */
- 	return true;
+ 	if (pcie->cfg->ops->host_post_init)
+ 		pcie->cfg->ops->host_post_init(pcie);
  }
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index f60f9e4e7b39..1e5b59fa258a 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -660,6 +660,8 @@ struct pci_host_bridge {
- 	unsigned int	preserve_config:1;	/* Preserve FW resource setup */
- 	unsigned int	size_windows:1;		/* Enable root bus sizing */
- 	unsigned int	msi_domain:1;		/* Bridge wants MSI domain */
-+	unsigned int	broken_l1ss_resume:1;	/* Resuming from L1ss during
-+						   system suspend is broken */
- 
- 	/* Resource alignment requirements */
- 	resource_size_t (*align_resource)(struct pci_dev *dev,
 
 -- 
 2.48.1
