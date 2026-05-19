@@ -1,79 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-108501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uGc8K3VeDGoVggUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 14:58:29 +0200
+	id oPPfE59eDGq5gQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 14:59:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B90E957F2BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 14:58:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 563E057F2E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 14:59:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 163943010532
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 12:57:09 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 1AECD3022C33
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 12:57:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 479B34BCAC6;
-	Tue, 19 May 2026 12:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC30F4DD6FC;
+	Tue, 19 May 2026 12:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bbIeHj7f"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LQRVbMxl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043583A9610
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 12:57:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771E84BCAC6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 12:57:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779195427; cv=none; b=deI2w0BkVWPQZPry7mb78LiXiAUGZ2RTeKjhbT0pbcc55oezUOLoq8GvAerzsQ8qXrRLX8UElJFxsNdbivOmI/BXMKiD7X3AM2IoZJsH243zr094/VpXext/pv+llpMJM/cQiK9x6qIYroo70fFsu47v2EDj5L9yqbTwrTLIEkc=
+	t=1779195434; cv=none; b=pg2yeZW3jQsjvlWIG2bRUYZzLlFPokbgVJSK5tBeyuJJfKXwZ6p2WpIQITOkwdHPmsDIULztHRZAN0JP3ajigyYJVY1Z11ENRNIzEwDPzA6gBt+ihhbUz1//F6UF5+YKonYxLdHoINAL4WYy79X/BFZ1fA2/klZv3pQdJfD9H6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779195427; c=relaxed/simple;
-	bh=JSxBoC2uoLr6BLbqbSeKIFf7QHBtHs3aqqips2RK4jY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uFzpwXbeIsjwqR797MnMWwAhoI+wno9h13Uk0zr4BiF6Y0UfAPM86RP4rePUNKJClBgVWemmOVN3zV/QAO+bpb7NkKAV3TmAfCmAWTriYg0VcCiWqw9QwZEOZ0+6t39n+Hvzkr+jyUYv1w1pnWetRbCnZwPXSBDX510LoLCm9pM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bbIeHj7f; arc=none smtp.client-ip=209.85.215.172
+	s=arc-20240116; t=1779195434; c=relaxed/simple;
+	bh=XUJDd4xUHVWu57IdXVomBU+JbtBGQJowIYaHzRYn3x4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=uPmCPw5/YYeRJVq9qHKLTeV8W8zH4IrWGiBIPFu7TMWvICFg/SEqK+4ONDhpRKukTiAGv26v+a508ZWwWcLjALOHUKQv2AY6rwActGknbH+kwK8WP5XGiH2B6TRlTcHabNYI8T7WAYcjD8gCVmcqcyKX9qrQmwUa9vzKOUJDT6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LQRVbMxl; arc=none smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-c801912c903so1531835a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 05:57:05 -0700 (PDT)
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-c8016d642b2so1819556a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 05:57:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779195425; x=1779800225; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4KyP1NebRw4SwpgMMJ6Ldhqk+fU8RP5i9hw4k9Hf88k=;
-        b=bbIeHj7fTIqHYKszvAeKqbfd/u5ltg/SZfRYWQE5itgNYAd7MR1MxsgRBIHp9541uD
-         1cdITlrnt0EXB3y/wCP+471O3xRRfOlyG0D1nFRoLmQoPT5CiZjSYYFiEdVal3tDpPlP
-         a8zacsG5SxbWal7eCgTo6e8nMFNquvdjwUDiu/9++BX8OrFQXSlWlI+b2E2AuTn8jUZ0
-         pafrvXhXgZuQ9uCsH5v0o8exxLBI1rpEDGD/UZDS5NG6JRNwvY7Y+IfXSJPk+kEd4OoR
-         9Fha4eTpozohom0DqzjPkFWgxYIzOfHuCIc93yP4pEY/E9FuzNkqxgMFeOa2Q2YnEbs7
-         /wMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779195425; x=1779800225;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1779195433; x=1779800233; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4KyP1NebRw4SwpgMMJ6Ldhqk+fU8RP5i9hw4k9Hf88k=;
-        b=aboSqNOjDBVEqJICu7aFm1lyA0ihlK82nSyLvccIetL2bwy+K2tNPu5rptj9737k2J
-         CYlnEKF+NfMEBRgK+gHipq7UWidb5z1LNKgHwaO36o285/yfiuyjJQr6LIvGGwTxxx7I
-         QGGKh7ZZkc8YDF/YmebFSrzI8vthAz2+Rt9BILse6Yl09nJ9Qt9NDWRumI3BKz5XWp8n
-         073X+hnYs1Kf9J2Tn+xJFr1Qwti0XRqigXANmTkDbzaVmMbxgqZ11K5C28fbN3WkeIXN
-         HL2ruddV5rmpGJI71JRRv8qcWDADWZAeG8T1od4ZVetGK8See4pxhK37DRJK0SeZFr2u
-         7LcQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9kJl6zyLBUnQD83OiiyJ7ZI3yltwKLMFFIfq7zNThTEP7wJwBLN18DK+UINf9cg7jn5vCZk18J5/viPcYg@vger.kernel.org
-X-Gm-Message-State: AOJu0YzjdMnyOhUzBYzEKwm1nYg3seO7hKStcch5ShYHJsRYwcGyk9Ac
-	GvCyt44F42iV5xYx/4cIv/RcWDBhfCTkUVjUUWizPBASg+hbYTtTw3WERallXQ==
-X-Gm-Gg: Acq92OE+tW7lGpg11X0HdZHYcQYLpG2lBsjEDL9wQv56fgVWp3GWNLs/giOmistKmAJ
-	ZQ3yazgSi9iHFvSkhem2LShqVEc31Kk3fchrHWsEHIdObpXNB1hmOnELDtHdL9DA0N5UAxYct83
-	1BrqK8z6UTu3Axq+LVFMKUv3qwXpCY5o85kmXl2GOjvyozm/qBKJQhgFslizY7Zu7V4ZH+ULhiH
-	NrowTKX47yiOex+zvlHCzVehTvGHIXyS/rvxuEnuBQTOBCk0kjhAqcGT60W54OVx2eJ/t6lX6tI
-	cGN/UZWfFSBOU7bPN3KV6YQFwY25OpF7VQqhABHqMXuHi1qf97mD8wJ9Z72FsqeUpphv4RTZ3N2
-	IwdYv9Ngnh/XKSUZDYMYGiCylDr7cZVa5Z6ytiQ7MwlWi4nAah5ZYs0jXyVqEhow0vNpRvbZmkz
-	0lFZa123WDodomCj3WnjiS8A+BnvjluRhTcFLK5mTreXkc4TL/0JXFXo/d+g==
-X-Received: by 2002:a17:903:2ce:b0:2bd:6cab:85d with SMTP id d9443c01a7336-2bd7e782281mr204483575ad.3.1779195425227;
-        Tue, 19 May 2026 05:57:05 -0700 (PDT)
+        bh=4jwCfEHJNxVKEsC2iyhku54hBK/Iu9IeFsnGfdfRF2M=;
+        b=LQRVbMxlvP91Cvne5OezB2607R3ROk65uhYknlNMpcF1aaCpkLx9aR8VPbc/3aDJkh
+         qaRMU03S0u+/S2dHvp8q8uTTiNDLTbufNCPCkSLmwI+UpBiJXI3icZqXsZmIk//+E3tX
+         YVE3jPLCL/g0qPw8d4S+gvq+AKKULRiAOqMio54eTznHYQcj4evxa9vnDjwx2uIlq4Im
+         XVBCRqGYMXOwPhbue0YWojzXGceVy7BmpUBNNNYkn6zhiSaNdll3zPvhGE/8lwIkDX9M
+         6xuNGZXV9agHNnwZRB2LRezPUtGaYXL2YvbH39uvfiS1yq/Ag650G/sXJdQWU8jFI9U4
+         +E3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779195433; x=1779800233;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=4jwCfEHJNxVKEsC2iyhku54hBK/Iu9IeFsnGfdfRF2M=;
+        b=iim6UZA4ln/nfu7pRpTCJaFLUirTROh+cglkxQkcp3aN1RaG6joBLeFXEFiaPcGHtH
+         oQhOkS7VSXpPqSV0CeL7LQ4gsFhrwOyXcfTAdnX7Klenf3QBMJT6a9tzfM7+AQE0S603
+         qb/H560mxo1EFomKcakxoU+V/Z+7e0bodEH0o/gLFg9AdoSqd8xa5LZy7ZZd2l5CACbL
+         FkRXQDQoD9RX9YHMaQVSrYhWqxXLZR4DH4TJFPO1+lJg0W4vvGzM642BIDbX0mXoO2+C
+         CGXLIIJp5h+4mGn6wE2E3Onz8GqzIY82hF9q1mbYD9fTh+mZSQkQw+VKiwQjqjcPOMeW
+         ZfSg==
+X-Forwarded-Encrypted: i=1; AFNElJ8frs7JB+zCj7vp2IiGTNHclORp/cPy0h1d4wJvHTt9Ov7n3ragYiIfkFjBpVwT4OaZbuQ3QPF9U0Z5vPnk@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXzANhpve9Ejf3s7uez2ZRo61j3mBh5/FTOntgb3vGfxySvnNT
+	lK7DQODyLukXiAilXmsoB8XknYc9k6NhXMD4WnoTg5gWYpKdX+Ffb1h8
+X-Gm-Gg: Acq92OGupbw5NXgrv12lRorAsYT3CPsvVXY/g6wic/W/qoE6878lBgB3J1NQZTEH9MF
+	Xtm5+4pc6mghLVW0t+zxy7NMi5zMHVZ3h/KdTjHAoPjstXoXas4kmo+q0mmELAfyr+6Qj6AAIPr
+	mrL6fivUA7HL5jsWzYGPPrWOpw1stmYfwDnzf0ld/mWDIBlmZJ6W5W44ttI1qj8EzvSCU8JYNjX
+	7ZS5OwS/IlpANgdfV23Oow81dZBecrsWi90BW+LhwJN8hIjSglDw8p9j1ntaBIKO/QbmzCTCs+L
+	kZMuFi4tCQ2AvaWGaolkbOqjsiTyX+3lmiKoqS5E+Ha3vvYbwnB0Or0Lk5brea2Pnf/nBi5ZWZ6
+	DG0zgVtP9XAuEgRBx/h+j7K01ML/cmDszSDAQg3qwMcaptjESi+74b2F+0IC3Jbmv0+dVb9mDfk
+	6MbBvIwmbEFM8/ZZ2Eq9aT+EmIL5Zlo83uQ3Yc9qs8m018m4ugMX0xApWbTQ==
+X-Received: by 2002:a17:903:37c6:b0:2be:1eb1:eaf3 with SMTP id d9443c01a7336-2be1eb1ebf1mr47575795ad.11.1779195432731;
+        Tue, 19 May 2026 05:57:12 -0700 (PDT)
 Received: from localhost.localdomain ([2402:a00:163:2ce9:6421:6644:4454:28e9])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5d2360e8sm194025965ad.82.2026.05.19.05.57.00
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5d2360e8sm194025965ad.82.2026.05.19.05.57.08
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 19 May 2026 05:57:04 -0700 (PDT)
+        Tue, 19 May 2026 05:57:12 -0700 (PDT)
 From: Ajit Singh <blfizzyy@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
@@ -83,11 +85,14 @@ Cc: Rob Herring <robh@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Ajit Singh <blfizzyy@gmail.com>
-Subject: [PATCH v3 0/3] arm64: dts: qcom: Add Vicharak Axon Mini
-Date: Tue, 19 May 2026 18:26:52 +0530
-Message-ID: <20260519125655.23796-1-blfizzyy@gmail.com>
+	Ajit Singh <blfizzyy@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: [PATCH v3 1/3] dt-bindings: vendor-prefixes: Add prefix for Vicharak
+Date: Tue, 19 May 2026 18:26:53 +0530
+Message-ID: <20260519125655.23796-2-blfizzyy@gmail.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260519125655.23796-1-blfizzyy@gmail.com>
+References: <20260519125655.23796-1-blfizzyy@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,82 +100,63 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,gmail.com];
-	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-108501-lists,linux-arm-msm=lfdr.de];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,gmail.com,oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-108502-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[blfizzyy@gmail.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: B90E957F2BD
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qualcomm.com:email]
+X-Rspamd-Queue-Id: 563E057F2E5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add initial support for the Vicharak Axon Mini, a QCS6490-based
-single-board computer.
+Vicharak develops computing platforms and manufactures single-board
+computers, including FPGA-integrated SBCs. Add a vendor prefix for
+them.
 
-This series adds the Vicharak vendor prefix, documents the board
-compatible, and adds the initial board DTS.
+Link: https://vicharak.in/
 
-Tested:
-- debug UART
-- eMMC
-- UFS
-- SDIO WLAN
-- USB 2.0 host
-- PCIe
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Ajit Singh <blfizzyy@gmail.com>
+---
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Changes in v3:
-- Dropped unused regulators.
-- Pick up Acked-by tags for the binding patches.
-
-Link to V2: https://lore.kernel.org/all/20260518173039.20592-1-blfizzyy@gmail.com/
-
-Changes in v2:
-- Drop unused Type-C VBUS regulator.
-- Drop invalid camera thermal zone.
-- Drop incorrect PM8350C thermal alarm override.
-- Fix PCIe1 3.3 V regulator name.
-- Drop redundant EUD disable override.
-- Keep ICE disabled due to fatal SError during qcom_ice_create().
-- Fix pinctrl property ordering.
-- Sort top-level label references.
-- Add blank lines before status properties.
-
-Ajit Singh (3):
-  dt-bindings: vendor-prefixes: Add prefix for Vicharak
-  dt-bindings: arm: qcom: Add Vicharak Axon Mini
-  arm64: dts: qcom: Add Vicharak Axon Mini
-
- .../devicetree/bindings/arm/qcom.yaml         |    1 +
- .../devicetree/bindings/vendor-prefixes.yaml  |    2 +
- arch/arm64/boot/dts/qcom/Makefile             |    1 +
- .../dts/qcom/qcs6490-vicharak-axon-mini.dts   | 1025 +++++++++++++++++
- 4 files changed, 1029 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-vicharak-axon-mini.dts
-
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index ee7fd3cfe203..1948356337b9 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -1767,6 +1767,8 @@ patternProperties:
+     description: VIA Technologies, Inc.
+   "^vialab,.*":
+     description: VIA Labs, Inc.
++  "^vicharak,.*":
++    description: Vicharak Computers Pvt. Ltd.
+   "^vicor,.*":
+     description: Vicor Corporation
+   "^videostrong,.*":
 -- 
 2.50.1 (Apple Git-155)
 
