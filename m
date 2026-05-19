@@ -1,203 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-108364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2FrLLsQNDGqJVAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 09:14:12 +0200
+	id 8PjJFcYODGqJVAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 09:18:30 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DCA2578CA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 09:14:12 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADE90578D97
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 09:18:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CF58F3005778
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 07:09:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C2C483025D11
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 07:16:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50D713B3C15;
-	Tue, 19 May 2026 07:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37EEC3CEB9E;
+	Tue, 19 May 2026 07:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k8TnIJgz";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="KAueQnj/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mURZ2EQ4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C7C3AEF59
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 07:09:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084443BD63B;
+	Tue, 19 May 2026 07:16:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779174578; cv=none; b=XVcSPKa42UUmsfWDaMNBj8ZLd0SXLNRNefWIEnxcmb+aCU7fxplEmY4oRpZ/sbs0lxljNF6P1+EXiNzA5ayUgwVoMhmKWLc7+gW4zheZ+n2BF9UyD8akNyaRnpuiWP3X1lIZiZ1BdFEp/WuSGej/lJvyn04EXO2b/hvCxAXQBcs=
+	t=1779175001; cv=none; b=suoA7LtWVqa1GyQRBUSfQVXX9Km13vNSOYN7tyMaoJeR1k351SFs7pPYSUDVRIj7lGiIeiJJM9xHhwJxpswkk6tn7Lw3UCFjxDevV50ioX86bp+t1EtwzpllLgHWtt0tTczxk+3PIfFb51lpc2ADuWKYX1ned1Xvsqvd8aiCS8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779174578; c=relaxed/simple;
-	bh=HwXDOwJ/n8kwN5m65KMuiRC57ObOd4uZu5RS7F3aRHw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WDRGz2IO9yccsCSODi+39ERJlbdiqsPRBwPBTYSP13pHLzACIYKs5SC7ZyxWLVSTjzxnN7/ZP1a9V7DvRnn75aHjawBCYuXS/RGazT4KkNHLJvECk21GMCumt3Hqz/+2Yi+M1/XC6uUiovULjokkm2vmOM3xZT/VOWDiAufzIy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k8TnIJgz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KAueQnj/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64J5WGdj4130974
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 07:09:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	flpjn8w2XFi3HDGFXRZoiV0RXVmGTmh3woS4zlIQX2s=; b=k8TnIJgzFnzTAcNk
-	Xznrj3F6dsjV/bSW5iDpbg8odUQ1Ym0tIJhj7zRmnUu8YclwkG506SS5Mv4S1e/d
-	oOpn6g4mKRqAL4PQSa0k2Uu+B2Lb0CQK30evFwtOxxX12iFnz9c4V7vbosXDVTEo
-	kWgnCIwPsmLT48erBtYQnli4qUhxsNQiy0tnQojDVBst2f6p4zoMnd4R0VDmWsCL
-	W1R7QJWgDTEj1kzjOja1pA7c4CYtNCKJ6N1/sh/a98aX3wTNM+1eehcrvrzHJOig
-	hvN0U8L9wQlO3sYbzOcy1y3vpFJIxwAExe/KvB4h6dJnDqppoYt59kTUNGSw4l+n
-	IaK/cA==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8ht1gcsv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 07:09:36 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c82726f7b0bso1586417a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 00:09:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779174576; x=1779779376; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=flpjn8w2XFi3HDGFXRZoiV0RXVmGTmh3woS4zlIQX2s=;
-        b=KAueQnj/Sk42xz+DEI30livgaBIsFHXbtVokiCm25E1hwRFUn7KDAQcvwcBxzCD5OQ
-         o5WOihfokimBXC3uhkz+Go8Aa+wY+vDj8yd8HRwh8yuX07Q4xqvYGGA/GfQ1vBznlJv9
-         wO4Dh/DXKgk6s4BsdjiqkOYRACaZnYv44QPRVcz/CB15Hq0VYiWrG802+E9txRrHrDyd
-         0VmXl9e4cO/HxtNZ83KXlIVwfI20POZjOk4k9T9YeInHDVcQA82l2n/VTNPD1XcftrWd
-         9NDc+aM+2zDJiMnvsBQykusZv0rZgR0Inpv/pWt07W9xYkpZiD+Yqn5i1ifKEsNN8TEv
-         fpTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779174576; x=1779779376;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=flpjn8w2XFi3HDGFXRZoiV0RXVmGTmh3woS4zlIQX2s=;
-        b=QnohNHY7lCYRxcHnAX+JkBbox+PLix0jXGurH1ts2/TXrdWTo6AGBkcn/JoqgsPllb
-         DnGD7vK4CsJj45DXn6i5F9YetEImmYBlFsx4gFDDGNoFR9mZEn5L6R3Aw/QiEXQqKg1D
-         QVTp8uVKiOhQbq0rc4Iaiadlk7asMPzVkL8cpvnOhLAonxT3cKdJsW57JtvvI0r4SRW+
-         V69x5sy8zEbPnMrRCDGr6OVe57AZLw2rw4I7Eq3pdhYvPb8hq+QDhas13o0G0bu9byJZ
-         t0pYPi6bR32sa7U8YElQikXPAnzbZc2V9421/jeN+a/yZPSG5lhu2jDdaACr09f8JJvX
-         jUPQ==
-X-Gm-Message-State: AOJu0Yy+vgqSGwIS+wXYD/m49hlqf/+wLjLwu3xafpl6jVLa774ssgtP
-	HsjSxHhsyhBLRfHObZgsrI0T55wdM/J8MwF+uu+YTfFTqYnpS3DNXjwsURRy8MVxkepvnR+3cUl
-	noUvLqOFvt0iJ7gennNgGxEqBMtx6lVizQPQCAXFZetwyZbI7xWkcmRHDa2Ppx/p25RGR
-X-Gm-Gg: Acq92OFZn/TQ6Tu5q+XNoy4RBSPf5X8wwV9q9vWj29w9B/H+QQAWVR82oglY1B/dZ2k
-	ace6Iq8qMj3TJUtzxknXvt40tc/vM3U2dUYkTLA8tk8usnjy22zSWoiQQ72Re7iD+L/YbMIDV0G
-	ORh3tZN+D0tIuk/TaBw+nW8HP33ofQHpxUMascWViggLMhvSHxRbpDi7kGwk71mfnsWZOFmwSxB
-	0pG5zoV0SymZ85CwxqPt35qA+sn3H2K4ODaCelUSrFT8pWysjgFSy/62MSMKqY6fuu3vldT6/P8
-	RDNpQhsFkZQ4PazBlvbbZeTXTIRWNUL5X2LO5Nffyknsiqpzu2YMhWRKhCtOSF1+WWpc8W8WN4F
-	AHHl/MDI1cjGkx2rJXSW7/6GHgzndGDvNg6G2p3xY2y+bO5tGb7Wt
-X-Received: by 2002:a05:6a00:4fc8:b0:82f:48e:241c with SMTP id d2e1a72fcca58-83f33d8ba87mr18630233b3a.23.1779174575625;
-        Tue, 19 May 2026 00:09:35 -0700 (PDT)
-X-Received: by 2002:a05:6a00:4fc8:b0:82f:48e:241c with SMTP id d2e1a72fcca58-83f33d8ba87mr18630188b3a.23.1779174575082;
-        Tue, 19 May 2026 00:09:35 -0700 (PDT)
-Received: from [10.92.176.107] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19c7f202sm16288753b3a.43.2026.05.19.00.09.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 May 2026 00:09:34 -0700 (PDT)
-Message-ID: <f40798ef-e066-4814-a26c-729dcdb9f5b1@oss.qualcomm.com>
-Date: Tue, 19 May 2026 12:39:27 +0530
+	s=arc-20240116; t=1779175001; c=relaxed/simple;
+	bh=srxk/ghW3IwsXPEsHcEiUAzCr9Eal81bJ5+97DujtE8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=fLYCbBXZlVoDr+09/YTXH9qr/3I5ya/ehhrlklhlg7VHU4I9SryuLM3SdGVOlVcbMv6aMVkDoWj8+VibN7RYp3sRGlNEod9s05+PoBMFzu1jddHLWjpHZ6ZPU103GUh+2089YD4FeuxEGH5w+Ii/jnBNPvf5n+dQlWopMXvojqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mURZ2EQ4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A730CC2BCB3;
+	Tue, 19 May 2026 07:16:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779175000;
+	bh=srxk/ghW3IwsXPEsHcEiUAzCr9Eal81bJ5+97DujtE8=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=mURZ2EQ4iOpriczkQ+pA0MfYyTPTqcU3/HBCfhN8/r4zjfR3qUgrziWip5R1IMqRB
+	 +qBM65H3yS08o6wekx5dIv7jbKaO+rFAxamWhZCnW1KIQZI+ebwVhhdcjY7/LU883I
+	 oWaUavUIYhoXF/fL2bAZ5AruMKG3aDy5JoWBoQ586qq/6OKCaMgsbyFgW/F79mYRbp
+	 vs6kKFg+x32mImABuFhFqhf6P6WFFGl1wSfV0edXM06yivd1AvKk8eSks7IAPWzaB+
+	 n0Ga6iD4qM9fDt2IcAMnlowxdRGcrjz+r2+nV2MsDkcWsQ0jGm9ALSvVf/IUoSe8Hq
+	 D3c58B9Lja48Q==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 960ABCD4851;
+	Tue, 19 May 2026 07:16:40 +0000 (UTC)
+From: Alexandre MINETTE via B4 Relay <devnull+contact.alex-min.fr@kernel.org>
+Subject: [PATCH v3 0/8] Add Samsung Galaxy S4 support
+Date: Tue, 19 May 2026 09:16:30 +0200
+Message-Id: <20260519-mainline-send-v1-sending-v3-0-3dd7aa125353@alex-min.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: crypto: qcom-qce: Document the Shikra
- crypto engine
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org
-References: <20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com>
- <20260515-shikra_qcrypto-v1-1-80f07b345c29@oss.qualcomm.com>
- <181abfec-a6f9-49d3-9428-21a169a94246@kernel.org>
-Content-Language: en-US
-From: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-In-Reply-To: <181abfec-a6f9-49d3-9428-21a169a94246@kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=JKULdcKb c=1 sm=1 tr=0 ts=6a0c0cb0 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=nVgdB394IWv0AcZ3mQQA:9 a=QEXdDO2ut3YA:10
- a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-GUID: ivZ0ew6Rug6AdZQ-SWdsZwpuvjXX3JMg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDA2OCBTYWx0ZWRfXyWZLlW6luzts
- kI13lEViKgYEVtvo+ONoNPaMzeUNuK+4G/X/51v66A3mdoOit8/d0q3yVdtmTxOohiPb1mQkA2L
- MgSinsBJJe8m0TpwZY15XuLlmry5F9MqbxGG3RuPUh04R8NjA8zHJXAEKIu7nTghSXFi0gRw9L1
- wHuyU32Cf3Y+PC/rkMUcEsbm3KMGbtP/1M7D2+DvYeWQdr6WMQbih6ZiQxnrVkCgnsJno78R/T7
- e3wrznooffOoZcI+Vg/Nq3EgHs9c+ymD1iCtsKH0YX9TJC2Bz+KGbGnoTcBZ5O81UYHGTV0cH1L
- BdYyk2BCVG9oUZc1IcxrBuhZ4nntx7ebRR1Z+lz+giAMLdxC+zod/t35ccY3jNk4dYo+0qQtbzY
- aeZ70h/ve+1pniSn7bbUOPNOy8Jyyvix+6OjuVfl0+3s8gUNl5Uyz1L7qin4V3bpJBQl9FqvpSj
- e2Smm8zoG5AaQwLeaPw==
-X-Proofpoint-ORIG-GUID: ivZ0ew6Rug6AdZQ-SWdsZwpuvjXX3JMg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-19_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
- lowpriorityscore=0 impostorscore=0 phishscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605190068
+X-B4-Tracking: v=1; b=H4sIAE4ODGoC/43NwQ6CMAwG4FchPTuzTWTDk+9hPIytQBMYZjMLh
+ vDuDk56MZ7a/0/6dYGIgTDCpVggYKJIk8/hdCjA9sZ3yMjlDJLLipdSsNGQH8gji+gdS2Kf5Ds
+ mdY221lg5KyCfPwK2NO/07Z5zT/E5hdf+KYmt/QPNK2eNbbg+KyVLh1cz4MxG8sc2wMYm+UmpH
+ 5TMlLPG1EJpzlXzTa3r+gYEXMf4DQEAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, MyungJoo Ham <myungjoo.ham@samsung.com>, 
+ Chanwoo Choi <cw00.choi@samsung.com>, 
+ Guru Das Srinagesh <linux@gurudas.dev>, Linus Walleij <linusw@kernel.org>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, Joerg Roedel <joro@8bytes.org>, 
+ Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+ Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, 
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+ iommu@lists.linux.dev, phone-devel@vger.kernel.org, 
+ Alexandre MINETTE <contact@alex-min.fr>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Antony Kurniawan Soemardi <linux@smankusors.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779174999; l=3359;
+ i=contact@alex-min.fr; s=20260421; h=from:subject:message-id;
+ bh=srxk/ghW3IwsXPEsHcEiUAzCr9Eal81bJ5+97DujtE8=;
+ b=g9pYROX+TD6V562E6OiEcSZzW3Qctl2dJZD6VHNRIZtqXXnb+7awsVWSQgOfI+TxMdcXZ40Mw
+ IgiGtUf+lTLClZf+kR1WOjL0rpk09OchzKym4OSIylScQNfZM4edNAd
+X-Developer-Key: i=contact@alex-min.fr; a=ed25519;
+ pk=KOCaxY4v16ptaT0uk1FRkuaDF2n1JhmnYwLiqWD76M4=
+X-Endpoint-Received: by B4 Relay for contact@alex-min.fr/20260421 with
+ auth_id=743
+X-Original-From: Alexandre MINETTE <contact@alex-min.fr>
+Reply-To: contact@alex-min.fr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-108365-lists,linux-arm-msm=lfdr.de,contact.alex-min.fr];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108364-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,gondor.apana.org.au,davemloft.net];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kuldeep.singh@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_TWELVE(0.00)[27];
+	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 1DCA2578CA0
+	FROM_HAS_DN(0.00)[];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	HAS_REPLYTO(0.00)[contact@alex-min.fr];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,alex-min.fr:replyto,alex-min.fr:mid,alex-min.fr:email]
+X-Rspamd-Queue-Id: ADE90578D97
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 15-05-2026 16:30, Krzysztof Kozlowski wrote:
-> On 14/05/2026 21:23, Kuldeep Singh wrote:
->> Document the crypto engine on the Shikra platform.
->>
->> Signed-off-by: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
->> ---
-> 
-> Same comments as for IPQ, Nord. I gave the same feedback internally more
-> than once.
+Add initial mainline support for the Samsung Galaxy S4, codenamed jflte.
 
-If i understand you correctly, you are looking for more descriptive
-commit message?
+This series adds the devicetree binding and board DTS, together with the
+small driver and common DTS changes needed to boot the device with working
+USB peripheral mode.
 
+Tested on a Samsung Galaxy S4 GT-I9505. With this series the device boots
+and supports UART, USB peripheral mode with USB networking, the front
+notification LED and the physical buttons.
+
+Signed-off-by: Alexandre MINETTE <contact@alex-min.fr>
+---
+Changes in v3:
+- Clarify that the Galaxy S4 compatible is for the Qualcomm
+  APQ8064-based variant, and add Krzysztof's Acked-by.
+- Clarify the PM8921 USB ID binding, driver and DTS commit messages to
+  describe the PMIC interrupt-controller interface and the lack of a
+  known register resource for this interrupt-only path.
+- Keep the PM8921 USB ID extcon node non-addressable rather than adding a
+  speculative reg value.
+- Keep the MUIC and LED buses as i2c-gpio. Testing the corresponding
+  GSBI controllers on GT-I9505 made USB fail to enumerate with the MUIC
+  on GSBI2, and made LED brightness writes time out with the LED on
+  GSBI3.
+- Reorder APQ8064 USB clock entries to match the related ci-hdrc binding
+  update, using iface, core, fs order.
+- Sort the jflte DTB Makefile entry after the LG Nexus 4 entry.
+- Link to v2: https://lore.kernel.org/r/20260427-mainline-send-v1-sending-v2-0-dcaa9178007b@alex-min.fr
+
+Changes in v2:
+- Keep the APQ8064 compatible list in qcom.yaml alphabetically sorted.
+- Clarify the Qualcomm pinctrl commit message and include the failing hog
+  lookup trace seen on APQ8064.
+- Clarify the MSM IOMMU commit message and include the NULL dereference
+  trace seen during IOMMU probe on APQ8064.
+- Move the PM8921 USB ID extcon node to the end of the PM8921 child nodes.
+- Reorder the jflte DTS nodes and pinctrl properties as requested by
+  reviewers.
+- Add Reviewed-by/Acked-by tags collected on v1.
+- Link to v1: https://lore.kernel.org/r/20260421-mainline-send-v1-sending-v1-0-bcb0857724de@alex-min.fr
+
+---
+Alexandre MINETTE (8):
+      dt-bindings: arm: qcom: Add Samsung Galaxy S4
+      dt-bindings: extcon: qcom,pm8941-misc: Add PM8921 compatible
+      pinctrl: qcom: Register functions before enabling pinctrl
+      iommu/msm: Look up masters per IOMMU instance
+      extcon: qcom-spmi-misc: Add PM8921 compatible
+      ARM: dts: qcom: apq8064: Fix USB controller clocks
+      ARM: dts: qcom: pm8921: Add USB ID extcon
+      ARM: dts: qcom: Add Samsung Galaxy S4
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ .../bindings/extcon/qcom,pm8941-misc.yaml          |  17 +-
+ arch/arm/boot/dts/qcom/Makefile                    |   1 +
+ arch/arm/boot/dts/qcom/pm8921.dtsi                 |   7 +
+ .../boot/dts/qcom/qcom-apq8064-samsung-jflte.dts   | 485 +++++++++++++++++++++
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi           |  18 +-
+ drivers/extcon/extcon-qcom-spmi-misc.c             |   1 +
+ drivers/iommu/msm_iommu.c                          |  28 +-
+ drivers/pinctrl/qcom/pinctrl-msm.c                 |  15 +-
+ 9 files changed, 546 insertions(+), 27 deletions(-)
+---
+base-commit: 4bf3800382b91c2898d14452cf4332782b3fe80a
+change-id: 20260421-mainline-send-v1-sending-289ec98e6dc1
+
+Best regards,
 -- 
-Regards
-Kuldeep
+Alexandre MINETTE <contact@alex-min.fr>
+
 
 
