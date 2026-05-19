@@ -1,84 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-108543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oEltCG6ADGpfigUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 17:23:26 +0200
+	id WJbgNYeFDGoniwUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 17:45:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78FC9581581
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 17:23:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3570C581ABC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 17:45:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 813B431EBA97
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 15:14:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D124131FC589
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 May 2026 15:14:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C53B47F2F3;
-	Tue, 19 May 2026 15:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3ECC4EA386;
+	Tue, 19 May 2026 15:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q/zXWLni"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OkOw7HDb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919F3480DF2
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 15:13:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D244E3774
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 15:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779203606; cv=none; b=eCjMWkkVxrsqfKGSSf65vK19FGJRHKoBhC7ssTCWN4gZBJtNH+HL3kIpVM8jrS+xw/7qt434gKpodOE6ZYHTfQ3ktNZi0l1jlFiUm64na/PaN3FTnDP2BMD+ba+0ITzXBlREye/DHBtvi3DBVz95LotAdFyfW57H+kojil9GzSA=
+	t=1779203608; cv=none; b=dcbSRZSF273wR1iB/ZgiHotGUayvSElCfzXo/MC/dup6KKredCyWwrzfRikEyiA+0kAQ8WwWHgcHr9Q84PXRyrRct5LOmQfbEAlnK5uQUEuKAFUvkgbrMvukeA/B0+E85TxoFSKHz8/mYdHX2DFl9aO3a3hxbIBUO8jobAILL6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779203606; c=relaxed/simple;
-	bh=TT2eyoTRfzWA6wV6jKgNOxATiT/ULKEb5pDlKZbjQaQ=;
+	s=arc-20240116; t=1779203608; c=relaxed/simple;
+	bh=U2Bp/Xc0dTJFjq2uSqbXXCvsJyGOH0R6f9lCOAE7i+c=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JrdXw6eDEZM9sIa7uAlrDOMorVOjvEVcPvE2XJIsxzIroz0Qk4LJvyt96gLTYcrhg/cd2pb2LyQznPZcVNAtC2JYnCXB3hSPjHFocg5e7/3JKtbiZc0QWUklH5sp8cueDBdD18pzOeyQ9VVgc+mrWfGO+YS7BjbW0s9nTS6/OtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q/zXWLni; arc=none smtp.client-ip=209.85.208.52
+	 In-Reply-To:To:Cc; b=U+2oPFPgC62nM4SzMXSoV+AspKRQUzRdTQ+hgkjUefYqXEuiWNQQFAYP3iX2d7tFvHMWj3JwC77eRzLL1L2t/j6E0FJyzTsc8ghrzG9tqiIDH2aQG/3xtoYIpNXKP/0AXz5kvzfwuGcPVD5+LOGDnXriP/AdF6///A7DP6EvSjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OkOw7HDb; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-67e43a8996fso4666081a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 08:13:23 -0700 (PDT)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-67c2b4809baso8385071a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 08:13:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779203602; x=1779808402; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779203605; x=1779808405; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LIHp7+5MbvYuooU2HjgAc6OMaVGphWri9A/MKFD+YlI=;
-        b=Q/zXWLni9zV7OZAPcMo02S2vSF9XxuEnymI7vZYI5xKmUdOmKsUbVqschmhe71tWvm
-         1Evff57IDxnMJfPMzcoMgQouhzo39zj7gHCwwiadeIa+3NBdmqMCXVtiIC9UigIW3yOU
-         oFKW6BvlDp00sfH81WM7ekTAkWPVfpadAsdnKBX3vDAWUCOLuiKkYXuurbPHkhRxSTDe
-         p2UANpqA8PNDhtwUQwpePoFAEcKVpPHJTjFlLTm5GP+S5PdthtZIbkYVqTKXisUsZLT0
-         hH1e9mMUP8lTdzWDSPmdrAWUeJXdD1B4OlGQVS7teuo9of2LlJJxDrU0phQE3+1pMZns
-         Xd4w==
+        bh=C/v05q6UOvuJ4DYkluO9mWC+JtH7XndlyQ+TlGglxGQ=;
+        b=OkOw7HDbEdUl7wB5wpkAQUXhhtbnB3+YiHNuBflnr2F5XYojoBmtx2DnCziaeuZ0YO
+         4nMkSf7ncTPAl6tpPWHXFQbyFkFprzU4Xg84CuWitE97QYn65zIMUk9P5jv0PpOw445y
+         eak5jZOoRK3wrPj8X37Dvf2a3tD78wlg3NPj2aW1yVFiagmTVyfUmwZA/dCe9jaWm03r
+         o8X4fqhiBozPjwXX5AjW48GhwMAIoel1C/GwvymBSKLyQTM5Ch7b9xUg3B05o2sWV0fr
+         nmlN8Ya0mgrgKiINVM+aHLf2Rqs2oc8t0aBvob/BHCozJjbcuAFMrzLefXHHvu6AFdX4
+         JFqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779203602; x=1779808402;
+        d=1e100.net; s=20251104; t=1779203605; x=1779808405;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=LIHp7+5MbvYuooU2HjgAc6OMaVGphWri9A/MKFD+YlI=;
-        b=SXlFPaJD9jzs5aekom3ztTalCq4OWcBphGOnoArEgmjreEqa6YkarCcrSY1e1yzyso
-         xaRe7zYcdWdxaP7tFVnXXdUTuP7X56oPfa3LKbJPeW4LtEHvFzYqEPGrPgqo/lviaA+G
-         8UCYRM80yEClj3OUUtVw71qlEB4jxY4jKD3h9HCLYUsXS0hbKFGXsTuNA8ZP20utgVcR
-         yMix9+Vsi06DOlZGtaNMEb1j5CW75TNAFVxNUXDeCHLfOQ4skiSzCxesZUxOtU2iJ997
-         rUHuYpDZ9/jOiVXRy5zaLvtAUgdpN4Z9deGfBgvJAnR5FIw5zXAN6jswbYD/ACTXVUgD
-         Fdyw==
-X-Forwarded-Encrypted: i=1; AFNElJ8XwenHVadxt9AbgoVkuiaRTheHf88yRSP0BdxlepPsaRGmoOCRLBmmJ424BXI0BJmtO9AufXYuNHbHSeTV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzzw6JYg6yzqb/tT+oehSrCBl2BtKxiHrZTSrw0zU9iVgFqlmuz
-	swekR8/zFZQxOZe8GEWZKsrexw2/LfTd2TEX0uLDKthINyDJWRhflCfs
-X-Gm-Gg: Acq92OEZf5CT+zFZ0wZc5uwD0ScEiqCrxb4NYNw1pbYCZBFv4y4vrofUmYlxMddcXGL
-	ksWUlmnX9M9ylMxy1U/02F9Y0dJLCdiWzXJBjbO32sKQ759A/OKa7s5OCDkJdB9iSXSH/4eq1fY
-	F+5npNKMYYdlHJZ5apXOFBeH9Lx02+aohihAmXLm+NdwYyiLj05kDk+He9Cd6aLMJ+ka7hIVqUn
-	i6MxUEx566lEq8zkjUo01wwGNfaQdQ4dLyy16cO/+FaRC8LxtjEUbbAeYcspw0MwUq6axhi9nsv
-	l5NbOh0UIVep3Njuj9h6nuhtn3hJFIl8P1aI8SYpB+b6o4CynizxcCkU0l5nPE45M9tztDEyWJ9
-	JPkNYemJ0jWX96bnhYzNvym+juvHa5AFD0Jlgiqg/gPbUYNiFxBhdfnQhj8eMw1sdJlEqw1oJc+
-	xMxowLfv1DpdCaG9yZomJxxs9GdA==
-X-Received: by 2002:a05:6402:a583:20b0:676:9c6d:7448 with SMTP id 4fb4d7f45d1cf-683bd38a310mr7764909a12.22.1779203601809;
-        Tue, 19 May 2026 08:13:21 -0700 (PDT)
+        bh=C/v05q6UOvuJ4DYkluO9mWC+JtH7XndlyQ+TlGglxGQ=;
+        b=Rkm80NRvIiCq5ukOV/wpNTM1pO+1mG5GV9kJ4sbuoPLxc9dCwrwEHtBR9qp9lzr5iI
+         iypL72yASUuqSdQYjnu6n1J9OvTm7Ac6zz0/4Wqrwel/t7218dsyhBqwgox+f/SG+Zo6
+         alrSCCZYskyoFPanfcLcoJQmdcrdAo5uixgaZXqnYYXBH2PWMNAiblleHhcCM8GvUrCs
+         nPcjNi/nM2IKw3i6aavg3qC/KWeZX2kjEGUnN6GZTIGcsf8r8GVMpjSHh3jlI2/nmvn1
+         f9CmGMKcPPs32gsvUlqaECCoNEA89yozlCgmEnov1akEyzlhILZvtOk4VWL5Q+iQyeGu
+         hKXw==
+X-Forwarded-Encrypted: i=1; AFNElJ/SnChwRYYn0n+FgIundsfqxCucxUkm4JfGsOV1LF9meXTx2Id9baNs47SOiFRhlzfKKGmjvqJWVoYo2ecT@vger.kernel.org
+X-Gm-Message-State: AOJu0YyEQud1TrNOH8KOlw99e+xmsFDTKVryeHoXtUytgNUAMNe7TomL
+	Du4ZM2q0ScGE+O2iBZDGaJqls5Vmn3W9+7oteMZVXQm0uy4vNGQ92YtO
+X-Gm-Gg: Acq92OFtOIRqqw3WXiIs/i+UKrhEbIiQy8sn11VPQAO3f2B5nNWDNpdDTpv5Du1muhg
+	2eT7FtpsSH1y1Lmudl4CCIhBqrTi0bQaKfTlB3PpHAbCUFsVYRQT0mm0YXVbCzqllpOC+D2eNTl
+	PBeQP0sDMRcK4PKafCbxLgsDeMTz5PeftwjQOzBqfVic4eQ40HWloSaN574UntlvshjLKUzqGhL
+	ZaSqmgMs9X1xTy9IcOJ1WzwBdxIb17lRhDueZCpfSY+ak4vCCvZmPVO2Rs/T19S5OZ4QRaMJsAJ
+	wHaWVkr3yCwLiN3AMg9P9Je49TJL2JVsqdW0pjw8x9HnPCpsFlHBxMO0aRcZW/1dr9/j3uAs9vV
+	pzyoKftT0AINkRyIFNCXNll9JEqVNO/712NFx92cdhMJDWQL91xuP71qzqNSVEhu1ja622HGnlW
+	HqQEYZMp2H4xAmZRXEzkpagH+T1eEC+/18HBDa
+X-Received: by 2002:a05:6402:1357:b0:680:ccda:55bf with SMTP id 4fb4d7f45d1cf-683bd095c51mr6997580a12.16.1779203604701;
+        Tue, 19 May 2026 08:13:24 -0700 (PDT)
 Received: from [192.168.0.39] ([79.133.247.80])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-68310b52675sm6697700a12.8.2026.05.19.08.13.18
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-68310b52675sm6697700a12.8.2026.05.19.08.13.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 May 2026 08:13:20 -0700 (PDT)
+        Tue, 19 May 2026 08:13:23 -0700 (PDT)
 From: Erikas Bitovtas <xerikasxx@gmail.com>
-Date: Tue, 19 May 2026 18:10:46 +0300
-Subject: [PATCH v8 1/9] media: dt-bindings: venus: Add qcom,msm8939 schema
+Date: Tue, 19 May 2026 18:10:47 +0300
+Subject: [PATCH v8 2/9] clk: qcom: gcc-msm8939: mark Venus core GDSCs as
+ hardware controlled
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,8 +87,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260519-msm8939-venus-rfc-v8-1-542ec7557ebc@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260519-msm8939-venus-rfc-v8-2-542ec7557ebc@gmail.com>
 References: <20260519-msm8939-venus-rfc-v8-0-542ec7557ebc@gmail.com>
 In-Reply-To: <20260519-msm8939-venus-rfc-v8-0-542ec7557ebc@gmail.com>
 To: Bryan O'Donoghue <bod@kernel.org>, 
@@ -104,9 +105,7 @@ To: Bryan O'Donoghue <bod@kernel.org>,
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, Erikas Bitovtas <xerikasxx@gmail.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+ phone-devel@vger.kernel.org, Erikas Bitovtas <xerikasxx@gmail.com>
 X-Mailer: b4 0.15.2
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -117,13 +116,13 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-108543-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-108544-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,gmail.com,linaro.org,oss.qualcomm.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,gmail.com];
 	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[23];
+	RCPT_COUNT_TWELVE(0.00)[21];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -135,109 +134,55 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[devicetree.org:url,1d00000:email,linaro.org:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,apitzsch.eu:email,qualcomm.com:email]
-X-Rspamd-Queue-Id: 78FC9581581
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 3570C581ABC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: André Apitzsch <git@apitzsch.eu>
+Allow Venus core GDSCs to have their control passed to hardware, so they
+can be powered on by Venus firmware.
 
-Add a schema description for the Venus video decoder/encoder IP in
-MSM8939.
-
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
 ---
- .../bindings/media/qcom,msm8939-venus.yaml         | 79 ++++++++++++++++++++++
- 1 file changed, 79 insertions(+)
+ drivers/clk/qcom/gcc-msm8939.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,msm8939-venus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8939-venus.yaml
-new file mode 100644
-index 000000000000..10a50a410748
---- /dev/null
-+++ b/Documentation/devicetree/bindings/media/qcom,msm8939-venus.yaml
-@@ -0,0 +1,79 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/media/qcom,msm8939-venus.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm MSM8939 Venus video encode and decode accelerators
-+
-+maintainers:
-+  - André Apitzsch <git@apitzsch.eu>
-+  - Erikas Bitovtas <xerikasxx@gmail.com>
-+
-+description:
-+  The Venus IP is a video encode and decode accelerator present
-+  on Qualcomm platforms
-+
-+allOf:
-+  - $ref: qcom,venus-common.yaml#
-+
-+properties:
-+  compatible:
-+    const: qcom,msm8939-venus
-+
-+  power-domains:
-+    maxItems: 3
-+
-+  power-domain-names:
-+    items:
-+      - const: venus
-+      - const: vcodec0
-+      - const: vcodec1
-+
-+  clocks:
-+    maxItems: 5
-+
-+  clock-names:
-+    items:
-+      - const: core
-+      - const: iface
-+      - const: bus
-+      - const: vcodec0_core
-+      - const: vcodec1_core
-+
-+  iommus:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - iommus
-+  - power-domain-names
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/clock/qcom,gcc-msm8939.h>
-+
-+    video-codec@1d00000 {
-+      compatible = "qcom,msm8939-venus";
-+      reg = <0x01d00000 0xff000>;
-+      interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;
-+      clocks = <&gcc GCC_VENUS0_VCODEC0_CLK>,
-+               <&gcc GCC_VENUS0_AHB_CLK>,
-+               <&gcc GCC_VENUS0_AXI_CLK>,
-+               <&gcc GCC_VENUS0_CORE0_VCODEC0_CLK>,
-+               <&gcc GCC_VENUS0_CORE1_VCODEC0_CLK>;
-+      clock-names = "core",
-+                    "iface",
-+                    "bus",
-+                    "vcodec0_core",
-+                    "vcodec1_core";
-+      power-domains = <&gcc VENUS_GDSC>,
-+                      <&gcc VENUS_CORE0_GDSC>,
-+                      <&gcc VENUS_CORE1_GDSC>;
-+      power-domain-names = "venus", "vcodec0", "vcodec1";
-+      iommus = <&apps_iommu 5>;
-+      memory-region = <&venus_mem>;
-+    };
+diff --git a/drivers/clk/qcom/gcc-msm8939.c b/drivers/clk/qcom/gcc-msm8939.c
+index 45193b3d714b..243d31a32e92 100644
+--- a/drivers/clk/qcom/gcc-msm8939.c
++++ b/drivers/clk/qcom/gcc-msm8939.c
+@@ -3664,6 +3664,7 @@ static struct clk_branch gcc_venus0_vcodec0_clk = {
+ 
+ static struct clk_branch gcc_venus0_core0_vcodec0_clk = {
+ 	.halt_reg = 0x4c02c,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x4c02c,
+ 		.enable_mask = BIT(0),
+@@ -3681,6 +3682,7 @@ static struct clk_branch gcc_venus0_core0_vcodec0_clk = {
+ 
+ static struct clk_branch gcc_venus0_core1_vcodec0_clk = {
+ 	.halt_reg = 0x4c034,
++	.halt_check = BRANCH_HALT_SKIP,
+ 	.clkr = {
+ 		.enable_reg = 0x4c034,
+ 		.enable_mask = BIT(0),
+@@ -3753,6 +3755,7 @@ static struct gdsc venus_core0_gdsc = {
+ 	.pd = {
+ 		.name = "venus_core0",
+ 	},
++	.flags = HW_CTRL_TRIGGER,
+ 	.pwrsts = PWRSTS_OFF_ON,
+ };
+ 
+@@ -3761,6 +3764,7 @@ static struct gdsc venus_core1_gdsc = {
+ 	.pd = {
+ 		.name = "venus_core1",
+ 	},
++	.flags = HW_CTRL_TRIGGER,
+ 	.pwrsts = PWRSTS_OFF_ON,
+ };
+ 
 
 -- 
 2.54.0
