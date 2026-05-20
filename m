@@ -1,260 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-108625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cO+TIE9UDWr9wAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 08:27:27 +0200
+	id oH9eCSJaDWpuwQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 08:52:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBF13588202
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 08:27:26 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98B23588703
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 08:52:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8DB593001482
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 06:26:29 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7AB2F30269D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 06:51:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2C0D373C1A;
-	Wed, 20 May 2026 06:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AF6A364EB6;
+	Wed, 20 May 2026 06:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dunzMV3u";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UtRH9BRJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="V+eFaVkL";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XMIz/Qe5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CFF30E0ED
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 06:26:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630DA1E51E0
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 06:50:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779258388; cv=none; b=D0izIfObABkOUG4DgFO2QtJIxIul/A7iBysllvMBcDKxJQYYud+ItkhMzuEDA42S7fdwmxA5xcjxIFfrZQhBv1sxywIvKmoRAEyd0wUINXfOVScf0ipYhfZb8WkqVr2iyT3SkJ/JlDh01lrZEFSaGExi5J0jpripWXz8MMDLKXc=
+	t=1779259859; cv=none; b=A6tkA3ZUuNFWqp98ZG5IE56maBwEjy+/Y2twY1HlBMUUy+PX6KAYFfqOXeTw43Qj0GBs4IGY0TyZxzk+bvlldmVyFJd4TPpQtbfy4WMm55TB7pZwclQfm9vg3R5ZSRYOHojExO0NxPxUKMZSrOG/QioXqQc++W6Boqhog8bUOhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779258388; c=relaxed/simple;
-	bh=BQZGGR+Kj9Md3bS6Uq4HRXhbnJ4m++574iu+PGya68I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e87PCLZAYVDtnt0bu/hu5inXgG0xENn8VaA1S0fS9+8XRLCEGxjsfw8uJOmLZSbbSRwHTU3oZk4N6NpJwe7jW/i6jVMuIQos1LpuG1uT3wfd1ab7X2aOGoyLez3WLrQv9dMzysa97707SM25bOB2urliyuvGxbJLp5K0QkOyGYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dunzMV3u; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UtRH9BRJ; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1779259859; c=relaxed/simple;
+	bh=yHFXw6rHo+KkRLN1LFdXaGvQmgb3W2PQGqq6aDaC6Kk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=V9eLBud1I3gGCLfk/uN/XudcFZscsQ4WIbyrRVfl3t/lXKG731JdVRr4F4ddmM7NU/l/uVYy+xeV7qZas8f4Vzie69A79iiyB57S4VMR1oXB7IBzBtgNSsYn/dFpW1i4IOrZIfJfC//HRUBI8NLlWRsuya315HzRoZBLnFV0WNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=V+eFaVkL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XMIz/Qe5; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64K6DVRg2983950
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 06:26:26 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64JMU2b11739353
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 06:50:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bW7F36999oGFMbvn1eYTcV73jKHwj2KE5q8L3kwSVD4=; b=dunzMV3uXGkn7Q8I
-	K1yv966/P0r1yGQzaCI+eju4wxVDl2VU5NcvnPjb3CtDSqtS6g2o3OXGr4HUEnWU
-	O0Ml8v000I3Fv50EOnmDjeHT9lCIT3+pbnocaNbmmneGuJXQ+FR02FAB53WV0ORw
-	hIBnawbFy11Nw97lqy/qVzLxz2XQMwEDSybh/rY7Zk9g7DF3FHq9Rxl0TjhxOCEf
-	hlszaPAZqWm4OsuLfO5sJuID5S1qOAhMqHdcE5jYin67F76vPfQoqv7JpDgRRVWS
-	RcQqFhTD0vYGs+OvTW0P49PBmat2c06aHFbT/kxBPRGXbIjAR6Q+OsXyoR3nGi4/
-	5hhMdg==
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=yxNka9h0X4XMJU9qmetE4w7520NEDL25/rq
+	/Xg3a2dM=; b=V+eFaVkLPujpyKxpSBCRGwpaMV0la+sBCNRU7xrLkAGS96CXVOf
+	FcRzAxRP+Yaz9DNSBd5W+NicwU/7VrmXjq1JdBOBEzt7sS5Q40Z7Lna391geM3U5
+	hrPCuAxNEY7Dm45jdPa7rNrI0tt9MTrdNGevCr8uTHtHi5V0miSbIX/JqDe1RepE
+	La6NM0sIzxmsVi2lYfBp807cLhalQsbviv0ofsJFOXYbUfhXwp4WsH+IvlWuYGXW
+	6lQWk/TU8xbOFUNl8ICNR/yEs+CqvO0C2uGJjPHs8HXHmJD8HjdRgFw1uGIazX/N
+	ubRrkdsPY0qr6SF06woi3zwvGzel3k6YlWQ==
 Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8t3t3c3g-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8t3qbb9c-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 06:26:26 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2babbeff9e4so48412965ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 23:26:26 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 06:50:55 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2bd1dbcccf6so67180045ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 May 2026 23:50:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779258386; x=1779863186; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bW7F36999oGFMbvn1eYTcV73jKHwj2KE5q8L3kwSVD4=;
-        b=UtRH9BRJ3aa8tHrpkttAhcsI0s7fNEPU2OHT8MFtlyASK6/+oqPZQILeqAdVmkq+7c
-         Ee0tmOXUwgTaeT/6v5Go5aHdOX09ek4qbabrL7O5UUVBAXqY2aGh5h27PLZPmBTPhQrO
-         yxowWVchT36E1kfWaXp8op1uVSaggstXt9KScf6h3d+EIP+xMAckE1N2hLnGb2YU7NcC
-         2ZcE+66XbTwktN8MnFjHgWASMqfkS9oF5U4Csr2ciT1Yi145nOjMc289Ze+U04Etyaop
-         zPxpjzc4ZmTg4MMcq6MPpsRgrHhdfawkYVnYx37g/WSNsU58VvgVXJ0YqWmbQLPYFp8b
-         Z0ng==
+        d=oss.qualcomm.com; s=google; t=1779259854; x=1779864654; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yxNka9h0X4XMJU9qmetE4w7520NEDL25/rq/Xg3a2dM=;
+        b=XMIz/Qe51minwNvXZuW7pbt16HqKY6ttON2dr1J9D83M51ytWUBTGo7DB0wglTtByT
+         NV9Tga3e+MhAe3JXK1w2yAYGAgLvXBnAhgJndM1oI/UIRBtPs9kdVDXEthYuvG2AZYly
+         1QYhy+HE1zvRRy3FIEtbMwWZeVyX9uRiKBKTAGRniL1ZQdxaYBYQZkfoyfyLvdxu6L0q
+         6f9hex4PnAG/yFZDmPRK3Wu3vjQclKCcQiox/RMXnWF2Pt9O4GorHl6gCZYFxtxEX+If
+         KCoTWSDwVgNReL14z0ffBS5WEyLSKZPazIKEsbOVLA6S8Qt8mRwAZmlDzlKg9fWQJ8uX
+         jjIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779258386; x=1779863186;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bW7F36999oGFMbvn1eYTcV73jKHwj2KE5q8L3kwSVD4=;
-        b=p3QrH86IzcSArzQlHRZNjysZpaLlAWwXX4nW29v07xeTSv4U///Y3s3T1jzWVj/WJN
-         DLuoT/q9btNyD9ZTlHKra5Sctv13omZk/YuaebW+BEw1XsAOlnEWCbYsHPiOFN96m9V8
-         nY63x3H+zgWEczAkArvKmQ2ab24FLy+LzhR9Epuq2lT23OXV5wZInGzNfZXILFTJJQpk
-         nB5p7/Itf2ZzR84ryqgA2t0RRNq0DCfbG9mR6rtS46vPPBBlqLqWTo05EkntEDMdrQ8y
-         Tewj5LbMlwqFaRQAZO1w6f+2kLhzQckh9r5TYkHr3STidKUb2pTz1F+/UTaiEnwqZE/d
-         I6jQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9rD72walBZkC8Oig+1pWhR/D3YqBRVpntlgAaJDOXXtl90085zwsgrquwQzGJGSBvOXoas7dgQDwZqRYlZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwD/1aKqoYYp05Fqyq63qSHEbzqgufBN1Ryb1bOEzkchbHYVu9u
-	Fbum/4nJtZzp5eb/Q1yfE2qJRdaZ/XooVmK7qFNBWu3elNRzvJ7jA0oGHg8/5ufdM2LiycAS1KU
-	+DJa7gZxeKelUNf/JbmzoYsws005RnuqRI3zdiElzVJswwspiaWVbSOJ8+eNYnHXSt0pD
-X-Gm-Gg: Acq92OG4jkoQ9OjeGgLETqK+Xb0BMuCNegeFV5mBD5oZARPDHxIlCKCyTRxG4W9BenC
-	VBmM1JuWvMy/wrG1GWQ+XBCsG9oD0E/AuxzFaYBmnuCoKrfnWINg+Q2faTJ/nKv+8Qqb9xrsUzt
-	Q2Uu7SwVHMojIbG+lbIXyK7B4+C6zE9XwQPrS2XgSiTM1BMuqfdIwmwGjxK/ryD6hIo4P1MbDmk
-	NUGELexvHhHE3MFkzZtxAk+f1lEAklSrNZ/XIYscDKTKwaVgp1YhJrdy1GwZ6UybuZ/VANvawAe
-	UTzcDc4cd+nQsRPsixK2yxPXF7fAX3hj0E3WIBxE4DO3rLkyB3A82xy6VnPKOyY+9Mvn5tL7Cyw
-	qr8Dxfjo+dhPQUzJi4Enqkz6TNX5bQElpJEKLd/Z8jrVlt+qVPW0hR0CJDww=
-X-Received: by 2002:a17:903:46c4:b0:2ba:6601:8e3d with SMTP id d9443c01a7336-2bd526f69f8mr226306905ad.9.1779258385729;
-        Tue, 19 May 2026 23:26:25 -0700 (PDT)
-X-Received: by 2002:a17:903:46c4:b0:2ba:6601:8e3d with SMTP id d9443c01a7336-2bd526f69f8mr226306635ad.9.1779258385245;
-        Tue, 19 May 2026 23:26:25 -0700 (PDT)
-Received: from [10.239.97.158] ([114.94.8.21])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5cfe4973sm210884795ad.41.2026.05.19.23.26.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 May 2026 23:26:24 -0700 (PDT)
-Message-ID: <cf77b8bb-5427-4d0c-b212-51947704378a@oss.qualcomm.com>
-Date: Wed, 20 May 2026 14:26:20 +0800
+        d=1e100.net; s=20251104; t=1779259854; x=1779864654;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yxNka9h0X4XMJU9qmetE4w7520NEDL25/rq/Xg3a2dM=;
+        b=pMFs4s3Z5B9vG0bhfUtDhxQVihVucPRgVOsBFSy0FWQOtpP+z/6AJUOadALrQ0ld+M
+         5vU5q0XFa4mmydOk0GtwfRnQTDdS7Z9wBEUcUt4IOY5OPOFNvm7nQt5piNjtwZQ98dgQ
+         GjEtT/dppfoQzPe0vg3w3/BW95M90qMSPXuMJRn/Kr9F8PDjNxGypkq3pC4IX8KMbng6
+         6nmGUdufoBbExOFTYXdOQRHPpZhVACDjXqW7ddKgSXPC5dXehLzmA7r1icVoLC7YW26P
+         977dTVjioU5cZbUdbfe/LufER4wPtV/hc8+edXL3q11e68dhO9ZRCWsKyPk8VYJTXEPx
+         3ThA==
+X-Forwarded-Encrypted: i=1; AFNElJ+0gGq2yjurdSQBeRorYawBfEI7S8G7F2FgSpmE0WClqyeLPqXtH6OauggZciy6EHJ3xEidQJdhYfQyuIw2@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx1hjexoDsBbxWhsX/oLV15g07GPr2aMlXH+AA0+vzed286jvUp
+	aC12RzJPoYWGf4yulO/0MzWVFTroymacFccC2bHuXKJ4enYKAS2QfwciawcI5ISxBF/w3BeWffF
+	bmpbSVx6IeNP1mtOl80AL6q9Xcms8qAuT0Ew4SuWmdkFs2iPf5vTWdCuHXWjyufCyerzr
+X-Gm-Gg: Acq92OHFfN5DMj5ubrAFGfoZv+X2U2+jrXkh84+m7E61HhJERsw3nxL4fi+B/OddVv7
+	0TtAh0g71D75//LgqVd8mCwqyeqr67kldL9EnSoepE4Y1U5vTqcAAk20NY/NYx8OkkhHglZmP9O
+	nbWfIkeZupbYTVbe4jJf3xiSU5I88nsklqgsbNKirCkzbbGlkwSS9xYre32kvq1dfdskY555C8G
+	xZrURYDHgbq0RD7gfQ8EFcLjvSzp9zk13yELsO7G1Mzu1G3r7Sain+dXeb0pCRIGA5PUutqrUSC
+	3lAiTAy9Hb/dZCFUtj8e9abT/N6HSwU/6XsyxEwwWsdGFXUiKiFBUtr6qksuE45H+0f3zKp8V5Q
+	+sUfbKiBfSEVapLHZ7mKTPv9jgpnsqlyrexfZkASR0533+60WAIflJA==
+X-Received: by 2002:a17:902:f78a:b0:2b0:ac1e:9720 with SMTP id d9443c01a7336-2bd7e8f25f5mr248224345ad.23.1779259854154;
+        Tue, 19 May 2026 23:50:54 -0700 (PDT)
+X-Received: by 2002:a17:902:f78a:b0:2b0:ac1e:9720 with SMTP id d9443c01a7336-2bd7e8f25f5mr248224035ad.23.1779259853709;
+        Tue, 19 May 2026 23:50:53 -0700 (PDT)
+Received: from hu-ekangupt-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5bd5fe51sm206410165ad.2.2026.05.19.23.50.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 May 2026 23:50:52 -0700 (PDT)
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+To: srini@kernel.org, linux-arm-msm@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+        dri-devel@lists.freedesktop.org, arnd@arndb.de,
+        dmitry.baryshkov@oss.qualcomm.com
+Subject: [PATCH v11 0/4] misc: fastrpc: Add polling mode support
+Date: Wed, 20 May 2026 12:20:43 +0530
+Message-Id: <20260520065047.3415790-1-ekansh.gupta@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] Bluetooth: btusb: Allow firmware re-download when
- version matches
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        cheng.jiang@oss.qualcomm.com, quic_chezhou@quicinc.com,
-        wei.deng@oss.qualcomm.com, jinwang.li@oss.qualcomm.com,
-        mengshi.wu@oss.qualcomm.com
-References: <20260429121207.1306526-1-shuai.zhang@oss.qualcomm.com>
- <CABBYNZLP+rBrjhdKJLE7N47Bg-g4-6E3vS3yZXvMKwYQ2rMcUA@mail.gmail.com>
-Content-Language: en-US
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-In-Reply-To: <CABBYNZLP+rBrjhdKJLE7N47Bg-g4-6E3vS3yZXvMKwYQ2rMcUA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=BOCDalQG c=1 sm=1 tr=0 ts=6a0d5412 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=qqokX6KkybRntjKqjosA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-ORIG-GUID: zOn7jwnvjApaI9RNkvUNhNtFEmd8psLG
-X-Proofpoint-GUID: zOn7jwnvjApaI9RNkvUNhNtFEmd8psLG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDA2MCBTYWx0ZWRfXxHMy3sxAuT65
- 3IEcRcidKBwwSDG/QP/ViL056Mm7ET0F3bgIZtA0TFIhlyaLqr10SIBYfxSI2Fh6PMOfmBxMfpe
- KbheDfbprhnIRGSNqBhlvTZWJ/H6y9e+AMMSyVjBNMgLpGXzRswxajvI3p47SyZXtzfISCBXMVt
- 4wzPz7ewhq+wCm5fZ+/8NRFEKqielYixkHArbR/6/c4WTTwauHO/Qzj71pwVU/f3sZPCZDVkqUS
- fGt3xB0221wZrv5MNA88Itf5IXIVle/eVZs0YNPcuHsIrNYMMaolJXX5oQ3CDQFqj2n01QYZbsG
- gjLWNXfDcMK/Y2stEvD3oA4YSrjciayBH1nTL27DjAsecV5ftTisZhcuQbYCyMk531QTcsWCAOl
- KQPmuMaOHfgvA82aK6NdBJNQp+rvfr38TFS7OB5M+iHLRjZamwm9bJ2We+tJ2GXx0YcrrsWQUpj
- AEa87HtuNfsRps48qTA==
+X-Proofpoint-GUID: F62xddAtWEGB56t0VfeieQhWqrXAZL1c
+X-Authority-Analysis: v=2.4 cv=LcMMLDfi c=1 sm=1 tr=0 ts=6a0d59cf cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=NEAV23lmAAAA:8
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=FeUw2I9XaFYL6OdlDaEA:9
+ a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-ORIG-GUID: F62xddAtWEGB56t0VfeieQhWqrXAZL1c
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDA2MyBTYWx0ZWRfX4A7M+wk8jaZh
+ to6DrzTFpjfgpdQnCxAlMWyJFKc0G713hDKt/DTCh82yaE+1e9g+XMPmaXJTBcnrE2x1VsimdiF
+ TxamM/SuyznmnGs4jCcwUcUzlsRDWc6e/7xyaPQ0yWqM77Q4MbXdtbW1wmyHNUTY8jeZaKmEqAa
+ la2pRdJnU+OydTmKmci1ekqznhj4Rinc0ScFSutT2Y4LmBPuiombdarfWsklEtP3Wcty1+wfFSS
+ k2OK6asmOLhoxYStahmEZpoT4JF5uW6c3/eQsr280knNzse1SQeCqtSMWzHwofIO02YJKmmjo57
+ k8Ro2Dk/eWgnrUnJuhFx3m/sTgtv8orckT+UMTNTamzGXthWwijxDjVjUYzlTTV+V9fjRjkFSaj
+ ZSQvnZXB/Wy4druwNGDNQYiHKm0XAGs6ktDSPxmVxf3g0GWTEsfx7gsVvRsytxWw0CFK2eaYDNh
+ dbklfggzeOa97WSaQLA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-20_01,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 malwarescore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 adultscore=0 bulkscore=0 impostorscore=0 spamscore=0
+ suspectscore=0 phishscore=0 spamscore=0 priorityscore=1501 clxscore=1015
+ bulkscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200060
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200063
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-108625-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,qualcomm.com:dkim];
-	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_FROM(0.00)[bounces-108626-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:dkim];
+	MIME_TRACE(0.00)[0:+];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shuai.zhang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_NONE(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: DBF13588202
+X-Rspamd-Queue-Id: 98B23588703
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Luiz
+This patch series adds polling mode feature that have been missing in
+upstream FastRPC driver.
 
-On 4/29/2026 11:17 PM, Luiz Augusto von Dentz wrote:
-> Hi Shuai,
->
-> On Wed, Apr 29, 2026 at 8:12 AM Shuai Zhang
-> <shuai.zhang@oss.qualcomm.com> wrote:
->> The Bluetooth host decides whether to download firmware by reading the
->> controller firmware download completion flag and firmware version
->> information.
->>
->> If a USB error occurs during the firmware download process (for example
->> due to a USB disconnect), the download is aborted immediately. An
->> incomplete firmware transfer does not cause the controller to set the
->> download completion flag, but the firmware version information may be
->> updated at an early stage of the download process.
-> Hold on, if the download has been aborted then the version should be
-> reverted, or rather just update once the firmware loading is complete,
-> so this indicates there is a bug somewhere that needs fixing, not
-> worked around.
->
->> In this case, after USB reconnection, the host attempts to re-download
->> the firmware because the download completion flag is not set. However,
->> since the controller reports the same firmware version as the target
->> firmware, the download is skipped. This ultimately results in the
->> firmware not being properly updated on the controller.
->>
->> This change removes the restriction that skips firmware download when
->> the versions are equal. It covers scenarios where the USB connection
->> can be disconnected at any time and ensures that firmware download can
->> be retriggered after USB reconnection, allowing the Bluetooth firmware
->> to be correctly and completely updated.
->>
->> Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
->> ---
->> Changes v2:
->> - Update code comments and commit message to reflect the correct logic.
->> - Align the commit title with upstream conventions.
->> - Link v1
->>    https://lore.kernel.org/all/20260108074353.1027877-1-shuai.zhang@oss.qualcomm.com/
->> ---
->>   drivers/bluetooth/btusb.c | 8 +++++++-
->>   1 file changed, 7 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
->> index 572091e60..70abbabea 100644
->> --- a/drivers/bluetooth/btusb.c
->> +++ b/drivers/bluetooth/btusb.c
->> @@ -3550,7 +3550,13 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
->>                      "firmware rome 0x%x build 0x%x",
->>                      rver_rom, rver_patch, ver_rom, ver_patch);
->>
->> -       if (rver_rom != ver_rom || rver_patch <= ver_patch) {
->> +       /* Allow rampatch when the patch version equals the firmware version.
->> +        * A firmware download may be aborted by a transient USB error (e.g.
->> +        * disconnect) after the controller updates version info but before
->> +        * completion.
->> +        * Allowing equal versions enables re-flashing during recovery.
->> +        */
->> +       if (rver_rom != ver_rom || rver_patch < ver_patch) {
-> As I said above, this sounds more like a workaround. That said, I
-> wonder why it would print an error if the version matches, it sounds
-> to be that if the version matches it should just skip and consider it
-> has been loaded already in case the actual problem is fixed by setting
-> the new version only when loading has been completed.
->
->>                  bt_dev_err(hdev, "rampatch file version did not match with firmware");
->>                  err = -EINVAL;
->>                  goto done;
->> --
->> 2.34.1
+- Add changes to move fdlist to ctx structure to avoid code duplicacy.
+- Update context mask to support polling mode.
+- Add changes to support polling feature.
 
-Just checking if there are any updates on this
+Userspace change: https://github.com/qualcomm/fastrpc/pull/258
+Patch [v10]: https://lore.kernel.org/all/20260424095903.1622565-1-ekansh.gupta@oss.qualcomm.com/
 
+Changes in v11:
+  - Moved back to read_poll*.
+  - Improved error handling.
 
-Thanks,
+Changes in v10:
+  - Add milos and sar2130p to fastrpc_poll_supported_machines. 
+  - Updated comment for supported platform list.
 
-Shuai
+Changes in v9:
+  - Added platform support check.
+  - Moved to readl as per Luben's suggestion.
+  - Cleaned up fastrpc_wait_for_completion().
 
->
+Changes in v8:
+  - Added more comments.
+
+Changes in v7:
+  - Fixed warnings.
+  - Fixed commit text.
+  - Addressed clean-up comments.
+
+Changes in v6:
+  - Fixed poll memory calculation.
+  - Added few formatting changes.
+
+Changes in v5:
+  - Add more details in commit text.
+
+Changes in v4:
+  - Replace hardcoded ctxid mask with GENMASK.
+  - Fixed commit text.
+
+Changes in v3:
+  - Resolve compilation warning.
+
+Changes in v2:
+  - Added comments and fixed commit text.
+  - Defined context id position as a macro.
+  - Added new IOCTL to control polling mode as always enabling
+    it might cause excess power consumption.
+  - Cleaned up polling mode implementation.
+
+Ekansh Gupta (4):
+  misc: fastrpc: Move fdlist to invoke context structure
+  misc: fastrpc: Replace hardcoded ctxid mask with GENMASK
+  misc: fastrpc: Expand context ID mask for DSP polling mode support
+  misc: fastrpc: Add polling mode support for fastRPC driver
+
+ drivers/misc/fastrpc.c      | 189 ++++++++++++++++++++++++++++++++----
+ include/uapi/misc/fastrpc.h |  29 ++++++
+ 2 files changed, 198 insertions(+), 20 deletions(-)
+
+-- 
+2.34.1
+
 
