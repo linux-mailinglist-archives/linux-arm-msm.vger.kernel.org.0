@@ -1,201 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-108717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gENtBh6cDWoU0AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:33:50 +0200
+	id CDy7GTefDWqC0AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:47:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 897F058C923
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:33:49 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B98A58CE5F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:47:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 790C030B8F4D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 11:30:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 853C430DA35D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 11:31:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31FB13DCD8F;
-	Wed, 20 May 2026 11:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAB7D3A4528;
+	Wed, 20 May 2026 11:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cTsEkf2a"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ODOpsVXE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EB439658D;
-	Wed, 20 May 2026 11:21:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A3E2BE7C6;
+	Wed, 20 May 2026 11:22:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276087; cv=none; b=DqxVreoq+KVTkswoWwM7QLJLn6Pgih1S9JLhsx3zLRIFMXLsenmqxZO0kY3F2pu6Ofp8lm76klRoSq17YkDwBRUUk+C7mG1cy0J2URJFXaa/rSceHayAMX6SS5e6rTCZzRZYzVH2UNDV8UM5ZH/R97cp2U0ZuEiqcxUFziTFIOY=
+	t=1779276128; cv=none; b=MqlEBRId6aZyDGUb410khrJ2diQshvTfDeFr6PnQnxTMNMUHUtdrHD6O5wFpTZvniqrGxZmdvwxcD58hIuEkgYBrN1EljWetmLeTczAOlDsv4e7IgJ3VFP5iquMqhx/tQ6iuGeEtArUU55k3WeGDtXvV1fe1SM2O08JyboVDEMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276087; c=relaxed/simple;
-	bh=TIct65M6X6jxjQEZvIpCh3pktYk8EaQuFdSv9SgRjE8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=htx63mJz/iFNXf1dzNXb6YqfLqOkvvv8s103K3gnUYkU+SvLjGJctY9RU3BP2xUMhkiB+BMxNys7cvWc+jrRMDAHbPQ5+ac/e0j+U0dCv4ET0/qhKRyR0xUQtKEl/LoTxbAjiKJITneyqUzbSjJDvMMzWu8eIn7ZPwm7jkoTJr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cTsEkf2a; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626511F000E9;
-	Wed, 20 May 2026 11:21:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276086;
-	bh=/NNdlSCSm2zV6hkoaa7Oskxt5n0mdM0O824jQTIg7Lg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=cTsEkf2ahPMvKI7eOBiGZNsXqBG/pnaoRftnzxiuc2xeKBcu44F891ORyi4tCKmPL
-	 CKKaOi+bcGTSwFNX9tD74DgWlrfR95Aybor1MWCLvYZDM57/mS4lTBbY5phBymfjLa
-	 bwYgvcNMiwY9wiON6kWojIhsjTLBc8tcYsLGfVXHK2Fm9Tb7umiiLOoUFwzg93+VR+
-	 Z5x/ywq4lo/d5royHWa74YBTl2fRAwGQToPN3neGLkL1PrHCsXeG8y8wHG1XaELy4r
-	 IWyDVjoS1SktQhDzE6uMK0OUGQP3lf5De8KfO6MqkYd78pC130E/nC7OS4UJ3CH/+L
-	 iXG2oNGP4FnAw==
-Message-ID: <d6ad8b4c-5a48-452d-a070-921feda15125@kernel.org>
-Date: Wed, 20 May 2026 13:21:22 +0200
+	s=arc-20240116; t=1779276128; c=relaxed/simple;
+	bh=i5cEeky9vzuSilPkdzYZW80Ti4646kkrWEkdoqGt8XM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V0MYMjhkslKdGajbcAMKTzGIbGCYVlOh1aVLq44Qm9jjOMhv8gEh9uN/wwKL836RCzL87h2eJHokjFgsXG6r2fOZiF4zulNtu7JrdLPjcQ5E6DA9O37pNFHWO0pBFZfPfqoWp1BbeCkklBI12CMztjzPgDjwkCMMhLYnzgbjWYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ODOpsVXE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64K9nQWn446597;
+	Wed, 20 May 2026 11:22:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	5p/SnGWGxmFc54b+LFGyQzpr9SmVlt+zL3lpibG+ap4=; b=ODOpsVXEk14yhKLW
+	ByqyjUgxkfNUDLA1jJCpV7LmanEMckxhj/7OD4srfr7UbOs8u71+XVSS+leMrgLn
+	8PLTUtyFZhfhnEx2pUbFXFcGwDWAZxZdBziF8W413jkWyQjWqzquufCFzcuOWDKR
+	r6A8qK8wt8B3B3VU5uAfH+iUGXu8xC/o3qaep854XVN0QmchncHyvdD32sO6AaMi
+	C2iGdXQLnoeI51a8IeVC6326HgVgYAj6pdoLhkRNzhzn7W/3gY0sYOrBLnx1MnLZ
+	xrxIqSWZeo8gE8CMdA5/d5Ae9D+7ZbU2XZfkH1/x25V2mmUgSwFtItHErR6hXxXY
+	cBgV5w==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9anrgap5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 May 2026 11:22:03 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KBM0MQ031146;
+	Wed, 20 May 2026 11:22:00 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4e712fyn6e-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 May 2026 11:22:00 +0000 (GMT)
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64KBM0GY031141;
+	Wed, 20 May 2026 11:22:00 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 64KBLxbr031140
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 May 2026 11:22:00 +0000 (GMT)
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
+	id 3A1E7B31; Wed, 20 May 2026 16:51:59 +0530 (+0530)
+Date: Wed, 20 May 2026 16:51:59 +0530
+From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com
+Subject: Re: [PATCH 2/2] regulator: qcom_usb_vbus: add support for
+ qcom,pm4125-vbus-reg
+Message-ID: <20260520112159.o2p7gyfnwowhxgfp@hu-kotarake-hyd.qualcomm.com>
+References: <20260520-add_pm4125-vbus-reg-v1-0-f6d15d7dbbe8@oss.qualcomm.com>
+ <20260520-add_pm4125-vbus-reg-v1-2-f6d15d7dbbe8@oss.qualcomm.com>
+ <7b47ca4e-dc20-4155-881a-b1849cc000c7@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: usb: typec: Add Cypress CYPD6129 UCSI
- controller compatible
-To: Akash Kumar <akash.kumar@oss.qualcomm.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20260520093902.2064730-1-akash.kumar@oss.qualcomm.com>
- <20260520093902.2064730-2-akash.kumar@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260520093902.2064730-2-akash.kumar@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7b47ca4e-dc20-4155-881a-b1849cc000c7@oss.qualcomm.com>
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-GUID: lVKBYDqEYarZfzzEe19c3FgvP-_rCLC9
+X-Proofpoint-ORIG-GUID: lVKBYDqEYarZfzzEe19c3FgvP-_rCLC9
+X-Authority-Analysis: v=2.4 cv=UuJT8ewB c=1 sm=1 tr=0 ts=6a0d995b cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
+ a=5hu5nYuTp7SrDqNDHFsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDEwOSBTYWx0ZWRfXxLlRGnQ/whCe
+ HF8q62H/uutxsTw/wtAXxoKjGorZIRIL4KNW93X2vs7SehPMwnIxzhtas4hWX4/w9UHK/TZ+kEE
+ +3i65JutNwVFkrOfwB7QTltKMFtWAXu5YS2aSdRvy26S2EnPJjUB0YDrrCU+v3t8L+Ll0OI9E72
+ vFBXdIxnSz1ZUfqniqHmfzYuwzV5+9UhUFmVAHggoEhSgvZ1jfVF/g+1GNVSNW51du1H/twuRal
+ WplwTs8pgk9hxNFexcKSLlccLgprrF8OggCsotqRY1dBxtrhH4mvPZOHTweJNaQWgQyt0EURCCE
+ T3eD96MWF0zprraxB9JEHDnTuCkcOtMD3iVlRf7uXvnnGRP0INp5SPJW+pMTXsGuMlvwjDyjPs3
+ 55SrmHK+lr3h9PHbcXvzkbDvsJVvkKjliH+YfZrDd7dpkXOY4BvMR3zImo3aTQdywsCIXJ4nQ8d
+ jh7T0ZJ8aoEDCOTfl4A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-20_02,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0
+ priorityscore=1501 suspectscore=0 spamscore=0 malwarescore=0 bulkscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605200109
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108717-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,quicinc.com,vger.kernel.org,oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-108718-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,hu-kotarake-hyd.qualcomm.com:mid,qualcomm.com:email,qualcomm.com:dkim];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[12];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[rakesh.kota@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
-X-Rspamd-Queue-Id: 897F058C923
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[10]
+X-Rspamd-Queue-Id: 0B98A58CE5F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 20/05/2026 11:37, Akash Kumar wrote:
-> Document the "cypress,cypd6129" compatible string for the Cypress/Infineon
-> EZ-PD CCGx UCSI controller.
+On Wed, May 20, 2026 at 11:51:49AM +0200, Konrad Dybcio wrote:
+> On 5/20/26 11:07 AM, Rakesh Kota wrote:
+> > The PM4125 PMIC uses a different register layout for USB VBUS control
+> > compared to PM8150B. On PM4125, CMD_OTG is at offset 0x50, OTG_CFG is
+> > at 0x56, and offset 0x52 is a 2-bit VBOOST voltage selector rather than
+> > a current-limit selector.
+> > 
+> > Introduce per-compatible regulator descriptor data to accommodate these
+> > differences. This keeps the existing PM8150B current-limit logic intact
+> > while adding a dedicated voltage-selector path for PM4125.
+> > 
+> > Signed-off-by: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> > ---
+> >  drivers/regulator/qcom_usb_vbus-regulator.c | 102 ++++++++++++++++++++++++----
+> >  1 file changed, 88 insertions(+), 14 deletions(-)
+> > 
+> > diff --git a/drivers/regulator/qcom_usb_vbus-regulator.c b/drivers/regulator/qcom_usb_vbus-regulator.c
+> > index cd94ed67621fee9f6d7a0327054db0ebab6cc7ee..3d425452a0b35b35c4b454f84eb28e87cc8ba4f8 100644
+> > --- a/drivers/regulator/qcom_usb_vbus-regulator.c
+> > +++ b/drivers/regulator/qcom_usb_vbus-regulator.c
+> > @@ -20,10 +20,35 @@
+> >  #define OTG_CFG				0x53
+> >  #define OTG_EN_SRC_CFG			BIT(1)
+> >  
+> > +#define PM4125_CMD_OTG			0x50
 > 
-> The CYPD6129 is compatible with the existing CCGx binding, so allow it as a
-
-Device can be compatible with a device, not with a binding.
-
-And explain WHY it is compatible.
-
-> valid compatible and permit the existing "cypress,cypd4226" fallback where
-> appropriate.
+> This register is named differently
+Ok, i will update name to PM4125_VBOOST_EN in next version.
 > 
-> Signed-off-by: Akash Kumar <akash.kumar@oss.qualcomm.com>
-> ---
->  .../bindings/usb/cypress,cypd4226.yaml        | 73 ++++++++++++++-----
->  1 file changed, 55 insertions(+), 18 deletions(-)
+> > +#define PM4125_VBOOST_CFG		0x52
+> > +#define PM4125_VBOOST_CFG_MASK		GENMASK(1, 0)
+> > +#define PM4125_OTG_CFG			0x56
 > 
-> diff --git a/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml b/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml
-> index 0620d82508c1..90769c43ac95 100644
-> --- a/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml
-> +++ b/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml
-> @@ -15,7 +15,13 @@ description:
->  
->  properties:
->    compatible:
-> -    const: cypress,cypd4226
-> +    oneOf:
-> +      - enum:
-> +          - cypress,cypd6129
-> +          - cypress,cypd4226
-> +      - items:
-> +          - const: cypress,cypd6129
-> +          - const: cypress,cypd4226
+> And so is this one
+update name to PM4125_VBOOST_CFG in next version
+> 
+> 
+> > +#define PM4125_OTG_EN_SRC_CFG          BIT(0)
+> > +
+> > +struct qcom_usb_vbus_reg_data {
+> > +	u16 cmd_otg;
+> > +	u16 otg_cfg;
+> > +	u8  otg_en_src_cfg;
+> > +	u16 csel_reg;
+> > +	u8 csel_mask;
+> > +	const unsigned int *curr_table;
+> > +	unsigned int n_current_limits;
+> > +	u16 vsel_reg;
+> > +	u8 vsel_mask;
+> > +	const unsigned int *volt_table;
+> > +	unsigned int n_voltages;
+> > +	const struct regulator_ops *ops;
+> > +};
+> 
+> And because they're so different, keeping them in a single driver starts to
+> look a little odd
 
-Hm? This makes no sense.
+You are right, they differ in control mechanism — one uses current
+control and the other uses voltage control for VBUS in host mode.
+Since the functional purpose is the same (VBUS regulation in host
+mode), I felt a single driver made sense to avoid code duplication.
 
+But open to suggestions — should I split this into separate drivers
+or is there a better way to handle this cleanly?
+> 
+> > +
+> >  static const unsigned int curr_table[] = {
+> >  	500000, 1000000, 1500000, 2000000, 2500000, 3000000,
+> >  };
+> 
+> And I think there's current-limiting on this PMIC too, except in a differnt
+> peripheral (@1300)
+> 
+The @1300 peripheral is for ICL (Input Current Limit) in device mode
+charging — not for host mode VBUS regulation.
 
->  
->    '#address-cells':
->      const: 1
-> @@ -63,10 +69,42 @@ examples:
->    - |
->      #include <dt-bindings/interrupt-controller/arm-gic.h>
->      i2c {
-> -      #address-cells = <1>;
-> -      #size-cells = <0>;
+Could you share the register you're referring to for further clarity?
 
-What is happening here?
-
-You are making random changes to the binding. No, don't.
-
-
-Best regards,
-Krzysztof
+regards
+Rakesh
+> Konrad
 
