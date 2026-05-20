@@ -1,267 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-108894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wMdfCS41Dmq58AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 00:26:54 +0200
+	id MFVAErNGDmoM9gUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 01:41:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD74059BFD2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 00:26:53 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4E6E59CD91
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 01:41:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 19BCA3025AFA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 22:26:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CED8630325BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 22:51:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13E193750DC;
-	Wed, 20 May 2026 22:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB6E1352022;
+	Wed, 20 May 2026 22:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KpjhyQv3"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="pAgwiZym"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4983BFE3F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 22:26:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25AE33A9FE;
+	Wed, 20 May 2026 22:51:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779315990; cv=none; b=PHdWVL9p+k3xjmGd3qIQZHnHRSTIuibFh/HiH5D+KuM2tZw6PjApZg8T+sUq1sqzPuz5rA1jJABxhzS7btYXfdZa97jKNEtVhKfzAO0L/8qTsQdMpZhYHTnoIck+JhgaxQxaoW6luKj7dC+ObXLVqadYqcKxCA2j7Ixp6RqnFxs=
+	t=1779317472; cv=none; b=Nglh+o7oSMcUHXn3cU1H2dcCdtUyAchXy8wd00YrBunGMcK7V7bCrqIJ3AnrVOvxfCOGa8nxqemDeDf+M+D1WadqkxNmRl7ZfV4eacZ0NmIo+hj01KY7hy9SVJ+5AWl+xsHUJqIzWB1jbpqwBiIceJDqN68HYsPzdmviKqga6gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779315990; c=relaxed/simple;
-	bh=j+vvG9tL9x9Qm2N4qCmquu0PIMkZ01SDZnad8HjsKkM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JFUQhjxdRFtB1G+3t34xg/qLabNZDOaf3QWFp1YFIqdfwPyHYRtYN4UyJjtw+5DkAojHBFyVItfSTP97DhbiJeq+vEdVlFIic4Nuw3NdzEwNZ/KrdyEtRfs5EnuRJjfq6PNPrANlcrgrR+Wp8F2Ht4OHm97R6wzzOxsnm/UNgaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KpjhyQv3; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-43d73422431so3805101f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 15:26:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779315986; x=1779920786; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YG82xVAXQwQE8PumNL8zBtus2ibRKhYEPkSULunC6/w=;
-        b=KpjhyQv3vClXosjoGWZmpqAYKelW8CDboFucNDCLebSdcjqL+k9S7q3hyuuAHh0lHN
-         0+abZeVZgZqyyDO1m9oGSre1k8S2KYj6P1XFfAYKK8B9wqlGclNWWmQnoT+mo85HEupM
-         PXPyFLR7xbEanO/YuzOLirj/kCZueVgK5D0nNdhqpw+sk+xHqEwEx2km7A3v2olWadur
-         vk2Tsz9T1qtEu+BZJnieURhwWipITU8pmrgo0e24uCALwfVkHTLf1YadtyaOkb47MjxW
-         2zPL8AszT0RJwlBXEauCkr+lm2Q1P8vi/IGDeqZRYE9n7H/TcK5kwuzzNKWCirO6oL1m
-         AIRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779315986; x=1779920786;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YG82xVAXQwQE8PumNL8zBtus2ibRKhYEPkSULunC6/w=;
-        b=ZChpCmlMhlluxU5wc3ii4G4X/cWvA7lF8kOTmX1sRe0lj38Zf65yQFFDgXQUiWQgyn
-         Ad7m3G/Ojta41zAYG4Fnx3TYZ4F7B7JJNbhG2b+A+Cb6NiTQPQjbUzbHOQOUhESBouan
-         i07ESl3RKIRxtSe+sF3EbwjtsuQ3/PBP0GRfmKqN4dOYHEq4FG7Qvnr+VOT6TdvlAddb
-         psvO7R7ktz60srCCpyJRlp9puO7zAsZZHVehQwVhwzfVfamKr/MsHtZMSHjj5sZc6Uwc
-         QyRUKzJ9kv9jjLCxYeMndpQZhDGh8pBziBPOVb8Sdbu19ltLL9ppbT/6kKKenFBetdu+
-         VMvA==
-X-Forwarded-Encrypted: i=1; AFNElJ/F4wRMM7rbbMMQc5UfPH5bY442gHH2hmbPA3ji1jRFvWOgcjLEVw1EcY/lEJp2JsrhkzEj2w1g7EfTymFM@vger.kernel.org
-X-Gm-Message-State: AOJu0YxqdOj1kGDgTuVo0c10n1lWLcbqwcW0V/LVQDG1yJDf5GLIBcFu
-	/AdCXjdCNztoHTCkkGceGXjvVX9/yiC9IFxt+QEvsHbam22ZlAtwXqU=
-X-Gm-Gg: Acq92OEM71fEPAc+iIR5SypxAQF2T6gJwlGY4dQMFgLOW5erblQlCfnhzYG5qEBa8ix
-	Fyi0+zEq2vrTugpI+6TSjAnTQOJORIQ5foMm6asS6pX9oxPfinDor5dGhfYNX+wf3cxhfwuohCC
-	s0JZJZfs+FhCdjiDWMp6IltMn62RhdxRVTtDnCO0WAXRUmg2EpmdbNAudu9lqG/uq7ENAbq/l6R
-	HFEGxAQJpyuqaixd00URJmp/Uo8+JodhbF+kFO5yx0oArNpiAJdpAwXhJ8e5Fdr9EJHLB3em2lN
-	e4yJYyUHrwktS1QaY3dvBq6AOEkTEhwiAPtGx2rJNzL1ZwwPw9aZaR8RVK9fD2sVgYeOZY9IjEq
-	rwk+CyudMEaJofKq519wQ6f85IQk5NEK/iR7pD8QFcf8hZZaVYMILcwe6H/HPtKAkxHYWvYRnaE
-	dqTyUtBF975D3rs+W11L7WFaCePs+L/iE1EoinNNk3JEtnUMKpSiQwkIFWdYxyX4fH61f60E/Ds
-	M+wfvMGtix8X1bCozp8mF0jRAvvZH6m6OYjd6exiMEotvveeKQ4fLMvzi5q5QoOdp0geg==
-X-Received: by 2002:a5d:584c:0:b0:452:c246:ab69 with SMTP id ffacd0b85a97d-45ea38c687bmr331364f8f.13.1779315985965;
-        Wed, 20 May 2026 15:26:25 -0700 (PDT)
-Received: from ?IPV6:2a01:cb08:52d:7400:bbd7:ca83:de4a:f625? (2a01cb08052d7400bbd7ca83de4af625.ipv6.abo.wanadoo.fr. [2a01:cb08:52d:7400:bbd7:ca83:de4a:f625])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45da0fe1a41sm61784681f8f.31.2026.05.20.15.26.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 May 2026 15:26:25 -0700 (PDT)
-Message-ID: <f5f70aa2-a1b8-40e0-838f-6709e6e08a5a@gmail.com>
-Date: Thu, 21 May 2026 00:26:24 +0200
+	s=arc-20240116; t=1779317472; c=relaxed/simple;
+	bh=zlajbrVUi4MpS0m3fKu0aT0gFphuz5cuKsBSgtxFc3M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RSfDtrpDEmIdffzdSEojpAWEjoIxfKxojHaHkSrgpnPayBc7ueYbzYvZ7mfV0giQurMYWMEa1XbndVwY8aPztxpdTALITRMIelV/63Xrm5iPwth6CBaQvBZuh7ITD8TL1TldWLg+t+qSIguiYEtd/w6/Ju7Ly2D4KCYfMeY7VI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=pAgwiZym; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=HsjhAy2BBtCFA/egDCdJZk4pjYZbxFSYZKXDkZ+Avwo=; b=pAgwiZymOW8GGrLLojHhetbVx0
+	9TrKs9vM0v6AmUOGFF9kTLwGkbQ/WntzQL2Sj0b7582rF4a4DMqcybT4HUbo4l4rKRyqkxpCx4H/e
+	o1Z4MDHncvmdjtf+fvVmlVAJ4gNVGT2Q/PtvPUOqX4J6E0C9rvamZCWWq/Rzj8l2qU7wrfxT7Rkj4
+	iEQgN5cRzQaPAArG92EKxbyOWFD4IBrKs+vQ4yLdziplGub28uNWH2zOi1fq/2WLfzZDFmtFPb/4z
+	VCWOXI0i0O92YxbT0DmOHLG4oKNKWiGJ3fQdBFOulCCk2bIG40O5m42OD9JBUlNlvsdvIRP50KAki
+	hzS4+nFw==;
+Received: from d209-89-236-181.abhsia.telus.net ([209.89.236.181] helo=atmagalia)
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1wPpk9-0043dh-8d; Thu, 21 May 2026 00:50:25 +0200
+Date: Wed, 20 May 2026 16:50:14 -0600
+From: Rodrigo Siqueira <siqueira@igalia.com>
+To: Alex Hung <alex.hung@amd.com>, Harry Wentland <harry.wentland@amd.com>
+Cc: John Harrison <John.Harrison@igalia.com>, 
+	Jani Nikula <jani.nikula@linux.intel.com>, "Kandpal, Suraj" <suraj.kandpal@intel.com>, 
+	Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>, 
+	Alex Deucher <alexander.deucher@amd.com>, Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Liviu Dudau <liviu.dudau@arm.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>, 
+	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>, Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Dave Stevenson <dave.stevenson@raspberrypi.com>, =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, 
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Louis Chauvet <louis.chauvet@bootlin.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	linux-renesas-soc@vger.kernel.org
+Subject: Re: [PATCH v5 0/8] drm: writeback: clean up writeback connector
+ initialization
+Message-ID: <ag44Kk4h188WGhcN@atmagalia>
+References: <20260505-wb-drop-encoder-v5-0-42567b7c7af2@oss.qualcomm.com>
+ <177894506978.2448625.17152574519326512949.b4-ty@b4>
+ <8fc45730-b2e3-4ba8-b80a-9b30557e810b@Igalia.com>
+ <wcgvogluzfrjk6rlomswkmqceilbbichxsgx3aqzpoawe7jzgw@uiy3ogtswflk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/11] arm64: dts: qcom: sc8280xp-arcata: Enable backlight
-To: Douglas Anderson <dianders@chromium.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <jesszhan0024@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- Krzysztof Kozlowski <krzk@kernel.org>
-References: <20260520-surface-sp9-5g-for-next-v1-0-9df52552bf87@gmail.com>
- <20260520-surface-sp9-5g-for-next-v1-2-9df52552bf87@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>
-In-Reply-To: <20260520-surface-sp9-5g-for-next-v1-2-9df52552bf87@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [0.01 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <wcgvogluzfrjk6rlomswkmqceilbbichxsgx3aqzpoawe7jzgw@uiy3ogtswflk>
+X-Spamd-Result: default: False [1.64 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MIXED_CHARSET(0.67)[subject];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-108895-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-108894-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FREEMAIL_TO(0.00)[chromium.org,linaro.org,gmail.com,linux.intel.com,kernel.org,suse.de,ffwll.ch];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[38];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.34.96:email];
+	DKIM_TRACE(0.00)[igalia.com:-];
+	NEURAL_HAM(-0.00)[-0.990];
+	FROM_NEQ_ENVFROM(0.00)[siqueira@igalia.com,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FROM_NEQ_ENVFROM(0.00)[jeromedebretagne@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[igalia.com,linux.intel.com,intel.com,amd.com,gmail.com,ffwll.ch,arm.com,kernel.org,suse.de,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,ideasonboard.com,glider.be,raspberrypi.com,wanadoo.fr,bootlin.com,lists.freedesktop.org,vger.kernel.org];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,0.0.0.3:email,0.0.0.1:email]
-X-Rspamd-Queue-Id: BD74059BFD2
+	TO_DN_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,gitlab.freedesktop.org:url,igalia.com:email]
+X-Rspamd-Queue-Id: E4E6E59CD91
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 5/20/26 18:40, Jérôme de Bretagne via B4 Relay wrote:
-> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+On 05/20, Dmitry Baryshkov wrote:
+> On Tue, May 19, 2026 at 09:59:00AM -0700, John Harrison wrote:
+> > On 5/16/26 08:25, Dmitry Baryshkov wrote:
+> > > On Tue, 05 May 2026 03:24:57 +0300, Dmitry Baryshkov wrote:
+> > > > Drivers using drm_writeback_connector_init() / _with_encoder() don't
+> > > > perform cleanup in a manner similar to drmm_writeback_connector_init()
+> > > > (see drm_writeback_connector_cleanup()). Migrate all existing drivers
+> > > > to use drmm_writeback_connector_init(), drop
+> > > > drm_writeback_connector_init() and drm_writeback_connector::encoder
+> > > > (it's unused afterwards).
+> > > > 
+> > > > [...]
+> > > Applied to msm-fixes, thanks!
+> > > 
+> > > [1/8] drm/msm/dpu: don't mix devm and drmm functions
+> > >        https://gitlab.freedesktop.org/lumag/msm/-/commit/c0c70a11365c
+> > > 
+> > > Best regards,
+> > That is only the first patch of the series, yes?
 > 
-> Add backlight nodes and enable backlight so that it can be controlled
-> with the corresponding buttons found on Surface Pro Type Cover keyboards.
+> Yes, correct.
 > 
-> The nodes are almost identical to the ones from the ThinkPad X13s with
-> a different enable GPIO for the vreg_edp_bl node.
+> > 
+> > What is happening with the rest? Can they all be merged to drm-next now? As
+> > I understand it, only the first patch was still being discussed, the others
+> > have all been reviewed some time ago.
 > 
-> The difference was found by looking at the output of /sys/kernel/debug/gpio
-> on the ThinkPad X13s to see the properties of its enable gpio9:
+> At least we need an ack from the AMD maintainers. I can pick up patches
+> 3-6 to drm-misc-next, but it doesn't really help because the rest of the
+> patches are blocked by the AMD change.
+
+
+Hi Alex, Harry,
+
+Could we have your acked-by for this series? I tested it with a DCN
+4.0.1 and the kms_writeback test; everything looks fine. This series
+should not cause regressions because the AMD modifications are
+restricted to the writeback functions; if you want to be sure and cover
+more hardware, it can be useful to run it through AMD CI (you just need
+to make a few minor adjustments when applying it to the
+amd-staging-drm-next).
+
+Anyway, this series was
+
+Tested-by: Rodrigo Siqueira <siqueira@igalia.com>
+
+Thanks
+
 > 
->    gpiochip1: GPIOs 742-751, parent: platform/c440000.spmi:pmic@1:gpio@8800, c440000.spmi:pmic@1:gpio@8800:
->     ...
->     gpio9 : out  high normal  vin-1 pull-down 10uA              push-pull  medium  atest-1 dtest-0
->     ...
-> 
-> The same gpio9 on the Surface Pro 9 5G has different properties:
-> 
->    gpiochip0: 10 GPIOs, parent: platform/c440000.spmi:pmic@1:gpio@8800, c440000.spmi:pmic@1:gpio@8800:
->     ...
->     gpio9 : in   high normal  vin-1 pull-up 30uA                push-pull  low     atest-1 dtest-0
->     ...
-> 
-> Looking for a match on the Surface Pro 9 5G pointed to this only one:
-> 
->    gpiochip2: 10 GPIOs, parent: platform/c440000.spmi:pmic@3:gpio@8800, c440000.spmi:pmic@3:gpio@8800:
->     ...
->     gpio6 : out  high normal  vin-1 pull-down 10uA              push-pull  medium  atest-1 dtest-0
->     ...
-> 
-> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
-> ---
->   .../boot/dts/qcom/sc8280xp-microsoft-arcata.dts    | 49 ++++++++++++++++++++++
->   1 file changed, 49 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-> index f2b4470d4407fb5b6a3dbac8bc972c010c31bd06..14287092fb07ea15e527fd318f7ea2155448b26c 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-> @@ -46,6 +46,16 @@ wcd938x: audio-codec {
->   		#sound-dai-cells = <1>;
->   	};
->   
-> +	backlight: backlight {
-> +		compatible = "pwm-backlight";
-> +		pwms = <&pmc8280c_lpg 3 1000000>;
-> +		enable-gpios = <&pmc8280_1_gpios 8 GPIO_ACTIVE_HIGH>;
-> +		power-supply = <&vreg_edp_bl>;
-> +
-> +		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
-> +		pinctrl-names = "default";
-> +	};
-> +
+> -- 
+> With best wishes
+> Dmitry
 
-
-Investigating the feedback I got from an AI bot review [1], I plan to 
-update this patch in v2. Let me know what you think.
-
-I was skeptical at first but upon review I've tried the following patch:
-
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts 
-b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-index f938e68c69ea..82e0a01276a8 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-@@ -198,7 +198,7 @@ vreg_edp_bl: regulator-edp-bl {
-                 regulator-min-microvolt = <3600000>;
-                 regulator-max-microvolt = <3600000>;
-
--               gpio = <&pmc8280c_gpios 6 GPIO_ACTIVE_HIGH>;
-+               gpio = <&pmc8280_2_gpios 6 GPIO_ACTIVE_HIGH>;
-                 enable-active-high;
-
-                 pinctrl-0 = <&edp_bl_reg_en>;
-@@ -1050,6 +1050,11 @@ vol_up_n: vol-up-n-state {
-  };
-
-  &pmc8280_2_gpios {
-+       edp_bl_reg_en: edp-bl-reg-en-state {
-+               pins = "gpio6";
-+               function = "normal";
-+       };
-+
-         wwan_sw_en: wwan-sw-en-state {
-                 pins = "gpio1";
-                 function = "normal";
-@@ -1061,11 +1066,6 @@ edp_bl_pwm: edp-bl-pwm-state {
-                 pins = "gpio8";
-                 function = "func1";
-         };
--
--       edp_bl_reg_en: edp-bl-reg-en-state {
--               pins = "gpio6";
--               function = "normal";
--       };
-  };
-
-  &pmr735a_gpios {
-
-
-
-and ... backlight still works! It can also be enabled/disabled with:
-    /sys/class/backlight/backlight/bl_power
-as expected.
-
-I have no clue why both gpio6 on pmc8280_2 and gpio6 on pmc8280c can 
-enable and disable the backlight. Is it a common scenario?
-
-Anyway, if I follow my own investigation fully based on the X13s 
-reference and the properties of its backlight enable GPIO, I should 
-switch to pmc8280_2 to use the better match.
-
-I will update this patch in v2.
-
-Jérôme
-
-
-[1] https://lore.kernel.org/all/20260520165709.E485C1F00893@smtp.kernel.org/
-
+-- 
+Rodrigo Siqueira
 
