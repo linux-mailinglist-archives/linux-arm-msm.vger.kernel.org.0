@@ -1,342 +1,504 @@
-Return-Path: <linux-arm-msm+bounces-108739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YNo4BZ2oDWpr1AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 14:27:09 +0200
+	id CPO3H9+qDWox1QUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 14:36:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A666458DA00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 14:27:08 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5F2A58DCE2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 14:36:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id BD1D330066BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 12:27:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 56C11302AE1A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 12:30:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 580113DCDA2;
-	Wed, 20 May 2026 12:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0221A3DBD5C;
+	Wed, 20 May 2026 12:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IEL3c5Pj";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Tdg5TV4e"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Red52nK/";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="X9jySy82"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC173DCDB7
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:26:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779280018; cv=none; b=umsKptPRciesMmn/53r9ZB3G/WD/VmU0CsxyfD2oMkiCChxxqDZZCjTIboO7TR3d/JefilmSFjFRD0yeiu21NgBRWrxP4/giS6exAyPux/dmEhfNEhxGi3B9/F9yEOtywGswEl5CPpr5pzgVjV961aogSYSCR7q3lvY0BrT8uy4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779280018; c=relaxed/simple;
-	bh=DwsYZ/L59gK2frARM4OpTutCsqwpRRPxIu26xmMRpGo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ejBnuNis4WgD/pNDkiKu1CFa4xVs14uLtakZTkHlP5P6E+PABpzuzmW9iwnBAeAPa2d1PPmgcqChPkfRcbwwZnCr+fb6jmk6hBaPtKXAKhC558fkzfkzjvQvOErfAdp/ofytqwE9dbpDqiCFTRb7tDr6H/kolnWv0oIjQruXZuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IEL3c5Pj; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Tdg5TV4e; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89583DDDBC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:30:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.180.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779280241; cv=pass; b=mrnTfV7WvrZwKEcQS0kc0+CzPEb+jgLp33+QfCmHWUZEEIg1BdUnrNyNZoPPB8i7TYGP/vUp2X+mSZFo/Plx9lX6A+rm89loRlN0E7M5lSo92y8A7ET8XiQLPDL5y7SaGW02g+n3bn0ceR5C+ghDfd8IaCvij3AdjYvqkrxb8F4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779280241; c=relaxed/simple;
+	bh=LN7op/v3EKo2CUBqiG1+j8NjIeoB1EpBlmih40gE22k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ga+0Jv4E2vs+t8OnRKnGqx3q9wDjK+0+Mi//4MlfMoJ/ujwpRO9WidKrDYpqWeM2rEnHy4EEXc3xUFqjcIFdOKm+dIegZ45SkWDfFM2dEXPLKptFVdya2daAlXManUH56quNLe2rjMceJMkMHjr/Dw6ZRBrimzcQ4ZguegK0F44=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Red52nK/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=X9jySy82; arc=pass smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64K8vCbt4115900
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:26:54 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64KBZgPd3085144
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:30:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=R2TeQqks38QIoyDMGjnlHZik
-	TcCtv1Rua8ztzIrSGMs=; b=IEL3c5PjqWlF+XsnVNBCelp1TMrAsAl6meLx5Fpo
-	Qr75sMcTLEqvMdOoHpU+OYtP9rhIOv8nIPX2wfHkYe4nimwsj6eonlhLInzGyoGl
-	oVbmLIkw1KIBlyCCv2dRGadc3GEqceUukay8kCYuJCqZoEdQWqv7JKh3rokRh08w
-	Uw9B+rDuloBd2LhhoKtrHOmBshYeaAUnYl5ZUQrOOdDMV4niA2Ik+YRqg/JSVkE3
-	E569Mg7PhhYWhMWuS8uuPG91zGmYPDzSEjVVfHeVMZ/bqIpFWEmQfMJzWK0Y5oxS
-	Hh9rAA455ZRtUUTKQxNd6bvmZcDtMzG4mGTNObVxK1Q1SQ==
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com [209.85.222.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e99w0gs2h-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=cRAlnpjqr6bgUfKkNAu3ISqsa9AjttBO7qAkv5Wdtl8=; b=Re
+	d52nK/3A0saI9eAg8ShXQyCcd6UfbWKoKbDAPtuLpXkFtLsnc1xms7kU1Jhsj8T0
+	2NaTLk5bHm+AJOlkMAS06jSWL/mBqBsMf8WgREy4Rts3vplU+jGxr4LFYMrm6irA
+	I7QdyKL9asWuKNP6anWMEOM50eMLpiB8oJVqhnh4fw6jL+NJepaPnID8sRT0s/Kz
+	+50ZYCc9RWkk48X130TfSdQgeDLB7K+3TAdaQk4GQQ1oQ4efQ4+yM6jLqRKYSyRr
+	ismdfrr+YhAjaIkHUReCWBVlSIG0tgzbKUTgectRvggPttaalmJAf/LNWT80TSMm
+	xTutpvKlN8ca5RCw5+Kg==
+Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com [209.85.161.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9c7f0680-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:26:54 +0000 (GMT)
-Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-95fd0a49df1so7171391241.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 05:26:53 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:30:38 +0000 (GMT)
+Received: by mail-oo1-f70.google.com with SMTP id 006d021491bc7-69b3a3c798dso5572151eaf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 05:30:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779280238; cv=none;
+        d=google.com; s=arc-20240605;
+        b=cnO10dU9ReIqTjaY5m3V+H7Gl7kJ4F5JJpHZ9n3HcPY+2G/jtSePhMbRe5cRrQ6nn0
+         b7azctfiz8MlJxuGvTHAmCPFRq53ofnTB2MnIDgEe9kXp/oBH72Blc21JCo6Wx0yMlkY
+         c4Qg0FrQbYKiFEbth6giz4bgo/zpjdJ5pOuAmmr7zEZzrxH+GuCxVxftZByhekf6H9W7
+         Ni4Fxf37mNgO13kGjN08rqJjdNZmOwn9/kgGA7afXMKAKz8wamWHmbsl3EMjIoOQN8Ww
+         u/ciBx4Ir/+fftJePU1fdrgw7QtPlf6/dc0pH4uBQb0pQ6WpnaWmku7J+MFkYoChxsZg
+         gglA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:dkim-signature;
+        bh=cRAlnpjqr6bgUfKkNAu3ISqsa9AjttBO7qAkv5Wdtl8=;
+        fh=GThcAc2qvCbk21nqgBNAvJkFlcZKo3WraVZslXEl1DA=;
+        b=M3ywR4VR9xsUM1kMLzLUvzlJLH9ZxoggHPbs38izRa6VaF1ZWhxOxy9Zi18i7U9/q5
+         VXeErftJLT2D7NlZxhFGk7tnIwtMa7oNKuNslNWYlauMjcPRWEQvkZy40ykwzOOJCgGM
+         WM7U+x+PrSGFqsgBL8M3AKVpKEETdDIjZnZu4ItZiAJ9o835evVmZtAKKlHM+BtAV1kw
+         5srDFjPawd4CAgf66pgpJ80QblRS+n1Pw3sYJRV/o3l2/3ZY0dXfMjy6awKX4ZfOh2WJ
+         tF6DuShOBcTyQ80l1s9FHkXBplfRi8P7SFuJq+Z94Aq8drRSOWoG5A3po106trlNeyYG
+         +0hA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779280013; x=1779884813; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=R2TeQqks38QIoyDMGjnlHZikTcCtv1Rua8ztzIrSGMs=;
-        b=Tdg5TV4eAeEyrSF2FR1YNb7YlOtRqI8Ig2L/WkOfKMVdkxrAg9IQGEVCEgM8h/v8AR
-         JdH+fkm+wPy/NMKltC6BXgxQG71sqR6TsDls6VW97b+2bvDylWVPZuDso8Q4R05NKDz6
-         aEINzkwe7EhcrvCFSWCL036buA+7JXSBpsERJPDaRRqupdLWNiCGqAF+DjStVGMXR9lZ
-         +R05f7IjJpWVWsM6hT7tt90IAb+W6tynhrQneZ1sUbcijTyn0fzZHEl99Dgus4CrGZSi
-         ihzutamSMxraqucW+BhPsFx3s3L17WeHCn1hgOczzk1lTCSEQi+D4Ylr7qbo2+//eT8x
-         S6rA==
+        d=oss.qualcomm.com; s=google; t=1779280238; x=1779885038; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=cRAlnpjqr6bgUfKkNAu3ISqsa9AjttBO7qAkv5Wdtl8=;
+        b=X9jySy82zKoS3PKHPFWFOLEvnJRAUheXO63rrQRSls87tSqt96hzag/vaxXfhz2j+a
+         vQjptug9ktb80EOdOlbhekr2+zq+UO4XlxJ/WigevEHEnsC2CDtIeB5IU3JLwK40XiQ3
+         hIC/6tmLpYKMK8Vk1RMvDh1NinJOALVoBh1J0UigbDWMQo+Hz7gbHylfzTaQCRVOyll/
+         jNDwVmVn7wXsjszGaBKfAuriKdYyU6QH/1N1z4g34P1I4XEpOKTxRUi5KuDMtWuGljVx
+         euD7SEjdkp/fSPt9SjROPDNkKTC9Bf+C09Z2dg4+MOXKa5GmVWfEQ92bGO0U8udoEwBF
+         A7CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779280013; x=1779884813;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=R2TeQqks38QIoyDMGjnlHZikTcCtv1Rua8ztzIrSGMs=;
-        b=Rb04ifrPRFw9uYjybu+fsskLVFm5LBSh6/3rIavxzCUDm6gnx+H0iwB9EXMv7tVJDF
-         go6Nzis8m7yKMQyYnbZ6Np5+T0cLjsMr7h+AogdIq7QAy7aSssu0x6QaIVoWhl379Pmd
-         Zdn6a/bJZcCdxao7YVEm88GH4QR8aKgFO7IAgIgRA3myIhwy4yJ5fOlZGDPqkVI/kREK
-         KhNr8bn8b5DLZ1rHa2h24fpzqb6rs1N6RhIoUst9DrCdTQ4Pt/v9KWdnScGwoQCTabVH
-         RsliCW58vq/oHqS7XDBWhz4oVMo3vWJHcxzRzipsU2+7k4qRSxefi/P70cR1sRHGMPnN
-         jUSg==
-X-Forwarded-Encrypted: i=1; AFNElJ+zmTBwsnMOgWjluXFwcKr2J0AeC9rwWflJ0Uw2mNWCV4+pTtmLh53wYyFr4gv6eJN952C7F+DA13gH2khV@vger.kernel.org
-X-Gm-Message-State: AOJu0YwH5WPxFCPqsinqgPU40bXorJFBld6/+mTqBoGzGFMsZBBlI//g
-	ZQqII0ixLYQNBLk++HbqcHdXsOMJz5aD0T3e8P0sE7YG3Dk7DMUY7QWVknL1RF+WxijbzeHOlsz
-	VP88rMZ1zr4RE9W6T6QR1h5ZV159SXBdP76OaKEjLn9XNdypnDWgWFgAKPy4kTcqOQ3mL
-X-Gm-Gg: Acq92OEBIYudro8MUsFFV2q1ktcPDDtr4L/MSo4+hohpqakkafaBEk4nuL+6gH0e9wP
-	d6r5PSRftKx5ESHKPMhBapSJ17dPvqFNe79rw7dpOD8Fv1T4ruzuihD7egs0VXQM2LVR/Hc3BWC
-	HS2pQm1ZVJgXfMKiGrTHe4CcjX27yZBq3cqZhBtUvx6HfDSFnw8F13ydr8zJZBdWDXs80YjEJU/
-	g/ubTQ+2qZ3hsDSKGsIqNKYrxlmWITq1ywid4k+cYO4aZv5RyxMORb/BwL/s+v9ppd3y1EIUN+n
-	ioqSx0OxS1LcnyALaHaCakCR7UaGOod+WP6ogXMOT+sroeb5G5XfVteLfAbTmi99rjeI/vMN5nx
-	vfjiDjIHOGr0yZ8D5acsr/aJvy358XU+Hs+OUaUWIN1PxK859HZwh/+5Vm/qhwPN/M1TQfVi5Y5
-	gR7TDYRunpUdbYoybxqPwdmk1MSowdgxwdiqI=
-X-Received: by 2002:a05:6102:5e86:b0:633:d7ec:153c with SMTP id ada2fe7eead31-63a3c801ffemr13878889137.3.1779280013357;
-        Wed, 20 May 2026 05:26:53 -0700 (PDT)
-X-Received: by 2002:a05:6102:5e86:b0:633:d7ec:153c with SMTP id ada2fe7eead31-63a3c801ffemr13878848137.3.1779280012801;
-        Wed, 20 May 2026 05:26:52 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a90f11a7a0sm4868217e87.24.2026.05.20.05.26.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2026 05:26:51 -0700 (PDT)
-Date: Wed, 20 May 2026 15:26:49 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Adrien Grassein <adrien.grassein@gmail.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Tvrtko Ursulin <tursulin@ursulin.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Pengyu Luo <mitltlatltl@gmail.com>, Nikita Travkin <nikita@trvn.ru>,
-        Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        intel-xe@lists.freedesktop.org, linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH RESEND v3 1/6] drm/connector: report IRQ_HPD events to
- drm_connector_oob_hotplug_event()
-Message-ID: <vvlw4f6xo7krq3xoyxuoaa3tecrgduw5qlujp3qf3zzibzjesv@demhqzadavql>
-References: <20260513-hpd-irq-events-v3-0-086857017f16@oss.qualcomm.com>
- <20260513-hpd-irq-events-v3-1-086857017f16@oss.qualcomm.com>
+        d=1e100.net; s=20251104; t=1779280238; x=1779885038;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cRAlnpjqr6bgUfKkNAu3ISqsa9AjttBO7qAkv5Wdtl8=;
+        b=nGIInVEnZR945LQMjFSTZFyF9kXIp+l+tVsRmVSP9gXUqW1l8Cw6HBrfqxuhC/cU5M
+         9u3iJsVGUF18pGcLbw9YpsU5U8HQZaOVCx+pPlryXbrXPI6zdtNiXirNx5kcKkwct5B/
+         +8jk8l+Ny4cr3VUstFeQuvDTT4Hef4gjQPqElbWEZ+uiqA2LWoLMtmwq5xM45hvEBhhY
+         JZ7Ho2BexQnkq1IC/AAVYVPDVQf+Ht8BqOQ0tH8uurI/URN0TH66OXCN8aO5KPkh12QJ
+         Rgt/z1t3UDToxnjFURi+6vvxnRqV91jJ3eCKRJpZm24o+h55VDo9cr2shBgnGMyRtlS3
+         F1gA==
+X-Forwarded-Encrypted: i=1; AFNElJ/EJNAuotg7R/TzlbcdZXCkRnhDXXsQXc1qoxq2/8lG/dMzcixenpY/3WfT9coAf1rXSD20k5f/v7PddGlH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy3fvizpMiIcWzgmvpZNE6HKfxQuyrWnClYpH/fd8WPVHk/vWau
+	sguQz2lJPsshgcPd6VfSvXX9XaYsdpsbsANNaHc7BCgxwml9iL4l5+yHXR4gbOkWQTLmphtmngd
+	mLwL0S2ADzk7NSgVHf0eAEW/yXiDphRrNsYx1qYsSj/EP6hPMt1atbrSw1Ql9DxJXCI+/IL4WPf
+	IsPfNebLfkcS2zHzxySOECvlp3KgTtkeLi/UV5N+9JhG4=
+X-Gm-Gg: Acq92OH6xHIcKjdu9qlx3yuNQejTAWHfIALe1gKEcnD0oNRkmvbTStiXvGsl8cjd6Ra
+	Lv2dtpXAIjTDExHSvQDI2aWFUcLETTqruMPewry3qYdFcnJSrRe5z2TBkSLgu7Wxq5J2pWf1L/z
+	T/whk+34pEWkVg1387lN/VfvXlKA9CMGVRbdMWNCuG93vCy+r/ydik6wDbEfCuooejadRsc/Q0v
+	KvmgCebup+Y49jOFnZGnw4ADHLXzwiiQt7RfQ==
+X-Received: by 2002:a05:6820:3103:b0:696:6440:9e2a with SMTP id 006d021491bc7-69c9437a8fdmr13632115eaf.29.1779280237612;
+        Wed, 20 May 2026 05:30:37 -0700 (PDT)
+X-Received: by 2002:a05:6820:3103:b0:696:6440:9e2a with SMTP id
+ 006d021491bc7-69c9437a8fdmr13632098eaf.29.1779280237088; Wed, 20 May 2026
+ 05:30:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260513-hpd-irq-events-v3-1-086857017f16@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: 72zFCMzaLMag1ptmzI3Z7dISOe4pVPq5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDEyMCBTYWx0ZWRfX9fmsjiwYPCSV
- EmjpmSjEHxEfKRtwobHd4popqZzfV/YwOcLSDPAPAYtRhG//lkJzoAox4dtIDbZEW3UVa56mF8b
- 4M8MMzS+x5fr9jxmuKkSdxvaIkXa6NbTov+HBYIDFQnxoO3uP4edOt01uX0XnnmSedR/kf8AtMV
- dJZeCTSj4EvbxfHuC5kDSwq4lSbxUMuAqm3u5NG7gmCZp4RcoUwFlRBi9WA8Z/2YXFoNtpN4WbD
- 7LrjBAubREPGVzduau/F8fFfL1Ed7cNz22j+TJ8mb5ijNvJcMPsaYkLJ6xwtXkSdVpmQQ2gsl2l
- deFqDPiFnzz4kGVdjTLIG4lQsvm/f9V5gTrFmqhaKkxat1l3rscM3Sd+9eTSWacpVAIuEVGD9XP
- IcBj1rQGPJZm8jeZ6tQ+DgtJQzVMSEvyPjWXloAXzRR26SvLl7Oz68Z0rQDz3zi5f6gk3iBDRan
- mJh91l1i5hwRAfARbrw==
-X-Authority-Analysis: v=2.4 cv=RZigzVtv c=1 sm=1 tr=0 ts=6a0da88e cx=c_pps
- a=KB4UBwrhAZV1kjiGHFQexw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
- a=6jUhzznPuw0D9V4-6sIA:9 a=CjuIK1q_8ugA:10 a=o1xkdb1NAhiiM49bd1HK:22
-X-Proofpoint-GUID: 72zFCMzaLMag1ptmzI3Z7dISOe4pVPq5
+References: <20260518190735.16236-1-robin.clark@oss.qualcomm.com>
+ <20260518190735.16236-6-robin.clark@oss.qualcomm.com> <b4787a2b-c1db-4c0c-8c58-fe60fed83cfb@oss.qualcomm.com>
+In-Reply-To: <b4787a2b-c1db-4c0c-8c58-fe60fed83cfb@oss.qualcomm.com>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Wed, 20 May 2026 05:30:25 -0700
+X-Gm-Features: AVHnY4LzoFxkUnfiW8o2N4ZWSii52hKyNHpJEIfWcWyaWJPx5X2ycU2_KrwUkLo
+Message-ID: <CACSVV01srddm1569SStsdBg_L_JG79sPgORokNUw8odgyix=pA@mail.gmail.com>
+Subject: Re: [PATCH v7 05/16] drm/msm/registers: Add perfcntr json
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Anna Maniscalco <anna.maniscalco2000@gmail.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=c/ibhx9l c=1 sm=1 tr=0 ts=6a0da96e cx=c_pps
+ a=lkkFf9KBb43tY3aOjL++dA==:117 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8
+ a=AqeHwav0Fnr3ArOU010A:9 a=8f1wxSZkJpRnjI3K:21 a=QEXdDO2ut3YA:10
+ a=k4UEASGLJojhI9HsvVT1:22
+X-Proofpoint-GUID: d4-0jebB8U0PkhFxASi_j9LJj66cORzw
+X-Proofpoint-ORIG-GUID: d4-0jebB8U0PkhFxASi_j9LJj66cORzw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDEyMCBTYWx0ZWRfX34eZ+SBF3MIZ
+ 08LqlLywowgjjuzQiCxFAJKmRpMiRFAIkOZ0RiJP+ZO2X73O4aA6MopQyJ3G8mCUsTkBS8XSDpc
+ AOEjk0gtPfFt0p28Ot2ETUxa2LXqotX9p6UYEkKEJR8/GzvBLm+6J18O25yz01O4NmL0ry+h1VE
+ 3Znx8OJWpkE5dF5zX26bZzUcprnyIssHVe38ALKMHPLQpAtq15cKYaNQVofOZ+Du7I/VnwXg8zI
+ xPfJYcdKlb+KrujuTWr2PxwdSah0cxrJGC6AeHkfpaTBvlJ9tUmWOG+reSQaKN6lYrD9W8GgBEL
+ kt1yLlKfRbBJTuh9J/mm2tQ+eLvhfqlwtGRsYYEC2qh26l/wYb7VY4b7WbDs4gYS2a2Fis7/GFk
+ c+f2va7g4AxRMXah7jsUcu24twuf6IjWC5r3ACDiHT++o5pU7dhPvBOo12FB5JZ/pRce7/MURPR
+ 27dul2YFtzs2GChRUGw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-20_02,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
- priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0 spamscore=0
+ impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0 bulkscore=0
+ clxscore=1015 malwarescore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200120
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108739-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,linuxfoundation.org,intel.com,linaro.org,ideasonboard.com,kwiboo.se,ursulin.net,baylibre.com,googlemail.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,trvn.ru];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-108740-lists,linux-arm-msm=lfdr.de];
+	REPLYTO_DOM_EQ_TO_DOM(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[42];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: A666458DA00
+	FREEMAIL_CC(0.00)[lists.freedesktop.org,vger.kernel.org,oss.qualcomm.com,gmail.com,kernel.org,linux.dev,poorly.run,somainline.org,ffwll.ch];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	HAS_REPLYTO(0.00)[rob.clark@oss.qualcomm.com];
+	RCVD_COUNT_FIVE(0.00)[6];
+	REPLYTO_ADDR_EQ_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[rob.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	PRECEDENCE_BULK(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-1.000];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,qualcomm.com:dkim,mail.gmail.com:mid,oss.qualcomm.com:replyto,oss.qualcomm.com:dkim]
+X-Rspamd-Queue-Id: D5F2A58DCE2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, May 13, 2026 at 09:23:21PM +0300, Dmitry Baryshkov wrote:
-> The DisplayPort standard defines a special kind of events called IRQ.
-> These events are used to notify DP Source about the events on the Sink
-> side. It is extremely important for DP MST handling, where the MST
-> events are reported through this IRQ.
-> 
-> In case of the USB-C DP AltMode there is no actual HPD pulse, but the
-> events are ported through the bits in the AltMode VDOs.
-> 
-> Extend the drm_connector_oob_hotplug_event() interface and report IRQ
-> events to the DisplayPort Sink drivers.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/drm_connector.c          |  5 ++++-
->  drivers/usb/typec/altmodes/displayport.c | 15 +++++++++++----
->  include/drm/drm_connector.h              | 19 ++++++++++++++++++-
->  3 files changed, 33 insertions(+), 6 deletions(-)
+On Wed, May 20, 2026 at 1:36=E2=80=AFAM Akhil P Oommen <akhilpo@oss.qualcom=
+m.com> wrote:
+>
+> On 5/19/2026 12:36 AM, Rob Clark wrote:
+> > Pull in perfcntr json and wire up generation of perfcntr tables.
+> >
+> > Sync from mesa commit d2c4653ee953 ("freedreno/registers: Add gen8 perf=
+cntrs")
+> >
+> > Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > Reviewed-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+> > ---
+> >  drivers/gpu/drm/msm/Makefile                  |  25 +-
+> >  drivers/gpu/drm/msm/msm_perfcntr.h            |  48 ++++
+> >  .../msm/registers/adreno/a2xx_perfcntrs.json  | 109 ++++++++
+> >  .../msm/registers/adreno/a5xx_perfcntrs.json  | 128 ++++++++++
+> >  .../msm/registers/adreno/a6xx_perfcntrs.json  | 105 ++++++++
+> >  .../msm/registers/adreno/a7xx_perfcntrs.json  | 228 +++++++++++++++++
+> >  .../msm/registers/adreno/a8xx_perfcntrs.json  | 240 ++++++++++++++++++
+> >  7 files changed, 882 insertions(+), 1 deletion(-)
+> >  create mode 100644 drivers/gpu/drm/msm/msm_perfcntr.h
+> >  create mode 100644 drivers/gpu/drm/msm/registers/adreno/a2xx_perfcntrs=
+.json
+> >  create mode 100644 drivers/gpu/drm/msm/registers/adreno/a5xx_perfcntrs=
+.json
+> >  create mode 100644 drivers/gpu/drm/msm/registers/adreno/a6xx_perfcntrs=
+.json
+> >  create mode 100644 drivers/gpu/drm/msm/registers/adreno/a7xx_perfcntrs=
+.json
+> >  create mode 100644 drivers/gpu/drm/msm/registers/adreno/a8xx_perfcntrs=
+.json
+> >
+>
+> << snip >>
+>
+> > diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx_perfcntrs.json b=
+/drivers/gpu/drm/msm/registers/adreno/a6xx_perfcntrs.json
+> > new file mode 100644
+> > index 000000000000..8bb31820479e
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/msm/registers/adreno/a6xx_perfcntrs.json
+> > @@ -0,0 +1,105 @@
+> > +{
+>
+> RBBM and CMP groups are missing here.
 
-Greg, Heikki, would you please ack merging this through the drm tree?
+Yes, so far we only support the counters that mesa has been using.
+There are some missing.  Although RBBM and CMP look straightforward to
+add.
 
-> 
-> diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
-> index 47dc53c4a738..edee9daccd51 100644
-> --- a/drivers/gpu/drm/drm_connector.c
-> +++ b/drivers/gpu/drm/drm_connector.c
-> @@ -3510,6 +3510,8 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
->   * drm_connector_oob_hotplug_event - Report out-of-band hotplug event to connector
->   * @connector_fwnode: fwnode_handle to report the event on
->   * @status: hot plug detect logical state
-> + * @extra_status: additional information provided by the sink without changing
-> + * the HPD state (or in addition to such a change).
->   *
->   * On some hardware a hotplug event notification may come from outside the display
->   * driver / device. An example of this is some USB Type-C setups where the hardware
-> @@ -3520,7 +3522,8 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
->   * a drm_connector reference through calling drm_connector_find_by_fwnode().
->   */
->  void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
-> -				     enum drm_connector_status status)
-> +				     enum drm_connector_status status,
-> +				     enum drm_connector_status_extra extra_status)
->  {
->  	struct drm_connector *connector;
->  
-> diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
-> index 35d9c3086990..7182a8e2e710 100644
-> --- a/drivers/usb/typec/altmodes/displayport.c
-> +++ b/drivers/usb/typec/altmodes/displayport.c
-> @@ -189,7 +189,9 @@ static int dp_altmode_status_update(struct dp_altmode *dp)
->  	} else {
->  		drm_connector_oob_hotplug_event(dp->connector_fwnode,
->  						hpd ? connector_status_connected :
-> -						      connector_status_disconnected);
-> +						      connector_status_disconnected,
-> +						(hpd && irq_hpd) ? DRM_CONNECTOR_DP_IRQ_HPD :
-> +								   DRM_CONNECTOR_NO_EXTRA_STATUS);
->  		dp->hpd = hpd;
->  		sysfs_notify(&dp->alt->dev.kobj, "displayport", "hpd");
->  		if (hpd && irq_hpd) {
-> @@ -212,7 +214,10 @@ static int dp_altmode_configured(struct dp_altmode *dp)
->  	 */
->  	if (dp->pending_hpd) {
->  		drm_connector_oob_hotplug_event(dp->connector_fwnode,
-> -						connector_status_connected);
-> +						connector_status_connected,
-> +						dp->pending_irq_hpd ?
-> +						DRM_CONNECTOR_DP_IRQ_HPD :
-> +						DRM_CONNECTOR_NO_EXTRA_STATUS);
->  		sysfs_notify(&dp->alt->dev.kobj, "displayport", "hpd");
->  		dp->pending_hpd = false;
->  		if (dp->pending_irq_hpd) {
-> @@ -397,7 +402,8 @@ static int dp_altmode_vdm(struct typec_altmode *alt,
->  			dp->data.conf = 0;
->  			if (dp->hpd) {
->  				drm_connector_oob_hotplug_event(dp->connector_fwnode,
-> -								connector_status_disconnected);
-> +								connector_status_disconnected,
-> +								DRM_CONNECTOR_NO_EXTRA_STATUS);
->  				dp->hpd = false;
->  				sysfs_notify(&dp->alt->dev.kobj, "displayport", "hpd");
->  			}
-> @@ -827,7 +833,8 @@ void dp_altmode_remove(struct typec_altmode *alt)
->  
->  	if (dp->connector_fwnode) {
->  		drm_connector_oob_hotplug_event(dp->connector_fwnode,
-> -						connector_status_disconnected);
-> +						connector_status_disconnected,
-> +						DRM_CONNECTOR_NO_EXTRA_STATUS);
->  
->  		fwnode_handle_put(dp->connector_fwnode);
->  	}
-> diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
-> index f83f28cae207..e05197e970d3 100644
-> --- a/include/drm/drm_connector.h
-> +++ b/include/drm/drm_connector.h
-> @@ -91,6 +91,22 @@ enum drm_connector_status {
->  	connector_status_unknown = 3,
->  };
->  
-> +/**
-> + * enum drm_connector_status_extra - additional events sent by the sink /
-> + * display together or in replacement of the HPD status changes.
-> + */
-> +enum drm_connector_status_extra {
-> +	/**
-> +	 * @DRM_CONNECTOR_NO_EXTRA_STATUS: No additional status reported.
-> +	 */
-> +	DRM_CONNECTOR_NO_EXTRA_STATUS,
-> +	/**
-> +	 * @DRM_CONNECTOR_DP_IRQ_HPD: DisplayPort Sink has sent the
-> +	 * IRQ_HPD (either by the HPD short pulse or via the AltMode event).
-> +	 */
-> +	DRM_CONNECTOR_DP_IRQ_HPD,
-> +};
-> +
->  /**
->   * enum drm_connector_registration_state - userspace registration status for
->   * a &drm_connector
-> @@ -2521,7 +2537,8 @@ drm_connector_is_unregistered(struct drm_connector *connector)
->  }
->  
->  void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
-> -				     enum drm_connector_status status);
-> +				     enum drm_connector_status status,
-> +				     enum drm_connector_status_extra extra_status);
->  const char *drm_get_connector_type_name(unsigned int connector_type);
->  const char *drm_get_connector_status_name(enum drm_connector_status status);
->  const char *drm_get_subpixel_order_name(enum subpixel_order order);
-> 
-> -- 
-> 2.47.3
-> 
+> > +    "chip": "A6XX",
+> > +    "groups": [
+> > +        {
+> > +            "name": "CP",
+> > +            "num": 14,
+> > +            "reserved": [ 0 ],
+> > +            "select": "CP_PERFCTR_CP_SEL",
+> > +            "counter": "RBBM_PERFCTR_CP",
+> > +            "countable_type": "a6xx_cp_perfcounter_select"
+>
+> << snip >>
+>
+> > diff --git a/drivers/gpu/drm/msm/registers/adreno/a7xx_perfcntrs.json b=
+/drivers/gpu/drm/msm/registers/adreno/a7xx_perfcntrs.json
+> > new file mode 100644
+> > index 000000000000..e60aab1862ec
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/msm/registers/adreno/a7xx_perfcntrs.json
+> > @@ -0,0 +1,228 @@
+> > +{
+> > +    "chip": "A7XX",
+> > +    "groups": [
+> > +        {
+> > +            "name": "CP",
+> > +            "num": 14,
+> > +            "reserved": [ 0 ],
+> > +            "select": "CP_PERFCTR_CP_SEL",
+> > +            "counter": "RBBM_PERFCTR_CP",
+> > +            "countable_type": "a7xx_cp_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "RBBM",
+> > +            "num": 4,
+> > +            "select": "RBBM_PERFCTR_RBBM_SEL",
+> > +            "counter": "RBBM_PERFCTR_RBBM",
+> > +            "countable_type": "a7xx_rbbm_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "PC",
+> > +            "pipe": "BR",
+> > +            "num": 8,
+> > +            "select": "PC_PERFCTR_PC_SEL",
+> > +            "counter": "RBBM_PERFCTR_PC",
+> > +            "countable_type": "a7xx_pc_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "VFD",
+> > +            "pipe": "BR",
+> > +            "num": 8,
+> > +            "select": "VFD_PERFCTR_VFD_SEL",
+> > +            "counter": "RBBM_PERFCTR_VFD",
+> > +            "countable_type": "a7xx_vfd_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "HLSQ",
+> > +            "pipe": "BR",
+> > +            "num": 6,
+> > +            "select": "SP_PERFCTR_HLSQ_SEL",
+> > +            "counter": "RBBM_PERFCTR_HLSQ",
+> > +            "countable_type": "a7xx_hlsq_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "VPC",
+> > +            "pipe": "BR",
+> > +            "num": 6,
+> > +            "select": "VPC_PERFCTR_VPC_SEL",
+> > +            "counter": "RBBM_PERFCTR_VPC",
+> > +            "countable_type": "a7xx_vpc_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "TSE",
+> > +            "pipe": "BR",
+> > +            "num": 4,
+> > +            "select": "GRAS_PERFCTR_TSE_SEL",
+> > +            "counter": "RBBM_PERFCTR_TSE",
+> > +            "countable_type": "a7xx_tse_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "RAS",
+> > +            "pipe": "BR",
+> > +            "num": 4,
+> > +            "select": "GRAS_PERFCTR_RAS_SEL",
+> > +            "counter": "RBBM_PERFCTR_RAS",
+> > +            "countable_type": "a7xx_ras_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "UCHE",
+> > +            "num": 12,
+>
+> A740 and newer has 24 counters
 
--- 
-With best wishes
-Dmitry
+We don't yet have a way of dealing with mid-gen changes like this..  I
+have some ideas, but nothing implemented yet.  The same situation
+comes up for a8xx, where some new counter groups are added.
+
+> > +            "select": "UCHE_PERFCTR_UCHE_SEL",
+> > +            "counter": "RBBM_PERFCTR_UCHE",
+> > +            "countable_type": "a7xx_uche_perfcounter_select"
+> > +        },
+>
+> << snip >>
+>
+> > diff --git a/drivers/gpu/drm/msm/registers/adreno/a8xx_perfcntrs.json b=
+/drivers/gpu/drm/msm/registers/adreno/a8xx_perfcntrs.json
+> > new file mode 100644
+> > index 000000000000..503b113df397
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/msm/registers/adreno/a8xx_perfcntrs.json
+> > @@ -0,0 +1,240 @@
+> > +{
+> > +    "chip": "A8XX",
+> > +    "groups": [
+> > +        {
+> > +            "name": "CP",
+> > +            "num": 14,
+> > +            "reserved": [ 0 ],
+> > +            "select": "CP_PERFCTR_CP_SEL",
+> > +            "counter": "RBBM_PERFCTR_CP",
+> > +            "countable_type": "a8xx_cp_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "RBBM",
+> > +            "num": 4,
+> > +            "select": "RBBM_PERFCTR_RBBM_SEL",
+> > +            "slice_select": [ "RBBM_SLICE_PERFCTR_RBBM_SEL" ],
+> > +            "counter": "RBBM_PERFCTR_RBBM",
+> > +            "countable_type": "a8xx_rbbm_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "PC",
+> > +            "pipe": "BR",
+> > +            "num": 8,
+> > +            "select": "PC_PERFCTR_PC_SEL",
+> > +            "slice_select": [ "PC_SLICE_PERFCTR_PC_SEL" ],
+> > +            "counter": "RBBM_PERFCTR_PC",
+> > +            "countable_type": "a8xx_pc_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "VFD",
+> > +            "pipe": "BR",
+> > +            "num": 8,
+> > +            "select": "VFD_PERFCTR_VFD_SEL",
+> > +            "counter": "RBBM_PERFCTR_VFD",
+> > +            "countable_type": "a8xx_vfd_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "HLSQ",
+> > +            "pipe": "BR",
+> > +            "num": 6,
+> > +            "select": "SP_PERFCTR_HLSQ_SEL",
+> > +            "slice_select": [ "SP_PERFCTR_HLSQ_SEL_2" ],
+> > +            "counter": "RBBM_PERFCTR_HLSQ",
+> > +            "countable_type": "a8xx_hlsq_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "VPC",
+> > +            "pipe": "BR",
+> > +            "num": 6,
+> > +            "select": "VPC_PERFCTR_VPC_SEL",
+> > +            "slice_select": [ "VPC_PERFCTR_VPC_SEL_1", "VPC_PERFCTR_VP=
+C_SEL_2" ],
+> > +            "counter": "RBBM_PERFCTR_VPC",
+> > +            "countable_type": "a8xx_vpc_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "TSE",
+> > +            "pipe": "BR",
+> > +            "num": 4,
+> > +            "select": "GRAS_PERFCTR_TSE_SEL",
+> > +            "slice_select": [ "GRAS_PERFCTR_TSEFE_SEL" ],
+> > +            "counter": "RBBM_PERFCTR_TSE",
+> > +            "countable_type": "a8xx_tse_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "RAS",
+> > +            "pipe": "BR",
+> > +            "num": 4,
+> > +            "select": "GRAS_PERFCTR_RAS_SEL",
+> > +            "counter": "RBBM_PERFCTR_RAS",
+> > +            "countable_type": "a8xx_ras_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "UCHE",
+> > +            "num": 12,
+>
+> "num": 24,
+
+ack
+
+>
+> > +            "select": "UCHE_PERFCTR_UCHE_SEL",
+> > +            "counter": "RBBM_PERFCTR_UCHE",
+> > +            "countable_type": "a8xx_uche_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "TP",
+> > +            "pipe": "BR",
+> > +            "num": 12,
+> > +            "select": "TPL1_PERFCTR_TP_SEL",
+> > +            "counter": "RBBM_PERFCTR_TP",
+> > +            "countable_type": "a8xx_tp_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "SP",
+> > +            "pipe": "BR",
+> > +            "num": 24,
+> > +            "select": "SP_PERFCTR_SP_SEL",
+> > +            "counter": "RBBM_PERFCTR_SP",
+> > +            "countable_type": "a8xx_sp_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "RB",
+> > +            "pipe": "BR",
+> > +            "num": 8,
+> > +            "select": "RB_PERFCTR_RB_SEL",
+> > +            "counter": "RBBM_PERFCTR_RB",
+> > +            "countable_type": "a8xx_rb_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "VSC",
+> > +            "num": 2,
+> > +            "select": "VSC_PERFCTR_VSC_SEL",
+> > +            "counter": "RBBM_PERFCTR_VSC",
+> > +            "countable_type": "a8xx_vsc_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "CCU",
+> > +            "pipe": "BR",
+> > +            "num": 5,
+> > +            "select": "RB_PERFCTR_CCU_SEL",
+> > +            "counter": "RBBM_PERFCTR_CCU",
+> > +            "countable_type": "a8xx_ccu_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "LRZ",
+> > +            "pipe": "BR",
+> > +            "num": 4,
+> > +            "select": "GRAS_PERFCTR_LRZ_SEL",
+> > +            "counter": "RBBM_PERFCTR_LRZ",
+> > +            "countable_type": "a8xx_lrz_perfcounter_select"
+> > +        },
+> > +        {
+> > +            "name": "CMP",
+>
+> "pipe": "BR",
+
+ack
+
+BR,
+-R
 
