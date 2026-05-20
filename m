@@ -1,252 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-108892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8P1bATEwDmoK7wUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 00:05:37 +0200
+	id /ayZFqwxDmou8AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 00:11:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5D8F59BB94
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 00:05:36 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DEA259BCE2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 00:11:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 49E7330625A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 22:03:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6A767307835E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 22:11:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F17F03C416B;
-	Wed, 20 May 2026 22:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F8993B6C13;
+	Wed, 20 May 2026 22:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b="pVj8z0i8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WomUS9xZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from OSPPR02CU001.outbound.protection.outlook.com (mail-norwayeastazon11013023.outbound.protection.outlook.com [40.107.159.23])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4B73BF684;
-	Wed, 20 May 2026 22:01:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.159.23
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779314499; cv=fail; b=LydwnifjiqN47CqMvZYKgXUChnCWYjl+l8Fc9E7mUIYaRjQmYP6DiyTA0DzxXGcw8Y4ZxJWUkVFwRHdtOhgNS685P5mcqA5jdb1itOB0VKhsHb0hl8uHgjmK5XOWBcAaCvlU9tKs6kxBHOHyxXhVsa4BFpV2hpwU5NrtpWASSE4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779314499; c=relaxed/simple;
-	bh=Xxxb3WvNGrZnopGky0RMx4nHthEr92Nj/Z1vHabT314=;
-	h=From:Date:Subject:Content-Type:Message-Id:References:In-Reply-To:
-	 To:Cc:MIME-Version; b=D0HjkHvXULtROh0FTyeTCVQoXqp4awMCqu7krNLjmG0qr4f7pAhpZnGgNDMszCuUsvGGtAGnxR6OVKxf9idnNdncjkdYKnLbQrXm7B6Q+tc7MVq0DY5BijC7c7Q7UVkZiYgJVimxVfURN/cdBqAgYhmevXUUJGwSXZjlqSURgKM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; dkim=pass (2048-bit key) header.d=NXP1.onmicrosoft.com header.i=@NXP1.onmicrosoft.com header.b=pVj8z0i8; arc=fail smtp.client-ip=40.107.159.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=a+JC3JPI//wbgrkfwxIqMCyERt86+Rw75D8IEgyt6smb/kVor6PxoIf0dur9Fb34u8H6vcmIYfcP81hWn/9Twi/eYaj/f3UvVnHTHOHhQSNkOtClqrbXplMPNUQzn3V6pQBFkleilm4cmkWbdjU+eaCc6kr0SRthTfNz01tuodwMtVKZw9nwETSPkPAAYgS4aVjGDmbYa6uK3psZw0QXuetohdpPAoN62/fu/6d5gdVEZa13FuV/jhp0LSSQ6w4MZlPV7wGo2D784CIsv7s2hu9n5W8IvGpcC/ZVgK6oWvVdUTivQERO/Pcnd2HTFMRUFGMgno7syp+nZ2typ0IFkg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=i/ReP1rgqWrU4/sMzuwdfH3iluXexvaN58iUOEqpsAA=;
- b=RdAOGwYOVB5yVQlrIzcLp7Syr+57uo1wFiwHoU8bFOZTb/hxuFzNOg4m4PuTOLlC3XQoUdZdZtkUT7lZPGO6coHSwbd0jqqZIrhAud6H4BY9PP6AJQidSKlmrSNBr4mOCK9goczGkUt2YbUOIwkpFsQDD/iXjbhXkEY/XFnXEJurap/DoFbJNyLxRRspzoLRiPQMYm0GdEtb0U3SZVdHX9DfsUMbHcjGPwz7a9o1yDxvzBf3+VediHJYHVQj/UyypmAZGoolcdH0D+DWnviI8AbMEyHQf6RqWCXsh1Zxz5b7AIB1BjfxTexO8oGgHCxdse3IRVG/PYXO3cO5Xs8dtg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oss.nxp.com; dmarc=pass action=none header.from=oss.nxp.com;
- dkim=pass header.d=oss.nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=NXP1.onmicrosoft.com;
- s=selector1-NXP1-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=i/ReP1rgqWrU4/sMzuwdfH3iluXexvaN58iUOEqpsAA=;
- b=pVj8z0i8Jb6Q9JWZDF5bMAvYBcqlEV+w5rXsGUOXslYoNnyJybQlFARoXfwkGrOZaFMkPyIMljjslCL5Uxw/SRZLns1Ry+i9lWp3IPuM54CrC2Zl93y7XxmuDxKJcnzKcea8cSTHigpgSoi2t3MArBcS6HzO/Dx0eakyUGux6i4VbBeuSMnGHsDTvKtjRzg/DIHc4ywBzT4BzHUg/7UGogMhZFBxU1PAH8VDyK1o3XO9ZzSfjD9A0UCOnzon9aGWK1rFvbAG/gcaL/uvPtxcCdj76fokP2YJA/dcA08ygQucQWKLoU5v42sth02bn/aqH2+b9m8DtWvjPEL56WMG6w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=oss.nxp.com;
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com (2603:10a6:150:2cf::9)
- by PA4PR04MB8029.eurprd04.prod.outlook.com (2603:10a6:102:c9::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.14; Wed, 20 May
- 2026 22:01:30 +0000
-Received: from GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c]) by GV2PR04MB11799.eurprd04.prod.outlook.com
- ([fe80::2146:83a2:5329:b7c%6]) with mapi id 15.21.0048.013; Wed, 20 May 2026
- 22:01:30 +0000
-From: Frank.Li@oss.nxp.com
-Date: Wed, 20 May 2026 18:00:50 -0400
-Subject: [PATCH v6 9/9] crypto: atmel: Use dmaengine_prep_config_sg() API
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260520-dma_prep_config-v6-9-06e49b7acb38@nxp.com>
-References: <20260520-dma_prep_config-v6-0-06e49b7acb38@nxp.com>
-In-Reply-To: <20260520-dma_prep_config-v6-0-06e49b7acb38@nxp.com>
-To: Vinod Koul <vkoul@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Bjorn Helgaas <bhelgaas@google.com>, Christoph Hellwig <hch@lst.de>, 
- Sagi Grimberg <sagi@grimberg.me>, Chaitanya Kulkarni <kch@nvidia.com>, 
- Herbert Xu <herbert@gondor.apana.org.au>, 
- "David S. Miller" <davem@davemloft.net>, 
- Nicolas Ferre <nicolas.ferre@microchip.com>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Claudiu Beznea <claudiu.beznea@tuxon.dev>, Koichiro Den <den@valinux.co.jp>, 
- Niklas Cassel <cassel@kernel.org>
-Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-pci@vger.kernel.org, linux-nvme@lists.infradead.org, 
- mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
- linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- imx@lists.linux.dev, Frank Li <Frank.Li@nxp.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779314446; l=1773;
- i=Frank.Li@nxp.com; s=20240130; h=from:subject:message-id;
- bh=erGKLaAZMNXPQALsbiq4uU1FrELcrAtTPXSGZhnyQ3o=;
- b=/Xyzy8RzK6dkLmE/eKI0VzHHc7C1CD2oir42Z7tjFQUJypShx9pOrLKm1h+fKtnpElmhuvfkS
- lIjR+9AroGyAZVQpayYbkHFyoPrRJ8UhgrEft5zXtUNpBXeuQXviM3p
-X-Developer-Key: i=Frank.Li@nxp.com; a=ed25519;
- pk=I0L1sDUfPxpAkRvPKy7MdauTuSENRq+DnA+G4qcS94Q=
-X-ClientProxiedBy: PH8P221CA0056.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:510:349::11) To GV2PR04MB11799.eurprd04.prod.outlook.com
- (2603:10a6:150:2cf::9)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE24393DDC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 22:11:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779315075; cv=none; b=pS3DjEDYYy9brMFINtgKN3Gm8mIxxqHkYteQMCPj3uRNWJ1CtDHNzqLgOQixFc0uPuR299NGxU0WwtpDobAJa7wFSwuNdvCypauVFpFABv0etL1//H5p1DHbSqZ5sdqKiGQSfMHO7adbepAnyDypA1lBMXd4lCvopEDfAVLWmQA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779315075; c=relaxed/simple;
+	bh=37M9PUOfQy2p5QSRWIOQGsVGmX9OOYtVM7BVMxAeCXI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=cEGrFUJoIIe/LA08EmxpJ9dESZPbSqVKpHwCOCVeGeyP6c2H4LKvA4sWbBmFj6w+R1SQcPJiICPaK7mXQDe4apO/3ZfDwE6Ix8E0zt5YUrAVtua4N1o9gCowxcHShN6/8sqpuVDRNbiECV+FthHQzSaLkjs1EXRMJ947KOxg0M8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WomUS9xZ; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-488ad135063so43858885e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 15:11:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1779315071; x=1779919871; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XztvXw0EM5mypFKKLP+bYDI+RT7mLsUytHlSi+Ua1b0=;
+        b=WomUS9xZcBabBoucqci2fo+RdWAZF7GBLCOzGByDrdGtnYgNI3Z2QEO4AyVX316eku
+         1MYsmIGNyKe7rfbax36szSYq260l0FNRzD88vXhqapUEaaaZV0EVJTVo5+dc9uv5vEBu
+         jo2/Q7tYJMRTHbNPgUh+DVbVTo8FFJxdXIryMnONLeiZnlUUmOJXAUMLcekblogx3wJQ
+         92F/O0QC9Wvp35EXyFThjSzc9p/6fvoRwjcuZ80kNrtWjT1Xtn+Lu2JXKhogpTVQ8feG
+         EmncWb238VB5RDVJyWjKxup4l3d7gqoslY+NPJ9vRGUiWMSQYaPfiR632zXA48MTmUzg
+         ij0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779315071; x=1779919871;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XztvXw0EM5mypFKKLP+bYDI+RT7mLsUytHlSi+Ua1b0=;
+        b=D9mIL88QV2RD8IqtcfbdCB2bL0QaAK7GLakwYkb3KBEyBlBMh2rFPaVGHs1e7D4eJD
+         P21J002gfwYKchYpBohOlbQyuYfvbseo9TSn0xNWzasG+M6keychkgkuqk80UsCAue8R
+         3k+4+LC4+FxNtLRF8pAr8qnr0Vulbrj/tJyZoeRz8t7EPBCJE1M3eF0HfnQEHrSNPfPq
+         sD46HV/2tHuJ0/hSWrd05EngYPh64a0zSzxY1RKoWZuanqpGHNRd9giXnQ1CbWa7FHqn
+         cKcqZkMyizZsA5wbODrU0nGb19eMc3mxRShFVPrOt5vhKrtD5yNMiVfyrNRG1k63aJpB
+         njwQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+n8o89n6YX09hkJ+vjCqLu7xwua8Gn42I0ExFP9VNn3TQBgh0/f+cUO3q54VtFZpmT+kZlX9wZnxCXkvAB@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0vERCAg91M4mGcpZUrLYHVP8O7q2WNQwPln5FhrPx9TrylEZp
+	7m9w74jxf5tnfTHdD2fW5qgrEkL7DFVcRJcnMJVyrPHHEb9aetr0rYIiGYbVzHOU1gE=
+X-Gm-Gg: Acq92OE4pVra+ynRa81KVRwAdT8wSrVJhWXR/KCzb1Bs7ntZ6DIY0D4rpEqxduyM59b
+	mLzlEr/RNttfwmovjeKD8pmNcMnsb6516MuVqCtWDS9WAGHk1R2mQd6KI4hRwWJb+1rhJ16EaxD
+	1yJy3pN5R73qzuIZsWs446BVpoZfFUrmFcoJDo4amZ9mKAvcNK/sk91a9Xom4c3oQoVh/ObrGq2
+	PLMV66gPCRXRZxal6ktlvOUS1ngfJk8kFPGHrLIZgUpxzn8UmnclL23oaX/vCAXFxkBJqS8rWhk
+	1h0JgwoD74lvqG8Kl285H3cWACoYtF8Mj7hmmgFCe7BZv+NA6qFjaqPC4yhWuTwGugMx8hHEk9S
+	5wvg5joSizAy0jVSFQhFQif/khvaXl1a9/F9jDa60IqMy6r7UBjTdNQ1sLoP3ijir51+RUYWzAS
+	RTXQIHknzzDYAWXXZ6gPFYBcV3qOtMEznvBN85f1WiQgAipEfVj6SzofjkxEZsSkQQNQHb24poJ
+	nGnk66PR4j/RQ==
+X-Received: by 2002:a05:600c:42d1:b0:489:1ba8:5bf0 with SMTP id 5b1f17b1804b1-49036089466mr1297995e9.21.1779315071295;
+        Wed, 20 May 2026 15:11:11 -0700 (PDT)
+Received: from localhost ([94.4.195.193])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49033cdcc01sm23507635e9.0.2026.05.20.15.11.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 May 2026 15:11:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV2PR04MB11799:EE_|PA4PR04MB8029:EE_
-X-MS-Office365-Filtering-Correlation-Id: a57588e0-419f-41f2-b018-08deb6bb58f7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|366016|7416014|19092799006|921020|56012099003|18002099003|22082099003|11063799006|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	QwNEh13UvSusglFN+StZkU308E+KM8Yd/vRORw1T3mH5yu4Rp2sMxfcTvbwCWrroVROSCU/qgxVRr+lzfT2GE/GHhW8DGALYOg+D5tCWwxbFl6bTGhlYzp1GIlwN0/y/WrrQxx6QuqL2JVIbSLj+I/mir9+uEp6UTfc13pn+7Q5wDmAgFk0lLeorvQI8xtH8jliSmVg2bU6t6MAT60NvgUBc2XQnZ2jQExCn20PVmywa+f23bb3J50OfgvEPvsFK1qqYbMNCoNZjv7M+SS54coaa5Y4QRDvPazyaOY+YrXat9l/U5NQ4XrMj26/KIjmxj9l14RdXMKtfu3Z3Zlnjw+M9fVC0pzLHduB5swm+WRCU7/sqfXcZXPhFHTLLIQWqJsVsLxeTko3YodiK2sGs7OWX0jPNhqGP8oowvlIk8gblZlF0qEIGLZ3029/9oNaCZpVUPLmoIdIAi9aQX3Z/DGYUOqDIT3sB4AzJS0QpyQV0O87r3TfHYqn5keM+PiQi5moHHzdW36qgSPriy8/XDg1EXFU+hZHs6m7eNNxPHfwNhm7bhhr+hw3tRl3xmYh/ZvN8dFTR/hdM9sNbSozl8qlv9e1uQEyYJoWY6h2EZfapNY4P9KyoMCF07DbLGdN3k54tVepUHU/xFIB9zRXj5SJoh0J7A93iGgU3Mc5sAFKeckxMwuVBD553SzpjmwwqYIENq4sY7Bxx3Qkbg3DxYrvaeunJ2bNvqACJZUj7t1M=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV2PR04MB11799.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(7416014)(19092799006)(921020)(56012099003)(18002099003)(22082099003)(11063799006)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?dW00SEM4QnBuSFFXWG81cklTS3h2WEY2T2QreWQ3Z1hkd1JhM0t1N3o3WmdF?=
- =?utf-8?B?SDhlcVkvNXNmVTRjVDVhNEdRNXpicDNMNzVRVDMwa1RpaVJNSkhTYm40Z3Vo?=
- =?utf-8?B?aWV4M3VLV0FhUWpTNWVmeStIcTdvTjJOQVo4TmJJQmdGK3U5QlBpaVBkTkRl?=
- =?utf-8?B?bUI2enJYdzhwc0ZBY24xZDMzaFhGK213WDRNUjkwOXozTzVxUkdPeWFGdC9R?=
- =?utf-8?B?U0NZbDhvM2hsd1RieXFlTTl0KzNmbTFXdmVqS2c0RWQyb1oxZXhPdGpuN1Fo?=
- =?utf-8?B?WlhMTGNQc2crcVFHYjRCd0VXSk5uRElEcFhYZFR1L1JqeUVrb0N1dk9HYVNT?=
- =?utf-8?B?bG9odE9VZkpqWWhzYjg0cGwvTVNxUi9CbERwdVVlMXRoQ0JaeGc2NWpRSkM3?=
- =?utf-8?B?bWJ5cUtBWG9CQmV0ZHQveFhvUWZDZDU4WUFSR3drOG05UXJDdE1WZFRRR2lV?=
- =?utf-8?B?K1ZWUTdWaE9IbU1wNk1la1RVUmpCeWNrYkd4U2hRbjRpVm5xVGd2bEwrOWc4?=
- =?utf-8?B?ZDQrQmNWWGVqTU8yOElnU0ZOZDc3MXYwQ3RiWVVPQU8rUmlERzQvQlVwZ2tW?=
- =?utf-8?B?bXZoNEZEYkZPV0pUVGZCYVFpd1pvbXhTRVZ4dVZZRTNrWERXRlRCQkRPdytW?=
- =?utf-8?B?SjJzc0VKSkFmYThsZ0lFRjVkZi95am1oSzFSV2NoZ3pjSUdQcUVpc0lPUUlr?=
- =?utf-8?B?dHI5L3psN1R6TnYzNlpzdWFISjJncnBBS0xDOWhINlBINVN4dU50N2poWldm?=
- =?utf-8?B?cWlrSXFzUndNZFNZcyt3Z2VMR2s5K3hrZGQrOEhqTmNzVStkMFF4ZDJ1ZG1O?=
- =?utf-8?B?UklUbXliL0ZEdXFKR3JEVnRHS055ZmpQemtXdWtZclRTZVdnTnVleVMyUVBv?=
- =?utf-8?B?TWdlY3ZFNlBkcmY5RWQ0UmpzRVZzM1JWNXJSZnh2czNZbDNsWjIxMmhZOUFP?=
- =?utf-8?B?MHcyajVHNjJzRWJjNWJPZ1dyZFp0cko1c1A0RW8wdnVnOGEzWG9vTTdsQmtJ?=
- =?utf-8?B?MzJ3WVEwN1RBUzZZNlZ4dytEaFFNWXFLTWF3Z1M5Z21iRmFyOHNWOEZMb3d4?=
- =?utf-8?B?cmRLRkowc3RVMHY0b3VyWDVHNGZJNWpJSkN0eDMraVRTQUJ1TSs3QlJvQ0tN?=
- =?utf-8?B?RkIvd241TjVrNGdZdlFaM1I4bEkzSGhRN2dzOGdvZy9KSjlzbitIM1BKTUJw?=
- =?utf-8?B?QW5FOVYzM2RxVnJMZGtodUxlRWxxNXBFMGVib1JIWmNucFRWWHF3K0I0dmRx?=
- =?utf-8?B?Z25qWmN4ek9JSXliZzhQNTF5YVc0S2RFZHNoSUtSQytkR3QycjlZTS96SllD?=
- =?utf-8?B?dGdWZjFrYTVwNUc4bVZ2SjBYKzdIVDhZaUZFM2orL0xBYi9BOGMwMDNuUjhj?=
- =?utf-8?B?YVpXTzdnbGEyTGN1c2NEYzNnbWNIZExCYjcrcjhzWUlSMlNkUDZVeDhLNEUy?=
- =?utf-8?B?S2o4bDBHdEY2WTV5TUVsWlZpd09YNjlTU3V5d2U5YlV3Z0NMamZCYm5OVjFY?=
- =?utf-8?B?aUw1SVhGcXpNbVpvRmNpVlJ5a0dXU0xaNnpvRnEzaGFuaWdubFB2RjZjb1ZU?=
- =?utf-8?B?dzAzblFVOXRsMi8rTWM1ODlLTjdNWS9DckVBdnBTUmZ5OC9NQ3NiUy9mQytz?=
- =?utf-8?B?YmNlVXcxODIrLzNWNlJHd3lKWlBONCtUdDRaR005M0sxL3lacGIzWWhsaHZk?=
- =?utf-8?B?enNBVzZqM1V5RXUxa0VVcDJmZGRZK0c0S1JLTXBCWlpKd2FXWDE5K05lSVRW?=
- =?utf-8?B?ZC8wbHZxL2xST3BXanhUSkhEMWVLZ1V6VTlkWlBQa0ZQM0ZZQ25aZ1gxcnFR?=
- =?utf-8?B?Rk5ZaEFtL1BOVmYvbzRCVEVIcEduUmZWUnBSamZIbE5WbWtwYlkyUWRYSCtv?=
- =?utf-8?B?bEdPSjEyZGwvazBVY2hHVXhQTCtUUUwvK0V2ZVQybDN3QlN1T2JoeE0yYmF6?=
- =?utf-8?B?aGNXTUVaa245QWJLWjJkK1JCZmxhQWlEU3lVbDJ0NDhGVHVjdndCa3FzUlJJ?=
- =?utf-8?B?UStVNGxNYVBLUUtET3BEbXptY1lTWlBuMVF6ZUsrTml1NklRTG9xdUJ1RExa?=
- =?utf-8?B?REE0dk9aZDFwRWJ4N2JuR3B2MFRZdjdob0YxaDlMYVp1cEkra0hpSHBkaFlZ?=
- =?utf-8?B?WTJWK3JGbzNQU0ZKMFhMbHY0aUplQ21YOWk3M0ExbGNVek9aN3VSUUYwR3lK?=
- =?utf-8?B?dWdTY0JxdEhhR1ZPUmJ1cFpaT1NoOUZEbEpBTnJWYTVPcEpMaEQ5bFZxUFRC?=
- =?utf-8?B?aHFUVkNZNUtrOGV3OVA0NzI2M3B3OGNFRzJZNWx5RHluWlRqd2w2eXVkZENP?=
- =?utf-8?B?ZGhWTnhvNGV3NU8rSTR2bXdFSEgzdUxkRmdNenAwWExGanBxMS83bjdPbEUw?=
- =?utf-8?Q?FFx/TtkqEldRjCfo=3D?=
-X-OriginatorOrg: oss.nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a57588e0-419f-41f2-b018-08deb6bb58f7
-X-MS-Exchange-CrossTenant-AuthSource: GV2PR04MB11799.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2026 22:01:30.2940
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ct7NZG1BSRnaeO/xjkO86vp1QujXuZ/9agZ1ujghbdJOla0JvMvz0RshljmrO3usyaYOMAitq3XtLjsE6KMkzyss2zcZu3Kv4i373Oscjq+z4PivvGkyNokjTiMe7W+x
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB8029
-X-Spamd-Result: default: False [0.44 / 15.00];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[NXP1.onmicrosoft.com:s=selector1-NXP1-onmicrosoft-com];
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 20 May 2026 23:11:09 +0100
+Message-Id: <DINUJUCEDNXP.2BDISX62IPSQ2@linaro.org>
+Cc: <srini@kernel.org>, <lgirdwood@gmail.com>, <perex@perex.cz>,
+ <tiwai@suse.com>, <krzysztof.kozlowski@oss.qualcomm.com>,
+ <mohammad.rafi.shaik@oss.qualcomm.com>, <alexey.klimov@linaro.org>,
+ <ravi.hothi@oss.qualcomm.com>, <mathieu.poirier@linaro.org>,
+ <verhaegen@google.com>, <andersson@kernel.org>,
+ <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 5/6] ASoC: qcom: q6apm: add watermark event support
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Srinivas Kandagatla" <srinivas.kandagatla@oss.qualcomm.com>,
+ <broonie@kernel.org>
+X-Mailer: aerc 0.21.0
+References: <20260519131527.4002526-1-srinivas.kandagatla@oss.qualcomm.com>
+ <20260519131527.4002526-6-srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20260519131527.4002526-6-srinivas.kandagatla@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	MV_CASE(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[nxp.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108892-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-108893-lists,linux-arm-msm=lfdr.de];
 	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	RCPT_COUNT_TWELVE(0.00)[25];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,oss.qualcomm.com,linaro.org,google.com,vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FROM_NEQ_ENVFROM(0.00)[Frank.Li@oss.nxp.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	DKIM_TRACE(0.00)[NXP1.onmicrosoft.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[alexey.klimov@linaro.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NO_DN(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,nxp.com:mid,nxp.com:email,NXP1.onmicrosoft.com:dkim]
-X-Rspamd-Queue-Id: D5D8F59BB94
+	NEURAL_HAM(-0.00)[-1.000];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:mid,linaro.org:dkim,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
+X-Rspamd-Queue-Id: 0DEA259BCE2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Frank Li <Frank.Li@nxp.com>
+On Tue May 19, 2026 at 2:15 PM BST, Srinivas Kandagatla wrote:
+> Push-pull shared memory modules can report watermark events when the DSP
+> read/write index reaches configured circular buffer levels.
+>
+> Add support for registering watermark levels with the shared memory modul=
+e
+> and route the resulting module event to q6apm clients using a new
+> APM_CLIENT_EVENT_WATERMARK_EVENT event.
+>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> ---
+>  sound/soc/qcom/qdsp6/audioreach.c | 36 ++++++++++++++++++++++
+>  sound/soc/qcom/qdsp6/audioreach.h | 50 +++++++++++++++++++++++++++++++
+>  sound/soc/qcom/qdsp6/q6apm.c      | 19 ++++++++++++
+>  sound/soc/qcom/qdsp6/q6apm.h      |  2 ++
+>  4 files changed, 107 insertions(+)
+>
+> diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/aud=
+ioreach.c
+> index c984b12409dd..e6e9eb2e85aa 100644
+> --- a/sound/soc/qcom/qdsp6/audioreach.c
+> +++ b/sound/soc/qcom/qdsp6/audioreach.c
+> @@ -1118,6 +1118,42 @@ static int audioreach_pcm_set_media_format(struct =
+q6apm_graph *graph,
+>  	return q6apm_send_cmd_sync(graph->apm, pkt, 0);
+>  }
+> =20
+> +int audioreach_shmem_register_event(struct q6apm_graph *graph, int bytes=
+, int num_levels)
+> +{
+> +	struct apm_module_register_events *event;
+> +	struct event_cfg_sh_mem_pull_push_mode_watermark_t *level;
+> +	int i, payload_size;
+> +	struct gpr_pkt *pkt __free(kfree) =3D NULL;
+> +	void *p;
+> +
+> +	if (num_levels <=3D 0 || bytes <=3D 0)
+> +		return -EINVAL;
+> +
+> +	payload_size =3D sizeof(*event) + sizeof(*level) + num_levels * sizeof(=
+uint32_t);
+> +
+> +	pkt =3D audioreach_alloc_cmd_pkt(payload_size, APM_CMD_REGISTER_MODULE_=
+EVENTS, 0,
+> +				     graph->port->id, graph->shm_iid);
+> +	if (IS_ERR(pkt))
+> +		return PTR_ERR(pkt);
+> +
+> +	p =3D (void *)pkt + GPR_HDR_SIZE + APM_CMD_HDR_SIZE;
+> +
+> +	event =3D p;
+> +	event->module_instance_id =3D graph->shm_iid;
+> +	event->event_id =3D EVENT_ID_SH_MEM_PULL_PUSH_MODE_WATERMARK;
+> +	event->is_register =3D 1;
+> +	event->event_config_payload_size =3D sizeof(*level) + num_levels * size=
+of(uint32_t);
+> +	p +=3D sizeof(*event);
+> +	level =3D p;
+> +	level->num_water_mark_levels =3D num_levels;
+> +
+> +	for (i =3D 0; i < num_levels; i++)
+> +		level->level[i] =3D (i + 1) * bytes;
 
-Using new API dmaengine_prep_config_sg() to simple code.
+Let's hope that compilers optimize this to avoid multiplication, anyway
+it shouln't be a hot path, although I don't really know.
 
-dmaengine_prep_config_sg() does not distinguish between configuration
-failures and descriptor preparation failures, as both are reported through
-a NULL return value. Converting both cases to -ENOMEM is therefore
-acceptable and consistent with the helper's abstraction.
+- don't you need a check like num_levels<=3DARRAY_SIZE(level->level) before
+this loop? Looking at the code it seems that it relies on pkt which is
+allocated using audioreach_alloc_cmd_pkt() taking payload_size into
+account. Looks okay but I wanted to double check.
 
-In practice, most users only care whether the operation succeeds or fails,
-and do not depend on the exact errno value returned from this path.
+- level->level[] is of u32 types. Can level->level[i] =3D (i + 1) * bytes
+overflow?
 
-Tested-by: Niklas Cassel <cassel@kernel.org>
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
----
-change in v6
-- add commit message about error propagation (sashaki AI)
----
- drivers/crypto/atmel-aes.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+[..]
+> +struct event_cfg_sh_mem_pull_push_mode_watermark_t {
+> +	uint32_t num_water_mark_levels;
+> +	uint32_t level[];
+> +} __packed;
+[..]
 
-diff --git a/drivers/crypto/atmel-aes.c b/drivers/crypto/atmel-aes.c
-index b393689400b4c..d890b5a277b9c 100644
---- a/drivers/crypto/atmel-aes.c
-+++ b/drivers/crypto/atmel-aes.c
-@@ -795,7 +795,6 @@ static int atmel_aes_dma_transfer_start(struct atmel_aes_dev *dd,
- 	struct dma_slave_config config;
- 	dma_async_tx_callback callback;
- 	struct atmel_aes_dma *dma;
--	int err;
- 
- 	memset(&config, 0, sizeof(config));
- 	config.src_addr_width = addr_width;
-@@ -820,12 +819,9 @@ static int atmel_aes_dma_transfer_start(struct atmel_aes_dev *dd,
- 		return -EINVAL;
- 	}
- 
--	err = dmaengine_slave_config(dma->chan, &config);
--	if (err)
--		return err;
--
--	desc = dmaengine_prep_slave_sg(dma->chan, dma->sg, dma->sg_len, dir,
--				       DMA_PREP_INTERRUPT | DMA_CTRL_ACK);
-+	desc = dmaengine_prep_config_sg(dma->chan, dma->sg, dma->sg_len, dir,
-+					DMA_PREP_INTERRUPT | DMA_CTRL_ACK,
-+					&config);
- 	if (!desc)
- 		return -ENOMEM;
- 
-
--- 
-2.43.0
-
+Best regards,
+Alexey
 
