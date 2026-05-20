@@ -1,163 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-108749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gN8XEPGvDWrW1QUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 14:58:25 +0200
+	id GAzeIH+wDWpy1gUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 15:00:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98A4A58E5B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 14:58:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 18C4058E641
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 15:00:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 18432300BC85
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 12:52:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0BAC1303353B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 12:54:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F4013A3E9C;
-	Wed, 20 May 2026 12:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 844CE3DE435;
+	Wed, 20 May 2026 12:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WuTxrjHn";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="dbcd9Gv1"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MLRhJku1";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GXBR1HEK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942553E1233
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 312833438BA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779281545; cv=none; b=Jn09FftibQN5ZB6eHX2TRHzo3TcvWKm77LB/Z9BnRmnzU66bmH2CwOW42V3+qTAy0uIGMwJ2wZmrpKDyPqhQNKgd/YM5fXvP/jT3gAavlTAMQYK62W0KjWuipYdK2p/dQxjJH7Q1x33aplROCKPEcH0xhQS3vyp9PEFq0/vZVQQ=
+	t=1779281670; cv=none; b=raufcYzajVswMxVSvJy0WHjvJTFI/baPhlX/QF6nypzRf9gLeKFUvDYRkdszjp+kOeXlHjelyCA69ib4PKFGd2RPuWScLiyJ34iK6DL+kJe/Zi/1dw63yS9wGKyLOMSBlSHiYHzl8VXCn57yFW3cQQiBVjpl/fl6P1GM/PPj9Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779281545; c=relaxed/simple;
-	bh=a1x3PX1iaKMLfxjA33XePNA+XnOVe9pJTH02fuVJBIg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=fKewWWpqobmior7rN7K8g2ibzThPWSpXasF114iK0B2q3cyCy0zQFpDvaPRcoSVa7VQlX3DmyNeUhIeXh4MLBhnoOEUWQ3yFckn5wqSmCuAMxMSg0GmBGjj694ke5wyGCHn6i/elr/VL/WCFcEIU7F3w6mwyGTIGNuUcNGp+1IA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WuTxrjHn; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=dbcd9Gv1; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1779281670; c=relaxed/simple;
+	bh=JMOHCzSskxk9SodFi+k5hXlCfeh6kYZnY4uBi7QGsPQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rlJsEpLtnujV54rIUh34EdUaugs1wHVfkqGopnApdOXXdXMt4VQmWLtptvFAuEdSxbLJ3ZyP/uvaWysdizBGgPT8nK2hOonuL5Ue8lffPAdkBg1woKjSfzmA4rWo+0sKveYkhI65Ka7Wwk0UfLuWQnlRSb/PhX891yk4JDKPZ8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MLRhJku1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GXBR1HEK; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64KCeXJI629580
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:52:23 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64KCpDa92983956
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:54:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=RPr2sjQVxk1gAzeHuQ/C99
-	sFybgLvBxV0RLYSJro0Mw=; b=WuTxrjHnC6hDl/tKTrynLDmJnQkNGaOx5fLGdv
-	UeIMg+cgWJhkIb6ShOW8FVbLTU6K0kJF1JcuxZTL7iS+MQGHDjD0KXnbUtT/F6Ht
-	nnQPnHzdTIuVe8JmokAp5ZceVA0K9MIYFB8j4oYVq+2R2UBHh4/33XlmBZGX4vnf
-	oTEeiG+yMjZomByTw8sVt5twjRe+hF7Y0CgqVw/uaSkVAIDUrnCyZs7bEK1uePz8
-	2MwxB5xZNtBHVS1ixxa8iZsmQKe6m69QoTtmxE21weXI4QoHAtPs6t8cUm0SqLk/
-	m9iVF6pUwmowOrBRWCW5cicOVfONmSQiVTY3bpsq3tcBCe9Q==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8t3nvurh-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+Dzs5PVghvmsHfh8+8zkBuOfRJJDmi8DS3v15nIcsg0=; b=MLRhJku1aJ3gq/oY
+	mweYadyyR9zL/KTChTJ8P4QqqYv26Lvy6gpYAsML+RcW07POBE5pf9v/FQ7+cP4d
+	SRn1BTNRxQy/GqsprlElfn7YLXhsuO+seP0KVIqMQ1kp2CmCibVQc3VGm37oYuny
+	TSkE45EUT3FqKaUXS9zHTgLRORRipipk+S14Tz/hRhxcX5+A5yNLhc41J5ovh99g
+	haXOKi4LGf9I2db+OpMES+nrRpQ5jpS9/ONAP0289OaLuaKzFyruUM0YGlrbWT9N
+	Ji40TEFn1jIvxs5yOrs6mXyt2tihN567lTPiSH0wFOJqm/DN4yUh+X1tbQlXvpUC
+	aCn9xw==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8t3t4v31-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:52:22 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-50fbc49bef6so97330911cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 05:52:22 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 12:54:28 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c827c880e39so2385507a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 05:54:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779281542; x=1779886342; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RPr2sjQVxk1gAzeHuQ/C99sFybgLvBxV0RLYSJro0Mw=;
-        b=dbcd9Gv11o2l+031VJHQtlDOew4MrsudYT206YqJtYPZs0M74bYFVdH+MVkUxauMLN
-         g5dpirBD1Q7Ph2mH8fnXrXlH30ASyEQ+mYR1mNpaYpVIX1k/qwr+vMquSI0wDs+P6BEq
-         IHk9mnbcLf5Gqgll5wuquhxM5MFTxbNZRl6q+o4mzWbQ+Bpg7ORzPrUpagmqcuWltua6
-         DmrV3OhD9fL6aUgXWkSn2fGALLwf+HudZKrDZyPCq7x1bn2zokAq4cPsTOIGOlCOAQl3
-         bkQXk3P0pkU1otptRjiG8h6f5eAteDTS3tZVKM9Sx66ZHdDx/x7lkCoL3d1xzzBcLget
-         Mt3Q==
+        d=oss.qualcomm.com; s=google; t=1779281668; x=1779886468; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+Dzs5PVghvmsHfh8+8zkBuOfRJJDmi8DS3v15nIcsg0=;
+        b=GXBR1HEKONU+opCwizLLgNCh/ggG04MxUv860CWZYtrP0DW6oxXoNNQXhUxM3Qee29
+         lEWxk+wTiiwyGrF7MoFaRZem38N0s8IT7srsCgGK1KO4AqPImf1BziaTSR7+hRDGvMKl
+         GBJla0BomnmEm2FeDG+Yjyk5LQ+uRACWuMy5kkuPF6WoiQF9O0jBBR75j89Hjck0U7jn
+         0xLdvVbf5X5lgjLOdlH6/L+BEqCCx6EKubocn0kqBrVsVLQcmKcVwu+GjoPEknJ1wWLl
+         woeQQcSaM6ByvuaH0tZN5m4BpRTC+Mmr5T4Qs5E7EPPS3LJiCX4JbyqGiZ7L0oViuFja
+         OyMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779281542; x=1779886342;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RPr2sjQVxk1gAzeHuQ/C99sFybgLvBxV0RLYSJro0Mw=;
-        b=EvVOJrfLgj8XyTXJsg+iR6MSct3rCuoy2ezKW9FW/zSXG2EBPjEdHLwaMHJtG7Pp3R
-         ECEaN4g53wZcUiyzmHfPADpeTscY8IUMpkJIhHJt/1LUljnZSVUt0Sbqa7+HUTPnLOgF
-         Vg2AjYhFAfJgHFHPTKahcbhhWJAHeGyebKTkavJwANKpaOzNs4MOFMYvQ0/bWHeGm0q2
-         AbHHxa5hqhBnLqUEwoe7qEbujK4MVvsb4Ppo7d19Rr6ViVPIcuLoGcifzdf6bKxVBsxW
-         nUiejpaw74JHQBFhHkuh/2dpvG4EZVrmi/POenThSPeDFP9G1j0XppL+1QnseMwsrm7i
-         uWpQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+IQ9v8uW+H3CYbjLahQRgxscRvNnsa9cmF+P7lVznGlSbC1tnAqH/Ic9qlbcQ46x07bEjdYLNN57hYBwIc@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4OPrZleajdvbdlrvq2/GAqlbBrJH1+vQWDA9vlPAhIwVmZ7O2
-	z56fJs4m8qmvLPf7LAdp5iQnOWZK300DPGxhAT9sL7gaUlV6ZRcttS1XUsdhY1y+IVYqJiuH/VM
-	7F7BPDEMy00ZNJm97RBcvTbEzitClMl4I7HhDFVQqjqPFBcEoF2Y2LNydJchVGn0FZh4L
-X-Gm-Gg: Acq92OFrSAxJW6EvluK7AbjgvqqPtmURSt1/pW2t+kHHP1gMVKco6Lh6qcBuBcVm6AY
-	TFXNFV9flV4AXLNYZeIOMUC7aqVKkHrRW9pmpMXx+KehJKp83Cjwm2RgREIJclxJKgWLU28uNbn
-	ZmPrFSFsSSnhQAsdtVoEXyg9wBT0QqgnEmFYGBcAiQwjwWPJ0KT+u3vVEpq6vT7VZEfOHOE5b0c
-	7PBUIcwEgvHelCQex4zIwnPSDxyGXJLbiFuQFJfSmtegQbwlVwygacg6U1nJRgcBO6MeCtVzFNx
-	eMOKIsMrkdBgejJJZ2QND5r7GhUqJo8EDSXsKSLcz8nHKLdDeYNWCAgZN39PoSZbSSmvzPyw49E
-	MvJxDwNn6OHadJ55uHI5/SDXBmvHdI+65KvViiYsvPl2vSHT0okHcwooWS+Ik+yevmHtDqj1czp
-	A+o+lt812J7HtaFTlvXtZjGVFXtFiSi0KaYog=
-X-Received: by 2002:a05:622a:8e1c:b0:516:508b:bf4d with SMTP id d75a77b69052e-5165a276f74mr218948161cf.56.1779281541531;
-        Wed, 20 May 2026 05:52:21 -0700 (PDT)
-X-Received: by 2002:a05:622a:8e1c:b0:516:508b:bf4d with SMTP id d75a77b69052e-5165a276f74mr218947901cf.56.1779281541010;
-        Wed, 20 May 2026 05:52:21 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a90f10c8b2sm4920527e87.17.2026.05.20.05.52.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2026 05:52:20 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Wed, 20 May 2026 15:52:17 +0300
-Subject: [PATCH v5] media: iris: drop struct iris_fmt
+        d=1e100.net; s=20251104; t=1779281668; x=1779886468;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+Dzs5PVghvmsHfh8+8zkBuOfRJJDmi8DS3v15nIcsg0=;
+        b=YFTuSvxSVBHqFcQzFoGE1qnwXFzvgx0w8yf1njUzVfbcDqIJ2mdBImzNgFO5GLnXJs
+         qzFB3OeWe2TR4V3zhKwcXUY0MeMWK9J0rB9qATGwabN/leENxx8WVAoRIVL/yvlGOLUH
+         UCGuUZXDEkAF0Mpcskc+KWMJe4BP/0YMrhGvER9j4SjbvMqHJHsYyj7tD+ipQJWiel6/
+         LdwwZyn4F3P7wQi7gnaT8mq8a1GW0Vorr5djN5wsK34jO8OpsiQfArgWLIFQDewOjelB
+         ho2HNOESx+5pQrj2JjSpxOfNdN/ZnKZf/Z1ZFCPIT6GAetI0o85OYkpOhwzCgXAZx6eM
+         pm3Q==
+X-Forwarded-Encrypted: i=1; AFNElJ9yEI7YT5tyOIOm9WswO5n1XB6oLMVtcmUZBd41mqrdKJ8WEliWwVfLxJ4ilBqNKu/lL0Nlu7w3/JTpLERw@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5F2ZJKBxvbODvYZFUCNCcxFn5GUPFl3LQmIZ2VoqvU5ia9p9r
+	DPrjfD9GEibTuE9/cxpz32lps0U9uX8ckWWWFnIm96UTTCL53opFlzOFEIEd3Ck/WWxGF/V3eek
+	JXT4iW9TI8tC6BNQNNo0VWOWB1xXxfjshd8dqyEsXlaShTy+9PaDFYiVrTN507kIPNGHg
+X-Gm-Gg: Acq92OEERrKKWymZuLGl6y7E2eULxhHQdNvJSTy+LKtl39nUyTR7bTJtIs3NDH0nXx4
+	Hbp6gPq2nRnqSXLvLCOY+N41wS1/O9MwI0E48jC+zwCa6XUQHAmtfMQr3wMrrXNHtA4Ky46dMYi
+	hHM5ddZ9RuMLat8TK6EU3mjBnDRRMmldokh/60pDw4LUKa1LrrJO3mm1/2jXVW3YEF0u4p+S11J
+	KbL1kVSA1mSPdYfRTi7OjL6j/vW/P5JbAVQtxH3Aui9H0V32IVIrj4UGiIJQSQ0gdEEB0BQSYxY
+	x/bB+61S7QqmAsxNwo3JIo1k7nWSvSF5yJQmKvzrrU8dNX6etT+7TsMb1AFhcQIs9PlAAm9LhN9
+	AK7e21OmCf+tErAr+dFSQPJ13DDeH+wxTTX0ygfBJQkf1Z/5AFog=
+X-Received: by 2002:a05:6a00:4508:b0:82f:3436:42d7 with SMTP id d2e1a72fcca58-83f33bcc799mr24430006b3a.2.1779281667714;
+        Wed, 20 May 2026 05:54:27 -0700 (PDT)
+X-Received: by 2002:a05:6a00:4508:b0:82f:3436:42d7 with SMTP id d2e1a72fcca58-83f33bcc799mr24429973b3a.2.1779281667121;
+        Wed, 20 May 2026 05:54:27 -0700 (PDT)
+Received: from [10.206.100.243] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f19664a59sm21472794b3a.1.2026.05.20.05.54.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 May 2026 05:54:26 -0700 (PDT)
+Message-ID: <1ebc7c8a-b0de-4f25-b4dd-571909f9c67b@oss.qualcomm.com>
+Date: Wed, 20 May 2026 18:24:20 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: display: panel: add Ilitek ILI7807S
+ panel controller
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, dri-devel@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Ayushi Makhija <ayushi.makhija@oss.qualcomm.com>,
+        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com
+References: <20260518-ili7807s-panel-v1-0-d7b048163b1c@oss.qualcomm.com>
+ <20260518-ili7807s-panel-v1-1-d7b048163b1c@oss.qualcomm.com>
+ <ss3deh6wb4bjasig2r56bhl6opygpkid2ixztzdsegqgayuvdk@vgy4ytjzyife>
+Content-Language: en-US
+From: Arpit Saini <arpit.saini@oss.qualcomm.com>
+In-Reply-To: <ss3deh6wb4bjasig2r56bhl6opygpkid2ixztzdsegqgayuvdk@vgy4ytjzyife>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260520-iris-remote-fmts-v5-1-a4915476c072@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAICuDWoC/33RzW7DIAwH8FeJOI/OfISUnvYe0w6QOCvSCCvQq
- FXVd6/THtZDugvSH9k/S/aFFcwBC9s1F5ZxDiWkiUL71rB+76Zv5GGgzCRIA0oIHnIoPGNMFfk
- Ya+GtUsr00m+tA0ZtvxnHcLqTn1+U96HUlM/3CbNYfv/BZsEFHxBAa90qb7YfqZTN4eh++hTjh
- h62mLN8dtSKI8nBwQvRWeWFNS8c9eQoWHEUOU4a5y1aECBeOPrPaaFbcTQ5nRydRelGaWHFuT6
- Wl/FwpDPUxwaZdwX5UhTqrpnwVN+jKxUz1V9v5qdTcb4BAAA=
-X-Change-ID: 20260311-iris-remote-fmts-53336c2b89a0
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=16886;
- i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=a1x3PX1iaKMLfxjA33XePNA+XnOVe9pJTH02fuVJBIg=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBqDa6D+s25Eq16BrZaLMbVRBT1kxRXvrl6e9rqF
- 4IQeinOMmuJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCag2ugwAKCRCLPIo+Aiko
- 1YkgB/4zZK2KrZ5PcXCYFIdhNmoYOeUd05kYfFdi1jGIaJ5Z/msm+cxifu2aEMF5joddFTr+yxZ
- ZrZDgNacvCtfhdnIaX/mtNJLK4O5pnoZnCLFQOFIg9a7LzXLyzwEXpQcfhbB7G479QwY7Q7ayQe
- 3A3GLcZkFuRZx0vmnoP9xn05JbwtL0/HIBwaVvtggRNbujPCuk+XCynvojRpB0wN1+agTMQ5HRI
- rJFmVCbHmq+sVta3OBh8Zn8zZSFKLziNrx8QjUKYRk3qeQ3w63xL6VOQm1HW1FsDemtWJ/6Mpkj
- dN9cs3Ue63DLzNcJSS4XneUJqvFU0LsSikpwgRduyy9uTfYR
-X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDEyNSBTYWx0ZWRfX2U67+klIoeqF
- FiL0UEgUYhqSD/2/nwnO1fB869AFqoOR0sTv7aKHgYKtw6perPiroRk+BYphvvAglHViOwH53IA
- 0HyeF+fXahpMYwaHLa1o+cCVohcv0BqhHvcdboM+yTRTv0nr4Bbb9PSm13G/8r0ZuQLYe4Q+eX7
- RtQ0VyT6EVZxdxIts3o0xrKv4kfm+5jCfojjDl2hsALDJfwMbP2s+v8OZX7JjYAQTJbnpNI7sdd
- SDaLoKZFTMrFHTBsR2Lj0n5Z8N7El8PUsFEWRWmqhzzrL2+/s6T6dnVJ1Cg3eloL1u0Wq1xdE35
- sOQALROj3118EpQxxTEzrkWVvNZXHUaXQHQji+8itVurdTs6Vfjssc0pops25H9lynTyVEroIyR
- cJpKhNVYlCY4WJ1FoSUjjgsTN1yBQXvDsgRz08+4g9it2DDTz4ygRxCI98UHgVqvaBqyKbrNQwx
- +BzfxG7MUu7j1Uucn0Q==
-X-Proofpoint-GUID: 8o2aqki0iNbkCmPMj_D8qLdG3IJ_0Wsc
-X-Proofpoint-ORIG-GUID: 8o2aqki0iNbkCmPMj_D8qLdG3IJ_0Wsc
-X-Authority-Analysis: v=2.4 cv=Mr9iLWae c=1 sm=1 tr=0 ts=6a0dae86 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=bC-a23v3AAAA:8
- a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=5MaIgx6z3_532Kf81nQA:9 a=QEXdDO2ut3YA:10
- a=a_PwQJl-kcHnX1M80qC6:22 a=FO4_E8m0qiDe52t0p3_H:22
+X-Authority-Analysis: v=2.4 cv=BOCDalQG c=1 sm=1 tr=0 ts=6a0daf04 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=gEfo2CItAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=6rjBTs_pIWsmsDHkzHgA:9
+ a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22 a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-ORIG-GUID: PXRfuGez2aRlFtrM1k1sGKyIANOmL7L1
+X-Proofpoint-GUID: PXRfuGez2aRlFtrM1k1sGKyIANOmL7L1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDEyNSBTYWx0ZWRfXzbAA2sMos3ck
+ 5MOUCxEA2p/d4+imAd32gurqEZ7HSRLrZDYL/eBUuARszzcsHjC14rCFLhFfbT8GieU/O6FRkpv
+ vLV5Ffwg9Bm7gNtC0tzAUQ8APUJqyrccQLr576e00Ey3/yKLw2HyKvwH6PI9fi5+3pNOmtDgT/w
+ +KcQtwoNG6IxJRHPV39JfQDhASlWObQ5Lr45osZobBP1Lt5xZwk0+TPsSnX3A3JqPevOSIymjT2
+ TBMe5QJH21ctjfxMeD9hsZwoChcjTqcjdVo9WHJ4S2dIVD1/tdAiB8l83koNPWz+7DGDzXUrEpV
+ go7vrOGW1gYVdlMcGVEsglCknRDkVwhRMcPoOl9Iuj5Q9xee4q6QWN12FmXZLMFOgVj+6ZMUXDU
+ nOueVeMKuRK7horavbDoDGE67jxgYLaDgBfQEribGGsz0sFzsMWLcRHmQRvswDHqQ4CCp8LxAS0
+ Ui1QBJpL4tsuhCmFZPA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-20_02,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 bulkscore=0 impostorscore=0 spamscore=0 phishscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605200125
-X-Spamd-Result: default: False [-2.16 / 15.00];
+ priorityscore=1501 suspectscore=0 malwarescore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 adultscore=0 bulkscore=0 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200125
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
@@ -165,539 +162,91 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,msgid.link:url];
+	TAGGED_FROM(0.00)[bounces-108750-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RSPAMD_URIBL_FAIL(0.00)[devicetree.org:query timed out];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108749-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,lists.freedesktop.org,vger.kernel.org,oss.qualcomm.com,quicinc.com];
+	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,devicetree.org:url,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[arpit.saini@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[8];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 98A4A58E5B9
+X-Rspamd-Queue-Id: 18C4058E641
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The struct iris_fmt unites pixfmt with the plane type, however the type
-from the struct is not actually used. Drop the struct completely and use
-u32 pixfmt in all the callsites.
+Hi Dmitry,
 
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
-Changes in v5:
-- Rebased on linux-next tree, dropping the dependencies.
-- Link to v4: https://patch.msgid.link/20260507-iris-remote-fmts-v4-1-72fa9e2af290@oss.qualcomm.com
+On 5/18/2026 9:53 PM, Dmitry Baryshkov wrote:
+> On Mon, May 18, 2026 at 04:34:12PM +0530, Arpit Saini wrote:
+>> ILI7807S is a DSI display controller used to drive MIPI-DSI panels.
+>> The DLC DLC0697 1080x1920 LCD panel is based on this controller.
+>>
+>> The panel requires a reset GPIO, backlight enable GPIO, I/O voltage
+>> supply (vddi), positive LCD bias supply (avdd) and negative LCD bias
+>> supply (avee). The panel operates in video burst mode with four data
+>> lanes using RGB888 pixel format.
+>>
+>> Signed-off-by: Arpit Saini <arpit.saini@oss.qualcomm.com>
+>> ---
+>>   .../bindings/display/panel/ilitek,ili7807s.yaml    | 80 ++++++++++++++++++++++
+>>   MAINTAINERS                                        |  7 ++
+>>   2 files changed, 87 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/display/panel/ilitek,ili7807s.yaml b/Documentation/devicetree/bindings/display/panel/ilitek,ili7807s.yaml
+>> new file mode 100644
+>> index 000000000000..93c511d03c00
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/display/panel/ilitek,ili7807s.yaml
+>> @@ -0,0 +1,80 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/display/panel/ilitek,ili7807s.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Ilitek ILI7807S-based DSI panels
+>> +
+>> +maintainers:
+>> +  - Arpit Saini <arpit.saini@oss.qualcomm.com>
+>> +
+>> +allOf:
+>> +  - $ref: panel-common.yaml#
+>> +
+>> +properties:
+>> +  compatible:
+>> +    items:
+>> +      - enum:
+>> +          - dlc,dlc0697
+>> +      - const: ilitek,ili7807s
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +    description: DSI virtual channel
+>> +
+>> +  reset-gpios: true
+>> +
+>> +  backlight-en-gpios:
+>> +    description: Backlight enable GPIO (active high)
+> 
+> Is this actual GPIO or the GPIO-controlled supply?
+> 
+Addressed here 
+https://lore.kernel.org/all/dd065ccd-d7cb-45b5-8733-64b4f6571b3d@oss.qualcomm.com/
 
-Changes in v4:
-- Rebased on top of Bryan's -next tree, fixing the conflicts.
-- Link to v3: https://patch.msgid.link/20260330-iris-remote-fmts-v3-1-a26ab9e90101@oss.qualcomm.com
+Thanks
+Arpit
 
-Changes in v3:
-- Rebased on top of the 20260227-iris-platform-data-c5c80e84d1a7:v11
-  (Dikshita)
-- Link to v2: https://lore.kernel.org/r/20260313-iris-remote-fmts-v2-1-edb11793b196@oss.qualcomm.com
-
-Changes in v2:
-- Made platform_fmts_sm8250_dec const (Dikshita)
-- Sorted entries in find_format_by_index (Dikshita)
-- Link to v1: https://lore.kernel.org/r/20260311-iris-remote-fmts-v1-1-de0044453b68@oss.qualcomm.com
----
- drivers/media/platform/qcom/iris/iris_instance.h   |  5 --
- .../platform/qcom/iris/iris_platform_common.h      |  2 +-
- .../media/platform/qcom/iris/iris_platform_vpu2.c  | 17 +---
- .../media/platform/qcom/iris/iris_platform_vpu3x.c | 22 ++---
- drivers/media/platform/qcom/iris/iris_vdec.c       | 78 ++++++++----------
- drivers/media/platform/qcom/iris/iris_venc.c       | 96 +++++++++-------------
- 6 files changed, 80 insertions(+), 140 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
-index 352af99699dd..476efa4d6a03 100644
---- a/drivers/media/platform/qcom/iris/iris_instance.h
-+++ b/drivers/media/platform/qcom/iris/iris_instance.h
-@@ -29,11 +29,6 @@ enum iris_fmt_type_cap {
- 	IRIS_FMT_QC08C,
- };
- 
--struct iris_fmt {
--	u32 pixfmt;
--	u32 type;
--};
--
- /**
-  * struct iris_inst - holds per video instance parameters
-  *
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-index 6a108173be35..0408d51188b2 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-+++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-@@ -280,7 +280,7 @@ struct iris_platform_data {
- 	const char * const *controller_rst_tbl;
- 	unsigned int controller_rst_tbl_size;
- 	u64 dma_mask;
--	struct iris_fmt *inst_iris_fmts;
-+	const u32 *inst_iris_fmts;
- 	u32 inst_iris_fmts_size;
- 	struct platform_inst_caps *inst_caps;
- 	const struct tz_cp_config *tz_cp_config_data;
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_vpu2.c b/drivers/media/platform/qcom/iris/iris_platform_vpu2.c
-index 41986af8313b..6e06a32822bb 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_vpu2.c
-+++ b/drivers/media/platform/qcom/iris/iris_platform_vpu2.c
-@@ -28,19 +28,10 @@ static const struct iris_firmware_desc iris_vpu20_p4_gen1_desc = {
- 	.fwname = "qcom/vpu/vpu20_p4.mbn",
- };
- 
--static struct iris_fmt iris_fmts_vpu2_dec[] = {
--	[IRIS_FMT_H264] = {
--		.pixfmt = V4L2_PIX_FMT_H264,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--	[IRIS_FMT_HEVC] = {
--		.pixfmt = V4L2_PIX_FMT_HEVC,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--	[IRIS_FMT_VP9] = {
--		.pixfmt = V4L2_PIX_FMT_VP9,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
-+static const u32 iris_fmts_vpu2_dec[] = {
-+	[IRIS_FMT_H264] = V4L2_PIX_FMT_H264,
-+	[IRIS_FMT_HEVC] = V4L2_PIX_FMT_HEVC,
-+	[IRIS_FMT_VP9] = V4L2_PIX_FMT_VP9,
- };
- 
- static struct platform_inst_caps platform_inst_cap_vpu2 = {
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_vpu3x.c b/drivers/media/platform/qcom/iris/iris_platform_vpu3x.c
-index c249ff827541..85aa0c87338b 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_vpu3x.c
-+++ b/drivers/media/platform/qcom/iris/iris_platform_vpu3x.c
-@@ -41,23 +41,11 @@ static const struct iris_firmware_desc iris_vpu35_p4_gen2_desc = {
- 	.fwname = "qcom/vpu/vpu35_p4.mbn",
- };
- 
--static struct iris_fmt iris_fmts_vpu3x_dec[] = {
--	[IRIS_FMT_H264] = {
--		.pixfmt = V4L2_PIX_FMT_H264,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--	[IRIS_FMT_HEVC] = {
--		.pixfmt = V4L2_PIX_FMT_HEVC,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--	[IRIS_FMT_VP9] = {
--		.pixfmt = V4L2_PIX_FMT_VP9,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--	[IRIS_FMT_AV1] = {
--		.pixfmt = V4L2_PIX_FMT_AV1,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
-+static const u32 iris_fmts_vpu3x_dec[] = {
-+	[IRIS_FMT_H264] = V4L2_PIX_FMT_H264,
-+	[IRIS_FMT_HEVC] = V4L2_PIX_FMT_HEVC,
-+	[IRIS_FMT_VP9] = V4L2_PIX_FMT_VP9,
-+	[IRIS_FMT_AV1] = V4L2_PIX_FMT_AV1,
- };
- 
- static const struct icc_info iris_icc_info_vpu3x[] = {
-diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
-index dfccfb274492..762459d43e8e 100644
---- a/drivers/media/platform/qcom/iris/iris_vdec.c
-+++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-@@ -61,23 +61,16 @@ int iris_vdec_inst_init(struct iris_inst *inst)
- 	return iris_ctrls_init(inst);
- }
- 
--static const struct iris_fmt iris_vdec_formats_cap[] = {
--	[IRIS_FMT_NV12] = {
--		.pixfmt = V4L2_PIX_FMT_NV12,
--		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
--	},
--	[IRIS_FMT_QC08C] = {
--		.pixfmt = V4L2_PIX_FMT_QC08C,
--		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
--	},
-+static const u32 iris_vdec_formats_cap[] = {
-+	[IRIS_FMT_NV12] = V4L2_PIX_FMT_NV12,
-+	[IRIS_FMT_QC08C] = V4L2_PIX_FMT_QC08C,
- };
- 
--static const struct iris_fmt *
--find_format(struct iris_inst *inst, u32 pixfmt, u32 type)
-+static bool check_format(struct iris_inst *inst, u32 pixfmt, u32 type)
- {
--	const struct iris_fmt *fmt = NULL;
--	unsigned int size = 0;
--	unsigned int i;
-+	unsigned int size, i;
-+	const u32 *fmt;
-+
- 	switch (type) {
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
- 		fmt = inst->core->iris_platform_data->inst_iris_fmts;
-@@ -88,25 +81,21 @@ find_format(struct iris_inst *inst, u32 pixfmt, u32 type)
- 		size = ARRAY_SIZE(iris_vdec_formats_cap);
- 		break;
- 	default:
--		return NULL;
-+		return false;
- 	}
- 
- 	for (i = 0; i < size; i++) {
--		if (fmt[i].pixfmt == pixfmt)
--			break;
-+		if (fmt[i] == pixfmt)
-+			return true;
- 	}
- 
--	if (i == size || fmt[i].type != type)
--		return NULL;
--
--	return &fmt[i];
-+	return false;
- }
- 
--static const struct iris_fmt *
--find_format_by_index(struct iris_inst *inst, u32 index, u32 type)
-+static u32 find_format_by_index(struct iris_inst *inst, u32 index, u32 type)
- {
--	const struct iris_fmt *fmt = NULL;
--	unsigned int size = 0;
-+	unsigned int size;
-+	const u32 *fmt;
- 
- 	switch (type) {
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
-@@ -118,18 +107,18 @@ find_format_by_index(struct iris_inst *inst, u32 index, u32 type)
- 		size = ARRAY_SIZE(iris_vdec_formats_cap);
- 		break;
- 	default:
--		return NULL;
-+		return 0;
- 	}
- 
--	if (index >= size || fmt[index].type != type)
--		return NULL;
-+	if (index >= size)
-+		return 0;
- 
--	return &fmt[index];
-+	return fmt[index];
- }
- 
- int iris_vdec_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f)
- {
--	const struct iris_fmt *fmt;
-+	u32 fmt;
- 
- 	switch (f->type) {
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
-@@ -137,14 +126,14 @@ int iris_vdec_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f)
- 		if (!fmt)
- 			return -EINVAL;
- 
--		f->pixelformat = fmt->pixfmt;
-+		f->pixelformat = fmt;
- 		f->flags = V4L2_FMT_FLAG_COMPRESSED | V4L2_FMT_FLAG_DYN_RESOLUTION;
- 		break;
- 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
- 		fmt = find_format_by_index(inst, f->index, f->type);
- 		if (!fmt)
- 			return -EINVAL;
--		f->pixelformat = fmt->pixfmt;
-+		f->pixelformat = fmt;
- 		break;
- 	default:
- 		return -EINVAL;
-@@ -157,15 +146,15 @@ int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
- {
- 	struct v4l2_pix_format_mplane *pixmp = &f->fmt.pix_mp;
- 	struct v4l2_m2m_ctx *m2m_ctx = inst->m2m_ctx;
--	const struct iris_fmt *fmt;
- 	struct v4l2_format *f_inst;
- 	struct vb2_queue *src_q;
-+	bool supported;
- 
- 	memset(pixmp->reserved, 0, sizeof(pixmp->reserved));
--	fmt = find_format(inst, pixmp->pixelformat, f->type);
-+	supported = check_format(inst, pixmp->pixelformat, f->type);
- 	switch (f->type) {
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
--		if (!fmt) {
-+		if (!supported) {
- 			f_inst = inst->fmt_src;
- 			f->fmt.pix_mp.width = f_inst->fmt.pix_mp.width;
- 			f->fmt.pix_mp.height = f_inst->fmt.pix_mp.height;
-@@ -173,7 +162,7 @@ int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
- 		}
- 		break;
- 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
--		if (!fmt) {
-+		if (!supported) {
- 			f_inst = inst->fmt_dst;
- 			f->fmt.pix_mp.pixelformat = f_inst->fmt.pix_mp.pixelformat;
- 			f->fmt.pix_mp.width = f_inst->fmt.pix_mp.width;
-@@ -222,7 +211,7 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
- 
- 	switch (f->type) {
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
--		if (!(find_format(inst, f->fmt.pix_mp.pixelformat, f->type)))
-+		if (!check_format(inst, f->fmt.pix_mp.pixelformat, f->type))
- 			return -EINVAL;
- 
- 		fmt = inst->fmt_src;
-@@ -260,7 +249,7 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
- 		inst->crop.height = f->fmt.pix_mp.height;
- 		break;
- 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
--		if (!(find_format(inst, f->fmt.pix_mp.pixelformat, f->type)))
-+		if (!check_format(inst, f->fmt.pix_mp.pixelformat, f->type))
- 			return -EINVAL;
- 
- 		fmt = inst->fmt_dst;
-@@ -289,16 +278,13 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
- 
- int iris_vdec_validate_format(struct iris_inst *inst, u32 pixelformat)
- {
--	const struct iris_fmt *fmt = NULL;
-+	bool supported;
- 
--	fmt = find_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
--	if (!fmt) {
--		fmt = find_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
--		if (!fmt)
--			return -EINVAL;
--	}
-+	supported = check_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
-+	if (!supported)
-+		supported = check_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
- 
--	return 0;
-+	return supported ? 0 : -EINVAL;
- }
- 
- int iris_vdec_subscribe_event(struct iris_inst *inst, const struct v4l2_event_subscription *sub)
-diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
-index c11fee4799cd..a945992f63aa 100644
---- a/drivers/media/platform/qcom/iris/iris_venc.c
-+++ b/drivers/media/platform/qcom/iris/iris_venc.c
-@@ -79,34 +79,21 @@ int iris_venc_inst_init(struct iris_inst *inst)
- 	return iris_ctrls_init(inst);
- }
- 
--static const struct iris_fmt iris_venc_formats_cap[] = {
--	[IRIS_FMT_H264] = {
--		.pixfmt = V4L2_PIX_FMT_H264,
--		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
--	},
--	[IRIS_FMT_HEVC] = {
--		.pixfmt = V4L2_PIX_FMT_HEVC,
--		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
--	},
-+static const u32 iris_venc_formats_cap[] = {
-+	[IRIS_FMT_H264] = V4L2_PIX_FMT_H264,
-+	[IRIS_FMT_HEVC] = V4L2_PIX_FMT_HEVC,
- };
- 
--static const struct iris_fmt iris_venc_formats_out[] = {
--	[IRIS_FMT_NV12] = {
--		.pixfmt = V4L2_PIX_FMT_NV12,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--	[IRIS_FMT_QC08C] = {
--		.pixfmt = V4L2_PIX_FMT_QC08C,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
-+static const u32 iris_venc_formats_out[] = {
-+	[IRIS_FMT_NV12] = V4L2_PIX_FMT_NV12,
-+	[IRIS_FMT_QC08C] = V4L2_PIX_FMT_QC08C,
- };
- 
--static const struct iris_fmt *
--find_format(struct iris_inst *inst, u32 pixfmt, u32 type)
-+static bool check_format(struct iris_inst *inst, u32 pixfmt, u32 type)
- {
--	const struct iris_fmt *fmt = NULL;
--	unsigned int size = 0;
--	unsigned int i;
-+	unsigned int size, i;
-+	const u32 *fmt;
-+
- 	switch (type) {
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
- 		fmt = iris_venc_formats_out;
-@@ -117,25 +104,21 @@ find_format(struct iris_inst *inst, u32 pixfmt, u32 type)
- 		size = ARRAY_SIZE(iris_venc_formats_cap);
- 		break;
- 	default:
--		return NULL;
-+		return false;
- 	}
- 
- 	for (i = 0; i < size; i++) {
--		if (fmt[i].pixfmt == pixfmt)
--			break;
-+		if (fmt[i] == pixfmt)
-+			return true;
- 	}
- 
--	if (i == size || fmt[i].type != type)
--		return NULL;
--
--	return &fmt[i];
-+	return false;
- }
- 
--static const struct iris_fmt *
--find_format_by_index(struct iris_inst *inst, u32 index, u32 type)
-+static u32 find_format_by_index(struct iris_inst *inst, u32 index, u32 type)
- {
--	const struct iris_fmt *fmt = NULL;
--	unsigned int size = 0;
-+	unsigned int size;
-+	const u32 *fmt;
- 
- 	switch (type) {
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
-@@ -147,18 +130,18 @@ find_format_by_index(struct iris_inst *inst, u32 index, u32 type)
- 		size = ARRAY_SIZE(iris_venc_formats_cap);
- 		break;
- 	default:
--		return NULL;
-+		return 0;
- 	}
- 
--	if (index >= size || fmt[index].type != type)
--		return NULL;
-+	if (index >= size)
-+		return 0;
- 
--	return &fmt[index];
-+	return fmt[index];
- }
- 
- int iris_venc_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f)
- {
--	const struct iris_fmt *fmt;
-+	u32 fmt;
- 
- 	switch (f->type) {
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
-@@ -166,14 +149,14 @@ int iris_venc_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f)
- 		if (!fmt)
- 			return -EINVAL;
- 
--		f->pixelformat = fmt->pixfmt;
-+		f->pixelformat = fmt;
- 		break;
- 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
- 		fmt = find_format_by_index(inst, f->index, f->type);
- 		if (!fmt)
- 			return -EINVAL;
- 
--		f->pixelformat = fmt->pixfmt;
-+		f->pixelformat = fmt;
- 		f->flags = V4L2_FMT_FLAG_COMPRESSED | V4L2_FMT_FLAG_ENC_CAP_FRAME_INTERVAL;
- 		break;
- 	default:
-@@ -186,14 +169,14 @@ int iris_venc_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f)
- int iris_venc_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
- {
- 	struct v4l2_pix_format_mplane *pixmp = &f->fmt.pix_mp;
--	const struct iris_fmt *fmt;
- 	struct v4l2_format *f_inst;
-+	bool supported;
- 
- 	memset(pixmp->reserved, 0, sizeof(pixmp->reserved));
--	fmt = find_format(inst, pixmp->pixelformat, f->type);
-+	supported = check_format(inst, pixmp->pixelformat, f->type);
- 	switch (f->type) {
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
--		if (!fmt) {
-+		if (!supported) {
- 			f_inst = inst->fmt_src;
- 			f->fmt.pix_mp.width = f_inst->fmt.pix_mp.width;
- 			f->fmt.pix_mp.height = f_inst->fmt.pix_mp.height;
-@@ -201,7 +184,7 @@ int iris_venc_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
- 		}
- 		break;
- 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
--		if (!fmt) {
-+		if (!supported) {
- 			f_inst = inst->fmt_dst;
- 			f->fmt.pix_mp.width = f_inst->fmt.pix_mp.width;
- 			f->fmt.pix_mp.height = f_inst->fmt.pix_mp.height;
-@@ -222,17 +205,17 @@ int iris_venc_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
- 
- static int iris_venc_s_fmt_output(struct iris_inst *inst, struct v4l2_format *f)
- {
--	const struct iris_fmt *venc_fmt;
- 	struct v4l2_format *fmt;
- 	u32 codec_align;
-+	bool supported;
- 
- 	iris_venc_try_fmt(inst, f);
- 
--	venc_fmt = find_format(inst, f->fmt.pix_mp.pixelformat, f->type);
--	if (!venc_fmt)
-+	supported = check_format(inst, f->fmt.pix_mp.pixelformat, f->type);
-+	if (!supported)
- 		return -EINVAL;
- 
--	codec_align = venc_fmt->pixfmt == V4L2_PIX_FMT_HEVC ? 32 : 16;
-+	codec_align = (f->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_HEVC) ? 32 : 16;
- 
- 	fmt = inst->fmt_dst;
- 	fmt->type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
-@@ -275,7 +258,7 @@ static int iris_venc_s_fmt_input(struct iris_inst *inst, struct v4l2_format *f)
- 
- 	iris_venc_try_fmt(inst, f);
- 
--	if (!(find_format(inst, f->fmt.pix_mp.pixelformat, f->type)))
-+	if (!check_format(inst, f->fmt.pix_mp.pixelformat, f->type))
- 		return -EINVAL;
- 
- 	fmt = inst->fmt_src;
-@@ -344,16 +327,13 @@ int iris_venc_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
- 
- int iris_venc_validate_format(struct iris_inst *inst, u32 pixelformat)
- {
--	const struct iris_fmt *fmt = NULL;
-+	bool supported;
- 
--	fmt = find_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
--	if (!fmt) {
--		fmt = find_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
--		if (!fmt)
--			return -EINVAL;
--	}
-+	supported = check_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
-+	if (!supported)
-+		supported = check_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
- 
--	return 0;
-+	return supported ? 0 : -EINVAL;
- }
- 
- int iris_venc_subscribe_event(struct iris_inst *inst,
-
----
-base-commit: 687da68900cd1a46549f7d9430c7d40346cb86a0
-change-id: 20260311-iris-remote-fmts-53336c2b89a0
-
-Best regards,
---  
-With best wishes
-Dmitry
 
 
