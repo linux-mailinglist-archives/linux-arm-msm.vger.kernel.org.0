@@ -1,116 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-108844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +Oj8K3ALDmo35wUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 21:28:48 +0200
+	id gCB1F2jhDWod4gUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 18:29:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 191FA598596
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 21:28:48 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FB74592001
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 18:29:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9CC61311FFCC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 16:26:31 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 137C4305AE1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 16:26:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2CB9370AF4;
-	Wed, 20 May 2026 16:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50EBF3DD528;
+	Wed, 20 May 2026 16:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pwO4ygww";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="knBCWAlY"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="O1UhhMq+";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kGqdyjQj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16A436E498
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 16:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6D53DE451
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 16:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779294337; cv=none; b=tKEVQSaNOjfha9RzxpdLkJ4Cw9V1Yjy3qcEiQP4uTZJOia4+sIo6yV7rXYel4IDTRSlUCIbq88InTBypcNkdrIA89DFY2DfCVavS80SGcHt9cMqKw+fdYruowm8m1Mg+sAhv8ahtRPLqi5sbwNuG1MdQGxiOtuvgAQs6h9duQ+U=
+	t=1779294341; cv=none; b=ctxRBUyiDDqtY5Ja6l/UVS5+Vfk3+0S9J1vBzCr/eMikfYR8phTGDd6993bgdsnE7KwL42sFFXVeyC1oy5TKi80FvuG+xhpwZvu/tNHUmj86PLkNZdAoI23SMeEVstigvM3UuqhODvpZxBl5s0AwT/KM10th3r01/HgCPfx8CX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779294337; c=relaxed/simple;
-	bh=hqi3tq0y9epWny4EPW7VeKw3SDVmkOb39hmH3jRlfjo=;
+	s=arc-20240116; t=1779294341; c=relaxed/simple;
+	bh=7lpAB6p20Jpq4st3l0dlp3X2C+VtwazHcC3n983ypPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nCUyYarAhrQwwEUf3uZebSykkBkq8u14HaSd2FuhiBja009GZk/4ap7X6Ygm2pBASW6pYmBxqZmTxQIkqK7/lkSKi3fGVpdzlkrG+5RR2tEq2Oc4Lct2vcX/8/Adz02N2oWg62jObLNbkroX7tzGsWZirFcFAoqRxlLnNPy/vrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pwO4ygww; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=knBCWAlY; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version; b=d3yqRcplwU+e3LHRv4o67LiTVGuT1P9JPra8FouY0a36QtksSwclaRo7oFjwDPVLD999d4Yko0ybtI9TMlyE2+wwjeDxUE2ZYWYIpQDPBGN5DlfePgRyJjVZIvWQ544qY9UWDpgYP1C2w4WzPf2mo66Fxe0KYLOmoiyJaLFn3YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=O1UhhMq+; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kGqdyjQj; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64KFT2IE4115399
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 16:25:35 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64KEFfKR963957
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 16:25:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=zUQTW5zoVnU
-	p4nHccZutj+SQwGrJIr4wWIwttwIdYe4=; b=pwO4ygwwIW3AkFObGV9ks9gjtcV
-	4QnyFTUlChK/O4ZitILh0OaSP6BIx2S90/J/dFhVa6/q9zRxvCy/kjGvHrC3kNcv
-	rwogK0sAdQw8sf13sSUEGZ4qa+N+pa+ucgkVOfSq3SzAYQH7X+o/xrBpxnKWk7P+
-	63WlMttw6FK13SqvjwfFi+I7B8YakPqffES/ojycVkB/P3whQsOHQhvvuUBwn8LK
-	Rv7w1FoGBpTqGJxkQEZYcGA5aG4SIn54+KKuZfRuzEoppsGN6ZdduVd+z5Xeavl0
-	HTMbM1HEFKxxyB64oJGLh/G4MXbYGwdx/szpiykGP6NAskgWe6YxfWVqYrw==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e99w0hrcc-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=MmKogDjDhe1
+	97HBXQ8JCrpetWifViys5CJQz4NA34Cw=; b=O1UhhMq+OxgCTkx08X0kPhuA3sf
+	CygWx56olcg/AL3cvhxLUivwkIAefo7JbxSzZjpjbpLL5JnRAQWuffnQsFajUfE3
+	7zDaCwBboYdK3V8ccFzygdK/4OEUMBXdUGR9dhI1gh2tTnDYnrHCI46FTE7pmcwM
+	d7jICrByeNIbvBnESxsA2+ZdJmSHmXzCUQNdt799Jpb60IN9aV1KOlzSGRB/wocf
+	25XR+v3z9rjz4Wr2yZ+ZJoVbCUHLkuWlVxFhQ+vevEy8rEQiLA1KmGXojjccd8oR
+	ZboJn0rWTUGOh9eHDMJjsXsO6JlhgMjycO2lDUJMF6mL8oIblJWsUCFTiQw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9ejh0jrr-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 16:25:34 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-82fd55bf6cdso3126809b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 09:25:34 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 16:25:37 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2bc860066a6so36390685ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 09:25:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779294334; x=1779899134; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1779294336; x=1779899136; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zUQTW5zoVnUp4nHccZutj+SQwGrJIr4wWIwttwIdYe4=;
-        b=knBCWAlYlZGOniw27tD0UTd90fvCHyUyouwT+KfFmIBrdDhfAAB3kXiJ7feHz9/z5B
-         5LrWcNPpwXBUuSGTYPBncTQC3xqogVJY7wVQpbYah99Cwrqeb2que8xd4w1DQD0ZHhVe
-         Xx27hKByA9YnEjJ7QiJX2F7o02UTjA6NCzW298IdlI7LTPuysf85pOv5si5h3cTdLFQh
-         jztunmTRfUYj0pcJxxlLVENuoSpgFfFWz4hxLAL6lQgNQ6WyD6b2D+SgY5Xnkp6LQnKo
-         8JcgG2sdcaJN8WN7apmwfuZG1Z5h89CHcO2h22NdC/ZrPd0ApUIEXhFvX/jzMy3lwW/K
-         lH4A==
+        bh=MmKogDjDhe197HBXQ8JCrpetWifViys5CJQz4NA34Cw=;
+        b=kGqdyjQjcVaX1ROqxZuGhih8uEhh4l7G4pgzgI3EC2bWOdCaiA87h/1cwap+xsWtXy
+         iu9j1/1QUzRcjIM3RagCbM8CO4sykAX4jshDathMp8HotFIr2PqVAlXWXwbE1VapI6RA
+         AzAtPV7d4gZI3WEF4FlZUvWd1k6sJdqQKhTovpcbx1TzPeATox/WEkQEobbFo4lkD2+O
+         i1FxWlluLf1z9IcsanbfRhR+StO4wKYepj59uCKLP1hgfur4k9tXudir4UDhZFLk7M4y
+         drwZVvtXeIh7EmxT9mhK5fHkTK5Xak1g42raO+5HxIt470s+/bX0ow4XJgsohBwO2sGB
+         fY5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779294334; x=1779899134;
+        d=1e100.net; s=20251104; t=1779294336; x=1779899136;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=zUQTW5zoVnUp4nHccZutj+SQwGrJIr4wWIwttwIdYe4=;
-        b=AXdLzw4BWJ5HYGgaSuVa4fUfJSEeV5oFM+Ai0XmpLp7lXS5CQkAC7zz4DG+ZDC2n5d
-         ++aty9D6PlVQoZXLV/j9CEXTdfnDcHCXAxmR64QPE87+Yr+ZnZyIF97JQN+qp/HMdoEp
-         6Qk3APHvZ1WKQ7mrfsngboGy7Hvj9cwUGZ5T1Odyv2zAeodv3+W8PjzI+rCAnN+nfYUm
-         W/JI8qg1nOWcrriyUuyEO9D75q6WHhfCMYrW3+Qm94Spt5n1c7a61ygDJrB6FhbHGjwh
-         TI5F15NTKSM2sfvYUDyhedVVXYEuN2oxlfBUiXTqtYFl5sS5KZ3smXHRc1vnmhoEa9l3
-         yVCQ==
-X-Gm-Message-State: AOJu0Yxn7z9j88IwIXLT+if/tBO2l1H/b7gYe5/tL4D46Tm7kfKUTiFT
-	V2NxdMn9CDZ2s3y4dm9taU109qJuxaNjHqBHSG3UjUyI8uM/THrb2SuDOo1iUFbmniFlh7uKiJz
-	uxrxti5+IYWxjkgycoYvkd0fzisSQA1YEduzNDL8Q406DmK/WnqkX1HsY7rDIfL32rtTl
-X-Gm-Gg: Acq92OGdLopPSAyE9XLDhC0CbOQdPKoupAb+/oxOL8f5OG8kkOmpBCFhg6M8xv4a91C
-	2ZKKk1MadjT+6LrV944dr3w6E3HVAFKX2++ELB//2bzuKzTQP6s6ASZOhIKcNezALuVFqKVPGs+
-	VNw+pzXFeSRFqv6/Lfrq0l5Iywx39Xx27YEkW7tDr8eqAXuOv8gcBuzg7XrRGBoRGkN+YB9lVSZ
-	tOPOwmXd20LDiByA0Hz8YC4Qq0bjpmFIruFvg4PmOF0SFFj++Ute7CTXTOthXm0mw9GDTy6VISf
-	v6UE7ttDHzboIXNSyvUqJgJowSnYKR3Q77FSvKkpv8s6qlo9vLl48rnxg7dJi0H2kMTlQ+ByJk+
-	/QP38BLxxJcklUh4R1C1rXSeqrH8tpC0G
-X-Received: by 2002:a05:6a00:18a9:b0:827:3b1b:43e6 with SMTP id d2e1a72fcca58-83f33d227c0mr24677345b3a.21.1779294333551;
-        Wed, 20 May 2026 09:25:33 -0700 (PDT)
-X-Received: by 2002:a05:6a00:18a9:b0:827:3b1b:43e6 with SMTP id d2e1a72fcca58-83f33d227c0mr24677314b3a.21.1779294333020;
-        Wed, 20 May 2026 09:25:33 -0700 (PDT)
+        bh=MmKogDjDhe197HBXQ8JCrpetWifViys5CJQz4NA34Cw=;
+        b=JRLc0u63uLGCjs6jQFDmg3yr/0JhJcm3FRn2VZY15tl0QJPmHdGJiEafEYaWhkwU+R
+         ediHMlpXQwQH9/9Zzr7Gpkxdy9dvJU3M7ydEonHVzXEu2IFhpSFxcHcJ9RpsRUiBsA1b
+         Cl3X/o4iPt7oreD7SmhEpAC4wF7Ct62vxZuAppX2HicU+B/k7LbVwrXMrrWtUTSzNzam
+         AjRt0IEHv43vW9Ce0HFNJGHtYf2WYS89IgMXpqQ76/awRJ/T6V5zWdaAp34NEupbxxmn
+         gW7JyiIDTu94ZIUBDMrkjHYzA1dBeWUS68r7n56S3pI78LhHIGAgULFFIy8Ua0c3iYB4
+         lj2Q==
+X-Gm-Message-State: AOJu0YxjtQZNJeYSLW2Qc1q4vGgWW2UTquBEJ2KplRvGxX1hvNTF5H0Z
+	n/4HLbNXxMF53Egi+8qziyjST1XI+y/JsGFYeFFcRJmUrxdddaIyE6xPC0pHzM3tYQ1wGGjWIwP
+	8Xu0OPK36Zcwjx+pbeu/VXOzwyoOGDSElhAtQizGFb1EY45CDltf2LcK8eWY+Y6X3XRFY
+X-Gm-Gg: Acq92OFH5htfrc23N0odEtq5AhHLGfB8fYFrHqxDiLXZ+Dt+73QcEcbz1bflqAa2B6Z
+	D1sxwsCttj1gkHERalKyc1G6ByDvc17nfcUC2EgW+mggOkjMpZKGSB8t/MUT1KtcxK9UynLKoRI
+	VdE19U63X7kTt4+lCpKbgSzMM4sffejO93rTwX907LCzTG3X7ln3Nztk6KwFd/XVVR1WSHft87I
+	tq8FKqpw0A635AIg5ynhm1zFNn5IaMp87+b7D6kc+GP+Chk3Ym30CaeVkqs/SD3YAHT+sw4eq1R
+	He4ReCCXVPS6gr97QRFGS5TaO98uuj+MjCmIeWJfLRPShVs0asK9DSI4kLUhXN6uAX8FU6eLjhI
+	1FdbvohSFxjDXg0Ch6JEtKCtnoqBU/IqY
+X-Received: by 2002:a17:902:768c:b0:2b4:5cea:f619 with SMTP id d9443c01a7336-2bd7e97d3ffmr191929115ad.22.1779294336438;
+        Wed, 20 May 2026 09:25:36 -0700 (PDT)
+X-Received: by 2002:a17:902:768c:b0:2b4:5cea:f619 with SMTP id d9443c01a7336-2bd7e97d3ffmr191928765ad.22.1779294335897;
+        Wed, 20 May 2026 09:25:35 -0700 (PDT)
 Received: from localhost ([2601:1c0:5000:d5c:4ec8:83f5:8254:6891])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-83f1977c494sm20995960b3a.21.2026.05.20.09.25.32
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bd5bd5f2e7sm218100535ad.5.2026.05.20.09.25.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2026 09:25:32 -0700 (PDT)
+        Wed, 20 May 2026 09:25:35 -0700 (PDT)
 From: Rob Clark <robin.clark@oss.qualcomm.com>
 To: dri-devel@lists.freedesktop.org
 Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         Akhil P Oommen <akhilpo@oss.qualcomm.com>,
         Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
         Anna Maniscalco <anna.maniscalco2000@gmail.com>,
-        Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
         Dmitry Baryshkov <lumag@kernel.org>,
         Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Konrad Dybcio <konradybcio@kernel.org>,
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v8 09/16] drm/msm: Add per-context perfcntr state
-Date: Wed, 20 May 2026 09:23:56 -0700
-Message-ID: <20260520162454.18391-10-robin.clark@oss.qualcomm.com>
+Subject: [PATCH v8 10/16] drm/msm: Add basic perfcntr infrastructure
+Date: Wed, 20 May 2026 09:23:57 -0700
+Message-ID: <20260520162454.18391-11-robin.clark@oss.qualcomm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260520162454.18391-1-robin.clark@oss.qualcomm.com>
 References: <20260520162454.18391-1-robin.clark@oss.qualcomm.com>
@@ -121,27 +120,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 3w7JKQetzvFZ_CxyvLYgivDTXUin_vJy
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1OSBTYWx0ZWRfX0KayB/wicslL
- 4Mu3c77zY2T4jWdZHRushWm/JYiAnkwyAGrnaEC0lOXm2rkERmU3or1vFJKYaB38g06wvJZ6oQV
- bgXOwwNSVbeu3ji0gp5/8xwUPn6MrCgAojUyJ6vSs6GarmSmcs+q6leg/EUwByLdN6aiQunwL9t
- IgdYNxixd39AnaRpz0Je94NbeMQRQBS8TZ6mvBSPUYgAJvEhDuBbRm2ult2W2YGxkiIEUhlug7o
- yoROinq07Q7AJWZDGjWfDSpcF9NeDuMWRVCw5QScKjHadmstvud5dglI5f6prmXVILCnMP89e3J
- 5Q7poSrTSxq2wrxyPL9Wab1bzDttbdvkV80tPIIfk09pHSAIhy95Pud3yf9zXFCUjIeyASWr606
- CwH4Phtg2y0yYhUAzNlFY99hOrJ/L+K9nE5F7mRdGXgRP8r6uFdTP4CsdFt0t2M/shzA37evUhl
- g1/DohHxSjVa7kO/OgQ==
-X-Authority-Analysis: v=2.4 cv=RZigzVtv c=1 sm=1 tr=0 ts=6a0de07e cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=xqWC_Br6kY4A:10 a=NGcC8JguVDcA:10
+X-Authority-Analysis: v=2.4 cv=QptuG1yd c=1 sm=1 tr=0 ts=6a0de081 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=xqWC_Br6kY4A:10 a=NGcC8JguVDcA:10
  a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8
- a=OtV_UDYxk2hhjaRdRjwA:9 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-GUID: 3w7JKQetzvFZ_CxyvLYgivDTXUin_vJy
+ a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8
+ a=hddbS_E73Iye693R-v0A:9 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1OSBTYWx0ZWRfX7fme2DGTyQ1v
+ aGscgCHkX+bbvXlX2XdbgsWEy99fUtCeTbGwJlbk3pfkLk4jnUtkWarsO8+Z3uaabQGy/uDeJwP
+ s+WI3mU5vBoFer9ZsMUzQpQD8/sZK2GvCnREKVeqSTcOd6j5wQKnJzML2SFNtr9rYYHofg4ykUz
+ Qr/WpwNqwABh+fJpX2PT5vHS5lbK2v47mA1sObAnSoRAE1Mq/p7BudaN3KM2qP9/eM4Twh4bGov
+ kSe6H/lNe9EbKBRLUg3G5RwqeIru5BqIoIVmXLi5NJISVgSK+ZAASpCVjBKXU8v6ZzX2srHVZY3
+ aD3Q+6HXY+ksuxXPiSrDBuROmIorX5wjnN/NCbfs0HBOC7ErDFOAAC8PJcO40FBet2F7ESAqHX0
+ XuozrdLY9jlILaskU2IVAE+u3Gw782AAtlrSD1JvPdhvGWDOS1V8w/53vCgS3C7bb4Iv0r15VbH
+ fEkyavbDRqsbGhCLFlA==
+X-Proofpoint-GUID: j8r-61Fp8q6Vr2usVVJu0RylbvtFrFom
+X-Proofpoint-ORIG-GUID: j8r-61Fp8q6Vr2usVVJu0RylbvtFrFom
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
- priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0 spamscore=0
+ spamscore=0 adultscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ clxscore=1015 impostorscore=0 phishscore=0 malwarescore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200159
 X-Spamd-Result: default: False [0.84 / 15.00];
@@ -151,114 +150,410 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_MISSING_CHARSET(0.50)[];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,gmail.com,poorly.run,kernel.org,linux.dev,somainline.org,ffwll.ch];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	TAGGED_FROM(0.00)[bounces-108844-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,gmail.com,kernel.org,linux.dev,poorly.run,somainline.org,ffwll.ch];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	TAGGED_FROM(0.00)[bounces-108846-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[robin.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 191FA598596
+X-Rspamd-Queue-Id: 1FB74592001
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The upcoming PERFCNTR_CONFIG ioctl will allow for both global counter
-collection, and per-context counter reservation for local (ie. within
-a single GEM_SUBMIT ioctl) counter collection.
-
-Any number of contexts can reserve the same counters, but we will need
-to ensure that counters reserved for local counter collection do not
-conflict with counters used for global counter collection.
-
-So add tracking for per-context local counter reservations.
+Add the basic infrastructure for tracking assigned perfcntrs.
 
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Reviewed-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
 Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/msm_gpu.h         |  5 +++++
- drivers/gpu/drm/msm/msm_perfcntr.h    | 21 +++++++++++++++++++++
- drivers/gpu/drm/msm/msm_submitqueue.c |  1 +
- 3 files changed, 27 insertions(+)
+ drivers/gpu/drm/msm/Makefile               |   1 +
+ drivers/gpu/drm/msm/adreno/adreno_device.c |   8 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    |   5 +-
+ drivers/gpu/drm/msm/msm_drv.h              |   6 +
+ drivers/gpu/drm/msm/msm_gpu.c              |  12 ++
+ drivers/gpu/drm/msm/msm_gpu.h              |  57 +++++++++-
+ drivers/gpu/drm/msm/msm_perfcntr.c         | 126 +++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_perfcntr.h         |  23 ++++
+ 8 files changed, 232 insertions(+), 6 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/msm_perfcntr.c
 
+diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+index 337634e7e247..2466cb32dac5 100644
+--- a/drivers/gpu/drm/msm/Makefile
++++ b/drivers/gpu/drm/msm/Makefile
+@@ -122,6 +122,7 @@ msm-y += \
+ 	msm_gpu_devfreq.o \
+ 	msm_io_utils.o \
+ 	msm_iommu.o \
++	msm_perfcntr.o \
+ 	msm_rd.o \
+ 	msm_ringbuffer.o \
+ 	msm_submitqueue.o \
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index fc38331ce640..7f20320ef66a 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -307,8 +307,10 @@ MODULE_DEVICE_TABLE(of, dt_match);
+ static int adreno_runtime_resume(struct device *dev)
+ {
+ 	struct msm_gpu *gpu = dev_to_gpu(dev);
+-
+-	return gpu->funcs->pm_resume(gpu);
++	int ret = gpu->funcs->pm_resume(gpu);
++	if (!ret)
++		ret = msm_perfcntr_resume(gpu);
++	return ret;
+ }
+ 
+ static int adreno_runtime_suspend(struct device *dev)
+@@ -322,6 +324,8 @@ static int adreno_runtime_suspend(struct device *dev)
+ 	 */
+ 	WARN_ON_ONCE(gpu->active_submits);
+ 
++	msm_perfcntr_suspend(gpu);
++
+ 	return gpu->funcs->pm_suspend(gpu);
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 72b71e9e44f0..ee0bcf985934 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -702,11 +702,10 @@ void adreno_recover(struct msm_gpu *gpu)
+ 	struct drm_device *dev = gpu->dev;
+ 	int ret;
+ 
+-	// XXX pm-runtime??  we *need* the device to be off after this
+-	// so maybe continuing to call ->pm_suspend/resume() is better?
+-
++	msm_perfcntr_suspend(gpu);
+ 	gpu->funcs->pm_suspend(gpu);
+ 	gpu->funcs->pm_resume(gpu);
++	msm_perfcntr_resume(gpu);
+ 
+ 	ret = msm_gpu_hw_init(gpu);
+ 	if (ret) {
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index e53e4f220bed..f00b2e7aeb91 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -235,6 +235,12 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ int msm_ioctl_vm_bind(struct drm_device *dev, void *data,
+ 		      struct drm_file *file);
+ 
++int msm_perfcntr_resume(struct msm_gpu *gpu);
++void msm_perfcntr_suspend(struct msm_gpu *gpu);
++
++struct msm_perfcntr_state * msm_perfcntr_init(struct msm_gpu *gpu);
++void msm_perfcntr_cleanup(struct msm_gpu *gpu);
++
+ #ifdef CONFIG_DEBUG_FS
+ unsigned long msm_gem_shrinker_shrink(struct drm_device *dev, unsigned long nr_to_scan);
+ #endif
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 1bac70473f80..bf6845e5719e 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -1028,6 +1028,17 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 
+ 	refcount_set(&gpu->sysprof_active, 1);
+ 
++	mutex_init(&gpu->perfcntr_lock);
++
++	if (gpu->num_perfcntr_groups > 0) {
++		gpu->perfcntrs = msm_perfcntr_init(gpu);
++		if (IS_ERR(gpu->perfcntrs)) {
++			ret = PTR_ERR(gpu->perfcntrs);
++			gpu->perfcntrs = NULL;
++			goto fail;
++		}
++	}
++
+ 	return 0;
+ 
+ fail:
+@@ -1066,6 +1077,7 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
+ 	}
+ 
+ 	msm_devfreq_cleanup(gpu);
++	msm_perfcntr_cleanup(gpu);
+ 
+ 	platform_set_drvdata(gpu->pdev, NULL);
+ }
 diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 9e5c753437c2..19484774f369 100644
+index 19484774f369..be922641a14f 100644
 --- a/drivers/gpu/drm/msm/msm_gpu.h
 +++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -434,6 +434,11 @@ struct msm_context {
- 	 * this context.
+@@ -25,6 +25,7 @@ struct msm_gem_vm_log_entry;
+ struct msm_gpu_state;
+ struct msm_context;
+ struct msm_perfcntr_group;
++struct msm_perfcntr_stream;
+ 
+ struct msm_gpu_config {
+ 	const char *ioname;
+@@ -93,6 +94,13 @@ struct msm_gpu_funcs {
  	 */
- 	atomic64_t ctx_mem;
+ 	bool (*progress)(struct msm_gpu *gpu, struct msm_ringbuffer *ring);
+ 	void (*sysprof_setup)(struct msm_gpu *gpu);
 +
-+	/**
-+	 * @perfcntrs: Per-context reserved perfcntrs state
-+	 */
-+	struct msm_perfcntr_context_state *perfctx;
++	/* Configure perfcntr SELect regs: */
++	void (*perfcntr_configure)(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
++				   const struct msm_perfcntr_stream *stream);
++
++	/* Flush perfcntrs before reading (optional): */
++	void (*perfcntr_flush)(struct msm_gpu *gpu);
  };
  
- struct drm_gpuvm *msm_context_vm(struct drm_device *dev, struct msm_context *ctx);
+ /* Additional state for iommu faults: */
+@@ -266,6 +274,11 @@ struct msm_gpu {
+ 
+ 	const struct msm_perfcntr_group *perfcntr_groups;
+ 	unsigned num_perfcntr_groups;
++
++	struct msm_perfcntr_state *perfcntrs;
++
++	/** @perfcntr_lock: protects perfcntr related state */
++	struct mutex perfcntr_lock;
+ };
+ 
+ static inline struct msm_gpu *dev_to_gpu(struct device *dev)
+@@ -311,10 +324,52 @@ static inline bool msm_gpu_active(struct msm_gpu *gpu)
+ 	return false;
+ }
+ 
++/**
++ * struct msm_perfcntr_group_state - Tracking for the currently allocated counter state
++ */
++struct msm_perfcntr_group_state {
++	/**
++	 * @allocated_counters:
++	 *
++	 * allocated counters for global counter collection.  The
++	 * corresponding counters are allocated from highest to
++	 * lowest, to minimize chance of conflict with old userspace
++	 * allocating from lowest to highest.
++	 */
++	unsigned allocated_counters;
++
++	/**
++	 * @countables:
++	 *
++	 * The correspnding SELect reg values for the allocated counters
++	 */
++	uint32_t countables[];
++};
++
++/**
++ * struct msm_perfcntr_state - overall global perfcntr state
++ */
++struct msm_perfcntr_state {
++	/** @stream: current global counter stream if active */
++	struct msm_perfcntr_stream *stream;
++
++	/**
++	 * @groups: Global perfcntr stream group state.
++	 *
++	 * Conceptually this is part of msm_perfcntr_stream state, but is
++	 * statically pre-allocated when the gpu is initialized to simplify
++	 * error path cleanup in PERFCNTR_CONFIG ioctl.  (__free(kfree)
++	 * doesn't really help with variable length arrays of allocated
++	 * pointers.)
++	 */
++	struct msm_perfcntr_group_state *groups[];
++};
++
+ static inline bool
+ msm_gpu_sysprof_no_perfcntr_zap(struct msm_gpu *gpu)
+ {
+-	return refcount_read(&gpu->sysprof_active) > 1;
++	return (refcount_read(&gpu->sysprof_active) > 1) ||
++		(gpu->perfcntrs && READ_ONCE(gpu->perfcntrs->stream));
+ }
+ 
+ static inline bool
+diff --git a/drivers/gpu/drm/msm/msm_perfcntr.c b/drivers/gpu/drm/msm/msm_perfcntr.c
+new file mode 100644
+index 000000000000..04407260a4e1
+--- /dev/null
++++ b/drivers/gpu/drm/msm/msm_perfcntr.c
+@@ -0,0 +1,126 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
++
++#include "msm_drv.h"
++#include "msm_gpu.h"
++#include "msm_perfcntr.h"
++
++static int
++msm_perfcntr_resume_locked(struct msm_perfcntr_stream *stream)
++{
++	return 0;
++}
++
++int
++msm_perfcntr_resume(struct msm_gpu *gpu)
++{
++	if (!gpu->perfcntrs)
++		return 0;
++	guard(mutex)(&gpu->perfcntr_lock);
++	return msm_perfcntr_resume_locked(gpu->perfcntrs->stream);
++}
++
++static void
++msm_perfcntr_suspend_locked(struct msm_perfcntr_stream *stream)
++{
++}
++
++void
++msm_perfcntr_suspend(struct msm_gpu *gpu)
++{
++	if (!gpu->perfcntr_groups)
++		return;
++	guard(mutex)(&gpu->perfcntr_lock);
++	msm_perfcntr_suspend_locked(gpu->perfcntrs->stream);
++}
++
++/**
++ * msm_perfcntr_group_idx - map idx of perfcntr group to group_idx
++ * @stream: The global perfcntr stream
++ * @n: The requested group_idx
++ *
++ * The PERFCNTR_CONFIG ioctl requested N counters/countables per perfcntr
++ * group, but the order of groups is not required to match the order they
++ * are defined in the perfcntr tables (which is not stable/UABI, only the
++ * group names are UABI).
++ *
++ * But the order samples are returned in the stream should match the
++ * order they are requested in the PERFCNTR_CONFIG ioctl.  This helper
++ * handles the order remapping.
++ *
++ * Returns an index into gpu->perfcntr_groups[] and perfcntrs->groups[].
++ */
++uint32_t
++msm_perfcntr_group_idx(const struct msm_perfcntr_stream *stream, uint32_t n)
++{
++	WARN_ON_ONCE(n > stream->nr_groups);
++	return stream->group_idx[n];
++}
++
++/**
++ * msm_perfcntr_counter_base - get idx of the first counter in group
++ * @stream: The global perfcntr stream
++ * @group_idx: the index of the counter group
++ *
++ * For global counter collection, counters are allocated from the end
++ * (last counter) while UMD allocates them from the start (0..N-1).
++ * Since UMD always allocated them from the start this also minimizes
++ * the chance of conflict when using old UMD which predates
++ * PERFCNTR_CONFIG ioctl.
++ *
++ * Returns the index of first counter to use.  An index into
++ * msm_perfcntr_group::counters[].
++ */
++uint32_t
++msm_perfcntr_counter_base(const struct msm_perfcntr_stream *stream, uint32_t group_idx)
++{
++	struct msm_gpu *gpu = stream->gpu;
++	struct msm_perfcntr_state *perfcntrs = gpu->perfcntrs;
++	unsigned num_counters = gpu->perfcntr_groups[group_idx].num_counters;
++	unsigned allocated_counters = perfcntrs->groups[group_idx]->allocated_counters;
++
++	return num_counters - allocated_counters;
++}
++
++struct msm_perfcntr_state *
++msm_perfcntr_init(struct msm_gpu *gpu)
++{
++	struct msm_perfcntr_state *perfcntrs;
++	struct device *dev = &gpu->pdev->dev;
++	size_t sz;
++
++	sz = struct_size(perfcntrs, groups, gpu->num_perfcntr_groups);
++	perfcntrs = devm_kzalloc(dev, sz, GFP_KERNEL);
++	if (!perfcntrs)
++		return ERR_PTR(-ENOMEM);
++
++	for (unsigned i = 0; i < gpu->num_perfcntr_groups; i++) {
++		const struct msm_perfcntr_group *group =
++			&gpu->perfcntr_groups[i];
++
++		sz = struct_size(perfcntrs->groups[i], countables, group->num_counters);
++		perfcntrs->groups[i] = devm_kzalloc(dev, sz, GFP_KERNEL);
++		if (!perfcntrs->groups[i]) {
++			msm_perfcntr_cleanup(gpu);
++			return ERR_PTR(-ENOMEM);
++		}
++	}
++
++	return perfcntrs;
++}
++
++void
++msm_perfcntr_cleanup(struct msm_gpu *gpu)
++{
++	struct msm_perfcntr_state *perfcntrs = gpu->perfcntrs;
++	struct device *dev = &gpu->pdev->dev;
++
++	gpu->perfcntrs = NULL;
++
++	for (unsigned i = 0; i < gpu->num_perfcntr_groups; i++)
++		devm_kfree(dev, perfcntrs->groups[i]);
++
++	devm_kfree(dev, perfcntrs);
++}
 diff --git a/drivers/gpu/drm/msm/msm_perfcntr.h b/drivers/gpu/drm/msm/msm_perfcntr.h
-index 64a5d29feba1..7f0654182496 100644
+index 7f0654182496..bfda19e01535 100644
 --- a/drivers/gpu/drm/msm/msm_perfcntr.h
 +++ b/drivers/gpu/drm/msm/msm_perfcntr.h
-@@ -35,6 +35,27 @@ struct msm_perfcntr_group {
+@@ -35,6 +35,29 @@ struct msm_perfcntr_group {
     const struct msm_perfcntr_counter *counters;
  };
  
 +/**
-+ * struct msm_perfcntr_context_state - per-msm_context counter state
-+ *
-+ * A given counter can either be unused, reserved for global counter
-+ * collection exclusively, or reserved for local per-context counter
-+ * collection inclusively.  Multiple contexts can reserve the same
-+ * counter, since SEL reg programming and counter begin/end sampling
-+ * happen locally (within a single GEM_SUBMIT ioctl).
++ * struct msm_perfcntr_stream - state for a single open stream fd
 + */
-+struct msm_perfcntr_context_state {
-+	/** @dummy: Some compilers dislike structs with only a flex array */
-+	unsigned dummy;
++struct msm_perfcntr_stream {
++	/** @gpu: Back-link to the GPU */
++	struct msm_gpu *gpu;
++
++	/** @nr_groups: # of counter groups with enabled counters */
++	uint32_t nr_groups;
 +
 +	/**
-+	 * @reserved_counters:
++	 * @group_idx: array of nr_groups
 +	 *
-+	 * The number of reserved counters indexed by perfcntr group.
++	 * Maps the order of groups in PERFCNTR_CONFIG ioctl to group idx,
++	 * so that results in the results stream can be ordered to match
++	 * the ioctl call that setup the stream
 +	 */
-+	unsigned reserved_counters[];
++	uint32_t *group_idx;
 +};
 +
- extern const struct msm_perfcntr_group a6xx_perfcntr_groups[];
- extern const unsigned a6xx_num_perfcntr_groups;
- 
-diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
-index 2598d674a99d..a58fe41602c6 100644
---- a/drivers/gpu/drm/msm/msm_submitqueue.c
-+++ b/drivers/gpu/drm/msm/msm_submitqueue.c
-@@ -66,6 +66,7 @@ void __msm_context_destroy(struct kref *kref)
- 	drm_gpuvm_put(ctx->vm);
- 	kfree(ctx->comm);
- 	kfree(ctx->cmdline);
-+	kfree(ctx->perfctx);
- 	kfree(ctx);
- }
- 
++uint32_t msm_perfcntr_group_idx(const struct msm_perfcntr_stream *stream, uint32_t n);
++uint32_t msm_perfcntr_counter_base(const struct msm_perfcntr_stream *stream, uint32_t group_idx);
++
+ /**
+  * struct msm_perfcntr_context_state - per-msm_context counter state
+  *
 -- 
 2.54.0
 
