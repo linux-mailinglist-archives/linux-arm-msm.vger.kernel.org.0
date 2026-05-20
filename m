@@ -1,297 +1,468 @@
-Return-Path: <linux-arm-msm+bounces-108826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yLjoInjZDWrE4AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 17:55:36 +0200
+	id KE49BrzkDWpN4gUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 18:43:40 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A8C65914DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 17:55:36 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69A77592550
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 18:43:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 86B2430E6EA5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 15:45:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F16C63233FAB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 15:47:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0402E3F2116;
-	Wed, 20 May 2026 15:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38D4C22541C;
+	Wed, 20 May 2026 15:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FWkZaH8Q";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Fo/NUyyh"
+	dkim=pass (2048-bit key) header.d=tomeuvizoso-net.20251104.gappssmtp.com header.i=@tomeuvizoso-net.20251104.gappssmtp.com header.b="gqpKgBW+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5B93EFFB8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 15:44:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779291872; cv=none; b=qsa7OmTkalKeKBDzXB999DQfpVg8es3K5CH7Mpdk9vNGmI3ipP6B4PLheLpEY3npZ1P/Mdfv/knZPznpAju1lrsUfAyWKQ/BaQrwebRGn8wZTeuhB1pTnJNh7TUzJme0iNE1ZShIziYoW5SisBLlo37BQILGrneTxPVCp4Jax4o=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779291872; c=relaxed/simple;
-	bh=hXYOo2KOdZ2RezxUpX+nYE6lfyapAWeCnwTUrPTZ4cE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q0z5bAwa9Y4Le85q/Vg6kR2SZQR1flGo+JlgDrFKDEw6gilLtcixjXj2GuJ103OV2FFS/B6cdgZoM4N55owC75Sf6CgmR1+vCRemiVm6WQlRl6gRxBcuJLmATjqr8sk53DAevAvdS7HHdRd23HSJyEidcFPVP0MsHSI7DtWUqU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FWkZaH8Q; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Fo/NUyyh; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64KE6UPr119026
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 15:44:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9qZiw3Q1UdCzGrvVsZnH0m9WuZPRbHSQ0ex7xVdJkCA=; b=FWkZaH8Q3eGw3zBs
-	a9WY6NuemhnNDNJbTacpwXkQi5l47YYuFph2bmONnX2LFikLp9+cDJxn+GckTYSb
-	om0ZEDcuR/ypP+B2balufsPL/l0/xMUbbVYrg3bSFdCemINHkalSqIMEf/dck3W3
-	jl1BzevyVRHhL5om42xucssWD8o3EbL4oAfZ28srTiJRF9CPFShZZjARd0twIAm0
-	RH9V5SDwL/ydAeDeLysZL0KyQHh77AJibVa0GM7fXOw16XSyFqsf0oNNut5TsDE1
-	GRbgSw4utvNc7Oq/KuzvEnHMMzNmxdaZKudXRQmvxD7N2+XyBGz9o8figfjUugYi
-	pTKasw==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9ee88e89-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 15:44:30 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-36641fe4aedso9788911a91.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 08:44:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FDCF3264EA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 15:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.171
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779292051; cv=pass; b=NwNPX0+hngmrL5MiLXV7HF81NoiOrIGcjOhMxuLfXVNdUAvr769kg0PQ0B/qbF9A43ApOQrOhKJGaxlF8mWHww4ibeHdd/R936no4uS1antOPAR5e/HA4JlROh1AuaFPw6ikje5yVOHizF5P4qndwVSDEeuEKmhiDY58+WBy64c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779292051; c=relaxed/simple;
+	bh=AWGO8vhu+Zh92NgAY6Z9P494WPO1xIp3IJxl+CkGVDI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UYPV1P7fgf1+PwiRfwde9gfSFuYf4oEL+18iJiWoUHa1emhlBHsxTwJb/VO16fAhYf1K0VKpPwb1zDP3uug9sDOr6GoyYrI9RZoFqnF/CjBun9ND71DGMyRKZpMQYPZ+zLLHwxwyKeHlWPJHR4xdzzsg6ndGfszufKW8bO6IQlI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tomeuvizoso.net; spf=pass smtp.mailfrom=tomeuvizoso.net; dkim=pass (2048-bit key) header.d=tomeuvizoso-net.20251104.gappssmtp.com header.i=@tomeuvizoso-net.20251104.gappssmtp.com header.b=gqpKgBW+; arc=pass smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tomeuvizoso.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tomeuvizoso.net
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-90d1f03238bso571086085a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 08:47:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779292046; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Q2Tt+oac1KJxIeJqEW5qx09CcbmM984p1gO67/86/29+6hWZ+pHOFyG2B8iKX4WQmg
+         Du26KUnt1IJRm7BNi3g1dW/gU0XbTpThJK2ZAxBlz8JMvOwtS7z8TA4s0BT68gh28+OX
+         Gk+3aBO8zK9UTxV5tZz2UJV6zusYYu6CziGUgqtppRO8/UJ2PJ3Q6eAHGpHZbDd/vIVJ
+         oXde6RQ3OvPVThxRTP9Fq+tgpzEXPcbWAud1bP6GeYFdjxpwOZToQVKbm1If5P4TpoSO
+         tXG5YoMgAzMh5/Ee0LFYEJlkM1hTWm6UwfTUULwRmfrGGa4NjMGCrFmCaJBqPn+26VpX
+         rBwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=I5uPOQqH/io7bW7wdgpurqth07a6Aq9sxwItrhNv9yI=;
+        fh=jfL71JG7Wfh/VUbG5Ds86YT2xyuUqNAr82ohAWH69f4=;
+        b=i35D+jebtil3MtqoLqvkllFuqRac4lOEa9Q9GJsDsEJ6U7gisGUTxOgaaI2+GKZwn1
+         8cpEyf33dgGQFSu25XcwreJ3dVcg9ON7wvhqvoSP4RYIZ9YoAs67wcGxIob1mWOxr/rh
+         CUUB2mqHnSnEsDW7cJu6rZwo831usSupJzILzVeJ3QQKXpmiftljafSkFj/TbvQ6LP2V
+         Dx1ZRAxBm/tAS1bmoxAfPzOfxskcg9UDH0EtU98dg7o6U43Lr5q/Ge7UWYJKIzc5brVC
+         vBzmLoB0iZalsNU3i+9/fl9C6fdu3OjaVJWIU/s0uo6LemQFLb9NFGzTwRpSQoeT78dO
+         rorg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779291870; x=1779896670; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9qZiw3Q1UdCzGrvVsZnH0m9WuZPRbHSQ0ex7xVdJkCA=;
-        b=Fo/NUyyh0W5oOPGSbXPb0s9pltxpeggxI8UMPQAU5ki4DUZQalCYqq3xBG45panaQk
-         uQO1wgXkkJTj1+TKZpVh6ZKQMM7VBxFBcGgknBGxK3tJvyfRck/Q/KoQICkyR/0WG6EG
-         jTaqtT2p3i5LTx9VmypVIlrO+X0/Sk/HvAIBU/xKNAhFwiBDaB1E0vrj6u/IpiJ3jrXb
-         rJXJdi9NFuKDsyt6oKDwT7UdfK6wrp/fyn5CovRlLpQPLkD982bXMPZ73rgl1LPpTsdE
-         ky87MTtedHRzojs5PV+UH2LY+jxJRnFzc96yjlf7oXXjsnFD8MRFEPPlNNQKoFTdPNJ+
-         3I+Q==
+        d=tomeuvizoso-net.20251104.gappssmtp.com; s=20251104; t=1779292046; x=1779896846; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I5uPOQqH/io7bW7wdgpurqth07a6Aq9sxwItrhNv9yI=;
+        b=gqpKgBW+I0jN7mJrVwuYxEQK5+v8ZKgcfb/N8fKIp/DRkwO3EvYPS2Bxu7Ku5uw6Tk
+         Qi5/w5VuAMFqy/BPb+nmYhAW/2Eb9V3vxfhd5hpUbnCpFi5rtnE8svDuYScomFj0hW6y
+         BLh9xvzOi1j1W6o9LYHeW8vOyx1T3UdhFGWQfGj6AYwrXa+VzZgUyEa5GYtjPv3BHG9v
+         hrHuAKpUx3Kl+n2Oz7fyPmC8Nm2g8FwEQKpLcTAZSdiTCDLcOWECfQ5Z5LZh3Al5CnR4
+         244jcVQVaZkMsDHQQrcTzgVrf6UfMuELa0bBLfJ81miA405vsc48ZuFs3gN5HWikIZX3
+         fkug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779291870; x=1779896670;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9qZiw3Q1UdCzGrvVsZnH0m9WuZPRbHSQ0ex7xVdJkCA=;
-        b=EJ0YciPprRdMvYTFqAFLyTB0jK7DY2CiXuHHHl07nBt+ZiuY4GA7eyMI0BRcenZzI1
-         1VdZ5CPvyGRa0yCoAbCMIgpmM80R8hMhyAqnA90EXaGPwn7Uem6urj0lS7IhKV8dQpYg
-         XTzK0Fh7GZ85Ee9F9ZcE0IN6TUifpVPhPmmJw+ofip4QIZIsILt5bHqa00g/hP99SMe3
-         apsGljQ17uzNJafW6v0sztgrDF3f956R+qaRLihVYNkptlpSQM+2iq0VSa/5G28b42oK
-         BvqqIzDDMHgU2a0pdi04aNaFVCsPfdW/Hf5z6yexnFbLND4KNCSB/2g8BJgjcN2c4Oy3
-         Ff6g==
-X-Forwarded-Encrypted: i=1; AFNElJ+FY4l/nErkizeAY089Fk6OKHDCWOaVULDpJELpeo1XP/Iu1TWw5If/kXW/5goGh1CYtxb0j33y6XaXMJ3I@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYMX4LhwCA0llffcjXAANt/JthR5MajvkUwR79PWHmrWE/kjb1
-	BhWPC0YqLfPq53i7isSaDEsWN89ocZguz+PsauihFldEJt0BROACLxlyrNekwjI6jMKzrMgLSZn
-	LUbns28NFjUONxOe4o9KHm/R1or7AaVIxub3EQj13mRg3jG496nFn5VzNzOMlmyeK4hHX
-X-Gm-Gg: Acq92OHLHexx0mQnRK/sYsdGm6kCeWn+zz9IAAAAnjeX/8tUv16BLbMp7qQEQHmH16F
-	qlicyRD5MDW8zfKBzcs1x9sZmRFDvyLMZ3lsTFhVB2wpE+LJFVtN8RKoVi7zxbobLFQFiVEtt3j
-	W9rEzi2yfYDnvbskTqKMatxpwPegVdMw7nRrHkbi/M17xaMxqNKAFt0Vv+I4Yjn7/WoCvHXBrxW
-	3c9PySD/YT2YldhslfjV/TWXUQ5noyIfMb1zYiLgb942d0DQW+wkkTf5tGCyJf4quXjb71wgj2W
-	6YBIVkVnmypr8huUU2cokfliyiem4/a67z4cnsrPMZFg5IuQUGbV2cMGELT82pPYRJZMb5NIDWM
-	YUF/DWf9dW+aOq0ul74VH1F+u8u0US/rXCa1R08BigDXaQm2WxRCug10=
-X-Received: by 2002:a05:6a20:3d8f:b0:3a2:dabf:fef9 with SMTP id adf61e73a8af0-3b22ec9b3d7mr27913069637.27.1779291870029;
-        Wed, 20 May 2026 08:44:30 -0700 (PDT)
-X-Received: by 2002:a05:6a20:3d8f:b0:3a2:dabf:fef9 with SMTP id adf61e73a8af0-3b22ec9b3d7mr27913034637.27.1779291869552;
-        Wed, 20 May 2026 08:44:29 -0700 (PDT)
-Received: from [10.204.101.125] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c82bb062695sm19731416a12.4.2026.05.20.08.44.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 May 2026 08:44:29 -0700 (PDT)
-Message-ID: <16581410-45e9-4311-a0e5-435dc5314ae6@oss.qualcomm.com>
-Date: Wed, 20 May 2026 21:14:24 +0530
+        d=1e100.net; s=20251104; t=1779292046; x=1779896846;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=I5uPOQqH/io7bW7wdgpurqth07a6Aq9sxwItrhNv9yI=;
+        b=Z3zsCOiBJQCowSFNRFTSeY9NZcRRc2hB8F3TyxOMZQ8Eea0UZlzpe4dnR3XCjoB/9/
+         Pn51l1LJm/x+V5G/f6Rz8weeH0KD33Du8/EJCQVuOvMy1KjS5IzfCLhV52zjZyR9BPEL
+         IJtjbAV2o3WXbVdZoKdDtfGEGyUFqEg/7mclfckIiEUUnLlLtJ/kZA6j6bfUhvnAHR5z
+         TtKJD6cdObA8uGsmO1NaZJwNcpcVcZ2ircwE46XmXz1Lh6dwZ7YMRAmY4s2RY8CbMi8A
+         z/YR1mIxUnGpumFW8JIieVDDY2z+kh3ds/xcLwWMGTR/AyEkAxbhQvW4RHmT9CEe7KvC
+         vEjQ==
+X-Forwarded-Encrypted: i=1; AFNElJ806jD2B+/rBC2LpH8Tib0B/xTLSd3Lx1n8tDmfGSFgD0cxsM2UmWPoKwklNwTmVWUCxT9/4hvG8VjqcQC3@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+fg7QVhSFAwvlkBmpo+PweoxrB9Ab07K/bceLaWBABUSZGo8S
+	+LZ3PtdLNNjmjdtKTkDIV6bFaRFvc4t9/Fgdt0a/Xw+t4VgcuNXmEMyug5Q1E5dcwDouRDEEWo7
+	jVLo6mWrH9QBwE+gKFDUaOi5Xmm9t0rihIxFDjGSDRg==
+X-Gm-Gg: Acq92OGH5/kL4SYt4aq4gxn3asftze9W0prLyw0iREJtwGtK6JAG1mEPSH3QOXgoRMF
+	lfMgNvMyP2N1K5NCihVTzkcOAFrG4QKmjxV/VR/jYQj+dNYUBwwYdD4PIt1XrSOPuI5sgBFs06t
+	qgEVtBNfCYq6tJOckz+y8pjdUJHBT5PRphbC/dnkgfnHGexU/Dd0yqoxkA24PZXDBV1/Xh6bjB0
+	gjOKBS4MwkNDa6fqUvUVFEs6ElT3Ol3sglB2A8pCzazK3zUpC9ldnNaaxxrDpERk4Mng0wLMb3v
+	BnNkvTKhr9OxflJ+VQ==
+X-Received: by 2002:a05:620a:1d94:b0:911:fba0:6d02 with SMTP id
+ af79cd13be357-914a0268c45mr5177385a.22.1779292045808; Wed, 20 May 2026
+ 08:47:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/6] media: qcom: iris: add support for decoding 10bit
- formats
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260511-topic-sm8x50-iris-10bit-decoding-v3-0-7fc049b93042@linaro.org>
- <c4144820-c5fe-4249-85df-acd64642b909@oss.qualcomm.com>
- <3b3fbaab-1463-4593-beeb-40168658de7c@linaro.org>
-Content-Language: en-US
-From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <3b3fbaab-1463-4593-beeb-40168658de7c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: KlnmwY6cBeo58k3I3mkdQtVG8hubxrmo
-X-Authority-Analysis: v=2.4 cv=e5k2j6p/ c=1 sm=1 tr=0 ts=6a0dd6de cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=poQuPI4Y3rRwBnmNrTsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE1MiBTYWx0ZWRfXyXuYsEhuxHw2
- SDru1fEIalOeeB2VnRzSD6myStLvasyXrZ1aLsVKG4wPOb0m+83/Gjqu2BdFAdM3WoKGTxpztIW
- h3Ra7NHziV9iKpsMLA/oz2GHV2LJkqJOqxYjOor7TDoIb6/8GpKqSZD4Z1CzL/7iREPYvh7R8sn
- Kzq7NbjFh5bkDroZNIgKcwgoAa0byQiriAJZS2eoS15WlGLN7fS7Q8eHdPrbt7hsk14ROKd21x3
- H3EPqQGXhLKRpC92LyszgiomAPGT71NLFQfOouDDqrBPcfHtOOza+YGkL6OA7H7UyKxMn9PuiCW
- Q10wsUs+KQfQbuTjbpxfXENh0yEmYwsJdic/myWgX2dpOdO76Jksok4/U3peysPBaKSwCKVxKlp
- WpxxKuHCyr0VmVChkFGAIb8wOc9oi+2CU2j4Mjjz7xwTIIchER3VkHSKxzdrZIgC2h4/imltoor
- NFyY0kYuFq9+Vzw2RFQ==
-X-Proofpoint-GUID: KlnmwY6cBeo58k3I3mkdQtVG8hubxrmo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0
- adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1015 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200152
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+References: <20260519-qda-series-v1-0-b2d984c297f8@oss.qualcomm.com>
+ <20260519-qda-series-v1-2-b2d984c297f8@oss.qualcomm.com> <paiohsil5pmvm7cf6jxrhaj2225bgvlt3scrag4x6gbkyosow5@l4tbakbnxcvo>
+In-Reply-To: <paiohsil5pmvm7cf6jxrhaj2225bgvlt3scrag4x6gbkyosow5@l4tbakbnxcvo>
+From: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Date: Wed, 20 May 2026 17:47:14 +0200
+X-Gm-Features: AVHnY4JWUX0pXGJu6GgwPpdJDM8Jh8t09gfswovnCTuU2k-U-QKXEr_LdCOWDYs
+Message-ID: <CAPsqS2Tt0JbHhJLHBsbJ2YfZW913WNfoSXpSa+8TD1T9CV8V3g@mail.gmail.com>
+Subject: Re: [PATCH 02/15] accel/qda: Add QDA driver documentation
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: ekansh.gupta@oss.qualcomm.com, Oded Gabbay <ogabbay@kernel.org>, 
+	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+	Bharath Kumar <quic_bkumar@quicinc.com>, Chenna Kesava Raju <quic_chennak@quicinc.com>, srini@kernel.org, 
+	andersson@kernel.org, konradybcio@kernel.org, robin.clark@oss.qualcomm.com, 
+	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	iommu@lists.linux.dev, linux-media@vger.kernel.org, 
+	linaro-mm-sig@lists.linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	R_DKIM_ALLOW(-0.20)[tomeuvizoso-net.20251104.gappssmtp.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108826-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[vikash.garodia@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
+	DMARC_NA(0.00)[tomeuvizoso.net];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-108827-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,lwn.net,linuxfoundation.org,8bytes.org,arm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch,linaro.org,amd.com,quicinc.com,vger.kernel.org,lists.freedesktop.org,lists.linux.dev,lists.linaro.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[tomeu@tomeuvizoso.net,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[tomeuvizoso-net.20251104.gappssmtp.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 3A8C65914DB
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,foo:url,mail.gmail.com:mid]
+X-Rspamd-Queue-Id: 69A77592550
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+On Wed, May 20, 2026 at 4:12=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Tue, May 19, 2026 at 11:45:52AM +0530, Ekansh Gupta via B4 Relay wrote=
+:
+> > From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+> >
+> > Add documentation for the Qualcomm DSP Accelerator (QDA) driver under
+> > Documentation/accel/qda/. The documentation covers the driver
+> > architecture, GEM-based buffer management, IOMMU context bank
+> > isolation, and the RPMsg transport layer.
+> >
+> > The user-space API section describes the DRM IOCTLs for session
+> > management, GEM buffer allocation, and remote procedure invocation via
+> > the FastRPC protocol, along with a typical application lifecycle
+> > example. Sections for dynamic debug and basic testing are also
+> > included.
+> >
+> > Wire the new documentation into the Compute Accelerators index at
+> > Documentation/accel/index.rst.
+> >
+> > Assisted-by: Claude:claude-4-6-sonnet
+> > Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+> > ---
+> >  Documentation/accel/index.rst     |   1 +
+> >  Documentation/accel/qda/index.rst |  13 ++++
+> >  Documentation/accel/qda/qda.rst   | 146 ++++++++++++++++++++++++++++++=
+++++++++
+> >  3 files changed, 160 insertions(+)
+> >
+> > diff --git a/Documentation/accel/index.rst b/Documentation/accel/index.=
+rst
+> > index cbc7d4c3876a..5901ea7f784c 100644
+> > --- a/Documentation/accel/index.rst
+> > +++ b/Documentation/accel/index.rst
+> > @@ -10,4 +10,5 @@ Compute Accelerators
+> >     introduction
+> >     amdxdna/index
+> >     qaic/index
+> > +   qda/index
+> >     rocket/index
+> > diff --git a/Documentation/accel/qda/index.rst b/Documentation/accel/qd=
+a/index.rst
+> > new file mode 100644
+> > index 000000000000..013400cf9c25
+> > --- /dev/null
+> > +++ b/Documentation/accel/qda/index.rst
+> > @@ -0,0 +1,13 @@
+> > +.. SPDX-License-Identifier: GPL-2.0-only
+> > +
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +accel/qda Qualcomm DSP Accelerator
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +The QDA driver provides a DRM accel based interface for Qualcomm DSP o=
+ffload.
+> > +It uses the FastRPC protocol and integrates with DRM and GEM infrastru=
+cture
+> > +for device and buffer management.
+> > +
+> > +.. toctree::
+> > +
+> > +   qda
+> > diff --git a/Documentation/accel/qda/qda.rst b/Documentation/accel/qda/=
+qda.rst
+> > new file mode 100644
+> > index 000000000000..9f49af6e6acc
+> > --- /dev/null
+> > +++ b/Documentation/accel/qda/qda.rst
+> > @@ -0,0 +1,146 @@
+> > +.. SPDX-License-Identifier: GPL-2.0-only
+> > +
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +Qualcomm DSP Accelerator (QDA) Driver
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +Introduction
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +The QDA driver is a DRM accel driver for Qualcomm's DSPs. It provides =
+a
+> > +DRM accel based interface for Qualcomm DSP offload, supporting workloa=
+ds
+> > +such as AI inference, computer vision, audio processing, and sensor of=
+fload
+> > +on Qualcomm SoCs. It uses the FastRPC protocol and integrates with DRM=
+ and
+> > +GEM infrastructure for device and buffer management.
+> > +
+> > +Key Features
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +*   **DRM accel Interface**: Exposes a standard character device node
+> > +    (e.g., ``/dev/accel/accel0``) via the DRM accel subsystem.
+> > +*   **FastRPC Protocol**: Implements the FastRPC protocol for communic=
+ation
+> > +    between the application processor and the DSP.
+> > +*   **GEM Buffer Management**: Uses the DRM GEM interface for buffer
+> > +    allocation, lifecycle management, and DMA-BUF import/export.
+> > +*   **IOMMU Isolation**: Uses IOMMU context banks to enforce memory is=
+olation
+> > +    between different DSP user sessions.
+> > +*   **Modular Design**: Clean separation between the core DRM logic, t=
+he
+> > +    memory manager, and the RPMsg-based transport layer.
+> > +
+> > +Architecture
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +The QDA driver consists of several functional blocks:
+> > +
+> > +1.  **Core Driver (``qda_drv``)**: Manages device registration, file o=
+perations,
+> > +    and DRM accel integration.
+> > +2.  **Memory Manager (``qda_memory_manager``)**: A flexible memory man=
+agement
+> > +    layer that handles IOMMU context banks. It supports pluggable back=
+ends
+> > +    (such as DMA-coherent) to adapt to different SoC memory architectu=
+res.
+> > +3.  **GEM Subsystem**: Implements the DRM GEM interface for buffer man=
+agement:
+> > +
+> > +    * **``qda_gem``**: Core GEM object management, including allocatio=
+n, mmap
+> > +      operations, and buffer lifecycle management.
+> > +    * **``qda_prime``**: PRIME import functionality for DMA-BUF intero=
+perability
+> > +      with other kernel subsystems.
+> > +
+> > +4.  **Transport Layer (``qda_rpmsg``)**: Abstraction over the RPMsg fr=
+amework
+> > +    to handle low-level message passing with the DSP firmware.
+> > +5.  **Compute Bus (``qda_compute_bus``)**: A custom virtual bus used t=
+o
+> > +    enumerate and manage the specific compute context banks defined in=
+ the
+> > +    device tree. The bus was introduced because IOMMU context banks (C=
+Bs) are
+> > +    synthetic constructs =E2=80=94 not real platform devices =E2=80=94=
+ making a platform driver
+> > +    an incorrect abstraction for them. The earlier platform-driver app=
+roach also
+> > +    had a race condition: device nodes were created before the RPMsg c=
+hannel
+> > +    resources were fully initialized, and because ``probe`` runs async=
+hronously,
+> > +    applications could open a CB device and attempt to start a session=
+ before
+> > +    the underlying transport was ready. The compute bus makes CB lifet=
+ime
+> > +    explicitly subordinate to the parent QDA device, closing that wind=
+ow.
+> > +6.  **FastRPC Core (``qda_fastrpc``)**: Implements the protocol logic =
+for
+> > +    marshalling arguments and handling remote invocations.
+> > +
+> > +User-Space API
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +The driver exposes a set of DRM-compliant IOCTLs:
+> > +
+> > +*   ``DRM_IOCTL_QDA_QUERY``: Query DSP type (e.g., "cdsp", "adsp")
+> > +    and capabilities.
+> > +*   ``DRM_IOCTL_QDA_REMOTE_SESSION_CREATE``: Initialize a new process =
+context
+> > +    on the DSP.
+> > +*   ``DRM_IOCTL_QDA_REMOTE_INVOKE``: Submit a remote method invocation=
+ (the
+> > +    primary execution unit).
+> > +*   ``DRM_IOCTL_QDA_GEM_CREATE``: Allocate a GEM buffer object for DSP=
+ usage.
+> > +*   ``DRM_IOCTL_QDA_GEM_MMAP_OFFSET``: Retrieve mmap offsets for memor=
+y mapping.
+> > +*   ``DRM_IOCTL_QDA_REMOTE_MAP`` / ``DRM_IOCTL_QDA_REMOTE_MUNMAP``: Ma=
+p or unmap
+> > +    buffers into the DSP's virtual address space. Each accepts a ``req=
+uest``
+> > +    field selecting between a legacy operation (``QDA_MAP_REQUEST_LEGA=
+CY`` /
+> > +    ``QDA_MUNMAP_REQUEST_LEGACY``) and an attribute-based operation
+> > +    (``QDA_MAP_REQUEST_ATTR`` / ``QDA_MUNMAP_REQUEST_ATTR``).
+>
+> Explain, what happens in the users don't map the buffers into the DSP
+> space. Will DRM_IOCTL_QDA_REMOTE_INVOKE handle the mapping or not? What
+> is the difference between those two modes?
+>
+> Would the driver benefit from using GPUVM?
+>
+> > +
+> > +Usage Example
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +A typical lifecycle for a user-space application:
+> > +
+> > +1.  **Discovery**: Open ``/dev/accel/accel*`` and use
+> > +    ``DRM_IOCTL_QDA_QUERY`` to identify the DSP domain served by that
+> > +    device node.
+> > +2.  **Initialization**: Call ``DRM_IOCTL_QDA_REMOTE_SESSION_CREATE`` t=
+o
+> > +    establish a session and create a process context on the DSP.
+> > +3.  **Memory**: Allocate buffers via ``DRM_IOCTL_QDA_GEM_CREATE`` or i=
+mport
+> > +    DMA-BUFs (PRIME fd) from other drivers using ``DRM_IOCTL_PRIME_FD_=
+TO_HANDLE``.
+> > +4.  **Execution**: Use ``DRM_IOCTL_QDA_REMOTE_INVOKE`` to pass argumen=
+ts and
+> > +    execute functions on the DSP.
+> > +5.  **Cleanup**: Close file descriptors to automatically release resou=
+rces and
+> > +    detach the session.
+>
+> I'd have expected the description of the actual example. I.e. clone the
+> app from https://the.addr, prepare clang >=3D NN.MM, QAIC (https://foo),
+> run make, run the app, check the results. I'd remind that DRM Accel has
+> a very specific requirement of having the working toolhain in the
+> open-source.
 
-On 5/18/2026 1:12 PM, Neil Armstrong wrote:
-> On 5/13/26 19:33, Vikash Garodia wrote:
->>
->> On 5/11/2026 2:50 PM, Neil Armstrong wrote:
->>> This adds the plumbing to support decoding HEVC, VP9 and AV1
->>> streams into 10bit pixel formats, linear and compressed.
->>>
->>> This has only been tested on SM8550 & SM8650 with HEVC, and was
->>> inspired by Venus, DRM MSM and the downstream vidc driver for the
->>> buffer calculations and HFI messages.
->>>
->>> I was unable to get 10bit decoding working with ffmpeg since P010
->>> support for v4l2 decoding is missing, but v4l2-ctl works with:
->>> v4l2-ctl --verbose --set-fmt-video-out=pixelformat=HEVC --set-fmt- 
->>> video=pixelformat=P010 --stream-mmap --stream-out-mmap --stream-from- 
->>> hdr Big_Buck_Bunny_1080_10s_30MB_main10.h265.hdr --stream-to out.P010
->>> v4l2-ctl --verbose --set-fmt-video-out=pixelformat=HEVC --set-fmt- 
->>> video=pixelformat=Q10C --stream-mmap --stream-out-mmap --stream-from- 
->>> hdr Big_Buck_Bunny_1080_10s_30MB_main10.h265.hdr --stream-to out.QC10
->>>
->>> The non-10bit decoding still works as before.
->>>
->>> With Big_Buck_Bunny_1080_10s_30MB reencoded in 10-bit profile
->>> and tranformed in v4l2 header format with [1]:
->>> ffmpeg -i Big_Buck_Bunny_1080_10s_30MB.h264 -pix_fmt yuv420p10le -c:v 
->>> libx265 -crf 28 -x265-params profile=main10 
->>> Big_Buck_Bunny_1080_10s_30MB_main10.h265
->>> /path/to/mkhdr.sh Big_Buck_Bunny_1080_10s_30MB_main10.h265 raw 
->>> Big_Buck_Bunny_1080_10s_30MB_main10.h265.hdr
->>>
->>> Fluster HEVC results on SM8650:
->>>
->>> ./fluster.py run -ts JCT-VC-HEVC_V1 -d GStreamer-H.265-V4L2-Gst1.0 - 
->>> 131/147
->>> The failing test case:
->>> - Pixel Format mismatch
->>>   - TSUNEQBD_A_MAIN10_Technicolor_2 - Gstreamer waits NV12 but 
->>> decoder returns P010
->>> - Unsupported resolution
->>>   - PICSIZE_A_Bossen_1 - resolution is higher than max supported
->>>   - PICSIZE_B_Bossen_1 - resolution is higher than max supported
->>>   - WPP_D_ericsson_MAIN_2 - resolution is lower than min supported
->>>   - WPP_D_ericsson_MAIN10_2 - resolution is lower than min supported
->>> - CRC mismatch
->>>   - RAP_A_docomo_6
->>> - CRC mismatch - bitstream issue - fails with ffmpeg sw decoder as well
->>>   - VPSSPSPPS_A_MainConcept_1
->>
->>  From earlier SOC reports, 10bit tests which were failing were
->> - DBLK_A_MAIN10_VIXS_4
->> - INITQP_B_Main10_Sony_1
->> - TSUNEQBD_A_MAIN10_Technicolor_2
->> - WP_A_MAIN10_Toshiba_3
->> - WP_MAIN10_B_Toshiba_3
->> - WPP_A_ericsson_MAIN10_2
->> - WPP_B_ericsson_MAIN10_2
->> - WPP_C_ericsson_MAIN10_2
->> - WPP_E_ericsson_MAIN10_2
->> - WPP_F_ericsson_MAIN10_2
->>
->> I was in the opinion that once we enable 10bit, these tests would 
->> pass. Though i do not see these in your failing tests, but the count 
->> of 131/147 have not improved. Could you check if these tests are 
->> passing and count is better than 131 pass ?
-> 
-> Sorry there's a copy paste error I'll fix on v4, here's the fluster log:
-> 
-> 
-> |Test|GStreamer-H.265-V4L2|
-> |-|-|
-> |TOTAL|141/147|
-> |TOTAL TIME|8.600s|
-> |-|-|
-> ...
-> |PICSIZE_A_Bossen_1|☠|
-> |PICSIZE_B_Bossen_1|☠|
-> ...
-> |RAP_A_docomo_6|❌|
-> ...
-> |TSUNEQBD_A_MAIN10_Technicolor_2|☠|
-> ...
-> |WPP_D_ericsson_MAIN10_2|☠|
-> |WPP_D_ericsson_MAIN_2|☠|
-> ...
-> |-|-|
-> |Test|GStreamer-H.265-V4L2|
-> |TOTAL|140/147|
-> |TOTAL TIME|8.600s|
-> 
-> |-|-|
-> |Profile|GStreamer-H.265-V4L2|
-> |MAIN|131/135|
-> |MAIN_10|9/11|
-> |MAIN_STILL_PICTURE|1/1|
-> 
-> So the failing cases:
-> - Pixel Format mismatch
->   - TSUNEQBD_A_MAIN10_Technicolor_2 - Gstreamer waits NV12 but decoder 
-> returns P010
+We have been getting submissions lately that don't fulfill that
+requirement so I will point to the precise part of the documentation
+that explains it:
 
-Why would gstreamer expect NV12 for MAIN10 usecase ? Is this something 
-to do with format negotiation ?
+https://www.kernel.org/doc/html/latest/gpu/drm-uapi.html#open-source-usersp=
+ace-requirements
 
-> - Unsupported resolution
->   - PICSIZE_A_Bossen_1 - resolution is higher than max supported
->   - PICSIZE_B_Bossen_1 - resolution is higher than max supported
->   - WPP_D_ericsson_MAIN_2 - resolution is lower than min supported
->   - WPP_D_ericsson_MAIN10_2 - resolution is lower than min supported
-> - CRC mismatch
->   - RAP_A_docomo_6
-> 
->>
->> Regards,
->> Vikash
-> 
+For an example of a submissions that complies, see:
 
+https://lore.kernel.org/dri-devel/20260114-thames-v2-0-e94a6636e050@tomeuvi=
+zoso.net/
+
+Most importantly, notice how the proposed Thames Mesa driver generates
+machine code for all the hardware units, and doesn't use any blob for
+that.
+
+Regards,
+
+Tomeu
+
+> > +
+> > +Internal Implementation
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +Memory Management
+> > +-----------------
+> > +The driver's memory manager creates virtual "IOMMU devices" that map t=
+o
+> > +hardware context banks. This allows the driver to manage multiple isol=
+ated
+> > +address spaces. The implementation uses a DMA-coherent backend to ensu=
+re data consistency
+> > +between the CPU and DSP without manual cache maintenance in most cases=
+.
+>
+> GEM usage?
+>
+> > +
+> > +Debugging
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +The driver includes extensive dynamic debug support. Enable it via the
+> > +kernel's dynamic debug control:
+> > +
+> > +.. code-block:: bash
+> > +
+> > +    echo "file drivers/accel/qda/* +p" > /sys/kernel/debug/dynamic_deb=
+ug/control
+> > +
+> > +Testing
+> > +=3D=3D=3D=3D=3D=3D=3D
+> > +The QDA driver can be exercised using the ``fastrpc_test`` utility fro=
+m the
+> > +FastRPC userspace library. Run the test application:
+>
+> pointer
+>
+> > +
+> > +.. code-block:: bash
+> > +
+> > +    fastrpc_test -d 3 -U 1 -t linux -a v68
+> > +
+> > +**Options**
+> > +
+> > +``-d domain``
+> > +    Select the DSP domain to run on:
+> > +
+> > +    * ``0`` =E2=80=94 ADSP
+> > +    * ``1`` =E2=80=94 MDSP
+> > +    * ``2`` =E2=80=94 SDSP
+> > +    * ``3`` =E2=80=94 CDSP *(default on targets with CDSP)*
+> > +
+> > +``-U unsigned_PD``
+> > +    Select signed or unsigned protection domain:
+> > +
+> > +    * ``0`` =E2=80=94 signed PD
+> > +    * ``1`` =E2=80=94 unsigned PD *(default)*
+> > +
+> > +``-t target``
+> > +    Target platform: ``android`` or ``linux`` *(default: linux)*
+> > +
+> > +``-a arch_version``
+> > +    DSP architecture version, e.g. ``v68``, ``v75`` *(default: v68)*
+> >
+> > --
+> > 2.34.1
+> >
+> >
+>
+> --
+> With best wishes
+> Dmitry
 
