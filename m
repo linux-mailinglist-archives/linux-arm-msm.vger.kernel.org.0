@@ -1,56 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-108864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iByQB3kPDmrB5wUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 21:46:01 +0200
+	id iN1CIPzwDWp+4wUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 19:35:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E181598B72
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 21:46:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 155875940D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 19:35:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E5D4834F9B09
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 16:41:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E6AE934F9B14
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 16:41:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 167543CD8B8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 165053CB2CC;
 	Wed, 20 May 2026 16:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="chXvXKf/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SsiHupVj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A84436E460;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8213636EAB8;
 	Wed, 20 May 2026 16:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779295242; cv=none; b=Ez6Va0zOvhHK1sgfpIlmWj8TjDPTDQDxLnLlXDNrnMxc+M/hW+fnYSiiwzn8TrzM/T4tQJE9vf/sbIpk8TYnR37/fZ1cb9oNxWi6LbMOLzJL8cf6Ixl816nz8S5DOlQfldWVysnninyB5RuEoZ9cfGgBj75PkGAnAfcmMB25AZQ=
+	t=1779295242; cv=none; b=aU963gQN5y7QdbcTs678oo7DnxuK1NEuRFGCQaIaj4IvgCPJr/bYDtMuLCdEJWsdWQX8BmCBKI+S3W8f8ncpRaxQxq77d2osAbKyqFiyKsik5ASgu9BVkM2DrjWMyc2H8p9g7IvJgVDcLhccHTuH3UR26pGuBtawy2f//5d/XZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779295242; c=relaxed/simple;
-	bh=yjbTv7IE3rnG+foAIeVCcQYWym1cEuH3YQsEYTkU92o=;
+	bh=G7HxiM6tVHMRA1+SUDkrf/cDunwAcZHJbVy1FJcDaBs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FtaOxoxAVjtgXXViBFdT4tEMnKHHSB3Brpx+MidxsHj5Q8vEDqbDYaCqEMeG1ha/WrWzW3uJabXavDxfo3TjEEX4P3IgccHX8O1XJMZHTLS+h4Wm8CjeVHaLG6Rg5iLmyvF2D8FuA17GEtM0DZ8COLuzmmjqnw6oDOY8KyflvRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=chXvXKf/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 49AABC32782;
+	 In-Reply-To:To:Cc; b=CenH9srNocywnGBfZSIV0VYoKHOZMZLHU+BA8FW59EbpGntbU4qfKUOVidqpFvjm8SqdkDGsuVeOnBFW36ABxto9Rz2w5ck8sQQQd538aqB+/jYZQk2/gRXlk/VuwNyw28i8t59gjPBxXkO3eQpmbBtW0d/U0oT0LMIwj9nFtyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SsiHupVj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5CF49C2BCB4;
 	Wed, 20 May 2026 16:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1779295242;
-	bh=yjbTv7IE3rnG+foAIeVCcQYWym1cEuH3YQsEYTkU92o=;
+	bh=G7HxiM6tVHMRA1+SUDkrf/cDunwAcZHJbVy1FJcDaBs=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=chXvXKf/C7UETP35+/ZNkk75kc604OtSLqgxuB+GL4ZCZIgdRDIfv2qbiDSsLJdpn
-	 rMQC2P0pf+1147LdfuwPexomC2QYmBPQ1cIX4ScZ+XCagyZO40frvn8UCay/4gJK2G
-	 /N31KsBxSbYybvuoKDqIR+T3H2o05F1r97tTJs4pXM+DRhqWPXJrJhiOfxU4zD3/vJ
-	 laSW8CvrTIUHP9lDBhSAPfANHGadZkGni36xZj3pGUxC41uUB8vPJMwwEGWOTXKTHg
-	 S9FqHwODbgtfxLQx4yXlwK0glhbZr78tCKnOv3Wpxwt/Gun5ouKl2+ezLgxvTUXXpP
-	 muR2icHa886Hw==
+	b=SsiHupVjJo9Ps48QsvW/PQvk/eAYIKe589CRtEep7PkhnsBEHJfsadgOzZ6z27abX
+	 lqn1HZZoew+jYCBV53QWZdGx5/o4s4DXpe2Jsmvix6zUcqprFvYhjm4X97KidIY3Co
+	 1q4G+n2GIrPd1TDeaDeWycVuYjL1quTHsc70HGrrE7Ce5sCuO+HgsX5W2HL7AlA9H4
+	 D4+OLrBnGyPUCys25snvgivi+JFgosTjYRneOI3vTfNpHMkvYT7WX8pazGetLDmVmj
+	 jG3f0nSIVAnZJ/V6GBkWCPt4KB8uk/y756nr4pg7vRB2LQyVgz90hXnRfyN9pcmTcc
+	 h7PD4SxFpDkTw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F081CD5BAA;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50AEECD4F3C;
 	Wed, 20 May 2026 16:40:42 +0000 (UTC)
 From: =?utf-8?q?J=C3=A9r=C3=B4me_de_Bretagne_via_B4_Relay?= <devnull+jerome.debretagne.gmail.com@kernel.org>
-Date: Wed, 20 May 2026 18:40:11 +0200
-Subject: [PATCH 07/11] arm64: dts: qcom: sc8280xp-arcata: Add volume
- up/down GPIO keys
+Date: Wed, 20 May 2026 18:40:12 +0200
+Subject: [PATCH 08/11] arm64: dts: qcom: sc8280xp-arcata: Add lid switch
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +58,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260520-surface-sp9-5g-for-next-v1-7-9df52552bf87@gmail.com>
+Message-Id: <20260520-surface-sp9-5g-for-next-v1-8-9df52552bf87@gmail.com>
 References: <20260520-surface-sp9-5g-for-next-v1-0-9df52552bf87@gmail.com>
 In-Reply-To: <20260520-surface-sp9-5g-for-next-v1-0-9df52552bf87@gmail.com>
 To: Douglas Anderson <dianders@chromium.org>, 
@@ -77,39 +76,39 @@ Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
  Krzysztof Kozlowski <krzk@kernel.org>, 
  =?utf-8?q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779295238; l=2039;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779295238; l=1758;
  i=jerome.debretagne@gmail.com; s=20260520; h=from:subject:message-id;
- bh=CfiRUKjuOkBz4gm02vzH1uF4ZTJ7kW7Ou28mRmrz7TE=;
- b=Y/MRBh06KA8oGhSHijX6zyf2PvGCEcP/zUixmH66wBm/zVVlyf3jKtq9AuHmwqKrgUOUPewvp
- eYV7SvmddAzCbGlo9tR7NQNdmx6UsFCbWIHFlviE3I7VXNzzRbZc4/D
+ bh=GHQeiThCwLf6jCuaGumAVOSJSuFkPcBJgAyN9IpZc40=;
+ b=TFq+TLgkt9rh2mmnQxevAtdFZW/mL6bEj3bCiaQuvnsozIHkbcz0PNr48IunEMKbZPEb4babO
+ Rh0qYueURAZD0ClBY6MYkYiNZDPJfD5h1ABfmEBMd1FYvX2voBDBNqM
 X-Developer-Key: i=jerome.debretagne@gmail.com; a=ed25519;
  pk=3/JYhgYjGg5V9mlFxc0A0+pFiyjsuDB/TtDlNMId9fk=
 X-Endpoint-Received: by B4 Relay for jerome.debretagne@gmail.com/20260520
  with auth_id=785
 X-Original-From: =?utf-8?q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>
 Reply-To: jerome.debretagne@gmail.com
-X-Spamd-Result: default: False [1.34 / 15.00];
+X-Spamd-Result: default: False [1.90 / 15.00];
 	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	R_MIXED_CHARSET(0.56)[subject];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-108864-lists,linux-arm-msm=lfdr.de,jerome.debretagne.gmail.com];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-108863-lists,linux-arm-msm=lfdr.de,jerome.debretagne.gmail.com];
+	FREEMAIL_TO(0.00)[chromium.org,linaro.org,gmail.com,linux.intel.com,kernel.org,suse.de,ffwll.ch];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_SOME(0.00)[];
 	FREEMAIL_REPLYTO(0.00)[gmail.com];
 	RCPT_COUNT_TWELVE(0.00)[19];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[chromium.org,linaro.org,gmail.com,linux.intel.com,kernel.org,suse.de,ffwll.ch];
-	MIME_TRACE(0.00)[0:+];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	HAS_REPLYTO(0.00)[jerome.debretagne@gmail.com];
 	RCVD_COUNT_FIVE(0.00)[5];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
@@ -118,90 +117,74 @@ X-Spamd-Result: default: False [1.34 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	HAS_REPLYTO(0.00)[jerome.debretagne@gmail.com];
 	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 8E181598B72
+X-Rspamd-Queue-Id: 155875940D4
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
 
-Configure gpio6 to serve as volume down and gpio9 as volume up to enable
-the volume up/down keys located at the top of the screen.
+Enable the lid switch for the Microsoft Surface Pro 9 5G using
+GPIO pin 180.
 
 Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
 ---
- .../boot/dts/qcom/sc8280xp-microsoft-arcata.dts    | 42 ++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ .../arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-index 2a6f0c9de7c85a4f0659237846b0430a0b021a40..a300069b5960dbba28601c418951869c94b63938 100644
+index a300069b5960dbba28601c418951869c94b63938..4daff3a0ecf48ad2081a2fe98910adf0debef88f 100644
 --- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
 +++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-@@ -6,6 +6,7 @@
- /dts-v1/;
+@@ -7,6 +7,7 @@
  
  #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/gpio-keys.h>
+ #include <dt-bindings/input/gpio-keys.h>
++#include <dt-bindings/input/input.h>
  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
  
  #include "sc8280xp.dtsi"
-@@ -56,6 +57,31 @@ backlight: backlight {
+@@ -60,7 +61,7 @@ backlight: backlight {
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 
+-		pinctrl-0 = <&vol_down_n>, <&vol_up_n>;
++		pinctrl-0 = <&hall_int_n_default>, <&vol_down_n>, <&vol_up_n>;
  		pinctrl-names = "default";
+ 
+ 		key-vol-down {
+@@ -80,6 +81,15 @@ key-vol-up {
+ 			linux,can-disable;
+ 			wakeup-source;
+ 		};
++
++		switch-lid {
++			label = "lid";
++			gpios = <&tlmm 180 GPIO_ACTIVE_LOW>;
++			linux,input-type = <EV_SW>;
++			linux,code = <SW_LID>;
++			wakeup-source;
++			wakeup-event-action = <EV_ACT_DEASSERTED>;
++		};
  	};
  
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&vol_down_n>, <&vol_up_n>;
-+		pinctrl-names = "default";
-+
-+		key-vol-down {
-+			label = "Volume Down";
-+			gpios = <&pmc8280_1_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+
-+		key-vol-up {
-+			label = "Volume Up";
-+			gpios = <&pmc8280_1_gpios 9 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+	};
-+
  	pmic-glink {
- 		compatible = "qcom,sc8280xp-pmic-glink", "qcom,pmic-glink";
- 
-@@ -939,6 +965,22 @@ edp_bl_en: edp-bl-en-state {
- 		pins = "gpio8";
- 		function = "normal";
+@@ -1032,6 +1042,13 @@ edp_reg_en: edp-reg-en-state {
+ 		bias-disable;
  	};
-+
-+	vol_down_n: vol-down-n-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		power-source = <1>;
-+		input-enable;
-+		bias-pull-up;
-+	};
-+
-+	vol_up_n: vol-up-n-state {
-+		pins = "gpio9";
-+		function = "normal";
-+		power-source = <1>;
-+		input-enable;
-+		bias-pull-up;
-+	};
- };
  
- &pmc8280_2_gpios {
++	hall_int_n_default: hall-int-n-state {
++		pins = "gpio180";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
+ 	nvme_reg_en: nvme-reg-en-state {
+ 		pins = "gpio135";
+ 		function = "gpio";
 
 -- 
 2.47.3
