@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-108716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2H/sJLWeDWpO0AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:44:53 +0200
+	id gENtBh6cDWoU0AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:33:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44A6A58CDAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:44:52 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 897F058C923
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:33:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 0076330F4209
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 11:28:56 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 790C030B8F4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 11:30:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB5543C9EC3;
-	Wed, 20 May 2026 11:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31FB13DCD8F;
+	Wed, 20 May 2026 11:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MZS+aJ/j"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cTsEkf2a"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753F63FA5F1;
-	Wed, 20 May 2026 11:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EB439658D;
+	Wed, 20 May 2026 11:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276064; cv=none; b=Mfd/cZED1xxDka7AXgchjIxerxf9AA+axSjwKUH9resJ7tehNcIlzDoL9XQ+FybtxV7Vi+2R83dbmD8fMXokhcrDHHmvgPuO+nG/1daDliPxw1wadChC4ZB27f5iG0W2teRkFhey0D8/1B7V1kFrxQGAk7A0rdGbGr5Gs2r5Ejc=
+	t=1779276087; cv=none; b=DqxVreoq+KVTkswoWwM7QLJLn6Pgih1S9JLhsx3zLRIFMXLsenmqxZO0kY3F2pu6Ofp8lm76klRoSq17YkDwBRUUk+C7mG1cy0J2URJFXaa/rSceHayAMX6SS5e6rTCZzRZYzVH2UNDV8UM5ZH/R97cp2U0ZuEiqcxUFziTFIOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276064; c=relaxed/simple;
-	bh=tYPEqdSnUVxxo361DloJlvFccbzYEDXXyqer7BF08PE=;
+	s=arc-20240116; t=1779276087; c=relaxed/simple;
+	bh=TIct65M6X6jxjQEZvIpCh3pktYk8EaQuFdSv9SgRjE8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SRjw+l8dfge4o5vAbahuNP5AfDFBOXVGL2t3B3b8kD8zohWr8kw7kFCMTagip3xv7WoAhYh4nyI9hwCxY6rBnZ+r/H/b+UOkPZz69s7AAMrI6sZ3VWIPuGQD9i6NkWBQ5uki8vsGlradQMNWP27d5JhDa0NDxj48BzmKRsCnkZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MZS+aJ/j; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64241F000E9;
-	Wed, 20 May 2026 11:21:00 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=htx63mJz/iFNXf1dzNXb6YqfLqOkvvv8s103K3gnUYkU+SvLjGJctY9RU3BP2xUMhkiB+BMxNys7cvWc+jrRMDAHbPQ5+ac/e0j+U0dCv4ET0/qhKRyR0xUQtKEl/LoTxbAjiKJITneyqUzbSjJDvMMzWu8eIn7ZPwm7jkoTJr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cTsEkf2a; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626511F000E9;
+	Wed, 20 May 2026 11:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276063;
-	bh=yxIaDyMCO5AP2ujL4CK9wc5FbJ1c3rTDitcbDCzLI7A=;
+	s=k20260515; t=1779276086;
+	bh=/NNdlSCSm2zV6hkoaa7Oskxt5n0mdM0O824jQTIg7Lg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=MZS+aJ/j3cHtKES59/bRpyEGDi3b2VhLD7oAzzEqGjeH3jz5+QVtsOYpzSUhlrNTD
-	 ve0gxIvH8tqZdmiBX2zSNcpMOlMunjULu5WCYjmSGc3ORSrwJE4O94EkvDz5jSULfo
-	 27OFquF/cxqu+Z/srYR1krWATHuYNj+xrH//Ws+RzgTuWTapWDcKja5KOwKAJuo0Kh
-	 soXJIOOYS1HFfOUc2AfKe5KHevn1Sp4Y2pTxotRDehz4sAB+K3GX/6CbmgaJl2vyyb
-	 CTXrdBpeu5wgjYA8XxyRF/4/YwzO8qnTVdtRXfOBcvvRqr/+BdWDZs4iAox4euKWjW
-	 2LJsJ4u0IomqA==
-Message-ID: <44894052-4b29-40e2-96d7-2b1d19f7c849@kernel.org>
-Date: Wed, 20 May 2026 13:20:59 +0200
+	b=cTsEkf2ahPMvKI7eOBiGZNsXqBG/pnaoRftnzxiuc2xeKBcu44F891ORyi4tCKmPL
+	 CKKaOi+bcGTSwFNX9tD74DgWlrfR95Aybor1MWCLvYZDM57/mS4lTBbY5phBymfjLa
+	 bwYgvcNMiwY9wiON6kWojIhsjTLBc8tcYsLGfVXHK2Fm9Tb7umiiLOoUFwzg93+VR+
+	 Z5x/ywq4lo/d5royHWa74YBTl2fRAwGQToPN3neGLkL1PrHCsXeG8y8wHG1XaELy4r
+	 IWyDVjoS1SktQhDzE6uMK0OUGQP3lf5De8KfO6MqkYd78pC130E/nC7OS4UJ3CH/+L
+	 iXG2oNGP4FnAw==
+Message-ID: <d6ad8b4c-5a48-452d-a070-921feda15125@kernel.org>
+Date: Wed, 20 May 2026 13:21:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] usb: ucsi: ccg: Add support for CYPD6129 (CCG6)
+Subject: Re: [PATCH 1/3] dt-bindings: usb: typec: Add Cypress CYPD6129 UCSI
+ controller compatible
 To: Akash Kumar <akash.kumar@oss.qualcomm.com>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -63,7 +64,7 @@ To: Akash Kumar <akash.kumar@oss.qualcomm.com>,
 Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 References: <20260520093902.2064730-1-akash.kumar@oss.qualcomm.com>
- <20260520093902.2064730-4-akash.kumar@oss.qualcomm.com>
+ <20260520093902.2064730-2-akash.kumar@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,26 +110,26 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260520093902.2064730-4-akash.kumar@oss.qualcomm.com>
+In-Reply-To: <20260520093902.2064730-2-akash.kumar@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108716-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-108717-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[12];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
@@ -137,37 +138,63 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 44A6A58CDAE
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
+X-Rspamd-Queue-Id: 897F058C923
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 On 20/05/2026 11:37, Akash Kumar wrote:
-> Add "cypress,cypd6129" to the UCSI CCG driver match table so the driver
-> can bind to CCG6-based platforms using this controller.
+> Document the "cypress,cypd6129" compatible string for the Cypress/Infineon
+> EZ-PD CCGx UCSI controller.
 > 
-> This is required for monza SOM USB-C support.
+> The CYPD6129 is compatible with the existing CCGx binding, so allow it as a
 
-Pointless statement. What is "monza SOM"? Who could guess it in open
-source community?
+Device can be compatible with a device, not with a binding.
 
+And explain WHY it is compatible.
+
+> valid compatible and permit the existing "cypress,cypd4226" fallback where
+> appropriate.
 > 
 > Signed-off-by: Akash Kumar <akash.kumar@oss.qualcomm.com>
 > ---
->  drivers/usb/typec/ucsi/ucsi_ccg.c | 1 +
->  1 file changed, 1 insertion(+)
+>  .../bindings/usb/cypress,cypd4226.yaml        | 73 ++++++++++++++-----
+>  1 file changed, 55 insertions(+), 18 deletions(-)
 > 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_ccg.c b/drivers/usb/typec/ucsi/ucsi_ccg.c
-> index 199799b319c2..0695ce348135 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_ccg.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
-> @@ -1520,6 +1520,7 @@ static void ucsi_ccg_remove(struct i2c_client *client)
+> diff --git a/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml b/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml
+> index 0620d82508c1..90769c43ac95 100644
+> --- a/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml
+> +++ b/Documentation/devicetree/bindings/usb/cypress,cypd4226.yaml
+> @@ -15,7 +15,13 @@ description:
 >  
->  static const struct of_device_id ucsi_ccg_of_match_table[] = {
->  		{ .compatible = "cypress,cypd4226", },
-> +		{ .compatible = "cypress,cypd6129", },
+>  properties:
+>    compatible:
+> -    const: cypress,cypd4226
+> +    oneOf:
+> +      - enum:
+> +          - cypress,cypd6129
+> +          - cypress,cypd4226
+> +      - items:
+> +          - const: cypress,cypd6129
+> +          - const: cypress,cypd4226
 
-NAK. You just said they are compatible!
+Hm? This makes no sense.
+
+
+>  
+>    '#address-cells':
+>      const: 1
+> @@ -63,10 +69,42 @@ examples:
+>    - |
+>      #include <dt-bindings/interrupt-controller/arm-gic.h>
+>      i2c {
+> -      #address-cells = <1>;
+> -      #size-cells = <0>;
+
+What is happening here?
+
+You are making random changes to the binding. No, don't.
+
 
 Best regards,
 Krzysztof
