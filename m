@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-108720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gP4ZNRGdDWoS0AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:37:53 +0200
+	id gG3hMOKdDWpO0AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:41:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AC1658CB47
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:37:52 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43D2A58CC64
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:41:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DA42A31B9194
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 11:31:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 143B130B8616
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 11:34:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3F943E2762;
-	Wed, 20 May 2026 11:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AB2C3DBD60;
+	Wed, 20 May 2026 11:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Icn9+7of"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HmTPCI7O"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF7B3BE162;
-	Wed, 20 May 2026 11:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E29A3C9EC3;
+	Wed, 20 May 2026 11:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276176; cv=none; b=BUrYf26dBsbqAiTL/4u00+7tiTlrCJnQHLEL5gQsOvh5pXC+4jLeEQyVXgUtfG1DNBRIfGLkOIb9GjcdP6KdyLxAvwbCbn0dGhhsOgxMSSaREls6p9mDYnDD9kYWk0DRcvzGJgnEL5foy5fOeVS0Z944FqW2QyVImDvoQYSGGNQ=
+	t=1779276571; cv=none; b=nhYuMv1RGEsb/Q5+IYgvFbXB7+9kuvJHKUvAGfpAkcBCXryKG5QBCL6VV4yUXCPPaQH6n9zPBEoalrkd1f2VDTdILfOG7sEBMQngBTBNBEizFp2ulY7P1gdGi5lZoG7p9idieuJ+sxofLYbDz4+eNXxnhMF2Tnx7MS9m+HV6iUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276176; c=relaxed/simple;
-	bh=SKwSxi91nC9vP8K9tYjtbhP/Ua26jzgSM4tbX2Y3xsM=;
+	s=arc-20240116; t=1779276571; c=relaxed/simple;
+	bh=GWFKGVfOWD/d0OJEF/xtYaKbKFwepHPfU17HCLbBHCg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DManl0Gb5xTxb/9h+iRFy01sSId33ov3QJohfh6zPAOjCGonZVGDBPMIIL6YTttCnJWECYVHiHLg3ME5WuAAhSLQoqUBtUPkw3HHKo1Z8E+/diKg6sM8p1OIpQRBIyxEzq9IYoLIQI0Zvl+uqPiQkgVq2sKdh5DVTACg0q0owjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Icn9+7of; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A8E1F000E9;
-	Wed, 20 May 2026 11:22:52 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ZoinPWW3co+8xL/LcZin9kZzqXwT6X6b36ZYVpCCAgAd5CZ9qnIg6/xNng5MbltYHdQD499CPBLTqIjUFFSEf3EwhhUG2QL8RdryqEHsf0PJjZ04AMr6s0qJdGKlM2JRqG8IP5CQawXzsF1sBxI8/HIaIYd081+AZpdBd2BvdnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HmTPCI7O; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E585F1F000E9;
+	Wed, 20 May 2026 11:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779276175;
-	bh=Hp+Jmq+uiuX41rhxEqpANqNaAHyAYT3Z4AqTaIWzOqo=;
+	s=k20260515; t=1779276570;
+	bh=qvoG4aNz4WjwJv+2yN4cJ2o3T9asOyX6Zi51zffP2Kg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=Icn9+7of3PUE09Jyr9mNk+XTTXnDQkRO+l/5Zdqy+PbDnyNs5aJ0XpKAxllgy+l3H
-	 QWYrWE6wcu0NzGo2Dy4EXXHVbWIo2ij1cLkq/9a9KWmqcmmEida++rL0k6Cx5wtSRP
-	 cDwX4aJYzo5JuQcs4gu6NgiuXqzAXOsK/+9EGgKvgSwHfsJXLz0nVi9sX8nABQqsd0
-	 CQnhEQyIsq/TQHr8KOKlByD/plrldKj4Iss9/rt+32NhPDtgMbEKYhqcTQUeMWZpJp
-	 N+fW/kDvRihDlyEILfiPa3bAuW+0RGKCxg0HgTeyKxvgbsDlwzD3g+yoK+WuJV3MXT
-	 FJ7SLMEEvERiw==
-Message-ID: <566e5978-0f7c-4de9-b2aa-1bc37bf1457b@kernel.org>
-Date: Wed, 20 May 2026 13:22:51 +0200
+	b=HmTPCI7OdHOccAFE8nIsgJQVTZZmw015qWpJZXOxZSBmBr17yApZjWlKB/MMpaosl
+	 wt0qhZkAQ7d8L06PcrnSyEocMNDYhKTHAtMbHMEHvbjBGqS7wgt+8XLBynYTuJkPX+
+	 QRI9Md1HezBxCtoJntdxZxqRLR4AGXDKK1G7vp6mGZxz0w6HF9olIe3WGOaIoa/GmF
+	 jN04P3X4kRM8pa/E0uGeiBsl4k9uVJDHVUCIx+USD+88EgN7xCjM7ykYfqT6RqPKf6
+	 2omsaZPt11n2eKLR9QHCn4BaJQQJXRfpPanK8pXnWiHcUavXlW2DTwI4dI5XFbDLfR
+	 rMhHAeKRnkZDw==
+Message-ID: <f097c75a-0c33-499b-9910-b23182d4472b@kernel.org>
+Date: Wed, 20 May 2026 13:29:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,17 +53,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] Add Cypress CYPD6129 UCSI support for monza SOM USB0
- DRD
-To: Akash Kumar <akash.kumar@oss.qualcomm.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20260520093902.2064730-1-akash.kumar@oss.qualcomm.com>
+Subject: Re: [PATCH V6 5/5] arm64: dts: qcom: glymur-crd: add Audio sound card
+ node
+To: Sibi Sankar <sibi.sankar@oss.qualcomm.com>, robh@kernel.org,
+ srini@kernel.org, amahesh@qti.qualcomm.com, krzk+dt@kernel.org,
+ conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20260325035338.1393287-1-sibi.sankar@oss.qualcomm.com>
+ <20260325035338.1393287-6-sibi.sankar@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,62 +109,74 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260520093902.2064730-1-akash.kumar@oss.qualcomm.com>
+In-Reply-To: <20260325035338.1393287-6-sibi.sankar@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108720-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-108721-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 3AC1658CB47
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 43D2A58CC64
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 20/05/2026 11:37, Akash Kumar wrote:
-> Hi all,
+On 25/03/2026 04:53, Sibi Sankar wrote:
+> From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 > 
-> This series adds support for the Cypress/Infineon CYPD6129 UCSI controller,
-> used on the monza SOM platform for USB0 dual-role operation.
+> Add the sound card of Glymur-crd board with the routing for speakers.
 > 
-> The series consists of:
->   1. A dt-binding update to document the CYPD6129 compatible string for the
->      existing CCGx binding.
->   2. A driver update to bind the UCSI CCG driver to CYPD6129.
->   3. A board DTS update to enable USB0 DRD mode on monza SOM using the
->      CYPD6129 controller over I2C12.
+> Add device nodes for the sound support with WSA884x smart speakers
+> and playback via speakers and recording via DMIC microphones.
 > 
-> This enables the USB-C controller, connector, interrupt routing, and the
-> USB2/USB3 endpoints required for DRD operation on the platform.
+> Co-developed-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/glymur-crd.dtsi | 110 +++++++++++++++++++++++
+>  1 file changed, 110 insertions(+)
 > 
-> Akash Kumar (3):
->   dt-bindings: usb: typec: Add Cypress CYPD6129 UCSI controller compatible
->   usb: ucsi: ccg: Add support for CYPD6129 (CCG6)
->   arm64: dts: qcom: monaco-monza-som: Enable USB0 DRD mode
+> diff --git a/arch/arm64/boot/dts/qcom/glymur-crd.dtsi b/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
+> index 690b90e3d6ce..88a5c63e8ac2 100644
+> --- a/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/glymur-crd.dtsi
+> @@ -118,6 +118,54 @@ vreg_wwan: regulator-wwan {
+>  		pinctrl-0 = <&wwan_reg_en>;
+>  		pinctrl-names = "default";
+>  	};
+> +
+> +	sound {
+> +		compatible = "qcom,glymur-sndcard";
+> +		model = "glymur-crd";
 
-Why are you mixing USB with DTS (don't! we asked many times already),
-and in completely random order (read submitting patches in DT dir).
+That's not the name which was already used in Audioreach topology and
+maybe other places.
+
+While it is fine to use whatever case you wish, please also fix that
+users of this name.
 
 Best regards,
 Krzysztof
