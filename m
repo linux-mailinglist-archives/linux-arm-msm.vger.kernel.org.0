@@ -1,222 +1,267 @@
-Return-Path: <linux-arm-msm+bounces-108893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id /ayZFqwxDmou8AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 00:11:56 +0200
+	id wMdfCS41Dmq58AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 00:26:54 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DEA259BCE2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 00:11:56 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD74059BFD2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 00:26:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6A767307835E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 22:11:19 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 19BCA3025AFA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 22:26:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F8993B6C13;
-	Wed, 20 May 2026 22:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13E193750DC;
+	Wed, 20 May 2026 22:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WomUS9xZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KpjhyQv3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE24393DDC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 22:11:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4983BFE3F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 22:26:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779315075; cv=none; b=pS3DjEDYYy9brMFINtgKN3Gm8mIxxqHkYteQMCPj3uRNWJ1CtDHNzqLgOQixFc0uPuR299NGxU0WwtpDobAJa7wFSwuNdvCypauVFpFABv0etL1//H5p1DHbSqZ5sdqKiGQSfMHO7adbepAnyDypA1lBMXd4lCvopEDfAVLWmQA=
+	t=1779315990; cv=none; b=PHdWVL9p+k3xjmGd3qIQZHnHRSTIuibFh/HiH5D+KuM2tZw6PjApZg8T+sUq1sqzPuz5rA1jJABxhzS7btYXfdZa97jKNEtVhKfzAO0L/8qTsQdMpZhYHTnoIck+JhgaxQxaoW6luKj7dC+ObXLVqadYqcKxCA2j7Ixp6RqnFxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779315075; c=relaxed/simple;
-	bh=37M9PUOfQy2p5QSRWIOQGsVGmX9OOYtVM7BVMxAeCXI=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=cEGrFUJoIIe/LA08EmxpJ9dESZPbSqVKpHwCOCVeGeyP6c2H4LKvA4sWbBmFj6w+R1SQcPJiICPaK7mXQDe4apO/3ZfDwE6Ix8E0zt5YUrAVtua4N1o9gCowxcHShN6/8sqpuVDRNbiECV+FthHQzSaLkjs1EXRMJ947KOxg0M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WomUS9xZ; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-488ad135063so43858885e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 15:11:12 -0700 (PDT)
+	s=arc-20240116; t=1779315990; c=relaxed/simple;
+	bh=j+vvG9tL9x9Qm2N4qCmquu0PIMkZ01SDZnad8HjsKkM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JFUQhjxdRFtB1G+3t34xg/qLabNZDOaf3QWFp1YFIqdfwPyHYRtYN4UyJjtw+5DkAojHBFyVItfSTP97DhbiJeq+vEdVlFIic4Nuw3NdzEwNZ/KrdyEtRfs5EnuRJjfq6PNPrANlcrgrR+Wp8F2Ht4OHm97R6wzzOxsnm/UNgaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KpjhyQv3; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-43d73422431so3805101f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 15:26:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1779315071; x=1779919871; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XztvXw0EM5mypFKKLP+bYDI+RT7mLsUytHlSi+Ua1b0=;
-        b=WomUS9xZcBabBoucqci2fo+RdWAZF7GBLCOzGByDrdGtnYgNI3Z2QEO4AyVX316eku
-         1MYsmIGNyKe7rfbax36szSYq260l0FNRzD88vXhqapUEaaaZV0EVJTVo5+dc9uv5vEBu
-         jo2/Q7tYJMRTHbNPgUh+DVbVTo8FFJxdXIryMnONLeiZnlUUmOJXAUMLcekblogx3wJQ
-         92F/O0QC9Wvp35EXyFThjSzc9p/6fvoRwjcuZ80kNrtWjT1Xtn+Lu2JXKhogpTVQ8feG
-         EmncWb238VB5RDVJyWjKxup4l3d7gqoslY+NPJ9vRGUiWMSQYaPfiR632zXA48MTmUzg
-         ij0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779315071; x=1779919871;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+        d=gmail.com; s=20251104; t=1779315986; x=1779920786; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=XztvXw0EM5mypFKKLP+bYDI+RT7mLsUytHlSi+Ua1b0=;
-        b=D9mIL88QV2RD8IqtcfbdCB2bL0QaAK7GLakwYkb3KBEyBlBMh2rFPaVGHs1e7D4eJD
-         P21J002gfwYKchYpBohOlbQyuYfvbseo9TSn0xNWzasG+M6keychkgkuqk80UsCAue8R
-         3k+4+LC4+FxNtLRF8pAr8qnr0Vulbrj/tJyZoeRz8t7EPBCJE1M3eF0HfnQEHrSNPfPq
-         sD46HV/2tHuJ0/hSWrd05EngYPh64a0zSzxY1RKoWZuanqpGHNRd9giXnQ1CbWa7FHqn
-         cKcqZkMyizZsA5wbODrU0nGb19eMc3mxRShFVPrOt5vhKrtD5yNMiVfyrNRG1k63aJpB
-         njwQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+n8o89n6YX09hkJ+vjCqLu7xwua8Gn42I0ExFP9VNn3TQBgh0/f+cUO3q54VtFZpmT+kZlX9wZnxCXkvAB@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw0vERCAg91M4mGcpZUrLYHVP8O7q2WNQwPln5FhrPx9TrylEZp
-	7m9w74jxf5tnfTHdD2fW5qgrEkL7DFVcRJcnMJVyrPHHEb9aetr0rYIiGYbVzHOU1gE=
-X-Gm-Gg: Acq92OE4pVra+ynRa81KVRwAdT8wSrVJhWXR/KCzb1Bs7ntZ6DIY0D4rpEqxduyM59b
-	mLzlEr/RNttfwmovjeKD8pmNcMnsb6516MuVqCtWDS9WAGHk1R2mQd6KI4hRwWJb+1rhJ16EaxD
-	1yJy3pN5R73qzuIZsWs446BVpoZfFUrmFcoJDo4amZ9mKAvcNK/sk91a9Xom4c3oQoVh/ObrGq2
-	PLMV66gPCRXRZxal6ktlvOUS1ngfJk8kFPGHrLIZgUpxzn8UmnclL23oaX/vCAXFxkBJqS8rWhk
-	1h0JgwoD74lvqG8Kl285H3cWACoYtF8Mj7hmmgFCe7BZv+NA6qFjaqPC4yhWuTwGugMx8hHEk9S
-	5wvg5joSizAy0jVSFQhFQif/khvaXl1a9/F9jDa60IqMy6r7UBjTdNQ1sLoP3ijir51+RUYWzAS
-	RTXQIHknzzDYAWXXZ6gPFYBcV3qOtMEznvBN85f1WiQgAipEfVj6SzofjkxEZsSkQQNQHb24poJ
-	nGnk66PR4j/RQ==
-X-Received: by 2002:a05:600c:42d1:b0:489:1ba8:5bf0 with SMTP id 5b1f17b1804b1-49036089466mr1297995e9.21.1779315071295;
-        Wed, 20 May 2026 15:11:11 -0700 (PDT)
-Received: from localhost ([94.4.195.193])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49033cdcc01sm23507635e9.0.2026.05.20.15.11.09
+        bh=YG82xVAXQwQE8PumNL8zBtus2ibRKhYEPkSULunC6/w=;
+        b=KpjhyQv3vClXosjoGWZmpqAYKelW8CDboFucNDCLebSdcjqL+k9S7q3hyuuAHh0lHN
+         0+abZeVZgZqyyDO1m9oGSre1k8S2KYj6P1XFfAYKK8B9wqlGclNWWmQnoT+mo85HEupM
+         PXPyFLR7xbEanO/YuzOLirj/kCZueVgK5D0nNdhqpw+sk+xHqEwEx2km7A3v2olWadur
+         vk2Tsz9T1qtEu+BZJnieURhwWipITU8pmrgo0e24uCALwfVkHTLf1YadtyaOkb47MjxW
+         2zPL8AszT0RJwlBXEauCkr+lm2Q1P8vi/IGDeqZRYE9n7H/TcK5kwuzzNKWCirO6oL1m
+         AIRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779315986; x=1779920786;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YG82xVAXQwQE8PumNL8zBtus2ibRKhYEPkSULunC6/w=;
+        b=ZChpCmlMhlluxU5wc3ii4G4X/cWvA7lF8kOTmX1sRe0lj38Zf65yQFFDgXQUiWQgyn
+         Ad7m3G/Ojta41zAYG4Fnx3TYZ4F7B7JJNbhG2b+A+Cb6NiTQPQjbUzbHOQOUhESBouan
+         i07ESl3RKIRxtSe+sF3EbwjtsuQ3/PBP0GRfmKqN4dOYHEq4FG7Qvnr+VOT6TdvlAddb
+         psvO7R7ktz60srCCpyJRlp9puO7zAsZZHVehQwVhwzfVfamKr/MsHtZMSHjj5sZc6Uwc
+         QyRUKzJ9kv9jjLCxYeMndpQZhDGh8pBziBPOVb8Sdbu19ltLL9ppbT/6kKKenFBetdu+
+         VMvA==
+X-Forwarded-Encrypted: i=1; AFNElJ/F4wRMM7rbbMMQc5UfPH5bY442gHH2hmbPA3ji1jRFvWOgcjLEVw1EcY/lEJp2JsrhkzEj2w1g7EfTymFM@vger.kernel.org
+X-Gm-Message-State: AOJu0YxqdOj1kGDgTuVo0c10n1lWLcbqwcW0V/LVQDG1yJDf5GLIBcFu
+	/AdCXjdCNztoHTCkkGceGXjvVX9/yiC9IFxt+QEvsHbam22ZlAtwXqU=
+X-Gm-Gg: Acq92OEM71fEPAc+iIR5SypxAQF2T6gJwlGY4dQMFgLOW5erblQlCfnhzYG5qEBa8ix
+	Fyi0+zEq2vrTugpI+6TSjAnTQOJORIQ5foMm6asS6pX9oxPfinDor5dGhfYNX+wf3cxhfwuohCC
+	s0JZJZfs+FhCdjiDWMp6IltMn62RhdxRVTtDnCO0WAXRUmg2EpmdbNAudu9lqG/uq7ENAbq/l6R
+	HFEGxAQJpyuqaixd00URJmp/Uo8+JodhbF+kFO5yx0oArNpiAJdpAwXhJ8e5Fdr9EJHLB3em2lN
+	e4yJYyUHrwktS1QaY3dvBq6AOEkTEhwiAPtGx2rJNzL1ZwwPw9aZaR8RVK9fD2sVgYeOZY9IjEq
+	rwk+CyudMEaJofKq519wQ6f85IQk5NEK/iR7pD8QFcf8hZZaVYMILcwe6H/HPtKAkxHYWvYRnaE
+	dqTyUtBF975D3rs+W11L7WFaCePs+L/iE1EoinNNk3JEtnUMKpSiQwkIFWdYxyX4fH61f60E/Ds
+	M+wfvMGtix8X1bCozp8mF0jRAvvZH6m6OYjd6exiMEotvveeKQ4fLMvzi5q5QoOdp0geg==
+X-Received: by 2002:a5d:584c:0:b0:452:c246:ab69 with SMTP id ffacd0b85a97d-45ea38c687bmr331364f8f.13.1779315985965;
+        Wed, 20 May 2026 15:26:25 -0700 (PDT)
+Received: from ?IPV6:2a01:cb08:52d:7400:bbd7:ca83:de4a:f625? (2a01cb08052d7400bbd7ca83de4af625.ipv6.abo.wanadoo.fr. [2a01:cb08:52d:7400:bbd7:ca83:de4a:f625])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45da0fe1a41sm61784681f8f.31.2026.05.20.15.26.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 May 2026 15:11:10 -0700 (PDT)
+        Wed, 20 May 2026 15:26:25 -0700 (PDT)
+Message-ID: <f5f70aa2-a1b8-40e0-838f-6709e6e08a5a@gmail.com>
+Date: Thu, 21 May 2026 00:26:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 20 May 2026 23:11:09 +0100
-Message-Id: <DINUJUCEDNXP.2BDISX62IPSQ2@linaro.org>
-Cc: <srini@kernel.org>, <lgirdwood@gmail.com>, <perex@perex.cz>,
- <tiwai@suse.com>, <krzysztof.kozlowski@oss.qualcomm.com>,
- <mohammad.rafi.shaik@oss.qualcomm.com>, <alexey.klimov@linaro.org>,
- <ravi.hothi@oss.qualcomm.com>, <mathieu.poirier@linaro.org>,
- <verhaegen@google.com>, <andersson@kernel.org>,
- <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 5/6] ASoC: qcom: q6apm: add watermark event support
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Srinivas Kandagatla" <srinivas.kandagatla@oss.qualcomm.com>,
- <broonie@kernel.org>
-X-Mailer: aerc 0.21.0
-References: <20260519131527.4002526-1-srinivas.kandagatla@oss.qualcomm.com>
- <20260519131527.4002526-6-srinivas.kandagatla@oss.qualcomm.com>
-In-Reply-To: <20260519131527.4002526-6-srinivas.kandagatla@oss.qualcomm.com>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/11] arm64: dts: qcom: sc8280xp-arcata: Enable backlight
+To: Douglas Anderson <dianders@chromium.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <jesszhan0024@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ Krzysztof Kozlowski <krzk@kernel.org>
+References: <20260520-surface-sp9-5g-for-next-v1-0-9df52552bf87@gmail.com>
+ <20260520-surface-sp9-5g-for-next-v1-2-9df52552bf87@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>
+In-Reply-To: <20260520-surface-sp9-5g-for-next-v1-2-9df52552bf87@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [0.01 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_MIXED_CHARSET(0.67)[subject];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108893-lists,linux-arm-msm=lfdr.de];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,oss.qualcomm.com,linaro.org,google.com,vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	TAGGED_FROM(0.00)[bounces-108894-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	FREEMAIL_TO(0.00)[chromium.org,linaro.org,gmail.com,linux.intel.com,kernel.org,suse.de,ffwll.ch];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	DBL_PROHIBIT(0.00)[0.0.34.96:email];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[alexey.klimov@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[jeromedebretagne@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:mid,linaro.org:dkim,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
-X-Rspamd-Queue-Id: 0DEA259BCE2
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,0.0.0.3:email,0.0.0.1:email]
+X-Rspamd-Queue-Id: BD74059BFD2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue May 19, 2026 at 2:15 PM BST, Srinivas Kandagatla wrote:
-> Push-pull shared memory modules can report watermark events when the DSP
-> read/write index reaches configured circular buffer levels.
->
-> Add support for registering watermark levels with the shared memory modul=
-e
-> and route the resulting module event to q6apm clients using a new
-> APM_CLIENT_EVENT_WATERMARK_EVENT event.
->
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+On 5/20/26 18:40, Jérôme de Bretagne via B4 Relay wrote:
+> From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+> 
+> Add backlight nodes and enable backlight so that it can be controlled
+> with the corresponding buttons found on Surface Pro Type Cover keyboards.
+> 
+> The nodes are almost identical to the ones from the ThinkPad X13s with
+> a different enable GPIO for the vreg_edp_bl node.
+> 
+> The difference was found by looking at the output of /sys/kernel/debug/gpio
+> on the ThinkPad X13s to see the properties of its enable gpio9:
+> 
+>    gpiochip1: GPIOs 742-751, parent: platform/c440000.spmi:pmic@1:gpio@8800, c440000.spmi:pmic@1:gpio@8800:
+>     ...
+>     gpio9 : out  high normal  vin-1 pull-down 10uA              push-pull  medium  atest-1 dtest-0
+>     ...
+> 
+> The same gpio9 on the Surface Pro 9 5G has different properties:
+> 
+>    gpiochip0: 10 GPIOs, parent: platform/c440000.spmi:pmic@1:gpio@8800, c440000.spmi:pmic@1:gpio@8800:
+>     ...
+>     gpio9 : in   high normal  vin-1 pull-up 30uA                push-pull  low     atest-1 dtest-0
+>     ...
+> 
+> Looking for a match on the Surface Pro 9 5G pointed to this only one:
+> 
+>    gpiochip2: 10 GPIOs, parent: platform/c440000.spmi:pmic@3:gpio@8800, c440000.spmi:pmic@3:gpio@8800:
+>     ...
+>     gpio6 : out  high normal  vin-1 pull-down 10uA              push-pull  medium  atest-1 dtest-0
+>     ...
+> 
+> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
 > ---
->  sound/soc/qcom/qdsp6/audioreach.c | 36 ++++++++++++++++++++++
->  sound/soc/qcom/qdsp6/audioreach.h | 50 +++++++++++++++++++++++++++++++
->  sound/soc/qcom/qdsp6/q6apm.c      | 19 ++++++++++++
->  sound/soc/qcom/qdsp6/q6apm.h      |  2 ++
->  4 files changed, 107 insertions(+)
->
-> diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/aud=
-ioreach.c
-> index c984b12409dd..e6e9eb2e85aa 100644
-> --- a/sound/soc/qcom/qdsp6/audioreach.c
-> +++ b/sound/soc/qcom/qdsp6/audioreach.c
-> @@ -1118,6 +1118,42 @@ static int audioreach_pcm_set_media_format(struct =
-q6apm_graph *graph,
->  	return q6apm_send_cmd_sync(graph->apm, pkt, 0);
->  }
-> =20
-> +int audioreach_shmem_register_event(struct q6apm_graph *graph, int bytes=
-, int num_levels)
-> +{
-> +	struct apm_module_register_events *event;
-> +	struct event_cfg_sh_mem_pull_push_mode_watermark_t *level;
-> +	int i, payload_size;
-> +	struct gpr_pkt *pkt __free(kfree) =3D NULL;
-> +	void *p;
+>   .../boot/dts/qcom/sc8280xp-microsoft-arcata.dts    | 49 ++++++++++++++++++++++
+>   1 file changed, 49 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+> index f2b4470d4407fb5b6a3dbac8bc972c010c31bd06..14287092fb07ea15e527fd318f7ea2155448b26c 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+> @@ -46,6 +46,16 @@ wcd938x: audio-codec {
+>   		#sound-dai-cells = <1>;
+>   	};
+>   
+> +	backlight: backlight {
+> +		compatible = "pwm-backlight";
+> +		pwms = <&pmc8280c_lpg 3 1000000>;
+> +		enable-gpios = <&pmc8280_1_gpios 8 GPIO_ACTIVE_HIGH>;
+> +		power-supply = <&vreg_edp_bl>;
 > +
-> +	if (num_levels <=3D 0 || bytes <=3D 0)
-> +		return -EINVAL;
+> +		pinctrl-0 = <&edp_bl_en>, <&edp_bl_pwm>;
+> +		pinctrl-names = "default";
+> +	};
 > +
-> +	payload_size =3D sizeof(*event) + sizeof(*level) + num_levels * sizeof(=
-uint32_t);
-> +
-> +	pkt =3D audioreach_alloc_cmd_pkt(payload_size, APM_CMD_REGISTER_MODULE_=
-EVENTS, 0,
-> +				     graph->port->id, graph->shm_iid);
-> +	if (IS_ERR(pkt))
-> +		return PTR_ERR(pkt);
-> +
-> +	p =3D (void *)pkt + GPR_HDR_SIZE + APM_CMD_HDR_SIZE;
-> +
-> +	event =3D p;
-> +	event->module_instance_id =3D graph->shm_iid;
-> +	event->event_id =3D EVENT_ID_SH_MEM_PULL_PUSH_MODE_WATERMARK;
-> +	event->is_register =3D 1;
-> +	event->event_config_payload_size =3D sizeof(*level) + num_levels * size=
-of(uint32_t);
-> +	p +=3D sizeof(*event);
-> +	level =3D p;
-> +	level->num_water_mark_levels =3D num_levels;
-> +
-> +	for (i =3D 0; i < num_levels; i++)
-> +		level->level[i] =3D (i + 1) * bytes;
 
-Let's hope that compilers optimize this to avoid multiplication, anyway
-it shouln't be a hot path, although I don't really know.
 
-- don't you need a check like num_levels<=3DARRAY_SIZE(level->level) before
-this loop? Looking at the code it seems that it relies on pkt which is
-allocated using audioreach_alloc_cmd_pkt() taking payload_size into
-account. Looks okay but I wanted to double check.
+Investigating the feedback I got from an AI bot review [1], I plan to 
+update this patch in v2. Let me know what you think.
 
-- level->level[] is of u32 types. Can level->level[i] =3D (i + 1) * bytes
-overflow?
+I was skeptical at first but upon review I've tried the following patch:
 
-[..]
-> +struct event_cfg_sh_mem_pull_push_mode_watermark_t {
-> +	uint32_t num_water_mark_levels;
-> +	uint32_t level[];
-> +} __packed;
-[..]
 
-Best regards,
-Alexey
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts 
+b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+index f938e68c69ea..82e0a01276a8 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+@@ -198,7 +198,7 @@ vreg_edp_bl: regulator-edp-bl {
+                 regulator-min-microvolt = <3600000>;
+                 regulator-max-microvolt = <3600000>;
+
+-               gpio = <&pmc8280c_gpios 6 GPIO_ACTIVE_HIGH>;
++               gpio = <&pmc8280_2_gpios 6 GPIO_ACTIVE_HIGH>;
+                 enable-active-high;
+
+                 pinctrl-0 = <&edp_bl_reg_en>;
+@@ -1050,6 +1050,11 @@ vol_up_n: vol-up-n-state {
+  };
+
+  &pmc8280_2_gpios {
++       edp_bl_reg_en: edp-bl-reg-en-state {
++               pins = "gpio6";
++               function = "normal";
++       };
++
+         wwan_sw_en: wwan-sw-en-state {
+                 pins = "gpio1";
+                 function = "normal";
+@@ -1061,11 +1066,6 @@ edp_bl_pwm: edp-bl-pwm-state {
+                 pins = "gpio8";
+                 function = "func1";
+         };
+-
+-       edp_bl_reg_en: edp-bl-reg-en-state {
+-               pins = "gpio6";
+-               function = "normal";
+-       };
+  };
+
+  &pmr735a_gpios {
+
+
+
+and ... backlight still works! It can also be enabled/disabled with:
+    /sys/class/backlight/backlight/bl_power
+as expected.
+
+I have no clue why both gpio6 on pmc8280_2 and gpio6 on pmc8280c can 
+enable and disable the backlight. Is it a common scenario?
+
+Anyway, if I follow my own investigation fully based on the X13s 
+reference and the properties of its backlight enable GPIO, I should 
+switch to pmc8280_2 to use the better match.
+
+I will update this patch in v2.
+
+Jérôme
+
+
+[1] https://lore.kernel.org/all/20260520165709.E485C1F00893@smtp.kernel.org/
+
 
