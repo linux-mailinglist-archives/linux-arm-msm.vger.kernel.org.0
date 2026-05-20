@@ -1,228 +1,374 @@
-Return-Path: <linux-arm-msm+bounces-108714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qHT9OsSXDWoMzwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:15:16 +0200
+	id +FieFUubDWoS0AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:30:19 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F21658C2E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:15:16 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89A2E58C777
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:30:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 012AC3015420
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 11:15:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0ADF8310281E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 11:23:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33B8B318EE7;
-	Wed, 20 May 2026 11:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D65733ECBC6;
+	Wed, 20 May 2026 11:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kQKhyyiH";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hRfPS8Wn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DqWkldPq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AEF352018
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 11:15:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B62439D6E2;
+	Wed, 20 May 2026 11:20:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779275715; cv=none; b=m3P6lRbIo9dBXNot+jxSjPS6ZXGw/KfFN6PxzFX+C/GIUtgD1Rc3Ppc6KViLUDcv7BZUAhURM0MvI4vTv/jaRRGCtktetr5gxFi8sYks+8mzAkHShvNa2AkibnMkJH9IELfcqNqi1n2ZMdy3UXPZM+R88zNDiqifqCNDEu9V+IA=
+	t=1779276028; cv=none; b=XyN9OynOtjo6DIyWmVPmFnFnRIHX5AJt8CX4pLEYZASsKQjJDeZh+DIDKi7NXtWioeJngwhDE0thzrFKABeB6gwVbx8AVi3HD2c73UYXyYyNAf3ZCCD3Jg2WM7ImmV/Ibb/b5tgxYKBy3LdFEydwpM8HR5SERBknp0jinfZVKVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779275715; c=relaxed/simple;
-	bh=DQn5wkZ5evtF2xsA7fVKvrXRFubdEbruQnpuwMWCwRo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MBaPRowuNpNE91KwwGlWz6KTz+4Ze/xqyxvCVPY9003QkkJydonrzVz2vamYmAOMafwnebzzuMtahsymIrJSr08X6vyKMWbPyq0emL5Qtaliac1YaMGCZfzgiP1syqwcEqiOT/n4xjoafQF3Gud7nZbUodzRTKMRYdW0bJKnEnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kQKhyyiH; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hRfPS8Wn; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64K731rH1725453
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 11:15:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	K9ZCGpGKO/dzQP/sIYxBMZ+crs2O49Dfxdra2zpXf84=; b=kQKhyyiHYYxQwA0R
-	6MxcmvLCW+wrwyNunAi95JsgsmC/yskTyq8Fc4ndmWBPZTftQci91VJYUANrZxoh
-	DoDGwxI+aRyuZSqtuolycTVrvhxBhsSwjB3SEhRkE7fH+ywAN90XlNZAMiPqHwoQ
-	5tjGyFaT7ooXp+Xpe/Md/YV0wjITc807WSyFvIhmLYgucXTSaLW7ytG9aLV8xOWE
-	6PQf1CsfXHUnFGvVg0gSDSV0OqI86Sn9ORUaRf1nsMEKZTMpjIYXCyA8yDKZFUS6
-	weJ3hiqFCuoChdQcDO0mfC11lG/Bv9ycsoNjlqubR8cljrFA7UFZP6SL4W6ou7TZ
-	PvnfMQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e8t3qmf2k-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 11:15:13 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-90f6e66879eso111133785a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 04:15:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779275712; x=1779880512; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=K9ZCGpGKO/dzQP/sIYxBMZ+crs2O49Dfxdra2zpXf84=;
-        b=hRfPS8Wnkl0IW12xTK0Ctgzo5CV8WUjgBFEf4G6TQSjOyFakUWA8ngs/2YXrjNyd0P
-         8bAjPvJCOTfh36mW0+dBXGNcnBWw/4xjSjhtO+/tuBgfhCd33oVGk6dJ5+5rGspRmxYM
-         Z9LqKE9mhNWBeqYP9wJttjpGLWQuqG9Lfs9lm1k0/6XZzytpuC6J1jOozyVQ1DMC3URF
-         sE/DpLdYqi2IZZOzl8sihGVlaJKxb7wTa0GFanAfTqZYth1xN5YEsZLHhrwWpE+/vhnk
-         i8fGCbjUxkoxap5+DKV1qCJkwHWe+phOrmZoH54QYjGZnlBCD1E3fHvKnoQ+GPnXzOZ7
-         IY4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779275712; x=1779880512;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=K9ZCGpGKO/dzQP/sIYxBMZ+crs2O49Dfxdra2zpXf84=;
-        b=PhQR1mrpUfHIO5hSoMdiiVUTZEZYSG6CfaR4yI8ahypOLOISxVO/9WWyNDo+p2HS4N
-         wXd6DD5sFeW/Hqj13WQnvjatUWC3ldZPARjKFRodRhzizQpdVGDIi25wi9nVONc65j72
-         ZaIo9YxenEX/+6PygsrNI+xr5pb0JZHgul35rClCrbXqsxZenpyxYrC/FJ58ctOWEDRi
-         QMrWB2QQ5BdhAecESfD5VJ0kwvsQlr3uZIwJz563b4pPt9nyIZpiTLj1krJsV73g9GqD
-         qR6W+UCfTT9cr++W1Fm9AyH8jg9PujRF8/tnroKJCtfkPHTyOq40Or4y/zOiZi5EDAII
-         V4MQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/HLvA/0rubxhAabDv4SBb8cYvz0SG//cDCj7LR+BBfCKu5Xb6P49D2aSLNjz4xhHLHv/DMAiwxBIay+NRA@vger.kernel.org
-X-Gm-Message-State: AOJu0YxsbpXkoiJjKQLvzPg/skZ4bJEjkYChGWPHenPMpneOZ49Ndhvy
-	Iqkl+eHYmhvze5sTZ4q2TcfOh3J5Nxkizb8Ks30VS6ka0uMu8cZrPQjb6jUXLKzcZQ1Btv3RMF8
-	EBt1+MpVUooZ2S5igOuxapbjwVNpQB8XVb0V5NgvPk6CgekgwJ5Ad1GYw1cTA8JLz4hKY
-X-Gm-Gg: Acq92OGIG4yllsfwbaYFyFLqNZ4T9OUFWzS25Hr/ytCYPQ8qO5S7UP34cQVBtqc5WD1
-	zLQZIw7qRSCeDvZ+UAsHsgv7iHk8GlEybKSpKVto4FoudcgAitLOJ5WmteWkwMikbbrda3PDQs0
-	epXp8dEHkF5SauRKVgXsXlIb2Mno47k5Lf5NLsnwfkSOC5DH2n6cMOVDqU+vPG/UJ1Vn3EjqqK/
-	rdomN3uiBfvLKsxCuD7a4QM9N1qBSdiiPeuS45edoBd7q9y/qRPJlvoyGp7y6aiAMRD5hpJ07XL
-	Vm6iIrpn1mB8QGvq1p2cX2dXQf1Zhcj+IMhE8G7bzd34GgQJ+w8xQXPPVxT3JEJN31oKeK4jRWC
-	U9wUC+ZJdm/vE6DyDlQqpKkW4/uEYLnN3eGmZQvMoya/fkNWNzeYehmsDUHFhn8KLjwpR7XreUg
-	3ec1fewk2KMZILiQ==
-X-Received: by 2002:a05:620a:17a3:b0:8d7:a89d:958a with SMTP id af79cd13be357-911d05967b6mr2361727985a.6.1779275712111;
-        Wed, 20 May 2026 04:15:12 -0700 (PDT)
-X-Received: by 2002:a05:620a:17a3:b0:8d7:a89d:958a with SMTP id af79cd13be357-911d05967b6mr2361721785a.6.1779275711450;
-        Wed, 20 May 2026 04:15:11 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bd4f4bd1124sm850249666b.1.2026.05.20.04.15.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 May 2026 04:15:10 -0700 (PDT)
-Message-ID: <d20ed9b8-18aa-4901-ba49-f24e3c79e36d@oss.qualcomm.com>
-Date: Wed, 20 May 2026 13:15:08 +0200
+	s=arc-20240116; t=1779276028; c=relaxed/simple;
+	bh=LRN2672r35IyVec++JGBaiETnqJv8Sk5nTuKiSNxa8A=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sjLne0DAi5kl+hOA4Va5GNYlp15QgzzL+m3pe+Ykmwc2ruJg/J0GoaUm54eN+wge1FRex/ghKmNHrBE+SMdjFCP1cXFhxwmrtBAGsH7ws8x0ak7Bu7OJTRf+8gsGh4ft0J/IguOR0vbsJtxtbKCqZZJpC8bmY2HFRI8Tr6sBBfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DqWkldPq; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6EE1F00897;
+	Wed, 20 May 2026 11:20:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779276026;
+	bh=Awnos86qn1nOZLrjiQeDKSX5qCUuZjhkaj+6eONAsSQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=DqWkldPqCO9shgs18fFncUaZJppA0Hy5/IivQGaN+7SsYDBo5wxCa1hiyX6Eo7CxM
+	 HmaIOco1eTf6/cOq9kbtZrntWqCAYcN+TA8rBLCDQ3cnKFnWEZUYBXJb2OK6ZAmxCW
+	 WaPG/a31nc2CYWzgsTq0fNzna+Q6y/D8VwEvOK1rMZz/GoZmccFBaVB5foSdRBWZSE
+	 vTfbHRf14Cpe/OOc0ZySNe6KHMXMThqlTPFtcXVfzPupChiSRASusS4ydX7pGRzkM4
+	 t2wu6GRtpwiGwTxNCFnyd+RacghFG9yOJy/XPn+U7ea2gjZpQTO9gMioPUXdgPtOOT
+	 uHAMTFhCD4GNw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	rfoss@kernel.org,
+	todor.too@gmail.com,
+	mchehab@kernel.org,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 7.0-6.12] media: qcom: camss: avoid format string warning
+Date: Wed, 20 May 2026 07:19:01 -0400
+Message-ID: <20260520111944.3424570-29-sashal@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260520111944.3424570-1-sashal@kernel.org>
+References: <20260520111944.3424570-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: monaco-monza-som: Enable USB0 DRD
- mode
-To: Akash Kumar <akash.kumar@oss.qualcomm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20260520093902.2064730-1-akash.kumar@oss.qualcomm.com>
- <20260520093902.2064730-3-akash.kumar@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260520093902.2064730-3-akash.kumar@oss.qualcomm.com>
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 7.0.9
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDEwOCBTYWx0ZWRfX6Cfr1psx6fac
- kL/zMH+vvwzQ+MtUm2EDOX8Nl7w0vIjBu/CBpIXKT8wl6/aMthM1HNcrlu9P/OwsABrfWfcWNMn
- f/+4+O0N5v29ur/ER7ACDrbW/FSbW8lksuV6NB0YF85CLyrJMwbHS/d1oA/DBu+LS/b1gJwBALU
- E4I1wyHPuDe0gECG3ig4p2RuvEFwsqNCtVad/deEUu+g6lCvoe5EtNksyqUPK9iu0KD8S6TxgSd
- 7oleupU4cZOpG5PonQPSIW0FVFI9DijYfl2cMiPOxAAUuVtl2m4SU7Y76xRuK31zyLc/8QWRqGh
- ry0Ykvgrqt+Voyvd69sZV/nc2WYcsISRvFzwpdGVGDmwC4TOKJq+SQE0wh8jFdawmcCopYK+9D4
- 5M5NqNDMHUlSKGVk06PBXPtFu9+0kslGvdaxAKD3iitwhIF78Z3UVJOGgkqXbX4628hH6iKca//
- c1fgahKnuXr7o1tSEOA==
-X-Authority-Analysis: v=2.4 cv=N9cZ0W9B c=1 sm=1 tr=0 ts=6a0d97c1 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=028NdSF9W1XUqDdDnWcA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: qYEImqEv8VpAaPpDZe67cH5gHeLgbHGX
-X-Proofpoint-ORIG-GUID: qYEImqEv8VpAaPpDZe67cH5gHeLgbHGX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-20_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 adultscore=0 lowpriorityscore=0
- suspectscore=0 malwarescore=0 spamscore=0 phishscore=0 clxscore=1015
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
- definitions=main-2605200108
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	TAGGED_FROM(0.00)[bounces-108714-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim,0.0.0.8:email];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-108715-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[arndb.de,linaro.org,kernel.org,gmail.com,vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 8F21658C2E5
+	TAGGED_RCPT(0.00)[linux-arm-msm,cisco];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[msgid.link:url,linaro.org:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 89A2E58C777
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 5/20/26 11:37 AM, Akash Kumar wrote:
-> Enable USB0 dual-role mode on monza SOM using the Cypress CYPD6129 UCSI
-> controller.
-> 
-> Switch the controller node to I2C12, configure the required pinctrl and
-> interrupt settings, and wire the USB2/USB3 endpoints for the USB-C
-> connector.
-> 
-> Signed-off-by: Akash Kumar <akash.kumar@oss.qualcomm.com>
-> ---
->  .../arm64/boot/dts/qcom/monaco-monza-som.dtsi | 57 +++++++++++++++++++
->  1 file changed, 57 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/monaco-monza-som.dtsi b/arch/arm64/boot/dts/qcom/monaco-monza-som.dtsi
-> index 9b5ed55939b8..8e3af6018dfc 100644
-> --- a/arch/arm64/boot/dts/qcom/monaco-monza-som.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/monaco-monza-som.dtsi
-> @@ -194,6 +194,52 @@ &iris {
->  	status = "okay";
->  };
->  
-> +&i2c12 {
-> +	pinctrl-0 = <&qup_i2c12_data_clk>, <&usb0_intr_state>;
-> +	pinctrl-names = "default";
-> +	status = "okay";
+From: Arnd Bergmann <arnd@arndb.de>
 
-Let's keep a \n before 'status'
+[ Upstream commit 23c39cb598977f10909a2387c5e5f34afc1d6933 ]
 
-> +
-> +	typec@8 {
-> +		compatible = "cypress,cypd6129";
-> +		reg = <0x08>;
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = < 3 IRQ_TYPE_LEVEL_LOW>;
+clang-22 warns about csiphy_match_clock_name() taking a variable format
+string that is not checked against the 'int index' argument:
 
-interrupts-extended = <&tlmm 3 IRQ..>
+drivers/media/platform/qcom/camss/camss-csiphy.c:566:44: error: diagnostic behavior may be improved by
+      adding the 'format(printf, 2, 3)' attribute to the declaration of 'csiphy_match_clock_name'
+      [-Werror,-Wmissing-format-attribute]
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      | __attribute__((format(printf, 2, 3)))
+  562 |                                     int index)
+  563 | {
+  564 |         char name[16]; /* csiphyXXX_timer\0 */
+  565 |
+  566 |         snprintf(name, sizeof(name), format, index);
+      |                                                   ^
+drivers/media/platform/qcom/camss/camss-csiphy.c:561:13: note: 'csiphy_match_clock_name' declared here
+  561 | static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+      |             ^
 
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		status = "okay";
+Change the function to use a snprintf() style format string that allows this
+to be checked at the call site.
 
-This is unnecessary, nodes are enabled by default
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
-Konrad
+LLM Generated explanations, may be completely bogus:
+
+## Phase Walkthrough
+
+### Phase 1: Commit Message Forensics
+Step 1.1 Record: Subsystem is `media: qcom: camss`; action verb is
+`avoid`; claimed intent is to avoid a clang-22 format-string build
+warning/error in `csiphy_match_clock_name()`.
+
+Step 1.2 Record: Verified fetched commit
+`2211e826bd69c041534093735241182013dde7bc` has:
+- `Signed-off-by: Arnd Bergmann <arnd@arndb.de>`
+- `Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>`
+- `Signed-off-by: Bryan O'Donoghue <bod@kernel.org>`
+
+The original lore submission also has `Fixes: 0727615fb975 ("media:
+qcom: camss: Functionally decompose CSIPHY clock lookups")`. No
+`Reported-by`, `Tested-by`, `Cc: stable`, or bug-report `Link` was
+verified.
+
+Step 1.3 Record: The body describes a clang-22 diagnostic promoted to
+error: `[-Werror,-Wmissing-format-attribute]`. The root cause is that
+`csiphy_match_clock_name()` takes a `const char *format` and passes it
+to `snprintf()` with a fixed `int index`, but the helper itself lacks a
+checkable printf-style prototype.
+
+Step 1.4 Record: This is not a hidden runtime bug fix. It is a build-
+warning/build-error fix for newer clang plus warning-as-error
+configurations.
+
+### Phase 2: Diff Analysis
+Step 2.1 Record: One file changed:
+`drivers/media/platform/qcom/camss/camss-csiphy.c`, `7 insertions(+), 3
+deletions(-)`. One function modified: `csiphy_match_clock_name()`. Scope
+is single-file surgical.
+
+Step 2.2 Record: Before, the helper accepted `format, int index` and
+called `snprintf(name, sizeof(name), format, index)`. After, it is
+declared `__printf(2, 3)`, accepts varargs, uses `va_start()`,
+`vsnprintf()`, and `va_end()`. Call sites remain unchanged.
+
+Step 2.3 Record: Bug category is build fix / compiler diagnostic fix. It
+does not fix memory safety, locking, refcounting, or runtime logic.
+
+Step 2.4 Record: The fix is mechanically correct and minimal. Existing
+callers pass literal format strings plus `csiphy->id`, so behavior is
+preserved while allowing compiler format checking. Regression risk is
+very low; the only meaningful risk is varargs misuse, but current call
+sites were verified unchanged and simple.
+
+### Phase 3: Git History Investigation
+Step 3.1 Record: `git blame` shows the helper body was introduced by
+`0727615fb975f6`, authored by Bryan O'Donoghue on 2023-09-25. `git
+describe --contains` places it at `v6.7-rc1~51^2~149`.
+
+Step 3.2 Record: The final fetched commit lacks a `Fixes:` trailer, but
+the original lore submission includes `Fixes: 0727615fb975`. I inspected
+that commit; it introduced the helper and the `snprintf(..., format,
+index)` pattern.
+
+Step 3.3 Record: Recent file history includes later CAMSS/CSIPHY
+changes, especially `74cae7794341` changing callers to use `csiphy->id`.
+No prerequisite for this format-warning fix was found beyond the helper
+existing.
+
+Step 3.4 Record: Arnd Bergmann has prior CAMSS build/undefined-behavior
+fixes in history. Bryan O'Donoghue, who reviewed the patch, is listed as
+a CAMSS maintainer in `MAINTAINERS`.
+
+Step 3.5 Record: No dependent commits were found. The patch only needs
+the existing helper and kernel `__printf`/`va_list` support, both
+present in the checked tree.
+
+### Phase 4: Mailing List And External Research
+Step 4.1 Record: `b4 dig -c 2211e826...` found the original patch at
+`https://patch.msgid.link/20260320151828.3456863-1-arnd@kernel.org`. `b4
+dig -a` found only v1.
+
+Step 4.2 Record: `b4 dig -w` shows relevant maintainers/lists were
+included: CAMSS maintainers, media maintainers, `linux-media`, `linux-
+arm-msm`, `linux-kernel`, and `llvm`.
+
+Step 4.3 Record: No separate bug report was present. The concrete report
+is the compiler diagnostic embedded in the patch.
+
+Step 4.4 Record: This is a standalone one-patch fix, not part of a
+multi-patch series.
+
+Step 4.5 Record: Direct lore stable search was blocked by Anubis; web
+search did not find stable-specific discussion for this exact patch.
+
+### Phase 5: Code Semantic Analysis
+Step 5.1 Record: Modified function: `csiphy_match_clock_name()`.
+
+Step 5.2 Record: Callers are only within `msm_csiphy_subdev_init()`, at
+the three verified clock-name checks: `"csiphy%d_timer"`, `"csi%d_phy"`,
+and `"csiphy%d"`.
+
+Step 5.3 Record: The helper calls formatting and string comparison
+functions: previously `snprintf()` and `strcmp()`, after patch
+`vsnprintf()` and `strcmp()`.
+
+Step 5.4 Record: The affected path is CAMSS device probe:
+`camss_probe()` calls `camss_init_subdevices()`, which calls
+`msm_csiphy_subdev_init()`. Runtime behavior remains equivalent for the
+verified call sites.
+
+Step 5.5 Record: Nearby CAMSS code has no other `const char *format`
+helper or `vsnprintf()`/`__printf()` pattern matching this issue.
+
+### Phase 6: Stable Tree Analysis
+Step 6.1 Record: The buggy helper exists from `v6.7` onward. Verified
+absent in `v6.6`, present in `v6.12`, and present in `v7.0`.
+
+Step 6.2 Record: `git apply --check` succeeds against the current
+`7.0.5` checkout. For `v6.12`, the same helper and `snprintf(name,
+sizeof(name), format, index)` pattern are present, but I did not run a
+separate worktree apply check.
+
+Step 6.3 Record: No related stable-specific fix for this exact CAMSS
+warning was found in local targeted searches or public web search.
+
+### Phase 7: Subsystem Context
+Step 7.1 Record: Subsystem is Qualcomm CAMSS media driver under
+`drivers/media/platform/qcom/camss/`. Criticality is peripheral/driver-
+specific, but build failures affect anyone building this driver or
+COMPILE_TEST coverage.
+
+Step 7.2 Record: CAMSS is actively developed; recent history shows many
+CAMSS commits, including fixes and new platform support.
+
+### Phase 8: Impact And Risk
+Step 8.1 Record: Affected population is config-specific: builders with
+`CONFIG_VIDEO_QCOM_CAMSS`, including `COMPILE_TEST`, using clang-22 with
+`-Wmissing-format-attribute` and warnings-as-errors.
+
+Step 8.2 Record: Trigger is build-time, not runtime.
+`scripts/Makefile.warn` verifies `-Wmissing-format-attribute` is under
+`W=1`; `-Werror` is enabled by `W=e` or `CONFIG_WERROR`.
+
+Step 8.3 Record: Failure mode is build failure, not
+crash/corruption/security. Severity is medium, but build fixes are an
+accepted stable exception.
+
+Step 8.4 Record: Benefit is moderate: keeps affected stable builds
+working with newer clang warning behavior. Risk is very low: 10-line
+single-function mechanical change, no API change, call sites unchanged.
+
+### Phase 9: Final Synthesis
+Evidence for backporting:
+- Real build failure mode documented in commit and lore.
+- Fits stable build-fix exception.
+- Very small, contained, reviewed by CAMSS maintainer.
+- Applies cleanly to current `7.0.5`; buggy code exists in `v6.12+` and
+  `v7.0`.
+
+Evidence against backporting:
+- Not a runtime correctness, crash, data corruption, or security fix.
+- Trigger requires specific compiler/warning-as-error build settings.
+- Not relevant to `v6.6` and older because the helper is absent there.
+
+Stable rules checklist:
+1. Obviously correct and tested: yes for code review/readability; no
+   local clang-22 build reproduction.
+2. Fixes a real bug: yes, a verified build diagnostic/error path.
+3. Important issue: medium; build failure, not runtime failure.
+4. Small and contained: yes, one function, one file, 7+/3-.
+5. No new feature/API: yes.
+6. Can apply to stable: verified for current `7.0.5`; likely
+   straightforward for `v6.12+`, not applicable to `v6.6` and older.
+
+Exception category: Build fix.
+
+## Verification
+- Phase 1: `git show` verified candidate commit metadata and exact diff
+  for `2211e826bd69...`.
+- Phase 2: `git diff --shortstat` verified `1 file changed, 7
+  insertions(+), 3 deletions(-)`.
+- Phase 3: `git blame` verified helper introduced by `0727615fb975`;
+  `git show` inspected that commit.
+- Phase 3/6: `git describe --contains` and tag containment checks
+  verified introduction in `v6.7`, presence in `v6.12+`, absence from
+  `v6.6`.
+- Phase 4: `b4 dig`, `b4 dig -a`, `b4 dig -w`, and saved mbox verified
+  original lore thread, v1-only series, recipients, `Fixes:` trailer,
+  and Bryan’s review.
+- Phase 5: `rg` and file reads verified call sites and probe call chain.
+- Phase 6: `git apply --check` verified clean apply to current `7.0.5`.
+- Phase 7: `MAINTAINERS` verified Bryan O'Donoghue is a CAMSS
+  maintainer.
+- Phase 8: `scripts/Makefile.warn` verified when `-Wmissing-format-
+  attribute` and `-Werror` are enabled.
+- UNVERIFIED: I did not reproduce the clang-22 build failure locally.
+- UNVERIFIED: I did not perform an actual `git apply --check` in a
+  separate `v6.12` worktree.
+
+This is stable-worthy as a low-risk build fix for stable trees that
+contain the helper, especially `v6.12+`/`v7.0` era trees, and should be
+skipped for older trees where the code does not exist.
+
+**YES**
+
+ drivers/media/platform/qcom/camss/camss-csiphy.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.c b/drivers/media/platform/qcom/camss/camss-csiphy.c
+index 62623393f4144..78a1b568dbae6 100644
+--- a/drivers/media/platform/qcom/camss/camss-csiphy.c
++++ b/drivers/media/platform/qcom/camss/camss-csiphy.c
+@@ -558,12 +558,16 @@ static int csiphy_init_formats(struct v4l2_subdev *sd,
+ 	return csiphy_set_format(sd, fh ? fh->state : NULL, &format);
+ }
+ 
+-static bool csiphy_match_clock_name(const char *clock_name, const char *format,
+-				    int index)
++static bool __printf(2, 3)
++csiphy_match_clock_name(const char *clock_name, const char *format, ...)
+ {
+ 	char name[16]; /* csiphyXXX_timer\0 */
++	va_list args;
++
++	va_start(args, format);
++	vsnprintf(name, sizeof(name), format, args);
++	va_end(args);
+ 
+-	snprintf(name, sizeof(name), format, index);
+ 	return !strcmp(clock_name, name);
+ }
+ 
+-- 
+2.53.0
+
 
