@@ -1,251 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-108724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +D9MEqOeDWqC0AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:44:35 +0200
+	id EEoTKXGgDWqC0AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:52:17 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 190EE58CD94
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:44:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 50A1458CF67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 13:52:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 03806314D920
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 11:36:12 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id AB87E304AC9E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 May 2026 11:36:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C0BC39B94C;
-	Wed, 20 May 2026 11:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ECF82F363F;
+	Wed, 20 May 2026 11:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="YA2EOWne"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LyCHvUq6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011035.outbound.protection.outlook.com [40.93.194.35])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812CE2F363F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 11:35:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.35
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779276954; cv=fail; b=kKwgPB5Z6O9J6zSU+6unCZJHHX9nKC2uM0gQx12E2BiAEm9NHeA+ENBiX/cWfkIRahoUJapnSb9jlCom2LsxtmN/as7SR9CDS6Y/y/QEEoEn3lpdVvwCgBqxgKLcfNku5l73Xga8FTNh0D0QHRBzoxO71cJ6W6W5TCNweuR/khw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779276954; c=relaxed/simple;
-	bh=0oS9K7qkyFG9M2EmpB9w+8MZe2C9RwhGRCOsCBz/2i8=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=jsCkkWQQA3EaZBbbaWZaiw2MzfGMdBDjFEiFgswvZCtU/rtK5XyXr6Zo0sBUCsZBt3VWuzWM04N5qt8SI/HzqMbT919Q97IRp9dYjxdabX4H9ZY2GsdKUhoT4Cu0KJ3flrjFrxktOKiwcnfJkS9yJoCuLrR1+t0rMyfzoH/AF+4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=YA2EOWne; arc=fail smtp.client-ip=40.93.194.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=TAgZ8pJMf2ox0iMH8ueo3PMma6yKKEcN63E/uACxpxR7aC4SXK+517E6RRvMV/9Q74hr2XJHlYuWx/ojADS2g6XWhGpz1tQNrkyBbdkmPlGAFDsJMsr/5YtJYEhXYhtdJEVJLaBWRYfgSbEZU90YISMmv3/+NxDGKjmTGfbITG7CFz2YjLgh0/vihGSWgYQoh5/1Hf4bxZeLtLXIHVGXABjbUcCdmufGgRocG3fIxa7HlcRRT3V6b7+K+iAHaYYONwhA7uc+3DeTgV0O898yevrYX4MOtq6o7u1l9+02n3Payw8qVYiFpzszfLl5SDMp9LYRYz79WuCzicFn0vHtDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EECI8WZY+v9cwhzawDzGelC1ocQYnWeiT4LeynM3Wmo=;
- b=VS4/MREAivmzkzuOJSSI2iQsRUrUb42W8+fXValm8kzyscvfvaYYyZybUOuWpJKEJHKT0CGpc5nrPqIPSxrA55X/okE0o4wJ5qtfkNfvJcaXgX+/wIRRtbspk8v4Q4z01dLMqHoJS4Uq4aIKsSokbRNBCfo+HJ1ByjEqM6amUMPGz/u42c1MEtQTh7ZpHea/3IDLwRUIGsieMhLM5lO6Udbf7jMgQx+0llUHG/wJVAuf8rQcyD7iMLgDFWxJjpG08EwPZetnztVE/rf+q8ddHstsdYcI88TvwYefwHjuq/usxnn9PgEv9AvpuIlLqRbhUef/A/VrEDDbdj6n+lQVXQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EECI8WZY+v9cwhzawDzGelC1ocQYnWeiT4LeynM3Wmo=;
- b=YA2EOWneKs/usg0X036Bk6qeJcVYdY1xvkmUIkrjmCBOBzspx5b6ohIeCbXlRdDC3oae87KQnRvtqQdQI8fHK/ID1gZBNvOoBkBT6ewIDEXhnZcqnpwyUuySxYKcR8pNcOpu4af6C3/DCodSUJLKpzZlHeXcgAcqaHDShgRWFik=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com (2603:10b6:510:13c::22)
- by PH8PR12MB7110.namprd12.prod.outlook.com (2603:10b6:510:22e::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.14; Wed, 20 May
- 2026 11:35:49 +0000
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::ce69:cfae:774d:a65c]) by PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::ce69:cfae:774d:a65c%5]) with mapi id 15.21.0025.022; Wed, 20 May 2026
- 11:35:49 +0000
-Message-ID: <73a122c6-77e2-4a75-b5e2-ecc0ecf7edce@amd.com>
-Date: Wed, 20 May 2026 13:35:40 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] drm/exec: Make the drm_exec_until_all_locked()
- macro more readable
-To: =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
- intel-xe@lists.freedesktop.org
-Cc: Felix Kuehling <Felix.Kuehling@amd.com>,
- Alex Deucher <alexander.deucher@amd.com>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Danilo Krummrich <dakr@kernel.org>, Matthew Brost <matthew.brost@intel.com>,
- Alice Ryhl <aliceryhl@google.com>, Rob Clark <robin.clark@oss.qualcomm.com>,
- Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
- <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20260520101616.41284-1-thomas.hellstrom@linux.intel.com>
- <20260520101616.41284-3-thomas.hellstrom@linux.intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-In-Reply-To: <20260520101616.41284-3-thomas.hellstrom@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR2P281CA0003.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:a::13) To PH7PR12MB5685.namprd12.prod.outlook.com
- (2603:10b6:510:13c::22)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AFB548EE;
+	Wed, 20 May 2026 11:36:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779276997; cv=none; b=WNC1IZOFhFxLmA2+4uq+QjwQ6wcVpN21rkty7ynzKf9pg1uslb5HutpTEGX8+tYyWwg3xXjUuVsG7B8ONWxz3AG2AgRJS+AC/RTOkZOzjWsul/Rce4ZpidjXwdPKqBQvVP5O1pfI9vDiiHI3rqJi/qLCuoK83wLYDOkyRRDj/zE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779276997; c=relaxed/simple;
+	bh=pt5s+8VqY9gzjyhGDvxKdUz/CP+gdiVXU9zfBbubgVc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mz8KOYiWu7rzKtxDt+Vkr9Y7OOW0v4Pt3Mc/E7l0zEulJn2H5prmvicGcIDfJLNMzW1NLeBX0TznCy2BALHn59+cRw6NE6tKDEhVTG8YV56LIuIEck77P3BmQ8WFmVIOZmr975GNb1xo2Ay/YEqJfsVDjIBmCA9zFdKKm4h5PKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LyCHvUq6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64K8uaZd4115171;
+	Wed, 20 May 2026 11:36:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=MaVVDbsg0Qf1q7ZkzeGs0e6M
+	s+o5j/imjdgouDQWfhI=; b=LyCHvUq6GXZ5kGYGD2mLYhq0urwUgKA4cyDe45Qa
+	Q2H6uetACVOQbnnPSSRPumoWWwM+Dl07RAqt0O+2Hh2eBbfyngfkHMzOclSq4lbm
+	XLUnX/eI8NdAOllkXzrq007sJ7Nacu7ASll9yfIGGtA/WwnjUUU+2U/7q8dvZCN2
+	YGGu/mlOcoWxl6Ppqu6yaX4UuLgC0yIQpHuy1P0Mc7QQDsdjzr1Jn22uPYM5zQci
+	xiEU5qWHn5CM5eYTf5XRcsorqGz7ZYAssMW7DgVRHs0kPnz3Zt070UD4L1rUDFlQ
+	NONWL4MFCZCRCTpGvqIA8RSo9PeNsxANpvEAFCa2Eie9TA==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e99w0gke0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 May 2026 11:36:32 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 64KBaS20017167;
+	Wed, 20 May 2026 11:36:28 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4e712fys9w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 May 2026 11:36:28 +0000 (GMT)
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64KBaS6i017160;
+	Wed, 20 May 2026 11:36:28 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-kotarake-hyd.qualcomm.com [10.213.97.140])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 64KBaSVo017159
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 May 2026 11:36:28 +0000 (GMT)
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2389607)
+	id 94D8CB31; Wed, 20 May 2026 17:06:27 +0530 (+0530)
+Date: Wed, 20 May 2026 17:06:27 +0530
+From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        jishnu.prakash@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com
+Subject: Re: [PATCH 1/2] dt-bindings: regulator: qcom,usb-vbus-regulator: add
+ qcom,pm4125-vbus-reg
+Message-ID: <20260520113627.mbstqbtdr6hfunwn@hu-kotarake-hyd.qualcomm.com>
+References: <20260520-add_pm4125-vbus-reg-v1-0-f6d15d7dbbe8@oss.qualcomm.com>
+ <20260520-add_pm4125-vbus-reg-v1-1-f6d15d7dbbe8@oss.qualcomm.com>
+ <wobourxqghhmi4htonf2ls24mcaeca7chytmyxihbxokc55cbc@jayo6u2azowq>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5685:EE_|PH8PR12MB7110:EE_
-X-MS-Office365-Filtering-Correlation-Id: a6d35d34-c66a-4dde-c074-08deb663f0c5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|7416014|1800799024|376014|366016|22082099003|18002099003|56012099003|11063799006|4143699003;
-X-Microsoft-Antispam-Message-Info:
-	AyGix35LqH8CUwC8LZsAZumQvMBSUw/v3U5Hc/bvfeAMfiGbVFOCs8NeXYoCihGn7Klz41UwRa4E87ZZ1an67CjVSjrmajiA42ciRhknWpE0HdMTzQ7XqwzO6vGlbgErTwOJHAQVtWda5XN7/Lrb3mu6Rpv+PCwiIATtmt6bJXeUEbkQkivvlLgkYycm8Kb2fzuH3mBXb8WJnHN9rEJhaCAFqH6v3GM8q5yx2j7TaIJLEcvNw1SMC4mQfI08slGEx9D38idNiOl0RGQgghWgI28YoGx0CK7qIXPXq1QhsUerJjXOQJX07iwp7gf7c3QqX6OGLGIcugwqWSnwu+5/h80HVf0AvQWMXgNpLzvdrHexIxIzN+xXDV8oqYs41JwMtclfiI+B30HTHlS7tdMult/3nJRSMqU16uh17FIn7rq3q4ebCnWYNNMKNjw98gsmutqsVkswsZBwCoBEWqJTHN9RXKQKDB59pL4KIxx+D5x3DhJDoEI8PMGJGtAfUDi0b9Ioa2dQ5vTl34zMUtQZKii49M23bAY0iFxHTitRqn9hBJhuaRc9sJMMJft3jhQvM4N2ofWkkars09j3F+7ZL1g4kVfQJrLuUUdRZ+yvv8qEiqqb13KsORv/oj2uwbf17kJDQ+OYzF77i6dMGTr760u+ttHsA98zIfycLNUlJuTCa4PjgcyGaTLbJuN3pA/y
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5685.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(1800799024)(376014)(366016)(22082099003)(18002099003)(56012099003)(11063799006)(4143699003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RC9VLzM0Nk9GNGlIVGxHSDhtTDFobE1lQWJWbzh6U2Vvc2ZJaXQ5NnlGSjVQ?=
- =?utf-8?B?K0RNSElrc3JVSlRabjJIOEdNdDhJU1FYQktmZHZPQzZhSnc5SkZjS1lKOEJi?=
- =?utf-8?B?TzNoWVJhbjlQQlFoR1VSTlJyczY2S1Rsd1drb3kzZU5vTlB3Sk95THJQcER2?=
- =?utf-8?B?QStlbEU1VXRoWVlBVlJwQ1p5d3o5VzNrOENHUERsWERwZURTZmdmcnVtdGVq?=
- =?utf-8?B?RWM2Y3Rna2F4M1M5enoyWDFmMWVDUU9oZEtCM2VLcjIwa0RYREtBVlRMckxS?=
- =?utf-8?B?bUhBN0VLdGIyZE51VFZ2WGVGbXpJdU1KV3ZhRWdkcFBXOEloN2tHSU91ZmZ4?=
- =?utf-8?B?MVJYM1VrN29icTBwZ3JyRnFGUUNDMDQ2OUZJQ25KVGpLQ21OWDN2UHZzVjAx?=
- =?utf-8?B?aFdJZldLMGJqcVEvd1FGZ0FsVlVFQmNQTTIza1hPWkRCZDh2bWZjZWk1Vzlk?=
- =?utf-8?B?TGk0S2Jsd1JmNzgyTWl6Mkl5dktJTVEwc1JKNDdlZTNjL0JrMDJoYjlFWlY0?=
- =?utf-8?B?U09SUER3Q3cyMnZWWXl2RHBUamh4cjlrY2ZlSjF2NE9ZbTFpaFZaejVJU2xQ?=
- =?utf-8?B?NERPL1JPdnVseC94S3FJaHFNNGhCeVQvVkZqVFMyckJsY3BKRnRvOGI4Nkc5?=
- =?utf-8?B?S2JvMTQyYmdlS3F5cDZKeklYcytERmRHcEFrdDhkeE9zSXcrUEUxVkdXcXF1?=
- =?utf-8?B?ODZKenZBTFJhUDlGbm5waEVMUGJrazQrVEZaY1BTeWdVcnNOQW5PWUxERVlw?=
- =?utf-8?B?TEQ1YVBzWEFJemhjOEtlZktDUlRXN3UwbkhjRnM2ZXVQYVJmUVI0SGhHdzNh?=
- =?utf-8?B?UXZ3aWt2cXkvUXdveFQwdVVNdlR5QWNNM3U3bTYrVERoZE14SmJ5N1RidzBU?=
- =?utf-8?B?bXRZRUZnMlY1RjJLd2VUSGlVL0xpRk9jYTdmb0JCUy9RY3p2enY0VWUzYlNG?=
- =?utf-8?B?NWZNazVFeTkvVythby9rcmFGN2FOQVU5UnZyVEdUeWVhR01PZlVacHAyRzdX?=
- =?utf-8?B?RnRVbDZJSU1PQmEzWmFibFByd2ZLOXorMFNWWEpxbXN0U3R4VmdMczQyeU5H?=
- =?utf-8?B?c1I3dG91WTVTUzdOYUFwMENOUFV5RUFjY1Ivc1cwK3R1YWdqOXBoMDdWV1Z2?=
- =?utf-8?B?ZmVHeDg5M0NHOHlkWVNSOVhZR1JnZWZ2UUtweVBhMC9rejRxcExoNWY4SEo2?=
- =?utf-8?B?R1c3NFBFMjNvUzIzcUxlY1E2MFduenhIdzZvSkdqbVpoM2hNeGZUMEEvMDFP?=
- =?utf-8?B?MFRoOG9xczJhRVE4QjE2WlQ2NDBEYWNLTGlvb2lPcVBrVUdVb0N0U1ZWc2l2?=
- =?utf-8?B?dERRQnFvdEpKODJ5SUZNQithV0hEOVpYa3podzgvSUdmT0Z5NXlmNThWY1Ar?=
- =?utf-8?B?S3JTby9Fckk0K3J4eVYwbXIwc0ErR2FJY0VpZDMzM2thN3JnRnpoeWpiY2pJ?=
- =?utf-8?B?TzB4eTZkbFBVOWtrOUxKbGF1SWtVTGFYaUV3L1BoTVRxYkNEZzJwc1NEVkxm?=
- =?utf-8?B?YkZrcFQ0MndFOGVYZmZmK1RucmZ0dFNHS1NQdnlseWNUcW54OXhCQzBqbk5m?=
- =?utf-8?B?QlR3b2loLzJxYW9Xa0w3NEJNZ1I4QVdwL2sweG5zcFp6Um1URm5uUElJMndT?=
- =?utf-8?B?clJJNFF6eForTEdKUkd6ZE43d3AyZGZ6dmpQSndLd2hDT0FMOVBhVDBDamFr?=
- =?utf-8?B?UCs1blVNM3UvWlRnUll1MUw3WUlWeXVUcnl0MERyREtUa1dnRVNEcDJhN2VT?=
- =?utf-8?B?R1lrajZicWJlVXhpUFNDUDZESjBUYWREbWZITW5sSkc5L2xuTkFmUDRwd1lv?=
- =?utf-8?B?Q3Q3QXVIZC9lRkhZNVd2Q1BOSHFkRUZ3ZjlZQXg2aWkwWk0vQ09BdzhKaXd0?=
- =?utf-8?B?QXpVRlNTOThkQ2tUelNDT1g2Rmd1elJjbTl0ZkJaV3VyaEc2dUl5RllEeEhK?=
- =?utf-8?B?dVY0clNkc1BOTDkyaSs3bnppYVY3UGhkbmJhbGdDUW9RRHlUMnNpcE9ucGpB?=
- =?utf-8?B?VXVKcHNSMVJXNUo1U0xTWEJOcTFwZ1JvSTNiRDBYYWZLUm1halplK2htdk5s?=
- =?utf-8?B?N25lWnNQYTRCb1BZR0MyYTJNNFUyaTZBcTBJc080UEprcjl3ZFphMHRDR2s5?=
- =?utf-8?B?SHNUWmRKQklNUUpiMkVpWm9nNFZ1VTFwazZ5ajJZOW9rRENicWN0NStENFps?=
- =?utf-8?B?ZVdQTHBWVEtJS2VmNzhOZEIwdlhRZEJSZ0RXbU0zMkV6ZHpsT1FCVHNENFVw?=
- =?utf-8?B?WnNPZGg4WGU1WjRIUU9tcGxNRm5NV2hyVDFlSDFxZVVEVHlxTlJtVDM0aWJ2?=
- =?utf-8?Q?CqOvdxhsaHzN2yiJAp?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a6d35d34-c66a-4dde-c074-08deb663f0c5
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5685.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2026 11:35:49.3225
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pAPb6mGaJXsSZHHjJpwylIOXoPoXT4sFed/r9hQT3WaEAHUYCm2T/o0R3nW+ur2x
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7110
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[amd.com,quarantine];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <wobourxqghhmi4htonf2ls24mcaeca7chytmyxihbxokc55cbc@jayo6u2azowq>
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-ORIG-GUID: hTFYv9dg0c2zlcN2AoqnMQ_436kw9y1z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDExMiBTYWx0ZWRfX+uuLweIKa9xq
+ /Q5N1ThljmLrSN+Wr1M+xqm4et685lO4JKLvuuY3nDD/GEqzxOUy5l2EeZHFI542OHMMAp2ZUsY
+ Lh7Qv0KDazWJCUNGsOQLiDA0ZRlHe60MFT2GiOhq9L7aUiF9cQfYwyh79Q+GCGShuq2mFTPEzs1
+ H0gRalYgEdMSvFTy31DNrNBVMNUmdnYt3MSSUSNw3pKCpu0QE8Lrf6+f0xALMjaIQhgGqoepODH
+ BzWU8jSCQkqvnwnovjeiek/AcxWibxnE2nIAIJ/85GriMxuvV2vJN/TNEwOOrcOSknF9FIl179A
+ K4mqTKdM5pNirhY/wT0V6HTu66re+Kmn+5H4FCAbzFaL94/ob7SN7IOAMyKtNsLSwLvbRtm1M+y
+ m/S+K7xF+fzrUjd+4R44F1se7kT2RQz9XBf78V2eJm9uDlTGDz0GqSjCPvIfeIPzYw2nRpnrDln
+ gw/G+LUpwPR0d9Hz5iw==
+X-Authority-Analysis: v=2.4 cv=RZigzVtv c=1 sm=1 tr=0 ts=6a0d9cc0 cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
+ a=vsn15EuVot32RTnektwA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: hTFYv9dg0c2zlcN2AoqnMQ_436kw9y1z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-20_02,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605200112
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[amd.com:s=selector1];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	TAGGED_FROM(0.00)[bounces-108724-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,quicinc.com,vger.kernel.org,oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-108725-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,hu-kotarake-hyd.qualcomm.com:mid,qualcomm.com:email,qualcomm.com:dkim];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[amd.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,intel.com,google.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,lists.freedesktop.org,vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+];
+	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[rakesh.kota@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[christian.koenig@amd.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[amd.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,amd.com:email,amd.com:mid,amd.com:dkim,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 190EE58CD94
+	RCVD_COUNT_SEVEN(0.00)[10]
+X-Rspamd-Queue-Id: 50A1458CF67
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 5/20/26 12:16, Thomas Hellström wrote:
-> Use __UNIQUE_ID as done elsewhere in the kernel rather than a
-> hand-rolled __PASTE to craft a unique id.
+On Wed, May 20, 2026 at 12:58:35PM +0300, Dmitry Baryshkov wrote:
+> On Wed, May 20, 2026 at 02:37:11PM +0530, Rakesh Kota wrote:
+> > The pm4125 PMIC uses a different USB VBUS register layout than pm8150b.
+> > It uses a 2-bit VBOOST voltage selector supporting output voltages of
+> > 4.25 V, 4.5 V, 4.75 V and 5.0 V, instead of a current-limit selector.
 > 
-> Also use __maybe_unused rather than (void) to signify that a
-> variable, althrough written to, may not actually be used.
-> 
-> v2:
-> - Move assignment to declaration (Christian)
-> - Declare the retry pointer as void *const.
-> 
-> Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+> Is it only PM4125? What about other PMICs which have the VBUS regulator
+> (e.g. PMI632)?
+>
+Yes, this change is specific to PM4125. I have verified that PM6150,
+PM7250B, and PMI632 all use the same register offsets (0x40, 0x52
+and 0x53) as PM8150B, so no changes are required for those PMICs.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
-
-> ---
->  include/drm/drm_exec.h | 21 ++++++++++++---------
->  1 file changed, 12 insertions(+), 9 deletions(-)
+regards
+Rakesh
+> > 
+> > Move qcom,pm4125-vbus-reg from the pm8150b fallback items list into the
+> > standalone enum since the driver handles it with its own match-data and
+> > register layout.
+> > 
+> > Make regulator-min/max-microamp conditional so they are only required
+> > for current-limit variants (pm8150b, pm6150, pm7250b, pmi632). Add an
+> > if/then condition for qcom,pm4125-vbus-reg requiring regulator-min/
+> > max-microvolt instead, and update the pm4125 example accordingly.
+> > 
+> > Signed-off-by: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> > ---
+> >  .../regulator/qcom,usb-vbus-regulator.yaml         | 50 +++++++++++++++++++---
+> >  1 file changed, 45 insertions(+), 5 deletions(-)
+> > 
 > 
-> diff --git a/include/drm/drm_exec.h b/include/drm/drm_exec.h
-> index dee6ebdbe416..18f84faabbb9 100644
-> --- a/include/drm/drm_exec.h
-> +++ b/include/drm/drm_exec.h
-> @@ -95,6 +95,17 @@ drm_exec_obj(struct drm_exec *exec, unsigned long index)
->  #define drm_exec_for_each_locked_object_reverse(exec, obj)		\
->  	__drm_exec_for_each_locked_object_reverse(exec, obj, __UNIQUE_ID(drm_exec))
->  
-> +/*
-> + * Helper to drm_exec_until_all_locked(). Don't use directly.
-> + *
-> + * Since labels can't be defined local to the loop's body we use a jump pointer
-> + * to make sure that the retry is only used from within the loop's body.
-> + */
-> +#define __drm_exec_until_all_locked(exec, _label)			 \
-> +_label:									 \
-> +	for (void *const __maybe_unused __drm_exec_retry_ptr = &&_label; \
-> +	     drm_exec_cleanup(exec);)
-> +
->  /**
->   * drm_exec_until_all_locked - loop until all GEM objects are locked
->   * @exec: drm_exec object
-> @@ -102,17 +113,9 @@ drm_exec_obj(struct drm_exec *exec, unsigned long index)
->   * Core functionality of the drm_exec object. Loops until all GEM objects are
->   * locked and no more contention exists. At the beginning of the loop it is
->   * guaranteed that no GEM object is locked.
-> - *
-> - * Since labels can't be defined local to the loops body we use a jump pointer
-> - * to make sure that the retry is only used from within the loops body.
->   */
->  #define drm_exec_until_all_locked(exec)					\
-> -__PASTE(__drm_exec_, __LINE__):						\
-> -	for (void *__drm_exec_retry_ptr; ({				\
-> -		__drm_exec_retry_ptr = &&__PASTE(__drm_exec_, __LINE__);\
-> -		(void)__drm_exec_retry_ptr;				\
-> -		drm_exec_cleanup(exec);					\
-> -	});)
-> +	__drm_exec_until_all_locked(exec, __UNIQUE_ID(drm_exec))
->  
->  /**
->   * drm_exec_retry_on_contention - restart the loop to grap all locks
-
+> -- 
+> With best wishes
+> Dmitry
 
