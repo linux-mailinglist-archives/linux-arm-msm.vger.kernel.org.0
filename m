@@ -1,105 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-109040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QNvqNV31Dmq+DgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 14:06:53 +0200
+	id WCA9Dsz0DmqmDQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 14:04:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E1125A486D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 14:06:52 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1CD15A4792
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 14:04:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9F3713011BEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 12:04:03 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 317D03022879
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 12:04:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07A653C8738;
-	Thu, 21 May 2026 12:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0D483C5859;
+	Thu, 21 May 2026 12:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bLoAeiKU";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Dl8rqs27"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lHxflUCe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58493B83E8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 12:04:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A374371D15
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 12:04:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779365042; cv=none; b=ud4qqe4S7UCIvjjTJuX0kECPRXybIFtsGymLqT2OaNn7oUpWDgo7a2UOoJTyKuj4oY3CDaZRtxgCUlw9MLdOzHSfCWH8xkXNlsUNKElNscSSOi22rc9GwQCpkqVjIgReA/hSYUMe94LGxKE8/gJnrKEIU5RTxKtTSzmJ8gDDz5g=
+	t=1779365063; cv=none; b=pyxxafGxDX4HM+y1kYEu5XxVUT22VtmqWhi9lg64eBW97me9/3cXA4LDGe5fVnw+RvDexxKuEDRHyGnNuv6dMgMHSg/v0NdMcIgjwJgzjS8Is2VkxvXMgcswhq4hwYquFSkW8J3SGYzvD+QMHex+km5tsna8+Bft7OUyl+3Kvy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779365042; c=relaxed/simple;
-	bh=vi+ktZKZm9Yy2L+06r4vJsXGCOhQz+Pz0d6iDzYMf8c=;
+	s=arc-20240116; t=1779365063; c=relaxed/simple;
+	bh=sUj3Twmg9sv0IDvSRDz8N2kvdStNX/TLH4+TmHaPjNE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EkU1RWNKfqEkM/K4YNP/KGIjh0jMhEJzg2X2sNWdsmLr0BR2l55IkRfhYgk7Sf2jKTrVKD5UcHyTXK29BzHeZZXYE8RgGEwRcKD0N2BLfdl7wL6njfnF7FLOr//7SV6nqpCFYUExH/oLKVQmvsVSGaKv8ACMZb8YyuAmBir14gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bLoAeiKU; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Dl8rqs27; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64L9A6iU3452608
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 12:04:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YUELNXDXE7Cvv2I02S53zLhzYwfJypzl3RST9hT9jEY=; b=bLoAeiKUbDoKe8FJ
-	mx66EZYJrwXLvJG0xrF3iuWtpbhpCU2xSlwwg1C1t7PAl6EeZZ42pR1Q6TohLfE9
-	XZKtHCeXwVWoxaAWsrzJeiyTCzcGjKU9UYT+bIFcgXVB2SsOzsoN2RhnZ7ISDSfv
-	lmeLcTBTsvwHrO+w9hCzrf7KmazSql2UJmoWvLxdgcBGzOkIthEUc53QnZvqxBv8
-	StPYoDy4qRGViOkV2p+lUfLL0PWlMv9+cM6fHUbTFL7DLkQuREB8B/4QjySX+Ym3
-	mEJiivhJ1HsB14SB/G8Yxq60JoQNoxJhWLz/cC9GtGm4jxhq/Z8lu7gvQIQdBW5C
-	bF9pIA==
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com [209.85.210.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9y1h8q85-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 12:04:00 +0000 (GMT)
-Received: by mail-ot1-f70.google.com with SMTP id 46e09a7af769-7e5f56b8b91so69020a34.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 05:04:00 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=qWDa+1DujBt5/6rbCIBbx3goG0eLQjhNAe96i7d0bdmlf9w38zqqnsBNJdZADPqf9xM7w55p4y0+2w3MKa5a1m49CL5r6nEFZfI/tac9h1MdJpZlhpuAMazmrIZ7JeWOuzrz6C+i/VzmkotZxNysKpgPEPIQFTsVajMEO2Pyj28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lHxflUCe; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-49039a8851fso5637175e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 05:04:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779365040; x=1779969840; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1779365060; x=1779969860; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YUELNXDXE7Cvv2I02S53zLhzYwfJypzl3RST9hT9jEY=;
-        b=Dl8rqs275YeJtR2XsD7aDFxkQbdSnJMioatq6KaGX8xga/PCJed7JvR9MFjnItITcc
-         dJ8ncjYPUYSmXhwMTIZBtvHrbjD9MEnCg49bEAy4nFwxikhQpYjx56bLqc1gdvwWoyE0
-         KrGTVqTF5gI5IkrGkwI4q49Mus0gq7a8suHlAnp0JewBJfFjA6cVepMSKm0tj0TGoPmL
-         xJFvsgN1roM9NHNGiteyFY4b1bwpf9lWTVh3BblQl6lSLhDTsfQdjGswDHOCLIwOav3w
-         BvU/mIBeH2KTSZHVXrMJx74c2GDzHTO5HH7UdatdOt6jNzYLOc0MkgvQGn5QgRlMRv8p
-         ducQ==
+        bh=Kjahf0mvv6U9uz8GUu7it7h6OHA5HQ2HOSOEgZINcYE=;
+        b=lHxflUCeC61k47AfshSEUYR7WBGR1SeMLDN05P3arvCggEdqx6DNzd8ABA8acldvA5
+         qanOp3SYwXl8HRfOdKGfTU+s3tDjYTlVe92h8VeH0E6PGHh5Yaqp6Mh+I+jh4x+Oefq/
+         Tp2jNDPc9q6Jsmbmu5gF1CnGZ25e7ZYWNyvNS83r1I+dAHZiZ1q52qrpWJrfqif14wiU
+         Ai0fd1pNIpZ1WLUjnJgEfzkMQGVaVashLx3/sOuw+D2Up53R5+3wgyjov9hcRtQDzbVQ
+         wNshp2ZZGbu8MJldff+zWxVm+W94t7zvwiq7ThCmKm3h9WZSEMI6f4GcM5nHu/rvwDMi
+         KqGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779365040; x=1779969840;
+        d=1e100.net; s=20251104; t=1779365060; x=1779969860;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YUELNXDXE7Cvv2I02S53zLhzYwfJypzl3RST9hT9jEY=;
-        b=mtwohSLUTt47CMyU+mUeG2bZpM8NO1JWyAUpFi8uyVIFRE59vHEhi/fk5gBv2Grne3
-         9jHF2u11VXaK6QxDcmWoLQe7k/1zQVrXoe1j8o+NB6pnnq59y9rTKU4MorB3ssdGfNPZ
-         Vh77Wfu54xsBKhCEzvlt6MmNZW2+XezzZ0i1Y70D/gjmeT3ZKWm6wzjGXwbYiwIh6zob
-         m+L+q/Wnone7qM7Yy1D3Iq1MwhVb+GeoSOT0arOZjFIJO1qGaXiOV0+fGdPBFHycpRYS
-         I4AfzEHHHlhth5AC9A2kw5q1hrC5PBmDLNBfwrRXFqmjVQKH5Sob/nBPTc15GIY3D68E
-         stYQ==
-X-Forwarded-Encrypted: i=1; AFNElJ91k5mmBqmchjaf5GJ6p/Qj/TuPvmYCy2WJkAvaJoc7umOfBuGDr98okB69oypaNOCdfi4jqrVEkQfttLOx@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCQDRNWp4QEH0DuM7x3gDxaf28rt49tEsKJaZyNxrCwZ0ZUkhN
-	RZb8gPDL8iUcCPicpJIKZ0eLp81b2He7Xf5Re07xjx+flOdhK/rBmBg17UFYml0rxIgzYyi+EEK
-	mT06Bry+1YRGSq6AYZc3dZ0w/fjHMZWxeMMkcZRXW+8r7Kem2/A2gVbi7HdawliNBFQ3L
-X-Gm-Gg: Acq92OEWfSVMCOkzwvM9rkfFOsDarvL4tnS2QPW1hGKFgItihF8VQk3MC6EVetV55qN
-	3nnzjIo1+A4ZCrYZXC/LG5xMcl6P7IX81C5b3nf/ED7U9PqZ9vvI0h6wpsfAC18HDA/EI3J+vVz
-	jB0fNBm6uVeJctoBnhZ8BhMtx2RBdDoiv99dx3xm3muMPDBTBYb0qMTED+i9R6B45DkxGtdouTS
-	6/tKy95Zyro+KK2mXGVIZ6ix66vF0tC5PsO7U2krnqXg44EI/uQoVRWtaP+dC3A61og64zumxOy
-	J0yb5viJwz/oLtOpuE7GjvdwGlezvf+E6bEEbgXHhDKDjtQlohV9lInTVggkbHxjYVU5stlDimU
-	2JPJjO1KA1dVPbyMc0BTqMjyYm3G6uuHvJCFlMLsHEFHppUn+z7vnudV+A0JaWEQZfthdnOtWU9
-	pNQ50=
-X-Received: by 2002:a05:6830:4c0c:b0:7dc:c5e9:b99 with SMTP id 46e09a7af769-7e5eca5c102mr836613a34.7.1779365040016;
-        Thu, 21 May 2026 05:04:00 -0700 (PDT)
-X-Received: by 2002:a05:6830:4c0c:b0:7dc:c5e9:b99 with SMTP id 46e09a7af769-7e5eca5c102mr836593a34.7.1779365039515;
-        Thu, 21 May 2026 05:03:59 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6887e964947sm57293a12.21.2026.05.21.05.03.56
+        bh=Kjahf0mvv6U9uz8GUu7it7h6OHA5HQ2HOSOEgZINcYE=;
+        b=GY8nEbCf1KLnW9KvIlgWcHr0swYsIUU4K8b1T0UNfDjob3qlB13qemEWWyEPDmK2+d
+         06Qy6fDTgpu2rzUnK+IppsczPcvHuOPNtVuwq8yxTH4cRRNrq/WCycEq4xIb5eDriRIJ
+         G7eCX1PPp4g7f0hQUMsN6nvWxWu8veaZpfyATxW9HJVpG9a02/odV7qGZRg4QS0l5ncC
+         qzqHtT/RWJwF8Gc2Ceve8PMGSUzMkecertAb2eYWLgr/1YKl7boKNHjssw8SBLu3RWMn
+         M4UDMYt1edCYmbpCkdsagr80JEiHJBUoR7vjcPQjTkLE45Dzaw0AtaDC7ORo1Ug/vF1A
+         p+Rg==
+X-Forwarded-Encrypted: i=1; AFNElJ8JCsbx/PnrX2j1Q3MOzXhktoMI3Fq3PpnL2gUpanewQjjUbay9dIRMk+HAimopIsUUUJKtDRw8yF3txKBH@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXgyiSmk1Xvvio1gMdRYTzAXtL7SUT7L65vxpJTTRTrgaP+TBk
+	VCh5hSpt5cTp+xSudw+tJf4hgKwsSCO0cj/U5ccWdPKz8PkgCQpFm0mAYzTcKiLSWxI=
+X-Gm-Gg: Acq92OGy4rKD6llJYh0IEHm6i9RwTnEZ42fhH2rGIJddBDvJ5B887rNOGf0P2w5WTJv
+	iPU2QQvLNRA1g6CuuJASu/deoynLc51y/WgKsjhyLyBy4bsmeaKoIeI66ovwZHuS3Q2fQ/8V10u
+	oo348sSpcky+eiY7T5qaR9W+NELnaOFhy+CVc50/RQ0QlWIC1nUrPu5LtPzt6lzOD/zHU8Rw/w+
+	x6e9jHHkzXrFp+wByGpmOkI8ga0V6hW+LbQp0GJTzhJn7Fxcc1TRf8O9ZZRo9Ifn7scAJxqXWzI
+	clb+pCbAR3AZUO3Bgz+oLsBj1MW/a7949CaLw1dTTQIUIQlcJYHZu52OJo9jD2MTD/SLtGi9sLX
+	QVklTzSQJXxBdVIV48X/hxRjPCLn2Fdc+nuvhLyShsZLy1JoMWfP+AxAz1vOLezNdawVI490tEI
+	ud+M0a9hHwFcpmzUBgxeZNYIR4c5e/otFctg==
+X-Received: by 2002:a05:600c:6c8:b0:489:1d74:56d with SMTP id 5b1f17b1804b1-490360c52e4mr22056995e9.29.1779365060197;
+        Thu, 21 May 2026 05:04:20 -0700 (PDT)
+Received: from [192.168.0.35] ([109.76.55.220])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4903c99d807sm25117975e9.5.2026.05.21.05.04.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 May 2026 05:03:57 -0700 (PDT)
-Message-ID: <9da6954f-79ef-4510-b2e8-741d08c04d15@oss.qualcomm.com>
-Date: Thu, 21 May 2026 14:03:55 +0200
+        Thu, 21 May 2026 05:04:19 -0700 (PDT)
+Message-ID: <ac559877-f4f2-48d7-b00c-4cf24fc64489@linaro.org>
+Date: Thu, 21 May 2026 13:04:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,82 +86,213 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] firmware: qcom: scm: instrument SMC call path with
- tracepoints
-To: Yuvaraj Ranganathan <yuvaraj.ranganathan@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: kernel@quicinc.com, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20260506-scm-tracepoints-v1-0-4bc983264014@oss.qualcomm.com>
- <20260506-scm-tracepoints-v1-2-4bc983264014@oss.qualcomm.com>
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: x1-dell-thena: bump linux,cma to
+ 256 MiB
+To: Michael Scott <mike.scott@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org
+Cc: vkoul@kernel.org, neil.armstrong@linaro.org,
+ dmitry.baryshkov@oss.qualcomm.com, wesley.cheng@oss.qualcomm.com,
+ abelvesa@kernel.org, faisal.hassan@oss.qualcomm.com,
+ linux-phy@lists.infradead.org, andersson@kernel.org, konradybcio@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org, val@packett.cool, laurentiu.tudor1@dell.com,
+ alex.vinarskis@gmail.com, linux-kernel@vger.kernel.org
+References: <20260521010935.1333494-1-mike.scott@oss.qualcomm.com>
+ <20260521010935.1333494-5-mike.scott@oss.qualcomm.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260506-scm-tracepoints-v1-2-4bc983264014@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: _1YqI4ZhdHRLnksl-G8zwAOpuWTx3u9s
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDEyMCBTYWx0ZWRfXwPRfJinbrano
- GGDj7GYglIMs0AuP9TMhQdgtWhpv5FKaKW1It4l0mWfNSs251LPFeePU0nT4UHbP2z2BlKaz7St
- 5NWB4Sfb5BJNcxxnT2FxzaqxMGZHRUnot+us7mBI5YrLvBx5v0AcmbPyUpHcYS/3JfQH9+mufFd
- 532+q/zt1zTiJit7cJuVnsFsLSvnrmox2CPvx8LcxIJ/vDz6WkphX8T8a29kOcfldNS6RDQoRIk
- cf6qeUXV8/Q7M4RUht7o0vSOMM1buheu3TnL9IdGTQgOnXkfdAcE0cNKXU+r3fSC8kXMhFpuynS
- nX/bMmNEkclW1AWKSfXuZ+6TlXwsbqYWPsbq/fLOB+Pv4e4WsbzunGDCV2vtFKIoTZDcMmxRkUj
- JF9rzSkx4EWM/2XeoptqSOSSQ194DZpjolc3D/jeJpmBl2P37QVgexnL+I+Ii3eMKa/9q05sxB/
- Xw/9ufB4PbEdOPtbrHQ==
-X-Authority-Analysis: v=2.4 cv=YfyNIQRf c=1 sm=1 tr=0 ts=6a0ef4b0 cx=c_pps
- a=7uPEO8VhqeOX8vTJ3z8K6Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=RlSQ44rCwcSWJ_mFnB8A:9 a=QEXdDO2ut3YA:10
- a=EXS-LbY8YePsIyqnH6vw:22
-X-Proofpoint-GUID: _1YqI4ZhdHRLnksl-G8zwAOpuWTx3u9s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-21_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 suspectscore=0 clxscore=1015 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210120
-X-Spamd-Result: default: False [-2.16 / 15.00];
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20260521010935.1333494-5-mike.scott@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-109040-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FREEMAIL_CC(0.00)[kernel.org,linaro.org,oss.qualcomm.com,lists.infradead.org,vger.kernel.org,packett.cool,dell.com,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_FROM(0.00)[bounces-109041-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
-	RCPT_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_PROHIBIT(0.00)[0.0.0.10:email];
 	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 9E1125A486D
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,linaro.org:mid,linaro.org:dkim,0.0.0.1:email,qualcomm.com:email,ac16000:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: A1CD15A4792
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 5/6/26 12:37 PM, Yuvaraj Ranganathan wrote:
-> Wire the five tracepoints defined in qcom_scm_trace.h into the SMC
-> execution path by including the header with CREATE_TRACE_POINTS.
+On 21/05/2026 02:09, Michael Scott wrote:
+> The 128 MiB linux,cma reserved-memory pool on dell-thena is too small
+> to support the camera pipeline in parallel with the normal Linux
+> desktop. On a freshly-booted system with GNOME running, the typical
+> runtime consumers — msm DRM framebuffers (Wayland triple buffering on
+> the eDP panel), qcom_iris video codec buffers, qcom_camss VFE
+> pre-allocated buffers — already occupy ~100 MiB of the pool, leaving
+> only ~25 MiB free.
 > 
-> Signed-off-by: Yuvaraj Ranganathan <yuvaraj.ranganathan@oss.qualcomm.com>
+> The libcamera "simple" pipeline handler used by /dev/media0 on
+> dell-thena allocates four ABGR8888 frames at 1920×1088 = 32 MiB total.
+> That request fails on the fourth frame:
+> 
+>      ERROR DmaBufAllocator: dma-heap allocation failure for frame-3
+>      ERROR Allocator: Stream is not part of /base/.../camera@10 active configuration
+>      Can't allocate buffers
+>      Failed to start camera session
+> 
+> resulting in gnome-snapshot's "Could not play camera stream" and any
+> other libcamera-mediated app being unable to actually stream.
+> 
+> Bumping linux,cma to 256 MiB (a 0.9% reservation on these laptops'
+> typical 27 GiB RAM) leaves ~150 MiB free at runtime — sufficient for
+> the libcamera buffer set plus headroom for video playback or other
+> CMA-hungry workloads in parallel.
+> 
+> Tested on Dell Latitude 7455: with the 256 MiB pool, CmaFree at
+> GNOME-desktop idle is ~150 MiB, gnome-snapshot streams the OV02E10
+> camera cleanly, and `cam -c 1 --capture=2` succeeds.
+> 
+> The companion board files dell-inspiron-14-plus-7441 and the upstream
+> .dts variants inherit from x1-dell-thena.dtsi, so this changes the
+> pool size for every dell-thena-based laptop in one place.
+> 
+> Signed-off-by: Michael Scott <mike.scott@oss.qualcomm.com>
 > ---
+>   arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+> index d6de4da02dcd..714988a81384 100644
+> --- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+> @@ -167,7 +167,7 @@ led-camera-indicator {
+>   	reserved-memory {
+>   		linux,cma {
+>   			compatible = "shared-dma-pool";
+> -			size = <0x0 0x8000000>;
+> +			size = <0x0 0x10000000>;
+>   			reusable;
+>   			linux,cma-default;
+>   		};
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+How old is your version of libcamera ?
 
-Konrad
+With CONFIG_UDMA=y you don't need a contiguous memory area at all and 
+you will get juicy and delicious GPUISP.
+
+Instead of allocating in the kernel just use a better version of libcamera
+
+┌─[deckard@inspiron14p-linux] - [~/Development/libcamera] - [Thu May 21, 
+13:03]
+└─[$] <git:(0.7.0-multipass-v0*)> zcat /proc/config.gz | grep UDMA
+CONFIG_UDMABUF=y
+┌─[deckard@inspiron14p-linux] - [~/Development/libcamera] - [Thu May 21, 
+13:03]
+└─[$] <git:(0.7.0-multipass-v0*)> cam -v
+libcamera version v0.7.1
+┌─[deckard@inspiron14p-linux] - [~/Development/libcamera] - [Thu May 21, 
+13:03]
+└─[$] <git:(0.7.0-multipass-v0*)> qcam
+[68:50:10.493478857] [438859]  INFO Camera camera_manager.cpp:340 
+libcamera v0.7.1
+[68:50:10.511134091] [438863] ERROR V4L2 v4l2_subdevice.cpp:1192 
+'ov02e10 10-0010': Unable to get rectangle 2 on pad 0/0: Inappropriate 
+ioctl for device
+[68:50:10.511201590] [438863]  WARN CameraSensor 
+camera_sensor_legacy.cpp:402 'ov02e10 10-0010': The PixelArraySize 
+property has been defaulted to 1928x1088
+[68:50:10.511206069] [438863] ERROR V4L2 v4l2_subdevice.cpp:1192 
+'ov02e10 10-0010': Unable to get rectangle 1 on pad 0/0: Inappropriate 
+ioctl for device
+[68:50:10.511209559] [438863]  WARN CameraSensor 
+camera_sensor_legacy.cpp:413 'ov02e10 10-0010': The 
+PixelArrayActiveAreas property has been defaulted to (0, 0)/1928x1088
+[68:50:10.511213778] [438863] ERROR V4L2 v4l2_subdevice.cpp:1192 
+'ov02e10 10-0010': Unable to get rectangle 0 on pad 0/0: Inappropriate 
+ioctl for device
+[68:50:10.511216590] [438863]  WARN CameraSensor 
+camera_sensor_legacy.cpp:421 'ov02e10 10-0010': Failed to retrieve the 
+sensor crop rectangle
+[68:50:10.511219559] [438863]  WARN CameraSensor 
+camera_sensor_legacy.cpp:427 'ov02e10 10-0010': The sensor kernel driver 
+needs to be fixed
+[68:50:10.511221746] [438863]  WARN CameraSensor 
+camera_sensor_legacy.cpp:429 'ov02e10 10-0010': See 
+Documentation/sensor_driver_requirements.rst in the libcamera sources 
+for more information
+[68:50:10.511327474] [438863]  WARN CameraSensorProperties 
+camera_sensor_properties.cpp:538 No static properties available for 
+'ov02e10'
+[68:50:10.511330599] [438863]  WARN CameraSensorProperties 
+camera_sensor_properties.cpp:540 Please consider updating the camera 
+sensor properties database
+[68:50:10.511334089] [438863]  WARN CameraSensor 
+camera_sensor_legacy.cpp:617 'ov02e10 10-0010': Rotation control not 
+available, default to 0 degrees
+[68:50:10.511340912] [438863]  WARN CameraSensor 
+camera_sensor_legacy.cpp:502 'ov02e10 10-0010': No sensor delays found 
+in static properties. Assuming unverified defaults.
+[68:50:10.512362985] [438863]  WARN IPAProxy ipa_proxy.cpp:196 
+Configuration file 'ov02e10.yaml' not found for IPA module 'simple', 
+falling back to '/usr/share/libcamera/ipa/simple/uncalibrated.yaml'
+[68:50:10.512372828] [438863] ERROR V4L2 v4l2_subdevice.cpp:1192 
+'ov02e10 10-0010': Unable to get rectangle 0 on pad 0/0: Inappropriate 
+ioctl for device
+[68:50:10.512377464] [438863]  WARN CameraSensor 
+camera_sensor_legacy.cpp:881 'ov02e10 10-0010': The analogue crop 
+rectangle has been defaulted to the active area size
+[68:50:10.512386578] [438863]  WARN IPASoft soft_simple.cpp:104 IPASoft: 
+Failed to create camera sensor helper for ov02e10
+[68:50:10.512505275] [438863]  INFO Camera camera_manager.cpp:223 Adding 
+camera '/base/soc@0/cci@ac16000/i2c-bus@1/camera@10' for pipeline 
+handler simple
+[68:50:10.548026157] [438859]  INFO Camera camera.cpp:1216 configuring 
+streams: (0) 1920x1088-ABGR8888/sRGB
+[68:50:10.548323081] [438863]  INFO IPASoft soft_simple.cpp:258 IPASoft: 
+Exposure 1-2242, gain 16-248 (1)
+[68:50:10.548402247] [438863]  INFO SoftwareIsp software_isp.cpp:278 
+Input 1928x1088-GRBG-10-CSI2P stride 2416
+Zero-copy enabled
+[68:50:10.636862424] [438866]  INFO eGL egl.cpp:288 EGL: EGL_VERSION: 1.5
+[68:50:10.636899299] [438866]  INFO eGL egl.cpp:289 EGL: EGL_VENDOR: 
+Mesa Project
+[68:50:10.636902112] [438866]  INFO eGL egl.cpp:290 EGL: 
+EGL_CLIENT_APIS: OpenGL OpenGL_ES
+[68:50:10.636904768] [438866]  INFO eGL egl.cpp:291 EGL: EGL_EXTENSIONS: 
+EGL_ANDROID_blob_cache EGL_ANDROID_native_fence_sync 
+EGL_EXT_config_select_group EGL_EXT_create_context_robustness 
+EGL_EXT_image_dma_buf_import EGL_EXT_image_dma_buf_import_modifiers 
+EGL_EXT_query_reset_notification_strategy EGL_EXT_surface_compression 
+EGL_IMG_context_priority EGL_KHR_cl_event2 EGL_KHR_config_attribs 
+EGL_KHR_context_flush_control EGL_KHR_create_context 
+EGL_KHR_create_context_no_error EGL_KHR_fence_sync 
+EGL_KHR_get_all_proc_addresses EGL_KHR_gl_colorspace 
+EGL_KHR_gl_renderbuffer_image EGL_KHR_gl_texture_2D_image 
+EGL_KHR_gl_texture_3D_image EGL_KHR_gl_texture_cubemap_image 
+EGL_KHR_image_base EGL_KHR_no_config_context EGL_KHR_reusable_sync 
+EGL_KHR_surfaceless_context EGL_EXT_pixel_format_float EGL_KHR_wait_sync 
+EGL_MESA_configless_context EGL_MESA_gl_interop 
+EGL_MESA_image_dma_buf_export EGL_MESA_query_driver 
+EGL_MESA_x11_native_visual_id EGL_NV_context_priority_realtime
+[68:50:10.643064652] [438866]  INFO eGL egl.cpp:332 EGL: GL_VERSION: 
+OpenGL ES 3.2 Mesa 26.0.6-arch1.1
+[68:50:12.667202273] [438866]  INFO Benchmark benchmark.cpp:89 Debayer 
+processed 30 frames in 228802us, 7626 us/frame
+┌─[deckard@inspiron14p-linux] - [~/Development/libcamera] - [Thu May 21, 
+13:03]
+└─[$] <git:(0.7.0-multipass-v0*)>
 
