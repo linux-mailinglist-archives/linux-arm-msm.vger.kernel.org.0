@@ -1,105 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-109112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WE0nBkcgD2pSGAYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 17:09:59 +0200
+	id eHI1K4wnD2paGgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 17:41:00 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9DA45A7FC9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 17:09:58 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 644A15A8856
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 17:40:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CB38331CC911
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 14:07:40 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 026B63145E21
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 14:49:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D98C93DCDAA;
-	Thu, 21 May 2026 14:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 123B7363C6B;
+	Thu, 21 May 2026 14:46:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DZb3c1U4";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XDQ08mDe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="obldQwLy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FE03D7D7B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 14:06:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F9736492A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 14:46:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779372395; cv=none; b=H7ptnMU7cx1SfMu3sILwjlDzfxeQlpvVs0u5XNO7lhSMsXGqJOifrb4M+ggY4gBGL0Z4IGl5cIljIw5kWjI3/B1xInh5+N91JkVBYQV0RjjEat9SR63a08hQHoLWd0NPwWoZsyPxmD8zvM2sptHnRHLg8oKc3qKZKBBENpD8EoA=
+	t=1779374801; cv=none; b=vGkS8zsJSl1NrGRKyc6SFTDAzfZWHBmKYIxBLPY8LLGbpjv/Jvrrs755duoDLnZdR635/F34Zp4Livw3Uaej79kBBzq9tutb0xs09RC5mgnnJYbcBp8eDRae+vABc7GJCS6eme5cJTp3xP8lyO+Qayx1j6Y0rdx/5O4gdVkdo0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779372395; c=relaxed/simple;
-	bh=2fruTuJGgso+AVSjN86SFOWYtIxEi2oXmlzdSiu8LiQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cvXIuUuLjyithXgfsls9A2GTdOH+Ee7xvE9tRQvRxz4aFrGmzlnqakwRnuOA+cgCa0h1rauDofS0L5pQxoGANTWOoRn/EEzLm0q0qxpMCIUgMok3iBzUg09RwLsS1brCQL4y05ADHHpEJPh9KukXViuhrgehqCgMwWp7fdqsVcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DZb3c1U4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XDQ08mDe; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64L99jGR3527290
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 14:06:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	c4wgPZzl341OGf2dUgGOsYttbVFxmjqeXYFCtkA02/8=; b=DZb3c1U4hANrkUez
-	MWm5LxJ7zfcX6bniI46n54ufgbPmzvvoR52OhokQlOP1Qkq2MIcvAg/j4b3itzPS
-	d7YoJmcMb/RvrRwDWtAmIcrOCRiNB/ehC/1zaHlXQa0tA0498pLdSr/jOhpiLzWo
-	+sz9PLV9/43EZ0TUq1csNxUlbhcPdOSbK2ejTnDyTOq+2Fh6KnqHjiA/SjQ7H/mb
-	6nCu1bhl+S+RVkw1fFGJhqbPYgtGmdyUrYcH1ycoh1GgaQUkx1HyLOh/3atyDztN
-	bMtkzAbvEfGVqWs7AYpbSsfFtbRZpvS8Eau2IfPSmsxN+zoszwbz4RxfKepZGhlD
-	CeGkxg==
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com [209.85.128.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9vhbhxx7-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 14:06:32 +0000 (GMT)
-Received: by mail-yw1-f199.google.com with SMTP id 00721157ae682-7bd5c9e2e4aso63521617b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 07:06:32 -0700 (PDT)
+	s=arc-20240116; t=1779374801; c=relaxed/simple;
+	bh=9/4X222Ffhg6qxLQzzfx1T7bWcnktGM6AwovaxbqqjY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=giKBJgjaQveAV8qoVo3hcXgWmQldItF0rTfszoymPh/zkLBcMH24i/kQWreZL8nYg5pUmVwNAD9hgB7x/C7bs8J119hiMmkGItk8hOJAPFGvZFyKKQlKvPoGa6Fm5yrOY92d0QijVXASdZVd5Ynfg9XthqtOJjFuHVsU3yxpwmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=obldQwLy; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-368f25ff4c4so3284220a91.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 07:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779372392; x=1779977192; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=c4wgPZzl341OGf2dUgGOsYttbVFxmjqeXYFCtkA02/8=;
-        b=XDQ08mDesHFURKb/KLTJw9D0fsLKcheWKC5NCgUzswOJX7PB7offQsmhUDWF2hOdkg
-         zZoLHifLXPCUJaNDuzCn94Mqjw4FOmovzBxcnwe0iIn2zMDthNK33sRi/EjPdyDyGinT
-         NsFuXuTZYN+RcExp89J5TQz3pQWEX09q4a1ZlKmRX3udispAV+Uguo7qaPmZU7duunAL
-         yhOuqGrSfWWycdIwTspCAKtKoll7S5sLkGYJoekkY+CvwINq67KYzxMszE6dS3nUgd2k
-         mxRRKT0u6hhWEhzpeh7OP6kXp/LmXeBccD8hKgW+JigNhYCATqve+37lHn9zuh0bfeqt
-         vMoQ==
+        d=linaro.org; s=google; t=1779374799; x=1779979599; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MYcMfa9UmKpbrcq2eKdzXRn9iD3DzK0oC+yU6GOGJbQ=;
+        b=obldQwLy9++pGZEkvq9vCp1fG8Kv+fEuZeAc+QCto1FCEUsNh1p/Z3DLcx/usDJeIE
+         xQ5cWbuJGU8jgwNXyuzSNlBBfFUwYLSRVbg4k6ZYz1JnIbDOnfZaOko5o1FDIzBwFVmm
+         513nvDI4eKKPNerIEs4YCx5OEoQ0yFKiL11Mi6eD0d65yIXgpMPTmSE9JWMlgWRYK0/x
+         mmhITp17sDNh64Hl36a9mbjMoqqwrZ90qbblpWjkbMi1Tg6f2gcVwH+lFgx5Wi6nlBKA
+         T/urfcUZyLHBUAI9Kb5iqaJ+LBdp2BeyqmcUkXBXjrbqIavp7ksomSdPxl3BcCvfrobZ
+         odAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779372392; x=1779977192;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=c4wgPZzl341OGf2dUgGOsYttbVFxmjqeXYFCtkA02/8=;
-        b=hxqjLeSBUPQc2rhuItPTDvw1c+qzN2EYR7OHB+0sSr6/Ug6IycKq/hDXYYp5v+Up5t
-         +Svz13c6KN7wUCs+QTpbSYaU3cYOmXpmgT1kydg89pEFMlKBfN8e0PE99bFVhVm0n3Wt
-         pMVJ0+8aZ/NB6UY8Q2lh1Lb8KcM4fgosP7cGB8rMNFCS19dHJ7aZAaQmsJTOKk20PcRh
-         t3WmRFN4B9N0u3fcetHUCFLDz3e7H+9cAQmbJGlmeRbPCHPbSEk2E33tHVcbeMxoh9ee
-         XXxyK56+LSMbGn+iWT31WMp0dz8zX/6QWtW7UXk7LUrGHKHphfouc9GY32oxE821pGnh
-         maZA==
-X-Forwarded-Encrypted: i=1; AFNElJ99Cc90dGW7adpXxu5W8fu44E2Ndra61Ji90U9a8hyMdDjuUSxr0xWcs6Nj8FOsKEB5a+6TccVYZgLZKzeb@vger.kernel.org
-X-Gm-Message-State: AOJu0YztdGQTNTvzVmO4y66ABp0zFUFlc6uIBkJr86WJJCfdBhWQIAHr
-	e69LXzotkRZcW0DtF2otJjOq/XzPbYc2HDQOavfdDnKORCcTYnPoDizr+LgaPCEpfK+3CXOEi1g
-	o/cw9tV7nHd+sJHGyJTfoa8AtdafvHn/JAacSnkm/TYY5Cy4PQF+kTifrLahanBDf4yDV
-X-Gm-Gg: Acq92OGAppMijZy3HWww3INfr8QLE6jtdhnVtfEUusYBIK0/8V69nMzFgt6/s7CofI7
-	awvm7phb67lAdwDiIMMAl062j8JePml4ecLzh+ZLMAAE1FEyXfr6/uVrgQGOzhRRa7k3rqvflKn
-	o7tD6bVxSWkmBk3vOLtAVuebuuB5IO360BxEV0OYqtkCRjnJhNeS622N9C+l5I91q+Wa3DbB++U
-	O7x9fnN6Jyifo86CbNgc7w0V9dYJ7grR4CWSm0fJ8sgyyyQsXyz7Ap5P+l9fc9dO1BEyZmq/uIR
-	s0yupIguafJ5Ppd1WHpR68lj9EBUNfhUopEXW49HErMgKqtzjzjgbf4GTs1UJ/JjouxYh2eM9g7
-	WZZU9GuPQ1PkPcA14KRtzO53PbKDCdCCgEZTIHxrHCFg0JR4j6czI
-X-Received: by 2002:a05:690c:6213:b0:7cf:d9bc:808b with SMTP id 00721157ae682-7d20c940a74mr29415847b3.23.1779372391661;
-        Thu, 21 May 2026 07:06:31 -0700 (PDT)
-X-Received: by 2002:a05:690c:6213:b0:7cf:d9bc:808b with SMTP id 00721157ae682-7d20c940a74mr29415057b3.23.1779372391070;
-        Thu, 21 May 2026 07:06:31 -0700 (PDT)
-Received: from hu-imrashai-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7d2cab7a5f9sm2920677b3.39.2026.05.21.07.06.25
+        d=1e100.net; s=20251104; t=1779374799; x=1779979599;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MYcMfa9UmKpbrcq2eKdzXRn9iD3DzK0oC+yU6GOGJbQ=;
+        b=HUlWXNBRW3IyaLv3JVVhLlVogQhl6+CL70zIV0Rg4axCETx7YLM0OtSYEwt9d2lq9O
+         +d6vivk8tT80EZJOQM5bHf1h5Z0a7IIDzSyGpSPas4AGDC68Euwt591ha5Eb2WDLIGA8
+         rIep+ml6d38dvJowxOr1/RsIWHUf/MFmdmW8tgFSWT1aVMuQcrdEaO1GRa/mpAo1k5rp
+         RAQo5cPiSQEkeSqDYem5/xsIfiR6KOrdCi+Qbl5pT6yyK31Aog43XOKtAgSrg/b5t+hp
+         i8Uh/iVCKifr0PdlCvUqKFuCpnAePXB14bdm48NwWzW2l4LkVJHBftw/ClaWgRJFkLt3
+         4vfQ==
+X-Gm-Message-State: AOJu0YwRDbnF7f7uhdmTV1QfLw/MIdPWVhTI2ID89DCfmMbrDtKj9lTK
+	kVUeGwUFO7LtwLG5Dt9LNgwVoOyWcpe1luTTgrrDlZ2z5aARWy/n4Ea/DFaMzb5mWo8=
+X-Gm-Gg: Acq92OGC2nORbnLJRAXzOvr2fud2Cm6GdpQk05eqXc+2bmiKH1HHH9pM3g+4hUw/VXZ
+	imXtg1PZZlD0xkiw6Bjj6vooq75VMLYtkEhZD8uXHi32MestTOUqaGp6yyr8ITi9YEV2ZHM/oQz
+	bhuRLxXZxUCFjkftGNUPpxdYgDFlXV2bK/BBAxpgd4lM2TOB6Q5xfDbL5NocvPjltVE0Jx7jejx
+	vDnY6/tMhwZAsqT4YRMUVPOOTKr1gjI7KWRn/gjrAZfUDxRQrEpzxWe0ImumTlZ9XZDCueS1XqW
+	VwKvrQRfyIGpTbwiBdzgq/DdMwJG659KockCiFbhoiEeN/wbybszbPsVrtBsOVuwhbjE1M8j4ja
+	9NZZg3w7OFqchDjZCN7iJmLg48bi9moG7Tf+A5vBi/JI9IanM2GwwD8AonPiJSWSMHNaDFmZdcA
+	txttLl
+X-Received: by 2002:a17:90b:578e:b0:368:6a6e:94dd with SMTP id 98e67ed59e1d1-36a4577cf96mr3442038a91.24.1779374798897;
+        Thu, 21 May 2026 07:46:38 -0700 (PDT)
+Received: from [127.0.1.1] ([2a11:3:200::109e])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a5bff3ef3sm476527a91.4.2026.05.21.07.46.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2026 07:06:30 -0700 (PDT)
-From: Imran Shaik <imran.shaik@oss.qualcomm.com>
-Date: Thu, 21 May 2026 19:36:05 +0530
-Subject: [PATCH v3 2/2] cpufreq: qcom: Add cpufreq scaling support for
- Qualcomm Shikra SoC
+        Thu, 21 May 2026 07:46:38 -0700 (PDT)
+From: Jun Nie <jun.nie@linaro.org>
+Subject: [PATCH v4 0/5] Add support to 2 panels in bonded-DSI mode
+Date: Thu, 21 May 2026 22:46:02 +0800
+Message-Id: <20260521-sm8650-7-1-bonded-dsi-v4-0-a4dd5e0850f1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,175 +85,117 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260521-shikra-cpufreq-scaling-v3-2-883c13d1e514@oss.qualcomm.com>
-References: <20260521-shikra-cpufreq-scaling-v3-0-883c13d1e514@oss.qualcomm.com>
-In-Reply-To: <20260521-shikra-cpufreq-scaling-v3-0-883c13d1e514@oss.qualcomm.com>
-To: "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
-        Taniya Das <taniya.das@oss.qualcomm.com>,
-        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Imran Shaik <imran.shaik@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDE0MiBTYWx0ZWRfX1BkY/q7Ku7fv
- UZafLm7qZ5RAT+WvXRtEULIUWrhNF1eRLg+psNpo09ECjPXu1Ohxm7sG0lCxkPvdRTrltLtBJEX
- 6WkdVARiNy7FXAtVgi+cio/mzFfKkxRuk2t/d/oHFXHIWnrWgKs/G4OBiG4MukuuFhX0WoNNOd/
- LDUXRBNMvBtoJx8ZDOYUBoy9SHCDa7lS1x+Jk6PeEwaFmTC5rcWUwmtUvgmxtmss51L/NyNvqR2
- /FVAegDAb9dUoIQWPwQjLyNjw//xS4GsFPEFvmYgGVYmXEGFG64TRS7dqGK3jriyUjuNYIccCjd
- pmi/2ycsXAc3PkUZTVgBvOaouMwXSKBKUPCknOQ5wXvnZzg23cIMeICq+wlvZJYnHbZa8g2uzzG
- qKhddjlz+MK4rJyFJUfqaAQb4b8tGI0G6ucaCXoZ74Ji8S+n4SLPCfAwclwhR+cwh42ZH1wXaWc
- hnDLeiZURweX9H6HAcw==
-X-Authority-Analysis: v=2.4 cv=GYAnWwXL c=1 sm=1 tr=0 ts=6a0f1168 cx=c_pps
- a=72HoHk1woDtn7btP4rdmlg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=8xPgF8R1Jm-cxLKBqHoA:9 a=QEXdDO2ut3YA:10
- a=kA6IBgd4cpdPkAWqgNAz:22
-X-Proofpoint-GUID: liyWNktXmCFWvChG3DsH-p4mHENB2QDA
-X-Proofpoint-ORIG-GUID: liyWNktXmCFWvChG3DsH-p4mHENB2QDA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-21_02,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 bulkscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210142
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-B4-Tracking: v=1; b=H4sIAKoaD2oC/x3MQQqEMAxA0atI1gZqmTYyVxEXOknHLKxDAyIU7
+ 26Z5Vv8X8GkqBi8uwpFTjU9csOr7+CzLfkrqNwM3vnogh/Q9jEGh4QDrkdmYWRTpIU4rORSHAl
+ a+yuS9Pp/p/m+HxErmS1nAAAA
+To: Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, Jun Nie <jun.nie@linaro.org>, 
+ Jonathan Marek <jonathan@marek.ca>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779374785; l=2436;
+ i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
+ bh=9/4X222Ffhg6qxLQzzfx1T7bWcnktGM6AwovaxbqqjY=;
+ b=/WKxz3iXOXS5uf1GNcLWawLpDSfY6swFLXN24AUeDm+crBP+skomIhxxoU8jLwoiGj3q7hP1k
+ OgvdCnEyzLnB6puoNidZaS2wb/hzD24i+mXd4X9wALv1DEvag78eMwX
+X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
+ pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	TAGGED_FROM(0.00)[bounces-109112-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-109113-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de,linaro.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[imran.shaik@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[jun.nie@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: A9DA45A7FC9
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,linaro.org:email,linaro.org:mid,linaro.org:dkim]
+X-Rspamd-Queue-Id: 644A15A8856
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Taniya Das <taniya.das@oss.qualcomm.com>
+The 2 DSI interfaces may be connected to 2 independent panels in bonded-DSI
+mode. Horizontal timing and DSC configuration are adjusted per individual
+panel in DSI host side. Support to multiple slice per packet is added for
+the device setup to test the usage case. A panel driver is included as an
+use case example.
 
-The Qualcomm Shikra cpufreq hardware is functionally identical to EPSS,
-but supports only up to 12 frequency lookup table (LUT) entries. When all
-12 entries are populated, the existing repetitive LUT entry check may read
-beyond valid entries and expose incorrect frequencies. Hence, introduce
-shikra_epss_soc_data that reuses EPSS configuration with appropriate LUT
-entries limit.
+Changes vs v3:
+- A panel driver is added as an use case example.
+- Move dsc_slice_per_pkt to struct drm_dsc_config.
+- Polish commit messages.
+- Link to v3: https://lore.kernel.org/all/20250924-dsi-dual-panel-upstream-v3-0-6927284f1098@linaro.org
 
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
+Changes vs v2:
+- Polish commit message to describe usage case and requirements to
+  panel driver.
+- Remove changes in device tree and add dual_panel flag in mipi_dsi_device
+  to pass information from panel to dsi host.
+- Drop the register programming to DSI_VBIF_CTRL, as no issue is seen
+  in latest test.
+- Link to v2: https://lore.kernel.org/r/20250220-dual-dsi-v2-0-6c0038d5a2ef@linaro.org
+
+Change vs v1:
+- Add device tree binding for dual panel case in handling frame width for
+  DSC to avoid breaking existing dual-DSI case.
+- Leverage Marijn's patch to configure proper slice per interface in
+  dsi_update_dsc_timing().
+- Polish commit comments.
+- Link to v1: https://lore.kernel.org/all/20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org/
+
+Signed-off-by: Jun Nie <jun.nie@linaro.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+Jun Nie (5):
+      drm/msm/dsi: support DSC configurations with slice_per_pkt > 1
+      drm/mipi-dsi: Add flag to support dual-panel configurations
+      drm/msm/dsi: Support dual panel use case with single CRTC
+      dt-bindings: display: Add Synaptics R63455 panel support
+      drm/panel: Add driver for Synaptics R63455 DSI panel
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index ea9a20d27b8fdceb9341ee53e5fa27b7a6d92483..3d5a865fb8a35e112cb4d040fb519e2c122a91dc 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-  * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #include <linux/bitfield.h>
-@@ -40,6 +41,7 @@ struct qcom_cpufreq_soc_data {
- 	u32 reg_intr_clr;
- 	u32 reg_current_vote;
- 	u32 reg_perf_state;
-+	u32 lut_max_entries;
- 	u8 lut_row_size;
- };
- 
-@@ -156,7 +158,7 @@ static unsigned int qcom_cpufreq_get_freq(struct cpufreq_policy *policy)
- 	soc_data = qcom_cpufreq.soc_data;
- 
- 	index = readl_relaxed(data->base + soc_data->reg_perf_state);
--	index = min(index, LUT_MAX_ENTRIES - 1);
-+	index = min(index, soc_data->lut_max_entries - 1);
- 
- 	return policy->freq_table[index].frequency;
- }
-@@ -211,7 +213,7 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
- 	struct qcom_cpufreq_data *drv_data = policy->driver_data;
- 	const struct qcom_cpufreq_soc_data *soc_data = qcom_cpufreq.soc_data;
- 
--	table = kzalloc_objs(*table, LUT_MAX_ENTRIES + 1);
-+	table = kzalloc_objs(*table, soc_data->lut_max_entries + 1);
- 	if (!table)
- 		return -ENOMEM;
- 
-@@ -236,7 +238,7 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
- 		icc_scaling_enabled = false;
- 	}
- 
--	for (i = 0; i < LUT_MAX_ENTRIES; i++) {
-+	for (i = 0; i < soc_data->lut_max_entries; i++) {
- 		data = readl_relaxed(drv_data->base + soc_data->reg_freq_lut +
- 				      i * soc_data->lut_row_size);
- 		src = FIELD_GET(LUT_SRC, data);
-@@ -405,6 +407,7 @@ static const struct qcom_cpufreq_soc_data qcom_soc_data = {
- 	.reg_current_vote = 0x704,
- 	.reg_perf_state = 0x920,
- 	.lut_row_size = 32,
-+	.lut_max_entries = LUT_MAX_ENTRIES,
- };
- 
- static const struct qcom_cpufreq_soc_data epss_soc_data = {
-@@ -416,11 +419,25 @@ static const struct qcom_cpufreq_soc_data epss_soc_data = {
- 	.reg_intr_clr = 0x308,
- 	.reg_perf_state = 0x320,
- 	.lut_row_size = 4,
-+	.lut_max_entries = LUT_MAX_ENTRIES,
-+};
-+
-+static const struct qcom_cpufreq_soc_data shikra_epss_soc_data = {
-+	.reg_enable = 0x0,
-+	.reg_domain_state = 0x20,
-+	.reg_dcvs_ctrl = 0xb0,
-+	.reg_freq_lut = 0x100,
-+	.reg_volt_lut = 0x200,
-+	.reg_intr_clr = 0x308,
-+	.reg_perf_state = 0x320,
-+	.lut_row_size = 4,
-+	.lut_max_entries = 12,
- };
- 
- static const struct of_device_id qcom_cpufreq_hw_match[] = {
- 	{ .compatible = "qcom,cpufreq-hw", .data = &qcom_soc_data },
- 	{ .compatible = "qcom,cpufreq-epss", .data = &epss_soc_data },
-+	{ .compatible = "qcom,shikra-epss", .data = &shikra_epss_soc_data },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, qcom_cpufreq_hw_match);
+ .../bindings/display/panel/synaptics,r63455.yaml   | 125 ++++
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 |  33 +-
+ drivers/gpu/drm/panel/Kconfig                      |   9 +
+ drivers/gpu/drm/panel/Makefile                     |   1 +
+ drivers/gpu/drm/panel/panel-synaptics-r63455.c     | 631 +++++++++++++++++++++
+ include/drm/display/drm_dsc.h                      |   7 +
+ include/drm/drm_mipi_dsi.h                         |   2 +
+ 7 files changed, 792 insertions(+), 16 deletions(-)
+---
+base-commit: 6654f8f33aa6229a90d4401519a62a2bf96cb851
+change-id: 20260521-sm8650-7-1-bonded-dsi-7a7d5b70f687
 
+Best regards,
 -- 
-2.34.1
+Jun Nie <jun.nie@linaro.org>
 
 
