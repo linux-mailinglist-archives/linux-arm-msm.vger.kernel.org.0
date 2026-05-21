@@ -1,86 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-108929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cD6DMi+yDmosBQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 09:20:15 +0200
+	id sB1mCJCyDmosBQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 09:21:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48DB85A002D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 09:20:15 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70E615A009F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 09:21:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 873F3303BB9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 07:18:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 353993014959
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 07:20:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 388F7335BBB;
-	Thu, 21 May 2026 07:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71D723630A5;
+	Thu, 21 May 2026 07:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uXdzFnB/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQ9+cjtw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9247A349B0D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 07:18:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DA130DEB2;
+	Thu, 21 May 2026 07:20:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779347936; cv=none; b=GAp2L9ZeYZoUkSl9cBmM9yFtimlQBiAFHzGlUorx20PgOfW9Dg450RiDHptzlxWzQQKTXRttNizFqGzGrs1qIxmRmckL53hxSLDnKJ09Za4ujEUicZr2oLr1uDeouwDL1CJOWV4yn5qFFnhHxnH27UfGPBVcrS5Kbr6TX6A/IKs=
+	t=1779348050; cv=none; b=psOcr1caEeP9F+u9lXuG2zBbt9se7/+tjvXeVMgo5y+IC1iOR85FpwU9MAfUAWOPyGqJRUP1ZUbpp3rfKREqvzyq1vYW5lx9tngw0JDNEx6nICYgd+OBpiUBQ5LQMUHAXI800ie4z+iY3Ou/TLEhhr+xtaPcEeYL78/k9rS//5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779347936; c=relaxed/simple;
-	bh=ENWaSHBZoZ9w5cKwcFrQT87wjVPfmFeBFdI2+RaeD74=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=KIpIHSmH0/1On3SUAoIqfudI2FuEaLDXXJxA5hZZOUGnk1BLc6xQp34/gjnWohQzTtIJM/2mGx6Ebd6nxyYuheCAS4or8WOZjW4/k0QBu5r2RYmQTzLR0GkwAxUSkV9Eoj+Lx0JJZI8gZDVd2IeR1Dq7Gkf6EC798fvD6T51CNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uXdzFnB/; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-45d96d21e82so3326919f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 00:18:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1779347933; x=1779952733; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bETVK/qL+P6n+cslnrRdLDkDC8prspZnCCpH5RkWKN0=;
-        b=uXdzFnB/PEbkb08zbsX4PkC1McJfoogR2AIPeyu13Lqtw6VNGaoBPxZNt8i0YsvcK8
-         lXL7qLKimsNdS/NbS7RLsl4gQTCGRiEgbBOB/38Pc61ZXN7l8FEhZmmQZ1yZmlgakCMX
-         7szvRWgw9/k+ae+sVTtWnktCZSCjCS0kOrmvd0eIMyVkaJq9NIttQ6KhVUyX/otJcoE/
-         jm4fSywOuiIyCmlhtVN20bp2fzQXjSJhmgjd7QFl6L9WP83AIfciXZEMvohP28Z3ev+9
-         xvD403TZEliktzaNvy+2frLaP8me03DUhc9q0WzfuOeOw+oO4LyKZJT6PZEqDU/k/bJH
-         jUMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779347933; x=1779952733;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bETVK/qL+P6n+cslnrRdLDkDC8prspZnCCpH5RkWKN0=;
-        b=TAfENmLgzoJ2nUT/uKmpnnparoFaXLULXAYQ7A5g081Zu8g0yZhiAURsytL0jWhwzW
-         7VIePftZTImHTobDsFtdWaxres0txMlTqYeKpzC1Qbb/fVmGYNqJzPCX2T5Zjn8/wc/r
-         Z3Q5SsD9mcJ+11hGm9nBXjsRyCndrrv10oU+MPlM6/D/kWOTcmxwbIZm44YZnIHT2pZJ
-         cdkZmRp1hXcAPHObQPQq2Yzyo78zPtsPatxBx1vCorUsLssLdG0y1wZN972mBSjYev0+
-         HWKSVrxtv0hPT49wvg9Z6ykoL4E0iPOeifgNk1YbIzQTlxg1IyXvB46IVCxP89QMivxb
-         SZnQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+RnB8FJipxAV2BoWms4qWnMBHX+vsdMXZRT2Asl+A4Cwem/NeBfsUu0neOG/IPdBjwDLI5rOI7WjUuHl5L@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywi9RPo2mnknmVpkmkFG4JoCPjF5TMZWdHhpSnEPCUnmGQR/R64
-	p9V9yd3lWrXXyAzjpK7mZtv5xtD2cw2cD0tT9lKIpO5ok6ZYU5VDdssJt8hKp0oTWkQ=
-X-Gm-Gg: Acq92OFooFUvKmcq2qbJVqK8pT2TBCPUyMctk16EwkK9iPPpIC27dDXkCUQKbD2yqS3
-	sOVn/f3CPhZHCvzWNvm9W3oQfttprndNYsvIRPHCxVhfQ7l/eszagv/GZMf/J1fx1mKrjN1GTzi
-	GLQ+2VkUU8qKwVMHKU1pmsKrIMRN0FgXoS/B+ixFD0el1SwZxri+MMjHUaKU5E/DKFREbWKB9MD
-	DZtixBQfkPFO6G4d0appbAQTNPI7A7CqJ7O3YaKWf/icSQQPYfGZXje8IQSgLtOlrwSHXn6u+v7
-	BvX3zdCchZYhHVp85LNoznBmpJUa8KNgBEurj4hG294wfMAiT9KqwqMwiHwSu/LPTMv7P2AfB9X
-	VQGxcDR0opogbF5cd5TJ+uemENBZOV5go6kEWTLrnX8O3fv++7lwnTtngg7UveNmNj7cjJLH3lk
-	BioKOUMjxm7M9lktYV1NtPntDrEsre0OVoM82bWRQIxfMOUwkObG/GxTzRPZ42A5S6m7uCjC+u/
-	j+yn/90XtyoiMyoQA==
-X-Received: by 2002:a05:6000:240b:b0:43e:a69b:d810 with SMTP id ffacd0b85a97d-45ea3df3f69mr2462925f8f.38.1779347932779;
-        Thu, 21 May 2026 00:18:52 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:e038:7e8a:7467:8c6c? ([2a01:e0a:106d:1080:e038:7e8a:7467:8c6c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45eaa7d0a36sm544322f8f.2.2026.05.21.00.18.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 May 2026 00:18:52 -0700 (PDT)
-Message-ID: <f8273eaf-1eb5-4f9e-aca2-ebbe4bd2e361@linaro.org>
-Date: Thu, 21 May 2026 09:18:51 +0200
+	s=arc-20240116; t=1779348050; c=relaxed/simple;
+	bh=NJTuqVhhx4ZZxUfa0gsUnmbbhttyXCV5v2ViNtsMC80=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=W/0O31nWYSM5a4qKumD2300L1egMvfeZKUQKD1R9UN3F0jfdYWz+7AFwl/W1Nyg0iolGURBmNezVeFPFXxfqAcL4qYxXbqGcKXwZOUVRkXsaNBgLiZBR+4J6yo0KeTz1IKRh5OZ/ISQ4GNyfU8iJpkSz0yBpYYinwSFr1QU2PFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQ9+cjtw; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2431A1F000E9;
+	Thu, 21 May 2026 07:20:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779348049;
+	bh=nI+G+aCuQ9siluJQySImBqqIqDQnteIx2vdEuLDlJvI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=GQ9+cjtws8KOBpcE6OwlZIUgpsEIZfC93Nr7AvRXM31Al+yg3J8s6DyWN9ZN2wvuI
+	 PRNs8IuC8nkFzYl51762dQ9DnCLECQDAeDFiOiKL4dqjACkM1WKMrpiYnxhMJmFd87
+	 rZdb3coZQJY549hcgIEWdtwmdLyM0j1wrnSdlqmXIeX5f8bq0jp4s+lISqNMfs3QY4
+	 scVM3cl+zxWqdLmclcYqBCYSiHRDBJ8c2FEkOzCw0o03myMOvpaC9GVaFHgVqRcSR1
+	 wHeBaVDGz3Jv9aT5nid6N2qqsW+vsrW4kAbcSwLLipPJf11HhqnIy3TMemEolI128h
+	 7CgCKlzBU1o0Q==
+Message-ID: <86f76a81-832d-4ba5-81d5-38b46b7dc0a7@kernel.org>
+Date: Thu, 21 May 2026 09:20:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,192 +53,145 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v3 5/6] media: qcom: iris: vdec: update find_format to
- handle 8bit and 10bit formats
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- nicolas Dufresne <nicolas@ndufresne.ca>,
- Hans Verkuil <hverkuil+cisco@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260511-topic-sm8x50-iris-10bit-decoding-v3-0-7fc049b93042@linaro.org>
- <20260511-topic-sm8x50-iris-10bit-decoding-v3-5-7fc049b93042@linaro.org>
- <5fc62574-fae1-4bf0-b6b9-fb6fb33041f8@oss.qualcomm.com>
- <08eff436-4221-4bc2-9fac-2ac1b6a091ae@linaro.org>
- <8f708b87-92d3-47ed-8cda-1f34b512816c@oss.qualcomm.com>
- <0534f746-c776-4688-94d3-85a7d7f2d25e@linaro.org>
- <209f8a94-957f-4362-9e17-40e74eed4d7c@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <209f8a94-957f-4362-9e17-40e74eed4d7c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: pmic-glink: Document
+ batteryless property
+To: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+ jishnu.prakash@oss.qualcomm.com
+Cc: Rakesh Kota <rakesh.kota@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Sebastian Reichel <sre@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20260518-add_dc_in_support-v1-0-31fbaa329879@oss.qualcomm.com>
+ <20260518-add_dc_in_support-v1-1-31fbaa329879@oss.qualcomm.com>
+ <fd58d6d7-26cf-4b11-82ad-05b4863b6dd1@kernel.org>
+ <20260519082526.odmn5dqi2jftwnln@hu-kotarake-hyd.qualcomm.com>
+ <20260519-first-wine-bulldog-a6a4c7@quoll>
+ <20260521071341.q4efqssppvettaey@hu-kamalw-hyd.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20260521071341.q4efqssppvettaey@hu-kamalw-hyd.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-108929-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-108930-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	HAS_ORG_HEADER(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
-	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,cisco];
-	REPLYTO_EQ_FROM(0.00)[]
-X-Rspamd-Queue-Id: 48DB85A002D
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 70E615A009F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 5/20/26 17:47, Vikash Garodia wrote:
-> 
-> On 5/20/2026 9:09 PM, Neil Armstrong wrote:
->> On 5/20/26 17:30, Vikash Garodia wrote:
+On 21/05/2026 09:13, Kamal Wadhwa wrote:
+> On Tue, May 19, 2026 at 12:35:13PM +0200, Krzysztof Kozlowski wrote:
+>> On Tue, May 19, 2026 at 01:55:26PM +0530, Rakesh Kota wrote:
 >>>
->>> On 5/18/2026 1:06 PM, Neil Armstrong wrote:
->>>> On 5/13/26 21:27, Vikash Garodia wrote:
->>>>>
->>>>>
->>>>> On 5/11/2026 2:50 PM, Neil Armstrong wrote:
->>>>>> The 10bit pixel format can be only used when the decoder identifies the
->>>>>> stream as decoding into 10bit pixel format buffers, so update the
->>>>>> find_format helper to filter the formats and only allow the proper
->>>>>> formats when setting or trying a capture format.
->>>>>>
->>>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>>>>> ---
->>>>>>   drivers/media/platform/qcom/iris/iris_platform_common.h |  1 +
->>>>>>   drivers/media/platform/qcom/iris/iris_vdec.c            | 10 ++++ ++ ++++
->>>>>>   2 files changed, 11 insertions(+)
->>>>>>
->>>>>> diff --git a/drivers/media/platform/qcom/iris/ iris_platform_common.h b/drivers/media/platform/qcom/iris/ iris_platform_common.h
->>>>>> index 5a489917580e..cd3509da4b75 100644
->>>>>> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
->>>>>> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
->>>>>> @@ -18,6 +18,7 @@ struct iris_inst;
->>>>>>   #define REGISTER_BIT_DEPTH(luma, chroma)    ((luma) << 16 | (chroma))
->>>>>>   #define BIT_DEPTH_8                REGISTER_BIT_DEPTH(8, 8)
->>>>>> +#define BIT_DEPTH_10                REGISTER_BIT_DEPTH(10, 10)
->>>>>>   #define CODED_FRAMES_PROGRESSIVE        0x0
->>>>>>   #define DEFAULT_MAX_HOST_BUF_COUNT        64
->>>>>>   #define DEFAULT_MAX_HOST_BURST_BUF_COUNT    256
->>>>>> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/ drivers/ media/platform/qcom/iris/iris_vdec.c
->>>>>> index eea69f937147..f4d9951ed04c 100644
->>>>>> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
->>>>>> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
->>>>>> @@ -99,6 +99,16 @@ find_format(struct iris_inst *inst, u32 pixfmt, u32 type)
->>>>>>       if (i == size || fmt[i].type != type)
->>>>>>           return NULL;
->>>>>> +    if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
->>>>>> +        if (iris_fmt_is_8bit(fmt[i].pixfmt) &&
->>>>>> +            inst->fw_caps[BIT_DEPTH].value == BIT_DEPTH_10)
->>>>>> +            return NULL;
->>>>>> +
->>>>>> +        if (iris_fmt_is_10bit(fmt[i].pixfmt) &&
->>>>>> +            inst->fw_caps[BIT_DEPTH].value != BIT_DEPTH_10)
->>>>>> +            return NULL;
->>>>>> +    }
->>>>>
->>>>> similar logic would be now needed while enumerating fmt.
->>>>>
->>>>> VIDIOC_ENUM_FMT will now enumerate all capture formats (NV12, QC08C, QC10C..) regardless of the stream's bit depth, while VIDIOC_S_FMT will reject the wrong-depth formats.
->>>>>
->>>>> userspace will see formats via ENUM_FMT that it cannot successfully set with S_FMT.
->>>>
->>>> So initially I did that, but I reverted since it broke decoding with gstreamer when trying
->>>> to use QC10C since it requires negociating the src/sink before sending the fist buffer
->>>> and then get the source format change to switch to 10bit.
+>>>> And isn't lack of monitored battery property enough to indicate that?
 >>>
->>> Does that mean that src is still producing the data in Q10c, while sink is configured to NV12 (8bit) ?
+>>> Regarding monitored-battery — its absence alone isn't sufficient. The
+>>> BATT_ID line on debug boards is pulled to ~10kΩ, which is used during
+>>> development phase where some battery properties are still present. The
+>>> same ~10kΩ value is also used on some genuinely battery-less production
+>>> platforms where no battery properties exist, making auto-detection
+>>> unreliable. Hence the need for an explicit DT property to identify
+>>> hardware platforms where no battery populated. 
 >>
->> No, it's early src/sink negociation capabilities with the special DRM DMABUF format to handle the QC10c, way before playback starts and starts the v4l2 dance.
->>
+>> I don't understand this logic. So you claim you have debug boards which
+>> do not have battery, but define monitored-battery? Then these are wrong
+>> and fix them first.
 > 
-> How will it know its Q10c, even before the playback starts ?
-
-So in the way upstream gstreamer wants to support QC8C/QC10C, the format must be specified like:
-gst-launch-1.0 -v -m filesrc location=Big_Buck_Bunny_1080_10s_30MB.h265 ! h265parse !  v4l2h265dec ! "video/x-raw(memory:DMABuf), format=DMA_DRM, drm-format=NV12:0x0500000000000001" ! kmssink
-or
-gst-launch-1.0 -v -m filesrc location=Big_Buck_Bunny_1080_10s_30MB_main10.h265 ! h265parse !  v4l2h265dec ! "video/x-raw(memory:DMABuf), format=DMA_DRM, drm-format=P010:0x0500000000000001" ! kmssink
-
-so this means the QC8C/QC10C format must be listed in the VIDIOC_ENUM_FMT so the v4l2h265dec element can enums them as supported (and translated as drm-format=NV12:0x0500000000000001/drm-format=P010:0x0500000000000001)
-
-Neil
-
+> Actually our firmware treats the debug board as a "fake battery" rather then
+> a "no-battery" case.
 > 
->>>
->>>>
->>>> I checked and none of the other v4l2 drivers supporting 10bit does that, so it seems right
->>>> to allow enumerating all possibly supported formats and only accept the session supported
->>>> one with S_FMT.
->>>
->>> I was reading the documentation on this aspects, and it says to keep all the supported ones, instead of changing runtime and limit it to 10bit ones, in this case.
->>
->> Hmm, so my change is correct ?
+> This is done to avoid triggering shutdown or trigger power/thermal related
+> mitigations to kick in from the HLOS (android) that is configured mainly for
+> battery-backed devices.
 > 
-> Yes, to me.
+> Note that we can know if its a debug board, just by looking at the battery
+> ID resistance or the battery profile name in the power supply properties
+> for `qcom-battmgr-bat` in sysfs.
 > 
->>
->>>
->>> +ing Nico and Hans incase they would like to comment on this.
->>>
->>>>
->>>>>
->>>>>> +
->>>>>>       return &fmt[i];
->>>>>>   }
->>>>>>
->>>>>
->>>>> Regards,
->>>>> Vikash
->>>>>
->>>>
->>>
->>
+> However, the problem started with the boards that are battery-less and
+> unfortunetely used the same debug board batt ID resistance value, so from
+> the firmware side the batteryless board is also seen same as a board with
+> debug-board connected.
 > 
+> Since firmware does not have a way to dynamically tell if it on a
+> debug-board powered device or a DCIN powered device, We are required to
+> add this new DT property.
 
+Neither debug-board powered device nor battery-less will have
+monitored-battery, thus again, why lack of that property cannot tell you
+what you need?
+
+And no, you are not required to add a new DT property. Every wrong
+property was also justified like that...
+
+Best regards,
+Krzysztof
 
