@@ -1,277 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-109097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WI+3ARALD2omEgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 15:39:28 +0200
+	id 6BylCkcPD2qSEgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 15:57:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DB385A60F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 15:39:27 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E8E85A68AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 15:57:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 6E9F531DBD68
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 13:22:06 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 4989230F705C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 13:22:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 873473C278B;
-	Thu, 21 May 2026 13:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D4B93D966A;
+	Thu, 21 May 2026 13:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="ZSi5w5iK"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gtACG+hQ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="iz6pjnWQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E03F3E1732
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 13:19:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20ED33DA5D9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 13:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779369587; cv=none; b=U2KqLKiAsC8dy//EJ3YvYypf54rgpstSPpWMct6/AZNfm+R9o8NRR80nO88S6Yxgd611HE2noUvvI1XP96VRQUZzdwWHO7nKRKP+eg0x6RYHdNZpDrwQ9Pwbz+iU2scfbr5q7gRg4hpn7pKY9ojUn7AJPkVhdIzqs6IqSkBN5Vk=
+	t=1779369710; cv=none; b=f5hRlw4Ga5J/VvbRxK+80xJgRIlm6PcPWcg73g+PgwaUYxhTxOvOaBjSdSj0rDy6PDgvz7jc1Dl3xMByHsXd7KeAtqmO8p2oaufT15cGb//eDpOr3wh++XJ4U0ZlIi3gwMIuCcpS7423FoXtMK/WryuTgw7b4ljI8z4lD+4HX1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779369587; c=relaxed/simple;
-	bh=IJtawXV3YdRjwyK8aWqMpZZTVgrxIkd00Yz86WdKpEU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kRKExEw0mftiQ1VmDywFRPHM2+0bvIZFB1tFLHs7L+35YRjCQj8VEeClDpatLJkC8hTJEj05mhgimu8AA8DsZcEkExj7WLwYvpyK4DgkQZHIlYKb9gJZQfPJ/4KKCBH6MGBRV7HQBhI7kS1d3FoCMnGCzFCy7xDVQiqLuydovH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=ZSi5w5iK; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=IIpdmIOgvl0TQniaAHS+GD+OE1WeFz+0+H9K2/ObYUo=; b=ZSi5w5iKECb9ZrQYLpQ963Qtib
-	9XCeOlFYKm3qQQLC4wAgIGxChYh/0Ztvznz73ETHzIJWvRMQt4+JaxJOgd42oVuUodx4MeMXqyucW
-	UUnHUxH7ACZsYGwXFWOx44JJlYqE8mx/UHjvYZ5G73+hqHdOqTrMgCQgiTdEcFlzAXedqPsb3tvCe
-	tmIAFLbbRRhbf4GsMfoRltHXI8yTWJBJUp5rgaqEA+aaVGfZ1M88aZG+YJcpp/CkFiSVVgZlM4Fsi
-	s6q3Ov8OvDiwlMTmH12DLyNvUs61xbnUmLsBrB1fCSFnhUD6WRj65tW783jRc5pPoQMx41DxJpGK0
-	CbuCILjA==;
-Received: from [79.117.146.159] (helo=[192.168.1.135])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1wQ3IX-004MSj-DH; Thu, 21 May 2026 15:18:49 +0200
-Message-ID: <c1e5b078-2352-4569-b82e-398cb3c5f537@igalia.com>
-Date: Thu, 21 May 2026 15:18:47 +0200
+	s=arc-20240116; t=1779369710; c=relaxed/simple;
+	bh=+vNXN873XOakefQbWqH8n9IChdpk5Rk+tlb0lt0sTAM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=FGt33CxaRzamen7+nVm27dp9y3TxLPAESQuzg5us1t3reAl7BLp5Eep55MTjafVMQJJfoT5AL1RlFQ3XgZdTImSj3/2y1pReLg6vBbIU/nBUI1JLAXfLkZv/B+zjLTw3qPJMDHJGrI4EAv+/BCmv+F4drnZG6kyofX/ad9q3jFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gtACG+hQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iz6pjnWQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64L99oXx3009540
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 13:21:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=hYbj4ynBne3MplkmrjvHug
+	K1R01YSntuLsXM7CFi3k8=; b=gtACG+hQSdapdJSew+jb18n+AnfL3+AKduEXBJ
+	87s970QuJSje5cj+KSdqZJxt3MmjzMN5D8lp/6QRJHccxqLUxGDllijYDOAhZ8nU
+	WJfFULvwisAS23CS4x9a8p7B+a6vxH1CfuR+w9lQFpyUuVZ0eq3z7iI2QSr0lzNW
+	Nj+lJ9FOJgzsrmFDiA1K551Nd7e8bAcOq4BzcpyRgpBm5LFG+JYIQg3K/7uZ6gCd
+	i01bZfl3d2Diwg1uMKaTT5buRh6AymnxvH1vDEbDTfdnJIpbUR9R8W+WA2h6qXbg
+	9EM0IhinrPOV5nI6pVvsCd55BFf7KfQgnz/ee3pMPavMNG4Q==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9sr32br6-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 13:21:48 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-365fc4636bbso13203001a91.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 06:21:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1779369707; x=1779974507; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hYbj4ynBne3MplkmrjvHugK1R01YSntuLsXM7CFi3k8=;
+        b=iz6pjnWQ8EWhFLkX2kQ8nchfSpA1GVIdn3tg3nI76LvaPhH+upv4mZW8vuGuvTJAP7
+         GgCfKHmRXjg0l/ceQhw6cIBDHYn0zPga+VpEfThmr/wG3Q3csEpf+ht8L8D6GB7K+Cg7
+         4NfAjCsx6/r2vNzxOgbeFa6Ag28jVCiD7hHf+M/5Epbc/9MkaTdwSESQuFWSJsl0EqTG
+         La2Zb+0R/dAyD26gANlei+WNPD6MhkOGCf7sX7ppmUF4xS9p8GQwARpdDe+XUwVh8rin
+         CDOmnH0JKQBLfGSTKhBwDtrjHpkWEqy4/oM/UlpLPUKA/5CiRmEEue+SpeR3rc2ZrLDx
+         2dIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779369707; x=1779974507;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hYbj4ynBne3MplkmrjvHugK1R01YSntuLsXM7CFi3k8=;
+        b=tWsgUUbcNuodVmtXHzEBJZcNrQ3j0TlmwHRHc7ThgSowNMCcRKEkcrHAwcoQ9AKQ6U
+         MS+jMECoKX6QcrwVv88Waare09aRj2Kk9cLETzeSy4MqEOEU8LZ/Xbcl7gn3TOPCPCL7
+         afrrkZb063U1sYs6kDcAkAAr9JY7615wK3Qg9G6L1TvHDrKjMWtx9ZAn/pZaOuUvWoHU
+         YrbGUvbCw+sR+lvMDYemo0rrYorvzC5FM2bJrYgC0aQvfZwCeaaDxlZz3meZLl8lGCLa
+         REDf/VlayB9Zj3W4rFPXZGe/P+NH1M8fWc8HLUj266obglLhtgqCldu2yUMHg8YIlQ5u
+         tQLQ==
+X-Gm-Message-State: AOJu0YyNBDLub0NTlM5ys2vOC06tMxT+xlYDuyVIoOGQwaUzdrBEqgrU
+	GhIMb8DM3IkjJwmCWWJc1xOOxtqJLzFJP1cgK2dGa4aFNGiqYo0byEcnR6KC5YC1rjNnN0KI0Jm
+	BQg+6m/tHJyNTqx8VdMFJN9Kbo7s0+trXYa28w+eYzsJGMpPXMHjRE7k4H9opxJ+xdtcP
+X-Gm-Gg: Acq92OHWUoVBRy/8qEImC4kfzTee6dvbcR1KsiMLmhLQhPabpLEssU3iqa0yUPDGBeW
+	kHcSAOoVjpB7U5HUevH9/nHS1p5MgXiU5z4ha95z8q7s1La/F+jS1F4iUIKiO0lY3MKtEerjtfi
+	ssHsHagAHquGGMHtpOk8dfSlpI/cG2HyW3TtDywHZh4tS/vLdNz0RrM0K3Vt9GD0oFyJzrxaZVK
+	oI97eNl6UrvLaEitGf2QAc8imLf53xNcyTa9wlJouLPs/O6eocgkLjYt2Hn+yxVPT6lL8TiI0kI
+	E3XwXeBNLFB9xbFuDkimXyGf3EOTmP5y/t61yFRhqKuxRJEeZAkpQP6dDmRpyG+FWXfoHoF36xS
+	lTP+77ygnxI/OvAfTFkxJCbovyxJOP5WkjDef
+X-Received: by 2002:a17:90b:380a:b0:366:10f1:3d86 with SMTP id 98e67ed59e1d1-36a45ca3a75mr2903253a91.22.1779369706701;
+        Thu, 21 May 2026 06:21:46 -0700 (PDT)
+X-Received: by 2002:a17:90b:380a:b0:366:10f1:3d86 with SMTP id 98e67ed59e1d1-36a45ca3a75mr2903196a91.22.1779369705977;
+        Thu, 21 May 2026 06:21:45 -0700 (PDT)
+Received: from [10.213.101.118] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a3d1e9300sm2927797a91.13.2026.05.21.06.21.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 May 2026 06:21:45 -0700 (PDT)
+From: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+Subject: [PATCH v3 0/2] remoteproc: qcom: Add Shikra remoteproc support
+Date: Thu, 21 May 2026 18:51:36 +0530
+Message-Id: <20260521-shikra-rproc-v3-0-2fca0bbe1ad7@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/6] drm/atomic: reject colorop update from inactive
- color pipeline
-To: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
- airlied@gmail.com, alexander.deucher@amd.com, christian.koenig@amd.com,
- harry.wentland@amd.com, maarten.lankhorst@linux.intel.com,
- mripard@kernel.org, simona@ffwll.ch, siqueira@igalia.com,
- sunpeng.li@amd.com, tzimmermann@suse.de
-Cc: Alex Hung <alex.hung@amd.com>, Simon Ser <contact@emersion.fr>,
- Uma Shankar <uma.shankar@intel.com>, Xaver Hugl <xaver.hugl@kde.org>,
- Pekka Paalanen <pekka.paalanen@collabora.com>,
- Louis Chauvet <louis.chauvet@bootlin.com>,
- Matthew Schwartz <matthew.schwartz@linux.dev>,
- amd-gfx@lists.freedesktop.org, kernel-dev@igalia.com,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org
-References: <20260519211111.228303-1-mwen@igalia.com>
- <20260519211111.228303-3-mwen@igalia.com>
- <5caac879-5063-4999-941f-d062da040879@intel.com>
-Content-Language: en-US
-From: Melissa Wen <mwen@igalia.com>
-In-Reply-To: <5caac879-5063-4999-941f-d062da040879@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.36 / 15.00];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOAGD2oC/23PTQrCMBAF4KuUrE3JT1OsK+8hLkIytUFr2kkbl
+ NK7m1YFFTcDb2A+3kwkADoIZJdNBCG64Pw1BbnJiGn09QTU2ZSJYKJkiksaGndGTbFDbyizWip
+ lVGnKiqSTDqF2t5U7HFNuXBg83lc98mX7hopvKHLKaKVrCxYAGBN7H0Lej/pifNvmaZDFi+LDE
+ OzHEMlQW6kFFFxqqf8Y87MkQj+mV4dX03l+AJqPHtoIAQAA
+X-Change-ID: 20260513-shikra-rproc-0da355c56c69
+To: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>,
+        Komal Bajaj <komal.bajaj@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779369701; l=1730;
+ i=komal.bajaj@oss.qualcomm.com; s=20250710; h=from:subject:message-id;
+ bh=+vNXN873XOakefQbWqH8n9IChdpk5Rk+tlb0lt0sTAM=;
+ b=PrZjUqcGb04RZeVKwM/sowSNh0kC5IRMBWpWa1zl1uVZOSdqIWs0ZNe8ribw6DUmD6PB0Ctms
+ gH4E4VrxujKC5psRsPPssp/vo2auDCAN0GQi2+v/ZTeDn1jpHPrmpBA
+X-Developer-Key: i=komal.bajaj@oss.qualcomm.com; a=ed25519;
+ pk=wKh8mgDh+ePUZ4IIvpBhQOqf16/KvuQHvSvHK20LXNU=
+X-Proofpoint-GUID: sEC165iuYifAJhsOqd2TBN_s3GQ_dOJ_
+X-Proofpoint-ORIG-GUID: sEC165iuYifAJhsOqd2TBN_s3GQ_dOJ_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDEzNCBTYWx0ZWRfX5cbJiZGX/fM0
+ qoKsnva+0AcqKOMXfcjrCiGoBmIsg2Vc5RGw78NN+bleOvTR+fuOgqmvWLNFgwxlX4uoCePUAgh
+ rsZKSvYV7hn0aKGutcoi71vPKOmNJTkwrB8hk+rP7BdhW1y55LOl3s6VhUUGcJUi+RvNxrB0z/9
+ 3pbhe4QaezCkr4gRYhqvQrrzMr/nYBFTlwn8vkB8kMAv8MbBxWzidvdmRNt11ViHFWSr2YhN9Gk
+ V9UM+kbEAvJSD6E3erUiK0nYkXpl/Uk38Xqga3uH9ugQZ5w3XGrBRxMfKw2CEOfdb2eCgeXn/nS
+ XqAjmXRElqmuOqGIS/EmHdnKQfIfTMAYZ3NH92PJ/jqyemfc08LTfZGmePvFRG3F2sA+rpG0g8G
+ AhD6MTkPZG0I2iKc9YzE7sYqKpy/drVyBPDmebeBTcXtJ6Ux1jU7sPBOcDfcd38+KGt8EQ8ESD+
+ Vr7jOb9xnRwOYg0uCSQ==
+X-Authority-Analysis: v=2.4 cv=L+YtheT8 c=1 sm=1 tr=0 ts=6a0f06ec cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=E_Y9bAwo2dYQWIToq5QA:9 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-21_02,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 phishscore=0 clxscore=1015 adultscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210134
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-109097-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[intel.com,gmail.com,amd.com,linux.intel.com,kernel.org,ffwll.ch,igalia.com,suse.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[29];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[amd.com,emersion.fr,intel.com,kde.org,collabora.com,bootlin.com,linux.dev,lists.freedesktop.org,igalia.com,oss.qualcomm.com,kernel.org,gmail.com,poorly.run,somainline.org,vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	TAGGED_FROM(0.00)[bounces-109098-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	FROM_NEQ_ENVFROM(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	DKIM_TRACE(0.00)[igalia.com:-];
+	FROM_NEQ_ENVFROM(0.00)[komal.bajaj@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,intel.com:email,igalia.com:mid,igalia.com:email,01.org:url]
-X-Rspamd-Queue-Id: 9DB385A60F4
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 9E8E85A68AC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+Add Peripheral Authentication Service (PAS) support for the Qualcomm
+Shikra SoC. This series introduces the device tree bindings and the
+driver resource configurations for the three remoteproc cores present
+on Shikra: CDSP, LPAICP and MPSS.
 
+Signed-off-by: Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>
+Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+---
+Changes in v3:
+- Fix dtschema/dtc warnings/errors (Rob's bot)
+- Added firmware-name property in example (Krzysztof)
+- Added power-domains and power-domains-names to false for
+  qcom,shikra-lpaicp-pas (Krzysztof)
+- Collected Reviewed-By tag from Dmitry
+- Link to v2: https://lore.kernel.org/r/20260520-shikra-rproc-v2-0-583a2e413a3a@oss.qualcomm.com
 
-On 21/05/2026 13:00, Borah, Chaitanya Kumar wrote:
->
->
-> On 5/20/2026 2:39 AM, Melissa Wen wrote:
->> Only allow updates on colorops that are part of an active pipeline.
->> Check if a colorop in a new state belongs to a color pipeline which was
->> set as a plane color_pipeline property and therefore is an active color
->> pipeline. If not, reject the atomic state. Performing this check later
->> in drm_atomic_check_only() to remove the ordering dependency that would
->> exist if done at the time of colorop property setting.
->>
->> Suggested-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
->> Signed-off-by: Melissa Wen <mwen@igalia.com>
->> ---
->>   drivers/gpu/drm/drm_atomic.c | 38 ++++++++++++++++++++++++++++++++++++
->>   1 file changed, 38 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
->> index 28831a548b0c..659cf56150e5 100644
->> --- a/drivers/gpu/drm/drm_atomic.c
->> +++ b/drivers/gpu/drm/drm_atomic.c
->> @@ -812,6 +812,33 @@ static int drm_atomic_plane_check(const struct 
->> drm_plane_state *old_plane_state,
->>       return 0;
->>   }
->>   +/**
->> + * drm_atomic_colorop_check - check new colorop state
->> + * @new_colorop_state: new colorop state to check
->> + *
->> + * Ensure that the colorop in @new_colorop_state belongs to an 
->> active color
->> + * pipeline, i.e. it's in the chain of colorops set to the 
->> color_pipeline
->> + * property of a plane state.
->> + *
->> + * Returns: 0 on success, -EINVAL otherwise.
->> + */
->> +static int drm_atomic_colorop_check(const struct drm_colorop_state 
->> *new_colorop_state)
->> +{
->> +    struct drm_colorop *colorop, *color_pipeline;
->> +    struct drm_plane_state *new_plane_state;
->> +
->> +    new_plane_state = 
->> drm_atomic_get_new_plane_state(new_colorop_state->state,
->> + new_colorop_state->colorop->plane);
->> +    color_pipeline = new_plane_state ? 
->> new_plane_state->color_pipeline :
->> + new_colorop_state->colorop->plane->state->color_pipeline;
->> +
->> +    for (colorop = color_pipeline; colorop; colorop = colorop->next)
->> +        if (colorop == new_colorop_state->colorop)
->> +            return 0;
->> +
->> +    return -EINVAL;
->> +}
->> +
->
-> This causes regression in our CI[1].
->
-> I looked into it and looks like the following sequence in 
-> igt@kms_color_pipeline causes the error
->
->         set_color_pipeline_bypass(plane);
->         reset_colorops(colorops);
->         igt_plane_set_fb(plane, NULL);
->         igt_display_commit_atomic(&data->display, 0, NULL);
->
-> So this change restricts bypassing/disabling both the pipeline and a 
-> colorop within it in a single commit.
+Changes in v2:
+- Add glink-edge, qcom,smem-states and qcom,smem-state-names properties
+  in bindings 
+- Drop second interconnect path from the example node (sashiko-bot)
+- Update auto_boot to true for CDSP resource (Dmitry)
+- Drop region_assign_vmid from CDSP and MPSS resources (Dmitry)
+- Drop decrypt_shutdown from MPSS resource (Dmitry)
+- Link to v1: https://lore.kernel.org/r/20260514-shikra-rproc-v1-0-9afdedeee002@oss.qualcomm.com
 
-Oops, cc'ing everyone.
+---
+Bibek Kumar Patro (1):
+      remoteproc: qcom: pas: Add Shikra remoteproc support
 
-"
-I wonder if userspace resetting colorops to disable a pipeline or 
-configuring colorops before enabling the color pipeline is an expected 
-behavior.
+Komal Bajaj (1):
+      dt-bindings: remoteproc: qcom,shikra-pas: Document Shikra PAS remoteprocs
 
-For resetting properties, I think I can solve it by taking into account 
-old and new state to collect the active colorops, not only the new state.
-But if configuring colorops before activate a color pipeline is 
-expected, there is no need to have patches 1 and 2, since setting an 
-inactive colorop have to be allowed. In that case, the solution is just 
-drop both patches from the series.
-"
+ .../bindings/remoteproc/qcom,shikra-pas.yaml       | 167 +++++++++++++++++++++
+ drivers/remoteproc/qcom_q6v5_pas.c                 |  48 ++++++
+ 2 files changed, 215 insertions(+)
+---
+base-commit: 687da68900cd1a46549f7d9430c7d40346cb86a0
+change-id: 20260513-shikra-rproc-0da355c56c69
 
-Melissa
-
->
-> Also Sashiko had the following to say
->
-> "Furthermore, does this unnecessarily restrict UAPI by preventing 
-> userspace
-> from configuring inactive pipelines before enabling them, or from 
-> resetting
-> properties on a pipeline in the same commit that switches away from it?"
->
-> So this will also fail a commit which tries to change a pipeline and 
-> disable the colorops in an old pipeline.
->
-> That got me thinking whether the first patch[3] in the series is also 
-> correct, since it is quite similar to the change[4] I added, where 
-> colorops are only added to the state when a pipeline is active. In 
-> both cases, we could end up ignoring colorops that are not part of the 
-> currently selected pipeline.
->
-> [1] 
-> https://intel-gfx-ci.01.org/tree/intel-xe/xe-pw-166922v1/shard-lnl-5/igt@kms_color_pipeline@plane-ctm3x4@pipe-a-plane-2.html
-> [2] 
-> https://sashiko.dev/#/patchset/20260520073827.3395745-3-chaitanya.kumar.borah%40intel.com
-> [3] 
-> https://lore.kernel.org/dri-devel/20260519211111.228303-2-mwen@igalia.com/
-> [4] 
-> https://lore.kernel.org/dri-devel/148df44d-2456-40e3-8be6-f98b89b7ee4d@amd.com/
->
-> P.S. Can you please send the next version to intel-gfx and intel-xe too?
->
-> ==
-> Chaitanya
->>   static void drm_atomic_colorop_print_state(struct drm_printer *p,
->>                          const struct drm_colorop_state *state)
->>   {
->> @@ -1665,6 +1692,8 @@ int drm_atomic_check_only(struct 
->> drm_atomic_commit *state)
->>       struct drm_plane *plane;
->>       struct drm_plane_state *old_plane_state;
->>       struct drm_plane_state *new_plane_state;
->> +    struct drm_colorop *colorop;
->> +    struct drm_colorop_state *new_colorop_state;
->>       struct drm_crtc *crtc;
->>       struct drm_crtc_state *old_crtc_state;
->>       struct drm_crtc_state *new_crtc_state;
->> @@ -1681,6 +1710,15 @@ int drm_atomic_check_only(struct 
->> drm_atomic_commit *state)
->>               requested_crtc |= drm_crtc_mask(crtc);
->>       }
->>   +    for_each_new_colorop_in_state(state, colorop, 
->> new_colorop_state, i) {
->> +        ret = drm_atomic_colorop_check(new_colorop_state);
->> +        if (ret) {
->> +            drm_dbg_atomic(dev, "[COLOROP:%d:%d] is not part of an 
->> active color pipeline.\n",
->> +                       colorop->base.id, colorop->type);
->> +            return ret;
->> +        }
->> +    }
->> +
->>       for_each_oldnew_plane_in_state(state, plane, old_plane_state, 
->> new_plane_state, i) {
->>           ret = drm_atomic_plane_check(old_plane_state, 
->> new_plane_state);
->>           if (ret) {
->
+Best regards,
+-- 
+Komal Bajaj <komal.bajaj@oss.qualcomm.com>
 
 
