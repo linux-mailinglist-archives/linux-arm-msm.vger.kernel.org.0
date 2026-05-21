@@ -1,193 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-108983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oBN1HTHPDmq7CQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 11:24:01 +0200
+	id IGt5Lf3NDmqdCQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 11:18:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6A535A241B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 11:24:00 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 886315A2264
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 11:18:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0AA0D3011C7B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 09:13:17 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 4E3053036E22
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 09:14:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE6333644C1;
-	Thu, 21 May 2026 09:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 619DE36683D;
+	Thu, 21 May 2026 09:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="qIIr3YP8"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="T5tm6Vpt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3AD29C327;
-	Thu, 21 May 2026 09:13:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9862C29C327
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 09:14:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779354795; cv=none; b=dSqU7Rk1GPz8p8iaGmUPlZxwzY4E6lQ8uy0gDT2UfM/wIDnlvlEfIQnaUp07T4dL1cKPWgIcuJAlsFKnGt7YduhqsrDdJ92mNhzg5XiBYrNoh9SbrxVMEiO3v6HB/PA41yUkb3+JX95ZNWKBhZPb23pZHowu1eKJcAjzsfcjwfU=
+	t=1779354849; cv=none; b=Oip4Jv0Om0HJoRXXfo3rNnetecfQdkyqumRzI6maqtk17ta8ZoV8qzPkvPbzZ/kchBcH1LbFi9/RbPpy0XOAjXAxgivfYHkkcD2LvOg2JU8ki5B593hmlfPiK+AXz2HJd/iJbPwRXdQ0FpE4syKohEHfDW6hG0viNceXqqjkohE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779354795; c=relaxed/simple;
-	bh=sDtCR/112nTH/J/4iPL+45VIxb96cevBopgsu4Ph8eo=;
+	s=arc-20240116; t=1779354849; c=relaxed/simple;
+	bh=i4LSJMuxYcgWYb3GPgbU+j9ntkVEZvedEpR1p4L24qk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t9E0w5iaAZXEDfU5Bk0wpf0UG8VR9FgH2Aaa+km+CnFCOO19iXTTKlVXqPeojxDinCZUZQgDLSxcBl6jt01ZOqtuFzjNOa2W6/xm/qmZGl3vcZE+4ONddDa0EIZsT+SutgETjIydtLr5i3UYbXQeVUjEvFrexEQ3r1fwVw1vhu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=qIIr3YP8; arc=none smtp.client-ip=213.167.242.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
-Received: from killaraus.ideasonboard.com (unknown [IPv6:2a01:cb1d:8f2:800:42d6:38fa:3bdf:70df])
-	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 301F96DF;
-	Thu, 21 May 2026 11:12:57 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-	s=mail; t=1779354777;
-	bh=sDtCR/112nTH/J/4iPL+45VIxb96cevBopgsu4Ph8eo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qIIr3YP8EAZW/iNOMw/M83HwuXvaiW2nt6NKTXAAeyC2iRQOxtyJLDg1gp9bNZTum
-	 clogYJTaTikdiQ/fMlCox498QlxMUMfloaJhvs2T9peZdU1RkF0OmGBnJ5BoqTPSxN
-	 bcjGvDXa+j/Vds8fTNw8+rZDtwh+h1VnEQRbvHn0=
-Date: Thu, 21 May 2026 11:13:10 +0200
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
-Cc: "sakari.ailus@linux.intel.com" <sakari.ailus@linux.intel.com>,
-	Hardevsinh Palaniya <hardevsinh.palaniya@siliconsignals.io>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Mehdi Djait <mehdi.djait@linux.intel.com>,
-	Elgin Perumbilly <elgin.perumbilly@siliconsignals.io>,
-	Xiaolei Wang <xiaolei.wang@windriver.com>,
-	Walter Werner Schneider <contact@schnwalter.eu>,
-	Kate Hsuan <hpa@redhat.com>, Svyatoslav Ryhel <clamor95@gmail.com>,
-	"linux-media@vger.kernel.org" <linux-media@vger.kernel.org>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 2/3] media: i2c: add imx576 image sensor driver
-Message-ID: <20260521091310.GB4511@killaraus.ideasonboard.com>
-References: <20260520115641.11729-1-himanshu.bhavani@siliconsignals.io>
- <20260520115641.11729-3-himanshu.bhavani@siliconsignals.io>
- <20260520123326.GC215344@killaraus.ideasonboard.com>
- <PN0P287MB20196A26D90DF65CF551FD359A0E2@PN0P287MB2019.INDP287.PROD.OUTLOOK.COM>
+	 Content-Type:Content-Disposition:In-Reply-To; b=GAZpS2COfWCnnNH3Siv2ZNXzafVc4D9qQd35YkZoKbrxMRthDbjRQUXRX2zGq9+KUX6AlYlXvdYRxv+P7dQWQZYbAoA8A97z0ToiVVqC8YRHMksMyAArr51zAUf4AC57iFxVYCWaob5VX/ZY6FYcLDAFLnnEPNwhGxda1I0G5TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=T5tm6Vpt; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=Ff12
+	f+xeEXoOZ6ISjNWjK5es8Z76Ux83Stxx6bkIL2k=; b=T5tm6VptISE3O93lHV5y
+	d1q/FYUIW2uqPFQf4AutKE+i5zanr4UksjM12JMxuf3nzccBAC59W7CZrFMQf4ke
+	sYwjOF5rZY2SyYYDIJNe8nJH8ByPTr4OfMy9I9PZeD0YPhd2ivJwqtoVLrYHUqol
+	/qFE9/8U++tZNJHOjg8zaND7WbjUSiiz1WZbcFBTrKV/EIY7/NjJlJuBYuh7BD4z
+	LwWph88oAywOufRMhvrZsuYznaAwP8ZpzepDh50Uq3KZ7DRV9tY13cWYAUbbF62P
+	zMc0y1xCm5sFLOJwZQmj/qB46Aw1bcv3E7fQfmLpeC8uTSbrUAopKqMMpO19X8Qa
+	8Q==
+Received: (qmail 996243 invoked from network); 21 May 2026 11:13:53 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 21 May 2026 11:13:53 +0200
+X-UD-Smtp-Session: l3s3148p1@tTS7VFBSRpwujnvC
+Date: Thu, 21 May 2026 11:13:51 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: Lee Jones <lee@kernel.org>,
+	Mark Brown <broonie@opensource.wolfsonmicro.com>,
+	Thierry Reding <thierry.reding@avionic-design.de>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>, Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ulf Hansson <ulfh@kernel.org>, Frank Li <Frank.Li@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Thomas =?utf-8?Q?Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Peter Chen <peter.chen@kernel.org>,
+	Paul Cercueil <paul@crapouillou.net>, Bin Liu <b-liu@ti.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Hans de Goede <hansg@kernel.org>,
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>, brgl@kernel.org,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+	driver-core@lists.linux.dev, devicetree@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-i2c@vger.kernel.org,
+	iommu@lists.linux.dev, linux-pm@vger.kernel.org,
+	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	linux-usb@vger.kernel.org, linux-mips@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org
+Subject: Re: [PATCH 11/23] i2c: pxa-pci: use platform_device_set_of_node()
+Message-ID: <ag7MzzkiA6sseuVb@shikoro>
+References: <20260521-pdev-fwnode-ref-v1-0-88c324a1b8d2@oss.qualcomm.com>
+ <20260521-pdev-fwnode-ref-v1-11-88c324a1b8d2@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <PN0P287MB20196A26D90DF65CF551FD359A0E2@PN0P287MB2019.INDP287.PROD.OUTLOOK.COM>
-X-Spamd-Result: default: False [-0.66 / 15.00];
+In-Reply-To: <20260521-pdev-fwnode-ref-v1-11-88c324a1b8d2@oss.qualcomm.com>
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ideasonboard.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[ideasonboard.com:s=mail];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[sang-engineering.com:s=k1];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[linux.intel.com,siliconsignals.io,kernel.org,oss.qualcomm.com,linaro.org,windriver.com,schnwalter.eu,redhat.com,gmail.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-108983-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	DKIM_TRACE(0.00)[ideasonboard.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[laurent.pinchart@ideasonboard.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-108984-lists,linux-arm-msm=lfdr.de,renesas];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_CC(0.00)[kernel.org,opensource.wolfsonmicro.com,avionic-design.de,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,linuxfoundation.org,linux.ibm.com,ellerman.id.au,linux.intel.com,8bytes.org,arm.com,broadcom.com,nxp.com,pengutronix.de,intel.com,ffwll.ch,crapouillou.net,ti.com,kernel.crashing.org,vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.infradead.org,lists.freedesktop.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DMARC_NA(0.00)[sang-engineering.com];
+	DKIM_TRACE(0.00)[sang-engineering.com:+];
+	MISSING_XM_UA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_GT_50(0.00)[66];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[wsa@sang-engineering.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[22];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: E6A535A241B
+X-Rspamd-Queue-Id: 886315A2264
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, May 21, 2026 at 05:44:09AM +0000, Himanshu Bhavani wrote:
-> > On Wed, May 20, 2026 at 05:26:34PM +0530, Himanshu Bhavani wrote:
-> >> Add a v4l2 subdevice driver for the Sony imx576 sensor.
-> >>
-> >> The Sony IMX576 image sensor with an active
-> >> array size of 5760 x 4312
-> >>
-> >> The following features are supported:
-> >> - Manual exposure an gain control support
-> >> - vblank/hblank control support
-> >> - Supported resolution: 2880 x 2156 30fps (SRGGB10)
-> >>
-> >> Signed-off-by: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
-> >> ---
-> >>  MAINTAINERS                |    1 +
-> >>  drivers/media/i2c/Kconfig  |   10 +
-> >>  drivers/media/i2c/Makefile |    1 +
-> >>  drivers/media/i2c/imx576.c | 1029 ++++++++++++++++++++++++++++++++++++
-> >>  4 files changed, 1041 insertions(+)
-> >>  create mode 100644 drivers/media/i2c/imx576.c
-
-[snip]
-
-> >> diff --git a/drivers/media/i2c/Makefile b/drivers/media/i2c/Makefile
-> >> index 90b276a7417a..e96c083e03d9 100644
-> >> --- a/drivers/media/i2c/Makefile
-> >> +++ b/drivers/media/i2c/Makefile
-> >> @@ -61,6 +61,7 @@ obj-$(CONFIG_VIDEO_IMX335) += imx335.o
-> >>  obj-$(CONFIG_VIDEO_IMX355) += imx355.o
-> >>  obj-$(CONFIG_VIDEO_IMX412) += imx412.o
-> >>  obj-$(CONFIG_VIDEO_IMX415) += imx415.o
-> >> +obj-$(CONFIG_VIDEO_IMX576) += imx576.o
-> >>  obj-$(CONFIG_VIDEO_IR_I2C) += ir-kbd-i2c.o
-> >>  obj-$(CONFIG_VIDEO_ISL7998X) += isl7998x.o
-> >>  obj-$(CONFIG_VIDEO_KS0127) += ks0127.o
-> >> diff --git a/drivers/media/i2c/imx576.c b/drivers/media/i2c/imx576.c
-> >> new file mode 100644
-> >> index 000000000000..910cbcfb6031
-> >> --- /dev/null
-> >> +++ b/drivers/media/i2c/imx576.c
-
-[snip]
-
-> >> +static const struct imx576_mode supported_modes_10bit[] = {
-> >> +	{
-> >> +		.width = 2880,
-> >> +		.height = 2156,
-> >> +		.hts = 3165,
-> >> +		.vts = 2172,
-> >> +		.reg_list = {
-> >> +			.num_of_regs = ARRAY_SIZE(mode_2880x2156_regs),
-> >> +			.regs = mode_2880x2156_regs,
-> >> +		},
-> >> +	},
-> >> +};
-> >
-> > No mode tables please. Control the analog crop and binning through the
-> > selection and format APIs.
-> >
-> >> +
-> >> +static const s64 link_freq[] = {
-> >> +	IMX576_LINK_FREQ_600MHZ,
-> >
-> > The link frequency should be selectable from DT, with PLL parameters (if
-> > any) computed by the driver.
+On Thu, May 21, 2026 at 10:36:34AM +0200, Bartosz Golaszewski wrote:
+> Ahead of reworking the reference counting logic for platform devices,
+> encapsulate the assignment of the OF node for dynamically allocated
+> platform devices with the provided helper.
 > 
-> I don't have the full datasheet, so this cannot be implemented properly.
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-Have you tried to work with your support channel to obtain the
-documentation?
+Acked-by: Wolfram Sang <wsa+renesas@sang-engineering.com> # for I2C
 
--- 
-Regards,
-
-Laurent Pinchart
 
