@@ -1,207 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-109014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oLu/DJvbDmrmCgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 12:16:59 +0200
+	id mNptGn7aDmrmCgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 12:12:14 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A0025A31BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 12:16:58 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9D9D5A3073
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 12:12:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 23A7A30EC371
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 10:01:10 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 10E3A309BFEC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 10:10:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0AC13803EB;
-	Thu, 21 May 2026 09:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF7C4380FC6;
+	Thu, 21 May 2026 10:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="F1w37Lm8";
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="gTjdReDw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="okq0EC+E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6669837F8A6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 09:59:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA0937FF43;
+	Thu, 21 May 2026 10:10:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779357590; cv=none; b=nzwGVlGdSJvUFS5om+DJr/7uNRelAr3wyTVV4WuQCp/0Rx1PZ/mcZ29O14crpwXu+O6WNSjEUbxZfkvXWWUD+Iu1PA5+4rnhjDlJ3NEGwIe5953wsC7qiFrgX7hD6GqpYDz2qg9gKA7hE+CSs67+qmBeRchOuh/iGS7QcBLEYqo=
+	t=1779358210; cv=none; b=kHbbkwOEFEFHIzzBs00V01N5GDpr0MfdbY6fwWxyxq79jhqm3yFVFjqAxbzyGWdztTdW83t5djSABS3cxIGgpCh5Euse8PhAyr7TQw33+L6a2/1Iub9IczHKl7ET7njCXFxK40o5/j2j/EwsrDGopV6bMxJr3q79+na+tF6LfZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779357590; c=relaxed/simple;
-	bh=LkSopfWII/lcGmM2n4IOlRw1uksN3kZC4Q8rc5fxC/Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f4Jl0MUR4VSPyJ8gLom7xmrEfw2Y5q6/QGhgxBSVCO8xBUEcmts7IaZ5cxrBvnlCS0FbopsMDDT3DXa5YAumIgC6Ypj83SJ/NhSkMNXCkc6rpivJ8KukBtTDVKspe8GtCburHP3ljKvis5DwMbsnv6Jmo/3hCvmksOI/pELmGIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=F1w37Lm8; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=gTjdReDw; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1779357585;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0nHbVXywPYI+m+RM8iHAt2Jum4qcWT4EHlZtaJMwkXs=;
-	b=F1w37Lm8o+IREg/in8sb7cU+DPvZa1LfCummFw1SR9Q+z1u00PZu4JBDpzb9D1sl+3TtxE
-	+q4/w6J12NvAj3hRMGxnjYkBO3fb2Zu2g1h6bE2ggrP8HsZn3LxRPYdjQcS07Fu5iwDIjM
-	Cj0+jzbTIfSc0zs/4rxeBvv11KM8WYo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-668-CB3_6s63P9GGdxhAN788nw-1; Thu, 21 May 2026 05:59:44 -0400
-X-MC-Unique: CB3_6s63P9GGdxhAN788nw-1
-X-Mimecast-MFC-AGG-ID: CB3_6s63P9GGdxhAN788nw_1779357583
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-45e80183514so3845625f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 02:59:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat.com; s=google; t=1779357583; x=1779962383; darn=vger.kernel.org;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0nHbVXywPYI+m+RM8iHAt2Jum4qcWT4EHlZtaJMwkXs=;
-        b=gTjdReDwFKA4HsVqXRe2AAl8kmGnQ4McauCljVKF8+A9W9WSsHbdSiS6fwUUdQjOyJ
-         UTztfFwdyYziphv/6s2oX3vf8c9EoDJMTbu4O4uQuhNm9QhTmqx8JJs2+tuzsH4jOSCq
-         SgNHIgNi/HeqHqBwYYFim/HyKs+xVQyjD4vSAoia9HssOkmUR9TKbR7yuxpfEj6BpG66
-         xIFf/mcoAt7gxMD03KdOe0YFpRURl9aW6FXk1JyTP0J9xrds1bAH58VM56yUxAxs+GYa
-         LflYsxem9gyvhGETtxhKrWm+I2XOlMC3+j6V9VuwRyKJ5WGxYwerJVcgcvdR0FaTghQ0
-         Pbuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779357583; x=1779962383;
-        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
-         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0nHbVXywPYI+m+RM8iHAt2Jum4qcWT4EHlZtaJMwkXs=;
-        b=AaxlPcxDp7+fG/zLJ3OrgCzvzEUpl5YvwbkLyAOB7L4eiWiwWLY/5UpdOLaMEnH2RQ
-         0+LQQ7J38C4nJmt7c8H5wyFcJn00cYH0hB/Y3hXgSiq9tRgXrIgvz3YK5+aMVBxCP/Ab
-         of6GpGYbNcnkSCOZRxmV3qLnYeAGzUhTN6LXJI7XdpmoCkR9S7RhlC06842vFhkGj4wZ
-         KJA0Xpy/fqNLxeiwplnx4HB68LyjDvzKIUuJCah5nlKiWXbxjpRIQtPonTNr25cU+Ii5
-         8ecOshNuT7Pg+Who9mavFz1xNdxtOxXSZXM5v+o8eY0UGTMRRw+AbHBvmwJbP7xdQg0D
-         Nr0g==
-X-Forwarded-Encrypted: i=1; AFNElJ+VtaZKyfoZX9suyaR1YMMlohJNRvNPCObD0JQyKovHl246VMLQEPDIuRoXm1TXrtlF6yGT+/x53NOO70Ce@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxu5lSPfHMIXX2jLuz4OLwpzbyUJ806q4qXC7VJc8/Fkx5wv60W
-	jpNtQcHjwYq50wzmjs7ydRjW4GKGOS5F92wFmW4jc6JrUekqH5WDEQB33wZLv1wYkCUzFvu6SyF
-	AoxPaS4G58BinmxLVfZZoc9jHP2prZ9iIeG0wg3qy8Eh/KJfv+JLd57exRYTyy4lbly4=
-X-Gm-Gg: Acq92OF+s0irBI5yHxTvt+FQ5JD1BeBL5xr2A/8/1fap+kJLVKd/i5MsbU/SvOIE4zX
-	9Vxl2MZSiNhevwRWh/DZcgZEB1B2WIi2nWdE2tDTKnGyOwntt0JUVcJjZAh1Y7AHj/E4OeydqHS
-	zWe+Lw/U3zTtcyaZzBfS0PgMf63mnMFK1ZPm3kp8Lsej9k2ss7EaqM4TT1MM+XiADmI9++d3Ag3
-	yqEzzg9CP89Z2CaW+A4scMKMsPYnpx1X25w8OxHRiJQtGGu9LXDhmJ3Rvrm9pNfdUZJ56Ir26ps
-	WjFF2+nNK9DE3cQuz3teFEbOdocndBKLws1dLYlmYjjsudWg8cVANQV0+9YTm2E82TnIVGcN0IS
-	oMbmrC8lFlD0AW48muZZcDxYC+AlTMBD3ZrECBlnATktrS9ZroTDgURp6pJxFhI04a4gtWizflh
-	7cR3WY
-X-Received: by 2002:a5d:588a:0:b0:43d:68ad:3b7f with SMTP id ffacd0b85a97d-45ea3ae68b3mr3967853f8f.21.1779357582720;
-        Thu, 21 May 2026 02:59:42 -0700 (PDT)
-X-Received: by 2002:a5d:588a:0:b0:43d:68ad:3b7f with SMTP id ffacd0b85a97d-45ea3ae68b3mr3967757f8f.21.1779357582159;
-        Thu, 21 May 2026 02:59:42 -0700 (PDT)
-Received: from localhost (62-151-111-63.jazzfree.ya.com. [62.151.111.63])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45eaa7d9e2bsm1634922f8f.10.2026.05.21.02.59.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2026 02:59:41 -0700 (PDT)
-From: Javier Martinez Canillas <javierm@redhat.com>
-To: linux-kernel@vger.kernel.org
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, Alain Volmat
- <alain.volmat@foss.st.com>, Andrzej Hajda <andrzej.hajda@intel.com>, Andy
- Yan <andy.yan@rock-chips.com>, Brian Masney <bmasney@redhat.com>, Chen-Yu
- Tsai <wens@kernel.org>, Chris Morgan <macromorgan@hotmail.com>, Cristian
- Ciocaltea <cristian.ciocaltea@collabora.com>, Daniel Stone
- <daniels@collabora.com>, David Airlie <airlied@gmail.com>, Dmitry
- Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Heiko Stuebner <heiko@sntech.de>, Jani Nikula
- <jani.nikula@intel.com>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Jessica Zhang <jesszhan0024@gmail.com>, Jonas Karlman <jonas@kwiboo.se>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Laurent Pinchart
- <Laurent.pinchart@ideasonboard.com>, Liu Ying <victor.liu@nxp.com>, Luca
- Ceresoli <luca.ceresoli@bootlin.com>, Maarten Lankhorst
- <maarten.lankhorst@linux.intel.com>, Marijn Suijten
- <marijn.suijten@somainline.org>, Maxime Ripard <mripard@kernel.org>, Neil
- Armstrong <neil.armstrong@linaro.org>, Raphael Gallais-Pou
- <rgallaispou@gmail.com>, Rob Clark <robin.clark@oss.qualcomm.com>, Robert
- Foss <rfoss@kernel.org>, Samuel Holland <samuel@sholland.org>, Sean Paul
- <sean@poorly.run>, Shengjiu Wang <shengjiu.wang@nxp.com>, Simona Vetter
- <simona@ffwll.ch>, Thomas Zimmermann <tzimmermann@suse.de>,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH v2 0/8] hdmi: Add common TMDS character rate constants
-In-Reply-To: <20260520144424.1633354-1-javierm@redhat.com>
-References: <20260520144424.1633354-1-javierm@redhat.com>
-Date: Thu, 21 May 2026 11:59:40 +0200
-Message-ID: <87o6i913sj.fsf@ocarina.mail-host-address-is-not-set>
+	s=arc-20240116; t=1779358210; c=relaxed/simple;
+	bh=4zJMOmYPrPkZPfbycVIOw3mkRfSp8H1UbAhRW9NXmXs=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YKe/gOfeHPzJV1FvUWVlbwUlhRXcyEO8pPPTn9RCLL2emmoBbD+RyCmtckFluCnyMMP2tfwcKLwSMrUT0nZe7FJnik4igGyVg261uC70fMTHSZrAB7vVe75yVfVFIVt+wqHHDZ2xABa1odS50MvchfHXVOmtDrWBAZr/rA8wpz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=okq0EC+E; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE341F000E9;
+	Thu, 21 May 2026 10:10:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779358209;
+	bh=ZeXhl0TRrGYSsEZfs+4x0l3uj5e6YbKaAiSvSza6FxY=;
+	h=Date:From:To:Subject:References:In-Reply-To;
+	b=okq0EC+EJjMhNoSfVdE1iCsiL6EFtXZpjy2usMT+6gxjcqsdNkiMyigjtrCGorbs5
+	 ipsXm38tXHr1j8rX3IbV/X1XTdwtVKcatCSrB5jD2HQXeDWoaS4pDf6pD9rH7ZRzlU
+	 MkgJPe7+X3jGLkY54PquqVM27yTfKV+Qk3SH872bvWNVB+Kl5olkpliF0tjS/EbNkE
+	 bVyvSdU68++0tcVcbuVXp/Sl06MOgC8IOOgm6qyJ2LvkHq742M+TpS3L1UM3XJcCE0
+	 YV5lDZqvF39BBl0eR4lNVK+1pDOOsAs1bbj/FCW5UQyoTqjvsHMqqkP12I2s1k4K4s
+	 HUz9ABIdtst1w==
+Date: Thu, 21 May 2026 11:10:02 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Akash Goel <akash.goel@arm.com>, Chia-I Wu <olvaffe@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Rob Clark <rob.clark@oss.qualcomm.com>
+Subject: Re: [PATCH v4] drm/gem: Make the GEM LRU lock part of drm_device
+Message-ID: <d7764149-e710-4133-894c-67471e0b5b3c@sirena.org.uk>
+Mail-Followup-To: Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Akash Goel <akash.goel@arm.com>, Chia-I Wu <olvaffe@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Rob Clark <rob.clark@oss.qualcomm.com>
+References: <20260518-panthor-shrinker-fixes-v4-1-1920234470d5@collabora.com>
+ <20260518165225.145175b1@fedora>
+ <a1920a93-ac61-4246-a57c-b10bada3d70c@sirena.org.uk>
+ <20260519135153.42c3f4a0@fedora>
+ <ag7LVI2mia92Oa8L@phenom.ffwll.local>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="297fsb/DOnRjNva8"
+Content-Disposition: inline
+In-Reply-To: <ag7LVI2mia92Oa8L@phenom.ffwll.local>
+X-Cookie: No shirt, no shoes, no service.
+X-Spamd-Result: default: False [-4.26 / 15.00];
+	SIGNED_PGP(-2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[39];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[linux.dev,foss.st.com,intel.com,rock-chips.com,redhat.com,kernel.org,hotmail.com,collabora.com,gmail.com,oss.qualcomm.com,sntech.de,kwiboo.se,ideasonboard.com,nxp.com,bootlin.com,linux.intel.com,somainline.org,linaro.org,sholland.org,poorly.run,ffwll.ch,suse.de,lists.freedesktop.org,lists.infradead.org,vger.kernel.org,lists.linux.dev];
-	TAGGED_FROM(0.00)[bounces-109014-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	DKIM_TRACE(0.00)[redhat.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[javierm@redhat.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-109015-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[collabora.com,arm.com,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
 	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,ocarina.mail-host-address-is-not-set:mid]
-X-Rspamd-Queue-Id: 3A0025A31BF
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sirena.org.uk:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: C9D9D5A3073
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Javier Martinez Canillas <javierm@redhat.com> writes:
 
-> Several DRM drivers define their own local macros or use magic numbers for
-> the standard HDMI TMDS character rate limits. Maxime Ripard suggested that
-> instead these common rate constants could be included to a shared header.
->
-> This series introduces these constants to the <linux/hdmi.h> header and
-> replaces the local defined constants or magic numbers in drivers.
->
-> I split the changes as one patch per driver, so that these can be reviewed
-> individually and merged at their own pace.
->
-> This is a version 2 that addresses issues pointed out by Maxime Ripard and
-> Dmitry Baryshkov.
->
-> Changes in v2:
-> - Change naming convention to HDMI_$SPEC_TMDS_CHAR_RATE_MAX_HZ (Maxime).
-> - Define the constants in <linux/hdmi.h> (Dmitry).
->
-> Javier Martinez Canillas (8):
->   video/hdmi: Add common TMDS character rate constants
->   drm/bridge: dw-hdmi: Use the common TMDS char rate constant
->   drm/bridge: dw-hdmi-qp: Use the common TMDS char rate constant
->   drm/bridge: inno-hdmi: Use the common TMDS char rate constant
->   drm/sti: hdmi: Use the common TMDS char rate constants
->   drm/sun4i: hdmi: Use the common TMDS char rate constant
->   drm/msm/hdmi: Use the common TMDS char rate constants in 8996 PHY
->   drm/msm/hdmi: Use the common TMDS char rate constants in 8998 PHY
->
+--297fsb/DOnRjNva8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Pushed to drm-misc (drm-misc-next). Thanks everyone for the feedback and review!
+On Thu, May 21, 2026 at 11:07:32AM +0200, Simona Vetter wrote:
 
--- 
-Best regards,
+> The assumption is that committers will ask maintainers for help if they're
+> trying to push a patch that results in tons of conflicts when applying
+> (since development should happen on top of linux-next or drm-tip). Could
+> probably improve that a bit. But also, often it's only clear after
+> applying that a fixup is needed, and then it's pushed already. And with
+> committers there's no undoing pushed patches. So it's just part of the
+> deal with having lots of committers imo that history is a bit more a mess
+> at times.
 
-Javier Martinez Canillas
-Core Platforms
-Red Hat
+What I see frequently in -next is people just cherry picking the fixes
+into the development branch instead of doing a merge, this leads to
+pointless conflicts as soon as someone adds new code on top of the fix.
+I gather the stable people also aren't terribly enthusiastic about this
+workflow.  There also seem to be repeated situations where people mail
+me saying they're going to introduce a bunch of conflicts that are
+sufficiently non-obvious they're sending me fixups in whatever random
+form, even where people seem to think it's a big problem themselves
+there seems to be a helplessness about actually doing the merge.
 
+--297fsb/DOnRjNva8
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmoO2fkACgkQJNaLcl1U
+h9Cu5Qf/WnjWw7DjKwglXy52V//1/IpDdLuFDCPJ0FnN7pa0uy+3CM1jmKYjNGh2
+2/zrv+0yw4wjddi48ikA5Hbx6jDe/Z2aqyuSovglKmPYToyp4BQgaiFxjM9mFLAM
+60VZHPzOGUdB+ANu1nc3J59tCJkaJA1YYrRdIKbjgZdvZ1axUxRFUWeB9AD6/75e
+ulR+T245pWRI+WTipd0Ce8lJxb75/nG2+Pl8HreR1zWORI6wXuQrRPs6YqU3irO8
+03M1bxVCOU4AnY8OHoyhOa34FQ86Ak9Cp6Jk9cu/y13bzbkJ4mUkx+RVHQdADyDp
+lvHBOrK9io2gFUL6feDQ1+23MzOXDA==
+=/K87
+-----END PGP SIGNATURE-----
+
+--297fsb/DOnRjNva8--
 
