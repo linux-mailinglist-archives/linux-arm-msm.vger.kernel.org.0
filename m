@@ -1,101 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-108905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kF1AO/ZbDmo4+AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108905-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 03:12:22 +0200
+	id ECTdOShcDmo4+AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 03:13:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8109059D8E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 03:12:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4856E59D906
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 03:13:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8512230AFC04
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 01:10:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 380C530D04F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 01:10:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 559182C15BE;
-	Thu, 21 May 2026 01:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC65A2C08BC;
+	Thu, 21 May 2026 01:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AeTJ0U3l";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="E3yvDGuA"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RvtUmOFa";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XEgEIMtU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99702C11E4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 01:09:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD192BDC32
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 01:10:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779325800; cv=none; b=ZoMYijM2oRYv6XJv7jol9sbpt8O2RNCAyKaXBIqrvIgARkZXNxXKjH95PjkWI9BiD4hixcRvMmGS46ITgCRVValdfcpD9MbND6OCeitS+j7NyB4XOzii/9DLhe6SV2lcGOyyExUv8AHaC2WSmfyjt4yvm9IX8wJJxPG74UtFElU=
+	t=1779325803; cv=none; b=svS/EgTWkIfCxDBtaSSnm0P6SFAnzsYUhFvm+TsGIf6snYq293lZXctUUIe8LYlfev6YYOXXC2PA3u6P07nRMgyQoNc224TXBFO8pRCELn0jqJprkWPIz0s63pm0T304dwbbJbBaN9Vir/B4ARJ1w8H44jF20QUpD6Ni/JxCLyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779325800; c=relaxed/simple;
-	bh=RFXz2fENqdLVWccMwug3ybapgQvtvrvDR4bLa4G95Wk=;
+	s=arc-20240116; t=1779325803; c=relaxed/simple;
+	bh=sHaXDiFQgCt9FlMExLxzDgxjno95mKMkDP35FvdVBDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rUcafH8GFGS2jiOKfneGW/wJlWxi6LYIbudTj2iMOsz50sn5gKTDyi35DZUKpJ5+jrC+XrWay5EcL5CVLnr0PZmRs20FW8YvLXqY2TjTsd2oqhhpgNzcKGSeJ12kM46y5vKsiwwcRtLhXNEzW7PSSsC1x2at+9C7duPcxv9xPqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AeTJ0U3l; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=E3yvDGuA; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=JHNMX8UE4no6VS95TtxOrgdyLJ8sjnvzssSXa74GjlkAAYA+rUno3kDsOFj9s9uLtl2/Mz/kFeFNoqNYbVYTa7ytCnqP6zWQmSQ8DPz/XMEBN1FA2PdcIk9snFnXCsBV4Sd4H+EMd7us/yxtwkxFBwXvc77qvipirDfPyiWbs4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RvtUmOFa; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XEgEIMtU; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64KGFteh1177853
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 01:09:58 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64KKP8ft316412
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 01:10:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=RAFhQHBj3Lj
-	iJryw0ojmCoWQ4BfJtI8S4Cf5s+zUFFQ=; b=AeTJ0U3lg2EM6QPLXxU6coHV1f4
-	ecTy3rgtK9Ufuw3WIyRN2h9RxTGviqISV83pGohZJOgSdKohtUGKqlCwDfiRqOCO
-	/I/8e9JjxyhKzTUtDYdGhees7Oj+g8RzaYrYkfpk5f+c/luRyjCqtVgnA0tcDdzE
-	Ln4F7zwrFjFP9TypYSVp6LFZGvUnEaRCRP2qfyk2pd/I/ig5H23hOwG/lp2OCNUp
-	oQlz/nfC9KLaGnS+pfrZgVZxEY9dmLVvLdjuG3J2X7QCexvRrMf4bJEd2euCyLvR
-	/R3fxd9Hg6QK4IkSidR5DjqidFiQwT8sYzW73ooL2/k9vIXrmseAf3Nx5Ew==
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com [209.85.128.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9ap6u9b4-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=6dRmKU+5SKA
+	eTGqRwOTPOTFNGFIlyQSi7HHIupFI5YQ=; b=RvtUmOFagx+eHfpxxq6rjUTfilI
+	euKm7aBxgbzV3OT0CzQHG41jKBf3tmXSeJpOqcbEkZRVWNEE68GMiOWAf5UpvPC4
+	Y4DC72ITFVnisxFwPmHcGC3u7MTborwBg0CjY67UV8ox6E7Yzx7mv8/MAAwLtiFJ
+	jzTTE0qaDui360rDvUh5uIsVP/gPkCK5KFRAc5am9HodzF091HDqb+ZbOzsOvNJZ
+	Jy1i//VZW11+brqSO4IDNkclNsHarFAwFi5iQWgXxPwt/UEq99n4n9GM7qYdP+oc
+	rq2Eju3JxMo4cejU+UQ1kWXaQUbAuAtTKpRszrjajfRwCZlysDM+wWP9VHg==
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com [209.85.128.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9d5qtpjh-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 01:09:57 +0000 (GMT)
-Received: by mail-yw1-f200.google.com with SMTP id 00721157ae682-7cff695e4a3so53528487b3.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 18:09:57 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 01:10:01 +0000 (GMT)
+Received: by mail-yw1-f198.google.com with SMTP id 00721157ae682-7bd5c9e1826so80094027b3.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 18:10:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779325797; x=1779930597; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1779325800; x=1779930600; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RAFhQHBj3LjiJryw0ojmCoWQ4BfJtI8S4Cf5s+zUFFQ=;
-        b=E3yvDGuAH1Ue3g4E0wRZfb6NM1cOBIC0Xylzs7R4EqRLaEtTg47GVKje9bZ0D2awTz
-         lWMLq3b2GoPwMbGmHXLdwfgubRRdpfjRDLpgVKOhiWH/BvSNK5wUejp6oizbCNzmgI9/
-         iiLIWrFkCFbjfXsFOhYVfuKeD7cmBO4/9deapNIRH5zPmJ+eI6WAR7QBEQSSYqMOZ0Y2
-         jA4KsGklmunOgRmOY+dP7hmf9iR1dZtkBIRlxWcTHuVu+D2j3ZBt0+l7baXujBqxXbQi
-         SY+NAarOJ+D1EIvpm2hC5hx63TK6vCso2H6eu9p1hPtUu+pW0gVBKd+3cwd0S69Gx3dL
-         EcLw==
+        bh=6dRmKU+5SKAeTGqRwOTPOTFNGFIlyQSi7HHIupFI5YQ=;
+        b=XEgEIMtUcquy9MFM0oxEXfZSZww63VusKKrerY10ZF+POQghArIrBnMhYGfTfG5qWS
+         kL8d9A5EiMqlB9k2+igUdhZhXsTxte7OF8/h1xH6WsArzRb77vFcCPON2gKeBWHbMsMS
+         JMddp7AI+s4lirQyUFF6xaHQfVbI8g9DRMjz6UPYR8jkmVScEhWFk+eImoVRf3iuF9m+
+         IIavycYnq/75L19NGtvsRKvF+K9rigLLnOdwZH32mcDM5ExxsSInWcBFId0yScyVetfL
+         ekNDnfcc1QwKLrYnMviv3DMPE7I+5I8GbJB0v20dMuijKrSVNyEZy9Nc2P0PXFL1VJX4
+         y++Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779325797; x=1779930597;
+        d=1e100.net; s=20251104; t=1779325800; x=1779930600;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=RAFhQHBj3LjiJryw0ojmCoWQ4BfJtI8S4Cf5s+zUFFQ=;
-        b=GAjAo+HYpasS+M3sCj+liznR1bZ1WzHuIiD3JcZV4Jd3F0vPPIAO4+Np4HNDbMBeZ5
-         qpS2H6kZ0UGaAolKWef4r0us/pYymSwh0QpoPotrNJqEY79sfWhDKROuWQN/fVuULWqQ
-         LUAvoF5qU3d/Zohjd0OYnZ7JBFaT4j7u50B/NK7/vOd3cNhoW0mQKpba+LUaWWXrp/T/
-         Zu/Vn8uIiERk2RdUqWtzavQ3yTvwIqGrtHi3Ef2J2oAm3TClSGinIgsyqz7jvyTWBLgQ
-         2vQ3HiYhihV7cdxt4b7LpJJuVNEUnL8H7IxVHJr5d0+riyfyF1a4eLUJQeeyt7QHGfuJ
-         67sA==
-X-Gm-Message-State: AOJu0YzV2zEgwvg4jeHDbZxIE6RpL4dxrRWLkbkDTLnqe1JdCjsx9T21
-	bOQISOQYVPAXrN/rUb/H0W7Bf4iSINN1N8JboyaHXfTEi9FKZ9ueszKfxiygpxiNecI/BSRSnry
-	y7RhcYg+QX4NslNNPIPSg50LmDaj8Et0slk69KSG0tjcCD7qJ7TwYnNonEQxikFziD0/5TREfV0
-	o4
-X-Gm-Gg: Acq92OFGK3QTgoPqJ8XqIFzWPID8HwczdMbigYOxosAPcI2idejo4TpPqQM1LwLmv1r
-	TDDrvriC6rPYMN9I4UwMJ4EUbJeCBf9cDWD4kTcJ/iSrgCzSgGalWHwh96o3mG8T0Z3/wM6w4Yj
-	jsZIwARIYgV4wXDo/UEnQ/sWiJa9QMxAvmsnIjiUFN3HZCnrkGctyUOiey/fVHBdOESPSiChGpy
-	ms3TTQ/RrNkUv42DK7MwyHsWxVg7RAN6MZGluGtN98xDTe5+Suq7ykr55+40kmS2gb8T7Vnodz6
-	b8flMhXvN60D9UzI+dBuKyKJ90w6BHvARn5brMj5dB9vwYxJllcASB20GJ40wJx5ck/PAfzEw7B
-	Vy4+WCbtWpR5b9MbRR3zJmsn2uPgCmparegMqYFoFsvdS1vXqttai21Yx7WJ4KyNyoY0icDoxA8
-	6Vrom7O3nJv0tR2bs=
-X-Received: by 2002:a05:690c:498b:b0:7cf:e22b:fc49 with SMTP id 00721157ae682-7d20c047039mr8476437b3.31.1779325797073;
-        Wed, 20 May 2026 18:09:57 -0700 (PDT)
-X-Received: by 2002:a05:690c:498b:b0:7cf:e22b:fc49 with SMTP id 00721157ae682-7d20c047039mr8476247b3.31.1779325796610;
-        Wed, 20 May 2026 18:09:56 -0700 (PDT)
+        bh=6dRmKU+5SKAeTGqRwOTPOTFNGFIlyQSi7HHIupFI5YQ=;
+        b=Xbvqh9fM0rYTOi556KSECdDM2ry7LuO3eyutbueh4F44Lx8d7p0WJXpR+6MzWOibDk
+         63NlBX1pC+x+B2aP6HSLYl30cwJ5qShuQbjbZEgdjDjibFh9vJWocWZXKladGQn7Jh02
+         mzvYz5iFm5RFSNuFp5DSVFne8bbx9mDuJDRjwHVRgrMePRZt1vOX2SbF/Zg+Ava39vvk
+         zyafycwEtfWu2SUK/oAq6OIhtyc4PE+twOcDsMryFJHvhlwZgvywywUzYd/7GHF787O+
+         ouFUnuCzayCoTHFSa995+B0DlxxYL2+QgAltsxx5ukzfoaoZjKxUyGJ7k230l+ske0ae
+         dPSQ==
+X-Gm-Message-State: AOJu0YwjkhilxJwroqwelocVLebkAtx9/++cQj0EtdwcJKfomCrz3b/X
+	pRTmHKBT/tuO2WGhBV7gJZ5UIdbswllOXiXHtmDI+rMEza70tR60WblEauPNNejiG2NRgtjbQG4
+	0KwEtKe3MzLQ+ZSAq3pfDhsUOca5cM36CkTTWaaBX16ZaCL7wGJY2IWZQzaETZiOejX9/oSr3Af
+	/g
+X-Gm-Gg: Acq92OGlVeH064hvfbS4597rLgRqmq2v+VjktCN/FwwH7YESHB7seqTYfb7e8oy7oQy
+	SjDRj6NYnRqga2E7T7AwqRiOrLnlPhlUlT6ZV+cVgj/uoxEI3x9ziPMMol8XCyF8i3+JrL/lHWS
+	YtIedsxR9E4Nxqj2BwkUwnPEUx1hqEMFIHlSXKRmvFVKmRH0gGgf6lemCTfT8LpJzaxOkTpgsJz
+	k/YxDVzjd/eRH8Xe2Kcq5ytz2Gr5anbOyoOfGXRaCG/wzKSHHsTWy2GEj/S84jyfzd6IQm+i4zJ
+	tlsc3XSANe+Knap27W6zO3fsluWJ2p/96s1zeZ3EJRGqXtK+FuM3JBEdmBWcf42AhdVmmI9ZZ6s
+	3a4uaigRV6zj7sE6hcLUmAx2sBB1r/qDRFch82yfHUn8MF9FNIa3V8mu2oVXps+tczP94KM6LBF
+	vWISj5uhI0L4E5QWY=
+X-Received: by 2002:a05:690c:9990:b0:7bf:b4a:179b with SMTP id 00721157ae682-7d20d50e192mr7151117b3.18.1779325800426;
+        Wed, 20 May 2026 18:10:00 -0700 (PDT)
+X-Received: by 2002:a05:690c:9990:b0:7bf:b4a:179b with SMTP id 00721157ae682-7d20d50e192mr7150837b3.18.1779325800058;
+        Wed, 20 May 2026 18:10:00 -0700 (PDT)
 Received: from scottml-Latitude-7455 (107-198-5-8.lightspeed.irvnca.sbcglobal.net. [107.198.5.8])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc991c98d9sm60851307b3.10.2026.05.20.18.09.54
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7cc991c98d9sm60851307b3.10.2026.05.20.18.09.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 May 2026 18:09:56 -0700 (PDT)
+        Wed, 20 May 2026 18:09:59 -0700 (PDT)
 From: Michael Scott <mike.scott@oss.qualcomm.com>
 To: linux-arm-msm@vger.kernel.org
 Cc: vkoul@kernel.org, neil.armstrong@linaro.org,
@@ -106,10 +106,10 @@ Cc: vkoul@kernel.org, neil.armstrong@linaro.org,
         conor+dt@kernel.org, devicetree@vger.kernel.org, val@packett.cool,
         bryan.odonoghue@linaro.org, laurentiu.tudor1@dell.com,
         alex.vinarskis@gmail.com, linux-kernel@vger.kernel.org,
-        Michael Scott <mike.scott@oss.qualcomm.com>
-Subject: [PATCH v2 2/4] phy: qcom: qmp-combo: track whether the cached typec_mux mode was committed to hardware
-Date: Wed, 20 May 2026 18:09:33 -0700
-Message-ID: <20260521010935.1333494-3-mike.scott@oss.qualcomm.com>
+        Michael Scott <mike.scott@oss.qualcomm.com>, stable@vger.kernel.org
+Subject: [PATCH v2 3/4] arm64: dts: qcom: x1-dell-thena: mark l12b and l15b always-on
+Date: Wed, 20 May 2026 18:09:34 -0700
+Message-ID: <20260521010935.1333494-4-mike.scott@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260521010935.1333494-1-mike.scott@oss.qualcomm.com>
 References: <20260521010935.1333494-1-mike.scott@oss.qualcomm.com>
@@ -120,28 +120,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: fFdLy1y1zEzMUEqGPMwYLRLYEemjzRz8
-X-Proofpoint-ORIG-GUID: fFdLy1y1zEzMUEqGPMwYLRLYEemjzRz8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDAwOCBTYWx0ZWRfX42R1EcWfsHoG
- KwBo9sy84HhqYhbFNqOM9IUUKp0Yn6H3pCQapOpmxBV13/wHYYm6iUtkbWNrokvndvtrJ6boOrJ
- QGcD+HL4LK/kSIf08LaNnlBPwlUQHjLiLAuD/OSa78uALwSZitBvGzXX59OG9Kp4MbT9pFdXiYE
- Dv2nrWlip6aI0MoY5NskZZtb8MRFac4OLFDlV+vsoWw81btDjgM1ot8wX6gVVITc3/u03L9hdzS
- A7KKjuAA77e09833IjSXXEIi3UP8qPFAmMkbEyMKq2oAZAiZTTzfybwaEjwdtv6MzOCEHjMpft9
- fFwBj6REfiyl7+LhPn6HnEKdFGML6l9H9P8u59qrlVTs+DicholgrQUDX7Xt305n0vA27Yj96Yb
- HXo07RyMPY6EkD9E5PAInNLHLj601OR4bjybO4Loaif4V1TvIu+mF4kZ5N1CfcZZ6O+HeCiTqrr
- 0dugrEsO/QzeXcE8hoQ==
-X-Authority-Analysis: v=2.4 cv=FesHAp+6 c=1 sm=1 tr=0 ts=6a0e5b66 cx=c_pps
- a=NMvoxGxYzVyQPkMeJjVPKg==:117 a=cdagev08qavQYXHyx3V8vg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDAwOCBTYWx0ZWRfX05vyGTwGQktQ
+ ZhZ9PMjE86M5vbu7DNt0HlZNfKScOLigZl7mw++4otHsQd1TBkA4rSyBe5zTJDWYpHT2twhg+hK
+ OknAJapZNVLdUJpZmUI1IY+Li850WPc6M4wuZM79Z+T6g6iTGDRJnTgWI930xov+1OGsfU+qj1u
+ TB3EoyelqTvW17z4DRD8ARP/FoIwnoew9m/boWw9LPv3TkwlR8vZm6O9FTOk0LxFOPAgg5WkFb7
+ Bk+3D6HA6Ci63wL/UQVWGNtEhaW+grYmrJ4stOYZ4a96Zj4At39a/PaxCeT1boffcBx+6zHwH6G
+ RyLfavj7YR0nsc+FDBbb19gfk1KrBje9pk7MdcKaEAYU9g9qPaIC5CzNm4bO0aU8cQJxBQ8ScYD
+ 6/lDVTjH/fWMolc/CBkTD40jtpWOAe7gJFpLdPT0215UMbGP5cM4NIjUnNWZ4CCXbQkRxTSZKQf
+ HRlMYwpTMuEm/w9b6Cg==
+X-Authority-Analysis: v=2.4 cv=QshuG1yd c=1 sm=1 tr=0 ts=6a0e5b69 cx=c_pps
+ a=g1v0Z557R90hA0UpD/5Yag==:117 a=cdagev08qavQYXHyx3V8vg==:17
  a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
- a=GhrnwN_qMCjkbgjgO0kA:9 a=+jEqtf1s3R9VXZ0wqowq2kgwd+I=:19
- a=kLokIza1BN8a-hAJ3hfR:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=CbK1FIr4-MOfYfEwsVEA:9 a=MFSWADHSvvjO3QEy5MdX:22
+X-Proofpoint-GUID: vXmZhm3NRdnZeZo4szO6ko1n3sHBDEWs
+X-Proofpoint-ORIG-GUID: vXmZhm3NRdnZeZo4szO6ko1n3sHBDEWs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 clxscore=1015 priorityscore=1501 phishscore=0
- bulkscore=0 suspectscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 clxscore=1015 phishscore=0 spamscore=0
+ suspectscore=0 bulkscore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210008
 X-Spamd-Result: default: False [0.84 / 15.00];
@@ -156,9 +155,9 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_CC(0.00)[kernel.org,linaro.org,oss.qualcomm.com,lists.infradead.org,vger.kernel.org,packett.cool,dell.com,gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[20];
+	RCPT_COUNT_TWELVE(0.00)[21];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-108905-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-108906-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
@@ -167,121 +166,62 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[mike.scott@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 8109059D8E2
+X-Rspamd-Queue-Id: 4856E59D906
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-qmp_combo_typec_mux_set() updates qmp->qmpphy_mode (the cached state)
-unconditionally, but only reprograms hardware when qmp->init_count is
-non-zero. If pmic_glink_altmode (or any other typec_mux consumer)
-calls into the PHY before DWC3 has performed phy_init() -- a real
-ordering observed during testing of USB-C role-switch enablement on
-Snapdragon X (X1E80100) -- the cache transitions away from the
-probe default QMPPHY_MODE_USB3DP but the hardware is never touched.
+The l12b and l15b supplies are used by components that are not (fully)
+described (and some never will be) and must never be disabled.
 
-Subsequent calls (for example on partner detach, where TYPEC_STATE_SAFE
-also resolves to QMPPHY_MODE_USB3_ONLY in the !DP-SVID branch) then
-match the cached mode and the function bails out early with:
+Mark the regulators as always-on to prevent them from being disabled,
+for example, when consumers probe defer or suspend.
 
-  qcom-qmp-combo-phy faXX000.phy: typec_mux_set: same qmpphy mode, bail out
+Note that these supplies currently have no consumers described in
+mainline for dell-thena beyond the audio codec (vdd-buck/vdd-rxtx/
+vdd-io on wcd938x), which can release them when the codec goes idle.
+The board-level gpio-fixed regulators that feed the Type-C retimer's
+VDDIO and other rails are not described with a vin-supply link, so
+the kernel cannot keep their parent LDOs alive on its own.
 
-leaving the lane mux in whatever configuration it powered up in. On
-the Dell Latitude 7455 this manifests as the SS lanes being left in
-the default state when the first altmode notification arrives during
-DWC3 probe, with the function bailing out on every subsequent attach.
+This mirrors the same change Johan Hovold applied to every other
+X1E80100 board in a March 2025 series; commit 63169c07d740
+("arm64: dts: qcom: x1e80100-dell-xps13-9345: mark l12b and l15b always-on")
+is representative. The dell-thena board file was introduced four months
+later and did not inherit that change; this patch closes the gap.
 
-Track separately whether the cached mode has actually been committed
-to hardware. The bail-out optimization is only safe when the cache
-truly reflects the hardware:
-
-  - qmp_combo_typec_mux_set(): bail only when the cached mode matches
-    and was committed; clear the committed flag whenever the cache is
-    updated, set it again after a successful reprogram inside the
-    init_count-guarded block.
-
-  - qmp_combo_com_init(): set the committed flag at the end of a
-    successful init, since com_init() programs registers from the
-    cached qmpphy_mode.
-
-No behavioural change on platforms where typec_mux_set never fires
-before phy_init -- committed remains true through normal operation.
-
+Fixes: e7733b42111c ("arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455")
+Cc: stable@vger.kernel.org
 Signed-off-by: Michael Scott <mike.scott@oss.qualcomm.com>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 25 +++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 0db200292642..e28bc1cc7a78 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -2295,6 +2295,7 @@ struct qmp_combo {
- 	struct mutex phy_mutex;
- 	int init_count;
- 	enum qmpphy_mode qmpphy_mode;
-+	bool qmpphy_mode_committed;
+diff --git a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+index db291730130c..d6de4da02dcd 100644
+--- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+@@ -589,6 +589,7 @@ vreg_l12b_1p2: ldo12 {
+ 			regulator-min-microvolt = <1200000>;
+ 			regulator-max-microvolt = <1200000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
  
- 	struct phy *usb_phy;
- 	enum phy_mode phy_mode;
-@@ -3754,6 +3755,9 @@ static int qmp_combo_com_init(struct qmp_combo *qmp, bool force)
- 	qphy_setbits(qmp->pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
- 			SW_PWRDN);
+ 		vreg_l13b_3p0: ldo13 {
+@@ -610,6 +611,7 @@ vreg_l15b_1p8: ldo15 {
+ 			regulator-min-microvolt = <1800000>;
+ 			regulator-max-microvolt = <1800000>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
+ 		};
+ 	};
  
-+	/* com_init() just programmed registers from qmp->qmpphy_mode. */
-+	qmp->qmpphy_mode_committed = true;
-+
- 	return 0;
- 
- err_disable_clocks:
-@@ -4509,9 +4513,22 @@ static int qmp_combo_typec_mux_set(struct typec_mux_dev *mux, struct typec_mux_s
- 		new_mode = QMPPHY_MODE_USB3_ONLY;
- 	}
- 
-+	/*
-+	 * Fast-path bail only when the cached mode is also known to be
-+	 * committed to hardware. The cache may be ahead of the hardware
-+	 * if a typec_mux_set arrived while the PHY had not yet been
-+	 * initialised (init_count == 0); in that case the cache update
-+	 * below was the only thing that ran, and we still need to drive
-+	 * the registers when the PHY does come up.
-+	 */
- 	if (new_mode == qmp->qmpphy_mode) {
--		dev_dbg(qmp->dev, "typec_mux_set: same qmpphy mode, bail out\n");
--		return 0;
-+		if (qmp->qmpphy_mode_committed) {
-+			dev_dbg(qmp->dev,
-+				"typec_mux_set: same qmpphy mode (committed), bail out\n");
-+			return 0;
-+		}
-+		dev_dbg(qmp->dev,
-+			"typec_mux_set: same qmpphy mode but uncommitted; reprogramming\n");
- 	}
- 
- 	if (qmp->qmpphy_mode != QMPPHY_MODE_USB3_ONLY && qmp->dp_powered_on) {
-@@ -4523,6 +4540,7 @@ static int qmp_combo_typec_mux_set(struct typec_mux_dev *mux, struct typec_mux_s
- 		qmp->qmpphy_mode, new_mode);
- 
- 	qmp->qmpphy_mode = new_mode;
-+	qmp->qmpphy_mode_committed = false;
- 
- 	if (qmp->init_count) {
- 		if (qmp->usb_init_count)
-@@ -4551,6 +4569,9 @@ static int qmp_combo_typec_mux_set(struct typec_mux_dev *mux, struct typec_mux_s
- 			if (qmp->dp_init_count)
- 				cfg->dp_aux_init(qmp);
- 		}
-+
-+		/* Reprogram complete; cache now reflects hardware. */
-+		qmp->qmpphy_mode_committed = true;
- 	}
- 
- 	return 0;
 -- 
 2.53.0
 
