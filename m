@@ -1,309 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-108932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4MtCAtWzDmpjBQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 09:27:17 +0200
+	id UPkaDy+2DmrBBgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 09:37:19 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 975665A016A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 09:27:16 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id B49935A0363
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 09:37:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id A880A30215BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 07:27:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CB6043040FBC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 07:33:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F09A939A4A8;
-	Thu, 21 May 2026 07:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BCCB357D1A;
+	Thu, 21 May 2026 07:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O7lHyhut"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z6UQuBd4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71733815DD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 07:27:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140BD1D5AD4;
+	Thu, 21 May 2026 07:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779348431; cv=none; b=LX8Io+UN5cAj3VtT7X+mzh/L/ZL4SSfSUcRBDT//YB1yB4835aeRw3yl0d8wFx+pA3xENmHgh/pq6hWAPLTnEZpRSUcioAVOTbLtXInuFdIPcWg16/ImKi8Z9JSrHa/m3rEPAJhHaAiCVz9z71JFoeg4Cjsy/1FNG15oUjZb4VY=
+	t=1779348805; cv=none; b=qf3pGjLfkrHS/osU+1rtiheXR0dU9MYVrE/BxXUbwc83SBttO8YZxkKJXjn8T8WsztqCN1A0Xdr00gZHUijX2TNl74QeYltnIQITeWgFu340RJMQCjh5ehkTfPvUNwKktk6aELPv5KA3CH60T5sVOcbESAYrl3PY+VOjm9hHdsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779348431; c=relaxed/simple;
-	bh=b+dsCjQobQVJSHwz4J0dobN/Ng1Ay6rcNNRtQ8SNH7E=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=fx9Tkkvm7Yaa9g9spH0IAFWzsjv4DAjGpiClavEABOn5EU1QGjbjF0sR5GR6LlMvCiP14evwNoIV+/s1WZDDGbXVN7n+kyTGlFNOA6MyokoZufEosIL+RL+X3gDYd/fP+OJlwJ1jGdddEIMPVmp0WaKowEfKRPmPHwBbs9ixffI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O7lHyhut; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-44ce78ab5feso4858840f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 00:27:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1779348427; x=1779953227; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MXHtGnnOcV5ddtG6N7wO967d73FTdnEIMjnmhjZWCNc=;
-        b=O7lHyhutR1gGgHCFCKLwqVWqdRwcQW8xUEJ2S+pv0lGIIwqEigo+FNvSp/BrVuKlOH
-         pBDyngY1l1aAj9cl/F74vtt8lhT7jIA9JZQo38pztxwsPIZvWHSbrMNGrj2uvkx0AHsB
-         Lru9KDGLuDWZ2iP6cXgC/GvoXLdzV+vsjDKxtdCqNC2J7gXpAYPcQK+S86xpuEtawBl7
-         dbt/zIRH1qyADGDZG/pvaRldTKZMqz59nCbnEHJ9vx4XSOYagm2fKVs4E/ySGAlcbuBe
-         pCxi5wrsGCW8nyjhu/Jyo1EH5ItPbVX5wQOk409JFt/I59BhVzqG8R6mULo+MY7lafxj
-         rr0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779348427; x=1779953227;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MXHtGnnOcV5ddtG6N7wO967d73FTdnEIMjnmhjZWCNc=;
-        b=NVsyZJmbG5Wje3tEuQug5PvM4Kv37GvubjjZ0nHV5nAaPqe/YHTF65BIWnB5hFRQM3
-         K7bejLJKwIjUZdZNzucurTC6kI8o8qouV0SbQcfzzMIzGVe2dQLFOYK9R8E8TSOiye8R
-         sfbmjUwAgUTditn20xVuM8D9trL60HJK2umMsD3vQaBss+LgxYMO+Sl++4+Rvh1hGo9C
-         +IsP+qYwd6tdrxEI40Iw50KhijdeiEfihO3au4fdv71jXpkdeuFieTIK3J4nIQTSQHyc
-         njILqz6GhtfcbmEtnR0igOCsRnQgD5gfCeW0CkitjDWb4Xc0YoXSWbh17xc9W5GEZhXI
-         +QDg==
-X-Forwarded-Encrypted: i=1; AFNElJ89fyV4pUGEBhk1/wrtP2WD91OkGhAWv759FeWnVYA2YhwuRT098M0bzFdeS423yz+/kEyY1GuncB6z3vdY@vger.kernel.org
-X-Gm-Message-State: AOJu0YzoK/bbpKO/ZnaT6DIk19EN7HO+dgfTabGnnJg8zqp2Ro1YcZbS
-	bM7ZOODN6vQS9os07GEUWEQYHMWjlnKkUvWFUEOnY0YHCBbi60f8tjKdbq252XsDZVr50Bq7mgd
-	umPXu
-X-Gm-Gg: Acq92OGUHsLm9hVBZq74uL+Do/GNG6H/rJiYW2AEkkhGPkvMAR6krSNO3aM4xrcJDx0
-	UZOISc5E7BM2JRGD0a+ElEEDE6Yk6hcH7CSClJIgg/WDGfvTSoEWzZguBj6XSAjIceowT43f+JA
-	zxtOTo7xQFz6LjkPU/igPPVQMpT4Y/UgMGujPuLWuMRFgupE/N9GUTvQvZ9CKEZyV+x2o5edSxH
-	K6qOoFrVuKOisOzR74CZbwmiZHnjuvvtpGmFweoQwm1z4yUw4ctJ7335yDJ0scVtZzdrY24QOaP
-	V39smvKK751pKgNuUEcr2iX+8cvmvnLjzej40Gpv8fSjHvkPBhtxjcbARN/FSq6HLNjK5908Bu9
-	qA0Y6LVsTwi5TOfW+J5esRU6H8PiHSoTItVmDCvTcQ5Ud8+OcSbYNoXq+9TZiZ6Nt5qJHF3hq8l
-	hzcQ4f4lRyr6SVdw4zuxBOHFeLQjkeGb0LLMhZ+hAQE/G8b75ouOAupbbXc/Hs3X5Oq7kIjJsAC
-	hbms9E=
-X-Received: by 2002:a05:6000:1ace:b0:45e:7997:8b7a with SMTP id ffacd0b85a97d-45ea37bb72dmr2607655f8f.16.1779348427186;
-        Thu, 21 May 2026 00:27:07 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:e038:7e8a:7467:8c6c? ([2a01:e0a:106d:1080:e038:7e8a:7467:8c6c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45eaa9366besm670994f8f.31.2026.05.21.00.27.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 May 2026 00:27:06 -0700 (PDT)
-Message-ID: <89a81b27-b217-4c74-96c0-c6f813a0768f@linaro.org>
-Date: Thu, 21 May 2026 09:27:06 +0200
+	s=arc-20240116; t=1779348805; c=relaxed/simple;
+	bh=X1HXhO4MKj+KA58/sWBWrmVliwgGPmPbC6E/l69bQs0=;
+	h=Message-ID:Date:From:To:Subject:In-Reply-To:References:Cc; b=c7KqkdOuc2+TZnyKF98AEoy5LdrTBatbEcHaRj9lKVpFrdc+7wupXMDKuWHrWV19NSUdSPUvJ8anr7ZjUV8nnP5qcnIJx8hFP8td3W2pYCZHL4TBKuwykUWsZOQeedlACr3AtHd/1yPCh5SwEr82fw1/zskPqs5S9Y/Y7fRXJuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z6UQuBd4; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F75E1F000E9;
+	Thu, 21 May 2026 07:33:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779348803;
+	bh=X1HXhO4MKj+KA58/sWBWrmVliwgGPmPbC6E/l69bQs0=;
+	h=Date:From:To:Subject:In-Reply-To:References:Cc;
+	b=Z6UQuBd4mCurIijfG+Mm9uAJj27UL8fCw7HyE30fF/OpSPvR8r/41XSMj3+wiLTa0
+	 j2oKR9i24+JqeHqvsVN3IxQkk9zKSbYHBgbAWbqM7ZejPU9xv1YLs3LNx5COKk1BVZ
+	 eJRjQihNRBaKpyUrcZMUiP8HWjVhn1KFqDowOTKLtHGC5f6ztixI8ox0Y9ZYWoxtb2
+	 BCtamcSmiNevy+ZpolJpi4+49Z4Dqq7LHefTC0F3og36MybFyBDLZBPB+xr5XkUrBT
+	 c6FY5A66iIvDsCefd89sZQXdoCYzdMsfkpb9p25pb86s+9T+9kQpBGQHMpBI9chUtm
+	 X4V9XxziA7rRA==
+Message-ID: <6fef8c198bf06bc5ce0705f24775674e@kernel.org>
+Date: Thu, 21 May 2026 07:33:20 +0000
+From: "Maxime Ripard" <mripard@kernel.org>
+To: "Alexander Koskovich" <akoskovich@pm.me>
+Subject: Re: [PATCH 0/2] drm/msm/dsi: support multiple DSC slices per packet
+In-Reply-To: <20260318-dsi-dsc-slice-per-pkt-v1-0-1bd66b7f9e0c@pm.me>
+References: <20260318-dsi-dsc-slice-per-pkt-v1-0-1bd66b7f9e0c@pm.me>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, "Abhinav
+ Kumar" <abhinav.kumar@linux.dev>, "David Airlie" <airlied@gmail.com>, "Dmitry
+ Baryshkov" <lumag@kernel.org>, "Jessica Zhang" <jesszhan0024@gmail.com>, "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>, "Marijn Suijten" <marijn.suijten@somainline.org>, "Maxime
+ Ripard" <mripard@kernel.org>, "Rob Clark" <robin.clark@oss.qualcomm.com>, "Sean
+ Paul" <sean@poorly.run>, "Simona Vetter" <simona@ffwll.ch>, "Thomas
+ Zimmermann" <tzimmermann@suse.de>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v3 6/6] media: qcom: iris: vdec: allow GEN2 decoding into
- 10bit format
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260511-topic-sm8x50-iris-10bit-decoding-v3-0-7fc049b93042@linaro.org>
- <20260511-topic-sm8x50-iris-10bit-decoding-v3-6-7fc049b93042@linaro.org>
- <c6789e1e-db42-4546-8a98-d75a2443747a@oss.qualcomm.com>
- <de7c6626-a1fc-4a8e-b5e6-86dadf47cdf7@linaro.org>
- <bdc1bd01-f9ab-4101-b9e6-5799d63ed1f6@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <bdc1bd01-f9ab-4101-b9e6-5799d63ed1f6@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
+	MISSING_MIME_VERSION(2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-108932-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,linaro.org:replyto,linaro.org:email,linaro.org:mid,linaro.org:dkim];
-	MIME_TRACE(0.00)[0:+];
-	HAS_ORG_HEADER(0.00)[];
+	TAGGED_FROM(0.00)[bounces-108933-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[lists.freedesktop.org,vger.kernel.org,linux.dev,gmail.com,kernel.org,linux.intel.com,somainline.org,oss.qualcomm.com,poorly.run,ffwll.ch,suse.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[mripard@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	REPLYTO_EQ_FROM(0.00)[]
-X-Rspamd-Queue-Id: 975665A016A
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: B49935A0363
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 5/20/26 17:55, Vikash Garodia wrote:
-> 
-> On 5/18/2026 1:09 PM, Neil Armstrong wrote:
->> On 5/13/26 21:39, Vikash Garodia wrote:
->>>
->>> On 5/11/2026 2:50 PM, Neil Armstrong wrote:
->>>> Add the necessary bits into the gen2 platforms tables and handlers
->>>> to allow decoding streams into 10bit pixel formats.
->>>>
->>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>>> ---
->>>>   .../media/platform/qcom/iris/iris_hfi_gen2_response.c    | 16 +++++ ++++++++++-
->>>>   drivers/media/platform/qcom/iris/iris_instance.h         |  2 ++
->>>>   drivers/media/platform/qcom/iris/iris_platform_gen2.c    |  8 +++++---
->>>>   drivers/media/platform/qcom/iris/iris_vdec.c             |  8 ++++++++
->>>>   4 files changed, 30 insertions(+), 4 deletions(-)
->>>>
->>>> diff --git a/drivers/media/platform/qcom/iris/ iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/ iris_hfi_gen2_response.c
->>>> index 0541e02d7507..b6d815c01f1d 100644
->>>> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
->>>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
->>>> @@ -542,6 +542,15 @@ static void iris_hfi_gen2_read_input_subcr_params(struct iris_inst *inst)
->>>>       pixmp_ip->width = width;
->>>>       pixmp_ip->height = height;
->>>> +    if (subsc_params.bit_depth == BIT_DEPTH_8 &&
->>>> +        pixmp_op->pixelformat != V4L2_PIX_FMT_NV12 &&
->>>> +        pixmp_op->pixelformat != V4L2_PIX_FMT_QC08C)
->>>> +        pixmp_op->pixelformat = V4L2_PIX_FMT_NV12;
->>>> +    else if (subsc_params.bit_depth == BIT_DEPTH_10 &&
->>>> +         pixmp_op->pixelformat != V4L2_PIX_FMT_P010 &&
->>>> +         pixmp_op->pixelformat != V4L2_PIX_FMT_QC10C)
->>>> +        pixmp_op->pixelformat = V4L2_PIX_FMT_P010;
->>>> +
->>>>       switch (pixmp_op->pixelformat) {
->>>>       case V4L2_PIX_FMT_P010:
->>>>           pixmp_op->width = ALIGN(width, 128);
->>>> @@ -625,7 +634,12 @@ static void iris_hfi_gen2_read_input_subcr_params(struct iris_inst *inst)
->>>>       inst->fw_caps[POC].value = subsc_params.pic_order_cnt;
->>>>       inst->fw_caps[TIER].value = subsc_params.tier;
->>>> -    if (subsc_params.bit_depth != BIT_DEPTH_8 ||
->>>> +    if (subsc_params.bit_depth == BIT_DEPTH_8)
->>>> +        inst->fw_caps[BIT_DEPTH].value = BIT_DEPTH_8;
->>>> +    else
->>>> +        inst->fw_caps[BIT_DEPTH].value = BIT_DEPTH_10;
->>>> +
->>>> +    if ((subsc_params.bit_depth != BIT_DEPTH_8 && subsc_params.bit_depth != BIT_DEPTH_10) ||
->>>>           !(subsc_params.coded_frames & HFI_BITMASK_FRAME_MBS_ONLY_FLAG)) {
->>>>           dev_err(core->dev, "unsupported content, bit depth: %x, pic_struct = %x\n",
->>>>               subsc_params.bit_depth, subsc_params.coded_frames);
->>>> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/ drivers/media/platform/qcom/iris/iris_instance.h
->>>> index 16965150f427..16424d1e94a6 100644
->>>> --- a/drivers/media/platform/qcom/iris/iris_instance.h
->>>> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
->>>> @@ -25,6 +25,8 @@ enum iris_fmt_type_out {
->>>>   enum iris_fmt_type_cap {
->>>>       IRIS_FMT_NV12,
->>>>       IRIS_FMT_QC08C,
->>>> +    IRIS_FMT_TP10,
->>>> +    IRIS_FMT_QC10C,
->>>>   };
->>>>   struct iris_fmt {
->>>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/ drivers/media/platform/qcom/iris/iris_platform_gen2.c
->>>> index 5da90d47f9c6..ceed4b5d96ca 100644
->>>> --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
->>>> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
->>>> @@ -56,9 +56,10 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8550_dec[] = {
->>>>       {
->>>>           .cap_id = PROFILE_HEVC,
->>>>           .min = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
->>>> -        .max = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE,
->>>> +        .max = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_10,
->>>
->>> what about gen1 platforms ?
->>
->> With this patchset gen platforms will reject 10bit since all the
->> plumbing in the HFI response handling is missing.
->>
->> Once the Gen1 HFI gets the bit_depth and calculates the buffer sizes, it
->> should work. But looking at Venus, the 10bit buffer calculation seems much
->> more complex in Gen1.
-> 
-> Is it more than accommodating higher buffer size by adding 25% extra for higher bits for decode scenario ?
+On Wed, 18 Mar 2026 07:32:53 +0000, Alexander Koskovich wrote:
+> This series adds support for sending multiple DSC slices in a single
+> DSI packet, which is required by some panels such as the JDI LPM026M648C.
+>=20
+> The MSM DRM change was originally authored by Jonathan Marek [1], changed=
+ to
+> use an 'all slices in packet' flag which derives slice_per_pkt from slice=
+_count
+>=20
+> [ ... ]
 
-No idea, I haven't looked closely how to implement 10bit on gen1, I just checked if this patchset
-wouldn't cause any regressions.
+Acked-by: Maxime Ripard <mripard@kernel.org>
 
-It may show P010 and QC10C in enum_fmt, but the PROFILE_HEVC and would not expose MAIN10 on gen1.
-
-> 
->>
->>>
->>>>           .step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN) |
->>>> -                BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE),
->>>> +                BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE) |
->>>> +                BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_10),
->>>>           .value = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
->>>>           .hfi_id = HFI_PROP_PROFILE,
->>>>           .flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
->>>> @@ -287,7 +288,7 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8550_dec[] = {
->>>>       {
->>>>           .cap_id = BIT_DEPTH,
->>>>           .min = BIT_DEPTH_8,
->>>> -        .max = BIT_DEPTH_8,
->>>> +        .max = BIT_DEPTH_10,
->>>>           .step_or_mask = 1,
->>>>           .value = BIT_DEPTH_8,
->>>>           .hfi_id = HFI_PROP_LUMA_CHROMA_BIT_DEPTH,
->>>> @@ -866,6 +867,7 @@ static const u32 sm8550_vdec_output_config_params[] = {
->>>>       HFI_PROP_OPB_ENABLE,
->>>>       HFI_PROP_COLOR_FORMAT,
->>>>       HFI_PROP_LINEAR_STRIDE_SCANLINE,
->>>> +    HFI_PROP_UBWC_STRIDE_SCANLINE,
->>>>   };
->>>>   static const u32 sm8550_venc_output_config_params[] = {
->>>> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/ media/platform/qcom/iris/iris_vdec.c
->>>> index f4d9951ed04c..65cf509e4aef 100644
->>>> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
->>>> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
->>>> @@ -70,6 +70,14 @@ static const struct iris_fmt iris_vdec_formats_cap[] = {
->>>>           .pixfmt = V4L2_PIX_FMT_QC08C,
->>>>           .type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
->>>>       },
->>>> +    [IRIS_FMT_TP10] = {
->>>> +        .pixfmt = V4L2_PIX_FMT_P010,
->>>> +        .type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
->>>> +    },
->>>> +    [IRIS_FMT_QC10C] = {
->>>> +        .pixfmt = V4L2_PIX_FMT_QC10C,
->>>> +        .type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
->>>> +    },
->>>>   };
->>>>   static const struct iris_fmt *
->>>>
->>>
->>> Regards,
->>> Vikash
->>>
->>
-> 
-
+Thanks!
+Maxime
 
