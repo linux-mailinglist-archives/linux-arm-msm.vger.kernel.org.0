@@ -1,697 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-108916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-108917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8A+xHLWbDmqTAgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-108916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 07:44:21 +0200
+	id YnvPCg+cDmqZAgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-108917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 07:45:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1DC759F2BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 07:44:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A325959F2E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 07:45:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 26F3B300A123
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 05:44:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6D39A300B051
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 May 2026 05:45:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D27F138D412;
-	Thu, 21 May 2026 05:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 374711D432D;
+	Thu, 21 May 2026 05:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=siliconsignals.io header.i=@siliconsignals.io header.b="GaNMOiyK"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OXEe49/6";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kSVeerY3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazon11021120.outbound.protection.outlook.com [40.107.51.120])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5507F34CFD1;
-	Thu, 21 May 2026 05:44:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.51.120
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779342257; cv=fail; b=te5FzskJgqbooJ+48HsBIPfCy2iY15e+jPkT9Bvhqiv9fZpelinCNNp3CPROBhcbh9NpgzyBQtc6Rnw/ld4vTgR1M+BB6o8iEj61/o1FuE10fP/jpQ+89kk5xrdNLKZJ4X1K37Ote+QyMnOKL4gXBJxAX/JutMqsezntLD+fDJo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779342257; c=relaxed/simple;
-	bh=u8rAoaRiBFkaQqr34vvM+VGBnIq0aRa1qyGjoGgh4xE=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=qUirWPx3KmgTD/Hesx9VEQXekIkCZ3q/S6i/kpgDA/d6pSJcuxEYWOVANljshLxA/yzgJM+4sMKwhNd/LS+oAOEnci/dwzuHCaL0TBQdzC37g4nOuAH3Z8FYD25PETjDYRysbRCkuw+i9iAASOMI8ISLJMGPa+o75eePLjtHHps=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=siliconsignals.io; spf=pass smtp.mailfrom=siliconsignals.io; dkim=pass (2048-bit key) header.d=siliconsignals.io header.i=@siliconsignals.io header.b=GaNMOiyK; arc=fail smtp.client-ip=40.107.51.120
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=siliconsignals.io
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=siliconsignals.io
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FJsOaYdN4wN/xnhCpSoCPpyFmeuYKXMiwLYNdnq38IW3SGbuYzs61QY56pHidHVyJ0O5e7zZdUfsvz0hp8DqYKRni6qIgDA08EumvsGEyzUCOdLF1g+Vzbo8R6oisZzdmq7b5Pej5f8F1tR6CzCk3ZAhAr029ETIGMswnIP9zt/D59fL7G9/6dGnh1tsl0DrQDGEel8deignMcVvbgXUnmscznOsIdG07eAcGDGHJ1Qua14DXvyaKAJwn0NiYOFjt9CpIPZhb6PdDRRLaSoi1d/I38XEPwSL8UXnYoixg7cEd+H7PrKOt0hgwO1BMmAnrOgRRDvryJFH392wJEW1wg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0hU+ArAVDE6vQIFfCohUWiFipYAUG6UgqvmsGR/CLPw=;
- b=s7TtBrnOqFeDlT4pBlT5/8t8ae7CULkX8zPPGdU4wtcYHyUDMOmlzirNi9p2rjkNOyUMY9SItzz6SGvsCAZw0XddSrbY23syjAbjOMzg3xIklir30SJkshfUl31KIwtqZSZDKQndiZ+6/7qYJXItvEwv+QP5+9Y3dNgJuDuGGsFkf6j/A4w2TafdTgyUWTv/qMxNa11GL/Jd5/YsAjOdQ/qMTysJnkVjmmJYvy/pYClCco+AQFj648ySZN+PcqBdM+eS5zPzU1MVuF26yLobJzNwhD/62Z3uL2OK7z4oron5epQG5QsgBFrvXrYSvb0XAJRox+2OH92T95GErZBPpg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siliconsignals.io; dmarc=pass action=none
- header.from=siliconsignals.io; dkim=pass header.d=siliconsignals.io; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siliconsignals.io;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0hU+ArAVDE6vQIFfCohUWiFipYAUG6UgqvmsGR/CLPw=;
- b=GaNMOiyKuZbxNOJHx/fP7gAgTSrOCkSOocau6Qo37BgLNC+pWluBdUojH/86h/ZN2id9Byfb6oWclaS+Xfxh7T/nD+0xW3wKIefz+N6ijj+ZzaxdWtDiWv2AuOcSAjFwmhiJPqA4wSiTD21uePevFSnlH+d7n2AfMyVGFcCW7oTq5cPnVX7pxBzmVM9YVSRFq/WTPPq9UDj80I/DklhWt79gfTsv+OBZH+5Om50FEeh/WktqFiyX+M/Ynxwigo22E/JfDZwy1asdtT2+VrbmNSnlI81hH8pkydH8jonVaY1uG86MNLxlP2VQ69uSVUOIxDAZuRFwG9z79vQytVmmrw==
-Received: from PN0P287MB2019.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:1b8::9)
- by PN1P287MB3648.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:257::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.48.14; Thu, 21 May
- 2026 05:44:09 +0000
-Received: from PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
- ([fe80::ebd8:538d:c705:8432]) by PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
- ([fe80::ebd8:538d:c705:8432%6]) with mapi id 15.21.0048.016; Thu, 21 May 2026
- 05:44:09 +0000
-From: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-CC: "sakari.ailus@linux.intel.com" <sakari.ailus@linux.intel.com>, Hardevsinh
- Palaniya <hardevsinh.palaniya@siliconsignals.io>, Mauro Carvalho Chehab
-	<mchehab@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
-	<krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson
-	<andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Hans Verkuil
-	<hverkuil+cisco@kernel.org>, Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Mehdi Djait
-	<mehdi.djait@linux.intel.com>, Elgin Perumbilly
-	<elgin.perumbilly@siliconsignals.io>, Xiaolei Wang
-	<xiaolei.wang@windriver.com>, Walter Werner Schneider
-	<contact@schnwalter.eu>, Kate Hsuan <hpa@redhat.com>, Svyatoslav Ryhel
-	<clamor95@gmail.com>, "linux-media@vger.kernel.org"
-	<linux-media@vger.kernel.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 2/3] media: i2c: add imx576 image sensor driver
-Thread-Topic: [PATCH 2/3] media: i2c: add imx576 image sensor driver
-Thread-Index: AQHc6E/PlSTyRCcRPE68B2vvph78QLYW2RUAgAEfyKo=
-Date: Thu, 21 May 2026 05:44:09 +0000
-Message-ID:
- <PN0P287MB20196A26D90DF65CF551FD359A0E2@PN0P287MB2019.INDP287.PROD.OUTLOOK.COM>
-References: <20260520115641.11729-1-himanshu.bhavani@siliconsignals.io>
- <20260520115641.11729-3-himanshu.bhavani@siliconsignals.io>
- <20260520123326.GC215344@killaraus.ideasonboard.com>
-In-Reply-To: <20260520123326.GC215344@killaraus.ideasonboard.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=siliconsignals.io;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PN0P287MB2019:EE_|PN1P287MB3648:EE_
-x-ms-office365-filtering-correlation-id: 47e64db8-391d-4b0e-9eba-08deb6fbfadc
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|1800799024|376014|366016|7416014|38070700021|4143699003|56012099003|22082099003|18002099003|3023799007|6133799003;
-x-microsoft-antispam-message-info:
- dmjSp9rJQ+y4K3nL72dKSjSUKl//pPlPXcd3ODXoolzNtWe6c4mKu4pHcY4/GNFC0p5eTc06dGF6fHc48hSf6dJ2FpdAT1TfMJJ1tCF4stZBkb8KVmen8a66RfEx98+TGwfLq/mzh3U4O8/zrP+JBl0NXtSmHxaUxrmGTiwotHRlxw095M0o+lvLx4MD1Ev6X5X7jeHk7zhLkBN3CZB4OqMqa2ypchZ8hlBUW3XX48bxROfz+e2+inUXECCUI42aLs838e2THMin84yC1b476BglaMXRGMJZV3e8L1ErTQ4gVcp1CcP0fosqrB3VR24o5fi2ExwqIK7TJprgbNxewEPlxwtOmTFBfA2wMFafWVB8Q9KJVIpkdZIq48EhIYg+r7f9e4MgcYj5S18JVMBKOueVRRNmWaXkGXwubAhQgePQeG0eQxroR0OcC8agQXrbY6Dk1XBzqgInc7Z7gT5bPLyU9l845VQQ2B6ai29lSEsN+0Z97Qls5e1ypOrNbJQQuOidhW1jSnZrXphGqQ2rB2xluEpH1NXEtQc0+uPpxfl1sG382hN0Oq4BLQ4cpxfW8PrLnb5hu0wFdDqiIk4Aj67t9rllvri+56MS+uxfZ7Oxf/XJg3P3PcjH2PZKezfM5eDDYWkEtr61g5ZZU/WMMG1xGDIXHhhsoWFbioOfNc2M3VAD0dH86BsQc+SzhHhd2jieZRYV9dh5mmK8uwLf10FkE5LalDyQ1m/CUm4pIq+/ThIYvybScfzrT6HOx9bL
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PN0P287MB2019.INDP287.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(7416014)(38070700021)(4143699003)(56012099003)(22082099003)(18002099003)(3023799007)(6133799003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?OAmVQw3elgT5u+x28Gx3U51SuGUBNcRQr2yxJO4fLlZgYt8T98Bl1W3Uhk?=
- =?iso-8859-1?Q?V+ipTsQ/adzMSVHgYu8YcOoxpNIb0zo/oG73FyEmj4nZNv2iOzR2srTtv+?=
- =?iso-8859-1?Q?Mdwdg8VlPDHyX0CJk6+mlPa3oVnp1NgxlhB7MEax8FI61tHvG97icZv3oJ?=
- =?iso-8859-1?Q?XYwaPZGcQftnOkQx+bHpWI+wV97mELzny7ani8qZaKrpmalW2lmFOuOv79?=
- =?iso-8859-1?Q?8TWtg26L0rgUa6KMKQgLz7LoKfoQuYw4xeaFd1RGWaJtEyeLniiAvZRk60?=
- =?iso-8859-1?Q?or6Hig03sBG+dmp6FYt37bFSuTW4PcKdMY37i0vyooaF5g5Gs+wfmZn3ym?=
- =?iso-8859-1?Q?jstLv+4xkGLcLH8HQ4kf8YpH/HgPP4u0AeuCAhxBVoCYUkN4sdcRGUeU/k?=
- =?iso-8859-1?Q?kEksjALDeQRn57fpjXBiLCai2fC/madg4HPbh2hWkARvHx+3ZMSmVyD9Tv?=
- =?iso-8859-1?Q?8GMRSN026y0ewYq/v88ykUD+tQ5FVKXqYDfrPb5gGA/EJpAre0mUP/Kt/0?=
- =?iso-8859-1?Q?4MgVJfz78U729nR2PLXjwJHh1lnyO5Yclz/vuwlwX+/w/2Hvi6TqRQTmHq?=
- =?iso-8859-1?Q?r4iq1bNcjPb4vpFeMN7PGVNzPEUaa8dfU7ONh6qG8ahWhBwiaqDzsLTb9D?=
- =?iso-8859-1?Q?bzDzJz21IGnE9Fd4bSsuZ7G+/r3zgSSEETpoR+bhovhmtFlUSIooijlPxD?=
- =?iso-8859-1?Q?aMipUcldn4Mch2qJ5hyDwS8vJgGTs2iajN/6pEJS0YGC+Hx3bqn6vzLPus?=
- =?iso-8859-1?Q?ZiEtlRUJ3ymIBrMrbdpxWncMqmjTu5dT3n7igKDFyzTR4fwp+hNs1nFvBz?=
- =?iso-8859-1?Q?uqZbmCT6daWfDLSuTRMI9u148o/bW+v0gXDRt3Vz5/iLWfk+Nv9Ffb8Utb?=
- =?iso-8859-1?Q?2rIzwEPx+Xt5pbyUbCNz9azbtVoPpbiRpC+WRAcE2gyigqrsB4tHG5Hbrt?=
- =?iso-8859-1?Q?tNm8RfD9vJY1yV3LBIjnEDz6aHkW3UVyeDOpdgLeCQVSW3csACxuxn+dFq?=
- =?iso-8859-1?Q?p9vfNj5r+7ubjQtZc6rms2HP5faWah2WDG3VH+GpJmHSf7uWd2Xr0GvEaa?=
- =?iso-8859-1?Q?AS3uD2Vjaqru6MqbL23nr919CDGnLIaP8xXVuWPWLZKLL7E+wLNMIdCHz7?=
- =?iso-8859-1?Q?oK0yHFp0hgWtBwA2nAW20HhinxEFRim4FggeFoyQIkWIURXAPkauvQA9zU?=
- =?iso-8859-1?Q?uQEWU7tVHBQApa8GOsycXFGRhp9uJ9rWEacP4mH1uWt0ZzG6cYJ0MdIwej?=
- =?iso-8859-1?Q?t+vj7UzC6ygfVcj/Bg9vlEowz+gri0jAeqwqEqlOkFkaVcGzDaMeTtyEBK?=
- =?iso-8859-1?Q?0Qlxb+1NA2JalJRoMYQ1ja4mX6geyi3WX5kYXomdMkdwS2Kq/X9OUJEGc2?=
- =?iso-8859-1?Q?ZKsPihDFw3MFhJi+/qTmlfq8Np2xwE6zbgHF0PM0EnmmMccdmtMPuICC6s?=
- =?iso-8859-1?Q?TvJwj8x0T4wGI4lmi2ciLzvE10cePMoS85M++P/y7AsUUX4A7AFhwWFJ3l?=
- =?iso-8859-1?Q?8VjJLUY410RJe66aRuL76nmidZeJwsp0NjIhFK3KCQWmm7TAmD3kE7wN1O?=
- =?iso-8859-1?Q?xhJKS0921PmcwAH3J9ftMpqq9jXxEpOR4+s6MtIACH5YpnmgGaEi7Nvyip?=
- =?iso-8859-1?Q?ZnH2GLLdtOGdTSwWbZUzshLHV/SbfxshBNcC+5f6DhzMDxyaRGV3CAvbNZ?=
- =?iso-8859-1?Q?an0Z4PRn8EYeM8RnBkzin4YJZ1OfuSac9enjWOWAEq3IJVEuMHIrR0LtaR?=
- =?iso-8859-1?Q?UbJuBKntRTcF9EOennV3FVCh2iLzOIpTJCRm+8l4ns+eD4xSKL5AMHv4TO?=
- =?iso-8859-1?Q?gD4vwDCSNpO/SRkdgcp5F14rj0RVYk8=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB9332F75B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 05:45:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779342348; cv=none; b=rJh0syDQEYkGKj7/m+Ph6Ur49tALCJxGhlnwDfRXM5jhnMF+rpQLarAzgTiCGXgErG7pHsMAwY45dUF/rYnliNcU8DwXSYzyyjlhFWsiFIu+iQHPJKWGiJQpeIOzDAl7YfrpCPxQn7Pbh0CQUtSM2+5WOl63lVcVzbbxqK3AB54=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779342348; c=relaxed/simple;
+	bh=Y6TnmMYMljBqTx5vDanaa4hfeRMPaVNY4bySG6tGIpE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=AVvDdI0/KMcnzWTmsTMa0yw8D0jZqGfz/O761EBTug6jatH/u0D8xeCI85vU4FNP+N0x7KEDHyTiEGN57nXuBxidpyD038hh7lwwOSKX22vqXzwr4dzNtZ0AjqsGlzHOjxyHYjh86OGXdcacyBkhlhyhpShzmpqpvgn9PwX3DGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OXEe49/6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kSVeerY3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64L0elha748668
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 05:45:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=BqqubzpdbdtQfA/IGavwMW5/BByOyO7liDh
+	sovCQsGI=; b=OXEe49/6MlCPmsETZ3xUsFLCNgzTkjBHG4on5TfbEB0set4pPTD
+	nZpez+zgIB8rLyPCM75GC6I8b759vFOTDuKLySUo7YdmIXoRSEjlolmgS4w4Xh9D
+	ryiWJfA2jmWEHkqS87NAfsyVGlg0kzWeecNj6IEOxXs0tlPFIx2Gu9o9xg7NRxVW
+	wiweW+ZVKsxx4RiIvYlt6/ZwUMUgC6Fdrl/3ebZ0wwWgl2AoGQe/3y7M/jiAOoqU
+	Ry5bWxtRI55TboRDTBY2FBiSLjPm3u2B+tUr19kxtr0wxFN9XyyQH4Tzba4xv+ME
+	xr5UqZerbzYWbSamR0xT0v8WJCk8gmEDElw==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e9fb6jvs9-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 05:45:45 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-368ac44b26dso4849108a91.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 May 2026 22:45:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1779342345; x=1779947145; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BqqubzpdbdtQfA/IGavwMW5/BByOyO7liDhsovCQsGI=;
+        b=kSVeerY3j24F6E1xZN3IyrCzM1VHHfnUK2d9yyAps+n5XUDdFnRVfY38QLym08cnk0
+         nqFpUWqaMd8uZvqow2CrGvNT2byBItPnsSNGmuDs6n+HiaLO69q6/NC1rrB/1XoopWyB
+         Ht66aLcxA1GVgWIrTZFfEJe/Bg4stSkbxTaPf6NSzcVi8hHCyhnUTPzGbN7d4Uuf36Si
+         1UhCOQuCuKT2w2A5/LErkP7IrLhzow/MSfCH7U4L4A8PoYTG6NuY1BkJIc23qH3isaLs
+         q6Gepq1YrnEMkpl2iruND0AroaOiKhr57YuCd9cjrRLE9q2BDyv6xs5WLrR061/9D59c
+         sWZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779342345; x=1779947145;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BqqubzpdbdtQfA/IGavwMW5/BByOyO7liDhsovCQsGI=;
+        b=P0BII3PKT5OF3sQB08QASOqrn9F6ihlkaR/xYP0crajMKfyXn5Re1p/UObblGvi423
+         4X1vP8QslKb3WT7yxQVkwicF5/kNliUTSkrZHvFIkQ3Nh0B1R6TPJwZYquFsnREaN/Rt
+         Rse0I2XaBjIXgMQMQp4u96asK5/7Y97uMXqzxEMcP1YuypcKwTr22l5h5lqdJFiFH8Nx
+         NNVuCdsbvg6bcoICh3NekAhhOLI5JD6E8cFEAdMhNDk9+sGAv8JFgWEJGA6mRFYmfOjy
+         +ugoJ87D4JfjPXzN/gfaDISpA4xrZWnM83+9rjSSOS+1TqG7PqMXgdr6WkwoReBAIRXE
+         5xhw==
+X-Forwarded-Encrypted: i=1; AFNElJ+yT5N3ejWmoS9Htb4IFd45rF+ZfNZz6+grFdMMOOw2UTqNFqD0dbWSl2sACaUPtdwEfmONK0gr5vWVMWEH@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQGv4/wihryG7V0eSh6nWJI+yEstEGWsboFpTk+gwL+r9OGP/w
+	aAZ0qjDdjjYUtrCgaudg5aZdbFSHIizRLkpG4ZIRIc6ys8xow7lh0R6zuIGK04MV1uygbjko/IT
+	x6raa7qL/W0Zxo2yWXKZWYE+M/R4hZry5G0ugU/MUM5catfXLwaJobgCfaFQSZBOILPf8AXiOy6
+	N7
+X-Gm-Gg: Acq92OFAVBaqTolup6LhDdFtes4s0Lhqv5kQ3ycyf/zGzR1d7JSiW2SgWadmm6I3LRc
+	lTqnBd+yEOaDIu1fOstPsBP7CYQhwts2dhEdpNzl8o0j3qp2yGyu0JDjhLZ2Doy4ahf6qyCJeNX
+	XIx4HNoE98SlUxSwHsnKaYOurRhv/i59iA4nXBuNL2xsUBKMWcpl4XdFpep2OahpBuDxaIVjyES
+	SLzpvbOjub7fkVKHkn68yUKCo0inTQRC6g3m+JUQANuJ4XZnP5QFEhixI05OcnRF2VHpL1YtPZt
+	qzMOgwaTgUL/owTKaRRkHpFV7AtdsMVRIB/80CgVaATMMIP2h/Kz+qAvAVoiZPx5KNJhsSLZzy8
+	srvfVDSF2E17KStCoAxBqWcQFn6MwloJtynoxONccs7rxhMbK9Hen0vYZl72+nQbw
+X-Received: by 2002:a17:90b:3811:b0:36a:2a9b:3fb5 with SMTP id 98e67ed59e1d1-36a455f8dd7mr1388603a91.18.1779342345196;
+        Wed, 20 May 2026 22:45:45 -0700 (PDT)
+X-Received: by 2002:a17:90b:3811:b0:36a:2a9b:3fb5 with SMTP id 98e67ed59e1d1-36a455f8dd7mr1388571a91.18.1779342344735;
+        Wed, 20 May 2026 22:45:44 -0700 (PDT)
+Received: from hu-ekangupt-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a3cb323e3sm1474847a91.4.2026.05.20.22.45.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 May 2026 22:45:44 -0700 (PDT)
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+To: srini@kernel.org, linux-arm-msm@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
+        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
+        dri-devel@lists.freedesktop.org, arnd@arndb.de,
+        dmitry.baryshkov@oss.qualcomm.com
+Subject: [PATCH v12 0/4] misc: fastrpc: Add polling mode support
+Date: Thu, 21 May 2026 11:15:35 +0530
+Message-Id: <20260521054539.128651-1-ekansh.gupta@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: siliconsignals.io
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 47e64db8-391d-4b0e-9eba-08deb6fbfadc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 May 2026 05:44:09.3800
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7ec5089e-a433-4bd1-a638-82ee62e21d37
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Tk2qnq3Oft2op9Aw/uc72Url3E0HplVc4BTjcRtOH99Nmlu+opL8j0btwY7hnBsATdQ1BRcDLPheazncb0rM0YnP2xKlxdRc8qNjzOIhVUvsRJLPF4NKoxjuD07LChZC
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN1P287MB3648
-X-Spamd-Result: default: False [1.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[siliconsignals.io,quarantine];
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=do/rzVg4 c=1 sm=1 tr=0 ts=6a0e9c09 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=NEAV23lmAAAA:8
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=FeUw2I9XaFYL6OdlDaEA:9
+ a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-ORIG-GUID: 1zxCjv9jKUaie6bXh5iJrutKFoRTClpd
+X-Proofpoint-GUID: 1zxCjv9jKUaie6bXh5iJrutKFoRTClpd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIxMDA1MiBTYWx0ZWRfX876DeVdLHNkv
+ ikjfAduHGEs5oS+h1GAGEnsnL9GZLQnBhInqbKX6u4bqhIdbwk/HhbRnZ/H7YjNikuLC+NgPPAJ
+ 5yV/T03wuV0cVTFNAfLbocJX3wIUqIF9/x8XUCpcbnFIvE60F+HmV6q1OKUxRw3WrPUuE1ylgJm
+ pD8bm5UT1SEJMESU4iOnNILhhRaRkBBwNI8YTXghZa92SpMrhCxEnRqIhas9hKZEoANgWEUJ1dR
+ glHYbLT9N9V/R305+F54saYAbgwH0OEAfKBlplujl0b4Rqm8E7KWDJcnqrQqDsSfnPhWDPMpQv4
+ 2vVjEOXeO64d2y/UVdvhFTXWFsvAuRAEQeKrhYJJcHK3uyx7DGZolKBHHtAx+g10f13bZoaKG3I
+ LqFddjhtEtqQYSWgweH4Dr4be3XCyYYB+/j63cVdI97Wja7g1Is3fW+uEmwhTEpBD6t9a/BtFvX
+ jVHAHwtpt/AS1Mjf5YA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 clxscore=1015
+ spamscore=0 malwarescore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605210052
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[siliconsignals.io:s=selector1];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-108916-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[linux.intel.com,siliconsignals.io,kernel.org,oss.qualcomm.com,linaro.org,windriver.com,schnwalter.eu,redhat.com,gmail.com,vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[himanshu.bhavani@siliconsignals.io,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[siliconsignals.io:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
-	NEURAL_HAM(-0.00)[-1.000];
-	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,siliconsignals.io:email,siliconsignals.io:dkim]
-X-Rspamd-Queue-Id: C1DC759F2BA
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_FROM(0.00)[bounces-108917-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	MIME_TRACE(0.00)[0:+];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_NONE(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: A325959F2E8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Laurent,=0A=
-=0A=
->On Wed, May 20, 2026 at 05:26:34PM +0530, Himanshu Bhavani wrote:=0A=
->> Add a v4l2 subdevice driver for the Sony imx576 sensor.=0A=
->>=0A=
->> The Sony IMX576 image sensor with an active=0A=
->> array size of 5760 x 4312=0A=
->>=0A=
->> The following features are supported:=0A=
->> - Manual exposure an gain control support=0A=
->> - vblank/hblank control support=0A=
->> - Supported resolution: 2880 x 2156 30fps (SRGGB10)=0A=
->>=0A=
->> Signed-off-by: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>=0A=
->> ---=0A=
->>  MAINTAINERS                |    1 +=0A=
->>  drivers/media/i2c/Kconfig  |   10 +=0A=
->>  drivers/media/i2c/Makefile |    1 +=0A=
->>  drivers/media/i2c/imx576.c | 1029 ++++++++++++++++++++++++++++++++++++=
-=0A=
->>  4 files changed, 1041 insertions(+)=0A=
->>  create mode 100644 drivers/media/i2c/imx576.c=0A=
->>=0A=
->> diff --git a/MAINTAINERS b/MAINTAINERS=0A=
->> index 1b15fa355e8b..768a1eb3627a 100644=0A=
->> --- a/MAINTAINERS=0A=
->> +++ b/MAINTAINERS=0A=
->> @@ -24862,6 +24862,7 @@ M:	Hardevsinh Palaniya <hardevsinh.palaniya@sili=
-consignals.io>=0A=
->>  L:	linux-media@vger.kernel.org=0A=
->>  S:	Maintained=0A=
->>  F:	Documentation/devicetree/bindings/media/i2c/sony,imx576.yaml=0A=
->> +F:	drivers/media/i2c/imx576.c=0A=
->>=0A=
->>  SONY MEMORYSTICK SUBSYSTEM=0A=
->>  M:	Maxim Levitsky <maximlevitsky@gmail.com>=0A=
->> diff --git a/drivers/media/i2c/Kconfig b/drivers/media/i2c/Kconfig=0A=
->> index fc2954098eaf..05d1e69c2f33 100644=0A=
->> --- a/drivers/media/i2c/Kconfig=0A=
->> +++ b/drivers/media/i2c/Kconfig=0A=
->> @@ -288,6 +288,16 @@ config VIDEO_IMX415=0A=
->>  	  To compile this driver as a module, choose M here: the=0A=
->>  	  module will be called imx415.=0A=
->>=0A=
->> +config VIDEO_IMX576=0A=
->> +        tristate "Sony IMX576 sensor support"=0A=
->> +        select V4L2_CCI_I2C=0A=
->> +        help=0A=
->> +          This is a Video4Linux2 sensor driver for the Sony=0A=
->> +          IMX576 camera.=0A=
->> +=0A=
->> +          To compile this driver as a module, choose M here: the=0A=
->> +          module will be called imx576.=0A=
->> +=0A=
->>  config VIDEO_MAX9271_LIB=0A=
->>  	tristate=0A=
->>=0A=
->> diff --git a/drivers/media/i2c/Makefile b/drivers/media/i2c/Makefile=0A=
->> index 90b276a7417a..e96c083e03d9 100644=0A=
->> --- a/drivers/media/i2c/Makefile=0A=
->> +++ b/drivers/media/i2c/Makefile=0A=
->> @@ -61,6 +61,7 @@ obj-$(CONFIG_VIDEO_IMX335) +=3D imx335.o=0A=
->>  obj-$(CONFIG_VIDEO_IMX355) +=3D imx355.o=0A=
->>  obj-$(CONFIG_VIDEO_IMX412) +=3D imx412.o=0A=
->>  obj-$(CONFIG_VIDEO_IMX415) +=3D imx415.o=0A=
->> +obj-$(CONFIG_VIDEO_IMX576) +=3D imx576.o=0A=
->>  obj-$(CONFIG_VIDEO_IR_I2C) +=3D ir-kbd-i2c.o=0A=
->>  obj-$(CONFIG_VIDEO_ISL7998X) +=3D isl7998x.o=0A=
->>  obj-$(CONFIG_VIDEO_KS0127) +=3D ks0127.o=0A=
->> diff --git a/drivers/media/i2c/imx576.c b/drivers/media/i2c/imx576.c=0A=
->> new file mode 100644=0A=
->> index 000000000000..910cbcfb6031=0A=
->> --- /dev/null=0A=
->> +++ b/drivers/media/i2c/imx576.c=0A=
->> @@ -0,0 +1,1029 @@=0A=
->> +// SPDX-License-Identifier: GPL-2.0-only=0A=
->> +/*=0A=
->> + * V4L2 Support for the IMX576=0A=
->> + *=0A=
->> + * Copyright (C) 2026 Silicon Signals Pvt. Ltd.=0A=
->> + *=0A=
->> + * Copyright (C) 2024 Luca Weiss <luca.weiss@fairphone.com>=0A=
->> + */=0A=
->> +=0A=
->> +#include <linux/array_size.h>=0A=
->> +#include <linux/bitops.h>=0A=
->> +#include <linux/clk.h>=0A=
->> +#incluLaurentde <linux/container_of.h>=0A=
->> +#include <linux/delay.h>=0A=
->> +#include <linux/device/devres.h>=0A=
->> +#include <linux/err.h>=0A=
->> +#include <linux/gpio/consumer.h>=0A=
->> +#include <linux/i2c.h>=0A=
->> +#include <linux/module.h>=0A=
->> +#include <linux/pm_runtime.h>=0A=
->> +#include <linux/regulator/consumer.h>=0A=
->> +#include <linux/types.h>=0A=
->> +#include <linux/time.h>=0A=
->> +#include <linux/units.h>=0A=
->> +=0A=
->> +#include <media/v4l2-cci.h>=0A=
->> +#include <media/v4l2-ctrls.h>=0A=
->> +#include <media/v4l2-device.h>=0A=
->> +#include <media/v4l2-fwnode.h>=0A=
->> +#include <media/v4l2-mediabus.h>=0A=
->> +=0A=
->> +#define IMX576_INCLK_RATE		(24 * HZ_PER_MHZ)=0A=
->> +=0A=
->> +#define IMX576_REG_CHIP_ID		CCI_REG16(0x0016)=0A=
->> +#define IMX576_CHIP_ID			0x0576=0A=
->> +=0A=
->> +#define IMX576_REG_MODE_SELECT		CCI_REG8(0x0100)=0A=
->> +#define IMX576_MODE_STANDBY		0x00=0A=
->> +#define IMX576_MODE_STREAMING		0x01=0A=
->> +=0A=
->> +#define IMX576_REG_HOLD			CCI_REG8(0x0104)=0A=
->> +=0A=
->> +#define IMX576_REG_EXPOSURE		CCI_REG16(0x0202)=0A=
->> +#define IMX576_EXPOSURE_MIN		8=0A=
->> +#define IMX576_EXPOSURE_OFFSET		22=0A=
->> +#define IMX576_EXPOSURE_STEP		1=0A=
->> +#define IMX576_EXPOSURE_DEFAULT		0x0648=0A=
->> +=0A=
->> +#define IMX576_REG_ANALOG_GAIN		CCI_REG16(0x0204)=0A=
->> +#define IMX576_ANA_GAIN_MIN		0=0A=
->> +#define IMX576_ANA_GAIN_MAX		978=0A=
->> +#define IMX576_ANA_GAIN_STEP		1=0A=
->> +#define IMX576_ANA_GAIN_DEFAULT		0=0A=
->> +=0A=
->> +#define IMX576_REG_VTS			CCI_REG16(0x0340)=0A=
->> +#define IMX576_REG_HTS			CCI_REG16(0x0342)=0A=
->> +=0A=
->> +/* FIXME: Exact VBLANK limit unknown (no datasheet). */=0A=
->> +#define IMX576_VBLANK_MAX		32420=0A=
->> +=0A=
->> +#define IMX576_LINK_FREQ_600MHZ		(600 * HZ_PER_MHZ)=0A=
->> +#define IMX576_NUM_DATA_LANES		4=0A=
->> +=0A=
->> +/* IMX576 native and active pixel array size */=0A=
->> +static const struct v4l2_rect imx576_native_area =3D {=0A=
->> +	.top =3D 0,=0A=
->> +	.left =3D 0,=0A=
->> +	.width =3D 5792,=0A=
->> +	.height =3D 4464,=0A=
->> +};=0A=
->> +=0A=
->> +static const struct v4l2_rect imx576_active_area =3D {=0A=
->> +	.top =3D 136,=0A=
->> +	.left =3D 16,=0A=
->> +	.width =3D 5760,=0A=
->> +	.height =3D 4312,=0A=
->> +};=0A=
->> +=0A=
->> +static const char * const imx576_supply_names[] =3D {=0A=
->> +	"avdd",		/* Analog power */=0A=
->> +	"dovdd",	/* Digital I/O power */=0A=
->> +	"dvdd",		/* Digital core power */=0A=
->> +};=0A=
->> +=0A=
->> +static const struct cci_reg_sequence imx576_common_regs[] =3D {=0A=
->> +	{ CCI_REG8(0x0136), 0x18 },=0A=
->> +	{ CCI_REG8(0x0137), 0x00 },=0A=
->> +	{ CCI_REG8(0x3c7e), 0x05 },=0A=
->> +	{ CCI_REG8(0x3c7f), 0x07 },=0A=
->> +	{ CCI_REG8(0x380d), 0x80 },=0A=
->> +	{ CCI_REG8(0x3c00), 0x1a },=0A=
->> +	{ CCI_REG8(0x3c01), 0x1a },=0A=
->> +	{ CCI_REG8(0x3c02), 0x1a },=0A=
->> +	{ CCI_REG8(0x3c03), 0x1a },=0A=
->> +	{ CCI_REG8(0x3c04), 0x1a },=0A=
->> +	{ CCI_REG8(0x3c05), 0x01 },=0A=
->> +	{ CCI_REG8(0x3c08), 0xff },=0A=
->> +	{ CCI_REG8(0x3c09), 0xff },=0A=
->> +	{ CCI_REG8(0x3c0a), 0x01 },=0A=
->> +	{ CCI_REG8(0x3c0d), 0xff },=0A=
->> +	{ CCI_REG8(0x3c0e), 0xff },=0A=
->> +	{ CCI_REG8(0x3c0f), 0x20 },=0A=
->> +	{ CCI_REG8(0x3f89), 0x01 },=0A=
->> +	{ CCI_REG8(0x4b8e), 0x18 },=0A=
->> +	{ CCI_REG8(0x4b8f), 0x10 },=0A=
->> +	{ CCI_REG8(0x4ba8), 0x08 },=0A=
->> +	{ CCI_REG8(0x4baa), 0x08 },=0A=
->> +	{ CCI_REG8(0x4bab), 0x08 },=0A=
->> +	{ CCI_REG8(0x4bc9), 0x10 },=0A=
->> +	{ CCI_REG8(0x5511), 0x01 },=0A=
->> +	{ CCI_REG8(0x560b), 0x5b },=0A=
->> +	{ CCI_REG8(0x56a7), 0x60 },=0A=
->> +	{ CCI_REG8(0x5b3b), 0x60 },=0A=
->> +	{ CCI_REG8(0x5ba7), 0x60 },=0A=
->> +	{ CCI_REG8(0x6002), 0x00 },=0A=
->> +	{ CCI_REG8(0x6014), 0x01 },=0A=
->> +	{ CCI_REG8(0x6118), 0x0a },=0A=
->> +	{ CCI_REG8(0x6122), 0x0a },=0A=
->> +	{ CCI_REG8(0x6128), 0x0a },=0A=
->> +	{ CCI_REG8(0x6132), 0x0a },=0A=
->> +	{ CCI_REG8(0x6138), 0x0a },=0A=
->> +	{ CCI_REG8(0x6142), 0x0a },=0A=
->> +	{ CCI_REG8(0x6148), 0x0a },=0A=
->> +	{ CCI_REG8(0x6152), 0x0a },=0A=
->> +	{ CCI_REG8(0x617b), 0x04 },=0A=
->> +	{ CCI_REG8(0x617e), 0x04 },=0A=
->> +	{ CCI_REG8(0x6187), 0x04 },=0A=
->> +	{ CCI_REG8(0x618a), 0x04 },=0A=
->> +	{ CCI_REG8(0x6193), 0x04 },=0A=
->> +	{ CCI_REG8(0x6196), 0x04 },=0A=
->> +	{ CCI_REG8(0x619f), 0x04 },=0A=
->> +	{ CCI_REG8(0x61a2), 0x04 },=0A=
->> +	{ CCI_REG8(0x61ab), 0x04 },=0A=
->> +	{ CCI_REG8(0x61ae), 0x04 },=0A=
->> +	{ CCI_REG8(0x61b7), 0x04 },=0A=
->> +	{ CCI_REG8(0x61ba), 0x04 },=0A=
->> +	{ CCI_REG8(0x61c3), 0x04 },=0A=
->> +	{ CCI_REG8(0x61c6), 0x04 },=0A=
->> +	{ CCI_REG8(0x61cf), 0x04 },=0A=
->> +	{ CCI_REG8(0x61d2), 0x04 },=0A=
->> +	{ CCI_REG8(0x61db), 0x04 },=0A=
->> +	{ CCI_REG8(0x61de), 0x04 },=0A=
->> +	{ CCI_REG8(0x61e7), 0x04 },=0A=
->> +	{ CCI_REG8(0x61ea), 0x04 },=0A=
->> +	{ CCI_REG8(0x61f3), 0x04 },=0A=
->> +	{ CCI_REG8(0x61f6), 0x04 },=0A=
->> +	{ CCI_REG8(0x61ff), 0x04 },=0A=
->> +	{ CCI_REG8(0x6202), 0x04 },=0A=
->> +	{ CCI_REG8(0x620b), 0x04 },=0A=
->> +	{ CCI_REG8(0x620e), 0x04 },=0A=
->> +	{ CCI_REG8(0x6217), 0x04 },=0A=
->> +	{ CCI_REG8(0x621a), 0x04 },=0A=
->> +	{ CCI_REG8(0x6223), 0x04 },=0A=
->> +	{ CCI_REG8(0x6226), 0x04 },=0A=
->> +	{ CCI_REG8(0x6b0b), 0x02 },=0A=
->> +	{ CCI_REG8(0x6b0c), 0x01 },=0A=
->> +	{ CCI_REG8(0x6b0d), 0x05 },=0A=
->> +	{ CCI_REG8(0x6b0f), 0x04 },=0A=
->> +	{ CCI_REG8(0x6b10), 0x02 },=0A=
->> +	{ CCI_REG8(0x6b11), 0x06 },=0A=
->> +	{ CCI_REG8(0x6b12), 0x03 },=0A=
->> +	{ CCI_REG8(0x6b13), 0x07 },=0A=
->> +	{ CCI_REG8(0x6b14), 0x0d },=0A=
->> +	{ CCI_REG8(0x6b15), 0x09 },=0A=
->> +	{ CCI_REG8(0x6b16), 0x0c },=0A=
->> +	{ CCI_REG8(0x6b17), 0x08 },=0A=
->> +	{ CCI_REG8(0x6b18), 0x0e },=0A=
->> +	{ CCI_REG8(0x6b19), 0x0a },=0A=
->> +	{ CCI_REG8(0x6b1a), 0x0f },=0A=
->> +	{ CCI_REG8(0x6b1b), 0x0b },=0A=
->> +	{ CCI_REG8(0x6b1c), 0x01 },=0A=
->> +	{ CCI_REG8(0x6b1d), 0x05 },=0A=
->> +	{ CCI_REG8(0x6b1f), 0x04 },=0A=
->> +	{ CCI_REG8(0x6b20), 0x02 },=0A=
->> +	{ CCI_REG8(0x6b21), 0x06 },=0A=
->> +	{ CCI_REG8(0x6b22), 0x03 },=0A=
->> +	{ CCI_REG8(0x6b23), 0x07 },=0A=
->> +	{ CCI_REG8(0x6b24), 0x0d },=0A=
->> +	{ CCI_REG8(0x6b25), 0x09 },=0A=
->> +	{ CCI_REG8(0x6b26), 0x0c },=0A=
->> +	{ CCI_REG8(0x6b27), 0x08 },=0A=
->> +	{ CCI_REG8(0x6b28), 0x0e },=0A=
->> +	{ CCI_REG8(0x6b29), 0x0a },=0A=
->> +	{ CCI_REG8(0x6b2a), 0x0f },=0A=
->> +	{ CCI_REG8(0x6b2b), 0x0b },=0A=
->> +	{ CCI_REG8(0x7948), 0x01 },=0A=
->> +	{ CCI_REG8(0x7949), 0x06 },=0A=
->> +	{ CCI_REG8(0x794b), 0x04 },=0A=
->> +	{ CCI_REG8(0x794c), 0x04 },=0A=
->> +	{ CCI_REG8(0x794d), 0x3a },=0A=
->> +	{ CCI_REG8(0x7951), 0x00 },=0A=
->> +	{ CCI_REG8(0x7952), 0x01 },=0A=
->> +	{ CCI_REG8(0x7955), 0x00 },=0A=
->> +	{ CCI_REG8(0x9004), 0x10 },=0A=
->> +	{ CCI_REG8(0x9200), 0xa0 },=0A=
->> +	{ CCI_REG8(0x9201), 0xa7 },=0A=
->> +	{ CCI_REG8(0x9202), 0xa0 },=0A=
->> +	{ CCI_REG8(0x9203), 0xaa },=0A=
->> +	{ CCI_REG8(0x9204), 0xa0 },=0A=
->> +	{ CCI_REG8(0x9205), 0xad },=0A=
->> +	{ CCI_REG8(0x9206), 0xa0 },=0A=
->> +	{ CCI_REG8(0x9207), 0xb0 },=0A=
->> +	{ CCI_REG8(0x9208), 0xa0 },=0A=
->> +	{ CCI_REG8(0x9209), 0xb3 },=0A=
->> +	{ CCI_REG8(0x920a), 0xb7 },=0A=
->> +	{ CCI_REG8(0x920b), 0x34 },=0A=
->> +	{ CCI_REG8(0x920c), 0xb7 },=0A=
->> +	{ CCI_REG8(0x920d), 0x36 },=0A=
->> +	{ CCI_REG8(0x920e), 0xb7 },=0A=
->> +	{ CCI_REG8(0x920f), 0x37 },=0A=
->> +	{ CCI_REG8(0x9210), 0xb7 },=0A=
->> +	{ CCI_REG8(0x9211), 0x38 },=0A=
->> +	{ CCI_REG8(0x9212), 0xb7 },=0A=
->> +	{ CCI_REG8(0x9213), 0x39 },=0A=
->> +	{ CCI_REG8(0x9214), 0xb7 },=0A=
->> +	{ CCI_REG8(0x9215), 0x3a },=0A=
->> +	{ CCI_REG8(0x9216), 0xb7 },=0A=
->> +	{ CCI_REG8(0x9217), 0x3c },=0A=
->> +	{ CCI_REG8(0x9218), 0xb7 },=0A=
->> +	{ CCI_REG8(0x9219), 0x3d },=0A=
->> +	{ CCI_REG8(0x921a), 0xb7 },=0A=
->> +	{ CCI_REG8(0x921b), 0x3e },=0A=
->> +	{ CCI_REG8(0x921c), 0xb7 },=0A=
->> +	{ CCI_REG8(0x921d), 0x3f },=0A=
->> +	{ CCI_REG8(0x921e), 0x7f },=0A=
->> +	{ CCI_REG8(0x921f), 0x77 },=0A=
->> +	{ CCI_REG8(0x99af), 0x0f },=0A=
->> +	{ CCI_REG8(0x99b0), 0x0f },=0A=
->> +	{ CCI_REG8(0x99b1), 0x0f },=0A=
->> +	{ CCI_REG8(0x99b2), 0x0f },=0A=
->> +	{ CCI_REG8(0x99b3), 0x0f },=0A=
->> +	{ CCI_REG8(0x99e1), 0x0f },=0A=
->> +	{ CCI_REG8(0x99e2), 0x0f },=0A=
->> +	{ CCI_REG8(0x99e3), 0x0f },=0A=
->> +	{ CCI_REG8(0x99e4), 0x0f },=0A=
->> +	{ CCI_REG8(0x99e5), 0x0f },=0A=
->> +	{ CCI_REG8(0x99e6), 0x0f },=0A=
->> +	{ CCI_REG8(0x99e7), 0x0f },=0A=
->> +	{ CCI_REG8(0x99e8), 0x0f },=0A=
->> +	{ CCI_REG8(0x99e9), 0x0f },=0A=
->> +	{ CCI_REG8(0x99ea), 0x0f },=0A=
->> +	{ CCI_REG8(0xe286), 0x31 },=0A=
->> +	{ CCI_REG8(0xe2a6), 0x32 },=0A=
->> +	{ CCI_REG8(0xe2c6), 0x33 },=0A=
->> +	{ CCI_REG8(0x4038), 0x00 },=0A=
->> +	{ CCI_REG8(0x9856), 0xa0 },=0A=
->> +	{ CCI_REG8(0x9857), 0x78 },=0A=
->> +	{ CCI_REG8(0x9858), 0x64 },=0A=
->> +	{ CCI_REG8(0x986e), 0x64 },=0A=
->> +	{ CCI_REG8(0x9870), 0x3c },=0A=
->> +	{ CCI_REG8(0x993a), 0x0e },=0A=
->> +	{ CCI_REG8(0x993b), 0x0e },=0A=
->> +	{ CCI_REG8(0x9953), 0x08 },=0A=
->> +	{ CCI_REG8(0x9954), 0x08 },=0A=
->> +	{ CCI_REG8(0x996b), 0x0f },=0A=
->> +	{ CCI_REG8(0x996d), 0x0f },=0A=
->> +	{ CCI_REG8(0x996f), 0x0f },=0A=
->> +	{ CCI_REG8(0x998e), 0x0f },=0A=
->> +	{ CCI_REG8(0xa101), 0x01 },=0A=
->> +	{ CCI_REG8(0xa103), 0x01 },=0A=
->> +	{ CCI_REG8(0xa105), 0x01 },=0A=
->> +	{ CCI_REG8(0xa107), 0x01 },=0A=
->> +	{ CCI_REG8(0xa109), 0x01 },=0A=
->> +	{ CCI_REG8(0xa10b), 0x01 },=0A=
->> +	{ CCI_REG8(0xa10d), 0x01 },=0A=
->> +	{ CCI_REG8(0xa10f), 0x01 },=0A=
->> +	{ CCI_REG8(0xa111), 0x01 },=0A=
->> +	{ CCI_REG8(0xa113), 0x01 },=0A=
->> +	{ CCI_REG8(0xa115), 0x01 },=0A=
->> +	{ CCI_REG8(0xa117), 0x01 },=0A=
->> +	{ CCI_REG8(0xa119), 0x01 },=0A=
->> +	{ CCI_REG8(0xa11b), 0x01 },=0A=
->> +	{ CCI_REG8(0xa11d), 0x01 },=0A=
->> +	{ CCI_REG8(0xaa58), 0x00 },=0A=
->> +	{ CCI_REG8(0xaa59), 0x01 },=0A=
->> +	{ CCI_REG8(0xab03), 0x10 },=0A=
->> +	{ CCI_REG8(0xab04), 0x10 },=0A=
->> +	{ CCI_REG8(0xab05), 0x10 },=0A=
->> +	{ CCI_REG8(0xad6a), 0x03 },=0A=
->> +	{ CCI_REG8(0xad6b), 0xff },=0A=
->> +	{ CCI_REG8(0xad77), 0x00 },=0A=
->> +	{ CCI_REG8(0xad82), 0x03 },=0A=
->> +	{ CCI_REG8(0xad83), 0xff },=0A=
->> +	{ CCI_REG8(0xae06), 0x04 },=0A=
->> +	{ CCI_REG8(0xae07), 0x16 },=0A=
->> +	{ CCI_REG8(0xae08), 0xff },=0A=
->> +	{ CCI_REG8(0xae09), 0x04 },=0A=
->> +	{ CCI_REG8(0xae0a), 0x16 },=0A=
->> +	{ CCI_REG8(0xae0b), 0xff },=0A=
->> +	{ CCI_REG8(0xaf01), 0x04 },=0A=
->> +	{ CCI_REG8(0xaf03), 0x0a },=0A=
->> +	{ CCI_REG8(0xaf05), 0x18 },=0A=
->> +	{ CCI_REG8(0xb048), 0x0a },=0A=
->> +};=0A=
->> +=0A=
->> +static const struct cci_reg_sequence mode_2880x2156_regs[] =3D {=0A=
->> +	{ CCI_REG8(0x0112), 0x0a },=0A=
->> +	{ CCI_REG8(0x0113), 0x0a },=0A=
->> +	{ CCI_REG8(0x0114), 0x03 },=0A=
->> +	{ CCI_REG8(0x0342), 0x0c },=0A=
->> +	{ CCI_REG8(0x0343), 0x5d },=0A=
->> +	{ CCI_REG8(0x0344), 0x00 },=0A=
->> +	{ CCI_REG8(0x0345), 0x00 },=0A=
->> +	{ CCI_REG8(0x0346), 0x00 },=0A=
->> +	{ CCI_REG8(0x0347), 0x00 },=0A=
->> +	{ CCI_REG8(0x0348), 0x16 },=0A=
->> +	{ CCI_REG8(0x0349), 0x7f },=0A=
->> +	{ CCI_REG8(0x034a), 0x10 },=0A=
->> +	{ CCI_REG8(0x034b), 0xd7 },=0A=
->> +	{ CCI_REG8(0x0220), 0x62 },=0A=
->> +	{ CCI_REG8(0x0900), 0x01 },=0A=
->> +	{ CCI_REG8(0x0901), 0x22 },=0A=
->> +	{ CCI_REG8(0x0902), 0x08 },=0A=
->> +	{ CCI_REG8(0x3140), 0x00 },=0A=
->> +	{ CCI_REG8(0x3246), 0x81 },=0A=
->> +	{ CCI_REG8(0x3247), 0x81 },=0A=
->> +	{ CCI_REG8(0x0401), 0x00 },=0A=
->> +	{ CCI_REG8(0x0404), 0x00 },=0A=
->> +	{ CCI_REG8(0x0405), 0x10 },=0A=
->> +	{ CCI_REG8(0x0408), 0x00 },=0A=
->> +	{ CCI_REG8(0x0409), 0x00 },=0A=
->> +	{ CCI_REG8(0x040a), 0x00 },=0A=
->> +	{ CCI_REG8(0x040b), 0x00 },=0A=
->> +	{ CCI_REG8(0x040c), 0x0b },=0A=
->> +	{ CCI_REG8(0x040d), 0x40 },=0A=
->> +	{ CCI_REG8(0x040e), 0x08 },=0A=
->> +	{ CCI_REG8(0x040f), 0x6c },=0A=
->> +	{ CCI_REG8(0x034c), 0x0b },=0A=
->> +	{ CCI_REG8(0x034d), 0x40 },=0A=
->> +	{ CCI_REG8(0x034e), 0x08 },=0A=
->> +	{ CCI_REG8(0x034f), 0x6c },=0A=
->> +	{ CCI_REG8(0x0301), 0x05 },=0A=
->> +	{ CCI_REG8(0x0303), 0x04 },=0A=
->> +	{ CCI_REG8(0x0305), 0x04 },=0A=
->> +	{ CCI_REG8(0x0306), 0x00 },=0A=
->> +	{ CCI_REG8(0x0307), 0xaf },=0A=
->> +	{ CCI_REG8(0x030b), 0x02 },=0A=
->> +	{ CCI_REG8(0x030d), 0x04 },=0A=
->> +	{ CCI_REG8(0x030e), 0x00 },=0A=
->> +	{ CCI_REG8(0x030f), 0xd1 },=0A=
->> +	{ CCI_REG8(0x0310), 0x01 },=0A=
->> +	{ CCI_REG8(0x0b06), 0x01 },=0A=
->> +	{ CCI_REG8(0x3620), 0x00 },=0A=
->> +	{ CCI_REG8(0x3f0c), 0x00 },=0A=
->> +	{ CCI_REG8(0x3f14), 0x01 },=0A=
->> +	{ CCI_REG8(0x3f80), 0x03 },=0A=
->> +	{ CCI_REG8(0x3f81), 0xe8 },=0A=
->> +	{ CCI_REG8(0x3ffc), 0x00 },=0A=
->> +	{ CCI_REG8(0x3ffd), 0x26 },=0A=
->> +	{ CCI_REG8(0x0202), 0x07 },=0A=
->> +	{ CCI_REG8(0x0203), 0xd0 },=0A=
->> +	{ CCI_REG8(0x0224), 0x01 },=0A=
->> +	{ CCI_REG8(0x0225), 0xf4 },=0A=
->> +	{ CCI_REG8(0x3fe0), 0x03 },=0A=
->> +	{ CCI_REG8(0x3fe1), 0xe8 },=0A=
->> +	{ CCI_REG8(0x0204), 0x00 },=0A=
->> +	{ CCI_REG8(0x0205), 0x00 },=0A=
->> +	{ CCI_REG8(0x0216), 0x00 },=0A=
->> +	{ CCI_REG8(0x0217), 0x00 },=0A=
->> +	{ CCI_REG8(0x0218), 0x01 },=0A=
->> +	{ CCI_REG8(0x0219), 0x00 },=0A=
->> +	{ CCI_REG8(0x020e), 0x01 },=0A=
->> +	{ CCI_REG8(0x020f), 0x00 },=0A=
->> +	{ CCI_REG8(0x3fe2), 0x00 },=0A=
->> +	{ CCI_REG8(0x3fe3), 0x00 },=0A=
->> +	{ CCI_REG8(0x3fe4), 0x01 },=0A=
->> +	{ CCI_REG8(0x3fe5), 0x00 },=0A=
->> +};=0A=
->> +=0A=
->> +struct imx576 {=0A=
->> +	struct device *dev;=0A=
->> +	struct regmap *regmap;=0A=
->> +	struct v4l2_subdev sd;=0A=
->> +	struct media_pad pad;=0A=
->> +	struct gpio_desc *reset_gpio;=0A=
->> +	struct clk *inclk;=0A=
->> +	struct regulator_bulk_data supplies[ARRAY_SIZE(imx576_supply_names)];=
-=0A=
->> +=0A=
->> +	/* V4L2 Controls */=0A=
->> +	struct v4l2_ctrl_handler handler;=0A=
->> +	struct v4l2_ctrl *link_freq;=0A=
->> +	struct v4l2_ctrl *hblank;=0A=
->> +	struct v4l2_ctrl *vblank;=0A=
->> +	struct v4l2_ctrl *exposure;=0A=
->> +	struct v4l2_ctrl *gain;=0A=
->> +=0A=
->> +	u32 link_freq_index;=0A=
->> +};=0A=
->> +=0A=
->> +struct imx576_reg_list {=0A=
->> +	u32 num_of_regs;=0A=
->> +	const struct cci_reg_sequence *regs;=0A=
->> +};=0A=
->> +=0A=
->> +struct imx576_mode {=0A=
->> +	u32 width;=0A=
->> +	u32 height;=0A=
->> +	u32 hts;=0A=
->> +	u32 vts;=0A=
->> +	struct imx576_reg_list reg_list;=0A=
->> +};=0A=
->> +=0A=
->> +static const struct imx576_mode supported_modes_10bit[] =3D {=0A=
->> +	{=0A=
->> +		.width =3D 2880,=0A=
->> +		.height =3D 2156,=0A=
->> +		.hts =3D 3165,=0A=
->> +		.vts =3D 2172,=0A=
->> +		.reg_list =3D {=0A=
->> +			.num_of_regs =3D ARRAY_SIZE(mode_2880x2156_regs),=0A=
->> +			.regs =3D mode_2880x2156_regs,=0A=
->> +		},=0A=
->> +	},=0A=
->> +};=0A=
->=0A=
->No mode tables please. Control the analog crop and binning through the=0A=
->selection and format APIs.=0A=
->=0A=
->> +=0A=
->> +static const s64 link_freq[] =3D {=0A=
->> +	IMX576_LINK_FREQ_600MHZ,=0A=
->=0A=
->The link frequency should be selectable from DT, with PLL parameters (if=
-=0A=
->any) computed by the driver.=0A=
-=0A=
-I don't have the full datasheet, so this cannot be implemented properly.=0A=
-=0A=
-Best Regards,=0A=
-Himanshu=
+This patch series adds polling mode feature that have been missing in
+upstream FastRPC driver.
+
+- Add changes to move fdlist to ctx structure to avoid code duplicacy.
+- Update context mask to support polling mode.
+- Add changes to support polling feature.
+
+Userspace change: https://github.com/qualcomm/fastrpc/pull/258
+Patch [v11]: https://lore.kernel.org/all/20260520065047.3415790-1-ekansh.gupta@oss.qualcomm.com/
+
+Changes in v12:
+  - Fixed poll_mode_supported check.
+
+Changes in v11:
+  - Moved back to read_poll*.
+  - Improved error handling.
+
+Changes in v10:
+  - Add milos and sar2130p to fastrpc_poll_supported_machines. 
+  - Updated comment for supported platform list.
+
+Changes in v9:
+  - Added platform support check.
+  - Moved to readl as per Luben's suggestion.
+  - Cleaned up fastrpc_wait_for_completion().
+
+Changes in v8:
+  - Added more comments.
+
+Changes in v7:
+  - Fixed warnings.
+  - Fixed commit text.
+  - Addressed clean-up comments.
+
+Changes in v6:
+  - Fixed poll memory calculation.
+  - Added few formatting changes.
+
+Changes in v5:
+  - Add more details in commit text.
+
+Changes in v4:
+  - Replace hardcoded ctxid mask with GENMASK.
+  - Fixed commit text.
+
+Changes in v3:
+  - Resolve compilation warning.
+
+Changes in v2:
+  - Added comments and fixed commit text.
+  - Defined context id position as a macro.
+  - Added new IOCTL to control polling mode as always enabling
+    it might cause excess power consumption.
+  - Cleaned up polling mode implementation.
+
+Ekansh Gupta (4):
+  misc: fastrpc: Move fdlist to invoke context structure
+  misc: fastrpc: Replace hardcoded ctxid mask with GENMASK
+  misc: fastrpc: Expand context ID mask for DSP polling mode support
+  misc: fastrpc: Add polling mode support for fastRPC driver
+
+ drivers/misc/fastrpc.c      | 189 ++++++++++++++++++++++++++++++++----
+ include/uapi/misc/fastrpc.h |  29 ++++++
+ 2 files changed, 198 insertions(+), 20 deletions(-)
+
+-- 
+2.34.1
+
 
