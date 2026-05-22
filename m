@@ -1,186 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-109431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4Ha3HrHMEGrydwYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 23:37:53 +0200
+	id OBOIGFfdEGqIewYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 00:48:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DCA85BA899
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 23:37:53 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3C645BB40D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 00:48:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 6DA0B3010BD6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 21:37:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 4670930099AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 22:48:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7A7938A299;
-	Fri, 22 May 2026 21:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FA8E378D9F;
+	Fri, 22 May 2026 22:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bfU8jLI2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mFliS7Ix"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC29025A359;
-	Fri, 22 May 2026 21:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1E634EF05;
+	Fri, 22 May 2026 22:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779485869; cv=none; b=YEvNYGAW0HmLdcHPQxIKQgVHjztrDxOcZUdmWFgvt3ZGttbPQvb3zRg13SnLaFZi3CWsr5YrhAPJHgsJsQ8aHEXoYc1OYSWbIx+G8D1bOadPLi/pLm+4F4bbIgqg9DHtv4Gvws1JvyTkY5nningKiV5M7nqqgRtkvGJXJTSCStk=
+	t=1779490115; cv=none; b=JNJyuIUjA3yQx/ZXAgV2jW/4Ir6W221W35am4DPbDcFzwfKxZStT6jEoEMjFhBYWuwSHtFdUxQP9sPGeOs4wv7wmPy3iHCJ2nT9bSYLTuTbOQSmslXq35wjNFVVoB7JKMuIKasRniV/NIS6sktBAKevVPJ2gf5k/Be2l9sjJx4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779485869; c=relaxed/simple;
-	bh=Irdpboga0e94lwhHZfmTpX7EMC+HzUaMewhmh6K9zP8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZAjghX2zOec8cm7H9C+YXKVfFHEB1Ms535YJuKrI1Ju/FJ9+hgA70wqRBvyB2tf2gn/sRYi8hnl2HsxnSsyANGfRPJ5biVNlsKDEIpj1mFNRYJrY95aeHdbZUQdUhNvtNZeKET61AshRQ5TL4IWO3CsaJeOjrr2FcnBocp0LGTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bfU8jLI2; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D4D1F000E9;
-	Fri, 22 May 2026 21:37:45 +0000 (UTC)
+	s=arc-20240116; t=1779490115; c=relaxed/simple;
+	bh=S4vcfrtwy9fIjOV0Im+sZ7KctQj8lUc/qAGhDNWt4vw=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=bL/ez/pdKMW+u5VBJBpLdy4nouJthZfFfDAKpHopbhTXdsBrYVuf3dI6RXKv/FZAZD4QzUMslNUu6W1lDVBP/yWg4mt1IEoAkJ3MGR0BWiZ7H8PY9KrBa91/uLITFkBgfJgjAhzzOojiLwfxd5IyjXdObTO1imq9aI+r/iYi4Ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mFliS7Ix; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with UTF8SMTPSA id 6A79C1F000E9;
+	Fri, 22 May 2026 22:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779485868;
-	bh=rKySuRH7zxmKCkRj+vsH6WLK86VeQbARbGCmHU+Y/HI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=bfU8jLI2yGgJ3S8yrF4rdgC5styfISFtbqUQutRoKEdI6SnhOTpvbwhLfdrndcTsa
-	 +bfIF8AAU0aOQ4Pk7SAfasWZTu0J//QGjMm+0Mw0YB8p+UO2PdO/mFGahGimEqKJx7
-	 Z19tzRTKvAefScpofcsg1goggwxVwonn1DOpcfBm403OGjEXxzigt7hy09yItg4y48
-	 5grJVQcaY3fJpC6I4rsmmJvQbAlGt1Uklz7Fetg1MQaBskuPcKc8A7PcW7oPRBM1me
-	 bGrkadhxfZ3g74ZO1eRP4pDSPL0UVo+Kxr6iwZlwoHdZU8lWjEELBA1iIEi+M+to9C
-	 jiIjbyCsEraBw==
-Message-ID: <b5dc7f51-b71c-46b1-823b-76f02d325acb@kernel.org>
-Date: Fri, 22 May 2026 22:37:44 +0100
+	s=k20260515; t=1779490113;
+	bh=auzU48UECky/VhRsM1MIzHXMTSQQH38DGJK40Vy8La0=;
+	h=Date:From:To:Cc:Subject:In-Reply-To;
+	b=mFliS7Ix7rqBthGHQaF5M6htxgc+ybi5mKkI/jhjzhUv2DB/LWOcg2o99/pXiq2JP
+	 522K3vZgppPOjIvvVDd7X2qj92uktNh04gvil8HJShJhNXcYTTsjX41nHrC3MrsD4N
+	 JTbVZNiNPrcpriJPnNj3yAnsWub1NN7yrjo4bdscyuml/hq44OHbEGVgW0mIVZp7+e
+	 tGdjWpvbioHmtbi5bRBANmyCwDDKfG5SWtic2myOgYBWY9aFEwwh2eom1ZWNcd2QEp
+	 wtlQkO7ok5K8k3vX6Ha/0yookF/2FebClHYQjXvKPXEd7IATRMXQz/upkUL/luodgb
+	 oUfjgYeuTLg0Q==
+Date: Fri, 22 May 2026 17:48:32 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Will Deacon <will@kernel.org>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, jonathanh@nvidia.com,
+	bjorn.andersson@oss.qualcomm.com, Frank Li <Frank.Li@nxp.com>,
+	linux-pm@vger.kernel.org
+Subject: Re: [PATCH v5 4/5] PCI: dwc: Use common D3cold eligibility helper in
+ suspend path
+Message-ID: <20260522224832.GA120697@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/2] dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
-To: "Rob Herring (Arm)" <robh@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: linux-kernel@vger.kernel.org, Kishon Vijay Abraham I <kishon@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, linux-phy@lists.infradead.org,
- linux-media@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- Vinod Koul <vkoul@kernel.org>, devicetree@vger.kernel.org,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-References: <20260522-x1e-csi2-phy-v7-0-79cb1280fad6@linaro.org>
- <20260522-x1e-csi2-phy-v7-1-79cb1280fad6@linaro.org>
- <svzHygggdG4PSd3qFMz0chRKqXNkhZwTvHoC3_oynq8e5HYOEn-_EHLnXm1w959nIDz9GaLZG9MgXqAJPNhWSA==@protonmail.internalid>
- <177946855028.3571140.11988520251406266072.robh@kernel.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bod@kernel.org>
-In-Reply-To: <177946855028.3571140.11988520251406266072.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260520000153.GA14400@bhelgaas>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-109431-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-109432-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,google.com,vger.kernel.org,lists.infradead.org,nvidia.com,oss.qualcomm.com,nxp.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.2:email];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,0.0.0.1:email,0.0.0.0:email,linaro.org:email,ace4000:email,devicetree.org:url]
-X-Rspamd-Queue-Id: 1DCA85BA899
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
+X-Rspamd-Queue-Id: D3C645BB40D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 22/05/2026 17:49, Rob Herring (Arm) wrote:
+On Tue, May 19, 2026 at 07:01:53PM -0500, Bjorn Helgaas wrote:
+> [+cc Frank, linux-pm]
 > 
-> On Fri, 22 May 2026 15:45:09 +0100, Bryan O'Donoghue wrote:
->> Add a base schema initially compatible with x1e80100 to describe MIPI CSI2
->> PHY devices.
->>
->> The hardware can support both CPHY, DPHY and a special split-mode DPHY.
->>
->> The schema here defines three ports:
->>
->> port@0:
->>      The first input port where a sensor is always required.
->>
->> port@1:
->>      A second optional input port which if present implies DPHY split-mode.
->>
->> port@2:
->>      A third always required output port which connects to the controller.
->>
->> The CSIPHY devices have their own pinouts on the SoC as well as their own
->> individual voltage rails.
->>
->> The need to model voltage rails on a per-PHY basis leads us to define
->> CSIPHY devices as individual nodes.
->>
->> Two nice outcomes in terms of schema and DT arise from this change.
->>
->> 1. The ability to define on a per-PHY basis voltage rails.
->> 2. The ability to require those voltage.
->>
->> We have had a complete bodge upstream for this where a single set of
->> voltage rail for all CSIPHYs has been buried inside of CAMSS.
->>
->> Much like the I2C bus which is dedicated to Camera sensors - the CCI bus in
->> CAMSS parlance, the CSIPHY devices should be individually modelled.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
->>   .../bindings/phy/qcom,x1e80100-csi2-phy.yaml       | 208 +++++++++++++++++++++
->>   1 file changed, 208 insertions(+)
->>
+> On Wed, Apr 29, 2026 at 12:12:26PM +0530, Krishna Chaitanya Chundru wrote:
+> > Previously, the driver skipped putting the link into L2/device state in
+> > D3cold whenever L1 ASPM was enabled, since some devices (e.g. NVMe) expect
+> > low resume latency and may not tolerate deeper power states.
 > 
-> My bot found errors running 'make dt_binding_check' on your patch:
+> I think "some devices expect low resume latency and may not tolerate
+> deeper power states" conveys the wrong message.  It's not that NVMe
+> has a mysterious acceptable resume latency number that we have to meet
+> or that NVMe has some inherent aversion to D3cold or L1SS or whatever
+> "deeper power states" refers to.
 > 
-> yamllint warnings/errors:
+> It could be that ASPM L1 was configured incorrectly (e.g., an L1->L0
+> transition didn't happen within the advertised exit latency, leading
+> to some device access failure) or a device lost internal context when
+> the driver didn't expect it (e.g., the Qcom problem where L1SS exit
+> takes too long and results in a link-down and device reset [1]).
 > 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml: port@0: Missing additionalProperties/unevaluatedProperties constraint
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml: port@1: Missing additionalProperties/unevaluatedProperties constraint
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml: port@2: Missing additionalProperties/unevaluatedProperties constraint
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.example.dtb: csiphy@ace4000 (qcom,x1e80100-csi2-phy): ports:port@2:endpoint: Unevaluated properties are not allowed ('clock-lanes', 'data-lanes' were unexpected)
-> 	from schema $id: http://devicetree.org/schemas/phy/qcom,x1e80100-csi2-phy.yaml
-Frustratingly
+> It sounds to me like the ASPM L1 check was a way to avoid problems
+> like that, but I don't think we ever really had a root cause.
 
-dtbs_do_check2 phy/qcom,x1e80100-mipi-csi2-combo-phy.yaml 
-qcom/x1e80100-crd.dtb
+Possible updated commit log text:
 
-dtbs_do_check2 () {
+  Previously, the driver skipped putting the link into L2 and device
+  state in D3cold when L1 ASPM was enabled since some devices (e.g.
+  NVMe) failed to resume correctly if they were suspended with L1
+  enabled. The root cause of the failure is unknown.
 
-echo "checking " $1 " and " $2
-make dtbs_check ARCH=$ARCH CROSS_COMPILE=$CROSS_COMPILE O=$BUILDDIR 
-DT_DOC_CHECKER=$DT_DOC_CHECKER DT_EXTRACT_EX=$DT_EXTRACT_EX 
-DT_MK_SCHEMA=$DT_MK_SCHEMA DT_SCHEMA_FILES=$1 CHECK_DTBS=y $2
-make dt_binding_check O=$BUILDDIR DT_CHECKER_FLAGS=-m 
-DT_DOC_CHECKER=$DT_DOC_CHECKER DT_EXTRACT_EX=$DT_EXTRACT_EX 
-DT_MK_SCHEMA=$DT_MK_SCHEMA DT_SCHEMA_FILES=$1 CHECK_DTBS=y $2
+> [1] https://lore.kernel.org/linux-pci/20260519-l1ss-fix-v2-0-b2c3a4bdeb15@oss.qualcomm.com/
+> 
+> > However, such devices typically remain in D0 and are already covered
+> > by the new helper's requirement that all endpoints be in D3hot
+> > before the devices under host bridge may enter D3cold.
 
-}
+It makes me nervous when we assume "typical" things, but I don't have
+any ideas about wording this.
 
-Neither my script nor the Makefile throw an error when the yaml name 
-doesn't exist i.e. when it changes.
+This is all merged and in pci/next, so we can leave it as-is or amend
+the commit log if anybody has better ideas.
 
-I really did run the checker - just for a file that doesn't exist.
-
-Feels like a bug I should blame on AI enslopification but, it was me..
-
-meh
-
----
-bod
-phy/qcom,x1e80100-mipi-csi2-combo-phy.yaml
+> If we put the host bridge in D3cold, I assume the hierarchy below is
+> either put in D3cold as well, or at least every device in the
+> hierarchy will be reset as a consequence of the Root Port link going
+> down.
+> 
+> If the driver doesn't manage the device power state itself, I assume
+> we have the freedom to put the hierarchy in D3cold or reset it.
+> 
+> Do we have the same freedom if the driver *does* manage the power
+> state itself?  What if the driver put the device in D3hot, expecting
+> it to *stay* in D3hot?
+> 
+> I think pci_host_common_d3cold_possible() will see the device in D3hot
+> and decide that D3cold is possible.
+> 
+> (I'm looking at https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/power/pci.rst?id=v7.0#n746)
+> 
+> > So, replace the local L1/L1SS-based check in dw_pcie_suspend_noirq() with
+> > the shared pci_host_common_d3cold_possible() helper to decide whether the
+> > devices under host bridge can safely transition to D3cold.
+> > 
+> > In addition, propagate PME-from-D3cold capability information from the
+> > helper and record it in skip_pwrctrl_off. Some devices (e.g. M.2 cards
+> > without auxiliary power) may lose PME detection when main power is
+> > removed, even if they advertise PME-from-D3cold support. This allows
+> > controller power-off to be skipped when required to preserve wakeup
+> > functionality.
+> > 
+> > Update the suspended flag in dw_pcie_resume_noirq() only after the PCIe
+> > link resumes successfully, to avoid marking the controller active when
+> > link resume fails.
+> > 
+> > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-designware-host.c | 15 +++++++--------
+> >  drivers/pci/controller/dwc/pcie-designware.h      |  1 +
+> >  2 files changed, 8 insertions(+), 8 deletions(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > index c9517a348836..9e409a1909e6 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > @@ -16,9 +16,11 @@
+> >  #include <linux/msi.h>
+> >  #include <linux/of_address.h>
+> >  #include <linux/of_pci.h>
+> > +#include <linux/pci.h>
+> >  #include <linux/pci_regs.h>
+> >  #include <linux/platform_device.h>
+> >  
+> > +#include "../pci-host-common.h"
+> >  #include "../../pci.h"
+> >  #include "pcie-designware.h"
+> >  
+> > @@ -1218,18 +1220,14 @@ static int dw_pcie_pme_turn_off(struct dw_pcie *pci)
+> >  
+> >  int dw_pcie_suspend_noirq(struct dw_pcie *pci)
+> >  {
+> > -	u8 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> > +	bool pme_capable = false;
+> >  	int ret = 0;
+> >  	u32 val;
+> >  
+> >  	if (!dw_pcie_link_up(pci))
+> >  		goto stop_link;
+> >  
+> > -	/*
+> > -	 * If L1SS is supported, then do not put the link into L2 as some
+> > -	 * devices such as NVMe expect low resume latency.
+> > -	 */
+> > -	if (dw_pcie_readw_dbi(pci, offset + PCI_EXP_LNKCTL) & PCI_EXP_LNKCTL_ASPM_L1)
+> > +	if (!pci_host_common_d3cold_possible(pci->pp.bridge, &pme_capable))
+> >  		return 0;
+> >  
+> >  	if (pci->pp.ops->pme_turn_off) {
+> > @@ -1273,6 +1271,7 @@ int dw_pcie_suspend_noirq(struct dw_pcie *pci)
+> >  	udelay(1);
+> >  
+> >  stop_link:
+> > +	pci->pp.skip_pwrctrl_off = pme_capable;
+> >  	dw_pcie_stop_link(pci);
+> >  	if (pci->pp.ops->deinit)
+> >  		pci->pp.ops->deinit(&pci->pp);
+> > @@ -1290,8 +1289,6 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
+> >  	if (!pci->suspended)
+> >  		return 0;
+> >  
+> > -	pci->suspended = false;
+> > -
+> >  	if (pci->pp.ops->init) {
+> >  		ret = pci->pp.ops->init(&pci->pp);
+> >  		if (ret) {
+> > @@ -1313,6 +1310,8 @@ int dw_pcie_resume_noirq(struct dw_pcie *pci)
+> >  	if (pci->pp.ops->post_init)
+> >  		pci->pp.ops->post_init(&pci->pp);
+> >  
+> > +	pci->suspended = false;
+> > +
+> >  	return 0;
+> >  
+> >  err_stop_link:
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> > index 3e69ef60165b..e759c5c7257e 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware.h
+> > +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> > @@ -450,6 +450,7 @@ struct dw_pcie_rp {
+> >  	bool			ecam_enabled;
+> >  	bool			native_ecam;
+> >  	bool                    skip_l23_ready;
+> > +	bool			skip_pwrctrl_off;
+> >  };
+> >  
+> >  struct dw_pcie_ep_ops {
+> > 
+> > -- 
+> > 2.34.1
+> > 
 
