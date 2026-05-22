@@ -1,165 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-109422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8NODOjK4EGqzcwYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 22:10:26 +0200
+	id qOWhIJe9EGqjdAYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 22:33:27 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A0FA5B9EA3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 22:10:25 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EDC955BA163
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 22:33:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 83243301AF42
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 20:09:26 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3B308300AC12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 20:33:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B523D37204A;
-	Fri, 22 May 2026 20:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99739379C3C;
+	Fri, 22 May 2026 20:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EbgztTsE";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="gEnWvWbh"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nvQcwwqc";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RSFWRQy7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7611352028
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 20:09:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.168.131
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779480564; cv=pass; b=bFykGxsd/1sCs84lBGndmqF1wksoLyk0uuF+3B6WWgLzxYHYEapJz47bRZm7qfP71HMs1Bud7hb34IBaRpRLzb+b9uJl6J21Y1sZCqNbao4bQYK0m0hbPq1lJ/XLZknaekb8GJgQ7/b9ZNIzKwR3jQUmTYCN16rEJRYoxQiDjKA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779480564; c=relaxed/simple;
-	bh=BYenqKReshgy7WMYk3vXJQUj0YK+MP2HizGUmGHcwiE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XAeoFXGNumW31zR0nOO2btOYs3A9DQrnotGJnVcKJ6Yxsc4l1v8Pj1UJX31trFgR44WCatbrh5kszBmw6dFt47Jo1+gFR6xl6hyo+CAaZ97rcDe0ZaLvewkYczaTfb8L4ckqRgzuM9xIRJY4LftpJdwbbjeep239DciiFy87I4o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EbgztTsE; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=gEnWvWbh; arc=pass smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48506356744
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 20:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779482004; cv=none; b=VIv064npG3T3VKyJYSYOhvQCaLEmjkOitNt6IJLApYvfn1Buy5PRyvdOszS6kt6k0qckrs8+i9a7FPq/SIEP7enXoFo/znspCJzy61f0MHwF9bCM43AtLqyEGnXj0+/44Je28Lct+JsBRQrg/IYnoP3gZFZoqSzzn3FnhvC4Y8k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779482004; c=relaxed/simple;
+	bh=xiDCHFCDmMw1mfCNRPy2n3KxieEbCopmNMNgiN0B0Ps=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=QSeBx1YNsgLfC1vAq9uyI40DR5d7AMVz+eswNdz+kVJLTbjLyIoE4N5XeMHViYGK6gzSsXAT659SfXwVHdZgMTClfbp7zFRWctJ/6s4BMHsk41L3QiYuk+TKYbQO2hs4iuH1y+fWQ9P0ouSlUqmsCct1lWHgNa9roZiC8RgFa3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nvQcwwqc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RSFWRQy7; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64MFrUnT3005127
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 20:09:21 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64MGFkhW3005223
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 20:33:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4mgJ5edVM+mqGwYghHMz4APWCN08GCaqEMyrnNrUOWY=; b=EbgztTsE1C9CerSE
-	ANTpW3uvn5Il5z/EcdPUowP+j1DovIhpYLkshTBQcFSp04zrMrdGzt9VrEDdhC4u
-	/OS8jPtLzIIC64gNN8r1/jWRO1QKY7ePcVrH1lXNsJdefWwgMAsp1OkdSnzgxz2A
-	RmeUVsDokIDB0hnA0AhEfhHrMWZiz+A/5xNfbXHXQ2JjFfmAuTexFDG4uSh9GBE4
-	Uj7Hhq2m1Z1Dkp6h7E7qH5ORpxVxb0PHRo1f9A+gQd3r8tvMFo7+/vT88LSzxMd0
-	CYtP3evhGCD5OxWn9UeuQY1sqK6HwmFMAEMNY2/FH5RrzV0e0fIlG8WG6aFtaO5Z
-	vTsYIQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eafrtbrm2-1
+	cc:content-transfer-encoding:date:from:in-reply-to:message-id
+	:mime-version:references:subject:to; s=qcppdkim1; bh=gOK+R9U/j/C
+	9n/YEFyMIKWRquYjE/YeWpmqvtSU/Xig=; b=nvQcwwqcukhxxAguGe1Xv7chshr
+	T8yq6u3Eq6E6cJa5E4M+l47iatXN7Jwi1RpnCPV4oVXqqagjfc/+tRFUVU9raqNU
+	0YmNryDdUB83P4ykFA57dA714cKT1L5qqLLR/WVTa2OYruCds0weWCzPbG93YXMt
+	UxVGhurDrIeVU3r1PyxPsytbwHTz3j2x9bprkST06QG+NTg3xwIqDCIIrYM88ifQ
+	aNEnxy02n7lKV2ejTdYufLl8wO3EF+fG91RqrqNF8/w4Jh/VIaIXiWJpMc25zzEf
+	3x+NqGtcTv/ZwqySMJlonQAMJ+AO+4NdfFTHhqOHBRmh+FKzqOYMStlbucg==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eafrtbtn2-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 20:09:21 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-910304978f3so1550880385a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 13:09:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1779480560; cv=none;
-        d=google.com; s=arc-20240605;
-        b=W6dxrSD/JkZE9KNVqRGp9d4ArWUFc+mn37lorSeKEO8bzQFg6bap6yvzv/0drGi1h1
-         EeD6w4XMpc2hKqBaMEDo4VIrG8GIB2xhG30FO3ecpQolgbt82wEPd3srhG+b5Rdu5LZd
-         b9jEzAcYHCJCpIXlA6TBaQWZV1D0/TIKFpUphdZSnWK/Fmo6IKdNN4DiCm2JmKPXtitz
-         9XEcGe0tKYKlLtIaorfmA9iunldkaiNVgqD5aE8FY1uaoHS98xo1eqOQcbMEKkhCkoeB
-         zAytBz2RPtL3SKPyOKpeaPikBZOSXitix/ToB7QSCgYtAYefsE/63jEaYEJ3ZaV1A6da
-         kkpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=4mgJ5edVM+mqGwYghHMz4APWCN08GCaqEMyrnNrUOWY=;
-        fh=iuNeA/kn5PIdZ9vK2CmV5sNuR7I+CCWTiCzyy/VG8vk=;
-        b=hA+koTJf6JfgPJwtD3Eu7l1eawY0lOUIcrF+SZBZCBmqrwts7HtXji4DxfBDytWS4a
-         Dc5e/+CEOlKlL/tUL8uJGEw3siH4EhKW/OI2Cr5h5yvnwgtwmBXuConZWyeguYVzhYqI
-         aYt+WIQ5tzpj22ycFojggaqOfGMXAhOUWm3uACb4NKJBBLTloSkidk8XxCbE5OXKSoiC
-         jd/rCVBGYUvY0MwBudiJhh6PiTT8yZDW7j6uzCwHH0IByYSphdGczGPWPTNFEbhTmiY7
-         T3tLUO3UZkaXhDi++RgP9dNxaIYNUlslXBZaWJYXF1YZSb9yrZe5tDSUBJ/5bfv9FEwY
-         7o3Q==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 20:33:22 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-8386367b23cso5378131b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 13:33:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779480560; x=1780085360; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=oss.qualcomm.com; s=google; t=1779482002; x=1780086802; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4mgJ5edVM+mqGwYghHMz4APWCN08GCaqEMyrnNrUOWY=;
-        b=gEnWvWbhvP0+e6LYTrWsbs3M/By180X7joJLIy4G7R1DWU4m/8cj1rAnGMnluHIE1P
-         Fw+WSudfAqe9Dfdh/nGbPNX8BTcQz7+0XSst2n7XzpU5SdFspXvzqSfiduK2u9PKJKOy
-         uletSv8F+H/t/Nyvg0VEHGnud9pDORrgqyA+eb/1zkC4pmc3TJmaB7f9P/Q9PL4vHkSP
-         IzKTr7crAYdi1pS/NkT3miojCZLXR3uLhm0AUsq5OCorx/BWtGzsJ8Oj3Hqvx90LlZo0
-         nBTgkIIsatOI5JDP5IzvlomB8GRyDteSzeo+tQzDLPa5b9AhqadO9439KBaU0+fYCkQm
-         sktQ==
+        bh=gOK+R9U/j/C9n/YEFyMIKWRquYjE/YeWpmqvtSU/Xig=;
+        b=RSFWRQy79J6mEv3SCn2NvFxkYneGlh3QVUC7dm3+QzUKXIG5YkmmCThknumGZ+flDr
+         8uhW3FJ6Xxeu66mmzBBvp9i37vDSz92XUnlrVhefudHY4xPn2hJbPcjlTbsztXXEsLEv
+         EBL19eUWo2MRHPx78aezan6fSereJUSLdC/k8nNdBZKNwUW/KGtJEDDxa8tiqKBs9lo4
+         ZVzGJftStZh02I4kUSEbapufJZfAxQGoYWvEqd4w9MICs4jesWVOwCst7XC4dv7i7yDt
+         Jatuad0JRphXmZw47GFSZuurkzOVNzFRM/aAF3yUYUY5b7weht3KeurY9PAUfi0b2J3H
+         TUNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779480560; x=1780085360;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20251104; t=1779482002; x=1780086802;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=4mgJ5edVM+mqGwYghHMz4APWCN08GCaqEMyrnNrUOWY=;
-        b=JkZyxL522r/STLyu5RSbRJzmPimYjR3lfqhVAy56L9Jy/5rtNG303n88S2LrIjf8ZH
-         p0QCfpI7jHqcW/0ycxNAd6IpqxBA7CTftGHBuAc/r97dC3eBN9LobzjVL9EbGxUophyg
-         sIcLiSLZFN5HU4kW7+GR5PbWd4zNgfwbsMxY8odSPAtScmeBLep3XqOXTctiAN1RfKET
-         joMv5P/GVsXae9DWZHENAMACRcNrUuowKQOfI3EJv8EfafEudL85P7oHDh9HFjhpAtKY
-         zy43em1OjVmTheqiGrxUVOeLE9aRGnrZ2xDZ2dA6dayMs9UZHBG/wVvHjc5nDAY6+64p
-         H5jw==
-X-Forwarded-Encrypted: i=1; AFNElJ89zQEWAl6Vbz8zKASbA8XIBWn1/c3FcsVyFwBDEcpSZPZwIaBsbnRqnLbMq3B7WmBVG/7050Ix/TFkHnM6@vger.kernel.org
-X-Gm-Message-State: AOJu0YwvnvTSgIrJWMrtheK+yoDzNx30dRNux080xHgBHW+OmjojpcPh
-	/DITh7KfYLPTKZ4QOateG6tvYptx0HOaHfs23TxJFi/tZHT7mPyxEhqXHQvwwec+Sv0baNNWsJq
-	VuRAxSKMeeczPn2B1cP/Sjv3izjhE1/oiakYAWba1EziFLsXbR5UtXacPHKJ1T2kJRcvRn4wdD5
-	YYSgFNby2PUpFEW0N8tWUIrO12+ioBL+T9QEbKhfv+fgM=
-X-Gm-Gg: Acq92OHxPibYs2ovQtGrgPTE03XnFRZAGPTS7AfIYsNcFK1apadJJ0/ptldshu6BdY3
-	l91alV24oa/rBwgP2X8r/gFu39QXLtsVK+1mXWfJT3ke0K+nDHByPeuV1uagJ+egUH4au+MtKJA
-	xY5Ai+p0PgbMKqcMnmL8bd43r/q1dtrBez8b7Gr2xLscxIpFMl1gStZTRCRJLRhmorU/t2INdmc
-	uiyPPBKtpfap1FZ7dhsenCeP6GLtUgtDX9QqZutTWYBNh3hDed4UvqExagLjmDPnXu8
-X-Received: by 2002:a05:620a:28c7:b0:8cd:aa61:ad8f with SMTP id af79cd13be357-914b50cab94mr617028285a.14.1779480560183;
-        Fri, 22 May 2026 13:09:20 -0700 (PDT)
-X-Received: by 2002:a05:620a:28c7:b0:8cd:aa61:ad8f with SMTP id
- af79cd13be357-914b50cab94mr617022585a.14.1779480559708; Fri, 22 May 2026
- 13:09:19 -0700 (PDT)
+        bh=gOK+R9U/j/C9n/YEFyMIKWRquYjE/YeWpmqvtSU/Xig=;
+        b=iapDgph79JEMFR2cfcPFhHD1EEphbbLOUk/hqpS4/i+ompGZF28FC7YzZnMTUqTAV+
+         RlSTq5tuRR1m1QhtjMvSeOwivBpzYSacnAAFC8Mos+2pBJDBX6a7jv3001X6+50eDN12
+         z1b5f3ipSP9XcDlQukwLXdMKuFGaniDa8em+PKO5ivTvmQW2DLQrinD4+wTd5LU2BMW2
+         EVz7Ykp705lyMsuLTGINi7lCQ3Y7JDBsFp8Jd/WgHgnFcBP4+U+J9V/9Ze047+8gzY5I
+         IRFnY9ZxapF627kvMBn6uyRWAY7H1dzE6k5Y80Mt7S7Jq4knX/x8OCPDhEkEnIsb5LEv
+         kThA==
+X-Gm-Message-State: AOJu0YynOSQLg7KopeJ2Awz/uYx8X/zuYN6cOSn3Qz3Mz9P1K7NvHK9H
+	IhdNWC4xorEfuQLehsl5EFBznA0+jQTT5SeyUhxbw3Lja/98JcfNzF6RZDM5T/AlAx2mi1q2cRo
+	oq/sRvxA1HeJAMqgSFHRgXggTZyi/uFd4Cl/NCoIO40sHBb0Seq/JbPAr2juTKCwHnimf
+X-Gm-Gg: Acq92OGwOU91eFDhmdbxUqlaDMK4mNRwfVa/MzLEAvbG0Cca2WWqJALUZ0JiEO8Gwxl
+	tLNpIz0Xq95sLUjIZxIBjKBrbmVKhViFwJwze7D2HJV0vNM8ed3qyURzeqB98yCA+5TMWUxX6V9
+	YFhG54eVmql32tZudVWrKHMMvDleuOMAyHd5fZ3rFhoOM9HlZ4LQGNqNYlcN1Gt7Cmo2xX8gcQ/
+	OzvFFs/yK0Ztc08XiP1EWMrzMmZsbssxjK/w4k6QeKNBoIDIAoGnTq9y2pdObRtBO8gS4ZEVao4
+	PHpNYYnHMmtESc/HzCz32d6COeB9pXOaISEvETRa6++8lf2d9FC1C2fb+COtTVb02cn8uG8aMy2
+	y1C5PEw53/l2e95+E7wsaspWli/nwds8bjjUf1ocShV0e3C8/dQ==
+X-Received: by 2002:a05:6a00:887:b0:835:41f3:f43e with SMTP id d2e1a72fcca58-8415f3f9783mr5324928b3a.16.1779482001818;
+        Fri, 22 May 2026 13:33:21 -0700 (PDT)
+X-Received: by 2002:a05:6a00:887:b0:835:41f3:f43e with SMTP id d2e1a72fcca58-8415f3f9783mr5324903b3a.16.1779482001368;
+        Fri, 22 May 2026 13:33:21 -0700 (PDT)
+Received: from hu-nandam-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84164ac9c77sm3062251b3a.2.2026.05.22.13.33.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 May 2026 13:33:21 -0700 (PDT)
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mohammad.rafi.shaik@oss.qualcomm.com,
+        ajay.nandam@oss.qualcomm.com
+Subject: [PATCH v6 0/2] pinctrl: qcom: lpass-lpi: Switch to PM clock framework
+Date: Sat, 23 May 2026 02:03:02 +0530
+Message-Id: <20260522203304.4065305-1-ajay.nandam@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260513140009.3841770-1-ajay.nandam@oss.qualcomm.com>
+References: <20260513140009.3841770-1-ajay.nandam@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260522-mhi_runtimepm-v2-0-fbebf41a82bb@oss.qualcomm.com> <20260522-mhi_runtimepm-v2-3-fbebf41a82bb@oss.qualcomm.com>
-In-Reply-To: <20260522-mhi_runtimepm-v2-3-fbebf41a82bb@oss.qualcomm.com>
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Fri, 22 May 2026 22:09:08 +0200
-X-Gm-Features: AVHnY4J-9F8AAJuD_tJW6-iaDPIYDcwXI9s5goDnYZwmGPWaSdjsV19cBJfwNa0
-Message-ID: <CAFEp6-1sdQn11NKom6cfwtJvZX-CnPRpJeVzQ+99Sb4A4L-qaQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/6] net: mhi_net: Hold runtime PM during active data
- path operations
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-        Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-        Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>,
-        Oded Gabbay <ogabbay@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
-        Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>,
-        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-        Johannes Berg <johannes@sipsolutions.net>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-wireless@vger.kernel.org,
-        ath11k@lists.infradead.org, ath12k@lists.infradead.org,
-        netdev@vger.kernel.org, mayank.rana@oss.qualcomm.com,
-        quic_vbadigan@quicinc.com, vivek.pernamitta@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=JN0LdcKb c=1 sm=1 tr=0 ts=6a10b7f1 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8 a=omgbQWz8Cy1bZfrwG_oA:9
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDIwMCBTYWx0ZWRfX0IFWAx/5AwXH
- CHCaikmzxqU54297DnxP2MflXz0yi4+GHjOrL+s6eJFPBRcLxa2HTsIxCc8De0BoDR5YQe0Vppt
- R/59f9wYJaAKqqKJPLIYFUnUe21XQ7UrOEuiGPd6cbBTapMrDBXHmMGVa3/z8jObLzVVBJHDYyo
- psh2qgv4RNyb+sTVaAbb3oB5pdS7SNEDyg0TuxQYXu/WDUSqikypi1+grb1E97DRUDyxkKPSeOR
- uUQHSaXe3NIof0eKAirshdM3afo9MazqoBGSYCGaiTkCXQnnsJzuOFISH71t/H2WgGlpk6j/2qC
- wWTZuMv5aGR2fBTCgqU1b/af7V0IA8SPH9Yt699uGH1z8+LPWbFV1aMTj+x8dAC8OrLH7YRbjWy
- DczG5r1p+av516xsqv6GZAttJKgwiKEAuMpCHiejTQQSAfuZaJEnb+kJv+g80i0ExMhaU+myDrc
- F62t+dmCW7qfKz/5Tgw==
-X-Proofpoint-GUID: jJzyklfpn4opiSVI5qnZwoWgX-LGwoqW
-X-Proofpoint-ORIG-GUID: jJzyklfpn4opiSVI5qnZwoWgX-LGwoqW
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=JN0LdcKb c=1 sm=1 tr=0 ts=6a10bd92 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=AVCyWFV1gjYqDRSFLWIA:9 a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDIwMyBTYWx0ZWRfX4eh68/+5N1pc
+ Xo1Z3bjw2DlX/nERnarfhHQxzcAehnN4p+X7JJCgD3rO/9EEN6r+r9FneS0VRCbG4VmjfafOdCs
+ /W9FJHPRtHGmw4Y2ppMqOIgca279dc9L410ZLgUBcEuIrHadZgBIVhaCZUmI4Fwf6/pYKj2PP5B
+ NW7S54C0k5Z051xsA/EnMGUbtDOx97c9X8PNyrwEWPCRLzxHYnoPPSL1akyQtlE+bmzrRsTjdPs
+ 7w2aFDQUFNgPNOWWR6eHAC2Zt8du5JafswR2+9lbhK/Ichsf+OKQVUl7X0hlVmFZbIN8RIY+GOs
+ Pc/XPlOwrIftm/p27nHnd1jcrUCX6/WdpoOMp5Rshnd5IxGw81BfWaQ8dmtNayyuRCjgZ4ncWO5
+ rfi8nCxh0jvzTXlOLDKQJL4IfW7xUjm7fd2M1Fc70P1gBsNNZBbuUyzcx+zMLPKixJyoTgm65YU
+ NKykT6GECKZtluLfngg==
+X-Proofpoint-GUID: eb6m1GzqXldiSoj4fJmLXtUBOruwYcqi
+X-Proofpoint-ORIG-GUID: eb6m1GzqXldiSoj4fJmLXtUBOruwYcqi
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-22_05,2026-05-18_01,2025-10-01_01
@@ -167,198 +134,85 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  adultscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0 impostorscore=0
  phishscore=0 bulkscore=0 clxscore=1015 spamscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605220200
+ reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605220203
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-109422-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[25];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,lunn.ch,davemloft.net,google.com,redhat.com,gmail.com,sipsolutions.net,lists.linux.dev,vger.kernel.org,lists.freedesktop.org,lists.infradead.org,quicinc.com];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-109423-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,mail.gmail.com:mid,oss.qualcomm.com:dkim,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 8A0FA5B9EA3
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ajay.nandam@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: EDC955BA163
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Krishna,
+This series converts LPASS LPI pinctrl runtime clock handling to the PM
+clock framework and ensures GPIO register accesses runtime-resume the
+block before MMIO.
 
-On Fri, May 22, 2026 at 12:01=E2=80=AFPM Krishna Chaitanya Chundru
-<krishna.chundru@oss.qualcomm.com> wrote:
->
-> The mhi_net driver does not coordinate with runtime PM, which allows the
-> underlying MHI controller to be runtime-suspended while transmit, receive=
-,
-> or RX buffer refill operations are in progress. This can lead to stalled
-> transfers or failed queueing once runtime PM is enabled in the MHI core.
->
-> Add runtime PM reference counting to the mhi_net data path to keep the
-> controller active for the duration of TX, RX, and buffer management
-> operations. Enable runtime PM during probe and take/release references
-> explicitly around these critical paths.
->
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.co=
-m>
-> ---
->  drivers/net/mhi_net.c | 39 +++++++++++++++++++++++++++++++++++++++
->  1 file changed, 39 insertions(+)
->
-> diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
-> index ae169929a9d8..5d7f9ccdb17b 100644
-> --- a/drivers/net/mhi_net.c
-> +++ b/drivers/net/mhi_net.c
-> @@ -9,6 +9,7 @@
->  #include <linux/mod_devicetable.h>
->  #include <linux/module.h>
->  #include <linux/netdevice.h>
-> +#include <linux/pm_runtime.h>
->  #include <linux/skbuff.h>
->  #include <linux/u64_stats_sync.h>
->
-> @@ -76,11 +77,19 @@ static netdev_tx_t mhi_ndo_xmit(struct sk_buff *skb, =
-struct net_device *ndev)
->         struct mhi_device *mdev =3D mhi_netdev->mdev;
->         int err;
->
-> +       err =3D pm_runtime_get(&mdev->dev);
-> +       if (err < 0 && err !=3D -EINPROGRESS) {
-> +               dev_err(&mdev->dev, "pm_runtime_get failed %d\n", err);
-> +               pm_runtime_put_noidle(&mdev->dev);
-> +               goto exit_drop;
-> +       }
-> +
+The series is intentionally ordered for bisect safety:
+- patch 1 wires runtime PM ops in LPASS LPI variant drivers
+- patch 2 updates the shared core to use pm_clk + runtime PM guarded
+  register access paths and adds the PM_CLK Kconfig dependency
 
-I am wondering what the value is in pushing this PM responsibility to
-each individual MHI client driver and requiring every MHI operation to
-be bracketed with runtime PM handling.
+After this conversion, LPASS LPI variants sharing the common core use a
+consistent DT clock flow via of_pm_clk_add_clks() together with
+pm_clk_suspend()/pm_clk_resume() and autosuspend.
 
-What does the client driver know here that the MHI core itself cannot
-handle centrally? It feels like ensuring the controller is
-runtime-active during transfer could be handled generically in the
-framework instead of duplicating the same logic in every client.
+Testing:
+- Runtime behavior validated on Kodiak (sc7280).
+- Wider runtime testing on other LPASS LPI variants is welcome.
 
->         err =3D mhi_queue_skb(mdev, DMA_TO_DEVICE, skb, skb->len, MHI_EOT=
-);
->         if (unlikely(err)) {
->                 net_err_ratelimited("%s: Failed to queue TX buf (%d)\n",
->                                     ndev->name, err);
->                 dev_kfree_skb_any(skb);
-> +               pm_runtime_put(&mdev->dev);
->                 goto exit_drop;
->         }
->
-> @@ -251,6 +260,7 @@ static void mhi_net_ul_callback(struct mhi_device *mh=
-i_dev,
->                 /* MHI layer stopping/resetting the UL channel */
->                 if (mhi_res->transaction_status =3D=3D -ENOTCONN) {
->                         u64_stats_update_end(&mhi_netdev->stats.tx_syncp)=
-;
-> +                       pm_runtime_put(&mdev->dev);
->                         return;
->                 }
->
-> @@ -261,6 +271,7 @@ static void mhi_net_ul_callback(struct mhi_device *mh=
-i_dev,
->         }
->         u64_stats_update_end(&mhi_netdev->stats.tx_syncp);
->
-> +       pm_runtime_put(&mdev->dev);
->         if (netif_queue_stopped(ndev) && !mhi_queue_is_full(mdev, DMA_TO_=
-DEVICE))
->                 netif_wake_queue(ndev);
->  }
-> @@ -277,6 +288,12 @@ static void mhi_net_rx_refill_work(struct work_struc=
-t *work)
->
->         size =3D mhi_netdev->mru ? mhi_netdev->mru : READ_ONCE(ndev->mtu)=
-;
->
-> +       err =3D pm_runtime_resume_and_get(&mdev->dev);
-> +       if (err) {
-> +               dev_err(&mdev->dev, "pm_runtime_resume_and_get failed %d\=
-n", err);
-> +               return;
-> +       }
-> +
->         while (!mhi_queue_is_full(mdev, DMA_FROM_DEVICE)) {
->                 skb =3D netdev_alloc_skb(ndev, size);
->                 if (unlikely(!skb))
-> @@ -296,6 +313,7 @@ static void mhi_net_rx_refill_work(struct work_struct=
- *work)
->                 cond_resched();
->         }
->
-> +       pm_runtime_put(&mdev->dev);
->         /* If we're still starved of rx buffers, reschedule later */
->         if (mhi_get_free_desc_count(mdev, DMA_FROM_DEVICE) =3D=3D mhi_net=
-dev->rx_queue_sz)
->                 schedule_delayed_work(&mhi_netdev->rx_refill, HZ / 2);
-> @@ -362,20 +380,41 @@ static int mhi_net_probe(struct mhi_device *mhi_dev=
-,
->
->         SET_NETDEV_DEV(ndev, &mhi_dev->dev);
->
-> +       pm_runtime_no_callbacks(&mhi_dev->dev);
-> +       err =3D devm_pm_runtime_set_active_enabled(&mhi_dev->dev);
-> +       if (err)
-> +               return err;
-> +
-> +       err =3D pm_runtime_resume_and_get(&mhi_dev->dev);
-> +       if (err) {
-> +               dev_err(&mhi_dev->dev, "pm_runtime_resume_and_get failed =
-%d\n", err);
-> +               return err;
-> +       }
-> +
->         err =3D mhi_net_newlink(mhi_dev, ndev);
->         if (err) {
->                 free_netdev(ndev);
-> +               pm_runtime_put(&mhi_dev->dev);
->                 return err;
->         }
->
-> +       pm_runtime_put(&mhi_dev->dev);
->         return 0;
->  }
->
->  static void mhi_net_remove(struct mhi_device *mhi_dev)
->  {
->         struct mhi_net_dev *mhi_netdev =3D dev_get_drvdata(&mhi_dev->dev)=
-;
-> +       int err;
-> +
-> +       err =3D pm_runtime_resume_and_get(&mhi_dev->dev);
-> +       if (err)
-> +               dev_err(&mhi_dev->dev, "pm_runtime_resume_and_get failed =
-%d\n", err);
->
->         mhi_net_dellink(mhi_dev, mhi_netdev->ndev);
-> +
-> +       if (!err)
-> +               pm_runtime_put(&mhi_dev->dev);
->  }
->
->  static const struct mhi_device_info mhi_hwip0 =3D {
->
-> --
-> 2.34.1
->
+Link: https://lore.kernel.org/r/20260513140009.3841770-1-ajay.nandam@oss.qualcomm.com
+
+Changes since v5:
+- Rebased to current linux-next and refreshed the shared-core conversion
+  patch to apply cleanly on top of latest LPASS LPI mux-path updates
+- Include SM6350 in the preparatory LPASS LPI per-SoC runtime PM hook
+  wiring set so all in-tree LPASS LPI variants are covered
+- Keep PM_CLK dependency under PINCTRL_LPASS_LPI where shared core PM
+  clock APIs are introduced
+
+Ajay Kumar Nandam (2):
+  pinctrl: qcom: lpass-lpi: Enable runtime PM hooks on LPASS LPI SoCs
+  pinctrl: qcom: lpass-lpi: Switch to PM clock framework for runtime PM
+
+ drivers/pinctrl/qcom/Kconfig                  |   1 +
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c      | 144 ++++++++++++------
+ .../pinctrl/qcom/pinctrl-milos-lpass-lpi.c    |   7 +
+ .../pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c   |  19 ++-
+ .../pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c |  15 +-
+ .../pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c   |   7 +
+ .../pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c   |   7 +
+ .../pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c   |   7 +
+ .../pinctrl/qcom/pinctrl-sm6115-lpass-lpi.c   |   7 +
+ .../pinctrl/qcom/pinctrl-sm6350-lpass-lpi.c   |   7 +
+ .../pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c   |  15 +-
+ .../pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c   |  15 +-
+ .../pinctrl/qcom/pinctrl-sm8550-lpass-lpi.c   |  15 +-
+ .../pinctrl/qcom/pinctrl-sm8650-lpass-lpi.c   |  15 +-
+ 14 files changed, 209 insertions(+), 72 deletions(-)
+
+-- 
+2.34.1
 
