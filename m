@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-109167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cA5pDqXyD2o2RwYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 08:07:33 +0200
+	id mEpnH4XzD2qXRwYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 08:11:17 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 190615AF5DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 08:07:32 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2C0F5AF650
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 08:11:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 61396301437B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 06:07:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4922A305E187
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 06:07:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CA4439BFF5;
-	Fri, 22 May 2026 06:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73F8628DC4;
+	Fri, 22 May 2026 06:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tDHH6ryC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IM0YKZhM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0234019CD1D
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 06:07:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4239F363083
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 06:07:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779430051; cv=none; b=o4DIFZTGOH7940n2r6dc1RlMKWZvLNvDbRVG/7R+dlxcTPWNuHUkTCFMLM8qqOqCrtLJZzc3FHqUYl2Gv1UfTIINcfNRcHqlQmAACZV7q1aqP43p2rZ6CaeRI7spSXOQMm0gkx5ZWOh/0xvcP8WzaM//4ZOONSsly7OnjS2L2Yk=
+	t=1779430057; cv=none; b=ItNLon66v2362fvx/Lza/guD44PXx7+nz+GIqwG6t0WL7uCwQYlxCI5HoeTBrjuaFz9GldWxlkuQKWv4FcXYCJta0SUa1skrsJtiTjuvCjEJa6jh7ZoFzSawwWSyDTb02IkXOYHnFw62+dlGwXD7tJ77EXFIngqQogeCQ6fQjdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779430051; c=relaxed/simple;
-	bh=qFXBmmvUeTK1exabxEjnNxEYc9NefmCZrUqDcKd9UHk=;
+	s=arc-20240116; t=1779430057; c=relaxed/simple;
+	bh=/I7WuYR6MH/DwUP9up6B//pZnATesBLUuziLXAJIHF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y5aPW0+Ej4YNSXILC4JKK4E00Hf1DeDdt9dBCxAIW/Hdgqn+xQUvgUmmpen/5Ka24eDStQ40C5Q47wsqeCX4nuU0eUELq0lIFQT9EWdOpH8UvW4dy+io4Q7Ycpn/7UJhsvkwp064v3dH1FsqNPsr8HeNorzkE7lb3OccmUH+1Go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=tDHH6ryC; arc=none smtp.client-ip=209.85.216.41
+	 MIME-Version; b=pbpzU6Mtq8ULHiSoo+6w3fScpzcQhDQ1xwWQ+DQXXqNwZPL3Pvo83JKlN01Dx79kaXyT/Fc2BAQ2E1UrV92UBMcahKHPFriMEzqs6lqP5nxXPH43dt8GMvMIFPiseYnTl3/xAwkJvsfYbP92b6gvlzJSbtF4lvUKaQbTo8sWTOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IM0YKZhM; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-3684a6f3b0bso3461263a91.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 23:07:29 -0700 (PDT)
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-369576666d5so3258618a91.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 May 2026 23:07:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779430049; x=1780034849; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779430055; x=1780034855; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NXHEsP6MIsIy0oSjkFIfzW+qvl+16XTQ6Ealt2erRAM=;
-        b=tDHH6ryCDW4kDmZE3/UEbTtq66FBojELhpUQWL044sqnvfmCkfdF2ugIV53BM4RLyw
-         NeESeAvshAmIrukTP64lx+RiYswE/uzUjxP7TbXuwa64v22z0epaRLbcTc18vZ3NG3YG
-         ryoUy7DxzG2pNHx5LhAJ6WERaRpy3zpC6qvYvO/pR2czJvX1WRoWjUw9KUqCfmjyeHny
-         2awzxxLnPVz9m5wL83+M+gfAnCN+J9ZMvqrcTowILST0uWsVuzbpDZgapvqyBWL0yh2p
-         qdQKBfS4ic/F5MuwdUH0V6kPuJ2zVzKZvQ1HTKyHaj49bYDxi+7hvD7ehEDPmuCPwq+x
-         BQNQ==
+        bh=0GxXWPb5b7IE1WF73BuquobJeXJY1I1vTx7dwyLAryI=;
+        b=IM0YKZhMO0xiZohYIxkgz5yMTixAWoG867iyXV30gkhhoakHUocUI98v9zKMWHUEUG
+         CkSPn9OoCrag5WW0+gA2ley4knveFGmOwcU9o69C0nt+m/oA3zUiW8TVx1kzPFkycRfn
+         PgU9hBDNI8i9QtpaVE1nUzCgQl2+Zf2XwovuJmrcgVHIw0My3jXl5sLIXLfAW+y2XaPR
+         TysIS2UCWBXReFA1Q8WEw+Yg5Vlrk5WCr+Ua+Dbk7M7/YPKjq551ahDclH5IM2VZbQPd
+         gn5qUjvszCjOX+myMMDN/05rVzRrFjrZ8T/GvWJAfUZFuwkwd2QZIPvwWBmvsz04KKvs
+         i3LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779430049; x=1780034849;
+        d=1e100.net; s=20251104; t=1779430055; x=1780034855;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=NXHEsP6MIsIy0oSjkFIfzW+qvl+16XTQ6Ealt2erRAM=;
-        b=DBWN50VxtrWMNLOdhcDFXxhXJlxVa6lqVocsIdbiycZHiBbiuL6cdorkSgzR8RMWNi
-         Vj4++FU7S0PSqxjdugUgLhLa9ZytZz4Cd1ANNicGf5oAEf45YEW5rMbPPv2cKcEjjABK
-         OlycESvgT6X3+KRrlJ4mIzHa7ntAozDLEk4Nez003tNuwdCMZescZqTcIQxsa5280iRB
-         OTN6xh29wojHcZs1dC8ZfDapPRscf9R2j4A4QF4cdPOg9pV5CLwzUK35mWsysr09TAzH
-         RdtZtAFQqXHn5lUYHOBA0M2Z19/s/ZXiaN1h6U2lSs0ueCA8f9rOStDOlwHX30bemx3h
-         hzWg==
-X-Gm-Message-State: AOJu0Yx2xxqsgnAgmJN2+mMdtoLlsERdtsubr9E8fV7taXL8LQBdmvre
-	p6e/996hoYvLXau2yQOhdK0PPa3dvefRHnWNohCV0GC0tEw+FM88youjdIDi4usYjqU=
-X-Gm-Gg: Acq92OHo7lMbTeVBKBWu564/TfhVE6Afc29uDDteTCFmYE686e8+wxuROcIQ8IN5MUr
-	J+fsUEXlpabPVEltXvl8hH5L3SqyAjGu+zHX7Ihq+Bwv8lyDPbbkUXCQ+/Md/+ojq1y+x8F68Ny
-	iCdhyAD+fn734RQU5ykiONvcQT7Xt+zs0wP+fWU9bOPkc3xJL0Nc3R8Yyeobw49HVVYKlZebvFL
-	m0ca3UUApcgfIxBeKmC1r9/hoDOpW9Z0Qlm1uzJUuyw6s0sjn3ws0G9nMuTQiN7VdH38cd8MOYc
-	tAD/kbB/G7ZWyfN0/2qUY6wh1EhtNuOnJa11EbwB7HFb/pOJExaB3XDiRzAAL8QNYjKGWd1MFze
-	4j8fOHfnuGx/b7UHTlZ1gykFTSGmlavtmI7NFKsNe0NmO29m6ydmUWS1/BPOUCBynt15XbMrGQJ
-	nahVndQaK1P0E9m4LCQW+Rzo5GEIH4iBg3dpcT+r1oTykvR0bLxS7hh9CKWxKia9mRMw==
-X-Received: by 2002:a17:90b:6c8:b0:368:7398:df8a with SMTP id 98e67ed59e1d1-36a473cccc4mr5285786a91.4.1779430049070;
-        Thu, 21 May 2026 23:07:29 -0700 (PDT)
+        bh=0GxXWPb5b7IE1WF73BuquobJeXJY1I1vTx7dwyLAryI=;
+        b=nilx3x3GUhW9yZmsOU2sbyDGK8wmiv5wusAmOm/KwuHPWUOlfZHRGX07W7qHa9Il6v
+         ACJ0nyGiG4wUF04W2geD9JFW8jZMOVDqMnapvCPN9++y89hButJMkm9Fl5D1oTz8osuN
+         vhAt1Q/PaK+rWONrq7ZZj0ovVr+26PNoEm8OR1gx4jaAo/IDfzdJS1ZE2pNujKDnTDvV
+         zbYvxcWlVP5Xg5oyrZ1V80410DEm8bc4IuvOYBKIRGgNbEy81YRv1Cx+bgfwzyaN5fQz
+         b6Cnowwow2Zs7qq59OL5NSBByTCEh7MnPKZnkNj9r/CvIxThy15AiApFcL93aw9MW7tG
+         e7SQ==
+X-Gm-Message-State: AOJu0Yz4s3sDYxxfcjB0SZHUiE5HakVn9ARs7352V9MrKmXT6FJ1mQcc
+	jHkXoqZEEMx0VgCimy+kVjxsttryuGWsBFQICf9jSW7fTWTnujTJGTkQs4KMLRZH7WA=
+X-Gm-Gg: Acq92OE23e7h/GkN/+p8/OUDZa+4tCYCB+dAh6i/6KOFkSsYP9p1UQsSHBQw2EZ3CF3
+	wAzW38zefmUrGE8bQw+yCEaabbsyRtklwoILydeyU3ESrf5PfmLbHUGkOuc74HCHPUt5QTh26Y1
+	0iW5dia7zUy1tQus9HL/Y05kDViSsXU20rNr1iJ/kMGjWYUer7aj/Fz1+m/M0QYy39B+vRhRVVz
+	3U/Cm36/hQpTpOHLiSglnSt2h6T65cO9YTAVX9oZYiu4onN5gfHrCleRUtI//lo/j3LBueev76c
+	ZJ7WH5eZyV+mb/7hVC/c3gctAb2tRoneSpf5+784wWHVzAwxSI/cqS+W5vY99g3Ow+jbyClJZVv
+	zYdsA4hTsiSWSjnZNazRVXNod10gOyri6qufFuprz+Vh1NhOuDXbQPLI3RKt0q1kTdr6c5f1ezm
+	dpvOejFLL1DrvRpc0alP0bkVZAAz3GDpjyi6lkqVBUj9aEE57GfZ4G7rTTWeo/6J+3DA==
+X-Received: by 2002:a17:90b:270e:b0:362:e826:cefe with SMTP id 98e67ed59e1d1-36a67697a77mr2327977a91.23.1779430055466;
+        Thu, 21 May 2026 23:07:35 -0700 (PDT)
 Received: from radxa (122-58-25-162-adsl.sparkbb.co.nz. [122.58.25.162])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a7212aa06sm428572a91.3.2026.05.21.23.07.24
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a7212aa06sm428572a91.3.2026.05.21.23.07.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 May 2026 23:07:28 -0700 (PDT)
+        Thu, 21 May 2026 23:07:35 -0700 (PDT)
 From: Graham O'Connor <graham.oconnor@gmail.com>
 To: linux-arm-msm@vger.kernel.org
 Cc: andersson@kernel.org,
@@ -89,9 +89,9 @@ Cc: andersson@kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Graham O'Connor <graham.oconnor@gmail.com>
-Subject: [PATCH 3/6] drm/msm/dp: Limit voltage swing level to 2 for RA620 bridge
-Date: Fri, 22 May 2026 18:06:42 +1200
-Message-ID: <20260522060645.4399-4-graham.oconnor@gmail.com>
+Subject: [PATCH 4/6] arm64: dts: qcom: qcs6490-radxa-dragon-q6a: Add regulator supplies and disable EUD
+Date: Fri, 22 May 2026 18:06:43 +1200
+Message-ID: <20260522060645.4399-5-graham.oconnor@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260522060645.4399-1-graham.oconnor@gmail.com>
 References: <20260522060645.4399-1-graham.oconnor@gmail.com>
@@ -107,7 +107,7 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -117,10 +117,10 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,linux.dev,lists.freedesktop.org,vger.kernel.org,gmail.com];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-109167-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-109168-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[grahamoconnor@gmail.com,linux-arm-msm@vger.kernel.org];
@@ -131,40 +131,54 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	NEURAL_HAM(-0.00)[-0.997];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 190615AF5DF
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: E2C0F5AF650
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The RA620 DP-to-HDMI bridge used on the Radxa Dragon Q6A does not
-acknowledge DP link training at voltage swing level 3. The bridge
-requests maximum voltage swing but never completes link training
-when the driver attempts level 3, causing HDMI output to fail.
+Add missing regulator supplies for qfprom and the PCIe controllers.
+The qfprom node requires vcc-supply for correct eFuse reading. The
+PCIe controllers require vdda and vddpe-3v3 supplies for the PHY and
+connector power rails.
 
-Cap DP_TRAIN_LEVEL_MAX at 2 to match the behaviour of the vendor
-kernel, where link training completes successfully at level 2.
-This allows the RA620 bridge to establish a stable HDMI connection.
+Disable the Embedded USB Debugger (EUD) as it conflicts with normal
+USB operation on this board.
 
-Tested on Radxa Dragon Q6A (QCS6490) with RA620 DP-to-HDMI bridge
+Tested on Radxa Dragon Q6A (QCS6490)
 
 Signed-off-by: Graham O'Connor <graham.oconnor@gmail.com>
 ---
- drivers/gpu/drm/msm/dp/dp_link.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.h b/drivers/gpu/drm/msm/dp/dp_link.h
-index 76125e9c0..ff0d8e99d 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.h
-+++ b/drivers/gpu/drm/msm/dp/dp_link.h
-@@ -24,7 +24,7 @@ struct msm_dp_link_info {
- 	unsigned long capabilities;
+diff --git a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
+index bb5a42b03..4003837ad 100644
+--- a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
++++ b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
+@@ -1093,3 +1093,23 @@ &sdc2_data {
+ 	bias-pull-up;
+ 	drive-strength = <10>;
  };
- 
--#define DP_TRAIN_LEVEL_MAX	3
-+#define DP_TRAIN_LEVEL_MAX	2
- 
- struct msm_dp_link_test_video {
- 	u32 test_video_pattern;
++
++/* Provide required regulator supplies for qfprom and PCIe controllers */
++&qfprom {
++	vcc-supply = <&vreg_l1c_1p8>;
++};
++
++&pcie0 {
++	vdda-supply = <&vreg_l1c_1p8>;
++	vddpe-3v3-supply = <&vreg_bob_3p296>;
++};
++
++&pcie1 {
++	vdda-supply = <&vreg_l1c_1p8>;
++	vddpe-3v3-supply = <&vreg_bob_3p296>;
++};
++
++/* Disable EUD as it conflicts with USB operation */
++&eud {
++	status = "disabled";
++};
 -- 
 2.53.0
 
