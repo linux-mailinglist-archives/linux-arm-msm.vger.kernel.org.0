@@ -1,239 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-109187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2GfMKt4FEGqLSQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 09:29:34 +0200
+	id wMPuFEMHEGqLSQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 09:35:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CDE85AFFF6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 09:29:34 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF87E5B00B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 09:35:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 793DE306A37A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 07:25:35 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id BFD0C30433B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 07:35:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10E37385D6F;
-	Fri, 22 May 2026 07:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80B2C360ED6;
+	Fri, 22 May 2026 07:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lJ0Md6du"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JfqXL8ZI";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="bYWRMKCd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBA83905F8;
-	Fri, 22 May 2026 07:25:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A72B38E5D6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 07:35:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779434735; cv=none; b=G5zyycp9MpJazKWx39x4OSnlBEAvZ943jU+GI1nZUZeWoddEHDAjZuHxRCs701zEcLGyhbiQ5oauhUNEh54qqGVllj11uz5jeoFLwxgRB9f4a5o+sxM4FGqgVUUdBjO5IEu7YVxDWPQbczedyYqZJMae6l1Yb0Ljg5x3ESztt+E=
+	t=1779435306; cv=none; b=nEOCcmCwdH9EGzm3z8XGBMFciPJ7aXgX+Wmozj5cbfO2tHvMk8+lNni6YYraplacVFbRRnQ8lsdQbKS26RpYidF2f5CSIBzuiVkSQBkYFa8KDPkXGgSu7elgNwfiYW9oMH2sisyuEWzuRPvtcq0s/mvpRwZQOmTWat3rn139rqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779434735; c=relaxed/simple;
-	bh=DOvrmSPgKlxZCC7RbEphO179i76aYP0QFkgrS/bkgMU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JOP7OLrMdhfJw1CmP5Hw6DYR7cWNiE/dV2Ki1BkoC7T+yTnK9KXaZ/0SDgOc57hcc5UkVjQW0JLb1iM1BlfsmSdM2H0st2dZbzikvN7TpDM6Cca9IFyaY02Oe5ciaYDyNJ0dLGCSlDoIqzBrcv5qIycuCbsacs25kauNTWMiNHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lJ0Md6du; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA79B1F00ADE;
-	Fri, 22 May 2026 07:25:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779434733;
-	bh=NyW+5g7DMTf1Y7Db+/rrVkUDzE+C2206FaaDl7KrUhM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=lJ0Md6duQ6sPRrIdwjugw9x6KqXsYx7A/mgn8Cm26WJcFPdIwrNirWmrk2y+oH2DM
-	 nRv7+D4/S2JZp/c0qo9faz1evc/9eej9fLq963ZdIYUufsnOC2pMQ/13L13gggxNR3
-	 EUeXdLQdS+9dclCJuCPVTSNZdvokzosq/nb6I/Qbhnz7JKjibv9yccuJHOmva5JwbO
-	 hnHGt3w/xkw7QAbPEzDy7zNRl5g712M2FLXy235+wnO6t8lFKU3OgxRuwWcftpUw1a
-	 3y3fJbv7Oy3hUuSWHdagmVRVVGStA5jyzIyeiXDnMUfK8/Ng3pFu4cVnUp9xxOYXR5
-	 N56f0BQcFPhvg==
-Date: Fri, 22 May 2026 12:55:15 +0530
-From: Sumit Garg <sumit.garg@kernel.org>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-Cc: andersson@kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-media@vger.kernel.org,
-	netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
-	ath12k@lists.infradead.org, linux-remoteproc@vger.kernel.org,
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, robin.clark@oss.qualcomm.com, sean@poorly.run,
-	akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
-	jesszhan0024@gmail.com, marijn.suijten@somainline.org,
-	airlied@gmail.com, simona@ffwll.ch,
-	dikshita.agarwal@oss.qualcomm.com, bod@kernel.org,
-	mchehab@kernel.org, elder@kernel.org, andrew+netdev@lunn.ch,
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-	pabeni@redhat.com, jjohnson@kernel.org, mathieu.poirier@linaro.org,
-	trilokkumar.soni@oss.qualcomm.com, mukesh.ojha@oss.qualcomm.com,
-	pavan.kondeti@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
-	tonyh@qti.qualcomm.com, vignesh.viswanathan@oss.qualcomm.com,
-	srinivas.kandagatla@oss.qualcomm.com,
-	amirreza.zarrabi@oss.qualcomm.com, jens.wiklander@linaro.org,
-	op-tee@lists.trustedfirmware.org, apurupa@qti.qualcomm.com,
-	skare@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>, pgujjula@qti.qualcomm.com
-Subject: Re: [PATCH v6 11/16] media: qcom: Switch to generic PAS TZ APIs
-Message-ID: <ahAE2_Eh-_H7ZtYq@sumit-xelite>
-References: <20260518072856.22790-1-sumit.garg@kernel.org>
- <20260518072856.22790-12-sumit.garg@kernel.org>
- <07cdbd20-f0c5-4be5-878a-ef23dc633767@oss.qualcomm.com>
+	s=arc-20240116; t=1779435306; c=relaxed/simple;
+	bh=7Tp8QR8ezREidBdZtgOBqXf3WM+ajNf36iDwZT850qg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=Zp/WW/+bWOENcfzjCGqegoPGfxbYoZkdUDSq0BSybXGGRV4KC1ZRDC4gSJ8+WSuxnLvBRAnKYv6pwKXlwWXW5FTpWdjW7hz9lphAmcxblAlDcwH5+iLth94E7NTFjObOsiK002rp/puaXsA2Yv4bgfAJpi+Mv6NN/xr4dmHvGyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JfqXL8ZI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=bYWRMKCd; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64M2sNjl1658219
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 07:35:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2b+Kij9t1IVCxFpBqd1qEHIqo7GSLvjCvGFJYZ65lN0=; b=JfqXL8ZIUCe2Ii7p
+	nwcC5qhqYp/OKR5a6KsdZICVLwTzqXeqTFKJIl2XWyrDe4BgDqGltFdpklJxJ4q8
+	bwpw3iUQk1aVO0QoIS3sUbEZfHdoARUfJqJGdNNKaTFDml2M9PTCULj3Pxi62qhQ
+	5fexdklrqG2E4O/OzjG4iuPeRL1OBdDrc192ghJ6g8LGKBOXKalRW4sk5aQwv+/n
+	MybrvN1Pt44DJOsBJzj+kqOGaZEtVBpPfbie6vXxU+amSObaIfhLXVbwoge0+UtO
+	o30L4OTNUk55Uoo1Lj8GiRyGxrOc650G9wG8Bl4zVVQgvXhCoHxfp3UDF3rFqhN6
+	LY8L8g==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ea0dkmf26-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 07:35:04 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-367fd7b8825so7034644a91.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 00:35:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1779435303; x=1780040103; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=2b+Kij9t1IVCxFpBqd1qEHIqo7GSLvjCvGFJYZ65lN0=;
+        b=bYWRMKCd0+fuB016zPpJUBJKPoanbg46b6zs02eT8j/8dJzV2LFGLyfosetExKYvf5
+         ftFQDFr6wzGOoeyZO2+IWgU739ZK2h33KA/S/LTzZiJFwQ3+pqRNeB7zBZQAdMdNXDh2
+         nDoqfPCPimyEBvYBRRickieH7tc2497a7XEmz/RBrQ5YOm3bT6/cz/MkU88+KQzJo1Le
+         vEM846dZOnIzjlmWZWqOvR19GRHnjcCbxJJEShvg5KVeHNK0Q6PYfjZWK6V0TTAkvqas
+         Ft6qc37k3OYgHVUToZKWouDaaWnqqtJXjGg+IQzjpH6a+gc4avCyKimtCYPjlyLCig2k
+         HUfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779435303; x=1780040103;
+        h=content-transfer-encoding:in-reply-to:cc:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2b+Kij9t1IVCxFpBqd1qEHIqo7GSLvjCvGFJYZ65lN0=;
+        b=SCtM0+YQMWzgFLstPpOZNRoX/H7VU5hTPkpYbSNZ2tGvQf+9Mmwl5lnpVlp/N0hSoq
+         LYF7Bt26k1me/rFCtfev51jvx31EtHVHMH8yHrCxppUc8c61QXQEqqK9SgOwRuSSxnwl
+         zh52AdlcvvzEqXzm1yuJ7m1zpl3/C7JW/lhfzUQoLparTHfDNJX6aDGRpdfVsa/IS22W
+         MZ9utvLZzFB5SfmocLlh9FuXJMnOBm+kZKiDThXX9asnM42+0WnOCrP1OMBF7cn/y5qJ
+         2I07va8yAJRBEnfXVk7WIu+qxzrG1vWP+piipxcCEQArktMcS1TitmqoQ0U0NNLvpthl
+         8bBQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9f43tMblWK8R6CriZcC4NScc+qJ99KAFH8Sw1h86d/S88eSXNk4IlMRy4xmfjGOTK5bV/w0qyO5PZ9381J@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrXB/RIoxxEkeUY05GhiD6IXgPd+lPNmRkXUkIT1+Ju9zpOFls
+	Be+aplqUNoi31nctxpzp+MGdG4xq9gUj89pL0ewsuMNUYPllEJsZsWnCiw5Ffa975KCku4E6zbq
+	9QWg6m+/9Mqk4oOuWwI255w8wstY1RxtkL0GqrL/C0XUiE4my1RIr7m0gtSXiPcLynbSS
+X-Gm-Gg: Acq92OEpY+SSeATibcHdCooFU7hdQPuxdPPqEOWgq/CnOnPqOHSHXf+ap2p4p69WTSo
+	P5GEhvf3GmTFCSv17th2wJWl5Em2UguUWb5OyD8r+8S05D7LfyNOQqYz4lflZaisaDmQam2KM4x
+	KjPEppLh9aBTaNm+zS0F01/GISZfbAZUlpgJBuizfdgUTdSuA2XqT8lb/TX7V1FygLswahIIJiq
+	BiaBawJBBl2snnT2yhxIdL2JxtV24pD2HmfbEjEUEf4CeDD25qnyvJTvugIdGLZ03SgDnGQOKkW
+	/AMAaFgrRaLj5Yi/7tCm2HX7GefcDDCK80nzEG+JLM1HNmHsoZ0TC04dHgg5gdQNvXdhCQ6w/qE
+	oWOQs2COQA7JxhiVVr87zMsT1hBkcOTbcoFI3bcE9ofLi7k+pFrKhMepdhRzoBFfFr9rPfgsD/u
+	MmbZwfcFRbiT79Y/RT
+X-Received: by 2002:a17:90b:1b47:b0:366:3517:1aa2 with SMTP id 98e67ed59e1d1-36a671e9069mr2466553a91.0.1779435303366;
+        Fri, 22 May 2026 00:35:03 -0700 (PDT)
+X-Received: by 2002:a17:90b:1b47:b0:366:3517:1aa2 with SMTP id 98e67ed59e1d1-36a671e9069mr2466542a91.0.1779435302884;
+        Fri, 22 May 2026 00:35:02 -0700 (PDT)
+Received: from [10.133.33.160] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36a67c4afc6sm579351a91.5.2026.05.22.00.34.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 May 2026 00:35:02 -0700 (PDT)
+Message-ID: <01407473-1fa6-45ca-83c7-090c0c935684@oss.qualcomm.com>
+Date: Fri, 22 May 2026 15:34:56 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <07cdbd20-f0c5-4be5-878a-ef23dc633767@oss.qualcomm.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/5] misc: fastrpc: Fail Audio PD init when reserved
+ memory is missing
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260515124217.20723-1-jianping.li@oss.qualcomm.com>
+ <20260515124217.20723-4-jianping.li@oss.qualcomm.com>
+ <5rpyaoyx3dsf3c7llnt57uukeaef2qgget42itfc45tura5esy@b4cwvazm42uo>
+Content-Language: en-US
+From: Jianping Li <jianping.li@oss.qualcomm.com>
+Cc: srini@kernel.org, amahesh@qti.qualcomm.com, arnd@arndb.de,
+        gregkh@linuxfoundation.org, abelvesa@kernel.org,
+        jorge.ramirez-ortiz@linaro.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, stable@kernel.org,
+        quic_chennak@quicinc.com
+In-Reply-To: <5rpyaoyx3dsf3c7llnt57uukeaef2qgget42itfc45tura5esy@b4cwvazm42uo>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIyMDA3MyBTYWx0ZWRfX2TVP+7kPtoze
+ jHcgyuTaUAnWIf+1VUPzQoOX+z+kzvqh1blPtCDbc1SY6M4ibbjnF9lv6XicxsS7gXJ4c45CtfO
+ NMfeuCkh83H/6TNZeuvs3yurFHqHdd/ij2MxsCUjJkISnVUFdXa3lDYEKcuAMq2eW1ZMqqJTFD6
+ 9DOiRWtxHI6I4l8mfc9M7E/TodHFMYjMRLlQFZrtiycass90r3XuEpu8mh6t5uCMrdaHyYhIkv+
+ vPQD9VG4bvJQSEZMJ9X3nQFXhUfpWCtxnAHfk/XNeSaTXUqgj6ibnIXWJXU4cUq/y8F9DiRgDAh
+ 7f/Sz73tzu9btYHCEcTSFdathiN4YU89izpscGmGJ7o35U2rkaAW7dqhCwjadHhELyFjljokLy0
+ MgWS/1t1tpN5m0/J9rzvk3ySEP21an21m6oNjsH/gycl6ZnKP7DjA9X6Pw+hA6FA7UG0wZJ8wuJ
+ G5TcGNMe1+ymMVWc0DQ==
+X-Authority-Analysis: v=2.4 cv=aueCzyZV c=1 sm=1 tr=0 ts=6a100728 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=uBSpvLV6fhDO0Xk4A2gA:9 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-GUID: fQ8T2174RWh8byZ7Y6xRsMs00q7PV9Yx
+X-Proofpoint-ORIG-GUID: fQ8T2174RWh8byZ7Y6xRsMs00q7PV9Yx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-22_01,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 adultscore=0 phishscore=0 malwarescore=0
+ lowpriorityscore=0 spamscore=0 suspectscore=0 clxscore=1015
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605220073
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-109187-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-109188-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,lists.freedesktop.org,lists.infradead.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
-	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[50];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-0.999];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 4CDE85AFFF6
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jianping.li@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: BF87E5B00B5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Vikash,
 
-On Thu, May 21, 2026 at 12:10:41PM +0530, Vikash Garodia wrote:
-> 
-> On 5/18/2026 12:58 PM, Sumit Garg wrote:
-> > diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
-> > index 5f408024e967..b3c5281aea91 100644
-> > --- a/drivers/media/platform/qcom/iris/iris_firmware.c
-> > +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
-> > @@ -4,6 +4,7 @@
-> >    */
-> >   #include <linux/firmware.h>
-> > +#include <linux/firmware/qcom/qcom_pas.h>
-> >   #include <linux/firmware/qcom/qcom_scm.h>
-> >   #include <linux/of_address.h>
-> >   #include <linux/of_reserved_mem.h>
-> > @@ -79,7 +80,7 @@ int iris_fw_load(struct iris_core *core)
-> >   		return -ENOMEM;
-> >   	}
-> > -	ret = qcom_scm_pas_auth_and_reset(core->iris_platform_data->pas_id);
-> > +	ret = qcom_pas_auth_and_reset(core->iris_platform_data->pas_id);
-> >   	if (ret)  {
-> >   		dev_err(core->dev, "auth and reset failed: %d\n", ret);
-> >   		return ret;
-> > @@ -93,7 +94,7 @@ int iris_fw_load(struct iris_core *core)
-> >   						     cp_config->cp_nonpixel_size);
-> >   		if (ret) {
-> >   			dev_err(core->dev, "qcom_scm_mem_protect_video_var failed: %d\n", ret);
-> > -			qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
-> > +			qcom_pas_shutdown(core->iris_platform_data->pas_id);
-> >   			return ret;
-> >   		}
-> >   	}
-> > @@ -103,10 +104,10 @@ int iris_fw_load(struct iris_core *core)
-> >   int iris_fw_unload(struct iris_core *core)
-> >   {
-> > -	return qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
-> > +	return qcom_pas_shutdown(core->iris_platform_data->pas_id);
-> >   }
-> >   int iris_set_hw_state(struct iris_core *core, bool resume)
-> >   {
-> > -	return qcom_scm_set_remote_state(resume, 0);
-> > +	return qcom_pas_set_remote_state(resume, 0);
-> >   }
-> > diff --git a/drivers/media/platform/qcom/venus/Kconfig b/drivers/media/platform/qcom/venus/Kconfig
-> > index 63ee8c78dc6d..7997b8aa427a 100644
-> > --- a/drivers/media/platform/qcom/venus/Kconfig
-> > +++ b/drivers/media/platform/qcom/venus/Kconfig
-> > @@ -6,6 +6,7 @@ config VIDEO_QCOM_VENUS
-> >   	select OF_DYNAMIC if ARCH_QCOM
-> >   	select QCOM_MDT_LOADER
-> >   	select QCOM_SCM
-> > +	select QCOM_PAS
-> >   	select VIDEOBUF2_DMA_CONTIG
-> >   	select V4L2_MEM2MEM_DEV
-> >   	help
-> > diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-> > index 1de7436713ed..3a38ff985822 100644
-> > --- a/drivers/media/platform/qcom/venus/firmware.c
-> > +++ b/drivers/media/platform/qcom/venus/firmware.c
-> > @@ -12,6 +12,7 @@
-> >   #include <linux/of_reserved_mem.h>
-> >   #include <linux/platform_device.h>
-> >   #include <linux/of_device.h>
-> > +#include <linux/firmware/qcom/qcom_pas.h>
-> >   #include <linux/firmware/qcom/qcom_scm.h>
-> >   #include <linux/sizes.h>
-> >   #include <linux/soc/qcom/mdt_loader.h>
-> > @@ -58,7 +59,7 @@ int venus_set_hw_state(struct venus_core *core, bool resume)
-> >   	int ret;
-> >   	if (core->use_tz) {
-> > -		ret = qcom_scm_set_remote_state(resume, 0);
-> > +		ret = qcom_pas_set_remote_state(resume, 0);
-> >   		if (resume && ret == -EINVAL)
-> >   			ret = 0;
-> >   		return ret;
-> > @@ -218,7 +219,7 @@ int venus_boot(struct venus_core *core)
-> >   	int ret;
-> >   	if (!IS_ENABLED(CONFIG_QCOM_MDT_LOADER) ||
-> > -	    (core->use_tz && !qcom_scm_is_available()))
-> > +	    (core->use_tz && !qcom_pas_is_available()))
-> >   		return -EPROBE_DEFER;
-> >   	ret = of_property_read_string_index(dev->of_node, "firmware-name", 0,
-> > @@ -236,7 +237,7 @@ int venus_boot(struct venus_core *core)
-> >   	core->fw.mem_phys = mem_phys;
-> >   	if (core->use_tz)
-> > -		ret = qcom_scm_pas_auth_and_reset(VENUS_PAS_ID);
-> > +		ret = qcom_pas_auth_and_reset(VENUS_PAS_ID);
-> >   	else
-> >   		ret = venus_boot_no_tz(core, mem_phys, mem_size);
-> > @@ -259,7 +260,7 @@ int venus_boot(struct venus_core *core)
-> >   						     res->cp_nonpixel_start,
-> >   						     res->cp_nonpixel_size);
-> >   		if (ret) {
-> > -			qcom_scm_pas_shutdown(VENUS_PAS_ID);
-> > +			qcom_pas_shutdown(VENUS_PAS_ID);
-> >   			dev_err(dev, "set virtual address ranges fail (%d)\n",
-> >   				ret);
-> >   			return ret;
-> 
-> 
-> API "qcom_scm_mem_protect_video_var() would also need this migration, any
-> reason not to consider that ?
+On 5/15/2026 9:37 PM, Dmitry Baryshkov wrote:
+> On Fri, May 15, 2026 at 08:42:15PM +0800, Jianping Li wrote:
+>> Audio PD static process creation assumes that a reserved-memory
+>> region is defined in DT and exposed via cctx->remote_heap.
+>>
+>> If reserved-memory is missing or incomplete, the driver may pass
+>> invalid address/size information to the DSP, leading to undefined
+>> behavior or crashes.
+>>
+>> Add explicit validation for remote_heap presence and size before
+>> sending the memory to DSP, and fail early if the configuration is
+>> invalid.
+>>
+>> Fixes: 0871561055e66 ("misc: fastrpc: Add support for audiopd")
+>> Cc: stable@kernel.org
+>> Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
+>> ---
+>>   drivers/misc/fastrpc.c | 6 ++++++
+>>   1 file changed, 6 insertions(+)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index 3c7c3b410d7d..a0337cce77f3 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -1363,6 +1363,12 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+>>   	args[1].length = inbuf.namelen;
+>>   	args[1].fd = -1;
+>>   
+>> +	if (!fl->cctx->remote_heap ||
+>> +	    !fl->cctx->remote_heap->dma_addr ||
+>> +	    !fl->cctx->remote_heap->size) {
+> I guess that !dma_addr || !size should fail much earlier than here.
 
-This SCM call is very specific to the media subsystem and don't align
-with the generic PAS APIs. I rather think these kind of special SMCs can
-rather be treated as SiP calls supported in TF-A but we have to analyze
-if we even need these SCM calls for the open boot stack or not.
+ACK
 
-However, with OP-TEE there is still work in progress to enable media upstream
-as Jorge posted in earlier versions on this patch-set due to IOMMU dependency.
-
-> 
-> Could you please check, if any such usage of legacy *scm* APIs, like the one
-> i pointed above, can be enforced to err out at compile time ?
-
-It will error out at runtime automatically since TF-A doesn't support
-this SCM/SMC call as of now.
-
--Sumit
+>
+>> +		err = -ENOMEM;
+>> +		goto err;
+>> +	}
+>>   	pages[0].addr = fl->cctx->remote_heap->dma_addr;
+>>   	pages[0].size = fl->cctx->remote_heap->size;
+>>   
+>> -- 
+>> 2.43.0
+>>
 
