@@ -1,161 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-109256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oKYfCIA1EGoaVAYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 12:52:48 +0200
+	id sJgMHjQ2EGoaVAYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 12:55:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB4015B284A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 12:52:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E99295B28EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 12:55:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 57D1E30DBF28
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 10:44:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 784D030316DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 May 2026 10:47:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F02D3D565F;
-	Fri, 22 May 2026 10:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D9C23CDBD0;
+	Fri, 22 May 2026 10:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WlUul++t"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NqoOW6Ru"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA063D3D00;
-	Fri, 22 May 2026 10:43:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43A13CDBD8;
+	Fri, 22 May 2026 10:47:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779446625; cv=none; b=l7ycMJGSl8vPLVGDNDUbhMcdbYRdblvfcz9+b5uaksXvn/Gj7kS4j0K9+qjvk0rILP5U5/XkT00QViiY3QDe6mLPaf6ABzH/Y+jAHHI8mPvOAGN1/CuRCE+NraBQWGeG1KeV05Nj2Tw9VPj/jbjzeqeYqWDKzW/yA/+bw5f39dM=
+	t=1779446856; cv=none; b=KpdiCFJH5W+41+A1NE5yO68YioUmAWIRGW8A87uECjHEOVDB8HbaFdG0quhSo1YoPIn9MFKU0lgcn1UTDgTn09DWNh0OScKId1kGHkudI1Fi8Vs9M/qJrLWUA7x8+9dHyQZrZI4SbV+12hFI1CuQuqiZb339mCKWalS0IRWVrC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779446625; c=relaxed/simple;
-	bh=dGAnhZyp9ThqWpBanX+G2jl/9rxp8oVAzFmh/PruNkw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eefIQ27FFUf13Tg//Y0X3HleQd4+PHo1o5y0AabB5luWb+PlgFtleVt330Vp/VIKsPrc7upEUTYA9fXRE0tiRrfhVV+b626cd0y3TLCYGdlx7Ktm4+CJlxX8VcmUwU/EpgyGojwbjOuNsVd7zP5uOReFxwSk9oARF6Ngx17UzV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WlUul++t; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9A713C2BCB3;
-	Fri, 22 May 2026 10:43:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779446625;
-	bh=dGAnhZyp9ThqWpBanX+G2jl/9rxp8oVAzFmh/PruNkw=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=WlUul++t0E45TCYkE7z0PiRP6lgIDnQtOevvhEwuRJaPyQp1S11/VPATvom5QzT6L
-	 ag04i2OF/uBWXVqIKlv49GX/Bpct3l0QlfLixBBHsA/3ExF3B5Y8qEhP2mjFPoZ/Hb
-	 911EM3XrCGZgnp9Sy3GaTuckUy93zsIzMv+bB4VMp5S3AWIQlBxfCRFnHu/n5c2+Gn
-	 odMmgMrJelK+wLA7JGtlP8ARq5HXjM8D9usET3uzqy1TX/ESdAtpU/8rM2yvmZ+6zk
-	 a04Eb3D2ntUpaP19vfklTY/9lhIRJtQ2FWqS0cE0G1mvf9Xz8kPXtfEAHOZzWhrDRl
-	 ZUJeNo9qUjD4g==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9186CCD5BAC;
-	Fri, 22 May 2026 10:43:45 +0000 (UTC)
-From: =?utf-8?q?J=C3=A9r=C3=B4me_de_Bretagne_via_B4_Relay?= <devnull+jerome.debretagne.gmail.com@kernel.org>
-Date: Fri, 22 May 2026 12:43:26 +0200
-Subject: [PATCH v2 10/10] arm64: dts: qcom: sc8280xp-arcata: Drop duplicate
- DMIC supplies
+	s=arc-20240116; t=1779446856; c=relaxed/simple;
+	bh=QNdletnnGNblfetjlRW6ZCm9/bq4IaOYIpJ8Y2ip6so=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=g6VdhHle3D/sbh9M+LLq0ILBL+hGlO9xdB6EaR7yNpIT73JRPxMxT9VPVy0xYnSK0fpbBpHonxlc284vkt41nHrMwPaj/udsjs3srF/Ghtah5Nw9LUayeHH5DxNspG7Smb1UP+mxVl2KR5HrIy6ObHJbSEAPKlr02SlfIu5nfto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NqoOW6Ru; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1BE51F000E9;
+	Fri, 22 May 2026 10:47:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779446854;
+	bh=K7QkYbeKzf0diPzwFSy35esfS3DNOr7gU6+VWzSEYXw=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=NqoOW6Ru5ewCnOZl4JPJNgROCMEbS2VYkGBvVV05HDjXUsmqvcZ/btGQX2aIUXrZ6
+	 8QvFlJ315J+uyGU+OY/HXdSDD6BJuriRtn0dMGKo2uVGcnnnaUJo8fs1OjHKP53H4M
+	 EvzTHTxJGlL4TywdE8zamWHjSZS8anCKmxL0wVDNTVz/YhoNaMG9+Fr7MEC7C2tlgJ
+	 SUWW/WdDiTNa1GIBkEwmxo62oWLLcoOtPIlSs7cVo2RVrUWpGFRDOpwsb9GfFhwGPg
+	 j6lLTBi7b/KDSfXbKVacEfpPmNc7ECF8OBYo2FuJbZXHkykbB/S7pAxQOv4YdRYD1r
+	 35AZXSnBLBsZA==
+Date: Fri, 22 May 2026 11:47:22 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+Cc: David Lechner <dlechner@baylibre.com>, Nuno =?UTF-8?B?U8Oh?=
+ <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>, Amit Kucheria
+ <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, "Rafael J.
+ Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@kernel.org>,
+ Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+ linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, Kamal Wadhwa
+ <kamal.wadhwa@oss.qualcomm.com>, David Collins
+ <david.collins@oss.qualcomm.com>, Anjelique Melendez
+ <anjelique.melendez@oss.qualcomm.com>, Neil Armstrong
+ <neil.armstrong@linaro.org>, Stephan Gerhold <stephan.gerhold@linaro.org>
+Subject: Re: [PATCH 1/2] iio: adc: qcom-spmi-adc5-gen3: Share SDAM0 IRQ with
+ ADC_TM auxiliary driver
+Message-ID: <20260522114722.49b6055e@jic23-huawei>
+In-Reply-To: <6c876a92-e572-4cb9-8c31-bbf681a4770b@oss.qualcomm.com>
+References: <20260515-gen3_adc_tm-v1-0-39ba29f9b4ab@oss.qualcomm.com>
+	<20260515-gen3_adc_tm-v1-1-39ba29f9b4ab@oss.qualcomm.com>
+	<20260515145450.3b1e9c3d@jic23-huawei>
+	<6c876a92-e572-4cb9-8c31-bbf681a4770b@oss.qualcomm.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260522-surface-sp9-5g-for-next-v2-10-dd9d477407f5@gmail.com>
-References: <20260522-surface-sp9-5g-for-next-v2-0-dd9d477407f5@gmail.com>
-In-Reply-To: <20260522-surface-sp9-5g-for-next-v2-0-dd9d477407f5@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>, 
- =?utf-8?q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>, 
- Stephan Gerhold <stephan.gerhold@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779446623; l=1416;
- i=jerome.debretagne@gmail.com; s=20260520; h=from:subject:message-id;
- bh=JlRG4nTcgg3o5MKMFi2SWQY9MXhILWt8VcNKctZNamw=;
- b=8qu1s7ecMCbQOFhN3sTt5DFnmB6ExgzvNv057us0GMNE3dcWrNZVlHucqpnZDpkqo3wbhbODp
- XAC/8BfDmMGB5hyIceCbdwAgVxFmuf6LvOLTeJZEsmOFKj6hMvCKbea
-X-Developer-Key: i=jerome.debretagne@gmail.com; a=ed25519;
- pk=3/JYhgYjGg5V9mlFxc0A0+pFiyjsuDB/TtDlNMId9fk=
-X-Endpoint-Received: by B4 Relay for jerome.debretagne@gmail.com/20260520
- with auth_id=785
-X-Original-From: =?utf-8?q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>
-Reply-To: jerome.debretagne@gmail.com
-X-Spamd-Result: default: False [1.34 / 15.00];
-	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-109256-lists,linux-arm-msm=lfdr.de,jerome.debretagne.gmail.com];
+	TAGGED_FROM(0.00)[bounces-109257-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_REPLYTO(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.981];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com,linaro.org,oss.qualcomm.com];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[baylibre.com,analog.com,kernel.org,gmail.com,intel.com,arm.com,vger.kernel.org,oss.qualcomm.com,linaro.org];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	HAS_REPLYTO(0.00)[jerome.debretagne@gmail.com];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,linaro.org:email]
-X-Rspamd-Queue-Id: CB4015B284A
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email,sashiko.dev:url]
+X-Rspamd-Queue-Id: E99295B28EA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+On Thu, 21 May 2026 16:16:17 +0530
+Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
 
-Align with the reference implementation from the ThinkPad X13s.
+> Hi Jonathan,
+> 
+> On 5/15/2026 7:24 PM, Jonathan Cameron wrote:
+> > On Fri, 15 May 2026 14:23:44 +0530
+> > Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
+> >   
+> >> The SDAM0 IRQ can be triggered for both EOC (end of conversion) events for
+> >> immediate ADC reads done in this driver and for threshold violation events,
+> >> based on ADC_TM thresholds configured from the auxiliary ADC_TM driver on
+> >> TM channels on the first SDAM.
+> >>
+> >> At present, this interrupt is handled only in the ISR in the main ADC driver.
+> >> When the ISR is triggered for an ADC_TM event, this driver notifies the ADC_TM
+> >> driver by calling a notifier callback exposed from it for this purpose.
+> >>
+> >> To simplify the interrupt handling in both drivers, share the interrupt between
+> >> the drivers. With this, ADC_TM interrupts on SDAM0 will be handled directly in
+> >> the ADC_TM driver, so remove the notifier callback and all TM interrupt
+> >> handling in the main ADC ISR.
+> >>
+> >> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+> >> ---  
+> > 
+> > Some stuff from Sashiko on this one:
+> > https://sashiko.dev/#/patchset/20260515-gen3_adc_tm-v1-0-39ba29f9b4ab%40oss.qualcomm.com
+> > 
+> > Given I assume you didn't see the warning (I'm fairly sure the bots analysis is correct
+> > as we've been busy fixing similar cases all cycle), can I just check, have you tested
+> > this on latest upstream?  
+> 
+> I had tested on a build based on top of Linux 7.1-rc2 and verified the driver's basic
+> functionality, but I think I overlooked the warning from the interrupt management code,
+> sorry about the miss.
+> 
+> > 
+> > Thanks,
+> > 
+> > Jonathan
+> > 
+> >   
+> >>  drivers/iio/adc/qcom-spmi-adc5-gen3.c         | 52 +++++----------------------
+> >>  include/linux/iio/adc/qcom-adc5-gen3-common.h |  2 --
+> >>  2 files changed, 8 insertions(+), 46 deletions(-)
+> >>
+> >> diff --git a/drivers/iio/adc/qcom-spmi-adc5-gen3.c b/drivers/iio/adc/qcom-spmi-adc5-gen3.c
+> >> index f8168a14b907..a819c3e627a0 100644
+> >> --- a/drivers/iio/adc/qcom-spmi-adc5-gen3.c
+> >> +++ b/drivers/iio/adc/qcom-spmi-adc5-gen3.c  
+> >   
+> >>  static int adc5_gen3_probe(struct platform_device *pdev)
+> >>  {
+> >>  	struct device *dev = &pdev->dev;
+> >> @@ -818,7 +782,7 @@ static int adc5_gen3_probe(struct platform_device *pdev)
+> >>  	}
+> >>  
+> >>  	ret = devm_request_irq(dev, adc->dev_data.base[ADC5_GEN3_VADC_SDAM].irq,
+> >> -			       adc5_gen3_isr, 0,
+> >> +			       adc5_gen3_isr, IRQF_ONESHOT | IRQF_SHARED,  
+> > 
+> > Sashikio points out that IRQF_ONESHOT is never correct for a non threaded
+> > interrupt.  The point of that flag is to ensure we don't handle another interrupt
+> > until the thread is done. If there isn't a thread then it doesn't do anything
+> > (other than omit a warning!)  
+> 
+> I tried at first keeping only the IRQF_SHARED flag here, but it seems that
+> shared interrupts need to agree on the ONESHOT flag configuration, else the
+> second interrupt's IRQ request call fails.
+> 
+> And the ADC_TM interrupt needs to be ONESHOT, since we don't want that interrupt to
+> be rearmed before we have notified the thermal framework from the threaded
+> part of the handler. So I had to add the IRQF_ONESHOT here too, though it is
+> not useful here.
+That's an interesting corner case.  Maybe the warning needs to be more refined?
+(I don't think it checks for shared?)
 
-The audio-routing setup specifies two power supplies for each DMIC,
-but only one of them can be active at the same time.
+> 
+> I think it's best to use a threaded IRQ handler in this driver too. I don't really
+> see any meaningful way to split the actions in the interrupt handler here into a primary
+> handler and a threaded handler, so is it fine if I just make the primary handler NULL
+> and move all the ISR functionality into the threaded handler part ?
 
-Drop the redundant routes to the pull-up "VA MIC BIASn" supplies as
-done in commit a2e617f4e698 ("arm64: dts: qcom: sc8280xp-x13s: Drop
-duplicate DMIC supplies").
+That's fine by me.  Just add some comments on why.
 
-There is no functional difference except that we skip briefly switching
-to pull-up mode when shutting down the microphone.
-
-Cc: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
----
- arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts | 3 ---
- 1 file changed, 3 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-index 60f65fd450ecba8196509a620be029314e5efc05..74e218cf8aaaa5658982c5cda0b231802712650d 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-@@ -776,9 +776,6 @@ &sound {
- 			"VA DMIC0", "MIC BIAS1",
- 			"VA DMIC1", "MIC BIAS1",
- 			"VA DMIC2", "MIC BIAS3",
--			"VA DMIC0", "VA MIC BIAS1",
--			"VA DMIC1", "VA MIC BIAS1",
--			"VA DMIC2", "VA MIC BIAS3",
- 			"TX SWR_ADC1", "ADC2_OUTPUT";
- 
- 	wcd-playback-dai-link {
-
--- 
-2.47.3
-
+J
+> 
+> Thanks,
+> Jishnu
+> 
+> 
+> >   
+> >>  			       adc->dev_data.base[ADC5_GEN3_VADC_SDAM].irq_name,
+> >>  			       adc);
+> >>  	if (ret)
+> >> diff --git a/include/linux/iio/adc/qcom-adc5-gen3-common.h b/include/linux/iio/adc/qcom-adc5-gen3-common.h
+> >> index 6303eaa6640b..39cbfcbdb101 100644
+> >> --- a/include/linux/iio/adc/qcom-adc5-gen3-common.h
+> >> +++ b/include/linux/iio/adc/qcom-adc5-gen3-common.h
+> >> @@ -205,7 +205,5 @@ int adc5_gen3_get_scaled_reading(struct device *dev,
+> >>  int adc5_gen3_therm_code_to_temp(struct device *dev,
+> >>  				 struct adc5_channel_common_prop *common_props,
+> >>  				 u16 code, int *val);
+> >> -void adc5_gen3_register_tm_event_notifier(struct device *dev,
+> >> -					  void (*handler)(struct auxiliary_device *));
+> >>  
+> >>  #endif /* QCOM_ADC5_GEN3_COMMON_H */
+> >>  
+> >   
+> 
 
 
