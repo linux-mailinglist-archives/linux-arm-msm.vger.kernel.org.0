@@ -1,170 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-109467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cBNeKO8bEWq+hQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 05:15:59 +0200
+	id QECEMihYEWr9kgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 09:32:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB9735BCE38
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 05:15:58 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 333035BDC00
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 09:32:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 600C4300D4D2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 03:15:35 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 008EE3011BCB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 07:32:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 677433191A5;
-	Sat, 23 May 2026 03:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92CFE3126CD;
+	Sat, 23 May 2026 07:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="JJSFbYbf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sj6TqP2W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB29932B107;
-	Sat, 23 May 2026 03:15:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.165.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4115B339705
+	for <linux-arm-msm@vger.kernel.org>; Sat, 23 May 2026 07:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779506133; cv=none; b=DR9mu/uA2eoPh73TFNSRZ/01oO+NTsFpxfZMyjD05azZ4bcBJ4tSf8YGFIzXO21ExMwWN2OpmlhEo2QxSqoWQpX8iv9OHFjGL5OpN/CHmnmQ6YWt8gB+mEkUIVZN6td6dy/0okggCxmIkj+lqMH84CgAatLkKq1N2Fmda+Amuw8=
+	t=1779521574; cv=none; b=iZRY2Uq/65cPcRqcu0/b19wfNCwltQf6qIvFKHbJlqLPkU/yw3F3oNg/bKtrNj9+g/DxNvI/aTVZOG6tLKJ+nNfteu0E9Ca98bgWX3466nMBwctpIQPHpia8tww+DVG47BNWo8BhFlaceqKxABvlJNaLKh/1bX89zamJsk9uiMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779506133; c=relaxed/simple;
-	bh=cYmNgJif3MBctwCNz7r10/ugSuy7ZEM2QzwgNXh1UTI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mN/i1IP/uWuwtymep/tm50kurGrQFXTRalKhulT/IXkL+lKjOCIKXeLdJkowKGJdmpau476/9AEFbQj/G8BqbLO2QY4cY+tEirSFDE0EsrNKChY30+bluhTS0T9LGalTjSVvKWEGPcy/Sa5MnanqKIQOX6r1wyicbKxq1Ai05zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=JJSFbYbf; arc=none smtp.client-ip=205.220.165.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64N1hc2Z771545;
-	Sat, 23 May 2026 03:15:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=W1qTmqz+ukB8nZk0DsEoX8bnLpw96qTX6w9LOPBiuuI=; b=
-	JJSFbYbf845+iBQSo1SRyZYS+jUL9yBlKUsb0wOS/nC7g8X1QqjZvTMCBoFBSlYP
-	DMeHskrd0FWU7sGkTfQ11rXxOxKnEJ5dQnwq6sVlNy/PwyYORn6hyVdMvKSq+a9y
-	2CKQXAVfrG1bBA0coN1yzmW3p3Ax61LQl7SlvJVlSkXiSIxqToYDUtm+OQBm9pdZ
-	PXbM8nMQ33lx+1XeSrlm+XcxQg2TVOcbjv2Hwhbw3HnphGOeKH/zu//euAAsgTMF
-	4Ssw8kxEARFLhTvu07YJBfRAqW1QXcIgPE1xaTArcXQh4a2Do/LFXmc9/sKk1VSg
-	PAFoc5MJ5Gwn8YJnWFg/cQ==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4eb2tyg72d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sat, 23 May 2026 03:15:25 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 64N3F68j032371;
-	Sat, 23 May 2026 03:15:25 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4eb2p6hsjt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sat, 23 May 2026 03:15:25 +0000 (GMT)
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 64N3F9eK032824;
-	Sat, 23 May 2026 03:15:24 GMT
-Received: from ca-mkp2.ca.oracle.com.com (mpeterse-ol9.allregionaliads.osdevelopmeniad.oraclevcn.com [100.100.251.135])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id 4eb2p6hs6k-14;
-	Sat, 23 May 2026 03:15:24 +0000 (GMT)
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-To: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-Cc: "Martin K . Petersen" <martin.petersen@oracle.com>,
-        Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Kumar Dwivedi <ram.dwivedi@oss.qualcomm.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-        Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>,
-        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] scsi: ufs: dt-bindings: Add compatibles for Nord UFS controller
-Date: Fri, 22 May 2026 23:14:28 -0400
-Message-ID: <177913641751.1181900.7719645023341396564.b4-ty@oracle.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260427013115.231731-1-shengchao.guo@oss.qualcomm.com>
-References: <20260427013115.231731-1-shengchao.guo@oss.qualcomm.com>
+	s=arc-20240116; t=1779521574; c=relaxed/simple;
+	bh=LI4SZvOrYB4t3FQlZ3gUc4AMAt3ZEplcuyrZ+eJM0cY=;
+	h=Message-ID:From:Date:Subject:To:Cc; b=WgWEt4gcnQ0RKthFwoWIcxUZ2AOOcWibPfbHmzMMpXrrE7NJsraefCcmaPArAph+cJlEDxBh4ZCyH1d/1tRrk2wN2eDU3n1ns5RGnjKGWjrb5RvyJ6NWuGvIIlPt1ZXPwrryLChksHE5Y68xtDV33eazt3gs9jmb7wG/Ah3E0DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sj6TqP2W; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2bccb978bd9so53869025ad.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 May 2026 00:32:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779521572; x=1780126372; darn=vger.kernel.org;
+        h=cc:to:subject:date:from:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H+KRTw9/sBNPjfGJSKTyHrcZ/0neRgH4YHpK/FuxGf0=;
+        b=sj6TqP2WTUSn3A/SnUCwJ4TFvVrbJp6FGu9614h0SedmQS1tscbpQlbD+Fbu5kLLy2
+         o47wjAjlbNS3kt0lgmk83BXV00i+QbU1J+bTP0yMowRcrzICp8PJqnH8/zm2B3rf/mEV
+         IjpTjpvlTGZaGaS4fCVfXn0HP8wpoFogp3aaifv/LWOofv4VPpoB0NIhchfLf7GUCP5S
+         /KHvDU+zkbnwrQy+iAPenWKUqhIp0wrpWJUq1IMeV4rr+GjrZc1an9Kc2MH/M8/8auBz
+         UlR477uldY0WR3V/pI/I01Xn6/d7lnmWq/aOAFkBuZquBjrVr5oe/t65IaWkgBHfvrj4
+         LS5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779521572; x=1780126372;
+        h=cc:to:subject:date:from:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=H+KRTw9/sBNPjfGJSKTyHrcZ/0neRgH4YHpK/FuxGf0=;
+        b=WXXWyFgk+qflUnYi+sJHFo/UPhfEBWhhO55o5FdhQfFIl9hLc0JdhduxegSP6tQPdx
+         2JE3sEgO3e4ABGPdaYLw0NDzUOSi/AMXlKGXcF3O3alpkR6Xc+WRjmDVcaZ7s62eLDAC
+         s0jOUyGYFhU8AJVkX19IOUgxCImV4DxbykMP+Pc9YLRVf1sUycB0KksqeVHq+siL740/
+         jeVCM0gJo3D7TR/xIf7RTR1+A4GCnR5ZOWV/uwkK85BJrCwkc+77p16gm1URwGlaLTPj
+         MdJHeLTqLrooIG1uTsECOo3hvMiAJ+HhX0YuUBFqHWCp2FOVIyxVYSbODYjBN8xBDGC/
+         KlAA==
+X-Gm-Message-State: AOJu0YxJUf2EfhIDHNTwmcnDubD0qDBP4d/ipmBmrMknMfpfb6O8wWAg
+	bvEY3+DpfbTkRcCMZQauxeGgabvVMRQzZIQJ5TluOELboZW//HcRxiK7NyycmQ==
+X-Gm-Gg: Acq92OG9JbzRow9mxLXcrcoVkE6VFlyD01aNEMpbhcl0nN7k/9FbIc6mFbXrGr3EOx4
+	RQm5LnHZiSG8xlygTyW174hS/ieK5P1crEHiy4W3MevpUmxhdhZtLtVaevyNcdXPSbdZKVqRomT
+	gz84wbzBzPHJTZmPmWO0wU46oWycY2NW7BFlVzAl20+MNh2y9n17zQJNhSovksLYczDlRXT21Wb
+	jPYiLkcxZiFgRY8mfNOG29epmXtfM7xWhID8UE5MomlxJZg+JCIr02d4rnJ65MDuo9JGv9TFNAq
+	EoECM93GXAbq30Y7qo6gAO6mqb5QOP7ZnIdpc6dbjdVsB7hYd/pYIExT1OGNCF7uURAKE0ny1MD
+	i2MKZEfRMHvSxC3OdcGe+Gh63p3JwCpp5yH9SCGfB2qa9VUEr055JgqU+zKcFfCztUqmtXGRQUe
+	M6Pz0Csksegjk0F3mxNMrKsbrxScqNn3n5VDzUBj3EifZixVmVx0Bjobewudc0+NA3ZtSmMAoin
+	1mU/xY0B9UoazdqAsCxZrc=
+X-Received: by 2002:a17:903:fa7:b0:2bc:ac76:c1d0 with SMTP id d9443c01a7336-2beb088e3ecmr52736095ad.17.1779521572418;
+        Sat, 23 May 2026 00:32:52 -0700 (PDT)
+Received: from 1.0.0.127.in-addr.arpa ([103.129.134.214])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2beb58b387dsm38101085ad.50.2026.05.23.00.32.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 23 May 2026 00:32:52 -0700 (PDT)
+Message-ID: <6a115824.a0bed9bd.3c0137.9edf@mx.google.com>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
+Date: Sat, 23 May 2026 13:17:33 +0545
+Subject: [PATCH] accel/qaic: Protect perf stats BO state with bo->lock
+To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+    Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>,
+    Oded Gabbay <ogabbay@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+    dri-devel@lists.freedesktop.org,
+    linux-kernel@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-23_01,2026-05-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- suspectscore=0 malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0
- mlxlogscore=790 bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2605130000 definitions=main-2605230029
-X-Authority-Analysis: v=2.4 cv=SoCgLvO0 c=1 sm=1 tr=0 ts=6a111bcd cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=RD47p0oAkeU5bO7t-o6f:22 a=VwQbUJbxAAAA:8
- a=ZC9mcO7Xf2SOoCrdTL8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: Uy00OdLTBUayyDaM-tM0EIugTWm-V_9i
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIzMDAyOSBTYWx0ZWRfX0lEhNU12WDa4
- iNx5UlkdjiSQuiTJJ7X1jDNWlXNywJmESOpr4REz6zQ3Q2wsItQng9OG8dc6LmmrliZfGzZS7Zu
- dpbnU3kCJlXGwAtDKXV36tXnLHT9GXkoLLpDucD33wB4Da89+QCXFUK35siSJ4D6nZsP4QiJSYA
- ZA2u1oCGBpyMsw0oJ+ozIWo4IKBsSFnQWu/k5H6awnd3ZsJjHAaasij0Y73+ljgQY4ddUqEq0uq
- GalPFnBbo5gY27McrlPhGb9GtREdmDet7vSAT/ffP2jUpxL5PAnkfw6oODPFbR04RJe7TQESZEG
- 9fRClquDNODekBh9ApzkLDRedxuIJQkyvGg+T1zqqF7x67gvI1VL4PLhdCdSUzCOcoCNhToSqXK
- UJYx/ro+rpFfABE2ieQ0X+pvZ7J4Qw+HrzxTRYj92tXoNkvn0Lar+66TFD18g+CJjysxbhZAJDs
- Fw+zO+Mt7LIQNYnhdnQ==
-X-Proofpoint-GUID: Uy00OdLTBUayyDaM-tM0EIugTWm-V_9i
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[oracle.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[oracle.com:s=corp-2025-04-25];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-109469-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	TAGGED_FROM(0.00)[bounces-109467-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[oracle.com:+];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oracle.com:mid,oracle.com:dkim,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[martin.petersen@oracle.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCPT_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[9]
-X-Rspamd-Queue-Id: AB9735BCE38
+	FROM_NEQ_ENVFROM(0.00)[shuvampandey1@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-0.999];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,mx.google.com:mid]
+X-Rspamd-Queue-Id: 333035BDC00
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, 27 Apr 2026 09:31:13 +0800, Shawn Guo wrote:
+qaic_perf_stats_bo_ioctl() validates each BO by checking bo->sliced and
+bo->dbc before returning its perf stats. These fields are changed by the
+detach paths while holding bo->lock, but the perf stats ioctl reads them
+without that lock.
 
-> This series documents the UFS host controller on Qualcomm Nord SoC.
-> 
-> Nord is a Qualcomm SoC series. Its UFS controller has a multi-queue
-> command (MCQ) register range in addition to the standard one,
-> both of which are required.
-> 
-> Nord also has an automotive variant, SA8797P, where the platform
-> firmware implements an SCMI server and manages UFS resources such as
-> the PHY, clocks, regulators and resets. As a result, SA8797P shares
-> the minimal OS-visible DT interface of SA8255P and uses it as the
-> fallback compatible
-> 
-> [...]
+A concurrent detach can clear bo->dbc and mark the BO unsliced while the
+perf stats ioctl is validating the BO. Take bo->lock while checking the
+BO state and copying the per-BO stats into the temporary result buffer.
 
-Applied to 7.2/scsi-queue, thanks!
+Fixes: 4ddf4ddfceb4 ("accel/qaic: Ensure entry belongs to DBC in qaic_perf_stats_bo_ioctl()")
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+---
+ drivers/accel/qaic/qaic_data.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-[1/2] scsi: ufs: dt-bindings: Add compatible for Nord UFS Host Controller
-      https://git.kernel.org/mkp/scsi/c/c9ee94c7e2fb
-[2/2] scsi: ufs: dt-bindings: Add compatible for SA8797P UFS Host Controller
-      https://git.kernel.org/mkp/scsi/c/7030e16247dc
-
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index 1e4c579d2..1d74c2ec3 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -1834,15 +1834,16 @@ int qaic_perf_stats_bo_ioctl(struct drm_device *dev, void *data, struct drm_file
+ 			goto free_ent;
+ 		}
+ 		bo = to_qaic_bo(obj);
++		ret = mutex_lock_interruptible(&bo->lock);
++		if (ret)
++			goto put_obj;
+ 		if (!bo->sliced) {
+-			drm_gem_object_put(obj);
+ 			ret = -EINVAL;
+-			goto free_ent;
++			goto unlock_bo;
+ 		}
+ 		if (bo->dbc->id != args->hdr.dbc_id) {
+-			drm_gem_object_put(obj);
+ 			ret = -EINVAL;
+-			goto free_ent;
++			goto unlock_bo;
+ 		}
+ 		/*
+ 		 * perf stats ioctl is called before wait ioctl is complete then
+@@ -1858,7 +1859,12 @@ int qaic_perf_stats_bo_ioctl(struct drm_device *dev, void *data, struct drm_file
+ 						    bo->perf_stats.req_received_ts), 1000);
+ 		ent[i].queue_level_before = bo->perf_stats.queue_level_before;
+ 		ent[i].num_queue_element = bo->total_slice_nents;
++unlock_bo:
++		mutex_unlock(&bo->lock);
++put_obj:
+ 		drm_gem_object_put(obj);
++		if (ret)
++			goto free_ent;
+ 	}
+ 
+ 	if (copy_to_user(u64_to_user_ptr(args->data), ent, args->hdr.count * sizeof(*ent)))
 -- 
-Martin K. Petersen
+2.50.1 (Apple Git-155)
+
 
