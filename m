@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-109485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sDRYIi36EWpYtAYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 21:04:13 +0200
+	id 8NfqBjL6EWpVtAYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 21:04:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A4355C0647
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 21:04:12 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 827885C0661
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 21:04:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 57CE6300844C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 19:04:09 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 181613015A4B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 19:04:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34C06357CE8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 552D738886F;
 	Sat, 23 May 2026 19:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ncgstb4+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BcB19Sh9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2DA2D12F3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3C73128AB;
 	Sat, 23 May 2026 19:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779563045; cv=none; b=jpBK+aTxjYkt1CPmfoP1umdQF6aVimvZyRosofTRcjxtRl99r09oUqrY3Dwwt0CBe/1IiqSruheXE5ZxMrthrykKA1ccDZ53VxsGRZGinIexI5EOfoSSqYNyljgIvvRAs+HYT6Wjm/JCLuC+A5//2WEk052tgZFa35CUg/RHZy4=
+	t=1779563045; cv=none; b=OFAMXEyxTvj5MVXGMsfpGks1RFFPx4qDGqv5rfD6iv3ZtSfwC+HTDwhlKQpOKZBOMDY8JTSqybqG4ukzDf/mMfqT2AegcVjGYbdg2H+KpuT9lG6TLkAmT7U+TsmhjkIUkRLCCX6u5lf3LD3HYEU98flKZPGvA8c1cLpQvva6jtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1779563045; c=relaxed/simple;
-	bh=qKdKW12reljmkI9Y5GL96UhP5eGpAEu75do6kp2GrbQ=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=bZNX9jqF2o6wzAqd/hU/H39DfFkJr7uYaQIrd18IoIGYIduOLBrqT6QN6C6ch1vPwKlKs3U1702Vd6uvh+eal7nBjIE1SrmzwJto2u4Q4wjhzTSF4ZA0C4M7aaA4/UiLTykj4ifX2ns+bpfKFN5VZosfIoGKhw0MPzr1+SU0LXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ncgstb4+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 876E6C2BCB4;
+	bh=ZxTfFcowDtKUY6KjvIVxuRaZ8vGugT9373TP8A5BoYQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=gWxgo8D7eXvBrDGMlir7w1rC+8upIx8WH4yckH8iQVt8qfoZSged4FqwSCisRerExUCVwWyxazPOdU1eSv2LQ352RZ9GKTgKVjTyyhkQ8XhcBys2wGStgKLogIjycKpRPSAJoaPTcQA1l45W33nrBPiNmxYBta1JnPFlQPjFEGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BcB19Sh9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id AD14EC2BCB8;
 	Sat, 23 May 2026 19:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1779563044;
-	bh=qKdKW12reljmkI9Y5GL96UhP5eGpAEu75do6kp2GrbQ=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=Ncgstb4+cU6Kr/5vk8rsYFyV4+Vp9eGMDxhnXQVVqjvXKekp7P5Mvrg2rKjmFIeM6
-	 Wu7KH2kzMzCpMVfUG1Vvf81mVhWYdikI1QG/7SR1hByDyv8lAngLOlu7nqTTL7gx4b
-	 MGWLaH6ZRhXxbVIKTFaYwkSxc0XfcMfPYp30s+Polf8A0ix9xeIHIxK5vZlU0dddMX
-	 gBnz5J2FtdgQl7mMv9nA2wWJhyVB9C4vElAyGqIwnZQy7nAEjDEbGXhXD9gp4MINOk
-	 VVDHAU8/uM8OwFnaOCmu0R6IMB0x9DmP0dRMRfKxgvSflDZJsHgQXKEjb1lVGupk/y
-	 x0tJS52KuBE2w==
+	bh=ZxTfFcowDtKUY6KjvIVxuRaZ8vGugT9373TP8A5BoYQ=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=BcB19Sh95saKfI7R/qPmrGsXL3CfShRTMNynYcd/jKIW5MAtYQGyuGhlTbojxoIjq
+	 qW/eA6oFKakt0wDxh7o0BuzVlLns8HZp5cZegh8gALJXrPD94PkTikXgmNHkeRcFqa
+	 K5KU+eydA+xyJRXvV5rRmdAn/EZyfkEAADePJqsucPk5JtUoJPPYXMyTtKRNdiS1qb
+	 lMNw79q7u+XLHULpvOhEa9cwEd9y/Td51ZiDSfCMGAjR9XKi0ZF4fo1Nv3AQ/Rjsf3
+	 +iBwvycWttfcod2GGoiOmOkl5Dt18pbHOgi6L8lEom4YwMyohitT03IiYxLP2sw3fy
+	 hdUYJGU4v+7oQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D9A0CD5BB1;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97334CD5BB8;
 	Sat, 23 May 2026 19:04:04 +0000 (UTC)
 From: Demi Marie Obenour via B4 Relay <devnull+demiobenour.gmail.com@kernel.org>
-Subject: [PATCH 0/2] Delete the Qualcomm crypto engine
-Date: Sat, 23 May 2026 15:03:55 -0400
-Message-Id: <20260523-delete-qce-v1-0-86105cd7f406@gmail.com>
+Date: Sat, 23 May 2026 15:03:56 -0400
+Subject: [PATCH 1/2] crypto: Delete Qualcomm crypto engine driver
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,10 +58,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDUyNj3ZTUnNSSVN3C5FRdA2Mz4xQjo0QLU0szJaCGgqLUtMwKsGHRsbW
- 1AAdO39VcAAAA
-X-Change-ID: 20260523-delete-qce-0363d22a8596
+Message-Id: <20260523-delete-qce-v1-1-86105cd7f406@gmail.com>
+References: <20260523-delete-qce-v1-0-86105cd7f406@gmail.com>
+In-Reply-To: <20260523-delete-qce-v1-0-86105cd7f406@gmail.com>
 To: Herbert Xu <herbert@gondor.apana.org.au>, 
  "David S. Miller" <davem@davemloft.net>, 
  Thara Gopinath <thara.gopinath@gmail.com>, Rob Herring <robh@kernel.org>, 
@@ -75,11 +74,11 @@ Cc: linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, 
  Demi Marie Obenour <demiobenour@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779563043; l=2071;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779563043; l=117638;
  i=demiobenour@gmail.com; s=20250731; h=from:subject:message-id;
- bh=qKdKW12reljmkI9Y5GL96UhP5eGpAEu75do6kp2GrbQ=;
- b=TtSJ+IKiIz4+J8ZUozDqY5sbAF3vqtXPpM9l1sFNxConO52NyijO6g3Vw49p+zAa/n1QHX5tt
- xTSDIB65+CJC+aZ2Q+K518avBn4FicGdDE2+6UFcs1UfpBdkIoLYdjs
+ bh=cvhzE5ntgpH/f80xnAbl4Na3a7TZxaLhw8nI/jPPWSE=;
+ b=/mAnGDDxKmtcMLzHtjXgP9oGXrOOB+LdYwsuvCm5JivDzwN6p4Jd/cqVeCZujptw+uLzoMGef
+ lJv5tJKFs0tAIB5os9Cu2j/Sn2lBxBtsTzklYHjiP5cfOnqcMgBLjYy
 X-Developer-Key: i=demiobenour@gmail.com; a=ed25519;
  pk=4iGY+ynEKxIfs+fIUK9EzsvZ44yGE0GvXLeLTPKKPhI=
 X-Endpoint-Received: by B4 Relay for demiobenour@gmail.com/20250731 with
@@ -92,80 +91,3977 @@ X-Spamd-Result: default: False [1.34 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-109485-lists,linux-arm-msm=lfdr.de,demiobenour.gmail.com];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-109487-lists,linux-arm-msm=lfdr.de,demiobenour.gmail.com];
 	FREEMAIL_TO(0.00)[gondor.apana.org.au,davemloft.net,gmail.com,kernel.org,armlinux.org.uk];
-	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
 	MIME_TRACE(0.00)[0:+];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_REPLYTO(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	HAS_REPLYTO(0.00)[demiobenour@gmail.com];
 	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.974];
+	NEURAL_HAM(-0.00)[-0.951];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,lists.infradead.org,gmail.com];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	FREEMAIL_REPLYTO(0.00)[gmail.com];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	HAS_REPLYTO(0.00)[demiobenour@gmail.com]
-X-Rspamd-Queue-Id: 8A4355C0647
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 827885C0661
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The only realistic uses I can think of are:
+From: Demi Marie Obenour <demiobenour@gmail.com>
 
-1. Very weak devices where QCE is actually faster.
-2. Devices without bitsliced NEON.
-
-Do any such devices exist in the wild?  I have no idea.
-
-Not even compile-tested, but should be trivial as it just deletes code.
-I didn't change the device tree beyond marking the bindings as
-deprecated.
+It's slower than the generic C code and causes problems.
 
 Signed-off-by: Demi Marie Obenour <demiobenour@gmail.com>
 ---
-Demi Marie Obenour (2):
-      crypto: Delete Qualcomm crypto engine driver
-      devicetree: Mark QCE bindings as deprecated
+ MAINTAINERS                         |   8 -
+ arch/arm/configs/multi_v7_defconfig |   1 -
+ arch/arm64/configs/defconfig        |   1 -
+ drivers/crypto/Kconfig              | 111 -----
+ drivers/crypto/Makefile             |   1 -
+ drivers/crypto/qce/Makefile         |   9 -
+ drivers/crypto/qce/aead.c           | 841 ------------------------------------
+ drivers/crypto/qce/aead.h           |  56 ---
+ drivers/crypto/qce/cipher.h         |  56 ---
+ drivers/crypto/qce/common.c         | 595 -------------------------
+ drivers/crypto/qce/common.h         | 104 -----
+ drivers/crypto/qce/core.c           | 271 ------------
+ drivers/crypto/qce/core.h           |  64 ---
+ drivers/crypto/qce/dma.c            | 135 ------
+ drivers/crypto/qce/dma.h            |  47 --
+ drivers/crypto/qce/regs-v5.h        | 326 --------------
+ drivers/crypto/qce/sha.c            | 545 -----------------------
+ drivers/crypto/qce/sha.h            |  72 ---
+ drivers/crypto/qce/skcipher.c       | 529 -----------------------
+ 19 files changed, 3772 deletions(-)
 
- .../devicetree/bindings/crypto/qcom-qce.yaml       |   3 +
- MAINTAINERS                                        |   8 -
- arch/arm/configs/multi_v7_defconfig                |   1 -
- arch/arm64/configs/defconfig                       |   1 -
- drivers/crypto/Kconfig                             | 111 ---
- drivers/crypto/Makefile                            |   1 -
- drivers/crypto/qce/Makefile                        |   9 -
- drivers/crypto/qce/aead.c                          | 841 ---------------------
- drivers/crypto/qce/aead.h                          |  56 --
- drivers/crypto/qce/cipher.h                        |  56 --
- drivers/crypto/qce/common.c                        | 595 ---------------
- drivers/crypto/qce/common.h                        | 104 ---
- drivers/crypto/qce/core.c                          | 271 -------
- drivers/crypto/qce/core.h                          |  64 --
- drivers/crypto/qce/dma.c                           | 135 ----
- drivers/crypto/qce/dma.h                           |  47 --
- drivers/crypto/qce/regs-v5.h                       | 326 --------
- drivers/crypto/qce/sha.c                           | 545 -------------
- drivers/crypto/qce/sha.h                           |  72 --
- drivers/crypto/qce/skcipher.c                      | 529 -------------
- 20 files changed, 3 insertions(+), 3772 deletions(-)
----
-base-commit: 49e05bb00f2e8168695f7af4d694c39e1423e8a2
-change-id: 20260523-delete-qce-0363d22a8596
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 882214b0e7db53bb8cc8e75b5d2269ee0591ea20..ff631ec4b025ed256d7ef74c313a88755c205797 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -21898,14 +21898,6 @@ F:	Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+ F:	Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+ F:	drivers/cpufreq/qcom-cpufreq-nvmem.c
+ 
+-QUALCOMM CRYPTO DRIVERS
+-M:	Thara Gopinath <thara.gopinath@gmail.com>
+-L:	linux-crypto@vger.kernel.org
+-L:	linux-arm-msm@vger.kernel.org
+-S:	Maintained
+-F:	Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+-F:	drivers/crypto/qce/
+-
+ QUALCOMM EMAC GIGABIT ETHERNET DRIVER
+ M:	Timur Tabi <timur@kernel.org>
+ L:	netdev@vger.kernel.org
+diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
+index bcc9aabc120283e8b98584964e0db3e24679724f..54960c8dc0989226ffd16c69cd26b69c33d22b79 100644
+--- a/arch/arm/configs/multi_v7_defconfig
++++ b/arch/arm/configs/multi_v7_defconfig
+@@ -1335,7 +1335,6 @@ CONFIG_CRYPTO_DEV_ATMEL_AES=m
+ CONFIG_CRYPTO_DEV_ATMEL_TDES=m
+ CONFIG_CRYPTO_DEV_ATMEL_SHA=m
+ CONFIG_CRYPTO_DEV_MARVELL_CESA=m
+-CONFIG_CRYPTO_DEV_QCE=m
+ CONFIG_CRYPTO_DEV_QCOM_RNG=m
+ CONFIG_CRYPTO_DEV_ROCKCHIP=m
+ CONFIG_CRYPTO_DEV_STM32_HASH=m
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index d905a0777f939c51cc39df6230591a31058b765f..6ba10b76026867dd4f4d3dead6d59dadf0e7d9aa 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1952,7 +1952,6 @@ CONFIG_CRYPTO_AES_ARM64_CE_CCM=y
+ CONFIG_CRYPTO_DEV_SUN8I_CE=m
+ CONFIG_CRYPTO_DEV_FSL_CAAM=m
+ CONFIG_CRYPTO_DEV_FSL_DPAA2_CAAM=m
+-CONFIG_CRYPTO_DEV_QCE=m
+ CONFIG_CRYPTO_DEV_QCOM_RNG=m
+ CONFIG_CRYPTO_DEV_TEGRA=m
+ CONFIG_CRYPTO_DEV_XILINX_TRNG=m
+diff --git a/drivers/crypto/Kconfig b/drivers/crypto/Kconfig
+index 3449b3c9c6adfdaf1ab5740d6b3542c39c7d5745..6da104e8c3c270968f4d7f0bdd2a03c90e2621a1 100644
+--- a/drivers/crypto/Kconfig
++++ b/drivers/crypto/Kconfig
+@@ -545,117 +545,6 @@ source "drivers/crypto/cavium/nitrox/Kconfig"
+ source "drivers/crypto/marvell/Kconfig"
+ source "drivers/crypto/intel/Kconfig"
+ 
+-config CRYPTO_DEV_QCE
+-	tristate "Qualcomm crypto engine accelerator"
+-	depends on ARCH_QCOM || COMPILE_TEST
+-	depends on HAS_IOMEM
+-	help
+-	  This driver supports Qualcomm crypto engine accelerator
+-	  hardware. To compile this driver as a module, choose M here. The
+-	  module will be called qcrypto.
+-
+-config CRYPTO_DEV_QCE_SKCIPHER
+-	bool
+-	depends on CRYPTO_DEV_QCE
+-	select CRYPTO_AES
+-	select CRYPTO_LIB_DES
+-	select CRYPTO_ECB
+-	select CRYPTO_CBC
+-	select CRYPTO_XTS
+-	select CRYPTO_CTR
+-	select CRYPTO_SKCIPHER
+-
+-config CRYPTO_DEV_QCE_SHA
+-	bool
+-	depends on CRYPTO_DEV_QCE
+-	select CRYPTO_SHA1
+-	select CRYPTO_SHA256
+-
+-config CRYPTO_DEV_QCE_AEAD
+-	bool
+-	depends on CRYPTO_DEV_QCE
+-	select CRYPTO_AUTHENC
+-	select CRYPTO_LIB_DES
+-
+-choice
+-	prompt "Algorithms enabled for QCE acceleration"
+-	default CRYPTO_DEV_QCE_ENABLE_ALL
+-	depends on CRYPTO_DEV_QCE
+-	help
+-	  This option allows to choose whether to build support for all algorithms
+-	  (default), hashes-only, or skciphers-only.
+-
+-	  The QCE engine does not appear to scale as well as the CPU to handle
+-	  multiple crypto requests.  While the ipq40xx chips have 4-core CPUs, the
+-	  QCE handles only 2 requests in parallel.
+-
+-	  Ipsec throughput seems to improve when disabling either family of
+-	  algorithms, sharing the load with the CPU.  Enabling skciphers-only
+-	  appears to work best.
+-
+-	config CRYPTO_DEV_QCE_ENABLE_ALL
+-		bool "All supported algorithms"
+-		select CRYPTO_DEV_QCE_SKCIPHER
+-		select CRYPTO_DEV_QCE_SHA
+-		select CRYPTO_DEV_QCE_AEAD
+-		help
+-		  Enable all supported algorithms:
+-			- AES (CBC, CTR, ECB, XTS)
+-			- 3DES (CBC, ECB)
+-			- DES (CBC, ECB)
+-			- SHA1, HMAC-SHA1
+-			- SHA256, HMAC-SHA256
+-
+-	config CRYPTO_DEV_QCE_ENABLE_SKCIPHER
+-		bool "Symmetric-key ciphers only"
+-		select CRYPTO_DEV_QCE_SKCIPHER
+-		help
+-		  Enable symmetric-key ciphers only:
+-			- AES (CBC, CTR, ECB, XTS)
+-			- 3DES (ECB, CBC)
+-			- DES (ECB, CBC)
+-
+-	config CRYPTO_DEV_QCE_ENABLE_SHA
+-		bool "Hash/HMAC only"
+-		select CRYPTO_DEV_QCE_SHA
+-		help
+-		  Enable hashes/HMAC algorithms only:
+-			- SHA1, HMAC-SHA1
+-			- SHA256, HMAC-SHA256
+-
+-	config CRYPTO_DEV_QCE_ENABLE_AEAD
+-		bool "AEAD algorithms only"
+-		select CRYPTO_DEV_QCE_AEAD
+-		help
+-		  Enable AEAD algorithms only:
+-			- authenc()
+-			- ccm(aes)
+-			- rfc4309(ccm(aes))
+-endchoice
+-
+-config CRYPTO_DEV_QCE_SW_MAX_LEN
+-	int "Default maximum request size to use software for AES"
+-	depends on CRYPTO_DEV_QCE && CRYPTO_DEV_QCE_SKCIPHER
+-	default 512
+-	help
+-	  This sets the default maximum request size to perform AES requests
+-	  using software instead of the crypto engine.  It can be changed by
+-	  setting the aes_sw_max_len parameter.
+-
+-	  Small blocks are processed faster in software than hardware.
+-	  Considering the 256-bit ciphers, software is 2-3 times faster than
+-	  qce at 256-bytes, 30% faster at 512, and about even at 768-bytes.
+-	  With 128-bit keys, the break-even point would be around 1024-bytes.
+-
+-	  The default is set a little lower, to 512 bytes, to balance the
+-	  cost in CPU usage.  The minimum recommended setting is 16-bytes
+-	  (1 AES block), since AES-GCM will fail if you set it lower.
+-	  Setting this to zero will send all requests to the hardware.
+-
+-	  Note that 192-bit keys are not supported by the hardware and are
+-	  always processed by the software fallback, and all DES requests
+-	  are done by the hardware.
+-
+ config CRYPTO_DEV_QCOM_RNG
+ 	tristate "Qualcomm Random Number Generator Driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
+diff --git a/drivers/crypto/Makefile b/drivers/crypto/Makefile
+index 283bbc650b5b22a3f2a5a1ec81ca42ae3d37a80f..9fcd55a8474e5a95c0c189d9ae5d890abcd5dbdc 100644
+--- a/drivers/crypto/Makefile
++++ b/drivers/crypto/Makefile
+@@ -27,7 +27,6 @@ obj-$(CONFIG_CRYPTO_DEV_OMAP_SHAM) += omap-sham.o
+ obj-$(CONFIG_CRYPTO_DEV_PADLOCK_AES) += padlock-aes.o
+ obj-$(CONFIG_CRYPTO_DEV_PADLOCK_SHA) += padlock-sha.o
+ obj-$(CONFIG_CRYPTO_DEV_PPC4XX) += amcc/
+-obj-$(CONFIG_CRYPTO_DEV_QCE) += qce/
+ obj-$(CONFIG_CRYPTO_DEV_QCOM_RNG) += qcom-rng.o
+ obj-$(CONFIG_CRYPTO_DEV_ROCKCHIP) += rockchip/
+ obj-$(CONFIG_CRYPTO_DEV_S5P) += s5p-sss.o
+diff --git a/drivers/crypto/qce/Makefile b/drivers/crypto/qce/Makefile
+deleted file mode 100644
+index 2cf8984e1b85161ab468bdec4d50950f40d070d0..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/Makefile
++++ /dev/null
+@@ -1,9 +0,0 @@
+-# SPDX-License-Identifier: GPL-2.0
+-obj-$(CONFIG_CRYPTO_DEV_QCE) += qcrypto.o
+-qcrypto-objs := core.o \
+-		common.o \
+-		dma.o
+-
+-qcrypto-$(CONFIG_CRYPTO_DEV_QCE_SHA) += sha.o
+-qcrypto-$(CONFIG_CRYPTO_DEV_QCE_SKCIPHER) += skcipher.o
+-qcrypto-$(CONFIG_CRYPTO_DEV_QCE_AEAD) += aead.o
+diff --git a/drivers/crypto/qce/aead.c b/drivers/crypto/qce/aead.c
+deleted file mode 100644
+index 9cb11fada2c4ddecebcb5c48416245f402389bb1..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/aead.c
++++ /dev/null
+@@ -1,841 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-
+-/*
+- * Copyright (C) 2021, Linaro Limited. All rights reserved.
+- */
+-#include <linux/dma-mapping.h>
+-#include <linux/interrupt.h>
+-#include <linux/string.h>
+-#include <crypto/gcm.h>
+-#include <crypto/authenc.h>
+-#include <crypto/internal/aead.h>
+-#include <crypto/internal/des.h>
+-#include <crypto/sha1.h>
+-#include <crypto/sha2.h>
+-#include <crypto/scatterwalk.h>
+-#include "aead.h"
+-
+-#define CCM_NONCE_ADATA_SHIFT		6
+-#define CCM_NONCE_AUTHSIZE_SHIFT	3
+-#define MAX_CCM_ADATA_HEADER_LEN        6
+-
+-static LIST_HEAD(aead_algs);
+-
+-static void qce_aead_done(void *data)
+-{
+-	struct crypto_async_request *async_req = data;
+-	struct aead_request *req = aead_request_cast(async_req);
+-	struct qce_aead_reqctx *rctx = aead_request_ctx_dma(req);
+-	struct qce_aead_ctx *ctx = crypto_tfm_ctx(async_req->tfm);
+-	struct qce_alg_template *tmpl = to_aead_tmpl(crypto_aead_reqtfm(req));
+-	struct qce_device *qce = tmpl->qce;
+-	struct qce_result_dump *result_buf = qce->dma.result_buf;
+-	enum dma_data_direction dir_src, dir_dst;
+-	bool diff_dst;
+-	int error;
+-	u32 status;
+-	unsigned int totallen;
+-	unsigned char tag[SHA256_DIGEST_SIZE] = {0};
+-
+-	diff_dst = (req->src != req->dst) ? true : false;
+-	dir_src = diff_dst ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
+-	dir_dst = diff_dst ? DMA_FROM_DEVICE : DMA_BIDIRECTIONAL;
+-
+-	error = qce_dma_terminate_all(&qce->dma);
+-	if (error)
+-		dev_dbg(qce->dev, "aead dma termination error (%d)\n",
+-			error);
+-	if (diff_dst)
+-		dma_unmap_sg(qce->dev, rctx->src_sg, rctx->src_nents, dir_src);
+-
+-	dma_unmap_sg(qce->dev, rctx->dst_sg, rctx->dst_nents, dir_dst);
+-
+-	if (IS_CCM(rctx->flags)) {
+-		if (req->assoclen) {
+-			sg_free_table(&rctx->src_tbl);
+-			if (diff_dst)
+-				sg_free_table(&rctx->dst_tbl);
+-		} else {
+-			if (!(IS_DECRYPT(rctx->flags) && !diff_dst))
+-				sg_free_table(&rctx->dst_tbl);
+-		}
+-	} else {
+-		sg_free_table(&rctx->dst_tbl);
+-	}
+-
+-	error = qce_check_status(qce, &status);
+-	if (error < 0 && (error != -EBADMSG))
+-		dev_err(qce->dev, "aead operation error (%x)\n", status);
+-
+-	if (IS_ENCRYPT(rctx->flags)) {
+-		totallen = req->cryptlen + req->assoclen;
+-		if (IS_CCM(rctx->flags))
+-			scatterwalk_map_and_copy(rctx->ccmresult_buf, req->dst,
+-						 totallen, ctx->authsize, 1);
+-		else
+-			scatterwalk_map_and_copy(result_buf->auth_iv, req->dst,
+-						 totallen, ctx->authsize, 1);
+-
+-	} else if (!IS_CCM(rctx->flags)) {
+-		totallen = req->cryptlen + req->assoclen - ctx->authsize;
+-		scatterwalk_map_and_copy(tag, req->src, totallen, ctx->authsize, 0);
+-		if (memcmp(result_buf->auth_iv, tag, ctx->authsize)) {
+-			pr_err("Bad message error\n");
+-			error = -EBADMSG;
+-		}
+-	}
+-
+-	qce->async_req_done(qce, error);
+-}
+-
+-static struct scatterlist *
+-qce_aead_prepare_result_buf(struct sg_table *tbl, struct aead_request *req)
+-{
+-	struct qce_aead_reqctx *rctx = aead_request_ctx_dma(req);
+-	struct qce_alg_template *tmpl = to_aead_tmpl(crypto_aead_reqtfm(req));
+-	struct qce_device *qce = tmpl->qce;
+-
+-	sg_init_one(&rctx->result_sg, qce->dma.result_buf, QCE_RESULT_BUF_SZ);
+-	return qce_sgtable_add(tbl, &rctx->result_sg, QCE_RESULT_BUF_SZ);
+-}
+-
+-static struct scatterlist *
+-qce_aead_prepare_ccm_result_buf(struct sg_table *tbl, struct aead_request *req)
+-{
+-	struct qce_aead_reqctx *rctx = aead_request_ctx_dma(req);
+-
+-	sg_init_one(&rctx->result_sg, rctx->ccmresult_buf, QCE_BAM_BURST_SIZE);
+-	return qce_sgtable_add(tbl, &rctx->result_sg, QCE_BAM_BURST_SIZE);
+-}
+-
+-static struct scatterlist *
+-qce_aead_prepare_dst_buf(struct aead_request *req)
+-{
+-	struct qce_aead_reqctx *rctx = aead_request_ctx_dma(req);
+-	struct qce_alg_template *tmpl = to_aead_tmpl(crypto_aead_reqtfm(req));
+-	struct qce_device *qce = tmpl->qce;
+-	struct scatterlist *sg, *msg_sg, __sg[2];
+-	gfp_t gfp;
+-	unsigned int assoclen = req->assoclen;
+-	unsigned int totallen;
+-	int ret;
+-
+-	totallen = rctx->cryptlen + assoclen;
+-	rctx->dst_nents = sg_nents_for_len(req->dst, totallen);
+-	if (rctx->dst_nents < 0) {
+-		dev_err(qce->dev, "Invalid numbers of dst SG.\n");
+-		return ERR_PTR(-EINVAL);
+-	}
+-	if (IS_CCM(rctx->flags))
+-		rctx->dst_nents += 2;
+-	else
+-		rctx->dst_nents += 1;
+-
+-	gfp = (req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP) ?
+-						GFP_KERNEL : GFP_ATOMIC;
+-	ret = sg_alloc_table(&rctx->dst_tbl, rctx->dst_nents, gfp);
+-	if (ret)
+-		return ERR_PTR(ret);
+-
+-	if (IS_CCM(rctx->flags) && assoclen) {
+-		/* Get the dst buffer */
+-		msg_sg = scatterwalk_ffwd(__sg, req->dst, assoclen);
+-
+-		sg = qce_sgtable_add(&rctx->dst_tbl, &rctx->adata_sg,
+-				     rctx->assoclen);
+-		if (IS_ERR(sg))
+-			goto dst_tbl_free;
+-		/* dst buffer */
+-		sg = qce_sgtable_add(&rctx->dst_tbl, msg_sg, rctx->cryptlen);
+-		if (IS_ERR(sg))
+-			goto dst_tbl_free;
+-		totallen = rctx->cryptlen + rctx->assoclen;
+-	} else {
+-		if (totallen) {
+-			sg = qce_sgtable_add(&rctx->dst_tbl, req->dst, totallen);
+-			if (IS_ERR(sg))
+-				goto dst_tbl_free;
+-		}
+-	}
+-	if (IS_CCM(rctx->flags))
+-		sg = qce_aead_prepare_ccm_result_buf(&rctx->dst_tbl, req);
+-	else
+-		sg = qce_aead_prepare_result_buf(&rctx->dst_tbl, req);
+-
+-	if (IS_ERR(sg))
+-		goto dst_tbl_free;
+-
+-	sg_mark_end(sg);
+-	rctx->dst_sg = rctx->dst_tbl.sgl;
+-	rctx->dst_nents = sg_nents_for_len(rctx->dst_sg, totallen) + 1;
+-
+-	return sg;
+-
+-dst_tbl_free:
+-	sg_free_table(&rctx->dst_tbl);
+-	return sg;
+-}
+-
+-static int
+-qce_aead_ccm_prepare_buf_assoclen(struct aead_request *req)
+-{
+-	struct scatterlist *sg, *msg_sg, __sg[2];
+-	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
+-	struct qce_aead_reqctx *rctx = aead_request_ctx_dma(req);
+-	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
+-	unsigned int assoclen = rctx->assoclen;
+-	unsigned int adata_header_len, cryptlen, totallen;
+-	gfp_t gfp;
+-	bool diff_dst;
+-	int ret;
+-
+-	if (IS_DECRYPT(rctx->flags))
+-		cryptlen = rctx->cryptlen + ctx->authsize;
+-	else
+-		cryptlen = rctx->cryptlen;
+-	totallen = cryptlen + req->assoclen;
+-
+-	/* Get the msg */
+-	msg_sg = scatterwalk_ffwd(__sg, req->src, req->assoclen);
+-
+-	rctx->adata = kzalloc((ALIGN(assoclen, 16) + MAX_CCM_ADATA_HEADER_LEN) *
+-			       sizeof(unsigned char), GFP_ATOMIC);
+-	if (!rctx->adata)
+-		return -ENOMEM;
+-
+-	/*
+-	 * Format associated data (RFC3610 and NIST 800-38C)
+-	 * Even though specification allows for AAD to be up to 2^64 - 1 bytes,
+-	 * the assoclen field in aead_request is unsigned int and thus limits
+-	 * the AAD to be up to 2^32 - 1 bytes. So we handle only two scenarios
+-	 * while forming the header for AAD.
+-	 */
+-	if (assoclen < 0xff00) {
+-		adata_header_len = 2;
+-		*(__be16 *)rctx->adata = cpu_to_be16(assoclen);
+-	} else {
+-		adata_header_len = 6;
+-		*(__be16 *)rctx->adata = cpu_to_be16(0xfffe);
+-		*(__be32 *)(rctx->adata + 2) = cpu_to_be32(assoclen);
+-	}
+-
+-	/* Copy the associated data */
+-	if (sg_copy_to_buffer(req->src, sg_nents_for_len(req->src, assoclen),
+-			      rctx->adata + adata_header_len,
+-			      assoclen) != assoclen)
+-		return -EINVAL;
+-
+-	/* Pad associated data to block size */
+-	rctx->assoclen = ALIGN(assoclen + adata_header_len, 16);
+-
+-	diff_dst = (req->src != req->dst) ? true : false;
+-
+-	if (diff_dst)
+-		rctx->src_nents = sg_nents_for_len(req->src, totallen) + 1;
+-	else
+-		rctx->src_nents = sg_nents_for_len(req->src, totallen) + 2;
+-
+-	gfp = (req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP) ? GFP_KERNEL : GFP_ATOMIC;
+-	ret = sg_alloc_table(&rctx->src_tbl, rctx->src_nents, gfp);
+-	if (ret)
+-		return ret;
+-
+-	/* Associated Data */
+-	sg_init_one(&rctx->adata_sg, rctx->adata, rctx->assoclen);
+-	sg = qce_sgtable_add(&rctx->src_tbl, &rctx->adata_sg,
+-			     rctx->assoclen);
+-	if (IS_ERR(sg)) {
+-		ret = PTR_ERR(sg);
+-		goto err_free;
+-	}
+-	/* src msg */
+-	sg = qce_sgtable_add(&rctx->src_tbl, msg_sg, cryptlen);
+-	if (IS_ERR(sg)) {
+-		ret = PTR_ERR(sg);
+-		goto err_free;
+-	}
+-	if (!diff_dst) {
+-		/*
+-		 * For decrypt, when src and dst buffers are same, there is already space
+-		 * in the buffer for padded 0's which is output in lieu of
+-		 * the MAC that is input. So skip the below.
+-		 */
+-		if (!IS_DECRYPT(rctx->flags)) {
+-			sg = qce_aead_prepare_ccm_result_buf(&rctx->src_tbl, req);
+-			if (IS_ERR(sg)) {
+-				ret = PTR_ERR(sg);
+-				goto err_free;
+-			}
+-		}
+-	}
+-	sg_mark_end(sg);
+-	rctx->src_sg = rctx->src_tbl.sgl;
+-	totallen = cryptlen + rctx->assoclen;
+-	rctx->src_nents = sg_nents_for_len(rctx->src_sg, totallen);
+-
+-	if (diff_dst) {
+-		sg = qce_aead_prepare_dst_buf(req);
+-		if (IS_ERR(sg)) {
+-			ret = PTR_ERR(sg);
+-			goto err_free;
+-		}
+-	} else {
+-		if (IS_ENCRYPT(rctx->flags))
+-			rctx->dst_nents = rctx->src_nents + 1;
+-		else
+-			rctx->dst_nents = rctx->src_nents;
+-		rctx->dst_sg = rctx->src_sg;
+-	}
+-
+-	return 0;
+-err_free:
+-	sg_free_table(&rctx->src_tbl);
+-	return ret;
+-}
+-
+-static int qce_aead_prepare_buf(struct aead_request *req)
+-{
+-	struct qce_aead_reqctx *rctx = aead_request_ctx_dma(req);
+-	struct qce_alg_template *tmpl = to_aead_tmpl(crypto_aead_reqtfm(req));
+-	struct qce_device *qce = tmpl->qce;
+-	struct scatterlist *sg;
+-	bool diff_dst = (req->src != req->dst) ? true : false;
+-	unsigned int totallen;
+-
+-	totallen = rctx->cryptlen + rctx->assoclen;
+-
+-	sg = qce_aead_prepare_dst_buf(req);
+-	if (IS_ERR(sg))
+-		return PTR_ERR(sg);
+-	if (diff_dst) {
+-		rctx->src_nents = sg_nents_for_len(req->src, totallen);
+-		if (rctx->src_nents < 0) {
+-			dev_err(qce->dev, "Invalid numbers of src SG.\n");
+-			return -EINVAL;
+-		}
+-		rctx->src_sg = req->src;
+-	} else {
+-		rctx->src_nents = rctx->dst_nents - 1;
+-		rctx->src_sg = rctx->dst_sg;
+-	}
+-	return 0;
+-}
+-
+-static int qce_aead_ccm_prepare_buf(struct aead_request *req)
+-{
+-	struct qce_aead_reqctx *rctx = aead_request_ctx_dma(req);
+-	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
+-	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
+-	struct scatterlist *sg;
+-	bool diff_dst = (req->src != req->dst) ? true : false;
+-	unsigned int cryptlen;
+-
+-	if (rctx->assoclen)
+-		return qce_aead_ccm_prepare_buf_assoclen(req);
+-
+-	if (IS_ENCRYPT(rctx->flags))
+-		return qce_aead_prepare_buf(req);
+-
+-	cryptlen = rctx->cryptlen + ctx->authsize;
+-	if (diff_dst) {
+-		rctx->src_nents = sg_nents_for_len(req->src, cryptlen);
+-		rctx->src_sg = req->src;
+-		sg = qce_aead_prepare_dst_buf(req);
+-		if (IS_ERR(sg))
+-			return PTR_ERR(sg);
+-	} else {
+-		rctx->src_nents = sg_nents_for_len(req->src, cryptlen);
+-		rctx->src_sg = req->src;
+-		rctx->dst_nents = rctx->src_nents;
+-		rctx->dst_sg = rctx->src_sg;
+-	}
+-
+-	return 0;
+-}
+-
+-static int qce_aead_create_ccm_nonce(struct qce_aead_reqctx *rctx, struct qce_aead_ctx *ctx)
+-{
+-	unsigned int msglen_size, ivsize;
+-	u8 msg_len[4];
+-	int i;
+-
+-	if (!rctx || !rctx->iv)
+-		return -EINVAL;
+-
+-	msglen_size = rctx->iv[0] + 1;
+-
+-	/* Verify that msg len size is valid */
+-	if (msglen_size < 2 || msglen_size > 8)
+-		return -EINVAL;
+-
+-	ivsize = rctx->ivsize;
+-
+-	/*
+-	 * Clear the msglen bytes in IV.
+-	 * Else the h/w engine and nonce will use any stray value pending there.
+-	 */
+-	if (!IS_CCM_RFC4309(rctx->flags)) {
+-		for (i = 0; i < msglen_size; i++)
+-			rctx->iv[ivsize - i - 1] = 0;
+-	}
+-
+-	/*
+-	 * The crypto framework encodes cryptlen as unsigned int. Thus, even though
+-	 * spec allows for upto 8 bytes to encode msg_len only 4 bytes are needed.
+-	 */
+-	if (msglen_size > 4)
+-		msglen_size = 4;
+-
+-	memcpy(&msg_len[0], &rctx->cryptlen, 4);
+-
+-	memcpy(&rctx->ccm_nonce[0], rctx->iv, rctx->ivsize);
+-	if (rctx->assoclen)
+-		rctx->ccm_nonce[0] |= 1 << CCM_NONCE_ADATA_SHIFT;
+-	rctx->ccm_nonce[0] |= ((ctx->authsize - 2) / 2) <<
+-				CCM_NONCE_AUTHSIZE_SHIFT;
+-	for (i = 0; i < msglen_size; i++)
+-		rctx->ccm_nonce[QCE_MAX_NONCE - i - 1] = msg_len[i];
+-
+-	return 0;
+-}
+-
+-static int
+-qce_aead_async_req_handle(struct crypto_async_request *async_req)
+-{
+-	struct aead_request *req = aead_request_cast(async_req);
+-	struct qce_aead_reqctx *rctx = aead_request_ctx_dma(req);
+-	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
+-	struct qce_aead_ctx *ctx = crypto_tfm_ctx(async_req->tfm);
+-	struct qce_alg_template *tmpl = to_aead_tmpl(crypto_aead_reqtfm(req));
+-	struct qce_device *qce = tmpl->qce;
+-	enum dma_data_direction dir_src, dir_dst;
+-	bool diff_dst;
+-	int dst_nents, src_nents, ret;
+-
+-	if (IS_CCM_RFC4309(rctx->flags)) {
+-		memset(rctx->ccm_rfc4309_iv, 0, QCE_MAX_IV_SIZE);
+-		rctx->ccm_rfc4309_iv[0] = 3;
+-		memcpy(&rctx->ccm_rfc4309_iv[1], ctx->ccm4309_salt, QCE_CCM4309_SALT_SIZE);
+-		memcpy(&rctx->ccm_rfc4309_iv[4], req->iv, 8);
+-		rctx->iv = rctx->ccm_rfc4309_iv;
+-		rctx->ivsize = AES_BLOCK_SIZE;
+-	} else {
+-		rctx->iv = req->iv;
+-		rctx->ivsize = crypto_aead_ivsize(tfm);
+-	}
+-	if (IS_CCM_RFC4309(rctx->flags))
+-		rctx->assoclen = req->assoclen - 8;
+-	else
+-		rctx->assoclen = req->assoclen;
+-
+-	diff_dst = (req->src != req->dst) ? true : false;
+-	dir_src = diff_dst ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
+-	dir_dst = diff_dst ? DMA_FROM_DEVICE : DMA_BIDIRECTIONAL;
+-
+-	if (IS_CCM(rctx->flags)) {
+-		ret = qce_aead_create_ccm_nonce(rctx, ctx);
+-		if (ret)
+-			return ret;
+-	}
+-	if (IS_CCM(rctx->flags))
+-		ret = qce_aead_ccm_prepare_buf(req);
+-	else
+-		ret = qce_aead_prepare_buf(req);
+-
+-	if (ret)
+-		return ret;
+-	dst_nents = dma_map_sg(qce->dev, rctx->dst_sg, rctx->dst_nents, dir_dst);
+-	if (!dst_nents) {
+-		ret = -EIO;
+-		goto error_free;
+-	}
+-
+-	if (diff_dst) {
+-		src_nents = dma_map_sg(qce->dev, rctx->src_sg, rctx->src_nents, dir_src);
+-		if (src_nents < 0) {
+-			ret = src_nents;
+-			goto error_unmap_dst;
+-		}
+-	} else {
+-		if (IS_CCM(rctx->flags) && IS_DECRYPT(rctx->flags))
+-			src_nents = dst_nents;
+-		else
+-			src_nents = dst_nents - 1;
+-	}
+-
+-	ret = qce_dma_prep_sgs(&qce->dma, rctx->src_sg, src_nents, rctx->dst_sg, dst_nents,
+-			       qce_aead_done, async_req);
+-	if (ret)
+-		goto error_unmap_src;
+-
+-	qce_dma_issue_pending(&qce->dma);
+-
+-	ret = qce_start(async_req, tmpl->crypto_alg_type);
+-	if (ret)
+-		goto error_terminate;
+-
+-	return 0;
+-
+-error_terminate:
+-	qce_dma_terminate_all(&qce->dma);
+-error_unmap_src:
+-	if (diff_dst)
+-		dma_unmap_sg(qce->dev, req->src, rctx->src_nents, dir_src);
+-error_unmap_dst:
+-	dma_unmap_sg(qce->dev, rctx->dst_sg, rctx->dst_nents, dir_dst);
+-error_free:
+-	if (IS_CCM(rctx->flags) && rctx->assoclen) {
+-		sg_free_table(&rctx->src_tbl);
+-		if (diff_dst)
+-			sg_free_table(&rctx->dst_tbl);
+-	} else {
+-		sg_free_table(&rctx->dst_tbl);
+-	}
+-	return ret;
+-}
+-
+-static int qce_aead_crypt(struct aead_request *req, int encrypt)
+-{
+-	struct crypto_aead *tfm = crypto_aead_reqtfm(req);
+-	struct qce_aead_reqctx *rctx = aead_request_ctx_dma(req);
+-	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
+-	struct qce_alg_template *tmpl = to_aead_tmpl(tfm);
+-	unsigned int blocksize = crypto_aead_blocksize(tfm);
+-
+-	rctx->flags  = tmpl->alg_flags;
+-	rctx->flags |= encrypt ? QCE_ENCRYPT : QCE_DECRYPT;
+-
+-	if (encrypt)
+-		rctx->cryptlen = req->cryptlen;
+-	else
+-		rctx->cryptlen = req->cryptlen - ctx->authsize;
+-
+-	/* CE does not handle 0 length messages */
+-	if (!rctx->cryptlen) {
+-		if (!(IS_CCM(rctx->flags) && IS_DECRYPT(rctx->flags)))
+-			ctx->need_fallback = true;
+-	}
+-
+-	/* If fallback is needed, schedule and exit */
+-	if (ctx->need_fallback) {
+-		/* Reset need_fallback in case the same ctx is used for another transaction */
+-		ctx->need_fallback = false;
+-
+-		aead_request_set_tfm(&rctx->fallback_req, ctx->fallback);
+-		aead_request_set_callback(&rctx->fallback_req, req->base.flags,
+-					  req->base.complete, req->base.data);
+-		aead_request_set_crypt(&rctx->fallback_req, req->src,
+-				       req->dst, req->cryptlen, req->iv);
+-		aead_request_set_ad(&rctx->fallback_req, req->assoclen);
+-
+-		return encrypt ? crypto_aead_encrypt(&rctx->fallback_req) :
+-				 crypto_aead_decrypt(&rctx->fallback_req);
+-	}
+-
+-	/*
+-	 * CBC algorithms require message lengths to be
+-	 * multiples of block size.
+-	 */
+-	if (IS_CBC(rctx->flags) && !IS_ALIGNED(rctx->cryptlen, blocksize))
+-		return -EINVAL;
+-
+-	/* RFC4309 supported AAD size 16 bytes/20 bytes */
+-	if (IS_CCM_RFC4309(rctx->flags))
+-		if (crypto_ipsec_check_assoclen(req->assoclen))
+-			return -EINVAL;
+-
+-	return tmpl->qce->async_req_enqueue(tmpl->qce, &req->base);
+-}
+-
+-static int qce_aead_encrypt(struct aead_request *req)
+-{
+-	return qce_aead_crypt(req, 1);
+-}
+-
+-static int qce_aead_decrypt(struct aead_request *req)
+-{
+-	return qce_aead_crypt(req, 0);
+-}
+-
+-static int qce_aead_ccm_setkey(struct crypto_aead *tfm, const u8 *key,
+-			       unsigned int keylen)
+-{
+-	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
+-	unsigned long flags = to_aead_tmpl(tfm)->alg_flags;
+-
+-	if (IS_CCM_RFC4309(flags)) {
+-		if (keylen < QCE_CCM4309_SALT_SIZE)
+-			return -EINVAL;
+-		keylen -= QCE_CCM4309_SALT_SIZE;
+-		memcpy(ctx->ccm4309_salt, key + keylen, QCE_CCM4309_SALT_SIZE);
+-	}
+-
+-	if (keylen != AES_KEYSIZE_128 && keylen != AES_KEYSIZE_256 && keylen != AES_KEYSIZE_192)
+-		return -EINVAL;
+-
+-	ctx->enc_keylen = keylen;
+-	ctx->auth_keylen = keylen;
+-
+-	memcpy(ctx->enc_key, key, keylen);
+-	memcpy(ctx->auth_key, key, keylen);
+-
+-	if (keylen == AES_KEYSIZE_192)
+-		ctx->need_fallback = true;
+-
+-	return IS_CCM_RFC4309(flags) ?
+-		crypto_aead_setkey(ctx->fallback, key, keylen + QCE_CCM4309_SALT_SIZE) :
+-		crypto_aead_setkey(ctx->fallback, key, keylen);
+-}
+-
+-static int qce_aead_setkey(struct crypto_aead *tfm, const u8 *key, unsigned int keylen)
+-{
+-	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
+-	struct crypto_authenc_keys authenc_keys;
+-	unsigned long flags = to_aead_tmpl(tfm)->alg_flags;
+-	u32 _key[6];
+-	int err;
+-
+-	err = crypto_authenc_extractkeys(&authenc_keys, key, keylen);
+-	if (err)
+-		return err;
+-
+-	if (authenc_keys.enckeylen > QCE_MAX_KEY_SIZE ||
+-	    authenc_keys.authkeylen > QCE_MAX_KEY_SIZE)
+-		return -EINVAL;
+-
+-	if (IS_DES(flags)) {
+-		err = verify_aead_des_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
+-		if (err)
+-			return err;
+-	} else if (IS_3DES(flags)) {
+-		err = verify_aead_des3_key(tfm, authenc_keys.enckey, authenc_keys.enckeylen);
+-		if (err)
+-			return err;
+-		/*
+-		 * The crypto engine does not support any two keys
+-		 * being the same for triple des algorithms. The
+-		 * verify_skcipher_des3_key does not check for all the
+-		 * below conditions. Schedule fallback in this case.
+-		 */
+-		memcpy(_key, authenc_keys.enckey, DES3_EDE_KEY_SIZE);
+-		if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
+-		    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
+-		    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
+-			ctx->need_fallback = true;
+-	} else if (IS_AES(flags)) {
+-		/* No random key sizes */
+-		if (authenc_keys.enckeylen != AES_KEYSIZE_128 &&
+-		    authenc_keys.enckeylen != AES_KEYSIZE_192 &&
+-		    authenc_keys.enckeylen != AES_KEYSIZE_256)
+-			return -EINVAL;
+-		if (authenc_keys.enckeylen == AES_KEYSIZE_192)
+-			ctx->need_fallback = true;
+-	}
+-
+-	ctx->enc_keylen = authenc_keys.enckeylen;
+-	ctx->auth_keylen = authenc_keys.authkeylen;
+-
+-	memcpy(ctx->enc_key, authenc_keys.enckey, authenc_keys.enckeylen);
+-
+-	memcpy_and_pad(ctx->auth_key, sizeof(ctx->auth_key),
+-		       authenc_keys.authkey, authenc_keys.authkeylen, 0);
+-
+-	return crypto_aead_setkey(ctx->fallback, key, keylen);
+-}
+-
+-static int qce_aead_setauthsize(struct crypto_aead *tfm, unsigned int authsize)
+-{
+-	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
+-	unsigned long flags = to_aead_tmpl(tfm)->alg_flags;
+-
+-	if (IS_CCM(flags)) {
+-		if (authsize < 4 || authsize > 16 || authsize % 2)
+-			return -EINVAL;
+-		if (IS_CCM_RFC4309(flags) && (authsize < 8 || authsize % 4))
+-			return -EINVAL;
+-	}
+-	ctx->authsize = authsize;
+-
+-	return crypto_aead_setauthsize(ctx->fallback, authsize);
+-}
+-
+-static int qce_aead_init(struct crypto_aead *tfm)
+-{
+-	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
+-
+-	ctx->need_fallback = false;
+-	ctx->fallback = crypto_alloc_aead(crypto_tfm_alg_name(&tfm->base),
+-					  0, CRYPTO_ALG_NEED_FALLBACK);
+-
+-	if (IS_ERR(ctx->fallback))
+-		return PTR_ERR(ctx->fallback);
+-
+-	crypto_aead_set_reqsize_dma(tfm, sizeof(struct qce_aead_reqctx) +
+-					 crypto_aead_reqsize(ctx->fallback));
+-	return 0;
+-}
+-
+-static void qce_aead_exit(struct crypto_aead *tfm)
+-{
+-	struct qce_aead_ctx *ctx = crypto_aead_ctx(tfm);
+-
+-	crypto_free_aead(ctx->fallback);
+-}
+-
+-struct qce_aead_def {
+-	unsigned long flags;
+-	const char *name;
+-	const char *drv_name;
+-	unsigned int blocksize;
+-	unsigned int chunksize;
+-	unsigned int ivsize;
+-	unsigned int maxauthsize;
+-};
+-
+-static const struct qce_aead_def aead_def[] = {
+-	{
+-		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
+-		.name           = "authenc(hmac(sha1),cbc(des))",
+-		.drv_name       = "authenc-hmac-sha1-cbc-des-qce",
+-		.blocksize      = DES_BLOCK_SIZE,
+-		.ivsize         = DES_BLOCK_SIZE,
+-		.maxauthsize	= SHA1_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA1_HMAC,
+-		.name           = "authenc(hmac(sha1),cbc(des3_ede))",
+-		.drv_name       = "authenc-hmac-sha1-cbc-3des-qce",
+-		.blocksize      = DES3_EDE_BLOCK_SIZE,
+-		.ivsize         = DES3_EDE_BLOCK_SIZE,
+-		.maxauthsize	= SHA1_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+-		.name           = "authenc(hmac(sha256),cbc(des))",
+-		.drv_name       = "authenc-hmac-sha256-cbc-des-qce",
+-		.blocksize      = DES_BLOCK_SIZE,
+-		.ivsize         = DES_BLOCK_SIZE,
+-		.maxauthsize	= SHA256_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          = QCE_ALG_3DES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+-		.name           = "authenc(hmac(sha256),cbc(des3_ede))",
+-		.drv_name       = "authenc-hmac-sha256-cbc-3des-qce",
+-		.blocksize      = DES3_EDE_BLOCK_SIZE,
+-		.ivsize         = DES3_EDE_BLOCK_SIZE,
+-		.maxauthsize	= SHA256_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          =  QCE_ALG_AES | QCE_MODE_CBC | QCE_HASH_SHA256_HMAC,
+-		.name           = "authenc(hmac(sha256),cbc(aes))",
+-		.drv_name       = "authenc-hmac-sha256-cbc-aes-qce",
+-		.blocksize      = AES_BLOCK_SIZE,
+-		.ivsize         = AES_BLOCK_SIZE,
+-		.maxauthsize	= SHA256_DIGEST_SIZE,
+-	},
+-	{
+-		.flags          =  QCE_ALG_AES | QCE_MODE_CCM,
+-		.name           = "ccm(aes)",
+-		.drv_name       = "ccm-aes-qce",
+-		.blocksize	= 1,
+-		.ivsize         = AES_BLOCK_SIZE,
+-		.maxauthsize	= AES_BLOCK_SIZE,
+-	},
+-	{
+-		.flags          =  QCE_ALG_AES | QCE_MODE_CCM | QCE_MODE_CCM_RFC4309,
+-		.name           = "rfc4309(ccm(aes))",
+-		.drv_name       = "rfc4309-ccm-aes-qce",
+-		.blocksize	= 1,
+-		.ivsize         = 8,
+-		.maxauthsize	= AES_BLOCK_SIZE,
+-	},
+-};
+-
+-static int qce_aead_register_one(const struct qce_aead_def *def, struct qce_device *qce)
+-{
+-	struct qce_alg_template *tmpl;
+-	struct aead_alg *alg;
+-	int ret;
+-
+-	tmpl = kzalloc_obj(*tmpl);
+-	if (!tmpl)
+-		return -ENOMEM;
+-
+-	alg = &tmpl->alg.aead;
+-
+-	strscpy(alg->base.cra_name, def->name);
+-	strscpy(alg->base.cra_driver_name, def->drv_name);
+-
+-	alg->base.cra_blocksize		= def->blocksize;
+-	alg->chunksize			= def->chunksize;
+-	alg->ivsize			= def->ivsize;
+-	alg->maxauthsize		= def->maxauthsize;
+-	if (IS_CCM(def->flags))
+-		alg->setkey		= qce_aead_ccm_setkey;
+-	else
+-		alg->setkey		= qce_aead_setkey;
+-	alg->setauthsize		= qce_aead_setauthsize;
+-	alg->encrypt			= qce_aead_encrypt;
+-	alg->decrypt			= qce_aead_decrypt;
+-	alg->init			= qce_aead_init;
+-	alg->exit			= qce_aead_exit;
+-
+-	alg->base.cra_priority		= 275;
+-	alg->base.cra_flags		= CRYPTO_ALG_ASYNC |
+-					  CRYPTO_ALG_ALLOCATES_MEMORY |
+-					  CRYPTO_ALG_KERN_DRIVER_ONLY |
+-					  CRYPTO_ALG_NEED_FALLBACK;
+-	alg->base.cra_ctxsize		= sizeof(struct qce_aead_ctx);
+-	alg->base.cra_alignmask		= 0;
+-	alg->base.cra_module		= THIS_MODULE;
+-
+-	INIT_LIST_HEAD(&tmpl->entry);
+-	tmpl->crypto_alg_type = CRYPTO_ALG_TYPE_AEAD;
+-	tmpl->alg_flags = def->flags;
+-	tmpl->qce = qce;
+-
+-	ret = crypto_register_aead(alg);
+-	if (ret) {
+-		dev_err(qce->dev, "%s registration failed\n", alg->base.cra_name);
+-		kfree(tmpl);
+-		return ret;
+-	}
+-
+-	list_add_tail(&tmpl->entry, &aead_algs);
+-	dev_dbg(qce->dev, "%s is registered\n", alg->base.cra_name);
+-	return 0;
+-}
+-
+-static void qce_aead_unregister(struct qce_device *qce)
+-{
+-	struct qce_alg_template *tmpl, *n;
+-
+-	list_for_each_entry_safe(tmpl, n, &aead_algs, entry) {
+-		crypto_unregister_aead(&tmpl->alg.aead);
+-		list_del(&tmpl->entry);
+-		kfree(tmpl);
+-	}
+-}
+-
+-static int qce_aead_register(struct qce_device *qce)
+-{
+-	int ret, i;
+-
+-	for (i = 0; i < ARRAY_SIZE(aead_def); i++) {
+-		ret = qce_aead_register_one(&aead_def[i], qce);
+-		if (ret)
+-			goto err;
+-	}
+-
+-	return 0;
+-err:
+-	qce_aead_unregister(qce);
+-	return ret;
+-}
+-
+-const struct qce_algo_ops aead_ops = {
+-	.type = CRYPTO_ALG_TYPE_AEAD,
+-	.register_algs = qce_aead_register,
+-	.unregister_algs = qce_aead_unregister,
+-	.async_req_handle = qce_aead_async_req_handle,
+-};
+diff --git a/drivers/crypto/qce/aead.h b/drivers/crypto/qce/aead.h
+deleted file mode 100644
+index efb8477cc088712fe73bf7e700c206b6b9bee8ae..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/aead.h
++++ /dev/null
+@@ -1,56 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Copyright (c) 2021, Linaro Limited. All rights reserved.
+- */
+-
+-#ifndef _AEAD_H_
+-#define _AEAD_H_
+-
+-#include "common.h"
+-#include "core.h"
+-
+-#define QCE_MAX_KEY_SIZE		64
+-#define QCE_CCM4309_SALT_SIZE		3
+-
+-struct qce_aead_ctx {
+-	u8 enc_key[QCE_MAX_KEY_SIZE];
+-	u8 auth_key[QCE_MAX_KEY_SIZE];
+-	u8 ccm4309_salt[QCE_CCM4309_SALT_SIZE];
+-	unsigned int enc_keylen;
+-	unsigned int auth_keylen;
+-	unsigned int authsize;
+-	bool need_fallback;
+-	struct crypto_aead *fallback;
+-};
+-
+-struct qce_aead_reqctx {
+-	unsigned long flags;
+-	u8 *iv;
+-	unsigned int ivsize;
+-	int src_nents;
+-	int dst_nents;
+-	struct scatterlist result_sg;
+-	struct scatterlist adata_sg;
+-	struct sg_table dst_tbl;
+-	struct sg_table src_tbl;
+-	struct scatterlist *dst_sg;
+-	struct scatterlist *src_sg;
+-	unsigned int cryptlen;
+-	unsigned int assoclen;
+-	unsigned char *adata;
+-	u8 ccm_nonce[QCE_MAX_NONCE];
+-	u8 ccmresult_buf[QCE_BAM_BURST_SIZE];
+-	u8 ccm_rfc4309_iv[QCE_MAX_IV_SIZE];
+-	struct aead_request fallback_req;
+-};
+-
+-static inline struct qce_alg_template *to_aead_tmpl(struct crypto_aead *tfm)
+-{
+-	struct aead_alg *alg = crypto_aead_alg(tfm);
+-
+-	return container_of(alg, struct qce_alg_template, alg.aead);
+-}
+-
+-extern const struct qce_algo_ops aead_ops;
+-
+-#endif /* _AEAD_H_ */
+diff --git a/drivers/crypto/qce/cipher.h b/drivers/crypto/qce/cipher.h
+deleted file mode 100644
+index 850f257d00f3aca0397adc1f703aea690c754d60..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/cipher.h
++++ /dev/null
+@@ -1,56 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
+- */
+-
+-#ifndef _CIPHER_H_
+-#define _CIPHER_H_
+-
+-#include "common.h"
+-#include "core.h"
+-
+-#define QCE_MAX_KEY_SIZE	64
+-
+-struct qce_cipher_ctx {
+-	u8 enc_key[QCE_MAX_KEY_SIZE];
+-	unsigned int enc_keylen;
+-	struct crypto_skcipher *fallback;
+-};
+-
+-/**
+- * struct qce_cipher_reqctx - holds private cipher objects per request
+- * @flags: operation flags
+- * @iv: pointer to the IV
+- * @ivsize: IV size
+- * @src_nents: source entries
+- * @dst_nents: destination entries
+- * @result_sg: scatterlist used for result buffer
+- * @dst_tbl: destination sg table
+- * @dst_sg: destination sg pointer table beginning
+- * @src_tbl: source sg table
+- * @src_sg: source sg pointer table beginning;
+- * @cryptlen: crypto length
+- */
+-struct qce_cipher_reqctx {
+-	unsigned long flags;
+-	u8 *iv;
+-	unsigned int ivsize;
+-	int src_nents;
+-	int dst_nents;
+-	struct scatterlist result_sg;
+-	struct sg_table dst_tbl;
+-	struct scatterlist *dst_sg;
+-	struct scatterlist *src_sg;
+-	unsigned int cryptlen;
+-	struct skcipher_request fallback_req;	// keep at the end
+-};
+-
+-static inline struct qce_alg_template *to_cipher_tmpl(struct crypto_skcipher *tfm)
+-{
+-	struct skcipher_alg *alg = crypto_skcipher_alg(tfm);
+-	return container_of(alg, struct qce_alg_template, alg.skcipher);
+-}
+-
+-extern const struct qce_algo_ops skcipher_ops;
+-
+-#endif /* _CIPHER_H_ */
+diff --git a/drivers/crypto/qce/common.c b/drivers/crypto/qce/common.c
+deleted file mode 100644
+index 54a78a57f63028f01870a3edeb8e390f523bb190..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/common.c
++++ /dev/null
+@@ -1,595 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
+- */
+-
+-#include <crypto/internal/hash.h>
+-#include <linux/err.h>
+-#include <linux/interrupt.h>
+-#include <linux/types.h>
+-#include <crypto/scatterwalk.h>
+-#include <crypto/sha1.h>
+-#include <crypto/sha2.h>
+-
+-#include "cipher.h"
+-#include "common.h"
+-#include "core.h"
+-#include "regs-v5.h"
+-#include "sha.h"
+-#include "aead.h"
+-
+-static inline u32 qce_read(struct qce_device *qce, u32 offset)
+-{
+-	return readl(qce->base + offset);
+-}
+-
+-static inline void qce_write(struct qce_device *qce, u32 offset, u32 val)
+-{
+-	writel(val, qce->base + offset);
+-}
+-
+-static inline void qce_write_array(struct qce_device *qce, u32 offset,
+-				   const u32 *val, unsigned int len)
+-{
+-	int i;
+-
+-	for (i = 0; i < len; i++)
+-		qce_write(qce, offset + i * sizeof(u32), val[i]);
+-}
+-
+-static inline void
+-qce_clear_array(struct qce_device *qce, u32 offset, unsigned int len)
+-{
+-	int i;
+-
+-	for (i = 0; i < len; i++)
+-		qce_write(qce, offset + i * sizeof(u32), 0);
+-}
+-
+-static u32 qce_config_reg(struct qce_device *qce, int little)
+-{
+-	u32 beats = (qce->burst_size >> 3) - 1;
+-	u32 pipe_pair = qce->pipe_pair_id;
+-	u32 config;
+-
+-	config = (beats << REQ_SIZE_SHIFT) & REQ_SIZE_MASK;
+-	config |= BIT(MASK_DOUT_INTR_SHIFT) | BIT(MASK_DIN_INTR_SHIFT) |
+-		  BIT(MASK_OP_DONE_INTR_SHIFT) | BIT(MASK_ERR_INTR_SHIFT);
+-	config |= (pipe_pair << PIPE_SET_SELECT_SHIFT) & PIPE_SET_SELECT_MASK;
+-	config &= ~HIGH_SPD_EN_N_SHIFT;
+-
+-	if (little)
+-		config |= BIT(LITTLE_ENDIAN_MODE_SHIFT);
+-
+-	return config;
+-}
+-
+-void qce_cpu_to_be32p_array(__be32 *dst, const u8 *src, unsigned int len)
+-{
+-	__be32 *d = dst;
+-	const u8 *s = src;
+-	unsigned int n;
+-
+-	n = len / sizeof(u32);
+-	for (; n > 0; n--) {
+-		*d = cpu_to_be32p((const __u32 *) s);
+-		s += sizeof(__u32);
+-		d++;
+-	}
+-}
+-
+-static void qce_setup_config(struct qce_device *qce)
+-{
+-	u32 config;
+-
+-	/* get big endianness */
+-	config = qce_config_reg(qce, 0);
+-
+-	/* clear status */
+-	qce_write(qce, REG_STATUS, 0);
+-	qce_write(qce, REG_CONFIG, config);
+-}
+-
+-static inline void qce_crypto_go(struct qce_device *qce, bool result_dump)
+-{
+-	if (result_dump)
+-		qce_write(qce, REG_GOPROC, BIT(GO_SHIFT) | BIT(RESULTS_DUMP_SHIFT));
+-	else
+-		qce_write(qce, REG_GOPROC, BIT(GO_SHIFT));
+-}
+-
+-#if defined(CONFIG_CRYPTO_DEV_QCE_SHA) || defined(CONFIG_CRYPTO_DEV_QCE_AEAD)
+-static u32 qce_auth_cfg(unsigned long flags, u32 key_size, u32 auth_size)
+-{
+-	u32 cfg = 0;
+-
+-	if (IS_CCM(flags) || IS_CMAC(flags))
+-		cfg |= AUTH_ALG_AES << AUTH_ALG_SHIFT;
+-	else
+-		cfg |= AUTH_ALG_SHA << AUTH_ALG_SHIFT;
+-
+-	if (IS_CCM(flags) || IS_CMAC(flags)) {
+-		if (key_size == AES_KEYSIZE_128)
+-			cfg |= AUTH_KEY_SZ_AES128 << AUTH_KEY_SIZE_SHIFT;
+-		else if (key_size == AES_KEYSIZE_256)
+-			cfg |= AUTH_KEY_SZ_AES256 << AUTH_KEY_SIZE_SHIFT;
+-	}
+-
+-	if (IS_SHA1(flags) || IS_SHA1_HMAC(flags))
+-		cfg |= AUTH_SIZE_SHA1 << AUTH_SIZE_SHIFT;
+-	else if (IS_SHA256(flags) || IS_SHA256_HMAC(flags))
+-		cfg |= AUTH_SIZE_SHA256 << AUTH_SIZE_SHIFT;
+-	else if (IS_CMAC(flags))
+-		cfg |= AUTH_SIZE_ENUM_16_BYTES << AUTH_SIZE_SHIFT;
+-	else if (IS_CCM(flags))
+-		cfg |= (auth_size - 1) << AUTH_SIZE_SHIFT;
+-
+-	if (IS_SHA1(flags) || IS_SHA256(flags))
+-		cfg |= AUTH_MODE_HASH << AUTH_MODE_SHIFT;
+-	else if (IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
+-		cfg |= AUTH_MODE_HMAC << AUTH_MODE_SHIFT;
+-	else if (IS_CCM(flags))
+-		cfg |= AUTH_MODE_CCM << AUTH_MODE_SHIFT;
+-	else if (IS_CMAC(flags))
+-		cfg |= AUTH_MODE_CMAC << AUTH_MODE_SHIFT;
+-
+-	if (IS_SHA(flags) || IS_SHA_HMAC(flags))
+-		cfg |= AUTH_POS_BEFORE << AUTH_POS_SHIFT;
+-
+-	if (IS_CCM(flags))
+-		cfg |= QCE_MAX_NONCE_WORDS << AUTH_NONCE_NUM_WORDS_SHIFT;
+-
+-	return cfg;
+-}
+-#endif
+-
+-#ifdef CONFIG_CRYPTO_DEV_QCE_SHA
+-static int qce_setup_regs_ahash(struct crypto_async_request *async_req)
+-{
+-	struct ahash_request *req = ahash_request_cast(async_req);
+-	struct crypto_ahash *ahash = __crypto_ahash_cast(async_req->tfm);
+-	struct qce_sha_reqctx *rctx = ahash_request_ctx_dma(req);
+-	struct qce_alg_template *tmpl = to_ahash_tmpl(async_req->tfm);
+-	struct qce_device *qce = tmpl->qce;
+-	unsigned int digestsize = crypto_ahash_digestsize(ahash);
+-	unsigned int blocksize = crypto_tfm_alg_blocksize(async_req->tfm);
+-	__be32 auth[SHA256_DIGEST_SIZE / sizeof(__be32)] = {0};
+-	__be32 mackey[QCE_SHA_HMAC_KEY_SIZE / sizeof(__be32)] = {0};
+-	u32 auth_cfg = 0, config;
+-	unsigned int iv_words;
+-
+-	/* if not the last, the size has to be on the block boundary */
+-	if (!rctx->last_blk && req->nbytes % blocksize)
+-		return -EINVAL;
+-
+-	qce_setup_config(qce);
+-
+-	if (IS_CMAC(rctx->flags)) {
+-		qce_write(qce, REG_AUTH_SEG_CFG, 0);
+-		qce_write(qce, REG_ENCR_SEG_CFG, 0);
+-		qce_write(qce, REG_ENCR_SEG_SIZE, 0);
+-		qce_clear_array(qce, REG_AUTH_IV0, 16);
+-		qce_clear_array(qce, REG_AUTH_KEY0, 16);
+-		qce_clear_array(qce, REG_AUTH_BYTECNT0, 4);
+-
+-		auth_cfg = qce_auth_cfg(rctx->flags, rctx->authklen, digestsize);
+-	}
+-
+-	if (IS_SHA_HMAC(rctx->flags) || IS_CMAC(rctx->flags)) {
+-		u32 authkey_words = rctx->authklen / sizeof(u32);
+-
+-		qce_cpu_to_be32p_array(mackey, rctx->authkey, rctx->authklen);
+-		qce_write_array(qce, REG_AUTH_KEY0, (u32 *)mackey,
+-				authkey_words);
+-	}
+-
+-	if (IS_CMAC(rctx->flags))
+-		goto go_proc;
+-
+-	if (rctx->first_blk)
+-		memcpy(auth, rctx->digest, digestsize);
+-	else
+-		qce_cpu_to_be32p_array(auth, rctx->digest, digestsize);
+-
+-	iv_words = (IS_SHA1(rctx->flags) || IS_SHA1_HMAC(rctx->flags)) ? 5 : 8;
+-	qce_write_array(qce, REG_AUTH_IV0, (u32 *)auth, iv_words);
+-
+-	if (rctx->first_blk)
+-		qce_clear_array(qce, REG_AUTH_BYTECNT0, 4);
+-	else
+-		qce_write_array(qce, REG_AUTH_BYTECNT0,
+-				(u32 *)rctx->byte_count, 2);
+-
+-	auth_cfg = qce_auth_cfg(rctx->flags, 0, digestsize);
+-
+-	if (rctx->last_blk)
+-		auth_cfg |= BIT(AUTH_LAST_SHIFT);
+-	else
+-		auth_cfg &= ~BIT(AUTH_LAST_SHIFT);
+-
+-	if (rctx->first_blk)
+-		auth_cfg |= BIT(AUTH_FIRST_SHIFT);
+-	else
+-		auth_cfg &= ~BIT(AUTH_FIRST_SHIFT);
+-
+-go_proc:
+-	qce_write(qce, REG_AUTH_SEG_CFG, auth_cfg);
+-	qce_write(qce, REG_AUTH_SEG_SIZE, req->nbytes);
+-	qce_write(qce, REG_AUTH_SEG_START, 0);
+-	qce_write(qce, REG_ENCR_SEG_CFG, 0);
+-	qce_write(qce, REG_SEG_SIZE, req->nbytes);
+-
+-	/* get little endianness */
+-	config = qce_config_reg(qce, 1);
+-	qce_write(qce, REG_CONFIG, config);
+-
+-	qce_crypto_go(qce, true);
+-
+-	return 0;
+-}
+-#endif
+-
+-#if defined(CONFIG_CRYPTO_DEV_QCE_SKCIPHER) || defined(CONFIG_CRYPTO_DEV_QCE_AEAD)
+-static u32 qce_encr_cfg(unsigned long flags, u32 aes_key_size)
+-{
+-	u32 cfg = 0;
+-
+-	if (IS_AES(flags)) {
+-		if (aes_key_size == AES_KEYSIZE_128)
+-			cfg |= ENCR_KEY_SZ_AES128 << ENCR_KEY_SZ_SHIFT;
+-		else if (aes_key_size == AES_KEYSIZE_256)
+-			cfg |= ENCR_KEY_SZ_AES256 << ENCR_KEY_SZ_SHIFT;
+-	}
+-
+-	if (IS_AES(flags))
+-		cfg |= ENCR_ALG_AES << ENCR_ALG_SHIFT;
+-	else if (IS_DES(flags) || IS_3DES(flags))
+-		cfg |= ENCR_ALG_DES << ENCR_ALG_SHIFT;
+-
+-	if (IS_DES(flags))
+-		cfg |= ENCR_KEY_SZ_DES << ENCR_KEY_SZ_SHIFT;
+-
+-	if (IS_3DES(flags))
+-		cfg |= ENCR_KEY_SZ_3DES << ENCR_KEY_SZ_SHIFT;
+-
+-	switch (flags & QCE_MODE_MASK) {
+-	case QCE_MODE_ECB:
+-		cfg |= ENCR_MODE_ECB << ENCR_MODE_SHIFT;
+-		break;
+-	case QCE_MODE_CBC:
+-		cfg |= ENCR_MODE_CBC << ENCR_MODE_SHIFT;
+-		break;
+-	case QCE_MODE_CTR:
+-		cfg |= ENCR_MODE_CTR << ENCR_MODE_SHIFT;
+-		break;
+-	case QCE_MODE_XTS:
+-		cfg |= ENCR_MODE_XTS << ENCR_MODE_SHIFT;
+-		break;
+-	case QCE_MODE_CCM:
+-		cfg |= ENCR_MODE_CCM << ENCR_MODE_SHIFT;
+-		cfg |= LAST_CCM_XFR << LAST_CCM_SHIFT;
+-		break;
+-	default:
+-		return ~0;
+-	}
+-
+-	return cfg;
+-}
+-#endif
+-
+-#ifdef CONFIG_CRYPTO_DEV_QCE_SKCIPHER
+-static void qce_xts_swapiv(__be32 *dst, const u8 *src, unsigned int ivsize)
+-{
+-	u8 swap[QCE_AES_IV_LENGTH] = {0};
+-	unsigned int i, offset;
+-
+-	if (ivsize > QCE_AES_IV_LENGTH)
+-		return;
+-
+-	offset = QCE_AES_IV_LENGTH - ivsize;
+-
+-	/* Reverse and right-align IV bytes. */
+-	for (i = 0; i < ivsize; i++)
+-		swap[offset + i] = src[ivsize - 1 - i];
+-
+-	qce_cpu_to_be32p_array(dst, swap, QCE_AES_IV_LENGTH);
+-}
+-
+-static void qce_xtskey(struct qce_device *qce, const u8 *enckey,
+-		       unsigned int enckeylen, unsigned int cryptlen)
+-{
+-	u32 xtskey[QCE_MAX_CIPHER_KEY_SIZE / sizeof(u32)] = {0};
+-	unsigned int xtsklen = enckeylen / (2 * sizeof(u32));
+-
+-	qce_cpu_to_be32p_array((__be32 *)xtskey, enckey + enckeylen / 2,
+-			       enckeylen / 2);
+-	qce_write_array(qce, REG_ENCR_XTS_KEY0, xtskey, xtsklen);
+-
+-	/* Set data unit size to cryptlen. Anything else causes
+-	 * crypto engine to return back incorrect results.
+-	 */
+-	qce_write(qce, REG_ENCR_XTS_DU_SIZE, cryptlen);
+-}
+-
+-static int qce_setup_regs_skcipher(struct crypto_async_request *async_req)
+-{
+-	struct skcipher_request *req = skcipher_request_cast(async_req);
+-	struct qce_cipher_reqctx *rctx = skcipher_request_ctx(req);
+-	struct qce_cipher_ctx *ctx = crypto_tfm_ctx(async_req->tfm);
+-	struct qce_alg_template *tmpl = to_cipher_tmpl(crypto_skcipher_reqtfm(req));
+-	struct qce_device *qce = tmpl->qce;
+-	__be32 enckey[QCE_MAX_CIPHER_KEY_SIZE / sizeof(__be32)] = {0};
+-	__be32 enciv[QCE_MAX_IV_SIZE / sizeof(__be32)] = {0};
+-	unsigned int enckey_words, enciv_words;
+-	unsigned int keylen;
+-	u32 encr_cfg = 0, auth_cfg = 0, config;
+-	unsigned int ivsize = rctx->ivsize;
+-	unsigned long flags = rctx->flags;
+-
+-	qce_setup_config(qce);
+-
+-	if (IS_XTS(flags))
+-		keylen = ctx->enc_keylen / 2;
+-	else
+-		keylen = ctx->enc_keylen;
+-
+-	qce_cpu_to_be32p_array(enckey, ctx->enc_key, keylen);
+-	enckey_words = keylen / sizeof(u32);
+-
+-	qce_write(qce, REG_AUTH_SEG_CFG, auth_cfg);
+-
+-	encr_cfg = qce_encr_cfg(flags, keylen);
+-
+-	if (IS_DES(flags)) {
+-		enciv_words = 2;
+-		enckey_words = 2;
+-	} else if (IS_3DES(flags)) {
+-		enciv_words = 2;
+-		enckey_words = 6;
+-	} else if (IS_AES(flags)) {
+-		if (IS_XTS(flags))
+-			qce_xtskey(qce, ctx->enc_key, ctx->enc_keylen,
+-				   rctx->cryptlen);
+-		enciv_words = 4;
+-	} else {
+-		return -EINVAL;
+-	}
+-
+-	qce_write_array(qce, REG_ENCR_KEY0, (u32 *)enckey, enckey_words);
+-
+-	if (!IS_ECB(flags)) {
+-		if (IS_XTS(flags))
+-			qce_xts_swapiv(enciv, rctx->iv, ivsize);
+-		else
+-			qce_cpu_to_be32p_array(enciv, rctx->iv, ivsize);
+-
+-		qce_write_array(qce, REG_CNTR0_IV0, (u32 *)enciv, enciv_words);
+-	}
+-
+-	if (IS_ENCRYPT(flags))
+-		encr_cfg |= BIT(ENCODE_SHIFT);
+-
+-	qce_write(qce, REG_ENCR_SEG_CFG, encr_cfg);
+-	qce_write(qce, REG_ENCR_SEG_SIZE, rctx->cryptlen);
+-	qce_write(qce, REG_ENCR_SEG_START, 0);
+-
+-	if (IS_CTR(flags)) {
+-		qce_write(qce, REG_CNTR_MASK, ~0);
+-		qce_write(qce, REG_CNTR_MASK0, ~0);
+-		qce_write(qce, REG_CNTR_MASK1, ~0);
+-		qce_write(qce, REG_CNTR_MASK2, ~0);
+-	}
+-
+-	qce_write(qce, REG_SEG_SIZE, rctx->cryptlen);
+-
+-	/* get little endianness */
+-	config = qce_config_reg(qce, 1);
+-	qce_write(qce, REG_CONFIG, config);
+-
+-	qce_crypto_go(qce, true);
+-
+-	return 0;
+-}
+-#endif
+-
+-#ifdef CONFIG_CRYPTO_DEV_QCE_AEAD
+-static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+-	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
+-};
+-
+-static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+-	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
+-	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
+-};
+-
+-static unsigned int qce_be32_to_cpu_array(u32 *dst, const u8 *src, unsigned int len)
+-{
+-	u32 *d = dst;
+-	const u8 *s = src;
+-	unsigned int n;
+-
+-	n = len / sizeof(u32);
+-	for (; n > 0; n--) {
+-		*d = be32_to_cpup((const __be32 *)s);
+-		s += sizeof(u32);
+-		d++;
+-	}
+-	return DIV_ROUND_UP(len, sizeof(u32));
+-}
+-
+-static int qce_setup_regs_aead(struct crypto_async_request *async_req)
+-{
+-	struct aead_request *req = aead_request_cast(async_req);
+-	struct qce_aead_reqctx *rctx = aead_request_ctx_dma(req);
+-	struct qce_aead_ctx *ctx = crypto_tfm_ctx(async_req->tfm);
+-	struct qce_alg_template *tmpl = to_aead_tmpl(crypto_aead_reqtfm(req));
+-	struct qce_device *qce = tmpl->qce;
+-	u32 enckey[QCE_MAX_CIPHER_KEY_SIZE / sizeof(u32)] = {0};
+-	u32 enciv[QCE_MAX_IV_SIZE / sizeof(u32)] = {0};
+-	u32 authkey[QCE_SHA_HMAC_KEY_SIZE / sizeof(u32)] = {0};
+-	u32 authiv[SHA256_DIGEST_SIZE / sizeof(u32)] = {0};
+-	u32 authnonce[QCE_MAX_NONCE / sizeof(u32)] = {0};
+-	unsigned int enc_keylen = ctx->enc_keylen;
+-	unsigned int auth_keylen = ctx->auth_keylen;
+-	unsigned int enc_ivsize = rctx->ivsize;
+-	unsigned int auth_ivsize = 0;
+-	unsigned int enckey_words, enciv_words;
+-	unsigned int authkey_words, authiv_words, authnonce_words;
+-	unsigned long flags = rctx->flags;
+-	u32 encr_cfg, auth_cfg, config, totallen;
+-	u32 iv_last_word;
+-
+-	qce_setup_config(qce);
+-
+-	/* Write encryption key */
+-	enckey_words = qce_be32_to_cpu_array(enckey, ctx->enc_key, enc_keylen);
+-	qce_write_array(qce, REG_ENCR_KEY0, enckey, enckey_words);
+-
+-	/* Write encryption iv */
+-	enciv_words = qce_be32_to_cpu_array(enciv, rctx->iv, enc_ivsize);
+-	qce_write_array(qce, REG_CNTR0_IV0, enciv, enciv_words);
+-
+-	if (IS_CCM(rctx->flags)) {
+-		iv_last_word = enciv[enciv_words - 1];
+-		qce_write(qce, REG_CNTR3_IV3, iv_last_word + 1);
+-		qce_write_array(qce, REG_ENCR_CCM_INT_CNTR0, (u32 *)enciv, enciv_words);
+-		qce_write(qce, REG_CNTR_MASK, ~0);
+-		qce_write(qce, REG_CNTR_MASK0, ~0);
+-		qce_write(qce, REG_CNTR_MASK1, ~0);
+-		qce_write(qce, REG_CNTR_MASK2, ~0);
+-	}
+-
+-	/* Clear authentication IV and KEY registers of previous values */
+-	qce_clear_array(qce, REG_AUTH_IV0, 16);
+-	qce_clear_array(qce, REG_AUTH_KEY0, 16);
+-
+-	/* Clear byte count */
+-	qce_clear_array(qce, REG_AUTH_BYTECNT0, 4);
+-
+-	/* Write authentication key */
+-	authkey_words = qce_be32_to_cpu_array(authkey, ctx->auth_key, auth_keylen);
+-	qce_write_array(qce, REG_AUTH_KEY0, (u32 *)authkey, authkey_words);
+-
+-	/* Write initial authentication IV only for HMAC algorithms */
+-	if (IS_SHA_HMAC(rctx->flags)) {
+-		/* Write default authentication iv */
+-		if (IS_SHA1_HMAC(rctx->flags)) {
+-			auth_ivsize = SHA1_DIGEST_SIZE;
+-			memcpy(authiv, std_iv_sha1, auth_ivsize);
+-		} else if (IS_SHA256_HMAC(rctx->flags)) {
+-			auth_ivsize = SHA256_DIGEST_SIZE;
+-			memcpy(authiv, std_iv_sha256, auth_ivsize);
+-		}
+-		authiv_words = auth_ivsize / sizeof(u32);
+-		qce_write_array(qce, REG_AUTH_IV0, (u32 *)authiv, authiv_words);
+-	} else if (IS_CCM(rctx->flags)) {
+-		/* Write nonce for CCM algorithms */
+-		authnonce_words = qce_be32_to_cpu_array(authnonce, rctx->ccm_nonce, QCE_MAX_NONCE);
+-		qce_write_array(qce, REG_AUTH_INFO_NONCE0, authnonce, authnonce_words);
+-	}
+-
+-	/* Set up ENCR_SEG_CFG */
+-	encr_cfg = qce_encr_cfg(flags, enc_keylen);
+-	if (IS_ENCRYPT(flags))
+-		encr_cfg |= BIT(ENCODE_SHIFT);
+-	qce_write(qce, REG_ENCR_SEG_CFG, encr_cfg);
+-
+-	/* Set up AUTH_SEG_CFG */
+-	auth_cfg = qce_auth_cfg(rctx->flags, auth_keylen, ctx->authsize);
+-	auth_cfg |= BIT(AUTH_LAST_SHIFT);
+-	auth_cfg |= BIT(AUTH_FIRST_SHIFT);
+-	if (IS_ENCRYPT(flags)) {
+-		if (IS_CCM(rctx->flags))
+-			auth_cfg |= AUTH_POS_BEFORE << AUTH_POS_SHIFT;
+-		else
+-			auth_cfg |= AUTH_POS_AFTER << AUTH_POS_SHIFT;
+-	} else {
+-		if (IS_CCM(rctx->flags))
+-			auth_cfg |= AUTH_POS_AFTER << AUTH_POS_SHIFT;
+-		else
+-			auth_cfg |= AUTH_POS_BEFORE << AUTH_POS_SHIFT;
+-	}
+-	qce_write(qce, REG_AUTH_SEG_CFG, auth_cfg);
+-
+-	totallen = rctx->cryptlen + rctx->assoclen;
+-
+-	/* Set the encryption size and start offset */
+-	if (IS_CCM(rctx->flags) && IS_DECRYPT(rctx->flags))
+-		qce_write(qce, REG_ENCR_SEG_SIZE, rctx->cryptlen + ctx->authsize);
+-	else
+-		qce_write(qce, REG_ENCR_SEG_SIZE, rctx->cryptlen);
+-	qce_write(qce, REG_ENCR_SEG_START, rctx->assoclen & 0xffff);
+-
+-	/* Set the authentication size and start offset */
+-	qce_write(qce, REG_AUTH_SEG_SIZE, totallen);
+-	qce_write(qce, REG_AUTH_SEG_START, 0);
+-
+-	/* Write total length */
+-	if (IS_CCM(rctx->flags) && IS_DECRYPT(rctx->flags))
+-		qce_write(qce, REG_SEG_SIZE, totallen + ctx->authsize);
+-	else
+-		qce_write(qce, REG_SEG_SIZE, totallen);
+-
+-	/* get little endianness */
+-	config = qce_config_reg(qce, 1);
+-	qce_write(qce, REG_CONFIG, config);
+-
+-	/* Start the process */
+-	qce_crypto_go(qce, !IS_CCM(flags));
+-
+-	return 0;
+-}
+-#endif
+-
+-int qce_start(struct crypto_async_request *async_req, u32 type)
+-{
+-	switch (type) {
+-#ifdef CONFIG_CRYPTO_DEV_QCE_SKCIPHER
+-	case CRYPTO_ALG_TYPE_SKCIPHER:
+-		return qce_setup_regs_skcipher(async_req);
+-#endif
+-#ifdef CONFIG_CRYPTO_DEV_QCE_SHA
+-	case CRYPTO_ALG_TYPE_AHASH:
+-		return qce_setup_regs_ahash(async_req);
+-#endif
+-#ifdef CONFIG_CRYPTO_DEV_QCE_AEAD
+-	case CRYPTO_ALG_TYPE_AEAD:
+-		return qce_setup_regs_aead(async_req);
+-#endif
+-	default:
+-		return -EINVAL;
+-	}
+-}
+-
+-#define STATUS_ERRORS	\
+-		(BIT(SW_ERR_SHIFT) | BIT(AXI_ERR_SHIFT) | BIT(HSD_ERR_SHIFT))
+-
+-int qce_check_status(struct qce_device *qce, u32 *status)
+-{
+-	int ret = 0;
+-
+-	*status = qce_read(qce, REG_STATUS);
+-
+-	/*
+-	 * Don't use result dump status. The operation may not be complete.
+-	 * Instead, use the status we just read from device. In case, we need to
+-	 * use result_status from result dump the result_status needs to be byte
+-	 * swapped, since we set the device to little endian.
+-	 */
+-	if (*status & STATUS_ERRORS || !(*status & BIT(OPERATION_DONE_SHIFT)))
+-		ret = -ENXIO;
+-	else if (*status & BIT(MAC_FAILED_SHIFT))
+-		ret = -EBADMSG;
+-
+-	return ret;
+-}
+-
+-void qce_get_version(struct qce_device *qce, u32 *major, u32 *minor, u32 *step)
+-{
+-	u32 val;
+-
+-	val = qce_read(qce, REG_VERSION);
+-	*major = (val & CORE_MAJOR_REV_MASK) >> CORE_MAJOR_REV_SHIFT;
+-	*minor = (val & CORE_MINOR_REV_MASK) >> CORE_MINOR_REV_SHIFT;
+-	*step = (val & CORE_STEP_REV_MASK) >> CORE_STEP_REV_SHIFT;
+-}
+diff --git a/drivers/crypto/qce/common.h b/drivers/crypto/qce/common.h
+deleted file mode 100644
+index 02e63ad9f24557c2238caa70b0ec521d49da4f13..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/common.h
++++ /dev/null
+@@ -1,104 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
+- */
+-
+-#ifndef _COMMON_H_
+-#define _COMMON_H_
+-
+-#include <linux/crypto.h>
+-#include <linux/types.h>
+-#include <crypto/aes.h>
+-#include <crypto/hash.h>
+-#include <crypto/internal/skcipher.h>
+-#include <crypto/internal/aead.h>
+-
+-/* xts du size */
+-#define QCE_SECTOR_SIZE			512
+-
+-/* key size in bytes */
+-#define QCE_SHA_HMAC_KEY_SIZE		64
+-#define QCE_MAX_CIPHER_KEY_SIZE		AES_KEYSIZE_256
+-
+-/* IV length in bytes */
+-#define QCE_AES_IV_LENGTH		AES_BLOCK_SIZE
+-/* max of AES_BLOCK_SIZE, DES3_EDE_BLOCK_SIZE */
+-#define QCE_MAX_IV_SIZE			AES_BLOCK_SIZE
+-
+-/* maximum nonce bytes  */
+-#define QCE_MAX_NONCE			16
+-#define QCE_MAX_NONCE_WORDS		(QCE_MAX_NONCE / sizeof(u32))
+-
+-/* burst size alignment requirement */
+-#define QCE_MAX_ALIGN_SIZE		64
+-
+-/* cipher algorithms */
+-#define QCE_ALG_DES			BIT(0)
+-#define QCE_ALG_3DES			BIT(1)
+-#define QCE_ALG_AES			BIT(2)
+-
+-/* hash and hmac algorithms */
+-#define QCE_HASH_SHA1			BIT(3)
+-#define QCE_HASH_SHA256			BIT(4)
+-#define QCE_HASH_SHA1_HMAC		BIT(5)
+-#define QCE_HASH_SHA256_HMAC		BIT(6)
+-#define QCE_HASH_AES_CMAC		BIT(7)
+-
+-/* cipher modes */
+-#define QCE_MODE_CBC			BIT(8)
+-#define QCE_MODE_ECB			BIT(9)
+-#define QCE_MODE_CTR			BIT(10)
+-#define QCE_MODE_XTS			BIT(11)
+-#define QCE_MODE_CCM			BIT(12)
+-#define QCE_MODE_MASK			GENMASK(12, 8)
+-
+-#define QCE_MODE_CCM_RFC4309		BIT(13)
+-
+-/* cipher encryption/decryption operations */
+-#define QCE_ENCRYPT			BIT(30)
+-#define QCE_DECRYPT			BIT(31)
+-
+-#define IS_DES(flags)			(flags & QCE_ALG_DES)
+-#define IS_3DES(flags)			(flags & QCE_ALG_3DES)
+-#define IS_AES(flags)			(flags & QCE_ALG_AES)
+-
+-#define IS_SHA1(flags)			(flags & QCE_HASH_SHA1)
+-#define IS_SHA256(flags)		(flags & QCE_HASH_SHA256)
+-#define IS_SHA1_HMAC(flags)		(flags & QCE_HASH_SHA1_HMAC)
+-#define IS_SHA256_HMAC(flags)		(flags & QCE_HASH_SHA256_HMAC)
+-#define IS_CMAC(flags)			(flags & QCE_HASH_AES_CMAC)
+-#define IS_SHA(flags)			(IS_SHA1(flags) || IS_SHA256(flags))
+-#define IS_SHA_HMAC(flags)		\
+-		(IS_SHA1_HMAC(flags) || IS_SHA256_HMAC(flags))
+-
+-#define IS_CBC(mode)			(mode & QCE_MODE_CBC)
+-#define IS_ECB(mode)			(mode & QCE_MODE_ECB)
+-#define IS_CTR(mode)			(mode & QCE_MODE_CTR)
+-#define IS_XTS(mode)			(mode & QCE_MODE_XTS)
+-#define IS_CCM(mode)			(mode & QCE_MODE_CCM)
+-#define IS_CCM_RFC4309(mode)		((mode) & QCE_MODE_CCM_RFC4309)
+-
+-#define IS_ENCRYPT(dir)			(dir & QCE_ENCRYPT)
+-#define IS_DECRYPT(dir)			(dir & QCE_DECRYPT)
+-
+-struct qce_alg_template {
+-	struct list_head entry;
+-	u32 crypto_alg_type;
+-	unsigned long alg_flags;
+-	const u32 *std_iv;
+-	union {
+-		struct skcipher_alg skcipher;
+-		struct ahash_alg ahash;
+-		struct aead_alg aead;
+-	} alg;
+-	struct qce_device *qce;
+-	const u8 *hash_zero;
+-	const u32 digest_size;
+-};
+-
+-void qce_cpu_to_be32p_array(__be32 *dst, const u8 *src, unsigned int len);
+-int qce_check_status(struct qce_device *qce, u32 *status);
+-void qce_get_version(struct qce_device *qce, u32 *major, u32 *minor, u32 *step);
+-int qce_start(struct crypto_async_request *async_req, u32 type);
+-
+-#endif /* _COMMON_H_ */
+diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+deleted file mode 100644
+index b966f3365b7de8d2a8f6707397a34aa4facdc4ac..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/core.c
++++ /dev/null
+@@ -1,271 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
+- */
+-
+-#include <linux/cleanup.h>
+-#include <linux/clk.h>
+-#include <linux/device.h>
+-#include <linux/dma-mapping.h>
+-#include <linux/interconnect.h>
+-#include <linux/interrupt.h>
+-#include <linux/module.h>
+-#include <linux/mod_devicetable.h>
+-#include <linux/platform_device.h>
+-#include <linux/types.h>
+-#include <crypto/algapi.h>
+-#include <crypto/internal/hash.h>
+-
+-#include "core.h"
+-#include "cipher.h"
+-#include "sha.h"
+-#include "aead.h"
+-
+-#define QCE_QUEUE_LENGTH	1
+-
+-#define QCE_DEFAULT_MEM_BANDWIDTH	393600
+-
+-static const struct qce_algo_ops *qce_ops[] = {
+-#ifdef CONFIG_CRYPTO_DEV_QCE_SKCIPHER
+-	&skcipher_ops,
+-#endif
+-#ifdef CONFIG_CRYPTO_DEV_QCE_SHA
+-	&ahash_ops,
+-#endif
+-#ifdef CONFIG_CRYPTO_DEV_QCE_AEAD
+-	&aead_ops,
+-#endif
+-};
+-
+-static void qce_unregister_algs(void *data)
+-{
+-	const struct qce_algo_ops *ops;
+-	struct qce_device *qce = data;
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(qce_ops); i++) {
+-		ops = qce_ops[i];
+-		ops->unregister_algs(qce);
+-	}
+-}
+-
+-static int devm_qce_register_algs(struct qce_device *qce)
+-{
+-	const struct qce_algo_ops *ops;
+-	int i, j, ret = -ENODEV;
+-
+-	for (i = 0; i < ARRAY_SIZE(qce_ops); i++) {
+-		ops = qce_ops[i];
+-		ret = ops->register_algs(qce);
+-		if (ret) {
+-			for (j = i - 1; j >= 0; j--)
+-				ops->unregister_algs(qce);
+-			return ret;
+-		}
+-	}
+-
+-	return devm_add_action_or_reset(qce->dev, qce_unregister_algs, qce);
+-}
+-
+-static int qce_handle_request(struct crypto_async_request *async_req)
+-{
+-	int ret = -EINVAL, i;
+-	const struct qce_algo_ops *ops;
+-	u32 type = crypto_tfm_alg_type(async_req->tfm);
+-
+-	for (i = 0; i < ARRAY_SIZE(qce_ops); i++) {
+-		ops = qce_ops[i];
+-		if (type != ops->type)
+-			continue;
+-		ret = ops->async_req_handle(async_req);
+-		break;
+-	}
+-
+-	return ret;
+-}
+-
+-static int qce_handle_queue(struct qce_device *qce,
+-			    struct crypto_async_request *req)
+-{
+-	struct crypto_async_request *async_req, *backlog;
+-	int ret = 0, err;
+-
+-	scoped_guard(mutex, &qce->lock) {
+-		if (req)
+-			ret = crypto_enqueue_request(&qce->queue, req);
+-
+-		/* busy, do not dequeue request */
+-		if (qce->req)
+-			return ret;
+-
+-		backlog = crypto_get_backlog(&qce->queue);
+-		async_req = crypto_dequeue_request(&qce->queue);
+-		if (async_req)
+-			qce->req = async_req;
+-	}
+-
+-	if (!async_req)
+-		return ret;
+-
+-	if (backlog) {
+-		scoped_guard(mutex, &qce->lock)
+-			crypto_request_complete(backlog, -EINPROGRESS);
+-	}
+-
+-	err = qce_handle_request(async_req);
+-	if (err) {
+-		qce->result = err;
+-		schedule_work(&qce->done_work);
+-	}
+-
+-	return ret;
+-}
+-
+-static void qce_req_done_work(struct work_struct *work)
+-{
+-	struct qce_device *qce = container_of(work, struct qce_device,
+-					      done_work);
+-	struct crypto_async_request *req;
+-
+-	scoped_guard(mutex, &qce->lock) {
+-		req = qce->req;
+-		qce->req = NULL;
+-	}
+-
+-	if (req)
+-		crypto_request_complete(req, qce->result);
+-
+-	qce_handle_queue(qce, NULL);
+-}
+-
+-static int qce_async_request_enqueue(struct qce_device *qce,
+-				     struct crypto_async_request *req)
+-{
+-	return qce_handle_queue(qce, req);
+-}
+-
+-static void qce_async_request_done(struct qce_device *qce, int ret)
+-{
+-	qce->result = ret;
+-	schedule_work(&qce->done_work);
+-}
+-
+-static int qce_check_version(struct qce_device *qce)
+-{
+-	u32 major, minor, step;
+-
+-	qce_get_version(qce, &major, &minor, &step);
+-
+-	/*
+-	 * the driver does not support v5 with minor 0 because it has special
+-	 * alignment requirements.
+-	 */
+-	if (major == 5 && minor == 0)
+-		return -ENODEV;
+-
+-	qce->burst_size = QCE_BAM_BURST_SIZE;
+-
+-	/*
+-	 * Rx and tx pipes are treated as a pair inside CE.
+-	 * Pipe pair number depends on the actual BAM dma pipe
+-	 * that is used for transfers. The BAM dma pipes are passed
+-	 * from the device tree and used to derive the pipe pair
+-	 * id in the CE driver as follows.
+-	 * 	BAM dma pipes(rx, tx)		CE pipe pair id
+-	 *		0,1				0
+-	 *		2,3				1
+-	 *		4,5				2
+-	 *		6,7				3
+-	 *		...
+-	 */
+-	qce->pipe_pair_id = qce->dma.rxchan->chan_id >> 1;
+-
+-	dev_dbg(qce->dev, "Crypto device found, version %d.%d.%d\n",
+-		major, minor, step);
+-
+-	return 0;
+-}
+-
+-static int qce_crypto_probe(struct platform_device *pdev)
+-{
+-	struct device *dev = &pdev->dev;
+-	struct qce_device *qce;
+-	int ret;
+-
+-	qce = devm_kzalloc(dev, sizeof(*qce), GFP_KERNEL);
+-	if (!qce)
+-		return -ENOMEM;
+-
+-	qce->dev = dev;
+-	platform_set_drvdata(pdev, qce);
+-
+-	qce->base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(qce->base))
+-		return PTR_ERR(qce->base);
+-
+-	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
+-	if (ret < 0)
+-		return ret;
+-
+-	qce->core = devm_clk_get_optional_enabled(qce->dev, "core");
+-	if (IS_ERR(qce->core))
+-		return PTR_ERR(qce->core);
+-
+-	qce->iface = devm_clk_get_optional_enabled(qce->dev, "iface");
+-	if (IS_ERR(qce->iface))
+-		return PTR_ERR(qce->iface);
+-
+-	qce->bus = devm_clk_get_optional_enabled(qce->dev, "bus");
+-	if (IS_ERR(qce->bus))
+-		return PTR_ERR(qce->bus);
+-
+-	qce->mem_path = devm_of_icc_get(qce->dev, "memory");
+-	if (IS_ERR(qce->mem_path))
+-		return PTR_ERR(qce->mem_path);
+-
+-	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
+-	if (ret)
+-		return ret;
+-
+-	ret = devm_qce_dma_request(qce->dev, &qce->dma);
+-	if (ret)
+-		return ret;
+-
+-	ret = qce_check_version(qce);
+-	if (ret)
+-		return ret;
+-
+-	ret = devm_mutex_init(qce->dev, &qce->lock);
+-	if (ret)
+-		return ret;
+-
+-	INIT_WORK(&qce->done_work, qce_req_done_work);
+-	crypto_init_queue(&qce->queue, QCE_QUEUE_LENGTH);
+-
+-	qce->async_req_enqueue = qce_async_request_enqueue;
+-	qce->async_req_done = qce_async_request_done;
+-
+-	return devm_qce_register_algs(qce);
+-}
+-
+-static const struct of_device_id qce_crypto_of_match[] = {
+-	{ .compatible = "qcom,crypto-v5.1", },
+-	{ .compatible = "qcom,crypto-v5.4", },
+-	{ .compatible = "qcom,qce", },
+-	{}
+-};
+-MODULE_DEVICE_TABLE(of, qce_crypto_of_match);
+-
+-static struct platform_driver qce_crypto_driver = {
+-	.probe = qce_crypto_probe,
+-	.driver = {
+-		.name = KBUILD_MODNAME,
+-		.of_match_table = qce_crypto_of_match,
+-	},
+-};
+-module_platform_driver(qce_crypto_driver);
+-
+-MODULE_LICENSE("GPL v2");
+-MODULE_DESCRIPTION("Qualcomm crypto engine driver");
+-MODULE_ALIAS("platform:" KBUILD_MODNAME);
+-MODULE_AUTHOR("The Linux Foundation");
+diff --git a/drivers/crypto/qce/core.h b/drivers/crypto/qce/core.h
+deleted file mode 100644
+index eb6fa7a8b64a81daf9ad5304a3ae4e5e597a70b8..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/core.h
++++ /dev/null
+@@ -1,64 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
+- */
+-
+-#ifndef _CORE_H_
+-#define _CORE_H_
+-
+-#include <linux/mutex.h>
+-#include <linux/workqueue.h>
+-
+-#include "dma.h"
+-
+-/**
+- * struct qce_device - crypto engine device structure
+- * @queue: crypto request queue
+- * @lock: the lock protects queue and req
+- * @done_work: workqueue context
+- * @req: current active request
+- * @result: result of current transform
+- * @base: virtual IO base
+- * @dev: pointer to device structure
+- * @core: core device clock
+- * @iface: interface clock
+- * @bus: bus clock
+- * @dma: pointer to dma data
+- * @burst_size: the crypto burst size
+- * @pipe_pair_id: which pipe pair id the device using
+- * @async_req_enqueue: invoked by every algorithm to enqueue a request
+- * @async_req_done: invoked by every algorithm to finish its request
+- */
+-struct qce_device {
+-	struct crypto_queue queue;
+-	struct mutex lock;
+-	struct work_struct done_work;
+-	struct crypto_async_request *req;
+-	int result;
+-	void __iomem *base;
+-	struct device *dev;
+-	struct clk *core, *iface, *bus;
+-	struct icc_path *mem_path;
+-	struct qce_dma_data dma;
+-	int burst_size;
+-	unsigned int pipe_pair_id;
+-	int (*async_req_enqueue)(struct qce_device *qce,
+-				 struct crypto_async_request *req);
+-	void (*async_req_done)(struct qce_device *qce, int ret);
+-};
+-
+-/**
+- * struct qce_algo_ops - algorithm operations per crypto type
+- * @type: should be CRYPTO_ALG_TYPE_XXX
+- * @register_algs: invoked by core to register the algorithms
+- * @unregister_algs: invoked by core to unregister the algorithms
+- * @async_req_handle: invoked by core to handle enqueued request
+- */
+-struct qce_algo_ops {
+-	u32 type;
+-	int (*register_algs)(struct qce_device *qce);
+-	void (*unregister_algs)(struct qce_device *qce);
+-	int (*async_req_handle)(struct crypto_async_request *async_req);
+-};
+-
+-#endif /* _CORE_H_ */
+diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
+deleted file mode 100644
+index 68cafd4741ad3d91906d39e817fc7873b028d498..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/dma.c
++++ /dev/null
+@@ -1,135 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
+- */
+-
+-#include <linux/device.h>
+-#include <linux/dmaengine.h>
+-#include <crypto/scatterwalk.h>
+-
+-#include "dma.h"
+-
+-static void qce_dma_release(void *data)
+-{
+-	struct qce_dma_data *dma = data;
+-
+-	dma_release_channel(dma->txchan);
+-	dma_release_channel(dma->rxchan);
+-	kfree(dma->result_buf);
+-}
+-
+-int devm_qce_dma_request(struct device *dev, struct qce_dma_data *dma)
+-{
+-	int ret;
+-
+-	dma->txchan = dma_request_chan(dev, "tx");
+-	if (IS_ERR(dma->txchan))
+-		return dev_err_probe(dev, PTR_ERR(dma->txchan),
+-				     "Failed to get TX DMA channel\n");
+-
+-	dma->rxchan = dma_request_chan(dev, "rx");
+-	if (IS_ERR(dma->rxchan)) {
+-		ret = dev_err_probe(dev, PTR_ERR(dma->rxchan),
+-				    "Failed to get RX DMA channel\n");
+-		goto error_rx;
+-	}
+-
+-	dma->result_buf = kmalloc(QCE_RESULT_BUF_SZ + QCE_IGNORE_BUF_SZ,
+-				  GFP_KERNEL);
+-	if (!dma->result_buf) {
+-		ret = -ENOMEM;
+-		goto error_nomem;
+-	}
+-
+-	dma->ignore_buf = dma->result_buf + QCE_RESULT_BUF_SZ;
+-
+-	return devm_add_action_or_reset(dev, qce_dma_release, dma);
+-
+-error_nomem:
+-	dma_release_channel(dma->rxchan);
+-error_rx:
+-	dma_release_channel(dma->txchan);
+-	return ret;
+-}
+-
+-struct scatterlist *
+-qce_sgtable_add(struct sg_table *sgt, struct scatterlist *new_sgl,
+-		unsigned int max_len)
+-{
+-	struct scatterlist *sg = sgt->sgl, *sg_last = NULL;
+-	unsigned int new_len;
+-
+-	while (sg) {
+-		if (!sg_page(sg))
+-			break;
+-		sg = sg_next(sg);
+-	}
+-
+-	if (!sg)
+-		return ERR_PTR(-EINVAL);
+-
+-	while (new_sgl && sg && max_len) {
+-		new_len = new_sgl->length > max_len ? max_len : new_sgl->length;
+-		sg_set_page(sg, sg_page(new_sgl), new_len, new_sgl->offset);
+-		sg_last = sg;
+-		sg = sg_next(sg);
+-		new_sgl = sg_next(new_sgl);
+-		max_len -= new_len;
+-	}
+-
+-	return sg_last;
+-}
+-
+-static int qce_dma_prep_sg(struct dma_chan *chan, struct scatterlist *sg,
+-			   int nents, unsigned long flags,
+-			   enum dma_transfer_direction dir,
+-			   dma_async_tx_callback cb, void *cb_param)
+-{
+-	struct dma_async_tx_descriptor *desc;
+-	dma_cookie_t cookie;
+-
+-	if (!sg || !nents)
+-		return -EINVAL;
+-
+-	desc = dmaengine_prep_slave_sg(chan, sg, nents, dir, flags);
+-	if (!desc)
+-		return -EINVAL;
+-
+-	desc->callback = cb;
+-	desc->callback_param = cb_param;
+-	cookie = dmaengine_submit(desc);
+-
+-	return dma_submit_error(cookie);
+-}
+-
+-int qce_dma_prep_sgs(struct qce_dma_data *dma, struct scatterlist *rx_sg,
+-		     int rx_nents, struct scatterlist *tx_sg, int tx_nents,
+-		     dma_async_tx_callback cb, void *cb_param)
+-{
+-	struct dma_chan *rxchan = dma->rxchan;
+-	struct dma_chan *txchan = dma->txchan;
+-	unsigned long flags = DMA_PREP_INTERRUPT | DMA_CTRL_ACK;
+-	int ret;
+-
+-	ret = qce_dma_prep_sg(rxchan, rx_sg, rx_nents, flags, DMA_MEM_TO_DEV,
+-			     NULL, NULL);
+-	if (ret)
+-		return ret;
+-
+-	return qce_dma_prep_sg(txchan, tx_sg, tx_nents, flags, DMA_DEV_TO_MEM,
+-			       cb, cb_param);
+-}
+-
+-void qce_dma_issue_pending(struct qce_dma_data *dma)
+-{
+-	dma_async_issue_pending(dma->rxchan);
+-	dma_async_issue_pending(dma->txchan);
+-}
+-
+-int qce_dma_terminate_all(struct qce_dma_data *dma)
+-{
+-	int ret;
+-
+-	ret = dmaengine_terminate_all(dma->rxchan);
+-	return ret ?: dmaengine_terminate_all(dma->txchan);
+-}
+diff --git a/drivers/crypto/qce/dma.h b/drivers/crypto/qce/dma.h
+deleted file mode 100644
+index 31629185000e12242fa07c2cc08b95fcbd5d4b8c..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/dma.h
++++ /dev/null
+@@ -1,47 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
+- */
+-
+-#ifndef _DMA_H_
+-#define _DMA_H_
+-
+-#include <linux/dmaengine.h>
+-
+-/* maximum data transfer block size between BAM and CE */
+-#define QCE_BAM_BURST_SIZE		64
+-
+-#define QCE_AUTHIV_REGS_CNT		16
+-#define QCE_AUTH_BYTECOUNT_REGS_CNT	4
+-#define QCE_CNTRIV_REGS_CNT		4
+-
+-struct qce_result_dump {
+-	u32 auth_iv[QCE_AUTHIV_REGS_CNT];
+-	u32 auth_byte_count[QCE_AUTH_BYTECOUNT_REGS_CNT];
+-	u32 encr_cntr_iv[QCE_CNTRIV_REGS_CNT];
+-	u32 status;
+-	u32 status2;
+-};
+-
+-#define QCE_IGNORE_BUF_SZ	(2 * QCE_BAM_BURST_SIZE)
+-#define QCE_RESULT_BUF_SZ	\
+-		ALIGN(sizeof(struct qce_result_dump), QCE_BAM_BURST_SIZE)
+-
+-struct qce_dma_data {
+-	struct dma_chan *txchan;
+-	struct dma_chan *rxchan;
+-	struct qce_result_dump *result_buf;
+-	void *ignore_buf;
+-};
+-
+-int devm_qce_dma_request(struct device *dev, struct qce_dma_data *dma);
+-int qce_dma_prep_sgs(struct qce_dma_data *dma, struct scatterlist *sg_in,
+-		     int in_ents, struct scatterlist *sg_out, int out_ents,
+-		     dma_async_tx_callback cb, void *cb_param);
+-void qce_dma_issue_pending(struct qce_dma_data *dma);
+-int qce_dma_terminate_all(struct qce_dma_data *dma);
+-struct scatterlist *
+-qce_sgtable_add(struct sg_table *sgt, struct scatterlist *sg_add,
+-		unsigned int max_len);
+-
+-#endif /* _DMA_H_ */
+diff --git a/drivers/crypto/qce/regs-v5.h b/drivers/crypto/qce/regs-v5.h
+deleted file mode 100644
+index d59ed279890621a8e2e6f4cdb20692dbf39f1461..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/regs-v5.h
++++ /dev/null
+@@ -1,326 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
+- */
+-
+-#ifndef _REGS_V5_H_
+-#define _REGS_V5_H_
+-
+-#include <linux/bitops.h>
+-
+-#define REG_VERSION			0x000
+-#define REG_STATUS			0x100
+-#define REG_STATUS2			0x104
+-#define REG_ENGINES_AVAIL		0x108
+-#define REG_FIFO_SIZES			0x10c
+-#define REG_SEG_SIZE			0x110
+-#define REG_GOPROC			0x120
+-#define REG_ENCR_SEG_CFG		0x200
+-#define REG_ENCR_SEG_SIZE		0x204
+-#define REG_ENCR_SEG_START		0x208
+-#define REG_CNTR0_IV0			0x20c
+-#define REG_CNTR1_IV1			0x210
+-#define REG_CNTR2_IV2			0x214
+-#define REG_CNTR3_IV3			0x218
+-#define REG_CNTR_MASK			0x21C
+-#define REG_ENCR_CCM_INT_CNTR0		0x220
+-#define REG_ENCR_CCM_INT_CNTR1		0x224
+-#define REG_ENCR_CCM_INT_CNTR2		0x228
+-#define REG_ENCR_CCM_INT_CNTR3		0x22c
+-#define REG_ENCR_XTS_DU_SIZE		0x230
+-#define REG_CNTR_MASK2			0x234
+-#define REG_CNTR_MASK1			0x238
+-#define REG_CNTR_MASK0			0x23c
+-#define REG_AUTH_SEG_CFG		0x300
+-#define REG_AUTH_SEG_SIZE		0x304
+-#define REG_AUTH_SEG_START		0x308
+-#define REG_AUTH_IV0			0x310
+-#define REG_AUTH_IV1			0x314
+-#define REG_AUTH_IV2			0x318
+-#define REG_AUTH_IV3			0x31c
+-#define REG_AUTH_IV4			0x320
+-#define REG_AUTH_IV5			0x324
+-#define REG_AUTH_IV6			0x328
+-#define REG_AUTH_IV7			0x32c
+-#define REG_AUTH_IV8			0x330
+-#define REG_AUTH_IV9			0x334
+-#define REG_AUTH_IV10			0x338
+-#define REG_AUTH_IV11			0x33c
+-#define REG_AUTH_IV12			0x340
+-#define REG_AUTH_IV13			0x344
+-#define REG_AUTH_IV14			0x348
+-#define REG_AUTH_IV15			0x34c
+-#define REG_AUTH_INFO_NONCE0		0x350
+-#define REG_AUTH_INFO_NONCE1		0x354
+-#define REG_AUTH_INFO_NONCE2		0x358
+-#define REG_AUTH_INFO_NONCE3		0x35c
+-#define REG_AUTH_BYTECNT0		0x390
+-#define REG_AUTH_BYTECNT1		0x394
+-#define REG_AUTH_BYTECNT2		0x398
+-#define REG_AUTH_BYTECNT3		0x39c
+-#define REG_AUTH_EXP_MAC0		0x3a0
+-#define REG_AUTH_EXP_MAC1		0x3a4
+-#define REG_AUTH_EXP_MAC2		0x3a8
+-#define REG_AUTH_EXP_MAC3		0x3ac
+-#define REG_AUTH_EXP_MAC4		0x3b0
+-#define REG_AUTH_EXP_MAC5		0x3b4
+-#define REG_AUTH_EXP_MAC6		0x3b8
+-#define REG_AUTH_EXP_MAC7		0x3bc
+-#define REG_CONFIG			0x400
+-#define REG_GOPROC_QC_KEY		0x1000
+-#define REG_GOPROC_OEM_KEY		0x2000
+-#define REG_ENCR_KEY0			0x3000
+-#define REG_ENCR_KEY1			0x3004
+-#define REG_ENCR_KEY2			0x3008
+-#define REG_ENCR_KEY3			0x300c
+-#define REG_ENCR_KEY4			0x3010
+-#define REG_ENCR_KEY5			0x3014
+-#define REG_ENCR_KEY6			0x3018
+-#define REG_ENCR_KEY7			0x301c
+-#define REG_ENCR_XTS_KEY0		0x3020
+-#define REG_ENCR_XTS_KEY1		0x3024
+-#define REG_ENCR_XTS_KEY2		0x3028
+-#define REG_ENCR_XTS_KEY3		0x302c
+-#define REG_ENCR_XTS_KEY4		0x3030
+-#define REG_ENCR_XTS_KEY5		0x3034
+-#define REG_ENCR_XTS_KEY6		0x3038
+-#define REG_ENCR_XTS_KEY7		0x303c
+-#define REG_AUTH_KEY0			0x3040
+-#define REG_AUTH_KEY1			0x3044
+-#define REG_AUTH_KEY2			0x3048
+-#define REG_AUTH_KEY3			0x304c
+-#define REG_AUTH_KEY4			0x3050
+-#define REG_AUTH_KEY5			0x3054
+-#define REG_AUTH_KEY6			0x3058
+-#define REG_AUTH_KEY7			0x305c
+-#define REG_AUTH_KEY8			0x3060
+-#define REG_AUTH_KEY9			0x3064
+-#define REG_AUTH_KEY10			0x3068
+-#define REG_AUTH_KEY11			0x306c
+-#define REG_AUTH_KEY12			0x3070
+-#define REG_AUTH_KEY13			0x3074
+-#define REG_AUTH_KEY14			0x3078
+-#define REG_AUTH_KEY15			0x307c
+-
+-/* Register bits - REG_VERSION */
+-#define CORE_STEP_REV_SHIFT		0
+-#define CORE_STEP_REV_MASK		GENMASK(15, 0)
+-#define CORE_MINOR_REV_SHIFT		16
+-#define CORE_MINOR_REV_MASK		GENMASK(23, 16)
+-#define CORE_MAJOR_REV_SHIFT		24
+-#define CORE_MAJOR_REV_MASK		GENMASK(31, 24)
+-
+-/* Register bits - REG_STATUS */
+-#define MAC_FAILED_SHIFT		31
+-#define DOUT_SIZE_AVAIL_SHIFT		26
+-#define DOUT_SIZE_AVAIL_MASK		GENMASK(30, 26)
+-#define DIN_SIZE_AVAIL_SHIFT		21
+-#define DIN_SIZE_AVAIL_MASK		GENMASK(25, 21)
+-#define HSD_ERR_SHIFT			20
+-#define ACCESS_VIOL_SHIFT		19
+-#define PIPE_ACTIVE_ERR_SHIFT		18
+-#define CFG_CHNG_ERR_SHIFT		17
+-#define DOUT_ERR_SHIFT			16
+-#define DIN_ERR_SHIFT			15
+-#define AXI_ERR_SHIFT			14
+-#define CRYPTO_STATE_SHIFT		10
+-#define CRYPTO_STATE_MASK		GENMASK(13, 10)
+-#define ENCR_BUSY_SHIFT			9
+-#define AUTH_BUSY_SHIFT			8
+-#define DOUT_INTR_SHIFT			7
+-#define DIN_INTR_SHIFT			6
+-#define OP_DONE_INTR_SHIFT		5
+-#define ERR_INTR_SHIFT			4
+-#define DOUT_RDY_SHIFT			3
+-#define DIN_RDY_SHIFT			2
+-#define OPERATION_DONE_SHIFT		1
+-#define SW_ERR_SHIFT			0
+-
+-/* Register bits - REG_STATUS2 */
+-#define AXI_EXTRA_SHIFT			1
+-#define LOCKED_SHIFT			2
+-
+-/* Register bits - REG_CONFIG */
+-#define REQ_SIZE_SHIFT			17
+-#define REQ_SIZE_MASK			GENMASK(20, 17)
+-#define REQ_SIZE_ENUM_1_BEAT		0
+-#define REQ_SIZE_ENUM_2_BEAT		1
+-#define REQ_SIZE_ENUM_3_BEAT		2
+-#define REQ_SIZE_ENUM_4_BEAT		3
+-#define REQ_SIZE_ENUM_5_BEAT		4
+-#define REQ_SIZE_ENUM_6_BEAT		5
+-#define REQ_SIZE_ENUM_7_BEAT		6
+-#define REQ_SIZE_ENUM_8_BEAT		7
+-#define REQ_SIZE_ENUM_9_BEAT		8
+-#define REQ_SIZE_ENUM_10_BEAT		9
+-#define REQ_SIZE_ENUM_11_BEAT		10
+-#define REQ_SIZE_ENUM_12_BEAT		11
+-#define REQ_SIZE_ENUM_13_BEAT		12
+-#define REQ_SIZE_ENUM_14_BEAT		13
+-#define REQ_SIZE_ENUM_15_BEAT		14
+-#define REQ_SIZE_ENUM_16_BEAT		15
+-
+-#define MAX_QUEUED_REQ_SHIFT		14
+-#define MAX_QUEUED_REQ_MASK		GENMASK(24, 16)
+-#define ENUM_1_QUEUED_REQS		0
+-#define ENUM_2_QUEUED_REQS		1
+-#define ENUM_3_QUEUED_REQS		2
+-
+-#define IRQ_ENABLES_SHIFT		10
+-#define IRQ_ENABLES_MASK		GENMASK(13, 10)
+-
+-#define LITTLE_ENDIAN_MODE_SHIFT	9
+-#define PIPE_SET_SELECT_SHIFT		5
+-#define PIPE_SET_SELECT_MASK		GENMASK(8, 5)
+-
+-#define HIGH_SPD_EN_N_SHIFT		4
+-#define MASK_DOUT_INTR_SHIFT		3
+-#define MASK_DIN_INTR_SHIFT		2
+-#define MASK_OP_DONE_INTR_SHIFT		1
+-#define MASK_ERR_INTR_SHIFT		0
+-
+-/* Register bits - REG_AUTH_SEG_CFG */
+-#define COMP_EXP_MAC_SHIFT		24
+-#define COMP_EXP_MAC_DISABLED		0
+-#define COMP_EXP_MAC_ENABLED		1
+-
+-#define F9_DIRECTION_SHIFT		23
+-#define F9_DIRECTION_UPLINK		0
+-#define F9_DIRECTION_DOWNLINK		1
+-
+-#define AUTH_NONCE_NUM_WORDS_SHIFT	20
+-#define AUTH_NONCE_NUM_WORDS_MASK	GENMASK(22, 20)
+-
+-#define USE_PIPE_KEY_AUTH_SHIFT		19
+-#define USE_HW_KEY_AUTH_SHIFT		18
+-#define AUTH_FIRST_SHIFT		17
+-#define AUTH_LAST_SHIFT			16
+-
+-#define AUTH_POS_SHIFT			14
+-#define AUTH_POS_MASK			GENMASK(15, 14)
+-#define AUTH_POS_BEFORE			0
+-#define AUTH_POS_AFTER			1
+-
+-#define AUTH_SIZE_SHIFT			9
+-#define AUTH_SIZE_MASK			GENMASK(13, 9)
+-#define AUTH_SIZE_SHA1			0
+-#define AUTH_SIZE_SHA256		1
+-#define AUTH_SIZE_ENUM_1_BYTES		0
+-#define AUTH_SIZE_ENUM_2_BYTES		1
+-#define AUTH_SIZE_ENUM_3_BYTES		2
+-#define AUTH_SIZE_ENUM_4_BYTES		3
+-#define AUTH_SIZE_ENUM_5_BYTES		4
+-#define AUTH_SIZE_ENUM_6_BYTES		5
+-#define AUTH_SIZE_ENUM_7_BYTES		6
+-#define AUTH_SIZE_ENUM_8_BYTES		7
+-#define AUTH_SIZE_ENUM_9_BYTES		8
+-#define AUTH_SIZE_ENUM_10_BYTES		9
+-#define AUTH_SIZE_ENUM_11_BYTES		10
+-#define AUTH_SIZE_ENUM_12_BYTES		11
+-#define AUTH_SIZE_ENUM_13_BYTES		12
+-#define AUTH_SIZE_ENUM_14_BYTES		13
+-#define AUTH_SIZE_ENUM_15_BYTES		14
+-#define AUTH_SIZE_ENUM_16_BYTES		15
+-
+-#define AUTH_MODE_SHIFT			6
+-#define AUTH_MODE_MASK			GENMASK(8, 6)
+-#define AUTH_MODE_HASH			0
+-#define AUTH_MODE_HMAC			1
+-#define AUTH_MODE_CCM			0
+-#define AUTH_MODE_CMAC			1
+-
+-#define AUTH_KEY_SIZE_SHIFT		3
+-#define AUTH_KEY_SIZE_MASK		GENMASK(5, 3)
+-#define AUTH_KEY_SZ_AES128		0
+-#define AUTH_KEY_SZ_AES256		2
+-
+-#define AUTH_ALG_SHIFT			0
+-#define AUTH_ALG_MASK			GENMASK(2, 0)
+-#define AUTH_ALG_NONE			0
+-#define AUTH_ALG_SHA			1
+-#define AUTH_ALG_AES			2
+-#define AUTH_ALG_KASUMI			3
+-#define AUTH_ALG_SNOW3G			4
+-#define AUTH_ALG_ZUC			5
+-
+-/* Register bits - REG_ENCR_XTS_DU_SIZE */
+-#define ENCR_XTS_DU_SIZE_SHIFT		0
+-#define ENCR_XTS_DU_SIZE_MASK		GENMASK(19, 0)
+-
+-/* Register bits - REG_ENCR_SEG_CFG */
+-#define F8_KEYSTREAM_ENABLE_SHIFT	17
+-#define F8_KEYSTREAM_DISABLED		0
+-#define F8_KEYSTREAM_ENABLED		1
+-
+-#define F8_DIRECTION_SHIFT		16
+-#define F8_DIRECTION_UPLINK		0
+-#define F8_DIRECTION_DOWNLINK		1
+-
+-#define USE_PIPE_KEY_ENCR_SHIFT		15
+-#define USE_PIPE_KEY_ENCR_ENABLED	1
+-#define USE_KEY_REGISTERS		0
+-
+-#define USE_HW_KEY_ENCR_SHIFT		14
+-#define USE_KEY_REG			0
+-#define USE_HW_KEY			1
+-
+-#define LAST_CCM_SHIFT			13
+-#define LAST_CCM_XFR			1
+-#define INTERM_CCM_XFR			0
+-
+-#define CNTR_ALG_SHIFT			11
+-#define CNTR_ALG_MASK			GENMASK(12, 11)
+-#define CNTR_ALG_NIST			0
+-
+-#define ENCODE_SHIFT			10
+-
+-#define ENCR_MODE_SHIFT			6
+-#define ENCR_MODE_MASK			GENMASK(9, 6)
+-#define ENCR_MODE_ECB			0
+-#define ENCR_MODE_CBC			1
+-#define ENCR_MODE_CTR			2
+-#define ENCR_MODE_XTS			3
+-#define ENCR_MODE_CCM			4
+-
+-#define ENCR_KEY_SZ_SHIFT		3
+-#define ENCR_KEY_SZ_MASK		GENMASK(5, 3)
+-#define ENCR_KEY_SZ_DES			0
+-#define ENCR_KEY_SZ_3DES		1
+-#define ENCR_KEY_SZ_AES128		0
+-#define ENCR_KEY_SZ_AES256		2
+-
+-#define ENCR_ALG_SHIFT			0
+-#define ENCR_ALG_MASK			GENMASK(2, 0)
+-#define ENCR_ALG_NONE			0
+-#define ENCR_ALG_DES			1
+-#define ENCR_ALG_AES			2
+-#define ENCR_ALG_KASUMI			4
+-#define ENCR_ALG_SNOW_3G		5
+-#define ENCR_ALG_ZUC			6
+-
+-/* Register bits - REG_GOPROC */
+-#define GO_SHIFT			0
+-#define CLR_CNTXT_SHIFT			1
+-#define RESULTS_DUMP_SHIFT		2
+-
+-/* Register bits - REG_ENGINES_AVAIL */
+-#define ENCR_AES_SEL_SHIFT		0
+-#define DES_SEL_SHIFT			1
+-#define ENCR_SNOW3G_SEL_SHIFT		2
+-#define ENCR_KASUMI_SEL_SHIFT		3
+-#define SHA_SEL_SHIFT			4
+-#define SHA512_SEL_SHIFT		5
+-#define AUTH_AES_SEL_SHIFT		6
+-#define AUTH_SNOW3G_SEL_SHIFT		7
+-#define AUTH_KASUMI_SEL_SHIFT		8
+-#define BAM_PIPE_SETS_SHIFT		9
+-#define BAM_PIPE_SETS_MASK		GENMASK(12, 9)
+-#define AXI_WR_BEATS_SHIFT		13
+-#define AXI_WR_BEATS_MASK		GENMASK(18, 13)
+-#define AXI_RD_BEATS_SHIFT		19
+-#define AXI_RD_BEATS_MASK		GENMASK(24, 19)
+-#define ENCR_ZUC_SEL_SHIFT		26
+-#define AUTH_ZUC_SEL_SHIFT		27
+-#define ZUC_ENABLE_SHIFT		28
+-
+-#endif /* _REGS_V5_H_ */
+diff --git a/drivers/crypto/qce/sha.c b/drivers/crypto/qce/sha.c
+deleted file mode 100644
+index 1b37121cbcdcb70ea02cc8b9cbbd6f03abb79851..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/sha.c
++++ /dev/null
+@@ -1,545 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
+- */
+-
+-#include <linux/device.h>
+-#include <linux/dma-mapping.h>
+-#include <linux/interrupt.h>
+-#include <linux/string.h>
+-#include <crypto/internal/hash.h>
+-
+-#include "common.h"
+-#include "core.h"
+-#include "sha.h"
+-
+-struct qce_sha_saved_state {
+-	u8 pending_buf[QCE_SHA_MAX_BLOCKSIZE];
+-	u8 partial_digest[QCE_SHA_MAX_DIGESTSIZE];
+-	__be32 byte_count[2];
+-	unsigned int pending_buflen;
+-	unsigned int flags;
+-	u64 count;
+-	bool first_blk;
+-};
+-
+-static LIST_HEAD(ahash_algs);
+-
+-static const u32 std_iv_sha1[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+-	SHA1_H0, SHA1_H1, SHA1_H2, SHA1_H3, SHA1_H4, 0, 0, 0
+-};
+-
+-static const u32 std_iv_sha256[SHA256_DIGEST_SIZE / sizeof(u32)] = {
+-	SHA256_H0, SHA256_H1, SHA256_H2, SHA256_H3,
+-	SHA256_H4, SHA256_H5, SHA256_H6, SHA256_H7
+-};
+-
+-static void qce_ahash_done(void *data)
+-{
+-	struct crypto_async_request *async_req = data;
+-	struct ahash_request *req = ahash_request_cast(async_req);
+-	struct crypto_ahash *ahash = crypto_ahash_reqtfm(req);
+-	struct qce_sha_reqctx *rctx = ahash_request_ctx_dma(req);
+-	struct qce_alg_template *tmpl = to_ahash_tmpl(async_req->tfm);
+-	struct qce_device *qce = tmpl->qce;
+-	struct qce_result_dump *result = qce->dma.result_buf;
+-	unsigned int digestsize = crypto_ahash_digestsize(ahash);
+-	int error;
+-	u32 status;
+-
+-	error = qce_dma_terminate_all(&qce->dma);
+-	if (error)
+-		dev_dbg(qce->dev, "ahash dma termination error (%d)\n", error);
+-
+-	dma_unmap_sg(qce->dev, req->src, rctx->src_nents, DMA_TO_DEVICE);
+-	dma_unmap_sg(qce->dev, &rctx->result_sg, 1, DMA_FROM_DEVICE);
+-
+-	memcpy(rctx->digest, result->auth_iv, digestsize);
+-	if (req->result && rctx->last_blk)
+-		memcpy(req->result, result->auth_iv, digestsize);
+-
+-	rctx->byte_count[0] = cpu_to_be32(result->auth_byte_count[0]);
+-	rctx->byte_count[1] = cpu_to_be32(result->auth_byte_count[1]);
+-
+-	error = qce_check_status(qce, &status);
+-	if (error < 0)
+-		dev_dbg(qce->dev, "ahash operation error (%x)\n", status);
+-
+-	req->src = rctx->src_orig;
+-	req->nbytes = rctx->nbytes_orig;
+-	rctx->last_blk = false;
+-	rctx->first_blk = false;
+-
+-	qce->async_req_done(tmpl->qce, error);
+-}
+-
+-static int qce_ahash_async_req_handle(struct crypto_async_request *async_req)
+-{
+-	struct ahash_request *req = ahash_request_cast(async_req);
+-	struct qce_sha_reqctx *rctx = ahash_request_ctx_dma(req);
+-	struct qce_sha_ctx *ctx = crypto_tfm_ctx(async_req->tfm);
+-	struct qce_alg_template *tmpl = to_ahash_tmpl(async_req->tfm);
+-	struct qce_device *qce = tmpl->qce;
+-	unsigned long flags = rctx->flags;
+-	int ret;
+-
+-	if (IS_SHA_HMAC(flags)) {
+-		rctx->authkey = ctx->authkey;
+-		rctx->authklen = QCE_SHA_HMAC_KEY_SIZE;
+-	} else if (IS_CMAC(flags)) {
+-		rctx->authkey = ctx->authkey;
+-		rctx->authklen = AES_KEYSIZE_128;
+-	}
+-
+-	rctx->src_nents = sg_nents_for_len(req->src, req->nbytes);
+-	if (rctx->src_nents < 0) {
+-		dev_err(qce->dev, "Invalid numbers of src SG.\n");
+-		return rctx->src_nents;
+-	}
+-
+-	ret = dma_map_sg(qce->dev, req->src, rctx->src_nents, DMA_TO_DEVICE);
+-	if (!ret)
+-		return -EIO;
+-
+-	sg_init_one(&rctx->result_sg, qce->dma.result_buf, QCE_RESULT_BUF_SZ);
+-
+-	ret = dma_map_sg(qce->dev, &rctx->result_sg, 1, DMA_FROM_DEVICE);
+-	if (!ret) {
+-		ret = -EIO;
+-		goto error_unmap_src;
+-	}
+-
+-	ret = qce_dma_prep_sgs(&qce->dma, req->src, rctx->src_nents,
+-			       &rctx->result_sg, 1, qce_ahash_done, async_req);
+-	if (ret)
+-		goto error_unmap_dst;
+-
+-	qce_dma_issue_pending(&qce->dma);
+-
+-	ret = qce_start(async_req, tmpl->crypto_alg_type);
+-	if (ret)
+-		goto error_terminate;
+-
+-	return 0;
+-
+-error_terminate:
+-	qce_dma_terminate_all(&qce->dma);
+-error_unmap_dst:
+-	dma_unmap_sg(qce->dev, &rctx->result_sg, 1, DMA_FROM_DEVICE);
+-error_unmap_src:
+-	dma_unmap_sg(qce->dev, req->src, rctx->src_nents, DMA_TO_DEVICE);
+-	return ret;
+-}
+-
+-static int qce_ahash_init(struct ahash_request *req)
+-{
+-	struct qce_sha_reqctx *rctx = ahash_request_ctx_dma(req);
+-	struct qce_alg_template *tmpl = to_ahash_tmpl(req->base.tfm);
+-	const u32 *std_iv = tmpl->std_iv;
+-
+-	memset(rctx, 0, sizeof(*rctx));
+-	rctx->first_blk = true;
+-	rctx->last_blk = false;
+-	rctx->flags = tmpl->alg_flags;
+-	memcpy(rctx->digest, std_iv, sizeof(rctx->digest));
+-
+-	return 0;
+-}
+-
+-static int qce_ahash_export(struct ahash_request *req, void *out)
+-{
+-	struct qce_sha_reqctx *rctx = ahash_request_ctx_dma(req);
+-	struct qce_sha_saved_state *export_state = out;
+-
+-	memcpy(export_state->pending_buf, rctx->buf, rctx->buflen);
+-	memcpy(export_state->partial_digest, rctx->digest, sizeof(rctx->digest));
+-	export_state->byte_count[0] = rctx->byte_count[0];
+-	export_state->byte_count[1] = rctx->byte_count[1];
+-	export_state->pending_buflen = rctx->buflen;
+-	export_state->count = rctx->count;
+-	export_state->first_blk = rctx->first_blk;
+-	export_state->flags = rctx->flags;
+-
+-	return 0;
+-}
+-
+-static int qce_ahash_import(struct ahash_request *req, const void *in)
+-{
+-	struct qce_sha_reqctx *rctx = ahash_request_ctx_dma(req);
+-	const struct qce_sha_saved_state *import_state = in;
+-
+-	memset(rctx, 0, sizeof(*rctx));
+-	rctx->count = import_state->count;
+-	rctx->buflen = import_state->pending_buflen;
+-	rctx->first_blk = import_state->first_blk;
+-	rctx->flags = import_state->flags;
+-	rctx->byte_count[0] = import_state->byte_count[0];
+-	rctx->byte_count[1] = import_state->byte_count[1];
+-	memcpy(rctx->buf, import_state->pending_buf, rctx->buflen);
+-	memcpy(rctx->digest, import_state->partial_digest, sizeof(rctx->digest));
+-
+-	return 0;
+-}
+-
+-static int qce_ahash_update(struct ahash_request *req)
+-{
+-	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
+-	struct qce_sha_reqctx *rctx = ahash_request_ctx_dma(req);
+-	struct qce_alg_template *tmpl = to_ahash_tmpl(req->base.tfm);
+-	struct qce_device *qce = tmpl->qce;
+-	struct scatterlist *sg_last, *sg;
+-	unsigned int total, len;
+-	unsigned int hash_later;
+-	unsigned int nbytes;
+-	unsigned int blocksize;
+-
+-	blocksize = crypto_tfm_alg_blocksize(crypto_ahash_tfm(tfm));
+-	rctx->count += req->nbytes;
+-
+-	/* check for buffer from previous updates and append it */
+-	total = req->nbytes + rctx->buflen;
+-
+-	if (total <= blocksize) {
+-		scatterwalk_map_and_copy(rctx->buf + rctx->buflen, req->src,
+-					 0, req->nbytes, 0);
+-		rctx->buflen += req->nbytes;
+-		return 0;
+-	}
+-
+-	/* save the original req structure fields */
+-	rctx->src_orig = req->src;
+-	rctx->nbytes_orig = req->nbytes;
+-
+-	/*
+-	 * if we have data from previous update copy them on buffer. The old
+-	 * data will be combined with current request bytes.
+-	 */
+-	if (rctx->buflen)
+-		memcpy(rctx->tmpbuf, rctx->buf, rctx->buflen);
+-
+-	/* calculate how many bytes will be hashed later */
+-	hash_later = total % blocksize;
+-
+-	/*
+-	 * At this point, there is more than one block size of data.  If
+-	 * the available data to transfer is exactly a multiple of block
+-	 * size, save the last block to be transferred in qce_ahash_final
+-	 * (with the last block bit set) if this is indeed the end of data
+-	 * stream. If not this saved block will be transferred as part of
+-	 * next update. If this block is not held back and if this is
+-	 * indeed the end of data stream, the digest obtained will be wrong
+-	 * since qce_ahash_final will see that rctx->buflen is 0 and return
+-	 * doing nothing which in turn means that a digest will not be
+-	 * copied to the destination result buffer.  qce_ahash_final cannot
+-	 * be made to alter this behavior and allowed to proceed if
+-	 * rctx->buflen is 0 because the crypto engine BAM does not allow
+-	 * for zero length transfers.
+-	 */
+-	if (!hash_later)
+-		hash_later = blocksize;
+-
+-	if (hash_later) {
+-		unsigned int src_offset = req->nbytes - hash_later;
+-		scatterwalk_map_and_copy(rctx->buf, req->src, src_offset,
+-					 hash_later, 0);
+-	}
+-
+-	/* here nbytes is multiple of blocksize */
+-	nbytes = total - hash_later;
+-
+-	len = rctx->buflen;
+-	sg = sg_last = req->src;
+-
+-	while (len < nbytes && sg) {
+-		if (len + sg_dma_len(sg) > nbytes)
+-			break;
+-		len += sg_dma_len(sg);
+-		sg_last = sg;
+-		sg = sg_next(sg);
+-	}
+-
+-	if (!sg_last)
+-		return -EINVAL;
+-
+-	if (rctx->buflen) {
+-		sg_init_table(rctx->sg, 2);
+-		sg_set_buf(rctx->sg, rctx->tmpbuf, rctx->buflen);
+-		sg_chain(rctx->sg, 2, req->src);
+-		req->src = rctx->sg;
+-	}
+-
+-	req->nbytes = nbytes;
+-	rctx->buflen = hash_later;
+-
+-	return qce->async_req_enqueue(tmpl->qce, &req->base);
+-}
+-
+-static int qce_ahash_final(struct ahash_request *req)
+-{
+-	struct qce_sha_reqctx *rctx = ahash_request_ctx_dma(req);
+-	struct qce_alg_template *tmpl = to_ahash_tmpl(req->base.tfm);
+-	struct qce_device *qce = tmpl->qce;
+-
+-	if (!rctx->buflen) {
+-		if (tmpl->hash_zero)
+-			memcpy(req->result, tmpl->hash_zero,
+-					tmpl->alg.ahash.halg.digestsize);
+-		return 0;
+-	}
+-
+-	rctx->last_blk = true;
+-
+-	rctx->src_orig = req->src;
+-	rctx->nbytes_orig = req->nbytes;
+-
+-	memcpy(rctx->tmpbuf, rctx->buf, rctx->buflen);
+-	sg_init_one(rctx->sg, rctx->tmpbuf, rctx->buflen);
+-
+-	req->src = rctx->sg;
+-	req->nbytes = rctx->buflen;
+-
+-	return qce->async_req_enqueue(tmpl->qce, &req->base);
+-}
+-
+-static int qce_ahash_digest(struct ahash_request *req)
+-{
+-	struct qce_sha_reqctx *rctx = ahash_request_ctx_dma(req);
+-	struct qce_alg_template *tmpl = to_ahash_tmpl(req->base.tfm);
+-	struct qce_device *qce = tmpl->qce;
+-	int ret;
+-
+-	ret = qce_ahash_init(req);
+-	if (ret)
+-		return ret;
+-
+-	rctx->src_orig = req->src;
+-	rctx->nbytes_orig = req->nbytes;
+-	rctx->first_blk = true;
+-	rctx->last_blk = true;
+-
+-	if (!rctx->nbytes_orig) {
+-		if (tmpl->hash_zero)
+-			memcpy(req->result, tmpl->hash_zero,
+-					tmpl->alg.ahash.halg.digestsize);
+-		return 0;
+-	}
+-
+-	return qce->async_req_enqueue(tmpl->qce, &req->base);
+-}
+-
+-static int qce_ahash_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
+-				 unsigned int keylen)
+-{
+-	unsigned int digestsize = crypto_ahash_digestsize(tfm);
+-	struct qce_sha_ctx *ctx = crypto_tfm_ctx(&tfm->base);
+-	struct crypto_wait wait;
+-	struct ahash_request *req;
+-	struct scatterlist sg;
+-	unsigned int blocksize;
+-	struct crypto_ahash *ahash_tfm;
+-	u8 *buf;
+-	int ret;
+-	const char *alg_name;
+-
+-	blocksize = crypto_tfm_alg_blocksize(crypto_ahash_tfm(tfm));
+-	memset(ctx->authkey, 0, sizeof(ctx->authkey));
+-
+-	if (keylen <= blocksize) {
+-		memcpy(ctx->authkey, key, keylen);
+-		return 0;
+-	}
+-
+-	if (digestsize == SHA1_DIGEST_SIZE)
+-		alg_name = "sha1-qce";
+-	else if (digestsize == SHA256_DIGEST_SIZE)
+-		alg_name = "sha256-qce";
+-	else
+-		return -EINVAL;
+-
+-	ahash_tfm = crypto_alloc_ahash(alg_name, 0, 0);
+-	if (IS_ERR(ahash_tfm))
+-		return PTR_ERR(ahash_tfm);
+-
+-	req = ahash_request_alloc(ahash_tfm, GFP_KERNEL);
+-	if (!req) {
+-		ret = -ENOMEM;
+-		goto err_free_ahash;
+-	}
+-
+-	crypto_init_wait(&wait);
+-	ahash_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
+-				   crypto_req_done, &wait);
+-	crypto_ahash_clear_flags(ahash_tfm, ~0);
+-
+-	buf = kzalloc(keylen + QCE_MAX_ALIGN_SIZE, GFP_KERNEL);
+-	if (!buf) {
+-		ret = -ENOMEM;
+-		goto err_free_req;
+-	}
+-
+-	memcpy(buf, key, keylen);
+-	sg_init_one(&sg, buf, keylen);
+-	ahash_request_set_crypt(req, &sg, ctx->authkey, keylen);
+-
+-	ret = crypto_wait_req(crypto_ahash_digest(req), &wait);
+-
+-	kfree(buf);
+-err_free_req:
+-	ahash_request_free(req);
+-err_free_ahash:
+-	crypto_free_ahash(ahash_tfm);
+-	return ret;
+-}
+-
+-static int qce_ahash_cra_init(struct crypto_tfm *tfm)
+-{
+-	struct crypto_ahash *ahash = __crypto_ahash_cast(tfm);
+-	struct qce_sha_ctx *ctx = crypto_tfm_ctx(tfm);
+-
+-	crypto_ahash_set_reqsize_dma(ahash, sizeof(struct qce_sha_reqctx));
+-	memset(ctx, 0, sizeof(*ctx));
+-	return 0;
+-}
+-
+-struct qce_ahash_def {
+-	unsigned long flags;
+-	const char *name;
+-	const char *drv_name;
+-	unsigned int digestsize;
+-	unsigned int blocksize;
+-	unsigned int statesize;
+-	const u32 *std_iv;
+-};
+-
+-static const struct qce_ahash_def ahash_def[] = {
+-	{
+-		.flags		= QCE_HASH_SHA1,
+-		.name		= "sha1",
+-		.drv_name	= "sha1-qce",
+-		.digestsize	= SHA1_DIGEST_SIZE,
+-		.blocksize	= SHA1_BLOCK_SIZE,
+-		.statesize	= sizeof(struct qce_sha_saved_state),
+-		.std_iv		= std_iv_sha1,
+-	},
+-	{
+-		.flags		= QCE_HASH_SHA256,
+-		.name		= "sha256",
+-		.drv_name	= "sha256-qce",
+-		.digestsize	= SHA256_DIGEST_SIZE,
+-		.blocksize	= SHA256_BLOCK_SIZE,
+-		.statesize	= sizeof(struct qce_sha_saved_state),
+-		.std_iv		= std_iv_sha256,
+-	},
+-	{
+-		.flags		= QCE_HASH_SHA1_HMAC,
+-		.name		= "hmac(sha1)",
+-		.drv_name	= "hmac-sha1-qce",
+-		.digestsize	= SHA1_DIGEST_SIZE,
+-		.blocksize	= SHA1_BLOCK_SIZE,
+-		.statesize	= sizeof(struct qce_sha_saved_state),
+-		.std_iv		= std_iv_sha1,
+-	},
+-	{
+-		.flags		= QCE_HASH_SHA256_HMAC,
+-		.name		= "hmac(sha256)",
+-		.drv_name	= "hmac-sha256-qce",
+-		.digestsize	= SHA256_DIGEST_SIZE,
+-		.blocksize	= SHA256_BLOCK_SIZE,
+-		.statesize	= sizeof(struct qce_sha_saved_state),
+-		.std_iv		= std_iv_sha256,
+-	},
+-};
+-
+-static int qce_ahash_register_one(const struct qce_ahash_def *def,
+-				  struct qce_device *qce)
+-{
+-	struct qce_alg_template *tmpl;
+-	struct ahash_alg *alg;
+-	struct crypto_alg *base;
+-	int ret;
+-
+-	tmpl = kzalloc_obj(*tmpl);
+-	if (!tmpl)
+-		return -ENOMEM;
+-
+-	tmpl->std_iv = def->std_iv;
+-
+-	alg = &tmpl->alg.ahash;
+-	alg->init = qce_ahash_init;
+-	alg->update = qce_ahash_update;
+-	alg->final = qce_ahash_final;
+-	alg->digest = qce_ahash_digest;
+-	alg->export = qce_ahash_export;
+-	alg->import = qce_ahash_import;
+-	if (IS_SHA_HMAC(def->flags))
+-		alg->setkey = qce_ahash_hmac_setkey;
+-	alg->halg.digestsize = def->digestsize;
+-	alg->halg.statesize = def->statesize;
+-
+-	if (IS_SHA1(def->flags))
+-		tmpl->hash_zero = sha1_zero_message_hash;
+-	else if (IS_SHA256(def->flags))
+-		tmpl->hash_zero = sha256_zero_message_hash;
+-
+-	base = &alg->halg.base;
+-	base->cra_blocksize = def->blocksize;
+-	base->cra_priority = 175;
+-	base->cra_flags = CRYPTO_ALG_ASYNC | CRYPTO_ALG_KERN_DRIVER_ONLY;
+-	base->cra_ctxsize = sizeof(struct qce_sha_ctx);
+-	base->cra_alignmask = 0;
+-	base->cra_module = THIS_MODULE;
+-	base->cra_init = qce_ahash_cra_init;
+-
+-	strscpy(base->cra_name, def->name);
+-	strscpy(base->cra_driver_name, def->drv_name);
+-
+-	INIT_LIST_HEAD(&tmpl->entry);
+-	tmpl->crypto_alg_type = CRYPTO_ALG_TYPE_AHASH;
+-	tmpl->alg_flags = def->flags;
+-	tmpl->qce = qce;
+-
+-	ret = crypto_register_ahash(alg);
+-	if (ret) {
+-		dev_err(qce->dev, "%s registration failed\n", base->cra_name);
+-		kfree(tmpl);
+-		return ret;
+-	}
+-
+-	list_add_tail(&tmpl->entry, &ahash_algs);
+-	dev_dbg(qce->dev, "%s is registered\n", base->cra_name);
+-	return 0;
+-}
+-
+-static void qce_ahash_unregister(struct qce_device *qce)
+-{
+-	struct qce_alg_template *tmpl, *n;
+-
+-	list_for_each_entry_safe(tmpl, n, &ahash_algs, entry) {
+-		crypto_unregister_ahash(&tmpl->alg.ahash);
+-		list_del(&tmpl->entry);
+-		kfree(tmpl);
+-	}
+-}
+-
+-static int qce_ahash_register(struct qce_device *qce)
+-{
+-	int ret, i;
+-
+-	for (i = 0; i < ARRAY_SIZE(ahash_def); i++) {
+-		ret = qce_ahash_register_one(&ahash_def[i], qce);
+-		if (ret)
+-			goto err;
+-	}
+-
+-	return 0;
+-err:
+-	qce_ahash_unregister(qce);
+-	return ret;
+-}
+-
+-const struct qce_algo_ops ahash_ops = {
+-	.type = CRYPTO_ALG_TYPE_AHASH,
+-	.register_algs = qce_ahash_register,
+-	.unregister_algs = qce_ahash_unregister,
+-	.async_req_handle = qce_ahash_async_req_handle,
+-};
+diff --git a/drivers/crypto/qce/sha.h b/drivers/crypto/qce/sha.h
+deleted file mode 100644
+index a22695361f1654cc94325ec5d886a158fa4bfb9c..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/sha.h
++++ /dev/null
+@@ -1,72 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
+- */
+-
+-#ifndef _SHA_H_
+-#define _SHA_H_
+-
+-#include <crypto/scatterwalk.h>
+-#include <crypto/sha1.h>
+-#include <crypto/sha2.h>
+-
+-#include "common.h"
+-#include "core.h"
+-
+-#define QCE_SHA_MAX_BLOCKSIZE		SHA256_BLOCK_SIZE
+-#define QCE_SHA_MAX_DIGESTSIZE		SHA256_DIGEST_SIZE
+-
+-struct qce_sha_ctx {
+-	u8 authkey[QCE_SHA_MAX_BLOCKSIZE];
+-};
+-
+-/**
+- * struct qce_sha_reqctx - holds private ahash objects per request
+- * @buf: used during update, import and export
+- * @tmpbuf: buffer for internal use
+- * @digest: calculated digest buffer
+- * @buflen: length of the buffer
+- * @flags: operation flags
+- * @src_orig: original request sg list
+- * @nbytes_orig: original request number of bytes
+- * @src_nents: source number of entries
+- * @byte_count: byte count
+- * @count: save count in states during update, import and export
+- * @first_blk: is it the first block
+- * @last_blk: is it the last block
+- * @sg: used to chain sg lists
+- * @authkey: pointer to auth key in sha ctx
+- * @authklen: auth key length
+- * @result_sg: scatterlist used for result buffer
+- */
+-struct qce_sha_reqctx {
+-	u8 buf[QCE_SHA_MAX_BLOCKSIZE];
+-	u8 tmpbuf[QCE_SHA_MAX_BLOCKSIZE];
+-	u8 digest[QCE_SHA_MAX_DIGESTSIZE];
+-	unsigned int buflen;
+-	unsigned long flags;
+-	struct scatterlist *src_orig;
+-	unsigned int nbytes_orig;
+-	int src_nents;
+-	__be32 byte_count[2];
+-	u64 count;
+-	bool first_blk;
+-	bool last_blk;
+-	struct scatterlist sg[2];
+-	u8 *authkey;
+-	unsigned int authklen;
+-	struct scatterlist result_sg;
+-};
+-
+-static inline struct qce_alg_template *to_ahash_tmpl(struct crypto_tfm *tfm)
+-{
+-	struct crypto_ahash *ahash = __crypto_ahash_cast(tfm);
+-	struct ahash_alg *alg = container_of(crypto_hash_alg_common(ahash),
+-					     struct ahash_alg, halg);
+-
+-	return container_of(alg, struct qce_alg_template, alg.ahash);
+-}
+-
+-extern const struct qce_algo_ops ahash_ops;
+-
+-#endif /* _SHA_H_ */
+diff --git a/drivers/crypto/qce/skcipher.c b/drivers/crypto/qce/skcipher.c
+deleted file mode 100644
+index db0b648a56eb1adb2e50285468112d051649aa9e..0000000000000000000000000000000000000000
+--- a/drivers/crypto/qce/skcipher.c
++++ /dev/null
+@@ -1,529 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
+- */
+-
+-#include <linux/device.h>
+-#include <linux/dma-mapping.h>
+-#include <linux/interrupt.h>
+-#include <linux/moduleparam.h>
+-#include <linux/string.h>
+-#include <linux/types.h>
+-#include <linux/errno.h>
+-#include <crypto/aes.h>
+-#include <crypto/internal/des.h>
+-#include <crypto/internal/skcipher.h>
+-
+-#include "cipher.h"
+-
+-static unsigned int aes_sw_max_len = CONFIG_CRYPTO_DEV_QCE_SW_MAX_LEN;
+-module_param(aes_sw_max_len, uint, 0644);
+-MODULE_PARM_DESC(aes_sw_max_len,
+-		 "Only use hardware for AES requests larger than this "
+-		 "[0=always use hardware; anything <16 breaks AES-GCM; default="
+-		 __stringify(CONFIG_CRYPTO_DEV_QCE_SW_MAX_LEN)"]");
+-
+-static LIST_HEAD(skcipher_algs);
+-
+-static void qce_skcipher_done(void *data)
+-{
+-	struct crypto_async_request *async_req = data;
+-	struct skcipher_request *req = skcipher_request_cast(async_req);
+-	struct qce_cipher_reqctx *rctx = skcipher_request_ctx(req);
+-	struct qce_alg_template *tmpl = to_cipher_tmpl(crypto_skcipher_reqtfm(req));
+-	struct qce_device *qce = tmpl->qce;
+-	struct qce_result_dump *result_buf = qce->dma.result_buf;
+-	enum dma_data_direction dir_src, dir_dst;
+-	u32 status;
+-	int error;
+-	bool diff_dst;
+-
+-	diff_dst = (req->src != req->dst) ? true : false;
+-	dir_src = diff_dst ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
+-	dir_dst = diff_dst ? DMA_FROM_DEVICE : DMA_BIDIRECTIONAL;
+-
+-	error = qce_dma_terminate_all(&qce->dma);
+-	if (error)
+-		dev_dbg(qce->dev, "skcipher dma termination error (%d)\n",
+-			error);
+-
+-	if (diff_dst)
+-		dma_unmap_sg(qce->dev, rctx->src_sg, rctx->src_nents, dir_src);
+-	dma_unmap_sg(qce->dev, rctx->dst_sg, rctx->dst_nents, dir_dst);
+-
+-	sg_free_table(&rctx->dst_tbl);
+-
+-	error = qce_check_status(qce, &status);
+-	if (error < 0)
+-		dev_dbg(qce->dev, "skcipher operation error (%x)\n", status);
+-
+-	memcpy(rctx->iv, result_buf->encr_cntr_iv, rctx->ivsize);
+-	qce->async_req_done(tmpl->qce, error);
+-}
+-
+-static int
+-qce_skcipher_async_req_handle(struct crypto_async_request *async_req)
+-{
+-	struct skcipher_request *req = skcipher_request_cast(async_req);
+-	struct qce_cipher_reqctx *rctx = skcipher_request_ctx(req);
+-	struct crypto_skcipher *skcipher = crypto_skcipher_reqtfm(req);
+-	struct qce_alg_template *tmpl = to_cipher_tmpl(crypto_skcipher_reqtfm(req));
+-	struct qce_device *qce = tmpl->qce;
+-	enum dma_data_direction dir_src, dir_dst;
+-	struct scatterlist *sg;
+-	bool diff_dst;
+-	gfp_t gfp;
+-	int dst_nents, src_nents, ret;
+-
+-	rctx->iv = req->iv;
+-	rctx->ivsize = crypto_skcipher_ivsize(skcipher);
+-	rctx->cryptlen = req->cryptlen;
+-
+-	diff_dst = (req->src != req->dst) ? true : false;
+-	dir_src = diff_dst ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
+-	dir_dst = diff_dst ? DMA_FROM_DEVICE : DMA_BIDIRECTIONAL;
+-
+-	rctx->src_nents = sg_nents_for_len(req->src, req->cryptlen);
+-	if (diff_dst)
+-		rctx->dst_nents = sg_nents_for_len(req->dst, req->cryptlen);
+-	else
+-		rctx->dst_nents = rctx->src_nents;
+-	if (rctx->src_nents < 0) {
+-		dev_err(qce->dev, "Invalid numbers of src SG.\n");
+-		return rctx->src_nents;
+-	}
+-	if (rctx->dst_nents < 0) {
+-		dev_err(qce->dev, "Invalid numbers of dst SG.\n");
+-		return -rctx->dst_nents;
+-	}
+-
+-	rctx->dst_nents += 1;
+-
+-	gfp = (req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP) ?
+-						GFP_KERNEL : GFP_ATOMIC;
+-
+-	ret = sg_alloc_table(&rctx->dst_tbl, rctx->dst_nents, gfp);
+-	if (ret)
+-		return ret;
+-
+-	sg_init_one(&rctx->result_sg, qce->dma.result_buf, QCE_RESULT_BUF_SZ);
+-
+-	sg = qce_sgtable_add(&rctx->dst_tbl, req->dst, req->cryptlen);
+-	if (IS_ERR(sg)) {
+-		ret = PTR_ERR(sg);
+-		goto error_free;
+-	}
+-
+-	sg = qce_sgtable_add(&rctx->dst_tbl, &rctx->result_sg,
+-			     QCE_RESULT_BUF_SZ);
+-	if (IS_ERR(sg)) {
+-		ret = PTR_ERR(sg);
+-		goto error_free;
+-	}
+-
+-	sg_mark_end(sg);
+-	rctx->dst_sg = rctx->dst_tbl.sgl;
+-
+-	dst_nents = dma_map_sg(qce->dev, rctx->dst_sg, rctx->dst_nents, dir_dst);
+-	if (!dst_nents) {
+-		ret = -EIO;
+-		goto error_free;
+-	}
+-
+-	if (diff_dst) {
+-		src_nents = dma_map_sg(qce->dev, req->src, rctx->src_nents, dir_src);
+-		if (!src_nents) {
+-			ret = -EIO;
+-			goto error_unmap_dst;
+-		}
+-		rctx->src_sg = req->src;
+-	} else {
+-		rctx->src_sg = rctx->dst_sg;
+-		src_nents = dst_nents - 1;
+-	}
+-
+-	ret = qce_dma_prep_sgs(&qce->dma, rctx->src_sg, src_nents,
+-			       rctx->dst_sg, dst_nents,
+-			       qce_skcipher_done, async_req);
+-	if (ret)
+-		goto error_unmap_src;
+-
+-	qce_dma_issue_pending(&qce->dma);
+-
+-	ret = qce_start(async_req, tmpl->crypto_alg_type);
+-	if (ret)
+-		goto error_terminate;
+-
+-	return 0;
+-
+-error_terminate:
+-	qce_dma_terminate_all(&qce->dma);
+-error_unmap_src:
+-	if (diff_dst)
+-		dma_unmap_sg(qce->dev, req->src, rctx->src_nents, dir_src);
+-error_unmap_dst:
+-	dma_unmap_sg(qce->dev, rctx->dst_sg, rctx->dst_nents, dir_dst);
+-error_free:
+-	sg_free_table(&rctx->dst_tbl);
+-	return ret;
+-}
+-
+-static int qce_skcipher_setkey(struct crypto_skcipher *ablk, const u8 *key,
+-				 unsigned int keylen)
+-{
+-	struct crypto_tfm *tfm = crypto_skcipher_tfm(ablk);
+-	struct qce_cipher_ctx *ctx = crypto_tfm_ctx(tfm);
+-	unsigned long flags = to_cipher_tmpl(ablk)->alg_flags;
+-	unsigned int __keylen;
+-	int ret;
+-
+-	if (!key || !keylen)
+-		return -EINVAL;
+-
+-	/*
+-	 * AES XTS key1 = key2 not supported by crypto engine.
+-	 * Revisit to request a fallback cipher in this case.
+-	 */
+-	if (IS_XTS(flags)) {
+-		__keylen = keylen >> 1;
+-		if (!memcmp(key, key + __keylen, __keylen))
+-			return -ENOKEY;
+-	} else {
+-		__keylen = keylen;
+-	}
+-
+-	switch (__keylen) {
+-	case AES_KEYSIZE_128:
+-	case AES_KEYSIZE_256:
+-		memcpy(ctx->enc_key, key, keylen);
+-		break;
+-	case AES_KEYSIZE_192:
+-		break;
+-	default:
+-		return -EINVAL;
+-	}
+-
+-	ret = crypto_skcipher_setkey(ctx->fallback, key, keylen);
+-	if (!ret)
+-		ctx->enc_keylen = keylen;
+-	return ret;
+-}
+-
+-static int qce_des_setkey(struct crypto_skcipher *ablk, const u8 *key,
+-			  unsigned int keylen)
+-{
+-	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
+-	int err;
+-
+-	err = verify_skcipher_des_key(ablk, key);
+-	if (err)
+-		return err;
+-
+-	ctx->enc_keylen = keylen;
+-	memcpy(ctx->enc_key, key, keylen);
+-	return 0;
+-}
+-
+-static int qce_des3_setkey(struct crypto_skcipher *ablk, const u8 *key,
+-			   unsigned int keylen)
+-{
+-	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(ablk);
+-	u32 _key[6];
+-	int err;
+-
+-	err = verify_skcipher_des3_key(ablk, key);
+-	if (err)
+-		return err;
+-
+-	/*
+-	 * The crypto engine does not support any two keys
+-	 * being the same for triple des algorithms. The
+-	 * verify_skcipher_des3_key does not check for all the
+-	 * below conditions. Return -ENOKEY in case any two keys
+-	 * are the same. Revisit to see if a fallback cipher
+-	 * is needed to handle this condition.
+-	 */
+-	memcpy(_key, key, DES3_EDE_KEY_SIZE);
+-	if (!((_key[0] ^ _key[2]) | (_key[1] ^ _key[3])) ||
+-	    !((_key[2] ^ _key[4]) | (_key[3] ^ _key[5])) ||
+-	    !((_key[0] ^ _key[4]) | (_key[1] ^ _key[5])))
+-		return -ENOKEY;
+-
+-	ctx->enc_keylen = keylen;
+-	memcpy(ctx->enc_key, key, keylen);
+-	return 0;
+-}
+-
+-static int qce_skcipher_crypt(struct skcipher_request *req, int encrypt)
+-{
+-	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
+-	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+-	struct qce_cipher_reqctx *rctx = skcipher_request_ctx(req);
+-	struct qce_alg_template *tmpl = to_cipher_tmpl(tfm);
+-	unsigned int blocksize = crypto_skcipher_blocksize(tfm);
+-	int keylen;
+-	int ret;
+-
+-	rctx->flags = tmpl->alg_flags;
+-	rctx->flags |= encrypt ? QCE_ENCRYPT : QCE_DECRYPT;
+-	keylen = IS_XTS(rctx->flags) ? ctx->enc_keylen >> 1 : ctx->enc_keylen;
+-
+-	/* CE does not handle 0 length messages */
+-	if (!req->cryptlen)
+-		return 0;
+-
+-	/*
+-	 * ECB and CBC algorithms require message lengths to be
+-	 * multiples of block size.
+-	 */
+-	if (IS_ECB(rctx->flags) || IS_CBC(rctx->flags))
+-		if (!IS_ALIGNED(req->cryptlen, blocksize))
+-			return -EINVAL;
+-
+-	/*
+-	 * Conditions for requesting a fallback cipher
+-	 * AES-192 (not supported by crypto engine (CE))
+-	 * AES-XTS request with len <= 512 byte (not recommended to use CE)
+-	 * AES-XTS request with len > QCE_SECTOR_SIZE and
+-	 * is not a multiple of it.(Revisit this condition to check if it is
+-	 * needed in all versions of CE)
+-	 */
+-	if (IS_AES(rctx->flags) &&
+-	    ((keylen != AES_KEYSIZE_128 && keylen != AES_KEYSIZE_256) ||
+-	    (IS_XTS(rctx->flags) && ((req->cryptlen <= aes_sw_max_len) ||
+-	    (req->cryptlen > QCE_SECTOR_SIZE &&
+-	    req->cryptlen % QCE_SECTOR_SIZE))))) {
+-		skcipher_request_set_tfm(&rctx->fallback_req, ctx->fallback);
+-		skcipher_request_set_callback(&rctx->fallback_req,
+-					      req->base.flags,
+-					      req->base.complete,
+-					      req->base.data);
+-		skcipher_request_set_crypt(&rctx->fallback_req, req->src,
+-					   req->dst, req->cryptlen, req->iv);
+-		ret = encrypt ? crypto_skcipher_encrypt(&rctx->fallback_req) :
+-				crypto_skcipher_decrypt(&rctx->fallback_req);
+-		return ret;
+-	}
+-
+-	return tmpl->qce->async_req_enqueue(tmpl->qce, &req->base);
+-}
+-
+-static int qce_skcipher_encrypt(struct skcipher_request *req)
+-{
+-	return qce_skcipher_crypt(req, 1);
+-}
+-
+-static int qce_skcipher_decrypt(struct skcipher_request *req)
+-{
+-	return qce_skcipher_crypt(req, 0);
+-}
+-
+-static int qce_skcipher_init(struct crypto_skcipher *tfm)
+-{
+-	/* take the size without the fallback skcipher_request at the end */
+-	crypto_skcipher_set_reqsize(tfm, offsetof(struct qce_cipher_reqctx,
+-						  fallback_req));
+-	return 0;
+-}
+-
+-static int qce_skcipher_init_fallback(struct crypto_skcipher *tfm)
+-{
+-	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+-
+-	ctx->fallback = crypto_alloc_skcipher(crypto_tfm_alg_name(&tfm->base),
+-					      0, CRYPTO_ALG_NEED_FALLBACK);
+-	if (IS_ERR(ctx->fallback))
+-		return PTR_ERR(ctx->fallback);
+-
+-	crypto_skcipher_set_reqsize(tfm, sizeof(struct qce_cipher_reqctx) +
+-					 crypto_skcipher_reqsize(ctx->fallback));
+-	return 0;
+-}
+-
+-static void qce_skcipher_exit(struct crypto_skcipher *tfm)
+-{
+-	struct qce_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+-
+-	crypto_free_skcipher(ctx->fallback);
+-}
+-
+-struct qce_skcipher_def {
+-	unsigned long flags;
+-	const char *name;
+-	const char *drv_name;
+-	unsigned int blocksize;
+-	unsigned int chunksize;
+-	unsigned int ivsize;
+-	unsigned int min_keysize;
+-	unsigned int max_keysize;
+-};
+-
+-static const struct qce_skcipher_def skcipher_def[] = {
+-	{
+-		.flags		= QCE_ALG_AES | QCE_MODE_ECB,
+-		.name		= "ecb(aes)",
+-		.drv_name	= "ecb-aes-qce",
+-		.blocksize	= AES_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= AES_MIN_KEY_SIZE,
+-		.max_keysize	= AES_MAX_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_AES | QCE_MODE_CBC,
+-		.name		= "cbc(aes)",
+-		.drv_name	= "cbc-aes-qce",
+-		.blocksize	= AES_BLOCK_SIZE,
+-		.ivsize		= AES_BLOCK_SIZE,
+-		.min_keysize	= AES_MIN_KEY_SIZE,
+-		.max_keysize	= AES_MAX_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_AES | QCE_MODE_CTR,
+-		.name		= "ctr(aes)",
+-		.drv_name	= "ctr-aes-qce",
+-		.blocksize	= 1,
+-		.chunksize	= AES_BLOCK_SIZE,
+-		.ivsize		= AES_BLOCK_SIZE,
+-		.min_keysize	= AES_MIN_KEY_SIZE,
+-		.max_keysize	= AES_MAX_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_AES | QCE_MODE_XTS,
+-		.name		= "xts(aes)",
+-		.drv_name	= "xts-aes-qce",
+-		.blocksize	= AES_BLOCK_SIZE,
+-		.ivsize		= AES_BLOCK_SIZE,
+-		.min_keysize	= AES_MIN_KEY_SIZE * 2,
+-		.max_keysize	= AES_MAX_KEY_SIZE * 2,
+-	},
+-	{
+-		.flags		= QCE_ALG_DES | QCE_MODE_ECB,
+-		.name		= "ecb(des)",
+-		.drv_name	= "ecb-des-qce",
+-		.blocksize	= DES_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= DES_KEY_SIZE,
+-		.max_keysize	= DES_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_DES | QCE_MODE_CBC,
+-		.name		= "cbc(des)",
+-		.drv_name	= "cbc-des-qce",
+-		.blocksize	= DES_BLOCK_SIZE,
+-		.ivsize		= DES_BLOCK_SIZE,
+-		.min_keysize	= DES_KEY_SIZE,
+-		.max_keysize	= DES_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_3DES | QCE_MODE_ECB,
+-		.name		= "ecb(des3_ede)",
+-		.drv_name	= "ecb-3des-qce",
+-		.blocksize	= DES3_EDE_BLOCK_SIZE,
+-		.ivsize		= 0,
+-		.min_keysize	= DES3_EDE_KEY_SIZE,
+-		.max_keysize	= DES3_EDE_KEY_SIZE,
+-	},
+-	{
+-		.flags		= QCE_ALG_3DES | QCE_MODE_CBC,
+-		.name		= "cbc(des3_ede)",
+-		.drv_name	= "cbc-3des-qce",
+-		.blocksize	= DES3_EDE_BLOCK_SIZE,
+-		.ivsize		= DES3_EDE_BLOCK_SIZE,
+-		.min_keysize	= DES3_EDE_KEY_SIZE,
+-		.max_keysize	= DES3_EDE_KEY_SIZE,
+-	},
+-};
+-
+-static int qce_skcipher_register_one(const struct qce_skcipher_def *def,
+-				       struct qce_device *qce)
+-{
+-	struct qce_alg_template *tmpl;
+-	struct skcipher_alg *alg;
+-	int ret;
+-
+-	tmpl = kzalloc_obj(*tmpl);
+-	if (!tmpl)
+-		return -ENOMEM;
+-
+-	alg = &tmpl->alg.skcipher;
+-
+-	strscpy(alg->base.cra_name, def->name);
+-	strscpy(alg->base.cra_driver_name, def->drv_name);
+-
+-	alg->base.cra_blocksize		= def->blocksize;
+-	alg->chunksize			= def->chunksize;
+-	alg->ivsize			= def->ivsize;
+-	alg->min_keysize		= def->min_keysize;
+-	alg->max_keysize		= def->max_keysize;
+-	alg->setkey			= IS_3DES(def->flags) ? qce_des3_setkey :
+-					  IS_DES(def->flags) ? qce_des_setkey :
+-					  qce_skcipher_setkey;
+-	alg->encrypt			= qce_skcipher_encrypt;
+-	alg->decrypt			= qce_skcipher_decrypt;
+-
+-	alg->base.cra_priority		= 275;
+-	alg->base.cra_flags		= CRYPTO_ALG_ASYNC |
+-					  CRYPTO_ALG_ALLOCATES_MEMORY |
+-					  CRYPTO_ALG_KERN_DRIVER_ONLY;
+-	alg->base.cra_ctxsize		= sizeof(struct qce_cipher_ctx);
+-	alg->base.cra_alignmask		= 0;
+-	alg->base.cra_module		= THIS_MODULE;
+-
+-	if (IS_AES(def->flags)) {
+-		alg->base.cra_flags    |= CRYPTO_ALG_NEED_FALLBACK;
+-		alg->init		= qce_skcipher_init_fallback;
+-		alg->exit		= qce_skcipher_exit;
+-	} else {
+-		alg->init		= qce_skcipher_init;
+-	}
+-
+-	INIT_LIST_HEAD(&tmpl->entry);
+-	tmpl->crypto_alg_type = CRYPTO_ALG_TYPE_SKCIPHER;
+-	tmpl->alg_flags = def->flags;
+-	tmpl->qce = qce;
+-
+-	ret = crypto_register_skcipher(alg);
+-	if (ret) {
+-		dev_err(qce->dev, "%s registration failed\n", alg->base.cra_name);
+-		kfree(tmpl);
+-		return ret;
+-	}
+-
+-	list_add_tail(&tmpl->entry, &skcipher_algs);
+-	dev_dbg(qce->dev, "%s is registered\n", alg->base.cra_name);
+-	return 0;
+-}
+-
+-static void qce_skcipher_unregister(struct qce_device *qce)
+-{
+-	struct qce_alg_template *tmpl, *n;
+-
+-	list_for_each_entry_safe(tmpl, n, &skcipher_algs, entry) {
+-		crypto_unregister_skcipher(&tmpl->alg.skcipher);
+-		list_del(&tmpl->entry);
+-		kfree(tmpl);
+-	}
+-}
+-
+-static int qce_skcipher_register(struct qce_device *qce)
+-{
+-	int ret, i;
+-
+-	for (i = 0; i < ARRAY_SIZE(skcipher_def); i++) {
+-		ret = qce_skcipher_register_one(&skcipher_def[i], qce);
+-		if (ret)
+-			goto err;
+-	}
+-
+-	return 0;
+-err:
+-	qce_skcipher_unregister(qce);
+-	return ret;
+-}
+-
+-const struct qce_algo_ops skcipher_ops = {
+-	.type = CRYPTO_ALG_TYPE_SKCIPHER,
+-	.register_algs = qce_skcipher_register,
+-	.unregister_algs = qce_skcipher_unregister,
+-	.async_req_handle = qce_skcipher_async_req_handle,
+-};
 
-Best regards,
 -- 
-Demi Marie Obenour <demiobenour@gmail.com>
+2.54.0
 
 
 
