@@ -1,66 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-109462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wIorAq4QEWrDgwYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 04:27:58 +0200
+	id EHG+AaAVEWqvhAYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 04:49:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A331D5BCB07
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 04:27:57 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05A025BCC60
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 04:49:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D4F3D303E6E7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 02:22:25 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 4CD3B300BC86
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 02:48:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13BE737FF6F;
-	Sat, 23 May 2026 02:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B636328B61;
+	Sat, 23 May 2026 02:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZOK0EXvy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OdcB7WiX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517ED306749;
-	Sat, 23 May 2026 02:20:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B658A25B0B7
+	for <linux-arm-msm@vger.kernel.org>; Sat, 23 May 2026 02:48:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779502842; cv=none; b=BcR3m7aB3sUOLxRNK+EMxw5eD3H7RqigdkmG0BxS9zC9DPMs1OaWyf9oGbOL0A6BIYZOMdnPURzcalpwwOJEQDgboImn7saiCutGINS4h+cmtUSfZchpbc3vrwVzfod39Uo3xy3LwazrIK7ABAPP9WCNe1CKG++sSHnMGgpQxZY=
+	t=1779504536; cv=none; b=P6aZNIG50WpUXOz5cPkjHt02SZCCHokusCmU5QnCUgeyWHVMKAkz3RW4Dp7TaW52Kv00usFVMZuWsCKdzHzXmWz+vu62JbEFV/1vV91qWcKpGX2c/X8FHWlr5VAUgUTlhVduQ0bzd168edT62ud8KkHMj+8j/ISBM9ShBCg3U1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779502842; c=relaxed/simple;
-	bh=WaI9cZHJ4Ng2+BH2UwkJufHIw/QTeKIjL8XWByc4Uso=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ibN694p4FSl6yuKYMW7oscJ4oU4vWA4qiicYVcYn8G2PI7KTmHpTQHjgi3TJ+O1rqglg7rA9ZtfCYP6ykOJjurdaJiSwwlqio5eFEwyPaQHsmont3VO2DGGkfvz+AwQzK5rfiGBLy71rZC1BSy1x6kO6NgNkZojR2L5u10UAZC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZOK0EXvy; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7045B1F00A3C;
-	Sat, 23 May 2026 02:20:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779502841;
-	bh=cBHwWlJr4hUKlV0jrnA8hVqOEFufOTtuaGLSxz86gaE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZOK0EXvyjo9q7Xc7sr4Z4bNlx5t0me9Zt0RXoa9PHaC0kLh51/b8jGMRrBlee3GjM
-	 P5Uj6cVDS5YGxZtNsF1xEFDA4lciMKr0HGfvTp+cdBZDzvN54uGF9o6v/7Qb4jZdcP
-	 3mOaxXft3Y1G2F7uXD6Ct3QrNSGjrL9NA0W1UMDY02iY2Em7kBg3O3I3Nw6eh9nrnF
-	 eJSCCknH0D1R0DeFIBmL6zqrpPt4uZTTP+jgg8TTCyiQ5V4z5q+lR/u69h5KGkMKVq
-	 tRQCI5S5izB8GjFU9pZto7KeafVEuf1ga6UboZEDgp+Jqcb+eY62RlxYlTJBiGrGx2
-	 Zg/a33vCXQ/Zw==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: hamoa-iot-evk: add MCP2518FD CAN on spi18
-Date: Fri, 22 May 2026 21:20:06 -0500
-Message-ID: <177950280366.1097700.8125828711987409701.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260515-hamoa-spi-can-devicetree-v2-1-d0e922608065@oss.qualcomm.com>
-References: <20260515-hamoa-spi-can-devicetree-v2-1-d0e922608065@oss.qualcomm.com>
+	s=arc-20240116; t=1779504536; c=relaxed/simple;
+	bh=Nej0oQa3vqYl952JRaqlayT9WNmSkPnhMmSkwYrr22k=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dOLJ+nu2tDgiMYlzlaz0XbGqEEBLufrWyKv3gNLyj2zMbo4kXKh8Ay5PyvQ8Nlm9l8gXNjqIBZYo4dAQH6Z0K87fIos7J9DZBqzPsoEbZDvFEb5Uai0jXSVAX6sof92u1Gs3iNNLz6q57cvID/zCSSzcxb7P/Xq3+ngqwTLT89M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OdcB7WiX; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-48ff4f8ef0dso83340555e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 May 2026 19:48:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1779504533; x=1780109333; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BExoLbiODonMM4G0WFkJCuEkkOxAvgNJFQq4OgtjaUI=;
+        b=OdcB7WiXBoE9v9yX86G6GfHW+AY8hn3Tr8F6SXox8jn4uuZHQ9CK7e3KQUQEFoLlE5
+         2RJZpvgmyq5rVdKsoyAUgbekwotLXvswuukamHeb4Z1t8iVMNOYCMVB8UkRoODLQN7nW
+         45XgArmgln54knaBz55eF0eJdSNO5etthSY9Dklzp0riaR3zSz9U2D0rEwB6ZrL8MnXP
+         xSsxo41UbRulDNGtbezXKTh4NDCKgFBQplB2zHtJB6Z0QVDbln0G55gtCS+mmOTQWuSF
+         pKQWmSqZw5oQ1UAwsNCEfWzgn2u0QhzRyOCWh4NULrMSb5p94csnx/ERBqtE99yx6kEg
+         vnMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779504533; x=1780109333;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BExoLbiODonMM4G0WFkJCuEkkOxAvgNJFQq4OgtjaUI=;
+        b=aZ5rsPi08JuDYQ4vd+aKZeb26lhaxTCGTtQQt6dzUtyrDFFaZ/YlGSzHQBXRNLSQ/d
+         hT83EhcWqrAzTDnDhha2SKr7cfx6N02vUMKzpHYN8fSp1gPekNDZMDKg+QC3trmJF9w0
+         RXatw+12/5oQQ5XduOGRkUOBKtxqkWOS6Z+U5HCM4WvUPc2oB5DYzEAykaMjmOdNgqV6
+         /RkYLIVy0XOVKT37/EG0K/ZTUoyLkiufK1YpzCes3XkEf5sgDxpV0KkI6Kg0WsNjMYX7
+         R3/SyNiZvDwRPPpeH9W/EY1uYOA3lK6z9lVwtMQMQHKhRgKpDik6t9xKrq0dKVF8d6LH
+         iBTw==
+X-Forwarded-Encrypted: i=1; AFNElJ9crDqul+1/OxoEUHdsjWryX0Op+r293yawRb5bURLroffHbNetgRVENzsfs67+OxVZm5/8nqJ/L80kHVeF@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMjNO0rdp6FNcz7YP9hWNoA0BkpOAZLUA//OPS80u4ZZeUkhIy
+	a97QJIt+GYthlt6h0kvw37VJnpS+wi0bZfgIcYU7dTMF8PXBVTD0GcA5Syvg3aU4Pf8=
+X-Gm-Gg: Acq92OH9bgbdvD3OPOGKGHIe+s8rUWV4FSCi6sjBkgmg1moWl0/L5wQRJwDVT1/Cdhs
+	gjJF7AAuv6E6f8WZxl9wacI1/FROwPYyqgUkLbR4wS8gVMXqAHxMNjzpAcjnIsvgwAxDUWkLejV
+	NQaBTWPqRJxwka3HSE5WzTB+LZAM0mEnIERoRRUIBJrEDzzNiE5WaLJGno8vgmqLeueKcWmF6Sk
+	OM4PURHIHPu7HDH2J93zjUt9Vx+pZaejIHEy6f5pMiskAIZfGRJ5QlSmGRRCzOZr87NpQWLZp+O
+	ckLs0Dz9ThMtufIU9nF/qsvSy/BUX83p5D+jFdzQAeKrkAVWSyER8R8R1t5SYueYrzJ94h+arG2
+	30f8IQ/YJzAWGsTw5k4px4+JqNZdWk7unmOEeRSsCg4NX/cDuSeL2j8mEPM0P10OkGsdtwfLbXg
+	4dFaYTQ1GyIU+9ohhHIdqU2kBIp0HOrAXDGg==
+X-Received: by 2002:a05:600c:4652:b0:490:3b84:c106 with SMTP id 5b1f17b1804b1-490428d3b7fmr57208975e9.26.1779504533073;
+        Fri, 22 May 2026 19:48:53 -0700 (PDT)
+Received: from [192.168.0.35] ([109.76.145.17])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4904526ca50sm77938765e9.2.2026.05.22.19.48.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 May 2026 19:48:51 -0700 (PDT)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v8 0/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+Date: Sat, 23 May 2026 03:48:46 +0100
+Message-Id: <20260523-x1e-csi2-phy-v8-0-a85668459521@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,49 +85,281 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XQy2rDMBAF0F8JWldlZvTuqv9RurAejgXFDnIxC
+ cH/XjlQ4lp0eQXnXkl3NqeS08zeTndW0pLnPI012JcTC0M3nhPPsWZGQAoMAr9i4mHOxC/Djfd
+ aCum1wig6VsmlpD5fH3UfnzUPef6eyu3RvuB2+k/Rghy4kV3wXnnU5N+/8tiV6XUqZ7Y1LfSrN
+ RCpg6ZNG6VT9NqkzjVa7LU+aFE1YtJgjXISodHyqQUet2XVDgI4AmGtjY1WO91sq6or7oPpVQB
+ s362fWhEetN62oxHR+WgitTc3e00HbbZfc8EjWei7qP/odV1/AE/WSp0dAgAA
+X-Change-ID: 20250710-x1e-csi2-phy-f6434b651d3a
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Bryan O'Donoghue <bod@kernel.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10133;
+ i=bryan.odonoghue@linaro.org; h=from:subject:message-id;
+ bh=Nej0oQa3vqYl952JRaqlayT9WNmSkPnhMmSkwYrr22k=;
+ b=owEBbQKS/ZANAwAKASJxO7Ohjcg6AcsmYgBqERWRQUdZn0i6DI4OcmhVnfl4oKWY1AWsL7xiz
+ TJsYOcoiFyJAjMEAAEKAB0WIQTmk/sqq6Nt4Rerb7QicTuzoY3IOgUCahEVkQAKCRAicTuzoY3I
+ OnFBD/4612F/OeHPQBZvfUwI6U3PHVOwiB8s3ARcAMrTp/9Rgko0qeNAAZ6c712nZiSP5kYp777
+ mnBmlWPyY/hKLKhZc+2Qprs96xywXSqFdBgY3l1ayBkoH6rPPXzEtyOVKOU6jxID0Rczx5JA6pB
+ fKjeFovnz8oaDBd4F43FMyep4/HxV0xq5zPbhT/6vPj4/W9ja0KDUEDwadfD/KctXUw/G3Qc1sF
+ 4Fd6t7gAkyeCUA9kp4Twzw4PdO+bBKlu/3Z1U2+qeM6WDpGG7YM8Izscdk0EIeeMtIEC0ZJx4WB
+ oBHu7weby6iwmB8wk0oTBDFUqtFNNuhcGF1wGDzrBmmldtXkHnW8R+D+NpF0tT4bSa5dyliSqn0
+ v4aowAGuzHfD0X7S1W6ji+tAS0xhWx7y/0ac0aDaZJnbAG5c2DXcWaJ5Y6D2UrYud9pEhyhWhdW
+ AKC6dP6wLBzKoxe4/2vCFGoWJ83ki7Z9R6D5QX0pec4Pq/onla/HXFjV42E/yX7m2GynuspyZQP
+ b0k+ma5lJKa7IuEi9zpTxn+zNGkk6S6pXISFB2JY52pJgASsYUZvgq7+afZZf/zbEig2Idp5aTH
+ c1ItGUdlTo1pRnd42WUqJOvXrDDdou/m5NKQTLIB7JKt9fX7XabAKNsozUAO5+MYHGCyzz/qUWD
+ yP/xGtTeVyyoyeA==
+X-Developer-Key: i=bryan.odonoghue@linaro.org; a=openpgp;
+ fpr=E693FB2AABA36DE117AB6FB422713BB3A18DC83A
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_FROM(0.00)[bounces-109462-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	TAGGED_FROM(0.00)[bounces-109463-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_PROHIBIT(0.00)[0.0.0.0:email];
 	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: A331D5BCB07
+	DBL_BLOCKED_OPENRESOLVER(0.00)[codelinaro.org:url,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,0.0.0.2:email,0.0.0.1:email]
+X-Rspamd-Queue-Id: 05A025BCC60
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+Changes in v8:
+- Fixes two dt verification splats I missed by passing the wrong yaml file
+  to my checking script :( - Rob's bot
+- Fixes the polarity offset error - thanks Sashiko.
+- CONFIG_PM implies CONFIG_GENERIC_PM_DOMAINS no change - Sashiko, Bryan
+- Implemented suggested unwinding by Sashiko
+- Leaving the flagged settle_cnt alone. Requires invalid DT settings and in
+  addition the result is just a long settle count. Not real bug - Sashiko
+- Link to v7: https://patch.msgid.link/20260522-x1e-csi2-phy-v7-0-79cb1280fad6@linaro.org
 
-On Fri, 15 May 2026 11:53:23 +0530, Viken Dadhaniya wrote:
-> Enable the Microchip MCP2518FD CAN-FD controller on hamoa. The controller
-> is connected via SPI18 and uses a 40 MHz oscillator.
-> 
-> 
+Changes in v7:
+- Made CONFIG_PM a dependency. Sashiko commented on the pd_list being NULL
+  and suggested I check the pointer but, we need to ramp the rails when
+  switching clock rate so we need CONFIG_PM full stop. - Sashiko.ai, Bryan
+- Added unwind operation for performance state error path - Sashiko
+- Made clock-lanes genuinely optional for the supported use-case. - Sashiko
+- Fixed the enable of lanes. Thus far we have had forever it seems
+  val |= BIT(lane.pos * 2) which I've never looked at much because it
+  has always worked. But looking at how to switch on polarities I realised
+  the relevant register is a linear bitmask without gaps so the correct
+  method is `val |= BIT(lane.pos)`.
+  This needs an update in the legacy PHY too in another series - Bryan
+- I opted not to do any of the "but if DT send junk into your driver" fixes
+  from Sashiko since TBH I think the code would be Spaghetti afterwards.
+  We trust DT and if DT is wrong we fix it, we don't try to graph its
+  relative (in)sanity.
+- Fixed my example in the yaml. Sashiko
+- Link to v6: https://patch.msgid.link/20260521-x1e-csi2-phy-v6-0-9d73d9bd7d20@linaro.org
 
-Applied, thanks!
+Changes in v6:
+- Taking feedback from lively debate added ports and
+  endpoints to the PHY - Neil, Vlad
+- Detection of split mode by way of which ports are declared.
+  port@0 is always a sensor input.
+  port@1 is optional and if present implies split-mode
+  port@2 is always the output. - Dmitry, Neil, Vlad.
+- Split mode is left as -ENOTSUPP unless/until someone with the appropriate
+  hardware can take on responsibility to drive to completion.
+- Extending phy_config_opts dropped.
+  I think this is a worthwhile extension but this series no longer depends
+  on it so dropped. - Bryan
+- MX/MXC.
+  Two OPP tables one for CSIPHY0/1/2 scaling MXC one for CSIPHY4 keeping
+  MXA at LOWSVS_D1 - to be implemented in DT not here. Taniya, Konrad, Bryan
+- Changed MAINTAINERS from Supported to Maintained.
+  Hobby time for me right now. - Bryan
+- Link to v5: https://lore.kernel.org/r/20260326-x1e-csi2-phy-v5-0-0c0fc7f5c01b@linaro.org
 
-[1/1] arm64: dts: qcom: hamoa-iot-evk: add MCP2518FD CAN on spi18
-      commit: 181bef739979466b6ede95b34d6c94d0250b1c0e
+v5:
+- Adds support to apply passed parameters for clock/data position/polarity - Neil
+- Drops GEN1/GEN2 differentiation this can be reconstituted if GEN1 ever
+  gets supported in this driver - Dmitry
+- Drops camnoc_axi, cpas_ahb - Konrad
+- Renames csiphy->core csiphy_timer->timer - Konrad
+- Renames rail from 0p8 to 0p9 schematics say  VDD_A_CSI_n_0P9 - Konrad
+- TITAN_TOP_GDSC dropped - Konrad
+- Passes PHY_QCOM_CSI2_MODE_{DPHY|CPHY|SPLIT_DPHY} with the controller
+  selecting the mode. Only DPHY mode is supported but the method to pass
+  CPHY or split-mode DPHY configuration is there.
+  Since split-mode is a Qualcomm specific mode the PHY modes are defined in
+  our binding instead of adding a new type to include/linux/phy/phy.h - bod
+- Depends-on: https://lore.kernel.org/r/20260325-dphy-params-extension-v1-0-c6df5599284a@linaro.org
+- Link to v4: https://lore.kernel.org/r/20260315-x1e-csi2-phy-v4-0-90c09203888d@linaro.org
+
+v4:
+- MMCX, MCX and MX/MXA power-domains added - Dmitry, Vijay, Konrad
+- power-domain-names added as required - bod
+- opp-tables amended to capture RPMHPD deps - Dmitry, Vijay
+- Switched to dev_pm_opp_set_rate, dev_pm_domain_attach_by_name etc
+  dropped inherited CAMSS code - Dmitry
+- Amended parameters structure to specify power-domain name list - bod
+- Removed dead defines - Dmitry
+- Noted in CSIPHY commit log intention to rework patterns of
+  PHY lane configs into loops/defines/bit-fields later - Dmitry, bod
+- Lowercase hex throughout - Dmitry
+- The yaml and code in this driver doesn't care if the node is a
+  sibling or a sub-node of CAMSS confirmed to work both ways - Dmitry, bod
+- Link to v3: https://lore.kernel.org/r/20260226-x1e-csi2-phy-v3-0-11e608759410@linaro.org
+
+v3:
+
+- Resending this to make clear this submission is additive to x1e/Hamoa
+  The existing bindings and code will continue to work 
+  Bindings are added only, nothing is subtracted from existing ABI.
+- Link to v2: https://lore.kernel.org/r/20260225-x1e-csi2-phy-v2-0-7756edb67ea9@linaro.org
+
+v2:
+
+In this updated version
+
+- Added operating-point support
+  The csiphy clock sets the OPP prior to setting the rate
+  for csiphy and csiphy_timer - Konrad
+
+- Combo mode
+  Combo mode in CAMSS yaml has been added. Right now
+  no code has been changed in the PHY driver to support it as
+  I don't have hardware to test. In principle though it can
+  be supported. - Vladimir
+
+- CSIPHY init sequences
+  I left these as their "magic number formats". With my diminished
+  status as a non-qcom VPN person - I can no longer see what the bits
+  map to. Moreover this is the situation any non-VPN community member
+  will be in when submitting CSIPHY sequences derived from downstream.
+
+  I think it is perfectly reasonable to take public CSIPHY init sequences
+  as magic numbers. If someone with bit-level access wants to enumerate
+  the bits that's fine but, it shouldn't gate in the interim. - Konrad/bod
+
+- Sensor endpoints
+  I've stuck to the format used by every other CSIPHY in upstream.
+  Sensor endpoints hit the CAMSS/CSID endpoint not a endpoint in the PHY.
+  Given the proposed changes to CAMSS though to support "combo mode" I
+  think this should achieve the same outcome - multiple sensors on the one
+  PHY without introducing endpoints into the PHY that no other CSIPHY in
+  upstream currently has.
+
+- Bitmask of enabled lanes
+  Work needs to be done in the v4l2 layer to really support this.
+  I propose making a separate series dedicated to non-linear bit
+  interpretation after merging this so as to contain the scope of the
+  series to something more bite (byte haha) sized. - Konrad/bod
+
+- Link to v1: https://lore.kernel.org/r/20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org
+
+v1:
+This short series adds a CSI2 MIPI PHY driver, initially supporting D-PHY
+mode. The core logic and init sequences come directly from CAMSS and are
+working on at least five separate x1e devices.
+
+The rationale to instantiate CSI2 PHYs as standalone devices instead of as
+sub-nodes of CAMSS is as follows.
+
+1. Precedence
+   CAMSS has a dedicated I2C bus called CCI Camera Control Interface.
+   We model this controller as its own separate device in devicetree.
+   This makes sense and CCI/I2C is a well defined bus type already modelled
+   in Linux.
+
+   MIPI CSI2 PHY devices similarly fit into a well defined separate
+   bus/device structure.
+
+   Contrast to another CAMSS component such as VFE, CSID or TPG these
+   components only interact with other CAMSS inputs/outputs unlike CSIPHY
+   which interacts with non-SoC components.
+
+2. Hardware pinouts and rails
+   The CSI2 PHY has its own data/clock lanes out from the SoC and indeed
+   has its own incoming power-rails.
+
+3. Other devicetree schemas
+   There are several examples throughout the kernel of CSI PHYs modeled as
+   standalone devices which one assumes follows the same reasoning as given
+   above.
+
+I've been working on this on-and-off since the end of April:
+Link: https://lore.kernel.org/linux-media/c5cf0155-f839-4db9-b865-d39b56bb1e0a@linaro.org
+
+There is another proposal to have the PHYs be subdevices of CAMSS but, I
+believe we should go with a "full fat" PHY to match best practices in
+drivers/phy/qualcomm/*.
+
+Using the standard PHY API and the parameter passing that goes with it
+allows us to move away from custom interfaces in CAMSS and to conform more
+clearly to established PHY paradigms such as the QMP combo PHY.
+
+Looking at existing compat strings I settled on
+"qcom,x1e80100-mipi-csi2-combo-phy" deliberately omitting reference to the
+fact the PHY is built on a four nano-meter process node, which seems to
+match recent submissions to QMP PHY.
+
+My first pass at this driver included support for the old two phase
+devices:
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commit/a504c28d109296c93470340cfe7281231f573bcb#b6e59ed7db94c9da22e492bb03fcda6a4300983c
+
+I realised that the device tree schema changes required to support a
+comprehensive conversion of all CAMSS to this driver would be an
+almost certainly be unacceptable ABI break or at the very least an enormous
+amount of work and verification so I instead aimed to support just one new
+SoC in the submission.
+
+I've retained the callback indirections give us scope to add in another type of
+future PHY including potentially adding in the 2PH later on.
+
+This driver is tested and working on x1e/Hamoa and has been tested as not
+breaking sc8280xp/Makena and sm8250/Kona.
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (2):
+      dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
+      phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+
+ .../bindings/phy/qcom,x1e80100-csi2-phy.yaml       | 209 +++++++++++
+ MAINTAINERS                                        |  10 +
+ drivers/phy/qualcomm/Kconfig                       |  14 +
+ drivers/phy/qualcomm/Makefile                      |   5 +
+ drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c | 376 +++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c     | 402 +++++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-mipi-csi2.h          |  95 +++++
+ 7 files changed, 1111 insertions(+)
+---
+base-commit: a1db83cc6f7e88a166c77d9060507ec01d617784
+change-id: 20250710-x1e-csi2-phy-f6434b651d3a
 
 Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+--  
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
