@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-109539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UNX3AJleE2r1/AYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 22:24:57 +0200
+	id 4ElVOrxfE2ow/QYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 22:29:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 945E65C41FA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 22:24:56 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 582595C424E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 22:29:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A9552300A635
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 20:24:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A342A3007CAF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 20:29:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78B8331F989;
-	Sun, 24 May 2026 20:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3846D329396;
+	Sun, 24 May 2026 20:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bhKHG3UO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VlUktFk6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB2A2DC321;
-	Sun, 24 May 2026 20:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA5E30E83A;
+	Sun, 24 May 2026 20:29:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779654263; cv=none; b=O86UEVhwrG0OU3sVFEUeSy4ccfUY/8yiyQNrnznLOaRgG6w+lbk2xcY680z06NL1b/vxnhMdzMpDbDp60UFWgj6cc/unsepql7RkNyQZTRgdv7G/i9inxd06v1MrFjamASPqfPlBTVvpvETUHtOl3n/EeklV0ITWQOPCbpAaagQ=
+	t=1779654575; cv=none; b=mm8x0GKzHm6YxpHM68AiAgnXhaO926iKfW9jHAb1M+tBEAv8XXeQ7bY3/VZM9zRYf3yL2+kLFndVDHe5LwqLoLmoZPqFeZ4QtcnrLzzO+RUoSFxM93EzGd1dP+3PBhsr4cIaUifMlOJ9xCX5Xcqa8AgVrcBv8cBg1O1bi1d97IY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779654263; c=relaxed/simple;
-	bh=6hrEBW9xxa2rFyM3UiZBkMHAu/AAa/6st35lITDJ+tw=;
+	s=arc-20240116; t=1779654575; c=relaxed/simple;
+	bh=gFTFgTosyic6gEPs+MxB+Sizmeo3CHw0yrtHznUwKhI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jmoSKvKxyZvxFas5MfBcKLwKUbfkyKaLGo901SstAalD3/jtLI7ytRmDnq5pGpF/OHkyvv254INc5vmEq7UC2W5v+U59wKLNROq2QZkmi3siu7+MhbvNWB35FnPYZJ90XfkZeR3ySyW7FKhqqwFjkhTu1GsOuByaX/ijxkRbgFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bhKHG3UO; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59FC1F000E9;
-	Sun, 24 May 2026 20:24:18 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=OL1bj0yNacpsfXKO8HMCks3WM9QBN/ZjsEGwp6rhPiELCPggZx2yNJ43hRoHo7m4shqWSFIbPAXq6MMEN8fFX/v6sp1p4NSnUFL9xlK4iwRunxfs8sadTpGO6h2lCzLcmyZ/iEka2lVjxeWrefAJBeCOMZ5z5GF+vuKg0Et8qjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VlUktFk6; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 017821F000E9;
+	Sun, 24 May 2026 20:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779654262;
-	bh=rGOsa7yIY2hW81dEtyxjEVri2enP/ru+f92GNhOkows=;
+	s=k20260515; t=1779654573;
+	bh=wW2vu9IkRnZzp1fQCeCBE/2EMHJERHqOYiopdnI8NrE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=bhKHG3UOI2u9VXhfJBZPltfr8qk6GiYOk6kmpNKKNRQ+QNJPyj1eej5BaXWdhBTzI
-	 uqEaCkV3O3hCgFALWiT6dg1K0w4fMJNkzMyW7bzTi4ZyUOUgSaCsOBhKCfDh/qHqgu
-	 0r5pZdVjHdTIXlZjTcqa8PhxXFymqGuubgj50PU/20eZ1D6QHTwjTo2a+hhfqfbMvM
-	 E3BbGhFq+Q1jWmKkOu5fHRj6qKmd4uDWWhdFv2YkGbt3L6G8+lXlChi23+4TAWRXC2
-	 sFES7+jBv1HqUntBA4CcakgYQeua1SakmUAfnVNMZV/VCAmKrlqVhWZVws9Qj/6T2+
-	 Sk2SRrxOL/CEA==
-Message-ID: <43f8921c-3797-4fd9-a7f4-e6db30194bcd@kernel.org>
-Date: Sun, 24 May 2026 22:24:16 +0200
+	b=VlUktFk6QGdARWhMdwA535XklXSsXGCU33ELIlg3UMenDgnbqrqH7PV6yNSCuTxex
+	 3Y07MzcJwBAi7EMwxVHwbkERMC8tv9kb50ylfLnJSha54UeWLD+r1VqqUFlgF2Bl01
+	 V746WCm57N6jn8LwGt8YO2vpKFfqH7nphm6bX6x+gzd8It9b3kXU7OGI1KkkmLX8li
+	 EzSQeWzf3CKJW7PoVBZI4qmFv/q/ai5Wlx9paxdbdzPbGaphBBJ6LnaBX/Uli2HE4t
+	 970/bqnclb2SGorYUF17o5iUET746oJ4E1EQ3DUgLxzulGs2ozelzKtJb8tyN57DsW
+	 whgHTFe5VwI5Q==
+Message-ID: <d97382a6-6c5d-4a3f-89cc-3ae9b432de3f@kernel.org>
+Date: Sun, 24 May 2026 22:29:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,18 +54,22 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/2] crypto: Delete Qualcomm crypto engine driver
-To: demiobenour@gmail.com, Herbert Xu <herbert@gondor.apana.org.au>,
+To: Demi Marie Obenour <demiobenour@gmail.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>,
  "David S. Miller" <davem@davemloft.net>,
  Thara Gopinath <thara.gopinath@gmail.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Russell King <linux@armlinux.org.uk>
-Cc: linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Eric Biggers <ebiggers@kernel.org>,
- Ard Biesheuvel <ardb@kernel.org>, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
+ Konrad Dybcio <konradybcio@kernel.org>, Russell King
+ <linux@armlinux.org.uk>, linux-kernel@vger.kernel.org,
+ linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Eric Biggers <ebiggers@kernel.org>, Ard Biesheuvel <ardb@kernel.org>,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 References: <20260523-delete-qce-v1-0-86105cd7f406@gmail.com>
  <20260523-delete-qce-v1-1-86105cd7f406@gmail.com>
+ <7rgfuvv3hai7g4wt4accbkejtzdt5dnb6mkj6x7ox5sz35q4n2@h7j6rr7extuj>
+ <66317f6a-645e-432b-ae11-8f40569d4117@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,7 +115,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260523-delete-qce-v1-1-86105cd7f406@gmail.com>
+In-Reply-To: <66317f6a-645e-432b-ae11-8f40569d4117@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -119,40 +123,77 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-109539-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[gmail.com,gondor.apana.org.au,davemloft.net,kernel.org,armlinux.org.uk];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-109540-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com,oss.qualcomm.com];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[gondor.apana.org.au,davemloft.net,gmail.com,kernel.org,armlinux.org.uk,vger.kernel.org,lists.infradead.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.998];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 945E65C41FA
+X-Rspamd-Queue-Id: 582595C424E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 23/05/2026 21:03, Demi Marie Obenour via B4 Relay wrote:
-> From: Demi Marie Obenour <demiobenour@gmail.com>
+On 24/05/2026 22:12, Demi Marie Obenour wrote:
+> On 5/24/26 12:42, Dmitry Baryshkov wrote:
+>> On Sat, May 23, 2026 at 03:03:56PM -0400, Demi Marie Obenour via B4 Relay wrote:
+>>> From: Demi Marie Obenour <demiobenour@gmail.com>
+>>>
+>>> It's slower than the generic C code and causes problems.
+>>
+>> Which problems?
 > 
-> It's slower than the generic C code and causes problems.
+> See https://lore.kernel.org/all/20260522024912.GC5937@quark/.
 
-That's really vague and incomplete. You need to make your case, provide
-arguments, numbers, data. Otherwise it is just trolling.
+Your commit is still incomplete and other people's opinion is poor
+reason. If you do not know what to write, ask that person to make
+necessary changes.
+
+Not mentioning that removing driver is not even necessary to achieve the
+goal Eric was mentioning and if I understood correctly: you are removing
+even the pieces Eric found useful.
+
+> 
+> Also, if there are no systems in which the QCE driver is actually
+> the highest priority, then unless someone adjusts priorities manually
+> it's unused code.
+
+That's not a reason to remove a driver.
+
+
+> 
+>> Also in the security world faster and safer are two orthogonal axis with
+>> very limited correlation.
+> 
+> If by "safer" you mean protection against physical side-channel
+> attacks, then my understanding is that all operations on secret keys
+> need to be masked.  This includes copying and storage.
+> 
+> Linux only supports this for protected keys, and even then sometimes
+> uses the kernel's own RNG for key generation.  There is no support
+> for using the QCE for protected keys.
+> 
+> Linux does support using hardware-wrapped keys with inline crypto
+> engines, which are what are actually used on Android.
+
+Patches are discussed for some time, did you miss that?
 
 Best regards,
 Krzysztof
