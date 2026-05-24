@@ -1,152 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-109486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ACzxIy76EWpVtAYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 21:04:14 +0200
+	id qPk0AWNbEmqbyQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 03:58:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94A735C064A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 21:04:13 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F313B5C116A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 03:58:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7C42F3008FDF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 May 2026 19:04:10 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id E54A23004402
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 01:58:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BAA4381B1B;
-	Sat, 23 May 2026 19:04:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AOLantyx"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4375722D781;
+	Sun, 24 May 2026 01:58:52 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bg1.exmail.qq.com (bg1.exmail.qq.com [114.132.58.6])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F35630C606;
-	Sat, 23 May 2026 19:04:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA502AD37;
+	Sun, 24 May 2026 01:58:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.132.58.6
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779563045; cv=none; b=cf4nDNuYcbb6YujWlv2R1NCMhh7un0mEmg0CDEJE7Z+yxxeDLEF/WLtyr2e4TJyL/FgairMiEIQ8IOCP+9MXbF74wQzgGQWvzd9Vhq+RqBMYcPpyd5BWxdkiGxzrH3bg3xBmL3WmbT4JPoEQHgSjZU43Ah0EuWc39hyWEZNKnt8=
+	t=1779587932; cv=none; b=PJSWJGAmO9YchmvLnLO59nYTNPAuw/Uinq3Igrw+7t+jIYOf9xu3b4/U5V0eW/sgeKXxpAIVfv2HGAWVcGdmKghDETk1moN6+QtdzqKjg0mrK4Bj560PBF/JVaRnVoY15QxbqC2leIuymCc+QXr7GVTFpEJvCQ3n5ITjjrpkfLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779563045; c=relaxed/simple;
-	bh=2SS07pcThfNT1tSaEjda22uwutm2wospJQwzUhdmOBw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OHBx0TrqnlyKvEettsu72OexnoSrMlToXpe94sqR19w5zQe+iFQRDr4NR9/mqbvGysI6NkiR+iDfYJaCriQg6Rij/4N1K18piIFT/jqYL4tHL7pnPMP2C+NUlhmLnGu58gpe6D15TFgBV5ynZq/Y1HewtyXDFS4Dz1XCkTUW2vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AOLantyx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B1EE7C2BCC6;
-	Sat, 23 May 2026 19:04:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779563044;
-	bh=2SS07pcThfNT1tSaEjda22uwutm2wospJQwzUhdmOBw=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=AOLantyx44Tvmr2p/dvDDJ06EAAhkd5EeYQBxCkrRQ9m0xOm4GcCwybmlZdCJq+Q8
-	 dqO+5dyhF1fZAvZNzgfdzK3QePjGmAEro6/l+mOOKGu/IFUJcdYTheI3Y7olKXELbd
-	 vuBhRdFQXHwCpklmoiHpfkAsgI3J3nOAk2QhWMMgJlEzNin3hqr2+cixXg5giyBRiq
-	 IKFvpX3BAPwpchEBFg/2Zyuet1Kj4Pz8UTzswH0D4EWlcX3rPVsBbwTN7qxEdHGvV6
-	 RwccLENMhH3yJmPQSMV8sTm4pzM0IG0mUNmUVM1qqUTld1fxAdjBz9IoLMgPTi1jhw
-	 KSsf0ZsWahz5Q==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4959CD5BC6;
-	Sat, 23 May 2026 19:04:04 +0000 (UTC)
-From: Demi Marie Obenour via B4 Relay <devnull+demiobenour.gmail.com@kernel.org>
-Date: Sat, 23 May 2026 15:03:57 -0400
-Subject: [PATCH 2/2] devicetree: Mark QCE bindings as deprecated
+	s=arc-20240116; t=1779587932; c=relaxed/simple;
+	bh=LJX3UDJEBWZclugIo9wnVCMsvrUIFevLdZMRx0Wn/qs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jD2XvfQPHZpOi2ywfasDuPNPNTvLNdcXNJKMLtn0zJFUfqNlup6kAqhumFwh3Nrw9XpVFg5OTW1uB/qJGvFqMyRC3BpeKbCoJU545gR0sYLZe8DDAKjPjuBsRj8Prf926eCvccFehMQSDyRfhLXVs+8fXY3lmIsyJZT5yW9q0X8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=114.132.58.6
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: esmtpgz15t1779587905t55917f99
+X-QQ-Originating-IP: +CMkYgQkelm3p4bzQbNBKmYcwd2gel7t9keJU6p+mwY=
+Received: from [127.0.0.1] ( [116.234.26.110])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Sun, 24 May 2026 09:58:22 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 1059293555878524542
+Message-ID: <15015D7EB84640D6+cc21a9f7-ae1b-4a22-bb38-34d6fafe1bcb@radxa.com>
+Date: Sun, 24 May 2026 09:58:23 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] arm64: qcom: Enable additional hardware on Radxa
+ Dragon Q6A
+To: Graham O'Connor <graham.oconnor@gmail.com>, linux-arm-msm@vger.kernel.org
+Cc: andersson@kernel.org, konradybcio@kernel.org,
+ robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, neil.armstrong@linaro.org
+References: <20260522060645.4399-1-graham.oconnor@gmail.com>
+ <20260522101323.31911-1-graham.oconnor@gmail.com>
+Content-Language: en-US
+From: Xilin Wu <sophon@radxa.com>
+In-Reply-To: <20260522101323.31911-1-graham.oconnor@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260523-delete-qce-v1-2-86105cd7f406@gmail.com>
-References: <20260523-delete-qce-v1-0-86105cd7f406@gmail.com>
-In-Reply-To: <20260523-delete-qce-v1-0-86105cd7f406@gmail.com>
-To: Herbert Xu <herbert@gondor.apana.org.au>, 
- "David S. Miller" <davem@davemloft.net>, 
- Thara Gopinath <thara.gopinath@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Russell King <linux@armlinux.org.uk>
-Cc: linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Eric Biggers <ebiggers@kernel.org>, 
- Ard Biesheuvel <ardb@kernel.org>, devicetree@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, 
- Demi Marie Obenour <demiobenour@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779563043; l=938;
- i=demiobenour@gmail.com; s=20250731; h=from:subject:message-id;
- bh=UpFD3AMMc7/LD9RiWL4w2/RMipvwMvRcG8UHGJEaez0=;
- b=yo8EFawzIu9uowTwT6gx7418eSwz8NdE8eaN4nlUmJi9nZT0Xb5dT6bfPYa7PttwabD5CoOZk
- jPDSEapbCQmAEMcriUpUZqZEojgTId9Zs1zk5AxN8mRKDz79OkI9g2t
-X-Developer-Key: i=demiobenour@gmail.com; a=ed25519;
- pk=4iGY+ynEKxIfs+fIUK9EzsvZ44yGE0GvXLeLTPKKPhI=
-X-Endpoint-Received: by B4 Relay for demiobenour@gmail.com/20250731 with
- auth_id=473
-X-Original-From: Demi Marie Obenour <demiobenour@gmail.com>
-Reply-To: demiobenour@gmail.com
-X-Spamd-Result: default: False [1.34 / 15.00];
-	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: M6krYJmOiHLv/R2v9jrvO0PzDoHLyIBWgyO/RJ0v5jsQyqDerRgxMyXC
+	Vu9my88aNPK0Xxuw9HI2Rb1g/hh7f40gvYPzoDBRMTcgkeMi7Lr5qiNSBgC+nuWjSCKWkU0
+	aDzdIiInMYdpHEHR/oVOCr/rF/OEIi1g4u7MBsu9sKMaagIuuvJVeDvATLfZMHuBQtFpZqx
+	yVXpgP1hc07ktb+xrSNJFSG+xzjQznbLI5d6JKSJYdtgjSCXxqVvIvHNdTCLHdZHT3yQzlp
+	gSVPr/75LMbonlINqtColP1nuZhxhIFvpV0aNbXKJ0WYyrbPt+9sIcqmQp6B1H7AeXfnwiL
+	UqwncV7iUBWsPKyaATZJJvy5OL1WURScVPOIHl9/iMCau3YaSeEGRtsWMKjEbyWjaPevhBk
+	/OIKO0YCGatMC2HBv1U8CNZK+SgcBALZpLD+07UNQ0+VhdAnZlXTibPpSh9mv+bv5PpCZD1
+	pZv92z5hcJJA88b8EpYPubLCdoEyKsP0wLf39KTvjaUCMafv4wtcLM2xSoSvh4CoikCXOz4
+	4jzgjzANQCUi3zuOJ3nngEglDha2+6tyofrEeM6/ltPkV1m8tHLOI2Ex7yvGuGVzPrsNasR
+	7kfwTvIGtlTwMTAHIFOtgfyOXx7ANUHoncHof4JN2SVIV0NMGZz7i4AcBjbbuBdEFfgZyzW
+	DWgrPU/qvKU1aXaSpTOsTwnEMVJKDf9o3g//+Rx3e/nJYxsFd6aLvmf86rz0Qkv8N1FjvPA
+	6xZDfw8D95/64Qe8EuETbO2DGVMewFZXK1ZSN9oTlYwOkAE2M+uAH4+0OXn9lnGpi8IYfvU
+	Z2JJwIN3G4yi/cdqKVLsfiNYy0YnkBsRrNKv0QMFtj99s1micpl855nQU8OTgBdeQALesHu
+	R8/GoQ3pXlD//+iBkFlA1/EVcWSPb5hG0gvq/Jvgy6dBXMd1sK1Dq+JIUqkHC1zXiRWR5pZ
+	7jBIu2NdEyqRK/BaLR4gMnQna6WxIip02k6uomn7cNl1iFuGN2J12Ul3f3C98x6l3qWU5Mw
+	hT5KL8/Q7OrbcJa3kZXPMUJB2zoxYUP+k+vmy4wts7AXqQb1fn912i6ixmj6oUnhZSxmO8u
+	g==
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
+X-Spamd-Result: default: False [0.14 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-109486-lists,linux-arm-msm=lfdr.de,demiobenour.gmail.com];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[gondor.apana.org.au,davemloft.net,gmail.com,kernel.org,armlinux.org.uk];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.946];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,lists.infradead.org,gmail.com];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FREEMAIL_TO(0.00)[gmail.com,vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-109488-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	FREEMAIL_REPLYTO(0.00)[gmail.com];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	HAS_REPLYTO(0.00)[demiobenour@gmail.com]
-X-Rspamd-Queue-Id: 94A735C064A
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.412];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	FORGED_MUA_MAILLIST(0.00)[];
+	R_DKIM_NA(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: F313B5C116A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Demi Marie Obenour <demiobenour@gmail.com>
+On 5/22/2026 6:13 PM, Graham O'Connor wrote:
+> Thank you to Konrad, Neil, and others for the very prompt and helpful reviews.
+> 
+> Based on the feedback received, I think it best to withdraw this series to
+> address the issues raised, most notobly:
+> 
+> 1. The DP_TRAIN_LEVEL_MAX change (patch 3) is too broad - it affects all
+>     devices using the Qualcomm MSM DP driver rather than being specific to
+>     the RA620 bridge. A proper fix should be implemented at the bridge
+>     level. This is going to take more investigation.
+> 
+> 2. The display DT nodes (patch 5) should use the radxa,ra620 compatible
+>     string per the existing Radxa upstream series from Xilin Wu, and the
+>     lane ordering needs correcting.
+> 
+> 3. The rpmh-rsc early return (patch 1) needs further review regarding
+>     the implications of returning before full driver initialization.
+> 
+> 4. DTS patch label dependency issue (sorry)
+> 
+> I'll integrate with the Radxa upstream effort, re-evaluate the other areas
+> and resubmit corrected patches addressing these concerns at a later date.
+> 
+> Thanks for the feedback.
+> 
+> Cheers
+> 
+> Graham
 
-They are no longer used by the kernel.  Keep them to avoid unnecessary
-churn and because I know next to nothing about devicetree.
+Hi Graham,
 
-Signed-off-by: Demi Marie Obenour <demiobenour@gmail.com>
----
- Documentation/devicetree/bindings/crypto/qcom-qce.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+Thanks for working on the additional hardware bring-up for Q6A upstream 
+support. I'm really glad to see someone pushing this forward.
 
-diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-index 08febd66c22ba8220860f1a59403782d12f8531f..0f378073ddf550ff5954fbe169d5d262a4e46dcf 100644
---- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-+++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-@@ -14,6 +14,9 @@ description:
-   This document defines the binding for the QCE crypto
-   controller found on Qualcomm parts.
- 
-+  This driver is no longer used and so this binding only exists
-+  for backwards compatibility.
-+
- properties:
-   compatible:
-     oneOf:
+I actually posted a patch series [1] last month, and it is generally in 
+good shape. Unfortunately, I got busy with other work and haven't had a 
+chance to send v2 yet.
+
+If it helps, please feel free to take over that series and fold your 
+additional patches into it. I think that would be a good way to move 
+things forward.
+
+Also, I believe patches 10-12 in my series are no longer needed and can 
+be dropped.
+
+Thank you again for the work you have done.
+
+[1] 
+https://patchwork.kernel.org/project/linux-arm-msm/list/?series=1078242&state=%2A&archive=both
 
 -- 
-2.54.0
-
-
+Best regards,
+Xilin Wu <sophon@radxa.com>
 
