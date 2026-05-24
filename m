@@ -1,173 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-109488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qPk0AWNbEmqbyQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 03:58:59 +0200
+	id +Ji4Af9tEmo7zQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 05:18:23 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F313B5C116A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 03:58:57 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0734B5C1378
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 05:18:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id E54A23004402
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 01:58:54 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id DE4CA3006913
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 May 2026 03:18:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4375722D781;
-	Sun, 24 May 2026 01:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D988119E839;
+	Sun, 24 May 2026 03:18:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KLJnPZ4B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bg1.exmail.qq.com (bg1.exmail.qq.com [114.132.58.6])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA502AD37;
-	Sun, 24 May 2026 01:58:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.132.58.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE572744F;
+	Sun, 24 May 2026 03:18:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779587932; cv=none; b=PJSWJGAmO9YchmvLnLO59nYTNPAuw/Uinq3Igrw+7t+jIYOf9xu3b4/U5V0eW/sgeKXxpAIVfv2HGAWVcGdmKghDETk1moN6+QtdzqKjg0mrK4Bj560PBF/JVaRnVoY15QxbqC2leIuymCc+QXr7GVTFpEJvCQ3n5ITjjrpkfLs=
+	t=1779592694; cv=none; b=Fv5Fm3OI7Sz3A1vKtASMdVxnKqYYqqte7IHLFYNtbL7FmImV1OuDo5etBR0bhTMu0+fLzBIyQ98Nt/6oUnkz47wqY/bU14SX/m5nS/fkGtb9M+z4B/YAhHYfpZJJ1dQ2X0DcxDITfLsGpeD5ylQ+jqMq5DANelMeGDIeAF7Erms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779587932; c=relaxed/simple;
-	bh=LJX3UDJEBWZclugIo9wnVCMsvrUIFevLdZMRx0Wn/qs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jD2XvfQPHZpOi2ywfasDuPNPNTvLNdcXNJKMLtn0zJFUfqNlup6kAqhumFwh3Nrw9XpVFg5OTW1uB/qJGvFqMyRC3BpeKbCoJU545gR0sYLZe8DDAKjPjuBsRj8Prf926eCvccFehMQSDyRfhLXVs+8fXY3lmIsyJZT5yW9q0X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=114.132.58.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: esmtpgz15t1779587905t55917f99
-X-QQ-Originating-IP: +CMkYgQkelm3p4bzQbNBKmYcwd2gel7t9keJU6p+mwY=
-Received: from [127.0.0.1] ( [116.234.26.110])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sun, 24 May 2026 09:58:22 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 1059293555878524542
-Message-ID: <15015D7EB84640D6+cc21a9f7-ae1b-4a22-bb38-34d6fafe1bcb@radxa.com>
-Date: Sun, 24 May 2026 09:58:23 +0800
+	s=arc-20240116; t=1779592694; c=relaxed/simple;
+	bh=FTF04ASVcIjNCTSm6vabBRC9pFEBi23lkvHUCkWwLVw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cavQdjYogtOaLOIpM89PSTV09ahASelm9IUik+uNDgVCIazsPhRZXGPD2Mohgro3DUfvNIfwdUm15C5QUNvHX0QbKuw0QVkJC4NQcwdPEC88OTdka+59GJDr+dzWS17IrzSwfuIvLa8OJDLMcmh2DuXIvnC7s9/VJVtMDUJFBp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KLJnPZ4B; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A481F000E9;
+	Sun, 24 May 2026 03:18:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779592693;
+	bh=IAB1qhj2r/fkAJ6mKlvIOfPFOwzS7DkVvJXTCaX2+So=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=KLJnPZ4BfCy7vv3pHrBbdspN7ac1IdUfwlsoQ7feQ7V1TOtNyzHvnpcBFcgqslc/Q
+	 MDdEwhQdihORhN4P0dKsaHoyuhl5QHx2I8N5sJf03RTzY5pmkcuez6lKGhR6LxRR53
+	 nRzF3hzPeh/H57M1fiwIsr0aI74M77x9Ry0yM/NnJrTCjGYBpZiOgC0yGCdq+Pz3Is
+	 hlnMPrtXcAIKWahHnStosix3etbklacLcZyNH2pAP36Anp+xp6EjMDClHKzltAPZjf
+	 PgTU1QEE/7eWI7GcUa791J77CQHMbm2lPlfjT3RwBcVjqBGTLXdbGzJ0+SEyq6lXNn
+	 9iveyTCCCAvYQ==
+Date: Sun, 24 May 2026 08:48:04 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: Bartosz Golaszewski <brgl@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-pci@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 1/3] power: sequencing: pcie-m2: Add QCA2066 (QCNFA765)
+ BT serdev ID
+Message-ID: <7apajygktl7myslg7mclwgndj2rqhomxmtdii2vsigo32ztr2d@qdui3oxx5rik>
+References: <20260520-monza-wireless-v1-0-9f6942310653@oss.qualcomm.com>
+ <20260520-monza-wireless-v1-1-9f6942310653@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] arm64: qcom: Enable additional hardware on Radxa
- Dragon Q6A
-To: Graham O'Connor <graham.oconnor@gmail.com>, linux-arm-msm@vger.kernel.org
-Cc: andersson@kernel.org, konradybcio@kernel.org,
- robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, neil.armstrong@linaro.org
-References: <20260522060645.4399-1-graham.oconnor@gmail.com>
- <20260522101323.31911-1-graham.oconnor@gmail.com>
-Content-Language: en-US
-From: Xilin Wu <sophon@radxa.com>
-In-Reply-To: <20260522101323.31911-1-graham.oconnor@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: M6krYJmOiHLv/R2v9jrvO0PzDoHLyIBWgyO/RJ0v5jsQyqDerRgxMyXC
-	Vu9my88aNPK0Xxuw9HI2Rb1g/hh7f40gvYPzoDBRMTcgkeMi7Lr5qiNSBgC+nuWjSCKWkU0
-	aDzdIiInMYdpHEHR/oVOCr/rF/OEIi1g4u7MBsu9sKMaagIuuvJVeDvATLfZMHuBQtFpZqx
-	yVXpgP1hc07ktb+xrSNJFSG+xzjQznbLI5d6JKSJYdtgjSCXxqVvIvHNdTCLHdZHT3yQzlp
-	gSVPr/75LMbonlINqtColP1nuZhxhIFvpV0aNbXKJ0WYyrbPt+9sIcqmQp6B1H7AeXfnwiL
-	UqwncV7iUBWsPKyaATZJJvy5OL1WURScVPOIHl9/iMCau3YaSeEGRtsWMKjEbyWjaPevhBk
-	/OIKO0YCGatMC2HBv1U8CNZK+SgcBALZpLD+07UNQ0+VhdAnZlXTibPpSh9mv+bv5PpCZD1
-	pZv92z5hcJJA88b8EpYPubLCdoEyKsP0wLf39KTvjaUCMafv4wtcLM2xSoSvh4CoikCXOz4
-	4jzgjzANQCUi3zuOJ3nngEglDha2+6tyofrEeM6/ltPkV1m8tHLOI2Ex7yvGuGVzPrsNasR
-	7kfwTvIGtlTwMTAHIFOtgfyOXx7ANUHoncHof4JN2SVIV0NMGZz7i4AcBjbbuBdEFfgZyzW
-	DWgrPU/qvKU1aXaSpTOsTwnEMVJKDf9o3g//+Rx3e/nJYxsFd6aLvmf86rz0Qkv8N1FjvPA
-	6xZDfw8D95/64Qe8EuETbO2DGVMewFZXK1ZSN9oTlYwOkAE2M+uAH4+0OXn9lnGpi8IYfvU
-	Z2JJwIN3G4yi/cdqKVLsfiNYy0YnkBsRrNKv0QMFtj99s1micpl855nQU8OTgBdeQALesHu
-	R8/GoQ3pXlD//+iBkFlA1/EVcWSPb5hG0gvq/Jvgy6dBXMd1sK1Dq+JIUqkHC1zXiRWR5pZ
-	7jBIu2NdEyqRK/BaLR4gMnQna6WxIip02k6uomn7cNl1iFuGN2J12Ul3f3C98x6l3qWU5Mw
-	hT5KL8/Q7OrbcJa3kZXPMUJB2zoxYUP+k+vmy4wts7AXqQb1fn912i6ixmj6oUnhZSxmO8u
-	g==
-X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
-X-QQ-RECHKSPAM: 0
-X-Spamd-Result: default: False [0.14 / 15.00];
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260520-monza-wireless-v1-1-9f6942310653@oss.qualcomm.com>
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-109489-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-109488-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,holtmann.org,gmail.com,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.412];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
-	FORGED_MUA_MAILLIST(0.00)[];
-	R_DKIM_NA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: F313B5C116A
+X-Rspamd-Queue-Id: 0734B5C1378
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 5/22/2026 6:13 PM, Graham O'Connor wrote:
-> Thank you to Konrad, Neil, and others for the very prompt and helpful reviews.
+On Wed, May 20, 2026 at 01:01:42PM +0200, Loic Poulain wrote:
+> Add PCI device ID 17cb:1103 (Qualcomm QCA2066/QCNFA765) to the M.2
+> serdev ID table, mapping it to the qcom,qca2066-bt compatible string.
 > 
-> Based on the feedback received, I think it best to withdraw this series to
-> address the issues raised, most notobly:
+> This allows the pwrseq-pcie-m2 driver to automatically create the
+> Bluetooth serdev device when a QCA2066-based M.2 card is enumerated.
 > 
-> 1. The DP_TRAIN_LEVEL_MAX change (patch 3) is too broad - it affects all
->     devices using the Qualcomm MSM DP driver rather than being specific to
->     the RA620 bridge. A proper fix should be implemented at the bridge
->     level. This is going to take more investigation.
-> 
-> 2. The display DT nodes (patch 5) should use the radxa,ra620 compatible
->     string per the existing Radxa upstream series from Xilin Wu, and the
->     lane ordering needs correcting.
-> 
-> 3. The rpmh-rsc early return (patch 1) needs further review regarding
->     the implications of returning before full driver initialization.
-> 
-> 4. DTS patch label dependency issue (sorry)
-> 
-> I'll integrate with the Radxa upstream effort, re-evaluate the other areas
-> and resubmit corrected patches addressing these concerns at a later date.
-> 
-> Thanks for the feedback.
-> 
-> Cheers
-> 
-> Graham
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-Hi Graham,
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
-Thanks for working on the additional hardware bring-up for Q6A upstream 
-support. I'm really glad to see someone pushing this forward.
+- Mani
 
-I actually posted a patch series [1] last month, and it is generally in 
-good shape. Unfortunately, I got busy with other work and haven't had a 
-chance to send v2 yet.
-
-If it helps, please feel free to take over that series and fold your 
-additional patches into it. I think that would be a good way to move 
-things forward.
-
-Also, I believe patches 10-12 in my series are no longer needed and can 
-be dropped.
-
-Thank you again for the work you have done.
-
-[1] 
-https://patchwork.kernel.org/project/linux-arm-msm/list/?series=1078242&state=%2A&archive=both
+> ---
+>  drivers/power/sequencing/pwrseq-pcie-m2.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/sequencing/pwrseq-pcie-m2.c
+> index efeb25ba9c79e20fc8bc8354def8ae423d0f2f2e..f90df88c663985c7702c19911f0c147e3b68984b 100644
+> --- a/drivers/power/sequencing/pwrseq-pcie-m2.c
+> +++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
+> @@ -188,6 +188,8 @@ static int pwrseq_pcie_m2_match(struct pwrseq_device *pwrseq,
+>  static const struct pci_device_id pwrseq_m2_pci_ids[] = {
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x1107),
+>  	  .driver_data = (kernel_ulong_t)"qcom,wcn7850-bt" },
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x1103),
+> +	  .driver_data = (kernel_ulong_t)"qcom,qca2066-bt" },
+>  	{ } /* Sentinel */
+>  };
+>  
+> 
+> -- 
+> 2.34.1
+> 
 
 -- 
-Best regards,
-Xilin Wu <sophon@radxa.com>
+மணிவண்ணன் சதாசிவம்
 
