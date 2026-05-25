@@ -1,79 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-109678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4DPvGl9hFGr2MwcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2026 16:49:03 +0200
+	id OPDGC6dhFGrsMwcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2026 16:50:15 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB4825CBE9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2026 16:49:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7AF365CBEF5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2026 16:50:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7568B3002762
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2026 14:47:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5AE753031CCC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 May 2026 14:47:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BC13248F64;
-	Mon, 25 May 2026 14:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C34C93EDE44;
+	Mon, 25 May 2026 14:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cWzhKUDT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JGGlizXL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA53F282F3E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2026 14:47:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB2B3859CB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2026 14:47:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779720437; cv=none; b=h6mvynmUjaDUzOkqlIRa1wJtG/eI31MO1HySrSCNsyutcCbANcUOhEX62/hYnmMu+hvdO6+PQWCAOri6Uw0lMa9weM+3r038OfCjJFz2BBPXB4PSY9bUqCtJh2H8+L837Z8LAKzMsJXmHZVR56Oa+GIwXAE6DReQnvbu8jkeVZ4=
+	t=1779720445; cv=none; b=oWkQh9yHt3KJoYd6FOflsaMdPLQhc8FPF+bVAelaniy6C7KdzWnEp3/iwTJf+kJJ4orf4hqNymFyBeixZIeKmKDox3A/EOOal+CP2K125B2fpx4Jf+FakeL2m9CvIL6MpJ3ThGDXGxiG/EoC2rFOVEAuRF0oHT4vY59ku3za56Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779720437; c=relaxed/simple;
-	bh=yr/1+spXVlyoOEnPXkKwQNNmxgFyrMF8Vg6TrpaWpNI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=trqS5RXmLKkoGLHf45DtY+dgsryEZfyh6I5TneTrpE3/xFLqa8Pb8bUE+4kK8ePl2kr8qsOLB4V6U0uLbrQsGBW0mbrY/tgZHWFr8RjLgBMRr7gv/zzeCOEkweXkFZR3RcXd2dWHuMqqKnCh9f7rG3uF8xWkGz55vqe3oGCTptc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cWzhKUDT; arc=none smtp.client-ip=209.85.216.52
+	s=arc-20240116; t=1779720445; c=relaxed/simple;
+	bh=DLsg2y1+bliXCGG/reyDyV3bIVP7ZQeG9EfRj65TbF4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=VYbQHfnMLqweEzoLt4B+XytUsmvtuFPNyJYgAdIJWv98FMe0oGNc0avmx/Y/OPgT1BshWz7mhKYeUnRGwuKgHvO8BBQJb5A8xZ6li8rFn4xo+YgbEy5Rca0kg7pROsxn9sX+78eeMYiT60HrfnrMt0ax2w1bwTQKNcNC4FJCNmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JGGlizXL; arc=none smtp.client-ip=209.85.216.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-366139223e4so5828669a91.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2026 07:47:15 -0700 (PDT)
+Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-36aa4ae1f11so1053776a91.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 May 2026 07:47:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779720435; x=1780325235; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vJLkAaWkaR/u6MnpMROmXCnK0KgC4u6HMrcHQXc6x1s=;
-        b=cWzhKUDT4MDKwMF3U/26YHbGor/ejRGmaXsUZh49ZKgizDoqfXXuUDtpsAj7u23PTk
-         xcj27oRzefUwu2oRnVRwrBINeuWIWQonbIX4zGWpwvl5s+NdJs71SvOLQoMFbCzPFjo4
-         m4FH4jKS9IlGGV1PxjflOKpjGlbUeaFGGArcA9qMlhiwX2TcwRDbq3EAzxn76JAxlLSh
-         UOTvC+dmUmr2DkYvh9oO1RTZ67d1QfQUUB0yStOEXBTUtnQcSEYowQ2cC0WtepneA7kM
-         SkiBJ+JXuxLkBLH+NEw2HCkZz3seTL5hDT232LUV3AfSflcUJ4iXGVTmG89S/hHozHvj
-         BcuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779720435; x=1780325235;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1779720444; x=1780325244; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vJLkAaWkaR/u6MnpMROmXCnK0KgC4u6HMrcHQXc6x1s=;
-        b=Owzszh0mRZ9V2gSf4ocM/oC2tkw2haNLucZtOHbydZcM3AMHtF3Q/APuM6K+cdKnzV
-         ve7eokS9IXFqyMPt+4POImBU8neJiqkVc+CxgjSgcjiyqOG+gWQXDrx5MoK2xzMdcCI0
-         uzuzWDF7kTyOLVZbxmraNAxwu/JQrrmnbfxETdFk5TZr20LQZvEqq9GFhPOjxisDsYbi
-         LsywKGOcUmexQZqKlqaPX1kD4mjutJ/Xyh3+hnNN180Ez6S5UiEaeKAIkRhZ37+heL8W
-         OBxTKs7jLZP4oG4q2rORU8LQtPR3g5PMXKy4j/hoqviC4xQpPLn4PUzn2sV7UW7W7Jm+
-         mCZQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+cLcwio9TqekBi/+GyhbL6L5JRLpYahZ5msdXe2o5SvO9mXZOZRaEqrUYe08uk9fTwsL7jI/Cc9MjW8F4X@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw809lyjfGc58iux3uR6B0gQPeLtsSa9Pl4cDyW6Hz2dpcR5xx0
-	dbswRGgZ0cD5G3BDIcFZSvxPVlLc65C9Z425MYuwWaJ5jAJO6wQKQkuS
-X-Gm-Gg: Acq92OED6oTgWvXHwiVtNLlmmcR/xCqwhKNAPzEHKiYP6rTOh6qiB64q28NGBI9Er8Y
-	NlAOkKVEojH8TBqwozEvdFch9Shu3jUSfABMxB/zZPg5Q4J27WC25IHQHamEr6p3AHdATQMkTea
-	s8qEwilnyQCW9D8KdKA+isr0zPeugf97HMknbat/5J+7UBZOfFVO5kTuZ/TKU7u/csRVdE6zqS7
-	aPN93K/M2CGsKZML8cULLKUiywoK3D+5lcFE6obSXCTszlFpuKs7hDkmxGwq7Qe+3nX21BVwVn0
-	nj1KXQkXsiX2n/4vwB/RG8wAlFZZuWkQnZCgEWnTzKa1yByNSvVXFkWiH3mP8nfaa8b2L+3EIal
-	hinUOlQhjvSG75ja6DVC4A5vIS3qKAVIAJhEQUbPzIk8mTfGXbqrZwQDZle7183l3f7aSdMbKN7
-	zgfv4fVuMonYEhDRPEuyXjiZ7UsR1ZKa6d4Wlag5c=
-X-Received: by 2002:a17:90b:1909:b0:368:433:b697 with SMTP id 98e67ed59e1d1-36abe37ef9cmr4093720a91.19.1779720435013;
-        Mon, 25 May 2026 07:47:15 -0700 (PDT)
+        bh=MYwtJECaHP5wUeZHKflBOjjaT0Cdv+xswmxDcx7ZgJo=;
+        b=JGGlizXLFOdXxSL3LwmSAX5532L9SEsX5fI4bLNm2kQmqrVgQG2+c/OyyHmAyDHS78
+         N8butyk0xZ3eHFiXZExuQQaTWYC5/xiD8yKRSPR433jJ3q40G/6wJCe/MVthxSE17ar+
+         f39ON8WjbjhavWzVG4VqinC7WcjHaMWDtW4v+zJS4KE7tabYpP++Jl+274wrLtBy4xPh
+         Rsk6aD79zPGd128FUBX0d55bGRnqWO3o5p9YS8bJB2/hkiAtPD4FoA9Ezm5MK43KdQAF
+         dfTgc+G6N9X6xfZYWrKpwoIurQT4DkvjHNwgDW530ppEazyRl5/dEXJLsSQQ0O0UdeVV
+         LkuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779720444; x=1780325244;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=MYwtJECaHP5wUeZHKflBOjjaT0Cdv+xswmxDcx7ZgJo=;
+        b=kuhIUtHDgUGfgRrcnIYj2Ni6hVK4owIu+33Bpx4O3DLLl7AAhdslF8AhuYByA7VvBg
+         vnbXWQiQN9NK18x2oW+xAZRQvvodD7ZFoUfZ2fka8f8lhmQigaEaFHAAexRdNODIE3xg
+         W5WUEEpKtQn8ENPYEb2RnyZO4CkZ1IQPDvmHyD3gOIjjY/OvW2Vog39psULiGGFYSeiJ
+         YUCN+/pxd6hcpjUhhCxqlLivZ/F6Q+o7TwkGSlU4R97QMXAPDXgZQ22/RENoukCvYiUo
+         FqPnCLUjkTiSBLEQ1PmYy2ZL6mp5HVuDhq1B6UFON4ICf+1VvFRzYbOjp9EXV0VmuS9f
+         dxhw==
+X-Forwarded-Encrypted: i=1; AFNElJ/f0K4aErTB5eOf+3KeWG92wP9SKDww3aVy2V1/FFsKVtTI1ymMeQxGS0KS/7PggtJmXfWjnTyaWWvPPaTA@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4lDKzWjYDdSRz0QFPZcNxKRhNJQA3tivJMwStxH1q9sntTGav
+	Iz4UUKzxDtzgfFgYDIhzQAdwTt7zpaYOxRA9wqpS8kZ0MEqfzoSjIjS7
+X-Gm-Gg: Acq92OHblFTOjVUWQbkNy+HjLXZHdzSNP1q+5axFsW6YFv/GEn1VAZ5E/PmkyDVoZ/L
+	gYd2mXgUgz4SjML1lLIWxjgmu1HaXNs/dciJER70tIUQs0LjJQ/5d+GKTfrU39vPGGkxGSESbYW
+	Fc3CZVfQqQlntOflu5OXGcGAl+5+E444MjBiSThOp0Dy6frbjV/QjK8dLhYk5RV5uMEpXask/nX
+	L05Bopr5pZcVutAT6GVpfbGUtbZyfbOJhDtQiMQQ3j/oHMOfQ0Bw6VZCZGkLz/FyGCWTf4TLr5f
+	C17RjdmNZYh9mj4twpHKjRStfLMAsUUYIPFHYW4rQsMczUYH2HEduL0eEK4e4+7/vtwEt+hxOgA
+	yhbpDevnUPeratN35X78J0hvDLASYLrZe3p6slaUEYqTJxbv7Q3pROhjZtAcU088rMkESJ4wVLa
+	E3HNn7+bqCoEsoR/u5cwob6TV6RXJkbS0H9Us7yus=
+X-Received: by 2002:a17:90b:1b07:b0:369:a9e8:dbf5 with SMTP id 98e67ed59e1d1-36a6749ea42mr13774833a91.3.1779720443648;
+        Mon, 25 May 2026 07:47:23 -0700 (PDT)
 Received: from arch.localdomain ([2409:8a28:a5f:4fa1:cc65:18c0:209b:38a4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36abfe17c95sm2721993a91.0.2026.05.25.07.47.08
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36abfe17c95sm2721993a91.0.2026.05.25.07.47.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 May 2026 07:47:14 -0700 (PDT)
+        Mon, 25 May 2026 07:47:23 -0700 (PDT)
 From: Jun Yan <jerrysteve1101@gmail.com>
 To: linusw@kernel.org,
 	dmitry.baryshkov@oss.qualcomm.com,
@@ -91,27 +93,29 @@ To: linusw@kernel.org,
 	Vincent Knecht <vincent.knecht@mailoo.org>,
 	Grant Feng <von81@163.com>,
 	Andre Przywara <andre.przywara@arm.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Michal Simek <michal.simek@amd.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Wei Xu <xuwei5@hisilicon.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Tony Lindgren <tony@atomide.com>,
 	Robert Marko <robert.marko@sartura.hr>
 Cc: Jun Yan <jerrysteve1101@gmail.com>,
 	Pavel Machek <pavel@ucw.cz>,
 	Krzysztof Kozlowski <krzk@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
 	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Michal Simek <michal.simek@amd.com>,
 	linux-leds@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-gpio@vger.kernel.org
-Subject: [PATCH v2 0/6] leds: is31fl319x: Fix shutdown GPIO and update DT bindings
-Date: Mon, 25 May 2026 22:46:06 +0800
-Message-ID: <20260525144629.498630-1-jerrysteve1101@gmail.com>
+Subject: [PATCH v2 1/6] dt-bindings: leds: issi,is31fl319x: Update description for the shutdown-gpios property
+Date: Mon, 25 May 2026 22:46:07 +0800
+Message-ID: <20260525144629.498630-2-jerrysteve1101@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260525144629.498630-1-jerrysteve1101@gmail.com>
+References: <20260525144629.498630-1-jerrysteve1101@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -130,14 +134,14 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[gmail.com,ucw.cz,kernel.org,glider.be,socionext.com,foss.st.com,vger.kernel.org,lists.infradead.org];
+	FREEMAIL_CC(0.00)[gmail.com,ucw.cz,kernel.org,foss.st.com,socionext.com,amd.com,vger.kernel.org,lists.infradead.org];
 	FREEMAIL_FROM(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-109678-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-109679-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[33];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,lunn.ch,bootlin.com,gmail.com,mailoo.org,163.com,arm.com,amd.com,linaro.org,sartura.hr];
+	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,lunn.ch,bootlin.com,gmail.com,mailoo.org,163.com,arm.com,tuxon.dev,hisilicon.com,atomide.com,sartura.hr];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -145,55 +149,57 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[gmail.com:+];
 	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
-	NEURAL_HAM(-0.00)[-0.997];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	NEURAL_HAM(-0.00)[-0.992];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: EB4825CBE9F
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,0.0.0.1:email]
+X-Rspamd-Queue-Id: 7AF365CBEF5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-This series fixes incorrect shutdown GPIO polarity and improves
-shutdown-gpios description in DT bindings.
+The IS31FL319X series features an SDB shutdown pin.
+Driving it low (active low) places the chip into hardware shutdown
+mode for power saving, while all register contents are preserved
+and registers are not reset.
 
-Patch 1 adds detailed shutdown-gpios description and fixes example
-in DT bindings.
+Update description for the shutdown down (SDB) pin and fix the example
+device tree binding.
 
-Patch 2 fixes shutdown GPIO initial state and removes redundant
-startup toggling.
+Fixes: dbc801b472c1 ("dt-bindings: leds: Convert is31fl319x to dtschema")
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+---
+ .../devicetree/bindings/leds/issi,is31fl319x.yaml        | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-Patch 3 adds fixup to force consumer active low for legacy device 
-trees in gpiolib.
-
-Patches 4-6 correct shutdown GPIO polarity in board DTS files.
-
-Changes in v2:
-- Add comments explaining the reason for this GPIO line level.
-- Add fixup to force consumer active low for legacy device trees in gpiolib.
-- Link to v1: https://lore.kernel.org/all/20260508152435.21389-1-jerrysteve1101@gmail.com
-
-Jun Yan (6):
-  dt-bindings: leds: issi,is31fl319x: Update description for the
-    shutdown-gpios property
-  leds: is31fl319x: Fix shutdown GPIO initial state and remove redundant
-    startup pulse
-  gpiolib: of: add quirk for IS31FL319X shutdown line
-  arm64: dts: qcom: msm8916-alcatel-idol347: Fix sn3190 shutdown GPIO
-    polarity
-  ARM: dts: qcom: msm8974-oneplus-bacon: Fix sn3193 shutdown GPIO
-    polarity
-  arm64: dts: marvell: armada-7040-mochabin: Fix is31fl3199 shutdown
-    GPIO polarity
-
- .../devicetree/bindings/leds/issi,is31fl319x.yaml     |  9 +++++++--
- .../boot/dts/qcom/qcom-msm8974pro-oneplus-bacon.dts   |  2 +-
- arch/arm64/boot/dts/marvell/armada-7040-mochabin.dts  |  2 +-
- arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts  |  2 +-
- drivers/gpio/gpiolib-of.c                             | 10 ++++++++++
- drivers/leds/leds-is31fl319x.c                        | 11 ++++-------
- 6 files changed, 24 insertions(+), 12 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/leds/issi,is31fl319x.yaml b/Documentation/devicetree/bindings/leds/issi,is31fl319x.yaml
+index 906735acfbaf..ebf2bed51e7f 100644
+--- a/Documentation/devicetree/bindings/leds/issi,is31fl319x.yaml
++++ b/Documentation/devicetree/bindings/leds/issi,is31fl319x.yaml
+@@ -39,7 +39,12 @@ properties:
+ 
+   shutdown-gpios:
+     maxItems: 1
+-    description: GPIO attached to the SDB pin.
++    description: |
++      GPIO attached to the chip's SDB pin.
++      Driving this GPIO low places the chip into hardware shutdown mode
++      for power saving. All register contents are preserved and registers
++      are not reset during shutdown. The chip exits hardware shutdown mode
++      when the SDB pin is pulled high.
+ 
+   audio-gain-db:
+     default: 0
+@@ -174,7 +179,7 @@ examples:
+             #address-cells = <1>;
+             #size-cells = <0>;
+ 
+-            shutdown-gpios = <&gpio0 11 GPIO_ACTIVE_HIGH>;
++            shutdown-gpios = <&gpio0 11 GPIO_ACTIVE_LOW>;
+ 
+             led@1 {
+                 reg = <1>;
 -- 
 2.54.0
 
