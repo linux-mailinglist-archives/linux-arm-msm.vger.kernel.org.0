@@ -1,140 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-109858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EHexA/e1FWr/YQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 17:02:15 +0200
+	id 6MUCHVC3FWrKYQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 17:08:00 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABF025D8382
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 17:02:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CC7CF5D8521
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 17:07:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 05D8031936DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 14:54:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B8B6E30888B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 14:58:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF9FF3C5DCE;
-	Tue, 26 May 2026 14:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82BFF403EA1;
+	Tue, 26 May 2026 14:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gAM1KIY5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Nka0MBj8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D2034CFAE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 14:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4680D3FFACF;
+	Tue, 26 May 2026 14:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779807209; cv=none; b=rzaKXoaEIUX8bZGpYFVoGU4roHfxzD9zAV4WO3gPTPiAMfiKJO9QQ7X28lxf+2Eu3KjZYvz/QE9JZVg4Rk2d0hebwIOqMO/JX8HyKsXpkf6uGsrfeA5QaCkq68DKG1k1YqAQHsmQnpmnJV5pA5dOS40W/sbOrrRoTNiVcTuzBrU=
+	t=1779807298; cv=none; b=ARe2OTmcsI77JtWV1yyh3mQ9MmekWn4TvPQJgh/ybuUCu7AvO7ILsjq1jSp8LD7HfvZR3yBFRDWgB8kNvsOomBnVo8l9O9QNrTbnauPJXeNc8N89ZHvt/7eSKfb5nz5ZV+YsZeGcO2p78Hjhb+ZzNMVReML2MIUbScKsUQlCwzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779807209; c=relaxed/simple;
-	bh=J7KS84d0wt/zG8e1LkOZRy4/IGi/wYaDDu5n3JaES+E=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CxvxNQOuodp+Xu7W1HdA3jacaBFRmKvE64RGbVOQunuE5DcegPaEzU4dSiAC6SVVyJisAWfPWl8ZKAYczs+ECBDQ27KtwxlRtelxaymATJd3rZvqMnt7ffYGRxZb42jUZjCRdQbHr98JZIY4LB8JizbWWDuMGIbC1ZCwBrV42cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gAM1KIY5; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F881F00A3D;
-	Tue, 26 May 2026 14:53:27 +0000 (UTC)
+	s=arc-20240116; t=1779807298; c=relaxed/simple;
+	bh=sEWmEoDeKV3e8XmvxvpVCz5qpEiEFRtT/L/nyenoHfM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ine1Mcf6Txf2lefcnZ1j0KDGyMnknPRlG6zvgldX5mPU6+1RzIiPVjpdRLKdagaBKgIzTEmrIXvYAgxuZC/d+w3JGSIBSfGQS45sVqWNIRGJG12o6drdLniMTI2pb1S19eo8yDaC0DWimgVMwN3IsXf7IrX/KdR4OYg7ek8ZOEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nka0MBj8; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29A71F00A3A;
+	Tue, 26 May 2026 14:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779807208;
-	bh=NG1MsJD+6r7VdzmGyqNvXHjFFZ8NsZMlL149djZSr2g=;
-	h=From:To:Cc:Subject:Date;
-	b=gAM1KIY5bwj49FuQYukZaEMwgitseVn3EbKtSxJdWs8YFyuOMTPA0vq0maMBegu9Q
-	 Jq4HO3zPzN70CZoz17fpFothsZFMaHtqpmfWjQ+2twUZZu6RdaNPnFtLtMxBiIn3t2
-	 LsFaTw4gh7P8mLDgfp+9ji5EmQyJcU9j4/SKI+llCHCa0y6DTw6dnVJO1YgOaK07Fq
-	 +ciKoyeIPK1/69UVye8EIOTmTTy3kVWLmfx9l2Txo85tMN5+dX7w1rH0oPkpok2s3g
-	 7N3AY/684akel4mlBcv0Zri8zVBBCC3u1A2xtpPUjPrpVm7NZIznSxi71qUifSrUhv
-	 qtpBDtNMDcWUw==
+	s=k20260515; t=1779807297;
+	bh=Gz1XDPEqMOede6w3QiL6LZiwFKjg/p5trACYiKw7+M8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Nka0MBj8qZwX0efF+YTCpVSV5CRLDdNArlqWNJrbtk4cr3mfS9/8GQKE1CTmkbNIG
+	 SjyvOGgA+YTrF2aTyhr0G0peBARIOywlyARllBnVFmwT3s1V8PyGyzPUNZIyBdieuq
+	 +lxy/iEyFLx+zSwBZ6d2Wy5sKQnT2aDLbZLuVUtxc+1gllMfuUWkjQhKmpHbn9AGO+
+	 PCdi70c+4q3OZk7ENpFgqroxtHMjfqr0J4RQ1rYdsmEaRHo+Z426cJfblyM4E0kbqO
+	 3MGTgeF3OiTkXRMFR/0yBf2zYKnOD3L7dDKkGyPsHGJZQwn3q2rhHk74tO67LkxjMW
+	 XYJyM8hPPF0GA==
+Date: Tue, 26 May 2026 09:54:52 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: arm@kernel.org,
-	soc@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Val Packett <val@packett.cool>
-Subject: [GIT PULL] Qualcomm Arm64 DeviceTree fixes for v7.1
-Date: Tue, 26 May 2026 09:53:26 -0500
-Message-ID: <20260526145326.3243-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.53.0
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Qiang Yu <qiang.yu@oss.qualcomm.com>, linux-pci@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: avoid duplicate PERST# GPIO acquisition in
+ legacy path
+Message-ID: <ahW0HOEMnJIHviLi@baldur>
+References: <20260526-fix_perst_gpio_handling-v1-1-9170507bb4e9@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260526-fix_perst_gpio_handling-v1-1-9170507bb4e9@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-109858-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-109876-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RSPAMD_EMAILBL_FAIL(0.00)[20260416-qcom_ice_power_and_clk_vote-v5-13-5ccf5d7e2846.oss.qualcomm.com:query timed out];
-	NEURAL_HAM(-0.00)[-1.000];
+	MIME_TRACE(0.00)[0:+];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
-	FROM_HAS_DN(0.00)[]
-X-Rspamd-Queue-Id: ABF025D8382
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: CC7CF5D8521
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+On Tue, May 26, 2026 at 05:02:30PM +0530, Kathiravan Thirumoorthy wrote:
+> Commit deed8aec62dc ("PCI: qcom: Handle mixed PERST#/PHY DT
+> configuration") handles the case where the PHY is moved to the Root
+> Port node while PERST# remains in the RC node by acquiring the PERST#
+> GPIO during Root Port parsing.
+> 
+> However, on platforms such as IPQ5424, both PERST# and PHY are
+> described under the RC node and are intended to be handled via the
+> legacy binding path.
 
-The following changes since commit 254f49634ee16a731174d2ae34bc50bd5f45e731:
+Please send patches to update IPQ5424 to the non-legacy binding.
 
-  Linux 7.1-rc1 (2026-04-26 14:19:00 -0700)
+Thanks,
+Bjorn
 
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-7.1
-
-for you to fetch changes up to 67802f981361ebb49cc25175c57179aecb14626c:
-
-  Merge branch '20260416-qcom_ice_power_and_clk_vote-v5-13-5ccf5d7e2846@oss.qualcomm.com' into arm64-fixes-for-7.1 (2026-05-21 16:34:26 -0500)
-
-----------------------------------------------------------------
-Qualcomm Arm64 DeviceTree fixes for v7.1
-
-Add missing power-domain and iface clocks for the ICE node of Eliza and
-Milos to avoid the validation errors that resulted from late binding
-changes. Also drop the reference clock for the USB QMP PHYs, for the
-same reason.
-
-Avoid touching the 20'th I2C bus on the Hamoa-based (X Elite) Dell
-laptops, as this conflicts with the battery management firmware.
-
-----------------------------------------------------------------
-Abel Vesa (1):
-      arm64: dts: qcom: glymur: Drop RPMh CXO clocks from QMP PHYs
-
-Bjorn Andersson (1):
-      Merge branch '20260416-qcom_ice_power_and_clk_vote-v5-13-5ccf5d7e2846@oss.qualcomm.com' into arm64-fixes-for-7.1
-
-Harshal Dev (2):
-      arm64: dts: qcom: milos: Add power-domain and iface clk for ice node
-      arm64: dts: qcom: eliza: Add power-domain and iface clk for ice node
-
-Val Packett (1):
-      arm64: dts: qcom: x1-dell-thena: remove i2c20 (battery SMBus) and reserve its pins
-
- arch/arm64/boot/dts/qcom/eliza.dtsi         |  6 +++++-
- arch/arm64/boot/dts/qcom/glymur.dtsi        | 20 ++++++--------------
- arch/arm64/boot/dts/qcom/milos.dtsi         |  6 +++++-
- arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi |  7 +------
- 4 files changed, 17 insertions(+), 22 deletions(-)
+> Since PERST# is already acquired during Root Port
+> parsing, attempting to acquire it again in the legacy path fails,
+> resulting in probe failures as shown below:
+> 
+> [    1.571859] qcom-pcie 18000000.pcie: probe with driver qcom-pcie failed with error -16
+> [    1.571909] qcom-pcie 10000000.pcie: probe with driver qcom-pcie failed with error -16
+> [    1.571973] qcom-pcie 20000000.pcie: probe with driver qcom-pcie failed with error -16
+> 
+> Fix this by removing the redundant GPIO acquisition from
+> qcom_pcie_parse_legacy_binding() and reusing the PERST# descriptor
+> obtained in qcom_pcie_parse_ports().
+> 
+> While at it, move the warning message to qcom_pcie_parse_perst() to
+> avoid polluting dmesg when the legacy binding is used.
+> 
+> Fixes: deed8aec62dc ("PCI: qcom: Handle mixed PERST#/PHY DT configuration")
+> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 10 ++--------
+>  1 file changed, 2 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 11fc60489892..77cbd204ac5c 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1824,6 +1824,7 @@ static int qcom_pcie_parse_perst(struct qcom_pcie *pcie,
+>  	int ret;
+>  
+>  	if (pcie->reset) {
+> +		dev_warn(dev, "Reusing PERST# from Root Complex node. DT needs to be fixed!\n");
+>  		reset = pcie->reset;
+>  		goto skip_perst_parsing;
+>  	}
+> @@ -1912,8 +1913,6 @@ static int qcom_pcie_parse_ports(struct qcom_pcie *pcie)
+>  						      GPIOD_OUT_HIGH);
+>  		if (IS_ERR(pcie->reset))
+>  			return PTR_ERR(pcie->reset);
+> -
+> -		dev_warn(dev, "Reusing PERST# from Root Complex node. DT needs to be fixed!\n");
+>  	}
+>  
+>  	for_each_available_child_of_node_scoped(dev->of_node, of_port) {
+> @@ -1942,7 +1941,6 @@ static int qcom_pcie_parse_legacy_binding(struct qcom_pcie *pcie)
+>  	struct device *dev = pcie->pci->dev;
+>  	struct qcom_pcie_perst *perst;
+>  	struct qcom_pcie_port *port;
+> -	struct gpio_desc *reset;
+>  	struct phy *phy;
+>  	int ret;
+>  
+> @@ -1950,10 +1948,6 @@ static int qcom_pcie_parse_legacy_binding(struct qcom_pcie *pcie)
+>  	if (IS_ERR(phy))
+>  		return PTR_ERR(phy);
+>  
+> -	reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
+> -	if (IS_ERR(reset))
+> -		return PTR_ERR(reset);
+> -
+>  	ret = phy_init(phy);
+>  	if (ret)
+>  		return ret;
+> @@ -1970,7 +1964,7 @@ static int qcom_pcie_parse_legacy_binding(struct qcom_pcie *pcie)
+>  	INIT_LIST_HEAD(&port->list);
+>  	list_add_tail(&port->list, &pcie->ports);
+>  
+> -	perst->desc = reset;
+> +	perst->desc = pcie->reset;
+>  	INIT_LIST_HEAD(&port->perst);
+>  	INIT_LIST_HEAD(&perst->list);
+>  	list_add_tail(&perst->list, &port->perst);
+> 
+> ---
+> base-commit: d387b06f7c15b4639244ad66b4b0900c6a02b430
+> change-id: 20260525-fix_perst_gpio_handling-5a4fee9228fd
+> 
+> Best regards,
+> --  
+> Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+> 
+> 
 
