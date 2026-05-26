@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-109802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yG/bAFSLFWrUWQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 14:00:20 +0200
+	id ILozM9CQFWovWgcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 14:23:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 096C85D53EB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 14:00:18 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 552415D579B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 14:23:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7ECA730060B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 12:00:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id ABC5E300EA98
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 12:23:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDEAA3F6C28;
-	Tue, 26 May 2026 12:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D515A3F5BD0;
+	Tue, 26 May 2026 12:23:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pHwwspWc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eZPR3riL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E963D88EB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 12:00:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176323F7AB6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 12:23:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779796812; cv=none; b=EGfuDSQGuGERIceUHysnymb5Irzjr24QOQ6bJhAgc//n7M5DlumUXmZCACOZEp+jspXOZZbubKATczfmQq0rhu+2IaV7CXv3vYX09WS0WRIYF84f1GExSI+nPKD9LM9cyHJjFo3w8uUIsw6WZQJiUPVvVgpzhwyH+v256V2hNPg=
+	t=1779798213; cv=none; b=AQbPCcg53WxPoPwqKv8pzUmHw1UaPBoIhgQIqfgJKY+aESnrvElqFuNOpBc/zGX1BAu8P+GJFq4fLFzcMhDs+yQYWqSNEsIFoQ41D12d1zDRIeWxMOyjq4zUfIk1aj8NtgS7KYTRxPtz/5LrjtCpMG7rjIW4OmwWXyrsz6gA1Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779796812; c=relaxed/simple;
-	bh=hTZYyqvqtGqppwXg4HP3xZpz+TZopttkYVxm+x/q8Jw=;
+	s=arc-20240116; t=1779798213; c=relaxed/simple;
+	bh=iGDQmirXwsVXqAciJSjXGrEGgNfDX2hiOOLxRSpT0f0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g7Vj3tufJ9/Bq9NVE90s0O095PuHnk26gs9KwG54NyjYTuqXawYboUIFJa0AJKTfn83/aJ0WyFkSvo7n4b2ykfO1cUyE+uc3pYNgqIbCuMwH2RdPdtSIniKVycbWYHguB6NYaAzVG2KjV3PtqJcFd6jxU9bN/0xicWDVcw6rDCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pHwwspWc; arc=none smtp.client-ip=209.85.218.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=mkeBi1Vg/nXuSxPCL1xAYtxC4NzzFAAda9PftOnDGSPLpQUAaqR0nqXIIqyq1Pvt1EyC9r6DMxaXeDRed1Nv7ulBnck7ceS1sapQRe8A7DbmSHfxr70gry85mDwbiKeDSBpx0ct+cA7yU9s+EQMH4584KakfApjUhZqt1IA0eJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eZPR3riL; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-bd6460b0d11so1841324366b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 05:00:07 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-48e8132c6d0so66512575e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 05:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1779796805; x=1780401605; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1779798210; x=1780403010; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CoKLuje7HUGv4pGCvIBQiUOeF+gz3p4jM4FxO+bIdX0=;
-        b=pHwwspWcu5HViVH9PrTg3VZGKAXTnNGteSs54531z1yqAvoQ9iBT7CEw4t9D0baKUH
-         byMt2zeqQnIntjhhwu20JIzFZbDq9LEAweNjSM/QJ+ooJMiyVZM+4a1VFYcCW3lUrfkm
-         e+pPq1JQ46/j0lw0YAKPCxdvoLZFK2ixC8DBCGhSSXq5YXwYfElqzUSc/uNEZQpzVYeQ
-         wpTxmiHgcLyVfyrHBh4ID7utw8G10oFWuFzl3TYMXdPnb8nSgtmebQ+/E1R9DXQ+hpO8
-         JiaYJ2R/MmMxrJlu5caCZgP1L7gh2ei9wZmnkuPZZMArcD2gYwFM+3qbAj6//UKppe7/
-         Askg==
+        bh=ZCIY9sU4f3NHfQKfeX8dod9XT1LJXx2xAP5zQxt3BVI=;
+        b=eZPR3riL+W3qzANtKqmOvNbGUks1goO8ojCdqBbVgQKNnexrOZ/10JxbUBr9dsJTIH
+         ogkU9zT9/Qdtl7BCSsNZHDrG0MNwJmwBd0ZKos+BrB9ZHzVQeay4g8PsBgdvaVX/vIQ3
+         xCmGrIW7IEnFtik3bIZkE+g76i4XNlVkczMIxGcLKKskwvemjd97gyWwxwHLzW45GwEd
+         TeVypgBZSz/SzDGxqCblGMAw1AZhkMq5Vf9NNFVxcvUdAN1PawnP8O06FksdHOS/H9rv
+         K8+7QGcFfhE+sa3rUATMM6AolENy5WtTN9QpghsOgykaLuTP6uGxl8L0DJehJu3kqOke
+         lzIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779796805; x=1780401605;
+        d=1e100.net; s=20251104; t=1779798210; x=1780403010;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CoKLuje7HUGv4pGCvIBQiUOeF+gz3p4jM4FxO+bIdX0=;
-        b=eO5nL9kCtaCNB8g6xN28fdRN2mGYssBpG5L/wmvBqoIo/G78mGJZaewbHCeiyBoNLv
-         uRHBxbEVxdJMpSFl1cYLJmr7lAaoTlEo+g2yh8OSKdF2ixUggzDSqxAe3eiVxrBRoV06
-         zEOaGGa9YLeaG0aiip8nGiwpz1LoCqbe4tfIWyPI2F0xInM32kxLm9wzTDAQ8Ge/5c39
-         GVBCNywS3yOk8y8jxN9o4DvNUTCWh/abfg9KN4eYI16imRfJ9XVYevzfhIERQO0biz3o
-         yQfWrfjIdIwB0+yxN13y8ZftQ7qTaCJBfSj4cKRDsfrV0TGpgZUPSpVDzfy6zo9EXqi1
-         35WA==
-X-Forwarded-Encrypted: i=1; AFNElJ8ljeqidaZvEticgjiVhncstu4IDk0YaOCnTm+iR/kEizspEDN3Rm8P8VCLUMqVVCOTPOoKpQ7EEILRpxxd@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfdXiYMeokYyC1/EAcaF06niwI1N8J2CTK31+Vc1xzpJzIBsY5
-	veEw1oXW2Dr+bsg/d3egmlzv+Y3whKBTwDP8jhuOj1+SO7mp8JWlEBXvCbn4WlrkiIA=
-X-Gm-Gg: Acq92OFistNn+6HaPOWRwlZNZ9MJusj92xv+3qT6n8uRAxG+ahupsb529mK0Aqd7uOZ
-	itlsw91nxXCYJAG//lTnRNdt2zPwStnNIhMLgFgMit4slljrP6PCcIBW0PjtiQBlzjZTe2UUpc/
-	W7u7Gg3bjPftzJqM9u55fU5ZvC8yOVBJs/swvGv7LN4vyi5I7huX58tYJhyvEGemZtHvmCFwGxy
-	0HMedd0OiK+B+WuUnDCd0vh4ReY9wDT4N4KbHhXLJDUx6g6ruaQzXq+ZlvJX8ZiJNVL3cY3pea6
-	jLgF9x7zjfuCg9PTdgB/I+Jo9k0sY67Bu2xKTea6u6A3DflEfqfqVb5PQ4/1A2rZRkb/WBcIWgS
-	9lP6w52BdAe5iD93aznHfzYHRLcLyws18pZjE85dmBeoHJIF1fRg56/Ark53cMxlzBGLqRkZv8M
-	edz/U+euibBuTm38lyOj26lto0FFED
-X-Received: by 2002:a17:907:a80c:b0:bd5:ec9:e063 with SMTP id a640c23a62f3a-bdd267cae6cmr1071905766b.49.1779796804514;
-        Tue, 26 May 2026 05:00:04 -0700 (PDT)
+        bh=ZCIY9sU4f3NHfQKfeX8dod9XT1LJXx2xAP5zQxt3BVI=;
+        b=Vyu3+ZMYf1rig1+kw08FwMgycixJm6bHM/unByq7tax9dzWkBaOIyHcLnO7VxXSDzp
+         sw1cDlw3fCu2r05t5DM9UkMbfSjGbMs0TGzN4BHUMTCuUzmhhQucE1cldce2B1oeu3u2
+         fc/QS5cYtLyJcDqhZ16RNX4HzaJ4/WAcBMO/juPqIy1L1gKPH16NLDvN7aBSzUDCrqpi
+         Yz0iUsPawZuD2v3Gzntge+tZDxQYj8jNncTMn36Ky+ZRbBxdGj11kgLpK3oOWDdA9R3V
+         X1ImlaV+qMxOYpIh9jbuF1VMIUoseaC4GF7o3sfLDO00LiuZHI5ZRhubU37kvl5JjAml
+         xYnw==
+X-Forwarded-Encrypted: i=1; AFNElJ/gSMuys5NJScR1yA+W3Z5Z0UCqphSUZA2mT1V+8hqIBI6aYNnP06WiLs4CEh3u/tKqXCzxTOwU0yi9q29C@vger.kernel.org
+X-Gm-Message-State: AOJu0YyaXi5uEoeebXBqlgGzFnu/UCE50r3bi4/IK8NLqorQ4hydukc6
+	n02FQKKvlZvyTj7Cyf9ug33sTReeIszb1T1/eutm4BsQnyqBMuymrhGmelxxz+MNpZE=
+X-Gm-Gg: Acq92OHsBbLLX6LmcxP3CD9S24OYfweQPsXt0ejYbbtrbjUzxEJ47IQ2NK5jWoVTrjZ
+	wJuKtMSH0woa5HQsSSZ0DfUL03FTI8+zbfMnsIqkVZ8OzzgzXLs8IOuCRJX9EDBYxsMJxEtf1uX
+	6bdlfu61QC5ZNf2YoFiK9pJtWutRCmZjym7OBRNyOi3duR3ANCKjcFhplmVQFLb7x2oAub3unu6
+	yEWdl3mDfiL5690a2mCNPpqxsonCYVc01RH51tU1nfKWA+muuxErWyMYabT2tLqpfX41qOqVCSx
+	hg5ny8fydKiHpmhhypvVh+QTkAau7PFbkae1qy4rHztWcTdc5A/ccH3Q9j2+RP75MwwmLdtraaE
+	75EXr6iUmwfeaC9yr9Js/RDimzsQFB8ZnSN5iY1H1bMFuPclrxF2ecRNAXc9aXQUveyqmPkzumg
+	VrozfkaVqlTduOcwOLCuYxeu3HmHNekO6hs1z4NCo=
+X-Received: by 2002:a05:600c:4510:b0:48f:e230:c3fa with SMTP id 5b1f17b1804b1-490428ddc9fmr289822275e9.32.1779798210262;
+        Tue, 26 May 2026 05:23:30 -0700 (PDT)
 Received: from linaro.org ([77.64.147.108])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bddc61de4c4sm497740166b.42.2026.05.26.05.00.03
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45eb6d4850dsm33487487f8f.17.2026.05.26.05.23.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 May 2026 05:00:04 -0700 (PDT)
-Date: Tue, 26 May 2026 13:59:59 +0200
+        Tue, 26 May 2026 05:23:29 -0700 (PDT)
+Date: Tue, 26 May 2026 14:22:49 +0200
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
 To: Maulik Shah <maulik.shah@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -88,10 +88,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-gpio@vger.kernel.org,
 	Sneh Mankad <sneh.mankad@oss.qualcomm.com>
-Subject: Re: [PATCH v2 0/8] x1e80100: Enable PDC wake GPIOs and deepest idle
- state
-Message-ID: <ahWLPy8vg_neYgrX@linaro.org>
+Subject: Re: [PATCH v2 5/8] irqchip/qcom-pdc: Configure PDC to pass through
+ mode
+Message-ID: <ahWQmTr-9a33b9FY@linaro.org>
 References: <20260526-hamoa_pdc-v2-0-f6857af1ce91@oss.qualcomm.com>
+ <20260526-hamoa_pdc-v2-5-f6857af1ce91@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,11 +101,11 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260526-hamoa_pdc-v2-0-f6857af1ce91@oss.qualcomm.com>
+In-Reply-To: <20260526-hamoa_pdc-v2-5-f6857af1ce91@oss.qualcomm.com>
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -112,7 +113,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	DKIM_TRACE(0.00)[linaro.org:+];
 	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-109802-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-109803-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -122,70 +123,168 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:mid,linaro.org:dkim,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 096C85D53EB
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 552415D579B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, May 26, 2026 at 04:24:36PM +0530, Maulik Shah wrote:
-> There are two modes PDC irqchip can work in
->         - pass through mode
->         - secondary controller mode
-> 
-> Secondary mode is supported depending on SoC using PDC HW Version v3.0
-> or higher.
-> 
-> +------------------------------------------------------------------------+
-> | SoC             |  SM8350, SM8450  | SM8550, Hamoa   | SM8650, SM8750  |
-> |----------------------------------------------------------- ------------|
-> | Version         |        v2.7      |       v3.0        |       v3.2    |
-> |------------------------------------------------------------------------|
-> | Pass through    |        Yes       |       Yes         |       Yes     |
-> |------------------------------------------------------------------------|
-> | Secondary       |        No        |       Yes         |       Yes     |
-> +------------------------------------------------------------------------+
-> 
+On Tue, May 26, 2026 at 04:24:41PM +0530, Maulik Shah wrote:
 > All PDC irqchip supports pass through mode in which both Direct SPIs and
-> GPIO IRQs (as SPIs) are sent to GIC without latching at PDC, PDC only does
-> inversion when needed for falling edge to rising edge or level low to level
-> high, as the GIC do not support falling edge/level low interrupts.
+> GPIO IRQs (as SPIs) are sent to GIC without latching at PDC.
 > 
 > Newer PDCs (v3.0 onwards) also support additional secondary controller mode
 > where PDC latches GPIO IRQs and sends to GIC as level type IRQ. Direct SPIs
 > still works same as pass through mode without latching at PDC even in
 > secondary controller mode.
 > 
-> All the SoCs defaulted to pass through mode with the exception of some x1e.
-> 
-> x1e PDC may be set to secondary controller mode for builds on CRD boards
-> whereas it may be set to pass through mode for IoT-EVK boards. The mode
-> configuration is done in firmware and initially shipped windows firmware
-> did not have SCM interface to read or modify the PDC configuration.
+> All the SoCs so far default uses pass through mode with the exception of
+> x1e. x1e PDC may be set to secondary controller mode for builds on CRD
+> boards whereas it may be set to pass through mode for IoT-EVK boards.
+> The mode configuration is done in firmware and initially shipped windows
+> firmware did not have SCM interface to read or modify the PDC mode.
 > Later only write access is opened up for non secure world.
 > 
 > Using the write access available add changes to modify the PDC mode to
 > pass through mode via SCM write. When the write fails (on older firmware)
 > assume to work in secondary mode.
 > 
-> As the deepest idle state as the PDC can now wake up SoC from GPIOs and
-> revert commit 602cb14e310a ("pinctrl: qcom: x1e80100: Bypass PDC wakeup
-> parent for now").
+> Co-developed-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+> Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+> ---
+>  drivers/irqchip/qcom-pdc.c | 109 +++++++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 106 insertions(+), 3 deletions(-)
 > 
-> The series has been tested on x1e80100 CRD with both old and new firmware
-> and also on kaanapali.
-> 
+> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+> index 86379dddc5be..69ddd7d89a83 100644
+> --- a/drivers/irqchip/qcom-pdc.c
+> +++ b/drivers/irqchip/qcom-pdc.c
+> [...]
+> @@ -135,6 +151,8 @@ static const struct pdc_regs pdc_v3_2 = {
+>  };
+>  
+>  static const struct pdc_cfg pdc_cfg_v3_2 = {
+> +	.gpio_irq_sts = GENMASK(5, 5),
+> +	.gpio_irq_mask = GENMASK(4, 4),
 
-Tested how?
+BIT(5) / BIT(4) would be clearer here in my opinion.
 
-I recommend testing with the tlmm-test module Bjorn added, in all
-supported configurations, to make sure you don't introduce regressions
-for one of them. It would be also good to provide the test results here
-in the cover letter.
+>  	.irq_enable = GENMASK(3, 3),
+>  	.irq_type = GENMASK(2, 0),
+>  };
+> [...]
+> @@ -184,6 +204,14 @@ static u32 pdc_reg_read(int reg, u32 i)
+>  	return readl_relaxed(pdc->base + reg + i * sizeof(u32));
+>  }
+>  
+> +static inline bool pdc_pin_uses_seconary_mode(int pin_out)
+> +{
+> +	if (pdc->mode == PDC_SECONDARY_MODE && pin_out >= pdc->num_spis)
+> +		return true;
+> +
+> +	return false;
+
+Can put this in one line:
+
+	return pdc->mode == PDC_SECONDARY_MODE && pin_out >= pdc->num_spis;
+
+> +}
+> +
+>  static void pdc_x1e_irq_enable_write(u32 bank, u32 enable)
+>  {
+>  	void __iomem *base;
+> @@ -232,6 +260,36 @@ static void pdc_enable_intr_bank(int pin_out, bool on)
+>  		pdc_reg_write(pdc->regs->irq_en_reg, index, enable);
+>  
+>  	raw_spin_unlock_irqrestore(&pdc->lock, flags);
+> +
+> +	if (pdc_pin_uses_seconary_mode(pin_out))
+> +		pdc->unmask_gpio(pin_out, on);
+> +}
+> +
+> +static void pdc_clear_gpio_cfg(int pin_out)
+> +{
+> +	unsigned long gpio_sts;
+> +
+> +	if (pdc->version < PDC_VERSION_3_0)
+> +		return;
+> +
+> +	gpio_sts = pdc_reg_read(pdc->regs->irq_cfg_reg, pin_out);
+> +	gpio_sts &= ~pdc->cfg->gpio_irq_sts;
+> +	pdc_reg_write(pdc->regs->irq_cfg_reg, pin_out, gpio_sts);
+
+Is this guaranteed to be called sequentially, i.e. not in parallel on
+another CPU? Otherwise, you need to add the lock here to make sure the
+read-modify-write doesn't race with another CPU.
+
+Note that since the irq_cfg_reg is also used in qcom_pdc_gic_set_type()
+it would be safest to add the lock there as well (although since PDC has
+IRQCHIP_SET_TYPE_MASKED it's probably unlikely to be called in parallel
+with another irqchip operation for the same IRQ). In my patch, I handled
+this for all users using a new pdc_update_irq_cfg() function [1].
+
+[1]: https://github.com/stephan-gh/linux/commit/59ca2a7335ede83e4a7cf02704dd7c469c725c14
+
+> +}
+> +
+> +static void pdc_unmask_gpio_cfg(int pin_out, bool unmask)
+> +{
+> +	unsigned long gpio_mask;
+> +
+> +	if (pdc->version < PDC_VERSION_3_0)
+> +		return;
+> +
+> +	gpio_mask = pdc_reg_read(pdc->regs->irq_cfg_reg, pin_out);
+> +	if (unmask)
+> +		gpio_mask &= ~pdc->cfg->gpio_irq_mask;
+> +	else
+> +		gpio_mask |= pdc->cfg->gpio_irq_mask;
+> +	pdc_reg_write(pdc->regs->irq_cfg_reg, pin_out, gpio_mask);
+>  }
+>  
+>  static void pdc_enable_intr_cfg(int pin_out, bool on)
+> [...]
+> @@ -258,6 +319,20 @@ static void qcom_pdc_gic_enable(struct irq_data *d)
+>  	irq_chip_enable_parent(d);
+>  }
+>  
+> +static void qcom_pdc_ack(struct irq_data *d)
+> +{
+> +	if (pdc_pin_uses_seconary_mode(d->hwirq) && !irqd_is_level_type(d))
+> +		pdc->clear_gpio(d->hwirq);
+> +}
+
+You might need a write memory barrier here and/or read-back here to make
+sure the write is complete before the interrupt is unmasked in the GIC.
+IIRC I added this in my patch after seeing some test tlmm-test failure..
+
+> +
+> +static void qcom_pdc_gic_eoi(struct irq_data *d)
+> +{
+> +	if (pdc_pin_uses_seconary_mode(d->hwirq) && irqd_is_level_type(d))
+> +		pdc->clear_gpio(d->hwirq);
+> +
+> +	irq_chip_eoi_parent(d);
+> +}
+> +
+>  /*
+>   * GIC does not handle falling edge or active low. To allow falling edge and
+>   * active low interrupts to be handled at GIC, PDC has an inverter that inverts
+> [...]
+> @@ -510,6 +600,10 @@ static int qcom_pdc_probe(struct platform_device *pdev, struct device_node *pare
+>  		pdc->enable_intr = pdc_enable_intr_bank;
+>  	}
+>  
+> +	pdc->unmask_gpio = pdc_unmask_gpio_cfg;
+> +	pdc->clear_gpio = pdc_clear_gpio_cfg;
+
+What is the purpose of these function pointers if you always assign the
+same function?
 
 Thanks,
 Stephan
