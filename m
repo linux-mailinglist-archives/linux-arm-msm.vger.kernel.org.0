@@ -1,162 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-109922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wN+nJkkeFmpZhwcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 00:27:21 +0200
+	id SB69CdviFmpbvQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 14:26:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1ECD5DD30F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 00:27:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9083E5E4261
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 14:26:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 668EA303282F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 22:27:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7BF1730D170A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 12:15:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01DB93C769B;
-	Tue, 26 May 2026 22:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70A2637B022;
+	Wed, 27 May 2026 12:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="RjUxyWNn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b9fDkV4z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF7F29E117
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 22:26:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217AB3D16E2;
+	Wed, 27 May 2026 12:15:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779834421; cv=none; b=oEh0cImgS0YWEk5DGq3HfRnxp0fE8+u+9JRTw/JycARegw98ikSlRFL0EteaLTRHeYToUsJhwzJLAKauD+ylsKvE9L1ElfOz+Vd8aiDztDvdHrL0q1S+zuo+XydozYLqBepzK6yQYsmhJI3Cg19chSL05VT/XshnEtfXwMcCO3w=
+	t=1779884125; cv=none; b=jHHstk7Yp5MOI6uwzcC+egfx1L04/KBPGe1XX0t2/q5ncPwQly2jk552SrwABDZA9CsaNFSANe/8NFAcqyiSujXfqZ/R5iaia2q7TSnG9fACUnCpYZrWP7WR2xgd+GwMM6xLPywFi9HULutFd0cLJ8CjS/lfe8geLMjM1cPpn70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779834421; c=relaxed/simple;
-	bh=HgY5Masn0W5/0NfnUc8THm8uwyfc2gbRIogqIK3E7rc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LD9jkGG98merm8CGVchY74Onvco9L2wn29aN59we+flg2GDwpDBd2sxtk9VL/CXiczQgmfZFrClNtK2sim3uk9HKmhmcKR/akmgP/3CVQ4NFmPyYmlsqMZHI12fNYRSWW3fkEqcoSLEIHNxS879bEzVag+oYoPCe+B+NDFFFS48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=RjUxyWNn; arc=none smtp.client-ip=91.218.175.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <133ced18-1aa9-475d-80d8-6120678bdde4@packett.cool>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1779834407;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8FKKP3/izRY7pwM0mbrBoI1rU+sAJfmrdc5PGmqj3SQ=;
-	b=RjUxyWNnJrOGazqvy+fYoXHQwS9CQs+m0AUI/nNM63JjDdpp9Q/V6LarTRaKDPOBS3/Buq
-	hePwtP2kYgL33/bn8SaejFWswqAESJm7Z3qTiM2/cu8iXHe8I2u5zp47mDxdLdAMHZCsH1
-	TkAGmkOm5MPo4LnVJbXrkp/Xz/pl7ltFZNlxVwTGzL8NcTVEyRCcjWc6BlGkNbl520yYtG
-	6tJK6mSW/4NywhX11FJUhXIIWHEDCuRaiELtwY7yVAg6+JuDlySpRxsc1IBgWD1lJw66YK
-	9M7uo27Euy8caPfQ7oP+Z3CX1jlMWNzKKzrTWyp12c7Hey4PDC+LQ1nlhl6oQg==
-Date: Tue, 26 May 2026 19:26:40 -0300
+	s=arc-20240116; t=1779884125; c=relaxed/simple;
+	bh=T4FqehIl8WWQvNN4UBxgpJZklu+2/xmkrX022/gXTXU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=pTOhK8PprkuXxkQ5TdbqK8cbuQ/npdMvv9ZuiA7Dj+Od9A/GQ54yxvjbPA6sRCpaApeJBn7nbgUdeh0adTGSrg/DSCj9WbolXntv7ocPksieHujo8g8WgvSh9djI+fofN2so5pVR00aak425tCLGm1OI/DNkTkfxl0HpUcg3PUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b9fDkV4z; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34DA81F00A3A;
+	Wed, 27 May 2026 12:15:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779884123;
+	bh=t6CParXec6WBWqEfdqrDBdsraZOad/XDU3mSaF49ohA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=b9fDkV4zUYHeuvE3+i1ILBnpjr/nzYvLEcc3bvLBxw4tjjUdGn+2LeoxjOa/BelVi
+	 ubKUPxYN9NPT9r2q4IUUknrDssJ0HK/4udrLVmE7Bcm66MF/9NqDtmY6Zy5WG0PI2U
+	 n4zMciY5sHHDfJpQUDa1vkOiJ0nyi5hnx2XIv4N6vqcRbD+qt3nWBWaPZT55RyjUhb
+	 BOnYx3muft0x0S3dxajlvbaUp8GlXOTA2VL6TyuLyTHED96aGmbzSoS3AMJ48KuK5K
+	 HG8ZXAma9VK9uv6opTFknqZGmQrhz33odlWHvp/7nmtWfml2SBSn5Qtyp2VvyPEWpJ
+	 BH+orH0QaZDtA==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: srini@kernel.org, lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com, 
+ krzysztof.kozlowski@oss.qualcomm.com, mohammad.rafi.shaik@oss.qualcomm.com, 
+ alexey.klimov@linaro.org, ravi.hothi@oss.qualcomm.com, 
+ mathieu.poirier@linaro.org, verhaegen@google.com, andersson@kernel.org, 
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20260519131527.4002526-1-srinivas.kandagatla@oss.qualcomm.com>
+References: <20260519131527.4002526-1-srinivas.kandagatla@oss.qualcomm.com>
+Subject: Re: [PATCH 0/6] ASoC: qcom: qdsp6: add push/pull module support
+Message-Id: <177983641184.868420.5216505688708523357.b4-ty@b4>
+Date: Wed, 27 May 2026 00:00:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 0/3] soc: qcom: apr: improve RX processing
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
- andersson@kernel.org
-Cc: srini@kernel.org, konradybcio@kernel.org, linux-sound@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260514155051.2593354-1-srinivas.kandagatla@oss.qualcomm.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <20260514155051.2593354-1-srinivas.kandagatla@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2531; i=broonie@kernel.org;
+ h=from:subject:message-id; bh=T4FqehIl8WWQvNN4UBxgpJZklu+2/xmkrX022/gXTXU=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqFuBYLE+RUGBY5i9Fmhgob6MV4cdwmqiCeUL5C
+ nQr0Tbqk7SJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCahbgWAAKCRAk1otyXVSH
+ 0BKJCACGjUEAKePNuw5PYuTcUVsLSbOHGPMG8KLJ07gusPxZoLJNVShJAaIbWGRNYnFvgLmTnoD
+ 0TCEumdmgMbDMAYx/7g3wjA3ePefVuhxrQpPWeztVd6HBkai3R0cWfjXT835IW/U3u6/Ebjs19N
+ N5ZqmcTXueElXGa8A/sDq78QeFIzwwQYJhyGnd2B5F7qtYE2/hUJgCidu6OPtDp67LUGCOBBnaM
+ GIvCRJXPSrpWsiQ9eFTbldTD/5ICFmag+wH1umz9yJUznL3hKG4yTUMcbw1jAM1rYnvTybR7SMb
+ 4wTyJBG++dLUorJhwibHYny/CkVn7M0FaWxtXIW1XvL9rhRQ
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-109922-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-109994-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	DKIM_TRACE(0.00)[packett.cool:+];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,oss.qualcomm.com,linaro.org,google.com,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[flathub.org:url,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,packett.cool:mid,packett.cool:dkim]
-X-Rspamd-Queue-Id: F1ECD5DD30F
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 9083E5E4261
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi,
+On Tue, 19 May 2026 13:15:21 +0000, Srinivas Kandagatla wrote:
+> ASoC: qcom: qdsp6: add push/pull module support
+> 
+> This patchset adds support for Push/Pull mode modules.
+> Push-pull mode uses dedicated shared-memory modules that allow the DSP
+> to access the PCM circular buffer directly. In addition to reducing
+> fragment queueing and ACK handling in the host driver,
+> This mode exposes a DSP-maintained position buffer that provides
+> fine-grained hardware pointer updates. Unlike the Read/Write Shared
+> Memory endpoitn modules, which are period based, where the reported
+> pointer advances only at period boundaries, where as push-pull mode
+> allows .pointer() to reflect sub-period progress, improving pointer
+> accuracy.
+> Also the driver now can queue buffers which are less than period size,
+> which makes tests like alsa_conformance_test happy.
+> 
+> [...]
 
-On 5/14/26 12:50 PM, Srinivas Kandagatla wrote:
-> Hi all,
-> [..]
-> Srinivas Kandagatla (3):
->    soc: qcom: apr: Remove service from IDR before registration failure
->    soc: qcom: apr: Check response packet length by router type
->    soc: qcom: apr: Process RX messages using per-service work items
->
->   drivers/soc/qcom/apr.c       | 283 ++++++++++++++++++++++++-----------
->   include/linux/soc/qcom/apr.h |   6 +
->   2 files changed, 200 insertions(+), 89 deletions(-)
+Applied to
 
-just saw a crash under apr_service_rxwq -> graph_callback with this 
-series applied. Can't say it really is to blame, but still replying here 
-because it was applied..
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.2
 
-hamoa, quad WSA speakers, pipewire, audio playing from 
-https://flathub.org/en/apps/com.rafaelmardojai.Blanket, crashed when 
-opening pavucontrol (display froze with the pavucontrol UI already loaded)
+Thanks!
 
-<1>[577090.453413] Unable to handle kernel NULL pointer dereference at 
-virtual address 0000000000000050
-[..]
-<4>[577090.453924] CPU: 0 UID: 0 PID: 946838 Comm: kworker/u49:1 
-Tainted: G        W  7.1.0-rc4-next-20260519-uwu+ #116 PREEMPT(full)
-<4>[577090.453933] Tainted: [W]=WARN
-<4>[577090.453936] Hardware name: Dell Inc. Latitude 7455/0FK7MX, BIOS 
-2.13.0 09/19/2025
-<4>[577090.453941] Workqueue: qcom_apr_rx apr_service_rxwq [apr] 
-(../drivers/soc/qcom/apr.c:359)
-<4>[577090.453957] pstate: 61400009 (nZCv daif +PAN -UAO -TCO +DIT -SSBS 
-BTYPE=--)
-<4>[577090.453963] pc : graph_callback+0x1a8/0x280 [snd_q6apm] 
-(../sound/soc/qcom/qdsp6/q6apm.c:577)
-<4>[577090.453977] lr : graph_callback+0x194/0x280 [snd_q6apm] 
-(../sound/soc/qcom/qdsp6/q6apm.c:572)
-[..]
-<4>[577090.454086] Call trace:
-<4>[577090.454090]  graph_callback+0x1a8/0x280 [snd_q6apm] 
-(../sound/soc/qcom/qdsp6/q6apm.c:577) (P)
-<4>[577090.454100]  apr_service_rxwq+0x274/0x3b8 [apr] 
-(../drivers/soc/qcom/apr.c:535)
-<4>[577090.454109]  process_scheduled_works+0x190/0x500 
-(../kernel/workqueue.c:3323)
-<4>[577090.454124]  worker_thread+0x230/0x330 (../include/linux/list.h:404)
-<4>[577090.454133]  kthread+0x120/0x158 (../kernel/kthread.c:438)
-<4>[577090.454141]  ret_from_fork+0x10/0x20 
-(../arch/arm64/kernel/entry.S:842)
-<0>[577090.454153] Code: f94026e9 910242e0 f9400e95 d37ced08 (f8686936)
-<4>[577090.454158] ---[ end trace 0000000000000000 ]---
+[1/6] ASoC: qcom: audioreach: use cached shared memory module IID
+      https://git.kernel.org/broonie/sound/c/e4c4b837d65d
+[2/6] ASoC: qcom: q6apm: return error code to consumers on failures
+      https://git.kernel.org/broonie/sound/c/f3493007b7bb
+[3/6] ASoC: qcom: q6apm: remove shared memory IID helpers
+      https://git.kernel.org/broonie/sound/c/47ce092cde64
+[4/6] ASoC: qcom: audioreach: Add support for shared memory push/pull modules
+      https://git.kernel.org/broonie/sound/c/f08ce3bf4133
+[5/6] ASoC: qcom: q6apm: add watermark event support
+      https://git.kernel.org/broonie/sound/c/f257ed401cfc
+[6/6] ASoC: qcom: q6apm-dai: add push-pull and watermark event support
+      https://git.kernel.org/broonie/sound/c/0fd22bfd3af2
 
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-Line 577 is         atomic_set(&graph->tx_data.hw_ptr, hdr->token + 1);
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-weird, both graph and hdr have been dereferenced before this line..
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
 Thanks,
-~val
+Mark
 
 
