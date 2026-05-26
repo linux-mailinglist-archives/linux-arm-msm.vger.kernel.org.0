@@ -1,104 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-109746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yMDtGo5RFWrzUQcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 09:53:50 +0200
+	id YFBlKyJTFWqmUQcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 10:00:34 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0EB525D210D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 09:53:49 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40B635D22C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 10:00:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 158DF300ACA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 07:53:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E01093011F16
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 May 2026 07:57:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9808B3CC316;
-	Tue, 26 May 2026 07:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F4ED3CC30F;
+	Tue, 26 May 2026 07:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nsyg1ER3";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VRXpxD/P"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XY+lPHoI";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VW0Jr/Mh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6EC3CBE74
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 07:53:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CF23B2FC8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 07:57:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779782026; cv=none; b=LwP9/fh1DDwi/gp2D446vT1NPVN3eW4ESJ6SsH1t90u5m9FNGyZ0MaNu6OOt/4QpVd3nEgZ6xb8/qF0ji3CPFIxWyLuW7KXDdm5ng77I8su5ly2YIURwvyftmej7mCF05sl5hDm0NS2Yn/Xl1KYiEzmedZw5TY4dzqVQQlAkbJ0=
+	t=1779782245; cv=none; b=oZs601TlzpFtfEk+/XX3cVoRZrsnWaHseZlJtEyYc/6yHtuiYoCBD++mOJZpnF0oa+qenRzvBb9+xw+vqvVM/7PMJU2axEEDoRkFULaz6+ikl3x/iE/Yg5XO4ujsNSgMezsjHd4BvqKpJaJQr1o7CBuEHECAJ8jRzG9kVPMZFJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779782026; c=relaxed/simple;
-	bh=FQItYE5lhOgysObmk/9s1tt32WG7yWkaKTC+0wxlmaQ=;
+	s=arc-20240116; t=1779782245; c=relaxed/simple;
+	bh=taI92lZX94r2aiRpHUjaq9t477WefzxpTE2yDGbdTWQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Gc6HyjwW05i0/1qUXCbgIYU/k241GV7BCFOxHr1lbLObBCc2poU+ZT8bd9KYTrPHuEIoBIR7JgfMS/rmln+I4ptVgu64AEI1KT8R7quV464AkCgpXnq+p1epkDR9rOI7CWGNkiDg25Yl26aJ7565z1A4R47ohCJY2uZF5YwftMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nsyg1ER3; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VRXpxD/P; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=OgLVtfDPb9BDzWwwnyCq3gzXbrSvi7XYg69r1jo+93KrkmrLRiKZ3Wvna0iWOq763yK5Coj6NFzQYN+vp9aMiKIHyYNw5+XKpg0beptvota2Xwid5qB/49bbEqo4uf2Dx4V7ST57wyi3cK4uPNswNY7BJofir3I0WrzZXoEOQlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XY+lPHoI; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VW0Jr/Mh; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64Q2Gbsg4117456
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 07:53:44 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64Q2omHI2823055
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 07:57:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OuL8yKBdugShDKTmzUjZs0KnNoPZVA0o6dUNMSnFCgQ=; b=nsyg1ER3Mn1HiMIs
-	tGfFWi4/CKUC/lVPWG6EF/pdLEXCxmskLy4FCCMNi4/gmKME+wZB7J/28q6BmWQR
-	6vCbd9HGPvlUAHHF0FKh1OvjEZ80v5erbm7qlIimv0pOa2wNiRsMNYA1hPJeJDAn
-	S5YFDnAjGspA5whZlVxvo8fjXwwvtgd+Mkx1TSy3WDkKYfG0hgjHuK3B65o4HPEx
-	7RrF3ntJxS8J20sOsnFXOlyt+G75tENULnxj05REOkj9CbTR7Ku/eDNVLr+DSRej
-	qs6mrxmpae6XXt8GPhqxU+r0jgApmzOql5rSyknK8FFKeQfjQSJqTJH4bMbC0gLj
-	mPS6SQ==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ecqudarr6-1
+	Fq7M7jSV3ibv9kCZCo9XSqfI/a3Xnorju71AEARJQ0g=; b=XY+lPHoIh7v1gE3Y
+	ZV+5s0dylNrNLlwoGblYVefuJlqxN5CjvhuVxhJKb23sGgs1IQrER8EWkv/utw+v
+	BH548I7+Ht5bYKmAmktQo76REhadu7TS1Tm5s3dwDecwcEqzTJIE51ndjQYcvRfL
+	RLxqklTjduTXGxN3+47WAZWetIBtxlXiunEl4lN9iItXF9WhFI1alAmZDazbuGKF
+	Adl/XYmqxV/QAT3hwU+p89y1Pjt0hOwYwfFrb9Y/A1Nr2CWktqMJUSHkn+8ssOf9
+	uWxvJLs4cKS077f3gaZ6fw2aP1vMYzpIhoMNEKAZhBnTHPLwj7tLxqiq6a9ntRRn
+	ewz5Vw==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ecqvwtpqd-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 07:53:43 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-2f3eb8f3419so3606209eec.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 00:53:43 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 07:57:22 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2b4654f9bb6so112219225ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 May 2026 00:57:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779782023; x=1780386823; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1779782242; x=1780387042; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OuL8yKBdugShDKTmzUjZs0KnNoPZVA0o6dUNMSnFCgQ=;
-        b=VRXpxD/PVQhTwBnRff5qBWaQTu5QupZXPMGqyjLR7IxBKVO1uTYcSEqY0hAfy7Wwep
-         aUAHw828l5XbipvNNWNkZtEtCD6ETJhHxAQyi19JVysjcsrmVyQ4zUeIqHlGVocHa12Y
-         3FER3lW8r3So1oypLGT8oL7AUA0j/5un8eoUH70QyPzeHkHICwOmBeOvU7k4IOTvbSf7
-         2R/pKc1u9+W869qTLPoWsQAto5K6cS3kl7JPNWX2Iv/05us0kb6VwD8CTXNmmjnJnh5+
-         ISHPTkZmHER74un5tc/dn0cfEdmVm+cPisuVM+zh+/QJWBtYED5x4Essus7sI91SutYm
-         7hWg==
+        bh=Fq7M7jSV3ibv9kCZCo9XSqfI/a3Xnorju71AEARJQ0g=;
+        b=VW0Jr/MhQcdBhZVVAhfNj3IGGDB08oc3N9Heu6egiHNp+iQ0+Sk+OvBDZYrQ87O9Tp
+         qdD0RN7IOxRzyXRMD746J3Fiyj42Is38mdOi1N2fyXSIVOZ3RkBr5fU3tfSsyuDTlIMP
+         jKfJV5XH6B/x6Gs12ovXlp1U6GZZ6WJBUaP690Yh2x3IB6jLac65WgHqWyw7SuyPAQFY
+         vj4h6Ym8wVB1iNgBLIY3E7iN/Qb9rBp5Fl/p0Y9ddMBgsTq4teH8/kFm6DIOXE9tTGws
+         ssM9/x0LShde0jhKIyq7Ai2nyMuzwSsmu6TJ9+yO7hnZDp14u9rMvfxsauGDXH4YV0MM
+         gpsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779782023; x=1780386823;
+        d=1e100.net; s=20251104; t=1779782242; x=1780387042;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OuL8yKBdugShDKTmzUjZs0KnNoPZVA0o6dUNMSnFCgQ=;
-        b=WT8qUahemHQr49dGT6CAax71QoH1trCZix6laHz8XLvF9CobXWLylsdC08rn1aN14N
-         97PCq02kMRaUBBWqawe8cm/zLP8pgRN2yfmig+1f6jM43m132QNGOYTScv299ePKAFpr
-         jphZbNQv2G820Q1rIHw9SrBXh/XU+do44VNeRXMUsueJyTWtW+gasnn5gl+d/vefNnN+
-         bgNlwapWpQbHmILWu9VC6u8+nfp67tMDKANoGLGrrOEojvyqygDCog3NkCtakvMt4mH9
-         kBnwnsawqYE5T9vBstKB8kQuqoVAq65cgxtENAD53sVgszi9n1VzRjqyvqWMUvXPqAyE
-         rYKA==
-X-Forwarded-Encrypted: i=1; AFNElJ8f2DWscJeXsZtZtNxlmMFz+5PUF2mOGoo9SR+gSzKwqFKt/w/AqcprnpV8W2OvpeETFrkhXd1UQR+pFMNl@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz23uV4LPKaXKTJ1CWGrXRBxaqfqyvb9Wmes+bfzircE5cuNBi3
-	zfvpm2GS5lHMYqJZKPYttqR+nChpxaG01hl25oAnH/sukL0sXpAjm6pFrXAn7hMqjXkAJEFQDZA
-	uyJRJnUE5YY8jmGCR+gt2OBX3yfXCeFBV2rUscTO5S+xKGSD54wnFVfmFp4Vv8jRDM737
-X-Gm-Gg: Acq92OGn+i6wUAj/NfzK6Y9jqu7SXnK8efPHb88rYAHJwWO6T9oyZ/x5Gwz/LpVrmES
-	4O0tlDDlMv3KsCuUp/3a7ymZmyoy52UakUTrP3VCWzAJugbilY98kHO4j1/xEeYRH8GT7/qsQoi
-	Vdi2Xx17lZ77Vy+JQ1eQqP1kZkGfnC815cj/fHRjhQjxA2PgXtvf5lomEFOR5bHWABICFsPwPsO
-	7//NDzUuUVk8Qxwim229lvFrEWE/jhrOuAH58aWRkSGC0qvzA/zsfkqq6pT4pqnV0GJdSLmurOA
-	8q11rIPXEw2OBhCaz+E+tccETuFcH21sTjfdWTd64p5Ic41+/KzBJbLE8lxT/6tw6X93zJWwDp5
-	ARiDB9xLSMXVs+0S6wAMsNnSyshQKwd4y88XhrF5EVlT1FoHI1krX
-X-Received: by 2002:a05:7301:d0f:b0:2ed:e15:c923 with SMTP id 5a478bee46e88-30449142740mr7787207eec.31.1779782022797;
-        Tue, 26 May 2026 00:53:42 -0700 (PDT)
-X-Received: by 2002:a05:7301:d0f:b0:2ed:e15:c923 with SMTP id 5a478bee46e88-30449142740mr7787195eec.31.1779782022220;
-        Tue, 26 May 2026 00:53:42 -0700 (PDT)
-Received: from [10.68.116.254] ([146.0.26.16])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-30451f1fd1csm9838346eec.8.2026.05.26.00.53.39
+        bh=Fq7M7jSV3ibv9kCZCo9XSqfI/a3Xnorju71AEARJQ0g=;
+        b=UH7pGm78OrxkjGG+/v2n8rJuzmYUeqgfIDln6Rv939DpbxVpTGhbW+eeaW8+o99Exq
+         FSAYUL/ssrX/OWjiCeznxVyYX7Rl8fllS/lYR4zjDiAxBeFhbKjmfPp9+bOicgq7GZa+
+         VQFhhTu/EyUFa6VxXBfio9HGlY56o71nmW+KvFkrKvL2S/bpt1/EKCKIWLqMIBWOw+RJ
+         d56c2vsI3B6aw1xaCQgUTvPP1qKhShxjMz3VIo/c6cU+4vgegIC1XLWYAs3DfJmrOGa/
+         5Z9MHdHCrFvMxD7r1UncSc/TZOVdYRR4yMIslC+y+LQ6QD+rGD842l7UgW0vsxx/lWXP
+         ua6w==
+X-Forwarded-Encrypted: i=1; AFNElJ/LOPDiV8Fdpt8aL4rP2fn73+KhPTu9qDDdWTt/Uxhs2VMfP2KP326VPQx9oY+IyNmSrWFrlTnPOfQ1UUm8@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxjQTAoi8xygnxPWxFwiY0mobX8ggYngUPDxfMyWWC+hUonBNC
+	BiW2QBI8umK7BmfQDYKdxhI38kMv7suKR+kefxvZGy1OXMX0icD32agD93zBLo+68WnBFPSmhYT
+	mcaQ5RguLHg/E5qdGxmH+7MpSTFLogUUrzFuGicqhSaLyw9/me98uEoltvjN0u1AtzJEw
+X-Gm-Gg: Acq92OFEVE88Hat2cLsbxHJrB/aBPMiToD64cz7HnVttS+b+NK/kZ5eMtD1Dsh/8Ev/
+	Vv1T2Vned1W8XwSAu+qHEHYo987P+K8YpyhdMQaDBlABI6Y4bNrhDDcz9ef1vBw5GNRraa2e0oH
+	Dj+VMaThk4TiiiNiwd8SAAK1D92qWdV8RaJpQZk27y+WNc6+GyzveAvxeuLgBewG3hz1B7PHAY6
+	nnvX0oQzeOCyvo0uUAuoexb39MiEd75I19mGeUOWhIUszaqVXYrUzlnd1j0O6ESBlcFGQXGc/87
+	99XouVkQzXxi1ix5OWsc25i9tCBTItSYyIvF9eDbRRRe4P1OnJsLEc78wBIUv3tTMzG4Ldw4CTV
+	WgB3zgtzKGrmjUJ1PaRm1c/ax5o3PNrk/JqGbssfcm+hlpAqK0tb8ftGsPOM=
+X-Received: by 2002:a17:903:2bcc:b0:2b2:5099:2f3e with SMTP id d9443c01a7336-2beb06ea859mr185518405ad.4.1779782242032;
+        Tue, 26 May 2026 00:57:22 -0700 (PDT)
+X-Received: by 2002:a17:903:2bcc:b0:2b2:5099:2f3e with SMTP id d9443c01a7336-2beb06ea859mr185517995ad.4.1779782241417;
+        Tue, 26 May 2026 00:57:21 -0700 (PDT)
+Received: from [10.151.36.45] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2beb58c31a3sm117564955ad.55.2026.05.26.00.57.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 May 2026 00:53:41 -0700 (PDT)
-Message-ID: <fa26f61e-86b6-4612-afae-7726e3b35c4b@oss.qualcomm.com>
-Date: Tue, 26 May 2026 13:23:36 +0530
+        Tue, 26 May 2026 00:57:20 -0700 (PDT)
+Message-ID: <3cbcffee-a2d1-494d-b4d4-378c2ae395e6@oss.qualcomm.com>
+Date: Tue, 26 May 2026 13:27:16 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,177 +106,315 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/6] media: qcom: iris: add support for decoding 10bit
- formats
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20260521-topic-sm8x50-iris-10bit-decoding-v4-0-8ff8fce3f904@linaro.org>
+Subject: Re: [PATCH 1/2] dt-bindings: soc: qcom: Document CDSP Power
+ Management
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260520-cdsp-power-v1-0-85eb9501a1cd@oss.qualcomm.com>
+ <20260520-cdsp-power-v1-1-85eb9501a1cd@oss.qualcomm.com>
+ <ag-Tk8xE4OkZpvIZ@baldur>
 Content-Language: en-US
-From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <20260521-topic-sm8x50-iris-10bit-decoding-v4-0-8ff8fce3f904@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
+In-Reply-To: <ag-Tk8xE4OkZpvIZ@baldur>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 76hNrF_xY8IgGHZ2mEEi9F0hEgLtbJTi
-X-Proofpoint-GUID: 76hNrF_xY8IgGHZ2mEEi9F0hEgLtbJTi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI2MDA2OCBTYWx0ZWRfX/bBbLiqzlafy
- 3BsbB6pihUofTYPTHdpuQlOpwvGv4O/zpyLhmoA+72OmiUz7/5bsPEErfgy+pr1vqRhVtjXh7Dv
- RBUnfpPGKgJHo0Kcre2mlPMVKurGcn41DOkH6tmJsYa/h4/inwt/RoeMa4rqcMiWsPZUX1El3vl
- meWeWKOJz7AC5Gdw2wNf9m84gPJVzE55vMdslUlMehwgojxcz/NyyX/rq0YFPJx3ERMrsgM4slR
- cXDwn2SPmX05Y4VO3h7nC4kIASBxa59L1ks/ZafD9cNhFkP/EH41dfw/vJgySHmijoGFLygOTqj
- cmo+LMtMYKSvY4LyPE4OoG3WR4IeYpx181DjeuFciDUtXklPmZzW6T6fmwnTyD8/RIFSpj6fyQC
- 8szT34ibqt02TBS3Yl58C2CpJ1a4mKm4c9rFsiXD42xHicdWA8BMYeukKGP4QD7G6oTJQKKGm1b
- qH25zJckZEVAghkxGRQ==
-X-Authority-Analysis: v=2.4 cv=C9jZDwP+ c=1 sm=1 tr=0 ts=6a155187 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=3xFAF2x3o65iZn5cP+8M2w==:17
+X-Proofpoint-ORIG-GUID: qPGiJdgME17PQEcdhX75g8Y3SMMOoFnZ
+X-Proofpoint-GUID: qPGiJdgME17PQEcdhX75g8Y3SMMOoFnZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI2MDA2OCBTYWx0ZWRfX2/XIXR9Y5YtQ
+ jPz3AsuZy1wK90waqpLVjv399PVJpOfDNeL8cNpDPzXkyXrjNS7Mb7RfrcBUNOELVIndqh5jvgs
+ 19s6wFFfrcWBakviL0YNGWYSciNBptl6TCGXJHviI2iTXfHgp4iOF4/EHYNSJIbdjSWegQ9e2ZB
+ SNF66Ui6F/HxYILe30mSXWsYWuGxnB9SY01LUSnYmBgkxK4xOg+U4AvoP9F0GC7tuQhX7UUsz34
+ f1QklUxo+gZun2A2BSuEGW3uHP6xIxuYWVArSVUsOK1ksccOB68a78m6l/cgZMcmeK1vaYAMXVT
+ /zXSsixGlt3jztZ6BHQ1qoKlyfq6jT9cgxXfv5vMLNneymIrQ00BCkhuJgTIEgM+5MVbzPukEWH
+ Z9/tZdIiD2WT9maywBeITds3Of+DoHJewzoNzZbcaucgPoycKXNObxAMgTax5cQtJpCyv+EiQNV
+ HqOIMUJnRrVhEeirR/A==
+X-Authority-Analysis: v=2.4 cv=M4l97Sws c=1 sm=1 tr=0 ts=6a155262 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=e5mUnYsNAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=bC-a23v3AAAA:8
- a=KKAkSRfTAAAA:8 a=PPvw34hF8QDUbFAgV6MA:9 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22 a=Vxmtnl_E_bksehYqCbjh:22 a=FO4_E8m0qiDe52t0p3_H:22
- a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8 a=UWntCAtc-LHixlmDmXQA:9 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22 a=sptkURWiP4Gy88Gu7hUp:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-26_01,2026-05-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0 bulkscore=0
- malwarescore=0 suspectscore=0 clxscore=1015 phishscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605130000 definitions=main-2605260068
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 suspectscore=0
+ clxscore=1015 malwarescore=0 impostorscore=0 spamscore=0 phishscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605130000
+ definitions=main-2605260068
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[4ae000:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,devicetree.org:url,qualcomm.com:email,qualcomm.com:dkim];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[msgid.link:url,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim,linaro.org:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,gitlab.freedesktop.org:url];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-109746-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-109747-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[vikash.garodia@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vignesh.viswanathan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCPT_COUNT_SEVEN(0.00)[10];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 0EB525D210D
+X-Rspamd-Queue-Id: 40B635D22C0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On 5/21/2026 2:54 PM, Neil Armstrong wrote:
-> This adds the plumbing to support decoding HEVC, VP9 and AV1
-> streams into 10bit pixel formats, linear and compressed.
-> 
-> This has only been tested on SM8550 & SM8650 with HEVC, and was
-> inspired by Venus, DRM MSM and the downstream vidc driver for the
-> buffer calculations and HFI messages.
-> 
-> Gstreamer support for QC08 and QC10 need the MR at [1] to be applied,
-> but NV12 and P010 works out of the box with mainline Gstreamer.
-> 
-> Fluster HEVC results on SM8650 using Gstreamer:
-> 
-> ./fluster.py run -ts JCT-VC-HEVC_V1 -d GStreamer-H.265-V4L2-Gst1.0 - 141/147
-> The failing test case:
-> - Pixel Format mismatch
->   - TSUNEQBD_A_MAIN10_Technicolor_2 - Gstreamer waits NV12 but decoder returns P010
-> - Unsupported resolution
->   - PICSIZE_A_Bossen_1 - resolution is higher than max supported
->   - PICSIZE_B_Bossen_1 - resolution is higher than max supported
->   - WPP_D_ericsson_MAIN_2 - resolution is lower than min supported
->   - WPP_D_ericsson_MAIN10_2 - resolution is lower than min supported
-> - CRC mismatch
->   - RAP_A_docomo_6
->
 
-<snip>
+On 5/22/2026 4:59 AM, Bjorn Andersson wrote:
+> On Wed, May 20, 2026 at 12:35:09AM +0530, Vignesh Viswanathan wrote:
+>> Add documentation for the CDSP Power Management driver, which handles
+> 
+> Your commit message should not describe an action, it should describe
+> the problem you're solving.
+> 
+>> Dynamic Clock and Voltage Scaling (DCVS) requests via SMEM, manages Low
+>> Power Mode (LPM) transitions via MPM handshake, and provides virtual
+>> regulators for the remoteproc driver to control CDSP power rails.
+>>
+> 
+> You have a node describing the CDSP (remoteproc) already, but it doesn't
+> contain all the properties, so you're going to add this sibling node.
+> 
+> Why don't you describe the remoteproc properly instead?
 
+Sure, will address in next version.
 
 > 
-> Total for iris_driver device /dev/video0: 54, Succeeded: 54, Failed: 0, Warnings: 0
+>> Signed-off-by: Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
+>> ---
+>>  .../bindings/soc/qcom/qcom,cdsp-power.yaml         | 138 +++++++++++++++++++++
+>>  1 file changed, 138 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cdsp-power.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cdsp-power.yaml
+>> new file mode 100644
+>> index 000000000000..f0f89fdeba4e
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,cdsp-power.yaml
+>> @@ -0,0 +1,138 @@
+>> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/soc/qcom/qcom,cdsp-power.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm CDSP Power Management
+>> +
+>> +maintainers:
+>> +  - Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com>
+>> +
+>> +description:
+>> +  The CDSP Power Management driver provides power management services for the
+>> +  Qualcomm Compute DSP (CDSP) subsystem. It handles Dynamic Clock and Voltage
+>> +  Scaling (DCVS) requests via SMEM, manages Low Power Mode (LPM) transitions
+>> +  via MPM handshake, and provides virtual regulators that are consumed by the
+>> +  CDSP remoteproc driver.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,cdsp-power
+>> +
+>> +  reg:
+>> +    items:
+>> +      - description: MPM (Modem Power Manager) register region
+>> +      - description: RSCC (RSC Configuration) register region
+>> +
+>> +  reg-names:
+>> +    items:
+>> +      - const: mpm
+>> +      - const: rscc
+>> +
+>> +  interrupts-extended:
+>> +    items:
+>> +      - description: LPM (Low Power Mode) interrupt from MPM
+>> +      - description: DCVS (Dynamic Clock and Voltage Scaling) interrupt from IPCC
+>> +
+>> +  interrupt-names:
+>> +    items:
+>> +      - const: lpm
+>> +      - const: dcvs
+>> +
+>> +  mboxes:
+>> +    maxItems: 1
+>> +    description: IPCC mailbox channel for sending DCVS responses to CDSP
+>> +
+>> +  qcom,smem-item:
+>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>> +    description:
+>> +      SMEM item ID used for DCVS communication channel between APSS and CDSP.
+>> +      This is a platform-specific value that identifies the shared memory region.
+>> +
+>> +  vdd-cx-supply:
+>> +    description:
+>> +      Phandle to the CX voltage regulator. This is the actual hardware regulator
+>> +      (e.g., from MP8899 PMIC) that supplies power to the CDSP CX rail.
 > 
-> [1] https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/8195
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-> Changes in v4:
-> - Picked review tags
-> - Use u32 instead of __u32
-> - Explicit DPB
-> - Drop NULL and use >>1 in q10c buffer calc
-> - Drop selicolon after switch statementr
-> - Correctly align HFI_PROP_UBWC_STRIDE_SCANLINE entry
+> This isn't the CX supply of the power management block, this is the CX
+> supply of the remoteproc - so put it there.
 
-Its not very clear. Does this fix the issue reported here [1] ?
+Ack.
 
-https://lore.kernel.org/linux-media/fb377b11-c54c-4bd9-bf12-cf19d6484c66@oss.qualcomm.com/
+> 
+>> +
+>> +  vdd-mx-supply:
+>> +    description:
+>> +      Phandle to the MX voltage regulator. This is the actual hardware regulator
+>> +      (e.g., from MP8899 PMIC) that supplies power to the CDSP MX rail. Optional
+>> +      on boards where MX rail is always-on or not present.
+>> +
+>> +  regulators:
+>> +    type: object
+>> +    description:
+>> +      Virtual regulators provided by this driver for consumption by the CDSP
+>> +      remoteproc driver. These virtual regulators pass through enable/disable
+>> +      requests to the actual hardware regulators (vdd-cx-supply, vdd-mx-supply).
+> 
+> These regulators doesn't exist in reality, they are only here because
+> you choose to split the description of your remoteproc implementation in
+> two.
 
-> - Rebase on media next tree after the file split
-> - Link to v3: https://patch.msgid.link/20260511-topic-sm8x50-iris-10bit-decoding-v3-0-7fc049b93042@linaro.org
-> 
-> Changes in v3:
-> - Added review tag on patch 1
-> - Limited stride command to AV1 decoding only
-> - Link to v2: https://patch.msgid.link/20260417-topic-sm8x50-iris-10bit-decoding-v2-0-c987b65a31d5@linaro.org
-> 
-> Changes in v2:
-> - Fixed bug breaking 8bit decoding
-> - Dropped filtering on G_FMT while waiting for soure change
-> - Dropped format filtering on ENUMFMT
-> - Switched ALIGN(x, 192) to roundup(x, 192) because ALIGN works only with Power Of Two numbers
-> - Cleaned and refactors the width/height/stride calculations
-> - Cleaned and redesigned the buffer calculations functions with proper comments and var names
-> - Passed fluster and v4l2-compliance to check for non regression
-> - Tested on SM8550
-> - Added missing V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_10 with made gstreamer fail decoding
-> - Link to v1: https://patch.msgid.link/20260408-topic-sm8x50-iris-10bit-decoding-v1-0-428c1ec2e3f3@linaro.org
-> 
-> ---
-> Neil Armstrong (6):
->        media: qcom: iris: add helpers for 8bit and 10bit formats
->        media: qcom: iris: add QC10C & P010 buffer size calculations
->        media: qcom: iris: gen2: add support for 10bit decoding
->        media: qcom: iris: vdec: update size and stride calculations for 10bit formats
->        media: qcom: iris: vdec: update find_format to handle 8bit and 10bit formats
->        media: qcom: iris: vdec: allow GEN2 decoding into 10bit format
-> 
->   drivers/media/platform/qcom/iris/iris_buffer.c     | 195 ++++++++++++++++++++-
->   drivers/media/platform/qcom/iris/iris_hfi_gen2.c   |   8 +-
->   .../platform/qcom/iris/iris_hfi_gen2_command.c     |  75 +++++++-
->   .../platform/qcom/iris/iris_hfi_gen2_defines.h     |   1 +
->   .../platform/qcom/iris/iris_hfi_gen2_response.c    |  37 +++-
->   drivers/media/platform/qcom/iris/iris_instance.h   |   2 +
->   .../platform/qcom/iris/iris_platform_common.h      |   1 +
->   drivers/media/platform/qcom/iris/iris_utils.c      |  16 +-
->   drivers/media/platform/qcom/iris/iris_utils.h      |   2 +
->   drivers/media/platform/qcom/iris/iris_vdec.c       |  42 ++++-
->   10 files changed, 364 insertions(+), 15 deletions(-)
-> ---
-> base-commit: 86693e86019a7466be961fd4f45d407cc0b0ba0a
-> change-id: 20260408-topic-sm8x50-iris-10bit-decoding-074c3ac7975c
-> 
-> Best regards,
-> --
-> Neil Armstrong <neil.armstrong@linaro.org>
-> 
+Yes, this is because the actual regulator can be controlled by two independent entities,
+the standard PAS driver and this CDSP driver when CDSP requests via the SMEM channel.
 
-Regards,
-Vikash
+This entire design is implemented because IPQ9650 does not have AOSS and CDSP cannot control
+the regulator supplies, or the MPM power sequences. So CDSP has a channel over SMEM to request
+the APSS to control the regulators or the power sequences, and remoteproc driver
+also does regulator enable/disable.
+
+As you suggested in the driver's review, will try to squash these into a new remoteproc
+driver and post the next version.
+
+> 
+>> +
+>> +    properties:
+>> +      cdsp-vdd-cx:
+>> +        type: object
+>> +        $ref: /schemas/regulator/regulator.yaml#
+>> +        description: Virtual CX regulator for CDSP
+>> +        unevaluatedProperties: false
+>> +
+>> +      cdsp-vdd-mx:
+>> +        type: object
+>> +        $ref: /schemas/regulator/regulator.yaml#
+>> +        description: Virtual MX regulator for CDSP
+>> +        unevaluatedProperties: false
+>> +
+>> +    additionalProperties: false
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - reg-names
+>> +  - interrupts-extended
+>> +  - interrupt-names
+>> +  - mboxes
+>> +  - qcom,smem-item
+>> +  - vdd-cx-supply
+>> +  - regulators
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +    #include <dt-bindings/interrupt-controller/irq.h>
+>> +    #include <dt-bindings/mailbox/qcom-ipcc.h>
+>> +
+>> +    soc {
+>> +        #address-cells = <2>;
+>> +        #size-cells = <2>;
+> 
+> It's just an example, when you write bindings drop the 0x0 from base and
+> size in your reg and this need goes away.
+
+Ack.
+
+> 
+>> +
+>> +        cdsp_power: cdsp-power@4ae000 {
+>> +            compatible = "qcom,cdsp-power";
+>> +            reg = <0x0 0x004ae000 0x0 0x1000>,
+> 
+> For when you do this properly, please confirm that this is a dedicated
+> MPM register region and does not alias with any other nodes.
+
+Yes, this region is dedicated to CDSP MPM.
+
+> 
+>> +                  <0x0 0x26018018 0x0 0x4>;
+> 
+> No, we don't point reg = <> at a single register.
+
+Ack, will address this.
+> 
+>> +            reg-names = "mpm", "rscc";
+>> +
+>> +            interrupts-extended = <&intc GIC_SPI 65 IRQ_TYPE_EDGE_RISING 0>,
+> 
+> 0?
+
+GIC interrupt-controller node has interrupt-cells as 4 in IPQ9650.
+
+> 
+>> +                                  <&ipcc IPCC_CLIENT_CDSP
+>> +                                         IPCC_MPROC_SIGNAL_PING
+>> +                                         IRQ_TYPE_EDGE_RISING>;
+>> +            interrupt-names = "lpm", "dcvs";
+>> +
+>> +            mboxes = <&ipcc IPCC_CLIENT_CDSP IPCC_MPROC_SIGNAL_PING>;
+>> +
+>> +            qcom,smem-item = <503>;
+> 
+> Isn't this static for the given remoteproc?
+
+Yes, it is static, will move this within the driver.
+
+Thanks,
+Vignesh
+
+> 
+> Regards,
+> Bjorn
+> 
+>> +
+>> +            vdd-cx-supply = <&ipq9650_s2>;
+>> +            vdd-mx-supply = <&ipq9650_s4>;
+>> +
+>> +            regulators {
+>> +                cdsp_vdd_cx: cdsp-vdd-cx {
+>> +                    regulator-name = "cdsp-vdd-cx";
+>> +                };
+>> +
+>> +                cdsp_vdd_mx: cdsp-vdd-mx {
+>> +                    regulator-name = "cdsp-vdd-mx";
+>> +                };
+>> +            };
+>> +        };
+>> +    };
+>>
+>> -- 
+>> 2.43.0
+>>
+
 
