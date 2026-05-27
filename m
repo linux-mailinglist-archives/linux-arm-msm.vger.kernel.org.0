@@ -1,83 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-110020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UBpSOfpQF2oIBAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 22:15:54 +0200
+	id WCaJFk1PF2rcAggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 22:08:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 457B55E9F79
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 22:15:54 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82B885E9F03
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 22:08:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 16F8C300C03E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 20:08:12 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 76680302909B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 20:08:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4C3C3446C0;
-	Wed, 27 May 2026 20:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F7543B637F;
+	Wed, 27 May 2026 20:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VHU9eUVE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GC5Kkw1M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B2039182A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 20:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0881C3B6BE4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 20:08:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779912490; cv=none; b=hxdNQXXR8zzWKU/WXVV2OLJT5AcdqqudK/K4WzNAu/kjWmdd9ahPU7fZE4rcCo8y2/cNJ2XIwUYTS7oURGaeu9rnIrgoANTO6Q6qT9RzMzAi1o0Z4x2djyeHOmnIpBShkttI/A6DWDYkeJcyvfV47Kv8C/kUMYQtf/XFDUvZoYw=
+	t=1779912494; cv=none; b=TI/zUpHyuHjeMBAFfmZmPbWFLcwVU/82nIe6Aessd9tE3Md7c3Qnsi7qQm392HUslsL+ZPms7SeSC3KM+PgVNwcuUsK4LZidKdIEtXN5IJLTfTLofocKoBGgpc3+YGa7l2eAYJB6QjbU+hsOybdElmmGu0l7dmTHitC2YewvpMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779912490; c=relaxed/simple;
-	bh=kTpBUkX0rt0xbSv0yoLPWHk+BTyd3gSxlTejaHQkxZA=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=V2mFj6afTGlGestvOEbwYeSAkLeop2tcCYH8QHzYH+iPb5ftk6r2H+78X4zMYlOjPXkXe8QKO9JbwLMS2kdr3dRrX9gTllfZRZbxXna2aToP29+pupfqCgiR0rY/YK3MW1+/kN81eAYpGlH6vCACK5msUJ2rE50NbRE/gOSVXN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VHU9eUVE; arc=none smtp.client-ip=209.85.128.181
+	s=arc-20240116; t=1779912494; c=relaxed/simple;
+	bh=nLaNjhV9w4LQ19tqYh4CBqpRid9LZpY2DudE26Y0cfE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=dIMFMDACwgxdcwYq5+b4X454IDlhNDcIlVjmzzmo2n2ZnKPGGKBowGTnmlGNlVptQpvQeadPOUbwL7kgJXGx0RW1pmhnNctL9zQisS3VIchWhATyZ494YFTw08FnWeaOla7JNEXT6zQ0iG1HmmZ3hpJYo16tyoeaKeXjYyJJamE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GC5Kkw1M; arc=none smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7b6ae2ea4a1so125877767b3.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 13:08:09 -0700 (PDT)
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7bb0d18c7f9so113726697b3.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 13:08:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779912488; x=1780517288; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=q7uoGG35zfSYVF4g6jttWnLIJujz61rH2XH/8UbJJQI=;
-        b=VHU9eUVEdIg2NokaADiwijJJykp+GQcvIF4/NLF9mvPHPBTTvfGo3Yq8rO1ZeB/SOO
-         YrBAIpB68z3Hp7ocdNBb02YA6QocUSSK8LDPvIXoX4LIzpwQX1ToWlpy+dJEIqwvtTAe
-         GIzYNoq6oHAoKrE9N5OnlRD7lsAtopbIqiPRDGzusX4/APNYDu5I72ASVVlPEH6piDSl
-         7o6eM5dsz+W3+1miFSjWmjn6Nthzc/YTStH6T1vNwOViSGx9xhugro2wR0GSavkF9B7w
-         seNVuhj5x58Mq29cFS8UkLk7sJU6i3eBPGf++8tsJ/cy34yPs3GeYaOKSfEYag9orfAd
-         9tUw==
+        d=gmail.com; s=20251104; t=1779912492; x=1780517292; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OCyCktqg53OMT1gkdMQ/Nzei9mUmVcB94In9FoeM+e8=;
+        b=GC5Kkw1M13HvXZCKw8n05tR5pJ0wJBcGUIWPfnLIToNXbS6NrdwIj/oVuLX6Cix/dj
+         /YKIz4W1ehxRByHzWcg/h49IUvbAEfb5jJt8jKr/fRCsqQgvaz/QiTXkGnKk/calVq3u
+         iN05aQD7iyI3FwAO/0ugq4nvE9B2bnjmPbnkZHpf6eQsoyA7hErVNKpG9OdhhhTyPJS4
+         nOZMCmwpHTsIQjNZVnR3yJ9ynDfDyGPG6oU9SRRA0iBbdH659JPxSHJZNtaBzS/aZhsz
+         KcvxxZ6z1M7U6fU7NlKotBWYg2AK11mA9pCdMj5ti5j4CWMSzy6jaInIr8os4TraypZq
+         CIYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779912488; x=1780517288;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=q7uoGG35zfSYVF4g6jttWnLIJujz61rH2XH/8UbJJQI=;
-        b=EFFS4OzAbsaEN3kU8OJ+qylevdweRdQx4h4a+dDISIFZLxsGZf+C/DENtXlYd8RhG7
-         kcII3DZajrSFiREMsGJ7is2jRD1Lg49c/mg1GPSGbkcMCfcPArTPob4fqyAtbZwVbZmX
-         XjlT51uPiIiMIP/IcRdR0AEsibddwmD/gX1UgIk51ff/H0twIhWkxLqjgUhvg6rvQADz
-         K6jqaCWfivCqCgYXIHkOZZVJny8U5OgQFJ+6J5/EjSjd7e6Vvbk785tMe3UT0vJpkuJp
-         ZncosStIGmP08pwxEN/w2DxpxqJ+yFzQnoJ5BxiLVszdNTOw0hSxk+3EfGDk/Oh8Z5ob
-         yvhA==
-X-Gm-Message-State: AOJu0YwNPL6QrTIRMWiTdcDjZuvyi+cUrJhauXufWA5MCvJGWCPQmNnC
-	6zOCxgYr7jq3KCCo/9snCpk3iIkcpznQH+Udy/peTIvnaZEd3k8p190k
-X-Gm-Gg: Acq92OE/51LmcrBFWqej8agmT23tZWyrDMM9PsUMzd8SFiJEBctOQwor/lqLupy1r6C
-	uxZheiu0szxcXX+OsyP01hSMJouRJuAiKqDdbsb3OaMF3HrmWr7ivgO26+r2BaNYyqmg1x1pQTh
-	d9VTM0EW+rNv9OTWnpW6JJg+fstAzUmu+U8Qubl/JmBgr7XwdXi4j78bTj4g85GHm2myhk+7fwS
-	E28r097StBE/73qN8dRLoASpzcT3nxSLEBOjdNxV9qdyuQNGdqSP5ObkuQlQnJxAaVVqrG1TGQY
-	GG8/lFtufIb09qYAcxHGy5gj06Qz+SUJ19JQqDx4DfGPXgme1i2bG8DKyJYpZZABhLgu52zMKhc
-	aetSz+5jXN7QbslOU1ScO9Dutq/geI6u2bDXyIceSQw2IG+9jvl2+W4hrH7TcDwq3GwRe1AT96F
-	C76EX6AovLn1DM+M6dXBDQzxxScVBm9I6dp5u1
-X-Received: by 2002:a05:690c:48c7:b0:7d0:1583:4cd2 with SMTP id 00721157ae682-7d3339e48acmr245510687b3.9.1779912488525;
-        Wed, 27 May 2026 13:08:08 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1779912492; x=1780517292;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OCyCktqg53OMT1gkdMQ/Nzei9mUmVcB94In9FoeM+e8=;
+        b=DGhkw1lzph7L3vWAK9CK906SIp+WuTveCI4J7Zebm8uuWntZGaat/69zXVtp+Jxr6p
+         J5BDdpKcjQq7jGWUWVhh6eQrok9jFOOPRdCROyfI34UI8nWd1PWjtYEwY1ZOpBUN6xvB
+         pCIpDMZu9c0ivqupS1Ipc1mPOYMbKNNk0F1OT9vQgEz8ZtnPJPsoteiO2pNYrhyhu0+I
+         o9rpyNZrT3L+Ueof/B5wbaEr9YHdRxzXMy4aPj5jW3nCpfgFzHgEDVar+v6nI9RlpIeC
+         KlxRznGNhWDt7o6bXq1A40YqcCruOiMXRzK9PpgE7by2K2HDWH9xFdBPL4Bs19GuaYQM
+         CdDA==
+X-Gm-Message-State: AOJu0YwIRJ8fu4GzAWNJj1IzZZbbDP7ykQd+0qitpm3ijwavqpV7mHSD
+	R1a4I9nYWhkxwVUKlGzoK86mvIUoT7mFXQxNyzR01p9/8WMXVjsIuzKJ
+X-Gm-Gg: Acq92OH9nqD1b98j5xOo18sAlH3hpLD57/SlibHkEHCCO6hfpuoV22et0vwbyI5G6Fg
+	7P0k1taQ+pT4JLkIDvIP2gJFD8Kw4ZUotHfmVQ0t+GMAm2+xs1yi922WXMsJ+L73KI0DKbSGjGV
+	MEJjtaC1lO0MUejTAUslmKxyFW3yXHOs5Pi916J+C7x5ZZ9EUJtW+XZh0WEW1rc8Z+JYm62qeTZ
+	fq1tyh0V4s6xwP8oOnRlgXBUDhoZcodqTk1pyzEAuEtqZi1T4lsRHO7b2ic4y/0uUkeKFZJLgYp
+	10EszqdjGieomAsHQH076U3qippVM+Zp0a79nBEndW/D2x9ZCyoGd3YnvcUU8IqSDeva8SNwL9N
+	uFL8lYw6fvfO6gkZyRlQuciCrlBIoAkIPb9ybyIlPEWkjKfyQp7BXRHdpDFwopqtc2bLuxUwopT
+	BT0VAzR+JvTUaqvFFANhQT1BOc0Rfa7Z5bwxEvqpCpKfSWUrU=
+X-Received: by 2002:a05:690c:6d03:b0:7d0:1583:4cc7 with SMTP id 00721157ae682-7d337db008dmr256377907b3.9.1779912491951;
+        Wed, 27 May 2026 13:08:11 -0700 (PDT)
 Received: from [192.168.0.39] ([79.133.247.80])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7d38be36898sm79065497b3.27.2026.05.27.13.08.05
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7d38be36898sm79065497b3.27.2026.05.27.13.08.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 May 2026 13:08:08 -0700 (PDT)
+        Wed, 27 May 2026 13:08:11 -0700 (PDT)
 From: Erikas Bitovtas <xerikasxx@gmail.com>
-Subject: [PATCH 0/2] ARM: dts: qcom: msm8926-sony-xperia-yukon-eagle: add
- initial device tree
-Date: Wed, 27 May 2026 23:08:00 +0300
-Message-Id: <20260527-yukon-eagle-v1-0-98119d64a71b@gmail.com>
+Date: Wed, 27 May 2026 23:08:01 +0300
+Subject: [PATCH 1/2] dt-bindings: arm: qcom: Add Sony Xperia M2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,10 +86,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ5AMBBA0avIrDXRhkZcRSyKaQ1S0iJEenfF8
- i3+v8GjI/RQJTc4PMjTYiN4mkA3KGuQUR8NIhMyK4Rk1z4tlqEyMzJZlFrokiue9xCL1aGm87v
- VzW+/tyN227uAEB7MUA1dbwAAAA==
-X-Change-ID: 20260526-yukon-eagle-658f2f81a14d
+Message-Id: <20260527-yukon-eagle-v1-1-98119d64a71b@gmail.com>
+References: <20260527-yukon-eagle-v1-0-98119d64a71b@gmail.com>
+In-Reply-To: <20260527-yukon-eagle-v1-0-98119d64a71b@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -102,7 +101,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -112,7 +111,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110020-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110021-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[gmail.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
@@ -120,47 +119,39 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[xerikasxx@gmail.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 457B55E9F79
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 82B885E9F03
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Sony Xperia M2 is a smartphone released in 2014 based on the Qualcomm
-Snapdragon 400 (MSM8926) platform.
-
-Add initial device tree with for Sony Xperia M2 with support for:
-- Framebuffer
-- Regulators
-- Internal storage
-- SD card
-- Accelerometer
-- Magnetometer
-- Ambient Light/Proximity sensor
-- NFC
-- USB/Charger
+Document the Sony Xperia M2, which is a smartphone based on the
+Qualcomm MSM8926 SoC.
 
 Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
 ---
-Erikas Bitovtas (2):
-      dt-bindings: arm: qcom: Add Sony Xperia M2
-      ARM: dts: qcom: msm8926-sony-xperia-yukon-eagle: add initial device tree
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
- Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
- arch/arm/boot/dts/qcom/Makefile                    |   1 +
- .../dts/qcom/msm8926-sony-xperia-yukon-eagle.dts   | 406 +++++++++++++++++++++
- 3 files changed, 408 insertions(+)
----
-base-commit: e7e28506af98ce4e1059e5ec59334b335c00a246
-change-id: 20260526-yukon-eagle-658f2f81a14d
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 50cc18a6ec5e..851d1b4d74eb 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -99,6 +99,7 @@ properties:
+               - microsoft,tesla
+               - motorola,peregrine
+               - samsung,matisselte
++              - sony,eagle
+           - const: qcom,msm8926
+           - const: qcom,msm8226
+ 
 
-Best regards,
---  
-Erikas Bitovtas <xerikasxx@gmail.com>
+-- 
+2.54.0
 
 
