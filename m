@@ -1,119 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-110017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YA1/LKYcF2rw5AcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 18:32:38 +0200
+	id EKDPKnw6F2qg9wcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 20:39:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 208075E7CCE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 18:32:38 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02A4B5E9226
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 20:39:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9A3A7301BF77
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 16:26:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 80C9A3004228
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 18:38:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D559B2C0F8C;
-	Wed, 27 May 2026 16:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA2BE3E9F85;
+	Wed, 27 May 2026 18:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SPQGzuWn"
+	dkim=pass (2048-bit key) header.d=vinatta.cz header.i=@vinatta.cz header.b="CZPrCZhI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from vinatta.cz (vinatta.cz [37.205.8.231])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD26742EED7
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 16:26:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958FA3C5837;
+	Wed, 27 May 2026 18:38:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.205.8.231
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779899202; cv=none; b=jgQOMcqibpLTVexw3Mbr5c7cFfsSAYdQHvW1AfOulARgra3XBN82pBQrRC8P+UspohBG5FLdEQC2jA0dPvxnhvY95xDLwA311Azmzuny8U7fc/rB5qlIDiJdFT0Shj6PErjh8M+qLJVnh8OOdTlMyGS8BhDtvkZOr6k7y11IgI0=
+	t=1779907090; cv=none; b=ByEA/OwU9bY8c69rmYXKIaJBrvVBcPPAFfyYTqnNB68Zu4p74DhkP+EzA3+WXN4TrkWOiK48FfCfEWBNhg7cvzQ3KS+J7Y9cAA481/Zi2oitNLUx29OU6OnSOvpqCuRjQQBmACOqy4l3vioJAjoMXQ0GgHD4oehFyj5mdn4t318=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779899202; c=relaxed/simple;
-	bh=8BV3+khZegmizDJn1lokr/0ihOHmzM4T2I1EjFqoDR4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dqXFdQ8mdCaXZhaN0ASQDD0vhP7EO+QU+JEkXMne0dqDceThi8zIckYbo01CvoE3M5YL59N0J4eu4zepPRHMBhXEay+vchAfHNn/raNpPKDsK1XY8iqGuiOOsQuUfvN6xPGXyWahhEK095+BtcmbqfPpqT4nACR38NWH0KiA4+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SPQGzuWn; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA411F000E9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 16:26:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779899200;
-	bh=8BV3+khZegmizDJn1lokr/0ihOHmzM4T2I1EjFqoDR4=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=SPQGzuWng1XUqH4CdCnby9ZPZT0k5igngAvULTpHJgh16mV1Ob0T4Ud8Q+fBAdBbn
-	 XXcM0nd7HERu2v7HXL8buIyKieWIg7HbZLckpIuzCjznDyLz5Xww9JzgYV4zOF5MUT
-	 kqZmDjrPuJ3xfdp9huqWd1M0FX5Nm6Pa+4xz5Ph2fS+45RHbSSiXhG47aUQaiDZkw4
-	 n2IVR/tgnnTBLNZSlQYNKEUZZXdsiMi+w6tThzEtvK1DyzByrSSV41tYJOY1LjO1fh
-	 HOQ4YO3myfVF8RA/egMUmfthCKO/ALX50v4n6UdQ2buYHqSghqLO/pp55RXLKapxBd
-	 6Ryfp6qFzpZeg==
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5aa4bb157c6so1029516e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 09:26:40 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ/5p/2JyL4N193DbYzi4TuE5QHAKJ3s9xTLDl7HjcnHmX2Y8VrvfHLcYxFLqymWm7NoTbv0hAu6y7yFrdqP@vger.kernel.org
-X-Gm-Message-State: AOJu0YyOnLn/IAW0DLhjMkgQ3SmOitFi6GrZUdEb+YhwrlcE6+4CGlT3
-	3XHHWLz2DyGdNdXhQKYZPUyBGCVL9rP9yaAGJLgZFTPCe0eo/KpE8M4fCa1nBZObeGHWoSJ7ILr
-	h3G1U/7D0bdHnZKJPOYRBiAXam3Xomz8=
-X-Received: by 2002:a05:6512:3ba4:b0:5a7:42e2:db4 with SMTP id
- 2adb3069b0e04-5aa323a16eemr7894312e87.15.1779899199187; Wed, 27 May 2026
- 09:26:39 -0700 (PDT)
+	s=arc-20240116; t=1779907090; c=relaxed/simple;
+	bh=ApEPioN6Lb4OKyOa7Ff37Nv+Yg/r+wxB4CavphylJVQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:To:From:Cc:
+	 References:In-Reply-To; b=SlaPwXfkiGihZWJbmhahPCdvnpzyPRUXBB++bfuazN5Z9cHXFWTssLvY2E2rl0zCbV1i91drlTN2H7aNvjCzZamTKrL0EJ/3FlaPD6DfUYQ8wO8JWjL5tNRNjGrRuqjk3yXz3Lncj1mRroMSiouz6UZDuJn8w/ZZPAIu20IKcz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=matfyz.cz; spf=pass smtp.mailfrom=vinatta.cz; dkim=pass (2048-bit key) header.d=vinatta.cz header.i=@vinatta.cz header.b=CZPrCZhI; arc=none smtp.client-ip=37.205.8.231
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=matfyz.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinatta.cz
+DKIM-Signature: a=rsa-sha256; bh=kpx6Uj9RIdUNjK8W3CnmyMzyh2ekBIwrGqDnhdzKB20=;
+ c=relaxed/relaxed; d=vinatta.cz;
+ h=Subject:Subject:Sender:To:To:Cc:Cc:From:From:Date:Date:MIME-Version:MIME-Version:Content-Type:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Reply-To:In-Reply-To:In-Reply-To:Message-Id:Message-Id:References:References:Autocrypt:Openpgp;
+ i=@vinatta.cz; s=default; t=1779906099; v=1; x=1780338099;
+ b=CZPrCZhIXkDoHB0cMhVJm/JiciH7dzJdwyLBNIe3/8l0Zq3QV7VFjYO1LEd+kDuYAthVAc6v
+ 9Phsze4RHJ9Wiy9dWqZUi5r11Ec++f5qsA7nGRjusmk7hxln5DUEsOKnpA2/zvZ9LMdttYtwoyk
+ obUMhAA8pyd2d3p8TJdxtRngXAsD4MSuHOA2w5iCmS3mJjwGMFQ4EIGNj12WNFNtf7i78IRXvpe
+ JEqKD5JLfzCf1QT+W+0p1tE0PQQ7dibqrscIPMku5iDYLpWuWEeYveIaDWU/huyQb4ixLw5hd7h
+ EVuNnF/o8bxGM9wtY1p5oWRroCkzvfJ9ffBm6K/KgWwcQ==
+Received: by vinatta.cz (envelope-sender <karel@vinatta.cz>) with ESMTPS id
+ 4f3f7766; Wed, 27 May 2026 20:21:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20260522141149.1425711-1-zstaseg@gmail.com>
-In-Reply-To: <20260522141149.1425711-1-zstaseg@gmail.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Wed, 27 May 2026 18:26:26 +0200
-X-Gmail-Original-Message-ID: <CAD++jLmRRjna7MSQ3UYKW+Buq6_yYRR-_wrmd0Ye-FNmoOwbLQ@mail.gmail.com>
-X-Gm-Features: AVHnY4I2h5cRGGGZTMq4EXlNnEHAWl2FcAS1NNMEEAQsvczyEUSeNfIJyyteYCA
-Message-ID: <CAD++jLmRRjna7MSQ3UYKW+Buq6_yYRR-_wrmd0Ye-FNmoOwbLQ@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: sm6115: Add egpio support
-To: Stanislav Zaikin <zstaseg@gmail.com>
-Cc: andersson@kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 27 May 2026 20:21:38 +0200
+Message-Id: <DITO1XL17NWQ.31DQEIXADGBND@matfyz.cz>
+Subject: Re: [PATCH v1 2/3] regulator: Use named initializers for
+ platform_device_id arrays
+To: =?utf-8?b?VXdlIEtsZWluZS1Lw7ZuaWcgKFRoZSBDYXBhYmxlIEh1Yik=?=
+ <u.kleine-koenig@baylibre.com>, "Liam Girdwood" <lgirdwood@gmail.com>,
+ "Mark Brown" <broonie@kernel.org>
+From: "Karel Balej" <balejk@matfyz.cz>
+Cc: "Matti Vaittinen" <mazziesaccount@gmail.com>, "Marek Vasut"
+ <marek.vasut+renesas@gmail.com>, "Chanwoo Choi" <cw00.choi@samsung.com>,
+ "Krzysztof Kozlowski" <krzk@kernel.org>, "Matthias Brugger"
+ <matthias.bgg@gmail.com>, "AngeloGioacchino Del Regno"
+ <angelogioacchino.delregno@collabora.com>, "Samuel Kayode"
+ <samkay014@gmail.com>, =?utf-8?q?Andr=C3=A9_Draszik?=
+ <andre.draszik@linaro.org>, "Aaro Koskinen" <aaro.koskinen@iki.fi>,
+ "Andreas Kemnade" <andreas@kemnade.info>, "Kevin Hilman"
+ <khilman@baylibre.com>, "Roger Quadros" <rogerq@kernel.org>, "Tony
+ Lindgren" <tony@atomide.com>, <linux-kernel@vger.kernel.org>,
+ <linux-renesas-soc@vger.kernel.org>,
+ <linux-arm-kernel@lists.infradead.org>,
+ <linux-mediatek@lists.infradead.org>, <imx@lists.linux.dev>,
+ <linux-arm-msm@vger.kernel.org>, <linux-samsung-soc@vger.kernel.org>,
+ <linux-omap@vger.kernel.org>
+References: <cover.1779878004.git.u.kleine-koenig@baylibre.com>
+ <d02f55dfd5bdd743ae5cd76f2a5af0d346226a68.1779878004.git.u.kleine-koenig@baylibre.com>
+In-Reply-To: <d02f55dfd5bdd743ae5cd76f2a5af0d346226a68.1779878004.git.u.kleine-koenig@baylibre.com>
+X-Spamd-Result: default: False [0.44 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	MV_CASE(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[vinatta.cz:s=default];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[matfyz.cz : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110017-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[baylibre.com,gmail.com,kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-110018-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[vinatta.cz:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[balejk@matfyz.cz,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[gmail.com,samsung.com,kernel.org,collabora.com,linaro.org,iki.fi,kemnade.info,baylibre.com,atomide.com,vger.kernel.org,lists.infradead.org,lists.linux.dev];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_FIVE(0.00)[5];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 208075E7CCE
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	TO_DN_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vinatta.cz:dkim]
+X-Rspamd-Queue-Id: 02A4B5E9226
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, May 22, 2026 at 4:12=E2=80=AFPM Stanislav Zaikin <zstaseg@gmail.com=
-> wrote:
+Uwe Kleine-K=C3=B6nig (The Capable Hub), 2026-05-27T12:47:45+02:00:
+> diff --git a/drivers/regulator/88pm886-regulator.c b/drivers/regulator/88=
+pm886-regulator.c
+> index a38bd4f312b7..7328cd1cf265 100644
+> --- a/drivers/regulator/88pm886-regulator.c
+> +++ b/drivers/regulator/88pm886-regulator.c
+> @@ -373,7 +373,7 @@ static int pm886_regulator_probe(struct platform_devi=
+ce *pdev)
+>  }
+> =20
+>  static const struct platform_device_id pm886_regulator_id_table[] =3D {
+> -	{ "88pm886-regulator", },
+> +	{ .name =3D "88pm886-regulator" },
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(platform, pm886_regulator_id_table);
 
-> This mirrors the egpio support added to sc7280/sm8450/sm8250/etc. This ch=
-ange
-> is necessary for GPIOs 98-112 (15 GPIOs) to be used as normal GPIOs.
->
-> Signed-off-by: Stanislav Zaikin <zstaseg@gmail.com>
-
-Patch applied!
-
-Yours,
-Linus Walleij
+Acked-by: Karel Balej <balejk@matfyz.cz> # for Marvell 88PM886
 
