@@ -1,131 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-109944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-109945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6LyDJ3e2FmqGpwcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-109944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 11:16:39 +0200
+	id yDZAEcC2Fmo6pwcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-109945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 11:17:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 387A75E1A7B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 11:16:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DD5455E1AC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 11:17:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C0B013009537
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 09:10:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C1C1C30439A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 09:11:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9359D3E714A;
-	Wed, 27 May 2026 09:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FE9B3E714A;
+	Wed, 27 May 2026 09:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="HyiFN1u7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dQ9+zHsT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9493E5EE1;
-	Wed, 27 May 2026 09:10:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB10D3E558E;
+	Wed, 27 May 2026 09:11:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779873053; cv=none; b=P97OgXX9R7S0A++WLtpZwY3Ls+ud3XefIDKigJ5jFMPieHh7XjfR8p1rF/nuGQ5K/1kTqyBD5H2CcUvDqbhDHU72Cp1Bk5YtMu3QpqVc4QAYrL9Ed+oMEZL4fwaxE8adWzPOzYNB4DE9FxfbhdqqBFChKArLJBONiPknaXaGjLQ=
+	t=1779873100; cv=none; b=Z9U5j5Juf65WLGbMckWIhpFHjGcKn0Fu9eOeho4NwFgSKb3eb3CklShtPpdtWrJ8GM3mb4KeL5Ar4HYbvfkBh2UaN6J7AC/PeSF0GoQI3nBv9aZ0VThHyQkIyRlnOjPgEGgq5/SqeDUlNXNQ7OFGsm6GI4UsyPqfvk8Qcpenjzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779873053; c=relaxed/simple;
-	bh=47d/Jm1aEE1PefKSf6IA+k5sCvWi9aR0JRO/7j5KjT0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=FLK7uBWI85fG1mR5YixeHTkgqNGyw9jNY9w4bgURK7lo/6yaC63lKrh3TrrUkqsb0E4V7C00svWI6qbxnwTZA/xItSzlkCoLzEXENgLOqqLMBJ9hvjDWGQ7At6zkfIRb+HSslvlv9OQpC/kLHp8hhSqFv0H0mnzIm3EPUR9wo+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=HyiFN1u7; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 316D11A36E8;
-	Wed, 27 May 2026 09:10:48 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id F1AF3601A1;
-	Wed, 27 May 2026 09:10:47 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 53E0010888BA2;
-	Wed, 27 May 2026 11:10:46 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1779873047; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=/Kn5ek8m5SLf/9jOedgJ4k0VlYp3m2eYak7kE4f8UeA=;
-	b=HyiFN1u7e5cW49UJjE0d8bCVY2QSLyQ0u0paNb50vN6Rw2s5ORI/g5XyVV2aBPRBZuJXBs
-	lxEBS37v5ZlUEX5lMFQMZW1pLrKAz9qjScz4BixAC/0UXCOuWRoQEknsxiAj3oN6UjHlfv
-	XmdQypMQrN3Pnm+iC/JWxQv0uHWeEr0V6meG7BFrc+JizB1BF/NA8ps+ts2s8W1R0wxgLQ
-	U6OWENZl21z0O9w/NEqyKnj9/wTXvs7Hi1stw5y5yDc0lSEwjg7bcNee0t4nSnyfYBpCWT
-	0ZrvhzJUK14/22Ag3A2BOyu/Oyh3Om/M4515eMLB8CavAu2Jfyz6behIcJrggg==
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: linux-mtd@lists.infradead.org, Rosen Penev <rosenp@gmail.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, linusw@kernel.org, 
- Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260525220440.94639-1-rosenp@gmail.com>
-References: <20260525220440.94639-1-rosenp@gmail.com>
-Subject: Re: [PATCH] mtd: rawnand: qcom: embed nand_controller into
- qcom_nand_controller
-Message-Id: <177987304626.3986809.7144873679247622798.b4-ty@bootlin.com>
-Date: Wed, 27 May 2026 11:10:46 +0200
+	s=arc-20240116; t=1779873100; c=relaxed/simple;
+	bh=P6FqDSzQZb7m3vjDaU6naHjoOV3/aIcIc3MTcBfnM44=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gTP3pSjrDn8WR0Sa6jZATxjuGy/LySRTawPa8GpHyLp5miFboMLEFeqHmN0pvIJraTi0u9+1h8NW7d6YiHYC2kCBdJHGpDCyxtyGE9phpbh/AiJtdKgfuZCM5Q2Pn232wpvKRfGiUIB1o9J5fk9hnIMC658YS5ePBBQM8IYM0mM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dQ9+zHsT; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FBB1F000E9;
+	Wed, 27 May 2026 09:11:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779873096;
+	bh=w8SNyfroetexR/rsWgkA/TlWiipBp7W7BaOHpufW7us=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=dQ9+zHsTB5S8+cja+lPli2tAY5+rNntkB5VeiOTEpY+C+NfY++AcNcBmEyJ9mkNP+
+	 Ss3skkru5b9Xx6jjSLC4Kak3xr6/+2TbdnHybyrf4PfNOx1C0zsF8CZRrNPy9h/GDr
+	 055IOD7o0EWmIb9z2wC6R0m+GhluIF05AtDyKnDPGE5xqE6vjiu5NyVvsggY7ZOU+G
+	 sIMXNFpKI2wNq8hlxyEqT5iaTDPDanW5rm5WTeqddt3FExgugOtMakhdBcOhEI3ZaL
+	 4XZPoFhBdJcblxf4qRrvuYgP4rJTYoE8SWlx3fY5xsZTm+Ed3cW4sWQbbdj5ne6V/B
+	 oYky6JCrszNZw==
+Message-ID: <ee817070-cc7a-40d5-92a4-2bd8e9e65fbe@kernel.org>
+Date: Wed, 27 May 2026 11:11:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.14.3
-X-Last-TLS-Session-Version: TLSv1.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: improve the kmem_cache_alloc_bulk API
+Content-Language: en-US
+To: Christoph Hellwig <hch@lst.de>, Harry Yoo <harry@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>
+Cc: Hao Li <hao.li@linux.dev>, Christoph Lameter <cl@gentwo.org>,
+ David Rientjes <rientjes@google.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Jesper Dangaard Brouer <hawk@kernel.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, io-uring@vger.kernel.org,
+ kasan-dev@googlegroups.com, bpf@vger.kernel.org, netdev@vger.kernel.org
+References: <20260527070239.2252948-1-hch@lst.de>
+From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Autocrypt: addr=vbabka@kernel.org; keydata=
+ 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
+In-Reply-To: <20260527070239.2252948-1-hch@lst.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-109944-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FREEMAIL_TO(0.00)[lists.infradead.org,gmail.com];
-	DKIM_TRACE(0.00)[bootlin.com:+];
+	TAGGED_FROM(0.00)[bounces-109945-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[miquel.raynal@bootlin.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.999];
-	RCPT_COUNT_SEVEN(0.00)[8];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vbabka@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,bootlin.com:mid,bootlin.com:dkim]
-X-Rspamd-Queue-Id: 387A75E1A7B
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: DD5455E1AC0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, 25 May 2026 15:04:40 -0700, Rosen Penev wrote:
-> The qcom_nand_controller had a struct nand_controller *controller
-> pointer that was assigned to (struct nand_controller *)&nandc[1],
-> with the allocation oversized by sizeof(*controller) to make room.
-> get_qcom_nand_controller() then walked backwards from chip->controller
-> using sizeof()-based arithmetic to recover the enclosing nandc.
+On 5/27/26 09:02, Christoph Hellwig wrote:
+> Hi all,
 > 
-> Embed the nand_controller directly into qcom_nand_controller and use
-> container_of() in get_qcom_nand_controller(). The header now needs
-> the full rawnand.h definition rather than a forward declaration.
+> kmem_cache_alloc_bulk has a very unintuitive and undocumented return
+> value convention.  Fix that and add documentation.
 > 
-> [...]
+> Note that the few comments explaining it mention that the gfp flags
+> must allow "spinning".  That's not really a term used in the memory
+> allocator, is this supposed to mean "block" or "sleep"?
 
-Applied to nand/next, thanks!
+Page allocator now has alloc_pages_nolock() for when no spinning is
+possible, and it uses ALLOC_TRYLOCK internally.
 
-[1/1] mtd: rawnand: qcom: embed nand_controller into qcom_nand_controller
-      commit: 7fbdbc7d028a20a78b7d28a9510a216c76b5fbfd
+Slab has kmalloc_nolock() relying on that when it needs new pages.
 
-Patche(s) should be available on mtd/linux.git and will be
-part of the next PR (provided that no robot complains by then).
+In terms of gfp flags, such context is currently indicated by lack of
+__GFP_KSWAPD_RECLAIM, where lack of __GFP_DIRECT_RECLAIM only means "no
+sleeping" - see gfpflags_allow_spinning(). Slab uses it internally as
+there's no ALLOC_TRYLOCK, but also there are callers from memcg and stackdepot.
 
-Kind regards,
-Miquèl
+Like the rest of gfp flags it's far from ideal, maybe we'll figure out a
+better design eventually.
+
+> Diffstat:
+>  drivers/gpu/drm/msm/msm_iommu.c       |    6 +--
+>  drivers/gpu/drm/panthor/panthor_mmu.c |   12 ++-----
+>  include/linux/slab.h                  |    6 ++-
+>  io_uring/io_uring.c                   |   23 +++++--------
+>  lib/test_meminit.c                    |   19 +++++------
+>  mm/kasan/kasan_test_c.c               |    5 +-
+>  mm/kfence/kfence_test.c               |    9 ++---
+>  mm/slub.c                             |   58 ++++++++++++++++++----------------
+>  net/bpf/test_run.c                    |    7 +---
+>  net/core/skbuff.c                     |   23 +++++++------
+>  tools/include/linux/slab.h            |    2 -
+>  tools/testing/shared/linux.c          |   19 ++++-------
+>  12 files changed, 92 insertions(+), 97 deletions(-)
 
 
