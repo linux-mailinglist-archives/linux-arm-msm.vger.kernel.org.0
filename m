@@ -1,84 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-110024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mHzvAP5XF2oPBQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 22:45:50 +0200
+	id kKxyLRhZF2oPBQgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 22:50:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8ED085EA298
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 22:45:49 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58C895EA34E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 22:50:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 91C3130417B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 20:43:42 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id A022B3049700
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 May 2026 20:50:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5E783B637F;
-	Wed, 27 May 2026 20:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54A333BADB5;
+	Wed, 27 May 2026 20:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F86nRPIO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d25owl9M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4C93B0AE3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 20:43:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0019C2F1FFE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 20:50:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779914621; cv=none; b=UmfseNcU/u3SQ27z4sGKrZCJMz+/M1QuYsyZ0cpzTll2S021RagmWl+WHuW086mXBJ9NkDFK1H08e5cEjpvhjgDELMZ3/+MCnLIJEJuk1BvPwul7e1b75LOBuvzUvLJALd2vvCHoMTHQMtzAdDjJDnWUDRHey+T/O/N+5Br4w+4=
+	t=1779915030; cv=none; b=h6M/AJkAtPFfJz7VTByoy/Yg7YNK2JpiulBBZpo6Rltnnu82pKQeboTc6Et1koigwh6ywO3LDE34UKcuh6JI8af0yhyVMo9ldeQAFGmeyi1QlQ7TV4LTpkz89sYkn6+1pH0BaPt1ROSMWJM5xys6KwinaOMzK3zjDA4KCII2JV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779914621; c=relaxed/simple;
-	bh=AkzX2MlqKTaRtxCpwMIv0eAGJ5QPIVZAFJN0tzOXrjc=;
+	s=arc-20240116; t=1779915030; c=relaxed/simple;
+	bh=Ch8UhebV/5NRICmqkk0vKbCURGtEelPdnGUhUTkn1IU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WByq9IDiDd+VsHe3kDxswMsWrMk7LpIaMiDPq8rMwZAxKPbOzrm1apAZwT/kFnwdN89ynjw99nc7YbFWFPJAILDw8yvlGzkFfrkyt0zIUj8Uk/iTVeaySHHDXA94L6me6amQFOtelVTQyEfTG8eekk2ne6Wp1awKfNSacO3tE2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F86nRPIO; arc=none smtp.client-ip=209.85.214.177
+	 In-Reply-To:Content-Type; b=LQnQzzKF2ciXMJTAF291etNhhbVn9X7uwMlMuUmbmt/Gmr9+856iAgc+YxCJ3F/FiCWZ4p9RW43IeWqRlH9AsQjgeNqbeDILWQqOWSrT6dp31bnLyEUzEPunLNdiCcKnPwSKQCsqWhHSZSrxtqDdYZaPa6gkvUPvYshwAeBLbi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d25owl9M; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2bf008a99d4so2291695ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 13:43:40 -0700 (PDT)
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-8367df48711so5309428b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 13:50:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1779914620; x=1780519420; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1779915028; x=1780519828; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=FXTPczjLvJobFRbkK7xxt7iJVHks66505vqIfh89VkA=;
-        b=F86nRPIOL+UmKq/0fSBPrIWnBhdDDjUeLuo6B9etacPsr7AUj4XuEJZyidJxi3Rsa+
-         p9KStBE+v9G3pxocxGsq5mjnUPAJSCMUMSNBE8zfVZYmT5Pvxo0jQ52feZAiuZd/iOQW
-         DKPTwcrU3+/n/KP33L13QY9SBagjiOfK2IyWTcZtE0kLsAoOM/+6OInNcW8FESYtuuup
-         YDE2nohfslPNpI4dKTG01OFCQxCWGDd3XWcs1DOOnTbtr6jmcXbRpNbputF8dlWysNAw
-         +CnZdn//WCEJFHoo3lX1cElT/bkVuKPB8RrQl7JzbknOyPALTrlsBrunyQf0wfzM5P6I
-         azCw==
+        bh=ZgmT2PCf8Y8jhcdcmTfOPLMXO+NaMPZbn+px8TLtHg8=;
+        b=d25owl9M9gAUzbprJP/KeN64nKRsHbaEPMext1UdfEZCzxThUz9sFsuYFcBxzdHuVI
+         HYettf2/GhgNHafxo8p5mHfRuwBHQFHcKzq5z4uveVvyn+Ygp9XbT4NCGJY8KmWtJf6Y
+         5ApaYWeXa0Q3CqMDzYEhzFPlljMqbW6rIscDfincsU/74Bui2tuxXk8NniwG1I1nEJnf
+         7uOxGe6vw8Lp1tBwJWAmScxUUrqBDqAPoVeAFqRJesOjfq/QAd+C4IjOUB/VIChWKWxL
+         5oHFadOFHK5BBvZDctpGvx9wmfLza3vS/FfpB79NjXuuA0FcOq3FYrtT+su/3IkYPBVu
+         As0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779914620; x=1780519420;
+        d=1e100.net; s=20251104; t=1779915028; x=1780519828;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=FXTPczjLvJobFRbkK7xxt7iJVHks66505vqIfh89VkA=;
-        b=PPgqVcQwHOLi9c2G116nvAB7gC88fEFJZy4tVaKjnzseLy+d3h55AOBTtBvZPKxnOC
-         k9OrNKd+S7KgCQKmpF/L/14XRU2bF0BS1iOuc60tRiAjtt7UGqlUw8K5i+iB+Y7mp/gD
-         i473++DIpGAIqK9xb5VO96Oj0XRGkbJOzuDPKL7nIQ6XBLYN7GTSbo7FECQ4ibApRkhV
-         CIC+KkKK5uPQ0KDQ0OEmMhgsu0NZ83rc+N5tdtfktMVJJY3bzFhd6fITF72c5Bk9Wxte
-         EW++VwMeDRScazGq7zXwdw+CJnvgNrseac/lJ7eK0vU4DO4At7bs3LBT5YdoQNUsiUU1
-         chdw==
-X-Forwarded-Encrypted: i=1; AFNElJ99QUzWKFmgxqeG+7ciVLKOhCuUvUDpPHIIS3beQSwU/mTTcHKgJCx41sHVcraFSChCQZHbmUvmpc2aPHiA@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx//WwMUF/VEK40DoG1XxCeHxfPmEGH9u0K8gvqSoSiZtSHZiLM
-	rQKQH2SkNIBTP89glMm+/ChCfURR8gC5wuQhhn09eSL1rbU0iD2NMJ9I
-X-Gm-Gg: Acq92OFtGqAhocEhtvuLg26Ov1xBO6jVzH7wnVkz1j0nFgZzw42oelIGtC2fEIOzXpK
-	iya3QuXMAQhGpXAGV8NdYGqkS52fRe5EbMcLdQ9zxzSFBlI9gYEYrXQmHLneuA8vwXTdvH3oFhp
-	wcdt9KEuMJcIgjSUMcQQ7JhGS/BXRL4jZ45b/Jzc2ds70U+9gDrjS+5LG2bX/XZfRncggLggMFV
-	/3mPdg0OpR1xjT9J1UeCCnEVsHDCfrRGkYd6PdqlvEsbIoQHPzNwT/korBHv9L+TlR0MkRuHhSz
-	+jMw8zuDkNzaa/q95brqDfSbKbRtL11IKDAft3kzjHXHzJUD4Y7RQ9A/Ur+pPluv+JFoWSu6eQq
-	dWZ4GvJa456uQe8xZPcTUEkek6iBQWWJ9hn1Fbn59anqf5+jJCgrubsVfnVsePm7aShTkkJa4Vj
-	6iQyIPsh2SbNnwTMfet8U0pEj5nXzPncqHZN6+arT460gPjZg=
-X-Received: by 2002:a17:903:f86:b0:2bd:2de3:5198 with SMTP id d9443c01a7336-2beb033f48cmr279229085ad.3.1779914619757;
-        Wed, 27 May 2026 13:43:39 -0700 (PDT)
+        bh=ZgmT2PCf8Y8jhcdcmTfOPLMXO+NaMPZbn+px8TLtHg8=;
+        b=rCPh/M8SpSlUazZuGd2JaUbN8zMbRQMw66Dhw9YnvptMmlFUU8W4hXzoQwz5EHai2H
+         LhycrCGKXwKCOCEOKDCMGMHFgjJKUa6FvY/oyZuLsWWrLhShnzAQTSTlN5M4StfiEh78
+         i90QiqM3eP1XPDBEYdqG2DsfMvhmt2ui7IQ8w5eTbrd8/Kzb+1MCZQkcVuD83zxIfTMJ
+         SYZ9zBDCtQmHwKLvfsPgkJF8sfrMC1aQKxeEgltjUuJtsnZ+rvolMxS6n9sWR/ulzQk9
+         fPWANhfZ0Iwpb02GcOnnvyhN0+8khNVcKHb3ST0gRDHIOtq4HLwIFv17Vu2xhe1hhwG8
+         6LzQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+RjLhAHVvSHsa3BfMX2WXEQSVXY4puHVKesDOgoMQiFvHtixnj+r2ic2P637v16bzpp9zOE+bbYM1Geyrp@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz6sshYeS7G98r5C8zYi86q5gB11Iux93ONVkTnXALi4FiUqsv5
+	5ZDMJBj42XZTuaHF60oNj/vMVLG39g9RAqMtrliGaEEZNoYK9B13DeH0
+X-Gm-Gg: Acq92OEG3qS7cNB3zLP/bW2dy6Z4c7gA2gSdKBhg02XriMrLFZCI3ZcwcRk9OSkw/Yn
+	xmcimY0tC/G2s2ni4GAgOqEer6Q0/UGXwPzUnpqOlM/2fMKYbhKaBuSNIXF5wOJ4T+5AIaNvaC8
+	rg9At1AxdTezkxQkbqfq917O8U/oU1Hi0a/3kiN7G6hsL+sUJENiNgs21Zc/iTWZs1A8So6twNj
+	XaXg/jan5JtcqpCEdNBEJSm41ew7/AEphtp6KLWGHhuHSy5ZlA4nryQWB+tLRmpv/HxBJAmzfhx
+	Vb6g4uIxe2KrP54JnqMQKU0cOIax8Y2yC+Q0sn16Bwn3GyJQpYDeyOXG0P0aYYSLjVs+n1o6q+X
+	nEKOGOKWSzvax47q2kBAY6GwjmvXrwvLZHFpkB6r6cPsM2ZA48Q2pmdz7HPuafCiUc9fuEcH8iz
+	NTJs5+IOW/1aXojjN6Ec/SIU0F89/+Uojg+YBk2MGGW6ncanU=
+X-Received: by 2002:a05:6a00:f03:b0:82a:6f69:7f72 with SMTP id d2e1a72fcca58-8415f588372mr23987407b3a.47.1779915028339;
+        Wed, 27 May 2026 13:50:28 -0700 (PDT)
 Received: from [172.18.227.108] ([219.88.198.180])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2beb58b2ccbsm165239385ad.48.2026.05.27.13.43.34
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-841d6eae464sm4078935b3a.20.2026.05.27.13.50.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 May 2026 13:43:39 -0700 (PDT)
-Message-ID: <30edf212-f656-4c09-a066-d765debf3fcb@gmail.com>
-Date: Thu, 28 May 2026 08:43:31 +1200
+        Wed, 27 May 2026 13:50:27 -0700 (PDT)
+Message-ID: <a727e1e9-777d-4372-a087-85a721f174ba@gmail.com>
+Date: Thu, 28 May 2026 08:50:20 +1200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,40 +86,41 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] arm64: qcom: Enable additional hardware on Radxa
- Dragon Q6A
-To: Xilin Wu <sophon@radxa.com>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 3/6] drm/msm/dp: Limit voltage swing level to 2 for RA620
+ bridge
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org
 Cc: andersson@kernel.org, konradybcio@kernel.org,
  robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
  dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, neil.armstrong@linaro.org
+ linux-kernel@vger.kernel.org
 References: <20260522060645.4399-1-graham.oconnor@gmail.com>
- <20260522101323.31911-1-graham.oconnor@gmail.com>
- <15015D7EB84640D6+cc21a9f7-ae1b-4a22-bb38-34d6fafe1bcb@radxa.com>
+ <20260522060645.4399-4-graham.oconnor@gmail.com>
+ <7e435e8c-ba0e-453a-b95c-450446dfc0ff@oss.qualcomm.com>
 Content-Language: en-GB, en-US
 From: Gekko <graham.oconnor@gmail.com>
-In-Reply-To: <15015D7EB84640D6+cc21a9f7-ae1b-4a22-bb38-34d6fafe1bcb@radxa.com>
+In-Reply-To: <7e435e8c-ba0e-453a-b95c-450446dfc0ff@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110024-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110025-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
@@ -129,90 +130,55 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 8ED085EA298
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 58C895EA34E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Xilin,
+Hi Konrad
 
-Thank you for the response.
+I completely agree.
 
-I appreciate the offer to take over your patch set to move things 
-forward. However, I feel I must respectfully decline. This is mainly due 
-to my lack of experience with both upstream kernel development on this 
-hardware and the patch management process itself. It would be 
-irresponsible of me to take on something that I'm not knowledgeable 
-enough to ensure successful completion.
-
-I'm happy to work with you to help in any other way that I can such as 
-testing patches, but I think you should maintain ownership of the 
-patch-set and submission process, at least for now.
-
-One of the reasons I withdrew my own patch-set is that from what I can 
-see your series covers everything I was trying to achieve, and does it 
-correctly :-)
-
-The only one that isn't covered is the patch for early TCS 
-initialisation that I'm discussing with Konrad which may be unnecessary 
-anyway.
+This patch is a temporary hardware workaround for RA620 bridge support 
+and should not have been submitted. Please disregard.
 
 Graham
 
-On 24/05/2026 13:58, Xilin Wu wrote:
-> On 5/22/2026 6:13 PM, Graham O'Connor wrote:
->> Thank you to Konrad, Neil, and others for the very prompt and helpful 
->> reviews.
+On 22/05/2026 21:28, Konrad Dybcio wrote:
+> On 5/22/26 8:06 AM, Graham O'Connor wrote:
+>> The RA620 DP-to-HDMI bridge used on the Radxa Dragon Q6A does not
+>> acknowledge DP link training at voltage swing level 3. The bridge
+>> requests maximum voltage swing but never completes link training
+>> when the driver attempts level 3, causing HDMI output to fail.
 >>
->> Based on the feedback received, I think it best to withdraw this 
->> series to
->> address the issues raised, most notobly:
+>> Cap DP_TRAIN_LEVEL_MAX at 2 to match the behaviour of the vendor
+>> kernel, where link training completes successfully at level 2.
+>> This allows the RA620 bridge to establish a stable HDMI connection.
 >>
->> 1. The DP_TRAIN_LEVEL_MAX change (patch 3) is too broad - it affects all
->>     devices using the Qualcomm MSM DP driver rather than being 
->> specific to
->>     the RA620 bridge. A proper fix should be implemented at the bridge
->>     level. This is going to take more investigation.
+>> Tested on Radxa Dragon Q6A (QCS6490) with RA620 DP-to-HDMI bridge
 >>
->> 2. The display DT nodes (patch 5) should use the radxa,ra620 compatible
->>     string per the existing Radxa upstream series from Xilin Wu, and the
->>     lane ordering needs correcting.
+>> Signed-off-by: Graham O'Connor <graham.oconnor@gmail.com>
+>> ---
+>>   drivers/gpu/drm/msm/dp/dp_link.h | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> 3. The rpmh-rsc early return (patch 1) needs further review regarding
->>     the implications of returning before full driver initialization.
->>
->> 4. DTS patch label dependency issue (sorry)
->>
->> I'll integrate with the Radxa upstream effort, re-evaluate the other 
->> areas
->> and resubmit corrected patches addressing these concerns at a later date.
->>
->> Thanks for the feedback.
->>
->> Cheers
->>
->> Graham
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_link.h b/drivers/gpu/drm/msm/dp/dp_link.h
+>> index 76125e9c0..ff0d8e99d 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_link.h
+>> +++ b/drivers/gpu/drm/msm/dp/dp_link.h
+>> @@ -24,7 +24,7 @@ struct msm_dp_link_info {
+>>   	unsigned long capabilities;
+>>   };
+>>   
+>> -#define DP_TRAIN_LEVEL_MAX	3
+>> +#define DP_TRAIN_LEVEL_MAX	2
 > 
-> Hi Graham,
+> You're limiting this value for *all* devices featuring a Qualcomm
+> SoC with a DP controller. Instead, if this is really an issue that
+> results from the bridge's capabilities (which could potentially only
+> be a symptom, not the cause), this should be somehow limited to the
+> specific bridge itself
 > 
-> Thanks for working on the additional hardware bring-up for Q6A upstream 
-> support. I'm really glad to see someone pushing this forward.
-> 
-> I actually posted a patch series [1] last month, and it is generally in 
-> good shape. Unfortunately, I got busy with other work and haven't had a 
-> chance to send v2 yet.
-> 
-> If it helps, please feel free to take over that series and fold your 
-> additional patches into it. I think that would be a good way to move 
-> things forward.
-> 
-> Also, I believe patches 10-12 in my series are no longer needed and can 
-> be dropped.
-> 
-> Thank you again for the work you have done.
-> 
-> [1] https://patchwork.kernel.org/project/linux-arm-msm/list/? 
-> series=1078242&state=%2A&archive=both
-> 
+> Konrad
 
 
