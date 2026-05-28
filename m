@@ -1,196 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-110105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wOz3AOwlGGqZeQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 13:24:28 +0200
+	id EPpsON0rGGqwfAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 13:49:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D2155F13BB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 13:24:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 53B1B5F18B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 13:49:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 85F43306D0EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 11:21:39 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DA0F130210F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 11:43:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 402433E1CEF;
-	Thu, 28 May 2026 11:21:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 908BA3E5567;
+	Thu, 28 May 2026 11:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jVJ+Ngzp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FCYWWq9i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28583D3491;
-	Thu, 28 May 2026 11:21:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7613B3ACF1E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 11:43:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779967297; cv=none; b=CZ4nGyfyZ2NTyAMr1p/vAtyRgYMIRfGJzoQx/szoxpOzs4khnvEHUhb3gqaYIFn7zeO/HIEfCZnJODbrmaNjsoW1wl02+so3s/uWF/8X5EM/aWS3GgWxVBfHn8hLZd5VkKeuxntft+svktB6lNWj7447hsBD3GAcgQiUXW0IOww=
+	t=1779968637; cv=none; b=MoGByy0Ze4fXzfGPYQOAjv3QNIYhzNJy8Qi4meD7Y6MnoPwKugyOETw66zshHIV7tOjqWwsIU4KA9ai2tkcLzmQG/3j2ZhI2Lj2zyZokARj7RMlaJM/1LTPJEgvcUbmVbSStJTsmspl4OdUZjosF2j1kqvbTWG3OdsWOmeI25Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779967297; c=relaxed/simple;
-	bh=f/lIC4TgmEzyiBDPh2iBCW6oUeY6y5+TmWqzleJFfvY=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=bTpRNi9xWi6NAZ9hg0k+E60lA2+4Htrx5oLqKfFJkL0Twj/PB0sg+4xXfYuOEmoHbkcJkie44RshfQQQIQQ0BMlOWdsmbVFcS/WcdIDrcqJ7gdHOwwEKjiK50eD40H/1qf53cbw0kYcCsHBKqRF2xK7IM7S8De1GClnT2ZFE7D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jVJ+Ngzp; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1779967296; x=1811503296;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=f/lIC4TgmEzyiBDPh2iBCW6oUeY6y5+TmWqzleJFfvY=;
-  b=jVJ+NgzpXSONr+RHbU6qtCCrztJa5bqPUWbPogVG670ahHdbLpztMlD2
-   LcExizHgnYSr5uusg/B++Rlg6iY3ewekxdkYBUusP2p7rfcVFPo11YkpY
-   +VPfeJRP2cxwEuYP9iJLhpTG/sB5AoyHqXNf9jJf/vAIxkdRz21sV/edC
-   S4SvSeeFKau7+FmX0jBDqNtAI+YBLoD+aJwH00RMhKjG2olrfHw7UVCXw
-   /K0rmUWzZ/RA5FHPZMUUHeyW6fnweYNoVRYL4PkZQznYCNLx+/O2zcC+6
-   bnY4ieUaHTgOJfFSZDlxPvBgnxsB6LKEZq69H+JmWQLRMLwJYD/qQfdsk
-   A==;
-X-CSE-ConnectionGUID: 81EPxlcyToqpjP3cFLSHKw==
-X-CSE-MsgGUID: sRzTGLwxS6OY/9ZIJEHWLg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11799"; a="103480346"
-X-IronPort-AV: E=Sophos;i="6.24,173,1774335600"; 
-   d="scan'208";a="103480346"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2026 04:21:34 -0700
-X-CSE-ConnectionGUID: NhorkxbETOO3yaxAYXvTkQ==
-X-CSE-MsgGUID: vXFsgfpXQNSWfwq2pTGuRg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,173,1774335600"; 
-   d="scan'208";a="238337774"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.187])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2026 04:21:15 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Thu, 28 May 2026 14:21:11 +0300 (EEST)
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-cc: Lee Jones <lee@kernel.org>, 
-    Mark Brown <broonie@opensource.wolfsonmicro.com>, 
-    Thierry Reding <thierry.reding@avionic-design.de>, 
-    Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, 
-    Andrew Lunn <andrew+netdev@lunn.ch>, 
-    "David S. Miller" <davem@davemloft.net>, 
-    Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
-    Paolo Abeni <pabeni@redhat.com>, Srinivas Kandagatla <srini@kernel.org>, 
-    Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-    Vinod Koul <vkoul@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-    Danilo Krummrich <dakr@kernel.org>, Rob Herring <robh@kernel.org>, 
-    Saravana Kannan <saravanak@kernel.org>, 
-    Madhavan Srinivasan <maddy@linux.ibm.com>, 
-    Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
-    "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, 
-    Andi Shyti <andi.shyti@kernel.org>, 
-    Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-    Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
-    Robin Murphy <robin.murphy@arm.com>, Doug Berger <opendmb@gmail.com>, 
-    Florian Fainelli <florian.fainelli@broadcom.com>, 
-    Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
-    Ulf Hansson <ulfh@kernel.org>, Frank Li <Frank.Li@nxp.com>, 
-    Sascha Hauer <s.hauer@pengutronix.de>, 
-    Pengutronix Kernel Team <kernel@pengutronix.de>, 
-    Fabio Estevam <festevam@gmail.com>, 
-    Matthew Brost <matthew.brost@intel.com>, 
-    =?ISO-8859-15?Q?Thomas_Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>, 
-    Rodrigo Vivi <rodrigo.vivi@intel.com>, David Airlie <airlied@gmail.com>, 
-    Simona Vetter <simona@ffwll.ch>, Peter Chen <peter.chen@kernel.org>, 
-    Paul Cercueil <paul@crapouillou.net>, Bin Liu <b-liu@ti.com>, 
-    Philipp Zabel <p.zabel@pengutronix.de>, 
-    Maximilian Luz <luzmaximilian@gmail.com>, Hans de Goede <hansg@kernel.org>, 
-    Krzysztof Kozlowski <krzk@kernel.org>, 
-    Benjamin Herrenschmidt <benh@kernel.crashing.org>, brgl@kernel.org, 
-    LKML <linux-kernel@vger.kernel.org>, Netdev <netdev@vger.kernel.org>, 
-    linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
-    driver-core@lists.linux.dev, devicetree@vger.kernel.org, 
-    linuxppc-dev@lists.ozlabs.org, linux-i2c@vger.kernel.org, 
-    iommu@lists.linux.dev, linux-pm@vger.kernel.org, imx@lists.linux.dev, 
-    linux-arm-kernel@lists.infradead.org, intel-xe@lists.freedesktop.org, 
-    dri-devel@lists.freedesktop.org, linux-usb@vger.kernel.org, 
-    linux-mips@vger.kernel.org, platform-driver-x86@vger.kernel.org
-Subject: Re: [PATCH 19/23] platform/surface: gpe: use
- platform_device_set_fwnode()
-In-Reply-To: <20260521-pdev-fwnode-ref-v1-19-88c324a1b8d2@oss.qualcomm.com>
-Message-ID: <bfdbc026-b3f9-971b-aaf0-0485434b8411@linux.intel.com>
-References: <20260521-pdev-fwnode-ref-v1-0-88c324a1b8d2@oss.qualcomm.com> <20260521-pdev-fwnode-ref-v1-19-88c324a1b8d2@oss.qualcomm.com>
+	s=arc-20240116; t=1779968637; c=relaxed/simple;
+	bh=FSUoz74TrT0zQzYeiPjrZsasRIeLZAQcNVbI2YX8Eh0=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mykNhr7L770gPltr11HOwDx/kq+wlnU0V6eOEO/LhXt9s0HzBHWK6E6BccLEJ/EAY5wcR/y/MjAhotzQbheDy7vSnu5NMZ/IFhhykSv+NvzHJ5BPNjRYS1UgTJ4TGJP6SPKStBS6DE3ov5yC1HF81OSKOt/RNevz6Pb+rTbsa+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FCYWWq9i; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3211F00A3F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 11:43:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779968636;
+	bh=FSUoz74TrT0zQzYeiPjrZsasRIeLZAQcNVbI2YX8Eh0=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=FCYWWq9iPgwz3Eop35EmoWx+QCgoQdlASe411zNpi074sPfO+xF/7G56O3io9QBO5
+	 a/doDuX7bz+tfQkCVPpVOuO2zVqLCqqMXSvAXPY8w40MKLmFTvJkrXenclcxwQi8FW
+	 jdJk111LyspEpUW9FVxbjSpQU2tolO+JPvcSFVVN+wCMUCtagy+c7wMYFtx58IZyXh
+	 2YNXYirbz7WV4NFb6El+5D/TSzfbfQjKJgmpcmhrkuks5ZGK29qd4vrwaD74aHq6JC
+	 7bLafz1pOb6SHuU9aBG/8mCmVulWSvfMA2X1aUVqamqFSY64kvIS+/+dUscdJa85CE
+	 0fjZGWWge6fcA==
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-39556b00a85so92554881fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 04:43:56 -0700 (PDT)
+X-Gm-Message-State: AOJu0YxK+jgLS+qByRDzxkByx5B6+I6eXZKFdmPMZa9aYiROfOEjqZyC
+	zO86hJtFjO9SffecyvmcE5xVbZAGdLd6vJm5c3zzikChh7Lsku1WlOdx2PRiAMJ2KcF4exO7UGA
+	+G3fRWdmxt1zzDkhTLwepb1KDOkKRaMTLxbwuYvD5Zg==
+X-Received: by 2002:a2e:9187:0:b0:38e:294a:d447 with SMTP id
+ 38308e7fff4ca-395d8d1d2a3mr64476751fa.28.1779968635101; Thu, 28 May 2026
+ 04:43:55 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 28 May 2026 07:43:53 -0400
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 28 May 2026 07:43:53 -0400
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260528-serial-rx-0-byte-fix-v1-1-dc4e876c7368@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-947565217-1779967271=:1291"
-X-Spamd-Result: default: False [0.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	CTYPE_MIXED_BOGUS(1.00)[];
+References: <20260528-serial-rx-0-byte-fix-v1-1-dc4e876c7368@oss.qualcomm.com>
+Date: Thu, 28 May 2026 07:43:53 -0400
+X-Gmail-Original-Message-ID: <CAMRc=Mc4HD7f3D8DUGLKcz-66Bi8kKHw-WtPDVBp_YD3DiKEgQ@mail.gmail.com>
+X-Gm-Features: AVHnY4IB70q5IozlS2a9GUGHIvRfqnu0lYWotLXMTsHITBij0XdGwpRzqGZPo2M
+Message-ID: <CAMRc=Mc4HD7f3D8DUGLKcz-66Bi8kKHw-WtPDVBp_YD3DiKEgQ@mail.gmail.com>
+Subject: Re: [PATCH v1] serial: qcom_geni: Fix RX DMA stall when
+ SE_DMA_RX_LEN_IN is zero
+To: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-serial@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jiri Slaby <jirislaby@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[multipart/mixed,text/plain];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[intel.com:+];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110105-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,opensource.wolfsonmicro.com,avionic-design.de,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,linuxfoundation.org,linux.ibm.com,ellerman.id.au,linux.intel.com,8bytes.org,arm.com,broadcom.com,nxp.com,pengutronix.de,intel.com,ffwll.ch,crapouillou.net,ti.com,kernel.crashing.org,vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.infradead.org,lists.freedesktop.org];
-	MIME_TRACE(0.00)[0:+,1:+];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-110106-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ilpo.jarvinen@linux.intel.com,linux-arm-msm@vger.kernel.org];
 	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[65];
-	MID_RHS_MATCH_FROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,mail.gmail.com:mid];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.intel.com:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,intel.com:email,intel.com:dkim]
-X-Rspamd-Queue-Id: 9D2155F13BB
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 53B1B5F18B7
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-947565217-1779967271=:1291
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-
-On Thu, 21 May 2026, Bartosz Golaszewski wrote:
-
-> Ahead of reworking the reference counting logic for platform devices,
-> encapsulate the assignment of the firmware node for dynamically allocated
-> platform devices with the provided helper.
->=20
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+On Thu, 28 May 2026 09:05:43 +0200, Viken Dadhaniya
+<viken.dadhaniya@oss.qualcomm.com> said:
+> In qcom_geni_serial_handle_rx_dma(), geni_se_rx_dma_unprep() clears
+> port->rx_dma_addr before SE_DMA_RX_LEN_IN is read. If the register is zero,
+> for example when the RX stale counter fires on an idle line, the handler
+> returns without calling geni_se_rx_dma_prep().
+>
+> The next RX DMA interrupt then hits the !port->rx_dma_addr guard and
+> returns immediately, so the RX DMA buffer is never rearmed and later input
+> is lost.
+>
+> Keep the handler on the rearm path when rx_in is zero. Warn about the
+> unexpected zero-length DMA completion, skip received-data handling, and
+> always call geni_se_rx_dma_prep().
+>
+> Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
+> Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
 > ---
->  drivers/platform/surface/surface_gpe.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/drivers/platform/surface/surface_gpe.c b/drivers/platform/su=
-rface/surface_gpe.c
-> index b359413903b13c4f8e8b284ef7ae6f6db3f47d72..40896a8544b0a4da4261ea881=
-b1eaed62d93b32b 100644
-> --- a/drivers/platform/surface/surface_gpe.c
-> +++ b/drivers/platform/surface/surface_gpe.c
-> @@ -317,7 +317,7 @@ static int __init surface_gpe_init(void)
->  =09=09goto err_alloc;
->  =09}
-> =20
-> -=09pdev->dev.fwnode =3D fwnode;
-> +=09platform_device_set_fwnode(pdev, fwnode);
-> =20
->  =09status =3D platform_device_add(pdev);
->  =09if (status)
->=20
->=20
 
-Acked-by: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
-
---=20
- i.
-
---8323328-947565217-1779967271=:1291--
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
