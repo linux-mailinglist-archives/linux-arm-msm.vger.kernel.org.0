@@ -1,55 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-110032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WJQqB/KkF2oTMAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 04:14:10 +0200
+	id uGZFLYioF2qhMQgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 04:29:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1ED75EBB77
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 04:14:08 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AB185EBC8B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 04:29:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 4512F3030062
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 02:13:49 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id B91593018792
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 02:29:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7CBF2F4A18;
-	Thu, 28 May 2026 02:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4D432F6900;
+	Thu, 28 May 2026 02:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a0THgojI"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kqtOeXEu";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FRfAn2BF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F072F361E;
-	Thu, 28 May 2026 02:13:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804BB2F549F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 02:29:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779934422; cv=none; b=ZBURECEvBD6s1qJIgIHdMk3Nhbz6AFhsQBMavREF87qN0NOJVgC1fraXp1RIXZZ0Gj669kuumhYBA+CjAFNaY3EXl73DF9ar+mKQ6oWzgLdnFiStHZtYYbQEmBBBIqpCzOO/f1BcYLM9IDQ4gucTC7sl28r6cpYx0WZc4pmZN8o=
+	t=1779935366; cv=none; b=BEA91ahlB1CG3yBena3kFp9u9uaZxUDB+rx7foawQUhghYmSTGl0IliCEhebf7k78jHQU9TELp8325G/PbmijiTluGIvGCQ0DbQzLpHo2/m0UB1wHm30v1DlHjMe8CeOjZhkIzLKX4UJTyCFjz0WiMZsaHNHwwd/AkGoozzVIrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779934422; c=relaxed/simple;
-	bh=l1a2/mDB9FsmByRZHT5JzE46+y6/2ln+HvPITWNrDwU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=N2H6sQUzXMYTZ0NJyD38Oz4HLKKjTuSTT08zW9mMyaRebQWBHX+Of4iDs6PXjDp3Nn9kC0XvR52GaFY0D8Lo5C9VnFqN/cFTJ0ISQvTsKkK5hFOEB72ihBBvKimXwvB4bas0Pz+2lmeiOYxAfp+KuwVrWKxCvLfX1aDt1fYFcp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a0THgojI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 639AFC2BCB3;
-	Thu, 28 May 2026 02:13:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1779934422;
-	bh=l1a2/mDB9FsmByRZHT5JzE46+y6/2ln+HvPITWNrDwU=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=a0THgojICdJaB6Oij6F1mPVxF7/NSdo8YExBCMVXqrQp3Nm4bs7QOyDC3x0sOOSFX
-	 eXffoI7f3M1JhAqnHsxy0OYpE9rhzRcoD2+zIl/kvAx8jJMg3CvZkzB9CB6ghJgkxc
-	 E6sV5H5gBirPwkYWysGWTQ0lXUVFX76S4+o9GPGqbVOu+I2/ssijfrGrvl6cs0WKEP
-	 Sboa9gJl3sogAAxMnAJe17eQLVYp3Vngl28m/n5MNSujbe2gB2nTQE/GTkmY1db7xj
-	 cJuXqpZkTNJEodmkDMUWkGY73EFNcOWaJEV3LicB/DNX66Nt87XcNuDJI20Bx1Hq5t
-	 Bfj5gVBtufUng==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A594CD6E44;
-	Thu, 28 May 2026 02:13:42 +0000 (UTC)
-From: Rudraksha Gupta via B4 Relay <devnull+guptarud.gmail.com@kernel.org>
-Date: Wed, 27 May 2026 19:13:41 -0700
-Subject: [PATCH v2] ARM: dts: qcom: msm8960: expressatt: Add
- coreriver,tc360-touchkey
+	s=arc-20240116; t=1779935366; c=relaxed/simple;
+	bh=L15VMw5XjEqY+cGy21QzrxCEV9EwBH6ZN6g6Z3zkoU4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=aVbgDxjFNkoQIU/LAw2B38eK/e3/nHB9kluh8wD+G46bGzxdsx0e5AbYuyo7ZPJ7FI4Y0WpfwQQOQrreJ1TnjLxXlqXZ+NIsH4nxq+lj9+DeyQpopqZ14IlYMaJDGAndFnCsK7tGoJinz2G6VJZAAivCwk9wnkLdwXj12WctBmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kqtOeXEu; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FRfAn2BF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64RKnJEt3010208
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 02:29:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Vrrd/LevLkevsPOqrPyadI
+	p2nqDCB8i/YVQP0+reWnY=; b=kqtOeXEu9CIlizPxPv5NP20uMkRS6ci/LmmLe+
+	eQ9wDVOwaWFnfgptpNlPqPenNrkhq7InmSdCBGc+5xvrR/8HM2R3do0jRNZkALI/
+	X21NZG7rzxpbr/EJhz9DdpD4vZ4QQCFhDlldeGKrqnE/imzNP/U96qzGQ+rWKeL+
+	GF71GbO/ngvau7M2xnsIKBJ8IS5z+vSynzdo/5/dZLHi83tHV+T5I56SwnRJahyl
+	pfwhUwYWkinrD/uI1GJVZ7aP2FMAdbTTi2OfSJcJgyuH+o+6OstnJd252ZN98vyL
+	cgpHaOHs3yvpECOg4oOElvgFTMFEVM/Wch6bO8AbC9cj6RbQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7yrgypr-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 02:29:24 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-304d2447962so256794eec.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 May 2026 19:29:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1779935364; x=1780540164; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vrrd/LevLkevsPOqrPyadIp2nqDCB8i/YVQP0+reWnY=;
+        b=FRfAn2BFosyNT4myUat5KEXap0PsKK8Azwt7xejKWXnAdQcLFSiHo9sdBd7/lVVdd7
+         IU/qSQ+mwXZcEA/W+38HsPiHvaQJbLMxDG4k+ttI/29bhY8esaomc6ERYqxxh4esfdqN
+         0no2VfZjGUzckLf0RFIjY09OmJSde9adwmBt7zfZH16expeRbk72FI0o63KtlcROZzC/
+         2lSPTEfLJceRfApwZ6Df09g0tZ4Go7DdWJzSSQBXu1IZNxyF3PQ48Q7DWd2DKWV/w0Nm
+         91GjmMKw5MrtQ3f9rwn2UxKMxw64etGwt6Ote6B5zQPE/FtTkFUcR/7CL+BymTrZCJEM
+         OoEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779935364; x=1780540164;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Vrrd/LevLkevsPOqrPyadIp2nqDCB8i/YVQP0+reWnY=;
+        b=mhCykKqFxNudUU3MdbQ+cmduHfbvu2YIbt6pfaRctPiSP/Gnno3oWy+ZsI+wPdBTG3
+         TftnsttIdLpA1ivcvEl00CcS5ZH1gu+LQjdKxIfcAqTsPl1MxCniHUnnkeRo6+HEtVoN
+         Bx9TAUvd1SjMIZAnPjxB2ne/r7e7c5Cpg4suYWnoZtdrLcVoMkkCoEUFqfRYGWI2Z5FP
+         SEiR9W2v33ADqghcMpM7MBnsLVBC1eZNztXL5nzDZedkvvI6aJMaS49o6+FcNBLCKdma
+         Ahx3tuq5Etnz4VXjrzM/RYw5f2nGbUtrabTY+Ff7Qyskrthwa/Qww4AsuTACUqv5WIfy
+         Vaww==
+X-Gm-Message-State: AOJu0YzZorTg4F2xSbP/6t1knOxogZiXKKTL5LnGCpHe6QoYFhrxNhXz
+	wAD+Slg9eoI9sO4kZ5kmUoV3emX/WUrbsI6zYp0VUhWm1qbDzYtdS/rlX1pmb6ePQqIlnAlUBU8
+	Kyez+uD1qcKpRS/v3EZmpyg9CK62HW0WprMaMyfMVQ8nXrsqr9L0Xg+GEBPCGVJJVxT7x
+X-Gm-Gg: Acq92OHgyBHAFRCUcYWHux3+ULJC5q0tqxbY4BJA8DlSa0f3W5KV2ODz5xutapwMjEO
+	+M9IiNUA+aRks6e68JZJIMoolPwt5IRErLm8MaIoJk4z6VMe7+xZa7vYOBxp2Mqmqe37KoN+scc
+	kiMR7eUG6qEy8Ah6hNcZckiL/ESs8s86mv68wqHNTVwbTSLX233uR7sEUzEAHA958iwMnOL3NhT
+	9dR+dAT7t64e97t0epGgACtY5tcCGLGpO8agqaHg5aDSHi8Ik4dL+Bivv7KeIXwIEuzKKSXHKeV
+	TGMqlZA/JgujyfUztPzyNZ7GaqgQULcSy0VjKyJL5BykDqgHgEAzGKb8wjuJk3eLOMRS5lrh3uQ
+	44Kg8L1jh99WVozoF7wYn/t7LQS0NCCFIRPZtVPUPhuZc1WwHrH1FuAnV+bXiFxz4bUtgH7kmrB
+	vimXU=
+X-Received: by 2002:a05:7300:6ca6:b0:302:8cb5:af0b with SMTP id 5a478bee46e88-30430e3fadfmr12632598eec.13.1779935363879;
+        Wed, 27 May 2026 19:29:23 -0700 (PDT)
+X-Received: by 2002:a05:7300:6ca6:b0:302:8cb5:af0b with SMTP id 5a478bee46e88-30430e3fadfmr12632577eec.13.1779935363331;
+        Wed, 27 May 2026 19:29:23 -0700 (PDT)
+Received: from hu-qianyu-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-304d4222060sm691653eec.29.2026.05.27.19.29.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 May 2026 19:29:22 -0700 (PDT)
+From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+Subject: [PATCH v4 0/7] clk: qcom: Add common clkref support and migrate
+ Glymur and Mahua
+Date: Wed, 27 May 2026 19:29:11 -0700
+Message-Id: <20260527-tcsr_qref_0527-v4-0-ded83866c9d9@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,222 +106,158 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260527-expressatt-touchkey-v2-1-049dca41fc3a@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32OQQ6DIBBFr2JmXQwgxuiq92hcIB110lpaQKIx3
- r1U982s3uTNn7+BR0foock2cBjJk30lkJcMzKhfAzK6JwbJZSkkLxkub4fe6xBYsLMZH7gyUan
- KlLzQsi8gXSajp+VIvbUnO/zMKTycS+i0R2bsNFFosljlHH7eSD5Ytx5lojjEv3+jYGmUUl0tK
- 1P3xXWYND3zFAztvu9fZL55KN4AAAA=
-X-Change-ID: 20251205-expressatt-touchkey-1747c503a2f3
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Rudraksha Gupta <guptarud@gmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1779934422; l=5127;
- i=guptarud@gmail.com; s=20240916; h=from:subject:message-id;
- bh=QKeXmWv32UYGOnYCe6uOdzYUC+QSTTFeTGr6mUqA+oU=;
- b=KtaXdbdrs6N2DxKOXa8+rKWRxO8BoT+09CU2hHO8sm5itm2N3tRFNhPx45NgTaHcP4MirEGtT
- kwu4Iw9uH07ACUrK9BCpSDo6UHQTRp5yFjxY7vBcd7ptj/10wq2T8W8
-X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
- pk=ETrudRugWAtOpr0OhRiheQ1lXM4Kk4KGFnBySlKDi2I=
-X-Endpoint-Received: by B4 Relay for guptarud@gmail.com/20240916 with
- auth_id=211
-X-Original-From: Rudraksha Gupta <guptarud@gmail.com>
-Reply-To: guptarud@gmail.com
-X-Spamd-Result: default: False [1.34 / 15.00];
-	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
+X-B4-Tracking: v=1; b=H4sIAHioF2oC/yXM3QpAQBCG4VvRHNvaxr9bkcQajAM/O0jJvVscP
+ n197wVClkkg9y6wdLDwPDmEvgdmqKeeFLfOgBpjHWGiNiO2Wi111ccuDahGjDIdtOBOi1v4/IJ
+ F+Vv2ZiSzvRW47wds/WHAcgAAAA==
+X-Change-ID: 20260527-tcsr_qref_0527-f83ea225903d
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Taniya Das <taniya.das@oss.qualcomm.com>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Qiang Yu <qiang.yu@oss.qualcomm.com>, krishna.chundru@oss.qualcomm.com
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779935361; l=3784;
+ i=qiang.yu@oss.qualcomm.com; s=20250513; h=from:subject:message-id;
+ bh=L15VMw5XjEqY+cGy21QzrxCEV9EwBH6ZN6g6Z3zkoU4=;
+ b=KzygnUE57AY7PPGZW+UhA6KW3ayozlOSjdPeE8U4Wo7P3JCadEzomM3E0M8s+u6kfJJhd0xPO
+ S7kt7+pmmemBgPMZhNbQZqTLgGSMY2Y5KYucsAycBd/r2RFntPHLalT
+X-Developer-Key: i=qiang.yu@oss.qualcomm.com; a=ed25519;
+ pk=Rr94t+fykoieF1ngg/bXxEfr5KoQxeXPtYxM8fBQTAI=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDAyMSBTYWx0ZWRfX1S9XBDeSZKEP
+ C7FbinPXIj66ljjI+R3TmLmeIScRsfE2OtLcJ63NWuVYbaOPivdOTSIES+jbWbihst4pOBcGpBi
+ nbWn0ivCflwM93ZPsZALW09bkW0OEP5NP5r9wq+JE4EoXkuJQPal0Jqz39b3S6TaO5L6ZafJrG/
+ b8rqw5uPrT1+H9DSopapNp2Jcy+bpzD4Ka4BXluHb4U58sBR7iQsea9LcoZdWFhY9Rkp+SFqjHC
+ TUQkawHLFQJMgdRj6pruMbWLJs6qLd9+PhhoAEEYHOVMnWc43gZbGXfYlbPlOKlxvE7FH84nsWS
+ MPB6IAMrPmxo8K6BlHgNqsHwrK8O8B+0vKRxY6TzTHMpOkr7cgFAepUD5BBVgt4+tIaWtKEsBeB
+ qSBUyfUFhEjd7Xj6R2u7FhW7IG4eWpGGUPqU9TrHttLp5JLloYzcAtjA90s7yKVg6baURDL3xx+
+ gvQg5/OXO8SuAQMCs+g==
+X-Authority-Analysis: v=2.4 cv=PLo/P/qC c=1 sm=1 tr=0 ts=6a17a884 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=VwQbUJbxAAAA:8 a=zitRP-D0AAAA:8 a=EUspDBNiAAAA:8 a=DfkYS8A862cjZAK12kEA:9
+ a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=xwnAI6pc5liRhupp6brZ:22
+X-Proofpoint-GUID: 47HzanMg3hrB6lSPk-hj137mMakjtww3
+X-Proofpoint-ORIG-GUID: 47HzanMg3hrB6lSPk-hj137mMakjtww3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-27_05,2026-05-26_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1015 malwarescore=0 spamscore=0 bulkscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2605280021
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110032-lists,linux-arm-msm=lfdr.de,guptarud.gmail.com];
-	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_REPLYTO(0.00)[gmail.com];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,gmail.com];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.992];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	HAS_REPLYTO(0.00)[guptarud@gmail.com];
+	TAGGED_FROM(0.00)[bounces-110033-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qualcomm.com:email,0.0.0.20:email]
-X-Rspamd-Queue-Id: F1ED75EBB77
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[qiang.yu@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 5AB185EBC8B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Rudraksha Gupta <guptarud@gmail.com>
+This series adds a common clkref_en implementation and converts glymur
+and mahua to use it, along with the related binding and DTS updates.
 
-Add the tc360 touchkey. It's unknown if this is the actual model of the
-touchkey, as downstream doesn't mention a variant, but this works.
+The PCIe clkref clocks on Glymur and Mahua gate the QREF block which
+provides reference clocks to the PCIe PHYs. QREF requires LDO supplies
+and a reference voltage from the refgen block to operate. The refgen
+block itself requires vdda-refgen_0p9 and vdda-refgen_1p2 LDOs to
+function.
 
-Link:
-https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/drivers/input/keyboard/cypress_touchkey_236/Makefile#L5
+Previously, these QREF votes were done in PHY drivers. In earlier
+discussion [1], the feedback was that this is the wrong ownership point:
+those supplies are for the QREF controlled by clkref registers, not for
+the PHY directly. Based on that feedback, this series keeps the
+regulator handling with the clkref control path.
 
-Assisted-by: Claude:claude-opus-4.6
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
----
-Add the tc360 touchkey. It's unknown if this is the actual model of the
-touchkey, as downstream doesn't mention a variant, but this works.
+Another reason for this series is reuse. clkref_en registers may live in
+different blocks across platforms (for example TCSR on Glymur, TLMM on
+SM8750 [2]), while the behavior is the same. The common helper lets each
+driver provide simple descriptors (name, offset, optional supplies) and
+reuse shared registration and runtime logic.
 
-Link:
-https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/drivers/input/keyboard/cypress_touchkey_236/Makefile#L5
+Glymur and Mahua share the same QREF TX/RPT/RX component naming but
+have different PCIe QREF topologies. Both are handled in tcsrcc-glymur.c
+via match_data to select the correct descriptor table per compatible.
 
-Test:
-=============
-- LEDs:
-samsung-expressatt:/sys/class/leds/tm2-touchkey$ echo heartbeat > trigger
-// Flashes LEDs :)
+[1] https://lore.kernel.org/lkml/aEBfV2M-ZqDF7aRz@hovoldconsulting.com/
+[2] https://lore.kernel.org/linux-arm-msm/20260202-topic-8750_tcsr-v1-0-cd7e6648c64f@oss.qualcomm.com/
 
-- Touching buttons:
-samsung-expressatt:/sys/class/leds/tm2-touchkey$ evtest
-No device specified, trying to scan all of /dev/input/event*
-Not running as root, no devices may be available.
-Available devices:
-/dev/input/event0:      pmic8xxx_pwrkey
-/dev/input/event1:      gpio-keys
-/dev/input/event2:      tm2-touchkey
-/dev/input/event3:      Atmel maXTouch Touchscreen
-Select the device event number [0-3]: 2
-Input driver version is 1.0.1
-Input device ID: bus 0x18 vendor 0x0 product 0x0 version 0x0
-Input device name: "tm2-touchkey"
-Supported events:
-  Event type 0 (EV_SYN)
-  Event type 1 (EV_KEY)
-    Event code 139 (KEY_MENU)
-    Event code 158 (KEY_BACK)
-  Event type 4 (EV_MSC)
-    Event code 4 (MSC_SCAN)
-Properties:
-Testing ... (interrupt to exit)
-Event: time 1761059686.899755, type 4 (EV_MSC), code 4 (MSC_SCAN), value 00
-Event: time 1761059686.899755, type 1 (EV_KEY), code 139 (KEY_MENU), value 1
-Event: time 1761059686.899755, -------------- SYN_REPORT ------------
-Event: time 1761059687.113489, type 4 (EV_MSC), code 4 (MSC_SCAN), value 00
-Event: time 1761059687.113489, type 1 (EV_KEY), code 139 (KEY_MENU), value 0
-Event: time 1761059687.113489, -------------- SYN_REPORT ------------
-Event: time 1761059688.764757, type 4 (EV_MSC), code 4 (MSC_SCAN), value 01
-Event: time 1761059688.764757, type 1 (EV_KEY), code 158 (KEY_BACK), value 1
-Event: time 1761059688.764757, -------------- SYN_REPORT ------------
-Event: time 1761059688.817516, type 4 (EV_MSC), code 4 (MSC_SCAN), value 01
-Event: time 1761059688.817516, type 1 (EV_KEY), code 158 (KEY_BACK), value 0
-Event: time 1761059688.817516, -------------- SYN_REPORT ------------
----
+Changes in v4:
+- Add mahua QREF support (binding, driver, DTS) to avoid dtb check error
+- Override pcie5_phy ref clock to RPMH_CXO_CLK on mahua since
+  TCSR_PCIE_1_CLKREF_EN is not available
+- Rename regulator arrays to topology-based names and merge duplicates
+- Remove else: false blocks from binding
+- Sort supply properties alphabetically in binding and DTS
+- Link to v3: https://lore.kernel.org/all/20260506-qref_vote_0506-v3-0-5ab71d2e6f16@oss.qualcomm.com/
+
+Changes in v3:
+- Fix dtb check error: allOf:0: 'then' is a dependency of 'if'.
+- Link to v2: https://lore.kernel.org/all/20260420-vote_qref_in_tcsrcc-v2-0-589a23ae640a@oss.qualcomm.com/
+
 Changes in v2:
-- drop status = okay
-- reorder pinctrl-{n,names}
-- Resend of v1: https://lore.kernel.org/all/20260503-expressatt-touchkey-v1-1-f7dd5db64e0d@gmail.com/
-- Link to v1: https://lore.kernel.org/r/20251205-expressatt-touchkey-v1-1-1444b927c9f3@gmail.com
----
- .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   | 54 ++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+- RFC tag dropped
+- Changed back to additionalProperties: false
+- Moved all Glymur supply properties into top-level properties so they are explicitly defined.
+- Link to v1: https://lore.kernel.org/all/20260331-qref_vote-v1-0-3fd7fbf87864@oss.qualcomm.com/
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-index 5a39abd6f3ce..5a3d88e31cf5 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-@@ -52,6 +52,40 @@ key-volume-down {
- 			linux,code = <KEY_VOLUMEDOWN>;
- 		};
- 	};
-+
-+	touchkey_enable: touchkey-enable {
-+		compatible = "regulator-fixed";
-+		regulator-name = "touchkey_enable";
-+		gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+		regulator-boot-on;
-+	};
-+
-+	i2c-gpio-touchkey {
-+		compatible = "i2c-gpio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		sda-gpios = <&tlmm 71 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+		scl-gpios = <&tlmm 72 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+		pinctrl-0 = <&touchkey_i2c_pins>;
-+		pinctrl-names = "default";
-+		i2c-gpio,delay-us = <2>;
-+
-+		touchkey@20 {
-+			compatible = "coreriver,tc360-touchkey";
-+			reg = <0x20>;
-+
-+			interrupts-extended = <&tlmm 52 IRQ_TYPE_EDGE_FALLING>;
-+			pinctrl-0 = <&touchkey_irq_pin>;
-+			pinctrl-names = "default";
-+
-+			vddio-supply = <&touchkey_enable>;
-+			vdd-supply = <&pm8921_l29>;
-+			vcc-supply = <&pm8921_l29>;
-+
-+			linux,keycodes = <KEY_MENU KEY_BACK>;
-+		};
-+	};
- };
- 
- &gsbi2 {
-@@ -198,6 +232,20 @@ firmware-pins {
- 			bias-disable;
- 		};
- 	};
-+
-+	touchkey_i2c_pins: touchkey-i2c-state {
-+		pins = "gpio71", "gpio72";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	touchkey_irq_pin: touchkey-irq-state {
-+		pins = "gpio52";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
- };
- 
- &pm8921 {
-@@ -420,6 +468,12 @@ pm8921_l25: l25 {
- 			bias-pull-down;
- 		};
- 
-+		pm8921_l29: l29 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+			bias-pull-down;
-+		};
-+
- 		/* Low Voltage Switch */
- 		pm8921_lvs1: lvs1 {
- 			bias-pull-down;
-
+Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
 ---
-base-commit: 3131ff5a117498bb4b9db3a238bb311cbf8383ce
-change-id: 20251205-expressatt-touchkey-1747c503a2f3
+Qiang Yu (7):
+      dt-bindings: clock: qcom,sm8550-tcsr: Add QREF/REFGEN supply properties for glymur and mahua
+      clk: qcom: Add generic clkref_en support
+      clk: qcom: tcsrcc-glymur: Migrate tcsr_pcie_N_clkref_en to clk_ref common helper
+      clk: qcom: tcsrcc-glymur: Add Mahua QREF regulator support
+      arm64: dts: qcom: glymur: Add QREF regulator supplies to TCSR
+      arm64: dts: qcom: mahua: Add QREF regulator supplies to TCSR
+      arm64: dts: qcom: mahua: Switch pcie5_phy ref clock to RPMH_CXO_CLK
+
+ .../bindings/clock/qcom,sm8550-tcsr.yaml           |  66 ++++
+ arch/arm64/boot/dts/qcom/glymur-crd.dts            |  20 +
+ arch/arm64/boot/dts/qcom/mahua-crd.dts             |  15 +
+ arch/arm64/boot/dts/qcom/mahua.dtsi                |  13 +
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/clk-ref.c                         | 205 +++++++++++
+ drivers/clk/qcom/tcsrcc-glymur.c                   | 407 +++++++++------------
+ include/linux/clk/qcom.h                           |  69 ++++
+ 8 files changed, 557 insertions(+), 239 deletions(-)
+---
+base-commit: e7e28506af98ce4e1059e5ec59334b335c00a246
+change-id: 20260527-tcsr_qref_0527-f83ea225903d
 
 Best regards,
--- 
-Rudraksha Gupta <guptarud@gmail.com>
-
+--  
+Qiang Yu <qiang.yu@oss.qualcomm.com>
 
 
