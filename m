@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-110193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SN6EIlbCGGp4nAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 00:31:50 +0200
+	id yPYBK5fNGGpjnggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 01:19:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 085D35FAFCC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 00:31:49 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45A9A5FB592
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 01:19:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3FBDB3030D66
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 22:30:51 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id ECD9730D14BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 23:16:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05C33368294;
-	Thu, 28 May 2026 22:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4314637107F;
+	Thu, 28 May 2026 23:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dtDxQHxo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c0tVZwKT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D849A367F23;
-	Thu, 28 May 2026 22:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE33736F91D;
+	Thu, 28 May 2026 23:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780007450; cv=none; b=NTR7JM8LaLFuPNvqOrXSgfOadsp2DpP+xM6C/+blHWKwID1pwO+TAGed6EksCkQN7bPYmen2yTtItGiFTVfsjN12zq09ymgMS7CA/yCHddLzAOX9iG9BKv+P4dlD0xt7JngzBSNTubX0y0k3LzqoBLScrFP3JT3ZAlpWG9NmzNI=
+	t=1780010170; cv=none; b=j5vLsrLo9Fx6oJ4LBzl18zI/9AoHM9dPzT6ZrnfdK3svBQ/JZkEHI1fgQPHelc6RVEGP/3LAvFYvrI1264cdmg/HyGKU/F25trwJ+yS+zXN5Bgzg8z4bPkM32hFzaIEu9ZIKmMOTQLVY1tCZthPKiZVyi/oZd18eoK/4seUU1iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780007450; c=relaxed/simple;
-	bh=6gM00ZsipIMswoFFkvvLiDGFT+x/pe9LSDNPgHmgU2c=;
+	s=arc-20240116; t=1780010170; c=relaxed/simple;
+	bh=Y4yC2cJXsAW117xlMYbe6HSIDdWUAsaQE9HmItYt0ds=;
 	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=bZeRtmmC7hcH1OvHk45VUwRkHs1pZXRgJgi0hF0WbZcyWw2Woh+RsN2xMiBDSx4pxPqpOpEct/IIt85s8PGH2meAknGuuRDhw2NcjbHquTjK4o29I6+VsudRANBtxRkePuaYBUgyDyLL8JCnS421GcQYgKOpEfkwmgeNh267S8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dtDxQHxo; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BF01F00A3A;
-	Thu, 28 May 2026 22:30:43 +0000 (UTC)
+	 References:Date:Message-Id; b=ZZ264NOh0CxUQxxyoKya40cczt0czzsaC7aRxyOKEVcPTWMl+PhILVcDIJdanBE2Usr98rRsKJTVhib6EUQiuIFcix55HeUMUtkFS8Nr+tt9PIsxnW8kwPWVRt2T8i9C7Jpp9x0F2B/Z93a6ZNUR3+eigVJ6+mKch8Z586JIStg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c0tVZwKT; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24B61F00A3A;
+	Thu, 28 May 2026 23:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780007449;
-	bh=JTC78I7HyeSyWieBpRlXgLzYRKV0E9nhA+7nPJZHDPI=;
+	s=k20260515; t=1780010168;
+	bh=vtWSlz05mwN/OppBwdY6wKRfOcrYi2X3b6estq5JAq4=;
 	h=Subject:From:To:Cc:In-Reply-To:References:Date;
-	b=dtDxQHxo989x4MuYetEl28FjQ+wkepDGzLoqkJwRAQzuZQh2FxcsXRnfmzt8rD8tn
-	 XXIia42Bj97lDQJuC9NjQuOdqrRNVNOrxzTexKFb7QpUjPakgO+jqn6sxmszM/CL1b
-	 Q1XNmjnOpWC6xYrdvXn6/1GUWQPZLnh024tARvmHoEb8yqeiwepMqfjPkqv+h1dm7s
-	 GoRdMWEaPaaCIAsaXExuYaQNCfoGJRyCnzr0Oy7HU6511k4SETnuMcSRFz/oBCWY2X
-	 eN4E8GE3qBOOLLd7vEv8Am5A+hxpKoIIGyVh3ekRN4dXt/6mDC13sLpFGS1biyGtcG
-	 8ZqlO6zILGQiQ==
+	b=c0tVZwKTk9kOm5BqRZYABwrdP1ve2jykaduIKa0oMyZCK9OZnpJXj16MgyOXiNBFK
+	 Q+EqcXJXAx4spC+eBR8fbKGMATLZVTzCdQ+n1n/h9Jjc8nQWwC9lINCgWfVNQoz6fh
+	 WxkEjOH5UELLHNU8QzR68OmozlXxOzSebgBp2/iPCpAMYo3sxszWG2Gi96r4dVcx3R
+	 xkt9+u+MLZsKMQhbbvJkA2EnbKUixUy0usDy4PTBkRVHKGL9ZLcIik9dJPvmFJAzSp
+	 DjYtRxqTrT/1nwx42S2yEuE0/NKrbdN/JmMAUzjW9U5+x+ZH2ACDeZFbl6+xBuHkNJ
+	 anKz3BXo+Dlqw==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,192 +52,225 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 8/8] arm64: dts: qcom: shikra-iqs-evk-imx577-camera:
- Add DT overlay
+Subject: Re: [PATCH v5 5/5] media: qcom: camss: vfe-340: Support for PIX
+ client
 From: bod@kernel.org
-To: Nihal Kumar Gupta <nihal.gupta@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bod@kernel.org>, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
- Loic Poulain <loic.poulain@oss.qualcomm.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>, 
- Andi Shyti <andi.shyti@kernel.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.Li@nxp.com>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, linux-arm-msm@vger.kernel.org, 
- linux-media@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, 
- imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
- Suresh Vankadara <quic_svankada@quicinc.com>, 
- Vikram Sharma <vikram.sharma@oss.qualcomm.com>
-In-Reply-To: <20260526-shikra-camss-review-v1-8-645d2c8c75a7@qti.qualcomm.com>
-References: <20260526-shikra-camss-review-v1-0-645d2c8c75a7@qti.qualcomm.com>
- <20260526-shikra-camss-review-v1-8-645d2c8c75a7@qti.qualcomm.com>
-Date: Thu, 28 May 2026 23:30:41 +0100
-Message-Id: <178000744162.4557.14613962845288279527.b4-reply@b4>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: bryan.odonoghue@linaro.org, vladimir.zapolskiy@linaro.org, 
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ mchehab@kernel.org, konrad.dybcio@oss.qualcomm.com, 
+ dmitry.baryshkov@oss.qualcomm.com
+In-Reply-To: <20260414185202.2714019-6-loic.poulain@oss.qualcomm.com>
+References: <20260414185202.2714019-1-loic.poulain@oss.qualcomm.com>
+ <20260414185202.2714019-6-loic.poulain@oss.qualcomm.com>
+Date: Fri, 29 May 2026 00:16:03 +0100
+Message-Id: <178001016320.17898.16333899791163571417.b4-reply@b4>
 X-Mailer: b4 0.16-dev-d5d98
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3500; i=bod@kernel.org;
- h=from:subject:message-id; bh=6gM00ZsipIMswoFFkvvLiDGFT+x/pe9LSDNPgHmgU2c=;
- b=owEBbQKS/ZANAwAKASJxO7Ohjcg6AcsmYgBqGMITaf4YGJtKzrCQ5wNkqoquixtxXfW2tchE6
- X4fB6QIxOKJAjMEAAEKAB0WIQTmk/sqq6Nt4Rerb7QicTuzoY3IOgUCahjCEwAKCRAicTuzoY3I
- OkS1EACm6OJhIyJkwiAawBePKRoqc8eWD/J4E3aODc4QgOgbkar0E21yOB9gGj7xJTwOwW+lNCQ
- xAL5+Q8UtIHM826BJMKEsHA72AIy4R5irN6DVtdsnngIRO39KVU/vIb+lLMNDdGnKu3qHK/809x
- dQ+N4+ATOnjKDWQiIBHo59Edx0iADyX56xMAMcBrQ37FrKVm8we00ASoLPXyOLFv+IO3rtP2WA4
- Xfsd/JcrAJ/PCi0rsyaBA+Uiypmqzgmt33F+o2CLCgn6QG6TLjTfrdiq0C19yl7eXiS0dw4HEwq
- 4sU6DzdABm98IILZgm9IijQ76uvjVC4Yz5AKSgaPES4/jdKolWNAt7eT3qKQPMY/N1NnycwF9+v
- nW95dgttRlGzIVlZVFxoIQk1TNPeI+7DhEpJW/Q0zX1Y3elcx/0BuchWvss4zI+1KiPWWguGm+N
- bPFJB0K/HQdVem3TjvG5CcnnATFiYmUDDb5fV/v9IxE75Nj6i6griTeuTz7P8aU2sgKyw+rFC4q
- AiPzlPETx0XY8S2QWxkYal9L4TrAr11o4V/oFAf8XMs1IEY/KDYU8TZB5S2GhVEUc8xOi+MaWIL
- X6aCK/nFKdzce6vB9qW4EdlDUKJIJeKBGkhuU/ojUlxp98vupO/B2G8uJ9VtnF/eJ4VSNy4gj5r
- GLHQDN+91MUGNdQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7170; i=bod@kernel.org;
+ h=from:subject:message-id; bh=Y4yC2cJXsAW117xlMYbe6HSIDdWUAsaQE9HmItYt0ds=;
+ b=owEBbQKS/ZANAwAKASJxO7Ohjcg6AcsmYgBqGMy1WeE7KYDp5vCW6DL2J0wX0f2DzeIy5k+nn
+ +alLCU2vk6JAjMEAAEKAB0WIQTmk/sqq6Nt4Rerb7QicTuzoY3IOgUCahjMtQAKCRAicTuzoY3I
+ OnmcD/4+rM2nPtzLVmYlcez/YaADPuNTN9jvO/256OASBhZoYG2GJklxfsX9oRTGOK7qcgKEb+C
+ 5Q3HiGl8FPHyk/Jk+uHcceJwVHa53y6aubUhFJYLzeE7s/t9vRR6Ed1FHN7o31cXoG347mXcaJ9
+ ldfGGj41QHMyArJLW9RA89HVpPn6SFlF041Qe52AQjvyVWUMy6IeDh4nwmIsXqJvf2XjQSOdqdz
+ ePtS5msANPpc0HrZtV+daMgezJdFKs/qkXO6Q0i+HYHFtLQA8FiTEBnUEY5HA1qXBPT9yq9abAn
+ mv22O12NhN8J/XgazBnFIpnMLiGeCq9nqkrK8FWXq2ti1ntuMa6QaGZ9ckRtkQfKtM4i69uiv5W
+ 5OFI8u3IJDl+1m3S2Em82KL/o4zvcqm46AM50EDIEafVo4xbKMroftRSUN5eGT53rahyrLqBJKm
+ p9TENLtJkSGOj8KMOEY26tcoxrCzh6+jJYH1RJ7EmJHwJ3oBzfLnl+Jh9uLsSIP5ebwzr3IQ1S2
+ oX9Q2a8bEBpGFRbKj69wZ645kMAYlfsIIhTz3hlEHA/IQPkC72NhLXWO43Wu7GPIhNDhl1h5fL1
+ D613vjmrLuFQxrSedDqsQhJKn23fl9k8XlxhhPvl6FA05SASMnpaTRIDa5k18UVFK2j6BDrkMHx
+ ist9L6psVVroZWw==
 X-Developer-Key: i=bod@kernel.org; a=openpgp;
  fpr=E693FB2AABA36DE117AB6FB422713BB3A18DC83A
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110193-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110194-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[26];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NO_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,linaro.org,oss.qualcomm.com,nxp.com,pengutronix.de,gmail.com,vger.kernel.org,lists.linux.dev,lists.infradead.org,quicinc.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_NO_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,0.0.0.1:email,qualcomm.com:email,1a:email]
-X-Rspamd-Queue-Id: 085D35FAFCC
+	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,linaro.org:email]
+X-Rspamd-Queue-Id: 45A9A5FB592
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 2026-05-26 22:42 +0530, Nihal Kumar Gupta wrote:
-> Shikra IQS is an industrial-grade variant using PM8150 PMIC, requiring
-> different CSIPHY and sensor supply rails compared to the retail boards
-> (CQM and CQS) which use PM4125.
+On 2026-04-14 20:52 +0200, Loic Poulain wrote:
+> Add support for the vfe-340 PIX write engine, enabling frame capture
+> through the PIX video device (e.g. msm_vfe0_pix). The PIX path requires
+> a separate configuration flow from RDI, including cropping setup, line-
+> based write engine configuration, and the correct packer format based
+> on the input pixel format.
 > 
-> Add a dedicated overlay for optional IMX577 integration via CSIPHY1.
+> In contrast to RDI, the PIX interface embeds a lightweight processing
+> engine we can use for cropping, configuring custom stride/alignment,
+> and, in the future, extracting frame statistics.
 > 
-> Signed-off-by: Nihal Kumar Gupta <nihal.gupta@oss.qualcomm.com>
+> The functionality has been validated on Arduino-Uno-Q with:
+> media-ctl -d /dev/media0 --reset
+> media-ctl -d /dev/media0 -l '"msm_csiphy0":1->"msm_csid0":0[1],"msm_csid0":4->"msm_vfe0_pix":0[1]'
+> media-ctl -d /dev/media0 -V '"imx219 1-0010":0[fmt:SRGGB8_1X8/640x480 field:none]'
+> media-ctl -d /dev/media0 -V '"msm_csiphy0":0[fmt:SRGGB8_1X8/640x480 field:none]'
+> media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:SRGGB8_1X8/640x480 field:none]'
+> media-ctl -d /dev/media0 -V '"msm_vfe0_pix":0[fmt:SRGGB8_1X8/640x480 field:none]'
+> yavta -B capture-mplane --capture=3 -n 3 -f SRGGB8 -s 640x480 /dev/video3
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile                  |  2 +
->  .../dts/qcom/shikra-iqs-evk-imx577-camera.dtso     | 63 ++++++++++++++++++++++
->  2 files changed, 65 insertions(+)
+>  .../media/platform/qcom/camss/camss-vfe-340.c | 82 ++++++++++++++++---
+>  1 file changed, 72 insertions(+), 10 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index df41830e18edff82893ca24ca84d7e03065d0ef7..2a728c975a38f700360e317307036efb0968a00f 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -340,9 +340,11 @@ dtb-$(CONFIG_ARCH_QCOM)	+= shikra-iqs-evk.dtb
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-340.c b/drivers/media/platform/qcom/camss/camss-vfe-340.c
+> index d129b0d3a6ed..a01b78c805cd 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-340.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-340.c
+> @@ -54,6 +54,7 @@
 >  
->  shikra-cqm-evk-imx577-camera-dtbs	:= shikra-cqm-evk.dtb shikra-cqm-evk-imx577-camera.dtbo
->  shikra-cqs-evk-imx577-camera-dtbs	:= shikra-cqs-evk.dtb shikra-cqm-evk-imx577-camera.dtbo
-> +shikra-iqs-evk-imx577-camera-dtbs	:= shikra-iqs-evk.dtb shikra-iqs-evk-imx577-camera.dtbo
+>  #define TFE_BUS_CLIENT_CFG(c)				BUS_REG(0x200 + (c) * 0x100)
+>  #define		TFE_BUS_CLIENT_CFG_EN		BIT(0)
+> +#define		TFE_BUS_CLIENT_CFG_AUTORECOVER	BIT(4)
+>  #define		TFE_BUS_CLIENT_CFG_MODE_FRAME	BIT(16)
+>  #define TFE_BUS_IMAGE_ADDR(c)				BUS_REG(0x204 + (c) * 0x100)
+>  #define TFE_BUS_FRAME_INCR(c)				BUS_REG(0x208 + (c) * 0x100)
+> @@ -63,12 +64,23 @@
+>  #define TFE_BUS_IMAGE_CFG_2(c)				BUS_REG(0x214 + (c) * 0x100)
+>  #define		TFE_BUS_IMAGE_CFG_2_DEFAULT	0xffff
+>  #define TFE_BUS_PACKER_CFG(c)				BUS_REG(0x218 + (c) * 0x100)
+> +#define		TFE_BUS_PACKER_CFG_FMT_PLAIN8	0x1
+>  #define		TFE_BUS_PACKER_CFG_FMT_PLAIN64	0xa
+> +#define		TFE_BUS_PACKER_CFG_FMT_MIPI10	0xc
+> +#define		TFE_BUS_PACKER_CFG_FMT_MIPI12	0xd
+>  #define TFE_BUS_IRQ_SUBSAMPLE_CFG_0(c)			BUS_REG(0x230 + (c) * 0x100)
+>  #define TFE_BUS_IRQ_SUBSAMPLE_CFG_1(c)			BUS_REG(0x234 + (c) * 0x100)
+>  #define TFE_BUS_FRAMEDROP_CFG_0(c)			BUS_REG(0x238 + (c) * 0x100)
+>  #define TFE_BUS_FRAMEDROP_CFG_1(c)			BUS_REG(0x23c + (c) * 0x100)
 >  
->  dtb-$(CONFIG_ARCH_QCOM)	+= shikra-cqm-evk-imx577-camera.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= shikra-cqs-evk-imx577-camera.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= shikra-iqs-evk-imx577-camera.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm4450-qrd.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6115-fxtec-pro1x.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/shikra-iqs-evk-imx577-camera.dtso b/arch/arm64/boot/dts/qcom/shikra-iqs-evk-imx577-camera.dtso
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..f0423f1ab4e93abdcc7cad8977b39e31b2437e8e
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/shikra-iqs-evk-imx577-camera.dtso
-> @@ -0,0 +1,63 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
+> +#define PP_CROP_REG(a)					(0x2800 + (a))
+> +#define TFE_PP_CROP_CFG					PP_CROP_REG(0x60)
+> +#define		TFE_PP_CROP_CFG_EN	(BIT(0) | BIT(9))
+> +#define	TFE_PP_CROP_LINE_CFG				PP_CROP_REG(0x68)
+> +#define		TFE_PP_CROP_FIRST	GENMASK(29, 16)
+> +#define		TFE_PP_CROP_LAST	GENMASK(13, 0)
+> +#define	TFE_PP_CROP_PIX_CFG				PP_CROP_REG(0x6C)
 > +
-> +/dts-v1/;
-> +/plugin/;
+>  enum tfe_client {
+>  	TFE_CLI_BAYER,
+>  	TFE_CLI_IDEAL_RAW,
+> @@ -245,18 +257,69 @@ static void vfe_wm_update(struct vfe_device *vfe, u8 wm, u32 addr,
+>  	writel_relaxed(addr, vfe->base + TFE_BUS_IMAGE_ADDR(client));
+>  }
+>  
+> +static u32 vfe_packer_format(struct vfe_device *vfe, u32 pixelformat)
+> +{
+> +	const struct camss_formats *fmt = vfe->res->formats_rdi;
+> +	unsigned int bpp = 0;
+> +	int i;
 > +
-> +#include <dt-bindings/clock/qcom,shikra-gcc.h>
-> +#include <dt-bindings/gpio/gpio.h>
+> +	for (i = 0; i < fmt->nformats; i++) {
+> +		if (fmt->formats[i].pixelformat == pixelformat) {
+> +			bpp = fmt->formats[i].mbus_bpp;
+> +			break;
+> +		}
+> +	}
 > +
-> +&camss {
-> +	vdd-csiphy-1p2-supply = <&pm8150_l11>;
-> +	vdd-csiphy-1p8-supply = <&pm8150_l12>;
+> +	switch (fmt->formats[i].mbus_bpp) {
+> +	case 10:
+> +		return TFE_BUS_PACKER_CFG_FMT_MIPI10;
+> +	case 12:
+> +		return TFE_BUS_PACKER_CFG_FMT_MIPI12;
+> +	default:
+> +		return TFE_BUS_PACKER_CFG_FMT_PLAIN8;
+> +	}
+> +}
 > +
-> +	status = "okay";
+>  static void vfe_wm_start(struct vfe_device *vfe, u8 wm, struct vfe_line *line)
+>  {
+>  	struct v4l2_pix_format_mplane *pix = &line->video_out.active_fmt.fmt.pix_mp;
+>  	u32 stride = pix->plane_fmt[0].bytesperline;
+>  	u8 client = tfe_wm_client_map[wm];
+> -
+> -	/* Configuration for plain RDI frames */
+> -	writel_relaxed(TFE_BUS_IMAGE_CFG_0_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_0(client));
+> -	writel_relaxed(0u, vfe->base + TFE_BUS_IMAGE_CFG_1(client));
+> -	writel_relaxed(TFE_BUS_IMAGE_CFG_2_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_2(client));
+> -	writel_relaxed(stride * pix->height, vfe->base + TFE_BUS_FRAME_INCR(client));
+> -	writel_relaxed(TFE_BUS_PACKER_CFG_FMT_PLAIN64, vfe->base + TFE_BUS_PACKER_CFG(client));
+> +	u32 cfg = TFE_BUS_CLIENT_CFG_EN;
 > +
-> +	ports {
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
+> +	if (client == TFE_CLI_BAYER) { /* PIX - Line based */
+> +		struct v4l2_rect *crop = &line->crop;
 > +
-> +		port@1 {
-> +			reg = <1>;
+> +		/* Cropping */
+> +		writel_relaxed(TFE_PP_CROP_CFG_EN, vfe->base + TFE_PP_CROP_CFG);
+> +		writel_relaxed(FIELD_PREP(TFE_PP_CROP_FIRST, crop->top) |
+> +			       FIELD_PREP(TFE_PP_CROP_LAST, crop->top + crop->height - 1),
+> +			       vfe->base + TFE_PP_CROP_LINE_CFG);
+> +		writel_relaxed(FIELD_PREP(TFE_PP_CROP_FIRST, crop->left) |
+> +			       FIELD_PREP(TFE_PP_CROP_LAST, crop->left + crop->width - 1),
+> +			       vfe->base + TFE_PP_CROP_PIX_CFG);
 > +
-> +			csiphy1_ep: endpoint {
-> +				data-lanes = <0 1 2 3>;
-> +				remote-endpoint = <&imx577_ep1>;
-> +			};
-> +		};
-> +	};
-> +};
+> +		/* Write Engine */
+> +		writel_relaxed(pix->width | (pix->height << 16),
+> +			       vfe->base + TFE_BUS_IMAGE_CFG_0(client));
+> +		writel_relaxed(0u, vfe->base + TFE_BUS_IMAGE_CFG_1(client));
+> +		writel_relaxed(stride, vfe->base + TFE_BUS_IMAGE_CFG_2(client));
+> +		writel_relaxed(stride * pix->height, vfe->base + TFE_BUS_FRAME_INCR(client));
+> +		writel_relaxed(vfe_packer_format(vfe, pix->pixelformat),
+> +			       vfe->base + TFE_BUS_PACKER_CFG(client));
 > +
-> +&cci {
-> +	status = "okay";
-> +};
-> +
-> +&cci_i2c1 {
-> +	#address-cells = <1>;
-> +	#size-cells = <0>;
-> +
-> +	camera@1a {
-> +		compatible = "sony,imx577";
-> +		reg = <0x1a>;
-> +
-> +		reset-gpios = <&tlmm 33 GPIO_ACTIVE_LOW>;
-> +		pinctrl-0 = <&mclk1_default>;
-> +		pinctrl-names = "default";
-> +
-> +		clocks = <&gcc GCC_CAMSS_MCLK1_CLK>;
-> +		assigned-clocks = <&gcc GCC_CAMSS_MCLK1_CLK>;
-> +		assigned-clock-rates = <24000000>;
-> +
-> +		dovdd-supply = <&pm8150_l15>;
-
-I don't have your schematic BUT where are the rest of the regulators.
-
-If they are absent or powered by the daughter board, a comment in the patch
-would be warranted.
-
-Same comment for previous patch.
-
-> +		port {
-> +			imx577_ep1: endpoint {
-> +				link-frequencies = /bits/ 64 <600000000>;
-> +				data-lanes = <0 1 2 3>;
-> +				remote-endpoint = <&csiphy1_ep>;
-> +			};
-> +		};
-> +	};
-> +};
-> 
+> +		cfg |= TFE_BUS_CLIENT_CFG_AUTORECOVER;
+> +	} else { /* RDI - Frame based */
+> +		writel_relaxed(TFE_BUS_IMAGE_CFG_0_DEFAULT,
+> +			       vfe->base + TFE_BUS_IMAGE_CFG_0(client));
+> +		writel_relaxed(0u, vfe->base + TFE_BUS_IMAGE_CFG_1(client));
+> +		writel_relaxed(TFE_BUS_IMAGE_CFG_2_DEFAULT,
+> +			       vfe->base + TFE_BUS_IMAGE_CFG_2(client));
+> +		writel_relaxed(stride * pix->height, vfe->base + TFE_BUS_FRAME_INCR(client));
+> +		writel_relaxed(TFE_BUS_PACKER_CFG_FMT_PLAIN64,
+> +			       vfe->base + TFE_BUS_PACKER_CFG(client));
+> +		cfg |= TFE_BUS_CLIENT_CFG_MODE_FRAME;
+> +	}
+>  
+>  	/* No dropped frames, one irq per frame */
+>  	writel_relaxed(0, vfe->base + TFE_BUS_FRAMEDROP_CFG_0(client));
+> @@ -266,11 +329,10 @@ static void vfe_wm_start(struct vfe_device *vfe, u8 wm, struct vfe_line *line)
+>  
+>  	vfe_enable_irq(vfe);
+>  
+> -	writel(TFE_BUS_CLIENT_CFG_EN | TFE_BUS_CLIENT_CFG_MODE_FRAME,
+> -	       vfe->base + TFE_BUS_CLIENT_CFG(client));
+> +	writel(cfg, vfe->base + TFE_BUS_CLIENT_CFG(client));
+>  
+>  	dev_dbg(vfe->camss->dev, "VFE%u: Started client %u width %u height %u stride %u\n",
+> -		vfe->id, client, pix->width, pix->height, client);
+> +		vfe->id, client, pix->width, pix->height, stride);
+>  }
+>  
+>  static void vfe_wm_stop(struct vfe_device *vfe, u8 wm)
 > -- 
 > 2.34.1
 > 
 > 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
+---
+bod
 
 
