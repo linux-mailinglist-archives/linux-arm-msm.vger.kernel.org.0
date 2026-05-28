@@ -1,205 +1,644 @@
-Return-Path: <linux-arm-msm+bounces-110129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EIFDHCNIGGr2iQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 15:50:27 +0200
+	id B4hnE1NIGGpSiggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 15:51:15 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2AC85F302F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 15:50:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E93395F3092
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 15:51:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 593BF3011795
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 13:50:23 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 83D6E3046B9F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 13:50:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DF8E280338;
-	Thu, 28 May 2026 13:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E84B29B799;
+	Thu, 28 May 2026 13:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NgX2AMwD";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="fdvJp/K5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D+fSYxCy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9207276028
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 13:50:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A31C282F25;
+	Thu, 28 May 2026 13:50:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779976218; cv=none; b=ppMaYJFh5/8oHXCg9p1P+PU0Ff5yCdqK0nlCN7Z4dk6ygEen/8Zrz1167lgahNBqq7z4hIoTyy27Mk6RU9sKOSFtq/y/HC6ForPrjw2skmRHJE/6BWT2eiDGswNjQwSI46gWiJxwVpJr9cpkiAGhNKT3K+P9b/5AJhtajHEGPRY=
+	t=1779976229; cv=none; b=p4ReepU26JN+Ps5jmrBdp8wmULN1jM7iuZY4rxYjSigOr9DeS4UkHTaDxkcWr4ylJQiAUBg3YJlWeJ1dsuodggibggc995tTgrPtDzMT9ukj+5tJjLF+gQb8W3Icr3Z1h7zevhOBagzWypTCG8WxRj5jtv1YV2aKP778mg5hLWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779976218; c=relaxed/simple;
-	bh=vd/rQRJQWLIg+xDuYcY88Qbbo0c1bTx1+oaoNovwGyA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uAPr7Izw93gmxYBOt+LuKwWBmNJdPOH+m4obPbz46lA13aGvXYdaCMgXjT6gLIJ7M1rnnw6SO7TDgsIfUsTGPGevZ0pQUDtuQ1xK0ChGv6EAtDIU3gYH8xxEQ0IagXnIWSLwUcrUY3BDzfaVfO5DvR3Q3qdcjlcHK40tA28pdv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NgX2AMwD; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fdvJp/K5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64S8vSdq4184457
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 13:50:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=V1s8jKskQG0bDSH4tCE3i2dJ
-	j/wDsiGH0s/CmPfjVgE=; b=NgX2AMwDdKD5hgnZ/aYfhZ8QKTSbIG1dhVGw28oC
-	JE9VZ9pHC7Q9lp0qBxKGwnbXDagxOHrxzUaHpAS7hXdptOXPGCF4f8m6NQPyW6Z2
-	KMjfUFxVH1jCEkCXkKVUaj4KEssFUt1vVfIiUJl2DNaN8YEQT7sFqEuD088Kv8Ft
-	uJDIsZXU/ho+KkQKf2lx8e3lO5DUexyPcYZWGsH72h/Aa2tACM2fu8thXVZQYecv
-	WE1IY48F8aA9vkYcxFlfa3PFRdXFvyjyO8YLJMueXqkInfP/Xbd6Hgptmp00SJUY
-	zda8ERh+f/Z5TjiAA+dduUqaTkg5oqXjdYALwFWwdC1s+Q==
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com [209.85.217.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7yf2yn4-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 13:50:15 +0000 (GMT)
-Received: by mail-vs1-f69.google.com with SMTP id ada2fe7eead31-63144b84f14so16144437137.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 06:50:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779976215; x=1780581015; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=V1s8jKskQG0bDSH4tCE3i2dJj/wDsiGH0s/CmPfjVgE=;
-        b=fdvJp/K5Q9X3GiJZCj+oDun76mibiFVvphFV8V7wH/f8dvY4BlIxrzIwgRC31A/Omu
-         nhVRXT6LZMoz24Bqt3kzkOoUOdIH2oy44dw3bYxFmvOOmPRJM2LiR1gZPw9oezawVzA/
-         g1B0Ovo+yyhP0hMTpa+TCHoUR6+Co18tlwHmtncIFgLtLq0SOOsp0lb20fYMD9PiqW4/
-         +iJz7dAUEJ7tbusRiRZaLm1p6cWl715j+c/Gu1gubVLhwih2fVKH8QVkK0HZbANvsOH3
-         mfoYH608D8boPTdhksT1p941dyivWSHI+StYMHqTxZm8f0wMdfYYjGQgeMnXnN9YUA5I
-         w+0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779976215; x=1780581015;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=V1s8jKskQG0bDSH4tCE3i2dJj/wDsiGH0s/CmPfjVgE=;
-        b=Gcm1gMMbJDvKzHimM7xL1ExQI6wq21SY/wVm5cCLU0DsGJef00GfIaH98YPe1sSuGk
-         GwIEIHIR34Y68QioCLY4Aqllz8KfiOHd14qGFE31KYCFPT82Yah+IzDM32DJ+/SgMzlp
-         Dji4sLH9xrm99huvkgXBRrihmJ5K78RrMzM9Yqz+0hm9UU38IxMcFr/Ek4TbBh8y0zdg
-         QdOqh2p8x/woXZDhoe5WIY18Oy8y49Zzm3PguCOLPBeeyaOB5Jz5x5cmwycCNGtbYYtC
-         BiOJNflLCqOCPE62t+muCbZO78y9YG9JTcjcFslyQ3VtwSQM1bRJSX9dpFgOOlbUGB+g
-         DWnQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8Gv+K6hrmmAYy1u3upHGxJ+b1BgG0yHkQju6cWyI/oEWk6mv8C9CETt67D3TyMTQMHnZUavJH3MbUGhqHy@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkjXO4dSqeOGAKJYr0V63q2otMZElzc3SZXkQ63hwYx8nEZh8y
-	LPbSrZCsU4iCx2bArNy5Un9qfyr/s7IgWm912l5gUlE5QLXRLcIwzHQAipV02Al4xxDYfMY3ciX
-	vHLtoIvjy+CH71anOX05LrsBClkyxTS6YzFYOrdNZgauyPP3oAVHUpjkF1owiI6ogaVN4
-X-Gm-Gg: Acq92OG/yLfLEj27kTrRuKvJSJweOmFfXHSmW7+0ZidskdXk/O8rRwDi9SPePyIsRyp
-	hgr6tVYdt/1jh8P9jgkrOfHp22rRCX8eL6zVWk/8lPRD4AXxma4AwxrbK+ObKFPfpG6mlo8UzvD
-	7JO//N67L4+VFLozhYxClyHfL9n7IOHcKFnHn5YKFlizBmOwTZVQRLmY/v7suDkGPysYsu6iu7g
-	sHpdbJEkCH0aN80ZiYtOYzoB88DtDdqo5G4LbMk9HbyzaVdB8y8ku6NWc+25t8COgG/xdjBt4/h
-	HcffqdATmTRd8Ce+16TllUD4MQCnrZ/IuJpMv6+/M6E1Wv3XR98G2ykOi9Xp3s+z3KReie5t2N/
-	srtIHDZT1HgdS61uuP651IIKB+yN8hZQ+qcjRhaKolAr6QSGHZF6VGw833bz6jOVMkJrlLpXVLC
-	0GFR57j/r6PPXarKKy6XUVm0Lk/yK+0pJvYbRBJS+9kZgJzA==
-X-Received: by 2002:a05:6102:5ccb:b0:632:73ad:6c8 with SMTP id ada2fe7eead31-67c7f273532mr15881162137.7.1779976214956;
-        Thu, 28 May 2026 06:50:14 -0700 (PDT)
-X-Received: by 2002:a05:6102:5ccb:b0:632:73ad:6c8 with SMTP id ada2fe7eead31-67c7f273532mr15881139137.7.1779976214562;
-        Thu, 28 May 2026 06:50:14 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-395dcc45b19sm39183511fa.40.2026.05.28.06.50.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2026 06:50:12 -0700 (PDT)
-Date: Thu, 28 May 2026 16:50:10 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-        Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>,
-        Neeraj Soni <neeraj.soni@oss.qualcomm.com>,
-        Eric Biggers <ebiggers@kernel.org>
-Subject: Re: [PATCH 0/3] Add support for qcrypto on shikra
-Message-ID: <lj7geczhthury476ilkjym2k5fblo5pqroefsbdfgh5jcf7zy2@qrss5xc7umn3>
-References: <20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com>
- <20260514194735.GA1939213@google.com>
- <d4d35e17-84fa-4c95-9bfb-abfd25ea7f4a@oss.qualcomm.com>
- <20260522024912.GC5937@quark>
- <c1697372-54ec-4f57-85d9-ad375ff1a44d@oss.qualcomm.com>
- <20260525142843.GA2018@quark>
- <e49c4a45-6455-47f3-a91f-c32c1a0b99be@oss.qualcomm.com>
- <CAMRc=MfC6CEwOXYttsav3mwqyJ2F4sburBj+zNJ25qMoweyL-Q@mail.gmail.com>
+	s=arc-20240116; t=1779976229; c=relaxed/simple;
+	bh=weaZdaCnIvQQO2iWtnJYG90sWonh1QB5GfDUnoFtzT4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=UDjjEUUpcoPyFh7nwSEW2m1RYCLl6CQb/Co2sT0BhEYswg28TCzOPusZaNVQWSfvalI6TKHsoJBmUyKV9Ypq+V0elMEcQ4LusBBBb1ZERzYGTbm3pG3pP+q5dm7ySWHE7LFPNG9JXvZLGCbl4VfWGO09zq2o+YTRGw73V6IndPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D+fSYxCy; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DB41F00A3C;
+	Thu, 28 May 2026 13:50:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779976226;
+	bh=qpQbVznKBuxkvfvnF3ZtK/OpN/xy5/tFgCckXzQ+K+Y=;
+	h=Date:From:Subject:To:Cc:References:In-Reply-To;
+	b=D+fSYxCy6hT8b2xJbtko7ISFnD/+pCxWvZPioGSF7Olg7AHPHvNwX4JBkFjITE76h
+	 oB1kMyjpjzlG+OJ0laAHpFIzaHK9skvzkBKdFNfy74wzAHzLKhsiJkLJRwRz8UO0z9
+	 8SaP8G/5awhGBzDi5GoOqpe1w6xNihU10a3/OAtcEiwQ/3L/olQ9Vx0PNbUSTso6qs
+	 pykRezpflmWSWHrYyPypzUYoNT3zCVrNsg7crvDNKl/h2j2ulP/BE7ufIM5ZUlgUkE
+	 1W+1b5Ar61Xy+izFoYrIZvQj9b/4uTuRJEw+zownu9nNo+NyJzX5ZkCpD1hmMwep3K
+	 XNgSlHPZdB2mg==
+Message-ID: <97ae0e55-ca17-42d7-a013-a3c3bd686bdf@kernel.org>
+Date: Thu, 28 May 2026 14:50:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMRc=MfC6CEwOXYttsav3mwqyJ2F4sburBj+zNJ25qMoweyL-Q@mail.gmail.com>
-X-Proofpoint-GUID: 2TBrGXk07prJmThka8PQaaw1rsqVNfGg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDEzOCBTYWx0ZWRfX6AP7cwIqpmuc
- n98J7eldKfTJthCDB/7g3D6sVtHrsntp+Fy3lfK+YY+pk9ih35kzbDrtHCjOi0dvDJT+eC1kX0J
- kTw6Xy0ESxzfv+dafRIiJpLzXgRPkfuQD9S92ycWd2pzcDIAK82eY8l/kwKYOSoOzPRimp92bPH
- 24taIjIc0QyNqErhh0Oy4F+HhBsRM8mLSAMcy9xuRAosEuZZ4V9C/0UU6vSsXRi7qjdBLnzG6pY
- bI6f1CAWJKs9SGRY5INpehDXhIu3pLAhTy2pCpO/P//30ublVhZKwXwW084UYZFQngp4FrY7HWz
- vAWIVvU4qgj3liktWepxpqGLgP08D7dDNlbR4zX2ifPqMjmyKNd5oYfVPpBDgbisnWWwXWWn/6d
- oq6ZM4CVdojB8PnHtS/la2Pexk9dNI8Ibec1jcdSlt3boNYDD+xpE+OPS/WeYl5Ql0e4S3bBcCj
- y8wqVQZr0TBb2km7Fnw==
-X-Proofpoint-ORIG-GUID: 2TBrGXk07prJmThka8PQaaw1rsqVNfGg
-X-Authority-Analysis: v=2.4 cv=G8gs1dk5 c=1 sm=1 tr=0 ts=6a184817 cx=c_pps
- a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
- a=7wDE0xjjevibnHHXysgA:9 a=CjuIK1q_8ugA:10 a=gYDTvv6II1OnSo0itH1n:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-28_03,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 priorityscore=1501 clxscore=1015 adultscore=0
- impostorscore=0 malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280138
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+User-Agent: Mozilla Thunderbird
+From: Srinivas Kandagatla <srini@kernel.org>
+Subject: Re: [PATCH 3/3] soc: qcom: apr: Process RX messages using per-service
+ work items
+To: Bjorn Andersson <andersson@kernel.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: srini@kernel.org, konradybcio@kernel.org, linux-sound@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260514155051.2593354-1-srinivas.kandagatla@oss.qualcomm.com>
+ <20260514155051.2593354-4-srinivas.kandagatla@oss.qualcomm.com>
+ <ag-GpRMF3KQ8I1YN@baldur>
+Content-Language: en-US
+In-Reply-To: <ag-GpRMF3KQ8I1YN@baldur>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110129-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-110130-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,gmail.com,gondor.apana.org.au,davemloft.net,kernel.org,vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:dkim];
-	MISSING_XM_UA(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[srini@kernel.org,linux-arm-msm@vger.kernel.org];
 	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: F2AC85F302F
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: E93395F3092
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, May 28, 2026 at 09:13:23AM -0400, Bartosz Golaszewski wrote:
-> On Thu, 28 May 2026 13:54:51 +0200, Kuldeep Singh
-> <kuldeep.singh@oss.qualcomm.com> said:
-> >>> +Bartosz, Gaurav, Neeraj
+
+
+On 5/21/26 11:28 PM, Bjorn Andersson wrote:
+> On Thu, May 14, 2026 at 03:50:51PM +0000, Srinivas Kandagatla wrote:
+>> The APR transport currently serializes all incoming packets through a
+>> single work item and a global RX queue. If one service callback blocks
+>> or takes a long time to complete, packet processing for all other
+>> services is delayed.
+>>
 > 
-> I know about the self-tests etc., I will address them next.
+> Can you please elaborate on why that's bad? Also, can you confirm that
 
-My 2c, the self-tests would be more important, as they are fixes. Doing
-the crypto in a wrong way is a bad idea...
+We started to notice that some of the commands are timing out mainly
+commands that are sent while streaming is in progress, example, graph
+stop/start. The underlying reason for this timeout is that there are
+read/write acks that are in the queue.
 
--- 
-With best wishes
-Dmitry
+And other potential issue could be when we have both playback and
+capture or multiple streaming in progress, we do not want to delay dsp
+events to particular stream because other stream events are in queue.
+
+Events for each stream or service are independent of each other, I will
+be really surprised if there is a inter dependency of this.
+
+
+> there are no issues downstream of this with the packets now potentially
+> being handled out-of-order?
+When you mean downstream, you mean adsp or downstream kernel?
+
+> 
+> Regards,
+> Bjorn
+> 
+>> Move RX buffering and work items from the packet router to each
+>> individual service. Incoming packets are queued on a per-service list
+>> and processed by that service's work item, allowing unrelated services
+>> to make progress independently while preserving message ordering within
+>> each service.
+>>
+>> Since queued packets may outlive service removal, add a reference count
+>> to keep the service object alive until all queued packets have been
+>> processed, and reject new packets once the service begins shutting down.
+>>
+>> Switch the shared APR workqueue to an unbound reclaim workqueue so that
+>> multiple services can process packets in parallel.
+>>
+>> This also addresses the random CMD timeouts seen with audio commands
+>> that are sent to DSP which timeout on the response as they are waiting in
+>> the queue for other commands to finish.
+>>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+>> ---
+>>  drivers/soc/qcom/apr.c       | 265 +++++++++++++++++++++++------------
+>>  include/linux/soc/qcom/apr.h |   6 +
+>>  2 files changed, 185 insertions(+), 86 deletions(-)
+>>
+>> diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+>> index 68b357462438..f25219b48cdc 100644
+>> --- a/drivers/soc/qcom/apr.c
+>> +++ b/drivers/soc/qcom/apr.c
+>> @@ -28,14 +28,11 @@ struct packet_router {
+>>  	struct rpmsg_endpoint *ch;
+>>  	struct device *dev;
+>>  	spinlock_t svcs_lock;
+>> -	spinlock_t rx_lock;
+>>  	struct idr svcs_idr;
+>>  	int dest_domain_id;
+>>  	int type;
+>>  	struct pdr_handle *pdr;
+>>  	struct workqueue_struct *rxwq;
+>> -	struct work_struct rx_work;
+>> -	struct list_head rx_list;
+>>  };
+>>  
+>>  struct apr_rx_buf {
+>> @@ -74,54 +71,58 @@ int apr_send_pkt(struct apr_device *adev, struct apr_pkt *pkt)
+>>  }
+>>  EXPORT_SYMBOL_GPL(apr_send_pkt);
+>>  
+>> -void gpr_free_port(gpr_port_t *port)
+>> +static void apr_svc_release(struct kref *ref)
+>>  {
+>> -	struct packet_router *gpr = port->pr;
+>> -	unsigned long flags;
+>> +	struct pkt_router_svc *svc;
+>>  
+>> -	spin_lock_irqsave(&gpr->svcs_lock, flags);
+>> -	idr_remove(&gpr->svcs_idr, port->id);
+>> -	spin_unlock_irqrestore(&gpr->svcs_lock, flags);
+>> +	svc = container_of(ref, struct pkt_router_svc, refcount);
+>>  
+>> -	kfree(port);
+>> +	if (svc->dynamic_svc)
+>> +		kfree(svc);
+>>  }
+>> -EXPORT_SYMBOL_GPL(gpr_free_port);
+>>  
+>> -gpr_port_t *gpr_alloc_port(struct apr_device *gdev, struct device *dev,
+>> -				gpr_port_cb cb,	void *priv)
+>> +static void apr_svc_get(struct pkt_router_svc *svc)
+>>  {
+>> -	struct packet_router *pr = dev_get_drvdata(gdev->dev.parent);
+>> -	gpr_port_t *port;
+>> -	struct pkt_router_svc *svc;
+>> -	int id;
+>> +	kref_get(&svc->refcount);
+>> +}
+>>  
+>> -	port = kzalloc_obj(*port);
+>> -	if (!port)
+>> -		return ERR_PTR(-ENOMEM);
+>> +static void apr_svc_put(struct pkt_router_svc *svc)
+>> +{
+>> +	kref_put(&svc->refcount, apr_svc_release);
+>> +}
+>>  
+>> -	svc = port;
+>> -	svc->callback = cb;
+>> -	svc->pr = pr;
+>> -	svc->priv = priv;
+>> -	svc->dev = dev;
+>> -	spin_lock_init(&svc->lock);
+>> +static void apr_svc_purge_rx(struct pkt_router_svc *svc)
+>> +{
+>> +	struct apr_rx_buf *abuf, *tmp;
+>> +	unsigned long flags;
+>>  
+>> -	spin_lock(&pr->svcs_lock);
+>> -	id = idr_alloc_cyclic(&pr->svcs_idr, svc, GPR_DYNAMIC_PORT_START,
+>> -			      GPR_DYNAMIC_PORT_END, GFP_ATOMIC);
+>> -	if (id < 0) {
+>> -		dev_err(dev, "Unable to allocate dynamic GPR src port\n");
+>> -		kfree(port);
+>> -		spin_unlock(&pr->svcs_lock);
+>> -		return ERR_PTR(id);
+>> +	spin_lock_irqsave(&svc->lock, flags);
+>> +	list_for_each_entry_safe(abuf, tmp, &svc->rx_list, node) {
+>> +		list_del(&abuf->node);
+>> +		kfree(abuf);
+>> +		apr_svc_put(svc);
+>>  	}
+>> +	spin_unlock_irqrestore(&svc->lock, flags);
+>> +}
+>>  
+>> -	svc->id = id;
+>> -	spin_unlock(&pr->svcs_lock);
+>> +void gpr_free_port(gpr_port_t *port)
+>> +{
+>> +	struct packet_router *gpr = port->pr;
+>> +	unsigned long flags;
+>>  
+>> -	return port;
+>> +	spin_lock_irqsave(&port->lock, flags);
+>> +	port->dying = true;
+>> +	spin_unlock_irqrestore(&port->lock, flags);
+>> +
+>> +	spin_lock_irqsave(&gpr->svcs_lock, flags);
+>> +	idr_remove(&gpr->svcs_idr, port->id);
+>> +	spin_unlock_irqrestore(&gpr->svcs_lock, flags);
+>> +
+>> +	cancel_work_sync(&port->rx_work);
+>> +	apr_svc_purge_rx(port);
+>> +	apr_svc_put(port);
+>>  }
+>> -EXPORT_SYMBOL_GPL(gpr_alloc_port);
+>> +EXPORT_SYMBOL_GPL(gpr_free_port);
+>>  
+>>  static int pkt_router_send_svc_pkt(struct pkt_router_svc *svc, const struct gpr_pkt *pkt)
+>>  {
+>> @@ -155,15 +156,53 @@ static void apr_dev_release(struct device *dev)
+>>  {
+>>  	struct apr_device *adev = to_apr_device(dev);
+>>  
+>> +	cancel_work_sync(&adev->svc.rx_work);
+>> +	apr_svc_purge_rx(&adev->svc);
+>> +	apr_svc_put(&adev->svc);
+>>  	kfree(adev);
+>>  }
+>>  
+>> +static struct pkt_router_svc *apr_find_svc(struct packet_router *apr, void *buf)
+>> +{
+>> +	struct pkt_router_svc *svc;
+>> +	unsigned long flags;
+>> +	uint32_t svc_id;
+>> +	struct apr_hdr *ahdr;
+>> +	struct gpr_hdr *ghdr;
+>> +
+>> +	switch (apr->type) {
+>> +	case PR_TYPE_APR:
+>> +		ahdr = buf;
+>> +		svc_id = ahdr->dest_svc;
+>> +		break;
+>> +	case PR_TYPE_GPR:
+>> +		ghdr = buf;
+>> +		svc_id = ghdr->dest_port;
+>> +		break;
+>> +	default:
+>> +		dev_err(apr->dev, "Invalid Packet Router\n");
+>> +		return NULL;
+>> +	}
+>> +
+>> +	spin_lock_irqsave(&apr->svcs_lock, flags);
+>> +	svc = idr_find(&apr->svcs_idr, svc_id);
+>> +	if (svc)
+>> +		apr_svc_get(svc);
+>> +	spin_unlock_irqrestore(&apr->svcs_lock, flags);
+>> +
+>> +	if (!svc)
+>> +		dev_err(apr->dev, "APR: service is not registered (%d)\n", svc_id);
+>> +
+>> +	return svc;
+>> +}
+>> +
+>>  static int apr_callback(struct rpmsg_device *rpdev, void *buf,
+>>  				  int len, void *priv, u32 addr)
+>>  {
+>>  	struct packet_router *apr = dev_get_drvdata(&rpdev->dev);
+>>  	struct apr_rx_buf *abuf;
+>>  	unsigned long flags;
+>> +	struct pkt_router_svc *svc;
+>>  
+>>  	switch (apr->type) {
+>>  	case PR_TYPE_APR:
+>> @@ -189,24 +228,35 @@ static int apr_callback(struct rpmsg_device *rpdev, void *buf,
+>>  	abuf->len = len;
+>>  	memcpy(abuf->buf, buf, len);
+>>  
+>> -	spin_lock_irqsave(&apr->rx_lock, flags);
+>> -	list_add_tail(&abuf->node, &apr->rx_list);
+>> -	spin_unlock_irqrestore(&apr->rx_lock, flags);
+>> +	svc = apr_find_svc(apr, buf);
+>> +	if (!svc) {
+>> +		kfree(abuf);
+>> +		return 0;
+>> +	}
+>> +
+>> +	spin_lock_irqsave(&svc->lock, flags);
+>> +	if (svc->dying) {
+>> +		spin_unlock_irqrestore(&svc->lock, flags);
+>> +		kfree(abuf);
+>> +		apr_svc_put(svc);
+>> +		return 0;
+>> +	}
+>> +
+>> +	list_add_tail(&abuf->node, &svc->rx_list);
+>> +	spin_unlock_irqrestore(&svc->lock, flags);
+>>  
+>> -	queue_work(apr->rxwq, &apr->rx_work);
+>> +	queue_work(apr->rxwq, &svc->rx_work);
+>>  
+>>  	return 0;
+>>  }
+>>  
+>> -static int apr_do_rx_callback(struct packet_router *apr, struct apr_rx_buf *abuf)
+>> +static int apr_do_rx_callback(struct pkt_router_svc *svc, struct apr_rx_buf *abuf)
+>>  {
+>> -	uint16_t hdr_size, msg_type, ver, svc_id;
+>> -	struct pkt_router_svc *svc;
+>> -	struct apr_device *adev;
+>> +	uint16_t hdr_size, msg_type, ver;
+>> +	struct apr_device *adev = NULL;
+>>  	struct apr_driver *adrv = NULL;
+>>  	struct apr_resp_pkt resp;
+>>  	struct apr_hdr *hdr;
+>> -	unsigned long flags;
+>>  	void *buf = abuf->buf;
+>>  	int len = abuf->len;
+>>  
+>> @@ -217,18 +267,18 @@ static int apr_do_rx_callback(struct packet_router *apr, struct apr_rx_buf *abuf
+>>  
+>>  	hdr_size = APR_HDR_FIELD_SIZE_BYTES(hdr->hdr_field);
+>>  	if (hdr_size < APR_HDR_SIZE) {
+>> -		dev_err(apr->dev, "APR: Wrong hdr size:%d\n", hdr_size);
+>> +		dev_err(svc->dev, "APR: Wrong hdr size:%d\n", hdr_size);
+>>  		return -EINVAL;
+>>  	}
+>>  
+>>  	if (hdr->pkt_size < APR_HDR_SIZE || hdr->pkt_size != len) {
+>> -		dev_err(apr->dev, "APR: Wrong packet size\n");
+>> +		dev_err(svc->dev, "APR: Wrong packet size\n");
+>>  		return -EINVAL;
+>>  	}
+>>  
+>>  	msg_type = APR_HDR_FIELD_MT(hdr->hdr_field);
+>>  	if (msg_type >= APR_MSG_TYPE_MAX) {
+>> -		dev_err(apr->dev, "APR: Wrong message type: %d\n", msg_type);
+>> +		dev_err(svc->dev, "APR: Wrong message type: %d\n", msg_type);
+>>  		return -EINVAL;
+>>  	}
+>>  
+>> @@ -236,22 +286,17 @@ static int apr_do_rx_callback(struct packet_router *apr, struct apr_rx_buf *abuf
+>>  			hdr->dest_domain >= APR_DOMAIN_MAX ||
+>>  			hdr->src_svc >= APR_SVC_MAX ||
+>>  			hdr->dest_svc >= APR_SVC_MAX) {
+>> -		dev_err(apr->dev, "APR: Wrong APR header\n");
+>> +		dev_err(svc->dev, "APR: Wrong APR header\n");
+>>  		return -EINVAL;
+>>  	}
+>>  
+>> -	svc_id = hdr->dest_svc;
+>> -	spin_lock_irqsave(&apr->svcs_lock, flags);
+>> -	svc = idr_find(&apr->svcs_idr, svc_id);
+>>  	if (svc && svc->dev->driver) {
+>>  		adev = svc_to_apr_device(svc);
+>>  		adrv = to_apr_driver(adev->dev.driver);
+>>  	}
+>> -	spin_unlock_irqrestore(&apr->svcs_lock, flags);
+>>  
+>>  	if (!adrv || !adev) {
+>> -		dev_err(apr->dev, "APR: service is not registered (%d)\n",
+>> -			svc_id);
+>> +		dev_err(svc->dev, "APR: service device not found\n");
+>>  		return -EINVAL;
+>>  	}
+>>  
+>> @@ -270,13 +315,11 @@ static int apr_do_rx_callback(struct packet_router *apr, struct apr_rx_buf *abuf
+>>  	return 0;
+>>  }
+>>  
+>> -static int gpr_do_rx_callback(struct packet_router *gpr, struct apr_rx_buf *abuf)
+>> +static int gpr_do_rx_callback(struct pkt_router_svc *svc, struct apr_rx_buf *abuf)
+>>  {
+>>  	uint16_t hdr_size, ver;
+>> -	struct pkt_router_svc *svc = NULL;
+>>  	struct gpr_resp_pkt resp;
+>>  	struct gpr_hdr *hdr;
+>> -	unsigned long flags;
+>>  	void *buf = abuf->buf;
+>>  	int len = abuf->len;
+>>  
+>> @@ -287,12 +330,12 @@ static int gpr_do_rx_callback(struct packet_router *gpr, struct apr_rx_buf *abuf
+>>  
+>>  	hdr_size = hdr->hdr_size;
+>>  	if (hdr_size < GPR_PKT_HEADER_WORD_SIZE) {
+>> -		dev_err(gpr->dev, "GPR: Wrong hdr size:%d\n", hdr_size);
+>> +		dev_err(svc->dev, "GPR: Wrong hdr size:%d\n", hdr_size);
+>>  		return -EINVAL;
+>>  	}
+>>  
+>>  	if (hdr->pkt_size < GPR_PKT_HEADER_BYTE_SIZE || hdr->pkt_size != len) {
+>> -		dev_err(gpr->dev, "GPR: Wrong packet size\n");
+>> +		dev_err(svc->dev, "GPR: Wrong packet size\n");
+>>  		return -EINVAL;
+>>  	}
+>>  
+>> @@ -306,49 +349,91 @@ static int gpr_do_rx_callback(struct packet_router *gpr, struct apr_rx_buf *abuf
+>>  	if (resp.payload_size > 0)
+>>  		resp.payload = buf + (hdr_size *  4);
+>>  
+>> -
+>> -	spin_lock_irqsave(&gpr->svcs_lock, flags);
+>> -	svc = idr_find(&gpr->svcs_idr, hdr->dest_port);
+>> -	spin_unlock_irqrestore(&gpr->svcs_lock, flags);
+>> -
+>> -	if (!svc) {
+>> -		dev_err(gpr->dev, "GPR: Port(%x) is not registered\n",
+>> -			hdr->dest_port);
+>> -		return -EINVAL;
+>> -	}
+>> -
+>>  	if (svc->callback)
+>>  		svc->callback(&resp, svc->priv, 0);
+>>  
+>>  	return 0;
+>>  }
+>>  
+>> -static void apr_rxwq(struct work_struct *work)
+>> +static void apr_service_rxwq(struct work_struct *work)
+>>  {
+>> -	struct packet_router *apr = container_of(work, struct packet_router, rx_work);
+>> +	struct pkt_router_svc *svc = container_of(work, struct pkt_router_svc, rx_work);
+>> +	struct packet_router *apr = svc->pr;
+>>  	struct apr_rx_buf *abuf, *b;
+>>  	unsigned long flags;
+>>  
+>> -	if (!list_empty(&apr->rx_list)) {
+>> -		list_for_each_entry_safe(abuf, b, &apr->rx_list, node) {
+>> +	for (;;) {
+>> +		LIST_HEAD(local);
+>> +
+>> +		spin_lock_irqsave(&svc->lock, flags);
+>> +		if (list_empty(&svc->rx_list)) {
+>> +			spin_unlock_irqrestore(&svc->lock, flags);
+>> +			break;
+>> +		}
+>> +
+>> +		list_splice_init(&svc->rx_list, &local);
+>> +		spin_unlock_irqrestore(&svc->lock, flags);
+>> +
+>> +		list_for_each_entry_safe(abuf, b, &local, node) {
+>>  			switch (apr->type) {
+>>  			case PR_TYPE_APR:
+>> -				apr_do_rx_callback(apr, abuf);
+>> +				apr_do_rx_callback(svc, abuf);
+>>  				break;
+>>  			case PR_TYPE_GPR:
+>> -				gpr_do_rx_callback(apr, abuf);
+>> +				gpr_do_rx_callback(svc, abuf);
+>>  				break;
+>>  			default:
+>>  				break;
+>>  			}
+>> -			spin_lock_irqsave(&apr->rx_lock, flags);
+>> +			apr_svc_put(svc);
+>>  			list_del(&abuf->node);
+>> -			spin_unlock_irqrestore(&apr->rx_lock, flags);
+>>  			kfree(abuf);
+>>  		}
+>>  	}
+>>  }
+>>  
+>> +gpr_port_t *gpr_alloc_port(struct apr_device *gdev, struct device *dev,
+>> +				gpr_port_cb cb,	void *priv)
+>> +{
+>> +	struct packet_router *pr = dev_get_drvdata(gdev->dev.parent);
+>> +	gpr_port_t *port;
+>> +	struct pkt_router_svc *svc;
+>> +	int id;
+>> +
+>> +	port = kzalloc_obj(*port);
+>> +	if (!port)
+>> +		return ERR_PTR(-ENOMEM);
+>> +
+>> +	svc = port;
+>> +	svc->callback = cb;
+>> +	svc->pr = pr;
+>> +	svc->priv = priv;
+>> +	svc->dying = false;
+>> +	svc->dynamic_svc = true;
+>> +	svc->dev = dev;
+>> +	spin_lock_init(&svc->lock);
+>> +
+>> +	INIT_WORK(&svc->rx_work, apr_service_rxwq);
+>> +	INIT_LIST_HEAD(&svc->rx_list);
+>> +	kref_init(&svc->refcount);
+>> +
+>> +	spin_lock(&pr->svcs_lock);
+>> +	id = idr_alloc_cyclic(&pr->svcs_idr, svc, GPR_DYNAMIC_PORT_START,
+>> +			      GPR_DYNAMIC_PORT_END, GFP_ATOMIC);
+>> +	if (id < 0) {
+>> +		dev_err(dev, "Unable to allocate dynamic GPR src port\n");
+>> +		kfree(port);
+>> +		spin_unlock(&pr->svcs_lock);
+>> +		return ERR_PTR(id);
+>> +	}
+>> +
+>> +	svc->id = id;
+>> +	spin_unlock(&pr->svcs_lock);
+>> +
+>> +	return port;
+>> +}
+>> +EXPORT_SYMBOL_GPL(gpr_alloc_port);
+>> +
+>>  static int apr_device_match(struct device *dev, const struct device_driver *drv)
+>>  {
+>>  	struct apr_device *adev = to_apr_device(dev);
+>> @@ -390,6 +475,11 @@ static void apr_device_remove(struct device *dev)
+>>  	struct apr_device *adev = to_apr_device(dev);
+>>  	struct apr_driver *adrv = to_apr_driver(dev->driver);
+>>  	struct packet_router *apr = dev_get_drvdata(adev->dev.parent);
+>> +	unsigned long flags;
+>> +
+>> +	spin_lock_irqsave(&adev->svc.lock, flags);
+>> +	adev->svc.dying = true;
+>> +	spin_unlock_irqrestore(&adev->svc.lock, flags);
+>>  
+>>  	if (adrv->remove)
+>>  		adrv->remove(adev);
+>> @@ -437,9 +527,15 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+>>  	svc->id = svc_id;
+>>  	svc->pr = apr;
+>>  	svc->priv = adev;
+>> +	svc->dying = false;
+>>  	svc->dev = dev;
+>> +	svc->dynamic_svc = false;
+>>  	spin_lock_init(&svc->lock);
+>>  
+>> +	INIT_WORK(&svc->rx_work, apr_service_rxwq);
+>> +	INIT_LIST_HEAD(&svc->rx_list);
+>> +	kref_init(&svc->refcount);
+>> +
+>>  	adev->domain_id = domain_id;
+>>  
+>>  	if (np)
+>> @@ -488,7 +584,6 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+>>  		dev_err(dev, "device_register failed: %d\n", ret);
+>>  		put_device(&adev->dev);
+>>  	}
+>> -
+>>  out:
+>>  	return ret;
+>>  }
+>> @@ -629,12 +724,12 @@ static int apr_probe(struct rpmsg_device *rpdev)
+>>  	dev_set_drvdata(dev, apr);
+>>  	apr->ch = rpdev->ept;
+>>  	apr->dev = dev;
+>> -	apr->rxwq = create_singlethread_workqueue("qcom_apr_rx");
+>> +
+>> +	apr->rxwq = alloc_workqueue("qcom_apr_rx", WQ_UNBOUND | WQ_MEM_RECLAIM, 0);
+>>  	if (!apr->rxwq) {
+>>  		dev_err(apr->dev, "Failed to start Rx WQ\n");
+>>  		return -ENOMEM;
+>>  	}
+>> -	INIT_WORK(&apr->rx_work, apr_rxwq);
+>>  
+>>  	apr->pdr = pdr_handle_alloc(apr_pd_status, apr);
+>>  	if (IS_ERR(apr->pdr)) {
+>> @@ -643,8 +738,6 @@ static int apr_probe(struct rpmsg_device *rpdev)
+>>  		goto destroy_wq;
+>>  	}
+>>  
+>> -	INIT_LIST_HEAD(&apr->rx_list);
+>> -	spin_lock_init(&apr->rx_lock);
+>>  	spin_lock_init(&apr->svcs_lock);
+>>  	idr_init(&apr->svcs_idr);
+>>  
+>> diff --git a/include/linux/soc/qcom/apr.h b/include/linux/soc/qcom/apr.h
+>> index 58fa1df96347..f5bc55c3d025 100644
+>> --- a/include/linux/soc/qcom/apr.h
+>> +++ b/include/linux/soc/qcom/apr.h
+>> @@ -3,6 +3,7 @@
+>>  #ifndef __QCOM_APR_H_
+>>  #define __QCOM_APR_H_
+>>  
+>> +#include <linux/kref.h>
+>>  #include <linux/spinlock.h>
+>>  #include <linux/device.h>
+>>  #include <linux/mod_devicetable.h>
+>> @@ -129,6 +130,11 @@ struct pkt_router_svc {
+>>  	gpr_port_cb callback;
+>>  	struct packet_router *pr;
+>>  	spinlock_t lock;
+>> +	struct work_struct rx_work;
+>> +	struct list_head rx_list;
+>> +	struct kref refcount;
+>> +	bool dying;
+>> +	bool dynamic_svc;
+>>  	int id;
+>>  	void *priv;
+>>  };
+>> -- 
+>> 2.47.3
+>>
+
 
