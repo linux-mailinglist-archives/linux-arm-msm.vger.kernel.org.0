@@ -1,303 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-110116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oAG6I2JAGGrIhwgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 15:17:22 +0200
+	id SOjjBPlAGGrfhwgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 15:19:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E45915F2934
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 15:17:21 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68EF85F29F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 15:19:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6EA20306A888
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 13:11:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A185C30547E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 13:13:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E970F3F0ABB;
-	Thu, 28 May 2026 13:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05F383F1AAC;
+	Thu, 28 May 2026 13:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b2UHAKvV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jiTh9UT7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490503F0AAD;
-	Thu, 28 May 2026 13:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEACE3EDADA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 13:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779973881; cv=none; b=fXrIWavsX6CiwYjTi/SJmoksjHSxyE5+zHDv/SkI0/jgjt2oQFRWwe0M+sj23O3tP0OMQLoPVSnfFJxKhzVVe5r1EWta+2c/Kg8X4ze0FHv+8vNNJc8uDc8augLoM4Nr7yd0jPnFyB+6arHrzkcFgAdisDaFayWzTWWTqoOTxR8=
+	t=1779974008; cv=none; b=jTM/2VJcT3E7aKA2Hf/tOPoG5qSpduo282roGK6hecfYEOD8WMZ8eypo2m9rqTCUzvfdwTBAnI/6eLnyJqwMt8ChVs78Hi0c6uq6f7/jESwCbZ3smHaJyIhoQxBvSZuL8lmspPy3bDUSTXfmTtDrrkD30vJoxjUQxhReBMShHZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779973881; c=relaxed/simple;
-	bh=DRxY+IRB0IqAgofhsecYlxPFiYO6P8tDS1HNVNN3odI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j7jeG1jBi3vSxuKAxmjCv8OLEUdoK/eBLN6NA/CVEX/Xo37SIJECOP1cSfyYulbehbOU3QAnwUSwd0koQRxqOitkN9rwEigrAJvxM/v72kfDjTQF9Dr322A7gPc8OlaNNRdEpLK5vJFQnoGS/dRI6+hAz5p1esUy5qNDmJudBng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b2UHAKvV; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4393B1F000E9;
-	Thu, 28 May 2026 13:11:10 +0000 (UTC)
+	s=arc-20240116; t=1779974008; c=relaxed/simple;
+	bh=mspoBZCTwb041Rjt8oeTx8IwYnHSbpHh6IFT1g7Opw4=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eoHE9nTdbUQke9QWGvTFQH87N78EOLtOgI9TMiB8K3TkwXt5axS4qEf9rR44S16659v93JZGTRq1oUPLgAuhTgkM7Ddx16iHI6sqsSTcTf5JDSnZY5IkERWm/aTzD7JZdgNE3sQh0JhQ0c+GwEbOZ1lAst4bY3w2tXScLgzNMRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jiTh9UT7; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6711F01558
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 13:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779973880;
-	bh=iDEo0j2nHsYSJgSqy1z8dWMjD802zHIig7qC3EKAx/k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=b2UHAKvVDwz9Q8zDeG5+gjEzAwHGNvWPrhFQu4UWecZMGU9oLFnYEUppHdL1JG96W
-	 ZyKfXbFlZkxgErlkIJ9vEDjHqhgkZYeEglVfzfyl1vwgy5OcQX/ILvYNtAw+Fw/u/n
-	 7Rf4HO5aTgBsh8Qrexyv+asWzwUvPXiN0B/LUktlwpZ7GWwIh5oxpK5VedspSPx+Bn
-	 nl+HsmBpJmBcRweXxwoqgm9Olo+josivuYToc2QW7vazCQsXTqNoHWp1knQYF/ENFG
-	 jtLGo1SiiASszWS5aZ18I7jEX0fOy1BKxNFyaZVCVtMBYw8PPdiTBmqYLjDYvMKN77
-	 k31LndrsIUjKg==
-Date: Thu, 28 May 2026 18:41:07 +0530
-From: Sumit Garg <sumit.garg@kernel.org>
-To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Cc: andersson@kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-media@vger.kernel.org,
-	netdev@vger.kernel.org, linux-wireless@vger.kernel.org,
-	ath12k@lists.infradead.org, linux-remoteproc@vger.kernel.org,
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, robin.clark@oss.qualcomm.com, sean@poorly.run,
-	akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
-	jesszhan0024@gmail.com, marijn.suijten@somainline.org,
-	airlied@gmail.com, simona@ffwll.ch, vikash.garodia@oss.qualcomm.com,
-	dikshita.agarwal@oss.qualcomm.com, bod@kernel.org,
-	mchehab@kernel.org, elder@kernel.org, andrew+netdev@lunn.ch,
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-	pabeni@redhat.com, jjohnson@kernel.org, mathieu.poirier@linaro.org,
-	trilokkumar.soni@oss.qualcomm.com, mukesh.ojha@oss.qualcomm.com,
-	pavan.kondeti@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
-	tonyh@qti.qualcomm.com, vignesh.viswanathan@oss.qualcomm.com,
-	srinivas.kandagatla@oss.qualcomm.com, jens.wiklander@linaro.org,
-	op-tee@lists.trustedfirmware.org, apurupa@qti.qualcomm.com,
-	skare@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Harshal Dev <harshal.dev@oss.qualcomm.com>
-Subject: Re: [PATCH v7 02/15] firmware: qcom: Add a generic PAS service
-Message-ID: <ahg-6-eLus-J7tC8@sumit-xelite>
-References: <20260522115936.201208-1-sumit.garg@kernel.org>
- <20260522115936.201208-3-sumit.garg@kernel.org>
- <37fb075c-3f48-4a7c-b05d-090b0b09e04a@oss.qualcomm.com>
+	s=k20260515; t=1779974007;
+	bh=YYpeafvMhAx0qgEhbKf7QJbwzvvyekLX4+tpZsjO+/w=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=jiTh9UT76ucrnHoIIcGjrEgFVOoq/Gplzt/6ZT0GCZAcP6hYf26P9I/MIJIWEYi02
+	 TFjLFmfJTq7tRzdS2MNdxsYmQhhrflyF0QIJVa6NcKEXPQ9CJNB+bKqDiKC4rQDkF/
+	 egHGRL40QiPLA0JEglCVBpT9TtQSTDL8czczL2goDfalbmGjVO1DpSC6IG4k5fSaxs
+	 6u3qFdbaTebDHJypUaNQp3dfmVhkh1DWU3B6/wfhnYLTjcDhUb7NsBgNWImB7Jzhqm
+	 JoYm8ulAgxhACvXS+7QHRWlg/wh5qeGRKh965SiLNcpHkmF+jI9aBPtq5mnLshYVgN
+	 nEdy1dgbxGJXg==
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-39393ec4ed0so113218791fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 06:13:27 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ/9A11vXtCi5cGWCHsijTxkRsCfYfdOa4VZQ2PK49yjpFWTcKGCyEZcZeTgDk91kP0Wi9IpSpIzY0UCfGAt@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcILdxcRGvBT2gCoFBCd8df9akOabt34Rp61DK+noj0YmS7K/f
+	2by2Xjs3Q63yTU7A0yEHwY3xqDHGnjJwRLnhZ4HcaeKQgSwg7Y7fCxG2NhYoYDg7XdR3EO/d9wB
+	jEwOD5dklxkyYORnVk2L6nLIIsmQrC4WRSCLNHaKoSA==
+X-Received: by 2002:a05:651c:212a:b0:393:aea6:857e with SMTP id
+ 38308e7fff4ca-395d89085f4mr89644911fa.10.1779974006225; Thu, 28 May 2026
+ 06:13:26 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 28 May 2026 09:13:23 -0400
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 28 May 2026 09:13:23 -0400
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <e49c4a45-6455-47f3-a91f-c32c1a0b99be@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <37fb075c-3f48-4a7c-b05d-090b0b09e04a@oss.qualcomm.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
+References: <20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com>
+ <20260514194735.GA1939213@google.com> <d4d35e17-84fa-4c95-9bfb-abfd25ea7f4a@oss.qualcomm.com>
+ <20260522024912.GC5937@quark> <c1697372-54ec-4f57-85d9-ad375ff1a44d@oss.qualcomm.com>
+ <20260525142843.GA2018@quark> <e49c4a45-6455-47f3-a91f-c32c1a0b99be@oss.qualcomm.com>
+Date: Thu, 28 May 2026 09:13:23 -0400
+X-Gmail-Original-Message-ID: <CAMRc=MfC6CEwOXYttsav3mwqyJ2F4sburBj+zNJ25qMoweyL-Q@mail.gmail.com>
+X-Gm-Features: AVHnY4LugvRYZll4BPMcuUQeZJsNVmlPyEMrJTl0DoRxI9a9LoB78G8ub57WLMA
+Message-ID: <CAMRc=MfC6CEwOXYttsav3mwqyJ2F4sburBj+zNJ25qMoweyL-Q@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Add support for qcrypto on shikra
+To: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Cc: Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	dmaengine@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>, Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>, 
+	Neeraj Soni <neeraj.soni@oss.qualcomm.com>, Eric Biggers <ebiggers@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110116-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110117-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[22];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,lists.freedesktop.org,lists.infradead.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
-	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[gmail.com,gondor.apana.org.au,davemloft.net,kernel.org,vger.kernel.org,oss.qualcomm.com];
 	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[50];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: E45915F2934
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 68EF85F29F8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Amir,
+On Thu, 28 May 2026 13:54:51 +0200, Kuldeep Singh
+<kuldeep.singh@oss.qualcomm.com> said:
+>>> +Bartosz, Gaurav, Neeraj
+>>>
+>>> Hi Eric,
+>>>
+>>> GPCE is relevant in terms of providing hardware security.
+>>> There are multiple usecases coming up for example to handle DRM/secure
+>>> buffer usecases to improve overall throughput for secure content.
+>>>
+>>> Regarding performance, it's currently slower compared to arm CE but
+>>> provides an edge by giving hardware security which is considered more
+>>> secure.
+>>>
+>>> Btw, there's been performance improvement with new targets and we are
+>>> expecting to achieve far more better performance with new SoCs family.
+>>> Pakala:    GPCE - 550MBps, ARMv8 - 8GBps
+>>> Kaanapali: GPCE - 3GBps,   ARMv8 - 10GBps
+>>>
+>>> Please note, there's almost 5x improvement in kaanapali compared to
+>>> pakala. Though overall is still slower compared to arm but as mentioned,
+>>> expecting better performance with hardware improvements as we progress.
+>>>
+>>> Also, currently qce driver exhibit stability issues and that's what we
+>>> are putting effort in stabilizing the software on immediate basis.
+>>>
+>>> There's parallel effort ongoing by Bartosz to introduce baseline for
+>>> secure buffer usecases.
+>>> https://lore.kernel.org/lkml/20260522-qcom-qce-cmd-descr-v18-0-99103926bafc@oss.qualcomm.com/
+>>> There's active development ongoing and i believe lowering cra_priority
+>>> for qce is fine as of now and can scale values once qce becomes
+>>> performance efficient.
+>>>
+>>> Please share your thoughts. Thanks!
+>>
+>> ARMv8 Crypto Extensions are "hardware" as well, just in the CPU.  They
+>> provide constant-time execution, for example.
+>>
+>> Granted, they don't protect from power analysis and electromagnetic
+>> emanation attacks.  Does QCE actually provide those protections, though?
+>
+> QCE doesn't provide these protections currently.
+> What i wanted to highlight was there are certain security usecases which
+> are possible via dedicated crypto engine only and not via arm cpu.
+>> Either way, it doesn't really matter in this case.  There are multiple
+>> aspects to security, and before even considering these advanced
+>> protections, the basics of security need to be absolutely solid.  That
+>> is, the driver needs to always compute the crypto algorithms correctly,
+>> and it needs to be completely robust when fuzzed by unprivileged
+>> userspace (because it can accessed in that way).
+>  > Yet, this driver "exhibits stability issues", fails the self-tests, and
+>> doesn't even have exclusive access to the hardware!  These are all
+>> security bugs.  That very much defeats the claimed point.  (Plus, due to
+>> the performance issues no one wants to use it in Linux anyway.)
+>
+> Sure, we are analyzing self-tests failures and are committed to fix any
+> hung/stability issue in any aspect but i do feel it should not be a
+> blocker to add new soc id support.
+>
+> Also, could you please elaborate more on "exclusive access to hardware"?
+> Do you mean the hardware can be accessed by multiple execution
+> environment like TEE and Linux?
+> --
+> Regards
+> Kuldeep
+>
+>
 
-On Thu, May 28, 2026 at 10:45:32AM +1000, Amirreza Zarrabi wrote:
-> Hi Sumit,
-> 
-> On 5/22/2026 9:59 PM, Sumit Garg wrote:
-> > From: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> > 
-> > Qcom platforms has the legacy of using non-standard SCM calls
-> > splintered over the various kernel drivers. These SCM calls aren't
-> > compliant with the standard SMC calling conventions which is a
-> > prerequisite to enable migration to the FF-A specifications from Arm.
-> > 
-> > OP-TEE as an alternative trusted OS to Qualcomm TEE (QTEE) can't
-> > support these non-standard SCM calls. And even for newer architectures
-> > using S-EL2 with Hafnium support, QTEE won't be able to support SCM
-> > calls either with FF-A requirements coming in. And with both OP-TEE
-> > and QTEE drivers well integrated in the TEE subsystem, it makes further
-> > sense to reuse the TEE bus client drivers infrastructure.
-> > 
-> > The added benefit of TEE bus infrastructure is that there is support
-> > for discoverable/enumerable services. With that client drivers don't
-> > have to manually invoke a special SCM call to know the service status.
-> > 
-> > So enable the generic Peripheral Authentication Service (PAS) provided
-> > by the firmware. It acts as the common layer with different TZ
-> > backends plugged in whether it's an SCM implementation or a proper
-> > TEE bus based PAS service implementation.
-> > 
-> > Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> > Tested-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com> # Lemans
-> > Reviewed-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-> > Tested-by: Vignesh Viswanathan <vignesh.viswanathan@oss.qualcomm.com> # IPQ9650
-> > Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> > ---
-> >  drivers/firmware/qcom/Kconfig          |   8 +
-> >  drivers/firmware/qcom/Makefile         |   1 +
-> >  drivers/firmware/qcom/qcom_pas.c       | 291 +++++++++++++++++++++++++
-> >  drivers/firmware/qcom/qcom_pas.h       |  50 +++++
-> >  include/linux/firmware/qcom/qcom_pas.h |  43 ++++
-> >  5 files changed, 393 insertions(+)
-> >  create mode 100644 drivers/firmware/qcom/qcom_pas.c
-> >  create mode 100644 drivers/firmware/qcom/qcom_pas.h
-> >  create mode 100644 include/linux/firmware/qcom/qcom_pas.h
-> > 
-> > diff --git a/drivers/firmware/qcom/Kconfig b/drivers/firmware/qcom/Kconfig
-> > index b477d54b495a..9f66cc774508 100644
-> > --- a/drivers/firmware/qcom/Kconfig
-> > +++ b/drivers/firmware/qcom/Kconfig
-> > @@ -6,6 +6,14 @@
-> >  
-> >  menu "Qualcomm firmware drivers"
-> >  
-> > +config QCOM_PAS
-> > +	tristate "Qualcomm generic PAS interface driver"
-> > +	help
-> > +	  Enable the generic Peripheral Authentication Service (PAS) provided
-> > +	  by the firmware. It acts as the common layer with different TZ
-> > +	  backends plugged in whether it's an SCM implementation or a proper
-> > +	  TEE bus based PAS service implementation.
-> > +
-> >  config QCOM_SCM
-> >  	select QCOM_TZMEM
-> >  	tristate
-> > diff --git a/drivers/firmware/qcom/Makefile b/drivers/firmware/qcom/Makefile
-> > index 0be40a1abc13..dc5ab45f906a 100644
-> > --- a/drivers/firmware/qcom/Makefile
-> > +++ b/drivers/firmware/qcom/Makefile
-> > @@ -8,3 +8,4 @@ qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
-> >  obj-$(CONFIG_QCOM_TZMEM)	+= qcom_tzmem.o
-> >  obj-$(CONFIG_QCOM_QSEECOM)	+= qcom_qseecom.o
-> >  obj-$(CONFIG_QCOM_QSEECOM_UEFISECAPP) += qcom_qseecom_uefisecapp.o
-> > +obj-$(CONFIG_QCOM_PAS)		+= qcom_pas.o
+Eric: FYI I do plan - and have been allowed to by Qualcomm - to work on this
+driver further to refactor and improve it. However, the BAM locking series[1]
+needs to be queued first as it significantly changes the way the driver works.
+Any help with reviewing and getting these patches merged is appreciated. I
+don't want to start sending more patches before the 14 commit series gets queued
+first.
 
-<snip>
+Vinod: the series has been reviewed and tested. The NAND team at qualcomm is
+telling me they're using it internally already to fix a race between the modem
+firmware and linux. Can we get it queued for v7.2 please? This will make further
+refactoring easier.
 
-> > diff --git a/include/linux/firmware/qcom/qcom_pas.h b/include/linux/firmware/qcom/qcom_pas.h
-> > new file mode 100644
-> > index 000000000000..65b1c9564458
-> > --- /dev/null
-> > +++ b/include/linux/firmware/qcom/qcom_pas.h
-> > @@ -0,0 +1,43 @@
-> > +/* SPDX-License-Identifier: GPL-2.0-only */
-> > +/*
-> > + * Copyright (c) 2010-2015, 2018-2019 The Linux Foundation. All rights reserved.
-> > + * Copyright (C) 2015 Linaro Ltd.
-> > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> > + */
-> > +
-> > +#ifndef __QCOM_PAS_H
-> > +#define __QCOM_PAS_H
-> > +
-> > +#include <linux/err.h>
-> > +#include <linux/types.h>
-> > +
-> > +struct qcom_pas_context {
-> > +	struct device *dev;
-> > +	u32 pas_id;
-> > +	phys_addr_t mem_phys;
-> > +	size_t mem_size;
-> > +	void *ptr;
-> > +	dma_addr_t phys;
-> > +	ssize_t size;
-> > +	bool use_tzmem;
-> > +};
-> > +
-> > +bool qcom_pas_is_available(void);
-> > +struct qcom_pas_context *devm_qcom_pas_context_alloc(struct device *dev,
-> > +						     u32 pas_id,
-> > +						     phys_addr_t mem_phys,
-> > +						     size_t mem_size);
-> > +int qcom_pas_init_image(u32 pas_id, const void *metadata, size_t size,
-> > +			struct qcom_pas_context *ctx);
-> > +struct resource_table *qcom_pas_get_rsc_table(struct qcom_pas_context *ctx,
-> > +					      void *input_rt, size_t input_rt_size,
-> > +					      size_t *output_rt_size);
-> > +int qcom_pas_mem_setup(u32 pas_id, phys_addr_t addr, phys_addr_t size);
-> > +int qcom_pas_auth_and_reset(u32 pas_id);
-> > +int qcom_pas_prepare_and_auth_reset(struct qcom_pas_context *ctx);
-> > +int qcom_pas_set_remote_state(u32 state, u32 pas_id);
-> > +int qcom_pas_shutdown(u32 pas_id);
-> > +bool qcom_pas_supported(u32 pas_id);
-> > +void qcom_pas_metadata_release(struct qcom_pas_context *ctx);
-> > +
-> > +#endif /* __QCOM_PAS_H */
-> 
-> I have a question about the shape of the generic PAS abstraction.
-> 
-> Looking at the current interface, it seems that pas_id is still treated as
-> the primary identity for most PAS operations, while struct qcom_pas_context
-> is used as optional extended state for the operations that need it. I can see
-> how this maps well to the existing SCM PAS interface and keeps the transition
-> simple.
-> 
-> However, I wonder if this makes the abstraction less generic in the long term.
-> Some callbacks in struct qcom_pas_ops receive only pas_id, while others
-> receive struct qcom_pas_context *ctx. This works as long as pas_id is
-> sufficient for those operations. But if a backend needs per-peripheral
-> private state for operations such as auth_and_reset,
-> shutdown, or set_remote_state, it would need to reconstruct that state from
-> pas_id or maintain a separate pas_id to backend-context mapping.
-> 
-> Would it be cleaner to make struct qcom_pas_context the common
-> per-peripheral object and pass it consistently to all per-peripheral callbacks?
-> Existing backends could still use ctx->pas_id, but future backends would not
-> need to perform a separate lookup only because the callback was passed a raw
-> pas_id.
+I know about the self-tests etc., I will address them next.
 
-The common evolution for a generic abstraction comes when it's needed.
-So once the client driver or the backend comes up with certain
-requirements then the generic PAS layer can be extended as needed. It
-should be possible for more APIs to migrate to using PAS context but
-there should be corresponding use-case requirements.
+Bart
 
-> 
-> I also wonder whether struct qcom_pas_context is exposing some
-> implementation-specific state. Fields such as ptr, phys, size, and
-> use_tzmem seem to describe how the current SCM/QTEE implementations manage
-> metadata memory, rather than generic PAS state. For another backend, the
-> per-operation state might be a tee_shm, an FF-A memory handle, shared or lent
-> memory state, or something else transport-specific.
-> 
-> Would it make sense to keep only the common PAS fields in
-> struct qcom_pas_context, such as dev, pas_id, and possibly the firmware
-> memory address/size if those are truly generic, and add a backend-private
-> pointer for implementation-specific state?
-
-Currently, the 2 backends can re-use parts of the PAS context but I
-agree more abstraction can be done as needed for future backends.
-
-> 
-> I may be missing a reason why the pas_id-only callbacks are preferred, but if
-> this is intended to be the long-term generic PAS layer rather than mainly a
-> shim over the existing SCM API shape, using the context consistently and keeping
-> backend-specific state private seems easier to extend.
-
-As I mentioned above, the generic PAS layer isn't fixed but it will
-surely go through evolution as needed. Current abstraction handles the
-existing client driver and backend requirments.
-
-Moreover the subsystem maintainers are already complaining about this
-series being too large for the merge to happen.
-
--Sumit
+[1] https://lore.kernel.org/all/20260526-qcom-qce-cmd-descr-v19-0-08472fdcbf4a@oss.qualcomm.com/
 
