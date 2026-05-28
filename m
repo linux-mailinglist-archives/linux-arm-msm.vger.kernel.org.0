@@ -1,128 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-110150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CHIADal7GGrbkQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 19:30:17 +0200
+	id wOj8IiCCGGp8kggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 19:57:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 447F15F5A38
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 19:30:15 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3104D5F5FAA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 19:57:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2F6953075A29
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 17:25:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C55423058FDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 17:52:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F08293FDBF3;
-	Thu, 28 May 2026 17:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A65EA3FD94C;
+	Thu, 28 May 2026 17:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="U1Pg3ept"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h3RWVWIS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-24418.protonmail.ch (mail-24418.protonmail.ch [109.224.244.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD8B282F25
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 17:25:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DEE3B4EA3;
+	Thu, 28 May 2026 17:52:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779989101; cv=none; b=pBG0q4RwsRTfu3t3wlevxh+G0+hoYX47hzRNbJxn3Ncl0ZWeIsbutXwgDumeQWijGAKhxjkAouv5pIQMD65fjOm24HyMZqGD7eFHC84YO1J2PNO6PTSFaek77N8XdwzPGQe6TvfKyrFv4g6RlaLKX2J2lu1J/NrAS0NXHXdtVaI=
+	t=1779990739; cv=none; b=YV16JzzaUva8nU4sKujD8dREU/CPRuAmtHGawruBXKX/ZHejg9BbRoSDJzIv9lUllrH5od925gCMhqqi33F7I1xDAmByUWOGJgozDcHuAvI1w/Qs5KnKz7mcSRq4t0N9fkzXEMgksaZfM9BIs8zvMIDfbEkeqrfv2FyoKy4ocWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779989101; c=relaxed/simple;
-	bh=ZzExrYy0BQ16Tbydiro3jbBk5BdYDYTPA/Y0aVdDzdc=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Mc8r3C7ZFR3nsxbXDR1eVhDg93325t90zRxV48N/H3Sv4Yuy4ep7H2C4sBWnWDRwPYDhEPY/0ylhfEeJPuqGNCkHBl7Tc4yg3aRylmzKnxbQwbm03dYZ901VJgVdxHV6ysOt6ZS5yiSm1lwUlGPyZ3FLagov93ZFaQGYv3no54k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=U1Pg3ept; arc=none smtp.client-ip=109.224.244.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1779989098; x=1780248298;
-	bh=BoYkvI2WjcsQCtI26PtJ10p6lX2JRDVsMLT/e1gckfc=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=U1Pg3eptjX5rLzIBpNCyl4ec/IYofvK+ouluKNv3Ln1FZ5Cz4WzC7r6n8Vk46SBBB
-	 Te5Jd/W1PMxLxU0s80DwMjnqXoYc6y6O8G1gMVNaTPQoS+XICr+Z8HUnPM2OqKvypd
-	 Up7YUkI6btax3NUs3w7BR+L+cls4q+g2CDENulmeQfzhGzbeLhBiGUlK1sfM4bYLSE
-	 DR0EpJ/MRU1mg6LEp+0KP2X7wxjfqRrIKJDoF1hrTnmi8oJV98SJpmQYgyFKGcxlPQ
-	 0vlVkF5E4s8QEE8H8d6pfH5jahjcU8i+TaH+P/CccgRWl8ouqqlxXdC89RXD5rAp3p
-	 D8BnW6FS7FRdA==
-Date: Thu, 28 May 2026 17:24:52 +0000
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 1/2] pinctrl: qcom: eliza: Fix HDMI_RCV_DET function slot
-Message-ID: <P33wW6i3eN15uYIbIb8LfIVRvmL0zVdiI_FOKDoMIM_KFi01m_7PMaZmU1z3YJl9mGN2kDtSvXUujD-TWaXXiSOZeEH-kwj3JSjmIRfRb54=@pm.me>
-In-Reply-To: <5dae3a56-a17c-4201-ba0b-8591646197ef@oss.qualcomm.com>
-References: <20260423-misc-eliza-pinctrl-v1-0-2498b365ff2c@pm.me> <20260423-misc-eliza-pinctrl-v1-1-2498b365ff2c@pm.me> <5dae3a56-a17c-4201-ba0b-8591646197ef@oss.qualcomm.com>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: cd99b66da121e7271911e9b6f60ed50e4b3269e2
+	s=arc-20240116; t=1779990739; c=relaxed/simple;
+	bh=/WevIpPK3SaYeqJ1HmkSOi3MW+1TONCBYE4elIAounc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uryyft7CQ06RkVxxB0fGhZWEsNNbJ6sdpBFoAjAAilF9b3J8QWNjeVVdh1/NOZPgMNjY51FfGCQSUFEnfYJXtKN4mMZZIZmBJVCTKXEevuoTq0jqnBxoS0Xz0oKJ3S7HVbSKzsVRWl6lBx0uFwl0sM5kI4jMcWX1Ig2YG50KRqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h3RWVWIS; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB45B1F000E9;
+	Thu, 28 May 2026 17:52:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1779990736;
+	bh=wA+h2LHJqTGA0QJnfQ0FCObieUhoPZ0RdKo+Y/z5Xyg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=h3RWVWIS+mWdQxZ5uz+s4obm8+Xaok4BxvqhGUauCmCTRepK6hIMUzS7G3R6gcT+Q
+	 9VOU+EiIiKShxPH++HQ8NedDIZl4IJYwy6tzFmD+HKQ74yPcphUdWbIxzQ8pA4u8C5
+	 LKrsQryP6HyEOU8VYRp6OQJP16pQiuqlz5UCVA4xB1+VT5Jk+R5Hggtr2RB8zY3whg
+	 R5Ch+8C+k5x8dbdmUSIhV8uKjSqaMc3efUjj9xVGZ5SbV+I3DIwDJDQLf0cnsSg+zA
+	 gMhjZjCOKcgsFrtiTy9ODdBazicvw5YEJ0NMueTgWpcBfzpipKY8ZcbvDPGSwJZ7vd
+	 H6+eDYAfggBmA==
+Date: Thu, 28 May 2026 17:52:14 +0000
+From: Eric Biggers <ebiggers@kernel.org>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+	Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>,
+	Neeraj Soni <neeraj.soni@oss.qualcomm.com>
+Subject: Re: [PATCH 0/3] Add support for qcrypto on shikra
+Message-ID: <20260528175214.GA3936298@google.com>
+References: <20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com>
+ <20260514194735.GA1939213@google.com>
+ <d4d35e17-84fa-4c95-9bfb-abfd25ea7f4a@oss.qualcomm.com>
+ <20260522024912.GC5937@quark>
+ <c1697372-54ec-4f57-85d9-ad375ff1a44d@oss.qualcomm.com>
+ <20260525142843.GA2018@quark>
+ <e49c4a45-6455-47f3-a91f-c32c1a0b99be@oss.qualcomm.com>
+ <CAMRc=MfC6CEwOXYttsav3mwqyJ2F4sburBj+zNJ25qMoweyL-Q@mail.gmail.com>
+ <lj7geczhthury476ilkjym2k5fblo5pqroefsbdfgh5jcf7zy2@qrss5xc7umn3>
+ <CAMRc=Me6cqasdBknbAjUZ5BqcpERYwV+NvseRJp4P0aTSYAMUw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMRc=Me6cqasdBknbAjUZ5BqcpERYwV+NvseRJp4P0aTSYAMUw@mail.gmail.com>
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110150-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
+	TAGGED_FROM(0.00)[bounces-110151-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DKIM_TRACE(0.00)[pm.me:+];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,gmail.com,gondor.apana.org.au,davemloft.net,kernel.org,vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,pm.me:mid,pm.me:dkim]
-X-Rspamd-Queue-Id: 447F15F5A38
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ebiggers@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 3104D5F5FAA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thursday, April 23rd, 2026 at 7:08 PM, Konrad Dybcio <konrad.dybcio@oss.=
-qualcomm.com> wrote:
-
-> On 4/23/26 6:51 AM, Alexander Koskovich wrote:
-> > The hdmi_rcv_det function was placed at alt function slot 2, but the
-> > correct mux value for this function on GPIO 19 is slot 3. Move it
-> > accordingly and leave slot 2 unassigned.
->=20
-> No, 2 is the desired one per docs
->=20
-> 0 -> GPIO
-> 1 -> QUP2_SE5_L3
-> 2 -> HDMI_RCV_DET
-
-Is it possible that CQ7790S is a special case? The pin assignment I have fo=
-r it
-here is:
-
-0 -> GPIO
-1 -> QUP2_SE5_L3
-2 -> N/A
-3 -> GP_PDM_MIRA[0]/HDMI_RCV_DET
-
->=20
-> Konrad
->=20
-
-Thanks,
-Alex
-
+On Thu, May 28, 2026 at 11:13:47AM -0400, Bartosz Golaszewski wrote:
+> On Thu, 28 May 2026 15:50:10 +0200, Dmitry Baryshkov
+> <dmitry.baryshkov@oss.qualcomm.com> said:
+> > On Thu, May 28, 2026 at 09:13:23AM -0400, Bartosz Golaszewski wrote:
+> >> On Thu, 28 May 2026 13:54:51 +0200, Kuldeep Singh
+> >> <kuldeep.singh@oss.qualcomm.com> said:
+> >> >>> +Bartosz, Gaurav, Neeraj
+> >>
+> >> I know about the self-tests etc., I will address them next.
+> >
+> > My 2c, the self-tests would be more important, as they are fixes. Doing
+> > the crypto in a wrong way is a bad idea...
+> >
 > 
+> Then let that be "in parallel". :)
+
+The race conditions between Linux and other environments (modem, TEE,
+etc) are of course about correctness as well, even though the self-tests
+don't expose race condition bugs.  The self-tests have always just done
+a few serialized tests.  That's sufficient for CPU-based code, but not
+for offload drivers, which need to be stress-tested to find the
+concurrency bugs that occur during actual use.
+
+Is there a plan to improve the tests to do stress testing as well?
+
+It's kind of odd that they don't do that yet.  But it makes sense: the
+CPU-based code doesn't need it, while the offload driver authors have
+never cared enough about correctness and test coverage to add it.
+
+I still don't really see a path forward here, given the track record and
+poor performance numbers.  This approach just doesn't work.
+
+- Eric
 
