@@ -1,132 +1,345 @@
-Return-Path: <linux-arm-msm+bounces-110152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GEtxJmKEGGq6kggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 20:07:30 +0200
+	id yBH7IECLGGrCkwgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 20:36:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3FCC5F615C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 20:07:29 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 817D85F65F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 20:36:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4F17E300A766
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 18:01:35 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 85E5A300C381
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 18:36:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC2C0403EB6;
-	Thu, 28 May 2026 18:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CF673F9F26;
+	Thu, 28 May 2026 18:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="iOg36/k7"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="h922R/VY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D529B4028CF;
-	Thu, 28 May 2026 18:01:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779991294; cv=none; b=suBMgf6jZkvuN3h3FzLtZmPXYn6IgC/Y9JrwIYzGypDNWGQD+59lr97Z7OHwdytfqJEhj6SeUL/YR+vtEE0Mu/RRhrAG4pQ4tHVg9SIhiXMIa0Q+RxXy8yQ4AuDLZQrhIoDuIwcTIdDTCHLZhM8zK/z5dxSsEcS+pvzWRT3iWFI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779991294; c=relaxed/simple;
-	bh=y36QqDCCRxFgAritP62khWPWor0UF35crmcLFibL7iQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IH+NOl9RT9MXY1xZMTBmKkQFj/jl0ciReHumjjaeh9JLXm8jRwmBMxyBD/E2Aa+6dqUo0I2iSXAtyb5G7UYyNLP7T1o+nnzgP3QK3pW88XSed4cWNLQEoCC6QqLS7D02ifwb05xrF3jcv8bTDfaXwHXgkq46vooBbUVvCcpZWh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=iOg36/k7; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0E07A22C8;
-	Thu, 28 May 2026 11:01:27 -0700 (PDT)
-Received: from localhost (e132581.arm.com [10.1.196.87])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A61043F632;
-	Thu, 28 May 2026 11:01:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1779991292; bh=y36QqDCCRxFgAritP62khWPWor0UF35crmcLFibL7iQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iOg36/k7zSaeOW5PVb7Uxmwxz4ZiPGmRKjNNt0ewIbINCWRHrwEpoznt+aX2/9nks
-	 v9F8zQdmm/3oEzcXO8LtkdiUwQi53Ap20DNGlI6o9/AsyqK7QDL3c4Ig1X8JCIxiQT
-	 0TO12Yw/kzwLocebq0HrHUqCUT+VnZ29HtlzOeOY=
-Date: Thu, 28 May 2026 19:01:29 +0100
-From: Leo Yan <leo.yan@arm.com>
-To: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@arm.com>,
-	James Clark <james.clark@linaro.org>,
+Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012022.outbound.protection.outlook.com [52.101.48.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0C02F8E88;
+	Thu, 28 May 2026 18:36:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.22
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1779993400; cv=fail; b=jfd731kQDssIKwCW0ZRjTwfoLHKB4VkHIBkTYH/n+6IfE4cJF+iMMMWqzu/f9ZQ+ohtEett7WLtBe/NkIWMcogr0oKPG3y/sifW2J5vL74zyZfG+5Tkqqdzzx9qKGLi0ABXG2ogzQzEMJPH3bKlkJ6LrQUz7d4yy+uXtRZ53muU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1779993400; c=relaxed/simple;
+	bh=kqlqK19rITWjanXFkHDrssZv0f7J9mf9zo7UMBGik2w=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=N5di27aMyQ37rV+i2XedSTLIOimMiWj93+paPA1RmJ1t7/UH/Ye3X+Rij1AQRHfZnkEAkt4h/uBoyylICXxmz0bpQAJQp7+8tG0xLQxzvhn2yA8cesfPwk7GVmYAWJOef9iiY3fA8r79g+n3V+VAJXRmSmdBG4jkQiFv1o45zVU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=h922R/VY; arc=fail smtp.client-ip=52.101.48.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=W4rc1G8PRNEF63wnNNLGvJE16l8KgrKiwAeEz3bPzrqxfSAQrxkGURK0u6ar9hg6HAPQqDQTXnFE4ACzSIonGYHazhC4B4DleEbmCQWDo82KPtQvfwlPUntMvSVI7t/Ca7Eq2oKUFiVvldfUyOlWhR9rqe86HmpErjt1zqIssEn77WBGbNVigeikAnlwMqTCNOGGZZZens/OTGIyTTi34FMpw2DMQjzAKS5csTIVFf7WS3AKaup8xA4FnpMhnNvu0lrj/KO5SZ32v351BGZaiZ2nXEoyXY/c4C4NMGzz3Buzs/P7Mt+h32hT/1ISNZzwIP9knOt33hexviFKXlbQxQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Pm3RxOlUziMIipQdyQHT2pcKu2ESuFD9ZeBKDhFFqu8=;
+ b=m5RB8GrzCcx8H0fKPhUE613qwJk7kZSuxiAsh5leLQQoD7xBr4GHWcXAPlHT3dCBvTk7TdKoWIhp7SJAlEvs2r3q7zGvq29smyj/i3mCzx+pKwCcKOfkpkLhTOPAt2QboMXBYbdzTJlvpy1d2agc8ABH47tX3ebWXbofEaTc9pmo6OArI8YzHHeHd+0+IthDzJBW1d7CL1XLRtLp9eB8TgKLJOGurUU/hJ/Wc3gmp1viPBDaUbzNr/bqrdglTeesxFxWE9xKYSgG2jK6MNOHM5ExSh9EkrGUM2Rj5hJgyBSWvy3Fa2ZJv47ixO0ToU/JqHWJOU1X3ZkKmj6KKSC7ZA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Pm3RxOlUziMIipQdyQHT2pcKu2ESuFD9ZeBKDhFFqu8=;
+ b=h922R/VYYBrfQii2qD3ohQUoRXHoYuXC/tMwX4kGaSDBTjuwG6p4kQvU1DmzY4DgEh3wBrYoN1iZNtv+0s+8PFbTjMFhiOnYzxsOR7xnHGfqeCPyb/dI+boOmgU749k2WpC0577xYdTBC0Ojvsc7JHElGTx4XeTL4xjmgovFttijlMr4LvErTumd+o4Iamz0fp8JmAzE+/5qDjqBqynvu6jAGjr8fofKbqhW8dfrboM7/WRDpIZqx5iSjmc2SWVIbCNORItLYhnTi8Ih4jMirKSSk15e60dKQrbb0GJO/5Q+KPnhxDANU4V9xIrF8V8krSq6fM3QxRJ6pVXQrCIeDQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV3PR12MB9356.namprd12.prod.outlook.com (2603:10b6:408:20c::21)
+ by SA3PR12MB9228.namprd12.prod.outlook.com (2603:10b6:806:39c::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.13; Thu, 28 May
+ 2026 18:36:30 +0000
+Received: from LV3PR12MB9356.namprd12.prod.outlook.com
+ ([fe80::1c36:31b4:c420:6286]) by LV3PR12MB9356.namprd12.prod.outlook.com
+ ([fe80::1c36:31b4:c420:6286%5]) with mapi id 15.21.0071.011; Thu, 28 May 2026
+ 18:36:29 +0000
+From: Yury Norov <ynorov@nvidia.com>
+To: Andrew Morton <akpm@linux-foundation.org>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Yury Norov <ynorov@nvidia.com>
+Cc: Russell King <linux@armlinux.org.uk>,
+	Frank Li <Frank.Li@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	jinlong.mao@oss.qualcomm.com, quic_yingdeng@quicinc.com,
-	tingwei.zhang@oss.qualcomm.com, jie.gan@oss.qualcomm.com
-Subject: Re: [PATCH v9 1/4] coresight: cti: Convert trigger usage fields to
- dynamic
-Message-ID: <20260528180129.GJ101133@e132581.arm.com>
-References: <20260521-extended_cti-v9-0-d21f4f92c51e@oss.qualcomm.com>
- <20260521-extended_cti-v9-1-d21f4f92c51e@oss.qualcomm.com>
+	Jiri Olsa <jolsa@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	James Clark <james.clark@linaro.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Len Brown <lenb@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	MyungJoo Ham <myungjoo.ham@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Xu Yilun <yilun.xu@intel.com>,
+	Tom Rix <trix@redhat.com>,
+	Moritz Fischer <mdf@kernel.org>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Leon Romanovsky <leon@kernel.org>,
+	Dan Williams <djbw@kernel.org>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Will Deacon <will@kernel.org>,
+	Jiucheng Xu <jiucheng.xu@amlogic.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Jing Zhang <renyu.zj@linux.alibaba.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Linu Cherian <lcherian@marvell.com>,
+	Gowthami Thiagarajan <gthiagarajan@marvell.com>,
+	Ji Sheng Teoh <jisheng.teoh@starfivetech.com>,
+	Khuong Dinh <khuong@os.amperecomputing.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Yury Norov <yury.norov@gmail.com>,
+	Kees Cook <kees@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+	Besar Wicaksono <bwicaksono@nvidia.com>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Chengwen Feng <fengchengwen@huawei.com>,
+	linux-arm-kernel@lists.infradead.org,
+	imx@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-perf-users@vger.kernel.org,
+	linux-acpi@vger.kernel.org,
+	driver-core@lists.linux.dev,
+	linux-pm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-fpga@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	nvdimm@lists.linux.dev,
+	linux-pci@vger.kernel.org,
+	linux-amlogic@lists.infradead.org,
+	linux-cxl@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH 00/16] lib/cpumask: get rid of cpumap_print_to_pagebuf()
+Date: Thu, 28 May 2026 14:36:07 -0400
+Message-ID: <20260528183625.870813-1-ynorov@nvidia.com>
+X-Mailer: git-send-email 2.51.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SJ0PR03CA0077.namprd03.prod.outlook.com
+ (2603:10b6:a03:331::22) To LV3PR12MB9356.namprd12.prod.outlook.com
+ (2603:10b6:408:20c::21)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260521-extended_cti-v9-1-d21f4f92c51e@oss.qualcomm.com>
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV3PR12MB9356:EE_|SA3PR12MB9228:EE_
+X-MS-Office365-Filtering-Correlation-Id: 19749e33-0ed2-4e6e-5dfa-08debce80877
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|7416014|376014|10070799003|366016|18002099003|11063799006|6133799003|56012099006;
+X-Microsoft-Antispam-Message-Info:
+	vUVY3uUYl2ZVcZRHFt1uUn0nw6d4ieHKXH/HFZHDcNyi+nyEY3JWsme1sfsPs/mo4L5wojaKHKkLm6i9jZd37fgEOchKCZjvVTPXs7H4+XchbPQ7IjHXVLLf0it0Dxzb0uqYwO8oTBxiF6QtifK3qfeyZ5YDTkl6r7LuwIM1ep19fQaUygG+jixUgouokBSdvnZwBCxDZIYRfNtyxosgZxBQxgsdpG92HvzZEA6lYYqB/x8Z+ShgH8f4SE5ozE9tU+ZJlUx+Dw9UvbpXvam6rt7WjJ1x7x2WldP2ijm6fSAmvPAPEBJGcOKGL5ns9f3ofAK2wHejW7hmd9KctxBbrK8nNeo+7f2Zfz+O+/4IX3eEKowaGO6kpkGOFiXvvuvRpOVs1aB7qfUef0Z0CaI74+hVxrZAM8h2mHXiXNUeTgI8fMoWNuU0u2hpNw43P4bC2JBur76cI3EfaSaIsoKxjPIlvmo2mv8qyWV8gMbPATH5ghs2c6E9TNFX4dxEyPu7D01eqevnJAb3J9Kocs6tM1J9jgRYMzJzxyY6ke9ae/6ta/NHHppfwZVQEnc3HVn/45w7/HQjBG2TIKOIkLo/RtN5Dya+P9VWaukhmKFkcHs1S7JBjhEGhLCTaCKOBVeTd0uRIQUS8pkpMaRKgbuT6FYYognFaBxGhIt0Yef9qn5BiUSBcYy2G6HWIuswNBdf
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV3PR12MB9356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(10070799003)(366016)(18002099003)(11063799006)(6133799003)(56012099006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?+HRz9lewdEfK9kpquRoYwbH1o6nEJdTpOVIrWceCHDdXJw+rIVJYAtbW9fpm?=
+ =?us-ascii?Q?pep5r+3N/cL1LNM7IsQeX1u/4M9ga28u25o4PZp9drsrxv0EFABK3/uv9LjJ?=
+ =?us-ascii?Q?PDinK5HONprFSfiQeEv0OhA3N3aKjTkeSEhK+F0zdbaDeZtDKS+PFAcHwcXy?=
+ =?us-ascii?Q?07fd6FV5IsDS4f65wzKl6LTi/kbLhTHmQC64sIyfnuRP0uMGlhcYPua+QKX+?=
+ =?us-ascii?Q?SW1ys5X6fHpRIUqVqwCySqR7l2jFNNaNNgI2n3KRiUwBTxPUYs7p4l677Xx8?=
+ =?us-ascii?Q?rZhRoXNmv1vJpMlD3WhpsC3KeG6UTtM8O2xqYXAvYTJ48r68QUD9d7OwnF9G?=
+ =?us-ascii?Q?WlcDoI96GtAsXHd8HGfYTx/yuze4W/AUOsevJx+BH14UDB0RL57tDWuqO1UE?=
+ =?us-ascii?Q?DNzu0Qelq5XVTaLK82e0DDy5+Cclzo+H4ZPzAPO2kfyk79Qdc/ZJET7MlPs0?=
+ =?us-ascii?Q?1qGuzPUfTGfccUFzSm0mCV54GtHvyV23vXJf8uOjgMCmYpwPEQBFxLZbxRd9?=
+ =?us-ascii?Q?+T9zKCoAgKGZjz8WP5LUBNtSfizXXN4BmzeTidi6m5YwEE8NBmZhBgJ92EXD?=
+ =?us-ascii?Q?GXQE2apDmHJzh5UqoNjFrFymljw7bLiBZVicHdXeFMzpWt8aRje1CFDhumL6?=
+ =?us-ascii?Q?QuNWzgjP1dr4V6a9gS+t5V9Z6YSdOtgQ8+pd9PEzduurpzK5vRGhRqrxK05i?=
+ =?us-ascii?Q?r9Hnx9blmNX9iSf+XMvy09yM9/M0zB3RpxNjjUWSgnVgP+lka9e8nbW65Wj8?=
+ =?us-ascii?Q?WTyBRssTzReZWiHvlt1YYpwv3a4WsVF145fOPIqSR13Zh6ooJRrA5sEdCTbA?=
+ =?us-ascii?Q?8xREizGwWocXScjgjSyKoF7nQNtY3qB997G+7NAc76J5puv8TVnIYKIEh+z2?=
+ =?us-ascii?Q?zQL2cvAxSDlThv10Lo6/UHsQV7SxKzdi3GNzixhjbWQQmV9tPAymRMPin2vB?=
+ =?us-ascii?Q?YVYh2cp6SPuiltlksxK0+pCE9+ZevFKuvsiijEvhxTnc8r874YXIiHTlByhJ?=
+ =?us-ascii?Q?qvB430xktTYisRP17Y36mUlta7o5ghDghBnn4v/piKxiW2PhpYuDqBSEpKXC?=
+ =?us-ascii?Q?Nl1VyviwA1C+e2s81rpsnkjslzRWYZRyUAK+z75+Wx5dqnLYxM8bVQFvSJ8z?=
+ =?us-ascii?Q?iVQtYQH/Kd0JyKSEki0dvMW3LP6aK6OCWzLZFHXQfYZ4MrPxS9oK0gj7w8Vr?=
+ =?us-ascii?Q?Ty3Kugvk3qDzf07xgP0MVoW/fUHPpBU0QDk9spsmJX5ZfbMBQol6G7BeGslH?=
+ =?us-ascii?Q?IfggJMss6ucFIRDnaRTPVpKPe+05bTDAnxy0mm2ZGhO054tZ7kK/5IfaRlec?=
+ =?us-ascii?Q?Js0Umh0Ogbsf2a8Grcxz1jdQsKAYREmWHPqonMnEuAIUF+jBVi5V/BnehoFM?=
+ =?us-ascii?Q?jOd2Yw1XPhl2YLMRw+BqANd9ZrGUwLPKpc32TFbROVWlGPYbm9b5pIM2bFR5?=
+ =?us-ascii?Q?8AQMmf/RMhTjuDq5co1uWiEBeNGTT4N2dn6VObhphUm/ardD+9wVCWCGHwo1?=
+ =?us-ascii?Q?TPtBtot8XTZkFTat8T9ps7FGHPtfs8BkRxgYXZKi7VpPdENosbSIFlA0oJEn?=
+ =?us-ascii?Q?RbB0K8vl1tKSfNCxRx0m4z9EnISN1bLVAmwYiA+VlHtQvW3HLxkEXuRmTfDP?=
+ =?us-ascii?Q?ATzAYV0Gay2/xzLeX2WROMBt3VBw05qqINQjZsgti55xlz2voB3YYCK+vfxY?=
+ =?us-ascii?Q?Ce6JvZj1cstRum7uN9hfUOdwBQbe3FxT1O3dxCGMyr8eNRcwrPp8LjX9mQ10?=
+ =?us-ascii?Q?njuLgRKiJWhPPZA59OfRzUBXiqbQZA4MCoHY/0GRQo66nRi+Ic4k?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 19749e33-0ed2-4e6e-5dfa-08debce80877
+X-MS-Exchange-CrossTenant-AuthSource: LV3PR12MB9356.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2026 18:36:29.7574
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Tc2GFQcS1qEMQ+1rOuwfNOGwp/zyCZQCEGjU4f399Zyt8Q/60ZuB32VMy2PiEPOG/h/szipm3VhUxO9zg2CODw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9228
+X-Spamd-Result: default: False [2.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[nvidia.com,reject];
+	R_DKIM_ALLOW(-0.20)[Nvidia.com:s=selector2];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[arm.com:+];
-	TAGGED_FROM(0.00)[bounces-110152-lists,linux-arm-msm=lfdr.de];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[armlinux.org.uk,nxp.com,pengutronix.de,gmail.com,linux.ibm.com,ellerman.id.au,kernel.org,infradead.org,redhat.com,arm.com,linux.intel.com,google.com,intel.com,linaro.org,alien8.de,zytor.com,linuxfoundation.org,samsung.com,sntech.de,hisilicon.com,cornelisnetworks.com,ziepe.ca,linux.alibaba.com,amlogic.com,baylibre.com,googlemail.com,marvell.com,starfivetech.com,os.amperecomputing.com,linutronix.de,nvidia.com,iscas.ac.cn,huawei.com,lists.infradead.org,lists.linux.dev,vger.kernel.org,lists.ozlabs.org];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-110153-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[leo.yan@arm.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
+	FROM_NEQ_ENVFROM(0.00)[ynorov@nvidia.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[Nvidia.com:+];
+	RCPT_COUNT_GT_50(0.00)[90];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: E3FCC5F615C
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	FROM_HAS_DN(0.00)[]
+X-Rspamd-Queue-Id: 817D85F65F2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, May 21, 2026 at 08:16:27PM +0800, Yingchao Deng wrote:
+cpumap_print_to_pagebuf() is the equivalent for the "&*pb[l]" notation
+in printk-like functions. In some cases, it makes people to create
+temporary buffers for the printed cpumasks, where it can be avoided.
 
-[...]
+Get rid of it in a favor of more standard printing API.
 
-> @@ -231,6 +254,8 @@ struct cti_trig_con *cti_allocate_trig_con(struct device *dev, int in_sigs,
->  {
->  	struct cti_trig_con *tc = NULL;
->  	struct cti_trig_grp *in = NULL, *out = NULL;
-> +	struct cti_drvdata *drvdata = dev_get_drvdata(dev);
-> +	int n_trigs = drvdata->config.nr_trig_max;
+Each patch, except for the last one, is independent and may be moved with
+the corresponding subsystem. Or I can take it in bitmap-for-next, at
+maintainers' discretion.
 
-I don't mind it allocates bitmask with nr_trig_max, but AI review
-suggests that when in_sigs / out_sigs bigger than nr_trig_max, it might
-access memory out-of-boundary (see cti_plat_read_trig_group()).
+On top of bitmap-for-next.
 
-It is good to add a check:
+(Apologize for the bulky CC list. Feel free to review only relevant
+patches.)
 
-    if (in_sigs > n_trigs || out_sigs > n_trigs) {
-        dev_err(dev, "trigger signal is out of range: in=%d out=%d nr_max=%d\n",
-                in_sigs, out_sigs, n_trigs\n");
-        return NULL;
-    }
+Yury Norov (16):
+  psci: simplify hotplug_tests()
+  arm: Use sysfs_emit() for cpumask show callbacks
+  powerpc: Use sysfs_emit() for cpumask show callbacks
+  x86/events: Use sysfs_emit() for cpumask show callbacks
+  ACPI: pad: Use sysfs_emit() for idlecpus show
+  cpu: Use sysfs_emit() for cpumask show callback
+  devfreq: Use sysfs_emit() for cpumask show callbacks
+  fpga: dfl-fme-perf: Use sysfs_emit() for cpumask show
+  hwtracing: hisi_ptt: Use sysfs_emit() for cpumask show
+  RDMA/hfi1: Use sysfs_emit() for cpumask show helper
+  nvdimm: Use sysfs_emit() for cpumask show callback
+  PCI/sysfs: Use sysfs_emit() for cpumask show callbacks
+  perf: Use sysfs_emit() for cpumask show callbacks
+  powercap: intel_rapl: Use sysfs_emit() for cpumask show
+  thermal: intel: Use sysfs_emit() for powerclamp cpumask
+  lib/bitmap-str: get rid of cpumap_print_to_pagebuf()
 
-With this:
+ arch/arm/mach-imx/mmdc.c                    |  2 +-
+ arch/arm/mm/cache-l2x0-pmu.c                |  2 +-
+ arch/powerpc/kernel/cacheinfo.c             |  3 ++-
+ arch/powerpc/perf/hv-24x7.c                 |  2 +-
+ arch/powerpc/perf/hv-gpci.c                 |  2 +-
+ arch/powerpc/perf/imc-pmu.c                 |  2 +-
+ arch/x86/events/amd/iommu.c                 |  2 +-
+ arch/x86/events/amd/power.c                 |  2 +-
+ arch/x86/events/amd/uncore.c                |  2 +-
+ arch/x86/events/intel/core.c                |  2 +-
+ arch/x86/events/intel/uncore.c              |  2 +-
+ drivers/acpi/acpi_pad.c                     |  4 ++--
+ drivers/base/cpu.c                          |  2 +-
+ drivers/devfreq/event/rockchip-dfi.c        |  2 +-
+ drivers/devfreq/hisi_uncore_freq.c          |  2 +-
+ drivers/firmware/psci/psci_checker.c        | 14 ++------------
+ drivers/fpga/dfl-fme-perf.c                 |  2 +-
+ drivers/hwtracing/ptt/hisi_ptt.c            |  2 +-
+ drivers/infiniband/hw/hfi1/sdma.c           |  3 ++-
+ drivers/nvdimm/nd_perf.c                    |  2 +-
+ drivers/pci/pci-sysfs.c                     |  7 ++++---
+ drivers/perf/alibaba_uncore_drw_pmu.c       |  2 +-
+ drivers/perf/amlogic/meson_ddr_pmu_core.c   |  2 +-
+ drivers/perf/arm-cci.c                      |  2 +-
+ drivers/perf/arm-ccn.c                      |  2 +-
+ drivers/perf/arm-cmn.c                      |  2 +-
+ drivers/perf/arm-ni.c                       |  2 +-
+ drivers/perf/arm_cspmu/arm_cspmu.c          |  2 +-
+ drivers/perf/arm_dmc620_pmu.c               |  4 ++--
+ drivers/perf/arm_dsu_pmu.c                  |  2 +-
+ drivers/perf/arm_pmu.c                      |  2 +-
+ drivers/perf/arm_smmuv3_pmu.c               |  2 +-
+ drivers/perf/arm_spe_pmu.c                  |  2 +-
+ drivers/perf/cxl_pmu.c                      |  2 +-
+ drivers/perf/dwc_pcie_pmu.c                 |  2 +-
+ drivers/perf/fsl_imx8_ddr_perf.c            |  2 +-
+ drivers/perf/fsl_imx9_ddr_perf.c            |  2 +-
+ drivers/perf/fujitsu_uncore_pmu.c           |  2 +-
+ drivers/perf/hisilicon/hisi_pcie_pmu.c      |  2 +-
+ drivers/perf/hisilicon/hisi_uncore_pmu.c    |  2 +-
+ drivers/perf/marvell_cn10k_ddr_pmu.c        |  2 +-
+ drivers/perf/marvell_cn10k_tad_pmu.c        |  2 +-
+ drivers/perf/marvell_pem_pmu.c              |  2 +-
+ drivers/perf/nvidia_t410_c2c_pmu.c          |  2 +-
+ drivers/perf/nvidia_t410_cmem_latency_pmu.c |  2 +-
+ drivers/perf/qcom_l2_pmu.c                  |  2 +-
+ drivers/perf/qcom_l3_pmu.c                  |  2 +-
+ drivers/perf/starfive_starlink_pmu.c        |  2 +-
+ drivers/perf/thunderx2_pmu.c                |  2 +-
+ drivers/perf/xgene_pmu.c                    |  2 +-
+ drivers/powercap/intel_rapl_common.c        |  2 +-
+ drivers/thermal/intel/intel_powerclamp.c    |  2 +-
+ include/linux/cpumask.h                     | 19 -------------------
+ kernel/events/core.c                        |  2 +-
+ lib/bitmap-str.c                            |  9 ++++-----
+ 55 files changed, 65 insertions(+), 92 deletions(-)
 
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-
-BTW, I have given my review tag on v8, please remember to update
-patches with review / ack tags.
+-- 
+2.51.0
 
