@@ -1,124 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-110060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MPJwF833F2q5WAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 10:07:41 +0200
+	id YN6uDTUHGGrGaQgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 11:13:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09E835EE415
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 10:07:40 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB9395EF545
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 11:13:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 279CB315EE2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 08:00:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D873231FBC9A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 08:59:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 676C736896F;
-	Thu, 28 May 2026 08:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F12638AC7D;
+	Thu, 28 May 2026 08:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hQb0SGSr";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="iHqSJrYR"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZLjGjCS8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D63B36680C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 08:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0809377EBA;
+	Thu, 28 May 2026 08:59:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779955232; cv=none; b=U3te3cbheTqn4bCMajJbi+V0Fe/x/gGVRRBD6+kDx2in5p+tdIwj+HRM+KNPfnRPbrCLFDSgvVqn0BN0NlmRTc8dp6ydtVcb94NC1dMiSTty4iAxq9iJ914uJvuwb3feDKKH75AxJis03eJWvbYpXwAukrWJjCnkWSXqTXRgQiU=
+	t=1779958754; cv=none; b=netuq0PWdY3Kq5/z/hbyVscVm7iNBrcBRSA40Ry7sK0piCp4QBRAvo67KqVlIaSvV4ADzcTlNIwfJ9SkUwAT5K3K6FXx96o7eTBqZsmhOUwXXvy4xU0a9+TCh8LFECM0esIuvpMMX5zb5KACpPfnbFl/c101wxIVqD7g73ws/L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779955232; c=relaxed/simple;
-	bh=hB9rWWdziNFSDSCFK0MEsE6r1p8y3/lPTZryWO7j3LY=;
+	s=arc-20240116; t=1779958754; c=relaxed/simple;
+	bh=yITXz7miJoKkLJkFy0JeLjTGaWJ0V8x8RwQLEqHLRmQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n8jK4D2sDxm/MfBF5rTmro9P9Xtqmo8HzvljutJ/405gbxm1giVSx5I3mkJPqME8+L4rQsnSS0O8z36NuLUYv+toQCWodnrNLrOosSFSwVSk09MoGxk/jl3WOY5oFE4r+4ilxaeJnFgeW+Hc4DKX2B6FjDiV+5JWiN+Pm6fgAT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hQb0SGSr; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iHqSJrYR; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64S6jgBT2621799
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 08:00:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=N7iMbetrrOwn6wQkhuxIddok
-	2tB1wY35g7JsfGtZdak=; b=hQb0SGSr6d5nOnQPbsCqqc0XyBMozQI1cGgGMDJ0
-	HuBvifkSNS56xU43f9j1SX8TrPK4gDXm6jFX69BIj4SUUSnvdgv5RSpQcBULEcdu
-	EJiccDSiu0yzGLi4bofFOPIMoQtsTrCiQFjfYqRND9u9SA7uP/jo2540P9eLycXD
-	r8UPzbVXdybVReSAvPvOjYz4ESqP2+DOGL5CVSSamw4GAM8OulD50DfF9z3FXBoJ
-	h2orbLsRexGINodAogEXinEUSVsiMCBgtyg0An13pUczxVyvjsnem5WJ41FkxlbT
-	Bftp6/7r+U4kEQZ12WyIexaxQSg73IKrXFT8Jl6oBBVFcA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7yf1vs3-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 08:00:29 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-50ea1a7a5d0so82655341cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 May 2026 01:00:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779955229; x=1780560029; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=N7iMbetrrOwn6wQkhuxIddok2tB1wY35g7JsfGtZdak=;
-        b=iHqSJrYRGRED0ftPYZl//0UxIHI7BhtjvkZZXL4viB+NL4IeKJft55tbhAV6CJ1rxe
-         0CvruGzU8v+UkqKw7barjhCNZnXqoYe1r/5LL1QsS+39yTNW0mIWCEoIGGZaoAKr6q/y
-         /8ldEQnNLjfWrcGGtESApPdVhLcJaN23MR1s5y1rkB1AZte18uzqiTfmiKOeWFYC/OeM
-         um5aPURc7ojGHjYjRuUJZHss3CU4F4Ayw0mnXiGTlAGUYg9LdU9ZbM/EQYOz2PJkXbOY
-         EQ9yuNt3zqCH9ja0GoDG+emmwJ+sC1bbOENAwBxrKWH/nk7FTArlozthAkK4Q8A35CiX
-         GVFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779955229; x=1780560029;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=N7iMbetrrOwn6wQkhuxIddok2tB1wY35g7JsfGtZdak=;
-        b=jz/jOMY5C9ZwjwSXdijz3OZTzw8Gu2PpFdS9H5nsYpkd44+4tXMDtn2Ko0ySHJpvGj
-         CbiMvX7E7up49ebkVucKdtB/UCHmjlH2z/hj1g6UAx3IVNU0O+QIfhcqa41Dihhn0R/0
-         JFQ1pQbRfTbGu8XcZq0fUwBpsAwOP809CjMi61BpcXkp9kdOwtPitFS3lj4BQRPdAYW+
-         Q9yCp4ZMRohjeMjRxDtoUfcexF8AGws+4QjeDlZkpuebusKq4CiE0ycoxzEH/DD0LfN/
-         Mle4l3ON1k+xsKEBy50TqvC64UkzXk9ZSttuhi9UttEyBkaNuWe9psQ/dmCQpNOX+kxQ
-         e6Cw==
-X-Forwarded-Encrypted: i=1; AFNElJ9+rXrQXEPYERmyUwbZnYj5RQZ/DFy+3oH63qBYlb3ar2O4mND9Jcl5cyQtDFT25+Xle4yYp69OOKEOSxC4@vger.kernel.org
-X-Gm-Message-State: AOJu0YyG8AnozZnRokgo8T5jZAVTT1NuC1dr73vKzfmUeYJ2dPhI/bGt
-	86Fam6SOAtlYJHIPTMdHiMpDTXbp3x4KIx5KaJNb9ECPU8M1lPWr/FJhCB64/C9HX4ZhiqfXXz4
-	kK2NLEwAZ6NIm34ZQ0ZHFbmoKG4aP+4I0ebW6p79anCNw8HvCwvxBuVwha7JM6Ygh2AwG
-X-Gm-Gg: Acq92OG//KEh4JM9wEg4g97/yYx7o+Rue763LhrOOMKCrJBsoohTBhkRSPojkzIMa0k
-	1eSLrYamMep/pJb8bU0BepWeW/QjNI2NDYbI4Cgx6jDEdL9nKroiJ4E+odNlMDLvdWz0CY1BLyB
-	tQPCgRT5+o5OQNx3CueA6Sa2Dhg6fmGVq2lJUY41CTzUrGZHPqKUOASAdU3wwqoYg9ywVYkLfKc
-	120Shlb3UeynHOu0HPyLtqbsAhjfwTtyUoMIrHNdKPC3a3ZFgcJ1AXGNEl0QFifLQV4RfY8OsxD
-	4UC+723fvDkieXaedbWBs6IFeJ1PlX68J9ZoUlkArsdVmunIPsF6je6cnJLLtN8b+wT3zG4xsXz
-	uyBmfNwaIwdEMfNEyNI3U+MttEa1Jb28k+VjtAuMWHDzdn5Vw+xljjkLgnts9mfzNwrXv12kIu/
-	gUDLQ+N66fvgsjCZ72Oyy7KCc64LuAobJrokmRVqg+gET2kA==
-X-Received: by 2002:a05:622a:8589:b0:516:daff:7f71 with SMTP id d75a77b69052e-516daff8005mr277691201cf.56.1779955228567;
-        Thu, 28 May 2026 01:00:28 -0700 (PDT)
-X-Received: by 2002:a05:622a:8589:b0:516:daff:7f71 with SMTP id d75a77b69052e-516daff8005mr277690111cf.56.1779955227789;
-        Thu, 28 May 2026 01:00:27 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aa462cf284sm1739113e87.7.2026.05.28.01.00.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 May 2026 01:00:26 -0700 (PDT)
-Date: Thu, 28 May 2026 11:00:23 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, usb4-upstream@oss.qualcomm.com,
-        Raghavendra Thoorpu <rthoorpu@qti.qualcomm.com>,
-        Mika Westerberg <westeri@kernel.org>, Sven Peter <sven@kernel.org>
-Subject: Re: [PATCH 3/5] phy: qualcomm: qmp-combo: Add preliminary USB4
- support
-Message-ID: <zzs4wgr37wfptzqwgttxdubqnyudyh3am2r6i7b56kd3lwuo2e@bjcyelaxtlq3>
-References: <20260518-topic-usb4phy-v1-0-71d827c49dca@oss.qualcomm.com>
- <20260518-topic-usb4phy-v1-3-71d827c49dca@oss.qualcomm.com>
- <4nqlpu7qfptekyn77sd7sdn446stgn3v3lw2356bvizrnvjgnr@czqgivemigt5>
- <9aad8e45-b0a5-4c59-8793-8c0747d8fafa@oss.qualcomm.com>
- <uc2l2mbobmik5workhcbtry5spe2gyamx2x4yj4rjly4t3dbrh@n34fo74rctnk>
- <6fb112ae-5919-4c8f-a915-4538d14284da@oss.qualcomm.com>
- <iws2snsi3yfddich3rqqurhwt6mvi2boushkog5t5gvo2ahwmp@l2m6ays2kicf>
- <72b140a7-e95e-491d-8bae-f98a593bdbfb@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=iOMcckbopTyZ3OB+GllmxVS78eUTEB0S6mwcBmLyHgOHmf6ed4yOw35TFjXKYKT8Wj7lzatuFhKryT5Jx+BGZRf2afgdwVoHw3S07JTuFLaUz2OKyz61/wnHIgP8qsOU4/58DQOSIubkM6uSI+q5VqwinYqtnF4JLnH5bLghCJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZLjGjCS8; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1779958753; x=1811494753;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=yITXz7miJoKkLJkFy0JeLjTGaWJ0V8x8RwQLEqHLRmQ=;
+  b=ZLjGjCS8wiNcOhv0UVujYSv2STmW4NEvvxaBjIu9pH9XcD2BjNXRc/2H
+   oWxLTYUwkIz3UHBLfP2zCHwbJNsQfyByIfGMlDLMqB7tQaUTzI4vHYoh4
+   U6Va9hk/d2cD+APLK7gF7FosLYlRPJaGygriTPPAC21ueXmdxaSZx3JCw
+   hIeEYXen3Zyildyrit+LBdg4lRQFEOH3NIZpni44JxG79R1vDGQrSK1f1
+   opFsJj4qAmAgCLK/7y3l3KK7luKcs+jyktGNF4NIE0HiWKJiSgqik7B/L
+   4Y8R/Oegzch6TSdrynPkAnN2f8/d9DvXSg9vPXEE9rhZa2AnNEsXEh1SC
+   w==;
+X-CSE-ConnectionGUID: iPULJdZQTyeeAyzrk2BHiw==
+X-CSE-MsgGUID: 8k8i7sWxTqWscFozEpUTOA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11799"; a="79946333"
+X-IronPort-AV: E=Sophos;i="6.24,173,1774335600"; 
+   d="scan'208";a="79946333"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 May 2026 01:59:12 -0700
+X-CSE-ConnectionGUID: OWoJ8s+vSmKaooVbl3p+sQ==
+X-CSE-MsgGUID: R+cGajzlR9ql9VHI5YnIIw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,173,1774335600"; 
+   d="scan'208";a="246523117"
+Received: from lkp-server01.sh.intel.com (HELO f0d55cb201f0) ([10.239.97.150])
+  by orviesa003.jf.intel.com with ESMTP; 28 May 2026 01:59:07 -0700
+Received: from kbuild by f0d55cb201f0 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1wSWa0-000000005l0-1tso;
+	Thu, 28 May 2026 08:59:04 +0000
+Date: Thu, 28 May 2026 16:58:24 +0800
+From: kernel test robot <lkp@intel.com>
+To: Christoph Hellwig <hch@lst.de>, Vlastimil Babka <vbabka@kernel.org>,
+	Harry Yoo <harry@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Cc: oe-kbuild-all@lists.linux.dev,
+	Linux Memory Management List <linux-mm@kvack.org>,
+	Hao Li <hao.li@linux.dev>,
+	Christoph Lameter <cl@linux-foundation.org>,
+	David Rientjes <rientjes@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	io-uring@vger.kernel.org, kasan-dev@googlegroups.com,
+	bpf@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [PATCH] mm/slab: improve kmem_cache_alloc_bulk
+Message-ID: <202605281629.y8HhAihO-lkp@intel.com>
+References: <20260527070239.2252948-2-hch@lst.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -127,180 +92,147 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <72b140a7-e95e-491d-8bae-f98a593bdbfb@oss.qualcomm.com>
-X-Proofpoint-GUID: tSvYERG3BH71Qwl8zr1WCKq3GSGTBrZa
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDA3OSBTYWx0ZWRfX6pGTiECRh+/Y
- CPH9tnOKuZ96USW7DgapfKWc/4pp1sXXafWHw03lThLoWclqYXJe92Mf5LnoTwNVI1Q17tdGcq3
- Vtomdq+v6AQIn9UeMkpzZ3aku+XOQx0BbNcAigjUdM9KLi8UROUBwrrCu2c77CT1caUdZ8lQp5H
- PhIHY8GauZJEm2gJH2vZhofWNG7U2FctwOBp6YRhqxYeh+XjLRAUQH6litzaUUY/AXgZL8lURPe
- zK/azoj7mNcLxeCcWMqWv85ynqidDMAiU4FHzmH4B0Mjxw7or79bv46vYkE9QWtXmWAXBqVr+9n
- gLYn8r9f/Y8E+L+zDRRHGoR70bwfCRGoeBSVwmUNp9RtUo/fibqOnfdiJJyED8MZPjfzpFsarwH
- MZz92S5YKeEFqAOWxBPZCySqIBT3gcLOmKNizIjWx9CclE4MZbU8Q/sZvJb01WLN3xmvXeEdKRt
- mcKteo+7U4x5u7+ZBsQ==
-X-Proofpoint-ORIG-GUID: tSvYERG3BH71Qwl8zr1WCKq3GSGTBrZa
-X-Authority-Analysis: v=2.4 cv=G8gs1dk5 c=1 sm=1 tr=0 ts=6a17f61d cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
- a=PDx2_Kj2Eo2xtKM_tVQA:9 a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-28_02,2026-05-26_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 priorityscore=1501 clxscore=1015 adultscore=0
- impostorscore=0 malwarescore=0 phishscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280079
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+In-Reply-To: <20260527070239.2252948-2-hch@lst.de>
+X-Spamd-Result: default: False [-1.16 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110060-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email,qualcomm.com:dkim];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-110062-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[intel.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 09E835EE415
+	RCPT_COUNT_TWELVE(0.00)[19];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: AB9395EF545
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, May 22, 2026 at 02:05:14PM +0200, Konrad Dybcio wrote:
-> On 5/20/26 5:06 PM, Dmitry Baryshkov wrote:
-> > On Tue, May 19, 2026 at 10:12:06AM +0200, Konrad Dybcio wrote:
-> >> On 5/18/26 5:38 PM, Dmitry Baryshkov wrote:
-> >>> On Mon, May 18, 2026 at 04:15:16PM +0200, Konrad Dybcio wrote:
-> >>>> On 5/18/26 3:57 PM, Dmitry Baryshkov wrote:
-> >>>>> On Mon, May 18, 2026 at 12:29:50PM +0200, Konrad Dybcio wrote:
-> >>>>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> >>>>>>
-> >>>>>> Some Combo PHYs (so far only on SC8280XP, X1E80100 and Glymur), come in
-> >>>>>> a flavor called USB43DP, which as the name implies, features USB4, USB3
-> >>>>>> and DP signal processing capabilities. In that architecture, USB3 and
-> >>>>>> USB4 PHYs share the same USB_PLL while featuring separate logic spaces.
-> >>>>>> The DP part is roughly the same as on the instances without USB4.
-> >>>>>>
-> >>>>>> The USB4 and USB3/DP operation modes of the PHY are mutually exclusive.
-> >>>>>> Only one USB protocol (and flavor of pipe clock) can be active at a
-> >>>>>> given moment (not to be confused with USB3 not being able to be
-> >>>>>> tunneled as USB4 packets - that of course remains possible).
-> >>>>>> The DP PLL is still used for clocking tunneled DP links. It may be
-> >>>>>> turned off to save power when no tunnels are active, but that's left as
-> >>>>>> a TODO item for now.
-> >>>>>>
-> >>>>>> Due to the nature of USB4, the Type-C handling happens entirely inside
-> >>>>>> the Host Router, and as such the QMPPHY's mux_set() function is
-> >>>>>> nullified for the period when USB4 PHY remains active. This is strictly
-> >>>>>> necessary, as the Host Router driver is going to excercise manual
-> >>>>>> control over the USB4 PHY's power state, which is needed by the suspend
-> >>>>>> and resume flows. Failure to control that synchronously with other
-> >>>>>> parts of the code results in a SoC crash by unlocked access.
-> >>>>>>
-> >>>>>> Because of that, a new struct phy is spawned to expose the USB4 mode,
-> >>>>>> along with a .set_mode callback to allow toggling between USB4 and TBT3
-> >>>>>> submodes.
-> >>>>>>
-> >>>>>> Thunderbolt 3, having a number of differences vs USB4, requires a
-> >>>>>> couple specific overrides, pertaining to electrical characteristics,
-> >>>>>> which are easily accommodated for.
-> >>>>>>
-> >>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> >>>>>> ---
-> >>>>>>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 392 ++++++++++++++++++++++++------
-> >>>>>>  1 file changed, 322 insertions(+), 70 deletions(-)
-> >>>>>>
-> >>>>>
-> >>>>> Overall it looks good. The major question (after looking at TODOs), do
-> >>>>> we need a separate submode for USB+DP / TBT+DP?
-> >>>>
-> >>>> The problem space is as follows:
-> >>>>
-> >>>> After a TBT (collectively TBT3+ and USB4) link has been established and
-> >>>> we have a link partner, we may (based on the HW capabilities and user
-> >>>> config, such as kernel params but not only) start or stop a DP tunnel at
-> >>>> runtime. On Qualcomm hardware, the PHY is kept in USB4 mode and its DP
-> >>>> AUX lines are not used (instead, the encapsulated DP AUX packets are r/w
-> >>>> entirely within the USB4 subsystem via a pair of FIFOs that Linux sees
-> >>>> as a separate DP AUX host)
-> >>>
-> >>> So far so good. But I still don't grok if having a DP-over-USB4 is a
-> >>> separate submode or not. I.e. I see code (and TODOs) to detect and
-> >>> handle DP going on and off. Would it be better if we specify that
-> >>> explicitly?
-> >>
-> >> I really don't want to end up in a situation like we have with:
-> >>
-> >> $ rg _USB include/linux/phy/phy.h
-> >> 29:     PHY_MODE_USB_HOST,
-> >> 30:     PHY_MODE_USB_HOST_LS,
-> >> 31:     PHY_MODE_USB_HOST_FS,
-> >> 32:     PHY_MODE_USB_HOST_HS,
-> >> 33:     PHY_MODE_USB_HOST_SS,
-> >> 34:     PHY_MODE_USB_DEVICE,
-> >> 35:     PHY_MODE_USB_DEVICE_LS,
-> >> 36:     PHY_MODE_USB_DEVICE_FS,
-> >> 37:     PHY_MODE_USB_DEVICE_HS,
-> >> 38:     PHY_MODE_USB_DEVICE_SS,
-> >> 39:     PHY_MODE_USB_OTG,
-> >>
-> >>>> Then, on hamoa/glymur specifically, any of the 3 USB4-capable DP hosts
-> >>>> can be muxed to either of the 2 DPIN ports on any of the 3 USB4 routers
-> >>>> (and each of these routers is hardwired to one of the PHYs).
-> >>>>
-> >>>> To underline, we have 3 DP producers and 6 consumers. If there's e.g. a
-> >>>> super high-res display at one of the physical ports, or a long
-> >>>> daisy-chain, we may need to use 2 DPTXes to service 1 receptacle. Then,
-> >>>> we would only need one of the PHYs (associated with the router that's
-> >>>> wired to that port) to provide a DP clock.
-> >>>>
-> >>>> This, along with the normal (logical or physical) present/absent status
-> >>>> can change at runtime. My plan is to use phy_set_opts(dp_tunelling=true)
-> >>>> or something along those lines to toggle that bit as necessary
-> >>>
-> >>> I don't see phy_set_opts(). So maybe a submode then...
-> >>
-> >> Sorry, I misremembered the name. The function is phy_configure(), and it
-> >> takes a union phy_configure_opts, hence the confusion
-> > 
-> > So, phy_configure() will be called for the DP PHY to set the DP opts,
-> > but how do you plan to determine if DP is on or not? Or do you plan to
-> > add phy_tbt_configure_opts ?
-> > 
-> > Another obvious option would be to set the flag if DP PHY is being tuned
-> > on / off. I don't know if that fulfills your needs.
-> 
-> Either this or tbt_configure_opts. We still have the muxing question to
-> chew through.
-> 
-> The bottom line is that all AUX traffic happens between the "AUX adapters"
-> within USB4SS, talking over thunderbolt to other AUX adapters on the LTTPRs
-> and the far-end device (and anything inbetween in a chained topology) meaning
-> we only need to engage the DP host itself (and therefore the PHY) after we've
-> already performed the capability negotiations
+Hi Christoph,
 
-I hope you mean USB link capabilities. DP host still needs to ping LTTPRs
-and read all the DP properties on its own. I don't think we want to leak
-that to the other layers.
+kernel test robot noticed the following build errors:
 
--- 
-With best wishes
-Dmitry
+[auto build test ERROR on akpm-mm/mm-everything]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Christoph-Hellwig/mm-slab-improve-kmem_cache_alloc_bulk/20260527-150421
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-everything
+patch link:    https://lore.kernel.org/r/20260527070239.2252948-2-hch%40lst.de
+patch subject: [PATCH] mm/slab: improve kmem_cache_alloc_bulk
+config: parisc-randconfig-r071-20260528 (https://download.01.org/0day-ci/archive/20260528/202605281629.y8HhAihO-lkp@intel.com/config)
+compiler: hppa-linux-gcc (GCC) 8.5.0
+smatch: v0.5.0-9185-gbcc58b9c
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260528/202605281629.y8HhAihO-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202605281629.y8HhAihO-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   lib/test_meminit.c: In function 'do_kmem_cache_size':
+>> lib/test_meminit.c:239:29: error: 'ret' undeclared (first use in this function); did you mean 'net'?
+        kmem_cache_free_bulk(c, ret, bulk_array);
+                                ^~~
+                                net
+   lib/test_meminit.c:239:29: note: each undeclared identifier is reported only once for each function it appears in
+
+
+vim +239 lib/test_meminit.c
+
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04  209  
+5015a300a522c8f Alexander Potapenko 2019-07-16  210  /*
+5015a300a522c8f Alexander Potapenko 2019-07-16  211   * Test kmem_cache with given parameters:
+5015a300a522c8f Alexander Potapenko 2019-07-16  212   *  want_ctor - use a constructor;
+5015a300a522c8f Alexander Potapenko 2019-07-16  213   *  want_rcu - use SLAB_TYPESAFE_BY_RCU;
+5015a300a522c8f Alexander Potapenko 2019-07-16  214   *  want_zero - use __GFP_ZERO.
+5015a300a522c8f Alexander Potapenko 2019-07-16  215   */
+5015a300a522c8f Alexander Potapenko 2019-07-16  216  static int __init do_kmem_cache_size(size_t size, bool want_ctor,
+5015a300a522c8f Alexander Potapenko 2019-07-16  217  				     bool want_rcu, bool want_zero,
+5015a300a522c8f Alexander Potapenko 2019-07-16  218  				     int *total_failures)
+5015a300a522c8f Alexander Potapenko 2019-07-16  219  {
+5015a300a522c8f Alexander Potapenko 2019-07-16  220  	struct kmem_cache *c;
+5015a300a522c8f Alexander Potapenko 2019-07-16  221  	int iter;
+5015a300a522c8f Alexander Potapenko 2019-07-16  222  	bool fail = false;
+5015a300a522c8f Alexander Potapenko 2019-07-16  223  	gfp_t alloc_mask = GFP_KERNEL | (want_zero ? __GFP_ZERO : 0);
+5015a300a522c8f Alexander Potapenko 2019-07-16  224  	void *buf, *buf_copy;
+5015a300a522c8f Alexander Potapenko 2019-07-16  225  
+5015a300a522c8f Alexander Potapenko 2019-07-16  226  	c = kmem_cache_create("test_cache", size, 1,
+5015a300a522c8f Alexander Potapenko 2019-07-16  227  			      want_rcu ? SLAB_TYPESAFE_BY_RCU : 0,
+5015a300a522c8f Alexander Potapenko 2019-07-16  228  			      want_ctor ? test_ctor : NULL);
+5015a300a522c8f Alexander Potapenko 2019-07-16  229  	for (iter = 0; iter < 10; iter++) {
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04  230  		/* Do a test of bulk allocations */
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04  231  		if (!want_rcu && !want_ctor) {
+863d4ee245fb4d6 Christoph Hellwig   2026-05-27  232  			if (!kmem_cache_alloc_bulk(c, alloc_mask, BULK_SIZE,
+863d4ee245fb4d6 Christoph Hellwig   2026-05-27  233  					bulk_array)) {
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04  234  				fail = true;
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04  235  			} else {
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04  236  				int i;
+863d4ee245fb4d6 Christoph Hellwig   2026-05-27  237  				for (i = 0; i < BULK_SIZE; i++)
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04  238  					fail |= check_buf(bulk_array[i], size, want_ctor, want_rcu, want_zero);
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04 @239  				kmem_cache_free_bulk(c, ret, bulk_array);
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04  240  			}
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04  241  		}
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04  242  
+5015a300a522c8f Alexander Potapenko 2019-07-16  243  		buf = kmem_cache_alloc(c, alloc_mask);
+5015a300a522c8f Alexander Potapenko 2019-07-16  244  		/* Check that buf is zeroed, if it must be. */
+dc5c5ad79f0cc2d Laura Abbott        2019-12-04  245  		fail |= check_buf(buf, size, want_ctor, want_rcu, want_zero);
+5015a300a522c8f Alexander Potapenko 2019-07-16  246  		fill_with_garbage_skip(buf, size, want_ctor ? CTOR_BYTES : 0);
+d3a811617ae629d Arnd Bergmann       2019-07-16  247  
+d3a811617ae629d Arnd Bergmann       2019-07-16  248  		if (!want_rcu) {
+d3a811617ae629d Arnd Bergmann       2019-07-16  249  			kmem_cache_free(c, buf);
+d3a811617ae629d Arnd Bergmann       2019-07-16  250  			continue;
+d3a811617ae629d Arnd Bergmann       2019-07-16  251  		}
+d3a811617ae629d Arnd Bergmann       2019-07-16  252  
+5015a300a522c8f Alexander Potapenko 2019-07-16  253  		/*
+5015a300a522c8f Alexander Potapenko 2019-07-16  254  		 * If this is an RCU cache, use a critical section to ensure we
+5015a300a522c8f Alexander Potapenko 2019-07-16  255  		 * can touch objects after they're freed.
+5015a300a522c8f Alexander Potapenko 2019-07-16  256  		 */
+5015a300a522c8f Alexander Potapenko 2019-07-16  257  		rcu_read_lock();
+5015a300a522c8f Alexander Potapenko 2019-07-16  258  		/*
+5015a300a522c8f Alexander Potapenko 2019-07-16  259  		 * Copy the buffer to check that it's not wiped on
+5015a300a522c8f Alexander Potapenko 2019-07-16  260  		 * free().
+5015a300a522c8f Alexander Potapenko 2019-07-16  261  		 */
+733d1d1a7745113 Alexander Potapenko 2019-08-02  262  		buf_copy = kmalloc(size, GFP_ATOMIC);
+5015a300a522c8f Alexander Potapenko 2019-07-16  263  		if (buf_copy)
+5015a300a522c8f Alexander Potapenko 2019-07-16  264  			memcpy(buf_copy, buf, size);
+d3a811617ae629d Arnd Bergmann       2019-07-16  265  
+4ab7ace465466d2 Alexander Potapenko 2019-07-16  266  		kmem_cache_free(c, buf);
+5015a300a522c8f Alexander Potapenko 2019-07-16  267  		/*
+5015a300a522c8f Alexander Potapenko 2019-07-16  268  		 * Check that |buf| is intact after kmem_cache_free().
+5015a300a522c8f Alexander Potapenko 2019-07-16  269  		 * |want_zero| is false, because we wrote garbage to
+5015a300a522c8f Alexander Potapenko 2019-07-16  270  		 * the buffer already.
+5015a300a522c8f Alexander Potapenko 2019-07-16  271  		 */
+5015a300a522c8f Alexander Potapenko 2019-07-16  272  		fail |= check_buf(buf, size, want_ctor, want_rcu,
+5015a300a522c8f Alexander Potapenko 2019-07-16  273  				  false);
+5015a300a522c8f Alexander Potapenko 2019-07-16  274  		if (buf_copy) {
+5015a300a522c8f Alexander Potapenko 2019-07-16  275  			fail |= (bool)memcmp(buf, buf_copy, size);
+5015a300a522c8f Alexander Potapenko 2019-07-16  276  			kfree(buf_copy);
+5015a300a522c8f Alexander Potapenko 2019-07-16  277  		}
+5015a300a522c8f Alexander Potapenko 2019-07-16  278  		rcu_read_unlock();
+5015a300a522c8f Alexander Potapenko 2019-07-16  279  	}
+5015a300a522c8f Alexander Potapenko 2019-07-16  280  	kmem_cache_destroy(c);
+5015a300a522c8f Alexander Potapenko 2019-07-16  281  
+5015a300a522c8f Alexander Potapenko 2019-07-16  282  	*total_failures += fail;
+5015a300a522c8f Alexander Potapenko 2019-07-16  283  	return 1;
+5015a300a522c8f Alexander Potapenko 2019-07-16  284  }
+5015a300a522c8f Alexander Potapenko 2019-07-16  285  
+
+--
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
