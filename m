@@ -1,222 +1,279 @@
-Return-Path: <linux-arm-msm+bounces-110031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wLA6Nv2gF2qzLggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 03:57:17 +0200
+	id WJQqB/KkF2oTMAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 04:14:10 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38B875EBA16
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 03:57:16 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1ED75EBB77
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 04:14:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 572973041878
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 01:57:15 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 4512F3030062
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 02:13:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C8CA2D5923;
-	Thu, 28 May 2026 01:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7CBF2F4A18;
+	Thu, 28 May 2026 02:13:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a0THgojI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CAC23394A;
-	Thu, 28 May 2026 01:57:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F072F361E;
+	Thu, 28 May 2026 02:13:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779933434; cv=none; b=smu3o7bBu3fkEarL3/IEbBTZwT86LKs+be6j7sFGIMzdHtK50y0HvQ3D+HrqyrlfNTXlMXNz7V9ssM0jFkHwFV8NEY28bD6oXuvVL2HGx/t0kdCj7UnNltVh46768W6DrNqAaDhFO1CkNM6l/CE7nqF6/UicPJgADKnOJc606CE=
+	t=1779934422; cv=none; b=ZBURECEvBD6s1qJIgIHdMk3Nhbz6AFhsQBMavREF87qN0NOJVgC1fraXp1RIXZZ0Gj669kuumhYBA+CjAFNaY3EXl73DF9ar+mKQ6oWzgLdnFiStHZtYYbQEmBBBIqpCzOO/f1BcYLM9IDQ4gucTC7sl28r6cpYx0WZc4pmZN8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779933434; c=relaxed/simple;
-	bh=KBlLgF6gRJ1Qn56J9PT2IuLK4PeEsqW8yyXjeblENb8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VA7U4Evzphp1Sr/I9i5N7Ym6rYtEGU4FlGFygexnXLoUFJROKGq9GpafTb5yc3Ihox7xEbIMvBopFiJY+5b1oVJ3xocX1DMFIiqwG7sOgwJzkX+ti0Uk7DlZ//wrYnJqQDAkxiknOdZPIpnRpcKsHNyccyx2WcbyeQoxNcAAU6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.207.19.206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: zesmtpsz3t1779933411t051b27aa
-X-QQ-Originating-IP: Xo+WVLqeetR6zv4ASWWCm/TADq7Vz3fao/NqAUF+c7w=
-Received: from [127.0.0.1] ( [116.234.26.110])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 28 May 2026 09:56:48 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 3255798331960100904
-Message-ID: <755BEADC478F92B8+16dd5a2a-9a6f-44c2-a84a-af36675a3346@radxa.com>
-Date: Thu, 28 May 2026 09:56:47 +0800
+	s=arc-20240116; t=1779934422; c=relaxed/simple;
+	bh=l1a2/mDB9FsmByRZHT5JzE46+y6/2ln+HvPITWNrDwU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=N2H6sQUzXMYTZ0NJyD38Oz4HLKKjTuSTT08zW9mMyaRebQWBHX+Of4iDs6PXjDp3Nn9kC0XvR52GaFY0D8Lo5C9VnFqN/cFTJ0ISQvTsKkK5hFOEB72ihBBvKimXwvB4bas0Pz+2lmeiOYxAfp+KuwVrWKxCvLfX1aDt1fYFcp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a0THgojI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 639AFC2BCB3;
+	Thu, 28 May 2026 02:13:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1779934422;
+	bh=l1a2/mDB9FsmByRZHT5JzE46+y6/2ln+HvPITWNrDwU=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=a0THgojICdJaB6Oij6F1mPVxF7/NSdo8YExBCMVXqrQp3Nm4bs7QOyDC3x0sOOSFX
+	 eXffoI7f3M1JhAqnHsxy0OYpE9rhzRcoD2+zIl/kvAx8jJMg3CvZkzB9CB6ghJgkxc
+	 E6sV5H5gBirPwkYWysGWTQ0lXUVFX76S4+o9GPGqbVOu+I2/ssijfrGrvl6cs0WKEP
+	 Sboa9gJl3sogAAxMnAJe17eQLVYp3Vngl28m/n5MNSujbe2gB2nTQE/GTkmY1db7xj
+	 cJuXqpZkTNJEodmkDMUWkGY73EFNcOWaJEV3LicB/DNX66Nt87XcNuDJI20Bx1Hq5t
+	 Bfj5gVBtufUng==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A594CD6E44;
+	Thu, 28 May 2026 02:13:42 +0000 (UTC)
+From: Rudraksha Gupta via B4 Relay <devnull+guptarud.gmail.com@kernel.org>
+Date: Wed, 27 May 2026 19:13:41 -0700
+Subject: [PATCH v2] ARM: dts: qcom: msm8960: expressatt: Add
+ coreriver,tc360-touchkey
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] arm64: qcom: Enable additional hardware on Radxa
- Dragon Q6A
-To: Gekko <graham.oconnor@gmail.com>, linux-arm-msm@vger.kernel.org
-Cc: andersson@kernel.org, konradybcio@kernel.org,
- robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, neil.armstrong@linaro.org
-References: <20260522060645.4399-1-graham.oconnor@gmail.com>
- <20260522101323.31911-1-graham.oconnor@gmail.com>
- <15015D7EB84640D6+cc21a9f7-ae1b-4a22-bb38-34d6fafe1bcb@radxa.com>
- <30edf212-f656-4c09-a066-d765debf3fcb@gmail.com>
-Content-Language: en-US
-From: Xilin Wu <sophon@radxa.com>
-In-Reply-To: <30edf212-f656-4c09-a066-d765debf3fcb@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: N+4N2KiqbZESIbKj7VNt9rs5Mnx/p51JwKlMwucRmj8jNA2dTiFYqcOE
-	mC24iYw+JFVK2O67Pvntmtb9eil1I9ma0ANnwmGLN8cOCsXHAmJVuNVrpOB8NIbB79gb/FX
-	WJrqpY6SacedYJRiuPYBVM29K+i328Qvks12iOBTYv3U7eT8o+SThCGQBueCW920Jdy34AA
-	T3WgKjujHTKimTfLqj0J4lNnWhdblPJSPBp3dRzwNtU13lGlRNkXFDl1lU4MFWJEaWS+/PU
-	EICyTYv4k1Zpgn7bhC6Mnl66RPX4RuAzfme95QxeMrJuDnn1Wdia1yWveo62njDARtJGFEv
-	8QH2khW4nOypHnsBDrnHe4pmxDgCyQI0heizJP//R0UQrMA7DZBYJJZeBGub/h8VzAcd39M
-	iOtC8fjHSFjxM9X95KoqC9szY6ibCSZPcf65jL0ZU02Cy6UX4ajwfL89iAputzCiuSerf1p
-	t20IOBPDY73BeN2pmhsmzsfNAZVExAUPYeXgeMdtDbZ1fTks8mf1R03AXBCSWWgLmnEYmcN
-	0u0OGDYGlFkbRxXMMmSeDYNqtbrvhSW+t0/ITIY6TLL0nUi8FajEMWNWw/50NPZWXirDT2S
-	6q6M8LgHwacwI3zF1Kn8ZRgRvET293NIVG0r9kxwRQCsIONX9I/KsPvPNw30WWrzmXS1YU4
-	ehyKFC/Sss4WxM5ZrSo1+y1hZVX0S/sFyEO+lP815DtD+NA9UrrdrsAzr2JitXWf0w1Fakq
-	8wG5uv/CWYo+ccAKeRJMEfqxeBso1y81LDkl0CqP3XS5n4M8Lk13K01Zwm0u/parb46MMUi
-	xLNPWRsOLSRrKb+anuEzeneg2S/xhqIYd2JwiCU75400svUaR8XdkwCWqei91IWdOSoqjIu
-	MxJidqUcfo7WwtGfboTmyuekUpSTGrqxElv9hANtDDjyU/RxdBS1sbXX3qURbntIJ2R0oAp
-	w1jMcaEIZI941KkSM4NN/y/KzvVB+xa9uuipFYuL5xyhQPeoZalij2aZII/Qby9RO+R+gb5
-	dURtuceBUXC+V14iGYu22+YHVJ9jP1qTPu+LVQTHz5C/gRngy1G61HT41sV9qVecDqNYbac
-	FK8r/HsinOR
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-QQ-RECHKSPAM: 0
-X-Spamd-Result: default: False [0.14 / 15.00];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260527-expressatt-touchkey-v2-1-049dca41fc3a@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/32OQQ6DIBBFr2JmXQwgxuiq92hcIB110lpaQKIx3
+ r1U982s3uTNn7+BR0foock2cBjJk30lkJcMzKhfAzK6JwbJZSkkLxkub4fe6xBYsLMZH7gyUan
+ KlLzQsi8gXSajp+VIvbUnO/zMKTycS+i0R2bsNFFosljlHH7eSD5Ytx5lojjEv3+jYGmUUl0tK
+ 1P3xXWYND3zFAztvu9fZL55KN4AAAA=
+X-Change-ID: 20251205-expressatt-touchkey-1747c503a2f3
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Rudraksha Gupta <guptarud@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1779934422; l=5127;
+ i=guptarud@gmail.com; s=20240916; h=from:subject:message-id;
+ bh=QKeXmWv32UYGOnYCe6uOdzYUC+QSTTFeTGr6mUqA+oU=;
+ b=KtaXdbdrs6N2DxKOXa8+rKWRxO8BoT+09CU2hHO8sm5itm2N3tRFNhPx45NgTaHcP4MirEGtT
+ kwu4Iw9uH07ACUrK9BCpSDo6UHQTRp5yFjxY7vBcd7ptj/10wq2T8W8
+X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
+ pk=ETrudRugWAtOpr0OhRiheQ1lXM4Kk4KGFnBySlKDi2I=
+X-Endpoint-Received: by B4 Relay for guptarud@gmail.com/20240916 with
+ auth_id=211
+X-Original-From: Rudraksha Gupta <guptarud@gmail.com>
+Reply-To: guptarud@gmail.com
+X-Spamd-Result: default: False [1.34 / 15.00];
+	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-110032-lists,linux-arm-msm=lfdr.de,guptarud.gmail.com];
 	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-110031-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_REPLYTO(0.00)[gmail.com];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.969];
+	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,gmail.com];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.992];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
-	FORGED_MUA_MAILLIST(0.00)[];
-	R_DKIM_NA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,radxa.com:mid,radxa.com:email]
-X-Rspamd-Queue-Id: 38B875EBA16
+	HAS_REPLYTO(0.00)[guptarud@gmail.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qualcomm.com:email,0.0.0.20:email]
+X-Rspamd-Queue-Id: F1ED75EBB77
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 5/28/2026 4:43 AM, Gekko wrote:
-> Hi Xilin,
-> 
-> Thank you for the response.
-> 
-> I appreciate the offer to take over your patch set to move things 
-> forward. However, I feel I must respectfully decline. This is mainly due 
-> to my lack of experience with both upstream kernel development on this 
-> hardware and the patch management process itself. It would be 
-> irresponsible of me to take on something that I'm not knowledgeable 
-> enough to ensure successful completion.
-> 
-> I'm happy to work with you to help in any other way that I can such as 
-> testing patches, but I think you should maintain ownership of the patch- 
-> set and submission process, at least for now.
-> 
-> One of the reasons I withdrew my own patch-set is that from what I can 
-> see your series covers everything I was trying to achieve, and does it 
-> correctly :-)
-> 
-> The only one that isn't covered is the patch for early TCS 
-> initialisation that I'm discussing with Konrad which may be unnecessary 
-> anyway.
-> 
-> Graham
-> 
+From: Rudraksha Gupta <guptarud@gmail.com>
 
-Hi Graham,
+Add the tc360 touchkey. It's unknown if this is the actual model of the
+touchkey, as downstream doesn't mention a variant, but this works.
 
-Thanks, I understand your point.
+Link:
+https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/drivers/input/keyboard/cypress_touchkey_236/Makefile#L5
 
-I appreciate your offer to help with testing. I will do my best to move 
-this series forward once I get the current work off my plate.
+Assisted-by: Claude:claude-opus-4.6
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+---
+Add the tc360 touchkey. It's unknown if this is the actual model of the
+touchkey, as downstream doesn't mention a variant, but this works.
 
-Thanks again for your help.
+Link:
+https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/drivers/input/keyboard/cypress_touchkey_236/Makefile#L5
 
-> On 24/05/2026 13:58, Xilin Wu wrote:
->> On 5/22/2026 6:13 PM, Graham O'Connor wrote:
->>> Thank you to Konrad, Neil, and others for the very prompt and helpful 
->>> reviews.
->>>
->>> Based on the feedback received, I think it best to withdraw this 
->>> series to
->>> address the issues raised, most notobly:
->>>
->>> 1. The DP_TRAIN_LEVEL_MAX change (patch 3) is too broad - it affects all
->>>     devices using the Qualcomm MSM DP driver rather than being 
->>> specific to
->>>     the RA620 bridge. A proper fix should be implemented at the bridge
->>>     level. This is going to take more investigation.
->>>
->>> 2. The display DT nodes (patch 5) should use the radxa,ra620 compatible
->>>     string per the existing Radxa upstream series from Xilin Wu, and the
->>>     lane ordering needs correcting.
->>>
->>> 3. The rpmh-rsc early return (patch 1) needs further review regarding
->>>     the implications of returning before full driver initialization.
->>>
->>> 4. DTS patch label dependency issue (sorry)
->>>
->>> I'll integrate with the Radxa upstream effort, re-evaluate the other 
->>> areas
->>> and resubmit corrected patches addressing these concerns at a later 
->>> date.
->>>
->>> Thanks for the feedback.
->>>
->>> Cheers
->>>
->>> Graham
->>
->> Hi Graham,
->>
->> Thanks for working on the additional hardware bring-up for Q6A 
->> upstream support. I'm really glad to see someone pushing this forward.
->>
->> I actually posted a patch series [1] last month, and it is generally 
->> in good shape. Unfortunately, I got busy with other work and haven't 
->> had a chance to send v2 yet.
->>
->> If it helps, please feel free to take over that series and fold your 
->> additional patches into it. I think that would be a good way to move 
->> things forward.
->>
->> Also, I believe patches 10-12 in my series are no longer needed and 
->> can be dropped.
->>
->> Thank you again for the work you have done.
->>
->> [1] https://patchwork.kernel.org/project/linux-arm-msm/list/? 
->> series=1078242&state=%2A&archive=both
->>
-> 
-> 
+Test:
+=============
+- LEDs:
+samsung-expressatt:/sys/class/leds/tm2-touchkey$ echo heartbeat > trigger
+// Flashes LEDs :)
 
+- Touching buttons:
+samsung-expressatt:/sys/class/leds/tm2-touchkey$ evtest
+No device specified, trying to scan all of /dev/input/event*
+Not running as root, no devices may be available.
+Available devices:
+/dev/input/event0:      pmic8xxx_pwrkey
+/dev/input/event1:      gpio-keys
+/dev/input/event2:      tm2-touchkey
+/dev/input/event3:      Atmel maXTouch Touchscreen
+Select the device event number [0-3]: 2
+Input driver version is 1.0.1
+Input device ID: bus 0x18 vendor 0x0 product 0x0 version 0x0
+Input device name: "tm2-touchkey"
+Supported events:
+  Event type 0 (EV_SYN)
+  Event type 1 (EV_KEY)
+    Event code 139 (KEY_MENU)
+    Event code 158 (KEY_BACK)
+  Event type 4 (EV_MSC)
+    Event code 4 (MSC_SCAN)
+Properties:
+Testing ... (interrupt to exit)
+Event: time 1761059686.899755, type 4 (EV_MSC), code 4 (MSC_SCAN), value 00
+Event: time 1761059686.899755, type 1 (EV_KEY), code 139 (KEY_MENU), value 1
+Event: time 1761059686.899755, -------------- SYN_REPORT ------------
+Event: time 1761059687.113489, type 4 (EV_MSC), code 4 (MSC_SCAN), value 00
+Event: time 1761059687.113489, type 1 (EV_KEY), code 139 (KEY_MENU), value 0
+Event: time 1761059687.113489, -------------- SYN_REPORT ------------
+Event: time 1761059688.764757, type 4 (EV_MSC), code 4 (MSC_SCAN), value 01
+Event: time 1761059688.764757, type 1 (EV_KEY), code 158 (KEY_BACK), value 1
+Event: time 1761059688.764757, -------------- SYN_REPORT ------------
+Event: time 1761059688.817516, type 4 (EV_MSC), code 4 (MSC_SCAN), value 01
+Event: time 1761059688.817516, type 1 (EV_KEY), code 158 (KEY_BACK), value 0
+Event: time 1761059688.817516, -------------- SYN_REPORT ------------
+---
+Changes in v2:
+- drop status = okay
+- reorder pinctrl-{n,names}
+- Resend of v1: https://lore.kernel.org/all/20260503-expressatt-touchkey-v1-1-f7dd5db64e0d@gmail.com/
+- Link to v1: https://lore.kernel.org/r/20251205-expressatt-touchkey-v1-1-1444b927c9f3@gmail.com
+---
+ .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   | 54 ++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
--- 
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
+index 5a39abd6f3ce..5a3d88e31cf5 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
+@@ -52,6 +52,40 @@ key-volume-down {
+ 			linux,code = <KEY_VOLUMEDOWN>;
+ 		};
+ 	};
++
++	touchkey_enable: touchkey-enable {
++		compatible = "regulator-fixed";
++		regulator-name = "touchkey_enable";
++		gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		regulator-boot-on;
++	};
++
++	i2c-gpio-touchkey {
++		compatible = "i2c-gpio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		sda-gpios = <&tlmm 71 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
++		scl-gpios = <&tlmm 72 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
++		pinctrl-0 = <&touchkey_i2c_pins>;
++		pinctrl-names = "default";
++		i2c-gpio,delay-us = <2>;
++
++		touchkey@20 {
++			compatible = "coreriver,tc360-touchkey";
++			reg = <0x20>;
++
++			interrupts-extended = <&tlmm 52 IRQ_TYPE_EDGE_FALLING>;
++			pinctrl-0 = <&touchkey_irq_pin>;
++			pinctrl-names = "default";
++
++			vddio-supply = <&touchkey_enable>;
++			vdd-supply = <&pm8921_l29>;
++			vcc-supply = <&pm8921_l29>;
++
++			linux,keycodes = <KEY_MENU KEY_BACK>;
++		};
++	};
+ };
+ 
+ &gsbi2 {
+@@ -198,6 +232,20 @@ firmware-pins {
+ 			bias-disable;
+ 		};
+ 	};
++
++	touchkey_i2c_pins: touchkey-i2c-state {
++		pins = "gpio71", "gpio72";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	touchkey_irq_pin: touchkey-irq-state {
++		pins = "gpio52";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
+ };
+ 
+ &pm8921 {
+@@ -420,6 +468,12 @@ pm8921_l25: l25 {
+ 			bias-pull-down;
+ 		};
+ 
++		pm8921_l29: l29 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <3300000>;
++			bias-pull-down;
++		};
++
+ 		/* Low Voltage Switch */
+ 		pm8921_lvs1: lvs1 {
+ 			bias-pull-down;
+
+---
+base-commit: 3131ff5a117498bb4b9db3a238bb311cbf8383ce
+change-id: 20251205-expressatt-touchkey-1747c503a2f3
+
 Best regards,
-Xilin Wu <sophon@radxa.com>
+-- 
+Rudraksha Gupta <guptarud@gmail.com>
+
 
 
