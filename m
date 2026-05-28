@@ -1,81 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-110151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wOj8IiCCGGp8kggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 19:57:52 +0200
+	id GEtxJmKEGGq6kggAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 20:07:30 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3104D5F5FAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 19:57:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E3FCC5F615C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 20:07:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C55423058FDE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 17:52:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4F17E300A766
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 May 2026 18:01:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A65EA3FD94C;
-	Thu, 28 May 2026 17:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC2C0403EB6;
+	Thu, 28 May 2026 18:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h3RWVWIS"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="iOg36/k7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DEE3B4EA3;
-	Thu, 28 May 2026 17:52:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D529B4028CF;
+	Thu, 28 May 2026 18:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779990739; cv=none; b=YV16JzzaUva8nU4sKujD8dREU/CPRuAmtHGawruBXKX/ZHejg9BbRoSDJzIv9lUllrH5od925gCMhqqi33F7I1xDAmByUWOGJgozDcHuAvI1w/Qs5KnKz7mcSRq4t0N9fkzXEMgksaZfM9BIs8zvMIDfbEkeqrfv2FyoKy4ocWc=
+	t=1779991294; cv=none; b=suBMgf6jZkvuN3h3FzLtZmPXYn6IgC/Y9JrwIYzGypDNWGQD+59lr97Z7OHwdytfqJEhj6SeUL/YR+vtEE0Mu/RRhrAG4pQ4tHVg9SIhiXMIa0Q+RxXy8yQ4AuDLZQrhIoDuIwcTIdDTCHLZhM8zK/z5dxSsEcS+pvzWRT3iWFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779990739; c=relaxed/simple;
-	bh=/WevIpPK3SaYeqJ1HmkSOi3MW+1TONCBYE4elIAounc=;
+	s=arc-20240116; t=1779991294; c=relaxed/simple;
+	bh=y36QqDCCRxFgAritP62khWPWor0UF35crmcLFibL7iQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uryyft7CQ06RkVxxB0fGhZWEsNNbJ6sdpBFoAjAAilF9b3J8QWNjeVVdh1/NOZPgMNjY51FfGCQSUFEnfYJXtKN4mMZZIZmBJVCTKXEevuoTq0jqnBxoS0Xz0oKJ3S7HVbSKzsVRWl6lBx0uFwl0sM5kI4jMcWX1Ig2YG50KRqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h3RWVWIS; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB45B1F000E9;
-	Thu, 28 May 2026 17:52:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1779990736;
-	bh=wA+h2LHJqTGA0QJnfQ0FCObieUhoPZ0RdKo+Y/z5Xyg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=h3RWVWIS+mWdQxZ5uz+s4obm8+Xaok4BxvqhGUauCmCTRepK6hIMUzS7G3R6gcT+Q
-	 9VOU+EiIiKShxPH++HQ8NedDIZl4IJYwy6tzFmD+HKQ74yPcphUdWbIxzQ8pA4u8C5
-	 LKrsQryP6HyEOU8VYRp6OQJP16pQiuqlz5UCVA4xB1+VT5Jk+R5Hggtr2RB8zY3whg
-	 R5Ch+8C+k5x8dbdmUSIhV8uKjSqaMc3efUjj9xVGZ5SbV+I3DIwDJDQLf0cnsSg+zA
-	 gMhjZjCOKcgsFrtiTy9ODdBazicvw5YEJ0NMueTgWpcBfzpipKY8ZcbvDPGSwJZ7vd
-	 H6+eDYAfggBmA==
-Date: Thu, 28 May 2026 17:52:14 +0000
-From: Eric Biggers <ebiggers@kernel.org>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-	Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>,
-	Neeraj Soni <neeraj.soni@oss.qualcomm.com>
-Subject: Re: [PATCH 0/3] Add support for qcrypto on shikra
-Message-ID: <20260528175214.GA3936298@google.com>
-References: <20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com>
- <20260514194735.GA1939213@google.com>
- <d4d35e17-84fa-4c95-9bfb-abfd25ea7f4a@oss.qualcomm.com>
- <20260522024912.GC5937@quark>
- <c1697372-54ec-4f57-85d9-ad375ff1a44d@oss.qualcomm.com>
- <20260525142843.GA2018@quark>
- <e49c4a45-6455-47f3-a91f-c32c1a0b99be@oss.qualcomm.com>
- <CAMRc=MfC6CEwOXYttsav3mwqyJ2F4sburBj+zNJ25qMoweyL-Q@mail.gmail.com>
- <lj7geczhthury476ilkjym2k5fblo5pqroefsbdfgh5jcf7zy2@qrss5xc7umn3>
- <CAMRc=Me6cqasdBknbAjUZ5BqcpERYwV+NvseRJp4P0aTSYAMUw@mail.gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=IH+NOl9RT9MXY1xZMTBmKkQFj/jl0ciReHumjjaeh9JLXm8jRwmBMxyBD/E2Aa+6dqUo0I2iSXAtyb5G7UYyNLP7T1o+nnzgP3QK3pW88XSed4cWNLQEoCC6QqLS7D02ifwb05xrF3jcv8bTDfaXwHXgkq46vooBbUVvCcpZWh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=iOg36/k7; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0E07A22C8;
+	Thu, 28 May 2026 11:01:27 -0700 (PDT)
+Received: from localhost (e132581.arm.com [10.1.196.87])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A61043F632;
+	Thu, 28 May 2026 11:01:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1779991292; bh=y36QqDCCRxFgAritP62khWPWor0UF35crmcLFibL7iQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iOg36/k7zSaeOW5PVb7Uxmwxz4ZiPGmRKjNNt0ewIbINCWRHrwEpoznt+aX2/9nks
+	 v9F8zQdmm/3oEzcXO8LtkdiUwQi53Ap20DNGlI6o9/AsyqK7QDL3c4Ig1X8JCIxiQT
+	 0TO12Yw/kzwLocebq0HrHUqCUT+VnZ29HtlzOeOY=
+Date: Thu, 28 May 2026 19:01:29 +0100
+From: Leo Yan <leo.yan@arm.com>
+To: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	jinlong.mao@oss.qualcomm.com, quic_yingdeng@quicinc.com,
+	tingwei.zhang@oss.qualcomm.com, jie.gan@oss.qualcomm.com
+Subject: Re: [PATCH v9 1/4] coresight: cti: Convert trigger usage fields to
+ dynamic
+Message-ID: <20260528180129.GJ101133@e132581.arm.com>
+References: <20260521-extended_cti-v9-0-d21f4f92c51e@oss.qualcomm.com>
+ <20260521-extended_cti-v9-1-d21f4f92c51e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,69 +68,65 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAMRc=Me6cqasdBknbAjUZ5BqcpERYwV+NvseRJp4P0aTSYAMUw@mail.gmail.com>
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+In-Reply-To: <20260521-extended_cti-v9-1-d21f4f92c51e@oss.qualcomm.com>
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110151-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[arm.com:+];
+	TAGGED_FROM(0.00)[bounces-110152-lists,linux-arm-msm=lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,gmail.com,gondor.apana.org.au,davemloft.net,kernel.org,vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ebiggers@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[leo.yan@arm.com,linux-arm-msm@vger.kernel.org];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[22];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 3104D5F5FAA
+X-Rspamd-Queue-Id: E3FCC5F615C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, May 28, 2026 at 11:13:47AM -0400, Bartosz Golaszewski wrote:
-> On Thu, 28 May 2026 15:50:10 +0200, Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> said:
-> > On Thu, May 28, 2026 at 09:13:23AM -0400, Bartosz Golaszewski wrote:
-> >> On Thu, 28 May 2026 13:54:51 +0200, Kuldeep Singh
-> >> <kuldeep.singh@oss.qualcomm.com> said:
-> >> >>> +Bartosz, Gaurav, Neeraj
-> >>
-> >> I know about the self-tests etc., I will address them next.
-> >
-> > My 2c, the self-tests would be more important, as they are fixes. Doing
-> > the crypto in a wrong way is a bad idea...
-> >
-> 
-> Then let that be "in parallel". :)
+On Thu, May 21, 2026 at 08:16:27PM +0800, Yingchao Deng wrote:
 
-The race conditions between Linux and other environments (modem, TEE,
-etc) are of course about correctness as well, even though the self-tests
-don't expose race condition bugs.  The self-tests have always just done
-a few serialized tests.  That's sufficient for CPU-based code, but not
-for offload drivers, which need to be stress-tested to find the
-concurrency bugs that occur during actual use.
+[...]
 
-Is there a plan to improve the tests to do stress testing as well?
+> @@ -231,6 +254,8 @@ struct cti_trig_con *cti_allocate_trig_con(struct device *dev, int in_sigs,
+>  {
+>  	struct cti_trig_con *tc = NULL;
+>  	struct cti_trig_grp *in = NULL, *out = NULL;
+> +	struct cti_drvdata *drvdata = dev_get_drvdata(dev);
+> +	int n_trigs = drvdata->config.nr_trig_max;
 
-It's kind of odd that they don't do that yet.  But it makes sense: the
-CPU-based code doesn't need it, while the offload driver authors have
-never cared enough about correctness and test coverage to add it.
+I don't mind it allocates bitmask with nr_trig_max, but AI review
+suggests that when in_sigs / out_sigs bigger than nr_trig_max, it might
+access memory out-of-boundary (see cti_plat_read_trig_group()).
 
-I still don't really see a path forward here, given the track record and
-poor performance numbers.  This approach just doesn't work.
+It is good to add a check:
 
-- Eric
+    if (in_sigs > n_trigs || out_sigs > n_trigs) {
+        dev_err(dev, "trigger signal is out of range: in=%d out=%d nr_max=%d\n",
+                in_sigs, out_sigs, n_trigs\n");
+        return NULL;
+    }
+
+With this:
+
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+
+BTW, I have given my review tag on v8, please remember to update
+patches with review / ack tags.
 
