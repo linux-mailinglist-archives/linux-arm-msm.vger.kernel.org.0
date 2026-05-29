@@ -1,83 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-110307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AFSwCs6wGWqiyQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 17:29:18 +0200
+	id sOMbD9yxGWrJyQgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 17:33:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC453604B42
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 17:29:17 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F911604CDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 17:33:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 09EE63113316
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 15:09:34 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 59A4E30B1334
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 15:17:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 330C33F0A90;
-	Fri, 29 May 2026 15:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D98DF35C197;
+	Fri, 29 May 2026 15:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wr9MG4XV"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="E/Y8OmFz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7893F0777
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 15:07:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7572331AA8F;
+	Fri, 29 May 2026 15:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780067263; cv=none; b=iQIMkTkDOisG771BJFiUElfO8QQqtTlm4FfI2yLXYbXyse+uj673/DtQZNOv7gfu8MCu59c5BMF4lJyQaqqbnXynuZh0IlESmbr2JCr4t+hg7nG6vs/aPC7bcisP25C/J5PYfY+zY4cDK9+PNiQEJ07s6NcWVnpGmAD3Pd1Lh8E=
+	t=1780067869; cv=none; b=CMES3MSNZ6S6aGpctuuU8OxUOnphy2aB98jZOWqFN2MBpY6pp5XhULgF25AadOMb9KuuApmNu5wuotDEqzdHA8xN4+FlFysZmKYQh9G68cQzikx1ML34yayxcHhI1GAVyJ/8i5rE1my1QS+Aj7dWgIyVJc87Y+jVsQY4ZOkPzmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780067263; c=relaxed/simple;
-	bh=tF43KjufwHIu80KkfJ7VV26iopIlq2XuutVp9qCHPRY=;
+	s=arc-20240116; t=1780067869; c=relaxed/simple;
+	bh=i14utAyWVag4qxanxiMOSsLoacp5PlK9awjdPrY0Lt0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ECxyWwPOzcoioN3ftwUUyflrA1UAzITj7ucXONF3iI4iKG5IhJVKJ268UC7uEpYJ3fVfy7YqzmadMUe0C1yN6VQ7y8aUpkQd4RIuiSI0fXrc15muCE0QrkwxEZER7nPNuv6EFrsXqBZvGcYlnz1sWgt1jpN7PxSAGPQQUvQqOB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Wr9MG4XV; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-490686877a1so41299205e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 08:07:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1780067260; x=1780672060; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oMsYKu0rt98o4CUIj1PMUPtxut+9KNkzkjaeGCrAIPg=;
-        b=Wr9MG4XVrb2AlEpJ2OuftCHDddxh00iA/NqJ0CsRzpHi/XPGFame3B5yHnl6IJeYPp
-         HWCx0p1d6cp3GYZH5oUyta/eCJA/TaChfDViofKIwI4LrI1wlSCKzPA24Vd4d6c2lMKU
-         ADxrfJXu8d4beDprcfkHcPEzkJr0LI92X/PbdIVnekcRK/u87aShycKNDOEgjoebYNt/
-         P0G1yhuP5+OP1fLq3HNmvggckV+UNHmq1ASesLiaebrMeUuh79+gc1SHai1UaWngeqO+
-         1JS3EgeCHzNnKrWy+VnqxUCdS9KtBnAetNWPMrYv9uVsblLvO3wRgwW2XXz/3avIFk1y
-         vZhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780067260; x=1780672060;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oMsYKu0rt98o4CUIj1PMUPtxut+9KNkzkjaeGCrAIPg=;
-        b=XmZn8OqTom3fW/ffqLmAepgOwNyAVp4V4b3TFWWD8iihs3nIwSPIFUfukQHgo1IVyt
-         CwJwDsXTK/6UkEB4c265xrfA8XibOcEyjtK0TiI3RcpaKiBy50WkYiJwpfeLKcdf1p8n
-         hdzYl0QGptcwNb8DXUqokiwcGuoc+Pys36d68nZlwtwnFVitXIC6uFAK1SLvFB+l1qhi
-         OYcJIezM0TsMlRcVhFiC4Hs1y8d8OEmeQ88macrLkaIM+xe5n3XYVMb5x4kQxsqXjZjs
-         u0qC8RhHSY8x9FuLeUyHZ/AKB8L5/XP2lc7E+cPu6iKRiDDFGBPzNohiihE3/M1adzkO
-         3B7A==
-X-Gm-Message-State: AOJu0Yzf67xsjXGrY8hlXePiGbzs/RhaTp//jw+lZBloGNp9NWWYJiB2
-	pIhDoMd2JiRydVOwTsdeq9pqE/hh09RZS3iaHwJrQgN3yzqQSCGAqibsE12qmhHyJaI=
-X-Gm-Gg: Acq92OE6X/pRq7FdxYYN42RHsmYKGqKPclTD0GSgvDT/SMYxEA7SxrTGpegIe36s+1S
-	9dy1WuxEwVjUo8XM7yqoEUrGNG8tDX7pti6t/BVZmBYzjcn2uPiWni+jYZcusG0R0bPud7jrwtm
-	FJ+r3+B+/qx+KquEAlUPsoEyQ4wnetDrsYlq2t0GmQn2Di26rclGDTRVtn10KxQGPNyxnr2A508
-	uenRCDMojOH49DMWQKu1MirLwRd3FqTCx8c1vhqot7DG84dEYNfNce0juLFUz55v1YUVgXtUc8w
-	8Xp2S8sJLxZmcbrNJD2ciXrXju1bbkpIpaQS9YeGN7g5+AodhM90UNVSw/34M0DfSAfANmNc9pk
-	1JqxZ/KAZoxiIAIfp7csi48T6A5UqpnZPXt064cBtM2eJUXfZ2A7Km3c4NnCFmOCaxJugYcvUAB
-	+D9VAp4Qw2KCR4BPMfuX+BNWslzSTcmKtcaudXJpsDVDk=
-X-Received: by 2002:a05:600c:a30f:b0:490:4b89:5372 with SMTP id 5b1f17b1804b1-4909c62603cmr38449265e9.11.1780067260267;
-        Fri, 29 May 2026 08:07:40 -0700 (PDT)
-Received: from [192.168.0.101] ([64.43.33.81])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-45ef34a04e2sm3789037f8f.1.2026.05.29.08.07.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 May 2026 08:07:39 -0700 (PDT)
-Message-ID: <8618255e-ecbf-4f55-877d-09cb2faa6f50@linaro.org>
-Date: Fri, 29 May 2026 16:07:38 +0100
+	 In-Reply-To:Content-Type; b=j0qPFaQadhbQ52HzB562wD6EykeqIsPmj0O2alnTMUjh+8PeGUoyGM6c63endgTdIOt+49f6kTZjeI0LN48q7OZB3DVhNOSAx/BGHkeZupxquGg0kco2IsQKcVaw4pduNLGxLtHNJb3pqvpu9VtudNmtzSS7A1h1OWujVirC3io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=E/Y8OmFz; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D29DD1C00;
+	Fri, 29 May 2026 08:17:41 -0700 (PDT)
+Received: from [10.57.26.238] (unknown [10.57.26.238])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8093B3F632;
+	Fri, 29 May 2026 08:17:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1780067866; bh=i14utAyWVag4qxanxiMOSsLoacp5PlK9awjdPrY0Lt0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=E/Y8OmFzjPPiFlVn4wlpigbZpVnBOLe/nvmQB9aWj85QNMT7/qwPvsbPCBXgoTSUY
+	 ILoZRm/Zx+YVmLnnnjl6SbY9FgvOkUu3spSzSN72QzgqEzBR85lxu8q43Fz/aKK1vx
+	 t17fO/GqqvBY0+f/5OA/Bl8CQBWaofzEEz9yntmI=
+Message-ID: <c99085e5-cf1f-479d-bef0-b6a4161482e5@arm.com>
+Date: Fri, 29 May 2026 16:17:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,77 +53,133 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] dt-bindings: media: Add bindings for
- qcom,glymur-camss
-To: Vikram Sharma <vikram.sharma@oss.qualcomm.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v4 06/10] thermal/of: Rename the
+ devm_thermal_of_cooling_device_register() function
+To: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>, rafael@kernel.org,
+ daniel.lezcano@kernel.org
+Cc: Zhang Rui <rui.zhang@intel.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Nihal Kumar Gupta <nihal.gupta@oss.qualcomm.com>,
- Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-i2c@vger.kernel.org, Suresh Vankadara <svankada@qti.qualcomm.com>,
- Prashant Shrotriya <pshrotri@qti.qualcomm.com>
-References: <20260529-glymur_camss-v1-0-bee535396d22@oss.qualcomm.com>
- <20260529-glymur_camss-v1-1-bee535396d22@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+ <conor+dt@kernel.org>, Lucas Stach <l.stach@pengutronix.de>,
+ Russell King <linux+etnaviv@armlinux.org.uk>,
+ Christian Gmeiner <christian.gmeiner@gmail.com>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Guenter Roeck <linux@roeck-us.net>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+ Benson Leung <bleung@chromium.org>, =?UTF-8?Q?Pali_Roh=C3=A1r?=
+ <pali@kernel.org>, Avi Fishman <avifishman70@gmail.com>,
+ Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>,
+ Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
+ Benjamin Fair <benjaminfair@google.com>, Heiko Stuebner <heiko@sntech.de>,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Amit Daniel Kachhap <amit.kachhap@gmail.com>,
+ Viresh Kumar <viresh.kumar@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Amit Kucheria
+ <amitk@kernel.org>, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-hwmon@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
+ Thierry Reding <thierry.reding@kernel.org>,
+ Nathan Chancellor <nathan@kernel.org>,
+ Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
+ Ingo Molnar <mingo@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
+ "Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+ Mikko Perttunen <mperttunen@nvidia.com>,
+ Svyatoslav Ryhel <clamor95@gmail.com>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ <linux-arm-kernel@lists.infradead.org>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
+ "moderated list:ARM/NUVOTON NPCM ARCHITECTURE" <openbmc@lists.ozlabs.org>,
+ "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
+ "open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>,
+ "open list:KHADAS MCU MFD DRIVER" <linux-amlogic@lists.infradead.org>,
+ "open list:CLANG/LLVM BUILD SUPPORT" <llvm@lists.linux.dev>
+References: <20260526140802.1059293-12-daniel.lezcano@oss.qualcomm.com>
+ <20260526140802.1059293-18-daniel.lezcano@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260529-glymur_camss-v1-1-bee535396d22@oss.qualcomm.com>
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <20260526140802.1059293-18-daniel.lezcano@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
+	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	TAGGED_FROM(0.00)[bounces-110307-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	FREEMAIL_CC(0.00)[intel.com,kernel.org,pengutronix.de,armlinux.org.uk,gmail.com,ffwll.ch,roeck-us.net,jms.id.au,codeconstruct.com.au,weissschuh.net,chromium.org,google.com,sntech.de,nvidia.com,linaro.org,vger.kernel.org,lists.infradead.org,lists.ozlabs.org,lists.linux.dev];
+	DKIM_TRACE(0.00)[arm.com:+];
+	TAGGED_FROM(0.00)[bounces-110308-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[lukasz.luba@arm.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	RCPT_COUNT_GT_50(0.00)[54];
 	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:mid,linaro.org:dkim]
-X-Rspamd-Queue-Id: BC453604B42
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,etnaviv,lkml];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[arm.com:email,arm.com:mid,arm.com:dkim,qualcomm.com:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 3F911604CDE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 29/05/2026 15:37, Vikram Sharma wrote:
-> +
-> +  vdd-csiphy-0p8-supply:
-> +    description:
-> +      Phandle to 0.8V regulator supply to CSI PHYs.
-> +
-> +  vdd-csiphy-1p2-supply:
-> +    description:
-> +      Phandle to a 1.2V regulator supply to CSI PHYs pll block.
-> +
 
-To be brutally honest, I'd rather see effort and buy-in from qcom 
-engineers in converting to CSIPHY as a distinct sub-node.
 
-Pushing patches to hit your own internal deadlines to the detriment of 
-upstream quality is not OK.
+On 5/26/26 15:08, Daniel Lezcano wrote:
+> To clarify that the function operates on child nodes, rename:
+> 
+>            devm_thermal_of_cooling_device_register()
+> 	                     |
+> 			     v
+>         devm_thermal_of_child_cooling_device_register()
+> 
+> Used the command:
+> 
+>       	 find . -type f -name '*.[ch]' -exec \
+> 	 sed -i 's/devm_thermal_of_cooling_device_register/\
+> 	 devm_thermal_of_child_cooling_device_register/g' {} \;
+> 
+> Did not used clang-format-diff because it does not indent correctly
+> and checkpatch complained. Manually reindented to make checkpatch
+> happy
+> 
+> This prepares for upcoming support of cooling devices identified by
+> an ID rather than device tree child nodes.
+> 
+> No functional change.
+> 
+> Signed-off-by: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
+> ---
+>   drivers/hwmon/amc6821.c                  |  2 +-
+>   drivers/hwmon/aspeed-pwm-tacho.c         |  5 +++--
+>   drivers/hwmon/emc2305.c                  |  6 +++---
+>   drivers/hwmon/gpio-fan.c                 |  6 ++++--
+>   drivers/hwmon/max6650.c                  |  6 +++---
+>   drivers/hwmon/npcm750-pwm-fan.c          |  6 ++++--
+>   drivers/hwmon/pwm-fan.c                  |  5 +++--
+>   drivers/hwmon/qnap-mcu-hwmon.c           |  6 +++---
+>   drivers/hwmon/tc654.c                    |  5 +++--
+>   drivers/memory/tegra/tegra210-emc-core.c |  4 ++--
+>   drivers/soc/qcom/qcom_aoss.c             |  2 +-
+>   drivers/thermal/khadas_mcu_fan.c         |  7 ++++---
+>   drivers/thermal/tegra/soctherm.c         |  6 +++---
+>   drivers/thermal/thermal_of.c             | 15 +++++++++------
+>   include/linux/thermal.h                  | 16 ++++++++--------
+>   15 files changed, 54 insertions(+), 43 deletions(-)
+> 
 
-This binding should be predicated on separate CSIPHY nodes. I've 
-published... three perhaps four versions of that patch to radio silence 
-on your side.
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
 
----
-bod
 
