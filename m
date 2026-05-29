@@ -1,233 +1,643 @@
-Return-Path: <linux-arm-msm+bounces-110262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YLGUHZF+GWp9xAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 13:54:57 +0200
+	id 8OaFDEyCGWrVxAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 14:10:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B4F0601E81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 13:54:57 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99AE1602070
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 14:10:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 7E88D300EEB7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 11:54:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D25B9303D701
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 12:06:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FAFC3DD502;
-	Fri, 29 May 2026 11:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6186E3E00A9;
+	Fri, 29 May 2026 12:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L8VZz9V7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z02x2rEg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B613C3BF3;
-	Fri, 29 May 2026 11:54:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B98333730
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 12:06:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780055695; cv=none; b=RCHQAIG80pyoqi0oWQmB1fd4Nzb6sjBjcQnES6onov1gmepc2zopST4xwrDl7M9LVokaI8AFfQfmqImTC6P8sVzyKxaFtzxiM4oD9TuOSdGourwEfZ/53GJyXTxlsGnL0opGBQbzth/fZO6E9rconb3PDQF0EaSsUb8mKWfpdHA=
+	t=1780056391; cv=none; b=f9K9fYOgDq6/qzHGkxzvbnZxQCjzQ98IDgZXX5vXaJPgnyp+qzZAT6o+qX/ub4BBYX06j0C6Zg4+L4G+TKutODeHVA2D/deJaylUsQtwHwvw/XCKHk5ZtKLqO4BB4dhrADh5sh1BIANtojM7rym3iRY6XMhbqlbsZrrTGKg2bdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780055695; c=relaxed/simple;
-	bh=CploV4r1XHi0hyyHrOSw/drP95odjiL6JuuR/nNDCpc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FAku3iLN1Z4Y4uHRBqm8sIZJNZyi9YYm0r0Vdod70qKhvgVNn//U+a+x5FgdrhTI59B8u3rSDAbJt2k1uQJY6WhxpfucJvH+ZNRiaf4V5nNW3yXJcx/mcqNCG8zd4ccVVxW+pxnE6AQCsBUJj/WYwmk2lcEKymmyd3qCmYZz4Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L8VZz9V7; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298511F00893;
-	Fri, 29 May 2026 11:54:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780055693;
-	bh=wDOsRW9HSX03yxtZDtOoclJqvTh9mPV1pfPcH0+q2no=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=L8VZz9V7K1eN2jdYePACCXZ60MYUhFC1fOihSN+0H+7dhVQgUxdGJ9EQdJmCDTbwW
-	 G+lY0xHDWzx6pTWX1lLWl/0EpNCsU5b9yHlXtO5sbBEMs7G5VmlF0dXcZ9v/DGu76f
-	 /viJGQXlwamh7rHUkI0iAX99Shho8pimXeoM0y7KNHlU+cpwDo6MSIljUf43lop+B4
-	 Y/IKFYrX4MCpwS9OMGK+k+HTotpqSCbAaZXWldCVwdTAjK0G+boxDWKQ2C5xXoy/Dg
-	 Frr8k2GRRRiGohLe6GdGc+rFcv3VqLP0ZveFBiJjWHREuNVs5EyBZwfujpGuPitREW
-	 03hx7I5WrTEiQ==
-Message-ID: <5f7f90d8-cb32-4ffb-8f1c-0722aafbe869@kernel.org>
-Date: Fri, 29 May 2026 13:54:48 +0200
+	s=arc-20240116; t=1780056391; c=relaxed/simple;
+	bh=z5MeuZGbZL70SAzX/1/HK1UFdcBmRR3cc/7Ci8mb7kE=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=HXwmgg1j7HQxoO+ppgo4hQ9fGBPeN880CskhV9asNN3T1c9RqsCcaqau07pV7HC5HE4uOS0cTGsKpPc13PE0/03I3wkvMs9qKG55lR+FCTjltWUBBMu147+v20BSxp3ASzcPauDVz4VlR0lxox9/sh130dE80nwtzeHp+LGxsuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z02x2rEg; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4891e5b9c1fso120285685e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 05:06:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780056386; x=1780661186; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=72jz4VASspyNfZwaO2ZoEBYiy1qSN0s6Nl9KPx8bbj4=;
+        b=Z02x2rEgCDWdatK1QnxMA6qheKknn9AxNvRpHgdoC0x1/TtWm+lCJeO8YKriLuDFnd
+         WPIK97JLSFykDVSZ7TmZ5VMXKhMg2+LcLm8QvHOaFHLVVf1TXcu9XJFSMBuDUmCMoZnS
+         fGikNY3lXXrTBnAyEeU1p0Dcol+CCflg6OqYEXXccD5CDopnBB49GfMYCiKz4iJx2WWc
+         Acn9i5phcYETuia9r+rPL8s1P3mspyFKk4nRiG3cGJ5HB6v8FryyxfBMtWMg3c4LwEIr
+         Ic+RiHK7QFLOsONRFQVSKeIEkqbY+u2n7W0+RQ7Flm3GoBjgALHBs6Fv+I0nJXUizFv/
+         CO5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780056386; x=1780661186;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=72jz4VASspyNfZwaO2ZoEBYiy1qSN0s6Nl9KPx8bbj4=;
+        b=XFIp2SOtplvKz2NAeXGolYfpt6SK2Urx6a1yHIriOXDKYeGfQghrhHLlGyKGNpdC5W
+         qaQ0LjFdgH0JovTvEz9CGovv7ffIoqGvnhbKv7TBRXUVT2VXaEMEDykE0JkHsOZ8vJyG
+         dv7bCYKVuVwdo+UXHOWF9vAQ9Z+zxKFngO6LmKm6wauF12bhrdysUfDKPY6+cTz9VB8S
+         rzv5StwcSv6y1IkxanwkjDSxOns79FOzNdyfIZ8oEIiIfFOYalgiwHnnM1MGSboNPHsd
+         h240Ato25mbVNZn/wJjVsLyoh9rCpHOoF1BVmgDFZ+YLUPf/0TWIkvmtHPGah6C/Exmr
+         K1yQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+/zSpfTk4B7IHQLskPjdkKQXajC9KbEHdWfkD/w36PHv+/TH1iyijoLOtg3C3lJHhBjVPhn3vAaHfWInjD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzq5LfyMk1U5Vkt5q/rqwNIueODF+WEpd6y5Tuh9949kCQejZ7E
+	DwuJjycKvvH6aIfZASYSRkr58YRbYN8d5lwRgMO7qikUGuYvgx6W+MI6
+X-Gm-Gg: Acq92OHTFy/HpH+SOVvsHiKWkbBvaXTPSwfyUN0DxcGoM94kVfE3fywtGdng6CDTC3L
+	PqgiiLWC2jLn8k+JOv9k3WoPsfOHRroyERFt7+yy5weH4RKSQHMomsSX6r3Q3QmipYO9eIrzC/O
+	PafaF2tfaufEsGECNZLV2bhyC96PZSyfZJEIbPLUHNINsy1XJaAX47gtjRT2EkJGwFxGzE2aB4E
+	Hg9rAHywgMCef2MhoHrRoFgHXpMvU/ZxMPM/uT/wl4gtgDa/5C2wPK/IT48avzS2YiET0YAtEQ1
+	7M7jJ3et085nMtDfhGsVBon+dBMtP5yEmjwhhCUgul2nv6qz3X5Ha/R7em6k7oI4DqhmWLXdm4R
+	SMVjP5RvQH/YqR0KIJ+FE7Vy5MJnVfyUh5BQl4ShgKzgfHUliyb2XuCjx8pE/zoPuUIpVhydPVm
+	VLVfDoDa1XcLCP1w8oum1VIfbRA32U3T3th3f4NjOxxpnMYOXgMHzmysF4uiXSZI3FGqBFObk=
+X-Received: by 2002:a05:600c:1f93:b0:48f:e230:8cad with SMTP id 5b1f17b1804b1-4909ca8958dmr45994995e9.33.1780056385169;
+        Fri, 29 May 2026 05:06:25 -0700 (PDT)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4909cab7b00sm40374125e9.14.2026.05.29.05.06.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 May 2026 05:06:24 -0700 (PDT)
+Date: Fri, 29 May 2026 13:06:19 +0100
+From: David Laight <david.laight.linux@gmail.com>
+To: Robin Murphy <robin.murphy@arm.com>
+Cc: Yury Norov <ynorov@nvidia.com>, Andrew Morton
+ <akpm@linux-foundation.org>, Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+ Russell King <linux@armlinux.org.uk>, Frank Li <Frank.Li@nxp.com>, Sascha
+ Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team
+ <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Madhavan
+ Srinivasan <maddy@linux.ibm.com>, Michael Ellerman <mpe@ellerman.id.au>,
+ Nicholas Piggin <npiggin@gmail.com>, "Christophe Leroy (CS GROUP)"
+ <chleroy@kernel.org>, Peter Zijlstra <peterz@infradead.org>, Ingo Molnar
+ <mingo@redhat.com>, Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung
+ Kim <namhyung@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Alexander
+ Shishkin <alexander.shishkin@linux.intel.com>, Jiri Olsa
+ <jolsa@kernel.org>, Ian Rogers <irogers@google.com>, Adrian Hunter
+ <adrian.hunter@intel.com>, James Clark <james.clark@linaro.org>, Thomas
+ Gleixner <tglx@kernel.org>, Borislav Petkov <bp@alien8.de>, Dave Hansen
+ <dave.hansen@linux.intel.com>, "H. Peter Anvin" <hpa@zytor.com>, "Rafael J.
+ Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>, Greg
+ Kroah-Hartman <gregkh@linuxfoundation.org>, Danilo Krummrich
+ <dakr@kernel.org>, Chanwoo Choi <cw00.choi@samsung.com>, MyungJoo Ham
+ <myungjoo.ham@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>,
+ Heiko Stuebner <heiko@sntech.de>, Lorenzo Pieralisi
+ <lpieralisi@kernel.org>, Xu Yilun <yilun.xu@intel.com>, Tom Rix
+ <trix@redhat.com>, Moritz Fischer <mdf@kernel.org>, Yicong Yang
+ <yangyicong@hisilicon.com>, Jonathan Cameron <jic23@kernel.org>, Dennis
+ Dalessandro <dennis.dalessandro@cornelisnetworks.com>, Jason Gunthorpe
+ <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>, Dan Williams
+ <djbw@kernel.org>, Vishal Verma <vishal.l.verma@intel.com>, Dave Jiang
+ <dave.jiang@intel.com>, Ira Weiny <ira.weiny@intel.com>, Bjorn Helgaas
+ <bhelgaas@google.com>, Shuai Xue <xueshuai@linux.alibaba.com>, Will Deacon
+ <will@kernel.org>, Jiucheng Xu <jiucheng.xu@amlogic.com>, Neil Armstrong
+ <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, Jerome
+ Brunet <jbrunet@baylibre.com>, Martin Blumenstingl
+ <martin.blumenstingl@googlemail.com>, Jing Zhang
+ <renyu.zj@linux.alibaba.com>, Xu Yang <xu.yang_2@nxp.com>, Linu Cherian
+ <lcherian@marvell.com>, Gowthami Thiagarajan <gthiagarajan@marvell.com>, Ji
+ Sheng Teoh <jisheng.teoh@starfivetech.com>, Khuong Dinh
+ <khuong@os.amperecomputing.com>, Daniel Lezcano
+ <daniel.lezcano@kernel.org>, Zhang Rui <rui.zhang@intel.com>, Lukasz Luba
+ <lukasz.luba@arm.com>, Yury Norov <yury.norov@gmail.com>, Kees Cook
+ <kees@kernel.org>, Thomas =?UTF-8?B?V2Vpw59zY2h1aA==?=
+ <thomas.weissschuh@linutronix.de>, Aboorva Devarajan
+ <aboorvad@linux.ibm.com>, "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+ Ilkka Koskinen <ilkka@os.amperecomputing.com>, Besar Wicaksono
+ <bwicaksono@nvidia.com>, Ma Ke <make24@iscas.ac.cn>, Chengwen Feng
+ <fengchengwen@huawei.com>, linux-arm-kernel@lists.infradead.org,
+ imx@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linuxppc-dev@lists.ozlabs.org, linux-perf-users@vger.kernel.org,
+ linux-acpi@vger.kernel.org, driver-core@lists.linux.dev,
+ linux-pm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ linux-fpga@vger.kernel.org, linux-rdma@vger.kernel.org,
+ nvdimm@lists.linux.dev, linux-pci@vger.kernel.org,
+ linux-amlogic@lists.infradead.org, linux-cxl@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 13/16] perf: Use sysfs_emit() for cpumask show callbacks
+Message-ID: <20260529130619.12f24264@pumpkin>
+In-Reply-To: <7e980b99-1e4e-408b-8ebd-4d28116e7ad5@arm.com>
+References: <20260528183625.870813-1-ynorov@nvidia.com>
+	<20260528183625.870813-14-ynorov@nvidia.com>
+	<7e980b99-1e4e-408b-8ebd-4d28116e7ad5@arm.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/slab: improve kmem_cache_alloc_bulk
-Content-Language: en-US
-To: Christoph Hellwig <hch@lst.de>, Harry Yoo <harry@kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>, Mark Brown <broonie@kernel.org>
-Cc: Hao Li <hao.li@linux.dev>, Christoph Lameter <cl@gentwo.org>,
- David Rientjes <rientjes@google.com>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Jesper Dangaard Brouer <hawk@kernel.org>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, io-uring@vger.kernel.org,
- kasan-dev@googlegroups.com, bpf@vger.kernel.org, netdev@vger.kernel.org,
- Alexander Lobakin <aleksander.lobakin@intel.com>,
- Boris Brezillon <boris.brezillon@collabora.com>
-References: <20260528093437.2519248-1-hch@lst.de>
- <20260528093437.2519248-2-hch@lst.de>
-From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Autocrypt: addr=vbabka@kernel.org; keydata=
- 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
-In-Reply-To: <20260528093437.2519248-2-hch@lst.de>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110262-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vbabka@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[nvidia.com,linux-foundation.org,rasmusvillemoes.dk,armlinux.org.uk,nxp.com,pengutronix.de,gmail.com,linux.ibm.com,ellerman.id.au,kernel.org,infradead.org,redhat.com,arm.com,linux.intel.com,google.com,intel.com,linaro.org,alien8.de,zytor.com,linuxfoundation.org,samsung.com,sntech.de,hisilicon.com,cornelisnetworks.com,ziepe.ca,linux.alibaba.com,amlogic.com,baylibre.com,googlemail.com,marvell.com,starfivetech.com,os.amperecomputing.com,linutronix.de,iscas.ac.cn,huawei.com,lists.infradead.org,lists.linux.dev,vger.kernel.org,lists.ozlabs.org];
+	TAGGED_FROM(0.00)[bounces-110263-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[davidlaightlinux@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	RCPT_COUNT_GT_50(0.00)[90];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,lst.de:email,intel.com:email]
-X-Rspamd-Queue-Id: 1B4F0601E81
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,arm.com:email,nvidia.com:email]
+X-Rspamd-Queue-Id: 99AE1602070
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 5/28/26 11:34, Christoph Hellwig wrote:
-> The kmem_cache_alloc_bulk return value is weird.  It returns the number
-> of allocated objects, but that must always be 0 or the requested number
-> based on the implementations and the handling in the callers, but that
-> assumption is not actually documented anywhere, which confuses automated
-> review tools.
+On Fri, 29 May 2026 12:05:08 +0100
+Robin Murphy <robin.murphy@arm.com> wrote:
+
+> On 2026-05-28 7:36 pm, Yury Norov wrote:
+> > These callbacks are sysfs show paths.
+> > 
+> > Use sysfs_emit() and cpumask_pr_args() to emit the masks.
+> > 
+> > This prepares for removing cpumap_print_to_pagebuf().  
 > 
-> Fix this by returning a bool if the allocation succeeded and adding a
-> kerneldoc comment explaining the API.
+> TBH, looking at this diff I think it only shows the value of having a 
+> helper to abstract the boilerplate...
 > 
-> Signed-off-by: Christoph Hellwig <hch@lst.de>
-> Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com> # skbuff
-> ---
->  drivers/gpu/drm/msm/msm_iommu.c       |  6 +--
->  drivers/gpu/drm/panthor/panthor_mmu.c | 13 +++---
->  include/linux/slab.h                  |  6 ++-
->  io_uring/io_uring.c                   | 23 ++++-------
->  lib/test_meminit.c                    | 23 +++++------
->  mm/kasan/kasan_test_c.c               |  5 +--
->  mm/kfence/kfence_test.c               |  9 ++--
->  mm/slub.c                             | 59 +++++++++++++++------------
->  net/bpf/test_run.c                    |  7 ++--
->  net/core/skbuff.c                     | 24 ++++++-----
->  tools/include/linux/slab.h            |  2 +-
->  tools/testing/shared/linux.c          | 19 ++++-----
->  12 files changed, 97 insertions(+), 99 deletions(-)
+> I'm not sure I agree with the argument of removing something entirely 
+> just because it may occasionally be misused, but could we at least have 
+> something like:
+> 
+> #define sysfs_emit_cpumask(buf, mask) \
+> 	sysfs_emit((buf), "%*pbl\n", cpumask_pr_args(mask))
+> 
+> to save the mess in all the many places where the current 
+> cpumap_print_to_pagebuf() usage _is_ entirely appropriate?
 
-Thanks, I applied it to slab/for-7.2/alloc_bulk and merged to slab/for-next
-(it's still yankable in case of issues)
+That has the advantage of letting you change how it is done (again)
+without having to find all the callers.
 
-Did some fixups below (the comment was stale prior to the patch; restored
-unlikely(), simplified one line).
+-- David
 
-A test merge into yesterday's -next found a conflict in drivers/gpu/drm/
-panthor/panthor_mmu.c. Commit 1013bf53650e ("drm/panthor: Split
-panthor_vm_prepare_map_op_ctx() to prepare for reclaim") moved the changed
-codeto a new function panthor_vm_op_ctx_prealloc_pts().
-But it's solvable so no need for a complicated coordination I think.
-
-diff --git a/mm/slub.c b/mm/slub.c
-index 6caf6f3ceeed..711df528c9a6 100644
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -7372,10 +7372,7 @@ bool kmem_cache_alloc_bulk_noprof(struct kmem_cache *s, gfp_t flags,
-        }
- 
- out:
--       /*
--        * memcg and kmem_cache debug support and memory initialization.
--        * Done outside of the IRQ disabled fastpath loop.
--        */
-+       /* memcg and kmem_cache debug support and memory initialization */
-        return likely(slab_post_alloc_hook(s, NULL, flags, size, p,
-                        slab_want_init_on_alloc(flags, s), s->object_size));
- }
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 99ab9ddb05e3..dbf0d8eae8d8 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -246,8 +246,8 @@ static int xdp_recv_frames(struct xdp_frame **frames, int nframes,
-        int i;
-        LIST_HEAD(list);
- 
--       if (!kmem_cache_alloc_bulk(net_hotdata.skbuff_cache, gfp, nframes,
--                                  (void **)skbs)) {
-+       if (unlikely(!kmem_cache_alloc_bulk(net_hotdata.skbuff_cache, gfp,
-+                                           nframes, (void **)skbs))) {
-                for (i = 0; i < nframes; i++)
-                        xdp_return_frame(frames[i]);
-                return -ENOMEM;
-diff --git a/tools/testing/shared/linux.c b/tools/testing/shared/linux.c
-index e9c3bc9b3272..e0a0693df08f 100644
---- a/tools/testing/shared/linux.c
-+++ b/tools/testing/shared/linux.c
-@@ -301,7 +301,7 @@ int kmem_cache_refill_sheaf(struct kmem_cache *s, gfp_t gfp,
-        if (!kmem_cache_alloc_bulk(s, gfp, size - sheaf->size,
-                        &sheaf->objects[sheaf->size]))
-                return -ENOMEM;
--       sheaf->size += (size - sheaf->size);
-+       sheaf->size = size;
-        return 0;
- }
-
-
-
-
-
-
+> 
+> Thansk,
+> Robin.
+> 
+> > Signed-off-by: Yury Norov <ynorov@nvidia.com>
+> > ---
+> >   drivers/perf/alibaba_uncore_drw_pmu.c       | 2 +-
+> >   drivers/perf/amlogic/meson_ddr_pmu_core.c   | 2 +-
+> >   drivers/perf/arm-cci.c                      | 2 +-
+> >   drivers/perf/arm-ccn.c                      | 2 +-
+> >   drivers/perf/arm-cmn.c                      | 2 +-
+> >   drivers/perf/arm-ni.c                       | 2 +-
+> >   drivers/perf/arm_cspmu/arm_cspmu.c          | 2 +-
+> >   drivers/perf/arm_dmc620_pmu.c               | 4 ++--
+> >   drivers/perf/arm_dsu_pmu.c                  | 2 +-
+> >   drivers/perf/arm_pmu.c                      | 2 +-
+> >   drivers/perf/arm_smmuv3_pmu.c               | 2 +-
+> >   drivers/perf/arm_spe_pmu.c                  | 2 +-
+> >   drivers/perf/cxl_pmu.c                      | 2 +-
+> >   drivers/perf/dwc_pcie_pmu.c                 | 2 +-
+> >   drivers/perf/fsl_imx8_ddr_perf.c            | 2 +-
+> >   drivers/perf/fsl_imx9_ddr_perf.c            | 2 +-
+> >   drivers/perf/fujitsu_uncore_pmu.c           | 2 +-
+> >   drivers/perf/hisilicon/hisi_pcie_pmu.c      | 2 +-
+> >   drivers/perf/hisilicon/hisi_uncore_pmu.c    | 2 +-
+> >   drivers/perf/marvell_cn10k_ddr_pmu.c        | 2 +-
+> >   drivers/perf/marvell_cn10k_tad_pmu.c        | 2 +-
+> >   drivers/perf/marvell_pem_pmu.c              | 2 +-
+> >   drivers/perf/nvidia_t410_c2c_pmu.c          | 2 +-
+> >   drivers/perf/nvidia_t410_cmem_latency_pmu.c | 2 +-
+> >   drivers/perf/qcom_l2_pmu.c                  | 2 +-
+> >   drivers/perf/qcom_l3_pmu.c                  | 2 +-
+> >   drivers/perf/starfive_starlink_pmu.c        | 2 +-
+> >   drivers/perf/thunderx2_pmu.c                | 2 +-
+> >   drivers/perf/xgene_pmu.c                    | 2 +-
+> >   kernel/events/core.c                        | 2 +-
+> >   30 files changed, 31 insertions(+), 31 deletions(-)
+> > 
+> > diff --git a/drivers/perf/alibaba_uncore_drw_pmu.c b/drivers/perf/alibaba_uncore_drw_pmu.c
+> > index ac49d3b2dad6..74786a5dd6a2 100644
+> > --- a/drivers/perf/alibaba_uncore_drw_pmu.c
+> > +++ b/drivers/perf/alibaba_uncore_drw_pmu.c
+> > @@ -221,7 +221,7 @@ static ssize_t ali_drw_pmu_cpumask_show(struct device *dev,
+> >   {
+> >   	struct ali_drw_pmu *drw_pmu = to_ali_drw_pmu(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(drw_pmu->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(drw_pmu->cpu)));
+> >   }
+> >   
+> >   static struct device_attribute ali_drw_pmu_cpumask_attr =
+> > diff --git a/drivers/perf/amlogic/meson_ddr_pmu_core.c b/drivers/perf/amlogic/meson_ddr_pmu_core.c
+> > index c1e755c356a3..f614aa3434a5 100644
+> > --- a/drivers/perf/amlogic/meson_ddr_pmu_core.c
+> > +++ b/drivers/perf/amlogic/meson_ddr_pmu_core.c
+> > @@ -191,7 +191,7 @@ static ssize_t meson_ddr_perf_cpumask_show(struct device *dev,
+> >   {
+> >   	struct ddr_pmu *pmu = dev_get_drvdata(dev);
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(pmu->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(pmu->cpu)));
+> >   }
+> >   
+> >   static struct device_attribute meson_ddr_perf_cpumask_attr =
+> > diff --git a/drivers/perf/arm-cci.c b/drivers/perf/arm-cci.c
+> > index 1cc3214d6b6d..f0ef0a679e74 100644
+> > --- a/drivers/perf/arm-cci.c
+> > +++ b/drivers/perf/arm-cci.c
+> > @@ -1351,7 +1351,7 @@ static ssize_t pmu_cpumask_attr_show(struct device *dev,
+> >   	struct pmu *pmu = dev_get_drvdata(dev);
+> >   	struct cci_pmu *cci_pmu = to_cci_pmu(pmu);
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(cci_pmu->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(cci_pmu->cpu)));
+> >   }
+> >   
+> >   static struct device_attribute pmu_cpumask_attr =
+> > diff --git a/drivers/perf/arm-ccn.c b/drivers/perf/arm-ccn.c
+> > index 8af3563fdf60..d5dcb4280434 100644
+> > --- a/drivers/perf/arm-ccn.c
+> > +++ b/drivers/perf/arm-ccn.c
+> > @@ -538,7 +538,7 @@ static ssize_t arm_ccn_pmu_cpumask_show(struct device *dev,
+> >   {
+> >   	struct arm_ccn *ccn = pmu_to_arm_ccn(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(ccn->dt.cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(ccn->dt.cpu)));
+> >   }
+> >   
+> >   static struct device_attribute arm_ccn_pmu_cpumask_attr =
+> > diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+> > index f5305c8fdca4..2187ba763b72 100644
+> > --- a/drivers/perf/arm-cmn.c
+> > +++ b/drivers/perf/arm-cmn.c
+> > @@ -1326,7 +1326,7 @@ static ssize_t arm_cmn_cpumask_show(struct device *dev,
+> >   {
+> >   	struct arm_cmn *cmn = to_cmn(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(cmn->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(cmn->cpu)));
+> >   }
+> >   
+> >   static struct device_attribute arm_cmn_cpumask_attr =
+> > diff --git a/drivers/perf/arm-ni.c b/drivers/perf/arm-ni.c
+> > index 66858c65215d..03a1c6bf9223 100644
+> > --- a/drivers/perf/arm-ni.c
+> > +++ b/drivers/perf/arm-ni.c
+> > @@ -239,7 +239,7 @@ static ssize_t arm_ni_cpumask_show(struct device *dev,
+> >   {
+> >   	struct arm_ni *ni = cd_to_ni(pmu_to_cd(dev_get_drvdata(dev)));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(ni->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(ni->cpu)));
+> >   }
+> >   
+> >   static struct device_attribute arm_ni_cpumask_attr =
+> > diff --git a/drivers/perf/arm_cspmu/arm_cspmu.c b/drivers/perf/arm_cspmu/arm_cspmu.c
+> > index 80fb314d5135..e6292021f653 100644
+> > --- a/drivers/perf/arm_cspmu/arm_cspmu.c
+> > +++ b/drivers/perf/arm_cspmu/arm_cspmu.c
+> > @@ -305,7 +305,7 @@ static ssize_t arm_cspmu_cpumask_show(struct device *dev,
+> >   	default:
+> >   		return 0;
+> >   	}
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask);
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask));
+> >   }
+> >   
+> >   static struct attribute *arm_cspmu_cpumask_attrs[] = {
+> > diff --git a/drivers/perf/arm_dmc620_pmu.c b/drivers/perf/arm_dmc620_pmu.c
+> > index 4f6b196160f8..467147a05eec 100644
+> > --- a/drivers/perf/arm_dmc620_pmu.c
+> > +++ b/drivers/perf/arm_dmc620_pmu.c
+> > @@ -237,8 +237,8 @@ static ssize_t dmc620_pmu_cpumask_show(struct device *dev,
+> >   {
+> >   	struct dmc620_pmu *dmc620_pmu = to_dmc620_pmu(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf,
+> > -				       cpumask_of(dmc620_pmu->irq->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n",
+> > +			  cpumask_pr_args(cpumask_of(dmc620_pmu->irq->cpu)));
+> >   }
+> >   
+> >   static struct device_attribute dmc620_pmu_cpumask_attr =
+> > diff --git a/drivers/perf/arm_dsu_pmu.c b/drivers/perf/arm_dsu_pmu.c
+> > index 32b0dd7c693b..bcbd19e075a5 100644
+> > --- a/drivers/perf/arm_dsu_pmu.c
+> > +++ b/drivers/perf/arm_dsu_pmu.c
+> > @@ -157,7 +157,7 @@ static ssize_t dsu_pmu_cpumask_show(struct device *dev,
+> >   	default:
+> >   		return 0;
+> >   	}
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask);
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask));
+> >   }
+> >   
+> >   static struct attribute *dsu_pmu_format_attrs[] = {
+> > diff --git a/drivers/perf/arm_pmu.c b/drivers/perf/arm_pmu.c
+> > index 939bcbd433aa..51ab6cc52ca0 100644
+> > --- a/drivers/perf/arm_pmu.c
+> > +++ b/drivers/perf/arm_pmu.c
+> > @@ -570,7 +570,7 @@ static ssize_t cpus_show(struct device *dev,
+> >   			 struct device_attribute *attr, char *buf)
+> >   {
+> >   	struct arm_pmu *armpmu = to_arm_pmu(dev_get_drvdata(dev));
+> > -	return cpumap_print_to_pagebuf(true, buf, &armpmu->supported_cpus);
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(&armpmu->supported_cpus));
+> >   }
+> >   
+> >   static DEVICE_ATTR_RO(cpus);
+> > diff --git a/drivers/perf/arm_smmuv3_pmu.c b/drivers/perf/arm_smmuv3_pmu.c
+> > index 621f02a7f43b..8ce34e6bb82b 100644
+> > --- a/drivers/perf/arm_smmuv3_pmu.c
+> > +++ b/drivers/perf/arm_smmuv3_pmu.c
+> > @@ -537,7 +537,7 @@ static ssize_t smmu_pmu_cpumask_show(struct device *dev,
+> >   {
+> >   	struct smmu_pmu *smmu_pmu = to_smmu_pmu(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(smmu_pmu->on_cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(smmu_pmu->on_cpu)));
+> >   }
+> >   
+> >   static struct device_attribute smmu_pmu_cpumask_attr =
+> > diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
+> > index dbd0da111639..9f786fd48cdd 100644
+> > --- a/drivers/perf/arm_spe_pmu.c
+> > +++ b/drivers/perf/arm_spe_pmu.c
+> > @@ -343,7 +343,7 @@ static ssize_t cpumask_show(struct device *dev,
+> >   {
+> >   	struct arm_spe_pmu *spe_pmu = dev_get_drvdata(dev);
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, &spe_pmu->supported_cpus);
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(&spe_pmu->supported_cpus));
+> >   }
+> >   static DEVICE_ATTR_RO(cpumask);
+> >   
+> > diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
+> > index 68a54d97d2a8..0735eb33f5f3 100644
+> > --- a/drivers/perf/cxl_pmu.c
+> > +++ b/drivers/perf/cxl_pmu.c
+> > @@ -493,7 +493,7 @@ static ssize_t cpumask_show(struct device *dev, struct device_attribute *attr,
+> >   {
+> >   	struct cxl_pmu_info *info = dev_get_drvdata(dev);
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(info->on_cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(info->on_cpu)));
+> >   }
+> >   static DEVICE_ATTR_RO(cpumask);
+> >   
+> > diff --git a/drivers/perf/dwc_pcie_pmu.c b/drivers/perf/dwc_pcie_pmu.c
+> > index 5385401fa9cf..291e776d6f6a 100644
+> > --- a/drivers/perf/dwc_pcie_pmu.c
+> > +++ b/drivers/perf/dwc_pcie_pmu.c
+> > @@ -117,7 +117,7 @@ static ssize_t cpumask_show(struct device *dev,
+> >   {
+> >   	struct dwc_pcie_pmu *pcie_pmu = to_dwc_pcie_pmu(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(pcie_pmu->on_cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(pcie_pmu->on_cpu)));
+> >   }
+> >   static DEVICE_ATTR_RO(cpumask);
+> >   
+> > diff --git a/drivers/perf/fsl_imx8_ddr_perf.c b/drivers/perf/fsl_imx8_ddr_perf.c
+> > index bcdf5575d71c..3760ebe02674 100644
+> > --- a/drivers/perf/fsl_imx8_ddr_perf.c
+> > +++ b/drivers/perf/fsl_imx8_ddr_perf.c
+> > @@ -237,7 +237,7 @@ static ssize_t ddr_perf_cpumask_show(struct device *dev,
+> >   {
+> >   	struct ddr_pmu *pmu = dev_get_drvdata(dev);
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(pmu->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(pmu->cpu)));
+> >   }
+> >   
+> >   static struct device_attribute ddr_perf_cpumask_attr =
+> > diff --git a/drivers/perf/fsl_imx9_ddr_perf.c b/drivers/perf/fsl_imx9_ddr_perf.c
+> > index 7050b48c0467..6fee5eb5087a 100644
+> > --- a/drivers/perf/fsl_imx9_ddr_perf.c
+> > +++ b/drivers/perf/fsl_imx9_ddr_perf.c
+> > @@ -159,7 +159,7 @@ static ssize_t ddr_perf_cpumask_show(struct device *dev,
+> >   {
+> >   	struct ddr_pmu *pmu = dev_get_drvdata(dev);
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(pmu->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(pmu->cpu)));
+> >   }
+> >   
+> >   static struct device_attribute ddr_perf_cpumask_attr =
+> > diff --git a/drivers/perf/fujitsu_uncore_pmu.c b/drivers/perf/fujitsu_uncore_pmu.c
+> > index c3c6f56474ad..a07877632d53 100644
+> > --- a/drivers/perf/fujitsu_uncore_pmu.c
+> > +++ b/drivers/perf/fujitsu_uncore_pmu.c
+> > @@ -374,7 +374,7 @@ static ssize_t cpumask_show(struct device *dev,
+> >   {
+> >   	struct uncore_pmu *uncorepmu = to_uncore_pmu(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(uncorepmu->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(uncorepmu->cpu)));
+> >   }
+> >   static DEVICE_ATTR_RO(cpumask);
+> >   
+> > diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+> > index c5394d007b61..0f55d871c67e 100644
+> > --- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
+> > +++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+> > @@ -121,7 +121,7 @@ static ssize_t cpumask_show(struct device *dev, struct device_attribute *attr, c
+> >   {
+> >   	struct hisi_pcie_pmu *pcie_pmu = to_pcie_pmu(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(pcie_pmu->on_cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(pcie_pmu->on_cpu)));
+> >   }
+> >   static DEVICE_ATTR_RO(cpumask);
+> >   
+> > diff --git a/drivers/perf/hisilicon/hisi_uncore_pmu.c b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+> > index de71dcf11653..0ff2fdf4b3e2 100644
+> > --- a/drivers/perf/hisilicon/hisi_uncore_pmu.c
+> > +++ b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+> > @@ -56,7 +56,7 @@ static ssize_t hisi_associated_cpus_sysfs_show(struct device *dev,
+> >   {
+> >   	struct hisi_pmu *hisi_pmu = to_hisi_pmu(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, &hisi_pmu->associated_cpus);
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(&hisi_pmu->associated_cpus));
+> >   }
+> >   static DEVICE_ATTR(associated_cpus, 0444, hisi_associated_cpus_sysfs_show, NULL);
+> >   
+> > diff --git a/drivers/perf/marvell_cn10k_ddr_pmu.c b/drivers/perf/marvell_cn10k_ddr_pmu.c
+> > index 72ac17efd846..8681e8715cb3 100644
+> > --- a/drivers/perf/marvell_cn10k_ddr_pmu.c
+> > +++ b/drivers/perf/marvell_cn10k_ddr_pmu.c
+> > @@ -364,7 +364,7 @@ static ssize_t cn10k_ddr_perf_cpumask_show(struct device *dev,
+> >   {
+> >   	struct cn10k_ddr_pmu *pmu = dev_get_drvdata(dev);
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(pmu->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(pmu->cpu)));
+> >   }
+> >   
+> >   static struct device_attribute cn10k_ddr_perf_cpumask_attr =
+> > diff --git a/drivers/perf/marvell_cn10k_tad_pmu.c b/drivers/perf/marvell_cn10k_tad_pmu.c
+> > index 51ccb0befa05..54909d0031b7 100644
+> > --- a/drivers/perf/marvell_cn10k_tad_pmu.c
+> > +++ b/drivers/perf/marvell_cn10k_tad_pmu.c
+> > @@ -258,7 +258,7 @@ static ssize_t tad_pmu_cpumask_show(struct device *dev,
+> >   {
+> >   	struct tad_pmu *tad_pmu = to_tad_pmu(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(tad_pmu->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(tad_pmu->cpu)));
+> >   }
+> >   
+> >   static DEVICE_ATTR(cpumask, 0444, tad_pmu_cpumask_show, NULL);
+> > diff --git a/drivers/perf/marvell_pem_pmu.c b/drivers/perf/marvell_pem_pmu.c
+> > index 29fbcd1848e4..cf1d8cdb1318 100644
+> > --- a/drivers/perf/marvell_pem_pmu.c
+> > +++ b/drivers/perf/marvell_pem_pmu.c
+> > @@ -164,7 +164,7 @@ static ssize_t pem_perf_cpumask_show(struct device *dev,
+> >   {
+> >   	struct pem_pmu *pmu = dev_get_drvdata(dev);
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(pmu->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(pmu->cpu)));
+> >   }
+> >   
+> >   static struct device_attribute pem_perf_cpumask_attr =
+> > diff --git a/drivers/perf/nvidia_t410_c2c_pmu.c b/drivers/perf/nvidia_t410_c2c_pmu.c
+> > index 411987153ff3..bff875f4f625 100644
+> > --- a/drivers/perf/nvidia_t410_c2c_pmu.c
+> > +++ b/drivers/perf/nvidia_t410_c2c_pmu.c
+> > @@ -658,7 +658,7 @@ static ssize_t nv_c2c_pmu_cpumask_show(struct device *dev,
+> >   	default:
+> >   		return 0;
+> >   	}
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask);
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask));
+> >   }
+> >   
+> >   #define NV_C2C_PMU_CPUMASK_ATTR(_name, _config)			\
+> > diff --git a/drivers/perf/nvidia_t410_cmem_latency_pmu.c b/drivers/perf/nvidia_t410_cmem_latency_pmu.c
+> > index acb8f5571522..6c8e41598ec1 100644
+> > --- a/drivers/perf/nvidia_t410_cmem_latency_pmu.c
+> > +++ b/drivers/perf/nvidia_t410_cmem_latency_pmu.c
+> > @@ -501,7 +501,7 @@ static ssize_t cmem_lat_pmu_cpumask_show(struct device *dev,
+> >   	default:
+> >   		return 0;
+> >   	}
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask);
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask));
+> >   }
+> >   
+> >   #define NV_PMU_CPUMASK_ATTR(_name, _config)			\
+> > diff --git a/drivers/perf/qcom_l2_pmu.c b/drivers/perf/qcom_l2_pmu.c
+> > index ea8c85729937..c0c522b10b72 100644
+> > --- a/drivers/perf/qcom_l2_pmu.c
+> > +++ b/drivers/perf/qcom_l2_pmu.c
+> > @@ -638,7 +638,7 @@ static ssize_t l2_cache_pmu_cpumask_show(struct device *dev,
+> >   {
+> >   	struct l2cache_pmu *l2cache_pmu = to_l2cache_pmu(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, &l2cache_pmu->cpumask);
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(&l2cache_pmu->cpumask));
+> >   }
+> >   
+> >   static struct device_attribute l2_cache_pmu_cpumask_attr =
+> > diff --git a/drivers/perf/qcom_l3_pmu.c b/drivers/perf/qcom_l3_pmu.c
+> > index 66e6cabd6fff..c8d259dd1f80 100644
+> > --- a/drivers/perf/qcom_l3_pmu.c
+> > +++ b/drivers/perf/qcom_l3_pmu.c
+> > @@ -663,7 +663,7 @@ static ssize_t cpumask_show(struct device *dev,
+> >   {
+> >   	struct l3cache_pmu *l3pmu = to_l3cache_pmu(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, &l3pmu->cpumask);
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(&l3pmu->cpumask));
+> >   }
+> >   
+> >   static DEVICE_ATTR_RO(cpumask);
+> > diff --git a/drivers/perf/starfive_starlink_pmu.c b/drivers/perf/starfive_starlink_pmu.c
+> > index 964897c2baa9..222a0a34e211 100644
+> > --- a/drivers/perf/starfive_starlink_pmu.c
+> > +++ b/drivers/perf/starfive_starlink_pmu.c
+> > @@ -131,7 +131,7 @@ cpumask_show(struct device *dev, struct device_attribute *attr, char *buf)
+> >   {
+> >   	struct starlink_pmu *starlink_pmu = to_starlink_pmu(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, &starlink_pmu->cpumask);
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(&starlink_pmu->cpumask));
+> >   }
+> >   
+> >   static DEVICE_ATTR_RO(cpumask);
+> > diff --git a/drivers/perf/thunderx2_pmu.c b/drivers/perf/thunderx2_pmu.c
+> > index 6ed4707bd6bb..a69c02d2d874 100644
+> > --- a/drivers/perf/thunderx2_pmu.c
+> > +++ b/drivers/perf/thunderx2_pmu.c
+> > @@ -254,7 +254,7 @@ static ssize_t cpumask_show(struct device *dev, struct device_attribute *attr,
+> >   	struct tx2_uncore_pmu *tx2_pmu;
+> >   
+> >   	tx2_pmu = pmu_to_tx2_pmu(dev_get_drvdata(dev));
+> > -	return cpumap_print_to_pagebuf(true, buf, cpumask_of(tx2_pmu->cpu));
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(cpumask_of(tx2_pmu->cpu)));
+> >   }
+> >   static DEVICE_ATTR_RO(cpumask);
+> >   
+> > diff --git a/drivers/perf/xgene_pmu.c b/drivers/perf/xgene_pmu.c
+> > index 33b5497bdc06..e9e4871db08d 100644
+> > --- a/drivers/perf/xgene_pmu.c
+> > +++ b/drivers/perf/xgene_pmu.c
+> > @@ -595,7 +595,7 @@ static ssize_t cpumask_show(struct device *dev,
+> >   {
+> >   	struct xgene_pmu_dev *pmu_dev = to_pmu_dev(dev_get_drvdata(dev));
+> >   
+> > -	return cpumap_print_to_pagebuf(true, buf, &pmu_dev->parent->cpu);
+> > +	return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(&pmu_dev->parent->cpu));
+> >   }
+> >   
+> >   static DEVICE_ATTR_RO(cpumask);
+> > diff --git a/kernel/events/core.c b/kernel/events/core.c
+> > index 7935d5663944..61689d348abd 100644
+> > --- a/kernel/events/core.c
+> > +++ b/kernel/events/core.c
+> > @@ -12657,7 +12657,7 @@ static ssize_t cpumask_show(struct device *dev, struct device_attribute *attr,
+> >   	struct cpumask *mask = perf_scope_cpumask(pmu->scope);
+> >   
+> >   	if (mask)
+> > -		return cpumap_print_to_pagebuf(true, buf, mask);
+> > +		return sysfs_emit(buf, "%*pbl\n", cpumask_pr_args(mask));
+> >   	return 0;
+> >   }
+> >     
+> 
+> 
 
 
