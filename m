@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-110209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YC1zO9fqGGruoggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 03:24:39 +0200
+	id MLoTL8brGGpnowgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 03:28:38 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7460B5FC006
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 03:24:38 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CBCE5FC057
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 03:28:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 80167306AD07
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 01:22:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 086F9301224A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 01:28:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3360535200C;
-	Fri, 29 May 2026 01:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5648930F55F;
+	Fri, 29 May 2026 01:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n7ixbxX6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YCaq+h9Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF232E737C;
-	Fri, 29 May 2026 01:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E50719067C;
+	Fri, 29 May 2026 01:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780017743; cv=none; b=VydH73b07ZtToL0iqynw+x1lXjtDO+izxnjyRjzsgMrF0Eh49iYu9/n4aHu7YDexlhakCAJCaDmTWlEtrrLldbkB2kzmswsLYn3XC7PevGEhkELLHCcAFO2NfwLeiMgiV4IfAjYK2khTwbNKdf5h1IARENdXndRCm7DfvYhYK5A=
+	t=1780018096; cv=none; b=c0M0iuk9fY6IZsM3o2elOnG4rjqvUeFueRGblQ3Zp815R9zqnzWKHVBy9RNA2WWJSJif4J1EktYhhnA3zYTml1hx+T8AXYeALQqZVHaPxkep6lDx8L7NIdnpODrgfm2BgvhC+O8JEets1QhF0pvzW9M1y7qqjhwhiiuj4DizRdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780017743; c=relaxed/simple;
-	bh=Grfqx6in53yR6brNkFKidWO3sz/SzbBK47q+qoFKUYo=;
+	s=arc-20240116; t=1780018096; c=relaxed/simple;
+	bh=577YCxBQyijttrD/GDDpiPNAegNNoIYy/0sCwpR697Q=;
 	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=NkSqnQSJA+jtEc/4yFQBV7s240PtlboAECaNedqNwmRCgCk/7zAbc93sBVYbGZ+AjnY6CFrnnPuW7ndeZsS/uTLWA6sr9ghG5lbhlDdqaVgvGXuZRtPIdcVaaq6j9FUBIar2bEKZsOZyC+ChJw7zHGCngtSzIHcNpYjKgRdV4pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n7ixbxX6; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D14F61F000E9;
-	Fri, 29 May 2026 01:22:21 +0000 (UTC)
+	 To:Date:Message-ID; b=Ycubk4bLfZ2ZiaqTMOQ3J9s+0PawVVJ0Ngz/ezIdZnAQnIqAdKznAJiymh4U+hS62u/YJHcTPYFaRF4A3vshRLemTlOPIJIDW8ElJzB0Y1EAMrP+G76FtCbRCW9M5tcO6n07rbGFZovtHRcZkXVMIl0WvpvYNrvXtfXzpj9ra/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YCaq+h9Q; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC621F00A3A;
+	Fri, 29 May 2026 01:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780017741;
-	bh=nBm/saWMSnvcWJK0srDmWF64YvRSAgnNDoEaL6eIWLM=;
+	s=k20260515; t=1780018095;
+	bh=577YCxBQyijttrD/GDDpiPNAegNNoIYy/0sCwpR697Q=;
 	h=In-Reply-To:References:Subject:From:Cc:To:Date;
-	b=n7ixbxX6Eiek901hoLF6lO4mfTy80hPp2QdMjaNYt0Vke97S+WAw8XuCSgIr8ipqX
-	 fY937+M+benJVGfsAK7cp3FCx8zIea3Ut2pLiRBMsbcGr1kanX+JOTLT2OmN0rwBoW
-	 /iO7VZUhv4Clxkzgt46g7KzzMw2k9LZoWHoBy10h17jAiyKAozcLM44M5lYRWhsWwF
-	 VUV+xeh7Yp8rAK/3VJgQLtczuWj9Z/jm6ZdrRCTsHuyZzjuw7NyFBcmopHdD8x2vwZ
-	 IR1K/apfvXmyVg61ibrySf8JLDJkg2aPOeJc1204nrqppMB5fnWBpf4RklDwFw3Ro/
-	 t7icncf/bhFUA==
+	b=YCaq+h9QYgsif34iSCrdrUxFZ7HWypSjWzMi/+Y2uOHUybgK+tv4rrtHcJN5NJLwA
+	 9n59vRcZVsIvK5XNv6RBD33zE3xsihareiZb1++jNozMgrLXxSb5nsCd6Co5I753zK
+	 0qOuQOa71NrZwvcgdIFtuuWX0GzGVu/u+fYI+cKlIAZkDJAk+2s6LoFhtsKpHFmRoW
+	 EXLuKva+syrO4i/Tm17xluOg226BTHcLp69k+YS0HzGwC2JSsBFhuU0HNf4yqHVTV2
+	 QMJdaCKci1DCYmE8OzMFvQzQAtxvSHzCoMF68Im0jd8VxhM+0IKkS/DcsAoTM2YaEg
+	 aWXTdMecL42rg==
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -52,64 +52,58 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260526150454.4281-1-andersson@kernel.org>
-References: <20260526150454.4281-1-andersson@kernel.org>
-Subject: Re: [GIT PULL] Qualcomm clock fixes for v7.1
+In-Reply-To: <20260419-hawi-spmi-v3-1-b04ee909cb87@oss.qualcomm.com>
+References: <20260419-hawi-spmi-v3-0-b04ee909cb87@oss.qualcomm.com> <20260419-hawi-spmi-v3-1-b04ee909cb87@oss.qualcomm.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: spmi: glymur-spmi-pmic-arb: Add compatible for Qualcomm Hawi SoC
 From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Hans de Goede <johannes.goede@oss.qualcomm.com>, Pengyu Luo <mitltlatltl@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org
-Date: Thu, 28 May 2026 18:22:20 -0700
-Message-ID: <178001774018.5961.10942896930927860509@lazor>
+Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, David Collins <david.collins@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, kernel@oss.qualcomm.com, Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+To: Conor Dooley <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Fenglin Wu <fenglin.wu@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>
+Date: Thu, 28 May 2026 18:28:13 -0700
+Message-ID: <178001809324.7182.13624403441092934995@lazor>
 User-Agent: alot/0.12
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110209-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,oss.qualcomm.com,gmail.com];
+	TAGGED_FROM(0.00)[bounces-110210-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sboyd@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 7460B5FC006
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email]
+X-Rspamd-Queue-Id: 5CBCE5FC057
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Quoting Bjorn Andersson (2026-05-26 08:04:54)
+Quoting Fenglin Wu (2026-04-19 19:25:52)
+> The PMIC arbiter in the Qualcomm Hawi SoC is version v8.5, which
+> introduces parity and CRC checks for data received from the PMIC,
+> as well as NACK checks for command sequences except for read.
+> All other features in PMIC arbiter remain the same as the one in
+> the Qualcomm Glymur SoC, with the only differences being some
+> additional error status checks.
 >=20
-> The following changes since commit 254f49634ee16a731174d2ae34bc50bd5f45e7=
-31:
+> Therefore, add a string for "qcom,hawi-spmi-pmic-arb" as a compatible
+> entry for "qcom,glymur-spmi-pmic-arb".
 >=20
->   Linux 7.1-rc1 (2026-04-26 14:19:00 -0700)
->=20
-> are available in the Git repository at:
->=20
->   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
-m-clk-fixes-for-7.1
->=20
-> for you to fetch changes up to 5285b046757844435d1db96c1b5c3a6621b2979a:
->=20
->   clk: qcom: dispcc-sc8280xp: Don't park mdp_clk_src at registration time=
- (2026-05-21 22:45:49 -0500)
->=20
-> ----------------------------------------------------------------
+> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+> ---
 
-Thanks. Pulled into clk-fixes.
+Applied to spmi-next
 
