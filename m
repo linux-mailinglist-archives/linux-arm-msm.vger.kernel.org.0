@@ -1,279 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-110300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KByRKtWoGWodyQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 16:55:17 +0200
+	id MORDEUyrGWpEyQgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 17:05:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0825860408C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 16:55:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B8E560438E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 17:05:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D4097300D14A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 14:41:01 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 67CBF301C597
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 14:55:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F5AC3E2AD6;
-	Fri, 29 May 2026 14:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 672503F4107;
+	Fri, 29 May 2026 14:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="pQa9iw4w"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gvjaNbGy";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="gdsmLXL1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EDA63E9F7D;
-	Fri, 29 May 2026 14:40:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780065661; cv=none; b=tPdkNLK9FFqqYdSP5cs7pYP8M71k4s7AHFaoYikiBOguLD1/sykXSMNZ+RJzQQDmb2oiodRNWVbgOKqBSTfokrp934AbNi9k+skxC2eoFeHB/sSkYFC8prOddzQ8w24FTtIjYJO//zCxuJQOZwGlvFnbpZ+SYhdgZWj20RWl2/g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780065661; c=relaxed/simple;
-	bh=SaSJnQrDHy26ahs5WkmoCdUA8qqhur7vMZILhcqQpYM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JTcPzvqeHzU/m4E1bYnk+TzlwebKhWhuxZ6oQ7Hwn0Uc2Dzmgs0NZd98I7FFlG1vHOogv9WvEYGeVH17fSV9f1PdGGFckHcdOWLrZXwvFUmplrj30qNnpJR3k+Abv492c3Cx6+C4NJzy+P29VyTLW3xEWtyj90lvMda4DTuO4WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=pQa9iw4w; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 878451FC7;
-	Fri, 29 May 2026 07:40:53 -0700 (PDT)
-Received: from localhost (e132581.arm.com [10.1.196.87])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 247A23F905;
-	Fri, 29 May 2026 07:40:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1780065658; bh=SaSJnQrDHy26ahs5WkmoCdUA8qqhur7vMZILhcqQpYM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pQa9iw4we79cyPR7M1QBB5Qcr4ZgyPHdo+IWFUSsUwjFVyyXCW91NcFUool1WTWcz
-	 E/25jC3m2pzJT2w2YxJ6QNBMws7LXlLLxZaqorWv4ySL14w8EEXnPd9vJ8Yvflv5pa
-	 w7RRBLC/d4Yl7Xv8gm3nkhxhmLNwVkGxti1UyG34=
-Date: Fri, 29 May 2026 15:40:55 +0100
-From: Leo Yan <leo.yan@arm.com>
-To: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	jinlong.mao@oss.qualcomm.com, quic_yingdeng@quicinc.com,
-	tingwei.zhang@oss.qualcomm.com, jie.gan@oss.qualcomm.com
-Subject: Re: [PATCH v9 2/4] coresight: cti: use __reg_addr() helper for
- register access
-Message-ID: <20260529144055.GK101133@e132581.arm.com>
-References: <20260521-extended_cti-v9-0-d21f4f92c51e@oss.qualcomm.com>
- <20260521-extended_cti-v9-2-d21f4f92c51e@oss.qualcomm.com>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CAA3F1AA8
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 14:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.168.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780065970; cv=pass; b=SlM4X+dUhReyIRmFW509DyoQqHdsPbaOUssXKBP8O/UuxqBIZBii9F0XW1tGLpdo7jK1rwaHggu1mw24LGrwsCIsvsCdap02IeyJXNHnbrz7R03x2iyU0rJy3Nt+fPyTlLWGQV4fi7OltNFNER8JsGk7qHkC9QLO4TnK1/Tbniw=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780065970; c=relaxed/simple;
+	bh=ujCYn817iX6wlBEWzpPBEDe4rtEevi5+ZUNJsLLv2oo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZGoT2Rgm001ebIGwwOMsklSiY0wNAqGfUgYxH4cT4sKH1lROEWsenrn74E55YiWWpbFsdEgsv6ZaNo3pXQyLVLnBdqHW616KmtdFCQcvgY2WJX1gMQhG9NwZSJUBSzi3U2L3/q0t6hqq6f3GkhYXH59/ohaFpzvmkLxqV9N8fuw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gvjaNbGy; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=gdsmLXL1; arc=pass smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64TDLgkv2748160
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 14:46:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	voUJObYcKin1raCObqToYyhbjwo0Gb69o1ZFsTElHNc=; b=gvjaNbGy9OG7lgC+
+	1XjNFFrJei/xE63AvWA+ms4OiSYfmg0+FVGVDmKiL6kAE7ix5pBZoNcRwaFFsJDa
+	+HGGvn9bvwfKm4rNUf/W1V4cGMH0hnHQz/XSMW/tTCi4j4Jx2lHpeBhBWh09nICg
+	1z+rKmsEaL37efwt8dBlePbMZMjvjXgGkRxf9xv6Y+eXBK9XugZrXkx4xS+WK5Q1
+	2AgQXcm7VC1sbvA/MLZvKgErte5FY143Tijk+3+xo3YZm5Pyh/6L3W1twxbrpq7S
+	RwqzLltfBHsgBkMjoYrVgHooE8qatMoRKKwck6DHGM3Pi2UAIAZDgr6OKaj2D0k0
+	FagbyQ==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eevug43yg-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 14:46:08 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-8cce230de8bso25698846d6.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 07:46:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780065967; cv=none;
+        d=google.com; s=arc-20240605;
+        b=hXihJBR9iTNgKXzY6latESBmRXWH6vUgccXhxq6+B4zF36XmrUR31cR+5I03HtYiQj
+         zvXjIGN5DJEfLGTRp6Tpogcy5M15AkdLOlHfUDtWqYdF/6+g7Bk+yPRO8Dh/HIzQ2FDi
+         jTR7q6zunB8eAX74JlqflKsQP2S8fItR9L1wfnHVThEL4CkP9Mh5LW8JdIPce8tUEl3e
+         CeNVEnaPMFkpq+VG0Jm3gmogaY42c61SHeWjxfvY+tRhEgBG95BxA9YEKxziOh/TgzRl
+         DxF2RQzSNAWELU/ABl+Zp5fVSSphZxJ3rRBmW6rK18VAZt8pRMFfXXBQEVHiUIhJRZIc
+         5dWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=voUJObYcKin1raCObqToYyhbjwo0Gb69o1ZFsTElHNc=;
+        fh=txMMjYvXjlgN/q8PKMaI9frq0RibldGlZmuFTdAGqzY=;
+        b=VYQD+dHN3WjVFPGtmqRoZOQh9N8CpzwCPAhPurqL6bG0bspw8Ew+XKhAylA3aOKUpA
+         4vVMp0V0tkTSAkz5dt9UVW1/IhjjkZQcf6fxEnvEFOigDWNhJGMe+LCzmvGAhPS/EMhZ
+         n1IRxiJOKhUfgTjHyJ397/JXcG8VOnohcYNKL1k93PtxfGdM05GzCoiNFuRlkxdOJJ2t
+         ka4ugB7opqvBpgXQ7yybAAbGGDuEF+6QvLv49lqNo7kOxJS2Xgsuu3I1UM0Lc32z2Usx
+         t7ugTNdbMV1ypzs+eoieXxK8kPSSsXFi488WmG1exDTpws+GsGpPWg59f04mjsSmWQTv
+         oKww==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1780065967; x=1780670767; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=voUJObYcKin1raCObqToYyhbjwo0Gb69o1ZFsTElHNc=;
+        b=gdsmLXL1o3n2VUCpZex7dM82iA6UDdpimAAk9EEXZBMEZrBvNs5Q0JQs4aTyMkPiGP
+         3hCs4XpRzJw+wonztg1EafKoxCpHnBDAliEe0yeKo3be+U2G2FWEGNKgc+WAHWdhXy90
+         qo6tvdR2Pf/RnmmuOZMCvmkncFK2GU0DFIHzE7qoedTrE3gXO+7FUyyMxnbbTbGcqgKR
+         nJdwaWHfR9INM1z7D0dNL2roTauJHtlJ6kTA9XVAmQyiANX3cl/KsTS4Dp8fG9ytYBP7
+         ZrVJOv/lkHj5S+bp1IcKh3fWtdJfUO3f0iWjyzWAwgaLskTujljDY2IH9xZvhRrKDB8g
+         EtVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780065967; x=1780670767;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=voUJObYcKin1raCObqToYyhbjwo0Gb69o1ZFsTElHNc=;
+        b=hXrZqdm/3IqSYTFQFniIAearFELh9DZWhL8fkNvOWDKVHbSdwvm3gwBlHF5b2xqqaj
+         MCb7bxpF6BZEX2egq0AU8Q2oEzebgwhhE0MUud5fDGGCGPYv/2dW3SuBliZYKVJEDium
+         ixuQBK7Gf/k29npikR60Lf9D7ar0b7dxrvaUHQ2CpmMKmgDIt/vQa/3KEfzswSrld9EB
+         qPFShoaOaOvTNc7zwzqks9ks/Nj+Mz2TNG7CFVBtrLTCjSNSrIMjHEm9AgzuSC64qp1f
+         zhRnyPEWqV6yyvuPuNVX6QYed/3zqwzwL7mLhT3Z7TIMrtXGi33Qkm/2ZYIuBNNx6Jpw
+         Dfeg==
+X-Forwarded-Encrypted: i=1; AFNElJ/flSPZB94pVJ+bxZ1uboxKTabq4/1NlF62aN1OZmwuWSH3g/wvg3hNjKVb4IhYqIK8YV4EIvnoz+PmU+zt@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz0IWz+yuYKlmgarhwkBe3FOmRWmZLiEl0k3oXdfpwcenI2+FGt
+	RZclAFAq3REFk3E177Fmnp/3Kxaa4r/x1fTKTX12ucvdGwlQQDXUKcl0ATytZiQ4pUx6Uk7LKV7
+	OnT0+bEtSKmxUqc8KULrGdvKGlT7OMNqlT1DZEwrTrKQ/5MR3u+kq16JeLlUS0zzE25tsTww0RI
+	NtYtBlq7nsVwbQbQEY8/NpC3JzYS7jun4S9tp2jSJ1wRA=
+X-Gm-Gg: Acq92OGORpLJeI2blktxk70lTg6hUUp+a6YebYJI17bS7ns0CGeIPm1BlImKwWZHDyc
+	hv9kmh/hzOSJfbmx+KqfqPoILJNHqaHkbuFuxdFUHNhDjPKxiliBrhxGJzPj5SDObe1AQohcisS
+	osGIbP7fUilIIchYTpP0G1FqOWX4gbLBfT09EuO45Vc42XtQK9AB3qhpXzmmg90cHGD8DS36Sve
+	RTAMSHtlBqqGx8Ajw==
+X-Received: by 2002:a05:6214:2129:b0:8cc:611f:197f with SMTP id 6a1803df08f44-8cce8273b9amr40421456d6.44.1780065967446;
+        Fri, 29 May 2026 07:46:07 -0700 (PDT)
+X-Received: by 2002:a05:6214:2129:b0:8cc:611f:197f with SMTP id
+ 6a1803df08f44-8cce8273b9amr40420966d6.44.1780065966941; Fri, 29 May 2026
+ 07:46:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260521-extended_cti-v9-2-d21f4f92c51e@oss.qualcomm.com>
+References: <20260528135342.11678-1-manivannan.sadhasivam@oss.qualcomm.com>
+In-Reply-To: <20260528135342.11678-1-manivannan.sadhasivam@oss.qualcomm.com>
+From: Ulf Hansson <ulf.hansson@oss.qualcomm.com>
+Date: Fri, 29 May 2026 16:45:56 +0200
+X-Gm-Features: AVHnY4L6MWNB9ipo3mmpNNI-uKAIfhPINhRgf_XrDuSat0AGf5o159oc_oNQjTg
+Message-ID: <CAPx+jO9782bBRuMAsJBgRc7y=THa_+48hY8xPieZAB_3dWeaHA@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: mmc: sdhci-msm: Rename the binding to
+ include 'qcom' prefix
+To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Cc: ulfh@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        andersson@kernel.org, konradybcio@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDE0NyBTYWx0ZWRfXy3LzZUX6zb7q
+ nyPBHWqBfi4mr27+u3WhQIBuNLMfvd52066faOqkHhqAe5bXFzkHcO4SDukzt5KpNwT8oOcMJuI
+ hMfTbSTyxamYEbaEMC7E6wgrkolt+moouKkIS6K+jp/xLxwKsk+/GnJ1UB2R2EB6Zj2YpsvJ8xT
+ ow98w0qv1Bs1GuLqQ3ctDaXuEC6pQ9TiB6ehu4ofNuXsWeEKFA+B+jXzkUwf28if0JntLDbVohn
+ cl4jj1Jap24vS/Te0D3eYLvSVpfCi5c+jugIUYxHzSzWDJ7oqB/xLtiPE37b5SUo1yEImPjgZd/
+ rJctBq0QsmSSXvd5AukHlZhh/6tg5TTMpVL/FeWWtH5hmk7m+Ovh9o47S5BAPgbwJwn0rJiKGoP
+ UVwY4v8KwmvNymXz8zbZiMTU2HvE0wxB4BXeEYENS3qWZ0m+ktLBNxetPmfTFPn2nuo8sy146TT
+ FiJpHLqrTGuRBMSgCBQ==
+X-Authority-Analysis: v=2.4 cv=SNBykuvH c=1 sm=1 tr=0 ts=6a19a6b0 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=yOCtJkima9RkubShWh1s:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=gEfo2CItAAAA:8
+ a=5jWyPAnK0HxrPH3f6sQA:9 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+ a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-ORIG-GUID: Ej3p5BMNn5MToeU-882Xg3VzIjClYfdC
+X-Proofpoint-GUID: Ej3p5BMNn5MToeU-882Xg3VzIjClYfdC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-29_04,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 malwarescore=0 spamscore=0 adultscore=0
+ lowpriorityscore=0 phishscore=0 impostorscore=0 clxscore=1011 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605290147
 X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110300-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110301-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[arm.com:+];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[leo.yan@arm.com,linux-arm-msm@vger.kernel.org];
 	MISSING_XM_UA(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ulf.hansson@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,e132581.arm.com:mid]
-X-Rspamd-Queue-Id: 0825860408C
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:dkim,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,mail.gmail.com:mid]
+X-Rspamd-Queue-Id: 9B8E560438E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, May 21, 2026 at 08:16:28PM +0800, Yingchao Deng wrote:
+On Thu, May 28, 2026 at 3:53=E2=80=AFPM Manivannan Sadhasivam
+<manivannan.sadhasivam@oss.qualcomm.com> wrote:
+>
+> This is the only Qcom binding that doesn't have 'qcom' prefix in the
+> bindings name. This doesn't match with the regex in MAINTAINERS file and
+> the 'get_maintainer.pl' script fails to list the 'linux-arm-msm' list:
+>
+> Ulf Hansson <ulfh@kernel.org> (maintainer:MULTIMEDIA CARD (MMC), SECURE D=
+IGITAL (SD) AND...)
+> Rob Herring <robh@kernel.org> (maintainer:OPEN FIRMWARE AND FLATTENED DEV=
+ICE TREE BINDINGS)
+> Krzysztof Kozlowski <krzk+dt@kernel.org> (maintainer:OPEN FIRMWARE AND FL=
+ATTENED DEVICE TREE BINDINGS)
+> Conor Dooley <conor+dt@kernel.org> (maintainer:OPEN FIRMWARE AND FLATTENE=
+D DEVICE TREE BINDINGS)
+> Bjorn Andersson <andersson@kernel.org> (in file)
+> Konrad Dybcio <konradybcio@kernel.org> (in file)
+> linux-mmc@vger.kernel.org (open list:MULTIMEDIA CARD (MMC), SECURE DIGITA=
+L (SD) AND...)
+> devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE =
+TREE BINDINGS)
+> linux-kernel@vger.kernel.org (open list)
+>
+> Hence, rename the binding to include 'qcom' prefix so that the regex
+> matches correctly.
+>
+> Reported-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> Closes: https://lore.kernel.org/all/20260526151003.p4kn2vek3hpv4gzv@hu-mo=
+jha-hyd.qualcomm.com
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
+com>
 
-[...]
+Applied for next, thanks!
 
-> +static void __iomem *__reg_addr(struct cti_drvdata *drvdata, u32 off,
-> +				u32 index)
-> +{
-> +	return drvdata->base + off + sizeof(u32) * index;
-> +}
-> +
-> +#define reg_addr(drvdata, off)		__reg_addr((drvdata), (off), 0)
-> +#define reg_index_addr(drvdata, off, i)	__reg_addr((drvdata), (off), (i))
+Kind regards
+Uffe
 
-> -u32 cti_read_single_reg(struct cti_drvdata *drvdata, int offset)
-> +u32 cti_read_single_reg(struct cti_drvdata *drvdata, u32 off, u32 index)
->  {
-> -	int val;
-> +	u32 val;
->  
->  	CS_UNLOCK(drvdata->base);
-> -	val = readl_relaxed(drvdata->base + offset);
-> +	val = readl_relaxed(reg_index_addr(drvdata, off, index));
->  	CS_LOCK(drvdata->base);
->  
->  	return val;
->  }
->  
-> -void cti_write_single_reg(struct cti_drvdata *drvdata, int offset, u32 value)
-> +void cti_write_single_reg(struct cti_drvdata *drvdata, u32 off, u32 index,
-> +			  u32 value)
->  {
->  	CS_UNLOCK(drvdata->base);
-> -	writel_relaxed(value, drvdata->base + offset);
-> +	writel_relaxed(value, reg_index_addr(drvdata, off, index));
->  	CS_LOCK(drvdata->base);
->  }
 
-I prefer to move the register helpers into coresight-cti.h and add two
-additional helpers: cti_read_single_reg_index() and
-cti_write_single_reg_index().
-
-I also found circular dependency between coresight-cti.h and qcom-cti.h.
-Since qcom-cti.h only contains register definitions and a small inline
-function for register conversion, we can simply fold it into
-coresight-cti.h and dismiss the circular dependency.
-
-Based on this idea, I played around with the code a bit (see the snippet
-below). Would you be okay with applying this approach to patches 02/03?
-If have any questions, please let me know.
-
----8<---
-
---- a/drivers/hwtracing/coresight/coresight-cti.h
-+++ b/drivers/hwtracing/coresight/coresight-cti.h
-@@ -60,6 +60,31 @@ struct fwnode_handle;
-  */
- #define CTIINOUTEN_MAX		128
- 
-+/* QCOM CTI extension */
-+#define QCOM_ARCHITECT		0x477
-+
-+#define QCOM_CTIINTACK		0x020
-+#define QCOM_CTIAPPSET		0x004
-+#define QCOM_CTIAPPCLEAR	0x008
-+#define QCOM_CTIAPPPULSE	0x00C
-+#define QCOM_CTIINEN		0x400
-+#define QCOM_CTIOUTEN		0x800
-+#define QCOM_CTITRIGINSTATUS	0x040
-+#define QCOM_CTITRIGOUTSTATUS	0x060
-+#define QCOM_CTICHINSTATUS	0x080
-+#define QCOM_CTICHOUTSTATUS	0x084
-+#define QCOM_CTIGATE		0x088
-+#define QCOM_ASICCTL		0x08C
-+/* Integration test registers */
-+#define QCOM_ITCHINACK		0xE70
-+#define QCOM_ITTRIGINACK	0xE80
-+#define QCOM_ITCHOUT		0xE74
-+#define QCOM_ITTRIGOUT		0xEA0
-+#define QCOM_ITCHOUTACK		0xE78
-+#define QCOM_ITTRIGOUTACK	0xEC0
-+#define QCOM_ITCHIN		0xE7C
-+#define QCOM_ITTRIGIN		0xEE0
-+
- /**
-  * Group of related trigger signals
-  *
-@@ -222,9 +247,8 @@ int cti_enable(struct coresight_device *csdev, enum cs_mode mode,
- int cti_disable(struct coresight_device *csdev, struct coresight_path *path);
- void cti_write_all_hw_regs(struct cti_drvdata *drvdata);
- void cti_write_intack(struct device *dev, u32 ackval);
--void cti_write_single_reg(struct cti_drvdata *drvdata, u32 off, u32 index,
--			  u32 value);
--u32 cti_read_single_reg(struct cti_drvdata *drvdata, u32 off, u32 index);
- int cti_channel_trig_op(struct device *dev, enum cti_chan_op op,
- 			enum cti_trig_dir direction, u32 channel_idx,
- 			u32 trigger_idx);
-@@ -237,6 +261,78 @@ struct coresight_platform_data *
- coresight_cti_get_platform_data(struct device *dev);
- const char *cti_plat_get_node_name(struct fwnode_handle *fwnode);
- 
-+static inline u32 cti_qcom_reg_off(u32 offset)
-+{
-+	switch (offset) {
-+	case CTIINTACK:		return QCOM_CTIINTACK;
-+	case CTIAPPSET:		return QCOM_CTIAPPSET;
-+	case CTIAPPCLEAR:	return QCOM_CTIAPPCLEAR;
-+	case CTIAPPPULSE:	return QCOM_CTIAPPPULSE;
-+	case CTIINEN:		return QCOM_CTIINEN;
-+	case CTIOUTEN:		return QCOM_CTIOUTEN;
-+	case CTITRIGINSTATUS:	return QCOM_CTITRIGINSTATUS;
-+	case CTITRIGOUTSTATUS:	return QCOM_CTITRIGOUTSTATUS;
-+	case CTICHINSTATUS:	return QCOM_CTICHINSTATUS;
-+	case CTICHOUTSTATUS:	return QCOM_CTICHOUTSTATUS;
-+	case CTIGATE:		return QCOM_CTIGATE;
-+	case ASICCTL:		return QCOM_ASICCTL;
-+	case ITCHINACK:		return QCOM_ITCHINACK;
-+	case ITTRIGINACK:	return QCOM_ITTRIGINACK;
-+	case ITCHOUT:		return QCOM_ITCHOUT;
-+	case ITTRIGOUT:		return QCOM_ITTRIGOUT;
-+	case ITCHOUTACK:	return QCOM_ITCHOUTACK;
-+	case ITTRIGOUTACK:	return QCOM_ITTRIGOUTACK;
-+	case ITCHIN:		return QCOM_ITCHIN;
-+	case ITTRIGIN:		return QCOM_ITTRIGIN;
-+
-+	default:
-+		return offset;
-+	}
-+}
-+
-+static inline void __iomem *__reg_addr(struct cti_drvdata *drvdata,
-+				       u32 off, u32 index)
-+{
-+	if (unlikely(drvdata->is_qcom_cti))
-+		off = cti_qcom_reg_off(off);
-+
-+	return drvdata->base + off + index * sizeof(u32);
-+}
-+
-+#define reg_addr(drvdata, off)		__reg_addr((drvdata), (off), 0)
-+#define reg_index_addr(drvdata, off, i)	__reg_addr((drvdata), (off), (i))
-+
-+static inline u32 cti_read_single_reg_index(struct cti_drvdata *drvdata,
-+					    u32 off, u32 index)
-+{
-+	u32 val;
-+
-+	CS_UNLOCK(drvdata->base);
-+	val = readl_relaxed(reg_index_addr(drvdata, off, index));
-+	CS_LOCK(drvdata->base);
-+
-+	return val;
-+}
-+
-+static inline u32 cti_read_single_reg(struct cti_drvdata *drvdata, u32 off)
-+{
-+	return cti_read_single_reg_index(drvdata, off, 0);
-+}
-+
-+static inline void cti_write_single_reg_index(struct cti_drvdata *drvdata,
-+					      u32 off, u32 index, u32 value)
-+{
-+	CS_UNLOCK(drvdata->base);
-+	writel_relaxed(value, reg_index_addr(drvdata, off, index));
-+	CS_LOCK(drvdata->base);
-+}
-+
-+static inline void cti_write_single_reg(struct cti_drvdata *drvdata,
-+					u32 off, u32 value)
-+{
-+	cti_write_single_reg_index(drvdata, off, 0, value);
-+}
-+
- /* Check if a cti device is enabled */
- static inline bool cti_is_active(struct cti_config *cfg)
- {
+> ---
+>  .../bindings/mmc/{sdhci-msm.yaml =3D> qcom,sdhci-msm.yaml}        | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>  rename Documentation/devicetree/bindings/mmc/{sdhci-msm.yaml =3D> qcom,s=
+dhci-msm.yaml} (99%)
+>
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Docum=
+entation/devicetree/bindings/mmc/qcom,sdhci-msm.yaml
+> similarity index 99%
+> rename from Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> rename to Documentation/devicetree/bindings/mmc/qcom,sdhci-msm.yaml
+> index 695a95e8f35d..cb16c08d22cc 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/qcom,sdhci-msm.yaml
+> @@ -1,7 +1,7 @@
+>  # SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>  %YAML 1.2
+>  ---
+> -$id: http://devicetree.org/schemas/mmc/sdhci-msm.yaml#
+> +$id: http://devicetree.org/schemas/mmc/qcom,sdhci-msm.yaml#
+>  $schema: http://devicetree.org/meta-schemas/core.yaml#
+>
+>  title: Qualcomm SDHCI controller (sdhci-msm)
+> --
+> 2.51.0
 
