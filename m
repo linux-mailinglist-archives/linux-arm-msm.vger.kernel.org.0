@@ -1,134 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-110309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6HbKK4q3GWpByggAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 17:58:02 +0200
+	id eD1qNUvAGWo1ywgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 18:35:23 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F09A605295
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 17:58:02 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FAB3605B7D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 18:35:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id B445830F1AB1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 15:35:59 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 506933173CF5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 16:05:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 934D93E2AD6;
-	Fri, 29 May 2026 15:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F2E23E7BC2;
+	Fri, 29 May 2026 15:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="PnU6SFhF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f8f1vukR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E311342CB3;
-	Fri, 29 May 2026 15:32:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8846364E85
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 15:58:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780068724; cv=none; b=LKwrKCiFJDeL6wvSfVbg81b3ntFvDJ7GEzV21pUkK7bj68jaaei7tdiH34K0qtb/FCk1aGTBAidmrylHJ8pEPGkXgPTb6qrGIb3jJc5X4Bw1rrWiWaNhUgfYLaopz77/2SDnysnVu0dm+X3FTeABOH4G9nH5YlEFpI/RuBg/tI0=
+	t=1780070309; cv=none; b=IXIdhub4m/YUmPr+wjuiGZ2FuqezPb2QGJ8YikCEpnmpE038uwtqmdVSJj/nuhx3FhaASSxu28Di1xTTQeZZL2yOY5sMsztje6URv0OJeRc5F+9Tkkk7v6Jg8Xchr+DaNsjI/csbJlhPvacadnHjRcymh4JpNqsUuRVdqd+47PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780068724; c=relaxed/simple;
-	bh=aaqSGHmOFP9GDydN0V8EWfYzZpiFRb3G1MWrfDttjnY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sygrgLBT+GaPUlwrtqOHWl2hlJC9M97hLQgqzzp3ie9WAcMoTzQ2I/gKfYWxNctVOLsQLPM41MhfC9IsmDcGLm/s31Qi//ylhXR4FQ+KF29cC52P1ElGELgycoSk5zLRdN1kKcfdhN+o/OQnkF/3CTM0Aq091xdAkQC83TPsXvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=PnU6SFhF; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A7DA233EA;
-	Fri, 29 May 2026 08:31:57 -0700 (PDT)
-Received: from localhost (e132581.arm.com [10.1.196.87])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 438BA3F632;
-	Fri, 29 May 2026 08:32:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1780068722; bh=aaqSGHmOFP9GDydN0V8EWfYzZpiFRb3G1MWrfDttjnY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PnU6SFhFsjLY+yQklLoE94ixjHzfniX4RqzaSHh+5npaDzp24Ijjo7Fb8U+ixEm2V
-	 qSOw8lTBRVqQJfnDp22g0DqrLk1vP0xLac+LzXj+c6e7BEuP9/fC/JwGqyFWLS7WKo
-	 e0xnjijWYfwE/20g0NEqNRUSs81iWIjKciaO3fps=
-Date: Fri, 29 May 2026 16:32:00 +0100
-From: Leo Yan <leo.yan@arm.com>
-To: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	jinlong.mao@oss.qualcomm.com, quic_yingdeng@quicinc.com,
-	tingwei.zhang@oss.qualcomm.com, jie.gan@oss.qualcomm.com
-Subject: Re: [PATCH v9 4/4] coresight: cti: expose banked sysfs registers for
- Qualcomm extended CTI
-Message-ID: <20260529153200.GL101133@e132581.arm.com>
-References: <20260521-extended_cti-v9-0-d21f4f92c51e@oss.qualcomm.com>
- <20260521-extended_cti-v9-4-d21f4f92c51e@oss.qualcomm.com>
+	s=arc-20240116; t=1780070309; c=relaxed/simple;
+	bh=9BCS56pVRryY7pWjuzmcS8K36R35NfR88+/6XLLhN6U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tgqMt8aCNNHcGzKGXpmQ32XX2AqUOqtjibtWXiAkHfs2UiPZAUQAN+PO/vWrOWoXxgLBohM6lTHSAMWvbKCYCHt8ZwMtlkoFZkOfJOxIANAg5PQD+zoITnWGoWw6EHTcLr1X7U/n6EGhhAf1EtzQgzgc3ZsH9tU6FQcn5apJv/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f8f1vukR; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE471F0089B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 15:58:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780070307;
+	bh=9q8bnA8Cybs5JYtZeRk2lM9ckb6ZQxrxMyz/lWzwvTQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=f8f1vukRXm2JaBuOVOpUOQL2X3ZlNpT56Iz+2q7JNuPD2soJM//pQ3y/ju6QggUIZ
+	 BK08E0l/6K8XC2i4eKRk0SXjOFBzCM4clWhSUXBce0C0IWV43ZqHbc5K0O0Exk9/UZ
+	 zrNf4smbjCdUQSmo3eGjuqIhY7lmSPVbT+sve+SGAQS3ItuZ7X6VBy9M4AT52z0z6F
+	 WG38IKlzQV3GNvxfVuwfo6hnUfNnaiJYQVv8PbuliRAEkynA53BI+xnG5hq6qUX98k
+	 cIZIHjJTCq5Em+xF/fZ53VDN6shmm09CMyrKhV/geYLdk7enLpFT+EJmvwyAMp68yU
+	 s7G9lkS7mxuIw==
+Received: by mail-dl1-f52.google.com with SMTP id a92af1059eb24-1353c2f35cfso7458149c88.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 08:58:27 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ+P7jv3aBVrjYGZ+cpIZKrymJkvLkhmz4lxVlUpb2iiU+vZq6ab3kNwA1325sLj4WjBsAJetD8kVfZeLyfD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzn4H79rY0V79Vb9icx3abGBCbNgKSVyZ9qGHdlNoyjq3Hxw3iG
+	1nqErfQFPdQen74kAD/oGka0DFlwtMU1+Bx22/XQihDkw14mH2+3GNnO1yjvfKLaXtyGa5I6Yaq
+	OsHhfTJFDtQiPosWHmQSKNMlALFx+Wm4DgVf/31DxfQ==
+X-Received: by 2002:a05:7022:6299:b0:135:dc3d:ab50 with SMTP id
+ a92af1059eb24-137d4242f26mr125225c88.29.1780070307047; Fri, 29 May 2026
+ 08:58:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260521-extended_cti-v9-4-d21f4f92c51e@oss.qualcomm.com>
-X-Spamd-Result: default: False [-2.16 / 15.00];
+References: <20260515-shikra_qcrypto-v1-0-80f07b345c29@oss.qualcomm.com>
+ <20260514194735.GA1939213@google.com> <d4d35e17-84fa-4c95-9bfb-abfd25ea7f4a@oss.qualcomm.com>
+ <20260522024912.GC5937@quark> <c1697372-54ec-4f57-85d9-ad375ff1a44d@oss.qualcomm.com>
+ <20260525142843.GA2018@quark> <e49c4a45-6455-47f3-a91f-c32c1a0b99be@oss.qualcomm.com>
+ <CAMRc=MfC6CEwOXYttsav3mwqyJ2F4sburBj+zNJ25qMoweyL-Q@mail.gmail.com>
+ <lj7geczhthury476ilkjym2k5fblo5pqroefsbdfgh5jcf7zy2@qrss5xc7umn3>
+ <CAMRc=Me6cqasdBknbAjUZ5BqcpERYwV+NvseRJp4P0aTSYAMUw@mail.gmail.com> <20260528175214.GA3936298@google.com>
+In-Reply-To: <20260528175214.GA3936298@google.com>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Fri, 29 May 2026 17:58:12 +0200
+X-Gmail-Original-Message-ID: <CAMRc=MfY-tmMCdw9FVBgfkX-FvB5Nx2X06S023GhASenSCQSNA@mail.gmail.com>
+X-Gm-Features: AVHnY4LP_t91eok9MEp4yvSeZMeVRFiXKE_WmFYVgc-of5NzGm-5x7t-ox5gugo
+Message-ID: <CAMRc=MfY-tmMCdw9FVBgfkX-FvB5Nx2X06S023GhASenSCQSNA@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Add support for qcrypto on shikra
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>, Thara Gopinath <thara.gopinath@gmail.com>, 
+	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	dmaengine@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>, 
+	Neeraj Soni <neeraj.soni@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-110310-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,gmail.com,gondor.apana.org.au,davemloft.net,kernel.org,vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110309-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[arm.com:+];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[22];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[leo.yan@arm.com,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,linaro.org:email,arm.com:email,arm.com:dkim]
-X-Rspamd-Queue-Id: 4F09A605295
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
+X-Rspamd-Queue-Id: 4FAB3605B7D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, May 21, 2026 at 08:16:30PM +0800, Yingchao Deng wrote:
+On Thu, May 28, 2026 at 7:52=E2=80=AFPM Eric Biggers <ebiggers@kernel.org> =
+wrote:
+>
+> On Thu, May 28, 2026 at 11:13:47AM -0400, Bartosz Golaszewski wrote:
+> > On Thu, 28 May 2026 15:50:10 +0200, Dmitry Baryshkov
+> > <dmitry.baryshkov@oss.qualcomm.com> said:
+> > > On Thu, May 28, 2026 at 09:13:23AM -0400, Bartosz Golaszewski wrote:
+> > >> On Thu, 28 May 2026 13:54:51 +0200, Kuldeep Singh
+> > >> <kuldeep.singh@oss.qualcomm.com> said:
+> > >> >>> +Bartosz, Gaurav, Neeraj
+> > >>
+> > >> I know about the self-tests etc., I will address them next.
+> > >
+> > > My 2c, the self-tests would be more important, as they are fixes. Doi=
+ng
+> > > the crypto in a wrong way is a bad idea...
+> > >
+> >
+> > Then let that be "in parallel". :)
+>
+> The race conditions between Linux and other environments (modem, TEE,
+> etc) are of course about correctness as well, even though the self-tests
+> don't expose race condition bugs.  The self-tests have always just done
+> a few serialized tests.  That's sufficient for CPU-based code, but not
+> for offload drivers, which need to be stress-tested to find the
+> concurrency bugs that occur during actual use.
+>
+> Is there a plan to improve the tests to do stress testing as well?
+>
 
-[...]
+I'm not sure if we can easily implement linux-only tests using
+multiple execution environments. I will look into it and come back
+with an answer.
 
-> @@ -515,18 +543,36 @@ static struct attribute *coresight_cti_regs_attrs[] = {
->  	&dev_attr_appclear.attr,
->  	&dev_attr_apppulse.attr,
->  	coresight_cti_reg(triginstatus, CTITRIGINSTATUS),
-> +	coresight_cti_reg_index(triginstatus1, CTITRIGINSTATUS, 1),
-> +	coresight_cti_reg_index(triginstatus2, CTITRIGINSTATUS, 2),
-> +	coresight_cti_reg_index(triginstatus3, CTITRIGINSTATUS, 3),
+> It's kind of odd that they don't do that yet.  But it makes sense: the
+> CPU-based code doesn't need it, while the offload driver authors have
+> never cared enough about correctness and test coverage to add it.
+>
+> I still don't really see a path forward here, given the track record and
+> poor performance numbers.  This approach just doesn't work.
+>
 
-For this patch:
+Sorry but I'm not sure what your point is. What this series does is:
+it documents the compatible for the crypto engine that very much *does
+exist* on the SoC and describes how it's wired up as a real HW
+component in devicetree. Whatever the state of the driver is, it's not
+grounds for NAKing HW description. The IP *is* there, we're allowed to
+describe it in DTS.
 
-Reviewed-by: Leo Yan <leo.yan@arm.com>
+Qualcomm wants to use this IP and I will keep on improving it. I think
+that - given the BAM locking series is at v19 now and has been
+initially posted in 2023 - I've a proven track record of not
+abandoning it. :)
 
-AI tool reminds to update
-Documentation/ABI/testing/sysfs-bus-coresight-devices-cti, you might
-need to add description with a new patch:
+I'm away next week but will look into self-tests the week after. This
+series - once fixed - should go upstream independently.
 
-  What:           /sys/bus/coresight/devices/<cti-name>/regs/trigoutstatus[1-3]
-  Date:           May 2026
-  KernelVersion:  7.2
-  Contact:        coresight@lists.linaro.org
-  Description:    (Read) read current status of QCOM extended output trigger signals.
-
-And please add document for other new sysfs knobs.
-
-Thanks,
-Leo
+Bart
 
