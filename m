@@ -1,226 +1,279 @@
-Return-Path: <linux-arm-msm+bounces-110299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2IhmBhymGWptyAgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 16:43:40 +0200
+	id KByRKtWoGWodyQgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 16:55:17 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD85D603CE2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 16:43:39 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0825860408C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 16:55:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id B5C7A308AF18
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 14:39:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D4097300D14A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 14:41:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09B3D3EAC8A;
-	Fri, 29 May 2026 14:38:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F5AC3E2AD6;
+	Fri, 29 May 2026 14:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KZfrr961";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ERqOVPWr"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="pQa9iw4w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8F63F076E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 14:38:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EDA63E9F7D;
+	Fri, 29 May 2026 14:40:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780065506; cv=none; b=SVEGBgf+7RO+dwK/4X7Z4Gsr5LLE9J57FsnPVc9egzJTRoGRD8XUAepw8jRnuwPlZFpIRtRzgrQvgmwsfWlGJ0VuuBK8p+684aySIyEDzY9bXzAs4oaXL0hOJ73AiH+jVx6CRSK7Y7L7ms1jRx8126qpxKbOjnhkRHCbDB6FmIQ=
+	t=1780065661; cv=none; b=tPdkNLK9FFqqYdSP5cs7pYP8M71k4s7AHFaoYikiBOguLD1/sykXSMNZ+RJzQQDmb2oiodRNWVbgOKqBSTfokrp934AbNi9k+skxC2eoFeHB/sSkYFC8prOddzQ8w24FTtIjYJO//zCxuJQOZwGlvFnbpZ+SYhdgZWj20RWl2/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780065506; c=relaxed/simple;
-	bh=2l7ASUVYGl+MTHZQX1kdxBx7D4NE1H4xPHCxp/OAHqY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DhHWGYeyZ9pNRJznGEjaB8dx2d9ny+EBHEhVGHEfROjBnNnLCcQSaSqqIRqZ4t43Wq4TkJ8s50kBIJ4GbRwFgvF0dlGyg0QTp4ipdEPILgk36IBu/3gsnf5JowAYkMOarUFbtiY2IFfy9VXlzQVSGEmamlnsF+jq2YyqduIpN4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KZfrr961; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ERqOVPWr; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64TDLEHn4050791
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 14:38:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pEPcxjulbQi4xYK18d6nSKAQis+Z1kXngU/yn5ZXG88=; b=KZfrr961hmLBrKT9
-	XiTWDl1D1ZNymTD9ynXZ2wsPMxqsUEdrMwPyim1m8QKsz3i3seGeerTit/8d1Kt2
-	2yAKhlEVaW7BveEhaQJYlq6y7XM3soaiPiGhSN2bEk0E5due9vKd1FlEZrkgDBYc
-	jlRDc2GWOyTDSuKKLoll4/FlyfEqgj5J6tME6WbEkvOSNobTy3nGbWWjVtq27V2C
-	0cpccSLA8p5MBvCC83sreqnvHPlE5uz54LtDpoZL4Rngh41rMd144hYhXtPC1mZO
-	Y2QqCElPykRdZid8aQFgqKTQG2FHYDVOmvX+hFF7VoszyajyspZ/C+al1ikIG51p
-	EvdENQ==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eety54h7x-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 14:38:24 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-365fd467cf6so11596345a91.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 07:38:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780065504; x=1780670304; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pEPcxjulbQi4xYK18d6nSKAQis+Z1kXngU/yn5ZXG88=;
-        b=ERqOVPWryyh/XgTcyw8ItZzQFLhHDkMF4OkkKRBPRU4DPFXqYMh3Y0JrEF9qJX6XLh
-         0PubI+A3rdS/PxObtvtq1WvUk0P6jjzxvzDpBrbYHwE7kfoTF62ZVOAqbXceOAEhzrAG
-         S8lr8VO3GGYa1RAIxaxtA6vxJZHb+If6xL+GXha6Tbbgr6zOWo5LBGDBTr3ceSlWY+1N
-         iCMLzLNgDFT5do+vy2KDC1l/0lJ9oGviawuXzBNQzSAK//a9wgFT5cOODNhPqW4vIJEp
-         g6+A89n6ybmGr+jn/N+tT2+xgJH02QwDHfuTlhNpz40Duu0OIAMwIIKN0GYQmxVZx/Bi
-         WZ5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780065504; x=1780670304;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pEPcxjulbQi4xYK18d6nSKAQis+Z1kXngU/yn5ZXG88=;
-        b=GWuR6mWM3r0WrK1iagLNe9SGJqw7yG7nJj2RjbgsSpyjnSmqJHVJdPiQ9Rkhmxi9QC
-         GFza2cGcliy8RTSg03+RhYl1PBlFtN/BoC3x7J4nmF8SuZzqVFeCvI9CsnZ7Ju80kjf0
-         3NIVen8zXfUSFvCBfdL6ez5xmyHLWdBw9afEfzAzjj+nwfmiz6jEhG3C9HeYT49RD8Fm
-         8jis/Ribl5VS9vsPv8IiX1DlhlGvMSfWipflK3Th4G/Gg5iWEIiABWb1zdX7vgE7CJNe
-         mqrPfR/vRQx/q/lmXn5VM2c9A9YbUfhFj8aV6Gdri4RgjJQvDlybDxoxUCkhBndhEWQH
-         sSoA==
-X-Gm-Message-State: AOJu0Yw/t5XDZIhfyWKa4O9docZ9gJbx7O0oTS/F08zMipny6nAV0pfC
-	XwY/pw9JSE/IGmNnDdYrYwapCS0xDY8IeIcR83oVtjPNe5XSZDRehMZnuKdbNYiez1624LSVBU9
-	fHnAwToLLVxnRVWaIItCD3hfJSxveCEefshNrjpJzOlo3f0LuSUj959OQwv1PikXovHSz0HGNrM
-	DT
-X-Gm-Gg: Acq92OFxIBoi/BEm8GgTrFPAZFTwwinPJnyK9KltUhWuLpTVPVkGFN5tHWdvDUwCCS0
-	NPnvgtoI8EpNmO+XNyd7+4n4wvKy/871H+o9PwyI5lbfitKzKaYqHWOO0c8rAjCTvTo2atOPe6R
-	T80gNb7tdbSTwMA6R/4zWpTM2z53ICaJrs+N8RHzyXaKdGnHafP+Bu8CQGHFwruz/Iln8j5w6AG
-	9K/gRO8HCryiM0qhphtQ65I8yB0e71HhuNS/1euftAfj0P8/yjAKNnz7+vt7ssZYNKL9yKHq8FJ
-	tw/Iap01M3a53Qccq8ZQ1gqfxOtEOJitvPgo/RB0CctHckgEAVcEkY8zpJUCn01w7iURE4IZrk9
-	aGSzNDteTAJWezheEekw4lSa50ZI0GaJH0GqBnFGNp5x8etyJhBx7yrZpKjq7LaSKdg==
-X-Received: by 2002:a17:90b:4cc9:b0:36a:3176:ad08 with SMTP id 98e67ed59e1d1-36bbcff7b2dmr3693042a91.25.1780065503611;
-        Fri, 29 May 2026 07:38:23 -0700 (PDT)
-X-Received: by 2002:a17:90b:4cc9:b0:36a:3176:ad08 with SMTP id 98e67ed59e1d1-36bbcff7b2dmr3692997a91.25.1780065503106;
-        Fri, 29 May 2026 07:38:23 -0700 (PDT)
-Received: from hu-vikramsa-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85772993c9sm2469394a12.15.2026.05.29.07.38.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2026 07:38:22 -0700 (PDT)
-From: Vikram Sharma <vikram.sharma@oss.qualcomm.com>
-Date: Fri, 29 May 2026 20:07:26 +0530
-Subject: [PATCH 6/6] media: qcom: camss: Enumerate resources for Glymur
+	s=arc-20240116; t=1780065661; c=relaxed/simple;
+	bh=SaSJnQrDHy26ahs5WkmoCdUA8qqhur7vMZILhcqQpYM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JTcPzvqeHzU/m4E1bYnk+TzlwebKhWhuxZ6oQ7Hwn0Uc2Dzmgs0NZd98I7FFlG1vHOogv9WvEYGeVH17fSV9f1PdGGFckHcdOWLrZXwvFUmplrj30qNnpJR3k+Abv492c3Cx6+C4NJzy+P29VyTLW3xEWtyj90lvMda4DTuO4WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=pQa9iw4w; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 878451FC7;
+	Fri, 29 May 2026 07:40:53 -0700 (PDT)
+Received: from localhost (e132581.arm.com [10.1.196.87])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 247A23F905;
+	Fri, 29 May 2026 07:40:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1780065658; bh=SaSJnQrDHy26ahs5WkmoCdUA8qqhur7vMZILhcqQpYM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pQa9iw4we79cyPR7M1QBB5Qcr4ZgyPHdo+IWFUSsUwjFVyyXCW91NcFUool1WTWcz
+	 E/25jC3m2pzJT2w2YxJ6QNBMws7LXlLLxZaqorWv4ySL14w8EEXnPd9vJ8Yvflv5pa
+	 w7RRBLC/d4Yl7Xv8gm3nkhxhmLNwVkGxti1UyG34=
+Date: Fri, 29 May 2026 15:40:55 +0100
+From: Leo Yan <leo.yan@arm.com>
+To: Yingchao Deng <yingchao.deng@oss.qualcomm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@arm.com>,
+	James Clark <james.clark@linaro.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	jinlong.mao@oss.qualcomm.com, quic_yingdeng@quicinc.com,
+	tingwei.zhang@oss.qualcomm.com, jie.gan@oss.qualcomm.com
+Subject: Re: [PATCH v9 2/4] coresight: cti: use __reg_addr() helper for
+ register access
+Message-ID: <20260529144055.GK101133@e132581.arm.com>
+References: <20260521-extended_cti-v9-0-d21f4f92c51e@oss.qualcomm.com>
+ <20260521-extended_cti-v9-2-d21f4f92c51e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260529-glymur_camss-v1-6-bee535396d22@oss.qualcomm.com>
-References: <20260529-glymur_camss-v1-0-bee535396d22@oss.qualcomm.com>
-In-Reply-To: <20260529-glymur_camss-v1-0-bee535396d22@oss.qualcomm.com>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Nihal Kumar Gupta <nihal.gupta@oss.qualcomm.com>,
-        Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-i2c@vger.kernel.org,
-        Vikram Sharma <vikram.sharma@oss.qualcomm.com>,
-        Suresh Vankadara <svankada@qti.qualcomm.com>,
-        Prashant Shrotriya <pshrotri@qti.qualcomm.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1780065463; l=1246;
- i=vikram.sharma@oss.qualcomm.com; s=20240628; h=from:subject:message-id;
- bh=cjRbYS3MDx7sjTRWCdrbRmdl5hn7CXbudx8PwfgWcG4=;
- b=Y+9dlGWNrAcbBsDrknHM1Mie43lV9Z4E356FDUowae3qBsowgbcnLblt/w2+TPEFBvqN7iz2Y
- /EP3L149QFcBpoqzk+zGxdSant8Ug9v6mny0vsvig07ourJidmQq/Ez
-X-Developer-Key: i=vikram.sharma@oss.qualcomm.com; a=ed25519;
- pk=vQBkwZr1Hv+VXogAyTAu7AEx8/6bvkOmgrzYFbNGCDI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDE0NCBTYWx0ZWRfX/D71Z/SV2kUU
- RPp1L4rPHJzk2ypbAeAALiUZwwq+DXLldPCFqcfAXq0NlOJOOQKSca/0qSL4m1pxgTFOVDfYwYr
- uslD94MMDESYh+SWKPClGkvBZ0kdJgA72/nGEpXXFnJI2erVo651HKMQT+/GUqHqZEmHhbwZ2Y2
- GmAEDXUIJrGTz1pDcoyAR0/PP/4ryfLENmOOGf4jKQXE3PuEAG8GCWuqbgpeZPWXB69JbK249sy
- VnkABmoAwRBR/wSEj56qu/rbnzthuJUUTRT7KFbhisB4BzuNPlOUWpu52sZC2x9o5JnndCzKGD5
- mPjNS7oVBJsJWwVrk1Zauiz6l479qy07Hm55rOusWudylaX55sXa8wpkVkv5kvepHfupY7QeGx/
- SdCPlgabgcj41JLw0eS+A6984/LRJlNVfmIZC61clJPIua/sXN5eV1yHqxJlZMVaxRawVtY718P
- vjX135h04QbguQDlGGQ==
-X-Proofpoint-GUID: AmUtBBRQ08x7Wn21AdqHr2hk9JsTEYm-
-X-Authority-Analysis: v=2.4 cv=WaM8rUhX c=1 sm=1 tr=0 ts=6a19a4e0 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=mRZuhVVaaiH9Hk074e4A:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-ORIG-GUID: AmUtBBRQ08x7Wn21AdqHr2hk9JsTEYm-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-29_04,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
- adultscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605290144
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260521-extended_cti-v9-2-d21f4f92c51e@oss.qualcomm.com>
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	TAGGED_FROM(0.00)[bounces-110299-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:email,qualcomm.com:dkim];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vikram.sharma@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	TAGGED_FROM(0.00)[bounces-110300-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[arm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[leo.yan@arm.com,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: AD85D603CE2
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,e132581.arm.com:mid]
+X-Rspamd-Queue-Id: 0825860408C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Prashant Shrotriya <pshrotri@qti.qualcomm.com>
+On Thu, May 21, 2026 at 08:16:28PM +0800, Yingchao Deng wrote:
 
-Enumerate csiphy, csid vfe and tpg resources for Glymur.
+[...]
 
-Signed-off-by: Prashant Shrotriya <pshrotri@qti.qualcomm.com>
-Signed-off-by: Vikram Sharma <vikram.sharma@oss.qualcomm.com>
----
- drivers/media/platform/qcom/camss/camss.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+> +static void __iomem *__reg_addr(struct cti_drvdata *drvdata, u32 off,
+> +				u32 index)
+> +{
+> +	return drvdata->base + off + sizeof(u32) * index;
+> +}
+> +
+> +#define reg_addr(drvdata, off)		__reg_addr((drvdata), (off), 0)
+> +#define reg_index_addr(drvdata, off, i)	__reg_addr((drvdata), (off), (i))
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 864e16e999e3..004df8fdf08c 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -5564,6 +5564,17 @@ static void camss_remove(struct platform_device *pdev)
- static const struct camss_resources glymur_resources = {
- 	.version = CAMSS_GLYMUR,
- 	.pd_name = "top",
-+	.csiphy_res = csiphy_res_glymur,
-+	.tpg_res = tpg_res_x1e80100,
-+	.csid_res = csid_res_x1e80100,
-+	.vfe_res = vfe_res_x1e80100,
-+	.csid_wrapper_res = &csid_wrapper_res_x1e80100,
-+	.icc_res = icc_res_x1e80100,
-+	.icc_path_num = ARRAY_SIZE(icc_res_x1e80100),
-+	.csiphy_num = ARRAY_SIZE(csiphy_res_glymur),
-+	.tpg_num = ARRAY_SIZE(tpg_res_x1e80100),
-+	.csid_num = ARRAY_SIZE(csid_res_x1e80100),
-+	.vfe_num = ARRAY_SIZE(vfe_res_x1e80100),
- };
+> -u32 cti_read_single_reg(struct cti_drvdata *drvdata, int offset)
+> +u32 cti_read_single_reg(struct cti_drvdata *drvdata, u32 off, u32 index)
+>  {
+> -	int val;
+> +	u32 val;
+>  
+>  	CS_UNLOCK(drvdata->base);
+> -	val = readl_relaxed(drvdata->base + offset);
+> +	val = readl_relaxed(reg_index_addr(drvdata, off, index));
+>  	CS_LOCK(drvdata->base);
+>  
+>  	return val;
+>  }
+>  
+> -void cti_write_single_reg(struct cti_drvdata *drvdata, int offset, u32 value)
+> +void cti_write_single_reg(struct cti_drvdata *drvdata, u32 off, u32 index,
+> +			  u32 value)
+>  {
+>  	CS_UNLOCK(drvdata->base);
+> -	writel_relaxed(value, drvdata->base + offset);
+> +	writel_relaxed(value, reg_index_addr(drvdata, off, index));
+>  	CS_LOCK(drvdata->base);
+>  }
+
+I prefer to move the register helpers into coresight-cti.h and add two
+additional helpers: cti_read_single_reg_index() and
+cti_write_single_reg_index().
+
+I also found circular dependency between coresight-cti.h and qcom-cti.h.
+Since qcom-cti.h only contains register definitions and a small inline
+function for register conversion, we can simply fold it into
+coresight-cti.h and dismiss the circular dependency.
+
+Based on this idea, I played around with the code a bit (see the snippet
+below). Would you be okay with applying this approach to patches 02/03?
+If have any questions, please let me know.
+
+---8<---
+
+--- a/drivers/hwtracing/coresight/coresight-cti.h
++++ b/drivers/hwtracing/coresight/coresight-cti.h
+@@ -60,6 +60,31 @@ struct fwnode_handle;
+  */
+ #define CTIINOUTEN_MAX		128
  
- static const struct camss_resources msm8916_resources = {
-
--- 
-2.43.0
-
++/* QCOM CTI extension */
++#define QCOM_ARCHITECT		0x477
++
++#define QCOM_CTIINTACK		0x020
++#define QCOM_CTIAPPSET		0x004
++#define QCOM_CTIAPPCLEAR	0x008
++#define QCOM_CTIAPPPULSE	0x00C
++#define QCOM_CTIINEN		0x400
++#define QCOM_CTIOUTEN		0x800
++#define QCOM_CTITRIGINSTATUS	0x040
++#define QCOM_CTITRIGOUTSTATUS	0x060
++#define QCOM_CTICHINSTATUS	0x080
++#define QCOM_CTICHOUTSTATUS	0x084
++#define QCOM_CTIGATE		0x088
++#define QCOM_ASICCTL		0x08C
++/* Integration test registers */
++#define QCOM_ITCHINACK		0xE70
++#define QCOM_ITTRIGINACK	0xE80
++#define QCOM_ITCHOUT		0xE74
++#define QCOM_ITTRIGOUT		0xEA0
++#define QCOM_ITCHOUTACK		0xE78
++#define QCOM_ITTRIGOUTACK	0xEC0
++#define QCOM_ITCHIN		0xE7C
++#define QCOM_ITTRIGIN		0xEE0
++
+ /**
+  * Group of related trigger signals
+  *
+@@ -222,9 +247,8 @@ int cti_enable(struct coresight_device *csdev, enum cs_mode mode,
+ int cti_disable(struct coresight_device *csdev, struct coresight_path *path);
+ void cti_write_all_hw_regs(struct cti_drvdata *drvdata);
+ void cti_write_intack(struct device *dev, u32 ackval);
+-void cti_write_single_reg(struct cti_drvdata *drvdata, u32 off, u32 index,
+-			  u32 value);
+-u32 cti_read_single_reg(struct cti_drvdata *drvdata, u32 off, u32 index);
+ int cti_channel_trig_op(struct device *dev, enum cti_chan_op op,
+ 			enum cti_trig_dir direction, u32 channel_idx,
+ 			u32 trigger_idx);
+@@ -237,6 +261,78 @@ struct coresight_platform_data *
+ coresight_cti_get_platform_data(struct device *dev);
+ const char *cti_plat_get_node_name(struct fwnode_handle *fwnode);
+ 
++static inline u32 cti_qcom_reg_off(u32 offset)
++{
++	switch (offset) {
++	case CTIINTACK:		return QCOM_CTIINTACK;
++	case CTIAPPSET:		return QCOM_CTIAPPSET;
++	case CTIAPPCLEAR:	return QCOM_CTIAPPCLEAR;
++	case CTIAPPPULSE:	return QCOM_CTIAPPPULSE;
++	case CTIINEN:		return QCOM_CTIINEN;
++	case CTIOUTEN:		return QCOM_CTIOUTEN;
++	case CTITRIGINSTATUS:	return QCOM_CTITRIGINSTATUS;
++	case CTITRIGOUTSTATUS:	return QCOM_CTITRIGOUTSTATUS;
++	case CTICHINSTATUS:	return QCOM_CTICHINSTATUS;
++	case CTICHOUTSTATUS:	return QCOM_CTICHOUTSTATUS;
++	case CTIGATE:		return QCOM_CTIGATE;
++	case ASICCTL:		return QCOM_ASICCTL;
++	case ITCHINACK:		return QCOM_ITCHINACK;
++	case ITTRIGINACK:	return QCOM_ITTRIGINACK;
++	case ITCHOUT:		return QCOM_ITCHOUT;
++	case ITTRIGOUT:		return QCOM_ITTRIGOUT;
++	case ITCHOUTACK:	return QCOM_ITCHOUTACK;
++	case ITTRIGOUTACK:	return QCOM_ITTRIGOUTACK;
++	case ITCHIN:		return QCOM_ITCHIN;
++	case ITTRIGIN:		return QCOM_ITTRIGIN;
++
++	default:
++		return offset;
++	}
++}
++
++static inline void __iomem *__reg_addr(struct cti_drvdata *drvdata,
++				       u32 off, u32 index)
++{
++	if (unlikely(drvdata->is_qcom_cti))
++		off = cti_qcom_reg_off(off);
++
++	return drvdata->base + off + index * sizeof(u32);
++}
++
++#define reg_addr(drvdata, off)		__reg_addr((drvdata), (off), 0)
++#define reg_index_addr(drvdata, off, i)	__reg_addr((drvdata), (off), (i))
++
++static inline u32 cti_read_single_reg_index(struct cti_drvdata *drvdata,
++					    u32 off, u32 index)
++{
++	u32 val;
++
++	CS_UNLOCK(drvdata->base);
++	val = readl_relaxed(reg_index_addr(drvdata, off, index));
++	CS_LOCK(drvdata->base);
++
++	return val;
++}
++
++static inline u32 cti_read_single_reg(struct cti_drvdata *drvdata, u32 off)
++{
++	return cti_read_single_reg_index(drvdata, off, 0);
++}
++
++static inline void cti_write_single_reg_index(struct cti_drvdata *drvdata,
++					      u32 off, u32 index, u32 value)
++{
++	CS_UNLOCK(drvdata->base);
++	writel_relaxed(value, reg_index_addr(drvdata, off, index));
++	CS_LOCK(drvdata->base);
++}
++
++static inline void cti_write_single_reg(struct cti_drvdata *drvdata,
++					u32 off, u32 value)
++{
++	cti_write_single_reg_index(drvdata, off, 0, value);
++}
++
+ /* Check if a cti device is enabled */
+ static inline bool cti_is_active(struct cti_config *cfg)
+ {
 
