@@ -1,242 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-110244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QA0lJKxiGWrDvwgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 11:55:56 +0200
+	id Z7yMHCJjGWoBwAgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 11:57:54 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E8436004D2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 11:55:55 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E3DD600590
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 11:57:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7F35730069A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 09:55:52 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 25DDF3013BAA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 09:56:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A19CA3BED31;
-	Fri, 29 May 2026 09:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE4A93C4565;
+	Fri, 29 May 2026 09:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XsHwlxh0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CvpigIhO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBA23446DE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 09:55:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83AF83546FB
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 09:56:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780048550; cv=none; b=Rad/ZXzp8+lCIobdULcr/Je0Jc3C0lEu0fZJ/eqh6rzs/awN3voAe5gtlM3sugrQbGHSwOie9N7pwmpUdgwf/9Qec2B0eiT4o0K33NubVmThiVIDI6CSNFuoWnnQeNpOl5ELXHvY7Y8lslbse2avhjuQ6fh+TJoUL1IuC3/zFGM=
+	t=1780048616; cv=none; b=uUwFhJ6ACuLN5RO5iQFmD3JESyj/TYpwW6xGF9Hmlwvi6Op1R3xu6F5AW1P2f6a22baMnP9Aa8V2DD9BT2+Vjifstx3V7DL8BvRSTb3TixU4ElZ6wf9xcrivKl07128WT/m4nl2mJCkfzM9f9hfmVb4cwP+m0WO3gSewIqkKz90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780048550; c=relaxed/simple;
-	bh=d3Z4Z1iJBfrEqHD0Kpt8W1NR0WSMZYbfR2eL2irTvY4=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=l93hxZQb9naUfAv3eMWnSFu7wY0/Hq92wKxpIVdRVTvOEqoxKlpxxXqXy+JywiZgdlVz13qlQazjvZCBO4hgAMo3jWF0GkldZsxfmCP1GFPdvxD7GOC+JI6bXtDV7efX2uoyBNoPCgVMARE8OTfsZSNs6umqnQJHu5JlmkYdpEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XsHwlxh0; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-49050ff7cbdso63007985e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 02:55:48 -0700 (PDT)
+	s=arc-20240116; t=1780048616; c=relaxed/simple;
+	bh=lV4KFFGp0ypFwMw75cgGF7N44SHe2ZGna2tzsRK8m/c=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=KW+yuK2e7UyQgEjy1urim3Loax7yH0zdPNRTfh/MnBzKo5TV0jWagcIgyqTTCwVnu2LydKKWgUDe5f0Y/NpmaFDj62EhSG5SDGoEEjlVVl1bp75FcH/TAR6Poq0ewBPjtJgCLYFKvIFyRn8RLjcecIppgnFo4WrULjekntcSvKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CvpigIhO; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5a41a9a97d3so1078104e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 02:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1780048547; x=1780653347; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m7yi/3JR1gKrin2QFBbQQL2NOWimtIfwQZrg/mmS3vs=;
-        b=XsHwlxh0bfAcSxP6kVwcZEWUEnVF5tki3+XGiukD6yA6m5Bqs+C0XEAC3DC7T9ccUz
-         lNKLSVTPaeThgTlGw8T8bM+V3gDOkM0erVttObs63KUC5RyqCJvwlHxpsDy7u/W6kYRB
-         IAh7F8YHbtK95D3Njzuj73hZe1GAc/P6otYQCOiWCDM9EUpo9Owhtk6kd9pqX85+F6li
-         TFWsxpWGZNbeafXFi1AG0+gZB2Gkn8poEJvgIv5253dd1qiZgRSWwNEdcTGtPdqNnNlc
-         3wy6gxYb5OZGUWQiR5tRAeYjsFoAQlVyuH5/yOFslzsazqLjwc8gQXM54WMwNp2fICsA
-         yXrw==
+        d=gmail.com; s=20251104; t=1780048613; x=1780653413; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nLbV5NS/+AUn3jPB1rVufRXT2KFY5tOEq+biHp14VAU=;
+        b=CvpigIhOFnv0NnKDQBUvFcL41zpR6zaC68nVP6n0ybWVVxsXgnwEFntUjy9yHsCmTX
+         1WGz4dkworxwCT43fmLwiuEYvxtXM/mjZAHgYI20IzJ18NjobkWOOiXTvXZZwVsnrfj4
+         JNqsdqSdipSjOMcHPD09uTnHcbJTgg08AmLC/I66B0NlaqNW0H4hsktXIx/H1R7Vc+Od
+         CGs3V3NRFNxg0y4fo3lX6v53/PUnN7kBEKaTry53/vqlEK7kz0242EdcmFahzXjqHRKF
+         BlQ3THSYmBVNeHW164gsHGsQaYSyTPd+UKY0z/8CfZv48xnPSYF4xJL3zmsX/E8+X49l
+         jhsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780048547; x=1780653347;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=m7yi/3JR1gKrin2QFBbQQL2NOWimtIfwQZrg/mmS3vs=;
-        b=IRqcTUzb2liDEnzZIkyv9CuCKKGVHEJtERaOt75dLveBdMfhadN6yEJpDFTWkHxDM2
-         6n0WOBeSJmfaL8WueMv+UNRienm7J619mR0na1nQrPAsnmVMRHcK4nPqqVBHbbBINISE
-         0kUQgZ27UIURHFh5ImpMGmlmsb46fpDZ3d1mhZbpkJibOTO1sH0y23bHrsWMYaObxcJ/
-         S0D4iGcJMfj0M/wHOH2s0DoGSau8wzfmcVmuQzLD/K66zw7A704J6KsBvk9KUn5fVnhG
-         omf5MJ5WS+ZCq+82v1FoAiZLzv+GT2K1Nzet1UwSccuVmRDcIu3wYb8vhxZEhLs5bkCU
-         EYiw==
-X-Forwarded-Encrypted: i=1; AFNElJ9ZTSDTAxjDY/vnLGdOn1ck/8i+/+AosmjLxjvtZX4tCvBpjrTB3lvBJE0Xbil5qSxNLdB6XxkwxjUnYmyJ@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMy4K73j1RvXhDrOqmfpdIm9epd5sATpjhRHMtkyt8sB5dlxwS
-	avDut5h0kavWpX6IsiZW1FoXWM2fpI2WS3K6SPKUKIscrm0xT6UipeSG0EETKi0UEqs=
-X-Gm-Gg: Acq92OEGPCMoG1Ov6DDKaweE3Z+Twu7p7hNEW8OEcGwkkokrCD+zdwTIvYgpCNB62kM
-	RXTuo9NqpZxDt+mSmff5mLGyWaM33lwj7YS/L9ZQONTNVUq0P6BjNphpJLDiuUZdFLR8wLjWzPH
-	HFnN4Z8RLADPPfHfppw/dQxBMvzIb3zKRlfd89h5KuhjEaLUH0yEswTVhDc78Rj/P2QC1doGKHI
-	adNjvn8+oYXGRTSLvmWGXVdy7i7xxPsmQ/nb6I8ubPRZuE6PVSxr0YuTIr4s4BMVqcPGf3DlYZ/
-	8mGmyWuCuvpk2MY4IEUwQPVWGwOgeX+WADOvDBSdTkR6vIjR9Hnk2gWI4xC7ONOCVXcPVKgaTY4
-	BMyT+jwbXkPsXwsyR/vNpRe1ltCpFViykWcPL7FCpxSVjJUOS4M2ySw7QkBnbUwN8GEn0+ou0Dh
-	H5Gc37Clevzct+GtQjUJMRgtXdPeEmGDhy6Lb8bVhFOQ==
-X-Received: by 2002:a05:600c:4815:b0:488:b187:3c with SMTP id 5b1f17b1804b1-4909c088fd9mr21674855e9.14.1780048546862;
-        Fri, 29 May 2026 02:55:46 -0700 (PDT)
-Received: from [172.20.10.3] ([37.167.96.43])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4909c0c39b0sm17345645e9.2.2026.05.29.02.55.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 May 2026 02:55:46 -0700 (PDT)
-Message-ID: <3baa753a-f716-45da-b1aa-7406f4092578@linaro.org>
-Date: Fri, 29 May 2026 11:55:44 +0200
+        d=1e100.net; s=20251104; t=1780048613; x=1780653413;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nLbV5NS/+AUn3jPB1rVufRXT2KFY5tOEq+biHp14VAU=;
+        b=KjHerSftQJkCa/MQJfIcyiu8x6WwWKhwj+QZAN5hnA+rhQNV2z+dT9jvEjxILS1Oii
+         vFE7Dfi/iMZT/KifdK7eeL1OIXuruuxGqXARQGZ/BGe0rj1/AjEWeeacuxrwuUzCN87p
+         tILFr9gQCJBXjlq+uOnRQYcHIKNGftxUMhvEroDm4oICBKxyUZ4hCbW7f6lOOybtiOA7
+         KUJAGKGYzfrXp4FTIGrPt/o2WikYRDU+KQ0/WHq7P2FUa98MEDFUc4zquGQkQ26ofl9c
+         BbvZwabxMha8j9cao+F1t9CC+DsQ5rN2sRjWF2i4r4rJibgFwG1rI4RA0V+/dq56N/Kh
+         fINw==
+X-Forwarded-Encrypted: i=1; AFNElJ9dI8UcpHfGDNzLExheyOfg3cjs9S7J2FH1eZcvNFES7qZZ6zYyReyoyJaKJUPFrQ00A9XwhlZaP85rkjZK@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVGyJB3Qd+jd1VkdaTegW0iN7hLjEBbBdH7NnX/KrZRDD/y1gz
+	tz10pGJLW4HCoI3kOuHJ1oR6oL80dwso9cYAgd9FSop3yBC7WvvegAwZ
+X-Gm-Gg: Acq92OEcu/R6iJj57rReCuMoEQittjZBjfzIaeJtN1PjAqd8Bgmjb9d+lJSKVU44/ab
+	2bzYQj97jDe77q1fyQdcwQn31pVeoVBmuvxd9Qrh8vskrCnBJ2BnKe9hotOkX/eWzRm0cSbZz3y
+	UjmkiC+EBd0uRWvJttdeU+ve9ZaRt6uj4YGVpHe9VGDWnHXf5PthLvmkqQ46cnE0VV+hli0sfvF
+	YHyevgcF6UbnMrBGJAsn7843oYAQ2RY/ls0rF1ChqCSDHgE72RpzTzrEzg8cdSVVoUyJl5tTMNv
+	tUWscsI5+Fc7qecfDVLSLdRhmiigajAN0LZ5l2tnhYb7Kq3pjXKf5EE0A3p7ivXImcd03JK9J5a
+	6JQNt2gViZJ7msrpc98bPHU+hF0XXlEoO7WnPj4EQkXUkda15K9OSitpH4g66ODAUi7CK6nr15D
+	jnySXBZt08zVer7lCoJ80lTClUd4eo6yLtxBuPpX7yx9xE5GFr+W2sSonKAMvxyjG4MQ==
+X-Received: by 2002:a05:6512:3988:b0:5a8:7396:63e3 with SMTP id 2adb3069b0e04-5aa59523751mr278652e87.5.1780048612472;
+        Fri, 29 May 2026 02:56:52 -0700 (PDT)
+Received: from localhost.localdomain ([94.158.61.193])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aa5b07214asm178613e87.21.2026.05.29.02.56.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 May 2026 02:56:52 -0700 (PDT)
+From: Stepan Ionichev <sozdayvek@gmail.com>
+To: jic23@kernel.org
+Cc: dlechner@baylibre.com,
+	nuno.sa@analog.com,
+	andy@kernel.org,
+	hcazarim@yahoo.com,
+	linux-iio@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3] iio: adc: qcom-spmi-iadc: balance enable_irq_wake() on driver unbind
+Date: Fri, 29 May 2026 14:56:48 +0500
+Message-Id: <20260529095649.2452-1-sozdayvek@gmail.com>
+X-Mailer: git-send-email 2.33.0.windows.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 0/6] media: qcom: iris: add support for decoding 10bit
- formats
-To: Wangao Wang <wangao.wang@oss.qualcomm.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20260521-topic-sm8x50-iris-10bit-decoding-v4-0-8ff8fce3f904@linaro.org>
- <fa26f61e-86b6-4612-afae-7726e3b35c4b@oss.qualcomm.com>
- <12102d68-da35-47ea-a972-28cb6d54ce1c@linaro.org>
- <feb42925-5704-4266-8c3f-aa944fdbed28@oss.qualcomm.com>
- <12da2953-fe51-4999-9656-2b42a7897f91@oss.qualcomm.com>
- <c54e7f34-b3a7-47fa-843a-9930de04599e@linaro.org>
- <9148913b-a5cd-4730-beff-6c517ac4818e@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <9148913b-a5cd-4730-beff-6c517ac4818e@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110244-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,linaro.org:replyto,linaro.org:mid,linaro.org:dkim,larmoire.org:url];
 	MIME_TRACE(0.00)[0:+];
-	HAS_ORG_HEADER(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	TAGGED_FROM(0.00)[bounces-110245-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[baylibre.com,analog.com,kernel.org,yahoo.com,vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[sozdayvek@gmail.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	TO_DN_NONE(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	REPLYTO_EQ_FROM(0.00)[]
-X-Rspamd-Queue-Id: 7E8436004D2
+	RCPT_COUNT_SEVEN(0.00)[8];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 4E3DD600590
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi,
+iadc_probe() calls enable_irq_wake() after a successful
+devm_request_irq(), but the driver has no remove callback or
+matching disable_irq_wake(), so the wake reference count on the
+IRQ is leaked on module unload or driver unbind.
 
-On 5/29/26 10:21, Wangao Wang wrote:
-> 
-> 
-> On 2026/5/28 21:26, Neil Armstrong wrote:
->> Hi Wangao,
->>
->> On 5/27/26 06:15, Wangao Wang wrote:
->>> I tested the v4 patch using the gst command you provided earlier. The decoded output still has the previous plane misalignment issue, but all frames are decoded successfully. When viewing the raw data with an image player at 1920x1080 resolution, the first frame looks correct but subsequent frames appear shifted. If viewed at 1920x1088 resolution, there are artifacts at the bottom of each frame. I've attached the images.
->>>
->>> Also, have you tested the 720p case? I can't get it to run on my end.
->>
->> Thanks for the report but I don't have access to the Purwa platform you use,
->> I've run test with multiple resolutions with display using P010
->> and QC10, and ran fluster aswell and all passed on SM8550 and SM8650.
->>
->> I'll test it on the Hamoa T14S I have which should be the closest to purwa,
->> but it uses the same driver setup as SM8550 so I expected it to work the same.
->>
->> Could you indicate which iris firmware you're using ?
->>
->> Could you try passing the fluster h265 main10 test suite with gstreamer ?
->>
->> fluster download -c h.265
->> fluster run -d GStreamer-H.265-V4L2 -ts JCT-VC-HEVC_V1 -q -s -j1
->>
->> The picture you send looks like there's a mismatch with the kernel
->> and firmware setup of planes offsets.
->> Could you check if there's a Purwa specific firmware property
->> to set for 10bit decoding ?
->>
->> Neil
->>
->>>
-> 
-> Hi Neil,
-> 
-> I also tested on hamoa, and it has the same issue as purwa. The firmware used on purwa is vpu30_p1_s7.mbn.
-> 
-> This is the result of fluster:
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WP_MAIN10_B_Toshiba_3       ... Success
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_A_ericsson_MAIN10_2       ... Success
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_A_ericsson_MAIN_2       ... Success
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_B_ericsson_MAIN10_2       ... Success
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_B_ericsson_MAIN_2       ... Success
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_C_ericsson_MAIN10_2       ... Success
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_C_ericsson_MAIN_2       ... Success
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_D_ericsson_MAIN10_2       ... Error
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_D_ericsson_MAIN_2       ... Error
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_E_ericsson_MAIN10_2       ... Success
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_E_ericsson_MAIN_2       ... Success
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_F_ericsson_MAIN10_2       ... Success
-> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_F_ericsson_MAIN_2       ... Success
-> 
+Check the IRQ request error first, then register a devm action
+that calls disable_irq_wake() so the wake reference is released
+in the same scope as the enable. While here, drop the inverted
+"if (!ret) ... else return ret" in favour of the standard
+"if (ret) return ret;" pattern.
 
-Ok so this works fine, so I'm really wondering if your main10 HEVC is not properly encoded.
+Fixes: ce0694841ea6 ("iio: iadc: Qualcomm SPMI PMIC current ADC driver")
+Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
+---
+v3:
+- Add Fixes tag (Jonathan)
 
-Could you try playing a well know HEVC main10 files ?
+v2: https://lore.kernel.org/all/20260523134613.4930-1-sozdayvek@gmail.com/
+v1: https://lore.kernel.org/all/20260520190924.12774-1-sozdayvek@gmail.com/
 
-For example I just tried the 1080p and 4k 10bit files on Hamoa + fluster and it just worked as expected:
-https://larmoire.org/jellyfish/
-https://larmoire.org/jellyfish/media/jellyfish-10-mbps-hd-hevc-10bit.mkv
-https://larmoire.org/jellyfish/media/jellyfish-120-mbps-4k-uhd-hevc-10bit.mkv
+ drivers/iio/adc/qcom-spmi-iadc.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-Neil
-
-
-> 
+diff --git a/drivers/iio/adc/qcom-spmi-iadc.c b/drivers/iio/adc/qcom-spmi-iadc.c
+index b64a8a407168..88f6be2108e7 100644
+--- a/drivers/iio/adc/qcom-spmi-iadc.c
++++ b/drivers/iio/adc/qcom-spmi-iadc.c
+@@ -481,6 +481,11 @@ static const struct iio_chan_spec iadc_channels[] = {
+ 	},
+ };
+ 
++static void iadc_disable_irq_wake(void *data)
++{
++	disable_irq_wake((long)data);
++}
++
+ static int iadc_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *node = pdev->dev.of_node;
+@@ -538,9 +543,16 @@ static int iadc_probe(struct platform_device *pdev)
+ 	if (!iadc->poll_eoc) {
+ 		ret = devm_request_irq(dev, irq_eoc, iadc_isr, 0,
+ 					"spmi-iadc", iadc);
+-		if (!ret)
+-			enable_irq_wake(irq_eoc);
+-		else
++		if (ret)
++			return ret;
++
++		ret = enable_irq_wake(irq_eoc);
++		if (ret)
++			return ret;
++
++		ret = devm_add_action_or_reset(dev, iadc_disable_irq_wake,
++					       (void *)(long)irq_eoc);
++		if (ret)
+ 			return ret;
+ 	} else {
+ 		ret = devm_device_init_wakeup(iadc->dev);
+-- 
+2.43.0
 
 
