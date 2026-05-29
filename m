@@ -1,199 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-110265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QCpsBsODGWobxQgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 14:17:07 +0200
+	id iDBnMGmGGWouxQgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 14:28:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A551602246
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 14:17:05 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF53360242B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 14:28:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 502E630056C9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 12:11:40 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A639F302A5B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 May 2026 12:24:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 057E63C3BED;
-	Fri, 29 May 2026 12:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 450093DBD64;
+	Fri, 29 May 2026 12:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EmNsjEuW";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="bkMt8l/v"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="aPrsjUKC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C270E346AED
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 12:11:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A06F3D1718;
+	Fri, 29 May 2026 12:24:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780056698; cv=none; b=gK9KlOpZ7nZjcRPnzDmfxvqNGcj9iZEI+drTj/Ru5WR6eLJHB5Zneym/ng4CBwpVrIWepb1xlPOUTpKi9MfotmzeuNmjYpCGNZxlUx7M7VqBVNPvoHWVsYzPhQEISELznjHpjNnx46afaB6bri+1lxMNhHTO3cacj/Ix1+oc6uo=
+	t=1780057468; cv=none; b=qRDTCfSynMZkg4NdHOiqSfG1XEHtDx8GpVwvauPqMnDVHky1gHHEbHzaoEIMaZst3hYBR9xq0RIVt2LVHocWEZWUfy1htgxX3+6/WPRouVH+cr7N08DXtYtzNBZUvvZVUyAHx3Ymxgtgvkyxfp+F76U+F04BrPJ8Bq/Mq8TK0m4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780056698; c=relaxed/simple;
-	bh=DzaB2jdabzPZpoeGAzxUhDYLKpL/A9JHkaQDvUUNNmA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k1+L1fKQM4Q8r+a1Y6re6YqzDdFaDEp7pWEzbgmAwjYGJ1hpzyRmn/SWqxOSQUVsNcD3zgfVLJMujL2YjhLvc2lpJiAFKkOqxF+R0IvOAsyG8eFEviJ7NZA51q3hGqYP25LUvDp1lRU1Gy4wYHDodh5H7EAiWBX1FUiVtA4iWLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EmNsjEuW; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=bkMt8l/v; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64T6ebns1386878
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 12:11:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=myZURdkrXDIz2L+zV0UOKR91
-	eBxVLnWLIAPahE6PCKY=; b=EmNsjEuWnz8ABrbiQBBvdeoCtk8jEwcyhoGBycIa
-	SW/sYVJsNtHW/wOHfEIXw6ctLZ4+h7lg9dOAytI/GtAfHX28fORHJW39HBxGZLNm
-	MuddKd/a96vfqBtzBi7nUVREF/QCiAv4rtN1FdGE6cNub4UUJbQRJjOPAaINQeIB
-	34EMauxDWj5DaFVWEhQU5TqxThHPnIM2r5Vr7pYWYvxgjDlT3RHPxg7OmfZ6arZL
-	VD9scxa+T4L3VgaQ7DLOhJUEvUn/9+N1X0QecvH4aoiPm8O6Wiw+2qGLN2jEnEOF
-	fx1FZK0zLey17AciRi4oNElFutY7pBffLCGFJX94R/PbIg==
-Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com [209.85.221.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eevumud41-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 12:11:36 +0000 (GMT)
-Received: by mail-vk1-f198.google.com with SMTP id 71dfb90a1353d-575ff9befe6so9526754e0c.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 May 2026 05:11:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780056696; x=1780661496; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=myZURdkrXDIz2L+zV0UOKR91eBxVLnWLIAPahE6PCKY=;
-        b=bkMt8l/vWcw64wOLWZneEFkxEAvmK9bFk46Z1FGXfOJXMFBCPn1IDyk+yOhzE67upv
-         D3t1xLGqVB3+bnTITSY3JowlD6BqlY2anCzwDz5xqQnK6zW68G6Hl/C3MCtt4cRg6Krr
-         5z0lTPEWn7iHJKBtQ/asOSa5oMywDkt4inrW20ypjBIqScXDkrz2KoBnEKPwiBUCG/C8
-         0IMCt4chzHaGH/tF20rnjQ16pj1yH+xCQfP1ZEV8pEC4VRIbv+L/nWGhG6PkZMLe9Y98
-         pjV3HNHa7cwQ3QG3gGoBEXk8cWFLnuiRcVnLwtbp7b1SgEIAcztdUXJh20+CYhCfg+mI
-         K9jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780056696; x=1780661496;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=myZURdkrXDIz2L+zV0UOKR91eBxVLnWLIAPahE6PCKY=;
-        b=Y0oU700RPWtMSAjqbMWrlsEJd8xhDVLpEioHgbEimOhdP/T6ez1mUyl0nVetbTFYny
-         lon+/2jO2iWBKDWJhk92lurwH8U2HxJSz/6fljHQ21ZLhO1qzepZEqK2MKKRjRs+jZpL
-         h0Ng4xhVCMC2BWF3k4ZGzou4OYqq/f8rJazUzATgveHhZDjPnm8WbVbvQkz5OYli+/+m
-         3c8mBXHJxlytMqRPaA/W13huYhFOerrs9TcMkzyKrxOxcbt3dntolqzNVI4ABpDTgwK9
-         4YzN8B2BUVKZ+I1Zb0MAEqJ2JvOtYKzelWnPcXZLfXNTjcPsXeMRe3rB8R47k0GRtQ5K
-         SGOA==
-X-Forwarded-Encrypted: i=1; AFNElJ8JmWU7cui4rdBbFGRX6+ofTR2nS9CdDR+d87suQKlN6rt8yrepmBSkXI6x3ZfHM7PeX8a2C0et753NUzfH@vger.kernel.org
-X-Gm-Message-State: AOJu0YxjIb18XV1tEtxQrAD3RPf5q/Gki2c10i4wYaDbi4/zY3srAf+H
-	Yiiiwj83De9Mjf3UmOsT1qMzM+/nQfPNBri0VvukeZ0/a3QtddccVg4zfAuc1aksx9EWhjqpxXq
-	0G10ZtRnJI8oITgE4Mfijy3IHWmPhNawYyKCVKivHg9iXwZE9Ei1rl/XNQ89LLMUTFgrn
-X-Gm-Gg: Acq92OE72YGt+VdXpsyPO6CdMUuNh0n2v2GucGZgfuoc3hCgYGIpVSV4Psg0p+gazsI
-	QOGAxiSWFKA3jKHsMpeupWUo7VOdaek6lcY4S/UTu02vOzqr4JieVxpWTzCOF71Z7Cxy3TSk17z
-	zKeUgyVj4fetd2qMFXg1DbP/lGnncDS17msKeN3STFBADGf7mMX4UZetI2PnyUHMPMdsMbSwGii
-	fz7mZF8edENSiHpX9saUyg1ZVwNK+VrTkvaSNDBOop6WLWVX/cDpC3qvoW6YCIXgWo/rojUstB/
-	2j9Ns+QRfTtMDNjooVQSftcD8XYi+KZw20xe1ib4XtrmHZzj6VmJrxWF6BpEtcCTSVPZAoJCidf
-	D7Tlv6rnLuKIsYrcEGyYXDMIdCi9z6toEgRPWGUpOPKJoyGVgEgvTecgsqv6h7TOv5puy6j+MLn
-	k9mbPAKlJAV2QGwUPEzauq4X4qijyT4jwM2G1QI8SsqpuKnA==
-X-Received: by 2002:a05:6122:3390:b0:575:3b34:28b6 with SMTP id 71dfb90a1353d-599f7e54afcmr883173e0c.11.1780056696077;
-        Fri, 29 May 2026 05:11:36 -0700 (PDT)
-X-Received: by 2002:a05:6122:3390:b0:575:3b34:28b6 with SMTP id 71dfb90a1353d-599f7e54afcmr883143e0c.11.1780056695578;
-        Fri, 29 May 2026 05:11:35 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aa5ba625fasm225880e87.64.2026.05.29.05.11.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 May 2026 05:11:34 -0700 (PDT)
-Date: Fri, 29 May 2026 15:11:32 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 03/15] drm/msm/dp: move mode setup into
- msm_dp_panel_init_panel_info()
-Message-ID: <6g662olfylifrsx5dkifvz3dizs4xsum6gq62dwq5gu2ghgcbe@ouwaghilkkza>
-References: <20260528-dp_mstclean-v5-0-a9221c1f1f3b@oss.qualcomm.com>
- <20260528-dp_mstclean-v5-3-a9221c1f1f3b@oss.qualcomm.com>
+	s=arc-20240116; t=1780057468; c=relaxed/simple;
+	bh=fjbO4t8XdyU8NOb41mG4ChhG+m/bzPP3BywWNtdYqoA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=btjAgdJXyV/tFlF5kTRjcBnxVl8x2i0VKcfxQZncA2vlEIfD5E53s4OM9OZNzuATqLSHgY9RahokqelZKunFJL8YabHf+a2gW9dmCvoYttxsJAt4FmZtE1w+LLiy4DrY8OCTn4ghCLSwjB0hnO3fuAvZptwOp+kvWzK18bw3CFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=aPrsjUKC; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 45FEC204C;
+	Fri, 29 May 2026 05:24:20 -0700 (PDT)
+Received: from [10.57.37.50] (unknown [10.57.37.50])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 16BE13F632;
+	Fri, 29 May 2026 05:24:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1780057465; bh=fjbO4t8XdyU8NOb41mG4ChhG+m/bzPP3BywWNtdYqoA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=aPrsjUKCk50s149VeWZk4F2Llmjdo90qP4DWtdM9ATKguxbUU6gRebVq07f2uJFK0
+	 YVnIN2oOqMRDRFm11YWBgDWM/xTptKipB8Q9REDRnovKPHG2ooZaALp7Zti/C2KUQ+
+	 b4qPfWs6v4eF/TgyfabaRYMbwAxOu8OUsO69761s=
+Message-ID: <3a4e22fe-b8ce-4e62-9139-113e0cd4f16b@arm.com>
+Date: Fri, 29 May 2026 13:24:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260528-dp_mstclean-v5-3-a9221c1f1f3b@oss.qualcomm.com>
-X-Proofpoint-GUID: p3oFejREtYsy8yMCaqwK-T5NtM6xKIhu
-X-Proofpoint-ORIG-GUID: p3oFejREtYsy8yMCaqwK-T5NtM6xKIhu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI5MDEyMiBTYWx0ZWRfXweZbYdK48GCg
- /GxShnHUCPztEeIXZgQCCAL68CqheCQAfW4++ayfWXjPmod0vPEAZgOmWuJHlYEoUIkd1sRdZ92
- BQvK89r3QWX2QRxvb6ZUCJP6rvjvSh4OaaKAxFMqUEr3mwUxjH8si1l1Cs+mgse5/g1MyFf/YRM
- vBfOT54vry2SDqCyzRnpj+WfriJ9W8u4O9MkUGzDOlQd+jAb4oZkHGT8R3r37a635WX+ETmSMKn
- wzhj614XdqNSONo1e8Rn7QOdOEnSfZ5u6HFPqOrRhGshzrK/UU/F5k8NjwzlytDwvGhMIYktU6z
- ov6pHCS5DLQ3/vNYs2sNg06Upj7HMv0H8oEO9OjIhbMVmlJxC/+6yr5SzN/STY97zgh/wo5ZL+h
- oVkl23vrM6uAtkLHrf5TGw7MQCgvjbJfhvnnTAtD42HBTXIS9h4fOEsEU3UILOaRbOHEXXpUvR1
- gVq/bE1Px7x3MwPwp0A==
-X-Authority-Analysis: v=2.4 cv=cObQdFeN c=1 sm=1 tr=0 ts=6a198278 cx=c_pps
- a=1Os3MKEOqt8YzSjcPV0cFA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22 a=EUspDBNiAAAA:8
- a=czEj8ZBfGQkZxxwQui4A:9 a=CjuIK1q_8ugA:10 a=hhpmQAJR8DioWGSBphRh:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-29_03,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 clxscore=1015 spamscore=0 malwarescore=0
- phishscore=0 suspectscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605290122
-X-Spamd-Result: default: False [-1.66 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/16] psci: simplify hotplug_tests()
+To: Yury Norov <ynorov@nvidia.com>, Andrew Morton
+ <akpm@linux-foundation.org>, Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Russell King <linux@armlinux.org.uk>, Frank Li <Frank.Li@nxp.com>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Madhavan Srinivasan
+ <maddy@linux.ibm.com>, Michael Ellerman <mpe@ellerman.id.au>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+ Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>,
+ Arnaldo Carvalho de Melo <acme@kernel.org>,
+ Namhyung Kim <namhyung@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Jiri Olsa <jolsa@kernel.org>, Ian Rogers <irogers@google.com>,
+ Adrian Hunter <adrian.hunter@intel.com>, James Clark
+ <james.clark@linaro.org>, Thomas Gleixner <tglx@kernel.org>,
+ Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
+ "H. Peter Anvin" <hpa@zytor.com>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Len Brown <lenb@kernel.org>, Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>, Danilo Krummrich <dakr@kernel.org>,
+ Chanwoo Choi <cw00.choi@samsung.com>, MyungJoo Ham
+ <myungjoo.ham@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>,
+ Heiko Stuebner <heiko@sntech.de>, Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ Xu Yilun <yilun.xu@intel.com>, Tom Rix <trix@redhat.com>,
+ Moritz Fischer <mdf@kernel.org>, Yicong Yang <yangyicong@hisilicon.com>,
+ Jonathan Cameron <jic23@kernel.org>,
+ Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+ Jason Gunthorpe <jgg@ziepe.ca>, Leon Romanovsky <leon@kernel.org>,
+ Dan Williams <djbw@kernel.org>, Vishal Verma <vishal.l.verma@intel.com>,
+ Dave Jiang <dave.jiang@intel.com>, Ira Weiny <ira.weiny@intel.com>,
+ Bjorn Helgaas <bhelgaas@google.com>, Shuai Xue <xueshuai@linux.alibaba.com>,
+ Will Deacon <will@kernel.org>, Jiucheng Xu <jiucheng.xu@amlogic.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Jing Zhang <renyu.zj@linux.alibaba.com>, Xu Yang <xu.yang_2@nxp.com>,
+ Linu Cherian <lcherian@marvell.com>,
+ Gowthami Thiagarajan <gthiagarajan@marvell.com>,
+ Ji Sheng Teoh <jisheng.teoh@starfivetech.com>,
+ Khuong Dinh <khuong@os.amperecomputing.com>,
+ Daniel Lezcano <daniel.lezcano@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
+ Lukasz Luba <lukasz.luba@arm.com>, Yury Norov <yury.norov@gmail.com>,
+ Kees Cook <kees@kernel.org>,
+ =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+ Aboorva Devarajan <aboorvad@linux.ibm.com>,
+ "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+ Ilkka Koskinen <ilkka@os.amperecomputing.com>,
+ Besar Wicaksono <bwicaksono@nvidia.com>, Ma Ke <make24@iscas.ac.cn>,
+ Chengwen Feng <fengchengwen@huawei.com>,
+ linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ linux-perf-users@vger.kernel.org, linux-acpi@vger.kernel.org,
+ driver-core@lists.linux.dev, linux-pm@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, linux-fpga@vger.kernel.org,
+ linux-rdma@vger.kernel.org, nvdimm@lists.linux.dev,
+ linux-pci@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20260528183625.870813-1-ynorov@nvidia.com>
+ <20260528183625.870813-2-ynorov@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <20260528183625.870813-2-ynorov@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
+	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110265-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,vger.kernel.org,lists.freedesktop.org];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:dkim];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[armlinux.org.uk,nxp.com,pengutronix.de,gmail.com,linux.ibm.com,ellerman.id.au,kernel.org,infradead.org,redhat.com,arm.com,linux.intel.com,google.com,intel.com,linaro.org,alien8.de,zytor.com,linuxfoundation.org,samsung.com,sntech.de,hisilicon.com,cornelisnetworks.com,ziepe.ca,linux.alibaba.com,amlogic.com,baylibre.com,googlemail.com,marvell.com,starfivetech.com,os.amperecomputing.com,linutronix.de,nvidia.com,iscas.ac.cn,huawei.com,lists.infradead.org,lists.linux.dev,vger.kernel.org,lists.ozlabs.org];
+	DKIM_TRACE(0.00)[arm.com:+];
+	TAGGED_FROM(0.00)[bounces-110266-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robin.murphy@arm.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCPT_COUNT_GT_50(0.00)[89];
+	MID_RHS_MATCH_FROM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 6A551602246
+	DBL_BLOCKED_OPENRESOLVER(0.00)[nvidia.com:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,arm.com:email,arm.com:mid,arm.com:dkim]
+X-Rspamd-Queue-Id: EF53360242B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, May 28, 2026 at 06:40:24PM +0800, Yongxing Mou wrote:
-> The display layer directly assigns msm_dp_panel mode fields (bpp,
-> sync polarity, yuv420 flag) instead of letting the panel manage its
-> own state. Pass adjusted_mode and bpp as parameters to
-> msm_dp_panel_init_panel_info() and move the assignments inside it.
+On 2026-05-28 7:36 pm, Yury Norov wrote:
+> Switch to pr_info("... %pbl"), and drop the temporary buffer allocation.
+
+I would say this is simply an improvement in its own right, regardless 
+of whether cpumap_print_to_pagebuf() deserves to be removed or not. For 
+the change itself, FWIW,
+
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+
+> This prepares for removing cpumap_print_to_pagebuf().
 > 
-> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> Signed-off-by: Yury Norov <ynorov@nvidia.com>
 > ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 11 +----------
->  drivers/gpu/drm/msm/dp/dp_panel.c   | 18 +++++++++++++++---
->  drivers/gpu/drm/msm/dp/dp_panel.h   |  4 +++-
->  3 files changed, 19 insertions(+), 14 deletions(-)
+>   drivers/firmware/psci/psci_checker.c | 14 ++------------
+>   1 file changed, 2 insertions(+), 12 deletions(-)
 > 
+> diff --git a/drivers/firmware/psci/psci_checker.c b/drivers/firmware/psci/psci_checker.c
+> index e67ba9891082..ecd745bb90bf 100644
+> --- a/drivers/firmware/psci/psci_checker.c
+> +++ b/drivers/firmware/psci/psci_checker.c
+> @@ -186,7 +186,6 @@ static int hotplug_tests(void)
+>   {
+>   	int i, nb_cpu_group, err = -ENOMEM;
+>   	cpumask_var_t offlined_cpus, *cpu_groups;
+> -	char *page_buf;
+>   
+>   	if (!alloc_cpumask_var(&offlined_cpus, GFP_KERNEL))
+>   		return err;
+> @@ -194,10 +193,6 @@ static int hotplug_tests(void)
+>   	nb_cpu_group = alloc_init_cpu_groups(&cpu_groups);
+>   	if (nb_cpu_group < 0)
+>   		goto out_free_cpus;
+> -	page_buf = (char *)__get_free_page(GFP_KERNEL);
+> -	if (!page_buf)
+> -		goto out_free_cpu_groups;
+> -
+>   	/*
+>   	 * Of course the last CPU cannot be powered down and cpu_down() should
+>   	 * refuse doing that.
+> @@ -210,16 +205,11 @@ static int hotplug_tests(void)
+>   	 * off, the cpu group itself should shut down.
+>   	 */
+>   	for (i = 0; i < nb_cpu_group; ++i) {
+> -		ssize_t len = cpumap_print_to_pagebuf(true, page_buf,
+> -						      cpu_groups[i]);
+> -		/* Remove trailing newline. */
+> -		page_buf[len - 1] = '\0';
+> -		pr_info("Trying to turn off and on again group %d (CPUs %s)\n",
+> -			i, page_buf);
+> +		pr_info("Trying to turn off and on again group %d (CPUs %*pbl)\n",
+> +			i, cpumask_pr_args(cpu_groups[i]));
+>   		err += down_and_up_cpus(cpu_groups[i], offlined_cpus);
+>   	}
+>   
+> -	free_page((unsigned long)page_buf);
+>   out_free_cpu_groups:
+>   	free_cpu_groups(nb_cpu_group, &cpu_groups);
+>   out_free_cpus:
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-
-
--- 
-With best wishes
-Dmitry
 
