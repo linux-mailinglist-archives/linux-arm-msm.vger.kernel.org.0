@@ -1,174 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-110378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wNf1NRrZGmqE9QgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 14:33:30 +0200
+	id 0NxyMNPZGmqE9QgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 14:36:35 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B79860CD3D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 14:33:30 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2609960CD7C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 14:36:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 135FE300AB2A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 12:32:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 20988302659D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 12:34:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7304E369D6E;
-	Sat, 30 May 2026 12:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 842A93AC0FA;
+	Sat, 30 May 2026 12:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LJczq9Ji"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OhdovVW1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD6321CC5A;
-	Sat, 30 May 2026 12:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FF8369D6E;
+	Sat, 30 May 2026 12:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780144326; cv=none; b=Uow/ssVzdEDZe8Fx3KcOngNqlIc9To0YzwfpQxATt7dkUbUEt4eM3e7p8kotl1IOxxoRNieKn6eVkqYaD5C+5eVkd2mPGhsDkA0qSnkeJ7DG0/9vo3fDPtFfCUv8sqhCkuY+z+5HprEch5oYrLQLj1WoOAZDTGEI7/ZdlN24um8=
+	t=1780144450; cv=none; b=HvSrYsuy3/Uy4bx7jHAOflfJ1uItvOIRtopjE/GPPgjfENoiiDfr5WESeDMqrM8zNEfULqsVw0FV6/T1cQYX2e87KeS7fYEx0k1vztbwJLskoIzzqREA6GBDDNup5JDjbjyuuNJCx/8az1wdTpKOEDzVT2IuRNE0uvC6NrGjz30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780144326; c=relaxed/simple;
-	bh=A3YYWQPGOSNfNFzUBFjjQ4OlMk/WhqTQ0O1JHsGY6XY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WXtjenDItqhQpm+iWtXquu4zOp+yRtWVHHch5a4Gt5ggZZQhT51jG3JVeegBz17+F2s3khywnristqzq5IQ+16OtJ/dS32gnniSOrnmoKMWNVJOysS4E1emiRHqRvbcqbaQnwjM+Ii35gYk8Q81YuZnFDLLbs6nQZT7VoZSjAlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LJczq9Ji; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B7161F00893;
-	Sat, 30 May 2026 12:32:02 +0000 (UTC)
+	s=arc-20240116; t=1780144450; c=relaxed/simple;
+	bh=wOJmFdNftqS+GQHtzstTgN9VYhidAKXLhVYbHxC5jRc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IcVn2YBEzS5sgw8twxF5P71ojb2aYeREVEazkztfycf9cUhJADohopEYG8x28ij/w6SIH+ch2lGEZDipnTWYC/MQQ8YMwB7j4j2OPGEnRMBhDcF8aMXNw72myGmr790H1WloSublmJ/v13aaGo7PvTk7l6l81qSrRHARAmHUuy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OhdovVW1; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3701F00893;
+	Sat, 30 May 2026 12:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780144325;
-	bh=smmoYyxQcRtLKMjLcD7EIArEiMMan8ecg/rsJh8HwLo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=LJczq9JinDhO48VGTUdSJh6ed6GILXCeoQXJ1M8ZxR61gDQrdcdbwYBjJnVMKcqOx
-	 ZOd2KhJKiWaI5RbLQIZYmU/dvFIkSnNyTUihuvCQR2wc4rXYl1SDq89i73rmYI61zo
-	 /+f8jT9OQtSXzET/SstVvjSry2ngSPw1GGsbcYmcHu8YdesWWWkC/aBuo0w0MFYQ83
-	 Ld7Je/Ov1JzkE2q22zL8Zu6u+CYN4CYAj1xN2OoS5fusZAHbpjGqWznTxrwgI5DWXI
-	 s1RK5q52m+sj5KLq9pUs/JpCsc2qkNUSCxmwjLguTd+Er4NuNkfNxm3RYs/AgsPGuo
-	 8SbsYFMDlpGQg==
-Message-ID: <e220d10e-1c36-424f-84b8-068615f1060d@kernel.org>
-Date: Sat, 30 May 2026 14:32:00 +0200
+	s=k20260515; t=1780144449;
+	bh=tUUwWoV95jfPZcfMUOFNCFZmKQsy3guUqU++k2IZgZo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=OhdovVW1yii1GYnkHVpVXXOSTK4vEiQz7tLegvBXUeTPAhoD8tH2Ui/lz6yRG4F8/
+	 TzI43xBY2ZuPC8KjK6533naMB+LG+zLyX8ZKWbjQWr/w362fZoOsWAlOaRtW1lQGPu
+	 gUBpxX5bYrH8U2+GfQW5URan9uqo1+B4j5Cwo9GtQCD7icehXDRvWevcRn5tambs5/
+	 XYz7qlOTmDI08F4AaA4MxBk9KHB0WrEPiKDqZZSej5OyHVglpb1SjTv3iB9VhNSC+m
+	 vVMOzSkzDkOD9XLYEBirjUYkQ6DH2+31Y4Tl8H+C4ptvM0nNnNQmMNZNHapKDV3ap6
+	 /L59AIO4uEx8A==
+Date: Sat, 30 May 2026 14:34:06 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Yepuri Siddu <yepuri.siddu@oss.qualcomm.com>
+Cc: Bartosz Golaszewski <brgl@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
+	Rocky Liao <quic_rjliao@quicinc.com>, quic_mohamull@quicinc.com, quic_hbandi@quicinc.com, 
+	rahul.samana@oss.qualcomm.com, harshitha.reddy@oss.qualcomm.com, dishank.garg@oss.qualcomm.com, 
+	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: bluetooth: qcom,qcc2072-bt: add
+ bindings for QCC2072
+Message-ID: <20260530-funky-mackerel-of-current-878e2a@quoll>
+References: <20260529175342.3363935-1-yepuri.siddu@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: glymur: Enable SPEL powercap driver
-To: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
- Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
-References: <20260519-qcom_spel_driver_upstream-v1-0-75356d1b7f94@oss.qualcomm.com>
- <20260519-qcom_spel_driver_upstream-v1-3-75356d1b7f94@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260519-qcom_spel_driver_upstream-v1-3-75356d1b7f94@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260529175342.3363935-1-yepuri.siddu@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110378-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-110379-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FREEMAIL_CC(0.00)[kernel.org,holtmann.org,gmail.com,quicinc.com,oss.qualcomm.com,vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,ef3b000:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 7B79860CD3D
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[devicetree.org:url,bootlin.com:url,qualcomm.com:email,quicinc.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 2609960CD7C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 19/05/2026 12:49, Manaf Meethalavalappu Pallikunhi wrote:
-> The Qualcomm SoC Power and Electrical Limits (SPEL) provides hardware
-> based power monitoring and limiting capabilities for various power
-> domains including System, SoC, CPU clusters, GPU, and various other
-> subsystems for glymur.
+On Fri, May 29, 2026 at 11:23:42PM +0530, Yepuri Siddu wrote:
+> Document the YAML binding schema for the Qualcomm QCC2072 UART-based
+> Bluetooth controller.
+
+Where is the rest?
+
+Also:
+A nit, subject: drop second/last, redundant "bindings for". The
+"dt-bindings" prefix is already stating that these are bindings.
+See also:
+https://elixir.bootlin.com/linux/v6.17-rc3/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+
 > 
-> Signed-off-by: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
+> Unlike other Qualcomm Bluetooth chips, QCC2072 requires no external
+> voltage regulators. The schema inherits common Qualcomm Bluetooth
+> properties via qcom,bluetooth-common.yaml and serial peripheral
+> interface properties for the UART link.
+> 
+> Signed-off-by: Yepuri Siddu <yepuri.siddu@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/glymur.dtsi | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  .../net/bluetooth/qcom,qcc2072-bt.yaml        | 38 +++++++++++++++++++
+>  1 file changed, 38 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/bluetooth/qcom,qcc2072-bt.yaml
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
-> index 72c7dc6e4f09..c0ba8740ae41 100644
-> --- a/arch/arm64/boot/dts/qcom/glymur.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
-> @@ -5033,6 +5033,16 @@ spmi_bus2: spmi@c48000 {
->  			};
->  		};
->  
-> +		power-controller@ef3b000 {
+> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qcom,qcc2072-bt.yaml b/Documentation/devicetree/bindings/net/bluetooth/qcom,qcc2072-bt.yaml
+> new file mode 100644
+> index 000000000000..8e2f15a75d62
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/bluetooth/qcom,qcc2072-bt.yaml
+> @@ -0,0 +1,38 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/bluetooth/qcom,qcc2072-bt.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm QCC2072 Bluetooth
+> +
+> +maintainers:
+> +  - Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
+> +  - Rocky Liao <quic_rjliao@quicinc.com>
+> +
+> +description:
+> +  Qualcomm QCC2072 is a UART-based Bluetooth controller.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,qcc2072-bt
+> +
+> +required:
+> +  - compatible
+> +
 
-Never properly build tested. Please read carefully either kernel docs or
-internal guide which tells you what steps you are supposed to do.
+Looks heavily incomplete. Devices do not work without power for example.
 
-NAK
+> +allOf:
+> +  - $ref: bluetooth-controller.yaml#
+> +  - $ref: qcom,bluetooth-common.yaml#
+> +  - $ref: /schemas/serial/serial-peripheral-props.yaml#
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    serial {
+> +        bluetooth {
+> +            compatible = "qcom,qcc2072-bt";
+> +            max-speed = <3200000>;
+
+Also incomplete.
 
 Best regards,
 Krzysztof
+
 
