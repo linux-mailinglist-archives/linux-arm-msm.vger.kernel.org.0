@@ -1,170 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-110343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cE6IDpaeGmrE6AgAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 10:23:50 +0200
+	id aJqGA6+eGmrE6AgAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 10:24:15 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BBBB60BAD2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 10:23:49 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D9F560BAE4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 10:24:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DC0E330479D1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 08:23:46 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D91033051FC3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 May 2026 08:24:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEE40384CF2;
-	Sat, 30 May 2026 08:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D8CA39021E;
+	Sat, 30 May 2026 08:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="LjFDz3GH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lr3XSW/R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.2])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ACBB30E85C;
-	Sat, 30 May 2026 08:23:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38ECC384CCE;
+	Sat, 30 May 2026 08:24:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780129425; cv=none; b=tkH8xb1BvxsOkp2XxFt3VNVHC1lxO9M7ONQtZzHArNH0pdo8cjxPddOLrHlA/sTEGfuTFoYVWHJy7jr6gb+chjTVZ/h+NjMcStWfXfiuzRVCWS7lH+il+5ApVA47yJa/4ZzdTdaXffHJNvJkcq20omgg9PjxqfdBDjFbaq29kp8=
+	t=1780129452; cv=none; b=nyNWvkzHdjf//OTb4TZIzxw+y+v2NcLpxWBZP+pbZ+h7nsJX+m06udAn71MDbAkrhBLgRB+mPJIGtS3Nm1dqNkARjRZzmE8+Lr3ywtSf/YwtxvetUFlXLWqK1B5dIrzpYZMCCbWpInLAba75Ng5KPRJqWGtivQmBrSAsTkMm70g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780129425; c=relaxed/simple;
-	bh=LSkIBo4gDPkYTilY3gyUoXUlIQlHQI9yEaTT1JVX65A=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Yi4U14kjl1QarMdv5TXXEfvYInqyikZK8sx8gqw02OSSPDKcgjxjH9xrWLN0Hgy0OxbR1EU/uPlLD6m19siZzYROcV+yIjdFpHv5XLBFmpRWqBVBb+G3VAXwKdPKjgsyzUalenI8KArCJcJpihOkTShMlqRR1AYbKjt2pd3JcI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=LjFDz3GH; arc=none smtp.client-ip=220.197.31.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:To:Subject:Date:Message-Id:MIME-Version; bh=qZ
-	2Fjwwm5hDmCK5YhIOGAYcFdo/AIR1P2G8gCMd6Et0=; b=LjFDz3GH2vZo9QcaZw
-	3+ZV0QYk8KYu5Lt1hRaPpJSRqcmOOMMnM7EnzTU4nHyNmJjSAvR3mSmCS/pTOV3z
-	lnDlt+JP7o0Xf0WTYIbfDNL8vxXQiOiELvYCaDUdgPvoHXeV5zwp39fVHAu0BtbP
-	K/psW/J31qoNXvQwrNUsDxj0M=
-Received: from 163.com (unknown [])
-	by gzga-smtp-mtada-g0-3 (Coremail) with SMTP id _____wBnJtVUnhpqr9W1AQ--.60856S2;
-	Sat, 30 May 2026 16:22:48 +0800 (CST)
-From: w15303746062@163.com
-To: Manivannan Sadhasivam <mani@kernel.org>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Cc: Simon Horman <horms@kernel.org>,
-	Luca Weiss <luca@lucaweiss.eu>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Mingyu Wang <25181214217@stu.xidian.edu.cn>
-Subject: [PATCH] net: qrtr: fix refcount saturation and potential UAF in qrtr_port_remove
-Date: Sat, 30 May 2026 16:22:43 +0800
-Message-Id: <20260530082243.1123402-1-w15303746062@163.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1780129452; c=relaxed/simple;
+	bh=0kQgF0VU6WNLml0oxeOF7FDH7Un9q9mJ28Xv5n/URQA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CaX7575fL5IqfIC/i6u9tbctSyPcN8j1aL2EnZzTEyi7RiCu7I5FEk9uWsv1Qpp+PPyXiXSQ2RrOrcZM1M/OjHf/3E57BeOT5nPXv4KRKiwY9CCdYfrLEdzBwWhGZCn80011PjACCNQ7oHlZ8WrZGY9Fr+3PjhZDBt80e41JNlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lr3XSW/R; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BFFD1F00893;
+	Sat, 30 May 2026 08:24:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780129450;
+	bh=avfTWFeGMGmg1ha5Cp8GXYUEmbzZJ9JNXqzfpHVT4PA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=lr3XSW/RJq7tQURrbYa01m4nuNrteDP4JE4TJ96z+va0ETKn9PeM4HhkKgNbDlC7Q
+	 8su+Dm8RrN2D1yAlQx+NlmlJq4NiC6TYbs9Y9Fx6rGwcg+S8J0Qwl9GT3otUWRIsG4
+	 kr8pkXZjWctIxvcChJCnTh7heleAGs3Bmkb6L+e5UFe4QjAHqU6+JKMS+rt2DYLO+t
+	 c4tJZ3DOrz3Fs61Q3GJUDjfXWIaRPF44pdb18/HZFsikZdMFNJ78Q8OTd1IidVFuSw
+	 oIZoED+LkcVF1Y+Y4OpsG15GvoDw+Mzh4WbBev1gCc2IWALo/nP5HIolkDKa7fOzDX
+	 jmVUkAc83Bz2Q==
+Date: Sat, 30 May 2026 10:24:08 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Robert Marko <robimarko@gmail.com>, Guru Das Srinagesh <linux@gurudas.dev>, 
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 01/18] dt-bindings: firmware: qcom,scm: Add minidump
+ SRAM property
+Message-ID: <20260530-lumpy-zircon-gibbon-dc83bc@quoll>
+References: <20260522195009.2961022-1-mukesh.ojha@oss.qualcomm.com>
+ <20260522195009.2961022-2-mukesh.ojha@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wBnJtVUnhpqr9W1AQ--.60856S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7ZF48trWrXF13WF4UWr1xXwb_yoW8KFW5pr
-	WFyan0y34kGr1DKF48Aa18Ga48ZFyrJrZ3GFZ3Can5ZFn3AwnrZw10yr1Y9FyUCFs3JrWx
-	ZF1DCFs09FyYyFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j5EfOUUUUU=
-X-CM-SenderInfo: jzrvjiatxuliiws6il2tof0z/xtbC4xjewmoanljxjAAA3s
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260522195009.2961022-2-mukesh.ojha@oss.qualcomm.com>
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[163.com,none];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[163.com:s=s110527];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110343-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110344-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_FROM(0.00)[163.com];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,gurudas.dev,chromium.org,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[w15303746062@163.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[163.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NO_DN(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: 8BBBB60BAD2
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: 7D9F560BAE4
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Mingyu Wang <25181214217@stu.xidian.edu.cn>
+On Sat, May 23, 2026 at 01:19:52AM +0530, Mukesh Ojha wrote:
+> On most Qualcomm SoCs where minidump is supported, a word in always-on
+> SRAM is shared between the kernel and boot firmware. Before DDR is
+> initialised on the warm reset following a crash, firmware reads this
+> word to decide if minidump is enabled and collect a minidump and where
+>  to deliver it (USB upload to a host, or save to local storage).
+> 
+> Add a 'sram' property to the SCM binding to describe a region in
+> always-on SRAM where the minidump download destination value could be
+> written. Boot firmware reads it before DDR is initialised on a warm
+> reset to decide where to store the minidump either to host PC or to
+> on device storage.
 
-In qrtr_port_remove(), the socket reference count is decremented via
-__sock_put() before the port is removed from the qrtr_ports XArray and
-before the RCU grace period elapses.
+You described how firmware is using it, but we do not run the firmware
+here. From this entire description we don't need it in DTS, because this
+is not a DTS for firmware.
 
-This breaks the fundamental RCU update paradigm. It exposes a race
-window where a concurrent RCU reader (such as qrtr_reset_ports() or
-qrtr_port_lookup()) can obtain a pointer to the socket from the XArray,
-and attempt to call sock_hold() on a socket whose reference count has
-already dropped to zero.
-
-This exact race condition was hit during syzkaller fuzzing, leading to
-the following refcount saturation warning and a potential Use-After-Free:
-
-  refcount_t: saturated; leaking memory.
-  WARNING: CPU: 3 PID: 1273 at lib/refcount.c:22 refcount_warn_saturate+0xae/0x1d0
-  Modules linked in: qrtr(+) bochs drm_shmem_helper ...
-  Call Trace:
-   <TASK>
-   qrtr_reset_ports net/qrtr/af_qrtr.c:768 [inline] [qrtr]
-   __qrtr_bind.isra.0+0x48b/0x570 net/qrtr/af_qrtr.c:805 [qrtr]
-   qrtr_bind+0x17d/0x210 net/qrtr/af_qrtr.c:901 [qrtr]
-   kernel_bind+0xe4/0x120 net/socket.c:3592
-   qrtr_ns_init+0x1a6/0x380 net/qrtr/ns.c:715 [qrtr]
-   qrtr_proto_init+0x3b/0xff0 net/qrtr/af_qrtr.c:169 [qrtr]
-   do_one_initcall+0xf5/0x5e0 init/main.c:1283
-   ...
-   </TASK>
-
-Fix this by deferring the reference count decrement until after the
-xa_erase() and the synchronize_rcu() complete. Furthermore, replace
-__sock_put() with sock_put() to ensure that the socket memory is safely
-freed if this happens to be the last reference, preventing memory leaks.
-
-Fixes: a365023a76f2 ("net: qrtr: combine nameservice into main module")
-Signed-off-by: Mingyu Wang <25181214217@stu.xidian.edu.cn>
----
- net/qrtr/af_qrtr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index 7cec6a7859b0..9ddc8657f7db 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -707,13 +707,13 @@ static void qrtr_port_remove(struct qrtr_sock *ipc)
- 	if (port == QRTR_PORT_CTRL)
- 		port = 0;
- 
--	__sock_put(&ipc->sk);
--
- 	xa_erase(&qrtr_ports, port);
- 
- 	/* Ensure that if qrtr_port_lookup() did enter the RCU read section we
- 	 * wait for it to up increment the refcount */
- 	synchronize_rcu();
-+
-+	sock_put(&ipc->sk);
- }
- 
- /* Assign port number to socket.
--- 
-2.34.1
+Best regards,
+Krzysztof
 
 
