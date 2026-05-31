@@ -1,45 +1,45 @@
-Return-Path: <linux-arm-msm+bounces-110437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0KgpDcO0G2pVFgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 06:10:43 +0200
+	id 6H57MZy0G2pVFgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 06:10:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1E986145F4
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 06:10:42 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 574A56145A8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 06:10:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B00E830459FD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 04:09:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5B877303938E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 04:09:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BD8630E0D6;
-	Sun, 31 May 2026 04:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3500306B08;
+	Sun, 31 May 2026 04:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="dh7LQijA"
+	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="sT9FdjdF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from outbound1.mail.transip.nl (outbound1.mail.transip.nl [149.210.149.72])
+Received: from outbound7.mail.transip.nl (outbound7.mail.transip.nl [136.144.136.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DCA2D0C64;
-	Sun, 31 May 2026 04:09:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=149.210.149.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6B82F549F;
+	Sun, 31 May 2026 04:09:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.136.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780200567; cv=none; b=W+/0UpcIfjI4VdwsclXZ0y4ZlU57A4gYOs5sHgbtZmV5sK7vnpR3gGdoGOCPo4Lg3OHHFc9d4j0nw5NiOde+xjTI/qeicZlE8cFOoI5D5Le+fVCbukEDzNZuqhf7EdeUP3u/oE6Lkgtm+9wv66q+pjF2HjZJUVMq+ADlPJ7+0Kk=
+	t=1780200561; cv=none; b=qm6IK3MVZ0eqWe2zWWe/U7BlkkW03T6Qc88lYaic6Kh6oW4gS4rRz/fFnLuExywadsQXF4yysoczzhssaG3ZG9JIWQtKDWwbgYDwj1hABxObK+N2tAqjxzJXFI1fo1CISgRJFVb0rrpHHS3x2JHjDp2RIrTd7DUT0Y4cBMwFW5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780200567; c=relaxed/simple;
-	bh=8jFx2EfHA/j1MYHywm1IJI7M7Nx1G4RjikfGNeK1t+Q=;
+	s=arc-20240116; t=1780200561; c=relaxed/simple;
+	bh=uwlX8PMjADCDQEuq4aieXUonap0uly45GgLHHNp7B8s=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXUKPr91Ffz73xdZhhb3ZXxYNsKwYxGnzJkdAAZMmgB24gazRp33KuWL5wj69RqRzA1icoqbDvdRtApiNel6rbXLluKSKfjdgBaF3jDknSGK6oPjwYnLdOE90dwcVN5IYVsMULPirvWxgeyzFiqf8LVAK6XgHByWERMscb2gu/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=dh7LQijA; arc=none smtp.client-ip=149.210.149.72
+	 MIME-Version; b=eDFqwhyoKZ1qpB9lvqZNY5QhQIQn485WsRcsAu+JnXXof6ZK8QOflUC/vV7BDPpDSE4+eUhQPIm9aPAP3YUH+KjA/MI4Lx9JuKXrsxaMsE1bOKWuxRJmkpFoZZXm8KwWN6VfQdR3Wi5lHcJSsKZhrbDqgTx++/5IwUxve5tSLY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=sT9FdjdF; arc=none smtp.client-ip=136.144.136.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=herrie.org
 Received: from submission1.mail.transip.nl (unknown [10.100.4.70])
-	by outbound1.mail.transip.nl (Postfix) with ESMTP id 4gSkB06z75zRhjc;
-	Sun, 31 May 2026 06:09:12 +0200 (CEST)
+	by outbound7.mail.transip.nl (Postfix) with ESMTP id 4gSkB16LSlzQvvWt;
+	Sun, 31 May 2026 06:09:13 +0200 (CEST)
 Received: from herrie-desktop.. (180-93-184-31.ftth.glasoperator.nl [31.184.93.180])
-	by submission1.mail.transip.nl (Postfix) with ESMTPA id 4gSkB00f6FzJjhXx;
-	Sun, 31 May 2026 06:09:12 +0200 (CEST)
+	by submission1.mail.transip.nl (Postfix) with ESMTPA id 4gSkB108KYzJjhXv;
+	Sun, 31 May 2026 06:09:13 +0200 (CEST)
 From: Herman van Hazendonk <github.com@herrie.org>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Clark Williams <clrkwllms@kernel.org>,
@@ -55,12 +55,12 @@ To: Bjorn Andersson <andersson@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>,
 	Thomas Gleixner <tglx@kernel.org>,
 	van Hazendonk <github.com@herrie.org>
-Subject: [PATCH v2 0/2] irqchip: add MSM8x60 MPM wakeup interrupt controller
-Date: Sun, 31 May 2026 06:09:09 +0200
-Message-ID: <cover.1780195817.git.github.com@herrie.org>
+Subject: [PATCH v2 1/2] dt-bindings: interrupt-controller: qcom: add msm8660-mpm
+Date: Sun, 31 May 2026 06:09:10 +0200
+Message-ID: <4cca687dba2d1c341613a13d3e4b4a156b0d5531.1780195817.git.github.com@herrie.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1780148149.git.github.com@herrie.org>
-References: <cover.1780148149.git.github.com@herrie.org>
+In-Reply-To: <cover.1780195817.git.github.com@herrie.org>
+References: <cover.1780148149.git.github.com@herrie.org> <cover.1780195817.git.github.com@herrie.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,14 +70,14 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: ClueGetter at submission1.mail.transip.nl
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=herrie.org; t=1780200552; h=from:subject:to:references:
+ s=transip-a; d=herrie.org; t=1780200553; h=from:subject:to:references:
  in-reply-to:date:mime-version;
- bh=n6KVD8QjDPvusnMvLoUlxwwYj06x0h+adODibnesU8A=;
- b=dh7LQijAqAVXTgLeLbLSzbPINlCxAzrM44NwUjGguEN7MP0mo4wPV8kYjCl5RczpaxtVt3
- UHE8tc03jpotyhMoyMc++9MY+NaHYECSVyEkNU0ADHOCBqlOniVwJnWTZElNSHCFSoStc5
- Gz2yJ/9LDA608o1wjXdRUbR9HOaD4vH8nMY+e4HesDXw5MYOBu2tSnDiOAgmfoLv985gGP
- H2REXNT3xQiVzNkcv8JQKZlO4ur4tI+tT9u0WnGaelf78tQTy0sVSeaPIOPLjJihhhljFn
- vzNw7t4wITvZlvjUpCw18gs8tivcFKFqiWh068hdYg3zS2b2/ubbKpYhrTsV8g==
+ bh=IOnVW/3WZHj8cYeEeQr7f0EyPtew8KoJY81FvzBRJSs=;
+ b=sT9FdjdFDQe4uB/WL6B6ovQc6Vy5evEw/otAMlxYkJeeo2gKJPLVNoORpXJa7VW23j+VyI
+ AlQg0evTYG+cUzlp2eKkvPyfv7W5bKgjfVkRg56kGsUIqde02ScWYcAFQloXvE4IJ9qKnh
+ f4kg/ckLxNqq145ClZFkP/r49OJNVzk5NwfTauA6Kz41YMV60NL/tHDfQXA1R0+X9rXsP6
+ RNCU3yeEU1F7naZUllYP6LR7kUJUxIYqASE5dAZ7n7/fmDz0vMresjxqgBVrE4gDG35Lhy
+ 3lGbhngyzvDdvs8mASztVhM2fvsX79aXRKx1aCevzHzUvkRyEirCD2Jhpk+KNA==
 X-Report-Abuse-To: abuse@transip.nl
 X-Spamd-Result: default: False [1.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -85,18 +85,18 @@ X-Spamd-Result: default: False [1.34 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
 	R_DKIM_ALLOW(-0.20)[herrie.org:s=transip-a];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[14];
-	TAGGED_FROM(0.00)[bounces-110437-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110434-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DMARC_NA(0.00)[herrie.org];
 	DKIM_TRACE(0.00)[herrie.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
@@ -104,92 +104,157 @@ X-Spamd-Result: default: False [1.34 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-0.995];
+	NEURAL_HAM(-0.00)[-0.999];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,herrie.org:mid,herrie.org:dkim]
-X-Rspamd-Queue-Id: D1E986145F4
+	DBL_BLOCKED_OPENRESOLVER(0.00)[herrie.org:email,herrie.org:mid,herrie.org:dkim,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,devicetree.org:url,1049d8:email]
+X-Rspamd-Queue-Id: 574A56145A8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi all,
+Add the binding for the Modem Power Manager (MPM) interrupt
+controller on the MSM8x60 family (MSM8260/MSM8660/APQ8060). The MPM
+is a small wake-capable interrupt aggregator that lets the SoC stay
+in low-power states while a small set of GIC SPIs continues to be
+monitored and can wake the system on an edge.
 
-Self-review (with Sashiko AI assist) caught eight real issues in v1
-before maintainer review reached them; re-rolling promptly. v1:
+The binding describes its register region (in the RPM syscon), the
+GIC SPI it raises on a wake event, the GIC mailbox it shares with
+the RPM, and the per-pin wake-source mapping table.
 
-  https://lore.kernel.org/linux-arm-msm/cover.1780148149.git.github.com@herrie.org/
-
-v2 changes:
-
-  - PREEMPT_RT: drop the syscon regmap and ioremap the vMPM sub-region
-    of the RPM control block directly. The IRQ core invokes the
-    irqchip mask/unmask/set_type/set_wake callbacks with the irq_desc
-    raw_spinlock_t held, and syscon regmaps use a sleepable
-    spinlock_t that becomes an rt_mutex on PREEMPT_RT. Direct MMIO
-    (readl_relaxed/writel_relaxed) is what every other SoC irqchip
-    in tree does for the same reason (qcom-pdc, gic-v3, ...).
-
-  - RPM doorbell: after every vMPM register write, send a message
-    through the qcom-apcs-ipc mailbox. v1 acquired the mailbox
-    channel but never used it, so the RPM kept running with its
-    cached enable / detect / polarity state and our configuration
-    changes had no effect.
-
-  - Teardown order: v1 used devm_request_irq() and then called
-    irq_domain_remove() manually in ->remove(); the devres-managed
-    handler outlives the domain, so an IRQ arriving in the removal
-    window would dereference a freed domain. Switch to plain
-    request_irq() / free_irq() and remove in strict reverse-init
-    order (free_irq, free mailbox, irq_domain_remove).
-
-  - .irq_set_wake: implement it (toggle the MPM enable bit + delegate
-    to irq_chip_set_wake_parent for the GIC) and drop
-    IRQCHIP_SKIP_SET_WAKE. v1 declared SKIP and provided no
-    callback, so enable_irq_wake() was a silent no-op for every
-    consumer.
-
-  - Clear-before-dispatch: in the IPC IRQ handler, write CLEAR for
-    the pending bits before calling generic_handle_domain_irq() for
-    each pin. v1 cleared after the handler returned, racing against
-    a fresh edge latched during dispatch and silently dropping it.
-
-  - DT pin-map bounds check: validate each qcom,mpm-pin-map pin
-    entry against MSM8660_MPM_PIN_COUNT before storing it, so a
-    malformed DT cannot induce out-of-bounds register accesses in
-    later set_type/enable paths.
-
-  - Consumer API lifetime: msm8660_mpm_get() now takes a consumer
-    device argument and establishes a DL_FLAG_AUTOREMOVE_CONSUMER
-    device link to the MPM device. Without this, an unbind of the
-    MPM driver would free the devres-managed struct while consumers
-    still hold pointers, causing UAF on the next call.
-
-  - regmap_read return check: moot now that we use readl_relaxed,
-    but the original Sashiko finding (uninitialised val on regmap
-    error) is closed.
-
-DT binding: drop qcom,rpm-syscon and qcom,mpm-offset; replace with a
-single reg property pointing at the vMPM window inside the RPM
-control block. dt_binding_check passes on the example.
-
-Driver passes checkpatch with zero warnings or errors.
-
-Thanks,
-Herman
-
-Herman van Hazendonk (2):
-  dt-bindings: interrupt-controller: qcom: add msm8660-mpm
-  irqchip: add MSM8x60 MPM wakeup interrupt controller driver
-
- .../qcom,msm8660-mpm.yaml                     | 122 +++
- drivers/irqchip/Kconfig                       |  23 +
- drivers/irqchip/Makefile                      |   1 +
- drivers/irqchip/irq-msm8660-mpm.c             | 740 ++++++++++++++++++
- include/soc/qcom/msm8660-mpm.h                |  83 ++
- 5 files changed, 969 insertions(+)
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+---
+ .../qcom,msm8660-mpm.yaml                     | 122 ++++++++++++++++++
+ 1 file changed, 122 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/interrupt-controller/qcom,msm8660-mpm.yaml
- create mode 100644 drivers/irqchip/irq-msm8660-mpm.c
- create mode 100644 include/soc/qcom/msm8660-mpm.h
 
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,msm8660-mpm.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,msm8660-mpm.yaml
+new file mode 100644
+index 000000000000..1288e83d75d6
+--- /dev/null
++++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,msm8660-mpm.yaml
+@@ -0,0 +1,122 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/interrupt-controller/qcom,msm8660-mpm.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm MSM8x60 MPM wakeup interrupt controller
++
++maintainers:
++  - Herman van Hazendonk <github.com@herrie.org>
++
++description: |
++  The MSM Power Manager (MPM) on the MSM8x60 family (MSM8260/MSM8660/
++  APQ8060) is an always-on hardware block that keeps a set of wake
++  interrupts alive while the application processor is powered down.
++
++  The vMPM (virtual MPM) registers live INSIDE the RPM control block:
++  the request window (ENABLE, DETECT_CTL, POLARITY, CLEAR) starts at
++  RPM_BASE + 0x9d8 and the status window starts 0x420 above the
++  request window. The reg property points at this vMPM sub-region;
++  the qcom,rpm-msm8660 driver maps the surrounding RPM control area
++  for its own use, so the two mappings overlap but neither claims
++  exclusive ownership of the other's range.
++
++  Notification of new wake-source configuration is delivered via the
++  qcom-apcs-ipc mailbox (writing GCC + 0x008 bit 1).
++
++  This binding is MSM8x60-specific. Newer Qualcomm SoCs (sm6375, etc.)
++  use the qcom,mpm binding which assumes a dedicated MPM SRAM region
++  and an IPCC mailbox - neither holds on MSM8x60. The driver lives at
++  drivers/irqchip/irq-msm8660-mpm.c.
++
++allOf:
++  - $ref: /schemas/interrupt-controller.yaml#
++
++properties:
++  compatible:
++    const: qcom,msm8660-mpm
++
++  reg:
++    maxItems: 1
++    description: |
++      vMPM register window inside the RPM control block. Must cover
++      the request registers at offset 0 of the window and the status
++      registers at offset 0x420 of the window. A length of 0x440 is
++      sufficient for the four-word request banks and the status bank.
++
++  interrupts:
++    maxItems: 1
++    description:
++      IPC IRQ raised by MPM when one of the enabled wake sources fires.
++      On MSM8x60 this is wired to GIC SPI 2.
++
++  mboxes:
++    maxItems: 1
++    description:
++      Mailbox channel used to notify MPM that the vMPM request
++      registers have been updated. On MSM8x60 this is the
++      qcom-apcs-ipc mailbox channel 1 (writes GCC + 0x008 bit 1).
++
++  interrupt-controller: true
++
++  '#interrupt-cells':
++    const: 2
++    description:
++      First cell is the MPM pin number / parent GIC SPI; second cell
++      is the trigger type.
++
++  qcom,mpm-pin-count:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description: Total number of MPM pins exposed.
++
++  qcom,mpm-pin-map:
++    $ref: /schemas/types.yaml#/definitions/uint32-matrix
++    items:
++      items:
++        - description: MPM pin number
++        - description: GIC SPI number this pin maps to
++    description: |
++      List of (MPM-pin, GIC-SPI) tuples for wake sources that have a
++      corresponding GIC IRQ. Consumers route their interrupts through
++      the MPM hierarchical irqdomain to take advantage of these
++      mappings.
++
++      Raw wake pins like SDC3/4 DATx (pins 21-24) are NOT listed
++      here - they have no GIC SPI mapping and are accessed through
++      the msm8660_mpm_set_pin_wake() / msm8660_mpm_enable_pin() C API
++      by consumer drivers.
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - mboxes
++  - interrupt-controller
++  - '#interrupt-cells'
++  - qcom,mpm-pin-count
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++
++    soc {
++        #address-cells = <1>;
++        #size-cells = <1>;
++
++        msm8660_mpm: interrupt-controller@1049d8 {
++            compatible = "qcom,msm8660-mpm";
++            reg = <0x001049d8 0x440>;
++            interrupts = <GIC_SPI 2 IRQ_TYPE_EDGE_RISING>;
++            mboxes = <&gcc_ipc 1>;
++            interrupt-controller;
++            #interrupt-cells = <2>;
++            interrupt-parent = <&intc>;
++            qcom,mpm-pin-count = <64>;
++            qcom,mpm-pin-map = <25 100>,
++                               <26 50>,
++                               <27 79>;
++        };
++    };
 -- 
 2.43.0
 
