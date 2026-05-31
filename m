@@ -1,587 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-110439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0A9GAtW0G2pXFgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 06:11:01 +0200
+	id 6IM+AGXNG2prGQkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 07:55:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92BA661460A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 06:11:00 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47D736149C2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 07:55:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8CD93304D246
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 04:09:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D1935302FAA6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 May 2026 05:55:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3121E31352D;
-	Sun, 31 May 2026 04:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 657663264F6;
+	Sun, 31 May 2026 05:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="U0gTd2OG"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LJZfuWf3";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ri1P7tvD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from outbound6.mail.transip.nl (outbound6.mail.transip.nl [136.144.136.128])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E892D6407;
-	Sun, 31 May 2026 04:09:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.136.128
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056AC308F23
+	for <linux-arm-msm@vger.kernel.org>; Sun, 31 May 2026 05:55:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780200569; cv=none; b=eEAEPrv0SK3/DbtTSI24of50mvMmzU1WqvoBCMv+Qww99k9wqB7Q9ZfMYCVYTuxaayRoTAdH0ySH3SGhvjew+SPDOAHJ1vGCa5U135E00wtawKhRL2+mrZBBM0jt1zbKX8QtIZWEQEgq9zU+diJuMfiJi78QeZH8lMA8gZF9ZAU=
+	t=1780206930; cv=none; b=iMCJGZdnTAAWrKxbpIyQc5f9Nh8K+DsXAoKyGP9Ksy6c7Na4d3Y1sp7wWGWV4/mskNZ+ciEUmzMZceLQpk+Lj6uQBYOn6pPObc/vp+XUQ8GpA4WSA28CVOB/OcrSalrp6KGtBmzG7Sj2Jr0cH4rViRA3LEJ3WZS3xfeXkVSrgvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780200569; c=relaxed/simple;
-	bh=8Z6YB4Ja9kjIYhaeQZmOhUMbihguecPgoPZiQ0WJQBo=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ag7fD3W26BvvFzwUkd0oFJbiQLBSDOwrGd2q7NWTOdeS+3N9qRT6Ejji5Ib2yuzFBqHHzCEje4+/plZ0Jldy8C3DTgzo993iwfstgPQQmmsx45cay+f+Ylpm9G/fLbDttFjWLi1uYzxoTNbA3ge6xPKFJ1YYcO2qOp119jkahiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=U0gTd2OG; arc=none smtp.client-ip=136.144.136.128
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=herrie.org
-Received: from submission4.mail.transip.nl (unknown [10.103.8.155])
-	by outbound6.mail.transip.nl (Postfix) with ESMTP id 4gSkB95DhfzwLHfW;
-	Sun, 31 May 2026 06:09:21 +0200 (CEST)
-Received: from herrie-desktop.. (180-93-184-31.ftth.glasoperator.nl [31.184.93.180])
-	by submission4.mail.transip.nl (Postfix) with ESMTPA id 4gSkB85hjJz3R3nyZ;
-	Sun, 31 May 2026 06:09:20 +0200 (CEST)
-From: Herman van Hazendonk <github.com@herrie.org>
-To: Amit Kucheria <amitk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	devicetree@vger.kernel.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Satya Priya <quic_c_skakit@quicinc.com>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	van Hazendonk <github.com@herrie.org>,
-	Zhang Rui <rui.zhang@intel.com>
-Subject: [PATCH v2 3/3] thermal: qcom: add PM8901 PMIC temperature-alarm driver
-Date: Sun, 31 May 2026 06:09:16 +0200
-Message-ID: <aebf87a1be4512aa6158faf45001ee04caa397fc.1780197411.git.github.com@herrie.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1780197411.git.github.com@herrie.org>
-References: <cover.1780148149.git.github.com@herrie.org> <cover.1780197411.git.github.com@herrie.org>
+	s=arc-20240116; t=1780206930; c=relaxed/simple;
+	bh=aWWHzgXXbLhAdPIfZkTluIIEU0fJsmuZG+EK0Mb9zUY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WU1WtCcrEHAgMo754FuXpqE9qsS31X/tPtL7ITtP394rZFwCJtfbtzYMGp4xSHt8SCLW7ZVn5vjGYHF736jQEFJX4S4r4Z7KnZrJCIFD5ifYMg6DmR+r1SKH4ICrGjljWGc0cIPjY/3fQljQv90QgjEQRlc3pc05V8Ojxt8lh4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LJZfuWf3; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ri1P7tvD; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64V3o5fn644707
+	for <linux-arm-msm@vger.kernel.org>; Sun, 31 May 2026 05:55:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=gDsluyIYqDzR/a+ynOYZLg
+	EdTtTH0lfZipUYx9zJWus=; b=LJZfuWf3PvImEjmJ3K7K/vTm9ea4e5PmEyJleJ
+	bLrkVTBxfnqBE1n4UvvwAVC97wccoNEY9KajsRzPgCnPBwhyxzFKTS9ll6E1VAJs
+	9t/hvuPM8Az5o5vP1toHRShddYm8fVhw/7gAYC+tJoChgXqrVzgbl0gq0b3q7ICp
+	VttrSkIMQ0XMfMB5rlIctkEMNOdizFxymIWMORncL+888Qw6R675EgdGv72VQyX0
+	7hRDqrrqdAnHykJuE70bZEviM/vUOY/UWBOqsGjXKix8ihiY5wP6FSS6Ov3gvneq
+	Rn2PQRFNeE601Ky/thE6sbWKQ5UYVO3KVFQgn2s6z6BvAn1g==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4efqyutvj3-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 31 May 2026 05:55:27 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2bf3636d6c0so12163225ad.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 May 2026 22:55:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1780206927; x=1780811727; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gDsluyIYqDzR/a+ynOYZLgEdTtTH0lfZipUYx9zJWus=;
+        b=Ri1P7tvDQYzlsryMy8hP4GUQ5YKAgYS8JlaGvBAVWlZnHQqKdZatbQVviYWebnz/wJ
+         8Va/R73BqbgoK34TlY21swbRn+znCNrF/xmf4qFtdKkTyTtiiMclAXtmRhQDaRFiqo3M
+         D02SXPwuxbLNh9JBZVcJhO9mg8NMHgc9KZDiAwNyFqK0zlHBUoLdxNlBIGpO4cHNdbj8
+         nBWRV5SRSB8svpNI3el5A2Jeu164d6x28Xz1ybGR0FWTZaIAWZIEPgiNL1oNZscnImfi
+         Rbg1paElpwyL7EDl1eb0iap0N5O1uWNylSUsVGYQdiZMgIcYdu7f/CM1n2un/4yYlCeq
+         Fopg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780206927; x=1780811727;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gDsluyIYqDzR/a+ynOYZLgEdTtTH0lfZipUYx9zJWus=;
+        b=lnEKaj/LWm5zqpLa9ULbllNfl1pehGc2J+dv/3ksEUhDB+t4P7jFYnPf3OHXl1RkEZ
+         PT9fk7RC4p39+9FiRgsIpQco7lCIA6VLXyFTvAiC+vBH3v+sYCV0hcVOLd8p9WZcwc3c
+         pC369f7zttAgEjUgzU0Nk+MBNLERNMZS61ui2/LpGSgo7v+Vy8aubROqcywLTTluC5az
+         AzRrneo7azgN9D99XCcBmxiGYBcF9h08usS0tVV+Tv6WG2/X+CI9FwMUD0zDWP7oDmKg
+         tTHQp37OfaV0HMedo4hNuezM8bANxBVYVW4lm5RtW8INSd++iWMoC76NCYEMB/sl51Oa
+         YAig==
+X-Forwarded-Encrypted: i=1; AFNElJ84dK/AOWt6AhiIEfcvW3PenGJaDDyg+UzNbmsg/jM1N4k2NSiOwxDaMmNJLw2TaesNwdIh4Ua702pyISKi@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0TFmal1VuOPzgfp+NbS7dupv0mKrPseyMOSBhaF2G4CYxZeJ/
+	BV/iBs1a5aozfc9f0ci9BRFKx9Pn1u33QeNwrDtyuzxINOYrvsQhA6+Sy7mnpWY3v5u+s03zwR2
+	m2BL+V4SDxPagl5wBsoA3gjhW1rEGmSCHOjbRBFmI6gT/ePypiDV94MRe2yYcfWbDYchlLNT9mg
+	6p
+X-Gm-Gg: Acq92OFf8HhPHccADJqkOohEYizpAwT78//mbhxzIbRiczLFLJgEwr3J7e5omwcVfvM
+	7HikVnX8npgNq7LKN6SaQvt1zjj3+ypgK5ER724OT5kTEP0KI50pqJNxONa6m911k0lTj5hOc0a
+	QFMLfyP5+EYHtyRlRGDJH2RDawHuM88yFP080UaouJpbnspX3QmzfHn0s93UUMeoYm8a5CacHVL
+	kWULGshVCf28RCEyLL0jOqQ4QV8RdoygUhuFRQKLw5/8/p1uRkrWRQgc/PbkgVCwVPUpSvEf/9L
+	bATdmocBDC5ZHcb678mboPPUJk6+ZJIQRsCHBIkJsbBo+fiJ6karnudROV9HjNvbJnSInHamOyn
+	3ALSEaf6jwnaKHjxdWQMGvkxrq2mtXV7Go0SVFJM5uil/IXhr3AgTEjHT27JpgF1K6g==
+X-Received: by 2002:a17:902:d4ce:b0:2be:3626:dd42 with SMTP id d9443c01a7336-2bf36793909mr72969555ad.6.1780206926766;
+        Sat, 30 May 2026 22:55:26 -0700 (PDT)
+X-Received: by 2002:a17:902:d4ce:b0:2be:3626:dd42 with SMTP id d9443c01a7336-2bf36793909mr72969275ad.6.1780206926294;
+        Sat, 30 May 2026 22:55:26 -0700 (PDT)
+Received: from hu-bvisredd-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bf239e702fsm67124375ad.4.2026.05.30.22.55.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 30 May 2026 22:55:25 -0700 (PDT)
+From: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+Subject: [PATCH v3 0/7] media: qcom: iris: miscellaneous code-quality fixes
+Date: Sun, 31 May 2026 11:20:34 +0530
+Message-Id: <20260531-iris-code-improvement-v3-0-4c699c3dd719@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: ClueGetter at submission4.mail.transip.nl
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=herrie.org; t=1780200561; h=from:subject:to:references:
- in-reply-to:date:mime-version:content-type;
- bh=WQ0QwPq9DZzX06ZtQCVj989jT8nDJZsAIoIDgckGPFI=;
- b=U0gTd2OG23i4sPhhQ7jQW4/b1gjgmaLTJqiiTsaAorpxYuWiy/Q/nq2r2EPb1tunA4hzcX
- Ikc8XkAxTuOcuJUaL1GtvNaTl9aXhj/H/dKSpxizgen/ji7LuMzWvpRK5hRr3ElZV0KrEG
- iQU8DUdfhd5tUp1yKU01zWnB3Hiu1t+aoh0dYtU5MR3YFRQLE5yLpKpI/CdbTLybBTf775
- EfjFFa+6TSSey6iRAZ/1/rCdLHrBSr3gFH2Lo4VqICUPcWknK4g6z9I5H+kacDT2T0Hoxf
- aI0AMp8PoGbHJXTuRPi0XkWYMOJiZAzxCiWHDZO5Jw2be4eCM+YQ/gPz20f7AA==
-X-Report-Abuse-To: abuse@transip.nl
-X-Spamd-Result: default: False [0.84 / 15.00];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACrMG2oC/x2MywqAIBAAf0X2nGD2IPqV6GC61h7UWCOC8N+Tj
+ sMw80JGJswwixcYb8qUYoWuEWAPE3eU5CqDVnpUQ9dKYsrSJldFODndGDBesp+M8QZtv7UOans
+ yenr+77KW8gFChORDZwAAAA==
+X-Change-ID: 20260531-iris-code-improvement-48aafaec4b1d
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil@kernel.org>,
+        Stefan Schmidt <stefan.schmidt@linaro.org>,
+        Hans Verkuil <hverkuil+cisco@kernel.org>,
+        Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1780206921; l=1857;
+ i=busanna.reddy@oss.qualcomm.com; s=20260216; h=from:subject:message-id;
+ bh=aWWHzgXXbLhAdPIfZkTluIIEU0fJsmuZG+EK0Mb9zUY=;
+ b=OORsXq3AGT0po37yjAg5EC8K4ArUSATmU9qRxgmdPS9f0JiQYawNF2ixwY19woAdf/8Iv6gxU
+ LQY4RIGm2SRCOTodSB+LMrZi2Jdwki79UetRXLF00xO1OFw1gavoQe7
+X-Developer-Key: i=busanna.reddy@oss.qualcomm.com; a=ed25519;
+ pk=9vmy9HahBKVAa+GBFj1yHVbz0ey/ucIs1hrlfx+qtok=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTMxMDA2MiBTYWx0ZWRfX5fhO7vdPOnEH
+ rO99Gof5xgHwzOPmtpO22aREiKMFO4pm8a3Mszr5NTxdRfAvggyUyRlJNvZiVvST5i9MKcTV7pU
+ dxmHbsvuFIMIh8yXQ4rxQOh8K7nqp8/TTq9ENJz5PkvofAYf5NLNK+fB0fp2WznMmmwTjkrVui2
+ lW8lqqxo5Ld9sB9mXAdDITjBq674yoEv4ic9yUIj7dnjqSjp6xk3L4V6gRqWS5kSsII0K//Avzl
+ XGoSrDBIUk4PvgxHatoYap9E5auJ1BfSqReMSOdYI764Y8pNlYSaVfecbiLjt6Kb5SlG91d/L0k
+ H1UOZ//r7nb8I9yB0cuKDmn3MOlCAAXw0/2Gn5HG9aWeD7qIRPZVXLxF7A9peJ5bkHd6n6MASqg
+ LnmacVd4bYZrQcOBQA3+EyTSXFj9TEw+VIG8Q443IQ0OESZ2P3qjMiiIB19WtcZxEcPWY3JoFXx
+ byWp/J/A64NCF+wAk4A==
+X-Proofpoint-ORIG-GUID: IM4lj6UtiDJJduRFvuVB-MW6pmoxyggY
+X-Proofpoint-GUID: IM4lj6UtiDJJduRFvuVB-MW6pmoxyggY
+X-Authority-Analysis: v=2.4 cv=B5uJFutM c=1 sm=1 tr=0 ts=6a1bcd4f cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=Z3I29kXYegTyEPjnXUAA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-31_02,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 adultscore=0 impostorscore=0 spamscore=0
+ bulkscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605310062
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_ALLOW(-0.20)[herrie.org:s=transip-a];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110439-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[kernel.org,vger.kernel.org,arm.com,quicinc.com,gmail.com,herrie.org,intel.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_NA(0.00)[herrie.org];
-	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-110443-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[herrie.org:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	FROM_NEQ_ENVFROM(0.00)[busanna.reddy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,cisco];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,herrie.org:email,herrie.org:mid,herrie.org:dkim]
-X-Rspamd-Queue-Id: 92BA661460A
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 47D736149C2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add a thermal-of sensor driver for the temperature-alarm block inside
-the Qualcomm PM8901 PMIC. PM8901 is a secondary PMIC paired with
-PM8058 on the MSM8x60 family (MSM8260/MSM8660/APQ8060). It exposes
-an over-temperature alarm at SSBI offset 0x23/0x24 with three
-escalating stages (105/125/145 C); the driver decodes the stage +
-threshold pair into a millicelsius reading and registers two PMIC-
-internal interrupts (TEMP_ALARM at block 6 bit 4, TEMP_HI_ALARM at
-block 6 bit 5).
+This series addresses a set of independent code-quality issues found 
+during review of the Qualcomm iris video driver.
 
-Used by board thermal-zones for the orderly_poweroff path on the HP
-TouchPad.
+No functional changes are intended.
 
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 ---
- drivers/thermal/qcom/Kconfig          |  12 +
- drivers/thermal/qcom/Makefile         |   1 +
- drivers/thermal/qcom/qcom-pm8901-tm.c | 408 ++++++++++++++++++++++++++
- 3 files changed, 421 insertions(+)
- create mode 100644 drivers/thermal/qcom/qcom-pm8901-tm.c
+Changes in v3:
+- Rebased and resolved merge conflicts (Bryan)
+- Link to v2: https://lore.kernel.org/r/20260423-iris-code-improvement-v2-0-9e9cbf00f9c9@oss.qualcomm.com 
 
-diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
-index a6bb01082ec6..af099032f1e6 100644
---- a/drivers/thermal/qcom/Kconfig
-+++ b/drivers/thermal/qcom/Kconfig
-@@ -32,6 +32,18 @@ config QCOM_SPMI_TEMP_ALARM
- 	  real time die temperature if an ADC is present or an estimate of the
- 	  temperature based upon the over temperature stage value.
- 
-+config QCOM_PM8901_TEMP_ALARM
-+	tristate "Qualcomm PM8901 PMIC Temperature Alarm"
-+	depends on MFD_PM8XXX || COMPILE_TEST
-+	depends on THERMAL_OF
-+	help
-+	  This enables the thermal driver for the PM8901 PMIC over-temperature
-+	  alarm block. PM8901 exposes a stage-based alarm (no raw ADC) with
-+	  four selectable thresholds and three escalating stages. The driver
-+	  registers a thermal-of sensor so a board device tree can declare
-+	  trip points and a critical-trip action (orderly_poweroff). Used on
-+	  HP TouchPad (APQ8060) where PM8901 supplies the secondary PMIC die.
-+
- config QCOM_LMH
- 	tristate "Qualcomm Limits Management Hardware"
- 	depends on ARCH_QCOM || COMPILE_TEST
-diff --git a/drivers/thermal/qcom/Makefile b/drivers/thermal/qcom/Makefile
-index 0fa2512042e7..90dc05151e33 100644
---- a/drivers/thermal/qcom/Makefile
-+++ b/drivers/thermal/qcom/Makefile
-@@ -5,4 +5,5 @@ qcom_tsens-y			+= tsens.o tsens-v2.o tsens-v1.o tsens-v0_1.o \
- 				   tsens-8960.o
- obj-$(CONFIG_QCOM_SPMI_ADC_TM5)	+= qcom-spmi-adc-tm5.o
- obj-$(CONFIG_QCOM_SPMI_TEMP_ALARM)	+= qcom-spmi-temp-alarm.o
-+obj-$(CONFIG_QCOM_PM8901_TEMP_ALARM)	+= qcom-pm8901-tm.o
- obj-$(CONFIG_QCOM_LMH)		+= lmh.o
-diff --git a/drivers/thermal/qcom/qcom-pm8901-tm.c b/drivers/thermal/qcom/qcom-pm8901-tm.c
-new file mode 100644
-index 000000000000..b159e9917c2c
---- /dev/null
-+++ b/drivers/thermal/qcom/qcom-pm8901-tm.c
-@@ -0,0 +1,408 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Qualcomm PM8901 PMIC Thermal-Alarm Driver
-+ *
-+ * Mainline port of the legacy 2.6.35-palm drivers/thermal/pmic8901-tm.c.
-+ * PM8901 exposes a stage-based over-temperature alarm (no raw ADC) with
-+ * four selectable thresholds and three escalating stages. This driver
-+ * mirrors the legacy programming exactly (threshold-set 0, software
-+ * override enabled, PWM gating at 8 Hz) and registers a thermal-of
-+ * sensor so a board DT can declare trip points and a critical action.
-+ *
-+ * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
-+ * Copyright (c) 2026 Herman van Hazendonk <github.com@herrie.org>
-+ */
-+
-+#include <linux/bitfield.h>
-+#include <linux/bitops.h>
-+#include <linux/interrupt.h>
-+#include <linux/module.h>
-+#include <linux/mutex.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+#include <linux/thermal.h>
-+
-+/* SSBI registers (offsets from the per-instance reg base) */
-+#define PM8901_TM_REG_CTRL		0x00	/* CTRL/STATUS  (base + 0) */
-+#define PM8901_TM_REG_PWM		0x01	/* PWM gating  (base + 1) */
-+
-+/* CTRL register fields */
-+#define CTRL_ST3_SD			BIT(7)
-+#define CTRL_ST2_SD			BIT(6)
-+#define CTRL_STATUS_MASK		GENMASK(5, 4)
-+#define CTRL_THRESH_MASK		GENMASK(3, 2)
-+#define CTRL_OVRD_ST3			BIT(1)
-+#define CTRL_OVRD_ST2			BIT(0)
-+#define CTRL_OVRD_MASK			GENMASK(1, 0)
-+
-+/* PWM register fields */
-+#define PWM_EN				BIT(7)
-+#define PWM_PER_PRE_MASK		GENMASK(5, 3)
-+#define PWM_PER_DIV_MASK		GENMASK(2, 0)
-+
-+/* Temperature math (from legacy pmic8901-tm.c) */
-+#define PM8901_TEMP_STAGE_STEP		20000	/* 20 deg C between stages */
-+#define PM8901_TEMP_STAGE_HYSTERESIS	2000	/*  2 deg C transition guard */
-+#define PM8901_TEMP_THRESH_MIN		105000	/* threshold 0 base = 105 C */
-+#define PM8901_TEMP_THRESH_STEP		5000	/*  5 deg C per threshold step */
-+
-+/*
-+ * PM8901 has no real die ADC; when stage == 0 ("below threshold") we
-+ * report a plausible idle estimate matching the legacy DEFAULT_NO_ADC_TEMP.
-+ */
-+#define PM8901_TEMP_NO_ALARM		37000
-+
-+struct pm8901_tm_chip {
-+	struct device			*dev;
-+	struct regmap			*map;
-+	struct thermal_zone_device	*tz_dev;
-+	struct mutex			lock;
-+	unsigned int			base;	/* SSBI offset, from DT reg */
-+	unsigned int			stage;
-+	unsigned int			thresh;
-+	int				temp;
-+	bool				initialised;
-+};
-+
-+static int pm8901_tm_read_ctrl(struct pm8901_tm_chip *chip, u8 *val)
-+{
-+	unsigned int v;
-+	int ret;
-+
-+	ret = regmap_read(chip->map, chip->base + PM8901_TM_REG_CTRL, &v);
-+	if (!ret)
-+		*val = v;
-+	return ret;
-+}
-+
-+static int pm8901_tm_write_ctrl(struct pm8901_tm_chip *chip, u8 val)
-+{
-+	return regmap_write(chip->map, chip->base + PM8901_TM_REG_CTRL, val);
-+}
-+
-+static int pm8901_tm_write_pwm(struct pm8901_tm_chip *chip, u8 val)
-+{
-+	return regmap_write(chip->map, chip->base + PM8901_TM_REG_PWM, val);
-+}
-+
-+/*
-+ * Decode the (stage, threshold) pair into a single millicelsius value.
-+ * Logic matches the legacy pmic8901-tm.c hysteresis selection:
-+ *  - on a rising stage transition, use the lower bound of the new stage
-+ *    plus +HYSTERESIS so we don't bounce
-+ *  - on a falling stage transition, use the upper bound of the new stage
-+ *    minus -HYSTERESIS
-+ *  - on the first read after probe (initialised == false), report the
-+ *    lower bound of the current stage (the most conservative estimate
-+ *    given that the hardware only tells us "we crossed this stage's
-+ *    threshold"), or PM8901_TEMP_NO_ALARM when stage == 0.
-+ */
-+static int pm8901_tm_update_temp_locked(struct pm8901_tm_chip *chip)
-+{
-+	unsigned int new_stage;
-+	u8 reg;
-+	int ret;
-+
-+	ret = pm8901_tm_read_ctrl(chip, &reg);
-+	if (ret)
-+		return ret;
-+
-+	new_stage = FIELD_GET(CTRL_STATUS_MASK, reg);
-+	chip->thresh = FIELD_GET(CTRL_THRESH_MASK, reg);
-+
-+	if (!chip->initialised) {
-+		if (new_stage)
-+			chip->temp = PM8901_TEMP_THRESH_MIN +
-+				     chip->thresh * PM8901_TEMP_THRESH_STEP +
-+				     (new_stage - 1) * PM8901_TEMP_STAGE_STEP;
-+		else
-+			chip->temp = PM8901_TEMP_NO_ALARM;
-+		chip->initialised = true;
-+	} else if (new_stage > chip->stage) {
-+		chip->temp = PM8901_TEMP_THRESH_MIN +
-+			     chip->thresh * PM8901_TEMP_THRESH_STEP +
-+			     (new_stage - 1) * PM8901_TEMP_STAGE_STEP +
-+			     PM8901_TEMP_STAGE_HYSTERESIS;
-+	} else if (new_stage < chip->stage) {
-+		chip->temp = PM8901_TEMP_THRESH_MIN +
-+			     chip->thresh * PM8901_TEMP_THRESH_STEP +
-+			     new_stage * PM8901_TEMP_STAGE_STEP -
-+			     PM8901_TEMP_STAGE_HYSTERESIS;
-+	}
-+
-+	chip->stage = new_stage;
-+	return 0;
-+}
-+
-+static int pm8901_tm_get_temp(struct thermal_zone_device *tz, int *temp)
-+{
-+	struct pm8901_tm_chip *chip = thermal_zone_device_priv(tz);
-+	int ret;
-+
-+	if (!temp)
-+		return -EINVAL;
-+
-+	mutex_lock(&chip->lock);
-+	ret = pm8901_tm_update_temp_locked(chip);
-+	if (!ret)
-+		*temp = chip->temp;
-+	mutex_unlock(&chip->lock);
-+
-+	return ret;
-+}
-+
-+static const struct thermal_zone_device_ops pm8901_tm_zone_ops = {
-+	.get_temp = pm8901_tm_get_temp,
-+};
-+
-+/*
-+ * Shared ISR for both TEMP_ALARM (stage-transition) and TEMP_HI_ALARM
-+ * (hi-temp) interrupts. Updates the cached temperature, clears any
-+ * latched ST2_SD / ST3_SD shutdown bits so the next stage transition
-+ * can be observed, and pokes the thermal core which then re-reads
-+ * temp and walks trips (a critical-trip cross triggers orderly_poweroff
-+ * via the kernel's standard machinery).
-+ */
-+static irqreturn_t pm8901_tm_isr(int irq, void *data)
-+{
-+	struct pm8901_tm_chip *chip = data;
-+	u8 reg;
-+	int ret;
-+
-+	mutex_lock(&chip->lock);
-+
-+	ret = pm8901_tm_update_temp_locked(chip);
-+	if (ret) {
-+		mutex_unlock(&chip->lock);
-+		return IRQ_HANDLED;
-+	}
-+
-+	ret = pm8901_tm_read_ctrl(chip, &reg);
-+	if (!ret && (reg & (CTRL_ST2_SD | CTRL_ST3_SD))) {
-+		reg &= ~(CTRL_ST2_SD | CTRL_ST3_SD | CTRL_STATUS_MASK);
-+		pm8901_tm_write_ctrl(chip, reg);
-+	}
-+
-+	dev_dbg(chip->dev, "alarm irq=%d stage=%u thresh=%u temp=%d\n",
-+		irq, chip->stage, chip->thresh, chip->temp);
-+
-+	mutex_unlock(&chip->lock);
-+
-+	thermal_zone_device_update(chip->tz_dev, THERMAL_EVENT_UNSPECIFIED);
-+	return IRQ_HANDLED;
-+}
-+
-+/*
-+ * Program PM8901 to the legacy default: threshold-set 0 (105 / 125 / 145 C),
-+ * PWM at 8 Hz (legacy "cut down on unnecessary interrupts" rate), and
-+ * prime the cached temperature. This intentionally does NOT yet flip the
-+ * software-override bits; HW auto-shutdown is left enabled here so the
-+ * PMIC keeps protecting the part if any later probe step fails. The
-+ * SW-override switch happens in pm8901_tm_enable_sw_override() and is
-+ * paired with a devm action that reverts the bits if the driver unbinds.
-+ */
-+static int pm8901_tm_init_hw(struct pm8901_tm_chip *chip)
-+{
-+	int ret;
-+	u8 reg;
-+
-+	mutex_lock(&chip->lock);
-+
-+	ret = pm8901_tm_read_ctrl(chip, &reg);
-+	if (ret)
-+		goto out;
-+
-+	/* Clear status + threshold bits, leave OVRD bits as the HW found them. */
-+	reg = reg & ~(CTRL_STATUS_MASK | CTRL_THRESH_MASK);
-+	ret = pm8901_tm_write_ctrl(chip, reg);
-+	if (ret)
-+		goto out;
-+
-+	chip->thresh = 0;
-+
-+	/* PWM @ 8 Hz: PWM_EN | PRE=3 | DIV=3 — verbatim from legacy. */
-+	reg = PWM_EN | FIELD_PREP(PWM_PER_PRE_MASK, 3) |
-+	      FIELD_PREP(PWM_PER_DIV_MASK, 3);
-+	ret = pm8901_tm_write_pwm(chip, reg);
-+	if (ret)
-+		goto out;
-+
-+	/* Prime the cached temperature from current hardware state. */
-+	chip->initialised = false;
-+	ret = pm8901_tm_update_temp_locked(chip);
-+
-+out:
-+	mutex_unlock(&chip->lock);
-+	return ret;
-+}
-+
-+/*
-+ * Re-enable PM8901's hardware auto-cut on the way out, so the PMIC takes
-+ * over thermal protection again once the kernel is no longer the
-+ * shutdown agent. Best-effort: log on failure, do not propagate the
-+ * error (there is nothing the unbind path can do about it).
-+ */
-+static void pm8901_tm_restore_hw_shutdown(void *data)
-+{
-+	struct pm8901_tm_chip *chip = data;
-+	int ret;
-+	u8 reg;
-+
-+	mutex_lock(&chip->lock);
-+	ret = pm8901_tm_read_ctrl(chip, &reg);
-+	if (!ret) {
-+		reg &= ~CTRL_OVRD_MASK;
-+		ret = pm8901_tm_write_ctrl(chip, reg);
-+	}
-+	mutex_unlock(&chip->lock);
-+
-+	if (ret)
-+		dev_warn(chip->dev,
-+			 "failed to restore PMIC HW auto-shutdown: %d\n", ret);
-+}
-+
-+/*
-+ * Hand thermal protection responsibility from the PMIC's hardware
-+ * auto-cut to the kernel thermal core. This is the LAST step of probe
-+ * so that, if any earlier step fails, the PMIC keeps protecting the
-+ * part on its own. Once it succeeds we install a devm action that
-+ * re-enables HW auto-cut if/when the driver is unbound.
-+ */
-+static int pm8901_tm_enable_sw_override(struct pm8901_tm_chip *chip)
-+{
-+	int ret;
-+	u8 reg;
-+
-+	mutex_lock(&chip->lock);
-+	ret = pm8901_tm_read_ctrl(chip, &reg);
-+	if (!ret) {
-+		reg = (reg & ~CTRL_OVRD_MASK) | CTRL_OVRD_ST3 | CTRL_OVRD_ST2;
-+		ret = pm8901_tm_write_ctrl(chip, reg);
-+	}
-+	mutex_unlock(&chip->lock);
-+	if (ret)
-+		return ret;
-+
-+	return devm_add_action_or_reset(chip->dev,
-+					pm8901_tm_restore_hw_shutdown, chip);
-+}
-+
-+static int pm8901_tm_probe(struct platform_device *pdev)
-+{
-+	struct pm8901_tm_chip *chip;
-+	int ret, irq_alarm, irq_hi_alarm;
-+	u32 res;
-+
-+	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
-+	if (!chip)
-+		return -ENOMEM;
-+
-+	chip->dev = &pdev->dev;
-+	mutex_init(&chip->lock);
-+
-+	chip->map = dev_get_regmap(pdev->dev.parent, NULL);
-+	if (!chip->map)
-+		return dev_err_probe(&pdev->dev, -ENXIO,
-+				     "no regmap on PM8901 parent\n");
-+
-+	ret = of_property_read_u32(pdev->dev.of_node, "reg", &res);
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret,
-+				     "missing reg property\n");
-+	chip->base = res;
-+
-+	irq_alarm = platform_get_irq_byname(pdev, "alarm");
-+	if (irq_alarm < 0)
-+		return irq_alarm;
-+	irq_hi_alarm = platform_get_irq_byname(pdev, "hi-alarm");
-+	if (irq_hi_alarm < 0)
-+		return irq_hi_alarm;
-+
-+	ret = pm8901_tm_init_hw(chip);
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret, "hw init failed\n");
-+
-+	chip->tz_dev = devm_thermal_of_zone_register(&pdev->dev, 0, chip,
-+						     &pm8901_tm_zone_ops);
-+	if (IS_ERR(chip->tz_dev))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(chip->tz_dev),
-+				     "thermal zone register failed\n");
-+
-+	ret = devm_request_threaded_irq(&pdev->dev, irq_alarm, NULL,
-+					pm8901_tm_isr, IRQF_ONESHOT,
-+					"pm8901-tm-alarm", chip);
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret,
-+				     "alarm IRQ request failed\n");
-+
-+	ret = devm_request_threaded_irq(&pdev->dev, irq_hi_alarm, NULL,
-+					pm8901_tm_isr, IRQF_ONESHOT,
-+					"pm8901-tm-hi-alarm", chip);
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret,
-+				     "hi-alarm IRQ request failed\n");
-+
-+	platform_set_drvdata(pdev, chip);
-+
-+	/*
-+	 * All resources that we need on the thermal hot path are now in
-+	 * place; hand thermal-shutdown responsibility from the PMIC's
-+	 * hardware auto-cut to the kernel thermal core. If this fails the
-+	 * PMIC is left with its original (post-reset) HW auto-cut intact,
-+	 * so we never leave the part unprotected.
-+	 */
-+	ret = pm8901_tm_enable_sw_override(chip);
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret,
-+				     "failed to enable SW thermal override\n");
-+
-+	thermal_zone_device_update(chip->tz_dev, THERMAL_EVENT_UNSPECIFIED);
-+
-+	{
-+		unsigned int stage, thresh;
-+		int temp;
-+
-+		/*
-+		 * IRQs and thermal-core polling are live by now, so the
-+		 * cached state can be updated under chip->lock at any time.
-+		 * Snapshot under the lock so the boot banner is consistent.
-+		 */
-+		mutex_lock(&chip->lock);
-+		stage = chip->stage;
-+		thresh = chip->thresh;
-+		temp = chip->temp;
-+		mutex_unlock(&chip->lock);
-+
-+		dev_info(&pdev->dev,
-+			 "PM8901 thermal alarm: base=0x%x stage=%u thresh=%u temp=%d\n",
-+			 chip->base, stage, thresh, temp);
-+	}
-+
-+	return 0;
-+}
-+
-+/*
-+ * No explicit ->remove() needed: pm8901_tm_restore_hw_shutdown() is
-+ * registered as a devm action in probe and re-enables the PMIC's HW
-+ * auto-cut automatically on unbind.
-+ */
-+
-+static const struct of_device_id pm8901_tm_match_table[] = {
-+	{ .compatible = "qcom,pm8901-temp-alarm" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, pm8901_tm_match_table);
-+
-+static struct platform_driver pm8901_tm_driver = {
-+	.driver = {
-+		.name		= "pm8901-temp-alarm",
-+		.of_match_table	= pm8901_tm_match_table,
-+	},
-+	.probe	= pm8901_tm_probe,
-+};
-+module_platform_driver(pm8901_tm_driver);
-+
-+MODULE_ALIAS("platform:pm8901-temp-alarm");
-+MODULE_DESCRIPTION("Qualcomm PM8901 PMIC Thermal Alarm driver");
-+MODULE_LICENSE("GPL v2");
+Changes in v2:
+- Updated variables names for iris_get_int_buf_tbl helper (Bryan)
+- Removed un-necessary fixes tags (Bryan, Konrad)
+- Addressed other comments (Bryan, Konrad)
+- Link to v1: https://lore.kernel.org/r/20260422-iris-code-improvement-v1-0-8e150482212d@oss.qualcomm.com
+
+---
+Dikshita Agarwal (7):
+      media: qcom: iris: Centralize internal buffer table selection
+      media: qcom: iris: fix state-change debug log printing stale value
+      media: qcom: iris: Fix bitmask test in iris_allow_cmd()
+      media: qcom: iris: Remove dead assignment in iris_hfi_gen2_set_tier()
+      media: qcom: iris: Remove duplicate HFI_PROP_OPB_ENABLE entry
+      media: qcom: iris: Add missing break in iris_hfi_gen2_session_set_codec()
+      media: qcom: iris: Make iris_destroy_internal_buffer() return void
+
+ drivers/media/platform/qcom/iris/iris_buffer.c     | 123 +++++----------------
+ drivers/media/platform/qcom/iris/iris_buffer.h     |   2 +-
+ .../platform/qcom/iris/iris_hfi_gen1_command.c     |   2 +-
+ .../platform/qcom/iris/iris_hfi_gen2_command.c     |   7 +-
+ .../platform/qcom/iris/iris_hfi_gen2_response.c    |   4 +-
+ drivers/media/platform/qcom/iris/iris_state.c      |   4 +-
+ 6 files changed, 40 insertions(+), 102 deletions(-)
+---
+base-commit: a96fcde9fa9a6696991d1f172a8bc2bade82a6d9
+change-id: 20260531-iris-code-improvement-48aafaec4b1d
+
+Best regards,
 -- 
-2.43.0
+Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 
 
