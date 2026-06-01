@@ -1,85 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-110771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
-	by lfdr with LMTP
-	id QEyPG2qXHmoAlQkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 10:42:18 +0200
+	by mail.lfdr.de with LMTP
+	id +Do8MFzJHmphVAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 14:15:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id E525B62AC22
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 10:42:17 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C191B62DE5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 14:15:23 +0200 (CEST)
+Authentication-Results: mail.lfdr.de;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=UoHp3qsd;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110806-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110806-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 740DA306DEF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 08:40:06 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 653BC30B3F5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 12:08:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFCD23A8FE8;
-	Tue,  2 Jun 2026 08:39:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jSqPVgGz"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B824A3E0C53;
+	Tue,  2 Jun 2026 12:08:18 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302553C8737
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 08:39:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA0A3E0745;
+	Tue,  2 Jun 2026 12:08:17 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780389572; cv=none; b=G0PZgc4NaKCw48/omtb+8vsJeEshdvNjCZcsu/6qDZ3vdpUpqDLy46TX64VPQiHgX9IQuZ66eH03QeejoMFaKoRevrWpr62vTOJM8k/wUfcKmHxTxDS7/ewVa2SkVFZeL/OOdRwlHX5pC2myock4r++kwZJw1BnOjOhXh/6WSmM=
+	t=1780402098; cv=none; b=ot9949X2AjmgVDjOFckinsMtwKKi2j2eHe59OTvyjISoyiW73ZyI8+em31P9m1LoT4lMUqrLt5hOl3S/mNwCUMZQKDw3u7gAcTvn3pOqMlQ1wPB+e0bL6IkH2B8FBdX5uRhHdqNAHoDry4BL+lr6Q9Z4DTkdC/0jEs+bqXYoBqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780389572; c=relaxed/simple;
-	bh=FSRjjiwubMsbmGQlFv02cRDb8aSDoT7TLY94ZGqccOE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Hh9vzXyRI1z3JYH/t0xWI4czVYzT5MS/3Y+ssEYI4+WV1PJ58SEX5H+esY13OJ5ZU7X50GtPYN4Hn5dDMjojdNDP7lYGfQPJXVWGmxesMWmCPGa47+e8A+JraBotQQUZjpxjjyUniBKvZiZcJjlttVToCly1oJNmWcjjOAI+d6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jSqPVgGz; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-490af320e2aso11108845e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2026 01:39:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1780389565; x=1780994365; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yU+v1GlIbb9kozfDeAVXVrzHJKOrtEBHh4oL/P0WE9U=;
-        b=jSqPVgGzQZb5HEz5M2AyF/iI3UvUO+1q+gIo8+SzelCnveGOeFimrDO9Fp8HEmOfSd
-         MSAKhD4OQMsOaiH4T5aWLo/XstN+90QOidvgG56mqWxxWCPjA8iDh2wyNfwUSQeuLIhB
-         wxbV2PAcjHDMYaxrCQYjXBU/H2efSpG0+u50fRwUUmnfPMgQ5WH5s6xemxlew1NlGIx6
-         jN1aQKB6wbK11blTV/BKrpPr984Bt3l9TE/hrTnz9UAPrC5HUXjODSrPiJmSatiOAC8S
-         dz5izXSNfNu3BoJNmc/27M54ZFRFQsZOlwI1q3iUfGJkX7O4mVTkf7tIGlpFLH3COT0h
-         CzKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780389565; x=1780994365;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=yU+v1GlIbb9kozfDeAVXVrzHJKOrtEBHh4oL/P0WE9U=;
-        b=lLqqCeEZIxaGKKgnCtxOntyJl86/ueAxiy5RLv3XYaIF3gkubXlR/IPuppbRKFGwJA
-         4ePP+IIH0YO+zDexXfnfB40KFzRgCnxYnkfdTnCXd676sZpaYuHhOzgkzOaJYpJs4kkD
-         CX6BG8nA1IJEVItMSVwWZHEP4dh+/Os3eGvWyOdbT9D2/V/gNbT6evsIqTjYPx0qbUar
-         eWBsYfWb3VFkJc7vm8GuFTHoFi3LuAw233IoW6Fg1oRrquFQbpGeCliYXfyvPQzG1xDn
-         JJ2eVTmkgilm41BWcv8zOtPiFfRYsLizU+v8BdNZ8OEb6ZpBKZv6i0ZR03eJp56gbpzT
-         1j5Q==
-X-Forwarded-Encrypted: i=1; AFNElJ8daFW0kdRS87RuE88NqOtiGRhPAjay45pEJv1Y/aCcwHDjQpYRNemgMr/rY7QjVh6GMT2+vLsoIq2/sQ5I@vger.kernel.org
-X-Gm-Message-State: AOJu0YzqHIKvWEnsrsrgJ8W0yOiuiAy9fKkKGxnvfBc4zA+yEMfm58l8
-	AVut+EcIV3JmvMHGLxK5pHK79VWGXM5ef8ReacF+9iUiiw40z4z1ZLwHtzH7mR4VsAU=
-X-Gm-Gg: Acq92OEMG7Y9Y8zHM+n8gr6Mxmu9qqWbg3C6CMkg4djF25gLqihhlHHNYFfnYwncuKY
-	x/LiVeXgHaQfYoJXgsX6KwS2moQLpnyzrBqMlkJk0QuJCS+MPXN4+JcwB2XFNsVn6tUe8WtkCai
-	0529V3VIUFr6vaY93w3QXuQAEFhTtXrKSwImmfCmGRATBOR/mqtJbM2VKJuZppC1JN7Jep4+Fjj
-	s/qMsELm7OEWHZ2LGnHtO2lmCu1X3hHmOJmhgcG7h1ryEM2QqZbcsE5VsSGlSbw5LIaWhwB7Ib9
-	BmRCiQSUu/WqhSq+/ApnblG9p1nKRWxJTIxgajT2H+XHlrSUdXZJjmwXRqWNtJcmVT5kZnHccmg
-	sSwKaw1P4L93UZgkcioGVBB8z3BsYdVp23SRquV71inFsYpw+FulkMpmijQ3/5kC6aaXNr1CjS4
-	T5wU+gCEMIfpKkSpDmMGPsWYkhtA7zCPNN6ozWk+9/jZ3jOe3+LPLIdGk=
-X-Received: by 2002:a05:600c:8b01:b0:48a:563c:c8c5 with SMTP id 5b1f17b1804b1-490a29127c0mr55625555e9.8.1780389565427;
-        Tue, 02 Jun 2026 01:39:25 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:106d:1080:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b0e26050sm43879425e9.9.2026.06.02.01.39.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 01:39:25 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Tue, 02 Jun 2026 10:39:21 +0200
-Subject: [PATCH v5 6/6] media: qcom: iris: vdec: allow GEN2 decoding into
- 10bit format
+	s=arc-20240116; t=1780402098; c=relaxed/simple;
+	bh=zLAj4P9Dy6L2EM/RcQvTYSnONUWfrINoP2/8PbJBYwc=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=kLE0l++nxGj7vI+Z/4gCLeLmNozSPjS21Qkx/eys0EkKYjkrEYsKZpg784sUoxZq98Bb8KEHNkqVEVjaqSqrNxmg40qB3X6hxM5Gd2ExUVhr9xK9E/ifSjzLn5BLZDNmCK/2a+tJOkLXc5rLTdkTrYTXKn1ZM7x6mFKx20B412Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UoHp3qsd; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741461F00893;
+	Tue,  2 Jun 2026 12:08:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780402097;
+	bh=7ay+AKx4LhOcg/My/FDa+sB5VF1ZYepET64MBC4G2yU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=UoHp3qsdcYvkoZIK7m+Fe+1i23bwbQ/x6dyI00f/m5x7QCvioD3/g3kHG37z9oMwH
+	 vPR2eS76453kH648olGHUttv826cIEvgmQq821aSsB+v1Sr4Yh5xdDBoob+foLSQp+
+	 6I+i1W4Ec4WRaVBHl1S9YTpRr2alOsVPnwPKR0BzoQF7iDFqZMnvp9jp9OgOYWYdoE
+	 aHDjizs9+kZWHuB4gkC4rfSZSrxz9qKPw0imkHc+azrF4MWEnoWfibIgtOigVgV5YT
+	 pzD4UQX8awJVssk9nloieR6XBzFUJyv/NeS0kKOcKlMkuBybpaQakzq4jIoi9umBL8
+	 uhj/P/6eCvIHw==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com, 
+ krzysztof.kozlowski@oss.qualcomm.com, alexey.klimov@linaro.org, 
+ mohammad.rafi.shaik@oss.qualcomm.com, ravi.hothi@oss.qualcomm.com, 
+ mathieu.poirier@linaro.org, andersson@kernel.org, kees@kernel.org, 
+ verhaegen@google.com, linux-sound@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20260528185806.6316-1-srinivas.kandagatla@oss.qualcomm.com>
+References: <20260528185806.6316-1-srinivas.kandagatla@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/6] ASoC: qcom: qdsp6: add push/pull module support
+Message-Id: <178033076336.44654.4051791515158017580.b4-ty@b4>
+Date: Mon, 01 Jun 2026 17:19:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,173 +67,108 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260602-topic-sm8x50-iris-10bit-decoding-v5-6-c2b32474ed67@linaro.org>
-References: <20260602-topic-sm8x50-iris-10bit-decoding-v5-0-c2b32474ed67@linaro.org>
-In-Reply-To: <20260602-topic-sm8x50-iris-10bit-decoding-v5-0-c2b32474ed67@linaro.org>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Wangao Wang <wangao.wang@oss.qualcomm.com>
-X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4850;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=FSRjjiwubMsbmGQlFv02cRDb8aSDoT7TLY94ZGqccOE=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBqHpa3tphMfFq2aRbEGfi12mhSrXo+E1GzA7nnkPUP
- k+QIH7SJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCah6WtwAKCRB33NvayMhJ0UP/D/
- 4rKpp40CWrMs+OayqZM3J1qkp6ktiWk8FQvq6bdiWqZlo6X522U5dNui+tgvUxN2Bn8KOIt93GDdU0
- Nz9+4AQAukp0MMbg9JVVBx5vdArlTS3VZ3HimVO4DZXPzYUXM9FUJdqNgA+0EflfW+svmq2Le8SdyP
- zMdbFGz7CtlmT1iurqRWaXLcxv5rrHiho89ZsAsiZBU2tZdDCq4KHxzrr0v86+yS1Iv7Rwur4lm2CL
- U0w1caAvK/wMwVc3oJ1XbN5eDit+K/2D6MekvFW9qLeP0GUwVMcwr3xiFNETS8eyB9IRms8Tr4nj6D
- 5AboIgx2GitTl3HoV7/HkXuwUCOcVvd8r/IKhtFgi+8HM2N/ACA34ZQ/XiJwu2VDlqKST2oJvez0Si
- oG4im2hSU5PP1ddlqBx8asU94iG23xCW5nOxytwKCUIW4X8SbJhUhWm+pW/NDj6MfnKvHODwCPbpr1
- i8tTK2DmGdwbfBlwSQ2pOdI4AGlz8shAilC+y4OfLke9Ei2ZV8AgNZ5SXod9PU7S7W3SAa9bIIaVWz
- JQ/PjK53TWxxuTa4iyPEEpa3RVS9kwfci0UL05nMGea7IvEUpYiegQ8B1+w9sjiGblEF9JS03CGTsx
- hs835IHfqmgk6UfUINjJ99L4vcB27yC3i1FHhwDvjUwATbnUcf/ZbuxblTiA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2531; i=broonie@kernel.org;
+ h=from:subject:message-id; bh=zLAj4P9Dy6L2EM/RcQvTYSnONUWfrINoP2/8PbJBYwc=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqHsetKXMP3n1XuuoAxs5FVEr/0WuQBxJi8N6z4
+ kxMzFt5XIWJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCah7HrQAKCRAk1otyXVSH
+ 0CZ1B/92s1QLN95Sn55fcp3zZUNqeflRtHVjF7tCT2t/PKmGDUjQgUQ5BOc29+EPXWfmZA3GFUe
+ pYKvi7fWkG4xp7rlagTvu6tilvuqa6q66V9HLI1h/HFI070hNT4ots49kuVA3LLbgDKWuCyiMyh
+ 7AT0tJ5jTDtxaZtjyqK7I0TxBxCMMTpIic1LwdgOQmij3HY3U9i/cT0Br0Wlq9Av1PYqDNuBUQM
+ dzxOO67cGf/toRmVdVyX3v9JWtVeTqgeKKeJoanflJBBElKnaepFiJ6ANhn0HOJRym7uC5frVEX
+ GFzAZMIAwmGWkwZUKazWr6uruajDbqZU5HD9MF5wwGy3i7fD
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:srinivas.kandagatla@oss.qualcomm.com,m:lgirdwood@gmail.com,m:perex@perex.cz,m:tiwai@suse.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:alexey.klimov@linaro.org,m:mohammad.rafi.shaik@oss.qualcomm.com,m:ravi.hothi@oss.qualcomm.com,m:mathieu.poirier@linaro.org,m:andersson@kernel.org,m:kees@kernel.org,m:verhaegen@google.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110771-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110806-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[gmail.com,perex.cz,suse.com,oss.qualcomm.com,linaro.org,kernel.org,google.com,vger.kernel.org];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,linaro.org:mid,linaro.org:dkim,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: E525B62AC22
-X-Rspamd-Action: no action
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
+X-Rspamd-Queue-Id: C191B62DE5F
 
-Add the necessary bits into the gen2 platforms tables and handlers
-to allow decoding streams into 10bit pixel formats.
+On Thu, 28 May 2026 19:57:59 +0100, Srinivas Kandagatla wrote:
+> ASoC: qcom: qdsp6: add push/pull module support
+> 
+> This patchset adds support for Push/Pull mode modules.
+> Push-pull mode uses dedicated shared-memory modules that allow the DSP
+> to access the PCM circular buffer directly. In addition to reducing
+> fragment queueing and ACK handling in the host driver,
+> This mode exposes a DSP-maintained position buffer that provides
+> fine-grained hardware pointer updates. Unlike the Read/Write Shared
+> Memory endpoitn modules, which are period based, where the reported
+> pointer advances only at period boundaries, where as push-pull mode
+> allows .pointer() to reflect sub-period progress, improving pointer
+> accuracy.
+> Also the driver now can queue buffers which are less than period size,
+> which makes tests like alsa_conformance_test happy.
+> 
+> [...]
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Tested-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/media/platform/qcom/iris/iris_hfi_gen2.c         |  8 +++++---
- .../media/platform/qcom/iris/iris_hfi_gen2_response.c    | 16 +++++++++++++++-
- drivers/media/platform/qcom/iris/iris_instance.h         |  2 ++
- drivers/media/platform/qcom/iris/iris_vdec.c             |  2 ++
- 4 files changed, 24 insertions(+), 4 deletions(-)
+Applied to
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2.c
-index 7a85c1d4e5e6..acc0ed8adda1 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2.c
-@@ -31,9 +31,10 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8550_dec[] = {
- 	{
- 		.cap_id = PROFILE_HEVC,
- 		.min = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
--		.max = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE,
-+		.max = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_10,
- 		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN) |
--				BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE),
-+				BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_10),
- 		.value = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
- 		.hfi_id = HFI_PROP_PROFILE,
- 		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-@@ -262,7 +263,7 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8550_dec[] = {
- 	{
- 		.cap_id = BIT_DEPTH,
- 		.min = BIT_DEPTH_8,
--		.max = BIT_DEPTH_8,
-+		.max = BIT_DEPTH_10,
- 		.step_or_mask = 1,
- 		.value = BIT_DEPTH_8,
- 		.hfi_id = HFI_PROP_LUMA_CHROMA_BIT_DEPTH,
-@@ -996,6 +997,7 @@ static const u32 sm8550_vdec_output_config_params[] = {
- 	HFI_PROP_OPB_ENABLE,
- 	HFI_PROP_COLOR_FORMAT,
- 	HFI_PROP_LINEAR_STRIDE_SCANLINE,
-+	HFI_PROP_UBWC_STRIDE_SCANLINE,
- };
- 
- static const u32 sm8550_venc_output_config_params[] = {
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-index aca90aab8548..25162ae71357 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_response.c
-@@ -542,6 +542,15 @@ static void iris_hfi_gen2_read_input_subcr_params(struct iris_inst *inst)
- 	pixmp_ip->width = width;
- 	pixmp_ip->height = height;
- 
-+	if (subsc_params.bit_depth == BIT_DEPTH_8 &&
-+	    pixmp_op->pixelformat != V4L2_PIX_FMT_NV12 &&
-+	    pixmp_op->pixelformat != V4L2_PIX_FMT_QC08C)
-+		pixmp_op->pixelformat = V4L2_PIX_FMT_NV12;
-+	else if (subsc_params.bit_depth == BIT_DEPTH_10 &&
-+		 pixmp_op->pixelformat != V4L2_PIX_FMT_P010 &&
-+		 pixmp_op->pixelformat != V4L2_PIX_FMT_QC10C)
-+		pixmp_op->pixelformat = V4L2_PIX_FMT_P010;
-+
- 	switch (pixmp_op->pixelformat) {
- 	case V4L2_PIX_FMT_P010:
- 		pixmp_op->width = ALIGN(width, 128);
-@@ -625,7 +634,12 @@ static void iris_hfi_gen2_read_input_subcr_params(struct iris_inst *inst)
- 	inst->fw_caps[POC].value = subsc_params.pic_order_cnt;
- 	inst->fw_caps[TIER].value = subsc_params.tier;
- 
--	if (subsc_params.bit_depth != BIT_DEPTH_8 ||
-+	if (subsc_params.bit_depth == BIT_DEPTH_8)
-+		inst->fw_caps[BIT_DEPTH].value = BIT_DEPTH_8;
-+	else
-+		inst->fw_caps[BIT_DEPTH].value = BIT_DEPTH_10;
-+
-+	if ((subsc_params.bit_depth != BIT_DEPTH_8 && subsc_params.bit_depth != BIT_DEPTH_10) ||
- 	    !(subsc_params.coded_frames & HFI_BITMASK_FRAME_MBS_ONLY_FLAG)) {
- 		dev_err(core->dev, "unsupported content, bit depth: %x, pic_struct = %x\n",
- 			subsc_params.bit_depth, subsc_params.coded_frames);
-diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
-index c54d8ec8562a..a770331d1675 100644
---- a/drivers/media/platform/qcom/iris/iris_instance.h
-+++ b/drivers/media/platform/qcom/iris/iris_instance.h
-@@ -27,6 +27,8 @@ enum iris_fmt_type_out {
- enum iris_fmt_type_cap {
- 	IRIS_FMT_NV12,
- 	IRIS_FMT_QC08C,
-+	IRIS_FMT_TP10,
-+	IRIS_FMT_QC10C,
- };
- 
- /**
-diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
-index d55671340600..a8d6354bee28 100644
---- a/drivers/media/platform/qcom/iris/iris_vdec.c
-+++ b/drivers/media/platform/qcom/iris/iris_vdec.c
-@@ -71,6 +71,8 @@ void iris_vdec_inst_deinit(struct iris_inst *inst)
- static const u32 iris_vdec_formats_cap[] = {
- 	[IRIS_FMT_NV12] = V4L2_PIX_FMT_NV12,
- 	[IRIS_FMT_QC08C] = V4L2_PIX_FMT_QC08C,
-+	[IRIS_FMT_TP10] =  V4L2_PIX_FMT_P010,
-+	[IRIS_FMT_QC10C] =  V4L2_PIX_FMT_QC10C,
- };
- 
- static bool check_format(struct iris_inst *inst, u32 pixfmt, u32 type)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.2
 
--- 
-2.34.1
+Thanks!
+
+[1/6] ASoC: qcom: audioreach: use cached shared memory module IID
+      https://git.kernel.org/broonie/sound/c/525fa5f30c83
+[2/6] ASoC: qcom: q6apm: return error code to consumers on failures
+      https://git.kernel.org/broonie/sound/c/3075ae5abbc3
+[3/6] ASoC: qcom: q6apm: remove shared memory IID helpers
+      https://git.kernel.org/broonie/sound/c/240286ecf1a2
+[4/6] ASoC: qcom: audioreach: Add support for shared memory push/pull modules
+      https://git.kernel.org/broonie/sound/c/7c1ac23b178a
+[5/6] ASoC: qcom: q6apm: add watermark event support
+      https://git.kernel.org/broonie/sound/c/ed56ac9e5e96
+[6/6] ASoC: qcom: q6apm-dai: add push-pull and watermark event support
+      https://git.kernel.org/broonie/sound/c/4cfbd3a8d596
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
 
