@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-110638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YJeBEwmuHWondAkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 18:06:33 +0200
+	id GKuSCbCvHWpfdAkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 18:13:36 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC549622467
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 18:06:32 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BF5C622654
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 18:13:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 72CC130488F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 15:58:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F1971306402E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 15:59:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62CBF3DB33B;
-	Mon,  1 Jun 2026 15:58:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55BA53D9029;
+	Mon,  1 Jun 2026 15:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxsw.ie header.i=@nxsw.ie header.b="H41/ouOP"
+	dkim=pass (2048-bit key) header.d=nxsw.ie header.i=@nxsw.ie header.b="RBS5nRPS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-06.mail-europe.com (mail-06.mail-europe.com [85.9.210.45])
+Received: from mail-4318.protonmail.ch (mail-4318.protonmail.ch [185.70.43.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9503DB627;
-	Mon,  1 Jun 2026 15:58:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.9.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54FE5DF6C;
+	Mon,  1 Jun 2026 15:59:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780329488; cv=none; b=qXd3Ueogp6qMuuhUDz2zc6QJB37IbqmJdgs8fh3TMtvmHml582PpSLrOVBQebNhP6ruOo/q3l8B197THvXUDIJUPfxCzwXNVs7cig4kztyKMR9Uv7YfzJaPkOkQF3g8IgR5RUJgwcTrFxwAhvJa/7AkWAVtgMK54+OjXiGUMCwA=
+	t=1780329589; cv=none; b=S9RtcWBeON8gSSl3Cc+ZK+6qU+PyGlm99L6D4UtXuxeLqbgYIcMC+7f1Rp+45kmPNzrGzcJS0oLmYHmKafpZuePfg5po3USQEj9GpFn/xOEtSNzhi7kssI55IerkAu8wcVuMbku+PhgG+h0DvPMM5yKEN6fDikrlFeiJn5upNAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780329488; c=relaxed/simple;
-	bh=dU4T3mZ6PmW6TXBZjcY3Rv7X6u6bZ5TcDvtHFT8Z/fI=;
+	s=arc-20240116; t=1780329589; c=relaxed/simple;
+	bh=siznxTogCHKxXst8Lq3mDvd8C0H+AogSWhZU4jMP48M=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=odUkIcgy0QYgfY75SlUp3GUQdaO92Yjjb9jRju0otssxlvB1RsNUB31dpzRQAIkz3TOt9HpK7yBZF1od9Jro5FBRlezKt94WSF0oDPOIAj/I/l1wh77gBYlR//eLqxjaH1ehkOQrhAXY6aAvvlfzWw+vEEZ51HIOF7t+78cZd3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nxsw.ie; spf=pass smtp.mailfrom=nxsw.ie; dkim=pass (2048-bit key) header.d=nxsw.ie header.i=@nxsw.ie header.b=H41/ouOP; arc=none smtp.client-ip=85.9.210.45
+	 MIME-Version:Content-Type; b=ORKdnKNcwzv+EYwSyravHgjcgtykGO8zujqKBJS6rxyRIoSXQshxFHQSePiekZnft7bLGY4q+HLip/X3BmZ8OPaie5lYggAU0QZIAqqobO5WqCTWuzZxv5pp3zWw9DkK0ECixfQ62nO/XJmoXy5kHRUo7qPHCdMDaEM+hl1JZqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nxsw.ie; spf=pass smtp.mailfrom=nxsw.ie; dkim=pass (2048-bit key) header.d=nxsw.ie header.i=@nxsw.ie header.b=RBS5nRPS; arc=none smtp.client-ip=185.70.43.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=nxsw.ie
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxsw.ie
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxsw.ie;
-	s=protonmail; t=1780329476; x=1780588676;
-	bh=NY87X2lFoFobOh27lPTDtROXYG5P4N0cXKP8ir/JG3s=;
+	s=protonmail; t=1780329579; x=1780588779;
+	bh=kHfLwfneoa+Js6ej14JnZpESus7RpKq9V3awMa89nvM=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=H41/ouOPmPFCiZw/lNByHA+Z+TaS3mqWmj9p3a2ia5nh3bNsIW2QEpTC9ULmdbcl3
-	 5oTpP/uYZkVbTW4OZvvptJWYIuHP++KOPqIinDYnw7jm/hROX0tB3Ni9dqoK7I9WUa
-	 vx9NqRjWybIJy4DM5kCZAOsK/nh3e6GupWnAzYNrTolrarTofcUZHLK02+uIIlJNvg
-	 HKETGkyRt215WfUYJENu3GQiY8WPmMDIFSYUFmFR9XbIYf6qKK+6pcBG8roRPBDsb0
-	 5aEf9C79Q02OeQ+yoErUJCf8X6iWEe+UEX7LR2CPKOk4NhI+Yi9eynSrUyMjOsblQy
-	 5iO59fQK45uAA==
-Date: Mon, 01 Jun 2026 15:57:50 +0000
-To: david@ixit.cz, Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>, Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>, Cory Keitz <ckeitz@amazon.com>, Loic Poulain <loic.poulain@oss.qualcomm.com>
+	b=RBS5nRPSZr/+6jKQvnWr9IT+Tioqwh2T5AlgkuF3lzXuUoJAF4l+HPTTD7RIgb7YG
+	 d06RP5t+nPnWYHC3nGKziOz62Y2/vAGGo9D0nZm8OwqAwS5qrAr8RxrEE/DE+WUpL3
+	 SOosXuf1QrG9wkAytLoBKuKTBkAO94saoekQmw9dufUF3GZxTys4YH2CDfAAf5M4A5
+	 N1yKqjmo7Yo4v1ujHJkmBzyIFlLrDSWTjYLFAQ2o/HqiN7xl9aeqMHXI7IgMb6nnAG
+	 funORKctFE6wEySMmeSwleeFoybTxLBqy/CWszWEhXezXVzRbvPyylINUjjhbTTIis
+	 P1SDjdPgkKA6A==
+Date: Mon, 01 Jun 2026 15:59:32 +0000
+To: David Heidelberg <david@ixit.cz>, Sakari Ailus <sakari.ailus@linux.intel.com>
 From: Bryan O'Donoghue <bod.linux@nxsw.ie>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Joel Selvaraj <foss@joelselvaraj.com>, Kieran Bingham <kbingham@kernel.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
-Subject: Re: [PATCH WIP v5 1/9] media: qcom: camss: csiphy: Introduce PHY configuration
-Message-ID: <d32ad64c-132e-4ba9-9745-39254a479785@nxsw.ie>
-In-Reply-To: <20260531-qcom-cphy-v5-1-6be0f62b4d65@ixit.cz>
-References: <20260531-qcom-cphy-v5-0-6be0f62b4d65@ixit.cz> <20260531-qcom-cphy-v5-1-6be0f62b4d65@ixit.cz>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>, Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>, Cory Keitz <ckeitz@amazon.com>, Loic Poulain <loic.poulain@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Joel Selvaraj <foss@joelselvaraj.com>, Kieran Bingham <kbingham@kernel.org>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: Re: [PATCH WIP v5 2/9] media: qcom: camss: csiphy-3ph: Use odd bits for configuring C-PHY lanes
+Message-ID: <6503e8e2-5d7e-4875-a855-2e9a4526677e@nxsw.ie>
+In-Reply-To: <c8cda422-1a02-4a2d-bd01-6c04ebebd0be@ixit.cz>
+References: <20260531-qcom-cphy-v5-0-6be0f62b4d65@ixit.cz> <20260531-qcom-cphy-v5-2-6be0f62b4d65@ixit.cz> <ah1HhruI1Qc2FfwG@kekkonen.localdomain> <c8cda422-1a02-4a2d-bd01-6c04ebebd0be@ixit.cz>
 Feedback-ID: 136405006:user:proton
-X-Pm-Message-ID: b5dc7ce8f6a2f6de754d5fa2bd7b102372e6c996
+X-Pm-Message-ID: 7ea8f7d8d887c7454941637bcb5b9b2cbe11003d
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,15 +69,15 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[nxsw.ie,quarantine];
 	R_DKIM_ALLOW(-0.20)[nxsw.ie:s=protonmail];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110638-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[ixit.cz,kernel.org,gmail.com,linaro.org,fairphone.com,protonmail.com,amazon.com,oss.qualcomm.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-110639-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[3];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,fairphone.com,protonmail.com,amazon.com,oss.qualcomm.com,joelselvaraj.com,vger.kernel.org];
 	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
@@ -88,96 +88,103 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[bod.linux@nxsw.ie,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[nxsw.ie:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,ixit.cz:email,nxsw.ie:mid,nxsw.ie:dkim]
-X-Rspamd-Queue-Id: BC549622467
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ixit.cz:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,nxsw.ie:mid,nxsw.ie:dkim]
+X-Rspamd-Queue-Id: 7BF5C622654
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 31/05/2026 14:08, David Heidelberg via B4 Relay wrote:
-> From: David Heidelberg <david@ixit.cz>
+On 01/06/2026 13:48, David Heidelberg wrote:
+> On 01/06/2026 10:49, Sakari Ailus wrote:
+>> Hi David,
+>>
+>> Thanks for the patch.
+>>
+>> On Sun, May 31, 2026 at 03:08:10PM +0200, David Heidelberg via B4 Relay =
+wrote:
+>>> From: David Heidelberg <david@ixit.cz>
+>>>
+>>> So far, only D-PHY mode was supported, which uses even bits when enabli=
+ng
+>>> or masking lanes. For C-PHY configuration, the hardware instead require=
+s
+>>> using the odd bits.
+>>>
+>>> Since there can be unrecognized configuration allow returning failure.
+>>>
+>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> Acked-by: Cory Keitz <ckeitz@amazon.com>
+>>> Signed-off-by: David Heidelberg <david@ixit.cz>
+>>> ---
+>>>    .../platform/qcom/camss/camss-csiphy-2ph-1-0.c     |  8 ++--
+>>>    .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 49 ++++++++++++=
++++++-----
+>>>    drivers/media/platform/qcom/camss/camss-csiphy.c   |  5 +--
+>>>    drivers/media/platform/qcom/camss/camss-csiphy.h   |  6 +--
+>>>    4 files changed, 48 insertions(+), 20 deletions(-)
+>>>
 >=20
-> Read PHY configuration from the device-tree bus-type and save it into
-> the csiphy structure for later use.
+> [...]
 >=20
-> For C-PHY, skip clock line configuration, as there is none.
+>>> -static void csiphy_lanes_enable(struct csiphy_device *csiphy,
+>>> -=09=09=09=09struct csiphy_config *cfg,
+>>> -=09=09=09=09s64 link_freq, u8 lane_mask)
+>>> +static int csiphy_lanes_enable(struct csiphy_device *csiphy,
+>>> +=09=09=09       struct csiphy_config *cfg,
+>>> +=09=09=09       s64 link_freq, u8 lane_mask)
+>>>    {
+>>> +=09struct device *dev =3D csiphy->camss->dev;
+>>>    =09struct csiphy_lanes_cfg *c =3D &cfg->csi2->lane_cfg;
+>>>    =09struct csiphy_device_regs *regs =3D csiphy->regs;
+>>>    =09u8 settle_cnt;
+>>>    =09u8 val;
+>>>    =09int i;
+>>>
+>>>    =09settle_cnt =3D csiphy_settle_cnt_calc(link_freq, csiphy->timer_cl=
+k_rate);
+>>>
+>>> -=09val =3D CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE;
+>>> -=09for (i =3D 0; i < c->num_data; i++)
+>>> -=09=09val |=3D BIT(c->data[i].pos * 2);
+>>> +=09val =3D 0;
+>>> +
+>>> +=09switch (c->phy_cfg) {
+>>> +=09case V4L2_MBUS_CSI2_CPHY:
+>>> +=09=09for (i =3D 0; i < c->num_data; i++)
+>>> +=09=09=09val |=3D BIT((c->data[i].pos * 2) + 1);
+>>> +=09=09break;
+>>> +=09case V4L2_MBUS_CSI2_DPHY:
+>>> +=09=09val =3D CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE;
+>>> +
+>>> +=09=09for (i =3D 0; i < c->num_data; i++)
+>>> +=09=09=09val |=3D BIT(c->data[i].pos * 2);
+>>> +=09=09break;
+>>> +=09default:
+>>> +=09=09dev_err(dev, "Unsupported bus type %d\n", c->phy_cfg);
+>>> +=09=09return -EINVAL;
+>>
+>> If this is the only reason why you're changing the return type to int, I=
+'d
+>> suggest using WARN_ON() in this case. I presume it'd take a driver bug f=
+or
+>> this to trigger?
 >=20
-> Acked-by: Cory Keitz <ckeitz@amazon.com>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->   drivers/media/platform/qcom/camss/camss-csiphy.h | 2 ++
->   drivers/media/platform/qcom/camss/camss.c        | 8 ++++++--
->   2 files changed, 8 insertions(+), 2 deletions(-)
+> Thank you for the review.
 >=20
-> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/drivers/m=
-edia/platform/qcom/camss/camss-csiphy.h
-> index 9d9657b82f748..2ebb307be18ba 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
-> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
-> @@ -25,21 +25,23 @@
+> If others agree, I would also prefer WARN_ON instead of changing return v=
+alues.
 >=20
->   struct csiphy_lane {
->   =09u8 pos;
->   =09u8 pol;
->   };
+> David
 >=20
->   /**
->    * struct csiphy_lanes_cfg - CSIPHY lanes configuration
-> + * @phy_cfg:  interface selection (C-PHY or D-PHY)
->    * @num_data: number of data lanes
->    * @data:     data lanes configuration
->    * @clk:      clock lane configuration (only for D-PHY)
->    */
->   struct csiphy_lanes_cfg {
-> +=09enum v4l2_mbus_type phy_cfg;
->   =09int num_data;
->   =09struct csiphy_lane *data;
->   =09struct csiphy_lane clk;
->   };
+> [...]
 >=20
->   struct csiphy_csi2_cfg {
->   =09struct csiphy_lanes_cfg lane_cfg;
->   };
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/pl=
-atform/qcom/camss/camss.c
-> index 2123f6388e3d7..072c428e25166 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -4761,19 +4761,23 @@ static int camss_parse_endpoint_node(struct devic=
-e *dev,
->   =09if (vep.bus_type !=3D V4L2_MBUS_CSI2_DPHY) {
->   =09=09dev_err(dev, "Unsupported bus type %d\n", vep.bus_type);
->   =09=09return -EINVAL;
->   =09}
->=20
->   =09csd->interface.csiphy_id =3D vep.base.port;
->=20
->   =09mipi_csi2 =3D &vep.bus.mipi_csi2;
-> -=09lncfg->clk.pos =3D mipi_csi2->clock_lane;
-> -=09lncfg->clk.pol =3D mipi_csi2->lane_polarities[0];
->   =09lncfg->num_data =3D mipi_csi2->num_data_lanes;
-> +=09lncfg->phy_cfg =3D vep.bus_type;
-> +
-> +=09if (lncfg->phy_cfg !=3D V4L2_MBUS_CSI2_CPHY) {
-> +=09=09lncfg->clk.pos =3D mipi_csi2->clock_lane;
-> +=09=09lncfg->clk.pol =3D mipi_csi2->lane_polarities[0];
-> +=09}
->=20
->   =09lncfg->data =3D devm_kcalloc(dev,
->   =09=09=09=09   lncfg->num_data, sizeof(*lncfg->data),
->   =09=09=09=09   GFP_KERNEL);
->   =09if (!lncfg->data)
->   =09=09return -ENOMEM;
->=20
->   =09for (i =3D 0; i < lncfg->num_data; i++) {
->=20
-> --
-> 2.53.0
->=20
->=20
->=20
+
+In the standalone PHY we validate the PHY type in probe :)
+
+WARN_ON() seems fine to me though.
+
 
 Reviewed-by: Bryan O'Donoghue <bod@kernel.org>
 
