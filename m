@@ -1,180 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-110657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cJ/WHpvFHWq9dgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 19:47:07 +0200
+	id mAqiEETFHWq9dgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 19:45:40 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02A2F623716
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 19:47:06 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEA4B6236CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 19:45:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 437313081CFB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 17:45:27 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 6FFF33022912
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 17:45:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5656C3E1220;
-	Mon,  1 Jun 2026 17:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 094AD3E0745;
+	Mon,  1 Jun 2026 17:45:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gjGRHh/A"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ExUCI09Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488BA3E0C53
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2026 17:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65DD3E025E;
+	Mon,  1 Jun 2026 17:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780335919; cv=none; b=oMKl+Y7cU2XYxd91MGi8KKKJxUZg/NdQibjFDFsCq6vo+ukXnIhOtzxA27sknxM+QF/qBersfE1xAKYJ9zZieF3e9AwJbpDR8cZ+V+RirbbbcCQJaskZFqCqvGftJ0lvTk7KZSLXn3NuHCw1Chihm4jWlJxgjbMKRjuTvpDwClA=
+	t=1780335925; cv=none; b=niOGHQy4EBdI+2pm0hJChHkTALcPfhO4CNPE/xA0sbaWiHmvJMYrb6v4udKGKgjQm+JLQJSgTkuPAl/O7/mw7IXCGM1c1mQ7vHY731Ze/ijh9Uix94Ib9fu2mDm8+asqTjo9lHM1PtFmDDpnxgPKIeSP33PWSVwZq6b/SlaLnyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780335919; c=relaxed/simple;
-	bh=EUaevAzgtzlvUB5/tuC/JSEZdio1mHCw6ZYwf4PCo8o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t3vWZ5gKBg8zAtRj4k4VAJItT2mimg7l5vgXOEKQIDiuvwGdYee77kDRlfZ5KwKxRs73VpKBziXrmQq1T3qhy1qRPliYoefXSPnFmhP8xTxLyJPck+7vc3XDzhTXEhy+uuXAToeHX6P0GzcM3UZ/HYklGc8T9AQAx+y8297ojCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gjGRHh/A; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D4D1F00898
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2026 17:45:16 +0000 (UTC)
+	s=arc-20240116; t=1780335925; c=relaxed/simple;
+	bh=9rGSzvVmrUy3l8fA2KbwEhQHlrI3U6G48E7KCZFO06s=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=VVlaGfcQSIqG0K10QFvbaXa6P1YYOpfUVTMtqIGI99UswZIxyUImDd3viLf02z/1zzfc9hEeOJnc7pNPEWzzj1SMhabpx1zjCs6F8K/EX8ce+szkgOaCkNCjjO1e+EHevqS/B6G7kNVKUBxhkRGzH4Z4T7LjhInd6CMTFKg+vvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ExUCI09Z; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7570F1F00893;
+	Mon,  1 Jun 2026 17:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780335916;
-	bh=NQXET+HIwUHzkASejrWXITD/EhCJ1l5nthigBOUX5B4=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=gjGRHh/AejulXxkNQAjfjV93VMiqgdq6wRmZ7BNSN1UHb97WguW4+/ZA+WuQC6Kll
-	 yhn3UxrX6XHEvJlmkImSQf3opqad40WQNxo0e446ikygz1JQuNxXlxEupqUOOMotfi
-	 QZ7zNwyi6Ev4WkeVDBku7OIdn6/NnCxDJfGGNtSBSMm42l8FYQ3sk4gJGLxT/hbqCe
-	 K0vFWgCVQinuD4UcX6ltdXhdbZf0cM4k6OQ10FtXjpLK4tNUvA3GQZ7EyhXiE2tkMT
-	 OVYBnp+ntfYpsvWr85EAbNEvk2fl/CVRUiYB0mkIo2usdhpYSJ7vIUPsX5pwj59Gzk
-	 lW6qoYjQk8e7g==
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5aa68cfc182so1546668e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2026 10:45:16 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ8lv95Shcmxs/T/fll8zaSB7UFn2sEU2l7Cc/VirWy3Upgx81aNTmhDiEsW7Ztz4JIdFsemuW8JvGlkXyeb@vger.kernel.org
-X-Gm-Message-State: AOJu0YzlQ8pj9GK6h/oaplbBJvxxvn831CmCMBI2fjOE/GxPYvReIGb5
-	+WnCd4zNI8jKikcc0kd8HrXR6Q7I8050OHujS3q6iLzvQbzIbNCD9dkYniUR0SZwuy8vMaokm47
-	1Yu5XOzk9VnWXAp4aNvKgmUGIMAGrb0Q=
-X-Received: by 2002:a05:6512:3b97:b0:5aa:6e86:55c8 with SMTP id
- 2adb3069b0e04-5aa6e8657c0mr1302970e87.12.1780335912894; Mon, 01 Jun 2026
- 10:45:12 -0700 (PDT)
+	s=k20260515; t=1780335924;
+	bh=QGg65dtps5OsZ9R2wzLue/4oCaMGv12xGoP4E9S3gs0=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject;
+	b=ExUCI09Z93u1IkI+k/jIpPjvzHgBBd/Zfet+MT9mGqcURiDhiyu673e8YS+E5Csa4
+	 Kp6IQnc/7qZTX/DyED3kRjOhZmS1ceSWxMokQSnYLfjDbHv1nd4+3HrZxCXJX2ZgYC
+	 QX9qzmgRCaiDLbSKxqxTdH1W9bAf41z/cRLGMIHfRXuPpWWjUGjq5tLtM7wHtDpEnV
+	 fn5Pcr0QCvkfFbBKLf0hsSu1FtxNwaBsy4itZk4ERXDYLkiyvp0omvidp3nvOp+tlT
+	 uZR8Nwl4ltg2pmHycaLKLDcPk3q5iG3zMJxG9L6jM6b0NZzKznxFkegWMdfaHYuzXj
+	 muJf78ywaLbmQ==
+Date: Mon, 01 Jun 2026 12:45:23 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260528183625.870813-1-ynorov@nvidia.com> <20260528183625.870813-6-ynorov@nvidia.com>
-In-Reply-To: <20260528183625.870813-6-ynorov@nvidia.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Mon, 1 Jun 2026 19:45:01 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0gPZL7Cmi7Sm5pVN01AG7rb8NiwWkUJ9X6gwim67EUZPQ@mail.gmail.com>
-X-Gm-Features: AVHnY4L1KYHIevdOf61kuP7a6ocAZfa6dkfv0T6IORvr_Om4IsQ3giCPU7iBHEE
-Message-ID: <CAJZ5v0gPZL7Cmi7Sm5pVN01AG7rb8NiwWkUJ9X6gwim67EUZPQ@mail.gmail.com>
-Subject: Re: [PATCH 05/16] ACPI: pad: Use sysfs_emit() for idlecpus show
-To: Yury Norov <ynorov@nvidia.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>, Rasmus Villemoes <linux@rasmusvillemoes.dk>, 
-	Russell King <linux@armlinux.org.uk>, Frank Li <Frank.Li@nxp.com>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Madhavan Srinivasan <maddy@linux.ibm.com>, 
-	Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, 
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
-	Ingo Molnar <mingo@redhat.com>, Arnaldo Carvalho de Melo <acme@kernel.org>, Namhyung Kim <namhyung@kernel.org>, 
-	Mark Rutland <mark.rutland@arm.com>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, Jiri Olsa <jolsa@kernel.org>, 
-	Ian Rogers <irogers@google.com>, Adrian Hunter <adrian.hunter@intel.com>, 
-	James Clark <james.clark@linaro.org>, Thomas Gleixner <tglx@kernel.org>, Borislav Petkov <bp@alien8.de>, 
-	Dave Hansen <dave.hansen@linux.intel.com>, "H. Peter Anvin" <hpa@zytor.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Danilo Krummrich <dakr@kernel.org>, 
-	Chanwoo Choi <cw00.choi@samsung.com>, MyungJoo Ham <myungjoo.ham@samsung.com>, 
-	Kyungmin Park <kyungmin.park@samsung.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Xu Yilun <yilun.xu@intel.com>, Tom Rix <trix@redhat.com>, 
-	Moritz Fischer <mdf@kernel.org>, Yicong Yang <yangyicong@hisilicon.com>, 
-	Jonathan Cameron <jic23@kernel.org>, 
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>, Jason Gunthorpe <jgg@ziepe.ca>, 
-	Leon Romanovsky <leon@kernel.org>, Dan Williams <djbw@kernel.org>, 
-	Vishal Verma <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>, 
-	Ira Weiny <ira.weiny@intel.com>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Shuai Xue <xueshuai@linux.alibaba.com>, Will Deacon <will@kernel.org>, 
-	Jiucheng Xu <jiucheng.xu@amlogic.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Robin Murphy <robin.murphy@arm.com>, 
-	Jing Zhang <renyu.zj@linux.alibaba.com>, Xu Yang <xu.yang_2@nxp.com>, 
-	Linu Cherian <lcherian@marvell.com>, Gowthami Thiagarajan <gthiagarajan@marvell.com>, 
-	Ji Sheng Teoh <jisheng.teoh@starfivetech.com>, Khuong Dinh <khuong@os.amperecomputing.com>, 
-	Daniel Lezcano <daniel.lezcano@kernel.org>, Zhang Rui <rui.zhang@intel.com>, 
-	Lukasz Luba <lukasz.luba@arm.com>, Yury Norov <yury.norov@gmail.com>, Kees Cook <kees@kernel.org>, 
-	=?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>, 
-	Aboorva Devarajan <aboorvad@linux.ibm.com>, "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>, 
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>, Besar Wicaksono <bwicaksono@nvidia.com>, 
-	Ma Ke <make24@iscas.ac.cn>, Chengwen Feng <fengchengwen@huawei.com>, 
-	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
-	linux-perf-users@vger.kernel.org, linux-acpi@vger.kernel.org, 
-	driver-core@lists.linux.dev, linux-pm@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org, linux-fpga@vger.kernel.org, 
-	linux-rdma@vger.kernel.org, nvdimm@lists.linux.dev, linux-pci@vger.kernel.org, 
-	linux-amlogic@lists.infradead.org, linux-cxl@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-0.66 / 15.00];
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-media@vger.kernel.org, 
+ Konrad Dybcio <konradybcio@kernel.org>, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+To: Daniel J Blueman <daniel@quora.org>
+In-Reply-To: <20260601041336.9497-1-daniel@quora.org>
+References: <20260601041336.9497-1-daniel@quora.org>
+Message-Id: <178033592233.3996692.3343005255061515852.robh@kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: media: qcom,sm8550-iris: Allow IOVA
+ reservation memory-region
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_FROM(0.00)[bounces-110657-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[linux-foundation.org,rasmusvillemoes.dk,armlinux.org.uk,nxp.com,pengutronix.de,gmail.com,linux.ibm.com,ellerman.id.au,kernel.org,infradead.org,redhat.com,arm.com,linux.intel.com,google.com,intel.com,linaro.org,alien8.de,zytor.com,linuxfoundation.org,samsung.com,sntech.de,hisilicon.com,cornelisnetworks.com,ziepe.ca,linux.alibaba.com,amlogic.com,baylibre.com,googlemail.com,marvell.com,starfivetech.com,os.amperecomputing.com,linutronix.de,nvidia.com,iscas.ac.cn,huawei.com,lists.infradead.org,lists.linux.dev,vger.kernel.org,lists.ozlabs.org];
-	MISSING_XM_UA(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[rafael@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCPT_COUNT_GT_50(0.00)[90];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-110658-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 02A2F623716
+X-Rspamd-Queue-Id: EEA4B6236CC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, May 28, 2026 at 8:36=E2=80=AFPM Yury Norov <ynorov@nvidia.com> wrot=
-e:
->
-> idlecpus_show() is a sysfs show callback. Use sysfs_emit() and
-> cpumask_pr_args() to emit the mask.
->
-> This prepares for removing cpumap_print_to_pagebuf().
->
-> Signed-off-by: Yury Norov <ynorov@nvidia.com>
-> ---
->  drivers/acpi/acpi_pad.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/acpi/acpi_pad.c b/drivers/acpi/acpi_pad.c
-> index ec94b09bb747..04d61a6cc95f 100644
-> --- a/drivers/acpi/acpi_pad.c
-> +++ b/drivers/acpi/acpi_pad.c
-> @@ -334,8 +334,8 @@ static ssize_t idlecpus_store(struct device *dev,
->  static ssize_t idlecpus_show(struct device *dev,
->         struct device_attribute *attr, char *buf)
->  {
-> -       return cpumap_print_to_pagebuf(false, buf,
-> -                                      to_cpumask(pad_busy_cpus_bits));
-> +       return sysfs_emit(buf, "%*pb\n",
-> +                         cpumask_pr_args(to_cpumask(pad_busy_cpus_bits))=
-);
->  }
->
->  static DEVICE_ATTR_RW(idlecpus);
-> --
 
-Applied (with a tweaked subject) as 7.2 material, thanks!
+On Mon, 01 Jun 2026 12:13:33 +0800, Daniel J Blueman wrote:
+> In addition to the firmware-loaded codec carveout, some Iris platforms
+> need to declare an IOMMU IOVA reservation (a reserved-memory node with
+> iommu-addresses) to keep DMA away from IOVA ranges that earlier
+> firmware stages have already mapped through the SMMU.
+> 
+> Permit a second memory-region phandle for this purpose, and describe
+> the meaning of each entry so the ordering is unambiguous.
+> 
+> Signed-off-by: Daniel J Blueman <daniel@quora.org>
+> ---
+>  Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml: properties:memory-region: {'minItems': 1, 'maxItems': 2, 'items': [{'description': 'Firmware-loaded codec carveout'}, {'description': 'IOMMU IOVA reservation region'}]} should not be valid under {'required': ['maxItems']}
+	hint: "maxItems" is not needed with an "items" list
+	from schema $id: http://devicetree.org/meta-schemas/items.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.kernel.org/project/devicetree/patch/20260601041336.9497-1-daniel@quora.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
