@@ -1,105 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-110504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AGXOCDoeHWoeVwkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 07:52:58 +0200
+	id uKV1BLojHWq6VwkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 08:16:26 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83AC8619D6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 07:52:57 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B28161A073
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 08:16:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 81CA03009F00
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 05:52:56 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id CCEF1300DED6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 06:15:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4C623290A6;
-	Mon,  1 Jun 2026 05:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A11D35F199;
+	Mon,  1 Jun 2026 06:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JgFrh6Yo";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="S4H7h+Uq"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="b7D2e04K";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NrStXR0I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3D123EAA0
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2026 05:52:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F13357D0D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2026 06:15:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780293175; cv=none; b=bJsnsRjy0Q3KYyLboHhq4KTvfpc1fPPWbGydaxRs3KE0dEeqoCv6CnJOMwEIg98MEsE/5Op879zjUqQ658MR6nyPGwCqrNlvpJyiiNnYuLXkpIFPvJ26GhjM9TvcpCcOSA4435Lf5bUonhBv/9HwVswHpL426umtjkmOkqazAIM=
+	t=1780294515; cv=none; b=BFuO8BkSVsfL4J8EAl2zsOvBI2KPKtp/Ykc3dt8y5ZmyvMAF9R5kvAxH9OGroG8+9o3/mR0QBgwdoSnjfmiDvDC7VRSlauhc+xSb2HOEixyj+tw9iG6Ln8+a3i6K3maFWMAQ7u90rOMMS4qaZxIuxvLrCSTQWIFdf1bsRNDlhiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780293175; c=relaxed/simple;
-	bh=MfzHraVuLyZV3po/8qGl5n1uLaihs5b0BUqLZYJ2VPQ=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Nz4iWQ8R18kv0vCysOkyylY2TmT1hOnb5tiec09ozEP9uGpwFiH7tiztT4ge2dJovZ/YVGaeyoDBNI/sGhBXEOIKqVzIp7F2c2ABSyoYK+nz2Cq5+niptsCu3/aPDrp9Q5NeIQVHnbriKX2FyV2RjnRq84vckXqHZX2tx3Tm5vU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JgFrh6Yo; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=S4H7h+Uq; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1780294515; c=relaxed/simple;
+	bh=BYInH99AES8l6GOH74UMUsVD2nICq4mqXDc//+JCYIQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NGmd8EwKHw9JqrnhqyvLam3aOOZ542cnd8Ln2grGUTaolULGIrm26zV4rJqaZ+egSR8hGO5w0/6zHVEJvB6D4iytzoD12Fnk0n31wOo+gYUoKa9+cE4+3yU8+ZfcJDSVkI8S52vhSgavn7X9wryqCbHNniVSh0uNMUBGddBBLsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b7D2e04K; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NrStXR0I; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64VLcOMO2687418
-	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Jun 2026 05:52:53 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64VNLVQf086275
+	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Jun 2026 06:15:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LcnAs697VrlnzLquQDasRgSAeWnZHSj8hzCAtvsVObU=; b=JgFrh6YoXSyg1qR/
-	q/rGizMoQhMhleHR2LlAZiMXkG0G8tkHatnkgxc1DwVFlMFyGiNGrKTTVxBXQG90
-	7CHNisjXGNMVYrF3XnVfV+xiSs7sKz1UD6kG8lqZdPs6NIqG7Qgcf+ggk3qSpwtZ
-	At7avHrFS7X492LOGN8yl2owh0gHsJqgLLOKW2uOm2F+iMC5bPqhqjceoYKThJ+F
-	l3wIOhfYfZmwB/ox9/Q6xBxAjI7oRWBY5mqGkUl9IeXsj0XO5J2DhQROBz3FRaYN
-	/Z1GcH6EVJLI+hNCO77OY7XQbhNBb3bdPsc9Pd574JdYUaLym1hQIlayjy8Yh0YL
-	uN+Mig==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4efxy7w70a-1
+	xfeYcVH6YJHbtfgsbpNeqbgrkd3UR64ekVNjwW2FoaI=; b=b7D2e04Kz26XzWCr
+	bsPCL3rVZCm8slMypKGbUCBYyICgr2WAb0+IKO6HY+iAU6eJCqQl6a2WsysdwVLT
+	IqOH1G7ORoiuqESxKULs8sLQCEz73KrigZa/6ONgXd84l4Mj58PMHm3kdn7cB+AN
+	+ji+aUIHMWP9I9f54SLErCUPvB3JHXqgCsxi9+oGI20Yp/hJ+D4uelZDNMsXW+7u
+	H1Xbz8MgbpuebslZIn2j6Zx2JldJtXvuPiLdHc5/z+guva4Q7VS80hBYaeSKgai6
+	5VYcl0zrBIIG3CEAGRS0F6vxn+2+AC5vEybE7yjhoo9ZpuzLa55gsfsU1wZGnvP7
+	xv+4lA==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4efqyux2g5-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2026 05:52:53 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c85a2c0b56fso1116203a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 31 May 2026 22:52:53 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2026 06:15:11 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-842264ce286so1203913b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 31 May 2026 23:15:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780293173; x=1780897973; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1780294511; x=1780899311; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:cc:user-agent:mime-version:date:message-id
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LcnAs697VrlnzLquQDasRgSAeWnZHSj8hzCAtvsVObU=;
-        b=S4H7h+UqYB6he4lT8Cyz8PihVnIyS8JIuur3K3ZgBFzQUncP11bZCPBbgWypzFicKQ
-         PL4L25tGiR5Yh55GKTcqWV/CP+BWFmjWyB/e/6ADXky1DpYo3yYh10fvrOxe2HrpUiNX
-         LAwkqauMaaj3Nrj7okvajJ+s90XwJeH6+WS5ZgcN+yDsMOZt4wtdsb8MY11w3+ymHcGJ
-         LCO9BBByvEZWJF6cUsPIrb8EmV9bQFxCoWemQPPuYrmUAo1GAUgzZ5fk2gFJPSMQnrDg
-         LFXpEqLoSc+mlMeP48RHoyHjd27Vex11r/KsyzY5MPSJ2iGNl7i9xVFvGcdrENrjHSd+
-         AE3A==
+        bh=xfeYcVH6YJHbtfgsbpNeqbgrkd3UR64ekVNjwW2FoaI=;
+        b=NrStXR0INnAIWcW6LooWnKviSuXXIq9SGT201eNfYLR0zxwpzk2RwqtUOMDGrqjAlN
+         irhXc+ceKfkPy9snAZYJCYui5Ob6mvE2KktrK9kLAfpelWmqKwVxgWVYIWnO4yGJrJw/
+         sEPODh3bUcOOGGDnH5YF3PY6tP2i+B4sBkeGjxFwSnMrc4MhFH2DXo1fS1sFu47g0GDH
+         tR5qIIrmftpZMcbMVq/BimqQWqdouyelM7oXl7u3NLGplVPszvXHmc1gMTn15+mMSo7L
+         2Nb0mdTLyduKM/vNK//kXEjQVfMVuWOCTJIRVfHL9HVqQFtO+i1k8hhRr44zjQZ5WnzU
+         mlnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780293173; x=1780897973;
+        d=1e100.net; s=20251104; t=1780294511; x=1780899311;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:cc:user-agent:mime-version:date:message-id
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LcnAs697VrlnzLquQDasRgSAeWnZHSj8hzCAtvsVObU=;
-        b=D/RyL9dYTVrDlNKdDCYxov+trDLo1zNIsMsuaIbj3cPKbazEy7EQHkznrr7daVzjqh
-         pDJDMAOk1r38ZRqcrlTkrkx3VXEe/AmgMMmODm4gM9E84RJJ4IAFDjFfNJOvS7qwyny3
-         mMmZ6Vkt0ScqiOQBCHIF+DNeOuBkjOIEjMzVV78hsoTHzwl5+s2Tenxo+OGF2+vNK5H/
-         603yQ4FgbyyKq1Kj6gKACyIGvIGM6rD3GTZ06Nh/MC8jZ04umvGDknHHgwfSUziRfFC9
-         fiZaWMrWvFhkbn/6CCd0uXbVw2jcTD8QD0eiSWWbLJlJ29/oKx8jybMigtkiTUUo6mUV
-         wDuQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8hA2oCRLSDwp5pI/89rF+/mQncGC+vceU8ZvzBjUfEcDrozGvAN+ifj2QwyBpr9WTHNNwhXCffyCcsBh3/@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywl0j+ZqGutCniCZnNbMXCh8Z5oS/DZ2zGJJMPW1sF7IVRdGubp
-	+Q7l+OHVQzmrvTpS5xpIQxBLoDN14lhKHPCClC9AbsTxGiL7CrDTVjrZ7viDFPlBJGrg70gcXD6
-	jq+p7WwbcO0iQQ2W+Bryw+/1rg2Nn7TBLE+WluJhn2w2ldXUPSDWcNwlXZLPcTBmKpbvt
-X-Gm-Gg: Acq92OHdb/AhieBtPB/u57MtczhIcgnftRv6Iu5dnbpbRQBhThPX5sPxoGZCnKFAZWF
-	+BSxNn3lOnTmmbGInNTWXI4etI/U/+BTK84g2mequQwBAm9fDJQWhgLTc1IroZOfgV+GKplF6V5
-	sM5WlsagAxZc8u9nKOll+7DYKiydmefxO3+HGNqUw3G/MKcWoMPxGW1Fvx+QdxmkDkqeMQy917j
-	b1OaCIKxp0sXU/28UKj10F56QwX5urrtXLMTTFLgVgEJto+zjSjmcBOaL5e6SMqGwiI1BCNsLV3
-	NAT1L3xcNR0/bX0+xDOs8AyUdqeOGWSKCWH07NKfuW5NdHuxBDPQ1KnyjbTjN7nDt+ytZ/PDskC
-	JNvFCWIS9+5eT5wnV6Dlao9AAmnemhlynudtqgOwgG8Ne0ERa1Xt1AkQxzD6zfVtybYbOfVWUXM
-	Ht8R3gjQ2nzeiyd/RXokKvq6X7Xdc=
-X-Received: by 2002:a05:6a00:1485:b0:83e:f208:b0f8 with SMTP id d2e1a72fcca58-84225709021mr9336801b3a.47.1780293172708;
-        Sun, 31 May 2026 22:52:52 -0700 (PDT)
-X-Received: by 2002:a05:6a00:1485:b0:83e:f208:b0f8 with SMTP id d2e1a72fcca58-84225709021mr9336776b3a.47.1780293172222;
-        Sun, 31 May 2026 22:52:52 -0700 (PDT)
-Received: from [10.249.20.117] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84214ce54b8sm8926009b3a.48.2026.05.31.22.52.48
+        bh=xfeYcVH6YJHbtfgsbpNeqbgrkd3UR64ekVNjwW2FoaI=;
+        b=rBtcp2OtvR4slWbDSRqfSGG6y7RRjWTODeo2gvceVk2+c77zYN13asXmJp1GAwC9HS
+         Zws1EY5cbHXIPStLv+vSgw+L/he/ZXV8oSfdu4TslcaRNQyVQQDamMliO30MDDDF3pUi
+         f2JagM3Td7pWZteTOW3NDYZSPCihbT9ayaw4K0wZo0J5zjb6Afzq93qqhJR3YEjWFx+w
+         u8z7wdP8SIDFEodOGrTz3Y2SUAJhLzlULR3Pk+JWU8ZxAd/H48VJTMInpZRPEEyzvIuT
+         Qt0pp7jHKalZjC8YA2aRymKvRsc4tj+f+jZk1OLlLvBXEEjQIMt8IfIwurZcfpmh18O3
+         rg+A==
+X-Forwarded-Encrypted: i=1; AFNElJ9nnCJqtZQ2bZihXQs4rRnNOf28mOcd4J0BLi0HtU1MSa1ycLy9FXWB7q5I56PrfEI/ZPxHqCiaew+sfqvA@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx12mgwRD/f66gbWT8NBXCGyJLLwtU5hlQ7twur755B3UGSuv8S
+	IBqXnIUF1GrH5xv0TrzlW0vSCQ2GlFrQQUAea0RRpocM5HTOQtLRFjdU4NEcAgXLDCtCmtd6UBk
+	jf3tn8j9Mg5YXHOyytC/TABNl1/DvXk6ptYPkHSmhIdoRW+zr+kcMQLTQjKeHePltdN1f
+X-Gm-Gg: Acq92OF9l/OtGdJ0AXbFohdAVNjb5avJNlahVFRH5gsbyelr9rv+NdgvEPrpQGqY3Kn
+	Ogpv3T8OuS8lg2PwKqTbglrnFZ0JECm9Ok3NdrAgJNW65Rq744HmH5+MQkdBwSMFoQKK6QUh840
+	H6AvZXv1jFcpQSOlcBifdBt0uRjifocDlgKoVSGwnEwehZk5sflx2TOPWr37ieEFbLLG1TLrCDC
+	46F2ohlFoyBeEQ+YIHyGbxS+rtM3A4ejqDfXZDzw9q60e6Q1FKcS1y0KOBmxL/bxAgRKPHD4gzT
+	qc9ef2TLraflsQr8tNldEiBZPEckIuroWWdGQ5Q3Ivvt2TGWxjmMqT17nLB26+rIHxQEqxInOc5
+	1lvGHMh7XfEsC86YXn9uhI2Y/11dM8t+qAceDu2bRDRewuPLfNvVS4f8S8/sKkmU7P+FXRQbLBM
+	tnDPx+MF4THDPDlHJreLKl7h49DQ==
+X-Received: by 2002:a05:6a00:330c:b0:842:5f67:eada with SMTP id d2e1a72fcca58-8425f67f7a7mr526139b3a.5.1780294510656;
+        Sun, 31 May 2026 23:15:10 -0700 (PDT)
+X-Received: by 2002:a05:6a00:330c:b0:842:5f67:eada with SMTP id d2e1a72fcca58-8425f67f7a7mr526114b3a.5.1780294510066;
+        Sun, 31 May 2026 23:15:10 -0700 (PDT)
+Received: from [10.133.33.72] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84214b000ebsm9515214b3a.11.2026.05.31.23.15.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 31 May 2026 22:52:51 -0700 (PDT)
-Message-ID: <e6df389b-cca9-481a-b2b9-5915cd6ff88a@oss.qualcomm.com>
-Date: Mon, 1 Jun 2026 13:52:46 +0800
+        Sun, 31 May 2026 23:15:09 -0700 (PDT)
+Message-ID: <c7b5f9cb-09a4-448f-8f49-bdc9570d6b29@oss.qualcomm.com>
+Date: Mon, 1 Jun 2026 14:15:05 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,243 +107,102 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: wangao.wang@oss.qualcomm.com, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH v4 0/6] media: qcom: iris: add support for decoding 10bit
- formats
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-References: <20260521-topic-sm8x50-iris-10bit-decoding-v4-0-8ff8fce3f904@linaro.org>
- <fa26f61e-86b6-4612-afae-7726e3b35c4b@oss.qualcomm.com>
- <12102d68-da35-47ea-a972-28cb6d54ce1c@linaro.org>
- <feb42925-5704-4266-8c3f-aa944fdbed28@oss.qualcomm.com>
- <12da2953-fe51-4999-9656-2b42a7897f91@oss.qualcomm.com>
- <c54e7f34-b3a7-47fa-843a-9930de04599e@linaro.org>
- <9148913b-a5cd-4730-beff-6c517ac4818e@oss.qualcomm.com>
- <3baa753a-f716-45da-b1aa-7406f4092578@linaro.org>
- <88f8519f-31d8-47db-b0d1-f1d0d8c9df1f@oss.qualcomm.com>
- <0fb85345-ea8c-4294-bf4b-220617c9f089@linaro.org>
+Subject: Re: [PATCH 0/2] pinctrl: qcom: Introduce Pinctrl for the upcoming
+ Maili SoC
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Linus Walleij
+ <linusw@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, aiqun.yu@oss.qualcomm.com,
+        tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
+        yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20260522-maili-pinctrl-v1-0-0a6636f5c277@oss.qualcomm.com>
+ <20260530-primitive-encouraging-quail-ee8af1@quoll>
 Content-Language: en-US
-From: Wangao Wang <wangao.wang@oss.qualcomm.com>
-In-Reply-To: <0fb85345-ea8c-4294-bf4b-220617c9f089@linaro.org>
+From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+In-Reply-To: <20260530-primitive-encouraging-quail-ee8af1@quoll>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=POg/P/qC c=1 sm=1 tr=0 ts=6a1d1e35 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDA1OSBTYWx0ZWRfX/tqIB9Zm6Rcc
+ sTucWHr/zkWHmMt6AEVv9tNDw3DpFIrCoNMKueyZtPZY9lROIFED6MY5QrG0DyO6p+Sc8zPU2F7
+ L3iVQfjfchxfghcp1Ndw2hcSQqn+Bd2GcVEb2RKQ5A6eJkfZh5jhzvjg5vJdtZ/eM4bkHy4d/FS
+ WbBVaVRvekMdm392ebDqlbi5OcvdUobqGui62UoXs38SQzrV1PbwUHqSnhZgIMDM86F8uw/e9co
+ 6lucnQHEO40DTfLPPY697gO/UNJw7hICw6gdsq7d9K5ESC5r/4dc1uyHEgvPSSOUZhCMttnMbNW
+ j4h5CYYQOieIBTivGGCAQRlW0ITUL/pRJKA9+oDa+Ik5xU5URUhYY4mB8f0rbgQSknf7zdc1gNT
+ 8obhKIzK2od/9g/BYlrzo52iIWflLP2JDWCJyvgXPV2tDfmSjNCLLcLJNdU8RSOzlfoGIhe8dHD
+ fmYV7dpuEwWX4izd72g==
+X-Proofpoint-ORIG-GUID: A1ELorLWc4AnSF0EkF18704V5S4A7s0m
+X-Proofpoint-GUID: A1ELorLWc4AnSF0EkF18704V5S4A7s0m
+X-Authority-Analysis: v=2.4 cv=B5uJFutM c=1 sm=1 tr=0 ts=6a1d236f cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=785Dn-WPAAAA:8 a=9Z9kgQCjHYkt6ZcilowA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22 a=b7-gl1MdSEcY02uTy1GE:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDA1NyBTYWx0ZWRfX6VBde53uprQg
- K7ix6OZOCFQ7zk/KjiZmNtyyaMSEwzBykLsSCLcuSm/XKKLWkIcg2LUSXkEEwCFw1MLA3XyPf5N
- 0bUj/JJj4w7V+6UNUghZwjoM+Aue5N41cHkGQD5Cp0kET3z3rAUNLUeCNiS+n9vpmHfzydWOfKZ
- NRSdFjcFUttV66eLPOn6GtbldegVLqyE5KRxOw5FmUOqPN52hJ8gE6+XAGkSZttHqnyKYfVQ+wT
- ltIJzCFj5Y38hTh5EcxRDcdVfQrgNlvJ1CIohqgXXhlK+iZU0ITqpJ0CdgrVkvyWHyvYVkCagBX
- Z82/K0TIIKqHQhQKxabcsicmhTKp73Z7zS0JUewofBJlpQGvfcxKWnWN4coVPU5R7+xQg5XuzAt
- pytcgLguLlugHw9W2YzKAeDFQyOrqYhj3GZ7pmBd59DEP7cpnbtORC+WkbDvmhKUNxkooPckIuq
- hzfEFQbzJZqr7lqiMag==
-X-Proofpoint-ORIG-GUID: xNtzGC6i0jjmAPbkVxPU0CjVI3iAVQBu
-X-Proofpoint-GUID: xNtzGC6i0jjmAPbkVxPU0CjVI3iAVQBu
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=jTSDsdX6X7ecxBhJIo4A:9 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-01_01,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 phishscore=0 bulkscore=0 adultscore=0
- spamscore=0 impostorscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
+ clxscore=1015 priorityscore=1501 adultscore=0 impostorscore=0 spamscore=0
+ bulkscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010057
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010059
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	TAGGED_FROM(0.00)[bounces-110504-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	TAGGED_FROM(0.00)[bounces-110505-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[wangao.wang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[jingyi.wang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 83AC8619D6C
+X-Rspamd-Queue-Id: 9B28161A073
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
 
-On 2026/5/29 21:25, Neil Armstrong wrote:
-> On 5/29/26 12:33, Wangao Wang wrote:
->>
->>
->> On 2026/5/29 17:55, Neil Armstrong wrote:
->>> Hi,
->>>
->>> On 5/29/26 10:21, Wangao Wang wrote:
->>>>
->>>>
->>>> On 2026/5/28 21:26, Neil Armstrong wrote:
->>>>> Hi Wangao,
->>>>>
->>>>> On 5/27/26 06:15, Wangao Wang wrote:
->>>>>> I tested the v4 patch using the gst command you provided earlier. 
->>>>>> The decoded output still has the previous plane misalignment 
->>>>>> issue, but all frames are decoded successfully. When viewing the 
->>>>>> raw data with an image player at 1920x1080 resolution, the first 
->>>>>> frame looks correct but subsequent frames appear shifted. If 
->>>>>> viewed at 1920x1088 resolution, there are artifacts at the bottom 
->>>>>> of each frame. I've attached the images.
->>>>>>
->>>>>> Also, have you tested the 720p case? I can't get it to run on my end.
->>>>>
->>>>> Thanks for the report but I don't have access to the Purwa platform 
->>>>> you use,
->>>>> I've run test with multiple resolutions with display using P010
->>>>> and QC10, and ran fluster aswell and all passed on SM8550 and SM8650.
->>>>>
->>>>> I'll test it on the Hamoa T14S I have which should be the closest 
->>>>> to purwa,
->>>>> but it uses the same driver setup as SM8550 so I expected it to 
->>>>> work the same.
->>>>>
->>>>> Could you indicate which iris firmware you're using ?
->>>>>
->>>>> Could you try passing the fluster h265 main10 test suite with 
->>>>> gstreamer ?
->>>>>
->>>>> fluster download -c h.265
->>>>> fluster run -d GStreamer-H.265-V4L2 -ts JCT-VC-HEVC_V1 -q -s -j1
->>>>>
->>>>> The picture you send looks like there's a mismatch with the kernel
->>>>> and firmware setup of planes offsets.
->>>>> Could you check if there's a Purwa specific firmware property
->>>>> to set for 10bit decoding ?
->>>>>
->>>>> Neil
->>>>>
->>>>>>
->>>>
->>>> Hi Neil,
->>>>
->>>> I also tested on hamoa, and it has the same issue as purwa. The 
->>>> firmware used on purwa is vpu30_p1_s7.mbn.
->>>>
->>>> This is the result of fluster:
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WP_MAIN10_B_Toshiba_3 
->>>>       ... Success
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) 
->>>> WPP_A_ericsson_MAIN10_2       ... Success
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_A_ericsson_MAIN_2 
->>>>       ... Success
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) 
->>>> WPP_B_ericsson_MAIN10_2       ... Success
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_B_ericsson_MAIN_2 
->>>>       ... Success
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) 
->>>> WPP_C_ericsson_MAIN10_2       ... Success
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_C_ericsson_MAIN_2 
->>>>       ... Success
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) 
->>>> WPP_D_ericsson_MAIN10_2       ... Error
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_D_ericsson_MAIN_2 
->>>>       ... Error
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) 
->>>> WPP_E_ericsson_MAIN10_2       ... Success
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_E_ericsson_MAIN_2 
->>>>       ... Success
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) 
->>>> WPP_F_ericsson_MAIN10_2       ... Success
->>>> [JCT-VC-HEVC_V1] (GStreamer-H.265-V4L2-Gst1.0) WPP_F_ericsson_MAIN_2 
->>>>       ... Success
->>>>
->>>
->>> Ok so this works fine, so I'm really wondering if your main10 HEVC is 
->>> not properly encoded.
->>>
->>> Could you try playing a well know HEVC main10 files ?
->>>
->>> For example I just tried the 1080p and 4k 10bit files on Hamoa + 
->>> fluster and it just worked as expected:
->>> https://larmoire.org/jellyfish/
->>> https://larmoire.org/jellyfish/media/jellyfish-10-mbps-hd-hevc-10bit.mkv
->>> https://larmoire.org/jellyfish/media/jellyfish-120-mbps-4k-uhd- 
->>> hevc-10bit.mkv
->>>
->>> Neil
->>
->> Could you provide the test commands? I tried both files and the 
->> results from gst still show anomalies, but the results from 
->> iris_test_app are normal. I'm wondering if there are any additional 
->> settings needed on the client side.
->>
->> Here are my test commands:
->> gst-launch-1.0 -v -m filesrc location=jellyfish-10-mbps-hd- 
->> hevc-10bit.mkv ! matroskademux ! h265parse ! v4l2h265dec ! filesink 
->> location=1080P_out.yuv
->> gst-launch-1.0 -v -m filesrc location=jellyfish-120-mbps-4k-uhd- 
->> hevc-10bit.mkv ! matroskademux ! h265parse ! v4l2h265dec ! filesink 
->> location=4K_out.yuv
->>
+On 5/30/2026 6:42 PM, Krzysztof Kozlowski wrote:
+> On Fri, May 22, 2026 at 12:42:07AM -0700, Jingyi Wang wrote:
+>> Introduce Top Level Mode Multiplexer dt-binding and driver for the
+>> upcoming Qualcomm Maili SoC.
 > 
-> If I run those exact commands, I can correctly visualize the files with:
-> gst-launch-1.0 -v -m filesrc location=1080P_out.yuv ! rawvideoparse 
-> format=p010-10le width=1920 height=1080 frame-size=6266880 ! waylandsink
-> gst-launch-1.0 -v -m filesrc location=4K_out.yuv ! rawvideoparse 
-> format=p010-10le width=3840 height=2160 frame-size=25067520 ! waylandsink
+> This is the first patch where such name appears, so same comments as
+> before for other cases - describe what is Maili somewhere.
 > 
-> I have to use the decoder full aligned buffer size because gst just 
-> dumps the whole v4l2 buffer into filesink and frames are not tighly 
-> packed together.
-> 
-> If you want to output tighly packed frames, this worked for me:
-> gst-launch-1.0 -v -m filesrc location=jellyfish-10-mbps-hd- 
-> hevc-10bit.mkv ! matroskademux ! h265parse ! v4l2h265dec ! rawvideoparse 
-> format=p010-10le width=1920 height=1080 frame-size=6266880 ! filesink 
-> location=1080P_out.yuv
-> gst-launch-1.0 -v -m filesrc location=jellyfish-120-mbps-4k-uhd- 
-> hevc-10bit.mkv.1 ! matroskademux ! h265parse ! v4l2h265dec ! 
-> rawvideoparse format=p010-10le width=3840 height=2160 frame- 
-> size=25067520 ! filesink location=4K_out.yuv
-> 
-> There's probably a better way I don't know, but in any case gstreamer 
-> will only use the "frame-size" portion of each frame and process it.
-> 
-> For example, you can convert it nv12 and dump to file, it will then dump 
-> only the nv12 data:
-> gst-launch-1.0 -v -m filesrc location=jellyfish-10-mbps-hd- 
-> hevc-10bit.mkv ! matroskademux ! h265parse ! v4l2h265dec ! 
-> videoconvert ! video/x-raw, format=NV12 ! filesink location=1080P_out.yuv
-> gst-launch-1.0 -v -m filesrc location=1080P_out.yuv ! rawvideoparse 
-> format=nv12 width=1920 height=1080 ! waylandsink
-> 
-> If the plane offset/alignment was wrong, the convert frames would be 
-> wrong and playback would also be wrong.
-> 
-> Neil
 
-Thanks. Using the commands you provided, the output file no longer has 
-the previous issues.
+Hi Krzysztof,
 
--- 
-Best Regards,
-Wangao
+Maili is similar to Hawi which is not announced yet, so we refer to Hawi
+to use "upcoming Qualcomm Maili SoC" to describe it, shall we expose details
+now or add info after announcement?
+
+Thanks,
+Jingyi
+
+> Best regards,
+> Krzysztof
+> 
 
 
