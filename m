@@ -1,55 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-110647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4MrCBUW6HWoidQkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 18:58:45 +0200
+	id eHmXF1a6HWoidQkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 18:59:02 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84708622EAF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 18:58:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CC95C622ED7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 18:59:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8057B3008523
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 16:55:53 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 22E57302F43B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 16:55:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70A2A37F74A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8869E399CFD;
 	Mon,  1 Jun 2026 16:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BDvUWt/1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PUQxRjRU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C74232BF51;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FAF36A023;
 	Mon,  1 Jun 2026 16:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780332950; cv=none; b=MnH2poGjQNJyLrJvrcqtQF12C7nBS60AurGMn2roRmE19df7VQ7n9ydN0Ec41xfmJNJUn5xsoQDNSQR2QLhQFz/C4vRgLlDY4PBM65aNC+qcVkXWBHJuf2QeoWKsPz28u6b/TWuYQo3bvmdEXmv0CRheTfaDhSK3nHmzYDjibc8=
+	t=1780332950; cv=none; b=TV76HftRF5jXZaKBEK77aMp5VsdYll48+lfWcB8h1yXIB1JkbHknGbw2dxziCeuVJVBhqDH0xpWA0rtjEN1jWcQrJAFRzoA91+7K17CUxrPVk6NdV0LvhHX7W7sfCfSUz8wNXdLhfr337PK4cZyagNdlHv4aaOfmfvMEG25fY4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780332950; c=relaxed/simple;
-	bh=D/XT+m3FiTqZRLDK2ZnnhUD7UzZrm7MDEl/OjwerbKo=;
+	bh=pcXsxP4PYk7iPgPnNq3O7JW++OaxXAlshcFnAw5oheo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=F4UMiI6gg8IbEFOPx2J4/jMSHNiue0TLkOvSCJpd2BhxSnrQc/M1ySfoy9OzjA57RbiVGaWl4wnIsQkf/pU+V4qwmFR4ttto+VdQrVt4lyk4A/c3/4rt1aL738yn2N3G0y42TAVdnJCK2z10Rb3XZh94h/ZV1/kQ3blku0jaSWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BDvUWt/1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 27C3DC2BCC6;
+	 In-Reply-To:To:Cc; b=eblvOhqdSEwh3kEGnvW91N8A1ZWXVIubojXAo4szvBohsQfUiqLU7h0559RlAeOmfIe/BaWvgETeu4dThG/VOHJZ723nGTpjW6qyzav+U9zxWzoOAP6OP0/tIuwo0Yr8Z3viZbdpP9ec6eKOfUZ4VwLR2iWSBHlL9A/liGaSHUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PUQxRjRU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3692AC2BCFA;
 	Mon,  1 Jun 2026 16:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1780332950;
-	bh=D/XT+m3FiTqZRLDK2ZnnhUD7UzZrm7MDEl/OjwerbKo=;
+	bh=pcXsxP4PYk7iPgPnNq3O7JW++OaxXAlshcFnAw5oheo=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=BDvUWt/1m4IUElyQM5+CqISuGGdFlf0sZ/q1E/OEYfVlpL265QIb5vPc/8xnZPG78
-	 MoJiAwdkbxx5hWy5wiWC4Rmh9fuCsoL3ESenlHqEsKz5xgjXKS1Y7vb1WrcK/Jvbqw
-	 FeTR6ohOwLvZkgHrZYjIH+2MSZrzXsTL2WjYBs9xTiu4GvxmimK/jvu+3D7MviuogQ
-	 Ga+3OoaCSW+CQceZ69Bwwm9FqnH6ldSbCJa85kXHxDfGBAKcTO+8WodTG5Zkqy/zFa
-	 kj74oXXfRgQ7mpebKhAHMuZ1XzG4761anfehzND2A1oEk/7vawroX2CKXtmoJvWDv3
-	 oKBCw4qJTNiJw==
+	b=PUQxRjRUbtKJEFEtB6XHk5ZdpFNUU8CMFl9pHFec9+UhFp064Nq/NkfPb0SZTRsau
+	 w5seO8DS/mpYv5fpYslZAKRT5yVk58ofTDDkuMGLT2KZelcFAV+tgrBF6h2bmB6DbC
+	 LyMoltDsm0KPsuU4fRSm2Inros3q+RzG/j66uGICWRbmcJT7LXP5ACRlB8Eurg9r4M
+	 JYAM1fWWC7u8AhvNnyYSeJe8VaEotkT5zNecaHrA9OtudjHCkOkjaIBQqXo0o6klOy
+	 pxfeXV1tlg8xvE66z4xcHKeNy241yrOtyDE/+eytG1p7HmY+W6k6RkgD+OQ+KevdBb
+	 OgrEOkHElScNw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EB51CD6E61;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E18ECD6E5D;
 	Mon,  1 Jun 2026 16:55:50 +0000 (UTC)
 From: =?utf-8?q?Pablo_Correa_G=C3=B3mez_via_B4_Relay?= <devnull+pabloyoyoista.postmarketos.org@kernel.org>
-Date: Mon, 01 Jun 2026 18:55:37 +0200
-Subject: [PATCH v4 2/3] arm64: dts: qcom: sdm670: add debug uart soc node
+Date: Mon, 01 Jun 2026 18:55:38 +0200
+Subject: [PATCH v4 3/3] arm64: dts: qcom: sdm670-google-common: enable
+ debug uart
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260601-pabloyoyoista-debug-uart-on-rdacayan-next-v4-2-c5d51dd96ca0@postmarketos.org>
+Message-Id: <20260601-pabloyoyoista-debug-uart-on-rdacayan-next-v4-3-c5d51dd96ca0@postmarketos.org>
 References: <20260601-pabloyoyoista-debug-uart-on-rdacayan-next-v4-0-c5d51dd96ca0@postmarketos.org>
 In-Reply-To: <20260601-pabloyoyoista-debug-uart-on-rdacayan-next-v4-0-c5d51dd96ca0@postmarketos.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -72,21 +73,21 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1353;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1380;
  i=pabloyoyoista@postmarketos.org; h=from:subject:message-id;
- bh=PKWUit6YaDLgMvBcmHsB+WvICXOjhQdpimwGRlG8xpo=;
- b=owEBbQKS/ZANAwAKAXo0JWX/Y195AcsmYgBqHbmUCLYggOFkMCTXQ0wYBdLc819CRcZPTqLgY
- 7oHxZINky+JAjMEAAEKAB0WIQS9CheUSi6o/ykTCaJ6NCVl/2NfeQUCah25lAAKCRB6NCVl/2Nf
- eVsQEACrECCW94nloXYFpEm0NV4xmamMUONm1jvXlEEfxC1Ro87zxy0zbGEblDhJAxzKhm7fGxC
- 1QnFURUtywGdLlGlm3E5TUAv+dDmtLO/Cv5+QypEl9j35oalN7KxdZqwVAJS9OCLKM2bzRpnS3F
- hjOd404yIgcmJvymEqEk5bU82Wz1rQQQBd1ql8c+N99tWA+6U5/db8ySZm/RpXg+5EUlfDPeSk2
- OOmtptzVR576LPfyhgzrfPvpbktEji13Mha8kQO4I1qMuWk3Q8yCyeTUJtM00+aPruzH3vQWDyR
- YGXESUhuDJe9q6e0XvCE/tidBUVT6qPwhj5TmoPPi7VTFUKTkDK2IjnCzI6AQ5XsXkB+a8TlTZ0
- PhKDEpccAjXaaLL2lXyH/R4BU+jGSnBgjBFCmMqK4VIqqm2Nldqp3CHCZkaCJbez7c92qS8Eufk
- jtB/vK6huGTEYb+vVpOpVRfWVIYjMfoIHRcbgeksH0B5uRotvlQGuW1fg7aJdl6BEvBaLpOqroN
- PrFvR6amliX0a9fzD2ZmVXZNCNRfEXlQ+YQHxRAzK67wFIs6+Nfj5AYplPUq0fDfJ/gyE3dY/y0
- 1+iROmh9WFK8fl1Cq4iH6ChtYihOapj8NX/b9tN8x0oU1GOObEk7NaKPQocYnvSnCi94NrZsGJz
- vlV5HJLD9HQ2uEw==
+ bh=4SCoeppOpCMNCW9QJaC0akZ1S9kuDZvEwTxAmO1MfSw=;
+ b=owEBbQKS/ZANAwAKAXo0JWX/Y195AcsmYgBqHbmU3k/6IGECCjmflfHZE/w7gi0Do/A89M1wk
+ X0BiEzlKV6JAjMEAAEKAB0WIQS9CheUSi6o/ykTCaJ6NCVl/2NfeQUCah25lAAKCRB6NCVl/2Nf
+ eQWQD/4r65jyRvzbZVAsy2CIKafE6k1sNmU1l4dLeOIQvK1OftMoxYlTT3xFcSdretQVlpuW8vJ
+ fOUY/6IZRLc+5FI/sycKyxURLi1qb9mIdkI5+QxIJULzlreZEn9ZHspZZ077IK1zlsajYBDYbkB
+ 9fvvcH+QZAx/WE3gWELmV2ZCLIsSYV+vFdGfGrYnRkjuKUaAps9Y5yT7kyUmJZGuFdfbud0Dl0G
+ XT0X8PlX7eg1L7x9oS8OJjGI8wvYGGOOiIvC+SkpHFfc/kgyPifAvdQ4DfWsgLByWt64D+I/Ktu
+ 39FksOmDglSb3q1lhJ70QbIZcTGRIHafT9BiYtG7V3riJoGY2yLJpoEHP1P5rZWjEodqItWgUdE
+ al1IYpJE6wXYidEZols4gODJTGUfZvvgFi6G02R8trJTSDwWnQxi+wxnsIm00b9+4cQPNcpDoP6
+ VYaqbjzg0Ac7WJ+ARV1PHmNmW40LqdHYKKIJHrOj0jn0sAOMoJe4o+YtbEfEmd3SxPPfnmQQnzc
+ HBSZABfwEX6CrE+/5YlMuCskEoWz6lKRM21/wjqJ9p6RiU45W02VH7pKspW1Er13ld2Xb7+0Nf+
+ C6jODEuPcWVrs5FjqQP0/aIwM8s/ah59JhVSaTXXQuLH+L/R8zs2YuO7yWPvID7UhMvncJUXzBQ
+ LEthcwKJ9DcO9SA==
 X-Developer-Key: i=pabloyoyoista@postmarketos.org; a=openpgp;
  fpr=BD0A17944A2EA8FF291309A27A342565FF635F79
 X-Endpoint-Received: by B4 Relay for pabloyoyoista@postmarketos.org/default
@@ -103,7 +104,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110647-lists,linux-arm-msm=lfdr.de,pabloyoyoista.postmarketos.org];
+	TAGGED_FROM(0.00)[bounces-110649-lists,linux-arm-msm=lfdr.de,pabloyoyoista.postmarketos.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[13];
@@ -116,53 +117,73 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	NEURAL_HAM(-0.00)[-0.996];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	HAS_REPLYTO(0.00)[pabloyoyoista@postmarketos.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[a90000:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,a94000:email,qualcomm.com:email,postmarketos.org:replyto,postmarketos.org:mid,postmarketos.org:email]
-X-Rspamd-Queue-Id: 84708622EAF
+	DBL_BLOCKED_OPENRESOLVER(0.00)[postmarketos.org:replyto,postmarketos.org:mid,postmarketos.org:email,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: CC95C622ED7
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Pablo Correa Gómez <pabloyoyoista@postmarketos.org>
 
-Values are taken from the other geni nodes
+This has been tested on the Pixel 3a with USB Cereal board
+
+Depends on
+https://lore.kernel.org/all/20260310002606.16413-5-mailingradian@gmail.com/
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Pablo Correa Gómez <pabloyoyoista@postmarketos.org>
 ---
- arch/arm64/boot/dts/qcom/sdm670.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-index 1c6c18a913a0..400d5d8ef9fa 100644
---- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-@@ -1060,6 +1060,21 @@ i2c12: i2c@a90000 {
- 				status = "disabled";
- 			};
+diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi b/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
+index 0f57b915186b..711664c83b5f 100644
+--- a/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
+@@ -26,7 +26,9 @@
+ /delete-node/ &gpu_mem;
  
-+			uart12: serial@a90000 {
-+				compatible = "qcom,geni-debug-uart";
-+				reg = <0 0x00a90000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP1_S4_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_uart12_default>;
-+				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
-+				power-domains = <&rpmhpd SDM670_CX>;
-+				interconnects = <&aggre2_noc MASTER_BLSP_2 0 &config_noc SLAVE_BLSP_2 0>,
-+						<&gladiator_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_BLSP_2 0>;
-+				interconnect-names = "qup-core", "qup-config";
-+				status = "disabled";
-+			};
+ / {
+-	aliases { };
++	aliases {
++		serial0 = &uart12;
++	};
+ 
+ 	battery: battery {
+ 		compatible = "simple-battery";
+@@ -622,6 +624,16 @@ &qupv3_id_1 {
+ 	status = "okay";
+ };
+ 
++&qup_uart12_rx {
++	drive-strength = <2>;
++	bias-pull-up;
++};
 +
- 			i2c13: i2c@a94000 {
- 				compatible = "qcom,geni-i2c";
- 				reg = <0 0x00a94000 0 0x4000>;
++&qup_uart12_tx {
++	drive-strength = <2>;
++	bias-disable;
++};
++
+ &sdhc_1 {
+ 	supports-cqe;
+ 	mmc-hs200-1_8v;
+@@ -688,6 +700,10 @@ ts-switch-pins {
+ 	};
+ };
+ 
++&uart12 {
++	status = "okay";
++};
++
+ &usb_1_hsphy {
+ 	vdd-supply = <&vreg_l1b_0p925>;
+ 	vdda-pll-supply = <&vreg_l10a_1p8>;
 
 -- 
 2.54.0
