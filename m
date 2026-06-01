@@ -1,192 +1,276 @@
-Return-Path: <linux-arm-msm+bounces-110649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eHmXF1a6HWoidQkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 18:59:02 +0200
+	id QA0DAEy7HWo/dQkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110651-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 19:03:08 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC95C622ED7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 18:59:01 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96696622F97
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 19:03:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 22E57302F43B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 16:55:55 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 4D522301709E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 17:03:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8869E399CFD;
-	Mon,  1 Jun 2026 16:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E5A53DC4A4;
+	Mon,  1 Jun 2026 17:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PUQxRjRU"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="zDhAxlDH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FAF36A023;
-	Mon,  1 Jun 2026 16:55:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2582EA72A;
+	Mon,  1 Jun 2026 17:03:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780332950; cv=none; b=TV76HftRF5jXZaKBEK77aMp5VsdYll48+lfWcB8h1yXIB1JkbHknGbw2dxziCeuVJVBhqDH0xpWA0rtjEN1jWcQrJAFRzoA91+7K17CUxrPVk6NdV0LvhHX7W7sfCfSUz8wNXdLhfr337PK4cZyagNdlHv4aaOfmfvMEG25fY4Y=
+	t=1780333383; cv=none; b=e2227ke/5oyTnkoWsEN0p2QPf+4oqG0hsewJ1lWwLmRs6EqEzGojZmLeVkVF61r/XOmbA53X/2RCXEhphgWzC9J+AsXBnPrYhBcQlBYG7mSqyYSl9rw8x18UJTxUM3B3IdzufxuglzBTmP3ifqiGUCj4Ox0V3vEoc1orvMOWFO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780332950; c=relaxed/simple;
-	bh=pcXsxP4PYk7iPgPnNq3O7JW++OaxXAlshcFnAw5oheo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=eblvOhqdSEwh3kEGnvW91N8A1ZWXVIubojXAo4szvBohsQfUiqLU7h0559RlAeOmfIe/BaWvgETeu4dThG/VOHJZ723nGTpjW6qyzav+U9zxWzoOAP6OP0/tIuwo0Yr8Z3viZbdpP9ec6eKOfUZ4VwLR2iWSBHlL9A/liGaSHUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PUQxRjRU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3692AC2BCFA;
-	Mon,  1 Jun 2026 16:55:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1780332950;
-	bh=pcXsxP4PYk7iPgPnNq3O7JW++OaxXAlshcFnAw5oheo=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=PUQxRjRUbtKJEFEtB6XHk5ZdpFNUU8CMFl9pHFec9+UhFp064Nq/NkfPb0SZTRsau
-	 w5seO8DS/mpYv5fpYslZAKRT5yVk58ofTDDkuMGLT2KZelcFAV+tgrBF6h2bmB6DbC
-	 LyMoltDsm0KPsuU4fRSm2Inros3q+RzG/j66uGICWRbmcJT7LXP5ACRlB8Eurg9r4M
-	 JYAM1fWWC7u8AhvNnyYSeJe8VaEotkT5zNecaHrA9OtudjHCkOkjaIBQqXo0o6klOy
-	 pxfeXV1tlg8xvE66z4xcHKeNy241yrOtyDE/+eytG1p7HmY+W6k6RkgD+OQ+KevdBb
-	 OgrEOkHElScNw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E18ECD6E5D;
-	Mon,  1 Jun 2026 16:55:50 +0000 (UTC)
-From: =?utf-8?q?Pablo_Correa_G=C3=B3mez_via_B4_Relay?= <devnull+pabloyoyoista.postmarketos.org@kernel.org>
-Date: Mon, 01 Jun 2026 18:55:38 +0200
-Subject: [PATCH v4 3/3] arm64: dts: qcom: sdm670-google-common: enable
- debug uart
+	s=arc-20240116; t=1780333383; c=relaxed/simple;
+	bh=8WsYYXy0LSkMl4P+/kiwX6H8dqN4+Y6M0KPXAHxVuwA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PCioK3LbXK8R0UZ9wHRfnwGTKABtN6bDOh05xiUTY/LMhJwSLRxzHFJWW5ZdPRRzN3q5s2/V24h/1tgHV8c6HWzodGZJl/KadU9W88LKxRnQuw6Y7x+vA3FU0a4x66tIAI+XeIdLFyUSuQoZ7/eCyVF4uvOWwjw0KYDPn62v8K4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=zDhAxlDH; arc=none smtp.client-ip=185.100.197.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.200] (unknown [10.88.125.21])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 9179A534157F;
+	Mon, 01 Jun 2026 19:02:57 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1780333378;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=CNDA99ZKEEGK/UOVD7Lzi1Dn+/Vl4AtUMnGx3I5ZUNg=;
+	b=zDhAxlDHLlYagR3y7me/ZW59y9BfnXWOblg1ejsId5ySofdcCiN7IMca8jApLqTRSbp6S2
+	XfV7+qAupsLJg2e5WZ9/oSY2jtjt3gsGWLifJBJ/LH+Z4lxQSatIu9Lvl4wwFoMmUZrwmd
+	ULOmF8O0cmoXfX53rmLcMyD12Y2V+7o=
+Message-ID: <a547e784-9e24-4dba-abcb-6c22130af2f2@ixit.cz>
+Date: Mon, 1 Jun 2026 19:02:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260601-pabloyoyoista-debug-uart-on-rdacayan-next-v4-3-c5d51dd96ca0@postmarketos.org>
-References: <20260601-pabloyoyoista-debug-uart-on-rdacayan-next-v4-0-c5d51dd96ca0@postmarketos.org>
-In-Reply-To: <20260601-pabloyoyoista-debug-uart-on-rdacayan-next-v4-0-c5d51dd96ca0@postmarketos.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Richard Acayan <mailingradian@gmail.com>, 
- ~postmarketos/upstreaming@lists.sr.ht, 
- =?utf-8?q?Pablo_Correa_G=C3=B3mez?= <pabloyoyoista@postmarketos.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1380;
- i=pabloyoyoista@postmarketos.org; h=from:subject:message-id;
- bh=4SCoeppOpCMNCW9QJaC0akZ1S9kuDZvEwTxAmO1MfSw=;
- b=owEBbQKS/ZANAwAKAXo0JWX/Y195AcsmYgBqHbmU3k/6IGECCjmflfHZE/w7gi0Do/A89M1wk
- X0BiEzlKV6JAjMEAAEKAB0WIQS9CheUSi6o/ykTCaJ6NCVl/2NfeQUCah25lAAKCRB6NCVl/2Nf
- eQWQD/4r65jyRvzbZVAsy2CIKafE6k1sNmU1l4dLeOIQvK1OftMoxYlTT3xFcSdretQVlpuW8vJ
- fOUY/6IZRLc+5FI/sycKyxURLi1qb9mIdkI5+QxIJULzlreZEn9ZHspZZ077IK1zlsajYBDYbkB
- 9fvvcH+QZAx/WE3gWELmV2ZCLIsSYV+vFdGfGrYnRkjuKUaAps9Y5yT7kyUmJZGuFdfbud0Dl0G
- XT0X8PlX7eg1L7x9oS8OJjGI8wvYGGOOiIvC+SkpHFfc/kgyPifAvdQ4DfWsgLByWt64D+I/Ktu
- 39FksOmDglSb3q1lhJ70QbIZcTGRIHafT9BiYtG7V3riJoGY2yLJpoEHP1P5rZWjEodqItWgUdE
- al1IYpJE6wXYidEZols4gODJTGUfZvvgFi6G02R8trJTSDwWnQxi+wxnsIm00b9+4cQPNcpDoP6
- VYaqbjzg0Ac7WJ+ARV1PHmNmW40LqdHYKKIJHrOj0jn0sAOMoJe4o+YtbEfEmd3SxPPfnmQQnzc
- HBSZABfwEX6CrE+/5YlMuCskEoWz6lKRM21/wjqJ9p6RiU45W02VH7pKspW1Er13ld2Xb7+0Nf+
- C6jODEuPcWVrs5FjqQP0/aIwM8s/ah59JhVSaTXXQuLH+L/R8zs2YuO7yWPvID7UhMvncJUXzBQ
- LEthcwKJ9DcO9SA==
-X-Developer-Key: i=pabloyoyoista@postmarketos.org; a=openpgp;
- fpr=BD0A17944A2EA8FF291309A27A342565FF635F79
-X-Endpoint-Received: by B4 Relay for pabloyoyoista@postmarketos.org/default
- with auth_id=698
-X-Original-From: =?utf-8?q?Pablo_Correa_G=C3=B3mez?= <pabloyoyoista@postmarketos.org>
-Reply-To: pabloyoyoista@postmarketos.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH WIP v5 6/9] media: qcom: camss: csiphy-3ph: Update Gen2
+ v1.1 MIPI CSI-2 C-PHY init
+To: Bryan O'Donoghue <bod.linux@nxsw.ie>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
+ Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>,
+ Cory Keitz <ckeitz@amazon.com>, Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Joel Selvaraj <foss@joelselvaraj.com>, Kieran Bingham <kbingham@kernel.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20260531-qcom-cphy-v5-0-6be0f62b4d65@ixit.cz>
+ <20260531-qcom-cphy-v5-6-6be0f62b4d65@ixit.cz>
+ <eff110a1-4161-4190-a0b2-7a1139a85d52@nxsw.ie>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <eff110a1-4161-4190-a0b2-7a1139a85d52@nxsw.ie>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
+	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110649-lists,linux-arm-msm=lfdr.de,pabloyoyoista.postmarketos.org];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-110651-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[nxsw.ie,kernel.org,gmail.com,linaro.org,fairphone.com,protonmail.com,amazon.com,oss.qualcomm.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,lists.sr.ht,postmarketos.org,oss.qualcomm.com];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	NEURAL_HAM(-0.00)[-0.996];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	HAS_REPLYTO(0.00)[pabloyoyoista@postmarketos.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[postmarketos.org:replyto,postmarketos.org:mid,postmarketos.org:email,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: CC95C622ED7
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[ixit.cz:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,ixit.cz:email,ixit.cz:mid,ixit.cz:dkim]
+X-Rspamd-Queue-Id: 96696622F97
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Pablo Correa Gómez <pabloyoyoista@postmarketos.org>
+On 01/06/2026 18:03, Bryan O'Donoghue wrote:
+> On 31/05/2026 14:08, David Heidelberg via B4 Relay wrote:
+>> From: David Heidelberg <david@ixit.cz>
+>>
+>> These values should improve C-PHY behaviour. Should match most recent
+>> Qualcomm code.
+>>
+>> Acked-by: Cory Keitz <ckeitz@amazon.com>
+>> Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>> Signed-off-by: David Heidelberg <david@ixit.cz>
+>> ---
+>>    .../media/platform/qcom/camss/camss-csiphy-3ph-1-0.c   | 18 +++++++++---------
+>>    1 file changed, 9 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> index d837fcf7cd2f0..9a0f009c033bb 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> @@ -220,19 +220,19 @@ csiphy_lane_regs lane_regs_sdm845[] = {
+>>    	{0x0660, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0664, 0x7F, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    };
+>>
+>>    /* GEN2 1.0 3PH */
+>>    /* 3 entries: 3 lanes (C-PHY) */
+>>    static const struct
+>>    csiphy_lane_regs lane_regs_sdm845_3ph[] = {
+>> -	{0x015c, 0x43, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> -	{0x0168, 0xa0, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> -	{0x016c, 0x25, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> +	{0x015c, 0x63, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> +	{0x0168, 0xac, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> +	{0x016c, 0xa5, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0104, 0x06, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x010c, 0x12, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+>>    	{0x0108, 0x00, 0x00, CSIPHY_SETTLE_CNT_HIGHER_BYTE},
+>>    	{0x0114, 0x20, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0150, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0118, 0x3e, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x011c, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0120, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> @@ -240,19 +240,19 @@ csiphy_lane_regs lane_regs_sdm845_3ph[] = {
+>>    	{0x0128, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x012c, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0144, 0x12, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0160, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x01cc, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0164, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x01dc, 0x51, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>
+>> -	{0x035c, 0x43, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> -	{0x0368, 0xa0, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> -	{0x036c, 0x25, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> +	{0x035c, 0x63, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> +	{0x0368, 0xac, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> +	{0x036c, 0xa5, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0304, 0x06, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x030c, 0x12, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+>>    	{0x0308, 0x00, 0x00, CSIPHY_SETTLE_CNT_HIGHER_BYTE},
+>>    	{0x0314, 0x20, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0350, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0318, 0x3e, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x031c, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0320, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> @@ -260,19 +260,19 @@ csiphy_lane_regs lane_regs_sdm845_3ph[] = {
+>>    	{0x0328, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x032c, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0344, 0x12, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0360, 0x02, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x03cc, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0364, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x03dc, 0x51, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>
+>> -	{0x055c, 0x43, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> -	{0x0568, 0xa0, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> -	{0x056c, 0x25, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> +	{0x055c, 0x63, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> +	{0x0568, 0xac, 0x00, CSIPHY_DEFAULT_PARAMS},
+>> +	{0x056c, 0xa5, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0504, 0x06, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x050c, 0x12, 0x00, CSIPHY_SETTLE_CNT_LOWER_BYTE},
+>>    	{0x0508, 0x00, 0x00, CSIPHY_SETTLE_CNT_HIGHER_BYTE},
+>>    	{0x0514, 0x20, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0550, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0518, 0x3e, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x051c, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>    	{0x0520, 0x41, 0x00, CSIPHY_DEFAULT_PARAMS},
+>>
+>> --
+>> 2.53.0
+>>
+>>
+>>
+> 
+> Squash this down !
 
-This has been tested on the Pixel 3a with USB Cereal board
+Document the regs !
 
-Depends on
-https://lore.kernel.org/all/20260310002606.16413-5-mailingradian@gmail.com/
+But now seriously - it's nice to have at least commit documenting what these 
+change doing.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Pablo Correa Gómez <pabloyoyoista@postmarketos.org>
----
- arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+In previous discussion [1] we agreed on keeping this commit.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi b/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
-index 0f57b915186b..711664c83b5f 100644
---- a/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
-@@ -26,7 +26,9 @@
- /delete-node/ &gpu_mem;
- 
- / {
--	aliases { };
-+	aliases {
-+		serial0 = &uart12;
-+	};
- 
- 	battery: battery {
- 		compatible = "simple-battery";
-@@ -622,6 +624,16 @@ &qupv3_id_1 {
- 	status = "okay";
- };
- 
-+&qup_uart12_rx {
-+	drive-strength = <2>;
-+	bias-pull-up;
-+};
-+
-+&qup_uart12_tx {
-+	drive-strength = <2>;
-+	bias-disable;
-+};
-+
- &sdhc_1 {
- 	supports-cqe;
- 	mmc-hs200-1_8v;
-@@ -688,6 +700,10 @@ ts-switch-pins {
- 	};
- };
- 
-+&uart12 {
-+	status = "okay";
-+};
-+
- &usb_1_hsphy {
- 	vdd-supply = <&vreg_l1b_0p925>;
- 	vdda-pll-supply = <&vreg_l10a_1p8>;
+David
+
+[1] 
+https://lore.kernel.org/linux-media/be4abbc8-414a-429d-baff-48c829378a31@linaro.org/
+
+> 
+> ---
+> bod
+> 
 
 -- 
-2.54.0
-
+David Heidelberg
 
 
