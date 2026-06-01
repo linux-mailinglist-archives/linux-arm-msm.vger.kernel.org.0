@@ -1,184 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-110678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QKqjHITbHWpsfQkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 21:20:36 +0200
+	id 0LzAFjDsHWp0fwkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 22:31:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDEB46248E7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 21:20:35 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CA406251DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 22:31:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 65D5F304699A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 19:16:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7C7803064733
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 20:29:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82AFF37BE6F;
-	Mon,  1 Jun 2026 19:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 594863EAC8D;
+	Mon,  1 Jun 2026 20:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="myfmX6/d"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jSX1zweN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED652D0617
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2026 19:16:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44A63F44E3
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2026 20:29:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780341385; cv=none; b=pO7oEmNx5mzAsFap9Bt62zJWa8vJt2zgoe/n9gzGKhr1AMs2ODE3MEX05Op8jUfSKknOkTTC/tjsrDSXfdAvDDHq8b0HGKlxbAObKUdrq5hmho+Lv08FRPhL2ro+KUcVm+opWsX+Rb+Zfx8wEGNI9R/qwqGZYJ1H7FtfDCU6rV8=
+	t=1780345759; cv=none; b=XHpmisBZWfzXARNJrusejFFwHAaGx8YE32l43AZ1Dql1e9cPozBdcxoxXNbolGnekYPSD2R8LJJ/ggcyrS6VSyYWirvRoYPALo72DgNeBD1couChXSqSA5PBHzAK82HC6+GNmDmh6629HGKPXw+ye5CU+RDVMJU2fNEkVjizxDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780341385; c=relaxed/simple;
-	bh=pfzOzaqWA/AH3npRNvlp0MxpAD4DF0Z7Hw40WYdOvag=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D1VNyvd7m5xQZTIcbKj4mOGaehxfX5OqN4Ukc24L3fVMPeNlaB+5sO555M1JVzrZfGQBKku+u4n1jh3UeR6j15qghLAeJw5wTBcyflgrnvEj0GAH10OFcGNOSQZUJn9iCbJ5t7bIejNv28r3gbAUlkrbdmudTa4Tvi9nV1bvlFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=myfmX6/d; arc=none smtp.client-ip=74.125.82.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-304cf518c9dso6728497eec.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2026 12:16:22 -0700 (PDT)
+	s=arc-20240116; t=1780345759; c=relaxed/simple;
+	bh=fqT6LZZWvvuCiVxgMDtlsXYgUKBFR0XwxahTM1RHgnQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=S9hRwJ6dyHf1ZJbR8SbJbSa/+gdaGePZGf3w3rI8C/kCyvKBxHk7aPbd71HJ9wud0pBJD+ufADCx3TdLbAI2+qYVaPO2AR5kspklSdMrE/WA808fpgXfS4uLQOoyv062RgI/64+XphWfvVDfLH54SV2PXF2gwUZDei2bzIDUkJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jSX1zweN; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-490426d72f7so92199775e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2026 13:29:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1780341382; x=1780946182; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5YY0AKjuRmhN5jXS67K9oBDfInraYXWkuQQvtFh6y0A=;
-        b=myfmX6/dok18af1IkfDaIQnFS4k6cfp0IZpwppNQTbz2Z63pDdrnH9ZyaTJ7Yj5udk
-         hxaCijVoQBFOiVgfLKLhxKMWMtdAM1mKoT3ibWlEXa2/Z65EC74baiSCI/GB0ZlnCcwg
-         UPiGVTOlda3krVqKEUqHlDgrgipPhmNZUQ2Zo=
+        d=linaro.org; s=google; t=1780345755; x=1780950555; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=FuBG5thkiczhmSMU1mytIPUE9n1pNCrGrOz79kkF6lo=;
+        b=jSX1zweNlgE4yP4XzxPGGUA5cVUVYGI9HeZQWYmZEI1ehBOEE/lqpmPOJvKhx4ypeU
+         3mc79TQkbNIQ87JboSL343OlZ8nLCOt4yNR1lFKb0/77DN8j14oKjSjI2knTtxyMXe18
+         8rsXaDIg+g0pI04Hmy9C9Tr5hjX1705expWHbCYLKHzE8SrI0d2gHKR+sIATd7+wSJHi
+         4yA1h8EEOVirGi1KJbYQXy9Xn68fZ3eStRbeEt47UJBOp8AbSkp7mlTsa3pNFhvP88FD
+         X3xPyKYqT9/1+yQKbQLYxQbbSVI+CYMYiP+8QJMPEu2+utGG49pTVFx6dqgEpBUY8FNZ
+         GYTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780341382; x=1780946182;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5YY0AKjuRmhN5jXS67K9oBDfInraYXWkuQQvtFh6y0A=;
-        b=LUtkkNcxgJLd2fQK5fOr7G5VYmkSvm6JoNI4hheH9NPGv55plm7Z8/dEK72WAoAU8z
-         Q7IraC6ty2XQkxNYekaUantoz80+zgA2wkwaUEPNB15XjOZCvw/cDEI/vu33WnqoJJQs
-         64sA3tGlXjkV/vIcXRLt5Dbcd+icofZ9+vSr1NIhNVu1uRBAmbSFrZvmotCr8ktCtLXH
-         CYeYvkb89GvoM/CCvkgKrCogXLWRX7NiRKtRBIz0Y89oB5v1D5O0xuiJc3RF6swLx1qE
-         5N11x7WZcCF62vMfGdYaWzOy7cq7YCEKH01hWJ0/1MhFln8UFbq45YCAl02JZ6qviWxu
-         ohlA==
-X-Forwarded-Encrypted: i=1; AFNElJ+RY1U7aKkHOxCT7BlwfpbIZPmSDXdwPxoaqW3amZfOdsaOv31DYGxMsNgTYoSVDPnsXr1oIPjMLepgil+0@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywsls7aY2xou1pY7N2BlLiHYKNnMsv1Akmjv7V8QxZQ1XuuNhkX
-	SOWjucpFOl1thfsCS5aF8cU/MWxfgbtdhMvmQKORDQaMcrrnAjqwSsoEA3AvstV8Gg==
-X-Gm-Gg: Acq92OFx+vDgSOBh1JTNVVi65O+UndWjbacNL/PqFKFurXqMJkgYOowPyW878TNxXzL
-	4GqCUU3bMHrebqGndaaLdNjW5Cv8YjQaRYLCAfxJQPpWePrcomBdC9Jn/7H+hLm1ZZ60f65qZhh
-	EhAnb3N/kx5QCgJlqNKo/1/22QoTb3Uj9bwMenmAmysO43aDk5LgeIdL5n527Iyg/a65eL/cRKa
-	Euzo/3r44jSc3m2XwCIB08E6/otf7vZT2eKxK2TI9AXOMDuZHrarllutghdsi6n13dm+U6BXMPW
-	mNb2BYMwcMDUA8rzc2je1eG0R1r++niwdk8XpRlMLpAdk1VKO60/JvXmkSw9IOjneMXuvgngTTp
-	7pZt4/BVU5JQNxGqgVaTe+68iLa063HwMf5I5VxWUFzaOeOkPa9APLNZH/407QGAgKnX4ZAOOkK
-	gBlXKEsCrpnFD0H/4m0XxUUMn2NPWaKoZSnJxu+7EInZZG0K8KzxfF3yGi/ztoC3PXqbcuZd6Q
-X-Received: by 2002:a05:7300:ef83:b0:304:9b48:53da with SMTP id 5a478bee46e88-304fa6438afmr5420329eec.26.1780341381977;
-        Mon, 01 Jun 2026 12:16:21 -0700 (PDT)
-Received: from localhost ([2a00:79e0:2e7c:8:d53d:3040:2c80:7717])
-        by smtp.gmail.com with UTF8SMTPSA id 5a478bee46e88-304ee0dd8e1sm13033848eec.21.2026.06.01.12.16.20
+        d=1e100.net; s=20251104; t=1780345755; x=1780950555;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FuBG5thkiczhmSMU1mytIPUE9n1pNCrGrOz79kkF6lo=;
+        b=sz6r5w8ooIbfFZ5POcrCjvqQ2e68H5tiMqyNHa7Hagf9t2jWgC6DlS2OKTorg0NCrg
+         MYfInMJrGpcN0ZFhjCVbc3LUPcSXZJTxFyA4Z3y87c6K2WtocbYGTJAmMszcJrwx3dGx
+         JdD3XFkwUyLoDDdwJ4nlKQS45rb0JG0i5TXTD/kMz7NCffbsPyFTnf6AAMXQcCvhgDEw
+         X1i1NnW1j/uM5+1QCg3o0yP74RYvU1UmYxmgu0dGMLNGIRjtFjFYVXLP9m+QiR9s+hJA
+         I0nf0nHW30lMKXNx0aJWKdvpZMWzWq5EKu4KANy6HvzskwkhZM/IsDhkQvrHPSq1YFR2
+         i/Ew==
+X-Forwarded-Encrypted: i=1; AFNElJ9oQVXMfMm7e6EUx1sDJlNrO6OLGsPpMBzpxrzwk2BMVpMcDz2jSXdjEiHOniJEBlrbgRcvt4Me2ZRYNnq2@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPL5THfpvnbB3yM4Mwx+QbzSt9AwrBBM9uhMagvdJwwMrrsg5H
+	OriONzfgQc511jPaA3DcFwPZu+9JIPqwcC33lu4gk0q+IVoprm825NsQhq5jZiydj7k=
+X-Gm-Gg: Acq92OGKmUhX490PFFddiHPpeLKzAmtxwY8O/65MXO1+KRFvnOY3MYrhvNqCTDZI2Mi
+	Kz3T+ruuBwzPkmGwW/2c5qKkHVrz8mNpTEnbYai7lb7u8bcWaeQcZqPSuN4D0fDI0aRyY+RNaBE
+	leQs7wW+gLw+4adYf9NS8yyRqv3tPOzjFCmnjgLwYjHxuTX8kW5zJoPOmXb0780jD6/DNDk76X5
+	ex4R2l0cUrgrxesWxlrZ7BdFjQ9w3rEudrxj6HuaNdNgE3DIQnfr3dWnrj+T4cNpq4IxQQ5Mnq8
+	xL1Kuhv18m/0gXnZny571YfqF5Qa0/CB0760QJ/ZO2+2UOmRzw3T/1IC0/JL0ZDx0udnpdGCjDf
+	4LT1NfhbgpzXbFFeepeH9HrQ9gud9WAsa/Ywp1uVcsDyvD144OYQTDgCC4t+pTlHllHtOlXG2Tv
+	vECOmgpfDB7zpFN0koiHbLgvUaaCJtwgQbvWWJNHeou/6p9w==
+X-Received: by 2002:a05:600c:1c0a:b0:490:5074:651e with SMTP id 5b1f17b1804b1-490a2940746mr237991485e9.25.1780345755113;
+        Mon, 01 Jun 2026 13:29:15 -0700 (PDT)
+Received: from [192.168.0.101] ([109.76.233.76])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490b18cf3f9sm1530325e9.21.2026.06.01.13.29.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Jun 2026 12:16:21 -0700 (PDT)
-Date: Mon, 1 Jun 2026 12:16:18 -0700
-From: Brian Norris <briannorris@chromium.org>
-To: manivannan.sadhasivam@oss.qualcomm.com
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Keith Busch <kbusch@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>, Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-nvme@lists.infradead.org
-Subject: Re: [PATCH v2 0/4] PCI: Introduce pci_suspend_retains_context() API
-Message-ID: <ah3agpwmcDfn9plX@google.com>
-References: <20260519-l1ss-fix-v2-0-b2c3a4bdeb15@oss.qualcomm.com>
+        Mon, 01 Jun 2026 13:29:14 -0700 (PDT)
+Message-ID: <2768617d-e031-441b-be05-a6c8efa6615c@linaro.org>
+Date: Mon, 1 Jun 2026 21:29:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260519-l1ss-fix-v2-0-b2c3a4bdeb15@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: qcom: camss: csid: Consolidate
+ CSI2_RX_CFG0_PHY_SEL_BASE_IDX definition
+To: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>,
+ hangxiang.ma@oss.qualcomm.com, Loic Poulain <loic.poulain@oss.qualcomm.com>,
+ Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260601-camss-macro-v1-1-cabf1fb99241@oss.qualcomm.com>
+ <CAFEp6-3a_ZRvCBiATwT594KOMH3DOMoQA_=qj0WW7iiZHTWABw@mail.gmail.com>
+ <ac381274-f50c-4db4-9e4f-436d1d3cdbb6@oss.qualcomm.com>
+ <215786e4-e85c-4af0-9993-5c6331c87817@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <215786e4-e85c-4af0-9993-5c6331c87817@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110678-lists,linux-arm-msm=lfdr.de];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	URIBL_MULTI_FAIL(0.00)[sea.lore.kernel.org:server fail,qualcomm.com:server fail,chromium.org:server fail];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	TAGGED_FROM(0.00)[bounces-110679-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,linaro.org,vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[briannorris@chromium.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[chromium.org:+];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,chromium.org:email,chromium.org:dkim,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: CDEB46248E7
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email]
+X-Rspamd-Queue-Id: 8CA406251DD
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, May 19, 2026 at 01:41:19PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> Hi all,
+On 01/06/2026 19:22, Vijay Kumar Tumati wrote:
+> Hi Hangxiang,
 > 
-> This series introduces a new PCI API, pci_suspend_retains_context() to
-> let the client drivers know whether they can expect context retention across
-> suspend/resume or not and uses it in the NVMe PCI host driver.
+> On 6/1/2026 8:13 AM, hangxiang.ma@oss.qualcomm.com wrote:
+>> On 6/1/26 11:04 PM, Loic Poulain <loic.poulain@oss.qualcomm.com> wrote:
+>>> On Mon, Jun 1, 2026 at 4:44 PM Hangxiang Ma
+>>> <hangxiang.ma@oss.qualcomm.com> wrote:
+>>> >
+>>> > Move the duplicate CSI2_RX_CFG0_PHY_SEL_BASE_IDX definition from
+>>> > camss-csid-680.c and camss-csid-gen3.c into the shared camss-csid.h
+>>> > header. This eliminates redundancy and makes the constant available
+>>> > to future CSID implementations.
+>>>
+>>> Taking that direction, I don’t think this is the only instance of
+>>> redundancy, so why single out this one in particular? Should we
+>>> consider one-line cleanups across all similar cases? Also, other CSID
+>>> drivers follow the same pattern but use different identifiers for that
+>>> define (e.g. csid-340).
+>>>
+>>> Also, introducing such low-level, register-aligned naming
+>>> (CSI2_RX_CFG0_PHY...)  in what is supposed to be a generic
+>>> CSID header doesn’t seem appropriate.
+>>>
+>>> Regards,
+>>> Loic
+>>>
+>>>
+>>>
+>>> >
+>>> > Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+>>> > ---
+>>> > Move the duplicate CSI2_RX_CFG0_PHY_SEL_BASE_IDX definition from
+>>> > camss-csid-680.c and camss-csid-gen3.c into the shared camss-csid.h
+>>> > header. This eliminates redundancy and makes the constant available
+>>> > to future CSID implementations.
+>>> > ---
+>>> >   drivers/media/platform/qcom/camss/camss-csid-680.c  | 1 -
+>>> >   drivers/media/platform/qcom/camss/camss-csid-gen3.c | 1 -
+>>> >   drivers/media/platform/qcom/camss/camss-csid.h      | 2 ++
+>>> >   3 files changed, 2 insertions(+), 2 deletions(-)
+>>> >
+>>> > diff --git a/drivers/media/platform/qcom/camss/camss-csid-680.c b/ 
+>>> drivers/media/platform/qcom/camss/camss-csid-680.c
+>>> > index 345a67c8fb94..bf7164085ddb 100644
+>>> > --- a/drivers/media/platform/qcom/camss/camss-csid-680.c
+>>> > +++ b/drivers/media/platform/qcom/camss/camss-csid-680.c
+>>> > @@ -101,7 +101,6 @@
+>>> >   #define CSI2_RX_CFG0_DL2_INPUT_SEL                      12
+>>> >   #define CSI2_RX_CFG0_DL3_INPUT_SEL                      16
+>>> >   #define CSI2_RX_CFG0_PHY_NUM_SEL                        20
+>>> > -#define CSI2_RX_CFG0_PHY_SEL_BASE_IDX                   1
+>>> >   #define CSI2_RX_CFG0_PHY_TYPE_SEL                       24
+>>> >   #define CSI2_RX_CFG0_TPG_MUX_EN                         BIT(27)
+>>> >   #define CSI2_RX_CFG0_TPG_MUX_SEL                        
+>>> GENMASK(29, 28)
+>>> > diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen3.c b/ 
+>>> drivers/media/platform/qcom/camss/camss-csid-gen3.c
+>>> > index 0fdbf75fb27d..da9458cd178b 100644
+>>> > --- a/drivers/media/platform/qcom/camss/camss-csid-gen3.c
+>>> > +++ b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
+>>> > @@ -105,7 +105,6 @@
+>>> >   #define CSID_RDI_IRQ_SUBSAMPLE_PERIOD(rdi)     
+>>> (csid_is_lite(csid) && IS_CSID_690(csid) ?\
+>>> >                                                          (0x34C + 
+>>> 0x100 * (rdi)) :\
+>>> >                                                          (0x54C + 
+>>> 0x100 * (rdi)))
+>>> > -#define CSI2_RX_CFG0_PHY_SEL_BASE_IDX  1
+>>> >
+>>> >   static void __csid_configure_rx(struct csid_device *csid,
+>>> >                                  struct csid_phy_config *phy, int vc)
+>>> > diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/ 
+>>> drivers/media/platform/qcom/camss/camss-csid.h
+>>> > index 5296b10f6bac..059ac94ad1be 100644
+>>> > --- a/drivers/media/platform/qcom/camss/camss-csid.h
+>>> > +++ b/drivers/media/platform/qcom/camss/camss-csid.h
+>>> > @@ -27,6 +27,8 @@
+>>> >   /* CSID hardware can demultiplex up to 4 outputs */
+>>> >   #define MSM_CSID_MAX_SRC_STREAMS       4
+>>> >
+>>> > +/* CSIPHY to hardware PHY selector mapping */
+>>> > +#define CSI2_RX_CFG0_PHY_SEL_BASE_IDX 1
+>>> >   #define CSID_RESET_TIMEOUT_MS 500
+>>> >
+>>> >   enum csid_testgen_mode {
+>>> >
+>>> > ---
+>>> > base-commit: 697a0e31ee66f5ddb929c09895139779fff33f20
+>>> > change-id: 20260601-camss-macro-3d40c4d4e90d
+>>> >
+>>> > Best regards,
+>>> > --
+>>> > Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+>>> >
+>>>
+>> Thanks Loic, Bryan pointed this out in last review cycle and suggested 
+>> to split it as a standalone series. This idea comes from KNP series as 
+>> I was once suggested to move this macro into one common header to 
+>> remove redundancy. I think your are correct after fully consideration. 
+>> I will make changes only for KNP and put it in driver.
+>>
+>> Best regards,
+>> Hangxiang
+>>
+> So this patch is not necessary any more, is it? If there is anything 
+> specifically to be done to withdraw this, just for it to be clear to 
+> Bryan, can you please?
 > 
-> This new API is targeted to abstract the PCI power management details away from
-> the client drivers. This is needed because client drivers like NVMe make use of
-> APIs such as pm_suspend_via_firmware() and decide to keep the device in low
-> power mode if this API returns 'false'. But some platforms may have other
-> limitations like in the case of Qcom, where if the RC driver removes the PCIe RC
-> resource vote to allow the SoC to enter low power mode, it cannot reliably exit
-> the L1ss state when the endpoint asserts CLKREQ#. So in this case also, the
-> client drivers cannot keep the device in low power state during suspend and
-> expect context retention.
+> Thanks,
+> Vijay.
 > 
-> And these limitations may just keep adding in the future. Without a unified
-> API, the client drivers have to implement their own logic which may cause code
-> duplication and may also lead to drivers missing some of the platform
-> limitations.
-> 
-> Once this series gets merged, we can extend this API usage to other client
-> drivers as well.
-> 
-> Testing
-> =======
-> 
-> This series is tested on Qualcomm Hamoa based Lenovo Thinkpad T14s latop with
-> NVMe drive.
-> 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-FWIW, this was already applied to pci/next for v7.2, but I'll add that
-it seems this resolves what appeared as a regression in v7.0 for me when
-using a Qualcomm SC7280-based laptop
-(arch/arm64/boot/dts/qcom/sc7280-herobrine-crd.dts):
+I don't like endlessly redefining the same things over and over again. 
+Its wasteful and error prone.
 
-report: https://lore.kernel.org/linux-pci/ahC8Pyuatu_AvnZp@google.com/
-test notes: https://lore.kernel.org/linux-pci/ah3XLfI7E39B1UPh@google.com/
+Burying it in camss-csid yes I agree is not appropriate - however for 
+specific classes of silicon - it is entirely appropriate.
 
-In short, my NVMe failed to resume from suspend-to-mem:
+That surely is the entire point of naming things gen2, gen3, gen4 etc 
+instead of silicon-version-x
 
-[   58.384442] nvme 0001:01:00.0: Unable to change power state from unknown to D0, device inaccessible
-...
-[   68.875606] nvme 0001:01:00.0: PM: **** DPM device timeout ****
+Hence camss-csid-genX.h for sharing generation specific things.
 
-Notably, this regression bisected to commit eaf290c404f7 ("PCI: dwc:
-Enable MSI affinity support"), though I'm still not quite sure why.
-
-Anyway, for $subject series, I'll provide my late tags:
-
-Closes: https://lore.kernel.org/linux-pci/ahC8Pyuatu_AvnZp@google.com/
-Tested-by: Brian Norris <briannorris@chromium.org>
+---
+bod
 
