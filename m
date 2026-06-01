@@ -1,284 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-110508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EGhLCvooHWq6VwkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 08:38:50 +0200
+	id 0IYjCKgpHWq6VwkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 08:41:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B4D861A449
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 08:38:49 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEA8561A49C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 08:41:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C2623301C979
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 06:38:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A2257304D766
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 06:39:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA67A37754D;
-	Mon,  1 Jun 2026 06:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC160377034;
+	Mon,  1 Jun 2026 06:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fo1bvltx";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LzPBv5rr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="deU2ejyR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E7D36DA08
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2026 06:38:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18BD33F8B1;
+	Mon,  1 Jun 2026 06:39:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780295896; cv=none; b=plwksZLD3BxmkFghB9xvT91lbyqZ409nw7dNA7v76RWlHQlzjOd3Nk0vg9GBJZ2Nq8ScZ3E9gUSdde3AHC6TH7asGXCPFzozXOG3uzlaT7ZOnyct2u+/y3v8Twdl4UHr+mEMy3AsEhoAS0dm69eNgyMYoNz5JLR4+G/teQ/Ydjk=
+	t=1780295956; cv=none; b=KbQPeWVnGW8LZl5xUNB3Ows8hF/msKSZ3vz5HIHNzVBkmQd7mkUYk3eePnAwE9XZRFLRpUg+1emhzUVzNjbD2dfRVTeU9ZOZ1eJqdlKzU+bRM7YX84U15W226AJNK74by3WJWs3GbR6+Z9RkR2FxkeSPhkAXD60msqYmj9t1izQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780295896; c=relaxed/simple;
-	bh=MKOSKfy5HVKspOCH3nNHGWVz9K6OmlhyitqwNsphRo8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hXxTeDkEvR0iPok5dA7Im+Dc+wyIAWHsxNkRRRnyGkHbVJ7UD3cknwEk/xOewDUFJmMg1bTEpSJWygmXkN8CuRQ2+e70fzaHsEg3df6FDroN6phcAyaSVCx5y5b1zVLWcwWNTN62romYV5g/tGz0LEJwy1Sh/6RtI079xOO/B0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fo1bvltx; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LzPBv5rr; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64VNliE1045294
-	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Jun 2026 06:38:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Q+ZAvj5oFG/y4ZUnZyUxx7ksRw8f9xhtX9EZCxAOa6A=; b=fo1bvltxnWVYxHTK
-	pcSArR0Vgty+pXAO/s1H/DeFLPs9z7JYv6IzJtoQbAi0hvFPkYOSVC65f2FhnzmY
-	oXYhvfd1m8l9t50Q7iAmgmEQXhcCNup1YI/ZdA9TYvSJNVmRoldPcWxe28UL6L5W
-	yz+8P7VkdANxeMHuuF4H4WXQWZd/QaFwW4ycPv9yQaxMqfngG5jT1wvuYaXqmrHl
-	4RhAFsWikQ0a2xdDSxUvUtYzbQb3QUyamtmPe9Y4JEL8ggwmVuCvDpG0zd0wA4cu
-	0bbFX8oVAzeyy7wh85dsStGDhEDnukOyaFuwE3iQRKefQYTLR3nrwpFXNbzw6XAc
-	yViOdQ==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4efrnce3ur-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2026 06:38:14 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-8422ca754d8so1250807b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 31 May 2026 23:38:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780295894; x=1780900694; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q+ZAvj5oFG/y4ZUnZyUxx7ksRw8f9xhtX9EZCxAOa6A=;
-        b=LzPBv5rrrF8VguoSPuuIznLlHEm4372ToruMeXQmyOUvX35ZnpsR9LcE8tttfttu97
-         tohD24vpkYiDmTMVtiKp2IM23kbLJQWJcqBDUQFVoxwm+c0gKjnS6PyEGR9rMGuGAYC7
-         aqK8ZWf+3IrrObjyd1wJIJuLTtoPRdkI6cuNP7g5nmNhKi8aZKsXZ0Q8n6VKX/hYrDtl
-         hppi4FAkIUr3WWxyllIMmQ9C2rTVwjmhuMM9+mLLnSGWb9KYV6Ulm5oiyg4xnsYBGbR2
-         EiGn4kUR1n76AsvWdZ0ODIBHbl2LP2oUbBqi0XtOCsXYPWTm6vZSBHZfdrKEBbtQ7f04
-         qQNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780295894; x=1780900694;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Q+ZAvj5oFG/y4ZUnZyUxx7ksRw8f9xhtX9EZCxAOa6A=;
-        b=LXJi8IOzZ3vGmA/JO4Oqs0lj6VcfHVfmWltuN5pSziCYRT5VWW53M2p+DkQSYBR0qR
-         e+0TIzUe24BJYUy3PCxFRDk315eew/BYrWHhRUXdYdi9GDyfrY629xnQNleYJ4h5onib
-         FOnAH/WH6p/e7XiBQgsKLM8hoFf3k1fZPztJn6N9dsiDzXIVlMvLh+ynierYCVJKLLfL
-         h5XStoNYu1kCV6sp4KcHZ1fjrmcY4CzmdkQozRyf1cBvUCJO+ESt7dxN9ouy/aWi7BLR
-         qbrhnH9RVBhFSMyAw8Q0vHaSFH+pKOlMlR3J9tIYzFr9Ysxp4ABoV7KyrcbABe1Uw5O3
-         ndZA==
-X-Gm-Message-State: AOJu0YwS7fmiZoaC72pLHChckIdupdvuaZAACCdafkfGSpNzReVApg2A
-	E2KXwfTs5U3titG7u2Bq6L8iWjIjoNspKHTKKa8QBS/XE0SORgA+0Kz/lsvXzhg/lm64oKZsDF/
-	xPPLuovtd88xBns0X4/lGuvNrWx79TpDUbSVZ9vIvc/+pdnWtcsu7e+K2R02wdnzkwyzK
-X-Gm-Gg: Acq92OEz/AXAbjg4kRaQyPTJYmnkxDW+f4NprzRHvMAWCj2/Yl9pCZwDYBty1JebtTa
-	qZidf23U0/ATA3N6Mtv7+NaP2kG8dfBtO61IffwidvlBdMA6XRjIBnqB52CLxL5hblC6JmsOcOI
-	Pwdo+js4THjmlz4+J3vQrcA7NXKuXGQMI+95v64GeW1o8H0/FrLY4a698MtxaTCpq+KoxzfK/yZ
-	F7dhYJyqTG5zYEjKtL2OjlrO1MKB78Tgtx1EjE6Z28B6sijQ6Alb1CUb2uIXy9BFsEMiuK/bfub
-	Cl+el2G5sqMmVKIuw2wOkqF4r4xSnf/yS7XB1F9W4Dw3541R1I2G2R33uvirRCW386LfgY+e5Jb
-	F0o1SHd3/sBfSi6KcdWZgnNGlzRRizspazBFdoQzU4epLZASUZ2kNUPRyNhejroXtIw==
-X-Received: by 2002:a05:6a00:2186:b0:82f:1b1b:e166 with SMTP id d2e1a72fcca58-84225490c67mr9382048b3a.33.1780295894045;
-        Sun, 31 May 2026 23:38:14 -0700 (PDT)
-X-Received: by 2002:a05:6a00:2186:b0:82f:1b1b:e166 with SMTP id d2e1a72fcca58-84225490c67mr9382027b3a.33.1780295893597;
-        Sun, 31 May 2026 23:38:13 -0700 (PDT)
-Received: from hu-priyjain-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84214c9252bsm9321358b3a.39.2026.05.31.23.38.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 May 2026 23:38:13 -0700 (PDT)
-From: Priyansh Jain <priyansh.jain@oss.qualcomm.com>
-Date: Mon, 01 Jun 2026 12:07:57 +0530
-Subject: [PATCH v2 2/2] thermal: qcom: tsens: Disable wakeup interrupt
- setup on automotive targets
+	s=arc-20240116; t=1780295956; c=relaxed/simple;
+	bh=vj0CG7FLtY3Gdw8dYwgFK/i+ZFxFt/ONhuN1JqJsDMM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e2ppWQ5oJyNbsUIrgHMel8dY6wT+pFztg0dRtJioqyyofAyuN1lhYH2btcAZ+LgUbqCL/SFnYKG9kI3Sxi6S2KPClkfIV+XaVr2ORucZM7EOQYlkteJ9nQq0TeKkOE1Wc0vB16Il68vtmGn64HZ1hcGywebh/voCOKeDEuSrJkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=deU2ejyR; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03E81F00893;
+	Mon,  1 Jun 2026 06:39:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780295954;
+	bh=rKk6j/n9sj1IniX/7VKjNeDlTH/D2W3IN/BVvbihauI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=deU2ejyRoOMJVQywPOlLu1PqH70E+zWfsku4xW3ejYZB8yKEwCBukyd+rzzgKkdmf
+	 vGfMeLir+q2+YLlqYJ/AzObbKzdRw866F6HyGjCNfk4XHBFW0DBz7SfQREAKIrqTih
+	 eBi6cugoUG+CYfTUshTd0CccN+PQjgSzwSv7queVBc6p52Wolbj/6fOndd0MpYLxG2
+	 cWd4oZ+vbxMMcHUxBTZyTjrMsQm3x2s3VngOun20ayrnEQkV5sF8YIYLuI3Ny72DXa
+	 BZJwi4+K5b9H+0C3rpQ6FfqPHiUwR1FUO2dIJha1fHRhWnIHL6s3QX/hRpXpWMsXxA
+	 Afp4/cf9Y5iIg==
+Message-ID: <5f3ba603-a6ad-4cf2-9a54-aebc10273c59@kernel.org>
+Date: Mon, 1 Jun 2026 15:39:06 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260601-tsens_interrupt_wake_control-v2-2-ce9570946abd@oss.qualcomm.com>
-References: <20260601-tsens_interrupt_wake_control-v2-0-ce9570946abd@oss.qualcomm.com>
-In-Reply-To: <20260601-tsens_interrupt_wake_control-v2-0-ce9570946abd@oss.qualcomm.com>
-To: Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Priyansh Jain <priyansh.jain@oss.qualcomm.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1780295882; l=3513;
- i=priyansh.jain@oss.qualcomm.com; s=20260515; h=from:subject:message-id;
- bh=MKOSKfy5HVKspOCH3nNHGWVz9K6OmlhyitqwNsphRo8=;
- b=t22Pgs2NN0JJK/dfiohdEJGJBmzt/RmIaKXEW/bqpEyFcV/SGVIQFmimoAg3k/5Bnyi/zrPWe
- mTylDvkmCGdBum7wMBxPAAy+IHQVCIXl0YyyblwNFXa7EOFbFR/ayTh
-X-Developer-Key: i=priyansh.jain@oss.qualcomm.com; a=ed25519;
- pk=xe57jjgIoTuNHN/Dp00kZl1mAJjmROaH7JV9sRxEoEQ=
-X-Proofpoint-GUID: ApUmmaO_dAlPWaBoqqPD0XTzlcNquPfE
-X-Proofpoint-ORIG-GUID: ApUmmaO_dAlPWaBoqqPD0XTzlcNquPfE
-X-Authority-Analysis: v=2.4 cv=FcIHAp+6 c=1 sm=1 tr=0 ts=6a1d28d6 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=PJyjg1ohnCiW5JLUlNMA:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDA2NCBTYWx0ZWRfX549G1Aqgyu73
- 0VHAqCBt1LRBhvgMCxtUxLTAbN9aX3cuUBFCnx/YTXzLMoF4VIjiQWhwDMjnjV28NOBWXTUZxCS
- AFbRLosHH0mUI+NerGqJG6E2gD2feO3z6Sui+sWlNkV8Vr0SyKvWNYxDKUai6Auvcg4m53Zpyue
- J1QB0UqH+55F8pLPHg88yQq6PIXfwtIi+loBf2Gupsd9WKTzPMFTro+sZa/+WsKjAOmZH+kyIH7
- xUK9sd/KCLjnFMQ2efqLiPf3mUnqYFh0xT6jVQqYxoTcj0zVr4nhSPBJAzIed4kiVjxArm+1EqM
- 1OSSHrUHUggGgDP3Cotn5sqrFq9pqiiZ2/GA50JfaRTBlihmK3LBKKHYgnhGTXKrs98rPCM7BJq
- 9ZNkwPUayQb6FhPSEmk4sv3NxWnpDp/Q/eSGd5oymjHCABWVy5n7MpsQ6uuSpFcnierikwXAK07
- MjIkqFsrSbmrRMWZf/g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-01_02,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 clxscore=1015 impostorscore=0 adultscore=0
- spamscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010064
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mm/slab: improve kmem_cache_alloc_bulk
+To: Christoph Hellwig <hch@lst.de>, "Vlastimil Babka (SUSE)"
+ <vbabka@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, Mark Brown
+ <broonie@kernel.org>, Hao Li <hao.li@linux.dev>,
+ Christoph Lameter <cl@gentwo.org>, David Rientjes <rientjes@google.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Jesper Dangaard Brouer <hawk@kernel.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, io-uring@vger.kernel.org,
+ kasan-dev@googlegroups.com, bpf@vger.kernel.org, netdev@vger.kernel.org,
+ Alexander Lobakin <aleksander.lobakin@intel.com>,
+ Boris Brezillon <boris.brezillon@collabora.com>
+References: <20260528093437.2519248-1-hch@lst.de>
+ <20260528093437.2519248-2-hch@lst.de>
+ <5f7f90d8-cb32-4ffb-8f1c-0722aafbe869@kernel.org>
+ <20260529135045.GA10647@lst.de>
+Content-Language: en-US
+From: Harry Yoo <harry@kernel.org>
+In-Reply-To: <20260529135045.GA10647@lst.de>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------HMU1xMsen67VgPzLuGJEEdMK"
+X-Spamd-Result: default: False [-4.26 / 15.00];
+	SIGNED_PGP(-2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	MIME_GOOD(-0.20)[multipart/signed,multipart/mixed,text/plain];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,intel.com,arm.com];
-	TAGGED_FROM(0.00)[bounces-110508-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[priyansh.jain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-110509-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+,1:+,2:+,3:~];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[harry@kernel.org,linux-arm-msm@vger.kernel.org];
+	HAS_ATTACHMENT(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 9B4D861A449
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,sashiko.dev:url]
+X-Rspamd-Queue-Id: AEA8561A49C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add a no_irq_wake flag to struct tsens_plat_data to allow platforms
-to control whether TSENS interrupts should be configured as wakeup
-sources.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------HMU1xMsen67VgPzLuGJEEdMK
+Content-Type: multipart/mixed; boundary="------------ub6P4aBhniaWwf9dwX4fSUIh";
+ protected-headers="v1"
+From: Harry Yoo <harry@kernel.org>
+To: Christoph Hellwig <hch@lst.de>, "Vlastimil Babka (SUSE)"
+ <vbabka@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>, Mark Brown
+ <broonie@kernel.org>, Hao Li <hao.li@linux.dev>,
+ Christoph Lameter <cl@gentwo.org>, David Rientjes <rientjes@google.com>,
+ Roman Gushchin <roman.gushchin@linux.dev>,
+ Jesper Dangaard Brouer <hawk@kernel.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, io-uring@vger.kernel.org,
+ kasan-dev@googlegroups.com, bpf@vger.kernel.org, netdev@vger.kernel.org,
+ Alexander Lobakin <aleksander.lobakin@intel.com>,
+ Boris Brezillon <boris.brezillon@collabora.com>
+Message-ID: <5f3ba603-a6ad-4cf2-9a54-aebc10273c59@kernel.org>
+Subject: Re: [PATCH] mm/slab: improve kmem_cache_alloc_bulk
+References: <20260528093437.2519248-1-hch@lst.de>
+ <20260528093437.2519248-2-hch@lst.de>
+ <5f7f90d8-cb32-4ffb-8f1c-0722aafbe869@kernel.org>
+ <20260529135045.GA10647@lst.de>
+In-Reply-To: <20260529135045.GA10647@lst.de>
 
-Create a new data_automotive structure and add compatible strings for
-automotive TSENS variants (SA8775P, SA8255P) with wakeup interrupts
-disabled.
+--------------ub6P4aBhniaWwf9dwX4fSUIh
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Automotive platforms can enter a low-power parking suspend state where the
-application processors and thermal mitigation paths are not active. In this
-state, waking the system due to TSENS threshold interrupts does not enable
-useful thermal action, but it does repeatedly break suspend residency and
-increase battery drain.
 
-Allow these automotive variants to keep TSENS monitoring enabled during
-normal runtime while opting out of TSENS wakeup interrupts during suspend,
-so the system can remain in low power until ignition/resume.
 
-Signed-off-by: Priyansh Jain <priyansh.jain@oss.qualcomm.com>
----
- drivers/thermal/qcom/tsens-v2.c | 8 ++++++++
- drivers/thermal/qcom/tsens.c    | 8 +++++++-
- drivers/thermal/qcom/tsens.h    | 5 +++++
- 3 files changed, 20 insertions(+), 1 deletion(-)
+On 5/29/26 10:50 PM, Christoph Hellwig wrote:
+> On Fri, May 29, 2026 at 01:54:48PM +0200, Vlastimil Babka (SUSE) wrote:=
 
-diff --git a/drivers/thermal/qcom/tsens-v2.c b/drivers/thermal/qcom/tsens-v2.c
-index e06f8e5802e8..2ee117aa91ba 100644
---- a/drivers/thermal/qcom/tsens-v2.c
-+++ b/drivers/thermal/qcom/tsens-v2.c
-@@ -306,3 +306,11 @@ struct tsens_plat_data data_8996 = {
- 	.feat		= &tsens_v2_feat,
- 	.fields	= tsens_v2_regfields,
- };
-+
-+/* Do not enable wakeup capable interrupts for automotive platforms */
-+struct tsens_plat_data data_automotive_v2 = {
-+	.ops		= &ops_generic_v2,
-+	.feat		= &tsens_v2_feat,
-+	.fields		= tsens_v2_regfields,
-+	.no_irq_wake = true,
-+};
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 5210985b3767..6237e000640b 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -1169,6 +1169,12 @@ static const struct of_device_id tsens_table[] = {
- 	}, {
- 		.compatible = "qcom,tsens-v2",
- 		.data = &data_tsens_v2,
-+	}, {
-+		.compatible = "qcom,sa8775p-tsens",
-+		.data = &data_automotive_v2,
-+	}, {
-+		.compatible = "qcom,sa8255p-tsens",
-+		.data = &data_automotive_v2,
- 	},
- 	{}
- };
-@@ -1381,7 +1387,7 @@ static int tsens_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, priv);
- 
--	device_init_wakeup(dev, true);
-+	device_init_wakeup(dev, !data->no_irq_wake);
- 
- 	if (!priv->ops || !priv->ops->init || !priv->ops->get_temp)
- 		return -EINVAL;
-diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-index 5e2da4e0d51b..d20d514bf8ce 100644
---- a/drivers/thermal/qcom/tsens.h
-+++ b/drivers/thermal/qcom/tsens.h
-@@ -531,6 +531,7 @@ struct tsens_features {
-  * @hw_ids: Subset of sensors ids supported by platform, if not the first n
-  * @feat: features of the IP
-  * @fields: bitfield locations
-+ * @no_irq_wake: if set, TSENS interrupts will not be configured as wakeup sources
-  */
- struct tsens_plat_data {
- 	const u32		num_sensors;
-@@ -538,6 +539,7 @@ struct tsens_plat_data {
- 	unsigned int		*hw_ids;
- 	struct tsens_features	*feat;
- 	const struct reg_field		*fields;
-+	bool		no_irq_wake;
- };
- 
- /**
-@@ -675,4 +677,7 @@ extern const struct tsens_plat_data data_ipq5018;
- extern struct tsens_plat_data data_8996, data_ipq8074, data_tsens_v2;
- extern const struct tsens_plat_data data_ipq5332, data_ipq5424;
- 
-+/* TSENS automotive targets */
-+extern struct tsens_plat_data data_automotive_v2;
-+
- #endif /* __QCOM_TSENS_H__ */
+>> Thanks, I applied it to slab/for-7.2/alloc_bulk and merged to slab/for=
+-next
+>> (it's still yankable in case of issues)
+>>
+>> Did some fixups below (the comment was stale prior to the patch; resto=
+red
+>> unlikely(), simplified one line).
+>>
+>> A test merge into yesterday's -next found a conflict in drivers/gpu/dr=
+m/
+>> panthor/panthor_mmu.c. Commit 1013bf53650e ("drm/panthor: Split
+>> panthor_vm_prepare_map_op_ctx() to prepare for reclaim") moved the cha=
+nged
+>> codeto a new function panthor_vm_op_ctx_prealloc_pts().
+>> But it's solvable so no need for a complicated coordination I think.
+>=20
+> Ok, thanks.  The two Sashiko complains also look like they had merrits,=
 
--- 
-2.43.0
+> but I won't get to looking into them until Monday.
+The review:
+https://sashiko.dev/#/patchset/20260528093437.2519248-2-hch%40lst.de
 
+So there is a user who might call kmem_cache_alloc_bulk() with size =3D 0=
+
+(although the comment says @size must be larger than 0!) and
+kmem_cache_alloc_bulk() returning 0 was considered a success in that case=
+=2E
+
+Either fixing kmem_cache_alloc_bulk() (and the comment) or fixing the
+user sounds fine to me.
+
+And yeah freeing an object via kfree() allocated via kvmalloc is a bug...=
+
+
+--=20
+Cheers,
+Harry / Hyeonggon
+
+
+--------------ub6P4aBhniaWwf9dwX4fSUIh--
+
+--------------HMU1xMsen67VgPzLuGJEEdMK
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQQQ1ub6gR5ogjaKRmOGXBN6rc5S1gUCah0pCgAKCRCGXBN6rc5S
+1rmyAP4xYSWajEqm+MA0a6gB0YMw8PYGMERv/Liiv8qq9FfVwQEA0LaAVOUS0vOJ
+pFwKYpvxOLNGK+0ssT0N7hdbranbAAA=
+=ebwI
+-----END PGP SIGNATURE-----
+
+--------------HMU1xMsen67VgPzLuGJEEdMK--
 
