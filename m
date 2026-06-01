@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-110542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UHjHFQJKHWpcYgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 10:59:46 +0200
+	id aAOQCfBJHWphYgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 10:59:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4A0361BFE5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 10:59:45 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67AD661BFAB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 10:59:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 36CC33078AD3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 08:54:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 29EB030707C5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 08:53:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C62938F227;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A18838E8DB;
 	Mon,  1 Jun 2026 08:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qoIibdtT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kGu0BOGZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E7F387364;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD385384CDC;
 	Mon,  1 Jun 2026 08:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780304029; cv=none; b=TpW7nRN9QaumsiWizD0zma91mzcLeHgMv5KZcGDMZ0m+3L0OsaYr/6mB9aNbLZmEP1x6QjIt8nvtRFpcuu/IcmDcj6Yy8eTHul2r/fQwcgFkFaBTbvwVU+vdVawJv/waSDXWQloqAemaRP6nn09vSbQFFMsEvhLznBL/l+UGX64=
+	t=1780304029; cv=none; b=s8OFTPO1t73D78YbDuMbQFLiyHt/N5M2f4K07SqHvjZq9mWoAeyjPjV2E+3/wfPuEfs4Tmp9f60UAL+uRlC1xAGhYW+jSruf48fgPP2FhhefTjaDf1aUO0yw/cdCe5GnoOI2QMVac9+VoA2Z12S19BlEMcZHnHVmuTPH8Gl8hqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780304029; c=relaxed/simple;
-	bh=MkpPKPVy+9GLtYKxadNdxdYllxLqMFGKUqVOpBhYxyY=;
+	bh=wjdwTqZ5D5ZMAy32TwmJ5CTrlMm4QYSLdb5eI9NYIq0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hIJ5vmq9VqGTiarK/Dm0JGtwuBonqntbqOG0UJL1dW9PzsQbFcbdNneOA3XlPKyG7QTCyOTs6Wmi7uO0/Gl48JSONTyOU/MzDYcmUpFPUmQ3MrSHLMXhGkcm+6KS8za4zsdFfZ/CiI0K/N2FDwCDViLU99R+CAKyWp8FpR3r0Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qoIibdtT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 81797C2BD04;
+	 In-Reply-To:To:Cc; b=o3ykyyrH0PEkJp5b/M0HOW7FrNkfdaEjO0fHxOZ1VLy5b+z4Er0pJPBUMsKwS69vcvbh89v6S8w6fVGGEkb0a+T8WR0An4s9LLsUtqPq2Li6R6y8GPISgpTWUsRg4SnVMjO4qvTbc2G/heXqgK9V3PZtsx1Ysmc1qrn1WGKB1V8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kGu0BOGZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8F83CC2BCFB;
 	Mon,  1 Jun 2026 08:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1780304029;
-	bh=MkpPKPVy+9GLtYKxadNdxdYllxLqMFGKUqVOpBhYxyY=;
+	bh=wjdwTqZ5D5ZMAy32TwmJ5CTrlMm4QYSLdb5eI9NYIq0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=qoIibdtTcDWMiYkJqkgkbsiGQ6Zu707pdQLmaZyG0qPdQgAyz1VNbk30Is4rdwabY
-	 FCMn9rELyQZyRlGNLNuHlNGnYGyNd1WYAOXrCYnYtD/dO6QyxGztpA8PTPEK1SpoyH
-	 vPoze81xTSkgxWK7wFNAINIdJUCLxIiFEsOvsL1WDgAE/53e76HJ4+JcLBUgyu7Ggt
-	 NjOZTjvt/MWPDKHu6MZTO79oLmRLXIhEFzbdcVjN4G83NCsrbf9dxdaxY8kBQ9BOTX
-	 72cNMe4bD3R+9yqYcEr68GBNNFUPQ+BOs4Nknz2uAzGDEMDmQHqIuPUFDlLoQINIye
-	 B6B3Vu8Wh7igQ==
+	b=kGu0BOGZ8BoSfUc2zB1DPdsRn3Pm5Jzoq+wIaRgNfSjAkfDxN4tVl1mhboVFBH0jW
+	 hO1pwULLQhCWSSDeqYe7+ZSbL4WnYPNBgsoK2zSVTTNLnVHGO9WiONymEFFcd4h5+f
+	 WeMmR465VibezSG8hOIYrGAGAiNsr9b7tStaTiRkxQxfrIGO2Avz/FBo3C8HjlszOv
+	 G93eRf8yvimsYJgRyzx+HtRUeu1bx9ZM4xbVW77mFJDFnWe57hj58h2CuU4M/DTBr7
+	 QdGGo81qcZodhrHpJYzHzBLMbTDeJDr9W9hYarfJxw5pczghMcsi8MUIR0r0GFFC8F
+	 PfWrjiQLZZhsA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AE0ACD6E61;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88D81CD6E62;
 	Mon,  1 Jun 2026 08:53:49 +0000 (UTC)
 From: Antony Kurniawan Soemardi via B4 Relay <devnull+linux.smankusors.com@kernel.org>
-Date: Mon, 01 Jun 2026 15:51:20 +0700
-Subject: [PATCH v3 07/10] ARM: dts: qcom: msm8960: add SMEM & hwlock
+Date: Mon, 01 Jun 2026 15:51:21 +0700
+Subject: [PATCH v3 08/10] ARM: dts: qcom: msm8960: add SMSM & SPS
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +58,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260601-msm8960-wifi-v3-7-fec6ac8dba02@smankusors.com>
+Message-Id: <20260601-msm8960-wifi-v3-8-fec6ac8dba02@smankusors.com>
 References: <20260601-msm8960-wifi-v3-0-fec6ac8dba02@smankusors.com>
 In-Reply-To: <20260601-msm8960-wifi-v3-0-fec6ac8dba02@smankusors.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -72,14 +72,14 @@ Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
  Rudraksha Gupta <guptarud@gmail.com>, 
  Antony Kurniawan Soemardi <linux@smankusors.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1780304027; l=1523;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1780304027; l=1706;
  i=linux@smankusors.com; s=20250609; h=from:subject:message-id;
- bh=Oht/cFl6U3V6NzWGOX7GKn9DSQ6ZGNZg8IzNcNz1o6A=;
- b=nnIamnuAmt9aV0KPVHQQN/J2+DEjC3baj5RwCdg4w7RzI5GxIDICimKA/JhNoiNnlqz6aU0Z1
- epXMqTq55u7CFAIQYF8UsB7JXB2apBAXVlmjATS36wp6PbjBbgzHn2V
+ bh=29iZiaPwFJy0KE3pkLEKwM4IFfOE4DRw/PBlrOR2g54=;
+ b=fnXx5cV3h8+iTvA96iWudVfyXCnQS2jBKzvsX+hBfjOEbQy2W5PaLquj3sQe982atiJnMkBFW
+ C8oMRr+Nb9LB0Zb9LiwCi2GFv2BSFFYBYFWYyIXtXASJmBEU0yzWrRX
 X-Developer-Key: i=linux@smankusors.com; a=ed25519;
  pk=65wTy06fJl2/h/EJwjr704YG+yjHFhZObJBWzzK+N00=
 X-Endpoint-Received: by B4 Relay for linux@smankusors.com/20250609 with
@@ -91,90 +91,96 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-110541-lists,linux-arm-msm=lfdr.de,linux.smankusors.com];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110542-lists,linux-arm-msm=lfdr.de,linux.smankusors.com];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[];
 	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,gmail.com,smankusors.com,oss.qualcomm.com];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	MIME_TRACE(0.00)[0:+];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	HAS_REPLYTO(0.00)[linux@smankusors.com];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	DBL_PROHIBIT(0.00)[0.0.0.3:email];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	HAS_REPLYTO(0.00)[linux@smankusors.com];
+	NEURAL_HAM(-0.00)[-1.000];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,0.18.81.216:email,smankusors.com:replyto,smankusors.com:mid,smankusors.com:email,4.196.180.0:email,qualcomm.com:email,0.30.132.128:email]
-X-Rspamd-Queue-Id: B4A0361BFE5
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.185.218.32:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,0.61.9.0:email,0.184.161.160:email,0.0.0.0:email,qualcomm.com:email,smankusors.com:replyto,smankusors.com:mid,smankusors.com:email]
+X-Rspamd-Queue-Id: 67AD661BFAB
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Antony Kurniawan Soemardi <linux@smankusors.com>
 
-Enable shared memory communication and add the SFPB lock for MSM8960.
-These provide the foundation for inter-processor communication with the
-Riva (BT + Wi-Fi) subsystem.
+Add the Shared Memory State Machine node to coordinate state transitions
+between the Applications processor and the Riva subsystem.
 
 Tested-by: Rudraksha Gupta <guptarud@gmail.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Antony Kurniawan Soemardi <linux@smankusors.com>
 ---
- arch/arm/boot/dts/qcom/qcom-msm8960.dtsi | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ arch/arm/boot/dts/qcom/qcom-msm8960.dtsi | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
 diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
-index 3c1640188982..cb7199d0366e 100644
+index cb7199d0366e..662e2e45bbb8 100644
 --- a/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
 +++ b/arch/arm/boot/dts/qcom/qcom-msm8960.dtsi
-@@ -91,6 +91,24 @@ memory@80000000 {
- 		reg = <0x80000000 0>;
+@@ -109,6 +109,31 @@ smem {
+ 		hwlocks = <&sfpb_mutex 3>;
  	};
  
-+	reserved-memory {
++	smsm {
++		compatible = "qcom,smsm";
++
 +		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
++		#size-cells = <0>;
 +
-+		smem_region: smem@80000000 {
-+			reg = <0x80000000 0x200000>;
-+			no-map;
++		qcom,ipc-1 = <&l2cc 8 4>;
++		qcom,ipc-2 = <&l2cc 8 14>;
++		qcom,ipc-3 = <&l2cc 8 23>;
++		qcom,ipc-4 = <&sps_sic_non_secure 0x4094 0>;
++
++		apps_smsm: apps@0 {
++			reg = <0>;
++			#qcom,smem-state-cells = <1>;
 +		};
-+	};
 +
-+	smem {
-+		compatible = "qcom,smem";
-+		memory-region = <&smem_region>;
++		wcnss_smsm: wcnss@3 {
++			reg = <3>;
++			interrupts = <GIC_SPI 204 IRQ_TYPE_EDGE_RISING>;
 +
-+		hwlocks = <&sfpb_mutex 3>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
 +	};
 +
  	soc: soc {
  		compatible = "simple-bus";
  		ranges;
-@@ -344,6 +362,12 @@ tsens: thermal-sensor {
- 			};
+@@ -459,6 +484,11 @@ clock-controller@4000000 {
+ 				      "hdmipll";
  		};
  
-+		sfpb_mutex: hwlock@1200600 {
-+			compatible = "qcom,sfpb-mutex";
-+			reg = <0x01200600 0x100>;
-+			#hwlock-cells = <1>;
++		sps_sic_non_secure: interrupt-controller@12100000 {
++			compatible = "qcom,msm8960-sps-sic", "syscon";
++			reg = <0x12100000 0x10000>;
 +		};
 +
- 		intc: interrupt-controller@2000000 {
- 			compatible = "qcom,msm-qgic2";
- 			reg = <0x02000000 0x1000>,
+ 		sdcc3: mmc@12180000 {
+ 			compatible = "arm,pl18x", "arm,primecell";
+ 			reg = <0x12180000 0x2000>;
 
 -- 
 2.34.1
