@@ -1,216 +1,307 @@
-Return-Path: <linux-arm-msm+bounces-110569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iGXAOPtsHWphagkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 13:28:59 +0200
+	id VGsAJlxtHWrlagkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 13:30:36 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B93661E541
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 13:28:58 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18CDB61E578
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 13:30:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AE236301111F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 11:24:14 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8B636300A4E2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 11:30:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96EFC277C88;
-	Mon,  1 Jun 2026 11:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 887902FD1DA;
+	Mon,  1 Jun 2026 11:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kGfffAwe";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UuM9Nhmj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DOV+Z1rd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E953A1CF3
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Jun 2026 11:24:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5687C2E7394;
+	Mon,  1 Jun 2026 11:30:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780313053; cv=none; b=b85mxoy+uX/nAwI2cKHog/HTWUfXupJi1PmwKeXuiwXDxcam54qqJ53AfYhVEllGXzV1JZV9q3FhAE2Vvi5FS+ViVA3F7JW7IJJcO2E6x+KCoaiDWfa9KS2VRphem0WwvuKadln0/UZ3tlyhXFU13bBv/sAdUaJZyY+AukoFv8k=
+	t=1780313431; cv=none; b=GoZCMRz9/Y61TUkQ/Q8bE21g2PLCKOM3aM2lzBDNFv5iRJirZZLtoH+/0h0jVS2qdDr4ytiMiw6itJ9ij3UzBC/y7IJeQ4BI2JFxAM0p0f+8w5mIay0U1sSpLQK/NRpZfFC/4Wdi+NFaIgmhzLLODGpYshLNLvcNoLdMFEpAjvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780313053; c=relaxed/simple;
-	bh=qF0Ufo/CjIRzKBzBQQtd19XCtcP1aSRWrtVrk1k3Gg8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z78p+IR5DjonW8RP4PF3G673bXgCUMS10hHb5V8RmotROEn2anwkxbh2Nhdz9PIF5MDP0Vne1ZjJ8TpGvNoBYg9qvkmSr7KMtk14DmbcQQalDriIM5XoNirDKs/voevWG1jJB/KE4gOeVpGYJR16o2R0BzLGwjMpnxpaYLTFawU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kGfffAwe; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UuM9Nhmj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6518fl0L4066038
-	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Jun 2026 11:24:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=ArCUJSu0p5Rr7kXoBPCR6AQJ
-	dxQ3plRaRNA21LoO2vQ=; b=kGfffAweEuFI61ksMVOgeMQXVInhen1UNYG1849B
-	gwrE6W77PzXJ55F0VIo/G6QE4UFr4VkNBqcNCgraI/1O9owetKwsDe+zvxq7xoQR
-	JYDcjuMt1IauhlADNOZsoSQaXTCXxeXtFXSOXr4Yig5qYSbSkYDYlSiSl+IYoTrg
-	jMrVGCQesGyfSSSgReb1/L0IAgdQvm2ohB2TTzFN5ulheYqsCVycPI5x19OlXZUJ
-	5dN3mHud3khZdJe/Co/J2rlGF+fRWBWFwcVan5WhgZDEXoXgvhzRgN+zGj3ljH6k
-	x9rhNv4aGp3tYB5iT8vrovY39fBM4dC0tMc5/RiBrRS8bQ==
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com [209.85.217.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eh6swrnd4-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2026 11:24:10 +0000 (GMT)
-Received: by mail-vs1-f70.google.com with SMTP id ada2fe7eead31-6751c50552dso3570976137.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Jun 2026 04:24:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780313050; x=1780917850; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ArCUJSu0p5Rr7kXoBPCR6AQJdxQ3plRaRNA21LoO2vQ=;
-        b=UuM9NhmjQwFH0QXyrNFau22D62X8VV6XPvsz0TbQXI444ON8Yb+JXzSemBat1rTFwV
-         k3nDhRL0+dfSVirRraP8G4nh5o0z9VlGA2BhMSXGLatpkbFMR2XGoFIoFnr1EvOMdP/l
-         +Jt+ZZSnWo1MsqL7uhFWByNFQGLfh+TC2jBLIq2c6hPELkItmYxN2/dDs83YTts1htQl
-         /ZwwmekKx26Qv0ZkRK2HMVG/WXmYodAb7jZb37MBRJNiK979I+nOtr3kQPHMzf99EEyt
-         JhxT8WSVpX0NdUtPW4PneWZP1jBrAoPRdd96+u8aGaHQoLpbuH3gbg2yXG8ug76aYcmt
-         QJ8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780313050; x=1780917850;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ArCUJSu0p5Rr7kXoBPCR6AQJdxQ3plRaRNA21LoO2vQ=;
-        b=qGyWPepEIU9416DZYBCSWt1tHKAJhpNXa5v35N5ru+oNXqGYKhMrdrCASe3rVVee5j
-         wJ5E1bBKEjO+E4FooIdpkTh7ULqCxf+Mz2Lrb2Kj49LI2C/HucvPICEO4rN850BmxVZN
-         j6vVkldcjFy8OQvz9mwRefy0INYoh90r7kbJcOmgJMdsKbGOcsOXnBO9u1CnaUBt2LPf
-         wm/M47Pj3fXa/y2VVNuHHzGVawPw4RI0+sorQX4bqTfsRb83vK/6DHeE2bQAx4+XmB9M
-         gt18IJDNsRROOnvi59HTJ74KT9woPiuXiLaKnMtLUpvekr18UyvHtq7yVfoCxACQ4JXk
-         V9DA==
-X-Forwarded-Encrypted: i=1; AFNElJ+IQnOcl7NnYSztNZbiqXPSwAfDgtJbSze4d9E6g5+Suf4Cm9PI2DAAURqdPr19M0yZIpmyru9yDbca543z@vger.kernel.org
-X-Gm-Message-State: AOJu0YwN5dvyvvBn5uKiv30kyZ1U5wVyIXXVITKNBgsKdjaC+3sQldxn
-	Eq7LTeXx8HXxvXyYfQO7tA5iuuXXiMDcHl2QjcqbSt1PYY0b8rVrbxsSkA5qCgwFzwpZkfzjLgU
-	6vr6ZySSBxTvt314dEF6G5OMOxiK5HvCwZpQCHfQooA2esK/sW1e2kW/YCJv9gcTyjgnx
-X-Gm-Gg: Acq92OF6DTLUOSQEIe9dngkr09i77O72zGfNiMRAac7lCLtXgAmC7+rq8dk7eUnCClf
-	eWMeMXQ3dq9Z+U4FAQYVItfhoDjjPLORuTK9tpGtL2FPseVHuPRi9RLtoyjEx4Qwm9shnfgKA7I
-	N9JZg2SjqyFRRkWE15f7Yq6BTpfSA9TsSFlQlclbSfaN11iREEW/bEB6SFumx8DvHhgsetAJZIv
-	v5hUMpEXn95lM/RyelwK31S6e2O/BGssl8ru08PcG7/XsZaq8X7H5DxPT7RBlMLmrYEL3y/+2XR
-	T1g4pvzmKP/kFPTdx8blQKACDEAbytFUXgUXveYWEwriHkSkuPf/HBIJtOvQbKQOnw4rShurbMd
-	wBk8MxZpR+jo0yDtw3jOmjQaooxE5RFvVNC4+Jm+u6lulKX+t3TYXgggf5+HIBhNqyGO2hW13xn
-	ht1TsUg9CRbRuVJMdeL31yMdKcl7viGg5bjV9rzLvZyA2Xgg==
-X-Received: by 2002:a05:6102:5049:b0:607:4fde:1921 with SMTP id ada2fe7eead31-6c6976d1327mr2867655137.24.1780313050078;
-        Mon, 01 Jun 2026 04:24:10 -0700 (PDT)
-X-Received: by 2002:a05:6102:5049:b0:607:4fde:1921 with SMTP id ada2fe7eead31-6c6976d1327mr2867647137.24.1780313049688;
-        Mon, 01 Jun 2026 04:24:09 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aa70b75865sm182056e87.18.2026.06.01.04.24.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Jun 2026 04:24:08 -0700 (PDT)
-Date: Mon, 1 Jun 2026 14:24:06 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Vikram Sharma <vikram.sharma@oss.qualcomm.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Nihal Kumar Gupta <nihal.gupta@oss.qualcomm.com>,
-        Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-i2c@vger.kernel.org,
-        Suresh Vankadara <svankada@qti.qualcomm.com>,
-        Prashant Shrotriya <pshrotri@qti.qualcomm.com>
-Subject: Re: [PATCH 1/6] dt-bindings: media: Add bindings for
- qcom,glymur-camss
-Message-ID: <5fdcnv3k7w2r5at3oun4eldgbmh2o25rmb234urksy72le7an5@ddl4aapbjexg>
-References: <20260529-glymur_camss-v1-0-bee535396d22@oss.qualcomm.com>
- <20260529-glymur_camss-v1-1-bee535396d22@oss.qualcomm.com>
- <8618255e-ecbf-4f55-877d-09cb2faa6f50@linaro.org>
+	s=arc-20240116; t=1780313431; c=relaxed/simple;
+	bh=8Ucj4fp6cxZ4+DnmoRcnCdkdviUW0b3KUei+/dNPcYY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tdEbz57LHbO/QtZBE10qqANESup7yPCmcfh2LzcD6VRE3043iAnmvyV+AfN15/wIeWMXQPEiBle1zrOpgJseO85ANyPsRfjgP/9OyA1R2JHcLLe/h6YDxYiRSxSKAT3XBPFIdEOT9IjO1y+IGJ/8o16fPDbzwHvo0lj9QGdsRgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DOV+Z1rd; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF131F00893;
+	Mon,  1 Jun 2026 11:30:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780313430;
+	bh=jQJ/act9W7vDrGgLtIYr+ZfV8kr/t5gDKLTOLvDLfL4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=DOV+Z1rdoMGaXgBjVmLd0BoV6ZtE+a3pGAoXoMIDB5en0CspvBpbc/Tc8QxwPZtUu
+	 7ECXAM+vrMspIxI7tiRR7ZDh1NlLlk4M8hBAVNzqTd4vvFZV94KCacDik5iArqrPG3
+	 fYaVJNK7yYZHPyo7nXGX55voioIzpinnKdwFdzNdoohN5p3aygb4x58oSeVpQbHjni
+	 pPSzzhgZsO6A9On4UTNmC8t4kwQy3DlgPVekmgkpu6yN+yn7BEnBHJzOf78+x9EfvF
+	 c7620oVpL1Ywvk8W+3udXGfTzdVDA/m/WfRhZoPJdnHE4XE9aHxl59i7lf9a7Bf/jB
+	 xlzKpatnMkQ3A==
+Message-ID: <d764694f-0cb6-4488-8ee8-ec4ce658ebd4@kernel.org>
+Date: Mon, 1 Jun 2026 13:30:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8618255e-ecbf-4f55-877d-09cb2faa6f50@linaro.org>
-X-Authority-Analysis: v=2.4 cv=Z4Hc2nRA c=1 sm=1 tr=0 ts=6a1d6bda cx=c_pps
- a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=YcgPmG4jwsFezTXk2NgA:9
- a=CjuIK1q_8ugA:10 a=crWF4MFLhNY0qMRaF8an:22
-X-Proofpoint-GUID: MnKjdjpW69pZRz8A8-9gB7G2-hjKOcbC
-X-Proofpoint-ORIG-GUID: MnKjdjpW69pZRz8A8-9gB7G2-hjKOcbC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAxMDExNCBTYWx0ZWRfX42Lo26lnNSjv
- qDTsvPeqYoitY9keH9cy9Ip1FCqOgbywwzDxkNJhdKao2L2F9h2rWfVCsihvmDK0sIB0gIXRhjK
- Y+c3hoS2qjIcPwzw++0/l5t2LHMJJjrWUUeyP8nCn91VuABDllOoyOF6l4Q+rc5bZG1MuZHGvRJ
- 5lS54zLRzLC5PK4rsGSDja1C/UFaH2YIsk6zuKJziZvm9c9mmCEqJWmrjo/FR8YOuUIvwcv2vRg
- A6gvXYI+6jl/4Vc5Ut8EPM9NLXe70JXazzBz9Bu5Is+DJP7vLNGmgEEWbdeKtgJuntCGP/55MR0
- MtswdKPrLNIwC1vTM1JAK+d+ev4u3OdQV3hyfUFUga3ogStX3XDzi7SlE///eRCirtWelUJkFaQ
- /wGbjtHjCTz3eCPE9IDTg5fAdMz0GBlzOzXVtpP0lQqX0W0qwdsbEJn7oflZJz1fV6MZ/mnOKdB
- tbXc57NIzCAvVuZ+iLA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-01_03,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 bulkscore=0 adultscore=0 phishscore=0
- impostorscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606010114
-X-Spamd-Result: default: False [-1.66 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] dt-bindings: pinctrl: qcom,pmic-gpio: Add
+ level-shifter function
+To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Linus Walleij <linusw@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>,
+ David Collins <david.collins@oss.qualcomm.com>,
+ Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
+ Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+ Maulik Shah <maulik.shah@oss.qualcomm.com>, kernel@oss.qualcomm.com,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20260528-pinctrl-level-shifter-v2-0-3a6a025392bf@oss.qualcomm.com>
+ <20260528-pinctrl-level-shifter-v2-2-3a6a025392bf@oss.qualcomm.com>
+ <20260530-thankful-maroon-boar-be86f8@quoll>
+ <158920bf-3b52-4772-9305-18afcd5807e3@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <158920bf-3b52-4772-9305-18afcd5807e3@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110569-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,oss.qualcomm.com:dkim];
+	TAGGED_FROM(0.00)[bounces-110570-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 4B93661E541
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
+X-Rspamd-Queue-Id: 18CDB61E578
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, May 29, 2026 at 04:07:38PM +0100, Bryan O'Donoghue wrote:
-> On 29/05/2026 15:37, Vikram Sharma wrote:
-> > +
-> > +  vdd-csiphy-0p8-supply:
-> > +    description:
-> > +      Phandle to 0.8V regulator supply to CSI PHYs.
-> > +
-> > +  vdd-csiphy-1p2-supply:
-> > +    description:
-> > +      Phandle to a 1.2V regulator supply to CSI PHYs pll block.
-> > +
+On 01/06/2026 07:00, Fenglin Wu wrote:
 > 
-> To be brutally honest, I'd rather see effort and buy-in from qcom engineers
-> in converting to CSIPHY as a distinct sub-node.
+> On 5/30/2026 6:29 PM, Krzysztof Kozlowski wrote:
+>> On Thu, May 28, 2026 at 06:05:36PM -0700, Fenglin Wu wrote:
+>>> Add the "level-shifter" function and add the required DT properties to
+>>> allow RPMh firmware to control the level-shifter. Introduce a custom
+>>> pinconf parameter "qcom,1p2v-1p8v-ls-en" for enabling or disabling the
+>>> level-shifter function.
+>> I don't get how PMIC, which is not a child of RPMh at all or not
+>> talking with RPMh RSC, needs to configure its pin via RPMh. It feels it
+>> is misrepresented.
 > 
-> Pushing patches to hit your own internal deadlines to the detriment of
-> upstream quality is not OK.
+> The control for enabling or disabling the bi-directional level shifter 
+> has been centralized in AOP, similar to how regulator resources are 
+> managed. This allows it to be used on a serial bus shared by multiple 
+> clients from different subsystems. Each subsystem can vote for its 
+> enable state through RPMh commands, and AOP determines the final status 
+> to turn the BIDIR_LVL_SHIFTER PMIC modules on or off. Additionally, each 
+> bi-directional level shifter shares its physical pins with a pair of 
+> PMIC GPIO modules and is mutually exclusive with other PMIC GPIO 
+> functions, which means those PMIC GPIO functions must be disabled.
 
-Can we please get an update of the the CSI PHY series? I think they were
-some time ago, they received some comments and there were no updates on them.
+So two completely independent hardware devices - PMIC and RPMh -
+configure the same hardware - level shifter and pin function?
 
 > 
-> This binding should be predicated on separate CSIPHY nodes. I've
-> published... three perhaps four versions of that patch to radio silence on
-> your side.
+> For these reasons, adding bi-directional level shifter software support 
+> to the pinctrl-spmi-gpio driver is considered the best approach. Let me 
+> know if you have a better suggestion.
 > 
-> ---
-> bod
+>>> Additionally, add the "groups" property with the allowed group names
+>>> that can be used to control the level-shifter function on pmh0101.
+>>>
+>>> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+>>> ---
+>>>   .../bindings/pinctrl/qcom,pmic-gpio.yaml           | 66 +++++++++++++++++++++-
+>>>   include/dt-bindings/pinctrl/qcom,pmic-gpio.h       |  1 +
+>>>   2 files changed, 64 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+>>> index b8109e6c2a10..19dc61ddff2d 100644
+>>> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+>>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+>>> @@ -119,6 +119,21 @@ properties:
+>>>         The first cell will be used to define gpio number and the
+>>>         second denotes the flags for this gpio
+>>>   
+>>> +  qcom,rpmh:
+>>> +    description:
+>>> +      Phandle to the RPMh controller device. Required for PMICs when the
+>>> +      bidirectional level shifters is used (e.g., pmh0101), to enable
+>>> +      communication with RPMh firmware for level shifter control.
+>>> +    $ref: /schemas/types.yaml#/definitions/phandle
+>>> +
+>>> +  qcom,pmic-id:
+>>> +    description:
+>>> +      The ID of the PMIC which supports bidirectional level shifter function.
+>>> +      It is used as the RPMh resource name suffix to request control of the
+>>> +      level shifter to the RPMh firmware.
+>>> +    $ref: /schemas/types.yaml#/definitions/string
+>>> +    pattern: "^[A-N]_E[0-3]+$"
+>> You do not get instance IDs (it's explcitly documented in docs).
+> 
+> Okay. This is primarily for creating the resource names used to obtain 
+> the rpmh addresses from the cmd-db for the level-shifter.
+> 
+> I can change it to a different name if you still agree to add the 
+> support in the pinctrl driver.
 
--- 
-With best wishes
-Dmitry
+ID or name, same thing. Still not allowed.
+
+> 
+>>> +
+>>>   additionalProperties: false
+>>>   
+>>>   required:
+>>> @@ -330,6 +345,22 @@ allOf:
+>>>             contains:
+>>>               enum:
+>>>                 - qcom,pmh0101-gpio
+>>> +    then:
+>>> +      properties:
+>>> +        gpio-line-names:
+>>> +          minItems: 18
+>>> +          maxItems: 18
+>>> +        gpio-reserved-ranges:
+>>> +          minItems: 1
+>>> +          maxItems: 9
+>>> +        qcom,rpmh: true
+>>> +        qcom,pmic-id: true
+>>> +
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          contains:
+>>> +            enum:
+>>>                 - qcom,pmih0108-gpio
+>>>       then:
+>>>         properties:
+>>> @@ -523,6 +554,19 @@ $defs:
+>>>           items:
+>>>             pattern: '^gpio([0-9]+)$'
+>>>   
+>>> +      groups:
+>>> +        $ref: /schemas/types.yaml#/definitions/string-array
+>>> +        description:
+>>> +          List of GPIO groups to apply properties to. Only valid for
+>>> +          function "level-shifter" on pmh0101. Valid groups are
+>>> +          gpio11, gpio12; gpio13, gpio14; gpio15, gpio16; gpio17, gpio18.
+>>> +        items:
+>>> +          enum:
+>>> +            - gpio11, gpio12
+>>> +            - gpio13, gpio14
+>>> +            - gpio15, gpio16
+>>> +            - gpio17, gpio18
+>>> +
+>>>         function:
+>>>           items:
+>>>             - enum:
+>>> @@ -536,6 +580,7 @@ $defs:
+>>>                 - dtest4
+>>>                 - func3  # supported by LV/MV GPIO subtypes
+>>>                 - func4  # supported by LV/MV GPIO subtypes
+>>> +              - level-shifter  # supported only by pmh0101
+>>>   
+>>>         bias-disable: true
+>>>         bias-pull-down: true
+>>> @@ -592,9 +637,24 @@ $defs:
+>>>             configured as digital input.
+>>>           enum: [1, 2, 3, 4]
+>>>   
+>>> -    required:
+>>> -      - pins
+>>> -      - function
+>>> +      qcom,1p2v-1p8v-ls-en:
+>>> +        $ref: /schemas/types.yaml#/definitions/uint32
+>>> +        description:
+>>> +          Enable or disable the bidirectional 1.2V/1.8V level shifter
+>>> +          associated with the specified GPIO group. When set to 1, an RPMh
+>>> +          vote is sent to AOP to enable the level shifter. When set to 0,
+>>> +          the vote is withdrawn. Only valid when function is "level-shifter"
+>>> +          and groups is a level-shifter GPIO pair (e.g., "gpio11, gpio12"
+>>> +          on pmh0101).
+>> And there are no generic pinconf properties defining the voltage?
+> 
+> The 1.2V and 1.8V voltages on each side of the bidirectional level 
+> shifter are not configurable. They are fixed in the hardware with 
+> built-in reference voltages at each side of the pins. I am adding this 
+> custom pinconf parameter mainly to control its enabling status. Also, I 
+> am adding "1p2v-1p8v" in the parameter name to provide additional 
+> clarity for users about the "level-shifter" function.
+
+So there are or there are not?
+
+Best regards,
+Krzysztof
 
