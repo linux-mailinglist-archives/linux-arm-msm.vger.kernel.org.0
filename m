@@ -1,51 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-110587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kAjcEhWAHWpPbQkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 14:50:29 +0200
+	id 4NKbLh2CHWpwbQkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 14:59:09 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id D84CD61F8C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 14:50:28 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 195E961FB0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 01 Jun 2026 14:59:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id DD8AD30082AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 12:50:27 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6FF8D300875D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Jun 2026 12:52:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E205B377EBC;
-	Mon,  1 Jun 2026 12:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3EC13783C1;
+	Mon,  1 Jun 2026 12:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iRzWzLox"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="QBuRn8wS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65C61A683D;
-	Mon,  1 Jun 2026 12:50:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C90375AAB;
+	Mon,  1 Jun 2026 12:52:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780318226; cv=none; b=WtRns0fF8PExWsPO2QQx9vuoDCT2/OxbEri7t5CcYctUsqXwrtfQQb7H83WbywKsw6OJuHYwv77KPNa76HyI3VNpJXvd3k3Lb/xbVtHp792dYbLLegWOxMl/WVh2vjMQX8vTrX1QKBY7b+Kc5XvK1HxYm+W4Hnut8H9+Eib6i+0=
+	t=1780318342; cv=none; b=Wi1XULBO2KnR4F9apKf+qlM7E+4p0KjTA/OAKhkEmHg5dyj/MshwCqnsPqh9Z2RqEoOo/x1WaYnDgs6IO18pFf+nluxRbFaKvmA03T/F3iIxMx7jOXZn8Z/SlDNnodu+llbGuj9pG0POAYEmK74RcL92D3Y9SImRPETypbDzCSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780318226; c=relaxed/simple;
-	bh=Xw5SifiO8sPqenzU/bTeLa9arbIsDrOONM4GL/6ZyP8=;
+	s=arc-20240116; t=1780318342; c=relaxed/simple;
+	bh=uASAkkWBuy7TVQlmssSLMlaamHgz3OsmdxP3AluMlPU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hrFPl0qbqhAOwHafFLwZz+VC2u581K9Pvt0PCDZviYfOjsXDmFEBec24UsH9d/xoTl0X5vnI+fRmWp4GsW0hVDliX6LWVFsGzR+ZnFoxbX3+fqMePFRZkkFFA9g5e1csD+3hTwSZ5UD+M5Cg/ZMvkK7kqXxQFwpK887bsjiqvqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iRzWzLox; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50B81F00893;
-	Mon,  1 Jun 2026 12:50:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780318225;
-	bh=NiO5RIOjFIjhX80InovlNJiMWsaq00sNfFpnk2xz4IU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=iRzWzLoxQbdLcwQM9CdEweJdKhVuPzgfMWkbGxgQp03XaBS6MW1UO2dMb1zXTv8gf
-	 Lc37QA55GKb4mm3qFObJW4zQf7Pz9qC7xV6ikZyYxHWeXlpofGZ8kKZRfyHkVJtovX
-	 c2ZkuL1UYH+UTxuATU7dzZzfpA6IEKpFDWOB6hVdJaxSbAlTvcO0HpBEBh4M1IOiWK
-	 xME9N7IGEufKWMYRgGc4BLlvBFLWjK3g3gy4mJixcfwwu9iob8jkrzwNnj/CAUTDZA
-	 b3Bt2jxBtQkY2ceqVr80cx5EueZj8hSqFEYX6B+N8EfmU7ZAiX0ieACScg+Y4VnUDc
-	 WH8lM0xfD2KIA==
-Message-ID: <d7b08296-7f6e-4d89-ab3b-04e43d04929e@kernel.org>
-Date: Mon, 1 Jun 2026 14:50:19 +0200
+	 In-Reply-To:Content-Type; b=kJv72oLBtrVJsFJrGa77OGPqVvM9TP1POmkEro4FzNKc2WdTPjGc7sYMBIte6QuLGWSxzqpxCWy4VWZiZpzQVL6NlYIq/v+qINUdbefD5Jikdk90Zk+qG+VFMbBmGUff92+mtFjp8s1bmZzNOTp9hhtdmZNqtMTFrEdRmkRW4Ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=QBuRn8wS; arc=none smtp.client-ip=185.100.197.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [172.20.10.2] (78-80-16-54.customers.tmcz.cz [78.80.16.54])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 3B4065341082;
+	Mon, 01 Jun 2026 14:52:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1780318337;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=fWt5ujZPTFFktwcOPAvnxBrtudIIrdMy5aPzWyXLRaY=;
+	b=QBuRn8wSCeWV7YLbmwKxR3v/GvmGVreARQld4JjtUsIXEc847RXmof+wnvxOsbVQlmUe+W
+	f6DvNivtZxJFoV0idGkS77+6J/e40i2cOl/qAZXmDHLLNHMlNur1nlI/6teIBs67Qbo+Wg
+	EWHfe92YEQ/WbKravEgTJZk1qxaGg24=
+Message-ID: <e101e3a6-643b-4a3a-ac54-ca381db633a3@ixit.cz>
+Date: Mon, 1 Jun 2026 14:52:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,121 +59,327 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/slab: improve kmem_cache_alloc_bulk
+Subject: Re: [PATCH WIP v5 4/9] media: qcom: camss: Initialize lanes after
+ lane configuration is available
+To: Sakari Ailus <sakari.ailus@linux.intel.com>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
+ Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>,
+ Cory Keitz <ckeitz@amazon.com>, Loic Poulain
+ <loic.poulain@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Joel Selvaraj <foss@joelselvaraj.com>, Kieran Bingham <kbingham@kernel.org>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
+References: <20260531-qcom-cphy-v5-0-6be0f62b4d65@ixit.cz>
+ <20260531-qcom-cphy-v5-4-6be0f62b4d65@ixit.cz>
+ <ah1KS63aOL4wzhvb@kekkonen.localdomain>
 Content-Language: en-US
-To: Christoph Hellwig <hch@lst.de>
-Cc: Harry Yoo <harry@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
- Mark Brown <broonie@kernel.org>, Hao Li <hao.li@linux.dev>,
- Christoph Lameter <cl@gentwo.org>, David Rientjes <rientjes@google.com>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Jesper Dangaard Brouer <hawk@kernel.org>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, io-uring@vger.kernel.org,
- kasan-dev@googlegroups.com, bpf@vger.kernel.org, netdev@vger.kernel.org,
- Alexander Lobakin <aleksander.lobakin@intel.com>,
- Boris Brezillon <boris.brezillon@collabora.com>
-References: <20260528093437.2519248-1-hch@lst.de>
- <20260528093437.2519248-2-hch@lst.de>
- <5f7f90d8-cb32-4ffb-8f1c-0722aafbe869@kernel.org>
- <20260529135045.GA10647@lst.de>
- <5f3ba603-a6ad-4cf2-9a54-aebc10273c59@kernel.org>
- <58cc76e7-2348-443d-a989-2a06e61178af@kernel.org>
- <20260601113831.GA25535@lst.de>
-From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Autocrypt: addr=vbabka@kernel.org; keydata=
- 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
-In-Reply-To: <20260601113831.GA25535@lst.de>
-Content-Type: text/plain; charset=UTF-8
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <ah1KS63aOL4wzhvb@kekkonen.localdomain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
+	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-110588-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110587-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vbabka@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,fairphone.com,protonmail.com,amazon.com,oss.qualcomm.com,joelselvaraj.com,vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[ixit.cz:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
-X-Rspamd-Queue-Id: D84CD61F8C7
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[protonmail.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,ixit.cz:email,ixit.cz:mid,ixit.cz:dkim]
+X-Rspamd-Queue-Id: 195E961FB0F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 6/1/26 13:38, Christoph Hellwig wrote:
-> On Mon, Jun 01, 2026 at 10:16:30AM +0200, Vlastimil Babka (SUSE) wrote:
->> > kmem_cache_alloc_bulk() returning 0 was considered a success in that case.
->> > 
->> > Either fixing kmem_cache_alloc_bulk() (and the comment) or fixing the
->> > user sounds fine to me.
->> 
->> Would it be wrong if we just returned true for size of 0? Would something
->> else break?
+On 01/06/2026 11:00, Sakari Ailus wrote:
+> Hi David,
 > 
-> I don't think it is wrong per se, but it feels like the wrong kind of
-> API.  I.e. I don't think the MSM caller actually wants this, as they'd
-> also do a zero-sized kvmalloc.
+> On Sun, May 31, 2026 at 03:08:12PM +0200, David Heidelberg via B4 Relay wrote:
+>> From: David Heidelberg <david@ixit.cz>
+>>
+>> The lanes must not be initialized before the driver has access to
+>> the lane configuration, as it depends on whether D-PHY or C-PHY mode
+>> is in use. Move the lane initialization to csiphy_lanes_enable which is
+>> called when the configuration structures are available.
+>>
+>> Co-developed-by: Petr Hodina <phodina@protonmail.com>
+>> Signed-off-by: Petr Hodina <phodina@protonmail.com>
+>> Signed-off-by: David Heidelberg <david@ixit.cz>
+>> ---
+>>   .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 133 +++++++++++++++------
+>>   1 file changed, 95 insertions(+), 38 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> index d4624417a7424..8bcba6107471f 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+>> @@ -1164,16 +1164,110 @@ static int csiphy_lanes_enable(struct csiphy_device *csiphy,
+>>   {
+>>   	struct device *dev = csiphy->camss->dev;
+>>   	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
+>>   	struct csiphy_device_regs *regs = csiphy->regs;
+>>   	u8 settle_cnt;
+>>   	u8 val;
+>>   	int i;
+>>   
+>> +	switch (csiphy->camss->res->version) {
+>> +	case CAMSS_845:
+>> +		if (c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
+>> +			regs->lane_regs = NULL;
+>> +			regs->lane_array_size = 0;
+> 
+> Aren't these fields already initialised to 0?
 
-If p->count is 0 then indeed there's a zero-sized kvmalloc so p->pages ==
-ZERO_SIZE_PTR but then nothing breaks because nothing tries to dereference it?
+I assume yes, but I wanted to be more explicit here so it's more obvious that 
+C-PHY sequences are missing (until these get filled in by users).
 
-msm_iommu_pagetable_prealloc_cleanup() has a "if (p->count > 0)" branch so
-it seems it's considered possible. But then the rest of the functions also
-seems working fine, i.e. kmem_cache_free_bulk() of zero size does nothing,
-kvfree() of ZERO_SIZE_PTR does nothing.
+> 
+> Using the compatible string to assign these using device matching would be
+> nice if possible.
 
-It seems to me kmem_cache_alloc_bulk() returning true for size == 0 fits
-naturally in this world and is less likely to result in a gotcha?
+Sure, thou if not explicitly requested, I would prefer to do minimal changes 
+above the C-PHY itself introduction (it's pretty much breaking with every CAMSS 
+version addition). I can do it as follow up, if wanted.
+
+David
+
+> 
+>> +		} else {
+>> +			regs->lane_regs = &lane_regs_sdm845[0];
+>> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sdm845);
+>> +		}
+>> +		break;
+>> +	case CAMSS_2290:
+>> +	case CAMSS_6150:
+>> +		if (c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
+>> +			regs->lane_regs = NULL;
+>> +			regs->lane_array_size = 0;
+>> +		} else {
+>> +			regs->lane_regs = &lane_regs_qcm2290[0];
+>> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_qcm2290);
+>> +		}
+>> +		break;
+>> +	case CAMSS_6350:
+>> +		if (c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
+>> +			regs->lane_regs = NULL;
+>> +			regs->lane_array_size = 0;
+>> +		} else {
+>> +			regs->lane_regs = &lane_regs_sm6350[0];
+>> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sm6350);
+>> +		}
+>> +		break;
+>> +	case CAMSS_7280:
+>> +	case CAMSS_8250:
+>> +		if (c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
+>> +			regs->lane_regs = NULL;
+>> +			regs->lane_array_size = 0;
+>> +		} else {
+>> +			regs->lane_regs = &lane_regs_sm8250[0];
+>> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8250);
+>> +		}
+>> +		break;
+>> +	case CAMSS_8280XP:
+>> +		if (c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
+>> +			regs->lane_regs = NULL;
+>> +			regs->lane_array_size = 0;
+>> +		} else {
+>> +			regs->lane_regs = &lane_regs_sc8280xp[0];
+>> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sc8280xp);
+>> +		}
+>> +		break;
+>> +	case CAMSS_X1E80100:
+>> +		if (c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
+>> +			regs->lane_regs = NULL;
+>> +			regs->lane_array_size = 0;
+>> +		} else {
+>> +			regs->lane_regs = &lane_regs_x1e80100[0];
+>> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_x1e80100);
+>> +		}
+>> +		break;
+>> +	case CAMSS_8550:
+>> +		if (c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
+>> +			regs->lane_regs = NULL;
+>> +			regs->lane_array_size = 0;
+>> +		} else {
+>> +			regs->lane_regs = &lane_regs_sm8550[0];
+>> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8550);
+>> +		}
+>> +		break;
+>> +	case CAMSS_8650:
+>> +		if (c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
+>> +			regs->lane_regs = NULL;
+>> +			regs->lane_array_size = 0;
+>> +		} else {
+>> +			regs->lane_regs = &lane_regs_sm8650[0];
+>> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8650);
+>> +		}
+>> +		break;
+>> +	case CAMSS_8300:
+>> +	case CAMSS_8775P:
+>> +		if (c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
+>> +			regs->lane_regs = NULL;
+>> +			regs->lane_array_size = 0;
+>> +		} else {
+>> +			regs->lane_regs = &lane_regs_sa8775p[0];
+>> +			regs->lane_array_size = ARRAY_SIZE(lane_regs_sa8775p);
+>> +		}
+>> +		break;
+>> +	default:
+>> +		break;
+>> +	}
+>> +
+>> +	if (!regs->lane_regs && c->phy_cfg == V4L2_MBUS_CSI2_CPHY) {
+>> +		dev_err(dev, "Missing lane_regs definition for C-PHY\n");
+>> +		return -EINVAL;
+>> +	}
+>> +
+>>   	settle_cnt = csiphy_settle_cnt_calc(link_freq, csiphy->timer_clk_rate);
+>>   
+>>   	val = 0;
+>>   
+>>   	switch (c->phy_cfg) {
+>>   	case V4L2_MBUS_CSI2_CPHY:
+>>   		for (i = 0; i < c->num_data; i++)
+>>   			val |= BIT((c->data[i].pos * 2) + 1);
+>> @@ -1235,63 +1329,26 @@ static int csiphy_init(struct csiphy_device *csiphy)
+>>   	struct device *dev = csiphy->camss->dev;
+>>   	struct csiphy_device_regs *regs;
+>>   
+>>   	regs = devm_kmalloc(dev, sizeof(*regs), GFP_KERNEL);
+>>   	if (!regs)
+>>   		return -ENOMEM;
+>>   
+>>   	csiphy->regs = regs;
+>> -	regs->offset = 0x800;
+>>   	regs->common_status_offset = 0xb0;
+>>   
+>>   	switch (csiphy->camss->res->version) {
+>> -	case CAMSS_845:
+>> -		regs->lane_regs = &lane_regs_sdm845[0];
+>> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sdm845);
+>> -		break;
+>> -	case CAMSS_2290:
+>> -	case CAMSS_6150:
+>> -		regs->lane_regs = &lane_regs_qcm2290[0];
+>> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_qcm2290);
+>> -		break;
+>> -	case CAMSS_6350:
+>> -		regs->lane_regs = &lane_regs_sm6350[0];
+>> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sm6350);
+>> -		break;
+>> -	case CAMSS_7280:
+>> -	case CAMSS_8250:
+>> -		regs->lane_regs = &lane_regs_sm8250[0];
+>> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8250);
+>> -		break;
+>> -	case CAMSS_8280XP:
+>> -		regs->lane_regs = &lane_regs_sc8280xp[0];
+>> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sc8280xp);
+>> -		break;
+>>   	case CAMSS_X1E80100:
+>> -		regs->lane_regs = &lane_regs_x1e80100[0];
+>> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_x1e80100);
+>> -		regs->offset = 0x1000;
+>> -		break;
+>>   	case CAMSS_8550:
+>> -		regs->lane_regs = &lane_regs_sm8550[0];
+>> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8550);
+>> -		regs->offset = 0x1000;
+>> -		break;
+>>   	case CAMSS_8650:
+>> -		regs->lane_regs = &lane_regs_sm8650[0];
+>> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sm8650);
+>>   		regs->offset = 0x1000;
+>>   		break;
+>> -	case CAMSS_8300:
+>> -	case CAMSS_8775P:
+>> -		regs->lane_regs = &lane_regs_sa8775p[0];
+>> -		regs->lane_array_size = ARRAY_SIZE(lane_regs_sa8775p);
+>> -		break;
+>>   	default:
+>> +		regs->offset = 0x800;
+>>   		break;
+>>   	}
+>>   
+>>   	return 0;
+>>   }
+>>   
+>>   const struct csiphy_hw_ops csiphy_ops_3ph_1_0 = {
+>>   	.get_lane_mask = csiphy_get_lane_mask,
+>>
+>> -- 
+>> 2.53.0
+>>
+>>
+> 
+
+-- 
+David Heidelberg
+
 
