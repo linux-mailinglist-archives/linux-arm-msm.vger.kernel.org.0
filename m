@@ -1,180 +1,420 @@
-Return-Path: <linux-arm-msm+bounces-110853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id KAlHDthSH2rqkQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 00:02:00 +0200
+	id S4IZEO5SH2rwkQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 00:02:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B34946324FB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 00:01:59 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82ECD632505
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 00:02:21 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=fail ("headers rsa verify failed") header.d=igalia.com header.s=20170329 header.b=FU2va5St;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110853-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110853-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=fail reason="SPF not aligned (relaxed)" header.from=igalia.com (policy=none);
+	dkim=pass header.d=linaro.org header.s=google header.b="e26UbWN/";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110856-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110856-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=linaro.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A3F15302BE25
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 21:58:39 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D8409303E4AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 21:59:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0069A35E1CE;
-	Tue,  2 Jun 2026 21:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52EFE3AD50E;
+	Tue,  2 Jun 2026 21:59:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B333A6B6F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 21:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BDC37A4AB
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 21:59:48 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780437518; cv=none; b=AJlKdQs7iWwZAjxATe5aIYeuxdJAuj9RdCrf40xmDp3WU7tTVHRVlIqs7yYSaTFYI4oA/2e0PalA4WrADTAKxdVrqbqte8P9Eul2J9LbxOostwPDWkDAXfHd3siCsdXonezhsohO3WMWtgoLEysR726lWjUp1+Him5B/47UJCWE=
+	t=1780437591; cv=none; b=XEmEU7rQ2ZttU8JN8OxhZwyEXHZZivSlYYlNZSRJfnYLU4pXNYU9egk9aHYR546iMY1nzQ0trlCCw+oLNcYuDzxGCrE+5UK1FLxThzO+2fBjR2J2Oyxfy5d5ns7Bi27XPD2/jJGctJbnuoAIaoDQx4iD+GAYrJQ+j34mizZX2Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780437518; c=relaxed/simple;
-	bh=2L5e+Vt0bnqN+gQ8GFsFEGLuo0jLBjOs50+fgeCp7qw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M3EC7copup50U9/5OAJSmWLrtnPEJwrqaMUCrwCsdiQjdpH81FsF6EwlyMEl7xJzrIqf/xeLmREsSOlMCC6vTS95GUIKgK+Mw7skfpTIDInui2i6mINCErX0ic2RKnaj4b9ERV5xRk+bg7RxpVE7mMiBKX69VQ7qExoy04wwdLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=FU2va5St; arc=none smtp.client-ip=213.97.179.56
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=Fukk5KLK5wyO7l2hCG6rqCiBklgfEsxQauSgjFaJQks=; b=FU2va5St+0Lie+vajfVC4ybZUz
-	YKJXeCOZU2gc9L43zSP+uI7/n64+uaTEz0DeXKwCVrkf0HWcSF0ZNzAMOwH3G1f6d97paTuuZsUEm
-	hRvuh7aqlJ2t1RhTXyaPKn8PYPz3g4YzZx9aNyYfErS3n85tEkbtYwe7S0Tr3rRecEfl1g7HAem1p
-	pQF9yYDMRIyDOFQfnjotzaC3xKoa/wMoGZWmwRZAZjfIUaLVsjY0bCW6Mhm7rK6deVDC4gDomStLU
-	xIMX6muKXbXeH6KvKIF2VsVsx1PAWjYKqtScjgCXic+s8aJaV6ToVbFZSVHYJWYEQVrr//X/K9YdQ
-	tZtSqzqw==;
-Received: from [79.117.146.159] (helo=killbill.home)
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1wUX7a-00BuCE-3R; Tue, 02 Jun 2026 23:58:02 +0200
-From: Melissa Wen <mwen@igalia.com>
-To: airlied@gmail.com,
-	alexander.deucher@amd.com,
-	alex.hung@amd.com,
-	christian.koenig@amd.com,
-	contact@emersion.fr,
-	daniels@collabora.com,
-	harry.wentland@amd.com,
-	louis.chauvet@bootlin.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	mwen@igalia.com,
-	sebastian.wick@redhat.com,
-	simona@ffwll.ch,
-	siqueira@igalia.com,
-	sunpeng.li@amd.com,
-	tzimmermann@suse.de
-Cc: Uma Shankar <uma.shankar@intel.com>,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Xaver Hugl <xaver.hugl@kde.org>,
-	Pekka Paalanen <pekka.paalanen@collabora.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	amd-gfx@lists.freedesktop.org,
-	kernel-dev@igalia.com,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH v8 4/4] drm/amd/display: use plane color_mgmt_changed to track colorop changes
-Date: Tue,  2 Jun 2026 23:53:56 +0200
-Message-ID: <20260602215743.914265-5-mwen@igalia.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260602215743.914265-1-mwen@igalia.com>
-References: <20260602215743.914265-1-mwen@igalia.com>
+	s=arc-20240116; t=1780437591; c=relaxed/simple;
+	bh=B5wOD4aE4a17EXFpKcNzecgy6k/iGpJ3WdyEjdtjTrE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lwv0h6dxDqc7x03s5+pAuS0UaM+JDcMKZNbTHOfwgEmI/Pfe/WGDsnSINde89bhvVtV9ylV6BKhWpGtI4vsWpcVOg6lUNepvDVN9cCkoKWWx2REOCi5m0rhnfRirQjA+BptU+81EeFU5Xrhxu48XGIc7R3ckJXgY0Y330qtuI2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e26UbWN/; arc=none smtp.client-ip=209.85.208.182
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3967701fc3cso5107811fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2026 14:59:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1780437587; x=1781042387; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/rYnZ3lqT7DmKRSTxtVSgTNnxHdLejTszMrt6K93BCk=;
+        b=e26UbWN/7eZLaMpiJIw3nw5ADo2j0I/ERoKbCdORwsrvLSDdw+iIGoWk+j+HYfp3zE
+         FIw24wHtYm2SCP+d6DTmH3V0bIiRPrgoQgIkYEr31P+kNUb5OXcvOj9pTU1m1iKHjisw
+         VDZhkXeyULah1M5ttYEpElI5qi5mWwN3wffQozAkBug+BffRK5nknStpts+uLxUHRUaS
+         EQy1RI0+SPsIHvcqgBoDmd4ooekzev26DiXSFE8XfLURzsbKzURLSjUHoRox5Dg56ART
+         PWissr7BWWbP6+7bWW8bLDxuUnt6X//Y3Wfl+fDtuVfLLwPhtUplIencnRLLS3yeF8S2
+         SopQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780437587; x=1781042387;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/rYnZ3lqT7DmKRSTxtVSgTNnxHdLejTszMrt6K93BCk=;
+        b=SyOih9Z72UBF3JO16RgwHHstBrHe2nLB3fxHv5myygZVNmhRltUopZFbEHXIjDGo8D
+         XIiE9q+nUCTJQG37RHdtYR8cJXEXDC5HLokUf+lyCpm/YG2NJj8h/6y4LZ3xXHamL+N6
+         HywtenySUTTuZITYN21UWrdIdSulAIKW8i08SMkBwT+Wtq9KJ4y7+61VhgsD8j746PtQ
+         CjSHxgttCTaVwErqYGIz4hRUr2tcy33uoqLXwmpCKRgp/o9xFkpzcvHiahEBB0B6phu1
+         fGnPSxJzo7DQ60rjIlP9Dxnu3Uzfen/JUYsGLS+wUOsGumUpsaAuSc6EAw4rFRocjUpn
+         ePWQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9b4oiP2f6AfDtBHk+eYfpI8s4KSP7i//QkAoirc2Nq9rJ/OnjuACgCqpyNWz6Dl+zzOx6w1gjciFJ1OLoi@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTKWMgukrNr4WnQdT6UUInQi8m0baBjU0IDhmIpviiyOM7qToB
+	irnFS8C/nLRCIo+ssNhvpq+hvLHCCbi+ImVpG6BHJ47x+M13At/WMppEJBv7NuYN/VE=
+X-Gm-Gg: Acq92OEkpsFKRsWCUyJNjoYl69MoZ5slL7gIuWac90OxxK+tLW90cR41zm7y2725N5c
+	lX3054Bz9stQOgcrJWZjSOhxuB0yWt/3Uc8BddliBFdb2cabjh/wLBIbz+5BWxj7dcipAHbORgL
+	6wWYKe8gnOFe/1pfFNCfGHD0jITh5H6MdOIpDSEMN/LXsF7aqERC343nbcR6vIszKpr1GIYmbZg
+	O9UyS7r8B4LJ9OMqJ0KhFID2xegm0moQ9c8WG3VVYl+/kWoPT3kTCyZ9tONqEtKvMIOcM8aucyy
+	LHj5Xn/aUjnH6wx1kt3J9SdxHktjga5lGNYtGeaP/Amm3aBGv/mepsPbBOOkcK7kgMuEbmZT/p7
+	EQ8/odXR/lWQTinRHvp48w45P2rOqefTzLDXFIRQjzn55Y4wIkOwOx/341tE4kyw/dKMOxDLd8V
+	DQ23OobWXhiumbwJr8HqgMApbC+drd53h1yfHmV5wQfgkLxE3m3+viLcjhYh+4DU6IwItlUQVWD
+	Oomz5wtQ8C/ApSP
+X-Received: by 2002:a2e:bc2a:0:b0:396:975f:c384 with SMTP id 38308e7fff4ca-396ac314d06mr1880491fa.6.1780437587064;
+        Tue, 02 Jun 2026 14:59:47 -0700 (PDT)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-396abd6cbe6sm3606351fa.0.2026.06.02.14.59.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jun 2026 14:59:46 -0700 (PDT)
+Message-ID: <dda32577-04e0-4507-acaf-a5694f4f31b3@linaro.org>
+Date: Wed, 3 Jun 2026 00:59:40 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/2] dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260523-x1e-csi2-phy-v8-0-a85668459521@linaro.org>
+ <20260523-x1e-csi2-phy-v8-1-a85668459521@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20260523-x1e-csi2-phy-v8-1-a85668459521@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [1.14 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110853-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[gmail.com,amd.com,emersion.fr,collabora.com,bootlin.com,linux.intel.com,kernel.org,igalia.com,redhat.com,ffwll.ch,suse.de];
-	FORGED_SENDER(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[34];
-	FORGED_RECIPIENTS(0.00)[m:airlied@gmail.com,m:alexander.deucher@amd.com,m:alex.hung@amd.com,m:christian.koenig@amd.com,m:contact@emersion.fr,m:daniels@collabora.com,m:harry.wentland@amd.com,m:louis.chauvet@bootlin.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:mwen@igalia.com,m:sebastian.wick@redhat.com,m:simona@ffwll.ch,m:siqueira@igalia.com,m:sunpeng.li@amd.com,m:tzimmermann@suse.de,m:uma.shankar@intel.com,m:chaitanya.kumar.borah@intel.com,m:xaver.hugl@kde.org,m:pekka.paalanen@collabora.com,m:matthew.schwartz@linux.dev,m:amd-gfx@lists.freedesktop.org,m:kernel-dev@igalia.com,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:intel-xe@lists.freedesktop.org,m:intel-gfx@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110856-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[intel.com,kde.org,collabora.com,linux.dev,lists.freedesktop.org,igalia.com,oss.qualcomm.com,kernel.org,gmail.com,poorly.run,somainline.org,vger.kernel.org];
-	DKIM_TRACE(0.00)[igalia.com:-];
+	FORGED_RECIPIENTS(0.00)[m:bryan.odonoghue@linaro.org,m:vkoul@kernel.org,m:kishon@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:neil.armstrong@linaro.org,m:bod@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,igalia.com:mid,igalia.com:from_mime,igalia.com:email,vger.kernel.org:from_smtp]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,devicetree.org:url,linaro.org:mid,linaro.org:dkim,linaro.org:from_mime,linaro.org:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B34946324FB
+X-Rspamd-Queue-Id: 82ECD632505
 
-Ensure the driver tracks changes in any colorop property of a plane
-color pipeline by using the same mechanism of CRTC color management and
-update plane color blocks when any colorop property changes. It fixes an
-issue observed on gamescope settings for night mode which is done via
-shaper/3D-LUT updates.
+On 5/23/26 05:48, Bryan O'Donoghue wrote:
+> Add a base schema initially compatible with x1e80100 to describe MIPI CSI2
+> PHY devices.
+> 
+> The hardware can support both CPHY, DPHY and a special split-mode DPHY.
+> 
+> The schema here defines three ports:
+> 
+> port@0:
+>      The first input port where a sensor is always required.
+> 
+> port@1:
+>      A second optional input port which if present implies DPHY split-mode.
+> 
+> port@2:
+>      A third always required output port which connects to the controller.
+> 
 
-Fixes: 9ba25915efba ("drm/amd/display: Add support for sRGB EOTF in DEGAM block")
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Melissa Wen <mwen@igalia.com>
----
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+This port numeration is imperfect, because port@0 and port@2 are required,
+while middle port@1 is optional.
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index ba7f98a87808..ca97f1da8c0e 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10215,7 +10215,7 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_commit *state,
- 			continue;
- 
- 		bundle->surface_updates[planes_count].surface = dc_plane;
--		if (new_pcrtc_state->color_mgmt_changed) {
-+		if (new_pcrtc_state->color_mgmt_changed || new_plane_state->color_mgmt_changed) {
- 			bundle->surface_updates[planes_count].gamma = &dc_plane->gamma_correction;
- 			bundle->surface_updates[planes_count].in_transfer_func = &dc_plane->in_transfer_func;
- 			bundle->surface_updates[planes_count].gamut_remap_matrix = &dc_plane->gamut_remap_matrix;
-@@ -12057,6 +12057,10 @@ static bool should_reset_plane(struct drm_atomic_commit *state,
- 	if (new_crtc_state->color_mgmt_changed)
- 		return true;
- 
-+	/* Plane color pipeline or its colorop changes. */
-+	if (new_plane_state->color_mgmt_changed)
-+		return true;
-+
- 	/*
- 	 * On zpos change, planes need to be reordered by removing and re-adding
- 	 * them one by one to the dc state, in order of descending zpos.
+Like it was stated before a number of times, it seems natural to operate
+with two ports, where input port may have two endpoints rather than 3 ports,
+also that approach solves the problem of a hole in the port numeration.
+
+> The CSIPHY devices have their own pinouts on the SoC as well as their own
+> individual voltage rails.
+> 
+> The need to model voltage rails on a per-PHY basis leads us to define
+> CSIPHY devices as individual nodes.
+> 
+> Two nice outcomes in terms of schema and DT arise from this change.
+> 
+> 1. The ability to define on a per-PHY basis voltage rails.
+> 2. The ability to require those voltage.
+> 
+> We have had a complete bodge upstream for this where a single set of
+> voltage rail for all CSIPHYs has been buried inside of CAMSS.
+> 
+> Much like the I2C bus which is dedicated to Camera sensors - the CCI bus in
+> CAMSS parlance, the CSIPHY devices should be individually modelled.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>   .../bindings/phy/qcom,x1e80100-csi2-phy.yaml       | 209 +++++++++++++++++++++
+>   1 file changed, 209 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml
+> new file mode 100644
+> index 0000000000000..270375f949880
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml
+> @@ -0,0 +1,209 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/qcom,x1e80100-csi2-phy.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm CSI2 PHY
+> +
+> +maintainers:
+> +  - Bryan O'Donoghue <bod@kernel.org>
+> +
+> +description:
+> +  Qualcomm MIPI CSI2 C-PHY/D-PHY combination PHY. Connects MIPI CSI2 sensors
+> +  to Qualcomm's Camera CSI Decoder. The PHY supports both C-PHY and D-PHY
+> +  modes.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,x1e80100-csi2-phy
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  "#phy-cells":
+> +    const: 1
+> +    description:
+> +      The single cell specifies the PHY operating mode.
+
+#phy-cells should be 0, because the PHY operating mode is well defined
+by 'bus-type' property of an endpoint on the sensor side, the opposite
+side of CAMSS/CSID as a CSIPHY "consumer" should not dictate the PHY type.
+
+> +
+> +  clocks:
+> +    maxItems: 2
+> +
+> +  clock-names:
+> +    items:
+> +      - const: core
+> +      - const: timer
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  operating-points-v2:
+> +    maxItems: 1
+> +
+> +  power-domains:
+> +    items:
+> +      - description: MMCX voltage rail
+> +      - description: MXC or MXA voltage rail
+
+Only "qcom,x1e80100-csi2-phy" device is supported so far, unlikely it's
+the case that "MXC or MXA voltage rail" should be specified, it'd be
+just one of two or both.
+
+> +
+> +  power-domain-names:
+> +    items:
+> +      - const: mmcx
+> +      - const: mx
+> +
+> +  vdda-0p9-supply:
+> +    description: Phandle to a 0.9V regulator supply to a PHY.
+> +
+> +  vdda-1p2-supply:
+> +    description: Phandle to 1.2V regulator supply to a PHY.
+> +
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    properties:
+> +      port@0:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        description: Sensor input. Always present.
+> +        unevaluatedProperties: false
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: /schemas/media/video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +            properties:
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +              clock-lanes:
+> +                maxItems: 1
+> +              remote-endpoint: true
+> +            required:
+> +              - data-lanes
+> +              - remote-endpoint
+> +
+> +      port@1:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        description:
+> +          Second sensor input. When present, indicates DPHY split mode.
+> +        unevaluatedProperties: false
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: /schemas/media/video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +            properties:
+> +              data-lanes:
+> +                maxItems: 1
+> +              clock-lanes:
+> +                maxItems: 1
+> +              remote-endpoint: true
+> +            required:
+> +              - data-lanes
+> +              - clock-lanes
+> +              - remote-endpoint
+
+As it's stated above, it should be converted to a single port with two
+endpoints, it'd be done in accordance to video-interfaces.yaml.
+
+> +
+> +      port@2:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        description: Output to CAMSS controller.
+> +        unevaluatedProperties: false
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: /schemas/graph.yaml#/$defs/endpoint-base
+> +            unevaluatedProperties: false
+> +            properties:
+> +              remote-endpoint: true
+> +            required:
+> +              - remote-endpoint
+> +
+> +    required:
+> +      - port@0
+> +      - port@2
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - "#phy-cells"
+> +  - clocks
+> +  - clock-names
+> +  - interrupts
+> +  - operating-points-v2
+> +  - power-domains
+> +  - power-domain-names
+> +  - vdda-0p9-supply
+> +  - vdda-1p2-supply
+> +  - ports
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/clock/qcom,x1e80100-camcc.h>
+> +    #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
+> +    #include <dt-bindings/power/qcom,rpmhpd.h>
+> +
+> +    csiphy4: csiphy@ace4000 {
+> +        compatible = "qcom,x1e80100-csi2-phy";
+> +        reg = <0x0ace4000 0x2000>;
+> +        #phy-cells = <1>;
+> +
+> +        clocks = <&camcc CAM_CC_CSIPHY0_CLK>,
+> +                 <&camcc CAM_CC_CSI0PHYTIMER_CLK>;
+> +        clock-names = "core",
+> +                      "timer";
+> +
+> +        operating-points-v2 = <&csiphy_opp_table>;
+> +
+> +        interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>;
+> +
+> +        power-domains = <&rpmhpd RPMHPD_MMCX>,
+> +                        <&rpmhpd RPMHPD_MX>;
+> +        power-domain-names = "mmcx",
+> +                             "mx";
+> +
+> +        vdda-0p9-supply = <&vreg_l2c_0p8>;
+> +        vdda-1p2-supply = <&vreg_l1c_1p2>;
+> +
+> +        ports {
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            port@0 {
+> +                reg = <0>;
+> +                csiphy0_in_ep: endpoint {
+> +                    data-lanes = <0 1>;
+> +                    clock-lanes = <2>;
+> +                    remote-endpoint = <&sensor_out>;
+> +                };
+> +            };
+> +
+> +            port@2 {
+> +                reg = <2>;
+> +                csiphy0_out_ep: endpoint {
+> +                    remote-endpoint = <&controller_in>;
+> +                };
+> +            };
+> +        };
+> +    };
+> +
+> +    csiphy_opp_table: opp-table {
+> +        compatible = "operating-points-v2";
+> +
+> +        opp-300000000 {
+> +            opp-hz = /bits/ 64 <300000000>;
+> +            required-opps = <&rpmhpd_opp_low_svs_d1>,
+> +                            <&rpmhpd_opp_low_svs_d1>;
+> +        };
+> +
+> +        opp-400000000 {
+> +            opp-hz = /bits/ 64 <400000000>;
+> +            required-opps = <&rpmhpd_opp_low_svs>,
+> +                            <&rpmhpd_opp_low_svs_d1>;
+> +        };
+> +
+> +        opp-480000000 {
+> +            opp-hz = /bits/ 64 <480000000>;
+> +            required-opps = <&rpmhpd_opp_low_svs>,
+> +                            <&rpmhpd_opp_low_svs_d1>;
+> +        };
+> +    };
+> 
+
 -- 
-2.53.0
-
+Best wishes,
+Vladimir
 
