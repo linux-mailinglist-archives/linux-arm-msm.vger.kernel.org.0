@@ -1,159 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-110802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +G5eJkGzHmr7JAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 12:41:05 +0200
+	id GFI+FgK0Hmr7JAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 12:44:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EA8F62CC2B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 12:41:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 55C3162CCF2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 12:44:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7B1893063750
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 10:27:13 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A96343021B5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 10:33:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECC5E3D6CA0;
-	Tue,  2 Jun 2026 10:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56EAA3D6476;
+	Tue,  2 Jun 2026 10:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OwroatbO"
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="vC1W8xB3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35E53D6476;
-	Tue,  2 Jun 2026 10:27:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 391193D16F0
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 10:33:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780396021; cv=none; b=MUaxdZszyVhSLZ4Pg1bjvw3v2f+FcBHgvSB2jQsla79TqABQDAtbGC9q5gN7O9IBB9IvxurPyYhCfXhHITt9i4shCdhLa5P0g1UDwf6cXY0E7+RxQWvE+dBC6Bz+5Ucwooczg1aIR+qVozNk52rkjFOMW6+AlkYtvRSO8NfzYjg=
+	t=1780396392; cv=none; b=ODFBTvD5skA//o6Y8zqkepDSHcluN50EXc8ZEc19Wqt6Bo/uG/8wBleB7bGjzYQO+yaoFKw0py+nNt/9kTqjXX9p9WSUGJ2acTiRNFuqWnTGVstdOQIz9PyrJSGhftAuG73RppTJYtVl4+HulJWmjU70d312aosfGsvPVwfEB3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780396021; c=relaxed/simple;
-	bh=jNbT1xfI4AKES/R6C034ioB/2d5MtkYrDKcFt4KRmV0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OjVkAxTD5WNuaDYvQd46IpwAueQUXM9VofgPMb0WwL4GjyZ7OYbjd5Ajh09qlmMrDlfgYq2Ci8gf7xm4ND7dcH6Z5+aImP4oQDQwtt74jCHNM4VomXVNTU5Z5m9y23RSeaThgLohJXGOsBJzwxkleznVx+ajsiHa3V6AjVO1Yuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OwroatbO; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B381F00898;
-	Tue,  2 Jun 2026 10:26:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780396020;
-	bh=3jBEa69c8N63ks09izWxmsniZ4VAuLD5W5zxrLrC+J4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=OwroatbOTf4JWpFHrVpcw+sN0hdMdAEPBoMBttFTGmMLSOKGRTelONzECEeZtvS+y
-	 1EbAc6+nUn4uChqO4m11OWVXf0jKj5tw8QQBZOQ4LsPYJhMGnzFoFMHdNfifOMrND6
-	 O2lCv7aEm+QTP9RFHE41ksn3qrg0WT5XxM4i9rHCISgI/LpMA0uiYwqi9WBJdFXQam
-	 LtUt2SKU2pj2z/zQUjC4KwEy6hSuuaQBxlf14WIEcPfxNjtxRbOGo8YXWmEZY3A/K8
-	 QA1/DtCcDHaWOEgIyLWq9OiisE5f5KIMzL9lvjBkc8IiV2wFDs+ccMSzadMCCICuer
-	 yQ4dHubwpHeuQ==
-Message-ID: <ec7c564e-745a-4998-af9a-e9632fe063f7@kernel.org>
-Date: Tue, 2 Jun 2026 11:26:56 +0100
+	s=arc-20240116; t=1780396392; c=relaxed/simple;
+	bh=iOHUK6brXgyIm879Y6Al2FeqYaz5id6uidKZL33WOWI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GXhYk1t7BuAmOrC+m+CiURlKnhAeksDXEAY+qrn6awXQA8ocM4RvlW7OUWPGo3EfyqEDYaj7YFwpKS3BncyWWJ5DdwZoWO4VtVxI3cUCNv1AsnRZEqSCyNB8RS446ycYQzj1TMnG5nLTJW/csV0/DPgy3OlwvHDRBESF/axxyw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=vC1W8xB3; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AE2AB353E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 03:33:04 -0700 (PDT)
+Received: from [192.168.0.1] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 646CE3F632
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 03:33:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1780396389; bh=iOHUK6brXgyIm879Y6Al2FeqYaz5id6uidKZL33WOWI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=vC1W8xB3tboV3mgCF8OUQDOdlXZnl/rDlMnGG/KQsF9jCmQzVXH4/wQaRmfXTvzMz
+	 MFf264GD4bUWR4LxS2FflmI5niDnULfKqC3IYJ0m+Tz98Ot3K+b8eQ+SWwlDv1CT89
+	 McWEV9xBBatWL2zYJGQXBrXymb9f8vLf9OpN4dU8=
+Date: Tue, 2 Jun 2026 11:32:32 +0100
+From: Liviu Dudau <liviu.dudau@arm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>,
+	"Kandpal, Suraj" <suraj.kandpal@intel.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <siqueira@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
+	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Louis Chauvet <louis.chauvet@bootlin.com>,
+	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org
+Subject: Re: [PATCH v5 3/8] drm/komeda: use drmm_writeback_connector_init()
+Message-ID: <ah6xQEWemicF_ECc@e142607>
+References: <20260505-wb-drop-encoder-v5-0-42567b7c7af2@oss.qualcomm.com>
+ <20260505-wb-drop-encoder-v5-3-42567b7c7af2@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: hamoa: Reserve low IOVA range for
- Iris
-To: Daniel J Blueman <daniel@quora.org>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20260601041336.9497-1-daniel@quora.org>
- <ecavEnqJTDXvfFykc9uJb5No7ioighpjrCdw2CFZ4c8Izr5DxpTs-606Bg7K0RtHTaOqksWivHxWQLzMBP6qow==@protonmail.internalid>
- <20260601041336.9497-2-daniel@quora.org>
-From: Bryan O'Donoghue <bod@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=bod@kernel.org; keydata=
- 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
-In-Reply-To: <20260601041336.9497-2-daniel@quora.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 9EA8F62CC2B
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260505-wb-drop-encoder-v5-3-42567b7c7af2@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 55C3162CCF2
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-110803-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[35];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110802-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[linux.intel.com,intel.com,amd.com,igalia.com,gmail.com,ffwll.ch,kernel.org,suse.de,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,ideasonboard.com,glider.be,raspberrypi.com,wanadoo.fr,bootlin.com,lists.freedesktop.org,vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[liviu.dudau@arm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[arm.com:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
 	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,bootlin.com:email,qualcomm.com:email,arm.com:dkim,arm.com:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 01/06/2026 05:13, Daniel J Blueman wrote:
-> On X1-family hamoa platforms, Iris DMA below IOVA 0x25800000 (600MB)
-> triggers unhandled SMMU page faults
+On Tue, May 05, 2026 at 03:25:00AM +0300, Dmitry Baryshkov wrote:
+> The driver uses drm_writeback_connector_init() instead of its drmm
+> counterpart, but it doesn't perform the job queue cleanup (neither
+> manually nor by calling drm_writeback_connector_cleanup()). On the
+> contrary, the drmm_writeback_connector_init() function ensures the
+> proper cleanup of the job queue.
+> 
+> Use drmm_plain_encoder_alloc() to allocate simple encoder and
+> drmm_writeback_connector_init() in order to initialize writeback
+> connector instance.
+> 
+> Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+> Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-How do we know that is a correct address - does it come from qcom 
-documentation or trial and error ?
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
 
----
-bod
+Best regards,
+Liviu
+
+> ---
+>  .../drm/arm/display/komeda/komeda_wb_connector.c   | 30 ++++++++++++----------
+>  1 file changed, 17 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c b/drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c
+> index 41cc3e080dc9..bcc53d4015f1 100644
+> --- a/drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c
+> +++ b/drivers/gpu/drm/arm/display/komeda/komeda_wb_connector.c
+> @@ -5,6 +5,7 @@
+>   *
+>   */
+>  #include <drm/drm_framebuffer.h>
+> +#include <drm/drm_managed.h>
+>  #include "komeda_dev.h"
+>  #include "komeda_kms.h"
+>  
+> @@ -121,17 +122,10 @@ komeda_wb_connector_fill_modes(struct drm_connector *connector,
+>  	return 0;
+>  }
+>  
+> -static void komeda_wb_connector_destroy(struct drm_connector *connector)
+> -{
+> -	drm_connector_cleanup(connector);
+> -	kfree(to_kconn(to_wb_conn(connector)));
+> -}
+> -
+>  static const struct drm_connector_funcs komeda_wb_connector_funcs = {
+>  	.reset			= drm_atomic_helper_connector_reset,
+>  	.detect			= komeda_wb_connector_detect,
+>  	.fill_modes		= komeda_wb_connector_fill_modes,
+> -	.destroy		= komeda_wb_connector_destroy,
+>  	.atomic_duplicate_state	= drm_atomic_helper_connector_duplicate_state,
+>  	.atomic_destroy_state	= drm_atomic_helper_connector_destroy_state,
+>  };
+> @@ -143,13 +137,15 @@ static int komeda_wb_connector_add(struct komeda_kms_dev *kms,
+>  	struct komeda_wb_connector *kwb_conn;
+>  	struct drm_writeback_connector *wb_conn;
+>  	struct drm_display_info *info;
+> +	struct drm_encoder *encoder;
+> +
+>  	u32 *formats, n_formats = 0;
+>  	int err;
+>  
+>  	if (!kcrtc->master->wb_layer)
+>  		return 0;
+>  
+> -	kwb_conn = kzalloc_obj(*kwb_conn);
+> +	kwb_conn = drmm_kzalloc(&kms->base, sizeof(*kwb_conn), GFP_KERNEL);
+>  	if (!kwb_conn)
+>  		return -ENOMEM;
+>  
+> @@ -165,11 +161,19 @@ static int komeda_wb_connector_add(struct komeda_kms_dev *kms,
+>  		return -ENOMEM;
+>  	}
+>  
+> -	err = drm_writeback_connector_init(&kms->base, wb_conn,
+> -					   &komeda_wb_connector_funcs,
+> -					   &komeda_wb_encoder_helper_funcs,
+> -					   formats, n_formats,
+> -					   BIT(drm_crtc_index(&kcrtc->base)));
+> +	encoder = drmm_plain_encoder_alloc(&kms->base, NULL,
+> +					   DRM_MODE_ENCODER_VIRTUAL, NULL);
+> +	if (IS_ERR(encoder))
+> +		return PTR_ERR(encoder);
+> +
+> +	drm_encoder_helper_add(encoder, &komeda_wb_encoder_helper_funcs);
+> +
+> +	encoder->possible_crtcs = drm_crtc_mask(&kcrtc->base);
+> +
+> +	err = drmm_writeback_connector_init(&kms->base, wb_conn,
+> +					    &komeda_wb_connector_funcs,
+> +					    encoder,
+> +					    formats, n_formats);
+>  	komeda_put_fourcc_list(formats);
+>  	if (err) {
+>  		kfree(kwb_conn);
+> 
+> -- 
+> 2.47.3
+> 
+
+-- 
+====================
+| I would like to |
+| fix the world,  |
+| but they're not |
+| giving me the   |
+ \ source code!  /
+  ---------------
+    ¯\_(ツ)_/¯
 
