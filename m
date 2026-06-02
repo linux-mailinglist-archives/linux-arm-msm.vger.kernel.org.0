@@ -1,63 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-110714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GCIVM6VuHmrwjAkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 07:48:21 +0200
+	id aBepJxd5HmqPjQkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 08:32:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1C04628B9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 07:48:20 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAF28629077
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 08:32:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 161193025240
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 05:47:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1339F30179C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 06:29:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67E783939C2;
-	Tue,  2 Jun 2026 05:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C29153A7193;
+	Tue,  2 Jun 2026 06:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="Uu9xj1Wu"
+	dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b="TaHNG+Aa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from outbound0.mail.transip.nl (outbound0.mail.transip.nl [149.210.149.69])
+Received: from outbound11.mail.transip.nl (outbound11.mail.transip.nl [136.144.136.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B01E393DC1;
-	Tue,  2 Jun 2026 05:46:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=149.210.149.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1543A6EF1;
+	Tue,  2 Jun 2026 06:29:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.136.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780379214; cv=none; b=H5PeMPq25+ypvgwI0DjLyxFUcuBPzGeioY1vhaNM7/L24dDLREhQmLnjCSW2B0e5d4cxMA0aoqxFvzITQrnPO2pBOG2RaA07Teyk8VgZ9JxgXHOCf/GEurC4Z9QWUS0BhhH1qjdtxXtCKHYynBBaXvH6zIQWkBmzc3IywhHDy+g=
+	t=1780381783; cv=none; b=npnwi+dRXkpjwBwWE8VJIweKRJIT55Vh98qyarFsZlyssaSXcj4DNesNxZjnzTcL6xga4LrobnTkuDnBwdMctnOqCsry2veTzZn4ZIdM/hfob3zBTVDR9ILLefmtIsCCYDBa24+LIlwqs6hxtZ/H+q98CVRWOxZ022j3jOHQ4KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780379214; c=relaxed/simple;
-	bh=WTlnb6WhBew/Lr7lTzYI38c13gwnVdQUjWbEmQwh1Cs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KwCIn676HvJ/HZ1/uLaqUIjX1VaJIo3DCdOAah84IYeZ/AHkB6epZq2UZAlMz04tsTEWmsXCAmvctCh4wlDogOIieljVkz4qkcw/JdNxGDWLYH4LZYxspJikEohd7XIqakhRWAoo9P8DB+nGisjiAbjS8szpuknMreLpPP17qsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=Uu9xj1Wu; arc=none smtp.client-ip=149.210.149.69
+	s=arc-20240116; t=1780381783; c=relaxed/simple;
+	bh=L1fbsxfPEuEzvH2NsGg+9KqZBofam8axo9KWKn3C2G8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=C0d9xFKQ2zSwGDs/3hCfOGR6JPe5XCb5AS0wgjw0qiOrsjucK2WG1TRE0XWCI+YH3GJAC2Y1vrMZuE0TCl0Oe4ei/gaPhxWGbXEH5tAapj0Xb//Y7cw9YHYYe1pHdy1CZ4yKvVy5G+9bOWVsrN51S82meIbdGDWDC5FVG2XTlHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=TaHNG+Aa; arc=none smtp.client-ip=136.144.136.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=herrie.org
-Received: from submission8.mail.transip.nl (unknown [10.103.8.159])
-	by outbound0.mail.transip.nl (Postfix) with ESMTP id 4gV0Fc3LW8zxP7H;
-	Tue,  2 Jun 2026 07:46:44 +0200 (CEST)
+Received: from submission14.mail.transip.nl (unknown [10.103.8.165])
+	by outbound11.mail.transip.nl (Postfix) with ESMTP id 4gV1Bw4VfszkQNKZ;
+	Tue,  2 Jun 2026 08:29:28 +0200 (CEST)
 Received: from herrie-desktop.. (180-93-184-31.ftth.glasoperator.nl [31.184.93.180])
-	by submission8.mail.transip.nl (Postfix) with ESMTPA id 4gV0Fb5wrGz3RgQXq;
-	Tue,  2 Jun 2026 07:46:43 +0200 (CEST)
+	by submission14.mail.transip.nl (Postfix) with ESMTPA id 4gV1Bw0k2bz3RgQXr;
+	Tue,  2 Jun 2026 08:29:28 +0200 (CEST)
 From: Herman van Hazendonk <github.com@herrie.org>
 To: sboyd@kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
+Cc: Herman van Hazendonk <github.com@herrie.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Michael Turquette <mturquette@baylibre.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Herman van Hazendonk <github.com@herrie.org>
-Subject: Re: [PATCH 2/2] clk: qcom: gcc-msm8660: register PLL4_VOTE for LPASS
-Date: Tue,  2 Jun 2026 07:46:43 +0200
-Message-ID: <20260602054643.452049-1-github.com@herrie.org>
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] clk: qcom: clk-pll: reject vote enable on orphan parent
+Date: Tue,  2 Jun 2026 08:29:27 +0200
+Message-ID: <20260602062927.467249-1-github.com@herrie.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260602042747.277270-3-github.com@herrie.org>
-References: <20260602042747.277270-3-github.com@herrie.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,104 +58,120 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: ClueGetter at submission8.mail.transip.nl
+X-Scanned-By: ClueGetter at submission14.mail.transip.nl
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=herrie.org; t=1780379204; h=from:subject:to:cc:
- references:in-reply-to:date:mime-version;
- bh=XjBv83Sj8FKAhDYVPn4VOY/phqktLX+/RqBuAjWHddY=;
- b=Uu9xj1WuBIhW0ITKJ7VBcHA+hBrhHIW5bBuRjq2MrCn7MIqXRySHoTNVNmsUvZsYuMjDJ7
- 0vBOfzEx4heodOtWd2XYZt+W1h/rMhbQFZA2zk9bNw5qWIs1AiQH23jIkGvT0eciHXvT8s
- AWUmMDF1WryL0Mh93VAQt2CAkHKok1zDFodInjK+kxzI9y2EnvJPYo04DWsHxEAEW/UmkE
- a61YoK+wfhkM3tiC0YrZuqdWq7FEUQtV1kupXv8nRxjUfub2Ja4gxVlD/wH2o4sY9E1QBb
- UQh2oVGR3ec1tdWyCZnnVK0G9bX97tUPuLdWWyK0F1YY8p1kt3PSe8obFl+zUA==
+ s=transip-a; d=herrie.org; t=1780381768; h=from:subject:to:cc:date:
+ mime-version; bh=840DlinO4B97ZCMg4uxTVGT94NCA95j2Wc9qNbGs1Jc=;
+ b=TaHNG+Aad0c6YbZBv0d+yoXqeV/hlbQ7Rv5GIyV+nUD9ImVdGvp/T6YulxhVxEgC/RJQ1f
+ we+QRJrASemdy+WdD2fOVFckh4Gf0NGj+dpWHRkfTdvKBlEJbJXZgtwzdD9DPMe/PePiT4
+ dvS3UzIa2UV5gt+muaLjcyrBn88NfR9TXUP6Jc/H4chzuybDpFYrIGoJZCTKR8/4asJgdG
+ p14GmD6L1vhaUFCyp19GVkzHb6Gjj0ThrhPfNI9+n47FanI6cY3KKpj0FizH36be7Q3KJX
+ kQHlVUSePBAah0wHff5QF3xZUKr5jP5Qjj2M7HKbqtAhTptjGJF81xs8hvKQEw==
 X-Report-Abuse-To: abuse@transip.nl
-X-Spamd-Result: default: False [1.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[herrie.org:s=transip-a];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110714-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_FIVE(0.00)[5];
-	DMARC_NA(0.00)[herrie.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FROM_NEQ_ENVFROM(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	NEURAL_HAM(-0.00)[-1.000];
 	DKIM_TRACE(0.00)[herrie.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-110715-lists,linux-arm-msm=lfdr.de];
+	DMARC_NA(0.00)[herrie.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,herrie.org:mid,herrie.org:dkim]
-X-Rspamd-Queue-Id: F1C04628B9F
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+X-Rspamd-Queue-Id: EAF28629077
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi,
+clk_pll_vote_enable() unconditionally feeds the result of
+clk_hw_get_parent(hw) through to_clk_pll() and on to wait_for_pll().
+The common clock framework permits clk_enable() on an orphan clock
+(supplier not bound yet), in which case clk_hw_get_parent() returns
+NULL. to_clk_pll(NULL) then yields container_of(NULL, struct clk_pll,
+clkr) -- a non-NULL bogus pointer pointing into the negative offset
+of struct clk_pll.
 
-Thanks, two real items here. Triage:
+wait_for_pll() reaches for the parent's name via
+clk_hw_get_name(&pll->clkr.hw). Because clkr sits at a fixed offset
+inside struct clk_pll, &pll->clkr.hw cancels the to_clk_pll offset
+exactly back to NULL and clk_hw_get_name() then dereferences
+core->name on a NULL clk_hw, panicking the kernel.
 
-[High] clk_pll_vote_enable() NULL deref on orphan parent.
+This is reachable today: gcc-msm8960.c and gcc-apq8064.c register a
+pll4_vote whose parent (pll4) lives in lcc-msm8960.c, and the future
+gcc-msm8660 pll4_vote does the same. If anything calls clk_enable()
+on pll4_vote between gcc probe and the LCC clock controller binding,
+the system panics. The exposure widens as more SoCs adopt the same
+cross-controller voter pattern.
 
-Confirmed: clk_hw_get_parent() can return NULL while the LCC parent
-is not yet bound, to_clk_pll(NULL) is then handed to wait_for_pll(),
-and clk_hw_get_name(&pll->clkr.hw) reverses the offset back to NULL
-and panics in core/core->name.
+Resolve the parent with clk_hw_get_parent() once, return -ENODEV when
+it is NULL, and only call into wait_for_pll() with a real
+struct clk_pll. The enable-regmap write is also gated behind the
+parent check so a failed enable cannot leave the vote bit asserted
+against a clock the framework has not finished wiring up.
 
-Not introduced by this patch though: drivers/clk/qcom/gcc-msm8960.c
-and gcc-apq8064.c already register an identical pll4_vote with the
-same parent_data fw_name = "pll4" and clk_pll_vote_ops, and have for
-years. The hazard already lives in mainline; my patch is a clone of
-the same pattern for the older Scorpion-class MSM8x60 family.
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+---
+ drivers/clk/qcom/clk-pll.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-I will send a separate one-liner fix to drivers/clk/qcom/clk-pll.c
-adding the NULL check in clk_pll_vote_enable() so the cross-driver
-voter pattern stops being a latent panic everywhere it is used.
-That patch is a precondition for v2 of this series. I would rather
-not invent a parallel non-vote ops for MSM8660 specifically when
-the right answer is to make the existing one safe.
+diff --git a/drivers/clk/qcom/clk-pll.c b/drivers/clk/qcom/clk-pll.c
+index 26ba709f43c8..7b26129565fe 100644
+--- a/drivers/clk/qcom/clk-pll.c
++++ b/drivers/clk/qcom/clk-pll.c
+@@ -199,14 +199,31 @@ static int wait_for_pll(struct clk_pll *pll)
+ 
+ static int clk_pll_vote_enable(struct clk_hw *hw)
+ {
++	struct clk_hw *parent;
+ 	int ret;
+-	struct clk_pll *p = to_clk_pll(clk_hw_get_parent(hw));
++
++	/*
++	 * Vote clocks can be registered on one clock controller and have
++	 * the underlying PLL live on a different one (e.g. PLL4_VOTE in
++	 * GCC for the LPASS PLL4 owned by LCC on the MSM8x60 / MSM8960 /
++	 * APQ8064 families). The common clock framework permits enable
++	 * on an orphan, so clk_hw_get_parent() can legitimately return
++	 * NULL here while the supplier controller has not finished
++	 * probing yet. Reject the enable rather than handing a bogus
++	 * container_of(NULL, struct clk_pll, clkr) pointer to
++	 * wait_for_pll() - inside wait_for_pll(), clk_hw_get_name()
++	 * would reverse the offset back to NULL and dereference
++	 * core->name.
++	 */
++	parent = clk_hw_get_parent(hw);
++	if (!parent)
++		return -ENODEV;
+ 
+ 	ret = clk_enable_regmap(hw);
+ 	if (ret)
+ 		return ret;
+ 
+-	return wait_for_pll(p);
++	return wait_for_pll(to_clk_pll(parent));
+ }
+ 
+ const struct clk_ops clk_pll_vote_ops = {
 
-[Medium] qcom,gcc-msm8660.yaml does not allow "pll4" in clock-names.
+base-commit: 944125b4c454b58d2fe6e35f1087a932b2050dff
+-- 
+2.43.0
 
-Real, and an oversight on my part. The qcom,gcc-apq8064.yaml schema
-already documents the same shape -- clocks maxItems = 3, third entry
-"pll4" -- because apq8064's gcc-apq8064.c has the same pll4_vote
-pattern. I will mirror that here in v2:
-
-  -  clocks:
-  -    maxItems: 2
-  -  clock-names:
-  -    items:
-  -      - const: pxo
-  -      - const: cxo
-  +  clocks:
-  +    minItems: 2
-  +    maxItems: 3
-  +  clock-names:
-  +    minItems: 2
-  +    items:
-  +      - const: pxo
-  +      - const: cxo
-  +      - const: pll4
-
-The yaml fix becomes a new PATCH 1/3 in v2 (ahead of the existing
-CE2 + PLL4_VOTE driver patches) so the schema lands before the
-consumer.
-
-I will hold v2 of this series until both the clk-pll.c NULL-check
-fix has had review traction and any further feedback on the v1
-patches has come in.
-
-Thanks,
-Herman
 
