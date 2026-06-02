@@ -1,165 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-110809-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110810-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id yYUBCTTUHmpDVgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110809-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 15:01:40 +0200
+	id qf7LHzXXHmoLVwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110810-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 15:14:29 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76CBF62E3DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 15:01:37 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBB0C62E5CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 15:14:28 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b="Jxd2rf0/";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110809-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110809-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=pass header.d=foss.st.com header.s=selector2 header.b=NI8wEIUD;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110810-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110810-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=foss.st.com;
+	arc=reject ("cv is fail on i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8F3EE308838F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 12:54:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3B0DD30209CA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 13:04:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8ACC73E121A;
-	Tue,  2 Jun 2026 12:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1808A3E7BBC;
+	Tue,  2 Jun 2026 13:03:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011037.outbound.protection.outlook.com [52.101.65.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAF33DEFF6
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 12:54:41 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780404883; cv=none; b=j2ttznQ0oU97Um1zbXn8fWeNJ0HLLq4lhRFzPV4y4T5Qdof25HfRPz1giTBw9+7KVTNler7rDo/orsm7v765/uMzBsiQL9UbxQyfWAxn3kkjiEx9rvTY8oOaxa0rpsYGSkhiBEbPK7zfV4HbX5abYBh4YE9UNWHfqhET/5RRsSg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780404883; c=relaxed/simple;
-	bh=zQOZPBrgpfZjqODyyKAiUxM7OwUcXe4zzYiOVBrwJGQ=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=Vd6LgomJsFWfBErizek3jqlA9UTbW5UXq6UwQDIrYQZNNIJcdipfr68RPzZ81xyCqihLUCoE0LEBeEsl7QWk3xjAXdWb2hCSJ0HVq6xo+uMlufJtYnzUGenvl94Teirhakm6o6lurucL8Nf1335hSm8PILnm1Gw0kRLV9OUsM2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jxd2rf0/; arc=none smtp.client-ip=209.85.214.174
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2bf2e8ccca1so23850765ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2026 05:54:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780404881; x=1781009681; darn=vger.kernel.org;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QlHVyX//uRQweKI8AEsyxUDPsp1hZA4ulnXxEiRJiS8=;
-        b=Jxd2rf0/EzKSy3C/zB0Spm5gIDg5rRtlRV7Rd/JtcNwiuygIsOAFd1PF5NgKxJDzV/
-         khW9jkE2RVZYZzxDiF8FOKbKN6s1rWXVjpJWq9S6gFUhHY8d8E+cbyx9M46mr74GnFV9
-         JIvhJGNnXCRtcF7Um0xzii4b4yp42U6ivr3ut/o4c4IU8WOGnNd/5coXL+NdqXU6S1pu
-         kccWVhSbsCCWAxzL7Uddbt07OhR7NWkCp0XchMGN5iaKwUKgr1LGnNqhGsMv3rOi+iXT
-         rYuwcCFM8mqTT/XFbXYMbWe0ia7tXAZMbbDN0tEG0F1cbb/q6yfaXvmfElCWI3Pxj8UL
-         /EHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780404881; x=1781009681;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QlHVyX//uRQweKI8AEsyxUDPsp1hZA4ulnXxEiRJiS8=;
-        b=JXPnzGW/K4VuHohu/+YAlHcfo4fA6aV6idXY5KXBL6Do498emoIQ8YXyoaf73RqYen
-         AO3TngCQD8G+MFb6Z3VtOSA8SfhQCbPdIjXZg9daVhPPBGi7/ogxc9T2CzaSNGO+Ue+k
-         9bnHwfayf/v6PaLMcz/80HsRMq5ExgYJI/Q7XyrxqO+9WF1mYRrqi+R9nYm4DYzmvBq7
-         OpxCNe7j/wudMZEf6V57kBVVGugcRn2MhhQ5rR8r2BQ48VgXTe6kIzS37McnuUy6viYW
-         YKNwSEBRfvSWGiLsuwuY6U3ztI+7fJaeestGinSb+giWRalOOwUfCoZndjM5Ikg3LKWV
-         lGXw==
-X-Forwarded-Encrypted: i=1; AFNElJ/jwLZOlv2PSR2a1rb+Iajczzvxk1fqpb4eBqTtgYTSsIYs0m0t5cwLznE1tihswHr9PRH5/g0krXI4+JPz@vger.kernel.org
-X-Gm-Message-State: AOJu0YyDK5/f1R53xQ2GfQP66Dtgu4RGGopjKh1S2Bb3f/6mN5AJCipN
-	M0AeCpvHSmsk5HCnUBcArq103q9U7gazkXFsIU8hdREVOqWqrExV1odfZsvayQD2I84mdg==
-X-Gm-Gg: Acq92OF3DK7uLQr30S/AqsgMQil4rPetdOg3QFgAjzpS1zqwA6ybJ/VQHwk0AVoMbwv
-	oRWazFY6PCbiB3bR9DG6UuA/W6rXBxvRGcexEMKraHM2FpqYByCHWmYGwTdCxUROrCbD5Cox5H0
-	w4+dwLWuSyPps71wyrz912lwEGiTWBCN4mM7wHt1cAn6p+p7mSYAtAZrFfOoL/En417H3TTWrcc
-	jYSZ2FI7YylTJCE5HGbFyl/ksy5KShAMoVzkbYEiyCQTpK3MunyIUD4bWD3w+T1+I3D8+8bFIDh
-	X45WgJYM/3RbvpWGmohPtEmt1/5cMZKpKx6xvfflT3mcxdEkwcTuPG69j7RXhLj/cQ0MbQt5BLv
-	Vj1Aqil1wZdld5ufNz+C7d6pdLucJgz6o9j0+iSHIQUYyn02cAoaOTnfcrZNnXiwCmmh4tFqS6i
-	KASzgBlYbSDInZCPIP8ljHjy4pNowneI1Jtc7LOEh4nL3p8NU=
-X-Received: by 2002:a17:902:e881:b0:2c0:bcff:e191 with SMTP id d9443c01a7336-2c0bcffe248mr137229755ad.36.1780404880526;
-        Tue, 02 Jun 2026 05:54:40 -0700 (PDT)
-Received: from [192.168.10.11] ([2409:8a34:5f30:f0f4:8da5:4634:baf0:dee3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bf23c2da36sm167581305ad.69.2026.06.02.05.54.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 05:54:39 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC0D3E63A6;
+	Tue,  2 Jun 2026 13:03:42 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780405425; cv=fail; b=o81IHqYfQ4S4J547/PaPEhQjsAK807haeR+FJoEUZTcHx3upadG6L7r9eJwDXGCzKjEKU0wpWqPy4JUqFcgEUEAqmcKLFNP7+WGnLOfBMa7MatB1vPPq2joVVGWjFvTPC3WXDtuPXKeXyYJ523g6OoCOydRBy5fclS9ILWG+UYA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780405425; c=relaxed/simple;
+	bh=WNFDfk7IM4HeP4yJWYiAuuv35Zgu+UGfAxKeJKO3FuE=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Eyv9lTSJ+r8Sk0u5Vi9OPkku1C/rPviz8SoCnM5YhiMAAITZ1c7+ptrXoqmaWelf5SvafeRq+A3loH4nVD3i31L0G3esc0S73rYGqDKlAiTuJvy4fidKz8vC+AxTZU6aq0h+dadOw3bQGSlQtQXUhPSGjvwBMZSxilYH3HYUPuA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=NI8wEIUD; arc=fail smtp.client-ip=52.101.65.37
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JIcuGOG9xL5lZtXURPaGH1tSNXDtY6EeMUOu2I11cuDi3cmYk+W1KGxqIoIDV6UOw2fMF9mnsXQeLXWgaOD6YTCgkt0ReqHF7/jr9kJ3at5kTJfy9xRpwFWxdwG3hxk68krZGTZ7zLZW9Z9iBzXIETrzCROyOayQr+3QgqRzuS0CmVvbmnHAPwKMJdPq11lMmeyVH8D2wdj25sBY6ERPzi7k2yaPgIfa/GV4iA8TadVb0HSwTdGTLtgT8dklsNJ/SHuJs2xOYwNw/S2IeaULP4C0mrbNu99IR/pQ0RXSHlCc0yUfR5KYIRXX6bHi7CXva9t2pDGcHf5p5rfiobJN8w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vwWwQR9P8Ympgw+kQz4842HILDOyHmzShXCwxSRrcg8=;
+ b=lwyoP/0OmTEsf1fNgE7Ak7juVsrJ0qhhvJMm3gNYniPTUIgulIVRFBwt3gTMw6RDuBcdiQWSVRxZMMkB8NE8Txd14InHBSRFAA5e1qszm4inmw38DeqwNrr1W8Y2bCPAJ3n2HMrAAXXNr0ej0DNC/7p8ImCPt/qlIw21ep2+ovwx25mzqzcvNrr8JvISjem+/IchhgtVsQky1Agd6pKXUwxC8DW+AWvLb4mVzS8bH+p7e5dIvByf3pxa7d/xUNr0rHfIYPlxQOINmkAVThb6MfC7vUnhKPbkl1fGYcKt3ksYQfkLUxKklci9tshwI4nwawlTg5SUH0dJ8EiXuhNbIw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 164.130.1.59) smtp.rcpttodomain=kernel.org smtp.mailfrom=foss.st.com;
+ dmarc=fail (p=none sp=none pct=100) action=none header.from=foss.st.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vwWwQR9P8Ympgw+kQz4842HILDOyHmzShXCwxSRrcg8=;
+ b=NI8wEIUDnGlHzXkJQy6i4GOwTPSqDsgr/hPgDJwRLWDQWg2tIzFrJWM1BJoZNvl/JV8FqpUuHAFQ1YjGwnWcVL3pUzMx3RmCU8Wnk00LeGq557H6+WPUQ2DTsqggApftkUHrODF/vAQiHKU5OkWuPk5vV38TbHaWzuP+uY/5ymfiZskr0ormpZ5denr5eSOn5221m3BUrV5C59ag/TU9KHQ2WA0JOco+iYc27lINyO7+hjkdNDt/sOuolj0CrfLjWXT/vqrKcpJSF709gSLncFausnDehHkPE+vis6nTY9Lp710a3iBdkzDRlmUieXJaN4uoL5ZkCK4C477bFr5lNA==
+Received: from DB7PR05CA0027.eurprd05.prod.outlook.com (2603:10a6:10:36::40)
+ by VI1PR10MB3184.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:803:12f::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Tue, 2 Jun 2026
+ 13:03:36 +0000
+Received: from DU2PEPF0001E9C0.eurprd03.prod.outlook.com
+ (2603:10a6:10:36:cafe::e) by DB7PR05CA0027.outlook.office365.com
+ (2603:10a6:10:36::40) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.71.16 via Frontend Transport; Tue, 2
+ Jun 2026 13:03:36 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 164.130.1.59)
+ smtp.mailfrom=foss.st.com; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=foss.st.com;
+Received-SPF: Fail (protection.outlook.com: domain of foss.st.com does not
+ designate 164.130.1.59 as permitted sender) receiver=protection.outlook.com;
+ client-ip=164.130.1.59; helo=smtpO365.st.com;
+Received: from smtpO365.st.com (164.130.1.59) by
+ DU2PEPF0001E9C0.mail.protection.outlook.com (10.167.8.69) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.92.5 via Frontend Transport; Tue, 2 Jun 2026 13:03:35 +0000
+Received: from STKDAG1NODE2.st.com (10.75.128.133) by smtpo365.st.com
+ (10.250.44.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Tue, 2 Jun
+ 2026 15:07:44 +0200
+Received: from gnbcxd0016.gnb.st.com (10.130.77.119) by STKDAG1NODE2.st.com
+ (10.75.128.133) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.35; Tue, 2 Jun
+ 2026 15:03:33 +0200
+Date: Tue, 2 Jun 2026 15:03:20 +0200
+From: Alain Volmat <alain.volmat@foss.st.com>
+To: "Rob Herring (Arm)" <robh@kernel.org>
+CC: Liu Ying <victor.liu@nxp.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard
+	<mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie
+	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Krzysztof Kozlowski
+	<krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Frank Li
+	<Frank.Li@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>, "Pengutronix
+ Kernel Team" <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Rob
+ Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, Konrad
+ Dybcio <konradybcio@kernel.org>, Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	"Dmitry Baryshkov" <lumag@kernel.org>, Abhinav Kumar
+	<abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Marijn
+ Suijten <marijn.suijten@somainline.org>, Vinod Koul <vkoul@kernel.org>, Nas
+ Chung <nas.chung@chipsnmedia.com>, Jackson Lee <jackson.lee@chipsnmedia.com>,
+	"Mauro Carvalho Chehab" <mchehab@kernel.org>, Mirela Rabulea
+	<mirela.rabulea@nxp.com>, Detlev Casanova <detlev.casanova@collabora.com>,
+	Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>, Heiko Stuebner
+	<heiko@sntech.de>, Hugues Fruchet <hugues.fruchet@foss.st.com>, "Maxime
+ Coquelin" <mcoquelin.stm32@gmail.com>, Alexandre Torgue
+	<alexandre.torgue@foss.st.com>, Andrew Lunn <andrew+netdev@lunn.ch>, "David
+ S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, "Jakub
+ Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, MD Danish Anwar
+	<danishanwar@ti.com>, Roger Quadros <rogerq@kernel.org>, Parvathi Pudi
+	<parvathi@couthit.com>, Mohan Reddy Putluru <pmohan@couthit.com>, "Bjorn
+ Andersson" <andersson@kernel.org>, Mathieu Poirier
+	<mathieu.poirier@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Michal Simek
+	<michal.simek@amd.com>, Mark Brown <broonie@kernel.org>, Matthias Brugger
+	<matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>, Linus Walleij <linusw@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>, Felix Fietkau <nbd@nbd.name>, "Andrew
+ F. Davis" <afd@ti.com>, Hussain Khaja <basharath@couthit.com>, Suman Anna
+	<s-anna@ti.com>, Ben Levinsky <ben.levinsky@amd.com>, Tanmay Shah
+	<tanmay.shah@amd.com>, Erwan Leray <erwan.leray@foss.st.com>, Fabrice Gasnier
+	<fabrice.gasnier@foss.st.com>, Roger Quadros <rogerq@ti.com>,
+	<dri-devel@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+	<imx@lists.linux.dev>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<freedreno@lists.freedesktop.org>, <dmaengine@vger.kernel.org>,
+	<linux-media@vger.kernel.org>, <linux-rockchip@lists.infradead.org>,
+	<linux-stm32@st-md-mailman.stormreply.com>, <netdev@vger.kernel.org>,
+	<linux-remoteproc@vger.kernel.org>, <linux-amlogic@lists.infradead.org>,
+	<linux-spi@vger.kernel.org>, <linux-mediatek@lists.infradead.org>
+Subject: Re: [PATCH] dt-bindings: Consolidate "sram" property definition
+Message-ID: <ah7UmMC9fbWuyopl@gnbcxd0016.gnb.st.com>
+References: <20260511165942.2774868-1-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH 0/6] arm64: dts: qcom: sc8280xp: set GPI DMA channels
- according to DSDT
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <20260602081451.3808833-1-zhengxingda@iscas.ac.cn>
-References: <20260602081451.3808833-1-zhengxingda@iscas.ac.cn>
-Date: Tue, 02 Jun 2026 20:53:26 +0800
-Message-Id: <178040480680.1778078.1165164069560552075.b4-review@b4>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20260511165942.2774868-1-robh@kernel.org>
+X-Disclaimer: ce message est personnel / this message is private
+X-ClientProxiedBy: ENXCAS1NODE2.st.com (10.75.128.138) To STKDAG1NODE2.st.com
+ (10.75.128.133)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DU2PEPF0001E9C0:EE_|VI1PR10MB3184:EE_
+X-MS-Office365-Filtering-Correlation-Id: 41804fca-f1aa-4c97-6843-08dec0a75b71
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|36860700016|82310400026|376014|7416014|22082099003|18002099003|3023799007|56012099006|11063799006;
+X-Microsoft-Antispam-Message-Info:
+	nBtSLCyV1zNaj4AYS9TljJxgu9LjuqDypvz6s5q1mmtaP3SSLxCZQEWwIxiLS+VAVYAuA7oDf7K6+m40o/xOcVrotpYE/XqihZn3zsWUweEhW7kSyL3bEKN/7Y97ZY3DngopwbPo3TmdNeggBqYoDcZH+6rwDRKAMGhtmXoXidU/Q/psey30ZPXNRfuLe79Vwm5HNIdcmkulv9ymbhMEYodX8fMDNeCqzsi1lv+ekv0eBBRJ8ZzqsHGRCblhFnHO2voSiJCE+UQBFF8QDZYGMl8pVRO6Op9dZpr3mh/FWSXy1atXlI561urKBhAZEudJgsL1JocV44jQC+WzgojHZF2kh1h54yHxNJJTo90ct800Hmv5cRnEAJGdgvKUNnUMoCFPG2SxEnxQ/8YtrESRvrQalllwW4hmLuHIV6/MGFF5DGlcqPIJ2zT9vfT1M6xVyWvgZu5G6e9W5JpRns0oU8z9hx0TtYQa7FVdlfgYEGBIazv7YVFu91/eodjxRlJdrwMyO8uKkXNvqvBdgF9l2S5fZoek0ekxeULffTEBEYvVCt7AOyS9V2w9771i+gHQEJjoHn00LaVMkkGeaQY3W/aOEQCAB23In41sol9GPCJsw6oCce43TyO82Hhxq81xMeakW1CvhEVyDzKUGfo/t+RxPZflg8io4Jgs6ku3KaRZkGhOMFtqkXss3wtALDhqb4FoEPEVm1qsACJ/HnWniCNXJaf3Q8IeIqu4OJA54Yk=
+X-Forefront-Antispam-Report:
+	CIP:164.130.1.59;CTRY:IT;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:smtpO365.st.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(36860700016)(82310400026)(376014)(7416014)(22082099003)(18002099003)(3023799007)(56012099006)(11063799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	aBmJ6MlgTmzNChnBehDqv9+4//tdizL6JKnMkyfjk9H+924t2l28f906bO2GWyks5L9F1PgGV4iLcesLKLL52YfzYULyiGhkgtdagr2OpLLMD3s3hTq1UXnNF1iyxFGmqherFoLIF8dWYUpD23kPWEHFY8bP1iXQVK1Nwx5UoaUuXaGb6/vNFMmp8Wym3c/Lvc5zhWgoXrFvcpLFgeH0/kpOtWEGmzbjQStWW0Isg1VqBJqlcZtRn8/8R0vZfUcT4lTpYUyZdT/FJFUnDkpbOr3oAfTbWC9097HNmAsr098j/dLKnVWY667H4QS/F1JqXOIIHyds4oI9YvtJoSyAqw3l7+893pU5Wd14tvmPY13WZr23xdEa9BZeEGaQhxaULqhZeklPswj9/zo74DOw3Q8TIu7OXH1r+PBsVTcLbaBdHLyCkdRjPSTk4Tp8zyIZ
+X-OriginatorOrg: foss.st.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2026 13:03:35.8611
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 41804fca-f1aa-4c97-6843-08dec0a75b71
+X-MS-Exchange-CrossTenant-Id: 75e027c9-20d5-47d5-b82f-77d7cd041e8f
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=75e027c9-20d5-47d5-b82f-77d7cd041e8f;Ip=[164.130.1.59];Helo=[smtpO365.st.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DU2PEPF0001E9C0.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR10MB3184
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-1.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+X-Spamd-Result: default: False [1.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	DMARC_POLICY_ALLOW(-0.50)[foss.st.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[foss.st.com:s=selector2];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_CC(0.00)[nxp.com,pengutronix.de,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,poorly.run,linux.dev,somainline.org,chipsnmedia.com,collabora.com,vanguardiasur.com.ar,sntech.de,foss.st.com,lunn.ch,davemloft.net,google.com,redhat.com,ti.com,couthit.com,linaro.org,baylibre.com,googlemail.com,amd.com,nbd.name,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,lists.infradead.org,st-md-mailman.stormreply.com];
+	TAGGED_FROM(0.00)[bounces-110810-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110809-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:zhengxingda@iscas.ac.cn,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,foss.st.com:from_mime,foss.st.com:dkim,st.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,gnbcxd0016.gnb.st.com:mid];
+	FORGED_SENDER(0.00)[alain.volmat@foss.st.com,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:robh@kernel.org,m:victor.liu@nxp.com,m:p.zabel@pengutronix.de,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:robin.clark@oss.qualcomm.com,m:sean@poorly.run,m:konradybcio@kernel.org,m:akhilpo@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:marijn.suijten@somainline.org,m:vkoul@kernel.org,m:nas.chung@chipsnmedia.com,m:jackson.lee@chipsnmedia.com,m:mchehab@kernel.org,m:mirela.rabulea@nxp.com,m:detlev.casanova@collabora.com,m:ezequiel@vanguardiasur.com.ar,m:heiko@sntech.de,m:hugues.fruchet@foss.st.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:danishanwar@ti.com,m:rogerq@kernel.org,m:parvathi@couthi
+ t.com,m:pmohan@couthit.com,m:andersson@kernel.org,m:mathieu.poirier@linaro.org,m:neil.armstrong@linaro.org,m:khilman@baylibre.com,m:jbrunet@baylibre.com,m:martin.blumenstingl@googlemail.com,m:michal.simek@amd.com,m:broonie@kernel.org,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:linusw@kernel.org,m:lorenzo@kernel.org,m:nbd@nbd.name,m:afd@ti.com,m:basharath@couthit.com,m:s-anna@ti.com,m:ben.levinsky@amd.com,m:tanmay.shah@amd.com,m:erwan.leray@foss.st.com,m:fabrice.gasnier@foss.st.com,m:rogerq@ti.com,m:dri-devel@lists.freedesktop.org,m:devicetree@vger.kernel.org,m:imx@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:dmaengine@vger.kernel.org,m:linux-media@vger.kernel.org,m:linux-rockchip@lists.infradead.org,m:linux-stm32@st-md-mailman.stormreply.com,m:netdev@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:linux-amlogic@lists.infradead.org,m:linux-spi@vge
+ r.kernel.org,m:linux-mediatek@lists.infradead.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[foss.st.com:+];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[alain.volmat@foss.st.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[79];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	RCVD_COUNT_SEVEN(0.00)[8]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 76CBF62E3DA
+X-Rspamd-Queue-Id: CBB0C62E5CC
 
-On Tue, 02 Jun 2026 16:14:45 +0800, Icenowy Zheng <zhengxingda@iscas.ac.cn> wrote:
-> Some bugs of the GPI driver exhibits a fact that some GPI interfaces
-> aren't available to HLOS, and accessing them leads to system stucks /
-> resets [1] [2].
+On Mon, May 11, 2026 at 11:59:36AM -0500, Rob Herring (Arm) wrote:
+> The "sram" property has become a de facto standard property, so create a
+> common schema for it and drop all the duplicated definitions.
 > 
-> This patchset sets the DMA channel mask of sc8280xp device trees to the
-> values indicated by the DSDTs of the corresponding devices.
-> 
-> As different devices seem to have different allowed DMA channels, the
-> value in the SoC DTSI file is removed, to prevent new DTS's from
-> directly using these broken values.
-> 
-> [1] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2142403
-> [2] https://discussion.fedoraproject.org/t/fedora-43-44-beta-aarch64-wont-boot-on-thinkpad-x13s/183074/13
-> 
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> ---
+>
+>  .../bindings/media/st,stm32-dcmi.yaml         |  6 ++---
 
-I don't focus on the upstream for a while, was this problem still here
-recently? Could you attach the base commit, so I can reproduce it.
-About one months ago, gaokun3 worked well with Linux 7.0.0. I enabled
-i2c4(gpi_dma0, seid=4), spi6(gpi_dma0, seid=6), i2c15(gpi_dma1, seid=7)
-
-I thought this commit should have fixed the issue in [1]
-https://lore.kernel.org/all/20251013115506.103649-1-mitltlatltl@gmail.com
-
--- 
-Best wishes,
-Pengyu
-
+Acked-by: Alain Volmat <alain.volmat@foss.st.com>
 
