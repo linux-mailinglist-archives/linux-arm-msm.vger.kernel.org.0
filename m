@@ -1,220 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-110804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
-	by lfdr with LMTP
-	id eKaHDjG0Hmr7JAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 12:45:05 +0200
+	by mail.lfdr.de with LMTP
+	id M/56J7TGHmr4UwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 14:04:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 425C462CD01
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 12:45:04 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FD4362DCE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 14:04:04 +0200 (CEST)
+Authentication-Results: mail.lfdr.de;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=DonvhDbN;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110805-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110805-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id CBE3E30028CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 10:34:28 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 98F00305BEA7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 11:59:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70EA83D6476;
-	Tue,  2 Jun 2026 10:34:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="kFYm0yAq"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D852C3CAA51;
+	Tue,  2 Jun 2026 11:59:34 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7CC633D6F7
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 10:34:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99893438B0;
+	Tue,  2 Jun 2026 11:59:33 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780396467; cv=none; b=nFIaddQ8yvo5AQWKXw3DpwPPzS4CQPuMPRlbWJkx8FOAq/6iy5aXZM6riqgSW5ZZb9SGDyOWaClpfEep87VKio4sfMCSxMt/14dstFUUNPCUdI51GiJ6lCh5mxEEmeFkM1Rt5CHfN4GUfuanai/IcJPD/tYw/xuvQYe3pxfYBug=
+	t=1780401574; cv=none; b=OGMMFAw1f45o8sBb3bEvV/YMpj6iCQWmX5sZEOeSOArSHJYuZCMgiSUDI+Jp8cVP9JZSHpQajChET3t6I9lgu8yLlx7wnHW4ps0JMGf2uhqPARChv0tw9YRyag9X8uVaVeUYXSm/DWlJnRRb0ydC+Oa2NAmrt5XOxXej2b7v26Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780396467; c=relaxed/simple;
-	bh=sSLG3wXzMGkuchBhOWXlkifyhi6ZS+mT6rRQfEDVsGo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jLugZj7e9to7sfeOBDr4NaHjd8dPPQlvQvnldDkz+S1W8d4CpUNwpkEyP3VfX3fJWVSsX5/0Tugq996TvbhEKRnz1dwi4VeAJVwIFUD6WTLa/sAUbkv+Atzlwgzxm3yobj6HH82hsAxGp5fFbBslK86tfnuI2hVfSPtf+TGa8kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=kFYm0yAq; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 54ED4353D
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 03:34:20 -0700 (PDT)
-Received: from [192.168.0.1] (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 1440D3F632
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 03:34:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1780396465; bh=sSLG3wXzMGkuchBhOWXlkifyhi6ZS+mT6rRQfEDVsGo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kFYm0yAqMe72KIAAwUBvvsw/ID7etQEFx6JM6Z014ms2VHE7FJM97sfnkJVmc6zvx
-	 LYhju8o0hvFxJoDAN1jB5orrIS3lRfVdRNUsxr+eyAJY+Dnx395m99AL0ako9Yzvvc
-	 hl7TqvsQMhbul6LCLTW7IjCu1/cLxhN9EjA5TQQ8=
-Date: Tue, 2 Jun 2026 11:33:49 +0100
-From: Liviu Dudau <liviu.dudau@arm.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>,
-	"Kandpal, Suraj" <suraj.kandpal@intel.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
-	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH v5 4/8] drm/mali: use drmm_writeback_connector_init()
-Message-ID: <ah6xjR_vHhsXqvyI@e142607>
-References: <20260505-wb-drop-encoder-v5-0-42567b7c7af2@oss.qualcomm.com>
- <20260505-wb-drop-encoder-v5-4-42567b7c7af2@oss.qualcomm.com>
+	s=arc-20240116; t=1780401574; c=relaxed/simple;
+	bh=C6IDbATvmsujLkcAtKsUV+sdUM03dmfJnlzn7GJ5V14=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=i5g8NTvpMfODiKbuliBs6B2yY4f1rgtMrhcpEYuBKFYGziw7l3dTGLy3nD2qrWE6Q7JVOALyZbw5++hdBBr28PVtpTLO8T7GG3sWC6bU9NevKjwD+C9DYR7rxzWk42HjnpdlzWy71hvPqDxBNBGDvn7gPnQQTMAgeRPizsy3Y4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DonvhDbN; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFCE1F00893;
+	Tue,  2 Jun 2026 11:59:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780401573;
+	bh=cslhbcrcSh5KPhsgmHlbZ6cOOWPLMDJaqdZ/gNaDIJo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=DonvhDbNUWQYQEe6a2fL9dU6twMJWEs31K1ehJ1FDaArD+VJdjSU5PhB74HFCvFzT
+	 TrgnOJfhmLVLQW75JpQS53lLQ0XAuS3Zyz5UsuU7FMurW3l4sN6FN7YNEamKccF8dV
+	 ym+tg/ye6Ega0L9KKGe+RB1IQKzCNptaKv7tyek53SjwAsIr5sYye+JuyDCNSCZgGF
+	 z49VV4GENM3xu44ChbRBYIJphXG3M1tvPmEuhfnnZrlu08U+jhh/c4zHHleKJMjCfy
+	 RB+igK/UDkF0prUA2/7miLAQn6oTeBLkbMv4HXagcLZ9bxCFZvPPBUNu2h0FK3J7z1
+	 T+pB7ksdHo/9Q==
+Message-ID: <709428ff-e732-47b6-a6db-b26cd9149c98@kernel.org>
+Date: Tue, 2 Jun 2026 13:59:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260505-wb-drop-encoder-v5-4-42567b7c7af2@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 425C462CD01
-X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: qcom,shikra-epss-l3: Add
+ EPSS L3 DT binding
+To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
+Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
+References: <20260524-shikra_epss_l3-v1-0-b1528a436134@oss.qualcomm.com>
+ <20260524-shikra_epss_l3-v1-1-b1528a436134@oss.qualcomm.com>
+ <20260530-victorious-resourceful-muskox-cdeadb@quoll>
+ <afeab8fd-6951-46a3-8b92-9c3b7075949e@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <afeab8fd-6951-46a3-8b92-9c3b7075949e@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[arm.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[arm.com:s=foss];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110804-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[35];
+	TAGGED_FROM(0.00)[bounces-110805-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[linux.intel.com,intel.com,amd.com,igalia.com,gmail.com,ffwll.ch,kernel.org,suse.de,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,ideasonboard.com,glider.be,raspberrypi.com,wanadoo.fr,bootlin.com,lists.freedesktop.org,vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:raviteja.laggyshetty@oss.qualcomm.com,m:djakov@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-pm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:odelu.kukatla@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[liviu.dudau@arm.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[arm.com:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,bootlin.com:email,qualcomm.com:email,arm.com:dkim,arm.com:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
-X-Rspamd-Action: no action
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Server: lfdr
+X-Rspamd-Queue-Id: 1FD4362DCE0
 
-On Tue, May 05, 2026 at 03:25:01AM +0300, Dmitry Baryshkov wrote:
-> The driver uses drm_writeback_connector_init() instead of its drmm
-> counterpart, but it doesn't perform the job queue cleanup (neither
-> manually nor by calling drm_writeback_connector_cleanup()). On the
-> contrary, the drmm_writeback_connector_init() function ensures the
-> proper cleanup of the job queue.
+On 02/06/2026 11:27, Raviteja Laggyshetty wrote:
 > 
-> Use drmm_plain_encoder_alloc() to allocate simple encoder and
-> drmm_writeback_connector_init() in order to initialize writeback
-> connector instance.
 > 
-> Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-> Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> On 5/30/2026 4:38 PM, Krzysztof Kozlowski wrote:
+>> On Sun, May 24, 2026 at 06:03:35PM +0000, Raviteja Laggyshetty wrote:
+>>> +  '#interconnect-cells':
+>>> +    const: 1
+>>> +
+>>
+>> I do not see any differences against OSM L3 binding. Why isn't this
+>> device there?
+>>
+> 
+> The EPSS L3 on Shikra is similar to EPSS/OSM L3 on other Qualcomm SoCs,
+> but supports only twelve LUT entries. Due to this hardware difference,
+> the generic compatibles are not applicable, so a new SoC specific
+> binding is introduced.
+> 
 
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+This I understood, but the binding would be exactly the same, no? Kind
+of repeating the question....
 
 Best regards,
-Liviu
-
-> ---
->  drivers/gpu/drm/arm/malidp_mw.c | 25 ++++++++++++++-----------
->  1 file changed, 14 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/arm/malidp_mw.c b/drivers/gpu/drm/arm/malidp_mw.c
-> index fad343842038..6e0c78e998aa 100644
-> --- a/drivers/gpu/drm/arm/malidp_mw.c
-> +++ b/drivers/gpu/drm/arm/malidp_mw.c
-> @@ -84,11 +84,6 @@ malidp_mw_connector_detect(struct drm_connector *connector, bool force)
->  	return connector_status_connected;
->  }
->  
-> -static void malidp_mw_connector_destroy(struct drm_connector *connector)
-> -{
-> -	drm_connector_cleanup(connector);
-> -}
-> -
->  static struct drm_connector_state *
->  malidp_mw_connector_duplicate_state(struct drm_connector *connector)
->  {
-> @@ -114,7 +109,6 @@ static const struct drm_connector_funcs malidp_mw_connector_funcs = {
->  	.reset = malidp_mw_connector_reset,
->  	.detect = malidp_mw_connector_detect,
->  	.fill_modes = drm_helper_probe_single_connector_modes,
-> -	.destroy = malidp_mw_connector_destroy,
->  	.atomic_duplicate_state = malidp_mw_connector_duplicate_state,
->  	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
->  };
-> @@ -211,6 +205,7 @@ static u32 *get_writeback_formats(struct malidp_drm *malidp, int *n_formats)
->  int malidp_mw_connector_init(struct drm_device *drm)
->  {
->  	struct malidp_drm *malidp = drm_to_malidp(drm);
-> +	struct drm_encoder *encoder;
->  	u32 *formats;
->  	int ret, n_formats;
->  
-> @@ -224,11 +219,19 @@ int malidp_mw_connector_init(struct drm_device *drm)
->  	if (!formats)
->  		return -ENOMEM;
->  
-> -	ret = drm_writeback_connector_init(drm, &malidp->mw_connector,
-> -					   &malidp_mw_connector_funcs,
-> -					   &malidp_mw_encoder_helper_funcs,
-> -					   formats, n_formats,
-> -					   1 << drm_crtc_index(&malidp->crtc));
-> +	encoder = drmm_plain_encoder_alloc(drm, NULL, DRM_MODE_ENCODER_VIRTUAL,
-> +					   NULL);
-> +	if (IS_ERR(encoder))
-> +		return PTR_ERR(encoder);
-> +
-> +	drm_encoder_helper_add(encoder, &malidp_mw_encoder_helper_funcs);
-> +
-> +	encoder->possible_crtcs = drm_crtc_mask(&malidp->crtc);
-> +
-> +	ret = drmm_writeback_connector_init(drm, &malidp->mw_connector,
-> +					    &malidp_mw_connector_funcs,
-> +					    encoder,
-> +					    formats, n_formats);
->  	kfree(formats);
->  	if (ret)
->  		return ret;
-> 
-> -- 
-> 2.47.3
-> 
-
--- 
-====================
-| I would like to |
-| fix the world,  |
-| but they're not |
-| giving me the   |
- \ source code!  /
-  ---------------
-    ¯\_(ツ)_/¯
+Krzysztof
 
