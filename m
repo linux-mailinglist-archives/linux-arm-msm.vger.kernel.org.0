@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-110717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0LY9LPx9HmrnjgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 08:53:48 +0200
+	id EIzMMv99HmrnjgkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 08:53:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C366629346
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 08:53:47 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EFF362934E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 08:53:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C9CC6304D7D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 06:50:48 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2F37A304F21F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 06:50:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE8193A8736;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D14153A8741;
 	Tue,  2 Jun 2026 06:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HdUFOIL/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ByfxNs6z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95342571DA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96523A05C2;
 	Tue,  2 Jun 2026 06:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780383047; cv=none; b=iGa+ZyXavPpar8VqjPRnUX3gQPA6Wfh7rf0fzgOY2l9p4Q4BWUlP6Ew/2H8IdQlCGpbHqT7dX3g2RrgEhk/qu+6M/zO87TI7xXQEmhzotbIw4lPiRASkXTTb+bAY381i/HC7wu7dveXKt7iCobW+lCH1IagUD5hm4ZEt0PFCEj8=
+	t=1780383047; cv=none; b=Fkkn+6pwthRSG1nwsga2ptG5lQzdLUoOZGZM2mC6UBL9DtWjpnmgaE+U7bCzmPe1vk2E7MFfLmfX9/HysLO4eGgqZV+pr5Jlczik9nAaqvJzPUpuyUWg5I5hJObmescurzYlIgYXGZQQNBuioFdb3kLneGA87o0jXQVn/dIFbeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780383047; c=relaxed/simple;
-	bh=SORcje6nNo4hyz3sdF5oThJ2NF9xcrhVqrTOFos5NAM=;
+	bh=kIefg/1GFOBugtxjwANZjrxgWJw8zIE16yRu6PaEZ6I=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=j11fOvuLGqRiDA5mhqw91tZywtoOsPyKuszXzWeUSMQuBfHKGWm9lFNlj95uD08Er7rPXe27WheqO7j+jipmiCQoZaHi23rSKL80hKZCWVSEKajPDPepGi/uhqHLJwLscldHN2lMeoIqLdu0xKD5hfmsz+WoE8MuWGlIn9ZFEH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HdUFOIL/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5C034C2BCF4;
+	 In-Reply-To:To:Cc; b=DQNiK6FobdAXump1YCaefEVUnYdbAXM0APvdD3z980CxB+LJiywJhQ5DPIZz4nkeRVXgIiQaBheBkuj6MnJ7kSiDp1gsXeM7gG75vxKpyOARSYuO3ZxSs6eNMEaUkVFuMblRHqn/XW8laoHaYETB1EjoSNx9WwMpceDGEY0RRjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ByfxNs6z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 688E6C2BCF6;
 	Tue,  2 Jun 2026 06:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1780383047;
-	bh=SORcje6nNo4hyz3sdF5oThJ2NF9xcrhVqrTOFos5NAM=;
+	bh=kIefg/1GFOBugtxjwANZjrxgWJw8zIE16yRu6PaEZ6I=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=HdUFOIL/FCQWoKf1wiNtcHuCir/ZLNMjVfRwi5+9745zwzM+FyrGZ6XcgMVeXYUMW
-	 NyZW3FwWgNejXGnN+6gUzbsz2q4VOgEbFngtvysf/FhtxOtwJjFwmHJT1jOkBTUnFy
-	 8fDI7IcD7q7eqVMSgmh6Ul+ktN2ptEf4Lzxs2kjimJUaYirMxHxJfm2isF8enKaA/4
-	 etdqZJP0kQY1XPre2XjGqpiDCa6wHmHDxlB7agGKo1ulIYPmWsMYi5Vxzavj7wF2EF
-	 D79hINRfQNIVAYRJDfoofG10o4gLSwUpV8ycqjJUEScV9r/+9DHV8kEjEvBH/Mz0FN
-	 swMU8jaA+rGjg==
+	b=ByfxNs6zvTKxwN2P1uUJZf/V2cfF0O3x5Gb4TWJU33UHKp5GlOMsFgUWR0g4cGAb8
+	 WmrMAzHwFZ9YPdPYIY8OkTvtOstxvbHx7KU5sq/eJ6wrNOXUlCgKH7abbAWG+0dQfw
+	 8yOBOLWoUVA/Il01Qh0/9NJoFXWBGU300mpL5MH/70Mpj2LAedyj2jBI3M8eqQs+ME
+	 CNGhupECmWGlXxwj7bMtCfg/a0/R+wgsQfTKXULxkTpVOsbz7GxeQii43eW/hvAfAL
+	 guaiHbY4DJ4ydJf+P6sUT5mhAjGMtZwQQrZYLr3pTf3yeud/+iUhInPBUk50ZXa4M6
+	 4hj0KBgVG5/Vg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 484CDC5DF71;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E3CBCD6E4A;
 	Tue,  2 Jun 2026 06:50:47 +0000 (UTC)
 From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Date: Tue, 02 Jun 2026 10:50:37 +0400
-Subject: [PATCH v2 1/4] dt-bindings: net: ethernet-phy: move clocks
- property to invidivual PHY bindings
+Date: Tue, 02 Jun 2026 10:50:38 +0400
+Subject: [PATCH v2 2/4] dt-bindings: net: qca,ar803x: Add clocks property
+ for IPQ5018 PHY
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260602-ipq5018-gephy-clocks-v2-1-65a1f1d881f3@outlook.com>
+Message-Id: <20260602-ipq5018-gephy-clocks-v2-2-65a1f1d881f3@outlook.com>
 References: <20260602-ipq5018-gephy-clocks-v2-0-65a1f1d881f3@outlook.com>
 In-Reply-To: <20260602-ipq5018-gephy-clocks-v2-0-65a1f1d881f3@outlook.com>
 To: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>, 
@@ -76,11 +76,11 @@ Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, 
  George Moussalem <george.moussalem@outlook.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1780383045; l=2564;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1780383045; l=1550;
  i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=JF+9D9ibIujy3R8OCamEf63tGtDhuH5LrP1BT4APw7g=;
- b=qmYr1njuSRFfbA8TCMCe9/wzVxkvnZ1e2EEziVPHMEjgm/0ygSsOwXmDxgPIyLpZtgeytdr6a
- szM4/13e3aHAdGZmNX96G2RXH4GxbYkH1Yme64KJh+r6Ip29QK6vCIs
+ bh=rp75ghzSXcjDqIvT5opgDmpxqQkfyYFvfhT3Z1yNuHo=;
+ b=Usttx2e8YKj6zXboagFAnbpDINjy3YqTzY2if/dIYtg3G4sMensrQbZYOGUT1lOykjyPhygM5
+ NY8rA1NJG3sDWI7ObRa3WovAWDWe/MKbUPmlyx/iCNx/zG72OMrrrd5
 X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
  pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
 X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
@@ -93,12 +93,12 @@ X-Spamd-Result: default: False [1.34 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110717-lists,linux-arm-msm=lfdr.de,george.moussalem.outlook.com];
+	TAGGED_FROM(0.00)[bounces-110718-lists,linux-arm-msm=lfdr.de,george.moussalem.outlook.com];
 	FREEMAIL_TO(0.00)[lunn.ch,gmail.com,armlinux.org.uk,davemloft.net,google.com,kernel.org,redhat.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
@@ -109,80 +109,70 @@ X-Spamd-Result: default: False [1.34 / 15.00];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	HAS_REPLYTO(0.00)[george.moussalem@outlook.com];
 	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.998];
+	NEURAL_HAM(-0.00)[-0.997];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,outlook.com];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,outlook.com:replyto,outlook.com:mid,outlook.com:email]
-X-Rspamd-Queue-Id: 1C366629346
+X-Rspamd-Queue-Id: 3EFF362934E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: George Moussalem <george.moussalem@outlook.com>
 
-Move the clock property and restriction from the ethernet-phy.yaml file
-to the individual PHY binding files. This allows each PHY to manage its
-own clock requirements.
+Further testing revealed that the RX and TX clocks of the IPQ5018 PHY
+need to be explicitly enabled. As such, add the clocks property to the
+schema.
 
 Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
-Commit 350b7a258f20 introduced the clocks property with a restriction to
-maximum 1 to the main ethernet-phy.yaml binding for Realtek to add an
-optional external clock source. This is restrictive to all PHY bindings,
-as some PHYs may require more than 1 clock such as the IPQ5018 PHY which
-requires 2 clocks (for RX and TX).
+ Documentation/devicetree/bindings/net/qca,ar803x.yaml | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-There are three other PHY drivers that require clock management:
-- Micrel: requires 1 optional clock and the micrel.yaml file already
-accomodates for the clock property.
-- SMSC: requires an optional clock and the legacy bindings file
-(smsc-lan87xx.txt) already accomodates for the clock property.
-- BCM7xxx: requires an optional clock. I could not find a bindings file
-for this PHY family.
----
- Documentation/devicetree/bindings/net/ethernet-phy.yaml    | 6 ------
- Documentation/devicetree/bindings/net/realtek,rtl82xx.yaml | 6 ++++++
- 2 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/net/ethernet-phy.yaml b/Documentation/devicetree/bindings/net/ethernet-phy.yaml
-index 21a1a63506f0..709ea976ef79 100644
---- a/Documentation/devicetree/bindings/net/ethernet-phy.yaml
-+++ b/Documentation/devicetree/bindings/net/ethernet-phy.yaml
-@@ -105,12 +105,6 @@ properties:
-       1BR-10 names. The PHY must be configured to operate in BroadR-Reach mode
-       by software.
+diff --git a/Documentation/devicetree/bindings/net/qca,ar803x.yaml b/Documentation/devicetree/bindings/net/qca,ar803x.yaml
+index 7ae5110e7aa2..07615640b0ed 100644
+--- a/Documentation/devicetree/bindings/net/qca,ar803x.yaml
++++ b/Documentation/devicetree/bindings/net/qca,ar803x.yaml
+@@ -28,6 +28,16 @@ allOf:
+         reg:
+           const: 7  # This PHY is always at MDIO address 7 in the IPQ5018 SoC
  
--  clocks:
--    maxItems: 1
--    description:
--      External clock connected to the PHY. If not specified it is assumed
--      that the PHY uses a fixed crystal or an internal oscillator.
--
-   enet-phy-lane-swap:
-     $ref: /schemas/types.yaml#/definitions/flag
-     description:
-diff --git a/Documentation/devicetree/bindings/net/realtek,rtl82xx.yaml b/Documentation/devicetree/bindings/net/realtek,rtl82xx.yaml
-index 45033c31a2d5..8a26f6941dc4 100644
---- a/Documentation/devicetree/bindings/net/realtek,rtl82xx.yaml
-+++ b/Documentation/devicetree/bindings/net/realtek,rtl82xx.yaml
-@@ -38,6 +38,12 @@ properties:
-       - ethernet-phy-id001c.cad0
-       - ethernet-phy-id001c.cb00
- 
-+  clocks:
-+    maxItems: 1
-+    description:
-+      External clock connected to the PHY. If not specified it is assumed
-+      that the PHY uses a fixed crystal or an internal oscillator.
++        clocks:
++          items:
++            - description: RX clock
++            - description: TX clock
 +
-   leds: true
++        clock-names:
++          items:
++            - const: rx
++            - const: tx
++
+         resets:
+           items:
+             - description:
+@@ -162,6 +172,7 @@ examples:
+         };
+     };
+   - |
++    #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
+     #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
  
-   realtek,aldps-enable:
+     mdio {
+@@ -172,6 +183,9 @@ examples:
+             compatible = "ethernet-phy-id004d.d0c0";
+             reg = <7>;
+ 
++            clocks = <&gcc GCC_GEPHY_RX_CLK>,
++                     <&gcc GCC_GEPHY_TX_CLK>;
++            clock-names = "rx", "tx";
+             resets = <&gcc GCC_GEPHY_MISC_ARES>;
+         };
+     };
 
 -- 
 2.53.0
