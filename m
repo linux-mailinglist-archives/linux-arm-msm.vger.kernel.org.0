@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-110851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id WEtBLM5SH2rekQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 00:01:50 +0200
+	id JkXLGNBSH2rfkQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 00:01:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05E816324EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 00:01:50 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE3CF6324F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 00:01:51 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=fail ("headers rsa verify failed") header.d=igalia.com header.s=20170329 header.b=Tgwx7vlo;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110851-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110851-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=fail ("headers rsa verify failed") header.d=igalia.com header.s=20170329 header.b=Nd2I+3i0;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110852-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110852-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=fail reason="SPF not aligned (relaxed)" header.from=igalia.com (policy=none);
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C3313300B07E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 21:58:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0F5FF300CC14
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 21:58:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 321023A3E9C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 417F63AB466;
 	Tue,  2 Jun 2026 21:58:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F2335E1CE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FB0370D7C
 	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 21:58:35 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780437518; cv=none; b=G3wYEutWrZDzUQ4TXDj6bKwgv28fkgn4z1HbsXPBpxrBM41GsltO4w6ljsxYb4IhET//1krTLUqhvsGma8O6Br5aKPHYLX3gkPVCHro8t9u7I3O+Wv6EEgIcLakcNyjOfrt1BwWm5sNSuogm9bgx2hLrXczpCkmqUJJswgEiNls=
+	t=1780437518; cv=none; b=VIm7o0mMZZeen4zDrZinteE2bb2LwqWeFJ4CegLhzmz4ymUXdomuOEt6a1qmsFQjRi/OICcSghKgYaatvlXCu4caWyBvI3d8ePv1Omh13ZNHSaQEobAe4Io13FuWztNVCBbSEJ8xc9O6Oo2Apc0DtGTt7iutPkrI/Y5xAs+P4So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1780437518; c=relaxed/simple;
-	bh=zw/Mww6geAV+GwTMTHC762EL40MWWt+gpzG5gX6TAnk=;
+	bh=K2VWUzW8DfTMwVoH7IqbGHceg1hqoi9eUvfXOoKsCIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ikttwA/zbF9IzRpE/hfZ23PplL/lnEvfI1ORDZPmCqaAoVvvX2Om6/ar43Tn8365Dm9vuvXz4y36m5vjrG7CfO0SCZFTPAreacEEdU2HsPJ30ZCqWV/TyzIfh3DLzx1z8hQgRSvmUCgwHs2KtX3uYIvXwSqw/k0BG+BBmu39cr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=Tgwx7vlo; arc=none smtp.client-ip=213.97.179.56
+	 MIME-Version; b=himQBtVtYrYU/sni1ood+lYBZQiWTqe7f7e4r+4g5Lp+cdIhfwOX4ptMqQbm7kjGq8iQz4CqFb9VLbWi+AAwVWM+XYvgyqdl0Ff2B+XwoDZ3ESVLCIHpqv6Jsazf45lC3XLh2fZ+dY3+4YmaTQhtUoRGBM0sfjkSLrGH4FRW31I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=Nd2I+3i0; arc=none smtp.client-ip=213.97.179.56
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
 	s=20170329; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
 	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
 	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
 	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
 	List-Post:List-Owner:List-Archive;
-	bh=wIQdz4iLfZpC+LKLV3pfcR8c7zT7fxM4g00Wn+wXD70=; b=Tgwx7vlo1cGAH/ND277yUE5zm7
-	Yt/sM9K4IDE0D6H3nBlh995ZqXfJd9XoThmRJJSHY1esLr2Bzzl6/4e+f0y9eCSjSvZzBLWvelzHH
-	ZXfnmJ6vjx3iu2ByqKE490oP94o4sthw74IjbRGj4hl//B6LJ0qAFmelSfGKsQPz+jrM8eS2smc2X
-	KezqfFj0qkrkL0ih0w2PWggeQcdM/omCB37SYCb3e4pxnGzO0fW+WjlBk0p3gqoJZlUwBSVteZ+a1
-	zZ5F1MmkSY9USaLla+1QPIo3mvCRqkylRRJt3JBfaZsYRX/uYRfeC9CQyZVIJF7huzK+egsk4CEUy
-	nLjqJ3Cg==;
+	bh=s7efP6o/xE6tYb4JmF0OG/yjdjeEPUW3qQxNVZMitsc=; b=Nd2I+3i02KlXKh24n5K22UstUS
+	o1H3q66agY3IRs2kjXXmfxCgXKV2QifpFfK0BA44/DDgFMnjvP7pVQcPQGoausmNLTfZb7wFZKeAO
+	WJsuiaYReZ1QfA/B5vBl1iDaqc6dNqx9hCMSvqjBbIufj+K/DOfYQYRM3uRpABpWk81Hrr7vMg3wc
+	TOprMM/93frIR1S0g5aneHDcvlvQkAb09/O6WxKSFLWSNqAKqGjR0GVTynIO7o4hTY7a0jn2udBh7
+	SHeah7VnfJY+LR/KjDoTGe7DsFAqwI3b9PIAWeyVroIocw4AIWuC32pRZb6otMabUUGLR2P5J8y7H
+	/A+T/r1Q==;
 Received: from [79.117.146.159] (helo=killbill.home)
 	by fanzine2.igalia.com with esmtpsa 
 	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1wUX7T-00BuCE-VB; Tue, 02 Jun 2026 23:57:56 +0200
+	id 1wUX7V-00BuCE-TY; Tue, 02 Jun 2026 23:57:58 +0200
 From: Melissa Wen <mwen@igalia.com>
 To: airlied@gmail.com,
 	alexander.deucher@amd.com,
@@ -85,9 +85,9 @@ Cc: Uma Shankar <uma.shankar@intel.com>,
 	intel-xe@lists.freedesktop.org,
 	intel-gfx@lists.freedesktop.org,
 	dri-devel@lists.freedesktop.org
-Subject: [PATCH v8 1/4] drm/colorop: Remove read-only comments from interpolation fields
-Date: Tue,  2 Jun 2026 23:53:53 +0200
-Message-ID: <20260602215743.914265-2-mwen@igalia.com>
+Subject: [PATCH v8 2/4] drm/colorop: make lut(1/3)d_interpolation props correctly behave as mutable
+Date: Tue,  2 Jun 2026 23:53:54 +0200
+Message-ID: <20260602215743.914265-3-mwen@igalia.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260602215743.914265-1-mwen@igalia.com>
 References: <20260602215743.914265-1-mwen@igalia.com>
@@ -104,12 +104,12 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110851-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110852-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:airlied@gmail.com,m:alexander.deucher@amd.com,m:alex.hung@amd.com,m:christian.koenig@amd.com,m:contact@emersion.fr,m:daniels@collabora.com,m:harry.wentland@amd.com,m:louis.chauvet@bootlin.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:mwen@igalia.com,m:sebastian.wick@redhat.com,m:simona@ffwll.ch,m:siqueira@igalia.com,m:sunpeng.li@amd.com,m:tzimmermann@suse.de,m:uma.shankar@intel.com,m:chaitanya.kumar.borah@intel.com,m:xaver.hugl@kde.org,m:pekka.paalanen@collabora.com,m:matthew.schwartz@linux.dev,m:amd-gfx@lists.freedesktop.org,m:kernel-dev@igalia.com,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:intel-xe@lists.freedesktop.org,m:intel-gfx@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,s:lists@lfdr.de];
 	FREEMAIL_TO(0.00)[gmail.com,amd.com,emersion.fr,collabora.com,bootlin.com,linux.intel.com,kernel.org,igalia.com,redhat.com,ffwll.ch,suse.de];
@@ -130,65 +130,175 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,igalia.com:mid,igalia.com:from_mime,igalia.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,intel.com:email,vger.kernel.org:from_smtp,igalia.com:mid,igalia.com:from_mime,igalia.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 05E816324EE
+X-Rspamd-Queue-Id: AE3CF6324F1
 
-From: Alex Hung <alex.hung@amd.com>
-
-The lut1d_interpolation and lut3d_interpolation fields and their
-associated properties were marked as read-only, but userspace
-can set them via drm_atomic_colorop_set_property().
+As interpolation props are actually mutable props, any changes should be
+handled by drm_colorop_state. Move their enum and make it correctly
+behaves as mutable.
 
 Fixes: 7fa3ee8c0a79 ("drm/colorop: Define LUT_1D interpolation")
 Fixes: db971856bbe0 ("drm/colorop: Add 3D LUT support to color pipeline")
 Reviewed-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Melissa Wen <mwen@igalia.com>
 ---
- include/drm/drm_colorop.h | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/drm_atomic.c      |  4 ++--
+ drivers/gpu/drm/drm_atomic_uapi.c |  8 ++++----
+ drivers/gpu/drm/drm_colorop.c     | 16 ++++++++++++++--
+ include/drm/drm_colorop.h         | 28 ++++++++++++++--------------
+ 4 files changed, 34 insertions(+), 22 deletions(-)
 
+diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+index 3af1b9cc9a06..735ab7badc2e 100644
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -910,7 +910,7 @@ static void drm_atomic_colorop_print_state(struct drm_printer *p,
+ 	case DRM_COLOROP_1D_LUT:
+ 		drm_printf_indent(p, 1, "size=%d\n", colorop->size);
+ 		drm_printf_indent(p, 1, "interpolation=%s\n",
+-				  drm_get_colorop_lut1d_interpolation_name(colorop->lut1d_interpolation));
++				  drm_get_colorop_lut1d_interpolation_name(state->lut1d_interpolation));
+ 		drm_printf_indent(p, 1, "data blob id=%d\n", state->data ? state->data->base.id : 0);
+ 		break;
+ 	case DRM_COLOROP_CTM_3X4:
+@@ -922,7 +922,7 @@ static void drm_atomic_colorop_print_state(struct drm_printer *p,
+ 	case DRM_COLOROP_3D_LUT:
+ 		drm_printf_indent(p, 1, "size=%d\n", colorop->size);
+ 		drm_printf_indent(p, 1, "interpolation=%s\n",
+-				  drm_get_colorop_lut3d_interpolation_name(colorop->lut3d_interpolation));
++				  drm_get_colorop_lut3d_interpolation_name(state->lut3d_interpolation));
+ 		drm_printf_indent(p, 1, "data blob id=%d\n", state->data ? state->data->base.id : 0);
+ 		break;
+ 	default:
+diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
+index 6441b55cc274..78423905051e 100644
+--- a/drivers/gpu/drm/drm_atomic_uapi.c
++++ b/drivers/gpu/drm/drm_atomic_uapi.c
+@@ -751,13 +751,13 @@ static int drm_atomic_colorop_set_property(struct drm_colorop *colorop,
+ 	if (property == colorop->bypass_property) {
+ 		state->bypass = val;
+ 	} else if (property == colorop->lut1d_interpolation_property) {
+-		colorop->lut1d_interpolation = val;
++		state->lut1d_interpolation = val;
+ 	} else if (property == colorop->curve_1d_type_property) {
+ 		state->curve_1d_type = val;
+ 	} else if (property == colorop->multiplier_property) {
+ 		state->multiplier = val;
+ 	} else if (property == colorop->lut3d_interpolation_property) {
+-		colorop->lut3d_interpolation = val;
++		state->lut3d_interpolation = val;
+ 	} else if (property == colorop->data_property) {
+ 		return drm_atomic_color_set_data_property(colorop, state,
+ 							  property, val);
+@@ -782,7 +782,7 @@ drm_atomic_colorop_get_property(struct drm_colorop *colorop,
+ 	else if (property == colorop->bypass_property)
+ 		*val = state->bypass;
+ 	else if (property == colorop->lut1d_interpolation_property)
+-		*val = colorop->lut1d_interpolation;
++		*val = state->lut1d_interpolation;
+ 	else if (property == colorop->curve_1d_type_property)
+ 		*val = state->curve_1d_type;
+ 	else if (property == colorop->multiplier_property)
+@@ -790,7 +790,7 @@ drm_atomic_colorop_get_property(struct drm_colorop *colorop,
+ 	else if (property == colorop->size_property)
+ 		*val = colorop->size;
+ 	else if (property == colorop->lut3d_interpolation_property)
+-		*val = colorop->lut3d_interpolation;
++		*val = state->lut3d_interpolation;
+ 	else if (property == colorop->data_property)
+ 		*val = (state->data) ? state->data->base.id : 0;
+ 	else
+diff --git a/drivers/gpu/drm/drm_colorop.c b/drivers/gpu/drm/drm_colorop.c
+index c0eecde8c176..682fcc651525 100644
+--- a/drivers/gpu/drm/drm_colorop.c
++++ b/drivers/gpu/drm/drm_colorop.c
+@@ -342,7 +342,6 @@ int drm_plane_colorop_curve_1d_lut_init(struct drm_device *dev, struct drm_color
+ 
+ 	colorop->lut1d_interpolation_property = prop;
+ 	drm_object_attach_property(&colorop->base, prop, interpolation);
+-	colorop->lut1d_interpolation = interpolation;
+ 
+ 	/* data */
+ 	ret = drm_colorop_create_data_prop(dev, colorop);
+@@ -442,7 +441,6 @@ int drm_plane_colorop_3dlut_init(struct drm_device *dev, struct drm_colorop *col
+ 
+ 	colorop->lut3d_interpolation_property = prop;
+ 	drm_object_attach_property(&colorop->base, prop, interpolation);
+-	colorop->lut3d_interpolation = interpolation;
+ 
+ 	/* data */
+ 	ret = drm_colorop_create_data_prop(dev, colorop);
+@@ -521,6 +519,20 @@ static void __drm_colorop_state_init(struct drm_colorop_state *colorop_state,
+ 							   &val))
+ 			colorop_state->curve_1d_type = val;
+ 	}
++
++	if (colorop->lut1d_interpolation_property) {
++		if (!drm_object_property_get_default_value(&colorop->base,
++							   colorop->lut1d_interpolation_property,
++							   &val))
++			colorop_state->lut1d_interpolation = val;
++	}
++
++	if (colorop->lut3d_interpolation_property) {
++		if (!drm_object_property_get_default_value(&colorop->base,
++							   colorop->lut3d_interpolation_property,
++							   &val))
++			colorop_state->lut3d_interpolation = val;
++	}
+ }
+ 
+ /**
 diff --git a/include/drm/drm_colorop.h b/include/drm/drm_colorop.h
-index b4b9e4f558ab..5cea4d7c4efa 100644
+index 5cea4d7c4efa..224fae40ed2b 100644
 --- a/include/drm/drm_colorop.h
 +++ b/include/drm/drm_colorop.h
-@@ -309,7 +309,6 @@ struct drm_colorop {
- 	/**
- 	 * @lut1d_interpolation:
- 	 *
--	 * Read-only
- 	 * Interpolation for DRM_COLOROP_1D_LUT
+@@ -183,6 +183,20 @@ struct drm_colorop_state {
  	 */
- 	enum drm_colorop_lut1d_interpolation_type lut1d_interpolation;
-@@ -317,7 +316,6 @@ struct drm_colorop {
- 	/**
- 	 * @lut3d_interpolation:
- 	 *
--	 * Read-only
- 	 * Interpolation for DRM_COLOROP_3D_LUT
+ 	struct drm_property_blob *data;
+ 
++	/**
++	 * @lut1d_interpolation:
++	 *
++	 * Interpolation for DRM_COLOROP_1D_LUT
++	 */
++	enum drm_colorop_lut1d_interpolation_type lut1d_interpolation;
++
++	/**
++	 * @lut3d_interpolation:
++	 *
++	 * Interpolation for DRM_COLOROP_3D_LUT
++	 */
++	enum drm_colorop_lut3d_interpolation_type lut3d_interpolation;
++
+ 	/** @state: backpointer to global drm_atomic_commit */
+ 	struct drm_atomic_commit *state;
+ };
+@@ -306,20 +320,6 @@ struct drm_colorop {
  	 */
- 	enum drm_colorop_lut3d_interpolation_type lut3d_interpolation;
-@@ -325,7 +323,7 @@ struct drm_colorop {
+ 	uint32_t size;
+ 
+-	/**
+-	 * @lut1d_interpolation:
+-	 *
+-	 * Interpolation for DRM_COLOROP_1D_LUT
+-	 */
+-	enum drm_colorop_lut1d_interpolation_type lut1d_interpolation;
+-
+-	/**
+-	 * @lut3d_interpolation:
+-	 *
+-	 * Interpolation for DRM_COLOROP_3D_LUT
+-	 */
+-	enum drm_colorop_lut3d_interpolation_type lut3d_interpolation;
+-
  	/**
  	 * @lut1d_interpolation_property:
  	 *
--	 * Read-only property for DRM_COLOROP_1D_LUT interpolation
-+	 * Property for DRM_COLOROP_1D_LUT interpolation
- 	 */
- 	struct drm_property *lut1d_interpolation_property;
- 
-@@ -353,7 +351,7 @@ struct drm_colorop {
- 	/**
- 	 * @lut3d_interpolation_property:
- 	 *
--	 * Read-only property for DRM_COLOROP_3D_LUT interpolation
-+	 * Property for DRM_COLOROP_3D_LUT interpolation
- 	 */
- 	struct drm_property *lut3d_interpolation_property;
- 
 -- 
 2.53.0
 
