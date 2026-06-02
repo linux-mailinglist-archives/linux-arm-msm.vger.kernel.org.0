@@ -1,101 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-110734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wH97MJ6FHmo9kgkAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 09:26:22 +0200
+	id WOhWJ5uEHmqhkQkAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 09:22:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2AFB629A98
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 09:26:21 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BDC7629941
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 09:22:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 99D7E30539F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 07:18:45 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3CDAF30546DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 07:18:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1FB6379C5E;
-	Tue,  2 Jun 2026 07:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 991B9CA6B;
+	Tue,  2 Jun 2026 07:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZZ5KSwYM";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UoMqVuPw"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lZhhK0eW";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="cNBHzPMy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB92379C43
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 07:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B07935DD1C
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 07:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780384697; cv=none; b=f56QntvC5tAzW7EL/yjICl4W8WLUEiSyaqkH87eEqblfApXxjJSsFx3SfDd1lHersXfE0uVUi+dAr3/UJvVM8pQ18s5UE/o8fNvfmBm7/NUMAsxNdM7DCXj+Mu+/INybB/b/KSKO45b0H5wEwLz+c4N01ScyizfuM6mxqSqlwpo=
+	t=1780384703; cv=none; b=M6dyVkf4L5p2/QEnoLyXG3/D704QZMTmqV8kdq3R84NUZkQfEnAsy706WfrDWuQvi8Soc0FFvnhY83l0mAagj2ge5fOVsxLaTBqFD3rrfJuEuI2T/UA+lRjZmdGuSYrbXbgRLnz36gpGusAB6PnHhj8ntM7qNpBV4fP6bCr2Lj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780384697; c=relaxed/simple;
-	bh=JPVQANRPzIydaU0WcpkAVORq1mGKEPTOEIUcCS0y0vU=;
+	s=arc-20240116; t=1780384703; c=relaxed/simple;
+	bh=LaEl+yypMKeLK5rR8sTmYcYFF/hVieL3wAX2zHj57Fc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ozPDoVzLSjdiL/e8tVL9vOALPwOfVMPMaRxKb+tYBtVLfyliSx8U53CySgo5Nn0XfRoPnmlGrDKHB2d8Eq84L+IdyXAPIT52Wzi+xQcQ1FkluMCEg10mHFgctNEb9RXq7ihRV+7XSswMV+dAzz32Ofh1W7kEC2Iko0KO/6FmErI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZZ5KSwYM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UoMqVuPw; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=M22VBSLhAL4zYAzWduXD31vzgJ0izdpF5QggwHrUWO65w0uf9rTBC3DyWa3qk1exngHz5JHN+pp+rOQpgNWOjaEkNcjUcjeAxkjhtzxf1AzP2JuYOciyAF28ZQCkztoMmYy+zI72V8hOXBf7pIvTeEiFcD0vEk5Q87G6NUV971Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lZhhK0eW; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cNBHzPMy; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65245nB32692286
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Jun 2026 07:18:15 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6525tZXl4012485
+	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Jun 2026 07:18:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=GExpfkrACNf
-	d8AgKb7pzoxx6CS0kiv0JrtZqZXX3hVQ=; b=ZZ5KSwYMKZBdV2J7rA+BKaZVSuY
-	kJFouZjz6jCJZi/iK3YsFL+fbQ+DTKEfBqyDlULM8aLXhwfih66W2eYPiYHm8+Nn
-	I9ZXzC6UncyYH3dH4pvWoMjOAZa7ORpPsuj5RnKVxO770UnmGOtgwYogZH6nnIUv
-	vyl69sWA+GjmvwmgLrsLootw3pvSvJsgwYdyqSDP7HDNMQVbwkdTIkE1obBs99p9
-	o0y+yfRFEf3+EmlswYIA0WYi5G90IeGvD60iNE+nnKgRIR5qlhCoS9lNDbB1RWMH
-	TewUoF3xx6+URUz/Tvx/kAE81KU+sRfnFjnfOh67Mmjt0UntQ5ZVrJbwaOg==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ehqumgq0w-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=HU4ZtcghD0M
+	28On2VNhDRQP9LlC0xqJF34085t8tRAU=; b=lZhhK0eWBbNrvuuk9NZsrLbeJVC
+	Fr2cHMY5Ev1KSDWse+dEPHqxxPOvyQo0NvHfUrNX0QfzkL3nvzxkhOwLyvgTF8VB
+	ZJFBFKOIN9E/Kvg9WrkDKUJWaEADt4vnlhN0kI0ansOspTcJKSuz5BpUA3W+j9sF
+	b+7BoRqAIRALrPocHNeE8LrMpN1AdvjTebCLOmavG+PQ0yO2Xks22cmtw4VrhMNT
+	6X1ndFN6N9zo+s5t12scC8B0vd9/24zKB0Sgea5eorKhnoXEHVk5gVW8P4M0Cjcq
+	dZ+pgVK8A8fSFP4MGXs1KFgwlDZJkIs33KRVucojqkzO5BIMf0fb4sUNxmg==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ehsf4gan0-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2026 07:18:15 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-36d985df4cfso1757011a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2026 00:18:15 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2026 07:18:21 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-36bd4146cb2so4050215a91.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2026 00:18:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780384695; x=1780989495; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1780384700; x=1780989500; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GExpfkrACNfd8AgKb7pzoxx6CS0kiv0JrtZqZXX3hVQ=;
-        b=UoMqVuPwE9u/qzrZ0EOWwHRULgDap4fSLoVpxHgjyqV5VoZ9V0Dam2aTPL+7m4cX8+
-         OHtDAK3eRcaNYYorJqBYGZfF1bDbmRfXmoq+C0LBGBqRTAkAujMrVqojjJahYtUR8FxI
-         RTXesmvyWHYqIPKZ2jTwcUnO0EnmXfSG8nJaCBUYd+m8C32Iyr8l3XBeCMBRhdl9ahHR
-         7Zz1P1aAlCI6lupN1KwWHKHMHq8hNB9J/FMdEAL2gByL98hq2tqTSuep0N9zcjSieVHi
-         fSvOctSK4v/p40NvzKmZNjr0RWVn/2dLCXa8nv1KuAMCkUWNlHzl9cNDywYzwmLjSjzH
-         hHxw==
+        bh=HU4ZtcghD0M28On2VNhDRQP9LlC0xqJF34085t8tRAU=;
+        b=cNBHzPMyEOCCDCbFcGwVA6AtNExEWHnd7bvT8m/sPoKYI1qqAnj/4K7ZJHZt4V8C9r
+         2LIf1OFDQDidEkTj8GzphH0kEZEn9PDiCEDx9sbvylm662u0GbhYby7nU8uFkq1eFQZE
+         PIfEoXddDAJGC0x4Ryu9AvkO3/G+KvD7z9oVa62OGxaiTto8L/tm6biZANtdNKQVAn5n
+         sL0hLKQHmkuK0JWUAm5AOofvj2atULks6jDIh86gXxXSatL32M7So+OB/4KAA/99lrH8
+         5I/DZSaje/Pyt+5gLRcRaU/owjqCdi0GdgBG/UISRh7ZrlbdRRAU47uNzzTr31v+QLwg
+         xEww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780384695; x=1780989495;
+        d=1e100.net; s=20251104; t=1780384700; x=1780989500;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=GExpfkrACNfd8AgKb7pzoxx6CS0kiv0JrtZqZXX3hVQ=;
-        b=nsQLzP1ELl4qbXcDojJc7h0GyygcmLgQXA0P8xkM78u1AkIGLRhqqQGK6eVOE0sK0O
-         vuKago9oHMURoybdh9LswINJADZM80MSjLj96BrEMNHMmvfTpo/bRsqREbcaeCoxJ21o
-         CpD9UxHzkX3EPbIpthZE/sJl0yiazaQjdTsmneDKS4lJOnqF3Fw9bkauN4wETWQGUHxl
-         N68GPkHoXxbHGvW5utQqEKYDnc2Nu3T8Y4J8EcVCwcAOVpdSXORBSu1rqJTNIeJuHq83
-         qWEMVzlzbKH7Kc5yCBDKj01ngBNudzk3ydobIysmJrpdodgd3Hcx5N1RnhqId/DRNrt8
-         JjCQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+hOscwdpw+qHCgo7qENwu1FUha0w/s5odHTg4m0D051mTCd89hARhvILUY/qN868KuOxyrdP2eEkrXR5vK@vger.kernel.org
-X-Gm-Message-State: AOJu0YyAO9kmZLRzq48F6FoEpWFt35MAIl00uB/g6UykHkhh3jgNWLDu
-	TzfZ7zAv0sGKqyE3DMxiRBXPVs6+Ci1tRkK9YxvBggisZsCWTN2D3rw0qCgmv+8HjdKAiGwDPP4
-	K5z0kLarZNGUhEJa99tLIzWk+3yzp+pjKV3ctS03CTiiD0u2HLf1grVVPGs/n7A88i5Rx
-X-Gm-Gg: Acq92OHR8cAsoIHMLJutInVn/+IXN9PDaE65WIcOdzt5P9Vp9ULN3m8VzzOiHKWjwhc
-	OiMBYpFttSJ3xGbupa7m3VFM4N+L5O99JhExAkk9TUGFzkuv/r0LNYMUqUNGn0IF3d8AExSdNDM
-	hoqnLyXogw8aRVe3v06VsxmFW1ctw8xoo2Anjg81a9oWT47OMbslMIl/7MdP2g4mjUc1Vi8LZss
-	rfR/R9ja6+aRJcVOsOQFvlQ/p6doVPa9QfRE8i45mo9QSiq28hC8pK0iR7+MCuRk4Ps2mV0DEn7
-	7Xe90gcyBpE49Nq4n6JVMssrGdL79QKE/jt1EJAul3Yf1ru2hwM9CUkK6E33XcOwgAe1gSvX/VA
-	OwSBjxmtNEthReh4M39Yc542QbNtF4uQa+q6o3yxtq+t6yj7uHwfn6gMXx5j+o5W16YutNFy4Dc
-	XCWwACEWInvukY7yu0Gns3dmLmiPIJPA==
-X-Received: by 2002:a17:90b:4a4d:b0:36d:dd4a:1e59 with SMTP id 98e67ed59e1d1-36ddd4a24e2mr2251888a91.23.1780384694927;
-        Tue, 02 Jun 2026 00:18:14 -0700 (PDT)
-X-Received: by 2002:a17:90b:4a4d:b0:36d:dd4a:1e59 with SMTP id 98e67ed59e1d1-36ddd4a24e2mr2251844a91.23.1780384694470;
-        Tue, 02 Jun 2026 00:18:14 -0700 (PDT)
+        bh=HU4ZtcghD0M28On2VNhDRQP9LlC0xqJF34085t8tRAU=;
+        b=cUUqiEyJJnAFnwWNDPM1S2/VRZ/1m7OIZI8+UUgctDE2mgwxu/XuvnYaftAkU6rHKB
+         WnvjHfMQWMZzhTT6s1MaWHwBKz45oHgDkWfyWu/RXOSXOmBzoALDEbbjP9+/jjrI+o86
+         X7osiku5d+kNBJWgjeoD7bIvxuc/+J/vbge2CWuzz/gzRNEnpND4oCGZpgkuxoU9Nqw5
+         RVk3lnslc5Ap9LB1358gtsb/UUleKvfnnT01qM8zsbTLUBntpkIoiOgR+uNcn72qoKYw
+         9glFjeB0YMk88fhDJ1frtrOHyNXmhox+ikQRm86O89t3fv/Xu8jEVRle+NGhd1GdowrM
+         FKGw==
+X-Forwarded-Encrypted: i=1; AFNElJ/o93GhDv0ZlqVu8ZdnTyV4tsDC4IDZXVLuCi/G7BsEJk++77uJkXte/4q+9D7WyzrtQtoaKYIf7QuC8iBr@vger.kernel.org
+X-Gm-Message-State: AOJu0YzExIOtDhfv6KqkA4zgC42BGd/fCyxTGvfD57CiPPrFxYV8VCOq
+	yYV3ZxgzYYOO0m25Q13AVvGK6ReIB4K2gyI4lbjxSqBVtApuEu9mDfortwN/dwHRgsEmnB9EwKm
+	p/4lKO1K8/LqZqF9mVovsdqxnp2/Z9aSgvXk73nycE+EuZs3P00R7oyHuL8DrXbwe6/S7
+X-Gm-Gg: Acq92OFmxzk/aWMCyG0YZgh9bRMAtDCAtyw+Qff7DrotjtReNM0ehhYNmTXPQCQDFpG
+	1Z1rA6KbzKRdZeHusMSf+cKmEunRXPZ1IkoSQvBtHfT/BRUG1xHCCMQQzxcL7AiKMyPSUkF28rn
+	/s5zxmf6d0ugT9UT6n09R8O43LGWiJYJgQZAe/5G2LooXjEpU27Om5waPbP3w2D50QgMA4NoGjx
+	oPGNc4YAADUEg1zfiIL0Uj/Cb6BqQcd9AmO6uiawW/RNUbugb2fMnzFqAdX1HOu44xPgn0WgoUa
+	F3q/OmEuh6OrUAdD8nRRVUkBOZv01vcTlE65XhPTSGx7D3i4r8+pd8fbHU5WE7mrg94EjGEz/xC
+	EtXHPWl8dCiJYj89gWoLH62iH69TOK7cQfVsTR9n60fWSu8qY4BkUySXhaO9Jhe06ax67KO1J07
+	h/CJqSElF4WjAhuEyhtixolaD998iR5w==
+X-Received: by 2002:a17:90b:520a:b0:36b:a162:a1be with SMTP id 98e67ed59e1d1-36dd91f0f42mr2277824a91.4.1780384700324;
+        Tue, 02 Jun 2026 00:18:20 -0700 (PDT)
+X-Received: by 2002:a17:90b:520a:b0:36b:a162:a1be with SMTP id 98e67ed59e1d1-36dd91f0f42mr2277800a91.4.1780384699782;
+        Tue, 02 Jun 2026 00:18:19 -0700 (PDT)
 Received: from QCOM-SocCW5bzXR.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36dd91c9991sm1766279a91.7.2026.06.02.00.18.09
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36dd91c9991sm1766279a91.7.2026.06.02.00.18.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jun 2026 00:18:14 -0700 (PDT)
+        Tue, 02 Jun 2026 00:18:19 -0700 (PDT)
 From: Jianping Li <jianping.li@oss.qualcomm.com>
 To: srini@kernel.org, amahesh@qti.qualcomm.com, arnd@arndb.de,
         gregkh@linuxfoundation.org, abelvesa@kernel.org,
@@ -104,9 +104,9 @@ Cc: Jianping Li <jianping.li@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         ekansh.gupta@oss.qualcomm.com, quic_chennak@quicinc.com,
         stable@kernel.org
-Subject: [PATCH v7 3/5] misc: fastrpc: Fail Audio PD init when reserved memory is missing
-Date: Tue,  2 Jun 2026 15:17:48 +0800
-Message-Id: <20260602071750.526-4-jianping.li@oss.qualcomm.com>
+Subject: [PATCH v7 4/5] misc: fastrpc: Allocate entire reserved memory for Audio PD in probe
+Date: Tue,  2 Jun 2026 15:17:49 +0800
+Message-Id: <20260602071750.526-5-jianping.li@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260602071750.526-1-jianping.li@oss.qualcomm.com>
 References: <20260602071750.526-1-jianping.li@oss.qualcomm.com>
@@ -117,43 +117,44 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAyMDA2NiBTYWx0ZWRfX7MKUqiL5F7GO
- DC1BMVIMw34LJzXznrSSf33ryKN819jGP+ykn7uxwHIEgOA5meGAUEYSI1ipkFUMmWGV+Gupsyy
- M8VlN94KDldhnhj4F6IxSRtEKSZiFvoWIUcBA0DPEhXe4tuH/6vwWtf4QEzijl7kv2u02635hJX
- UWAesRIER8IxI53XsZXTYj/ZH1p+V+9SUwSWddjWrGvWsQII+ctPATddy+yim1pVJ1dlNV90sIb
- focA8iK4gZMW6XfUgIgiSopkL5BnMly1ZPByWyE0CAVvIUcN8Gq6NppV5/rBB0b5fZjzvOiCFtw
- GKMY83fmPKv3nv8A1D6EyYDUr75EJAWrRl07XmqvOHJCw97X6E5NyHE2t9vb2x9xudq+UWJchdB
- zue8tlmjrRPMJ/3QcbeC9cWTrwhmnWZBeUkvyPH0+Zcshjk4pot5S99ieMESmTbBDulKHoguDJZ
- cgO5wK0dQS5hpU1V+8A==
-X-Proofpoint-ORIG-GUID: OwCKngntqWMkyeaL_8ocnJdMlcliJbyw
-X-Proofpoint-GUID: OwCKngntqWMkyeaL_8ocnJdMlcliJbyw
-X-Authority-Analysis: v=2.4 cv=Rrv16imK c=1 sm=1 tr=0 ts=6a1e83b7 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAyMDA2NiBTYWx0ZWRfXzNFfplVaSo+N
+ /ipScmuwyK/KOcrrTitMbENqaI1teVOrBHaNLvGeDumSlgqMPTreFt9/g20q5l7dirON14hc0o3
+ w/ynZU/eG6Az7MfcPc19qjbIf3Fq72UstbvygGWz4Ggh8/f4M9P1bn25MMWX1wNKu3290pqo/0F
+ okPxjHPjTJ1Hb28R6A4fp2EIxGn+Ev9NvwYkGhLoHDkqPDpKm7VcMQJPviyOQNb6OjGe1pYnX6W
+ ixuQc42181qXzPo2EFwy5rsHI3WVWw+XmzZdCrH3SQgPhmTiNet7YW+yb3IXLYtFW1ycg15Y5Wq
+ MwMwgIXE6VO99rgb5gpiht6WMgB64D3mhQi+Aq5BnSWc1KmUkkHgOWWKuypN/niegAYqQotR4PO
+ LcHN9LDAQXifI27y8OG273Iql6QdwNlYmOLI7qONb8apgcKXFvYK/3+NstTqmI85dm34hj/rIa3
+ h5dGfU49ACQf5+L2ldw==
+X-Proofpoint-GUID: VMVpLG86FDV-9cTZLfEjGBaxEphvUm-u
+X-Authority-Analysis: v=2.4 cv=AJZ7LEvz c=1 sm=1 tr=0 ts=6a1e83bd cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=cwMOb1EeFLyGxYfGK4oA:9 a=mQ_c8vxmzFEMiUWkPHU9:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=vXPY0jRleWu_0xqwLycA:9 a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-ORIG-GUID: VMVpLG86FDV-9cTZLfEjGBaxEphvUm-u
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-01_07,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0
- suspectscore=0 impostorscore=0 phishscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606020066
+ adultscore=0 suspectscore=0 malwarescore=0 phishscore=0 bulkscore=0
+ impostorscore=0 clxscore=1015 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2606020066
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110734-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110735-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qualcomm.com:email,qualcomm.com:dkim];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[13];
@@ -164,49 +165,210 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: C2AFB629A98
+X-Rspamd-Queue-Id: 1BDC7629941
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Audio PD static process creation assumes that a reserved-memory
-region is defined in DT and exposed via cctx->remote_heap.
+Allocating and freeing Audio PD memory from userspace is unsafe because
+the kernel cannot reliably determine when the DSP has finished using the
+memory. Userspace may free buffers while they are still in use by the DSP,
+and remote free requests cannot be safely trusted.
 
-If reserved-memory is missing or incomplete, the driver may pass
-invalid address/size information to the DSP, leading to undefined
-behavior or crashes.
+Additionally, the current implementation allows userspace to repeatedly
+grow the Audio PD heap, but does not support shrinking it. This can lead
+to unbounded memory usage over time, effectively causing a memory leak.
 
-Add explicit validation for remote_heap presence and size before
-sending the memory to DSP, and fail early if the configuration is
-invalid.
+Fix this by allocating the entire Audio PD reserved-memory region during
+rpmsg probe and tying its lifetime to the rpmsg channel. This removes
+userspace-controlled alloc/free and ensures that memory is reclaimed only
+when the DSP process is torn down.
 
 Fixes: 0871561055e66 ("misc: fastrpc: Add support for audiopd")
 Cc: stable@kernel.org
 Signed-off-by: Jianping Li <jianping.li@oss.qualcomm.com>
 ---
- drivers/misc/fastrpc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/misc/fastrpc.c | 96 +++++++++++++++++++-----------------------
+ 1 file changed, 43 insertions(+), 53 deletions(-)
 
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index a8a58f889d07..f46a8f53970d 100644
+index f46a8f53970d..33be8bed6a0b 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -1354,6 +1354,13 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+@@ -276,6 +276,8 @@ struct fastrpc_channel_ctx {
+ 	struct kref refcount;
+ 	/* Flag if dsp attributes are cached */
+ 	bool valid_attributes;
++	/* Flag if audio PD init mem was allocated */
++	bool audio_init_mem;
+ 	u32 dsp_attributes[FASTRPC_MAX_DSP_ATTRIBUTES];
+ 	struct fastrpc_device *secure_fdevice;
+ 	struct fastrpc_device *fdevice;
+@@ -1344,15 +1346,16 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 	struct fastrpc_init_create_static init;
+ 	struct fastrpc_invoke_args *args;
+ 	struct fastrpc_phy_page pages[1];
++	struct fastrpc_channel_ctx *cctx = fl->cctx;
+ 	char *name;
+ 	int err;
+-	bool scm_done = false;
+ 	struct {
+ 		int client_id;
+ 		u32 namelen;
+ 		u32 pageslen;
  	} inbuf;
  	u32 sc;
++	unsigned long flags;
  
-+	if (!fl->cctx->remote_heap ||
-+	    !fl->cctx->remote_heap->dma_addr ||
-+	    !fl->cctx->remote_heap->size) {
-+		err = -ENOMEM;
-+		dev_dbg(fl->sctx->dev, "remote heap memory region is not added\n");
-+		return err;
+ 	if (!fl->cctx->remote_heap ||
+ 	    !fl->cctx->remote_heap->dma_addr ||
+@@ -1383,31 +1386,6 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 	inbuf.client_id = fl->client_id;
+ 	inbuf.namelen = init.namelen;
+ 	inbuf.pageslen = 0;
+-	if (!fl->cctx->remote_heap) {
+-		err = fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
+-						&fl->cctx->remote_heap);
+-		if (err)
+-			goto err_name;
+-
+-		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
+-		if (fl->cctx->vmcount) {
+-			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+-
+-			err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
+-							(u64)fl->cctx->remote_heap->size,
+-							&src_perms,
+-							fl->cctx->vmperms, fl->cctx->vmcount);
+-			if (err) {
+-				dev_err(fl->sctx->dev,
+-					"Failed to assign memory with dma_addr %pad size 0x%llx err %d\n",
+-					&fl->cctx->remote_heap->dma_addr,
+-					fl->cctx->remote_heap->size, err);
+-				goto err_map;
+-			}
+-			scm_done = true;
+-			inbuf.pageslen = 1;
+-		}
+-	}
+ 
+ 	fl->pd = USER_PD;
+ 
+@@ -1419,8 +1397,17 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 	args[1].length = inbuf.namelen;
+ 	args[1].fd = -1;
+ 
+-	pages[0].addr = fl->cctx->remote_heap->dma_addr;
+-	pages[0].size = fl->cctx->remote_heap->size;
++	spin_lock_irqsave(&cctx->lock, flags);
++	if (!fl->cctx->audio_init_mem) {
++		pages[0].addr = fl->cctx->remote_heap->dma_addr;
++		pages[0].size = fl->cctx->remote_heap->size;
++		fl->cctx->audio_init_mem = true;
++		inbuf.pageslen = 1;
++	} else {
++		pages[0].addr = 0;
++		pages[0].size = 0;
 +	}
- 	args = kzalloc_objs(*args, FASTRPC_CREATE_STATIC_PROCESS_NARGS);
- 	if (!args)
- 		return -ENOMEM;
++	spin_unlock_irqrestore(&cctx->lock, flags);
+ 
+ 	args[2].ptr = (u64)(uintptr_t) pages;
+ 	args[2].length = sizeof(*pages);
+@@ -1438,27 +1425,7 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+ 
+ 	return 0;
+ err_invoke:
+-	if (fl->cctx->vmcount && scm_done) {
+-		u64 src_perms = 0;
+-		struct qcom_scm_vmperm dst_perms;
+-		u32 i;
+-
+-		for (i = 0; i < fl->cctx->vmcount; i++)
+-			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
+-
+-		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
+-		dst_perms.perm = QCOM_SCM_PERM_RWX;
+-		err = qcom_scm_assign_mem(fl->cctx->remote_heap->dma_addr,
+-						(u64)fl->cctx->remote_heap->size,
+-						&src_perms, &dst_perms, 1);
+-		if (err)
+-			dev_err(fl->sctx->dev, "Failed to assign memory dma_addr %pad size 0x%llx err %d\n",
+-				&fl->cctx->remote_heap->dma_addr, fl->cctx->remote_heap->size, err);
+-	}
+-err_map:
+-	fastrpc_buf_free(fl->cctx->remote_heap);
+-	fl->cctx->remote_heap = NULL;
+-err_name:
++	fl->cctx->audio_init_mem = false;
+ 	kfree(name);
+ err:
+ 	kfree(args);
+@@ -2425,12 +2392,21 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 		}
+ 	}
+ 
+-	if (domain_id == SDSP_DOMAIN_ID) {
++	if (domain_id == SDSP_DOMAIN_ID || domain_id == ADSP_DOMAIN_ID) {
+ 		struct resource res;
+ 		u64 src_perms;
+ 
+ 		err = of_reserved_mem_region_to_resource(rdev->of_node, 0, &res);
+ 		if (!err) {
++			if (domain_id == ADSP_DOMAIN_ID) {
++				data->remote_heap =
++					kzalloc_obj(*data->remote_heap, GFP_KERNEL);
++				if (!data->remote_heap)
++					return -ENOMEM;
++
++				data->remote_heap->dma_addr = res.start;
++				data->remote_heap->size = resource_size(&res);
++			}
+ 			src_perms = BIT(QCOM_SCM_VMID_HLOS);
+ 
+ 			err = qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
+@@ -2438,7 +2414,6 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+ 			if (err)
+ 				goto err_free_data;
+ 		}
+-
+ 	}
+ 
+ 	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
+@@ -2519,6 +2494,7 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+ 	struct fastrpc_buf *buf, *b;
+ 	struct fastrpc_user *user;
+ 	unsigned long flags;
++	int err;
+ 
+ 	/* No invocations past this point */
+ 	spin_lock_irqsave(&cctx->lock, flags);
+@@ -2536,8 +2512,22 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
+ 	list_for_each_entry_safe(buf, b, &cctx->invoke_interrupted_mmaps, node)
+ 		list_del(&buf->node);
+ 
+-	if (cctx->remote_heap)
+-		fastrpc_buf_free(cctx->remote_heap);
++	if (cctx->remote_heap && cctx->vmcount) {
++		u64 src_perms = 0;
++		struct qcom_scm_vmperm dst_perms;
++
++		for (u32 i = 0; i < cctx->vmcount; i++)
++			src_perms |= BIT(cctx->vmperms[i].vmid);
++
++		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
++		dst_perms.perm = QCOM_SCM_PERM_RWX;
++
++		err = qcom_scm_assign_mem(cctx->remote_heap->dma_addr,
++					  cctx->remote_heap->size, &src_perms,
++					  &dst_perms, 1);
++		if (!err)
++			kfree(cctx->remote_heap);
++	}
+ 
+ 	of_platform_depopulate(&rpdev->dev);
+ 
 -- 
 2.43.0
 
