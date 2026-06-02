@@ -1,186 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-110880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id xhYILS1oH2rXlgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 01:33:01 +0200
+	id hoOsGcRoH2r8lgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 01:35:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56897632EC7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 01:33:01 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0791632F11
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 01:35:31 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20201202 header.b=eKyL8IcL;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110880-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110880-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=intel.com header.s=Intel header.b="NzkKhO/f";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110881-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110881-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=intel.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3B2B030A3FC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 23:31:09 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 23EE1300288A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 23:35:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8F8A3CBE7C;
-	Tue,  2 Jun 2026 23:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A305D360EFC;
+	Tue,  2 Jun 2026 23:35:28 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCF13815C2;
-	Tue,  2 Jun 2026 23:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156782F7478;
+	Tue,  2 Jun 2026 23:35:26 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780443053; cv=none; b=Yi05v0HfXWA7ZvX41pS/PrHNO9LSnrkRI1pLZ5UZ7lT6XIlWS2S6lSSxCeE6F8OQVlPae0QKlDvfRv62GmaE1zRmsBozuAVTzga4/8OvrwRg3v+UPsUdfh0Hk6Tu3D4NzbAOdYrKGYCXKaeiyCEMQeJEmflxwNCZ1p2Qt/URm1Q=
+	t=1780443328; cv=none; b=BueNHHmJKy6KN6hnSfyy60Yrs0bwQVlvx3hdUx1QG14mshT9q3gTo3Z4yYLMmZL7n1zTnwJ+Y9enA9ACDuXkRbqEntUEMFx7KWRRPLdgAHcBpVuQ2Wnh6ASH0zUFDczZ2TTuKd5WOwdTG6oMbWsyTDaUadP9hIqPSD5q7m0NQbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780443053; c=relaxed/simple;
-	bh=yJk1wbL1jqLZ7xqEvSc5MqxvJ8W6C4e/ugOsmSZ4iIA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rtqTa0eoeS3tVP5XE1SqU0/WK1NfXzdzNSFmaIOO5QmH2bKqgT9BgycEd/YVm/u21DxDxvsuxYzhl2NLSJ611nDy6AviRWQLmJ9TORTbkByTG4JSKcKP6m6NSyrUORQ/+2oU8V/mi3Gr6mG91BxMZpMSDF5lPb19Ob3We6YOksM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eKyL8IcL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 50B37C2BCFC;
-	Tue,  2 Jun 2026 23:30:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1780443053;
-	bh=yJk1wbL1jqLZ7xqEvSc5MqxvJ8W6C4e/ugOsmSZ4iIA=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=eKyL8IcLC6P90WRBBGqtbovDIMdp9iXpbN9UFlUHlpHOy+ADO/ZoY7kpLKKzodq27
-	 +fPZdrvuuNHq6301aHRts+31BLuOZj5sUqiM1IKeCMlHrV/40eSVLhG9JeDBtgy6EF
-	 t2K7qcCH93cRc9Sga3kqmwfT4jD8vrDWfJu0AHJXPxGPaGEJLqdwCZYQm/fe7X/aSL
-	 7zrHDFIp69SbDCPDvpNk90wp+e4GQiCkh2tyWnSPmvf/buYd1PKivaWcCmlpNJQ31X
-	 XsTqqvJVRJU/DOH1WJ5MIiQYitq4JjH6HgH60k77eH+zwfn/D8YMdtcrFwbXmzwRGy
-	 v67JuTGEz3oBA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D9ECD6E6A;
-	Tue,  2 Jun 2026 23:30:53 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Wed, 03 Jun 2026 01:30:46 +0200
-Subject: [PATCH v6 8/8] media: qcom: camss: Enable C-PHY where available
+	s=arc-20240116; t=1780443328; c=relaxed/simple;
+	bh=CPp9mntO1Z8AhjLa62UOmTDu/vkEQOgFfpPOSYZt15s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=H0jEASzPfclECLWI0fUcMUejGZ36m9RKZVbKmS0tyimb9izI3p47BLm3mO8HG3Xu+P8zkN5XPUsKRYet3Tmfe8QNZxFrpDRfzH99iaOV1HlJrY1k3wBGTKQY+Z4G2ZRkPxfwgbRcUhPVGC4xkzPYbhDD/ph4Fe8BUAPqG3mejj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NzkKhO/f; arc=none smtp.client-ip=192.198.163.15
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780443327; x=1811979327;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=CPp9mntO1Z8AhjLa62UOmTDu/vkEQOgFfpPOSYZt15s=;
+  b=NzkKhO/fW/hpoozaXZ/zUtxmahicw8zwhCfCtltHb0itCY4dAzBdYtLZ
+   YxcxC9krgMc7uIz9aI9C6OqyqaOoP+Y4ZnlLjpoZiPNs5AbbYip7hMxTA
+   NF4sAR4M8T2rs5+hAaXBMYJQjerypP1Tc2sVGhU943Hvh2cGw6OA5QH/t
+   85YqljIfNisacvfOy0Ejg7anHSzinEOK1NlpPwAz4oi2A+vtYRkeaNt7A
+   FgDYRziXKrmJ0aIT1U3G56+41Yp+3BhzlsZ2Z8qAkN8CkQbdFapWjQGu6
+   T++6RW4xelk3daOq+i0qxDJemfj7DK9ZXncvrhcIw7wssPDX944loc7Nd
+   g==;
+X-CSE-ConnectionGUID: IpI3nzZMQ4a623RUKtX+dw==
+X-CSE-MsgGUID: 8jjomkLyRYuYtCWq+XY1FQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11805"; a="81369633"
+X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
+   d="scan'208";a="81369633"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 16:35:26 -0700
+X-CSE-ConnectionGUID: B64CSb24SA2zGjQ1FyNgJA==
+X-CSE-MsgGUID: KxNNY/SkSGC5FivD3At41A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
+   d="scan'208";a="267921782"
+Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.116])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 16:35:22 -0700
+Date: Wed, 3 Jun 2026 02:35:20 +0300
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+Cc: Jonathan Cameron <jic23@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andy@kernel.org>, Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+	David Collins <david.collins@oss.qualcomm.com>,
+	Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>
+Subject: Re: [PATCH v2 1/2] iio: adc: qcom-spmi-adc5-gen3: Share SDAM0 IRQ
+ with ADC_TM auxiliary driver
+Message-ID: <ah9ouLQFI7VtHCWL@ashevche-desk.local>
+References: <20260526-gen3_adc_tm-v2-0-702fbac919ac@oss.qualcomm.com>
+ <20260526-gen3_adc_tm-v2-1-702fbac919ac@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260603-qcom-cphy-v6-8-e50de0b557a8@ixit.cz>
-References: <20260603-qcom-cphy-v6-0-e50de0b557a8@ixit.cz>
-In-Reply-To: <20260603-qcom-cphy-v6-0-e50de0b557a8@ixit.cz>
-To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Bryan O'Donoghue <bod@kernel.org>, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>, 
- "Dr. Git" <drgitx@gmail.com>, Cory Keitz <ckeitz@amazon.com>, 
- Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Kieran Bingham <kbingham@kernel.org>, 
- Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1350; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=WQAK+dTWd4zgEWrjdRbxx4I2y2Bah8Upe6SOIj07erk=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBqH2erjuxOKIAR+9NWPxdxKUDCuTfi2NbYCikRQ
- COb0d9Bi+GJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCah9nqwAKCRBgAj/E00kg
- cmjDD/4n7DVvh3LREds6dJWlxq9B/BDPRCKUbwEadOF1zpoety9Rv7X7b9Q1/tRyATv2fY+FLoE
- I7YrJMxuc7keo/YjNMsSM7SJe9AtE1g3r3capal4EELqIShe2NFX/9JXx0u7xKAkhDP2Cr9zhRr
- N7h4Fy+IFTc56UTy/cdz/+ps8ClZe2cQ++HFfbjmLRZpdmrpQXP5Nlb5NRBZVnkApD6KYEV3/do
- sI9o/6Cdskjv2mh/lL0epIkmCpeyoaJ4FdJ6Bj/R+uHexyAQcB+EmkiS/DbOVGPbpCtGj9yadrr
- +2dTC9UTvuaQiUBUPdE8HjTlL8XlplYo/uJL9zAM2eYECTkejcYqEyZYGFoVWrNBkTiQmpv/ops
- DTy8SsDCN/+B4ge2ZVX9cejnhITI9IQ2Trxj8FAAKAR1as/6BXeYvPzXHW5whcMOiJmi9ikG+/N
- 0FgbcUy6nLaIaWaCHVRqwtbW4lFXKB7gkRh3/Xkao3MAdckELKLJSEyY2t9l+asEH7DE62Esexh
- nMsUEFC1BE4yJgJStdPgSRxPvIG3kjXuD0P/rqIv8wh+xPu9//CM/L3tH93b/DF/GQDEe6RkTyp
- yJ7P0/Lz2uCdoPmJ/+kA1FJlqmZ19OX1RT+poq1oudavVnWfn02GqocUfBZOYFrHd9bqUG2my8a
- xA+28VPx5AFYHQg==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260526-gen3_adc_tm-v2-1-702fbac919ac@oss.qualcomm.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110880-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
-	FORGED_RECIPIENTS(0.00)[m:rfoss@kernel.org,m:todor.too@gmail.com,m:bryan.odonoghue@linaro.org,m:bod@kernel.org,m:vladimir.zapolskiy@linaro.org,m:mchehab@kernel.org,m:luca.weiss@fairphone.com,m:phodina@protonmail.com,m:drgitx@gmail.com,m:ckeitz@amazon.com,m:loic.poulain@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:kbingham@kernel.org,m:sakari.ailus@linux.intel.com,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:phone-devel@vger.kernel.org,m:david@ixit.cz,m:todortoo@gmail.com,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110881-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,linaro.org,fairphone.com,protonmail.com,amazon.com,oss.qualcomm.com];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:jishnu.prakash@oss.qualcomm.com,m:jic23@kernel.org,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:amitk@kernel.org,m:thara.gopinath@gmail.com,m:rafael@kernel.org,m:daniel.lezcano@kernel.org,m:rui.zhang@intel.com,m:lukasz.luba@arm.com,m:linux-arm-msm@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:kamal.wadhwa@oss.qualcomm.com,m:david.collins@oss.qualcomm.com,m:anjelique.melendez@oss.qualcomm.com,m:neil.armstrong@linaro.org,m:stephan.gerhold@linaro.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[andriy.shevchenko@intel.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,analog.com,gmail.com,intel.com,arm.com,vger.kernel.org,oss.qualcomm.com,linaro.org];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	HAS_REPLYTO(0.00)[david@ixit.cz];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	HAS_ORG_HEADER(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ixit.cz:mid,ixit.cz:email,ixit.cz:replyto,vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@intel.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[intel.com:+];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,intel.com:from_mime,intel.com:dkim,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 56897632EC7
+X-Rspamd-Queue-Id: D0791632F11
 
-From: David Heidelberg <david@ixit.cz>
+On Tue, May 26, 2026 at 04:26:09PM +0530, Jishnu Prakash wrote:
+> The SDAM0 IRQ can be triggered for both EOC (end of conversion) events for
+> immediate ADC reads done in this driver and for threshold violation events,
+> based on ADC_TM thresholds configured from the auxiliary ADC_TM driver on
+> TM channels on the first SDAM.
+> 
+> At present, this interrupt is handled only in the ISR in the main ADC driver.
+> When the ISR is triggered for an ADC_TM event, this driver notifies the ADC_TM
+> driver by calling a notifier callback exposed from it for this purpose.
+> 
+> To simplify the interrupt handling in both drivers, share the interrupt between
+> the drivers. With this, ADC_TM interrupts on SDAM0 will be handled directly in
+> the ADC_TM driver, so remove the notifier callback and all TM interrupt
+> handling in the main ADC ISR.
 
-After all the changes done we can now safely enable C-PHY for a SoC
-where it's available.
+...
 
-Acked-by: Cory Keitz <ckeitz@amazon.com>
-Reviewed-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- drivers/media/platform/qcom/camss/camss.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+> +	/*
+> +	 * This interrupt is shared with the ADC_TM auxiliary driver, which
+> +	 * is threaded and uses IRQF_ONESHOT. Since shared interrupts need
+> +	 * to agree on IRQF_ONESHOT configuration and there is a kernel
+> +	 * warning for using IRQF_ONESHOT with non-threaded interrupts,
+> +	 * make this also a threaded IRQ.
+> +	 */
+> +
+> +	ret = devm_request_threaded_irq(dev, adc->dev_data.base[ADC5_GEN3_VADC_SDAM].irq,
+> +					NULL, adc5_gen3_isr, IRQF_ONESHOT | IRQF_SHARED,
+> +					adc->dev_data.base[ADC5_GEN3_VADC_SDAM].irq_name,
+> +					adc);
+>  	if (ret)
+>  		return dev_err_probe(dev, ret,
+>  				     "Failed to request SDAM%d irq\n",
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index db4e14a84a95f..555c53343a1e9 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -4761,21 +4761,21 @@ static int camss_parse_endpoint_node(struct device *dev,
- 	struct v4l2_fwnode_endpoint vep = { { 0 } };
- 	unsigned int i;
- 	int ret;
- 
- 	ret = v4l2_fwnode_endpoint_parse(ep, &vep);
- 	if (ret)
- 		return ret;
- 
--	/*
--	 * Most SoCs support both D-PHY and C-PHY standards, but currently only
--	 * D-PHY is supported in the driver.
--	 */
--	if (vep.bus_type != V4L2_MBUS_CSI2_DPHY) {
-+	switch (vep.bus_type) {
-+	case V4L2_MBUS_CSI2_CPHY:
-+	case V4L2_MBUS_CSI2_DPHY:
-+		break;
-+	default:
- 		dev_err(dev, "Unsupported bus type %d\n", vep.bus_type);
- 		return -EINVAL;
- 	}
- 
- 	csd->interface.csiphy_id = vep.base.port;
- 
- 	mipi_csi2 = &vep.bus.mipi_csi2;
- 	lncfg->num_data = mipi_csi2->num_data_lanes;
+Also add a patch to drop this duplicate message.
 
 -- 
-2.53.0
+With Best Regards,
+Andy Shevchenko
 
 
 
