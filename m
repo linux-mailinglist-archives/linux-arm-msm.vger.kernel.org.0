@@ -1,209 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-110844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id XjXGNhpIH2pRjgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 23:16:10 +0200
+	id FXw/B91OH2oRkAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 23:45:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 343746320CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 23:16:10 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B14FB6322B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 02 Jun 2026 23:45:00 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=gD2vEr+D;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=OD5PbOz0;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110844-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110844-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=intel.com header.s=Intel header.b=bOrxwt7d;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110845-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110845-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=intel.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 72FFF3002293
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 21:12:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B8A3C30942EC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Jun 2026 21:40:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1064436EA80;
-	Tue,  2 Jun 2026 21:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37A6E3A9D88;
+	Tue,  2 Jun 2026 21:40:26 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D635219E839
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Jun 2026 21:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D522425A354;
+	Tue,  2 Jun 2026 21:40:24 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780434761; cv=none; b=kxMoa4dsOZQSot0CYjMkCi5Jjrv7Z4+k75HvtgB6Bt1URXjLm7zM5/fXQVKB9p1BnhLMgqy+kDqGPI03+oxQF7ABii6ZM8/4d8m06XnfQWOuGcty4a22gh/vu3ytaBeSqrgA8tRY2d0EQqCPK7Ksro6k+5ESz+35QYMOkjS2740=
+	t=1780436426; cv=none; b=hG1oAR4KGjTTcYBlH+fghBotxTnMZVki4ChAPUn1smESfg84PEOO8UGmTQg/rPypw1yz6YDAjfC+L7O36u7rNqg/G1GLMro+7+M36uF2GYxOUVvKjZRTMjs57h7ORblmbeztBsKrunq5qEPmax0NW7XsTC9jvRQRvvi8tWq6BmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780434761; c=relaxed/simple;
-	bh=rDeXtDL/PJbNE80wWmAYiMIlUv/C2tp5BR6QLjbzJRk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PcbElYsGJb9Kbdkg5TaqrTFWomXzMFDlQ3yQyeIZazRRpqhNN4sFL7Lnp5RX8T4PYgIV9Ts8rSo2Koco5t1NcPwO4R06U3/9Ww03rBstC5MxQqBMHcEHKXg9ls4tTzNbJJgBMAN1Gxmlsaps38bFBYvl0mUqnA+kOv1s8BlLy0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gD2vEr+D; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OD5PbOz0; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 652Kcoon2884623
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Jun 2026 21:12:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mhSG96DeO4siCnlPLzkltobE8Bmk/gbxupxseeS1UBg=; b=gD2vEr+DoVPkixd4
-	cS5j0E9R7LlPbyh5DJAyVIC+Vr9/uVwFOxWYlZxSnp2J0O3XKqaSpef9w4Y8LowJ
-	RxbebOXoXSe5/TuC4wFmLDzTqCIqpyhLiMwLofoHxnuFQqoWQFUry04+vVV7dCps
-	hkTJ40ct7QjixlXT66rUe1A78PQU4/qcUc5YC8gCnPFrRxDhwmDWKjkDkSWvdKvt
-	WrCztXkU92kt2PGjAb/Q2GaQIgnhYUqNicBQiNq1rIOx42qhMYRibSyEl+iRI6+R
-	kUkY4nB7BAJqgE+kaSKA/Ew3TG4YP3pWFt5FvHugJVaK3vms/UpEibeb9E7H07wA
-	28VgXQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ehsu13m2h-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2026 21:12:38 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-51772325a64so11713021cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2026 14:12:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780434758; x=1781039558; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mhSG96DeO4siCnlPLzkltobE8Bmk/gbxupxseeS1UBg=;
-        b=OD5PbOz04O+DdhFIY7qgukXc/tWkf576hLkuvjzwuZiTI0oyc8lCu27KI+NYIwbfyh
-         guaMpA/C5mgzqdUMrqPYkhf1R9yKvn9lmv6SpQFL4DvENXl0z/ZWw8wWJEI+ckvKBjPa
-         cUM+lNHXct3kvL4C+MGNgpm/pDKePowyLJnjrqqjZvARVH3CAixxu7/+zFhT6pHq8spI
-         ho6TcXxvGNNP7EQRBGbURUvUWWC/6lFxleIezjniurcojJ91r1jY/DHfutA+F83rs4PZ
-         K1htGsm+8jD2l9Ll21RXyJxMyP43Fh1tjsjK4qKzSTISVI325ue5aLU0ciI42l2yIbGn
-         6+BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780434758; x=1781039558;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mhSG96DeO4siCnlPLzkltobE8Bmk/gbxupxseeS1UBg=;
-        b=exbxsloz8c0c++n6r4g+eC1YXNOrR6+djbkrj55C0W4FGe7Qcftz3xV3Gm9rLCANX6
-         mhkzs3kpZvjyMwLClV2k0G6pOryJMjhEP+VVrnHExMLB41FiCgvofsJZjauy5nIhqT3A
-         ROxNIixjy6ftCBPASBDkjHDjP2aRh70Am6pKyHrjN/C14Lcup/O/6CVittK8hIVPUWAT
-         23/Fk9XITK/Zlqp8xHo/kpsTLq1MX5MsXrgBPztaM9f5UwuwiUUstCnU14CUgrUXa+47
-         a1a8M7ZMFTluNBaiwyA2ayycABDRjGHQF9NRaUx079+b9eiM7zJg7J2nPc+VUK9dpNw/
-         I81A==
-X-Gm-Message-State: AOJu0Yz++mu+hb8Ccyvs/Jiekbby7CruliLbjyJ3QGVtN13w2/qlybKS
-	Lj1wGUsc00DputKm3V5ACV7oB8Ilg4z7yzcElzFS5uo+8ka3+vQKhM/EErKoXK1kE9GciCDDG1G
-	UVtX2sx6KsoiP01zMcSk6SvLGmbRI9/BJvcCaFgvy4i4QGG9c9CFucaRSaiJmuoupmzMe
-X-Gm-Gg: Acq92OE8hSnMks5ts0dhlq3RVDL8L1XsdOvhzNqv91HxlYQn+e/f0guQ4CSsn9rAPf4
-	Y7u1rfcRwPp2T8DGwuCGD0V4SyR34oAdySf2+3U9ZYCDrM2UKDfVv9+wS/rtpgDRYusywaSPFWG
-	1AYhY9xNhhrN4CWb/pi1+ayzMon1xrcopBoIBxpR3/lamF2FNGqG6RkVXjUTrVMMMtRYRkaJux4
-	dartiZItCSzzGEX4DHXsNOXpAyFb6vQ6dLFB+pf+ZAjqtFeyQUS9uerOm9xfZas6v3tBYr/WUCT
-	NLKOkXJ0ltGKQv2lNWz62kIfRA1JNYGxfAhuG2rDgarRx2KDaWKgGLtFq2zDSkyue9yotS2VGem
-	VccVLqdby765/fINr6/eOGRjVr8LCcpolY0A2Utgo6GUqs3gqTVvJhMANntiE+Im1jLCAB4CVlD
-	RC
-X-Received: by 2002:a05:622a:190a:b0:516:d955:ea4 with SMTP id d75a77b69052e-517785d8ec1mr14317761cf.17.1780434757987;
-        Tue, 02 Jun 2026 14:12:37 -0700 (PDT)
-X-Received: by 2002:a05:622a:190a:b0:516:d955:ea4 with SMTP id d75a77b69052e-517785d8ec1mr14317431cf.17.1780434757610;
-        Tue, 02 Jun 2026 14:12:37 -0700 (PDT)
-Received: from [192.168.2.1] (146725694.box.freepro.com. [130.180.211.218])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f368e9fsm2086132f8f.37.2026.06.02.14.12.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Jun 2026 14:12:36 -0700 (PDT)
-Message-ID: <993ef9ed-65d8-4bcd-b0f9-fa6f167395d2@oss.qualcomm.com>
-Date: Tue, 2 Jun 2026 23:12:32 +0200
+	s=arc-20240116; t=1780436426; c=relaxed/simple;
+	bh=4eyZw4UOnHhwv4cFQ/JjHG+RrOIvOOmydNLwutjD+3M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QRu7q33Kb4LOlBIbQqlj7aYJtj1Lzq+sBxAP2CumSXJOKhS0BP3cc77Yw2xv15+e++kC3xhsg+XKglLv4rRBOy3Cnx74gQkX6FBmCvx1dPExSBhnc5Fy4UVlmNxeikVIpAXGYISO3E18zF+6Q2voXZzLNtGZuoOuI5EuU11dvDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bOrxwt7d; arc=none smtp.client-ip=198.175.65.20
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1780436425; x=1811972425;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=4eyZw4UOnHhwv4cFQ/JjHG+RrOIvOOmydNLwutjD+3M=;
+  b=bOrxwt7dDdlu+tP9OU2MHGU2Tagrr5urXNNZGyFg9SW7iyaS4ycJF/jt
+   G7DzFSRuUviQCr4+/0YBH90Zi26k4nKHka39YsxJ6e/ItU1hjSddgaOze
+   Zrnu4wLJG/HAnwt4N4+RhcBYjnjIc4fWKDvu32buOY4fA8jSOILZRuc6/
+   Oquoy7V+wOXq3BuLTRFX4PV1ZZJLwm4xqKhixuJqCflyB/YT3R+DxvCGn
+   X+w/m00sEp/majR84hpYlILQE6N1uFcoiv4u+uasR+bJNnBpo3/gQxMNF
+   9HnQztpLpcpEsMpDc608AE4H5W8Evy7VyjMoMUy/vB74FP2Ok41osAO+j
+   A==;
+X-CSE-ConnectionGUID: 5vzSC6yuRUadbchniYYLFQ==
+X-CSE-MsgGUID: dJMr+KXQRnSltNzNwtzVWQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11805"; a="80972401"
+X-IronPort-AV: E=Sophos;i="6.24,183,1774335600"; 
+   d="scan'208";a="80972401"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 14:40:24 -0700
+X-CSE-ConnectionGUID: PcIQbEzqTbKa1yc0yhfIOQ==
+X-CSE-MsgGUID: nO91ZzCfR2qu25nrSJCLRw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,183,1774335600"; 
+   d="scan'208";a="239575909"
+Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.244.116])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Jun 2026 14:40:11 -0700
+Date: Wed, 3 Jun 2026 00:40:08 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: Lee Jones <lee@kernel.org>,
+	Mark Brown <broonie@opensource.wolfsonmicro.com>,
+	Thierry Reding <thierry.reding@avionic-design.de>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>, Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ulf Hansson <ulfh@kernel.org>, Frank Li <Frank.Li@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Peter Chen <peter.chen@kernel.org>,
+	Paul Cercueil <paul@crapouillou.net>, Bin Liu <b-liu@ti.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Hans de Goede <hansg@kernel.org>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>, brgl@kernel.org,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
+	driver-core@lists.linux.dev, devicetree@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org, linux-i2c@vger.kernel.org,
+	iommu@lists.linux.dev, linux-pm@vger.kernel.org,
+	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+	intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	linux-usb@vger.kernel.org, linux-mips@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org
+Subject: Re: [PATCH 06/23] driver core: platform: provide
+ platform_device_set_of_node()
+Message-ID: <ah9NXwJFrkK_yuw8@ashevche-desk.local>
+References: <20260521-pdev-fwnode-ref-v1-0-88c324a1b8d2@oss.qualcomm.com>
+ <20260521-pdev-fwnode-ref-v1-6-88c324a1b8d2@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] thermal: qcom: tsens: refine wake IRQ handling for
- suspend
-To: Priyansh Jain <priyansh.jain@oss.qualcomm.com>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260601-tsens_interrupt_wake_control-v2-0-ce9570946abd@oss.qualcomm.com>
-Content-Language: en-US
-From: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
-In-Reply-To: <20260601-tsens_interrupt_wake_control-v2-0-ce9570946abd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: fbsklEpQcW6M3ukXuJCPhEnM6JJfDVXa
-X-Proofpoint-GUID: fbsklEpQcW6M3ukXuJCPhEnM6JJfDVXa
-X-Authority-Analysis: v=2.4 cv=MKFQXsZl c=1 sm=1 tr=0 ts=6a1f4746 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=uw/3876vWhRnNVL35W6mqQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=BZznKAv9R9A1RLtjlQAA:9 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAyMDIwNiBTYWx0ZWRfX8koMwN2ce2SD
- wXsQla2BSe7gSQjnTw0aSK42gP2hICxxzX/xKE6o93HfWTWeuhWsuIr8xeO41+j84feTJb0YzmQ
- drhlPqDXDSJTLWYqCbHc3RbBDYqmFBRCmUh5hjG24rYDWuYANFw432DzsYfRBozYYXdIZWWAp6v
- eLwcMk6m15Y4Fu8EoGUARVRzPaz6AcJX45FMHd1SJS0nj3Fv03eOsn3B8HkHtrQZEQgN/9wrUjg
- 1vddlzOAYM7LOl2MU3R+ghQ/FrqJMRrOBlVIKbCNNrGs65yeQDA23/ULghu+PtKjOfKOJlKgI5N
- Eqa2kxQ4Eg4RNWj6MUPU5ZvDUhctPUR0MfSflnTnIi3rfJkmLAyNc5ZWIPwu5xX/W/9IORXXe2t
- hhyRWD2BkAZkqloW1AISczE+XFdrvG7cHvP98omtTTkujbou/I1qVPiRC5gJlk7MEwJALm95ZHn
- ez1XzF7IteSUZxwLA5g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-02_04,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 impostorscore=0 adultscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 clxscore=1015 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606020206
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260521-pdev-fwnode-ref-v1-6-88c324a1b8d2@oss.qualcomm.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110844-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,intel.com,arm.com];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:priyansh.jain@oss.qualcomm.com,m:amitk@kernel.org,m:thara.gopinath@gmail.com,m:rafael@kernel.org,m:daniel.lezcano@kernel.org,m:rui.zhang@intel.com,m:lukasz.luba@arm.com,m:linux-arm-msm@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[daniel.lezcano@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[daniel.lezcano@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_FROM(0.00)[bounces-110845-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:bartosz.golaszewski@oss.qualcomm.com,m:lee@kernel.org,m:broonie@opensource.wolfsonmicro.com,m:thierry.reding@avionic-design.de,m:sebastian.hesselbarth@gmail.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:srini@kernel.org,m:gregkh@linuxfoundation.org,m:vkoul@kernel.org,m:rafael@kernel.org,m:dakr@kernel.org,m:robh@kernel.org,m:saravanak@kernel.org,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:npiggin@gmail.com,m:chleroy@kernel.org,m:andi.shyti@kernel.org,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:opendmb@gmail.com,m:florian.fainelli@broadcom.com,m:bcm-kernel-feedback-list@broadcom.com,m:ulfh@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:rodrigo.vivi@intel.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:peter.chen@kernel.org,m:paul@crapouillou.net,m:b-liu@ti.com,m:p.za
+ bel@pengutronix.de,m:luzmaximilian@gmail.com,m:hansg@kernel.org,m:ilpo.jarvinen@linux.intel.com,m:krzk@kernel.org,m:benh@kernel.crashing.org,m:brgl@kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:driver-core@lists.linux.dev,m:devicetree@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:linux-i2c@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-pm@vger.kernel.org,m:imx@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:intel-xe@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-usb@vger.kernel.org,m:linux-mips@vger.kernel.org,m:platform-driver-x86@vger.kernel.org,m:sebastianhesselbarth@gmail.com,m:andrew@lunn.ch,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	FREEMAIL_CC(0.00)[kernel.org,opensource.wolfsonmicro.com,avionic-design.de,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,linuxfoundation.org,linux.ibm.com,ellerman.id.au,8bytes.org,arm.com,broadcom.com,nxp.com,pengutronix.de,intel.com,linux.intel.com,ffwll.ch,crapouillou.net,ti.com,kernel.crashing.org,vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.infradead.org,lists.freedesktop.org];
+	MIME_TRACE(0.00)[0:+];
+	HAS_ORG_HEADER(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	RCPT_COUNT_GT_50(0.00)[65];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ashevche-desk.local:mid,linux.intel.com:from_mime,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,intel.com:dkim]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 343746320CC
+X-Rspamd-Queue-Id: B14FB6322B1
 
-On 6/1/26 08:37, Priyansh Jain wrote:
-> This series refines how TSENS threshold IRQs are used as wake sources
-> across suspend/resume.
-> 
-> Patch 1 moves IRQ wake control from registration time into PM callbacks,
-> so wakeup configuration follows the actual suspend state instead of being
-> left enabled during normal runtime.
-> 
-> Patch 2 adds a platform-data opt-out for wake IRQ setup and uses it for
-> automotive TSENS compatibles (SA8775P/SA8255P), where parking suspend
-> should not be exited repeatedly due to TSENS threshold wake events.
-> 
-> Series highlights:
-> - store and manage TSENS IRQ wake state in suspend/resume paths
-> - keep existing runtime monitoring behavior unchanged
-> - disable TSENS wake IRQ setup for selected automotive targets
-> 
-> Signed-off-by: Priyansh Jain <priyansh.jain@oss.qualcomm.com>
-> ---
+On Thu, May 21, 2026 at 10:36:29AM +0200, Bartosz Golaszewski wrote:
+> Encapsulate the reference counting logic for OF nodes assigned to
+> platform devices created with platform_device_alloc() in a helper
+> function. Make the kerneldoc state that this is the proper interface for
+> assigning OF nodes to dynamically allocated platform devices. This will
+> allow us to switch to counting the references of the device's firmware
+> nodes, not only the OF nodes.
 
-Applied, thanks
+...
+
+> +/**
+> + * platform_device_set_of_node - assign an OF node to device
+> + * @pdev: platform device to add the node for
+> + * @np: new device node
+> + *
+> + * Assign an OF node to this platform device. Internally keep track of the
+> + * reference count. Devices created with platform_device_alloc() must use this
+> + * function instead of assigning the node manually.
+> + */
+> +void platform_device_set_of_node(struct platform_device *pdev,
+> +				 struct device_node *np)
+
+Why not fwnode to begin with?
+
+> +{
+> +	of_node_put(pdev->dev.of_node);
+
+And if it has an fwnode?
+
+> +	pdev->dev.of_node = of_node_get(np);
+> +	pdev->dev.fwnode = of_fwnode_handle(np);
+
+This looks like
+
+	device_set_node(&pdev->dev, fwnode_handle_get(...));
+
+> +}
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
 
 
