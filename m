@@ -1,1374 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-111040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id /DsaDfddIGoE2AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 19:01:43 +0200
+	id +Ed0C3xkIGpI2gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 19:29:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11A49639FFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 19:01:41 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E24763A284
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 19:29:31 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=herrie.org header.s=transip-a header.b="m751g/M5";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111040-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111040-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=none;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=c18sJ7aS;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111041-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111041-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 44E55316D210
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 16:34:29 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 65E4F3009385
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 17:21:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DB98402433;
-	Wed,  3 Jun 2026 16:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7600743E498;
+	Wed,  3 Jun 2026 17:21:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from outbound7.mail.transip.nl (outbound7.mail.transip.nl [136.144.136.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095183A59A7;
-	Wed,  3 Jun 2026 16:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D423E2756;
+	Wed,  3 Jun 2026 17:21:18 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780504463; cv=none; b=nwppL2FfuyN2/KctxPM/XaRqqmByUysEdnmGQw6L6QtlcXGlFb6vQqfMD7dzRQEecPbHYYOhmHPLcaDwNCxC5bqKrO9xMHkbSFkIHfSlMgP1CyFey6ELdeGFDVyhqzRlrm+xICMoXHaXU+INDPYJCe6L4PhTDcZByQMGWxQqTYw=
+	t=1780507280; cv=none; b=g7pWtHhMf0O0iGNdd36VMpvNXdYZD2TBObJu+1s1FhyR7RR0FDqupRKr3xtIquVu0ZrsfUQt9a1IdEJznGmnHbQosoUZQEjZxxU9N8mLC2H2OZdZg7jgjzvT9To7Zc2hZOm4wlnOQYWnRoczOCzflaos4j5VaBXrToTHB8PlmoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780504463; c=relaxed/simple;
-	bh=4fD6pegHLlAxgSU6PgPPZPMXLDH27VIwe5Vm4sJkVe8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UIYWBzhR5K4SQnMUQY1NibUFPoyAWTQ1JdSsfuOIiw5RYRuQMHOupnrjl6URBAy/LpS50w8mtfRWvzvquXGLBlAfmKs66gx7byhir42NByiUEysB8vtEPlDc4yZVmJrzkg27aEIDuAsRfh3U0omACIzhTdl6TpBEYZJ8oZt8nWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=m751g/M5; arc=none smtp.client-ip=136.144.136.7
-Received: from submission3.mail.transip.nl (unknown [10.100.4.72])
-	by outbound7.mail.transip.nl (Postfix) with ESMTP id 4gVtZF2RGkzQvtmQ;
-	Wed,  3 Jun 2026 18:34:13 +0200 (CEST)
-Received: from herrie-desktop.. (180-93-184-31.ftth.glasoperator.nl [31.184.93.180])
-	by submission3.mail.transip.nl (Postfix) with ESMTPA id 4gVtZD2Cbqzf52bP;
-	Wed,  3 Jun 2026 18:34:12 +0200 (CEST)
-From: Herman van Hazendonk <github.com@herrie.org>
-To: djakov@kernel.org
-Cc: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Herman van Hazendonk <github.com@herrie.org>
-Subject: [PATCH 2/2] interconnect: qcom: add MSM8x60 NoC driver
-Date: Wed,  3 Jun 2026 18:34:10 +0200
-Message-ID: <20260603163410.2312712-3-github.com@herrie.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260603163410.2312712-1-github.com@herrie.org>
-References: <20260603163410.2312712-1-github.com@herrie.org>
+	s=arc-20240116; t=1780507280; c=relaxed/simple;
+	bh=Gxx19LdDTz6T+j/ZXP+pzENHKb9KQ9gFUO3WnCcEAmg=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=feSZkWqT/TmUJbsOkZnDmJS1HsxQliCkldQqTYA/bcSk3sW0dn7jh+75XI4tjfKLqJvwgAiSzTX85m4XrQnqWyN+kxq8m6wCcXZSc0e8z8IoueqqNx+EDTpbhpu7pYV8VMdbdRuE89d5WGODkM3E4EvAHUBHRREJIVt1Zekpdzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c18sJ7aS; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9B71F00893;
+	Wed,  3 Jun 2026 17:20:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780507278;
+	bh=Ig4zCGf7+4ptZbdZZMypwYARwR0YB1sgjeMspwVj9PE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=c18sJ7aSoq9r+i0IlOMIyM+kePG9Og4QNfkKdmvW9i9gHt/nkcyz7wt3X6sQ55+PN
+	 9FCuhhMNrZDZj6AiihMI5VZ5eSGx75aw2BHqp+z8eJPDKPiawLxyWYNdzegnzvTLP4
+	 SUK0v0AV8YpRWsaQN9Z7bVQvVxyvbFJIooaNjoNYh0o8y8mjZWNbqaH/2nGiGRSSjv
+	 yhGhdlantZDthW2N7NtTDXBDCNyfOloZ32O+IlYOTFWGg3Gt/jq7bLRmckBoFSWC6R
+	 Go6HqJDXVno0Uqebslcwu+6uFCc6/BDhadZDjKwxPxloA2uOX2Cy1qIxjyq10GIpqT
+	 8FjWPlNqvKQSg==
+Date: Wed, 3 Jun 2026 18:20:52 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Romain Gantois <romain.gantois@bootlin.com>, MyungJoo Ham
+ <myungjoo.ham@samsung.com>, Chanwoo Choi <cw00.choi@samsung.com>, Guenter
+ Roeck <linux@roeck-us.net>, Peter Rosin <peda@axentia.se>, David Lechner
+ <dlechner@baylibre.com>, Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>, Andy
+ Shevchenko <andy@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, Michael
+ Hennerich <Michael.Hennerich@analog.com>, Mariel Tinaco
+ <Mariel.Tinaco@analog.com>, Kevin Tsai <ktsai@capellamicro.com>, Linus
+ Walleij <linus.walleij@linaro.org>, Eugen Hristev
+ <eugen.hristev@linaro.org>, Vinod Koul <vkoul@kernel.org>, Kishon Vijay
+ Abraham I <kishon@kernel.org>, Sebastian Reichel <sre@kernel.org>, Chen-Yu
+ Tsai <wens@csie.org>, Hans de Goede <hansg@kernel.org>, Support Opensource
+ <support.opensource@diasemi.com>, Paul Cercueil <paul@crapouillou.net>,
+ Iskren Chernev <me@iskren.info>, Krzysztof Kozlowski <krzk@kernel.org>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, Matheus Castello
+ <matheus@castello.eng.br>, Saravanan Sekar <sravanhome@gmail.com>, Matthias
+ Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
+ <angelogioacchino.delregno@collabora.com>, Casey Connolly
+ <casey.connolly@linaro.org>, Pali =?UTF-8?B?Um9ow6Fy?= <pali@kernel.org>,
+ Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
+ <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, Amit
+ Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano
+ <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, Lukasz Luba
+ <lukasz.luba@arm.com>, Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Sylwester
+ Nawrocki <s.nawrocki@samsung.com>, Olivier Moysan
+ <olivier.moysan@foss.st.com>, Arnaud Pouliquen
+ <arnaud.pouliquen@foss.st.com>, Maxime Coquelin
+ <mcoquelin.stm32@gmail.com>, Alexandre Torgue
+ <alexandre.torgue@foss.st.com>, Thomas Petazzoni
+ <thomas.petazzoni@bootlin.com>, linux-kernel@vger.kernel.org,
+ linux-hwmon@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-input@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-pm@vger.kernel.org, linux-mips@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+ Sebastian Reichel <sebastian.reichel@collabora.com>, Andy Shevchenko
+ <andriy.shevchenko@intel.com>
+Subject: Re: [PATCH v2 2/2] iio: inkern: Use namespaced exports
+Message-ID: <20260603182052.7d23c067@jic23-huawei>
+In-Reply-To: <acBr-W2ILu9tnMyd@google.com>
+References: <20251209-iio-inkern-use-namespaced-exports-v2-0-9799a33c4b7f@bootlin.com>
+	<20251209-iio-inkern-use-namespaced-exports-v2-2-9799a33c4b7f@bootlin.com>
+	<acBr-W2ILu9tnMyd@google.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: ClueGetter at submission3.mail.transip.nl
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=herrie.org; t=1780504452; h=from:subject:to:cc:
- references:in-reply-to:date:mime-version:content-type;
- bh=8WJI+cLwPLKvI+64CERoo+qCHHgX5J9wzRMCLII3EFs=;
- b=m751g/M5HzlIDGbrhis/jbgGClZQ6DBSUrTLzkNjuOKUVHKt43upgY5kgWoRB1X7yH82Z2
- w4LkaNM12LTjCcSQlv/d25NMv/hd7atECkKDPYyNTw0ivt/uYyOcJZZAQmG2vqwBmgzgzu
- MVWsEcCJNeGZIkN6x9FcqxlfqdgnJycrXt2wP7CyObe32Ve2BmQ/Kkk3lkGn9IaHtLARpN
- HECU+miTqON1I7KA5fwxf4gmVPn6T42oC8qvIT9oBCmBS0PLrRs4J7FLQ2UHKiKZ4juuXe
- UZ7qctwyLYQNZB5TkB37Lkf2vj8CEQYtPE/R3NqMin5BMxS92WV1bbVxwPxefg==
-X-Report-Abuse-To: abuse@transip.nl
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[herrie.org:s=transip-a];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111040-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111041-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:dmitry.torokhov@gmail.com,m:romain.gantois@bootlin.com,m:myungjoo.ham@samsung.com,m:cw00.choi@samsung.com,m:linux@roeck-us.net,m:peda@axentia.se,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:lars@metafoo.de,m:Michael.Hennerich@analog.com,m:Mariel.Tinaco@analog.com,m:ktsai@capellamicro.com,m:linus.walleij@linaro.org,m:eugen.hristev@linaro.org,m:vkoul@kernel.org,m:kishon@kernel.org,m:sre@kernel.org,m:wens@csie.org,m:hansg@kernel.org,m:support.opensource@diasemi.com,m:paul@crapouillou.net,m:me@iskren.info,m:krzk@kernel.org,m:m.szyprowski@samsung.com,m:matheus@castello.eng.br,m:sravanhome@gmail.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:casey.connolly@linaro.org,m:pali@kernel.org,m:orsonzhai@gmail.com,m:baolin.wang@linux.alibaba.com,m:zhang.lyra@gmail.com,m:amitk@kernel.org,m:thara.gopinath@gmail.com,m:rafael@kernel.org,m:daniel.lezcano@linaro.org,m:rui.zhang@intel.com,m:lukasz.luba@arm.com,m:claudiu.beznea.uj@bp
+ .renesas.com,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:s.nawrocki@samsung.com,m:olivier.moysan@foss.st.com,m:arnaud.pouliquen@foss.st.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:thomas.petazzoni@bootlin.com,m:linux-kernel@vger.kernel.org,m:linux-hwmon@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-input@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-pm@vger.kernel.org,m:linux-mips@vger.kernel.org,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:sebastian.reichel@collabora.com,m:andriy.shevchenko@intel.com,m:dmitrytorokhov@gmail.com,m:matthiasbgg@gmail.com,m:zhanglyra@gmail.com,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:djakov@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-pm@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:github.com@herrie.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
-	DMARC_NA(0.00)[herrie.org];
-	DKIM_TRACE(0.00)[herrie.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_GT_50(0.00)[64];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[bootlin.com,samsung.com,roeck-us.net,axentia.se,baylibre.com,analog.com,kernel.org,metafoo.de,capellamicro.com,linaro.org,csie.org,diasemi.com,crapouillou.net,iskren.info,castello.eng.br,gmail.com,collabora.com,linux.alibaba.com,intel.com,arm.com,bp.renesas.com,perex.cz,suse.com,foss.st.com,vger.kernel.org,lists.infradead.org,st-md-mailman.stormreply.com];
 	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,herrie.org:mid,herrie.org:dkim,herrie.org:from_mime,herrie.org:email,onstation.org:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[jic23-huawei:mid,intel.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,vger.kernel.org:from_smtp,roeck-us.net:email,bootlin.com:email,collabora.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 11A49639FFC
+X-Rspamd-Queue-Id: 0E24763A284
 
-Add a Qualcomm interconnect driver for the MSM8x60 family modelling the
-four NoC fabrics (APPSS, System, MMSS, DFAB) that connect masters and
-slaves on these Scorpion-class SoCs. The driver implements the
-interconnect-provider API to manage bandwidth between specific masters
-and slaves via the RPM arbitration tables.
+On Sun, 22 Mar 2026 15:24:21 -0700
+Dmitry Torokhov <dmitry.torokhov@gmail.com> wrote:
 
-Each fabric carries:
-  - A bus clock (managed via clk_bulk APIs) whose rate is the
-    aggregated bandwidth divided by the fabric bus width, with a
-    minimum floor of 384 MHz to prevent USB starvation observed when
-    the fabric drops to the previously-used 266 MHz minimum.
-  - An RPM arbitration buffer (arb / bwsum) that the RPM firmware
-    consumes via its shared-memory protocol; commits go via the
-    qcom-rpm driver's set_resource API.
+> On Tue, Dec 09, 2025 at 09:25:56AM +0100, Romain Gantois wrote:
+> > Use namespaced exports for IIO consumer API functions.
+> > 
+> > This will make it easier to manage the IIO export surface. Consumer drivers
+> > will only be provided access to a specific set of functions, thereby
+> > restricting usage of internal IIO functions by other parts of the kernel.
+> > 
+> > This change cannot be split into several parts without breaking
+> > bisectability, thus all of the affected drivers are modified at once.
+> > 
+> > Acked-by: Sebastian Reichel <sebastian.reichel@collabora.com> # for power-supply
+> > Acked-by: Guenter Roeck <linux@roeck-us.net>
+> > Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+> > Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>  
+> 
+> For input:
+> 
+> Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+> 
+> Thanks.
+> 
 
-msm8660_get_rpm() pins the supplier with device_link_add() before
-reading drvdata so an unbind/rebind window cannot leave a stale
-qcom_rpm pointer. clk_bulk_prepare_enable is paired with a
-devm_add_action_or_reset cleanup so an EPROBE_DEFER from the RPM
-lookup does not leak the prepare/enable refcount across retries. The
-fabric rate cap uses min_t(u64,...) so a bandwidth request exceeding
-4 GiB/s cannot wrap through u32 truncation into a near-zero clock
-rate that would halt the interconnect.
+For anyone wondering what happened to this... I forgot to apply this at the
+beginning of the cycle and by the time I remembered we had too much queued up
+so it would have been messy to do an immutable branch.   Anyhow, I plan to
+sort this at start of next cycle.
 
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
----
- drivers/interconnect/qcom/Kconfig             |   14 +
- drivers/interconnect/qcom/Makefile            |    2 +
- drivers/interconnect/qcom/msm8660.c           | 1147 +++++++++++++++++
- .../dt-bindings/interconnect/qcom,msm8660.h   |    6 +-
- 4 files changed, 1166 insertions(+), 3 deletions(-)
- create mode 100644 drivers/interconnect/qcom/msm8660.c
-
-diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
-index 786b4eda44b4..d0a8df7cc700 100644
---- a/drivers/interconnect/qcom/Kconfig
-+++ b/drivers/interconnect/qcom/Kconfig
-@@ -80,6 +80,20 @@ config INTERCONNECT_QCOM_MSM8953
- 	  This is a driver for the Qualcomm Network-on-Chip on msm8953-based
- 	  platforms.
- 
-+config INTERCONNECT_QCOM_MSM8660
-+	# bool, not tristate: this provider must be registered at
-+	# core_initcall to be ready before icc_init (subsys_initcall) walks
-+	# devicetree consumers; a loadable module cannot satisfy that
-+	# ordering. Build-in only.
-+	bool "Qualcomm MSM8x60 interconnect driver"
-+	depends on INTERCONNECT_QCOM=y
-+	depends on MFD_QCOM_RPM
-+	help
-+	  This is a driver for the Qualcomm fabric-based bus interconnect
-+	  on MSM8x60 family (MSM8260/MSM8660/APQ8060) platforms (e.g., HP TouchPad).
-+	  The driver manages APPSS, System, and MMSS fabrics and sends
-+	  per-port bandwidth arbitration requests to RPM firmware.
-+
- config INTERCONNECT_QCOM_MSM8974
- 	tristate "Qualcomm MSM8974 interconnect driver"
- 	depends on INTERCONNECT_QCOM
-diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
-index cdf2c6c9fbf3..0c849c30a907 100644
---- a/drivers/interconnect/qcom/Makefile
-+++ b/drivers/interconnect/qcom/Makefile
-@@ -13,6 +13,7 @@ qnoc-msm8916-objs			:= msm8916.o
- qnoc-msm8937-objs			:= msm8937.o
- qnoc-msm8939-objs			:= msm8939.o
- qnoc-msm8953-objs			:= msm8953.o
-+qnoc-msm8660-objs			:= msm8660.o
- qnoc-msm8974-objs			:= msm8974.o
- qnoc-msm8976-objs			:= msm8976.o
- qnoc-msm8996-objs			:= msm8996.o
-@@ -58,6 +59,7 @@ obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) += qnoc-msm8916.o
- obj-$(CONFIG_INTERCONNECT_QCOM_MSM8937) += qnoc-msm8937.o
- obj-$(CONFIG_INTERCONNECT_QCOM_MSM8939) += qnoc-msm8939.o
- obj-$(CONFIG_INTERCONNECT_QCOM_MSM8953) += qnoc-msm8953.o
-+obj-$(CONFIG_INTERCONNECT_QCOM_MSM8660) += qnoc-msm8660.o
- obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) += qnoc-msm8974.o
- obj-$(CONFIG_INTERCONNECT_QCOM_MSM8976) += qnoc-msm8976.o
- obj-$(CONFIG_INTERCONNECT_QCOM_MSM8996) += qnoc-msm8996.o
-diff --git a/drivers/interconnect/qcom/msm8660.c b/drivers/interconnect/qcom/msm8660.c
-new file mode 100644
-index 000000000000..f4bb852eaa2b
---- /dev/null
-+++ b/drivers/interconnect/qcom/msm8660.c
-@@ -0,0 +1,1147 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Qualcomm MSM8x60 family (MSM8260/MSM8660/APQ8060) interconnect driver
-+ *
-+ * Copyright (c) 2026 Herman van Hazendonk <github.com@herrie.org>
-+ *
-+ * Based on msm8974.c by Brian Masney <masneyb@onstation.org>
-+ * and legacy vendor kernel msm_bus_board_8660.c / msm_bus_fabric.c
-+ * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
-+ *
-+ * MSM8x60 has a fabric-based bus architecture:
-+ *
-+ *              +------------------+
-+ *              |   APPSS Fabric   |  (CPU, L2, Memory)
-+ *              +--------+---------+
-+ *                       |
-+ *         +-------------+-------------+
-+ *         |                           |
-+ *  +------+------+            +-------+-------+
-+ *  | MMSS Fabric |            | System Fabric |
-+ *  | (Display,   |            | (Peripherals, |
-+ *  |  Camera,    |            |  DMA, etc)    |
-+ *  |  Video)     |            +-------+-------+
-+ *  +-------------+                    |
-+ *                           +---------+---------+
-+ *                           |                   |
-+ *                    +------+------+     +------+------+
-+ *                    | System FPB  |     |  CPSS FPB   |
-+ *                    | (RPM, PMIC) |     | (GSBI, USB) |
-+ *                    +-------------+     +-------------+
-+ *
-+ * Each fabric has an RPM arbitration interface that programs per-port
-+ * bandwidth and priority tier via MM_FABRIC_ARB / SYS_FABRIC_ARB /
-+ * APPS_FABRIC_ARB registers.  The legacy vendor kernel sent these as packed
-+ * u16 arrays (bwsum + arb) through msm_rpm_set().  This driver uses
-+ * the mainline qcom_rpm_write() interface to do the same.
-+ */
-+
-+#include <dt-bindings/interconnect/qcom,msm8660.h>
-+#include <dt-bindings/mfd/qcom-rpm.h>
-+
-+#include <linux/args.h>
-+#include <linux/clk.h>
-+#include <linux/device.h>
-+#include <linux/interconnect-provider.h>
-+#include <linux/io.h>
-+#include <linux/mfd/qcom_rpm.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/of_platform.h>
-+#include <linux/platform_device.h>
-+#include <linux/slab.h>
-+
-+/* Internal node IDs - these map to the DT binding IDs plus fabric offset */
-+enum {
-+	/* APPSS Fabric nodes */
-+	MSM8660_AFAB_MAS_AMPSS_M0 = 1,
-+	MSM8660_AFAB_MAS_AMPSS_M1,
-+	MSM8660_AFAB_SLV_EBI_CH0,
-+	MSM8660_AFAB_SLV_AMPSS_L2,
-+	MSM8660_AFAB_TO_MMSS,
-+	MSM8660_AFAB_TO_SYSTEM,
-+
-+	/* System Fabric nodes */
-+	MSM8660_SFAB_MAS_APPSS,
-+	MSM8660_SFAB_MAS_SPS,
-+	MSM8660_SFAB_MAS_ADM0_PORT0,
-+	MSM8660_SFAB_MAS_ADM0_PORT1,
-+	MSM8660_SFAB_MAS_ADM1_PORT0,
-+	MSM8660_SFAB_MAS_ADM1_PORT1,
-+	MSM8660_SFAB_MAS_LPASS_PROC,
-+	MSM8660_SFAB_MAS_MSS_PROCI,
-+	MSM8660_SFAB_MAS_MSS_PROCD,
-+	MSM8660_SFAB_MAS_MSS_MDM_PORT0,
-+	MSM8660_SFAB_MAS_LPASS,
-+	MSM8660_SFAB_MAS_MMSS_FPB,
-+	MSM8660_SFAB_MAS_ADM1_CI,
-+	MSM8660_SFAB_MAS_ADM0_CI,
-+	MSM8660_SFAB_MAS_MSS_MDM_PORT1,
-+	MSM8660_SFAB_MAS_USB_HS,
-+	MSM8660_SFAB_TO_APPSS,
-+	MSM8660_SFAB_TO_SYSTEM_FPB,
-+	MSM8660_SFAB_TO_CPSS_FPB,
-+	MSM8660_SFAB_SLV_SPS,
-+	MSM8660_SFAB_SLV_SYSTEM_IMEM,
-+	MSM8660_SFAB_SLV_AMPSS,
-+	MSM8660_SFAB_SLV_MSS,
-+	MSM8660_SFAB_SLV_LPASS,
-+	MSM8660_SFAB_SLV_MMSS_FPB,
-+	MSM8660_SFAB_TO_DFAB,
-+
-+	/* Daytona Fabric nodes (DFAB) - peripheral bus */
-+	MSM8660_DFAB_MAS_SDC1,
-+	MSM8660_DFAB_MAS_SDC2,
-+	MSM8660_DFAB_MAS_SDC3,
-+	MSM8660_DFAB_MAS_SDC4,
-+	MSM8660_DFAB_MAS_SDC5,
-+	MSM8660_DFAB_MAS_ADM0_MASTER,
-+	MSM8660_DFAB_MAS_ADM1_MASTER,
-+	MSM8660_DFAB_TO_SFAB,
-+	MSM8660_DFAB_SLV_SDC1,
-+	MSM8660_DFAB_SLV_SDC2,
-+	MSM8660_DFAB_SLV_SDC3,
-+	MSM8660_DFAB_SLV_SDC4,
-+	MSM8660_DFAB_SLV_SDC5,
-+	MSM8660_DFAB_MAS_USB_HS,	/* USB HS DFAB voter */
-+	MSM8660_DFAB_MAS_DSPS,		/* DSPS DFAB voter */
-+
-+	/* MMSS Fabric nodes */
-+	MSM8660_MMFAB_MAS_MDP_PORT0,
-+	MSM8660_MMFAB_MAS_MDP_PORT1,
-+	MSM8660_MMFAB_MAS_ADM1_PORT0,
-+	MSM8660_MMFAB_MAS_ROTATOR,
-+	MSM8660_MMFAB_MAS_GRAPHICS_3D,
-+	MSM8660_MMFAB_MAS_JPEG_DEC,
-+	MSM8660_MMFAB_MAS_GRAPHICS_2D_CORE0,
-+	MSM8660_MMFAB_MAS_VFE,
-+	MSM8660_MMFAB_MAS_VPE,
-+	MSM8660_MMFAB_MAS_JPEG_ENC,
-+	MSM8660_MMFAB_MAS_GRAPHICS_2D_CORE1,
-+	MSM8660_MMFAB_MAS_HD_CODEC_PORT0,
-+	MSM8660_MMFAB_MAS_HD_CODEC_PORT1,
-+	MSM8660_MMFAB_TO_APPSS,
-+	MSM8660_MMFAB_SLV_SMI,
-+	MSM8660_MMFAB_SLV_MM_IMEM,
-+};
-+
-+#define to_msm8660_icc_provider(_provider) \
-+	container_of(_provider, struct msm8660_icc_provider, provider)
-+
-+/*
-+ * Minimum fabric clock rate to prevent bus starvation.
-+ *
-+ * When no consumers request bandwidth, the rate calculation yields 0,
-+ * causing fabric clocks to drop to minimum. This creates bimodal
-+ * performance: fast when other subsystems (like display) happen to
-+ * request bandwidth, slow otherwise.
-+ *
-+ * 384 MHz keeps fabric fast during concurrent MDP display scanout
-+ * and USB gadget traffic. legacy vendor kernel docs: "AXI bus frequency needs to be
-+ * kept at maximum value while USB data transfers are happening."
-+ * 266 MHz was insufficient - USB crashed during display activity.
-+ */
-+#define MSM8660_FABRIC_MIN_RATE		384000000UL	/* 384 MHz */
-+
-+/*
-+ * Maximum RPM ARB buffer size across all fabrics.
-+ * MM fabric is largest at 23 u32 words.
-+ */
-+#define MSM8660_MAX_RPM_BUF		23
-+
-+/*
-+ * RPM fabric arbitration data format (from legacy vendor kernel msm_bus_fabric.c):
-+ *
-+ * Each u16 arb entry: bit 15 = tier (1=TIER1 high priority), bits 14-0 = BW
-+ * Bandwidth is in 128KB units (bytes >> 17).
-+ * Two u16 values are packed into each u32 RPM register word.
-+ *
-+ * Buffer layout: [bwsum pairs] [arb pairs]
-+ * bwsum[slave_port] = total bandwidth to that slave
-+ * arb[(tier-1)*nmasters + master_port] = per-master arbitration entry
-+ */
-+#define ARB_BWMASK		0x7FFF
-+#define ARB_TIERMASK		0x8000
-+#define ARB_TIER1		1
-+#define ARB_TIER2		2
-+
-+static const struct clk_bulk_data msm8660_afab_clocks[] = {
-+	{ .id = "bus" },
-+	{ .id = "bus_a" },
-+	{ .id = "ebi1" },
-+	{ .id = "ebi1_a" },
-+};
-+
-+static const struct clk_bulk_data msm8660_sfab_clocks[] = {
-+	{ .id = "bus" },
-+	{ .id = "bus_a" },
-+};
-+
-+static const struct clk_bulk_data msm8660_mmfab_clocks[] = {
-+	{ .id = "bus" },
-+	{ .id = "bus_a" },
-+	{ .id = "smi" },
-+	{ .id = "smi_a" },
-+};
-+
-+static const struct clk_bulk_data msm8660_dfab_clocks[] = {
-+	{ .id = "bus" },
-+	{ .id = "bus_a" },
-+};
-+
-+/**
-+ * struct msm8660_icc_node - MSM8660 specific interconnect nodes
-+ * @name: the node name used in debugfs
-+ * @id: a unique node identifier
-+ * @links: an array of nodes where we can go next while traversing
-+ * @num_links: the total number of @links
-+ * @buswidth: width of the interconnect between a node and the bus (bytes)
-+ * @rate: current bus clock rate in Hz
-+ * @mas_port: master port index for RPM ARB (-1 if not a master)
-+ * @slv_port: slave port index for RPM bwsum (-1 if not a slave)
-+ * @mas_tier: master priority tier (ARB_TIER1 or ARB_TIER2, 0 if N/A)
-+ */
-+struct msm8660_icc_node {
-+	unsigned char *name;
-+	u16 id;
-+#define MSM8660_ICC_MAX_LINKS	3
-+	u16 links[MSM8660_ICC_MAX_LINKS];
-+	u16 num_links;
-+	u16 buswidth;
-+	s8 mas_port;
-+	s8 slv_port;
-+	u8 mas_tier;
-+};
-+
-+/**
-+ * struct msm8660_icc_desc - Fabric descriptor
-+ * @nodes: array of node pointers
-+ * @num_nodes: number of nodes
-+ * @bus_clks: clock definitions
-+ * @num_clks: number of clocks
-+ * @rpm_resource: QCOM_RPM_*_FABRIC_ARB constant, or -1 for no ARB
-+ * @nmasters: number of master ports in this fabric (for ARB array sizing)
-+ * @nslaves: number of slave ports in this fabric (for bwsum array sizing)
-+ * @ntieredslaves: number of tiered slaves (ARB rows)
-+ * @default_tiered_slave: 1-based index of default tiered slave for masters
-+ * @rpm_buf_size: number of u32 words for RPM write
-+ * @bus_width: representative fabric bus width in bytes, used as the
-+ *             divisor for translating aggregate bytes/sec into a single
-+ *             clock rate that drives the whole fabric
-+ */
-+struct msm8660_icc_desc {
-+	struct msm8660_icc_node * const *nodes;
-+	size_t num_nodes;
-+	const struct clk_bulk_data *bus_clks;
-+	size_t num_clks;
-+	int rpm_resource;
-+	u8 nmasters;
-+	u8 nslaves;
-+	u8 ntieredslaves;
-+	u8 default_tiered_slave;
-+	u8 rpm_buf_size;
-+	u8 bus_width;
-+};
-+
-+/**
-+ * struct msm8660_icc_provider - MSM8660 specific interconnect provider
-+ * @provider: generic interconnect provider
-+ * @bus_clks: the clk_bulk_data table of bus clocks
-+ * @num_clks: the total number of clk_bulk_data entries
-+ * @rpm: RPM handle for fabric arbitration writes
-+ * @desc: fabric descriptor with RPM metadata
-+ * @arb: pre-allocated arbitration array (nmasters * ntieredslaves u16 entries)
-+ * @bwsum: pre-allocated bandwidth sum array (nslaves u16 entries)
-+ * @rpm_buf: pre-allocated RPM write buffer (rpm_buf_size u32 entries)
-+ * @rate: last clock rate applied to the fabric bus_clks, used as the
-+ *        single source of truth for whether the rate actually needs to
-+ *        be reprogrammed (per-node caching would desync when different
-+ *        masters update at different times)
-+ */
-+struct msm8660_icc_provider {
-+	struct icc_provider provider;
-+	struct clk_bulk_data *bus_clks;
-+	int num_clks;
-+	struct qcom_rpm *rpm;
-+	const struct msm8660_icc_desc *desc;
-+	u16 *arb;
-+	u16 *bwsum;
-+	u32 *rpm_buf;
-+	u32 rate;
-+};
-+
-+/*
-+ * Node definitions with RPM port mapping.
-+ *
-+ * DEFINE_QNODE(_name, _id, _buswidth, _mas_port, _slv_port, _tier, links...)
-+ *
-+ * _mas_port: master port index for RPM ARB array (-1 if not a master)
-+ * _slv_port: slave port index for RPM bwsum array (-1 if not a slave)
-+ * _tier: master priority tier (ARB_TIER1=1, ARB_TIER2=2, 0 if N/A)
-+ */
-+#define DEFINE_QNODE(_name, _id, _buswidth, _mas, _slv, _tier, ...)	\
-+	static struct msm8660_icc_node _name = {			\
-+		.name = #_name,						\
-+		.id = _id,						\
-+		.buswidth = _buswidth,					\
-+		.num_links = COUNT_ARGS(__VA_ARGS__),			\
-+		.links = { __VA_ARGS__ },				\
-+		.mas_port = _mas,					\
-+		.slv_port = _slv,					\
-+		.mas_tier = _tier,					\
-+	}
-+
-+/*
-+ * =========================================================================
-+ * APPSS Fabric nodes
-+ *
-+ * 4 masters, 4 slaves, 2 tiered slaves
-+ * Master ports: SMPSS_M0=0, SMPSS_M1=1, FAB_MMSS=2, FAB_SYSTEM=3
-+ * Slave ports:  EBI_CH0=0, SMPSS_L2=1, MMSS_FAB=2, SYSTEM_FAB=3
-+ * Default target: tiered slave 1 (EBI_CH0)
-+ * =========================================================================
-+ */
-+DEFINE_QNODE(mas_ampss_m0, MSM8660_AFAB_MAS_AMPSS_M0, 8, 0, -1, ARB_TIER2,
-+	     MSM8660_AFAB_SLV_EBI_CH0, MSM8660_AFAB_TO_MMSS, MSM8660_AFAB_TO_SYSTEM);
-+DEFINE_QNODE(mas_ampss_m1, MSM8660_AFAB_MAS_AMPSS_M1, 8, 1, -1, ARB_TIER2,
-+	     MSM8660_AFAB_SLV_EBI_CH0, MSM8660_AFAB_TO_MMSS, MSM8660_AFAB_TO_SYSTEM);
-+DEFINE_QNODE(slv_ebi_ch0, MSM8660_AFAB_SLV_EBI_CH0, 8, -1, 0, 0);
-+DEFINE_QNODE(slv_ampss_l2, MSM8660_AFAB_SLV_AMPSS_L2, 8, -1, 1, 0);
-+/*
-+ * Gateway nodes need links to both the cross-fabric gateway AND the memory
-+ * slave to enable cross-fabric paths. Without link to EBI_CH0, path_find()
-+ * can't route from MMSS/System fabric masters to main memory.
-+ *
-+ * AFAB_TO_MMSS doubles as AFAB master port 2 (the FAB_MMSS master). MDP
-+ * scanout and GPU traffic enter AFAB through this gateway. Mark it
-+ * ARB_TIER1 so display/multimedia traffic keeps priority over CPU L2
-+ * misses inside the APPSS fabric — without this, MDP TIER1 priority
-+ * earned in MMFAB is dropped at the AFAB boundary and MDP fetches lose
-+ * arbitration to CPU traffic, producing PRIMARY_INTF_UDERRUN.
-+ */
-+DEFINE_QNODE(afab_to_mmss, MSM8660_AFAB_TO_MMSS, 8, 2, 2, ARB_TIER1,
-+	     MSM8660_MMFAB_TO_APPSS, MSM8660_AFAB_SLV_EBI_CH0);
-+DEFINE_QNODE(afab_to_system, MSM8660_AFAB_TO_SYSTEM, 8, 3, 3, ARB_TIER2,
-+	     MSM8660_SFAB_TO_APPSS, MSM8660_AFAB_SLV_EBI_CH0);
-+
-+static struct msm8660_icc_node * const msm8660_afab_nodes[] = {
-+	[AFAB_MAS_AMPSS_M0] = &mas_ampss_m0,
-+	[AFAB_MAS_AMPSS_M1] = &mas_ampss_m1,
-+	[AFAB_SLV_EBI_CH0] = &slv_ebi_ch0,
-+	[AFAB_SLV_AMPSS_L2] = &slv_ampss_l2,
-+	[AFAB_TO_MMSS] = &afab_to_mmss,
-+	[AFAB_TO_SYSTEM] = &afab_to_system,
-+};
-+
-+static const struct msm8660_icc_desc msm8660_afab = {
-+	.nodes = msm8660_afab_nodes,
-+	.num_nodes = ARRAY_SIZE(msm8660_afab_nodes),
-+	.bus_clks = msm8660_afab_clocks,
-+	.num_clks = ARRAY_SIZE(msm8660_afab_clocks),
-+	.rpm_resource = QCOM_RPM_APPS_FABRIC_ARB,
-+	.nmasters = 4,
-+	.nslaves = 4,
-+	.ntieredslaves = 2,
-+	.default_tiered_slave = 1,	/* EBI_CH0 */
-+	.rpm_buf_size = 6,
-+	.bus_width = 8,			/* 64-bit APPSS fabric datapath */
-+};
-+
-+/*
-+ * =========================================================================
-+ * System Fabric nodes
-+ *
-+ * 17 masters, 9 slaves, 2 tiered slaves
-+ * Master ports: see enum msm_bus_8660_master_ports_type in legacy vendor kernel
-+ * Slave ports:  APPSS_FAB=0, SPS=1, SYSTEM_IMEM=2, SMPSS=3, MSS=4,
-+ *               LPASS=5, CPSS_FPB=6, SYSTEM_FPB=7, MMSS_FPB=8
-+ * Default target: tiered slave 1 (APPSS gateway)
-+ * =========================================================================
-+ */
-+DEFINE_QNODE(sfab_mas_appss, MSM8660_SFAB_MAS_APPSS, 8, 0, -1, ARB_TIER2,
-+	     MSM8660_AFAB_TO_SYSTEM);
-+DEFINE_QNODE(sfab_mas_sps, MSM8660_SFAB_MAS_SPS, 8, 1, -1, ARB_TIER2,
-+	     MSM8660_SFAB_SLV_SPS);
-+/*
-+ * ADM DMA masters - route through SFAB_TO_APPSS to reach EBI memory.
-+ * Path: ADM -> SFAB_TO_APPSS -> AFAB_TO_SYSTEM -> AFAB_SLV_EBI_CH0
-+ * This enables proper EBI bandwidth voting for DMA operations.
-+ */
-+DEFINE_QNODE(sfab_mas_adm0_port0, MSM8660_SFAB_MAS_ADM0_PORT0, 8, 2, -1, ARB_TIER2,
-+	     MSM8660_SFAB_TO_APPSS);
-+DEFINE_QNODE(sfab_mas_adm0_port1, MSM8660_SFAB_MAS_ADM0_PORT1, 8, 3, -1, ARB_TIER2,
-+	     MSM8660_SFAB_TO_APPSS);
-+DEFINE_QNODE(sfab_mas_adm1_port0, MSM8660_SFAB_MAS_ADM1_PORT0, 8, 4, -1, ARB_TIER2,
-+	     MSM8660_SFAB_TO_APPSS);
-+DEFINE_QNODE(sfab_mas_adm1_port1, MSM8660_SFAB_MAS_ADM1_PORT1, 8, 5, -1, ARB_TIER2,
-+	     MSM8660_SFAB_TO_APPSS);
-+DEFINE_QNODE(sfab_mas_lpass_proc, MSM8660_SFAB_MAS_LPASS_PROC, 8, 6, -1, ARB_TIER2);
-+DEFINE_QNODE(sfab_mas_mss_proci, MSM8660_SFAB_MAS_MSS_PROCI, 8, 7, -1, ARB_TIER2);
-+DEFINE_QNODE(sfab_mas_mss_procd, MSM8660_SFAB_MAS_MSS_PROCD, 8, 8, -1, ARB_TIER2);
-+DEFINE_QNODE(sfab_mas_mss_mdm_port0, MSM8660_SFAB_MAS_MSS_MDM_PORT0, 8, 9, -1, ARB_TIER2);
-+DEFINE_QNODE(sfab_mas_lpass, MSM8660_SFAB_MAS_LPASS, 8, 10, -1, ARB_TIER2);
-+DEFINE_QNODE(sfab_mas_mmss_fpb, MSM8660_SFAB_MAS_MMSS_FPB, 8, 13, -1, ARB_TIER2);
-+DEFINE_QNODE(sfab_mas_adm1_ci, MSM8660_SFAB_MAS_ADM1_CI, 8, 14, -1, ARB_TIER2);
-+DEFINE_QNODE(sfab_mas_adm0_ci, MSM8660_SFAB_MAS_ADM0_CI, 8, 15, -1, ARB_TIER2);
-+DEFINE_QNODE(sfab_mas_mss_mdm_port1, MSM8660_SFAB_MAS_MSS_MDM_PORT1, 8, 16, -1, ARB_TIER2);
-+/* USB HS has no dedicated master port in legacy vendor kernel SFAB - bandwidth voting only */
-+DEFINE_QNODE(sfab_mas_usb_hs, MSM8660_SFAB_MAS_USB_HS, 8, -1, -1, 0,
-+	     MSM8660_SFAB_TO_APPSS);
-+DEFINE_QNODE(sfab_to_appss, MSM8660_SFAB_TO_APPSS, 8, -1, 0, 0,
-+	     MSM8660_AFAB_TO_SYSTEM);
-+DEFINE_QNODE(sfab_to_system_fpb, MSM8660_SFAB_TO_SYSTEM_FPB, 4, -1, 7, 0);
-+DEFINE_QNODE(sfab_to_cpss_fpb, MSM8660_SFAB_TO_CPSS_FPB, 4, -1, 6, 0);
-+DEFINE_QNODE(sfab_slv_sps, MSM8660_SFAB_SLV_SPS, 8, -1, 1, 0);
-+DEFINE_QNODE(sfab_slv_system_imem, MSM8660_SFAB_SLV_SYSTEM_IMEM, 8, -1, 2, 0);
-+DEFINE_QNODE(sfab_slv_ampss, MSM8660_SFAB_SLV_AMPSS, 8, -1, 3, 0);
-+DEFINE_QNODE(sfab_slv_mss, MSM8660_SFAB_SLV_MSS, 8, -1, 4, 0);
-+DEFINE_QNODE(sfab_slv_lpass, MSM8660_SFAB_SLV_LPASS, 8, -1, 5, 0);
-+DEFINE_QNODE(sfab_slv_mmss_fpb, MSM8660_SFAB_SLV_MMSS_FPB, 8, -1, 8, 0);
-+/*
-+ * Gateway to DFAB: links to DFAB_TO_SFAB for path traversal.
-+ * Also links to SFAB_TO_APPSS to enable DFAB->SFAB->AFAB->memory paths.
-+ * No slave port in legacy vendor kernel SFAB config (DFAB is separate fabric).
-+ */
-+DEFINE_QNODE(sfab_to_dfab, MSM8660_SFAB_TO_DFAB, 8, -1, -1, 0,
-+	     MSM8660_DFAB_TO_SFAB, MSM8660_SFAB_TO_APPSS);
-+
-+static struct msm8660_icc_node * const msm8660_sfab_nodes[] = {
-+	[SFAB_MAS_APPSS] = &sfab_mas_appss,
-+	[SFAB_MAS_SPS] = &sfab_mas_sps,
-+	[SFAB_MAS_ADM0_PORT0] = &sfab_mas_adm0_port0,
-+	[SFAB_MAS_ADM0_PORT1] = &sfab_mas_adm0_port1,
-+	[SFAB_MAS_ADM1_PORT0] = &sfab_mas_adm1_port0,
-+	[SFAB_MAS_ADM1_PORT1] = &sfab_mas_adm1_port1,
-+	[SFAB_MAS_LPASS_PROC] = &sfab_mas_lpass_proc,
-+	[SFAB_MAS_MSS_PROCI] = &sfab_mas_mss_proci,
-+	[SFAB_MAS_MSS_PROCD] = &sfab_mas_mss_procd,
-+	[SFAB_MAS_MSS_MDM_PORT0] = &sfab_mas_mss_mdm_port0,
-+	[SFAB_MAS_LPASS] = &sfab_mas_lpass,
-+	[SFAB_MAS_MMSS_FPB] = &sfab_mas_mmss_fpb,
-+	[SFAB_MAS_ADM1_CI] = &sfab_mas_adm1_ci,
-+	[SFAB_MAS_ADM0_CI] = &sfab_mas_adm0_ci,
-+	[SFAB_MAS_MSS_MDM_PORT1] = &sfab_mas_mss_mdm_port1,
-+	[SFAB_MAS_USB_HS] = &sfab_mas_usb_hs,
-+	[SFAB_TO_APPSS] = &sfab_to_appss,
-+	[SFAB_TO_SYSTEM_FPB] = &sfab_to_system_fpb,
-+	[SFAB_TO_CPSS_FPB] = &sfab_to_cpss_fpb,
-+	[SFAB_SLV_SPS] = &sfab_slv_sps,
-+	[SFAB_SLV_SYSTEM_IMEM] = &sfab_slv_system_imem,
-+	[SFAB_SLV_AMPSS] = &sfab_slv_ampss,
-+	[SFAB_SLV_MSS] = &sfab_slv_mss,
-+	[SFAB_SLV_LPASS] = &sfab_slv_lpass,
-+	[SFAB_SLV_MMSS_FPB] = &sfab_slv_mmss_fpb,
-+	[SFAB_TO_DFAB] = &sfab_to_dfab,
-+};
-+
-+static const struct msm8660_icc_desc msm8660_sfab = {
-+	.nodes = msm8660_sfab_nodes,
-+	.num_nodes = ARRAY_SIZE(msm8660_sfab_nodes),
-+	.bus_clks = msm8660_sfab_clocks,
-+	.num_clks = ARRAY_SIZE(msm8660_sfab_clocks),
-+	.rpm_resource = QCOM_RPM_SYS_FABRIC_ARB,
-+	.nmasters = 17,
-+	.nslaves = 9,
-+	.ntieredslaves = 2,
-+	.default_tiered_slave = 1,	/* APPSS gateway */
-+	.rpm_buf_size = 22,
-+	.bus_width = 8,			/* 64-bit System fabric datapath */
-+};
-+
-+/*
-+ * =========================================================================
-+ * MMSS Fabric nodes - Multimedia subsystem (MDP, camera, video, GPU)
-+ *
-+ * 14 masters, 4 slaves, 3 tiered slaves
-+ * Master ports: MDP0=0, MDP1=1, ADM1=2, ROT=3, 3D=4, JPEG_DEC=5,
-+ *               2D_CORE0=6, VFE=7, VPE=8, JPEG_ENC=9, 2D_CORE1=10,
-+ *               (APPS_FAB=11), HD_CODEC0=12, HD_CODEC1=13
-+ * Slave ports:  SMI=0, APPSS_FAB=1, (APPSS_FAB_1=2), MM_IMEM=3
-+ * Tiered slaves: SMI=1, APPSS_FAB=2, MM_IMEM=3
-+ * Default target: tiered slave 2 (APPSS gateway -> main memory)
-+ *
-+ * MDP ports get TIER1 (high priority) for guaranteed display refresh.
-+ * All other masters get TIER2 (default priority).
-+ * =========================================================================
-+ */
-+DEFINE_QNODE(mmfab_mas_mdp_port0, MSM8660_MMFAB_MAS_MDP_PORT0, 16, 0, -1, ARB_TIER1,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+DEFINE_QNODE(mmfab_mas_mdp_port1, MSM8660_MMFAB_MAS_MDP_PORT1, 16, 1, -1, ARB_TIER1,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+DEFINE_QNODE(mmfab_mas_adm1_port0, MSM8660_MMFAB_MAS_ADM1_PORT0, 8, 2, -1, ARB_TIER2);
-+DEFINE_QNODE(mmfab_mas_rotator, MSM8660_MMFAB_MAS_ROTATOR, 16, 3, -1, ARB_TIER2,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+DEFINE_QNODE(mmfab_mas_graphics_3d, MSM8660_MMFAB_MAS_GRAPHICS_3D, 16, 4, -1, ARB_TIER2,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+DEFINE_QNODE(mmfab_mas_jpeg_dec, MSM8660_MMFAB_MAS_JPEG_DEC, 16, 5, -1, ARB_TIER2,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+DEFINE_QNODE(mmfab_mas_graphics_2d_core0, MSM8660_MMFAB_MAS_GRAPHICS_2D_CORE0, 16,
-+	     6, -1, ARB_TIER2,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+DEFINE_QNODE(mmfab_mas_vfe, MSM8660_MMFAB_MAS_VFE, 16, 7, -1, ARB_TIER2,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+DEFINE_QNODE(mmfab_mas_vpe, MSM8660_MMFAB_MAS_VPE, 16, 8, -1, ARB_TIER2,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+DEFINE_QNODE(mmfab_mas_jpeg_enc, MSM8660_MMFAB_MAS_JPEG_ENC, 16, 9, -1, ARB_TIER2,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+DEFINE_QNODE(mmfab_mas_graphics_2d_core1, MSM8660_MMFAB_MAS_GRAPHICS_2D_CORE1, 16,
-+	     10, -1, ARB_TIER2,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+DEFINE_QNODE(mmfab_mas_hd_codec_port0, MSM8660_MMFAB_MAS_HD_CODEC_PORT0, 16,
-+	     12, -1, ARB_TIER2,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+DEFINE_QNODE(mmfab_mas_hd_codec_port1, MSM8660_MMFAB_MAS_HD_CODEC_PORT1, 16,
-+	     13, -1, ARB_TIER2,
-+	     MSM8660_MMFAB_SLV_SMI, MSM8660_MMFAB_TO_APPSS);
-+/*
-+ * Gateway from APPSS into MMSS: slave (port 1) for outbound traffic
-+ * leaving MMSS, AND master (port 2) for inbound traffic arriving from
-+ * APPSS (e.g. CPU memremap_wc accesses to SMI BOs). Without the master
-+ * port and the forward links into MMFAB slaves (SMI / MM_IMEM), the
-+ * ICC path-finder has no route from AMPSS_M0 to MMFAB_SLV_SMI; the
-+ * cross-fabric gateway only worked for outbound traffic (MMSS masters
-+ * reaching APPSS slaves like EBI).
-+ *
-+ * ARB_TIER1 keeps AMPSS->SMI traffic high-priority within MMFAB so
-+ * CPU mmap reads/writes to SMI BOs don't get starved by MDP scanout.
-+ */
-+DEFINE_QNODE(mmfab_to_appss, MSM8660_MMFAB_TO_APPSS, 8, 11, 1, ARB_TIER1,
-+	     MSM8660_AFAB_TO_MMSS,
-+	     MSM8660_MMFAB_SLV_SMI,
-+	     MSM8660_MMFAB_SLV_MM_IMEM);
-+DEFINE_QNODE(mmfab_slv_smi, MSM8660_MMFAB_SLV_SMI, 16, -1, 0, 0);
-+DEFINE_QNODE(mmfab_slv_mm_imem, MSM8660_MMFAB_SLV_MM_IMEM, 8, -1, 3, 0);
-+
-+static struct msm8660_icc_node * const msm8660_mmfab_nodes[] = {
-+	[MMFAB_MAS_MDP_PORT0] = &mmfab_mas_mdp_port0,
-+	[MMFAB_MAS_MDP_PORT1] = &mmfab_mas_mdp_port1,
-+	[MMFAB_MAS_ADM1_PORT0] = &mmfab_mas_adm1_port0,
-+	[MMFAB_MAS_ROTATOR] = &mmfab_mas_rotator,
-+	[MMFAB_MAS_GRAPHICS_3D] = &mmfab_mas_graphics_3d,
-+	[MMFAB_MAS_JPEG_DEC] = &mmfab_mas_jpeg_dec,
-+	[MMFAB_MAS_GRAPHICS_2D_CORE0] = &mmfab_mas_graphics_2d_core0,
-+	[MMFAB_MAS_VFE] = &mmfab_mas_vfe,
-+	[MMFAB_MAS_VPE] = &mmfab_mas_vpe,
-+	[MMFAB_MAS_JPEG_ENC] = &mmfab_mas_jpeg_enc,
-+	[MMFAB_MAS_GRAPHICS_2D_CORE1] = &mmfab_mas_graphics_2d_core1,
-+	[MMFAB_MAS_HD_CODEC_PORT0] = &mmfab_mas_hd_codec_port0,
-+	[MMFAB_MAS_HD_CODEC_PORT1] = &mmfab_mas_hd_codec_port1,
-+	[MMFAB_TO_APPSS] = &mmfab_to_appss,
-+	[MMFAB_SLV_SMI] = &mmfab_slv_smi,
-+	[MMFAB_SLV_MM_IMEM] = &mmfab_slv_mm_imem,
-+};
-+
-+static const struct msm8660_icc_desc msm8660_mmfab = {
-+	.nodes = msm8660_mmfab_nodes,
-+	.num_nodes = ARRAY_SIZE(msm8660_mmfab_nodes),
-+	.bus_clks = msm8660_mmfab_clocks,
-+	.num_clks = ARRAY_SIZE(msm8660_mmfab_clocks),
-+	.rpm_resource = QCOM_RPM_MM_FABRIC_ARB,
-+	.nmasters = 14,
-+	.nslaves = 4,
-+	.ntieredslaves = 3,
-+	.default_tiered_slave = 2,	/* APPSS gateway */
-+	.rpm_buf_size = 23,
-+	.bus_width = 16,		/* 128-bit Multimedia fabric datapath */
-+};
-+
-+/*
-+ * =========================================================================
-+ * Daytona Fabric (DFAB) nodes - peripheral bus for SDCC and ADM DMA
-+ *
-+ * DFAB connects slower peripherals to SFAB via the DFAB_TO_SFAB gateway.
-+ * SDCC controllers (eMMC, SD card) connect here.
-+ *
-+ * No RPM ARB for DFAB - it's a simple peripheral bus with clock-only control.
-+ *
-+ * USB HS is included as a DFAB voter for compatibility with the legacy
-+ * legacy vendor kernel clock voting mechanism.
-+ * =========================================================================
-+ */
-+DEFINE_QNODE(dfab_mas_sdc1, MSM8660_DFAB_MAS_SDC1, 8, -1, -1, 0,
-+	     MSM8660_DFAB_TO_SFAB);
-+DEFINE_QNODE(dfab_mas_sdc2, MSM8660_DFAB_MAS_SDC2, 8, -1, -1, 0,
-+	     MSM8660_DFAB_TO_SFAB);
-+DEFINE_QNODE(dfab_mas_sdc3, MSM8660_DFAB_MAS_SDC3, 8, -1, -1, 0,
-+	     MSM8660_DFAB_TO_SFAB);
-+DEFINE_QNODE(dfab_mas_sdc4, MSM8660_DFAB_MAS_SDC4, 8, -1, -1, 0,
-+	     MSM8660_DFAB_TO_SFAB);
-+DEFINE_QNODE(dfab_mas_sdc5, MSM8660_DFAB_MAS_SDC5, 8, -1, -1, 0,
-+	     MSM8660_DFAB_TO_SFAB);
-+DEFINE_QNODE(dfab_mas_adm0_master, MSM8660_DFAB_MAS_ADM0_MASTER, 8, -1, -1, 0,
-+	     MSM8660_DFAB_TO_SFAB);
-+DEFINE_QNODE(dfab_mas_adm1_master, MSM8660_DFAB_MAS_ADM1_MASTER, 8, -1, -1, 0,
-+	     MSM8660_DFAB_TO_SFAB);
-+DEFINE_QNODE(dfab_to_sfab, MSM8660_DFAB_TO_SFAB, 8, -1, -1, 0,
-+	     MSM8660_SFAB_TO_DFAB);
-+DEFINE_QNODE(dfab_slv_sdc1, MSM8660_DFAB_SLV_SDC1, 8, -1, -1, 0);
-+DEFINE_QNODE(dfab_slv_sdc2, MSM8660_DFAB_SLV_SDC2, 8, -1, -1, 0);
-+DEFINE_QNODE(dfab_slv_sdc3, MSM8660_DFAB_SLV_SDC3, 8, -1, -1, 0);
-+DEFINE_QNODE(dfab_slv_sdc4, MSM8660_DFAB_SLV_SDC4, 8, -1, -1, 0);
-+DEFINE_QNODE(dfab_slv_sdc5, MSM8660_DFAB_SLV_SDC5, 8, -1, -1, 0);
-+/* USB HS DFAB voter - keeps DFAB clock stable during USB activity */
-+DEFINE_QNODE(dfab_mas_usb_hs, MSM8660_DFAB_MAS_USB_HS, 8, -1, -1, 0,
-+	     MSM8660_DFAB_TO_SFAB);
-+/* DSPS DFAB voter - keeps DFAB clock stable during sensor activity */
-+DEFINE_QNODE(dfab_mas_dsps, MSM8660_DFAB_MAS_DSPS, 8, -1, -1, 0,
-+	     MSM8660_DFAB_TO_SFAB);
-+
-+static struct msm8660_icc_node * const msm8660_dfab_nodes[] = {
-+	[DFAB_MAS_SDC1] = &dfab_mas_sdc1,
-+	[DFAB_MAS_SDC2] = &dfab_mas_sdc2,
-+	[DFAB_MAS_SDC3] = &dfab_mas_sdc3,
-+	[DFAB_MAS_SDC4] = &dfab_mas_sdc4,
-+	[DFAB_MAS_SDC5] = &dfab_mas_sdc5,
-+	[DFAB_MAS_ADM0_MASTER] = &dfab_mas_adm0_master,
-+	[DFAB_MAS_ADM1_MASTER] = &dfab_mas_adm1_master,
-+	[DFAB_TO_SFAB] = &dfab_to_sfab,
-+	[DFAB_SLV_SDC1] = &dfab_slv_sdc1,
-+	[DFAB_SLV_SDC2] = &dfab_slv_sdc2,
-+	[DFAB_SLV_SDC3] = &dfab_slv_sdc3,
-+	[DFAB_SLV_SDC4] = &dfab_slv_sdc4,
-+	[DFAB_SLV_SDC5] = &dfab_slv_sdc5,
-+	[DFAB_MAS_USB_HS] = &dfab_mas_usb_hs,
-+	[DFAB_MAS_DSPS] = &dfab_mas_dsps,
-+};
-+
-+static const struct msm8660_icc_desc msm8660_dfab = {
-+	.nodes = msm8660_dfab_nodes,
-+	.num_nodes = ARRAY_SIZE(msm8660_dfab_nodes),
-+	.bus_clks = msm8660_dfab_clocks,
-+	.num_clks = ARRAY_SIZE(msm8660_dfab_clocks),
-+	.rpm_resource = -1,		/* No RPM ARB for DFAB */
-+	.bus_width = 8,			/* 64-bit Daytona fabric datapath */
-+};
-+
-+/*
-+ * Pack bwsum[] and arb[] arrays into the u32 RPM buffer.
-+ *
-+ * Two u16 values are packed per u32 word: lower 16 bits first, upper 16 next.
-+ * Layout: [bwsum pairs] then [arb pairs], handling odd boundaries.
-+ *
-+ * This matches the legacy vendor kernel msm_bus_fabric_rpm_commit() packing algorithm.
-+ */
-+static void msm8660_pack_rpm_data(const u16 *bwsum, int nslaves,
-+				  const u16 *arb, int arb_size,
-+				  u32 *buf)
-+{
-+	int i, index = 0;
-+
-+	/* Pack bwsum pairs */
-+	for (i = 0; i + 1 < nslaves; i += 2) {
-+		buf[index] = ((u32)bwsum[i + 1] << 16) | bwsum[i];
-+		index++;
-+	}
-+
-+	/*
-+	 * Handle boundary between bwsum and arb for odd nslaves. When the
-+	 * fabric has no master ports (arb_size == 0) the arb[0] access would
-+	 * read out of bounds; pad the lone bwsum into the low half of the
-+	 * word instead.
-+	 */
-+	if (nslaves & 1) {
-+		if (arb_size > 0) {
-+			buf[index] = ((u32)arb[0] << 16) | bwsum[i];
-+			i = 1;
-+		} else {
-+			buf[index] = bwsum[i];
-+			i = 0;
-+		}
-+		index++;
-+	} else {
-+		i = 0;
-+	}
-+
-+	/* Pack arb pairs */
-+	for (; i + 1 < arb_size; i += 2) {
-+		buf[index] = ((u32)arb[i + 1] << 16) | arb[i];
-+		index++;
-+	}
-+
-+	/* Handle odd arb entry at end */
-+	if (i < arb_size) {
-+		buf[index] = arb[i];
-+		index++;
-+	}
-+}
-+
-+/*
-+ * Send fabric arbitration data to RPM.
-+ *
-+ * Iterates over all ICC nodes in the provider, builds bwsum/arb arrays
-+ * from their aggregated bandwidth, and sends the packed data to RPM.
-+ */
-+static void msm8660_rpm_commit(struct msm8660_icc_provider *qp)
-+{
-+	const struct msm8660_icc_desc *desc = qp->desc;
-+	struct icc_provider *provider = &qp->provider;
-+	int nm = desc->nmasters;
-+	int ns = desc->nslaves;
-+	int nts = desc->ntieredslaves;
-+	int arb_size = nm * nts;
-+	int def_ts = desc->default_tiered_slave;
-+	struct icc_node *n;
-+	int ret;
-+
-+	memset(qp->bwsum, 0, ns * sizeof(u16));
-+	memset(qp->arb, 0, arb_size * sizeof(u16));
-+	memset(qp->rpm_buf, 0, desc->rpm_buf_size * sizeof(u32));
-+
-+	list_for_each_entry(n, &provider->nodes, node_list) {
-+		struct msm8660_icc_node *qn = n->data;
-+		u64 bw_bytes;
-+		u16 bw_128k;
-+
-+		/* Use max of avg and peak bandwidth, convert to 128KB units */
-+		bw_bytes = max(icc_units_to_bps(n->avg_bw),
-+			       icc_units_to_bps(n->peak_bw));
-+		bw_128k = (u16)min_t(u64, bw_bytes >> 17, ARB_BWMASK);
-+
-+		/* Set arb entry for masters at their default tiered slave */
-+		if (qn->mas_port >= 0 && qn->mas_port < nm && def_ts > 0) {
-+			int idx = (def_ts - 1) * nm + qn->mas_port;
-+			u8 tier;
-+
-+			if (idx < arb_size) {
-+				tier = bw_128k ? qn->mas_tier : ARB_TIER2;
-+				qp->arb[idx] = (tier == ARB_TIER1 ? ARB_TIERMASK : 0)
-+					       | (bw_128k & ARB_BWMASK);
-+			}
-+		}
-+
-+		/* Set bwsum for slaves */
-+		if (qn->slv_port >= 0 && qn->slv_port < ns)
-+			qp->bwsum[qn->slv_port] = bw_128k;
-+	}
-+
-+	msm8660_pack_rpm_data(qp->bwsum, ns, qp->arb, arb_size, qp->rpm_buf);
-+
-+	ret = qcom_rpm_write(qp->rpm, QCOM_RPM_ACTIVE_STATE,
-+			     desc->rpm_resource, qp->rpm_buf,
-+			     desc->rpm_buf_size);
-+	if (ret)
-+		dev_err_ratelimited(provider->dev,
-+				    "RPM fabric ARB write failed: %d\n", ret);
-+}
-+
-+/*
-+ * u64-safe replacement for icc_std_aggregate(): the standard helper sums
-+ * average bandwidth into a u32, which can wrap around when summed across
-+ * many high-bandwidth nodes. We accumulate in u64 internally and saturate
-+ * back to U32_MAX on overflow rather than wrapping silently to a small
-+ * value that would underclock the fabric.
-+ */
-+static int msm8660_icc_aggregate(struct icc_node *node, u32 tag,
-+				 u32 avg_bw, u32 peak_bw,
-+				 u32 *agg_avg, u32 *agg_peak)
-+{
-+	u64 new_avg = (u64)*agg_avg + avg_bw;
-+
-+	*agg_avg = (new_avg > U32_MAX) ? U32_MAX : (u32)new_avg;
-+	*agg_peak = max(*agg_peak, peak_bw);
-+	return 0;
-+}
-+
-+static int msm8660_icc_set(struct icc_node *src, struct icc_node *dst)
-+{
-+	struct msm8660_icc_node *src_qn;
-+	struct msm8660_icc_provider *qp;
-+	u64 sum_bw, max_peak_bw, rate;
-+	u32 agg_avg = 0, agg_peak = 0;
-+	struct icc_provider *provider;
-+	struct icc_node *n;
-+	int ret, i;
-+
-+	src_qn = src->data;
-+	provider = src->provider;
-+	qp = to_msm8660_icc_provider(provider);
-+
-+	list_for_each_entry(n, &provider->nodes, node_list)
-+		provider->aggregate(n, 0, n->avg_bw, n->peak_bw,
-+				    &agg_avg, &agg_peak);
-+
-+	sum_bw = icc_units_to_bps(agg_avg);
-+	max_peak_bw = icc_units_to_bps(agg_peak);
-+
-+	/*
-+	 * Divide by the *fabric* bus width, not src_qn->buswidth: every
-+	 * master on a given fabric shares the same hardware clock, so the
-+	 * required clock rate is a single function of total bandwidth and
-+	 * the fabric's bus width. Picking the bus width of whichever node
-+	 * happened to trigger this update would make the rate oscillate
-+	 * depending on which master called icc_set_bw() last.
-+	 */
-+	rate = max(sum_bw, max_peak_bw);
-+	do_div(rate, qp->desc->bus_width);
-+	/* Apply minimum floor to prevent bus starvation */
-+	rate = max_t(u64, rate, MSM8660_FABRIC_MIN_RATE);
-+	/*
-+	 * Cap at INT_MAX in u64 space; min_t(u32, ...) would cast the u64
-+	 * down to u32 BEFORE comparing, so a request above 4 GiB/s could
-+	 * wrap to a near-zero value below INT_MAX and pass through, then
-+	 * be programmed as a near-zero clock rate that effectively halts
-+	 * the interconnect fabric.
-+	 */
-+	rate = min_t(u64, rate, INT_MAX);
-+
-+	if (qp->rate != rate) {
-+		for (i = 0; i < qp->num_clks; i++) {
-+			ret = clk_set_rate(qp->bus_clks[i].clk, rate);
-+			if (ret) {
-+				dev_err(provider->dev,
-+					"%s clk_set_rate(%llu) error: %d\n",
-+					qp->bus_clks[i].id, rate, ret);
-+				/*
-+				 * Bail without updating qp->rate so the next
-+				 * icc_set call will retry the rate change
-+				 * rather than treating it as cached-applied.
-+				 */
-+				return ret;
-+			}
-+		}
-+		qp->rate = rate;
-+	}
-+
-+	/* Send RPM fabric arbitration if available */
-+	if (qp->rpm && qp->desc->rpm_resource >= 0)
-+		msm8660_rpm_commit(qp);
-+
-+	return 0;
-+}
-+
-+static int msm8660_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
-+{
-+	*avg = 0;
-+	*peak = 0;
-+	return 0;
-+}
-+
-+/*
-+ * devm cleanup paired with clk_bulk_prepare_enable() in probe. Registered
-+ * via devm_add_action_or_reset() so any subsequent probe error path
-+ * (including -EPROBE_DEFER from msm8660_get_rpm()) reliably releases the
-+ * prepare/enable reference rather than leaking it across the retry.
-+ */
-+static void msm8660_icc_clk_release(void *data)
-+{
-+	struct msm8660_icc_provider *qp = data;
-+
-+	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
-+}
-+
-+/*
-+ * Look up the RPM that owns fabric arbitration writes.
-+ *
-+ * Returns NULL if the DT does not have a "qcom,rpm" phandle (in which
-+ * case the caller silently drops RPM ARB and runs the fabric purely
-+ * via clk_set_rate).
-+ *
-+ * Returns ERR_PTR(-EPROBE_DEFER) if the RPM device exists in DT but
-+ * its driver has not finished probing yet, or if device_link_add()
-+ * fails. The caller is expected to propagate this so the interconnect
-+ * driver gets retried once the RPM is ready.
-+ *
-+ * On success returns the qcom_rpm handle and pins the RPM device
-+ * lifetime to ours via a consumer-supplier device link, so the
-+ * devres-allocated qcom_rpm cannot be freed while we still hold a
-+ * pointer to it.
-+ */
-+static struct qcom_rpm *msm8660_get_rpm(struct device *dev)
-+{
-+	struct device_node *rpm_np;
-+	struct platform_device *rpm_pdev;
-+	struct device_link *link;
-+	struct qcom_rpm *rpm;
-+
-+	rpm_np = of_parse_phandle(dev->of_node, "qcom,rpm", 0);
-+	if (!rpm_np) {
-+		dev_dbg(dev, "no qcom,rpm phandle, RPM ARB disabled\n");
-+		return NULL;
-+	}
-+
-+	rpm_pdev = of_find_device_by_node(rpm_np);
-+	of_node_put(rpm_np);
-+	if (!rpm_pdev) {
-+		dev_dbg(dev, "RPM device not found yet, deferring probe\n");
-+		return ERR_PTR(-EPROBE_DEFER);
-+	}
-+
-+	/*
-+	 * Pin the supplier BEFORE reading its drvdata. The device link
-+	 * (MANAGED, the default state) prevents the RPM driver from being
-+	 * unbound while we hold the link, which closes the window where a
-+	 * concurrent unbind+rebind could free the qcom_rpm pointer between
-+	 * dev_get_drvdata() and the link being established. If the link
-+	 * cannot be added (e.g. supplier is in the process of being
-+	 * removed) we defer and retry.
-+	 */
-+	link = device_link_add(dev, &rpm_pdev->dev,
-+			       DL_FLAG_AUTOREMOVE_CONSUMER);
-+	put_device(&rpm_pdev->dev);
-+	if (!link) {
-+		dev_warn(dev, "failed to add device link to RPM, deferring\n");
-+		return ERR_PTR(-EPROBE_DEFER);
-+	}
-+
-+	/*
-+	 * Safe to read drvdata now: the device link pins the supplier so
-+	 * it cannot be unbound until our consumer (this interconnect
-+	 * provider) is unbound first.
-+	 */
-+	rpm = dev_get_drvdata(&rpm_pdev->dev);
-+	if (!rpm) {
-+		dev_dbg(dev, "RPM not ready, deferring probe\n");
-+		device_link_remove(dev, &rpm_pdev->dev);
-+		return ERR_PTR(-EPROBE_DEFER);
-+	}
-+
-+	return rpm;
-+}
-+
-+static int msm8660_icc_probe(struct platform_device *pdev)
-+{
-+	const struct msm8660_icc_desc *desc;
-+	struct msm8660_icc_node * const *qnodes;
-+	struct msm8660_icc_provider *qp;
-+	struct device *dev = &pdev->dev;
-+	struct icc_onecell_data *data;
-+	struct icc_provider *provider;
-+	struct icc_node *node;
-+	size_t num_nodes, i;
-+	int ret;
-+
-+	desc = of_device_get_match_data(dev);
-+	if (!desc)
-+		return -EINVAL;
-+
-+	qnodes = desc->nodes;
-+	num_nodes = desc->num_nodes;
-+
-+	qp = devm_kzalloc(dev, sizeof(*qp), GFP_KERNEL);
-+	if (!qp)
-+		return -ENOMEM;
-+
-+	data = devm_kzalloc(dev, struct_size(data, nodes, num_nodes),
-+			    GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+	data->num_nodes = num_nodes;
-+
-+	qp->bus_clks = devm_kmemdup(dev, desc->bus_clks,
-+				    desc->num_clks * sizeof(*desc->bus_clks),
-+				    GFP_KERNEL);
-+	if (!qp->bus_clks)
-+		return -ENOMEM;
-+
-+	qp->num_clks = desc->num_clks;
-+
-+	/*
-+	 * MSM8660 fabric clocks are managed by RPM firmware and may not be
-+	 * available in mainline Linux yet. Once the clock provider exists,
-+	 * we want to honour it; until then we run without per-fabric clock
-+	 * scaling. The crucial part is that -EPROBE_DEFER means "the
-+	 * provider exists but hasn't probed yet" and MUST be propagated so
-+	 * we get retried; only other errors (genuine -ENOENT, etc.) get
-+	 * downgraded to "no clocks, continue".
-+	 */
-+	ret = devm_clk_bulk_get_optional(dev, qp->num_clks, qp->bus_clks);
-+	if (ret == -EPROBE_DEFER)
-+		return ret;
-+	if (ret) {
-+		dev_warn(dev, "Failed to get bus clocks: %d (continuing without clock scaling)\n",
-+			 ret);
-+		qp->num_clks = 0;
-+	}
-+
-+	if (qp->num_clks) {
-+		ret = clk_bulk_prepare_enable(qp->num_clks, qp->bus_clks);
-+		if (ret) {
-+			dev_warn(dev, "Failed to enable bus clocks: %d\n", ret);
-+			qp->num_clks = 0;
-+		} else {
-+			/*
-+			 * Register the cleanup right after a successful
-+			 * prepare_enable so any later -EPROBE_DEFER or other
-+			 * probe error path (e.g. msm8660_get_rpm failing
-+			 * with -EPROBE_DEFER below) does not leak a clock
-+			 * prepare/enable reference across the retry.
-+			 */
-+			ret = devm_add_action_or_reset(dev,
-+				msm8660_icc_clk_release, qp);
-+			if (ret)
-+				return ret;
-+		}
-+	}
-+
-+	/* Set up RPM fabric arbitration */
-+	qp->desc = desc;
-+	if (desc->rpm_resource >= 0) {
-+		qp->rpm = msm8660_get_rpm(dev);
-+		if (IS_ERR(qp->rpm))
-+			return PTR_ERR(qp->rpm);
-+		if (qp->rpm) {
-+			int arb_size = desc->nmasters * desc->ntieredslaves;
-+
-+			qp->bwsum = devm_kcalloc(dev, desc->nslaves,
-+						 sizeof(u16), GFP_KERNEL);
-+			qp->arb = devm_kcalloc(dev, arb_size,
-+					       sizeof(u16), GFP_KERNEL);
-+			qp->rpm_buf = devm_kcalloc(dev, desc->rpm_buf_size,
-+						   sizeof(u32), GFP_KERNEL);
-+			if (!qp->bwsum || !qp->arb || !qp->rpm_buf) {
-+				dev_warn(dev, "RPM buffer alloc failed, ARB disabled\n");
-+				qp->rpm = NULL;
-+			} else {
-+				int rc;
-+
-+				dev_info(dev, "RPM fabric ARB enabled (%d masters, %d slaves, %d tiered)\n",
-+					 desc->nmasters, desc->nslaves,
-+					 desc->ntieredslaves);
-+
-+				/*
-+				 * One-shot sleep-context vote of zero bandwidth.
-+				 * Without an explicit SLEEP_STATE write, RPM has no
-+				 * fabric bandwidth target for deep-sleep and may
-+				 * keep the active vote applied indefinitely,
-+				 * preventing DDR from dropping its rate when CPUs
-+				 * power-collapse. The buffer is devm_kcalloc'd so
-+				 * it is all-zero at this point — written before
-+				 * any consumer can drive an active vote that would
-+				 * dirty it.
-+				 *
-+				 * msm8660_rpm_commit() writes ACTIVE_STATE only;
-+				 * SLEEP_STATE remains zero for the provider's
-+				 * lifetime, so this vote does not need refreshing.
-+				 */
-+				rc = qcom_rpm_write(qp->rpm,
-+						    QCOM_RPM_SLEEP_STATE,
-+						    desc->rpm_resource,
-+						    qp->rpm_buf,
-+						    desc->rpm_buf_size);
-+				if (rc)
-+					dev_warn(dev, "RPM fabric sleep vote failed: %d\n",
-+						 rc);
-+			}
-+		}
-+	}
-+
-+	provider = &qp->provider;
-+	provider->dev = dev;
-+	provider->set = msm8660_icc_set;
-+	provider->aggregate = msm8660_icc_aggregate;
-+	provider->xlate = of_icc_xlate_onecell;
-+	provider->data = data;
-+	provider->get_bw = msm8660_get_bw;
-+
-+	icc_provider_init(provider);
-+
-+	for (i = 0; i < num_nodes; i++) {
-+		size_t j;
-+
-+		if (!qnodes[i])
-+			continue;
-+
-+		node = icc_node_create(qnodes[i]->id);
-+		if (IS_ERR(node)) {
-+			ret = PTR_ERR(node);
-+			goto err_remove_nodes;
-+		}
-+
-+		node->name = qnodes[i]->name;
-+		node->data = qnodes[i];
-+		icc_node_add(node, provider);
-+
-+		dev_dbg(dev, "registered node %s\n", node->name);
-+
-+		/* populate links */
-+		for (j = 0; j < qnodes[i]->num_links; j++)
-+			icc_link_create(node, qnodes[i]->links[j]);
-+
-+		data->nodes[i] = node;
-+	}
-+
-+	ret = icc_provider_register(provider);
-+	if (ret)
-+		goto err_remove_nodes;
-+
-+	platform_set_drvdata(pdev, qp);
-+
-+	dev_info(dev, "MSM8660 interconnect provider registered\n");
-+
-+	return 0;
-+
-+err_remove_nodes:
-+	icc_nodes_remove(provider);
-+	/*
-+	 * Do NOT call clk_bulk_disable_unprepare() here: the devm cleanup
-+	 * action registered after clk_bulk_prepare_enable() will run
-+	 * automatically when probe returns an error and devres unwinds.
-+	 * Calling it manually would double-unprepare and corrupt the
-+	 * clock-framework refcount.
-+	 */
-+	return ret;
-+}
-+
-+static void msm8660_icc_remove(struct platform_device *pdev)
-+{
-+	struct msm8660_icc_provider *qp = platform_get_drvdata(pdev);
-+
-+	icc_provider_deregister(&qp->provider);
-+	icc_nodes_remove(&qp->provider);
-+	/* clk cleanup happens via devm_add_action_or_reset on remove. */
-+}
-+
-+static const struct of_device_id msm8660_noc_of_match[] = {
-+	{ .compatible = "qcom,msm8660-apps-fabric", .data = &msm8660_afab },
-+	{ .compatible = "qcom,msm8660-system-fabric", .data = &msm8660_sfab },
-+	{ .compatible = "qcom,msm8660-mmss-fabric", .data = &msm8660_mmfab },
-+	{ .compatible = "qcom,msm8660-daytona-fabric", .data = &msm8660_dfab },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(of, msm8660_noc_of_match);
-+
-+static struct platform_driver msm8660_noc_driver = {
-+	.probe = msm8660_icc_probe,
-+	.remove = msm8660_icc_remove,
-+	.driver = {
-+		.name = "qnoc-msm8660",
-+		.of_match_table = msm8660_noc_of_match,
-+		.sync_state = icc_sync_state,
-+	},
-+};
-+/*
-+ * Register the NOC provider at core_initcall, matching the mainline pattern
-+ * used by newer Qualcomm SoCs (sm8450, glymur, qdu1000, sc8280xp, sm8750).
-+ *
-+ * Why not module_platform_driver (device_initcall)?  drivers/Makefile lists
-+ * drivers/interconnect/ at position 189, *after* every ICC-consumer subdir
-+ * (clk/ @40, soc/ @46, gpu/ @68, base/mfd/ @76, spmi/ @89, usb/ @106,
-+ * i2c/ @116, mmc/ @133, remoteproc/ @158).  Within a single initcall level
-+ * execution order = link order, so a device_initcall registration here runs
-+ * *after* every consumer has already tried to probe.  Mainline relies on
-+ * deferred-probe retry to recover from that, but in this tree some consumer
-+ * (apcs-msm8660 + cpufreq cascade suspected) fails to recover within
-+ * deferred_probe_timeout=5 and boot dies at the Tux splash with no rootfs.
-+ * Empirically confirmed 2026-05-29 with module_platform_driver (commits
-+ * 99275d8a8ae9 + ca35c591854c, reverted).
-+ *
-+ * icc_provider_register does not require icc_init to have run first --
-+ * the framework's locks are statically DEFINE_MUTEX'd -- so registering
-+ * the provider at core_initcall (before icc_init at subsys_initcall) is
-+ * safe, same as mainline sm8450 etc.
-+ */
-+static int __init msm8660_noc_driver_init(void)
-+{
-+	return platform_driver_register(&msm8660_noc_driver);
-+}
-+core_initcall(msm8660_noc_driver_init);
-+
-+/*
-+ * No module_exit: Kconfig is bool, the driver is built-in only, and
-+ * unbind/unload paths are not exercised. core_initcall + module_exit
-+ * mix badly anyway (you cannot unload something registered earlier
-+ * than module_init level).
-+ */
-+
-+MODULE_DESCRIPTION("Qualcomm MSM8x60 interconnect driver");
-+MODULE_LICENSE("GPL v2");
-diff --git a/include/dt-bindings/interconnect/qcom,msm8660.h b/include/dt-bindings/interconnect/qcom,msm8660.h
-index c9ce3f5a5276..bac9fc423da2 100644
---- a/include/dt-bindings/interconnect/qcom,msm8660.h
-+++ b/include/dt-bindings/interconnect/qcom,msm8660.h
-@@ -4,7 +4,7 @@
-  *
-  * Copyright (c) 2026 Herman van Hazendonk <github.com@herrie.org>
-  *
-- * Based on webOS kernel msm_bus_board_8660.c
-+ * Based on legacy vendor kernel msm_bus_board_8660.c
-  * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
-  */
- 
-@@ -79,11 +79,11 @@
-  * Daytona Fabric (DFAB) - Peripheral bus
-  *
-  * DFAB connects slower peripherals (SDCC, ADM DMA) to the system fabric.
-- * The webOS kernel managed DFAB bandwidth via voter clocks (dfab_sdc*_clk,
-+ * The legacy vendor kernel managed DFAB bandwidth via voter clocks (dfab_sdc*_clk,
-  * dfab_usb_hs_clk). In mainline, this is handled by the interconnect framework.
-  *
-  * USB HS is included as a DFAB voter for compatibility with the legacy clock
-- * voting mechanism. The webOS kernel comment said: "if usb link is in sps
-+ * voting mechanism. The legacy vendor kernel comment said: "if usb link is in sps
-  * there is no need for usb pclk as daytona fabric clock will be used instead".
-  * This keeps DFAB clock stable when USB is active.
-  */
--- 
-2.43.0
-
+Jonathan
 
