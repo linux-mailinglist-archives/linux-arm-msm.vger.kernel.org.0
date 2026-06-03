@@ -1,195 +1,320 @@
-Return-Path: <linux-arm-msm+bounces-111057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id cX6FJs6fIGq15wAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 23:42:38 +0200
+	id Sll/NeygIGr05wAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 23:47:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB12B63B6E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 23:42:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3232F63B740
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 23:47:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=none;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111057-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111057-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=fail reason="SPF not aligned (relaxed), No valid DKIM" header.from=collabora.com (policy=none);
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=pass header.d=nxp.com header.s=selector1 header.b=m2juDcPj;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111058-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111058-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=nxp.com;
+	arc=reject ("cv is fail on i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AADD8307F89B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 21:39:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 49E99304D5EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 21:42:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AC99395ADB;
-	Wed,  3 Jun 2026 21:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94FCB492197;
+	Wed,  3 Jun 2026 21:42:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013028.outbound.protection.outlook.com [52.101.83.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AD14A2E07;
-	Wed,  3 Jun 2026 21:39:31 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780522774; cv=none; b=C5Ibx7KZSdSjPrRdNDwHEYUpk7E3YDWijoRddn4CwtGE1G6ZdW+9bs/sOO/nCg0Qe199ip/GL4pNZfS7uLutvDoRzPgztUHMLTPGbMBuHtC4c5eKCROdwgacJMIkJD9zDBeyLyq1MFjvcIHmRBzhQaceBxixEtsIsLDTC65LPFg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780522774; c=relaxed/simple;
-	bh=4ixFSV/12Id5tf/md9aSMpcT24U/Cz8Zv3drM0rLg14=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=SFQB5u1wrQ6bk0OIbhMPSA427JzkCvRvmRzFA6kMc5oOBL7fPw63LEIsHjjTeDWb23rEfGliLS0hcJzKF110BIlEaQxb0tgFCQgH396gRGw8w7gvZCKKTFuTuqnwDKCssF03ccmH5bk5ANFlnwoCn6YQ/2EVmNa89GYwHM6Dc0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3131F0089B;
-	Wed,  3 Jun 2026 21:39:31 +0000 (UTC)
-Received: by venus (Postfix, from userid 1000)
-	id 7F4B0181D83; Wed, 03 Jun 2026 23:39:29 +0200 (CEST)
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: linux-phy@lists.infradead.org, 
- Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: Vinod Koul <vkoul@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
- linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
- linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
- linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
- linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org, 
- linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
- linux-usb@vger.kernel.org, netdev@vger.kernel.org, spacemit@lists.linux.dev, 
- UNGLinuxDriver@microchip.com, Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Alim Akhtar <alim.akhtar@samsung.com>, 
- =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
- Andrew Lunn <andrew+netdev@lunn.ch>, 
- Andrzej Hajda <andrzej.hajda@intel.com>, Andy Yan <andy.yan@rock-chips.com>, 
- Bart Van Assche <bvanassche@acm.org>, Bjorn Helgaas <bhelgaas@google.com>, 
- Can Guo <quic_cang@quicinc.com>, Chanho Park <chanho61.park@samsung.com>, 
- Chen-Yu Tsai <wens@kernel.org>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
- Damien Le Moal <dlemoal@kernel.org>, 
- Daniel Machon <daniel.machon@microchip.com>, 
- David Airlie <airlied@gmail.com>, "David S. Miller" <davem@davemloft.net>, 
- Dmitry Baryshkov <lumag@kernel.org>, Eric Dumazet <edumazet@google.com>, 
- Fabio Estevam <festevam@gmail.com>, Frank Li <Frank.Li@nxp.com>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
- Inki Dae <inki.dae@samsung.com>, Jagan Teki <jagan@amarulasolutions.com>, 
- Jakub Kicinski <kuba@kernel.org>, 
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
- JC Kuo <jckuo@nvidia.com>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Joe Perches <joe@perches.com>, 
- Johan Hovold <johan+linaro@kernel.org>, Jonas Karlman <jonas@kwiboo.se>, 
- Jonathan Hunter <jonathanh@nvidia.com>, 
- Kevin Xie <kevin.xie@starfivetech.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Linus Walleij <linusw@kernel.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Magnus Damm <magnus.damm@gmail.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, 
- Marc Kleine-Budde <mkl@pengutronix.de>, 
- Marek Szyprowski <m.szyprowski@samsung.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Markus Schneider-Pargmann <msp@baylibre.com>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>, 
- Mathias Nyman <mathias.nyman@intel.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Maxime Ripard <mripard@kernel.org>, Michael Dege <michael.dege@renesas.com>, 
- Nicolas Ferre <nicolas.ferre@microchip.com>, 
- Niklas Cassel <cassel@kernel.org>, Nitin Rawat <quic_nitirawa@quicinc.com>, 
- Paolo Abeni <pabeni@redhat.com>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Peter Chen <peter.chen@kernel.org>, 
- Peter Griffin <peter.griffin@linaro.org>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, Robert Foss <rfoss@kernel.org>, 
- Rob Herring <robh@kernel.org>, 
- "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, 
- Samuel Holland <samuel@sholland.org>, Sandy Huang <hjc@rock-chips.com>, 
- Sascha Hauer <s.hauer@pengutronix.de>, Sean Paul <sean@poorly.run>, 
- Sebastian Reichel <sre@kernel.org>, Shawn Guo <shawn.guo@linaro.org>, 
- Shawn Lin <shawn.lin@rock-chips.com>, Simona Vetter <simona@ffwll.ch>, 
- Steen Hegelund <Steen.Hegelund@microchip.com>, 
- Thierry Reding <thierry.reding@gmail.com>, 
- Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
- Thomas Zimmermann <tzimmermann@suse.de>, 
- Tudor Ambarus <tudor.ambarus@linaro.org>, 
- Vincent Mailhol <mailhol@kernel.org>, Xu Yang <xu.yang_2@nxp.com>, 
- Yixun Lan <dlan@kernel.org>, 
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-In-Reply-To: <20260505100523.1922388-1-vladimir.oltean@nxp.com>
-References: <20260505100523.1922388-1-vladimir.oltean@nxp.com>
-Subject: Re: (subset) [PATCH v8 phy-next 00/31] Split Generic PHY consumer
- and provider API
-Message-Id: <178052276949.2678508.3221123153750103034.b4-ty@collabora.com>
-Date: Wed, 03 Jun 2026 23:39:29 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD40C312807;
+	Wed,  3 Jun 2026 21:42:47 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780522969; cv=fail; b=EKsL0b1R+XfPTxUXX44+hlBlSi1E4uSFGhKV4VwV/tBBt732hxvzY/1zmyR8/61IkrRtq4S7djMiuG83hvig8zVf+JtOJFGhX9ILzSCENAK+fibblLciQgoWhqZqu5pQZnABOxTRsD15d2ML6GdSrGn9Jgc3puBC0XC5zj9imeQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780522969; c=relaxed/simple;
+	bh=djvUBPZJKMTKoqUDveLeQRfTCVJYWjuBSkQrmG+Mf9c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=CeEoIZXvQvNortrt7uwzezYcacOVNVWsISTzUUfOC/2fTP9Hhx3dEjPi79bq8BrNNaB5G4gI/Lg9EQyoFQdn96PdXRJZwELEbr3GcON8nb/OSPF1oKRxK6zEOgK2d6cv1UW7ivNIMRJ3+SyOGKkuvwNV01oqPr+5ml/We7e20zE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=m2juDcPj; arc=fail smtp.client-ip=52.101.83.28
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=P/eRDSWrtRQhW0md40+SvKQjFBgUihzl1jhNiA3vCJt9pqXqhtp+CmjS5JOjJUB4D5UZ/LUkVLraT4Qpg40FM3MtlWokFyCBFmywvc0g4bzghp2kMxvlzAbkUCmEOanPW9rSbHIXiO+7rP7jey4Fo0SIPZgESGDqmAYfrd9jk+A4quqlgPpoqv9JQLOY7CyUhX+jgjrdaAt86lq+x2GKV8ahST6gVFbtuTGH5zZdMKwtl2/MhkYQhWiOfNCKLTNqPFVjAwWF8VyLxzdE05RYub8zySHkqq5qXMz5xnJjQx940wmcaXdg/G7qAGcfKNQqzXxeR4j5zxBv86+vzAk42A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pjWE6lVwB2uqUm+lW4h3CJHXHzBKhXR01s0k3qysJBU=;
+ b=OtV/xuEZdOji7KVOZzLnIjuDiP8zLTiDtrf9w0Rm+eghYjCmkM/lbAaYRulBt87EDC18Ii6m399AVmvNCzMGpJxzvS2n7MLoCJRwYstr22tkRA6GvvnFKpWdxFIdBPem/LKgg+QdqmPXtua2dBuGLsw6mauNvDS4ctE27VLPIC0/CKjOai0WIGjSdlzYmbDSPHVrD0lRCpCdDxYKU3EL7zSV1Ho/gZC9FR5V4yFcQpgAHRf+wJOjQLjtI/Br3cRk0qo7LmwX9gWcLgfW1XsdWAlSF0tG7IW6VCGUyAwTQacZARAkPh3UPu6L/k0ZwsXTMfnRzFtkBHCBqr6j+KAiiw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pjWE6lVwB2uqUm+lW4h3CJHXHzBKhXR01s0k3qysJBU=;
+ b=m2juDcPjEE19zvyGvIkJt9WdXCoNPP/QT0F3kDitSQgJbE3calzTVEmsIG1Ic/LfBACKf5DiaVIvjinxz4HlhuVWwaPCmQqK6EOcONP9Zu7t2TAqOSIQEXxV1w+fBpZuB8Rfu86+yI/bgdICUTo5FLAAi0rt2mGfHS2/IdqXvAM+66FDroyd4qA/R3IetT1ziHk/doECDeRq/R0gmcVnQGKbf0lXHfW+Dmi/6yX29QHUzPZqZ9xFb5zuXXU4FluBF1fhbo/hbWFlwAM6nCbxiNaJa7pMBo1evyHXOgT04eYbkdr2NHu07JMHtmyWFlhzUaIAEsCqpg+WshhCYLbxcA==
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com (2603:10a6:102:2a9::8)
+ by DB9PR04MB8347.eurprd04.prod.outlook.com (2603:10a6:10:245::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.13; Wed, 3 Jun 2026
+ 21:42:44 +0000
+Received: from PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588]) by PA4PR04MB9366.eurprd04.prod.outlook.com
+ ([fe80::75e4:8143:ddbc:6588%3]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
+ 21:42:44 +0000
+Date: Wed, 3 Jun 2026 17:42:36 -0400
+From: Frank Li <Frank.li@nxp.com>
+To: David Heidelberg <david@ixit.cz>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Petr Hodina <phodina@protonmail.com>, "Dr. Git" <drgitx@gmail.com>,
+	Cory Keitz <ckeitz@amazon.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v6 2/8] media: qcom: camss: csiphy-3ph: Use odd bits for
+ configuring C-PHY lanes
+Message-ID: <aiCfzBAbEg27S85_@lizhi-Precision-Tower-5810>
+References: <20260603-qcom-cphy-v6-0-e50de0b557a8@ixit.cz>
+ <20260603-qcom-cphy-v6-2-e50de0b557a8@ixit.cz>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260603-qcom-cphy-v6-2-e50de0b557a8@ixit.cz>
+X-ClientProxiedBy: PH3PEPF000040A9.namprd05.prod.outlook.com
+ (2603:10b6:518:1::4b) To PA4PR04MB9366.eurprd04.prod.outlook.com
+ (2603:10a6:102:2a9::8)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.3
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PA4PR04MB9366:EE_|DB9PR04MB8347:EE_
+X-MS-Office365-Filtering-Correlation-Id: 236d8075-bb3e-4f9d-c7fc-08dec1b90bd9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|52116014|1800799024|19092799006|366016|6133799003|18002099003|4143699003|56012099006|11063799006|22082099003|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	YMRWQSQKS7PFfM0smpA4GnVOeFyipqXUpnorcreliqpM5zKvPYL1E9/1w0tVQTOeHM3AQi8DHk1B6rQIRf2fk5UjNvlQpuePN4ZapZNEr4dntli/ZbwZLvT+bBlwVoaWsQ/U3lb0Ee+mK2AMqf7wRUj8BgBZyOOgdemoL8jgk5PXTnpTR771DR1g5V7JORxZZyevUxCCMXIaWTkCGQbl9KWDSX3+zjPQJAdbu+tlWFFyNxRHYnOlARIhXVxYN/lduch4qfkZ5a1RPAELODRl6pu2uQEVDqod1L/fLTx/qlHF/lVCTmxmRd+s7C88f2mcwWbp6EAXtcntNeTG6yoB/WD3QwVKLo/DJP37c19LLS60Up0H+yFO5hhURyYLVv1SbZ800j8H0UCyPBE4LIDjqLIIXDo75WRbhLfK9OPmqUaDXDS/HRaUD+3yRwVTtq9rPjI8lzE4yM34CsNLpsnj0cu6KxO+P5r8pe2cPNplqkJI7hylqWzH8V8x5eRpZXuTQ02HXHcEj0Pja428e1U9TWPnfPVDbmPLKTz4G091TCC1T5rXjmgLZAoP1DWf03Zx7n5lXaYso10yCbQPTpjW+DAPrhDqJ6Mo/uizJX4Czd87y1Ruy0dT73h+FsKLn0i/7R0TuUs+4hlZU95CAzppth18Tno+T3zSigT3boSGxca7bhznErrdUozgsc6yLLqurYAM6qx8xZ4tDC4gmG+UOm+ByYK+gREa79lvB+4cC8llY9Uw6wuxkg8Cpku+CMQT
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PA4PR04MB9366.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(52116014)(1800799024)(19092799006)(366016)(6133799003)(18002099003)(4143699003)(56012099006)(11063799006)(22082099003)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?WohRzO2nnFnv5lORd84x+gGUAzm0RjegsWsS6IrHQII2DoDyKf65RyysmiSD?=
+ =?us-ascii?Q?tBeyURbOAncI3EFALKMbBjNTWSh63s+mwDj+cbcAOR5qZBe2aH0Lbc4FDoNF?=
+ =?us-ascii?Q?Jgin/2MJgivOWQzrcFNKUPQTBeJ4XChpLQsX5DTyFPL2moHkpyrKedJcNqS5?=
+ =?us-ascii?Q?NjbvCEYVTj33QSatgawRbr/8fPhPJbFP7W6Coh1H1IJEOvd/58rBrG87cS5E?=
+ =?us-ascii?Q?/MZZ16uV42dOdbMtz/+1ToLjlgAuR5qI3jD3nnE3E5kUqg1ui2wt100+rMiL?=
+ =?us-ascii?Q?locegmzNgT4hL/gFW2L6GmfNKhqOYKKcGRpBRZ+n1I/PHllPT3o3lgTI4leo?=
+ =?us-ascii?Q?WDu7TE684vsCI57+2o593KzJcm8GOW8lrbpjgbSfVPXebcInOaeuWKsnStWT?=
+ =?us-ascii?Q?28DXDv1h9YRCPJSrGuZvv2eTRw8B7EjIblWTfTrAI83a6QuhaMbL5bYUXkZM?=
+ =?us-ascii?Q?H88aent5j4GAvfLfhviavWmyxCF+pDBUPDlDHcS3QisPuJVdWcrBx4H81pJV?=
+ =?us-ascii?Q?WK+GD8OyfSNzRPmbioT9BHz6VxKffKNJ5GEJRgsW0HKG5uCLt6pa8G+OFsLF?=
+ =?us-ascii?Q?T/E/YdxeQqSY8FIsuroFaFLnRmrC+aloGEApsXOMtad9oj3yMru69preVtQt?=
+ =?us-ascii?Q?zgbmUSPHtVSwnM6RCuo2Q36sAH3DQU87C6Yd7RMAGjZPd5od+PULZJSVS5jm?=
+ =?us-ascii?Q?u8bLfJL2F62nixy5u3LfUinO4P+du4xHkJrWVFCm961tFlovrkgownvifyaL?=
+ =?us-ascii?Q?Tn4zAQmlRDrn+DprmQEGThJ0fGYM/0MOwgAU0AXMkjyH9sH5LEI9wktmUhuD?=
+ =?us-ascii?Q?8OHDVdrNP0p/O+ZW73iwMJOGq3ZJoUAaboo57Pzke2Oj0UYDJFa5poWhuIMz?=
+ =?us-ascii?Q?9mxcf3j+l66t8OPq0ZEqbibNP2v7qG12KWsYaY6RlCFlusGr3D8cTnOCxb7t?=
+ =?us-ascii?Q?0VhTNlhAKYm3BMyOoicv/Uxz3jxordSXjWYqWi5otdrRQbxb8UaJV4I9sPda?=
+ =?us-ascii?Q?bzUzxjws/VZ9+L1x38fC3UTWOFH/Q3XY08L7cMKKfZeq1ZOmfbPUMVuxd8vB?=
+ =?us-ascii?Q?ZiXkEy8jeIYOvitKMR0Cfvh8V7ei3LWPjZl6FVLmwHOy+gfCDKGc5vkysnBm?=
+ =?us-ascii?Q?ri7BRecI4mJq38HPDj+tMtmrzOW2wXt5hiKfULPtqtbjsJIduqSWujIV5Plq?=
+ =?us-ascii?Q?V4FpOyxsXpHxIvccLoCK6z3ki6hZCIFaTMON5mClrRx60XPMkwhKxMHitrbf?=
+ =?us-ascii?Q?yvZyMLh8Y+uyRTGnJSHA2ousdK7gxibSzFsrWbwHbOrWBEguKWnbLa2KA2p4?=
+ =?us-ascii?Q?iJbA3ucv2tEDEK2vgnUM5h1AI+DJiyo4Ux+KhMMjzyB+IohcB/UkTnIOG1FN?=
+ =?us-ascii?Q?1AmlIbKz4ni+4Ivg/AKIWSnuca71kFeArc8cHZqAb+S2GeYvfcv6gg5Qhe4k?=
+ =?us-ascii?Q?XjS/V9oJPDBY93dqX1TcYNPs7yrtJkVMQ4ImaofbqtaDxu5YdyDYt7AgvvRX?=
+ =?us-ascii?Q?7uy04g6+XZUX2xFh+jF1SohywZdiu/dMvBMGYU2UW+dZCvzhYejIPMcw0/rW?=
+ =?us-ascii?Q?4cUwZqmkeILd6iUrCuOAg/Neejy6/pQwCqDRmlaBt334RDQAWge9mI5EvS/H?=
+ =?us-ascii?Q?bC5nrLMB2gVI/RyZOIiGHxlM1OFOuw7SUkHzBLxLyeYWZiTq9NmA/1uHfa+m?=
+ =?us-ascii?Q?92M3xUuC1t+X7qiYDM0iQVET6WmR9uEcyA3aC2xnrsw6u/Cu?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 236d8075-bb3e-4f9d-c7fc-08dec1b90bd9
+X-MS-Exchange-CrossTenant-AuthSource: PA4PR04MB9366.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 21:42:44.6363
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: xaQ3md/OyyYU0WdvUHI+nEiH0IWvSE1rL5k1dIv6H2iRke/BChSqwf4k6DheIXuSz6XonphbAt5twK+ynS/EGA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB8347
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.14 / 15.00];
+X-Spamd-Result: default: False [1.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[nxp.com,none];
+	R_DKIM_ALLOW(-0.20)[nxp.com:s=selector1];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[collabora.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kernel.org,linaro.org,lists.freedesktop.org,lists.infradead.org,vger.kernel.org,lists.linux.dev,microchip.com,linux.dev,bootlin.com,samsung.com,lunn.ch,intel.com,rock-chips.com,acm.org,google.com,quicinc.com,tuxon.dev,gmail.com,davemloft.net,nxp.com,glider.be,linuxfoundation.org,sntech.de,amarulasolutions.com,HansenPartnership.com,nvidia.com,perches.com,kwiboo.se,starfivetech.com,oss.qualcomm.com,ideasonboard.com,linux.intel.com,pengutronix.de,somainline.org,baylibre.com,oracle.com,renesas.com,redhat.com,armlinux.org.uk,sholland.org,poorly.run,ffwll.ch,synopsys.com,suse.de];
-	FORGED_RECIPIENTS(0.00)[m:linux-phy@lists.infradead.org,m:vladimir.oltean@nxp.com,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-arm-kernel@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-can@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:linux-ide@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-media@vger.kernel.org,m:linux-pci@vger.kernel.org,m:linux-renesas-soc@vger.kernel.org,m:linux-riscv@lists.infradead.org,m:linux-rockchip@lists.infradead.org,m:linux-samsung-soc@vger.kernel.org,m:linux-scsi@vger.kernel.org,m:linux-sunxi@lists.linux.dev,m:linux-tegra@vger.kernel.org,m:linux-usb@vger.kernel.org,m:netdev@vger.kernel.org,m:spacemit@lists.linux.dev,m:UNGLinuxDriver@microchip.com,m:abhinav.kumar@linux.dev,m:alexandre.belloni@bootlin.com,m:alim.akhtar@samsung.com,m:andre.draszik@linaro.org,m:andrew+netdev@lunn.ch,m:andrzej.hajda@intel.com,m:andy.yan@rock-chips.com,m:bvanassche@acm.org,m:bh
- elgaas@google.com,m:quic_cang@quicinc.com,m:chanho61.park@samsung.com,m:wens@kernel.org,m:claudiu.beznea@tuxon.dev,m:dlemoal@kernel.org,m:daniel.machon@microchip.com,m:airlied@gmail.com,m:davem@davemloft.net,m:lumag@kernel.org,m:edumazet@google.com,m:festevam@gmail.com,m:Frank.Li@nxp.com,m:geert+renesas@glider.be,m:gregkh@linuxfoundation.org,m:heiko@sntech.de,m:inki.dae@samsung.com,m:jagan@amarulasolutions.com,m:kuba@kernel.org,m:James.Bottomley@HansenPartnership.com,m:jckuo@nvidia.com,m:jernej.skrabec@gmail.com,m:jesszhan0024@gmail.com,m:joe@perches.com,m:johan+linaro@kernel.org,m:jonas@kwiboo.se,m:jonathanh@nvidia.com,m:kevin.xie@starfivetech.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:kwilczynski@kernel.org,m:Laurent.pinchart@ideasonboard.com,m:linusw@kernel.org,m:lpieralisi@kernel.org,m:maarten.lankhorst@linux.intel.com,m:magnus.damm@gmail.com,m:mani@kernel.org,m:mkl@pengutronix.de,m:m.szyprowski@samsung.com,m:marijn.suijten@somainline.org,m:msp@baylibre.com,m:martin.petersen@o
- racle.com,m:mathias.nyman@intel.com,m:mchehab@kernel.org,m:mripard@kernel.org,m:michael.dege@renesas.com,m:nicolas.ferre@microchip.com,m:cassel@kernel.org,m:quic_nitirawa@quicinc.com,m:pabeni@redhat.com,m:kernel@pengutronix.de,m:peter.chen@kernel.org,m:peter.griffin@linaro.org,m:robin.clark@oss.qualcomm.com,m:rfoss@kernel.org,m:robh@kernel.org,m:rmk+kernel@armlinux.org.uk,m:samuel@sholland.org,m:hjc@rock-chips.com,m:s.hauer@pengutronix.de,m:sean@poorly.run,m:sre@kernel.org,m:shawn.guo@linaro.org,m:shawn.lin@rock-chips.com,m:simona@ffwll.ch,m:Steen.Hegelund@microchip.com,m:thierry.reding@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-111058-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111057-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER(0.00)[sebastian.reichel@collabora.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_SENDER(0.00)[Frank.li@nxp.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:david@ixit.cz,m:rfoss@kernel.org,m:todor.too@gmail.com,m:bryan.odonoghue@linaro.org,m:bod@kernel.org,m:vladimir.zapolskiy@linaro.org,m:mchehab@kernel.org,m:luca.weiss@fairphone.com,m:phodina@protonmail.com,m:drgitx@gmail.com,m:ckeitz@amazon.com,m:loic.poulain@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:kbingham@kernel.org,m:sakari.ailus@linux.intel.com,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:phone-devel@vger.kernel.org,m:todortoo@gmail.com,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[nxp.com:+];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sebastian.reichel@collabora.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCPT_COUNT_GT_50(0.00)[106];
-	R_DKIM_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[Frank.li@nxp.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,fairphone.com,protonmail.com,amazon.com,oss.qualcomm.com,linux.intel.com,vger.kernel.org];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,renesas,linaro,kernel];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[collabora.com:mid,collabora.com:from_mime,collabora.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ixit.cz:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,nxp.com:from_mime,nxp.com:dkim,lizhi-Precision-Tower-5810:mid,vger.kernel.org:from_smtp,linaro.org:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: EB12B63B6E3
+X-Rspamd-Queue-Id: 3232F63B740
 
+On Wed, Jun 03, 2026 at 01:30:40AM +0200, David Heidelberg wrote:
+> So far, only D-PHY mode was supported, which uses even bits when enabling
+> or masking lanes. For C-PHY configuration, the hardware instead requires
+> using the odd bits.
+>
+> Since there can be unrecognized configuration allow returning failure.
+>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Acked-by: Cory Keitz <ckeitz@amazon.com>
+> Reviewed-by: Bryan O'Donoghue <bod@kernel.org>
 
-On Tue, 05 May 2026 13:04:52 +0300, Vladimir Oltean wrote:
-> The biggest problem requiring this split is the fact that consumer
-> drivers poke around in struct phy, accessing fields which shouldn't be
-> visible to them. Follow the example of mux, gpio, iio, spi offload,
-> pwrsec, pinctrl and regulator, which each expose separate headers for
-> consumers and providers.
-> 
-> Some off-list discussions were had with Vinod Koul regarding the 3 PHY
-> providers outside the drivers/phy/ subsystem. It was agreed that it is
-> desirable to relocate them to drivers/phy/, rather than to publish
-> phy-provider.h to include/linux/phy/ for liberal use. Only phy.h and
-> (new) phy-props.h - consumer-facing headers - stay there.
-> 
-> [...]
+Suppose two Bryan is the same person?
 
-Applied, thanks!
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 39 +++++++++++++++++-----
+>  1 file changed, 31 insertions(+), 8 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> index dac8d2ecf7995..15876eb973718 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csiphy-3ph-1-0.c
+> @@ -9,16 +9,17 @@
+>   */
+>
+>  #include "camss.h"
+>  #include "camss-csiphy.h"
+>
+>  #include <linux/delay.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/io.h>
+> +#include <linux/media-bus-format.h>
+>
+>  #define CSIPHY_3PH_LNn_CFG1(n)			(0x000 + 0x100 * (n))
+>  #define CSIPHY_3PH_LNn_CFG1_SWI_REC_DLY_PRG	(BIT(7) | BIT(6))
+>  #define CSIPHY_3PH_LNn_CFG2(n)			(0x004 + 0x100 * (n))
+>  #define CSIPHY_3PH_LNn_CFG2_LP_REC_EN_INT	BIT(3)
+>  #define CSIPHY_3PH_LNn_CFG3(n)			(0x008 + 0x100 * (n))
+>  #define CSIPHY_3PH_LNn_CFG4(n)			(0x00c + 0x100 * (n))
+>  #define CSIPHY_3PH_LNn_CFG4_T_HS_CLK_MISS	0xa4
+> @@ -1108,23 +1109,32 @@ static void csiphy_gen2_config_lanes(struct csiphy_device *csiphy,
+>  		writel_relaxed(val, csiphy->base + r->reg_addr);
+>  		if (r->delay_us)
+>  			udelay(r->delay_us);
+>  	}
+>  }
+>
+>  static u8 csiphy_get_lane_mask(struct csiphy_lanes_cfg *lane_cfg)
+>  {
+> -	u8 lane_mask;
+> -	int i;
+> +	u8 lane_mask = 0;
+>
+> -	lane_mask = CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE;
+> +	switch (lane_cfg->phy_cfg) {
+> +	case V4L2_MBUS_CSI2_CPHY:
+> +		for (int i = 0; i < lane_cfg->num_data; i++)
+> +			lane_mask |= BIT(lane_cfg->data[i].pos + 1);
+> +		break;
+> +	case V4L2_MBUS_CSI2_DPHY:
+> +		lane_mask = CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE;
+>
+> -	for (i = 0; i < lane_cfg->num_data; i++)
+> -		lane_mask |= 1 << lane_cfg->data[i].pos;
+> +		for (int i = 0; i < lane_cfg->num_data; i++)
+> +			lane_mask |= BIT(lane_cfg->data[i].pos);
 
-[26/31] power: supply: cpcap-charger: include missing <linux/property.h>
-        commit: a9e36028b688d693d8aefbf84a9899f31a20fcf0
+suggest small tuning to move common logic out of switch
 
-Best regards,
--- 
-Sebastian Reichel <sebastian.reichel@collabora.com>
+switch (lane_cfg->phy_cfg) {
+case V4L2_MBUS_CSI2_CPHY:
+	off = 1;
+	lane_mask = 0;
+case V4L2_MBUS_CSI2_DPHY:
+	off = 0;
+	lane_mask = CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE;
+}
 
+for (int i = 0; i < lane_cfg->num_data; i++)
+	lane_mask |= BIT(lane_cfg->data[i].pos+ off);
+
+the same as below block
+
+Frank
+> +		break;
+> +	default:
+> +		break;
+> +	}
+>
+>  	return lane_mask;
+>  }
+>
+>  static bool csiphy_is_gen2(u32 version)
+>  {
+>  	bool ret = false;
+>
+> @@ -1155,19 +1165,32 @@ static void csiphy_lanes_enable(struct csiphy_device *csiphy,
+>  	struct csiphy_lanes_cfg *c = &cfg->csi2->lane_cfg;
+>  	struct csiphy_device_regs *regs = csiphy->regs;
+>  	u8 settle_cnt;
+>  	u8 val;
+>  	int i;
+>
+>  	settle_cnt = csiphy_settle_cnt_calc(link_freq, csiphy->timer_clk_rate);
+>
+> -	val = CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE;
+> -	for (i = 0; i < c->num_data; i++)
+> -		val |= BIT(c->data[i].pos * 2);
+> +	val = 0;
+> +
+> +	switch (c->phy_cfg) {
+> +	case V4L2_MBUS_CSI2_CPHY:
+> +		for (i = 0; i < c->num_data; i++)
+> +			val |= BIT((c->data[i].pos * 2) + 1);
+> +		break;
+> +	case V4L2_MBUS_CSI2_DPHY:
+> +		val = CSIPHY_3PH_CMN_CSI_COMMON_CTRL5_CLK_ENABLE;
+> +
+> +		for (i = 0; i < c->num_data; i++)
+> +			val |= BIT(c->data[i].pos * 2);
+> +		break;
+> +	default:
+> +		WARN_ONCE(1, "Unsupported bus type %d!\n", c->phy_cfg);
+> +	}
+>
+>  	writel_relaxed(val, csiphy->base +
+>  		       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->offset, 5));
+>
+>  	val = CSIPHY_3PH_CMN_CSI_COMMON_CTRL6_COMMON_PWRDN_B;
+>  	writel_relaxed(val, csiphy->base +
+>  		       CSIPHY_3PH_CMN_CSI_COMMON_CTRLn(regs->offset, 6));
+>
+>
+> --
+> 2.53.0
+>
 
