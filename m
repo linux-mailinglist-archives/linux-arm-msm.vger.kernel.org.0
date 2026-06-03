@@ -1,390 +1,358 @@
-Return-Path: <linux-arm-msm+bounces-110933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id jrCHNFYAIGpRtwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 12:22:14 +0200
+	id X+X9DG0DIGo/uAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 12:35:25 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 497AF63688E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 12:22:14 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AF67636A47
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 12:35:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="ggPtm+b/";
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=LaZMBSKe;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110933-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110933-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=AS0wMddM;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="cxU9W/Qr";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110934-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110934-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 4C2EE3021D00
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 10:22:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 614D330C5A5A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 10:27:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1114B169AD2;
-	Wed,  3 Jun 2026 10:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69B2E3CB919;
+	Wed,  3 Jun 2026 10:27:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA4E37EFE9
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2026 10:22:07 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780482130; cv=pass; b=kkFcVJVihqmY60Zod1ePSa8SOK+KzRe/ZU9LwY7CNnPjFLh+vkXKRISRge7t/93B3BjkE2sUfgndWMlPVAWtz4IuLeReuavGzLqVa9e2V+gczOKA1hFs9Z8F4A5rdyGThWBdl5FZe/KMqwYoGixLlQrW7vtddmWhLvieJNHEv+g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780482130; c=relaxed/simple;
-	bh=E2lhkkD3vWy6NShu+6BbZtfRRL57cJEm/DnxgbgqJzA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SNpuOMwDD22j7rC7/LiBhW8iXL2QPV2UrHpGnK6iyUtZD724FjLNCZSlFNKYL9xBhax2bFvnChMIZvyD63rLcNAuhlty+xkCDTGl68fzKLcCbA+E3CPxdMmyVvznw9t7+t3L4dEej3A5oGcBq7PnIXlc2s2Rq1NgWjrtdO7P02M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ggPtm+b/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LaZMBSKe; arc=pass smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65395rg4780736
-	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Jun 2026 10:22:06 GMT
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05FF0384CF2
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2026 10:27:20 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780482442; cv=none; b=P8cFtpS2xfd5bLRbArSV8HOFjfpzIYWIeD8EBFt7EFnYygChLRdH7gata6AAt6viTRw/nRWRzlSocX+vq5JEecfRAKKMjgNSzRtmxtklfze+gwJppGesCriseeXVDqXSrQQumRttXomcTDkwchYOnVbvA3kw70rLf2rd2NpGth8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780482442; c=relaxed/simple;
+	bh=WaJnq4vJPJN0OK3iw6juyyLuxpGKER8KzYNWQqTNCUQ=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=k/3dU72gNZTrYLpNxlkvTM/WAidQfDOmreH35d0yI031UPFcGXyiCUgi9utnHVVehuR0Wzzj2drZ6/5QZ9Qcpn9FtV6mWwHpUIbJVCASi1NbTZS6iFBPsNJg/WoXPvU5nrrx0DJ+99aJrp4HKbK0pWyNPP3yLkc9853rGBe35Nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AS0wMddM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cxU9W/Qr; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6536RLlX873749
+	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Jun 2026 10:27:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	vyspHsiPTwyZ6GebRoTTOOurXoaLTdsqILlPjpDFqI8=; b=ggPtm+b/RYN+MeI+
-	xoY9WyTn+S7y2qVMMR/YeJ9nZ3kOZ02NrkVv/MiqDf4nY6boxWloVv8WXY+2nGx1
-	BGgyj7ltYgEsKBrD6aTYLCzL2HMe8kqhnBeUgKGsYM3IhP3A32O9BI+UyN/71q4E
-	tFbY+ZScGieO2Nr3wvNVzUrpE6ol1pNkzu3vjbU6IQtycLJH/4lz3O9WnsxqkZI6
-	4h6F5rZzd/3wOny3rZt57lySTpUCdpeOgJtfzFiFxXnTjrqQjWb3WSEbIJzPcCMP
-	64ZHlY8/X90XkqkLTDm7DBSVhuYl6EuK1T3CNksAU5nbBgSFI+nEBrRVsDkKiBSh
-	dcIuLg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejhbb0avr-1
+	Ke6hFaye3GUWTYMdDv1mH0rJhnS2IhQe2jTb8z6TWDU=; b=AS0wMddMbp1fh/so
+	LCIczNK/D0EgtaowsN9foXMEEKOaP+ydRDWE+hyr9/xJGowRNASIbON7wol+YolX
+	w+ZV0MlQQdZcmb+g0chRUlOTwsdR/uQ3Q5w86GrjOHw7VoHBxAi8NOhioaWAp517
+	VN+pq5VzwCIdTVtNvziq4m4HIBxXoF5zO/Ii2Z7/z9Df+hU6L425FABWtyQLG5lM
+	THtDxm9XMG6QumSe8rWzPVjfxiCCie7lflQPtTBAE27WA4kAOKlj2sa4qAomd+qB
+	CMTmXw1csnyc4Cu+mHgQIg2LkvxSLVpittDnhXAnX+JnVeM6pJ/yC1C1Dpq4tAJI
+	ZWFgfQ==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ej6a9k01k-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 10:22:06 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-9157c8eb597so338572685a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 03:22:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1780482126; cv=none;
-        d=google.com; s=arc-20240605;
-        b=DzwhBzjZ9ILNJ8iPSSFroUO5rra7lATYDgbXDdicVzrKLeubtQ7ZPSR0JJdgFPcW91
-         GEBprWk7TAt6Ko7FeUribjQc2MUKKoX7oPlqXMDxG1w7eKRmaaO2h6q6gk7+28M/MUp+
-         Q2lH0IgHQTDvPBRWbDuBcCArKtlwjPabfgX0JhtBXtVqH08qTafdsI6C3Y/tTKmVwqs4
-         y7clXZj1Ngjvv/Z2o0sF7xp+DxhaT9TA3ve09NG8Grru4VGpXHdd7lD7iAv3TAOtYm7p
-         aiWQjg0qaMEh5Ur2s8bW5BeSdWIDyf9xP8wEfEIXAFgWLfLWJwk8aJxOndQEyltEqCzv
-         TUAA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=vyspHsiPTwyZ6GebRoTTOOurXoaLTdsqILlPjpDFqI8=;
-        fh=h4554Ify6Cr8OXlkJFUlnbeUBvNLZ7l2x9cr3MWx6aQ=;
-        b=gu7+0IX6u+99urjzlHkiv/1Ez/Vn8XObj4hCJB9Y5dVax07EP9eiBh1FzL+GzhfPtg
-         yzCe9nvwc8vf972D8mtaG4/Yk1ga8YC487BjIQHV0VaPvC6Uh2ij0vtmfe9dAfHmuM/P
-         GwxtEZMcuLRUJobTsH/aMaq1UV/hq641ludqZoxsClT1LKLrB1mZgrFHOqHApfkimS+6
-         8Kv3WCQ7Px8cRDut7MZ67IqB1G2kbTMzqQIXMzxgQgncYbbIhtJFmgjtBKAjJ3S6xMm2
-         5xtkYnlkMVFdhibDMF4E8GOl3aMX376WkbQ96sIDi11RD3jaIsNlycvmBZCZVf7pBMwk
-         YLrA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 10:27:20 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-84227ba0a8fso933770b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 03:27:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780482126; x=1781086926; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vyspHsiPTwyZ6GebRoTTOOurXoaLTdsqILlPjpDFqI8=;
-        b=LaZMBSKeo6/ErUMaBh6z+5iNYAbYiBUUOtDB5XR/It4xnqAKJsRfWo9BRtO1NJVms4
-         dnZNfygofNZ/prz8vfD3D962W/Ijm6GhZxiiW4DletWvdShvoPveUp+NxWQuQbaFWxVa
-         2vWysh9hNi+Vmug8+thgcHoYP8ijuXXqHNFJcHpQK/gJa6Sz7xA4A1/6dG6hIFKL9GcQ
-         gb2CqeJLQnLMzTyRSxX1ofbKtMqFRgKAvEyAWIOZZNQTU5Qrl0KX+6Z2tuy+r6i0wgnq
-         jh5UEL/4bTeEAFK+rCc76AAKpJ1+eKdmtKYcGeZhRFV4GSEyxy/63w7JtHq8c6wd+6Du
-         Dv5w==
+        d=oss.qualcomm.com; s=google; t=1780482440; x=1781087240; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Ke6hFaye3GUWTYMdDv1mH0rJhnS2IhQe2jTb8z6TWDU=;
+        b=cxU9W/QrOGq0x74ri8BqVkKorIs6Ql2vOcuSNdtbtU7dWjRA+CueJ2ivm2CHJnHD5H
+         O6DlQMapio8hS0S9fVvpPYQgk8pJKSIJbaxamkhJLscrHx7FM62On1TE2P3jbpZS7s3X
+         pxh0wv3vBEhUMrVPszzRlwRUsh8vYCXvu7XxfaP7X3/k7PFqd3HTLvJTX1rcTaD+SIz1
+         BwV0OKJMvHCEH+95+V+UKfQ/aQk/rC7hcsjBxsJ+KjDXdd82mQ4Gz2tdKY6uTC2Tv+wh
+         iDr6BO+PCmcwxvRm3W5ntrMjDjpq5AorPPhhtXI4ThFxcT3obkGOwXNjkX88wbeJWxHf
+         5VKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780482126; x=1781086926;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=vyspHsiPTwyZ6GebRoTTOOurXoaLTdsqILlPjpDFqI8=;
-        b=WRTZZ9eGEqBhcIzUR6KdE0LZpYaDDvv1Pfey/6C71sHULIs7kJ4cbGcQjB3S29+Nxd
-         ceyg6jHOQBtFlDHkoCg/hm15X6uVuAFtvMRgqwpWkg3TeKshf7vc34P7/ybahbQ6hUqI
-         GN4mVFtVMSEWrkOL1EXbNId5dCRIWBEzYtlIBl+LVo2RCgCi/6kw/PSS/9fim1C2dfCb
-         V3L9wElY0yJJ3rHvzBUrvQHE2az1gSH1Oufi1sTcWO6EUhLSNEvVHIr0d8srTZMRpHqX
-         7+c+O7nRpkdM3HuIs5NuuKHgRW7f36Z3GjGiAdvXMsVm+dkdHBhHGsTB+Zmkoqn1m9tI
-         ybkQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/zYEVHuM4Oxsn4LJKoO2GEZWC8CqqMODxWUtDl+aVfh+KZHA4wB4CLeX58hzI3cb2Fz7kGCcQGJsPHxfWd@vger.kernel.org
-X-Gm-Message-State: AOJu0YwY/hy7oq/o06qhD9+v5gzfiCuWwkDvcaEEjGcjTB6hTJcCSb/K
-	RR1gDYCgYArYFzyOfCOCxswlwx5I0qxgLUTvf0EIlRog14nyo1TqB8Qxuwkx0TyFkxpvgWzTmqQ
-	JWcfy3+7oY9OOjz0NkOz0etaBZEUNy/btyodqCosae37Ke5zni+IIC8qqdTz7UnTlZ+iwA0Ije6
-	8jj9jKWWf6yLewtJ9JbgiNDtvk19Lv4R/ef4nPzmoUJiE=
-X-Gm-Gg: Acq92OFjR1mER7nOiPGtARFUHiMrlo0bojvMMU2O4E1IBuGsoHhW8AKah0SZkxmRd5Z
-	oRI+HIKzmBlYku43c2xx+Vup0YV146IotGjALjofCHFH3V6hs7F64nz3bd7fsfcYRL/YB6neAoQ
-	fC6RKX8dGkbN/zKWgy5dkzSWL05tUyesjLkj7UabEnoLjGVmCorEf+DrRGS5dSKhMw6N7dErDd0
-	bEKWLXjGhcHut2k8bCezMNqlJV7T5uY1T5nsS8R1RuWIRYzCDA=
-X-Received: by 2002:a05:620a:410f:b0:915:4c90:34fc with SMTP id af79cd13be357-9158a645299mr474824285a.11.1780482125547;
-        Wed, 03 Jun 2026 03:22:05 -0700 (PDT)
-X-Received: by 2002:a05:620a:410f:b0:915:4c90:34fc with SMTP id
- af79cd13be357-9158a645299mr474818885a.11.1780482125039; Wed, 03 Jun 2026
- 03:22:05 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1780482440; x=1781087240;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ke6hFaye3GUWTYMdDv1mH0rJhnS2IhQe2jTb8z6TWDU=;
+        b=gRuQKCDcJns2f467+DAtxLkkFhzaREB3VeIJxcqSzoMa4pNEuSLiCBsETP37jq+C2y
+         vKbDlEy88jZaGesnV+HtPGzraI60eFv7y095ur65CoxP+XQi4sVOVFq++xg1CcQZzUjE
+         zWwrdH+RRb8fmfXyhmAzr5PT8a/GSBmDbgAsZNGxnntUf94Kn1WZ6jwxxoLItYpxEAZp
+         TzESeJApQNrdtcZ3a5w59R6WRacy+USgRek5EuZ0uQy73B5SFGbn++CNXbeKihax+ZD8
+         QcvP3u+t9G1Eex6x9m/1ILJqgmZHy/ZO/GyObHhuKDdgmop92SazmDxd42O+x2BcrccB
+         6OQg==
+X-Forwarded-Encrypted: i=1; AFNElJ+UBsfi7HtORIiTnqKr/3PpJMutpHuN4vZT/od9qyl/TSRwzh7buMa91FiXfN61m42saeEXAWBmboivuP5t@vger.kernel.org
+X-Gm-Message-State: AOJu0YxCyzJBV91TSx8JH12f2ao0bFVlipQ8/zIWjPG3QAr/JtaPJKTI
+	6uv0l3tc6HEBVNdWf+aNUimmqi9tePmsi11x9vrGdQ3JRQCjfJGrm7j/6MY3MFJHqwdmDvkGqYK
+	sjzSKrCqPEeNkjiz937mfyfi8psszANpQFyvvQFNDvyMkC01INrA6gc1Woh1zb7VJ4qFo
+X-Gm-Gg: Acq92OHPxMP824d4SmQZuOCFv5s+/+9b+ODAyCcsNONpot6WABqgPNF0XH+Cv3gq1Po
+	UezKNcT6FQswtwoM3ttZq/K2FFMzxq/KgatXWo965jOxeAfODlPm+G546e+2mYGddrw0Pfbu1VX
+	I2e3bPQiZJG24MFG4K5JJObXOlVC7EP8LK8GW/RZ8uYwLDz0NRysc0UyGL6voYKIj7mFaqKUry9
+	kM+tHRPSa/4vfyAfVUV1mTTfF54rrq3HyTV/ywEdhVNFPF4yEkPDhKs7lHumVOyuXhoRuSg2OTH
+	n/G53FY5wJPZS4RsJqb057VuMoWUo7G7t8mgcqYoyEhvYYyiJFcNGdfdGSydyEYltA4qKdqWEVi
+	GS3D6wRst/+GJhfsrgFTQiXtWmjnQJtirZpaqeKzYT2Cw6AkpxtUJLQH1e3cK
+X-Received: by 2002:a05:6a00:3a27:b0:842:2d2c:2b58 with SMTP id d2e1a72fcca58-842838e011amr1625213b3a.5.1780482439592;
+        Wed, 03 Jun 2026 03:27:19 -0700 (PDT)
+X-Received: by 2002:a05:6a00:3a27:b0:842:2d2c:2b58 with SMTP id d2e1a72fcca58-842838e011amr1625198b3a.5.1780482439078;
+        Wed, 03 Jun 2026 03:27:19 -0700 (PDT)
+Received: from [10.92.217.24] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8428237430esm2428145b3a.21.2026.06.03.03.27.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jun 2026 03:27:18 -0700 (PDT)
+Message-ID: <fd5c9415-5275-4c0b-90ee-d81a5d5b660f@oss.qualcomm.com>
+Date: Wed, 3 Jun 2026 15:57:10 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260603070608.309114-1-zwq2226404116@163.com>
-In-Reply-To: <20260603070608.309114-1-zwq2226404116@163.com>
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Wed, 3 Jun 2026 12:21:53 +0200
-X-Gm-Features: AVHnY4Jf_VeyqqmKkqRnsZXE1Bfk8QllKlsKD1FlosCDBNy9-wJjka38T5nKSN8
-Message-ID: <CAFEp6-24xL80zhK6rgAqHv2z-P7=v1vF-5f0XjfPPmB=2DaSBg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] bus: mhi: pci_generic: add Rolling Wireless RW135R-GL
- and RW151 support
-To: zwq2226404116@163.com
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        mani@kernel.org, ryazanov.s.a@gmail.com, andrew+netdev@lunn.ch,
-        davem@davemloft.net, kuba@kernel.org,
-        Wanquan Zhong <wanquan.zhong@fibocom.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: LOsKwms88MPCfJsVQUDIuBXdz84CDRbO
-X-Authority-Analysis: v=2.4 cv=R74z39RX c=1 sm=1 tr=0 ts=6a20004e cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=_glEPmIy2e8OvE2BGh3C:22 a=Byx-y9mGAAAA:8 a=6GUwiT5CAAAA:8
- a=qXxXCjKvfSkB11hXGCMA:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
- a=tp1klI1xYmtLYojU9LVd:22
-X-Proofpoint-ORIG-GUID: LOsKwms88MPCfJsVQUDIuBXdz84CDRbO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDA5OCBTYWx0ZWRfX5PyKexnUN0/c
- nyyzsZhBoLnZVjDzOxzUpSQXwe4NJyVn2FBzbl6/GKvUW2/OcUdtNS/4cBaUsSzyHSP1mraacMx
- N06Wf6yrWDB3eKdrxiPQcmclmHaCQqIUewDf0YZeVKxZv+GFZHpLVBL3w0N74Yjk6RYHZn1/Cz+
- BuVOZbXmVp8MMdDIk6t6Crs4WovAeFZtPJGxx8+8zmI2/VQPumxh29ElsbKO18smJeB1qPF+iKO
- 1C+0uoR+sU/WUP0FADG3FoPUfB7rX/nJzDzU65wv8kLdzalFTLbT/WnUgiuwgzqiqchQAyap/p3
- 1/1LIhavEphe2fiKdbQy5i1uUBFRA1wHHPEYPHCoInlNjtALvWMXt62FrghkGpAhaAoS6V0ektt
- UJAI0M65lT3DQJyqlQ+X+03QGMix7piMt8Fk+sJ/G+9eSdV2a33F51RUQNfarY93bm7OFO72LC+
- IDWzE2dFokgolzSHlzg==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/8] dt-bindings: arm: ras: Introduce bindings for ARM
+ AEST
+From: Umang Chheda <umang.chheda@oss.qualcomm.com>
+To: Rob Herring <robh@kernel.org>
+Cc: Ruidong Tian <tianruidond@linux.alibaba.com>,
+        Tony Luck <tony.luck@intel.com>, Borislav Petkov <bp@alien8.de>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, catalin.marinas@arm.com,
+        will@kernel.org, lpieralisi@kernel.org, rafael@kernel.org,
+        mark.rutland@arm.com, Sudeep Holla <sudeep.holla@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-acpi@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-edac@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20260505-aest-devicetree-support-v1-0-d5d6ffacf0a5@oss.qualcomm.com>
+ <20260505-aest-devicetree-support-v1-5-d5d6ffacf0a5@oss.qualcomm.com>
+ <20260513175823.GA1471517-robh@kernel.org>
+ <48e298d0-f4cb-4afb-8ba1-a6b39f3285cb@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <48e298d0-f4cb-4afb-8ba1-a6b39f3285cb@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: gXFnI31HBcqetoTDarPZCWG6qAnzDpit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDEwMCBTYWx0ZWRfX2OHEg3nB60rd
+ BkrLpSZUatVyhQ4tV0OoCAT0wBBz/dvdIFH3BTodTRqxEjWmQ8ZHtRKkkPwqsu5pUiGD3VKzBF6
+ iAkFf2RJJilNQ8w7uKr62czc85VXTDlp+kg6aSUTbhY4q2pPUtDi6InSxa2puELMzc0MgnjO+av
+ /nMzuGiVgm9ob1AZqhvhtnqlsZ8YTMagNpVHMjvDYzqfaJlHXoUpDCapsRWLkgHKTPX5w0DyaKt
+ UAUlEl27Abe8LNFe6EwHGJkwpq+hLOe4ctsa/LU8UE5sTV7Wthi9ESUelQn/X07s2Sq6ynPMhdU
+ 6rQHj8WvHP/71oAUBw2F7E/naGKmjziAl6Q3RShek1YGmyCX/sxvfuRr0YtKEsOdPiSmdzAJtmP
+ XOBMjqfeaJZI/3zso63XS56TOXbxIxaDq1kbV+LEq8meIkBy6QzRjrBrP2949T8iazRhG8fTu+C
+ ox5DYW2sJRCy3DhmfxA==
+X-Authority-Analysis: v=2.4 cv=I/9Vgtgg c=1 sm=1 tr=0 ts=6a200188 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8 a=AMbOtgs2x-SaA9YGKiUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22 a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-ORIG-GUID: gXFnI31HBcqetoTDarPZCWG6qAnzDpit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-03_03,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 phishscore=0 bulkscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606030098
+ clxscore=1015 bulkscore=0 impostorscore=0 adultscore=0 suspectscore=0
+ malwarescore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030100
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-110933-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110934-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:zwq2226404116@163.com,m:mhi@lists.linux.dev,m:linux-arm-msm@vger.kernel.org,m:netdev@vger.kernel.org,m:mani@kernel.org,m:ryazanov.s.a@gmail.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:kuba@kernel.org,m:wanquan.zhong@fibocom.com,m:ryazanovsa@gmail.com,m:andrew@lunn.ch,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_TO(0.00)[163.com];
-	FREEMAIL_CC(0.00)[lists.linux.dev,vger.kernel.org,kernel.org,gmail.com,lunn.ch,davemloft.net,fibocom.com];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,devicetree.org:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp];
+	FORGED_SENDER(0.00)[umang.chheda@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	FORGED_RECIPIENTS(0.00)[m:robh@kernel.org,m:tianruidond@linux.alibaba.com,m:tony.luck@intel.com,m:bp@alien8.de,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:catalin.marinas@arm.com,m:will@kernel.org,m:lpieralisi@kernel.org,m:rafael@kernel.org,m:mark.rutland@arm.com,m:sudeep.holla@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-acpi@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-edac@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[umang.chheda@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:dkim,vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim]
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 497AF63688E
+X-Rspamd-Queue-Id: 8AF67636A47
 
-On Wed, Jun 3, 2026 at 9:06=E2=80=AFAM <zwq2226404116@163.com> wrote:
->
-> From: Wanquan Zhong <wanquan.zhong@fibocom.com>
->
-> bus: mhi: pci_generic: add Rolling Wireless RW135R-GL and RW151 support
->
-> Add MHI PCIe device configuration for Rolling Wireless modules:
->
-> - RW135R-GL (Qualcomm sdx35): MBIM, DIAG, DUN, NMEA, FIREHOSE, ADB, IP_HW=
-0
-> - RW151 (Qualcomm sdx75): same channel layout with adjusted ring sizes
->
-> Register PCI_DEVICE_SUB entries for vendor 0x2099, device 0x1300/1301 on
-> QCOM 0x011a (sdx35) and 0x0309 (sdx75) respectively.
->
-> Enable the ADB MHI channel in mhi_wwan_ctrl so userspace can access the
-> WWAN_PORT_ADB port via the wwan subsystem.
+Hello Rob,
 
-This should be done in a different patch.
+On 5/20/2026 11:43 PM, Umang Chheda wrote:
+> Hello Rob,
+> 
+> Thanks for helping reviewing the code!
+> 
+> On 5/13/2026 11:28 PM, Rob Herring wrote:
+>> On Tue, May 05, 2026 at 05:53:49PM +0530, Umang Chheda wrote:
+>>> The Arm Error Source Table (AEST) specification describes how firmware
+>>> exposes RAS error source topology to the operating system. On ACPI
+>>> systems this information is provided via the AEST ACPI table.
+>>>
+>>> Introduce Device Tree bindings that provide an equivalent description
+>>> of AEST error sources for DT-based platforms.
+>>>
+>>> Signed-off-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
+>>> ---
+>>>  .../devicetree/bindings/arm/arm,aest.yaml          | 406 +++++++++++++++++++++
+>>>  include/dt-bindings/arm/aest.h                     |  43 +++
+>>>  2 files changed, 449 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/arm/arm,aest.yaml b/Documentation/devicetree/bindings/arm/arm,aest.yaml
+>>> new file mode 100644
+>>> index 000000000000..7809a0d38270
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/arm/arm,aest.yaml
+>>> @@ -0,0 +1,406 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/arm/arm,aest.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Arm Error Source Table (AEST)
+>>> +
+>>> +maintainers:
+>>> +  - Umang Chheda <umang.chheda@oss.qualcomm.com>
+>>> +
+>>> +description:
+>>> +  The Arm Error Source Table (AEST) describes RAS error sources and their
+>>> +  register interfaces. Each error source exposes one or more error records
+>>> +  through either system registers or a memory-mapped register window, and
+>>> +  may signal errors via interrupts. The top-level node acts as a container
+>>> +  for one or more child nodes, each describing a single AEST error source.
+>>> +  Refer to the Arm AEST specification (DEN0085 / DDI 0587B) for details.
+>>> +  Flag bit constants for use in DT source files are defined in
+>>> +  <dt-bindings/arm/aest.h>.
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: arm,aest
+>>> +
+>>> +  "#address-cells":
+>>> +    const: 2
+>>> +
+>>> +  "#size-cells":
+>>> +    const: 2
+>>> +
+>>> +  ranges: true
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +
+>>> +additionalProperties: false
+>>> +
+>>> +patternProperties:
+>>> +  "^aest-[a-z0-9-]+(@[0-9a-f]+)?$":
+>>> +    type: object
+>>> +    description:
+>>> +      An AEST error source node describing one error source defined by
+>>> +      the Arm AEST specification.
+>>> +
+>>> +    properties:
+>>> +      compatible:
+>>> +        description:
+>>> +          Identifies the type of AEST error source. Each value corresponds to
+>>> +          a distinct error source class defined by the Arm AEST specification.
+>>> +          arm,aest-proxy represents a proxy error source that forwards errors
+>>> +          from another error source.
+>>> +        enum:
+>>> +          - arm,aest-processor
+>>> +          - arm,aest-memory
+>>> +          - arm,aest-smmu
+>>> +          - arm,aest-gic
+>>> +          - arm,aest-pcie
+>>> +          - arm,aest-vendor
+>>> +          - arm,aest-proxy
+>>
+>> This is a fundamental difference how DT and ACPI get structured. ACPI 
+>> defines new table for some feature and puts everything in that table. 
+>> For DT, these all belong in the node for the corresponding h/w. For 
+>> example, if the GIC supports AEST, then that belongs in the GIC node.
+> 
+> Thanks for the feedback. To clarify your suggestion — should the AEST
+> RAS properties be added directly as properties of the hardware node
+> (e.g. arm,ras-num-records inside the cpu@0 node itself), or as a child
+> node under the hardware node (e.g. a ras-error-source {} child under cpu@0)?
 
->
-> Tested-on: Rolling RW135R-GL / RW151 hardware (MHI probe, MBIM, DIAG, ADB=
-)
+Can you please help with this query ?
 
-Have you been able to test suspend-to-ram and hibernate?
+> 
+> 
+>>
+>>> +
+>>> +      reg:
+>>> +        description:
+>>> +          Register ranges for the error source. Absence of reg implies
+>>> +          system-register access (interface type 0). A single range implies
+>>> +          memory-mapped access (interface type 1). Two ranges imply
+>>> +          single-record memory-mapped access (interface type 2).
+>>> +        minItems: 1
+>>> +        maxItems: 4
+>>> +
+>>> +      reg-names:
+>>> +        description:
+>>> +          Names for the register ranges. The base error-record window is
+>>> +          unnamed (or first entry). Optional named ranges provide access to
+>>> +          the fault-injection, error-group, and interrupt-config register
+>>> +          windows defined by the AEST specification.
+>>> +        minItems: 1
+>>> +        maxItems: 4
+>>> +        items:
+>>> +          enum:
+>>> +            - fault-inject
+>>> +            - err-group
+>>> +            - irq-config
+>>> +
+>>> +      interrupts:
+>>> +        description: Interrupts associated with the error source.
+>>> +        minItems: 1
+>>> +        maxItems: 2
+>>> +
+>>> +      interrupt-names:
+>>> +        description: Names of the interrupts associated with the error source.
+>>> +        minItems: 1
+>>> +        maxItems: 2
+>>> +        items:
+>>> +          enum:
+>>> +            - fhi
+>>> +            - eri
+>>> +
+>>> +      arm,fhi-flags:
+>>> +        description:
+>>> +          Bitmask of flags for the fault-handling interrupt (FHI), as defined
+>>> +          in the AEST node interrupt structure flags field. Constants are
+>>> +          defined in <dt-bindings/arm/aest.h> - AEST_IRQ_MODE_LEVEL (0),
+>>> +          AEST_IRQ_MODE_EDGE (1).
+>>
+>> DT already has a way to define interrupt flags. Why invent something 
+>> new?
+> 
+> Ack, this flag is not needed for DT based systems, will remove this.
+> 
+>>
+>> Rob
+> 
+> Thanks,
+> Umang
+> 
+> 
 
-> Signed-off-by: Wanquan Zhong <wanquan.zhong@fibocom.com>
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 100 +++++++++++++++++++++++++++++
->  drivers/net/wwan/mhi_wwan_ctrl.c   |   1 +
->  2 files changed, 101 insertions(+)
->
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pc=
-i_generic.c
-> index 0884a384b77f..ad166de2d0f3 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -902,6 +902,94 @@ static const struct mhi_pci_dev_info mhi_netprisma_f=
-cun69_info =3D {
->         .sideband_wake =3D true,
->  };
->
-> +static const struct mhi_channel_config mhi_rolling_rw135r_channels[] =3D=
- {
-> +       MHI_CHANNEL_CONFIG_UL(4, "DIAG", 64, 1),
-> +       MHI_CHANNEL_CONFIG_DL(5, "DIAG", 64, 1),
-> +       MHI_CHANNEL_CONFIG_UL(12, "MBIM", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL(13, "MBIM", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL(14, "NMEA", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL(15, "NMEA", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL(36, "ADB", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL(37, "ADB", 32, 0),
-> +       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 2),
-> +       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
-> +};
-> +
-> +static struct mhi_event_config mhi_rolling_rw135r_events[] =3D {
-> +       MHI_EVENT_CONFIG_CTRL(0, 128),
-> +       MHI_EVENT_CONFIG_DATA(1, 128),
-> +       MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> +       MHI_EVENT_CONFIG_HW_DATA(3, 2048, 101),
-> +};
-> +
-> +static const struct mhi_controller_config modem_rolling_rw135r_config =
-=3D {
-> +       .max_channels =3D 128,
-> +       .timeout_ms =3D 8000,
-> +       .num_channels =3D ARRAY_SIZE(mhi_rolling_rw135r_channels),
-> +       .ch_cfg =3D mhi_rolling_rw135r_channels,
-> +       .num_events =3D ARRAY_SIZE(mhi_rolling_rw135r_events),
-> +       .event_cfg =3D mhi_rolling_rw135r_events,
-> +};
-> +
-> +static const struct mhi_pci_dev_info mhi_rolling_rw135r_info =3D {
-> +       .edl =3D "qcom/sdx35m/prog_firehose_ddr.elf",
-> +       .name =3D "rolling-rw135r",
-> +       .config =3D &modem_rolling_rw135r_config,
-> +       .bar_num =3D MHI_PCI_DEFAULT_BAR_NUM,
-> +       .dma_data_width =3D 32,
-> +       .sideband_wake =3D false,
-> +       .mru_default =3D 32768,
-> +       .edl_trigger =3D true,
-> +};
-> +
-> +static const struct mhi_channel_config mhi_rolling_rw151_channels[] =3D =
-{
-> +       MHI_CHANNEL_CONFIG_UL(4, "DIAG", 16, 1),
-> +       MHI_CHANNEL_CONFIG_DL(5, "DIAG", 16, 1),
-> +       MHI_CHANNEL_CONFIG_UL(12, "MBIM", 4, 0),
-> +       MHI_CHANNEL_CONFIG_DL(13, "MBIM", 4, 0),
-> +       MHI_CHANNEL_CONFIG_UL(14, "NMEA", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL(15, "NMEA", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL(32, "DUN", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL(33, "DUN", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
-> +       MHI_CHANNEL_CONFIG_UL(36, "ADB", 32, 0),
-> +       MHI_CHANNEL_CONFIG_DL(37, "ADB", 32, 0),
-> +       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 2),
-> +       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
-> +};
-> +
-> +static struct mhi_event_config mhi_rolling_rw151_events[] =3D {
-> +       MHI_EVENT_CONFIG_CTRL(0, 128),
-> +       MHI_EVENT_CONFIG_DATA(1, 128),
-> +       MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> +       MHI_EVENT_CONFIG_HW_DATA(3, 2048, 101),
-> +};
-> +
-> +static const struct mhi_controller_config modem_rolling_rw151_config =3D=
- {
-> +       .max_channels =3D 128,
-> +       .timeout_ms =3D 50000,
-> +       .num_channels =3D ARRAY_SIZE(mhi_rolling_rw151_channels),
-> +       .ch_cfg =3D mhi_rolling_rw151_channels,
-> +       .num_events =3D ARRAY_SIZE(mhi_rolling_rw151_events),
-> +       .event_cfg =3D mhi_rolling_rw151_events,
-> +};
-> +
-> +static const struct mhi_pci_dev_info mhi_rolling_rw151_info =3D {
-> +       .edl =3D "qcom/sdx75m/prog_firehose_lite.elf",
-> +       .name =3D "rolling-rw151",
-> +       .config =3D &modem_rolling_rw151_config,
-> +       .bar_num =3D MHI_PCI_DEFAULT_BAR_NUM,
-> +       .dma_data_width =3D 32,
-> +       .sideband_wake =3D false,
-> +       .mru_default =3D 32768,
-> +       .edl_trigger =3D true,
-> +};
-> +
->  /* Keep the list sorted based on the PID. New VID should be added as the=
- last entry */
->  static const struct pci_device_id mhi_pci_id_table[] =3D {
->         {PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0116),
-> @@ -909,6 +997,12 @@ static const struct pci_device_id mhi_pci_id_table[]=
- =3D {
->         /* Telit FN920C04 (sdx35) */
->         {PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x011a, 0x1c5d, 0x2020),
->                 .driver_data =3D (kernel_ulong_t) &mhi_telit_fn920c04_inf=
-o },
-> +       /* Rolling RW135R-GL (sdx35) */
-> +       { PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x011a, 0x2099, 0x1300),
-> +               .driver_data =3D (kernel_ulong_t) &mhi_rolling_rw135r_inf=
-o },
-> +       /* Rolling RW135R-GL (sdx35) */
-> +       { PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x011a, 0x2099, 0x1301),
-> +               .driver_data =3D (kernel_ulong_t) &mhi_rolling_rw135r_inf=
-o },
->         { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0304),
->                 .driver_data =3D (kernel_ulong_t) &mhi_qcom_sdx24_info },
->         { PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0306, PCI_VENDOR_ID_QCOM, =
-0x010c),
-> @@ -941,6 +1035,12 @@ static const struct pci_device_id mhi_pci_id_table[=
-] =3D {
->         /* Telit FE990B40 (sdx72) */
->         { PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0309, 0x1c5d, 0x2025),
->                 .driver_data =3D (kernel_ulong_t) &mhi_telit_fe990b40_inf=
-o },
-> +       /* Rolling RW151 (sdx75) */
-> +       { PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0309, 0x2099, 0x1300),
-> +               .driver_data =3D (kernel_ulong_t) &mhi_rolling_rw151_info=
- },
-> +       /* Rolling RW151 (sdx75) */
-> +       { PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0309, 0x2099, 0x1301),
-> +               .driver_data =3D (kernel_ulong_t) &mhi_rolling_rw151_info=
- },
->         { PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
->                 .driver_data =3D (kernel_ulong_t) &mhi_qcom_sdx75_info },
->         /* QDU100, x100-DU */
-> diff --git a/drivers/net/wwan/mhi_wwan_ctrl.c b/drivers/net/wwan/mhi_wwan=
-_ctrl.c
-> index fa73861db6ad..c0bba94d5c3f 100644
-> --- a/drivers/net/wwan/mhi_wwan_ctrl.c
-> +++ b/drivers/net/wwan/mhi_wwan_ctrl.c
-> @@ -264,6 +264,7 @@ static const struct mhi_device_id mhi_wwan_ctrl_match=
-_table[] =3D {
->         { .chan =3D "DIAG", .driver_data =3D WWAN_PORT_QCDM },
->         { .chan =3D "FIREHOSE", .driver_data =3D WWAN_PORT_FIREHOSE },
->         { .chan =3D "NMEA", .driver_data =3D WWAN_PORT_NMEA },
-> +       { .chan =3D "ADB", .driver_data =3D WWAN_PORT_ADB },
->         {},
->  };
->  MODULE_DEVICE_TABLE(mhi, mhi_wwan_ctrl_match_table);
->
-> --
-> 2.43.0
->
+Thanks,
+Umang
+
+
 
