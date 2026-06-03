@@ -1,176 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-111041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id +Ed0C3xkIGpI2gAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 19:29:32 +0200
+	id 8dBBGeJlIGrQ2gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 19:35:30 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E24763A284
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 19:29:31 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9A2F63A326
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 19:35:29 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=c18sJ7aS;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111041-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111041-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=chromium.org header.s=google header.b=C0ykJXsu;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111042-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111042-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=chromium.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 65E4F3009385
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 17:21:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 293A5304350F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 17:23:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7600743E498;
-	Wed,  3 Jun 2026 17:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9759B40B6DC;
+	Wed,  3 Jun 2026 17:23:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f171.google.com (mail-dy1-f171.google.com [74.125.82.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D423E2756;
-	Wed,  3 Jun 2026 17:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0213DCD92
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2026 17:23:41 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780507280; cv=none; b=g7pWtHhMf0O0iGNdd36VMpvNXdYZD2TBObJu+1s1FhyR7RR0FDqupRKr3xtIquVu0ZrsfUQt9a1IdEJznGmnHbQosoUZQEjZxxU9N8mLC2H2OZdZg7jgjzvT9To7Zc2hZOm4wlnOQYWnRoczOCzflaos4j5VaBXrToTHB8PlmoI=
+	t=1780507422; cv=none; b=Y2zd6Z6lZiWf9VjbK84r3Vi7DIt0P6f0OgJyDCnXtNoxLOtHSONMp3s7vabaH02q1TX9XLaMyAHjopVlKClGF6dk2eRd+NWjL1Y7ddS6d2vz0J00vq1wfoyhC8RAuQAjSM7Htk7nka1hSQvXKiF1BVRhh+WDNjVdmdjRpIh3lrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780507280; c=relaxed/simple;
-	bh=Gxx19LdDTz6T+j/ZXP+pzENHKb9KQ9gFUO3WnCcEAmg=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=feSZkWqT/TmUJbsOkZnDmJS1HsxQliCkldQqTYA/bcSk3sW0dn7jh+75XI4tjfKLqJvwgAiSzTX85m4XrQnqWyN+kxq8m6wCcXZSc0e8z8IoueqqNx+EDTpbhpu7pYV8VMdbdRuE89d5WGODkM3E4EvAHUBHRREJIVt1Zekpdzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c18sJ7aS; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9B71F00893;
-	Wed,  3 Jun 2026 17:20:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780507278;
-	bh=Ig4zCGf7+4ptZbdZZMypwYARwR0YB1sgjeMspwVj9PE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=c18sJ7aSoq9r+i0IlOMIyM+kePG9Og4QNfkKdmvW9i9gHt/nkcyz7wt3X6sQ55+PN
-	 9FCuhhMNrZDZj6AiihMI5VZ5eSGx75aw2BHqp+z8eJPDKPiawLxyWYNdzegnzvTLP4
-	 SUK0v0AV8YpRWsaQN9Z7bVQvVxyvbFJIooaNjoNYh0o8y8mjZWNbqaH/2nGiGRSSjv
-	 yhGhdlantZDthW2N7NtTDXBDCNyfOloZ32O+IlYOTFWGg3Gt/jq7bLRmckBoFSWC6R
-	 Go6HqJDXVno0Uqebslcwu+6uFCc6/BDhadZDjKwxPxloA2uOX2Cy1qIxjyq10GIpqT
-	 8FjWPlNqvKQSg==
-Date: Wed, 3 Jun 2026 18:20:52 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Romain Gantois <romain.gantois@bootlin.com>, MyungJoo Ham
- <myungjoo.ham@samsung.com>, Chanwoo Choi <cw00.choi@samsung.com>, Guenter
- Roeck <linux@roeck-us.net>, Peter Rosin <peda@axentia.se>, David Lechner
- <dlechner@baylibre.com>, Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>, Andy
- Shevchenko <andy@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, Michael
- Hennerich <Michael.Hennerich@analog.com>, Mariel Tinaco
- <Mariel.Tinaco@analog.com>, Kevin Tsai <ktsai@capellamicro.com>, Linus
- Walleij <linus.walleij@linaro.org>, Eugen Hristev
- <eugen.hristev@linaro.org>, Vinod Koul <vkoul@kernel.org>, Kishon Vijay
- Abraham I <kishon@kernel.org>, Sebastian Reichel <sre@kernel.org>, Chen-Yu
- Tsai <wens@csie.org>, Hans de Goede <hansg@kernel.org>, Support Opensource
- <support.opensource@diasemi.com>, Paul Cercueil <paul@crapouillou.net>,
- Iskren Chernev <me@iskren.info>, Krzysztof Kozlowski <krzk@kernel.org>,
- Marek Szyprowski <m.szyprowski@samsung.com>, Matheus Castello
- <matheus@castello.eng.br>, Saravanan Sekar <sravanhome@gmail.com>, Matthias
- Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
- <angelogioacchino.delregno@collabora.com>, Casey Connolly
- <casey.connolly@linaro.org>, Pali =?UTF-8?B?Um9ow6Fy?= <pali@kernel.org>,
- Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
- <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, Amit
- Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano
- <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, Lukasz Luba
- <lukasz.luba@arm.com>, Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Sylwester
- Nawrocki <s.nawrocki@samsung.com>, Olivier Moysan
- <olivier.moysan@foss.st.com>, Arnaud Pouliquen
- <arnaud.pouliquen@foss.st.com>, Maxime Coquelin
- <mcoquelin.stm32@gmail.com>, Alexandre Torgue
- <alexandre.torgue@foss.st.com>, Thomas Petazzoni
- <thomas.petazzoni@bootlin.com>, linux-kernel@vger.kernel.org,
- linux-hwmon@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-input@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-pm@vger.kernel.org, linux-mips@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
- Sebastian Reichel <sebastian.reichel@collabora.com>, Andy Shevchenko
- <andriy.shevchenko@intel.com>
-Subject: Re: [PATCH v2 2/2] iio: inkern: Use namespaced exports
-Message-ID: <20260603182052.7d23c067@jic23-huawei>
-In-Reply-To: <acBr-W2ILu9tnMyd@google.com>
-References: <20251209-iio-inkern-use-namespaced-exports-v2-0-9799a33c4b7f@bootlin.com>
-	<20251209-iio-inkern-use-namespaced-exports-v2-2-9799a33c4b7f@bootlin.com>
-	<acBr-W2ILu9tnMyd@google.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1780507422; c=relaxed/simple;
+	bh=ZHGFNjdms5o72NHG5mqWdI+YKiAUtQqIG0qM2Nu/sBs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZVadXrKa8hc5ACY5ajrm6EBO1dx1db/J20cNE9GSVJAlELF9Tm64WUl7sjq0j/TNnSCHXogsQ+nu6+1gAPx5xJmO2yVJhDPCO4I3JeKnuEyOdlaLt0slP8IqTmU6uhqwA7k+aXOkdPD/qrROhGXiO7ZnbHaK4gY9LnRRPNjxgpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=C0ykJXsu; arc=none smtp.client-ip=74.125.82.171
+Received: by mail-dy1-f171.google.com with SMTP id 5a478bee46e88-304f0039c02so52073eec.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 10:23:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1780507420; x=1781112220; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SrzBV/CHeC4K43UCwv6a0kN1Tfy/GhWE6NmP1fIYMXI=;
+        b=C0ykJXsu5pCDhL4JYW9V3w8b+ODbcDuvR1uaRaQ15dbWtStGSY2mczSaS9yDaW9ANS
+         JP9QhtfQkVmMazvuBi6bsvEsVTXoRxnDYsUWq+rTxcfh4paNMa3tFVbZsEh0+PJf+tph
+         eMdY0tgDWJmZr20KEVYJ9pxHb9/nXhj5VRgEY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780507420; x=1781112220;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SrzBV/CHeC4K43UCwv6a0kN1Tfy/GhWE6NmP1fIYMXI=;
+        b=fLEndAX3MGGNiK5z04TaYy4kLG9kU4nl//IZ8TC3fRGVyCYECK3ct6cY9TeGUupUlb
+         sLSHUF3A9vvVHIkAXu8bR4oznhw2GqBL711qpsAdKT3Dbyf4RBA/xyLoUP47MypNP8RH
+         j/lNd/i6orytLIluXJfXoOBG3LnpAioWI9t63zuJfePB5wA/VfCrB2Zwi/p5DFf8rqXk
+         pyuAFI2m020bAFPY3XqloJUtschPzGttvxazgqcgvn51g5U4E6y8jacL/K2/4EmvAesZ
+         NMr9zM2Pmr2RvahH0dl7f7AVvaudTZZdqBABrfWXToiFUrkg7ly7oauaIawrPbdt6lxk
+         UDUA==
+X-Forwarded-Encrypted: i=1; AFNElJ/PYI1bNGmjhOwkLKrFWjteQEqY3+tHHicWOQ4e+JJ/BvK6141d6vTD5BOX1TngD05pLzaNsL/1P5rJ6vav@vger.kernel.org
+X-Gm-Message-State: AOJu0YyUc/ETuYJOusRZMIssEnRDo139Xi8UNoMrMwLNnQglKGL9H/7u
+	8C6z8BC2+9LeiX/OwwOHcioDFfHCduOw9EdaDxYuY2G3xoXCSuOeq0GM+75cDzwatw==
+X-Gm-Gg: Acq92OFL2gOKJhgS5GbZUQO1Nsi2KuNebBLD9ELpLbS5lmfjFtnTCkrRsEyY1pW7wKS
+	PQkn0NTMFZjvYO0LVq299hw7F4fkX9hXee7021gu6iVFGOnFtpvhcACoLU38bxT7/dRFTt+npUz
+	Bn5ZtoH7sCoi+TUygCDqFlFVapbc0BQTihSGY82/iWIniDzZWQ2aoGt3xEQgt0DoDiC+WGlhrtP
+	E4Eohb00/fGQ4clQGv3J7XpCzhTBXE3XIh9XmzfEj5815BCPh/2+9zqbj8vnop2laRF/KFALvKI
+	TYnLLPGraxKaufjvJ99xKtS7opxT+o62RlQdkQdZAfm+3PWoPfS9J25cOUuw5Wa8RWaFQZJTVn3
+	CsZRghZGvxqoQA0SZ0bg9qq1IALgZeNCRcEBco54D70Y/Hrg3qKhIUVdHnrO9nFXREwIeIc43Zv
+	nUeY+539oiHFYUC5pLWz2CkM5rHnK7M2/mxFgyyIGYvlte48jXdPOZSj69iCHA6rBiijt+Tdqn
+X-Received: by 2002:a05:7301:128b:b0:2ea:b7a9:580d with SMTP id 5a478bee46e88-3074fa80739mr2310951eec.9.1780507420313;
+        Wed, 03 Jun 2026 10:23:40 -0700 (PDT)
+Received: from localhost ([2a00:79e0:2e7c:8:c444:80f4:5ace:a65c])
+        by smtp.gmail.com with UTF8SMTPSA id 5a478bee46e88-3074d9fde90sm4323779eec.0.2026.06.03.10.23.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Jun 2026 10:23:39 -0700 (PDT)
+Date: Wed, 3 Jun 2026 10:23:37 -0700
+From: Brian Norris <briannorris@chromium.org>
+To: Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Cc: devicetree@vger.kernel.org, Doug Anderson <dianders@chromium.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Tzung-Bi Shih <tzungbi@kernel.org>, chrome-platform@lists.linux.dev,
+	Julius Werner <jwerner@chromium.org>,
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>
+Subject: Re: [PATCH 0/7] dts: Add /firmware/#{address,size}-cells to
+ Chromium-based DTs
+Message-ID: <aiBjGekXkr2nIf-w@google.com>
+References: <20260428200712.2660635-1-briannorris@chromium.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260428200712.2660635-1-briannorris@chromium.org>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
+	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111041-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111042-lists,linux-arm-msm=lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[gmail.com];
+	FREEMAIL_TO(0.00)[gmail.com,collabora.com,kernel.org];
+	FORGED_SENDER(0.00)[briannorris@chromium.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FORGED_RECIPIENTS(0.00)[m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:andersson@kernel.org,m:devicetree@vger.kernel.org,m:dianders@chromium.org,m:linux-arm-kernel@lists.infradead.org,m:tzungbi@kernel.org,m:chrome-platform@lists.linux.dev,m:jwerner@chromium.org,m:cros-qcom-dts-watchers@chromium.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:wens@kernel.org,m:matthiasbgg@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:dmitry.torokhov@gmail.com,m:romain.gantois@bootlin.com,m:myungjoo.ham@samsung.com,m:cw00.choi@samsung.com,m:linux@roeck-us.net,m:peda@axentia.se,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:lars@metafoo.de,m:Michael.Hennerich@analog.com,m:Mariel.Tinaco@analog.com,m:ktsai@capellamicro.com,m:linus.walleij@linaro.org,m:eugen.hristev@linaro.org,m:vkoul@kernel.org,m:kishon@kernel.org,m:sre@kernel.org,m:wens@csie.org,m:hansg@kernel.org,m:support.opensource@diasemi.com,m:paul@crapouillou.net,m:me@iskren.info,m:krzk@kernel.org,m:m.szyprowski@samsung.com,m:matheus@castello.eng.br,m:sravanhome@gmail.com,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:casey.connolly@linaro.org,m:pali@kernel.org,m:orsonzhai@gmail.com,m:baolin.wang@linux.alibaba.com,m:zhang.lyra@gmail.com,m:amitk@kernel.org,m:thara.gopinath@gmail.com,m:rafael@kernel.org,m:daniel.lezcano@linaro.org,m:rui.zhang@intel.com,m:lukasz.luba@arm.com,m:claudiu.beznea.uj@bp
- .renesas.com,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:s.nawrocki@samsung.com,m:olivier.moysan@foss.st.com,m:arnaud.pouliquen@foss.st.com,m:mcoquelin.stm32@gmail.com,m:alexandre.torgue@foss.st.com,m:thomas.petazzoni@bootlin.com,m:linux-kernel@vger.kernel.org,m:linux-hwmon@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-input@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-pm@vger.kernel.org,m:linux-mips@vger.kernel.org,m:linux-mediatek@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:sebastian.reichel@collabora.com,m:andriy.shevchenko@intel.com,m:dmitrytorokhov@gmail.com,m:matthiasbgg@gmail.com,m:zhanglyra@gmail.com,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[64];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[bootlin.com,samsung.com,roeck-us.net,axentia.se,baylibre.com,analog.com,kernel.org,metafoo.de,capellamicro.com,linaro.org,csie.org,diasemi.com,crapouillou.net,iskren.info,castello.eng.br,gmail.com,collabora.com,linux.alibaba.com,intel.com,arm.com,bp.renesas.com,perex.cz,suse.com,foss.st.com,vger.kernel.org,lists.infradead.org,st-md-mailman.stormreply.com];
+	FROM_NEQ_ENVFROM(0.00)[briannorris@chromium.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[chromium.org:+];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[jic23-huawei:mid,intel.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,vger.kernel.org:from_smtp,roeck-us.net:email,bootlin.com:email,collabora.com:email]
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[chromium.org:from_mime,chromium.org:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0E24763A284
+X-Rspamd-Queue-Id: B9A2F63A326
 
-On Sun, 22 Mar 2026 15:24:21 -0700
-Dmitry Torokhov <dmitry.torokhov@gmail.com> wrote:
+(Trim address list)
 
-> On Tue, Dec 09, 2025 at 09:25:56AM +0100, Romain Gantois wrote:
-> > Use namespaced exports for IIO consumer API functions.
-> > 
-> > This will make it easier to manage the IIO export surface. Consumer drivers
-> > will only be provided access to a specific set of functions, thereby
-> > restricting usage of internal IIO functions by other parts of the kernel.
-> > 
-> > This change cannot be split into several parts without breaking
-> > bisectability, thus all of the affected drivers are modified at once.
-> > 
-> > Acked-by: Sebastian Reichel <sebastian.reichel@collabora.com> # for power-supply
-> > Acked-by: Guenter Roeck <linux@roeck-us.net>
-> > Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-> > Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>  
-> 
-> For input:
-> 
-> Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> 
-> Thanks.
-> 
+Hi Bjorn, AngeloGioacchino,
 
-For anyone wondering what happened to this... I forgot to apply this at the
-beginning of the cycle and by the time I remembered we had too much queued up
-so it would have been messy to do an immutable branch.   Anyhow, I plan to
-sort this at start of next cycle.
+On Tue, Apr 28, 2026 at 01:06:52PM -0700, Brian Norris wrote:
+...
+> The /firmware node has an empty 'ranges', but does not have
+> address/size-cells.
+> 
+> Commit 6e5773d52f4a ("of/address: Fix WARN when attempting translating
+> non-translatable addresses") started requiring #address-cells for a
+> device's parent if we want to use the reg resource in a device node.
+> This leads to errors like the following:
+> 
+> [    7.763870] coreboot_table firmware:coreboot: probe with driver coreboot_table failed with error -22
+> 
+> This series adds appropriate #{address,size}-cells to the device trees
+> used on Arm Chromebooks to work around the problem.
+...
 
-Jonathan
+> Brian Norris (7):
+>   arm64: dts: rockchip: Add #{address,size}-cells to Chromium-based
+>     /firmware
+>   ARM: dts: rockchip: Add #{address,size}-cells to Chromium-based
+>     /firmware
+>   ARM: dts: nvidia: Add #{address,size}-cells to Chromium-based
+>     /firmware
+>   ARM: dts: samsung: Add #{address,size}-cells to Chromium-based
+>     /firmware
+>   arm64: dts: mediatek: Add #{address,size}-cells to Chromium-based
+>     /firmware
+>   arm64: dts: nvidia: Add #{address,size}-cells to Chromium-based
+>     /firmware
+>   arm64: dts: qcom: Add #{address,size}-cells to Chromium-based
+>     /firmware
+
+Patch 1 and 2 (Rockchip) and 3 and 6 (Nvidia) are applied to linux-next.
+Patch 4 is obsolete / unnecessary. That leaves patch 5 (Mediatek) and 7
+(Qualcomm).
+
+Bjorn (Qualcomm) and AngeloGioacchino (Mediatek), any thoughts? I can
+resend them separately if that helps somehow.
+
+Regards,
+Brian
 
