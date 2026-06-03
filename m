@@ -1,311 +1,403 @@
-Return-Path: <linux-arm-msm+bounces-110901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id y8j/DX3AH2qqpQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 07:49:49 +0200
+	id Y/GgN/zCH2pOpgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 08:00:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 000016345FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 07:49:48 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F214634774
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 08:00:28 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=herrie.org header.s=transip-a header.b=C7VYHWeP;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110901-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110901-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=none;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=gLRejsnA;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=Tp+lh4EP;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110902-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110902-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 907BB30264A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 05:48:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 359A03070DCA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 05:51:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C4893ED5DA;
-	Wed,  3 Jun 2026 05:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01A383EF0A8;
+	Wed,  3 Jun 2026 05:51:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from outbound4.mail.transip.nl (outbound4.mail.transip.nl [136.144.136.2])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5F739061C;
-	Wed,  3 Jun 2026 05:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE193DBD7E
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2026 05:51:54 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780465704; cv=none; b=R+1K8Pizl+6ednhx5lVzqetlkAC3ZMbftb/ODoTuzScFKvR7+MgShrSnsoz5deDPS3axJsh1CRpjMtanJ0qiEO9SMRMmjBPw77gF4s7sUS7HR4m+BSSHaPyFePA7iv/YH1Ew6OOImh/uMv7qKkdeafIv4MvorALbgrMAvb8PBZM=
+	t=1780465915; cv=none; b=l4EtUuBTAiiPxpqkeGi3qtLyZlLBVMQYBUzYDwKRqIw4GmW+eGqpWOnpzwqoAGH0ljgsL4Sdn7aC9uAxK5pa+RgMJkOygKfUKZwIREERvtMk799w0PZvnEEHIsi3BnfP2uFKrg2Kx9BTGkCONpA8QgDHuFLyTXlh9igPN01pUD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780465704; c=relaxed/simple;
-	bh=ykalU1Cs2DBKaoqPX4Nq3Q2kxCDwHauZFAJf1UvW6zw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Sshe2LipxbyO1YQMVCXb69Ts9LDFAxh/MCZ0wM94Ex9AdIKpUTzTIu7dAN3hPn49JT0Z/PYxgSDkKnCJc4o+C+IrMursb0D89JDwZmFZ8aNqutdfVxOAJajrx8o2bSdHelL6DtA8Hq8KaX4VVQQsikt7vH3DODmD6DsLqAnzKdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=C7VYHWeP; arc=none smtp.client-ip=136.144.136.2
-Received: from submission13.mail.transip.nl (unknown [10.103.8.164])
-	by outbound4.mail.transip.nl (Postfix) with ESMTP id 4gVcDq3bmWz1F91M;
-	Wed,  3 Jun 2026 07:48:11 +0200 (CEST)
-Received: from herrie-desktop.. (180-93-184-31.ftth.glasoperator.nl [31.184.93.180])
-	by submission13.mail.transip.nl (Postfix) with ESMTPA id 4gVcDp6Lwlz3fCxJ9;
-	Wed,  3 Jun 2026 07:48:10 +0200 (CEST)
-From: Herman van Hazendonk <github.com@herrie.org>
-To: linux-phy@lists.infradead.org
-Cc: devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Vinod Koul <vkoul@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Herman van Hazendonk <github.com@herrie.org>
-Subject: [PATCH 2/2] phy: qcom: usb-hs: honour qcom,vendor-init-seq raw ULPI writes
-Date: Wed,  3 Jun 2026 07:48:09 +0200
-Message-ID: <20260603054809.565723-3-github.com@herrie.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260603054809.565723-1-github.com@herrie.org>
-References: <20260603054809.565723-1-github.com@herrie.org>
+	s=arc-20240116; t=1780465915; c=relaxed/simple;
+	bh=JU12tekL6GBhR04YvsNYNHGTnRlGN/sSSSIxQh1PeUw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tH30OXXzWEmTZYvE/4d3dM7I7ThBrIFD8o7Wovs8GyY1JReczmDXtYGcNMT5g3y9TmAroUyWDZA07SrGvHqSB14g5AlNe6q+gPlQKh6O88oI3ix/anSlVyFgusmrXePElSeVSmJwNaQk+z5uHuTJGhoI0DmlaA3QTkymuMFGgkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gLRejsnA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Tp+lh4EP; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6535WRxc2956028
+	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Jun 2026 05:51:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AoBXmuqEDW/B4n4M1GtYaMi2nefd/8NaLnywKReRnKk=; b=gLRejsnAQCm/y5ik
+	ugn0LJwtvecXJpobc9QOcYHsKyVw+1ctVQ18LgKhz/YIJ8x77vwGfOGruVZ5gEz6
+	PSY3LGCD/rL1Hrpr5QKxUa0viKgbwk6mSIWn+e/jqfFl4jt9bA+jSSS2Jc0BuH3A
+	64KAweYROTEsZ2x7VVaixA1e4+OChDAb/vVr5su+lQxNgVXcW4dSZo51c/lhoi7H
+	8GMSAC4i+tsgxdkS+RcNO7Xik29ObYSD5xYQSRNZSLK2jYAOKtjKyUZwvdRy81cY
+	Ia63ghCRnpR7QDZpBU/i97wmIe/mD4/sAwW/obIKA1m9GJoUica6Q3apSplGsIEJ
+	iTxykw==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejabbruwf-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 05:51:53 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2c0532a6588so38710875ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2026 22:51:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1780465913; x=1781070713; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AoBXmuqEDW/B4n4M1GtYaMi2nefd/8NaLnywKReRnKk=;
+        b=Tp+lh4EPnzXF56umkgDjKvZhyKD31jkdrqfEotS6V562cNk2Gp0cGOn5ZCe68tEp6k
+         JtLoKl7Gza2CRtqgEknYYvDktgtE82dpyWKmtcf5D+FtG+PYA94kd+7K3uSybTwH8lEV
+         PrlTcqoaRNYVndgv0miy6/97azEQOYDly6SMfmUnhL3/Gq2soaZVZ8zvoFrqg37v0dH2
+         7DXLHRxbfNbh4wXQJfQC/ph3aO2i+avDqysCotfAlBkmeR3gUoszFdBL3NzEXeOBDHKg
+         ZgWtSJGBECbLvbHNb12USU5CxPuABRuDAINO/4e4ng/kOOOSYbhit2ozpOuzJUEgaK7E
+         Q/sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780465913; x=1781070713;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AoBXmuqEDW/B4n4M1GtYaMi2nefd/8NaLnywKReRnKk=;
+        b=LEkoEtBU1QqPfwhXnxk0ppNLgOzZu+hmE7BiIsX1xxu0bv6ZsSgFEuVjboz23xs46g
+         lI/CS4oEc+EgpbCq3pgoLqcxiyIKqNTtB2HNkHblykG4DTD7tDFQWXCEY6OBu2iabCIe
+         FCojYCM9mlpb8cp6nFcaOxJ1SiSaq6SF8nSckfdFtTsOtRDHYQLt96FpKN29nd8bHCDq
+         ESAcs9f+WD7mvRDVonhGQjJBwp4PikbH+tOqpR1H/IAGOWFjckgzgH1ZKU4zuWSG+kNt
+         ZOLtGQxMy/xUvrNtlbC8HkbMvuBGGssDrjTHpD4D3zDIWEa8vP4yjP4wCVP1/BabcCZd
+         nClA==
+X-Forwarded-Encrypted: i=1; AFNElJ+zkwZters0l7FFh25EhZIcP8iojOYrfwHA+lTj8oAuuYcwfTIppHz8HmORzmGjGw8NZj6QN5vwU/ZMN5j8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yykq4oDtFjOEP+uG7y2X93TMp1p40hSS50fJYhRP1RTaYKGYF0H
+	peB5wRwA6WmS2ik6+hxx55Q/6hoYlinc/n8ltGV3rWMWeJ3JrmiXa8LwKhpG1TriXHc2PPH8k+P
+	w+JL2+DCoEwbrRV+YhPx8FsDrd3b2CRrqukAiUEcIzdspOuoaM6GEIKer+pGg9Gan+wJS
+X-Gm-Gg: Acq92OFYnGP/MPyyPGtFKGiJEhT6sLXHZM5i9lXt6yWF1gpCc19Y/tgGl5QV3/ec6MI
+	b3hcS8KNKtebvflgFV2PZpFUvsIC6b2H6FG0VxiqbBoQ7aZrflcWh8eeIN9ldjVK+yZi02Frjsa
+	Uc7pjsTGx+mp7+7PX6MIvHKvyyDzC1yWH83GYMefn08chUk/xie1QBd5ySH8b5fLoaUEy//piEw
+	aExRcn9DVneubJNVGshHa4dVXwtvviGv3019QxTJ5QNEjz/Wu08yzqybFKCX4n4IKrQxfJJlBeR
+	zu4FVmVXctfQrqxhTVXYJUmeaHFmb4a9KaXrrydK5MA5ZibRCWLblUjka6Lr19JcHUIKEqsYkQt
+	nDyXulsKXmwQC0ibqqpvq7GFFnN92FIFLZ0O6ibpegkEkz8EQCsJUDvsuVgk9
+X-Received: by 2002:a17:903:2312:b0:2be:fefc:d5b9 with SMTP id d9443c01a7336-2c163a1352amr20027085ad.5.1780465912919;
+        Tue, 02 Jun 2026 22:51:52 -0700 (PDT)
+X-Received: by 2002:a17:903:2312:b0:2be:fefc:d5b9 with SMTP id d9443c01a7336-2c163a1352amr20026725ad.5.1780465912431;
+        Tue, 02 Jun 2026 22:51:52 -0700 (PDT)
+Received: from [10.204.78.54] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16649d2d4sm11280795ad.77.2026.06.02.22.51.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jun 2026 22:51:51 -0700 (PDT)
+Message-ID: <b5c9d149-1a48-4c0d-aa0d-9ad331896f47@oss.qualcomm.com>
+Date: Wed, 3 Jun 2026 11:21:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/15] accel/qda: Add QUERY IOCTL and QDA UAPI header
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Oded Gabbay <ogabbay@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        Shuah Khan <skhan@linuxfoundation.org>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        Bharath Kumar <quic_bkumar@quicinc.com>,
+        Chenna Kesava Raju <quic_chennak@quicinc.com>, srini@kernel.org,
+        andersson@kernel.org, konradybcio@kernel.org,
+        robin.clark@oss.qualcomm.com, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-doc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org
+References: <20260519-qda-series-v1-0-b2d984c297f8@oss.qualcomm.com>
+ <20260519-qda-series-v1-8-b2d984c297f8@oss.qualcomm.com>
+ <m4zo2nkxtl5yeyo7riuata6r5saflmdgqf37cz2g2ezrwhk53m@mnad6bb7n3ik>
+Content-Language: en-US
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+In-Reply-To: <m4zo2nkxtl5yeyo7riuata6r5saflmdgqf37cz2g2ezrwhk53m@mnad6bb7n3ik>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: ClueGetter at submission13.mail.transip.nl
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=herrie.org; t=1780465691; h=from:subject:to:cc:
- references:in-reply-to:date:mime-version:content-type;
- bh=TeiTuwVhVKftRrV6+G+q9/smgsdKSE0BphnxQrsrj1M=;
- b=C7VYHWeP3I+csH5AK6hVkaktFn76kPUyW+7dFUuQ7nZM7PZB+J8zq5MIXyOy3z2ErADvxZ
- pW2E7ToUZE4v2Y16GTzumsFy0v/U45Y8IQ51rkja+WBA8J9B6FuBd9AMocuSroO42cY4hj
- XQ6UxpLcJbAzum0plW0hr2qas1dXkWCgPNwWILs2cz0uivlemnIQXwGQJr9/T2jzgoyD2b
- yDwgGAZySuU4Q3i/hVgSyBqj8uU/L77e3vymozznJG1Wc/E9kwEe3jWaSwMDSCnWKo5n+8
- 0fIISwmEKJDRaD6XPMFyfmViKWpA1xuoDpNTS0fwYI+AQJDgwdPAqePMTdEUHA==
-X-Report-Abuse-To: abuse@transip.nl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDA1MyBTYWx0ZWRfX+L9eR/ci7BgV
+ 1o4oGEbGqWco+RH/gZYB4q/Zn78xXNIvjKwo6UdR6dUe4kjJPZneyxgmCFHGqpiPjH9JR/nRLqs
+ RLrxNzDI0Va8Dw8axuBLgm1DUcXf0+BVw61MZPLJwlmongMVIlpH/nx8zBSYURCpUERzsUECjGF
+ HZ3dZRS8YhfzDVTOub2qzRvKRbqBORHOgzZOIE3PVzQ9zmgTWhuKbfG3o1VVHGEpR+v8o5aToNW
+ sbI6avr6+AxaKN35OaLkgPBJN6V6/rtYwXi6ylIAtULWCP9Pw+lGsA9xZZ72923dwmGs7SOMC1X
+ AE6vZ/2LjXrTB9aitkO/iVHzcaaEHeA6jLD4a5EJBilOU4oQjaW1Aa/tbyftgZglql4OiGrQa9A
+ 7izRtzhkpovUtr/FbW5JuLELDd0K5I0QRnNX3Rsxbt2xL5mAhqAbZhCnH0oHibw9Eb+I18wR6V1
+ j6AuWZ4zBtsUelfRHlw==
+X-Authority-Analysis: v=2.4 cv=UqZT8ewB c=1 sm=1 tr=0 ts=6a1fc0f9 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=-e_ofER35s36BqmFglcA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-ORIG-GUID: TaKQroS1wGhKVXbrFTESgHxCwozj1Vhw
+X-Proofpoint-GUID: TaKQroS1wGhKVXbrFTESgHxCwozj1Vhw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-03_02,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 malwarescore=0 lowpriorityscore=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 suspectscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
+ definitions=main-2606030053
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_DKIM_ALLOW(-0.20)[herrie.org:s=transip-a];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	URIBL_MULTI_FAIL(0.00)[herrie.org:server fail,sto.lore.kernel.org:server fail,vger.kernel.org:server fail];
-	TAGGED_FROM(0.00)[bounces-110901-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-110902-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:linux-phy@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:github.com@herrie.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,lwn.net,linuxfoundation.org,8bytes.org,arm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch,linaro.org,amd.com,quicinc.com,oss.qualcomm.com,vger.kernel.org,lists.freedesktop.org,lists.linux.dev,lists.linaro.org];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
+	FORGED_SENDER(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[27];
+	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:ogabbay@kernel.org,m:corbet@lwn.net,m:skhan@linuxfoundation.org,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:sumit.semwal@linaro.org,m:christian.koenig@amd.com,m:quic_bkumar@quicinc.com,m:quic_chennak@quicinc.com,m:srini@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robin.clark@oss.qualcomm.com,m:linux-kernel@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-doc@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-media@vger.kernel.org,m:linaro-mm-sig@lists.linaro.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_NA(0.00)[herrie.org];
-	FORGED_SENDER(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[herrie.org:+];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,herrie.org:mid,herrie.org:dkim,herrie.org:from_mime,herrie.org:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 000016345FC
+X-Rspamd-Queue-Id: 3F214634774
 
-Add support for the optional qcom,vendor-init-seq DT property: a
-list of u8 (addr, val) pairs written verbatim to raw ULPI register
-addresses, rather than to ULPI_EXT_VENDOR_SPECIFIC + addr like the
-existing qcom,init-seq sequence reaches. This lets boards reach the
-standard vendor register range 0x30-0x3F where MSM8x60-era hardware
-keeps pre-emphasis level / HS driver slope / CDR auto-reset, etc.
+On 20-05-2026 19:59, Dmitry Baryshkov wrote:
+> On Tue, May 19, 2026 at 11:45:58AM +0530, Ekansh Gupta via B4 Relay wrote:
+>> From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+>>
+>> Introduce the DRM_IOCTL_QDA_QUERY IOCTL, which allows user-space to
+>> identify which DSP domain a given /dev/accel/accel* node represents
+>> (e.g. "cdsp", "adsp").
+>>
+>> include/uapi/drm/qda_accel.h
+>>   Defines the QDA IOCTL command numbers and the associated data
+>>   structures. The header follows the standard DRM UAPI conventions:
+>>   __u8/__u32 types, a C++ extern "C" guard, and GPL-2.0-only WITH
+>>   Linux-syscall-note licensing.
+>>
+>> drivers/accel/qda/qda_ioctl.c / qda_ioctl.h
+>>   Implements qda_ioctl_query(), which copies the DSP domain name
+>>   stored in qda_dev.dsp_name into the user-supplied drm_qda_query
+>>   buffer using strscpy().
+>>
+>> drivers/accel/qda/qda_drv.c
+>>   Registers the qda_ioctls[] table with the drm_driver so that the
+>>   DRM core dispatches DRM_IOCTL_QDA_QUERY to qda_ioctl_query().
+>>
+>> Assisted-by: Claude:claude-4-6-sonnet
+>> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+>> ---
+>>  drivers/accel/qda/Makefile    |  1 +
+>>  drivers/accel/qda/qda_drv.c   |  8 +++++++
+>>  drivers/accel/qda/qda_ioctl.c | 26 +++++++++++++++++++++++
+>>  drivers/accel/qda/qda_ioctl.h | 13 ++++++++++++
+>>  include/uapi/drm/qda_accel.h  | 49 +++++++++++++++++++++++++++++++++++++++++++
+>>  5 files changed, 97 insertions(+)
+>>
+>> diff --git a/drivers/accel/qda/Makefile b/drivers/accel/qda/Makefile
+>> index 701fad5ffb50..b658dad35fee 100644
+>> --- a/drivers/accel/qda/Makefile
+>> +++ b/drivers/accel/qda/Makefile
+>> @@ -8,6 +8,7 @@ obj-$(CONFIG_DRM_ACCEL_QDA)	:= qda.o
+>>  qda-y := \
+>>  	qda_cb.o \
+>>  	qda_drv.o \
+>> +	qda_ioctl.o \
+>>  	qda_memory_manager.o \
+>>  	qda_rpmsg.o
+>>  
+>> diff --git a/drivers/accel/qda/qda_drv.c b/drivers/accel/qda/qda_drv.c
+>> index 0ad5d9873d7e..becd831d10be 100644
+>> --- a/drivers/accel/qda/qda_drv.c
+>> +++ b/drivers/accel/qda/qda_drv.c
+>> @@ -8,8 +8,10 @@
+>>  #include <drm/drm_gem.h>
+>>  #include <drm/drm_ioctl.h>
+>>  #include <drm/drm_print.h>
+>> +#include <drm/qda_accel.h>
+>>  
+>>  #include "qda_drv.h"
+>> +#include "qda_ioctl.h"
+>>  #include "qda_rpmsg.h"
+>>  
+>>  static int qda_open(struct drm_device *dev, struct drm_file *file)
+>> @@ -36,11 +38,17 @@ static void qda_postclose(struct drm_device *dev, struct drm_file *file)
+>>  
+>>  DEFINE_DRM_ACCEL_FOPS(qda_accel_fops);
+>>  
+>> +static const struct drm_ioctl_desc qda_ioctls[] = {
+>> +	DRM_IOCTL_DEF_DRV(QDA_QUERY, qda_ioctl_query, 0),
+>> +};
+>> +
+>>  static const struct drm_driver qda_drm_driver = {
+>>  	.driver_features = DRIVER_COMPUTE_ACCEL,
+>>  	.fops = &qda_accel_fops,
+>>  	.open = qda_open,
+>>  	.postclose = qda_postclose,
+>> +	.ioctls = qda_ioctls,
+>> +	.num_ioctls = ARRAY_SIZE(qda_ioctls),
+>>  	.name = QDA_DRIVER_NAME,
+>>  	.desc = "Qualcomm DSP Accelerator Driver",
+>>  };
+>> diff --git a/drivers/accel/qda/qda_ioctl.c b/drivers/accel/qda/qda_ioctl.c
+>> new file mode 100644
+>> index 000000000000..761d3567c33f
+>> --- /dev/null
+>> +++ b/drivers/accel/qda/qda_ioctl.c
+>> @@ -0,0 +1,26 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>> +#include <drm/drm_ioctl.h>
+>> +#include <drm/qda_accel.h>
+>> +#include "qda_drv.h"
+>> +#include "qda_ioctl.h"
+>> +
+>> +/**
+>> + * qda_ioctl_query() - Query DSP device information
+>> + * @dev: DRM device structure
+>> + * @data: User-space data (struct drm_qda_query)
+>> + * @file_priv: DRM file private data
+>> + *
+>> + * Return: 0 on success, negative error code on failure
+>> + */
+>> +int qda_ioctl_query(struct drm_device *dev, void *data, struct drm_file *file_priv)
+>> +{
+>> +	struct drm_qda_query *args = data;
+>> +	struct qda_dev *qdev;
+>> +
+>> +	qdev = qda_dev_from_drm(dev);
+>> +
+>> +	strscpy(args->dsp_name, qdev->dsp_name, sizeof(args->dsp_name));
+>> +
+>> +	return 0;
+>> +}
+>> diff --git a/drivers/accel/qda/qda_ioctl.h b/drivers/accel/qda/qda_ioctl.h
+>> new file mode 100644
+>> index 000000000000..b8fd536a111f
+>> --- /dev/null
+>> +++ b/drivers/accel/qda/qda_ioctl.h
+>> @@ -0,0 +1,13 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>> + */
+>> +
+>> +#ifndef __QDA_IOCTL_H__
+>> +#define __QDA_IOCTL_H__
+>> +
+>> +#include "qda_drv.h"
+>> +
+>> +int qda_ioctl_query(struct drm_device *dev, void *data, struct drm_file *file_priv);
+>> +
+>> +#endif /* __QDA_IOCTL_H__ */
+>> diff --git a/include/uapi/drm/qda_accel.h b/include/uapi/drm/qda_accel.h
+>> new file mode 100644
+>> index 000000000000..1971a4263065
+>> --- /dev/null
+>> +++ b/include/uapi/drm/qda_accel.h
+>> @@ -0,0 +1,49 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
+>> +/*
+>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>> + */
+>> +
+>> +#ifndef __QDA_ACCEL_H__
+>> +#define __QDA_ACCEL_H__
+>> +
+>> +#include "drm.h"
+>> +
+>> +#if defined(__cplusplus)
+>> +extern "C" {
+>> +#endif
+>> +
+>> +/*
+>> + * QDA IOCTL command numbers
+>> + *
+>> + * These define the command numbers for QDA-specific IOCTLs.
+>> + * They are used with DRM_COMMAND_BASE to create the full IOCTL numbers.
+>> + */
+>> +#define DRM_QDA_QUERY		0x00
+>> +
+>> +/*
+>> + * QDA IOCTL definitions
+>> + *
+>> + * These macros define the actual IOCTL numbers used by userspace applications.
+>> + * They combine the command numbers with DRM_COMMAND_BASE and specify the
+>> + * data structure and direction (read/write) for each IOCTL.
+>> + */
+>> +#define DRM_IOCTL_QDA_QUERY		DRM_IOR(DRM_COMMAND_BASE + DRM_QDA_QUERY, \
+>> +					 struct drm_qda_query)
+>> +
+>> +/**
+>> + * struct drm_qda_query - Device information query structure
+>> + * @dsp_name: Name of DSP (e.g., "adsp", "cdsp", "cdsp1", "gdsp0", "gdsp1")
+>> + *
+>> + * This structure is used with DRM_IOCTL_QDA_QUERY to query device type,
+>> + * allowing userspace to identify which DSP a device node represents. The
+>> + * kernel provides the DSP name directly as a null-terminated string.
+>> + */
+>> +struct drm_qda_query {
+>> +	__u8 dsp_name[16];
+> 
+> Are you sure that you want to query only the name? No extra options, no
+> attributes, no hardware capabilities?
+There are plans to extend this ioctl to support DSP capabilities and few
+other query options, but as per my understanding, I don't need to add
+reserved IOCTLs in drm case and I can extend it in future. Please
+correct me if my understanding is wrong and I should add reserved fields.
 
-The new sequence is applied AFTER reset_control_reset() in
-qcom_usb_hs_phy_power_on() so the values survive the register
-restore the reset performs. The pre-existing qcom,init-seq is left
-applied BEFORE the reset to preserve current behaviour for the
-APQ8064/MSM8916 boards that already depend on it; an earlier review flagged
-this ordering as a likely pre-existing bug, but blindly reordering
-established behaviour for those boards is out of scope for this
-patch and would risk regressing them.
+Copying the statement from the doc[1].
+"Note that drm_ioctl() automatically zero-extends structures, hence make
+sure you can add more stuff at the end, i.e. don’t put a variable sized
+array there."
 
-While at it, harden the parse logic shared between qcom,init-seq
-and qcom,vendor-init-seq:
+[1]
+https://www.kernel.org/doc/html/v7.0/gpu/drm-uapi.html#ioctl-support-on-device-nodes>
 
-  - Reject an odd byte count up-front rather than silently dropping
-    the trailing byte and producing a half-pair the rest of the
-    driver cannot describe.
-  - Reject more than 32 bytes (the binding's maxItems) rather than
-    making an unbounded devm_kmalloc_array() allocation driven by
-    an untrusted-shaped DT property.
-
-Factor the duplicated parse-and-allocate sequence into
-qcom_usb_hs_phy_parse_init_seq() so both properties get the same
-validation. The validation also fixes the pre-existing same bugs in
-the qcom,init-seq parse path uniformly with the new property.
-
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
----
- drivers/phy/qualcomm/phy-qcom-usb-hs.c | 109 ++++++++++++++++++++-----
- 1 file changed, 90 insertions(+), 19 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-usb-hs.c b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-index 98a18987f1be..89fbe8f8d001 100644
---- a/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-usb-hs.c
-@@ -35,6 +35,13 @@ struct qcom_usb_hs_phy {
- 	struct regulator *v3p3;
- 	struct reset_control *reset;
- 	struct ulpi_seq *init_seq;
-+	/*
-+	 * Optional sequence of writes targeting raw ULPI addresses (no
-+	 * ULPI_EXT_VENDOR_SPECIFIC base added). Populated from the
-+	 * "qcom,vendor-init-seq" DT property. Applied after PHY reset
-+	 * so the values survive the reset that follows init_seq writes.
-+	 */
-+	struct ulpi_seq *vendor_init_seq;
- 	struct extcon_dev *vbus_edev;
- 	struct notifier_block vbus_notify;
- };
-@@ -154,6 +161,19 @@ static int qcom_usb_hs_phy_power_on(struct phy *phy)
- 			goto err_ulpi;
- 	}
- 
-+	/*
-+	 * Apply board-specific raw-address ULPI writes after the PHY reset
-+	 * so they survive register restore. Used to reach the standard
-+	 * vendor range 0x30-0x3F which qcom,init-seq (above) cannot —
-+	 * pre-emphasis level / HS driver slope / CDR auto-reset etc. live
-+	 * there on MSM8660-class hardware.
-+	 */
-+	for (seq = uphy->vendor_init_seq; seq->addr; seq++) {
-+		ret = ulpi_write(ulpi, seq->addr, seq->val);
-+		if (ret)
-+			goto err_ulpi;
-+	}
-+
- 	if (uphy->vbus_edev) {
- 		state = extcon_get_state(uphy->vbus_edev, EXTCON_USB);
- 		/* setup initial state */
-@@ -199,6 +219,59 @@ static const struct phy_ops qcom_usb_hs_phy_ops = {
- 	.owner = THIS_MODULE,
- };
- 
-+/*
-+ * The binding caps both qcom,init-seq and qcom,vendor-init-seq at
-+ * maxItems: 32 (addr, val) pairs, i.e. 64 bytes total. Enforce that
-+ * limit here so a malformed DT cannot drive an unbounded
-+ * devm_kmalloc_array() and so the misconfiguration is visible at
-+ * probe time instead of silently truncated.
-+ */
-+#define QCOM_USB_HS_PHY_INIT_SEQ_MAX_PAIRS	32
-+#define QCOM_USB_HS_PHY_INIT_SEQ_MAX_BYTES	\
-+	(QCOM_USB_HS_PHY_INIT_SEQ_MAX_PAIRS * 2)
-+
-+static int qcom_usb_hs_phy_parse_init_seq(struct ulpi *ulpi,
-+					  const char *propname,
-+					  struct ulpi_seq **out)
-+{
-+	struct ulpi_seq *seq;
-+	int size;
-+
-+	size = of_property_count_u8_elems(ulpi->dev.of_node, propname);
-+	if (size < 0)
-+		size = 0;
-+	if (size > QCOM_USB_HS_PHY_INIT_SEQ_MAX_BYTES) {
-+		dev_err(&ulpi->dev,
-+			"%s: %d bytes exceeds %d-byte maximum\n",
-+			propname, size, QCOM_USB_HS_PHY_INIT_SEQ_MAX_BYTES);
-+		return -EINVAL;
-+	}
-+	if (size % 2) {
-+		dev_err(&ulpi->dev,
-+			"%s: %d bytes is not a whole number of (addr, val) pairs\n",
-+			propname, size);
-+		return -EINVAL;
-+	}
-+
-+	seq = devm_kmalloc_array(&ulpi->dev, (size / 2) + 1, sizeof(*seq),
-+				 GFP_KERNEL);
-+	if (!seq)
-+		return -ENOMEM;
-+
-+	if (size) {
-+		int ret = of_property_read_u8_array(ulpi->dev.of_node,
-+						    propname, (u8 *)seq, size);
-+		if (ret)
-+			return ret;
-+	}
-+	/* NUL-terminate so the power_on loop's seq->addr-as-sentinel works. */
-+	seq[size / 2].addr = 0;
-+	seq[size / 2].val = 0;
-+
-+	*out = seq;
-+	return 0;
-+}
-+
- static int qcom_usb_hs_phy_probe(struct ulpi *ulpi)
- {
- 	struct qcom_usb_hs_phy *uphy;
-@@ -206,7 +279,6 @@ static int qcom_usb_hs_phy_probe(struct ulpi *ulpi)
- 	struct clk *clk;
- 	struct regulator *reg;
- 	struct reset_control *reset;
--	int size;
- 	int ret;
- 
- 	uphy = devm_kzalloc(&ulpi->dev, sizeof(*uphy), GFP_KERNEL);
-@@ -215,19 +287,20 @@ static int qcom_usb_hs_phy_probe(struct ulpi *ulpi)
- 	ulpi_set_drvdata(ulpi, uphy);
- 	uphy->ulpi = ulpi;
- 
--	size = of_property_count_u8_elems(ulpi->dev.of_node, "qcom,init-seq");
--	if (size < 0)
--		size = 0;
--	uphy->init_seq = devm_kmalloc_array(&ulpi->dev, (size / 2) + 1,
--					   sizeof(*uphy->init_seq), GFP_KERNEL);
--	if (!uphy->init_seq)
--		return -ENOMEM;
--	ret = of_property_read_u8_array(ulpi->dev.of_node, "qcom,init-seq",
--					(u8 *)uphy->init_seq, size);
--	if (ret && size)
-+	ret = qcom_usb_hs_phy_parse_init_seq(ulpi, "qcom,init-seq",
-+					     &uphy->init_seq);
-+	if (ret)
-+		return ret;
-+	/*
-+	 * Optional raw-address vendor init sequence — same encoding as
-+	 * qcom,init-seq (u8 addr/val pairs) but each pair is written to
-+	 * the raw ULPI address rather than to ULPI_EXT_VENDOR_SPECIFIC +
-+	 * addr. Lets boards reach the standard vendor range 0x30-0x3F.
-+	 */
-+	ret = qcom_usb_hs_phy_parse_init_seq(ulpi, "qcom,vendor-init-seq",
-+					     &uphy->vendor_init_seq);
-+	if (ret)
- 		return ret;
--	/* NUL terminate */
--	uphy->init_seq[size / 2].addr = uphy->init_seq[size / 2].val = 0;
- 
- 	uphy->ref_clk = clk = devm_clk_get(&ulpi->dev, "ref");
- 	if (IS_ERR(clk))
-@@ -245,12 +318,10 @@ static int qcom_usb_hs_phy_probe(struct ulpi *ulpi)
- 	if (IS_ERR(reg))
- 		return PTR_ERR(reg);
- 
--	uphy->reset = reset = devm_reset_control_get(&ulpi->dev, "por");
--	if (IS_ERR(reset)) {
--		if (PTR_ERR(reset) == -EPROBE_DEFER)
--			return PTR_ERR(reset);
--		uphy->reset = NULL;
--	}
-+	uphy->reset = reset = devm_reset_control_get_optional_exclusive(&ulpi->dev, "por");
-+	if (IS_ERR(reset))
-+		return dev_err_probe(&ulpi->dev, PTR_ERR(reset),
-+				     "failed to get reset control\n");
- 
- 	uphy->phy = devm_phy_create(&ulpi->dev, ulpi->dev.of_node,
- 				    &qcom_usb_hs_phy_ops);
--- 
-2.43.0
+>> +};
+>> +
+>> +#if defined(__cplusplus)
+>> +}
+>> +#endif
+>> +
+>> +#endif /* __QDA_ACCEL_H__ */
+>>
+>> -- 
+>> 2.34.1
+>>
+>>
+> 
 
 
