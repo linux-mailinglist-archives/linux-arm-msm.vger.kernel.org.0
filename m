@@ -1,247 +1,239 @@
-Return-Path: <linux-arm-msm+bounces-111026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id pKnCIWFIIGqD0AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 17:29:37 +0200
+	id xPUXCipQIGpf0wAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 18:02:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87BDA639343
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 17:29:36 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6586C639868
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 18:02:44 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=FR7PSlyO;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=EDHQf92O;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111026-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111026-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=M4tKmGsa;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111027-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111027-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id DB46F31DF923
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 15:01:15 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A6120318333C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 15:13:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 168012F7EE8;
-	Wed,  3 Jun 2026 15:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 245BF3B6350;
+	Wed,  3 Jun 2026 15:13:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5F63CF67A
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2026 15:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047283D1AB3;
+	Wed,  3 Jun 2026 15:13:02 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780498824; cv=none; b=L4y5+G+Vhjm2KHWYasiOJOO7ZBVzYrmxZbPc2iMr5rVX+jdNgA9vB5ebmM0mxUGSRQG2UVMYRW5WuLaySr868zI1GWPJWTtqoKLqzIF1EWErvKnR4CJBvy/mPLlglLEfZ6e17OUDZ3uXMaAOuZ/ZTZ3OoJxn1cSf8YG3/0x+D4E=
+	t=1780499584; cv=none; b=CBRtwLwwnhMDpovwo+ZXYACgwEkjOAYVLoZkYMx7yRULwHgLXevR7xA0LP72R+lfkxdTkrEdTsTts/afNrVelMd81449rlKwLWSrbgC0zyVSJPkzjtZl2rs3K6vGYq9/g1dXEP1iSz3ktjhu1Hxb/a99gn+am2qq7v57H7tW5y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780498824; c=relaxed/simple;
-	bh=oR2yHxswddj6quJTdd+FGIgKIDMApsb7sGBB9OxVs9c=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MDDOYK3fQXSD4h5uN1mHgl87xx5E66DZXh1Cng8015bLLV7d2/wH7yMubY8SWfE+hrUhEIcYjpH7EEYBU2OAU0CsuAGtI42eXBvO16bdEciVp9YS6MFj+VHNFz0jun6xpyImrGqcheX9gGQTM/S2l098Iuh+I52Mavt4uvHS7Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FR7PSlyO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EDHQf92O; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 653CUCf6873766
-	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Jun 2026 15:00:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	uBhEfdW/m0+frpWlSOZbFsnd5JIPo2zwXhwrIyotka0=; b=FR7PSlyOJkWGIVkP
-	s6K5xuZO8708Qske/MsZj0ohP7hQzcNJPNb20Hx54i3AeK6MWJ1LU6PTti3NXgDJ
-	0R2wBcwfzbNy76tZjRzRkiIQMcmzPZDf3I+sDeMlabw9gVD4tPx0j53IFckySyXt
-	9LljQR8atd5o24uTbjtFePW3cSKsUxJyDJ/mgF0fEvKo0a480VjSIljfHHeAC1Dn
-	tJ0FskdFCcfF3usxaFdRegGWE0S/wZZj5q66dXsfm53CjicBEY6foMUh2NBPhUzx
-	5wOpdzPs+EGPt/2x7FxbQO25m3SsQp0uN0vcOGpN9ObPB7K6S2VUQDExk4P2xfD8
-	XWGtNA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ej6a9m23x-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 15:00:22 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-c85dc345ac8so622912a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 08:00:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780498821; x=1781103621; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uBhEfdW/m0+frpWlSOZbFsnd5JIPo2zwXhwrIyotka0=;
-        b=EDHQf92Oh9Jyiqdq1Fza0tsFBGX7gZu4GuY60rKk4dfNvGL9D6NhGYAUqLvXvv7VBx
-         jDXkNfCXnMI7awOk4iW5iuN2Q5P6NREMWByVvGkdwwFFQAu62GV1gPQhVOC8YJ/sejw/
-         zXhO09SUgEl3THuyaD9ELzQpB7MAiBXfdpFEF44j8KMO9lGaQGezcAd/UBnpNDJgQyul
-         wW5muKvgp3lgTdm8HkIefm5AsrqCTgT+XRtE2s3hMGexm3N6f04oRImnfgVU9TPhi3oT
-         Xz1JVeQyONUfggCcrkX6+d12cqUcV1eqiofMwwji5JnDU4G4Xign4hEswDghYsNP207K
-         kZjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780498821; x=1781103621;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=uBhEfdW/m0+frpWlSOZbFsnd5JIPo2zwXhwrIyotka0=;
-        b=R24VGmc/uqvsCEgQT0cdo6ByWSZnLGOd0dUA9mDlmFGEZsZjOlhiX7C9PFJOyOPIgz
-         Kkl8VBbcFuNVQgKSs0YEaZ4aCq3WAFP/GhGO+G+nGogbfR2W5xdiArwkNKlRUQ4gbuzZ
-         +u8aUHt7dHjM9moZ6Xr1FXmkjexy21MjAlZJuw9NqYkFrXMaJJ6pY5yZqxVAGSj/KvqB
-         qvEejflCLBesdObgPugvsoLqWDuGUb8cbtzpV80JUU46cWgRTLkbK8GkzR/zsvHOwRpf
-         gmhsY2UcqlpIPP/cCqytLx9YM42oGSikW/gn7YQsYgfCKEGL/l/zjlBp3/mJpbtauXWi
-         LA2g==
-X-Gm-Message-State: AOJu0YxwprWgp8e5aKHQ/QwUV8J2Bk93O85VAvsgCZrhK9ZGh/yVE9gL
-	BY+WLmv+8MKxr9TeVz+eJsDbFQukagX1nPOVZ195cdFqp5ULL4km0cYPoRLdHCoBC8mIkbZEdRO
-	2MckIeYJq13zClWMf+Lhusq4zKwt139tf2qtOffWhgIvv7/KzF5l8c7e3QTV/eHbwO03H
-X-Gm-Gg: Acq92OHqoHtXND2w2Wf64Fs4K224b6iEQDPBbFPACtivaFWdjrwKx693heEUyyVWwpL
-	1H6tIMvX6Lba+dCIT8PP+CnjcRmwuT8/Xtu20V1pOob3fusZUuQMheEwu9uchadbT/PDNUJQnWu
-	p/VQBwBXvvjpsOp1uIGlut5B1RI0XsJPAxfNHatZTDl+UqD2nMdDNSxx4dC8oFY4MebL1Ihb2e5
-	Ox3SOlcl14PDn8emHCEX7Favj1Vz7cBbCsuXLfy8LxpnpGgWw+Ul0gzSuuoq3FnLpmyv6Xk08FU
-	RVZe8IvMrG0K6/A+v5f5gY4BalFcZ1m6l2GJ6pBBlo5vkLT07kEIf1VLOv7ytWJkEl3lomLbYMo
-	JejLRwm6hJAb9ueQk6Vd/psg0cHIU7A8PT3Y059xERV1r8xG4gyy0u6uEuRo=
-X-Received: by 2002:a05:6a00:c90:b0:83f:2568:d45f with SMTP id d2e1a72fcca58-84284f5f588mr3805650b3a.23.1780498821412;
-        Wed, 03 Jun 2026 08:00:21 -0700 (PDT)
-X-Received: by 2002:a05:6a00:c90:b0:83f:2568:d45f with SMTP id d2e1a72fcca58-84284f5f588mr3805562b3a.23.1780498820755;
-        Wed, 03 Jun 2026 08:00:20 -0700 (PDT)
-Received: from hu-naala-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84282882170sm3747409b3a.30.2026.06.03.08.00.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jun 2026 08:00:20 -0700 (PDT)
-From: Nabige Aala <nabige.aala@oss.qualcomm.com>
-Date: Wed, 03 Jun 2026 20:29:30 +0530
-Subject: [PATCH 5/5] iommu/arm-smmu: Add qcom,shikra-mdss to Qualcomm SMMU
- client tables
+	s=arc-20240116; t=1780499584; c=relaxed/simple;
+	bh=bGv6026XnhDm8i+aKTBXzQ0LNc5FoJ6CnAMYvnx4k6Q=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=i4ZthIeQFj9GEoMPn4N47EtZ/h2SaqNE/GwprCNnI37g4hZotcROgimcuTPqnXMyiFqTgCBfZkJVbCMKTjiytM4mpI4DuK0kzOSJsXmfVhgFGEdxcJBng01oMIZvGZKko0OZDq+z36r8obZdoTmo4Qbo4gLQa0UqSwhdRBmZJjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M4tKmGsa; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9051F00893;
+	Wed,  3 Jun 2026 15:13:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780499582;
+	bh=9gPkGzXG0HU/tmXo8RdeundsdIGxa43c7OU1rJGKo7A=;
+	h=From:To:Subject:In-Reply-To:References:Date;
+	b=M4tKmGsaYH/lff+c0Ae3MHSW2FbvA6PTeiPQ4bIhA2KQJzMf+I3V8Qgc8w1GJn2Vy
+	 KHYCsPeMkMWj244DQb0D27w3oZnqkFqvhisTxN5k+q/X0usb0MAaJ9jAfSEs7lL9AQ
+	 39TgzIvy5WIC64XM//kGYp/2kq6zyAVVu5czwpGaAbIeFesePdG2etoWRvU1ssSPTM
+	 LQpd0Q1jLYBVzbeIiL5yxBKETbMfSza/xALr1qmNnJ+N3zDCjMkp8FXxDPxuwSNTAh
+	 F0dFEHGPKDAxLSPu0ghoQ40eZWSaQD8boCmDskDcOzWI+jZpyB2oUJ3BS4JlpMghxx
+	 mRWG6nm8MjQPQ==
+From: Thomas Gleixner <tglx@kernel.org>
+To: Herman van Hazendonk <github.com@herrie.org>, Bjorn Andersson
+ <andersson@kernel.org>, Clark Williams <clrkwllms@kernel.org>, Conor
+ Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, Konrad Dybcio
+ <konradybcio@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-rt-devel@lists.linux.dev, Rob Herring <robh@kernel.org>, Sebastian
+ Andrzej Siewior <bigeasy@linutronix.de>, Steven Rostedt
+ <rostedt@goodmis.org>, van Hazendonk <github.com@herrie.org>
+Subject: Re: [PATCH v2 2/2] irqchip: add MSM8x60 MPM wakeup interrupt
+ controller driver
+In-Reply-To: <0133fce127c7507bbb907d0258ad69ac8d753218.1780195817.git.github.com@herrie.org>
+References: <cover.1780148149.git.github.com@herrie.org>
+ <cover.1780195817.git.github.com@herrie.org>
+ <0133fce127c7507bbb907d0258ad69ac8d753218.1780195817.git.github.com@herrie.org>
+Date: Wed, 03 Jun 2026 17:12:59 +0200
+Message-ID: <87ecin7j44.ffs@fw13>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260603-shikra-display-v1-5-aeac1b94faa7@oss.qualcomm.com>
-References: <20260603-shikra-display-v1-0-aeac1b94faa7@oss.qualcomm.com>
-In-Reply-To: <20260603-shikra-display-v1-0-aeac1b94faa7@oss.qualcomm.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        "Joerg Roedel (AMD)" <joro@8bytes.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        Nabige Aala <nabige.aala@oss.qualcomm.com>
-X-Mailer: b4 0.16-dev-d5d98
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1780498770; l=1873;
- i=nabige.aala@oss.qualcomm.com; s=20260520; h=from:subject:message-id;
- bh=oR2yHxswddj6quJTdd+FGIgKIDMApsb7sGBB9OxVs9c=;
- b=slT7W/f52dq5AGO2+1rwtTo0T6c9Jbsdja/oVrv6fulBjy7AdNAx6Ybfd6TtE7V8hPTZoRf2Z
- IBvqNqxSNY+BT8jWJynyp5mtqdDgum45kTsfs7dMaj99ai7z9uACjZl
-X-Developer-Key: i=nabige.aala@oss.qualcomm.com; a=ed25519;
- pk=PYHJom8sPos1IGkrbCCsWiE7XTBQrQZd9jzAo051tgw=
-X-Proofpoint-GUID: r_XBGXRSUxnBYUyimQnfd--rkKRoPJtI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDE0NCBTYWx0ZWRfXzNC4CqA4HdqZ
- td7wl3KxAsTEoFQXYxXIdey7p+cXEbbSCRWOJHtPIFlygrYbbdnrFLrox+hH8evAmmJP5USAE/9
- uxQoQTxOs/yIL96fXkQIQ+zhPqPJGKyKg7hJbOw0ubGI3qzPorwnCiDJKzoBUOmdz1QcKQH3x6a
- T1kxM1JCrjoAcc85QCfHaoDaKZ0baZQxMKhv1H+u6X2js3O22/89/99/aJuYx29Ljnm1GWvX5U6
- 5SioQBblRz7QhgTuMnoFFr+Z00EOhkGQmhIOoY9PJwmuop2tA5N1sIwn0YnIGZMXaxJZSPOiDtQ
- CPtBHe7rIzpuvLvlW6sH3YyhUHIU3yIcZGbz8eBQIjjg4WuF55SH1/zAwsxsyWbn6NfF6DOtqTK
- iCV1n2vQvyqhpk1ckAcWYH//oT1CuEOjPh0pd5fWua/454Cgp30IitK+CNBt9VeDepAxxUnpFhG
- 2IQ3+IbknAczplf4Qwg==
-X-Authority-Analysis: v=2.4 cv=I/9Vgtgg c=1 sm=1 tr=0 ts=6a204186 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=WiTR6ph8kncRzgk6yhEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-ORIG-GUID: r_XBGXRSUxnBYUyimQnfd--rkKRoPJtI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-03_05,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 bulkscore=0 impostorscore=0 adultscore=0 suspectscore=0
- malwarescore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030144
+Content-Type: text/plain
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-111026-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[29];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de,quicinc.com,arm.com,8bytes.org];
-	FORGED_RECIPIENTS(0.00)[m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:quic_mkrishn@quicinc.com,m:loic.poulain@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:will@kernel.org,m:robin.murphy@arm.com,m:joro@8bytes.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:nabige.aala@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[nabige.aala@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-111027-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:github.com@herrie.org,m:andersson@kernel.org,m:clrkwllms@kernel.org,m:conor+dt@kernel.org,m:devicetree@vger.kernel.org,m:konradybcio@kernel.org,m:krzk+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-rt-devel@lists.linux.dev,m:robh@kernel.org,m:bigeasy@linutronix.de,m:rostedt@goodmis.org,m:conor@kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	FORGED_SENDER(0.00)[tglx@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORWARDED(0.00)[lists@lfdr.de];
+	RSPAMD_URIBL_FAIL(0.00)[sashiko.dev:query timed out];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[nabige.aala@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[tglx@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,sashiko.dev:url]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 87BDA639343
+X-Rspamd-Queue-Id: 6586C639868
 
-Register the Shikra MDSS display subsystem in both the SMMU ACTLR
-client table (for TLB prefetch tuning) and the SMMU client match table.
+On Sun, May 31 2026 at 06:09, Herman van Hazendonk wrote:
+> + *
+> + *   1. Hierarchical irqdomain: for MPM pins that map to GIC SPIs (USB,
+> + *      HDMI, ...). Consumers wire their interrupts through this
+> + *      controller via interrupts-extended and the kernel manages
+> + *      enable / mask / set_type / set_wake via the IRQ subsystem.
+> + *
+> + *   2. Raw-pin API: for MPM pins that do NOT correspond to a GIC IRQ
+> + *      (SDC3_DAT1=21, SDC3_DAT3=22, SDC4_DAT1=23, SDC4_DAT3=24).
+> + *      These are physical wake-signal lines monitored by MPM
+> + *      directly. Consumers (mmci for SDC4 wake) call
+> + *      msm8660_mpm_set_pin_wake() etc. The consumer API establishes
+> + *      a device_link from consumer to producer so the MPM device
+> + *      cannot disappear while a consumer holds a handle.
 
-Shikra MDSS uses qcom,shikra-mdss as its sole compatible string, so
-explicit entries are required — there is no fallback to qcom,qcm2290-mdss
-to fall back on. The prefetch settings mirror qcm2290-mdss
-(PREFETCH_SHALLOW | CPRE | CMTLB) as Shikra shares the same display
-hardware block.
+Why can't this be described in the device tree?
 
-No entry is needed in qcom_smmu_impl_of_match: Shikra's apps_smmu
-carries qcom,smmu-500 as a fallback and is covered by the catch-all
-entry there.
+> +
+> +struct msm8660_mpm {
+> +	struct device *dev;
+> +	void __iomem *base;
+> +	struct irq_domain *domain;
+> +	struct msm8660_mpm_pin *pin_map;
+> +	unsigned int pin_map_count;
+> +	int parent_irq;
+> +	struct mbox_client mbox_client;
+> +	struct mbox_chan *mbox_chan;
+> +};
 
-Signed-off-by: Nabige Aala <nabige.aala@oss.qualcomm.com>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 +++
- 1 file changed, 3 insertions(+)
+https://docs.kernel.org/process/maintainer-tip.html#struct-declarations-and-initializers
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index e2c914fccd6f..3dfee947e2c9 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -45,6 +45,8 @@ static const struct of_device_id qcom_smmu_actlr_client_of_match[] = {
- 			.data = (const void *) (PREFETCH_DEFAULT | CMTLB) },
- 	{ .compatible = "qcom,qcm2290-mdss",
- 			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
-+	{ .compatible = "qcom,shikra-mdss",
-+			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
- 	{ .compatible = "qcom,sa8775p-mdss",
- 			.data = (const void *) (PREFETCH_DEFAULT | CMTLB) },
- 	{ .compatible = "qcom,sc7280-mdss",
-@@ -410,6 +412,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
- 	{ .compatible = "qcom,mdp4" },
- 	{ .compatible = "qcom,mdss" },
- 	{ .compatible = "qcom,qcm2290-mdss" },
-+	{ .compatible = "qcom,shikra-mdss" },
- 	{ .compatible = "qcom,sar2130p-mdss" },
- 	{ .compatible = "qcom,sc7180-mdss" },
- 	{ .compatible = "qcom,sc7180-mss-pil" },
+Please read the rest of this document too.
 
--- 
-2.34.1
+> +
+> +/*
+> + * Singleton - there is only one MPM instance per SoC. msm8660_mpm_get()
+> + * returns this. Updates are serialised through the binding lifecycle so
+> + * a plain pointer is sufficient.
+> + */
+> +static struct msm8660_mpm *msm8660_mpm_global;
+> +
+> +static u32 msm8660_mpm_read(struct msm8660_mpm *mpm, unsigned int reg)
+> +{
+> +	return readl_relaxed(mpm->base + reg);
+> +}
+> +
+> +static void msm8660_mpm_write(struct msm8660_mpm *mpm, unsigned int reg,
+> +			      u32 val)
 
+No line break required. You have 100 characters. All over the place.
+
+> +static int msm8660_mpm_pin_to_hwirq(struct msm8660_mpm *mpm, int pin)
+> +{
+> +	int i;
+> +
+> +	for (i = 0; i < mpm->pin_map_count; i++) {
+
+for (int i = 0; ....
+
+> +		if (mpm->pin_map[i].pin == pin)
+> +			return mpm->pin_map[i].hwirq;
+> +	}
+> +	return -ENOENT;
+> +}
+> +
+> +/*
+> + * IPC handler: MPM fires this IRQ when one or more enabled wake pins
+> + * have pending activity. Read pending status, CLEAR the pending bits
+> + * BEFORE dispatching the per-pin handlers so a fresh edge that arrives
+> + * during dispatch cannot be wiped out by a later CLEAR write, then
+> + * replay each pending pin through the irqdomain.
+> + */
+> +static irqreturn_t msm8660_mpm_irq(int irq, void *data)
+> +{
+> +	struct msm8660_mpm *mpm = data;
+> +	unsigned long pending[MSM8660_MPM_REG_WIDTH];
+> +	unsigned long enable[MSM8660_MPM_REG_WIDTH];
+> +	int i, j;
+
+See documented variable ordering and put the iterator variables into context.
+
+> +static void msm8660_mpm_enable_hwirq(struct irq_data *d, bool enable)
+> +{
+> +	struct msm8660_mpm *mpm = irq_data_get_irq_chip_data(d);
+> +	int pin;
+> +	u32 val, mask;
+
+See docs
+
+> +static int msm8660_mpm_domain_alloc(struct irq_domain *domain,
+> +				    unsigned int virq, unsigned int nr_irqs,
+> +				    void *data)
+> +{
+> +	struct msm8660_mpm *mpm = domain->host_data;
+> +	struct irq_fwspec *fwspec = data;
+> +	struct irq_fwspec parent_fwspec;
+> +	irq_hw_number_t hwirq;
+> +	int i, ret;
+> +
+> +	if (fwspec->param_count != 2)
+> +		return -EINVAL;
+> +
+> +	hwirq = fwspec->param[0];
+> +
+> +	for (i = 0; i < nr_irqs; i++)
+> +		irq_domain_set_hwirq_and_chip(domain, virq + i, hwirq + i,
+> +					      &msm8660_mpm_chip, mpm);
+
+See bracket rules.
+
+> +static void msm8660_mpm_remove(struct platform_device *pdev)
+> +{
+> +	struct msm8660_mpm *mpm = platform_get_drvdata(pdev);
+> +
+> +	/*
+> +	 * Tear down in strict reverse order: drop the singleton so new
+> +	 * consumers cannot grab a handle, free the IRQ so the handler
+
+How is that serialized against a concurrent consumer request?
+
+Also please look at:
+
+   https://sashiko.dev/#/message/20260531043213.D18801F00893%40smtp.kernel.org
+
+Thanks,
+
+        tglx
 
