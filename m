@@ -1,267 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-110920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id ERE9JQr3H2pftQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 11:42:34 +0200
+	id ZgEBMGT8H2p2tgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 12:05:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B0E76363F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 11:42:34 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D75863666B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 12:05:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=siliconsignals.io header.s=selector1 header.b=MKSkdCbz;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110920-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110920-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=siliconsignals.io;
-	arc=reject ("cv is fail on i=2")
+	dkim=pass header.d=leemhuis.info header.s=key2 header.b=lJVV++GO;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110922-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110922-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AE9EE303DD23
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 09:36:30 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3B5063001C6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 10:05:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F302C39A4C4;
-	Wed,  3 Jun 2026 09:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD75C44B68E;
+	Wed,  3 Jun 2026 10:05:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazon11021126.outbound.protection.outlook.com [40.107.57.126])
+Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549D5374E60;
-	Wed,  3 Jun 2026 09:36:28 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780479389; cv=fail; b=L8eu2UkrCkXv44AyPnQeDewwCpKbnb8tAznOMf/hR7Jf1ZIRJKpxRmihtHJXi33PkiWOA4Zf05f3QGWBYNu4xPv10yJ+QyPfQ4hqrzTyy2XUd9VHc4Iq6rrqfYzp5tS0MEw6Bez6dfjnQsNrU7o6XXtLCE6f5gWBlmDPtaocohY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780479389; c=relaxed/simple;
-	bh=unOEWAyOxR5TJCmzKZRzMSIiYygogNysdJLnyAyLy24=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=EcQ4N8UXt4aImStcNFwNEIYDRN1P7ZJbIog6lOt63Q0PdkF1WC17Nb/1a5+R20N9DedKOq3dD5Lv2Y5rKWy/oypZ0Rw5f15gxtYFsPwGBA2BKfbfSuNH3DMdUY9+k+/njJAmKAM+FPo30Y4Zw7W5PrIV9JrlRShEN3EwLV2F2aI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=siliconsignals.io; spf=pass smtp.mailfrom=siliconsignals.io; dkim=pass (2048-bit key) header.d=siliconsignals.io header.i=@siliconsignals.io header.b=MKSkdCbz; arc=fail smtp.client-ip=40.107.57.126
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Axk9U8ygkiM/uVRI+B5NE3EaNm618xFB8nOPs58K+C2q+UsmX8RIQULJcJHmcbraW+bRiu6DgIzp4KTXx8vByXgGc5KfcwZysteWKfWej4tsnmkXUR4B5nBWfMy2QafzOf9JCw9M8EGVGiD7L/U/HiMRUVzt3WKkvn6v7w4+kKtGYcp0rrVi+Ib4wP6qSnPMSs0sW7e8Q+cOl467naGqH3GNnBnDicNUDH0hxGbXYwqdmpx21tlsh5GnXK798zwQKpUCDhu8UWYjyqxPTWTNUnBl0ZBrcBZ4Tq5Zjw2s+LzKWFN2cnUwFcucWNcXis+T+x3uTQ4tw/vEbXp2fGRiwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YT8HLXCn0NCh1OtDEeFwD8OhKDKecenERhpus6pXFhA=;
- b=Q31Ww9qRTIRLwcJtb8Q/ID0jP9YKTsS6UznKTJK3Ce+ndmL1motyWlJLTxFpy9EXU4WLLWm16mzjSlgfYo/cr4dkzle9YDLaA4aYdOv+eVMoKQTlzorFs1GqYICyZJa/zl+z0mAAgOVmD4lVnqWqGb3QYLpFsdiHbVOKi9jx1VS/ZIws4C1lI0CWF3sO3CgG30+YbR4s4IrbYLujnQRUBthRMtdm8Hp1FWJw10OPV54BLxN3b5Q/dauDI+wqgNGBiDbJCHrFOWFybVefDw0p/108cWV5JNusNspPpHGUJNfeRM/4hZ2XWEZ+iWxYFgQg9kGGNhIZwIz7yBHpTkRw7Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siliconsignals.io; dmarc=pass action=none
- header.from=siliconsignals.io; dkim=pass header.d=siliconsignals.io; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siliconsignals.io;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YT8HLXCn0NCh1OtDEeFwD8OhKDKecenERhpus6pXFhA=;
- b=MKSkdCbzpUQkaJ4Yl9Bd28ND5avA8EwYGkPwikZWWs1YEhlkVI+DC0uiCxKG8+ytjBFxPq5Ga5t6TNEB2y0IDQXhQgR6ERQk8ozIoNTlfymf4xNhlT2tyLe+eb3VYds/Ya3Z//SNWH0kOzYWNTEz0gj4PvahgDqA7nPk7Nnb5TuGmyOGnaih55hzz1MYjyebPGCDIhilsTR5cZHn/AsfJIlt36Z1E7u6ipa6p2rYTb7MzDchfk8VGRCdMGFGuWP+/SG0cis2r3EXFafk/fXKVOIpzhN0AWYgShQW7UHhba24TLh6D6i0H6fCy3cpelIllV5HdEfQkuj/7NWiqZE/GA==
-Received: from PN0P287MB2019.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:1b8::9)
- by PN0P287MB1315.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:189::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.92.7; Wed, 3 Jun 2026
- 09:36:23 +0000
-Received: from PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
- ([fe80::ebd8:538d:c705:8432]) by PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
- ([fe80::ebd8:538d:c705:8432%6]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
- 09:36:21 +0000
-From: Himanshu Bhavani <himanshu.bhavani@siliconsignals.io>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: "sakari.ailus@linux.intel.com" <sakari.ailus@linux.intel.com>, Hardevsinh
- Palaniya <hardevsinh.palaniya@siliconsignals.io>, Mauro Carvalho Chehab
-	<mchehab@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
-	<krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson
-	<andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Hans Verkuil
-	<hverkuil+cisco@kernel.org>, Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Elgin Perumbilly
-	<elgin.perumbilly@siliconsignals.io>, Laurent Pinchart
-	<laurent.pinchart@ideasonboard.com>, Xiaolei Wang
-	<xiaolei.wang@windriver.com>, Walter Werner Schneider
-	<contact@schnwalter.eu>, Kate Hsuan <hpa@redhat.com>, Svyatoslav Ryhel
-	<clamor95@gmail.com>, "linux-media@vger.kernel.org"
-	<linux-media@vger.kernel.org>, "devicetree@vger.kernel.org"
-	<devicetree@vger.kernel.org>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 1/3] dt-bindings: media: i2c: Add imx576 sensor
-Thread-Topic: [PATCH 1/3] dt-bindings: media: i2c: Add imx576 sensor
-Thread-Index: AQHc6E/KOlaCH/7z5kGlzhhM3jiXALYYRvQAgAs36o6AAAmlAIAJH5xB
-Date: Wed, 3 Jun 2026 09:36:21 +0000
-Message-ID:
- <PN0P287MB20195C8D66568AE3CB568EC49A132@PN0P287MB2019.INDP287.PROD.OUTLOOK.COM>
-References: <20260520115641.11729-1-himanshu.bhavani@siliconsignals.io>
- <20260520115641.11729-2-himanshu.bhavani@siliconsignals.io>
- <20260521-adept-lorikeet-of-elevation-5fceef@quoll>
- <PN0P287MB2019122FF174F05F43EB07229A092@PN0P287MB2019.INDP287.PROD.OUTLOOK.COM>
- <e20b0027-c0ee-4ad2-8f5f-d1b4f610c539@kernel.org>
-In-Reply-To: <e20b0027-c0ee-4ad2-8f5f-d1b4f610c539@kernel.org>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PN0P287MB2019:EE_|PN0P287MB1315:EE_
-x-ms-office365-filtering-correlation-id: ed96dce6-7094-412c-a508-08dec1539284
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|7416014|1800799024|366016|38070700021|56012099006|4143699003|3023799007|22082099003|18002099003;
-x-microsoft-antispam-message-info:
- AWdTxL9Sveec2X4DYaCnr77Q+pWEXBgDXqLf8eJf3ugch0021pim++8UuWaymqFhwz9d29iNm+7eiwGuXNgKBQ9OFw+ZfbNfKDu1Nbtank2WpRyTf8MUMtvz17ocqb/usyYjhd4Jw/dVNT4aZ/SUMmy7ZCmuFH90ZWbAuKA6wdr6vu/5y+xvx3Jf4lqGSi37VYkcS4zQVvMXfAIoiiUOHrlVKpK+pn+ocBWM5kkhgDykPg1SMmDxpZ09AhWa1X32EPb9i3upgrp1hkrEo9cmGxp68wFGTgoTTjtgejgUqY5sniJhdlehhgAHgLpRpSJ25CijdHHg+V6KPC3NGfE259vURXOtbBuo9V5bh3cDItib14k5th/K5Sj89EyC9gOSOHEtBc32Z94oXS27Gy72RmMykBsHaTG9FvaEpbHl+nj0f00lnv1DL+GZ4dsE0YivYWJsW4KomYQCksyIrFXivYUdZBQoUXAlpmJewR+Km21Pr6f954zs+QdvGQBEHJrn52PqEoSN7Mkes/GURDGYuXTE60CiHAXop2RpfmUrnh59dz+p9jAPwFWl6XcWPTmnzcSufLo8pz0BRUnX07ZSDRKSG88vpKTtnAk3L9ZJA4MVYVUF3XtTYBsMB9INr+XcIGD1Bs4YcbSZgxHL9BwoZOxdHQQbXWd5DUBTV5CVhJJc43bKzWxTiIEY1xj1AsvCp13hv8OhnQd4qOsg6qwVGQ==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PN0P287MB2019.INDP287.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700021)(56012099006)(4143699003)(3023799007)(22082099003)(18002099003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?B3EGSZkYyjDmkcvznsH27jgSWtjbC5abbhSAPHcBb0zyBdnXkJJSBg2mGf?=
- =?iso-8859-1?Q?xe5ksSdH87f0476AYJBTTztgj+8xlq1zodS1WsW4PfxU6uaGKdoMAdz8y1?=
- =?iso-8859-1?Q?nQbensPujd/CbIWlqtBi/JRbMMShUzjeNwLFU8XULvgpEP+dArnFAbLe16?=
- =?iso-8859-1?Q?qrJC1RaQdP0uQseL6PmkMUk848jNYy4sc2lkEWuDpg8HvvC3oSNFJmT4oT?=
- =?iso-8859-1?Q?PJPlQXv+FBgJ2D1ua6nGKaSEaSul+jPkTBm2l/DTPp1IpWcBkgTIIiycTJ?=
- =?iso-8859-1?Q?AZCT4P3ysioy5diWqJBUsv9RjV68R/cJ6j/j7pgmRB5V04euXACYP0vciZ?=
- =?iso-8859-1?Q?EJwwwz7Jb12noy52RGyUiBTkJgQlEcYgiKwwZpMhHPkTn6YbXOcKX5j9ET?=
- =?iso-8859-1?Q?ZiL5oNy7MaGDaLqerGyI1LZPyjI431NTQMUXajfcw7WULM4keg5UAVn1zD?=
- =?iso-8859-1?Q?/rz3f4siuZINb6I9t4ly9Jl+GkJ49UHpBSdQUcoxwGigu4xXqiRJG+rBKM?=
- =?iso-8859-1?Q?er5ZHj97q86JuR2dYV/QixGM+DrdAU7zMGENHa20c4B/5LMAX6s11x7sLA?=
- =?iso-8859-1?Q?Q1Cw2DbNrnT/WTjA5W8HHPpp1IrJCsluiIaS2Tp3BdYG2eMabupoY9zAc5?=
- =?iso-8859-1?Q?jQ6+m12lB9/G49cD4UQ6yMzE/9vjgE/HjdtjzbkceTHh0lmtxe1XD4xNEP?=
- =?iso-8859-1?Q?h08XpPWv86Q59VOIIwuQd8/ni76LKhQws50B3xuqrvw3eCdyygRn25aWL0?=
- =?iso-8859-1?Q?pVj7OnKHkks/4dovy+hMjRA9YfYxwvDOfuCVae2mDeoUfA/QrvrahbwJiu?=
- =?iso-8859-1?Q?1xagdcKUPROb3Sm6XRRhI/bFoPcV7jKQPcPHWP69YMx334Dn9y0m+lKxZQ?=
- =?iso-8859-1?Q?Sw4SiLFGzc3z3nq6yWd53NCeeKoIAXuHtByof7qlcN0PDa3w0K+HIJGEAH?=
- =?iso-8859-1?Q?2+HdcU4J6g3nStM+numWMnc6XnkL0JNHIjL4lBBtxop6Ht2omVkZ3r9jV8?=
- =?iso-8859-1?Q?mzeyHjzpRhQxox+HfVfJQ/nC9pzamxM9Fz8xOOo3JoTzUPGsA2cKM0HGCl?=
- =?iso-8859-1?Q?+Per23we5urDQPVt6eCIM0VU87NZ+iOKCuPfvDzrOTTs38Gy63Gyd51YA/?=
- =?iso-8859-1?Q?VUL9NU4C4imsEJhd9ilKBgSe2nWz/BrxFk8qZWVwIgYHQ5/ivSJ9jFmowq?=
- =?iso-8859-1?Q?sj/rTh98Gjz1ShIah+xFSQXmxiKHnN1K92ZOG1HZClrXad4tV3KaVabpf6?=
- =?iso-8859-1?Q?nQ6sWqDOZ3uGaM6G0wd3aYh1HoGq28csRNIC/YwNv2s9GWgYE92JYypqkh?=
- =?iso-8859-1?Q?mjJQizAiVnfj1L27ldHPlHo/OvpYnFjoCHpYZU+Do3uj4MKZimQ1I0M6y9?=
- =?iso-8859-1?Q?OXMsy6Bwin2fskNSRhwUumFeImr6tRX3NDAm0QaikBlBNG7rYg9O8sFqcr?=
- =?iso-8859-1?Q?SPgRx5htv7R2ot3gVjMuqKoDHvx9QHPZqpOQ80sELTPWCd2ns50nkdhbwP?=
- =?iso-8859-1?Q?LTN/oUkquV1X63f7csVb9tR8jeiSM9b3eM7u8LJ7AtjJ4kea+r8K7QZWGK?=
- =?iso-8859-1?Q?mSyLWK5P6H0J6KC4d7d5eKUecVwVkoMCPvw7solWtpVeEoXrMhvSOmt/f7?=
- =?iso-8859-1?Q?8y7dco4255V5aCb9ADgTaM8trgAVRU6ERoyZMnJL9pI0OcTO7p4cvU6I4n?=
- =?iso-8859-1?Q?CoziUyRFZjYlaJkaDP+6acAR+tU+kOh5EieaMvqbilwGLw5qL8AoiwWBfu?=
- =?iso-8859-1?Q?h/ZabkajNHKnWhU5FDVDGsNsmWyeGf0dZIoLj6GRBmubaj7FIG3pohFHBm?=
- =?iso-8859-1?Q?aD0TupCstpPPEMYiJxfzxahFfXl+oYs=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A5144BCA1;
+	Wed,  3 Jun 2026 10:05:17 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780481120; cv=none; b=iE/Pai5KXwuEb/D0pQcEsr7FmDXWoNStJPViHC7Ikc4D5Bp4fuSwFNq2FddR+52GVxrI/aihuahePqmUVfvRC3hLbIQgFw42G0DacGsYbdi+RkVdCpwFLSw5y/pwBGpSAEofLwtxlDUqAzdAF/lCNRveHz1bKmos6ImzwrDV45Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780481120; c=relaxed/simple;
+	bh=pPdgNJnhX2PrU1X4qnCxIVn7py/OIeTqDE4or41kmYg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c1JtsUHmeZ1up0WIDDk7lczPNm+G0sGTgkjQy1ueGIcTOgk77VGfLSPmU34bKGdUHKjVNqyQFHvcVyd/TB38yAjwDfLk7+WkXOad4EU+NSss5n9yArGj6FyTlazZz42MzTvqu61akdDSdRK/WYE0npU3z+UwtZZCge66RO/fObk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=lJVV++GO; arc=none smtp.client-ip=188.68.63.166
+Received: from mors-relay-8202.netcup.net (localhost [127.0.0.1])
+	by mors-relay-8202.netcup.net (Postfix) with ESMTPS id 4gVjxS0Prhz41qj;
+	Wed,  3 Jun 2026 12:05:16 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=leemhuis.info;
+	s=key2; t=1780481116;
+	bh=pPdgNJnhX2PrU1X4qnCxIVn7py/OIeTqDE4or41kmYg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=lJVV++GOVSYt7b90Y4lHdWNNN/nVk7GrgSQtnDAqDFjxwreWHBvCu2X2ZBuqcHxai
+	 E5FGkWkMnALXy8Z7uHWnsaWmUlEchCG8M90hcYLPrvjh+T9IOgFdxulRvoYVaFjjqL
+	 flUkKVaaOFxNQbJRESLlVQAeuqCbcnsTxWwp/RHmzBxWq599quImmbtM7UdJ62QAby
+	 yaPGYf+8LM6s/OzJeR1YVN1vlzTE2GeDTWP97PKKU8vt/JW4FHxLgxntwNI9l2A4Tq
+	 n/5t4o6SW9wgy1voHxwGhz7uchnXs/m6LIfaOc30N8IY4Wl+B9xa6D6DdcmfhJHV1Z
+	 3DIQjzSrMekOg==
+Received: from policy01-mors.netcup.net (unknown [46.38.225.35])
+	by mors-relay-8202.netcup.net (Postfix) with ESMTPS id 4gVjxR6mb4z3xJ6;
+	Wed,  3 Jun 2026 12:05:15 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at policy01-mors.netcup.net
+X-Spam-Flag: NO
+X-Spam-Score: -2.899
+X-Spam-Level: 
+Received: from mxe9fb.netcup.net (unknown [10.243.12.53])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by policy01-mors.netcup.net (Postfix) with ESMTPS id 4gVjxQ2YYJz8tZd;
+	Wed,  3 Jun 2026 12:05:14 +0200 (CEST)
+Received: from [IPV6:2a02:8108:8984:1d00:a0cf:1912:4be:477f] (unknown [IPv6:2a02:8108:8984:1d00:a0cf:1912:4be:477f])
+	by mxe9fb.netcup.net (Postfix) with ESMTPSA id D3F2B5FA20;
+	Wed,  3 Jun 2026 11:56:15 +0200 (CEST)
+Received-SPF: pass (mxe9fb: connection is authenticated)
+Message-ID: <114b9be8-1fca-4762-822e-1d53838d5de5@leemhuis.info>
+Date: Wed, 3 Jun 2026 11:56:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: siliconsignals.io
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PN0P287MB2019.INDP287.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: ed96dce6-7094-412c-a508-08dec1539284
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2026 09:36:21.7188
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7ec5089e-a433-4bd1-a638-82ee62e21d37
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 7T6Oz1RrNis1i5zp9zhvJzeqObTlDGAeO3K94Pj3nKfr0LOo5rYZZJmMJpsBy21m0ftXNJbrp+JZZvMACXdXJKOdqhmimNL9CT/KOlBiXW5nqDklqU2Z1sOQj316Beru
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN0P287MB1315
+User-Agent: Mozilla Thunderbird
+Subject: Re: [REGRESSION] Resolutions broken after "drm/msm: dsi: fix PLL init
+ in bonded mode"
+To: neil.armstrong@linaro.org, Mohit Dsor <mohit.dsor@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ vishnu.saini@qualcomm.oss.com,
+ Linux kernel regressions list <regressions@lists.linux.dev>
+References: 
+ <20251027-topic-sm8x50-fix-dsi-bonded-v1-1-a477cd3f907d@linaro.org>
+ <ae07cef84AmXK43H@hu-mdsor-hyd.qualcomm.com>
+ <wrhuksrzlxw2pjlvjm37dwjuztcv7qs5t6mqiav4ujecwqdkwj@ozbfxpbgaimt>
+ <CAJfMnmEVwUwt=wMJ-8HKH1yz9+erWLrRGB+6wVYCdSGDK+_T_Q@mail.gmail.com>
+From: Thorsten Leemhuis <regressions@leemhuis.info>
+Content-Language: de-DE, en-US
+X-Enigmail-Draft-Status: N11222
+Autocrypt: addr=linux@leemhuis.info; keydata=
+ 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 MEK4
+In-Reply-To: 
+ <CAJfMnmEVwUwt=wMJ-8HKH1yz9+erWLrRGB+6wVYCdSGDK+_T_Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-PPP-Message-ID: 
+ <178048057627.3107155.17534295353220760642@mxe9fb.netcup.net>
+X-NC-CID: z1MsFiVcCJunZd2oROBxLRLnrgFD6ue7Cr/uOXVEQD7T8aZ1lCM=
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [1.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[siliconsignals.io,quarantine];
-	R_DKIM_ALLOW(-0.20)[siliconsignals.io:s=selector1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[leemhuis.info:s=key2];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110920-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:krzk@kernel.org,m:sakari.ailus@linux.intel.com,m:hardevsinh.palaniya@siliconsignals.io,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:hverkuil+cisco@kernel.org,m:johannes.goede@oss.qualcomm.com,m:vladimir.zapolskiy@linaro.org,m:elgin.perumbilly@siliconsignals.io,m:laurent.pinchart@ideasonboard.com,m:xiaolei.wang@windriver.com,m:contact@schnwalter.eu,m:hpa@redhat.com,m:clamor95@gmail.com,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:conor@kernel.org,m:hverkuil@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[himanshu.bhavani@siliconsignals.io,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	FREEMAIL_CC(0.00)[linux.intel.com,siliconsignals.io,kernel.org,oss.qualcomm.com,linaro.org,ideasonboard.com,windriver.com,schnwalter.eu,redhat.com,gmail.com,vger.kernel.org];
+	FORGED_SENDER(0.00)[regressions@leemhuis.info,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-110922-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[leemhuis.info:+];
 	MIME_TRACE(0.00)[0:+];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:neil.armstrong@linaro.org,m:mohit.dsor@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:vishnu.saini@qualcomm.oss.com,m:regressions@lists.linux.dev,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	DMARC_NA(0.00)[leemhuis.info];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email,leemhuis.info:mid,leemhuis.info:from_mime,leemhuis.info:dkim];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[himanshu.bhavani@siliconsignals.io,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[regressions@leemhuis.info,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[siliconsignals.io:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,siliconsignals.io:dkim,siliconsignals.io:from_mime,siliconsignals.io:email,vger.kernel.org:from_smtp,devicetree.org:url]
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1B0E76363F6
+X-Rspamd-Queue-Id: 2D75863666B
 
-Hi Krzysztof,=0A=
-=0A=
-sorry for late reply.=0A=
-=0A=
->On 28/05/2026 15:42, Himanshu Bhavani wrote:=0A=
->> Hi Krzysztof,=0A=
->>=0A=
->>> On Wed, May 20, 2026 at 05:26:33PM +0530, Himanshu Bhavani wrote:=0A=
->>>> From: Hardevsinh Palaniya <hardevsinh.palaniya@siliconsignals.io>=0A=
->>>>=0A=
->>>> Add bindings for Sony IMX576 sensor=0A=
->>>>=0A=
->>>> Signed-off-by: Hardevsinh Palaniya <hardevsinh.palaniya@siliconsignals=
-.io>=0A=
->>>> ---=0A=
->>>>  .../bindings/media/i2c/sony,imx576.yaml       | 111 +++++++++++++++++=
-+=0A=
->>>>  MAINTAINERS                                   |   7 ++=0A=
->>>>  2 files changed, 118 insertions(+)=0A=
->>>>  create mode 100644 Documentation/devicetree/bindings/media/i2c/sony,i=
-mx576.yaml=0A=
->>>>=0A=
->>>> diff --git a/Documentation/devicetree/bindings/media/i2c/sony,imx576.y=
-aml b/Documentation/devicetree/bindings/media/i2c/sony,imx576.yaml=0A=
->>>> new file mode 100644=0A=
->>>> index 000000000000..b74253004fae=0A=
->>>> --- /dev/null=0A=
->>>> +++ b/Documentation/devicetree/bindings/media/i2c/sony,imx576.yaml=0A=
->>>> @@ -0,0 +1,111 @@=0A=
->>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)=0A=
->>>> +%YAML 1.2=0A=
->>>> +---=0A=
->>>> +$id: http://devicetree.org/schemas/media/i2c/sony,imx576.yaml#=0A=
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#=0A=
->>>> +=0A=
->>>> +title: Sony IMX576 Image Sensor=0A=
->>>> +=0A=
->>>=0A=
->>> Everything looks the same as imx577, so just add it next to that one. N=
-o=0A=
->>> need for new file.=0A=
->>>=0A=
->>> Best regards,=0A=
->>> Krzysztof=0A=
->>=0A=
->> The regulator names differ between imx577 and imx576.=0A=
->>=0A=
->> imx577 uses avdd, dovdd, dvdd supplies while imx576 uses vana, vdig, vif=
- supplies.=0A=
->=0A=
->I don't understand. I look  at imx576 and I see:=0A=
->=0A=
->+  avdd-supply:=0A=
->+    description: Analog Domain Power Supply (2.8v)=0A=
->+=0A=
->+  dovdd-supply:=0A=
->+    description: I/O Domain Power Supply (1.05v)=0A=
->+=0A=
->+  dvdd-supply:=0A=
->=0A=
->Best regards,=0A=
->Krzysztof=0A=
-=0A=
-That was my mistake. The IMX576 datasheet uses VANA, VDIG, and VIF supplies=
-.=0A=
-=0A=
-which was corrected by Luca here https://lore.kernel.org/linux-media/DINHRD=
-C35RER.Q143U5P4ZV9O@fairphone.com/=0A=
-=0A=
-Best Regards,=0A=
-Himanshu=
+On 5/4/26 22:09, Mohit Dsor wrote:
+> Sorry for the late reply. I am attaching clk_summary and reg_dump in
+> working and non working case. Lilliput is just a normal display working
+> with hdmi and has 720p as preferred mode. Yes, I was talking about RB3
+> Gen2 only.
+
+Neil, Dmitry, and Mohit: what's the status here? From the outside it
+looks like this regression is still unfixed with nothing happening for
+weeks now. Or has progress been made and I just missed it?
+
+Ciao, Thorsten
+
+> On Sun, Apr 26, 2026 at 4:14 AM Dmitry Baryshkov
+> <dmitry.baryshkov@oss.qualcomm.com
+> <mailto:dmitry.baryshkov@oss.qualcomm.com>> wrote:
+> 
+>     On Sun, Apr 26, 2026 at 03:38:49AM +0530, Mohit Dsor wrote:
+>     > Hi Neil, all,
+>     >
+>     > We are seeing a regression after:
+>     >
+>     > drm/msm: dsi: fix PLL init in bonded mode
+>     > https://lore.kernel.org/r/20251027-topic-sm8x50-fix-dsi-bonded-
+>     v1-1-a477cd3f907d@linaro.org <https://lore.kernel.org/r/20251027-
+>     topic-sm8x50-fix-dsi-bonded-v1-1-a477cd3f907d@linaro.org>
+>     >
+>     > Issue:
+>     > - Resolutions are broken after this change. Like if we try to run
+>     720p60 it will be 720p30.
+>     >   Even though the byte_clk is set correctly, the bridge is
+>     receiving half the byte clock.
+>     >   Some divider is getting set which is causing the byte_clk to get
+>     half, ultimately fps to
+>     >   get half. Some other resolutions may or may not be broken
+> 
+>     Please provide necessary excerpts from /sys/kernel/debug/clk/clk_summary
+>     for the working and for the broken cases. Also if there is a difference
+>     in DSI PHY registers, please capture those (see
+>     /sys/kernel/debug/dri/*/kms, provide necessary DSI PHY regs).
+> 
+>     > Reproduction:
+>     > - Used QNX RB3Gen2 Core kit with lilliput display and lt9611uxc
+>     dsi to hdmi bridge.
+> 
+>     What is lilliput? What is QNX RB3 Gen2? Is it the normal Thundercomm's
+>     RB3 Gen2 or some other board sold with the same name?
+> 
+>     > - Run 720p60 usecase on hdmi with dsi to hdmi bridge.
+>     >
+>     > Expected behavior:
+>     > - Display should support the expected resolutions correctly.
+>     >
+>     > Actual behavior:
+>     > - No display on lilliput display.
+>     >
+>     > Additional details:
+>     > - Reverting this change locally avoids the issue.
+>     >
+>     > Could you please take a look?
+>     >
+>     > Thanks,
+>     > Mohit
+> 
+>     -- 
+>     With best wishes
+>     Dmitry
+> 
+
 
