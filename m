@@ -1,193 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-111037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id V2qnH65WIGrV1QAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 18:30:38 +0200
+	id EdMLKrxXIGo/1gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 18:35:08 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14970639BD8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 18:30:38 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DBE0639C89
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 18:35:08 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=KmKmrL6P;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111037-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111037-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=herrie.org header.s=transip-a header.b=QYtq8dt0;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111038-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111038-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 418DF3074BEF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 16:22:49 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 1B3D730010E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 16:34:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F085D3E9C17;
-	Wed,  3 Jun 2026 16:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F1073E9C08;
+	Wed,  3 Jun 2026 16:34:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from outbound11.mail.transip.nl (outbound11.mail.transip.nl [136.144.136.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422CA3E959A;
-	Wed,  3 Jun 2026 16:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4DF39A079;
+	Wed,  3 Jun 2026 16:34:13 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780503767; cv=none; b=e5PBnanOok+eSiu6kHiMqSAdNsIJ0hIU/S5HUtS29CMHRkozIF/E7McRB1ael8Fm3j+23RL5D4H+otH7/WPaVYc++0QfqGJrLOfAlI8sGUtB1ETsaMbhzWpFjs7HPLjgIlVyzvLv0fX8gcWTrugS62AHqUVMBCjBMuJNEHa324Y=
+	t=1780504459; cv=none; b=cXtqQpCdL6AN0/2SHNZ5lss7FdbT9N6pmUztk6/IKT29R5braRWpniS+0HXnIyIogayUrJkVF3QoXkOkiyG4wwbLnHUFvGduvwHE3gRuukCV9wkGryN5vFxVTb1gA/IH9D8slpttfVKVoYDTAqwT4BN33taTudoeUjLeM4d2pRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780503767; c=relaxed/simple;
-	bh=LeFet8aJxtSJyQ13LV6ERwETBJSY/W0pancMKGK78HA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WxvYWu+9BGQzF8Uebrxml828YaldnAfKhdGxULNfaJjLrF73xDRVu521zZ/Vek4cWB5hDhfRV/r4+2t1X+s75u/51fIl06sABHXY5SYSONLu/+KrUmxEf6KB3yaYE7Z7aGWpEgt4OcE0vjUcyC1w1KZnTs/fp0Sp+eKz+g9UUbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KmKmrL6P; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024BF1F00893;
-	Wed,  3 Jun 2026 16:22:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780503765;
-	bh=CxPhfVSO1PMBoWPiKi9ZwlNxfl6TXOtrDKfoICaOCcw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=KmKmrL6PswCLcYojvpvZX8QoCfztwKuJFaEFgpHaGxc3Vpz4WNJTGjNXUOdXgBMPG
-	 pfvWqWoQhPOk9xY3gH/FSWhOZBMAJNdcTVkuJHaEyWSr/cUJ25JOb/wA87+CGgvHXq
-	 8XHpMxjqKz57R+JVa29dzsNEtBi83+f6n5FGjxq9GGtG+zV1XSEVZ0JvFzn7ctkqvQ
-	 65peuRFmiA22Veq9kCRGtqCIkm4VxBh1KBgl3MiXlW5TUyQq5VtyopJIJTmDuMz5A9
-	 m6OudFzZkl4NQNqflq8rui6SMZo0KpZecbcFwKBdkVPTowovyF4pt6+gQEpKWBADT1
-	 yIzkRHuRwpS8g==
-Message-ID: <b6f6323e-6f5b-4928-b474-bd2743eac3f2@kernel.org>
-Date: Wed, 3 Jun 2026 18:22:38 +0200
+	s=arc-20240116; t=1780504459; c=relaxed/simple;
+	bh=Ls9YNOyjqv9xby3NHUrvlbaMuhPviQdZ1jA4wXVtXcQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WW/8CXnklShBjRs3IgRVeKlOgpGYHPCzpcYstXUJVs4IYvT55qWZ0+9badYEMJtah2a7vQV2azAMTt+jZW4xJevMIHXJ8bKRkWTxCVNv2TOmTnML3m8nURUtUsatObzgr0XjUPnKeYkHDMDgBFmQDr3u7aYseIdx7OiLBhdkJjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=QYtq8dt0; arc=none smtp.client-ip=136.144.136.18
+Received: from submission3.mail.transip.nl (unknown [10.100.4.72])
+	by outbound11.mail.transip.nl (Postfix) with ESMTP id 4gVtZC4YVkzkQNbM;
+	Wed,  3 Jun 2026 18:34:11 +0200 (CEST)
+Received: from herrie-desktop.. (180-93-184-31.ftth.glasoperator.nl [31.184.93.180])
+	by submission3.mail.transip.nl (Postfix) with ESMTPA id 4gVtZC0gbrzf52bM;
+	Wed,  3 Jun 2026 18:34:11 +0200 (CEST)
+From: Herman van Hazendonk <github.com@herrie.org>
+To: djakov@kernel.org
+Cc: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Herman van Hazendonk <github.com@herrie.org>
+Subject: [PATCH 0/2] interconnect: qcom: add MSM8x60 (MSM8660/APQ8060) NoC driver
+Date: Wed,  3 Jun 2026 18:34:08 +0200
+Message-ID: <20260603163410.2312712-1-github.com@herrie.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/slab: improve kmem_cache_alloc_bulk
-Content-Language: en-US
-To: rob.clark@oss.qualcomm.com
-Cc: Christoph Hellwig <hch@lst.de>, Harry Yoo <harry@kernel.org>,
- Andrew Morton <akpm@linux-foundation.org>, Mark Brown <broonie@kernel.org>,
- Hao Li <hao.li@linux.dev>, Christoph Lameter <cl@gentwo.org>,
- David Rientjes <rientjes@google.com>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Jesper Dangaard Brouer <hawk@kernel.org>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, io-uring@vger.kernel.org,
- kasan-dev@googlegroups.com, bpf@vger.kernel.org, netdev@vger.kernel.org,
- Alexander Lobakin <aleksander.lobakin@intel.com>,
- Boris Brezillon <boris.brezillon@collabora.com>
-References: <20260528093437.2519248-1-hch@lst.de>
- <20260528093437.2519248-2-hch@lst.de>
- <5f7f90d8-cb32-4ffb-8f1c-0722aafbe869@kernel.org>
- <20260529135045.GA10647@lst.de>
- <5f3ba603-a6ad-4cf2-9a54-aebc10273c59@kernel.org>
- <58cc76e7-2348-443d-a989-2a06e61178af@kernel.org>
- <20260601113831.GA25535@lst.de>
- <d7b08296-7f6e-4d89-ab3b-04e43d04929e@kernel.org>
- <CACSVV00k-fxW6+waHNqvmYcnVNDkRexoWWprFzfayZfqdyMuuA@mail.gmail.com>
- <CACSVV00dNWgpNVU5rB=Hmg+3oWF18yTyfKNr_tWesjoP1jMxwg@mail.gmail.com>
- <5e6948b3-d235-4b61-aed7-e8b4d0f5b452@kernel.org>
- <CACSVV02v0Fuc6=Rqyd89D-_tcSjEXuQmxz0+2-4aoRAEwJE4zg@mail.gmail.com>
-From: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Autocrypt: addr=vbabka@kernel.org; keydata=
- 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
-In-Reply-To: <CACSVV02v0Fuc6=Rqyd89D-_tcSjEXuQmxz0+2-4aoRAEwJE4zg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-Scanned-By: ClueGetter at submission3.mail.transip.nl
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=transip-a; d=herrie.org; t=1780504451; h=from:subject:to:cc:date:
+ mime-version:content-type;
+ bh=jjeoKzD/DVr/ENOQbG3qxugLqPPqGCnMqtxH85Fdlsc=;
+ b=QYtq8dt0YlGMjuNFg3/C7t+T/EpEahJNsZqntn5e3s0bXM7tsSRG2cBwPc9Vp5AuOIR9nJ
+ wKF5azVnfx8lebPdwCHgScTtzQjUspv0t1NCVbITOdn0rzP4XJx1daMgCZAq5z75I0S5Uj
+ Dv+kKVUgpkvGCImd6TEGptOj9pqDhMUDTMganMf28BRhEuU24W6ahUo8dx3k2LOeEMRB+I
+ wWOvsfyoBrMfrp2lYX3ezjGADog3uJ1GsaR5V14+ha+j/saUMyOHyHA3f3xs4WE5sQJJ7B
+ OHugFKHMVjyEWDaXSwvbatvZ98bWZ/D1UogdlgFee+uorN1Oei+30vR7rMOL5w==
+X-Report-Abuse-To: abuse@transip.nl
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	MID_CONTAINS_FROM(1.00)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
+	R_DKIM_ALLOW(-0.20)[herrie.org:s=transip-a];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:rob.clark@oss.qualcomm.com,m:hch@lst.de,m:harry@kernel.org,m:akpm@linux-foundation.org,m:broonie@kernel.org,m:hao.li@linux.dev,m:cl@gentwo.org,m:rientjes@google.com,m:roman.gushchin@linux.dev,m:hawk@kernel.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:linux-mm@kvack.org,m:io-uring@vger.kernel.org,m:kasan-dev@googlegroups.com,m:bpf@vger.kernel.org,m:netdev@vger.kernel.org,m:aleksander.lobakin@intel.com,m:boris.brezillon@collabora.com,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[vbabka@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	TAGGED_FROM(0.00)[bounces-111037-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111038-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:djakov@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-pm@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:github.com@herrie.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
+	DMARC_NA(0.00)[herrie.org];
+	DKIM_TRACE(0.00)[herrie.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vbabka@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,herrie.org:mid,herrie.org:dkim,herrie.org:from_mime,herrie.org:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 14970639BD8
+X-Rspamd-Queue-Id: 0DBE0639C89
 
-On 6/3/26 13:13, Rob Clark wrote:
-> On Wed, Jun 3, 2026 at 2:17 AM Vlastimil Babka (SUSE) <vbabka@kernel.org> wrote:
->>
->> We know p->pages is NULL in this case, right? Because it was allocated by
->> vm_bind_job_create() using kzalloc().
->> And the job can't be reused with a leftover value?
->> (msm_iommu_pagetable_prealloc_cleanup doesn't set p->pages to zero).
->> Or should we set p->pages to NULL here.
-> 
-> Correct, the job is not reused.  But I suppose setting p->pages to
-> NULL would make things more obvious, so no objection to that.
+Add interconnect support for the MSM8x60 family (MSM8260, MSM8660,
+APQ8060) — Qualcomm's Scorpion dual-core SoC generation used in devices
+like the HP TouchPad, HTC EVO 3D and HTC Sensation.
 
-OK, did that, just in case. Thanks.
+The chip's Network-on-Chip fabric is divided into four sub-fabrics:
 
-> BR,
-> -R
-> 
->> > +
->> >         p->pages = kvmalloc_objs(*p->pages, p->count);
->> >         if (!p->pages)
->> >                 return -ENOMEM;
->> >
->> >         ret = kmem_cache_alloc_bulk(pt_cache, GFP_KERNEL, p->count, p->pages);
->> >         if (ret != p->count) {
->> > -               kfree(p->pages);
->> > +               kvfree(p->pages);
->> >                 p->pages = NULL;
->> >                 p->count = ret;
->> >                 return -ENOMEM;
->>
+  AFAB  - Applications fabric: Scorpion CPU + L2 cache, paths to EBI
+  SFAB  - System fabric: DMA engines, SPS, USB HS, LPASS, MSS
+  MMFAB - Multimedia fabric: MDP, GPU, camera (VFE/JPEG), video codec
+  DFAB  - Daytona fabric: eMMC/SD (SDC), ADM DMA, USB voter
+
+Bandwidth requests are committed to the RPM firmware via its shared-memory
+arbitration tables using the qcom-rpm driver backend; each fabric also has
+a bus clock whose rate is derived from the aggregated bandwidth.
+
+The driver includes a 384 MHz bus clock floor, replacing the previous
+266 MHz minimum that caused USB starvation on real hardware, and careful
+devm/device_link lifecycle to handle EPROBE_DEFER from both RPM and
+clock lookups without leaking clock prepare/enable references.
+
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+
+Herman van Hazendonk (2):
+  dt-bindings: interconnect: qcom: add msm8660 fabric IDs
+  interconnect: qcom: add MSM8x60 NoC driver
+
+ drivers/interconnect/qcom/Kconfig             |   14 +
+ drivers/interconnect/qcom/Makefile            |    2 +
+ drivers/interconnect/qcom/msm8660.c           | 1147 +++++++++++++++++
+ .../dt-bindings/interconnect/qcom,msm8660.h   |  156 +++
+ 4 files changed, 1319 insertions(+)
+ create mode 100644 drivers/interconnect/qcom/msm8660.c
+ create mode 100644 include/dt-bindings/interconnect/qcom,msm8660.h
+
+
+base-commit: 944125b4c454b58d2fe6e35f1087a932b2050dff
+-- 
+2.43.0
 
 
