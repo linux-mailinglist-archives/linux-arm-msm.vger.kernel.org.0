@@ -1,82 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-110952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id yBjsIqYWIGqWvgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 13:57:26 +0200
+	id nlllAr8WIGqavgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 13:57:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDCAF6373FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 13:57:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 77533637407
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 13:57:50 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=TZG2bb6d;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110952-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110952-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=dOeD0Csh;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110953-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110953-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id EE0773090874
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 11:51:05 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B18743128691
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 11:51:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6589E472785;
-	Wed,  3 Jun 2026 11:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 577FB45BD57;
+	Wed,  3 Jun 2026 11:50:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38213477E24
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2026 11:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C96477E37
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2026 11:50:42 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780487440; cv=none; b=SEJC21NwCr8qGnBhIwu+zmdgKOmpHSMhU6z1TQlTLbVOeSXPuY0tjKvzM2QytBR+I/qbhRYbVr/J8x1zEazMzDXQuapQhrbbvdm/Th/TTNnCNAExVop4PthPPlNENLXcgW1a/pLmkWQFtKQMI8qvcgM9YH6M4A+VASeJjTqMySE=
+	t=1780487444; cv=none; b=lQCoO70YdeQi/IvkruEejDDYRivfKCL6xPi0qDy9Mx3tNUQaZPqPTlPAANyeMQfOsQN6GCc0nsbkyoWSeCa6JFuW+3jpbm3AciyMEnIpXG65jyUW0PepyVWFPlHvyHLn9p8jNmc65jEmpBGeJWOjLlNgEh4ZyX+kfWv1GHIWV7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780487440; c=relaxed/simple;
-	bh=jjHgp/jZpuHSIFDNTXOtEU2uGayag8e8wk5Kamgfz9o=;
+	s=arc-20240116; t=1780487444; c=relaxed/simple;
+	bh=mW4eQXqnfxaB0c/JC7r7EXwbppQQR/dLCcxN+G/JGWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H1lBbiBOZKHV/4hT7iyiWsdRI/YmrqZWH4lVdBm4thbs5x021YmwTS6ABOqhh5JCBxAp5WhUaVfQqjJamUeKh14q9iiI1/LvLnUVx/z+262y/ggda+k9P31RrX+x3jNenMD04WpXtz6+csKr88fk3FrXQ35sm6NalpelXXsXOOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TZG2bb6d; arc=none smtp.client-ip=209.85.214.182
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2c0c3184c71so25403415ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 04:50:39 -0700 (PDT)
+	 MIME-Version; b=U/V+448MforbmgR6xqQscu3lFiL/Rj7PbyYKG8IvrbpdTOGQPH4RyQcmJfP/rAE/c67IVoM+vGE2WHEhaGC3+P0mG+F319NPvhoXjU0DVbtLBA6dPndc+Rp/JQXJeHNijS4bCIJvLbw85ND0bm5+tPcjV9D4O6hxv1M1nDGfO8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dOeD0Csh; arc=none smtp.client-ip=209.85.214.169
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2bf55c39e16so2310395ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 04:50:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780487438; x=1781092238; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780487442; x=1781092242; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aBfuXDyFUzLNioBdr/HkD5u66fuFdgp5SklAx/I+Qf8=;
-        b=TZG2bb6dCYNAVa7zqIQFWXwqguNGQMn7N7uNmcQxuBrsEfh6fk5JWY6uy1kVigOxLH
-         aeiELEHK1JmDSO9Zc1j23ie1Taguq51F04O89quwnQSLmrQxNbw18xyovnriFmWzm2NB
-         VxLWsgc2X7IlZ2lOF4OqalU5Q9QVpQrceeyouhwv4rKtP4dsr/Bmwe4Zo2NYYgIe7jco
-         TZONWHGQFGDqhb4P+Nc4v7rBVXbCX7LL7hhCm23Qlm6REQx7+ADrN46kSaWZju2qNAqq
-         ieprubN8DyrdLdUKdmswXAcBwejCPD/xlD6MIwMj+0EZhk/laM446YGtIBJy2UC9bNnm
-         d/Pg==
+        bh=v/cb7/Oh3wrVW6lTEgQSTGPGYUEEQIjXPznLNOjAVMo=;
+        b=dOeD0Csh2J9hCpo1AaEEl1z+VNNAE/NsFnLdeIyzE78YecNEmFb8cAdZFGAhzJOLIe
+         pwy93amfXkQO1ilD+mUH4EZfev+CYpfcU9ghQ1RFgFH2iDO6ilBUWt7ypt6qtFH8CG56
+         +DL1sFCze48VV8uv1hyGALHt4A5hXzGRKg79Ho2Ysv5/FWB0cBiiob4baZOAlJZhMb4K
+         I7KeofRucMuV/HIGtak77/KJ7OG5fKn1nmjMHY0/G7ofwiSKU3OY3NtCSjd+srx/jTLo
+         dH4Cc8LccLrAxSphyy8bALrk7vgoruAmJVppb8m0jtBle1UsCGoXFVN6O1+zzw752QdA
+         fZnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780487438; x=1781092238;
+        d=1e100.net; s=20251104; t=1780487442; x=1781092242;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=aBfuXDyFUzLNioBdr/HkD5u66fuFdgp5SklAx/I+Qf8=;
-        b=ihX5i2rii27JCu7rjbjV3QkFDmRYI9IX9c03HxUchFrqRtygOye5+ZBP1m8YmVSMrW
-         zxyrqaREOuLbcxDuy+mBkJvzYV+rmvC/YeMniqvbyXnWFDCDtg0C+C8fjid9AztL1dQv
-         q4rnNBq1ldqsKUozXGOOCtF3p4n/HD6HNEPo7UIvB52GtU/U30wFuZ5SqJ4lgTdic5GB
-         rmiwrTxF+AYSoDk7qsr/rxehZSWAsKnhb5t2QuuH/dVgIXmvXclpk5vg84XPj+irvcZ3
-         zjhnkrGg5AyP1zXcJ9Jt10HmXpvJdr71GSmfsFBFlHNIAN8SjIShK5NewhaJDIiWTrAj
-         dhrA==
-X-Forwarded-Encrypted: i=1; AFNElJ9qtqMfM4wieAGkzYVw1z5VreO/Exm11LN6/Ut9DPb61x8l1FgGgCeMnJB9XVm1Ot3Hpl964weRPkH0K1Ta@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHuv03gU0YMmN2ATKpTwpvLGwQ/+In7h8BD7FaLeZWbnLYV1sJ
-	UFPcO163qhUSOnZKSM1rAeFfRP2uVSrn1+RK18JZtycj6QtQmB0HU1R8
-X-Gm-Gg: Acq92OFbBwxcb3FjOwqE9Y07GWKs5LyatUoYug3D74rwaCjm+MRsntApktF9uFuqZty
-	5p+0ad6bzQdPykzG/TAPXg0z6VS2bGiCUm7hycc8/5xyBeRM9GgUilflCJhtzL/ndfgfYmsA3GP
-	roTPIZj7D5ISYArBLjvbf4ONHuebbQ47ZQP8ut2Egt7SYPg/vdAujyUDjMPZjPIa6Q2DnT+vL6I
-	WAEl+TGlIJdLDCj1OKKQcaK69NXLiRW9lMfVeOi2QypwGsQ7sslAHPF+LQmalZX4NJ3lv0VVgk4
-	qE3JczK0joReIs51hhEczR3EgY5pP9Pv2GL6lq8oLNqrSUkqCFR7KrA32Ge0dzzKPRd9S8IV35L
-	jgklbLZPHd+MfR67p4vb4xQyQ1+jbhgAs7lIyOT7MePorOWQuvpTOR0K4im1QCOEajfUYKKgWDK
-	57aDGmzFHJZNqUQszxjNxs1QIEdP9Fteh9GQTptImX9sudN4jGre6fatzJP3qb0f8Pxm0tZSVUx
-	m4sGL0=
-X-Received: by 2002:a17:903:b08:b0:2bf:77b2:8b2d with SMTP id d9443c01a7336-2c1644a63c5mr34036585ad.30.1780487438458;
-        Wed, 03 Jun 2026 04:50:38 -0700 (PDT)
+        bh=v/cb7/Oh3wrVW6lTEgQSTGPGYUEEQIjXPznLNOjAVMo=;
+        b=ObD9vENeeJTxbFQOIusi0VtDU5Dthw0SRy8ClUAQAaCgqt6/St8vfXU1o5B//xw7IB
+         l3LFlTwPwSgk+qduj/8t+2RfG2/ZTwFXdMnqsYDRuMmGGL5OK0bQKZS56lyKxQbELFi8
+         jCTV6GOwOGJYg906BR0KISeI5FidikT/r6tLq4zEM2JtZPqysJAOqjlJjNQSshNE/h0m
+         AWQqFE+KsgAt02yCTew9HJ8R7YErU5rQn8hFaGIum3CRJ8hywIknqeAm53T5HUe0INv0
+         ZQkWsFY7bQ4B7sy5VJFr6ASWLnc4iKUOhQ8seAucmyo+q8x2Ebg+KwUCJKpM42Ij/Ex1
+         aEGw==
+X-Forwarded-Encrypted: i=1; AFNElJ8Px2qyjdtCsYsytqzfUJ5759KG7gG0H61APepXkAbkRwWQir9UqyUd6bJTGD2U4bub1mgnFkoBbdqSrgRA@vger.kernel.org
+X-Gm-Message-State: AOJu0YxThoyHhieN+QZxk/tfVA7Tbnfkzu8juRxJg0+APoi5Pd+zeBFJ
+	HwQAphLcrbpkMHkQLlLNnABJ2bx58VavOy6HAxMFQJbGJbbqqzBkey1w
+X-Gm-Gg: Acq92OF1V0khhUrMqtq4Wqa3wpyPWegN2aMQ3Sj6gCCvTuH7zB0GJMlF0KxMKm+O+Uy
+	X8Jnfjk4+qI8uQZbo/8cfEF2xmfCTeWAwFNT7Q3FWnCU7IX12G/b15kvtQxkxSYH/aYmwBSdyAq
+	n8i1B8C+QNuP6K7Mmw3atOapRJow+mV/OHQQBXg7q4wIJ1BEIz1uZYzZ3Oxu5NFnJjTl0l7Cmkd
+	1lPpIBCTgiV517Kv+VZNf7IbVeqaCXaMAfmZh+wcua39JVm4gW11b9BKIxX7M2PJzcfFK2ByEZD
+	QiERomoHBLfnKKwpUI6JmQNqN26/JclWMQHm1pfubMMhY2uV9mx/WueJoByGvG+wI5iTvVqe9B5
+	0tvDWIp77D2/mBhjXZSJVWS9f9XINlXqIcd1lWs6xCtX6mC1urRpaECAkrkmkdPBlkJCtkT8oRe
+	fHtsPw4pLenGQuc9RIVW7Ik6NEgRxv/svdXqbzQK6PhpsDcp9Ngl56T+cE2HKgGU5gFQKq
+X-Received: by 2002:a17:902:bcc3:b0:2c0:bd40:17e5 with SMTP id d9443c01a7336-2c164b2c190mr16899325ad.19.1780487442382;
+        Wed, 03 Jun 2026 04:50:42 -0700 (PDT)
 Received: from phuc-desktop.. ([183.91.15.56])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16609df63sm22731455ad.40.2026.06.03.04.50.35
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16609df63sm22731455ad.40.2026.06.03.04.50.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jun 2026 04:50:38 -0700 (PDT)
+        Wed, 03 Jun 2026 04:50:41 -0700 (PDT)
 From: phucduc.bui@gmail.com
 To: Srinivas Kandagatla <srini@kernel.org>,
 	Mark Brown <broonie@kernel.org>
@@ -88,9 +87,9 @@ Cc: Liam Girdwood <lgirdwood@gmail.com>,
 	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	bui duc phuc <phucduc.bui@gmail.com>
-Subject: [PATCH 7/9] ASoC: qdsp6: q6routing: Use guard() for mutex locks
-Date: Wed,  3 Jun 2026 18:49:47 +0700
-Message-ID: <20260603114949.149595-8-phucduc.bui@gmail.com>
+Subject: [PATCH 8/9] ASoC: qdsp6: q6usb: Use guard() for mutex locks
+Date: Wed,  3 Jun 2026 18:49:48 +0700
+Message-ID: <20260603114949.149595-9-phucduc.bui@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260603114949.149595-1-phucduc.bui@gmail.com>
 References: <20260603114949.149595-1-phucduc.bui@gmail.com>
@@ -107,13 +106,13 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_CC(0.00)[gmail.com,perex.cz,suse.com,oss.qualcomm.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-110952-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110953-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:broonie@kernel.org,m:lgirdwood@gmail.com,m:perex@perex.cz,m:tiwai@suse.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:phucduc.bui@gmail.com,m:phucducbui@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -136,9 +135,9 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: EDCAF6373FE
+X-Rspamd-Queue-Id: 77533637407
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
@@ -150,59 +149,112 @@ Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
 
 NOTE: This patch is compile-tested only.
 
- sound/soc/qcom/qdsp6/q6routing.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ sound/soc/qcom/qdsp6/q6usb.c | 28 ++++++++++------------------
+ 1 file changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6routing.c b/sound/soc/qcom/qdsp6/q6routing.c
-index 7386226046fa..fff103b9dca1 100644
---- a/sound/soc/qcom/qdsp6/q6routing.c
-+++ b/sound/soc/qcom/qdsp6/q6routing.c
-@@ -381,7 +381,7 @@ int q6routing_stream_open(int fedai_id, int perf_mode,
+diff --git a/sound/soc/qcom/qdsp6/q6usb.c b/sound/soc/qcom/qdsp6/q6usb.c
+index 6381b289c55c..ee6de9635342 100644
+--- a/sound/soc/qcom/qdsp6/q6usb.c
++++ b/sound/soc/qcom/qdsp6/q6usb.c
+@@ -61,31 +61,28 @@ static int q6usb_hw_params(struct snd_pcm_substream *substream,
+ 	struct snd_soc_usb_device *sdev;
+ 	int ret = -EINVAL;
  
- 	pdata = &routing_data->port_data[session->port_id];
+-	mutex_lock(&data->mutex);
++	guard(mutex)(&data->mutex);
  
--	mutex_lock(&routing_data->lock);
-+	guard(mutex)(&routing_data->lock);
- 	session->fedai_id = fedai_id;
+ 	/* No active chip index */
+ 	if (list_empty(&data->devices))
+-		goto out;
++		return ret;
  
- 	session->path_type = pdata->path_type;
-@@ -396,10 +396,8 @@ int q6routing_stream_open(int fedai_id, int perf_mode,
- 			      session->channels, topology, perf_mode,
- 			      session->bits_per_sample, 0, 0);
+ 	sdev = list_last_entry(&data->devices, struct snd_soc_usb_device, list);
  
--	if (IS_ERR_OR_NULL(copp)) {
--		mutex_unlock(&routing_data->lock);
-+	if (IS_ERR_OR_NULL(copp))
- 		return -EINVAL;
--	}
+ 	ret = snd_soc_usb_find_supported_format(sdev->chip_idx, params, direction);
+ 	if (ret < 0)
+-		goto out;
++		return ret;
  
- 	copp_idx = q6adm_get_copp_id(copp);
- 	set_bit(copp_idx, &session->copp_map);
-@@ -417,7 +415,6 @@ int q6routing_stream_open(int fedai_id, int perf_mode,
- 		q6adm_matrix_map(routing_data->dev, session->path_type,
- 				 payload, perf_mode);
+ 	q6usb_afe = q6afe_port_get_from_id(cpu_dai->dev, USB_RX);
+ 	if (IS_ERR(q6usb_afe)) {
+ 		ret = PTR_ERR(q6usb_afe);
+-		goto out;
++		return ret;
  	}
--	mutex_unlock(&routing_data->lock);
+ 
+ 	/* Notify audio DSP about the devices being offloaded */
+ 	ret = afe_port_send_usb_dev_param(q6usb_afe, sdev->card_idx,
+ 					  sdev->ppcm_idx[sdev->num_playback - 1]);
+ 
+-out:
+-	mutex_unlock(&data->mutex);
+-
+ 	return ret;
+ }
+ 
+@@ -203,15 +200,14 @@ static int q6usb_update_offload_route(struct snd_soc_component *component, int c
+ {
+ 	struct q6usb_port_data *data = dev_get_drvdata(component->dev);
+ 	struct snd_soc_usb_device *sdev;
+-	int ret = 0;
+ 	int idx = -1;
+ 
+-	mutex_lock(&data->mutex);
++	guard(mutex)(&data->mutex);
+ 
+ 	if (list_empty(&data->devices) ||
+ 	    direction == SNDRV_PCM_STREAM_CAPTURE) {
+-		ret = -ENODEV;
+-		goto out;
++		route[0] = idx;
++		return -ENODEV;
+ 	}
+ 
+ 	sdev = list_last_entry(&data->devices, struct snd_soc_usb_device, list);
+@@ -227,11 +223,9 @@ static int q6usb_update_offload_route(struct snd_soc_component *component, int c
+ 				q6usb_get_pcm_id(component);
+ 	}
+ 
+-out:
+ 	route[0] = idx;
+-	mutex_unlock(&data->mutex);
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb,
+@@ -244,7 +238,7 @@ static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb,
+ 
+ 	data = dev_get_drvdata(usb->component->dev);
+ 
+-	mutex_lock(&data->mutex);
++	guard(mutex)(&data->mutex);
+ 	if (connected) {
+ 		if (data->hs_jack)
+ 			snd_jack_report(data->hs_jack->jack, SND_JACK_USB);
+@@ -257,7 +251,6 @@ static int q6usb_alsa_connection_cb(struct snd_soc_usb *usb,
+ 		if (data->hs_jack)
+ 			snd_jack_report(data->hs_jack->jack, 0);
+ 	}
+-	mutex_unlock(&data->mutex);
  
  	return 0;
  }
-@@ -1070,7 +1067,7 @@ static int routing_hw_params(struct snd_soc_component *component,
+@@ -284,12 +277,11 @@ static int q6usb_component_set_jack(struct snd_soc_component *component,
+ {
+ 	struct q6usb_port_data *data = dev_get_drvdata(component->dev);
  
- 	session = &data->port_data[be_id];
+-	mutex_lock(&data->mutex);
++	guard(mutex)(&data->mutex);
+ 	if (jack)
+ 		q6usb_component_enable_jack(data, jack);
+ 	else
+ 		q6usb_component_disable_jack(data);
+-	mutex_unlock(&data->mutex);
  
--	mutex_lock(&data->lock);
-+	guard(mutex)(&data->lock);
- 
- 	session->path_type = path_type;
- 	session->sample_rate = params_rate(params);
-@@ -1087,7 +1084,6 @@ static int routing_hw_params(struct snd_soc_component *component,
- 		break;
- 	}
- 
--	mutex_unlock(&data->lock);
  	return 0;
  }
- 
 -- 
 2.43.0
 
