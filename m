@@ -1,714 +1,320 @@
-Return-Path: <linux-arm-msm+bounces-110903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 6xNuOJjGH2obpwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 08:15:52 +0200
+	id AwT+HCvNH2o8qAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 08:43:55 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 569D9634947
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 08:15:52 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10D69634BE8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 08:43:55 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=JdAaWgXr;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=SrEAi2fw;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110903-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110903-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=pass header.d=outlook.com header.s=selector1 header.b=nKulzzeb;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110904-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110904-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=outlook.com;
+	arc=reject ("cv is fail on i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6EA77304641E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 06:11:57 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id AFA07304ACD3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 06:43:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A801E3F58E9;
-	Wed,  3 Jun 2026 06:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50F5238399B;
+	Wed,  3 Jun 2026 06:43:14 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from PH7PR06CU001.outbound.protection.outlook.com (mail-westus3azolkn19010027.outbound.protection.outlook.com [52.103.23.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CB63F8712
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2026 06:11:50 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780467113; cv=none; b=Wpoxv/G9ubzHr6QmDM91fKJiGnYYAJQz96ScKy3rVXlc02suKWayK8cOfsqzyI/fwmZpAjkiSw3ovEonG45YJxTc0Q64ufAa1BPh7s33siIahLBiJ/vUFoZSwBXLnEKXKtgGBcejaggAbTRMIsN9Fw/OZGcsPHaTEOM3YOFVHqg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780467113; c=relaxed/simple;
-	bh=x+xY6V7tjmQlFSrHMuO+AKeZ4Lv/+gzDnaNkEGIVBU8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BIMElTjgi/zg9fswy5TP+iwJl2r0GyIJraE/E8gRTFu5vTe6+8DFRaJGCl3/EXjzEC6B0XqQaW++yK98Mh9ziWInWn0ExbicXmMlQe3eqzeQA8Yw9q6ecm3okly2O2GTfCdjk5ZYKBHFyOZjaw+kXXjDbz+qJUy28RGG7RRSUP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JdAaWgXr; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SrEAi2fw; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6535WciY1955645
-	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Jun 2026 06:11:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	luPLt7IeAKwK3jkKB/1UtmasXRvyiBRth5AveWxB+Ms=; b=JdAaWgXrM4kzzOdW
-	+hvyK0Nd2a7h14xqIuO7Qb/dpoYUdhUpN/IeeODoJCAc6/hHEbMHZdyvjHpLuZ6w
-	1J9ujzyak7NdFV8+ki2Iizmy6KIE5HX/KkbequIjnztU6qxVTlUGVVeEQ3dUJGm0
-	jUVl2ivojWtYyKruanCrO0na8w7CF2mGxZ0Vnl6puo+Uy7k+ODW9s5lmcsZE79Dy
-	ofaBytmAIYguiDp1wmZ7VaCu80/ji9VEnaZ7gDp+gaSdXlOlq7sAslaoelqKS8cV
-	cAfTqkIYDmG+oOYIGYiZJNEe8HPjrTpJGVsFG2MiMHRQwilrIg5We+u/b+5+DAks
-	du3nLg==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ehu18n0x6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 06:11:49 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-8425a9979e1so1841421b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Jun 2026 23:11:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780467109; x=1781071909; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=luPLt7IeAKwK3jkKB/1UtmasXRvyiBRth5AveWxB+Ms=;
-        b=SrEAi2fwxeQG026Ij+JveHgkzL/kSgLZjutIJtRGTHw/0lJXrzI7V8iEvwZ/4WlnNa
-         QVDuekoVzC3Xg6oHksAueQ2f8uUlr/DiyahHm0kDmCTzi2DUMyFDl3FXEJ7sl4zXmKyc
-         OrUa2pFwtjD9lykuDStk7gUNikapCBYGSH/qBFpoXK92oi6xggRGiWIcAkpyOCxYs9j+
-         GXchVqySGFUN97/WA7L3tPwrVBN1Iktkbif9CUmiT3cq5NZOpQq41XaKw6T8nd4OL1bc
-         dnNsPmRoIgTlmHeclAkFqTYbihCCXAegGR1h/o+4SJ7F4QRzcTopxLblgdPUnRtX74gU
-         3MGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780467109; x=1781071909;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=luPLt7IeAKwK3jkKB/1UtmasXRvyiBRth5AveWxB+Ms=;
-        b=jii53VL63mpAYs7gmhSN3CYWavC8TregJWiRU10ZcUT2E8i54gQzBsvPswI8H1FRKp
-         tAr3x+jZzP7GkOQyVvYl3GDLRB2oGQbRziMtCJG/kJyRRij6OGCxY/4laT915/uzybD/
-         VTvOvouYuIvPrlWtLpo+y3OJK+36Kc63tFgiFGeoGUszO8qIHJJS0DBoXjTN5dMVDQb4
-         YAMZa53io4x8XU4Yst1d8AClPHIms6cnq3ev+c7baJ86Bd/DQHwaa1wo9pS/UtinqHfI
-         HblizupGr0bVKkTLYT0VlYh/0KyhHbVdenowlUxWd10qXSWLDk5+dc858A0uotxNcTNQ
-         TPUA==
-X-Forwarded-Encrypted: i=1; AFNElJ9LGnnAS6jPQBXFLlt1NemGDJgbTVo0l+iM+/Ez0/mwoEi8PgiKKKeSaKp3CtJXM38JXgZga5IodkR1A/OE@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxkq4pByrg+cTWC2+nD7MFMDhXdlJz428Xg2G/D1HboEO4TdOrY
-	0O6vSR0frQRvPI585xHQeS+4+1idg72FaScmVfojHvX5rceMt7IU7htHa+9iWaY9lk5WLKi80Wv
-	1DTYu70ns2uMMkOpZ+pf6lfWc/i3ep9XoUJrFOL0dGzLjPG2lSaLathdPhWpicwBB3Z7E
-X-Gm-Gg: Acq92OG8S1WBiqycVH+mmNrPaW+RnCWYAPpoLzxJSKiMjaH9SfPUYgSNsAQQ5mGNxAt
-	txUPkP1bKFn8NZ06R5Ihf10copqSxUVXSVOmN/WyDLEr+hINNQeFBuqsN1I3W7bvQ6xhdSG6mQu
-	HmsEOTHNRkPV9bgHwQtNVn2yMy3KKHcH2qp3H05gvx9LHQ+a/+73aJeLMS4GyZq3okEtfBo8xKg
-	gqLvDpdqrLF0YuZY4BDoVQ2ed9s2QDyMHOQofGB82Dgmj8sgqec0Xt3SgR64BOP03BuBVt94lTg
-	YHYPoduMFY8cxEqhbhIz4ybyE3r8rIuaLYgeOyOCnBh8rq2Yb6xiH6AFrgeBFfv2T3N9W3xhjOK
-	uJnuDmW9LuFuZHRvc5ZaeJTKFVQWvj9LGTOZfyXpPhGKaL83pEIAb8BbA6w9u
-X-Received: by 2002:a05:6a00:429b:b0:842:614e:cc9d with SMTP id d2e1a72fcca58-84284ed9586mr1904597b3a.27.1780467108212;
-        Tue, 02 Jun 2026 23:11:48 -0700 (PDT)
-X-Received: by 2002:a05:6a00:429b:b0:842:614e:cc9d with SMTP id d2e1a72fcca58-84284ed9586mr1904558b3a.27.1780467107401;
-        Tue, 02 Jun 2026 23:11:47 -0700 (PDT)
-Received: from [10.204.78.54] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8428288217bsm2013827b3a.37.2026.06.02.23.11.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Jun 2026 23:11:46 -0700 (PDT)
-Message-ID: <e465ed15-1568-467b-ac6b-94f903b46776@oss.qualcomm.com>
-Date: Wed, 3 Jun 2026 11:41:37 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68413803D2;
+	Wed,  3 Jun 2026 06:43:12 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780468994; cv=fail; b=bwS853Ff0Y6izYH+9VY5+vfS6HuzNUXpDxcDPWffiqKDMLcfaJzaBFHLNdnVsfNQiFHuembhuN+9WGfTuNcYJ6Q0C32ApdfdnVFODnGUtAN4ck4p+kRo/vry97ydNPzgs+F8SOP1vr/ifq5awsuajIKMdRc5FYoTvLLRW3z02jg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780468994; c=relaxed/simple;
+	bh=mRsCH8qz/OQ9Chz61CfaIHJWapu7QOaaZM9F86ZqQho=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=bqNtVgtbnkZi2TobA06IvFo4ZXousp1UMxJRYpZl0LyJSt3eVuffpwMn25OVZ04clPrKVoc+JJzp0DCE/qtRbWZwo4Cle5hyYHH6jKr9C/9A4m5J9aEUMcfHdbCMWsAyQL5BrdqhEnDAyzAVAhEZNjs2O4FilRR0U242anfqUlg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=nKulzzeb; arc=fail smtp.client-ip=52.103.23.27
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ym8kq1kHV0P03tPr40S3r8dO7sdEkNNzW2cjsLwXyuFmZTBVQOZcAxQI+rAe2o+xMJqJ2saMsulW4huqCrWJfccEI8O764HghXpBrNwsk2+M+CEh05iWnY98R+a4T3f1rB8xHhtOhG/k8eT9xilgVYCIfBR7vqnmg8XzWfjH2gs0wSqoRUT6GMxWSbXIrqac+2T0iorvYz/jCxioLXFB4Zf3t8gAgOrSXFI78dSeD1eyiJYJirJxL6gpP3ibxL5W3erDsphszcA2TDrLTNbDZeZRbt8J6TbDGLwtMtCF10jEgaEoBt7mcjp7qNjBpM1bSLxk/S8MKUjFtATyLhjU7Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=C3Q0SFFvSt7o4fKKodrZPkHhB9oeNfziNErf01jd1Qk=;
+ b=FKYrvmGO+89Wes9MiFMFQhoc9e0z6YUpGR5RH8cIpo2SriYbo0Fh6NfEKrVawBBiFIC2paXQ262qS2bwn2xzhev9STR3Ox31fKVLD4YxYpmDzpimJMsXIAAhKxgKm04J0Xkw4wYpgzyxc3o1t++KAmCdrC7A7b+aYXUnIyylwlKvA5h4784UfggO/iQJTMsXCGA1WOEJbwr/pKWeIaVdQyA2nl0q3uPxG82QVKq+oQvzcdgAdD87ttFYqp5iKAoLXQDIjNXKALN1zLIdX0fkLyGg/A+uvyKgeDJBoC1IGO0quQBr7d6LVE7O3fO6Xzr/woiOyKN5qlS3NP81J85pbA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=C3Q0SFFvSt7o4fKKodrZPkHhB9oeNfziNErf01jd1Qk=;
+ b=nKulzzebuwjqibyzRwmfpHZzQLbpCp8lGeewsxCBhh+5+BWstGMyOG7XnNytss+1AYIx3jVodumcFb4JTb8Y4mUbwoQeXyRIYjG+uOjx1M1qEGFk9iDATl3m9Y5PmDkvNXw8pOpKp9psKQhIZpZ9aVQMu8ZY7leS5GBrvfbM8IwYqnvkMxuJZJfc1FuCZ7O1IuxPFLLA7yqOi3MNnz6HlNZhqfPkr19HVNY4xasdmGxWZm6o1imQAvR+abmjPSzGSV9ADx+nGRAnP+kWL20bblK6c3g0ena74a9+xfBDLy90veV63IvKx+xTPQZP4tX6iksK4O3lkevYAsIA1qYNsg==
+Received: from SN7PR19MB6736.namprd19.prod.outlook.com (2603:10b6:806:263::12)
+ by PH0PR19MB5132.namprd19.prod.outlook.com (2603:10b6:510:90::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.17; Wed, 3 Jun 2026
+ 06:43:09 +0000
+Received: from SN7PR19MB6736.namprd19.prod.outlook.com
+ ([fe80::4b6c:b84f:b71c:d0a]) by SN7PR19MB6736.namprd19.prod.outlook.com
+ ([fe80::4b6c:b84f:b71c:d0a%3]) with mapi id 15.21.0092.006; Wed, 3 Jun 2026
+ 06:43:09 +0000
+Message-ID:
+ <SN7PR19MB6736D1AF2EA0ED8ADA4A72E79D132@SN7PR19MB6736.namprd19.prod.outlook.com>
+Date: Wed, 3 Jun 2026 10:42:53 +0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] dt-bindings: net: ethernet-phy: move clocks
+ property to invidivual PHY bindings
+To: Conor Dooley <conor@kernel.org>
+Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
+ Russell King <linux@armlinux.org.uk>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Florian Fainelli <f.fainelli@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org
+References: <20260602-ipq5018-gephy-clocks-v2-0-65a1f1d881f3@outlook.com>
+ <20260602-ipq5018-gephy-clocks-v2-1-65a1f1d881f3@outlook.com>
+ <20260602-defense-diabetic-8a8e8e03a536@spud>
+Content-Language: en-US
+From: George Moussalem <george.moussalem@outlook.com>
+In-Reply-To: <20260602-defense-diabetic-8a8e8e03a536@spud>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: DX0P273CA0040.AREP273.PROD.OUTLOOK.COM
+ (2603:1086:300:58::10) To SN7PR19MB6736.namprd19.prod.outlook.com
+ (2603:10b6:806:263::12)
+X-Microsoft-Original-Message-ID:
+ <39f57a9c-ba0c-4124-b3fe-3d7e1327e1dd@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/15] accel/qda: Add PRIME DMA-BUF import support
-To: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Oded Gabbay <ogabbay@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        Shuah Khan <skhan@linuxfoundation.org>, Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Cc: Bharath Kumar <quic_bkumar@quicinc.com>,
-        Chenna Kesava Raju <quic_chennak@quicinc.com>, srini@kernel.org,
-        dmitry.baryshkov@oss.qualcomm.com, andersson@kernel.org,
-        konradybcio@kernel.org, robin.clark@oss.qualcomm.com,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux.dev, linux-media@vger.kernel.org,
-        linaro-mm-sig@lists.linaro.org
-References: <20260519-qda-series-v1-0-b2d984c297f8@oss.qualcomm.com>
- <20260519-qda-series-v1-11-b2d984c297f8@oss.qualcomm.com>
- <3dddb7e8-5837-4038-9823-ce419cb49ec2@amd.com>
-Content-Language: en-US
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-In-Reply-To: <3dddb7e8-5837-4038-9823-ce419cb49ec2@amd.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=POA/P/qC c=1 sm=1 tr=0 ts=6a1fc5a5 cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=Snzw8C_a4kv6Wbo96mEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDA1NyBTYWx0ZWRfXy27olTxYjdPV
- l3sviUe1cJuUYtVq2ePh1CxWJNXQnxWtDHPzSmXklImQgt6bzoVWAXxyX8UrcIeIM51PUcrgYXR
- bxY/HZiqsqQV6qt9kFKR0ZSQLQLgH0wWs2h1W9oDQXrl1QY+XDVms9x/u1uEDe245Kw1Pz/Hgrw
- U5z+MwhtYaaciVRVYGQ8PCt/XgiC7Rm4/exJxS9mGNKvixvBF8FlYzJDM4nQJavJAINlIKJMyCd
- snzb6C6Bf8H3qfpnLPevXDW6pkPe+Df55lBDvgCHJurBJuQf0C9mXkvrrd2Df6npoiQ/N/Kpv9R
- t65TE114DLJn1AbnFd3t7zwPJ7bn58FEE5LWA7ZhodyaW8ydFPXh7IoUsx4WdUCb7RkecfgSqG7
- s0zlkhmt9TJZQTHk8u4a79qaOezx9DsuMmpgw07zu/jCPmy1TDcMNlI1aBMuld2ZKaHB7zkSA7M
- yXlzV/k0bOOemUO3PyQ==
-X-Proofpoint-GUID: 4RF93NZ318eygrSRXR0cqCLul5xmOr-D
-X-Proofpoint-ORIG-GUID: 4RF93NZ318eygrSRXR0cqCLul5xmOr-D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-03_02,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0 bulkscore=0
- adultscore=0 phishscore=0 impostorscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606030057
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN7PR19MB6736:EE_|PH0PR19MB5132:EE_
+X-MS-Office365-Filtering-Correlation-Id: bea12255-4461-4c90-2767-08dec13b6003
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|37011999003|24021099003|55001999006|6090799003|51005399006|12121999013|5072599009|23021999003|8060799015|15080799012|19110799012|40105399003|3412199025|440099028|10035399007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?ZXlGckd3UzRYOFpTUElZSXUrck1nY2pIVWRJcmlOeWlVaXpSQ0FMV01xM2o5?=
+ =?utf-8?B?Q2N3TjA4ejdYc3FkNkRZOWhnOFNPNGF1NHJkYlU4RFZHcWxkcTUrRWhrL3BK?=
+ =?utf-8?B?MHR0K3FzbE9sd2FZWnl3VzQ1YTFldGlOdmlDdVdMR1MzODZVd3ZhNzVzZTc2?=
+ =?utf-8?B?WHB2U04zMnJaZVp2RFlRM0JLLzVmWUlVcitIeitiVXovR0NWTC9HMmtjdkpQ?=
+ =?utf-8?B?Z2FkUytIWGlPaVdrN01PeEZWbk11Y1pHZHh6aXFOa3hOMWxETzh1bTQ5WThk?=
+ =?utf-8?B?RGpzNjRxL3BXaGIrS0ZLc3RGVUJuMmdXd2toNjU0dzdwTXhNQzdhWnNJYkhP?=
+ =?utf-8?B?dHFSU3RMNGF2TUlXcUhDWWVya1BiVFNWUkpLZ1kyOHFKcGxobmI3UUpmMkEy?=
+ =?utf-8?B?MHdoYmdCL2J4dUNyUUdKYWhnOHV0RTlzVUdJNWR0YjFWelVzUEVYZUFNZzVS?=
+ =?utf-8?B?dWxPN3FxeElvNktPd0FXQmlHUVRSSGRYTFN0SHd2VTVnbWFnWmluRXJ0ZVpC?=
+ =?utf-8?B?bXh6SjhiWWpGYS9MbldXV012ckdTT3JHQ0l0Vmhud1cwaWF3WXorQTlOL3d1?=
+ =?utf-8?B?L1pCWVgyYUJ1WUlFMUNRcTdwME41eHY3Vm1rVG45WmJMY1E4ZWFxeG1jZFVG?=
+ =?utf-8?B?K21rNFlNMG9qRittaHlJdWlpVmlrZ3dWSVN5TWhVTERvQk1sQXdDK3NXdnpD?=
+ =?utf-8?B?VU9sOE9rK3drbm5xVGlzblNTQy9VZS9tWDBhWTkzaHNiQXhrZjhhVkorVk5s?=
+ =?utf-8?B?YW90WnR1UitkZVNLd0NXWGNxcFJ0ZTBZTTdjSFlBenpPNFNyd0hEblNrdnps?=
+ =?utf-8?B?OTR0bUVUWTlDeWd4c0YxS05UcEVjZGYrUklRUGhTMmRSNFRFNndsMlMvVUxl?=
+ =?utf-8?B?NDcyTDZvVWRyU29KRmlWSmdJYzhlUS9GaXR6UXZJSjBXWEExTjNrQjNtM0wx?=
+ =?utf-8?B?bmdsdTcvN0MzNk1LZFJmamI2ZUZSOXZxcG0vZ0RsY1h2TmhHbEcxMEpmQXlZ?=
+ =?utf-8?B?cUNnek9uQVpqTmZrdEpSdS8zMURDWjgzYXJhRVVkYkkrcU1VZ25OdDBKTW9G?=
+ =?utf-8?B?WnE4dXEwcUVWd2VpcktHRG1pRlVheU9BUEFxS25sWm00VEFTY24vRlJvU240?=
+ =?utf-8?B?STkwUjVkTElNMm5reVc3VnpMS1VCNDBEN1pvZXVxRjh2YlhNUjgzaVc1cnBh?=
+ =?utf-8?B?bVEwL2djbUVHRHprR1ZlR2gvTXRUV3Y2WnEwSlZwVUg4S1NRREhkREpCNjBO?=
+ =?utf-8?B?aHFRS21Va1l2ai94RWdMMnZjVHJWTFBjZDRId3pnbHNBSndpdyttRlovWjhE?=
+ =?utf-8?B?R3VzM3gwSEQwSHA0UTBhR29XRDd5ZFlWd21oVUk2R1l4MTNTWkxiM2gyNkJU?=
+ =?utf-8?Q?O6B/elwJRLBl6/xgC4OOuOkTuQpqCvs0=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?WUFaRkVZTnpWSEkvZk9VV3VQNFhyVDhrWUxSZ1dUZzFYUjhjL281aVpSRTJQ?=
+ =?utf-8?B?UW5xcmY4b29GZzIrellaL0Q4ZDE1b3VKUUw3d0xpbDhzWk1PRHRJZThjRldp?=
+ =?utf-8?B?T09OY2pveXJjenBEK202WU5NcExabGltRGZjMTMyKzRUV0hMenhwd3JIYTlG?=
+ =?utf-8?B?b1lBS25uYktnNUlGMTdGTDJzM3lsWTE5Y1lWMndEQ25QMThrWGFJWmoza1pR?=
+ =?utf-8?B?SVhlV0FzdGxwN0I1YnBIbkVkaWMwTTN3anhtbHFkQmFNL2xwcnNhdlM4emdR?=
+ =?utf-8?B?R2F3OE95UThrdzg0VUNnQytHWWRXS3l0aE1VSERQd3ZMNExHV2d2NlNPU2RD?=
+ =?utf-8?B?eGFzREQxcUFJWUR4bW5KU0V6dnhod28vcVZPTzRTTXhEWnFqTjJoQkZwK2tW?=
+ =?utf-8?B?eXlDMWltMzRMUlF6em4yZ0tpM3hZdUsvWmM4MUJ2SFExdE1NNWVLdk5iMkdB?=
+ =?utf-8?B?eTRDT3VMUk9JcEh6eDNMbE1yeGdWWlZ3TVZCVloxWnNZMjkrVWFJdG8vQUNM?=
+ =?utf-8?B?alprM1BSQzNKQlJ0aktQeStXdDVKRG9vdFZvREFKMytkUHBISGlvM3c4NHJG?=
+ =?utf-8?B?VlRQZTNldVU5eWREVDhzTFMwVldHTzdwMXBJSmV6Nloyd0F6TDVQT2JxL3hT?=
+ =?utf-8?B?Q243ckUzK3RHMGtqaE1FaXVpWEVjV0ptamZGd3JGNVVjRzBrc2ovK2FQYUJY?=
+ =?utf-8?B?QTNkSjMxVlovdGt1c0xMVzFsVEFPdDdvQVVRMVFnbzBZWm9wd2twWUVvUUVs?=
+ =?utf-8?B?NXR6S014SUdpZENhU3hKMEJFZXlRUVE4bEhiTlltQlNuRnBOWXJIRGtoRnpD?=
+ =?utf-8?B?ZFpsbVNXUG1mcjlXNnVVSlZnN3ArajZpYlZBOE9LNTZIaWMrbDRoOXFabFdH?=
+ =?utf-8?B?KzEvbldpenp3bFhyK1h3OFYzWmdsVzNITEZ1TXdmT094eXRON3lVNUFyWE4x?=
+ =?utf-8?B?aTNaU1lpR01tVTdTOURjcU55ZVpCbDdQT000ajF4ejdEMmJwemxWYVJIbG8x?=
+ =?utf-8?B?YXRMUE9SQXIzR3hkWk1tOXU2N1JDYlB3K21FSWQ5Y0ZUK04vY2lzQTNEYjNP?=
+ =?utf-8?B?c09tUWRuVU9Ed1R2WVB5L2xjbnppUmd3ZXU2YlhGQnBrb09TTE0zRkFvMWxw?=
+ =?utf-8?B?cnJaQ0tCbHRoNWlyTVdtS2ovbzNFaTE3NE9zUlNtcVczcHdtUHU0dHllUmgw?=
+ =?utf-8?B?OFN2OE01clg2ZTUxdUtVaEdEWFVzRkx4Qkd2b0xKSkgzQ1BaNzdCVlF2V2Z3?=
+ =?utf-8?B?UXZLUXdQMWFUVG15cnB2Wi9lbTRCN3FrcDJUWTc3eHdjcmgvUFd2ZUVvdk5C?=
+ =?utf-8?B?dFYwbk1FbHFPWjdEZzdDYzJaL0cycjFmZTlxL1NRdzY1NzIrd2xyQWZuQXZN?=
+ =?utf-8?B?OUo1SmZKTjJoQjhLbVFLRFduUG1CSTBCRHB4R0VRTUpkRVkzb1U4N1U3Y0ls?=
+ =?utf-8?B?Qk8zcllwd2NvTW1zOU8yTUxzc08zS0F5VnY4ZGhZN1NlVjJFWmhPZGt4TXF2?=
+ =?utf-8?B?RGNvQ3A0MnFPUUVBWEhjUzlwN3ZhQXNZQTk5cWRMUkxhbmFxb1ZIUVdCdTlJ?=
+ =?utf-8?B?WXJSUGRrTG9VTjd4TnVBVjJia3dtNTFoZnV5N0pMTTdrRzQyb09MMmtkRVd1?=
+ =?utf-8?B?RUMyY1ZQSzRwUHZDeGY2MUdMcVEwWjNMdWhPcjYwZ25GVUVwa0RMMWdEVHlI?=
+ =?utf-8?B?VG1HdkJQNWVGZml3QmtsQnpaY0U3YVBUeEJyRVFKMnRBYUpwTlNhSVdLUjNr?=
+ =?utf-8?B?ZElnMjFMcm9iT1R2Z2VFbSt0RUhlMlU0WUJVVlE2RlRCWThiUGZTK0JrdXhr?=
+ =?utf-8?B?ZGJWRVBSeGREM09oa29NcUYxMVE2S2hkZXlqVnFLdTBUME14OWkxRnZpTHM4?=
+ =?utf-8?B?d01taTZDdkgyNjFjVW55djdYZWZkZkd1Ynh2RHJGZ3gwclE9PQ==?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bea12255-4461-4c90-2767-08dec13b6003
+X-MS-Exchange-CrossTenant-AuthSource: SN7PR19MB6736.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 06:43:09.6540
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR19MB5132
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+X-Spamd-Result: default: False [1.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	DMARC_POLICY_ALLOW(-0.50)[outlook.com,none];
+	R_DKIM_ALLOW(-0.20)[outlook.com:s=selector1];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110903-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:christian.koenig@amd.com,m:ogabbay@kernel.org,m:corbet@lwn.net,m:skhan@linuxfoundation.org,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:sumit.semwal@linaro.org,m:quic_bkumar@quicinc.com,m:quic_chennak@quicinc.com,m:srini@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robin.clark@oss.qualcomm.com,m:linux-kernel@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-doc@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-media@vger.kernel.org,m:linaro-mm-sig@lists.linaro.org,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim,vger.kernel.org:from_smtp];
-	FORGED_SENDER(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[27];
-	FREEMAIL_TO(0.00)[amd.com,kernel.org,lwn.net,linuxfoundation.org,8bytes.org,arm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch,linaro.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:conor@kernel.org,m:andrew@lunn.ch,m:hkallweit1@gmail.com,m:linux@armlinux.org.uk,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:f.fainelli@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:netdev@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:krzk@kernel.org,m:ffainelli@gmail.com,s:lists@lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[george.moussalem@outlook.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[outlook.com];
+	FORGED_MUA_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FORWARDED(0.00)[lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-110904-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[lunn.ch,gmail.com,armlinux.org.uk,davemloft.net,google.com,kernel.org,redhat.com,vger.kernel.org,oss.qualcomm.com];
+	DKIM_TRACE(0.00)[outlook.com:+];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[george.moussalem@outlook.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,vger.kernel.org:from_smtp,outlook.com:dkim,outlook.com:from_mime,outlook.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 569D9634947
+X-Rspamd-Queue-Id: 10D69634BE8
 
-On 19-05-2026 12:25, Christian König wrote:
-> On 5/19/26 08:16, Ekansh Gupta via B4 Relay wrote:
->> From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+On 6/2/26 20:34, Conor Dooley wrote:
+> On Tue, Jun 02, 2026 at 10:50:37AM +0400, George Moussalem via B4 Relay wrote:
+>> From: George Moussalem <george.moussalem@outlook.com>
 >>
->> Allow user-space to import DMA-BUF file descriptors from other
->> subsystems (GPU, camera, video) into the QDA driver via the standard
->> DRM PRIME interface.
+>> Move the clock property and restriction from the ethernet-phy.yaml file
+>> to the individual PHY binding files. This allows each PHY to manage its
+>> own clock requirements.
 >>
->> qda_prime.c
->>   Implements qda_gem_prime_import(), which is set as the driver's
->>   .gem_prime_import callback. On import it:
->>   1. Short-circuits self-import: if the dma_buf was exported by this
->>      device and is not itself an import, the existing GEM object is
->>      returned with an incremented reference count.
->>   2. Attaches to the dma_buf and maps it with DMA_BIDIRECTIONAL via
->>      dma_buf_map_attachment_unlocked(), obtaining an sg_table whose
->>      DMA addresses are IOMMU virtual addresses in the CB device's
->>      address space.
->>   3. Calls qda_memory_manager_alloc() to record the IOMMU mapping and
->>      encode the SID in the upper 32 bits of the DMA address, matching
->>      the convention used for natively allocated buffers.
->>
->>   qda_prime_fd_to_handle() wraps drm_gem_prime_fd_to_handle() under
->>   qdev->import_lock, storing the calling file_priv in
->>   qdev->current_import_file_priv so that qda_gem_prime_import() can
->>   retrieve it (the .gem_prime_import callback does not receive
->>   file_priv directly).
->>
->> qda_gem.c
->>   qda_gem_free_object() is extended to handle the imported-buffer
->>   teardown path: unmap the sg_table, detach from the dma_buf, and
->>   release the dma_buf reference.
->>   qda_gem_mmap_obj() rejects mmap requests on imported objects.
->>
->> qda_memory_manager.c
->>   qda_memory_manager_map_imported() records the IOMMU-mapped DMA
->>   address from the first sg entry (the IOMMU maps the buffer as a
->>   contiguous range) and encodes the SID prefix.
-> 
-> No it doesn't.
-I see, it does not guarantee or enforce contiguous IOMMU mapping. I'll
-fix the commit text.>
->>   qda_memory_manager_free() skips the DMA free path for imported
->>   buffers since the memory is owned by the exporter.
->>
->> Assisted-by: Claude:claude-4-6-sonnet
->> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+>> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 >> ---
->>  drivers/accel/qda/Makefile             |   1 +
->>  drivers/accel/qda/qda_drv.c            |  12 ++-
->>  drivers/accel/qda/qda_drv.h            |   4 +
->>  drivers/accel/qda/qda_gem.c            |  25 ++++-
->>  drivers/accel/qda/qda_gem.h            |   8 ++
->>  drivers/accel/qda/qda_memory_manager.c |  47 ++++++++-
->>  drivers/accel/qda/qda_prime.c          | 184 +++++++++++++++++++++++++++++++++
->>  drivers/accel/qda/qda_prime.h          |  18 ++++
->>  8 files changed, 295 insertions(+), 4 deletions(-)
+>> Commit 350b7a258f20 introduced the clocks property with a restriction to
+>> maximum 1 to the main ethernet-phy.yaml binding for Realtek to add an
+>> optional external clock source. This is restrictive to all PHY bindings,
+>> as some PHYs may require more than 1 clock such as the IPQ5018 PHY which
+>> requires 2 clocks (for RX and TX).
 >>
->> diff --git a/drivers/accel/qda/Makefile b/drivers/accel/qda/Makefile
->> index a46ddceecfc5..fb092e56d7f3 100644
->> --- a/drivers/accel/qda/Makefile
->> +++ b/drivers/accel/qda/Makefile
->> @@ -12,6 +12,7 @@ qda-y := \
->>         qda_ioctl.o \
->>         qda_memory_dma.o \
->>         qda_memory_manager.o \
->> +       qda_prime.o \
->>         qda_rpmsg.o
->>
->>  obj-$(CONFIG_DRM_ACCEL_QDA_COMPUTE_BUS) += qda_compute_bus.o
->> diff --git a/drivers/accel/qda/qda_drv.c b/drivers/accel/qda/qda_drv.c
->> index c9b9e56dcb28..ef8bd573b836 100644
->> --- a/drivers/accel/qda/qda_drv.c
->> +++ b/drivers/accel/qda/qda_drv.c
->> @@ -7,10 +7,12 @@
->>  #include <drm/drm_file.h>
->>  #include <drm/drm_gem.h>
->>  #include <drm/drm_ioctl.h>
->> +#include <drm/drm_prime.h>
->>  #include <drm/drm_print.h>
->>  #include <drm/qda_accel.h>
->>
->>  #include "qda_drv.h"
->> +#include "qda_prime.h"
->>  #include "qda_ioctl.h"
->>  #include "qda_rpmsg.h"
->>
->> @@ -64,6 +66,8 @@ static const struct drm_driver qda_drm_driver = {
->>         .postclose = qda_postclose,
->>         .ioctls = qda_ioctls,
->>         .num_ioctls = ARRAY_SIZE(qda_ioctls),
->> +       .gem_prime_import = qda_gem_prime_import,
->> +       .prime_fd_to_handle = qda_prime_fd_to_handle,
->>         .name = QDA_DRIVER_NAME,
->>         .desc = "Qualcomm DSP Accelerator Driver",
->>  };
->> @@ -100,6 +104,7 @@ static int init_memory_manager(struct qda_dev *qdev)
->>
->>  void qda_deinit_device(struct qda_dev *qdev)
->>  {
->> +       mutex_destroy(&qdev->import_lock);
->>         cleanup_memory_manager(qdev);
->>  }
->>
->> @@ -107,9 +112,14 @@ int qda_init_device(struct qda_dev *qdev)
->>  {
->>         int ret;
->>
->> +       mutex_init(&qdev->import_lock);
->> +       qdev->current_import_file_priv = NULL;
->> +
->>         ret = init_memory_manager(qdev);
->> -       if (ret)
->> +       if (ret) {
->>                 drm_err(&qdev->drm_dev, "Failed to initialize memory manager: %d\n", ret);
->> +               mutex_destroy(&qdev->import_lock);
->> +       }
->>
->>         return ret;
->>  }
->> diff --git a/drivers/accel/qda/qda_drv.h b/drivers/accel/qda/qda_drv.h
->> index 8a7d647ac8fc..96ce4135e2d9 100644
->> --- a/drivers/accel/qda/qda_drv.h
->> +++ b/drivers/accel/qda/qda_drv.h
->> @@ -47,6 +47,10 @@ struct qda_dev {
->>         struct list_head cb_devs;
->>         /** @iommu_mgr: IOMMU/memory manager instance */
->>         struct qda_memory_manager *iommu_mgr;
->> +       /** @import_lock: Lock protecting prime import context */
->> +       struct mutex import_lock;
->> +       /** @current_import_file_priv: Current file_priv during prime import */
->> +       struct drm_file *current_import_file_priv;
->>         /** @dsp_name: Name of the DSP domain (e.g. "cdsp", "adsp") */
->>         const char *dsp_name;
->>  };
->> diff --git a/drivers/accel/qda/qda_gem.c b/drivers/accel/qda/qda_gem.c
->> index 568b3c2e64b7..9e1ac7582d0c 100644
->> --- a/drivers/accel/qda/qda_gem.c
->> +++ b/drivers/accel/qda/qda_gem.c
->> @@ -9,6 +9,7 @@
->>  #include "qda_gem.h"
->>  #include "qda_memory_manager.h"
->>  #include "qda_memory_dma.h"
->> +#include "qda_prime.h"
->>
->>  static void setup_vma_flags(struct vm_area_struct *vma)
->>  {
->> @@ -25,8 +26,20 @@ void qda_gem_free_object(struct drm_gem_object *gem_obj)
->>         struct qda_gem_obj *qda_gem_obj = to_qda_gem_obj(gem_obj);
->>         struct qda_dev *qdev = qda_dev_from_drm(gem_obj->dev);
->>
->> -       if (qda_gem_obj->virt && qdev->iommu_mgr)
->> -               qda_memory_manager_free(qdev->iommu_mgr, qda_gem_obj);
->> +       if (qda_gem_obj->is_imported) {
->> +               if (qda_gem_obj->attachment && qda_gem_obj->sgt)
->> +                       dma_buf_unmap_attachment_unlocked(qda_gem_obj->attachment,
->> +                                                         qda_gem_obj->sgt, DMA_BIDIRECTIONAL);
->> +               if (qda_gem_obj->attachment)
->> +                       dma_buf_detach(qda_gem_obj->dma_buf, qda_gem_obj->attachment);
->> +               if (qda_gem_obj->dma_buf)
->> +                       dma_buf_put(qda_gem_obj->dma_buf);
->> +               if (qda_gem_obj->iommu_dev && qdev->iommu_mgr)
->> +                       qda_memory_manager_free(qdev->iommu_mgr, qda_gem_obj);
->> +       } else {
->> +               if (qda_gem_obj->virt && qdev->iommu_mgr)
->> +                       qda_memory_manager_free(qdev->iommu_mgr, qda_gem_obj);
->> +       }
->>
->>         drm_gem_object_release(gem_obj);
->>         kfree(qda_gem_obj);
->> @@ -44,6 +57,10 @@ int qda_gem_mmap_obj(struct drm_gem_object *drm_obj, struct vm_area_struct *vma)
->>         struct qda_gem_obj *qda_gem_obj = to_qda_gem_obj(drm_obj);
->>         int ret;
->>
->> +       /* Imported dma-buf objects must be mmap'd through the exporter, not the importer */
->> +       if (qda_gem_obj->is_imported)
->> +               return -EINVAL;
->> +
->>         /* Reset vm_pgoff for DMA mmap */
->>         vma->vm_pgoff = 0;
->>
->> @@ -143,6 +160,10 @@ struct drm_gem_object *qda_gem_create_object(struct drm_device *drm_dev,
->>         qda_gem_obj = qda_gem_alloc_object(drm_dev, aligned_size);
->>         if (IS_ERR(qda_gem_obj))
->>                 return ERR_CAST(qda_gem_obj);
->> +       qda_gem_obj->is_imported = false;
->> +       qda_gem_obj->dma_buf = NULL;
->> +       qda_gem_obj->attachment = NULL;
->> +       qda_gem_obj->sgt = NULL;
->>
->>         ret = qda_memory_manager_alloc(iommu_mgr, qda_gem_obj, file_priv);
->>         if (ret) {
->> diff --git a/drivers/accel/qda/qda_gem.h b/drivers/accel/qda/qda_gem.h
->> index bb18f8155aa4..0878f57715f6 100644
->> --- a/drivers/accel/qda/qda_gem.h
->> +++ b/drivers/accel/qda/qda_gem.h
->> @@ -22,12 +22,20 @@ struct qda_gem_obj {
->>         struct drm_gem_object base;
->>         /** @iommu_dev: IOMMU context bank device that performed the allocation */
->>         struct qda_iommu_device *iommu_dev;
->> +       /** @dma_buf: Reference to imported dma_buf */
->> +       struct dma_buf *dma_buf;
->> +       /** @attachment: DMA buf attachment */
->> +       struct dma_buf_attachment *attachment;
->> +       /** @sgt: Scatter-gather table */
->> +       struct sg_table *sgt;
->>         /** @virt: Kernel virtual address of the allocated DMA memory */
->>         void *virt;
->>         /** @dma_addr: DMA address (with SID encoded in upper 32 bits) */
->>         dma_addr_t dma_addr;
->>         /** @size: Size of the buffer in bytes */
->>         size_t size;
->> +       /** @is_imported: True if buffer is imported, false if allocated */
->> +       bool is_imported;
->>  };
->>
->>  /**
->> diff --git a/drivers/accel/qda/qda_memory_manager.c b/drivers/accel/qda/qda_memory_manager.c
->> index 82111275f420..d2aa0e0e65f5 100644
->> --- a/drivers/accel/qda/qda_memory_manager.c
->> +++ b/drivers/accel/qda/qda_memory_manager.c
->> @@ -202,6 +202,41 @@ static struct qda_iommu_device *get_or_assign_iommu_device(struct qda_memory_man
->>         return NULL;
->>  }
->>
->> +static int qda_memory_manager_map_imported(struct qda_memory_manager *mem_mgr,
->> +                                          struct qda_gem_obj *gem_obj,
->> +                                          struct qda_iommu_device *iommu_dev)
->> +{
->> +       struct scatterlist *sg;
->> +       dma_addr_t dma_addr;
->> +
->> +       if (!gem_obj->is_imported || !gem_obj->sgt || !iommu_dev) {
->> +               drm_err(gem_obj->base.dev, "Invalid parameters for imported buffer mapping\n");
->> +               return -EINVAL;
->> +       }
->> +
->> +       sg = gem_obj->sgt->sgl;
->> +       if (!sg) {
->> +               drm_err(gem_obj->base.dev, "Invalid scatter-gather list for imported buffer\n");
->> +               return -EINVAL;
->> +       }
->> +
->> +       gem_obj->iommu_dev = iommu_dev;
->> +
->> +       /*
->> +        * After dma_buf_map_attachment_unlocked(), sg_dma_address() returns the
->> +        * IOMMU virtual address, not the physical address. The IOMMU maps the
->> +        * entire buffer as a contiguous range in the IOMMU address space even if
->> +        * the underlying physical memory is non-contiguous. Therefore the first
->> +        * sg entry's DMA address is the start of the complete contiguous
->> +        * IOMMU-mapped range and is sufficient to describe the buffer to the DSP.
->> +        */
->> +       dma_addr = sg_dma_address(sg);
->> +       dma_addr += ((u64)iommu_dev->sid << 32);
->> +       gem_obj->dma_addr = dma_addr;
+>> There are three other PHY drivers that require clock management:
+>> - Micrel: requires 1 optional clock and the micrel.yaml file already
+>> accomodates for the clock property.
+>> - SMSC: requires an optional clock and the legacy bindings file
+>> (smsc-lan87xx.txt) already accomodates for the clock property.
+>> - BCM7xxx: requires an optional clock. I could not find a bindings file
+>> for this PHY family.
 > 
-> That handling here is completely broken since it assumes that the exporter maps the buffer as contigious range.
+> Have you done a large-scale dtbs_check run with this patch applied and
+> checked that it does not ban having a clock for phys with no dedicated
+> bindings?
+
+I've ran: make V=s CHECK_DTBS=y DT_SCHEMA_FILES=/net/ ARCH=arm64
+
+There were a whole lot of errors, mostly related to missing required
+regulator/power-supply properties, but none related to clocks.
+
+Also ran: make dt_binding_check DT_SCHEMA_FILES=/net/
+
+This ran successfully apart from the one error I highlighted in my reply
+to Rob on v1:
+
+  DTC [C] Documentation/devicetree/bindings/net/renesas,ether.example.dtb
+/home/george/src/linux-next/out/Documentation/devicetree/bindings/net/renesas,ether.example.dtb:
+ethernet-phy@1 (ethernet-phy-id0022.1537): compatible:
+['ethernet-phy-id0022.1537', 'ethernet-phy-ieee802.3-c22'] is too long
+	from schema $id: http://devicetree.org/schemas/net/micrel.yaml
+
+In addition, I ran `grep -r '#include <linux/clk.h>' drivers/net/phy` to
+identify all phy drivers that manage clocks which I've reported above.
+There's one more: xlnx_gmii2rgmii.c which acquires and enables 1 clock
+which is also accounted for in its schema.
+
+None of the phy-core files manage clocks.
+
+> I feel like weakening the limit of a single clock is probably more
+> accurate than outright banning clocks for ethernet phys without a
+> dedicated binding?
+
+If you think increasing the restriction is a better solution, I can
+submit an updated version. Kindly let me know.
+
 > 
-> But that's in no way guaranteed.
-I'll collect more details and will try to implement this in the right
-way, maybe by iterating the full sg_table.>
-> Regards,
-> Christian.
+> Cheers,
+> Conor.
 > 
->> +
->> +       return 0;
->> +}
->> +
->>  /**
->>   * qda_memory_manager_alloc() - Allocate memory for a GEM object
->>   * @mem_mgr: Pointer to memory manager
->> @@ -237,7 +272,11 @@ int qda_memory_manager_alloc(struct qda_memory_manager *mem_mgr, struct qda_gem_
->>                 return -ENOMEM;
->>         }
+>> ---
+>>  Documentation/devicetree/bindings/net/ethernet-phy.yaml    | 6 ------
+>>  Documentation/devicetree/bindings/net/realtek,rtl82xx.yaml | 6 ++++++
+>>  2 files changed, 6 insertions(+), 6 deletions(-)
 >>
->> -       ret = qda_dma_alloc(selected_dev, gem_obj, size);
->> +       if (gem_obj->is_imported)
->> +               ret = qda_memory_manager_map_imported(mem_mgr, gem_obj, selected_dev);
->> +       else
->> +               ret = qda_dma_alloc(selected_dev, gem_obj, size);
+>> diff --git a/Documentation/devicetree/bindings/net/ethernet-phy.yaml b/Documentation/devicetree/bindings/net/ethernet-phy.yaml
+>> index 21a1a63506f0..709ea976ef79 100644
+>> --- a/Documentation/devicetree/bindings/net/ethernet-phy.yaml
+>> +++ b/Documentation/devicetree/bindings/net/ethernet-phy.yaml
+>> @@ -105,12 +105,6 @@ properties:
+>>        1BR-10 names. The PHY must be configured to operate in BroadR-Reach mode
+>>        by software.
+>>  
+>> -  clocks:
+>> -    maxItems: 1
+>> -    description:
+>> -      External clock connected to the PHY. If not specified it is assumed
+>> -      that the PHY uses a fixed crystal or an internal oscillator.
+>> -
+>>    enet-phy-lane-swap:
+>>      $ref: /schemas/types.yaml#/definitions/flag
+>>      description:
+>> diff --git a/Documentation/devicetree/bindings/net/realtek,rtl82xx.yaml b/Documentation/devicetree/bindings/net/realtek,rtl82xx.yaml
+>> index 45033c31a2d5..8a26f6941dc4 100644
+>> --- a/Documentation/devicetree/bindings/net/realtek,rtl82xx.yaml
+>> +++ b/Documentation/devicetree/bindings/net/realtek,rtl82xx.yaml
+>> @@ -38,6 +38,12 @@ properties:
+>>        - ethernet-phy-id001c.cad0
+>>        - ethernet-phy-id001c.cb00
+>>  
+>> +  clocks:
+>> +    maxItems: 1
+>> +    description:
+>> +      External clock connected to the PHY. If not specified it is assumed
+>> +      that the PHY uses a fixed crystal or an internal oscillator.
 >> +
->>         if (ret) {
->>                 drm_err(gem_obj->base.dev, "Allocation failed: size=%zu, device_id=%u, ret=%d\n",
->>                         size, selected_dev->id, ret);
->> @@ -262,6 +301,12 @@ void qda_memory_manager_free(struct qda_memory_manager *mem_mgr, struct qda_gem_
->>                 return;
->>         }
+>>    leds: true
+>>  
+>>    realtek,aldps-enable:
 >>
->> +       if (gem_obj->is_imported) {
->> +               drm_dbg_driver(gem_obj->base.dev,
->> +                              "Freed imported buffer tracking (no DMA free needed)\n");
->> +               return;
->> +       }
->> +
->>         qda_dma_free(gem_obj);
->>  }
->>
->> diff --git a/drivers/accel/qda/qda_prime.c b/drivers/accel/qda/qda_prime.c
->> new file mode 100644
->> index 000000000000..acb0ac8c40fd
->> --- /dev/null
->> +++ b/drivers/accel/qda/qda_prime.c
->> @@ -0,0 +1,184 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->> +#include <drm/drm_gem.h>
->> +#include <drm/drm_prime.h>
->> +#include <drm/drm_print.h>
->> +#include <linux/slab.h>
->> +#include <linux/dma-mapping.h>
->> +#include "qda_drv.h"
->> +#include "qda_gem.h"
->> +#include "qda_prime.h"
->> +#include "qda_memory_manager.h"
->> +
->> +static struct drm_gem_object *check_own_buffer(struct drm_device *dev, struct dma_buf *dma_buf)
->> +{
->> +       struct drm_gem_object *existing_gem;
->> +
->> +       /* Only safe to access priv if this dma-buf was exported by this device */
->> +       if (!drm_gem_is_prime_exported_dma_buf(dev, dma_buf))
->> +               return NULL;
->> +
->> +       existing_gem = dma_buf->priv;
->> +       if (existing_gem->dev != dev)
->> +               return NULL;
->> +
->> +       if (to_qda_gem_obj(existing_gem)->is_imported)
->> +               return NULL;
->> +
->> +       drm_gem_object_get(existing_gem);
->> +       return existing_gem;
->> +}
->> +
->> +static struct qda_iommu_device *get_iommu_device_for_import(struct qda_dev *qdev,
->> +                                                           struct drm_file **file_priv_out)
->> +{
->> +       struct drm_file *file_priv;
->> +       struct qda_file_priv *qda_file_priv;
->> +       struct qda_iommu_device *iommu_dev = NULL;
->> +       int ret;
->> +
->> +       file_priv = qdev->current_import_file_priv;
->> +       *file_priv_out = file_priv;
->> +
->> +       if (!file_priv || !file_priv->driver_priv)
->> +               return NULL;
->> +
->> +       qda_file_priv = (struct qda_file_priv *)file_priv->driver_priv;
->> +       iommu_dev = qda_file_priv->assigned_iommu_dev;
->> +
->> +       if (!iommu_dev) {
->> +               ret = qda_memory_manager_assign_device(qdev->iommu_mgr, file_priv);
->> +               if (ret) {
->> +                       drm_err(&qdev->drm_dev, "Failed to assign IOMMU device: %d\n", ret);
->> +                       return NULL;
->> +               }
->> +
->> +               iommu_dev = qda_file_priv->assigned_iommu_dev;
->> +       }
->> +
->> +       return iommu_dev;
->> +}
->> +
->> +static int setup_dma_buf_mapping(struct qda_gem_obj *qda_gem_obj, struct dma_buf *dma_buf,
->> +                                struct device *attach_dev, struct qda_dev *qdev)
->> +{
->> +       struct dma_buf_attachment *attachment;
->> +       struct sg_table *sgt;
->> +       int ret;
->> +
->> +       attachment = dma_buf_attach(dma_buf, attach_dev);
->> +       if (IS_ERR(attachment)) {
->> +               ret = PTR_ERR(attachment);
->> +               drm_err(&qdev->drm_dev, "Failed to attach dma_buf: %d\n", ret);
->> +               return ret;
->> +       }
->> +       qda_gem_obj->attachment = attachment;
->> +
->> +       sgt = dma_buf_map_attachment_unlocked(attachment, DMA_BIDIRECTIONAL);
->> +       if (IS_ERR(sgt)) {
->> +               ret = PTR_ERR(sgt);
->> +               drm_err(&qdev->drm_dev, "Failed to map dma_buf attachment: %d\n", ret);
->> +               dma_buf_detach(dma_buf, attachment);
->> +               return ret;
->> +       }
->> +       qda_gem_obj->sgt = sgt;
->> +
->> +       return 0;
->> +}
->> +
->> +/**
->> + * qda_gem_prime_import() - Import a DMA-BUF as a GEM object
->> + * @dev: DRM device structure
->> + * @dma_buf: DMA-BUF to import
->> + *
->> + * Return: Pointer to the imported GEM object on success, ERR_PTR on failure
->> + */
->> +struct drm_gem_object *qda_gem_prime_import(struct drm_device *dev, struct dma_buf *dma_buf)
->> +{
->> +       struct qda_dev *qdev = qda_dev_from_drm(dev);
->> +       struct qda_gem_obj *qda_gem_obj;
->> +       struct drm_file *file_priv;
->> +       struct qda_iommu_device *iommu_dev;
->> +       struct drm_gem_object *existing_gem;
->> +       size_t aligned_size;
->> +       int ret;
->> +
->> +       if (!qdev->iommu_mgr) {
->> +               drm_err(dev, "Invalid iommu_mgr\n");
->> +               return ERR_PTR(-ENODEV);
->> +       }
->> +
->> +       existing_gem = check_own_buffer(dev, dma_buf);
->> +       if (existing_gem)
->> +               return existing_gem;
->> +
->> +       iommu_dev = get_iommu_device_for_import(qdev, &file_priv);
->> +       if (!iommu_dev || !iommu_dev->dev) {
->> +               drm_err(dev, "No IOMMU device assigned for prime import\n");
->> +               return ERR_PTR(-ENODEV);
->> +       }
->> +
->> +       drm_dbg_driver(dev, "Using IOMMU device %u for prime import\n", iommu_dev->id);
->> +
->> +       aligned_size = PAGE_ALIGN(dma_buf->size);
->> +       qda_gem_obj = qda_gem_alloc_object(dev, aligned_size);
->> +       if (IS_ERR(qda_gem_obj))
->> +               return ERR_CAST(qda_gem_obj);
->> +
->> +       qda_gem_obj->is_imported = true;
->> +       qda_gem_obj->dma_buf = dma_buf;
->> +       qda_gem_obj->virt = NULL;
->> +       qda_gem_obj->iommu_dev = iommu_dev;
->> +
->> +       get_dma_buf(dma_buf);
->> +
->> +       ret = setup_dma_buf_mapping(qda_gem_obj, dma_buf, iommu_dev->dev, qdev);
->> +       if (ret)
->> +               goto err_put_dma_buf;
->> +
->> +       ret = qda_memory_manager_alloc(qdev->iommu_mgr, qda_gem_obj, file_priv);
->> +       if (ret) {
->> +               drm_err(dev, "Failed to allocate IOMMU mapping: %d\n", ret);
->> +               goto err_unmap;
->> +       }
->> +
->> +       drm_dbg_driver(dev, "Prime import completed successfully size=%zu\n", aligned_size);
->> +       return &qda_gem_obj->base;
->> +
->> +err_unmap:
->> +       dma_buf_unmap_attachment_unlocked(qda_gem_obj->attachment,
->> +                                         qda_gem_obj->sgt, DMA_BIDIRECTIONAL);
->> +       dma_buf_detach(dma_buf, qda_gem_obj->attachment);
->> +err_put_dma_buf:
->> +       dma_buf_put(dma_buf);
->> +       qda_gem_cleanup_object(qda_gem_obj);
->> +       return ERR_PTR(ret);
->> +}
->> +
->> +/**
->> + * qda_prime_fd_to_handle() - Convert a PRIME fd to a GEM handle
->> + * @dev: DRM device structure
->> + * @file_priv: DRM file private data
->> + * @prime_fd: File descriptor of the PRIME buffer
->> + * @handle: Output GEM handle
->> + *
->> + * Return: 0 on success, negative error code on failure
->> + */
->> +int qda_prime_fd_to_handle(struct drm_device *dev, struct drm_file *file_priv,
->> +                          int prime_fd, u32 *handle)
->> +{
->> +       struct qda_dev *qdev = qda_dev_from_drm(dev);
->> +       int ret;
->> +
->> +       mutex_lock(&qdev->import_lock);
->> +       qdev->current_import_file_priv = file_priv;
->> +
->> +       ret = drm_gem_prime_fd_to_handle(dev, file_priv, prime_fd, handle);
->> +
->> +       qdev->current_import_file_priv = NULL;
->> +       mutex_unlock(&qdev->import_lock);
->> +
->> +       return ret;
->> +}
->> +
->> +MODULE_IMPORT_NS("DMA_BUF");
->> diff --git a/drivers/accel/qda/qda_prime.h b/drivers/accel/qda/qda_prime.h
->> new file mode 100644
->> index 000000000000..9b3850d54fa7
->> --- /dev/null
->> +++ b/drivers/accel/qda/qda_prime.h
->> @@ -0,0 +1,18 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
->> +/*
->> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->> + */
->> +
->> +#ifndef __QDA_PRIME_H__
->> +#define __QDA_PRIME_H__
->> +
->> +#include <drm/drm_device.h>
->> +#include <drm/drm_file.h>
->> +#include <drm/drm_gem.h>
->> +#include <linux/dma-buf.h>
->> +
->> +struct drm_gem_object *qda_gem_prime_import(struct drm_device *dev, struct dma_buf *dma_buf);
->> +int qda_prime_fd_to_handle(struct drm_device *dev, struct drm_file *file_priv,
->> +                          int prime_fd, u32 *handle);
->> +
->> +#endif /* __QDA_PRIME_H__ */
->>
->> --
->> 2.34.1
+>> -- 
+>> 2.53.0
 >>
 >>
-> 
+
+Best regards,
+George
 
 
