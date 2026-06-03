@@ -1,546 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-111046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id tE9/Em2NIGrr4wAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 22:24:13 +0200
+	id QNCrMUuSIGrg5AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 22:44:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCC0563B16E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 22:24:11 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B45263B310
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 22:44:59 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="ZgTwajg/";
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=WiX5KYR6;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111046-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111046-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=HmoxdPPK;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111048-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111048-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id E2176301A25E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 20:24:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C2803300EABC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 20:43:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 072F43FCB2A;
-	Wed,  3 Jun 2026 20:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21530403146;
+	Wed,  3 Jun 2026 20:43:13 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4702918871F
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2026 20:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D32C402B92;
+	Wed,  3 Jun 2026 20:43:12 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780518247; cv=none; b=hW6R+3CuwagV+yKgYSWyrGXGpk7L2+GsIt8OS9+KeMUSqu4SXdfb+qNPtSOLTkGS25rnn5o+6Xhl0G0qjpObQvrR7/Ohbt2ggsVKzh+NDrsAYremHATFgfSum7eJ6ry9CkUGPTmV33ALQj2CPp5SmCRym1uAGNKDtqgUS/CsR9k=
+	t=1780519393; cv=none; b=mUGw9ZFPMmZ/Kn1OFgqNXjcoKla+ovgq1/CyrkUmuBJMOkQkUhN/S47qTxxZgy1dClNfTNryTKOXnAo772Z/4HFR3mVlfKfHV+COp6jQ7wAA/LcercpAQgrxcgCOzKCIhZvbYGh1D1W1vJrKCbE13VtSVsJ8YUUpOc+xVPwXai0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780518247; c=relaxed/simple;
-	bh=dgtu2Iep90AeJho7vMivN6OvXTJk+BhD2v7PAhpGkIg=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=OG2sFuFizLG2PfDAWjpjqwbQiYsON4ceJhmKbwHEatj/ewmnOho+V6VJDzMEcUqLhErAl71UAZkfaa0tindUtxzHzrcKXUU8FGbBg2cLtkjd10d7SJa3p2+11oxWMLgLrvS5X3n9pqqxhPqaD944CLoNiLQGAO+8Fu1OcRdfbOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZgTwajg/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WiX5KYR6; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 653HA2Tp2651252
-	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Jun 2026 20:24:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aWKiZt685wkb/zfGIBJDwQedq36r3+vpvu2k4QjMlOk=; b=ZgTwajg/k6/NXcl5
-	Jh7W5QBbjK2qrecULXUDS+r6jBiSw8aK7pDApPY1n4bvPmXEBslrlf5CRCZZt9+g
-	0tXjQuozplc4kDS+slqv0spJotxMuCA4vPY8XnnaWY1KNqy93lB/ii0rTgWaF+sT
-	Lph3lvD/EfleSjNG+GNK9C1sjKxJwQqBpZHyflu7cbhPVuxeg2fiXGFDxdNK4RAz
-	QCfQT2kQ/eG2CmvffyM349GQokYMOXhrqXRTaWH3rKCrksk8zdlGshnIDox05ZKM
-	x/V4dtspwDrtvSW76kPSzdtWmQvfqwJTEUNXvsmIG3QO+MG5SbmDBrLyydMXpn9R
-	3rmFXw==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejre9gs78-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 20:24:05 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-304e4636205so17032089eec.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 13:24:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780518244; x=1781123044; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=aWKiZt685wkb/zfGIBJDwQedq36r3+vpvu2k4QjMlOk=;
-        b=WiX5KYR6TKWj8pRDoBzzWa58RQCRuyIRp31v/Br1t+TZpnmFXsBi2TF6g/KcK3g7po
-         gctMB2wLJ4V6BqSet22N/DT6A2PwvLNgNLZYY09Uhxalyoso76fHyIC5kQhP1P0Xarkz
-         uBQ2WIqraq/R7E5kOJcghwiWge3/HeO801JQ52RAv2YieRWjGZ3D/89muzUBfNnPya4R
-         6cx9KbeOQ9fnD3JOKNRI+rWCz2eaxfOLfX7Vsm926nG4xOYFpbR4lHtlNLHz3YM983mt
-         rWAnlBPm6EVAl9m7s6ADbMVKok7uVh6r0AFLa+IL6xw4BkXgtm4ABkN64QNDVkr9AHdx
-         Z8GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780518244; x=1781123044;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aWKiZt685wkb/zfGIBJDwQedq36r3+vpvu2k4QjMlOk=;
-        b=nDW3jCgrDOOmIagXt1ZNlk1DZqkdWsoSufnFCUrT5pbm2wjxjMzIElA2/wPcH5LXG1
-         VnZcqwHe9fb43YFk88352qj6U/tmUUprbb30H/toYldRFNX8aMOCnp9kNC4Y0VYUpEHb
-         4We4VTrfQIYNCPs9hKp+Hj9R5QGJ9sC52BtTm40N2v3aELqveoUFNP86UJ3GJ091m5lm
-         k3M/tfKzLjy5LM+vwZCSZM0jGoK51JZo89TbjmwgCQJe4xk2CdxRNt/mAXTBFpC4GaeP
-         tOkIItKzSW4ayUGr2So9P+3w1Q5Y7VnoI++fslcs7dIPFC1Sf1/frxSMWYQm+r72F21N
-         tUDw==
-X-Gm-Message-State: AOJu0YxmJbr/BoBZb7ErS9ND0s55sInfiaKIo6tEJlEVrS9fhb3Iccva
-	P0zGEhCcGNNvpjmgZhntSPWnoBFYEtLFhOST1R0Ui0jnx2mxWubrZ5T+h6SnqfCaJfErt/YA05j
-	jGs2ExqA8n9Oft1tvDy6NyI1uEnkPiHkg4v0Fm6oW8FonQP6SXzFM6AnsJBteTy9xq8Ka
-X-Gm-Gg: Acq92OEnQkVMvbsOejNCaLUpXgIEfFhyFzK8aQJMcgBAHmo2i3ms24G4Fi64J96AJea
-	eJp+snhjRQ//UiZcw3W2uFk15W4mEsWKp0iP9+GTPStBlhs+9czBR+JbgMS0pGHnHjVNNyhnE6n
-	Cc8GCkCstqJ9neSoN48kym1JOWoq1q1JPOgNcOdQxY7vvOoCOw1mtXzIYPH5j/xEgbRgjyNC5V6
-	w3T0qslLQJcOQ/i0UwEGRrESCg6yPeMs9Q8O3atqFL7QyssVV5CpSTW1qasv8GmwPrtZ7JS3alv
-	1QicCVSNXaWSRJhuWeWalORE0oQWOpRPHskNl2mNlPkFMWaBpOR3xuLwDt09tXc1hY1fWnDfOWA
-	3OfxLes36pMbnluSTSB9J7gBnWChX7R8wWBauic31CwEqOPdzOuUDQ5f/4dxDZXfUVWrqqmOfUX
-	EdM2XY6O9aAjA=
-X-Received: by 2002:a05:7300:2142:b0:304:630d:e4c4 with SMTP id 5a478bee46e88-3074fab7663mr2659624eec.10.1780518244118;
-        Wed, 03 Jun 2026 13:24:04 -0700 (PDT)
-X-Received: by 2002:a05:7300:2142:b0:304:630d:e4c4 with SMTP id 5a478bee46e88-3074fab7663mr2659592eec.10.1780518243493;
-        Wed, 03 Jun 2026 13:24:03 -0700 (PDT)
-Received: from [10.62.37.26] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074df3b234sm4306900eec.23.2026.06.03.13.24.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Jun 2026 13:24:02 -0700 (PDT)
-Message-ID: <514cf213-5778-45e1-8d70-d3fe27991fcc@oss.qualcomm.com>
-Date: Wed, 3 Jun 2026 13:24:01 -0700
+	s=arc-20240116; t=1780519393; c=relaxed/simple;
+	bh=Ln3VwH9jZTalQzCV8EsDvrH3SjB0I48DwYVoGUc9akY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=aIK41hEG+jsl9DFsEDfN50jkJ35PpFFsbutvL5e0cJ75zUxY/s58Ecilkmwk2rOYBLq0da+r9U5xtGvndjtyw6zEdh3LHaLcRk15BQLzhP5Eb/XPM1LHSbXy+onJEbISzqcsNurxojTb4zU/UV29f1vXEnzg+gAwZ81rYWvUILk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HmoxdPPK; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0B61F00893;
+	Wed,  3 Jun 2026 20:43:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780519391;
+	bh=UHEnKo0sJMWL3eFxkaTo2A19KZ4igsoSLZLGEVthVrk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=HmoxdPPKn0BKTWDaXW4Hr1AVaL4PdbG+EhVGUpdcqeGswZ713rb7vybCKqcNAcyOS
+	 NXDFcLvael/QoEG2l3Ztv9W7gUz05ZHDEZIpXx2Rl63m616LUTmT1/ei2upsudnRqk
+	 rLAO5FSfL0e2apKltXOQK3cP9uo8Uy9e381h1uNUQCr1T1whp6X1CvsBb8fngKFT25
+	 Bf3EbH4KRBjxY7XGqFdU/xgcUaexw+jdgce3VVRcTdG4i0iM8Bj7IUzWPbRmBSK1RS
+	 IVq7aTMBjdA3Fs6QOIsJELhqckI0cmGEDjoIAK8PAzJKFIM7Hi+YOszkSHTj6xHA/g
+	 I7n9rOGjGkXEg==
+From: Simon Horman <horms@kernel.org>
+To: w15303746062@163.com
+Cc: 'Simon Horman' <horms@kernel.org>,
+	mani@kernel.org,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	luca@lucaweiss.eu,
+	andersson@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	25181214217@stu.xidian.edu.cn
+Subject: Re: [PATCH] net: qrtr: fix refcount saturation and potential UAF in qrtr_port_remove
+Date: Wed,  3 Jun 2026 21:40:39 +0100
+Message-ID: <20260603204037.3852840-3-horms@kernel.org>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260530082243.1123402-1-w15303746062@163.com>
+References: <20260530082243.1123402-1-w15303746062@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 1/2] dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
-From: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
-To: Bryan O'Donoghue <bod@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vinod Koul
- <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260523-x1e-csi2-phy-v8-0-a85668459521@linaro.org>
- <20260523-x1e-csi2-phy-v8-1-a85668459521@linaro.org>
- <rpnNMsR9GY8gbynzeBO8Zm61JAOq3ubt6sp0x3WDPPwkMAJzlcofECD1kabN-IUoK6sSwP5P6l28UIZLFCOpjQ==@protonmail.internalid>
- <dda32577-04e0-4507-acaf-a5694f4f31b3@linaro.org>
- <478df3ed-d4ef-43aa-bb84-e2075798542b@kernel.org>
- <ec98ef2f-02b4-4086-8b4b-07b6953dbd20@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <ec98ef2f-02b4-4086-8b4b-07b6953dbd20@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: ATZDSus0ZGOGZOPGsVihNHVxb60ZFd4j
-X-Proofpoint-GUID: ATZDSus0ZGOGZOPGsVihNHVxb60ZFd4j
-X-Authority-Analysis: v=2.4 cv=KoF9H2WN c=1 sm=1 tr=0 ts=6a208d65 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=gEfo2CItAAAA:8 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8 a=Lt2A_MVf5n7MuNHE5loA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
- a=sptkURWiP4Gy88Gu7hUp:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjAzMDE5OCBTYWx0ZWRfX3DEBylKStfKK
- YT4/Myfc96DQgF6opG3IHGUtfW0bt10BS9m+wHPAsSYGwvyWScO28nbn4JS3rJ1+e6fLzSSJO3C
- iXsuTOzdmaGDp/f9AE/N4x/TaWK48NPC3nOAVXAlXix90MfDBM9qnHhYARftqYCyIyY3qE9jOhV
- O0tnemJ/HQGlQut6tvjEi+yokgO8wgo7CXbm6dfHPKkVQbzU0bpACo3MJ5Ap7WxyeKe98tMRFZY
- +07fIsiVVeFpw5AFG2FGG5J95vJ8Ni1flj0BGVrlE85JiUPUxpXyPUq/azDNie6NmHxF93OBSxw
- VQmnNR6BZ1Jvw3ksaoeBsF0A+PQldOrPDm+36OSLSffKKclu2og/mFxKnn92eTCYmsw0YQGH5J8
- PXoexPWxJV0VPJ3vAXonOcsIf2yL5dmqiAhVJFfg2oGaMGOuKjvLk8KKmvf95sJkYr3IiJWkBEV
- YgZA2/UabGhIbbv6E9Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-03_05,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 clxscore=1015 bulkscore=0 suspectscore=0
- priorityscore=1501 adultscore=0 phishscore=0 impostorscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606030198
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111046-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-111048-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:bod@kernel.org,m:vladimir.zapolskiy@linaro.org,m:bryan.odonoghue@linaro.org,m:vkoul@kernel.org,m:kishon@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:neil.armstrong@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FORGED_RECIPIENTS(0.00)[m:w15303746062@163.com,m:horms@kernel.org,m:mani@kernel.org,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:luca@lucaweiss.eu,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:25181214217@stu.xidian.edu.cn,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[vijay.tumati@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[horms@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[163.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,linaro.org:email,devicetree.org:url,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vijay.tumati@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[horms@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,sashiko.dev:url]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: DCC0563B16E
+X-Rspamd-Queue-Id: 6B45263B310
 
+From: 'Simon Horman' <horms@kernel.org>
 
+This is an AI-generated review of your patch. The human sending this
+email has considered the AI review valid, or at least plausible.
+Full review at: https://sashiko.dev
+---
+Subject: net: qrtr: fix refcount saturation and potential UAF in qrtr_port_remove
 
-On 6/3/2026 1:16 PM, Vijay Kumar Tumati wrote:
-> Hi,
-> 
-> On 6/2/2026 3:51 PM, Bryan O'Donoghue wrote:
->> On 02/06/2026 22:59, Vladimir Zapolskiy wrote:
->>> On 5/23/26 05:48, Bryan O'Donoghue wrote:
->>>> Add a base schema initially compatible with x1e80100 to describe 
->>>> MIPI CSI2
->>>> PHY devices.
->>>>
->>>> The hardware can support both CPHY, DPHY and a special split-mode DPHY.
->>>>
->>>> The schema here defines three ports:
->>>>
->>>> port@0:
->>>>       The first input port where a sensor is always required.
->>>>
->>>> port@1:
->>>>       A second optional input port which if present implies DPHY 
->>>> split-mode.
->>>>
->>>> port@2:
->>>>       A third always required output port which connects to the 
->>>> controller.
->>>>
->>>
->>> This port numeration is imperfect, because port@0 and port@2 are 
->>> required,
->>> while middle port@1 is optional.
->>>
->>> Like it was stated before a number of times, it seems natural to operate
->>> with two ports, where input port may have two endpoints rather than 3 
->>> ports,
->>> also that approach solves the problem of a hole in the port numeration.
->>
->> Can you confirm this is what you are after ?
->>
->> port@0 {
->>      #address-cells = <1>;
->>      #size-cells = <0>;
->>
->>      endpoint@0 {              /* primary sensor */
->>          reg = <0>;
->>          data-lanes = <0 1 2 3>;
->>          remote-endpoint = <&sensor0_out>;
->>      };
->>
->>      endpoint@1 {              /* split-mode second sensor, optional */
->>          reg = <1>;
->>          data-lanes = <0>;
->>          remote-endpoint = <&sensor1_out>;
->>      };
->> };
->>
->> port@1 {                     /* output to CAMSS, was port@2 */
->>      endpoint { remote-endpoint = <&controller_in>; };
->> };
->>
->> This works for me BTW.
-> Either way, do we need to document the constraint of using port@0 or 
-> endpoint@0 'only' for the 4+1 or 2+1 mode and the other one is for the 
-> 1+1 mode? Or is it implicit from this bindings for a developer?>
->>>> The CSIPHY devices have their own pinouts on the SoC as well as 
->>>> their own
->>>> individual voltage rails.
->>>>
->>>> The need to model voltage rails on a per-PHY basis leads us to define
->>>> CSIPHY devices as individual nodes.
->>>>
->>>> Two nice outcomes in terms of schema and DT arise from this change.
->>>>
->>>> 1. The ability to define on a per-PHY basis voltage rails.
->>>> 2. The ability to require those voltage.
->>>>
->>>> We have had a complete bodge upstream for this where a single set of
->>>> voltage rail for all CSIPHYs has been buried inside of CAMSS.
->>>>
->>>> Much like the I2C bus which is dedicated to Camera sensors - the CCI 
->>>> bus in
->>>> CAMSS parlance, the CSIPHY devices should be individually modelled.
->>>>
->>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>> ---
->>>>    .../bindings/phy/qcom,x1e80100-csi2-phy.yaml       | 209 ++++++++ 
->>>> + ++++++++++++
->>>>    1 file changed, 209 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,x1e80100- 
->>>> csi2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,x1e80100- 
->>>> csi2-phy.yaml
->>>> new file mode 100644
->>>> index 0000000000000..270375f949880
->>>> --- /dev/null
->>>> +++ b/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml
->>>> @@ -0,0 +1,209 @@
->>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>>> +%YAML 1.2
->>>> +---
->>>> +$id: http://devicetree.org/schemas/phy/qcom,x1e80100-csi2-phy.yaml#
->>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>> +
->>>> +title: Qualcomm CSI2 PHY
->>>> +
->>>> +maintainers:
->>>> +  - Bryan O'Donoghue <bod@kernel.org>
->>>> +
->>>> +description:
->>>> +  Qualcomm MIPI CSI2 C-PHY/D-PHY combination PHY. Connects MIPI 
->>>> CSI2 sensors
->>>> +  to Qualcomm's Camera CSI Decoder. The PHY supports both C-PHY and 
->>>> D-PHY
->>>> +  modes.
->>>> +
->>>> +properties:
->>>> +  compatible:
->>>> +    const: qcom,x1e80100-csi2-phy
->>>> +
->>>> +  reg:
->>>> +    maxItems: 1
->>>> +
->>>> +  "#phy-cells":
->>>> +    const: 1
->>>> +    description:
->>>> +      The single cell specifies the PHY operating mode.
->>>
->>> #phy-cells should be 0, because the PHY operating mode is well defined
->>> by 'bus-type' property of an endpoint on the sensor side, the opposite
->>> side of CAMSS/CSID as a CSIPHY "consumer" should not dictate the PHY 
->>> type.
->>
->> Rob said consumer but, I'm also not very bothered about that. bus-type 
->> is perfectly acceptable to me.
->>
->>>> +
->>>> +  clocks:
->>>> +    maxItems: 2
->>>> +
->>>> +  clock-names:
->>>> +    items:
->>>> +      - const: core
->>>> +      - const: timer
->>>> +
->>>> +  interrupts:
->>>> +    maxItems: 1
->>>> +
->>>> +  operating-points-v2:
->>>> +    maxItems: 1
->>>> +
->>>> +  power-domains:
->>>> +    items:
->>>> +      - description: MMCX voltage rail
->>>> +      - description: MXC or MXA voltage rail
->>>
->>> Only "qcom,x1e80100-csi2-phy" device is supported so far, unlikely it's
->>> the case that "MXC or MXA voltage rail" should be specified, it'd be
->>> just one of two or both.
->>
->> Hmm. I'm not being clear here if this is your take, I will reword it 
->> to make it clearer this generation of PHY _must_ have either
->>
->> - MMCX and MXC
->> or
->> - MMCX and MXA
-> I am not sure of this, Bryan. If you look at the PHY core clock 
-> separately, sure, that is correct. But all of them, on this platform as 
-> well, share the RCG, which requires all 3 power domains. So 
-> fundamentally, you need to enable all of those from each PHY. You can 
-> make it constant 3 power domains.>
->>>> +
->>>> +  power-domain-names:
->>>> +    items:
->>>> +      - const: mmcx
->>>> +      - const: mx
->>>> +
->>>> +  vdda-0p9-supply:
->>>> +    description: Phandle to a 0.9V regulator supply to a PHY.
->>>> +
->>>> +  vdda-1p2-supply:
->>>> +    description: Phandle to 1.2V regulator supply to a PHY.
->>>> +
->>>> +  ports:
->>>> +    $ref: /schemas/graph.yaml#/properties/ports
->>>> +
->>>> +    properties:
->>>> +      port@0:
->>>> +        $ref: /schemas/graph.yaml#/$defs/port-base
->>>> +        description: Sensor input. Always present.
->>>> +        unevaluatedProperties: false
->>>> +
->>>> +        properties:
->>>> +          endpoint:
->>>> +            $ref: /schemas/media/video-interfaces.yaml#
->>>> +            unevaluatedProperties: false
->>>> +            properties:
->>>> +              data-lanes:
->>>> +                minItems: 1
->>>> +                maxItems: 4
->>>> +              clock-lanes:
->>>> +                maxItems: 1
->>>> +              remote-endpoint: true
->>>> +            required:
->>>> +              - data-lanes
->>>> +              - remote-endpoint
->>>> +
->>>> +      port@1:
->>>> +        $ref: /schemas/graph.yaml#/$defs/port-base
->>>> +        description:
->>>> +          Second sensor input. When present, indicates DPHY split 
->>>> mode.
->>>> +        unevaluatedProperties: false
->>>> +
->>>> +        properties:
->>>> +          endpoint:
->>>> +            $ref: /schemas/media/video-interfaces.yaml#
->>>> +            unevaluatedProperties: false
->>>> +            properties:
->>>> +              data-lanes:
->>>> +                maxItems: 1
->>>> +              clock-lanes:
->>>> +                maxItems: 1
->>>> +              remote-endpoint: true
->>>> +            required:
->>>> +              - data-lanes
->>>> +              - clock-lanes
->>>> +              - remote-endpoint
->>>
->>> As it's stated above, it should be converted to a single port with two
->>> endpoints, it'd be done in accordance to video-interfaces.yaml.
->>>
->>>> +
->>>> +      port@2:
->>>> +        $ref: /schemas/graph.yaml#/$defs/port-base
->>>> +        description: Output to CAMSS controller.
->>>> +        unevaluatedProperties: false
->>>> +
->>>> +        properties:
->>>> +          endpoint:
->>>> +            $ref: /schemas/graph.yaml#/$defs/endpoint-base
->>>> +            unevaluatedProperties: false
->>>> +            properties:
->>>> +              remote-endpoint: true
->>>> +            required:
->>>> +              - remote-endpoint
->>>> +
->>>> +    required:
->>>> +      - port@0
->>>> +      - port@2
->>>> +
->>>> +required:
->>>> +  - compatible
->>>> +  - reg
->>>> +  - "#phy-cells"
->>>> +  - clocks
->>>> +  - clock-names
->>>> +  - interrupts
->>>> +  - operating-points-v2
->>>> +  - power-domains
->>>> +  - power-domain-names
->>>> +  - vdda-0p9-supply
->>>> +  - vdda-1p2-supply
->>>> +  - ports
->>>> +
->>>> +additionalProperties: false
->>>> +
->>>> +examples:
->>>> +  - |
->>>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->>>> +    #include <dt-bindings/clock/qcom,x1e80100-camcc.h>
->>>> +    #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
->>>> +    #include <dt-bindings/power/qcom,rpmhpd.h>
->>>> +
->>>> +    csiphy4: csiphy@ace4000 {
->>>> +        compatible = "qcom,x1e80100-csi2-phy";
->>>> +        reg = <0x0ace4000 0x2000>;
->>>> +        #phy-cells = <1>;
->>>> +
->>>> +        clocks = <&camcc CAM_CC_CSIPHY0_CLK>,
->>>> +                 <&camcc CAM_CC_CSI0PHYTIMER_CLK>;
->>>> +        clock-names = "core",
->>>> +                      "timer";
->>>> +
->>>> +        operating-points-v2 = <&csiphy_opp_table>;
->>>> +
->>>> +        interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>;
->>>> +
->>>> +        power-domains = <&rpmhpd RPMHPD_MMCX>,
->>>> +                        <&rpmhpd RPMHPD_MX>;
->>>> +        power-domain-names = "mmcx",
->>>> +                             "mx";
-Actually, one more thing, Why isn't TITAN TOP GDSC here?>>>> +
->>>> +        vdda-0p9-supply = <&vreg_l2c_0p8>;
->>>> +        vdda-1p2-supply = <&vreg_l1c_1p2>;
->>>> +
->>>> +        ports {
->>>> +            #address-cells = <1>;
->>>> +            #size-cells = <0>;
->>>> +
->>>> +            port@0 {
->>>> +                reg = <0>;
->>>> +                csiphy0_in_ep: endpoint {
->>>> +                    data-lanes = <0 1>;
->>>> +                    clock-lanes = <2>;
->>>> +                    remote-endpoint = <&sensor_out>;
->>>> +                };
->>>> +            };
->>>> +
->>>> +            port@2 {
->>>> +                reg = <2>;
->>>> +                csiphy0_out_ep: endpoint {
->>>> +                    remote-endpoint = <&controller_in>;
->>>> +                };
->>>> +            };
->>>> +        };
->>>> +    };
->>>> +
->>>> +    csiphy_opp_table: opp-table {
->>>> +        compatible = "operating-points-v2";
->>>> +
->>>> +        opp-300000000 {
->>>> +            opp-hz = /bits/ 64 <300000000>;
-> I wonder why you would have only one clock here. You should be setting 
-> the rate for both the core and timer, isn't it?>>> + required-opps = 
-> <&rpmhpd_opp_low_svs_d1>,
->>>> +                            <&rpmhpd_opp_low_svs_d1>;
-> Same here, it should 3 power domains set.>>> +        };
->>>> +
->>>> +        opp-400000000 {
->>>> +            opp-hz = /bits/ 64 <400000000>;
->>>> +            required-opps = <&rpmhpd_opp_low_svs>,
->>>> +                            <&rpmhpd_opp_low_svs_d1>;
-> Why is one at svs and the other at svs_d1? Shouldn't both be svs?>>> 
-> +        };
->>>> +
->>>> +        opp-480000000 {
->>>> +            opp-hz = /bits/ 64 <480000000>;
->>>> +            required-opps = <&rpmhpd_opp_low_svs>,
->>>> +                            <&rpmhpd_opp_low_svs_d1>;
-> And here, both should be svs_l1?>>> +        };
->>>> +    };
->>>>
->>>
->>> -- 
->>> Best wishes,
->>> Vladimir
->>
->>
-> Thanks,
-> Vijay.
-> 
+This patch defers the socket reference count decrement in
+qrtr_port_remove() until after xa_erase() and synchronize_rcu() to
+close a race with concurrent RCU readers, and also switches from
+__sock_put() to sock_put().
 
+> diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+> index 7cec6a7859b0..9ddc8657f7db 100644
+> --- a/net/qrtr/af_qrtr.c
+> +++ b/net/qrtr/af_qrtr.c
+> @@ -707,13 +707,13 @@ static void qrtr_port_remove(struct qrtr_sock *ipc)
+>  	if (port == QRTR_PORT_CTRL)
+>  		port = 0;
+>  
+> -	__sock_put(&ipc->sk);
+> -
+>  	xa_erase(&qrtr_ports, port);
+>  
+>  	/* Ensure that if qrtr_port_lookup() did enter the RCU read section we
+>  	 * wait for it to up increment the refcount */
+>  	synchronize_rcu();
+> +
+> +	sock_put(&ipc->sk);
+>  }
+
+[Low]
+Is the Fixes: tag pointing at the right commit?
+
+> Fixes: a365023a76f2 ("net: qrtr: combine nameservice into main module")
+
+Looking at a365023a76f2, that commit renames qrtr.c to af_qrtr.c and
+consolidates the nameservice into the main module; it does not touch the
+__sock_put()/xa_erase()/synchronize_rcu() sequence in qrtr_port_remove().
+
+A history search with git log -S '__sock_put(&ipc->sk)' on net/qrtr/
+shows this pattern was first introduced by:
+
+  bdabad3e363d ("net: Add Qualcomm IPC router")
+
+Should the Fixes: tag reference bdabad3e363d so stable picks up the fix
+on every release in the bdabad3e363d..a365023a76f2 range?
+
+[Low]
+Is the rationale given for switching __sock_put() to sock_put() accurate?
+
+The commit message states:
+
+  Furthermore, replace __sock_put() with sock_put() to ensure that the
+  socket memory is safely freed if this happens to be the last
+  reference, preventing memory leaks.
+
+Can the xarray reference legitimately be the last one at this point?
+
+The two callers of qrtr_port_remove() both keep additional references
+alive across the call.
+
+In qrtr_release(), sk is still dereferenced after qrtr_port_remove()
+returns:
+
+	if (!sock_flag(sk, SOCK_ZAPPED))
+		qrtr_port_remove(ipc);
+
+	skb_queue_purge(&sk->sk_receive_queue);
+
+	release_sock(sk);
+	sock_put(sk);
+
+In __qrtr_bind(), the rebind path calls qrtr_port_assign() (which does
+sock_hold() for the new port) before qrtr_port_remove():
+
+	rc = qrtr_port_assign(ipc, &port);
+	if (rc)
+		return rc;
+
+	/* unbind previous, if any */
+	if (!zapped)
+		qrtr_port_remove(ipc);
+
+If sock_put() ever did free the socket here, qrtr_release()'s subsequent
+skb_queue_purge(&sk->sk_receive_queue) and release_sock(sk) would be a
+use-after-free, which would indicate a separate refcount-imbalance bug
+rather than a memory leak.
+
+Could the commit message be reworded so it doesn't conflate the
+__sock_put() to sock_put() change with a memory leak fix?
+
+Simon says: I would go a bit further here. Based on the above
+            I think the __sock_put() -> sock_put() should be dropped.
 
