@@ -1,205 +1,348 @@
-Return-Path: <linux-arm-msm+bounces-110913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id X8tMInjoH2risAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 10:40:24 +0200
+	id AeWHKkTsH2rPsQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 10:56:36 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E43CF635C99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 10:40:23 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 530CD635E75
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 10:56:36 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=alex-min.fr header.s=fm3 header.b=NUhbtQtX;
-	dkim=pass header.d=messagingengine.com header.s=fm1 header.b="H gJyHdR";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110913-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110913-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=tomeuvizoso-net.20251104.gappssmtp.com header.s=20251104 header.b=xRhW72PA;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110914-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110914-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=none;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 3270F3007B82
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 08:40:23 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 2FC33300FA91
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 08:54:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9C62409DEA;
-	Wed,  3 Jun 2026 08:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C0E142669C;
+	Wed,  3 Jun 2026 08:54:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9D539DBFC;
-	Wed,  3 Jun 2026 08:40:19 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780476021; cv=none; b=t5cXDH//6Ksq3Sq/NnCsX0P7MeNCUMyiaVDWB6ejob7AAtfh+K9yovUySnURhwnrs8KahhWmbcFHkTjMWDPhm6c6YNhAskW5O3F+GKTNOipACCXdltk294qMRyidR1EOgJIIsAIgFum4IQkFKqV5gfw2Yv57lpOiZcobmiAonhg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780476021; c=relaxed/simple;
-	bh=K/rKz6b4F77j0xHWzIXpJgeNDf7V610k4bC4qX6dHXs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=CAjnkncX2WHqKbj2AXXxQArdawp+bjePU5J1KjLqSWsYKvP0dFKrTaOL7vrcYsx+gqKbMltIsiRB+5ZiEsNgxYsNJClRvR90mj6HY+7C5ZNnB3ZGeaxRJM8AOUnN0A8jeLBML60N2Y+Z+SZCW/14w6rc65DSHhhiCeOI8Awz/3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alex-min.fr; spf=pass smtp.mailfrom=alex-min.fr; dkim=pass (2048-bit key) header.d=alex-min.fr header.i=@alex-min.fr header.b=NUhbtQtX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HgJyHdRS; arc=none smtp.client-ip=103.168.172.148
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 16D21EC013A;
-	Wed,  3 Jun 2026 04:40:19 -0400 (EDT)
-Received: from phl-imap-03 ([10.202.2.93])
-  by phl-compute-04.internal (MEProxy); Wed, 03 Jun 2026 04:40:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alex-min.fr; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1780476019;
-	 x=1780562419; bh=u0muCYJkeE3pAYE8lO+AAxGI4J4BhmqEcwm6uUfo5uE=; b=
-	NUhbtQtXq9p/nvFoC74C/PrIAJqC6bllujDUVKiqxWWnA84ocxtk6uRXfbIl/0cO
-	i+hsW7ELyy2qYZD2v/NxN1RMlqzwe1lDNKCdu2NlTJgw+WAjLh7kNLcNUvHFF1IL
-	iS0C1chljLts+6KV5h3fW2cToPiEtY+E7HpzNCFTtjuVEXmMLr8hF5aFYnz5qPPu
-	5jpwp/wj/+L2ld7X9mG1jvtQ4xDneF+2XBPdk79P3Ql56K9E9vcu4TZUyQY5/AaD
-	5r3MLSfKiI0YGatPMgpPtI4ij8NwkFxqsMoK2JjN0uyACz4x/yDaEJVzW1TrmEye
-	WczvN6GhHr14LUGUgL4gOw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780476019; x=
-	1780562419; bh=u0muCYJkeE3pAYE8lO+AAxGI4J4BhmqEcwm6uUfo5uE=; b=H
-	gJyHdRSTRsWoDpuJsf7SJWxzVfm1dIVxuZktRPwJpnCUOzGt+eynSj4QNtK9VBt+
-	S0jm6E5WhzgLn1SyDpVYUBSPAyx3cEpzi+K9ebItz+nFl6CiEwGs7Xbqf9ufdJ0F
-	qa/urCO67q/hxfjF2KgfogPWFBJBinLYWw+0JH1FT0aLaZa03sYZ0VX349TGDovy
-	oOlFMR1WDmZ7SrE8yYYN3yPPSfYIfwboNX/K3NeY2ciIrkBrKv6s6JXSRk3xYbNw
-	hj6kGHKzTJ0aSoWPQ2EgmZS3TH8LXrOFmGYto7mmloQbPXrzOUc5FMQNpVxRJ/uO
-	w6gwWCx4qVXzbD948xo1A==
-X-ME-Sender: <xms:cugfalkrtFRJoZEYipjnGJLLK79ssZzaBQRS3TZRTQSDuOKjgz22sw>
-    <xme:cugfaro-Q--4yh0osdZvzxv0hW7y5fXjZZsBFqn6EK_9MbAhq0cmAWn5pv9BvklDV
-    DuUbHK9IKnjTvfYwrB8FjKhhzqrLTyO3gPhI104YnODxkuadkDtEQ>
-X-ME-Proxy-Cause: dmFkZTEjqkwl1pkbDArUnxuEE9GIScT8QO+8RvSWozOv35+sUiTP6ILEcbWB6RLnpvoP3a
-    Ba61CieoqCG+XP2aXBG06Q49zacl1TWZDij9mZ5F82zfTe0jpnrLGMRNbdJvC0FPseuIsm
-    0bTvDzAJDmxhsFLm1cIDD7h68Tco7NgQlFArcyK+9QG8qy/n3pGwgDvY5ukcuRNs+0M9Es
-    CkDowBjDl0Z7YoMuJbADt1w+VnwwQpS8eG6cRxSftCj6tJJ3THuMsY3pr6Lx6fWTZ1EpjI
-    xJvy7fGjVZ/qLMZ7wJa+egFrb1Phw9ygMsklLoOz7gzYuZSTsHb8OctXMhBoqT3RZDHmgx
-    L2BxiLdoF2oa4ypW459jUGwxzF66/Jzr+vCRHuIgIlZUuJZcwvn0f1gibdnq1sRwk6uPJi
-    568djrU1KhUo8av09KNlw3EsHTbJOkngAG+4TtOWgMOiWV9+nfNK5FBg1RLW17c3nXSyzP
-    wAtOx3pWkzFQAyyYKnPlMPfz+eFWVFsDs2z/aWRf9GhXdKFGu9r7CudNWQO0Dl+CpIZfIi
-    ASP+fYv1QfWjokvSqf6xIOP4CayS/+SjmH0wfKidhsSKCZjNVzWIjtj6QL0xlcAp6frGEb
-    I+etpvMfP7exP71LFKgjYtw3I9VIbYnQdH/I88cL0oi3r60YQmb0pXuVXW4A
-X-ME-Proxy: <xmx:cugfajihGlrX1kAJ-qiBxOhBd6SoT11j81dCPcitNeQOHm3I40ydkg>
-    <xmx:cugfarAFq-uIuJD1OXMgI1b5z3zRJseXAfN79wfjPDKdzqCpeRM7sA>
-    <xmx:cugfapve9avYfSV3IYPTPCKmiab9e2uk2aroJolroF4YFoy1nwdoqw>
-    <xmx:cugfat4b3L2DC-G2_6QuNaEqhcEOJLKzCKayrLi7ZD_PVZaeeu5q9Q>
-    <xmx:c-gfanApLeFI2REDd8kclC9auE-RF1W7wpIXdJ4H7oN0pt4tTUxk6jGP>
-Feedback-ID: i72694427:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 3B73B18E006C; Wed,  3 Jun 2026 04:40:18 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A624438FEF
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Jun 2026 08:54:25 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780476870; cv=pass; b=Lc3YX+ven5slL8yy92Mzgj9g/3cH6yuRkHsX/eJuPU31CXafoFlTRggrjn9wjhT4qSPsbtQy/K2E4dOwHW1c2NgOxc8bqDq3GIgk7YnAxKpFD+89ytN1p0oEKNJj4twbacaNw3rT2nrMhOWusXP2bi8B4xN4Qpr62IEzoTxzFkI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780476870; c=relaxed/simple;
+	bh=LWdpnYx07T1Ms5zP1asG6Lruytmqf/Fa2t41ma/B4B8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PM6/+4zlWDZ85Aqk304J9qofjO27JYEwBvHhryJPiRdi1WyXgmcOVQu/U0DhMHoSuuESwGPrJtMd3cUW8O8MAtcGKf+FncZKs97LwX3FZMG3csIEeRGeyUMQm9G29tV0liQxoqJJ2BJChJ1pCFFOB5FVPjzSYZYeDa4Whkb6lAM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tomeuvizoso.net; spf=pass smtp.mailfrom=tomeuvizoso.net; dkim=pass (2048-bit key) header.d=tomeuvizoso-net.20251104.gappssmtp.com header.i=@tomeuvizoso-net.20251104.gappssmtp.com header.b=xRhW72PA; arc=pass smtp.client-ip=209.85.222.176
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-91563abd6a9so147262485a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 01:54:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780476865; cv=none;
+        d=google.com; s=arc-20240605;
+        b=T+MzpaA7kWi6Gacnm9LqvI5Yt/YEHhMUzZjPl1jhID+w0SqAQ9bqPCGcIzfAIWzR29
+         MUkmM49v7A9QPXSI5L03aYge1VxdUHCVK6Vqd3xP78Du3uqoO6GanRTvYxJowFm5DNh8
+         q1O0Rc7TXr1givQ8tEVTPFaBOyzBMxE+XXKsn1nNgvHXAFOc+Y6jXGMw/nchxWKPaBYp
+         IsrP5rYLG//SvT/2xGP9C4AcH4sb1eulJ5ASqyesH30sik9pMEwAEsId0tndhpQZIsvs
+         jCX8U0jdPu42UTY9IUMnx9uUPxtMNnnc4uck+K0amNdWxrowy0KLVoIk0MMPmCfQ4ujI
+         rVnQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=g7JX48xUqE191PjwdvrWj7w+4oUCIR2hhRFUmFcQpEw=;
+        fh=H7nCvnLHxn5gRFerD7AVKVrXIunRCYuLrpQUpMpjHZs=;
+        b=avnuvihquztl/GoYOKDMMpZUrP1cMa7YfZCvu34eiiy81p9eL7TRcPyPiaJVrRLSbx
+         ffppD1+gTI4Pv1kpQPju0tPtpC49VDdXV3jZYnFIiRGkIStXKzyQE9W3hOImrBazMbXV
+         IlD/dzJCKYKaFqEZVkNnVGG0IvxIbkBrZeeYZfSqSqkoNY4VWy7NpgJ2yE/w22sVDYtF
+         a1MSscbn9oSginC9UxTsTm4bvb/TuHF71i9ug49fx5bK1svonZu8qPRUHFGxVUaGXkqi
+         MJBUg6S96M8eTqo5/IVTwPM5X2sbrbI5Y3Vd84Kb7cumhEfF/ZM1GTMWvlbyXS19SbIb
+         PERw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tomeuvizoso-net.20251104.gappssmtp.com; s=20251104; t=1780476865; x=1781081665; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g7JX48xUqE191PjwdvrWj7w+4oUCIR2hhRFUmFcQpEw=;
+        b=xRhW72PAvG6tvAL6ohGjFciI5+ZBAhgCgN2KXtEAaVmnacTCWylLBn35aeFOejG6/N
+         7GLp5ukhO4s6W7PSezQOF3eilmMUWZVNkilfOLnspccfDWK3P47XbJyUd1aXYf3I76GJ
+         nRr+cguQselLCvxmhLtyXRKtXjA1leN+sKNxvkkatS/XsRCSp8iLjlX0NcJq1r3d9pyp
+         AzT4/KAQfZ4cVTdRQyoE8gMV9Hfeeu4AeCKX3/1cEB4lmvyKR8cwLMdsWvDcQ58vb6pP
+         qaN99bc1m6hzx0BdEQgMgTNwyJhP7tcznGvnkMQ+6mL27TeBy065OZ+6YF4SEUltz8zK
+         dWdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780476865; x=1781081665;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=g7JX48xUqE191PjwdvrWj7w+4oUCIR2hhRFUmFcQpEw=;
+        b=U/id2sMbi0At21VU9uCRPI1an76ldsXAofUhx+Rvmhiw0EtjUapLcNSZhYP421hNiD
+         0VrquJvcBm++VqAvncXAsRnCtO9a78i7GVdbARC05iE6g7zmlWIWjm6J3+FJ/lIQ9jGP
+         JSeLE2Y3erK0qs4Df1Qm8YMGtpQy6HC0IE7irO9RC07bVQsWpOE15+vLZ0D/uFlSNK4y
+         /aoSO2o1TcYa/Huf55LQp56g8sK0ATzdkl0xBld6Byj7ULJutj8qVRc8IVAyemMofhck
+         5AWEmmbUgndD7fRFVyRO1lSlzZ5WklBFC2k0ZAyCuYdxNAACq7SGbgLSr3Pdid0Q09Ml
+         J8NA==
+X-Forwarded-Encrypted: i=1; AFNElJ8bLD/lD7Xy3MooN2BOyUsFbzLued+5h7Q/nsRlshoO0ICfS18f2WaGlu5juNvvZuiYeSFvqrAvZG6bdtwp@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxsh+Tr2XO8UPqAMQMdWIh60/bbcMWo5UajeBTWHKDxRiwpLTnn
+	fb2flPX+EBQCmJP8c80Czt4PbZPa2Ykh6ybC7pTJVlQ2asZ5RKXaJmJAC0UKD5YzR8FCvvQe1F4
+	5sbfhDadfYEpV5wPvxwq6r3DBPVDqDhCy+FsfYli39Q==
+X-Gm-Gg: Acq92OFndKyy4VPfpDEsoY0Y3O6gFtlEeVP+NtP0i8GNnYyDRnuKWhFQime7tANg/F3
+	Mem9JZ6z6oYD2dxWVV63kwDBrpCKnw2aoddwllBDXWULCA5M5wFdBMokVNRhCsEFZrWtyjZVab7
+	j1jXWssV8bt9cRcY+76dOHbhN8XygIrBIKsK11zj3Enme7FSFGPy7C+4cSldWkSBvVb4wAqXr2b
+	mcE4GaEdHteNDWxObdxH5KsXynjQG248MhuBnET93zBo6S8TG29glkEQ+hz33ZAHlGeMZrLe0rf
+	WQtZ96OeQtxCVOKS
+X-Received: by 2002:a05:620a:470d:b0:914:e3dd:17fd with SMTP id
+ af79cd13be357-9158a6cce06mr407596485a.6.1780476864872; Wed, 03 Jun 2026
+ 01:54:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: ABg7bcuugZBJ
-Date: Wed, 03 Jun 2026 10:39:24 +0200
-From: "MINETTE Alexandre" <contact@alex-min.fr>
-To: "Krzysztof Kozlowski" <krzk@kernel.org>
-Cc: "Bjorn Andersson" <andersson@kernel.org>,
- "Konrad Dybcio" <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>,
- "MyungJoo Ham" <myungjoo.ham@samsung.com>,
- "Chanwoo Choi" <cw00.choi@samsung.com>,
- "Guru Das Srinagesh" <linux@gurudas.dev>,
- "Linus Walleij" <linusw@kernel.org>,
- "Rob Clark" <robin.clark@oss.qualcomm.com>, "Joerg Roedel" <joro@8bytes.org>,
- "Will Deacon" <will@kernel.org>, "Robin Murphy" <robin.murphy@arm.com>,
- "Kees Cook" <kees@kernel.org>, "Tony Luck" <tony.luck@intel.com>,
- "Guilherme G. Piccoli" <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, iommu@lists.linux.dev,
- phone-devel@vger.kernel.org
-Message-Id: <50c433df-d737-45da-93dc-76d365052a6c@app.fastmail.com>
-In-Reply-To: <20260428-jumping-discerning-oarfish-d2caf1@quoll>
-References: <20260427-mainline-send-v1-sending-v2-0-dcaa9178007b@alex-min.fr>
- <20260427-mainline-send-v1-sending-v2-7-dcaa9178007b@alex-min.fr>
- <20260428-jumping-discerning-oarfish-d2caf1@quoll>
-Subject: Re: [PATCH v2 7/8] ARM: dts: qcom: pm8921: Add USB ID extcon
-Content-Type: text/plain; charset=utf-8
+References: <20260519-qda-series-v1-0-b2d984c297f8@oss.qualcomm.com>
+ <20260519-qda-series-v1-2-b2d984c297f8@oss.qualcomm.com> <paiohsil5pmvm7cf6jxrhaj2225bgvlt3scrag4x6gbkyosow5@l4tbakbnxcvo>
+ <CAPsqS2Tt0JbHhJLHBsbJ2YfZW913WNfoSXpSa+8TD1T9CV8V3g@mail.gmail.com> <9879f670-8a23-407b-ab45-673904ad4a86@oss.qualcomm.com>
+In-Reply-To: <9879f670-8a23-407b-ab45-673904ad4a86@oss.qualcomm.com>
+From: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Date: Wed, 3 Jun 2026 10:54:13 +0200
+X-Gm-Features: AVHnY4JxR71JOH6mKjWdwqMelPGIBYkdeP3ekd-6Gg14JWpiLQqO3KnjrrlcThc
+Message-ID: <CAPsqS2R5kr1-UqhijjgAfU9D1VnyEd3pCxOagHyesHSHpN4_8g@mail.gmail.com>
+Subject: Re: [PATCH 02/15] accel/qda: Add QDA driver documentation
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Oded Gabbay <ogabbay@kernel.org>, 
+	Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+	Bharath Kumar <quic_bkumar@quicinc.com>, Chenna Kesava Raju <quic_chennak@quicinc.com>, srini@kernel.org, 
+	andersson@kernel.org, konradybcio@kernel.org, robin.clark@oss.qualcomm.com, 
+	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	linux-doc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	iommu@lists.linux.dev, linux-media@vger.kernel.org, 
+	linaro-mm-sig@lists.linaro.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.15 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[alex-min.fr:s=fm3,messagingengine.com:s=fm1];
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[tomeuvizoso-net.20251104.gappssmtp.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	XM_UA_NO_VERSION(0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:krzk@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:myungjoo.ham@samsung.com,m:cw00.choi@samsung.com,m:linux@gurudas.dev,m:linusw@kernel.org,m:robin.clark@oss.qualcomm.com,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:kees@kernel.org,m:tony.luck@intel.com,m:gpiccoli@igalia.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:iommu@lists.linux.dev,m:phone-devel@vger.kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[contact@alex-min.fr,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	DMARC_NA(0.00)[alex-min.fr];
-	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:ekansh.gupta@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:ogabbay@kernel.org,m:corbet@lwn.net,m:skhan@linuxfoundation.org,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:sumit.semwal@linaro.org,m:christian.koenig@amd.com,m:quic_bkumar@quicinc.com,m:quic_chennak@quicinc.com,m:srini@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robin.clark@oss.qualcomm.com,m:linux-kernel@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:linux-doc@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-media@vger.kernel.org,m:linaro-mm-sig@lists.linaro.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	DMARC_NA(0.00)[tomeuvizoso.net];
+	FORGED_SENDER(0.00)[tomeu@tomeuvizoso.net,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-110913-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110914-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[tomeuvizoso-net.20251104.gappssmtp.com:+];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[contact@alex-min.fr,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[alex-min.fr:+,messagingengine.com:+];
-	RCVD_COUNT_FIVE(0.00)[6];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,messagingengine.com:dkim,alex-min.fr:dkim,alex-min.fr:from_mime,alex-min.fr:email,app.fastmail.com:mid]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[tomeu@tomeuvizoso.net,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,lwn.net,linuxfoundation.org,8bytes.org,arm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch,linaro.org,amd.com,quicinc.com,vger.kernel.org,lists.freedesktop.org,lists.linux.dev,lists.linaro.org];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tomeuvizoso-net.20251104.gappssmtp.com:dkim,mail.gmail.com:mid,vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E43CF635C99
+X-Rspamd-Queue-Id: 530CD635E75
 
-Thanks for the feedback, Krzysztof.
-
-Do you mean that the PM8921 USB ID handling should be exposed by the
-PM8921 parent node itself, so USB consumers would reference the PMIC
-directly, e.g.:
-
-  	extcon =3D <&muic>, <&pm8921>;
-
-I am fine with that model, but it would require more driver changes: the
-current extcon driver binds to a separate platform device, while the
-PM8921 parent node is already handled by the PM8xxx MFD driver.
-
-Is that the direction you would prefer for v4?
---=20
-  MINETTE Alexandre
-  contact@alex-min.fr
-
-Mar 28 avr 2026, =C3=A0 08:56, Krzysztof Kozlowski a =C3=A9crit=E2=80=AF:
-> On Mon, Apr 27, 2026 at 09:34:53PM +0200, Alexandre MINETTE wrote:
->> Add the PM8921 USB ID interrupt as a disabled extcon provider. Boards
->> can enable it when their USB controller consumes the PMIC USB ID state
->> for OTG role detection.
->>=20
->> The interrupt corresponds to PM8921 USB_ID_IN, block 6 bit 1.
->>=20
->> Signed-off-by: Alexandre MINETTE <contact@alex-min.fr>
->> ---
->>  arch/arm/boot/dts/qcom/pm8921.dtsi | 7 +++++++
->>  1 file changed, 7 insertions(+)
->>=20
->> diff --git a/arch/arm/boot/dts/qcom/pm8921.dtsi b/arch/arm/boot/dts/q=
-com/pm8921.dtsi
->> index 535cb6a2543f..30366536f580 100644
->> --- a/arch/arm/boot/dts/qcom/pm8921.dtsi
->> +++ b/arch/arm/boot/dts/qcom/pm8921.dtsi
->> @@ -121,6 +121,13 @@ ref_muxoff: adc-channel@f {
->>  				reg =3D <0x00 0x0f>;
->>  			};
->>  		};
->> +
->> +		usb_id: usb-detect {
+On Wed, Jun 3, 2026 at 7:22=E2=80=AFAM Ekansh Gupta
+<ekansh.gupta@oss.qualcomm.com> wrote:
 >
-> You should not mix non-addressable children with addressable. If you
-> really do not have address, but other children have, then probably this
-> is part of the main device, so should be folded into the parent node.
+> On 20-05-2026 21:17, Tomeu Vizoso wrote:
+> > On Wed, May 20, 2026 at 4:12=E2=80=AFPM Dmitry Baryshkov
+> > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> >>
+> >> On Tue, May 19, 2026 at 11:45:52AM +0530, Ekansh Gupta via B4 Relay wr=
+ote:
+> >>> From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+> >>>
+> >>> Add documentation for the Qualcomm DSP Accelerator (QDA) driver under
+> >>> Documentation/accel/qda/. The documentation covers the driver
+> >>> architecture, GEM-based buffer management, IOMMU context bank
+> >>> isolation, and the RPMsg transport layer.
+> >>>
+> >>> The user-space API section describes the DRM IOCTLs for session
+> >>> management, GEM buffer allocation, and remote procedure invocation vi=
+a
+> >>> the FastRPC protocol, along with a typical application lifecycle
+> >>> example. Sections for dynamic debug and basic testing are also
+> >>> included.
+> >>>
+> >>> Wire the new documentation into the Compute Accelerators index at
+> >>> Documentation/accel/index.rst.
+> >>>
+> >>> Assisted-by: Claude:claude-4-6-sonnet
+> >>> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+> >>> ---
+> >>>  Documentation/accel/index.rst     |   1 +
+> >>>  Documentation/accel/qda/index.rst |  13 ++++
+> >>>  Documentation/accel/qda/qda.rst   | 146 ++++++++++++++++++++++++++++=
+++++++++++
+> >>>  3 files changed, 160 insertions(+)
+
+<snip>
+
+> >>> +Usage Example
+> >>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >>> +
+> >>> +A typical lifecycle for a user-space application:
+> >>> +
+> >>> +1.  **Discovery**: Open ``/dev/accel/accel*`` and use
+> >>> +    ``DRM_IOCTL_QDA_QUERY`` to identify the DSP domain served by tha=
+t
+> >>> +    device node.
+> >>> +2.  **Initialization**: Call ``DRM_IOCTL_QDA_REMOTE_SESSION_CREATE``=
+ to
+> >>> +    establish a session and create a process context on the DSP.
+> >>> +3.  **Memory**: Allocate buffers via ``DRM_IOCTL_QDA_GEM_CREATE`` or=
+ import
+> >>> +    DMA-BUFs (PRIME fd) from other drivers using ``DRM_IOCTL_PRIME_F=
+D_TO_HANDLE``.
+> >>> +4.  **Execution**: Use ``DRM_IOCTL_QDA_REMOTE_INVOKE`` to pass argum=
+ents and
+> >>> +    execute functions on the DSP.
+> >>> +5.  **Cleanup**: Close file descriptors to automatically release res=
+ources and
+> >>> +    detach the session.
+> >>
+> >> I'd have expected the description of the actual example. I.e. clone th=
+e
+> >> app from https://the.addr, prepare clang >=3D NN.MM, QAIC (https://foo=
+),
+> >> run make, run the app, check the results. I'd remind that DRM Accel ha=
+s
+> >> a very specific requirement of having the working toolhain in the
+> >> open-source.
+> >
+> > We have been getting submissions lately that don't fulfill that
+> > requirement so I will point to the precise part of the documentation
+> > that explains it:
+> >
+> > https://www.kernel.org/doc/html/latest/gpu/drm-uapi.html#open-source-us=
+erspace-requirements
+> >
+> > For an example of a submissions that complies, see:
+> >
+> > https://lore.kernel.org/dri-devel/20260114-thames-v2-0-e94a6636e050@tom=
+euvizoso.net/
+> >
+> > Most importantly, notice how the proposed Thames Mesa driver generates
+> > machine code for all the hardware units, and doesn't use any blob for
+> > that.
+> >
+> I believe QDA checks all boxes for accel, as there is available
+> opensource userspace, opensource QAIC compiler for IDL compilation and
+> LLVM supports hexagon arch.
+
+I must say that I'm at a total loss regarding the userspace portion of
+this driver, despite spending half an hour looking inside the FastRPC
+branch that you link from the cover letter.
+
+Can you please explain what do people need to do to:
+
+- run an algorithm of their choice on the DSP,
+- execute inference with a common ML framework such as TensorFlow Lite
+or PyTorch.
+
+The documentation I pointed to earlier explains in length what is
+expected from the userspace portion of the driver, which is more than
+just being open source.
+
+Thanks,
+
+Tomeu
+
+> I'll try adding these details as well.
 >
-> Best regards,
-> Krzysztof
+> Thanks!> Regards,
+> >
+> > Tomeu
+> >
+> >>> +
+> >>> +Internal Implementation
+> >>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+> >>> +
+> >>> +Memory Management
+> >>> +-----------------
+> >>> +The driver's memory manager creates virtual "IOMMU devices" that map=
+ to
+> >>> +hardware context banks. This allows the driver to manage multiple is=
+olated
+> >>> +address spaces. The implementation uses a DMA-coherent backend to en=
+sure data consistency
+> >>> +between the CPU and DSP without manual cache maintenance in most cas=
+es.
+> >>
+> >> GEM usage?
+> >>
+> >>> +
+> >>> +Debugging
+> >>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >>> +The driver includes extensive dynamic debug support. Enable it via t=
+he
+> >>> +kernel's dynamic debug control:
+> >>> +
+> >>> +.. code-block:: bash
+> >>> +
+> >>> +    echo "file drivers/accel/qda/* +p" > /sys/kernel/debug/dynamic_d=
+ebug/control
+> >>> +
+> >>> +Testing
+> >>> +=3D=3D=3D=3D=3D=3D=3D
+> >>> +The QDA driver can be exercised using the ``fastrpc_test`` utility f=
+rom the
+> >>> +FastRPC userspace library. Run the test application:
+> >>
+> >> pointer
+> >>
+> >>> +
+> >>> +.. code-block:: bash
+> >>> +
+> >>> +    fastrpc_test -d 3 -U 1 -t linux -a v68
+> >>> +
+> >>> +**Options**
+> >>> +
+> >>> +``-d domain``
+> >>> +    Select the DSP domain to run on:
+> >>> +
+> >>> +    * ``0`` =E2=80=94 ADSP
+> >>> +    * ``1`` =E2=80=94 MDSP
+> >>> +    * ``2`` =E2=80=94 SDSP
+> >>> +    * ``3`` =E2=80=94 CDSP *(default on targets with CDSP)*
+> >>> +
+> >>> +``-U unsigned_PD``
+> >>> +    Select signed or unsigned protection domain:
+> >>> +
+> >>> +    * ``0`` =E2=80=94 signed PD
+> >>> +    * ``1`` =E2=80=94 unsigned PD *(default)*
+> >>> +
+> >>> +``-t target``
+> >>> +    Target platform: ``android`` or ``linux`` *(default: linux)*
+> >>> +
+> >>> +``-a arch_version``
+> >>> +    DSP architecture version, e.g. ``v68``, ``v75`` *(default: v68)*
+> >>>
+> >>> --
+> >>> 2.34.1
+> >>>
+> >>>
+> >>
+> >> --
+> >> With best wishes
+> >> Dmitry
+>
 
