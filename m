@@ -1,186 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-110965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id AS5zJ/QhIGpjwgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 14:45:40 +0200
+	id taClLTEkIGq7wwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 14:55:13 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id E89D5637AA7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 14:45:39 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 102E9637BA7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 14:55:13 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=pm.me header.s=protonmail3 header.b=KhY1rIh+;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110965-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110965-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=pm.me;
+	dkim=pass header.d=alex-min.fr header.s=fm3 header.b=jMb8Phkz;
+	dkim=pass header.d=messagingengine.com header.s=fm1 header.b="Z GjXwc+";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110966-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110966-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 3E386301FC2E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 12:41:53 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C908130459CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 12:45:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F3F047DF9A;
-	Wed,  3 Jun 2026 12:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EA9847ECD6;
+	Wed,  3 Jun 2026 12:45:13 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C551647DD6A;
-	Wed,  3 Jun 2026 12:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05DAF47ECF1;
+	Wed,  3 Jun 2026 12:45:11 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780490511; cv=none; b=h7wm2CxDr8cIRF6qUvIXD+bijJR5N9+h5jGYPpchD3FHHapjpfPTsVCvPdPdsTRXU1NEMxTzA00P3IbriifpRoBWjaVnzXn7ctukVB/iVxsh8k0jjePOuw9F34szUqKbFGlOAw7c3zknUvTdyNbpfFUiCGdQYFtwWd0fYJOb6uI=
+	t=1780490713; cv=none; b=GGZh0O+c7ybBNWkKZpEYaDS13vZQz8LLztG1EVygkuwCDK6asL5fUqk68rAzMqTGn6i8Gn3BlWdhmUJCemPyIinHGzO9/H8PZG0J/Q9K2HKweq0BFJFOcg4e/J6bEygIvQaGAdui4JgKBsUOD2ym3DZfJibbVCIc/i49mdj3pgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780490511; c=relaxed/simple;
-	bh=vTQ6t7Bi9M/jHIuXZprXAHvUQWNB8MBtsgUbdu/Voo0=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=CdACnmmLOqAXdbZb1J1IQ8qpwGrJsPKxF3+8qvrWr2G1dfR/cji0AE0gvGvWrxwtNqqddHpwSkR+8RrgAw1JkYio1/YYSKB50MCKiV8AWQX/+8FWYmPmeENp0QKCMyIuwemd5yxMaEIdf/0dnh3KcImyZnMVXvFAGazOiDr7TKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=KhY1rIh+; arc=none smtp.client-ip=185.70.43.16
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1780490500; x=1780749700;
-	bh=Hk4fuqM5mScxQ0UbnoPFK1HpCnJG0QG1ybteQ8gemiM=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=KhY1rIh+P4U9ZVGTX845e0hoVNRqP/loXaApd4ncRLI6ajSb4lmiFljub235IstSa
-	 4gGay8VoAqvPQ6T9SZzGBBpFETUjPqhBxsu6cqeZYtA+yTyoQqKOv6Dm710DAiQdGW
-	 P/JaKws6yVSR0qbI14h0z2x0spSwhP32Bcyi0xS2Q0rtgdOj/0yS8CL3xwR4uJmkCn
-	 6+3lmEE9J8pHPGV3XYclCoNWTe6CFKv35+W2FRUlMuRZJPO4Nt2kjcsvmwrhjhWEvp
-	 Oe8Tn2ghiKs4lRpR3LtU1Nwc3Nr8OWAWyMm76fWM99wk9v82NMsJixAqU/OMQXeTeM
-	 hMyPEcg1R4xXw==
-Date: Wed, 03 Jun 2026 12:41:34 +0000
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH] arm64: dts: qcom: milos-nothing-asteroids: Drop simplefb
-Message-ID: <20260603-asteroids-drop-simplefb-v1-1-34d73477c9d4@pm.me>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 630ff1533b26874fe3b7e28459ce01d5c08c748c
+	s=arc-20240116; t=1780490713; c=relaxed/simple;
+	bh=pmCaLcV3BndJE4Up2tsUK1bVlYyaiT27VrWZVDi0Pvo=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=MEISq4JlY8ULZt7dJlE1OyFIfu5Zxf1cRWmBqGmruhyTxqPGDaDLr+6d8RzPMUOmXZ4dQg6TANZ3OJCBRtQVuHlPe3OBaG5XNodY+vguf9X63i8uKala5XsW3Ff0YTtvMkAUvB+3PIky7RO+VLg51E0fDvJBPttqoF/DT3XXSjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alex-min.fr; spf=pass smtp.mailfrom=alex-min.fr; dkim=pass (2048-bit key) header.d=alex-min.fr header.i=@alex-min.fr header.b=jMb8Phkz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZGjXwc+m; arc=none smtp.client-ip=202.12.124.150
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 51AF51D000F6;
+	Wed,  3 Jun 2026 08:45:10 -0400 (EDT)
+Received: from phl-imap-03 ([10.202.2.93])
+  by phl-compute-04.internal (MEProxy); Wed, 03 Jun 2026 08:45:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alex-min.fr; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1780490710;
+	 x=1780577110; bh=0w4fKjgwyN1sYXvZXWscVp1/gGoJcvguUwQb4TJrhg0=; b=
+	jMb8PhkzukIo0SYLecNSmZA01xaKX8vClWzSLEmPXDJiSCsTP8HWlAubG5XPDgnU
+	5trqGD0zzBjAEdwnQ1CwAxpmpf533hbTFoeTk49I/jIF1Xg4JiB3pCK8x8/b7AO7
+	mbRjZIIUoN+be1BF8yZ9OKVTJo636xHLX7E7EraYxgICZLdOQWhOmt+dYxzJ5oa0
+	ExZSFf063fB9t91AhxyaNwHoBa9ARgqBxi1epfJpDXrcTQb4IfvPCQXE0Xg7quF0
+	MzKEZ5/iXptuKVFUiz1ww1K7vI0T0hXa5Vw814sLXh16DushwC6e5MF3A6uZQpP3
+	HTbNEji7RlplMMVOpG4V/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780490710; x=
+	1780577110; bh=0w4fKjgwyN1sYXvZXWscVp1/gGoJcvguUwQb4TJrhg0=; b=Z
+	GjXwc+mbSkH3xpVIzZsnAVu4D6JR1PuaYbhjquSAIqCMFGU9rMdIkpMKHD8FX6UE
+	5CzNp6z++kt5vDuZw7m0bMv2Ce1mxUnDFIv9pXMD63lP2FMvV3nMPId8IF4v5TpB
+	VZSz54nFjnn+MO5c4XJUX4T7DdoOFBoFik/Bg1rTz/W6KQt2ULaZ+EZguwfwtygH
+	UGLGmWrTdvDcbWaQp8e0vR/PtXe8IpoM3ZFTo7GaWx/G8sP9EJ7qPkz8IxCWszet
+	OPcxRcBGPAApEzSrrsKLMVh5Uvcf76O8nBYEXt0OmxmnUSpheT6KUJhsk6CmC7aw
+	5Bbu9xTxlZTaXY9lTEcnQ==
+X-ME-Sender: <xms:1CEgaqLBMLPgjcl95GtFHHUFBjUy19XtCWwLrIhRrjtYzTmlpp7GfQ>
+    <xme:1CEgas_RoPLuGFSipaiWKnXSIE0DppRiPaNYIHmzs_J0guL4D2vRD92wtfVLQBiqA
+    yPD3bWlpbY4jcVO-Lh06Jm_5QOlDbf6OnduJEsKP3oG6VO44et-YK8>
+X-ME-Proxy-Cause: dmFkZTFKc6jEQ9TYKBUeYC5FWNyUnl0VlrqGUvFtj+p69xyNqcz9jlziX+utsFNH3pCofK
+    7QwJyK+T202ofToUC3x7QCWne3wa3FCewYAwcIhX/k210mHxjS65VfoD+uXZkzBhVPEfq0
+    o3SMlHT/qMbzfIdCi2jhahdfB8odVsD5DshhjXNK5pulYNh2Gfx/INZidrss9vTZHH17su
+    mMrdkccuOfuqLwEFIC9mD/DhZe8TNkwBcgcxVZ0GIDHf/yj3D1k4R43Y88ns/ARGC6oimw
+    LkM7pFlXX/1e5a8r0U+Vgq3LnSE15l3zgzGqTwxbRwAqz2+2OdLneQL4hm9jzSunEnieGb
+    qIu2GndAmKyw4GoihhxfT9GGnPa7hnI4q9K/EgSFy/ScJbXfliKxLwE+2XxVq4M8cg+3q2
+    TkiuuyxDg4RUpK1k1l7v6NDHQNOHQAJo1GNBaerf7k6/SMfSCpHW1f0s+9Tt4jNn98F72M
+    Zho2+D8NjYiAbinZ7aBS+aPtlSOibCev8PcUV+Xty1nszWrwyrGNFOAGZGHEfgj5hdtvdc
+    LqfS8uZYJb/hYkBg8y8pTKy5pLyiSmlBDxN3Zhanqid+wIepCb9yz6bWnfWPZpMGUMmq8S
+    UZDZXdeGl7u9oYkLNTnkwNXj67AhjaSA8JEWQMGlYATkQs+ZnXYOLvEs0uUQ
+X-ME-Proxy: <xmx:1CEgau7AmZ9inZRCKIuCt9XCXsyzb_2xjhKQpuVtSdWzpQrZn7_8YQ>
+    <xmx:1CEgag_vo7DzsJKjaVAALEH1L8HzfRLJ6NuREs0f-rdYP7eSZMy8yA>
+    <xmx:1CEgamig1OZTp704gUOqnVnxbgimKAPSEl2qtaMW0-tEa1r8zbwqKg>
+    <xmx:1CEgam47aIGs3Op-THljAYksPRyCAtu84mk1woSdlgRX0JtDWzLjRg>
+    <xmx:1iEgarnJZkm1Wf1fP7OZSQUsuYia_vZbHlxXbj2UnlamqlbN9wr-jawe>
+Feedback-ID: i72694427:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 9AC1218E0071; Wed,  3 Jun 2026 08:45:08 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: A511MZycEBGs
+Date: Wed, 03 Jun 2026 14:44:47 +0200
+From: "MINETTE Alexandre" <contact@alex-min.fr>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
+Cc: "David Heidelberg" <david@ixit.cz>, "Linus Walleij" <linusw@kernel.org>,
+ "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>,
+ "MyungJoo Ham" <myungjoo.ham@samsung.com>,
+ "Chanwoo Choi" <cw00.choi@samsung.com>,
+ "Guru Das Srinagesh" <linux@gurudas.dev>,
+ "Rob Clark" <robin.clark@oss.qualcomm.com>, "Joerg Roedel" <joro@8bytes.org>,
+ "Will Deacon" <will@kernel.org>, "Robin Murphy" <robin.murphy@arm.com>,
+ "Kees Cook" <kees@kernel.org>, "Tony Luck" <tony.luck@intel.com>,
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org, iommu@lists.linux.dev,
+ phone-devel@vger.kernel.org
+Message-Id: <56ee469e-dab0-49fa-b808-d421b7505622@app.fastmail.com>
+In-Reply-To: 
+ <thj65jrvef3z3dmn5f52jplewrjgklomc5s32grktsjejs72sw@npk26yx2hpf7>
+References: <20260519-mainline-send-v1-sending-v3-0-3dd7aa125353@alex-min.fr>
+ <20260519-mainline-send-v1-sending-v3-3-3dd7aa125353@alex-min.fr>
+ <CAD++jLm=BxHsPJ4rgqwY8SvaefZUO+Pfv8E8xizqPsdJZw5weA@mail.gmail.com>
+ <298550eb-1bdf-4d7c-8111-8b8f0b5dc056@app.fastmail.com>
+ <4b797a3f-01c9-4b02-be98-7b82099c2e0e@ixit.cz>
+ <48cfedcb-a9f5-402e-9973-f5c175fd2740@app.fastmail.com>
+ <thj65jrvef3z3dmn5f52jplewrjgklomc5s32grktsjejs72sw@npk26yx2hpf7>
+Subject: Re: [PATCH v3 3/8] pinctrl: qcom: Register functions before enabling pinctrl
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.15 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[alex-min.fr:s=fm3,messagingengine.com:s=fm1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-110965-lists,linux-arm-msm=lfdr.de];
+	XM_UA_NO_VERSION(0.01)[];
 	RCVD_TLS_LAST(0.00)[];
+	DMARC_NA(0.00)[alex-min.fr];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	FORGED_SENDER(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER(0.00)[contact@alex-min.fr,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:david@ixit.cz,m:linusw@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:myungjoo.ham@samsung.com,m:cw00.choi@samsung.com,m:linux@gurudas.dev,m:robin.clark@oss.qualcomm.com,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:kees@kernel.org,m:tony.luck@intel.com,m:gpiccoli@igalia.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:iommu@lists.linux.dev,m:phone-devel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:akoskovich@pm.me,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[pm.me:+];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110966-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,pm.me:mid,pm.me:dkim,pm.me:from_mime,pm.me:email]
+	FORGED_SENDER_FORWARDING(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[contact@alex-min.fr,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[alex-min.fr:+,messagingengine.com:+];
+	RCVD_COUNT_FIVE(0.00)[6];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[app.fastmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,messagingengine.com:dkim,vger.kernel.org:from_smtp,alex-min.fr:dkim,alex-min.fr:from_mime,alex-min.fr:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E89D5637AA7
+X-Rspamd-Queue-Id: 102E9637BA7
 
-The dummy panel compatible 'boe,bf068mwm-td0' is missing documentation
-and gives a warning. The 'interconnects' property is also missing from
-the binding.
+Right, thanks for checking.
 
-Dropping the nodes here and will just submit panel binding & driver for
-use with MSM DRM.
-
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
----
- .../boot/dts/qcom/milos-nothing-asteroids.dts      | 38 ------------------=
-----
- 1 file changed, 38 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/milos-nothing-asteroids.dts b/arch/ar=
-m64/boot/dts/qcom/milos-nothing-asteroids.dts
-index 7393978926e4..787acef4a4c8 100644
---- a/arch/arm64/boot/dts/qcom/milos-nothing-asteroids.dts
-+++ b/arch/arm64/boot/dts/qcom/milos-nothing-asteroids.dts
-@@ -25,31 +25,7 @@ aliases {
- =09};
-=20
- =09chosen {
--=09=09#address-cells =3D <2>;
--=09=09#size-cells =3D <2>;
--=09=09ranges;
--
- =09=09stdout-path =3D "serial0:115200n8";
--
--=09=09framebuffer0: framebuffer@e3940000 {
--=09=09=09compatible =3D "simple-framebuffer";
--=09=09=09reg =3D <0x0 0xe3940000 0x0 (2392 * 1080 * 4)>;
--=09=09=09width =3D <1080>;
--=09=09=09height =3D <2392>;
--=09=09=09stride =3D <(1080 * 4)>;
--=09=09=09format =3D "a8r8g8b8";
--=09=09=09panel =3D <&panel>;
--=09=09=09interconnects =3D <&mmss_noc MASTER_MDP QCOM_ICC_TAG_ALWAYS
--=09=09=09=09=09 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
--=09=09=09clocks =3D <&gcc GCC_DISP_HF_AXI_CLK>;
--
--=09=09=09/* Dummy panel for simple-framebuffer dimension info */
--=09=09=09panel: dummy-panel {
--=09=09=09=09compatible =3D "boe,bf068mwm-td0";
--=09=09=09=09height-mm =3D <157>;
--=09=09=09=09width-mm =3D <71>;
--=09=09=09};
--=09=09};
- =09};
-=20
- =09gpio-keys {
-@@ -131,15 +107,6 @@ ramoops@81f20000 {
- =09=09=09mem-type =3D <2>;
- =09=09=09pmsg-size =3D <0x200000>;
- =09=09};
--
--=09=09/*
--=09=09 * ABL is powering down display and controller if this node is
--=09=09 * not named exactly "splash_region".
--=09=09 */
--=09=09splash_region@e3940000 {
--=09=09=09reg =3D <0x0 0xe3940000 0x0 0x2b00000>;
--=09=09=09no-map;
--=09=09};
- =09};
- };
-=20
-@@ -507,11 +474,6 @@ vreg_l12f: ldo12 {
- =09};
- };
-=20
--&dispcc {
--=09/* Disable for now so simple-framebuffer continues working */
--=09status =3D "disabled";
--};
--
- &gcc {
- =09protected-clocks =3D <GCC_PCIE_1_AUX_CLK>, <GCC_PCIE_1_AUX_CLK_SRC>,
- =09=09=09   <GCC_PCIE_1_CFG_AHB_CLK>, <GCC_PCIE_1_MSTR_AXI_CLK>,
-
----
-base-commit: b7bee4ca5688e30ca50fbc87b1b8f7eed7006c17
-change-id: 20260603-asteroids-drop-simplefb-0aeb1d1bbadb
-
-Best regards,
+I do not own the Nexus 7 flo/deb, so I cannot verify whether it needs
+this in the same way as jflte. I mentioned it because another
+postmarketOS contributor told me this patch helped on that device, but
+it is also possible that I misunderstood the failure they were seeing.
 --=20
-Alexander Koskovich <akoskovich@pm.me>
+  MINETTE Alexandre
+  contact@alex-min.fr
 
-
+Mer 03 juin 2026, =C3=A0 14:29, Dmitry Baryshkov a =C3=A9crit=E2=80=AF:
+> On Wed, Jun 03, 2026 at 10:58:24AM +0200, MINETTE Alexandre wrote:
+>> Thanks David.
+>>=20
+>> I initially considered adding a Fixes: tag, but I do not have a commi=
+t I
+>> can point to. This looks like a latent ordering issue in the
+>> Qualcomm pinctrl probe path and could have happened at any time until=
+ now.=20
+>>=20
+>> The failure became visible on APQ8064 boards such as this jflte, and =
+I also
+>> have a report that the same change helps flo/deb, but I do not want to
+>> add a misleading Fixes tag as we don't really know which commit reall=
+y triggered the race condition.
+>
+> But there are no gpio-hogs on Nexus7/flo.=20
+>
+>> --=20
+>>   MINETTE Alexandre
+>>   contact@alex-min.fr
+>>=20
+>> Mar 19 mai 2026, =C3=A0 23:03, David Heidelberg a =C3=A9crit=E2=80=AF:
+>> > On 19/05/2026 10:48, MINETTE Alexandre wrote:
+>> >> Thanks a lot Linus!
+>> >>=20
+>> >> This patch is required for my Samsung Galaxy S4 GT-I9505 to boot b=
+ut I also
+>> >> have confirmation from another contributor that the same pinctrl p=
+atch
+>> >> helped boot the ASUS Nexus 7 (2013), codenamed flo, which is also =
+based
+>> >> on APQ8064.
+>> >>=20
+>> >
+>> > Hello Alex,
+>> >
+>> > if what you wrote about asus-flo/deb is true, then this patch shoul=
+d have=20
+>> > `Fixes: ` tag, as I remember it was booting with few limited patche=
+s ~5 years=20
+>> > back then (only one serious was hack for proper clock bringup).
+>> >
+>> > David
+>> >
+>> > --=20
+>> > David Heidelberg
+>
+> --=20
+> With best wishes
+> Dmitry
 
