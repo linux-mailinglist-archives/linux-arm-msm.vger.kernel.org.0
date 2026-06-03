@@ -1,325 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-110912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-110913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id cbb0BgHlH2rArwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-110912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 10:25:37 +0200
+	id X8tMInjoH2risAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-110913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 10:40:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2370C635AB7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 10:25:36 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E43CF635C99
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 03 Jun 2026 10:40:23 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=intel.com header.s=Intel header.b=XzelwwcZ;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110912-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110912-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=intel.com;
-	arc=reject ("cv is fail on i=2")
+	dkim=pass header.d=alex-min.fr header.s=fm3 header.b=NUhbtQtX;
+	dkim=pass header.d=messagingengine.com header.s=fm1 header.b="H gJyHdR";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-110913-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-110913-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id CBFA131393FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 07:50:01 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3270F3007B82
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Jun 2026 08:40:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1632E405C4C;
-	Wed,  3 Jun 2026 07:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9C62409DEA;
+	Wed,  3 Jun 2026 08:40:21 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67BE402B80;
-	Wed,  3 Jun 2026 07:48:44 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780472930; cv=fail; b=GOelFqheWTbh8UPiV5lRsDV94X6CdROzdEjYcu1DCmsa/8CEeSxEph4mBUVI0GOMKAUcvdoVsQMulxctiKtWXyuK/jnMMxnks9sPxnelSiCl55RKiqYL/5uJgvdilchfYYRt4BedqCllqHpyBqh44A+c1TMmSbIqJItkjzq+QfI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780472930; c=relaxed/simple;
-	bh=7cWDLSHYc+VvvFjCY8IJv9Q3GKWZJwPtHdcoLhbK4RM=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=abefG2u3DCbmUk9LAbCzv2IyHi9/k6nF5U5z8SomZReLgqtkIXSaGpV6Wef+1AfR2Va4i+GLO9wnVXU6meVV68TAzoYci1ItzZxIg1hNntsWRm7iJ62dZSNEjgijL7zqHbK35JrkIYQUftSiAmKtRArLdOOqY1+4L2FtI8Zxgco=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XzelwwcZ; arc=fail smtp.client-ip=192.198.163.12
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780472925; x=1812008925;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=7cWDLSHYc+VvvFjCY8IJv9Q3GKWZJwPtHdcoLhbK4RM=;
-  b=XzelwwcZAG2+tzWG5m/9DqzgjyYlHDl+d6GNXgHXFWH7nEX84hnS58YJ
-   vUpqfEzuq6oyn88IvuOzWwcFD/olGG0F5k1X7nOIL1hgpbPeSS/QQ3Qa0
-   SFqPOi9bX74Gll4erw0H9MRYxDGJvlMJoMj17k+CkVWHvZOzj1FW7ewbx
-   bVADjQSdUN6fskYf3Dbp3OL8+96bBRSE2vSINstZxBsOeKtBCKwG/XY/F
-   vrJbIbCyr0aC4FxBitfvp1HF/f2ctcVAXAc8Ec23udy3kmbqGSrGb7SbY
-   IB28tPNUjCmLYjV8037Q8lvaqNr+09CwVb5aNMAkHitSLf74QLnPFLYrp
-   Q==;
-X-CSE-ConnectionGUID: bP6cB0W+Q4WLjnVVqVtdZQ==
-X-CSE-MsgGUID: 4e58T5mhQR2JsjFJOyOZ5g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11805"; a="85127241"
-X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
-   d="scan'208";a="85127241"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 00:48:28 -0700
-X-CSE-ConnectionGUID: vIEWEU/eQe2zFJbpouoGxw==
-X-CSE-MsgGUID: v+PJS7JFSU6mU5xQ9I+0YQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,184,1774335600"; 
-   d="scan'208";a="245965934"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
-  by fmviesa004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jun 2026 00:48:27 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 3 Jun 2026 00:48:26 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Wed, 3 Jun 2026 00:48:26 -0700
-Received: from CY7PR03CU001.outbound.protection.outlook.com (40.93.198.2) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 3 Jun 2026 00:48:24 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DNwEIgaQNKdLSZSLyHKn3Rd5repKc5hNjKFtx6fO5Tbt8OWbRZZ3+iqrUpi1Xgu+lnz1P2u5VwIIop93zWFbF3lkJMyXjiahThqSbAQY5vuapAA4WKVVWzZi77CFhsC+oyyUE4IfKil4I9pKj9jz2tA6khoyCaVui1Zr9pot1Pq+QiWL7IaLI7nkaSW8/RrWPQnMmMtHJZAZfZPhzt+049SjOHdrAcjP7lFsDe8SmN8oDbJ67biAJDNcEWgIqUbvtyhHnVioWtn868MJTD8F0EESa2DUkMGh5H5MGM2ps0HfJcMKlUuRxC6f60OhWmVcIIGlqbLw1nA1kZe98G9qYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bVBobvy2BePNge8ewm26DfL3m+wTNAAicX7tDjSMi20=;
- b=i9t7o8EhDCsqvpL12gTAC3oE0WLQb7Wog349Hey9C3T6EMxyndWBVCzs3TJidBYCNX6eG4oHAyMzvQATqWpWFKRglWlmipKJe9z64WOLJT2zmyrhj/iXAUAl60uKWxTYm7nXj4o/aSUnmPvseHRHK6UBt2VXLyG13ggF+tMgFm5o9noJ7EN+ORIQ7sguKNtSxplbGHdfi0PMJEKUko6SkFn+j+FKVw1mH9jQkDmBxjIZbL14qQ2s1mNkk9hf6EBxBisQyg0w5nqf0WfpdJz6I30AtwKDzKMu1XNi91+GF3JP49HCkyN+eC2I6u1scndtw8XkvvbCxdqJnwvxcO8rOg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA1PR11MB7198.namprd11.prod.outlook.com (2603:10b6:208:419::15)
- by PH8PR11MB8040.namprd11.prod.outlook.com (2603:10b6:510:238::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.71.16; Wed, 3 Jun 2026
- 07:48:16 +0000
-Received: from IA1PR11MB7198.namprd11.prod.outlook.com
- ([fe80::2c4e:e92a:4fa:a456]) by IA1PR11MB7198.namprd11.prod.outlook.com
- ([fe80::2c4e:e92a:4fa:a456%3]) with mapi id 15.21.0071.015; Wed, 3 Jun 2026
- 07:48:16 +0000
-Message-ID: <650d6ae8-36c9-44ba-a065-a1ceebee48b2@intel.com>
-Date: Wed, 3 Jun 2026 10:48:11 +0300
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] mmc: sdhci-msm: Set ice clk rate
-To: Ram Prakash Gupta <ram.gupta@oss.qualcomm.com>, Ulf Hansson
-	<ulf.hansson@linaro.org>, <konrad.dybcio@oss.qualcomm.com>,
-	<abhinaba.rakshit@oss.qualcomm.com>
-CC: <linux-mmc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <pradeep.pragallapati@oss.qualcomm.com>,
-	<manivannan.sadhasivam@oss.qualcomm.com>
-References: <20260529081045.2877910-1-ram.gupta@oss.qualcomm.com>
- <20260529081045.2877910-2-ram.gupta@oss.qualcomm.com>
- <18af0dcb-8cf1-4565-a90d-58bf1e66811f@intel.com>
- <a03e129c-6719-4cae-bffd-563bf1dfc335@oss.qualcomm.com>
-Content-Language: en-US
-From: Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
- 6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
- 4, Domiciled in Helsinki
-In-Reply-To: <a03e129c-6719-4cae-bffd-563bf1dfc335@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DU2P250CA0001.EURP250.PROD.OUTLOOK.COM
- (2603:10a6:10:231::6) To IA1PR11MB7198.namprd11.prod.outlook.com
- (2603:10b6:208:419::15)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9D539DBFC;
+	Wed,  3 Jun 2026 08:40:19 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780476021; cv=none; b=t5cXDH//6Ksq3Sq/NnCsX0P7MeNCUMyiaVDWB6ejob7AAtfh+K9yovUySnURhwnrs8KahhWmbcFHkTjMWDPhm6c6YNhAskW5O3F+GKTNOipACCXdltk294qMRyidR1EOgJIIsAIgFum4IQkFKqV5gfw2Yv57lpOiZcobmiAonhg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780476021; c=relaxed/simple;
+	bh=K/rKz6b4F77j0xHWzIXpJgeNDf7V610k4bC4qX6dHXs=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=CAjnkncX2WHqKbj2AXXxQArdawp+bjePU5J1KjLqSWsYKvP0dFKrTaOL7vrcYsx+gqKbMltIsiRB+5ZiEsNgxYsNJClRvR90mj6HY+7C5ZNnB3ZGeaxRJM8AOUnN0A8jeLBML60N2Y+Z+SZCW/14w6rc65DSHhhiCeOI8Awz/3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=alex-min.fr; spf=pass smtp.mailfrom=alex-min.fr; dkim=pass (2048-bit key) header.d=alex-min.fr header.i=@alex-min.fr header.b=NUhbtQtX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HgJyHdRS; arc=none smtp.client-ip=103.168.172.148
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 16D21EC013A;
+	Wed,  3 Jun 2026 04:40:19 -0400 (EDT)
+Received: from phl-imap-03 ([10.202.2.93])
+  by phl-compute-04.internal (MEProxy); Wed, 03 Jun 2026 04:40:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alex-min.fr; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1780476019;
+	 x=1780562419; bh=u0muCYJkeE3pAYE8lO+AAxGI4J4BhmqEcwm6uUfo5uE=; b=
+	NUhbtQtXq9p/nvFoC74C/PrIAJqC6bllujDUVKiqxWWnA84ocxtk6uRXfbIl/0cO
+	i+hsW7ELyy2qYZD2v/NxN1RMlqzwe1lDNKCdu2NlTJgw+WAjLh7kNLcNUvHFF1IL
+	iS0C1chljLts+6KV5h3fW2cToPiEtY+E7HpzNCFTtjuVEXmMLr8hF5aFYnz5qPPu
+	5jpwp/wj/+L2ld7X9mG1jvtQ4xDneF+2XBPdk79P3Ql56K9E9vcu4TZUyQY5/AaD
+	5r3MLSfKiI0YGatPMgpPtI4ij8NwkFxqsMoK2JjN0uyACz4x/yDaEJVzW1TrmEye
+	WczvN6GhHr14LUGUgL4gOw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780476019; x=
+	1780562419; bh=u0muCYJkeE3pAYE8lO+AAxGI4J4BhmqEcwm6uUfo5uE=; b=H
+	gJyHdRSTRsWoDpuJsf7SJWxzVfm1dIVxuZktRPwJpnCUOzGt+eynSj4QNtK9VBt+
+	S0jm6E5WhzgLn1SyDpVYUBSPAyx3cEpzi+K9ebItz+nFl6CiEwGs7Xbqf9ufdJ0F
+	qa/urCO67q/hxfjF2KgfogPWFBJBinLYWw+0JH1FT0aLaZa03sYZ0VX349TGDovy
+	oOlFMR1WDmZ7SrE8yYYN3yPPSfYIfwboNX/K3NeY2ciIrkBrKv6s6JXSRk3xYbNw
+	hj6kGHKzTJ0aSoWPQ2EgmZS3TH8LXrOFmGYto7mmloQbPXrzOUc5FMQNpVxRJ/uO
+	w6gwWCx4qVXzbD948xo1A==
+X-ME-Sender: <xms:cugfalkrtFRJoZEYipjnGJLLK79ssZzaBQRS3TZRTQSDuOKjgz22sw>
+    <xme:cugfaro-Q--4yh0osdZvzxv0hW7y5fXjZZsBFqn6EK_9MbAhq0cmAWn5pv9BvklDV
+    DuUbHK9IKnjTvfYwrB8FjKhhzqrLTyO3gPhI104YnODxkuadkDtEQ>
+X-ME-Proxy-Cause: dmFkZTEjqkwl1pkbDArUnxuEE9GIScT8QO+8RvSWozOv35+sUiTP6ILEcbWB6RLnpvoP3a
+    Ba61CieoqCG+XP2aXBG06Q49zacl1TWZDij9mZ5F82zfTe0jpnrLGMRNbdJvC0FPseuIsm
+    0bTvDzAJDmxhsFLm1cIDD7h68Tco7NgQlFArcyK+9QG8qy/n3pGwgDvY5ukcuRNs+0M9Es
+    CkDowBjDl0Z7YoMuJbADt1w+VnwwQpS8eG6cRxSftCj6tJJ3THuMsY3pr6Lx6fWTZ1EpjI
+    xJvy7fGjVZ/qLMZ7wJa+egFrb1Phw9ygMsklLoOz7gzYuZSTsHb8OctXMhBoqT3RZDHmgx
+    L2BxiLdoF2oa4ypW459jUGwxzF66/Jzr+vCRHuIgIlZUuJZcwvn0f1gibdnq1sRwk6uPJi
+    568djrU1KhUo8av09KNlw3EsHTbJOkngAG+4TtOWgMOiWV9+nfNK5FBg1RLW17c3nXSyzP
+    wAtOx3pWkzFQAyyYKnPlMPfz+eFWVFsDs2z/aWRf9GhXdKFGu9r7CudNWQO0Dl+CpIZfIi
+    ASP+fYv1QfWjokvSqf6xIOP4CayS/+SjmH0wfKidhsSKCZjNVzWIjtj6QL0xlcAp6frGEb
+    I+etpvMfP7exP71LFKgjYtw3I9VIbYnQdH/I88cL0oi3r60YQmb0pXuVXW4A
+X-ME-Proxy: <xmx:cugfajihGlrX1kAJ-qiBxOhBd6SoT11j81dCPcitNeQOHm3I40ydkg>
+    <xmx:cugfarAFq-uIuJD1OXMgI1b5z3zRJseXAfN79wfjPDKdzqCpeRM7sA>
+    <xmx:cugfapve9avYfSV3IYPTPCKmiab9e2uk2aroJolroF4YFoy1nwdoqw>
+    <xmx:cugfat4b3L2DC-G2_6QuNaEqhcEOJLKzCKayrLi7ZD_PVZaeeu5q9Q>
+    <xmx:c-gfanApLeFI2REDd8kclC9auE-RF1W7wpIXdJ4H7oN0pt4tTUxk6jGP>
+Feedback-ID: i72694427:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 3B73B18E006C; Wed,  3 Jun 2026 04:40:18 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR11MB7198:EE_|PH8PR11MB8040:EE_
-X-MS-Office365-Filtering-Correlation-Id: b0dfb966-625f-4d87-437f-08dec14478e5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016|22082099003|18002099003|11063799006|4143699003|56012099006;
-X-Microsoft-Antispam-Message-Info: Ts/kGnx3FYJ13m4rCIL1WxHmPiVNVPJiwk9Hq7TSSHxmUWQtNAWy009tuJir0Lz+4oi8abE32TxOL/fmA3YeAlBzywrBZcLTgjujczfnD+s1Es5Di2SPPvx9RNzC0lpOSfPu0/Ai3pV9ypVfmQUb9uX4P9hFeB0wEcjMv7b6c6J/6Tx2yCxIVjLyaVuQ558mnCO1gRnZa3itg/7zdxTLIj1kQDH/daAs2MEg6Tpd812bSdIejYZt1D1JCUE5MX+rFr1O/0jca1Iq3zgopJagEq1PGk2HLo2BxVCVHK68IWSy41xJDoJnWJQmYb1zELJj0TwSeRF1KVplzPOeQfvYH0PCsr9sLcBhfvsURlc2w1wMRIgmDAxpZ8hhxIqPV2/fng11rIQ23ypRnsphVDucsTHveE5jtmWkXpzbt2FZtIycz4t2kkYFGQt7mjTTMWwXHjcCszcPj0VwZzWQO7z/HBRfYcI4v+2jvARUw51k5vTxvqgLEdCJBEXT3OPrW9tGwqRYgVXCnqb6ZR7FNM032qf7ZHGJpT0EAWvVY9ChQwonZriATQPUTQh0GmAmacUGeCsP4VMaTygEHSfnULhVumFvnihFxiDh018sdR+9qyhw0CSePbxHhTfxMVpZimBbu452HmNr/nUTghrwEv9cy932KDg/inmQxY2DC1GECKHNdUFzhKTWERf9OtxWOfJlCHIRaRw4N6GQ8kontNKRDQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB7198.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(22082099003)(18002099003)(11063799006)(4143699003)(56012099006);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WFZMTzYzQTN5M1Exd0JaY0VlNGhHSVlmT3hxUkNmWmRQT2tHdU1ySy9Dc1FS?=
- =?utf-8?B?amhIRjRMVmxVQTNQaUNvUy9aQ21YOE5JYXVrUUxRaU0ySzdZQk41QVAwdnpy?=
- =?utf-8?B?azZqVHNKdFB4YUM5bFozM2lzRkxFTG83SzlqaThPOUt3Q0hHNzJZdHh6b2tS?=
- =?utf-8?B?dUVOVEdNcEk2ZEcxSUhjdEp2MmxGL2o2bUhYN1BaaWlTZjlvOTJKQWVKR0pr?=
- =?utf-8?B?NS92c240dTN2OUQxV2FycmVKbXQ2ajJNVHZOMVE5UDIxZklpVEMvSXc4ODhw?=
- =?utf-8?B?M2J1a0tGazN4MlJTMlowOE9vTmcrbzUrcXJtWnVlYkJvZkNSeFFTUFQ0RG1q?=
- =?utf-8?B?VkJVa0dwWm05elQ0ck9JU2pnNHhuVFhjVWoyZnNmQzhkRnBaNU9mUE5tZldq?=
- =?utf-8?B?cWxtNUNYTkk4TFJxYzVaME1NWlZUaEtyWGw2NWMzQzhhWGhYRk5RZkh0N1U4?=
- =?utf-8?B?c2E3UVZGeVhaWk9ubnJJY2V0MjhZVjdUd0xHV0JDYmcwbjI0dzM1bTdUWDdP?=
- =?utf-8?B?bzB1QnlJVXJTR3JQelNzaXJUKzlQQkRPbjZtLzZwejNKSW1YeGMwMUtXaXFG?=
- =?utf-8?B?MjcyRXZRZHB1bVhMNDFtQjFBRm82VlNSdmFxS3g5SmRBK2lHWW12Z2U5amVG?=
- =?utf-8?B?NVVMSmR4OStZTVNTQ3ZQblE0TlQyMWJyT0VLU3l1OWJBSCtLN01RcTFGTkto?=
- =?utf-8?B?UmdSSE9OMjlhTU9GMmMzZHhtUUJKc3lPS0QzdTlqRnJacnBPYUhlWFlZRyto?=
- =?utf-8?B?c3dWWW4xU1l2NUc3K3MzY2t4QWJoZ2xkaGVXZTNPZXZmeXdwMHI3SXlyV3NB?=
- =?utf-8?B?OGkwRlFvdmtVOG56RDBseXltSWUxbC9kQ0lEUnpUM3k4SGFDbnVVS2phcnF3?=
- =?utf-8?B?OHhhUm5zYXQzTy9WQ1pxQms4cVVvUVFhVmZwUDRPeXN3SXEycktJZGtZRzU0?=
- =?utf-8?B?SHBiREZYNUVwRGlDUWdramxQbWlUMXFoeEJrNU9NSlVGU0hwbkt0WjZyNUhw?=
- =?utf-8?B?T1ZVemlNZGV4SmcwZFN1dzd6a25zS3RmSlRyeXgyN2VBcGRsVkdEengxTENF?=
- =?utf-8?B?b2ZIcFlmb2M2b2t1emhtSmVRSEtXT3JxT1Z0ZFh1SWFINlc3NDhSL2RldlZ5?=
- =?utf-8?B?bXVnclRKUERnMUtaekQxT0RZNlhqdnkwSlBSLzYrTTNhVjhsRW5oQVZXbVlF?=
- =?utf-8?B?bFBrblNTbzJUdmQrcUJyWUlTZWhXS3c2aHB5V1FlWjFnU1RoODE3REtzSzZZ?=
- =?utf-8?B?U09GaHBVdmpwaE1pUmFpSFh6U1QzL2oxbzN1SHBpTGtGNEpCT1AxVG03dUEz?=
- =?utf-8?B?cEgxalJTWktRQUxBbVB4Mjg0aGxla2p6bW5IN1dYa3VYV0RDeXoyY0dUSmRm?=
- =?utf-8?B?U0hmaXZwQnFoanVMQkM3YmtBUTgrRk9IcllqOEQzVE55SVFkRDRZVmtxbjNu?=
- =?utf-8?B?OER2bFZRQzlGc1VnQzI4cURzZW5vR0JMNHZjZHUxWmpXZjgzdnNOc3ZKTzM0?=
- =?utf-8?B?WHF4aGcyNUxRQUxxb2lQOGRVZEpIMngvS2FiUCtKd0VKdFNuSklMRms5a1hT?=
- =?utf-8?B?Y3UzRUYxN0JrNFJtWTA4dTYwakkvODhYU2krK1hPRU1ZdlVYV2xLVCtFNWxu?=
- =?utf-8?B?cG1zc2RRZEdWMEE1M3grbmZLcXhDV3dRTW0zZGIwcmlxMUFNdzVEOGVZTHlD?=
- =?utf-8?B?eFJ5Njl4dEhSUEdMeWZoUExUUDJRaWorTFJuMjV6Mk9VN1dQOW1ucVlIQm9y?=
- =?utf-8?B?NklSUmcvbjdKWU5FVms1VWo2ZDVWOWFIVS9ad2RUVmE2YXhhY2lXZ3hyeFZi?=
- =?utf-8?B?TVJKOG9VWFhtTzlKK21tK0p2WlBOb1Y5R2c2Y2REMVZrbktuQ0I0eWN0cDBs?=
- =?utf-8?B?Qm54cFZTU3lzN3lBNkkwK3hEUW1ySElJZk45R3JsaVBlMEFwVlBXTDNKeXR0?=
- =?utf-8?B?Mi83MXdGcFU3cG1XN3lLRWtpcXBrdHhOVXZiQUVuekhsOUZqMkFJVTE3Q25i?=
- =?utf-8?B?TmJaN0FmVExzUzdyUVdpaGh2RFhkUVppN1Z3bHdPM3hBM1p5VldRLzE0QUdO?=
- =?utf-8?B?VkNZQk94akZlcHdpai9tSWNEYzBPdzRDY3czOEFMY29hY2wvc1QvVFlUREc1?=
- =?utf-8?B?bktEVmdCVWVzRFY1TVFNdUNSUU1MMEtiZkYyYjd5MUxNOVZBVkFwa1dTOERy?=
- =?utf-8?B?WHhrcGNjdktlTjdwTmYzVytsM0wxTmE0bWpacEtNc1RVaEJKcXBRWG5QUHgx?=
- =?utf-8?B?TldFdFBzS0t2U3ZUT2h2dHpzTVVqU1dZRldZTHFJRkVnbWErMFo2RlhxWU9T?=
- =?utf-8?B?RXl6Zm5BcXF4cG04Z2RUODRwYUNjOTZkUlQ5N1l1SFVxOHhwWVk2c0ZJYTMw?=
- =?utf-8?Q?xBbBrrEDiV0xEn6Y=3D?=
-X-Exchange-RoutingPolicyChecked: N0AKuPOdeLor5LunB7KMFK0kfRR1N2Zo/ocKT5Xv4jzZoZtxfmIR5V95Xe6hk4ZMSyDEBubUD6DYe7JDckchAL/1Qd+qqa4op1Jt0xXYLQ2d544DtH6jZ1hZiCc62FdHC8maYsnI8oVles85mxg2pZaVRtmeV8/hdBYThuh9MwqTGYXCCMvMJAzCxBTAvJa0kn5HxnMK+2YxMmDxZ13QLROrq68DG0m/dhp1D34eiQxLFfZ3G0kethXJW8UNzQEGrLjA63iSyZ6VPx1oeSLraR9UaqKRqaNmBb3HLiFhi8RkIQxnrVgK66xhJFGNGNkJ3LQ5mEQ/Llqb5p//ZRlNpg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0dfb966-625f-4d87-437f-08dec14478e5
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB7198.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 07:48:16.5489
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nCjLUmmiXPRlJhxP10yMuNngngSDz7VDtJ1qnCvP4G4NMqMN94mvzz8jes3fEEZhuJ4c/yUKJJSTthPFISqnmQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB8040
-X-OriginatorOrg: intel.com
+X-ThreadId: ABg7bcuugZBJ
+Date: Wed, 03 Jun 2026 10:39:24 +0200
+From: "MINETTE Alexandre" <contact@alex-min.fr>
+To: "Krzysztof Kozlowski" <krzk@kernel.org>
+Cc: "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>,
+ "MyungJoo Ham" <myungjoo.ham@samsung.com>,
+ "Chanwoo Choi" <cw00.choi@samsung.com>,
+ "Guru Das Srinagesh" <linux@gurudas.dev>,
+ "Linus Walleij" <linusw@kernel.org>,
+ "Rob Clark" <robin.clark@oss.qualcomm.com>, "Joerg Roedel" <joro@8bytes.org>,
+ "Will Deacon" <will@kernel.org>, "Robin Murphy" <robin.murphy@arm.com>,
+ "Kees Cook" <kees@kernel.org>, "Tony Luck" <tony.luck@intel.com>,
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org, iommu@lists.linux.dev,
+ phone-devel@vger.kernel.org
+Message-Id: <50c433df-d737-45da-93dc-76d365052a6c@app.fastmail.com>
+In-Reply-To: <20260428-jumping-discerning-oarfish-d2caf1@quoll>
+References: <20260427-mainline-send-v1-sending-v2-0-dcaa9178007b@alex-min.fr>
+ <20260427-mainline-send-v1-sending-v2-7-dcaa9178007b@alex-min.fr>
+ <20260428-jumping-discerning-oarfish-d2caf1@quoll>
+Subject: Re: [PATCH v2 7/8] ARM: dts: qcom: pm8921: Add USB ID extcon
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+X-Spamd-Result: default: False [-0.15 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[alex-min.fr:s=fm3,messagingengine.com:s=fm1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	XM_UA_NO_VERSION(0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-110912-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:ram.gupta@oss.qualcomm.com,m:ulf.hansson@linaro.org,m:konrad.dybcio@oss.qualcomm.com,m:abhinaba.rakshit@oss.qualcomm.com,m:linux-mmc@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:pradeep.pragallapati@oss.qualcomm.com,m:manivannan.sadhasivam@oss.qualcomm.com,s:lists@lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vger.kernel.org:from_smtp,intel.com:mid,intel.com:from_mime,intel.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
-	HAS_ORG_HEADER(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER(0.00)[adrian.hunter@intel.com,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[intel.com:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[adrian.hunter@intel.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:krzk@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:myungjoo.ham@samsung.com,m:cw00.choi@samsung.com,m:linux@gurudas.dev,m:linusw@kernel.org,m:robin.clark@oss.qualcomm.com,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:kees@kernel.org,m:tony.luck@intel.com,m:gpiccoli@igalia.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:iommu@lists.linux.dev,m:phone-devel@vger.kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[contact@alex-min.fr,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	DMARC_NA(0.00)[alex-min.fr];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-110913-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[contact@alex-min.fr,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[alex-min.fr:+,messagingengine.com:+];
+	RCVD_COUNT_FIVE(0.00)[6];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[10]
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,messagingengine.com:dkim,alex-min.fr:dkim,alex-min.fr:from_mime,alex-min.fr:email,app.fastmail.com:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2370C635AB7
+X-Rspamd-Queue-Id: E43CF635C99
 
-On 03/06/2026 10:03, Ram Prakash Gupta wrote:
-> 
-> 
-> On 6/1/2026 1:00 PM, Adrian Hunter wrote:
->> On 29/05/2026 11:10, Ram Prakash Gupta wrote:
->>> Set ice clk rate from sdhci msm platform driver, needed for
->>> target which are having legacy ice support, and need sdhci msm
->>> platform driver to set rate.
->>
->> Please expand upon what "legacy" means here?
->>
-> 
-> for devices where ice node is not created as separate device node those
-> are referred here as legacy, separate device node for ice starts with
-> below change: https://lore.kernel.org/all/20230407105029.2274111-1-abel.vesa@linaro.org/
-> 
-> also I will update legacy that ice nodes which are created withing mmc dt
-> node, so that ambiguity about legacy is clear.
-> 
->> For CQ case, qcom_ice_create() prefers "ice_core_clk" before
->> "ice".  How does that relate to this?  Please clarify that in the
->> commit message also.
->>
-> 
-> "ice" is the naming convention used for emmc ice core clk in dt and
-> "ice_core_clk" is the naming convention for ufs ice core clk. In the
-> function you referred, since ice driver is common for both storage media,
-> it tries to parse both the clock.
-> 
-> Here we are handling "ice" as this is needed for emmc only. I will add
-> the same in commit message.
-> 
->>>
->>> Signed-off-by: Ram Prakash Gupta <ram.gupta@oss.qualcomm.com>
->>> ---
->>>  drivers/mmc/host/sdhci-msm.c | 12 ++++++++++++
->>>  1 file changed, 12 insertions(+)
->>>
->>> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
->>> index b4131b12df56..c6a073718aa4 100644
->>> --- a/drivers/mmc/host/sdhci-msm.c
->>> +++ b/drivers/mmc/host/sdhci-msm.c
->>> @@ -286,6 +286,7 @@ struct sdhci_msm_host {
->>>  	/* core, iface, cal and sleep clocks */
->>>  	struct clk_bulk_data bulk_clks[4];
->>>  #ifdef CONFIG_MMC_CRYPTO
->>> +	struct clk *ice_clk;	/* ICE clock */
->>
->> Why keep ice_clk?
->>
-> 
-> here we need this ice_clk because rate set is required only when ice clk
-> is added with emmc node in dt, and in case we try to use the clk entry of
-> qcom_ice structure it will set the rate for new ice node as well which is
-> separate.
-> 
-> but also we can avoid this, since this one time operation, and we can reuse
-> local variable clk inside sdhci_msm_probe, so it wont be needed. I will remove
-> this in next patchset.
-> 
->>>  	struct qcom_ice *ice;
->>>  #endif
->>>  	unsigned long clk_rate;
->>> @@ -2708,6 +2709,17 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->>>  			return ret;
->>>  	}
->>>  
->>> +#ifdef CONFIG_MMC_CRYPTO
->>> +	/* Setup ICE clock */
->>> +	msm_host->ice_clk = devm_clk_get(&pdev->dev, "ice");
->>> +	if (!IS_ERR(msm_host->ice_clk)) {
->>
->> Does not attempt to deal with -EPROBE_DEFER, although bus_clk above
->> doesn't either.
->>
-> 
-> here need is just to set the rate, rest of the enablement part would be 
-> taken care in ice driver, hence we can avoid this handling here.
+Thanks for the feedback, Krzysztof.
 
-If devm_clk_get() returns -EPROBE_DEFER, then the rate will not be set,
-so you are relying on devm_clk_get() never to return -EPROBE_DEFER.
+Do you mean that the PM8921 USB ID handling should be exposed by the
+PM8921 parent node itself, so USB consumers would reference the PMIC
+directly, e.g.:
 
-> 
->>> +		/* Vote for max. clk rate for max. performance */
->>> +		ret = clk_set_rate(msm_host->ice_clk, INT_MAX);
->>> +		if (ret)
->>> +			dev_err(&pdev->dev, "ice clk set rate failed (%d)\n", ret);
->>> +	}
->>> +#endif
->>
->> Could put this in a helper+stub function in the "Inline Crypto Engine
->> (ICE) support" section, to save having #ifdef CONFIG_MMC_CRYPTO here
->>
-> 
-> sure, will take care of this in next patchset.
-> 
->>> +
->>>  	/* Setup main peripheral bus clock */
->>>  	clk = devm_clk_get(&pdev->dev, "iface");
->>>  	if (IS_ERR(clk)) {
->>
-> 
+  	extcon =3D <&muic>, <&pm8921>;
 
+I am fine with that model, but it would require more driver changes: the
+current extcon driver binds to a separate platform device, while the
+PM8921 parent node is already handled by the PM8xxx MFD driver.
+
+Is that the direction you would prefer for v4?
+--=20
+  MINETTE Alexandre
+  contact@alex-min.fr
+
+Mar 28 avr 2026, =C3=A0 08:56, Krzysztof Kozlowski a =C3=A9crit=E2=80=AF:
+> On Mon, Apr 27, 2026 at 09:34:53PM +0200, Alexandre MINETTE wrote:
+>> Add the PM8921 USB ID interrupt as a disabled extcon provider. Boards
+>> can enable it when their USB controller consumes the PMIC USB ID state
+>> for OTG role detection.
+>>=20
+>> The interrupt corresponds to PM8921 USB_ID_IN, block 6 bit 1.
+>>=20
+>> Signed-off-by: Alexandre MINETTE <contact@alex-min.fr>
+>> ---
+>>  arch/arm/boot/dts/qcom/pm8921.dtsi | 7 +++++++
+>>  1 file changed, 7 insertions(+)
+>>=20
+>> diff --git a/arch/arm/boot/dts/qcom/pm8921.dtsi b/arch/arm/boot/dts/q=
+com/pm8921.dtsi
+>> index 535cb6a2543f..30366536f580 100644
+>> --- a/arch/arm/boot/dts/qcom/pm8921.dtsi
+>> +++ b/arch/arm/boot/dts/qcom/pm8921.dtsi
+>> @@ -121,6 +121,13 @@ ref_muxoff: adc-channel@f {
+>>  				reg =3D <0x00 0x0f>;
+>>  			};
+>>  		};
+>> +
+>> +		usb_id: usb-detect {
+>
+> You should not mix non-addressable children with addressable. If you
+> really do not have address, but other children have, then probably this
+> is part of the main device, so should be folded into the parent node.
+>
+> Best regards,
+> Krzysztof
 
