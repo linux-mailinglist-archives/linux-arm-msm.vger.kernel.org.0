@@ -1,53 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-111162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id PhlEMOI8IWqqBgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 10:52:50 +0200
+	id TmN5ImE9IWrfBgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 10:54:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87FA563E2EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 10:52:50 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF85663E347
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 10:54:56 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="DD3V/mjR";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111162-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111162-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=linaro.org header.s=google header.b=TrGhWNKe;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111163-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111163-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=linaro.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id BD10630F750E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 08:46:13 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3B70F31849E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 08:47:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09EAA3C9ED6;
-	Thu,  4 Jun 2026 08:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C700C3CEBBC;
+	Thu,  4 Jun 2026 08:46:18 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3EF25B0BE;
-	Thu,  4 Jun 2026 08:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415F83D5C35
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2026 08:46:17 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780562647; cv=none; b=X7CGvNJkAK/u/NZHu4Yt1hme75IaYJaFWudhSo7DwZ7QRIEGrl45Tt1VEHBLwUFSSz++jNHjp5Q6/F0PNC0IvfGUWBvyMenaYV6VI+NDfDPfmxdh5zHSBE5WboIpz8UswaH+ojZXDXZTSuu8ho/EmiRZka6ERKJel+OYkOYzQT0=
+	t=1780562778; cv=none; b=f5Za8CzVN2FGCRfL7p1DsRIs5E+y0FMLsv/R+UDSNZ3VPkFXaYBSoJdt1chxPUyegLW/bZtHC5rj4l4nz6eYBKZMolK7WEGIGECsqFhnDD+9C1LoFwikGQ1t2Gith4iocTuhBNgmPlV3K5o/5zYtyK2gUXrA944i54LE/tIvL48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780562647; c=relaxed/simple;
-	bh=1LUUDEmkD11c3hqQcHTyg+36f2zaJxr/IKGVvBYPOIg=;
+	s=arc-20240116; t=1780562778; c=relaxed/simple;
+	bh=DKBAaG/N5R4rrztzGTcNqmxNSYvmbc4YOW44ZQWDhZg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IbxzfxLRH4tFMJdfmZw0+yvisbuKf94pCEhR+vnHsnYLjqM2hqcC7VvQSMKvktBmAqwvIQDNSrWkaAeTDelX3Pu7uUCneNRk9p0B0WZLylMwlueHGeW8nKGZjY8p8koWbkn6e2nkADKPna+WU3QXhV8kV/sTc4/qDQiZE13GJ9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DD3V/mjR; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BE11F00893;
-	Thu,  4 Jun 2026 08:44:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780562646;
-	bh=ziNVgcURkjhIGN/oRkW1p5OZGpR4tb4iPQT9ShnqS8w=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=DD3V/mjRkBZo+tz/soV82c4b242qENt/y+cDug4VODOyCq0u37PV0LrSyMB9+0sD8
-	 SjIgqL1usJ4Eoe/+/FFfLYbCUb8XfUFzkRJBlb3sI8KEzcBB6v0LleA28HmuAU9O7p
-	 7gnruTl0FMOpL7nPdAOC78ZGQqiT6zrI6MbEJW1MuZ7uc/BJz2FeMr23SZ6abeMKmL
-	 UlOtHN0E4HjIP+f3xkpYJ5Awmzy3tpg1nVz18r488VeZdBKHMUNIOYrDIB534Bre4a
-	 aTFINSro0uPiBejAZhX6cx+aHjP+E+s5fzI0bqCronxI4nMxGYW5XYMlOtf2inuO6K
-	 E05S07zWDuMsg==
-Message-ID: <76b46788-0cf1-469b-93be-b7788be2bd71@kernel.org>
-Date: Thu, 4 Jun 2026 09:44:02 +0100
+	 In-Reply-To:Content-Type; b=bEODKf29socC529tcWxXRayfneABkWFfZ+O9O5pHGahLdboSWq+MJdsHZICA7qke1FuDQ2Tb1JDkQEuBJmSDplRbR1HnNTxd7yEKXM7Wfcsq41/c15ofRk5J4K93KjabfmZE9yNQx50zoiqKocMOrH0IAbtvqVnnt2FTTpzjPZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TrGhWNKe; arc=none smtp.client-ip=209.85.167.41
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5aa60c7be57so18657e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2026 01:46:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1780562776; x=1781167576; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ysCy4i0ZuZGHTLV0NNKNvTSVjrjWNaqQ7rMKNBVAW0s=;
+        b=TrGhWNKesFMoOF8eV2aRD6QPSe1hm37sPWKH58MN2wL4Rmi+DbKnafC1zFjBDFHVWu
+         DsNfED04TBlgLFeQypnahib8eiuR4MSfTKMv/jrXfO8ZiNZwt90wlL0Vddcr0m7Bub1g
+         kKbSmtBVFVT0yfwKWZGYakYf+2F0IicrJmB9SUhK8g6JDEfSfDsyZ/qniDdyqpiSWBUK
+         P5fU8kjwYG9IRTklbFraqBMqPccMRVlxWCx2inALca4ceIzwHTJJHnN6ikvrtezk8Uxi
+         mpsRp8GMqKIEvw42y7o2CeDoxk13g5Hh3sICBkzR35g9UaFLBZ9/syaz9mXsiYCAscVI
+         ZmoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780562776; x=1781167576;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ysCy4i0ZuZGHTLV0NNKNvTSVjrjWNaqQ7rMKNBVAW0s=;
+        b=jBuLeI7rL3Vt4VSJT25VEPgvqh6vfDY/tFuBMnI0/XiM+C+n01UlxFq4bJqF7j2c24
+         7VWZz28/FUHsOspQIx+O1Tn6UQVOGbFirpcGTQM4KI19Q3O279hmYy6KOqBg/DYNFvRc
+         Ik4GCxFUcJVkKEkdDCb9rAGhJgbsr1YYxxCAZHOxz7BDVTFm3xfkA8dgEIG3J72vPXWY
+         1XvixcE6ChJpmOA6TvLh4EGLHHuHsMsnNWVToCRljMWeXXUP0Vhgl5BpeSNb6GDDk7mj
+         M7dbL/vqBP5JQH0taw76XCh7byf0sU9xzuaof09jO8h19gAcaP8xXby+7vIP7HT5l9bW
+         iw5g==
+X-Gm-Message-State: AOJu0Yx4Gh9y1OCigOh+K7VST5q1JvRj2iRiaYN73YUFSnDihvBe6wj6
+	q2d1BYBpY+WDp/TvNdrpWzT1Am6ilBebp/mdlAZaCGSj4jfLb1PBUGPLbSicpjQCbsw=
+X-Gm-Gg: Acq92OEsl0JLHrhmiEnX1/+2CoiLE3/VUVg5UTPdkhFrurXd9fq62c0lAcdZIFlJnoo
+	rK9qYAXchX0SK+7mWRXsEp9W7Ja1ZRdQ+mCni6SxwwIPeRreX97nVvpxdS6WIOr9rAX5dPhVb/l
+	t+eA3CXdnqU3iJ9YN7+KSB1iVCsLDilPJ5d2XKT0J3xBvDbX+byk/4YgmPjz1fAkjabUX6j4TUn
+	sQ+LNwjmgoE7fNek+OzO222Tt7chvgBFcdeMkhQbrpWDbWgCPWIPvkcDku5AsXdORWBr3BqjDZ3
+	gNgx2KiluGIuXU8j1ZDnZYAoIzgLP78Ke7tqsDH5v4acD7kEeyahu78wzSGV4Omtk9DOP1kNSRg
+	PoROwJecLxiwdUBK/vXiXn35aZk4ML5eDv3v9a548IgyFkIRTAdcZcgb5zAepc8Ah99UJHg5dSF
+	+FtqNCo5zqRdxMbT5MU3KSZiQdxhLhGOs/tHWnjGV18vv4LEgVgYyIDGZVKSIG8mA36NbzrOdxG
+	0h2eq7XoSesIU+2
+X-Received: by 2002:a05:6512:24d8:10b0:5a8:7317:540b with SMTP id 2adb3069b0e04-5aa81f36e3dmr159818e87.7.1780562775465;
+        Thu, 04 Jun 2026 01:46:15 -0700 (PDT)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aa7b99c74esm1075006e87.81.2026.06.04.01.46.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jun 2026 01:46:14 -0700 (PDT)
+Message-ID: <1b107aca-a857-4e58-a763-39c82af67747@linaro.org>
+Date: Thu, 4 Jun 2026 11:46:14 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,156 +85,138 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] media: qcom: iris: guard IRQ handler with runtime PM
- check
-To: Hungyu Lin <dennylin0707@gmail.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <v2-message-id>
- <oB5ie3iMXIF3Y880tV7tN8clu84kWmIaS84q29ShnUs0QVv21y1IOyXqc55FGzHfG9JIDlcIrhQh30TaZpC3vw==@protonmail.internalid>
- <20260604082510.45733-1-dennylin0707@gmail.com>
-From: Bryan O'Donoghue <bod@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=bod@kernel.org; keydata=
- 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
-In-Reply-To: <20260604082510.45733-1-dennylin0707@gmail.com>
+Subject: Re: [PATCH v8 1/2] dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bryan O'Donoghue <bod@kernel.org>,
+ Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260523-x1e-csi2-phy-v8-0-a85668459521@linaro.org>
+ <20260523-x1e-csi2-phy-v8-1-a85668459521@linaro.org>
+ <rpnNMsR9GY8gbynzeBO8Zm61JAOq3ubt6sp0x3WDPPwkMAJzlcofECD1kabN-IUoK6sSwP5P6l28UIZLFCOpjQ==@protonmail.internalid>
+ <dda32577-04e0-4507-acaf-a5694f4f31b3@linaro.org>
+ <478df3ed-d4ef-43aa-bb84-e2075798542b@kernel.org>
+ <ec98ef2f-02b4-4086-8b4b-07b6953dbd20@oss.qualcomm.com>
+ <514cf213-5778-45e1-8d70-d3fe27991fcc@oss.qualcomm.com>
+ <7JNJ4dUNz4ennJ5dkzhfLSuVo72JpfZAbprICPRqlRYnSzVDJw6x3h-1nESd_PK-3us9f1V3qOiLiywsTqP8vQ==@protonmail.internalid>
+ <f01c0e22-4e5c-44e7-9ea4-4bc8d53aea2e@linaro.org>
+ <29e8491f-20e8-4082-8943-66bee7e3af1d@kernel.org>
+ <5ca611b1-0663-4975-bd56-b1343851e5fd@linaro.org>
+ <83c12dc5-fcb4-4089-9917-9f0fcc4f940d@linaro.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <83c12dc5-fcb4-4089-9917-9f0fcc4f940d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111162-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111163-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:dennylin0707@gmail.com,m:vikash.garodia@oss.qualcomm.com,m:abhinav.kumar@linux.dev,m:mchehab@kernel.org,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
-	FREEMAIL_TO(0.00)[gmail.com,oss.qualcomm.com];
-	FORGED_SENDER(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FORGED_RECIPIENTS(0.00)[m:bryan.odonoghue@linaro.org,m:bod@kernel.org,m:vijay.tumati@oss.qualcomm.com,m:vkoul@kernel.org,m:kishon@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:neil.armstrong@linaro.org,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 87FA563E2EB
+X-Rspamd-Queue-Id: EF85663E347
 
-On 04/06/2026 09:25, Hungyu Lin wrote:
-> Use pm_runtime_get_if_active() before accessing hardware
-> registers in the threaded IRQ handler. Skip interrupt processing
-> when the device is not active.
+On 6/4/26 03:30, Bryan O'Donoghue wrote:
+> On 04/06/2026 01:07, Vladimir Zapolskiy wrote:
+>> On 6/4/26 00:18, Bryan O'Donoghue wrote:
+>>> On 03/06/2026 21:51, Vladimir Zapolskiy wrote:
+>>>>> Actually, one more thing, Why isn't TITAN TOP GDSC here?>>>> +
+>>>> If CSIPHYs are true subdevices under the umbrella CAMSS device and well
+>>>> described as subnodes, then likely none of power domains are needed
+>>>> to be
+>>>> repeatedly described in the children device nodes, since this
+>>>> information
+>>>> can be obtained from the parent device by the driver.
+>>>>
+>>>> Technically 'power-domains' property can be safely removed, I believe.
+>>>
+>>> The policy is to describe the power-domain dependency fully since DT
+>>> describes hardware not software architecture.
+>>
+>> It brings no contardiction to the statement I've given above, the needed
+>> power domans will be properly described in the parent device, and there
+>> is no
+>> sense to repeat the properties it again and again in every child subdevice.
+>>
+>>> Also for a very practical reason a sub-devices can probe/run
+>>> asynchronously of the parent device being active so in fact we do need
+>>> to describe the PDs fully.
+>>
+>> In opposite to the above this one is precisely a software centric argument,
+>> which should be excluded from the consideration, as well it's not a big
+>> deal to make a proper async initialization, removing excessive dt
+>> properties
+>> is worth it.
+>>
 > 
-> Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-> ---
-> v2:
-> - Use pm_runtime_get_if_active() instead of pm_runtime_get_if_in_use()
-> - Handle negative runtime PM return values correctly
-> - Return IRQ_NONE when interrupt processing is skipped
+> Right look forget about that.
 > 
-> v3:
-> - Remove the early enable_irq() from the PM-inactive early-return path
-> - IRQ re-enablement is already handled by iris_vpu_power_on() after power-on
-> 
->   drivers/media/platform/qcom/iris/iris_hfi_common.c | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_common.c b/drivers/media/platform/qcom/iris/iris_hfi_common.c
-> index 621c66593d88..59040cce8cf1 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_common.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_common.c
-> @@ -100,10 +100,15 @@ irqreturn_t iris_hfi_isr(int irq, void *data)
->   irqreturn_t iris_hfi_isr_handler(int irq, void *data)
->   {
->   	struct iris_core *core = data;
-> +	int ret;
-> 
->   	if (!core)
->   		return IRQ_NONE;
-> 
-> +	ret = pm_runtime_get_if_active(core->dev);
-> +	if (ret <= 0)
-> +		return IRQ_NONE;
-> +
->   	mutex_lock(&core->lock);
->   	pm_runtime_mark_last_busy(core->dev);
->   	iris_vpu_clear_interrupt(core);
-> @@ -111,6 +116,8 @@ irqreturn_t iris_hfi_isr_handler(int irq, void *data)
-> 
->   	core->hfi_response_ops->hfi_response_handler(core);
-> 
-> +	pm_runtime_put_autosuspend(core->dev);
-> +
->   	if (!iris_vpu_watchdog(core, core->intr_status))
->   		enable_irq(irq);
-> 
-> --
-> 2.34.1
+> - DT requires you to describe your hardware. You're not entitled to have
+>     some other device vote for a clock or a PD you rely on.
 > 
 
-Could you please put your series of individual patches but group them 
-into a consistent list - so that I/we don't have to figure our how to 
-apply them and in which order.
+Above are two uncorrelated between each other sentences.
 
----
-bod
+A device ("consumer") can ask another device ("provider") to behave in
+one or another way, this is the only possible and thus natually selected
+system design, and nothing behind it was asked. There is no justification
+for the proposed flood of multiply repeated data, it's avoidable.
+
+>     That's exactly the type of downstream short cut we are trying to zap.
+> 
+> - In our case we also need to vote on PDs individually when the PHY
+>     is active.
+> 
+> In extremis say we are only running the TPG then we have no reason to
+> vote for CSIPHY specific rails or operating points in the parent device.
+
+So, TPG shall communicate with CAMSS, there is no CSIPHY in the equation.
+
+> We could make the parent power-domain argument for CAMSS and CCI but we
+> have TITAN_TOP_GDSC in CCI specifically because we have to model the
+> hardware - including the PDs for that device.
+
+CCI is not described as a child of CAMSS, here the situation is different.
+
+> If tomorrow we put CCI as a sub-device of top-level CAMSS, that won't
+> negate the need to include that GDSC.
+
+Of course in this case a phandle to Titan GDSC will be marked as obsolete
+or unused for CCI, no problem here.
+
+-- 
+Best wishes,
+Vladimir
 
