@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-111148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id qshTNL0mIWoP/wAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 09:18:21 +0200
+	id p+rAKGIoIWpj/wAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 09:25:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A4BF63D935
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 09:18:21 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DB1D63D9AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 09:25:22 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=mTlK76AL;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111148-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111148-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=cs4y6+0D;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111149-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111149-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B9D213009CD9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 07:10:20 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id A4CAD300ED88
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 07:25:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 705313DD869;
-	Thu,  4 Jun 2026 07:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 029123D6CAB;
+	Thu,  4 Jun 2026 07:25:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EDC3C3BE6;
-	Thu,  4 Jun 2026 07:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4393D3016;
+	Thu,  4 Jun 2026 07:25:18 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780557019; cv=none; b=Pts9MkGon0MgQn+7BOFcZhPureUILyufJjXR35AL0Pnq6QSAt2gIoeqL23ogw4PdKN026BDmvU7Zhbum9mzveNtaEVKWLYafCaxI4sVehRIXrl+3P308DQLVh+DlCqwGg9LPjA1EBLdpnmt/+PpLym8CW14GXRn9T86ezTtDNdM=
+	t=1780557919; cv=none; b=bybEHYBb5RSvFSVrYG2haAPVfPrcQU4n3RIpKqq7G7MBBFTDhkWJ8CtI9u4uxYysRpzmu6LP0OaU3hTqv6OXiLJkqACR2H40WHM55U7vaNMJQSOv+tI6DFtSdWwL2LX8vBSlRQWNMTjPRPXVMOzNrEgEcuh3YDYCAUmdNQ5g4Og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780557019; c=relaxed/simple;
-	bh=Ws4H9Q+8t06VACzdZSGsOKt9b28u1KPCCkBtrR11z9g=;
+	s=arc-20240116; t=1780557919; c=relaxed/simple;
+	bh=dZG1fdIPC+fjh7OXowhQFnMVdunTtEEDayR6/MmXBbA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RhqPJVKO0Zi3Cfmdq5/SeJJaIvJcR/EaUFXuuovvWu1SSPDMTXgMB+rwiwfCyfGhvLcQjRj8hfiMrbTx9xLUMfH4S6SSA2A8+1lENfiz/bDHzVi+hd6COgjIGV+y7GRt3NnVRZ/KZpWgu1TO06BLsM8EzHmt2ErItKgw2QV2DhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mTlK76AL; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724E31F00893;
-	Thu,  4 Jun 2026 07:10:13 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=HqciJCMM12hdmxvoVWrVjprq9yrCVsDoB4+dUw7r27EuUMn/zErMiJ5fIr1LKjvXuYOD1dddPCfVip3PNUfx3dysyOJ6ZIi265bBCFlmGx9KimXeqMqDU60mgPf8Or8Jmn0Au2EQkDCueeVidl6qTAajyVUsxj6ZhOZBwhj9spw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cs4y6+0D; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048781F00893;
+	Thu,  4 Jun 2026 07:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780557018;
-	bh=AhMxEQwcegOFcYLIZ9y5iV53bw04kwuyEtOBVhEDYMA=;
+	s=k20260515; t=1780557918;
+	bh=hjXKhv82ClMhSZkNjY/bsHaypJZi4jwYqgGHu2syR0c=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=mTlK76ALzPHk/Pz+6x8nTHyAjcgK/SS+Mku9+Qi7I3SNA0dfcHu6BhFEs+C19pRU6
-	 E5+OGsyWwtumgMG/WJ2Le0aae5LQxGXgowtVmcepxAXxMfqCWAilCKaYGk/5+kRVkP
-	 4cO9j+hmH6qM30B4Ytx/qU6yvKs9erS3UMZLX0LxVk1/5u7oTpy2ME5T1T/npLCOGU
-	 s4u+Pk89mJTbVKzFZ55WRg+drPIILWBGGd5p/DVxhd0Z2F7ICIpxvMp25Jq0zQa4Gy
-	 HAb3eZDLpekHG+5x0DW3wia0LnDWOcTfGSaDl10ol+7lmMFjJhA3KS0hZK1C8ogR+c
-	 F4m/GYKhfbnJQ==
-Message-ID: <f027078c-6a55-463b-8938-95ede02dca3b@kernel.org>
-Date: Thu, 4 Jun 2026 16:10:08 +0900
+	b=cs4y6+0Dtc2PDt4J3Ydm0xDwxf6cSLFrqm7V2uVmJYtwHp0CNr6BjHJnUhFRizuKc
+	 CMg4jLvSm8kGJn48q7uaYo9TSHBrrWny9z1Hp5kkyxmXOf5Uct22O1mtrSBtG91v4l
+	 /1NBBdBlb3BXkF4EBPBmpol2x1IZgDdS4QyxVuuQ/AqOIpHGr4jjVXuYgVEcNtVyhp
+	 sZhaG2egWVyyYD7LiCxJQrT7BJra64jL71Ux4LlWvWXwvb18y0endrESD1RGbnOxWQ
+	 0pdfOSjpJT8JHfARbsqSAN78dUY0hIK8O3wCjJbDhbhE6WH6/5i+XtS7/kMyXHI3Dj
+	 Lz/hfI/NciSKQ==
+Message-ID: <5a37c179-8716-43fb-a4b3-9f84f971591a@kernel.org>
+Date: Thu, 4 Jun 2026 09:25:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,173 +55,107 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mm/slab: improve kmem_cache_alloc_bulk
-To: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>, rob.clark@oss.qualcomm.com
-Cc: Christoph Hellwig <hch@lst.de>, Andrew Morton
- <akpm@linux-foundation.org>, Mark Brown <broonie@kernel.org>,
- Hao Li <hao.li@linux.dev>, Christoph Lameter <cl@gentwo.org>,
- David Rientjes <rientjes@google.com>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Jesper Dangaard Brouer <hawk@kernel.org>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, io-uring@vger.kernel.org,
- kasan-dev@googlegroups.com, bpf@vger.kernel.org, netdev@vger.kernel.org,
- Alexander Lobakin <aleksander.lobakin@intel.com>,
- Boris Brezillon <boris.brezillon@collabora.com>
-References: <20260528093437.2519248-1-hch@lst.de>
- <20260528093437.2519248-2-hch@lst.de>
- <5f7f90d8-cb32-4ffb-8f1c-0722aafbe869@kernel.org>
- <20260529135045.GA10647@lst.de>
- <5f3ba603-a6ad-4cf2-9a54-aebc10273c59@kernel.org>
- <58cc76e7-2348-443d-a989-2a06e61178af@kernel.org>
- <20260601113831.GA25535@lst.de>
- <d7b08296-7f6e-4d89-ab3b-04e43d04929e@kernel.org>
- <CACSVV00k-fxW6+waHNqvmYcnVNDkRexoWWprFzfayZfqdyMuuA@mail.gmail.com>
- <CACSVV00dNWgpNVU5rB=Hmg+3oWF18yTyfKNr_tWesjoP1jMxwg@mail.gmail.com>
- <5e6948b3-d235-4b61-aed7-e8b4d0f5b452@kernel.org>
- <CACSVV02v0Fuc6=Rqyd89D-_tcSjEXuQmxz0+2-4aoRAEwJE4zg@mail.gmail.com>
- <b6f6323e-6f5b-4928-b474-bd2743eac3f2@kernel.org>
+Subject: Re: [PATCH] dt-bindings: nvmem: qfprom: Add ipq5210 & ipq9650
+ compatible
+To: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>,
+ Srinivas Kandagatla <srini@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260515-tsens-v1-1-1755b515777e@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Harry Yoo <harry@kernel.org>
-In-Reply-To: <b6f6323e-6f5b-4928-b474-bd2743eac3f2@kernel.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------wiFRKWLl9yvmDjGQCVE2s47E"
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20260515-tsens-v1-1-1755b515777e@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.26 / 15.00];
-	SIGNED_PGP(-2.00)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	MIME_GOOD(-0.20)[multipart/signed,multipart/mixed,text/plain];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111148-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111149-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:vbabka@kernel.org,m:rob.clark@oss.qualcomm.com,m:hch@lst.de,m:akpm@linux-foundation.org,m:broonie@kernel.org,m:hao.li@linux.dev,m:cl@gentwo.org,m:rientjes@google.com,m:roman.gushchin@linux.dev,m:hawk@kernel.org,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:linux-mm@kvack.org,m:io-uring@vger.kernel.org,m:kasan-dev@googlegroups.com,m:bpf@vger.kernel.org,m:netdev@vger.kernel.org,m:aleksander.lobakin@intel.com,m:boris.brezillon@collabora.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[harry@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+,1:+,2:+,3:~];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:varadarajan.narayanan@oss.qualcomm.com,m:srini@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[harry@kernel.org,linux-arm-msm@vger.kernel.org];
-	HAS_ATTACHMENT(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2A4BF63D935
+X-Rspamd-Queue-Id: 3DB1D63D9AB
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------wiFRKWLl9yvmDjGQCVE2s47E
-Content-Type: multipart/mixed; boundary="------------wMYGC0PsvxX072tLl8xZovbN";
- protected-headers="v1"
-From: Harry Yoo <harry@kernel.org>
-To: "Vlastimil Babka (SUSE)" <vbabka@kernel.org>, rob.clark@oss.qualcomm.com
-Cc: Christoph Hellwig <hch@lst.de>, Andrew Morton
- <akpm@linux-foundation.org>, Mark Brown <broonie@kernel.org>,
- Hao Li <hao.li@linux.dev>, Christoph Lameter <cl@gentwo.org>,
- David Rientjes <rientjes@google.com>,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Jesper Dangaard Brouer <hawk@kernel.org>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, io-uring@vger.kernel.org,
- kasan-dev@googlegroups.com, bpf@vger.kernel.org, netdev@vger.kernel.org,
- Alexander Lobakin <aleksander.lobakin@intel.com>,
- Boris Brezillon <boris.brezillon@collabora.com>
-Message-ID: <f027078c-6a55-463b-8938-95ede02dca3b@kernel.org>
-Subject: Re: [PATCH] mm/slab: improve kmem_cache_alloc_bulk
-References: <20260528093437.2519248-1-hch@lst.de>
- <20260528093437.2519248-2-hch@lst.de>
- <5f7f90d8-cb32-4ffb-8f1c-0722aafbe869@kernel.org>
- <20260529135045.GA10647@lst.de>
- <5f3ba603-a6ad-4cf2-9a54-aebc10273c59@kernel.org>
- <58cc76e7-2348-443d-a989-2a06e61178af@kernel.org>
- <20260601113831.GA25535@lst.de>
- <d7b08296-7f6e-4d89-ab3b-04e43d04929e@kernel.org>
- <CACSVV00k-fxW6+waHNqvmYcnVNDkRexoWWprFzfayZfqdyMuuA@mail.gmail.com>
- <CACSVV00dNWgpNVU5rB=Hmg+3oWF18yTyfKNr_tWesjoP1jMxwg@mail.gmail.com>
- <5e6948b3-d235-4b61-aed7-e8b4d0f5b452@kernel.org>
- <CACSVV02v0Fuc6=Rqyd89D-_tcSjEXuQmxz0+2-4aoRAEwJE4zg@mail.gmail.com>
- <b6f6323e-6f5b-4928-b474-bd2743eac3f2@kernel.org>
-In-Reply-To: <b6f6323e-6f5b-4928-b474-bd2743eac3f2@kernel.org>
+On 15/05/2026 11:24, Varadarajan Narayanan wrote:
+> Document compatible string for the QFPROM on ipq5210 & ipq9650 platforms.
+> 
+> Signed-off-by: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+> ---
+>  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 
---------------wMYGC0PsvxX072tLl8xZovbN
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-
-
-On 6/4/26 1:22 AM, Vlastimil Babka (SUSE) wrote:
-> On 6/3/26 13:13, Rob Clark wrote:
->> On Wed, Jun 3, 2026 at 2:17=E2=80=AFAM Vlastimil Babka (SUSE) <vbabka@=
-kernel.org> wrote:
->>>
->>> We know p->pages is NULL in this case, right? Because it was allocate=
-d by
->>> vm_bind_job_create() using kzalloc().
->>> And the job can't be reused with a leftover value?
->>> (msm_iommu_pagetable_prealloc_cleanup doesn't set p->pages to zero).
->>> Or should we set p->pages to NULL here.
->>
->> Correct, the job is not reused.  But I suppose setting p->pages to
->> NULL would make things more obvious, so no objection to that.
->=20
-> OK, did that, just in case. Thanks.
-
-The kvfree() -> kfree() part should probably be a separate patch
-with Fixes: 830d68f2cb8a ("drm/msm: Fix pgtable prealloc error
-path") and Cc: stable?
-
-=2E..as the commit landed v6.18.
-
->> BR,
->> -R
->>
->>>> +
->>>>         p->pages =3D kvmalloc_objs(*p->pages, p->count);
->>>>         if (!p->pages)
->>>>                 return -ENOMEM;
->>>>
->>>>         ret =3D kmem_cache_alloc_bulk(pt_cache, GFP_KERNEL, p->count=
-, p->pages);
->>>>         if (ret !=3D p->count) {
->>>> -               kfree(p->pages);
->>>> +               kvfree(p->pages);
->>>>                 p->pages =3D NULL;
->>>>                 p->count =3D ret;
->>>>                 return -ENOMEM;
-
---=20
-Cheers,
-Harry / Hyeonggon
-
---------------wMYGC0PsvxX072tLl8xZovbN--
-
---------------wiFRKWLl9yvmDjGQCVE2s47E
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQQQ1ub6gR5ogjaKRmOGXBN6rc5S1gUCaiEk0AAKCRCGXBN6rc5S
-1v0/AQCTdSzVR1AlZpSbYogIVVB+443eCQzT7065V9OSIICLswD/e6Yg56WZBHlu
-kh1s01feILBrZKf2TcrQ69haUSsKKgk=
-=BoaG
------END PGP SIGNATURE-----
-
---------------wiFRKWLl9yvmDjGQCVE2s47E--
+Best regards,
+Krzysztof
 
