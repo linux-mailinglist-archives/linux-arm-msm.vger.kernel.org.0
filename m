@@ -1,589 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-111270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 4fpZFRbeIWq7PwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 22:20:38 +0200
+	id b8oHHfPnIWraQQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 23:02:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D05164338A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 22:20:37 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69D13643833
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 23:02:42 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=OmFBiS6b;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111270-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111270-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=Jif3TTHi;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=V8F3FheN;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111271-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111271-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 1A0FD3026E66
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 20:19:51 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 45F2F3018D73
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 21:02:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CBF9495500;
-	Thu,  4 Jun 2026 20:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A66F3914E1;
+	Thu,  4 Jun 2026 21:02:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C878C3E3C50
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2026 20:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A80734D3B0
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2026 21:02:18 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780604380; cv=none; b=EvgFaNuMFg1e1wtDD5vBPe7Ab7kXX/Yym29F/aYqJRurq6WRWLukBakpOqE7zTXtqrLVquX/qwOQed87X+7jBeS/NTCNUSZPh1fEfzn+V66wW4zr30Csz8bmx/s1L0/BePCq6g0N+5xJv8KoXoMW/xxsV0vNdfwWQbZSgfpqTuo=
+	t=1780606939; cv=none; b=PUgsITbW78kc4B/VB0w2ZTB3enllMv1sQwugT/0bEzo0sTrpW2H1nckQFFlB52y+aMq940sQ8cLb9HU5FXHiT18+6gdcy3LXaMZ7yGK/dMzcz25meFdXJCknazGESslW8i/2Wd37DQXezKxfwnVT8biNfXu4dPE5mePxzoH2Rlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780604380; c=relaxed/simple;
-	bh=yn4OyISQigLSlB1f8LtqOM6+0O9jr1/T/89JKrDVjg8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VKBNnx0ht12vp+HCQ2gbcJC0XkMbf3kbOotb3+OL0r0EFjM/2IZmjlXH28dkz9sI+12iTUiijucNeeWsWjTQYV4k2ryogc8i7QzqYeNDl3NEVhTOr/SbSLBWk86IgRHoU3lflVaje1PxZajNZhkGnL7ts+KcesfGm/9EKLPn/8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OmFBiS6b; arc=none smtp.client-ip=209.85.221.51
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-4602e2a0372so552786f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2026 13:19:37 -0700 (PDT)
+	s=arc-20240116; t=1780606939; c=relaxed/simple;
+	bh=1Mnqpms2o44uk1778jDhw/oChgvu+1zcxrO/eA7pYOM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I37njbFXHLG5TO1lfaH6VO/i4o9IY3csTRJeRjs0kmrMiDrfQfR4yLHDYrSUat66g4kTHkRWsLJWXzb6737Xo8D+/IU8ylcCVLcZ0oq+iepHuYYivp9HLjPsXv8rCQyP2zlwBY5LoxdNpJ1a4SzAZBOMPSAYFTGy4sKjvAEsWlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Jif3TTHi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=V8F3FheN; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 654Ek7sQ1132390
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Jun 2026 21:02:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+J7VoHerHsoGih65b4TQk9xRPzpJ4VqqpsrxtPUKxA0=; b=Jif3TTHiDkOjim6C
+	07P+SqvzsVQVBbWcP95eX+1XNv6SqrO9qO6eygasz/h3pI3Oh7mxD80Rb3ezLBOs
+	2XDNoWPcAe+eVZpjOachA2VNnImA6jMFXDW9gsBNOmnsmH37ezZBttGePAxsu3IH
+	f5EId//qQgc6gaG4LhwIMhkIXVHTVIemPwNOCkjw5Mr7rOovtlMIAVteDZFdIt5Q
+	sXPdDgLsljvjgSE8+C73bjWKB9CB+5AvtVwEKlo/UnkV6x/SxL4MUwdP689oAof4
+	hQ7DMpn/oEAFLGtvkqM5FJ1XmN0TwqnZql4e0dDozal16uCQs+cPAhyP9o/QxyuJ
+	HNhLCw==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ek5wsk84c-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2026 21:02:17 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-304ec73b015so2463913eec.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2026 14:02:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780604376; x=1781209176; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NYvgHJr8WspsWOjK8anBYnOnSGmH9hPPsOv+MY5Wbjw=;
-        b=OmFBiS6bI7pc9TvbpI3RrZ7agzPQz6p4gicwt6NavyAn8sxWrlJBKwxT57wxV6J2u0
-         FqLtZwYCr5IvehXmbTbcnSdkMgy8Zp+ZR4aI+LuS973sXHSkvjtTlJlvpiVTNQKbM8Bs
-         jUflAUXJD4uMc+gYaHSXyChN1FhWZpqQoN/7f7OEj+t71eLWe9tZ0ArHduGaEwnsx7kD
-         +VKrR+eBt8sfTZeCZR2kHRmGBdAQp7KsML5CQtdHlxBJBZolbZ4TPk5Vm+j5KWGVPji2
-         LKPmvUouBnjPDQzfZ3SsiOp9gmf2GekHAoTAOUDH7A9C461zx2pI7AVw6qhphcrv8VwG
-         33Ag==
+        d=oss.qualcomm.com; s=google; t=1780606936; x=1781211736; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+J7VoHerHsoGih65b4TQk9xRPzpJ4VqqpsrxtPUKxA0=;
+        b=V8F3FheN9yh8Vmw9YDXFLVofwd+R8vgVRIaHxXs36PWcH7WZsDwVWpnJeIADdjUtMe
+         aVzDAQs1AaMRf29JhpCMbA74J5nGIWJkTVwB/eesakDSzw5FJT2Kd8/rOX3fqQK5SIw6
+         jJI6JhaaOC6n+NjFpGuDZgY6Q1Y1UwW7ETLLu5F/+HZQlpxzlyRtIJTHCDazrk1iDink
+         Pw2nU2+V5RXwzZ0QgF6NHGz3WFp9fuuXRTN/jPG/VAonp5kI3BJLrTbAekcmkdJZLYqS
+         ORU5HpoG297doWOAXJ/I1msSQ7R+OnLr9p/UPt6ryJaUqenwYG+aWvF9VCMSjSvET8w7
+         8kbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780604376; x=1781209176;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=NYvgHJr8WspsWOjK8anBYnOnSGmH9hPPsOv+MY5Wbjw=;
-        b=USYioA6tly37ppH2Y2oJVbNarEYx4u4PXoMiOgxtI8VziRAqUYKfLd3iH/v5cgZvaw
-         +91RYV1XUTeoh5U/srd1LPYjdiMbuIfHgse/XAhe+7XWW5FZWQ7e1JgLEBCQs5lxmXJ7
-         dfJ54/PwXM86Vx8il0E54W5jRdIaC/Ch4V+9itbK/uyp6HkCTAOCjIldrYB5mPIQk39+
-         Uk81r6qA5dVvYO01f9S7Ud+kjsjEC/JZhA/TPKh0wLQpC4vERL34aGVu4ej7zF/NIxvt
-         Skovpu50qh849nB5XKoyGI5Cr/bbAjjjdhoU9uy+c9lnNAwFTk0uTloDJW/SYXiTUlJ4
-         0ieQ==
-X-Gm-Message-State: AOJu0Yx4/gLENIqEhRMxLL/1CIvSe68HBJyzIhd+FNlGDI0n/+i1k5Yn
-	pXwdBIxLtK36VnCzSapSSTU2kjvS5x44Em+0E592/T0zS2iLBO1EOxn3
-X-Gm-Gg: Acq92OGJixSk3JdgnsitWMzcj6kCR1t7TcTDz7rPJ0w8JEgah/K/JffXOV15VBTlmbt
-	Lf7r93osV7Tp7jFOlJu1WB8FvWyClmEm+AinpJykO+AMGnBrw0ZX6MS7FQq/ywa2oUNNnE6FN1Z
-	BdpqjmzYdcTxdu9qU1pOV7vwmWjehKwQOIsGhI/Fv5LMuA2Vav9dyqfXBJfmFYEjTUoe/KCourS
-	Tl5SsfJiGYmf9YxEVNtyoGCGNl33Hz09Xk+B1+lGlYOC5unQwrrELlj8sJY9B2a+daGdfWo8cdx
-	gFevaVpIdYitXPfRTBijRdE9PAvIJnUEbjMp2KuZAbpeSJdMA5IeSf8zmXa+l0f0t4IJ6RLI9+p
-	7L7y8pjv7UNtXgn2jbmRhGRLdo/UGzMI59FWTnNlV46kpjlxLYkkoJBSpgoaONFUCMnQKoiK1N3
-	Dx/4PVWNHcXZQjuQ9UbSyOCkfmG9QDB5EMrjZqLA==
-X-Received: by 2002:adf:f911:0:b0:460:24c1:db8 with SMTP id ffacd0b85a97d-46030777545mr716558f8f.38.1780604376285;
-        Thu, 04 Jun 2026 13:19:36 -0700 (PDT)
-Received: from [192.168.8.79] ([2a00:f502:160:43ff:9a39:ef13:72e0:8f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f344558sm18999748f8f.18.2026.06.04.13.19.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 13:19:35 -0700 (PDT)
-From: Erikas Bitovtas <xerikasxx@gmail.com>
-Date: Thu, 04 Jun 2026 23:19:28 +0300
-Subject: [PATCH v3 2/2] ARM: dts: qcom: msm8926-sony-xperia-yukon-eagle:
- add initial device tree
+        d=1e100.net; s=20251104; t=1780606936; x=1781211736;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+J7VoHerHsoGih65b4TQk9xRPzpJ4VqqpsrxtPUKxA0=;
+        b=ZMjRnxoeOTGTC7+1Ph8jQ5oWhBRj1+i/mg5ACmiirYj34qbwIOXxPGLeNQpOwIbxuo
+         zpBer7J7TikEQHGnhXrVMdEXw9XY9sumvNddEPXH3FAU9qIIdOYqdJujtF/avBkpJrAP
+         7N5I6mKWohDJi/s9Lci+pkho14IL9V/OT1hE+eyKsQpnH7bdiyhQevdW5l6oiBamYfuH
+         bbvfQisNcVU0fBH8fBzIereCAtC3eV8duXf5ACW8ytlEZQ0E8pJY1gZyEo0JzNbar3ic
+         dbPXvO9lVtw2YnG+TdAjbs8i3UkceGWNjC+ovfexq8voVXM93PD1WoOtXWbp14hv+0t7
+         H1yQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9FpkquZMX40Q22HJ/pcD1b4wPDs4S99mQSM3Z7fB2lM1Nb9RctKZg6bl9HqqEN/IK69aqm4GmRw2SOY4Dm@vger.kernel.org
+X-Gm-Message-State: AOJu0YzBpLwz7bwFbh3urTwsQcnQYk6hjGkYw0wRyXOYW6sN0cBKW51p
+	JeIdJlOc7fGyeHrpTBk3fcwoNS5ok0iGN+70CHlkTCprIBbzNYKY5ipJdOEX5pGjZsN7AOQg/ve
+	EVpNTe6jfXs+mIRP6gDjrWm7IV6ZvO4RUH0N4xYCp6MRTOOh7VMNeuYYL3mLFd8LuwNqv
+X-Gm-Gg: Acq92OHSx709cwwggkJfosSr4DzHRMSHrWfTJmh6uKP1LegodrWUsGcEBSDh3MeKDE0
+	MDVwLjxyAiA8jepRLRvL701foY5jaH8//LKWkOUszFBnItOcC1GUyuTkmepxzFqHFdM1r7czeWk
+	cZpOGnIPyGFOhzuyfFUmD/kR5jF8xOrb9klqeZVOOyJhy3bGVXwwi/BSL5myBKwY2swcciK63dM
+	t5wuu5mypX73AfRoXvAIRnfQC3pk+tnqdYVptdM5HaMVBSbBksJ1FUMz+VjwzXoKYvY4ZXCAW0K
+	dOkR1OhCEwWj4uteH7+gbU4p3zDOOGHmKaZYjhvASWQ3jkmbPh+GsoHkoTaMgVAT3ZTkKZvOSz9
+	2z+9f8tYUCWJaqUxIHIQo+JdJqrfN00ixSSMzJJhcAoWxnRcvwQpcJ9sHo4xRjSKtSU3FtEkcNE
+	X/YsjzlxyOeZwgDWdY6k+KlXkQ
+X-Received: by 2002:a05:7301:9bc5:b0:2e7:c701:aa85 with SMTP id 5a478bee46e88-3077b47c994mr232155eec.17.1780606935981;
+        Thu, 04 Jun 2026 14:02:15 -0700 (PDT)
+X-Received: by 2002:a05:7301:9bc5:b0:2e7:c701:aa85 with SMTP id 5a478bee46e88-3077b47c994mr232121eec.17.1780606935447;
+        Thu, 04 Jun 2026 14:02:15 -0700 (PDT)
+Received: from [192.168.1.59] (c-24-130-122-79.hsd1.ca.comcast.net. [24.130.122.79])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074df349d8sm5820083eec.22.2026.06.04.14.02.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Jun 2026 14:02:14 -0700 (PDT)
+Message-ID: <9d3728cf-bf4b-4ba0-8c71-831d908072a9@oss.qualcomm.com>
+Date: Thu, 4 Jun 2026 14:02:13 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 1/1] remoteproc: qcom: Add NOTIFY_FATAL event type to
+ SSR subdevice
+To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>, andersson@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc: quic_varada@quicinc.com, quic_srichara@quicinc.com,
+        quic_viswanat@quicinc.com, quic_mojha@quicinc.com
+References: <20240820060943.277260-1-quic_gokulsri@quicinc.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20240820060943.277260-1-quic_gokulsri@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260604-yukon-eagle-v3-2-9e3b57d306a8@gmail.com>
-References: <20260604-yukon-eagle-v3-0-9e3b57d306a8@gmail.com>
-In-Reply-To: <20260604-yukon-eagle-v3-0-9e3b57d306a8@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, Erikas Bitovtas <xerikasxx@gmail.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.15.2
+X-Proofpoint-GUID: 75Av8FIZEO6qK6TBMeZR0nSOoDuQFS2-
+X-Proofpoint-ORIG-GUID: 75Av8FIZEO6qK6TBMeZR0nSOoDuQFS2-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDIwNiBTYWx0ZWRfX/vQbK9Q1fZYK
+ ojOc7O3KJlEDkoyTxFcve/ldYE6IOedBVoh6EHZ/WvG1Xa2xseheOTSXtDdKth+gMRLngb9K+fo
+ TrcgvH/AISJsYUBDzQeTm3fOAFdaRmYctrmLFY+Bz9zGyxmaAvgKfQrp1rTSsB0a34Jhyecb6Q+
+ om9ZDnNz5PVMP4VYFJcxpKbKu/JiiCo6vKZdp0yBLENJ7/UL0AldOZxhygC/DpKTna0VPLW7u3q
+ ODoCBnmUEjffWySQiN3K1rI4j0JmcZ69Qqsv1FZed0HlFohopFcdvUAuPeRbydvzihv1gYdDbAM
+ 6jsgYEEfXjoMhMvWIZnW5tAveFhhdMeqjT2I92aKhyRCuZ2cJinsXNOSxCv8G/4PGIHoJiijlWS
+ ybIXBAeclIIxtMJrJtoHonPI9Lt3sGtdm0fMB01M8s1OgvrpS6/5ZZMoSiqb5MtR1pLTIRMVo+1
+ 80kDI/ocuzfyuGM4fFg==
+X-Authority-Analysis: v=2.4 cv=POc/P/qC c=1 sm=1 tr=0 ts=6a21e7d9 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=Tg7Z00WN3eLgNEO9NLUKUQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=COk6AnOGAAAA:8 a=Be1Yk5Ofpn9B-WBGvlcA:9 a=QEXdDO2ut3YA:10
+ a=bBxd6f-gb0O0v-kibOvt:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-04_06,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 malwarescore=0 clxscore=1015 bulkscore=0
+ impostorscore=0 priorityscore=1501 spamscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606040206
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111270-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:~postmarketos/upstreaming@lists.sr.ht,m:phone-devel@vger.kernel.org,m:xerikasxx@gmail.com,m:dmitry.baryshkov@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[xerikasxx@gmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,gmail.com,oss.qualcomm.com];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FORWARDED(0.00)[lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111271-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[jeff.johnson@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:quic_gokulsri@quicinc.com,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:quic_varada@quicinc.com,m:quic_srichara@quicinc.com,m:quic_viswanat@quicinc.com,m:quic_mojha@quicinc.com,s:lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[xerikasxx@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:dkim];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jeff.johnson@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ALIAS_RESOLVED(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,vger.kernel.org:from_smtp]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 5D05164338A
+X-Rspamd-Queue-Id: 69D13643833
 
-Add device tree for Sony Xperia M2 (sony-eagle) smartphone
-based on the Qualcomm MSM8926 SoC.
+On 8/19/2024 11:09 PM, Gokul Sriram Palanisamy wrote:
+> From: Vignesh Viswanathan <quic_viswanat@quicinc.com>
+> 
+> Currently the SSR subdevice notifies the client driver on crash of the
+> rproc from the recovery workqueue using the BEFORE_SHUTDOWN event.
+> However, the client driver might be interested to know that the device
+> has crashed immediately to pause any further transactions with the
+> rproc. This calls for an event to be sent to the driver in the IRQ
+> context as soon as the rproc crashes.
+> 
+> Add NOTIFY_FATAL event to SSR subdevice to atomically notify rproc has
 
-Initial features:
-- Framebuffer
-- GPIO buttons (Volume Down and Camera)
-- Regulators
-- Internal storage
-- SD card
-- Accelerometer
-- Magnetometer
-- Ambient Light/Proximity sensor
-- NFC
-- pm8226_resin (Volume Up)
-- Vibrator
-- USB/Charger
+Almost 2 years later and I'm finally seeing the ath12k patch in internal
+review that uses this.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
----
- arch/arm/boot/dts/qcom/Makefile                    |   1 +
- .../dts/qcom/msm8926-sony-xperia-yukon-eagle.dts   | 403 +++++++++++++++++++++
- 2 files changed, 404 insertions(+)
+I was confused when the ath12k code didn't actually have any references to
+"NOTIFY_FATAL" and then I got a build error due to a missing
+QCOM_SSR_NOTIFY_CRASH.
 
-diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
-index 32a44b02d2fa..6b471a346d82 100644
---- a/arch/arm/boot/dts/qcom/Makefile
-+++ b/arch/arm/boot/dts/qcom/Makefile
-@@ -1,6 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
- dtb-$(CONFIG_ARCH_QCOM) += \
- 	msm8226-motorola-falcon.dtb \
-+	msm8926-sony-xperia-yukon-eagle.dtb \
- 	qcom-apq8016-sbc.dtb \
- 	qcom-apq8026-asus-sparrow.dtb \
- 	qcom-apq8026-huawei-sturgeon.dtb \
-diff --git a/arch/arm/boot/dts/qcom/msm8926-sony-xperia-yukon-eagle.dts b/arch/arm/boot/dts/qcom/msm8926-sony-xperia-yukon-eagle.dts
-new file mode 100644
-index 000000000000..2c1e5755a50a
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom/msm8926-sony-xperia-yukon-eagle.dts
-@@ -0,0 +1,403 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2026 Erikas Bitovtas <xerikasxx@gmail.com>
-+ */
-+
-+/dts-v1/;
-+
-+#include "msm8926.dtsi"
-+#include "pm8226.dtsi"
-+
-+/delete-node/ &adsp_region;
-+/delete-node/ &mba_region;
-+/delete-node/ &mpss_region;
-+/delete-node/ &smem_region;
-+
-+/ {
-+	model = "Sony Xperia M2";
-+	compatible = "sony,eagle", "qcom,msm8926", "qcom,msm8226";
-+	chassis-type = "handset";
-+
-+	aliases {
-+		mmc0 = &sdhc_1;
-+		mmc1 = &sdhc_2;
-+		display0 = &framebuffer0;
-+	};
-+
-+	chosen {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		stdout-path = "display0";
-+
-+		framebuffer0: framebuffer@3201000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x03201000 0x800000>;
-+			width = <540>;
-+			height = <960>;
-+			stride = <(540 * 3)>;
-+			format = "r8g8b8";
-+
-+			clocks = <&mmcc MDSS_AHB_CLK>,
-+				 <&mmcc MDSS_AXI_CLK>,
-+				 <&mmcc MDSS_BYTE0_CLK>,
-+				 <&mmcc MDSS_MDP_CLK>,
-+				 <&mmcc MDSS_PCLK0_CLK>,
-+				 <&mmcc MDSS_VSYNC_CLK>;
-+			power-domains = <&mmcc MDSS_GDSC>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		button-camera-focus {
-+			label = "Camera Focus";
-+			gpios = <&tlmm 108 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_CAMERA_FOCUS>;
-+			debounce-interval = <15>;
-+		};
-+
-+		button-camera-snapshot {
-+			label = "Camera Snapshot";
-+			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_CAMERA>;
-+			debounce-interval = <15>;
-+		};
-+
-+		button-volume-down {
-+			label = "Volume Down";
-+			gpios = <&tlmm 106 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	reserved-memory {
-+		framebuffer@3201000 {
-+			reg = <0x03201000 0x800000>;
-+			no-map;
-+		};
-+
-+		mpss_region: mpss@8000000 {
-+			reg = <0x08000000 0x4d00000>;
-+			no-map;
-+		};
-+
-+		reserved@cd00000 {
-+			reg = <0x0cd00000 0x200000>;
-+			no-map;
-+		};
-+
-+		mba_region: mba@d100000 {
-+			reg = <0x0d100000 0x3a000>;
-+			no-map;
-+		};
-+
-+		reserved@d13a000 {
-+			reg = <0x0d13a000 0xc6000>;
-+			no-map;
-+		};
-+
-+		wcnss_region: wcnss@d200000 {
-+			reg = <0x0d200000 0x5ae000>;
-+			no-map;
-+		};
-+
-+		reserved@d850000 {
-+			reg = <0x0d850000 0x3b0000>;
-+			no-map;
-+		};
-+
-+		adsp_region: adsp@dc00000 {
-+			reg = <0x0dc00000 0x1400000>;
-+			no-map;
-+		};
-+
-+		reserved@f000000 {
-+			reg = <0x0f000000 0x500000>;
-+			no-map;
-+		};
-+
-+		venus_region: venus@f500000 {
-+			reg = <0x0f500000 0x500000>;
-+			no-map;
-+		};
-+
-+		smem_region: smem@fa00000 {
-+			reg = <0x0fa00000 0x100000>;
-+			no-map;
-+		};
-+
-+		reserved@fb00000 {
-+			reg = <0x0fb00000 0x280000>;
-+			no-map;
-+		};
-+
-+		rmtfs@fd80000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0x0fd80000 0x180000>;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+		};
-+	};
-+};
-+
-+&blsp1_i2c2 {
-+	status = "okay";
-+
-+	accelerometer@f {
-+		compatible = "kionix,kxtj21009";
-+		reg = <0x0f>;
-+
-+		interrupts-extended = <&tlmm 49 IRQ_TYPE_EDGE_RISING>;
-+
-+		vdd-supply = <&pm8226_l19>;
-+		vddio-supply = <&pm8226_lvs1>;
-+
-+		mount-matrix = "0", "1", "0",
-+			      "-1", "0", "0",
-+			      "0", "0", "1";
-+	};
-+
-+	magnetometer@2e {
-+		compatible = "yamaha,yas532";
-+		reg = <0x2e>;
-+
-+		vdd-supply = <&pm8226_l19>;
-+		iovdd-supply = <&pm8226_lvs1>;
-+	};
-+
-+	light-sensor@48 {
-+		compatible = "sensortek,stk3310";
-+		reg = <0x48>;
-+
-+		interrupts-extended = <&tlmm 65 IRQ_TYPE_EDGE_FALLING>;
-+
-+		proximity-near-level = <1700>;
-+	};
-+};
-+
-+&blsp1_i2c3 {
-+	status = "okay";
-+
-+	nfc@28 {
-+		compatible = "nxp,pn547", "nxp,nxp-nci-i2c";
-+		reg = <0x28>;
-+
-+		interrupts-extended = <&tlmm 21 IRQ_TYPE_EDGE_RISING>;
-+
-+		enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
-+		firmware-gpios = <&tlmm 22 GPIO_ACTIVE_HIGH>;
-+	};
-+};
-+
-+&pm8226_resin {
-+	linux,code = <KEY_VOLUMEUP>;
-+
-+	status = "okay";
-+};
-+
-+&pm8226_vib {
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators {
-+		compatible = "qcom,rpm-pm8226-regulators";
-+
-+		pm8226_s3: s3 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1300000>;
-+		};
-+
-+		pm8226_s4: s4 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2200000>;
-+		};
-+
-+		pm8226_s5: s5 {
-+			regulator-min-microvolt = <1150000>;
-+			regulator-max-microvolt = <1150000>;
-+		};
-+
-+		pm8226_l1: l1 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8226_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l3: l3 {
-+			regulator-min-microvolt = <750000>;
-+			regulator-max-microvolt = <1287500>;
-+		};
-+
-+		pm8226_l4: l4 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l5: l5 {
-+			regulator-min-microvolt = <1050000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		pm8226_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l7: l7 {
-+			regulator-min-microvolt = <1850000>;
-+			regulator-max-microvolt = <1850000>;
-+		};
-+
-+		pm8226_l8: l8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l9: l9 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+
-+		pm8226_l10: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		pm8226_l14: l14 {
-+			regulator-min-microvolt = <2750000>;
-+			regulator-max-microvolt = <2750000>;
-+		};
-+
-+		pm8226_l15: l15 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+		};
-+
-+		pm8226_l16: l16 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3350000>;
-+		};
-+
-+		pm8226_l17: l17 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l18: l18 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+
-+			regulator-system-load = <200000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8226_l19: l19 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+		};
-+
-+		pm8226_l20: l20 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+		};
-+
-+		pm8226_l21: l21 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm8226_l22: l22 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l23: l23 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_l24: l24 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+
-+		pm8226_l25: l25 {
-+			regulator-min-microvolt = <1775000>;
-+			regulator-max-microvolt = <2125000>;
-+		};
-+
-+		pm8226_l26: l26 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+
-+		pm8226_l27: l27 {
-+			regulator-min-microvolt = <2100000>;
-+			regulator-max-microvolt = <2100000>;
-+		};
-+
-+		pm8226_l28: l28 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+
-+		pm8226_lvs1: lvs1 {};
-+	};
-+};
-+
-+&smbb {
-+	qcom,fast-charge-current-limit = <1500000>;
-+	qcom,fast-charge-safe-voltage = <4250000>;
-+	qcom,minimum-input-voltage = <4200000>;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_1 {
-+	vmmc-supply = <&pm8226_l17>;
-+	vqmmc-supply = <&pm8226_l6>;
-+
-+	bus-width = <8>;
-+	non-removable;
-+
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	vmmc-supply = <&pm8226_l18>;
-+	vqmmc-supply = <&pm8226_l21>;
-+
-+	bus-width = <4>;
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-+
-+	status = "okay";
-+};
-+
-+&usb {
-+	extcon = <&smbb>;
-+	dr_mode = "peripheral";
-+
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&smbb>;
-+	v1p8-supply = <&pm8226_l10>;
-+	v3p3-supply = <&pm8226_l20>;
-+};
+So all instance of NOTIFY_FATAL in the subject and commit text should be
+changed to NOTIFY_CRASH.
 
--- 
-2.54.0
+And as was noted by Dmitry, this patch should be packaged with the ath12k
+patch when it leaves internal review.
 
 
