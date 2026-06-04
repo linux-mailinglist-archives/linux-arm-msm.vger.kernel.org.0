@@ -1,252 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-111227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id v1JFAwWlIWotKgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 18:17:09 +0200
+	id yzBPCgCkIWrmKQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 18:12:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBF43641C32
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 18:17:07 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B10E9641B99
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 18:12:47 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=XVNcAUVA;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111227-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111227-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=linaro.org;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=pass header.d=gmail.com header.s=20251104 header.b="F/Ic9GRL";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111228-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111228-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=gmail.com;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 261D630AD75D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 16:02:01 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D869A30022C4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 16:04:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD0403EDACB;
-	Thu,  4 Jun 2026 16:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E0C6392C4B;
+	Thu,  4 Jun 2026 16:04:54 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EC23D5C12
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2026 16:01:28 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780588890; cv=none; b=qk5yn1C3BAAGcit9OEbP6bBWEkWNmntknMa0A+k3Yb9Y2emN1ntv23ssSAqAwcXok6USiGRdvYiWeK2XltaROPnOw9/xCsSWTjv/qvCJLWaC6UDyBiwkhWt1qZZyX5bGNMaN2QEkLOfX1c3791N3SVpAubYXNvveOpkajDgO96g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780588890; c=relaxed/simple;
-	bh=xC3/CEFaf3hg4/vKMnMcKeo7O3cqv8d7FnQwu9/kLm4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AY3jyuXi+cGfa+kriKz5VyDGHnc8FkJB2WqFDfiwreW1bxody1p5LtsOhjYGJO1DmRFwBnOLF4/awzF6NHMvqUAp3pUsGxgdSuXiJnKbkzPbPbK2ijPoHs6PPRUG4yFVPpLhipDrMrBx911wNv49aoy1wRaV6a6iEtuDaCT3aIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XVNcAUVA; arc=none smtp.client-ip=209.85.208.171
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-3966e5e7cebso1165481fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2026 09:01:28 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC453358B9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2026 16:04:52 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1780589094; cv=pass; b=Y0lMpK+CHF9e0369SncrS6lHx9QaUtdXp0pVXw1PikEbu2Pqebjs/dFzTcMqgTsfYFm/pqHYRAhddbtWRzxNlt6WtNijgo8HowiP+iFQlAWnk+4ZVq0LdlzXg/YTFDlYZ6+xGNtI14Wm7R52Kqgd8rsYNhJ37mgEHqHien1jXlk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1780589094; c=relaxed/simple;
+	bh=Ruf7zIoOv3SUomYRTm6IZBJjqUF3kMs9qPFBCiopdGE=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=P/xBBMAKZigGyBOrzlcSMeK8aO7YKYL79fY/T+nq+3KEwk8BHhAF+g8CUn+ruTxzS7miv2mlAEhyJUUaxI6Ze7CA6EYCAvIGRFPe1R6H3ImLdW3F3MuYZgxWO/yVDUir2CmRZZIJaE1lKteORfLmJB/RHC0Vhfc3lT2FzY5bnDU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F/Ic9GRL; arc=pass smtp.client-ip=209.85.222.54
+Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-96395a59ff6so339509241.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2026 09:04:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1780589092; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Ls4R8n8CSARognCohU+7xG6NK4/OMIeXtuoH760rmJAvtxU+nLh1DuvtstYgGKg4VT
+         aM7pgsaIyVDW07ipX6fvZJqjZ80KEa81rbrtz9Fg3MyIXLv8PMnWLq8mIVN0KESo/t1F
+         vd3wZoIS3yuy/Rz8CmT5QWNz9D6mPvQHxiR10AeMzY8qfC8BKzBBk0dndX5mP7bWrX6p
+         S8zyuJsnf97wBj1oBQP0qQYZZvTaFCc28O0rEjVvAAAE0PJyHJIccudx256NGsBdvLJQ
+         mJGrzC3pqavX7JPrYBtlGE5DpyigAE1uVKSaSEzXbOB0p126xWhKXQ0xjF7AYi0TKfSN
+         IP/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=Ruf7zIoOv3SUomYRTm6IZBJjqUF3kMs9qPFBCiopdGE=;
+        fh=2cSXzbAG8KSgQGzO73gFfKsJodXbMcIAfG4RAMmrbdA=;
+        b=GuYxQNrH3ya3nfOl28sGOfFlsJBTk0HMOghhfMxeoEZmoyaRqmrfZ3OkCRBICfhFah
+         yQr68mKUiNJi8vpzEskqyZnyJLLgImq7aiIkqeMXUtFISYGunoZwPpDcIlhabIhsuiyp
+         jab14mAcVg9/iqnUlgzDv24JLIr2x6FGMXiGy7UcwNHtrWuqjBiXV5SVORAbDUOVufnu
+         QT/4ZC2pW0xZGaAzOMkj+l6JXsXmuFYuMyzTw6OrBRUJwUzj3D9A4anQh+42qlH/5Lhu
+         Vz3WhEfZ2ynCWjo0+FWhvWaCWr3LCrRUvXTv48UeUgz+QP+im4tpE9tEYXI/eYmVnhLP
+         zX0g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1780588887; x=1781193687; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uGO+JoBq8PgFZVH5FUV2MufUBmEh2YHb4HRdQgvnePA=;
-        b=XVNcAUVAlolC7ehYvK9k5XvR3cJK3NhucrtM+TSdlZy0J4h+qA2gXs/j7rLv1O5YWG
-         VNDewuknM1LYGa+6O3sWoZ40axaVLpj/i4E/DoeYG9U5nEfUfiiSFc3XRBDNkvcMlB+2
-         XMl3m3sWamHufQxHirIlKPmcoUKiQ3mjA4m29wPvs6TyHIBrl59FU3zROaeNZwp36mZd
-         2rY8dM/GTlcVUorR26qt8LHEZCSXSBKLrPnrGO93nD/5H4JtaRbMutLGGe7hmmVptcmg
-         ATVtyDmJqf9bHTQhcOOzxtaGTjIocF9wj2fNTUBpiDzlEfidLOIjOhABtir9chhKfTyF
-         60ag==
+        d=gmail.com; s=20251104; t=1780589092; x=1781193892; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Ruf7zIoOv3SUomYRTm6IZBJjqUF3kMs9qPFBCiopdGE=;
+        b=F/Ic9GRLw2ZiDd2BfCsHySJk5k3UegqtdFo4nB0vXjEFjTYFUk8bh2AAjTVYmSdfNV
+         tHDXq3oix4wQtkVokOtmjsnb5uuDvZUGfr/Z7ERS3sRfKb0jYZk49LS9xT4m9UU0tL0H
+         M7KFgvg3YM5WVKthS78b8O5iSpu4PBsOfcLShNEvAjp07ruXgIhYsl6s6wGsWGry9A/g
+         P4dBaQ0iUuC1MMgodcYBFnmnaocFJPrritWvDWBWEiqSKERWLAt9iF3gOpz1k4c959FV
+         4WRC1xwWJfbxpR/HwBw6tDMVuZTK2WV3X2M/GV1bbOq7xlW4+kwj/i1CE+WcoMdEWlxA
+         CrNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780588887; x=1781193687;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uGO+JoBq8PgFZVH5FUV2MufUBmEh2YHb4HRdQgvnePA=;
-        b=H/Q2ZQSD4KP4GG+aXim5WDkS+7fuUFxAyx4k9HXjLr+4bwM4NSe2lOgIgx7mLWWQNr
-         WF0HM5m534+OrKDnAzYXz65SAQMP++rMrNTCZmbquSNMmKoQo5E0gdljNOCXWlUlRdow
-         NDaE8RCdUuFgt82U53p+z5s3qFF4NTVLFjbBPiYT+40fugYvoCTK6x6T7pKFULCKnwGi
-         LmIDqWIV2MhK2A4O2/ltMr82stV6mmylK4+g8GXPfsVzV14U/q7DHP23aXFF2OaL/Lvc
-         IIUhmoyljuq7Fpwhvu09kSWD2cgzeihy/8CxOtnlboUuCFPf3JzMKthTE0ANw35CsbZU
-         fw/A==
-X-Gm-Message-State: AOJu0Yxwkf/zx7pl+k3brWxJhm0koTvCVfL3KPC5QH3LeHw/AM4j+IVi
-	orgzj0oComPmUZOdm5MA+V5jE11Y7KS6I4tiPWbXxf7NJb7F7nrJoQ9e1V9pzW0rC5c=
-X-Gm-Gg: Acq92OFCvE90pYU0N/gHHYw5n49FFnw6Mhl3a8OM6x7RkCiHDRV+taF8htDarh6C+dH
-	0K11UET3+N6BhAgwq6YSGxgImdQg3Z92+Mfte0lbTQkmTKjOzyY9hjeceAnolWuYvX7M2wEoMjC
-	KJkHKr+huUO5BbIvtGj1fRM5BC3ljq7U1HTAk9VRdCEEEVohua2lnK8XgF55dAm7OtdVbdm5b++
-	hbkJtEB/Aqk1tqyqY5jm9W+yAu+KcAviHejQmLBejZzOwHdJiTWKdPdxmA2uVZG/fDxol/u3XOX
-	kd6lFvwC1Z2Pf5srcCcI6Pupcra+pXRanK8rPFxPYZk/2sVhvW/7giPKSLE0O01KLIL0NisvgqI
-	vGnhPRDAEscLR+YxM6kE/ILB5ENRUlq8OLh9yGjeU4E4cBYr/mEeJVG1graN4nLlDjrKA+tKaRi
-	HuLr6UXMJuzzZB/tqcOz/isa94afPiFpkyFAF6ibBEYy+ZIRAP1am90Dm55HYiNM6dqDmyMqvuA
-	aKgC9unbw7v//P6
-X-Received: by 2002:a05:6512:108d:b0:5a8:bd9c:a2e1 with SMTP id 2adb3069b0e04-5aa81c20ae9mr382484e87.2.1780588885434;
-        Thu, 04 Jun 2026 09:01:25 -0700 (PDT)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aa7b986c42sm1298972e87.58.2026.06.04.09.01.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Jun 2026 09:01:24 -0700 (PDT)
-Message-ID: <e0731edc-81da-429a-a12e-a1d1b75f9544@linaro.org>
-Date: Thu, 4 Jun 2026 19:01:22 +0300
+        d=1e100.net; s=20251104; t=1780589092; x=1781193892;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ruf7zIoOv3SUomYRTm6IZBJjqUF3kMs9qPFBCiopdGE=;
+        b=s53WDOGyPVl6kFrsk0i5zM+OxwV1laqJAZnC5Gp7rzHhI0C4yhXOswyY5X8nK4H2O6
+         nAwwRZJAglK821hG9t6liK15PBd9hKgCeD36AAu7d5R41EXZ5YWnvbNot/8gOG3+mch+
+         bm2qupDTo50Ed5j5t3PSDEliqZjfZMe/oo1Rk+ouP9XmMF8xR4AP+h8kvZqbbZd8yRWr
+         abAEyVp37KSg2bFkENJ4tJL5d+RnjC9NUGDnrDg9dx+A+6H8fPx8aLG9Fezld17RkEzJ
+         VCjRefNfxymuoR9AiGoawTni1Heg0Z9vEXV/exPvHbXULA4XLR1J6gNi+qCV7hxKmkUY
+         xhvw==
+X-Forwarded-Encrypted: i=1; AFNElJ8AJao8QPR7Q9FEOjWwrNzxbduTVv7HelYHaoXovA/fA2i9TwHPQiKrLWBBy+OTqt8Whu/g4soIc/uX5w0N@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy6VkzFpzCSoXKWIaCynD5PiO7uOmn3m5B15V9SqOuJ84StTUci
+	49LurWeij3sf/Ju2KjVUK9QSo908p/fVxnQccHNLHdP5jv82pC96YH/tcxZzl6UOeB7nlbJaaAx
+	YLtKFMCf7pn/fMoV9GQX6coA+w4Ig/3A=
+X-Gm-Gg: Acq92OFPM89zqMmjFEhiT40syVR8F5AOpaLhDBZ6TNaTeqhh87Uq/HdqUcdiS8l5WJ5
+	ocMWNAuRB4fIrbhF2WjfYqRbVvJfGvwt4mS6wTLuOSv31n8ZjH5GKDh2XZP3TX6yiG5c6tGUH0o
+	5BJh7aWIKmp4KH3g2nS3IaZ7uyxl2INup6YY3IdP3y6wSlBwSNW95+lgE4R5TcUnmDsa7BHkNcX
+	GcSF3Sl2c53zAmLBs0mBw9J4Pokj/RBlfMDRLqY7zB3IfhF9LlSUl3bb57CQV2a7Rww1l/jb7g6
+	jAtcZDdLRqYmQeyrng0=
+X-Received: by 2002:a05:6122:829f:b0:575:44b3:300d with SMTP id
+ 71dfb90a1353d-5a6e8b0d0f6mr4956435e0c.10.1780589091435; Thu, 04 Jun 2026
+ 09:04:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550: add SDHC4 controller node
-To: William Bright <william.bright@imd-tec.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Ram Boukobza <ram@imd-tec.com>,
- Tendai Makumire <tendai.makumire@imd-tec.com>
-References: <20260427-sm8550-sdhc4-support-v2-1-a4241f43ecd5@imd-tec.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20260427-sm8550-sdhc4-support-v2-1-a4241f43ecd5@imd-tec.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Yedaya Katsman <yedaya.ka@gmail.com>
+Date: Thu, 4 Jun 2026 19:04:39 +0300
+X-Gm-Features: AVVi8CeP15rSUsk1XI2OXrVWneBp1BIu7jE_glXWnX0Ij_ztSucqY3e24-FT7Rs
+Message-ID: <CAHuF_ZpTvYmARzx2_be1foM6XUVCdE0bNmb+YcHkH7tFhrYF8w@mail.gmail.com>
+Subject: Old patch version was applied accidently
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-111227-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:william.bright@imd-tec.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:ram@imd-tec.com,m:tendai.makumire@imd-tec.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-111228-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:~postmarketos/upstreaming@lists.sr.ht,m:phone-devel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER(0.00)[yedayaka@gmail.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[yedayaka@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,vger.kernel.org:from_smtp,linaro.org:mid,linaro.org:from_mime,linaro.org:dkim,imd-tec.com:email,msgid.link:url]
+	RCPT_COUNT_SEVEN(0.00)[10];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: DBF43641C32
+X-Rspamd-Queue-Id: B10E9641B99
 
-On 4/27/26 14:24, William Bright wrote:
-> Add the SDC4 SDHCI controller node for the SM8550 SoC.
-> 
-> SMMU stream ID 0x80 was sourced from the UEFI bootloader IORT tables,
-> as SDCC stream IDs are not documented in the register reference manual.
-> Unlike SDC2, the data path is routed via aggre1_noc, matching
-> MASTER_SDCC_4 in drivers/interconnect/qcom/sm8550.c.
-> 
-> The SDHCI capabilities register on this SoC advertises SDR104
-> and SDR50 but these UHS-I modes are broken on SDHC4.
+Hello, an old version of a patch I sent was applied, presumably since the patch
+series title changed between versions (learned for next time).
+Can the newest version be picked up?
+The patch that was picked up:
+https://lore.kernel.org/all/20260314-panel-patches-v4-3-1ecbb2c0c3c8@gmail.com/
+The up to date patch:
+https://lore.kernel.org/all/20260320-panel-patches-v7-3-3eaefc4b3878@gmail.com/
+The difference is only in the name of the compatible (O to zero), and
+the updated
+compatible in the driver is already applied in next.
+I don't want a release to come out with a wrong compatible.
 
-How do you know that these modes are broken in hardware and not
-caused by something else?
-
-It was stated before, but it was proven to be invalid as the statement.
-
-> Mask them via sdhci-caps-mask, this keeps the bus in HS mode,
-> which initialises reliably.
-> 
-> Tested on the IMDT QCS8550 SBC. This board is not currently
-> supported in-tree.
-> 
-> Co-developed-by: Tendai Makumire <tendai.makumire@imd-tec.com>
-> Signed-off-by: Tendai Makumire <tendai.makumire@imd-tec.com>
-> Signed-off-by: William Bright <william.bright@imd-tec.com>
-> ---
-> Changes in v2:
-> - Drop qcom,dll-config and qcom,ddr-config; these properties are not
->    valid for this SDC instance (Konrad Dybcio)
-> - Reduce the OPP table to a single 75 MHz / low_svs entry matching the
->    SDCC4 operating point on this SoC (Konrad Dybcio)
-> - Forbid SDR104/SDR50 via sdhci-caps-mask, matching the previously
->    existing sdhc_2 workaround in the same file.
->    The SDHCI capabilities register on this SoC advertises SDR50/SDR104
->    modes that are broken on sdhc_4; without masking them the MMC
->    core selects SDR50 and fails DLL tuning with
->    -ETIMEDOUT during SDIO card initialisation.
-
-Which one SDIO card do you test?
-
-> - Rework the commit message to reflect the above understanding and
->    drop the "root cause not yet determined" note
-> - Drop self Tested-by tag (Konrad Dybcio)
-> - Link to v1: https://patch.msgid.link/20260423-sm8550-sdhc4-support-v1-1-93fd81fea5d9@imd-tec.com
-> 
-> To: Bjorn Andersson <andersson@kernel.org>
-> To: Konrad Dybcio <konradybcio@kernel.org>
-> To: Rob Herring <robh@kernel.org>
-> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
-> To: Conor Dooley <conor+dt@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> ---
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 40 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 40 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index 912525e9bca6..07161a873b2d 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -3280,6 +3280,46 @@ opp-202000000 {
->   			};
->   		};
->   
-> +		sdhc_4: mmc@8844000 {
-> +			compatible = "qcom,sm8550-sdhci", "qcom,sdhci-msm-v5";
-> +			reg = <0 0x08844000 0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH 0>,
-> +				     <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH 0>;
-> +			interrupt-names = "hc_irq", "pwr_irq";
-> +
-> +			clocks = <&gcc GCC_SDCC4_AHB_CLK>,
-> +				 <&gcc GCC_SDCC4_APPS_CLK>,
-> +				 <&bi_tcxo_div2>;
-> +			clock-names = "iface", "core", "xo";
-> +			iommus = <&apps_smmu 0x80 0>;
-> +			power-domains = <&rpmhpd RPMHPD_CX>;
-> +			operating-points-v2 = <&sdhc4_opp_table>;
-> +
-> +			interconnects = <&aggre1_noc MASTER_SDCC_4 QCOM_ICC_TAG_ALWAYS
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &config_noc SLAVE_SDCC_4 QCOM_ICC_TAG_ACTIVE_ONLY>;
-> +			interconnect-names = "sdhc-ddr", "cpu-sdhc";
-> +			bus-width = <4>;
-> +			max-sd-hs-hz = <37500000>;
-> +			dma-coherent;
-> +
-> +			/* Forbid SDR104/SDR50 broken hw! */
-
-This is copied from somewhere else, while virtually it's unconfirmed,
-if this SD host controller is broken or not...
-
-> +			sdhci-caps-mask = <0x3 0>;
-> +
-> +			status = "disabled";
-> +
-> +			sdhc4_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-75000000 {
-> +					opp-hz = /bits/ 64 <75000000>;
-> +					required-opps = <&rpmhpd_opp_low_svs>;
-> +				};
-> +			};
-> +		};
-> +
->   		iris: video-codec@aa00000 {
->   			compatible = "qcom,sm8550-iris";
->   
-
--- 
-Best wishes,
-Vladimir
+Thanks, Yedaya
 
