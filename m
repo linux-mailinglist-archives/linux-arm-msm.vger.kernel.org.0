@@ -1,198 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-111175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id anq0FU9aIWplEwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 12:58:23 +0200
+	id GDUpJLNXIWprEQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 12:47:15 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D53E63F3ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 12:58:22 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA56A63F2C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 12:47:14 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=ASCFsNoA;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=SsliazwD;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111175-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111175-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=mMFNHt72;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111176-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111176-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id E4692305AA88
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 10:45:35 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A8AB83028EC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 10:46:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B328F406297;
-	Thu,  4 Jun 2026 10:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ED69405C42;
+	Thu,  4 Jun 2026 10:46:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E74B40626D
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2026 10:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6A52ED848;
+	Thu,  4 Jun 2026 10:46:44 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780569925; cv=none; b=LAd8QjiViZvMjq6eK+XbT58HWBA9X36LKFeQ2XOS0X3Euqjx3pOtvnCCfvon85MAwxDK7BayQ7n0tbbIdncazlUweqHtdCZHmJYDRlv18ei0SYeIK3Eukfm1Gb8YB2IWgSHZPJZ/Z9KCbMhs+P35cunG+k6gbPpL6xTp1CgRzZs=
+	t=1780570005; cv=none; b=UJdCrwoccockq0P1B99yzgG7p0zbSOvgGmtyOjW0UoJSdgbpx44YYwHdgCpksz/MOgjRs9grW/ff/0rqZmsgx5R9PZ3XX6HkV4NHQa1bLVPIbEGVjYKH2J+E8rg/Jv68RPLF6Tih2+pnd7Wz2c9e2dAC7P5UsAIfj0p8zygdjd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780569925; c=relaxed/simple;
-	bh=M8oUBwMoJrg18/xT45KX6GsBOIdZg94wj46SfP7dTMM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H3coHaTv7sioI7YDFOasfwQd1gzi5IADkDEWjDoWquRxcWlT0NJmjOiupxJDj11b7ECSTfzWcFvW5upQuJswxkbTv2izXBxvDApIkIXYE9Fa5X46eAzQGatc+1LiLv652JJxJjVu7gj9M9g7Iy2xSVOp3wynWG9ASk8RZbkm7Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ASCFsNoA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SsliazwD; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65473gER1476767
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Jun 2026 10:45:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=M8oUBwMoJrg18/xT45KX6GsB
-	OIdZg94wj46SfP7dTMM=; b=ASCFsNoAfwgAqepX7yt4vzpu0Mrf22IPQrntFazm
-	kcRPZC4xF/sTwZRincntkeYYJxLGL4OWzvAkuxtp6r31I4CfDGXL12oo15l5l3Ic
-	bjuLH6CoEH1vL2qJYJLkvY7bQ8t/2GaA+AvKIvAeZ1RsIYcpj4P2tkFhfKmYLKSF
-	+LZ5bb4eZFZ5/UF5r+sWCXsT1L33djmSs5a4Q0T1JPSPBluYWITIa7HQQxOnr3Nc
-	IS1oAquCBfplYbiLtq826mHF18waBICCWhyJtUzPlJLxOEOAS9hlN23F2ozhyodQ
-	tWO/039CY6P9tDvYsOM0LGdv2wpdvnzN+VsqogJ3WkIhSw==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejp6nvb6h-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2026 10:45:23 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2c0d0516ad7so7217655ad.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2026 03:45:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780569923; x=1781174723; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=M8oUBwMoJrg18/xT45KX6GsBOIdZg94wj46SfP7dTMM=;
-        b=SsliazwD98CPtFwyXNayVUJ2z2XwwoHOcD6CTf5sM73xvWTAFCsMJRz91oa7q7JvWP
-         8AEvXgpZKNxqcDE/nMIPMsmqif2c6oqNleEOOAO3W0uoOEpy9b7L1lBDanVlBaJ8pJzz
-         ClhJ/g23HExrDlLLZdUceA/gWv2Zcol5TxheO/JzWmHwTnaOWT9NyKJGx3IWk4GjWoxB
-         QcX8hOB7kwpkVdP/136dRaaPqfK6LGBElJFq7rcNmbeuU4NSzW4e+NHDtPWEK1g/yLyw
-         52nJTqp26wqqrKMsPTHXB2MaQ5xjrYfzQlc7dY42Dx/0ZSjwJ4KUZGPuAta4N2zy1HFv
-         BH0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780569923; x=1781174723;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=M8oUBwMoJrg18/xT45KX6GsBOIdZg94wj46SfP7dTMM=;
-        b=C3Kz8pt4u9/oPjva7qPkEBQXEnWRUJZeplegbFAPnP30D6TDav81kVf0vBQ1dNItQV
-         bpZyOgLCJALAAeCSbgT7CjX2QmV5LlmS1TnD9X/grWlOcWeuaNlzv7L1cT7PhO2cmAPc
-         X0MEHpRPM2ezmDC0bd8cG6EIgH0N1NEGCZJU4mAbCQuGe1zbW/bIEo+sk6h6m/cHgBzN
-         a/3QKjznFJ/pCqilHFVokOgltyINK5IQFzkow2sraPG+7SI5JHPMy9pNoK12V/YPaA7G
-         IOC0C/OIzbW9dhoEeQveaKkaBb8H65HERpp34cnd69fOlkgZNOROqrwabBQRsohF2dA8
-         jikQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/h8MjmQ3wWj4yoPx1GAbI4a8qgQvS97FBiBXShvfDwqppcBNocAz0AbS2zyeqf4A5E850BSW+PulSkA4Bc@vger.kernel.org
-X-Gm-Message-State: AOJu0YybkxdroUOta6+1FQfjvtt+yA70lcbD2Y8VA2dkVCUeckO7PIUp
-	NF/qHS+eIyZjQraQvdNwFh4TVBzcwy8GeN17/8IRXZYMSHIbKtCJSGXEm17aqfgH7VgoHQITAbr
-	+rZUm/iDWN+jdRpQL0XtdtWuiRAUzsG1ZG1q5tc1NU4iehodx1D8lniyct3YTD7fqHA70
-X-Gm-Gg: Acq92OH5pcXCntMOhe7zI0a8HtOAvEOR1aCZmF3RCLq920GfAqFuoC7D1jVnZttQwXd
-	VTnKoFHXeVomBqjATTWK1T0xvOSvhFna8A5+nTLkAJTNWFWJ24wB8hCgQys+JfDewJ6B834d2Q+
-	ru8Odvc0j3Q3e2VqvAaKOnme2PdKqTIeCHNj79A1VgRcycTQNK3SApqhYVZEkM+RB6tUIj43XaH
-	Xmo5QcdjFkIYl6BLykzs9417NYkNYEjmBs0GeCyT4i9zGwLyaPtflsVUHYAavW2v9uWAtDCAoFe
-	X6jcE9yQXE1YGyVJbElVCFAaKJEQrcX0Q/ryTufSlFmv0GnxXZU3jy2STVtvjIqiTw6rQun394b
-	IaFkcHBakY0a/B3wBnFfI1AQg45LVKeKlGvXfGtvGjOdqNnZZN7blXAOWUsLLZBMUFrSHngz7xA
-	FCIXlXIAAPeC6rWvUKevZ87XweEonzGtty5XFOQl8C+EWCUgF2+t2IHDHMrdrdLA==
-X-Received: by 2002:a17:903:1b64:b0:2c1:13b5:6c24 with SMTP id d9443c01a7336-2c163d85f20mr74272645ad.20.1780569923099;
-        Thu, 04 Jun 2026 03:45:23 -0700 (PDT)
-X-Received: by 2002:a17:903:1b64:b0:2c1:13b5:6c24 with SMTP id d9443c01a7336-2c163d85f20mr74272415ad.20.1780569922622;
-        Thu, 04 Jun 2026 03:45:22 -0700 (PDT)
-Received: from hu-varada-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c1664a67b0sm54701935ad.80.2026.06.04.03.45.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jun 2026 03:45:22 -0700 (PDT)
-Date: Thu, 4 Jun 2026 16:15:16 +0530
-From: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Frank Li <Frank.Li@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
-        mani@kernel.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Md Sadre Alam <md.alam@oss.qualcomm.com>, lakshmi.d@oss.qualcomm.com
-Subject: Re: [PATCH v5] dma: qcom: bam_dma: Fix command element mask field
- for BAM v1.6.0+
-Message-ID: <aiFXPPXtjCHj0Ged@hu-varada-blr.qualcomm.com>
-References: <20260514-bam-fix-v5-1-58f6edb34969@oss.qualcomm.com>
- <agyeh4PZwG0Mu6Wx@vaman>
+	s=arc-20240116; t=1780570005; c=relaxed/simple;
+	bh=biiRY84vnYMb5PbMnT2Tgh+oJNQYMtRjO3yfY9cGl2Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=W7YVBotgT4byVakg6R1WZk/Tu1KfSA2JOo1RK2XQebTsJA0KpfFd/xTHAt5dUPcp+Q9PEyDIehPSbb6ZRHkekGXnnLggTdngwQvsLPqBj1a+bExcxxmAR7gySwFvy7mc8tXCnZY15hhKTH83zouIl0OVzfBjSBsL0gJDwgs5Qik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mMFNHt72; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C4B1F00893;
+	Thu,  4 Jun 2026 10:46:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780570003;
+	bh=FOme6FGys2fI4Tk2hmHNWSvY6xaDpJ6qGZkN/RcDCTI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=mMFNHt72qrquxGmmCXZZA1e8HzZncvYR4s1rKQ9JJ7E51LqzroMv6dUPl/+EvHRRX
+	 +i060RL4+TDq293fspO/Hw5ew2qhYVvA/+j7Mv1Igbqe7Nd71abJ3mgjgbTg/xLgVR
+	 dpzX2hTBerXvJMQC+ODxYhAleonMuvSg28Uj/Yrf8uwd7myg0Jk/IUrvmP7tTfrr1N
+	 MjLary/2OxvlHx81VZN6zzGmHZg+XVBZf7jEZHdANpKaHDGUXkvwklru3BuSYDYQym
+	 9LzBH9SwgAPmilj/Br2v0WpO04kHdj0o54METH9DenfuuzrVGQXhyzsrHTLeKfO9Se
+	 GQrLsDToVaesA==
+Date: Thu, 4 Jun 2026 11:46:30 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>, David Lechner
+ <dlechner@baylibre.com>, Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>, Andy
+ Shevchenko <andy@kernel.org>, Amit Kucheria <amitk@kernel.org>, Thara
+ Gopinath <thara.gopinath@gmail.com>, "Rafael J. Wysocki"
+ <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@kernel.org>, Zhang Rui
+ <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+ linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, Kamal Wadhwa
+ <kamal.wadhwa@oss.qualcomm.com>, David Collins
+ <david.collins@oss.qualcomm.com>, Anjelique Melendez
+ <anjelique.melendez@oss.qualcomm.com>, Neil Armstrong
+ <neil.armstrong@linaro.org>, Stephan Gerhold <stephan.gerhold@linaro.org>
+Subject: Re: [PATCH v2 1/2] iio: adc: qcom-spmi-adc5-gen3: Share SDAM0 IRQ
+ with ADC_TM auxiliary driver
+Message-ID: <20260604114630.23ca427a@jic23-huawei>
+In-Reply-To: <ah9ouLQFI7VtHCWL@ashevche-desk.local>
+References: <20260526-gen3_adc_tm-v2-0-702fbac919ac@oss.qualcomm.com>
+	<20260526-gen3_adc_tm-v2-1-702fbac919ac@oss.qualcomm.com>
+	<ah9ouLQFI7VtHCWL@ashevche-desk.local>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <agyeh4PZwG0Mu6Wx@vaman>
-X-Proofpoint-GUID: KxBUo2dAhW46ciT6L8OyPG039OVEm9RC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDEwMiBTYWx0ZWRfXz3gAC0VLZ8OH
- UsssueJu83DVxX359dNSjVMmSfthYN08G4Bdwcvwken0KlxuhtGWFXw7h5fESJ/ovDn8K6dj9to
- lUbMOAbTReaqGHkJ0ncM7fN3L7Mtau4C5hCNrDV1VM38WKn5pPJxq7li2gjRiUmXlbZlrJAXGzD
- 4Rxv2cXiZ6qw5AYDl57hV19Vm0kQ6det1won1yDQl6T94xKWh8yO7+hn7K6BQmqJU22JHPrqz0n
- f9Rbx9Vyyfys8u4eD+d8hEr0MDtaadbj+5mIzbdoezeHpMrd7qstMJ92WE8FXoR0Q/c3nwx/i0e
- D8GXzcaUyHHSGvV3mH/9VWMmqv4YLNCUG7qS54VBH2/r5vz8Evb3Bt4l4pdi4eLKC8558vnfLE6
- tMH1qa1SDoWr7WQzOBJbC9i188kS6H8jDJ3+4skluckFLhJ0FjS7WFlaomUaPyMt3WCDrMh5M66
- HB28Blfzf1Kw7BEjzpA==
-X-Authority-Analysis: v=2.4 cv=DbcnbPtW c=1 sm=1 tr=0 ts=6a215743 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=jG7jI5RKT-kwyRtthR8A:9 a=CjuIK1q_8ugA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-ORIG-GUID: KxBUo2dAhW46ciT6L8OyPG039OVEm9RC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-04_03,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0 phishscore=0
- bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606040102
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111175-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111176-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:vkoul@kernel.org,m:Frank.Li@kernel.org,m:absahu@codeaurora.org,m:mani@kernel.org,m:linux-arm-msm@vger.kernel.org,m:dmaengine@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:md.alam@oss.qualcomm.com,m:lakshmi.d@oss.qualcomm.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[varadarajan.narayanan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS(0.00)[m:andriy.shevchenko@intel.com,m:jishnu.prakash@oss.qualcomm.com,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:amitk@kernel.org,m:thara.gopinath@gmail.com,m:rafael@kernel.org,m:daniel.lezcano@kernel.org,m:rui.zhang@intel.com,m:lukasz.luba@arm.com,m:linux-arm-msm@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:kamal.wadhwa@oss.qualcomm.com,m:david.collins@oss.qualcomm.com,m:anjelique.melendez@oss.qualcomm.com,m:neil.armstrong@linaro.org,m:stephan.gerhold@linaro.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[varadarajan.narayanan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,baylibre.com,analog.com,kernel.org,gmail.com,intel.com,arm.com,vger.kernel.org,linaro.org];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 4D53E63F3ED
+X-Rspamd-Queue-Id: EA56A63F2C7
 
-On Tue, May 19, 2026 at 11:01:51PM +0530, Vinod Koul wrote:
-> On 14-05-26, 12:09, Varadarajan Narayanan wrote:
-> > From: Md Sadre Alam <md.alam@oss.qualcomm.com>
-> >
-> > BAM version 1.6.0 and later changed the behavior of the mask field in
-> > command elements for read operations. In newer BAM versions, the mask
-> > field for read commands contains the upper 4 bits of the destination
-> > address to support 36-bit addressing, while for write commands it
-> > continues to function as a traditional write mask.
->
-> But this changes behaviour for all versions. What happens to folks on older
-> versions, wont this break for them, if not what am I missing
+On Wed, 3 Jun 2026 02:35:20 +0300
+Andy Shevchenko <andriy.shevchenko@intel.com> wrote:
 
-Md Alam,
+> On Tue, May 26, 2026 at 04:26:09PM +0530, Jishnu Prakash wrote:
+> > The SDAM0 IRQ can be triggered for both EOC (end of conversion) events for
+> > immediate ADC reads done in this driver and for threshold violation events,
+> > based on ADC_TM thresholds configured from the auxiliary ADC_TM driver on
+> > TM channels on the first SDAM.
+> > 
+> > At present, this interrupt is handled only in the ISR in the main ADC driver.
+> > When the ISR is triggered for an ADC_TM event, this driver notifies the ADC_TM
+> > driver by calling a notifier callback exposed from it for this purpose.
+> > 
+> > To simplify the interrupt handling in both drivers, share the interrupt between
+> > the drivers. With this, ADC_TM interrupts on SDAM0 will be handled directly in
+> > the ADC_TM driver, so remove the notifier callback and all TM interrupt
+> > handling in the main ADC ISR.  
+> 
+> ...
+> 
+> > +	/*
+> > +	 * This interrupt is shared with the ADC_TM auxiliary driver, which
+> > +	 * is threaded and uses IRQF_ONESHOT. Since shared interrupts need
+> > +	 * to agree on IRQF_ONESHOT configuration and there is a kernel
+> > +	 * warning for using IRQF_ONESHOT with non-threaded interrupts,
+> > +	 * make this also a threaded IRQ.
+> > +	 */
+> > +
+> > +	ret = devm_request_threaded_irq(dev, adc->dev_data.base[ADC5_GEN3_VADC_SDAM].irq,
+> > +					NULL, adc5_gen3_isr, IRQF_ONESHOT | IRQF_SHARED,
+> > +					adc->dev_data.base[ADC5_GEN3_VADC_SDAM].irq_name,
+> > +					adc);
+> >  	if (ret)
+> >  		return dev_err_probe(dev, ret,
+> >  				     "Failed to request SDAM%d irq\n",  
+> 
+> Also add a patch to drop this duplicate message.
+> 
 
-Can you please respond to Vinod's query.
+There is another thread going on this.  It might not be duplicate
+if -EPROBE_DEFER is returned.  The message won't be printed but it
+will be logged for helping debug deferred probe reasons.
 
--Varada
+So maybe we have been a little too energetic in removing these.
 
-[ . . . ]
+static void __dev_probe_failed(const struct device *dev, int err, bool fatal,
+			       const char *fmt, va_list vargsp)
+{
+	struct va_format vaf;
+	va_list vargs;
+
+	/*
+	 * On x86_64 and possibly on other architectures, va_list is actually a
+	 * size-1 array containing a structure.  As a result, function parameter
+	 * vargsp decays from T[1] to T*, and &vargsp has type T** rather than
+	 * T(*)[1], which is expected by its assignment to vaf.va below.
+	 *
+	 * One standard way to solve this mess is by creating a copy in a local
+	 * variable of type va_list and then using a pointer to that local copy
+	 * instead, which is the approach employed here.
+	 */
+	va_copy(vargs, vargsp);
+
+	vaf.fmt = fmt;
+	vaf.va = &vargs;
+
+	switch (err) {
+	case -EPROBE_DEFER:
+		device_set_deferred_probe_reason(dev, &vaf);
+//this call.
+		dev_dbg(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
+		break;
+
+	case -ENOMEM:
+		/* Don't print anything on -ENOMEM, there's already enough output */
+		break;
+
+	default:
+		/* Log fatal final failures as errors, otherwise produce warnings */
+		if (fatal)
+			dev_err(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
+		else
+			dev_warn(dev, "error %pe: %pV", ERR_PTR(err), &vaf);
+		break;
+	}
+
+	va_end(vargs);
+}
+
+Jonathan
 
