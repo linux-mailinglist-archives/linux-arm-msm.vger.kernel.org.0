@@ -1,257 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-111106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id UAKyIxr4IGoj+AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 05:59:22 +0200
+	id 0hhHJRD6IGpi+AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 06:07:44 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E279463CC37
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 05:59:21 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBE4763CC96
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 06:07:43 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=seu.edu.cn header.s=default header.b=L0ePJB2Z;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111106-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111106-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=seu.edu.cn;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=LgEB3lCl;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=LzxWolVw;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111108-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111108-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2C5E530416CB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 03:58:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0EE1E3026F06
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 04:06:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5B183B0AFE;
-	Thu,  4 Jun 2026 03:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1DC73AEB37;
+	Thu,  4 Jun 2026 04:06:35 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A17D72617;
-	Thu,  4 Jun 2026 03:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A229388881
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2026 04:06:34 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780545493; cv=none; b=AwbVnnLPQBLEFE2GxMAwt5L/1GUEbqxmmkjBPJb5LHT1VcAq7bIDksZmKomOyHZb3zzW761sbk95Re9QuPp/d2pXd9k1hK4kWa1xoS6wSLxvsP2aCEKcBdQ+x+mCZg+oUOwDLRYXpVHqDjJI/XHyi36nk+XLMkCtUrlFSLwjZCk=
+	t=1780545995; cv=none; b=geRBljkNSah8AFrUDoKIfF8tGqgrmLxvy8RDOZ7fOUtF9stu1VEhxj8W9ITGloIiHCq0hrJKpmiv1nMJGQMRkiTd6Vp/tM3RLZkdGk8JFdjydry327jMRmFKpdZ8Zpd1onJc00YijqGtxbZ2DBfNxOQr/f1kh7MIwWb88p+70o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780545493; c=relaxed/simple;
-	bh=aZLwY/9EDQ02XdFP+3inxUVP43n/84nghC9Ko7Zn+tA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=jeSu9bc0rSifw5nEsUHK0C+WWICpEzIn2XHf4VBebIb18GLB4rkWgOISpjpR4xs78zsy3+hy6lAOV7EK+kloqtlJWLwJAnBltoxPqWjY/7WmoH9B279Uyt40BN3cSXGJsRsC++uDjOn38ySal6zyHoQI7Y8ev8Ch4O93IZQWB0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=seu.edu.cn; spf=pass smtp.mailfrom=seu.edu.cn; dkim=pass (1024-bit key) header.d=seu.edu.cn header.i=@seu.edu.cn header.b=L0ePJB2Z; arc=none smtp.client-ip=45.254.49.198
-Received: from PC-202605011814.localdomain (unknown [221.228.238.82])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 4103cca57;
-	Thu, 4 Jun 2026 11:52:56 +0800 (GMT+08:00)
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
-To: gregkh@linuxfoundation.org,
-	rafael@kernel.org
-Cc: dakr@kernel.org,
-	driver-core@lists.linux.dev,
-	linux@armlinux.org.uk,
-	andersson@kernel.org,
-	mathieu.poirier@linaro.org,
-	kys@microsoft.com,
-	haiyangz@microsoft.com,
-	wei.liu@kernel.org,
-	decui@microsoft.com,
-	longli@microsoft.com,
-	nipun.gupta@amd.com,
-	nikhil.agarwal@amd.com,
-	linux-remoteproc@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-hyperv@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	jianhao.xu@seu.edu.cn,
-	runyu.xiao@seu.edu.cn,
-	stable@vger.kernel.org
-Subject: [PATCH v2 4/4] cdx: use generic driver_override infrastructure
-Date: Thu,  4 Jun 2026 11:52:39 +0800
-Message-Id: <20260604035239.1711889-5-runyu.xiao@seu.edu.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260604035239.1711889-1-runyu.xiao@seu.edu.cn>
-References: <20260602160829.560904-1-runyu.xiao@seu.edu.cn>
- <20260604035239.1711889-1-runyu.xiao@seu.edu.cn>
+	s=arc-20240116; t=1780545995; c=relaxed/simple;
+	bh=cvU6PzPx7VvwUybXBHSGGcHgzrpcjC7wW3pJAtXFR5c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nqFCeg+6aK1rCx3OJnJBUISOEc5hfQpFa60Si4Lt0iiavLYiNUaEitYKtC42GAGiinnNe4+9LksvcpK6za27O0+CyQDsKNMjacGauSqVfH8HaaafaQT3jpIrJRQG60/aRo97pcVGdLC/9X9qT1PgN1vEvzZTn6IjCbWIk/kv6jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LgEB3lCl; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LzxWolVw; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6540oDvt314080
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Jun 2026 04:06:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=cvU6PzPx7VvwUybXBHSGGcHg
+	zrpcjC7wW3pJAtXFR5c=; b=LgEB3lClk87m3qrLz2z/CRsoYUvYpNltEOkRxWCV
+	QB1lL4AKeWWzrcQ3vmcQmaqbw41dkhYZoxPPC9I1k0FjRNboDR/leCjxThhRNRGV
+	y0524tTHVvdtqN8lukUpOmykQwKifPPmuGVLZrnXf42U8uGgq0eDU5LVHNw9VaXd
+	mzG8dm/BXwUJk82cI3oEYtD3WboCSiBSqCESxGRuHbgGScbuvtLnCPrUyjJ9RdPp
+	NtoGCrjNl6MIuDHMnUXjNv0woG/2lERP/kGwFeD7azfiKVGdGXQsX1LjXFSpt9tG
+	9q6JkCeYb/opHo/YNffvDQW2i1U1V8qwbCurvnnjPPFovA==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ejy5v0jvw-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2026 04:06:33 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-36b808bedfaso407163a91.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Jun 2026 21:06:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1780545992; x=1781150792; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cvU6PzPx7VvwUybXBHSGGcHgzrpcjC7wW3pJAtXFR5c=;
+        b=LzxWolVw8mwbg/gpbdyVOCbwB2Sm7asqr3BzeMKzoZSsLqASy+66uKvClX9zFtbQuJ
+         yhqLkr9N28Z3k6PshNdP8JS1lJkRWYrjYByRlGNvpmK15Ga4MJpgfX0+5bLreQMD7M7I
+         HK+7J5YtUa+sdv9TC/eCqHN9XnamGAQQ/IqpADRL6yAmfiDL9yR/6xDDqxeuGKqCNwG+
+         8QtYrUM19rVMTKbizh6cjV0lYX4NKHw/nKxijnF7SZE6ptGBQpXeC5mf9PAWUWKj9iTc
+         R6yv+ZpAHp73JHV8P3hS6X5EtPrJPcFLjUKHHTfowUvF1lyBl4pc1ggwXCbJAGdm0KqI
+         cVTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780545992; x=1781150792;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cvU6PzPx7VvwUybXBHSGGcHgzrpcjC7wW3pJAtXFR5c=;
+        b=KFhUV/ZXJngPs9ZCdUBrpK87gFXCYiOZzOd1iP+UbCrNfbd5OLlGdMQ15PS46IiQ3b
+         Kvyo3jECFK8kJKNJ5eOm/3TqiZGRJrzEDU0974SLPMnMhE4XYNtiQ+39uWt5zofxWKSZ
+         C+uK5vvc9bS7H5dVfrk+wAPlafIeVioI7ULotFKgwmfA7cpL8o+Q2HCfAr9FnHIQaASE
+         +AXW3sx8RiLDKq36mCcl5T2u1D/u+uvD4MK59Fz+/QPsu2YJnlMM6OHx25SpSzrvlMVh
+         1lW26skn8zNOAQ8ounMkFLsDlI/1PRRSu8MhjDrn+JYwPhszjHalTH3Cg6TiqX5hbDj5
+         mJIg==
+X-Forwarded-Encrypted: i=1; AFNElJ9iFjkMzobiHK8JibKtcY4/QiWdu32qzxDuvmQC/YW6n9H0puNFxPDR5qUYTn2Jky/b70Rw+tl45vOAonD2@vger.kernel.org
+X-Gm-Message-State: AOJu0YydBNbCoYDWfUqvJ6vG/b8LtFt5U7aOQJF0BbZoyMkGnZIOiJU6
+	85E0bBhttvBnw30YF0E2wbegvI9zSVWsMb91qwlnWkVGtkybZyCmw4rxblWCXGi7JCvvZOAKXMd
+	9te+dG3I8xEGlHRoDelVNcoKcbP5P2ogqn+oh2o9QPGmqCbGH2aO7jqWXV6dzz8ta2b+h
+X-Gm-Gg: Acq92OGdu82tJO2uyhVMopJpihEk9oNaD7Rx07CqTRkbxtykvjLap4g7O9m67ZwCHvC
+	C2fd61u9QcloN1vgK/yRthnXR7WGwtZYEzPOI+T2T7McZEtGdkAXedxQMceoXhmYcgSsMYzwyxW
+	RJiTLMxGP1uo3ARV91XThQ7wSa4kuIMb6jaeMUpJCITqQ+kXMaTTM5IMqJAMSIDKCO0owbXRJZf
+	G7WN3nseJjHn+zn/7vDPTmuTF14lTnhznWjeQPJz1cmFonVGILcoFdKq6ahZLn4tmcrN3Am3Kto
+	W6gLrXwdlBWVG41IHHdmFL9vYh6qHXETMnOPmSvKaZ8Xb58vbRKapNzPa1AvJE4jm0nMRA5qhNv
+	1X+Di44OtrbMDLQomGnn+rEoTJVWVgXMPUmXfcjQMJ4VuA4vtHto6NbOt+S3XnhNwbLtrSulAue
+	L47XKmC/3I8Slcv3SXgVgdTOZ2h2lZXnELWb5FUpwoskD2QInYEuXWKgfWKC8znw==
+X-Received: by 2002:a17:90a:d406:b0:36b:a2cc:485b with SMTP id 98e67ed59e1d1-36e318c0424mr6180730a91.21.1780545992481;
+        Wed, 03 Jun 2026 21:06:32 -0700 (PDT)
+X-Received: by 2002:a17:90a:d406:b0:36b:a2cc:485b with SMTP id 98e67ed59e1d1-36e318c0424mr6180702a91.21.1780545992029;
+        Wed, 03 Jun 2026 21:06:32 -0700 (PDT)
+Received: from hu-varada-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df0b26bbsm3566591a12.23.2026.06.03.21.06.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jun 2026 21:06:31 -0700 (PDT)
+Date: Thu, 4 Jun 2026 09:36:25 +0530
+From: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: nvmem: qfprom: Add ipq5210 & ipq9650
+ compatible
+Message-ID: <aiD5wRww9sxClQ86@hu-varada-blr.qualcomm.com>
+References: <20260515-tsens-v1-1-1755b515777e@oss.qualcomm.com>
+ <20260516-hungry-ultraviolet-lemur-ea9aea@quoll>
+ <aiAQ4lzRoRIzAXT4@hu-varada-blr.qualcomm.com>
+ <d46a7c9c-ef20-434e-a373-c7f519335230@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9e90c3458003a1kunm0f81216d28d1b
-X-HM-MType: 10
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkZTEsdVkoYGh8eHkMaQ0NPSVYeHw
-	5VEwETFhoSFyQUDg9ZV1kYEgtZQVlJSUpVSUlDVUlIQ1VDSVlXWRYaDxIVHRRZQVlPS0hVSktISk
-	9ITFVKS0tVSkJLS1kG
-DKIM-Signature: a=rsa-sha256;
-	b=L0ePJB2Zgla5W6w8PmnPsi0MIHdQdH/3TgkcwGvhOJdJw8MD7UEzgg0Vyn3r8/0Rf97EMJrK8ONmOTIxiNTNsqcguPSKNzBsF/cbNK1YOc41xQsIelpXuxocnGbCywF7j3u4MNjSb1/THblDMq/4qp4AMtXXF6skWSjr6g9aQkQ=; s=default; c=relaxed/relaxed; d=seu.edu.cn; v=1;
-	bh=0XPOIhxg2F68hBRjE6rRRrqxSXoozAE1hg6WZ/Tun+U=;
-	h=date:mime-version:subject:message-id:from;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d46a7c9c-ef20-434e-a373-c7f519335230@kernel.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA0MDAzNyBTYWx0ZWRfX8tFjEmMAdJIg
+ 513+qVWzJetj8UvAaAzcM4mdhCm1sKpDnlGLC5n0HzKWzjcjMvVRv314T3FZ84FAzhvUah31Gog
+ 8QDGwn0stRcTZl4LJl/XFhFsKK9Ywgo/A+fI4B7tjVs9+B6qSFDkTLwrg/KX4I10VvWUhESfFOH
+ GRh7c3TJhxqxVZ+ASgUK4yyqrB0YWsXlSrgRBBcf/A024ggpwLZQlWQ1dCPgsvXlr82lCjnyZJg
+ Wn1X8EQDZL38xrE9pNkISw+hxK3KmuftEU8xPJUU1l6VFiXxBu+susfZ8zNCHqaDguiI/Q1sfWQ
+ wCHXcjSCGkhNyfrC3/QeEFtC2gavIDFn7NKP17G/Y55FcqX52KRIayuVYPqRREwhhjPBn7oxJ0o
+ ELdVYK48t1/Omu7k7bwMdRpJXsOk9LP6dhYAZMWWJVcSU0JH44m96uw+Qbh8evjmVYBA/l4LIq5
+ kCCTsRx3NmTG+kNurTg==
+X-Proofpoint-ORIG-GUID: 1Biu4zvnNZkyEWcpCftz8EzE1msdfh0D
+X-Authority-Analysis: v=2.4 cv=afRRWxot c=1 sm=1 tr=0 ts=6a20f9c9 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=P-IC7800AAAA:8 a=wzrz7JlyjnULdPGyGyoA:9 a=CjuIK1q_8ugA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22 a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-GUID: 1Biu4zvnNZkyEWcpCftz8EzE1msdfh0D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-04_02,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606040037
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[seu.edu.cn,none];
-	R_DKIM_ALLOW(-0.20)[seu.edu.cn:s=default];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-111106-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_FROM(0.00)[bounces-111108-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER(0.00)[runyu.xiao@seu.edu.cn,linux-arm-msm@vger.kernel.org];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:gregkh@linuxfoundation.org,m:rafael@kernel.org,m:dakr@kernel.org,m:driver-core@lists.linux.dev,m:linux@armlinux.org.uk,m:andersson@kernel.org,m:mathieu.poirier@linaro.org,m:kys@microsoft.com,m:haiyangz@microsoft.com,m:wei.liu@kernel.org,m:decui@microsoft.com,m:longli@microsoft.com,m:nipun.gupta@amd.com,m:nikhil.agarwal@amd.com,m:linux-remoteproc@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-hyperv@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:jianhao.xu@seu.edu.cn,m:runyu.xiao@seu.edu.cn,m:stable@vger.kernel.org,s:lists@lfdr.de];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,hu-varada-blr.qualcomm.com:mid,vger.kernel.org:from_smtp,bootlin.com:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	FORGED_RECIPIENTS(0.00)[m:krzk@kernel.org,m:srini@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[varadarajan.narayanan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[runyu.xiao@seu.edu.cn,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[varadarajan.narayanan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[seu.edu.cn:+];
-	TO_DN_NONE(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,seu.edu.cn:mid,seu.edu.cn:dkim,seu.edu.cn:from_mime,seu.edu.cn:email]
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E279463CC37
+X-Rspamd-Queue-Id: EBE4763CC96
 
-CDX devices still keep driver_override in bus-private storage.
+On Wed, Jun 03, 2026 at 04:04:43PM +0200, Krzysztof Kozlowski wrote:
+> On 03/06/2026 13:32, Varadarajan Narayanan wrote:
+> > On Sat, May 16, 2026 at 11:55:35AM +0200, Krzysztof Kozlowski wrote:
+> >> On Fri, May 15, 2026 at 02:54:34PM +0530, Varadarajan Narayanan wrote:
+> >>> Document compatible string for the QFPROM on ipq5210 & ipq9650 platforms.
+> >>
+> >> Please wrap commit message according to Linux coding style / submission
+> >> process (neither too early nor over the limit):
+> >> https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
+> >>
+> >> This applies to all your patches, not only to this one.
+> >
+> > I had incorrectly wrapped to 72 columns instead of 75. Will fix that.
+> >
+> > However, in this commit log there is only one line, not sure what to change.
+> > Am I missing something? Please let me know.
+>
+> Hm, that was two weeks ago, so I don't know what I had in mind that time
+> but I imagine it was too long. If you checked and it is fine, then
+> disregard the comment.
 
-The sysfs write side updates that string through driver_set_override(),
-which replaces the pointer and frees the old value. However,
-driver_match_device() can call cdx_bus_match() from __driver_attach()
-without holding the device lock, and cdx_bus_match() still dereferences
-that private pointer directly.
+Thanks for the clarification. Would you consider reviewing this patch, or
+should I re-post as v2?
 
-That means the CDX match path can race with a concurrent
-driver_override update and compare against freed memory.
-
-Switch CDX to the driver-core driver_override infrastructure. This
-removes the private driver_override storage, lets the core provide the
-sysfs attribute, and uses device_match_driver_override() for the locked
-read in cdx_bus_match().
-
-Preserve the existing CDX override_only semantics: entries marked
-override_only still require a matching driver_override, but ordinary ID
-matches continue to work unchanged.
-
-Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel.org/
-Fixes: 48a6c7bced2a ("cdx: add device attributes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
----
-drivers/cdx/cdx.c           | 40 +++++--------------------------------
-include/linux/cdx/cdx_bus.h |  1 -
- 2 files changed, 5 insertions(+), 36 deletions(-)
-
-diff --git a/drivers/cdx/cdx.c b/drivers/cdx/cdx.c
-index 9196dc50a48d..d3d230247262 100644
---- a/drivers/cdx/cdx.c
-+++ b/drivers/cdx/cdx.c
-@@ -156,8 +156,6 @@ static int cdx_unregister_device(struct device *dev,
- 	} else {
- 		cdx_destroy_res_attr(cdx_dev, MAX_CDX_DEV_RESOURCES);
- 		debugfs_remove_recursive(cdx_dev->debugfs_dir);
--		kfree(cdx_dev->driver_override);
--		cdx_dev->driver_override = NULL;
- 	}
- 
- 	/*
-@@ -268,6 +266,7 @@ static int cdx_bus_match(struct device *dev, const struct device_driver *drv)
- 	const struct cdx_driver *cdx_drv = to_cdx_driver(drv);
- 	const struct cdx_device_id *found_id = NULL;
- 	const struct cdx_device_id *ids;
-+	int ret;
- 
- 	if (cdx_dev->is_bus)
- 		return false;
-@@ -275,7 +274,8 @@ static int cdx_bus_match(struct device *dev, const struct device_driver *drv)
- 	ids = cdx_drv->match_id_table;
- 
- 	/* When driver_override is set, only bind to the matching driver */
--	if (cdx_dev->driver_override && strcmp(cdx_dev->driver_override, drv->name))
-+	ret = device_match_driver_override(dev, drv);
-+	if (ret == 0)
- 		return false;
- 
- 	found_id = cdx_match_id(ids, cdx_dev);
-@@ -289,7 +289,7 @@ static int cdx_bus_match(struct device *dev, const struct device_driver *drv)
- 		 */
- 		if (!found_id->override_only)
- 			return true;
--		if (cdx_dev->driver_override)
-+		if (ret > 0)
- 			return true;
- 
- 		ids = found_id + 1;
-@@ -453,36 +453,6 @@ static ssize_t modalias_show(struct device *dev, struct device_attribute *attr,
- }
- static DEVICE_ATTR_RO(modalias);
- 
--static ssize_t driver_override_store(struct device *dev,
--				     struct device_attribute *attr,
--				     const char *buf, size_t count)
--{
--	struct cdx_device *cdx_dev = to_cdx_device(dev);
--	int ret;
--
--	if (WARN_ON(dev->bus != &cdx_bus_type))
--		return -EINVAL;
--
--	ret = driver_set_override(dev, &cdx_dev->driver_override, buf, count);
--	if (ret)
--		return ret;
--
--	return count;
--}
--
--static ssize_t driver_override_show(struct device *dev,
--				    struct device_attribute *attr, char *buf)
--{
--	struct cdx_device *cdx_dev = to_cdx_device(dev);
--	ssize_t len;
--
--	device_lock(dev);
--	len = sysfs_emit(buf, "%s\n", cdx_dev->driver_override);
--	device_unlock(dev);
--	return len;
--}
--static DEVICE_ATTR_RW(driver_override);
--
- static ssize_t enable_store(struct device *dev, struct device_attribute *attr,
- 			    const char *buf, size_t count)
- {
-@@ -552,7 +522,6 @@ static struct attribute *cdx_dev_attrs[] = {
- 	&dev_attr_class.attr,
- 	&dev_attr_revision.attr,
- 	&dev_attr_modalias.attr,
--	&dev_attr_driver_override.attr,
- 	NULL,
- };
- 
-@@ -646,6 +615,7 @@ ATTRIBUTE_GROUPS(cdx_bus);
- 
- const struct bus_type cdx_bus_type = {
- 	.name		= "cdx",
-+	.driver_override = true,
- 	.match		= cdx_bus_match,
- 	.probe		= cdx_probe,
- 	.remove		= cdx_remove,
-diff --git a/include/linux/cdx/cdx_bus.h b/include/linux/cdx/cdx_bus.h
-index b1ba97f6c9ad..f1a107b232da 100644
---- a/include/linux/cdx/cdx_bus.h
-+++ b/include/linux/cdx/cdx_bus.h
-@@ -165,7 +165,6 @@ struct cdx_device {
- 	bool enabled;
- 	u32 msi_dev_id;
- 	u32 num_msi;
--	const char *driver_override;
- 	struct mutex irqchip_lock;
- 	bool msi_write_pending;
- };
--- 
-2.34.1
+-Varada
 
