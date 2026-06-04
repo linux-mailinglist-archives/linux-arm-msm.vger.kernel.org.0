@@ -1,89 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-111252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id JlHWE4u+IWrXMwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 20:06:03 +0200
+	id J3dlGITHIWqRNQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 20:44:20 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7F1B6427FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 20:06:02 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04139642A42
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 04 Jun 2026 20:44:20 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=fail ("headers rsa verify failed") header.d=igalia.com header.s=20170329 header.b="MG8ZL//9";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111252-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111252-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=fail reason="SPF not aligned (relaxed)" header.from=igalia.com (policy=none);
+	dkim=pass header.d=herrie.org header.s=transip-a header.b="Iq2N4/ID";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111255-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111255-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C4EDB301549C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 18:05:59 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 1A28A3021CAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Jun 2026 18:44:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A647039BFE0;
-	Thu,  4 Jun 2026 18:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B5803BED38;
+	Thu,  4 Jun 2026 18:44:16 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from outbound4.mail.transip.nl (outbound4.mail.transip.nl [136.144.136.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEE6175A70
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Jun 2026 18:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBB239EF3D;
+	Thu,  4 Jun 2026 18:44:08 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780596358; cv=none; b=Uqf4NmrRiCnNEaMM4l2Kgfee2K7TzFTivhgr4F3EcIp9zs0IPXrf3CJmG3E7s6w2Ij6EIRE49onfsy4u8ab5FlzRC0Mh96xFNdms2rh8QWSq+y99kuSDCxR9GIo/CVEdpr2WVwQxPYdPy1H+fEEfBHysQ1jbBry+kdstAk5IXSQ=
+	t=1780598655; cv=none; b=Mt0C3xWwTiKUYY7WzhOmaouHQORZ7CPbcLy4mf9bM40gmhplWKy9iBe82C4xksaeZkYBBteQIPzM1CU7j/UGdAojYAjJ07u4+9zDxrPiwsy5bhZ3ExoaGafhVZ1mpzoXdk7t515hFIFL5NqE+ELoXLuWg40l+GqRk3v/3shsvqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780596358; c=relaxed/simple;
-	bh=8Jjhmr0t6XVVaEH+ukfCCswzcTkeUxpCCgdMvhN0JSc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L1l8RDB2UpfK6IffHvSYusatHr3P+XXuM8BqcwFHr/Rt/WSE6aZXVoY8nKTlmXAdpePYV33Hq1drWawrdDei722fRSv9A8mYmRI7R4fshEI1ZnO9HIzDP3/3lXAkjsJKVRXOna/ZY9+fkv8jn5bpeZ59lIX0Ol27J2WN/TZCRok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=MG8ZL//9; arc=none smtp.client-ip=213.97.179.56
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=xDanblzNrKwLMIWCMdcO9/e2GrHOcHnN+e83qP8r5xg=; b=MG8ZL//9yGgx0wlwz0S4BdlORt
-	i3awrnyIRGvnWqC0MRdC1x4N5GjQawwDy41RgxUEFsEOOaG8+yASE/0FO0kkleUE3AFKvRbxI1siP
-	TBjJ7HGIhUQksYI1+3eTW+215xaeTqsAAjlGeWetYerw1o60vxZ/IQrxqVrWulsgdKYfOcB4dFYmN
-	OJ9oXkD+TG2FzNq2E0lXbeMpSFl+bz9ED4PDOSRSMQh6vvkk+1XpV7apDcLIEBh3M6TLI2+R5dbTX
-	uGyhOcUCRwmRrAmy0V/v0RLyL7RD4WT4kXhGwJvZb82XQ55nWmGamfzkl91QgROhiKMXJ0TI/kuyH
-	n5+Zptgg==;
-Received: from [79.117.146.159] (helo=killbill.home)
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1wVCRJ-00Ckqs-Dd; Thu, 04 Jun 2026 20:05:09 +0200
-From: Melissa Wen <mwen@igalia.com>
-To: airlied@gmail.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	simona@ffwll.ch,
-	tzimmermann@suse.de
-Cc: Alex Hung <alex.hung@amd.com>,
-	Simon Ser <contact@emersion.fr>,
-	Uma Shankar <uma.shankar@intel.com>,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Xaver Hugl <xaver.hugl@kde.org>,
-	Pekka Paalanen <pekka.paalanen@collabora.com>,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Sebastian Wick <sebastian.wick@redhat.com>,
-	John Harrison <John.Harrison@Igalia.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	amd-gfx@lists.freedesktop.org,
-	kernel-dev@igalia.com,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	s=arc-20240116; t=1780598655; c=relaxed/simple;
+	bh=yTTK8VtoRBYVbAh8BEyW+596U/dAce9FYmrXs0nOn+g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Rou0Sfie9/TcU+IP+ZSx8/0POg+FvprEXJGK7HdKlH5kXWzVnlrz7VjXMBetOe78ig+Xk6l5rKnMadE5SOgd96uKcV17pEHfObEilCxPJ3XnHpHsFcZ6r265Sbi/L19qEe3nBtT+m1KOheNKkbePd6MknGJr1NEuaOqjR9pp4AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=Iq2N4/ID; arc=none smtp.client-ip=136.144.136.2
+Received: from submission0.mail.transip.nl (unknown [10.100.4.69])
+	by outbound4.mail.transip.nl (Postfix) with ESMTP id 4gWYPY3jgLzwPYn;
+	Thu,  4 Jun 2026 20:44:01 +0200 (CEST)
+Received: from herrie-desktop.. (180-93-184-31.ftth.glasoperator.nl [31.184.93.180])
+	by submission0.mail.transip.nl (Postfix) with ESMTPA id 4gWYPX46Q8zZyxrx;
+	Thu,  4 Jun 2026 20:44:00 +0200 (CEST)
+From: Herman van Hazendonk <github.com@herrie.org>
+To: djakov@kernel.org
+Cc: dmitry.baryshkov@oss.qualcomm.com,
+	konrad.dybcio@oss.qualcomm.com,
+	odelu.kukatla@oss.qualcomm.com,
+	raviteja.laggyshetty@oss.qualcomm.com,
+	luca.weiss@fairphone.com,
+	abel.vesa@oss.qualcomm.com,
+	jie.gan@oss.qualcomm.com,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org,
-	intel-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH v2 3/3] drm/atomic: reject colorop update from inactive color pipeline
-Date: Thu,  4 Jun 2026 19:59:07 +0200
-Message-ID: <20260604180457.1110110-4-mwen@igalia.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260604180457.1110110-1-mwen@igalia.com>
-References: <20260604180457.1110110-1-mwen@igalia.com>
+	linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Herman van Hazendonk <github.com@herrie.org>
+Subject: [PATCH v2 0/2] interconnect: qcom: add MSM8x60 NoC driver
+Date: Thu,  4 Jun 2026 20:43:58 +0200
+Message-ID: <20260604184400.801543-1-github.com@herrie.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,145 +67,140 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Scanned-By: ClueGetter at submission0.mail.transip.nl
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=transip-a; d=herrie.org; t=1780598641; h=from:subject:to:cc:date:
+ mime-version; bh=xONqXCRPpfu0N8QcFXhHqD/ouGS1shZfT4TapA+CFNk=;
+ b=Iq2N4/IDz4bDYQ2QeMZ1+XLVUyhlYFs8e79h/lPtGIPtIzWsSE+wAOTouc9jTHMzNRkxov
+ jiSWcTWNa8obzG7zt15XQ8JjeZve5NG6fHvHcNpSs5dHuvzn3tFJNXAEixlWKY3GTsomnM
+ URRa9Z7YVeIleKeiQOOVwyoTPDPSsBsxOa4Cw3ui9moS3v43+y4IZcm9VffRbECo4jrJ31
+ QApAJwRxOD2JAG45Zf/QSHrZEDxXRcVPk7DJ8cAKKxyhvddUKefV9DOPN+2clEYP+pHzRg
+ gdJLAojeDkhXUB91k3ZR4pKTSXs91LsbXffMqunR8UVpm/o+Nv5G0IJ7YH9H5A==
+X-Report-Abuse-To: abuse@transip.nl
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [1.14 / 15.00];
-	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
+X-Spamd-Result: default: False [1.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[herrie.org:s=transip-a];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111252-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[27];
-	FORGED_RECIPIENTS(0.00)[m:airlied@gmail.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:simona@ffwll.ch,m:tzimmermann@suse.de,m:alex.hung@amd.com,m:contact@emersion.fr,m:uma.shankar@intel.com,m:chaitanya.kumar.borah@intel.com,m:xaver.hugl@kde.org,m:pekka.paalanen@collabora.com,m:louis.chauvet@bootlin.com,m:matthew.schwartz@linux.dev,m:sebastian.wick@redhat.com,m:John.Harrison@Igalia.com,m:siqueira@igalia.com,m:amd-gfx@lists.freedesktop.org,m:kernel-dev@igalia.com,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:intel-xe@lists.freedesktop.org,m:intel-gfx@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,s:lists@lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	TAGGED_FROM(0.00)[bounces-111255-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:djakov@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:odelu.kukatla@oss.qualcomm.com,m:raviteja.laggyshetty@oss.qualcomm.com,m:luca.weiss@fairphone.com,m:abel.vesa@oss.qualcomm.com,m:jie.gan@oss.qualcomm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-pm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:github.com@herrie.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[gmail.com,linux.intel.com,kernel.org,ffwll.ch,suse.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
+	DMARC_NA(0.00)[herrie.org];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_FORWARDING(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[igalia.com:-];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DKIM_TRACE(0.00)[herrie.org:+];
+	RCVD_COUNT_FIVE(0.00)[5];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TO_DN_SOME(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,igalia.com:mid,igalia.com:from_mime,igalia.com:email,intel.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B7F1B6427FA
+X-Rspamd-Queue-Id: 04139642A42
 
-Only allow updates on colorops that are part of an active pipeline, i.e.
-check if a colorop belongs to the color pipeline of a plane in its
-current, new or old state. If not, reject the state change of this
-inactive colorop. Performing this check later in drm_atomic_check_only()
-to remove the ordering dependency that would exist if done at the time
-of colorop property setting. Userspace is allowed to change colorops of
-an active color pipeline, or when activating or deactivating its
-pipeline in the same commit. However, changes in inactive color pipeline
-is not allowed.
+v2 addresses Jie's, Sashiko's and Dmitry's review of v1:
 
-Suggested-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Signed-off-by: Melissa Wen <mwen@igalia.com>
----
- drivers/gpu/drm/drm_atomic.c | 60 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+Binding (PATCH 1/2):
+ - Add the dt-binding schema (qcom,msm8660.yaml).  v1 only shipped
+   the ID header (Jie flagged the missing schema).  The schema
+   covers all four compatibles, per-fabric clock-name lists
+   (bus/bus_a/ebi1/ebi1_a for AFAB; bus/bus_a/smi/smi_a for MMFAB;
+   bus/bus_a for SFAB and DFAB) with descriptions for each clock
+   (Dmitry), the required qcom,rpm phandle, and
+   #interconnect-cells = <1>.
 
-diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-index 464562861408..960b52624deb 100644
---- a/drivers/gpu/drm/drm_atomic.c
-+++ b/drivers/gpu/drm/drm_atomic.c
-@@ -943,6 +943,55 @@ drm_atomic_add_pipeline_colorops(struct drm_atomic_commit *state,
- 	return 0;
- }
- 
-+/**
-+ * drm_atomic_colorop_check - check new colorop state
-+ * @new_colorop_state: new colorop state to check
-+ *
-+ * Ensure that the colorop in @new_colorop_state belongs to an active color
-+ * pipeline, i.e. it's in the chain of colorops set to the color_pipeline
-+ * property of current, old or new plane state.
-+ *
-+ * Returns: 0 on success, -EINVAL otherwise.
-+ */
-+static int drm_atomic_colorop_check(const struct drm_colorop_state *new_colorop_state)
-+{
-+	struct drm_atomic_commit *state = new_colorop_state->state;
-+	struct drm_plane *plane = new_colorop_state->colorop->plane;
-+	struct drm_plane_state *new_plane_state, *old_plane_state;
-+	struct drm_colorop *colorop;
-+
-+	new_plane_state = drm_atomic_get_new_plane_state(state, plane);
-+	old_plane_state = drm_atomic_get_old_plane_state(state, plane);
-+
-+	/* No changes in the plane state. Check current-committed plane state */
-+	if (!new_plane_state) {
-+		for (colorop = plane->state->color_pipeline; colorop; colorop = colorop->next)
-+			if (colorop == new_colorop_state->colorop)
-+				return 0;
-+		return -EINVAL;
-+	}
-+
-+	if (WARN_ON(!old_plane_state))
-+		return -EINVAL;
-+
-+	/* Check if the colorop is active in the new plane state */
-+	for (colorop = new_plane_state->color_pipeline; colorop; colorop = colorop->next)
-+		if (colorop == new_colorop_state->colorop)
-+			return 0;
-+
-+	/* Same color pipeline as new; no point walking old. Colorop isn't active */
-+	if (new_plane_state->color_pipeline == old_plane_state->color_pipeline)
-+		return -EINVAL;
-+
-+	/* Check if the colorop was active in the old plane state */
-+	for (colorop = old_plane_state->color_pipeline; colorop; colorop = colorop->next)
-+		if (colorop == new_colorop_state->colorop)
-+			return 0;
-+
-+	/* Colorop is not part of an active color pipeline. */
-+	return -EINVAL;
-+}
-+
- static void drm_atomic_colorop_print_state(struct drm_printer *p,
- 					   const struct drm_colorop_state *state)
- {
-@@ -1792,6 +1841,8 @@ int drm_atomic_check_only(struct drm_atomic_commit *state)
- 	struct drm_plane *plane;
- 	struct drm_plane_state *old_plane_state;
- 	struct drm_plane_state *new_plane_state;
-+	struct drm_colorop *colorop;
-+	struct drm_colorop_state *new_colorop_state;
- 	struct drm_crtc *crtc;
- 	struct drm_crtc_state *old_crtc_state;
- 	struct drm_crtc_state *new_crtc_state;
-@@ -1808,6 +1859,15 @@ int drm_atomic_check_only(struct drm_atomic_commit *state)
- 			requested_crtc |= drm_crtc_mask(crtc);
- 	}
- 
-+	for_each_new_colorop_in_state(state, colorop, new_colorop_state, i) {
-+		ret = drm_atomic_colorop_check(new_colorop_state);
-+		if (ret) {
-+			drm_dbg_atomic(dev, "[COLOROP:%d:%d] isn't in an active color pipeline.\n",
-+				       colorop->base.id, colorop->type);
-+			return ret;
-+		}
-+	}
-+
- 	for_each_oldnew_plane_in_state(state, plane, old_plane_state, new_plane_state, i) {
- 		ret = drm_atomic_plane_check(old_plane_state, new_plane_state);
- 		if (ret) {
+ - Drop the SFPB/CFPB mention from the header commit message;
+   those fabrics aren't modelled by the driver (Sashiko Low).
+
+Driver (PATCH 2/2):
+ - Fix the bandwidth aggregation in msm8660_icc_set() (Sashiko
+   High).  v1 walked provider->nodes and re-summed n->avg_bw
+   across all nodes, which double-counts: the framework already
+   writes each path's bw to every node it traverses, so summing
+   here gives e.g. master_bw + slave_bw for the same flow.  v2
+   takes the max per-node rate across the provider (matches the
+   qcom_icc_bus_aggregate() convention in icc-rpm.c).
+
+ - Switch to dynamic ICC node IDs via icc_node_create_dyn() and
+   pointer-based linking via icc_link_nodes(), matching the
+   icc-rpmh-style pattern (Dmitry).  Drop the internal MSM8660_*
+   enum entirely; struct msm8660_icc_node now carries a struct
+   icc_node *node and a flexible link_nodes[] array of qnode
+   pointers.
+
+ - Expand the DEFINE_QNODE macro (Dmitry); each of the 63 qnodes
+   is now an explicit static struct definition, with forward
+   declarations grouped at the top.
+
+ - Use dev_err_ptr_probe() in msm8660_get_rpm()'s deferred-probe
+   paths (Dmitry).
+
+ - Limit the clock-bulk-get fallback to -ENOENT only (Dmitry);
+   propagate every other error including -EPROBE_DEFER instead
+   of "any non-DEFER continues without clock scaling".
+
+ - Kconfig: depend on MFD_QCOM_RPM=y so a built-in interconnect
+   provider can't link against a modular RPM (Sashiko Low).
+
+ - struct msm8660_icc_node: const char *name (Sashiko Low).
+
+On-device validation (HP TouchPad / APQ8060):
+  All four fabric providers probe cleanly:
+
+    qnoc-msm8660 soc:interconnect@0: RPM fabric ARB enabled
+                 (4 masters, 4 slaves, 2 tiered)             [AFAB]
+    qnoc-msm8660 soc:interconnect@1: RPM fabric ARB enabled
+                 (17 masters, 9 slaves, 2 tiered)            [SFAB]
+    qnoc-msm8660 soc:interconnect@2: RPM fabric ARB enabled
+                 (14 masters, 4 slaves, 3 tiered)            [MMFAB]
+    qnoc-msm8660 soc:interconnect@3: MSM8660 interconnect provider
+                 registered                                  [DFAB]
+    mmcc-msm8660: MMSS fabric: unhalted all master ports (0-13)
+    msm_hsusb 12500000.usb: USB HS: Setting interconnect
+                 bandwidth avg=61440 peak=61440 kBps
+
+  interconnect_summary shows the expected per-node aggregation
+  (e.g. slv_ebi_ch0 sums MMC + MDP + DMA + USB consumer requests)
+  and msm8660_icc_set() then derives a single fabric clock rate
+  from the per-node max rather than the per-node sum (the v1
+  double-count is gone in v2).
+
+The companion DTS patches that enable the providers for the
+HP TouchPad will be sent separately to the ARM/DTS tree.
+
+Herman van Hazendonk (2):
+  dt-bindings: interconnect: qcom: add msm8660 NoC
+  interconnect: qcom: add MSM8x60 NoC driver
+
+ .../bindings/interconnect/qcom,msm8660.yaml   |  157 ++
+ drivers/interconnect/qcom/Kconfig             |   14 +
+ drivers/interconnect/qcom/Makefile            |    2 +
+ drivers/interconnect/qcom/msm8660.c           | 1619 +++++++++++++++++
+ .../dt-bindings/interconnect/qcom,msm8660.h   |  156 ++
+ 5 files changed, 1948 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,msm8660.yaml
+ create mode 100644 drivers/interconnect/qcom/msm8660.c
+ create mode 100644 include/dt-bindings/interconnect/qcom,msm8660.h
+
+
+base-commit: 944125b4c454b58d2fe6e35f1087a932b2050dff
 -- 
-2.53.0
+2.43.0
 
 
