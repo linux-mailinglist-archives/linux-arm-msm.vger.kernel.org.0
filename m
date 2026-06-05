@@ -1,292 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-111418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id ZbT4A5rJImrMdgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 15:05:30 +0200
+	id awW+NqvJImrRdgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 15:05:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61122648622
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 15:05:29 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EE0164862E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 15:05:47 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=intel.com header.s=Intel header.b=KYOmgJ+Q;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111418-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111418-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=intel.com;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=OhHLCJ31;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="Ur/hfIs6";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111419-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111419-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2C3763037DDC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 12:51:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A60333042272
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 12:52:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 965D43E5596;
-	Fri,  5 Jun 2026 12:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4BB3426698;
+	Fri,  5 Jun 2026 12:52:23 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD4C3F412C;
-	Fri,  5 Jun 2026 12:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00133B5846
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jun 2026 12:52:22 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780663903; cv=none; b=ulzetWvl6qQo2TP4YbBAayRP7keDY04cdlPJoWsD0bNmttTnmvjocy3ynZOEsgCosdLmg9ZLOAA9LDWl/vCO88Vmm+BaKoI0FMHqe2fkUO/PnEvOIO6/KRtbwBV6XGJNbbgCG5OhC++OLPK+wsUBONKuEJcDI6dMO9CE6z/Lay4=
+	t=1780663943; cv=none; b=Z2xXeLD96+3wOYMuSDNvpNsPaAgJ+uQ0RIOyh3ahkY0w37ZOfC8mM+rEePzvZyNLHX07rF9JB8aosM/1CHOBd98iYacSMDquFO9VVpTFhT5EQjPrwcQzivdqTiHoyz64uaRrwSqraLWzq5wJLue2/1HPWqgQZUCgV/amOxZD+68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780663903; c=relaxed/simple;
-	bh=+Z7fkGLCJoGEOW8BWuJGCF5uNojahF7laTSAwAS/N3w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BidDEi7W5QGq6xmGU/F8Q0l0h52qclwlADZzza/IjH5DEbJmVXXTIBflmUyvTEpyKY3fA3N5kZX5kcEgg/KC0qpeQ3iBnZ4IiI7pwLjOoXkgI6MbzITsc+5Zs3JMjCY0hiGSe+xYTZWmvONn7a/u+pxaZ0yd4AwN2dlo343HyyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KYOmgJ+Q; arc=none smtp.client-ip=198.175.65.21
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780663900; x=1812199900;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=+Z7fkGLCJoGEOW8BWuJGCF5uNojahF7laTSAwAS/N3w=;
-  b=KYOmgJ+QfQi5tpzkTHW2y82qWaMbC8Fmhwgi5EMPDS7302oYP3mXkpOe
-   w7Ac6yMffrm8XS7Gq8TfP3GW5vurhf+XFYOavG8gq6yIW785a/trfZWNT
-   1w7Obtd+zlQTKC0xGu6r149Tfpv3YQExa/87BV3DoW9JkUV4ALKuBgNUr
-   LyP/s66e/mznB11KrUlJwDbDp0xLS+4KjQn3YeaUrI2gCT+C+EA9DL4N2
-   SPAaeUBUbPDj2EADWlheagmtnYOwF4PefkoUqfTPP3wlU4ZG2Wb//TWk2
-   qyilNL5DY3QabWlKyHUzQnrvwj5lzYZB0DhotUvrz4hlxAskPveptk09x
-   A==;
-X-CSE-ConnectionGUID: 6/cggjV8RUGbTAHIT79G2A==
-X-CSE-MsgGUID: icUCUiHjQkyxDVrELcAVpA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11807"; a="81403407"
-X-IronPort-AV: E=Sophos;i="6.24,188,1774335600"; 
-   d="scan'208";a="81403407"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2026 05:51:38 -0700
-X-CSE-ConnectionGUID: 8UYQKWyNSLSmZbmHhYMM2Q==
-X-CSE-MsgGUID: FID66aKKRv25llgzYSd8vg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,188,1774335600"; 
-   d="scan'208";a="282917623"
-Received: from black.igk.intel.com ([10.91.253.5])
-  by orviesa001.jf.intel.com with ESMTP; 05 Jun 2026 05:51:28 -0700
-Received: by black.igk.intel.com (Postfix, from userid 1008)
-	id C960095; Fri, 05 Jun 2026 14:51:26 +0200 (CEST)
-Date: Fri, 5 Jun 2026 15:51:22 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Adrien Grassein <adrien.grassein@gmail.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Pengyu Luo <mitltlatltl@gmail.com>, Nikita Travkin <nikita@trvn.ru>,
-	Yongxing Mou <yongxing.mou@oss.qualcomm.com>,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	linux-usb@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, linux-amlogic@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH RESEND v3 1/6] drm/connector: report IRQ_HPD events to
- drm_connector_oob_hotplug_event()
-Message-ID: <aiLGSpd3cztbopDL@kuha>
-References: <20260513-hpd-irq-events-v3-0-086857017f16@oss.qualcomm.com>
- <20260513-hpd-irq-events-v3-1-086857017f16@oss.qualcomm.com>
+	s=arc-20240116; t=1780663943; c=relaxed/simple;
+	bh=Us+yG3m2+QHmSga3tniY07Eashl/QzlKEg/ECZRt1e8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Du1c+0WPxDXBySrctCtU1z604cVuKbmAkbaXxFwxrIS96VYy+/nUs/8EjxfRL6H7BDRdmzxro6U4wXT+x4fOaqhrF82RYJ5kZShhIbvI/+8ppSml0btJqJO8NdxH6cPNgbBNVHjvPb9YYFnhnUnAkOzX2lyTUPP6WhMkzyxe1sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OhHLCJ31; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ur/hfIs6; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65599S7l820652
+	for <linux-arm-msm@vger.kernel.org>; Fri, 5 Jun 2026 12:52:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	aXXPMAxCCNVKnzaiOEhcmEjF/NB0kuT+OfqrX4xSO5M=; b=OhHLCJ317ujs8Vuf
+	XHzv6gpokiN/RLYmVCzSlcJ7Vvb8/99t+c9QBBcBLNdYkHJ1BR+Pqo6P1m22pgGe
+	RFmxVfP7gQjJWJu2rw2j+0MmOAZ2eq3U8fyckemiTqozfcsY+g/KY3FGvkbao0zM
+	xB2I1fqmgNmFQ/wNsx+7aoVCK0SHcKA6Aot0g9rtVo3buN8xECLSD9r/4SNvPJFx
+	msQAt4XW9+YmXj9mF4++bvWTZEGEsrvZD4m8x5t2W8C46ckxFJCGAHWJ8wv9xzy5
+	y7+oqabmr6UaBWNtTwaCtgy6eoCiix2VXVKeme5BBhusfq3jG7z6IdD9JcYkFeRu
+	fENSVg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ekncbj8sr-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jun 2026 12:52:21 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2bd04e4fe3dso15184885ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jun 2026 05:52:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1780663941; x=1781268741; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aXXPMAxCCNVKnzaiOEhcmEjF/NB0kuT+OfqrX4xSO5M=;
+        b=Ur/hfIs6gp045G0MyWJjkqs0oA9WJ8JSmIKV/ClTH3QseKI2b5IOYURu76y2ZvMx6r
+         t0GINdST/hxTbStwcgPsxPVsrZh27EDdKpNax/nABKKjwvraHfqRzlFo8HVZGqOkykoX
+         ZUFbH7A+N2LtB5BxTeykd/9JfD8T1LOIacrCm/pvSQ17YeMqTd/orlrlNEWxgWOB0Au1
+         WHHGUxeOwzLBIcsFmbzHUzV69jJ/J8ELLg8EJnSM5CWpoi7vFZQNgWdrgRTBdDzL/9vq
+         U8E1kIdGQZ7k+WBbW1fucvH2wnT3Q0a1n1JWn5vh1bBo3++83V+V2iVaj7CcqjgB+RHP
+         K1ZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780663941; x=1781268741;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=aXXPMAxCCNVKnzaiOEhcmEjF/NB0kuT+OfqrX4xSO5M=;
+        b=Czp1t70LiPqt9o02kSME/Uqx/c3+W3B7T77EMqECYYZzkDiU9Qdfe5Hdudw6dmyzB+
+         6+BYD6AcvZgTFKVUj/6W/pcOQrkx9z+cZIKY0lJLjbw9F9bwSvTyHqZUAKa3mWa19nXT
+         vS6KoE+4dYIAzIryW58tpSXFj4DMc6fCfhLHhXjtsO8XYOnBOg/RTx9do1Q5IDqVOV3Z
+         hXdMGHo1gxF4+xnUSzTdkd+DeJnv9p3B2ps2JbG3Ei834LQtKEm75xW/2YfkyYP+Qpe9
+         Lah+1H7br6jBfjJm2zBcVEhUlfPh+kthbsgmuBFyIo8+nN05FXZGCW9xm7xsKxnnl7Eg
+         2uXA==
+X-Forwarded-Encrypted: i=1; AFNElJ+Kzfm6uvtLse6BN6oInqr9aPInLegV4lJ1i1gmk3fU/ega1M8BL/38LfCUhcNpZZmRAKO6hs0W7EExMB7i@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxsimyz1Y4oNgQnksxQiDoKTbpoSDnIz4EHDbY7RNe86kMFOs3O
+	Szs5j7VoSdmHxeeDWTpUiYSFnggpILb6I7HGB2XvmJ1T3NVJMpF4QrMQhR5vSvbDxC+UVxOd4qY
+	MS5gHCe2JlVUWLfkcCIVEGE7CSisHXc1rm6gqEvgBDojpRACK7AG83aRYpOXfCmJTLRCE
+X-Gm-Gg: Acq92OF4jji4RX7rTOUJvqB3eM8r1uL5VBirNR0ird8nBTHSocrCsGeoteyqAtohspI
+	ZDPYRe5oK9CoFxJ5DibZcflQ+BJWsmMo9x0cV5CHXV8VGMuNZgGoG43ILjGODRUnFzf6mVWE/Y6
+	Sj9hWu5KMGqOmliUEf/1gPlpGXeJ7x6qMhwNEtkR+HnVhnk8e4/zwcwa1FUUi/kk5vXVbdnPflU
+	sZ87GRhK1O+TkI8x8zd9TCgg47iLm/L11fifajnRHLwwu5wDqtvkeYgtrn1Y7Y7ND11SEshCRIJ
+	VTG6mDh2WntxstOgOataU7P8gbGW0b93o24oP5tETX3aOnPxuXk6WgxaoRmn2h99h0FbwlWkDVz
+	TdTD/dYWJRXlnTwGKzI90akKbIrs5BqJ7EXqH2w5nZvD173YaI3RGxLDW6mRtIfVluCpMKI5ciL
+	YHa8Ye03/bRy21SBAKCzuHgUKqlKQUQh3coI0uWyDNZz52NhAxOtU=
+X-Received: by 2002:a17:903:15c7:b0:2bf:dd0:c8b1 with SMTP id d9443c01a7336-2c1e78acf24mr38497255ad.0.1780663941401;
+        Fri, 05 Jun 2026 05:52:21 -0700 (PDT)
+X-Received: by 2002:a17:903:15c7:b0:2bf:dd0:c8b1 with SMTP id d9443c01a7336-2c1e78acf24mr38496835ad.0.1780663940969;
+        Fri, 05 Jun 2026 05:52:20 -0700 (PDT)
+Received: from [10.190.200.113] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f6d389sm90760015ad.16.2026.06.05.05.52.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Jun 2026 05:52:20 -0700 (PDT)
+Message-ID: <ec3c29ec-872a-4a01-bb92-7573a625211a@oss.qualcomm.com>
+Date: Fri, 5 Jun 2026 18:22:14 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260513-hpd-irq-events-v3-1-086857017f16@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: glymur: Fix gcc clock specifier for
+ usb_mp_qmpphy nodes
+To: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Wesley Cheng <wesley.cheng@oss.qualcomm.com>,
+        Abel Vesa <abel.vesa@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+        Rajendra Nayak <rajendra.nayak@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260602-glymur-fix-usb-mp-qmpphy-clock-specifier-v1-1-19c6f44d5655@oss.qualcomm.com>
+Content-Language: en-US
+From: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+In-Reply-To: <20260602-glymur-fix-usb-mp-qmpphy-clock-specifier-v1-1-19c6f44d5655@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=OauoyBTY c=1 sm=1 tr=0 ts=6a22c686 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8 a=04xiu5HVr_82CDOhBRwA:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22 a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDEyNiBTYWx0ZWRfX4oRxoMprotEO
+ YYJ/smdFn6vUt02qyPb+vlgLaBL57xTH6TzOOqbeGmpXt3Q3JhGFxRuFhPS7TAc5N2fztE4kqKG
+ nTf3hzx0o30fm9dN3tvgk3WkSK+ZMgYyH4C9XplkwhvlBwWF2PD+ZJYYZrXgUR/SIqRs2G9ZTem
+ 7qBccfsbq8IF3QSc7MxBvm/FGP97RSk8ACBlyUFhXTpFUeu7XfVuEhU+obJpjLwhoXnvt0GrWmI
+ WQ7RQG1CDwNQGkADpHDgqW8bIwN+r/zwv7ytWLn5lC9XnM91O0R2ddvJQgVqB3VWjfylqk6oTEH
+ ioOFMbkVMON00OZfqfhs1s2kUOPLCtS8R5ju5YnKpG7W/NosNc4X93EtYwdlgryTnKBBpHGzdeA
+ l6/6vhwFmRAYIYtwb4K0G0FGqFxZ8nQkkchOtXoE0EClSNE1f2taMuKj1wOrK29atPDL4SusFIP
+ wsQ5KvIHfHBCyVEORAg==
+X-Proofpoint-GUID: 3UtnKllZeOvNSN24BbbitbQSs-B0rgMU
+X-Proofpoint-ORIG-GUID: 3UtnKllZeOvNSN24BbbitbQSs-B0rgMU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-05_02,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 spamscore=0 priorityscore=1501 phishscore=0 impostorscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606050126
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111418-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:gregkh@linuxfoundation.org,m:andrzej.hajda@intel.com,m:neil.armstrong@linaro.org,m:rfoss@kernel.org,m:Laurent.pinchart@ideasonboard.com,m:jonas@kwiboo.se,m:jernej.skrabec@gmail.com,m:adrien.grassein@gmail.com,m:jani.nikula@linux.intel.com,m:rodrigo.vivi@intel.com,m:joonas.lahtinen@linux.intel.com,m:tursulin@ursulin.net,m:khilman@baylibre.com,m:jbrunet@baylibre.com,m:martin.blumenstingl@googlemail.com,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:tomi.valkeinen@ideasonboard.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:mitltlatltl@gmail.com,m:nikita@trvn.ru,m:yongxing.mou@oss.qualcomm.com,m:dri-devel@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:linux-usb@vger.kernel.org,m:intel-gfx@lis
- ts.freedesktop.org,m:intel-xe@lists.freedesktop.org,m:linux-amlogic@lists.infradead.org,m:linux-arm-kernel@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:jernejskrabec@gmail.com,m:adriengrassein@gmail.com,m:martinblumenstingl@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[42];
-	FORGED_SENDER(0.00)[heikki.krogerus@linux.intel.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-111419-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,linuxfoundation.org,intel.com,linaro.org,ideasonboard.com,kwiboo.se,ursulin.net,baylibre.com,googlemail.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,trvn.ru,lists.freedesktop.org,vger.kernel.org,lists.infradead.org];
+	FORGED_RECIPIENTS(0.00)[m:gopikrishna.garmidi@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:wesley.cheng@oss.qualcomm.com,m:abel.vesa@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:sibi.sankar@oss.qualcomm.com,m:rajendra.nayak@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[pankaj.patil@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,devicetree.org:url,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[heikki.krogerus@linux.intel.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[intel.com:+];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[pankaj.patil@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,kuha:mid,intel.com:email,intel.com:dkim,linux.intel.com:from_mime]
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 61122648622
+X-Rspamd-Queue-Id: 3EE0164862E
 
-On Wed, May 13, 2026 at 09:23:21PM +0300, Dmitry Baryshkov wrote:
-> The DisplayPort standard defines a special kind of events called IRQ.
-> These events are used to notify DP Source about the events on the Sink
-> side. It is extremely important for DP MST handling, where the MST
-> events are reported through this IRQ.
+On 6/2/2026 10:21 PM, Gopikrishna Garmidi wrote:
+> usb_mp_qmpphy0 and usb_mp_qmpphy1 have #clock-cells set to 0 so they take
+> no specifier. Drop the erroneous QMP_USB43DP_USB3_PIPE_CLK argument.
 > 
-> In case of the USB-C DP AltMode there is no actual HPD pulse, but the
-> events are ported through the bits in the AltMode VDOs.
+> This fixes the following dtbs_check warning:
+> clock-controller@100000 (qcom,glymur-gcc): clocks: [[59, 0], ..... [0]]
+> is too long
+> from schema $id: http://devicetree.org/schemas/clock/qcom,glymur-gcc.yaml
 > 
-> Extend the drm_connector_oob_hotplug_event() interface and report IRQ
-> events to the DisplayPort Sink drivers.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-
-The displayport altmode looks okay to me. FWIW:
-
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-
+> Fixes: 4eee57dd4df9f ("arm64: dts: qcom: glymur: Add USB related nodes")
+> Signed-off-by: Gopikrishna Garmidi <gopikrishna.garmidi@oss.qualcomm.com>
 > ---
->  drivers/gpu/drm/drm_connector.c          |  5 ++++-
->  drivers/usb/typec/altmodes/displayport.c | 15 +++++++++++----
->  include/drm/drm_connector.h              | 19 ++++++++++++++++++-
->  3 files changed, 33 insertions(+), 6 deletions(-)
+>  arch/arm64/boot/dts/qcom/glymur.dtsi | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
-> index 47dc53c4a738..edee9daccd51 100644
-> --- a/drivers/gpu/drm/drm_connector.c
-> +++ b/drivers/gpu/drm/drm_connector.c
-> @@ -3510,6 +3510,8 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
->   * drm_connector_oob_hotplug_event - Report out-of-band hotplug event to connector
->   * @connector_fwnode: fwnode_handle to report the event on
->   * @status: hot plug detect logical state
-> + * @extra_status: additional information provided by the sink without changing
-> + * the HPD state (or in addition to such a change).
->   *
->   * On some hardware a hotplug event notification may come from outside the display
->   * driver / device. An example of this is some USB Type-C setups where the hardware
-> @@ -3520,7 +3522,8 @@ struct drm_connector *drm_connector_find_by_fwnode(struct fwnode_handle *fwnode)
->   * a drm_connector reference through calling drm_connector_find_by_fwnode().
->   */
->  void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
-> -				     enum drm_connector_status status)
-> +				     enum drm_connector_status status,
-> +				     enum drm_connector_status_extra extra_status)
->  {
->  	struct drm_connector *connector;
->  
-> diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
-> index 35d9c3086990..7182a8e2e710 100644
-> --- a/drivers/usb/typec/altmodes/displayport.c
-> +++ b/drivers/usb/typec/altmodes/displayport.c
-> @@ -189,7 +189,9 @@ static int dp_altmode_status_update(struct dp_altmode *dp)
->  	} else {
->  		drm_connector_oob_hotplug_event(dp->connector_fwnode,
->  						hpd ? connector_status_connected :
-> -						      connector_status_disconnected);
-> +						      connector_status_disconnected,
-> +						(hpd && irq_hpd) ? DRM_CONNECTOR_DP_IRQ_HPD :
-> +								   DRM_CONNECTOR_NO_EXTRA_STATUS);
->  		dp->hpd = hpd;
->  		sysfs_notify(&dp->alt->dev.kobj, "displayport", "hpd");
->  		if (hpd && irq_hpd) {
-> @@ -212,7 +214,10 @@ static int dp_altmode_configured(struct dp_altmode *dp)
->  	 */
->  	if (dp->pending_hpd) {
->  		drm_connector_oob_hotplug_event(dp->connector_fwnode,
-> -						connector_status_connected);
-> +						connector_status_connected,
-> +						dp->pending_irq_hpd ?
-> +						DRM_CONNECTOR_DP_IRQ_HPD :
-> +						DRM_CONNECTOR_NO_EXTRA_STATUS);
->  		sysfs_notify(&dp->alt->dev.kobj, "displayport", "hpd");
->  		dp->pending_hpd = false;
->  		if (dp->pending_irq_hpd) {
-> @@ -397,7 +402,8 @@ static int dp_altmode_vdm(struct typec_altmode *alt,
->  			dp->data.conf = 0;
->  			if (dp->hpd) {
->  				drm_connector_oob_hotplug_event(dp->connector_fwnode,
-> -								connector_status_disconnected);
-> +								connector_status_disconnected,
-> +								DRM_CONNECTOR_NO_EXTRA_STATUS);
->  				dp->hpd = false;
->  				sysfs_notify(&dp->alt->dev.kobj, "displayport", "hpd");
->  			}
-> @@ -827,7 +833,8 @@ void dp_altmode_remove(struct typec_altmode *alt)
->  
->  	if (dp->connector_fwnode) {
->  		drm_connector_oob_hotplug_event(dp->connector_fwnode,
-> -						connector_status_disconnected);
-> +						connector_status_disconnected,
-> +						DRM_CONNECTOR_NO_EXTRA_STATUS);
->  
->  		fwnode_handle_put(dp->connector_fwnode);
->  	}
-> diff --git a/include/drm/drm_connector.h b/include/drm/drm_connector.h
-> index f83f28cae207..e05197e970d3 100644
-> --- a/include/drm/drm_connector.h
-> +++ b/include/drm/drm_connector.h
-> @@ -91,6 +91,22 @@ enum drm_connector_status {
->  	connector_status_unknown = 3,
->  };
->  
-> +/**
-> + * enum drm_connector_status_extra - additional events sent by the sink /
-> + * display together or in replacement of the HPD status changes.
-> + */
-> +enum drm_connector_status_extra {
-> +	/**
-> +	 * @DRM_CONNECTOR_NO_EXTRA_STATUS: No additional status reported.
-> +	 */
-> +	DRM_CONNECTOR_NO_EXTRA_STATUS,
-> +	/**
-> +	 * @DRM_CONNECTOR_DP_IRQ_HPD: DisplayPort Sink has sent the
-> +	 * IRQ_HPD (either by the HPD short pulse or via the AltMode event).
-> +	 */
-> +	DRM_CONNECTOR_DP_IRQ_HPD,
-> +};
-> +
->  /**
->   * enum drm_connector_registration_state - userspace registration status for
->   * a &drm_connector
-> @@ -2521,7 +2537,8 @@ drm_connector_is_unregistered(struct drm_connector *connector)
->  }
->  
->  void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwnode,
-> -				     enum drm_connector_status status);
-> +				     enum drm_connector_status status,
-> +				     enum drm_connector_status_extra extra_status);
->  const char *drm_get_connector_type_name(unsigned int connector_type);
->  const char *drm_get_connector_status_name(enum drm_connector_status status);
->  const char *drm_get_subpixel_order_name(enum subpixel_order order);
+> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> index 20b49af7298e..fd503e10e409 100644
+> --- a/arch/arm64/boot/dts/qcom/glymur.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> @@ -786,8 +786,8 @@ gcc: clock-controller@100000 {
+>  				 <&usb_0_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
+>  				 <&usb_1_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
+>  				 <&usb_2_qmpphy QMP_USB43DP_USB3_PIPE_CLK>,
+> -				 <&usb_mp_qmpphy0 QMP_USB43DP_USB3_PIPE_CLK>,
+> -				 <&usb_mp_qmpphy1 QMP_USB43DP_USB3_PIPE_CLK>,
+> +				 <&usb_mp_qmpphy0>,		/* USB3 UNI PHY pipe 0 */
+> +				 <&usb_mp_qmpphy1>,		/* USB3 UNI PHY pipe 1 */
+>  				 <0>,				/* USB4 PHY 0 pcie pipe */
+>  				 <0>,				/* USB4 PHY 0 Max pipe */
+>  				 <0>,				/* USB4 PHY 1 pcie pipe */
 > 
-> -- 
-> 2.47.3
+> ---
+> base-commit: 08484c504b55a98bd100527fbe10a3caf55ff3ff
+> change-id: 20260602-glymur-fix-usb-mp-qmpphy-clock-specifier-6d5e671f173e
+> 
+> Best regards,
 
--- 
-heikki
+Reviewed-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+
 
