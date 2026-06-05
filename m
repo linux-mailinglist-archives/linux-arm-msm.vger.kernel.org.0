@@ -1,385 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-111445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 6FiNMbzvImrSfQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 17:48:12 +0200
+	id TNNOAzLxImonfgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 17:54:26 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71417649757
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 17:48:12 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D6D664982C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 17:54:25 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=bootlin.com header.s=dkim header.b=LSb3DbXw;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111445-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111445-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=bootlin.com;
+	dkim=pass header.d=chromium.org header.s=google header.b=R9nw5l46;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111446-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111446-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=chromium.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 8BEC9306F388
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 15:37:02 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 4440530D5FB1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 15:44:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4851F41930E;
-	Fri,  5 Jun 2026 15:36:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46779360EE8;
+	Fri,  5 Jun 2026 15:44:39 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2A52153D8;
-	Fri,  5 Jun 2026 15:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD32130D3E8
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jun 2026 15:44:37 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780673779; cv=none; b=KFcvWj4gMDnX8oUERu3RzVywVds8Tf81WkY5tVXZS98yIBGzUT82/DEWKpKmZSYQBfAWp6eGlibd/WJDTeo+IRXzYhDE4bs0Qe9gL6YH22SGVWsCSWnYJjtDExyNoK4ouBrByLB+Tiysf4inPgHwtW10b8p9SK+pNB/++z4J8ak=
+	t=1780674279; cv=none; b=n6GAxvioMnPDhRbnvBYZ9KSvLVCkcNED0WVK/kmd8Exn1+yxBB93aRNz/PhaVJ/h6JvCFtx3HoKG56N9gdK7FY+72vR4k4krBC9m8qHFEAp55aAXINbFS1vQ4aGArpXucUr0JeZVIr+m6JLQJmQXqdUmqe6sovpMeB8F2eADEUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780673779; c=relaxed/simple;
-	bh=n83rW4eamdlQ8FGqJ0dCVHLwmywwEa//w82pSDEfiJk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eh1hOHNc/RJQLzg46rBVwngm9X9/aQFY9MvQWDgkZ5t2HVoCJ/4D4XSfnx/4gp61QKhyC1BTHO9gNEhZ5zH0Ki14/o7l+L9H1R0Ad+sohcyyW/LMJf4TTauPa33UC66Iyq5fh47J5H0UcAH52kfhivRmVnPBkST9JhvGAUXmpwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=LSb3DbXw; arc=none smtp.client-ip=185.171.202.116
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 2D349C58479;
-	Fri,  5 Jun 2026 15:36:10 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 4A1AB5FED1;
-	Fri,  5 Jun 2026 15:36:10 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3C996106A24F0;
-	Fri,  5 Jun 2026 17:35:47 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1780673767; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=FHeuOlC/gaOtesZkFgqVr9DoEMDIdfxTclEETE4eqSU=;
-	b=LSb3DbXwWwWowFJQbUezIa1BBhdJR5igSpOLdXQsCT+BMkRWsdW44ijdI9dXSrrrcI8V3I
-	ecL7Zv+Q2UVM43Odjp/o2hzqvGbJH9gcvwM6bdnjCKpscXz21KdbG5a15Kc6ylGOPoMikV
-	/27OcnmIj1H+3ddtxGC9cfiTRCWoqBfbWXl8ciMGadarXoTP7kfh+SkJNF+NmdT7qNf3N7
-	nOUpMyUSLjBesoK1WhJDphDI8xte4Zjy9kt1XGP1BSTgKvcUlm5wSd8QHvl7H5BQGa0SY4
-	7tx4Gs7DtT2TfocD21W8eEKgMWx1a3Dd+/HcnhtEgGNrly28oFopJXpGDFJybQ==
-Message-ID: <566af63b-05a9-43f8-94e9-19af737c848a@bootlin.com>
-Date: Fri, 5 Jun 2026 17:35:47 +0200
+	s=arc-20240116; t=1780674279; c=relaxed/simple;
+	bh=QTha33AcsGXLqeJoB7ThtoiTamYthYSeoS5Y5QadO/o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZPR+F5NeXbma3WIJuRs7t9VUg6nkUGfuljNYv0hIYQQ8fRhpYrq0yghpJQwPp6wI5VydMwU5HZ4+gfF09Bnk7C8N44GcAWmx+4RwP2qTl+0iYTBg87PMOICBWY4JqcTEJAxVgXJSVZgBtW84m/Occd6xdTR2FsCG7p2uz6jqHBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=R9nw5l46; arc=none smtp.client-ip=209.85.217.43
+Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-6c3a36fa9edso1531756137.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jun 2026 08:44:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1780674277; x=1781279077; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CZktE3L5rKfoN1/el6TuB/5aSd1JOfP8XWyiHhYJAdA=;
+        b=R9nw5l46H+BQQonVeXJJRK/O9oZZ3tUL4d3XDdxUCDgcOMGlq+6dxiswq3hGQEl/36
+         7MJXwahoPO4W/HMoLWRw27eGeALHWCaRb8JZTz5l+0b97RTl4TebknOdX9HAxWK9SMrX
+         2jXKhEm64NgcaAruxBmhFq5LUJSgo9jxyP3Uc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780674277; x=1781279077;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=CZktE3L5rKfoN1/el6TuB/5aSd1JOfP8XWyiHhYJAdA=;
+        b=ORsVDcTY9LEddmekJx0nSCUR+nA9rZ8ezpjt1dWdtl425fLVlwnuyA5oMewdYCuFMH
+         fRDkjF8s7j7+Iu1fdaGB5BFzuJlqBcmzkF0JwDyvbr0JyNSHakOZu5HscAPgvtojh1hf
+         hPo+/XAIqZMimWZE1xF3yDt4r4ArG8vTmmM8O5pZUWvOg5uvghTs6K5WbCnJDlCGlSgw
+         1fd+r9mNJrP3JAv+KVcclTw7dWc7KDC2dk0gyL07/dYPNqKlv7fGeVaKna0Id8zO5cyB
+         EDIjbuW42bU2UPrxqZBVP3zO/CFPTXNIhUCSWusfYRVxNC6OlKCXoS72jwfJhKfA4j9g
+         54Gg==
+X-Forwarded-Encrypted: i=1; AFNElJ+fjB8zbGTALiuZXORtX41x4kJs+vF5Cu5hpn7QGKlL285Qo9ZePkaD3umdcO7j1ctsYrqixP1OzvgdRplz@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz05LKZAH1/m9C8SsfT/CWlOgA+vKu8ocUKcClXzfrh/c9fhFnK
+	fn+gWQDR7lyomcEg7qO2RBCuJQOOlhXXjcyF/w/e/6ehQ/jd6/fdL1KpfpSC6AwOkBLuxklBDkp
+	51SA=
+X-Gm-Gg: Acq92OGh/GBODubJxkcz4eaQ7nOxDPOrA7l1EuMnwRFPgE96MZJWRTMsfrjt3/cE/Zh
+	7tmfHB/tGYSIUe8ZFTCXsRvtZisfwgKKSRrqgLRT9VF45vwltmsHSCLBqTDDWv/iKOu/mexNUL5
+	RriAuEPkyX6BTxA5lhwmXZsFIzoD3xCLHyGiROtHm8NcfMzWrDtMRHEnmktGuT6rkJfDCyJmYlM
+	Gy0E0Q0/XiwqCFKrnwgoT/3QER4TXKcTrvneqtepzPklkCyZmzCHi28wGG2N+Fs1bBdx/+4qCFm
+	LZD66yRWmw3xTHpur+JZbwo3m/2KZG6MxsWXthdFT27D7P3RHAJJdTeqB6D0IRyrfemxGUgSCBE
+	8LsWswwVo4bxr16ZSVsy4TPNFSt8IC4j+NbYrS5/aS89pvzURjB8nNsOxD2x95pXth/Q+d5DF1Y
+	nv6Qja/HVdwndmc0+BqbTMJTn43BgECzF7Y2nUGtyDaRNPLcwXZ8sdN3BafYjwqIPej6Q7Lk33
+X-Received: by 2002:a05:6102:5ef:b0:6d0:a5a0:ba23 with SMTP id ada2fe7eead31-7002b522935mr1021689137.3.1780674276775;
+        Fri, 05 Jun 2026 08:44:36 -0700 (PDT)
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com. [209.85.217.51])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-6eb6668702fsm7685942137.10.2026.06.05.08.44.35
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Jun 2026 08:44:35 -0700 (PDT)
+Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-6c67361fa3bso2164891137.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jun 2026 08:44:35 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ+HCE9jIX2e7sMnjxX3ljARoD80ECK6Sq/ikMSt8zTP1fGQez1ilyi6k4FmvrvkXS6deOwcAKizavP4P1uY@vger.kernel.org
+X-Received: by 2002:a05:6102:8347:10b0:6b4:d9ba:d9d2 with SMTP id
+ ada2fe7eead31-7002d6be5e9mr1035796137.6.1780674274409; Fri, 05 Jun 2026
+ 08:44:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v2 03/14] net: pcs: pcs-xpcs-regmap: support XPCS
- memory-mapped MDIO bus via regmap
-To: Alex Elder <elder@riscstar.com>, andrew+netdev@lunn.ch,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, rmk+kernel@armlinux.org.uk, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, linusw@kernel.org, brgl@kernel.org, arnd@arndb.de,
- gregkh@linuxfoundation.org
-Cc: Daniel Thompson <daniel@riscstar.com>, mohd.anwar@oss.qualcomm.com,
- a0987203069@gmail.com, alexandre.torgue@foss.st.com, ast@kernel.org,
- boon.khai.ng@altera.com, chenchuangyu@xiaomi.com, chenhuacai@kernel.org,
- daniel@iogearbox.net, hawk@kernel.org, hkallweit1@gmail.com,
- inochiama@gmail.com, john.fastabend@gmail.com, julianbraha@gmail.com,
- livelycarpet87@gmail.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
- prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
- rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
- weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
- bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20260605010022.968612-1-elder@riscstar.com>
- <20260605010022.968612-4-elder@riscstar.com>
-Content-Language: en-US
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-In-Reply-To: <20260605010022.968612-4-elder@riscstar.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+References: <20260604-topic-yoga_submission-v1-0-57c70c23d0d6@oss.qualcomm.com>
+ <20260604-topic-yoga_submission-v1-1-57c70c23d0d6@oss.qualcomm.com>
+ <CAD=FV=UaPKiGSL6mhVdywp67skSr2B7977f3kZ23FFHaD=95RQ@mail.gmail.com> <20260605152825.GA3740391-robh@kernel.org>
+In-Reply-To: <20260605152825.GA3740391-robh@kernel.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Fri, 5 Jun 2026 08:44:21 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U7jz-xwA+-Fic2thZaK6eCDhc-PZ1fqpCMAUmy3V3Y+Q@mail.gmail.com>
+X-Gm-Features: AVVi8CdDy3XFBVBoorpIXJgEbshGHoXa78jsg55oeGuqaaVdEdPTZn0YzBf-fxQ
+Message-ID: <CAD=FV=U7jz-xwA+-Fic2thZaK6eCDhc-PZ1fqpCMAUmy3V3Y+Q@mail.gmail.com>
+Subject: Re: [PATCH 1/4] dt-bindings: display: panel: samsung,atna33xc20: Add ATNA40HQ08-0
+To: Rob Herring <robh@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
-	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111445-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:elder@riscstar.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:rmk+kernel@armlinux.org.uk,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linusw@kernel.org,m:brgl@kernel.org,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:daniel@riscstar.com,m:mohd.anwar@oss.qualcomm.com,m:a0987203069@gmail.com,m:alexandre.torgue@foss.st.com,m:ast@kernel.org,m:boon.khai.ng@altera.com,m:chenchuangyu@xiaomi.com,m:chenhuacai@kernel.org,m:daniel@iogearbox.net,m:hawk@kernel.org,m:hkallweit1@gmail.com,m:inochiama@gmail.com,m:john.fastabend@gmail.com,m:julianbraha@gmail.com,m:livelycarpet87@gmail.com,m:mcoquelin.stm32@gmail.com,m:me@ziyao.cc,m:prabhakar.mahadev-lad.rj@bp.renesas.com,m:richardcochran@gmail.com,m:rohan.g.thomas@altera.com,m:sdf@fomichev.me,m:siyanteng@cqsoftware.com.cn,m:weishangjuan@eswincomputing.com,m:wens@kernel.org,m:netdev@vger.kernel.o
- rg,m:bpf@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:andrew@lunn.ch,m:rmk@armlinux.org.uk,m:krzk@kernel.org,m:conor@kernel.org,m:johnfastabend@gmail.com,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[maxime.chevallier@bootlin.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[48];
-	FREEMAIL_CC(0.00)[riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,kernel.org,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-111446-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:robh@kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:neil.armstrong@linaro.org,m:jesszhan0024@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:dri-devel@lists.freedesktop.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[dianders@chromium.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,lists.freedesktop.org,vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[maxime.chevallier@bootlin.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[bootlin.com:+];
+	FROM_NEQ_ENVFROM(0.00)[dianders@chromium.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[chromium.org:+];
 	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,bootlin.com:mid,bootlin.com:from_mime,bootlin.com:dkim,riscstar.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,chromium.org:from_mime,chromium.org:dkim,mail.gmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 71417649757
+X-Rspamd-Queue-Id: 6D6D664982C
 
-Hi Alex,
+Hi,
 
-On 6/5/26 03:00, Alex Elder wrote:
-> From: Daniel Thompson <daniel@riscstar.com>
-> 
-> In some DesignWare XPCS implementatons the memory-mapped MDIO bus is
-> allocated to a register window that does not align to a page boundary.
-> This makes iomapping the registers problematic.
-> 
-> For example the Toshiba TC9564 (a PCIe Ethernet-AVB/TSN bridge) provides
-> an "eMAC" subsystem with the XPCS base address cuddled up to XGMAC
-> registers.
-> 
-> Let's introduce helpers to allow the driver that owns the eMAC to register
-> an XPCS using is regmap for the memory-mapped MDIO bus.
-> 
-> Signed-off-by: Daniel Thompson <daniel@riscstar.com>
-> Signed-off-by: Alex Elder <elder@riscstar.com>
-> ---
->  MAINTAINERS                         |   2 +
->  drivers/net/pcs/Makefile            |   4 +-
->  drivers/net/pcs/pcs-xpcs-regmap.c   | 219 ++++++++++++++++++++++++++++
->  include/linux/pcs/pcs-xpcs-regmap.h |  20 +++
->  4 files changed, 243 insertions(+), 2 deletions(-)
->  create mode 100644 drivers/net/pcs/pcs-xpcs-regmap.c
->  create mode 100644 include/linux/pcs/pcs-xpcs-regmap.h
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index eb8cdcc76324f..2aa6ea012c848 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -25931,8 +25931,10 @@ F:	drivers/net/ethernet/synopsys/
->  SYNOPSYS DESIGNWARE ETHERNET XPCS DRIVER
->  L:	netdev@vger.kernel.org
->  S:	Orphan
-> +F:	drivers/net/pcs/pcs-xpcs-regmap.c
->  F:	drivers/net/pcs/pcs-xpcs.c
->  F:	drivers/net/pcs/pcs-xpcs.h
-> +F	include/linux/pcs/pcs-xpcs-regmap.h
->  F:	include/linux/pcs/pcs-xpcs.h
->  
->  SYNOPSYS DESIGNWARE HDMI RX CONTROLLER DRIVER
-> diff --git a/drivers/net/pcs/Makefile b/drivers/net/pcs/Makefile
-> index 4f7920618b900..565f1b63fce0b 100644
-> --- a/drivers/net/pcs/Makefile
-> +++ b/drivers/net/pcs/Makefile
-> @@ -1,8 +1,8 @@
->  # SPDX-License-Identifier: GPL-2.0
->  # Makefile for Linux PCS drivers
->  
-> -pcs_xpcs-$(CONFIG_PCS_XPCS)	:= pcs-xpcs.o pcs-xpcs-plat.o \
-> -				   pcs-xpcs-nxp.o pcs-xpcs-wx.o
-> +pcs_xpcs-$(CONFIG_PCS_XPCS)	:= pcs-xpcs.o pcs-xpcs-nxp.o pcs-xpcs-regmap.o \
-> +				   pcs-xpcs-plat.o pcs-xpcs-wx.o
->  
->  obj-$(CONFIG_PCS_XPCS)		+= pcs_xpcs.o
->  obj-$(CONFIG_PCS_LYNX)		+= pcs-lynx.o
-> diff --git a/drivers/net/pcs/pcs-xpcs-regmap.c b/drivers/net/pcs/pcs-xpcs-regmap.c
-> new file mode 100644
-> index 0000000000000..55cd05d09c7db
-> --- /dev/null
-> +++ b/drivers/net/pcs/pcs-xpcs-regmap.c
-> @@ -0,0 +1,219 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Synopsys DesignWare XPCS regmap helpers
-> + *
-> + * Copyright (C) 2026 RISCstar Solutions.
-> + * Copyright (C) 2024 Serge Semin
-> + */
-> +
-> +#include <linux/device.h>
-> +#include <linux/kernel.h>
-> +#include <linux/mdio.h>
-> +#include <linux/pcs/pcs-xpcs.h>
-> +#include <linux/pcs/pcs-xpcs-regmap.h>
-> +#include <linux/regmap.h>
-> +
-> +#include "pcs-xpcs.h"
-> +
-> +/* Page select register for the indirect MMIO CSRs access */
-> +#define DW_VR_CSR_VIEWPORT		0xff
-> +
-> +struct dw_xpcs_regmap {
-> +	struct device *dev;
-> +	struct mii_bus *bus;
-> +	struct regmap *regmap;
-> +	bool reg_indir;
-> +};
-> +
-> +static ptrdiff_t xpcs_regmap_addr_format(int dev, int reg)
-> +{
-> +	return FIELD_PREP(0x1f0000, dev) | FIELD_PREP(0xffff, reg);
-> +}
-> +
-> +static u16 xpcs_regmap_addr_page(ptrdiff_t csr)
-> +{
-> +	return FIELD_GET(0x1fff00, csr);
-> +}
-> +
-> +static ptrdiff_t xpcs_regmap_addr_offset(ptrdiff_t csr)
-> +{
-> +	return FIELD_GET(0xff, csr);
-> +}
-> +
-> +static int xpcs_regmap_read_reg_indirect(struct dw_xpcs_regmap *pxpcs, int dev,
-> +					 int reg)
-> +{
-> +	ptrdiff_t csr, ofs;
-> +	unsigned int val;
-> +	u16 page;
-> +	int res;
-> +
-> +	csr = xpcs_regmap_addr_format(dev, reg);
-> +	page = xpcs_regmap_addr_page(csr);
-> +	ofs = xpcs_regmap_addr_offset(csr);
-> +
-> +	res = regmap_write(pxpcs->regmap, DW_VR_CSR_VIEWPORT, page);
-> +	if (res < 0)
-> +		return res;
-> +
-> +	res = regmap_read(pxpcs->regmap, ofs, &val);
-> +	if (res < 0)
-> +		return res;
-> +
-> +	return val & 0xffff;
-> +}
-> +
-> +static int xpcs_regmap_write_reg_indirect(struct dw_xpcs_regmap *pxpcs, int dev,
-> +					  int reg, u16 val)
-> +{
-> +	ptrdiff_t csr, ofs;
-> +	u16 page;
-> +	int res;
-> +
-> +	csr = xpcs_regmap_addr_format(dev, reg);
-> +	page = xpcs_regmap_addr_page(csr);
-> +	ofs = xpcs_regmap_addr_offset(csr);
-> +
-> +	res = regmap_write(pxpcs->regmap, DW_VR_CSR_VIEWPORT, page);
-> +	if (res < 0)
-> +		return res;
-> +
-> +	return regmap_write(pxpcs->regmap, ofs, val);
-> +}
-> +
-> +static int xpcs_regmap_read_reg_direct(struct dw_xpcs_regmap *pxpcs, int dev,
-> +				       int reg)
-> +{
-> +	unsigned int val;
-> +	ptrdiff_t csr;
-> +	int res;
-> +
-> +	csr = xpcs_regmap_addr_format(dev, reg);
-> +	res = regmap_read(pxpcs->regmap, csr, &val);
-> +	if (res < 0)
-> +		return res;
-> +
-> +	return val & 0xffff;
-> +}
-> +
-> +static int xpcs_regmap_write_reg_direct(struct dw_xpcs_regmap *pxpcs, int dev,
-> +					int reg, u16 val)
-> +{
-> +	ptrdiff_t csr = xpcs_regmap_addr_format(dev, reg);
-> +
-> +	return regmap_write(pxpcs->regmap, csr, val);
-> +}
-> +
-> +static int xpcs_regmap_read_c22(struct mii_bus *bus, int addr, int reg)
-> +{
-> +	struct dw_xpcs_regmap *pxpcs = bus->priv;
-> +
-> +	if (addr != 0)
-> +		return -ENODEV;
-> +
-> +	if (pxpcs->reg_indir)
-> +		return xpcs_regmap_read_reg_indirect(pxpcs, MDIO_MMD_VEND2, reg);
-> +	else
-> +		return xpcs_regmap_read_reg_direct(pxpcs, MDIO_MMD_VEND2, reg);
-> +}
-> +
-> +static int xpcs_regmap_write_c22(struct mii_bus *bus, int addr, int reg, u16 val)
-> +{
-> +	struct dw_xpcs_regmap *pxpcs = bus->priv;
-> +
-> +	if (addr != 0)
-> +		return -ENODEV;
-> +
-> +	if (pxpcs->reg_indir)
-> +		return xpcs_regmap_write_reg_indirect(pxpcs, MDIO_MMD_VEND2, reg, val);
-> +	else
-> +		return xpcs_regmap_write_reg_direct(pxpcs, MDIO_MMD_VEND2, reg, val);
-> +}
-> +
-> +static int xpcs_regmap_read_c45(struct mii_bus *bus, int addr, int dev, int reg)
-> +{
-> +	struct dw_xpcs_regmap *pxpcs = bus->priv;
-> +
-> +	if (addr != 0)
-> +		return -ENODEV;
-> +
-> +	if (pxpcs->reg_indir)
-> +		return xpcs_regmap_read_reg_indirect(pxpcs, dev, reg);
-> +	else
-> +		return xpcs_regmap_read_reg_direct(pxpcs, dev, reg);
-> +}
-> +
-> +static int xpcs_regmap_write_c45(struct mii_bus *bus, int addr, int dev,
-> +				 int reg, u16 val)
-> +{
-> +	struct dw_xpcs_regmap *pxpcs = bus->priv;
-> +
-> +	if (addr != 0)
-> +		return -ENODEV;
-> +
-> +	if (pxpcs->reg_indir)
-> +		return xpcs_regmap_write_reg_indirect(pxpcs, dev, reg, val);
-> +	else
-> +		return xpcs_regmap_write_reg_direct(pxpcs, dev, reg, val);
-> +}
-> +
-> +static void devm_xpcs_regmap_destroy(void *data)
-> +{
-> +	struct dw_xpcs *xpcs = data;
-> +
-> +	xpcs_destroy(xpcs);
-> +}
-> +
-> +struct dw_xpcs *devm_xpcs_regmap_register(struct device *dev,
-> +					  const struct xpcs_regmap_config *config)
-> +{
-> +	static atomic_t id = ATOMIC_INIT(-1);
-> +	struct dw_xpcs_regmap *pxpcs;
-> +	struct dw_xpcs *xpcs;
-> +	int ret;
-> +
-> +	pxpcs = devm_kzalloc(dev, sizeof(*pxpcs), GFP_KERNEL);
-> +	if (!pxpcs)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	pxpcs->dev = dev;
-> +	pxpcs->regmap = config->regmap;
-> +	pxpcs->reg_indir = config->reg_indir;
+On Fri, Jun 5, 2026 at 8:28=E2=80=AFAM Rob Herring <robh@kernel.org> wrote:
+>
+> > > --- a/Documentation/devicetree/bindings/display/panel/samsung,atna33x=
+c20.yaml
+> > > +++ b/Documentation/devicetree/bindings/display/panel/samsung,atna33x=
+c20.yaml
+> > > @@ -25,6 +25,8 @@ properties:
+> > >                - samsung,atna40ct06
+> > >                # Samsung 14" WQXGA+ (2880x1800 pixels) eDP AMOLED pan=
+el
+> > >                - samsung,atna40cu11
+> > > +              # Samsung 14" WQXGA+ (2880x1800 pixels) eDP AMOLED pan=
+el
+> > > +              - samsung,atna40hq08
+> >
+> > Sure. I'll repeat the same comment I made the last time someone landed
+> > a change to this file [1] in the hopes that maybe someone will post a
+> > patch one day:
+> >
+> > <repeat>
+> > Given how many of these we're up to now, I'm starting to wonder if we
+> > should come up with a generic compatible like we did with "edp-panel"
+> > and then we can stop having to merge CLs like this. All of these
+> > Samsung OLED eDP panels have the same power up sequence and once we do
+> > that then we can read them via EDID or via DP AUX bus to identify
+> > which specific panel we have and if they need additional tweaking,
+> > just like we do with "edp-panel". Do DT folks have any opinion about
+> > that? Coming up with a name would be a pain since I wouldn't want to
+> > assert that all future Samsung OLED eDP panels will have the same
+> > powerup sequence. Maybe "samsung,amoled-edp-panel-v1" even though that
+> > sounds terrible and there's no known need for a "-v2"?
+> > </repeat>
+>
+> If things are the same, then perhaps there should be a fallback
+> compatible. Or just reuse an existing compatible.
 
-Looking at the overall series, is there any reason for this flag ?
+Right, there already is a fallback comparible. This patch is just
+adding a string to the enum that has the fallback compatible
+"samsung,atna33xc20". So someone using this new panel will use:
 
-Looks like the reg_indir=false path isn't used at all in this series.
+compatible =3D "samsung,atna40hq08", "samsung,atna33xc20"
 
-Maybe just drop it and let anyone add it back should the need arise ?
+My point was that listing specific panel isn't really valuable here.
+Though the "samsung" power sequence isn't completely compatible with
+the generic "eDP panel" power sequence (which is why they have
+separate drivers), just like generic "eDP panel"s we can query the
+panel ID if there are any per-panel quirks.
 
-Maxime
+So the question is: should we stop adding specific panels and just
+always list "samsung,atna33xc20" for all Samsung panels with a
+compatible power sequence, is it worth it to add a more generic name,
+or should we really keep listing all these individual panels for no
+real gain.
 
 
+> I can in no way
+> prevent someone from using 'foo-panel' in their DT when the h/w is
+> actually a foobar panel if the differences are transparent to s/w. (But
+> I will reject a quirk property later on when foobar turns out to be
+> different than foo.)
+
+It's more a question of what guidance we tell people. Here, Konrad is
+trying to do "the right thing" by listing his specific panel and then
+using the fallback. I'm saying "listing the specific panel isn't
+gaining you anything" and I'd rather not have to review / apply these
+pointless additions to the bindings.
+
+...but I can imagine people will be upset if I tell them to list
+"samsung,atna33xc20" for all compatible Samsung AMOLED panels. It
+would be nicer to come up with some sort of generic name?
+
+-Doug
 
