@@ -1,126 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-111441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id SzuoEH3jImppewEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 16:55:57 +0200
+	id ZT4DMRnnImoEfAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 17:11:21 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1EE2C6490C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 16:55:57 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A5CC649274
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 17:11:21 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=intel.com header.s=Intel header.b=ViCrIBCD;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111441-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111441-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=intel.com;
+	dkim=pass header.d=lunn.ch header.s=20171124 header.b=YO6xFE3v;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111442-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111442-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=lunn.ch;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 82C69304CF2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 14:54:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 466AC3040ABA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 15:01:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D02273E025D;
-	Fri,  5 Jun 2026 14:54:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99D623FF1C5;
+	Fri,  5 Jun 2026 15:01:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CCB3DD864;
-	Fri,  5 Jun 2026 14:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A8A3FB05D;
+	Fri,  5 Jun 2026 15:01:18 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780671269; cv=none; b=XURFfdMpC/md6jqHfwBOB9U8ftXfzpl1ZkqI/2XmO8AOsB7oKqDqMIS1JHgEzW3OI1dTGSiohkOeiWBBgIrSWNLN2eOja0JBVhLsu33ZKToXg9bJO0aB9yPfkYK2+XIv0Jqqh8C4FVizPvRM35QV9NIcK4WYTYdCXTNWWZH5iY4=
+	t=1780671679; cv=none; b=L4Rx8GFR4FY/P5E899qWRa+KBHFaTWRkWcnZZq2/20AeVw8W3bkVeLw76LaWLUmsJGxUlS8r8gZ9FD4zs4jbT+coKz3fa27KIlp4aZale31pz9YqdhRyQyjrxPyGTk4EPFBnxLgnF49MhzKp5PMTqPdq/u9xXL/HWo96SRCKNas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780671269; c=relaxed/simple;
-	bh=4tMeiKXzH2reWHQd2Do3LiCn4ypOHk0Io4ayzbOXR2A=;
+	s=arc-20240116; t=1780671679; c=relaxed/simple;
+	bh=pxAapcEdO+MAyKqj6ehtofV869XTRhryMMKXe/B0bGs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uE69f7oEiRrURVD1baumey7QqDInL9iiWqiBfGrbP5jySeDDdkIWnvId4Zf4wiZOFUXt7Fyis0KDmSaGMqnDlbDIpCmY4fdq7H7yRTtig4qNyHktkoRtpRpFzScC1n7mwTj9WBhmpQ79TwXmcWmtMrlDOHt6uy4wEdK01J2e/nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ViCrIBCD; arc=none smtp.client-ip=198.175.65.18
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1780671269; x=1812207269;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=4tMeiKXzH2reWHQd2Do3LiCn4ypOHk0Io4ayzbOXR2A=;
-  b=ViCrIBCD8lCv6XAbtpT81FQ631uftKlCzal7av3ErRIqeaKCKymlgqn6
-   AoZVkeupiO2Xg79jhTTe77rFaGCtOmmBblSg8R0tb2lR31byKp3B6Y335
-   GzHmCh/RAMtIxamW2Ot1DumW6coJAGxX3Vv2f6pQRwLXWS8yBRVHbJkNO
-   SvAu7aJAScvOVWTCSvnnIfXc42pEaCW2PeESJFwBerwUF2SaUh2QdynjL
-   KUhMC7j1zNE5snvNw7VYH2wqff3SV/h/qaLcJm79GCnPjGAIeIkytw/fO
-   rLX/Vk9j3d+uZk9UOSchtxYi9OaNPMkWQ0LMC21U27AagpVieYbzloWS5
-   Q==;
-X-CSE-ConnectionGUID: 9ou23hR/QfCF9CuA/UpSrQ==
-X-CSE-MsgGUID: liEgSng5SJaoz8YLlT4+Pw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11807"; a="81565442"
-X-IronPort-AV: E=Sophos;i="6.24,188,1774335600"; 
-   d="scan'208";a="81565442"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2026 07:54:28 -0700
-X-CSE-ConnectionGUID: h9Rk7ixqSzO/yh1S6oBceQ==
-X-CSE-MsgGUID: mgvGmj4gSWyogJmBey9GTw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,188,1774335600"; 
-   d="scan'208";a="243768683"
-Received: from ettammin-mobl2.ger.corp.intel.com (HELO localhost) ([10.245.245.178])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2026 07:54:14 -0700
-Date: Fri, 5 Jun 2026 17:54:11 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Johan Hovold <johan@kernel.org>
-Cc: Philipp Zabel <p.zabel@pengutronix.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>,
-	Mark Brown <broonie@opensource.wolfsonmicro.com>,
-	Thierry Reding <thierry.reding@avionic-design.de>,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
+	 Content-Type:Content-Disposition:In-Reply-To; b=LUb1V81iCmdAxeftYGWABu0KYWTdVQFRHMynlfHSc4kuiCJxniLSYoJ/a13QF6CRPgIW0Xqh3dkDUTB5hDT+9l/1kuEz8MmyuagmOtlbw67utsekrFTWfFEeJCfuX7zv++vDbAW6TGXjwkzBkqhMffAZNCu6xcYVcIwud2cF1ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=YO6xFE3v; arc=none smtp.client-ip=156.67.10.101
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=vhJid2pvzpBHl0Ce2YoytO/XJL6fJYHODig/cs9QFzE=; b=YO6xFE3vOyRiqK+WQnUmAdrcSV
+	VHHZ6YBl8JLmu1LynXh279jmPWBDAgBlv1od6iWCikJPm8EyrO4+uW9Sr1aoSz5XgP39N8UTiZb/g
+	HvCSDvZg3JK7EGgGVGa8mfMntnsVNsJTrNn7WDkgINPYp5JtnDUZedmwlYjDNkgZgwWk=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1wVW2i-006FUJ-5N; Fri, 05 Jun 2026 17:01:04 +0200
+Date: Fri, 5 Jun 2026 17:01:04 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: George Moussalem <george.moussalem@outlook.com>
+Cc: Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>, Rob Herring <robh@kernel.org>,
-	Saravana Kannan <saravanak@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ulf Hansson <ulfh@kernel.org>, Frank Li <Frank.Li@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Thomas =?iso-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Peter Chen <peter.chen@kernel.org>,
-	Paul Cercueil <paul@crapouillou.net>, Bin Liu <b-liu@ti.com>,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Hans de Goede <hansg@kernel.org>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>, brgl@kernel.org,
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-	driver-core@lists.linux.dev, devicetree@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org, linux-i2c@vger.kernel.org,
-	iommu@lists.linux.dev, linux-pm@vger.kernel.org,
-	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	linux-usb@vger.kernel.org, linux-mips@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org
-Subject: Re: [PATCH 22/23] reset: rzg2l: use
- platform_device_set_of_node_from_dev()
-Message-ID: <aiLjE0SLwrDytyw0@ashevche-desk.local>
-References: <20260521-pdev-fwnode-ref-v1-0-88c324a1b8d2@oss.qualcomm.com>
- <20260521-pdev-fwnode-ref-v1-22-88c324a1b8d2@oss.qualcomm.com>
- <6af284545729f03a60d06479339862a2f08c6b7e.camel@pengutronix.de>
- <ah9QtExF2rUUTMNo@ashevche-desk.local>
- <aiK-qZqpuC-OEigf@hovoldconsulting.com>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 4/4] net: phy: at803x: add RX and TX clock management
+ for IPQ5018 PHY
+Message-ID: <471a21f2-7ab0-410c-861d-5722a94b127d@lunn.ch>
+References: <20260605-ipq5018-gephy-clocks-v3-0-f232d9ca0966@outlook.com>
+ <20260605-ipq5018-gephy-clocks-v3-4-f232d9ca0966@outlook.com>
+ <36cd63f4-749e-4b09-b8a6-cbf6924dea88@lunn.ch>
+ <SN7PR19MB673634FEEF98FB8BCBBB15979D112@SN7PR19MB6736.namprd19.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -129,69 +77,62 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aiK-qZqpuC-OEigf@hovoldconsulting.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+In-Reply-To: <SN7PR19MB673634FEEF98FB8BCBBB15979D112@SN7PR19MB6736.namprd19.prod.outlook.com>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[lunn.ch,none];
+	R_DKIM_ALLOW(-0.20)[lunn.ch:s=20171124];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FORGED_RECIPIENTS(0.00)[m:george.moussalem@outlook.com,m:hkallweit1@gmail.com,m:linux@armlinux.org.uk,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:f.fainelli@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:netdev@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:ffainelli@gmail.com,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111442-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111441-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:johan@kernel.org,m:p.zabel@pengutronix.de,m:bartosz.golaszewski@oss.qualcomm.com,m:lee@kernel.org,m:broonie@opensource.wolfsonmicro.com,m:thierry.reding@avionic-design.de,m:sebastian.hesselbarth@gmail.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:srini@kernel.org,m:gregkh@linuxfoundation.org,m:vkoul@kernel.org,m:rafael@kernel.org,m:dakr@kernel.org,m:robh@kernel.org,m:saravanak@kernel.org,m:maddy@linux.ibm.com,m:mpe@ellerman.id.au,m:npiggin@gmail.com,m:chleroy@kernel.org,m:andi.shyti@kernel.org,m:joro@8bytes.org,m:will@kernel.org,m:robin.murphy@arm.com,m:opendmb@gmail.com,m:florian.fainelli@broadcom.com,m:bcm-kernel-feedback-list@broadcom.com,m:ulfh@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:matthew.brost@intel.com,m:thomas.hellstrom@linux.intel.com,m:rodrigo.vivi@intel.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:peter.chen@kernel.org,
- m:paul@crapouillou.net,m:b-liu@ti.com,m:luzmaximilian@gmail.com,m:hansg@kernel.org,m:ilpo.jarvinen@linux.intel.com,m:krzk@kernel.org,m:benh@kernel.crashing.org,m:brgl@kernel.org,m:linux-kernel@vger.kernel.org,m:netdev@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:driver-core@lists.linux.dev,m:devicetree@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:linux-i2c@vger.kernel.org,m:iommu@lists.linux.dev,m:linux-pm@vger.kernel.org,m:imx@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:intel-xe@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,m:linux-usb@vger.kernel.org,m:linux-mips@vger.kernel.org,m:platform-driver-x86@vger.kernel.org,m:sebastianhesselbarth@gmail.com,m:andrew@lunn.ch,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[pengutronix.de,oss.qualcomm.com,kernel.org,opensource.wolfsonmicro.com,avionic-design.de,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,linuxfoundation.org,linux.ibm.com,ellerman.id.au,8bytes.org,arm.com,broadcom.com,nxp.com,intel.com,linux.intel.com,ffwll.ch,crapouillou.net,ti.com,kernel.crashing.org,vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.infradead.org,lists.freedesktop.org];
+	FREEMAIL_TO(0.00)[outlook.com];
+	FORGED_SENDER(0.00)[andrew@lunn.ch,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	HAS_ORG_HEADER(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[lunn.ch:+];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@linux.intel.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[intel.com:+];
-	RCPT_COUNT_GT_50(0.00)[66];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,ashevche-desk.local:mid,linux.intel.com:from_mime,intel.com:dkim]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andrew@lunn.ch,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[gmail.com,armlinux.org.uk,davemloft.net,google.com,kernel.org,redhat.com,vger.kernel.org,oss.qualcomm.com];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,lunn.ch:mid,lunn.ch:from_mime,lunn.ch:dkim,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1EE2C6490C1
+X-Rspamd-Queue-Id: 4A5CC649274
 
-On Fri, Jun 05, 2026 at 02:18:49PM +0200, Johan Hovold wrote:
-> On Wed, Jun 03, 2026 at 12:52:52AM +0300, Andy Shevchenko wrote:
-> > On Tue, Jun 02, 2026 at 10:24:41AM +0200, Philipp Zabel wrote:
-> > > On Do, 2026-05-21 at 10:36 +0200, Bartosz Golaszewski wrote:
+> Link state detection works without these clocks though which
+> explains the approach to enabling/disabling them upon link state changes.
 
-...
+It would be good to add that to the commit message, since it is not
+what i would expect. However, ...
 
-> > > > -	device_set_of_node_from_dev(&vdev->dev, dev);
-> > > > +	platform_device_set_of_node_from_dev(vdev, dev);
-> > 
-> > Same Q here, why it uses inherited call? Cargo cult?
-> > 
-> > 'reused' flag is solely pin control (provider!) thingy as far as I remember.
-> 
-> No, it's needed for pin control *consumers*, which can be any device,
-> and potentially any other resource managed by driver core or bus code.
+> This PHY is integrated into the IPQ5018 SoC, connected to the first GMAC
+> (GMAC0) and probed upon boot. However, this PHY is not used on all
+> boards because an external PHY or switch can be wired to the SoC's
+> second GMAC instead (through a PCS). So from a power management
+> perspective, it would be better if we can disable the clocks if there's
+> no link detected.
 
-Why don't we set it for every pin control consumer automatically?
+Humm, is link the correct criteria? If the PHY is not used,
+.config_aneg should not be called. Why not have the probe method get
+the optional clocks, but leave them off. When .config_aneg is called
+for the first time, enable the clocks?
 
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+    Andrew
 
