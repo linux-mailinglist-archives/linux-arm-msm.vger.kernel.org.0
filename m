@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-111384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id JiEhK8OsImr8bwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 13:02:27 +0200
+	id qBfFDwutImoIcAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 13:03:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8C73647978
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 13:02:26 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id B385C647996
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 13:03:38 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=MD9HwyPk;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111384-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111384-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="YRf6SjA/";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111385-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111385-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 14C0F3009E3A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 10:51:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D644A300EF5B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 10:52:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05B654C77B1;
-	Fri,  5 Jun 2026 10:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6085B4A2E1A;
+	Fri,  5 Jun 2026 10:52:36 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF2D4BC03C;
-	Fri,  5 Jun 2026 10:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639783E123E;
+	Fri,  5 Jun 2026 10:52:35 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780656671; cv=none; b=nUe7YAMPZdboaKlVETl4DATuvhn7SN4pPlSaj4mvaAxW5SwcXlfCIGSq1GHX42MTAgMA1bVRVF2Lap5ynlK8u+d3G9Rz9zVUFITX5q9Ll8wR7XaLGxSqnQ+J6myhEhfoNyN0CcDkAGCVoQcR6L95g+crR47NtbB01FNHr06MDJI=
+	t=1780656756; cv=none; b=Jdpgx2nOUEoOhmOrZrBM7uDLPeDStuf63CaIAvly8PVUIVspuZYEfkqzjRN4Y0JNXuauGzgyTTralmKu/jLZl7kMoxDE+6MgD2by1YdEGmjcxTmFb8rn340wJi2tjlkBXLyl/FPgKM6+55hY7GiS0ljek3/6PGPKlYFy4g5jPVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780656671; c=relaxed/simple;
-	bh=DZqvkQ5zKCxI0Z1Dpo7C172RLyVI7SNoqtJXiuW/fUI=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Dp4/ngWS9RiGrMDpjx1gD2AMPG4G7fb77Ug5m+13Rnex/Tm4GlSRz0JYjJLuo0l3sbfTbU2ux3kWk7rBJEr7vUuiz2yJrOpIUBr0Anz++/tC4yYIju5JNivtG0Vg/HxvOwOg5/INUtPcBWBKDe3qil5MTUJIewzayJo0Pf7HqSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MD9HwyPk; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE16C1F00893;
-	Fri,  5 Jun 2026 10:51:05 +0000 (UTC)
+	s=arc-20240116; t=1780656756; c=relaxed/simple;
+	bh=Zisja1Bl0dQzuYf2h54m2bC/qEmi70FTkC/gHRg5f/Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=J4XMdNDzxICFIqk2jj0koJUL0P7yvAJaAds9X8d9b0RmZPu22WgDWEKYSn9uHM1ahNeFczgb8vSyiOElr2GAQ57XX4zPxtO3lLywqbHmXMo3pzlJHQzQnJw3u3EYqOyZIIvxwEY8R+HAHcpRxpUm+4yw3qHmmFRzc7+//qeC00s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YRf6SjA/; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E1B1F00893;
+	Fri,  5 Jun 2026 10:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780656670;
-	bh=QiJlaOUEk6E7gNeaDPVa2HO5tIuEXJoDuF0iMl2hJtM=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To;
-	b=MD9HwyPkDFfcK/aBtJ+691uhn+zIja2dyfk0f9XomcpoYS7IFnQW/OBOPH8cf/onE
-	 jHzzdQi4clXgzXzhdhGvKWHmSeBTh4fikUTpu8SPVaOtTqI1ndaPPjog49V70PaZ5n
-	 tZVUXDN+sPtlbkk+Wg7Qsc0ByUhGSjWFDCTyVaJofEv7rv2cUOWiDutHreqWFOclTk
-	 qNmKdj4PNamiTdRwuSxl2iM3T129Jes0WQpqptuC1PKiS5a8IWzaNNVQxDpEkWvpm+
-	 D0BtEWxIZfHq2LEtqt4MPv6YINKxTCx/3LgdpDRlM0+MOCFkmEq3//fOojv7JjR/qZ
-	 CW5i1GqUv37vw==
-Message-ID: <438f6817-326b-4c70-b3c3-28107ea385db@kernel.org>
-Date: Fri, 5 Jun 2026 12:51:03 +0200
+	s=k20260515; t=1780656755;
+	bh=Y34w090599Xd3z24JK3MJUMlHyjLYd5sE8XfSkjXFFo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=YRf6SjA/Bc5alqQDxclm4VUz/Tx3gSWBBRdi1tJhxkgXAiNK7TQwxdw0ZKUtskLAM
+	 bqg79L8SGwkvkoXbhGp2PzdqFExVckLP0DsIZDtqyiDVr74GukphMLFRbP6EtfrSB1
+	 5LbIRbkHUFzoteYPQZpcJEBIWF0cZj7FGXT2SJYA/AMz+DFjOAy6ydkdPfCVmruik7
+	 /PLUvfykjwrn9mZrxe4Cl0mcd1jUwDw8YRs7hzOP4NcfvdaaeFVFDFRXnvoq4kwSyv
+	 hN7y47M8UUaGGMG+0kCZlHElzEkoyLsxU7YgfL2RD0IYH80BMMIhvGfQK4PynozAiy
+	 Nx0eAtU94FGuA==
+Message-ID: <d38d849e-1ecb-4600-814a-23fa8d523dbb@kernel.org>
+Date: Fri, 5 Jun 2026 12:52:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,8 +55,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/13] dt-bindings: sound: Add Qualcomm QAIF binding
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 3/13] MAINTAINERS: Add Qualcomm QAIF driver entry
 To: Harendra Gautam <harendra.gautam@oss.qualcomm.com>,
  Srinivas Kandagatla <srini@kernel.org>
 Cc: Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
@@ -65,8 +64,8 @@ Cc: Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20260605103739.3557573-1-harendra.gautam@oss.qualcomm.com>
- <20260605103739.3557573-3-harendra.gautam@oss.qualcomm.com>
- <a7852d0b-10ee-42ec-b966-28d3f2066bb1@kernel.org>
+ <20260605103739.3557573-4-harendra.gautam@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -111,7 +110,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <a7852d0b-10ee-42ec-b966-28d3f2066bb1@kernel.org>
+In-Reply-To: <20260605103739.3557573-4-harendra.gautam@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -119,13 +118,13 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111384-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111385-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
@@ -145,41 +144,41 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A8C73647978
+X-Rspamd-Queue-Id: B385C647996
 
-On 05/06/2026 12:46, Krzysztof Kozlowski wrote:
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  '#sound-dai-cells':
->> +    const: 1
->> +
->> +  '#address-cells':
->> +    const: 1
->> +
->> +  '#size-cells':
->> +    const: 0
->> +
->> +  status: true
+On 05/06/2026 12:37, Harendra Gautam wrote:
+> Add MAINTAINERS coverage for the Qualcomm Audio Interface (QAIF) driver
+> so changes to its devicetree binding, CPU DAI driver, and PCM platform
+> driver are routed to the Qualcomm ASoC maintainers and lists.
 > 
-> Please do not invent own style. Is there any binding with something like
-> that?
+> Signed-off-by: Harendra Gautam <harendra.gautam@oss.qualcomm.com>
+> ---
+>  MAINTAINERS | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 > 
-> I finish here. Why? Because you sent DIFFERENT binding to internal
-> review. Then you made completely confusing changes and never reviewed it
-> internally again.
-> 
-> The internal review which Qualcomm implemented is for purpose of not
-> wasting community time on reviewing trivialities. You bypassing this and
-> sending us the trivialities feels like that wasting time is okay?
-> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index f877e5aaf2c7..b38f03680ef3 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -21707,6 +21707,16 @@ F:	sound/soc/codecs/wcd93*.*
+>  F:	sound/soc/codecs/wsa88*.*
+>  F:	sound/soc/qcom/
+>  
+> +QCOM AUDIO INTERFACE (QAIF) DRIVER
+> +M:	Harendra Gautam <harendra.gautam@oss.qualcomm.com>
+> +M:	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> +L:	linux-sound@vger.kernel.org
+> +L:	linux-arm-msm@vger.kernel.org
+> +S:	Supported
+> +F:	Documentation/devicetree/bindings/sound/qcom,qaif.yaml
+> +F:	include/dt-bindings/sound/qcom,qaif.h
+> +F:	sound/soc/qcom/qaif*
 
-I stand corrected - you did send later version for internal review with
-the status and toolset completely missed that.
+No such file.
 
 Best regards,
 Krzysztof
