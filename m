@@ -1,230 +1,385 @@
-Return-Path: <linux-arm-msm+bounces-111444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id fZjIJWbtImpVfQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 17:38:14 +0200
+	id 6FiNMbzvImrSfQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 17:48:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D4A66495F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 17:38:14 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71417649757
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 17:48:12 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=fWcnhy3n;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111444-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111444-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=bootlin.com header.s=dkim header.b=LSb3DbXw;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111445-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111445-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=bootlin.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 682EF30A5B03
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 15:28:28 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8BEC9306F388
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 15:37:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81ACF3B895D;
-	Fri,  5 Jun 2026 15:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4851F41930E;
+	Fri,  5 Jun 2026 15:36:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51BA33438B5;
-	Fri,  5 Jun 2026 15:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2A52153D8;
+	Fri,  5 Jun 2026 15:36:12 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780673307; cv=none; b=Ofn2d/+Ff15CqP3gsDjWeEiuO+TA7JkeCRQRE51n3Y5P8b3e/VZkvN9vjZIqQtxgniRsZqGDSJfljfeEPE12fU9Wc51ldhcoo5GAC2GBqgxl+F/is496RE4jy65nY1hW/O4kMQ4olZWllP+DRxivWOLtO5sv+/kFIpa6s0VMGAs=
+	t=1780673779; cv=none; b=KFcvWj4gMDnX8oUERu3RzVywVds8Tf81WkY5tVXZS98yIBGzUT82/DEWKpKmZSYQBfAWp6eGlibd/WJDTeo+IRXzYhDE4bs0Qe9gL6YH22SGVWsCSWnYJjtDExyNoK4ouBrByLB+Tiysf4inPgHwtW10b8p9SK+pNB/++z4J8ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780673307; c=relaxed/simple;
-	bh=WFwBSFveNwk4QJwSulfQzuXUhPta92VRsj+plVVpd+c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RV4+TxEEKl6XNoEv49EhDufW/wjR1BFFjgbaaaXnKy2N592+/lIYS5ucmfpHFZqnPNpWP1P1+KbsVr9rnyOsR6slZX7vXgdoKLSfmtSRfsMkt6dch0cYh4b+sidmqU/H6P4Qh3ChmDEjYBZ27gCXAef5CXiWYQEgeoBW6wtLdLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fWcnhy3n; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAFC1F00893;
-	Fri,  5 Jun 2026 15:28:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780673306;
-	bh=oBR7PyLS1GRVWsoOzBh999WZkqMfxUWSYE8ZccTmdu0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=fWcnhy3nfcLpIlGX0XpRreSQve+kDKX+VCRsbzRkZTzcjuSg4kzdSS2wyWj8P895v
-	 jKkdzwnkTT5yteTGM9/9/QBzAFs6w3vEe87/8KZFMMv/KNDg+s744VLpMqPH026Waf
-	 Jrxj/+9wMD2QI1VoeD4SsJCbjT6ObfXL+ph5R6GAc719K6snd3iICjMcMFG3aKonso
-	 stdD0sB9iTsCFQkTE1M2tBsD6DmUxxORwjhJoNmAcsvN9bk4B5bkPeU0OkaTy99iRb
-	 etnBbGQogMRQIDITILsbejpAzhcBvs/d/D9TB5HEg0PZS+rmZ/CNX9BZYpD+gBetG3
-	 yLryZkt+t7VaA==
-Date: Fri, 5 Jun 2026 10:28:25 -0500
-From: Rob Herring <robh@kernel.org>
-To: Doug Anderson <dianders@chromium.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/4] dt-bindings: display: panel: samsung,atna33xc20: Add
- ATNA40HQ08-0
-Message-ID: <20260605152825.GA3740391-robh@kernel.org>
-References: <20260604-topic-yoga_submission-v1-0-57c70c23d0d6@oss.qualcomm.com>
- <20260604-topic-yoga_submission-v1-1-57c70c23d0d6@oss.qualcomm.com>
- <CAD=FV=UaPKiGSL6mhVdywp67skSr2B7977f3kZ23FFHaD=95RQ@mail.gmail.com>
+	s=arc-20240116; t=1780673779; c=relaxed/simple;
+	bh=n83rW4eamdlQ8FGqJ0dCVHLwmywwEa//w82pSDEfiJk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eh1hOHNc/RJQLzg46rBVwngm9X9/aQFY9MvQWDgkZ5t2HVoCJ/4D4XSfnx/4gp61QKhyC1BTHO9gNEhZ5zH0Ki14/o7l+L9H1R0Ad+sohcyyW/LMJf4TTauPa33UC66Iyq5fh47J5H0UcAH52kfhivRmVnPBkST9JhvGAUXmpwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=LSb3DbXw; arc=none smtp.client-ip=185.171.202.116
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 2D349C58479;
+	Fri,  5 Jun 2026 15:36:10 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 4A1AB5FED1;
+	Fri,  5 Jun 2026 15:36:10 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 3C996106A24F0;
+	Fri,  5 Jun 2026 17:35:47 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1780673767; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=FHeuOlC/gaOtesZkFgqVr9DoEMDIdfxTclEETE4eqSU=;
+	b=LSb3DbXwWwWowFJQbUezIa1BBhdJR5igSpOLdXQsCT+BMkRWsdW44ijdI9dXSrrrcI8V3I
+	ecL7Zv+Q2UVM43Odjp/o2hzqvGbJH9gcvwM6bdnjCKpscXz21KdbG5a15Kc6ylGOPoMikV
+	/27OcnmIj1H+3ddtxGC9cfiTRCWoqBfbWXl8ciMGadarXoTP7kfh+SkJNF+NmdT7qNf3N7
+	nOUpMyUSLjBesoK1WhJDphDI8xte4Zjy9kt1XGP1BSTgKvcUlm5wSd8QHvl7H5BQGa0SY4
+	7tx4Gs7DtT2TfocD21W8eEKgMWx1a3Dd+/HcnhtEgGNrly28oFopJXpGDFJybQ==
+Message-ID: <566af63b-05a9-43f8-94e9-19af737c848a@bootlin.com>
+Date: Fri, 5 Jun 2026 17:35:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD=FV=UaPKiGSL6mhVdywp67skSr2B7977f3kZ23FFHaD=95RQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v2 03/14] net: pcs: pcs-xpcs-regmap: support XPCS
+ memory-mapped MDIO bus via regmap
+To: Alex Elder <elder@riscstar.com>, andrew+netdev@lunn.ch,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, rmk+kernel@armlinux.org.uk, andersson@kernel.org,
+ konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, linusw@kernel.org, brgl@kernel.org, arnd@arndb.de,
+ gregkh@linuxfoundation.org
+Cc: Daniel Thompson <daniel@riscstar.com>, mohd.anwar@oss.qualcomm.com,
+ a0987203069@gmail.com, alexandre.torgue@foss.st.com, ast@kernel.org,
+ boon.khai.ng@altera.com, chenchuangyu@xiaomi.com, chenhuacai@kernel.org,
+ daniel@iogearbox.net, hawk@kernel.org, hkallweit1@gmail.com,
+ inochiama@gmail.com, john.fastabend@gmail.com, julianbraha@gmail.com,
+ livelycarpet87@gmail.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
+ prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
+ rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
+ weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
+ bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20260605010022.968612-1-elder@riscstar.com>
+ <20260605010022.968612-4-elder@riscstar.com>
+Content-Language: en-US
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+In-Reply-To: <20260605010022.968612-4-elder@riscstar.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.34 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
+	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-111445-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111444-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FORGED_RECIPIENTS(0.00)[m:dianders@chromium.org,m:konrad.dybcio@oss.qualcomm.com,m:neil.armstrong@linaro.org,m:jesszhan0024@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:dri-devel@lists.freedesktop.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:elder@riscstar.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:rmk+kernel@armlinux.org.uk,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linusw@kernel.org,m:brgl@kernel.org,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:daniel@riscstar.com,m:mohd.anwar@oss.qualcomm.com,m:a0987203069@gmail.com,m:alexandre.torgue@foss.st.com,m:ast@kernel.org,m:boon.khai.ng@altera.com,m:chenchuangyu@xiaomi.com,m:chenhuacai@kernel.org,m:daniel@iogearbox.net,m:hawk@kernel.org,m:hkallweit1@gmail.com,m:inochiama@gmail.com,m:john.fastabend@gmail.com,m:julianbraha@gmail.com,m:livelycarpet87@gmail.com,m:mcoquelin.stm32@gmail.com,m:me@ziyao.cc,m:prabhakar.mahadev-lad.rj@bp.renesas.com,m:richardcochran@gmail.com,m:rohan.g.thomas@altera.com,m:sdf@fomichev.me,m:siyanteng@cqsoftware.com.cn,m:weishangjuan@eswincomputing.com,m:wens@kernel.org,m:netdev@vger.kernel.o
+ rg,m:bpf@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:andrew@lunn.ch,m:rmk@armlinux.org.uk,m:krzk@kernel.org,m:conor@kernel.org,m:johnfastabend@gmail.com,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[maxime.chevallier@bootlin.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[48];
+	FREEMAIL_CC(0.00)[riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,kernel.org,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,lists.freedesktop.org,vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[maxime.chevallier@bootlin.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[bootlin.com:+];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,bootlin.com:mid,bootlin.com:from_mime,bootlin.com:dkim,riscstar.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0D4A66495F7
+X-Rspamd-Queue-Id: 71417649757
 
-On Thu, Jun 04, 2026 at 02:23:25PM -0700, Doug Anderson wrote:
-> Hi,
-> 
-> On Thu, Jun 4, 2026 at 1:07 AM Konrad Dybcio
-> <konrad.dybcio@oss.qualcomm.com> wrote:
-> >
-> > Some variants of the Qualcomm Snapdragon X2 Elite-based Lenovo Yoga
-> > Slim 7x Gen11 laptop ship with a Samsung ATNA40HQ08-0 2880x1800 120 Hz
-> > OLED panel which seems to be compatible with the other ATNAxxx panels,
-> > document it.
-> >
-> > Note that I stripped the -0 suffix from the compatible, as it seems to
-> > be of little importance and some sources omit it.
-> >
-> > EDID:
-> > 0000000 ff00 ffff ffff 00ff 834c 422f 002f 0000
-> > 0000010 2300 0401 1eb5 7813 6603 ae85 3851 24b9
-> > 0000020 500a 0054 0000 0101 0101 0101 0101 0101
-> > 0000030 0101 0101 0101 0000 0000 0000 0000 0000
-> > 0000040 0000 0000 0000 0000 0000 fd00 1e00 e678
-> > 0000050 47e6 0a01 2020 2020 2020 0000 fe00 5300
-> > 0000060 4344 2020 2020 2020 2020 2020 0000 fc00
-> > 0000070 4100 4e54 3441 4830 3051 2d38 2030 c402
-> > 0000080 2070 0279 2000 1800 1200 2ffb 0042 0000
-> > 0000090 0000 0c23 5441 414e 3034 5148 3830 302d
-> > 00000a0 0021 ca1d 5e0b 4007 080b 0007 7ae5 8551
-> > 00000b0 b9a3 024a 020a 5445 5fd0 644c 4400 7823
-> > 00000c0 0026 0609 0000 0000 5000 0000 0022 0014
-> > 00000d0 0ad4 3f85 c70b 0700 1f00 0700 7707 4f00
-> > 00000e0 0f00 2e00 0600 4500 5fd0 644c 002b 270c
-> > 00000f0 1e00 0077 2700 1e00 003b 0000 0000 9085
-> > 0000100 2070 0079 2200 1400 d400 050a 0b3f 00c7
-> > 0000110 0007 001f 0707 07f7 07cf 000f 0081 731f
-> > 0000120 001a 0300 1e5b 0078 8fa0 6a02 7802 0000
-> > 0000130 0000 e38d 8005 e600 0506 8f01 016a 0000
-> > 0000140 0000 0000 0000 0000 0000 0000 0000 0000
-> > 0000150 0000 0000 0000 0000 0000 0000 0000 0000
-> > 0000160 0000 0000 0000 0000 0000 0000 0000 0000
-> > 0000170 0000 0000 0000 0000 0000 0000 0000 900f
-> 
-> I'm not a fan of the EDID being presented in 16-bit words. :-/
-> Changing it to this when applying:
-> 
-> 00 ff ff ff ff ff ff 00 4c 83 2f 42 2f 00 00 00
-> 00 23 01 04 b5 1e 13 78 03 66 85 ae 51 38 b9 24
-> 0a 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
-> 01 01 01 01 01 01 00 00 00 00 00 00 00 00 00 00
-> 00 00 00 00 00 00 00 00 00 00 00 fd 00 1e 78 e6
-> e6 47 01 0a 20 20 20 20 20 20 00 00 00 fe 00 53
-> 44 43 20 20 20 20 20 20 20 20 20 20 00 00 00 fc
-> 00 41 54 4e 41 34 30 48 51 30 38 2d 30 20 02 c4
-> 70 20 79 02 00 20 00 18 00 12 fb 2f 42 00 00 00
-> 00 00 23 0c 41 54 4e 41 34 30 48 51 30 38 2d 30
-> 21 00 1d ca 0b 5e 07 40 0b 08 07 00 e5 7a 51 85
-> a3 b9 4a 02 0a 02 45 54 d0 5f 4c 64 00 44 23 78
-> 26 00 09 06 00 00 00 00 00 50 00 00 22 00 14 00
-> d4 0a 85 3f 0b c7 00 07 00 1f 00 07 07 77 00 4f
-> 00 0f 00 2e 00 06 00 45 d0 5f 4c 64 2b 00 0c 27
-> 00 1e 77 00 00 27 00 1e 3b 00 00 00 00 00 85 90
-> 70 20 79 00 00 22 00 14 00 d4 0a 05 3f 0b c7 00
-> 07 00 1f 00 07 07 f7 07 cf 07 0f 00 81 00 1f 73
-> 1a 00 00 03 5b 1e 78 00 a0 8f 02 6a 02 78 00 00
-> 00 00 8d e3 05 80 00 e6 06 05 01 8f 6a 01 00 00
-> 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-> 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-> 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-> 00 00 00 00 00 00 00 00 00 00 00 00 00 00 0f 90
-> 
-> 
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> > ---
-> >  Documentation/devicetree/bindings/display/panel/samsung,atna33xc20.yaml | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/display/panel/samsung,atna33xc20.yaml b/Documentation/devicetree/bindings/display/panel/samsung,atna33xc20.yaml
-> > index 1bbe0da3997c3b06eccd18fe8980b58a6c05d963..27536eeaed8594c047dd0fa1cf425912be189508 100644
-> > --- a/Documentation/devicetree/bindings/display/panel/samsung,atna33xc20.yaml
-> > +++ b/Documentation/devicetree/bindings/display/panel/samsung,atna33xc20.yaml
-> > @@ -25,6 +25,8 @@ properties:
-> >                - samsung,atna40ct06
-> >                # Samsung 14" WQXGA+ (2880x1800 pixels) eDP AMOLED panel
-> >                - samsung,atna40cu11
-> > +              # Samsung 14" WQXGA+ (2880x1800 pixels) eDP AMOLED panel
-> > +              - samsung,atna40hq08
-> 
-> Sure. I'll repeat the same comment I made the last time someone landed
-> a change to this file [1] in the hopes that maybe someone will post a
-> patch one day:
-> 
-> <repeat>
-> Given how many of these we're up to now, I'm starting to wonder if we
-> should come up with a generic compatible like we did with "edp-panel"
-> and then we can stop having to merge CLs like this. All of these
-> Samsung OLED eDP panels have the same power up sequence and once we do
-> that then we can read them via EDID or via DP AUX bus to identify
-> which specific panel we have and if they need additional tweaking,
-> just like we do with "edp-panel". Do DT folks have any opinion about
-> that? Coming up with a name would be a pain since I wouldn't want to
-> assert that all future Samsung OLED eDP panels will have the same
-> powerup sequence. Maybe "samsung,amoled-edp-panel-v1" even though that
-> sounds terrible and there's no known need for a "-v2"?
-> </repeat>
+Hi Alex,
 
-If things are the same, then perhaps there should be a fallback 
-compatible. Or just reuse an existing compatible. I can in no way 
-prevent someone from using 'foo-panel' in their DT when the h/w is 
-actually a foobar panel if the differences are transparent to s/w. (But 
-I will reject a quirk property later on when foobar turns out to be 
-different than foo.)
+On 6/5/26 03:00, Alex Elder wrote:
+> From: Daniel Thompson <daniel@riscstar.com>
+> 
+> In some DesignWare XPCS implementatons the memory-mapped MDIO bus is
+> allocated to a register window that does not align to a page boundary.
+> This makes iomapping the registers problematic.
+> 
+> For example the Toshiba TC9564 (a PCIe Ethernet-AVB/TSN bridge) provides
+> an "eMAC" subsystem with the XPCS base address cuddled up to XGMAC
+> registers.
+> 
+> Let's introduce helpers to allow the driver that owns the eMAC to register
+> an XPCS using is regmap for the memory-mapped MDIO bus.
+> 
+> Signed-off-by: Daniel Thompson <daniel@riscstar.com>
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> ---
+>  MAINTAINERS                         |   2 +
+>  drivers/net/pcs/Makefile            |   4 +-
+>  drivers/net/pcs/pcs-xpcs-regmap.c   | 219 ++++++++++++++++++++++++++++
+>  include/linux/pcs/pcs-xpcs-regmap.h |  20 +++
+>  4 files changed, 243 insertions(+), 2 deletions(-)
+>  create mode 100644 drivers/net/pcs/pcs-xpcs-regmap.c
+>  create mode 100644 include/linux/pcs/pcs-xpcs-regmap.h
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index eb8cdcc76324f..2aa6ea012c848 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -25931,8 +25931,10 @@ F:	drivers/net/ethernet/synopsys/
+>  SYNOPSYS DESIGNWARE ETHERNET XPCS DRIVER
+>  L:	netdev@vger.kernel.org
+>  S:	Orphan
+> +F:	drivers/net/pcs/pcs-xpcs-regmap.c
+>  F:	drivers/net/pcs/pcs-xpcs.c
+>  F:	drivers/net/pcs/pcs-xpcs.h
+> +F	include/linux/pcs/pcs-xpcs-regmap.h
+>  F:	include/linux/pcs/pcs-xpcs.h
+>  
+>  SYNOPSYS DESIGNWARE HDMI RX CONTROLLER DRIVER
+> diff --git a/drivers/net/pcs/Makefile b/drivers/net/pcs/Makefile
+> index 4f7920618b900..565f1b63fce0b 100644
+> --- a/drivers/net/pcs/Makefile
+> +++ b/drivers/net/pcs/Makefile
+> @@ -1,8 +1,8 @@
+>  # SPDX-License-Identifier: GPL-2.0
+>  # Makefile for Linux PCS drivers
+>  
+> -pcs_xpcs-$(CONFIG_PCS_XPCS)	:= pcs-xpcs.o pcs-xpcs-plat.o \
+> -				   pcs-xpcs-nxp.o pcs-xpcs-wx.o
+> +pcs_xpcs-$(CONFIG_PCS_XPCS)	:= pcs-xpcs.o pcs-xpcs-nxp.o pcs-xpcs-regmap.o \
+> +				   pcs-xpcs-plat.o pcs-xpcs-wx.o
+>  
+>  obj-$(CONFIG_PCS_XPCS)		+= pcs_xpcs.o
+>  obj-$(CONFIG_PCS_LYNX)		+= pcs-lynx.o
+> diff --git a/drivers/net/pcs/pcs-xpcs-regmap.c b/drivers/net/pcs/pcs-xpcs-regmap.c
+> new file mode 100644
+> index 0000000000000..55cd05d09c7db
+> --- /dev/null
+> +++ b/drivers/net/pcs/pcs-xpcs-regmap.c
+> @@ -0,0 +1,219 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Synopsys DesignWare XPCS regmap helpers
+> + *
+> + * Copyright (C) 2026 RISCstar Solutions.
+> + * Copyright (C) 2024 Serge Semin
+> + */
+> +
+> +#include <linux/device.h>
+> +#include <linux/kernel.h>
+> +#include <linux/mdio.h>
+> +#include <linux/pcs/pcs-xpcs.h>
+> +#include <linux/pcs/pcs-xpcs-regmap.h>
+> +#include <linux/regmap.h>
+> +
+> +#include "pcs-xpcs.h"
+> +
+> +/* Page select register for the indirect MMIO CSRs access */
+> +#define DW_VR_CSR_VIEWPORT		0xff
+> +
+> +struct dw_xpcs_regmap {
+> +	struct device *dev;
+> +	struct mii_bus *bus;
+> +	struct regmap *regmap;
+> +	bool reg_indir;
+> +};
+> +
+> +static ptrdiff_t xpcs_regmap_addr_format(int dev, int reg)
+> +{
+> +	return FIELD_PREP(0x1f0000, dev) | FIELD_PREP(0xffff, reg);
+> +}
+> +
+> +static u16 xpcs_regmap_addr_page(ptrdiff_t csr)
+> +{
+> +	return FIELD_GET(0x1fff00, csr);
+> +}
+> +
+> +static ptrdiff_t xpcs_regmap_addr_offset(ptrdiff_t csr)
+> +{
+> +	return FIELD_GET(0xff, csr);
+> +}
+> +
+> +static int xpcs_regmap_read_reg_indirect(struct dw_xpcs_regmap *pxpcs, int dev,
+> +					 int reg)
+> +{
+> +	ptrdiff_t csr, ofs;
+> +	unsigned int val;
+> +	u16 page;
+> +	int res;
+> +
+> +	csr = xpcs_regmap_addr_format(dev, reg);
+> +	page = xpcs_regmap_addr_page(csr);
+> +	ofs = xpcs_regmap_addr_offset(csr);
+> +
+> +	res = regmap_write(pxpcs->regmap, DW_VR_CSR_VIEWPORT, page);
+> +	if (res < 0)
+> +		return res;
+> +
+> +	res = regmap_read(pxpcs->regmap, ofs, &val);
+> +	if (res < 0)
+> +		return res;
+> +
+> +	return val & 0xffff;
+> +}
+> +
+> +static int xpcs_regmap_write_reg_indirect(struct dw_xpcs_regmap *pxpcs, int dev,
+> +					  int reg, u16 val)
+> +{
+> +	ptrdiff_t csr, ofs;
+> +	u16 page;
+> +	int res;
+> +
+> +	csr = xpcs_regmap_addr_format(dev, reg);
+> +	page = xpcs_regmap_addr_page(csr);
+> +	ofs = xpcs_regmap_addr_offset(csr);
+> +
+> +	res = regmap_write(pxpcs->regmap, DW_VR_CSR_VIEWPORT, page);
+> +	if (res < 0)
+> +		return res;
+> +
+> +	return regmap_write(pxpcs->regmap, ofs, val);
+> +}
+> +
+> +static int xpcs_regmap_read_reg_direct(struct dw_xpcs_regmap *pxpcs, int dev,
+> +				       int reg)
+> +{
+> +	unsigned int val;
+> +	ptrdiff_t csr;
+> +	int res;
+> +
+> +	csr = xpcs_regmap_addr_format(dev, reg);
+> +	res = regmap_read(pxpcs->regmap, csr, &val);
+> +	if (res < 0)
+> +		return res;
+> +
+> +	return val & 0xffff;
+> +}
+> +
+> +static int xpcs_regmap_write_reg_direct(struct dw_xpcs_regmap *pxpcs, int dev,
+> +					int reg, u16 val)
+> +{
+> +	ptrdiff_t csr = xpcs_regmap_addr_format(dev, reg);
+> +
+> +	return regmap_write(pxpcs->regmap, csr, val);
+> +}
+> +
+> +static int xpcs_regmap_read_c22(struct mii_bus *bus, int addr, int reg)
+> +{
+> +	struct dw_xpcs_regmap *pxpcs = bus->priv;
+> +
+> +	if (addr != 0)
+> +		return -ENODEV;
+> +
+> +	if (pxpcs->reg_indir)
+> +		return xpcs_regmap_read_reg_indirect(pxpcs, MDIO_MMD_VEND2, reg);
+> +	else
+> +		return xpcs_regmap_read_reg_direct(pxpcs, MDIO_MMD_VEND2, reg);
+> +}
+> +
+> +static int xpcs_regmap_write_c22(struct mii_bus *bus, int addr, int reg, u16 val)
+> +{
+> +	struct dw_xpcs_regmap *pxpcs = bus->priv;
+> +
+> +	if (addr != 0)
+> +		return -ENODEV;
+> +
+> +	if (pxpcs->reg_indir)
+> +		return xpcs_regmap_write_reg_indirect(pxpcs, MDIO_MMD_VEND2, reg, val);
+> +	else
+> +		return xpcs_regmap_write_reg_direct(pxpcs, MDIO_MMD_VEND2, reg, val);
+> +}
+> +
+> +static int xpcs_regmap_read_c45(struct mii_bus *bus, int addr, int dev, int reg)
+> +{
+> +	struct dw_xpcs_regmap *pxpcs = bus->priv;
+> +
+> +	if (addr != 0)
+> +		return -ENODEV;
+> +
+> +	if (pxpcs->reg_indir)
+> +		return xpcs_regmap_read_reg_indirect(pxpcs, dev, reg);
+> +	else
+> +		return xpcs_regmap_read_reg_direct(pxpcs, dev, reg);
+> +}
+> +
+> +static int xpcs_regmap_write_c45(struct mii_bus *bus, int addr, int dev,
+> +				 int reg, u16 val)
+> +{
+> +	struct dw_xpcs_regmap *pxpcs = bus->priv;
+> +
+> +	if (addr != 0)
+> +		return -ENODEV;
+> +
+> +	if (pxpcs->reg_indir)
+> +		return xpcs_regmap_write_reg_indirect(pxpcs, dev, reg, val);
+> +	else
+> +		return xpcs_regmap_write_reg_direct(pxpcs, dev, reg, val);
+> +}
+> +
+> +static void devm_xpcs_regmap_destroy(void *data)
+> +{
+> +	struct dw_xpcs *xpcs = data;
+> +
+> +	xpcs_destroy(xpcs);
+> +}
+> +
+> +struct dw_xpcs *devm_xpcs_regmap_register(struct device *dev,
+> +					  const struct xpcs_regmap_config *config)
+> +{
+> +	static atomic_t id = ATOMIC_INIT(-1);
+> +	struct dw_xpcs_regmap *pxpcs;
+> +	struct dw_xpcs *xpcs;
+> +	int ret;
+> +
+> +	pxpcs = devm_kzalloc(dev, sizeof(*pxpcs), GFP_KERNEL);
+> +	if (!pxpcs)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	pxpcs->dev = dev;
+> +	pxpcs->regmap = config->regmap;
+> +	pxpcs->reg_indir = config->reg_indir;
 
-Rob
+Looking at the overall series, is there any reason for this flag ?
+
+Looks like the reg_indir=false path isn't used at all in this series.
+
+Maybe just drop it and let anyone add it back should the need arise ?
+
+Maxime
+
+
 
