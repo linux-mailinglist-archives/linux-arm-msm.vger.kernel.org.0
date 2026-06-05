@@ -1,146 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-111454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 9S0oMQMgI2qhjAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 21:14:11 +0200
+	id t9xaOpVGI2oInQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 23:58:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1982464ADEA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 21:14:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8899864B7E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 23:58:45 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="i/HIQKuU";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111454-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111454-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20201202 header.b="ONi/qBE2";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111456-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111456-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9EE40301FF9B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 19:06:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5026A306844C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 21:49:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 607E93B0AD3;
-	Fri,  5 Jun 2026 19:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62C9F3B71CD;
+	Fri,  5 Jun 2026 21:49:24 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9C1377543;
-	Fri,  5 Jun 2026 19:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A2233947AB;
+	Fri,  5 Jun 2026 21:49:24 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780686401; cv=none; b=qRGDGd8B02Emv4qD7o+VLZdx8E+TWh6l9OMNyPZMt2K9aZJ+53+C2FBCkszqCGD1bgFoE6mUu9MOlW68hQa9gQqU+SlkSKGa2xuQtrCp8JYgZ0pkVoWl1hglulXPrNk2mSaMwq5e0Qv0hRp+lDl9BFnXosCyl1OQQFoN90yfJkI=
+	t=1780696164; cv=none; b=B9kp5q7jKon9XA4ZGV7Nehp0zQ9+Cb4ZHpSXXGERnNZj7ZCAzh2D3NKt1cnzb+sNXbHGlt/KMiosutREpRxgZaj7Yk6BooVYdBZzmirnjCHadrrb4HGyEpr/jRCVqTGyLnF7fq8k5JMpuZzXpBhKhQVCn2PhA0S9dJvEr7wWI5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780686401; c=relaxed/simple;
-	bh=HBQj2WAAvsjLsPaPYx78bH6HEFEJLEckWJTIF2mvvnM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qjd+hVNm10+cNZAruvCWBTsZRYCqG/sI3jAif9zM7020KkwAybZUk94nxFng/Y3Rlxy23pgFYsDNTzpNVqFmvRbTNjUtFGv+tcA2Ay2MwtCif2kuQz5BuAmmH/e5ORHysk2Jt1Bil76vRbxQbcjZVTKGjmtmoMqoixggOB9w9kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i/HIQKuU; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF6D1F00893;
-	Fri,  5 Jun 2026 19:06:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780686400;
-	bh=bQdCIlR4TmbHaM9znLMb84vsVtHdadCejRiPSH1vb5U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=i/HIQKuUcaZgfPFAZ5IssdsE+mNsFymCVsX8tmr5CYCJNchoNgXkXVTndjq2eCzTd
-	 C8THXRONz3LDXDQFPbA3MLa3lz56fkSSsqSuj/8evfhqCPz3EoiTPsjyAcnLzrVr5Z
-	 /0XDZTvzO0O6VeyNJ/Lro+JcT5L7AXw/CofQzkcu/8A4ROdpgfNhOZ9LXvDpCxjkVl
-	 yaei2UF3t5nipAgno5y6BKjpt2nz0WL56jZK2YW8KQ4rQZVI3Jlm/vzfWokTfedO37
-	 Ojqy4CCWhy1QeSg27AR7n19a3FB/19q0k9ZY4QqGI9CEEq55SwIj30Dw/XSM52ttVy
-	 QxBtTUDE9/0kg==
-Date: Fri, 5 Jun 2026 14:06:38 -0500
-From: Rob Herring <robh@kernel.org>
-To: Oliver White <oliverjwhite07@gmail.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: usb: dwc3: document
- snps,reinit-phy-on-resume
-Message-ID: <20260605190638.GA4188454-robh@kernel.org>
-References: <20260601231236.20402-1-oliverjwhite07@gmail.com>
- <20260601231236.20402-2-oliverjwhite07@gmail.com>
+	s=arc-20240116; t=1780696164; c=relaxed/simple;
+	bh=p+Ek4rtYC2lXzkvKxdIQpewdKguYwiuJOF/vElMhShY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ezNUVzMXp6F7HFuKUS7srTRiJjHbcuXtAA7cMKbcD7Y0aHYIro2xkVC8vqpt/WAxysIbtFd3sArykwShroipj6SvTegO90Y6rtykydf9y8WJ6F4iWEEPeeqtDrwupVTVh871yTTLPkVIA2lncxAX/utV0D9uByH3YLZ5TUhNGrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ONi/qBE2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CF021C2BCB9;
+	Fri,  5 Jun 2026 21:49:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1780696163;
+	bh=p+Ek4rtYC2lXzkvKxdIQpewdKguYwiuJOF/vElMhShY=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=ONi/qBE209+9aYWiTWIBRwgAoqsKmzFrk3GSbjB9GzmipHiuD+RJmcaYRaEVVgc8t
+	 bR2joVrqokAFtmOgBE5sQAttjjBnaFCB0nkS0LtZoUEYqpMChH84ov6tPG6nKpjdfD
+	 c80qqEsC5g8Ha9AKvPAPda79B0msLz2PtQ2O6uckXTwpRwDhWNf8yC3n8ffLKbfK3f
+	 eK+kmrWZi8fGp1G0GgzPzDsI+Z5hDpkUGrgJLVVb5tSNsZAWyGXPrFAQ2sY9ojLk8d
+	 ySskjiu5kfYv2a14lI1wr/KW4nqcD9kbET7ECjCN/bLEVmXy+wYLGcco5B5TGqYCzS
+	 DL3a4GXEbfYXg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B35DCCD6E6E;
+	Fri,  5 Jun 2026 21:49:23 +0000 (UTC)
+From: Aaron Kling via B4 Relay <devnull+webgeek1234.gmail.com@kernel.org>
+Subject: [PATCH 0/2] soc: qcom: socinfo: Add CQ8725S SoC ID
+Date: Fri, 05 Jun 2026 16:49:06 -0500
+Message-Id: <20260605-cq8725s-soc-id-v1-0-bb1ef93de649@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260601231236.20402-2-oliverjwhite07@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MQQqAIBAAvxJ7TlCjsr4SHdS22ouWCxGIf086D
+ sNMBsZEyDA3GRI+xBRDBdU24E8bDhS0VQYt9SAH2Qt/m1H3LDj6qsSmzSSddd2uDNToSrjT+w+
+ XtZQPF92zc2AAAAA=
+X-Change-ID: 20260605-cq8725s-soc-id-d2890bab3f18
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Teguh Sobirin <teguh@sobir.in>, 
+ Aaron Kling <webgeek1234@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1780696163; l=480;
+ i=webgeek1234@gmail.com; s=20250217; h=from:subject:message-id;
+ bh=p+Ek4rtYC2lXzkvKxdIQpewdKguYwiuJOF/vElMhShY=;
+ b=4IQGpS/+vWwVGbSvaKXxjk2BzAENzxZcpV3aSiI2I/4sS9LgotzmWo3Z1mGbS0/lDM+oX3OXI
+ 8o3TSMXH3l5C/rQbrDk3PpARetVSzqW+es6YlSdptswWvMRkKezXhh5
+X-Developer-Key: i=webgeek1234@gmail.com; a=ed25519;
+ pk=TQwd6q26txw7bkK7B8qtI/kcAohZc7bHHGSD7domdrU=
+X-Endpoint-Received: by B4 Relay for webgeek1234@gmail.com/20250217 with
+ auth_id=342
+X-Original-From: Aaron Kling <webgeek1234@gmail.com>
+Reply-To: webgeek1234@gmail.com
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.34 / 15.00];
+X-Spamd-Result: default: False [1.34 / 15.00];
+	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111454-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:oliverjwhite07@gmail.com,m:gregkh@linuxfoundation.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:Thinh.Nguyen@synopsys.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:balbi@kernel.org,m:linux-usb@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111456-lists,linux-arm-msm=lfdr.de,webgeek1234.gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	FORGED_SENDER(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_REPLYTO(0.00)[gmail.com];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:teguh@sobir.in,m:webgeek1234@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	TO_DN_SOME(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,sobir.in,gmail.com];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	HAS_REPLYTO(0.00)[webgeek1234@gmail.com];
+	RCVD_COUNT_FIVE(0.00)[5];
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1982464ADEA
+X-Rspamd-Queue-Id: 8899864B7E3
 
-On Tue, Jun 02, 2026 at 11:12:34AM +1200, Oliver White wrote:
-> Add the documentation for the 'snps,reinit-phy-on-resume' boolean
-> property. When set, the DWC3 core will perform a full phy_exit() +
-> phy_init() cycle on each USB2 PHY during the host-mode fast resume
-> path. This is needed on platforms where the USB2 PHY power domain
-> is gated during deep sleep even when device_may_wakeup is true.
-> 
-> Signed-off-by: Oliver White <oliverjwhite07@gmail.com>
-> ---
->  .../devicetree/bindings/usb/snps,dwc3-common.yaml      | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml b/Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml
-> index 6c0b8b653824..d12f6ae81ab8 100644
-> --- a/Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml
-> +++ b/Documentation/devicetree/bindings/usb/snps,dwc3-common.yaml
-> @@ -212,6 +212,16 @@ properties:
->        When set, run the SOF/ITP counter based on ref_clk.
->      type: boolean
->  
-> +  snps,reinit-phy-on-resume:
-> +    description:
-> +      When set, the DWC3 will re-initialize the USB2 PHYs during the
-> +      host-mode fast resume path (device_may_wakeup). Some platforms
-> +      cut PHY power during deep sleep even when USB wake is enabled,
-> +      and the standard PHY runtime PM resume is insufficient to restore
-> +      the PHY register state. This quirk forces a full phy_exit() +
-> +      phy_init() cycle on each USB2 PHY.
-> +    type: boolean
+Add the ID for the CQ8725S which is a variant of SM8750.
 
-This should be implied from a platform specific compatible string.
+---
+Teguh Sobirin (2):
+      dt-bindings: arm: qcom,ids: Add SoC ID for CQ8725S
+      soc: qcom: socinfo: Add CQ8725S SoC ID
 
-Rob
+ drivers/soc/qcom/socinfo.c         | 1 +
+ include/dt-bindings/arm/qcom,ids.h | 1 +
+ 2 files changed, 2 insertions(+)
+---
+base-commit: 6e845bcb78c95af935094040bd4edc3c2b6dd784
+change-id: 20260605-cq8725s-soc-id-d2890bab3f18
+
+Best regards,
+-- 
+Aaron Kling <webgeek1234@gmail.com>
+
+
 
