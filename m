@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-111375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id hSrjGI2pImrdbgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111375-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 12:48:45 +0200
+	id vbpkOd+rImqObwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 12:58:39 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A1E06477FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 12:48:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B1BE647900
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 12:58:39 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=cY+lST0H;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111375-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111375-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=j5dYgnQQ;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111373-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111373-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 09A8530F4FA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 10:39:01 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 48D7930EDA4D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 10:38:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A449A4C77CB;
-	Fri,  5 Jun 2026 10:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB4444C6F16;
+	Fri,  5 Jun 2026 10:38:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB494183B0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15524183C7;
 	Fri,  5 Jun 2026 10:38:01 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780655885; cv=none; b=Cim0LU2D+JWPjZSjF+q0xF+ClYi1vdHD/CMW9AAQCSKVJjMvu+z67ndG1GkwwUyk5S3S6omrhD97ZXzQQJzPh+jQpQo2QzZkLfq68ZkyOigaxsoCjQGZXhmYsZ2iTDX3VjHAa1HKE1B+4+mjek/JyBexAlXcETXOqvXxMoUd4bs=
+	t=1780655884; cv=none; b=jWwyQma11VU+QxIJ5ThIye86zFHHG4edns+yNurw7xbdxwY2xoNygS0URyU8VMdH+1vUc5WTlONF7VBb8mJaElHWC1mStYdwumzPaobFHKdPN0W/ZF/NqMPCWfWoCDN1+sA2nlBbxaoGbIB6nYdAuP13JAN51nMvBkKIaTIdOAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780655885; c=relaxed/simple;
-	bh=wc4CIVW98UZE61WGCPjyswWUNJEop6Met5BFfq7+0W4=;
+	s=arc-20240116; t=1780655884; c=relaxed/simple;
+	bh=g8AbOkSXcU/8GItxMeSd2As/AfiC03vjCGKOW/TEu6w=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=oTrceavExYrX8BpBv8ZSUB3Z/ebMIVO7R71YipjNM8TLHqeRo2c0aUmj693VIq+HjBMjsI+vnNRln8jx6zXfAAlMvonBtuCdxx+tTTxsRgTBRj8i5eUxa/5fZCBD9gndnvg3aRkzmbKjKB9fl071/hMdZ/rIItE00FVhaQDsstE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cY+lST0H; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6559mDpA3016236;
-	Fri, 5 Jun 2026 10:37:58 GMT
+	 MIME-Version; b=aMzkcJ8DhtT1WVt8f52EU4CPUZWSCS/sr0szBMZc+z4t01rvTUpkU9Kv1e/PNm8px3YGMauhN9+MF8VhJqDfRpVRbEBqszkT7apMk8NO2We26HDO7CF7724sw+40W7GGhSIaxJa5eXB55na4372f/I2o39oOPgv9wIJcJ0R4L0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=j5dYgnQQ; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6555qLrF2428783;
+	Fri, 5 Jun 2026 10:37:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=Dlvu/8qpr2v
-	aZYFITvsUYVQ3VriRRYBDbs3PIm9LI/E=; b=cY+lST0HhdRtMI8u2nnyhNCHHp2
-	3LZEsgzxn0vjBGXHT8NlRpTcTJp9hJWqmb5JH9UEwd/5GcIi7zZcaRw7qjGEYskX
-	S9a0iropXKL09ID79/J7u8x3vgUhAPJoLIdYcGY0zVKY/gX5tx2kjZpbq5ymc2Qd
-	bOfXv/VhC0jCJCkbt6rSolSER7/4lw6uqLKt0VJahFeTrzpWRyioXaJ7sh5lhX0C
-	N9jiN9RIlsiPIuRFUXbojbsvZ/MaYGCOExZ7qsULtbLWJCQXwsRNHFyakfT8eNO3
-	veCU3Mp/xUTiPzqphhlSqqZzrj3K+B8EJTaQpJjSj4hvH5suwejcaPBsfdg==
+	:mime-version:references:subject:to; s=qcppdkim1; bh=dxvZiMITXar
+	Y2Wg7jDIvSuF9WeIimNknXWUyES4VKvQ=; b=j5dYgnQQcv2p1GiJ/NMjDMSS5dA
+	k3439/lgNsYV0ko86/N9unRGihZQ5H2gjNgKyV+ZySY9zFB2grhREqlxfzJJw7Oe
+	Lbrf63A2dbDrDS6C1hhY7hG/jEB/HnssaQ6iDDqPGOf5wCeMZQligBuHzxx0yg8P
+	eDly2V16mofcefqkaiAgD1JLcNZup740cS5TuAbt48kjTW44oNMMzCXAw3xlevry
+	X331jqFbX475GCbZ/cZqjjm7/Hpx4qmNIOSnoJj70paeNfCXJCTkEOolaNRtjMKm
+	nF66DTyrN+n7kJBpsW7T0dKBw0iZkLXgaSQ4m7JM4R805s/olUuagMTo9uA==
 Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ekv56g6hy-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ekrphh43w-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Jun 2026 10:37:58 +0000 (GMT)
+	Fri, 05 Jun 2026 10:37:59 +0000 (GMT)
 Received: from hu-hgautam-hyd.qualcomm.com (hu-hgautam-hyd.qualcomm.com [10.147.247.91])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 655Abk6s011714;
-	Fri, 5 Jun 2026 10:37:54 GMT
+	by APBLRPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 655Abk6t011714;
+	Fri, 5 Jun 2026 10:37:56 GMT
 From: Harendra Gautam <harendra.gautam@oss.qualcomm.com>
 To: Srinivas Kandagatla <srini@kernel.org>
 Cc: Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
@@ -61,9 +61,9 @@ Cc: Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
         Conor Dooley <conor+dt@kernel.org>, linux-sound@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 7/13] ASoC: qcom: Add QAIF AIF DAI ops
-Date: Fri,  5 Jun 2026 16:07:33 +0530
-Message-Id: <20260605103739.3557573-8-harendra.gautam@oss.qualcomm.com>
+Subject: [PATCH 8/13] ASoC: qcom: Add generic of_xlate_dai_name helper to common
+Date: Fri,  5 Jun 2026 16:07:34 +0530
+Message-Id: <20260605103739.3557573-9-harendra.gautam@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260605103739.3557573-1-harendra.gautam@oss.qualcomm.com>
 References: <20260605103739.3557573-1-harendra.gautam@oss.qualcomm.com>
@@ -75,27 +75,27 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-QCInternal: smtphost
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDEwMyBTYWx0ZWRfX7AHvJKzGihcF
- Y4ujDhZvxDSKeYGnN81kod3WFyBXETeuTmwcS8DecStVF2wE+sf+57CCGdhD2BVHSeb1U/19ORv
- GhPimcWkUM1Y61Je043z29jX5m6hqQI8xlmYVLM7ZeSYoEALV8JDT00xSGYy1vlP0qLpaVrIOGQ
- CLHGlubzC+tV7ETb4AkkiI0mZ7HBcvCi92E43adolq3lJx9j8hkm3dzrs1+M/FqS5ZKvPSOwqZB
- jnFqD7zDGUWfXYMOhLNvvPUALHI+P/cCTX9WoOODlPT9oqMdFQWmJUP3Mt0XOFUz58v5ejJvJA4
- gDwCxyHSaN/gFQeM2OkIC5LQkUgf54Vvrav6i0jU06eKL+9t5MJkNV8LDVuOnJF5o2nEc1rEgCj
- SSFbSMFnZkxdu8gvB/nZDh+WgqOqtUSEi1f8ylru4xIpC0r/sMgsWp3nCvlZY/KWi6I5ThZb5I0
- 6jBpqFJ/e6POR7bFE8Q==
-X-Authority-Analysis: v=2.4 cv=eJsjSnp1 c=1 sm=1 tr=0 ts=6a22a706 cx=c_pps
+X-Proofpoint-ORIG-GUID: J7OGugiKoen5ox8BXGG3Fwm9rxFwhiqP
+X-Proofpoint-GUID: J7OGugiKoen5ox8BXGG3Fwm9rxFwhiqP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA1MDEwMyBTYWx0ZWRfX2rO8JyAc0dUt
+ vjPO47Owy1NNOllwHHSPz6cUfrErLEYWqm1c5xA62wy0utZ0OiLa69y4pEgzc7bjkPQ9g4O4jyf
+ orc+5bUPTka0rzBmgux28QQegcC/+qXP8DD1pKiV0O9PvGvdiazNcHuz/t/p5FijNDJ/DSAEKjX
+ 9OLSzSyjoTpzb4JilSXftv56yp1cqK+TMDZp0p4wPginY4rUsUwzdqtgzitDKKOHNxfTxbyqnWs
+ feJlu66kJYJK+ie+pRgyavgg80yQxd5hjGBUlJxrDBxov45o8d6Lc6zWrcrDfGVs2LgS5BLxa2k
+ Kcu5B+3WIJckBjxLa6wnFHfA9o5fzvwv7vWWBZUwOu/q30oboW6JhKm7coRhLhdZIny/5yin8hk
+ uEDepDe0ngX8is7LYT/Noh5QdMRz+N+lYCWJ22zMsZzcrohUvIktMHCJ0xECKkIP9W2W3zK8a5H
+ USQM0rnurm6jcLAbYPQ==
+X-Authority-Analysis: v=2.4 cv=T9a8ifKQ c=1 sm=1 tr=0 ts=6a22a707 cx=c_pps
  a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
  a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=_glEPmIy2e8OvE2BGh3C:22 a=EUspDBNiAAAA:8 a=MYsBvJ0p-XDPe8fRrhQA:9
-X-Proofpoint-ORIG-GUID: 7nKJmq6ieIPCUKbtsJHQH2dquG0dDVq4
-X-Proofpoint-GUID: 7nKJmq6ieIPCUKbtsJHQH2dquG0dDVq4
+ a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8 a=oUFy9JDnOWMlxJQm5LIA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-05_01,2026-05-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 bulkscore=0 clxscore=1011 spamscore=0
- adultscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ malwarescore=0 suspectscore=0 clxscore=1011 bulkscore=0 adultscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
  definitions=main-2606050103
 X-Rspamd-Action: no action
@@ -113,7 +113,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-111375-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111373-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:broonie@kernel.org,m:lgirdwood@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[harendra.gautam@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
@@ -130,503 +130,90 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:from_mime,oss.qualcomm.com:mid,vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:from_mime,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp,qualcomm.com:email,qualcomm.com:dkim]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 9A1E06477FA
+X-Rspamd-Queue-Id: 8B1BE647900
 
-Add the CPU DAI operations and regmap field setup needed to use the QAIF
-AIF (MI2S) path.
+Multiple Qualcomm ASoC CPU DAI drivers need to resolve a sound-dai
+phandle argument to a DAI name by searching the component's DAI driver
+array by ID. Each driver currently implements this identically.
 
-The existing QAIF CPU support does not provide the AIF callbacks needed to
-configure and control MI2S playback and capture streams. Add the AIF-
-specific register field allocation and DAI callbacks to program the
-AUD_INTF configuration, set the MI2S bit clock, configure the codec DAI TDM
-format, and enable or disable the interface during stream triggers.
-
-This allows QAIF to route playback through RDDMA channels and capture
-through WRDMA channels to external serial audio devices over MI2S.
+Extract the common logic into asoc_qcom_of_xlate_dai_name() in
+common.c so it can be shared across drivers without duplication.
 
 Signed-off-by: Harendra Gautam <harendra.gautam@oss.qualcomm.com>
 ---
- sound/soc/qcom/qaif-cpu.c | 451 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 451 insertions(+)
+ sound/soc/qcom/common.c | 34 ++++++++++++++++++++++++++++++++++
+ sound/soc/qcom/common.h |  5 +++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/sound/soc/qcom/qaif-cpu.c b/sound/soc/qcom/qaif-cpu.c
-index 8eedbccd8805..a455c6ded243 100644
---- a/sound/soc/qcom/qaif-cpu.c
-+++ b/sound/soc/qcom/qaif-cpu.c
-@@ -313,3 +313,471 @@ const struct snd_soc_dai_ops asoc_qcom_qaif_cif_dai_ops = {
- 	.trigger	= qaif_cif_daiops_trigger,
+diff --git a/sound/soc/qcom/common.c b/sound/soc/qcom/common.c
+index cf1f3a767cee..46569290d44c 100644
+--- a/sound/soc/qcom/common.c
++++ b/sound/soc/qcom/common.c
+@@ -23,6 +23,40 @@ static const struct snd_soc_dapm_widget qcom_jack_snd_widgets[] = {
+ 	SND_SOC_DAPM_SPK("DP7 Jack", NULL),
  };
- EXPORT_SYMBOL_GPL(asoc_qcom_qaif_cif_dai_ops);
-+
-+static int qaif_aif_cfg_cpu_init_bitfields(struct device *dev,
-+					    struct regmap *map)
+ 
++/**
++ * asoc_qcom_of_xlate_dai_name - Resolve a sound-dai phandle argument to a
++ *                               DAI name by searching the DAI driver array.
++ * @dai_drv:  Array of DAI drivers registered by the component.
++ * @num_dai:  Number of entries in @dai_drv.
++ * @args:     Phandle arguments from the sound-dai property; args[0] is the
++ *            DAI ID.
++ * @dai_name: Output pointer set to the matched DAI name on success.
++ *
++ * Returns 0 on success, -EINVAL if args_count != 1 or no match is found.
++ */
++int asoc_qcom_of_xlate_dai_name(const struct snd_soc_dai_driver *dai_drv,
++				int num_dai,
++				const struct of_phandle_args *args,
++				const char **dai_name)
 +{
-+	struct qaif_drv_data *drvdata = dev_get_drvdata(dev);
-+	const struct qaif_variant *v = drvdata->variant;
-+	struct qaif_aud_intfctl *aif_intfctl;
++	int id, i;
 +
-+	aif_intfctl = devm_kzalloc(dev, sizeof(struct qaif_aud_intfctl), GFP_KERNEL);
-+	if (!aif_intfctl)
-+		return -ENOMEM;
-+
-+	/*
-+	 * Bulk-allocate all AIF intfctl fields in one call.
-+	 * Order must match struct qaif_aud_intfctl member order:
-+	 * inv_sync, sync_delay, sync_mode, sync_src,
-+	 * slot_width_rx, slot_width_tx, sample_width_rx, sample_width_tx,
-+	 * mono_mode_rx, mono_mode_tx,
-+	 * lane_en, lane_dir, loopback_en, ctrl_data_oe,
-+	 * slot_en_rx_mask, slot_en_tx_mask,
-+	 * full_cycle_en, bits_per_lane,
-+	 * enable, enable_tx, enable_rx,
-+	 * reset, reset_tx, reset_rx
-+	 */
-+	{
-+		const struct reg_field aif_intfctl_fields[] = {
-+			v->aif_inv_sync,
-+			v->aif_sync_delay,
-+			v->aif_sync_mode,
-+			v->aif_sync_src,
-+			v->aif_slot_width_rx,
-+			v->aif_slot_width_tx,
-+			v->aif_sample_width_rx,
-+			v->aif_sample_width_tx,
-+			v->aif_mono_mode_rx,
-+			v->aif_mono_mode_tx,
-+			v->aif_lane_en,
-+			v->aif_lane_dir,
-+			v->aif_loopback_en,
-+			v->aif_ctrl_data_oe,
-+			v->aif_slot_en_rx_mask,
-+			v->aif_slot_en_tx_mask,
-+			v->aif_full_cycle_en,
-+			v->aif_bits_per_lane,
-+			v->aif_enable,
-+			v->aif_enable_tx,
-+			v->aif_enable_rx,
-+			v->aif_reset,
-+			v->aif_reset_tx,
-+			v->aif_reset_rx,
-+		};
-+		int ret = devm_regmap_field_bulk_alloc(dev, map,
-+					&aif_intfctl->inv_sync,
-+					aif_intfctl_fields,
-+					ARRAY_SIZE(aif_intfctl_fields));
-+		if (ret) {
-+			dev_err(dev, "error allocating AIF interface regmap fields: %d\n", ret);
-+			return ret;
-+		}
-+	}
-+
-+	drvdata->aif_intfctl = aif_intfctl;
-+
-+	return 0;
-+}
-+
-+static int qaif_aif_cpu_init_bitfields(struct device *dev,
-+			struct regmap *map)
-+{
-+	struct qaif_drv_data *drvdata = dev_get_drvdata(dev);
-+	const struct qaif_variant *v = drvdata->variant;
-+	struct qaif_dmactl *rd_dmactl;
-+	struct qaif_dmactl *wr_dmactl;
-+
-+	rd_dmactl = devm_kzalloc(dev, sizeof(struct qaif_dmactl), GFP_KERNEL);
-+	if (!rd_dmactl)
-+		return -ENOMEM;
-+
-+	wr_dmactl = devm_kzalloc(dev, sizeof(struct qaif_dmactl), GFP_KERNEL);
-+	if (!wr_dmactl)
-+		return -ENOMEM;
-+
-+	/*
-+	 * Bulk-allocate AIF RDDMA dmactl fields.
-+	 * Order must match struct qaif_dmactl member order:
-+	 * enable, reset, num_ot, dma_dyncclk, burst16, burst8, burst4, burst2, burst1, shram_wm
-+	 */
-+	{
-+		const struct reg_field aif_rd_dmactl_fields[] = {
-+			v->rddma_enable,
-+			v->rddma_reset,
-+			v->rddma_num_ot,
-+			v->rddma_dma_dyncclk,
-+			v->rddma_burst16,
-+			v->rddma_burst8,
-+			v->rddma_burst4,
-+			v->rddma_burst2,
-+			v->rddma_burst1,
-+			v->rddma_shram_wm,
-+		};
-+		int ret = devm_regmap_field_bulk_alloc(dev, map,
-+					&rd_dmactl->enable,
-+					aif_rd_dmactl_fields,
-+					ARRAY_SIZE(aif_rd_dmactl_fields));
-+		if (ret) {
-+			dev_err(dev, "error allocating AIF RDDMA dmactl regmap fields: %d\n", ret);
-+			return ret;
-+		}
-+	}
-+
-+	/*
-+	 * Bulk-allocate AIF WRDMA dmactl fields.
-+	 * Order must match struct qaif_dmactl member order:
-+	 * enable, reset, num_ot, dma_dyncclk, burst16, burst8, burst4, burst2, burst1, shram_wm
-+	 */
-+	{
-+		const struct reg_field aif_wr_dmactl_fields[] = {
-+			v->wrdma_enable,
-+			v->wrdma_reset,
-+			v->wrdma_num_ot,
-+			v->wrdma_dma_dyncclk,
-+			v->wrdma_burst16,
-+			v->wrdma_burst8,
-+			v->wrdma_burst4,
-+			v->wrdma_burst2,
-+			v->wrdma_burst1,
-+			v->wrdma_shram_wm,
-+		};
-+		int ret = devm_regmap_field_bulk_alloc(dev, map,
-+					&wr_dmactl->enable,
-+					aif_wr_dmactl_fields,
-+					ARRAY_SIZE(aif_wr_dmactl_fields));
-+		if (ret) {
-+			dev_err(dev, "error allocating AIF WRDMA dmactl regmap fields: %d\n", ret);
-+			return ret;
-+		}
-+	}
-+
-+	drvdata->aif_rd_dmactl = rd_dmactl;
-+	drvdata->aif_wr_dmactl = wr_dmactl;
-+
-+	return 0;
-+}
-+
-+static int qaif_aif_cpu_daiops_startup(struct snd_pcm_substream *substream,
-+					struct snd_soc_dai *dai)
-+{
-+	struct qaif_drv_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	const struct qaif_variant *v = drvdata->variant;
-+	int idx, ret = 0;
-+
-+	idx = v->get_dma_idx(dai->driver->id);
-+	if (idx < 0) {
-+		dev_err(dai->dev, "%s: Invalid DMA index: %d\n", __func__, idx);
++	if (args->args_count != 1)
 +		return -EINVAL;
++
++	id = args->args[0];
++
++	for (i = 0; i < num_dai; i++) {
++		if (dai_drv[i].id == id) {
++			*dai_name = dai_drv[i].name;
++			return 0;
++		}
 +	}
 +
-+	ret = clk_prepare(drvdata->mi2s_bit_clk[idx]);
-+	if (ret) {
-+		dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
-+		return ret;
-+	}
-+	return 0;
++	return -EINVAL;
 +}
++EXPORT_SYMBOL_GPL(asoc_qcom_of_xlate_dai_name);
 +
-+static void qaif_aif_cpu_daiops_shutdown(struct snd_pcm_substream *substream,
-+					 struct snd_soc_dai *dai)
-+{
-+	struct qaif_drv_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	const struct qaif_variant *v = drvdata->variant;
-+	struct qaif_aud_intfctl *aif_intfctl = drvdata->aif_intfctl;
-+	const struct qaif_aif_config *aif_intf_cfg;
-+	int idx = v->get_dma_idx(dai->driver->id);
-+
-+	if (idx < 0) {
-+		dev_err(dai->dev, "%s: Invalid DMA index: %d\n", __func__, idx);
-+		return;
-+	}
-+
-+	aif_intf_cfg = &drvdata->aif_intf_cfg[idx];
-+
-+	if (aif_intf_cfg->loopback_en)
-+		regmap_fields_write(aif_intfctl->enable, idx, QAIF_AIF_CTL_ENABLE_OFF);
-+	else if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+		regmap_fields_write(aif_intfctl->enable_tx, idx, QAIF_AIF_CTL_ENABLE_OFF);
-+	else
-+		regmap_fields_write(aif_intfctl->enable_rx, idx, QAIF_AIF_CTL_ENABLE_OFF);
-+
-+	clk_unprepare(drvdata->mi2s_bit_clk[idx]);
-+}
-+
-+static int qaif_aif_cpu_daiops_hw_free(struct snd_pcm_substream *substream,
-+				       struct snd_soc_dai *dai)
-+{
-+	struct qaif_drv_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	const struct qaif_variant *v = drvdata->variant;
-+	int idx = v->get_dma_idx(dai->driver->id);
-+
-+	if (idx < 0)
-+		return 0;
-+
-+	clk_disable(drvdata->mi2s_bit_clk[idx]);
-+	return 0;
-+}
-+
-+static int qaif_aif_cpu_daiops_hw_params(struct snd_pcm_substream *substream,
-+					  struct snd_pcm_hw_params *params,
-+					  struct snd_soc_dai *dai)
-+{
-+	struct qaif_drv_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	struct snd_soc_pcm_runtime *rtd = substream->private_data;
-+	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(rtd, 0);
-+	const struct qaif_variant *v = drvdata->variant;
-+	struct qaif_aud_intfctl *aif_intfctl = drvdata->aif_intfctl;
-+	const struct qaif_aif_config *aif_intf_cfg = NULL;
-+	int idx;
-+	snd_pcm_format_t format = params_format(params);
-+	unsigned int channels = params_channels(params);
-+	unsigned int rate = params_rate(params);
-+	unsigned int slot_width = 32;
-+	int bitwidth, ret;
-+
-+	if (!aif_intfctl) {
-+		dev_err(dai->dev, "AIF interface control not initialized\n");
-+		return -EINVAL;
-+	}
-+
-+	idx = v->get_dma_idx(dai->driver->id);
-+
-+	if (idx < 0) {
-+		dev_err(dai->dev, "%s: Invalid DMA index: %d\n", __func__, idx);
-+		return -EINVAL;
-+	}
-+
-+	aif_intf_cfg = &drvdata->aif_intf_cfg[idx];
-+
-+	if (!aif_intf_cfg) {
-+		dev_err(dai->dev, "AIF interface config not found\n");
-+		return -EINVAL;
-+	}
-+	bitwidth = snd_pcm_format_width(format);
-+	if (bitwidth < 0) {
-+		dev_err(dai->dev, "invalid bit width given: %d\n", bitwidth);
-+		return bitwidth;
-+	}
-+
-+	/* SYNC_CFG: write all four sync fields */
-+	ret = regmap_fields_write(aif_intfctl->inv_sync, idx, aif_intf_cfg->invert_sync);
-+	if (ret) {
-+		dev_err(dai->dev, "Failed to write inv_sync: %d\n", ret);
-+		return ret;
-+	}
-+	ret = regmap_fields_write(aif_intfctl->sync_delay, idx, aif_intf_cfg->sync_delay);
-+	if (ret) {
-+		dev_err(dai->dev, "Failed to write sync_delay: %d\n", ret);
-+		return ret;
-+	}
-+	ret = regmap_fields_write(aif_intfctl->sync_mode, idx, aif_intf_cfg->sync_mode);
-+	if (ret) {
-+		dev_err(dai->dev, "Failed to write sync_mode: %d\n", ret);
-+		return ret;
-+	}
-+	ret = regmap_fields_write(aif_intfctl->sync_src, idx, aif_intf_cfg->sync_src);
-+	if (ret) {
-+		dev_err(dai->dev, "Failed to write sync_src: %d\n", ret);
-+		return ret;
-+	}
-+
-+	/* LANE_CFG: write all four lane fields */
-+	ret = regmap_fields_write(aif_intfctl->loopback_en, idx, aif_intf_cfg->loopback_en);
-+	if (ret) {
-+		dev_err(dai->dev, "Failed to write loopback_en: %d\n", ret);
-+		return ret;
-+	}
-+	ret = regmap_fields_write(aif_intfctl->ctrl_data_oe, idx, aif_intf_cfg->ctrl_data_oe);
-+	if (ret) {
-+		dev_err(dai->dev, "Failed to write ctrl_data_oe: %d\n", ret);
-+		return ret;
-+	}
-+	ret = regmap_fields_write(aif_intfctl->lane_en, idx, aif_intf_cfg->lane_en_mask);
-+	if (ret) {
-+		dev_err(dai->dev, "Failed to write lane_en (mask=0x%02X): %d\n",
-+			aif_intf_cfg->lane_en_mask, ret);
-+		return ret;
-+	}
-+	ret = regmap_fields_write(aif_intfctl->lane_dir, idx, aif_intf_cfg->lane_dir_mask);
-+	if (ret) {
-+		dev_err(dai->dev, "Failed to write lane_dir (mask=0x%02X): %d\n",
-+			aif_intf_cfg->lane_dir_mask, ret);
-+		return ret;
-+	}
-+
-+	/* CFG: full_cycle_en */
-+	ret = regmap_fields_write(aif_intfctl->full_cycle_en, idx, aif_intf_cfg->full_cycle_en);
-+	if (ret) {
-+		dev_err(dai->dev, "Failed to write full_cycle_en: %d\n", ret);
-+		return ret;
-+	}
-+
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK) {
-+		slot_width = aif_intf_cfg->slot_width_tx;
-+		/* BIT_WIDTH_CFG: TX slot width and sample width */
-+		ret = regmap_fields_write(aif_intfctl->slot_width_tx, idx,
-+					  QAIF_AIF_SLOT_WIDTH(slot_width));
-+		if (ret) {
-+			dev_err(dai->dev, "Failed to write slot_width_tx: %d\n", ret);
-+			return ret;
-+		}
-+		ret = regmap_fields_write(aif_intfctl->sample_width_tx, idx,
-+					  QAIF_AIF_SAMPLE_WIDTH(bitwidth));
-+		if (ret) {
-+			dev_err(dai->dev, "Failed to write sample_width_tx: %d\n", ret);
-+			return ret;
-+		}
-+
-+		/* ACTV_SLOT_EN_TX */
-+		ret = regmap_fields_write(aif_intfctl->slot_en_tx_mask, idx,
-+					  aif_intf_cfg->slot_en_tx_mask);
-+		if (ret) {
-+			dev_err(dai->dev, "Failed to write slot_en_tx_mask (0x%08X): %d\n",
-+				aif_intf_cfg->slot_en_tx_mask, ret);
-+			return ret;
-+		}
-+
-+		/* FRAME_CFG: bits_per_lane */
-+		ret = regmap_fields_write(aif_intfctl->bits_per_lane, idx,
-+					  (slot_width * aif_intf_cfg->bits_per_lane) - 1);
-+		if (ret) {
-+			dev_err(dai->dev, "Failed to write bits_per_lane: %d\n", ret);
-+			return ret;
-+		}
-+
-+		/* MI2S_CFG: TX mono mode */
-+		ret = regmap_fields_write(aif_intfctl->mono_mode_tx, idx,
-+					  (channels >= 2) ? QAIF_AUD_INTF_CTL_STEREO
-+							  : QAIF_AUD_INTF_CTL_MONO);
-+		if (ret) {
-+			dev_err(dai->dev, "Failed to write mono_mode_tx: %d\n", ret);
-+			return ret;
-+		}
-+	} else {
-+		slot_width = aif_intf_cfg->slot_width_rx;
-+		/* BIT_WIDTH_CFG: RX slot width and sample width */
-+		ret = regmap_fields_write(aif_intfctl->slot_width_rx, idx,
-+					  QAIF_AIF_SLOT_WIDTH(slot_width));
-+		if (ret) {
-+			dev_err(dai->dev, "Failed to write slot_width_rx: %d\n", ret);
-+			return ret;
-+		}
-+		ret = regmap_fields_write(aif_intfctl->sample_width_rx, idx,
-+					  QAIF_AIF_SAMPLE_WIDTH(bitwidth));
-+		if (ret) {
-+			dev_err(dai->dev, "Failed to write sample_width_rx: %d\n", ret);
-+			return ret;
-+		}
-+
-+		/* ACTV_SLOT_EN_RX */
-+		ret = regmap_fields_write(aif_intfctl->slot_en_rx_mask, idx,
-+					  aif_intf_cfg->slot_en_rx_mask);
-+		if (ret) {
-+			dev_err(dai->dev, "Failed to write slot_en_rx_mask (0x%08X): %d\n",
-+				aif_intf_cfg->slot_en_rx_mask, ret);
-+			return ret;
-+		}
-+
-+		/* FRAME_CFG: bits_per_lane */
-+		ret = regmap_fields_write(aif_intfctl->bits_per_lane, idx,
-+					  (slot_width * aif_intf_cfg->bits_per_lane) - 1);
-+		if (ret) {
-+			dev_err(dai->dev, "Failed to write bits_per_lane: %d\n", ret);
-+			return ret;
-+		}
-+
-+		/* MI2S_CFG: RX mono mode */
-+		ret = regmap_fields_write(aif_intfctl->mono_mode_rx, idx,
-+					  (channels >= 2) ? QAIF_AUD_INTF_CTL_STEREO
-+							  : QAIF_AUD_INTF_CTL_MONO);
-+		if (ret) {
-+			dev_err(dai->dev, "Failed to write mono_mode_rx: %d\n", ret);
-+			return ret;
-+		}
-+	}
-+
-+	ret = clk_set_rate(drvdata->mi2s_bit_clk[idx],
-+			   rate * slot_width * aif_intf_cfg->bits_per_lane);
-+	if (ret) {
-+		dev_err(dai->dev, "error setting mi2s bitclk to %u: %d\n",
-+			rate * slot_width * aif_intf_cfg->bits_per_lane, ret);
-+		return ret;
-+	}
-+	dev_dbg(dai->dev, "setting IBIT clock to %u\n",
-+		rate * slot_width * aif_intf_cfg->bits_per_lane);
-+
-+	ret = clk_enable(drvdata->mi2s_bit_clk[idx]);
-+	if (ret) {
-+		dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
-+		return ret;
-+	}
-+	snd_soc_dai_set_tdm_slot(codec_dai, 0x0f, 0b11, aif_intf_cfg->bits_per_lane, slot_width);
-+	snd_soc_dai_set_sysclk(codec_dai, 0, rate * aif_intf_cfg->bits_per_lane * slot_width, 0);
-+
-+	return 0;
-+}
-+
-+static int qaif_aif_cpu_daiops_trigger(struct snd_pcm_substream *substream,
-+				       int cmd, struct snd_soc_dai *dai)
-+{
-+	struct qaif_drv_data *drvdata = snd_soc_dai_get_drvdata(dai);
-+	const struct qaif_variant *v = drvdata->variant;
-+	int idx, ret = -EINVAL;
-+	const struct qaif_aif_config *aif_intf_cfg;
-+
-+	idx = v->get_dma_idx(dai->driver->id);
-+	if (idx < 0) {
-+		dev_err(dai->dev, "%s: Invalid DMA index: %d\n", __func__, idx);
-+		return -EINVAL;
-+	}
-+
-+	aif_intf_cfg = &drvdata->aif_intf_cfg[idx];
-+
-+	switch (cmd) {
-+	case SNDRV_PCM_TRIGGER_START:
-+	case SNDRV_PCM_TRIGGER_RESUME:
-+	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+		if (aif_intf_cfg->loopback_en)
-+			ret = regmap_fields_write(drvdata->aif_intfctl->enable, idx, QAIF_AIF_CTL_ENABLE_ON);
-+		else if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+			ret = regmap_fields_write(drvdata->aif_intfctl->enable_tx, idx, QAIF_AIF_CTL_ENABLE_ON);
-+		else
-+			ret = regmap_fields_write(drvdata->aif_intfctl->enable_rx, idx, QAIF_AIF_CTL_ENABLE_ON);
-+		if (ret)
-+			dev_err(dai->dev, "error writing to AIF CTL reg: %d\n", ret);
-+
-+		ret = clk_enable(drvdata->mi2s_bit_clk[idx]);
-+		if (ret) {
-+			dev_err(dai->dev, "error in enabling mi2s bit clk: %d\n", ret);
-+			return ret;
-+		}
-+		break;
-+	case SNDRV_PCM_TRIGGER_STOP:
-+	case SNDRV_PCM_TRIGGER_SUSPEND:
-+	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-+
-+		if (aif_intf_cfg->loopback_en)
-+			ret = regmap_fields_write(drvdata->aif_intfctl->enable, idx, QAIF_AIF_CTL_ENABLE_OFF);
-+		else if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+			ret = regmap_fields_write(drvdata->aif_intfctl->enable_tx, idx, QAIF_AIF_CTL_ENABLE_OFF);
-+		else
-+			ret = regmap_fields_write(drvdata->aif_intfctl->enable_rx, idx, QAIF_AIF_CTL_ENABLE_OFF);
-+		if (ret)
-+			dev_err(dai->dev, "error writing to AIF CTL reg: %d\n", ret);
-+
-+		clk_disable(drvdata->mi2s_bit_clk[idx]);
-+
-+		break;
-+	}
-+
-+	return ret;
-+}
-+
-+const struct snd_soc_dai_ops asoc_qcom_qaif_aif_cpu_dai_ops = {
-+	.startup	= qaif_aif_cpu_daiops_startup,
-+	.shutdown	= qaif_aif_cpu_daiops_shutdown,
-+	.hw_free	= qaif_aif_cpu_daiops_hw_free,
-+	.hw_params	= qaif_aif_cpu_daiops_hw_params,
-+	.trigger	= qaif_aif_cpu_daiops_trigger,
-+};
-+EXPORT_SYMBOL_GPL(asoc_qcom_qaif_aif_cpu_dai_ops);
+ int qcom_snd_parse_of(struct snd_soc_card *card)
+ {
+ 	struct device_node *np;
+diff --git a/sound/soc/qcom/common.h b/sound/soc/qcom/common.h
+index ee6662885593..5baf51a39c97 100644
+--- a/sound/soc/qcom/common.h
++++ b/sound/soc/qcom/common.h
+@@ -6,6 +6,7 @@
+ 
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <sound/soc.h>
++#include <sound/soc-dai.h>
+ 
+ #define LPASS_MAX_PORT			(SENARY_MI2S_TX + 1)
+ 
+@@ -15,5 +16,9 @@ int qcom_snd_wcd_jack_setup(struct snd_soc_pcm_runtime *rtd,
+ int qcom_snd_dp_jack_setup(struct snd_soc_pcm_runtime *rtd,
+ 			   struct snd_soc_jack *dp_jack, int id);
+ 
++int asoc_qcom_of_xlate_dai_name(const struct snd_soc_dai_driver *dai_drv,
++				int num_dai,
++				const struct of_phandle_args *args,
++				const char **dai_name);
+ 
+ #endif
 -- 
 2.34.1
 
