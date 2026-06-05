@@ -1,162 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-111394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id nGUDJz60ImqbcQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 13:34:22 +0200
+	id wxZ0Guu2ImpRcgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 13:45:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9930D647C18
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 13:34:21 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC3A9647D6F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 13:45:46 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="Jlc/jpAG";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111394-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111394-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=gondor.apana.org.au header.s=h01 header.b=en0nmYR0;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111399-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111399-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=apana.org.au;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 083B330210E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 11:27:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2D61E303DD5C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 11:39:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9DFD4D8DBB;
-	Fri,  5 Jun 2026 11:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8471C4CA279;
+	Fri,  5 Jun 2026 11:39:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A064E4D8D8C;
-	Fri,  5 Jun 2026 11:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDF54CA26E;
+	Fri,  5 Jun 2026 11:39:20 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780658832; cv=none; b=rqVD+BsTugIjzwHKsJZvFS8o3zaI5gYiQ5tPp8Tv9YqfkLYRngg2JKT8Y77YcKbSz2deVnmplcByFaTf2Z25RUckfmESPp49NoawoFmf3nqtBkqrABdnIbg/ay7qupKlZ53joDbEPcM4FDMM8HXgw26g13MvyvQ9MuaOMfuWGSk=
+	t=1780659562; cv=none; b=PgknFlzy5oGylFvxUAhVpsuF2XwVr+i5nAEVuzFYp6hMd/XvljSWw9Rzy02fSNb5w0DSgztXHI+XGfWl5CmNRq49MdI8/AFXIqJ0V+8QdNZlPWJw6lirCaVploIsCff+OvLDXmmIoJX+X+FxvI8YAiPIorL1b6giUTtj3JaTA6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780658832; c=relaxed/simple;
-	bh=tNC7e8ph+K4ynpxRT/iomFLlYWBmIw2Q5j/JyJ+hhKs=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=Dh2LD+qG4vzjR7mknPazxbitbIn9LkbSI2QejuesS5I4oCGnj2xNMSFZY+xeAK1G8jkrC6GuEEqLLe9zP7b7KtH+1YfNZ2Dq20EIVKwrCR6BczpQgoBpH3FdFus6rT2AVT/NJhVj3fsAuuj3G5PT1Tar2VRMOqU0Hsu2TxlGV9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jlc/jpAG; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB421F00898;
-	Fri,  5 Jun 2026 11:27:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780658831;
-	bh=yC0by5lCDY/lPJ1EPwJSYtDAQwVWWf0Ed5URy2sHQJE=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject;
-	b=Jlc/jpAGvJnHR8zcA9jCl8FcV4IdLsujotn6KHFQV991DtXP0G9bbAtPZYT4XEDvE
-	 s2P+vW2wWFTzbTitvk282Aq1aJ3ABXIO+w+B4F7Hbu+iwv2besV2zlQZHzA+kWmODb
-	 DZ2HZXPP3YHFHv/FhIAD+tTf3o3vydk35CnBmtqIdqOF5iIdhwsBryPG//RrXy1l3w
-	 AAUWJDy6VjVxXl4kwd3zZheU4vODRIbtYBktJbizd0wGPgr/n5Xr5Pdff2YTGYhMOT
-	 aVwt9oDjuG+IbD0QxlcYWHi8e5IT7bSMJkg6d+DnCXhUVIfwYtLeK5mpayc35T4xZe
-	 +NOlLKHoAVjPw==
-Date: Fri, 05 Jun 2026 06:27:10 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1780659562; c=relaxed/simple;
+	bh=zqH0Q9ITwZQODfgiXtS4y+OJk5FtZCErLivlcfamoMc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X1hllozU1ofdB2JUxhTMW2X9eGBA5yIcfiaBA4xMDwafXQzA7vr8/k5PGvD7tYEdBROC8RIh1NOzG8RWiKqrWLv5uIUXpoOQ0EGB0NlzeaYeLGDHrYFqYmqmj2M65ZDDhsT8lLclxYVsDbZpdNmKN2q/heEtPftZhAuIZdsMVKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b=en0nmYR0; arc=none smtp.client-ip=180.181.231.80
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
+	from:content-type:reply-to; bh=CHFPaICTJPqItjzPT3W6kuckW8eRD1ugtO9S1RGUb0U=; 
+	b=en0nmYR0NtYoq2N/hRP19z/02wCbOpSkAmac2uob0FcV7wp+skXXBBBFQAA2dhUXsXsmsz+38I+
+	8gCrPRppb7ohdmZ4CjVfanJMPCnhfg1bY3xO1pRGL8zeE1yiSK/oa9xBc+TN+47yn/7u+LBQhpM8f
+	BBCRv0ftK1wIkllkFBlDq2RYvBovm6655DA8yw+VOeVZiplRsfGGX3I1xFOFe9vcdsLi81k3QEmDH
+	17g2Owg4Yit88ZKvmxGLjH8dxMmJx5XwjT66yyfBGzQ40ov4MKXhczYwyY0aCNi3yh2zC2wt/ujT1
+	ND9T95T178jCgz8V8ZPlMnzyGzSQxQE8vx4Q==;
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
+	id 1wVStN-002olC-2u;
+	Fri, 05 Jun 2026 19:39:14 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 05 Jun 2026 19:39:13 +0800
+Date: Fri, 5 Jun 2026 19:39:13 +0800
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Subject: Re: [PATCH 0/2] dt-bindings: crypto: Add Qualcomm Hawi crypto support
+Message-ID: <aiK1YfeKShMTApph@gondor.apana.org.au>
+References: <20260521-hawi-crypto-v1-0-9176a3b51bc0@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, 
- Srinivas Kandagatla <srini@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, devicetree@vger.kernel.org, 
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>
-To: Harendra Gautam <harendra.gautam@oss.qualcomm.com>
-In-Reply-To: <20260605103739.3557573-3-harendra.gautam@oss.qualcomm.com>
-References: <20260605103739.3557573-1-harendra.gautam@oss.qualcomm.com>
- <20260605103739.3557573-3-harendra.gautam@oss.qualcomm.com>
-Message-Id: <178065883033.3171433.8446753794680185025.robh@kernel.org>
-Subject: Re: [PATCH 2/13] dt-bindings: sound: Add Qualcomm QAIF binding
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260521-hawi-crypto-v1-0-9176a3b51bc0@kernel.org>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.34 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	DMARC_POLICY_ALLOW(-0.50)[apana.org.au,quarantine];
+	R_DKIM_ALLOW(-0.20)[gondor.apana.org.au:s=h01];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,gmail.com];
+	TAGGED_FROM(0.00)[bounces-111399-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111394-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:conor+dt@kernel.org,m:srini@kernel.org,m:krzk+dt@kernel.org,m:devicetree@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:broonie@kernel.org,m:lgirdwood@gmail.com,m:harendra.gautam@oss.qualcomm.com,m:conor@kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[herbert@gondor.apana.org.au,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	FORGED_RECIPIENTS(0.00)[m:mani@kernel.org,m:davem@davemloft.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:vkoul@kernel.org,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:manivannan.sadhasivam@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[gondor.apana.org.au:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[herbert@gondor.apana.org.au,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,gondor.apana.org.au:mid,gondor.apana.org.au:from_mime,gondor.apana.org.au:dkim,apana.org.au:url,apana.org.au:email,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 9930D647C18
+X-Rspamd-Queue-Id: AC3A9647D6F
 
-
-On Fri, 05 Jun 2026 16:07:28 +0530, Harendra Gautam wrote:
-> Add a Devicetree binding for the Qualcomm Audio Interface (QAIF) CPU DAI
-> controller used on the Shikra audio platform.
+On Thu, May 21, 2026 at 12:36:19PM +0000, Manivannan Sadhasivam wrote:
+> Hi,
 > 
-> QAIF moves PCM data between system memory and external serial audio
-> interfaces through the AIF path, and between memory and the internal Bolero
-> digital codec through the CIF path. The controller needs a binding so
-> platform Devicetree files can describe its MMIO region, DMA IOMMU stream,
-> clocks, interrupt, DAI cells and per-interface AIF configuration.
+> This series adds the crypto (ICE, TRNG) dt-binding support for Qualcomm's
+> upcoming Hawi SoC.
 > 
-> Describe the single register region, one EE interrupt, the required GCC
-> LPASS and audio core clocks, the DMA IOMMU mapping, and 'aif-interface@N'
-> child nodes used for static PCM, TDM or MI2S configuration.
-> 
-> Signed-off-by: Harendra Gautam <harendra.gautam@oss.qualcomm.com>
+> Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 > ---
->  .../devicetree/bindings/sound/qcom,qaif.yaml  | 353 ++++++++++++++++++
->  1 file changed, 353 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/qcom,qaif.yaml
+> Manivannan Sadhasivam (2):
+>       dt-bindings: crypto: qcom,prng: Document Hawi TRNG
+>       dt-bindings: crypto: qcom,inline-crypto-engine: Document Hawi ICE
 > 
+>  Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml | 1 +
+>  Documentation/devicetree/bindings/crypto/qcom,prng.yaml                 | 1 +
+>  2 files changed, 2 insertions(+)
+> ---
+> base-commit: 254f49634ee16a731174d2ae34bc50bd5f45e731
+> change-id: 20260521-hawi-crypto-138bfd2a6ec5
 
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/sound/qcom,qaif.example.dts:28:18: fatal error: dt-bindings/clock/qcom,shikra-audiocorecc.h: No such file or directory
-   28 |         #include <dt-bindings/clock/qcom,shikra-audiocorecc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.dtbs:140: Documentation/devicetree/bindings/sound/qcom,qaif.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1662: dt_binding_check] Error 2
-make: *** [Makefile:248: __sub-make] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.kernel.org/project/devicetree/patch/20260605103739.3557573-3-harendra.gautam@oss.qualcomm.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+All applied.  Thanks.
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
 
