@@ -1,218 +1,271 @@
-Return-Path: <linux-arm-msm+bounces-111421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id zHmdOZPKImr3dgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 15:09:39 +0200
+	id 25E/EJ3MImpIdwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 15:18:21 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA3A96486A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 15:09:38 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5CE3648744
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 15:18:20 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=gxFsZSWD;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111421-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111421-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=linaro.org;
+	dkim=pass header.d=kernel.org header.s=k20201202 header.b=oQGFFjZb;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111423-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111423-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id D53593000585
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 13:09:28 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 80A4E304359E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 13:14:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38BAE3B14D5;
-	Fri,  5 Jun 2026 13:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CE733B14BF;
+	Fri,  5 Jun 2026 13:14:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F4F30D403
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jun 2026 13:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A2C395DBF;
+	Fri,  5 Jun 2026 13:14:44 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780664966; cv=none; b=eco+VH7oNXXlN6Cy056W6PW3yx3aTANUs1lqwLOEwUCsiQbTFflmeoxAXMXIsfwzoT3JJaTlUuxAJUewWc2ksLLHGngHMekIPHD3Mcja+vO4fN1xL2jyBVCLnD+pkpbFkAkF9HblBG0vOMq/kwIdhVD1R0QVqy3W+5Uv7Y67rBc=
+	t=1780665285; cv=none; b=cpssU77hCMUE52IW5ILcGY/6pBECy5z4t+d9v+mz4a+0yglbS0mKOFQw/NqLnezVzU1ZvlVSNo1GceM8UvQsVlmlCbzxcY/CShPL/48/esuv1Cu8weey/F1Uu2YfjFddjPrAFlUFvf7kGlduvd8dAPFc1fe2Ld0QBbTl1LbLgZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780664966; c=relaxed/simple;
-	bh=g+lhHV8N+B4fb9WldoM+q7EXyp846pVUNO0FPx79itw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Wcb6yIxLQzLGeENa/sWFjDX7VR4oLVdGF0QCrpvOeARlMwa2OWJIqJ5/YMf2a3s3HLf9mmBkkOYEDzLCyXPS2Hh8HWIJLzZKIEjsd1/cWk4C2dfCPEhHxgDzmiZIVkRGu/MQd5G10ZL6JqnS+V3yHTp/3uM/c7YfYifwPEEAYGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gxFsZSWD; arc=none smtp.client-ip=209.85.128.53
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-490b4a8e28bso15868925e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Jun 2026 06:09:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1780664959; x=1781269759; darn=vger.kernel.org;
-        h=content-transfer-encoding:organization:autocrypt:in-reply-to
-         :content-language:references:cc:to:reply-to:subject:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RWwic0XMe+s8tgCpCjfW/lHyoR3ERWBmi/iK7F/Oi/w=;
-        b=gxFsZSWDTHkV8+n82gJjEFSvLeI7sS/2a6WGHh6kr/z0y+7akpxJjYr5jRZ9JiUe5c
-         IERmkCxhop/emogyk/nI+YNs82LIUAT1rsLbc7t2BH3qoQZ07mKZJ1irfSJNed74+lRD
-         5qDvsmAYOFmYIhlde3zGfaOrJyG0BdG/ZwS+5KDlnwGvKZzoPYo/v64ywqaWwtAB3kxW
-         y4L48Rm5Z6yAdyxTFlF4R5DXHajNdQdQkfeQLmPNJnExzGjPfRadofx05e1tZxa+UPho
-         5CkNku9fqDilXsvCm3CCKR6Z8NYNdmB2yafJ9uVAM2kSsDIY11I0V4vLI+ATmXr0vZrg
-         L1jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780664959; x=1781269759;
-        h=content-transfer-encoding:organization:autocrypt:in-reply-to
-         :content-language:references:cc:to:reply-to:subject:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RWwic0XMe+s8tgCpCjfW/lHyoR3ERWBmi/iK7F/Oi/w=;
-        b=OnfbFwReVkZ7K5Wmc16LDywdfg2b2q/gZfxsKC8dTXqHzLWdy2VHNG4xyJkltUv1p0
-         9d0rElSF3wG2Itp69h73W/1Rgs7ZgvjsAfjuIzEXI8ej9asbrRJNcoACzVXTmdO8D4+e
-         jiAX0t+5liUMdBLt4QLctebVhvZ8mFpARfj6Xl0VzONzSjV7wlE/utDrs0kbIyuahV6h
-         02PtWhDqxWXl5Qr2GyvpToeSxUkVRT0VjfSEQRol8ySGOMKk1qb4EPeBC7rtyCvVtj56
-         CVSXMl8tt3N7tPJB9DeMF5B6ZLFmLTCNln7fU1sG7aRrhzRCYFx5fK9FLVt7GqP+KHBg
-         Cxuw==
-X-Gm-Message-State: AOJu0YzFfg6vAp+WfFQfLRTdnQq8o0AArM29VM+4w4TsSkucFeEMlamo
-	nR6O9SeukBvcjNVRcVC0Io/ULkOYppIZxWXdx22jH1NOkvzO60DAkgbrExXG+Bvmt7s=
-X-Gm-Gg: Acq92OEabhi0m/GtU5uU8GVOFkJkAnc/tAdW6wD9pimuijeG8R3KX4A+5g8EQRePxE2
-	jkhZjMDhcT+SWpz113N1XyytlUobR7CjfmCxanBVNh86USblWpGfZ2ORpRGOwME9g4uUg+7kCOG
-	yC4T98nLlhDflmTEg4hwnppV7NxNbV07TeRQAsHZfpFTj7Ki59ca/cEovL8bpx8q7zbyNtkXBdZ
-	k5LC6MwHFbdrLvbafOqv/z2TD20jDhT8pWkQCaOmnRSNlm6qeUSJKVQwwcBmEpEAAduF3pgPtWw
-	VR0rONQ0s2c0vxl0x9gbzy/NKZ2YCCnCQgnUNVLq6s0VJmE3PZosHgOzcvk0hO9oAUJBLcKq0GZ
-	7lMFnfTMNRAeH8x4bi3vlllyL7FLLhHw5vc2KfY91ZazKKGFZi+eD8RRBcZ8hhKECKyaRRtuSYA
-	bn+MHySgVQn9bhe8Ybv9X34wRngvWdB4iSSlTsErVTYHroh/2M/ZOgIqpLVxAaAfXIQyJyvgMWi
-	aslnF0nSrdRqckQhw==
-X-Received: by 2002:a05:600c:190b:b0:490:be9e:fd03 with SMTP id 5b1f17b1804b1-490c2589a02mr53379745e9.7.1780664959143;
-        Fri, 05 Jun 2026 06:09:19 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:b06c:5480:fdc5:c668? ([2a01:e0a:106d:1080:b06c:5480:fdc5:c668])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2f67c6sm25764494f8f.16.2026.06.05.06.09.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Jun 2026 06:09:18 -0700 (PDT)
-Message-ID: <06489359-1b96-43ad-a065-bfb9bee51a10@linaro.org>
-Date: Fri, 5 Jun 2026 15:09:17 +0200
+	s=arc-20240116; t=1780665285; c=relaxed/simple;
+	bh=O51xkAl5s81o4UbthCOTPTh9WQ0BVCJAm02EkoAQwE8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=tmGRITW6e7y/rzQ+rWid7B/bwbcMotafpzH641K8Z/wlKXNmpCjzVwf+1qDQ16bKBNDqOcWP5AipFzv3FHdqfjBkIjdRWYX3qveHGDCSBZZgMCz+9R/lYXT3+S2eHZywfwkbcg34fOlCH/sBphMknwzgq7NIYxPVDbYuDo0P0Hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oQGFFjZb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A5394C2BCB9;
+	Fri,  5 Jun 2026 13:14:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1780665284;
+	bh=O51xkAl5s81o4UbthCOTPTh9WQ0BVCJAm02EkoAQwE8=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=oQGFFjZbjlo3eI9kfOURftvNGR0lNTxQ4ryyNj4QuaTCTlPTIrTucdqdNbpSZ+zI4
+	 QTQMwrOW74Yp0RiC6NyfATq2RrzdUnJiq+Og+kZPwJaJv84G+ydK7A9XagkUdxpSqi
+	 GjoBka0V9HFqrC32dhhOiSdYLswxAtuEtWyyN2XCo24H0x4b9P73Zce4RbTbXUQslo
+	 jZh6XguDisAMZ4nsEEDOThbp+SCtFKFp7nagEomK+YKjeLFFYa/dPtWsfXtA4/sqQW
+	 l/bD2Z+6CU5ElHRbtIjeqx5IlmmqaE+ftwAvoo43c7I3zSJwlslnCj9zNTa2J0/VhI
+	 Q8Ndqe36vl3ow==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A1FCD6E7D;
+	Fri,  5 Jun 2026 13:14:44 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH v7 0/8] media: camss: Add support for C-PHY configuration
+ on Qualcomm platforms
+Date: Fri, 05 Jun 2026 15:14:38 +0200
+Message-Id: <20260605-qcom-cphy-v7-0-426c37e9008f@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 1/6] drm/msm/a6xx: Fix stale rpmh votes after suspend
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jesszhan0024@gmail.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>,
- Jie Zhang <quic_jiezh@quicinc.com>, =?UTF-8?Q?Ma=C3=ADra_Canal?=
- <mcanal@igalia.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- Shivam Rawat <shivrawa@qti.qualcomm.com>
-References: <20260605-assorted-fixes-june-v1-0-2caa04f7287c@oss.qualcomm.com>
- <20260605-assorted-fixes-june-v1-1-2caa04f7287c@oss.qualcomm.com>
-Content-Language: en-US, fr
-In-Reply-To: <20260605-assorted-fixes-june-v1-1-2caa04f7287c@oss.qualcomm.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAL7LImoC/23OwU7DMAwG4FeZcibITmKn48R7IA5N4tIcWEc7V
+ RtT352sEkqLOP6Wv9++q0nGLJN6OdzVKHOe8nAqwT8dVOzb04fonEpWBgwhwlF/xeFTx3N/0yE
+ 0MaQWIzunyv55lC5f166395L7PF2G8bZWz/iY/tcyowaNTJ0Xfwwg+Jqv+fIcv9WjYzbVGXBbZ
+ 4rjYEm6JoBH2Tv76xgQ/dbZ4poonlvgzqewd646C7h1rjgha5GTiZFp76g6sjtH658CHZvg0l/
+ H1ZWLW8frPUgCgci3TXXLsvwAzcPcvrgBAAA=
+X-Change-ID: 20251109-qcom-cphy-bb8cbda1c644
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Bryan O'Donoghue <bod@kernel.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>, 
+ "Dr. Git" <drgitx@gmail.com>, Cory Keitz <ckeitz@amazon.com>, 
+ Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: Frank Li <Frank.Li@nxp.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Kieran Bingham <kbingham@kernel.org>, 
+ Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5951; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=O51xkAl5s81o4UbthCOTPTh9WQ0BVCJAm02EkoAQwE8=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBqIsvCg6p45hL2uF9Ui51VrNd987t1eLp1CSq3b
+ ouk4ZUnv0WJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaiLLwgAKCRBgAj/E00kg
+ cp23D/9I1EPYpSF2/Z+ahYHr6DbgYVNI4KI+Dpa6XwOdPLDJNBayx28cQTdnZSVLCcG/aLmODxy
+ fNNSWoPUXxv9zjSNnoE6r0kU2SozSHJbgElR4DXTMiVFx/01y6I9AuwNuIfPXrd/LzWghwsT34T
+ EPWpBBGCJyKLbjdk/Xu27mhvNCAR50Z2XCUPD4sY3DQxxLAtsGPWa04gc+DRD5JNs5AGzz0N9Nw
+ 7cRC30IYRwT4E4a7V/IrYzCWA9v7MsLF4W05Vpja9/RhZMFHmxCndQTy0+JouhZjzkx84CFxmCB
+ CTjoJ8yyMCheAPer3YuIMHNQDbI9cTSknzKcMHWwfzPfQLlycV2GUbxdP44pVitPxWIu/3bo26i
+ iQ/0PIqvvKDq1h6d7ps5VkfCa3qkjskQ0IDtB0ZtpfaSS/BFeL2B0tnecNKkrNRyBYFv4Q7qwWh
+ vaddRvRmNymbegGa+dx9eBycDyBFApmtDzYTm2t2Fff5zA0qB2HXeQXURlmXBFIt6k7f4MH/mXc
+ p5JUruVOldvoZASYaUAIWWH4ijx8A9IVouGCuiRPzzwB2qG+EMvnVBxufymst9D/RXGTkBEZd4U
+ FNOaqGLUc9UBUuozso7HeQGP4jaTjb6KBQjCFgHZVUeaLoKdCl7Q/bdmKbEFjGJC4RuhI+8WAP9
+ aEOYlsPNX1Byaog==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:akhilpo@oss.qualcomm.com,m:robin.clark@oss.qualcomm.com,m:sean@poorly.run,m:konradybcio@kernel.org,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:quic_pvgtejas@quicinc.com,m:quic_jiezh@quicinc.com,m:mcanal@igalia.com,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:shivrawa@qti.qualcomm.com,s:lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-111421-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111423-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	FORGED_RECIPIENTS(0.00)[m:rfoss@kernel.org,m:todor.too@gmail.com,m:bryan.odonoghue@linaro.org,m:bod@kernel.org,m:vladimir.zapolskiy@linaro.org,m:mchehab@kernel.org,m:luca.weiss@fairphone.com,m:phodina@protonmail.com,m:drgitx@gmail.com,m:ckeitz@amazon.com,m:loic.poulain@oss.qualcomm.com,m:Frank.Li@nxp.com,m:konrad.dybcio@oss.qualcomm.com,m:kbingham@kernel.org,m:sakari.ailus@linux.intel.com,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:phone-devel@vger.kernel.org,m:david@ixit.cz,m:todortoo@gmail.com,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch,quicinc.com,igalia.com];
+	FORGED_SENDER(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	HAS_ORG_HEADER(0.00)[];
 	TO_DN_SOME(0.00)[];
-	FORGED_SENDER(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,linaro.org,fairphone.com,protonmail.com,amazon.com,oss.qualcomm.com];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	FORWARDED(0.00)[lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	HAS_REPLYTO(0.00)[david@ixit.cz];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	REPLYTO_EQ_FROM(0.00)[]
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,codeberg.org:url,ixit.cz:mid,ixit.cz:email,ixit.cz:replyto]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: EA3A96486A0
+X-Rspamd-Queue-Id: A5CE3648744
 
-On 6/4/26 22:08, Akhil P Oommen wrote:
-> From: Shivam Rawat <shivrawa@qti.qualcomm.com>
-> 
-> There are stale RPMH votes (BCM votes) observed after GMU suspend. This
-> is because the rpmh stop sequences are skipped during gmu suspend. Fix
-> this and also move GMU to reset state to avoid any further activity.
-> 
-> Fixes: f248d5d5159a ("drm/msm/a6xx: Fix PDC sleep sequence")
-> Signed-off-by: Shivam Rawat <shivrawa@qti.qualcomm.com>
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> ---
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 2e5d7b53a0c3..a2f6918c4f7f 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -642,7 +642,7 @@ static void a6xx_rpmh_stop(struct a6xx_gmu *gmu)
->   	int ret;
->   	u32 val;
->   
-> -	if (test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))
-> +	if (!test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))
->   		return;
->   
->   	if (adreno_is_a840(adreno_gpu))
-> @@ -1465,6 +1465,9 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
->   	/* Stop the interrupts and mask the hardware */
->   	a6xx_gmu_irq_disable(gmu);
->   
-> +	/* Halt the gmu cm3 core */
-> +	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
-> +
->   	/* Tell RPMh to power off the GPU */
->   	a6xx_rpmh_stop(gmu);
->   
-> 
+Note: WIP tag added, as not everything from the previous review round has
+been addressed.
 
-Thanks !
+# Short summary
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+This patch series extends the Qualcomm CAMSS (Camera Subsystem),
+including CSID and CSIPHY components, to support C-PHY mode configuration.
+
+# Background and motivation
+
+Modern smartphone cameras increasingly rely on MIPI C-PHY rather than 
+D-PHY, thanks to its higher data throughput and signal efficiency.
+As a result, many OEMs adopt C-PHY interfaces for main (rear) cameras on
+Qualcomm-based devices.
+
+Until now, mainline Linux lacked C-PHY configuration support for Qualcomm
+chipsets, preventing bring-up of primary camera sensors on several
+Snapdragon platforms. This series closes that gap.
+
+ - Introduces C-PHY configuration support for the CAMSS driver stack,
+   covering both CSID and CSIPHY blocks.
+ - Successfully enables C-PHY operation on the Snapdragon 845 platform.
+ - Tested on OnePlus 6 and 6T phones running mainline Linux,
+   using the Sony IMX519 main camera sensor.
+ - The new configuration allows other chipsets versionsto enable C-PHY by
+   simply adding corresponding sensor driver support and csiphy
+   initialization data, following the example set for sdm845.
+
+With this patch series, mainline Linux gains working C-PHY support for
+Snapdragon 845, paving the way for improved main camera functionality
+across many Qualcomm-based devices. The groundwork also simplifies
+future enablement efforts for additional SoCs and sensors.
+
+Until merged, the series will be also available at:
+  https://codeberg.org/sdm845/linux/commits/branch/b4/qcom-cphy
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+Changes in v7:
+- Move logic out of switch. (Frank)
+- Change csid cphy knob to phy_sel using enum. (Bryan, Frank)
+- Link to v6: https://lore.kernel.org/r/20260603-qcom-cphy-v6-0-e50de0b557a8@ixit.cz
+
+Changes in v6:
+- lanes_enable now uses WARN_ONCE instead of return values. (Sakari)
+- Dropped Kodiak patch until it gets better documented.
+- Document the 3ph C-PHY sdm845 registers a bit.
+- Link to v5: https://lore.kernel.org/r/20260531-qcom-cphy-v5-0-6be0f62b4d65@ixit.cz
+
+Changes in v5:
+- Split first patch enabling C-PHY part into last patch. (Bryan)
+- Fix the camss_get_link_freq crash. (Cory)
+- Dropped patch whitelisting C-PHY, instead use nullptr check. (Bryan)
+- Dropped A-b/R-b from
+ "media: qcom: camss: Initialize lanes after lane configuration is available"
+ and changed Petr to Co-developed by and owned the patch.
+- Link to v4: https://lore.kernel.org/r/20260301-qcom-cphy-v4-0-e53316d2cc65@ixit.cz
+
+Changes in v4:
+- Documented cphy parametr to camss_get_link_freq.
+- Use BIT() macro for lane_mask. (Bryan)
+- Correct lane_mask calculation. (Kieran + me)
+- Removed comment for the D/C-PHY sequences init. (Bryan)
+- Pass &csid->phy for calculate freq. (Bryan)
+- Added missing cphy description to camss_get_link_freq. (kernel test robot)
+- Gen2 v1.1 MIPI CSI-2 CPHY init hex to lowercase.
+- Added back missed commit with improved electrical for sdm845 3ph.
+- NOT addressed yet:
+  - Proliferating special cases in switch statements on a per-SoC basis is verboten. 
+  - is it possible to set clock_lane to say 0xff in DT ? 
+- Link to v3: https://lore.kernel.org/r/20260117-qcom-cphy-v3-0-8ce76a06f7db@ixit.cz
+
+Changes in v3:
+- Make lanes_enable return sucess or error, since I couldn't move the
+  configuration to the _init.
+- Dropped R-b tags on
+  "media: qcom: camss: Initialize lanes after lane configuration is available"
+  as I changed formatting.
+- Link to v2: https://lore.kernel.org/r/20251204-qcom-cphy-v2-0-6b35ef8b071e@ixit.cz
+
+Changes in v2:
+- This is still WIP patch series, thus I wanted to publish already
+  changed parts to get feedback regarding to the direction of patchset.
+- When switch to using odd bits, zeroed val which was left unitialized in v1.
+- Accidentally missed archs added back in the commit moving lane regs to
+  new location.
+- Remove commit with reverting check for only D-PHY is supported and
+  adjusted the check to also account for C-PHY.
+- Documented link frequency calculation with defines. (Casey)
+- Changed the cphy boolean to phy_cfg enum in the camss/camss-csiphy.
+  (Brian)
+- Added patch for csiphy-3ph enablement for sm7280 from Luca as I'm
+  meanwhile trying to bring up the C-PHY sensor on FairPhone 5.
+- Merged these two commits together
+    csiphy-3ph: Enable sdm845 C-PHY sequence
+    csiphy-3ph: Add Gen2 v1.1 MIPI CSI-2 CPHY init
+  merged R-b.
+- Link to v1: https://lore.kernel.org/r/20251109-qcom-cphy-v1-0-165f7e79b0e1@ixit.cz
+
+---
+David Heidelberg (8):
+      media: qcom: camss: csiphy: Introduce PHY configuration
+      media: qcom: camss: csiphy-3ph: Use odd bits for configuring C-PHY lanes
+      media: qcom: camss: Prepare CSID for C-PHY support
+      media: qcom: camss: Initialize lanes after lane configuration is available
+      media: qcom: camss: csiphy-3ph: Add Gen2 v1.1 MIPI CSI-2 C-PHY init
+      media: qcom: camss: csiphy-3ph: Update Gen2 v1.1 MIPI CSI-2 C-PHY init
+      media: qcom: camss: Account for C-PHY when calculating link frequency
+      media: qcom: camss: Enable C-PHY where available
+
+ .../media/platform/qcom/camss/camss-csid-gen2.c    |   1 +
+ drivers/media/platform/qcom/camss/camss-csid.c     |  12 +-
+ drivers/media/platform/qcom/camss/camss-csid.h     |   6 +
+ .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 243 +++++++++++++++++----
+ drivers/media/platform/qcom/camss/camss-csiphy.c   |   6 +-
+ drivers/media/platform/qcom/camss/camss-csiphy.h   |   2 +
+ drivers/media/platform/qcom/camss/camss.c          |  36 ++-
+ drivers/media/platform/qcom/camss/camss.h          |   2 +-
+ 8 files changed, 245 insertions(+), 63 deletions(-)
+---
+base-commit: b99ae45861eccff1e1d8c7b05a13650be805d437
+change-id: 20251109-qcom-cphy-bb8cbda1c644
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
+
 
 
