@@ -1,211 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-111306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id MlG0JpMqImqWTQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 03:46:59 +0200
+	id MVcwAl04ImrhTwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 04:45:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 383B0644839
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 03:46:59 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C179644BAB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 04:45:48 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=J44XSzBS;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111306-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111306-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=lAaLyatX;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111307-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111307-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DB81E306D626
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 01:33:14 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 379DC3095458
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 02:41:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CD6C3C2B9B;
-	Fri,  5 Jun 2026 01:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFE7B3DC4A9;
+	Fri,  5 Jun 2026 02:40:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4263B7B93;
-	Fri,  5 Jun 2026 01:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5703D16E3;
+	Fri,  5 Jun 2026 02:40:02 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780623193; cv=none; b=jNleUH5SYmuBX4d52xtCEfHXUGf1xuFfEnFSkqmKMBowI62LbeaTLVOyXU06VxjrG1si4Sbz29iafVXqYy8Sag++9cSedMg/8j4MTNij90p8DqtjDvpklI+x779Zt09lkZqqbdBbWoQrAiwzNYBny7r+1rMF4Xl7oXw6GtoKX64=
+	t=1780627208; cv=none; b=QQW6Mth2d8lYAQosnLW356Q+c0eNB1kq8uaKdQB0KKmTsnELmxRnBog34/70L9Tn17X9PdRmLl2YPNSxVKecSzeo4xE6ixqltZJsBPCXHUDFWNoM7oG4P4K21nEf91CAZMBz3A3O94/0ebdVrz98wpxQEB/nS1suhG5YHPc0oXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780623193; c=relaxed/simple;
-	bh=LWN8fiboKockRcgT6EHTV8jtVOiXIbjNSMKEl9uMPVs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOdrf6275uFoSaGf4tTiQT3GHrkLgRMEG6h7NnC3uC10WBM9qSoOqv0i0+gIAcnbQ5vyw51DWmGKFLgwKdjV5DCxI9VgVs6JvYeZICtUyCr5Otl/dIrhr+415NBizZfhEt15POSz35F3MU7Yg/s00ppSyA+5gNPfo14T2RUZD8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J44XSzBS; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086481F00893;
-	Fri,  5 Jun 2026 01:33:06 +0000 (UTC)
+	s=arc-20240116; t=1780627208; c=relaxed/simple;
+	bh=GueZdsUH/+EZ28mId0gTEe7ZJnf767mMV3uecyFh+A8=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=d3n08M9APLVL6bPqoZmxgwAC/d2w3n7a6FAMivl9oSEWsvcypkR3OxxoEo+eh/xrx1XhukeIr9REUoSjkbyuwGha8UwJ8cz56NlNxPLzQI8pfqPwChUCWQz/gGBW/ucxfUnzIv7nibGJEMpMsIplEACD0Ag/wv3HQzC+zh6WBrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lAaLyatX; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65E81F00893;
+	Fri,  5 Jun 2026 02:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780623187;
-	bh=C2+SL4in8IWp8bHwp1BHBRMxAHSPizaARVU+G4BqjAs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J44XSzBSG2WWnJM9HqAh3HKSMU6WfXyhYYRKRhL3TrELSDFg3fEY2US/zwdvvBkDz
-	 fGFAkXjlIRU5W+99H5/aSBLEUTNWQRXPt685jRWG7FnpiJEwx+3NR4VjEB9G7oi40N
-	 HhXzHzoFA0+TYkCStaT95V3jnqo6aZmDP8TaJEWaiotDDSVGrDlaGub2nP3grHn5zF
-	 r0zF9wqOYIbxJxxKWNBAiNVDbsDCP2QzmAlkhW5CRNtBFbQ+G56vAd9WDzjCsWI6Pw
-	 bhDGx2ffGvahk0PNn0AyfppA6cyLPDH2UKm2Fp1Czj962BmMC5Pg2SKCwgJtb9maaz
-	 0gA4d5LfSUxgQ==
-From: Jakub Kicinski <kuba@kernel.org>
-To: devnull+george.moussalem.outlook.com@kernel.org
-Cc: Jakub Kicinski <kuba@kernel.org>,
-	andrew@lunn.ch,
-	hkallweit1@gmail.com,
-	linux@armlinux.org.uk,
-	davem@davemloft.net,
-	edumazet@google.com,
-	pabeni@redhat.com,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	f.fainelli@gmail.com,
-	andersson@kernel.org,
-	konradybcio@kernel.org,
-	netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	konrad.dybcio@oss.qualcomm.com,
-	linux-arm-msm@vger.kernel.org,
-	george.moussalem@outlook.com
-Subject: Re: [PATCH v2 4/4] net: phy: at803x: add RX and TX clock management for IPQ5018 PHY
-Date: Thu,  4 Jun 2026 18:33:05 -0700
-Message-ID: <20260605013305.3533509-1-kuba@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260602-ipq5018-gephy-clocks-v2-4-65a1f1d881f3@outlook.com>
-References: <20260602-ipq5018-gephy-clocks-v2-4-65a1f1d881f3@outlook.com>
+	s=k20260515; t=1780627202;
+	bh=tllH2akN3DKgD+UoBWgHQAr8zejNajjH9gvNHbzmQz4=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject;
+	b=lAaLyatX9St8nhqQo0UQ/9uNMDYC7ERdUrrJ955eaLGC68Q4BEbyJtxCnuOpH+wE5
+	 1AXtjz3uALVDPstbGEgr6C4JmW17eY9i7q6PHOttU7s1LkEb13kjC+GrIedR7KrHH3
+	 TMM3W6kfQFXT4In1YkR69oD98qyw2eTlyN2GvvIXf/r2svLy5e8ZvvH/qumjpBJuel
+	 1JVjXqJzP2s/kGu6Rljo/xOacax6XdcoxSvdK7AmXILmHTulkRyqE6OqtLSRrmWBWL
+	 A19ZMy9ZT0N9tLI3+bvJsKgMvRABazLfnw4FJhdiCRPHwCsSpoIt4SSkg+rIA9aXKC
+	 EKdzryl/DjZbw==
+Date: Thu, 04 Jun 2026 21:40:01 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: weishangjuan@eswincomputing.com, linux-gpio@vger.kernel.org, 
+ inochiama@gmail.com, davem@davemloft.net, devicetree@vger.kernel.org, 
+ kuba@kernel.org, me@ziyao.cc, hawk@kernel.org, arnd@arndb.de, 
+ konradybcio@kernel.org, mohd.anwar@oss.qualcomm.com, hkallweit1@gmail.com, 
+ pabeni@redhat.com, ast@kernel.org, maxime.chevallier@bootlin.com, 
+ bpf@vger.kernel.org, boon.khai.ng@altera.com, linusw@kernel.org, 
+ andersson@kernel.org, sdf@fomichev.me, linux-kernel@vger.kernel.org, 
+ livelycarpet87@gmail.com, a0987203069@gmail.com, 
+ linux-stm32@st-md-mailman.stormreply.com, daniel@iogearbox.net, 
+ john.fastabend@gmail.com, alexandre.torgue@foss.st.com, 
+ richardcochran@gmail.com, rmk+kernel@armlinux.org.uk, krzk+dt@kernel.org, 
+ conor+dt@kernel.org, rohan.g.thomas@altera.com, gregkh@linuxfoundation.org, 
+ Daniel Thompson <daniel@riscstar.com>, chenchuangyu@xiaomi.com, 
+ andrew+netdev@lunn.ch, mcoquelin.stm32@gmail.com, edumazet@google.com, 
+ siyanteng@cqsoftware.com.cn, wens@kernel.org, brgl@kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ julianbraha@gmail.com, netdev@vger.kernel.org, chenhuacai@kernel.org, 
+ prabhakar.mahadev-lad.rj@bp.renesas.com
+To: Alex Elder <elder@riscstar.com>
+In-Reply-To: <20260605010022.968612-11-elder@riscstar.com>
+References: <20260605010022.968612-1-elder@riscstar.com>
+ <20260605010022.968612-11-elder@riscstar.com>
+Message-Id: <178062720108.1744752.12164392208085928081.robh@kernel.org>
+Subject: Re: [PATCH net-next v2 10/14] dt-bindings: net:
+ toshiba,tc9654-dwmac: add TC9564 Ethernet bridge
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.84 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111306-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-111307-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[kuba@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	FORGED_RECIPIENTS(0.00)[m:devnull+george.moussalem.outlook.com@kernel.org,m:kuba@kernel.org,m:andrew@lunn.ch,m:hkallweit1@gmail.com,m:linux@armlinux.org.uk,m:davem@davemloft.net,m:edumazet@google.com,m:pabeni@redhat.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:f.fainelli@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:netdev@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:george.moussalem@outlook.com,m:devnull@kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:ffainelli@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[48];
+	FORGED_RECIPIENTS(0.00)[m:weishangjuan@eswincomputing.com,m:linux-gpio@vger.kernel.org,m:inochiama@gmail.com,m:davem@davemloft.net,m:devicetree@vger.kernel.org,m:kuba@kernel.org,m:me@ziyao.cc,m:hawk@kernel.org,m:arnd@arndb.de,m:konradybcio@kernel.org,m:mohd.anwar@oss.qualcomm.com,m:hkallweit1@gmail.com,m:pabeni@redhat.com,m:ast@kernel.org,m:maxime.chevallier@bootlin.com,m:bpf@vger.kernel.org,m:boon.khai.ng@altera.com,m:linusw@kernel.org,m:andersson@kernel.org,m:sdf@fomichev.me,m:linux-kernel@vger.kernel.org,m:livelycarpet87@gmail.com,m:a0987203069@gmail.com,m:linux-stm32@st-md-mailman.stormreply.com,m:daniel@iogearbox.net,m:john.fastabend@gmail.com,m:alexandre.torgue@foss.st.com,m:richardcochran@gmail.com,m:rmk+kernel@armlinux.org.uk,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:rohan.g.thomas@altera.com,m:gregkh@linuxfoundation.org,m:daniel@riscstar.com,m:chenchuangyu@xiaomi.com,m:andrew+netdev@lunn.ch,m:mcoquelin.stm32@gmail.com,m:edumazet@google.com,m:siyanteng@cqsoftware.com.cn,m
+ :wens@kernel.org,m:brgl@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:julianbraha@gmail.com,m:netdev@vger.kernel.org,m:chenhuacai@kernel.org,m:prabhakar.mahadev-lad.rj@bp.renesas.com,m:elder@riscstar.com,m:johnfastabend@gmail.com,m:rmk@armlinux.org.uk,m:krzk@kernel.org,m:conor@kernel.org,m:andrew@lunn.ch,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[kernel.org,lunn.ch,gmail.com,armlinux.org.uk,davemloft.net,google.com,redhat.com,vger.kernel.org,oss.qualcomm.com,outlook.com];
+	FREEMAIL_CC(0.00)[eswincomputing.com,vger.kernel.org,gmail.com,davemloft.net,kernel.org,ziyao.cc,arndb.de,oss.qualcomm.com,redhat.com,bootlin.com,altera.com,fomichev.me,st-md-mailman.stormreply.com,iogearbox.net,foss.st.com,armlinux.org.uk,linuxfoundation.org,riscstar.com,xiaomi.com,lunn.ch,google.com,cqsoftware.com.cn,lists.infradead.org,bp.renesas.com];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kuba@kernel.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,george.moussalem.outlook.com,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	TAGGED_RCPT(0.00)[linux-arm-msm,kernel,dt,netdev];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[riscstar.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 383B0644839
+X-Rspamd-Queue-Id: 6C179644BAB
 
-This is an AI-generated review of your patch. The human sending this
-email has considered the AI review valid, or at least plausible.
----
-net: phy: at803x: add RX and TX clock management for IPQ5018 PHY
 
-This commit adds RX and TX clock acquisition for the IPQ5018 PHY using
-devm_clk_get_enabled(). It also attempts to manage power by manually toggling
-these clocks in ipq5018_link_change_notify() based on the link state.
+On Thu, 04 Jun 2026 20:00:17 -0500, Alex Elder wrote:
+> From: Daniel Thompson <daniel@riscstar.com>
+> 
+> Add devicetree bindings for the Toshiba TC956x family of Ethernet-AVB/TSN
+> bridges.
+> 
+> The TC9564 contains a PCIe switch with one upstream and three downstream
+> PCIe ports.  The third PCIe downstream port has an attached embedded PCIe
+> endpoint, and that endpoint implements two PCIe functions.  Each internal
+> PCIe function has a Synopsys XGMAC Ethernet interface capable of 10 Gbps
+> operation.
+> 
+> The TC9564 also implements an embedded GPIO controller, which exposes
+> 10 lines externally.  Some platforms use these GPIO lines, so this
+> GPIO controller is managed by a separate driver.  Other embedded
+> peripherals (like a microcontroller, SRAM, and UART) are currently
+> unused.
+> 
+> The GPIO controller is managed by registers accessed via MMIO on an
+> internal PCIe function's registers.
+> 
+> Signed-off-by: Daniel Thompson <daniel@riscstar.com>
+> Signed-off-by: Alex Elder <elder@riscstar.com>
+> ---
+>  .../bindings/net/toshiba,tc9564-dwmac.yaml    | 120 ++++++++++++++++++
+>  MAINTAINERS                                   |   6 +
+>  2 files changed, 126 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/toshiba,tc9564-dwmac.yaml
+> 
 
-> diff --git a/drivers/net/phy/qcom/at803x.c b/drivers/net/phy/qcom/at803x.c
-> index 63726cf98cd42..b7361a14220d8 100644
-> --- a/drivers/net/phy/qcom/at803x.c
-> +++ b/drivers/net/phy/qcom/at803x.c
+My bot found errors running 'make dt_binding_check' on your patch:
 
-[ ... ]
+yamllint warnings/errors:
 
-> @@ -1062,6 +1065,16 @@ static int ipq5018_config_init(struct phy_device *phydev)
->  
->  static void ipq5018_link_change_notify(struct phy_device *phydev)
->  {
-> +	struct ipq5018_priv *priv = phydev->priv;
-> +
-> +	if (phydev->link) {
-> +		clk_enable(priv->rx_clk);
-> +		clk_enable(priv->tx_clk);
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/toshiba,tc9564-dwmac.yaml: gpio: Missing additionalProperties/unevaluatedProperties constraint
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/toshiba,tc9564-dwmac.yaml: ethernet: Missing additionalProperties/unevaluatedProperties constraint
 
-[Severity: Medium]
-Should the return values of clk_enable() be checked here?
+doc reference errors (make refcheckdocs):
+Warning: MAINTAINERS references a file that doesn't exist: Documentation/devicetree/bindings/net/toshiba,tc956x-dwmac.yaml
+MAINTAINERS: Documentation/devicetree/bindings/net/toshiba,tc956x-dwmac.yaml
 
-If clk_enable(priv->rx_clk) succeeds but clk_enable(priv->tx_clk) fails,
-the hardware might be left in a partially enabled state without any logged
-warning. Would it be better to explicitly rollback and disable the
-previously enabled clocks if an error occurs to maintain a consistent state?
+See https://patchwork.kernel.org/project/devicetree/patch/20260605010022.968612-11-elder@riscstar.com
 
-> +	} else {
-> +		clk_disable(priv->rx_clk);
-> +		clk_disable(priv->tx_clk);
-> +	}
-> +
->  	/*
->  	 * Reset the FIFO buffer upon link disconnects to clear any residual data
->  	 * which may cause issues with the FIFO which it cannot recover from.
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
-[ ... ]
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-> @@ -1084,6 +1097,16 @@ static int ipq5018_probe(struct phy_device *phydev)
->  	priv->set_short_cable_dac = of_property_read_bool(dev->of_node,
->  							  "qcom,dac-preset-short-cable");
->  
-> +	priv->rx_clk = devm_clk_get_enabled(dev, "rx");
+pip3 install dtschema --upgrade
 
-[Severity: High]
-Does mixing devm_clk_get_enabled() with manual clk_enable() and clk_disable()
-cause enable count imbalances?
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
-Since devm_clk_get_enabled() establishes a base enable count of 1 and
-registers an unconditional devres teardown action to call
-clk_disable_unprepare(), manually toggling the clocks in
-ipq5018_link_change_notify() could lead to a few unintended behaviors:
-
-1. The count initializes to 1. If the link comes up, the count increases
-   to 2. When the link goes down, it drops to 1. The hardware clocks are
-   never actually gated since the count never reaches 0.
-
-2. If the driver is unbound while the link is down (after a manual
-   clk_disable()), devres will call clk_disable() again, dropping the
-   enable_count below zero and triggering a kernel WARN.
-
-3. If phy_stop() halts the PHY, it invokes the notify callback before
-   phydev->link is cleared. If the link was up, clk_enable() is called
-   again, inflating the count to 3. Devres cleanup will then only drop
-   the count by 1, permanently leaking the clock reference.
-
-Could this be resolved by using devm_clk_get() instead, and handling the
-prepare/enable states directly?
-
-> +	if (IS_ERR(priv->rx_clk))
-> +		return dev_err_probe(dev, PTR_ERR(priv->rx_clk),
-> +				     "failed to get and enable RX clock\n");
-> +
-> +	priv->tx_clk = devm_clk_get_enabled(dev, "tx");
-> +	if (IS_ERR(priv->tx_clk))
-> +		return dev_err_probe(dev, PTR_ERR(priv->tx_clk),
-> +				     "failed to get and enable TX clock\n");
-> +
->  	priv->rst = devm_reset_control_array_get_exclusive(dev);
-
-[ ... ]
--- 
-pw-bot: cr
 
