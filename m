@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-111291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id SgziN8YiImrVSwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 03:13:42 +0200
+	id 0vCrBo0jImoATAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 03:17:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 608676444EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 03:13:42 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08FE7644542
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 05 Jun 2026 03:17:00 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=riscstar-com.20251104.gappssmtp.com header.s=20251104 header.b=VBA0oiYL;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111291-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111291-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=riscstar-com.20251104.gappssmtp.com header.s=20251104 header.b=Qh52zVWu;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111298-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111298-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=fail reason="SPF not aligned (relaxed), DKIM not aligned (relaxed)" header.from=riscstar.com (policy=none);
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 810DF310FC61
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 01:05:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B50AD3147C8B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Jun 2026 01:07:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C21D3B0AF5;
-	Fri,  5 Jun 2026 01:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B71053C4B64;
+	Fri,  5 Jun 2026 01:01:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C613644BE
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jun 2026 01:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B4B37DAB9
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Jun 2026 01:01:11 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780621286; cv=none; b=UuGHuRJCGyDPU/eVWGy0+shzw36U96XtMOgkZqr5rTE1GSXL9SXdBD43/+HHjGcFj/JPSVO03XTBP6vwr6mgIEbU/bb+bnHt8UVhuN1gkEOvVLLZbazRFzKjGywTOTYUu818mGqwMoboId2Vnq8GOX4Whh/bOXS73d1kM50You0=
+	t=1780621302; cv=none; b=UabzqjlHEYiZERY/AmxKFg4CWW84jE9JYUXIlmNdUbuRrmtDw9PaQdXEYoY3laCFbZALrKWVLGdV+lusa8yDURdzrPSGpbZHXr45t7QZ0eO5I8HJdJEXxD6NViiOOvaLx3EQqRy7fPI2sv214Rhn0oe8jEokR3mfJYPW/AzIq7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780621286; c=relaxed/simple;
+	s=arc-20240116; t=1780621302; c=relaxed/simple;
 	bh=Q/ZNVyWH5+7aUXeLq9mlW50Vwgq0fqg1xk8VkFefUX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=okRBhtGNC61VodgBmAbYDUzARZB4OMXAlnyhhQ1gtyH5VrH8tptHotbQeoa4QgkMC9/Kwvm+dy2VPKiYJm98yM04W+R740BJL1Uc4EYKDZeUh5gRQA0rIkPazwxMrYLFNbFPiKwj1fBpp8f/fZ+9RDg5eLCfyANW8vSKLzZhB+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=VBA0oiYL; arc=none smtp.client-ip=209.85.167.177
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-485ecc0f2dfso1164249b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2026 18:01:00 -0700 (PDT)
+	 MIME-Version; b=d9lQEjqVccm2zSDXTCxt5OLHJtejvQlBxVID8/Ql/EYR4/BYIVwNm979XfOKa8JwmiJ+wWPSbS1glt83clnzuPQgrMfztxi0JGXCGKxh6WnAXh6vufkwR7QlPfYInQaCOZXzkKAWGehRicTFMM4U8edj0hT7nQDD2cbni8tLQgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=Qh52zVWu; arc=none smtp.client-ip=209.85.219.43
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8ce0f17a69cso9604966d6.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Jun 2026 18:01:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1780621260; x=1781226060; darn=vger.kernel.org;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1780621271; x=1781226071; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
         bh=/ZIGHz/o3y+3ogj7r6nfssUl4myckUIIzkFFbrT9qoc=;
-        b=VBA0oiYLEp5RT1MN3a1hVsJ8aRjH4SnEjm8N5ALMhxnEZFGvXRgXW34Zan/sKl+2x5
-         deTqZHtZXgnm2dOSmEAm+PTuNrLpnF1OsuLx6ixjUnOyTcyesBZe5KEwogK+OY9HEu66
-         rVMgEtkStXsK3Pj5d3ODn57cpdsvFOgeritiO7eAdpEbwCcRelRrDh38Av2IqceiEWlf
-         594CitBmTaWgZU0eG+zjXP9rq9k++r7nyvZo3wJMZ3VfKBGJr/8Yn5uksoGqC/0LZcun
-         PeQsD6SW9F3FTfxRr2T7e/Bo6u7mP9nOo1jfT+QxRPIk6VL7pqNDdqEVS5yk7//ZAhMQ
-         9g8w==
+        b=Qh52zVWuqYIzrDjMLp22V1GOj28oPxYc5/v3927ClXhCbmQn6psFUn1nJyc6Yz5hqP
+         +pmxgzPRLMCjKu0IIzUZ5Vch3+MYdJ1RPeXlmFYUqfl2f4WgcI+NlTuHm15bp5U3wdTZ
+         uwfPYvWcYoC+oSFKT6AiT8yKooZZ2AFIe9yKl9ip2i8hLF5CnIT125ie+UN5/tmxkrCT
+         iJg271JDrRHXhPGoOiZofbEw19WUI8EEyIJkkrNnKt0Zwt43hzH4903WjjvnlDfNkgsz
+         r7c2obSTI5eQhhrvFidGNfbpUo9xRjAb4EdRtIEwr1TYvMFhRn/KblUvYfeSE564oqmz
+         czww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780621260; x=1781226060;
+        d=1e100.net; s=20251104; t=1780621271; x=1781226071;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
         bh=/ZIGHz/o3y+3ogj7r6nfssUl4myckUIIzkFFbrT9qoc=;
-        b=Kmqh/i5DZhukPmiYvOzrTiCVAT5lfudiFLZocCY74Pc+T15/MeC6T5TZhN0H0b981f
-         t4y4OERau0+/WdKrthJFgK/RcLIHyn5jcdbuwy0yV/G1B+M7O1JL3Kjdp7vw+w4sssj8
-         VR3Yja8dLE/FcYNSdXRbCeDH6jMpmnK69bQDVgFqgwRlox4hFkpxvFysAbQ/N7rAH4Es
-         Bg4x53PMWnEEu9sP0DwXaZliyiHDErFe1CJxnqmilyU4hIWVAF7sHlmIcRpm1ytK6RCh
-         fJnKR6FUSCZcQAXwBEXp09sHCGQcnaY1hM6oZhpqAM2fn3abiPL/UTZPg4VXSCWAjV3j
-         EFMQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+MSw30qMAdZusuGsrxreMTsQ0rEe61Z7l5QKWHbh6dsO/D+JF6TIK3B4pDVYBKF8oL04XKQjA3JGCXcOhk@vger.kernel.org
-X-Gm-Message-State: AOJu0YzLiMWgalelF+3eeD1ePE9ZVVqurtsFwQkq1Dr92/hZHMygdYoh
-	tvi223OBXLcRqdBCmwF/l8dCm32aj4okoV0JmPWtCid0SyTzHhyQtr3ssT6pyjUCrdE=
-X-Gm-Gg: Acq92OHkklrDaeC0fbKJmFDbs4cakYTg/zior+gkG3dfYE5FKCtRdxPfo++yGH4MDmP
-	TU1ZktmtsJCSAaUcktUt9GvTywgARyPwncRruQDkObSuYCrMVphLFcYaJWTLO/myv9C0Yqnh+oO
-	NheiS7hbDo+EM/3fv7NnhmRLSjhUcY1gPNBG2oGSbmhJXPbZOQMD6igh3+uXFXLbroHtFPTZI5t
-	x6o27NToO3s+DKvrx8itzhyL2wsiaIXnivcJkwKXzcnjZbcBY14+r4g7vO9iv5R9B4lwufkUZQX
-	0taJhnRQxQK0baXP4dNcXd5a9LLHsdljma8afV9kwjeZdYMbrDuSbZ+cKLIPOvBIMLhY4GQWzuO
-	RhzFKFXhCM1P3PpcpWfaYg5YlclVpFJjkGtVt/ex/g3qCgeLm3S+4wLo1h6AdnQNEY/EldJ3txq
-	c6l+E22Hd/TG+JbET7E5rfHrCdPwfabLvbrztfVg==
+        b=PRefVoY/Gh3weovLr7kpJSZSdEktBweX5BARw7B5wkJSQF95QnUyNvsxej2wskYu6u
+         rFC0/KHuY5uhr1M6v2ytdz+dU6ZBNeMGptfLdaHg3YZqlbfc57Zp+iyMJXsJ/aicLW7B
+         3vVYlFl+L5ZCfDpLuPzyeyxaMCUeOkRyGc99a4XcY24oxdXSBRFzcseL+qes6jA3Jz2E
+         0m/YlQt+JcE2jgAWkMSM5gPhcFjrzAD9rA5GdlOpS20NUVmuec9ehPP3uo/fTZ5hdFi0
+         aWfJAVFGgJZMRgCzUqnAQcE+S2vH8oiSxHpINHk3nlfqkLdOQityVFg5fZM6CGBb9fSG
+         Dg6Q==
+X-Forwarded-Encrypted: i=1; AFNElJ/gZy0G4vhYCGhTlIkMLXYDaBE552wdvt8/dtlQDNTDBVCQapcCF12fmd/C9VQ252HqDvEW5gMaQXcG+iTT@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZNMjaAhuv73obzdxGci1yORyZU4Tpk/zBckjsHXRiYC6OHSJq
+	qedLaLP/NCt3l2yf4qR2zgqa8tkGS5J3LaKL/sRUdU/E+lb2dJ0Gt6pp9uBTRa0xvMvhe4p9ddq
+	ecdi1cZM=
+X-Gm-Gg: Acq92OGe027Lx1R1YLP0d74MjwChgLkQiEVs9CsZujeB4B1Z+3D1EfdA7Ex3Ur3Okns
+	rOcQeiLAi5PRyVAI7X7j13thQO3URMZLCM9lFut6c4UJ3oIu4CtweEIhXaVZWFGolZpEFVXvWwk
+	PyceydrUaChOMVJHTsvakkP3rizGQ/MFZR2PZv3eZbDWjqAQJK3ml1C/obKEOqET/v5UJDkoeen
+	xbO2nB2tQpc5p3V5wTuzY8s5l3IH3x9+WljRewSYusm2JTMD8jamdpdMlPq2Wd9EyS7q8/hC33k
+	E8CrVIbmwWi5lKWJXvq6/SilAiHJ2L1ZVDKOaU4jD5/8uPZ4SgPS77J341R254CS+nl966up0Qj
+	PshI+btSoTPqgyAHcM5mEiWC0E/JqgrBxlub30cI0LJAHboo7dE8f+rnyBdIACQx1HTiAVhzyWS
+	AmjlJSatmUBwwUtK549knE5xmwyzX1PowQr9lHrg==
 X-Received: by 2002:a05:6808:11cb:b0:467:de0e:feb6 with SMTP id 5614622812f47-4868dc583f1mr883548b6e.11.1780621259486;
         Thu, 04 Jun 2026 18:00:59 -0700 (PDT)
 Received: from zippy.localdomain ([73.62.185.64])
@@ -146,13 +147,13 @@ X-Spamd-Result: default: False [1.44 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
 	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-111291-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111298-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[49];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER(0.00)[elder@riscstar.com,linux-arm-msm@vger.kernel.org];
@@ -170,13 +171,13 @@ X-Spamd-Result: default: False [1.44 / 15.00];
 	DKIM_TRACE(0.00)[riscstar-com.20251104.gappssmtp.com:+];
 	RCVD_COUNT_FIVE(0.00)[5];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[devicetree.org:url,riscstar.com:mid,riscstar.com:from_mime,riscstar.com:email,riscstar-com.20251104.gappssmtp.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,riscstar-com.20251104.gappssmtp.com:dkim,devicetree.org:url,riscstar.com:mid,riscstar.com:from_mime,riscstar.com:email,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 608676444EF
+X-Rspamd-Queue-Id: 08FE7644542
 
 From: Daniel Thompson <daniel@riscstar.com>
 
