@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-111505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id m4zHOOcTJGr02gEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 14:34:47 +0200
+	id 4iCWAPcTJGr92gEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 14:35:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C8DF64D6F0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 14:34:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8544964D701
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 14:35:02 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=herrie.org header.s=transip-a header.b=OJSFSOAK;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111505-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111505-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=herrie.org header.s=transip-a header.b=tcGjbA4D;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111506-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111506-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=none;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2F6953016503
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2026 12:34:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3A224302E435
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2026 12:34:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E1443A5434;
-	Sat,  6 Jun 2026 12:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DD043A7D6F;
+	Sat,  6 Jun 2026 12:34:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from outbound8.mail.transip.nl (outbound8.mail.transip.nl [136.144.136.8])
+Received: from outbound11.mail.transip.nl (outbound11.mail.transip.nl [136.144.136.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C301E376C;
-	Sat,  6 Jun 2026 12:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1C235B631;
+	Sat,  6 Jun 2026 12:34:35 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780749281; cv=none; b=jB5uLuXZNP1mca8wRLrUxkus9rJO5ktFO3OhqYsl9BBRtUqOflll47mKQ0ZeQWkqefKD69rvChbQv0xVrLpMcg7UChB23l+Jcuk8AVMaubokJ8gDYuqcFipjSdYG052Cw61dOOMIiGUXHI3H3/uKjxLlqTY/MTPMnCBw0hAQbhQ=
+	t=1780749284; cv=none; b=OhmGuZ9hSgAb5NGn4/ndkm9NrA0U2Kjv8/WHy+0jOzzjrR5kpxgsUA6zigA2lkF1VCFzXHNI9ooG3J1vLN5QXA7KUCfxcwox7Z8w4bDg60ovEspSdYP4rBOUkjiVoQna7dpot1VlA6pg/aFdDCk57spEz2jbwYOBezn1qiyhQNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780749281; c=relaxed/simple;
-	bh=hgk/JsgCpMXpD1kgHnjMQw+KScZgIAnIClXZj+rpQ0c=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=OGKWwWNlDZqUsc9IHmMhmY2eJHioLbjl5X0vdpZD/cK9dVZUh0C7rhYQHvusqXjrzo489sYewaajraPJJV4LBfEZD1c3XxVazBHe3+IkZdUXpEAOYXFeihzKbtLBByfGcoKTz38FeEtOxx4ZDmQDj1QmlPYN2XuoGgNZjNhYOsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=OJSFSOAK; arc=none smtp.client-ip=136.144.136.8
+	s=arc-20240116; t=1780749284; c=relaxed/simple;
+	bh=DSEE5W+bUq/qz4HSuUOBsJojBrNkZwP6W5Me/2XZooo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=LSH11fagiLruDqcWDFHNgPK01V9+W1mZElJeP/76oNTqFDH5WkLQ6FBUIHeEN9Efewvc3VALdZWaKnm638YyGPdImKu2ko9MiZjO0DCh+FHnN0zi3lZfKxK9Ngo5wxixaB/8urxIpAHvij9HE+aLYTTx1+7doICh+zpNTx7iZy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=tcGjbA4D; arc=none smtp.client-ip=136.144.136.18
 Received: from submission1.mail.transip.nl (unknown [10.100.4.70])
-	by outbound8.mail.transip.nl (Postfix) with ESMTP id 4gXd6C00pRzY76X0;
+	by outbound11.mail.transip.nl (Postfix) with ESMTP id 4gXd6C58G0zkQNln;
 	Sat,  6 Jun 2026 14:34:27 +0200 (CEST)
 Received: from [127.0.1.1] (180-93-184-31.ftth.glasoperator.nl [31.184.93.180])
-	by submission1.mail.transip.nl (Postfix) with ESMTPA id 4gXd6B1HjdzJjhYK;
+	by submission1.mail.transip.nl (Postfix) with ESMTPA id 4gXd6C03XnzJjhYM;
 	Sat,  6 Jun 2026 14:34:26 +0200 (CEST)
 From: Herman van Hazendonk <github.com@herrie.org>
-Subject: [PATCH v2 0/2] clk: qcom: gdsc: add MSM8x60 LEGACY_FOOTSWITCH +
- RPM_ALWAYS_ON support
-Date: Sat, 06 Jun 2026 14:34:25 +0200
-Message-Id: <20260606-submit-clk-gdsc-msm8x60-legacy-v2-0-187a32d2f015@herrie.org>
+Date: Sat, 06 Jun 2026 14:34:26 +0200
+Subject: [PATCH v2 1/2] clk: qcom: gdsc: add LEGACY_FOOTSWITCH support for
+ MSM8x60
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,9 +52,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANETJGoC/x2NwQqDMBAFf0X23IU0liD+SunBJK/porElq2IR/
- 72hzGkuMwcpikCpbw4q2ETlPVexl4bCa5gTWGJ1ssY6U2FdfZaFwzRyiho4a+52Z3hCGsKXr+j
- izbetAzzVyKfgKft/cH+c5w/RRcZTcAAAAA==
+Message-Id: <20260606-submit-clk-gdsc-msm8x60-legacy-v2-1-187a32d2f015@herrie.org>
+References: <20260606-submit-clk-gdsc-msm8x60-legacy-v2-0-187a32d2f015@herrie.org>
+In-Reply-To: <20260606-submit-clk-gdsc-msm8x60-legacy-v2-0-187a32d2f015@herrie.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>
@@ -62,23 +62,23 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Herman van Hazendonk <github.com@herrie.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1780749266; l=3995;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1780749266; l=17570;
  i=github.com@herrie.org; s=20240417; h=from:subject:message-id;
- bh=hgk/JsgCpMXpD1kgHnjMQw+KScZgIAnIClXZj+rpQ0c=;
- b=fLbirAMHvtS0Shy6FvJdyfQwUhrEGx6Vc8PGsjZebqaR3J1Q+uzB7I2TMYHwDiGoiRAXtiGGq
- YpvC3o1E9RaBHnpymqXmKeSh9k+WmIakKR+j2w0XjqzxBeFk2ypxUvc
+ bh=DSEE5W+bUq/qz4HSuUOBsJojBrNkZwP6W5Me/2XZooo=;
+ b=QUvLveF2BYHpMrW9XxreCBfkn3jumUiycHuB7LexC5MyM7gypAn1DH6gcsIXaNoOtSZOMLW3k
+ K13Qk6pXvgNBQpRPba3yv/C+l2RW7wnwBkAzKclcOedLu0Zx1vKQ8bk
 X-Developer-Key: i=github.com@herrie.org; a=ed25519;
  pk=YYxdq8fb5O9vhkW3n2dCH044FPZZO5718v/du7fRhFw=
 X-Scanned-By: ClueGetter at submission1.mail.transip.nl
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=transip-a; d=herrie.org; t=1780749266; h=from:subject:to:cc:date:
- mime-version:content-type;
- bh=WZb3PZhfqkfQ5lawbj7nw/mnMBgdkG8MrHg1p8EFY18=;
- b=OJSFSOAKG60wNMyoTpXd7i7O72zWp2YBQ5+aCmBYtVT/fpQfvI/HHgahEsa2Iwd75r+DLI
- q4mKQqqYgMc0DRNLpX4vGP4V0i+ESGD2WagGUglMJ96jsMYoDsbSI3tdRLdT5jCKxL8TNW
- n46Ja+liNEF8/Y+++n886A8hlGhC6VgF4CxUGoW74wzLO+rZ8EeQnqO3qoXCIhiKgdpG0O
- /6EmDqEeUV3W1ppJa+OS1b854hdy6WExo75qI1TWhaNS1drqQYxfWng/7JVgIsDJJ7AY3c
- yLlACUa3uE1+mpCpBIWsYpvA4eyByclOWMcBgXHEMFoj/r2p6veWxyqP/LCpDg==
+ s=transip-a; d=herrie.org; t=1780749267; h=from:subject:to:cc:
+ references:in-reply-to:date:mime-version:content-type;
+ bh=zO2CAJBh9pdl2OXKCjRyvHeHsuKRc1CG5wQZ8yl072M=;
+ b=tcGjbA4DP4Wjt679IpwIceLvre6yDUi6uX4mRfyqYbKiVLVbm1Zni8DPasGPrj6r8ZwTkl
+ kqPMYlqhP53NLlIEXSmQfGwhHQRd8c+qKD6tByJ+H/VZidcoNk33LxoXQUUeHmjT8IV4+f
+ 3CkYwhT6wF191JRQbAs/EQIYsCc8Ml2t3m+X/2zsyQDQRqTdXDhsHuo/sAfQnz44oiz9tJ
+ uIZ/scww+HNi3P9yd00fo2Mt/IvKEpzTSh6tIwzxM//JZlNY00M8y+aKT9/10ItNhp4hul
+ TSPNBHO6ZXaTxMnL6vUhk46dOg8mCoLe8TDfsbcZiTCEkEUtIuiX/eFA60U8Wg==
 X-Report-Abuse-To: abuse@transip.nl
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-1.66 / 15.00];
@@ -89,7 +89,7 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORGED_SENDER(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-111505-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111506-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[herrie.org:+];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
@@ -111,95 +111,487 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,herrie.org:mid,herrie.org:dkim,herrie.org:from_mime,herrie.org:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,herrie.org:mid,herrie.org:dkim,herrie.org:from_mime,herrie.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 7C8DF64D6F0
+X-Rspamd-Queue-Id: 8544964D701
 
-The MSM8x60 family (MSM8260 / MSM8660 / APQ8060) uses a pre-modern
-"footswitch" power-domain block (GFS) for its multimedia GDSCs that
-predates the modern qcom GDSC programming model. The legacy block has
-a single-register layout (ENABLE / CLAMP / RETENTION at fixed bits in
-the GDSCR) instead of the modern split GDSCR / CFG_GDSCR pair, no
-power-status bit (state has to be inferred from ENABLE + CLAMP), and a
-fixed-delay handoff sequence with no completion register to poll.
+The MSM8x60 family (MSM8260, MSM8660, APQ8060) ships an older
+footswitch (FS / "GFS") block that pre-dates the GDSC programming
+model the existing driver was designed around. Adding GDSC entries
+for that family's MMCC power domains needs the driver to understand
+the legacy register layout:
 
-Patch 1 adds a LEGACY_FOOTSWITCH flag plus the supporting helpers
-(legacy enable / disable sequencing, gdsc_check_status fallback,
-legacy clamp helpers). Patch 2 adds an RPM_ALWAYS_ON flag wiring the
-PWRSTS_ON ALWAYS_ON paths to GENPD_FLAG_RPM_ALWAYS_ON; this is needed
-because some MSM8x60 GDSCs are managed by RPM firmware and the kernel
-must keep its genpd vote alive across runtime PM transitions.
+  - the CLAMP, ENABLE and RETENTION bits live in the main GDSCR
+    register rather than in a separate clamp_io_ctrl;
+  - there is no power-status bit, so software cannot poll for the
+    transition completing and has to gate progress on a fixed
+    udelay() after toggling ENABLE;
+  - ENABLE is positive-logic (set to power up, clear to collapse)
+    rather than the modern inverted SW_COLLAPSE semantics;
+  - none of the modern wait-time / HW-trigger / SW-override fields
+    are present, so gdsc_init() must skip the wait-config
+    programming block entirely.
 
-v2 folds 2 High Sashiko findings on the v1 patchset, both vote-balance
-bugs in gdsc_init() (see below). Both folds verified on HW; no
-regulator-imbalance WARNs in dmesg post-fix.
+Introduce a LEGACY_FOOTSWITCH flag and the matching code paths in
+gdsc_check_status(), gdsc_update_collapse_bit(), gdsc_enable(),
+gdsc_disable() and gdsc_init(). The enable / disable sequences
+mirror what the downstream vendor footswitch driver did on these
+SoCs, with the regulator hand-off normally done by
+gdsc_toggle_logic() spliced in at the matching points so a legacy
+domain that has a parent regulator still gets voted up/down:
 
+  enable:  regulator_enable -> assert resets -> set ENABLE ->
+           2us settle -> deassert resets -> clear CLAMP ->
+           5us settle
+  disable: assert resets -> set CLAMP -> clear ENABLE ->
+           regulator_disable
+
+Every register-write failure inside the sequence walks the partial
+state back to a defined endpoint before returning the error, so a
+mid-sequence failure cannot strand the block in "rail powered but
+clamped + in reset" (or the symmetric "clamped + reset asserted +
+ENABLE still set"). The two pwrsts == PWRSTS_ON short-circuits at
+the top of gdsc_enable() / gdsc_disable() are gated on
+!(sc->flags & LEGACY_FOOTSWITCH) for the same reason: a legacy
+footswitch declared PWRSTS_ON still has a real rail and clamp,
+which the reset-only fast path would silently skip. gdsc_init()'s
+PWRSTS_ON force-enable goes through gdsc_enable() for legacy
+domains for the same reason.
+
+In gdsc_init(), clear the RETENTION bit (BIT 9) before jumping to
+the common state-sync block. The vendor MSM8x60 footswitch driver
+does the same one-shot clear at probe for every footswitch; without
+it the reset-default value is unspecified per board and a stuck-set
+retention bit would leave the rail draining power while looking
+collapsed in software.
+
+This patch only adds the infrastructure; the MSM8x60 MMCC driver
+that consumes it lands in a follow-up series.
+
+Assisted-by: Claude:claude-opus-4-7 Sashiko:claude-haiku-4-5
 Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
 ---
-Changes in v2:
+ drivers/clk/qcom/gdsc.c | 323 ++++++++++++++++++++++++++++++++++++++++++++++--
+ drivers/clk/qcom/gdsc.h |   7 ++
+ 2 files changed, 321 insertions(+), 9 deletions(-)
 
-Both Sashiko findings folded:
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index 95aa07120245..1f80bebe88c7 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -27,6 +27,11 @@
+ #define GMEM_CLAMP_IO_MASK	BIT(0)
+ #define GMEM_RESET_MASK		BIT(4)
+ 
++/* Legacy MSM8x60 footswitch register bits (single register layout) */
++#define LEGACY_FS_CLAMP_MASK		BIT(5)
++#define LEGACY_FS_ENABLE_MASK		BIT(8)
++#define LEGACY_FS_RETENTION_MASK	BIT(9)
++
+ /* CFG_GDSCR */
+ #define GDSC_POWER_UP_COMPLETE		BIT(16)
+ #define GDSC_POWER_DOWN_COMPLETE	BIT(15)
+@@ -63,6 +68,32 @@ static int gdsc_check_status(struct gdsc *sc, enum gdsc_status status)
+ 	u32 val;
+ 	int ret;
+ 
++	/*
++	 * Legacy footswitches have no power-status bit: software has to
++	 * infer the state from the ENABLE bit it just wrote.
++	 */
++	if (sc->flags & LEGACY_FOOTSWITCH) {
++		ret = regmap_read(sc->regmap, sc->gdscr, &val);
++		if (ret)
++			return ret;
++		/*
++		 * A block with ENABLE=1 but CLAMP=1 is electrically isolated:
++		 * the rail is powered but all I/O is clamped. The downstream
++		 * vendor footswitch driver (footswitch-8x60.c) treats the block
++		 * as "ON" only when ENABLE is set AND CLAMP is clear -- mirror
++		 * that convention so callers don't mistake a clamped-but-
++		 * powered block for a fully usable one.
++		 */
++		switch (status) {
++		case GDSC_ON:
++			return (val & (LEGACY_FS_ENABLE_MASK | LEGACY_FS_CLAMP_MASK))
++			       == LEGACY_FS_ENABLE_MASK;
++		case GDSC_OFF:
++			return !(val & LEGACY_FS_ENABLE_MASK);
++		}
++		return -EINVAL;
++	}
++
+ 	if (sc->flags & POLL_CFG_GDSCR)
+ 		reg = sc->gdscr + CFG_GDSCR_OFFSET;
+ 	else if (sc->gds_hw_ctrl)
+@@ -121,6 +152,18 @@ static int gdsc_update_collapse_bit(struct gdsc *sc, bool val)
+ 	u32 reg, mask;
+ 	int ret;
+ 
++	/*
++	 * Legacy footswitches do not have an inverted SW_COLLAPSE bit;
++	 * instead the same bit means ENABLE: clear to disable the rail,
++	 * set to enable it. Invert the caller's "collapse" intent.
++	 */
++	if (sc->flags & LEGACY_FOOTSWITCH) {
++		reg = sc->gdscr;
++		mask = LEGACY_FS_ENABLE_MASK;
++		return regmap_update_bits(sc->regmap, reg, mask,
++					  val ? 0 : mask);
++	}
++
+ 	if (sc->collapse_mask) {
+ 		reg = sc->collapse_ctrl;
+ 		mask = sc->collapse_mask;
+@@ -240,6 +283,23 @@ static inline void gdsc_assert_clamp_io(struct gdsc *sc)
+ 			   GMEM_CLAMP_IO_MASK, 1);
+ }
+ 
++/*
++ * Legacy MSM8x60 footswitches keep the I/O clamp bit in the main GDSCR
++ * (no separate clamp_io_ctrl register), so the helpers here use sc->gdscr.
++ */
++static inline int legacy_fs_deassert_clamp(struct gdsc *sc)
++{
++	return regmap_update_bits(sc->regmap, sc->gdscr,
++				  LEGACY_FS_CLAMP_MASK, 0);
++}
++
++static inline int legacy_fs_assert_clamp(struct gdsc *sc)
++{
++	return regmap_update_bits(sc->regmap, sc->gdscr,
++				  LEGACY_FS_CLAMP_MASK,
++				  LEGACY_FS_CLAMP_MASK);
++}
++
+ static inline void gdsc_assert_reset_aon(struct gdsc *sc)
+ {
+ 	regmap_update_bits(sc->regmap, sc->clamp_io_ctrl,
+@@ -259,11 +319,121 @@ static void gdsc_retain_ff_on(struct gdsc *sc)
+ static int gdsc_enable(struct generic_pm_domain *domain)
+ {
+ 	struct gdsc *sc = domain_to_gdsc(domain);
+-	int ret;
++	int ret, rc;
+ 
+-	if (sc->pwrsts == PWRSTS_ON)
++	/*
++	 * Modern PWRSTS_ON-only GDSCs are pure reset-controllers: there
++	 * is no rail to bring up so only the reset deassert is needed.
++	 * Legacy footswitches always need the full power-up + clamp-
++	 * release sequence below, even when declared PWRSTS_ON, so they
++	 * must not take this short-circuit.
++	 */
++	if (sc->pwrsts == PWRSTS_ON && !(sc->flags & LEGACY_FOOTSWITCH))
+ 		return gdsc_deassert_reset(sc);
+ 
++	/*
++	 * Legacy MSM8x60 footswitch enable sequence:
++	 *   0. enable the parent regulator supply (if any)
++	 *   1. assert per-block resets (if SW_RESET)
++	 *   2. set ENABLE in GDSCR to power up the rail
++	 *   3. wait 2us for the rail to fully charge
++	 *   4. deassert resets
++	 *   5. clear CLAMP in GDSCR to release the I/O clamp
++	 *   6. wait 5us for clamps to release and signals to settle
++	 *
++	 * No status-bit polling -- the hardware does not expose one, so
++	 * the fixed delays below are the only safe synchronisation point.
++	 */
++	if (sc->flags & LEGACY_FOOTSWITCH) {
++		if (sc->rsupply) {
++			ret = regulator_enable(sc->rsupply);
++			if (ret < 0)
++				return ret;
++		}
++
++		if (sc->flags & SW_RESET) {
++			gdsc_assert_reset(sc);
++			/*
++			 * Wait for synchronous resets to propagate before
++			 * raising ENABLE: matches footswitch-8x60.c's
++			 * udelay(RESET_DELAY_US) between assert and enable.
++			 */
++			udelay(1);
++		}
++
++		ret = gdsc_update_collapse_bit(sc, false);
++		if (ret) {
++			/*
++			 * Power-up write failed -- release the reset we
++			 * just asserted so the block does not stay stuck
++			 * in reset for the rest of the system's lifetime,
++			 * and roll back the regulator vote we just took.
++			 */
++			if (sc->flags & SW_RESET)
++				gdsc_deassert_reset(sc);
++			if (sc->rsupply)
++				regulator_disable(sc->rsupply);
++			return ret;
++		}
++
++		udelay(2);
++
++		/*
++		 * Release the I/O clamp BEFORE deasserting resets: the
++		 * downstream vendor footswitch driver (footswitch-8x60.c)
++		 * always clears CLAMP_BIT first, then deasserts per-block
++		 * resets. This lets the block's outputs settle in a known
++		 * reset state before they become visible to consumers.
++		 */
++		ret = legacy_fs_deassert_clamp(sc);
++		if (ret) {
++			/*
++			 * Rail is already powered up; if we cannot release
++			 * the I/O clamp, collapse the rail again to avoid
++			 * leaving the block live but isolated, re-assert
++			 * the reset so the block ends in a defined
++			 * power-off state, and undo the regulator vote.
++			 * Errors from these best-effort rollback steps are
++			 * reported but do not override the original error
++			 * returned to the caller -- the secondary failure
++			 * means the hardware state is already indeterminate
++			 * and the regulator vote must still be released.
++			 */
++			rc = gdsc_update_collapse_bit(sc, true);
++			if (rc) {
++				/*
++				 * Collapse also failed: the rail is still ON.
++				 * Do NOT call regulator_disable() -- the rail
++				 * is still drawing from the supply and cutting
++				 * it while ENABLE is set risks hardware damage.
++				 * Mirror gdsc_disable()'s collapse-failure path
++				 * which deliberately skips regulator_disable()
++				 * when the rail did not collapse.
++				 */
++				pr_err("%s: rail collapse rollback failed (%d) after clamp release failure (%d); rail may be ON, regulator vote leaked\n",
++				       sc->pd.name, rc, ret);
++			} else {
++				if (sc->flags & SW_RESET)
++					gdsc_assert_reset(sc);
++				if (sc->rsupply) {
++					rc = regulator_disable(sc->rsupply);
++					if (rc)
++						pr_err("%s: regulator_disable failed (%d) in clamp-release rollback\n",
++						       sc->pd.name, rc);
++				}
++			}
++			return ret;
++		}
++
++		/* Deassert resets now that clamp is released (vendor order). */
++		if (sc->flags & SW_RESET)
++			gdsc_deassert_reset(sc);
++
++		udelay(5);
++
++		return 0;
++	}
++
+ 	if (sc->flags & SW_RESET) {
+ 		gdsc_assert_reset(sc);
+ 		udelay(1);
+@@ -317,11 +487,91 @@ static int gdsc_enable(struct generic_pm_domain *domain)
+ static int gdsc_disable(struct generic_pm_domain *domain)
+ {
+ 	struct gdsc *sc = domain_to_gdsc(domain);
+-	int ret;
++	int ret, rc;
+ 
+-	if (sc->pwrsts == PWRSTS_ON)
++	/*
++	 * Symmetric to gdsc_enable: modern PWRSTS_ON-only GDSCs only
++	 * need a reset assert, but legacy footswitches with PWRSTS_ON
++	 * still need to clamp I/O and collapse the rail explicitly so
++	 * they must not take this short-circuit.
++	 */
++	if (sc->pwrsts == PWRSTS_ON && !(sc->flags & LEGACY_FOOTSWITCH))
+ 		return gdsc_assert_reset(sc);
+ 
++	/*
++	 * Legacy MSM8x60 footswitch disable sequence:
++	 *   1. assert per-block resets (if SW_RESET)
++	 *   2. set CLAMP in GDSCR to hold I/O at safe values across collapse
++	 *   3. clear ENABLE in GDSCR to collapse the rail
++	 *   4. drop the parent regulator vote (if any)
++	 */
++	if (sc->flags & LEGACY_FOOTSWITCH) {
++		if (sc->flags & SW_RESET) {
++			gdsc_assert_reset(sc);
++			/*
++			 * Wait for synchronous resets to propagate before
++			 * clamping I/O: footswitch-8x60.c udelay(RESET_DELAY_US)
++			 * between assert and CLAMP_BIT set.
++			 */
++			udelay(1);
++		}
++
++		ret = legacy_fs_assert_clamp(sc);
++		if (ret) {
++			/*
++			 * Clamp programming failed -- release the reset we
++			 * just asserted so the block is not stranded in
++			 * reset, then surface the error.
++			 */
++			if (sc->flags & SW_RESET)
++				gdsc_deassert_reset(sc);
++			return ret;
++		}
++
++		ret = gdsc_update_collapse_bit(sc, true);
++		if (ret) {
++			/*
++			 * Collapse failed -- the rail is still ON. Walk
++			 * back the clamp and reset so the block returns
++			 * to its enabled state rather than being stranded
++			 * in the half-disabled "clamped + reset + on"
++			 * state; the regulator vote stays in place because
++			 * the rail is still drawing from it. A secondary
++			 * failure of the clamp release is reported but
++			 * cannot override the original error: the rail is
++			 * still ON, so the caller's view ("disable failed,
++			 * leave ON") is the correct outcome regardless.
++			 */
++			rc = legacy_fs_deassert_clamp(sc);
++			if (rc)
++				pr_err("%s: clamp release rollback failed (%d) after rail collapse failure (%d); hw may be clamped+ON\n",
++				       sc->pd.name, rc, ret);
++			if (sc->flags & SW_RESET)
++				gdsc_deassert_reset(sc);
++			return ret;
++		}
++
++		if (sc->rsupply) {
++			ret = regulator_disable(sc->rsupply);
++			if (ret < 0) {
++				/*
++				 * The rail is already collapsed. Reporting
++				 * the regulator error to genpd would leave it
++				 * thinking the domain is still ON when the
++				 * silicon is in fact off; the next consumer
++				 * enable would then be no-op'd by genpd and
++				 * hit dead hardware. Better to leak the
++				 * regulator vote (visible via /sys/.../
++				 * regulator) than to corrupt genpd state.
++				 */
++				pr_err("%s: regulator_disable failed (%d) after rail collapse; vote leaked, genpd state kept consistent with silicon\n",
++				       sc->pd.name, ret);
++			}
++		}
++
++		return 0;
++	}
++
+ 	/* Turn off HW trigger mode if supported */
+ 	if (sc->flags & HW_CTRL) {
+ 		ret = gdsc_hwctrl(sc, false);
+@@ -403,7 +653,28 @@ static bool gdsc_get_hwmode(struct generic_pm_domain *domain, struct device *dev
+ static int gdsc_init(struct gdsc *sc)
+ {
+ 	u32 mask, val;
+-	int on, ret;
++	int initial_on, on, ret;
++
++	/*
++	 * Legacy MSM8x60 footswitches share none of the modern GDSC
++	 * wait-time fields and have no HW trigger / SW override bits at
++	 * all, so skip the wait-config programming and jump straight to
++	 * the common state-sync block below.
++	 *
++	 * Clear the retention bit (BIT 9) so subsequent disable actually
++	 * power-collapses the rail rather than holding state. The vendor
++	 * MSM8x60 footswitch driver does the same one-shot clear at probe
++	 * for every footswitch; without it the reset-default value is
++	 * unspecified per board and a stuck-set retention bit would leave
++	 * the rail draining power while looking collapsed in software.
++	 */
++	if (sc->flags & LEGACY_FOOTSWITCH) {
++		ret = regmap_update_bits(sc->regmap, sc->gdscr,
++					 LEGACY_FS_RETENTION_MASK, 0);
++		if (ret)
++			return ret;
++		goto skip_wait_config;
++	}
+ 
+ 	/*
+ 	 * Disable HW trigger: collapse/restore occur based on registers writes.
+@@ -428,9 +699,31 @@ static int gdsc_init(struct gdsc *sc)
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Force gdsc ON if only ON state is supported */
++skip_wait_config:
++	/*
++	 * Sample the GDSC power state BEFORE any probe-time enable below
++	 * so the "sync the kernel state" regulator vote only runs when the
++	 * GDSC was already on at probe (bootloader handoff). For the
++	 * PWRSTS_ON / ALWAYS_ON force-enable paths, gdsc_enable() and
++	 * gdsc_toggle_logic() take the vote themselves -- re-voting from
++	 * the sync block would double-vote rsupply and leak a reference.
++	 */
++	initial_on = gdsc_check_status(sc, GDSC_ON);
++	if (initial_on < 0)
++		return initial_on;
++
++	/*
++	 * Force gdsc ON if only ON state is supported. For legacy
++	 * footswitches, gdsc_toggle_logic() would only flip the ENABLE
++	 * bit and skip the I/O-clamp release + settle delay that the
++	 * MSM8x60 power-up sequence requires; call gdsc_enable() instead
++	 * so the full legacy sequence runs.
++	 */
+ 	if (sc->pwrsts == PWRSTS_ON) {
+-		ret = gdsc_toggle_logic(sc, GDSC_ON, false);
++		if (sc->flags & LEGACY_FOOTSWITCH)
++			ret = gdsc_enable(&sc->pd);
++		else
++			ret = gdsc_toggle_logic(sc, GDSC_ON, false);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -440,8 +733,20 @@ static int gdsc_init(struct gdsc *sc)
+ 		return on;
+ 
+ 	if (on) {
+-		/* The regulator must be on, sync the kernel state */
+-		if (sc->rsupply) {
++		/*
++		 * Sync the kernel regulator state only if the GDSC was
++		 * already on at probe; if we just enabled it above, the
++		 * vote was taken inside gdsc_enable() / gdsc_toggle_logic().
++		 *
++		 * Special case: PWRSTS_ON + LEGACY_FOOTSWITCH always routes
++		 * through gdsc_enable() above (lines around the PWRSTS_ON
++		 * block), which calls regulator_enable() unconditionally on
++		 * the legacy path. Skip the sync vote in that case to avoid
++		 * a double-vote that gdsc_disable() only unwinds once.
++		 */
++		if (sc->rsupply && initial_on &&
++		    !(sc->pwrsts == PWRSTS_ON &&
++		      (sc->flags & LEGACY_FOOTSWITCH))) {
+ 			ret = regulator_enable(sc->rsupply);
+ 			if (ret < 0)
+ 				return ret;
+diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
+index dd843e86c05b..13ca09f93a01 100644
+--- a/drivers/clk/qcom/gdsc.h
++++ b/drivers/clk/qcom/gdsc.h
+@@ -68,6 +68,13 @@ struct gdsc {
+ #define RETAIN_FF_ENABLE	BIT(7)
+ #define NO_RET_PERIPH	BIT(8)
+ #define HW_CTRL_TRIGGER	BIT(9)
++/*
++ * Legacy MSM8x60-family footswitch (a.k.a. "GFS"). Different register layout
++ * from the modern GDSC blocks: CLAMP at bit 5, ENABLE at bit 8, RETENTION at
++ * bit 9, and there is no power-status bit so software has to assume the
++ * transition completed after a fixed delay rather than polling status.
++ */
++#define LEGACY_FOOTSWITCH	BIT(10)
+ 	struct reset_controller_dev	*rcdev;
+ 	unsigned int			*resets;
+ 	unsigned int			reset_count;
 
-  - [High] gdsc_init() PWRSTS_ON + LEGACY_FOOTSWITCH + initial_on
-    triple condition: the PWRSTS_ON block calls gdsc_enable() above,
-    which on the legacy path takes a regulator_enable() vote
-    unconditionally. The downstream "sync" block at line ~737 then
-    voted *again* because initial_on=true, while gdsc_disable() only
-    unwinds the vote once -> permanent +1 ref-count imbalance per
-    probe. Skip the sync vote when
-    (pwrsts == PWRSTS_ON && LEGACY_FOOTSWITCH).
-    Folded into patch 1 (LEGACY_FOOTSWITCH support).
-
-  - [High] gdsc_init() ALWAYS_ON / RPM_ALWAYS_ON block: the
-    unconditional gdsc_enable() call ignored its return value and
-    unconditionally set on=true. If gdsc_enable() failed (e.g. an
-    internal regulator_enable failure) the subsequent
-    pm_genpd_init() error path would call regulator_disable() for a
-    vote that was never actually taken -> regulator ref-count
-    underflow and vote leak. Propagate the gdsc_enable() return
-    immediately. Folded into patch 2 (RPM_ALWAYS_ON flag).
-
-Test results (v2, HP TouchPad APQ8060, kernel 7.1.0-rc1):
-
-  - Boot clean. All MSM8x60 GDSCs probe and reach their expected
-    initial state: vfe / ved / rot / mdp / gfx3d on (bootloader
-    handoff); ijpeg / vpe / gfx2d0 / gfx2d1 off-0 (kernel-managed).
-
-  - Camera stream stress (20x rapid pix640 + pix1280 + 60s
-    unbind/rebind race on mt9m113 -> exercises vfe domain off/on
-    cycles + ved bringup): zero regulator-imbalance WARNs, zero
-    "Unbalanced disable" messages from regulator/core.c, zero
-    clk-refcount underflow WARNs.
-
-  - 120s concurrent multi-subsystem load (camera stream loop + dd
-    to eMMC + /dev/urandom + filesystem walk): all GDSCs stay in
-    expected state, no genpd warnings, USB stayed up, MDP stayed
-    active. Driver still bound at the end.
-
-  - dmesg post-load: 0 WARN, 0 BUG, 0 Oops from gdsc /
-    regulator / clk frameworks. The only routine "CSIPHY1:
-    usleep 10-15ms for GDSC stabilize" info lines (camss
-    pre-existing chatter, not gdsc-related) are visible.
-
-  - Kernel build clean (ARCH=arm, CONFIG_QCOM_GDSC=y,
-    CONFIG_QCOM_CLK_RPM=y, CONFIG_MSM_MMCC_8660=y).
-
-- Link to v1: https://lore.kernel.org/r/20260602050840.435933-1-github.com@herrie.org
-
----
-Herman van Hazendonk (2):
-      clk: qcom: gdsc: add LEGACY_FOOTSWITCH support for MSM8x60
-      clk: qcom: gdsc: add RPM_ALWAYS_ON flag
-
- drivers/clk/qcom/gdsc.c | 344 ++++++++++++++++++++++++++++++++++++++++++++++--
- drivers/clk/qcom/gdsc.h |  19 +++
- 2 files changed, 351 insertions(+), 12 deletions(-)
----
-base-commit: 944125b4c454b58d2fe6e35f1087a932b2050dff
-change-id: 20260606-submit-clk-gdsc-msm8x60-legacy-1e8d4b336eeb
-
-Best regards,
 -- 
-Herman van Hazendonk <github.com@herrie.org>
+2.43.0
 
 
