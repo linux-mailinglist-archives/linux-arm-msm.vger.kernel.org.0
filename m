@@ -1,307 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-111503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id RbZVO40TJGrZ2gEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 14:33:17 +0200
+	id m4zHOOcTJGr02gEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 14:34:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6683264D6BC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 14:33:17 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C8DF64D6F0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 14:34:47 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="E/FAz9rD";
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=etr7bukI;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111503-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111503-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=herrie.org header.s=transip-a header.b=OJSFSOAK;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111505-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111505-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 2B8B6302D1A8
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2026 12:32:48 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2F6953016503
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2026 12:34:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1292038A726;
-	Sat,  6 Jun 2026 12:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E1443A5434;
+	Sat,  6 Jun 2026 12:34:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from outbound8.mail.transip.nl (outbound8.mail.transip.nl [136.144.136.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC241B4F09
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Jun 2026 12:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C301E376C;
+	Sat,  6 Jun 2026 12:34:34 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780749164; cv=none; b=uDD+w0/iL4FX5KjkApsmI8lfQ0jbhOcgmn5MoM87EPZiLbBQXj3M+s5vD1MWJuDzkdwenGtivBPbmwgLAax1WUFLRNExH/rKVYozm37AhFyfZy7h6jjMGSOH/TQpNc27ySaby4vGztVb0pyPiOryMbdQtqlAG25L8cagTyT8FdE=
+	t=1780749281; cv=none; b=jB5uLuXZNP1mca8wRLrUxkus9rJO5ktFO3OhqYsl9BBRtUqOflll47mKQ0ZeQWkqefKD69rvChbQv0xVrLpMcg7UChB23l+Jcuk8AVMaubokJ8gDYuqcFipjSdYG052Cw61dOOMIiGUXHI3H3/uKjxLlqTY/MTPMnCBw0hAQbhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780749164; c=relaxed/simple;
-	bh=uArRKwydgi7Awi4QPGR51VyhpX7czobobNZeG3o9P0k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t5TKiR+M0uCf4q7LV4YoK9gT5DE14dczZUISA9X5IzTWJfSHQ6oeDwNAl0976/gxAzNz8Avie0ljt6H7Jhc/Cp4ztDglXC0HKT22V8fbpzEPuOmOdMZ+rzCmIQCiB+F8UJvUfQqrk/fkJTkCg608kxQhVxaqkyhGCAYo0S9LS4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=E/FAz9rD; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=etr7bukI; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 656BFKtP1262110
-	for <linux-arm-msm@vger.kernel.org>; Sat, 6 Jun 2026 12:32:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=J7Jk6biw3e7jArCRN6UqVLK8
-	rysHv0R52SpzdK/4FYE=; b=E/FAz9rDat47MAmRdOnoSqI7RkGCWRGIiEDC51vj
-	JLkwxEz/tmIyvekIfi6YxXkyorWJua3ag9xd9BWtmJJXEP6psl3iJcnKjT8KEEJs
-	0yIJotazgYMkChJ7zncLaPbnjYzmx1ZBMyJNdZ5IJSZDL7pyWGMBEguyx0o8NSJ2
-	UXThhukq5USxC+w/HpEZNFtNyj0CsiDdcP+yd3jsCXGkBZ+PnEJtKMH4IaD31EHT
-	lLCjItmIe5+szFktITBMFzgrIu5vKOlLFe5xQsLPKbYcTuce+q/RDoNVhhqmXGlk
-	wIZqMJ31B4GDYyFaUPhd4dvPY7qFaT6vo2DeLUl8ed7kZA==
-Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com [209.85.221.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4emcadrv4h-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 06 Jun 2026 12:32:40 +0000 (GMT)
-Received: by mail-vk1-f199.google.com with SMTP id 71dfb90a1353d-5a10923f7d7so5822972e0c.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Jun 2026 05:32:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780749160; x=1781353960; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=J7Jk6biw3e7jArCRN6UqVLK8rysHv0R52SpzdK/4FYE=;
-        b=etr7bukIK2frDt50OzMcg67khqXOtR245s49ghOJZ7EBEAKCx5hxD8uOs0st22U8FO
-         1LX1IyiksadBCqllzb3iSfHErb2C302JU8c42k3qlbkAPeKUDlog07FuiiCIfFF6E0qi
-         pcNvdSfoDtDkN4cEWGUpIZT1q7DiliyMUm/uhgt5u9K0KpAeLWFe12FZ+ixXSl5FE8Mm
-         zzL23mWKkvFR9pqpuTDW0aOn/laVLJw36j6ullZj36j0WgHvLGZqkhgxzsHo+420aJt7
-         kZ/7JQeTpJoJK/a16IbcP2/E2PE4toqd3S5LITfjKQblXDoDlz9IUVkxyRYlHPez0ANk
-         o6kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780749160; x=1781353960;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=J7Jk6biw3e7jArCRN6UqVLK8rysHv0R52SpzdK/4FYE=;
-        b=S/tsGO4m4h1ASt6oo6G++UythiaSoIjgiPGLgMstmU/p2ZElaS9byTMxThOXTBea1M
-         yRHyWf4C52PuIST2DALzEqFAxtsnOZogIq2EdsCThU4E3iURSdSzW8wnKxniHtW6jDFj
-         op/t/86z0Fl5BymJc6C2qEwQvwPIzfAimC38Asv4ReX1Wv1uTzDptUGLQvHEbbp9aw5b
-         DOUC0YjCW9Lqmc86Z5wHk8+s9j8pjCNK0d9i9wJMvbeW2pQIVWKdd1L9AtincSndcGlP
-         NjocvUsK5HPFpwqUpXKmgJxLkHut4/43JOip901o2DCgl3xolRNEBz8hnWNmlpMTNNyC
-         k3fg==
-X-Forwarded-Encrypted: i=1; AFNElJ8WlcZ280i9O9cR58QWLNeZ5PUV3QOuH5iRk5uooKsoeOKWjsu5W18n1JI9cxuesSMTp4evqyIcz5DaZ2A6@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLQzg4eNSZSvTnoeKcQbi4dgYtKL+Bb4syjWDCtsHlX0kc9F8S
-	dgR/9ouJ0bcz/q4nkjDcpMTYc8qp412a8VfkBWCYRDXSVYUzDvP+0yGBFxxDF3EIB4iG0XuttrL
-	b1NgprXr0DJqMO8iw3/EX6RpnX2c6KF49wcC/l40ayrOcCe/BOXfjNJBhyzIvmIIkghSt
-X-Gm-Gg: Acq92OFlHRvrns+McnQfxHIwXInx0hv5x1CTYUZgmH4Qt43UYVYBOHRIMaRePd902Ra
-	42vuD4We3f2ym2m9g6QIGbtNLhPD5BJqNCj7KNvlwetrZNCbgme/p1EkVFAgj4UU+c5XgRuhJYo
-	O5iObAnUD3ZTN8gCC44AglVid4+g7o5npJ+HX2awS0udprp7R/+DJ4jhRR8x4vbuuja+gUbo5VO
-	RE98BB2dXFGqweROi6Uij1Em9Oga1tHDMjKrhpPWzZWqL3g1/0brjVCBCjfR2+k92tgHX/0WVLS
-	xpa0Rc6p6qhel0OQWo2/A3D5+pRq7ESL1PCaLFGwCQApOrWreNY1vqiMAfJGsGm0bcElcW93ytW
-	XOO6M+QoP5Q8G3I06uMFtKH6JvZpAGATyzLTmLSgUmiA5AviKZsW7zwybGsXxqF0T6pCU4VRPAk
-	qjhPe8+6u4/wrleJWA38XbXgBRKnyNt2QdgYPYDxvRcJ7F0g==
-X-Received: by 2002:a05:6102:284f:b0:6dc:c4aa:472 with SMTP id ada2fe7eead31-700359f5425mr1741719137.14.1780749159974;
-        Sat, 06 Jun 2026 05:32:39 -0700 (PDT)
-X-Received: by 2002:a05:6102:284f:b0:6dc:c4aa:472 with SMTP id ada2fe7eead31-700359f5425mr1741697137.14.1780749159549;
-        Sat, 06 Jun 2026 05:32:39 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5aa7b8fba4asm2415013e87.18.2026.06.06.05.32.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Jun 2026 05:32:37 -0700 (PDT)
-Date: Sat, 6 Jun 2026 15:32:35 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>
-Subject: Re: [PATCH v3 08/10] arm64: dts: qcom: shikra: Enable CDSP, LPAICP
- and MPSS on EVK boards
-Message-ID: <ykcbo7dkl2rrjdzutpwsc3wmnub5r7h3zuspxiyh5v432whb65@sbaar24glpta>
-References: <20260601-shikra-dt-m1-v3-0-0fe3f8d9ec48@oss.qualcomm.com>
- <20260601-shikra-dt-m1-v3-8-0fe3f8d9ec48@oss.qualcomm.com>
+	s=arc-20240116; t=1780749281; c=relaxed/simple;
+	bh=hgk/JsgCpMXpD1kgHnjMQw+KScZgIAnIClXZj+rpQ0c=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=OGKWwWNlDZqUsc9IHmMhmY2eJHioLbjl5X0vdpZD/cK9dVZUh0C7rhYQHvusqXjrzo489sYewaajraPJJV4LBfEZD1c3XxVazBHe3+IkZdUXpEAOYXFeihzKbtLBByfGcoKTz38FeEtOxx4ZDmQDj1QmlPYN2XuoGgNZjNhYOsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=OJSFSOAK; arc=none smtp.client-ip=136.144.136.8
+Received: from submission1.mail.transip.nl (unknown [10.100.4.70])
+	by outbound8.mail.transip.nl (Postfix) with ESMTP id 4gXd6C00pRzY76X0;
+	Sat,  6 Jun 2026 14:34:27 +0200 (CEST)
+Received: from [127.0.1.1] (180-93-184-31.ftth.glasoperator.nl [31.184.93.180])
+	by submission1.mail.transip.nl (Postfix) with ESMTPA id 4gXd6B1HjdzJjhYK;
+	Sat,  6 Jun 2026 14:34:26 +0200 (CEST)
+From: Herman van Hazendonk <github.com@herrie.org>
+Subject: [PATCH v2 0/2] clk: qcom: gdsc: add MSM8x60 LEGACY_FOOTSWITCH +
+ RPM_ALWAYS_ON support
+Date: Sat, 06 Jun 2026 14:34:25 +0200
+Message-Id: <20260606-submit-clk-gdsc-msm8x60-legacy-v2-0-187a32d2f015@herrie.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260601-shikra-dt-m1-v3-8-0fe3f8d9ec48@oss.qualcomm.com>
-X-Authority-Analysis: v=2.4 cv=DIa/JSNb c=1 sm=1 tr=0 ts=6a241368 cx=c_pps
- a=+D9SDfe9YZWTjADjLiQY5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
- a=0thynvrgsBQo68K9vjAA:9 a=CjuIK1q_8ugA:10 a=vmgOmaN-Xu0dpDh8OwbV:22
-X-Proofpoint-GUID: NwQbeWs6FCZ5l0ZYtvkdvYRRsAqwkG2p
-X-Proofpoint-ORIG-GUID: NwQbeWs6FCZ5l0ZYtvkdvYRRsAqwkG2p
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA2MDEyNSBTYWx0ZWRfX8Q7grpcpMNiw
- fhxLEv9u8NcA3DdIYf2Mhw6mF9XkVv/1drgvciJFwIEZ7kX1/X9zBAXSu0FiRKHuj4nleIqiYzw
- GG3mvnFkXsLU9/DTDG6PhjyGbBcNci6sQLuuFaVbarSnIYzG/hX4hS8D7AwJymAf3zCJEl1YDAm
- KqI68g9wVn+QBcJQG1z83xgSVuOUxXMdCb4OmFeN8rKbt7DDFT4SIk5BozYdgn5qAREioU9U/6B
- KIZRKF6h5DgCY8Qol3DAGz/YnQ9NElvVKRgqbVNUAWbTMibBMIZr0vwuaoI9yZkgZbZVezjagJx
- Zh+e8hDToEv/PKk/pKLaaQqi9HtzqRcDMjNl1PClRuWQgEfiL8ElomrJB8grrCJC8Yhirq6dQPu
- /w8qzUYEv475e+ssizPhoUNzQZLJF+38gEggwgK+sjCPe7KOnEKRizWY8sn2Sa/kx/E78CcDV29
- As63oXPhPunDY5FR99w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-06_03,2026-06-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
- bulkscore=0 adultscore=0 malwarescore=0 clxscore=1015 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606060125
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANETJGoC/x2NwQqDMBAFf0X23IU0liD+SunBJK/porElq2IR/
+ 72hzGkuMwcpikCpbw4q2ETlPVexl4bCa5gTWGJ1ssY6U2FdfZaFwzRyiho4a+52Z3hCGsKXr+j
+ izbetAzzVyKfgKft/cH+c5w/RRcZTcAAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Herman van Hazendonk <github.com@herrie.org>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1780749266; l=3995;
+ i=github.com@herrie.org; s=20240417; h=from:subject:message-id;
+ bh=hgk/JsgCpMXpD1kgHnjMQw+KScZgIAnIClXZj+rpQ0c=;
+ b=fLbirAMHvtS0Shy6FvJdyfQwUhrEGx6Vc8PGsjZebqaR3J1Q+uzB7I2TMYHwDiGoiRAXtiGGq
+ YpvC3o1E9RaBHnpymqXmKeSh9k+WmIakKR+j2w0XjqzxBeFk2ypxUvc
+X-Developer-Key: i=github.com@herrie.org; a=ed25519;
+ pk=YYxdq8fb5O9vhkW3n2dCH044FPZZO5718v/du7fRhFw=
+X-Scanned-By: ClueGetter at submission1.mail.transip.nl
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=transip-a; d=herrie.org; t=1780749266; h=from:subject:to:cc:date:
+ mime-version:content-type;
+ bh=WZb3PZhfqkfQ5lawbj7nw/mnMBgdkG8MrHg1p8EFY18=;
+ b=OJSFSOAKG60wNMyoTpXd7i7O72zWp2YBQ5+aCmBYtVT/fpQfvI/HHgahEsa2Iwd75r+DLI
+ q4mKQqqYgMc0DRNLpX4vGP4V0i+ESGD2WagGUglMJ96jsMYoDsbSI3tdRLdT5jCKxL8TNW
+ n46Ja+liNEF8/Y+++n886A8hlGhC6VgF4CxUGoW74wzLO+rZ8EeQnqO3qoXCIhiKgdpG0O
+ /6EmDqEeUV3W1ppJa+OS1b854hdy6WExo75qI1TWhaNS1drqQYxfWng/7JVgIsDJJ7AY3c
+ yLlACUa3uE1+mpCpBIWsYpvA4eyByclOWMcBgXHEMFoj/r2p6veWxyqP/LCpDg==
+X-Report-Abuse-To: abuse@transip.nl
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[herrie.org:s=transip-a];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111503-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,sbaar24glpta:mid];
-	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FORGED_RECIPIENTS(0.00)[m:komal.bajaj@oss.qualcomm.com,m:vkoul@kernel.org,m:Frank.Li@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:krzk@kernel.org,m:djakov@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:dmaengine@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:bibek.patro@oss.qualcomm.com,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-111505-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[herrie.org:+];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	DMARC_NA(0.00)[herrie.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:sboyd@kernel.org,m:mturquette@baylibre.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:github.com@herrie.org,s:lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ALIAS_RESOLVED(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,herrie.org:mid,herrie.org:dkim,herrie.org:from_mime,herrie.org:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6683264D6BC
+X-Rspamd-Queue-Id: 7C8DF64D6F0
 
-On Mon, Jun 01, 2026 at 06:25:10PM +0530, Komal Bajaj wrote:
-> From: Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>
-> 
-> Enable CDSP, LPAICP and MPSS for Qualcomm's Shikra CQM, CQS and
-> IQS EVK board.
-> 
-> Signed-off-by: Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>
-> Signed-off-by: Komal Bajaj <komal.bajaj@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/shikra-cqm-evk.dts | 19 +++++++++++++++++++
->  arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts | 19 +++++++++++++++++++
->  arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts | 19 +++++++++++++++++++
->  3 files changed, 57 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/shikra-cqm-evk.dts b/arch/arm64/boot/dts/qcom/shikra-cqm-evk.dts
-> index 0a52ab9b7a4c..b112b21b1d79 100644
-> --- a/arch/arm64/boot/dts/qcom/shikra-cqm-evk.dts
-> +++ b/arch/arm64/boot/dts/qcom/shikra-cqm-evk.dts
-> @@ -23,6 +23,25 @@ chosen {
->  	};
->  };
->  
-> +&remoteproc_cdsp {
-> +	firmware-name = "qcom/shikra/cdsp.mbn";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_lpaicp {
-> +	firmware-name = "qcom/shikra/lpaicp.mbn",
-> +			"qcom/shikra/lpaicp_dtb.mbn";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_mpss {
-> +	firmware-name = "qcom/shikra/cqm/qdsp6sw.mbn";
+The MSM8x60 family (MSM8260 / MSM8660 / APQ8060) uses a pre-modern
+"footswitch" power-domain block (GFS) for its multimedia GDSCs that
+predates the modern qcom GDSC programming model. The legacy block has
+a single-register layout (ENABLE / CLAMP / RETENTION at fixed bits in
+the GDSCR) instead of the modern split GDSCR / CFG_GDSCR pair, no
+power-status bit (state has to be inferred from ENABLE + CLAMP), and a
+fixed-delay handoff sequence with no completion register to poll.
 
-qcom/shikra/qdsp6sw.mbn
+Patch 1 adds a LEGACY_FOOTSWITCH flag plus the supporting helpers
+(legacy enable / disable sequencing, gdsc_check_status fallback,
+legacy clamp helpers). Patch 2 adds an RPM_ALWAYS_ON flag wiring the
+PWRSTS_ON ALWAYS_ON paths to GENPD_FLAG_RPM_ALWAYS_ON; this is needed
+because some MSM8x60 GDSCs are managed by RPM firmware and the kernel
+must keep its genpd vote alive across runtime PM transitions.
 
-> +
-> +	status = "okay";
-> +};
-> +
->  &sdhc_1 {
->  	vmmc-supply = <&pm4125_l20>;
->  	vqmmc-supply = <&pm4125_l14>;
-> diff --git a/arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts b/arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts
-> index b3f19a64d7ae..e62ba5aef71f 100644
-> --- a/arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts
-> +++ b/arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts
-> @@ -23,6 +23,25 @@ chosen {
->  	};
->  };
->  
-> +&remoteproc_cdsp {
-> +	firmware-name = "qcom/shikra/cdsp.mbn";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_lpaicp {
-> +	firmware-name = "qcom/shikra/lpaicp.mbn",
-> +			"qcom/shikra/lpaicp_dtb.mbn";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_mpss {
-> +	firmware-name = "qcom/shikra/cqs/qdsp6sw.mbn";
+v2 folds 2 High Sashiko findings on the v1 patchset, both vote-balance
+bugs in gdsc_init() (see below). Both folds verified on HW; no
+regulator-imbalance WARNs in dmesg post-fix.
 
-qcom/shikra/qdsp6sw_nm.mbn
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+---
+Changes in v2:
 
-> +
-> +	status = "okay";
-> +};
-> +
->  &sdhc_1 {
->  	vmmc-supply = <&pm4125_l20>;
->  	vqmmc-supply = <&pm4125_l14>;
-> diff --git a/arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts b/arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts
-> index 3003a47bd759..727809430fd1 100644
-> --- a/arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts
-> +++ b/arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts
-> @@ -23,6 +23,25 @@ chosen {
->  	};
->  };
->  
-> +&remoteproc_cdsp {
-> +	firmware-name = "qcom/shikra/cdsp.mbn";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_lpaicp {
-> +	firmware-name = "qcom/shikra/lpaicp.mbn",
-> +			"qcom/shikra/lpaicp_dtb.mbn";
-> +
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_mpss {
-> +	firmware-name = "qcom/shikra/cqs/qdsp6sw.mbn";
+Both Sashiko findings folded:
 
-qcom/shikra/qdsp6sw_nm.mbn
+  - [High] gdsc_init() PWRSTS_ON + LEGACY_FOOTSWITCH + initial_on
+    triple condition: the PWRSTS_ON block calls gdsc_enable() above,
+    which on the legacy path takes a regulator_enable() vote
+    unconditionally. The downstream "sync" block at line ~737 then
+    voted *again* because initial_on=true, while gdsc_disable() only
+    unwinds the vote once -> permanent +1 ref-count imbalance per
+    probe. Skip the sync vote when
+    (pwrsts == PWRSTS_ON && LEGACY_FOOTSWITCH).
+    Folded into patch 1 (LEGACY_FOOTSWITCH support).
 
-> +
-> +	status = "okay";
-> +};
-> +
->  &sdhc_1 {
->  	vmmc-supply = <&pm8150_l17>;
->  	vqmmc-supply = <&pm8150_s4>;
-> 
-> -- 
-> 2.34.1
-> 
+  - [High] gdsc_init() ALWAYS_ON / RPM_ALWAYS_ON block: the
+    unconditional gdsc_enable() call ignored its return value and
+    unconditionally set on=true. If gdsc_enable() failed (e.g. an
+    internal regulator_enable failure) the subsequent
+    pm_genpd_init() error path would call regulator_disable() for a
+    vote that was never actually taken -> regulator ref-count
+    underflow and vote leak. Propagate the gdsc_enable() return
+    immediately. Folded into patch 2 (RPM_ALWAYS_ON flag).
 
+Test results (v2, HP TouchPad APQ8060, kernel 7.1.0-rc1):
+
+  - Boot clean. All MSM8x60 GDSCs probe and reach their expected
+    initial state: vfe / ved / rot / mdp / gfx3d on (bootloader
+    handoff); ijpeg / vpe / gfx2d0 / gfx2d1 off-0 (kernel-managed).
+
+  - Camera stream stress (20x rapid pix640 + pix1280 + 60s
+    unbind/rebind race on mt9m113 -> exercises vfe domain off/on
+    cycles + ved bringup): zero regulator-imbalance WARNs, zero
+    "Unbalanced disable" messages from regulator/core.c, zero
+    clk-refcount underflow WARNs.
+
+  - 120s concurrent multi-subsystem load (camera stream loop + dd
+    to eMMC + /dev/urandom + filesystem walk): all GDSCs stay in
+    expected state, no genpd warnings, USB stayed up, MDP stayed
+    active. Driver still bound at the end.
+
+  - dmesg post-load: 0 WARN, 0 BUG, 0 Oops from gdsc /
+    regulator / clk frameworks. The only routine "CSIPHY1:
+    usleep 10-15ms for GDSC stabilize" info lines (camss
+    pre-existing chatter, not gdsc-related) are visible.
+
+  - Kernel build clean (ARCH=arm, CONFIG_QCOM_GDSC=y,
+    CONFIG_QCOM_CLK_RPM=y, CONFIG_MSM_MMCC_8660=y).
+
+- Link to v1: https://lore.kernel.org/r/20260602050840.435933-1-github.com@herrie.org
+
+---
+Herman van Hazendonk (2):
+      clk: qcom: gdsc: add LEGACY_FOOTSWITCH support for MSM8x60
+      clk: qcom: gdsc: add RPM_ALWAYS_ON flag
+
+ drivers/clk/qcom/gdsc.c | 344 ++++++++++++++++++++++++++++++++++++++++++++++--
+ drivers/clk/qcom/gdsc.h |  19 +++
+ 2 files changed, 351 insertions(+), 12 deletions(-)
+---
+base-commit: 944125b4c454b58d2fe6e35f1087a932b2050dff
+change-id: 20260606-submit-clk-gdsc-msm8x60-legacy-1e8d4b336eeb
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Herman van Hazendonk <github.com@herrie.org>
+
 
