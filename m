@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-111530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id QAiyE1p5JGrX6wEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 21:47:38 +0200
+	id HBkSEHx5JGrd6wEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 21:48:12 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43BE464E285
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 21:47:37 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF2BD64E28F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 21:48:11 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=BAHfvUk7;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111530-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111530-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=LN1w8Y2C;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111531-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111531-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 273093008619
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2026 19:47:34 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B7F193012CB3
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2026 19:48:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B94452DFF04;
-	Sat,  6 Jun 2026 19:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B455738239E;
+	Sat,  6 Jun 2026 19:48:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B980A3A1B5;
-	Sat,  6 Jun 2026 19:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BEE26ED3C;
+	Sat,  6 Jun 2026 19:48:06 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780775250; cv=none; b=UOAfzZYLg+LSm0nIsQkPTZn0VauqqgIL8JH+f/9/FS8YTX8HWLpqHFxbiUBAbLtI2tpcHO0GOdW9HzpyIi4X+Wu1ELS2Y9yhCxtOpBj3TRMBT8Npl7K7k4vSOHhK+RK77fVOGYr1j7NtpIA3UpIb95eOQPo+KShfupsPhZ2Dylo=
+	t=1780775287; cv=none; b=V25/6tJP8JWROszW/gOCF/Giym4qJazUmrWMYesJGThdQpt+f1xuKnPUiLfofDhfmUNyglsNR9A+dBO6hqy8nwtPlQGHoc5aUi/G86B8l+JotV5LD5L3VyTsMQ3/MPEE7FIN3Jrz24j5PwTDf97Lz240POb73+fAPCrD/EOg1Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780775250; c=relaxed/simple;
-	bh=/KwxgH46IcnrRnKljN2L/MuNd/6Uzq1oeSoszjSmVP0=;
+	s=arc-20240116; t=1780775287; c=relaxed/simple;
+	bh=kAS4xef3rZKbtAWZa5rpyoVfomxWowcRNE2ZbMHoSPE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g2GzmzdFvmQt/cGS4h8Wggsbc0bQRYnzHYieQSirE81ZZya7NZtHT6nLm6qwuADCnCCINqRMylafQCGGW60lgTB1sFdK3gciOiYPtTSH9Okn9hSst5ABBSQq+ozUWRacO/2C9XowdXBPZTx9IiuhvU8U/iu4mYAABkHcK68mnoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BAHfvUk7; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C181F00893;
-	Sat,  6 Jun 2026 19:47:25 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=AGFdBxLxObTbvL7ftsBLJFaRxzjKQ2Qc8YDrhWFr4loeMLJaEbQ+8ArXb2EMO3HfraYik5PW5Y1g2X4oWfWkbwksi06ddwikSnoyPInk57Z6u2EoqL5L6pyT+f/2kL7euonCO1tN5AiWpuMYG6xfhyqXgIe4T7p/DwWv0UAN4/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LN1w8Y2C; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4929B1F00893;
+	Sat,  6 Jun 2026 19:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780775249;
-	bh=YSr6u812Mv5KjuzWl6+xPL5oIpVe8jm0f+zBcmYYkyU=;
+	s=k20260515; t=1780775286;
+	bh=0Sx0YU3Ol9PcuiPsDE7wFPYzsYJ5sybdb29ZbLaBHYY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=BAHfvUk7efwNio3BnvTAuQO3IMRwpgy8MRpvYmcdkCXoheIhWeRTlD5pdEGXMaVVc
-	 aCsXOys2nr5ktKREsYTp4FZ7SsTlA2Og8JTnDvW7dbphuYhGqa681mxV5AOAUR+i+I
-	 mi6k/taP9FdBUMoP1dMyXTAnDQ96q8NxkFLkgAHr5pVPdH9htrrCSaQzo9yy7Tnxip
-	 MHnG1ewjzyDSIl4Z0UJv3DHsEZ38XN7c70zJysN0hvYZBAqMSjRmi91CSytNcBfZmq
-	 DoI0eBxmRMyHVsXuY93qOPMEwoV+iZfOTNZNQGSAyA1kB65Y+lZfDP/X88UfnDAkQX
-	 ubgsstSa4prCw==
-Message-ID: <c2f8a080-38ee-48d0-8fd2-6f2935c8ed4f@kernel.org>
-Date: Sat, 6 Jun 2026 21:47:22 +0200
+	b=LN1w8Y2C1O16epX73Ktyl7vVwIyAmmCIBwnaPu9A/wzKAriKWD/h0lT4yMxDhhPUP
+	 A1AXohmeAkQGnoDdAxphNNkP7F8uRvi72Q0Ie6JfQOWBVdT5cSBJlusn06S5WKKu3a
+	 kqz6kRswCYtjXJt6+DH2TzR3UZlHI1lpv6JYDn48XMaRZLELml09vtw0X4nUFfgDts
+	 2GcVKdlt7ECh+oHX2xdD3pFghZzWUKSX1+0JIbfeTurr9uKP/LDcB5n7OiU3GJJW9d
+	 OEPjBpF/kC2/NICtMoKCuu7DiMrc1N1mpWxMoag8AwRAEIu34nsOg0Fidnxeq5IIu1
+	 2ZFUxElBtNcCQ==
+Message-ID: <0b3a7b64-252e-4d86-8561-c5f16808054c@kernel.org>
+Date: Sat, 6 Jun 2026 21:48:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,14 +55,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom,ids: Add SoC ID for CQ8725S
+Subject: Re: [PATCH 0/2] soc: qcom: socinfo: Add CQ8725S SoC ID
 To: webgeek1234@gmail.com, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Teguh Sobirin <teguh@sobir.in>
 References: <20260605-cq8725s-soc-id-v1-0-bb1ef93de649@gmail.com>
- <20260605-cq8725s-soc-id-v1-1-bb1ef93de649@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,7 +107,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260605-cq8725s-soc-id-v1-1-bb1ef93de649@gmail.com>
+In-Reply-To: <20260605-cq8725s-soc-id-v1-0-bb1ef93de649@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -116,18 +115,18 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111530-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-111531-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:webgeek1234@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:teguh@sobir.in,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FREEMAIL_TO(0.00)[gmail.com,kernel.org];
 	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:webgeek1234@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:teguh@sobir.in,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
@@ -142,23 +141,22 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sobir.in:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 43BE464E285
+X-Rspamd-Queue-Id: AF2BD64E28F
 
 On 05/06/2026 23:49, Aaron Kling via B4 Relay wrote:
-> From: Teguh Sobirin <teguh@sobir.in>
+> Add the ID for the CQ8725S which is a variant of SM8750.
 > 
-> Add the ID for the Qualcomm CQ8725S SoC which represents the Pakala
-> platform.
+> ---
+> Teguh Sobirin (2):
+>       dt-bindings: arm: qcom,ids: Add SoC ID for CQ8725S
+>       soc: qcom: socinfo: Add CQ8725S SoC ID
 
-That's pretty confusing statement, considering first usage of name
-"Pakala" and not really accurate (complete). Maybe refer to the actual
-mobile SoC model number instead?
-
-
+Where is DTS using this? Or anything? We do not add SoC IDs alone, it's
+pointless for a DT platform.
 
 Best regards,
 Krzysztof
