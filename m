@@ -1,173 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-111467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id fIdeIhHnI2pn0AEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 11:23:29 +0200
+	id t5/PFFLoI2qK0AEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 11:28:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBD5964CFF1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 11:23:28 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAAA564D02E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 11:28:49 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=Xwu79pNv;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111467-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111467-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
+	dkim=none;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111468-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111468-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8F77630214C0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2026 09:23:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id BBD323022DCB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2026 09:28:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E28DA282F0E;
-	Sat,  6 Jun 2026 09:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD5AE314A8D;
+	Sat,  6 Jun 2026 09:28:47 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B06764071F8
-	for <linux-arm-msm@vger.kernel.org>; Sat,  6 Jun 2026 09:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741941D5170;
+	Sat,  6 Jun 2026 09:28:44 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780737806; cv=none; b=HexyLwN1siPKefSdTmG83cey5uTR6KRKibvPUpn36go8TIUyczuECKUinOkmmb5ztHeNa1a6q8+2wUE+K8NMnkJ+a65O/E9OLkmAksPGINZ94THV5hsgUhlLryjfTIZjfxHhJn6uvmJ7iF5apyCmj84f+0qEqp6Ct3hxIYlp77I=
+	t=1780738127; cv=none; b=e81mkGZ9qSIeLhQP8GfYasX/qZp8yhfq+nEBLGjgKEMzp7fGkQWsCTVMRJz1JWWwDNHrld4H4FIqiAUkFs5ZcIQ7N/sH5VfJz+mywVlCy/won4P3l2Rv3OvTFo5fKSIeNCBO0/qEwd8MTBHLAvwRezRnstoBLk15s/mjpof/wRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780737806; c=relaxed/simple;
-	bh=mDkPGwiVHQoklipRC1lQByxUrrOmsEjd/nyIvxoNglU=;
-	h=MIME-Version:Content-Type:Subject:From:To:Cc:In-Reply-To:
-	 References:Date:Message-Id; b=uT5Jb5TkFFMp8lD8eOp3ybQVt5EHYKNIvWqXTAk4yJq42HX+vX5hOZjkLa6DxAeeWqc4ez0/HlvN1HSuj9BgrLWXSFWYGlZBZACDwW3aK/oxZOwiY+hkPP/E+p+HL0hNq08c2MpnjPgwsb6ww3+G5XTz6NYZ54tLE4e1wKFJ47Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xwu79pNv; arc=none smtp.client-ip=209.85.210.180
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-842cd900ee0so103781b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 06 Jun 2026 02:23:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780737805; x=1781342605; darn=vger.kernel.org;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i90N6kve85T3Z6vhC3b/4AAHhPovipRsLvYZQX6Fo9M=;
-        b=Xwu79pNvNAJyAcpUIp+V5v7QdyVZQJzxE6qCUCNzeSpks1kkEBD50Crxr/4ETF2sCs
-         zB8O9HgMf6s5oMqBzAtFd110xvib8O9wyJU3FqfMqaDHOywAxaXTVsrmPjMxufNTgwDb
-         EHHcSesYcM8l46MYcrLwwIniZ/C8d+cl21sDgg954Nv2iDpKAXqi7ZFYFAUIXP53LHBF
-         PYiFOOGnI8iAdNQTeoICT6bSJkdY37/EwF+QJTI+a1hmdjURCDwqobIARgQo0NPhiR7W
-         HrppKk/ZZ2MzTTCVk9sG45j0rWxY4/C7vgzXrLa0l6bq5Jnwa2kFeyzaISOn1cL4JN34
-         Zn9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780737805; x=1781342605;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i90N6kve85T3Z6vhC3b/4AAHhPovipRsLvYZQX6Fo9M=;
-        b=PjHXiqpXjUf2/QtinCq4nB77w8enjrEneE7x8Ezxs/R/vWwkoz3zLeuYy53OkEGn5V
-         b98YWxQNxj0it09LExWhZtDC+R+WNp+WJgFajKPerWEUmHrgcfJPf7gxQMnoP+fezV+T
-         yHg66PsapQkdxLk70rQyVg671WjcEWqAodfQBma7lgNXwh06U4ryionnM/2I8zDp8sKr
-         yZoc3QY0mzBnA7vTiz8qrd3lSHT81ZLKHv3D2jxzSYPBgxYSjB2Wv7FQgJo12Lusy4/J
-         brmi3hIGrzN6xX+uQnrIxyW7GxXHF1fQYDFs6ID12EK7NBVdIhtaZa9NuyILJl8hJ3uY
-         1Bpw==
-X-Forwarded-Encrypted: i=1; AFNElJ/iY+rkNnDYotE2bZx2pFFF44JM/f6riK5GNQlTCgy9ddV4kzVxfS6BmtDaU+21xscDgV7vO7SktekWQIs8@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMePmtYGe4o6gDxQ0rD+fVMQaQoMVep3KkF6klWyoqH4h9xxn7
-	QbsPpmZm1ckTsdsAbd9mrQRGDAofLeDWWKulqr2RkWdOMNH7YGYfMo17
-X-Gm-Gg: Acq92OEyH5dFShlELO1IpFpI9kAAL9HIuk+ZtLkAwCiQlNUYvqJwXgt11QYhHJ3Se9T
-	1hSlDCxDbtWFEE3EIrvlOUFj1jmFAH20P9B7Kmjto/1c5S+j2QIl8v49Ha6z7/PLKr6XmZzpFAW
-	ggt69w6diR/SYdZ8+2VVOfYSxzG/6Z+sTkDxs54cs9D5pUOUIRjE7hv1Ud6IELfosMqB7XZomVh
-	GiGrror9N5zLlaYsGZF4pwMbUTuPJruf89/at8OAZu8c+kcs8596KXCoVWTln6oL22qCwPCvhol
-	VO+eLNHLaXKCF67OJf+ML7HQ1NlXygV67ueN7azsWEN4I8OiTDdDr2L+NOsDn0MBUKbapvxndus
-	55qkKBOyt+8vRYqAohO+plLQp+v4VesAq46GzXgHe23YkyW/+U6+XO/BklGSak5yVIiQquoB+il
-	HMwUWZv3MobuGeSLu/BHnlCKWeWt8ov/EhFxc33wAx/843RdC456nSdA==
-X-Received: by 2002:a05:6a00:1304:b0:842:3801:47f with SMTP id d2e1a72fcca58-842b0efa50dmr7854414b3a.17.1780737804994;
-        Sat, 06 Jun 2026 02:23:24 -0700 (PDT)
-Received: from [10.46.148.203] ([2001:19f0:8001:53c:5400:4ff:fe86:d241])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8428235006dsm12236720b3a.13.2026.06.06.02.23.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 06 Jun 2026 02:23:24 -0700 (PDT)
+	s=arc-20240116; t=1780738127; c=relaxed/simple;
+	bh=e7Tx9J+jLLyejMaHMmNbjZe776PL4e1aBAsaFXbxOjs=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=qAFZ5DvfOCRpWoqsNq3i9Ln9JCCV6OKLpt89WqG4g1YUoIHl15Vkp8nb9eRevanzDb0yLWJxLY8JFxvgKxd7fuEgNt1LAUy7db3S5N/a5UVRR1ExanBlxl2+40/yZtWpTaIfvew3yxi0wn+QS3L9OqUoKH0vpOoQqnpcrDJKKrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Received: from edelgard.fodlan.icenowy.me (unknown [112.94.101.15])
+	by APP-03 (Coremail) with SMTP id rQCowAAnSuFD6CNqJ87HEw--.7493S2;
+	Sat, 06 Jun 2026 17:28:37 +0800 (CST)
+Message-ID: <7ecda3d0f91b0d96bcec44ddf485ed5146788220.camel@iscas.ac.cn>
+Subject: Re: [PATCH 0/6] arm64: dts: qcom: sc8280xp: set GPI DMA channels
+ according to DSDT
+From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+To: Pengyu Luo <mitltlatltl@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio	
+ <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
+ Kozlowski	 <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Date: Sat, 06 Jun 2026 17:28:35 +0800
+In-Reply-To: <178073773007.397244.9871455646149843167.b4-reply@b4>
+References: <20260602081451.3808833-1-zhengxingda@iscas.ac.cn>
+	 <178040480680.1778078.1165164069560552075.b4-review@b4>
+	 <bc4644a6c1e30a99f1ed5d967c64ba7f5da77fbc.camel@iscas.ac.cn>
+	 <178073773007.397244.9871455646149843167.b4-reply@b4>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/6] arm64: dts: qcom: sc8280xp: set GPI DMA channels
- according to DSDT
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Cc: Pengyu Luo <mitltlatltl@gmail.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-In-Reply-To: <bc4644a6c1e30a99f1ed5d967c64ba7f5da77fbc.camel@iscas.ac.cn>
-References: <20260602081451.3808833-1-zhengxingda@iscas.ac.cn>
- <178040480680.1778078.1165164069560552075.b4-review@b4>
- <bc4644a6c1e30a99f1ed5d967c64ba7f5da77fbc.camel@iscas.ac.cn>
-Date: Sat, 06 Jun 2026 17:22:10 +0800
-Message-Id: <178073773007.397244.9871455646149843167.b4-reply@b4>
-X-Mailer: b4 0.15.2
+X-CM-TRANSID:rQCowAAnSuFD6CNqJ87HEw--.7493S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7Kr4fAryrGFy8tFy8XFWDurg_yoW8Gr18pF
+	WxJa1ayF4kKF1xGw40yw1DZrZ3twnayr1Yqrn8GF17Z3Z8ur18trW5KrZxWFnFgryF9r4a
+	va4xAasrZFWDA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUk2b7Iv0xC_KF4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I
+	8E87Iv6xkF7I0E14v26F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
+	0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr
+	1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxkF7I0En4kS14v26r1q6r43MxAI
+	w28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr
+	4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxG
+	rwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8Jw
+	CI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2
+	z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU2VbyDUUUU
+X-CM-SenderInfo: x2kh0wp0lqwv3d6l2u1dvotugofq/
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.46 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111467-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:zhengxingda@iscas.ac.cn,m:mitltlatltl@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:mitltlatltl@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	DMARC_NA(0.00)[iscas.ac.cn];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-111468-lists,linux-arm-msm=lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[zhengxingda@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ALIAS_RESOLVED(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[zhengxingda@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	R_DKIM_NA(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,iscas.ac.cn:email,pastebin.com:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[iscas.ac.cn:mid,iscas.ac.cn:from_mime,iscas.ac.cn:email,vger.kernel.org:from_smtp,pastebin.com:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: DBD5964CFF1
+X-Rspamd-Queue-Id: BAAA564D02E
 
-On 2026-06-02 21:21:27+08:00, Icenowy Zheng wrote:
-> 在 2026-06-02二的 20:53 +0800，Pengyu Luo写道：
-> 
-> > On Tue, 02 Jun 2026 16:14:45 +0800, Icenowy Zheng
-> > <zhengxingda@iscas.ac.cn> wrote:
-> > 
-> > I don't focus on the upstream for a while, was this problem still
-> > here
-> > recently? Could you attach the base commit, so I can reproduce it.
-> 
-> I tested on v7.0.10 (with some extra patches, but not related to
-> sc8280xp).
-> 
-> It seems that raid456 module will lead to the hang because improper
-> usage of GPI DMA, and without it loaded it seems to be working fine.
-> 
-> Could you check whether you have any problems with CONFIG_MD_RAID456=y
-> set?
-> 
+=E5=9C=A8 2026-06-06=E5=85=AD=E7=9A=84 17:22 +0800=EF=BC=8CPengyu Luo=E5=86=
+=99=E9=81=93=EF=BC=9A
+> On 2026-06-02 21:21:27+08:00, Icenowy Zheng wrote:
+> > =E5=9C=A8 2026-06-02=E4=BA=8C=E7=9A=84 20:53 +0800=EF=BC=8CPengyu Luo=
+=E5=86=99=E9=81=93=EF=BC=9A
+> >=20
+> > > On Tue, 02 Jun 2026 16:14:45 +0800, Icenowy Zheng
+> > > <zhengxingda@iscas.ac.cn> wrote:
+> > >=20
+> > > I don't focus on the upstream for a while, was this problem still
+> > > here
+> > > recently? Could you attach the base commit, so I can reproduce
+> > > it.
+> >=20
+> > I tested on v7.0.10 (with some extra patches, but not related to
+> > sc8280xp).
+> >=20
+> > It seems that raid456 module will lead to the hang because improper
+> > usage of GPI DMA, and without it loaded it seems to be working
+> > fine.
+> >=20
+> > Could you check whether you have any problems with
+> > CONFIG_MD_RAID456=3Dy
+> > set?
+> >=20
+>=20
+> The magnetic keyboard (USB HID) can't be connected somehow, others
+> are
+> fine, such as the spi touchscreen (not upstream yet), which utilizes
+> DMA definitely. My config is here https://pastebin.com/SdjuyJYk
 
-The magnetic keyboard (USB HID) can't be connected somehow, others are
-fine, such as the spi touchscreen (not upstream yet), which utilizes
-DMA definitely. My config is here https://pastebin.com/SdjuyJYk
+Is this a defconfig?
 
-Which device are you testing? Please attach more information if
-possible.
+BTW it seems that CONFIG_ASYNC_TX_DMA needs to be selected too for
+exhibiting the problem (because there should be "public" GPI DMA
+consumers to trigger the stuck/reset).
 
-> Thanks,
-> Icenowy
+>=20
+> Which device are you testing? Please attach more information if
+> possible.
 
+My device is gaokun3 too, although I used the mainline device tree.
+
+>=20
+> > Thanks,
+> > Icenowy
 
 
