@@ -1,99 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-111527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Ev5FLpZxJGqt6gEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 21:14:30 +0200
+	id QAiyE1p5JGrX6wEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 21:47:38 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AFCB64E188
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 21:14:29 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43BE464E285
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 06 Jun 2026 21:47:37 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=thundersoft.com header.s=default header.b=Q6kJZErv;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111527-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111527-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=thundersoft.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=BAHfvUk7;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111530-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111530-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A5D56301953B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2026 19:14:27 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 273093008619
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Jun 2026 19:47:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEA983AEF47;
-	Sat,  6 Jun 2026 19:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B94452DFF04;
+	Sat,  6 Jun 2026 19:47:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m9328.xmail.ntesmail.com (mail-m9328.xmail.ntesmail.com [103.126.93.28])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED953016FB;
-	Sat,  6 Jun 2026 19:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B980A3A1B5;
+	Sat,  6 Jun 2026 19:47:29 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780773265; cv=none; b=VJKOtxjUP6bKUQxXr7I1sTijBelgHH/yp0D6H4TS6v5UySTcl1DOUFKBn5AybMnUL/mDsA6i7mW741D2wIeKspb50Oam434kzSwdsv4/kLPKMn+bCvPjw+9Lh4EgXS89HuHEgqrvKcb/sJP6QwGtFzkOPJK5VyvQLBngTG9rLbs=
+	t=1780775250; cv=none; b=UOAfzZYLg+LSm0nIsQkPTZn0VauqqgIL8JH+f/9/FS8YTX8HWLpqHFxbiUBAbLtI2tpcHO0GOdW9HzpyIi4X+Wu1ELS2Y9yhCxtOpBj3TRMBT8Npl7K7k4vSOHhK+RK77fVOGYr1j7NtpIA3UpIb95eOQPo+KShfupsPhZ2Dylo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780773265; c=relaxed/simple;
-	bh=MeGVjaMxjH769oiq2fSMjLP0j+/dHsFf8sy3tDKl1p4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jMqIw8qi5cEkCFzELsEUN8yzoyMidEyvGXQKaOR2MuxRPdyqpQGdpMlJMphoMtVjkCsUly/wp3QUqZPdH+bSpopk/WCLYPaqHE6+Cnx9a4u0mSx6CTKS7seVfxWXcoNddVuhjt2TzM1FLthsJp+Gsspo+976tsWnGwiMJK9Z8uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com; spf=pass smtp.mailfrom=thundersoft.com; dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b=Q6kJZErv; arc=none smtp.client-ip=103.126.93.28
-Received: from [127.0.1.1] (unknown [113.235.125.44])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 415a3a861;
-	Sun, 7 Jun 2026 03:14:13 +0800 (GMT+08:00)
-From: Hongyang Zhao <hongyang.zhao@thundersoft.com>
-Date: Sun, 07 Jun 2026 03:13:49 +0800
-Subject: [PATCH] arm64: dts: qcom: qcs6490-rubikpi3: Move PCIe GPIOs to
- root ports
+	s=arc-20240116; t=1780775250; c=relaxed/simple;
+	bh=/KwxgH46IcnrRnKljN2L/MuNd/6Uzq1oeSoszjSmVP0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g2GzmzdFvmQt/cGS4h8Wggsbc0bQRYnzHYieQSirE81ZZya7NZtHT6nLm6qwuADCnCCINqRMylafQCGGW60lgTB1sFdK3gciOiYPtTSH9Okn9hSst5ABBSQq+ozUWRacO/2C9XowdXBPZTx9IiuhvU8U/iu4mYAABkHcK68mnoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BAHfvUk7; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C181F00893;
+	Sat,  6 Jun 2026 19:47:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780775249;
+	bh=YSr6u812Mv5KjuzWl6+xPL5oIpVe8jm0f+zBcmYYkyU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=BAHfvUk7efwNio3BnvTAuQO3IMRwpgy8MRpvYmcdkCXoheIhWeRTlD5pdEGXMaVVc
+	 aCsXOys2nr5ktKREsYTp4FZ7SsTlA2Og8JTnDvW7dbphuYhGqa681mxV5AOAUR+i+I
+	 mi6k/taP9FdBUMoP1dMyXTAnDQ96q8NxkFLkgAHr5pVPdH9htrrCSaQzo9yy7Tnxip
+	 MHnG1ewjzyDSIl4Z0UJv3DHsEZ38XN7c70zJysN0hvYZBAqMSjRmi91CSytNcBfZmq
+	 DoI0eBxmRMyHVsXuY93qOPMEwoV+iZfOTNZNQGSAyA1kB65Y+lZfDP/X88UfnDAkQX
+	 ubgsstSa4prCw==
+Message-ID: <c2f8a080-38ee-48d0-8fd2-6f2935c8ed4f@kernel.org>
+Date: Sat, 6 Jun 2026 21:47:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom,ids: Add SoC ID for CQ8725S
+To: webgeek1234@gmail.com, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Teguh Sobirin <teguh@sobir.in>
+References: <20260605-cq8725s-soc-id-v1-0-bb1ef93de649@gmail.com>
+ <20260605-cq8725s-soc-id-v1-1-bb1ef93de649@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20260605-cq8725s-soc-id-v1-1-bb1ef93de649@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260607-rubikpi-bugfix-next-20260605-v1-1-ff97c5e35bf6@thundersoft.com>
-X-B4-Tracking: v=1; b=H4sIAGxxJGoC/y3MQQqDMBCF4avIrB2IKcbiVcRFkk7iKERJTBHEu
- ze1Xf68x3dCosiUoK9OiPTmxGso0dQV2EkHT8iv0iCFVEKJDmM2vGyMJnvHBwY6dvyPLT7sU1p
- NSneugUJskcrp5ofx1ymbmez+NeG6PikmpmCAAAAA
-X-Change-ID: 20260607-rubikpi-bugfix-next-20260605-3c82cae6a7f1
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, rosh@debian.org, 
- Hongyang Zhao <hongyang.zhao@thundersoft.com>
-X-Mailer: b4 0.15-dev-47773
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1780773253; l=2259;
- i=hongyang.zhao@thundersoft.com; s=20251115; h=from:subject:message-id;
- bh=MeGVjaMxjH769oiq2fSMjLP0j+/dHsFf8sy3tDKl1p4=;
- b=f2vs41GsoUcJBD9h6rWOU2jvjVDmgt0NtP3cnYI9Un5G/8CQTgRw7K4DLM78TI/pNpWH+QWgd
- pr7ALCcTA8vAks1XNDS0N06dRxukewRoElqUh7wIBgrltwWjK7VfneR
-X-Developer-Key: i=hongyang.zhao@thundersoft.com; a=ed25519;
- pk=0M0CJ1s9WiFZwli2JsxLB9ykikp5WkpKzCWgpdANKNI=
-X-HM-Tid: 0a9e9e5b714209d5kunm4bbfa1de139e81
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaTxlDVklLT0lOHhpLGB9MSVYVFA
-	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlKSkhVSUhOVUpJTlVPT1lXWRYaDxIVHRRZQVlPS0hVSk
-	tJT09PSFVKS0tVSkJLS1kG
-DKIM-Signature: a=rsa-sha256;
-	b=Q6kJZErvAEVVOR2dVtP42TGPfr92yyF1m4fAqfgK9sdx1RF6u+mwSzVmHgchQQrVuetvGKQ4m7zSzXH+ffWYnqZNXLtZPPrCwscfDTfuE/nLVxrTs+kcRK4NTvvVNbBSXu9SfJ/HSWP3YdPFaVDOyTmGBQ0z82J696BR4deEEsw=; c=relaxed/relaxed; s=default; d=thundersoft.com; v=1;
-	bh=2ydJ8/WjXBtIfiJFXOyfkVQHcRbJXJdGqMLYUNx89/I=;
-	h=date:mime-version:subject:message-id:from;
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[thundersoft.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[thundersoft.com:s=default];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111527-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:rosh@debian.org,m:hongyang.zhao@thundersoft.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[hongyang.zhao@thundersoft.com,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-111530-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com,kernel.org];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:webgeek1234@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:teguh@sobir.in,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
@@ -102,90 +136,30 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[hongyang.zhao@thundersoft.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[thundersoft.com:+];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[thundersoft.com:mid,thundersoft.com:dkim,thundersoft.com:from_mime,thundersoft.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sobir.in:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 9AFCB64E188
+X-Rspamd-Queue-Id: 43BE464E285
 
-The Qualcomm PCIe binding deprecates perst-gpios on the host
-bridge and expects endpoint reset GPIOs to be described on the root
-port as reset-gpios.
+On 05/06/2026 23:49, Aaron Kling via B4 Relay wrote:
+> From: Teguh Sobirin <teguh@sobir.in>
+> 
+> Add the ID for the Qualcomm CQ8725S SoC which represents the Pakala
+> platform.
 
-Move the PCIe0 and PCIe1 reset and wake GPIOs to their root port
-nodes. This keeps the GPIO ownership with the device below the root
-port and matches the PCIe binding.
+That's pretty confusing statement, considering first usage of name
+"Pakala" and not really accurate (complete). Maybe refer to the actual
+mobile SoC model number instead?
 
-Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
----
-Fix the PCIe reset and wake GPIO description for the Thundercomm
-RubikPi3 board.
 
-The board currently describes PERST# and wake GPIOs on the Qualcomm
-PCIe host bridge nodes. The Qualcomm PCIe binding deprecates this
-and expects endpoint reset GPIOs on the root port nodes as
-reset-gpios.
-
-Move the PCIe0 and PCIe1 GPIOs to the corresponding root port
-nodes.
----
- .../arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-index f47efca42d48..5c08ab53cdbd 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-@@ -812,9 +812,6 @@ &mdss_dsi_phy {
- };
- 
- &pcie0 {
--	perst-gpios = <&tlmm 87 GPIO_ACTIVE_LOW>;
--	wake-gpios = <&tlmm 89 GPIO_ACTIVE_HIGH>;
--
- 	pinctrl-0 = <&pcie0_clkreq_n>,
- 		    <&pcie0_reset_n>,
- 		    <&pcie0_wake_n>;
-@@ -830,10 +827,12 @@ &pcie0_phy {
- 	status = "okay";
- };
- 
--&pcie1 {
--	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
--	wake-gpios = <&tlmm 3 GPIO_ACTIVE_LOW>;
-+&pcie0_port {
-+	reset-gpios = <&tlmm 87 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 89 GPIO_ACTIVE_HIGH>;
-+};
- 
-+&pcie1 {
- 	pinctrl-0 = <&pcie1_clkreq_n>,
- 		    <&pcie1_reset_n>,
- 		    <&pcie1_wake_n>;
-@@ -849,6 +848,11 @@ &pcie1_phy {
- 	status = "okay";
- };
- 
-+&pcie1_port0 {
-+	reset-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 3 GPIO_ACTIVE_LOW>;
-+};
-+
- &pm7325_gpios {
- 	kypd_vol_up_n: kypd-vol-up-n-state {
- 		pins = "gpio6";
-
----
-base-commit: 6e845bcb78c95af935094040bd4edc3c2b6dd784
-change-id: 20260607-rubikpi-bugfix-next-20260605-3c82cae6a7f1
 
 Best regards,
---  
-Hongyang Zhao <hongyang.zhao@thundersoft.com>
-
+Krzysztof
 
