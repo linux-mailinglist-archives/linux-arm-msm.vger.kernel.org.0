@@ -1,178 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-111550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id cuVeOFUoJWozEAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 10:14:13 +0200
+	id IvoFMDoqJWqUEAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 10:22:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 399D464F154
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 10:14:13 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE77A64F1EB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 10:22:17 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=VPnoMdQw;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111550-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111550-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=lIacer5b;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111551-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111551-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5E2CF3016821
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2026 08:14:05 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id D269730060A2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2026 08:22:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F158636E470;
-	Sun,  7 Jun 2026 08:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B013136C5A9;
+	Sun,  7 Jun 2026 08:22:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CC63612F8;
-	Sun,  7 Jun 2026 08:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7962D2D77E5;
+	Sun,  7 Jun 2026 08:22:10 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780820044; cv=none; b=S3RPBV2JHYanVECVWnZBs0Qe5msxR8WrUKQLDtCAuLQZJVyknvYhTHjqfyfS9RWpa/j1TezXurN0u48tyZnrMdP/p/gxHRFIKDWKEYG7/bOSEQKBR7KoIoPyfqk+M+1TcMpeAihwj0TlpVq1AB3K7aMoI8jsFFhN7J8PnG3VADs=
+	t=1780820531; cv=none; b=t49NNOSLqgTWqe7iATe0bTmmpLopQAQ6tHvELvaYcIDJtUWh6SzkZVO1V8g8u9wylIfQ0MQSc2kv6ifviL6oiu4f6C4pr/jvhZmAxqlaEKbPwaN9O0qbxtS+Q1lAGyG2L+YZsxMLjf9O5dw7DvScN6vdfD0AKChHrz10/dkjJtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780820044; c=relaxed/simple;
-	bh=hJxFYyRCmJ616l0kU5gHENL0ayvYl8WX8W/K8Qi49gc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AkrIzmXzm5DRaCOTAUxPx4o4vaaESgUuYYZc56mcaqn4o6WE/Tzeulg1NIZLYlu8Kzyl3PCj67lDFjGNJtmm9gSyr0ab8d4bTTMgZgXySCK5yeT/nwHiY3le9UBYRFrBX+kJaIxmbosdjVi0uerTJXENM44r30lXgiIPFXapUxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VPnoMdQw; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1139B1F00893;
-	Sun,  7 Jun 2026 08:13:56 +0000 (UTC)
+	s=arc-20240116; t=1780820531; c=relaxed/simple;
+	bh=RlXBGideOm0fG24sK57Fjj9O2Bf18IpHaeAOIA6gzx0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ptZ1rGKCGnp6VQFR0suR4VycWnl4zea/9N+Yox4VnzrzMShTmJ3Xo03TMcojdinNmpJtfoNmOSjaMQeAfrDOqrX0xUuX3duCVa4X4Fz/nVwREHNT1eWQ2oS1xfhzNej3EYRKNvkuGGF6uIIcgSbKczghkLLVi+sXKIccz/QsMB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lIacer5b; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C41A1F00893;
+	Sun,  7 Jun 2026 08:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780820043;
-	bh=wwcfzcJw05kfZLm5nbWQ6qC7kEOUN/R1wOxCqZRm2gU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=VPnoMdQwhbA8o2rO3Fskx/I7qLyxwIP0EN6R4nO+oJAtDJtCg09okKgeVWlcI4HOE
-	 /lFhSESq/atBYXw8BeQkpMpUMRLGPzed/kRimwvxiqb2LMApdrXF/S0XrZ0gIvjv46
-	 PoC43p2u6nff+heU0C658I2N9DsQLyRpN3iuYYNr5MlQ/qick4mVXzjGNXkb/CRrto
-	 Wlky8qJHlSidrCFjIrjY3bQKlAu/aXb0lqbNydmvSNWf9srtSW07die7iwvrzTxMqM
-	 za6MiJa5sdhwbyzVIljUYLIvfIQB25qAMJSh11dn44KJG9OWrFvsfZMVZhXnZIUCYC
-	 x6YzRHTeRUgaw==
-Message-ID: <f9a88104-9292-4cef-af48-58a722194b4a@kernel.org>
-Date: Sun, 7 Jun 2026 10:13:54 +0200
+	s=k20260515; t=1780820530;
+	bh=uqI3l1dNo0fGlCLztcpYfyTopg/g/S2ClfydNwNTjPI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=lIacer5bOOEQMfuoFy/5BQASek5+kZonDK/tQkTE24M776WBgDDCRjyAZt2p2TGtq
+	 LG/ycjE4Eqbc9qzQXDHsBaKlP/IqODCa7F870lreHh3dFY6lBzBz4VrJrsdX8tjWbi
+	 MT1/xDmsTvNIpo4eFH5vA9qSaichASr4Fe6Ie4A95HhwdpIYkglSlWCfClKvQ1sy7Z
+	 xpFAehcPF7LADCSxtHwb+BvJvTPTHzenXUWHfDgqMojhJwUKmadeAYsCjPB+3PJa3v
+	 WNFVay7zvu3MYsBdg2MNkeDQUfs94J20SZFmuoh/lXNaHRpwEggWRunmWQXtxBdq50
+	 Z2HtYLKdd55RA==
+Date: Sun, 7 Jun 2026 10:22:05 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Herman van Hazendonk <github.com@herrie.org>
+Cc: Georgi Djakov <djakov@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] dt-bindings: interconnect: qcom: add msm8660 NoC
+Message-ID: <20260607-zippy-tricky-bettong-1f7f74@quoll>
+References: <20260606-submit-interconnect-msm8660-v4-0-6e1e5c5efa26@herrie.org>
+ <20260606-submit-interconnect-msm8660-v4-1-6e1e5c5efa26@herrie.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] dt-bindings: dma: qcom,bam-dma: Increase iommus
- maxItems to seven
-To: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Vinod Koul <vkoul@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
- Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.Li@kernel.org>,
- Andy Gross <agross@kernel.org>, Harshal Dev <harshal.dev@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- dmaengine@vger.kernel.org
-References: <20260521-shikra_crypto_changse-v1-0-0154cc9cc0de@oss.qualcomm.com>
- <20260521-shikra_crypto_changse-v1-4-0154cc9cc0de@oss.qualcomm.com>
- <20260530-spiffy-glittering-quail-dff199@quoll>
- <289a5bca-5491-4fc2-92d9-1102aa664021@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <289a5bca-5491-4fc2-92d9-1102aa664021@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260606-submit-interconnect-msm8660-v4-1-6e1e5c5efa26@herrie.org>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111550-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111551-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:kuldeep.singh@oss.qualcomm.com,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:vkoul@kernel.org,m:thara.gopinath@gmail.com,m:konradybcio@kernel.org,m:Frank.Li@kernel.org,m:agross@kernel.org,m:harshal.dev@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmaengine@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:github.com@herrie.org,m:djakov@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-pm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[18];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[gondor.apana.org.au,davemloft.net,kernel.org,gmail.com,oss.qualcomm.com,vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	MIME_TRACE(0.00)[0:+];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 399D464F154
+X-Rspamd-Queue-Id: BE77A64F1EB
 
-On 06/06/2026 22:59, Kuldeep Singh wrote:
-> On 30-05-2026 16:09, Krzysztof Kozlowski wrote:
->> On Thu, May 21, 2026 at 06:47:11PM +0530, Kuldeep Singh wrote:
->>> Shikra bam dma engine support 7 iommu entries and not 6.
->>> Increase maxItems property for iommus to pass dtbs_check errors.
->>
->> What errors? There is no Shikra in upstream so how could we have errors?
-> dt-bindings updates are prerequisites for the DT changes of ice,rng, qce
-> and hence updated bindings in patch [1-4]/5.
-> Also, the commit message mention about shikra and DT change is also in
-> same series.
+On Sat, Jun 06, 2026 at 03:00:46PM +0200, Herman van Hazendonk wrote:
+> Add a dt-binding schema and an interconnect master/slave ID header for
+> the MSM8x60 family (MSM8260/MSM8660/APQ8060) Network-on-Chip.  The
+> chip exposes four NoC fabrics that the qnoc-msm8660 driver models:
 > 
-> I hope this clarifies.
+>   AFAB  - Applications fabric (Scorpion CPU + L2)
+>   SFAB  - System fabric (DMA, SPS, security)
+>   MMFAB - Multimedia fabric (MDP, GPU, camera, video, rotator)
+>   DFAB  - Daytona fabric (SDC, ADM master/slave)
+> 
+> The schema covers all four compatible strings, per-fabric clock-name
+> lists (bus / bus_a / ebi1 / ebi1_a for AFAB; bus / bus_a / smi /
+> smi_a for MMFAB; bus / bus_a for SFAB and DFAB), the required
+> qcom,rpm phandle through which the provider hands the arbitration
+> buffer to RPM firmware, and #interconnect-cells = <1>.
+> 
+> The ID header lists per-fabric master / slave / gateway indices
+> derived from the legacy vendor msm_bus_board_8660.c enums,
+> normalised to the upstream interconnect-framework naming convention.
+> 
+> Assisted-by: Claude:claude-opus-4-7 Sashiko:claude-haiku-4-5
+> Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+> ---
+>  .../bindings/interconnect/qcom,msm8660.yaml        | 164 +++++++++++++++++++++
+>  include/dt-bindings/interconnect/qcom,msm8660.h    | 156 ++++++++++++++++++++
+>  2 files changed, 320 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8660.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8660.yaml
+> new file mode 100644
+> index 000000000000..776717d4212f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8660.yaml
+> @@ -0,0 +1,164 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,msm8660.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm MSM8x60 family Network-On-Chip interconnect
+> +
+> +maintainers:
+> +  - Herman van Hazendonk <github.com@herrie.org>
+> +
+> +description: |
+> +  The Qualcomm MSM8x60 family (MSM8260/MSM8660/APQ8060) NoC is split into
+> +  four fabrics, each modelled as a separate interconnect provider:
+> +
+> +    APPSS fabric    Scorpion CPU cluster, L2 cache, EBI (DDR) memory.
+> +    System fabric   DMA controllers, modem and LPASS cross-domain links,
+> +                    security peripherals.
+> +    Multimedia fab  Display (MDP), GPU, camera (VFE), video codec (VPE),
+> +                    JPEG, with the SMI scratchpad as the local slave.
+> +    Daytona fabric  SDC1..SDC5 controllers and ADM master/slave channels.
+> +
+> +  Each provider programs fabric arbitration (per-master priority tier and
+> +  per-slave bandwidth vote) through RPM firmware via the qcom,rpm parent
+> +  controller, in addition to scaling its bus clocks via clk_set_rate.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,msm8660-apps-fabric
+> +      - qcom,msm8660-system-fabric
+> +      - qcom,msm8660-mmss-fabric
+> +      - qcom,msm8660-daytona-fabric
+> +
+> +  '#interconnect-cells':
+> +    const: 1
+> +    description:
+> +      Each consumer phandle takes the form <provider node-id> where node-id
+> +      indexes the per-fabric ID array in
+> +      <dt-bindings/interconnect/qcom,msm8660.h>.  Pinned to 1 because the
+> +      driver uses of_icc_xlate_onecell, which strictly requires a single cell.
+> +
+> +  clocks:
+> +    minItems: 2
+> +    maxItems: 4
+> +
+> +  clock-names:
+> +    minItems: 2
+> +    maxItems: 4
+> +
+> +  qcom,rpm:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description:
+> +      Phandle to the qcom,rpm node.  The interconnect provider hands the
+> +      per-fabric arbitration buffer to RPM firmware through this resource,
+> +      so a production device tree must point at the system RPM.
 
-No. Please explain what errors we see now.
+"production device tree" is confusing - no clue how does it matter for
+the bindings. Like a non-production would be different?
+
+Anyway, explain the hardware - the interconnects are part of RPM, no? So
+why do you need another resource?
+
+I do not see any resources for talking with the hardware, so it seems
+you just added this as a fake phandle to avoid properly repersenting the
+hardware.
+
+> +
+> +required:
+> +  - compatible
+> +  - clocks
+> +  - clock-names
+> +  - qcom,rpm
+> +  - '#interconnect-cells'
+> +
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          const: qcom,msm8660-apps-fabric
+> +    then:
+> +      properties:
+> +        clocks:
+> +          items:
+> +            - description: APPSS fabric bus clock (active vote)
+> +            - description: APPSS fabric bus clock (active+sleep vote)
+> +            - description: EBI1 (DDR) channel clock (active vote)
+
+Is there EBI0?
+
+> +            - description: EBI1 (DDR) channel clock (active+sleep vote)
+> +        clock-names:
+> +          items:
+> +            - const: bus
+> +            - const: bus_a
+> +            - const: ebi1
+
+If on, then this is just ebi or mc
+
+> +            - const: ebi1_a
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          enum:
+> +            - qcom,msm8660-system-fabric
+> +            - qcom,msm8660-daytona-fabric
+> +    then:
+> +      properties:
+> +        clocks:
+> +          items:
+> +            - description: Fabric bus clock (active vote)
+> +            - description: Fabric bus clock (active+sleep vote)
+> +        clock-names:
+> +          items:
+> +            - const: bus
+> +            - const: bus_a
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          const: qcom,msm8660-mmss-fabric
+> +    then:
+> +      properties:
+> +        clocks:
+> +          items:
+> +            - description: MMSS fabric bus clock (active vote)
+> +            - description: MMSS fabric bus clock (active+sleep vote)
+> +            - description: SMI scratchpad clock (active vote)
+> +            - description: SMI scratchpad clock (active+sleep vote)
+> +        clock-names:
+> +          items:
+> +            - const: bus
+> +            - const: bus_a
+> +            - const: smi
+> +            - const: smi_a
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,rpmcc.h>
+> +
+> +    interconnect-afab {
+> +        compatible = "qcom,msm8660-apps-fabric";
+> +        clocks = <&rpmcc RPM_APPS_FABRIC_CLK>,
+> +                 <&rpmcc RPM_APPS_FABRIC_A_CLK>,
+> +                 <&rpmcc RPM_EBI1_CLK>,
+> +                 <&rpmcc RPM_EBI1_A_CLK>;
+> +        clock-names = "bus", "bus_a", "ebi1", "ebi1_a";
+> +        qcom,rpm = <&rpm>;
+> +        #interconnect-cells = <1>;
+> +    };
+
+One example is enough, all of these are basically the same.
 
 Best regards,
 Krzysztof
+
 
