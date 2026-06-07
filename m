@@ -1,97 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-111566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 93YhJDNVJWpdHAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 13:25:39 +0200
+	id OXY1DmxYJWoZHQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 13:39:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFFD3650698
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 13:25:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B74765077C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 13:39:23 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=BfwjCMVa;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111566-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111566-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=eXOG06aB;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111567-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111567-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C5603305EF23
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2026 11:19:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 34253300E241
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2026 11:37:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 091423A2549;
-	Sun,  7 Jun 2026 11:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B29036C9E5;
+	Sun,  7 Jun 2026 11:37:12 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C1F3502B8
-	for <linux-arm-msm@vger.kernel.org>; Sun,  7 Jun 2026 11:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEE13112A5
+	for <linux-arm-msm@vger.kernel.org>; Sun,  7 Jun 2026 11:37:11 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780831182; cv=none; b=gjOl4TdO5yLpzrBZZ0cyI9ZWyFfxJpvhl1zwjOzTXvrdPmYuqq1hbW6tSRSR6XTmh9wbh1lzKlnU1voqhOFPEL/zzFs6feYOHMMsbjTmPeFdj4F6hRzSwvdu4UeS/lWy9kX8Ac9dr9xstvvmrMHLw9v28J0eex4NslOeqSo1X74=
+	t=1780832232; cv=none; b=ry+OzAxXBHVQcbeqBwWCrpNP8saXLrzBBrZ450Fo75ZfHtgI3Z1PKawxhmph8nQsMILAB6laVYlYSpQVe2yAvfD/MYelQfKYdLaxknUiMPAthUk95tet78d3Z+/D+XTX1b9kR20ABfCyfIs4RFOwJpZ9xsj0Y7h4lGJihcpsYrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780831182; c=relaxed/simple;
-	bh=0uDYtqRBUzvLjwC3Lb+glSfRN5HCu+ot/eZzvgKdnq8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=se94GnElCUFf8M1OZaMR3iDk+ypEDXcIKrG2LDkWAvERCuD3JdkGEuE9Po7NVPq4MJPPLK8Gs7NNrH9noipSZQ89En/lFKYR0XH1AHdCjI6ISxaKNMViZIW3CYeo7zkDNg0s4/JFdbMMN5S+Q7uk9jijognwY+ubFpcUn6rIPK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BfwjCMVa; arc=none smtp.client-ip=209.85.128.54
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-490b9318997so24137435e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Jun 2026 04:19:40 -0700 (PDT)
+	s=arc-20240116; t=1780832232; c=relaxed/simple;
+	bh=UkilVZ6L5qYNGf5OkHZ73UaA5FJBXCP4ssHkfm9A6Bw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XFnSC9IyfGeOEG1Z6GuudH7UjG7TRIxtgvRUZEm4OAS+qYSNpXLIeEliZNErVx1B4gqfMHQyNQsBEhN+db1bDsrTJKM0eobyyTH9oL5QVGHi34w1AEDoCB8y+g9hy9MZPMGwpw50b06jjvASg4RZfrl2jpmsaXeoPASzRVIKa48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eXOG06aB; arc=none smtp.client-ip=209.85.214.178
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2bf2247e38eso35497305ad.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Jun 2026 04:37:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780831179; x=1781435979; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1780832231; x=1781437031; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nrYQAlpfe/R8hKzBRpiJvT6OU8qSP87xKaeg9At/5s8=;
-        b=BfwjCMVa5kQOBFZ/v5rs91TcX6t9R+J+RUXTI6y4v6M2e6nY2c19BviZ0hLBQABya5
-         jy7N1orx4sQjjn4wAkIMJ8gJkGI2u7QnZiwJpNQAZOCFR95I+xN8rGw/fP+mTHLZUj/p
-         44sswKTGeTHCkARHGPQMu6p6Izzz1LM1orHNpLHFt1HNJ83GampZthLmkv1003riHEmw
-         aJPcdgWyEfhRdwLoDuyLYRiGx+v/Zt73O3ftGBMgfRHxr/1+YPbc1uO8DXifmQEZ7WTf
-         jxsXmV1GsPWlKkBOAJWyv8e3VfY2ZfFTlFwUj9mZwH62YKAsbXyh2YuzJsn0ql0jyrDV
-         Wwyg==
+        bh=E2qBSVXHU8kFXauvXxCaj7xA3mOOH97xQiwoWavb5pY=;
+        b=eXOG06aByr6zUseVHK4gfgtYZkmfzGUWtWHgNzL05VtynNpfFSAEUZLrVI8N1BizOZ
+         AJTNKyXnocqc6gz23Ibp1wjQgq048qbZ6UPvvWxLO6yJJO9UOAtumDjNSDVL93OeCvIk
+         tB41rZNy/sqG9fc5V9CTk15um2TM5dPmltoongOWYuobdjmzgN/Bv2Ns1kD2awNVAII0
+         dOGOjcx/1Y/oOw97KFKmgsMpkC72FhhX8sFsO21cZei4P79qclo7/mCgZrTiP/npQYtw
+         AceP1awIT8GsLud+KDUTLliaFg52ziUTsjT5dF67KqUzjmdoEl+3o2gzgEIPMxZOhmtQ
+         Ryfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780831179; x=1781435979;
+        d=1e100.net; s=20251104; t=1780832231; x=1781437031;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nrYQAlpfe/R8hKzBRpiJvT6OU8qSP87xKaeg9At/5s8=;
-        b=qXMRfZTAaFHsJqqtf8fuc4SJdWvWSUnu35eaKBsVwVsG/uP4sZEfwkWrDUEzuZTWB8
-         sBb+c6/PaewmvsGaUSdVM216cPeX/PT6a1B3mp77LnPUyiSoDPsck8cH2a4z7aMMgG1u
-         33VFuPgB9w5irUg8Fb0vXeVtOYlnjjDHljc4x800lO3HOh+VpCDOGHjGUGfynw5ZpdOf
-         w3Zr+pwTOFfM4UX9ziQu0sy0xvL4I1Nsuxu6W0sWXvXH5BEHFN6TQd1dGrgymijA5byt
-         PLu37qxcj7D/GYPfRUQJDoCzjm1rBVrcZI6fGoH/wBoFFBaxn0PTIri5zx8gy3zqvILi
-         CpjQ==
-X-Forwarded-Encrypted: i=1; AFNElJ9a4p94h/1OZwZckHDxPwp5+v1qQcb53mat2pG6ryvygbhTOZktPi0rlQa2RM9ONv8dZ4SLIqBt55e/hwpn@vger.kernel.org
-X-Gm-Message-State: AOJu0YyxWlAswZlA688WfjymuyMsocxwtFvWguzXLMJ4ZufnjDnwfF0O
-	sZHxFrj5PzHu5S4+w7dZlTSXlXx7r/oTI5H1rvBFuxzzst2sAPxnKkU=
-X-Gm-Gg: Acq92OGN+BWqmO+Yr4SUjWvNoLQMZDnnY89IHa6Dap1k+ZVOpbjcUHmj4G87BCS6bDK
-	2MINgxZLeFY3Lm+cunS2pyoXnMYWi2/eHMs46t5MHzQivCgCPZ6et0qlwC+Re6WcEfM90+caG6a
-	SPB52hXKeH3DZ9+U5enWwJ4T9hvbTVesbkT3JU43A4wBjgRrQLeLzuhDwx1XnjL0hwMsHMV2ofQ
-	UtL/1w/cLt/ykyygpPX78m/h2hZyVrPJgXw7dQJQslKfHyp+ury61yE5BDSLcxPwERGP57a5a8o
-	Nu1xqYRiFlFzD134thp+3L5rPIk6oNDD/iYTnjZYH/y4DzRN2pzVE/U7e42fzTmXgrHsfkDbs+z
-	SQikwUbaCKLJVldrEx3ggI6AloNglcws5TGEW3wsrEjLIRjNL0gWWI7GA0BlRuxzL/ZWUqYJEbF
-	bnbUjzGF90b9Vj8Ep3ZI42FcSNKp9abdbRexnVgqIxfctYN+ENWcvDB//LC3e2YrHxIe1AVsXID
-	B7BWd+rQt6KQCgplofMBl7b9bHNa5TPGyWMibFhnA==
-X-Received: by 2002:a05:600c:818c:b0:490:6237:521d with SMTP id 5b1f17b1804b1-490c25b3ca5mr196207925e9.13.1780831178838;
-        Sun, 07 Jun 2026 04:19:38 -0700 (PDT)
-Received: from hp-ubuntu.. ([196.74.199.190])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3918d7sm282234195e9.2.2026.06.07.04.19.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Jun 2026 04:19:38 -0700 (PDT)
-From: Mohammed EL Kadiri <med08elkadiri@gmail.com>
-To: quic_vgarodia@quicinc.com,
-	quic_dikshita@quicinc.com,
-	bryan.odonoghue@linaro.org,
-	mchehab@kernel.org
-Cc: kees@kernel.org,
-	gustavoars@kernel.org,
-	dmitry.baryshkov@oss.qualcomm.com,
-	linux-media@vger.kernel.org,
+        bh=E2qBSVXHU8kFXauvXxCaj7xA3mOOH97xQiwoWavb5pY=;
+        b=NYqQW3KZfq+VizaJQEiISDWw6l+ldTotf5omFXEf2Fm1tCRc5MD7WMJY5QEPBE94JJ
+         XX+N8ttTRJE8A+flVpp/YvW8HovLZgFJpvEmfsBk/dBv9cnxc9OWwRmxLlMCAw4rbDPo
+         rRggOEqbKHvv8bq1ZiHYFW3OmmCNgEYyigazxAGUzCjNSFmcvpl/NExZPaOOcJb/jE9a
+         fpTtkXVZOjAQebK7J+szEsU4nVOv/lbWjdac1rYb/2g39qGdKB4oRjE0ccR/XFhcqoE0
+         ItF/+p6rhkdVqcbegThJgG4//OYuNhBoZLn4ZBizV3Nf0Xskj9mL6Q1hQwkBeP9weqUW
+         +OmQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8yxOM0c+lfM5Yktiupl/JjYL93S3aLFNt4CD1xbcBnOSamwfmrFc4XHMrovRYZjddphYPsOcwck3QX/YfZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YyH+Jn3yzA//B2GnnnNO0/zfzQoEENhKw2xbke6ZrER82+OeAwx
+	TTVO/M5HCgkwSjQHyNlmRpA8MYwnYsRapGYSL3iYC50NjfVBIHCMpMAm
+X-Gm-Gg: Acq92OGw297T3+jpNGpWqoI8wJ8fnea17QDkuVCbJIgmQoOv0YeJnHf7+a03Ysdtbs9
+	gviwp44pQjcRsI64r3zjgBmWq/va6BRQss94eag+rMMi4pgd713xvi4xRBF3OBW5XjSLDBr2Xd8
+	pTEqNvoA8NV8e8YcLHhkIVu/UuYirHCNQI8VuMa0Df/nknErZ8L17iRD9/ZzPM9XPXZyjPMAYU2
+	n8FWgavbzK55fjcKyh8ohfU5/k5CKO5GhLghHm9W4odGx90HZ38JWTDN/1VtahBh0kD/StNqI7j
+	tJaAvBoyPruQ3EzeMR+1eukCPQKKos/p4WOXMyxwIBBF+6Pk1bwx8d9SDqOBmaRa3+yDfzV3KcL
+	LuVFCRNMm6+npXpYSBkYVD5W/5ldYHVKO523TGe2J24VdWKFNMwzWB5dHGcglgVa2DHWuGqHYy/
+	yahF+YkBWGrBHHSwGb98OGcfOWfzCG1FEwtYOikBa1CsnU1bEeUL3ifEbEasynrlnRK78FzWQ=
+X-Received: by 2002:a17:903:1206:b0:2c0:bb2d:a314 with SMTP id d9443c01a7336-2c1e85aad3cmr126401255ad.28.1780832230663;
+        Sun, 07 Jun 2026 04:37:10 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:88b6:5847:b159:e15f:b4ca:e80d])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c16649c302sm144144165ad.73.2026.06.07.04.37.06
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 07 Jun 2026 04:37:10 -0700 (PDT)
+From: Ajit Singh <blfizzyy@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-hardening@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Mohammed EL Kadiri <med08elkadiri@gmail.com>
-Subject: [PATCH v2] media: venus: Annotate flex arrays with __counted_by()
-Date: Sun,  7 Jun 2026 12:19:33 +0100
-Message-ID: <20260607111933.6398-1-med08elkadiri@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	Ajit Singh <blfizzyy@gmail.com>
+Subject: [PATCH v4 0/3] arm64: dts: qcom: Add Vicharak Axon Mini
+Date: Sun,  7 Jun 2026 17:06:55 +0530
+Message-ID: <20260607113658.25117-1-blfizzyy@gmail.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,8 +98,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
@@ -110,81 +107,84 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,vger.kernel.org,gmail.com];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-111566-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:quic_vgarodia@quicinc.com,m:quic_dikshita@quicinc.com,m:bryan.odonoghue@linaro.org,m:mchehab@kernel.org,m:kees@kernel.org,m:gustavoars@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-hardening@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:med08elkadiri@gmail.com,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER(0.00)[med08elkadiri@gmail.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[12];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,vger.kernel.org,gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-111567-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:blfizzyy@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[blfizzyy@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[med08elkadiri@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[blfizzyy@gmail.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	ALIAS_RESOLVED(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: CFFD3650698
+X-Rspamd-Queue-Id: 6B74765077C
 
-Add __counted_by() annotations to flexible array members:
+Add initial support for the Vicharak Axon Mini, a QCS6490-based
+single-board computer.
 
-- hfi_capabilities::data, counted by num_capabilities
-- hfi_profile_level_supported::profile_level, counted by profile_count
-- hfi_resource_ocmem_requirement_info::requirements, counted by num_entries
+This series adds the Vicharak vendor prefix, documents the board
+compatible, and adds the initial board DTS.
 
-This improves run-time bounds checking via CONFIG_UBSAN_BOUNDS and
-compile-time object size resolution via __builtin_dynamic_object_size().
+Tested:
+- debug UART
+- eMMC
+- UFS
+- SDIO WLAN
+- USB 2.0 host
+- PCIe
 
-Assisted-by: Claude:claude-opus-4
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Mohammed EL Kadiri <med08elkadiri@gmail.com>
 ---
- drivers/media/platform/qcom/venus/hfi_helper.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+v3: https://lore.kernel.org/all/20260519125655.23796-1-blfizzyy@gmail.com/
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index f44059f19505..e96d458c52fa 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -616,7 +616,7 @@ struct hfi_capability {
- 
- struct hfi_capabilities {
- 	u32 num_capabilities;
--	struct hfi_capability data[];
-+	struct hfi_capability data[] __counted_by(num_capabilities);
- };
- 
- #define HFI_DEBUG_MSG_LOW	0x01
-@@ -802,7 +802,7 @@ struct hfi_profile_level {
- 
- struct hfi_profile_level_supported {
- 	u32 profile_count;
--	struct hfi_profile_level profile_level[];
-+	struct hfi_profile_level profile_level[] __counted_by(profile_count);
- };
- 
- struct hfi_quality_vs_speed {
-@@ -1085,7 +1085,7 @@ struct hfi_resource_ocmem_requirement {
- 
- struct hfi_resource_ocmem_requirement_info {
- 	u32 num_entries;
--	struct hfi_resource_ocmem_requirement requirements[];
-+	struct hfi_resource_ocmem_requirement requirements[] __counted_by(num_entries);
- };
- 
- struct hfi_property_sys_image_version_info_type {
+Changes in v4:
+- Move pinctrl-related changes under a /* pinctrl */ section.
+- Explain why UFS ICE is kept disabled in commit msg.
+- Add a comment describing the USB 2.0 host-only board routing.
+
+Changes in v3:
+- Dropped unused regulators.
+- Pick up Acked-by tags for the binding patches.
+
+Changes in v2:
+- Drop unused Type-C VBUS regulator.
+- Drop invalid camera thermal zone.
+- Drop incorrect PM8350C thermal alarm override.
+- Fix PCIe1 3.3 V regulator name.
+- Drop redundant EUD disable override.
+- Keep ICE disabled due to fatal SError during qcom_ice_create().
+- Fix pinctrl property ordering.
+- Sort top-level label references.
+- Add blank lines before status properties.
+
+
+Ajit Singh (3):
+  dt-bindings: vendor-prefixes: Add prefix for Vicharak
+  dt-bindings: arm: qcom: Add Vicharak Axon Mini
+  arm64: dts: qcom: Add Vicharak Axon Mini
+
+ .../devicetree/bindings/arm/qcom.yaml         |    1 +
+ .../devicetree/bindings/vendor-prefixes.yaml  |    2 +
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ .../dts/qcom/qcs6490-vicharak-axon-mini.dts   | 1027 +++++++++++++++++
+ 4 files changed, 1031 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-vicharak-axon-mini.dts
+
 -- 
-2.43.0
+2.50.1 (Apple Git-155)
 
 
