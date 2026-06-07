@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-111549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id OgSNKQwkJWqYDwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 09:55:56 +0200
+	id cuVeOFUoJWozEAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 10:14:13 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2723764F0C0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 09:55:56 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 399D464F154
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 07 Jun 2026 10:14:13 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=eRZUjqa+;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111549-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111549-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=VPnoMdQw;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111550-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111550-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C4E9430160C9
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2026 07:55:54 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5E2CF3016821
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  7 Jun 2026 08:14:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 188C135DA40;
-	Sun,  7 Jun 2026 07:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F158636E470;
+	Sun,  7 Jun 2026 08:14:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F94E2874E6;
-	Sun,  7 Jun 2026 07:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CC63612F8;
+	Sun,  7 Jun 2026 08:14:03 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780818954; cv=none; b=Rs3dzw8cAKiE0pmwVVzlcpH8qafUrTuDlhKaTk2ALWJZ8rg5paMvhAXoQ6pyBO5VJyxg7QkqH6R2tLgryP21XzvAGGHdKemyJ9Ox59fGnKHX0eqrtKhxe0ckF4nL17MuBNi6gOsAEEDF6EsC3iTmc15qyJ1+EsAsN2fpLvUX1y4=
+	t=1780820044; cv=none; b=S3RPBV2JHYanVECVWnZBs0Qe5msxR8WrUKQLDtCAuLQZJVyknvYhTHjqfyfS9RWpa/j1TezXurN0u48tyZnrMdP/p/gxHRFIKDWKEYG7/bOSEQKBR7KoIoPyfqk+M+1TcMpeAihwj0TlpVq1AB3K7aMoI8jsFFhN7J8PnG3VADs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780818954; c=relaxed/simple;
-	bh=xTp7pcxi5qODLtaSM1Ae3hr+e0GnjPFJ9Z15wNPnCXs=;
+	s=arc-20240116; t=1780820044; c=relaxed/simple;
+	bh=hJxFYyRCmJ616l0kU5gHENL0ayvYl8WX8W/K8Qi49gc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j/wgzjahz91tPPuXk8jvmT/gOBF3kBSs1Z/Qwct3qrc76J76YkrRVb+8Dd+kx7lc5QDUiEzvCoEYHj23lMVGg1cSn0u22KwQw8vzet/rHmmJiYWthWtTwdGQUBbgpg9RSP7De0oEQPYc1AGh7eSfKzTWMDL79fPGFrD2xxBWtdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eRZUjqa+; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE45D1F00893;
-	Sun,  7 Jun 2026 07:55:48 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=AkrIzmXzm5DRaCOTAUxPx4o4vaaESgUuYYZc56mcaqn4o6WE/Tzeulg1NIZLYlu8Kzyl3PCj67lDFjGNJtmm9gSyr0ab8d4bTTMgZgXySCK5yeT/nwHiY3le9UBYRFrBX+kJaIxmbosdjVi0uerTJXENM44r30lXgiIPFXapUxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VPnoMdQw; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1139B1F00893;
+	Sun,  7 Jun 2026 08:13:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780818952;
-	bh=j0LtVxfTVWveZDlUyidpqgCzT8M4LgWarn5G6kwH2Rw=;
+	s=k20260515; t=1780820043;
+	bh=wwcfzcJw05kfZLm5nbWQ6qC7kEOUN/R1wOxCqZRm2gU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=eRZUjqa+UHsoreNNlqaZD/x+el8UYYBRKJPy9jKmGaDjTEUVgcgdibAiVpzLXRSxD
-	 UR/qlYfshyo+MzRKZS9bGZuIF6rXFU+rJqQMC2KPrdAS8f7yIbCI/yQtzWmCZYQQXR
-	 UU67h05rLghihUcyB+py2GIrqxRx/Dj8fZVZWNM/WTGCE+qov1v1Ulz64XeRMgbcuG
-	 kSYlDuPheO9NaezxzaB8jO7UkA2fyp85Fv71xo3WeG6IKLVzZFziODZdTkWyTHrlMJ
-	 UcLhGTnx4Yrx8ivREtokCwx2It/rQNcNLJ79VhR6BcsXj/00Q6ZYjJkE3rutw0bB7l
-	 pE+yDnevwwYtA==
-Message-ID: <06351149-6fc6-4fdd-86ac-90bf8b4c3933@kernel.org>
-Date: Sun, 7 Jun 2026 09:55:46 +0200
+	b=VPnoMdQwhbA8o2rO3Fskx/I7qLyxwIP0EN6R4nO+oJAtDJtCg09okKgeVWlcI4HOE
+	 /lFhSESq/atBYXw8BeQkpMpUMRLGPzed/kRimwvxiqb2LMApdrXF/S0XrZ0gIvjv46
+	 PoC43p2u6nff+heU0C658I2N9DsQLyRpN3iuYYNr5MlQ/qick4mVXzjGNXkb/CRrto
+	 Wlky8qJHlSidrCFjIrjY3bQKlAu/aXb0lqbNydmvSNWf9srtSW07die7iwvrzTxMqM
+	 za6MiJa5sdhwbyzVIljUYLIvfIQB25qAMJSh11dn44KJG9OWrFvsfZMVZhXnZIUCYC
+	 x6YzRHTeRUgaw==
+Message-ID: <f9a88104-9292-4cef-af48-58a722194b4a@kernel.org>
+Date: Sun, 7 Jun 2026 10:13:54 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,17 +55,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] soc: qcom: socinfo: Add CQ8725S SoC ID
-To: Aaron Kling <webgeek1234@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH 4/5] dt-bindings: dma: qcom,bam-dma: Increase iommus
+ maxItems to seven
+To: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Vinod Koul <vkoul@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
+ Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+ Andy Gross <agross@kernel.org>, Harshal Dev <harshal.dev@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Teguh Sobirin <teguh@sobir.in>
-References: <20260605-cq8725s-soc-id-v1-0-bb1ef93de649@gmail.com>
- <0b3a7b64-252e-4d86-8561-c5f16808054c@kernel.org>
- <CALHNRZ_2gC_WBQiz+4gTZOypvyCtwv6j4MnN6qJ1KoBZ=0LA5w@mail.gmail.com>
+ dmaengine@vger.kernel.org
+References: <20260521-shikra_crypto_changse-v1-0-0154cc9cc0de@oss.qualcomm.com>
+ <20260521-shikra_crypto_changse-v1-4-0154cc9cc0de@oss.qualcomm.com>
+ <20260530-spiffy-glittering-quail-dff199@quoll>
+ <289a5bca-5491-4fc2-92d9-1102aa664021@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,72 +117,61 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <CALHNRZ_2gC_WBQiz+4gTZOypvyCtwv6j4MnN6qJ1KoBZ=0LA5w@mail.gmail.com>
+In-Reply-To: <289a5bca-5491-4fc2-92d9-1102aa664021@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111549-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:webgeek1234@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:teguh@sobir.in,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FREEMAIL_TO(0.00)[gmail.com];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-111550-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:kuldeep.singh@oss.qualcomm.com,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:vkoul@kernel.org,m:thara.gopinath@gmail.com,m:konradybcio@kernel.org,m:Frank.Li@kernel.org,m:agross@kernel.org,m:harshal.dev@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmaengine@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_CC(0.00)[gondor.apana.org.au,davemloft.net,kernel.org,gmail.com,oss.qualcomm.com,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2723764F0C0
+X-Rspamd-Queue-Id: 399D464F154
 
-On 06/06/2026 22:19, Aaron Kling wrote:
-> On Sat, Jun 6, 2026 at 2:48 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+On 06/06/2026 22:59, Kuldeep Singh wrote:
+> On 30-05-2026 16:09, Krzysztof Kozlowski wrote:
+>> On Thu, May 21, 2026 at 06:47:11PM +0530, Kuldeep Singh wrote:
+>>> Shikra bam dma engine support 7 iommu entries and not 6.
+>>> Increase maxItems property for iommus to pass dtbs_check errors.
 >>
->> On 05/06/2026 23:49, Aaron Kling via B4 Relay wrote:
->>> Add the ID for the CQ8725S which is a variant of SM8750.
->>>
->>> ---
->>> Teguh Sobirin (2):
->>>       dt-bindings: arm: qcom,ids: Add SoC ID for CQ8725S
->>>       soc: qcom: socinfo: Add CQ8725S SoC ID
->>
->> Where is DTS using this? Or anything? We do not add SoC IDs alone, it's
->> pointless for a DT platform.
+>> What errors? There is no Shikra in upstream so how could we have errors?
+> dt-bindings updates are prerequisites for the DT changes of ice,rng, qce
+> and hence updated bindings in patch [1-4]/5.
+> Also, the commit message mention about shikra and DT change is also in
+> same series.
 > 
-> The cq8725s device I am working on is the AYN Odin 3. The kernel dt is
-> not ready for submission at this time. I am trying to get all the
-> prerequisites submitted early though, to make the later submissions
-> smoother. And other id's in exactly the same situation as this one,
-> such as sm7750 [0], were recently reviewed by you and merged. What
-> makes this any different?
+> I hope this clarifies.
 
-
-That one should not go in either in such case. This belongs to the
-patchset with DTS. This is integral part of that patchset, not a
-dependency, thus upstreaming it with such mindset (get dependencies
-earlier) is not applicable. It is not a dependency.
+No. Please explain what errors we see now.
 
 Best regards,
 Krzysztof
