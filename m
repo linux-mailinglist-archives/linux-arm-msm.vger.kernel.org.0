@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-111963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id JNptJIUdJ2p8sAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 21:52:37 +0200
+	id l7AuDLgdJ2qCsAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 21:53:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E396165A2C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 21:52:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CA65265A2D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 21:53:27 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="E/Wzkui5";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111963-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111963-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=WOqwgBz1;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111964-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111964-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6BE9E3029AC8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 19:48:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 650E6300FED4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 19:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B3B73E7BA8;
-	Mon,  8 Jun 2026 19:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F23E3E7BCA;
+	Mon,  8 Jun 2026 19:49:10 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A720937F721;
-	Mon,  8 Jun 2026 19:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBD83C3C0E;
+	Mon,  8 Jun 2026 19:49:09 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780948094; cv=none; b=XuhthF9WFCoc0dWFi3PYbTZWrH5T9oay73nGPvgQG9egv/gzhRj4dWO2b0wTZ/nOXdqpNvIWdjbmgZUvBNvQkpmcjRG9aJkw/VBqzzLcVWo/uwWl/9Go01BMAfPUr1KW0cDw6TrhwojLAA7wj9A3mUM2xfP1dVTgGaFg47NPP3Y=
+	t=1780948150; cv=none; b=pUAvRlbjEqXO9w4yFV9r+oBSsFYrbvS6Pjgbt7IbS4DO9Kkv70w8JabreFABcemGNdnXXo+DuG+PObtmr3DunJV5c3lufthuzUY0tbpWONjTprrn6K+Zx5x0pkCuEfmUA4K2SytKgiiTQjAn7wAk2O+EXu7d4k6rH7QSkB1E23E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780948094; c=relaxed/simple;
-	bh=+Ze7wlvQCSqYAK/5lCWzSqyjPXfsA34McEhLyWMGz+o=;
+	s=arc-20240116; t=1780948150; c=relaxed/simple;
+	bh=lFPuOA0+nYd5lmSCzxX9B5Sr7YnZ530uQSzMHCj2XgA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PJINSwr52kpyQt535EJJl1sS4yPuqE123YQEttokq3Ah43mlWyDRaJ1uF4qKgH2usOIsLcKjrIq44nOEm9Y72qQXrPvIPXmgW352H9eVLwnxoU6LXf4xqKGw3hnfRFBbgnsW1QOLDaFXxAU2KveVarHyCqanAPPWIT7alGL/PMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E/Wzkui5; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CBB1F00893;
-	Mon,  8 Jun 2026 19:48:07 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=OhJkKuEgFymUB+VHB0dx70h45C/ZeTuCDRduI3u9gy1jCbL7jGVc/VFFli54ucgOg0nWSK6i2h8oU1TLYryq9lx0Tqb++3lDDiK6KF33cEQmLdGjcKJD8YKrkQDtyTcbNpQVKUce+5X1MPaUi4KYQmNBDgwub4k7siywqEPxIOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WOqwgBz1; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1FE1F00893;
+	Mon,  8 Jun 2026 19:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780948093;
-	bh=VVNTZaAO0B0DQ+HTH+EESlWokJ8mf5amEZrArva7fb0=;
+	s=k20260515; t=1780948149;
+	bh=EfqxP/NBZsSvIK+t1PXFuVmwIz5Ypn/N27RGGMuwgWo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=E/Wzkui5soYyPiod/SkyuiDxg9W7N5rEpDkLT0a6VoKbfVcxWP/5a292RCCpZrGlF
-	 UzYsRTs4jfRARqO/jp3LSWva5ArcOdzKY+FkpyOsM4s3SQZL6iK1/xviVRa2bX0Q75
-	 0bUeEZiZSgvLyxyarxXgy+4fLoWOYUt/xk3pS8ftICME8m0rWk7fd/NHntpEA80FUZ
-	 CdveDCuqb/PIf4KTwO+WwF8xbD6n78cWIm7AaLo5GqZ9E5wFGH08RLi+/lvC85PQlA
-	 C7Mlk+ZgxPWN+coVt6yzXoUyJoYBoBXEbZhAahxl+48St3CyXEYrpyDxytooDNQQhq
-	 iE/2o2FUa0TrQ==
-Message-ID: <0030e12e-96b7-4a22-a3b4-1b42bd32f39e@kernel.org>
-Date: Mon, 8 Jun 2026 21:48:04 +0200
+	b=WOqwgBz1Mabg1F4H1WNZ1DDTeaD+9IJck8dVcbb8RPu/W6/kHaVIzWEksZ3Gq61CD
+	 OB1D5wCVdx7380LsY4wYooaatZL1lw2SbQsRz8oY2dscYgcukTLlaKJLU33sdORtoO
+	 ipDg+lySAy9KsvL7xW+BouPg/c6Skb2+kKfF8WSuuGJSZSALNEJMxdPfJ8Cdszp/ig
+	 bTWKBIB6jNX1nNz2AxAIK/Jsvg01qkl6sEJtSL9/FQAs4d+uhGv2qhtJxCCJIZHr1V
+	 vOZtt8YgslL9vC734R9ofOIe5fyal/ZSwgXXaDkJQinN56SdZ31sxuq7BfwSCkKpV+
+	 LT01bt3TSSIeA==
+Message-ID: <844eccf8-4ad3-46a2-bc8a-67895d629c4f@kernel.org>
+Date: Mon, 8 Jun 2026 21:49:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,18 +55,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] soundwire: qcom: add EE-aware register layout and
- cpu selection
-To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Srinivas Kandagatla <srini@kernel.org>,
- Vinod Koul <vkoul@kernel.org>, Bard Liao <yung-chuan.liao@linux.intel.com>,
- Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org
-References: <20260608175345.3118060-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20260608175345.3118060-3-mohammad.rafi.shaik@oss.qualcomm.com>
+Subject: Re: [PATCH 4/5] dt-bindings: dma: qcom,bam-dma: Increase iommus
+ maxItems to seven
+To: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>,
+ "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Vinod Koul <vkoul@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>,
+ Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.Li@kernel.org>,
+ Andy Gross <agross@kernel.org>, Harshal Dev <harshal.dev@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ dmaengine@vger.kernel.org
+References: <20260521-shikra_crypto_changse-v1-0-0154cc9cc0de@oss.qualcomm.com>
+ <20260521-shikra_crypto_changse-v1-4-0154cc9cc0de@oss.qualcomm.com>
+ <20260530-spiffy-glittering-quail-dff199@quoll>
+ <289a5bca-5491-4fc2-92d9-1102aa664021@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,7 +117,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <20260608175345.3118060-3-mohammad.rafi.shaik@oss.qualcomm.com>
+In-Reply-To: <289a5bca-5491-4fc2-92d9-1102aa664021@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -120,21 +125,22 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111963-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:mohammad.rafi.shaik@oss.qualcomm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:srini@kernel.org,m:vkoul@kernel.org,m:yung-chuan.liao@linux.intel.com,m:quic_srivasam@quicinc.com,m:pierre-louis.bossart@linux.dev,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-sound@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111964-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FORGED_RECIPIENTS(0.00)[m:kuldeep.singh@oss.qualcomm.com,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:vkoul@kernel.org,m:thara.gopinath@gmail.com,m:konradybcio@kernel.org,m:Frank.Li@kernel.org,m:agross@kernel.org,m:harshal.dev@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmaengine@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_CC(0.00)[gondor.apana.org.au,davemloft.net,kernel.org,gmail.com,oss.qualcomm.com,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -149,25 +155,25 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E396165A2C0
+X-Rspamd-Queue-Id: CA65265A2D6
 
-On 08/06/2026 19:53, Mohammad Rafi Shaik wrote:
-> Some Qualcomm SoundWire masters expose interrupt, FIFO and status
-> registers in EE-specific register windows on v2.0 and newer hardware.
+On 06/06/2026 22:59, Kuldeep Singh wrote:
+> On 30-05-2026 16:09, Krzysztof Kozlowski wrote:
+>> On Thu, May 21, 2026 at 06:47:11PM +0530, Kuldeep Singh wrote:
+>>> Shikra bam dma engine support 7 iommu entries and not 6.
+>>> Increase maxItems property for iommus to pass dtbs_check errors.
+>>
+>> What errors? There is no Shikra in upstream so how could we have errors?
+> dt-bindings updates are prerequisites for the DT changes of ice,rng, qce
+> and hence updated bindings in patch [1-4]/5.
+> Also, the commit message mention about shikra and DT change is also in
+> same series.
 > 
-> Add support for selecting the SoundWire execution environment from DT
-> and use it to program the correct register window for the active EE.
-> The driver now reads the EE value from the new
+> I hope this clarifies.
 
-No, it does not. "now" means before the commit, you are making the
-changes - see submitting patches.
 
-> qcom,swr-master-ee-val property, with qcom,ee as a fallback for
-> backward compatibility.
+No, nothing is clarified. This commit msg is just misleading.
 
-And where did you document qcom,ee and why do you need fallback in the
-first place? For downstream DTS? We do not support anything from
-downstream here.
 
 Best regards,
 Krzysztof
