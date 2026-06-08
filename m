@@ -1,84 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-111888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id VqJwOGnDJmrCkAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 15:28:09 +0200
+	id +5zwFHrDJmrEkAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 15:28:26 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53DE4656A28
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 15:28:09 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id C64EF656A32
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 15:28:25 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=O50rKS3s;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111888-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111888-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=linaro.org header.s=google header.b=E79Fp8Dp;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111890-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111890-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=linaro.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 735C6304359A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 13:21:02 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6F91730475D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 13:21:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8340837F74C;
-	Mon,  8 Jun 2026 13:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DE29380FEC;
+	Mon,  8 Jun 2026 13:20:53 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3BB372690
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2026 13:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C497037BE6D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2026 13:20:51 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780924852; cv=none; b=PVa9ejS7dNQ7GLGw0tE/jQ6R020uG2H05FmrJLlEJsReoNcbEcPnvFW0KWgOTw0zWtolAo7tI9q6OCkkfU0qNE76GK9wlBKVsWb0hdaLFzUrB4+ykmNAt/4cJOnzTUGBHmQ5XFoWCPSfLKQBfNPj0yPYZ7gaN9HPEbY5il7S7cI=
+	t=1780924853; cv=none; b=A5vRl6Zhadz41rDSvg7T2KLlC8D4ZP96TMR8o799rvvREwgvw3Gw+tpm8cOzQxjnHrGiH1gzwA/NOTtIZSf0anu57h3ok5Lkgu5lxqaXyvIF8HzVV6VNHVtk2StHFPm7dk9LMEjOgRrH4jtf2IUamJSD7o6KLZOFw9SvEQ8AHdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780924852; c=relaxed/simple;
-	bh=0AgIAl17ixhY3CTP9QeRWJkMWUPldlinPLmeQltSSw8=;
+	s=arc-20240116; t=1780924853; c=relaxed/simple;
+	bh=4LIlhcSSNJt4ijDmSKJWT+ggM0d+9mvXU1kPx79Vhp8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hwv0R8cLek90i7ZxhkxTJzelC9r3rwEiyIRBkFqjGnNOM3GWPX3fWyI+3kfgstyoeOkO+or0+wF5ca7yiOsS2qgubMoS9Rv4m0Rcml8TzxPNA363oEZhZo3ygTH9CXbhMnk/vt7Iqaekj99yWFxLNgg4eAJ2Ks+sNQ44Oxi6Nig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O50rKS3s; arc=none smtp.client-ip=209.85.128.52
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-490b43e2b95so34848055e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2026 06:20:50 -0700 (PDT)
+	 In-Reply-To:To:Cc; b=tOJI4fj7FdxnmKozja8zBV5kV9rRuY9NS8Jy18/VIqDneOCJ1PrNfrZnFs1x3oKZqm8NogwfZegSbgyqiRVizgdUyY8Xo6/hvSn0K/Npdoix0ynLiunbHIOV5vZ27VVd09e/st2remKagkpjmxTNNhvm9F1Al9UNNiVLX14/E9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E79Fp8Dp; arc=none smtp.client-ip=209.85.128.48
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-490a76757e5so27934175e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2026 06:20:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1780924849; x=1781529649; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1780924850; x=1781529650; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0KpA3ZQAr7zIXn0uGbXscgdRewtZO5/SMCNOMBE13D8=;
-        b=O50rKS3smR/TsZjEXbRbRyG7HC1qBfU/QHvn+Fh/PB5SSIza9FqGHgTU+sCRPXi01i
-         C8e1GEkIzrY9uhd04U+jbIspEbbvDkv3TYZQIRtixEdY5w564BRS4jAuZsOtcmpp0KI+
-         h1vEJWn17ZC9+/p+3C0K9siyGxk+R48Y0p7vj0xLiEAC+54O0pTtVQmeiTczSCKOqgij
-         cQrQSJRAwmdJPOVeI4BLKqHD45ym2f0xbqEkMd6A6fF18S0PRnf2aeiE4a7IKFR6B7ki
-         hHBb7gMeRDx7N14g+fJpnzY5Mcni/BTe2JGK3nidzNZaa/K0/gX4AF2JcvGkdiYrQNZB
-         NRhw==
+        bh=88tm0oNdAQ/v6RDKBRvrToGlaWSuSntV+oNt6Zj/FRs=;
+        b=E79Fp8DpkdvHdwbVHCBHfZVbYL4HLqehMaKDjZ3F+J6E3WrHvbLRmBOEHg5TQ54VYB
+         mMrxZlxs0mQo4jQvfszsrAI6f91bx+o1PIEPRCr2qPu1YrMtNF9Uz0rczt5SQJaUW8Bj
+         Gp2hqr5gCUysEmV8BH8b8WTu/ToAFaVJOkz6SfrKvfotHE4Qk2xmt1k1R6YW72PJKOpi
+         nTpjTWumAtGN3LJKUtU2r+AfzIPskvgu0EZPrLgMgKYBdFnnPUPfm0gZLKODJuJmvcAQ
+         Uwd4bNYHX/YneOQoWynsxiJQmFwRjGF+jGV1q6AEi07ZnZtE1CakJyswKMpsGq68oP5x
+         W7mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780924849; x=1781529649;
+        d=1e100.net; s=20251104; t=1780924850; x=1781529650;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=0KpA3ZQAr7zIXn0uGbXscgdRewtZO5/SMCNOMBE13D8=;
-        b=DDGyx5kVB3s0U6+MkJ+cspCbbyOwLT64DZFG+ES6TK1ksKjeVvomrws4L7WPTaYqso
-         dKSncF6YJYhXdNQnAek68WH+u6uQpQckfTUgdks3MjFQo+tG1pb1aWjd2K1qWNb7F+Ul
-         yQVq2gy5tEAL5mAgGIc1bmeQfuq78Y0LZceINb60AaB45uuZgQJWZkJNyQJdU7EnL0ul
-         KLQ6Gj7ihLK/dpilEsu4vprmJIleMDbWr69zRSIWN8x3UdH0RN8/dQzpyxBGVnpgzJ+l
-         urES4cQw/4rg5ar8XRW5NuWdIV5j8Jnq62D22jhIUog/KZPKzzn9tm0JxN0ZvHqClqsK
-         qirQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8cbeuaDGo/yeQzVzoYWG+vVFwW0N0E1aCurD6GQySz1gsXjPtZL2Cn77vhTHjK1ay9fhgELtJsKVrJivg1@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRrJkMlGZyZEWBh068DJn6WqvaldqwDbV2gBTII5r9fgIAMc1L
-	oghKDlCCxhQt1alKmqUYdP9PVAxIpmAAmf+RRTGCbf2zGnsvLryeCRVE0AduGMO3c1U=
-X-Gm-Gg: Acq92OHbQJyJu6ElTUV5yg5hytjNf7jhTUzsKZ4B6aFd/Pck2tz60zWdyYYNEwUQgVD
-	BZlx41WX9h4WAnz/Iixnk8Rerls8fQJDyngOdwn5evo5UQcH0/qNPOrzYerzJp6i4tphnUm36u6
-	u/ZWvnlKop0pove23/6tI8J2HAxNIatw4DqGsJsJmFVStMtiIShoSphoAimx0kgsKRfhCwXgJFz
-	BxeIlTulMGHczRIv3jnAmMEhVxZ5/gAb3yzKPzItWQSANbLEVDduL5WjiajVfAqfpDYHrD48mfj
-	pue6aT34FFqL5N3EclQzzbSno/kXuC1gWM//GBOHdJ6IiGhA7rSVZ00iHG5/4tebsdKY9OqqLgz
-	wXNpUVTVG3r+ef1eRaiaQlDkqEiNcVTHrNcJ7XPVTxvtZ+xoOzXpDzazU0k/Q29tF6GPJWBRAi2
-	0VYJ5lJJvhLVYg/T6AsEIlBkZpOJ8i0crNFLTdysath/iZTxs=
-X-Received: by 2002:a05:600c:34ca:b0:490:9df1:f0cf with SMTP id 5b1f17b1804b1-490c2592042mr268917625e9.2.1780924849190;
-        Mon, 08 Jun 2026 06:20:49 -0700 (PDT)
+        bh=88tm0oNdAQ/v6RDKBRvrToGlaWSuSntV+oNt6Zj/FRs=;
+        b=ajMtg61Fo9zfA/wm/txGAp8q8qz4wbWlhFoN9/46J6vaiVqDPkFyXw9FYypUm5lC1d
+         lK++3l5ezfLLnWF5Jj3MOrWqxripUxcpaqfeVMnn/pqsa87nw2YW5qGf7xBR6rCfCML5
+         HYt1eU3xKAMN/2zmTqiZ3yV7E453OQWRgTfuzsrqIADtzJyjhP6hSunAqic/DbjNA9gk
+         mRN1l4sBt08keXxaCxYIMPinB3cvkchwdkXR5mZyIR8tlxAOnsPD6u2GF/NWlROAsQSa
+         vxtHAzZsUm0/YnGq8EAoJErhejMEILpm5r1LwKTlZe2QoqSdACYrIOCCRJHnQp0soAP3
+         YrXQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8NTKE+DlbMvGOso/uewojoU05HkQY7UAJHcYYrHeV7VBKYEOUa85bNZlowY65F/4ac7sEU82oMOdma3Rdq@vger.kernel.org
+X-Gm-Message-State: AOJu0YxOm2iE1NzaLenLwfIg4Zvb6bZZha2Rgx8neSZXgCJt0B0rQqV1
+	b3X32uzrmamgF0VNrR7yjkDMxaTXwcWmulRuwhs9G/+4YEMN2QjtWdyp29Jh0NFmRto=
+X-Gm-Gg: Acq92OHh0FyECsjlpFnaFjqeGVFjwVaKbLOQPOUs2TcseS49r4hH0t5wLZLsDD5WbdS
+	SWiJey5j5jbLm46La/ukYWZQZfoRi9XNVyWy7GsJt1avXUcVMrgziFE3yU1QGiBIZTLe32qAYun
+	w5/gRSoRKsi2B6F6NpHMD1P1egChhbD3aq9TkMAe7FZW1mWHDFXpa0SwFifa42GP713+EsHCNWx
+	1K1Xl8viryESnDrR9prN5OSPtFqyk3PldCwZXxVx2pYmv8I5H67FmHidkc+MQM+PUZIVm2/2l7Z
+	cIU/gg8s8cg++h0D7aXUzJtnhZpARCQrRqBY5wjbGZJ8mrLz45/UUKSjqu9XrD+Bum6EPF+wAGv
+	ApM0p+2VSsezsQlYxJ/c0khR/fx/hg2VPaY1dxwyVOwO5Zu0Yd97kzyg8Xc+n8Knj3WpIKru5KD
+	z8P8VUBGBPM4xbBK764cIsnleOURr2vbeb//kiGA8UMP4sHOk=
+X-Received: by 2002:a05:600c:b93:b0:48a:93f8:dd02 with SMTP id 5b1f17b1804b1-490c4e0414emr237867275e9.14.1780924850120;
+        Mon, 08 Jun 2026 06:20:50 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:2454:ff23:4410:963d:8b06:4a7b:c38f])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f34413csm51684983f8f.21.2026.06.08.06.20.48
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f34413csm51684983f8f.21.2026.06.08.06.20.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Jun 2026 06:20:48 -0700 (PDT)
+        Mon, 08 Jun 2026 06:20:49 -0700 (PDT)
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Mon, 08 Jun 2026 15:20:23 +0200
-Subject: [PATCH 2/4] mtd: rawnand: qcom: Make "aon" clock optional
+Date: Mon, 08 Jun 2026 15:20:24 +0200
+Subject: [PATCH 3/4] mtd: rawnand: qcom: Make has_onfi_read_op separate
+ from qpic_version2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,7 +88,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260608-qcom-nandc-mdm9607-v1-2-4639a0492274@linaro.org>
+Message-Id: <20260608-qcom-nandc-mdm9607-v1-3-4639a0492274@linaro.org>
 References: <20260608-qcom-nandc-mdm9607-v1-0-4639a0492274@linaro.org>
 In-Reply-To: <20260608-qcom-nandc-mdm9607-v1-0-4639a0492274@linaro.org>
 To: Manivannan Sadhasivam <mani@kernel.org>, 
@@ -105,12 +106,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111888-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111890-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:mani@kernel.org,m:miquel.raynal@bootlin.com,m:richard@nod.at,m:vigneshr@ti.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-mtd@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
@@ -119,7 +120,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FORGED_SENDER(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
@@ -133,36 +134,116 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,linaro.org:dkim,linaro.org:email,linaro.org:mid,linaro.org:from_mime]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 53DE4656A28
+X-Rspamd-Queue-Id: C64EF656A32
 
-Some SoCs (e.g. MDM9607, SDX55) have only a single separately controllable
-clock for the NAND controller. The actual clocks in the hardware are
-managed by the firmware and turned on all together when needed. In this
-case, there is no separate "aon" clock that can be described in the device
-tree.
+QPIC v1.5 requires using the OP_PAGE_READ_ONFI_READ command, but is missing
+the rest of the hardware changes that are currently covered by the QPIC v2
+(qpic_version2) check in the driver. Split that into an extra
+has_onfi_read_op feature flag so it can be separately enabled.
 
-Make the second "aon" clock optional to avoid an error when it is missing.
-For platforms that really need it, the dt-bindings are responsible for
-validating that.
+No functional change.
 
 Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 ---
- drivers/mtd/nand/raw/qcom_nandc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/qcom_nandc.c    | 15 ++++++++-------
+ include/linux/mtd/nand-qpic-common.h |  2 ++
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
-index 4b80ce084d9a..0251dd591d40 100644
+index 0251dd591d40..9217e8de5512 100644
 --- a/drivers/mtd/nand/raw/qcom_nandc.c
 +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-@@ -2280,7 +2280,7 @@ static int qcom_nandc_probe(struct platform_device *pdev)
- 	if (IS_ERR(nandc->core_clk))
- 		return PTR_ERR(nandc->core_clk);
+@@ -1564,7 +1564,7 @@ static int qcom_op_cmd_mapping(struct nand_chip *chip, u8 opcode,
+ 		cmd = OP_FETCH_ID;
+ 		break;
+ 	case NAND_CMD_PARAM:
+-		if (nandc->props->qpic_version2)
++		if (nandc->props->has_onfi_read_op)
+ 			cmd = OP_PAGE_READ_ONFI_READ;
+ 		else
+ 			cmd = OP_PAGE_READ;
+@@ -1903,7 +1903,7 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
+ 		nandc->regs->ecc_buf_cfg = cpu_to_le32(ECC_CFG_ECC_DISABLE);
  
--	nandc->aon_clk = devm_clk_get(dev, "aon");
-+	nandc->aon_clk = devm_clk_get_optional(dev, "aon");
- 	if (IS_ERR(nandc->aon_clk))
- 		return PTR_ERR(nandc->aon_clk);
+ 	/* configure CMD1 and VLD for ONFI param probing in QPIC v1 */
+-	if (!nandc->props->qpic_version2) {
++	if (!nandc->props->has_onfi_read_op) {
+ 		nandc->regs->vld = cpu_to_le32((nandc->vld & ~READ_START_VLD));
+ 		nandc->regs->cmd1 = cpu_to_le32((nandc->cmd1 & ~READ_ADDR_MASK) |
+ 						FIELD_PREP(READ_ADDR_MASK, NAND_CMD_PARAM));
+@@ -1911,7 +1911,7 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
  
+ 	nandc->regs->exec = cpu_to_le32(1);
+ 
+-	if (!nandc->props->qpic_version2) {
++	if (!nandc->props->has_onfi_read_op) {
+ 		nandc->regs->orig_cmd1 = cpu_to_le32(nandc->cmd1);
+ 		nandc->regs->orig_vld = cpu_to_le32(nandc->vld);
+ 	}
+@@ -1925,7 +1925,7 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
+ 	else
+ 		nandc_set_read_loc_first(chip, reg_base, 0, len, 1);
+ 
+-	if (!nandc->props->qpic_version2) {
++	if (!nandc->props->has_onfi_read_op) {
+ 		qcom_write_reg_dma(nandc, &nandc->regs->vld, NAND_DEV_CMD_VLD, 1, 0);
+ 		qcom_write_reg_dma(nandc, &nandc->regs->cmd1, NAND_DEV_CMD1, 1, NAND_BAM_NEXT_SGL);
+ 	}
+@@ -1939,7 +1939,7 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
+ 			   nandc->buf_count, 0);
+ 
+ 	/* restore CMD1 and VLD regs */
+-	if (!nandc->props->qpic_version2) {
++	if (!nandc->props->has_onfi_read_op) {
+ 		qcom_write_reg_dma(nandc, &nandc->regs->orig_cmd1, NAND_DEV_CMD1_RESTORE, 1, 0);
+ 		qcom_write_reg_dma(nandc, &nandc->regs->orig_vld, NAND_DEV_CMD_VLD_RESTORE, 1,
+ 				   NAND_BAM_NEXT_SGL);
+@@ -2041,7 +2041,7 @@ static int qcom_nandc_setup(struct qcom_nand_controller *nandc)
+ 	if (!nandc->props->nandc_part_of_qpic)
+ 		nandc_write(nandc, SFLASHC_BURST_CFG, 0);
+ 
+-	if (!nandc->props->qpic_version2)
++	if (!nandc->props->has_onfi_read_op)
+ 		nandc_write(nandc, dev_cmd_reg_addr(nandc, NAND_DEV_CMD_VLD),
+ 			    NAND_DEV_CMD_VLD_VAL);
+ 
+@@ -2063,7 +2063,7 @@ static int qcom_nandc_setup(struct qcom_nand_controller *nandc)
+ 	}
+ 
+ 	/* save the original values of these registers */
+-	if (!nandc->props->qpic_version2) {
++	if (!nandc->props->has_onfi_read_op) {
+ 		nandc->cmd1 = nandc_read(nandc, dev_cmd_reg_addr(nandc, NAND_DEV_CMD1));
+ 		nandc->vld = NAND_DEV_CMD_VLD_VAL;
+ 	}
+@@ -2385,6 +2385,7 @@ static const struct qcom_nandc_props sdx55_nandc_props = {
+ 	.ecc_modes = (ECC_BCH_4BIT | ECC_BCH_8BIT),
+ 	.supports_bam = true,
+ 	.nandc_part_of_qpic = true,
++	.has_onfi_read_op = true,
+ 	.qpic_version2 = true,
+ 	.dev_cmd_reg_start = 0x7000,
+ 	.bam_offset = 0x30000,
+diff --git a/include/linux/mtd/nand-qpic-common.h b/include/linux/mtd/nand-qpic-common.h
+index 006ca8c978a9..437448995187 100644
+--- a/include/linux/mtd/nand-qpic-common.h
++++ b/include/linux/mtd/nand-qpic-common.h
+@@ -443,6 +443,7 @@ struct qcom_nand_controller {
+  * @dev_cmd_reg_start - NAND_DEV_CMD_* registers starting offset
+  * @supports_bam - whether NAND controller is using BAM
+  * @nandc_part_of_qpic - whether NAND controller is part of qpic IP
++ * @has_onfi_read_op - whether ONFI param page read command is supported
+  * @qpic_version2 - flag to indicate QPIC IP version 2
+  * @use_codeword_fixup - whether NAND has different layout for boot partitions
+  */
+@@ -452,6 +453,7 @@ struct qcom_nandc_props {
+ 	u32 bam_offset;
+ 	bool supports_bam;
+ 	bool nandc_part_of_qpic;
++	bool has_onfi_read_op;
+ 	bool qpic_version2;
+ 	bool use_codeword_fixup;
+ };
 
 -- 
 2.54.0
