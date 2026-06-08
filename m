@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-111803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id WJ32IIiZJmr2ZQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 12:29:28 +0200
+	id JmZvFvacJmovZwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 12:44:06 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9B9365516E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 12:29:27 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE83365544F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 12:44:05 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=collabora.com header.s=mail header.b=X8N8jMik;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111803-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111803-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=collabora.com header.s=mail header.b=Td6rvWg3;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111804-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111804-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=collabora.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C1A37308D6BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 10:15:11 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 621C630A5E58
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 10:15:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D8FD3D7A01;
-	Mon,  8 Jun 2026 10:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F7413D811B;
+	Mon,  8 Jun 2026 10:10:52 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F97C3D5671;
-	Mon,  8 Jun 2026 10:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EB43D75B1;
+	Mon,  8 Jun 2026 10:10:50 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780913451; cv=none; b=iB0aa+SKsyUy2lo2exPoCGN9tNLlmn+T1E3OMFWvINwztAu+ZlGGz0Fid/mWIjRW07nFkxhKDgdoK/LKRr1M3h8UyjOi/BPptleMbg14dXMRRxgLPLlJSo7fBpQ3jVN8AM4BP86rA1dgko+CLIALqlYi1wihyAn0BJ3GaMxpkW4=
+	t=1780913452; cv=none; b=MhlDdJiL2T4yffrpoHGWUQ7t5VX0ceTTFW5t9P8m+9tG05rm9J7aMBCAQHmsyPIfWeI6DbFZmlcH7yY2M0Bo1U0hktV4BVzpkmFO76ZQ5rZvfLSK9g90g1KHVNC8TJtrF3ydS4YzYT1yQYjIhDEcDuVaKUKbocDFgUNYo6Ltstc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780913451; c=relaxed/simple;
-	bh=HP73TMOo/xb49TOUi08knc6WOZuxameTKnDuIRFDeYM=;
+	s=arc-20240116; t=1780913452; c=relaxed/simple;
+	bh=Vd4pVFh8wsoCdS9ymYot+ehre/gecffYFCVThMvrfYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i81eW0AaC7ndRO9vKkc2blpjEVogPKp2Qgh06ZOEG+b+3aglb/7QNfHpARmHSaWTyCXFpL2r8tQFX4fmvcnPYNHfu7KTv0fzPs0NWpbLb8glYVudKTypoKINSJHhfmKcRChPSdBYOeI5u6lZJnlkKMeddeCUdIU3UcmxH6nEmCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=X8N8jMik; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version; b=J4o55BzNc8ArbINFOSZ4A5ZjI+IZGmjFlnbgHYLc04DPS23NXWo/lPX/pFzWfFaa+tGQt5ha+H/epjhhqlhNAjBqpfboL8KHYNx5rwuW7c0ZeJj87prJGm7JT0jYvElpvKCmVN5rRGRQrFHltMtzlLXgGkJ214m9aParBfXrwuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Td6rvWg3; arc=none smtp.client-ip=148.251.105.195
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1780913447;
-	bh=HP73TMOo/xb49TOUi08knc6WOZuxameTKnDuIRFDeYM=;
+	s=mail; t=1780913449;
+	bh=Vd4pVFh8wsoCdS9ymYot+ehre/gecffYFCVThMvrfYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X8N8jMikTQc2LzMzeck7QgFuMbomlUscdYdvs0h2CxMn+EJhFt2rXcU9ad114ml6+
-	 Gp6EMbxcxAHpajaaNAPPhSHQNmdFdx3oLLMNZ7nhPztUSNxTcqG8DLGQsKQAEx1jJy
-	 nKvIUNeiv11faUpw0Ld3SD7s9gfZI4UsY7UmoZiFZKb/MMNWlKK1scvcIQO/I30G6u
-	 jGnYSZ2DmSwXvv7xViHf+HTKFalSGfv2inKU/wBz4e6LmjkGrIxfQlXHqEX9YC4adq
-	 GbpNjGFODyC0xYZtLU0WelA9EiBHjIKyAcZ8EI/x0QIitynM5ojs8RsNkTtgJFHjmt
-	 lRUt/TFZ2LQgw==
+	b=Td6rvWg35CllMSGZfSJCFduyHDI+q/AQv3kGK/sq3IMdAC3lYjC471Hp7vLbLVe18
+	 CLD0olLbFIyIIPhEDxC5zPeYz4Blrc0bAlPaKrYWvsiYcnMMQPfUenEIhCIoiY73HJ
+	 Ht51yKbbKC9JIYb9lE9G2Mk0XCKv10swz6f0i0E/Z1ngL/8PkzQh2Ehkuwylrluf8v
+	 reEaa+53UJBgCKlcTJZH3nqvzLr/3XC7ZSA4ZwGtsrZwkzzZK21YKUOXkaFZ6Vtxhp
+	 KPJi5tkNagH34qTQs66lbm49yF9oZ896dQckdsoK99rtgSs98W71ko/MdchCc/ZeIm
+	 DEfZRlqVsCTeQ==
 Received: from IcarusMOD.eternityproject.eu (unknown [100.64.1.21])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id C6F9F17E0DE1;
-	Mon,  8 Jun 2026 12:10:46 +0200 (CEST)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 1801917E0FAC;
+	Mon,  8 Jun 2026 12:10:48 +0200 (CEST)
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 To: jic23@kernel.org
 Cc: dlechner@baylibre.com,
@@ -81,11 +81,10 @@ Cc: dlechner@baylibre.com,
 	linux-phy@lists.infradead.org,
 	linux-pm@vger.kernel.org,
 	kernel@collabora.com,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>
-Subject: [PATCH v9 04/10] spmi: Implement spmi_subdevice_alloc_and_add() and devm variant
-Date: Mon,  8 Jun 2026 12:09:43 +0200
-Message-ID: <20260608100949.36309-5-angelogioacchino.delregno@collabora.com>
+Subject: [PATCH v9 05/10] nvmem: qcom-spmi-sdam: Migrate to devm_spmi_subdevice_alloc_and_add()
+Date: Mon,  8 Jun 2026 12:09:44 +0200
+Message-ID: <20260608100949.36309-6-angelogioacchino.delregno@collabora.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260608100949.36309-1-angelogioacchino.delregno@collabora.com>
 References: <20260608100949.36309-1-angelogioacchino.delregno@collabora.com>
@@ -104,20 +103,20 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
 	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-111803-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111804-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:jic23@kernel.org,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:srini@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:sre@kernel.org,m:sboyd@kernel.org,m:angelogioacchino.delregno@collabora.com,m:krzk@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:quic_wcheng@quicinc.com,m:melody.olvera@oss.qualcomm.com,m:quic_nsekar@quicinc.com,m:ivo.ivanov.ivanov1@gmail.com,m:abelvesa@kernel.org,m:luca.weiss@fairphone.com,m:konrad.dybcio@oss.qualcomm.com,m:mitltlatltl@gmail.com,m:krishna.kurapati@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-pm@vger.kernel.org,m:kernel@collabora.com,m:jonathan.cameron@huawei.com,m:andriy.shevchenko@intel.com,m:ivoivanovivanov1@gmail.com,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:jic23@kernel.org,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:srini@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:sre@kernel.org,m:sboyd@kernel.org,m:angelogioacchino.delregno@collabora.com,m:krzk@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:quic_wcheng@quicinc.com,m:melody.olvera@oss.qualcomm.com,m:quic_nsekar@quicinc.com,m:ivo.ivanov.ivanov1@gmail.com,m:abelvesa@kernel.org,m:luca.weiss@fairphone.com,m:konrad.dybcio@oss.qualcomm.com,m:mitltlatltl@gmail.com,m:krishna.kurapati@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-pm@vger.kernel.org,m:kernel@collabora.com,m:andriy.shevchenko@intel.com,m:ivoivanovivanov1@gmail.com,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[angelogioacchino.delregno@collabora.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[31];
+	RCPT_COUNT_TWELVE(0.00)[30];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[baylibre.com,analog.com,kernel.org,arndb.de,linuxfoundation.org,linaro.org,collabora.com,oss.qualcomm.com,quicinc.com,gmail.com,fairphone.com,vger.kernel.org,lists.infradead.org,huawei.com,intel.com];
+	FREEMAIL_CC(0.00)[baylibre.com,analog.com,kernel.org,arndb.de,linuxfoundation.org,linaro.org,collabora.com,oss.qualcomm.com,quicinc.com,gmail.com,fairphone.com,vger.kernel.org,lists.infradead.org,intel.com];
 	DKIM_TRACE(0.00)[collabora.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -128,217 +127,148 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,intel.com:email,huawei.com:email,linaro.org:email,collabora.com:mid,collabora.com:dkim,collabora.com:from_mime,collabora.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,intel.com:email,collabora.com:mid,collabora.com:dkim,collabora.com:from_mime,collabora.com:email,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E9B9365516E
+X-Rspamd-Queue-Id: AE83365544F
 
-Some devices connected over the SPMI bus may be big, in the sense
-that those may be a complex of devices managed by a single chip
-over the SPMI bus, reachable through a single SID.
+Some Qualcomm PMICs integrate a SDAM device, internally located in
+a specific address range reachable through SPMI communication.
 
-Add new functions aimed at managing sub-devices of a SPMI device
-spmi_subdevice_alloc_and_add() and a spmi_subdevice_remove() for
-adding a new subdevice and removing it respectively, and also
-add their devm_* variants.
+Instead of using the parent SPMI device (the main PMIC) as a kind
+of syscon in this driver, register a new SPMI sub-device for SDAM
+and initialize its own regmap with this sub-device's specific base
+address, retrieved from the devicetree.
 
-The need for such functions comes from the existence of	those
-complex Power Management ICs (PMICs), which feature one or many
-sub-devices, in some cases with these being even addressable on
-the chip in form of SPMI register ranges.
+This allows to stop manually adding the register base address to
+every R/W call in this driver, as this can be, and is now, handled
+by the regmap API instead.
 
-Examples of those devices can be found in both Qualcomm platforms
-with their PMICs having PON, RTC, SDAM, GPIO controller, and other
-sub-devices, and in newer MediaTek platforms showing similar HW
-features and a similar layout with those also having many subdevs.
-
-Also, instead of generally exporting symbols, export them with a
-new "SPMI" namespace: all users will have to import this namespace
-to make use of the newly introduced exports.
-
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Acked-by: Stephen Boyd <sboyd@kernel.org>
+Acked-by: Srinivas Kandagatla <srini@kernel.org>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 ---
- drivers/spmi/spmi-devres.c | 24 ++++++++++++
- drivers/spmi/spmi.c        | 78 ++++++++++++++++++++++++++++++++++++++
- include/linux/spmi.h       | 16 ++++++++
- 3 files changed, 118 insertions(+)
+ drivers/nvmem/Kconfig          |  1 +
+ drivers/nvmem/qcom-spmi-sdam.c | 38 +++++++++++++++++++++++-----------
+ 2 files changed, 27 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/spmi/spmi-devres.c b/drivers/spmi/spmi-devres.c
-index 62c4b3f24d06..c3e889fe1b6e 100644
---- a/drivers/spmi/spmi-devres.c
-+++ b/drivers/spmi/spmi-devres.c
-@@ -60,5 +60,29 @@ int devm_spmi_controller_add(struct device *parent, struct spmi_controller *ctrl
- }
- EXPORT_SYMBOL_GPL(devm_spmi_controller_add);
+diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
+index e10f7ff725ff..cc032d60b8c1 100644
+--- a/drivers/nvmem/Kconfig
++++ b/drivers/nvmem/Kconfig
+@@ -380,6 +380,7 @@ config NVMEM_SNVS_LPGPR
+ config NVMEM_SPMI_SDAM
+ 	tristate "SPMI SDAM Support"
+ 	depends on SPMI
++	select REGMAP_SPMI
+ 	help
+ 	  This driver supports the Shared Direct Access Memory Module on
+ 	  Qualcomm Technologies, Inc. PMICs. It provides the clients
+diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
+index 4f1cca6eab71..4974105dd963 100644
+--- a/drivers/nvmem/qcom-spmi-sdam.c
++++ b/drivers/nvmem/qcom-spmi-sdam.c
+@@ -9,6 +9,7 @@
+ #include <linux/nvmem-provider.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
++#include <linux/spmi.h>
  
-+static void devm_spmi_subdevice_remove(void *sub_sdev)
-+{
-+	spmi_subdevice_remove(sub_sdev);
-+}
-+
-+struct spmi_subdevice *devm_spmi_subdevice_alloc_and_add(struct device *dev,
-+							 struct spmi_device *sparent)
-+{
-+	struct spmi_subdevice *sub_sdev;
-+	int ret;
-+
-+	sub_sdev = spmi_subdevice_alloc_and_add(sparent);
-+	if (IS_ERR(sub_sdev))
-+		return sub_sdev;
-+
-+	ret = devm_add_action_or_reset(dev, devm_spmi_subdevice_remove, sub_sdev);
-+	if (ret)
-+		return ERR_PTR(ret);
-+
-+	return sub_sdev;
-+}
-+EXPORT_SYMBOL_NS_GPL(devm_spmi_subdevice_alloc_and_add, "SPMI");
-+
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("SPMI devres helpers");
-+MODULE_IMPORT_NS("SPMI");
-diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
-index 0f32f099b0ce..0d587248665e 100644
---- a/drivers/spmi/spmi.c
-+++ b/drivers/spmi/spmi.c
-@@ -19,6 +19,7 @@
- 
- static bool is_registered;
- static DEFINE_IDA(ctrl_ida);
-+static DEFINE_IDA(spmi_subdevice_ida);
- 
- static void spmi_dev_release(struct device *dev)
- {
-@@ -31,6 +32,19 @@ static const struct device_type spmi_dev_type = {
- 	.release	= spmi_dev_release,
+ #define SDAM_MEM_START			0x40
+ #define REGISTER_MAP_ID			0x40
+@@ -20,7 +21,6 @@
+ struct sdam_chip {
+ 	struct regmap			*regmap;
+ 	struct nvmem_config		sdam_config;
+-	unsigned int			base;
+ 	unsigned int			size;
  };
  
-+static void spmi_subdev_release(struct device *dev)
-+{
-+	struct spmi_device *sdev = to_spmi_device(dev);
-+	struct spmi_subdevice *sub_sdev = container_of(sdev, struct spmi_subdevice, sdev);
-+
-+	ida_free(&spmi_subdevice_ida, sub_sdev->devid);
-+	kfree(sub_sdev);
-+}
-+
-+static const struct device_type spmi_subdev_type = {
-+	.release	= spmi_subdev_release,
-+};
-+
- static void spmi_ctrl_release(struct device *dev)
- {
- 	struct spmi_controller *ctrl = to_spmi_controller(dev);
-@@ -87,6 +101,18 @@ void spmi_device_remove(struct spmi_device *sdev)
- }
- EXPORT_SYMBOL_GPL(spmi_device_remove);
+@@ -73,7 +73,7 @@ static int sdam_read(void *priv, unsigned int offset, void *val,
+ 		return -EINVAL;
+ 	}
  
-+/**
-+ * spmi_subdevice_remove() - Remove an SPMI subdevice
-+ * @sub_sdev:	spmi_device to be removed
-+ */
-+void spmi_subdevice_remove(struct spmi_subdevice *sub_sdev)
-+{
-+	struct spmi_device *sdev = &sub_sdev->sdev;
-+
-+	device_unregister(&sdev->dev);
-+}
-+EXPORT_SYMBOL_NS_GPL(spmi_subdevice_remove, "SPMI");
-+
- static inline int
- spmi_cmd(struct spmi_controller *ctrl, u8 opcode, u8 sid)
- {
-@@ -428,6 +454,58 @@ struct spmi_device *spmi_device_alloc(struct spmi_controller *ctrl)
- }
- EXPORT_SYMBOL_GPL(spmi_device_alloc);
+-	rc = regmap_bulk_read(sdam->regmap, sdam->base + offset, val, bytes);
++	rc = regmap_bulk_read(sdam->regmap, offset, val, bytes);
+ 	if (rc < 0)
+ 		dev_err(dev, "Failed to read SDAM offset %#x len=%zd, rc=%d\n",
+ 						offset, bytes, rc);
+@@ -100,7 +100,7 @@ static int sdam_write(void *priv, unsigned int offset, void *val,
+ 		return -EINVAL;
+ 	}
  
-+/**
-+ * spmi_subdevice_alloc_and_add(): Allocate and add a new SPMI sub-device
-+ * @sparent:	SPMI parent device with previously registered SPMI controller
-+ *
-+ * Returns:
-+ * Pointer to newly allocated SPMI sub-device for success or error pointer.
-+ */
-+struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent)
-+{
+-	rc = regmap_bulk_write(sdam->regmap, sdam->base + offset, val, bytes);
++	rc = regmap_bulk_write(sdam->regmap, offset, val, bytes);
+ 	if (rc < 0)
+ 		dev_err(dev, "Failed to write SDAM offset %#x len=%zd, rc=%d\n",
+ 						offset, bytes, rc);
+@@ -110,8 +110,17 @@ static int sdam_write(void *priv, unsigned int offset, void *val,
+ 
+ static int sdam_probe(struct platform_device *pdev)
+ {
++	struct regmap_config sdam_regmap_config = {
++		.reg_bits = 16,
++		.val_bits = 8,
++		.max_register = 0xff,
++		.fast_io = true,
++	};
+ 	struct sdam_chip *sdam;
+ 	struct nvmem_device *nvmem;
++	struct spmi_device *sparent;
 +	struct spmi_subdevice *sub_sdev;
-+	struct spmi_device *sdev;
-+	int ret;
-+
-+	sub_sdev = kzalloc(sizeof(*sub_sdev), GFP_KERNEL);
-+	if (!sub_sdev)
-+		return ERR_PTR(-ENOMEM);
-+
-+	sdev = &sub_sdev->sdev;
-+	sdev->ctrl = sparent->ctrl;
-+	sdev->usid = sparent->usid;
-+
-+	ret = ida_alloc(&spmi_subdevice_ida, GFP_KERNEL);
-+	if (ret < 0) {
-+		kfree(sub_sdev);
-+		return ERR_PTR(ret);
-+	}
-+	sub_sdev->devid = ret;
-+
-+	device_initialize(&sdev->dev);
-+	sdev->dev.parent = &sparent->dev;
-+	sdev->dev.bus = &spmi_bus_type;
-+	sdev->dev.type = &spmi_subdev_type;
-+
-+	ret = dev_set_name(&sdev->dev, "%u-%02x.%d.auto",
-+			   sdev->ctrl->nr, sdev->usid, sub_sdev->devid);
-+	if (ret)
-+		goto err_put_dev;
-+
-+	ret = device_add(&sdev->dev);
-+	if (ret) {
-+		dev_err(&sdev->dev, "Can't add device, status %pe\n", ERR_PTR(ret));
-+		goto err_put_dev;
-+	}
-+
-+	return sub_sdev;
-+
-+err_put_dev:
-+	put_device(&sdev->dev);
-+	return ERR_PTR(ret);
-+}
-+EXPORT_SYMBOL_NS_GPL(spmi_subdevice_alloc_and_add, "SPMI");
-+
- /**
-  * spmi_controller_alloc() - Allocate a new SPMI controller
-  * @parent:	parent device
-diff --git a/include/linux/spmi.h b/include/linux/spmi.h
-index 4eb9564a7fb3..a78a8924b2ac 100644
---- a/include/linux/spmi.h
-+++ b/include/linux/spmi.h
-@@ -69,6 +69,22 @@ int spmi_device_add(struct spmi_device *sdev);
++	struct device *dev = &pdev->dev;
+ 	unsigned int val;
+ 	int rc;
  
- void spmi_device_remove(struct spmi_device *sdev);
+@@ -119,19 +128,23 @@ static int sdam_probe(struct platform_device *pdev)
+ 	if (!sdam)
+ 		return -ENOMEM;
  
-+/**
-+ * struct spmi_subdevice - Basic representation of an SPMI sub-device
-+ * @sdev:	Sub-device representation of an SPMI device
-+ * @devid:	Platform Device ID of an SPMI sub-device
-+ */
-+struct spmi_subdevice {
-+	struct spmi_device	sdev;
-+	unsigned int		devid;
-+};
+-	sdam->regmap = dev_get_regmap(pdev->dev.parent, NULL);
+-	if (!sdam->regmap) {
+-		dev_err(&pdev->dev, "Failed to get regmap handle\n");
+-		return -ENXIO;
+-	}
++	sparent = to_spmi_device(dev->parent);
++	sub_sdev = devm_spmi_subdevice_alloc_and_add(dev, sparent);
++	if (IS_ERR(sub_sdev))
++		return PTR_ERR(sub_sdev);
+ 
+-	rc = of_property_read_u32(pdev->dev.of_node, "reg", &sdam->base);
++	rc = device_property_read_u32(dev, "reg", &sdam_regmap_config.reg_base);
+ 	if (rc < 0) {
+-		dev_err(&pdev->dev, "Failed to get SDAM base, rc=%d\n", rc);
++		dev_err(dev, "Failed to get SDAM base, rc=%d\n", rc);
+ 		return -EINVAL;
+ 	}
+ 
+-	rc = regmap_read(sdam->regmap, sdam->base + SDAM_SIZE, &val);
++	sdam->regmap = devm_regmap_init_spmi_ext(&sub_sdev->sdev, &sdam_regmap_config);
++	if (IS_ERR(sdam->regmap))
++		return dev_err_probe(dev, PTR_ERR(sdam->regmap),
++				     "Failed to get regmap handle\n");
 +
-+struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent);
-+void spmi_subdevice_remove(struct spmi_subdevice *sdev);
-+
-+struct spmi_subdevice *devm_spmi_subdevice_alloc_and_add(struct device *dev,
-+							 struct spmi_device *sparent);
-+
- /**
-  * struct spmi_controller - interface to the SPMI master controller
-  * @dev:	Driver model representation of the device.
++	rc = regmap_read(sdam->regmap, SDAM_SIZE, &val);
+ 	if (rc < 0) {
+ 		dev_err(&pdev->dev, "Failed to read SDAM_SIZE rc=%d\n", rc);
+ 		return -EINVAL;
+@@ -159,7 +172,7 @@ static int sdam_probe(struct platform_device *pdev)
+ 	}
+ 	dev_dbg(&pdev->dev,
+ 		"SDAM base=%#x size=%u registered successfully\n",
+-		sdam->base, sdam->size);
++		sdam_regmap_config.reg_base, sdam->size);
+ 
+ 	return 0;
+ }
+@@ -181,3 +194,4 @@ module_platform_driver(sdam_driver);
+ 
+ MODULE_DESCRIPTION("QCOM SPMI SDAM driver");
+ MODULE_LICENSE("GPL v2");
++MODULE_IMPORT_NS("SPMI");
 -- 
 2.54.0
 
