@@ -1,201 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-111632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 9ZpzKy4JJmoXRQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 02:13:34 +0200
+	id zcOjJ1oWJmqvSAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111633-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 03:09:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BB1F651FD1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 02:13:34 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1C486520DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 03:09:45 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=rCBPgTFq;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111632-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111632-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
+	dkim=none;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111633-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111633-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=fail reason="SPF not aligned (relaxed), No valid DKIM" header.from=radxa.com (policy=none);
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D797E301ABA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 00:11:42 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9AD973006521
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 01:09:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EF975477E;
-	Mon,  8 Jun 2026 00:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C84FF2F12A1;
+	Mon,  8 Jun 2026 01:09:40 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dy1-f193.google.com (mail-dy1-f193.google.com [74.125.82.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F7454652
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2026 00:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBE329B8CF;
+	Mon,  8 Jun 2026 01:09:34 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780877502; cv=none; b=lRXALw5p3Qr1NlyOb+nwvCe3YhY6tmQVNBWDy0DU3gjh7SCbLyw7J/Sa1yJ2/Xitu1NdNldwY99HWawV5PLS6XsxbuvnP55obXxJ8DW3TouY0qM1aDr5d2mJVzEbtYHwdqBAj3BqJH+sNUYs6LfC0t4J+0ynx7igF1wJNXV9HqQ=
+	t=1780880980; cv=none; b=nJJu4fLR4XOVdmvm9ki7CLyhiwDwEbc3P7KOVQFgVxsjs2PguxhJvsqJzdnb3+TP4HlaHN6v19bcK6exOdB+c7MNR//c27Zu77K3W0KoRZBxKzpaT2zSkLxoJ3cnlfmchlsoqzZ64ciIIUbjDsWMxlw1aKF+Y2rsVSdTrOxVqQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780877502; c=relaxed/simple;
-	bh=vOOayBGohK0QwvzYe3v0W8+80VsNtvUxtjNMIUanpho=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=GdC4zgOATUPvv0+97EGx2oBN3XtBKONzxtfj3nQYnXAYNg3udlRMn2DXovtHlCY5ANSPEPdRtbfUNAwGbBjFCSuM8g6zgi6AnSkyrq4MynaHIraZR7i73PhNcZpLiUsOH7hK8d9m5XjzITJT/ibnHllELfpyuoa4qPV9d/w+knI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rCBPgTFq; arc=none smtp.client-ip=74.125.82.193
-Received: by mail-dy1-f193.google.com with SMTP id 5a478bee46e88-307631dbfedso8337502eec.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 07 Jun 2026 17:11:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780877499; x=1781482299; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oi4kLzuZyCKw08FN9wJbFhp23jSNbW+hFaRRXMRqEt8=;
-        b=rCBPgTFqO1vo4GhfaZc00r4zmZUsxfaE24zncPAO+vDECojQZxRoN3SJK38ddji80/
-         j95U8h3JiQrKP1/iNFh59zVM3E+lmFRs3mLiDstzqOrRlhB39vR2OSaOeaXrDl9GSUSO
-         trxVA4p+niqHsT1/Z59Htj4z/TNz+S5ArtspU6Yv9MYq/0hR0KIPjzRevdgpKVLe15SB
-         1YlNwljJ26qGRxpQSDlnWBDltZwbHu5qrOlq1M9ByJ05j/DPq6lusKgliqknAly5Xl2O
-         TvIw1sq1vrxk9gBU3+yKHt4kAd9zFfNtY9JhkuBmb9Xft7gnFsyLwoip6qAgpKMaiotW
-         Wj8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780877499; x=1781482299;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oi4kLzuZyCKw08FN9wJbFhp23jSNbW+hFaRRXMRqEt8=;
-        b=KS/dBtS+8AAYHh9KIVY90Q4ArGi6NDNZkNFpQOw7DhZqdLjgbw1P7hLvl0BTE/EKXC
-         w6ZtKHgYBTVnYmcEhJ9j6JKZm8MPoTRb+X6irx80tneD41m8UdjM6iJXx4H0KbkrQs1K
-         9SZ4uzLFRELOgYj3LDVOfLqiy3Mu6aE8fwyIzOgdwowxoIcTqsPnebjTRz0u6sjOOEaC
-         9wD/X6jru2VrRaNzb1Op89ptIWa2iaua/E8YLTKmPS0Q3AeUXwed8MW+y54VWXMHdcq7
-         dDXLSBi3LBjk4s8OGKevTyPtYa3IwRlnwG2CfhdpDc4xLp9nXDmsvwHCHcfUl4DGRCmq
-         tnrA==
-X-Forwarded-Encrypted: i=1; AFNElJ/TM0qAtqyGE5JIrYk3F1A82t1H5689rqDEwH1zd9BUxHHyg7UYxsRqRqCiRHMlvhHwNThy1OCJ/xvVvbY5@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0EKRs3fOIoCBkM0EoZ4hmOOPfqQ2OsDh20GcLPb+hOT1UajWL
-	s/jlekfGIY5jPbcp63ksvFOWR0cbXC3JTKirLCniOtoat28YoUPiFuMW
-X-Gm-Gg: Acq92OFAbLnIx20VAotibhcTTvblPDzLGiQqnd8nQRCe/q2rrQGebuhdtci2rdL0U7M
-	a/dYrTje217ud1rtXe6xfO8ZvBnWhToQnff8Fh7JY16f6QXU+dh55VpwtTB7HrKevB0slhQaf0e
-	hcshHEoH1fTN06HADDW4I7K5oz+eOlm0m39M161JPDWEFni4Pnr7KHk1PP2Mr1SalW/SyU8s+Er
-	Mz4M9/VZSDKDbuqcdbFLEAmP84k9X3ryi/vDszIFtT9WO8ZBHIHcWxv+alvWFT3NscGaDUS7YTE
-	PcXtMMohAG8d3aZGmnd12bgv1Z4bP/SieXIft1luDM56SjQvZlxPyqQzB8zk2HTTseQ5g8ys9Wb
-	IsHofWtq+eewXJPSoi2UYSoiFCoii+NCEX+CedY+ejqAjNgpS3cJxm9z4vpuzVm5UR71SEnXoSG
-	04wzFsDGVe34/vUtogmJgPNM79/4F2inQtq1gs5aVCoKecbJuQYZmEiVaQmx8md1LJxw==
-X-Received: by 2002:a05:7300:f193:b0:304:de28:1b16 with SMTP id 5a478bee46e88-3077b7830aemr7591327eec.28.1780877499460;
-        Sun, 07 Jun 2026 17:11:39 -0700 (PDT)
-Received: from localhost.localdomain ([76.32.119.210])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074df3b234sm19713471eec.23.2026.06.07.17.11.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Jun 2026 17:11:39 -0700 (PDT)
-From: Hungyu Lin <dennylin0707@gmail.com>
-To: linux-media@vger.kernel.org
-Cc: vikash.garodia@oss.qualcomm.com,
-	dikshita.agarwal@oss.qualcomm.com,
-	abhinav.kumar@linux.dev,
-	bod@kernel.org,
-	mchehab@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Hungyu Lin <dennylin0707@gmail.com>
-Subject: [PATCH v4] media: qcom: iris: guard IRQ handler with runtime PM check
-Date: Mon,  8 Jun 2026 00:11:28 +0000
-Message-Id: <20260608001128.80090-1-dennylin0707@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1780880980; c=relaxed/simple;
+	bh=6mFesj4hgoULMnFuaTjtFmFx3IRjOGWujjUMOSGa2r4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GK/RlCP/ul40iqaXSKYTBHPMGR6043MY8cg1kLbraZWUMgDUntGDvn3Rj0eEHrdSeI0O+oqwfhhvMwdwCtoJgROjpWpeaHEf1nC3hFD7DnD4onHrrSPLNSgDdTdU/Z07T0MuZsgz7NoMpP6JhFdDi6Okl4vN8qoo3h6t2f3M050=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.206.16.166
+X-QQ-mid: zesmtpgz3t1780880959t22d2278c
+X-QQ-Originating-IP: bXSnog20lGiDAATqGnwBlNDtCTN8ekmUmHTMsQS2HH0=
+Received: from [127.0.0.1] ( [116.234.26.110])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 08 Jun 2026 09:09:14 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 6460039914688242846
+Message-ID: <3ADB82C061204E67+dec56a7d-f8d1-4be9-9b21-3481a710df87@radxa.com>
+Date: Mon, 8 Jun 2026 09:11:44 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 10/12] net: stmmac: tc956x: add TC956x/QPS615
+ support
+To: Daniel Thompson <daniel@riscstar.com>
+Cc: Alex Elder <elder@riscstar.com>, andrew+netdev@lunn.ch,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, maxime.chevallier@bootlin.com,
+ rmk+kernel@armlinux.org.uk, andersson@kernel.org, konradybcio@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, linusw@kernel.org,
+ brgl@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org,
+ mohd.anwar@oss.qualcomm.com, a0987203069@gmail.com,
+ alexandre.torgue@foss.st.com, ast@kernel.org, boon.khai.ng@altera.com,
+ chenchuangyu@xiaomi.com, chenhuacai@kernel.org, daniel@iogearbox.net,
+ hawk@kernel.org, hkallweit1@gmail.com, inochiama@gmail.com,
+ john.fastabend@gmail.com, julianbraha@gmail.com, livelycarpet87@gmail.com,
+ matthew.gerlach@altera.com, mcoquelin.stm32@gmail.com, me@ziyao.cc,
+ prabhakar.mahadev-lad.rj@bp.renesas.com, richardcochran@gmail.com,
+ rohan.g.thomas@altera.com, sdf@fomichev.me, siyanteng@cqsoftware.com.cn,
+ weishangjuan@eswincomputing.com, wens@kernel.org, netdev@vger.kernel.org,
+ bpf@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20260501155421.3329862-1-elder@riscstar.com>
+ <20260501155421.3329862-11-elder@riscstar.com>
+ <DD71CDEABC7C16D5+02d052ff-13bb-4712-a847-91416f76c578@radxa.com>
+ <7f3a0f16-5159-4bbc-8b15-9b5841603bf6@riscstar.com>
+ <3A5C0389E7C0D241+21a4f16b-1af8-46ac-8831-0c1b49694df0@radxa.com>
+ <agH4qC74A540koDl@aspen.lan>
+Content-Language: en-US
+From: Xilin Wu <sophon@radxa.com>
+In-Reply-To: <agH4qC74A540koDl@aspen.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz3b-0
+X-QQ-XMAILINFO: MDqtQ4jGWXAGlDFsZ6teNi+ri0nkei5XfBZpP5QcO66nK0kgvh4BCaQl
+	Xv3oHRWmoZLiQ1NbhcZ1qXlPzIzEJ8CqCdsiu47q1Qn6F76e06528BVQ1LttQpUElnXfWVs
+	kxFAJ5ytcLC+VfARgmM31sq/2b7QO4PBBqhPnRI7sEDHqvvdwWDlv25MBk4KRA5bS4ucica
+	5LXUd562FvcGSuV/5jz0F2qItoNRjuYDfdVQn9Ufko3tz9ITXa9kLpaJH1DOIfOljiaTiM1
+	cm52MZ00AVEtz1epYd6lC8nyXQS77iE/Nko7iMytc+1tKt0H9lpaJW2fU/Q+dreKRRXaU4J
+	C7KZ1dJgfuieH3e5gBQzDZDgdNF9MhwvyNGQnczkg5M1eMnXrNypBMqTuOgGwJtDM7zXH7T
+	aL14LMPGqcut5WI7xpDFRVP8byDTHWJAF0aHiyGCVMlnVA9PHSMEzmSQ1nR2Y9Q476BFRC4
+	gZ3uTWWAKoUYbVPo0C2RjESWKWJUvHeKksk+VVbEYED45ujiEyjt8JVYaLp6nF9FaLzQANb
+	3rmqbPC/KMz+HZqvZE1vA0v13aS8u91Icyj4o41fJLWWreLEHmjko1yNMcIHfWgdp3knZm0
+	zGGPju3+xADUZ0IAFNwX7Aj33LiSbUsJ14uyp9uCjpNAT+xhmIuRRR4ZwaTyMf9QdBjZYPQ
+	2V22HYyjxivhLUFwTshRzC2ePMWyy+Z0fLfk2NUsbSZvEqDVKz/EeiGt98AXC+5a9OlRwcq
+	uVRELH4XNH4e4pA1gRUXqDQD6v7yszNBTvvQHJU8GcJagoWLLtOj/iADYboC++zeJvNNxaA
+	E2TS0jDnuvz+w11mRTOXml0xp3gU/6kcR9TVoPfyWf/966uwZSurnynl9XARHO4uscGHhhx
+	+ccDGOym4uCEc+bnxqt6u51SoQ5798+mxa8gFXpB2rM0r9RS6OuvQaZ5YX6r5XcQ06LtkLC
+	E4pSiQZCCa4RLLhuYmOGEpWqECYxcrP/FnHHjJifpUyFaMsNg69x+ef6ilhHzf4s4J7M=
+X-QQ-XMRINFO: OD9hHCdaPRBwH5bRRRw8tsiH4UAatJqXfg==
+X-QQ-RECHKSPAM: 0
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,linux.dev,kernel.org,vger.kernel.org,gmail.com];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-111632-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-111633-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:linux-media@vger.kernel.org,m:vikash.garodia@oss.qualcomm.com,m:dikshita.agarwal@oss.qualcomm.com,m:abhinav.kumar@linux.dev,m:bod@kernel.org,m:mchehab@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dennylin0707@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[dennylin0707@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dennylin0707@gmail.com,linux-arm-msm@vger.kernel.org];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:daniel@riscstar.com,m:elder@riscstar.com,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:maxime.chevallier@bootlin.com,m:rmk+kernel@armlinux.org.uk,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linusw@kernel.org,m:brgl@kernel.org,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:mohd.anwar@oss.qualcomm.com,m:a0987203069@gmail.com,m:alexandre.torgue@foss.st.com,m:ast@kernel.org,m:boon.khai.ng@altera.com,m:chenchuangyu@xiaomi.com,m:chenhuacai@kernel.org,m:daniel@iogearbox.net,m:hawk@kernel.org,m:hkallweit1@gmail.com,m:inochiama@gmail.com,m:john.fastabend@gmail.com,m:julianbraha@gmail.com,m:livelycarpet87@gmail.com,m:matthew.gerlach@altera.com,m:mcoquelin.stm32@gmail.com,m:me@ziyao.cc,m:prabhakar.mahadev-lad.rj@bp.renesas.com,m:richardcochran@gmail.com,m:rohan.g.thomas@altera.com,m:sdf@fomichev.me,m:siyanteng@cqsoftware.com.cn,m:weishangjua
+ n@eswincomputing.com,m:wens@kernel.org,m:netdev@vger.kernel.org,m:bpf@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:andrew@lunn.ch,m:rmk@armlinux.org.uk,m:krzk@kernel.org,m:conor@kernel.org,m:johnfastabend@gmail.com,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
+	FORGED_MUA_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[50];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sophon@radxa.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[riscstar.com,lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
+	ALIAS_RESOLVED(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	R_DKIM_NA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,radxa.com:mid,radxa.com:from_mime,radxa.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1BB1F651FD1
+X-Rspamd-Queue-Id: F1C486520DB
 
-Guard hardware register access in the threaded IRQ handler with
-pm_runtime_get_if_active().
+On 5/11/2026 11:41 PM, Daniel Thompson wrote:
+> Hi Xilin
+> 
+> On Thu, May 07, 2026 at 09:57:26PM +0800, Xilin Wu wrote:
+>> Do you think if a shutdown callback like this is required? It looks like the
+>> driver sometimes does a MDIO MMIO read when the PCIe link is down, causing
+>> the board to reset due to SoC side PCIe NoC timeout.
+>>
+>> After this change, the board can always shutdown gracefully.
+> 
+> I've preferred controlled reboots to power cycles throughout development
+> and I hadn't spotted any major problems with graceful shutdown (which
+> isn't to say there have never crashes but generally I expect `reboot`
+> to provoke a reboot successfully).
+> 
+> Just to be sure configured my board with irq=POLL (to match your setup)
+> and still can't reproduce.
+> 
+> We mostly run Debian/systemd so there might be something happening in
+> userspace to sequence things nicely. However I have ruled out
+> NetworkManager.service and networking.service (stopped this services
+> does *not* tear down the network link).
+> 
+> Can you share a bit more about how to reproduce the problem (including
+> reliability of reproduction)?
+> 
+> 
+> Daniel.
+> 
 
-A possible ordering exists where the top-half IRQ handler returns
-IRQ_WAKE_THREAD, runtime PM suspend powers down the VPU, and the
-threaded IRQ handler subsequently runs and accesses hardware
-registers through iris_vpu_clear_interrupt().
+Hi Daniel,
 
-Avoid touching registers when the device is no longer active by
-skipping interrupt processing when runtime PM indicates that the
-device is suspended.
+Sorry for the late reply. After some more investigation, I think the 
+problem is more likely related to the PCIe platform driver rather than 
+this driver. So I agree that a shutdown callback is probably not needed 
+here.
 
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
----
-v4:
-- Clarify the possible ordering between IRQ_WAKE_THREAD,
-  runtime PM suspend, and the threaded IRQ handler.
-- Describe the race condition motivating the runtime PM check.
-
-v3:
-- Remove the early enable_irq() from the PM-inactive early-return path.
-- IRQ re-enablement is already handled by iris_vpu_power_on() after power-on.
-
-v2:
-- Use pm_runtime_get_if_active() instead of pm_runtime_get_if_in_use().
-- Handle negative runtime PM return values correctly.
-- Return IRQ_NONE when interrupt processing is skipped.
-
- drivers/media/platform/qcom/iris/iris_hfi_common.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_common.c b/drivers/media/platform/qcom/iris/iris_hfi_common.c
-index 621c66593d88..ab2ec1e75309 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_common.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_common.c
-@@ -100,10 +100,17 @@ irqreturn_t iris_hfi_isr(int irq, void *data)
- irqreturn_t iris_hfi_isr_handler(int irq, void *data)
- {
- 	struct iris_core *core = data;
-+	int ret;
- 
- 	if (!core)
- 		return IRQ_NONE;
- 
-+	if (IS_ENABLED(CONFIG_PM)) {
-+		ret = pm_runtime_get_if_active(core->dev);
-+		if (ret <= 0)
-+			return IRQ_NONE;
-+	}
-+
- 	mutex_lock(&core->lock);
- 	pm_runtime_mark_last_busy(core->dev);
- 	iris_vpu_clear_interrupt(core);
-@@ -111,6 +118,8 @@ irqreturn_t iris_hfi_isr_handler(int irq, void *data)
- 
- 	core->hfi_response_ops->hfi_response_handler(core);
- 
-+	pm_runtime_put_autosuspend(core->dev);
-+
- 	if (!iris_vpu_watchdog(core, core->intr_status))
- 		enable_irq(irq);
- 
 -- 
-2.34.1
+Best regards,
+Xilin Wu <sophon@radxa.com>
 
 
