@@ -1,188 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-111864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id fAjtE66xJmoZbQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 14:12:30 +0200
+	id FRAhN8WyJmpnbQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 14:17:09 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F1E865600F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 14:12:29 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A7D06560D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 14:17:09 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="O/T8f9x8";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111864-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111864-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=IqRNtayI;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111865-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111865-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E6D58304698A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 12:09:01 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3CE11302A4FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 12:13:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 784E4376BE2;
-	Mon,  8 Jun 2026 12:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA614376A17;
+	Mon,  8 Jun 2026 12:13:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 732644071EC;
-	Mon,  8 Jun 2026 12:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027DE2DB798;
+	Mon,  8 Jun 2026 12:13:03 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780920541; cv=none; b=knCdgfWSvmAk3cWwH8ulrpwhAtTBLF32/xxOZIo/MXQrB/4LPxToFjv9MOg9vzzSTou5pfq4Ep0bpsPoTVwiir0edgHu6OMBuBwefTxE0wY+fXtMqRoVbeD9FP31Hvx/AUlKZ/rdHeICHXkkS+xor0DQpZpgWJQYoKXAGLFtEWU=
+	t=1780920784; cv=none; b=lIMevdnrMfxN7sekSKQqXXi9QfR4FXyC+G8UksRcXTNaiX1u7BxuFSzOLE+ly0EZ7KOAV1DvqhRIe/sTlemO0N2hT66GQ2aSgAqq0luf/cQ4BI466EZfYFA5QYNAz2Not14e0IGT3u9ibLRsvHCDxWnDV3c1pXxr/YOkGaBAK5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780920541; c=relaxed/simple;
-	bh=U6Va6A7yV2h/7MYZjDOKOdZ5mjQLKjPy6MtjSG6jY+U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X6zQa7umUmXUOTnDyF7dOe4S11NWN2jq+dxaIlLak/rDmJTBDBisAg7gyRMAsABiuRIuIyzHNc628nQa/utTY/vWWFgbwI29lgXokTWrjapxlkgUhiVwC/inxClCVMXMHmKFuRR737qDy6yhQEmqspPJ9AkhOYcO6VYoa4mvV5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O/T8f9x8; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBDF1F00893;
-	Mon,  8 Jun 2026 12:08:57 +0000 (UTC)
+	s=arc-20240116; t=1780920784; c=relaxed/simple;
+	bh=5K8A+OsfCTRjfODjWt3JK8ler7QqzmPEA7wEL6Adoy8=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=jH7+Rsm3W8mZNmpY0JgIQ4JxM93y1ATls2jg1UXuT8BmhxyVp9kYmNpvpQIEcPn1scfcHuXqb+wNeO7LmN9t4HnQs+VBaQaHEHjx59r+fXGkKQTpWceR7V6SzmgDfzlKkwPCbG7cqiekk8kTzIW5INbgu2inYim9LNcS4VqVkJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IqRNtayI; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69441F00893;
+	Mon,  8 Jun 2026 12:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780920540;
-	bh=YxYxM+EQAJviJu+eUvnr7ua5tymH8nx+ZxwtxUj8Qy8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=O/T8f9x8L7WOUnpNT+6S9/GuIQvsZO0hX4tFBjMPurbNX3J7fmu/vFGUWkAl1oolU
-	 sQnLtVQKPScTCK0fetgd7lP3CgvQwUgmnDls0fzafwwUnouUzxD3uk0Dx3jBho/Bls
-	 fSWBfCarHhxZvxrzf+uUFC2PP+WSlFMG1aXSRp6a/A48fvIvGqADDkFlO7bQ9mOfoZ
-	 9QB4frZInLE4njTl68aLNbAP/qoWk9QTd27XAJxRUaFNF53prXxrJ5Klw3PPmbsw5N
-	 7LaZrEtXuX1YUDCUYn9hTD0yLedIqbOKSQFZNxPap4RbDzOWi8ppYXWVlTUqvcZzL6
-	 Dot+eriqm5gxQ==
-Date: Mon, 8 Jun 2026 13:08:55 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-Cc: Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] ASoC: qcom: sc8280xp: ASoC: qcom: sc8280xp:
- enhance machine driver for board-specific config
-Message-ID: <b09da7e1-ddc1-452b-9380-964f9ed3b733@sirena.org.uk>
-References: <20260608023011.942228-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20260608023011.942228-4-mohammad.rafi.shaik@oss.qualcomm.com>
+	s=k20260515; t=1780920783;
+	bh=b4Ibo9LmvdLKVKs3dmKbH5oM1euS0Arni0r1WyAEB3s=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=IqRNtayIiLNV4RNEfEjyBSKfa94PnYxXn2r+F9CGM6u0c54AGpz5ZB6L8PZ7ejCe/
+	 /iEQbpxnqceCfOwewtAH0nv+FujbiAU6nPyW68Tb1YQSDtem/s9EibO1DQXRkVQW1y
+	 9SI2E3M9WLxa7wHlD4Jtu8ezDiTVNc13x6Eoyw76DDPg6ukSICnZ07dK4duHKMag3p
+	 tfeHI52kU8IJfc20c2HK94unxAxQVZjSSnX4rJvqKcj+Nk8Y1GiSt2TMROTUmlWzRR
+	 Zn0QCYHW4NBssjBWIAcnNE8VhUmKyLJKQ9tPYOmbfww/5J+ejU0u3HRU1OfC27KeCY
+	 QiX/h9rjTnApg==
+From: Vinod Koul <vkoul@kernel.org>
+To: Frank Li <Frank.Li@kernel.org>, Kees Cook <kees@kernel.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Icenowy Zheng <zhengxingda@iscas.ac.cn>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20260602070344.3707256-1-zhengxingda@iscas.ac.cn>
+References: <20260602070344.3707256-1-zhengxingda@iscas.ac.cn>
+Subject: Re: [PATCH] dmaengine: qcom: gpi: set DMA_PRIVATE capability
+Message-Id: <178092078035.96550.5970255410475103714.b4-ty@kernel.org>
+Date: Mon, 08 Jun 2026 17:43:00 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eN/pICkJk3dwI3nl"
-Content-Disposition: inline
-In-Reply-To: <20260608023011.942228-4-mohammad.rafi.shaik@oss.qualcomm.com>
-X-Cookie: We've upped our standards, so up yours!
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.76 / 15.00];
-	SIGNED_PGP(-2.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-111864-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-111865-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	FORGED_RECIPIENTS(0.00)[m:mohammad.rafi.shaik@oss.qualcomm.com,m:srini@kernel.org,m:lgirdwood@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:krzk@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	FORGED_SENDER(0.00)[vkoul@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:Frank.Li@kernel.org,m:kees@kernel.org,m:krzk@kernel.org,m:quic_jseerapu@quicinc.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:zhengxingda@iscas.ac.cn,m:linux-arm-msm@vger.kernel.org,m:dmaengine@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vkoul@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,sirena.org.uk:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 9F1E865600F
+X-Rspamd-Queue-Id: 8A7D06560D3
 
 
---eN/pICkJk3dwI3nl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Tue, 02 Jun 2026 15:03:44 +0800, Icenowy Zheng wrote:
+> The GPI DMA controller is only responsible for QUP peripherals, and
+> cannot work as a general-purpose DMA accelerator.
+> 
+> Set DMA_PRIVATE capability for it.
+> 
+> This fixes error messages about GPI being shown when an async-tx
+> consumer is loaded.
+> 
+> [...]
 
-On Mon, Jun 08, 2026 at 08:00:11AM +0530, Mohammad Rafi Shaik wrote:
-> The sc8280xp machine driver is currently written with a largely
-> SoC-centric view and assumes a uniform audio topology across all boards.
+Applied, thanks!
 
-> +static inline int sc8280xp_get_mclk_freq(struct snd_pcm_hw_params *params)
-> +{
-> +	int rate = params_rate(params);
-> +
-> +	switch (rate) {
-> +	case SNDRV_PCM_RATE_11025:
-> +	case SNDRV_PCM_RATE_44100:
-> +	case SNDRV_PCM_RATE_88200:
+[1/1] dmaengine: qcom: gpi: set DMA_PRIVATE capability
+      commit: 4e351f408743354d54ee1af5193fc78234f2044e
 
-rate is in Hz but these are bitmasks.
+Best regards,
+-- 
+~Vinod
 
-> +		return I2S_MCLK_RATE(44100);
-> +	default:
-> +		break;
-> +	}
 
-The function only works since it ignores invalid values.
-
-> +static int sc8280xp_snd_hw_params(struct snd_pcm_substream *substream,
-> +				  struct snd_pcm_hw_params *params)
-> +{
-
-> +
-> +		if (data->snd_soc_common_priv->codec_dai_fmt)
-> +			snd_soc_dai_set_fmt(codec_dai,
-> +					    data->snd_soc_common_priv->codec_dai_fmt);
-
-Should we error check the functions we call here?
-
-> +		if (data->snd_soc_common_priv->mi2s_mclk_enable)
-> +			snd_soc_dai_set_sysclk(cpu_dai,
-> +					       LPAIF_MI2S_MCLK, mclk_freq,
-> +					       SND_SOC_CLOCK_IN);
-> +
-> +		if (data->snd_soc_common_priv->mi2s_bclk_enable)
-> +			snd_soc_dai_set_sysclk(cpu_dai,
-> +					       LPAIF_MI2S_BCLK, bclk_freq,
-> +					       SND_SOC_CLOCK_IN);
-
-Is SND_SOC_CLK_IN right here?  The flag sounds like it's enabling the
-clock on the DAI but this is configuring the DAI to consume a clock.
-
-> +		if (data->snd_soc_common_priv->codec_sysclk_set)
-> +			snd_soc_dai_set_sysclk(cpu_dai,
-> +					       0, mclk_freq,
-> +					       SND_SOC_CLOCK_IN);
-
-This is configuring the CPU not CODEC.
-
---eN/pICkJk3dwI3nl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmomsNYACgkQJNaLcl1U
-h9DZNQf/aNqyWtGZPLMioRfjby2cvex5oZnhS/gRqvU4XV0jDE4yNjhQtDEL3pZM
-ExX51L5UKEz1Xa1G5NIrrGNj25DMS+8hky/A6eDyRdIiomaPbYA7xx41YuUDvMQs
-akRkyl1etIay31Wi6x1aeKmSj5ONT000Bo9o+G5XPrzF5wi2Qhvml9kKNtMzPYup
-PLpicmdt7jxMbhejjXY3YDylx9swflbJ+nMMs4Ug6f0PS8vHrL3DmLyaf/HKuzFw
-rgR/bj2fhcrPDzjhnJ3epDeSUw+EFBRxSrN6+hjps6glbt6NPB5UZkCBFn8WhcEs
-ZOR/OQLnOxREM99nm/5Dr0F4o72rxQ==
-=3rUg
------END PGP SIGNATURE-----
-
---eN/pICkJk3dwI3nl--
 
