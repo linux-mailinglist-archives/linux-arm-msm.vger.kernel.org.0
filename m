@@ -1,245 +1,345 @@
-Return-Path: <linux-arm-msm+bounces-111798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-111803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id qQWJMAiZJmq/ZQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-111798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 12:27:20 +0200
+	id WJ32IIiZJmr2ZQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-111803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 12:29:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3282E6550FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 12:27:20 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9B9365516E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 08 Jun 2026 12:29:27 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=lsFgojfe;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=PtegV+AV;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111798-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111798-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=collabora.com header.s=mail header.b=X8N8jMik;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-111803-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-111803-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=collabora.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id DA9AA30CDCD2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 10:12:45 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C1A37308D6BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Jun 2026 10:15:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAF733CFF41;
-	Mon,  8 Jun 2026 10:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D8FD3D7A01;
+	Mon,  8 Jun 2026 10:10:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBA43CF1E6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Jun 2026 10:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F97C3D5671;
+	Mon,  8 Jun 2026 10:10:49 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780913394; cv=none; b=Sa4oveIo23xKTzGyew1lTVsOj36vlrCBhIjai3VP4ySs4S0Ccc9XgrdPVnWFGzSOoeqa3oBxD+nFxsMTw6QIxVTzXi9sO1cm1QkTKEFeXWDMmewVxr4M5YzzheR6c3STubKFc9tqzEelJz+OOZUNDhaVrQOufbpwlD5Y+LSm9xs=
+	t=1780913451; cv=none; b=iB0aa+SKsyUy2lo2exPoCGN9tNLlmn+T1E3OMFWvINwztAu+ZlGGz0Fid/mWIjRW07nFkxhKDgdoK/LKRr1M3h8UyjOi/BPptleMbg14dXMRRxgLPLlJSo7fBpQ3jVN8AM4BP86rA1dgko+CLIALqlYi1wihyAn0BJ3GaMxpkW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780913394; c=relaxed/simple;
-	bh=8xtTBTXIDf7MfGw8Vi3PfMhZOCnYmOz3QGd5uTaJyVg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X3Jl6oHRMzQeNwJv80y4vsfuOfgorvnT+6f6iUn4FMlKYlEB03+zM9SFcyC2ejIIjAHYq1KcUq09fcxIfhwMOxPBIF+UoqLlsvafYg2vw+e8dIgl6Sdh9umvICc2yaED9kaSNhb12xjqC0JidGh4v5scw54+ieR9fmPJd+EvVBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lsFgojfe; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PtegV+AV; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 658A2xqe2882026
-	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Jun 2026 10:09:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6htNFMDsDnIKOIJ7Pg+h6BNVxf4do+RHck9LTOYbZTY=; b=lsFgojfeX1Y5tPxD
-	YFrDw6WpPPBleXuQ1hDOnq7b1uK6UnEdPTgVe0kQzOKGF0JPXtjsFHXLQrw6Xg1k
-	mnslkS6GXotP8/8OUKYcAxwLzDOzZ4LBFTMRL4CqPMTZzLi5g7IrDvdxKT5NliEf
-	6sfWRVmvjE4m0gqxxleDPq7IMRelCe1H09puiw+TftdALY2xj6W+UgyL+buvDKo0
-	4chm68bVosJY6L85fi5ou5zBRrt3wb6o22gaPz9d7C9MiV2BRDiEt64mETLP7q7E
-	VMMlHfGtNWPm9ZR5DbnGEdFiUZ1cSWqAn/RaG1X23sCkhNvJZcFRLhU4eqFjwhGW
-	SCv5bg==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4enun400yw-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2026 10:09:51 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-84245e2bb00so3750904b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Jun 2026 03:09:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780913391; x=1781518191; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6htNFMDsDnIKOIJ7Pg+h6BNVxf4do+RHck9LTOYbZTY=;
-        b=PtegV+AVPdpE0LLPiEmOCOAE3HwAwPSvFzSNGVBRR6xgM/yxTW91bLP3eaDiSAi0G5
-         fOoUEEgs/ZdkO7k9wWSY190ZfuH4LJyLxC6+I5mLYerELhBHRBNb3PDkXUj301+K4gDG
-         Q+7jMgVeM/ZGsGYapI+0pduEog2j57QEvnCQmjo0l+xhfphIp8ombQtobjdE4Mxu2B45
-         nLTIRhfY8c3Re04QAmTVzeRaSSJcYhs0l1lFm+LZNTBlCd5nK3XPR2TxkjtZCki3b4Ll
-         CGgxCHO4Hfilxh8+7xho7h1twuu26sW6iBJra4EyJffB9Qikk7FYj2zvnAGym1Bl8b8J
-         x3IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780913391; x=1781518191;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6htNFMDsDnIKOIJ7Pg+h6BNVxf4do+RHck9LTOYbZTY=;
-        b=FO7CQ/sCUdbsBDymE9u6siSG44l+aJ/lTBUlzPsnQDhNgA6dcGuS6YUcW9c/ov+ris
-         ZSy0D4PsJeZisRBqTDsr6tpVmyZKRjzJjOEqersiM8wuxMQchZroRIZruQmxPkSlLKOu
-         s5tm8TBXbYoYc4s6yjtFcKamD5L+NL3Vm9CCa8hAvasd0Y/dizDpMlyD4l7LpmkFxtzJ
-         g4XIrtl6+U+AiPIVavWb+AsPCRnJr+60azZfcedQm9Wp3jmsRZAqpXzrgVKrY8zdyge9
-         G6SclC5E/2j5cgOPHLI75USGkWTb/p1CVfqaDzV0NjrZRKCm5v4ZwTzb7K4elOyntpQG
-         VOHA==
-X-Forwarded-Encrypted: i=1; AFNElJ/+o7KcwiRofgcQfOInmsCElm/JPUvMeURa/dKGSRikLalPzU6acpeAO6W+koWvyjy5dz3QukVjjLBHbEPt@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy39l5/HuvUqhQ93zXm64p3Gy87V0r2ca9pJc/RGHn1IivuXAEg
-	PMrRuTltq/l0z8arPzpSYbXi5bSW3XWstx3ydvz2xEAMUWqPvfcY1CxUY9Bob8+e2cCNcBJXI67
-	fQCmPQWR1/Jq8hcZWHWaPhX95f8OgpT3ClJzxYtWL50xd1BOFLHgJDEoT+JDP9ye5TKbz
-X-Gm-Gg: Acq92OHDJI+Ghu0+ysgZR71FzbnNTd1z4L/vSRUWIVRG34+HoeHJecEH2chk50fOhWE
-	USIhGejS5/W8a0x8JrMltzt40JOLgmWPINd9YZtdNrLPtCzTXFxlJmB71I48NRtr5+lkG/E+Tst
-	r/yZ2x9QlrIZli6mvY0CqgfRCNFalaupeFQ0JlcTi087fcpY3V0UgZu+2kJ6PuCLy69dQ96j7JS
-	zceTq6nDKA9TfmiMbZ1QWM3/lPcoC2zMgYUieKSk5wgvKQKuPfdElfRtu50puymjql+G4JcOBuz
-	VuVy/gAIwc3PE26/BtYuwVllFQqIatehM4QmHaxzH60StLE/82g/SbTw7cSUehxejy7YXmkaKQY
-	ZXt+hE7Q4Fs3/Yc/PTHAqPKYMjTPpYCaks6uAHMv8rkzLLfZ8Gns3ChweDry6yHE=
-X-Received: by 2002:a05:6a00:1c96:b0:82f:6e7:1527 with SMTP id d2e1a72fcca58-842b0f516b6mr13611986b3a.23.1780913390687;
-        Mon, 08 Jun 2026 03:09:50 -0700 (PDT)
-X-Received: by 2002:a05:6a00:1c96:b0:82f:6e7:1527 with SMTP id d2e1a72fcca58-842b0f516b6mr13611953b3a.23.1780913390128;
-        Mon, 08 Jun 2026 03:09:50 -0700 (PDT)
-Received: from [10.217.222.59] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84282372a16sm21072093b3a.18.2026.06.08.03.09.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Jun 2026 03:09:49 -0700 (PDT)
-Message-ID: <55039d7e-34df-4f89-8188-fcb45fdea538@oss.qualcomm.com>
-Date: Mon, 8 Jun 2026 15:39:43 +0530
+	s=arc-20240116; t=1780913451; c=relaxed/simple;
+	bh=HP73TMOo/xb49TOUi08knc6WOZuxameTKnDuIRFDeYM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=i81eW0AaC7ndRO9vKkc2blpjEVogPKp2Qgh06ZOEG+b+3aglb/7QNfHpARmHSaWTyCXFpL2r8tQFX4fmvcnPYNHfu7KTv0fzPs0NWpbLb8glYVudKTypoKINSJHhfmKcRChPSdBYOeI5u6lZJnlkKMeddeCUdIU3UcmxH6nEmCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=X8N8jMik; arc=none smtp.client-ip=148.251.105.195
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1780913447;
+	bh=HP73TMOo/xb49TOUi08knc6WOZuxameTKnDuIRFDeYM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=X8N8jMikTQc2LzMzeck7QgFuMbomlUscdYdvs0h2CxMn+EJhFt2rXcU9ad114ml6+
+	 Gp6EMbxcxAHpajaaNAPPhSHQNmdFdx3oLLMNZ7nhPztUSNxTcqG8DLGQsKQAEx1jJy
+	 nKvIUNeiv11faUpw0Ld3SD7s9gfZI4UsY7UmoZiFZKb/MMNWlKK1scvcIQO/I30G6u
+	 jGnYSZ2DmSwXvv7xViHf+HTKFalSGfv2inKU/wBz4e6LmjkGrIxfQlXHqEX9YC4adq
+	 GbpNjGFODyC0xYZtLU0WelA9EiBHjIKyAcZ8EI/x0QIitynM5ojs8RsNkTtgJFHjmt
+	 lRUt/TFZ2LQgw==
+Received: from IcarusMOD.eternityproject.eu (unknown [100.64.1.21])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id C6F9F17E0DE1;
+	Mon,  8 Jun 2026 12:10:46 +0200 (CEST)
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+To: jic23@kernel.org
+Cc: dlechner@baylibre.com,
+	nuno.sa@analog.com,
+	andy@kernel.org,
+	arnd@arndb.de,
+	gregkh@linuxfoundation.org,
+	srini@kernel.org,
+	vkoul@kernel.org,
+	neil.armstrong@linaro.org,
+	sre@kernel.org,
+	sboyd@kernel.org,
+	angelogioacchino.delregno@collabora.com,
+	krzk@kernel.org,
+	dmitry.baryshkov@oss.qualcomm.com,
+	quic_wcheng@quicinc.com,
+	melody.olvera@oss.qualcomm.com,
+	quic_nsekar@quicinc.com,
+	ivo.ivanov.ivanov1@gmail.com,
+	abelvesa@kernel.org,
+	luca.weiss@fairphone.com,
+	konrad.dybcio@oss.qualcomm.com,
+	mitltlatltl@gmail.com,
+	krishna.kurapati@oss.qualcomm.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-iio@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-pm@vger.kernel.org,
+	kernel@collabora.com,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>
+Subject: [PATCH v9 04/10] spmi: Implement spmi_subdevice_alloc_and_add() and devm variant
+Date: Mon,  8 Jun 2026 12:09:43 +0200
+Message-ID: <20260608100949.36309-5-angelogioacchino.delregno@collabora.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260608100949.36309-1-angelogioacchino.delregno@collabora.com>
+References: <20260608100949.36309-1-angelogioacchino.delregno@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: shikra: Add ICE, TRNG and QCE nodes
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Frank Li <Frank.Li@kernel.org>, Andy Gross <agross@kernel.org>,
-        Harshal Dev <harshal.dev@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dmaengine@vger.kernel.org
-References: <20260521-shikra_crypto_changse-v1-0-0154cc9cc0de@oss.qualcomm.com>
- <20260521-shikra_crypto_changse-v1-5-0154cc9cc0de@oss.qualcomm.com>
- <enovafjkiuzr4bciu6bu6hh7h56wvnaq5fh7f46m4h7browyrd@7huwa5egaqaq>
-Content-Language: en-US
-From: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-In-Reply-To: <enovafjkiuzr4bciu6bu6hh7h56wvnaq5fh7f46m4h7browyrd@7huwa5egaqaq>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA4MDA5MyBTYWx0ZWRfXyOe25p4XN7re
- 8ee6hlB8Sn767TEU+iniskPxWOlZeRFJWKpt7+ztoUcvdVT04ktGIhl8A2wx6UGxz8ltxfbgrjJ
- 3Btdi1Mp7pIySpAahXkWTi2eDIW8f8+fCJL+pzlQ5BI4DNrIqrEgDqsP8xLSfLUmUkye9OCuPy0
- uo0Wed+2/jbsUkzjIGQk7I5g9FJA8OUXgM0E26POZoAiVTp2ZNalr8YPeRxAqHtOcA8Z9BO6j6a
- 7rEqJYQ6jLGdXxt0XRIuRtA0KC+DxZCLly8acIL+NgY9e7izziL2Hl3pgsaD9ZiGNtFqlDW3tQG
- GAYpTjONr2whQDzMxo1W8y1nPRPOh7HmEJU4GcXFQPTcFGbQMOwZQL4La030Ms5yrkiTp2ip3Nn
- +Q5fqFM5bT/92DzKJ9S3ABrKLtizw+W1gp1ZL+o5ZrZ/OpXrKHl4xMDIDX7HE+DHKMrHsYMxWlR
- b6y8HiT5Yc7g7KtyuqQ==
-X-Proofpoint-ORIG-GUID: iOwmTMog1J1wjShE6NCOVfvaFjLAo6tZ
-X-Authority-Analysis: v=2.4 cv=ZY4t8MVA c=1 sm=1 tr=0 ts=6a2694ef cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=Wdmx7GGFe5ciFpWgkT8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-GUID: iOwmTMog1J1wjShE6NCOVfvaFjLAo6tZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-08_02,2026-06-05_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 adultscore=0 priorityscore=1501 impostorscore=0
- lowpriorityscore=0 spamscore=0 malwarescore=0 bulkscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606080093
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
+	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	TAGGED_FROM(0.00)[bounces-111798-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-111803-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:konradybcio@kernel.org,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:vkoul@kernel.org,m:thara.gopinath@gmail.com,m:Frank.Li@kernel.org,m:agross@kernel.org,m:harshal.dev@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmaengine@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:jic23@kernel.org,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:srini@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:sre@kernel.org,m:sboyd@kernel.org,m:angelogioacchino.delregno@collabora.com,m:krzk@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:quic_wcheng@quicinc.com,m:melody.olvera@oss.qualcomm.com,m:quic_nsekar@quicinc.com,m:ivo.ivanov.ivanov1@gmail.com,m:abelvesa@kernel.org,m:luca.weiss@fairphone.com,m:konrad.dybcio@oss.qualcomm.com,m:mitltlatltl@gmail.com,m:krishna.kurapati@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-phy@lists.infradead.org,m:linux-pm@vger.kernel.org,m:kernel@collabora.com,m:jonathan.cameron@huawei.com,m:andriy.shevchenko@intel.com,m:ivoivanovivanov1@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[angelogioacchino.delregno@collabora.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[31];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[kuldeep.singh@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[gondor.apana.org.au,davemloft.net,kernel.org,gmail.com,oss.qualcomm.com,vger.kernel.org];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,oss.qualcomm.com:dkim,qualcomm.com:dkim];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_CC(0.00)[baylibre.com,analog.com,kernel.org,arndb.de,linuxfoundation.org,linaro.org,collabora.com,oss.qualcomm.com,quicinc.com,gmail.com,fairphone.com,vger.kernel.org,lists.infradead.org,huawei.com,intel.com];
+	DKIM_TRACE(0.00)[collabora.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kuldeep.singh@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[angelogioacchino.delregno@collabora.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,vger.kernel.org:from_smtp,intel.com:email,huawei.com:email,linaro.org:email,collabora.com:mid,collabora.com:dkim,collabora.com:from_mime,collabora.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 3282E6550FD
+X-Rspamd-Queue-Id: E9B9365516E
 
->> +		cryptobam: dma-controller@1b04000 {
->> +			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
->> +			reg = <0x0 0x01b04000 0x0 0x24000>;
->> +			interrupts = <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH 0>;
->> +			#dma-cells = <1>;
->> +			iommus = <&apps_smmu 0x84 0x0011>,
->> +				 <&apps_smmu 0x86 0x0011>,
->> +				 <&apps_smmu 0x92 0x0>,
->> +				 <&apps_smmu 0x94 0x0011>,
-> 
-> 0x84 / 0x0011 is exactly the same as 0x94 / 0x0011. Likewise 0x96
-> duplicates 0x86. Drop the duplicate IOMMU specifiers or explain in the
-> commit message why they are required.
+Some devices connected over the SPMI bus may be big, in the sense
+that those may be a complex of devices managed by a single chip
+over the SPMI bus, reachable through a single SID.
 
-+Konrad too as there was same discussion in past too.
+Add new functions aimed at managing sub-devices of a SPMI device
+spmi_subdevice_alloc_and_add() and a spmi_subdevice_remove() for
+adding a new subdevice and removing it respectively, and also
+add their devm_* variants.
 
-0x84/0x94 and 0x86/0x96 pairs are actually different even though
-resulting sid is same.
-Let me explain more.
+The need for such functions comes from the existence of	those
+complex Power Management ICs (PMICs), which feature one or many
+sub-devices, in some cases with these being even addressable on
+the chip in form of SPMI register ranges.
 
-From sid sheet,
-Description	   SID (hex)	MASK	RESULT_SID	S1 CB
-CE descriptors     0x84, 0x85	0x11	0x0084		S1_CRYPTO_KERNEL
-(for data pipe 4/5)
-CE descriptors	   0x86, 0x87	0x11	0x0086		S1_CRYPTO_USER
-(for data pipe 6/7)
-CE data pipe 4/5   0x94, 0x95	0x11	0x84(same)	S1_CRYPTO_KERNEL
-CE data pipe 6/7   0x96, 0x97	0x11	0x86(same)	S1_CRYPTO_USER
+Examples of those devices can be found in both Qualcomm platforms
+with their PMICs having PON, RTC, SDAM, GPIO controller, and other
+sub-devices, and in newer MediaTek platforms showing similar HW
+features and a similar layout with those also having many subdevs.
 
-Qualcomm BAM DMA engine driving QCE has 2 major components here:
-* Descriptor pipe (0x84/0x86): This carries BAM command descriptors i,e
-key, algorithm, length etc. which tell crypto engine what to do.
-* Data pipe (0x94/0x96): This carries the actual data payload — the
-plaintext/ciphertext buffers being read/written.
+Also, instead of generally exporting symbols, export them with a
+new "SPMI" namespace: all users will have to import this namespace
+to make use of the newly introduced exports.
 
-The descriptor(SID 0x84) basically contain IOVA address that points to
-the data buffer. That same IOVA address is then used by the data pipe
-(SID 0x94) to actually DMA the data.
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+Acked-by: Stephen Boyd <sboyd@kernel.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+---
+ drivers/spmi/spmi-devres.c | 24 ++++++++++++
+ drivers/spmi/spmi.c        | 78 ++++++++++++++++++++++++++++++++++++++
+ include/linux/spmi.h       | 16 ++++++++
+ 3 files changed, 118 insertions(+)
 
-Since, Crypto engine descriptor and crypto engine data are part of same
-crypto operation and with the limited number of context banks, smmu
-provides an optimization to logically group and resolve them to same
-context bank/page tables.
-
-Pipe 4/5 contain 2 SID(0x84/0x94) for kernel and pipe 6/7 contain
-sid(0x86/0x96) for user. Pipe 4/5 doesn't touch pipe6/7 buffers so both
-are safe.
-
+diff --git a/drivers/spmi/spmi-devres.c b/drivers/spmi/spmi-devres.c
+index 62c4b3f24d06..c3e889fe1b6e 100644
+--- a/drivers/spmi/spmi-devres.c
++++ b/drivers/spmi/spmi-devres.c
+@@ -60,5 +60,29 @@ int devm_spmi_controller_add(struct device *parent, struct spmi_controller *ctrl
+ }
+ EXPORT_SYMBOL_GPL(devm_spmi_controller_add);
+ 
++static void devm_spmi_subdevice_remove(void *sub_sdev)
++{
++	spmi_subdevice_remove(sub_sdev);
++}
++
++struct spmi_subdevice *devm_spmi_subdevice_alloc_and_add(struct device *dev,
++							 struct spmi_device *sparent)
++{
++	struct spmi_subdevice *sub_sdev;
++	int ret;
++
++	sub_sdev = spmi_subdevice_alloc_and_add(sparent);
++	if (IS_ERR(sub_sdev))
++		return sub_sdev;
++
++	ret = devm_add_action_or_reset(dev, devm_spmi_subdevice_remove, sub_sdev);
++	if (ret)
++		return ERR_PTR(ret);
++
++	return sub_sdev;
++}
++EXPORT_SYMBOL_NS_GPL(devm_spmi_subdevice_alloc_and_add, "SPMI");
++
+ MODULE_LICENSE("GPL");
+ MODULE_DESCRIPTION("SPMI devres helpers");
++MODULE_IMPORT_NS("SPMI");
+diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+index 0f32f099b0ce..0d587248665e 100644
+--- a/drivers/spmi/spmi.c
++++ b/drivers/spmi/spmi.c
+@@ -19,6 +19,7 @@
+ 
+ static bool is_registered;
+ static DEFINE_IDA(ctrl_ida);
++static DEFINE_IDA(spmi_subdevice_ida);
+ 
+ static void spmi_dev_release(struct device *dev)
+ {
+@@ -31,6 +32,19 @@ static const struct device_type spmi_dev_type = {
+ 	.release	= spmi_dev_release,
+ };
+ 
++static void spmi_subdev_release(struct device *dev)
++{
++	struct spmi_device *sdev = to_spmi_device(dev);
++	struct spmi_subdevice *sub_sdev = container_of(sdev, struct spmi_subdevice, sdev);
++
++	ida_free(&spmi_subdevice_ida, sub_sdev->devid);
++	kfree(sub_sdev);
++}
++
++static const struct device_type spmi_subdev_type = {
++	.release	= spmi_subdev_release,
++};
++
+ static void spmi_ctrl_release(struct device *dev)
+ {
+ 	struct spmi_controller *ctrl = to_spmi_controller(dev);
+@@ -87,6 +101,18 @@ void spmi_device_remove(struct spmi_device *sdev)
+ }
+ EXPORT_SYMBOL_GPL(spmi_device_remove);
+ 
++/**
++ * spmi_subdevice_remove() - Remove an SPMI subdevice
++ * @sub_sdev:	spmi_device to be removed
++ */
++void spmi_subdevice_remove(struct spmi_subdevice *sub_sdev)
++{
++	struct spmi_device *sdev = &sub_sdev->sdev;
++
++	device_unregister(&sdev->dev);
++}
++EXPORT_SYMBOL_NS_GPL(spmi_subdevice_remove, "SPMI");
++
+ static inline int
+ spmi_cmd(struct spmi_controller *ctrl, u8 opcode, u8 sid)
+ {
+@@ -428,6 +454,58 @@ struct spmi_device *spmi_device_alloc(struct spmi_controller *ctrl)
+ }
+ EXPORT_SYMBOL_GPL(spmi_device_alloc);
+ 
++/**
++ * spmi_subdevice_alloc_and_add(): Allocate and add a new SPMI sub-device
++ * @sparent:	SPMI parent device with previously registered SPMI controller
++ *
++ * Returns:
++ * Pointer to newly allocated SPMI sub-device for success or error pointer.
++ */
++struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent)
++{
++	struct spmi_subdevice *sub_sdev;
++	struct spmi_device *sdev;
++	int ret;
++
++	sub_sdev = kzalloc(sizeof(*sub_sdev), GFP_KERNEL);
++	if (!sub_sdev)
++		return ERR_PTR(-ENOMEM);
++
++	sdev = &sub_sdev->sdev;
++	sdev->ctrl = sparent->ctrl;
++	sdev->usid = sparent->usid;
++
++	ret = ida_alloc(&spmi_subdevice_ida, GFP_KERNEL);
++	if (ret < 0) {
++		kfree(sub_sdev);
++		return ERR_PTR(ret);
++	}
++	sub_sdev->devid = ret;
++
++	device_initialize(&sdev->dev);
++	sdev->dev.parent = &sparent->dev;
++	sdev->dev.bus = &spmi_bus_type;
++	sdev->dev.type = &spmi_subdev_type;
++
++	ret = dev_set_name(&sdev->dev, "%u-%02x.%d.auto",
++			   sdev->ctrl->nr, sdev->usid, sub_sdev->devid);
++	if (ret)
++		goto err_put_dev;
++
++	ret = device_add(&sdev->dev);
++	if (ret) {
++		dev_err(&sdev->dev, "Can't add device, status %pe\n", ERR_PTR(ret));
++		goto err_put_dev;
++	}
++
++	return sub_sdev;
++
++err_put_dev:
++	put_device(&sdev->dev);
++	return ERR_PTR(ret);
++}
++EXPORT_SYMBOL_NS_GPL(spmi_subdevice_alloc_and_add, "SPMI");
++
+ /**
+  * spmi_controller_alloc() - Allocate a new SPMI controller
+  * @parent:	parent device
+diff --git a/include/linux/spmi.h b/include/linux/spmi.h
+index 4eb9564a7fb3..a78a8924b2ac 100644
+--- a/include/linux/spmi.h
++++ b/include/linux/spmi.h
+@@ -69,6 +69,22 @@ int spmi_device_add(struct spmi_device *sdev);
+ 
+ void spmi_device_remove(struct spmi_device *sdev);
+ 
++/**
++ * struct spmi_subdevice - Basic representation of an SPMI sub-device
++ * @sdev:	Sub-device representation of an SPMI device
++ * @devid:	Platform Device ID of an SPMI sub-device
++ */
++struct spmi_subdevice {
++	struct spmi_device	sdev;
++	unsigned int		devid;
++};
++
++struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent);
++void spmi_subdevice_remove(struct spmi_subdevice *sdev);
++
++struct spmi_subdevice *devm_spmi_subdevice_alloc_and_add(struct device *dev,
++							 struct spmi_device *sparent);
++
+ /**
+  * struct spmi_controller - interface to the SPMI master controller
+  * @dev:	Driver model representation of the device.
 -- 
-Regards
-Kuldeep
+2.54.0
 
 
