@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-112251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id hjkHH+9BKGqqBAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 18:40:15 +0200
+	id fyusExZBKGpqBAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 18:36:38 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3F396627E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 18:40:14 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2850C662738
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 18:36:38 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=ara+ebIc;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112251-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112251-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b="Sz/6mxB3";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112252-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112252-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1CDBC31D419E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 16:24:25 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8A1AB3089E93
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 16:24:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F06513B6BF7;
-	Tue,  9 Jun 2026 16:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B3FE41C2FF;
+	Tue,  9 Jun 2026 16:23:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56CE3F8893
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 16:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C8A40683E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 16:23:18 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781022198; cv=none; b=SsdtDCjOH7eA6KGp+d2cfBt/Tirb3Om9SmrAOv2hOGOVakGEFbKC2aCUlE5ZUhCxJK7oRQr0EdkpgNe07hXV7D7JS/daWstrJsh6OWuJRp0/yGUT8bMgD4HM4soCTMlP+h76xZ8/3Tf2O4R3GMRBimrYujgrToShK63terdkH8o=
+	t=1781022199; cv=none; b=IUg5LLes9HyRlgckx50OlYeLlgsVtnmIDrgyCTxxrIXmHhYvM0jLX0mR5Eh1LL6BZKKOBbUeGwei5h+zmdSCNnMkjMIQnl4DGjWd5jYeHEOBHeImmP8JQZBUDu66q8agfxCPwYyPnMHKz8hxczQYpIaj8MdaRuWtUMmbwWTAacw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781022198; c=relaxed/simple;
-	bh=5RJmdsszUwLf4aDp9kqAY1nEgmpwmhr4v8CwdairNGQ=;
+	s=arc-20240116; t=1781022199; c=relaxed/simple;
+	bh=6vUCGaF63VdoccYiTvUVMsMgGqYjEw34fYPFFOoTrN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hw2YGrIIt3rsleO4Pq+XJBuWUsSSeBR7oFAifGhy++K7PQI27NJacIjD3+zdZxWNDilfiqiPbgEzB2aP7Hb7Rft+b3rfzl6SWcZ+XlKvNJ9Q8YRbhx8OTHjnZABG+J8WJxUfq2ucPqbgracEHi1XHow6IcaE2mM5p/jbRNispfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ara+ebIc; arc=none smtp.client-ip=209.85.222.172
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-91574384cc2so658273985a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 09:23:16 -0700 (PDT)
+	 MIME-Version; b=NlrNqSC5Umf3ro2kx1l0qCST3byP+Vz/Wnt/NoJu/qjzXkeytytDTM1K0TZAkbuT6qR6KfNwdn6M6ws428NAz0ctmyPt/ODgWvzKYMGDiavLySj1gcnGS0Co6JYyz/rp17YK3Oe0LlShrznHqlckOTYF1iA5hsgnzoHcAmEYpLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sz/6mxB3; arc=none smtp.client-ip=209.85.219.45
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-8ccd1f57b32so59745836d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 09:23:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781022196; x=1781626996; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781022197; x=1781626997; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gbMh7js/t00A2OiKknYuR6CQAso5EMSHmQD8+7uhBQM=;
-        b=ara+ebIchabtqoFhkWbIlvVBzv0Qq235kwuKx1CET1E7u7LPdoC7RTFJb8BZqBlih9
-         l5ZW9bmd5UPrGpaWOH9olPsUhTW27m5CQhBEigDEowjpfVHNzKAeYo6x1UXPtmfXXShH
-         +KMjexyks9k6fCQHdud4uL33Q3Hm5QHS8RoSmmODQCOCQ2oCMBbW3r504AEsQM/qE2k2
-         gpyrZIX9H7yXdOH0q0KrafeLSHgJ87Fy0BZnvVSwnjpER7Ea4rpVAc7MBw5Biepgi8Sr
-         EKRMZWqP+P12k6VAMp8B9v46J3Ol5A0LvI8tyKQqyHh2pdqM7062xhbI61QpCfLvpH0J
-         yprA==
+        bh=RrCuZ9cncdLFw2IWDk3WqZwfRxngglcAZOkJxY5zifM=;
+        b=Sz/6mxB3/Aiwn+RWo8hr6rUsqZJ2+ZpqKinuccRffSvyPHIMkODGpCnUmjfj549Tcg
+         qFF1pzATk95bQBL5qFUmspDeSvB2+PK9qnwvD974Ofb6q3JsXguSybP67nZLLPLEvrR9
+         VCbSz+k5jb1ZCBzdFXWQUejsZB5F85R6d4QNtPPKjvIN8auTzmoXeBNUG8wj6vEqGgEw
+         NWpU1hoRzedvFFQ55sjY6Q6cQtysVRbPTR3z/Qe8Dx8Dk/NpeTtIg7fKEQ6/KCOoOHOO
+         yqodtPigILFSImSuMmTNxvuyUZLY1UyZ3UtyTN0AvgfGWvCWERATJ2+FESLm3MCqvLkx
+         lgkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781022196; x=1781626996;
+        d=1e100.net; s=20251104; t=1781022197; x=1781626997;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=gbMh7js/t00A2OiKknYuR6CQAso5EMSHmQD8+7uhBQM=;
-        b=gLKoUFsWs0UEVoKE+Urkt8zIIf/eiQ7V7cjJYf574BkyNvqfb0BDPPBd7T6eLJO2A3
-         sci73RAE7/f6IxEoW8vjvPdFGEiRq5u7VKq1AliBmHXYC8YiloVSocTBbSVq/4FfSs1v
-         urqyJKf6CLKW/zbd6WIsgh/lBqVFHGSvObvFjs2o+qSKEjycCwHt1VgJwcq8yPdt9igm
-         VZX6Kn7U8Lzc8tzC56rgP++9RiySX0ShOfC4zhT62rT05FiosgqGPd2aNbnSeqAOoFGD
-         GHknkw8NzgEsNRcp93K9OE9RKAfFTVodfzGmH1sia55qDEOHJhxG9vudCggOUGaJtOzI
-         wgGw==
-X-Forwarded-Encrypted: i=1; AFNElJ/TPqbsKX/W4nlvy55fojvm1LpRoTmSndhhFignF+sqcwnyHBU6e24U/pVdtskuGjWkIZpMnX1fL4hsPOXh@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywq7yE/l8lZFg3+z2Oi69JOFUpc3Oi0A49ioVf4PZu4bFMw7MZU
-	Na8GnTwDJ2OTsREmJFJUrPTSal2sSnXu1eZcPmJa4s7LEofgCcT+Q05W
-X-Gm-Gg: Acq92OED6TxD0xaWZR+ydTHSEXytxzyBoRmH+FYTLA5uDC+vJJ2KSjiJ0UD/tAe+YSh
-	u93zCpGSF9lYAdPElFVqNuGf+2+g5WqpDgfQ3RiJvVaoYd9KsY9MwgyvJrEUcxQDsZ0GENJaZcs
-	gjWbXFw5FxteLfRWLzvjAJcUZVomki8VheXcsFWm2Gi5e5G0E1fK7FLG4n6MAnC6bW5Ge/711EW
-	aAB6rRtnzKn2IWWwuni1tPhTm/vQNs8G/l9zGr4+Nbp8/DorInbPrFC3rCLPCg+6FbNqQU1lBuc
-	VRAxHEDc/JBhm41YG9HTc6KYV7Bvfmi0Itsoy9QngBO5e3cXhy6XlDY/RdrxSNSQKaeQzQW1a5i
-	uagpsTjDkhmWqMI4aRJ3WDscnvEjAcJ44f3Vgi8wblLYtJeUA5psNPaWl5bom+sCB1KLI2xTdtM
-	O5ynjjQ1wZnsAsYxritCdokyEtwzt5CO1KHfsj9BTQmupqlYEW
-X-Received: by 2002:a05:620a:468f:b0:915:9fba:8794 with SMTP id af79cd13be357-915e822bc64mr519249685a.6.1781022195649;
-        Tue, 09 Jun 2026 09:23:15 -0700 (PDT)
+        bh=RrCuZ9cncdLFw2IWDk3WqZwfRxngglcAZOkJxY5zifM=;
+        b=rESZTwFMOrkHWukI6TyXhl7wx+tGJV81OLDeHQAqGN6NjiUeOF2Fgnyf88fKPQrBlC
+         bV7JEHKgiy1++WhDNegFou6H1Psjs/oo6sqVDwjrVLmDxkWO1fzEtGct1NFtgXXHU2X1
+         bZykxHy1ZXvRmr2tn2BlaaA8VffUdRGfiL8jbr4ZG6YBHnWY6E3LNfLIc16bknx8kRL5
+         1VkeV6WSq42t7PK4RqMmueJyFu4hac/TtQu0VCgcvsaO1BmL0UATe9+quzScnCzcW3rl
+         H440y04lrdvw79zJc4+8OAIdmDRw3PdsawBstIer7TK/9rFTbsk71lyaENmR17kAIyRu
+         uo/A==
+X-Forwarded-Encrypted: i=1; AFNElJ87EfHk22yXLuMilksz9ZiAfghOS+CRPMDHh1Y9KrLDn37GZslAY3WGTes1UzUi57imo13bM6hUwMZxxNNs@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMs8TTb9j3XJrCw/3vc5k+4mO/+sd5c5q9uJtF5chwPbMjBUkx
+	OjVnuivzVqaUFjLgJWXI4PehPp5HRCHAL3rG1FUBtMKn431w8oeGtxKs
+X-Gm-Gg: Acq92OGgGS7/TFl5G1arQQcUFIJmYilDCNp7T6OwUTmUabAOVZKKIGcbWEn6EWcthqk
+	zr07/qInCzcXvzC/O7u5AyYAyRgJfkWiN3GdNJYOKH2MgXXQl1NtJhh9//5XxNdwYwt7jnJOvfl
+	ZuSuM82NjSKplsyI0DVb9590tHrWSMZmvo0jojH9CS3dTH2pWZP/X2UIIQZEYWb6/rFNlsgRs4V
+	mek1/XNssBKX4AMxtsbFPAQzBj4v4s06KRIMGbIaqq0IJ/i8lLaHpwqdnhYyVigJFWphkKayFbP
+	w8JDbGecXjJwCX8jkhuPFSPAcPpRCUDOXZge7vAv/HMiZ+cO6LQDYwE935Pzvp1mJmmcbBmDoka
+	jKR8/P6nlOiZXiOaoTf1KPFPkr+HxN6W7HgGSV13VMBUZgE5ryylP0DO1z+eeEa6N9wPIf52lRw
+	my2GlCT83zAcfLECYf6XbaB+puU2wD7lr/xUjv7A2e9yU0PgUr
+X-Received: by 2002:a0c:fb0f:0:b0:8cc:f0b9:1f3b with SMTP id 6a1803df08f44-8cee5ff3b4emr249375006d6.20.1781022197371;
+        Tue, 09 Jun 2026 09:23:17 -0700 (PDT)
 Received: from localhost ([142.181.163.192])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9158a00840dsm2345045185a.1.2026.06.09.09.23.14
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ceccda0904sm208055116d6.7.2026.06.09.09.23.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jun 2026 09:23:15 -0700 (PDT)
+        Tue, 09 Jun 2026 09:23:16 -0700 (PDT)
 From: Richard Acayan <mailingradian@gmail.com>
 To: Srinivas Kandagatla <srini@kernel.org>,
 	Liam Girdwood <lgirdwood@gmail.com>,
@@ -99,9 +99,9 @@ Cc: Nickolay Goppen <setotau@mainlining.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v5 11/15] ASoC: qcom: sm8250: add support for LPI_MI2S_RX_0 and LPI_MI2S_TX_3
-Date: Tue,  9 Jun 2026 12:22:51 -0400
-Message-ID: <20260609162255.31074-12-mailingradian@gmail.com>
+Subject: [PATCH v5 12/15] ASoC: qcom: sm8250: add SDM660 compatible
+Date: Tue,  9 Jun 2026 12:22:52 -0400
+Message-ID: <20260609162255.31074-13-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260609162255.31074-1-mailingradian@gmail.com>
 References: <20260609162255.31074-1-mailingradian@gmail.com>
@@ -119,14 +119,14 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-112251-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112252-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[22];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
@@ -147,49 +147,32 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: D3F396627E7
+X-Rspamd-Queue-Id: 2850C662738
 
-The LPI_MI2S_RX_0 and LPI_MI2S_TX_3 ports on SDM660 can be connected to
-the digital and analog WCD codecs. They can be supported with the same
-logic for other ports, but just need to be explicitly stated. Add
-support for these ports.
+Add the compatible for SDM660 and SDM670 devices, which can use the
+support for WCD codecs connected to internal MI2S.
 
 Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 ---
- sound/soc/qcom/sm8250.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ sound/soc/qcom/sm8250.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
-index f193d0ba63d0..1952c599e004 100644
+index 1952c599e004..76dc3a3f4a31 100644
 --- a/sound/soc/qcom/sm8250.c
 +++ b/sound/soc/qcom/sm8250.c
-@@ -112,6 +112,22 @@ static int sm8250_snd_startup(struct snd_pcm_substream *substream)
- 		snd_soc_dai_set_fmt(cpu_dai, fmt);
- 		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
- 		break;
-+	case LPI_MI2S_RX_0:
-+		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
-+		snd_soc_dai_set_sysclk(cpu_dai,
-+			Q6AFE_LPASS_CLK_ID_INT0_MI2S_IBIT,
-+			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
-+		snd_soc_dai_set_fmt(cpu_dai, fmt);
-+		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
-+		break;
-+	case LPI_MI2S_TX_3:
-+		codec_dai_fmt |= SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
-+		snd_soc_dai_set_sysclk(cpu_dai,
-+			Q6AFE_LPASS_CLK_ID_INT3_MI2S_IBIT,
-+			MI2S_BCLK_RATE, SNDRV_PCM_STREAM_CAPTURE);
-+		snd_soc_dai_set_fmt(cpu_dai, fmt);
-+		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
-+		break;
- 	default:
- 		break;
- 	}
+@@ -210,6 +210,7 @@ static const struct of_device_id snd_sm8250_dt_match[] = {
+ 	{ .compatible = "qcom,qrb2210-sndcard", .data = "qcm2290" },
+ 	{ .compatible = "qcom,qrb4210-rb2-sndcard", .data = "sm4250" },
+ 	{ .compatible = "qcom,qrb5165-rb5-sndcard", .data = "sm8250" },
++	{ .compatible = "qcom,sdm660-sndcard", .data = "sdm660" },
+ 	{ .compatible = "qcom,sm8250-sndcard", .data = "sm8250" },
+ 	{}
+ };
 -- 
 2.54.0
 
