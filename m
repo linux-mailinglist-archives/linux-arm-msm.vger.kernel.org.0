@@ -1,84 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-112272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 97SCK9qGKGooFwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 23:34:18 +0200
+	id k+vlOgeHKGosFwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 23:35:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1843966445C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 23:34:18 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91B80664469
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 23:35:03 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=riscstar-com.20251104.gappssmtp.com header.s=20251104 header.b=mfqFmqt+;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112272-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112272-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=riscstar-com.20251104.gappssmtp.com header.s=20251104 header.b=uoS8Wc2e;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112273-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112273-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=fail reason="SPF not aligned (relaxed), DKIM not aligned (relaxed)" header.from=riscstar.com (policy=none);
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1D76D302F985
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 21:31:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2D503304C2C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 21:32:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47AB441168B;
-	Tue,  9 Jun 2026 21:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBBEB47B409;
+	Tue,  9 Jun 2026 21:32:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B4915C14F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 21:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F463EB0FB
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 21:31:59 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781040715; cv=none; b=XohmzyQcnDz1Iyte1xY8uPG+lQUFSZqaMK21+PHBAPQqCzWhz8MWtO3jl22DSf9Nbwyuw327sFyLLsYo/zIr8XCJyqAlsvPart9PM5dOFc4XvtSWFP3A5UwPX3sNb6ArBlB1rlqEyvzNS2501SO20PgqokH6SABhGX9lQVunJyw=
+	t=1781040720; cv=none; b=nBnvtnH8KXeaJXoQu5B9tap3oSTbfFa04XrAew6+PrsKwCpQFvrjyBZLu7yeldNIxvrZifPztlXrV3uV5GhH5dIza3ZcKBCsIpD+TO02Q8P3wYS6ISsq+ZbyIwFIAHiunmjFjH0N+cVhoP3S8neoH9XaDKtAwq9EC5ZbS3IVZqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781040715; c=relaxed/simple;
-	bh=u02KRuZlQFzGkv6nJNfx75RixQFD4xM54PRC9sX+TeM=;
+	s=arc-20240116; t=1781040720; c=relaxed/simple;
+	bh=WAiXRaxAM4Z1bZ828ygiu2QGKA8btwndyvH6LWkBmvs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GzQW8jsZXIggs/LmRbWdRyUiXwC98uZ5DPpTqLxUEw7Qix8wLPtP/ugDKNqYv6DnkdSqsGS6YFXbvI0iRcfv55Bk7C+l4YPyQ8FiyYRxfbdvAM/RouI4/m5IHHR0Tr/7unIfWN4oV0fT+QTWeQNB8RdhirEEJj2w9Qn8LfAccy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=mfqFmqt+; arc=none smtp.client-ip=209.85.167.178
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-48611addcfbso2497716b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 14:31:53 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=hzqgfKD3z6uLz2gxqOwBHSIeib9j2hDOzEog126lbjYzbYKE96cvpwyfCtTyOM1SLN3F1kPVGlIZjQxkkAgtrAApCASiZDMaVtC++bi4ftJh984x7IINyFNGnsZtuatMlzeFSowgwA+66xZhEP0iY5dhXx3QRB31jgUOuZGT6yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20251104.gappssmtp.com header.i=@riscstar-com.20251104.gappssmtp.com header.b=uoS8Wc2e; arc=none smtp.client-ip=209.85.167.175
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-486503ae8f0so4496828b6e.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 14:31:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1781040712; x=1781645512; darn=vger.kernel.org;
+        d=riscstar-com.20251104.gappssmtp.com; s=20251104; t=1781040718; x=1781645518; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=aGjz6oXrvv0vYyL9h564g5u9rOXsQ9Yj+tb2sJWaYA0=;
-        b=mfqFmqt+WJx8NSYfElhOBMTg++c3r8Yq+qOtPE6j+Rp39nGafXgFVejdw+XX6c1G8Y
-         WtGm1CHAjgdwVPbNMbusNhxrPEgqJ8ftBfI1CDBJrDXH58mf1cQs3T3t56ngL+brvLLL
-         mDkoPrurq+wWZP9/d3whgV2TL2M9jI29yrLoMadcZACt5Jkj7gMG0WC2DmIrIOQ1lWJ4
-         C84XQsZVeKsgRr9YkfYO+eZ6f41JO+z9W/2xJUO0ziqf9pp4rDolAUM9CN+pWjUre6Ew
-         KJLk2jUKoV5kpdOXgZjpUwWgg+0QmjaoZ/mmlgLndXknfUAZwyoJGFNJ8tQSbUdtBZ4z
-         v8IA==
+        bh=kQKbERiB0ntPOS/R2wMXRwGJAn2HHwIq3s8Tu7uVMO4=;
+        b=uoS8Wc2e1VeGoY7G1XUBEHm43nmS5gaWrdYwUmiNUbR6nAUt8w6us5wXqa8zvD0j8H
+         pElFvyvcXDwQRbA7XsXg25ZJRHvM8K6goHxTNObZ69eH7g4DY9o3ebLH0iTTxx0j3y5M
+         VKauDGWMkjgBFheiP8YjscG+JfsiNeZJp9RizPBwnWb2BY01EYdCMVKjHh58PXuq6py0
+         aKLhGhGkk7vUvFMeaqQ3OwEj7d8vo+rsKGKph1+Ix/B9kDz3fL8ZlaUpliFLu5oek+3b
+         oYjsUvyheB3NSko8ugKmu0mQq0yhwZCWmxtPvlx7+eF5c3u1n/XFljjOak4mPeOyK6q4
+         D2YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781040712; x=1781645512;
+        d=1e100.net; s=20251104; t=1781040718; x=1781645518;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=aGjz6oXrvv0vYyL9h564g5u9rOXsQ9Yj+tb2sJWaYA0=;
-        b=PfoeF+2Ihx74Wip5cnaktULKAGEKY3NLDKm/mxFZhj7Arc6cFZvh9VXF32RP64/91N
-         Ku7ZH3H1+Ncq6x1PQPxN/uwurBw6+WErB86Z+RvDiSCiWoToNbUc3uhKbIHGmI8fGL7f
-         9Y/QTF2RvPIt4e4uYoreAVZxoBiWeaGRoSp6VLXxn7hNvjQw4lJ2QCD7nTOW6D6OxX7Z
-         1UxaqL1LomaPAp80UD0hwRarYkfY0YNUAfhNqClHZpkdd+zntt9MvsPZLZKpwFsNkuMX
-         h4YWfwOnrT5ePvhNbDvxuafxD6eOA7ooIVFxnvC6W0TfO4BY7E5/PKIP8z0zKqvuUkKm
-         GlSA==
-X-Forwarded-Encrypted: i=1; AFNElJ/bhUGWrU2Xe0yJ3NMKMfrHhjbokTuj/WpBzwBO8cGnWTs2vI6AG34XXMQDHMjz9pZKi90GuzxgMIYYVFwh@vger.kernel.org
-X-Gm-Message-State: AOJu0YzAF7kDiI6Yd9/RCSeUtSRKaNOUmWC+IcZ1NfmW2y8FORmWMBZ5
-	QCP7TUnXY8LtaE2RDVLPuI4BItaIT/wdL7xMBbgOMr75EIW0C+R/YOpWGQ3qDOCJSCk=
-X-Gm-Gg: Acq92OFvqKpRJdO2Pht8OzqBURZ2iy962brCqVbVAtBRdAenm/hAQ127nbUb/Covjdv
-	E4ZkaYQGBmpHtUYJcvIfQIuus8o9yyAz0Q23lVvXxNJeK6nyj2mr5r4fd3RfgPw7R2BXr/Comcq
-	ihT2EuLTwBH2GjKg1WmK6w/mu3qSx46wlZj4zeL9JetEqSeGcRcNAQh5l1+/wih51PnA9vsiF/h
-	B1ju1YnodMQ6HlfU4eS0e+J6CjvenKyJdHwu1ZM3toZ7L5qSEBTibJlInwGD/GBEqksSbOEw8xf
-	6oHUy9yBvZIqw194p9PrpNuKMssDU1XRjbkV3KageeWxglNJWcf0riotA+9B0N6B4r4KWVrsUMw
-	QFOUEvf3uJZ07loOxUw5E0xmbHlFWVNJrDbjKU6tAvh+UzwM6T4gwCHGRrIkTglzxeRGrXwsHmM
-	S8n0p2OqTd8+B2fnLV7kuqNPjc21yyEuN0oQ==
-X-Received: by 2002:a05:6808:191e:b0:47b:bd7b:10e5 with SMTP id 5614622812f47-4868db2d9eamr11794474b6e.3.1781040712262;
-        Tue, 09 Jun 2026 14:31:52 -0700 (PDT)
+        bh=kQKbERiB0ntPOS/R2wMXRwGJAn2HHwIq3s8Tu7uVMO4=;
+        b=h9Pj6I6sl4jpoTN2g5U/C6vAk5zNNq9gqEw6PEwAABz9+HhG40vo6Mwln9D05XgpxC
+         EzvRZEYCkKE02U7dToNgMdEdH3XYRYW2VLs7tGcicwNkY32CLXau30KjFOqm++T+exKi
+         TbMDJJ4INn4G6N0yQdVjfV5/KfK3zvqoBs801GsBfFSKjLO1hxWyugeG7D3ByVRLuW5o
+         3GwfCQqD8qPhlXUEi9NoTPQGjtYjY8RQ9+22DhOQor7jYFxyR1Gr2ahcNrNLW8iIHaZH
+         YsMKOtuJ5L0hohjQjmpWIQ0soW6zM8RsOdSS6EcX9MXGa1SWg7iWLQpUe21ycl46zA8R
+         STmw==
+X-Forwarded-Encrypted: i=1; AFNElJ8auX+6RokcMTqchZ/myl5RZGsCMujIG+fnAlee/DrOEFn+k9yzUeKGiCdWQrAbWj90wy5YFlOZXJG9wobl@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyn4XPkPovcYH3kDA38m9CLkojTfr9l2uCXyHobVMuwK05FQVEN
+	7fc8FbaUbDR/qnjJkRX7FKKIpdxfasEs7y35HChLImoNmad4mf/Raowl7zpLA/pRGUw=
+X-Gm-Gg: Acq92OG70g4QxbJST6EYIdwttVD4P5XWNmWqPK5+g7d2QTPTae+NwUbAT8JJrk0fpOB
+	4OppxAtiBf/I2wu6b3Dq/OR09OZQohIdD5zERCRBS/EbgUPLrFbhsBG3AIK+PdSvCGB2UNt3qnr
+	nbS+hGZezw5juwZp8aExU6Vs1GW6DpdbgixX31Dn444uXXNwYBUvwDX2O1Wms3sXXjdl/G+zytw
+	SGJE6T2AKP7LF7a0gDX6bEZH5aNO+dS81grb1d8tgMAT0RX9482KjgVI0lSbzBcBDejNzPT3/q5
+	ufFYh0ttHZGsDd1mrKcqhKFahjRsW9Gvt2EuaOe2dBloCVa+cyHmkwzrlAxevmaJXUNxf4LekND
+	CI7NrFtAobFIJm/vbhDY1Dmcy3Rv5Z+QNQOMsMFDbLB+sWsKg+bZ3JxtODl/ErNDGGJ0kv46hXi
+	T6sZZfcLDxdWbrbQ32VDZ0SQ0gAvP7SnSUccTVijfKt3E9
+X-Received: by 2002:a05:6808:4fe2:b0:485:a9b2:5457 with SMTP id 5614622812f47-4868df63ae3mr15052790b6e.35.1781040718541;
+        Tue, 09 Jun 2026 14:31:58 -0700 (PDT)
 Received: from [172.22.22.28] ([73.62.185.64])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-4865b5a5a64sm17024127b6e.4.2026.06.09.14.31.49
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-4865b5a5a64sm17024127b6e.4.2026.06.09.14.31.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jun 2026 14:31:51 -0700 (PDT)
-Message-ID: <e5c0fc2a-dcf0-4165-b2dc-d16c6cbe92df@riscstar.com>
-Date: Tue, 9 Jun 2026 16:31:48 -0500
+        Tue, 09 Jun 2026 14:31:58 -0700 (PDT)
+Message-ID: <b89fe088-496f-4281-9d27-7f8b0b3f38cb@riscstar.com>
+Date: Tue, 9 Jun 2026 16:31:55 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,8 +86,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v2 10/14] dt-bindings: net: toshiba,tc9654-dwmac:
- add TC9564 Ethernet bridge
+Subject: Re: [PATCH net-next v2 13/14] net: stmmac: tc956x: add TC956x/QPS615
+ support
 To: Rob Herring <robh@kernel.org>
 Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
  kuba@kernel.org, pabeni@redhat.com, maxime.chevallier@bootlin.com,
@@ -108,11 +108,11 @@ Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
  linux-stm32@st-md-mailman.stormreply.com,
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 References: <20260605010022.968612-1-elder@riscstar.com>
- <20260605010022.968612-11-elder@riscstar.com>
- <20260605144032.GA3659201-robh@kernel.org>
+ <20260605010022.968612-14-elder@riscstar.com>
+ <20260605144758.GB3659201-robh@kernel.org>
 Content-Language: en-US
 From: Alex Elder <elder@riscstar.com>
-In-Reply-To: <20260605144032.GA3659201-robh@kernel.org>
+In-Reply-To: <20260605144758.GB3659201-robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -120,12 +120,12 @@ X-Spamd-Result: default: False [-0.06 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_DKIM_ALLOW(-0.20)[riscstar-com.20251104.gappssmtp.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	DMARC_POLICY_SOFTFAIL(0.10)[riscstar.com : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-112272-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112273-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:robh@kernel.org,m:andrew+netdev@lunn.ch,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:maxime.chevallier@bootlin.com,m:rmk+kernel@armlinux.org.uk,m:andersson@kernel.org,m:konradybcio@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linusw@kernel.org,m:brgl@kernel.org,m:arnd@arndb.de,m:gregkh@linuxfoundation.org,m:daniel@riscstar.com,m:mohd.anwar@oss.qualcomm.com,m:a0987203069@gmail.com,m:alexandre.torgue@foss.st.com,m:ast@kernel.org,m:boon.khai.ng@altera.com,m:chenchuangyu@xiaomi.com,m:chenhuacai@kernel.org,m:daniel@iogearbox.net,m:hawk@kernel.org,m:hkallweit1@gmail.com,m:inochiama@gmail.com,m:john.fastabend@gmail.com,m:julianbraha@gmail.com,m:livelycarpet87@gmail.com,m:mcoquelin.stm32@gmail.com,m:me@ziyao.cc,m:prabhakar.mahadev-lad.rj@bp.renesas.com,m:richardcochran@gmail.com,m:rohan.g.thomas@altera.com,m:sdf@fomichev.me,m:siyanteng@cqsoftware.com.cn,m:weishangjuan@eswincomputing.com,m:wens@kernel.org,m:netdev@vg
  er.kernel.org,m:bpf@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:linux-stm32@st-md-mailman.stormreply.com,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:andrew@lunn.ch,m:rmk@armlinux.org.uk,m:krzk@kernel.org,m:conor@kernel.org,m:johnfastabend@gmail.com,m:mcoquelinstm32@gmail.com,s:lists@lfdr.de];
@@ -136,7 +136,7 @@ X-Spamd-Result: default: False [-0.06 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FREEMAIL_CC(0.00)[lunn.ch,davemloft.net,google.com,kernel.org,redhat.com,bootlin.com,armlinux.org.uk,arndb.de,linuxfoundation.org,riscstar.com,oss.qualcomm.com,gmail.com,foss.st.com,altera.com,xiaomi.com,iogearbox.net,ziyao.cc,bp.renesas.com,fomichev.me,cqsoftware.com.cn,eswincomputing.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
@@ -149,168 +149,121 @@ X-Spamd-Result: default: False [-0.06 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,kernel,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[devicetree.org:url,riscstar-com.20251104.gappssmtp.com:dkim,riscstar.com:email,riscstar.com:mid,riscstar.com:from_mime,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[riscstar-com.20251104.gappssmtp.com:dkim,riscstar.com:email,riscstar.com:mid,riscstar.com:from_mime,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1843966445C
+X-Rspamd-Queue-Id: 91B80664469
 
-On 6/5/26 9:40 AM, Rob Herring wrote:
-> On Thu, Jun 04, 2026 at 08:00:17PM -0500, Alex Elder wrote:
+On 6/5/26 9:47 AM, Rob Herring wrote:
+> On Thu, Jun 04, 2026 at 08:00:20PM -0500, Alex Elder wrote:
 >> From: Daniel Thompson <daniel@riscstar.com>
 >>
->> Add devicetree bindings for the Toshiba TC956x family of Ethernet-AVB/TSN
->> bridges.
+>> Toshiba TC956x is an Ethernet AVB/TSN bridge and is essentially a
+>> small and highly-specialized SoC. TC956x includes an "eMAC" subsystem
+>> that can be accessed, along with several other peripherals, via two
+>> PCIe endpoint functions. There is a main driver for the endpoint that
+>> decomposes things and creates auxiliary bus devices to model the SoC.
 >>
->> The TC9564 contains a PCIe switch with one upstream and three downstream
->> PCIe ports.  The third PCIe downstream port has an attached embedded PCIe
->> endpoint, and that endpoint implements two PCIe functions.  Each internal
->> PCIe function has a Synopsys XGMAC Ethernet interface capable of 10 Gbps
->> operation.
+>> The eMAC consists of a Designware XGMAC, XPCS and PMA. Each eMAC is
+>> supported by an MSIGEN that bridges TC956x level interrupts to PCIe
+>> MSIs.
 >>
->> The TC9564 also implements an embedded GPIO controller, which exposes
->> 10 lines externally.  Some platforms use these GPIO lines, so this
->> GPIO controller is managed by a separate driver.  Other embedded
->> peripherals (like a microcontroller, SRAM, and UART) are currently
->> unused.
+>> Add a driver for the eMAC/MSIGEN combination.
 >>
->> The GPIO controller is managed by registers accessed via MMIO on an
->> internal PCIe function's registers.
->>
->> Signed-off-by: Daniel Thompson <daniel@riscstar.com>
+>> Co-developed-by: Alex Elder <elder@riscstar.com>
 >> Signed-off-by: Alex Elder <elder@riscstar.com>
+>> Signed-off-by: Daniel Thompson <daniel@riscstar.com>
+> 
+> The order is wrong here unless you worked on it and then Daniel took
+> over. Tags should be chronological order.
+
+I think this was a dumb reorder I did to address a complaint
+from checkpatch, but in any case I'll fix this.  Yes, my
+signoff should "wrap" the others.
+
 >> ---
->>   .../bindings/net/toshiba,tc9564-dwmac.yaml    | 120 ++++++++++++++++++
->>   MAINTAINERS                                   |   6 +
->>   2 files changed, 126 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/net/toshiba,tc9564-dwmac.yaml
+>>   MAINTAINERS                                   |   2 +
+>>   drivers/net/ethernet/stmicro/stmmac/Kconfig   |  14 +
+>>   drivers/net/ethernet/stmicro/stmmac/Makefile  |   2 +
+>>   .../ethernet/stmicro/stmmac/dwmac-tc956x.c    | 818 ++++++++++++++++++
+>>   4 files changed, 836 insertions(+)
+>>   create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
 >>
->> diff --git a/Documentation/devicetree/bindings/net/toshiba,tc9564-dwmac.yaml b/Documentation/devicetree/bindings/net/toshiba,tc9564-dwmac.yaml
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 0439607d1155f..418537cbefbbb 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -27059,6 +27059,8 @@ S:	Maintained
+>>   F:	Documentation/devicetree/bindings/net/toshiba,tc956x-dwmac.yaml
+>>   F:	drivers/gpio/gpio-tc956x.c
+>>   F:	drivers/misc/tc956x_pci.c
+>> +F:	drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
+>> +F:	include/soc/toshiba/tc956x-dwmac.h
+>>   
+>>   TOSHIBA WMI HOTKEYS DRIVER
+>>   M:	Azael Avalos <coproscefalo@gmail.com>
+>> diff --git a/drivers/net/ethernet/stmicro/stmmac/Kconfig b/drivers/net/ethernet/stmicro/stmmac/Kconfig
+>> index e3dd5adda5aca..8d247e033e356 100644
+>> --- a/drivers/net/ethernet/stmicro/stmmac/Kconfig
+>> +++ b/drivers/net/ethernet/stmicro/stmmac/Kconfig
+>> @@ -404,6 +404,20 @@ config DWMAC_MOTORCOMM
+>>   	  This enables glue driver for Motorcomm DWMAC-based PCI Ethernet
+>>   	  controllers. Currently only YT6801 is supported.
+>>   
+>> +config DWMAC_TC956X
+>> +	tristate "Toshiba TC956X DWMAC support"
+>> +	depends on PCI
+>> +	depends on COMMON_CLK
+>> +	depends on TOSHIBA_TC956X_PCI
+>> +	default TOSHIBA_TC956X_PCI
+>> +	select GENERIC_IRQ_CHIP
+>> +	help
+>> +	  This selects the Toshiba TC956X (and Qualcomm QPS615) support in the
+>> +	  stmmac driver.
+>> +
+>> +	  This provides support for the ethernet controllers found on these
+>> +	  devices.
+>> +
+>>   config STMMAC_PCI
+>>   	tristate "STMMAC PCI bus support"
+>>   	depends on PCI
+>> diff --git a/drivers/net/ethernet/stmicro/stmmac/Makefile b/drivers/net/ethernet/stmicro/stmmac/Makefile
+>> index a1cea2f57252e..e8e7f95dbe3e8 100644
+>> --- a/drivers/net/ethernet/stmicro/stmmac/Makefile
+>> +++ b/drivers/net/ethernet/stmicro/stmmac/Makefile
+>> @@ -51,4 +51,6 @@ obj-$(CONFIG_STMMAC_PCI)	+= stmmac-pci.o
+>>   obj-$(CONFIG_DWMAC_INTEL)	+= dwmac-intel.o
+>>   obj-$(CONFIG_DWMAC_LOONGSON)	+= dwmac-loongson.o
+>>   obj-$(CONFIG_DWMAC_MOTORCOMM)	+= dwmac-motorcomm.o
+>> +obj-$(CONFIG_TC956X_PCI)	+= tc956x-pci.o
+>> +obj-$(CONFIG_DWMAC_TC956X)	+= dwmac-tc956x.o
+>>   stmmac-pci-objs:= stmmac_pci.o
+>> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
 >> new file mode 100644
->> index 0000000000000..6e7a63dfcf86a
+>> index 0000000000000..c77585e4a50e6
 >> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/net/toshiba,tc9564-dwmac.yaml
->> @@ -0,0 +1,120 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/net/toshiba,tc9564-dwmac.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-tc956x.c
+>> @@ -0,0 +1,818 @@
+>> +// SPDX-License-Identifier: GPL-2.0
 >> +
->> +title: Toshiba TC956x Ethernet-AVB/TSN Controller
+>> +/*
+>> + * Copyright (C) 2026 by RISCstar Solutions Corporation.  All rights reserved.
+>> + *
+>> + * Derived from code having the following copyrights:
+>> + * Copyright (C) 2011-2012  Vayavya Labs Pvt Ltd
+>> + * Copyright (C) 2025 Toshiba Electronic Devices & Storage Corporation
+>> + */
 >> +
->> +maintainers:
->> +  - Alex Elder <elder@riscstar.com>
->> +  - Daniel Thompson <daniel@riscstar.com>
->> +
->> +description: |
->> +  The Toshiba TC9564 (and more generally, TC956x) incorporates a PCIe
->> +  gen 3 switch with one upstream and three downstream ports.  The first
->> +  two downstream ports are exposed externally, while the third is used
->> +  by an internal PCIe endpoint.  The PCIe endpoint implements two PCIe
->> +  functions, and attached to each of these is a 10 Gbps capable Synopsys
->> +  Ethernet controller.
->> +
->> +  The TC956x additionally implements other internal IP blocks, and in
->> +  particular it implements a GPIO controller.  Ten of the 35 GPIO lines
->> +  implemented are exposed externally and are usable by the platform.
->> +  It is platform-dependent whether the GPIO function must be exposed,
->> +  and if it is, PCIe function 0 supplies it.
->> +
->> +              ----------------------------------
->> +              |              Host              |
->> +              ------+...+----------+........+---
->> +                    |i2c|          |  PCIe  |
->> +    ----------------+...+----------+........+------
->> +    | TC956x        |I2C|          |upstream|     |
->> +    |               -----        --+--------+---  |
->> +    |  -----  ------  -------    | PCIe switch |  |
->> +    |  |SPI|  |GPIO|  |reset|    |             |  |
->> +    |  -----  ------  |clock|    | DS3 DS2 DS1 |  |
->> +    |                 -------    ---++--++--++--  |
->> +    |  -----  ------     downstream//    \\  \\   |  downstream
->> +    |  |MCU|  |SRAM|    /==========/      \\  \===== PCIe port 1
->> +    |  -----  ------   //PCIe port 3       \\     |
->> +    |                  ||                   \======= downstream
->> +    |  ----+-----------++-----------+----         |  PCIe port 2
->> +    |  | M | internal PCIe endpoint | M |         |
->> +    |  | S |------------------------| S |  ------ |
->> +    |  | I |   PCIe   |  |   PCIe   | I |  |UART| |
->> +    |  | G |function 0|  |function 1| G |  ------ |
+>> +#include <linux/auxiliary_bus.h>
 > 
-> I don't see nodes for these PCI functions. Boot this platform with
-> CONFIG_PCI_DYNAMIC_OF_NODES enabled and use the resulting DT node
-> structure. Anything else is wrong. This will give you the DTS:
-> 
-> dtc -O dts /proc/device-tree
-> 
-> The ethernet nodes should be just these PCI function nodes. You need to
-> make the DWMAC PCI driver (stmmac_pci.c) bind to those 2 PCI devices.
-> And really, a DT node for them should be completely optional (unless
-> there's some power on ctrl needed).
-> 
-> Everything else like SPI, GPIO, UART, etc. should be under the PCIe
-> switch upstream node in a pci-ep-bus.
+> Based on the block diagram, these are PCI devices. Auxiliary bus is the
+> wrong thing to use here.
 
-I unfortunately hadn't looked closely enough at pci-ep-bus
-before.  It really looks like what we should use.  It's a
-simple bus, and we'll use platform drivers and compatible
-strings to match the devices on the bus.
+As I said in the other message, I'm going to rearrange this
+to use pci-ep-bus and platform drivers.  Most of the core
+code should be stay the same but the overall structure will
+change.
 
-I'll work toward converting things over to use this model.
-
-> 
-> 
->> +    |  | E |----++----|  |----++----| E |         |
->> +    |  | N |  eMAC 0  |  |  eMAC 1  | N |         |
->> +    --------+.......+------+.....+-----------------
->> +            |USXGMII|      |SGMII|
->> +          --+.......+--  --+.....+--
->> +          |  ARQ113C  |  | QEP8121 |
->> +          |    PHY    |  |   PHY   |
->> +          -------------  -----------
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - pci1179,0220 # Toshiba TC9564 (a.k.a. Qualcomm QPS615)
->> +
->> +  gpio:
->> +    type: object
->> +    description: Embedded GPIO controller
->> +    $ref: /schemas/gpio/gpio.yaml#
-> 
-> gpio.yaml alone does not define a GPIO controller. How many #gpio-cells
-> needs to be defined.
-> 
-> Is there no address associated with the controller?
-> 
->> +
->> +  ethernet:
->> +    type: object
->> +    description: XGMAC Ethernet controller
->> +    $ref: /schemas/net/ethernet-controller.yaml#
->> +    properties:
->> +      mdio:
->> +        $ref: snps,dwmac.yaml#/properties/mdio
-> 
-> Either all of snps,dwmac.yaml should apply or none of it. Generally, we
-> only reference whole schema files (OF graph being a notable exception).
-
-OK.
-
-> 
->> +    required:
->> +      - mdio
->> +
->> +required:
->> +  - compatible
->> +
->> +allOf:
->> +  - $ref: /schemas/pci/pci-device.yaml#
->> +  - $ref: /schemas/pci/pci-bus-common.yaml#
-> 
-> These 2 are just pci-pci-bridge.yaml.
-
-OK.
+Thanks for your suggestions.
 
 					-Alex
 
