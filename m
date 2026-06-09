@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-112256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id No4aLf5EKGp2BQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 18:53:18 +0200
+	id OlqVHY5FKGqeBQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 18:55:42 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36B19662A33
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 18:53:18 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3918662A9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 18:55:41 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=ixit.cz header.s=dkim header.b=HfW+XNZg;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112256-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112256-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=ixit.cz header.s=dkim header.b=MAmVvSGJ;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112257-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112257-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=ixit.cz;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E36E930387A5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 16:39:19 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 53F8130D6468
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 16:42:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4992D3AA1A9;
-	Tue,  9 Jun 2026 16:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AF033EFD37;
+	Tue,  9 Jun 2026 16:42:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAB8370AF1;
-	Tue,  9 Jun 2026 16:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B75929B77E;
+	Tue,  9 Jun 2026 16:42:10 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781023159; cv=none; b=WLBNd2DLCviYzYVH6oD25msajkgO4kwUqfbUjCs4FFyuz5/ksf4S4q+66cQdztaAXbEyKfwKo5sp/4sY6llI8VMhj3qLp2AfHHmDDHaRex86paHoNryioVD6VkKlAmB0xS8zbrg1EYulNr6Yb7NLSpree70EJn4MdHbe4Zy8suI=
+	t=1781023331; cv=none; b=Wpsrj+s2nxV2p4ZPrMZF9eDRV6DXbBq3/jxdWWm99uGHVE7v4VilwHBDp+iVWfN8GplzTSQE2hcfFGsew5tMuAAOqG3SlnNgtwx9yBti7N0E2PSIzektRADJmKKt783f6uukbHt0qWn2o9OUxacZUKmXwi+30TXDzNh9avjUI6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781023159; c=relaxed/simple;
-	bh=ADeYXAeVVl38gW9tcY3UKnPzwglezpytKLRpwmXS5yc=;
+	s=arc-20240116; t=1781023331; c=relaxed/simple;
+	bh=f8U3CviyCU51P8ImP3kfg24gVdTyuZcrjVFCMhrHMW0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O/y9/iHy21m7I9lB0krmnPpJN6OWnUt9I1SL0dp7eobMCOS2FxCvAWr10lLexugpHgbX64jNSCIMEsQC1KnlGAiQwysxewhFH5kXJ6GlbLiVMUrUU1J82oDeXTL44xG479tqQTacDTsCfpSyXwxYixVni8+DpdfQ9NpprJHMwRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=HfW+XNZg; arc=none smtp.client-ip=185.100.197.86
+	 In-Reply-To:Content-Type; b=rwVItwCT2vEnsyZC7ymPhY4j9DQZoANv5829QThSHx50ZcFuKc4l0LtrDF6iB5oE/eVXMY3uNEOji8amv7YQMTIcHYfgUVCBPZ1sV0i82RQRwDro6dCcGu/h5M60obVoelp5VQGTo4FnnBeckCayncxWSGDQqFjol1aJNAqclXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=MAmVvSGJ; arc=none smtp.client-ip=185.100.197.86
 Received: from [10.0.0.200] (unknown [10.88.125.21])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id D747253403BB;
-	Tue, 09 Jun 2026 18:39:08 +0200 (CEST)
+	by ixit.cz (Postfix) with ESMTPSA id 5E5C25340866;
+	Tue, 09 Jun 2026 18:42:06 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1781023149;
+	t=1781023326;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=/7Lg1yfmwI+tVXniqjxLqm6pUWwVdBWqaU3M9Z1jHTw=;
-	b=HfW+XNZgfGx0abe89YQsoEcJK3dl7CoQzEa3+ot/YTCPUnOvjJoOzjQjDKZ9LlB+D2l50k
-	C8ACdEoObOOECVMQEh+WKK8fKCUpDl8IfG65TIU6vwwNsISd5DobV36Tcli9dOyKh2riS5
-	0aZL7mkT4EqWFSXQ0+shsV2X4ppkKZQ=
-Message-ID: <d908b754-154c-487d-8b64-36bfbd8f1c0b@ixit.cz>
-Date: Tue, 9 Jun 2026 18:39:08 +0200
+	bh=Gk27He8vqPFqmcGELX5t0abQFIfgMvQwTGmgnMcTnN4=;
+	b=MAmVvSGJpt4h2+bGMhMIOaFdqJB3d1bledbSp9D3itUDsRubmJoSiBUvAKX61XvFgUlQjj
+	7OGgi9qKu72RAazFrO/8k+jOsPHP0JCfgd8/6n17lDWLvX7V+QaaBGSESxCpmU1YowCJQy
+	hhf6jjfaoOUaPSGXhlDWJkf+7+brynw=
+Message-ID: <c5a382a0-e844-4d36-b8fa-aea28b7835e0@ixit.cz>
+Date: Tue, 9 Jun 2026 18:42:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,15 +59,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm6125-xiaomi-laurel-sprout: Fixup
- panel compatible
-To: Yedaya Katsman <yedaya.ka@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v4 6/6] ARM: dts: qcom: Add Samsung Galaxy S4
+To: contact@alex-min.fr, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, MyungJoo Ham <myungjoo.ham@samsung.com>,
+ Chanwoo Choi <cw00.choi@samsung.com>, Guru Das Srinagesh
+ <linux@gurudas.dev>, Linus Walleij <linusw@kernel.org>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Kees Cook <kees@kernel.org>,
+ Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
-References: <20260608-b4-compatible-s6e8fc0-fixup-v2-1-d23f373603a3@gmail.com>
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20260609-mainline-send-v1-sending-v4-0-83768fbf404d@alex-min.fr>
+ <20260609-mainline-send-v1-sending-v4-6-83768fbf404d@alex-min.fr>
 Content-Language: en-US
 From: David Heidelberg <david@ixit.cz>
 Autocrypt: addr=david@ixit.cz; keydata=
@@ -113,53 +118,59 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <20260608-b4-compatible-s6e8fc0-fixup-v2-1-d23f373603a3@gmail.com>
+In-Reply-To: <20260609-mainline-send-v1-sending-v4-6-83768fbf404d@alex-min.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-112256-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:yedaya.ka@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:phone-devel@vger.kernel.org,m:yedayaka@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org];
+	TAGGED_FROM(0.00)[bounces-112257-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:contact@alex-min.fr,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:myungjoo.ham@samsung.com,m:cw00.choi@samsung.com,m:linux@gurudas.dev,m:linusw@kernel.org,m:robin.clark@oss.qualcomm.com,m:kees@kernel.org,m:tony.luck@intel.com,m:gpiccoli@igalia.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:phone-devel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[ixit.cz:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DKIM_TRACE(0.00)[ixit.cz:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp,ixit.cz:dkim,ixit.cz:email,ixit.cz:mid,ixit.cz:from_mime]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,ixit.cz:dkim,ixit.cz:email,ixit.cz:mid,ixit.cz:from_mime,alex-min.fr:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 36B19662A33
+X-Rspamd-Queue-Id: E3918662A9C
 
-On 08/06/2026 22:10, Yedaya Katsman wrote:
-> The change to the panel compatible was missed, fix it. This compatible is
-> already in the driver.
+On 09/06/2026 10:13, Alexandre MINETTE via B4 Relay wrote:
+> From: Alexandre MINETTE <contact@alex-min.fr>
 > 
-> Fixes: 493cb869874c ("arm64: dts: qcom: sm6125-xiaomi-laurel-sprout: Enable MDSS and add panel")
-> Signed-off-by: Yedaya Katsman <yedaya.ka@gmail.com>
+> Add a device tree for the Samsung Galaxy S4, codenamed jflte.
+> 
+> This has been tested on a Samsung Galaxy S4 GT-I9505. The initial support
+> covers UART, USB peripheral mode with USB networking, the front LED and
+> the physical buttons.
+> 
+> Signed-off-by: Alexandre MINETTE <contact@alex-min.fr>
+> ---
+>   arch/arm/boot/dts/qcom/Makefile                    |   1 +
+>   .../boot/dts/qcom/qcom-apq8064-samsung-jflte.dts   | 481 +++++++++++++++++++++
+>   2 files changed, 482 insertions(+)
 
-Thanks,
-
-Reviewed-by: David Heidelberg <david@ixit.cz>
+Acked-by: David Heidelberg <david@ixit.cz>
 
