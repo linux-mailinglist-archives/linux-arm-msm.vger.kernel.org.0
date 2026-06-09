@@ -1,205 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-112172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id SL4CKk4TKGof9gIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 15:21:18 +0200
+	id m5e2GOUUKGqC9gIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 15:28:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F19FC6607EA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 15:21:17 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F62A6608F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 15:28:04 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=fkrMf1wO;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=j1SSJZKv;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112172-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112172-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="Nu3c//Al";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112173-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112173-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B1CB630888A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 13:15:24 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 46C6D303589D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 13:20:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 763E61E47CC;
-	Tue,  9 Jun 2026 13:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9FC1283FDD;
+	Tue,  9 Jun 2026 13:20:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D80B1DE8BE
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 13:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEED27816C;
+	Tue,  9 Jun 2026 13:20:04 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781010923; cv=none; b=VSvjvRWyUd9bornX2pNzvKgCBDb2ujaGZ64unCRbd8cZGOuJi0dnmJCCOTPviXidbJFBHQlt0wKiXSutr/z4dKHVAMt6P7d/9FYxchsdL9J1SKWRDtEL7wYpw2tanKV3QQD2PEteFcwFUnh9bEWGW3iXo2yIXIJYMTxKXOLAltg=
+	t=1781011205; cv=none; b=F3KgpOSGy5sLn15inMq1rxf35SbDnn0fGz4R2D027gCHU10tb1fdM9pJv3ca4xPvxuJdhzB9C3INJZtuHkUdI/1nwzmqoygGYLAERfK4yAwQjcnbOrrMQQJlX+lAkvxvjmRYu+esMB2l5jGDz4smYV0FKxNefwgM09nCHrDJvT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781010923; c=relaxed/simple;
-	bh=Lb/MZXyMjJM/nnkIwYyOQRhGKpbuBykgD/YE4HiGR+o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WCU+7MtX23FVsemgo3SYRpgMhIAgFZTEBYakUpGxUBSd1QAGjE+JDuTFXZcMHNLpNu9LCh1ldo2dPoMu7CeKIgIH3ocTf3tBuyxIlIVbXYZz5osgPPy3U9hUxkOWiaI6q2vfTeBTlROVQgiYPFNDUWD28mtfhUu+0tXZG+QQtKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fkrMf1wO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=j1SSJZKv; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 659ClLa6652209
-	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Jun 2026 13:15:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	J36Lv/6KiRlprtNoYGijhIbdhXLKcydnuqjl+rojm0U=; b=fkrMf1wOKUAkVzkT
-	Ran5OLFziSmE4WbKyYaeT0mm5NG3AEq9xoPWPg3Efso18tni7lmwHfJIukw1BOEP
-	fS7YjRc8lcAZt2pdIGoyVcuohfoke7KvqHoKjSwVNcUYVfifoCXiQQGmnw1G6yH8
-	lMtoTmqLYVDNzS01fGqC8Dc4vyfpRIq1oDwltAtJB+Db1xTcwTbGJtSvXQO+UHV2
-	gaAG2BxvP6dyQ6/ZGqNTXMXbmhC8o5wsoy8Jy1qzOsPWbeqVh4mpiLQ7Z8Em3uaS
-	hj+841qOhYp6I1XJNmsgUo26Nnjsk+iNkeu41nK6XobtlJvMVbeLbvDuhU0/KqF7
-	W68BpQ==
-Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com [209.85.217.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epf0ssass-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 13:15:21 +0000 (GMT)
-Received: by mail-vs1-f69.google.com with SMTP id ada2fe7eead31-6c5a5133221so198654137.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 06:15:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781010921; x=1781615721; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J36Lv/6KiRlprtNoYGijhIbdhXLKcydnuqjl+rojm0U=;
-        b=j1SSJZKvxa1HJF1i9XA/K8YT8jqDg/L6oFkA/p9QC9jIjgmLWSCgWFBzsScjkTLyBv
-         w0SVHQFy33an3iBAXmYeqHNlZhHv+Zqro/QRYpQs9VwAWwXNtrBX7aaWwi/3X882NvNJ
-         T6bcAQEt1LQCll7P4nKt568yhs5rSz5BCARbi0F09E78tvPp2h2DHMrZ5aZJLky3XEut
-         Dr9+tuR8Puv9gmRQaoRThP7ZWS4qsouQCYuJ6yMFSF35jMYkv3NHwcXGQ9YmhtyCrnVD
-         qb2U0vwTwXufUzeRREeTu4OP9W6l+e2yMXJGo24Azfqb2dPFWqU8Dw1M0EP7iLr+9iXT
-         bJ0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781010921; x=1781615721;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=J36Lv/6KiRlprtNoYGijhIbdhXLKcydnuqjl+rojm0U=;
-        b=mCwoXEVFcWcILLWpJr3Sd+8IDhoojEVUQqnHvykBX+2062lQAO03RJY6+IBPSWneja
-         e4XL229Z9/vBgNmLYJVG4AvLmNs/yCeIbFk9qsAtBO8mjlkZ86SOVKROWQpYknHHbMk0
-         y9kfHhrsPUf5Kpy6+VWikR16itlXHx173BYzXhnve+Z/lwzGjM+hBnzZ5tWtFjmKV2NP
-         gT2NVXQ05K6mTl6u+KTV0lhVlHdDkBSuXENDfJzubRC+yaCYD/OASa/HBc8KUFRz0qoi
-         vXpHTtfbLI8jdHyYZIdhGo9GWho/dHpVFXxq0AqspZ0KOBAfrotQyuk+ls3cxT3fcXKS
-         g57g==
-X-Gm-Message-State: AOJu0YzmbM2CvWPT3Th233KVU6zQuYBGrfVQDPIiFQOKKlJs1qPJWwHK
-	1oxGM30QKYSQhDlsfhbRCUDXrLt1nVXa1K3LzugUdI/gcOI9y+TkkQj0oYywuaOnZLtAXK9l15I
-	ISy/00eXz4lIQs2RUfTMRlO2bhH+3VLJGY0MTQqXagyeBgHyc0AkNNbfJmfJogqOQZ9yb
-X-Gm-Gg: Acq92OGrI2gFdpYRWASm/5oW7nMlCR29Yt9KiZ3PcheihIwzLJB3j5JtttB5sUUM7gp
-	83LzdAdcjvQJlWyl3tImtgnf5+f/ZhHcaLts2KEJpgsbua8B4eP8gQ2SDbuT5n89E0WG+ti3z9D
-	uu1SZE5JPGFdg0dW89GZJSM7+dD1R3yCEbi4KN2d9Dz2sFfJKR/h6wyPs427As/WSX0uNcHIh3T
-	uT+flbXy+Sq+EyIad21wQRG57StD9y/pPPFQHFjgib09xqrXjV9o8v+3tuessVoYWcQ9yqvWSnd
-	GmimpGxSPAk7DUsOvFbDxRSnCle6fWn51JRxBVNA1JdFwa8perbxBvwiXNN56I5EMhBxKv4vK+C
-	kG6lqf7bk3L9k8TH4efvwnPI0x2TmWYqkK9LFx80rEGdUgEOen4RLw827
-X-Received: by 2002:a05:6102:41a9:b0:62f:46c:40bb with SMTP id ada2fe7eead31-71925fa9013mr425185137.5.1781010920629;
-        Tue, 09 Jun 2026 06:15:20 -0700 (PDT)
-X-Received: by 2002:a05:6102:41a9:b0:62f:46c:40bb with SMTP id ada2fe7eead31-71925fa9013mr425100137.5.1781010917727;
-        Tue, 09 Jun 2026 06:15:17 -0700 (PDT)
-Received: from [192.168.120.170] ([178.235.128.140])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf0553040a7sm1041955966b.50.2026.06.09.06.15.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jun 2026 06:15:16 -0700 (PDT)
-Message-ID: <3876e21a-8462-429a-8fc3-da977f732743@oss.qualcomm.com>
-Date: Tue, 9 Jun 2026 15:15:14 +0200
+	s=arc-20240116; t=1781011205; c=relaxed/simple;
+	bh=pi5T/eK4OWz3QgGvWYsk5tIe6n4hsKPcMz2Tbf5hr6Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k0FhY9okz+kDXy1xW/4E3+Ovj4TUgXugYDqoRS4Xrd2IYg5RIkc0rZLV8aF+Wolf0ldMGd6F3k8sz5hrD2FFWZLwlwon6qPb7axDz9jvdL2J/w8VBaLvBBidxgJKd/HsqcNAlTxlERywP9Cwnqgf//8t80momCGWBGSxP8z8O7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Nu3c//Al; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5F451F0089B;
+	Tue,  9 Jun 2026 13:20:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781011204;
+	bh=3kfzfYUQjmzrzaNngkfG7jEfCJtYkrmcPuvtAzgJevo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Nu3c//AlzSp8dePkkxInyBwOH1za16zBtOfwyKKYtLFFLjiG8i4p3lxnz7/woXZRt
+	 JtKfFb9rqoH+SnrrC4q2iV44PdZ/9zVTsMNh6FhyvEl7aeFW7q1jiKXD0iYDuZT/19
+	 WAoTm2OfHpFKUjwDV7p3e1NXD1LDpjNUjE5OJ0BXTDAqSNdwXFpcotHjICirfRcDqq
+	 gXCCws+Lwj8qzUFh7jDIZdWSsogSZOcJi186LTV8ZYFAGhPuAZOcImMurdCnIqzQ5X
+	 HlfUlKnoNl7MCbPDCPLxB+eDFsxDgAHMilxw3DMD1rCWpElmqaPJkEJURsALDig2p1
+	 sWS4POf/gNapw==
+Date: Tue, 9 Jun 2026 15:20:01 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Adrien Grassein <adrien.grassein@gmail.com>, 
+	Jani Nikula <jani.nikula@linux.intel.com>, Rodrigo Vivi <rodrigo.vivi@intel.com>, 
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, Tvrtko Ursulin <tursulin@ursulin.net>, 
+	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Pengyu Luo <mitltlatltl@gmail.com>, Nikita Travkin <nikita@trvn.ru>, 
+	Yongxing Mou <yongxing.mou@oss.qualcomm.com>, Luca Ceresoli <luca.ceresoli@bootlin.com>, 
+	Francesco Dolcini <francesco@dolcini.it>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-usb@vger.kernel.org, intel-gfx@lists.freedesktop.org, intel-xe@lists.freedesktop.org, 
+	linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v4 1/8] drm/connector: report out-of-band IRQ_HPD events
+Message-ID: <20260609-bouncy-tomato-dalmatian-70ccee@houat>
+References: <20260608-hpd-irq-events-v4-0-30b62b335487@oss.qualcomm.com>
+ <20260608-hpd-irq-events-v4-1-30b62b335487@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pinctrl: qcom: eliza: Add missing sdc2 pin function
- mappings
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linusw@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260609-eliza-pinctrl-fix-sdc2-gpios-v1-1-cce631b7e7dd@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260609-eliza-pinctrl-fix-sdc2-gpios-v1-1-cce631b7e7dd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDEyNiBTYWx0ZWRfXyOXI6bKdH8L5
- 9ipCDscWTdhygYkfouLPEZVHaLOeokj9/a0ZaDmHNRxwI/VyaRwrj/VC/JNu5AJj/TtEOZKPL/n
- VJW1TfaCR59RLmNpUorE0mrLftrvqiYSlwDjIKFA72kBJcUAg5cLpiF+2dpY/Vs67vmkTZHNg01
- Q6kChCqoeUhdWD1D/ptewtg5t68mWjoAeyOuxhZQJtDkAJtcjktfZweNxvYK2K7benRISlfG73B
- PYByFj9X+ePS5/EMFQ5q6eRbAokgMlgVqxGDHRH0BtX+mnn8JNx9iVC9LV47bFOLzK53/Zd8ihW
- Nr3P45drRV02DGbFQytwTbdnrwvWBX+YlqXwSTY4p8BF/9xtQj9VY5SQoLAo5aIB0sF1FT1xsMH
- jUpeCDl+dZ3V5bn4O0AqDY7ICBRQ30l8KZJJXiwt+c/xm3y5bN6kBRC/kJT2lAm9bSWYmyIE6i6
- KJ1LGiGfbP6G/nVu/AA==
-X-Proofpoint-ORIG-GUID: n4LkxJHGtm_oCEiOrPWYZSKPz8AwITpI
-X-Proofpoint-GUID: n4LkxJHGtm_oCEiOrPWYZSKPz8AwITpI
-X-Authority-Analysis: v=2.4 cv=GeonWwXL c=1 sm=1 tr=0 ts=6a2811e9 cx=c_pps
- a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=Jll_wphTtbybbikUofUA:9 a=QEXdDO2ut3YA:10
- a=gYDTvv6II1OnSo0itH1n:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-09_03,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 malwarescore=0 clxscore=1015 spamscore=0
- lowpriorityscore=0 impostorscore=0 priorityscore=1501 suspectscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606090126
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="25e53fw4vpfchyki"
+Content-Disposition: inline
+In-Reply-To: <20260608-hpd-irq-events-v4-1-30b62b335487@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-2.26 / 15.00];
+	SIGNED_PGP(-2.00)[];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-112172-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112173-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[mripard@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:abel.vesa@oss.qualcomm.com,m:andersson@kernel.org,m:linusw@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[44];
+	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:maarten.lankhorst@linux.intel.com,m:tzimmermann@suse.de,m:airlied@gmail.com,m:simona@ffwll.ch,m:heikki.krogerus@linux.intel.com,m:gregkh@linuxfoundation.org,m:andrzej.hajda@intel.com,m:neil.armstrong@linaro.org,m:rfoss@kernel.org,m:Laurent.pinchart@ideasonboard.com,m:jonas@kwiboo.se,m:jernej.skrabec@gmail.com,m:adrien.grassein@gmail.com,m:jani.nikula@linux.intel.com,m:rodrigo.vivi@intel.com,m:joonas.lahtinen@linux.intel.com,m:tursulin@ursulin.net,m:khilman@baylibre.com,m:jbrunet@baylibre.com,m:martin.blumenstingl@googlemail.com,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:tomi.valkeinen@ideasonboard.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:mitltlatltl@gmail.com,m:nikita@trvn.ru,m:yongxing.mou@oss.qualcomm.com,m:luca.ceresoli@bootlin.com,m:francesco@dolcini.it,m:dri-devel@lists.freedesktop.org,m:linux-ke
+ rnel@vger.kernel.org,m:linux-usb@vger.kernel.org,m:intel-gfx@lists.freedesktop.org,m:intel-xe@lists.freedesktop.org,m:linux-amlogic@lists.infradead.org,m:linux-arm-kernel@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:jernejskrabec@gmail.com,m:adriengrassein@gmail.com,m:martinblumenstingl@gmail.com,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mripard@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[linux.intel.com,suse.de,gmail.com,ffwll.ch,linuxfoundation.org,intel.com,linaro.org,kernel.org,ideasonboard.com,kwiboo.se,ursulin.net,baylibre.com,googlemail.com,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,trvn.ru,bootlin.com,dolcini.it,lists.freedesktop.org,vger.kernel.org,lists.infradead.org];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,intel.com:email,houat:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: F19FC6607EA
+X-Rspamd-Queue-Id: 5F62A6608F2
 
-On 6/9/26 2:02 PM, Abel Vesa wrote:
-> GPIOs 38, 39, 48 and 49 support the SDC2 DATA function, while
-> GPIO 51 supports SDC2 CMD and GPIO 62 supports SDC2 CLK.
-> 
-> However, the sdc2 pin function is not listed in the corresponding
-> pingroup definitions, preventing these pins from being muxed for
-> SDC2 operation.
-> 
-> Add the missing sdc2 function mappings.
-> 
-> Fixes: 6f26989e15fb ("pinctrl: qcom: Add Eliza pinctrl driver")
-> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+
+--25e53fw4vpfchyki
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v4 1/8] drm/connector: report out-of-band IRQ_HPD events
+MIME-Version: 1.0
+
+Hi,
+
+On Mon, Jun 08, 2026 at 12:33:02AM +0300, Dmitry Baryshkov wrote:
+> The DisplayPort standard defines a special kind of events called IRQ.
+> These events are used to notify DP Source about the events on the Sink
+> side. It is extremely important for DP MST handling, where the MST
+> events are reported through this IRQ.
+>=20
+> In case of the USB-C DP AltMode there is no actual HPD pulse, but the
+> events are reported through the bits in the AltMode VDOs.
+>=20
+> Rename drm_connector_oob_hotplug_event() to drm_connector_dp_oob_status()
+> and extend its interface to report IRQ events to the DisplayPort Sink
+> drivers.
+>=20
+> Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
+>  drivers/gpu/drm/drm_connector.c          | 20 ++++++++++++--------
+>  drivers/usb/typec/altmodes/displayport.c | 23 +++++++++++++++--------
+>  include/drm/drm_connector.h              | 21 +++++++++++++++++++--
+>  3 files changed, 46 insertions(+), 18 deletions(-)
+>=20
+> diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connec=
+tor.c
+> index 3fa4d2082cd7..bb128dd0263a 100644
+> --- a/drivers/gpu/drm/drm_connector.c
+> +++ b/drivers/gpu/drm/drm_connector.c
+> @@ -3502,20 +3502,24 @@ struct drm_connector *drm_connector_find_by_fwnod=
+e(struct fwnode_handle *fwnode)
+>  }
+> =20
+>  /**
+> - * drm_connector_oob_hotplug_event - Report out-of-band hotplug event to=
+ connector
+> + * drm_connector_dp_oob_status - Report out-of-band hotplug event to Dis=
+playPort connector
+>   * @connector_fwnode: fwnode_handle to report the event on
+>   * @status: hot plug detect logical state
+> + * @extra_status: additional information provided by the sink without ch=
+anging
+> + * the HPD state (or in addition to such a change).
+>   *
+> - * On some hardware a hotplug event notification may come from outside t=
+he display
+> - * driver / device. An example of this is some USB Type-C setups where t=
+he hardware
+> - * muxes the DisplayPort data and aux-lines but does not pass the altmod=
+e HPD
+> - * status bit to the GPU's DP HPD pin.
+> + * In some cases when DisplayPort signals are being routed through the U=
+SB
+> + * Type-C port the hotplug event notifications come from outside of the =
+display
+> + * driver / device. In this case hardware muxes the DisplayPort data and
+> + * AUX-lines but does not pass the altmode HPD status bit to the GPU's D=
+P HPD
+> + * pin.
+>   *
+>   * This function can be used to report these out-of-band events after ob=
+taining
+>   * a drm_connector reference through calling drm_connector_find_by_fwnod=
+e().
+>   */
+> -void drm_connector_oob_hotplug_event(struct fwnode_handle *connector_fwn=
+ode,
+> -				     enum drm_connector_status status)
+> +void drm_connector_dp_oob_status(struct fwnode_handle *connector_fwnode,
+> +				 enum drm_connector_status status,
+> +				 enum drm_connector_status_extra extra_status)
 
-Interesting bit that unlike other platforms we don't have a separate
-group for clk/cmd/rclk
+Thanks for the renaming, but I think we can also rename
+drm_connector_status_extra to something a bit more descriptive now?
+drm_connector_dp_oob_event? status?
 
-anyway
+The rest looks good.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Maxime
 
-Konrad
+--25e53fw4vpfchyki
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaigTAQAKCRAnX84Zoj2+
+dnv2AX9le3hz+Lu8gxYvgEXc1sDIBCPM1bh/zkVwBN3wZ9THVMA3l8RMscsHED+I
+ZdjXquUBeQESub4sfU2kH0nggZa7VB2wC1SqcPxTrCSdEwKVl5n4RlSMJ/F47hOK
+i6kZa+CMlQ==
+=wSKV
+-----END PGP SIGNATURE-----
+
+--25e53fw4vpfchyki--
 
