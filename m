@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-112024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id bgBzMb7AJ2pF1gIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 09:29:02 +0200
+	id a/6tCV3BJ2py1gIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 09:31:41 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F99E65D310
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 09:29:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C3A2465D3A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 09:31:40 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=DCG6KX2m;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112024-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112024-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=LJMuEry7;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112025-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112025-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1E6063014118
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 07:24:24 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id F243A30607A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 07:26:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DB473C455C;
-	Tue,  9 Jun 2026 07:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D1613C455C;
+	Tue,  9 Jun 2026 07:26:06 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4D337CD5C;
-	Tue,  9 Jun 2026 07:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7224F3B3C1A;
+	Tue,  9 Jun 2026 07:26:05 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780989863; cv=none; b=nKzTgQQSPd0fNULKcuwoGuLayhgzcsdLcDM17uyn/cKhsgN7siWwyTMlQqUTh1TZ/58zqmJrQhp/UCm9lva4mqD8ij1c83Lb5EWIo7Hlsvdf8Sv3f9EM3Sly7Y2RpIds9Pa8+Oz7sS58LkO7J/k8m3QREgFMdZXMpAjfWQ4TQ9g=
+	t=1780989966; cv=none; b=cjgwuc7tRbMLlH7xKu0zwEb5/Q/FQ1+74c9SBLefsCCpVKkPh5ph52Ra+6f6svP7B8pHlz7SVYCdclwjXXdZUtLeKNFikKjyuq4aTsPSe6Df0DxMT0eycLp8+q7ffXKe7dkTFy93KA3XgbdA8KQJtX/lhnc1NrsNvFxTsg7NMCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780989863; c=relaxed/simple;
-	bh=1SGBH0+p19S1Ew7X+5YjP3OHj09qSijY643HFgXPfMI=;
+	s=arc-20240116; t=1780989966; c=relaxed/simple;
+	bh=B6mzxBqMBBu46rokPliDs7H8bpDdu+oGc9pdopcEOQg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a1uN5qA5E4W5uJSJevkfdpVNN6XGH/j+TzfydhNFQZl9bXLrIXdbZbZovgtLkp9lkWiH3vzfd106mEk0doZn2oWcq/AkH1hgmp3cz9OVHgVzKIOoJhWBmzWvIUCKe242c6QEHPdHfXMKgpZcrHLQAGvxfMSgxhGe/Bnzn5oXXn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DCG6KX2m; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FC91F00893;
-	Tue,  9 Jun 2026 07:24:20 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=L39SQd81O/WUSBp9uaiplLfQV62ben9qJnGjeyyg69kTpVEAZBb7E64mHOXNFXHml7tEj+UKggbYRFx3zuFsgMOsPpX55LfuiIdLbWnkj6kiThFp5zMKgiuHbA3BSNxCBKZBnrdp279tg7BGeOxkXWLI0WHuIgDVBThjty0vQyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LJMuEry7; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B04D1F00898;
+	Tue,  9 Jun 2026 07:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1780989861;
-	bh=nP5nc6+ayGjvJcpkjtBre/TACIZYVnCWBbFhPz6C0I0=;
+	s=k20260515; t=1780989965;
+	bh=YDTKrBYRK+11OpkAvD1LbVPGyycscURXPFUWF0HvLoo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=DCG6KX2mqGLppONKgLkFr8y1dFex0IQlMofSyGGxuaNR2StBlQdS6vlKHF6LtK3w6
-	 WbTaEJTwvRKl6nGCXoZ7d8I2rO8JCvRr4PNJO0XBYwWDDkouxpSeuHp7a5XPGN0rQl
-	 Sg2IcHcSJff5DI1XfuqpmTo68nK5mm1Zk63J2/JD2xgXISi8jT9NEJ8HR95CNmJtD0
-	 P3edsicUK602/nV91losjMsu6lw8t/uzuSwnriCIyLc10CZcR5j3vobapJ7AaDo4Cc
-	 CRPDwT8nch9UYXBm0yQHhqeLdzdpjHM3SeJWXPQzLRffX20ZUujV6+0nVct9ovl2Fw
-	 JfPd4c0aaNhWQ==
-Date: Tue, 9 Jun 2026 09:24:17 +0200
+	b=LJMuEry7C3c5nyEDbn6WkDnaXLyv5h4LKqszEWft21kQPy8AtJgZB8/DRUzoxW86V
+	 cL0CeP/ns8UB8MalnwDRocyXLO9l5FOy9E3hgM6uLrzR88dRlCvogbRWG3cIOr9tc1
+	 SNzykucyNB7ZmD5AiQjUA5POfEwVUDsc1uVkeakSP+CAA4kYt7H6uswqSrcO8TAz9Z
+	 wdWB2/9V+V8rpVdbowCKmc1HgBQpmklhrPpUteusKTczKBalsvnJLSpQvE76BeP9Ty
+	 0IyqdAWeM9E4KJTB9gkSzp0MyWXSS1z5i5ymlIugRKnUOX1GTReuFHE3tMk7gYTNjg
+	 FFyFGrK4i+xdA==
+Date: Tue, 9 Jun 2026 09:26:01 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, 
-	Miquel Raynal <miquel.raynal@bootlin.com>, Richard Weinberger <richard@nod.at>, 
-	Vignesh Raghavendra <vigneshr@ti.com>, Rob Herring <robh@kernel.org>, 
+To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+Cc: Srinivas Kandagatla <srini@kernel.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/4] mtd: rawnand: qcom: Make "aon" clock optional
-Message-ID: <20260609-aloof-healthy-condor-c3ca92@quoll>
-References: <20260608-qcom-nandc-mdm9607-v1-0-4639a0492274@linaro.org>
- <20260608-qcom-nandc-mdm9607-v1-2-4639a0492274@linaro.org>
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org, 
+	linux-sound@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 1/3] ASoC: dt-bindings: qcom: Add Shikra rx and va
+ macro codecs
+Message-ID: <20260609-cheerful-translucent-carp-c44aff@quoll>
+References: <20260608172023.2965292-1-mohammad.rafi.shaik@oss.qualcomm.com>
+ <20260608172023.2965292-2-mohammad.rafi.shaik@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,7 +67,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260608-qcom-nandc-mdm9607-v1-2-4639a0492274@linaro.org>
+In-Reply-To: <20260608172023.2965292-2-mohammad.rafi.shaik@oss.qualcomm.com>
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -80,48 +80,36 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-112024-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:stephan.gerhold@linaro.org,m:mani@kernel.org,m:miquel.raynal@bootlin.com,m:richard@nod.at,m:vigneshr@ti.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-mtd@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112025-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:mohammad.rafi.shaik@oss.qualcomm.com,m:srini@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,linaro.org:email,quoll:mid,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[quoll:mid,vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2F99E65D310
+X-Rspamd-Queue-Id: C3A2465D3A6
 
-On Mon, Jun 08, 2026 at 03:20:23PM +0200, Stephan Gerhold wrote:
-> Some SoCs (e.g. MDM9607, SDX55) have only a single separately controllable
-> clock for the NAND controller. The actual clocks in the hardware are
-> managed by the firmware and turned on all together when needed. In this
-> case, there is no separate "aon" clock that can be described in the device
-> tree.
-> 
-> Make the second "aon" clock optional to avoid an error when it is missing.
-> For platforms that really need it, the dt-bindings are responsible for
-> validating that.
-> 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> ---
->  drivers/mtd/nand/raw/qcom_nandc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Mon, Jun 08, 2026 at 10:50:21PM +0530, Mohammad Rafi Shaik wrote:
+> Add bindings for Qualcomm shikra rx and va  macro codec.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Which are not compatible with older variants because?
 
 Best regards,
 Krzysztof
