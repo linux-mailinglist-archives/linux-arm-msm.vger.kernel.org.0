@@ -1,104 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-112065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 5m3nN83WJ2qo3AIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 11:03:09 +0200
+	id YkjAKyjXJ2rA3AIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 11:04:40 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 149A765E12D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 11:03:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 25FE165E171
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 11:04:40 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=LIyAsMac;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=fn+MWOrz;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112065-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112065-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=linaro.org header.s=google header.b=UxoVll7h;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112066-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112066-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=linaro.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B800F30D4042
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 08:53:49 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2B8FE30816F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 08:54:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0CD03EAC9B;
-	Tue,  9 Jun 2026 08:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 300EE3E3DA6;
+	Tue,  9 Jun 2026 08:53:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4C639F187
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 08:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F5E3E51C8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 08:53:56 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780995212; cv=none; b=iiTd+vQ5wHS2BtyQ0iTbtHcHluFM7jh8X/YydPPxEI1C1IfVAQ/pHsRONzZni0rxqLSLM8qOfebJgAjXdMrmDQOSG53/F9Noio5wfYS47WaWDf0gHpZmjuHQDQipT+12lqsSzjo82f9cf2UqTQAnglsOgnioXA422ND9Q6KNiBM=
+	t=1780995239; cv=none; b=sY5FG4/L+XYSgw1tsgCtpisSkXnPjrGbasFkFEN96TnWekr7avta1KoSr1LtK1NuuZlLpu5eptn2sy3SXXH8bvyvvu6cIJfXHfrUlVbiSJvCjQvWnm7jz9x/YqdTpH2dq8H209J6kgaA6sRYNDVDlsemJqKH39uiy+fTVeF0z+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780995212; c=relaxed/simple;
-	bh=/FSMGn29BC7ORLv22Sa7o74cNNiRrr9HIkI5/qYctTQ=;
+	s=arc-20240116; t=1780995239; c=relaxed/simple;
+	bh=PeNlJwYLmznoeivJvOkcwrdTA7OLro16oPrB4TKgDsg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Fga58AfhwNX7G7oQH8YuOUepI7aEYZlWH49bJHkyZi+k3H8Udf5xTw4v8LM9r9EQeVapNR264TjBSoEYhOigdHtznay1fpujYfunnyzpwo7UPWTWAUK83LUkoShgdRZVFSc0uE8cHMKB46pmsXw+93bMDWgQJVpG3JkxKvCI7hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LIyAsMac; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fn+MWOrz; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6597rKoN1584064
-	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Jun 2026 08:53:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qxjGI4Ozh3EujmkmvmGGntYY6me51VER/HBizqF9uJk=; b=LIyAsMacW+rW/x2u
-	estfjDemu1BZ42GBzSHJdqmU21fmxHPLGKjRC4SlLF7oQKWXf/yVujEvfu1jowFV
-	cPdwzyXeSH7Kk9vJu82dszmJqiYdqCsIdJqau327Gw0YKbkCCcZS/OXOF4GEkvCB
-	bYpOT3INz80BBdrBUPdM/HczOIv8K8CoPUVHf4XAIWvNUmSzkc6jrKnZKc6PBRUi
-	y9+rIezfbIcJOQ6F5tLo2VEaseDgSRR1QQTnFmkxLTigtcRF7MUDEzPBWJzHHpfN
-	5xHwoeGx3kbdeLFGfv2XpEFgMkGT+RkcZGizDszN3NReATOyOR00qrDtwXdByHJt
-	jQr0Bg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epdeermyc-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 08:53:30 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-51758177935so63775561cf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 01:53:30 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=G9W1tg0IyZcqMgrDqwGaKYRhbSr3/cyKgCOF37ddeCU7NjccJHpnhNoFGAHH3WF8Ezhi65OkCcAUGzv7l7BCjXDSt3PArwrOnDAyHLu01LVvP84cMuOV1yptoPnLqmPmYe9IUOU0s7vKl2oZIQVTCNsc6SJ3cScj2nW3WgWDi0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UxoVll7h; arc=none smtp.client-ip=209.85.218.42
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-beb2a97cc9aso846547366b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 01:53:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1780995210; x=1781600010; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=linaro.org; s=google; t=1780995235; x=1781600035; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=qxjGI4Ozh3EujmkmvmGGntYY6me51VER/HBizqF9uJk=;
-        b=fn+MWOrzAX8wEczUz8gDPJJ4bugeZrcmYmS6v9FefDxPQJhjr2ZojenshNIPAwCKPV
-         bWA1vP/YK8PxJRxo5QLSGe7mnHwCutV2gL13qXxY+5L7WdUyQUAYTMUfefsbn/bgTWsD
-         gNs/GYKSQRjD0OTLteUDZSw/jJIXWD8Kryn0dVb7GAOYk/YJ7mf5gMZcnbOlhA7RQFkl
-         i4vG8ueB7BroD42i7Yovo+c2VK7mhHA7V4SdVPNulOc21LGdtUNJG2wk8bMCQuG6lcxp
-         YJdFV36AGq4Aphdn34M66GtSojd1K2R5MPj6BeUinUL7ryESJ49n7V6ygBLlUfdzdZEc
-         Mejg==
+        bh=hZrIRgISj6MusU5WRM9oV6xNWhYPCm9zSf8D1irSjCY=;
+        b=UxoVll7hs6Tyo3qSLhGCPZbiMGY6yLnqWIo8RNiPdUy7u++XlAvndqiwuVhsEkqLA9
+         oU5Ox+nGpVwFgRv0rkv0ZpWMbs8VHYdJENCjnu5mjBrcn1BBUhOrTne83YKmdHAt4Xol
+         KQJfkbz3NRnl3KoeegTjDLroYNitgzRNfdtYz8s/133T82t+igFHSFRiZcuVn6jEHEWR
+         kt7Ryi2AKKyddQS+bUwAQSpYHgX5Z46JAnhkLkd9lUUMZHursvudrX9/8npfZIO2dDmJ
+         K5DKPOgJpEdit+pv6gixLXR79ys1fWp2Zh65GheR86IRCoJ5MdCEv5UrV3ijWvGKn350
+         Q4tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780995210; x=1781600010;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=1e100.net; s=20251104; t=1780995235; x=1781600035;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qxjGI4Ozh3EujmkmvmGGntYY6me51VER/HBizqF9uJk=;
-        b=AWTzKpRB/ZYWSXqOFXOmjTQP3hv9DfylOBrbWZd58etGeaJhaZxSRUDfx9FFKVPgpY
-         uSNVg7cV5mmKaF5rsxq+cDGfu3ZLiGhjsTYhVtWaddNcGoQnwIPvsIne05cVeCckajV/
-         temGbetFlG9dg/c2a6MY1YJe3LwtX+yqtLO7ffVnBnkezsxPa5yZ+fe/fFpLmUy/79Nd
-         dtdouQ1XVrd7i20kC1XIqOf8MJn2U0DtkN8H9I/SedVrJXl20yVeANExagHKHxfvm7iv
-         nudgNH5VxqvCxoQVlM8FtB4QrFOq9/vilDdv84ZacpaBFhIlIfXpIlwQHKg7vnCdX8m7
-         JCqQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8WEIO1m4r1Ia+pqMSplroCtQMyqQXsQ/pqB8ZzR3T1MDmbOT3xrBjoTaUM4F26fsT8MSVJcuL6v3MVx31K@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywf8XSUe2FyrIbTvsJr+r/BK8ZisNYzgk8/8qFRpwKF8ew33A1+
-	BhsmJvlr/acwDkiUtPPqwkx57+/OsikErlhkmhMIrRySjZEbtacAzYa8CWiwVEX5FqY/lz/bNyf
-	MNtKE677nJAfumfo3WCZYwQh/qM8rXx/8aNtU/gt4rCDEvEYVmgf4NsYJ9xaStWPy08M0
-X-Gm-Gg: Acq92OEHIXdqA44eo7haMvtcEBuzioX5azNbuRTH/tIWYSia95+OeeBRLWtSFNJkr8K
-	rzYoZtQddAwcZd/BKFYoyAz1ACgUrN3e6QDx5s+xYI6DEuttb1Y+RME1s6JrWnqzw/Icyx8Kyuz
-	rAt3XF2VubpV4B+LzQOG0074Q7YNBxk590iqLSmtokIXGVel88kAaacpdEBJE4F/HUi6pnSy4nN
-	dHkOlTXhFzDq/HBAo5fEEVYkVxexyjBJyDcyefgtMhP38TawyMyNsqxa3Iflzm8xAIKfhifPFoE
-	6slaMY072oBJhM126QKgNOhyXCJHx74a5rvbBZmwLXzmr79QSo3AE1icQGT0dnmbV4EG0o88j+I
-	DWMjKj0BcC7qdRQ+FD5Pz5pq/pUNQEvPJRui+JTZ7YRUB5VQ0QpaV/9enonc=
-X-Received: by 2002:a05:622a:2489:b0:50d:66b6:1564 with SMTP id d75a77b69052e-51795b8650fmr177165251cf.14.1780995209401;
-        Tue, 09 Jun 2026 01:53:29 -0700 (PDT)
-X-Received: by 2002:a05:622a:2489:b0:50d:66b6:1564 with SMTP id d75a77b69052e-51795b8650fmr177164921cf.14.1780995208906;
-        Tue, 09 Jun 2026 01:53:28 -0700 (PDT)
-Received: from [192.168.68.125] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-6912365bd3fsm4736019a12.5.2026.06.09.01.53.27
+        bh=hZrIRgISj6MusU5WRM9oV6xNWhYPCm9zSf8D1irSjCY=;
+        b=k98MsvH/yeLGKblb4Bd7D5NmsOMzalKnLirPGSxnKpI+1HKeGIS9nWKY6TBvWAbV81
+         UpBI4yepwGwjopd75RQCWWF9LV0WuY2e5X6NcYVzcyrVzGAhQHENkGLk4qw8OBKWpfB7
+         hnmPj/vCEchGCJSFYf2ohypYPK4r2svPAL78VZDocw09XIYEW4qyP75PChgR8TN1hw8a
+         oOFUfZWADPOBGLkWwyw+ymiRYs9Zp/VlN/SflwmeXjFsooAr0OVGa59hzwD6rTQcZvmX
+         nfcXqc3URwJXNWKSRdocJS43iBLdJwLpDQXMifztFQbuNh34zR6CM453+WbY56D/y8GK
+         D4ZA==
+X-Gm-Message-State: AOJu0YzlzBNblJkUcmPj76kNSe6Oz0+kud/tmg93p/14uz8/yj0Niud5
+	ekEvF9CgomWTBWDJT5G8UaTxBCaHTZXWOrpGZdYQXNg6Jg6oLjvCN3RdCjHF+3nkOuw=
+X-Gm-Gg: Acq92OHcUyOoo5dy/1dC7huB5vn0oY+MLa38khDw1l4moHHJE8sDUC6cTxaLqjyVqYs
+	JIm8KgBpPWnciyD/iKGhPtWBH/Tixgel0OvCBMf1rMTlTpq/UAoJowW3R+PUN/5YHUq3YYs5Hpf
+	zWXmZV581QZ+3IYvUTAy1f1S2IgVJonND0pfp/u2zcoRs+fxVleQXe96fIJWbZ3pPa9HGr7ZfVf
+	rhBbdo39D58S1HHRtnczjhc7iyCAAC3xRziUydawg9BRKJkAqk+Sa4OMFzerAMZJBjw9vu6+Dzo
+	bXuY901pont9vXnR6sqmKWSIOI9IpMackWZM14qcG70FIwqCaXmXu8Em/vJlxyUikO+0c+SACUv
+	/UiIe5efcce4Nvb/sqSUu58nef4959w5xPjIVmCjbhiVfzbSwSm4vuKYk2qvHwIU4afIryHc64L
+	j7o27viZeRxkInUVmtigx80KGfD6jdMnxUhM7jGzxmB9wCeSgpqpSG7rs=
+X-Received: by 2002:a17:907:1dd3:b0:bf1:1df7:3e50 with SMTP id a640c23a62f3a-bf9365c6399mr65159966b.3.1780995234797;
+        Tue, 09 Jun 2026 01:53:54 -0700 (PDT)
+Received: from [192.168.0.167] ([109.77.72.26])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bf0553040a7sm998205466b.50.2026.06.09.01.53.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jun 2026 01:53:27 -0700 (PDT)
-Message-ID: <314beaa0-3dc4-4cba-a37f-c358532e90dd@oss.qualcomm.com>
-Date: Tue, 9 Jun 2026 09:53:26 +0100
+        Tue, 09 Jun 2026 01:53:54 -0700 (PDT)
+Message-ID: <d56d7468-a3e2-43dc-967f-63066bcaf1d6@linaro.org>
+Date: Tue, 9 Jun 2026 09:53:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,295 +85,196 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] soundwire: qcom: add EE-aware register layout and
- cpu selection
-To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srini@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org
-References: <20260608175345.3118060-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20260608175345.3118060-3-mohammad.rafi.shaik@oss.qualcomm.com>
+Subject: Re: [PATCH v2 3/7] arm64: dts: qcom: shikra: Add CAMSS node
+To: Nihal Kumar Gupta <nihal.gupta@oss.qualcomm.com>,
+ Bryan O'Donoghue <bod@kernel.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Loic Poulain <loic.poulain@oss.qualcomm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Andi Shyti <andi.shyti@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.Li@nxp.com>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-i2c@vger.kernel.org, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org,
+ Suresh Vankadara <quic_svankada@quicinc.com>,
+ Vikram Sharma <vikram.sharma@oss.qualcomm.com>
+References: <20260608-shikra-camss-review-v2-0-ca1936bf1219@oss.qualcomm.com>
+ <20260608-shikra-camss-review-v2-3-ca1936bf1219@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-In-Reply-To: <20260608175345.3118060-3-mohammad.rafi.shaik@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20260608-shikra-camss-review-v2-3-ca1936bf1219@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=H+DrBeYi c=1 sm=1 tr=0 ts=6a27d48a cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=nzkHmdKqgOy-9w5VjhwA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDA4MiBTYWx0ZWRfXz1La7EJ0fnWZ
- eUP3CvsUqDfn8KeJM3feanEUhTpGS6CJ/swb3uwHOp5nwdCKhLD9claOtEZOqsVQGqinmG1ECp7
- +G00GmEnuxqNTCqbQApBKpqbyo7UAIdIrMpCWVvPimC5l2qVl4wrdHd9lwbNuGYlXi9gO38dEuC
- lTFAk5xZ8jK8F5KrGNDeWVt8Dtc7LDAXmcoeDUNrTz6QXSctuJA+wN85G8ZBAf9zg3kqb646sEs
- H8KoERL3/HdeWJkx0mTLBCLDE0MWGdkzn343UFsIU5KftyspNX0W+oGz9oBzGklD91n1p7xHXbI
- jXEuq1zFA6CPNIKoC+d27Yw/9Qm7F6kDA+6IpQTg3AYj88fLQ5px44zJyvxHb663FI1DnmRHzLc
- wEyaDflk1We8mP1vMs98LpYN75Prl58jxELGEgO/wNhu11JFXixlpN7oy2tQAHjW+vRbAXDOC/C
- pYcjNvJem9mFa/jBWVg==
-X-Proofpoint-ORIG-GUID: 0wqhNec4AV4ndAmt-RSHTxUEFwKM4epd
-X-Proofpoint-GUID: 0wqhNec4AV4ndAmt-RSHTxUEFwKM4epd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-09_02,2026-06-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 clxscore=1015 adultscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2606090082
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-112065-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo];
-	FORGED_SENDER(0.00)[srinivas.kandagatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	FORGED_RECIPIENTS(0.00)[m:mohammad.rafi.shaik@oss.qualcomm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:srini@kernel.org,m:vkoul@kernel.org,m:yung-chuan.liao@linux.intel.com,m:quic_srivasam@quicinc.com,m:pierre-louis.bossart@linux.dev,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-sound@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-112066-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[25];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[srinivas.kandagatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linaro.org,nxp.com,pengutronix.de,gmail.com];
+	FORGED_RECIPIENTS(0.00)[m:nihal.gupta@oss.qualcomm.com,m:bod@kernel.org,m:vladimir.zapolskiy@linaro.org,m:loic.poulain@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:rfoss@kernel.org,m:andi.shyti@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:linux-arm-msm@vger.kernel.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-i2c@vger.kernel.org,m:imx@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:quic_svankada@quicinc.com,m:vikram.sharma@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,linaro.org:dkim,linaro.org:email,linaro.org:mid,linaro.org:from_mime,qualcomm.com:email,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 149A765E12D
+X-Rspamd-Queue-Id: 25FE165E171
 
-
-
-On 6/8/26 6:53 PM, Mohammad Rafi Shaik wrote:
-> Some Qualcomm SoundWire masters expose interrupt, FIFO and status
-> registers in EE-specific register windows on v2.0 and newer hardware.
+On 08/06/2026 15:06, Nihal Kumar Gupta wrote:
+> Add the Camera Subsystem node. Shikra shares the same IP as QCM2290
+> with two CSIPHYs, two CSIDs and two VFEs, but does not include CDM
+> and OPE blocks, so only a single IOMMU context bank is needed.
 > 
-> Add support for selecting the SoundWire execution environment from DT
-> and use it to program the correct register window for the active EE.
-
-So this is integration details, which can be derived dynamically based
-on version or compatible.
-
-
-> The driver now reads the EE value from the new
-> qcom,swr-master-ee-val property, with qcom,ee as a fallback for
-> backward compatibility.
-
-> 
-> For v2.0+ hardware, the IRQ/FIFO/status register layout is adjusted by
-Which exact version, do we have minor or step values for this?
-
-> the EE window stride so the driver programs the correct bank for the
-> selected EE. The interrupt enable path is also updated to always use
-> the selected EE window.
-> 
-> This change allows SoundWire interrupt routing and register accesses to
-> work correctly on platforms where the master is not mapped to the
-> default EE1 window.
-> 
-> In Shikra, the soundwire execution environment is set to 0 unlike other
-> Qualcomm boards.
-> 
-
-Can we get this integration details dynamically.
-> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+> Co-developed-by: Vikram Sharma <vikram.sharma@oss.qualcomm.com>
+> Signed-off-by: Vikram Sharma <vikram.sharma@oss.qualcomm.com>
+> Signed-off-by: Nihal Kumar Gupta <nihal.gupta@oss.qualcomm.com>
 > ---
->  drivers/soundwire/qcom.c | 78 +++++++++++++++++++++++++++++++++-------
->  1 file changed, 65 insertions(+), 13 deletions(-)
+>   arch/arm64/boot/dts/qcom/shikra.dtsi | 99 ++++++++++++++++++++++++++++++++++++
+>   1 file changed, 99 insertions(+)
 > 
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index 3d8f5a81e..f4b8ff77b 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -26,6 +26,7 @@
->  #define SWRM_COMP_STATUS					0x014
->  #define SWRM_LINK_MANAGER_EE					0x018
->  #define SWRM_EE_CPU						1
-> +#define SWRM_MAX_EE						1
-
-Can we not make the EE_CPU dynamic and everything should fall in place?
-isn't?
-
-Is the register layout changed?
-
->  #define SWRM_FRM_GEN_ENABLED					BIT(0)
->  #define SWRM_VERSION_1_3_0					0x01030000
->  #define SWRM_VERSION_1_5_1					0x01050001
-> @@ -118,6 +119,7 @@
->  #define SWRM_V2_0_CLK_CTRL					0x5060
->  #define SWRM_V2_0_CLK_CTRL_CLK_START				BIT(0)
->  #define SWRM_V2_0_LINK_STATUS					0x5064
-> +#define SWRM_V2_REG_EE_STRIDE					0x1000
->  
->  #define SWRM_DP_PORT_CTRL_EN_CHAN_SHFT				0x18
->  #define SWRM_DP_PORT_CTRL_OFFSET2_SHFT				0x10
-> @@ -202,6 +204,7 @@ struct qcom_swrm_ctrl {
->  	struct mutex port_lock;
->  	struct clk *hclk;
->  	int irq;
-> +	u32 ee;
->  	unsigned int version;
->  	int wake_irq;
->  	int num_din_ports;
-> @@ -222,6 +225,7 @@ struct qcom_swrm_ctrl {
->  	u32 slave_status;
->  	u32 wr_fifo_depth;
->  	bool clock_stop_not_supported;
-> +	unsigned int reg_layout_local[SWRM_OFFSET_DP_SAMPLECTRL2_BANK + 1];
->  };
->  
->  struct qcom_swrm_data {
-> @@ -328,6 +332,36 @@ static const struct qcom_swrm_data swrm_v3_0_data = {
->  };
->  #define to_qcom_sdw(b)	container_of(b, struct qcom_swrm_ctrl, bus)
->  
-> +static void qcom_swrm_set_ee_register_layout(struct qcom_swrm_ctrl *ctrl,
-> +					     const struct qcom_swrm_data *data)
-> +{
-> +	int ee_offset;
+> diff --git a/arch/arm64/boot/dts/qcom/shikra.dtsi b/arch/arm64/boot/dts/qcom/shikra.dtsi
+> index a4334d99c1f35ee851ca8266ec37d4a200a07ee5..b93ce4a92a998ea5d9d4268d2fd46030fafc4084 100644
+> --- a/arch/arm64/boot/dts/qcom/shikra.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/shikra.dtsi
+> @@ -604,6 +604,105 @@ opp-384000000 {
+>   			};
+>   		};
+>   
+> +		camss: camss@5c11000 {
+> +			compatible = "qcom,shikra-camss", "qcom,qcm2290-camss";
 > +
-> +	memcpy(ctrl->reg_layout_local, data->reg_layout,
-> +	       sizeof(ctrl->reg_layout_local));
-> +	ctrl->reg_layout = ctrl->reg_layout_local;
+> +			reg = <0x0 0x05c11000 0x0 0x1000>,
+> +			      <0x0 0x05c6e000 0x0 0x1000>,
+> +			      <0x0 0x05c75000 0x0 0x1000>,
+> +			      <0x0 0x05c52000 0x0 0x1000>,
+> +			      <0x0 0x05c53000 0x0 0x1000>,
+> +			      <0x0 0x05c66000 0x0 0x400>,
+> +			      <0x0 0x05c68000 0x0 0x400>,
+> +			      <0x0 0x05c6f000 0x0 0x4000>,
+> +			      <0x0 0x05c76000 0x0 0x4000>;
+> +			reg-names = "top",
+> +				    "csid0",
+> +				    "csid1",
+> +				    "csiphy0",
+> +				    "csiphy1",
+> +				    "csitpg0",
+> +				    "csitpg1",
+> +				    "vfe0",
+> +				    "vfe1";
 > +
-> +	if (ctrl->version < SWRM_VERSION_2_0_0)
-> +		return;
+> +			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
+> +				 <&gcc GCC_CAMSS_AXI_CLK>,
+> +				 <&gcc GCC_CAMSS_NRT_AXI_CLK>,
+> +				 <&gcc GCC_CAMSS_RT_AXI_CLK>,
+> +				 <&gcc GCC_CAMSS_TFE_0_CSID_CLK>,
+> +				 <&gcc GCC_CAMSS_TFE_1_CSID_CLK>,
+> +				 <&gcc GCC_CAMSS_CPHY_0_CLK>,
+> +				 <&gcc GCC_CAMSS_CSI0PHYTIMER_CLK>,
+> +				 <&gcc GCC_CAMSS_CPHY_1_CLK>,
+> +				 <&gcc GCC_CAMSS_CSI1PHYTIMER_CLK>,
+> +				 <&gcc GCC_CAMSS_TOP_AHB_CLK>,
+> +				 <&gcc GCC_CAMSS_TFE_0_CLK>,
+> +				 <&gcc GCC_CAMSS_TFE_0_CPHY_RX_CLK>,
+> +				 <&gcc GCC_CAMSS_TFE_1_CLK>,
+> +				 <&gcc GCC_CAMSS_TFE_1_CPHY_RX_CLK>;
+> +			clock-names = "ahb",
+> +				      "axi",
+> +				      "camnoc_nrt_axi",
+> +				      "camnoc_rt_axi",
+> +				      "csi0",
+> +				      "csi1",
+> +				      "csiphy0",
+> +				      "csiphy0_timer",
+> +				      "csiphy1",
+> +				      "csiphy1_timer",
+> +				      "top_ahb",
+> +				      "vfe0",
+> +				      "vfe0_cphy_rx",
+> +				      "vfe1",
+> +				      "vfe1_cphy_rx";
 > +
-> +	/*
-> +	 * Current register constants map EE1. For EE0, use the EE register
-> +	 * window stride to access status/IRQ/FIFO registers.
-> +	 */
-> +	ee_offset = ((int)ctrl->ee - SWRM_EE_CPU) * SWRM_V2_REG_EE_STRIDE;
-> +	if (!ee_offset)
-> +		return;
+> +			interrupts = <GIC_SPI 210 IRQ_TYPE_EDGE_RISING 0>,
+> +				     <GIC_SPI 212 IRQ_TYPE_EDGE_RISING 0>,
+> +				     <GIC_SPI 72 IRQ_TYPE_EDGE_RISING 0>,
+> +				     <GIC_SPI 73 IRQ_TYPE_EDGE_RISING 0>,
+> +				     <GIC_SPI 309 IRQ_TYPE_EDGE_RISING 0>,
+> +				     <GIC_SPI 310 IRQ_TYPE_EDGE_RISING 0>,
+> +				     <GIC_SPI 211 IRQ_TYPE_EDGE_RISING 0>,
+> +				     <GIC_SPI 213 IRQ_TYPE_EDGE_RISING 0>;
+> +			interrupt-names = "csid0",
+> +					  "csid1",
+> +					  "csiphy0",
+> +					  "csiphy1",
+> +					  "csitpg0",
+> +					  "csitpg1",
+> +					  "vfe0",
+> +					  "vfe1";
 > +
-> +	ctrl->reg_layout_local[SWRM_REG_FRAME_GEN_ENABLED] += ee_offset;
-> +	ctrl->reg_layout_local[SWRM_REG_INTERRUPT_STATUS] += ee_offset;
-> +	ctrl->reg_layout_local[SWRM_REG_INTERRUPT_CLEAR] += ee_offset;
-> +	ctrl->reg_layout_local[SWRM_REG_INTERRUPT_CPU_EN] += ee_offset;
-> +	ctrl->reg_layout_local[SWRM_REG_CMD_FIFO_WR_CMD] += ee_offset;
-> +	ctrl->reg_layout_local[SWRM_REG_CMD_FIFO_RD_CMD] += ee_offset;
-> +	ctrl->reg_layout_local[SWRM_REG_CMD_FIFO_STATUS] += ee_offset;
-> +	ctrl->reg_layout_local[SWRM_REG_CMD_FIFO_RD_FIFO_ADDR] += ee_offset;
+> +			interconnects = <&mem_noc MASTER_AMPSS_M0 RPM_ACTIVE_TAG
+> +					 &config_noc SLAVE_CAMERA_CFG RPM_ACTIVE_TAG>,
+> +					<&mmrt_virt MASTER_CAMNOC_HF RPM_ALWAYS_TAG
+> +					 &mc_virt SLAVE_EBI_CH0 RPM_ALWAYS_TAG>,
+> +					<&mmnrt_virt MASTER_CAMNOC_SF RPM_ALWAYS_TAG
+> +					 &mc_virt SLAVE_EBI_CH0 RPM_ALWAYS_TAG>;
+> +			interconnect-names = "ahb",
+> +					     "hf_mnoc",
+> +					     "sf_mnoc";
+> +
+> +			iommus = <&apps_smmu 0x400 0x0>;
+> +			power-domains = <&gcc GCC_CAMSS_TOP_GDSC>;
+> +
+> +			status = "disabled";
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +				};
+> +			};
+> +		};
+> +
+>   		qupv3_0: geniqup@4ac0000 {
+>   			compatible = "qcom,geni-se-qup";
+>   			reg = <0x0 0x04ac0000 0x0 0x2000>;
+> 
 
-Why not make these registers take the ee value rather then doing this way?
 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-> +}
-> +
->  static int qcom_swrm_ahb_reg_read(struct qcom_swrm_ctrl *ctrl, int reg,
->  				  u32 *val)
->  {
-> @@ -904,12 +938,13 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
->  	ctrl->reg_write(ctrl, SWRM_MCP_CFG_ADDR, val);
->  
->  	if (ctrl->version == SWRM_VERSION_1_7_0) {
-> -		ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, SWRM_EE_CPU);
-> +		ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, ctrl->ee);
->  		ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL,
-> -				SWRM_MCP_BUS_CLK_START << SWRM_EE_CPU);
-> +				SWRM_MCP_BUS_CLK_START << ctrl->ee);
->  	} else if (ctrl->version >= SWRM_VERSION_2_0_0) {
-> -		ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, SWRM_EE_CPU);
-> -		ctrl->reg_write(ctrl, SWRM_V2_0_CLK_CTRL,
-> +		ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, ctrl->ee);
-> +		ctrl->reg_write(ctrl, SWRM_V2_0_CLK_CTRL +
-> +				((int)ctrl->ee - SWRM_EE_CPU) * SWRM_V2_REG_EE_STRIDE,
->  				SWRM_V2_0_CLK_CTRL_CLK_START);
->  	} else {
->  		ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL, SWRM_MCP_BUS_CLK_START);
-> @@ -935,11 +970,9 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
->  	ctrl->reg_write(ctrl, ctrl->reg_layout[SWRM_REG_INTERRUPT_CLEAR],
->  			0xFFFFFFFF);
->  
-> -	/* enable CPU IRQs */
-> -	if (ctrl->mmio) {
-> -		ctrl->reg_write(ctrl, ctrl->reg_layout[SWRM_REG_INTERRUPT_CPU_EN],
-> -				SWRM_INTERRUPT_STATUS_RMSK);
-> -	}
-> +	/* enable CPU IRQs for the selected EE window */
-> +	ctrl->reg_write(ctrl, ctrl->reg_layout[SWRM_REG_INTERRUPT_CPU_EN],
-> +			SWRM_INTERRUPT_STATUS_RMSK);
->  
->  	/* Set IRQ to PULSE */
->  	ctrl->reg_write(ctrl, SWRM_COMP_CFG_ADDR,
-> @@ -1545,7 +1578,22 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->  		return -ENOMEM;
->  
->  	data = of_device_get_match_data(dev);
-> +	ctrl->ee = SWRM_EE_CPU;
-> +	ret = of_property_read_u32(dev->of_node, "qcom,swr-master-ee-val", &ctrl->ee);
-> +	if (ret)
-> +		ret = of_property_read_u32(dev->of_node, "qcom,ee", &ctrl->ee);
-> +	if (ret)
-> +		ctrl->ee = SWRM_EE_CPU;
-> +	if (ctrl->ee > SWRM_MAX_EE) {
-> +		dev_warn(dev, "invalid SoundWire EE %u, using EE%u\n",
-> +			 ctrl->ee, SWRM_EE_CPU);
-> +		ctrl->ee = SWRM_EE_CPU;
-> +	}
->  	ctrl->max_reg = data->max_reg;
-> +	/*
-> +	 * Defer EE register window selection until HW version is known.
-> +	 * For v2.0+ the IRQ/FIFO window is EE-banked.
-> +	 */
->  	ctrl->reg_layout = data->reg_layout;
->  	ctrl->rows_index = sdw_find_row_index(data->default_rows);
->  	ctrl->cols_index = sdw_find_col_index(data->default_cols);
-> @@ -1623,6 +1671,7 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->  	prop->default_row = data->default_rows;
->  
->  	ctrl->reg_read(ctrl, SWRM_COMP_HW_VERSION, &ctrl->version);
-> +	qcom_swrm_set_ee_register_layout(ctrl, data);
->  
->  	ret = devm_request_threaded_irq(dev, ctrl->irq, NULL,
->  					qcom_swrm_irq_handler,
-> @@ -1733,16 +1782,19 @@ static int __maybe_unused swrm_runtime_resume(struct device *dev)
->  		reset_control_reset(ctrl->audio_cgcr);
->  
->  		if (ctrl->version == SWRM_VERSION_1_7_0) {
-> -			ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, SWRM_EE_CPU);
-> +			ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, ctrl->ee);
->  			ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL,
-> -					SWRM_MCP_BUS_CLK_START << SWRM_EE_CPU);
-> +					SWRM_MCP_BUS_CLK_START << ctrl->ee);
->  		} else if (ctrl->version >= SWRM_VERSION_2_0_0) {
-> -			ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, SWRM_EE_CPU);
-> -			ctrl->reg_write(ctrl, SWRM_V2_0_CLK_CTRL,
-> +			ctrl->reg_write(ctrl, SWRM_LINK_MANAGER_EE, ctrl->ee);
-> +			ctrl->reg_write(ctrl, SWRM_V2_0_CLK_CTRL +
-> +					((int)ctrl->ee - SWRM_EE_CPU) *
-> +					SWRM_V2_REG_EE_STRIDE,
->  					SWRM_V2_0_CLK_CTRL_CLK_START);
->  		} else {
->  			ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL, SWRM_MCP_BUS_CLK_START);
->  		}
-> +
->  		ctrl->reg_write(ctrl, ctrl->reg_layout[SWRM_REG_INTERRUPT_CLEAR],
->  			SWRM_INTERRUPT_STATUS_MASTER_CLASH_DET);
->  
-
+---
+bod
 
