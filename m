@@ -1,246 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-112070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id iBN6Na3ZJ2pV3QIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 11:15:25 +0200
+	id z+H4NOHXJ2ro3AIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 11:07:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB09A65E2F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 11:15:24 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B26565E1CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 11:07:45 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=oltAfdje;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112070-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112070-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=linaro.org;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=hshcncq7;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112071-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112071-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id AE7CE306E4A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 08:57:22 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3433130BE435
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 08:59:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35D283EFFC5;
-	Tue,  9 Jun 2026 08:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53ABA3E3C73;
+	Tue,  9 Jun 2026 08:59:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CDB3DB970
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 08:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE303939BC;
+	Tue,  9 Jun 2026 08:59:03 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780995441; cv=none; b=faE0eF8x1Lj93Lowc3A0SX/HXvwsXI8jLz0PYqfU5T6KdZATeJFGWW1u1IpiAcfwE5GjNWFXkCOFv1hIA5SObdnsVpNWvrqZqcKjCHNP+N2jpjWiYgfxNZ6DpC5Mwh0peYL0DgpzNlemwtdycfev1hEZTg75m5I02JDnBdnxPA8=
+	t=1780995544; cv=none; b=if42tO3A7q+WpuZfcj07oYxPytn2MnbsO1lbDfL1Scwd480NFy2jP8DeUJHlQLAbu93RFHO8Rt1ZDiCEG45SAnwW4y/iF0eD/mHF/Aza6CWpx8L7YsfElz2/Fk5rZMHXmG3NZmAwgyrDwcgACNTyY+hA4wZ93endbIOubcGyq3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780995441; c=relaxed/simple;
-	bh=zZCsXnjVimwX+u/Cp9VUCXkd7AOaMc73JPe7POemOaU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=erIIuQFIhCtMPQheMMk6gxxKe3C4m0vnRYd9XNkrdfvD7XOcNq7TbVnDPR0avXyEtpJCbva7oJiKNVS1jIqxX+z5o+9sVOQEsMGDN1sz+WAzA+ubBxIAMqE4/z9kE29TYuJVKWHMixHtuwuWUo58LPFAjdTHlBcByNFyQ/IthOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oltAfdje; arc=none smtp.client-ip=209.85.208.45
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-68bd9fce347so9459123a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 01:57:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1780995437; x=1781600237; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FPwdVwz7ctVs0k+br7o6SIlRqfvmba+MdXedF8Oh3cc=;
-        b=oltAfdjeVuy5VznbfeBBC5mOPKft3ku/XG56RyfIMhCj9OxMeiBWT5J+H3hNYFJ3TF
-         hXMMfAq8UZbfz3tqTrKJ9X0kzOp1AhDgdSzZxRnUNAFq13OhkfZBTaJTvXpN8bYoYbDK
-         3B08INJbRR/ThPcDSAu7+pWekm2QnJZNJXmkbQ8oDyhtovwNvTKrOYg++d1fCk3KUy3j
-         0o13965NX/1wBNtDPtW46JTpntr0m1EAB6BhNXo7EN47TgQSRVre1Do+DaopPgwpkOHd
-         ei21yazQVvnOB8d40kbOIGZ/B2WwahcNHkK9RxeX9cpGGJfRma6VxhlD/cyykX0NtQbb
-         IkLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780995437; x=1781600237;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FPwdVwz7ctVs0k+br7o6SIlRqfvmba+MdXedF8Oh3cc=;
-        b=oZq3X4bgcYejEdDCXRXRWpc+b43ub9Urn9VCfxHQtV3Mmry2wS7mMKi005uXQ437eg
-         5rHuKlJPqNBw5c6xHxUkwiXjnaoRm1YNtZHOsJsnXVhviobXJi/0czUL85VUiJ4SyT2T
-         0xYmi2gQpLJgmuJQ8DfJetrcQsPJd9dYdPY66ovQguVCIZbNtOeiwlpSszuI4tjY/6NR
-         Pip6JH3GOtp8gxB25BzTeoW07alHmnCOdlGIhoGp8x3IX0+x3ug+atBEBhVA8aQ3QPop
-         H5K3xWOeIpWqbjDpzbztzJUFpjY0oWe6CxUOLM8l/MTlz6uSfqzzKJd1OEzw+QUxPGdr
-         WHOA==
-X-Gm-Message-State: AOJu0Yx7NpcDEHuDu/grm3dwd5tWZj85yqCx0/vNzJ3+cske2vk729BN
-	REhtJJiw9aUcvcRatqWI/gaSabCtKwPWjBRsDj8yC2MBdXu9igFIQYSMopo8HXMPbTM=
-X-Gm-Gg: Acq92OEPxjN+kSsk4OwUTTUs72BDlrmUOxIYKDSESr7yLyFdsi8AZteLNqW3LDbZaPr
-	blfqSAUWBeA3hpDxzCAF8WR24IWmbWJI8i3UAORYzKG4tegDPb2vIVN89fPsIVXeuX9sx8hb8xl
-	9eGpHFEr7g5RHhtmZWnmoLX5+7thCm5n60xOF7PcqvW6MpJ5MQeDrQkTwOIx2PztpxNc2Kh5O77
-	40AXptiI18Q42HXB9uvpHYARuWkPOtn9Dqce1G9IskF+U3UK7myve6ubuNTpkuGT4Rd74CZ/ofG
-	wwubo+lmt8JxDuhuPXZus6JoHEqgrbNLnL4KoRO/uOWAu6cumrJS3KQc2VM2hayuM+o7m4YnF2H
-	34Pnu+WfMR2NMvjm0nw0uNpM4ZrXAMuERA1FZ1X++JLmptVHzkf9xA8OX0eaNb3c86YMdWWImJr
-	sUHWL5s/f1Jor6nubu9zhkBAplZ98cZMPvCRRSM8AxBo9e
-X-Received: by 2002:a05:6402:4303:b0:688:1d5:44c5 with SMTP id 4fb4d7f45d1cf-692381fb3c7mr835032a12.2.1780995437379;
-        Tue, 09 Jun 2026 01:57:17 -0700 (PDT)
-Received: from [192.168.0.167] ([109.77.72.26])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-68e65b55d81sm8343493a12.27.2026.06.09.01.57.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jun 2026 01:57:16 -0700 (PDT)
-Message-ID: <c3b9dca7-7297-424c-9ab7-3ea29e9cf914@linaro.org>
-Date: Tue, 9 Jun 2026 09:57:12 +0100
+	s=arc-20240116; t=1780995544; c=relaxed/simple;
+	bh=9Y3n5I1pFwLBFXOzP3YWYLlAIAHwU8YrmcG9zjXipOY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ri9sTvxozkdRO2vKwxsdzpI3GUuQ1q/l58PZ7QZpEAnQTRK5GrGyHGX6c7S7dIOOIv5OysLbvI4ixWVH9r9NbO4wsHyHXB/6Ghk3JDyWkmv2N6PQxpPBL/0SFLxqgoXTohYvriQY9xzlCNhDn87BeZQ5cz07vu2AVKIBh7S8fnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hshcncq7; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B238A1F00893;
+	Tue,  9 Jun 2026 08:59:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1780995542;
+	bh=6pDUabs7/gUhZjsFM2LQBImVyXUMF5qnHoThUXm5aaY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=hshcncq7twzWJqwX53p+T8Xga3DJoQDg6PlLMy/NDp9xUfXc2RxG7bfkjHvn4tKQB
+	 YmYnzIXzQWAtorw3gV2wqFGgEdMRX8OB6yVWXQBg2NxOo1iSIdZ6tQQoVfyL1Nu8aM
+	 m/fHrgs0mMW+2NgJPhk+FLpWL9PaBDam4Fy6KXSqA15lgwbOujZfLOjdfv6MoGD42b
+	 XjKG2BM2udutmat6/Ah1iR5sGnFfBcs8hjMzJam6CFDzDlthT3wWS2JUTfXOaOYhTd
+	 DCxhROpca7Foghn7oIGU82HGXfj6CrCBUKIJZhBfzL+8agRLKT186Rkile5JVlzRaY
+	 C2tqLp2DBK7mw==
+Date: Tue, 9 Jun 2026 10:58:58 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] dt-bindings: PCI: qcom,pcie-sm8550: Add Eliza
+ compatible
+Message-ID: <20260609-bouncy-guan-of-mastery-bf78e4@quoll>
+References: <20260608-eliza-v3-0-9bdeb7434b28@oss.qualcomm.com>
+ <20260608-eliza-v3-2-9bdeb7434b28@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] Add CAMSS and IMX577 sensor support for Shikra EVK
-To: Nihal Kumar Gupta <nihal.gupta@oss.qualcomm.com>,
- Bryan O'Donoghue <bod@kernel.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Andi Shyti <andi.shyti@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Frank Li <Frank.Li@nxp.com>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-i2c@vger.kernel.org, imx@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org,
- Suresh Vankadara <quic_svankada@quicinc.com>,
- Vikram Sharma <vikram.sharma@oss.qualcomm.com>,
- Wolfram Sang <wsa+renesas@sang-engineering.com>
-References: <20260608-shikra-camss-review-v2-0-ca1936bf1219@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260608-shikra-camss-review-v2-0-ca1936bf1219@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260608-eliza-v3-2-9bdeb7434b28@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-112070-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[26];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linaro.org,nxp.com,pengutronix.de,gmail.com];
-	FORGED_RECIPIENTS(0.00)[m:nihal.gupta@oss.qualcomm.com,m:bod@kernel.org,m:vladimir.zapolskiy@linaro.org,m:loic.poulain@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:rfoss@kernel.org,m:andi.shyti@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:Frank.Li@nxp.com,m:s.hauer@pengutronix.de,m:kernel@pengutronix.de,m:festevam@gmail.com,m:linux-arm-msm@vger.kernel.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-i2c@vger.kernel.org,m:imx@lists.linux.dev,m:linux-arm-kernel@lists.infradead.org,m:quic_svankada@quicinc.com,m:vikram.sharma@oss.qualcomm.com,m:wsa+renesas@sang-engineering.com,m:krzk@kernel.org,m:conor@kernel.org,m:wsa@sang-engineering.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-112071-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:krishna.chundru@oss.qualcomm.com,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:lpieralisi@kernel.org,m:kwilczynski@kernel.org,m:mani@kernel.org,m:bhelgaas@google.com,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pci@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,linaro.org:dkim,linaro.org:email,linaro.org:mid,linaro.org:from_mime,vger.kernel.org:from_smtp,checkpatch.pl:url]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,quoll:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: CB09A65E2F0
+X-Rspamd-Queue-Id: 7B26565E1CC
 
-On 08/06/2026 15:06, Nihal Kumar Gupta wrote:
-> Shikra EVK is based on the Qualcomm Shikra SoC.
-> It lacks a camera sensor in its default configuration.
-> This series adds CAMSS driver support, CCI definitions and enables
-> the 22-pin IMX577 sensor via CSIPHY1 through device tree overlays.
+On Mon, Jun 08, 2026 at 02:18:14PM +0530, Krishna Chaitanya Chundru wrote:
+> PCIe controller present in Eliza SoC is backwards compatible with the
+> controller present in SM8550 SoC. Hence, add the compatible with SM8550
+> fallback.
 > 
-> We have tested IMX577 Sensor on CCI1 with following commands:
-> - media-ctl --reset
-> - media-ctl -d /dev/media0 -V '"imx577 1-001a":0[fmt:SRGGB10/4056x3040 field:none]'
-> - media-ctl -d /dev/media0 -V '"msm_csiphy1":0[fmt:SRGGB10/4056x3040]'
-> - media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> - media-ctl -d /dev/media0 -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> - media-ctl -d /dev/media0 -l '"msm_csiphy1":1->"msm_csid0":0[1]'
-> - media-ctl -d /dev/media0 -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> - yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
+> Eliza requires 6 reg entries, 8 clocks and 9 interrupts, so add the
+> corresponding allOf constraints.
 > 
-> Used following tools for the sanity check of these changes.
-> - make -j32 W=1
-> - checkpatch.pl
-> - make DT_CHECKER_FLAGS=-m W=1 DT_SCHEMA_FILES=i2c/qcom,i2c-cci.yaml dt_binding_check
-> - make DT_CHECKER_FLAGS=-m DT_SCHEMA_FILES=media/qcom,qcm2290-camss.yaml dt_binding_check W=1
-> - make CHECK_DTBS=y W=1 qcom/qrb2210-rb1-vision-mezzanine.dtb
-> - make CHECK_DTBS=1 W=1 qcom/shikra-cqm-cqs-evk-imx577-camera.dtb
-> - make CHECK_DTBS=1 W=1 qcom/shikra-iqs-evk-imx577-camera.dtb
-> - make CHECK_DTBS=y W=1 dtbs
-> 
-> This patch series depends on patch series:
-> https://lore.kernel.org/all/20260527-shikra-dt-v4-0-b5ca1fa0b392@oss.qualcomm.com/
-> https://lore.kernel.org/all/20260608-shikra-gcc-rpmcc-clks-v5-0-94cefe092ee3@oss.qualcomm.com/
-> 
-> Signed-off-by: Nihal Kumar Gupta <nihal.gupta@oss.qualcomm.com>
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 > ---
-> Changes in v2:
-> - Drop qcm2390_resources struct and CAMSS_2390 enum; use qcom,qcm2290-camss
->    as fallback compatible string since Shikra CAMSS is register-compatible
->    with QCM2290 (Loic, Bryan)
-> - Use oneOf in iommus to describe all valid SID combinations: VFE-only
->    (Shikra) and VFE+CDM+OPE read+OPE write (QCM2290/Agatti); add
->    per-entry descriptions naming each SID (Krzysztof, Bryan)
-> - Rename shikra-cqm-evk-imx577-camera overlay to
->    shikra-cqm-cqs-evk-imx577-camera, shared by both CQM and CQS EVK
->    boards which use the same PM4125 PMIC and camera supply rails (Bryan)
-> - Add reset-gpios pinctrl state for IMX577 sensor (gpio33, cam1-reset-default-state)
-> - Add comment in overlay DTS explaining absent regulators are powered
->    by the daughter board (Bryan)
-> - Collect Reviewed-by tags
-> - Add reset-gpios pinctrl state for IMX577 sensor.
-> - Link to v1: https://lore.kernel.org/r/20260526-shikra-camss-review-v1-0-645d2c8c75a7@qti.qualcomm.com
+>  .../devicetree/bindings/pci/qcom,pcie-sm8550.yaml  | 50 ++++++++++++++++++++++
+>  1 file changed, 50 insertions(+)
 > 
-> ---
-> Nihal Kumar Gupta (7):
->        dt-bindings: media: qcom: Add Shikra CAMSS compatible
->        dt-bindings: i2c: qcom-cci: Document Shikra compatible
->        arm64: dts: qcom: shikra: Add CAMSS node
->        arm64: dts: qcom: shikra: Add CCI definitions
->        arm64: dts: qcom: shikra: Add pin configuration for mclks
->        arm64: dts: qcom: shikra-cqm-cqs-evk-imx577-camera: Add DT overlay
->        arm64: dts: qcom: shikra-iqs-evk-imx577-camera: Add DT overlay
-> 
->   .../devicetree/bindings/i2c/qcom,i2c-cci.yaml      |   2 +
->   .../bindings/media/qcom,qcm2290-camss.yaml         |  16 +-
->   arch/arm64/boot/dts/qcom/Makefile                  |   8 +
->   .../dts/qcom/shikra-cqm-cqs-evk-imx577-camera.dtso |  70 ++++++++
->   arch/arm64/boot/dts/qcom/shikra-cqm-evk.dts        |   9 +
->   arch/arm64/boot/dts/qcom/shikra-cqs-evk.dts        |   9 +
->   .../dts/qcom/shikra-iqs-evk-imx577-camera.dtso     |  70 ++++++++
->   arch/arm64/boot/dts/qcom/shikra-iqs-evk.dts        |   9 +
->   arch/arm64/boot/dts/qcom/shikra.dtsi               | 197 +++++++++++++++++++++
->   9 files changed, 387 insertions(+), 3 deletions(-)
-> ---
-> base-commit: 6e845bcb78c95af935094040bd4edc3c2b6dd784
-> change-id: 20260526-shikra-camss-review-cf6f66ac566b
-> prerequisite-change-id: 20260511-shikra-dt-d75d97454646:v4
-> prerequisite-patch-id: 3a689e8dda5fd2755b689d94d095806b3f2e6eed
-> prerequisite-patch-id: 2acc300a68ed8c5364fb5f2f7d28fc0d56ab07bf
-> prerequisite-patch-id: 2357cac636e019eaf14d6a493a1c72bca56fe405
-> prerequisite-patch-id: 2885f299e711582da312ca9d13983d296a3dd5dc
-> prerequisite-patch-id: 91af5f3c01e766a53ce8de69aa21847a2d6bbbf8
-> prerequisite-change-id: 20260429-shikra-gcc-rpmcc-clks-2094edfff3b0:v5
-> prerequisite-patch-id: 59bb0a7828e41f546f734f127d81da83c0adcda9
-> prerequisite-patch-id: 197da6bcb15cadc47869dba88c8020987b25c335
-> prerequisite-patch-id: 8ec9c1eb03f052ae232ed54117abed38672c23f6
-> prerequisite-patch-id: 350db4f4bcdfc0fad9ed57cd5b1723f85ad44f5d
-> 
-> Best regards,
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml
+> index 3a94a9c1bb15..fb706b1397a3 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sm8550.yaml
+> @@ -20,6 +20,7 @@ properties:
+>        - const: qcom,pcie-sm8550
+>        - items:
+>            - enum:
+> +              - qcom,eliza-pcie
+>                - qcom,kaanapali-pcie
+>                - qcom,sar2130p-pcie
+>                - qcom,pcie-sm8650
+> @@ -91,6 +92,55 @@ required:
+>  
+>  allOf:
+>    - $ref: qcom,pcie-common.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,eliza-pcie
+> +    then:
+> +      properties:
+> +        reg:
+> +          minItems: 6
+> +        reg-names:
+> +          minItems: 6
+> +
 
-I really think you did a good job taking v1 feedback BTW, good work.
+This could be just one if:. Much less code, but I don't mind this
+approach.
 
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-For the series.
+Best regards,
+Krzysztof
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
----
-bod
 
