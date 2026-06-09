@@ -1,162 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-112139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id adxyMsT2J2qn6QIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 13:19:32 +0200
+	id hN9CEOr0J2o36QIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 13:11:38 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C84B965F6BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 13:19:31 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF82165F58D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 13:11:37 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=LQ5AHDgV;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112139-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112139-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=RGDhzDnd;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112140-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112140-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 211D9300B9CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 11:05:16 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id AA1AF308E152
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 11:05:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E7D43FADF6;
-	Tue,  9 Jun 2026 11:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DCEE3FD159;
+	Tue,  9 Jun 2026 11:05:16 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1B03F86E2
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 11:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1503FC5AE
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 11:05:14 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781003113; cv=none; b=qaNRGK/LiugOtuvW3KimgZPWeF7ZMKmIUQQRGoqK8vPo0AVPr78VLqAK1rMDmTl4Mj/s7DGYO72Rf4jV7ouHrNg8IDgnuYtlLvEtB/Hi7r6hPGbXw4u0sxPiQpAOeYBLwjcxsDzMSfEzC2Kh7u9ZFoL3Agn2lLKX3ydXmxbNxe4=
+	t=1781003116; cv=none; b=UZfYpDi6LZPfyn7wKXQ2oOMz7xoDi8ekyzRCD6b7uas/1Ec9fukTCKfv7q9XKJxc7uM9tZsrt7G/IfiCxXYhitcEG/fw6IRhsC5KhS5wB6CkTW2ByCrNwkt71J4DCZwceK3nQzpkBAtXc8tHmZi0TZaZwc72iqeBqsVL94qT9eA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781003113; c=relaxed/simple;
-	bh=kjw1avFU8520DRpYQDxuY9SvIAlSgQxLqUBUN9Yb05w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K4lB+TvGRnY9O6Xp/jv1vy/vo25xlAXQLh/vSTgYA8r7n6Oc61k4oldjj1lc6V+JHepXn+V/4BdxqjjmADQ7KLJC748GPYCgL1POOp2k7dKkn26QdPcedjkLoJ4qrK7+jFAVoIzo6ezwsdl634QmiSyd08LB26o+Nh7Vp1QfoqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LQ5AHDgV; arc=none smtp.client-ip=209.85.214.173
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2c0c2c7e0c5so36654705ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 04:05:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781003111; x=1781607911; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kjw1avFU8520DRpYQDxuY9SvIAlSgQxLqUBUN9Yb05w=;
-        b=LQ5AHDgVFf8+XKXrafeTgWm9/5qitbhWyjjGliRtULNeO5ecUkYAnuGsG9F2zKCd0V
-         j4w75Tm7HeGs8e3IolTN+2HuSn9C3YALQ8fexMWxBfj8tu+Bf7IWVmiz/KsYs/ysN8Uy
-         a3SHzXkazI5ymUOfafG8MBbcoCwjqpmYQtHCNB7eatZslq6viaGrfZR8xFmBWrOAHMuh
-         oWRnahcdC+PILHKbyM4lXYK355AWNKfxEBTzMWoo9radY+hi2ue+15ubgEWjtM16pivy
-         dXmIf3dE9AuSWa94/eWMPvrtbR0+XnhGHHDZR1jMlKnFSH9eB8pBfVCnBrBS+Ey2AYXm
-         utww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781003111; x=1781607911;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=kjw1avFU8520DRpYQDxuY9SvIAlSgQxLqUBUN9Yb05w=;
-        b=JO6s/5okTuOwcwNrPR+EIY1wdQizjAqIvupI5Fxu60DCOxapSnu35ri4cQaZZoyPwb
-         ETj+WZLkOAu6FEv9pk2NItxcdEMuFt1XZBWRfwSDQsVf/RtNG5SW6ql7l8iE2NahtRV/
-         6ZViD1q+cCUPKDK9P8XereKnoa1nb29Lk3oPC0ajSR6rir48wNcjFC9/3FJWrZLw8Lyi
-         9ttQs3vNYVttFpYrdBRszw2RbfJWpG6SoES+5HUGEHu2Us3DQA9zA7iu5mDaHCbwRU5f
-         2l6o4Id5zyeHNcweVquHN5Rg+AuZzJ0wUM8E30xpAH+zC9JxnVJcJYP/QD3+/xdpw2Ki
-         a2Ug==
-X-Forwarded-Encrypted: i=1; AFNElJ/rCYkhl1VOeZURY1kUfuhOCpr2ris+UlUnuB8XdK5thVpA7k98o6WYm9+2/AbjGFf3Oc/Mie3f/Hjvdcgz@vger.kernel.org
-X-Gm-Message-State: AOJu0YxvrPNpr+Ogtzxg4/9gec79jBjw2w2oKjObMaN3leKZSMkojFiv
-	cWlEJwwb9ajM3Zj1ch9F+ET7IxsMt6UirN5jKt/V07xykMwDJba7wOyx
-X-Gm-Gg: Acq92OFu/SZl8GXYob6u2IDxE+yVWoFal6oSJMdOal0bTmw0IB/zySxeYwqgLeplSAI
-	ZOAg5GdtXxKxwQQ0vmlKvk7n17YwuVWOBbFoUm4dCXIm2jzAcUhO9lk+6wbsmm7KbGYX0lDd0bh
-	HAbgOy5GfpROOt/RgMwgmCpVPdvDDLVm6NMIVZw92q/Gx9XY4Vp+2r71gEJ5YM7az6WLksDl7Is
-	chIjD4ZZ2nsMTUncDoN6hiLcgM/82x/q4XQMbQkAtCjmgQPPp7ViJs+wjMq56erZPQ9Ifju4ouL
-	HLMRYV36Zoa6wME8vlN4lZoqJAMkPMTeaioqjtiG6BkoDYXN/J9cqc6pgiIuezS0Gmv1TFoYwKn
-	7gy6XhWwsWZZuWNuM+a15AFC7ILAlGoqrd7VRRnciobqoERwTxxw06+kknFrjdf59gkzzUIZVvq
-	27PyfTsPuFvxPUvuQIaM8nf6nTdbNFDlm1p9xsOgzts8/a5Dyy8V05JupcOA/0jKQq7ls3dNlUv
-	LshwjN5uQ/c4J1AhU+6jVp9
-X-Received: by 2002:a17:902:f645:b0:2c1:6259:cda8 with SMTP id d9443c01a7336-2c2a1c873a1mr29134585ad.25.1781003111332;
-        Tue, 09 Jun 2026 04:05:11 -0700 (PDT)
-Received: from harrison-Surface-Pro-12in-1st-Ed-with-Snapdragon.lan ([58.164.4.185])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f875casm211687815ad.22.2026.06.09.04.05.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jun 2026 04:05:10 -0700 (PDT)
-From: Harrison Vanderbyl <harrison.vanderbyl@gmail.com>
-To: konrad.dybcio@oss.qualcomm.com
-Cc: andersson@kernel.org,
-	bentiss@kernel.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	dmitry.baryshkov@oss.qualcomm.com,
-	harrison.vanderbyl@gmail.com,
-	jikos@kernel.org,
-	konradybcio@kernel.org,
-	krzk+dt@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-input@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	robh@kernel.org
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add Microsoft Surface Pro 12in
-Date: Tue,  9 Jun 2026 21:04:29 +1000
-Message-ID: <20260609110429.11427-1-harrison.vanderbyl@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <4ced3207-a132-4ec5-a0eb-79f75f5cb4bb@oss.qualcomm.com>
-References: <4ced3207-a132-4ec5-a0eb-79f75f5cb4bb@oss.qualcomm.com>
+	s=arc-20240116; t=1781003116; c=relaxed/simple;
+	bh=FzHeD0sMZk02bfUIOVbZ7vcbl5dWXL2/Txt+74srelk=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W0/GP3v9lpagW2+5nVwdU4iYVplh9QpYP6PmZWP/qUyGDFGVRlDRJLuqUu/NgndumiAtxu8fg+bijirRg8qvxuPTG3U7wKaYzVe5hwPMJJKHjx18DwlNXiis1Xnp0aFgj9nzrCCyv17BuG1gy8OmDzfZ1MxJ9sA6tIwgzmZqY/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RGDhzDnd; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31761F00A04
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 11:05:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781003113;
+	bh=+sX9ATTxluLYTPpyn9xT27ptWmmBF8CPbs0HcxCOGLE=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=RGDhzDndKBB2dkoo2ExWmstsyWaeZ8qJ18zZpU/Zh0vnaXRYAMzekOdsxjslSMmMP
+	 Zz8+CTH0TaVqx9FQtV3+0bfwMumlGnwVxTC4XbD3pQ9vXv5cjQPwxw+p/urFIYe+M1
+	 23mhKFfJTqrlZpJV745TVZPiLITUlVY6C7d5E8xA1cDZC81W784rbDYRkz7hR5lGZL
+	 64Iy0/HNkiWIMrL9ECwoHOiIF9wCFEfpU8Auj711VfrHHZui/L8EP/HRqjhrowKr2W
+	 OxVlAEX7eB4eXwfcJe6BQDfh51Xjtyo6bbEDsj8hF5jBGM4+Ii4e2FKcVqq3Vj0HgK
+	 9xuzxLAHXn0zA==
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5aa6792e7b8so5373071e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 04:05:13 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ+zJUFMf1oBgZ5ytM+FstTWGYAUKZNCHObBKIosQJScV+wlgr3meKRzbnb+xWmUp9z4xnn+/4rsJiySp+aF@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywz9b6veqihMBsvA2WoVgRgpaSZ8CRlkZ8JIB7Zzu9py7anQG+/
+	sMxcqALKVhimQMUUyk6o/rneB2GRczgrm+/DdPmyfEbIYObPCRR5jlz4FPLeqUG4PueX2igW8KL
+	3vWHYJPjSYpwz8kT3/6J3Vd0HFqTnFR9+qL96NhtuSg==
+X-Received: by 2002:a05:6512:2253:b0:5aa:5c8c:9cf4 with SMTP id
+ 2adb3069b0e04-5aa87b5f803mr5428916e87.17.1781003111998; Tue, 09 Jun 2026
+ 04:05:11 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 9 Jun 2026 07:05:10 -0400
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 9 Jun 2026 07:05:10 -0400
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <CAFEp6-1syMQsvuQ+dLU39bnDeL5Ok7vK1mA7CS0v1m7cjhyMQw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260609-block-as-nvmem-v4-0-45712e6b22c6@oss.qualcomm.com>
+ <20260609-block-as-nvmem-v4-4-45712e6b22c6@oss.qualcomm.com>
+ <CAMRc=MfuiPMkSm=-G6VEJpqKhos0TD_pf0ScBGqfwLHT0uk8yQ@mail.gmail.com> <CAFEp6-1syMQsvuQ+dLU39bnDeL5Ok7vK1mA7CS0v1m7cjhyMQw@mail.gmail.com>
+Date: Tue, 9 Jun 2026 07:05:10 -0400
+X-Gmail-Original-Message-ID: <CAMRc=Mc=-G0+ESPJUUgxd+jJWwuEzBcVXSJyAbAhx6BFkHeimA@mail.gmail.com>
+X-Gm-Features: AVVi8CdBM8fdpM7hiE50yrSmJrPYo7K9sdF-J87b4PfgsolvJ2MbyT4LVehGYdI
+Message-ID: <CAMRc=Mc=-G0+ESPJUUgxd+jJWwuEzBcVXSJyAbAhx6BFkHeimA@mail.gmail.com>
+Subject: Re: [PATCH v4 4/8] block: implement NVMEM provider
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-block@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	ath10k@lists.infradead.org, linux-bluetooth@vger.kernel.org, 
+	netdev@vger.kernel.org, daniel@makrotopia.org, Ulf Hansson <ulfh@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Jens Axboe <axboe@kernel.dk>, Johannes Berg <johannes@sipsolutions.net>, 
+	Jeff Johnson <jjohnson@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
+	Rocky Liao <quic_rjliao@quicinc.com>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Simon Horman <horms@kernel.org>, Srinivas Kandagatla <srini@kernel.org>, Andrew Lunn <andrew@lunn.ch>, 
+	Heiner Kallweit <hkallweit1@gmail.com>, Russell King <linux@armlinux.org.uk>, 
+	Saravana Kannan <saravanak@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	PRECEDENCE_BULK(0.00)[];
-	TAGGED_FROM(0.00)[bounces-112139-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,oss.qualcomm.com,gmail.com];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:bentiss@kernel.org,m:conor+dt@kernel.org,m:devicetree@vger.kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:harrison.vanderbyl@gmail.com,m:jikos@kernel.org,m:konradybcio@kernel.org,m:krzk+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-input@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:robh@kernel.org,m:conor@kernel.org,m:harrisonvanderbyl@gmail.com,m:krzk@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[harrisonvanderbyl@gmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[35];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-112140-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	FROM_NEQ_ENVFROM(0.00)[harrisonvanderbyl@gmail.com,linux-arm-msm@vger.kernel.org];
-	TO_DN_NONE(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_SENDER_FORWARDING(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:loic.poulain@oss.qualcomm.com,m:linux-mmc@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-block@vger.kernel.org,m:linux-wireless@vger.kernel.org,m:ath10k@lists.infradead.org,m:linux-bluetooth@vger.kernel.org,m:netdev@vger.kernel.org,m:daniel@makrotopia.org,m:ulfh@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:axboe@kernel.dk,m:johannes@sipsolutions.net,m:jjohnson@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:quic_bgodavar@quicinc.com,m:quic_rjliao@quicinc.com,m:davem@davemloft.net,m:edumazet@google.com,m:kuba@kernel.org,m:pabeni@redhat.com,m:horms@kernel.org,m:srini@kernel.org,m:andrew@lunn.ch,m:hkallweit1@gmail.com,m:linux@armlinux.org.uk,m:saravanak@kernel.org,m:brgl@kernel.org,m:krzk@kernel.org,m:conor@kernel.org,m:luizdentz@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,makrotopia.org,kernel.org,kernel.dk,sipsolutions.net,holtmann.org,gmail.com,quicinc.com,davemloft.net,google.com,redhat.com,lunn.ch,armlinux.org.uk];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,config.id:url,vger.kernel.org:from_smtp,config.dev:url,config.name:url,mail.gmail.com:mid];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: C84B965F6BC
+X-Rspamd-Queue-Id: CF82165F58D
 
-On 6/9/26 11:30 AM, Konrad Dybcio wrote:
-> Because we'd put the subnodes for devices under the 'status' line (DTC
-> enforces that), please move the comment below as well
+On Tue, 9 Jun 2026 12:13:08 +0200, Loic Poulain
+<loic.poulain@oss.qualcomm.com> said:
+> Hi bartosz,
+>
 
-Will do,
+...
 
-> Or since it's @28, perhaps it's just nxp,nxp-nci-i2c and it could work
-> for you ootb?
+>>
+>> On the other hand, we don't want to not provide the block device just be=
+cause
+>> someone added a DT property on one that's too big. I'd say: warn, but re=
+turn 0.
+>> Does it make sense?
+>
+> It=E2=80=99s still technically an error in the sense that we cannot provi=
+de
+> the required nvmem feature. However, it only becomes a real issue if a
+> consumer actually attempts to use it.
+> Also, the block device should still be added, since the return code
+> from add_dev is not checked. In any case, I=E2=80=99m fine with either
+> approach, as long as we emit a warning message.
+>
 
-Unfortunately for me, the device/antenna is not present on the consumer version,
-I was able to confirm this during a speaker replacement.
+We don't check the return value now (why?) but if we ever do, the safer opt=
+ion
+is to return 0 IMO.
 
-> Please align the <s (or is it my mail client playing tricks on me?)
+>>
+>> > +     }
+>> > +
+>> > +     config.id =3D NVMEM_DEVID_NONE;
+>> > +     config.dev =3D dev;
+>> > +     config.name =3D dev_name(dev);
+>> > +     config.owner =3D THIS_MODULE;
+>> > +     config.priv =3D (void *)(uintptr_t)dev->devt;
+>> > +     config.reg_read =3D blk_nvmem_reg_read;
+>> > +     config.size =3D bdev_nr_bytes(bdev);
+>> > +     config.word_size =3D 1;
+>> > +     config.stride =3D 1;
+>> > +     config.read_only =3D true;
+>> > +     config.root_only =3D true;
+>> > +     config.ignore_wp =3D true;
+>> > +     config.of_node =3D to_of_node(dev->fwnode);
+>> > +
+>> > +     return PTR_ERR_OR_ZERO(devm_nvmem_register(dev, &config));
+>>
+>> And that was a wrong suggestion on my part too because I was under the
+>> impression that we're in the probe() path, not device_add(). You can't u=
+se
+>> devres here as the device at this point is not yet bound and may never b=
+e.
+>
+> So I understand The bd_device is purely a class device with no bus, no dr=
+iver.
+> For driverless devices, devres_release_all() is called explicitly
+> within device_del() .
+>
 
-The alignment changes depending on what text editor I copy paste this section into.
-I have them aligned the same as the other device trees are aligned though.
+Right.
+
+>>
+>> Which leads me to the second point: this is not the moment to add the nv=
+mem
+>> provider. This should happen at or after probe(). Once nvmem_register()
+>> returns, you have a visible nvmem resource but nothing backing it in the=
+ block
+>> layer.
+>
+> There is a short window during which a read attempt will 'properly'
+> fail, but this does seem somewhat fragile indeed.
+>
+>> Either do this in block core when registering a new device or schedule
+>> a notifier here for the BUS_NOTIFY_BOUND_DRIVER event and do it in the n=
+otifier
+>> callback.
+>
+> So in the end, it seems that the simpler and more robust approach is
+> probably to move away from the class_interface driver and instead
+> register/unregister the nvmem directly in add_disk/del_gendisk.
+> If that's ok I will move to this approach in the next version.
+>
+
+Yes, I think it's the right approach.
+
+Bart
 
