@@ -1,104 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-112270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id o2SROsRyKGqKEwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 22:08:36 +0200
+	id Isj5J3d5KGrZFAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 22:37:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C0DE664048
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 22:08:36 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D31566419E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 22:37:11 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=U+4KgRIO;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=jCLLwXF+;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112270-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112270-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=afujyT7Y;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112271-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112271-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5853D3049FEA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 20:03:45 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5F286307CBA6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 20:37:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA5EC369991;
-	Tue,  9 Jun 2026 20:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 992D9382F01;
+	Tue,  9 Jun 2026 20:37:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8433112DA
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 20:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3B930B502;
+	Tue,  9 Jun 2026 20:37:06 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781035424; cv=none; b=FvtPUXuBS8JCUk4w65DHtrRL3d1168X7nCeG1uQFIZ6gEK3tlG+HXk/pjlY+0O7M6RFJe54BIKk4VokiD2QzcviosrpQ+/dYx/wFuF1KhlmJdZxjq6nxRO/RJfLu8JLWV/kEDuDk2nydMI2U/55ZHRb+KtGhsP4klTAyxmuZy4A=
+	t=1781037427; cv=none; b=JQtTMGKSYaUR7Vhcsh1mKh7zFdVQrbrIV3rPkuYrsmatcVW7kIC1NBKGNF8+9RYgQ2wohm860rA0NLgGMmoW1rZNtuMoOu8a95ADjiq4SNnn1zeC7MQOHT8NFjLx3a79OKzUgAqvAjV9CcXJVGpQ3XRK00MSiKYKWmlSeLdY6gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781035424; c=relaxed/simple;
-	bh=nX0ELnEUwepDubWQW9f5f46rW8OESnuwHdSOWr6T1co=;
+	s=arc-20240116; t=1781037427; c=relaxed/simple;
+	bh=CgLXwzkVLHau615G2iIpQOXEhTb7FVPobAf+TFJvR+Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Wd2ZPz6nAc9On2W6XP+ADUXJD32E9JwHzvVWbJdQ6FbhEe8nOtHrl9If8coOAEUXGlO4pgCBkYujt/RDD/O2MxY6tfvbn2/LquVBvJmIwthW61A2W6Wt3cLxMoP8CvoTvZ4b43SKZaxbZGvkdRQd7G4N35VssCp3pSUESKB35z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=U+4KgRIO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jCLLwXF+; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 659GOmT02785590
-	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Jun 2026 20:03:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	C+iDlhgiTQyAJZ+H1EN2BAvPrKf8+QgAknHjV7x0ZDU=; b=U+4KgRIOwOX7SWaU
-	GfbWK49NGSGZ3n2YIvvI0tkLctbJKl1yCIXUFpa1j1RlecsO8Ba9/pjJ7MX1bMPI
-	h1Jkje4okRBiX2vPEFDqvR37fC5cwFAswWqPx0H0JMkwSJnTpc3cxBFhMd5q0AMn
-	OFOGx8cMjQxSqyljb7vpWS1Q5L0gTAzXAqOwPesdUar+ysyuEAXGXL7cqYxvoK8X
-	t3aUWcMQMo6APsrqbaicZmWcKUl7EdTOXHqoFudlI3h5M2HFfFgYzP4mneYfOycD
-	LDwpIvuT+rlsB9yo1pgBPKvxncJUbCeF5BNTj9u9II50Zuzg3nBL/XUm+QYfkE6S
-	PP0yGg==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epg3ju58k-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 20:03:42 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-36bc02d28b6so4456007a91.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 13:03:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781035422; x=1781640222; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=C+iDlhgiTQyAJZ+H1EN2BAvPrKf8+QgAknHjV7x0ZDU=;
-        b=jCLLwXF+9s66JmtxYm4PjERj6tJGNDY+zMCk/+R/k0THTUgzsE5G4PW1fownT8ppPu
-         vl1dQOGmak6nFQpbIbDkXgk4JijSWoEzc3ZoWizhF3H1bPf6zYvdZOVQMWUf+R+Q2M9S
-         FDyf7tmmYRUqHKZww5Ki4g7RSzkbja4Vk7IKGDZ7FA4OwCALuUWFFSFvjUKt2I6c+R6W
-         zc3VO6KiCbtXqZNbyR/HXaUM+og9fzLDeqII7a0iE2DHka/a6iKz4UcsJ0P/TBEpLaZl
-         fJUEWxsqdsIDDWsaK6vnJVcb8BLa+IsJUQtboy9x5xPgfmNMLwkTs0xuvkrVIcuTr2bL
-         aMhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781035422; x=1781640222;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C+iDlhgiTQyAJZ+H1EN2BAvPrKf8+QgAknHjV7x0ZDU=;
-        b=Wy/V1jmxsHBpGytaN9KogwoiZpvOEg91gQlaysDnd5bE7Mu/Dhl6nZF9MDue1+m7qj
-         eM5ASJIrGECZR8O/IUN0KH26WvZielJtOBEPgDnChXWhsFd/masDfcw+dqLmwy8Ql6zT
-         NEIZhBE/Z3SU1TFM/8CtzAyn+IC1DorwmWJx4VRGCQaGJbT+l5cImuGwJEbW6yi+MK8r
-         0CUur1zy2/u7tMatzO/IrOSYBiWa6b1haGJd9QFG+y0Fi32idD81H0Nb4Y112a1Gg4P9
-         3BAQJgm56YGY4jqgCJtBVeNU3dQRJ4wB4d9vsjlYD1dJxL8gizjgAy9UdJpt39y2x+9i
-         fH6w==
-X-Forwarded-Encrypted: i=1; AFNElJ/uIW6G66RaIbRcKCC14exM9UTJ05dPpk663g6jmjbvPOts8h55E84pjEUA4MFr2zsJ8dEZ56Ho7wqWgGaB@vger.kernel.org
-X-Gm-Message-State: AOJu0YwEXv0S1SIe1GruZMi9eWos/cnBpHPDEShnMOmlRCWycSkOwmy0
-	u0dh/CKvlsulRGyxO4looPkgpaMvUqWizZBKHyi3ggkRgYTUxsTCQtghv5Ec2Ro3qM84PI033Uo
-	nq2dzHqT0l+49TLDXVivHhLeOP1k9v13YtiGyjwe3ILz74fSsjKe40yfXL2RdzL7QLAHA
-X-Gm-Gg: Acq92OEl16UlQwQhtL8EXChybkTg6zteHEgbcPXpSRN/QdlyPY3wA0IbXEyVqKBhhAq
-	+BOuDbNXP3uSI8nzxHqOsDLJl6ungya5krohW2IseSeNAvZUqLXhdxlMEyaLk7zoNbqiQbNXjbb
-	xLxMZ+n+NlD+PxYjwFeOLKowpiuFwQIDJ+3hfX4EyXoGgDuoaYdBMy4UFaLH/0ui4XUFEmIzJF8
-	95D42ypSR7nDwZs2VqXI+57w1n2HvxoW4YhMbMLhDtcAFAnhy8FCxRSBwl8EK/bes4Xdi1yF11I
-	Oo3VMYDGK0ZRyqZsPfTpTuHXjM7cbpCjiBEQVvKaDM2gUgchWS1/0SEHdl2KItYgCLEuYI9M0wN
-	kMuBhD4sYT2/tsrBpdtoRQ7jBaww7jos7el+17dClBVKrI5Yt18hjKkDF
-X-Received: by 2002:a17:90b:4a50:b0:369:7421:b36f with SMTP id 98e67ed59e1d1-370f0c4ecf2mr23289068a91.21.1781035421755;
-        Tue, 09 Jun 2026 13:03:41 -0700 (PDT)
-X-Received: by 2002:a17:90b:4a50:b0:369:7421:b36f with SMTP id 98e67ed59e1d1-370f0c4ecf2mr23289030a91.21.1781035421239;
-        Tue, 09 Jun 2026 13:03:41 -0700 (PDT)
-Received: from [192.168.1.7] ([106.222.228.237])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-376212812ffsm241869a91.3.2026.06.09.13.03.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jun 2026 13:03:40 -0700 (PDT)
-Message-ID: <b8d6f4eb-49b8-4886-8c78-8adb2ffd0b3d@oss.qualcomm.com>
-Date: Wed, 10 Jun 2026 01:33:34 +0530
+	 In-Reply-To:Content-Type; b=fikfkOPgLYdS4HYpI2uXwuBFQo42vRxY3Xxe3oLGqEW8wqOemYGlf7OzGtVt5cLW2yi3G++fNyTBPJmUcm9Ykmjoigc+99TPhzuKC+6JJCD/qseWj/RmuP3s11riRkGHeUILVPVRA9aJmRhNL07d4lry3eSTX0kAUZ4ccacvHWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=afujyT7Y; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A130D1F00893;
+	Tue,  9 Jun 2026 20:37:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781037426;
+	bh=Y17eOu4vAxGLVyJ8KYCEYVKRupe8sOIVZrf4Uq9Q5jI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=afujyT7YaGaQItypmjOIY4fycIhvtQ3+T3nskuKfoK78/6crMxNcQCwDEG7M6N4s0
+	 bKH32V5gwVS2Xv2r3/LPMcJEkbmRhA/PAVC0D4h1hxClZWIwdmupjQhux6c+i3B8xS
+	 n9gBtDCMlGzhDuiIwWmTxNjwnFImLtNDnLTidr4wtvfcMT5KhyOKkMCPmr1RXRKltC
+	 SibyU1nfZIdL97gOgxYv/P7oJLit9Iez5Y8SK9+Anm3SFGbyLsCgaQUIPmvxMgEX4y
+	 tJTUjsH+8H6LSMWriW1LTNQr7v1exI++TDlGmguH9uqQLCGMEb7nL+nGJMRChWTKQ+
+	 WqqOtoMbDlKmw==
+Message-ID: <f793c665-ac99-4afe-a64b-bbd6d40044e5@kernel.org>
+Date: Tue, 9 Jun 2026 21:37:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,253 +55,176 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] drm/msm/a6xx: Fix IRQ storm during msm_recovery test
-To: rob.clark@oss.qualcomm.com
-Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar
- <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>,
-        Jie Zhang <quic_jiezh@quicinc.com>,
-        =?UTF-8?Q?Ma=C3=ADra_Canal?=
- <mcanal@igalia.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Jie Zhang <jie.zhang@oss.qualcomm.com>
-References: <20260605-assorted-fixes-june-v1-0-2caa04f7287c@oss.qualcomm.com>
- <20260605-assorted-fixes-june-v1-5-2caa04f7287c@oss.qualcomm.com>
- <CACSVV01dbQcjE+nTic+9R4VfCtNGvpwODH8BMZi8B7LFtcCCfQ@mail.gmail.com>
- <49b8530f-24d3-4201-b22c-0f8eaea9f4e0@oss.qualcomm.com>
- <CACSVV00vFNZDCN24wSdffZFRWpijb53qbX_-3b09ny4noa7-Mw@mail.gmail.com>
- <d153235f-ffec-4fee-87b2-6008f26d7014@oss.qualcomm.com>
- <CACSVV02_Yh21Ld5NX6Z6iaG0sfTGseOD5S9X_avSC=7RAfNt6w@mail.gmail.com>
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Subject: Re: [PATCH 1/3] dt-bindings: media: qcom,qcm2290-venus: document
+ shikra Iris compatible
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260609-shikra_vpu-v1-0-3a32bb38b080@oss.qualcomm.com>
+ <5YTsRTMAUGw0it3GAWHhKIh77_Hk823-xRJ4WxzQ-ENpdnC9-ttUvWhJI_CqFEetmFXcRel50GK_o2UMGzwZmg==@protonmail.internalid>
+ <20260609-shikra_vpu-v1-1-3a32bb38b080@oss.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
 Content-Language: en-US
-In-Reply-To: <CACSVV02_Yh21Ld5NX6Z6iaG0sfTGseOD5S9X_avSC=7RAfNt6w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Autocrypt: addr=bod@kernel.org; keydata=
+ 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
+In-Reply-To: <20260609-shikra_vpu-v1-1-3a32bb38b080@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: NCy2GL5D91_D6kttGw_TkTj45tr0Zk81
-X-Authority-Analysis: v=2.4 cv=aa9RWxot c=1 sm=1 tr=0 ts=6a28719e cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=Q2jhz0oZVy1Wt6PcVz7aQg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=mdSVG8094VgbVpz2fjIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDE4OCBTYWx0ZWRfX7+Bssbq9YEph
- 5YOltCI2e8Xk/Gn8QKnbl5zQxuHNZZOR0oOokkE2Ru9P+kJXkEKGO4kk2lEao194sGX4+ec2jXa
- biOq20dvylsmaEUznaZRDJScOAWBh1+Um5hE8t1nH81B69E2vXTLFsqd08SYGBSWF5rf2EKcOz3
- lPx5uzVDo4KJc+aXVsN9VJG1G1wBh2i/qaKBcZtJw8ATm4ecTrthEl8ReP61VwyRskE3i9AHhga
- xiLwqkU65s6oQ0KpFpd2UMQ5w8GdVu89kqfOzv/X1elA6DkyiEG/sdcArwOE4H7F+J28WpxuKKd
- An5fPkS8aKHswdxtyBs3XaNNG1k18g6QK4/M4EdOcOqCYxg1+xBfyJuGRLqR0CqKCraMX1TPVYV
- ox4cjPW54UD2mECUUJc/Blp3OkWlqR+viraemsYSJ8cxkc7O7PvkxI0NwFYpzwCwT+6S/vPSw8L
- X8zWWVI4l55sdOkxz7w==
-X-Proofpoint-ORIG-GUID: NCy2GL5D91_D6kttGw_TkTj45tr0Zk81
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-09_04,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 priorityscore=1501 impostorscore=0 adultscore=0
- spamscore=0 bulkscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090188
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-112270-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:vikash.garodia@oss.qualcomm.com,m:dikshita.agarwal@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:jorge.ramirez@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch,quicinc.com,igalia.com,vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
-	FORGED_SENDER(0.00)[akhilpo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FORGED_RECIPIENTS(0.00)[m:rob.clark@oss.qualcomm.com,m:sean@poorly.run,m:konradybcio@kernel.org,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:quic_pvgtejas@quicinc.com,m:quic_jiezh@quicinc.com,m:mcanal@igalia.com,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:jie.zhang@oss.qualcomm.com,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-112271-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akhilpo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 3C0DE664048
+X-Rspamd-Queue-Id: 5D31566419E
 
-On 6/9/2026 7:55 PM, Rob Clark wrote:
-> On Tue, Jun 9, 2026 at 6:09 AM Akhil P Oommen <akhilpo@oss.qualcomm.com> wrote:
->>
->> On 6/9/2026 5:50 AM, Rob Clark wrote:
->>> On Mon, Jun 8, 2026 at 2:55 PM Akhil P Oommen <akhilpo@oss.qualcomm.com> wrote:
->>>>
->>>> On 6/5/2026 12:20 PM, Rob Clark wrote:
->>>>> On Thu, Jun 4, 2026 at 1:10 PM Akhil P Oommen <akhilpo@oss.qualcomm.com> wrote:
->>>>>>
->>>>>> From: Jie Zhang <jie.zhang@oss.qualcomm.com>
->>>>>>
->>>>>> Once a hang is triggered by the msm_recovery test, the gpu error irq
->>>>>> remains asserted and triggers an interrupt storm. In the worst case,
->>>>>> this IRQ storm lands on the CPU core where the hangcheck timer is
->>>>>> scheduled, blocking it from running. This eventually leads to CPU
->>>>>> watchdog timeouts.
->>>>>>
->>>>>> To fix this, mask the gpu error irqs during msm_recovery test and
->>>>>> enable them back during the recovery.
->>>>>>
->>>>>> Fixes: 5edf2750d998 ("drm/msm: Add debugfs to disable hw err handling")
->>>>>> Signed-off-by: Jie Zhang <jie.zhang@oss.qualcomm.com>
->>>>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->>>>>> ---
->>>>>>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 5 +++++
->>>>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 5 ++++-
->>>>>>  drivers/gpu/drm/msm/adreno/a8xx_gpu.c | 5 ++++-
->>>>>>  drivers/gpu/drm/msm/msm_gpu.c         | 2 ++
->>>>>>  4 files changed, 15 insertions(+), 2 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
->>>>>> index 2c0bbac43c52..f1df2514c613 100644
->>>>>> --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
->>>>>> +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
->>>>>> @@ -1275,6 +1275,11 @@ static irqreturn_t a5xx_irq(struct msm_gpu *gpu)
->>>>>>                 status & ~A5XX_RBBM_INT_0_MASK_RBBM_AHB_ERROR);
->>>>>>
->>>>>>         if (priv->disable_err_irq) {
->>>>>> +               /* Turn off interrupts to avoid interrupt storm */
->>>>>> +               gpu_write(gpu, REG_A5XX_RBBM_INT_0_MASK,
->>>>>> +                              A5XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS |
->>>>>> +                              A5XX_RBBM_INT_0_MASK_CP_SW);
->>>>>> +
->>>>>>                 status &= A5XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS |
->>>>>>                           A5XX_RBBM_INT_0_MASK_CP_SW;
->>>>>>         }
->>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>> index 8b3bb2fd433b..9a4f9d0e1780 100644
->>>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>>>> @@ -1911,8 +1911,11 @@ static irqreturn_t a6xx_irq(struct msm_gpu *gpu)
->>>>>>
->>>>>>         gpu_write(gpu, REG_A6XX_RBBM_INT_CLEAR_CMD, status);
->>>>>>
->>>>>> -       if (priv->disable_err_irq)
->>>>>> +       if (priv->disable_err_irq) {
->>>>>> +               /* Turn off interrupts to avoid interrupt storm */
->>>>>> +               gpu_write(gpu, REG_A6XX_RBBM_INT_0_MASK, A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS);
->>>>>>                 status &= A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS;
->>>>>> +       }
->>>>>>
->>>>>>         if (status & A6XX_RBBM_INT_0_MASK_RBBM_HANG_DETECT)
->>>>>>                 a6xx_fault_detect_irq(gpu);
->>>>>> diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
->>>>>> index 9e44fd1ae634..0f6fd35bd587 100644
->>>>>> --- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
->>>>>> +++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
->>>>>> @@ -1211,8 +1211,11 @@ irqreturn_t a8xx_irq(struct msm_gpu *gpu)
->>>>>>
->>>>>>         gpu_write(gpu, REG_A8XX_RBBM_INT_CLEAR_CMD, status);
->>>>>>
->>>>>> -       if (priv->disable_err_irq)
->>>>>> +       if (priv->disable_err_irq) {
->>>>>> +               /* Turn off interrupts to avoid interrupt storm */
->>>>>> +               gpu_write(gpu, REG_A8XX_RBBM_INT_0_MASK, A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS);
->>>>>>                 status &= A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS;
->>>>>> +       }
->>>>>>
->>>>>>         if (status & A6XX_RBBM_INT_0_MASK_RBBM_HANG_DETECT)
->>>>>>                 a8xx_fault_detect_irq(gpu);
->>>>>> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
->>>>>> index 9ac7740a87f0..48ac51f4119b 100644
->>>>>> --- a/drivers/gpu/drm/msm/msm_gpu.c
->>>>>> +++ b/drivers/gpu/drm/msm/msm_gpu.c
->>>>>> @@ -552,6 +552,8 @@ static void recover_worker(struct kthread_work *work)
->>>>>>                 msm_update_fence(ring->fctx, fence);
->>>>>>         }
->>>>>>
->>>>>> +       priv->disable_err_irq = false;
->>>>>
->>>>> Ok, so we rely on recovery to re-enable the error irqs..  that is
->>>>> probably ok, given the intended purpose of the debugfs file.  And,
->>>>> well, it is debugfs.  But why do we clear disable_err_irq here?
->>>>
->>>> Now that we are updating the IRQ mask register which won't reset until
->>>> there is a gpu suspend, its side effect will be felt even after
->>>> userspace deasserts the debugfs knob, potentially into the next
->>>> testcase. This is different from the older behavior. So, I felt it would
->>>> be better to reset this flag during the recovery, considering
->>>> msm_recovery is the only user of this knob, afaiu.
->>>
->>> Hmm... maybe debugfs writes should just immediately update the irq
->>> mask (if the gpu is powered)?
->>
->> That needs some plumbing in adreno func table to program the register.
->> We can do that if you prefer that, but is it an overkill for this usecase?
+On 09/06/2026 17:15, Vikash Garodia wrote:
+> Document the iris video accelerator used on shikra platforms by adding
+> the qcom,shikra-iris compatible.
 > 
-> Yeah, that is why I didn't suggest it earlier.  But stealth re-enable
-> of err irqs makes the behavior harder to reason about, which I
-> dislike.  I guess it works now because msm_recovery only does a single
-> hang-test w/ hw error irq's disabled.  But from userspace PoV it seems
-> natural to expect error irq's to remain disabled until writing debugfs
-> again.
+> Although QCM2290 and shikra share the same video hardware and overall
+> integration, their SMMU programming differs. QCM2290 exposes separate
+> stream IDs for the video hardware and the Xtensa path, requiring two
+> explicit IOMMU entries, whereas shikra uses a masked SMR to collapse
+> equivalent stream IDs into a single mapping. Due to QCM2290’s SID layout
+> and Xtensa isolation requirements, such SMR masking is not applicable on
+> QCM2290 platforms.
+> Since shikra uses the same video hardware as QCM2290 and shares the same
+> programming model and capabilities, it is added as a fallback compatible
+> to qcom,qcm2290-venus, with conditional handling to allow either one or
+> two IOMMU entries.
 > 
-> Since it is about debugfs and a single igt test, maybe it is just best
-> to document that this is how it works.
+> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+> ---
+>   .../bindings/media/qcom,qcm2290-venus.yaml           | 20 ++++++++++++++++----
+>   1 file changed, 16 insertions(+), 4 deletions(-)
 > 
-> Or, would it be reasonable just to update the irq mask in gpu->submit()?
-
-IFPC complicates this a little bit. We need to vote OOB to keep the GX
-domain up to program this register. And I am not sure if we have any
-existing OOB bit that we can use for this purpose.
-
-I feel this debugfs knob is not worth any additional complications in
-the driver at the moment. We can consider improving this when more
-usecases show up. For now, I feel it is better to just document the
-modified behavior.
-
--Akhil
-
+> diff --git a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
+> index 5977e7d0a71b4fb5681f1c2094439c251366f01f..895533b9756690d075fd7729e3f805c8e72ff0df 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
+> @@ -15,12 +15,27 @@ description:
 > 
-> BR,
-> -R
+>   allOf:
+>     - $ref: qcom,venus-common.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,shikra-iris
+
+Should this be "iris" in a venus yaml ?
+
+> +    then:
+> +      properties:
+> +        iommus:
+> +          maxItems: 1
+> +    else:
+> +      properties:
+> +        iommus:
+> +          maxItems: 2
+> 
+>   properties:
+>     compatible:
+>       oneOf:
+>         - items:
+> -          - const: qcom,sm6115-venus
+> +          - enum:
+> +              - qcom,sm6115-venus
+> +              - qcom,shikra-iris
+>             - const: qcom,qcm2290-venus
+>         - const: qcom,qcm2290-venus
+> 
+> @@ -45,9 +60,6 @@ properties:
+>         - const: vcodec0_core
+>         - const: vcodec0_bus
+> 
+> -  iommus:
+> -    maxItems: 2
+> -
+>     interconnects:
+>       maxItems: 2
 > 
 > 
->> -Akhil
->>
->>>
->>> BR,
->>> -R
->>>
->>>> I should have explicitly called out this new behavior of disable_err_irq
->>>> in the commit text, but I forgot.
->>>>
->>>> -Akhil.
->>>>
->>>>>
->>>>> BR,
->>>>> -R
->>>>>
->>>>>> +
->>>>>>         gpu->funcs->recover(gpu);
->>>>>>
->>>>>>         /* retire completed submits, plus the one that hung: */
->>>>>>
->>>>>> --
->>>>>> 2.51.0
->>>>>>
->>>>
->>
+> --
+> 2.34.1
+> 
 
+---
+bod
 
