@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-112156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id /3A/FcwEKGqQ7QIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	id EhmBK8wEKGqR7QIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 14:19:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7E5165FF8E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 14:19:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6654B65FF91
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 14:19:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=fail ("headers rsa verify failed") header.d=igalia.com header.s=20170329 header.b=DYQnff+h;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112156-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112156-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=fail ("headers rsa verify failed") header.d=igalia.com header.s=20170329 header.b=IQJolVdc;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112157-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112157-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=fail reason="SPF not aligned (relaxed)" header.from=igalia.com (policy=none);
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id EE3583103EFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 12:13:25 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 309B831046E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 12:13:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 576E740E8D3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B475940F8E4;
 	Tue,  9 Jun 2026 12:13:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90CA407568
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 12:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F66840BCDA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 12:13:22 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781007205; cv=none; b=e+ZMhIhOgP8hqTpbcBj4r3YZRC7aNaKXKft9acTSipKEGyApqWi6JTaqzCYXHiXUsky7H1yP8GuXY5zAAlaKDeiiQItrHjlwmWB/8jzB1va9m8YYDsYDrqvHoxnYMiJDFRhCO2c7HlHRj+KuQ3IMLS+6LY+aBj7U0Jzo7Qn17mw=
+	t=1781007205; cv=none; b=gEI0tFyjZgN9KUa6sh0KxHiT0pXQdTSM2ZSEbGcQomrcjEigJIZy84sibtNnUJPW9ZZKRjylV8ysDTOfcKXW3LFcEbOt41jOLbcOANzjIQD8RLMcgs0ubE71Ux79F7bFWsMYQo2JJtgcT0cSkm9Md4mS45XkvbttBgEHxNpmxrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1781007205; c=relaxed/simple;
-	bh=8Jjhmr0t6XVVaEH+ukfCCswzcTkeUxpCCgdMvhN0JSc=;
+	bh=z+W9K0BcFkXrU8ydxsHaiBs5/u4YBqSmwr8+xePeFJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q55hE4PeiFPVejAz1Z72G3DM7rwcnJavd844tYFepNAyD2sybbrb+gXBKfVfotX9wmJvLuv+WdVtXEJSXLZm9DYaNtb0eLgNYvUymmN5SsnHEEXaPVZpMIQyJUJ5RrdEv6KqkuxlCqDXkOKM2wVH9msmB7g0Lrgs75FyCBmGOag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=DYQnff+h; arc=none smtp.client-ip=213.97.179.56
+	 MIME-Version; b=BZ7NldFTE3NrAEdgdjMjDYUN3EwBlOVVC6GnkVQDjy2ptRevRva/SautG86D0KHKU7eODM2zzJ0TznNTKcZ523oow3KtmvmsIvVcrZb8sbLiJUGSKYxxjhgKRfgX3DUIQdqSd3TvMmyIW8j/zlbi+98G0fOfbndG6rJ5PyfZowc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=IQJolVdc; arc=none smtp.client-ip=213.97.179.56
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
 	s=20170329; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
 	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
 	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
 	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
 	List-Post:List-Owner:List-Archive;
-	bh=xDanblzNrKwLMIWCMdcO9/e2GrHOcHnN+e83qP8r5xg=; b=DYQnff+h1I5WKLrCDZpfiXYUsF
-	WgUZXAk6NdzORRQC3A0hqmq66F1fIRHCwJtP03Ic75svhGxsg4pX6PZwYkpGG5e+p8ogXf4IB3mAV
-	WkEAI4iDYBSAAR8L0V4XItFuB7nvMYpnL1399A/fVntgAb+sMNpbP9heT8f6sAGQT88TjDYNMbiDA
-	4I1lMsuSNMhC/qP0XpV0ukpsQMAfymXQLCoGhbt4FQ9RCa+lw2t27y0A3cuIaVGRQYa1nzwJtPHP5
-	gxNBvE0QHrZUTFcdZjy1XbyHRIHp4QI8GmOj2cApMN/Am4q3YjINToNI5X/Zh0cXyI8dVzfmjNAqB
-	MnEP/G7w==;
+	bh=UznVIFEYKC0IyDpqtfOgBPAG+0I11/IKmEt3nq+ive4=; b=IQJolVdcFmWbS7Mc/0yr9Whp9q
+	qhhVeeTtgUyJR9r1u4OY18j4EUjwBSerJbSUjCUbWeXzit1MPjngl5ztNi3FuqriRIibcVP1GulJB
+	PV2ktWUoWukeI6egG4cVSn9hm9RbRV+WvvD/0eAMiWmx4JrFdqc7K78+gJEywkLvA7sb0hsRYP+x/
+	lKbdubTmRf5QCbHD75pGxGjs4qfABvbw9d2mL+lHhKj2x5qa+w6CGj6KcBvcHZQVZXzt+hqYxWLHG
+	jPtrYBfZxgbxVzxWJeDrc0IUOlTzKa/zcAS6+LlyDrazI8dFHpR2gnUPhwxiQyyNhMy3Hc/DBGzh0
+	zp7e8low==;
 Received: from [79.117.146.159] (helo=killbill.home)
 	by fanzine2.igalia.com with esmtpsa 
 	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1wWvK0-00EvWP-R7; Tue, 09 Jun 2026 14:12:44 +0200
+	id 1wWvK2-00EvWP-P9; Tue, 09 Jun 2026 14:12:46 +0200
 From: Melissa Wen <mwen@igalia.com>
 To: airlied@gmail.com,
 	alexander.deucher@amd.com,
@@ -81,10 +81,11 @@ Cc: Uma Shankar <uma.shankar@intel.com>,
 	freedreno@lists.freedesktop.org,
 	intel-xe@lists.freedesktop.org,
 	intel-gfx@lists.freedesktop.org,
+	Sashiko <sashiko-bot@kernel.org>,
 	dri-devel@lists.freedesktop.org
-Subject: [PATCH v3 2/7] drm/atomic: reject colorop update from inactive color pipeline
-Date: Tue,  9 Jun 2026 13:51:36 +0200
-Message-ID: <20260609121230.1358786-3-mwen@igalia.com>
+Subject: [PATCH v3 3/7] drm/amd/display: don't check colorop status if its in an inactive pipeline
+Date: Tue,  9 Jun 2026 13:51:37 +0200
+Message-ID: <20260609121230.1358786-4-mwen@igalia.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260609121230.1358786-1-mwen@igalia.com>
 References: <20260609121230.1358786-1-mwen@igalia.com>
@@ -107,9 +108,9 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-112156-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[31];
-	FORGED_RECIPIENTS(0.00)[m:airlied@gmail.com,m:alexander.deucher@amd.com,m:alex.hung@amd.com,m:aurabindo.pillai@amd.com,m:christian.koenig@amd.com,m:contact@emersion.fr,m:daniels@collabora.com,m:harry.wentland@amd.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:simona@ffwll.ch,m:siqueira@igalia.com,m:sunpeng.li@amd.com,m:tzimmermann@suse.de,m:uma.shankar@intel.com,m:chaitanya.kumar.borah@intel.com,m:xaver.hugl@kde.org,m:pekka.paalanen@collabora.com,m:louis.chauvet@bootlin.com,m:matthew.schwartz@linux.dev,m:amd-gfx@lists.freedesktop.org,m:kernel-dev@igalia.com,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:intel-xe@lists.freedesktop.org,m:intel-gfx@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112157-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[32];
+	FORGED_RECIPIENTS(0.00)[m:airlied@gmail.com,m:alexander.deucher@amd.com,m:alex.hung@amd.com,m:aurabindo.pillai@amd.com,m:christian.koenig@amd.com,m:contact@emersion.fr,m:daniels@collabora.com,m:harry.wentland@amd.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:simona@ffwll.ch,m:siqueira@igalia.com,m:sunpeng.li@amd.com,m:tzimmermann@suse.de,m:uma.shankar@intel.com,m:chaitanya.kumar.borah@intel.com,m:xaver.hugl@kde.org,m:pekka.paalanen@collabora.com,m:louis.chauvet@bootlin.com,m:matthew.schwartz@linux.dev,m:amd-gfx@lists.freedesktop.org,m:kernel-dev@igalia.com,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:intel-xe@lists.freedesktop.org,m:intel-gfx@lists.freedesktop.org,m:sashiko-bot@kernel.org,m:dri-devel@lists.freedesktop.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORWARDED(0.00)[lists@lfdr.de];
@@ -128,111 +129,79 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,intel.com:email,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A7E5165FF8E
+X-Rspamd-Queue-Id: 6654B65FF91
 
-Only allow updates on colorops that are part of an active pipeline, i.e.
-check if a colorop belongs to the color pipeline of a plane in its
-current, new or old state. If not, reject the state change of this
-inactive colorop. Performing this check later in drm_atomic_check_only()
-to remove the ordering dependency that would exist if done at the time
-of colorop property setting. Userspace is allowed to change colorops of
-an active color pipeline, or when activating or deactivating its
-pipeline in the same commit. However, changes in inactive color pipeline
-is not allowed.
+If colorop BYPASS property is true, but the colorop isn't part of an
+active/transient active color pipeline, this colorop status should not
+be taken into account when checking if a plane color pipeline is
+actually active. For example, if the userspace doesn't explicitly set a
+colorop obj to bypass but deactivates its color pipeline by setting
+plane COLOR_PIPELINE to bypass, it means that colorop is inactive
+regardless of its BYPASS property status.
 
-Suggested-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: d3a549f4df78 ("drm/amd/display: Use overlay cursor when color pipeline is active")
 Signed-off-by: Melissa Wen <mwen@igalia.com>
 ---
- drivers/gpu/drm/drm_atomic.c | 60 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 60 insertions(+)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 31 +++++++++++++------
+ 1 file changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-index 464562861408..960b52624deb 100644
---- a/drivers/gpu/drm/drm_atomic.c
-+++ b/drivers/gpu/drm/drm_atomic.c
-@@ -943,6 +943,55 @@ drm_atomic_add_pipeline_colorops(struct drm_atomic_commit *state,
- 	return 0;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index ba7f98a87808..2edec3e1b838 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -12590,9 +12590,9 @@ static int add_affected_mst_dsc_crtcs(struct drm_atomic_commit *state, struct dr
+  * @use_old: if true, inspect the old colorop states; otherwise the new ones
+  *
+  * A color pipeline may be selected (color_pipeline != NULL) but still is
+- * inactive if every colorop in the chain is bypassed.  Only return
+- * true when at least one colorop has bypass == false, meaning the cursor
+- * would be subjected to the transformation in native mode.
++ * inactive if every colorop in the chain is bypassed. Only return true when at
++ * least one active colorop has bypass == false, meaning the cursor would be
++ * subjected to the transformation in native mode.
+  *
+  * Return: true if the pipeline modifies pixels, false otherwise.
+  */
+@@ -12600,18 +12600,29 @@ static bool dm_plane_color_pipeline_active(struct drm_atomic_commit *state,
+ 					   struct drm_plane *plane,
+ 					   bool use_old)
+ {
+-	struct drm_colorop *colorop;
+-	struct drm_colorop_state *old_colorop_state, *new_colorop_state;
+-	int i;
++	struct drm_plane_state *plane_state = use_old ?
++					      drm_atomic_get_old_plane_state(state, plane) :
++					      drm_atomic_get_new_plane_state(state, plane);
++	struct drm_colorop *colorop, *pipeline;
++	struct drm_colorop_state *cstate;
+ 
+-	for_each_oldnew_colorop_in_state(state, colorop, old_colorop_state, new_colorop_state, i) {
+-		struct drm_colorop_state *cstate = use_old ? old_colorop_state : new_colorop_state;
++	pipeline = plane_state ? plane_state->color_pipeline :
++				 plane->state->color_pipeline;
+ 
+-		if (cstate->colorop->plane != plane)
+-			continue;
++	if (!pipeline)
++		return false;
++
++	drm_for_each_colorop_in_pipeline(colorop, pipeline) {
++		cstate = use_old ?
++			 drm_atomic_get_old_colorop_state(state, colorop) :
++			 drm_atomic_get_new_colorop_state(state, colorop);
++
++		if (!cstate)
++			cstate = colorop->state;
+ 		if (!cstate->bypass)
+ 			return true;
+ 	}
++
+ 	return false;
  }
  
-+/**
-+ * drm_atomic_colorop_check - check new colorop state
-+ * @new_colorop_state: new colorop state to check
-+ *
-+ * Ensure that the colorop in @new_colorop_state belongs to an active color
-+ * pipeline, i.e. it's in the chain of colorops set to the color_pipeline
-+ * property of current, old or new plane state.
-+ *
-+ * Returns: 0 on success, -EINVAL otherwise.
-+ */
-+static int drm_atomic_colorop_check(const struct drm_colorop_state *new_colorop_state)
-+{
-+	struct drm_atomic_commit *state = new_colorop_state->state;
-+	struct drm_plane *plane = new_colorop_state->colorop->plane;
-+	struct drm_plane_state *new_plane_state, *old_plane_state;
-+	struct drm_colorop *colorop;
-+
-+	new_plane_state = drm_atomic_get_new_plane_state(state, plane);
-+	old_plane_state = drm_atomic_get_old_plane_state(state, plane);
-+
-+	/* No changes in the plane state. Check current-committed plane state */
-+	if (!new_plane_state) {
-+		for (colorop = plane->state->color_pipeline; colorop; colorop = colorop->next)
-+			if (colorop == new_colorop_state->colorop)
-+				return 0;
-+		return -EINVAL;
-+	}
-+
-+	if (WARN_ON(!old_plane_state))
-+		return -EINVAL;
-+
-+	/* Check if the colorop is active in the new plane state */
-+	for (colorop = new_plane_state->color_pipeline; colorop; colorop = colorop->next)
-+		if (colorop == new_colorop_state->colorop)
-+			return 0;
-+
-+	/* Same color pipeline as new; no point walking old. Colorop isn't active */
-+	if (new_plane_state->color_pipeline == old_plane_state->color_pipeline)
-+		return -EINVAL;
-+
-+	/* Check if the colorop was active in the old plane state */
-+	for (colorop = old_plane_state->color_pipeline; colorop; colorop = colorop->next)
-+		if (colorop == new_colorop_state->colorop)
-+			return 0;
-+
-+	/* Colorop is not part of an active color pipeline. */
-+	return -EINVAL;
-+}
-+
- static void drm_atomic_colorop_print_state(struct drm_printer *p,
- 					   const struct drm_colorop_state *state)
- {
-@@ -1792,6 +1841,8 @@ int drm_atomic_check_only(struct drm_atomic_commit *state)
- 	struct drm_plane *plane;
- 	struct drm_plane_state *old_plane_state;
- 	struct drm_plane_state *new_plane_state;
-+	struct drm_colorop *colorop;
-+	struct drm_colorop_state *new_colorop_state;
- 	struct drm_crtc *crtc;
- 	struct drm_crtc_state *old_crtc_state;
- 	struct drm_crtc_state *new_crtc_state;
-@@ -1808,6 +1859,15 @@ int drm_atomic_check_only(struct drm_atomic_commit *state)
- 			requested_crtc |= drm_crtc_mask(crtc);
- 	}
- 
-+	for_each_new_colorop_in_state(state, colorop, new_colorop_state, i) {
-+		ret = drm_atomic_colorop_check(new_colorop_state);
-+		if (ret) {
-+			drm_dbg_atomic(dev, "[COLOROP:%d:%d] isn't in an active color pipeline.\n",
-+				       colorop->base.id, colorop->type);
-+			return ret;
-+		}
-+	}
-+
- 	for_each_oldnew_plane_in_state(state, plane, old_plane_state, new_plane_state, i) {
- 		ret = drm_atomic_plane_check(old_plane_state, new_plane_state);
- 		if (ret) {
 -- 
 2.53.0
 
