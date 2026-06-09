@@ -1,225 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-112118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id QNurOLfpJ2q+4gIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 12:23:51 +0200
+	id iEBnE6X1J2pl6QIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 13:14:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83A9165ED29
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 12:23:51 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D422E65F61A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 09 Jun 2026 13:14:44 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="nlgDO/26";
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=V5+VleG3;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112118-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112118-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=fail ("headers rsa verify failed") header.d=igalia.com header.s=20170329 header.b=q3x0k5yL;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112145-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112145-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=fail reason="SPF not aligned (relaxed)" header.from=igalia.com (policy=none);
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 61E88305AF71
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 10:17:08 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D583130DAEC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Jun 2026 11:05:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E1B239B951;
-	Tue,  9 Jun 2026 10:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 485733FBB6B;
+	Tue,  9 Jun 2026 11:05:23 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1247B2EEE8F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 10:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC8A3FB7C1
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Jun 2026 11:05:20 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781000225; cv=none; b=NAijI/XH6RMd8ca1H1UucMzpvE/IzDbUc4U6BSp5DQaomuPOxJszrMRuVhLayAxzPZ4/26FFKNAv2ovsZvqt9shwe2NX8KA6D3+FpDG0vQpwy6EykA2boJR1lLyrzcsw2Sv+J1crLtcN2WRNZxZbWc/YE7IhFza8QoqR/z24Ykc=
+	t=1781003123; cv=none; b=rJYlOJfO59U21jc5kKS7rISpTjzGSZyHBrAs41jTI/WdKau18I5KSjGyzbdb2QOn9TVOAkN+yguQyfG0nj52FgaLfyLrr1xkiUBKmGPqBdsdnsLGqm7G++8E/ZRuznzfORABhe+xj9yTB4BY+tJaNJ2NTr5WuIxm2SA2s03j/vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781000225; c=relaxed/simple;
-	bh=60lbSBPHLuPejyGJzFkNlNTtgRn0AxS2NaXpKwq4/9w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tcLdW3TFtXGXjKF/fNsFaneRc3OHZ/N5HH/l56uGlfsfsjnKU/esOJc4DvH+9lscu2ai7WDI82hyEZKAA6151zff4sadiAPI+EJ/9pgqfV74ALbhAFadXJMmjWV+kvh4jqz0Tm7onQq4tbFmgqfuUe/FGz1oFN5zKcwCIfCGyEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nlgDO/26; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=V5+VleG3; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6599vHqu1868616
-	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Jun 2026 10:17:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JudsusfDtbrr44rlxP7/oBk73rfyE1SdPB/IQf+KXPc=; b=nlgDO/26oEBjtB33
-	e3LXmHI/I+uVAz0axQLW9DaSUmE5W2QolchARMtMAxaOv5oCsHMA9BanvXAn2rgj
-	Rzq5mUiXmTCa4pNfaKyjrBpcgC3ZoMpdJXTtJre1w8HVbEU3n7lQQn2jEG7xbHEv
-	NtjSa71NrurmuRmGEnKlHmteCs0fRGu6YYOy/BtMQx4mmJJaeduh8RSvYmcUU3R/
-	L7hLmQ0bL2KGK9Od26tveYRWJxYm4N64xOciOSvHhfXkrW+FXFktHpi5TlLYrYAG
-	opVIE8rTihmgBAAboS14MA8z98EGrJ4UFyS7mWuyMX7NVPm0Gnomn33MTNELmDnm
-	/PNbBQ==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4epg3wg74v-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 10:17:03 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-36b982ec27aso3922139a91.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Jun 2026 03:17:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781000222; x=1781605022; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JudsusfDtbrr44rlxP7/oBk73rfyE1SdPB/IQf+KXPc=;
-        b=V5+VleG32ERvBmUt0YSAraRb5W3R5M+snEPbUaVDV/8Sm+8/2FDbw1ECKCqC3TUCPm
-         dItXu3aLGTJZ6nULo/IdKg9rdCnF3FKTX7/M1DAjVU5DeKyNUNujI/95O0KQA5bUFNEJ
-         +ypE0bb+YTiHaH4pqH8Ibz/yzgho45pzVfHeZhXAXZRuIy4A16imFcBBFVqfAwZG4HQw
-         0R4cxBCfVzgwW5NszIlgNxwDdahl0ADGzV5nJw6LmzrWQv/kSA4B8dSPaN+KK2TqBvTS
-         eUI9qN5hnejS1IEXN10tLdGpZkeQKPFE2j1j2iVmFvyEc8/czNjiMBa/W5ujm44/iv3t
-         9+gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781000222; x=1781605022;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JudsusfDtbrr44rlxP7/oBk73rfyE1SdPB/IQf+KXPc=;
-        b=GdDhEe17qFh5Nwserd/rYJ1XgqXL1pZssx77wuXhQN65nMjAiUWqdGNokTlFCNiD4b
-         997jsZuwSsoTbr2MVVvS1SqkMFeGU/9Sir93Wd2LDANTpMUTuJQJMEJuazaiE6ZV2P9t
-         BGTxSMNaFa2LAdtu8J7bLGRhpNwWhEMCFCenyuhmnLbqwUMF2xIUfDAVAabC+D6Y1Fe3
-         vwlTtVr6Rz1K89wHV7J8WTef9O+Hl9nHAp4OhQuDmG6bYC0mnUvEEk1ipObkEvJWWZxc
-         kHTMJPe5I0a97/0jpyjmhQTnd67KR80a9XA/ygTybkOtlhw+1Jv7pYLUkxBAVbhU8ZwL
-         T59A==
-X-Forwarded-Encrypted: i=1; AFNElJ/pbWkfLV1jQrAP/kuT1JE2jxpAekqbFmCAPQxnQKRL51iPF/EOpjPa7UHQ7pKVopDMnxIM5cytLH6+ne4O@vger.kernel.org
-X-Gm-Message-State: AOJu0YwuIEFSUoohEUFfRvxgo3zrdEB/gl4OkptUeW+ZoVglktPOvXKh
-	4uz42w0mZnf85fDOw2SLzAadRMICWXF2heUqqiVZqXXSuX9rBizI1WgV/KRJ/miz/DQG33lkMYA
-	u40zyAfAHkK8Fa21BxdiSYdSkyklq57Kbjr1/Ao9GEJC3ohxLcJJ1YJv0buBefXUAdiDh
-X-Gm-Gg: Acq92OEpLTUA7pEXBIWWkTitI+z9gV1QivFTXumEDCkcGMoEgKIZy+b9QdRJ+N2WC8V
-	LArlG2+kMucA3R0QErX1A71xwy9g+MgWrkEjIoIByGBYHOVwGuamFXrXoDQHyFF0WuIcJRoCack
-	1xbCf72fGbYrwiqI1HbUkULbutifAT0fauS84ASVJGTwe6viIw7ccKDBzGQyLa5K/bdtpDiEJgl
-	TVe7nmg+FLTQy6B+E8jaRzj/qNtr91DTJSWv+UdcYIdiUgeQS/XTmXmVfXFFT4Hp+I87yY0Q+0P
-	UbqDDhgdWf810rKDUlnY7cMqNPblEK+UMqo1jHHsr6Lhs24VCUx3Z0hoT2VvsNojsD7WwkLKtfW
-	JyJijLRiMXJqv0WekvNEsU2cRQFYCAqvyoQ4NgJNXmg8a3hIbDY5uOfGrf6GohrRuot2oz3hLpP
-	VK
-X-Received: by 2002:a05:6a20:9398:b0:3b4:640e:f6c0 with SMTP id adf61e73a8af0-3b4ccd77534mr18165461637.13.1781000222549;
-        Tue, 09 Jun 2026 03:17:02 -0700 (PDT)
-X-Received: by 2002:a05:6a20:9398:b0:3b4:640e:f6c0 with SMTP id adf61e73a8af0-3b4ccd77534mr18165419637.13.1781000222095;
-        Tue, 09 Jun 2026 03:17:02 -0700 (PDT)
-Received: from [10.151.37.217] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c85df0b374fsm17704239a12.25.2026.06.09.03.16.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jun 2026 03:17:01 -0700 (PDT)
-Message-ID: <7def2ccd-0319-4f85-8275-73fd254d887d@oss.qualcomm.com>
-Date: Tue, 9 Jun 2026 15:46:56 +0530
+	s=arc-20240116; t=1781003123; c=relaxed/simple;
+	bh=hYuzAedQbVWhTcCChwp8iBjer0CqSaYnwQ2918vSENs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oekXE47eX9Zc95tCizHwT9uL3PBkcHkHsv56rghV9iyOT937UkCzDMTIPKQldh+C1Zoyzznp4Ct5RsIMnSppCa5ggyA1w8Rho5u2HPqsNON2E8Pt5tralHOoOKne2ebCyR+4VPRP0VuqEoncWYiqyA++gELsGSO1f/la2NOs06A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=q3x0k5yL; arc=none smtp.client-ip=213.97.179.56
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:
+	Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=PJk8M4v6GaqLAHcClw4DhGsWZP0jf2JV25pqDSZ0gFM=; b=q3x0k5yLfgOgq27DmHTi2uBG+l
+	3P6ORcXJRHK0RoQtGblNgH7bnYOEHDx4gRYKrvmnN3H/CD5lfxNn3G1J9GWcZasYS2Jix+jYPrn3P
+	HbAQSCHUZAskYZylBwlKKzLwMTZ+vcobsb6/nnScHzH37XRy7Jdq6t4YP2WzTnqkIvCFIwTGoGfab
+	aUdPH2xutBEhAdDfp1sOhXWxQL5ITc9s0UkeO9fhBrYczwhFDv7v7ILh8TBi4e7/m92gvs6curO5r
+	yixsjsKA+XZExFjkWuCphrOJLNBhovMSWzTZpD6WaPqnGE/T2/1OV9WoCWmhJt0flb7uhu4QyUyO6
+	E3c+AFAQ==;
+Received: from [79.117.146.159] (helo=killbill.home)
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1wWuG0-00Etww-4h; Tue, 09 Jun 2026 13:04:32 +0200
+From: Melissa Wen <mwen@igalia.com>
+To: airlied@gmail.com,
+	alexander.deucher@amd.com,
+	alex.hung@amd.com,
+	christian.koenig@amd.com,
+	contact@emersion.fr,
+	daniels@collabora.com,
+	harry.wentland@amd.com,
+	louis.chauvet@bootlin.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	mwen@igalia.com,
+	sebastian.wick@redhat.com,
+	simona@ffwll.ch,
+	siqueira@igalia.com,
+	sunpeng.li@amd.com,
+	tzimmermann@suse.de
+Cc: Uma Shankar <uma.shankar@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Xaver Hugl <xaver.hugl@kde.org>,
+	Pekka Paalanen <pekka.paalanen@collabora.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	amd-gfx@lists.freedesktop.org,
+	kernel-dev@igalia.com,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org,
+	intel-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH v9 0/4] drm/atomic: track individual colorop updates
+Date: Tue,  9 Jun 2026 12:20:17 +0200
+Message-ID: <20260609110420.1298352-1-mwen@igalia.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] phy: qcom: qmp-pcie: Add IPQ9650 PCIe PHY support
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Neil Armstrong
- <neil.armstrong@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260602-ipq9650_pcie_phy-v1-0-d8c32a36dbd9@oss.qualcomm.com>
- <20260602-ipq9650_pcie_phy-v1-2-d8c32a36dbd9@oss.qualcomm.com>
- <56zkq7bwrt5smmmum6jckzrekkkqrych2gntx3obnrmamwumtv@espahwe6pc3v>
-Content-Language: en-US
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-In-Reply-To: <56zkq7bwrt5smmmum6jckzrekkkqrych2gntx3obnrmamwumtv@espahwe6pc3v>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjA5MDA5NSBTYWx0ZWRfX6p0E9mPRVfSC
- s5Z4hahrIzXPL9e7O9TIWLyISyCe0GAkAV9bndMDPoOCDqDTVwwTwe5bOs3PI6kx3LoKPquY7fl
- JnDqXXZUP0b2yJQsvH8H5g3rPgSTOlosssa/drHdOPIi+yc26L50ujsV7u8xkNv2mPz/HdfCjd0
- SQSOFdRqlKwRJiad5XowqK/pPf+ncovxw5Q5nGloczOK2zxwCWMgvZyvwfGpL8s7fKO2YO3WgTI
- 6h/dtGI8noPDTRW3qC+7bN2NZ+XJa1zaB7ImVPV6XCa5QN7thZ6VspMMoCbLbb6UT0r44ih6QB+
- hCu+GoHDIkG9Qf+GBcI90RPtWMkDJWGtm7yzlYUF5cvSGtNVVLlN7zgnRsBkD5iEZkAPafK1sO8
- pibFYai6UWprNY8gQFrIX3lTR84fMxfCr4zeYbGqsHKoBWZXoT/OI/SEtp+kfV8TcfaN0LmyHC2
- bqEPm5g/POSgCebGhyA==
-X-Authority-Analysis: v=2.4 cv=csWrVV4i c=1 sm=1 tr=0 ts=6a27e81f cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=qlr8FlQxwEk1uUl_DVUA:9 a=QEXdDO2ut3YA:10
- a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-GUID: _V0jye_D9vtW9bDpgRhH650BInSuKySG
-X-Proofpoint-ORIG-GUID: _V0jye_D9vtW9bDpgRhH650BInSuKySG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-09_02,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 phishscore=0 suspectscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606090095
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [1.14 / 15.00];
+	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-112118-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email];
-	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[kathiravan.thirumoorthy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-112145-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[32];
+	FORGED_RECIPIENTS(0.00)[m:airlied@gmail.com,m:alexander.deucher@amd.com,m:alex.hung@amd.com,m:christian.koenig@amd.com,m:contact@emersion.fr,m:daniels@collabora.com,m:harry.wentland@amd.com,m:louis.chauvet@bootlin.com,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:mwen@igalia.com,m:sebastian.wick@redhat.com,m:simona@ffwll.ch,m:siqueira@igalia.com,m:sunpeng.li@amd.com,m:tzimmermann@suse.de,m:uma.shankar@intel.com,m:chaitanya.kumar.borah@intel.com,m:xaver.hugl@kde.org,m:pekka.paalanen@collabora.com,m:matthew.schwartz@linux.dev,m:amd-gfx@lists.freedesktop.org,m:kernel-dev@igalia.com,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:linux-arm-msm@vger.kernel.org,m:freedreno@lists.freedesktop.org,m:intel-xe@lists.freedesktop.org,m:intel-gfx@lists.freedesktop.org,m:dri-devel@lists.freedesktop.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[gmail.com,amd.com,emersion.fr,collabora.com,bootlin.com,linux.intel.com,kernel.org,igalia.com,redhat.com,ffwll.ch,suse.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kathiravan.thirumoorthy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DKIM_TRACE(0.00)[igalia.com:-];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[igalia.com:mid,igalia.com:from_mime,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 83A9165ED29
+X-Rspamd-Queue-Id: D422E65F61A
 
+This version is just a rebase on top of `drm-misc-fixes` instead of
+`drm-misc-next`. The entire set of fixes targets issues in commits that
+are in the kernel v6.18, but the second patch conflicts with:
 
-On 6/8/2026 12:26 PM, Dmitry Baryshkov wrote:
-> On Tue, Jun 02, 2026 at 02:40:18PM +0530, Kathiravan Thirumoorthy wrote:
->> The IPQ9650 platform has three Gen3 2-lane PCIe controllers and two Gen3
->> 1-lane PCIe controllers. The PHY instances also require the on-chip refgen
->> supply.
->>
->> Add the IPQ9650 Gen3 x1 and x2 QMP PCIe PHY configurations, including the
->> refgen regulator supply.
->>
->> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 220 +++++++++++++++++++++++++++++++
->>   1 file changed, 220 insertions(+)
->>
->> @@ -3378,6 +3524,10 @@ static const char * const qmp_phy_vreg_l[] = {
->>   	"vdda-phy", "vdda-pll",
->>   };
->>   
->> +static const char * const ipq9650_qmp_phy_vreg_l[] = {
->> +	"refgen",
->> +};
-> Now vdda-phy / vdda-pll supplies?
+- 8e135a47d35 ("drm/colorop: Rename __drm_colorop_state_reset()")
+- 5164f7e7ff8 ("drm: Rename struct drm_atomic_state to drm_atomic_commit")
+- 0c44d8dc6df ("drm/atomic: prefer drm_printf_indent() over inline \t")
 
-Cross checked with HW team again. Along with refgen, there is a on-chip 
-LDO which supplies fixed voltage to the PHYs. It is enabled upon system 
-power on and no SW intervention is required.
+This series is a partial of [1], only with patches related to individual
+colorop update tracking. I.e., I'm detaching from here fixes regarding
+attempts of changing colorops that are not part of an active color
+pipeline, or in the transition between active and inactive color
+pipelines.
 
-regulator-fixed doesn't take the resource 'reg'. May be should I create 
-another regulator driver which accepts 'reg', something similar to the 
-qcom-refgen-regulator? Please advise.
+This series focus on tracking updates for each individual color
+operation, allowing the driver to react accordingly. This new version
+just adds r-b and Fixes tag accordingly. During the Display Next
+Hackfest we also agree that it should be applied to drm-misc-fixes and
+it can be backported by AMD after.
 
->
->> +
->>   static const char * const sm8550_qmp_phy_vreg_l[] = {
->>   	"vdda-phy", "vdda-pll", "vdda-qref",
->>   };
+- Patches 1 and 2 make lut1d_interpolation and lut3d_interpolation
+  colorops correctly behave as mutable, handling their changes via
+  drm_colorop_state.
+
+- Patches 3 and 4 track colorop updates of a given plane color
+  pipeline by setting plane `color_mgmt_changed` flag, similar to what
+  is done for tracking CRTC color mgmt property changes with CRTC
+  `color_mgmt_changed` flag. The flag also tracks when a different color
+  pipeline is set to a given plane, but doesn't consider as a change
+  when the same color pipeline value is set to the plane COLOR_PIPELINE
+  prop. That way, the driver can react accordingly and update their
+  color blocks. As interpolation properties become mutable, they are
+  also tracked here.
+
+It also fixes shaper/3D LUT updates when changing night mode settings on
+gamescope with a custom branch that supports `COLOR_PIPELINE`:
+- https://github.com/ValveSoftware/gamescope/pull/2113
+
+v1: https://lore.kernel.org/dri-devel/20260318162348.299807-1-mwen@igalia.com/
+Changes:
+- include linux types for function's bool return type (kernel bot on MSM
+  driver)
+- add Harry's r-b tags
+
+v2: https://lore.kernel.org/dri-devel/20260323131942.494217-1-mwen@igalia.com/
+Changes:
+- [NEW] two patches to only consider colorop updates from active color
+  pipelines (Chaitanya)
+- [NEW] make lut interpolation properties mutable + Alex H patch for
+  kernel docs
+- track lut(1/3)d_interpolation updates (Chaitanya)
+- rebase changes according to new patches
+
+v3: https://lore.kernel.org/dri-devel/20260403135909.214378-1-mwen@igalia.com/
+Changes: rebase on drm-misc-next
+
+v4: https://lore.kernel.org/dri-devel/20260501132527.522320-1-mwen@igalia.com/
+Changes: fix kernel doc (kernel bot)
+
+v5: https://lore.kernel.org/dri-devel/20260506192633.16066-1-mwen@igalia.com/
+Changes:
+- rebase on drm-misc-next
+- fix kernel-doc and correctly reword (atomic) state to plane_state (Chaitanya)
+- reject inactive colorop updates in atomic check time, instead of
+  during property's setup, to avoid ordering dependency as pointed out by Chaitanya
+- use `|= replaced` for consistency (Chaitanya)
+- add Chaitanya's r-b tags to patches 1,3-5
+
+[1] v6: https://lore.kernel.org/dri-devel/20260519211111.228303-1-mwen@igalia.com/
+Changes:
+- detach patches that implement individual tracking from those related
+  to inactive colorop updates.
+
+v7: https://lore.kernel.org/dri-devel/20260525100524.304263-1-mwen@igalia.com/
+Changes:
+- add Fixes and r-b tags
+
+v8: https://lore.kernel.org/dri-devel/20260602215743.914265-1-mwen@igalia.com/
+Changes:
+- moving from `drm-misc-next` to `drm-misc-fixes`
+
+Alex Hung (1):
+  drm/colorop: Remove read-only comments from interpolation fields
+
+Melissa Wen (3):
+  drm/colorop: make lut(1/3)d_interpolation props correctly behave as
+    mutable
+  drm/atomic: track individual colorop updates
+  drm/amd/display: use plane color_mgmt_changed to track colorop changes
+
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |  6 +-
+ drivers/gpu/drm/drm_atomic.c                  |  4 +-
+ drivers/gpu/drm/drm_atomic_uapi.c             | 68 +++++++++++++++----
+ drivers/gpu/drm/drm_colorop.c                 | 16 ++++-
+ include/drm/drm_atomic_uapi.h                 |  4 +-
+ include/drm/drm_colorop.h                     | 34 +++++-----
+ 6 files changed, 93 insertions(+), 39 deletions(-)
+
+-- 
+2.53.0
+
 
