@@ -1,182 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-112366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 4YEEC/cnKWqyRgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 11:01:43 +0200
+	id cCnOMfsqKWqQRwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 11:14:35 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51C6C6678E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 11:01:42 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAD30667B65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 11:14:34 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=G64v79pq;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112366-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112366-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=WFTFhevg;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112367-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112367-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id EDCF63088897
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 08:55:42 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 9BCBB31155E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 08:56:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3B2E3B71D3;
-	Wed, 10 Jun 2026 08:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E19BF3B7742;
+	Wed, 10 Jun 2026 08:55:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA98C3B14D0;
-	Wed, 10 Jun 2026 08:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5193B14B1;
+	Wed, 10 Jun 2026 08:55:10 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781081673; cv=none; b=mtajluy60FJ1gcGNDTH1sNMDo5J9+kSsoF6oYa3KNdFc9/zhHeqprYR4PK2tzH+6CECjWPuqsP/G3eBK1oB+X8WeLa1RIN7tnIDEEVIOYj/qyexD9eN0UPT10ZSZa8O3uk3GHdfGh8hMkY8w1sDOo+KcgR0y+LDOWsdWpS54LCk=
+	t=1781081711; cv=none; b=aQHx5p7nr4FS4iXitqu1mvrur+/I+MBrWeTRbQIHLIPiZ7Zy22ovqx7eDjlawaEcA/tdTbgd5WxLUmcAGAWCl4Qdg1G7JlMXw5b6DgBtiaMsbPP0DqmGGrp9UCrNU2jeJGlAuU5IGWnyZR/l7tCWsKSfcxqmb0JiD+dyoE4b2E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781081673; c=relaxed/simple;
-	bh=N5PAVY33a8UOCzFqSY8hiB8OI5zRrmjewKGaP/nZXrg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nzYLdUilVMogNo8y//c0RqTSMTkwWp6ljmqv3IAKOLwnoEyx4OlPNUcoDgM9PWt+E3vV1ZiUq8FLYIrqhK6pAhPaFeNjbilgqUBaA27AgNXcm+nUbgYX0PsS+3lFYM/ztPeFWgEtzib706HjiNEWZ66DJbmYkZazffkrlpAIU7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G64v79pq; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7451F00893;
-	Wed, 10 Jun 2026 08:54:29 +0000 (UTC)
+	s=arc-20240116; t=1781081711; c=relaxed/simple;
+	bh=DuXhchlQRc/ktqxlkDooSIAF8Anm4npGNhalnWTsdOE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kriMMi+lhU31pRWPS892P2smx6xpTamSHc+CSFa4XFh5S0DGMo67ECSEVSRqcBVQY0MUCk4kkEbEvcW6y9DYQqfhYQRg3Fg2lARRguZiUnQevT+sYuygkWYSR+dGFROielsiIwoiU/OpYa/zIP/+HxLxjgAeyXxPPY5rfEVuP6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WFTFhevg; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1AAA1F00893;
+	Wed, 10 Jun 2026 08:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781081672;
-	bh=0eGRKrLKV4PS4cxmYvW3x1zaSXwUY5isFocfs6vWoNA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=G64v79pqf+q1pnoweLHsi2yhnFe5SRsDlMeUbR/e0ZlDgBb+aSfp+GEi4CKe8gnxs
-	 /43qYE1ckQNoFT6Qru6jJoVAgcxAB8AHC0PuSe77vpZWtP2IGuFMWH1dG620y3+ebm
-	 71PCRcuNmnAb7NOCEzivoeLHVv4G5XLkypQF7AiCQfyD9ELGUoFzFoLILZQaCGctQh
-	 AQY1N2mzlqI3q7ExascjoEGLLfFOz78Qvsh4WNi2Ga2dP5ovpkmLfslxEUfUOM0Dt4
-	 L34zA+/2TkCWk5e9EClm5+Nv/Z6YHwqr6QZhG6y3Syzg5jzeJoHnMmro+3rJESnLgU
-	 IDBiyqGnKoQ8w==
-Message-ID: <3d53b646-d5f2-4ca9-9d69-dc0899165c3d@kernel.org>
-Date: Wed, 10 Jun 2026 09:54:28 +0100
+	s=k20260515; t=1781081710;
+	bh=TRTyM5MS3WUrXryQN7PJQVfhWuatgRYyBVXvwmd2zTE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=WFTFhevgbbLMPMRo1DQ+HhUgrsa6YL87dv+/P14TPw2SeAnJ4j/R5BzbzBuw6GKmF
+	 L2C59ozuazxirlRTHP0jo7MXXuo09SkNSfOrvrLWC9rTCpRna2CIC92Xzcygd8tzsG
+	 cTTj/j6hJWCS5Qc8RPHK7EtEc1TV/Yv1ERTi9YUzWZbEeKPcrknqB7DtkZJ6F5Jjxr
+	 UnyYIHnn9Nm7uApSxihY272Xjo5Gz/KB6n88X2T11FNm8Ei2EQMz4rLsghIdE5GneS
+	 C7RTMULy+gPjqiYjCfQzqxNV5jpA+p1LBHteyCGP2JBI5QVOsEx+0C2Cfx4HXNji9a
+	 EXduVOAXdSySg==
+Date: Wed, 10 Jun 2026 10:55:06 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com, 
+	yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: crypto: qcom,prng: Document Maili TRNG
+Message-ID: <20260610-spirited-scarlet-tortoise-fad4da@quoll>
+References: <20260609-maili-crypto-v1-0-0f577df56a61@oss.qualcomm.com>
+ <20260609-maili-crypto-v1-1-0f577df56a61@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: media: qcom,qcm2290-venus: document
- shikra Iris compatible
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260609-shikra_vpu-v1-0-3a32bb38b080@oss.qualcomm.com>
- <5YTsRTMAUGw0it3GAWHhKIh77_Hk823-xRJ4WxzQ-ENpdnC9-ttUvWhJI_CqFEetmFXcRel50GK_o2UMGzwZmg==@protonmail.internalid>
- <20260609-shikra_vpu-v1-1-3a32bb38b080@oss.qualcomm.com>
- <f793c665-ac99-4afe-a64b-bbd6d40044e5@kernel.org>
- <BMTIFxHuDURlDmZzZJTVeFB6LmfKxZHPKz3t2FEVk2jHRMdO-2_435jcKspeb-fET7XxgnFnsKMBfijBplRx4w==@protonmail.internalid>
- <bc9a8075-db42-4de1-a3cc-4f6816681290@oss.qualcomm.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bod@kernel.org>
-In-Reply-To: <bc9a8075-db42-4de1-a3cc-4f6816681290@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260609-maili-crypto-v1-1-0f577df56a61@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
+X-Spamd-Result: default: False [-3.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:vikash.garodia@oss.qualcomm.com,m:dikshita.agarwal@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:jorge.ramirez@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	TAGGED_FROM(0.00)[bounces-112366-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORWARDED(0.00)[lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FORGED_RECIPIENTS(0.00)[m:jingyi.wang@oss.qualcomm.com,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:vkoul@kernel.org,m:andersson@kernel.org,m:aiqun.yu@oss.qualcomm.com,m:tingwei.zhang@oss.qualcomm.com,m:trilok.soni@oss.qualcomm.com,m:yijie.yang@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-crypto@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112367-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,quoll:mid,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 51C6C6678E5
+X-Rspamd-Queue-Id: BAD30667B65
 
-On 10/06/2026 08:50, Vikash Garodia wrote:
+On Tue, Jun 09, 2026 at 02:08:56AM -0700, Jingyi Wang wrote:
+> Maili SoC has the True Random Number Generator (TRNG) which is compatible
+> with the baseline IP "qcom,trng". Hence, document the compatible as such.
 > 
-> On 6/10/2026 2:07 AM, Bryan O'Donoghue wrote:
->> On 09/06/2026 17:15, Vikash Garodia wrote:
->>> Document the iris video accelerator used on shikra platforms by adding
->>> the qcom,shikra-iris compatible.
->>>
->>> Although QCM2290 and shikra share the same video hardware and overall
->>> integration, their SMMU programming differs. QCM2290 exposes separate
->>> stream IDs for the video hardware and the Xtensa path, requiring two
->>> explicit IOMMU entries, whereas shikra uses a masked SMR to collapse
->>> equivalent stream IDs into a single mapping. Due to QCM2290’s SID layout
->>> and Xtensa isolation requirements, such SMR masking is not applicable on
->>> QCM2290 platforms.
->>> Since shikra uses the same video hardware as QCM2290 and shares the same
->>> programming model and capabilities, it is added as a fallback compatible
->>> to qcom,qcm2290-venus, with conditional handling to allow either one or
->>> two IOMMU entries.
->>>
->>> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
->>> ---
->>>    .../bindings/media/qcom,qcm2290-venus.yaml           | 20 ++++++++++
->>> ++++++----
->>>    1 file changed, 16 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/media/qcom,qcm2290-
->>> venus.yaml b/Documentation/devicetree/bindings/media/qcom,qcm2290-
->>> venus.yaml
->>> index
->>> 5977e7d0a71b4fb5681f1c2094439c251366f01f..895533b9756690d075fd7729e3f805c8e72ff0df 100644
->>> --- a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
->>> +++ b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
->>> @@ -15,12 +15,27 @@ description:
->>>
->>>    allOf:
->>>      - $ref: qcom,venus-common.yaml#
->>> +  - if:
->>> +      properties:
->>> +        compatible:
->>> +          contains:
->>> +            const: qcom,shikra-iris
->>
->> Should this be "iris" in a venus yaml ?
-> 
-> given the vpu core was first enabled on venus and now it same core on a
-> different SOC being enabled on iris. There are 2 ways to do this
-> 1. Add the compat to existing schema which defines the binding for that
-> core i.e existing patch
-> 2. Write a new schema (or say duplicate it) with ...shikra-iris.yaml,
-> but again, the shikra compat would fallback to "qcom,qcm2290-venus"
-> compat. hence even iris yaml would then need to carry the venus *string*.
-> 
-> I followed the first option.
-> 
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> ---
+>  Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-I'm confused here. Your fallback is qcm2290-venus.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-grep qcm2290-venus drivers/* -r
+Best regards,
+Krzysztof
 
-drivers/media/platform/qcom/venus/core.c:	{ .compatible = 
-"qcom,qcm2290-venus", .data = &qcm2290_res, },
-
-So shouldn't it be shikra-venus ?
-
----
-bod
 
