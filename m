@@ -1,70 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-112525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id SpgGD76XKWogaQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 18:58:38 +0200
+	id nMZvK+qVKWqYaAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 18:50:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36F9166BBFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 18:58:37 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DA7B66BAF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 18:50:50 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=QwFBHfec;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112525-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112525-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=bLXPA9rO;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112526-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112526-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B34063068E99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 16:42:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E1A13326A6DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 16:45:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58623340405;
-	Wed, 10 Jun 2026 16:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEA3C287263;
+	Wed, 10 Jun 2026 16:45:12 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406CD29D266;
-	Wed, 10 Jun 2026 16:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DD525B0AF;
+	Wed, 10 Jun 2026 16:45:11 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781109733; cv=none; b=EVqZFE3+qwreOylRQalZun5Tbz56++KZezr6NTtpFQ6M2de6SLU3mnKirX5fXDv7W9rIHPAK1CIagCCZzq+t3O9jnlQ42LKqt2enDd4Aq2eWqrRkbmWhkNyPw1P9Mkf6PrCvela5XXAHuCOQ1FmPui2+U//0r6MmCb+Y3P54r7M=
+	t=1781109912; cv=none; b=bZ1REEULpzjk6QrBzzqCpO6BL12nmDgZ/J9hZ8N3QGNmPDrxkEetiOJzE05Uq8glLpVrEwA8eXl8nlucF4bASOD3ksKKUe/1r+KKh0F1KJK5i0IefF1gcI7btA4VDWfZ+vEIZhNqHtv3xXu1mdGOqLmvdH7pmLNXavmIG0Ff5pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781109733; c=relaxed/simple;
-	bh=eA0BTjC7roZkBQyuYLYbCK8oC+CuUwcnIBiS2S3V2lw=;
+	s=arc-20240116; t=1781109912; c=relaxed/simple;
+	bh=+ZB6Da2HWvZYv1vmMvNe9eSUtjNUaw1y1O1JZQiS8vQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YEzzGgqZ0H1xt77Q+GlzJQjIkRWTtnuVUSED5hpaeVtIbiOl6g0qG/OA1ABaaMvRt+fVYQs4XCIhchtjXfGtRPDy8EGPEmEvVzOY7RGScShEpGcq813Tgyk5V6trk6KkQPrhYQCa41lNbU12ChIesCSuCuQDFB8ruVanq2QI0eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QwFBHfec; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74631F00899;
-	Wed, 10 Jun 2026 16:42:06 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=niFV1otHXYl6oVPFLwu1wC25jg8ZH+jEIJORoIUHjJWvpRJlkRLuMj47RBEteOK7nxywr11O5/BS0Q1sMEAibdd2h5r6bvNfpDx9qg7BaTUre0iyXJx5glFnp+imaIflFS8gKnKAkJT/ZvHvIAbRHAjezdJ7FelUXWM87MVOL2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bLXPA9rO; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204C41F00893;
+	Wed, 10 Jun 2026 16:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781109732;
-	bh=Xef98mP1MGAw6RwWxPpvhMdt6Ao9d0YrsHgC34pKfZQ=;
+	s=k20260515; t=1781109911;
+	bh=6gdHQGQUI+RdS7ZUuS8+/hjC20f5GnX3T6BFhRH2P2Y=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=QwFBHfecxJCvxHGywktWKI2TXD1aDOupuAm+hxm8dlnrJFMFAojvODhlyXVEfu9yv
-	 oyrAOzHT8QXkR20RoaPRF/wNX+wYooZ+a9EmSVhjrRiECBwzWJSrbxTK84m74b55XT
-	 xGb2fXAQbrkfEKkvwB+lORojM/HKbz+8ftTkPjc0PiReMBglObXLexO/pg46e5INDO
-	 g3ELVWkgc4qFw5lt5nFsuaKSAAZcMR78/rGsvqdT0VwKMKlktskaVL46GrrbHGiGaY
-	 PR32G/HpRQZiFS1xDy3b2jKZ6sm7uRcSOmdFaibXlX9KJ5RbI2VqHO6K8odxMTx/6a
-	 DN6UjNxd0WyxA==
-Date: Wed, 10 Jun 2026 18:42:02 +0200
+	b=bLXPA9rO+CKusqWUFkWKhbKrp6tW2aIKa+NIauigC5cJwmRCgLxstOPB94tmjJNG6
+	 eSnRtD5GsbKwFlWL5YfD4r6riqyBJS0zRIXYfgtix9QQ5OIAMJIqC8n0BRyI3J/JmL
+	 svlTyYKRiyt41Q4fftHHNx0DPaJYPSPUe3SWNQxLQo3L5sgfS68KeKuIJ5tJ0AjK9L
+	 c2TTpOSfgiT6dbuYT0X2Yrx1WT510CcZ/YPY/8EJKTYuyBW3s1YIkCA8KTGPOx3kud
+	 Sa3cexcbI+BiXiN/bp7/XfOTHDdH5dZ8THH4ZSUZjQuzf+XfW5NyIW+XpTnB38sPEs
+	 js2pkyRxv2Ifg==
+Date: Wed, 10 Jun 2026 18:44:59 +0200
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-pci@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: monaco-arduino-monza: Add QCA2066
- M.2 WiFi/BT support
-Message-ID: <ibfbihcivzxmy4go6w6a6jvohha72inadqg7jgy4qnvzhc34wx@qsfbybbqcpxi>
-References: <20260520-monza-wireless-v1-0-9f6942310653@oss.qualcomm.com>
- <20260520-monza-wireless-v1-3-9f6942310653@oss.qualcomm.com>
- <jetl37zsfcs5kl4b7iarbngrdu4ebp7ag2cvpqvkku6tbl6r5n@qozh6n5fq7f3>
- <CAFEp6-0A=LrU44pu2rfUqXW9k9peSu=b2qq_FVs4WZUj-g4pDA@mail.gmail.com>
- <n6kl7y47hztf7tgtdxhakpekwkxlleggv4sbzpsd2ncpill6ii@bdk5esjubv4t>
- <CAFEp6-3Gbd1gzfeu5xdfBJixL6JXaoSFkRUsBjOji0ZEOHHyvw@mail.gmail.com>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Mark Pearson <mpearson-lenovo@squebb.ca>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, Greg KH <gregkh@linuxfoundation.org>, 
+	Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
+	Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, "Derek J . Clark" <derekjohn.clark@gmail.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, 
+	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
+	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>
+Subject: Re: [PATCH v6 6/9] dt-bindings: connector: m2: Add M.2 1620 LGA
+ soldered down connector
+Message-ID: <eftahohsx3bbvmgxuciofjjcrybnsm2qc752hwyt65rb2uwaon@h32nh5fcpo7p>
+References: <to2mrizprc3hjufqbiplpqyek7f4uutqtn4hx4gkmdgv2rykbc@ybwwjhdec4nm>
+ <CAL_JsqJXrHCJt770bJkMmAUhirSF3kHjYwSzkG7cXp7-eys8Rg@mail.gmail.com>
+ <6aef3xxjjd4nbgrfx6jc6jt6rpqmttoui6hil5zqgdpas2j6gj@ie6j72orenou>
+ <fsvmmgoe5wslmxebhrrwmdg2ldcmhzvj53gjkdfnfg2m2rz2lw@dcfboaakz7ae>
+ <bguhzabwryayyqkv4ilzwr3ixwv6bzxncblo3ircz2wm3fs52k@66zvcrfcb4oe>
+ <blhm4csjyw6r667cleljgzd6rpwagttjo5rau7wjrlnjakq2qm@ekyhc4jvwmwf>
+ <m44mupdmg7kgco62n4evcviagqo7wwgyt3gybugbxwesd4ekjz@o24r6v4tpezc>
+ <3faffec9-dc9d-4eec-a652-a84d30d85c96@app.fastmail.com>
+ <cvqdbqnzjmzoowxkvz2lyv4avropu5jw7h2r6zng3ecf245hgg@fsysjqflqd35>
+ <acv2f1qbqu4PlSL1@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,101 +85,159 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEp6-3Gbd1gzfeu5xdfBJixL6JXaoSFkRUsBjOji0ZEOHHyvw@mail.gmail.com>
+In-Reply-To: <acv2f1qbqu4PlSL1@linaro.org>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.66 / 15.00];
+X-Spamd-Result: default: False [-3.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:loic.poulain@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:brgl@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-pci@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:devicetree@vger.kernel.org,m:luizdentz@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FORGED_SENDER(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-112526-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:stephan.gerhold@linaro.org,m:mpearson-lenovo@squebb.ca,m:dmitry.baryshkov@oss.qualcomm.com,m:robh@kernel.org,m:manivannan.sadhasivam@oss.qualcomm.com,m:gregkh@linuxfoundation.org,m:jirislaby@kernel.org,m:nathan@kernel.org,m:nicolas.schier@linux.dev,m:hansg@kernel.org,m:ilpo.jarvinen@linux.intel.com,m:derekjohn.clark@gmail.com,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:marcel@holtmann.org,m:luiz.dentz@gmail.com,m:brgl@bgdev.pl,m:andriy.shevchenko@linux.intel.com,m:brgl@kernel.org,m:linux-serial@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-kbuild@vger.kernel.org,m:platform-driver-x86@vger.kernel.org,m:linux-pci@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-bluetooth@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-acpi@vger.kernel.org,m:derekjohnclark@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,m:luizdentz@gmail.com,s:lists@lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[29];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-112525-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,holtmann.org,gmail.com,vger.kernel.org];
+	FREEMAIL_CC(0.00)[squebb.ca,oss.qualcomm.com,kernel.org,linuxfoundation.org,linux.dev,linux.intel.com,gmail.com,holtmann.org,bgdev.pl,vger.kernel.org];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qsfbybbqcpxi:mid,qualcomm.com:email]
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[h32nh5fcpo7p:mid,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,sparklan.com:url]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 36F9166BBFE
+X-Rspamd-Queue-Id: 4DA7B66BAF3
 
-On Wed, May 20, 2026 at 04:41:18PM +0200, Loic Poulain wrote:
-> On Wed, May 20, 2026 at 4:36 PM Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> >
-> > On Wed, May 20, 2026 at 04:29:40PM +0200, Loic Poulain wrote:
-> > > On Wed, May 20, 2026 at 2:34 PM Dmitry Baryshkov
-> > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+On Tue, Mar 31, 2026 at 06:29:51PM +0200, Stephan Gerhold wrote:
+> On Wed, Mar 25, 2026 at 05:36:08PM +0530, Manivannan Sadhasivam wrote:
+> > On Mon, Mar 23, 2026 at 01:23:07PM -0400, Mark Pearson wrote:
+> > > On Mon, Mar 23, 2026, at 12:52 PM, Manivannan Sadhasivam wrote:
+> > > > On Mon, Mar 23, 2026 at 06:45:15PM +0200, Dmitry Baryshkov wrote:
+> > > >> On Mon, Mar 23, 2026 at 09:26:04PM +0530, Manivannan Sadhasivam wrote:
+> > > >> > On Mon, Mar 23, 2026 at 05:14:30PM +0200, Dmitry Baryshkov wrote:
+> > > >> > > On Mon, Mar 23, 2026 at 07:14:25PM +0530, Manivannan Sadhasivam wrote:
+> > > >> > > > On Mon, Mar 23, 2026 at 08:39:55AM -0500, Rob Herring wrote:
+> > > >> > > > > On Mon, Mar 23, 2026 at 7:16 AM Manivannan Sadhasivam <mani@kernel.org> wrote:
+> > > >> > > > > >
+> > > >> > > > > > On Sun, Mar 22, 2026 at 06:37:13PM -0500, Rob Herring wrote:
+> > > >> > > > > > > On Tue, Mar 17, 2026 at 09:59:56AM +0530, Manivannan Sadhasivam wrote:
+> > > >> > > > > > > > Lenovo Thinkpad T14s is found to have a soldered down version of M.2 1620
+> > > >> > > > > > > > LGA connector. Though, there is no 1620 LGA form factor defined in the M.2
+> > > >> > > > > > > > spec, it looks very similar to the M.2 Key E connector. So add the
+> > > >> > > > > > > > "pcie-m2-1620-lga-connector" compatible with "pcie-m2-e-connector" fallback
+> > > >> > > > > > > > to reuse the Key E binding.
+> > > >> > > > > > >
+> > > >> > > > > > > What is LGA?
+> > > >> > > > > > >
+> > > >> > > > > >
+> > > >> > > > > > Land Grid Array
+> > > >> > > > > >
+> > > >> > > > > > > If not in the spec, is it really something generic?
+> > > >> > > > > > >
+> > > >> > > > > >
+> > > >> > > > > > Good question. Yes and No! LGA is not something that Lenovo only uses. Other
+> > > >> > > > > > vendors may also use this form factor. PCIe connectors are full of innovation as
+> > > >> > > > > > the spec gives room for hardware designers to be as innovative as possible to
+> > > >> > > > > > save the BOM cost.
+> > > >> > > > > 
+> > > >> > > > > innovation == incompatible changes
+> > > >> > > > > 
+> > > >> > > > 
+> > > >> > > > Yes, I was trying to sound nice :)
+> > > >> > > > 
+> > > >> > > > > > This is why I do not want to make it Lenovo specific. But if you prefer that, I
+> > > >> > > > > > can name it as "lenovo,pcie-m2-1620-lga-connector".
+> > > >> > > > > 
+> > > >> > > > > Depends if you think that s/w needs to know the differences. Hard to
+> > > >> > > > > say with a sample size of 1.
+> > > >> > > > > 
+> > > >> > > > 
+> > > >> > > > Sure. Will add the 'lenovo' prefix then.
+> > > >> > > 
+> > > >> > > Is it really Lenovo? Or is it some other module vendor, whose LGAs are
+> > > >> > > being used by Lenovo?
+> > > >> > > 
+> > > >> > > I remember that DB820c also used some kind of a module for the WiFi card
+> > > >> > > (which might be M.2 compatible or might not, I can't find exact docs at
+> > > >> > > this point).
+> > > >> > > 
+> > > >> > 
+> > > >> > I don't know. These kind of designs might be reused by several vendors. But
+> > > >> > considering that we should not make it generic, I'd go with Lenovo as that's
+> > > >> > the only vendor we know as of now.
+> > > >> 
+> > > >> ... and later we learn that other vendors use the same idea /pinout,
+> > > >> then nothing stops us from still telling that it's a
+> > > >> "lenovo,pcie-m2-something-lga". 
+> > > >> 
 > > > >
-> > > > On Wed, May 20, 2026 at 01:01:44PM +0200, Loic Poulain wrote:
-> > > > > Add support for the QCA2066 (QCNFA765) WiFi/Bluetooth module on the
-> > > > > Arduino VENTUNO Q board. The module is interfaced via LGA and is
-> > > > > compatible with the M.2 Key E.
-> > > > >
-> > > > > Add wireless-lga-connector node using pcie-m2-e-connector binding,
-> > > > > connecting PCIe port 0 to the WiFi interface and UART10 port 3 to
-> > > > > the Bluetooth interface.
-> > > > >
-> > > > > Add pcie@1,0 downstream port node with pciclass,0604 compatible so
-> > > > > the pci-pwrctrl driver can acquire the power sequencer and enable
-> > > > > the M.2 slot before PCIe enumeration.
-> > > > >
-> > > > > Add nfa725b_default_state pinctrl for the W_DISABLE1/2 GPIOs
-> > > > > (gpio56/gpio55) used by the power sequencer.
-> > > > >
-> > > > > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> > > > > ---
-> > > > >  arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts | 65 +++++++++++++++++++++++
-> > > > >  1 file changed, 65 insertions(+)
-> > > > >
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts b/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
-> > > > > index 93ed575817af1c5e903662c209ead629fe202ee2..6fcad77f320cb82eccb6f07244d185abfb1976d9 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
-> > > > > +++ b/arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
-> > > > > @@ -154,6 +154,39 @@ vreg_nvme: regulator-3p3-m2 {
-> > > > >               enable-active-high;
-> > > > >               startup-delay-us = <20000>;
-> > > > >       };
-> > > > > +
-> > > > > +     wireless-lga-connector {
-> > > > > +             compatible = "pcie-m2-e-connector";
+> > > > How do you possibly know whether a single vendor has introduced this form factor
+> > > > or reused by multiple ones? Atleast, I don't have access to such a source to
+> > > > confirm.
 > > > >
-> > > > I think it was discussed that LGA can't be an actual M.2 E-key
-> > > > connector.
-> > >
-> > > I am not sure I followed this discussion. Do you mean that I should
-> > > introduce a dedicated LGA/vendor-compatible string in the compatible
-> > > list of the pcie-m2-e-connector binding, or that LGA-based designs
-> > > should not be described using the pcie-m2-e-connector binding (graph
-> > > representation)?
-> >
-> > I think, it should be a separate, vendor-specific compat (maybe using
-> > m2-e as a fallback).
+> > > I've not really been following this thread/patchset in detail; but want me to try and check with the T14s platform team if this device is specifically made for us (Lenovo) or not?
+> > > I doubt it is - we just don't do that usually, but I can go and ask the question if it will help resolve this (with the caveat that it could hold up the review for a bit and I may not be able to get a straight answer)
+> > > 
+> > 
+> > I can drop this specific patch in the meantime.
+> > 
+> > > My vote (for what little it's worth) would be to make it non-Lenovo specific. Then when the same part causes issues on another vendors platform I won't get asked questions about why Lenovo is breaking <other vendor> :)
+> > > 
+> > 
+> > Even if Lenovo prefix is used, it won't break other vendors. Just that we will
+> > end up adding more compatibles.
+> > 
+> > Anyhow, I'll wait for your reply and drop this patch for next revision.
+> > 
+> 
+> If you need a vendor prefix, I think "qcom," would be more appropriate
+> than Lenovo. This form factor is used by most vendors for recent
+> soldered Qualcomm-based wireless cards, not just Lenovo:
+> 
+>  - Dell XPS 13 9345 has exactly the same soldered M.2 card, I assume
+>    there are several other vendors as well.
+> 
+>  - https://www.sparklan.com/product/wnsq-290be/ is a third-party
+>    (Qualcomm-based) M.2 LGA 1620 card, in the block diagram the
+>    pinout is called "QM.2 1620 LGA 168pin".
+> 
+>  - If you press F9 while booting the ThinkPad T14s, you should get to a
+>    screen with "Regulatory Information". For the T14s, this screen says
+>    "Contains FCC ID: J9C-QCNCM825". This is the WiFi/BT module in the
+>    soldered form factor. If you look that up on the FCC website, the
+>    applicant for this module is "Qualcomm Technologies, Inc.". This
+>    seems to be some kind of "modular certification" that vendors can
+>    reuse/adapt without going through the whole process again.
+> 
+> Perhaps you should ask around inside Qualcomm? :-)
 > 
 
-You can use "qcom,pcie-m2-<size>-lga-connector", where size depends on the
-module size, like 1620.
+Sorry for getting back after this long. I did ask around, but our HW folks are
+saying that Qcom is not the first one to use LGA M.2 modules. They claim that
+other vendors also do that.
+
+But for this specific card, it should be fine to use the 'qcom' prefix as
+apparently the module was supplied by Qcom.
+
+I'll submit the bindings patch together with DTS change for T14s.
 
 - Mani
 
