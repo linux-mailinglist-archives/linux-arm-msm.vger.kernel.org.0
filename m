@@ -1,246 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-112535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id swo1Nw6lKWocbQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 19:55:26 +0200
+	id yT9uBZamKWqvbQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 20:01:58 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B7ED66C13F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 19:55:26 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 815E566C222
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 20:01:57 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=VmK1jSWl;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112535-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112535-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=linaro.org header.s=google header.b=GjY5cGN7;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112536-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112536-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=linaro.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0B39B31998C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 17:53:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8C934323B332
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 17:58:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17A40352F85;
-	Wed, 10 Jun 2026 17:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFF87351C1F;
+	Wed, 10 Jun 2026 17:58:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC56D34E761
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 17:53:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECD9271468
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 17:58:16 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781114014; cv=none; b=K8lnFzcZth7pS2M6KJoP3gG4wqTRgelNX5L8fgEG4O6E/yMmHaNY0e8rLYDn9fUOIC6rCqndNv0VBggqO3xkME0qyafUGPGAJbQgM2hPG0DdCtAF0nmWskG34M/hr1Rf/NhV91CvDXQ3haZjzu4i2oFVNeOr2eDSUpCNNzftuh8=
+	t=1781114297; cv=none; b=sp+eTYAjejKqMYbWcmXK1idgb3f6/OgTYYVFGt0OqasUBDBoS/FZ39+DVgdEWf9XaaPWOfm18wEH99XErSply0DC2R2J7R2NTldUvurxkoNKHduVGgq3G6QLLpx9f3vDGL9KVN4QW79hZT0WudCp6oB8enwGIm8HZli5DMO+3UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781114014; c=relaxed/simple;
-	bh=p6rrNjzbXKhncoEPrd30ewgBUgvwvZlW5lIUleqXl90=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aHOCf7SYqOXGz9xDWP6jICX8fYqPJXwPZHA1N8EsKzbaPR8o9cEu47Zsua5umBm6OvSeW7Ibu3UKx53tsE+K/l/rUR4zY+Q0arbTshleVaxSxD7gzWlKcOhKQAaDteYc5JRMmq6gP17XEdXS9sYT8ZDlkub9hcCM6rz+8NmNdBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VmK1jSWl; arc=none smtp.client-ip=209.85.221.47
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-45eecb8bf67so5357398f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 10:53:31 -0700 (PDT)
+	s=arc-20240116; t=1781114297; c=relaxed/simple;
+	bh=DiEo+/bq8ErrnBnt4nPE9U123/wIPQRXBvgM8yxpiRo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B3MbJTNknVqO4PQN0yKwWtI1JSvHrPQVxovfWUXgdIoDgprMKQ/BxbAEgELtCs/BXQDdHOsqLKPF78K8eqFVhI2DaSCfMv+ckM3jILTqtCT2bmxKC1k1qWaDcQJkctKr7lML+m/XeU5XbKiWLUC1MBXHkIp/pcjWXGRGdb8IW68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GjY5cGN7; arc=none smtp.client-ip=209.85.128.49
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4903d730b1fso81968115e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 10:58:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1781114010; x=1781718810; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EATPXEB1RDeFojesY+qsHCN5Elyd5D9oGU90SkPET0U=;
-        b=VmK1jSWlZZldpo78YsiBmQ98Y3+hrUGA410fqi/2cZSBINUZMDagars1ggSvaaez/2
-         LqFf+CMYdDgSB2GNVKGjI6jstM8auOZNUgoapRorOuS4ZwuqKipraJrZ0js95KnfoJ4h
-         ccFjJhu11MLlD6MOZChKUOr8cPzEFFeZ1aJtlBODsZG+hIesyD6A3hNboQTHTOLDQJYD
-         p6JJDI8m9mvttC1riYAgHbtpac3JGwJrQYv6raJHLQoLGg2eltixFFzgfkFbxzLKrqnh
-         OkhM4Cdor4LwUBRRCTZevDjXKvJRWPmCdxhQ9UdpYjGNS2szxv6x9Xp+0VlQLq9+HCr8
-         QWrA==
+        d=linaro.org; s=google; t=1781114295; x=1781719095; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3avyTluAk283iBEga6wGPVoycf0Awj4BxU+6wyL2mC0=;
+        b=GjY5cGN7ou2yfRyQ41eAQ7Z7N03FLBFMGgEAy+DhN0ouFqI/A6gT4khKZmQVmKUtIL
+         DV5VoqyIrO4MEBC7Aq8suZgNzPbchhj1ufR5/uebsFcQqwPNQYE5dqDBAkENzfZTkDwE
+         YflnOwzRSdt4TjbK9hVN292GCNwbDZ05tqZzlxwEcRzjEcahJ71b27x7oLaRiAAum+H1
+         4P8uQSyfbcy1TCePpTMm5JI+z0Aq+Y0MJuwSaWaUU/+NpyBzE4yOvlk7IEQca6cjoXgG
+         fDVVrok86/SYgRcUIWzxYDXc1HtzwrxgBwBgiy56e/hMayAPkN6i6JHYswFtdSsBwN9f
+         eTdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781114010; x=1781718810;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=EATPXEB1RDeFojesY+qsHCN5Elyd5D9oGU90SkPET0U=;
-        b=A0Ec2ARrxfXgx68MT7MQ1STqGUwbEgmTSnIEr/djEBIKXY2dsAt+5P5Mpv+Ge7JDGe
-         a5jZJMhlZTd0o9f4DpwyVZfyxFu/fwavOecxztI9CATW4o3guQoKqPHflhk/hc65/Dug
-         CAUgYjDFUsGUxwYGBeCGzRYGOyME4bzSNkkYl5G1fkzTutYc+KnCDjGFG41anz1K9/Db
-         rISWS1kADpDGCqGvraqpxq4Frzc+D2Hy9Etu7luMyOW3Hbv9MXkd9ovohdE8zI8Z5gTv
-         rjOY8RlGHWjrYYv5j9xdqNVW6UxV9P+t8ViARU6HDNB/Fp3s0hNAi/1LicowAP9HDneE
-         dtFQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8xlGdXIlXLIgWl2zl8RbZZoUFtBX5VG2X5YtlBdb2xZFfHJa1eaITPpndOh+QfjF2o1vrE7uLyKS++SqGb@vger.kernel.org
-X-Gm-Message-State: AOJu0YzP7pcKQCrwzZYiXVatvL6KiBmucu70XCnrafRSTfiK545KGmnL
-	v/tRddvDjPurX0olxSJ4k4m+9zkzC1p79rTmlnd55aldRCsN0QE5GbQzGWUYdp+8bU0=
-X-Gm-Gg: Acq92OGW2SfsVbRBNDNyeQW+8m0Ut1z73w86mYqiJ1G/bBnMk+wEptdwvBlHiYTIiuO
-	AS+qmhoUod2S0Cx0TTtyZqKeSGQOUG/xulpgcmlEj10bXXwwOV1fNyLFwSqAD9d2ggPpAHUeAVQ
-	n7m9wSuGEJftxmm0fbfmDZMcsNpR0QCl+PnYQf+8r1Vgy7O7Ah8HjPQLVueM5St3zkHFi+Q6e6N
-	30A2KTQLwUbYPlfmaQ+1KSQk/KHPNQYC3QVC5dOgDznh8/0FPZbSo4e0RZEZyjRF2cBSZFhD1uc
-	2GO9QEgfg1TdKXAMFRBznxWZy1ble3EhYf8NOxScCxzJvWULiubqrlwZJivr0o2akgSWr72L9dp
-	TFesX5IvpuBll2oJavFC0hwHPhES4YlzHYyl0L3kR6H+xEZLemVqvcbEEptaSyH48cDW0V6YY1w
-	w66en1SnqbWzAljpBsqNObHesKzxnqVfEX9lmP3T9dwLH1UA==
-X-Received: by 2002:a05:6000:713:b0:460:1a52:8a13 with SMTP id ffacd0b85a97d-460301825femr38896171f8f.0.1781114010356;
-        Wed, 10 Jun 2026 10:53:30 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2454:ff23:4410:f160:c480:bee:c914])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f2e4004sm73553248f8f.9.2026.06.10.10.53.29
+        d=1e100.net; s=20251104; t=1781114295; x=1781719095;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3avyTluAk283iBEga6wGPVoycf0Awj4BxU+6wyL2mC0=;
+        b=Rpz/L8ppEeBZIhjBWQ2+0g5sRCsQeJLyxJXyadyPyoRbPdmgd4b2UaniAwBth2X4Kc
+         hav8NzjCZVpo4ONhN8We3xhFd1JsnAvFVB8X0kpni4F0P9VxoJfEugMMDrK+REEr/iBI
+         8xEVDbTwu/EnHdQykdfoYTrwEoRz2iLZ2yx98xkpZt+gXKlQiQ57prZj1TPEusTiIVuj
+         sFMb/nGLenIJlUb6FHKeFeSu80jOAYU7VjITHek6AJlGqzwDVY6wthucn0cdfSWHUFbw
+         yc4B5YM8muDoiqPfEoi2ctigbug2+AZGQecBrG0Vohx2ttjeKA2CzMH5NWG785M3WebS
+         NG7Q==
+X-Forwarded-Encrypted: i=1; AFNElJ/G3ouN7G8RwOy+8vHtt4rBUWgne4AbLUs6qDBxHsTe36eD7QD2kILznyoSUQNfp8ab2QrcXV4OdSNoL6o9@vger.kernel.org
+X-Gm-Message-State: AOJu0YznmwTszxbZt99A1IcAwmn4Vif/slA6y0zmZyGHC3eunEI9MvDt
+	SgkAz0XTsOQ22x2zepbj/jAP88Ei+YLTHFsX8mGFBCRwaTZ5P1iugGwrfObIlIPTKx8=
+X-Gm-Gg: Acq92OG+QB2uQreQug0Vu6tBsvsJubTW/AXiFejBDNZGJzZUsnjOmHnMG88AVMtFUAN
+	Xuyoq6Nas9xDvFmisQ4wJAeMMCTDVWdVzv55kjHb16kyhq7jpuGHzV43dSa4I+aK8uB2XJ6MXsT
+	TjLEFk5UDVlN0eDG/nRNrgvBMMKEcVx87Z/LujgP2kiqSYFOIIxLTpF4Av+VAbyo5vILul/280T
+	xrvEjHVFnYswfvYZR98dardH/bU4H6tNxK6ES3eC025Vj+ewEyj4FeQ5BO3SIMskIUGHGppQnWD
+	gjF5OSbpZhuoWVrfp3byDF/zFUHm+wguOqHu5MUp46veqsYpomoJ9iki7s14mDC1tgisy0pu3Ey
+	S6TNQGOhTQAtr1LAb+0wrsAD4HDqXa03iHJKjXxEXLCHdAAWpLpif5UUA/D3IidwsqfYE4A+vum
+	gsoJTdM+/1BCLRK0Wf7icjyWvoxGSprcSO6YqHSw/ZiDBL
+X-Received: by 2002:a05:600c:1d2a:b0:490:bbc1:d508 with SMTP id 5b1f17b1804b1-490c258f3femr428587595e9.1.1781114295096;
+        Wed, 10 Jun 2026 10:58:15 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff23:4410:f160:c480:bee:c914])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490dc471b6dsm63912895e9.0.2026.06.10.10.58.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 10:53:29 -0700 (PDT)
+        Wed, 10 Jun 2026 10:58:14 -0700 (PDT)
+Date: Wed, 10 Jun 2026 19:58:10 +0200
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Wed, 10 Jun 2026 19:53:11 +0200
-Subject: [PATCH 2/2] clocksource/drivers/arm_arch_timer_mmio: Restore
- support for early init
+To: Taniya Das <taniya.das@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH 04/12] clk: qcom: gcc-mdm9607: Fix BIMC PLL definition
+Message-ID: <aimlsgJssczxBGhQ@linaro.org>
+References: <20260609-qcom-clk-mdm9607-fixes-v1-0-5e9717faf842@linaro.org>
+ <20260609-qcom-clk-mdm9607-fixes-v1-4-5e9717faf842@linaro.org>
+ <022fb465-df10-4d95-a05c-1ff8e59558c1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260610-arm-arch-timer-mmio-early-v1-2-ac17218ec8b4@linaro.org>
-References: <20260610-arm-arch-timer-mmio-early-v1-0-ac17218ec8b4@linaro.org>
-In-Reply-To: <20260610-arm-arch-timer-mmio-early-v1-0-ac17218ec8b4@linaro.org>
-To: Mark Rutland <mark.rutland@arm.com>, Marc Zyngier <maz@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@kernel.org>, 
- Thomas Gleixner <tglx@kernel.org>, Sudeep Holla <sudeep.holla@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Jack Matthews <jack@jackmatthe.ws>
-X-Mailer: b4 0.15.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <022fb465-df10-4d95-a05c-1ff8e59558c1@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-112535-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112536-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:mark.rutland@arm.com,m:maz@kernel.org,m:daniel.lezcano@kernel.org,m:tglx@kernel.org,m:sudeep.holla@kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:jack@jackmatthe.ws,s:lists@lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FORGED_RECIPIENTS(0.00)[m:taniya.das@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:djakov@kernel.org,m:shengchao.guo@oss.qualcomm.com,m:bryan.odonoghue@linaro.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,jackmatthe.ws:email,linaro.org:dkim,linaro.org:email,linaro.org:mid,linaro.org:from_mime]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,linaro.org:mid,linaro.org:from_mime,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 7B7ED66C13F
+X-Rspamd-Queue-Id: 815E566C222
 
-Some single-core Qualcomm modem platforms (e.g. MDM9625, MDM9607) have an
-obscure timer setup where the global Arm MMIO timer (arm,armv7-timer-mem)
-is used as the only available timer for the CPU. This setup used to work
-fine until commit 0f67b56d84b4 ("clocksource/drivers/arm_arch_timer_mmio:
-Switch over to standalone driver") when the early timer initialization
-using TIMER_OF_DECLARE() was removed when moving to the standalone MMIO
-driver.
+On Wed, Jun 10, 2026 at 10:43:12PM +0530, Taniya Das wrote:
+> On 6/9/2026 7:44 PM, Stephan Gerhold wrote:
+> > The gcc-mdm9607 driver was originally based on gcc-msm8916, but a closer
+> > match nowadays is gcc-msm8909. Looking at the differences between
+> > gcc-mdm9607 and gcc-msm8909, there is quite some confusion around the
+> > definitions for the BIMC PLL.
+> > 
+> > It turns out the BIMC PLL on MDM9607 is actually an Alpha PLL just like on
+> > MSM8909. We can vote for it using BIT(2), which explains why BIT(3) was
+> > used for GPLL2.
+> 
+> BIMC PLL is never controlled from High Level OS (APSS). These are
+> controlled by other subsystems and voting should be via the ICC for BW
+> requirements.
+> 
 
-We need some timer early to run properly, so without another timer in the
-system the only choice is to make the MMIO timer available early again
-using TIMER_OF_DECLARE(). Use the refactoring in the previous commit to
-reuse most of the initialization code in the new standalone driver and
-probe one timer early if required. ACPI-based systems and platforms with a
-CPU-local CP15 timer continue to probe the timer late as before.
+The driver doesn't really control the BIMC PLL here, the PLL is defined
+with fixed/shared/read-only ops so it mostly just exists to model the
+clock tree properly and have the clock rate readable for the PLL itself
+and any downstream consumers.
 
-Reported-by: Jack Matthews <jack@jackmatthe.ws>
-Closes: https://lore.kernel.org/r/46A20F89-E208-4091-8B6E-B5C38BF82B42@jackmatthe.ws/
-Fixes: 0f67b56d84b4 ("clocksource/drivers/arm_arch_timer_mmio: Switch over to standalone driver")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
----
-I couldn't find any existing (fully-supported) platform upstream that
-relies on this, so I omitted Cc stable. MDM9607 does have most of the
-necessary drivers upstream, it's just missing the DT (I would like to
-upstream that once ready).
----
- drivers/clocksource/arm_arch_timer_mmio.c | 47 +++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+There are multiple drivers that do it like this (e.g. gcc-msm8916,
+gcc-msm8939), is there a reason why we should drop this?
 
-diff --git a/drivers/clocksource/arm_arch_timer_mmio.c b/drivers/clocksource/arm_arch_timer_mmio.c
-index 5cb94051c4be..d128dff7067f 100644
---- a/drivers/clocksource/arm_arch_timer_mmio.c
-+++ b/drivers/clocksource/arm_arch_timer_mmio.c
-@@ -15,6 +15,7 @@
- #include <linux/err.h>
- #include <linux/interrupt.h>
- #include <linux/io-64-nonatomic-lo-hi.h>
-+#include <linux/of.h>
- #include <linux/of_irq.h>
- #include <linux/of_address.h>
- #include <linux/platform_device.h>
-@@ -409,6 +410,8 @@ static struct arch_timer *arch_timer_mmio_init(struct arch_timer_mem *gt_block,
- 	return_ptr(at);
- }
- 
-+static struct device_node *arch_timer_mmio_early_np;
-+
- static int arch_timer_mmio_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
-@@ -417,6 +420,10 @@ static int arch_timer_mmio_probe(struct platform_device *pdev)
- 	int ret;
- 
- 	if (np) {
-+		/* Check if timer was already probed early */
-+		if (np == arch_timer_mmio_early_np)
-+			return 0;
-+
- 		gt_block = devm_kzalloc(&pdev->dev, sizeof(*gt_block),
- 					GFP_KERNEL);
- 		if (!gt_block)
-@@ -436,6 +443,46 @@ static int arch_timer_mmio_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static const struct of_device_id arch_timer_cp15_match[] __initconst = {
-+	{ .compatible = "arm,armv7-timer", },
-+	{ .compatible = "arm,armv8-timer", },
-+	{}
-+};
-+
-+static bool __init arch_timer_mmio_has_cp15(void)
-+{
-+	struct device_node *np __free(device_node) =
-+		of_find_matching_node(NULL, arch_timer_cp15_match);
-+
-+	return np && of_device_is_available(np);
-+}
-+
-+static int __init arch_timer_mmio_of_early_init(struct device_node *np)
-+{
-+	struct arch_timer *at;
-+	int ret;
-+
-+	if (arch_timer_mmio_early_np || arch_timer_mmio_has_cp15())
-+		return -EPROBE_DEFER;
-+
-+	struct arch_timer_mem *gt_block __free(kfree) = kzalloc_obj(*gt_block);
-+	if (!gt_block)
-+		return -ENOMEM;
-+
-+	ret = of_populate_gt_block(np, gt_block);
-+	if (ret)
-+		return ret;
-+
-+	at = arch_timer_mmio_init(gt_block, np);
-+	if (IS_ERR(at))
-+		return PTR_ERR(at);
-+	retain_and_null_ptr(gt_block);
-+
-+	arch_timer_mmio_early_np = np;
-+	return 0;
-+}
-+TIMER_OF_DECLARE(armv7_arch_timer_mem, "arm,armv7-timer-mem", arch_timer_mmio_of_early_init);
-+
- static const struct of_device_id arch_timer_mmio_of_table[] = {
- 	{ .compatible = "arm,armv7-timer-mem", },
- 	{}
-
--- 
-2.54.0
-
+Thanks,
+Stephan
 
