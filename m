@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-112441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id E+nKIP5UKWp4VAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 14:13:50 +0200
+	id EoQZDJhUKWpYVAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 14:12:08 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 549D166924A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 14:13:49 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90047669203
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 14:12:07 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="gQ/noQHJ";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112441-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112441-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=gsDxLj1f;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112442-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112442-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id ABC7E3055C85
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 12:04:58 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id ADFFD31453CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 12:05:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1C32406805;
-	Wed, 10 Jun 2026 12:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5937405C50;
+	Wed, 10 Jun 2026 12:04:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13411405844;
-	Wed, 10 Jun 2026 12:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD50406803;
+	Wed, 10 Jun 2026 12:04:48 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781093086; cv=none; b=hdqjYWV7+seuKFBbDB0v30K1Pozp1PPuSjsBSDv1lpz/8x1HXJdc1+eP9pH9620Cn7waLNT06o1X3vJPq7szDxGchWaVCP4QEI1/y9Pw6yVsNv+ReET3hSQs6kOFN2f/o/tpwC+Gmdh4J6/lTOgEIRHEjM8sYhKiDVf5aCgs7rA=
+	t=1781093091; cv=none; b=S4PwGFoptufV9e9EampoA+Lm13j6vB4qQhsVd6QBIl54JixnBhbUdkJthnPkqHfazFPIbTMLsdvSQVu1Yy2MpULHhhK1ZIVXDHybA/N+CUt2eS5oYZEUSmsYvlku69GUK/dVJnJEA3fRBm+MNdO0uClm2RCQ8g7cmVofjI3cuY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781093086; c=relaxed/simple;
-	bh=M5nlokA19VIWfXT0gjerV+iDVU54fVNT5RCYkVfjl+E=;
+	s=arc-20240116; t=1781093091; c=relaxed/simple;
+	bh=M66cB2F7xALh/u13C8aaeYXg0X1u3YSHSqfVx9v2wwk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SaBJtQRv4BBLT4c7PH2XuSWHsXsZeXLCB5ULDi2UkTpTuAFBRFXkgpmYl/MHR1QOu1q3y5zRW2W98l7BfDB0yZypI40RCdR5YLwn9o7NvLCQyUjV8BTbPQ++6eNwrV3xSDWT5CBzbwkoR4SVinv/L6bxHqeMGOUwaDtBjkI/5xA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gQ/noQHJ; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95A51F0089A;
-	Wed, 10 Jun 2026 12:04:39 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=rgFa8sBsX+hOe+ihr8jrPJtsT7keY0ar6ueox/FDfvW8J9ILvI9bn3fbeCXC5DEkYCvwR07JtiEcbHYNtCOVn28wYZ8UXIqkLzKz5SbfGzo9hfsKIA0SMa7fY2MMz8ALiKqlx5KfoZvt5Gpy/hccRg0wJOjc6x1r3DOtvou/d10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gsDxLj1f; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605B51F00893;
+	Wed, 10 Jun 2026 12:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781093083;
-	bh=uKld6mtpOAHOyUMP6+sCh+13il3I0Ttuj9CS6qy04Q0=;
+	s=k20260515; t=1781093088;
+	bh=LsyBpd3ubxXywUQiKVs/hjr1/ctDNQr3tCkSZxmIp0U=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=gQ/noQHJjHau+cQfA7znZdFUPUKda2/ysrQnTRe+jRtP+WekSeG4OzqfBGM3o96Md
-	 6oRlXWKtSnHYCYnla40eUs/hSgtmkhQtKCqqE7x+ANgpcK/9aANooL+nMJP/hzERbN
-	 7sck2bPPvZ0OM4E9eiK69ifEeHCoDQvIqTYsKbT3WTbA9KYPPiQ5OTGKP8dvDRjmzo
-	 K8pASL2EKWYPnhjs5kmY6HeoA86X2EOQQ+/SqWQHo5/IAM0GB8QeE8lzt2vPqgDK43
-	 Ezd4C7mFKbevAzAx6KbKde7uDfqMAA0GIojCIazOfnX/jIe1z5VoaFXiMEQR1k+4S9
-	 tX1epyfW/WPBQ==
+	b=gsDxLj1fjgPNbefANUcA6hmPrSLXo/+bgOXjvlVkzcf0ltdQ0z0tNCIl/xQweAWRh
+	 onVfIn3wirf4WO3C4ZVxthbQ2oWUH8hEBu3okuadDg3NAObxgHUlOmHs/S/CnJYHVt
+	 E1hmSpdC70dniwl0jgVUBabwtMiaI8ycwDI+mZzDdnCEVFGo+qu/I0GrzZPtjMpmYC
+	 WNBtTGKnfFHIG/iwwVClp25UK+wqHygJ6nZjjfGKV0OmIalzoogKtI+3rjn8D443Ak
+	 4QWDvpPQeH7MiWhkI/RBPW8KVf8mmQFtn3aeFUdJyXtXp1H8Ah6a43FMoavfGdoczn
+	 hdExCJBnMA8Fg==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Wed, 10 Jun 2026 14:04:16 +0200
-Subject: [PATCH 3/4] arm64: dts: qcom: msm8996: Add VDD_MX to QUSB2 PHYs
+Date: Wed, 10 Jun 2026 14:04:17 +0200
+Subject: [PATCH 4/4] arm64: dts: qcom: sm6125: Fix QUSB2 compatible
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,7 +57,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260610-topic-8996_61x5_qusb2phy-v1-3-d7135980e78f@oss.qualcomm.com>
+Message-Id: <20260610-topic-8996_61x5_qusb2phy-v1-4-d7135980e78f@oss.qualcomm.com>
 References: <20260610-topic-8996_61x5_qusb2phy-v1-0-d7135980e78f@oss.qualcomm.com>
 In-Reply-To: <20260610-topic-8996_61x5_qusb2phy-v1-0-d7135980e78f@oss.qualcomm.com>
 To: Vinod Koul <vkoul@kernel.org>, 
@@ -72,11 +72,11 @@ Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1781093064; l=1095;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781093064; l=1065;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=9ndZtXkmqXo1r/bpwIA6jBPYTw6ttBiubHvsJ0cp8u4=;
- b=xsEvEhhKA18OgnoIAxsGvKjnXq2ahSZ8va0geoaWMJQGSNKXsDUBlv+EbutsWuW/i5ybHSiiR
- yznMZvMT/T9BwUY0uaTaq4JpnF0/630KvdM4PSVlD16HY693zOnpizn
+ bh=YVIqfrH3mYeu1oku7m5qMRh3GSxgBbzNU1DvKKCnwRs=;
+ b=vQmEdDcvBBjR9bcJgViAK/lo1iKmbRKe4aVfqLMgFPPe3p7SNXSaHgH3wtvBtVEp7CzCSySXB
+ 5FbaOktItZeA/q54C8Oo25ip0czuFmAKfzQo/e34ZGy/fveXXTGGxUr
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Rspamd-Action: no action
@@ -86,7 +86,7 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -99,7 +99,7 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	FORGED_SENDER(0.00)[konradybcio@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-112441-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112442-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
@@ -109,51 +109,43 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	ALIAS_RESOLVED(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,oss.qualcomm.com:mid,vger.kernel.org:from_smtp,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,oss.qualcomm.com:mid,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 549D166924A
+X-Rspamd-Queue-Id: 90047669203
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-The QUSB2 PHYs are powered by (among others) the VDD_MX power rail.
-Describe that in the DT.
+There are a couple issues with the current description:
+
+1) The msm8996 compatible is wholly reused, without a SM6125-specific
+   primary compatible
+2) MSM8996 has a different power setup (VDD powered through a RPMPD
+   power-domain vs a regulator)
+3) MSM8996 uses a different init sequence
+
+As part of fixing all of them, use a SM6125-specific compatible with a
+SM6115 fallback.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6125.dtsi | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 2f67e665996f..b7cd1928335c 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -3192,7 +3192,12 @@ hsusb_phy1: phy@7411000 {
- 			clock-names = "cfg_ahb", "ref";
- 
- 			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-+
-+			power-domains = <&rpmpd MSM8996_VDDMX>;
-+			required-opps = <&rpmpd_opp4>;
-+
- 			nvmem-cells = <&qusb2p_hstx_trim>;
-+
- 			status = "disabled";
+diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+index 6e84c226948c..688548cef0f1 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+@@ -681,7 +681,8 @@ gcc: clock-controller@1400000 {
  		};
  
-@@ -3206,7 +3211,12 @@ hsusb_phy2: phy@7412000 {
- 			clock-names = "cfg_ahb", "ref";
- 
- 			resets = <&gcc GCC_QUSB2PHY_SEC_BCR>;
-+
-+			power-domains = <&rpmpd MSM8996_VDDMX>;
-+			required-opps = <&rpmpd_opp4>;
-+
- 			nvmem-cells = <&qusb2s_hstx_trim>;
-+
- 			status = "disabled";
- 		};
+ 		hsusb_phy1: phy@1613000 {
+-			compatible = "qcom,msm8996-qusb2-phy";
++			compatible = "qcom,sm6125-qusb2-phy",
++				     "qcom,sm6115-qusb2-phy";
+ 			reg = <0x01613000 0x180>;
+ 			#phy-cells = <0>;
  
 
 -- 
