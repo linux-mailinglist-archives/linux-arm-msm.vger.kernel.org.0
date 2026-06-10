@@ -1,85 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-112408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Aw8SIbNIKWpcTgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 13:21:23 +0200
+	id e2hnEKNIKWpWTgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 13:21:07 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76DCF668B0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 13:21:22 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F11BB668AFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 13:21:06 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=cs7mq+Rp;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112408-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112408-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=LYkVNcdG;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112409-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112409-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id A8AB3307CFF5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 11:12:38 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 06DD530D4DAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 11:12:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23FD8405C22;
-	Wed, 10 Jun 2026 11:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8F2D405C49;
+	Wed, 10 Jun 2026 11:11:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37696404BD0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 11:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BEEC3FE64E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 11:11:28 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781089884; cv=none; b=VqQoOfQqaC+H+3JSPwwZjVpF9LjOSor45n7Sxor3/+ouki1ccg19FmsoQ/fwSgTHsGG1obavhCUZgMrx0VYPvTPjlQt32X5VovUhM3V8hAC9pAY/mVZC4J5HvYIpp6dVwZWQfhxQU+Kf3HpaXWmDIVS7sUa8NqaxG/I2bJciBLY=
+	t=1781089893; cv=none; b=ez0BgP7qNQH0kr0otxoevEQWzjkrijQCETTEKLKIsO41AIfqH5nTXwJv9vh0olSijUXu4cpKM4RcN99YcDWTHFsR3kfKDrDp3nR6N3Vad/gRHkbuXh0u2+iNNR1kabdvCFersMJuHx2Clj4yqEkbz6cg1SfEql+zFGviDuygcI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781089884; c=relaxed/simple;
-	bh=TOj5OjxrruVphHTMiT2EGjrkwWWLSP4XZSWSQUFM7DA=;
+	s=arc-20240116; t=1781089893; c=relaxed/simple;
+	bh=+Hh67PVOILHaAgCMefcB+6yFoZHKO1AbWUQEUScrJW4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fCsee4L9dXgD0GKh8VbDWBOX0PFZ2CTZ20tg/soV1CGt6FsxuX3McW4AQekCsj93I1wjCsixHfkELjkMwHAq9wdUz1m+UVsbFhMMvbkSah9CZNA/snIF2R+QEgUxcjWdEyPECeo6qgCYIYCwobn7Dps7/NB5OM/8m+3cIO4IDQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cs7mq+Rp; arc=none smtp.client-ip=209.85.214.177
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2bf18c30bb2so48322485ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 04:11:19 -0700 (PDT)
+	 In-Reply-To:To:Cc; b=ScUeAuZCJGXkFjDSO6qu3gzhaOKWnH2xVJl1H9oDe5FI4XiVjd5Q1ufZkizNMHJ4kmqA+NQIbWtr63SQw725CYPjhAcwufndoa8LBFtmbEGSOVhFu0wjHw3VXseOp0uca1S4WIEEb96lw2RyBThXYbIBQ0Z47LijZAvHtUpg69M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LYkVNcdG; arc=none smtp.client-ip=209.85.214.176
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2bf55c39e16so29674825ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 04:11:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781089878; x=1781694678; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781089888; x=1781694688; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=06m6eTJZDZPQJ7w1wtJsPkoURM31DLSHf6Zo31tPFoY=;
-        b=cs7mq+RpG6dR6AXshfcBjj/ymvMRu6LxZjL+FKjjm4p9svuWUzwcHwP/ALx5BdfQok
-         j+IKXV7L1qKkXEeR3e7XUnCRBNgDF1OsFRaJH9v1s+NTpangFRqraJ7xIWryM4/ldL+X
-         M91b0ngs9QS1qx54kbTYO8zLCGsaC8FbKChbJ5g5fdOfci6I/3+kdoXZZRm8Y42Tcviy
-         l5BAp5u/1hiS8KjtfdAjR1g0Gvsle/KvcUg+wDT2iEeXcpzEtp5DVkGknxiu15YezFBA
-         mcKSqzNbAa3f0ajR9NZW3/vgqEJJiofkJ+lIHtRs50WYKTCzRNPaYe4dloOD5ZxFpjml
-         ZwPQ==
+        bh=YCyEbIJgycflS2cdn+qVWDZinKExvA9S1JRweNqMeoE=;
+        b=LYkVNcdGUcDVeAXSzGNmptG7XZJXWcJcLhVeJZf3egXGSf6C12Hn0vlYls1W9JUKY0
+         Yog6EzplgjE5z2le1IPToUZ8wJS52ygn9czO68cKju/RF7avDdFKIphHBkCib39xc/lZ
+         AGCHZg2Eqw8LjdJ2OntO/EWetH/0ahX4PV+CdgstnchFnr9tNihdmuyOIEQG2j+m20X2
+         /ftmreNrruHMVw1a6ZNaW8+OvcLQ0/p97JI+QVL+e0B/NQt54yov+SZ+hvBP+9m+IVf0
+         b71IKvg3XwrJ/7RdjBPIqgr0x3bhC/NCX8zRVU0ineG03okppziPQrSw+tiLjfg10lnu
+         h1LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781089878; x=1781694678;
+        d=1e100.net; s=20251104; t=1781089888; x=1781694688;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=06m6eTJZDZPQJ7w1wtJsPkoURM31DLSHf6Zo31tPFoY=;
-        b=ApAQD1Z+fZGoZB6MNUdIeDm0mKnQszcLsmHY2otdlhFddBL/PoQzkTF0+FQRSk9l6I
-         nQMX79qWyXn51L33VGqwisD1yxx23EajF8UkrOjnZNtoAMSr9C9v8LRO6gkcHWX80WHb
-         euvGK0GyB8irXU7XuxOZ6G1S7wAfx1pXYuQ4Fbj/0Z/dpZBEU/r1Afjb5/q21ZMfGwfY
-         Nj8U/MRckVnouB97RcqhOGe869gTA/uZoCW7mr9phGuaCfPp/a79ytxJ9tQBWd+sVnJM
-         TzCPMSJLTXpwjNg4uTvdkWe6b4QMS3dmmfQpVPKyImTQoNIiRZl1jwKSvH/RrvbczEuV
-         5FdQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8d81Ffe6XhTHNw3iaRyM9iKQhBCWXIOM+qUTZ2lU36nVm+14bCJLzMAYZKDCVQqM13Ct2umli4SdOY2ymG@vger.kernel.org
-X-Gm-Message-State: AOJu0YxdIKcvevKHlsfF8fb61GVQs/fxGViP6jA/r31LUdpYQUlpZOzq
-	RLnbrsF+yeZbGFDcSJr/iD+n1jlzzDQJ5Fj8wOzx8Npvx+SOE5+vbg4g
-X-Gm-Gg: Acq92OEVuPRLfOD1IkxcYIlXm9vUydPTEXNrILp0eu8PWYWt5Ny6EvRYmBMrlJ00ZBA
-	NFU9Oo+2+WVBDL+zy25vWaxA4o1AtaS4w5/XROwXFzhuzS7vN3AyU7+5XKhbra/e3bn2+hiV/89
-	fbSFyb2NtMadvyAQuOvopWgXVtlTSYcMKwokGT0S1j62dFXeUpfqwHxPsZvnzqc8FFTFHImkqLf
-	elm0iAVxE7ffqEDTfJPve4WHziSX7XcQZi0P/2IyusIp65VDJXlm2R5s39HSZgRT05vk/7BSXDT
-	d/0b+4STcetzt4rBT12oqjiCvuwwrIPYwkPePxs9OIa4OTaY80VLZ1mSDomESNdpOw/z9kTJOFR
-	Pvk5AEwIOKGcak1J2dRPz6hda/5BnQbzWMePxN6jbW6Wxve438cN32I/9V6ynXaDj6S6mmia/vu
-	0ZS3TqwtKImkCYhqVFOnHwO7HpBquXVVJD66GkJQ==
-X-Received: by 2002:a17:903:4b46:b0:2c0:c625:400d with SMTP id d9443c01a7336-2c1e8979bedmr280552555ad.37.1781089878316;
-        Wed, 10 Jun 2026 04:11:18 -0700 (PDT)
+        bh=YCyEbIJgycflS2cdn+qVWDZinKExvA9S1JRweNqMeoE=;
+        b=X837vyjQngwrEhWGhMg6nEEmBX3RvFC2w6kk93EMxS0Rn49jvvlYE8NoYS8FVBQHAv
+         zxN5sQRU6KJnpVduVZ5shkyeUd1HtsBmE1m3Fose8NvfXOFMmVpx4hZDSbcbnAaY/B2w
+         x5yJZEtULccop3gvm7IgP1Rh10TZ1zsSogbdlsZ77nIB2S16GwsbkNyZJgXKZD7vfJ5W
+         KbTyX3KY2aLrMOHm3pNqEaoB/nuZpGOsSfo8NKEWZ+XhgTXv7z8trtRcu+atnIzgwc6Q
+         0Eqggjghf5cKsVjBTlsvaLDX7eqGmStGD4TrRQyeXlWjvLLSQY0c3f3gR6AdzcNbEhNc
+         gG7A==
+X-Forwarded-Encrypted: i=1; AFNElJ+D0jPxKCmqU1pRIk/YltXbVS3YKSMwEaSXwDTElpzOfqgurd6HlZXlmPCifowyMKvW7V7qqLpEAjMEAjB8@vger.kernel.org
+X-Gm-Message-State: AOJu0YwO0OIb3ey+hGyF8IXLM97J1cjBNLLLY9uCXX5UIXCsZl03oe6B
+	/YzM0MLVpJ6zl0rZ1q8+0/pcAHpkIWTGTwS7grRLKwbEB/TgBfJ5TV7n
+X-Gm-Gg: Acq92OGuZd4jYgedW5vwrVJaPc0R2be8g5qo3FcL1cxAc8eZHUecI7VHNqbMJ059N9U
+	bSTNEpyplqON8C/k1R+Z+JvMWf+r2CQxlP3USei6+xZqewwilspkpX70iokHpsrdGPyzPmBB3j1
+	r5Db+i7o/Vtz6gje3Cl5OgTZSNArBYlR/SEc3nsvILDKJkMgRvQadIzGFK5n/1KMRnHXhzItzhI
+	vvEyfKL2RWyTfW7RH2rNKPl9hLVGmYnnDXaAQZU4K4TZ0+DcffQwEQLEkRtjIAZqMllg7bGxxX0
+	VIf+AwMfdbBCXFYRmyZnQ6Iddb5OAyx0YFuxcESn1dNv3hoGhY9326iTC3+BZhC8+tPK/azVzlD
+	XlpXv/S8wHHgyvc9kA9b6cFXpqcRSSbMlbczItvuwmOL2DQKJa2XeDhO9GSDM/nwM6EQES/gHvh
+	eQc441vwsVPsDKnoQirin2xSnEwVB1StQGd1BYPA==
+X-Received: by 2002:a17:902:d583:b0:2c0:aa5d:756f with SMTP id d9443c01a7336-2c1ec7c71cdmr207858455ad.8.1781089887644;
+        Wed, 10 Jun 2026 04:11:27 -0700 (PDT)
 Received: from [127.0.1.1] ([2409:40f4:4111:52c8:138e:8096:a8df:e68b])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f6d37esm317175205ad.9.2026.06.10.04.11.08
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f6d37esm317175205ad.9.2026.06.10.04.11.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 04:11:17 -0700 (PDT)
+        Wed, 10 Jun 2026 04:11:27 -0700 (PDT)
 From: Ramshouriesh <rshouriesh@gmail.com>
-Date: Wed, 10 Jun 2026 16:39:31 +0530
-Subject: [PATCH 6/9] arm64: dts/media: qcom: keep PLL8 out of Purwa camss
- hot path
+Date: Wed, 10 Jun 2026 16:39:32 +0530
+Subject: [PATCH 7/9] arm64: dts: qcom: hamoa: reorder csiphy power-domains
+ for v8 CSI2-PHY
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260610-a14-himax-hm1092-v1-6-0c9907da47ed@gmail.com>
+Message-Id: <20260610-a14-himax-hm1092-v1-7-0c9907da47ed@gmail.com>
 References: <20260610-a14-himax-hm1092-v1-0-0c9907da47ed@gmail.com>
 In-Reply-To: <20260610-a14-himax-hm1092-v1-0-0c9907da47ed@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -106,20 +106,20 @@ Cc: Aleksandrs Vinarskis <alex@vinarskis.com>,
  linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
  linux-phy@lists.infradead.org, Ramshouriesh <rshouriesh@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4179; i=rshouriesh@gmail.com;
- h=from:subject:message-id; bh=TOj5OjxrruVphHTMiT2EGjrkwWWLSP4XZSWSQUFM7DA=;
- b=owEBbQKS/ZANAwAKARWVil4RHAXeAcsmYgBqKUYPxDDLtCkxvbn6f4FJreQtb2Zfs33lMRdPL
- +pACyui44iJAjMEAAEKAB0WIQS/0QuzNKVfvUNlNAkVlYpeERwF3gUCailGDwAKCRAVlYpeERwF
- 3ieLEACVICuCKoukuly4K7kScUxZ74qX8QAG4zbHFuiq7U94MhTncgezdfSWNrVxWQbmUtrbacm
- BXIBD2PS9ko97X5H0Ch32aHBTRmEX1oNGd+iIdOfsZwfapINTymnBGrDfZ4mWsGObV965OJi2tg
- TCmpD5TOFYOVQiHtlDRWrLLFCr6O0wUp4+4ebsCySQDTrs3eU7xqtZb8BheDCmmym0PCKreaF6D
- 2r9G7zium9UGoIOcrcjIS5jbXRnYDWxG6aeFqotOZqIZw7YlHUCUQer+W1fMhKlILUFG7GVNWmj
- 4ur/XNEc/31fSMZYppkLuQFJICy8BPKLPrNit/owy0WFTzJigxs/6J/L7L9h35fxWN/hQY890AS
- /nqA9WWoPtkO35gKQ/61813IxQL8GIBpp1EDpyBxt6Y9qB5sK/h7NH1PT0ic03qE7Db81FQbf12
- fox/NEdl634WSrlmowVIU1eEB+i4kFe3EGMY3F1M+WJrk5g70a34yodxVSIMlIrx8+uAEcgnxfJ
- PWhoWlwsvh9s6hFbGW3H5XrvDdTOjfVW4uozhpNYrmZ/zxSasqatK63fRDx1DTBhbhVLRxjapt4
- FPRGEMmLSNNTs/TIDF7yIM3CG7G87L3BosX5mKKbNHCQquuNoIQ1tc67UdGhRHBZ9Sjzve0uEXv
- xXKd0AWF4HyFvwQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2717; i=rshouriesh@gmail.com;
+ h=from:subject:message-id; bh=+Hh67PVOILHaAgCMefcB+6yFoZHKO1AbWUQEUScrJW4=;
+ b=owEBbQKS/ZANAwAKARWVil4RHAXeAcsmYgBqKUYQGh6WahDBnQigIxX0k8AxRA7N2XoG0m/Em
+ 2BxmG4WFrCJAjMEAAEKAB0WIQS/0QuzNKVfvUNlNAkVlYpeERwF3gUCailGEAAKCRAVlYpeERwF
+ 3vLrD/474hk7I5RNcjWVILYpm4xc+LvkBOvjbeW+a2qZC9ZZl7ghSEA3SmvwCPvpAe1GAywpnBd
+ zEFL/rIEbAMStB547j0/wQ55MHeR9eFnJPOY2xbbDvpVbBZ6hA/RWrgHcDSD9MqZD0Db/e4qItG
+ fBm+6nPeMHl7TiJbh9wexsUFJJjJtCCPxJ/UBzdyVjKLGs1YETWgFkLRPJYm0fpcPL0ErbBan87
+ nfox1FhaDgD2eL4/ZkUfb83Lr61GivS/Imdwtsiurd3YVYH9ws8+4bPAmj4KO3LhbRk9i4WqZ1l
+ w8LwsK8OPHFmW+BpHBfGHx01A/d5AQMhuylrwZIrbRB3VbCcjwa04eoPAzNh/8GkBn3TPS1YbBb
+ 59TVbAPVExVaWxJpmkJ2bkATSa2IRUZ2v5btWN3iEMtzH1QguDwlH9yhtS/SOaLMZp5/3Oo6Uob
+ 4rkLXb21qBYFd1lyN7glVYmECdXOe3Gl+gA2zei5KSeYPz0Jfk7QpMZ1b6V+ectvXjfGGMTFSmD
+ nXgn1ot8vTaDAObv3wAu5oCUwqYdyfs/47ViIM7WMUk1+amN2xspyk65jhorUutVGU/oMUF10IH
+ uzvDEn75FlA3+/+1UBUY53ePnFcYrN7DarI5aUEdP6pJ2SLe9yKS5CVNZgATmEZdhqZ5YslB4fP
+ yH2wC5HAtJ6Qg6Q==
 X-Developer-Key: i=rshouriesh@gmail.com; a=openpgp;
  fpr=BFD10BB334A55FBD4365340915958A5E111C05DE
 X-Rspamd-Action: no action
@@ -128,11 +128,11 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-112408-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112409-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:mchehab@kernel.org,m:bryan.odonoghue@linaro.org,m:vladimir.zapolskiy@linaro.org,m:loic.poulain@oss.qualcomm.com,m:bod@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:alex@vinarskis.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-media@vger.kernel.org,m:linux-phy@lists.infradead.org,m:rshouriesh@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[rshouriesh@gmail.com,linux-arm-msm@vger.kernel.org];
@@ -152,118 +152,96 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	DKIM_TRACE(0.00)[gmail.com:+];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 76DCF668B0C
+X-Rspamd-Queue-Id: F11BB668AFF
 
-cam_cc_pll8 (defined in camcc-x1e80100.c) doesn't latch on Purwa
-silicon. "Lucid PLL latch failed. Output may be unstable!" fires from
-wait_for_pll() whenever something asks for a PLL8-sourced rate, and
-the camera pipeline ends up dead with "Failed to start media
-pipeline: -32" even after the qcom,x1p42100-camss compatible is in
-place.
+The v8 phy-qcom-mipi-csi2 binding mandates power-domain-names ordered
+"mmcx", "mx" (MMCX first), and its driver reads each domain's required
+performance state by index via dev_pm_opp_get_required_pstate(opp, i).
+The v3-era camss DTSI listed them "mx", "mmcx" (MXC/MX first), which is
+rejected by the v8 binding and, with the v8 driver's
+devm_pm_domain_attach_list() + per-index OPP lookup, maps the wrong
+pstate to the wrong rail.
 
-PLL8 sneaks into the streaming path via two RCG freq tables: the
-slow_ahb RCG defaults to its 64 MHz entry (PLL8-sourced) when CSID
-pulls it during csid_set_power, and vfe_lite picks its highest entry
-(480 MHz, also PLL8) at streamon.
-
-Fix this from the DT side:
-
-  * pin slow_ahb at 80 MHz via assigned-clock-rates in purwa.dtsi so
-    the RCG is reprogrammed to PLL0_OUT_EVEN at clk-init time and
-    never reaches PLL8;
-  * drop the 480 MHz entry from the Purwa vfe_lite clock_rate array
-    so the driver caps at 400 MHz (PLL0_OUT_ODD).
-
-I went poking at the Qualcomm Windows BSP shipped for the UX3407QA to
-see what rates the vendor side actually uses. The AeoB resource blob
-at qccamplatform_ext8380/CAMP_{PERF,RES}_MTP.bin lists the camera
-clocks Windows enables, and PLL8 isn't referenced once. For CCI in
-particular Windows runs at 37.5 MHz off PLL0_OUT_EVEN, not the
-30 MHz/PLL8 alternative the Linux driver happens to pick first.
-Whether PLL8 is fused off, trust-zone-only, or just unwired on this
-SoC I don't know, but treating it as unavailable matches what the
-vendor does.
+Reorder all four csiphy nodes to <MMCX>, <MXC|MX> / "mmcx", "mx". The
+second rail stays MXC for csiphy0/1/2 and MX for csiphy4 (the binding
+explicitly allows "MXC or MXA" for the second domain); the opp-table
+required-opps values are symmetric so they need no change.
 
 Signed-off-by: Ramshouriesh <rshouriesh@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/purwa.dtsi       | 12 ++++++++++++
- drivers/media/platform/qcom/camss/camss.c | 16 ++++++++--------
- 2 files changed, 20 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/hamoa.dtsi | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/purwa.dtsi b/arch/arm64/boot/dts/qcom/purwa.dtsi
-index cee72349da49..5e39355c38d4 100644
---- a/arch/arm64/boot/dts/qcom/purwa.dtsi
-+++ b/arch/arm64/boot/dts/qcom/purwa.dtsi
-@@ -409,3 +409,15 @@ &tsens3 {
- &videocc {
- 	compatible = "qcom,x1p42100-videocc";
- };
-+
-+/*
-+ * PLL8 in the camcc-x1e80100 driver fails to lock on Purwa silicon
-+ * ("Lucid PLL latch failed"). Several RCGs default to PLL8 as parent
-+ * (slow_ahb at 64 MHz, cci_0 at 30 MHz). Pin slow_ahb to the next-best
-+ * PLL0-sourced rate (80 MHz) at clock-init time so enabling it does not
-+ * try to bring PLL8 up. cci_0 already defaults to 19.2 MHz via TCXO.
-+ */
-+&camcc {
-+	assigned-clocks = <&camcc CAM_CC_SLOW_AHB_CLK_SRC>;
-+	assigned-clock-rates = <80000000>;
-+};
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index 5c9530d52bbd..ca43ff309b26 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -4437,8 +4437,8 @@ static const struct camss_subdev_resources vfe_res_x1e80100[] = {
- 				{ 0 },
- 				{ 0 },
- 				{ 0 },
--				{ 266666667, 400000000, 480000000 },
--				{ 266666667, 400000000, 480000000 }, },
-+				{ 266666667, 400000000 },
-+				{ 266666667, 400000000 }, },
- 		.reg = { "vfe_lite0" },
- 		.interrupt = { "vfe_lite0" },
- 		.vfe = {
-@@ -4460,8 +4460,8 @@ static const struct camss_subdev_resources vfe_res_x1e80100[] = {
- 				{ 0 },
- 				{ 0 },
- 				{ 0 },
--				{ 266666667, 400000000, 480000000 },
--				{ 266666667, 400000000, 480000000 }, },
-+				{ 266666667, 400000000 },
-+				{ 266666667, 400000000 }, },
- 		.reg = { "vfe_lite1" },
- 		.interrupt = { "vfe_lite1" },
- 		.vfe = {
-@@ -4574,8 +4574,8 @@ static const struct camss_subdev_resources vfe_res_x1p42100[] = {
- 				{ 0 },
- 				{ 0 },
- 				{ 0 },
--				{ 266666667, 400000000, 480000000 },
--				{ 266666667, 400000000, 480000000 }, },
-+				{ 266666667, 400000000 },
-+				{ 266666667, 400000000 }, },
- 		.reg = { "vfe_lite0" },
- 		.interrupt = { "vfe_lite0" },
- 		.vfe = {
-@@ -4597,8 +4597,8 @@ static const struct camss_subdev_resources vfe_res_x1p42100[] = {
- 				{ 0 },
- 				{ 0 },
- 				{ 0 },
--				{ 266666667, 400000000, 480000000 },
--				{ 266666667, 400000000, 480000000 }, },
-+				{ 266666667, 400000000 },
-+				{ 266666667, 400000000 }, },
- 		.reg = { "vfe_lite1" },
- 		.interrupt = { "vfe_lite1" },
- 		.vfe = {
+diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
+index 4226db30e244..1200101d7bb7 100644
+--- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
++++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
+@@ -5853,10 +5853,10 @@ csiphy0: phy@ace4000 {
+ 
+ 				interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>;
+ 
+-				power-domains = <&rpmhpd RPMHPD_MXC>,
+-						<&rpmhpd RPMHPD_MMCX>;
+-				power-domain-names = "mx",
+-						     "mmcx";
++				power-domains = <&rpmhpd RPMHPD_MMCX>,
++						<&rpmhpd RPMHPD_MXC>;
++				power-domain-names = "mmcx",
++						     "mx";
+ 
+ 				#phy-cells = <1>;
+ 
+@@ -5876,10 +5876,10 @@ csiphy1: phy@ace6000 {
+ 
+ 				interrupts = <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>;
+ 
+-				power-domains = <&rpmhpd RPMHPD_MXC>,
+-						<&rpmhpd RPMHPD_MMCX>;
+-				power-domain-names = "mx",
+-						     "mmcx";
++				power-domains = <&rpmhpd RPMHPD_MMCX>,
++						<&rpmhpd RPMHPD_MXC>;
++				power-domain-names = "mmcx",
++						     "mx";
+ 
+ 				#phy-cells = <1>;
+ 
+@@ -5899,10 +5899,10 @@ csiphy2: phy@ace8000 {
+ 
+ 				interrupts = <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>;
+ 
+-				power-domains = <&rpmhpd RPMHPD_MXC>,
+-						<&rpmhpd RPMHPD_MMCX>;
+-				power-domain-names = "mx",
+-						     "mmcx";
++				power-domains = <&rpmhpd RPMHPD_MMCX>,
++						<&rpmhpd RPMHPD_MXC>;
++				power-domain-names = "mmcx",
++						     "mx";
+ 
+ 				#phy-cells = <1>;
+ 
+@@ -5922,10 +5922,10 @@ csiphy4: phy@acec000 {
+ 
+ 				interrupts = <GIC_SPI 122 IRQ_TYPE_EDGE_RISING>;
+ 
+-				power-domains = <&rpmhpd RPMHPD_MX>,
+-						<&rpmhpd RPMHPD_MMCX>;
+-				power-domain-names = "mx",
+-						     "mmcx";
++				power-domains = <&rpmhpd RPMHPD_MMCX>,
++						<&rpmhpd RPMHPD_MX>;
++				power-domain-names = "mmcx",
++						     "mx";
+ 
+ 				#phy-cells = <1>;
+ 
 
 -- 
 2.53.0
