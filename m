@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-112434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id /KTzN0ZSKWqSUwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 14:02:14 +0200
+	id ev2vMKRTKWr8UwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 14:08:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34120669099
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 14:02:14 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6577B669151
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 14:08:04 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=T7NXYphB;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112434-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112434-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="c0w0QME/";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112435-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112435-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 234F830A3BF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 12:00:25 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id CB3A3307B775
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 12:01:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B801403EBA;
-	Wed, 10 Jun 2026 12:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A073404BCA;
+	Wed, 10 Jun 2026 12:01:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E992403AFC;
-	Wed, 10 Jun 2026 12:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E7E404893;
+	Wed, 10 Jun 2026 12:01:05 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781092824; cv=none; b=kYCcPJhRNMZt8S8eUbsWWKL4YnHQRx6WDfgFLfQxZy+gtxFUnktQRftZZWeOyptRnWTBGSnjqBbwtPGKIb7077NBMsuQrz/fS/0P1UhmpJjHBKi3FQVHQjU9ULnDAWTie1xWAnfGvxYBQNZqStzZQAvXNJ/iC/j/fBCujvLGaCs=
+	t=1781092867; cv=none; b=rQwUtO9Po2sQyYPo1bWU+bUMBb66cuABwXQMxmNNXyheAAvDEucOV6x+uwCuy8x1ModyRLilLEe5g7R4y9ZIOqHYnyRmGXoDaG4uTju/Q609SCepD8TW0IvW1l3hDvSAaUl7PUdlNhXKEg8V9ga0BTONm6iy/iQDrPsrFMFTJc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781092824; c=relaxed/simple;
-	bh=8Fl3eS1ZGsjazwyVqGkewn4kceYG6bYjFabf/7qf7pE=;
+	s=arc-20240116; t=1781092867; c=relaxed/simple;
+	bh=pFHS1DrrKMlq4R1hzjedWT+cVpUANsb6uXzupJvKPMw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QlMYmRVHDtjKk+uO3YKINkZeOesymNHFHbxaCxmE7HIHvX1Wcs68mX9NUHLl6T1i0NcTNVC9PZs7G35LMYivx9VPssfcXiG60116MVsKpGi8hmqrTRTgJDsuPcPuv0vtZlas+eFvOgSu9b/0VeZUVSP5pxMz/r2Jz/ZmZ+sQnSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T7NXYphB; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55AC51F00893;
-	Wed, 10 Jun 2026 12:00:20 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=HXgm4dtuYPiBIlOfBf3YkymBR4/Bw4d7aBRCe2Jyx0fGCl7cdOLjoW9rLkibpjz00CRV5+U9fogSL3tpv0+m8lgiUTTTR/CD/t/MniV4DZBVWASGWH+oSjBciNpQqLa5x/9J7ZrEKkLXqnWAEjmEmSDy+JOxmL9I8GaNOP6Ezrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c0w0QME/; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2416B1F00893;
+	Wed, 10 Jun 2026 12:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781092823;
-	bh=26E+US3b/oQc2fDJZWgSkLWIsb7dOrJoF1CZ5ARQ6GE=;
+	s=k20260515; t=1781092865;
+	bh=vKp7ebKQe9L2NbAAX85kKj1WoMkqZL7dKskhFQw+3v8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=T7NXYphBRJkIIyKmgU5WYp1P8mGlJDbx/FuNczhaImzlrwYziyVuRX/AO/fqrxTvg
-	 M6/KVj5oU1ysUM4o8XBl5dO5yNe5BNG1+7DpWdusmvIaV0MuCTgEk616iXdY4e1bEG
-	 Dyibn+nKVz3WhsF3XqGVU6/NXsSPucjRnyfD+XPvC7W4juh/eHSlrPrJXmFL/krCGr
-	 lNSBKZzgU8ZZJclv6YqQQpffPqJZ20VpEFh9Xx33EyIT6d/fBUD0CCr9FUQ7W+Gg+t
-	 dEzSW1en9fFKBmbA8U5H3qBvFKk8p366xniLMcoG3KBxVKH+zp+CNzVlaq3XqbhVQt
-	 kh9fsksjyLGLQ==
-Message-ID: <2229ec5a-f89f-47e0-a489-9d127528e4e3@kernel.org>
-Date: Wed, 10 Jun 2026 14:00:18 +0200
+	b=c0w0QME/s7ypv2u3colBte1FavplQTk/M0amr9Y9porpYOUDA74g9gSCBim/Y4nLy
+	 WubXMST1GhH9f9h5nsvdJCXlMgl9z2owdgifGXUa5z4eDyD3YIJtpAxKthtY/t+oRy
+	 Hgw6GfCC+EtrUYQNROcGSJOG8JVD1EsUBMLcD5JbC2TJO8DuL19WkikfgkJ+Y1E1Cq
+	 LamMmZDyTb1tFRdbxAmkFdXbwwJNs9ZqE0fXar6KCZiXBECxBKxN9971GJsAs4Nlti
+	 ibmURDrFmLG2rWK068AGDnZNVFL4DrYZdHmtaYA5PhDuOBfrHKYHudv3irsbxyGOgi
+	 rp9X3r4glT1Ew==
+Message-ID: <59d7ceaa-2978-4285-acc7-cdadddf9a562@kernel.org>
+Date: Wed, 10 Jun 2026 14:01:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,8 +55,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] arm64: dts: qcom: msm8998-sony-yoshino: Drop extra
- bias-disable
+Subject: Re: [PATCH 2/5] arm64: dts: qcom: msm8976-longcheer-l9360: Fix
+ accidental node override
 To: Konrad Dybcio <konradybcio@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -65,7 +65,7 @@ To: Konrad Dybcio <konradybcio@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 References: <20260610-topic-june26_dts_fixes-v1-0-2e0c953a6c08@oss.qualcomm.com>
- <20260610-topic-june26_dts_fixes-v1-1-2e0c953a6c08@oss.qualcomm.com>
+ <20260610-topic-june26_dts_fixes-v1-2-2e0c953a6c08@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,7 +111,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <20260610-topic-june26_dts_fixes-v1-1-2e0c953a6c08@oss.qualcomm.com>
+In-Reply-To: <20260610-topic-june26_dts_fixes-v1-2-2e0c953a6c08@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
@@ -121,12 +121,12 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-112434-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112435-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:andersson@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:git@apitzsch.eu,m:luca@lucaweiss.eu,m:ultracoolguy@disroot.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -145,33 +145,26 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 34120669099
+X-Rspamd-Queue-Id: 6577B669151
 
 On 10/06/2026 13:43, Konrad Dybcio wrote:
 > From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> The msm8998-common i2c5 pin sleep state is defined with a pull-up. The
-> Sony Yoshino DTSI attempts to override that to bias-disable without
-> removing the existing bias-pull-up. Remove the override and use the
-> common definition to resolve a dt checker warning.
-
-Maybe the bias-pull-up should be simply removed? At least you should
-document here why you chosen that way to fix the warning.
-
+> The active and sleep pinctrl states for the touchscreen interrupt pin
+> shared the same node name, creating a single node, accidentally
+> overridden immediately after the definition. Alter the names to make
+> them distinct and to silence DT checker warnings.
 > 
-> The change itself shouldn't have any functional effect, maybe except
-> a miniscule increase in power usage. The defaults may need revisiting
-> at a later date either way.
-> 
+> Fixes: 79b896e7da7e ("arm64: dts: qcom: msm8976-longcheer-l9360: Add initial device tree")
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi | 4 ----
->  1 file changed, 4 deletions(-)
-> 
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
 Best regards,
 Krzysztof
 
