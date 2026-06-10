@@ -1,85 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-112328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id FCp2MmEVKWqIQAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 09:42:25 +0200
+	id C4obG+UVKWr0QAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 09:44:37 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B514666B41
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 09:42:25 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21608666BB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 09:44:37 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=W6LRUUiy;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112328-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112328-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=linaro.org header.s=google header.b=CqqbogcS;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112329-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112329-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=linaro.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id F0755301FB31
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 07:42:01 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 1DFDE3061F00
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 07:42:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AA463932F7;
-	Wed, 10 Jun 2026 07:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F1803955D0;
+	Wed, 10 Jun 2026 07:41:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE046391E5C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 07:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE079391E52
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 07:41:53 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781077314; cv=none; b=aizp97qI4b5lUqr3VInHN8J2EfkjGIQ2iBgudAm9zOcAau7KoIeNfVaSi902fpxm0rr6WTuTjSFUd5wz01THzmZak9sIIs20EPt73ZX15WXnn1E6qLBhHDEY4NVmMdlxkUi5R+THHABq9kAODPBIgvM17DqobvfUwPEh8GpS0gA=
+	t=1781077315; cv=none; b=CBfREbKlQO/+h2YccqPa0PYq+QFp6TVEp4t1KclFQcPQv6+3kAIbUenzmc7fjk2tAsT3cOqrhi+Aq6frSUKZS8bZ64MwYLNhJvJjX/NKGEPTg7Sw24KHHbW3DhTG9/xiS7KLviKGvZUJP6hkBeFL6sUCCFBd3pGxmNrUB1BUtJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781077314; c=relaxed/simple;
-	bh=6m2M19WQ9ZB1jbnViPAEMFv3Bu7qYS7v74KK6JM2laE=;
+	s=arc-20240116; t=1781077315; c=relaxed/simple;
+	bh=SvKkKRkBVznFX5q5yYncMOx4jq7itvGv8CTS4i7bRXk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rfRoO8LJIfiL8P1sAdE+MOAFAH5Kc/5t/+EIAVsvZWfphIkiapJea7Y1KsbCu9gaRvTeTRdVMiIAwwSzfQhOLJdr704WpcX34hq9ccUSRxzoi+sYtyzTLd8zX2LKn1UMhyq0YIE362Iq0npJo4X3OSUBAs1J0CxOhweuHazij1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W6LRUUiy; arc=none smtp.client-ip=209.85.221.49
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-45eedc94d37so3250297f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 00:41:52 -0700 (PDT)
+	 In-Reply-To:To:Cc; b=kskH8vVkTLDlDWuzsMol1gC23IGx9U7SWkIWxY3e97QA0fKBBJI6/NN7ebjPee+EM8JmMCihMqUEJ6YFgAAKt9rvWhxNJ4JybMOHr5AO/ybm1DYLyhgdC3l3RqEIqpP8bn1lPc8yWMLaXymXSNYo3xtW9SjcihhNI9fbWWiAA2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CqqbogcS; arc=none smtp.client-ip=209.85.128.51
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-490b613a17bso62807135e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 00:41:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1781077311; x=1781682111; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1781077312; x=1781682112; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QT7hmcIZOxd/xtnUIe7SCN6JWFg63IatYmcGsjK/NhU=;
-        b=W6LRUUiyIT+E+2F9ROcKYFSKbrZWyKJDd3VfYxjOa5HvAYJ4CEge+xLT5RnV/bBssF
-         sVi1ES4HgZ1EoHk1pajbuZUQkAz9//kSyvezftabBW3mBLa1E+dvNNbcDn3fIadIT7s/
-         k+sBltBnq6mfw7TQ4Kvdyl1+li22f+htOMgHku3ukAth2351pJRYCHKFdLzJHfF+Ij8x
-         kGz5RFDu0tO4BMnkcyorm9idm9jDbBPW9fAzjnkFYe6sceifStI2hWi7IXFhAUnfMWqm
-         2UrVkuFbiQWaeuluaev9ZE3Z0mNuJPKvEF97pE/rMrsCYNSErujDzXgnwyb4Md10/MZx
-         0RuA==
+        bh=DHrjnAwx7+YbLQYR6LVWQgpOuTbHf+pvHyBwE/dQZyY=;
+        b=CqqbogcS78HMUcP0shJdNF3iiAHe6IZHILrz188QsGbjDlTrYv9E5PHB4BllL/Rls9
+         nnanvw0eyJnEDVXjtbaYSE+Z1zdlRNExjhk6GXA+2kh7jl+H0FYsZ4DWTliY6MeFSkY+
+         vXqFLM3frMhKeBp7GEGOYE0S6iwE2pqKMVqb/tFJG1fDzG3NdmYU7KA53GvJNIgGHn+k
+         mU6Nc8+oLAHVQVBxqou8NThCGA8QgCwRp+5hR4lIyhL0LhJ6fyj76yW5ey1mcZ6Yq1vX
+         U4aiJ526NkDWqmue5XR2qniR/dRupVR4us22Qrq7vfVdkWOlXb63QOLaK25jN/a0EKXS
+         qF3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781077311; x=1781682111;
+        d=1e100.net; s=20251104; t=1781077312; x=1781682112;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=QT7hmcIZOxd/xtnUIe7SCN6JWFg63IatYmcGsjK/NhU=;
-        b=ZmF9Slx8jhrcb8cQlrgamyJaM4prBP1oVER4jYPI+sE/4D0SMdo0/dvX+ehMz7x3Bf
-         n2IZlzYEy/yxj7LB5p7wnr6VqqHn7x5lZn/ox4fz5mbAipQzKRDCvaX/Ca6U7cLpObpR
-         0HVoNgdtJFsNOVlu19q+MClbTiCo4n7Dun0KSwDjboC9kwdGKtJtcTMrMxmOD3zaObQz
-         AunZoBa+DGgSXaytnagw55gjfPK9SOeNzep9CrZs/ROtitPVC4Fck37At1Tb7soAAcj8
-         VEtruY8BF2woGQjkRfe+kH24JyKr7/LZtUXoAlTGQQF/BM0ajBRyhG/BClXar0fdaiof
-         Lucg==
-X-Forwarded-Encrypted: i=1; AFNElJ9/sCoJDBRrKsUqo9gzpwI+dt5fRrDVTluVRoN/dVYuXw0tpU982LwDJjtVUWzdDcarRMDIq5zFKj7QHh6l@vger.kernel.org
-X-Gm-Message-State: AOJu0YzqOe+T0hMArckbaQ61WbVzfzH0kgGT5rOx8Ysx1Fw8Ga8sHC8Q
-	ScJkHWNMAz8lgqVkcyQQvGKKSce+sDD0EW2Uut2oXo0mz3ZJqLNKMYwr6L5Af7JxhZs=
-X-Gm-Gg: Acq92OGI5oiJzsBtaT1p+M4AwGvBJXgBBgKZ/ccRgJXu7p0k0YDKEl0dIZI5w20nO0Z
-	KY4B4YxyAoiH2rzumk/bKeuiv6fzE8S6+/5mpv8pSRwHofTOMrTkmlDq4YaA4CT+ftJLtaALBGJ
-	gIHYyseGtYfximgjvi9Q1VJgOR9G9q1Cbsxark/VVtc1xwiDodTNUYcSymVMAWhUQGb65QvayWu
-	i3tG8DzuFXb89c/hj6JrptvBJYh8be0MQoGRcvQIDkqy+qlBHNABGIMRII/oCyhRCDgnmqJhhEY
-	NCsJciUR5GIajXAxVZ38TaRyg84vYti+Yo7hNoO/fyCdOga5rRqgEqnhr3FSkzmaDh0SmbuH3zP
-	3vnnHYGcCFjrtIjDoES/0iJa+ajsP7F0Bc52x9ujSFqsPuB4K5kZxuL60jw4oEe+8HzMUysfRtO
-	cjhbmK599YwSe0joDjCdEqlDP7TXTLqQ4XD+ZImBTafNurrPjLF7W3dks=
-X-Received: by 2002:a05:6000:22c5:b0:45e:ef4a:8192 with SMTP id ffacd0b85a97d-460566d9bd6mr7676414f8f.38.1781077311192;
-        Wed, 10 Jun 2026 00:41:51 -0700 (PDT)
+        bh=DHrjnAwx7+YbLQYR6LVWQgpOuTbHf+pvHyBwE/dQZyY=;
+        b=EdT86Mrxi77XiZH3Ip9syDgTYYVNJHIp87RHOClGe3sAEOYuEqVgQd2Sv4GqnTkdFt
+         ZOIdCGLFxwylxXnBxftjgTHdRiCSGRRLvYhqHohBzOJNERl4afDj7KjkZ/aqDy8fgmx5
+         IR0lGzRIe4divnv+anPLa8uwGDoqHajNGgv9JBVKLtB093DSMav3n0p1VrJWQXK+L3y+
+         mJybuMXkvR1pNiJy9iZ9Uf1iiasLZfydXOPFj7m02UHKatA189pSYQI7HjsFh2x+mQHH
+         LwvUpp0qNRD4NeLKqdjxMoMNP0yCZo5dQMmg82LXCWwsBGlaYerGM6sAiiCzjWt0uEjy
+         9B1w==
+X-Forwarded-Encrypted: i=1; AFNElJ+Aww0iGe94UD2vXeqNIxRZYVL1A4SgoWMg3vBouF1Qv5tE4l88Mkuuw3J30tQWT1Fm/RgXPNr+sgE9WcsW@vger.kernel.org
+X-Gm-Message-State: AOJu0YxDI1pUmIyMRVoqHtrmiPYCkBoMNzcGi8j1j3JeNAVIttHn+MgL
+	JdgKHMKAAa4lZS/nV09l+wK3HNpv5evSJtj/DUTRtBBU48NRJA3Oqhk1spBojCtUIZY=
+X-Gm-Gg: Acq92OFNO1VOnFEYkJhhGuaOkZOEZZIxXWrgyY1YdhL+kTijcNqtLj+8p4g5HoZk1Y8
+	WCGHjmH1Zwg6AAVsMKfToy44AA0rnk5zEo2Mgp9c3sbFugQ+QHRf5RAzW4IVvz5WfVrtNTnFzpy
+	WJOvjfi6AQIQxTRFUBhU3sW82hj9Hm8b9MgW9x88JZg4BXe7VFHYqgs2hYRhxVIsPDLvvTnAJli
+	AbbKqoarxZ3bmRuBaFJr8jSe34JkmrUn06kjy8o0Gqv3XN2kks8suOyKc6a7qVcw5IyG+kmvCr4
+	N5O6xZXh4PRZMxsZNs5DgFBztiJQW8+DTbawOfOjI43P4jI0ilWgj671CGRW3wXCIWcUkYAgxLI
+	UPao6A1doE6QW9+0hpmUSHoaSrUjxj/vt17oO7/79oNRBZfdbwSGUNQpIBVP0h3q9VpwOduqpDP
+	GS64y67OXtaDqneO69C4sICKA1IG+ZIHlogsVXi2Izacv1nDGok8XxYxs=
+X-Received: by 2002:a05:600c:3e0f:b0:490:ce99:d2ee with SMTP id 5b1f17b1804b1-490d72058b7mr76953735e9.15.1781077312102;
+        Wed, 10 Jun 2026 00:41:52 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:106d:1080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f3444fesm69161344f8f.20.2026.06.10.00.41.50
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4601f3444fesm69161344f8f.20.2026.06.10.00.41.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 00:41:50 -0700 (PDT)
+        Wed, 10 Jun 2026 00:41:51 -0700 (PDT)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Wed, 10 Jun 2026 09:41:45 +0200
-Subject: [PATCH 1/4] ASoC: qcom: audioreach: compute active channel maps
- from channel_map
+Date: Wed, 10 Jun 2026 09:41:46 +0200
+Subject: [PATCH 2/4] ASoC: qcom: sc8280xp: add Ayaneo Pocket S2 card with
+ special WSA channel mapping
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260610-topic-sm8650-ayaneo-pocket-s2-wsa2-fix-v1-1-18bb19c5ca22@linaro.org>
+Message-Id: <20260610-topic-sm8650-ayaneo-pocket-s2-wsa2-fix-v1-2-18bb19c5ca22@linaro.org>
 References: <20260610-topic-sm8650-ayaneo-pocket-s2-wsa2-fix-v1-0-18bb19c5ca22@linaro.org>
 In-Reply-To: <20260610-topic-sm8650-ayaneo-pocket-s2-wsa2-fix-v1-0-18bb19c5ca22@linaro.org>
 To: Srinivas Kandagatla <srini@kernel.org>, 
@@ -100,23 +100,22 @@ To: Srinivas Kandagatla <srini@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>
 Cc: kancy2333@outlook.com, linux-sound@vger.kernel.org, 
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
- Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+ devicetree@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7360;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4056;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=6m2M19WQ9ZB1jbnViPAEMFv3Bu7qYS7v74KK6JM2laE=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBqKRU7HPL2eYdbYSyE3wOvBNVCFwzMJMWOtKeQjXXf
- gD/2aWeJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaikVOwAKCRB33NvayMhJ0cqyD/
- 9omKDa9RjH9KTIjVUBAj1jNBVZuuAwj4riG8MBK7+3cOy84tRIxT1TiDKosuyh7p/kYTGpdFPHL7/w
- cQSPHyQBTPWmqjTwOEe65rELu4peh+Nvk4OarPRcYCMIG5Mvmp7Z8kIhwKwdoAx1NSn0hvrk6Ljy2c
- scHbQZJDoF4ywoWqwEEGX55P8EcRYMSpNCu9AtLO1uX+UPuBQAZQDYi4KCShLqnAA60YFFDC/oOXnd
- t0AVhZ62/jQ3qLNWY/coFL1Q+5T8iT/FtE0Py6OrIe+OK48YBXFsaO7AxDsGG5Wl4Jrl1QejrlzaVZ
- KwYJnrTXGV4GImZK8sG9FUAYbpboTFqv5T19DCjH7u6EI38j2W59kbO9kGoQMWim+gF98g8qz/cPR+
- QIpyveupAJaSAe9vYfP8kufgTAIF+UGgjOUc0KPxNb5WPLCwkDriTlC5uQOOzEKUKy39/eQ4LIC/7z
- kVSmi5Cd4rsUh22C2qbCm9qcR1OT0o8CNkYaIXhq77IGc6VbzkR19DHpowLR5p3OK08uvEgsF+ieEx
- NGn4QvYHe38RTL19zOxSERHJaynfnOXGbhN2rOxDPmGj7uZOVxG3sH8EETsX9qrp5V+wl0U1bG8BB+
- jFjD5BfNk/RfnzwvQgrULRZQTnrgLTQSoIO2OYsJ3K4JyT3TVfsOW5+18XPA==
+ bh=SvKkKRkBVznFX5q5yYncMOx4jq7itvGv8CTS4i7bRXk=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBqKRU7trukKWsuWU99FY5/kOINnb84bqIzktsxOyWc
+ owTA91qJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaikVOwAKCRB33NvayMhJ0dxGEA
+ DPOGiBlp0eanc0REwv/nEzbL79LfQJwJySMwpxZtifWxQhtl20eAarosxgogWuRx3oOE/q8cjg96o8
+ Dhu1SMsOXbviJkX4pr7CUsQbDi4T3VgZG9zFhxq7bk/Tk8g/yJSowVPJ3G1oyUIwkSNkRa1WWXa+Fb
+ t2Tu0yapZ0lEYms9hquU6m+jVFTBy9XQLFJofwoCWPMXyUOkDCokqvZo6JAFl91HgkK1Bv1YA4g0Mk
+ agazqHFC2BWdpyDLRo6NtVliIBVe0Y7inxTkJJNz1GRoXzbnC+Vx7oe6rpFLdgsSIvTwv/wfEEQvKW
+ jTf3kfA+5L3siZDB+xtFLPh/RE73uyHUfJrImGcF9zOBznB1q3RIVfPY54iLDTSadvD+zzdFPZAp9C
+ O0Ouj9k9c0DkKojJ6kEFVZqUJm9ao1sK0/ny4BgIWIektzXDfut3WXymBSwLVE2+JEpvdwv6U7mubp
+ p9wiGxZdM5kD6IsA49tr8nO6APtRgbNDVsGJ6A+j53yzi5wYAcmATsFMDO++Ltr1AYOWEDUcJe+tjf
+ RIVkHFM8MipDgEQx6QLBwJ1/bAxdOcMujVMY0W0N4tx0Nu2ZiFs+p5uTtF1bpmUR1Dsh9E7eIz7EOz
+ JEWQG75htPkHWkSpPqlekDzfwJoAiRzxaCAuYCerY/Y/st7ibyb5JFoXxjew==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Rspamd-Action: no action
@@ -125,17 +124,17 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-112328-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112329-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:kancy2333@outlook.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:neil.armstrong@linaro.org,m:srinivas.kandagatla@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:kancy2333@outlook.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:neil.armstrong@linaro.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com];
 	FORGED_SENDER(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FREEMAIL_CC(0.00)[outlook.com,vger.kernel.org,linaro.org,oss.qualcomm.com];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FREEMAIL_CC(0.00)[outlook.com,vger.kernel.org,linaro.org];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
@@ -149,187 +148,128 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	DKIM_TRACE(0.00)[linaro.org:+];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email,vger.kernel.org:from_smtp,linaro.org:dkim,linaro.org:email,linaro.org:mid,linaro.org:from_mime]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,linaro.org:dkim,linaro.org:email,linaro.org:mid,linaro.org:from_mime,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 3B514666B41
+X-Rspamd-Queue-Id: 21608666BB2
 
-The Qualcom SM8650 based Ayaneo Pocket S2 gaming device has a set
-of 2 WSA speakers connected on the WSA2 lines.
+The WSA Speakers are connected on the WSA2 interface, but the
+WSA and WSA2 links are handled as a single dai and DSP interface, so
+we need to specify the channel mapping of the Ayaneo Pocket S2 for the
+WSA dai in order to have functional playback and avoid DSP errors.
 
-But the Audioreach DSP only handles WSA2 in pair with the WSA
-interface by using the upper bits of the active_channels_mask
-for WSA2 and the lower bits for WSA:
+Let's add a special entry for the Ayaneo Pocket S2 adding a prepare
+callback in order to set the proper channel mapping.
 
-/-------------------------------------------------\
-| Bits  |     3    |     2    |   1     |     0   |
-|-------------------------------------------------|
-| Line  | WSA2 Ch2 | WSA2 Ch1 | WSA Ch2 | WSA Ch1 |
-\-------------------------------------------------/
-
-Setting only the WSA2 upper bits is perfectly valid and
-functional but the current Audioreach code builds the bitmask
-from the channels count with:
-	active_channels_mask = (1 << num_channels) - 1;
-
-In order to enable the WSA2 bits the channel count should be 4,
-but the lower WSA bits are then also enabled and the DSP errors
-out when trying to play on the disabled WSA interface.
-
-A solution would've been to add a fake WSA2 topology element which
-would be translated into the top bits only, but it's not clean and
-add some special exceptions in the generic Audioreach code.
-
-The solution suggested by Srinivas is to use the channel mapping to
-set this bitmask.
-
-This works but makes all the other calls using the channel mapping fail
-because the DSP requires the channel_mapping table to start from index 0
-and using num_channel length in order to apply the mapping on the
-active_channels_mask bits in order.
-
-So we need to skip the empty channel mapping entries in all other
-users of the channel_map to build valid channel_mapping tables.
-
-This should not break any other usecases since the default channel
-mapping always start from index 0, and will add flexibilty to allow
-some special non linear mapping for other interfaces as well.
-
-Suggested-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- sound/soc/qcom/qdsp6/audioreach.c | 47 ++++++++++++++++++++++++++++++---------
- 1 file changed, 37 insertions(+), 10 deletions(-)
+ sound/soc/qcom/sc8280xp.c | 56 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
-diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/audioreach.c
-index a13f753eff98..9b80cfa56e8a 100644
---- a/sound/soc/qcom/qdsp6/audioreach.c
-+++ b/sound/soc/qcom/qdsp6/audioreach.c
-@@ -703,6 +703,7 @@ static int audioreach_codec_dma_set_media_format(struct q6apm_graph *graph,
- 	int pm_sz = APM_HW_EP_PMODE_CFG_PSIZE;
- 	int size = ic_sz + ep_sz + fs_sz + pm_sz;
- 	void *p;
-+	int i;
+diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
+index 1f3afc6d015c..2f1688c9f317 100644
+--- a/sound/soc/qcom/sc8280xp.c
++++ b/sound/soc/qcom/sc8280xp.c
+@@ -14,6 +14,7 @@
+ #include "qdsp6/q6afe.h"
+ #include "qdsp6/q6apm.h"
+ #include "qdsp6/q6prm.h"
++#include "qdsp6/q6dsp-common.h"
+ #include "common.h"
+ #include "sdw.h"
  
- 	struct gpr_pkt *pkt __free(kfree) = audioreach_alloc_apm_cmd_pkt(size, APM_CMD_SET_CFG, 0);
- 	if (IS_ERR(pkt))
-@@ -741,7 +742,12 @@ static int audioreach_codec_dma_set_media_format(struct q6apm_graph *graph,
+@@ -49,6 +50,7 @@ struct snd_soc_common {
+ 	bool codec_sysclk_set;
+ 	bool mi2s_mclk_enable;
+ 	bool mi2s_bclk_enable;
++	int (*snd_prepare)(struct snd_pcm_substream *substream);
+ };
  
- 	intf_cfg->cfg.lpaif_type = module->hw_interface_type;
- 	intf_cfg->cfg.intf_index = module->hw_interface_idx;
--	intf_cfg->cfg.active_channels_mask = (1 << cfg->num_channels) - 1;
-+	intf_cfg->cfg.active_channels_mask = 0;
-+	/* Convert the physical channel mapping into a bit field */
-+	for (i = 0; i < AR_PCM_MAX_NUM_CHANNEL; i++)
-+		if (cfg->channel_map[i])
-+			intf_cfg->cfg.active_channels_mask |= BIT(i);
-+
- 	p += ic_sz;
- 
- 	pm_cfg = p;
-@@ -840,7 +846,7 @@ static int audioreach_mfc_set_media_format(struct q6apm_graph *graph,
- 	uint32_t num_channels = cfg->num_channels;
- 	int payload_size = APM_MFC_CFG_PSIZE(media_format, num_channels) +
- 				APM_MODULE_PARAM_DATA_SIZE;
--	int i;
-+	int i, j;
- 	void *p;
- 
- 	struct gpr_pkt *pkt __free(kfree) = audioreach_alloc_apm_cmd_pkt(payload_size, APM_CMD_SET_CFG, 0);
-@@ -860,8 +866,12 @@ static int audioreach_mfc_set_media_format(struct q6apm_graph *graph,
- 	media_format->sample_rate = cfg->sample_rate;
- 	media_format->bit_width = cfg->bit_width;
- 	media_format->num_channels = cfg->num_channels;
--	for (i = 0; i < num_channels; i++)
--		media_format->channel_mapping[i] = cfg->channel_map[i];
-+	/* Convert the physical mapping to a logical mapping of the channels */
-+	for (i = 0, j = 0; i < AR_PCM_MAX_NUM_CHANNEL && j < cfg->num_channels; i++) {
-+		if (!cfg->channel_map[i])
-+			continue;
-+		media_format->channel_mapping[j++] = cfg->channel_map[i];
-+	}
- 
- 	return q6apm_send_cmd_sync(graph->apm, pkt, 0);
+ struct sc8280xp_snd_data {
+@@ -193,12 +195,58 @@ static int sc8280xp_snd_hw_params(struct snd_pcm_substream *substream,
+ 	return 0;
  }
-@@ -1080,6 +1090,7 @@ static int audioreach_pcm_set_media_format(struct q6apm_graph *graph,
- 	struct apm_pcm_module_media_fmt_cmd *cfg;
- 	struct apm_module_param_data *param_data;
- 	int payload_size;
-+	int i, j;
  
- 	if (num_channels > 4) {
- 		dev_err(graph->dev, "Error: Invalid channels (%d)!\n", num_channels);
-@@ -1113,7 +1124,12 @@ static int audioreach_pcm_set_media_format(struct q6apm_graph *graph,
- 	media_cfg->num_channels = mcfg->num_channels;
- 	media_cfg->q_factor = mcfg->bit_width - 1;
- 	media_cfg->bits_per_sample = mcfg->bit_width;
--	memcpy(media_cfg->channel_mapping, mcfg->channel_map, mcfg->num_channels);
-+	/* Convert the physical mapping to a logical mapping of the channels */
-+	for (i = 0, j = 0; i < AR_PCM_MAX_NUM_CHANNEL && j < mcfg->num_channels; i++) {
-+		if (!mcfg->channel_map[i])
-+			continue;
-+		media_cfg->channel_mapping[j++] = mcfg->channel_map[i];
-+	}
- 
- 	return q6apm_send_cmd_sync(graph->apm, pkt, 0);
- }
-@@ -1127,6 +1143,7 @@ static int audioreach_shmem_set_media_format(struct q6apm_graph *graph,
- 	struct payload_media_fmt_pcm *cfg;
- 	struct media_format *header;
- 	int rc, payload_size;
-+	int i, j;
- 	void *p;
- 
- 	if (num_channels > 4) {
-@@ -1166,7 +1183,12 @@ static int audioreach_shmem_set_media_format(struct q6apm_graph *graph,
- 		cfg->q_factor = mcfg->bit_width - 1;
- 		cfg->endianness = PCM_LITTLE_ENDIAN;
- 		cfg->num_channels = mcfg->num_channels;
--		memcpy(cfg->channel_mapping, mcfg->channel_map, mcfg->num_channels);
-+		/* Convert the physical mapping to a logical mapping of the channels */
-+		for (i = 0, j = 0; i < AR_PCM_MAX_NUM_CHANNEL && j < cfg->num_channels; i++) {
-+			if (!mcfg->channel_map[i])
-+				continue;
-+			cfg->channel_mapping[j++] = mcfg->channel_map[i];
-+		}
- 	} else {
- 		rc = audioreach_set_compr_media_format(header, p, mcfg);
- 		if (rc)
-@@ -1243,7 +1265,7 @@ static int audioreach_speaker_protection_vi(struct q6apm_graph *graph,
- 	struct apm_module_sp_vi_ex_mode_cfg *ex_cfg;
- 	int op_sz, cm_sz, ex_sz;
- 	struct apm_module_param_data *param_data;
--	int rc, i, payload_size;
-+	int rc, i, payload_size, j;
- 	struct gpr_pkt *pkt;
- 	void *p;
- 
-@@ -1284,14 +1306,19 @@ static int audioreach_speaker_protection_vi(struct q6apm_graph *graph,
- 	param_data->param_size = cm_sz - APM_MODULE_PARAM_DATA_SIZE;
- 
- 	cm_cfg->cfg.num_channels = num_channels * 2;
--	for (i = 0; i < num_channels; i++) {
-+	/* Convert the physical mapping to a logical mapping of the channels */
-+	for (i = 0, j = 0; i < AR_PCM_MAX_NUM_CHANNEL && j < num_channels; i++) {
-+		if (!mcfg->channel_map[i])
-+			continue;
- 		/*
- 		 * Map speakers into Vsense and then Isense of each channel.
- 		 * E.g. for PCM_CHANNEL_FL and PCM_CHANNEL_FR to:
- 		 * [1, 2, 3, 4]
- 		 */
--		cm_cfg->cfg.channel_mapping[2 * i] = (mcfg->channel_map[i] - 1) * 2 + 1;
--		cm_cfg->cfg.channel_mapping[2 * i + 1] = (mcfg->channel_map[i] - 1) * 2 + 2;
-+		cm_cfg->cfg.channel_mapping[2 * j] = (mcfg->channel_map[i] - 1) * 2 + 1;
-+		cm_cfg->cfg.channel_mapping[2 * j + 1] = (mcfg->channel_map[i] - 1) * 2 + 2;
++/*
++ * WSA and WSA2 are handled as a single interface with the
++ * following channels mask:
++ *  __________________________________________________
++ *  | Bits  |     3    |     2    |   1     |     0   |
++ *  ---------------------------------------------------
++ *  | Line  | WSA2 Ch2 | WSA2 Ch1 | WSA Ch2 | WSA Ch1 |
++ *  ---------------------------------------------------
++ *
++ * The Ayaneo Pocket S2 speakers are connected only to
++ * the WSA2 interface and the WSA interface is not enabled.
++ *
++ * Set the channel mapping on the WSA2 channels only.
++ */
++static const unsigned int ayaneo_ps2_channels_mapping[] = {
++	0,			/* WSA Ch1 */
++	0,			/* WSA Ch2 */
++	PCM_CHANNEL_FL,		/* WSA2 Ch1 */
++	PCM_CHANNEL_FR		/* WSA2 Ch2 */
++};
 +
-+		++j;
- 	}
++static int ayaneo_ps2_snd_prepare(struct snd_pcm_substream *substream)
++{
++	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
++	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
++	unsigned int channels = substream->runtime->channels;
++
++	if (cpu_dai->id != WSA_CODEC_DMA_RX_0)
++		return 0;
++
++	if (channels != 2)
++		return -EINVAL;
++
++	return snd_soc_dai_set_channel_map(cpu_dai, 0, NULL,
++					   ARRAY_SIZE(ayaneo_ps2_channels_mapping),
++					   ayaneo_ps2_channels_mapping);
++}
++
+ static int sc8280xp_snd_prepare(struct snd_pcm_substream *substream)
+ {
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+ 	struct sc8280xp_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
  
- 	p += cm_sz;
++	if (data->snd_soc_common_priv->snd_prepare) {
++		int ret;
++
++		ret = data->snd_soc_common_priv->snd_prepare(substream);
++		if (ret)
++			return ret;
++	}
++
+ 	return qcom_snd_sdw_prepare(substream, &data->stream_prepared[cpu_dai->id]);
+ }
+ 
+@@ -273,6 +321,13 @@ static int sc8280xp_platform_probe(struct platform_device *pdev)
+ 	return devm_snd_soc_register_card(dev, card);
+ }
+ 
++static struct snd_soc_common ayaneo_ps2_priv_data = {
++	.driver_name = "ayaneo-ps2",
++	.dapm_widgets = sc8280xp_dapm_widgets,
++	.num_dapm_widgets = ARRAY_SIZE(sc8280xp_dapm_widgets),
++	.snd_prepare = ayaneo_ps2_snd_prepare,
++};
++
+ static struct snd_soc_common kaanapali_priv_data = {
+ 	.driver_name = "kaanapali",
+ 	.dapm_widgets = sc8280xp_dapm_widgets,
+@@ -341,6 +396,7 @@ static struct snd_soc_common sm8750_priv_data = {
+ };
+ 
+ static const struct of_device_id snd_sc8280xp_dt_match[] = {
++	{.compatible = "ayaneo,pocket-s2-sndcard", .data = &ayaneo_ps2_priv_data},
+ 	{.compatible = "qcom,kaanapali-sndcard", .data = &kaanapali_priv_data},
+ 	{.compatible = "qcom,qcm6490-idp-sndcard", .data = &qcm6490_priv_data},
+ 	{.compatible = "qcom,qcs615-sndcard", .data = &qcs615_priv_data},
 
 -- 
 2.34.1
