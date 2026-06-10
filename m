@@ -1,312 +1,264 @@
-Return-Path: <linux-arm-msm+bounces-112397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id rG9lCvA/KWoDTAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 12:44:00 +0200
+	id DJhUBkJDKWrPTAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 12:58:10 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A9A9668664
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 12:43:59 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A699B6687EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 12:58:09 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=l48MXXUe;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112397-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112397-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=bz3tNq2I;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=PXPAEes6;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112398-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112398-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1DB31314FEAF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 10:40:36 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 307A130A27EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 10:52:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63CF13EDE53;
-	Wed, 10 Jun 2026 10:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC1193EA97E;
+	Wed, 10 Jun 2026 10:52:53 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2056D372B5E;
-	Wed, 10 Jun 2026 10:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7863C3DD50D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 10:52:51 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781088035; cv=none; b=ZRl+EXwgx6kWzePNg/jFXZuVMowyeHvtjnA1MYv5o2hemOcPE/PoGSVJwHEcm+IcQVAv0dEUUUejGjqm1vF11hCkXSVFpOQnWwEFrZY+egcRrBqLyU2PsbdEmBhSh+6RDBNRkNabhNcCDkBKUmIyo0zmORoOt8BM6poidbo9bYo=
+	t=1781088773; cv=none; b=gSBIAzPwBeqt8gL+2g0f1sbWXPBciwcPSrlVCH5vJrHOlWk9ugFu+f7rSJ6Nk24R9wHDM3qLFh2Yq/3vwqaseRlsuvHzaFuAcVpYA7hiSubtqpgDYQoWxcxMRhtbIa6Ry1G7wRsdNyV6gEhHovcGEA2x1UCiHLZgh1boUxtm5es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781088035; c=relaxed/simple;
-	bh=Q+ghOmwb6ca6yzsNslfSKHa+AkbW/ej9Rfb3xdIxs34=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ht2xS6yYBx6TcdvTB1OE35k9yKcyLb2k1dFVY9MXG55eUnwaHgw3PJbXtC9OihM+XM8eBjo4ugppRDdRctbdSsbVdqeHLKNdK9HQ9ILkRBnsmt3BxOS957HjCCBcdtKyRWOJU6yNl+vOG5IasVnEwXo6rz41GOhOiEBMqDklqk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l48MXXUe; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B821F00893;
-	Wed, 10 Jun 2026 10:40:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781088033;
-	bh=y3zogafe8Nfrcsf+kJY2CSo0RioNu8OlWnXsDWbzwH8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=l48MXXUe0y24pBLizMG9gqp66VI1e/D2JJv5j/aIRzXyludmgTo87u324IoAENt6q
-	 Gfvw07hIK7TV8Apt9wCMJsvUMxZEFeD+WZh2C830e4uxEmX41LNL/GDyJ+TCbExwwe
-	 FIxkN74Z6mJxMnVOPg6+Hdg6NyYua9PD5kVDrZU1rUPsCjtAtTJH7c/QrRDC9Gdveb
-	 woUCW5EVKYd6GQxZfz6WdXd87ngblNcXF8V6PAro/fBwWxmcfnFrocnKeQMvIHIWVK
-	 A5WTUmwi2LF/6Xy54jJZbJFDvZGx8PloA3L77zrqePoM2aVHoS9Ttq43YGOWesFuVU
-	 mmFN0yFX1AQIQ==
-Date: Wed, 10 Jun 2026 12:40:23 +0200
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
-	"Martin K. Petersen" <martin.petersen@oracle.com>, Adrian Hunter <adrian.hunter@intel.com>, 
-	Ulf Hansson <ulfh@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Neeraj Soni <neeraj.soni@oss.qualcomm.com>, Harshal Dev <harshal.dev@oss.qualcomm.com>, 
-	Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-scsi@vger.kernel.org, linux-mmc@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v11 1/6] soc: qcom: ice: Add OPP-based clock scaling
- support for ICE
-Message-ID: <mcqrm4pwziflqomw22gepqusc7jdlb2foslcfvtjufuyyoslb7@37olf54qxtfv>
-References: <20260609-enable-ice-clock-scaling-v11-0-1cebc8b3275b@oss.qualcomm.com>
- <20260609-enable-ice-clock-scaling-v11-1-1cebc8b3275b@oss.qualcomm.com>
+	s=arc-20240116; t=1781088773; c=relaxed/simple;
+	bh=+fVsd1Z1+tIzaGhW+BpuLIuaSGTLG0J27IW8uVttLPI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fs3mq+PGi8WHPYGC/8MujvZTdW/BIlC0M0fpIWfgsEo8B+qt1ebvYDt6c6QLMa4WX3z3DTzF6URHX7k37Q6Cbv3BgX26aJTcbNku2b2n1Kp8a5CoNO6P3z2XLbAjWJia1UTTneMwGiUL4ddDjmN9LSQ7ZWHlYuWgDV2KiBeolRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bz3tNq2I; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PXPAEes6; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65A7hmYP531598
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 10:52:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	TK96IQjgP90UGFdgjcEfW6TzZ2WJM/XtcB+xnxS45I0=; b=bz3tNq2IMi6oxKBJ
+	/0CcPf1Q6ZILQx56EV7sbjNaWSukT/dHmMCeu62boRm2mbwH2LhwNwhfgbasC1mE
+	iEML19TM0kotrxGdKuylFxjFb2eKb+tfTkvdHLTB4ko07aoUprWS0YgRHFrzNWnm
+	6YPMN+agwvhG/8tXWCNKwzAydJQaCERCjyP6KwN4r5rkayRhqBF5Yus3zS9YmrHH
+	mUwQ9zu9W+1Qq8J43aziQ5mEET0RuGxY/LQd7SCN8jIt+zeiI+ARHvoJYPsJ+GiT
+	cS9yYJQyyhhobAhLiKfebjqpok1qY7BUgTdMY4yC43CJH+oIu9U81bsdVvWpCQTm
+	tpbJLQ==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eq0m1seds-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 10:52:50 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-91574ad6871so810801785a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 03:52:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1781088770; x=1781693570; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TK96IQjgP90UGFdgjcEfW6TzZ2WJM/XtcB+xnxS45I0=;
+        b=PXPAEes6FuM9eUswKJLn1lqirl3DoTY5t0o7AdR+XG7T8OjFFe3OK3/ttCiZ3Bl7R9
+         rME7U3Q4EDzJGkCpZk7B5MhvDGxqNG/tjmluUe3YJ3tKrG7sj6FKgLY1rATbBsO6AsuM
+         nZltocGoymir18wuHZuMwy2wCb/DJGLvVJiHB359tSm3Wop+mPrQmyWhGYZYCQ+8NoCm
+         wl+2sWqj4mrL0uLb0ByX07MDqfYdX6ql4QrSDxhvYaM2YrI/IVK7EWo2K9RBNk5CpfYO
+         IcfNyYykYBWG35a6RcOMcbGs5TB3hgby28XaflC+wkAfqL43kjhQ1v21IuZH4foKO6iM
+         WmPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781088770; x=1781693570;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TK96IQjgP90UGFdgjcEfW6TzZ2WJM/XtcB+xnxS45I0=;
+        b=TRlV7pzNywjKfHn/NvW78g40ULPjA3DfSPfEJijI7QeNB4IihWefT+tdtYsMoI8Con
+         oXJnbilgug8j08buvRF7ukGBleZjQ9hv3VJoM3IminCz/rq23mKzdWcgoKl9b0EXQTs9
+         1YcKP+qBup+foXmuSfBJJS8LDWT269OiollHLvrEn3noJ+i1HeWMzOLi1XyWIbMgkz9M
+         ocm1SQ0ZfWDQPoKkfqv+XcItMS5Q/FCSZ/k1bcvwj7ylAqzvKw3zI/UxSQOYsRjlZWwE
+         YBkrKd+C6/HgJRrUnY59LHioPRdiqDDH7S5acsS5n3YQwNx3gK5xYvBaby9rMA52ZGjT
+         2ulg==
+X-Forwarded-Encrypted: i=1; AFNElJ81cE48QERjuc2AGDbo1GnCd95zRyQLTiDtdL9Jw0o/5//obNV5ZOIKqA9IuqIikxJYCH0fDoHUOBEim3Re@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXbuXv063tfqE+KLgqmfPRT1H7aoeq0L7AnnF0YW2RBHD5cJY7
+	MEthlxfg/3UZm1yDSRf04R6ZIDc13bndodfQnHkHRDnaTvT0eyd7+mkcNW3FNEsIM1RYGN1d3Dd
+	1LGmBodCttFfzRYGQaNpfTDcvTnm69CRb7Pa9JoQ+MCC8zL5UugBs6jMtVAkd3q7alfGq
+X-Gm-Gg: Acq92OG6p1CxGSxWNitTxf+T/LuGlliYqFPgP2TqYUgkpGaJ75JyO1zz4aEvuKRyKZv
+	5FwMH520UrRoV8K5AMYtNXc+2wpiugGWQoU5/TFmvLgcFjWv6AXg5hhmryBvMJ5WCkWv+jJ/Me1
+	MI/bFLPWZOOKTGIKAD0nkHZBC93fTlWd4jnq9LWJhce+f7pEwqD+07x81OftTSNexsOWB4w+fUG
+	L6GuHGdXrtrfhIyEw9hIHBG6cdkYjCyaou/IoM6KzRrR/NUDJtxMRxGmkxB80SeutDlSLSpcNpD
+	yoFsWHcp6zQXViM5EHoLcLyyPepilHD1EyboiRzYLQsVr6n/kj6Bq/fSkiYn3E+cT96a0ErfMI5
+	aeUSNR8u4GyCUQ/KjvcLbbd2NPzsPp3VzZXwk/GVRTW3z5VNWdFoQdMrej0U=
+X-Received: by 2002:a05:622a:53c7:b0:510:1325:58b9 with SMTP id d75a77b69052e-51795c56255mr369073611cf.41.1781088769699;
+        Wed, 10 Jun 2026 03:52:49 -0700 (PDT)
+X-Received: by 2002:a05:622a:53c7:b0:510:1325:58b9 with SMTP id d75a77b69052e-51795c56255mr369073261cf.41.1781088769303;
+        Wed, 10 Jun 2026 03:52:49 -0700 (PDT)
+Received: from [192.168.68.125] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-bf055309368sm1154147866b.49.2026.06.10.03.52.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Jun 2026 03:52:48 -0700 (PDT)
+Message-ID: <311ceabf-23ff-471b-9553-797c7d76af74@oss.qualcomm.com>
+Date: Wed, 10 Jun 2026 11:52:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260609-enable-ice-clock-scaling-v11-1-1cebc8b3275b@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ASoC: codecs: lpass-va-macro: Fix LPASS Codec Version for
+ SC7280
+To: Luca Weiss <luca.weiss@fairphone.com>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+        Dmitry Baryshkov <lumag@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260526-sc7280-va-macro-2-0-v1-1-2c1b572fa388@fairphone.com>
+Content-Language: en-US
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20260526-sc7280-va-macro-2-0-v1-1-2c1b572fa388@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEwMDEwMyBTYWx0ZWRfX2/q80D9l4m6y
+ QivtvWP2UwkuOK71ykFBLEVrQSOVbXZD+FtjwxPkepPiE8Kc0bapOCnw7UW6EwQ77AlhD8bykt1
+ kR8fPoVLzxQbglLtBLLHh+7X5idBUKMoUJJsFeZHxLILo8tBnjCDLocqnIruXZ30LibXIk/HXX1
+ u2e4XA+j9CNGQFMGe2+czLoMsjyQZim9yEcXPnFvQOalRd67Fq4PkrdsRmSVMczojMBLEzwHuhZ
+ 6wK1KGKbnyxS7sMlkeNnSx9k6UrUp3TRlizg9PzgXFDA+A9lRKQnSES/H330buamnsSsPcG+9ld
+ ysYtCCoxw04YfrTNN92H8ffab8ZtnTypHSTJ7WkzKt5E8UPngjeNTmwrzUITr3yziTU6iubaHdt
+ JdiyXyqb/s9CxEoHDToUME5w4qkYrnAwKz58qNyOHFRkh2Qay6pfDe45eTP5rh62hphAVDAHEVa
+ nmcGt4iXHjKe81UBiPA==
+X-Proofpoint-GUID: HzQQWyqSqjxerYlUtvW6Pp5kk6UQBcs1
+X-Authority-Analysis: v=2.4 cv=UdJhjqSN c=1 sm=1 tr=0 ts=6a294202 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=6H0WHjuAAAAA:8 a=EUspDBNiAAAA:8 a=Vj5VumI9SRvEE-TA0EoA:9 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=Soq9LBFxuPC4vsCAQt-j:22
+X-Proofpoint-ORIG-GUID: HzQQWyqSqjxerYlUtvW6Pp5kk6UQBcs1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-10_02,2026-06-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2606100103
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	FORGED_RECIPIENTS(0.00)[m:abhinaba.rakshit@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:James.Bottomley@hansenpartnership.com,m:martin.petersen@oracle.com,m:adrian.hunter@intel.com,m:ulfh@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:neeraj.soni@oss.qualcomm.com,m:harshal.dev@oss.qualcomm.com,m:kuldeep.singh@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-scsi@vger.kernel.org,m:linux-mmc@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112398-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:luca.weiss@fairphone.com,m:srini@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:lumag@kernel.org,m:~postmarketos/upstreaming@lists.sr.ht,m:phone-devel@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,vger.kernel.org:from_smtp,fairphone.com:email];
+	FORGED_SENDER(0.00)[srinivas.kandagatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	FREEMAIL_TO(0.00)[fairphone.com,kernel.org,gmail.com,perex.cz,suse.com];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-112397-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[srinivas.kandagatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[37olf54qxtfv:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,vger.kernel.org:from_smtp]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 7A9A9668664
+X-Rspamd-Queue-Id: A699B6687EB
 
-On Tue, Jun 09, 2026 at 03:17:23AM +0530, Abhinaba Rakshit wrote:
-> Register optional operation-points-v2 table for ICE device
-> during device probe. Attach the OPP-table with only the ICE
-> core clock. Since, dtbinding is on a transition phase to include
-> iface clock and clock-names, attaching the opp-table to core clock
-> remains optional such that it does not cause probe failures.
+
+Thanks Luca for the patch,
+
+On 5/26/26 4:03 PM, Luca Weiss wrote:
+> According to both the static definition in downstream...
 > 
-> Introduce clock scaling API qcom_ice_scale_clk which scale ICE
-> core clock based on the target frequency provided and if a valid
-> OPP-table is registered. Use round_ceil passed to decide on the
-> rounding of the clock freq against OPP-table. Clock scaling is
-> disabled when a valid OPP-table is not registered.
+>   yupik-audio-overlay.dtsi: qcom,bolero-version = <4>;
+>   #define BOLERO_VERSION_2_0 0x0004)
 > 
-> This ensures when an ICE-device specific OPP table is available,
-> use the PM OPP framework to manage frequency scaling and maintain
-> proper power-domain constraints.
+> and the runtime detection:
 > 
-> Also, ensure to drop the votes in suspend to prevent power/thermal
-> retention. Subsequently restore the frequency in resume from
-> core_clk_freq which stores the last ICE core clock operating frequency.
+>   CDC_VA_TOP_CSR_CORE_ID_0=0x1
+>   CDC_VA_TOP_CSR_CORE_ID_1=0xf
 > 
-> Reviewed-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-> Signed-off-by: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
+> SC7280 has LPASS Codec Version 2.0 and not, as declared with
+> sm8250_va_data LPASS_CODEC_VERSION_1_0.
+> 
+> Create new va_macro_data with .version not set to use the runtime
+> detection and correctly get .version = LPASS_CODEC_VERSION_2_0.
+> 
+> Fixes: 77212f300bfd ("ASoC: codecs: lpass-va-macro: set the default codec version for sm8250")
+
+Can you help me understand if this change was fixing any issue, if so
+can you pl add CC stable
+
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  drivers/soc/qcom/ice.c | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  include/soc/qcom/ice.h |  2 ++
->  2 files changed, 95 insertions(+)
+> I'm fairly confident this is correct, but please someone double check
+> this if they can.
+
+Yes, you are correct, this is actually Bolero 1.1.0 Version where things
+have changed in codec. if you read major number it will be 1
+This has been artificially tagged as 2.0 in the driver.
+So the change that you are doing is correct.
+
+
+
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+
+--srini
+> ---
+>  sound/soc/codecs/lpass-va-macro.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> index 5f20108aa03ebe9a47a10fba9afde420add0f34a..519d08c4727a6cb2dc5991216a2c042ed6218857 100644
-> --- a/drivers/soc/qcom/ice.c
-> +++ b/drivers/soc/qcom/ice.c
-> @@ -17,6 +17,7 @@
->  #include <linux/of_platform.h>
->  #include <linux/platform_device.h>
->  #include <linux/xarray.h>
-> +#include <linux/pm_opp.h>
->  
->  #include <linux/firmware/qcom/qcom_scm.h>
->  
-> @@ -113,6 +114,8 @@ struct qcom_ice {
->  	bool use_hwkm;
->  	bool hwkm_init_complete;
->  	u8 hwkm_version;
-> +	unsigned long core_clk_freq;
-> +	bool has_opp;
+> diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+> index 528d5b167ecf..58a5798823d7 100644
+> --- a/sound/soc/codecs/lpass-va-macro.c
+> +++ b/sound/soc/codecs/lpass-va-macro.c
+> @@ -244,6 +244,11 @@ static const struct va_macro_data sm8250_va_data = {
+>  	.version = LPASS_CODEC_VERSION_1_0,
 >  };
 >  
->  static DEFINE_XARRAY(ice_handles);
-> @@ -315,6 +318,10 @@ int qcom_ice_resume(struct qcom_ice *ice)
->  	struct device *dev = ice->dev;
->  	int err;
+> +static const struct va_macro_data sc7280_va_data = {
+> +	.has_swr_master = false,
+> +	.has_npl_clk = false,
+> +};
+> +
+>  static const struct va_macro_data sm8450_va_data = {
+>  	.has_swr_master = true,
+>  	.has_npl_clk = true,
+> @@ -1755,7 +1760,7 @@ static const struct dev_pm_ops va_macro_pm_ops = {
+>  };
 >  
-> +	/* Restore the ICE core clk freq */
+>  static const struct of_device_id va_macro_dt_match[] = {
+> -	{ .compatible = "qcom,sc7280-lpass-va-macro", .data = &sm8250_va_data },
+> +	{ .compatible = "qcom,sc7280-lpass-va-macro", .data = &sc7280_va_data },
+>  	{ .compatible = "qcom,sm6115-lpass-va-macro", .data = &sm8450_va_data },
+>  	{ .compatible = "qcom,sm8250-lpass-va-macro", .data = &sm8250_va_data },
+>  	{ .compatible = "qcom,sm8450-lpass-va-macro", .data = &sm8450_va_data },
+> 
+> ---
+> base-commit: 550604d6c9b9efc8d068aff94dc301694a7afdee
+> change-id: 20260526-sc7280-va-macro-2-0-f0d4591a611b
+> 
+> Best regards,
+> --  
+> Luca Weiss <luca.weiss@fairphone.com>
+> 
 
-Redundant comment.
-
-> +	if (ice->has_opp && ice->core_clk_freq)
-
-Can core clk be 0 if OPP is used?
-
-> +		dev_pm_opp_set_rate(ice->dev, ice->core_clk_freq);
-> +
->  	err = clk_prepare_enable(ice->core_clk);
->  	if (err) {
->  		dev_err(dev, "Failed to enable core clock: %d\n", err);
-> @@ -335,6 +342,11 @@ int qcom_ice_suspend(struct qcom_ice *ice)
->  {
->  	clk_disable_unprepare(ice->iface_clk);
->  	clk_disable_unprepare(ice->core_clk);
-> +
-> +	/* Drop the clock votes while suspend */
-
-Redundant comment.
-
-> +	if (ice->has_opp)
-> +		dev_pm_opp_set_rate(ice->dev, 0);
-> +
->  	ice->hwkm_init_complete = false;
->  
->  	return 0;
-> @@ -560,6 +572,51 @@ int qcom_ice_import_key(struct qcom_ice *ice,
->  }
->  EXPORT_SYMBOL_GPL(qcom_ice_import_key);
->  
-> +/**
-> + * qcom_ice_scale_clk() - Scale ICE clock for DVFS-aware operations
-> + * @ice: ICE driver data
-> + * @target_freq: requested frequency in Hz
-> + * @round_ceil: when true, selects nearest freq >= @target_freq;
-> + *              otherwise, selects nearest freq <= @target_freq
-> + *
-> + * Selects an OPP frequency based on @target_freq and the rounding direction
-> + * specified by @round_ceil, then programs it using dev_pm_opp_set_rate(),
-> + * including any voltage or power-domain transitions handled by the OPP
-> + * framework. Updates ice->core_clk_freq on success.
-> + *
-> + * Return: 0 on success; -EOPNOTSUPP if no OPP table; or error from
-
-s/error/errno
-
-> + *         dev_pm_opp_set_rate()/OPP lookup.
-> + */
-> +int qcom_ice_scale_clk(struct qcom_ice *ice, unsigned long target_freq,
-> +		       bool round_ceil)
-> +{
-> +	unsigned long ice_freq = target_freq;
-> +	struct dev_pm_opp *opp;
-> +	int ret;
-> +
-> +	if (!ice->has_opp)
-> +		return -EOPNOTSUPP;
-> +
-> +	if (round_ceil)
-> +		opp = dev_pm_opp_find_freq_ceil(ice->dev, &ice_freq);
-> +	else
-> +		opp = dev_pm_opp_find_freq_floor(ice->dev, &ice_freq);
-> +
-> +	if (IS_ERR(opp))
-> +		return PTR_ERR(opp);
-> +	dev_pm_opp_put(opp);
-> +
-> +	ret = dev_pm_opp_set_rate(ice->dev, ice_freq);
-> +	if (ret) {
-> +		dev_err(ice->dev, "Unable to scale ICE clock rate\n");
-> +		return ret;
-> +	}
-> +	ice->core_clk_freq = ice_freq;
-> +
-> +	return ret;
-
-return 0;
-
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_ice_scale_clk);
-> +
->  static struct qcom_ice *qcom_ice_create(struct device *dev,
->  					void __iomem *base)
->  {
-> @@ -738,6 +795,7 @@ static int qcom_ice_probe(struct platform_device *pdev)
->  	unsigned long phandle = pdev->dev.of_node->phandle;
->  	struct qcom_ice *engine;
->  	void __iomem *base;
-> +	int err;
->  
->  	guard(mutex)(&ice_mutex);
->  
-> @@ -756,6 +814,41 @@ static int qcom_ice_probe(struct platform_device *pdev)
->  		return PTR_ERR(engine);
->  	}
->  
-> +	err = devm_pm_opp_set_clkname(&pdev->dev, "core");
-> +	if (err && err != -ENOENT) {
-> +		dev_err(&pdev->dev, "Unable to set core clkname to OPP-table\n");
-> +		/* Store the error pointer for devm_of_qcom_ice_get() */
-> +		xa_store(&ice_handles, phandle, ERR_PTR(err), GFP_KERNEL);
-> +		return err;
-> +	}
-> +
-> +	/* OPP table is optional */
-> +	err = devm_pm_opp_of_add_table(&pdev->dev);
-> +	if (err && err != -ENODEV) {
-> +		dev_err(&pdev->dev, "Invalid OPP table in Device tree\n");
-> +		/* Store the error pointer for devm_of_qcom_ice_get() */
-> +		xa_store(&ice_handles, phandle, ERR_PTR(err), GFP_KERNEL);
-> +		return err;
-> +	}
-> +
-> +	/*
-> +	 * The OPP table is optional. devm_pm_opp_of_add_table() returns
-> +	 * -ENODEV when no OPP table is present in DT, which is not treated
-> +	 * as an error. Therefore, track successful OPP registration only
-> +	 * when err is not -ENODEV.
-> +	 */
-> +	if (err == -ENODEV)
-> +		dev_info(&pdev->dev, "ICE OPP table is not registered, please update your DT\n");
-
-dev_dbg() please. No need to spam old DTs.
-
-> +	else
-> +		engine->has_opp = true;
-> +
-> +	/*
-> +	 * Store the core clock rate for suspend resume cycles,
-> +	 * against OPP aware DVFS operations. core_clk_freq will
-> +	 * have a valid value only for non-legacy bindings.
-
-use full 80 column width for comments.
-
-> +	 */
-> +	engine->core_clk_freq = clk_get_rate(engine->core_clk);
-
-Why can't you conditionally cache the freq by moving it to the above else
-condition?
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
