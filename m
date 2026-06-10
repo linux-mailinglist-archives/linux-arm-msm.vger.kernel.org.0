@@ -1,84 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-112410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id kJVnE7xIKWphTgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 13:21:32 +0200
+	id qmftIFFIKWo3TgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 13:19:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2565A668B17
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 13:21:32 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3E2C668AAA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 13:19:44 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=hxZbFVmB;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112410-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112410-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=XIPUOzPw;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112411-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112411-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 852A830E4474
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 11:13:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id BDBAB3130273
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 11:13:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC27C403E90;
-	Wed, 10 Jun 2026 11:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DABAC406816;
+	Wed, 10 Jun 2026 11:11:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8C240627D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 11:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297E2406807
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 11:11:49 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781089904; cv=none; b=XjhGbuT/SGqwlvHcYPIaGsGaRdoztGTgKIkdI1Ok3L+j3ZmUSgyh4m4e7XcpoqoXRRb8YmRqWVinZf9XHc9iMA+T+QdVhDpApMQVDaxsrqxe+sP32l5FQPZo5rAlpCVO8mrWZbVuzaclRrjp9/hPmfMzQ2vDdPQ7Zfo6Oxr4TdE=
+	t=1781089915; cv=none; b=GqnvlKrtAw4GKIAZ34QQH7rZOvPW44m0efGjFGnTX4gGorvUxojTSfKRd0uek0b0Uj9yiZ+ZnhSencSMz95Nbzhrut6Hj0C6Xg14Q6hDh1euqYPwBwBlcc+oM2R4i5PovCQANE8lTRbVITaZhMaPTP7XfCrg2eeH0xadO+/R4qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781089904; c=relaxed/simple;
-	bh=u/ihBuRn411q7r2cqeHRKnXLHVg1nNx7cEQIFjgZxiI=;
+	s=arc-20240116; t=1781089915; c=relaxed/simple;
+	bh=uO7dmp+7kXXq35mabsz2m2dY+q1mTPopJfhyX1CU2yw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Onp7vAVOikJjrfIeTLO0xUEWTSVvXFGbizdRToazSHTlo9O6Ashb/NFJHox0WkF3E+QUB9X72SZ45h/4z+87+HSVq0k9bS8bayDyBlumn2lwDxLUaEwL6MIKpUBGIqzq75OtdhSVwNu0HchKHqKZnsPeSyqkIYQGj4uO50Eb3nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hxZbFVmB; arc=none smtp.client-ip=209.85.214.180
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2bf36a6905cso47222335ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 04:11:38 -0700 (PDT)
+	 In-Reply-To:To:Cc; b=X/QurDloq/xKJ/A0IAp53+oqHZ3UC26bz5ZkyhvG7MQGRmRz9aKlOU4gt5dMKuvm3BSH0YzmcjaJX0W8oDYZ49+1dOsGelPgTuW5NL+jsM2CjJjag73eyV8yzAsiRdXpOQx2qZWYjH9IhHdYXMIwim6gK9Wx5grmIrsfqLvE9gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XIPUOzPw; arc=none smtp.client-ip=209.85.214.182
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2c0c2d8b95bso47688905ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 04:11:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781089898; x=1781694698; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781089909; x=1781694709; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2cQ+ac5l+4cyouLoZKEF9xKzE/GgGPCqhOFMn5EQIOQ=;
-        b=hxZbFVmBPe5cJm7ekFWvttb0yatdBGvl3udE2OfzaGd6VTl108m2fbldPUceXGQQKc
-         87e9JZQjGXqLsKKmBRXxl8eEeR5ddVHnN5H9OS58bQPSN7lkapJ2WX3YOeseitAOPc8g
-         Mjk4sMwi5JUsZN9eiN9tIDgE8+zN7/DLERgT2STodoE+ozcx+7MlXhM4BogBl4hFGSMf
-         UzLcpmDohaUbHMyfHDPM37FzbUT1jezfcDVB73NKfwJ8Nk66U+B1E6vVN9zcPvMJBj/E
-         Jo9myV5zEQ2/2mNPrgK8BplH5iW+qeQkUblvIttF9XYXvxj/gEJe/H/WXSLaFeHy4lI7
-         Hw5Q==
+        bh=jxy+/rJ2nBiXps0IHi4kt0tmpzHJC70O0pAZEhcagdg=;
+        b=XIPUOzPwgjXIPK7biyPPlRzceYZtN7R8dG3p1ulo+zB35BN2yXL8YeFGL2gc/yhuQj
+         pXL6qs/MB2hi2ObsGmd/mf+/W6IybJgn/mR/FBymWLs5KAUOj5BmMNBMwCcPBgYDA73h
+         6unGp/fsP1qf3GfsZXeiiMZWsmY/lWydnv7tDxXl/bXdTKDGoHB+fgzn4Pd9AseUIWsz
+         R4ETxTraXIncb1kAgE9vb5oqL7uMbf5FPwJmwaTt0YxdxoRhlUvOLMJYcxOILk3HXemE
+         P1kVnRkPReSoqeiXku9AMAotf1tESAlCQ1P/2KAYanulyMOYVHAGeIVkRXN6gcSxtXKQ
+         X10w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781089898; x=1781694698;
+        d=1e100.net; s=20251104; t=1781089909; x=1781694709;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=2cQ+ac5l+4cyouLoZKEF9xKzE/GgGPCqhOFMn5EQIOQ=;
-        b=SpvnprJN/z6/VFTqSOsz9bRYu5LgYgJ3QuxIoW989EptaT0ir05WO5/vAdd+wrjbGA
-         H2iXwNz8tiHAtIns+x2MI/YZigYA8b2iu/gUgzMoq9lZrlgFAr7QwJdEMI28hE9t1M9g
-         k/7u1FfSc9vAdfLAZcvEagTNt84MKrjH41GtNxTlL2mCHAIaQuMyUwkehHzSCjmCmE2X
-         50z3gNlFlsWAS9jJOo4v3ZcLJ107y6Zwe/8hxxLeTezQyfnysmfatir0XMcxh4NEXr2N
-         JIlUftYmeJ0TemEj6eLTFTrgxVUZ/8+9Y6VKYIEvSHpBRGw2bWJHyfPkL7dSP/8Vd2eb
-         Y5hQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+63mW7c+81vPmR3gmQUi1BISMEQjnl0OLyiZ1D2T3QK8IkOVlxc0fx9rlIUCN//APBMJbuwvFYfHLZYI7G@vger.kernel.org
-X-Gm-Message-State: AOJu0YzV32Ox01WBPSIuGFHipz1bUckWCbCamMPSXT2GKGhtmFUKfZwn
-	PyLoHXzVEoaGXpKfRCDWNV8vybRd5VrvyHjo+EcLtC2JJIi7vemwqnX3vMR3HcXY
-X-Gm-Gg: Acq92OEnXpIZR5XfE+QEejGGMR/HvaIxUWom9zCnEojtpVvAv93+PP+QA7/DjsiAWyL
-	5u5VmVqbCiy+pik/9pbJuPBqAj+BN3O6b6uP9JXHHINLpTE5VA0PmjUtbafMca0Gh+zpRXh7e/W
-	q8smYEDX+wDp7YcPMgRqkHxdXLvEouo62g2EZ+Qa8jnaHtKCIBRKo8K4NlRZNClL0nTgEc3ZXGD
-	8S6WOAlJKzH2E+ZDAcffCjb3Npde2s7SIG0qAUiuvd2688J8MllsTbGwDJ4Oh8XpnV0ck0ZyYX0
-	jLw/GPYAPFZLDzWjtNw/TSynTPkcl+qjJ5dmCHec9vy/qJf+/2u/AcH4HWyCrzJuUk5rXtKQAQW
-	PZN0wsn8tyN0xkvVHgjnvus6WH8OeCW0pjW1PQbROIY0h/MUE8Bm59ruBHIzQe+ifnEK8Yh7CYb
-	Z6/FEMnnoC2gNJbsclN7br1Ukc6gfIOn2rksvmWg==
-X-Received: by 2002:a17:902:f541:b0:2b7:975c:dacc with SMTP id d9443c01a7336-2c2a1bb43e7mr80521495ad.1.1781089898069;
-        Wed, 10 Jun 2026 04:11:38 -0700 (PDT)
+        bh=jxy+/rJ2nBiXps0IHi4kt0tmpzHJC70O0pAZEhcagdg=;
+        b=S6DGg/9VF55kaBuuvfQUfxOBphlROrYUb+mXg23S5reX6p0P2Hn5ARTBK/MrBS1yeD
+         i/88Z1l6jA5v0et3F0OsndHQQ2aloOVvynxbZ0pdH34GV0/HwhMWDMM3nHzQymfOSLWL
+         t449Jq5sbZI56EDnWqIdDAGJGkauXlt8SeG3C55vaHrq6IZbVavAE36kqu94EMSvSeei
+         omM1Gu2wHw9beGmL93FpZD373o6ABkq7jZLS17ibvl4wUrJIPUMT+DyGt53fzklTiHeC
+         7BcD6h+otuzJ25/W908peI2Fw5L7Yirpao4tw1YL4GROp7OKsQVW1CW4f7WAh5nV9gB+
+         a6nw==
+X-Forwarded-Encrypted: i=1; AFNElJ86RfX/0Tbb/Yvph4L/Io/azBY/6sXFVhxqWPEMizXVB5h4DAQYXumfLzHRMdd78jmRvjAHenKR0DRfCcVu@vger.kernel.org
+X-Gm-Message-State: AOJu0YxOphr3XyRlYneo8nRCWn4C7YiMnXdKKhWT1zV/0ffRBCrpt2G0
+	V1LN15f39vC0G48GP4hj6+apMyfaMayQPguajFVj+cQZMdlIfGFeS5/LOVmayQND
+X-Gm-Gg: Acq92OFRHTxuuKDQeduycPC7JcMLCoG+2pHNDZulNCQpNrVBPdBWvt5XzyAnD18kNT5
+	srFoFqvHMe8NkTEZsSREPFHtkc4jF4q9+rauWEJvdmzCHJ9wtwP2nfQFbv4CSRZ7VFjtouX3Nkk
+	4YEITnKaalbdbJVv2In1/JvAI5eY1MVLczycM3kKQhMOga1pZ8sZa6Vbxdj7nE7c05g40DfO68a
+	zCLhBqMbbhsvgCC4WF7+AzZvpg36vq+KPjS59kzT5skDx6Vy+Yk4HaJogm8gg1FcHL99m4w6MlT
+	IVr+87aoa7fg98OkLSb09uFjCcLCg/mqZEQZ2+dKlcszPGkEFoPsy3EOcdXDg6NpT1GkmCM72MS
+	HsQucsNIXGRX0AQwwR2tAmJsnh39Y83NraVwPUVGMns4jWmym4a8/S+sCrH+fcc4DMPhXUUxLrP
+	cH9MWpPmGBbObbGOoiZq0SBnJ65E4ZiUdqwU8ZNgBJPSzTk/hu
+X-Received: by 2002:a17:903:1a10:b0:2bd:606d:b342 with SMTP id d9443c01a7336-2c1e881ff09mr286316365ad.26.1781089909338;
+        Wed, 10 Jun 2026 04:11:49 -0700 (PDT)
 Received: from [127.0.1.1] ([2409:40f4:4111:52c8:138e:8096:a8df:e68b])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f6d37esm317175205ad.9.2026.06.10.04.11.28
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c164f6d37esm317175205ad.9.2026.06.10.04.11.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 04:11:37 -0700 (PDT)
+        Wed, 10 Jun 2026 04:11:48 -0700 (PDT)
 From: Ramshouriesh <rshouriesh@gmail.com>
-Date: Wed, 10 Jun 2026 16:39:33 +0530
-Subject: [PATCH 8/9] dt-bindings: phy: qcom: add MIPI CSI2 mode constants
+Date: Wed, 10 Jun 2026 16:39:34 +0530
+Subject: [PATCH 9/9] phy: qcom-mipi-csi2: accept PHY_QCOM_CSI2_MODE_DPHY
+ phy-cell
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,7 +88,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260610-a14-himax-hm1092-v1-8-0c9907da47ed@gmail.com>
+Message-Id: <20260610-a14-himax-hm1092-v1-9-0c9907da47ed@gmail.com>
 References: <20260610-a14-himax-hm1092-v1-0-0c9907da47ed@gmail.com>
 In-Reply-To: <20260610-a14-himax-hm1092-v1-0-0c9907da47ed@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -105,20 +106,20 @@ Cc: Aleksandrs Vinarskis <alex@vinarskis.com>,
  linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
  linux-phy@lists.infradead.org, Ramshouriesh <rshouriesh@gmail.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1673; i=rshouriesh@gmail.com;
- h=from:subject:message-id; bh=u/ihBuRn411q7r2cqeHRKnXLHVg1nNx7cEQIFjgZxiI=;
- b=owEBbQKS/ZANAwAKARWVil4RHAXeAcsmYgBqKUYQ/WfQ91PlBPr5CIEMS+b24iqufT/+lTQZV
- lRTuKzhDL2JAjMEAAEKAB0WIQS/0QuzNKVfvUNlNAkVlYpeERwF3gUCailGEAAKCRAVlYpeERwF
- 3ux5EAComyAGYJYXSz0Kedtwa3VvHC+ooYDXeq57/vamu1NAvwb4diNkw53gmBkSW4le5AFIYdL
- pHh1QptSN1zemv0sXpOlV6geujC7WRUKsD2a5hWAmhaIxH8wClbp3IN29xy6R/eECch4+TLsbpH
- dWurBuTLHJ3mANXIUwlSh5dpyOuwFWbbEXsMO7yMu9gv6tjlRauhXsFoPyTm7kQ5YowStSgNkxc
- k9Un+ZPq/mb6lSsVRpB5BoWutb6zfnJea028Ye7pVswDOv5Y/vZbTRVhRlE5b4kcz+dIzML710j
- w1wzQl1MW/EX0m7RHE5RtuiBb8IefH25HpxZatEoX1ATBMT3cFbGTh1mj/e38VA4eR/HuafsK/7
- +9XDw4IQ3R8aIp0m5O6qxnCapXCaaGD/DEHXQKE3YBFpviAIka+fG5mwdgxSRjGcoBRQ5DU8KTl
- 8KYQVmtArETg4k1WRyxxlgFITfCPIWRrk1ym9SbXsdTSA6RH+BrYDJl+WP1mQ4PUKv/hI7ZkUgc
- BdZ/4LADyfMMkstYmtmF/tXffcTDoqWwDhkOf0M7QdEGlfTNgm0x0lfTByC6t229zVzOmkAWOwg
- +llY8eYurHAkSLTFUU4jXAC3itej7SHqcMgvP1VH76rSQ77fAAVljR541n6AJn267f+3tmjgH/d
- vxLeWjWyurqs//w==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1334; i=rshouriesh@gmail.com;
+ h=from:subject:message-id; bh=uO7dmp+7kXXq35mabsz2m2dY+q1mTPopJfhyX1CU2yw=;
+ b=owEBbQKS/ZANAwAKARWVil4RHAXeAcsmYgBqKUYRSIMMjLHMhkZR5dO4CGE49UyTRGGP49w1C
+ ttyD41c+g+JAjMEAAEKAB0WIQS/0QuzNKVfvUNlNAkVlYpeERwF3gUCailGEQAKCRAVlYpeERwF
+ 3pYHD/4uAmyfmypJaZPNO+fgd9CIEWOXJil30ot5bQFVpCScoYrN+SscUOUg/0WkUll4bJ3+x07
+ 4lUTL1vAUQBwAXx8sO3k6nnEfy/hQdIYedpATkAFsq1TeLYKhyCamempsswk31EIAiFcJUOC79n
+ G117fd0WQzZq4hF5qG6DyZNmNWEreZZDdi7dNVXHQXgIkV0R+M28rvqsmNYiT2SztbFYux4Gusl
+ 9+bTO20QltCUmvr5DjhjtUpxrwJYZZ8vnVr3BSM6YaQsxq/I4tuT99q/1tWt+Mtb5H6I+9MCw0F
+ dljQE7+DpI96IW1gHamorEK3exUeCkUc4MWz/ulGJmgcKZVlDDkl0lVoUUwEHhaQZ/M/6MybnAC
+ 4C56VRCpTM0y9lfjzrdvU+P8ZIOnbR7A26lMQhHeiGb9twCX9jHX76cpPgQBJetyUlJuxkQG1js
+ neA6ecvVxK0t1kiV0kiP8K4LFIxXFRrQ9gqE9BrvROicKC6dq3YuzXzsMW3Y7vVcuoII/O+I3JD
+ BcYF1fft05FfNsxqDNVRd+6CMwBGXFf+hBjCsELVOJIzG1zipThLmpLhzLuuiP/nk9zOdVSpSI0
+ y8SAVNMGxwOW14k1IkqCE7g8TxwH4bj660ix4jD3y12u74goy2RB0wLdkqojUUM+1Tl06JsG10W
+ /trux3pAPFc86QQ==
 X-Developer-Key: i=rshouriesh@gmail.com; a=openpgp;
  fpr=BFD10BB334A55FBD4365340915958A5E111C05DE
 X-Rspamd-Action: no action
@@ -127,11 +128,11 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-112410-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112411-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:mchehab@kernel.org,m:bryan.odonoghue@linaro.org,m:vladimir.zapolskiy@linaro.org,m:loic.poulain@oss.qualcomm.com,m:bod@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:alex@vinarskis.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-media@vger.kernel.org,m:linux-phy@lists.infradead.org,m:rshouriesh@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[rshouriesh@gmail.com,linux-arm-msm@vger.kernel.org];
@@ -151,60 +152,48 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	DKIM_TRACE(0.00)[gmail.com:+];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2565A668B17
+X-Rspamd-Queue-Id: F3E2C668AAA
 
-The CSI2-PHY binding references <dt-bindings/phy/phy-qcom-mipi-csi2.h>
-and consumers (the x1e80100/hamoa camss DTSI) select D-PHY mode with
-PHY_QCOM_CSI2_MODE_DPHY, but the v8 CSI2-PHY series does not ship the
-header, so any DT that includes it fails to build.
+qcom_csi2_phy_xlate() validates the phy-cell against the generic
+PHY_TYPE_DPHY (10) instead of PHY_QCOM_CSI2_MODE_DPHY (0), so a correct
+DPHY request from the camss DTSI is rejected with -EOPNOTSUPP and camss
+probe fails with -95.
 
-Add the header with the CSI2 mode constants and cover it in MAINTAINERS.
+Include the CSI2 mode header and check the phy-cell against
+PHY_QCOM_CSI2_MODE_DPHY.
 
 Signed-off-by: Ramshouriesh <rshouriesh@gmail.com>
 ---
- MAINTAINERS                                  |  1 +
- include/dt-bindings/phy/phy-qcom-mipi-csi2.h | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ece71732e6dd..a7ee9f0aaaa8 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -22280,6 +22280,7 @@ S:	Maintained
- F:	Documentation/devicetree/bindings/phy/qcom,*-csi2-phy.yaml
- F:	drivers/phy/qualcomm/phy-qcom-mipi-csi2*.c
- F:	drivers/phy/qualcomm/phy-qcom-mipi-csi2*.h
-+F:	include/dt-bindings/phy/phy-qcom-mipi-csi2*
+diff --git a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c
+index dfeff863a406..857c54cbaea6 100644
+--- a/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c
++++ b/drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2025, Linaro Ltd.
+  */
+ #include <dt-bindings/phy/phy.h>
++#include <dt-bindings/phy/phy-qcom-mipi-csi2.h>
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/err.h>
+@@ -188,7 +189,7 @@ static struct phy *qcom_csi2_phy_xlate(struct device *dev,
+ {
+ 	struct mipi_csi2phy_device *csi2phy = dev_get_drvdata(dev);
  
- QUALCOMM NAND CONTROLLER DRIVER
- M:	Manivannan Sadhasivam <mani@kernel.org>
-diff --git a/include/dt-bindings/phy/phy-qcom-mipi-csi2.h b/include/dt-bindings/phy/phy-qcom-mipi-csi2.h
-new file mode 100644
-index 000000000000..fa48fd75c58d
---- /dev/null
-+++ b/include/dt-bindings/phy/phy-qcom-mipi-csi2.h
-@@ -0,0 +1,15 @@
-+/* SPDX-License-Identifier: (GPL-2.0 OR BSD-3-Clause) */
-+/*
-+ * Qualcomm MIPI CSI2 PHY constants
-+ *
-+ * Copyright (C) 2026 Linaro Limited
-+ */
-+
-+#ifndef __DT_BINDINGS_PHY_MIPI_CSI2__
-+#define __DT_BINDINGS_PHY_MIPI_CSI2__
-+
-+#define PHY_QCOM_CSI2_MODE_DPHY		0
-+#define PHY_QCOM_CSI2_MODE_CPHY		1
-+#define PHY_QCOM_CSI2_MODE_SPLIT_DPHY	2
-+
-+#endif /* __DT_BINDINGS_PHY_MIPI_CSI2__ */
+-	if (args->args[0] != PHY_TYPE_DPHY) {
++	if (args->args[0] != PHY_QCOM_CSI2_MODE_DPHY) {
+ 		dev_err(csi2phy->dev, "mode %d -EOPNOTSUPP\n", args->args[0]);
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 	}
 
 -- 
 2.53.0
