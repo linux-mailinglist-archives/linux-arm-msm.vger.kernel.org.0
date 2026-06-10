@@ -1,192 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-112504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id aETbD5JxKWrtWwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 16:15:46 +0200
+	id 343pEaVxKWr5WwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 16:16:05 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A805866A262
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 16:15:45 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32A1C66A286
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 16:16:04 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=N0LL6f+u;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112504-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112504-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=linaro.org;
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=Mr+dH0jL;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112506-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112506-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 17B083206060
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 14:09:34 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id C08DE3007B25
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 14:15:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F19C3F44D3;
-	Wed, 10 Jun 2026 14:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0336F314D13;
+	Wed, 10 Jun 2026 14:15:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-dy1-f193.google.com (mail-dy1-f193.google.com [74.125.82.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1CB3F7AAD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 14:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7F33054C7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 14:15:28 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781100573; cv=none; b=DCRiSIaYH3CGxKl7k8+3ema+GarBMDeJqSJm/lNbkYctk5j0aA2l5wrSUE0fTCcI7loSF+VwHO7+15bJe/PA3lTNyAmEjYmX0kCo28gcdRyPngCnu/uTZnCWLFC++XgWUqTEdTgkJvSXc/cYKiBdKs2zhFX3+FETdqDmZk9db/A=
+	t=1781100929; cv=none; b=Q4m201YHEA5rpkzEKGS64zpHV/rMAS8j7m7PThyj1q4StXKnhwpiqT3UdrqwqU+hqIk9NNLrijdjogZZ2EsS4O+sJN8xmlm5KYG3D1G5YG/ra1fv0mD+/4rIyrLEQi6cUx/HVm8fOszhE4Rsv9xeIpxRi8z+k9fwxIfAEFL/mPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781100573; c=relaxed/simple;
-	bh=xOBnAKbfMwDSEwiOfNlKTQ/sIOMtTg3T6ON0DZHh4gk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E4Djj/ZYEgI7SDbkqNTDnI/tHbW6JuSZd9muhIut4cyOX9Kq/mCJWTNNkEbyAdPSqUHQBP4wyq+m5AHDpbwmjboarS7GxkXyb/ri4dU5PaFEHksIkZCJjxecUXbDkMJGpq3sSijY28zNUUSNP5JYA+HzBgNRStaX3Aa1CDsqv34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N0LL6f+u; arc=none smtp.client-ip=209.85.128.51
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-490a76757e5so45112445e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 07:09:31 -0700 (PDT)
+	s=arc-20240116; t=1781100929; c=relaxed/simple;
+	bh=4BoqfQ6mL38Ac+JXS/jYEbtdU0AheQACrXClFLVNg/8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=S2mPz4bgK3G/ol4zpJvng5jO+xY39kz6t0kUUeLz7Qkaj1700gnjhBvuNLAaao6cG35c2vTaAxXouVsxZ9gIqxdde12bnPm0pEkLyYIs7Hqh2Mf3WMS1jusSRRcq3AT/fZrcN2AVQ3xPYqdRu4c5vHfD3FVWCfPTgL/8+fQuhNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mr+dH0jL; arc=none smtp.client-ip=74.125.82.193
+Received: by mail-dy1-f193.google.com with SMTP id 5a478bee46e88-304cf518c9dso8450341eec.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 07:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1781100570; x=1781705370; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Yp7dQIH3qFqTFCTwClldJqvJ4eJdBAvpo4TLN8Qmpc=;
-        b=N0LL6f+uTVBdblveTqDHTS79wedP5+/lItTb5xiZmk11jHcWHRP0qYD7PTINm6tfrP
-         sWcUsVITDTYAG2HLwO0cM16/KVaXPtGa6IcDvQq7FKmQczuWXbwGKo1UnJ4+VbYOZci9
-         8IHDBDqrLzLUxh1UXLsvXtwM7GMxwj30OnAOUNFDy5nqS/0SA65VjbCgkCS3RxR1mxnd
-         P6WpfwyME7QQo+niO5/H2jBNkwIeIm3W4Q40dV9/zdTBUnT/JJPlhPs8hDFE9hIclAEd
-         WpNvFp1lrmvrYOOsEJpiZQpy/+9DFz2iXJ2kgaanNCk4Rc/zaH8mmXfGGPBFO92VXSi0
-         9I2A==
+        d=gmail.com; s=20251104; t=1781100927; x=1781705727; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BL13xctmBFivsXzXnLUZmni2yJ2AzY1XEjVgT0sg1Dc=;
+        b=Mr+dH0jLle90BqeIceBUtK2WiOy/hCioNs1Neshlq6vIYtqF4DRREuG4TlgpY9XXxi
+         5GJLyCMtGQoI6rsaienZBgCnwzr1LivGBtP5j9PBOIe4DX7uBVhjtNSs7qQ65E6NWK+z
+         GiLJm3Xc/V0mN78cs2gru1PZvRLm7b/nsmI2zjR6xwPn99K4bwJuAQAUmpeyXWtZBYXA
+         BIu0gIyW1+6ae2B8uH/20R1Ei4SwQH04uzw3lqR+Aw12EaydsFlp7y59RWdzlP2CYGFH
+         WupwduFGOzCwTi4cG6/P2wCXMNL04h3o5PY1k8N8gKHAzfQArFFxMd4kPqP91lvHrLq4
+         ot0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781100570; x=1781705370;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8Yp7dQIH3qFqTFCTwClldJqvJ4eJdBAvpo4TLN8Qmpc=;
-        b=XZuNzZp4xXTb0YynjlxUjd30+7LlYbTM7H8EaJNjw4IDj1Oc8aNjtQaAVOmT08rHkU
-         cl3pN5VFgz/ufiOgAfWdcRrzeMSRDDNZAOcAZ8yjtRM92MmMA3aX4u/EaO7AWSmcXBvV
-         iazh/bG9ENxl+VmFQDO0OiWJ31ziiPxMdHMo1pvbOqTdINcN48cWMenr2Omc8y+LyEYl
-         Oc3MNXuBBQuTalcVaFeGtclbx3JEK/gtausxPlXrv1NOij5ZpE/4uQb5Z47I1b84WYPH
-         U0ReYOIYddacC0ViLOSRyFfFUyaMtJ6GnxsUazypGGYVQWPMvP8UP17o9mOEufQrLti3
-         QX8w==
-X-Forwarded-Encrypted: i=1; AFNElJ9cIsNiG0SU/VW9YdqZQgLvUgtD9XqBPxri2VTXMRxwNodDPm1fZrCPEij6hlSRi2XD812pKRtT/i+a0aVX@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzjOur+FT752OPNU66/oSNRhvvj2FWsLNqXG6CZZYxPquoJdup
-	L8L3AfBsXjHs1oALj8Dk/2j6dQ5f2P3SLI2PvmYIc30PkSH6k+74v3kmeiCjdq1bYkNj7L5jOYk
-	yMVgaJXo=
-X-Gm-Gg: Acq92OHEx5QddNaL0icTDA+oC19k50VzzM4QVuwFgR1DNHx2rjs0lYyNpRSKWk58KjD
-	0O/Biwrf9LE+pTw9IoCphSt7+jHV39NDZ9jqLdNfT4vY2+IqA0wu2SIlUqakgzW/cfBxESaZiZA
-	LSkb9hAlzjVcaBBAS+ayaBAq0aFTKo/hO7fkhb+MsUTO77P1Hf6EQNh1DiNkFQd0gwamB5iUzuC
-	VmNaNWeaX60OXCVZibWK5w1H/r8zC9AStjQ0k+5g4kK2h6AhN554AmvTCKZoRPQra8Dj3+Q6VKB
-	dwWHPSpUvbZTV9AfAZATKhyOvAIhohzY4y9Tqku3u08+RCee0VA1NtCGhUt8OKAbEx9zR2D8F60
-	/WbtjTMVCeP1LmbZzn5oEKxzacmoBsTk2WSL4kINGpkHuuAUyaPLus/t2Tks1rlO9CTU0lUaY9q
-	XgVACB4Jfqlo4YcPZ+hGxDLM2TbBexafoZ+ZfIMPGyjjV0nhw=
-X-Received: by 2002:a05:600c:4e14:b0:490:4e3e:b483 with SMTP id 5b1f17b1804b1-490c2600ebdmr362021485e9.22.1781100570315;
-        Wed, 10 Jun 2026 07:09:30 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff23:4441:7c57:ff85:2733:9342])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490bc3cc0f8sm559839415e9.8.2026.06.10.07.09.29
+        d=1e100.net; s=20251104; t=1781100927; x=1781705727;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BL13xctmBFivsXzXnLUZmni2yJ2AzY1XEjVgT0sg1Dc=;
+        b=I8dKpkKZUcokStaJcx2T95wAr7vvg+qHyjR0h06yjb2ZCxy3niMN+Xe5I4EUvEm2oe
+         1BV/4mt5+aCEUF0frM11b0CIw72lpAmJC699MSwCKPwhg8wPAoy+gMzVu25YsVEJTQaH
+         FGVjwkxtHukNFr0Ods3UbtxOpOvlnmyO3zAOuTlOR29TlITGMlxJhtVXV6hvsEcQQC0R
+         mvciq21ZChNYaRbZtb1hb7ra8aPOFFSUQfU5IyFBIxFKYEaumD9SWVhwdC7hcHhv4eME
+         lvsLdk3BTe6YwONBeDTJcuIg9JPrUJ3hlZSOHHnX2X1aTHah1YXrMe5fYqHNBuXa9UA5
+         yTpA==
+X-Forwarded-Encrypted: i=1; AFNElJ8tt36OHK/S4toVIDXauGxABM6jMq4BA7Y5m8KUQGBRtr3sa8Zwd4ZxT1prpl9ST9qlwBq8Of+KmJ7RCbVh@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx8QGmZ/g1B5Ze8rCTuwRrurAiWNN80c9bA0kosZOaA7H7+kivL
+	WxixBOkPQNqdWNIFvEEjgBLhWnpGKxU+tpXVXMciR+qR1jltMx5h1T7T
+X-Gm-Gg: Acq92OHqaATjvqGOy6+4+6qqdmT57E2SmLgs9UjVcB9WYMCYyeSYFytRyd8cFYmjVJQ
+	6z4r6fsoSed3tR4GbPkdnXCgWtKZbLUtxk8YtKdPsz4Eov14/F0qCZ8+w/Cm1gFxWKgnfxy0yo6
+	MswWrFuZTUlqBeR0fdByfdjqiSWYoGwf5lPCziySo/WfYHCu8Uauun5S3zjguVtU9jvTPZVIOhb
+	BgHE8hCr8dvhoZAyIi5O3xcA5+TuGnTBiekGYcStIuphK8ZuqDvHWzl0pR+wd3m1zmmgblLZ7Ob
+	n5D7uK3AWv8OQN3fDKuPIM4cMkhRY5f2HGNchz7eI2Gdhjnubd48IC+iQNQzlN+iY/VppVpKQlE
+	Rbx2pAhMbMO4qfgVVBblYsnqQw64fDHP5/l6lnPByUj3URIbgf555jrU8kaW65CJQJ2jYMK3rGQ
+	dRVw6W9CUsUhhfBrU8zSOBv3p/2JuDOvjSoZg54qV5HvSyMEDcpPqeE5b8Hs+v7cKkpg==
+X-Received: by 2002:a05:7301:5f0f:b0:304:de26:3cb6 with SMTP id 5a478bee46e88-3077b1c51aemr13825901eec.23.1781100927217;
+        Wed, 10 Jun 2026 07:15:27 -0700 (PDT)
+Received: from localhost.localdomain ([76.32.119.210])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3074db528dcsm31456004eec.3.2026.06.10.07.15.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jun 2026 07:09:29 -0700 (PDT)
-Date: Wed, 10 Jun 2026 16:09:24 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Georgi Djakov <djakov@kernel.org>,
-	Shawn Guo <shengchao.guo@oss.qualcomm.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 07/12] clk: qcom: gcc-mdm9607: Drop incorrect
- apss_tcu_clk_src
-Message-ID: <ailwFPgY13_7dZ-C@linaro.org>
-References: <20260609-qcom-clk-mdm9607-fixes-v1-0-5e9717faf842@linaro.org>
- <20260609-qcom-clk-mdm9607-fixes-v1-7-5e9717faf842@linaro.org>
- <f55526ad-ecd2-47b2-8b8f-5aec429bc1c0@oss.qualcomm.com>
+        Wed, 10 Jun 2026 07:15:26 -0700 (PDT)
+From: Hungyu Lin <dennylin0707@gmail.com>
+To: vikash.garodia@oss.qualcomm.com,
+	dikshita.agarwal@oss.qualcomm.com
+Cc: abhinav.kumar@linux.dev,
+	bod@kernel.org,
+	mchehab@kernel.org,
+	konrad.dybcio@oss.qualcomm.com,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Hungyu Lin <dennylin0707@gmail.com>
+Subject: [PATCH v5] media: qcom: iris: use disable_irq() during power-off
+Date: Wed, 10 Jun 2026 14:15:11 +0000
+Message-Id: <20260610141511.92352-1-dennylin0707@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f55526ad-ecd2-47b2-8b8f-5aec429bc1c0@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-112504-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:djakov@kernel.org,m:shengchao.guo@oss.qualcomm.com,m:bryan.odonoghue@linaro.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:taniya.das@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_CC(0.00)[linux.dev,kernel.org,oss.qualcomm.com,vger.kernel.org,gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-112506-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:vikash.garodia@oss.qualcomm.com,m:dikshita.agarwal@oss.qualcomm.com,m:abhinav.kumar@linux.dev,m:bod@kernel.org,m:mchehab@kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dennylin0707@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[dennylin0707@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dennylin0707@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,linaro.org:dkim,linaro.org:mid,linaro.org:from_mime,gerhold.net:email]
+	ALIAS_RESOLVED(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A805866A262
+X-Rspamd-Queue-Id: 32A1C66A286
 
-On Wed, Jun 10, 2026 at 03:50:11PM +0200, Konrad Dybcio wrote:
-> On 6/9/26 4:14 PM, Stephan Gerhold wrote:
-> > From: Stephan Gerhold <stephan@gerhold.net>
-> > 
-> > This clock does not seem to exist on MDM9607. Reading/writing the registers
-> > always results in 0 or crashes. The math in the frequency table is also
-> > broken. GPLL2 on MDM9607 runs at 480 MHz, so:
-> > 
-> >  - F(155000000, P_GPLL2, 6, 0, 0), // 480 MHz/6 = 80 MHz, not 155 MHz
-> >  - F(310000000, P_GPLL2, 3, 0, 0), // 480 MHz/3 = 160 MHz, not 310 MHz
-> > 
-> > Presumably, this definition was mistakenly copied as-is from gcc-msm8916
-> > (which uses 930 MHz for GPLL2). There are no branch consumers of this root
-> > clock inside gcc-mdm9607 (notably, gcc_apss_tcu_clk has bimc_ddr_clk_src as
-> > parent instead of this clock), so we can just drop it.
-> > 
-> > Cc: stable@vger.kernel.org
-> > Fixes: 48b7253264ea ("clk: qcom: Add MDM9607 GCC driver")
-> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > ---
-> 
-> It does, CMD_RCGR @ 0x37000
-> 
-> Interestingly, there's also an SMMU instance.. although downstream doesn't
-> seem bothered with it
-> 
+The IRQ is registered as a threaded IRQ.
 
-Thanks for checking, but that still doesn't give us enough to work with
-it. In particular:
+Using disable_irq_nosync() in iris_vpu_power_off() does not wait
+for an already queued threaded IRQ handler to complete before
+returning.
 
- - What are the frequency tables? Which parents exist with which IDs?
- - What is the hid_width?
- - Where do we hook it up to some children?
+Replace it with disable_irq() so the power-off path waits for any
+in-flight threaded handler before returning.
 
-The way it is right now it's definitely wrong. I don't think we'll need
-it so removing it like this patch is probably the easiest thing to do...
+Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+---
+v5:
+- Drop the runtime PM check in the threaded IRQ handler.
+- Use disable_irq() instead of disable_irq_nosync() in the power-off path,
+  as suggested by Konrad Dybcio.
 
-Thanks,
-Stephan
+v4:
+- Clarify the possible ordering between IRQ_WAKE_THREAD,
+  runtime PM suspend, and the threaded IRQ handler.
+- Describe the race condition motivating the runtime PM check.
 
-PS: This platform has the weird TZ-managed SMMU (like MSM8916), so there
-isn't much you can do with it from Linux. Unless you are running TF-A,
-then you can describe it as "arm,mmu-500" and use it for everything
-pretty much exactly like you would normally expect. But you still don't
-need to do anything with this clock.
+v3:
+- Remove the early enable_irq() from the PM-inactive early-return path.
+- IRQ re-enablement is already handled by iris_vpu_power_on() after power-on.
+
+v2:
+- Use pm_runtime_get_if_active() instead of pm_runtime_get_if_in_use().
+- Handle negative runtime PM return values correctly.
+- Return IRQ_NONE when interrupt processing is skipped.
+
+ drivers/media/platform/qcom/iris/iris_vpu_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.c b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+index 69e6126dc4d9..538659284c7b 100644
+--- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
++++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+@@ -236,7 +236,7 @@ void iris_vpu_power_off(struct iris_core *core)
+ 	iris_unset_icc_bw(core);
+ 
+ 	if (!iris_vpu_watchdog(core, core->intr_status))
+-		disable_irq_nosync(core->irq);
++		disable_irq(core->irq);
+ }
+ 
+ int iris_vpu_power_on_controller(struct iris_core *core)
+-- 
+2.34.1
 
 
