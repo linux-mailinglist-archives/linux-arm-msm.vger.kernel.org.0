@@ -1,194 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-112767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id oAuzL668KmrpvwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 15:48:30 +0200
+	id O3IhGxS+KmouwAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 15:54:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35880672738
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 15:48:30 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB2136727CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 15:54:27 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=kX2o9L+1;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112767-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112767-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=hbAiHOE8;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112768-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112768-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7B657309E1C2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 13:48:23 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id E2479307C629
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 13:54:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01D5E3FBEC3;
-	Thu, 11 Jun 2026 13:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E620A3F99F4;
+	Thu, 11 Jun 2026 13:54:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D355B407CCF;
-	Thu, 11 Jun 2026 13:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21D23C10BE;
+	Thu, 11 Jun 2026 13:54:24 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781185702; cv=none; b=DasKcycKtizvLxuWve92eKWy8mnoTVmm2//PS4PRGwnd3JPNosB3l+fA1uFhehBfir6WZgvX73hVUMEcnek0kTh6Mkk9bYuGtE1wGi6c7+wrDgLxi5qAzoj5jQM6MEBo8MQfEM0SDkEVIgut3hgFqZBkBE61i4uLaPlZjfDTAFE=
+	t=1781186065; cv=none; b=GfQd+I5kGfeAOce0yHFMc7NOaNrra+4lL3VbSt1Dl/8mzTnaGboZn/89eoydyjBEGKGLt47gWIcOQDL0ougSp8VSJ8I8GBnLSj5Z33M+9G4MeSXfAyKChZ6AlduwP1UgnWnP2tTVDWzE+UtwdqGsTT51Td4R3QnFl2TF/wXpA+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781185702; c=relaxed/simple;
-	bh=xfcR1UboYlxMKpr6D/hSMPuR+aMODhriUaayEJLNxh0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EhyDQKHAqZDTnhfPMkpp9JzPHb2qoiPs6cGf84WSVVhzB27T5L8muIWI7OZ4u3gtZ544rhuJuPd59ulngxFDS8hJBVbmilykGX72S+OxPA4YmV7zSB3fsV9rbNlnPubVC/Aeo6R3Vuow8eNOTowjyoKnprzJu2QVStNvG1bHjPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kX2o9L+1; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5FF1F00893;
-	Thu, 11 Jun 2026 13:48:16 +0000 (UTC)
+	s=arc-20240116; t=1781186065; c=relaxed/simple;
+	bh=E9vEcCOi2nh2hhGy2MA+1MP3Brgs80zE879kJagUG6Y=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=gUyvSRvIsuh5+pAT2hNNwCmQr1H83Nw79MUhD+tjJ4BERCBScPRKBIdjkI3OJj263BoTqkYm/JvkSHlWned8AO4VpYzeZU4Qtq2Ufqgwp5w0tke0klr9c0Fd8IupkUXGTJoJAP57h1w2NQPfpu9YzRAVBk+9FnFDkQrv0RlhyjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hbAiHOE8; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EECD1F00893;
+	Thu, 11 Jun 2026 13:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781185701;
-	bh=aF00A/7LJqHmnZrGb5ZdXoOv2Kq8GHQtu8KTtY3CkN4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=kX2o9L+1zy0n3E2kY9ryIPg3zWECW8UZdxmdJ4pvDlPElbnUzNpTjsbkWNZ8+izT1
-	 QlFXERUt7CDbJkWLV74cQDE8hWfDagUTWBz/vTmtCc7bqQCB1NQsB1fPrmsMP2ROZQ
-	 85mdSrpgo/c14dkzS1eVKw5uVi+VuhzhVHZO/PI9lABJX/ks9/M7yD5wmMQzeZw342
-	 rNIOSRBMqjrPx9haaPMaJaLzIwpF7RlpkcW2OUZc2nbMPOO4P3EsT96hwkSrUVw4Wn
-	 ucNQLeX11Iz6Pfq5JeH+DX+vpVZ/AuuznsLP8On45sH2ISyzPqgncsHzwSZwYdRDWN
-	 mNpHHd4zeHjXA==
-Message-ID: <ac191a18-bcb4-4fa5-a179-b72a6ac928cb@kernel.org>
-Date: Thu, 11 Jun 2026 15:48:15 +0200
+	s=k20260515; t=1781186064;
+	bh=0/yDYWn6kRk5UjSWpdp2H/2Ws7hO3+Bb9GjBgGzUmKY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=hbAiHOE8s4N0loBWBlVzb81+kh/Io/vffUDNZncKw1qJB36wk4ftcg9x7b9mbtDuu
+	 BADDAvwHMREeyLz3owgo5vL7Hv4a2DyOV2hebvt7aYxGkscZi5bLHC/7rKxRo05z3E
+	 or3pfXC5xBwSIy+dzZMhyWcxN2TE7EGzyupU/BKBEiaILXHqiUG0Gd5fiCFdKPBSR8
+	 jWiczkESG8IBY1vCfwpSL2W8BRV4oJmGXC8kafaWuWas94wUYpFa6W5XASHtGU8Eei
+	 wQexs2ziQNLb3XF+I5922Z8yzGnvnsFf3xUDJCKiEo+3Si49yD78Md7DWbfR13BeiR
+	 Uotb3FtiNAOSw==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1wXfrS-0000000Bmwp-1O3w;
+	Thu, 11 Jun 2026 13:54:22 +0000
+Date: Thu, 11 Jun 2026 14:57:42 +0100
+Message-ID: <87qzmd89ih.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Mark Rutland <mark.rutland@arm.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Jack Matthews <jack@jackmatthe.ws>
+Subject: Re: [PATCH 0/2] clocksource/drivers/arm_arch_timer_mmio: Restore support for early init
+In-Reply-To: <aip2Pnmi-LJPKwW7@linaro.org>
+References: <20260610-arm-arch-timer-mmio-early-v1-0-ac17218ec8b4@linaro.org>
+	<87se6t8q3s.wl-maz@kernel.org>
+	<aip2Pnmi-LJPKwW7@linaro.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] dt-bindings: arm: qcom: Add Lenovo Yoga Slim 7x Gen11
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: rob.clark@oss.qualcomm.com, Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Douglas Anderson
- <dianders@chromium.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20260604-topic-yoga_submission-v1-0-57c70c23d0d6@oss.qualcomm.com>
- <20260604-topic-yoga_submission-v1-2-57c70c23d0d6@oss.qualcomm.com>
- <7a330941-8715-4523-9f39-10b57586c69d@kernel.org>
- <CACSVV03J7Y4-ADRNE+4qArqsWvQZ3qmTc04r7vmY64s0qDYFkw@mail.gmail.com>
- <799fea04-e7d0-4184-b9ae-4cebfdac38d5@kernel.org>
- <841a54ff-6287-48d2-a513-a7442d624ab6@oss.qualcomm.com>
- <uieb6ukjokwnppc5zfr6bjychqsnpikwmiy7j7dmt2kgk7k4zi@2stv37ijv36o>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <uieb6ukjokwnppc5zfr6bjychqsnpikwmiy7j7dmt2kgk7k4zi@2stv37ijv36o>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: stephan.gerhold@linaro.org, mark.rutland@arm.com, daniel.lezcano@kernel.org, tglx@kernel.org, sudeep.holla@kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, jack@jackmatthe.ws
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
+X-Spamd-Result: default: False [-4.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-112767-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112768-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:abel.vesa@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:rob.clark@oss.qualcomm.com,m:neil.armstrong@linaro.org,m:jesszhan0024@gmail.com,m:airlied@gmail.com,m:simona@ffwll.ch,m:maarten.lankhorst@linux.intel.com,m:mripard@kernel.org,m:tzimmermann@suse.de,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:dianders@chromium.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:dri-devel@lists.freedesktop.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[20];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[maz@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:stephan.gerhold@linaro.org,m:mark.rutland@arm.com,m:daniel.lezcano@kernel.org,m:tglx@kernel.org,m:sudeep.holla@kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:jack@jackmatthe.ws,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,chromium.org,lists.freedesktop.org,vger.kernel.org];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[maz@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,linaro.org:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 35880672738
+X-Rspamd-Queue-Id: DB2136727CC
 
-On 10/06/2026 15:31, Abel Vesa wrote:
->>>>>> @@ -68,6 +68,7 @@ properties:
->>>>>>
->>>>>>        - items:
->>>>>>            - enum:
->>>>>> +              - lenovo,yoga-slim7x-gen11
->>>>>
->>>>> I imagine you might want different panel variants, just like T14s has
->>>>> LCD and OLED?
->>>>
->>>> I expect this will be the case.
->>>
->>> Then better to prepare for this now, otherwise later you need to change
->>> bindings. If unsure what other variants are, then at least make this
->>> compatible panel-specific, e.g. lenovo,yoga-slim7x-gen11-oled-foo-bar.
->>
->> I took another look at psref [1] and there's only OLED SKUs (today?).
->> There are however, two different resolutions available and both can be
->> touch/notouch.
+On Thu, 11 Jun 2026 09:47:58 +0100,
+Stephan Gerhold <stephan.gerhold@linaro.org> wrote:
 > 
-> If the other SKU doesn't have touch, then you might as well mark now this
-> one with touch suffix or something like that.
+> On Thu, Jun 11, 2026 at 08:59:19AM +0100, Marc Zyngier wrote:
+> > On Wed, 10 Jun 2026 18:53:09 +0100,
+> > Stephan Gerhold <stephan.gerhold@linaro.org> wrote:
+> > > 
+> > > Jack reported a regression for some single-core Qualcomm platforms (e.g.
+> > > MDM9625, MDM9607) that no longer boot because no timers can be found during
+> > > early boot [1].
+> > 
+> > Again, this is *not* a regression. These machines were *never*
+> > supported upstream.
+> > 
+> 
+> Sorry, I'll reword this next time. MDM9607 does have all required
+> drivers and compatibles upstream already and is just missing the actual
+> DT so it does feel somewhat supported to me, but I'm fine treating this
+> as a feature extension without stable backporting etc.
 
+"Supported" has a different definition for me. Cortex-A5 without the
+A9-style TWD was so far never seen in the wild. The Generic MMIO timer
+was introduced way after Cortex-A5 shipped, and was designed to work
+with the CPU timers, making this QCOM contraption a franken-hack.
 
-If you decide not to have any changes (new compatibles), then at least
-please document the above reasoning in commit msg.
+So calling this supported is very much pushing the boundaries of what
+was supposed to be put together.
 
-Best regards,
-Krzysztof
+>
+> > > These platforms rely on an obscure timer setup where the
+> > > global Arm MMIO timer (arm,armv7-timer-mem) is used as the only available
+> > > timer for the CPU. This setup used to work fine until commit 0f67b56d84b4
+> > > ("clocksource/drivers/arm_arch_timer_mmio: Switch over to standalone
+> > > driver") when the early timer initialization using TIMER_OF_DECLARE() was
+> > > removed when moving to the standalone MMIO driver.
+> > > 
+> > > There doesn't seem to be any other usable CPU timer on those platforms, so
+> > > this series restores the early timer support using TIMER_OF_DECLARE()
+> > > inside the new standalone arm_arch_timer_mmio driver. This is pretty ugly,
+> > > but I could not think of a better solution so far. I tried to keep the
+> > > ugliness for the two probe paths as limited as possible. :-)
+> > > 
+> > > If someone has a better idea how to solve this, I would be happy to try it.
+> > 
+> > I would suggest finding out what is the latest point in the init
+> > sequence where the timer can be probed without preventing boot.
+> > 
+> 
+> It doesn't get far without having any timer:
+> 
+> [    0.000000] timer_probe: no matching timers found
+> [    0.000000] entering initcall level: console
+> [    0.000000] calling  con_init+0x0/0x354 @ 0
+> [    0.000000] Console: colour dummy device 80x30
+> [    0.000000] initcall con_init+0x0/0x354 returned 0 after 0 usecs
+> [    0.000000] sched_clock: 32 bits at 300 Hz, resolution 3333333ns, wraps every 7158278824300949ns
+> [    0.000000] Calibrating delay loop... 
+> <board hangs>
+>
+
+This is nothing that "lpj=[some value]" on the command line can't help
+getting past.
+
+> If you look at start_kernel() in init/main.c it's basically time_init()
+> that would normally probe the TIMER_OF_DECLARE() timers and
+> calibrate_delay() that needs some timer to finish. There is also
+> random_init() that comes directly after time_init(), which already wants
+> to have access to timestamp counters. I don't see any other suitable
+> place to hook into. :-/
+
+None of that should be a problem. I can boot a hacked arm64 kernel
+without any timer all the way to the point where it is waiting for a
+tick to enter the scheduler and run userspace. There's no reason why
+32bit can't do something similar. Heck, 32bit doesn't even have a
+standard timer to rely on, so that's very much possible to do.
+
+Can you at least give it a try?
+
+> 
+> I also don't see any other timer we could use, at least for MDM9625.
+> It's a single-core Cortex-A5 and the downstream kernel defines only the
+> arm,armv7-timer-mem, which seems to be used for everything... (The
+> situation for MDM9607 is a bit different, but not any less messy,
+> unfortunately.)
+
+MDM9607 appears to be a Cortex-A7, so it *definitely* has all the
+bells and whistles that we need. The DT I found doesn't make describe
+the timer, but it is absolutely part of the CPU.
+
+As for the A5, if we can't get this machine to use the driver as is
+without butchering it and going 15 years back in time, then I'd rather
+hack together a minimal driver that only this contraption will make
+use of, and be done with it.
+
+	M.
+
+-- 
+Jazz isn't dead. It just smells funny.
 
