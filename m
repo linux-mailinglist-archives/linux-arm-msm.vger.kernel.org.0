@@ -1,133 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-112563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id JFrYJBHYKWr5eAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 23:33:05 +0200
+	id YTB9AM4TKmpXiQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 03:47:58 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D86F166D194
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 23:33:04 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82E1B66DABA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 03:47:57 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=JVMUYyyF;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112563-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112563-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b="cSj/CwE/";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112564-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112564-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EE7903262D44
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Jun 2026 21:30:42 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id DEFCE300F5D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 01:47:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3BF13749F0;
-	Wed, 10 Jun 2026 21:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DD12237180;
+	Thu, 11 Jun 2026 01:47:53 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF3D35677E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 21:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFC722156C;
+	Thu, 11 Jun 2026 01:47:52 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781127042; cv=none; b=KwyT/6Zf9gLyLgcnOPgR1nAYBfuqmMOVB7p0Y0Oz0WbYw4VsYIY6hRTIJodYY46SSn3hLjKc+WjkzjkTVIdpLDQbarZ2fX2K95+YWdtFmSxLIH78RJYtIodQX0FRyvEgQIEL0Xp5xv43JV33cJ1DonO2GM8IwqFkfh3Npnkj1Vk=
+	t=1781142473; cv=none; b=m1G1qQJvOG0llhF3VEB+yKENJl0He3JqUE1v0lJDeII32QXdQZ3XW7/3OEttdqQNd5cGrlLIB4Q9LpwzNabS/1sAsy/yMzefp/NowML3RWLjzrXEDJJXcGoF7qPsv1Z7TwZxxnu1u1ZG2AQfsPEYkFSelDqW1bap+1JgphoORKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781127042; c=relaxed/simple;
-	bh=7WQCXjEo/laIMBkgD1CYNteLnFlzYiX2sAAQcUzXUX8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C0WzAMbg5iAaOFRtLCYy97aqMTALeUKhMYdl9lsGzOg7Z6MuQicPHGYwkwPb/B2XyFUNpRqy0XvyK05F7rRf/t39GYy0Ru9VPMuRCfkOkzFpIsTnzXVf/S2cTxh6rrSWZPKmeuvrpO7genje2vO1x7csYexG57b+7U3GcWfqcWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JVMUYyyF; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DA81F00899
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 21:30:41 +0000 (UTC)
+	s=arc-20240116; t=1781142473; c=relaxed/simple;
+	bh=b0wlz/vaX75E20iY8x3VE79SMlxJn8+i/s5P+DnOUls=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DDm9Da/54BymOVDpiXJaIvItq8h8M1NWhSalxLg1PpgTffhZ6Rp2XNByKsoLxqOknRVv2q4rNG8Ec7MuAq1Up9GmarbAo5QS5LM/I2tBtQ3aMz0Cap+H48JGLtjRa/30VH/Op57Y4h3YaY0KF6kUKoEL5PMss9yzgF1e9dzbPo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cSj/CwE/; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33EDE1F00893;
+	Thu, 11 Jun 2026 01:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781127041;
-	bh=7WQCXjEo/laIMBkgD1CYNteLnFlzYiX2sAAQcUzXUX8=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc;
-	b=JVMUYyyFjGJ4PUbq+KXmbiaIh992fkoOvSDkiM9HAJ1AKF4wCE59CWqIx1UvY4HFR
-	 aVJjuahjFO9bTVZkGnAv3JS4n2SWHBoxcgfTevTMSGGcPkY/HHusB3dQlPGK9UTKG/
-	 82YugnUqrBjF9PKXcyHu+mDII9OyPQqx78Yp9OQyC55rIi+rOWczBDAupukTC+DqSv
-	 SS7sERrsGQVw+kExR4C+eARHzQZmYVa6vZenz+0SPsqF1sSG3tIZUsXMMlA2kqWgNn
-	 YMT6ZiHY9qr/QBfvKQDKDCDtqK01aeWJ9E5BgWEEXXQpH16qwmQUDAvG2deb61jHhl
-	 Nbp0wiLqv12pA==
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5aa66893e9fso8641984e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 14:30:41 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ8rYRfvZ0ZvSAQ6BFLwPbiBnDjAnEIxjDP19rNqPJDyJitqjh+H1u2wfnqNckHDXZp/BieCBaciFxYdHrUM@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKTcePJdQiC1lWPBHG+MS1dVIIjGj9NRJGMg5XJ4W97ByOM9Xo
-	ukKd7/ic9AMbeqEOTUcggGZDpNlCI/bkgirU44XDzKlJ7f15lAYSURfWk+RzWn6sBL6BsT3D0zk
-	SooeWMB11tPINCmOF8ZVS0VSadhIPeng=
-X-Received: by 2002:a05:6512:2346:b0:5aa:6f47:32a0 with SMTP id
- 2adb3069b0e04-5ad27ab1b9dmr10041e87.11.1781127040221; Wed, 10 Jun 2026
- 14:30:40 -0700 (PDT)
+	s=k20260515; t=1781142472;
+	bh=ocfHmUE2159OtvIR3JSDxLuTY6+2jLY/vkBsagTQDNw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=cSj/CwE/uFZQnilhW/orot5YG3n8o86DKcQS53FDGcN6wFAQwHpRjJuajeUd/LtpK
+	 f/BalcCq7H93E+ry9QETjuWOqg9Z88dxhFg+IAvPTk40m88OUnWsil9COk5gsaPQmf
+	 RS6Gtl5MLWUs/1bUKB+kJ9A7G/kZAF2G9BSS7+DyZLRsKxecS+Nkr6+fqnfcVNl+jy
+	 O0tv1GOxAftLfxdNtl1Z+MrR6k+W/JbMgsLGNSL6n8K+xlPRA2rcgftT5JFY4maiJn
+	 CxiLfdX3S+EojalzRVKlB6qGTDc9Ub9Z2QNZVMoa0jtyAdHL2s3ll+WgdCpHK8gT1S
+	 Xzvpvj29BgtrA==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Komal Bajaj <komal.bajaj@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bibek Kumar Patro <bibek.patro@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/2] remoteproc: qcom: Add Shikra remoteproc support
+Date: Wed, 10 Jun 2026 20:47:40 -0500
+Message-ID: <178114245724.590736.6193089236503038513.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260521-shikra-rproc-v3-0-2fca0bbe1ad7@oss.qualcomm.com>
+References: <20260521-shikra-rproc-v3-0-2fca0bbe1ad7@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260609-eliza-pinctrl-fix-sdc2-gpios-v1-1-cce631b7e7dd@oss.qualcomm.com>
-In-Reply-To: <20260609-eliza-pinctrl-fix-sdc2-gpios-v1-1-cce631b7e7dd@oss.qualcomm.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Wed, 10 Jun 2026 23:30:28 +0200
-X-Gmail-Original-Message-ID: <CAD++jLmN6RSFD_R_ee8Yt_EmadGze4--PjnaeisqFSt_UejJ3g@mail.gmail.com>
-X-Gm-Features: AVVi8CdRxDNEX30dLaT-ERVk-eUzzOe60cmP1q-6ymwD9PXZ1if8KYbYZw6IGgc
-Message-ID: <CAD++jLmN6RSFD_R_ee8Yt_EmadGze4--PjnaeisqFSt_UejJ3g@mail.gmail.com>
-Subject: Re: [PATCH] pinctrl: qcom: eliza: Add missing sdc2 pin function mappings
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-112563-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112564-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:abel.vesa@oss.qualcomm.com,m:andersson@kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:mathieu.poirier@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:komal.bajaj@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:bibek.patro@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: D86F166D194
+X-Rspamd-Queue-Id: 82E1B66DABA
 
-On Tue, Jun 9, 2026 at 2:03=E2=80=AFPM Abel Vesa <abel.vesa@oss.qualcomm.co=
-m> wrote:
 
-> GPIOs 38, 39, 48 and 49 support the SDC2 DATA function, while
-> GPIO 51 supports SDC2 CMD and GPIO 62 supports SDC2 CLK.
->
-> However, the sdc2 pin function is not listed in the corresponding
-> pingroup definitions, preventing these pins from being muxed for
-> SDC2 operation.
->
-> Add the missing sdc2 function mappings.
->
-> Fixes: 6f26989e15fb ("pinctrl: qcom: Add Eliza pinctrl driver")
-> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+On Thu, 21 May 2026 18:51:36 +0530, Komal Bajaj wrote:
+> Add Peripheral Authentication Service (PAS) support for the Qualcomm
+> Shikra SoC. This series introduces the device tree bindings and the
+> driver resource configurations for the three remoteproc cores present
+> on Shikra: CDSP, LPAICP and MPSS.
+> 
+> 
 
-Patch applied with some fuzz, check the result!
+Applied, thanks!
 
-Yours,
-Linus Walleij
+[1/2] dt-bindings: remoteproc: qcom,shikra-pas: Document Shikra PAS remoteprocs
+      commit: 39176cdac9c7206ad4e70f22f134a6984a89be8b
+[2/2] remoteproc: qcom: pas: Add Shikra remoteproc support
+      commit: 23dd0092bc150b55a62347ed4814c14fda7a32c2
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
