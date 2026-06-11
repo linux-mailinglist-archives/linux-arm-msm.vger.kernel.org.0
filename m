@@ -1,207 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-112615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id ajPTKK9IKmoClwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 07:33:35 +0200
+	id oRnfKwZNKmoYmgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 07:52:06 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1949766E9DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 07:33:35 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F23466ECB7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 07:52:06 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=XXE8OmuM;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112615-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112615-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=ltendcq+;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112616-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112616-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6677930506A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 05:32:05 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9BD6F302E0D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 05:51:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7B622848BE;
-	Thu, 11 Jun 2026 05:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B67A356754;
+	Thu, 11 Jun 2026 05:51:28 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA54FC0A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 05:30:33 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781155836; cv=pass; b=pZ5/4wcO45vz6MoLAIPMZdmHNluN4Iod9m19yvPsdYVj/X4mBELWCY/RIKNOLBriO2oPxOIHIi1PqK3JsSPC2IbUg1NTr3hipzKHT9KzX0CanoxoYravJdmBqacN1gQoYkzvdFYf8vwWuQQx3i/k9mB+sh0WQ0ulJawEWQYtw7g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781155836; c=relaxed/simple;
-	bh=Q773769O9P0PEkWxz/hUK6moYfjQ705w9ViRAFQaflM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d3X9rgQSEjC7V75cLcW7N5IrCbQogla1Y2NHiQXUSUT4RpYa58QauSTWeLdz0NpF3USOecRsr1nj/QkSgyVqv/+1iKpEovlHkkZXdKD6xj2UyJtG1fN5Gz3A3yEEGbfN1AaFoFTam9DPx/7ziejPq6zEjkepFmal0M3D17iII9Y=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XXE8OmuM; arc=pass smtp.client-ip=209.85.222.45
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-96387977596so2531645241.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Jun 2026 22:30:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781155832; cv=none;
-        d=google.com; s=arc-20240605;
-        b=NL0TH/JOv/N9Z8mlJnWSdHPxn16O2OJ/EC8ERxhn8D6le99sn637bQAgHpFr5O+N9J
-         Mbr/az9GzjZzanog2EkEVwFAkCfYsB1AwErXDqPAy9xKRudIR/CLBEx6izgxIltLIFKe
-         +qwvKTccNOEQSbC58/wOdGHYwWCh+6wfftn5QbHENB5Yh4LK9yoxto30fF5r3MHGpGqo
-         t0p/jnAVO6MtP32G904TH3sK5sAQ0bEgCAuwKPbAW20qvjHlGLR3fwc28wyrXT0ENfqi
-         PdA84VUse/mCh9e4afmrnIYGC1/1BsP0LNsb/KgfKv4bgXBPqzJXP6yF9V+WAXp+h72e
-         hMEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ol4aUhvNk7Xou2fzcXcwE2NJZ2PFeOEVI2xbr2T74rc=;
-        fh=rdIa98ygZHUiwyX+U0+VNP2qOG+i1U8Q4JjyvHmZuc8=;
-        b=bKXrrsi5FL1V1Sht8e0GJEefkQkEEvGTIGRj0vCy/7evnWya2MotQY9s6Tf0weMIAm
-         c+m2Q4a4RxGzJX4V65hmoGvkwn0DMa6dQLgL6esyK9f58E18c2qgComOfvexcqjIMP/t
-         BUdtzIHnij9s+LhUuqbjpdNpc7n+5VxokdQnmadfeBymyBtyUw4d4mB8g8jzYYND7x/C
-         cdHPvjNEogAG8jStWlFtXbWqgT3eMUk4MGgpzhzYPJ4+S/BYW+bsh0J0ScvXemBG/srB
-         yr5Sx1oPAnYwNyRIbtmwTMM4nCBZZEPpbyybo58tkAdEzeRpG4d31C5AytEbuD+7k9rD
-         UP3g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781155832; x=1781760632; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ol4aUhvNk7Xou2fzcXcwE2NJZ2PFeOEVI2xbr2T74rc=;
-        b=XXE8OmuMKDC7wNPkumHHw4B7pkKNYbwZDEs6j4IXCRsRDI4w+mNnhYwkUxK0t21WOF
-         DOZwEpADmNpkKblzH2Q8d4NplfONwYArxPKH0BgWIPE+8zVak5Cww2xKS1XZox7hahyX
-         8sVZt0PNtdssKx0q3QjgfZbfbKI4GP7yMx3YrRRP7PCb9IcIWKim+bRaPCa3nd0731mf
-         KssWDJvtoBH6RIZfPjUqp/mN58ePYwRwxp7McqllhTvjycr6WJnEdu9Cv3t/wyPOZCNX
-         cwFeLeciBxxTKiK7d3IdC1gHTB2SvacSKYE+ScUowmlt84Vpixc7MNN7gWYfcB0mbJtI
-         wAlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781155832; x=1781760632;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ol4aUhvNk7Xou2fzcXcwE2NJZ2PFeOEVI2xbr2T74rc=;
-        b=DfYhAaQWS9YPd7vM2ZbUESljXiTa9V7q7XT648s/49IsL6bD64WcY2No8sO6oCyhNA
-         MXFuPO8LcB3ju8dZ0keYXWpSUHySB1p1FiQAs8TkoaSiFPudGkNHS4CLXOC9cmYM8YF9
-         eI3dfQGcfqPpbtzt9TXSasuZrWZ1AeIM6Rzu6DhSqvNIsdNl8/VYXANRGgWAW1zf22Ho
-         A5XZcbDtaFwJkT0xvL+izTRBOeZshywVx7HPtJLKAePPR3GBnXdhmbJSvfg0r2isF+VW
-         ki/DTq9eaUzlR4UNy5FDLI1xBy2oXBukDSgsJbtXNaSGNp86tqG80vR2Kl4oxFzVG1+G
-         x8pw==
-X-Forwarded-Encrypted: i=1; AFNElJ9lCzoEH5xgcgQ5JmAyJWmMJW+6o8TABcs8BCEalczqEIEeKBFMtInMtZmLTemcCZvZEEJ3n1kJHwxDAV2T@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBu3at1lmIz9cB0HYYMVzZiFiQd/Ylwa7HglT3HHDdkjgBPt6T
-	rHPzPRGl8lKLgr/HW16AE7osSsQFL54MB1h0Fl9YoH661uSTRzL/c5XIg0hB4IUOnsbYOaS4Ubj
-	nkqOgR2QJM7ajYi5ELgzXPGiD1riwfPg=
-X-Gm-Gg: Acq92OF0LvgamBi/oS4OGs3V2dgCSKHEg5AUD/UQ+9D5oQX5I9p/EIS+xW9ilDzyZUH
-	iXEBDZOUyCaJSzS2tYGkNzaQpd8uCM7d/Rm05jfRfkDFz/EDgbp0cwI3xVKuzoGJFYFLxZVzm7n
-	tk8S61NUc5uDG3eLPWuC8CZAkg2xeRbctOOTiE9iy4twKnSGIDn+c8gA/YyBcuAbgNpCVrPHW4q
-	sHFBCo6goHuqx0tjuOvzv9FM4YzLWuH019f0Un6u56R6UVXBxq60MMCVkp3f7iD17qNWTZX5tBM
-	VFyXcNVvrM3JP4j/Tjzt2+PhJ3t5vUcg5W8pr7nSfwh4LKDnj0BTiE0HHoS0
-X-Received: by 2002:a05:6102:374c:b0:62f:39a9:ae67 with SMTP id
- ada2fe7eead31-71d5ebb6737mr324066137.17.1781155831972; Wed, 10 Jun 2026
- 22:30:31 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91ABB352010;
+	Thu, 11 Jun 2026 05:51:26 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781157088; cv=none; b=m9o5a7TE0CRyLsdOLB3zPphKiY3MRDn50DBKP1dGmSN7mreSSZdAePtiwtKdXnA93ICfCcnzCzNj3urdb1TykDtIjC+U4iBnV4GyN1p1zd5xgbJRRrs3RfwzJ7fV6OlkirJrd9ZulmskAQC5heXYN8h27jVsVZQWOHO1X4X2jyg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781157088; c=relaxed/simple;
+	bh=QKG48vrRFo7Txxgz/yVhR27NhGkUONPhGEj9VJF+7j0=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=lIbYOigWPw6tLdqJ20o1mRvjzE6JKiTWm0SHmsA5xGBQTRcmzJg3QzHGx/uaUwSwL5XzXJLJjpCG5gfl8pELjiApvN/q/9qfCZCKLtrGENcCw4/I61HaYEknYufFFC2kJoqJ1aBOgEYolCUaJA7ZFU70Cz7Ja4QqmMRHRfzIvqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ltendcq+; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33AE61F0089A;
+	Thu, 11 Jun 2026 05:51:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781157086;
+	bh=wU9QahE17CHcvOem5UsKxBBxUuQVPCMM9FqgoNv0fUs=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=ltendcq+AAz8Kp/fDbsuB6K+OqKdl/kL2fMiTeZchbhNIhi8K6spbNhLwcnfHj+Gd
+	 kxtiVtmL3YdkKr3dwsVJqJgoWQez95r6u8PymmfpHYkxniT/nmwlwf+feqDFXeDsqB
+	 aCoW4wrYb+WmUfRIQcw3GeIYHLKw0eRXH2Lp68T++tsDOZSk1ho22cr62N+lYgBySL
+	 l44GV9AlHGrn7+T1xASigUXew50l8EX9/F0Jj8cPUnIrSu6Zk4s/d+eeRsBPAY5Jrz
+	 g1Zlv2lCGQOypJkhiLSb7kPCkAfkepx0GYqIvyHuGEWX5MesX0mc18xLJlgTDzZ2Hk
+	 V5Ef0FcvGOpjg==
+From: Vinod Koul <vkoul@kernel.org>
+To: okaya@kernel.org, Hungyu Lin <dennylin0707@gmail.com>
+Cc: Frank.Li@kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20260607163119.78717-1-dennylin0707@gmail.com>
+References: <20260607163119.78717-1-dennylin0707@gmail.com>
+Subject: Re: [PATCH] dmaengine: qcom: hidma: use sysfs_emit() in sysfs show
+ callbacks
+Message-Id: <178115708382.468137.8784208588482548501.b4-ty@kernel.org>
+Date: Thu, 11 Jun 2026 11:21:23 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260607160435.36546-1-mitltlatltl@gmail.com> <280402c0-57bd-46a3-b95c-f9ae02122a09@oss.qualcomm.com>
-In-Reply-To: <280402c0-57bd-46a3-b95c-f9ae02122a09@oss.qualcomm.com>
-From: Pengyu Luo <mitltlatltl@gmail.com>
-Date: Thu, 11 Jun 2026 13:29:12 +0800
-X-Gm-Features: AVVi8Ceuyu40o3HD-dzKwp_kGIQyqB8dXPSn6NI0LymvcdUS1bhUSGUemAnaeFs
-Message-ID: <CAH2e8h7aGiF1g_LgG4WxEj1eGbUp-T_U-yZVpoHgU8FsMOrWTg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sc8280xp: Add camera MCLK pinctrl
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+X-Spamd-Result: default: False [-5.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-112615-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:vladimir.zapolskiy@linaro.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:okaya@kernel.org,m:dennylin0707@gmail.com,m:Frank.Li@kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-arm-msm@vger.kernel.org,m:dmaengine@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER(0.00)[vkoul@kernel.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-112616-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email,vger.kernel.org:from_smtp,linaro.org:email]
+	FROM_NEQ_ENVFROM(0.00)[vkoul@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1949766E9DD
+X-Rspamd-Queue-Id: 3F23466ECB7
 
-On Tue, Jun 9, 2026 at 8:17=E2=80=AFPM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 6/7/26 6:04 PM, Pengyu Luo wrote:
-> > Define pinctrl definitions to enable camera master clocks on sc8280xp.
-> >
-> > Suggested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> > Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 56 ++++++++++++++++++++++++++
-> >  1 file changed, 56 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/d=
-ts/qcom/sc8280xp.dtsi
-> > index a2bd6b10e475..0dbcd3069a3b 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> > @@ -5484,6 +5484,62 @@ tlmm: pinctrl@f100000 {
-> >                       gpio-ranges =3D <&tlmm 0 0 230>;
-> >                       wakeup-parent =3D <&pdc>;
-> >
-> > +                     cam_mclk0_default: cam-mclk0-default-state {
-> > +                             pins =3D "gpio119";
-> > +                             function =3D "cam_mclk";
-> > +                             drive-strength =3D <6>;
->
-> Other platforms set this to 2 by default.
->
-> What's the value set on Windows when the camera is in use?
->
 
-It is 6mA.
+On Sun, 07 Jun 2026 16:31:19 +0000, Hungyu Lin wrote:
+> Replace sprintf() and strlen() patterns in sysfs show callbacks
+> with sysfs_emit().
+> 
+> sysfs_emit() is the preferred helper for formatting sysfs output
+> and simplifies the implementation.
+> 
+> 
+> [...]
 
-Let us get ctl_reg first on Windows
+Applied, thanks!
 
-lkd> !dd f111000 L8
-# f111000 00000284 00000002 000000e2 00000000
-# f111010 00000001 00000801 00000000 00000000
+[1/1] dmaengine: qcom: hidma: use sysfs_emit() in sysfs show callbacks
+      commit: 26f926b44dbfc035d5ba0ccfc4387a40aa9947c1
 
-ctl_reg =3D> 0x284
+Best regards,
+-- 
+~Vinod
 
-in msm_gpio_dbg_show_one()
-...
-drive =3D (ctl_reg >> g->drv_bit) & 7; // (0x284 >> 6) & 7 =3D=3D 2
-...
-seq_printf(s, " %dmA", msm_regval_to_drive(drive)); // (drive + 1) * 2 =3D=
-=3D 6;
-...
 
-x13s should be the same as gaokun3 in this part.
-
---
-Best wishes,
-Pengyu
 
