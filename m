@@ -1,198 +1,514 @@
-Return-Path: <linux-arm-msm+bounces-112692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id FYyTOeqFKmrYrgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 11:54:50 +0200
+	id YxRwEfKFKmrargMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 11:54:58 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52C3F6709B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 11:54:50 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0C6C6709B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 11:54:57 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=jyGmsJE7;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=A7Kg01kQ;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112692-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112692-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Ohvexb5v;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112693-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112693-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7DD9C33709CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 09:49:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 816C633B6F67
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 09:49:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 741933C5526;
-	Thu, 11 Jun 2026 09:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 687133C5544;
+	Thu, 11 Jun 2026 09:49:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5767F3C4175
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 09:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E403C553F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 09:49:20 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781171353; cv=none; b=fEpTMomnmy5soUU0LbcAMx6vwsaEB60xJCry1bl98KF3QkdPDA7lI+Lh86R1y3vk+mUVk1ASZShAolJB/p2uJS1jB9WSbL3GYchLWMvUjQwYkvYuau5NLJzbHS5myAvy3gureWlhJy/S2Ke3OJQrIJMnMjlEXxHTNa6stCVhgik=
+	t=1781171362; cv=none; b=aJFcMTb7lcBIQaiJz0p6VFQMgApQK2xNYQUd0ziFfpeJBVc+LJA9u84aw9YIfz08theUf6rgz8xXykqfbkJl/BpuDQG+IOP+AjdZfrsx2cktK7+YnNaK345HP4BEY6I3/N28C4OzYHNN63adEelHkxQN9QnhtllsSUrl5EJ7ZyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781171353; c=relaxed/simple;
-	bh=d0T5kP3LL+kfIxqV6/dK/GXb1lMjqJJIjQZkzPC1N6c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a9hAlQsIHuoA4+Bm6iVQ1sVCv/zeRSjmn+b/6QDw+ruOcXRlUZAbS5yEE32K8/IR29C0ENw6gDutZuKrykQ2Zl8nIk6oQxZeggO2nIRn4ReQ6qE1eczVm9gLMJmbPSZet5MVK7sWJdDofMJXC+4qHW+og8t8TJB/erUXSk0xPWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jyGmsJE7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=A7Kg01kQ; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65B5GFbg3791624
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 09:49:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3i9DKlQbhqJ2Xx9GXVi37yT+grS7XDDKX94F+vmurL8=; b=jyGmsJE7vj02LXJu
-	IytJR/lxSUiq7a/P/VGpxWeJ9r1VtoH2VomkQTCTssOOJyIgLHqzXQzJLoEbuxDP
-	WhtO2L92WX/Kg7YYTmoNbB3AAngiWtq0b0LP74UV+lXBhoRbmZd/ZF+Fbd69AXQ8
-	hLpfEyJSr859JmCpqdrKS9kJY3PS2SAV7VkJwB5oPr1RhSJ7oePauTymMY554SFN
-	RuoejhLNN8y2fBJfucCsnNCClmpS7snl5ApPkHuGOE4GqBA3IpI9BtIi1N665hia
-	D56R42navWm9DvWv8bQe/JZcpHxGmT9xE2DCVTO62HlIcyf0qCIkq7Ac9tSOUorF
-	fm7EAA==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqe702tjr-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 09:49:11 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c857fa2706aso3371352a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 02:49:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781171351; x=1781776151; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3i9DKlQbhqJ2Xx9GXVi37yT+grS7XDDKX94F+vmurL8=;
-        b=A7Kg01kQsOnoLcMxUyGWO8BOiNfTaR0hiMeNdHIdE+w4pR64rgQb0EjBX39jcive3Q
-         /6jHrdM9ah59kauGrosRZtxmFzbF7H9Bj3Kdp5zD9mEsWqpbqtrz8TGoqPFaX3gokpSe
-         +IVRpprJn92OYW1uP0wuUP21ACPGSw4op2yEQYlol9BNbt9aL68jehPyzS8HzSt46yG3
-         HhFC6pJso8DwLjqLGW8+tx6lYIxkoLH8vcGofaDqVVpzroQWigBgNaJIQiNFEk7+srZV
-         Y2g8nFuG3NVjFm5XKufcXWEibHw9F+JO9m8oj0wdShc3ZGw2mEPP/YLBfd9UCdj0AdQh
-         erkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781171351; x=1781776151;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3i9DKlQbhqJ2Xx9GXVi37yT+grS7XDDKX94F+vmurL8=;
-        b=ULcNr/jm2uhvh3QJTDQVPrFYwkJ1zpqWGYuOsbVOcDrO9RSMAmVh3H4t4Hm5GvuKE0
-         zKcfRTofH49Xc5KmayOxcYF0AxcoCLXruAx41AXjnG2m6KutyljbGtUleWswa30SizaG
-         0ONRK0cEkGOaGUNfO+yqBKHmRdawfG4e8bZ4RdDjbdZYtpSAAOHUx7IajtKzCNcRNgmq
-         KTW0B6d0/qsx04uMo87duBaJM3XviJexdZqavrqoVMniSauSsKgRmxq5yuDHfxeB3Tw2
-         OSFs1UIBTyxegKF3viMuY2tc/vgXCdnHTyI7t6EE65Gfu2sqNOdk3If74gGHx/lVxJuk
-         TRQQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/y8K6MZrROzpr6R2PN6Ntn39RhNDYDb+pcY0oEXsJXCX5cKPknar1+RVn63ZodLuCACdVld0ELrVOtHb7p@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/Ap6l6pm8JXFeJO+qDvgr9nBRUxNKdF920wbRKlKi0J+TIW99
-	bxdkk4D4RgMUUswKk7GHsJumPjyZG34Wa5OXmxCh7TTox6xIT/CgMQm1w7KvVhpe4APlMQlJF/5
-	PqAD8UZWcPKve3tsYj+ym6dVknQJelOOy4MdwOuVX5p7VpIXYJBrv88hHQTrFIyOXBTKe
-X-Gm-Gg: Acq92OHj3i9z2EZU42ggwUQy60bEztWT19Z0myoeXf/c0oGQIDJJs43mplaOt4qDTr7
-	s6WjuYCgjFiefotAqW6tNBN2xb4CwaxDVmFpaqcvc9MOQVAk2F5hJ8C0I73dGTrsejg4zULdVOV
-	tf4ZKCtp9ccinJtEO9syp6GjtECr0vvbsCta/u6S40MMLx3T7Ul/Ms6dW2T3OWdK4ETblyu1Roj
-	f+MPFVJLMu7S89yEdgf8pFMU8AiwS0Cgs3cuGspuFf/PiD06OS54k14r81n2gGVWgKHYfNVrYVY
-	xIOnV+iBZOj+91sugw0pQiWRBsQvitW7B6n88bzW41LiiPTgNxepVrQ13A2X815eS3OB1NdFofS
-	6szYblGSziyRWGYf1/13h/aeyG6G0r6pcluRHizNCcYE8WFpJl0y/XI9h5eXvPSU=
-X-Received: by 2002:a05:6a21:7d04:b0:3b3:bdfd:762c with SMTP id adf61e73a8af0-3b5e3200915mr2484922637.17.1781171351023;
-        Thu, 11 Jun 2026 02:49:11 -0700 (PDT)
-X-Received: by 2002:a05:6a21:7d04:b0:3b3:bdfd:762c with SMTP id adf61e73a8af0-3b5e3200915mr2484880637.17.1781171350373;
-        Thu, 11 Jun 2026 02:49:10 -0700 (PDT)
-Received: from [10.92.167.195] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c86585a1cf5sm1354184a12.4.2026.06.11.02.49.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jun 2026 02:49:09 -0700 (PDT)
-Message-ID: <a62345ab-483d-4201-be41-a14f5f44690d@oss.qualcomm.com>
-Date: Thu, 11 Jun 2026 15:19:05 +0530
+	s=arc-20240116; t=1781171362; c=relaxed/simple;
+	bh=S4BIUBRbEO29ocPxozqRrFP/C9o8xtnSUSH2KFmCpbg=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ppg2q3+dU06OUEp0TK13kNG22DaL0x5NSt0SFrF9niyAb1ckW96QiAvezASB4EsriFYBK1o7Nv/6+S8DoZEasWwjnwS893xkFFjuAlJIyV41QJhMb8pEmiGcQnSNup9E2Jaq4mcFOxYarr/ekUAoHWZIQ4R+Yp9Un0gul2JuWxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ohvexb5v; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFC11F0089C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 09:49:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781171360;
+	bh=wytX47iTOVlGsWaMnCOC5biW53KG+PvOIIBEsrB6UeQ=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc;
+	b=Ohvexb5vB0qvNCQ/waG2GHthFxasB5ZPE872j3CZA0Z4xB4Bu3tO97iYU0CgrWhAL
+	 e9Rat1EeRxA6GL3tBTMFwN9296nu3fZ62Z5PlmyPWhoa/XaSUuh6da1x+gN/n1D8g8
+	 xJ6vJwzhDoXjPA1JjwoesYe7BhlTH2R0A46mVDZaJp/8++OqIqYqD5qtS+ZCadmHUS
+	 yIvKXqKdQhyNVdz1FwpzH1BjNEihhErQIUKstpLXqVJH/WlLpyqw7evmVDTAn7B6HY
+	 dGkcC5TdGUW1ya97iuMQIQ/3umFqxkyjGpFMBETm9NYAHajzdv/PJ9KRbM7gerdOtH
+	 anR0kBEaAXN/A==
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-396771119c4so77501581fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 02:49:20 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ8ZIt92yL2DJV+U8852XVFMFkW9IPq2lAQPydiiiVoSLYs+lhqMAqB+LIguGst3so3kUOv5MHUJz8Kv+L9s@vger.kernel.org
+X-Gm-Message-State: AOJu0YyObERJ35I6dhoceGfRrg+DXdwUndFZXGoBij7z1MF1hXRgGVZD
+	HeeGeAP2DtWaPCg2PTqIRvCWA7wzaK/BxfKLEms/FZEM687RfUrdc+Md49KYYq2TUSIqWFDTp6R
+	1EE4OF3k7vqmSqCkQTjFyHlKUKdLJQ++lAO1retoB+w==
+X-Received: by 2002:a2e:bc82:0:b0:396:77aa:1dff with SMTP id
+ 38308e7fff4ca-3991a1634fbmr5864991fa.23.1781171359200; Thu, 11 Jun 2026
+ 02:49:19 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 11 Jun 2026 05:49:17 -0400
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 11 Jun 2026 05:49:17 -0400
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260610155708.151067-3-prasad.kumpatla@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] crypto: qce: Fix CTR-AES for partial block requests
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: Thara Gopinath <thara.gopinath@gmail.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
-        Bartosz Golaszewski <brgl@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260610-qce_selftest_fix-v1-0-1b0504783a46@oss.qualcomm.com>
- <20260610-qce_selftest_fix-v1-2-1b0504783a46@oss.qualcomm.com>
- <20260610184610.GC1158828@google.com>
-Content-Language: en-US
-From: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>
-In-Reply-To: <20260610184610.GC1158828@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDA5OCBTYWx0ZWRfX6rK4+qCCnq/p
- C1Y+LQ0dI2A4xubk7NvHprTc8teMVwXWsscc8/sjKyW5LZKbigBLGZHmK4GIesKkIssTgRHTi/W
- PpOtkh6zXFU4j//ck6Fg2etQ5529j9SsmUI1CPOvLlUTDotF+SilungupNvEd/p1GWDlz/rMkqf
- iUPzPtlaySjyjPWRdAuiKb1ppgwZY9eIEVSyC9dWJ0EQ9Vs/vUxo7avEAYrf361v46maVEqxBWn
- nmEB49sIOvReOXDUrYW/TtUUsgW+mSi2g72xkzADFZaPnLqTQzjS1gHtGLUKZEevZctRhxWA4uD
- AVKNdib+xomR+H0W5TjRmfO+rSKyrqH/YhbVLJOt0YWdi4kN2Gedy7kU/namI0S/7L+zNgpeB7N
- cZ0ecCyYE1viU1G2/EbSmbviImPc+NhljG83NL9A0cX66jSSxe86R1BC7FZm1I5HHPggCrjSQH2
- lkB1S6gt8naF8NYkz+g==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDA5OCBTYWx0ZWRfXy1XILpqQNcuA
- fyHd8B8EUllM21UGBSYCIeXOr23AS9i5qZcYVVrLNzaTXUpbTfw/dpMmP5uZz0lB33EyqqJRMR6
- xLvNFc+d6vw9q/o3aCzQe7/Xufo4XA4=
-X-Proofpoint-GUID: IuxwAwliskV62yLtZ-MiQWFEO3NaDnYI
-X-Proofpoint-ORIG-GUID: IuxwAwliskV62yLtZ-MiQWFEO3NaDnYI
-X-Authority-Analysis: v=2.4 cv=Z5Tc2nRA c=1 sm=1 tr=0 ts=6a2a8497 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=HjGwlBrXPuM9SlVP364A:9 a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-11_01,2026-06-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 adultscore=0 impostorscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110098
+References: <20260610155708.151067-1-prasad.kumpatla@oss.qualcomm.com> <20260610155708.151067-3-prasad.kumpatla@oss.qualcomm.com>
+Date: Thu, 11 Jun 2026 05:49:17 -0400
+X-Gmail-Original-Message-ID: <CAMRc=Mf2oujn6MstGqKg1JCu3hbPD5zHhCB-Zke_hu8LYCz-Xg@mail.gmail.com>
+X-Gm-Features: AVVi8CcPpEoF540dxiZBx5o09HxzmMiojRBzSAzxkGBQgVXV1gCQVjyXXQDH2E4
+Message-ID: <CAMRc=Mf2oujn6MstGqKg1JCu3hbPD5zHhCB-Zke_hu8LYCz-Xg@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] ASoC: codecs: add Qualcomm WSA885X I2C codec driver
+To: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
+	linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Linus Walleij <linusw@kernel.org>, 
+	Bartosz Golaszewski <brgl@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[gmail.com,gondor.apana.org.au,davemloft.net,kernel.org,linaro.org,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-112692-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
-	FORGED_SENDER(0.00)[kuldeep.singh@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:ebiggers@kernel.org,m:thara.gopinath@gmail.com,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:brgl@kernel.org,m:thara.gopinath@linaro.org,m:linux-crypto@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-112693-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:prasad.kumpatla@oss.qualcomm.com,m:srinivas.kandagatla@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:srini@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:linusw@kernel.org,m:brgl@kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,vger.kernel.org,kernel.org,gmail.com,perex.cz,suse.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,mail.gmail.com:mid,vger.kernel.org:from_smtp];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kuldeep.singh@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 52C3F6709B1
+X-Rspamd-Queue-Id: A0C6C6709B9
 
-> This fix isn't Cc'ed to stable, so stable kernels will remain vulnerable
-> to this bug.
-Sure, I'll Cc stable tag in v2 with any other feedback/comments on these
-patches.
+On Wed, 10 Jun 2026 17:57:08 +0200, Prasad Kumpatla
+<prasad.kumpatla@oss.qualcomm.com> said:
+> Add an ASoC codec driver for the Qualcomm WSA885X smart speaker
+> amplifier accessed over I2C.
+>
+> The driver provides the control-side support needed for playback
+> bring-up, including register programming, serial interface setup, clock
+> handling, mute and gain control, reset handling and interrupt support.
+>
+> Program the init table during codec initialization and reapply it only
+> after an explicit device reset so the static device configuration is
+> not rewritten on every playback start. Also program the TDM control
+> slot-count field from the runtime slot configuration so the same codec
+> path can be used with 2-slot, 4-slot, or 8-slot Audio IF backends.
+>
+> Keep the stream-time power-state sequencing in the DAI callbacks and
+> use normal regmap access for the control path.
+>
+> Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
+> ---
 
--- 
-Regards
-Kuldeep
+...
 
+> diff --git a/sound/soc/codecs/wsa885x-i2c.c b/sound/soc/codecs/wsa885x-i2c.c
+> new file mode 100644
+> index 000000000..a7d8f8d48
+> --- /dev/null
+> +++ b/sound/soc/codecs/wsa885x-i2c.c
+> @@ -0,0 +1,1643 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
+> +
+> +/* WSA885X I2C codec driver */
+> +
+> +#include <linux/gpio/consumer.h>
+> +#include <linux/bitfield.h>
+> +#include <linux/i2c.h>
+> +#include <linux/module.h>
+> +#include <linux/regmap.h>
+> +#include <linux/property.h>
+> +#include <linux/regulator/consumer.h>
+> +#include <linux/slab.h>
+> +#include <sound/core.h>
+> +#include <sound/pcm.h>
+> +#include <sound/pcm_params.h>
+> +#include <sound/soc-dapm.h>
+> +#include <sound/soc.h>
+> +#include <sound/tlv.h>
+> +#include <linux/interrupt.h>
+
+Can you keep the headers in alphabetical order?
+
+...
+
+> +
+> +#define WSA885X_FU21_VOL_STEPS 124
+> +#define WSA885X_USAGE_MODE_MAX 8
+> +#define WSA885X_INIT_TABLE_MAX_ITEMS 256
+
+Add newline.
+
+...
+
+> +
+> +static int wsa885x_apply_init_table(struct wsa885x_i2c_priv *wsa885x)
+> +{
+> +	int i;
+> +	int ret;
+
+I'd put it on the same line (elsewhere too) but that's personal preference.
+
+> +
+> +	if (!wsa885x || !wsa885x->regmap)
+> +		return -EINVAL;
+
+
+You have a lot of these checks but this can't really happen, can it?
+
+> +
+> +	if (!wsa885x->init_table_size)
+> +		return 0;
+> +
+> +	if (!wsa885x->init_table)
+> +		return -EINVAL;
+> +
+> +	for (i = 0; i < wsa885x->init_table_size / 2; i++) {
+> +		u32 reg = wsa885x->init_table[2 * i];
+> +		u32 val = wsa885x->init_table[2 * i + 1];
+> +
+> +		if (wsa885x->batt_conf == WSA885X_BATT_2S && reg == WSA885X_SPK_TOP_LF_CH1_CTRL11)
+> +			continue;
+> +
+> +		if (wsa885x->batt_conf == WSA885X_BATT_2S && reg == WSA885X_SPK_TOP_LF_CH2_CTRL11)
+> +			continue;
+> +
+> +		ret = regmap_write(wsa885x->regmap, reg, val);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int wsa885x_hw_init(struct wsa885x_i2c_priv *wsa885x)
+> +{
+> +	static const struct reg_sequence regs[] = {
+> +		{ WSA885X_DIG_CTRL1_SPMI_PAD_GPIO2_CTL, 0x2e },
+> +		{ WSA885X_DIG_CTRL1_INTR_MODE, 0x01 },
+> +		{ WSA885X_DIG_CTRL1_PIN_CT, 0x04 },
+> +	};
+> +	int ret;
+> +
+> +	if (!wsa885x || !wsa885x->regmap)
+> +		return -EINVAL;
+> +
+> +	ret = wsa885x_apply_init_table(wsa885x);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (wsa885x->batt_conf == WSA885X_BATT_2S) {
+> +		ret = wsa885x_2s_conf(wsa885x);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+> +	return regmap_multi_reg_write(wsa885x->regmap, regs, ARRAY_SIZE(regs));
+> +}
+> +
+> +static int wsa885x_unmask_interrupts(struct wsa885x_i2c_priv *wsa885x)
+> +{
+> +	static const struct reg_sequence regs[] = {
+> +		{ WSA885X_INTR_MASK0, 0x00 },
+> +		{ WSA885X_INTR_MASK0 + 1, 0x00 },
+> +		{ WSA885X_INTR_MASK0 + 2, 0xf8 },
+> +	};
+> +
+> +	if (!wsa885x || !wsa885x->regmap)
+> +		return -EINVAL;
+> +
+> +	return regmap_multi_reg_write(wsa885x->regmap, regs, ARRAY_SIZE(regs));
+> +}
+> +
+> +static int wsa885x_wait_for_pde_state(struct wsa885x_i2c_priv *wsa885x, int ps)
+> +{
+> +	int act_ps = -1, cnt = 0, clock_valid = -1;
+> +	int rc = 0;
+> +
+> +	if (!wsa885x || !wsa885x->regmap)
+> +		return -EINVAL;
+> +
+> +	if (ps < 0 || ps > 3)
+> +		return -EINVAL;
+> +
+> +	do {
+> +		usleep_range(1000, 1500);
+> +		rc = regmap_read(wsa885x->regmap,
+> +				 WSA885X_SMP_AMP_CTRL_STEREO_PDE23_ACT_PS,
+> +				 &act_ps);
+> +		if (rc) {
+> +			dev_err(wsa885x->dev, "PDE state read failed: %d\n", rc);
+> +			return rc;
+> +		}
+> +		if (act_ps == ps)
+> +			return 0;
+> +	} while (++cnt < 5);
+
+Newline.
+
+> +	if (regmap_read(wsa885x->regmap,
+> +			WSA885X_SMP_AMP_CTRL_STEREO_CS21_CLOCK_VALID,
+> +			&clock_valid))
+> +		dev_err(wsa885x->dev,
+> +			"PDE power state %d request failed, actual_ps %d, clock_valid read failed\n",
+> +			ps, act_ps);
+> +	else
+> +		dev_err(wsa885x->dev,
+> +			"PDE power state %d request failed, actual_ps %d, clock_valid:%d\n",
+> +			ps, act_ps, clock_valid);
+> +
+> +	return -ETIMEDOUT;
+> +}
+> +
+> +static int wsa885x_codec_hw_params(struct snd_pcm_substream *substream,
+> +				   struct snd_pcm_hw_params *params,
+> +				   struct snd_soc_dai *dai)
+> +{
+> +	struct wsa885x_i2c_priv *wsa885x;
+> +	u8 pcm_rate, cs21_sample_rate_idx, cs24_sample_rate_idx;
+> +
+> +	(void)substream;
+
+Do we warn about unused arguments in the kernel now?
+
+...
+
+> +
+> +static int wsa885x_stereo_gain_offset_get(struct snd_kcontrol *kcontrol,
+> +					  struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct snd_soc_component *component;
+> +	struct wsa885x_i2c_priv *wsa885x;
+> +	int val;
+> +
+> +	if (!kcontrol || !ucontrol)
+> +		return -EINVAL;
+> +
+> +	component = snd_kcontrol_chip(kcontrol);
+> +	if (!component)
+> +		return -EINVAL;
+> +
+> +	wsa885x = snd_soc_component_get_drvdata(component);
+> +	if (!wsa885x)
+> +		return -EINVAL;
+> +
+> +	val = wsa885x->stereo_vol_db + 84;
+> +	if (val < 0 || val > WSA885X_FU21_VOL_STEPS)
+> +		return -ERANGE;
+> +
+> +	ucontrol->value.integer.value[0] = val;
+> +	return 0;
+> +}
+> +
+> +static int wsa885x_stereo_gain_offset_put(struct snd_kcontrol *kcontrol,
+> +					  struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct snd_soc_component *component;
+> +	struct wsa885x_i2c_priv *wsa885x;
+> +	long val;
+> +
+> +	if (!kcontrol || !ucontrol)
+> +		return -EINVAL;
+> +
+> +	component = snd_kcontrol_chip(kcontrol);
+> +	if (!component)
+> +		return -EINVAL;
+> +
+> +	wsa885x = snd_soc_component_get_drvdata(component);
+> +	if (!wsa885x)
+> +		return -EINVAL;
+> +
+> +	val = ucontrol->value.integer.value[0];
+> +
+> +	if (val < 0 || val > WSA885X_FU21_VOL_STEPS) {
+> +		dev_err(component->dev, "%s: Invalid range, Val: %ld\n", __func__, val);
+> +		return -EINVAL;
+> +	}
+> +	wsa885x->stereo_vol_db = (int)val - 84;
+> +	return 0;
+> +}
+> +
+> +static int wsa885x_i2c_usage_modes_get(struct snd_kcontrol *kcontrol,
+> +				       struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct snd_soc_component *component;
+> +	struct wsa885x_i2c_priv *wsa885x_i2c;
+> +
+> +	if (!kcontrol || !ucontrol)
+> +		return -EINVAL;
+> +
+> +	component = snd_kcontrol_chip(kcontrol);
+> +	if (!component)
+> +		return -EINVAL;
+> +
+> +	wsa885x_i2c = snd_soc_component_get_drvdata(component);
+> +	if (!wsa885x_i2c)
+> +		return -EINVAL;
+> +
+> +	if (wsa885x_i2c->usage_mode > WSA885X_USAGE_MODE_MAX)
+> +		return -ERANGE;
+> +
+> +	ucontrol->value.integer.value[0] = wsa885x_i2c->usage_mode;
+> +
+> +	return 0;
+> +}
+> +
+> +static int wsa885x_i2c_usage_modes_put(struct snd_kcontrol *kcontrol,
+> +				       struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct snd_soc_component *component;
+> +	struct wsa885x_i2c_priv *wsa885x_i2c;
+> +	long val;
+> +
+> +	if (!kcontrol || !ucontrol)
+> +		return -EINVAL;
+> +
+> +	component = snd_kcontrol_chip(kcontrol);
+> +	if (!component)
+> +		return -EINVAL;
+> +
+> +	wsa885x_i2c = snd_soc_component_get_drvdata(component);
+> +	if (!wsa885x_i2c)
+> +		return -EINVAL;
+> +
+
+You seem to be repeating the same sequence in multiple functions just to get
+the address of wsa885x_i2c. Can you factor it out into a separate helper and
+save some lines?
+
+> +	val = ucontrol->value.integer.value[0];
+> +
+> +	if (val < 0 || val > WSA885X_USAGE_MODE_MAX)
+> +		return -EINVAL;
+> +
+> +	wsa885x_i2c->usage_mode = val;
+> +
+> +	return 0;
+> +}
+> +
+> +static int wsa885x_i2c_rx_slot_mask_get(struct snd_kcontrol *kcontrol,
+> +					struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct snd_soc_component *component;
+> +	struct wsa885x_i2c_priv *wsa885x_i2c;
+> +	u32 mask;
+> +
+> +	if (!kcontrol || !ucontrol)
+> +		return -EINVAL;
+> +
+> +	component = snd_kcontrol_chip(kcontrol);
+> +	if (!component)
+> +		return -EINVAL;
+> +
+> +	wsa885x_i2c = snd_soc_component_get_drvdata(component);
+> +	if (!wsa885x_i2c)
+> +		return -EINVAL;
+> +
+> +	mask = wsa885x_i2c->rx_slot_mask;
+> +	if (!wsa885x_is_valid_rx_slot_mask(mask))
+> +		return -ERANGE;
+> +
+> +	ucontrol->value.integer.value[0] = mask;
+> +
+> +	return 0;
+> +}
+> +
+> +static int wsa885x_i2c_rx_slot_mask_put(struct snd_kcontrol *kcontrol,
+> +					struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct snd_soc_component *component;
+> +	struct wsa885x_i2c_priv *wsa885x_i2c;
+> +	long mask;
+> +
+> +	if (!kcontrol || !ucontrol)
+> +		return -EINVAL;
+> +
+> +	component = snd_kcontrol_chip(kcontrol);
+> +	if (!component)
+> +		return -EINVAL;
+> +
+> +	wsa885x_i2c = snd_soc_component_get_drvdata(component);
+> +	if (!wsa885x_i2c)
+> +		return -EINVAL;
+> +
+> +	mask = ucontrol->value.integer.value[0];
+> +
+> +	if (!wsa885x_is_valid_rx_slot_mask(mask))
+> +		return -EINVAL;
+> +
+> +	wsa885x_i2c->rx_slot_mask = mask;
+> +
+> +	return 0;
+> +}
+> +
+
+...
+
+> +				/* INTR_CLEAR registers are write-only; use regmap_write
+> +				 * instead of regmap_update_bits to avoid the read-modify-write
+> +				 * that regmap_update_bits performs on non-readable registers.
+> +				 */
+
+/*
+ */
+
+style comments please
+
+...
+
+> +	ret = devm_add_action_or_reset(dev, wsa885x_gpio_powerdown, wsa885x);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "devm_add_action_or_reset failed\n");
+> +
+> +	i2c_set_clientdata(client, wsa885x);
+
+I don't see a corresponding i2c_get_clientdata(). Do you really need it?
+
+...
+
+Bart
 
