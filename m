@@ -1,148 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-112673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 4QavIkt8KmpWqwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 11:13:47 +0200
+	id 0f4jFMp9KmpKrAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 11:20:10 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 492BD6704A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 11:13:47 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A703670575
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 11:20:09 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=P5BO8pcr;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112673-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112673-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=linaro.org header.s=google header.b=dBxSmj7C;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112674-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112674-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=linaro.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 77D74301091F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 09:13:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id ABC593239223
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 09:14:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49A853BADA9;
-	Thu, 11 Jun 2026 09:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CA792E737F;
+	Thu, 11 Jun 2026 09:14:14 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468F93A257C;
-	Thu, 11 Jun 2026 09:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F2D374E7D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 09:14:13 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781169212; cv=none; b=VSg9jqbA8GrcekPHcz1hC9I6oibVUZmxNrc+BnGNGY7Q0ItC95Boa2qA8c9CxtSha6mqibcbtoMVvSZ53MpJxYn3evn53hVhR8cJksOYbTnAry/jgrGGXaj43yD+rc6yKkG8jL6OQh5lOtfpIcGtzBsaejKrhW6Bm+WOKSN5+tE=
+	t=1781169254; cv=none; b=YToyzDuhwDnzcnPZZ0vOgfZjY5ZrUgDyWLXpw7CJxuwVO3Bjlufg+On04Exe2V74cz48WMHZtXV8KB0Kbm/bHVZOa4h8USmEdvzxRT2znK2X8b8iwjIUYH/K4tb5baZkHGLjZcqldgRhXwGp4W7vHSZGQ6JmgScRgARekmEpgCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781169212; c=relaxed/simple;
-	bh=gKOCqxKCuRbslboKZqBeDKoCrIbSkktbxTTZx61IGbk=;
+	s=arc-20240116; t=1781169254; c=relaxed/simple;
+	bh=4CqiEOKp7G7+G9FT5Fh+bQy6KqYzvJWqGt8d9d7QZFY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ATpdWZhMX6JGrNrRg9rzu7gIn8u6v0IKy5WHO/mtSmhxsnFZFXW+3ODNtOUvcObiklrbea9v8dua0kEt+PZuEgeOPIWzayon6Kb1177HJFLlDgapk4/qEgBH6qxfs+byJRZHnrWJEgtwRw4ZMidU/TLdq0gR2yHvYI/FQ7tdp8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P5BO8pcr; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E3A51F0089C;
-	Thu, 11 Jun 2026 09:13:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781169210;
-	bh=BxXOFmqgKP//yNlaJchWiTOa6h3bEte8EY9Rwi4U/mE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=P5BO8pcrwDPMEAjCp8GZuk8zUXnYlfcEZrOUg1x7lzyuj1V0m2o6uiNnh0bGMTGlY
-	 ci0eDgeIPen4OiD7Ttm2DAW/Zn7E0E3F1wHEP1up/v+MH7m0TsifLukne+1QnWJkuC
-	 qG54ld7AXhJvtoWR1Yxmzp0SQ1vzJ9LIvBnKB6dHGtvjX53DU6D8Fbn3YylUS15J57
-	 GkAB4JKboMbSx/Y0a+xe9eoo+sirescKZLM4xeQ04zZHfamsEI/tFFoQi1gyFhTUVd
-	 wCwOXKb7YDPJrVI3CmisAKluhmyZ4sNiB8M1OJHihaF7Hs39fL3j8+BTH3rh/Fr50s
-	 0DjVZ4N5RSdQw==
-Date: Thu, 11 Jun 2026 11:13:28 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Ramshouriesh <rshouriesh@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Loic Poulain <loic.poulain@oss.qualcomm.com>, 
-	Bryan O'Donoghue <bod@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Aleksandrs Vinarskis <alex@vinarskis.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-media@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH 3/9] media: i2c: hm1092: add Himax HM1092 mono NIR sensor
- driver
-Message-ID: <20260611-sloppy-happy-pony-1efc8d@quoll>
-References: <20260610-a14-himax-hm1092-v1-0-0c9907da47ed@gmail.com>
- <20260610-a14-himax-hm1092-v1-3-0c9907da47ed@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=gIDH2T7SCaceN3l4XPX+BVuh1G6rA7fdDSeXIW4FQVKSVo8vdkqS2w/YsOrBBfPqL39+DT+1gU3T2Jw0UiooM3yP0TmUkR7sic19x4YyyE+uEUVGe6W+/N/QKQ4buwc/rn1bCtYDsaHFkYMoq1r+ntUVrdXZHZaa83XQg15BKwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dBxSmj7C; arc=none smtp.client-ip=209.85.128.46
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-490b2b037d2so67195625e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 02:14:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1781169251; x=1781774051; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=M3d4LMOrRVe9Dpt71iC63qNlgFeEkSybcIKSVZrkmmg=;
+        b=dBxSmj7CXI3Ht3IxAZVlELaMcu1PiEN98SwB7gMz2blQqTs2Rn+CTsVRy86A7Hnv1m
+         rF+dJYkWvla6LkuQxSkXgMC9EoW5h8Vu6BXgtIa+SLAyR2EyXNn6KbMj3cJMyy3lPbLG
+         iaKxxSl7ZdmqlB/e1iTfiUuhqGS59eymwvq1tIrM8iU6LhaUxMFZab1fQwaNo8rIKTZV
+         mfdGrcRzWQFVRRpli/5tcZlTH7mlncfEVoW/XEe+P95ovpq72rdPjhi4Tp6SYdAQQl0X
+         wJMkdbOBdiOI+kwWa9QbIV092VqZcCCcoJMDOBcMNJdfmQN7k9qnUN0+Aq0VV6/FemKF
+         Y/fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781169251; x=1781774051;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=M3d4LMOrRVe9Dpt71iC63qNlgFeEkSybcIKSVZrkmmg=;
+        b=f0dDRkwc/uUAap2Rv580o6Ii/jM6PMDiWq79bJI1dntKUKcwH0iKvUEaZl9p0GSCR/
+         PJOsm1gozT9eLTBUOzMgTWV64uQkA+oJunYTM3Ne1VdrwpAY1AlcKTwBh7VCmXn92W3S
+         fW1BNMt7srfurcxh1/ePjcjG8RRFfUexfon5uNPl86oH0tAFJB+99mZCzgkrGNKSn4jZ
+         ZsgHEU3UNVoq+CA89rzWxa/BxtYj9JwkUSireGdY2L7ohkSlcHnBersn5kB6qjFv/zwC
+         m9PflSgX6Uej9CnL5INqHnIBwdTJIzuLs+ie17uO74LALy4nbp9K9f/7G/9e4+1wqWZH
+         ztyg==
+X-Forwarded-Encrypted: i=1; AFNElJ8Y5UxHNXiTbCZ6IxtzSkZL7ljN/ENuL3d72viV+NOA620Psz2qSiGBeRVQ5bPY3SfxVdKTaaIywXsM6L+f@vger.kernel.org
+X-Gm-Message-State: AOJu0Yws2yblCk/7hM+TYt2Nhr83HLCzw3BI6pFTrRc3yIG+WFv+rVzB
+	JUK+acYxGVCS1OUOJwCpYAuH/lYeoxzL7OXK+GD47syS1dG9FD0e4UgK+m1z2pdNfn8=
+X-Gm-Gg: Acq92OFdKuJlxXqJPEPkZ9MD47ho/M9X7PtSZeeTCehen4a4BA8/3vplyg8TV1T9HcG
+	0mBa4ukmyoiO6axTZiHMQgbhDyIXhIoyFS19YYAbRa9XijlgV+Tyy612Rgme3yGbue/X0OU3Ts4
+	iGPDuhoBRdZYp2lark6z2PRwdO0dmJpgeEYO4TxD/uAR8tz6WUNBCPpSxX63FXFXLB5JqlbWzZB
+	2OgD5vd6N1N/+LBKwg+IidG/HZpRU2MrhY3YTGgi8Mx/3QnBGTWmK3C7UMKpyRKzhhIxL3LINTd
+	BVmChhOr5HoPLOpObS6xypHHkE0vJAnNykjmpkCWSCrDGxhL4sP28YpoT1wHLMH/jozuB4EjxsH
+	PFT3tl0ZdKU3Ctx3IbqZZMURNzWZ4TWRRnhe2WY1Oay49ud+fUrRzt6F2v2tN81LwwTNxm1UyK5
+	afaiLaklc0jGyqNgGU7cW19K0J4ltMxTMU5jf6CrySRuyqzg==
+X-Received: by 2002:a05:600c:3550:b0:490:e5c1:b897 with SMTP id 5b1f17b1804b1-490e5d0fe68mr19389845e9.20.1781169251573;
+        Thu, 11 Jun 2026 02:14:11 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff23:4410:7bb1:6476:9114:cf39])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-490e2cf5537sm59201665e9.9.2026.06.11.02.14.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jun 2026 02:14:11 -0700 (PDT)
+Date: Thu, 11 Jun 2026 11:14:06 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	bjorn.andersson@oss.qualcomm.com, chris.lew@oss.qualcomm.com
+Subject: Re: [PATCH] arm64: dts: qcom: shikra: Add BAM-DMUX support
+Message-ID: <aip8XtKoS2xTYv4L@linaro.org>
+References: <20260611-qcom-shikra-dts-bam-dmux-v1-1-43d0b43d41ef@oss.qualcomm.com>
+ <aip3_fyE8tMtJZIW@linaro.org>
+ <61fea0fa-d7af-47f4-a3c7-21d881090008@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260610-a14-himax-hm1092-v1-3-0c9907da47ed@gmail.com>
+In-Reply-To: <61fea0fa-d7af-47f4-a3c7-21d881090008@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:rshouriesh@gmail.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:mchehab@kernel.org,m:bryan.odonoghue@linaro.org,m:vladimir.zapolskiy@linaro.org,m:loic.poulain@oss.qualcomm.com,m:bod@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:alex@vinarskis.com,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-media@vger.kernel.org,m:linux-phy@lists.infradead.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112674-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:vishnu.santhosh@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:bjorn.andersson@oss.qualcomm.com,m:chris.lew@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FREEMAIL_TO(0.00)[gmail.com];
+	FORGED_SENDER(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-112673-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,quoll:mid,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,linaro.org:mid,linaro.org:from_mime,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 492BD6704A6
+X-Rspamd-Queue-Id: 9A703670575
 
-On Wed, Jun 10, 2026 at 04:39:28PM +0530, Ramshouriesh wrote:
-> +module_i2c_driver(hm1092_i2c_driver);
-> +
-> +MODULE_DESCRIPTION("Himax HM1092 sensor driver draft");
-> +MODULE_LICENSE("GPL");
-> diff --git a/drivers/media/i2c/hm1092_regs.h b/drivers/media/i2c/hm1092_r=
-egs.h
-> new file mode 100644
-> index 000000000000..4df2d5b49d81
-> --- /dev/null
-> +++ b/drivers/media/i2c/hm1092_regs.h
-> @@ -0,0 +1,223 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/* HM1092 register tables extracted from Qualcomm Chromatix sensor modul=
-e.
-> + * Source: com.qti.sensormodule.hm1092.bin
-> + * Generator: hm1092-re/gen_hm1092_regs.py
-> + * DO NOT HAND EDIT =E2=80=94 regenerate from the bin.
-> + */
-> +
-> +struct hm1092_reg {
-> +	u16 address;
-> +	u8 val;
-> +};
-> +
-> +static const struct hm1092_reg hm1092_init_regs[] =3D {
+On Thu, Jun 11, 2026 at 11:10:51AM +0200, Konrad Dybcio wrote:
+> On 6/11/26 10:55 AM, Stephan Gerhold wrote:
+> > On Thu, Jun 11, 2026 at 02:11:59PM +0530, Vishnu Santhosh wrote:
+> >> Add required nodes to enable the upstream BAM-DMUX WWAN driver on
+> >> Qualcomm Shikra SoC.
+> >>
+> >> The SMSM (Shared Memory State Machine) node provides the power
+> >> control signaling between the AP and modem for BAM-DMUX. The
+> >> BAM DMA controller node describes the A2 modem BAM hardware as a
+> >> standard DMA controller. The BAM-DMUX node references the DMA
+> >> channels and the pc/pc-ack interrupt lines from the modem SMSM
+> >> entry for power control signaling.
+> >>
+> >> Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+> > 
+> > I'm quite surprised to see this 15+ years(?) old hardware block being
+> > brought back to a new SoC. Is Shikra not using IPA?
+> 
+> That's correct.
+> 
 
-You must NOT define data in headers. This is not how C is written - you
-invite data duplication without any gains/benefits.
+Ok, thanks for the confirmation. It's nice to see my driver running on
+some new SoCs 6 years later. :-)
 
-Best regards,
-Krzysztof
-
+Thanks,
+Stephan
 
