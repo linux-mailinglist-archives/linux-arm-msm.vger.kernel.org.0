@@ -1,220 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-112768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id O3IhGxS+KmouwAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 15:54:28 +0200
+	id VkEKBrfAKmrpwAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 16:05:43 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB2136727CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 15:54:27 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 505356728DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 16:05:42 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=hbAiHOE8;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112768-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112768-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=dEhsvkhw;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=giULm2VD;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112769-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112769-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E2479307C629
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 13:54:26 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id AFECD3006829
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Jun 2026 14:05:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E620A3F99F4;
-	Thu, 11 Jun 2026 13:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBACA403B05;
+	Thu, 11 Jun 2026 14:05:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21D23C10BE;
-	Thu, 11 Jun 2026 13:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997F73BE63F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 14:05:32 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781186065; cv=none; b=GfQd+I5kGfeAOce0yHFMc7NOaNrra+4lL3VbSt1Dl/8mzTnaGboZn/89eoydyjBEGKGLt47gWIcOQDL0ougSp8VSJ8I8GBnLSj5Z33M+9G4MeSXfAyKChZ6AlduwP1UgnWnP2tTVDWzE+UtwdqGsTT51Td4R3QnFl2TF/wXpA+E=
+	t=1781186733; cv=none; b=tSsePBzbDPJE49aTLD3nkTUl+7QZsmvGTFYK5ynxHoKpS2/dlo/pB4vYiNf0DOSyfVo5Mnlk02eSEXCmjUswIp/L/9I44w/ZmekfCNA/RcF4XkeD2wZSzHoZrcoPgZ4BM5eQwETyuzINvagpU8vOhpnfJVuuzfyZC0ZkGKOd6T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781186065; c=relaxed/simple;
-	bh=E9vEcCOi2nh2hhGy2MA+1MP3Brgs80zE879kJagUG6Y=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gUyvSRvIsuh5+pAT2hNNwCmQr1H83Nw79MUhD+tjJ4BERCBScPRKBIdjkI3OJj263BoTqkYm/JvkSHlWned8AO4VpYzeZU4Qtq2Ufqgwp5w0tke0klr9c0Fd8IupkUXGTJoJAP57h1w2NQPfpu9YzRAVBk+9FnFDkQrv0RlhyjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hbAiHOE8; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EECD1F00893;
-	Thu, 11 Jun 2026 13:54:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781186064;
-	bh=0/yDYWn6kRk5UjSWpdp2H/2Ws7hO3+Bb9GjBgGzUmKY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=hbAiHOE8s4N0loBWBlVzb81+kh/Io/vffUDNZncKw1qJB36wk4ftcg9x7b9mbtDuu
-	 BADDAvwHMREeyLz3owgo5vL7Hv4a2DyOV2hebvt7aYxGkscZi5bLHC/7rKxRo05z3E
-	 or3pfXC5xBwSIy+dzZMhyWcxN2TE7EGzyupU/BKBEiaILXHqiUG0Gd5fiCFdKPBSR8
-	 jWiczkESG8IBY1vCfwpSL2W8BRV4oJmGXC8kafaWuWas94wUYpFa6W5XASHtGU8Eei
-	 wQexs2ziQNLb3XF+I5922Z8yzGnvnsFf3xUDJCKiEo+3Si49yD78Md7DWbfR13BeiR
-	 Uotb3FtiNAOSw==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1wXfrS-0000000Bmwp-1O3w;
-	Thu, 11 Jun 2026 13:54:22 +0000
-Date: Thu, 11 Jun 2026 14:57:42 +0100
-Message-ID: <87qzmd89ih.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Jack Matthews <jack@jackmatthe.ws>
-Subject: Re: [PATCH 0/2] clocksource/drivers/arm_arch_timer_mmio: Restore support for early init
-In-Reply-To: <aip2Pnmi-LJPKwW7@linaro.org>
-References: <20260610-arm-arch-timer-mmio-early-v1-0-ac17218ec8b4@linaro.org>
-	<87se6t8q3s.wl-maz@kernel.org>
-	<aip2Pnmi-LJPKwW7@linaro.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	s=arc-20240116; t=1781186733; c=relaxed/simple;
+	bh=Fw6gQFY3Gd6QiUmAnZ5DyWfDoT8MRmsSY0h3Ikqq92E=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=jouUZQ5BzAqarLiWNhd1KA8FxDAfckvyJ95eDo5CSMeVhW4Au4eRt0npVcKE4dsfzSj9pbnffoQC/k+uduUn2xk5R0cq14XJm5YSeeNHfR7GT4IzmShClR68fFpw+uTksDZkMczkkkb9gT7i5g/avt3B6BPIej/horS6ln6rWkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dEhsvkhw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=giULm2VD; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65BCSlZn630411
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 14:05:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=MLEQXryaifs1QKuY0lfBGF
+	UrdbxoYxdxNfya3F5CJGw=; b=dEhsvkhw1U4iu8cqnXSRHKZTBzgsEEAYn2VrZE
+	UrSVO3cLd39/DUacluu5SnpnJaaG+gJqL5RciDMb/OnY5ifk/LulLDxFvwMB40zk
+	GPwkk4aIlZShbgGLgu+nH9u67BekipsJdAR+ZS8bS9WhUT5+sapxJ2wEyc9PEHCC
+	E/yHlK/tCOJ+XRF2BnkfW/iAYXl2Vjv9u0D5KyIR/yEmlDC6EPBPDPEOv/gAaF+5
+	4BrBNJr/8TszATRrTUmD0wjHC79SyreAyNfYqeS2lkRVf7Lk9w+PH/yB5WZ/xIXG
+	AnP+ZySoIPSUrW1+RFtCnw7D5qN7SDFSpJRYjuAyNRgms7xw==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eqtb5h2a5-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 14:05:31 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-36d98b76d12so5659643a91.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 07:05:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1781186730; x=1781791530; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MLEQXryaifs1QKuY0lfBGFUrdbxoYxdxNfya3F5CJGw=;
+        b=giULm2VD5vQjF4dYEbquXK1nlWwmFkkCLP3pooPosug4tYQNTTXx8ekHHBLKO3lhYF
+         cVqyphZ8JlysUpBceqCpobLpZBWahDL9pefJA2ZbWY0QTCgBgFYed9TbPVpHWIT6sz3J
+         c4SnAZzYnuvQG8f4hk94w/atFi6lPhKscr1hhtdQKFnpNWDu0dNNEWJXVQ86f2cI4pEr
+         u80ZSAflGPqCVlgXDhvAHZqe40QBGsJl3SGathyHpMbXsKOE4bvfHT0P0TVGaawzjOrU
+         8kCryiuMblk87cQfsRqZv8bJ4xSwTQ3IY+3E+Mzs5zHxR3zErAiLjjT6q4BGXdcAgTR0
+         bNNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781186730; x=1781791530;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MLEQXryaifs1QKuY0lfBGFUrdbxoYxdxNfya3F5CJGw=;
+        b=FY+Zc+CqL8t0Nk6sPchye7vM4pkUvwhi+bBHhSDKNiJqdEe6Q4/rD6gpgAB3z+BQq9
+         lDfK6PVL6aI44DaKzS+6jqGDxs4EsshDtDLk44+vCE5F5KDS+f8RZNccCDtFPIhbePRV
+         e87PRIHpfkivxi/zn2Ojs6tc6UNaR+2hoPyMttrmtTTA9Y19FnLuqRnG3onziNRWpbru
+         U9m40+mXGO/WZ/urS9npXUPoyOpZeBIoPVs1x0iXi2UeogMPRYSu8RjSUMYxtiywKHuK
+         fU5xZNrSGku9IMh4aVmWYU5RmBWyLiusck6H3h9+BZ2/qSfdIidNx6mSjD5QGN8VNy32
+         gAqA==
+X-Forwarded-Encrypted: i=1; AFNElJ9f0y3hY0QoT8y+TaS3hfkE9XDmEfLOx6vZBgqPKGcwEK8eNL0F4ydOWE+EA/0udPNxLMmsCV6/HzLx+g+N@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxmz1PwqKV9nRyaFtc4D6l7fi9UEzNGHTuxWuDKnus60jHA554b
+	MZ4Y9+YFWdoDZd03IuhcPogqCrWJNxvm8+pGOvwP88SPMIoeRHIU4uRwYv50OEXt3dQwx4hGJ8Z
+	XPHGaCmcoZm7ax0kUwkf7IZHAF82GBwAlgIP3HQx8ges7LbrcVnnkKexdm4IezP/i6oDnm0p7oW
+	hz
+X-Gm-Gg: Acq92OEHFBjmBIxJ0Da3Gu29CV1PPSh2W/YzjDqeb78LhCuxraB0Qg1EJ0M1qkSE4v+
+	w/qXEgITiwk4zcaK4b6B8ACR1WwTayeox3ShX/BATfTpp11j0hAW5OE17sAEW0oO0+JjTsHJtYQ
+	E+fv9/SwWPK1Lu0ticUg4CnHXaGZA1m4+LDBbSeEevoh9JNVrI6KRsZ7MuOYjzJK4nLYT/9g26X
+	yG7/nAtMwTr7d6X/ZQVyO91v8zvoDc+v2vuAQ86vEC9qs2MJfe6DXEVdQ6vUrWQNT5SnsnSjxL1
+	CkA6nsAqMC6CY2l3GIl/Sw43pOsIleeXV2dYzi9rHTwr9Gt2eqrp14FxEEMoLDQ6qgc5aut3fuP
+	7SVJ+5rU1sbspus5QQA8b/k454VDA2ZZ68W6oCgdfZC/eIqBMX7RS+D+8Um7W7JD716NS/tWFNw
+	qm6Gze4plAKAEIeZOsCatYxTeWmED6XmroE5Kgbqh8EMOkdG797ZI13ySLmLxFIDKAlJbE9heji
+	vJwogXOaN+n
+X-Received: by 2002:a17:90b:4a4b:b0:36b:d2d9:a584 with SMTP id 98e67ed59e1d1-3779f83d834mr3307649a91.9.1781186730240;
+        Thu, 11 Jun 2026 07:05:30 -0700 (PDT)
+X-Received: by 2002:a17:90b:4a4b:b0:36b:d2d9:a584 with SMTP id 98e67ed59e1d1-3779f83d834mr3307600a91.9.1781186729772;
+        Thu, 11 Jun 2026 07:05:29 -0700 (PDT)
+Received: from QCOM-eG0v1AUPpu.na.qualcomm.com ([2a01:e0a:830:450:cc96:22ae:323b:9eff])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-68e64e2c810sm11133831a12.9.2026.06.11.07.05.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jun 2026 07:05:28 -0700 (PDT)
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Subject: [PATCH v2 0/3] Add INA232 power monitor support for Arduino
+ VENTUNO Q
+Date: Thu, 11 Jun 2026 16:05:23 +0200
+Message-Id: <20260611-monza-ina232-v2-0-e4375ce652d0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: stephan.gerhold@linaro.org, mark.rutland@arm.com, daniel.lezcano@kernel.org, tglx@kernel.org, sudeep.holla@kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, jack@jackmatthe.ws
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAKPAKmoC/3WMQQ6CMBBFr0JmbUlnjEVceQ/DotBRJpFWW21Uw
+ t2t7N385P3kvRkSR+EEh2qGyFmSBF+ANhUMo/UXVuIKA2ky2qBWU/Afq8Rb2pJyjHvNxrRuQCj
+ KLfJZXmvu1BUeJT1CfK/1jL/3Tyij0qqlXa8dUtNgfwwp1fenvQ5hmuoy0C3L8gWLVPByrwAAA
+ A==
+X-Change-ID: 20260610-monza-ina232-de180e669dc1
+To: Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-hwmon@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Martino Facchin <m.facchin@arduino.cc>
+X-Mailer: b4 0.14.2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjExMDE0MSBTYWx0ZWRfX9NvvS15KIO3L
+ cVPLlbq++YQmPVqNN78S9ziq02Oesc1EnlM+AIhr48K0dRUhxFjswfmP3RcwWbCaE0yUdhFHS3x
+ kfLl2vSF5UwUzhys9rBMukLZAX2ukEUf3d4k9NmI7eOF2xhgVG1RIjsCoXH8q+qRSUiwBYOBb2o
+ M0g0I537Fso8WTTiu4ItEV64oQtDV3vhiNiEZDYzPpMTWDsfYuAEXPDlbhYg4dyWQYCLzWG7wZ5
+ KZCBdfPQ4CREKIhvKK8bAXA/HsTcivhyQlDXrzsp75KGX5PRVIStrnbu6GjVyG9HzKcYcy8X0y2
+ aDWudwd1z0QL6jDnJD3zPjwXIrTcmn4gkVCJBU4bATWvs/+zRAy+J0kzfdocy/wrv8jsLqXZgRc
+ JQ+wATL8QwrOp4cUy+7qgcujJwkaYOWApZ16NmzoGlhUYDSqMeOTJvU9ubagGeRkSg0bRvn4bzw
+ 4PdUM6r1U7PNyRhXlLQ==
+X-Proofpoint-ORIG-GUID: w0ueflH52hM73X41aFZTb6-mo8MAHms-
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjExMDE0MSBTYWx0ZWRfX3zVapStPtMZm
+ h9u8pLIK1dBayEZdC0rSZttxmIrrQ1vsIrRUFGiDaWsTeh0nh7yI4XGOgV+0Ek87iz+Kn1RnjEd
+ 6x4gQUedg0kLagNiWmW/1O4LB8lYkOs=
+X-Authority-Analysis: v=2.4 cv=e6g2j6p/ c=1 sm=1 tr=0 ts=6a2ac0ab cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=Nm-2SeViG6Lg8r77o8wA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-GUID: w0ueflH52hM73X41aFZTb6-mo8MAHms-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-11_02,2026-06-11_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ phishscore=0 clxscore=1015 impostorscore=0 adultscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606110141
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-112768-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112769-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[maz@kernel.org,linux-arm-msm@vger.kernel.org];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp];
+	FORGED_SENDER(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FORGED_RECIPIENTS(0.00)[m:linux@roeck-us.net,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:krzk@kernel.org,m:linux-hwmon@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:loic.poulain@oss.qualcomm.com,m:m.facchin@arduino.cc,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:stephan.gerhold@linaro.org,m:mark.rutland@arm.com,m:daniel.lezcano@kernel.org,m:tglx@kernel.org,m:sudeep.holla@kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:jack@jackmatthe.ws,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORWARDED(0.00)[lists@lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[maz@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,linaro.org:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: DB2136727CC
+X-Rspamd-Queue-Id: 505356728DB
 
-On Thu, 11 Jun 2026 09:47:58 +0100,
-Stephan Gerhold <stephan.gerhold@linaro.org> wrote:
-> 
-> On Thu, Jun 11, 2026 at 08:59:19AM +0100, Marc Zyngier wrote:
-> > On Wed, 10 Jun 2026 18:53:09 +0100,
-> > Stephan Gerhold <stephan.gerhold@linaro.org> wrote:
-> > > 
-> > > Jack reported a regression for some single-core Qualcomm platforms (e.g.
-> > > MDM9625, MDM9607) that no longer boot because no timers can be found during
-> > > early boot [1].
-> > 
-> > Again, this is *not* a regression. These machines were *never*
-> > supported upstream.
-> > 
-> 
-> Sorry, I'll reword this next time. MDM9607 does have all required
-> drivers and compatibles upstream already and is just missing the actual
-> DT so it does feel somewhat supported to me, but I'm fine treating this
-> as a feature extension without stable backporting etc.
+Add support for the TI INA232 current/power monitor to the ina2xx
+hwmon driver, and enable it on the Arduino Monza board.
 
-"Supported" has a different definition for me. Cortex-A5 without the
-A9-style TWD was so far never seen in the wild. The Generic MMIO timer
-was introduced way after Cortex-A5 shipped, and was designed to work
-with the CPU timers, making this QCOM contraption a franken-hack.
+The INA232 is a bidirectional current/power monitor that shares the
+same I2C register layout as the INA226, but has different electrical
+characteristics.
 
-So calling this supported is very much pushing the boundaries of what
-was supposed to be put together.
+On the Arduino Monza/Ventuno-Q board, the INA232 is connected on
+I2C12 at address 0x40 with a 2 mΩ shunt resistor, and is used to
+monitor the board supply current.
 
->
-> > > These platforms rely on an obscure timer setup where the
-> > > global Arm MMIO timer (arm,armv7-timer-mem) is used as the only available
-> > > timer for the CPU. This setup used to work fine until commit 0f67b56d84b4
-> > > ("clocksource/drivers/arm_arch_timer_mmio: Switch over to standalone
-> > > driver") when the early timer initialization using TIMER_OF_DECLARE() was
-> > > removed when moving to the standalone MMIO driver.
-> > > 
-> > > There doesn't seem to be any other usable CPU timer on those platforms, so
-> > > this series restores the early timer support using TIMER_OF_DECLARE()
-> > > inside the new standalone arm_arch_timer_mmio driver. This is pretty ugly,
-> > > but I could not think of a better solution so far. I tried to keep the
-> > > ugliness for the two probe paths as limited as possible. :-)
-> > > 
-> > > If someone has a better idea how to solve this, I would be happy to try it.
-> > 
-> > I would suggest finding out what is the latest point in the init
-> > sequence where the timer can be probed without preventing boot.
-> > 
-> 
-> It doesn't get far without having any timer:
-> 
-> [    0.000000] timer_probe: no matching timers found
-> [    0.000000] entering initcall level: console
-> [    0.000000] calling  con_init+0x0/0x354 @ 0
-> [    0.000000] Console: colour dummy device 80x30
-> [    0.000000] initcall con_init+0x0/0x354 returned 0 after 0 usecs
-> [    0.000000] sched_clock: 32 bits at 300 Hz, resolution 3333333ns, wraps every 7158278824300949ns
-> [    0.000000] Calibrating delay loop... 
-> <board hangs>
->
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+---
+Changes in v2:
+- has_update_interval was missing and should be set to true/supported
+  (sashiko/Guenter)
+- ti,ina232 added to two allOf conditional exclusion blocks. (sashiko)
+- Fix commit message, it incorrectly mentioned 2Mohm instead of
+  milli-ohm. (sahiko, Konrad).
 
-This is nothing that "lpj=[some value]" on the command line can't help
-getting past.
+- Link to v1: https://lore.kernel.org/r/20260610-monza-ina232-v1-0-925b0d12771b@oss.qualcomm.com
 
-> If you look at start_kernel() in init/main.c it's basically time_init()
-> that would normally probe the TIMER_OF_DECLARE() timers and
-> calibrate_delay() that needs some timer to finish. There is also
-> random_init() that comes directly after time_init(), which already wants
-> to have access to timestamp counters. I don't see any other suitable
-> place to hook into. :-/
+---
+Loic Poulain (1):
+      arm64: dts: qcom: monaco-arduino-monza: add ina232 power sensor
 
-None of that should be a problem. I can boot a hacked arm64 kernel
-without any timer all the way to the point where it is waiting for a
-tick to enter the scheduler and run userspace. There's no reason why
-32bit can't do something similar. Heck, 32bit doesn't even have a
-standard timer to rely on, so that's very much possible to do.
+Martino Facchin (2):
+      dt-bindings: hwmon: ina2xx: add ina232 compatible
+      hwmon: ina2xx: support ina232
 
-Can you at least give it a try?
+ .../devicetree/bindings/hwmon/ti,ina2xx.yaml         |  3 +++
+ arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts    |  6 ++++++
+ drivers/hwmon/ina2xx.c                               | 20 ++++++++++++++++++++
+ 3 files changed, 29 insertions(+)
+---
+base-commit: 8a4062d204752e0d66a1e7e1a2f8834571a8d40f
+change-id: 20260610-monza-ina232-de180e669dc1
 
-> 
-> I also don't see any other timer we could use, at least for MDM9625.
-> It's a single-core Cortex-A5 and the downstream kernel defines only the
-> arm,armv7-timer-mem, which seems to be used for everything... (The
-> situation for MDM9607 is a bit different, but not any less messy,
-> unfortunately.)
-
-MDM9607 appears to be a Cortex-A7, so it *definitely* has all the
-bells and whistles that we need. The DT I found doesn't make describe
-the timer, but it is absolutely part of the CPU.
-
-As for the A5, if we can't get this machine to use the driver as is
-without butchering it and going 15 years back in time, then I'd rather
-hack together a minimal driver that only this contraption will make
-use of, and be done with it.
-
-	M.
-
+Best regards,
 -- 
-Jazz isn't dead. It just smells funny.
+Loic Poulain <loic.poulain@oss.qualcomm.com>
+
 
