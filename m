@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-112927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id mBOGLovqK2raHgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 13:16:27 +0200
+	id T8nLIq7rK2onHwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 13:21:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FEBC678E8C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 13:16:27 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC57B678F12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 13:21:17 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=NbY3nnBv;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112927-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112927-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=T1ZBtac5;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112928-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112928-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EFD6B33EB6F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 11:14:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 779BB3294EB3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 11:19:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 437B13921E0;
-	Fri, 12 Jun 2026 11:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B41E33B6C16;
+	Fri, 12 Jun 2026 11:18:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF6838D3E0;
-	Fri, 12 Jun 2026 11:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5F139934D;
+	Fri, 12 Jun 2026 11:18:52 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781262852; cv=none; b=BxiuIj/8HqvDU522/2nevoUHdAzmA93KNErr2zOpYG/VbnLlWDHObHfM8c/FmE5Xa/ojdEsqKih1P8MNq2Vbo7ETd8AIJc5/iG17KjNFw4fXGUd8L1HOBdqABFbX3d99nufgx9mwX07K544yu4ayNRr+ouX0mYfubWqpG9vA44M=
+	t=1781263136; cv=none; b=d3JnHosAmAUQthkXWmffXIgdkmiEuJhXDsRJYnRcQkPe53Vf8+9oHuyLdbwVo1nT4EQPLfydhZYI1pC/mpNWjcXK8oC0RZ+ch8KHu5pMalpXAB3Z1+be0CVTSiuAJ1LEfAB/84hC2ms8AY5AD4ipgFZrsOwUdXI6qZ2dP4JZ5Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781262852; c=relaxed/simple;
-	bh=NQzWXkEcu6HV2BAhZhYf7mM7q2QTMJqC9HwiVI/8xrg=;
+	s=arc-20240116; t=1781263136; c=relaxed/simple;
+	bh=/0DITwMPaESzc0h8GdQhI1V0wGYWiihrCOuwjEOzEp0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WxDZuFFianNOKoZh0dV/ovulBqY1c0aeA2Q+tSHYrL1dXOvME6rj/nUBSkaUa0heLFDQRvoQzxSuF3zy5vV9XLvk3y1G2bORX1OA8OmbBaNRpeGwrbnluwhpksenXrVg5qWkCTD4nR9l87sa6w59jirP+RvWoUZpeYXgJ7UZhUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NbY3nnBv; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379951F000E9;
-	Fri, 12 Jun 2026 11:14:08 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=D/SG18R+5bcLXYZ/ZQQezPfQMJM4s0Psh/r/b2L3aVxEG5ygew8vxlvp/ryHCLu+ySMjzUdMoPUYP0VBHAKYlFIi0Ng1WWLIrpG/lMcVRdYbrH4USwxsTNNJEhCxa4+5QcH89GXJrMRLMIYIDKf/ZF2aYr4quOz0lgioYIFExGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T1ZBtac5; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 740851F000E9;
+	Fri, 12 Jun 2026 11:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781262850;
-	bh=PZChMkC0kAP/BeBXhnEtdpKNR5h+zkzjl05C4+3VQCE=;
+	s=k20260515; t=1781263131;
+	bh=QA9VGCEANiXhD8chy/S02QB/G9vTT1qANH6a4eKKmnw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=NbY3nnBvPtC0c76fY6r1x7jGxNbMEWUItTLyhPzrMo8kOPBrajgapqOcnXV+b5sQE
-	 7d27Gf9zBMcB0QT66Fl2VJoF17+vPCENUy6Kd08N1eW+8Ntk3OeJqWSS+oOTGNIZeB
-	 CAAn3eJMfz88QKlmg7S/XQVpLXgopFkcUU8nOGu44xaeqIF1HngRhkaf1Z6iQoxVCi
-	 sAilo/FxtRvdEleQ1LPGrs5qkBRw/ug8KNvbqK3AMOqxMoNHVAJLuy2Vnir81BNMnr
-	 f3lAk/M8sAWYpfTWjqzThFr/n96JL5jXg4R7jOOdJpS3vtAxJCYP8WmZPL8aGtSWev
-	 8tYRXwZdQSz4g==
-Message-ID: <1de2f9bf-b48c-4acb-882c-9e35a8582d0b@kernel.org>
-Date: Fri, 12 Jun 2026 12:14:06 +0100
+	b=T1ZBtac5KybFrVXTSufoYaF0z3TLD6NAN03qdzWjF8eLVtlKAGn49ZfebFa65YemU
+	 N7u3sySJL3UEwjXLhrzm/fIDmIEt9Le75BiZJgSxFw+boowTJa7EIS9A7bfHw5r/gP
+	 pUVXZC5O62I9UilE6bFntsAiwvyeISrUBUVegfH5qcoOHLiXskRh5jMVpAr1Q0/5K6
+	 shuUy8FR2mWh5AtXTVsJWmlfUPfyiou7wRe2qFodqlSKDbeV5fufZX1/dEO80kG3g4
+	 njqZMgq/ieRHnerkleSv7H0FbhLsgqdi/VXk9BLiLV9uVZ4O7yBmmSQAvaoTrEVfct
+	 jHy14RjEASjaA==
+Message-ID: <f810f5a1-5ff5-496a-b872-6a27c6ac6d48@kernel.org>
+Date: Fri, 12 Jun 2026 12:18:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,29 +55,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] clk: qcom: camcc-glymur: Add camera clock
- controller driver
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+Subject: Re: [PATCH v2 1/3] dt-bindings: media: qcom,qcm2290-venus: document
+ shikra Iris compatible
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Taniya Das <taniya.das@oss.qualcomm.com>
-References: <20260517-glymur_camcc-v4-0-9d00acffdbf7@oss.qualcomm.com>
- <20260517-glymur_camcc-v4-2-9d00acffdbf7@oss.qualcomm.com>
- <8bd4365e-0171-425c-9738-0b186047cb15@kernel.org>
- <upcLoSPzJejUNhFiNYlTVH4d8Sh_Pv2o9OZfXsY-CMCDKw19_ci2gL9B3ZwqL1hV1pQeQMLDL8tNLbPzs0JIIg==@protonmail.internalid>
- <2a496bdf-4728-47b9-84ba-063712a6e5b6@oss.qualcomm.com>
- <0a197b43-a672-4849-91c7-6e5bfe3175f7@kernel.org>
- <amL4e4IHe75_j1HTIsmqE_GyurvudlyHQCPW14zs7ivHz0UnalN-yoknJwzaVRgHTT6ftSRCqDyCodh6ABCLxw==@protonmail.internalid>
- <66335474-d600-45ab-9ac6-e946f24142c8@oss.qualcomm.com>
- <639c94f9-6f62-4502-ad7e-5ae60f5f6d02@kernel.org>
- <WdjOMNZ2o-UF6xXKW4LiVgNZB10ZaGze3YWNriL-f1jf7LgBzprN9bqqMYcvMJH8KUF5wtRpyOB0aL_7HEk-yA==@protonmail.internalid>
- <10c2e008-74fe-4dac-99bf-194a1767bc16@oss.qualcomm.com>
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260612-shikra_vpu-v2-0-bf8727370a1e@oss.qualcomm.com>
+ <g-DHie7qniRKVCsx8_kFUx3ahp5F7hzKuwOEWG4xsWwfVzmvycsWRH4Q7K67aLyBcrKKUlzyRsGOUKzPJl3Okg==@protonmail.internalid>
+ <20260612-shikra_vpu-v2-1-bf8727370a1e@oss.qualcomm.com>
 From: Bryan O'Donoghue <bod@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=bod@kernel.org; keydata=
@@ -123,29 +114,28 @@ Autocrypt: addr=bod@kernel.org; keydata=
  LKSGEglMpiX07M1AotgvylN5C8fjbouoK+/RAMsXkk8jba6rPfuuXPaDjCyyKn6zSVHETnHW
  3AJbgVY50T8STpnxayBQvWbCvu+6NOEjXCbyaOJig+5l0zlGN9XHjdANXC5HnwmyaGRL9YDq
  Jh2nVXVJDincOdQRdKcJjYLqaOAoWrYWSDi1iZGspHBTDrnOvfMQzzHY
-In-Reply-To: <10c2e008-74fe-4dac-99bf-194a1767bc16@oss.qualcomm.com>
+In-Reply-To: <20260612-shikra_vpu-v2-1-bf8727370a1e@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-112927-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:vikash.garodia@oss.qualcomm.com,m:dikshita.agarwal@oss.qualcomm.com,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:jorge.ramirez@oss.qualcomm.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-media@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:jagadeesh.kona@oss.qualcomm.com,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:bmasney@redhat.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:taniya.das@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-112928-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -157,44 +147,62 @@ X-Spamd-Result: default: False [-3.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 1FEBC678E8C
+X-Rspamd-Queue-Id: DC57B678F12
 
-On 11/06/2026 09:51, Konrad Dybcio wrote:
->>> implementation simpler, avoids unnecessary abstraction, and makes debugging—through direct
->>> comparison with the hardware spec easier.
->> How are hex values in upstream code easier to debug ?
->>
->> Without the spec you can't change or understand hex values in upstream code, which is the whole point I'm making here.
-> I get the 'understanding' part, but regarding change, as I said
-> previously, these must remain as-is - any difference for a PLL
-> impacts every single clock downstream of it. Some of them also
-> correspond to specific electrical properties, just like with PHY
-> init sequences. The existing values are a result of tuning and
-> silicon validation across presumably many, many chip units.
-
-That's an argument against changing the values, not naming the values. 
-Hexwork in upstream code is a public black box and should be avoided 
-where possible.
-
-How about, take these fixed hex but someone on the clock-side in qcom 
-agrees to update the script to write defined bitfields not hexwork in 
-future deliveries. AFAIU its a script that mostly spits out these clock 
-descriptors so, it should be possible to fix that script once @ source, 
-without committing to fixing everything _currently_ in flight.
-
-Qcom can then at its leisure update old controller descriptors by 
-running the script again.
-
-> There may be updates (very rarely post the chip going into
-> production), but I'd assume these would go through the same
-> testing procedures
+On 11/06/2026 20:49, Vikash Garodia wrote:
+> Document the iris video accelerator used on shikra platforms by adding
+> the qcom,shikra-iris compatible.
 > 
-> Konrad
+> Although QCM2290 and shikra share the same video hardware and overall
+> integration, their SMMU programming differs. QCM2290 exposes separate
+> stream IDs for the video hardware and the Xtensa path, requiring two
+> explicit IOMMU entries, whereas shikra uses a masked SMR to collapse
+> equivalent stream IDs into a single mapping. Due to QCM2290’s SID layout
+> and Xtensa isolation requirements, such SMR masking is not applicable on
+> QCM2290 platforms.
+> Since shikra uses the same video hardware as QCM2290 and shares the same
+> programming model and capabilities, it is added as a fallback compatible
+> to qcom,qcm2290-venus, with conditional handling to allow either one or
+> two IOMMU entries.
+> 
+> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+> ---
+>   .../bindings/media/qcom,qcm2290-venus.yaml         | 26 ++++++++++++++++------
+>   1 file changed, 19 insertions(+), 7 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
+> index 5977e7d0a71b4fb5681f1c2094439c251366f01f..dec7051224d1610b8b3dcb1750152eeda95d3703 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,qcm2290-venus.yaml
+> @@ -13,14 +13,13 @@ description:
+>     The Venus AR50_LITE IP is a video encode and decode accelerator present
+>     on Qualcomm platforms.
+> 
+> -allOf:
+> -  - $ref: qcom,venus-common.yaml#
+> -
+>   properties:
+>     compatible:
+>       oneOf:
+>         - items:
+> -          - const: qcom,sm6115-venus
+> +          - enum:
+> +              - qcom,shikra-iris
+> +              - qcom,sm6115-venus
+I still think this is not an accurate name.
 
+https://lore.kernel.org/linux-arm-msm/q3sr74ncqnmzsjrd6jdbkpplxpnsnifhnvxsdplvogr2kf25p3@taadnzd2qrcu/
+
+Best practice if you _aren't_ acting on previous feedback is to document 
+it in your cover letter.
+
+https://lore.kernel.org/linux-arm-msm/20260612-shikra_vpu-v2-0-bf8727370a1e@oss.qualcomm.com
+
+Either way that naming comment still needs to be resolved.
 
 ---
 bod
