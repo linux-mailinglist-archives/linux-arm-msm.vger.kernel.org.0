@@ -1,267 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-112977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id k4p8Gb+MLGrsSQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 00:48:31 +0200
+	id KY1yBtCSLGplTAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 01:14:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01CED67CE49
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 00:48:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 983C467D04D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 01:14:23 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b="Wzq/qGDw";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112977-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112977-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=lgJHnN92;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112978-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112978-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 750A2301641C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 22:48:30 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 10763300988F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 23:14:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BB50356755;
-	Fri, 12 Jun 2026 22:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B26783A3E76;
+	Fri, 12 Jun 2026 23:14:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B51E279DAF;
-	Fri, 12 Jun 2026 22:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33021CAA7D;
+	Fri, 12 Jun 2026 23:14:18 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781304509; cv=none; b=kXSBWO1EsI7waY94mzWFBYuQMapwJDkzpHCnlNZ3KzdMqoXw7GM6zKiq8JtpYA/gf3YgIGVYSixKvBUi5PdlXJ38+77/pnzxLWL26PZkD4jOgehka05NP9epboQ9la7KwtsallGAv8f2sTejkzXK4FlVGrWUfh3AOpMoJp5BIhs=
+	t=1781306059; cv=none; b=TBV9w7Gx2ocmv2mrbdlGtHFpeyo5Djt91G1/MJWF2juj2sZxVzp4I6gKPLHlnSAc+klgOvg58tD7upjYJDkKHCtZ4SLgvBNpNBq6xVSZFL3CO5sbp9LDcjjJabtE/nJaIp8INefQ1SXkvjoXYVfVnuN6bS4UbPs2Oj3z/Wwv/H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781304509; c=relaxed/simple;
-	bh=uUPK1oL43rZp+FmOduw8qffMAXDz3BLy4nu4METhBrk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sKyuXApo/2JW4qNIz5YPfc+0RzLZZ9wAYU6QPEEqFvbRHe9j6+X8DLRhdSQKx0F8OY0K8z8/chBCXRQ+deAQAza0OMvnovnEDtCur+BGDiuVM1giqizU/BpUdgwje7mInEr2rmj7+VIxS5v2CjKAnmuM/bSkPPlyxbZOcbCymHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Wzq/qGDw; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07BC41F000E9;
-	Fri, 12 Jun 2026 22:48:26 +0000 (UTC)
+	s=arc-20240116; t=1781306059; c=relaxed/simple;
+	bh=Ovn9m+uq4wSZj9EuOGbBKrDd9U3AnyPOh4AAlTNT6Ic=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VICDh6vP8dNWn6Y8rRPcO1tyBGr/XKzWJrNcMB6lcfjyEaXyfOmCRZg7x+lAlM2GN1kpO72QBpIQ00A5PBe6OTheNQH6arKrxrHDLs4R71IrBDs37rVPd5fWDqRZg2YiKm9BvgIMekvkDzXFXZYCZkGWfm0cdevQJE97e6AxtFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lgJHnN92; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141401F000E9;
+	Fri, 12 Jun 2026 23:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781304508;
-	bh=sZ8zv1h9vTqxIWN/kyWnqAytOew5Axzx7GoxuJXRb+s=;
-	h=From:To:Cc:Subject:Date;
-	b=Wzq/qGDwR/S27eZeXfUkKaYYM9YhvcxpaWjonZHZ1+5OQDSWgs1xXto6u+vMvAxf7
-	 pFVrfjMLlN3l2nxNXrqL1opIh+HgqkzrSCyKW7s3sdxE3iS4nP/b0442fwkgNG2EiC
-	 zqKug41i1HlGtnEaLk7HKqz0VdOHVEudtly81GfgCCADTgldRbf8xtmvbk2LUAv+ku
-	 2AxUgW7gRvfSW4qSHiQJfv0FKDHSXpklXbWnvNnJfYKRfwjS3F0gxULF6mlpAoYsLQ
-	 A7RavZtrbSNO85p7krTiyvFD1rMSkBiQpz807Of22d0npfxyNKZdF3qz0xn05JA62z
-	 LqM44TQ1p9/Zw==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Stephen Boyd <sboyd@kernel.org>,
-	linux-clk@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Vivek Aknurwar <vivek.aknurwar@oss.qualcomm.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Luo Jie <jie.luo@oss.qualcomm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-	Alexander Koskovich <akoskovich@pm.me>,
-	Biswapriyo Nath <nathbappai@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Phillip Varney <pbvarney@protonmail.com>
-Subject: [GIT PULL] Qualcomm clock updates for v7.2
-Date: Fri, 12 Jun 2026 17:48:25 -0500
-Message-ID: <20260612224825.852551-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.53.0
+	s=k20260515; t=1781306058;
+	bh=ZQXiGTQ3OtcldVEcro7njYih0r291CC/iIZhpWPa3nk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=lgJHnN92hKJcAsa8+IXHN6Mggbiv1tmCipcZMIeD47BSLwZExDNiEdy7AwvO0tOXN
+	 SW6CjyB1FU+qonI43XDu41U9W5uZtPmk0znnD3FV83KIS8a+yTpJ5LCDd8Pwdl3vCt
+	 mr9XXdmEA50lfCnxYKi8DjwTp2xla6As6PFLtQextRSTDYuHee7d0DfsEJHfldSS2B
+	 6mnPYhNq5Fza7HfZP58bLznrbEmKTWQB/sPbzpHfr0iIDwnj8l2ptpZGE7fu5bFqcp
+	 fcdIDQEUrYNu8fdQ5ealNswTToY/FRi6SlIp+Cvsp5Dko419NXRxeEKtzegURVm7tQ
+	 T1Lb60dMbegOg==
+Message-ID: <8d230cca-2023-4a13-876f-d5db8eb200a1@kernel.org>
+Date: Sat, 13 Jun 2026 00:14:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/4] arm64: dts: qcom: sm8550: Add JPEG encoder node
+To: Atanas Filipov <atanas.filipov@oss.qualcomm.com>,
+ linux-media@vger.kernel.org
+Cc: mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260612194417.1737009-1-atanas.filipov@oss.qualcomm.com>
+ <n0iPW9ltP_HyfKgagM8MIvaGg_NF7KvUV834b6MPuE3llz9v6B1jdn6wEvXMkIHS_zLRsjnb7pXY3dURUOSs9g==@protonmail.internalid>
+ <20260612194417.1737009-3-atanas.filipov@oss.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=bod@kernel.org; keydata=
+ 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
+In-Reply-To: <20260612194417.1737009-3-atanas.filipov@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.66 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_MISSING_CHARSET(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-112977-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	TAGGED_FROM(0.00)[bounces-112978-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:atanas.filipov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:sboyd@kernel.org,m:linux-clk@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:vivek.aknurwar@oss.qualcomm.com,m:luca.weiss@fairphone.com,m:jagadeesh.kona@oss.qualcomm.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:jie.luo@oss.qualcomm.com,m:bartosz.golaszewski@oss.qualcomm.com,m:kathiravan.thirumoorthy@oss.qualcomm.com,m:akoskovich@pm.me,m:nathbappai@gmail.com,m:konrad.dybcio@oss.qualcomm.com,m:pbvarney@protonmail.com,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,oss.qualcomm.com,fairphone.com,pm.me,gmail.com,protonmail.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 01CED67CE49
+X-Rspamd-Queue-Id: 983C467D04D
 
+On 12/06/2026 20:44, Atanas Filipov wrote:
+> +		qcom_jpeg_enc: jpeg-encoder@ac4e000 {
 
-The following changes since commit 254f49634ee16a731174d2ae34bc50bd5f45e731:
+One key bit of review feedback I gave in the previous leaked version of 
+this driver is that since the jpeg-encoder is part of the CAMSS block it 
+should be a sub-node of camss as OPE, CSIPHY and other blocks will be.
 
-  Linux 7.1-rc1 (2026-04-26 14:19:00 -0700)
+Please take that feedback onboard in your v2.
 
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-clk-for-7.2
-
-for you to fetch changes up to e108373c54fbc844b7f541c6fd7ecb31772afd3c:
-
-  clk: qcom: regmap-phy-mux: Rework the implementation (2026-06-08 09:17:24 -0500)
-
-----------------------------------------------------------------
-Qualcomm clock updates for v7.2
-
-Introduce global, TCSR, and RPMh clock controllers for the Hawi mobile
-SoC.
-
-Introduce GX clock for Milos, and ensure that camera clock controller
-votes for interconnect bandwidth in order to ensure the TOP_GDSC can be
-turned on.
-
-Introduce camera and video clock controllers for Hamoa and Purwa. Reduce
-the max_register of the display clock controller to avoid regmap
-attemting to dump protected registers.
-
-Introduce global clock controller for the IPQ9650 SoC and add IPQ5332
-support to the cmnpll driver.
-
-Add missing USB2 PHY reset to the Nord NegCC.
-
-Rework the PHY mux clock implementation as necessary for upcoming USB4
-support.
-
-----------------------------------------------------------------
-Alexander Koskovich (1):
-      clk: qcom: clk-rpmh: Make all VRMs optional
-
-Bartosz Golaszewski (2):
-      dt-bindings: clock: qcom: add the definition for the USB2 PHY reset
-      clk: qcom: nord: negcc: add support for the USB2 PHY reset
-
-Biswapriyo Nath (1):
-      dt-bindings: clock: qcom,sm6125-dispcc: reference qcom,gcc.yaml
-
-Bjorn Andersson (2):
-      Merge branch '20260507-ipq9650_boot_to_shell-v3-1-62742b49c991@oss.qualcomm.com' into clk-for-7.2
-      Merge branch '20260106-qcom_ipq5332_cmnpll-v2-2-f9f7e4efbd79@oss.qualcomm.com' into clk-for-7.2
-
-Jagadeesh Kona (5):
-      dt-bindings: clock: qcom: Add X1P42100 video clock controller
-      dt-bindings: clock: qcom: Add X1P42100 camera clock controller
-      clk: qcom: videocc-x1p42100: Add support for video clock controller
-      clk: qcom: camcc-x1e80100: Add support for camera QDSS debug clocks
-      clk: qcom: camcc-x1p42100: Add support for camera clock controller
-
-Kathiravan Thirumoorthy (2):
-      dt-bindings: clock: add Qualcomm IPQ9650 GCC
-      clk: qcom: add Global Clock controller (GCC) driver for IPQ9650 SoC
-
-Konrad Dybcio (1):
-      clk: qcom: regmap-phy-mux: Rework the implementation
-
-Krzysztof Kozlowski (3):
-      clk: qcom: dispcc-x1e80100: Fix (possibly) dumping regmap
-      clk: qcom: Constify qcom_cc_driver_data and list of critical CBCR registers
-      dt-bindings: clock: qcom,kaanapali-gxclkctl: Correctly use additionalProperties
-
-Luca Weiss (6):
-      dt-bindings: clock: qcom: document the Milos GX clock controller
-      clk: qcom: Add support for GXCLK for Milos
-      interconnect: Add devm_of_icc_get_by_index() as exported API for users
-      dt-bindings: clock: qcom,milos-camcc: Document interconnect path
-      clk: qcom: gdsc: Support enabling interconnect path for power domain
-      clk: qcom: camcc-milos: Declare icc path dependency for CAMSS_TOP_GDSC
-
-Luo Jie (3):
-      dt-bindings: clock: qcom: Add CMN PLL support for IPQ5332 SoC
-      clk: qcom: cmnpll: Account for reference clock divider
-      clk: qcom: cmnpll: Add IPQ5332 SoC support
-
-Phillip Varney (1):
-      clk: qcom: a53: Corrected frequency multiplier for 1152MHz
-
-Vivek Aknurwar (7):
-      dt-bindings: clock: qcom-rpmhcc: Add RPMHCC bindings for Hawi
-      dt-bindings: clock: qcom: Add Hawi TCSR clock controller
-      dt-bindings: clock: qcom: Add Hawi global clock controller
-      clk: qcom: rpmh: Add support for Hawi RPMH clocks
-      clk: qcom: Add Hawi TCSR clock controller driver
-      clk: qcom: clk-alpha-pll: Add support for Taycan EHA_T PLL
-      clk: qcom: Add support for global clock controller on Hawi
-
- .../bindings/clock/qcom,dispcc-sm6125.yaml         |   17 +-
- .../devicetree/bindings/clock/qcom,hawi-gcc.yaml   |   63 +
- .../bindings/clock/qcom,ipq9574-cmn-pll.yaml       |    1 +
- .../bindings/clock/qcom,ipq9650-gcc.yaml           |   68 +
- .../bindings/clock/qcom,kaanapali-gxclkctl.yaml    |    2 +-
- .../bindings/clock/qcom,milos-camcc.yaml           |    8 +
- .../bindings/clock/qcom,milos-gxclkctl.yaml        |   61 +
- .../devicetree/bindings/clock/qcom,rpmhcc.yaml     |    1 +
- .../bindings/clock/qcom,sm8450-videocc.yaml        |    3 +
- .../bindings/clock/qcom,sm8550-tcsr.yaml           |    2 +
- .../bindings/clock/qcom,x1e80100-camcc.yaml        |    1 +
- drivers/clk/qcom/Kconfig                           |   48 +
- drivers/clk/qcom/Makefile                          |    7 +-
- drivers/clk/qcom/a53-pll.c                         |    2 +-
- drivers/clk/qcom/camcc-milos.c                     |    7 +
- drivers/clk/qcom/camcc-x1e80100.c                  |   64 +
- drivers/clk/qcom/camcc-x1p42100.c                  | 2223 ++++++++++++
- drivers/clk/qcom/clk-alpha-pll.h                   |    6 +
- drivers/clk/qcom/clk-regmap-phy-mux.c              |   52 +-
- drivers/clk/qcom/clk-rpmh.c                        |   41 +-
- drivers/clk/qcom/dispcc-x1e80100.c                 |    2 +-
- drivers/clk/qcom/gcc-hawi.c                        | 3657 ++++++++++++++++++++
- drivers/clk/qcom/gcc-ipq9650.c                     | 3445 ++++++++++++++++++
- drivers/clk/qcom/gcc-nord.c                        |    2 +-
- drivers/clk/qcom/gdsc.c                            |   33 +
- drivers/clk/qcom/gdsc.h                            |    5 +
- drivers/clk/qcom/gpucc-sm8750.c                    |    4 +-
- drivers/clk/qcom/gxclkctl-kaanapali.c              |    1 +
- drivers/clk/qcom/ipq-cmn-pll.c                     |   30 +-
- drivers/clk/qcom/negcc-nord.c                      |    3 +-
- drivers/clk/qcom/nwgcc-nord.c                      |    4 +-
- drivers/clk/qcom/segcc-nord.c                      |    2 +-
- drivers/clk/qcom/tcsrcc-hawi.c                     |  158 +
- drivers/clk/qcom/videocc-x1p42100.c                |  585 ++++
- drivers/interconnect/core.c                        |   20 +
- include/dt-bindings/clock/qcom,hawi-gcc.h          |  253 ++
- include/dt-bindings/clock/qcom,hawi-tcsrcc.h       |   16 +
- include/dt-bindings/clock/qcom,ipq5332-cmn-pll.h   |   19 +
- include/dt-bindings/clock/qcom,ipq9650-gcc.h       |  172 +
- include/dt-bindings/clock/qcom,nord-negcc.h        |    1 +
- include/dt-bindings/clock/qcom,rpmh.h              |    2 +
- include/dt-bindings/clock/qcom,x1e80100-camcc.h    |    3 +
- include/dt-bindings/clock/qcom,x1p42100-videocc.h  |   48 +
- include/dt-bindings/reset/qcom,ipq9650-gcc.h       |  215 ++
- include/linux/interconnect.h                       |    6 +
- 45 files changed, 11313 insertions(+), 50 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,hawi-gcc.yaml
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,ipq9650-gcc.yaml
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,milos-gxclkctl.yaml
- create mode 100644 drivers/clk/qcom/camcc-x1p42100.c
- create mode 100644 drivers/clk/qcom/gcc-hawi.c
- create mode 100644 drivers/clk/qcom/gcc-ipq9650.c
- create mode 100644 drivers/clk/qcom/tcsrcc-hawi.c
- create mode 100644 drivers/clk/qcom/videocc-x1p42100.c
- create mode 100644 include/dt-bindings/clock/qcom,hawi-gcc.h
- create mode 100644 include/dt-bindings/clock/qcom,hawi-tcsrcc.h
- create mode 100644 include/dt-bindings/clock/qcom,ipq5332-cmn-pll.h
- create mode 100644 include/dt-bindings/clock/qcom,ipq9650-gcc.h
- create mode 100644 include/dt-bindings/clock/qcom,x1p42100-videocc.h
- create mode 100644 include/dt-bindings/reset/qcom,ipq9650-gcc.h
+---
+bod
 
