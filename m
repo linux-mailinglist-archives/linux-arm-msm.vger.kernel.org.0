@@ -1,131 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-112841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id rRGEMAWBK2r6+gMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 05:46:13 +0200
+	id zhePJhaIK2qj/AMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 06:16:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71EC9676788
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 05:46:12 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33146676917
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 06:16:22 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gondor.apana.org.au header.s=h01 header.b=klgtFRZa;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112841-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112841-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=apana.org.au;
+	dkim=pass header.d=gmail.com header.s=20251104 header.b="X9k/kSie";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112842-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112842-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D8F9130D148A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 03:46:04 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 984273016CC0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 04:16:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 427FF2F8E9C;
-	Fri, 12 Jun 2026 03:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 211EB2874E3;
+	Fri, 12 Jun 2026 04:16:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B2D33BBBD;
-	Fri, 12 Jun 2026 03:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEE92580F2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jun 2026 04:16:17 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781235964; cv=none; b=sn6lWvCSly/+ti5OBBkGn5sHKHCU3p0FHJh8UOuoFQcBKc1cU2PrytWk80w8r0H/kJk92+xELupmf5ykb/8r0Rzp0Upf4d5sAXN9OzNa5efCwVXL2JqMIInpNHKEvfqhw0IQX6Civ0BNcKdogIOBcDPNiog48PLXAKE0p4d+0Nw=
+	t=1781237779; cv=none; b=L7cvvEW8qJb1INGOJcjpPVSqvBdkW4aZios7R7vDzMaTFAj63VJeKdm/28flV5t2VrlK+Qk9eaSR/rrxSfD8OdpUhE6bpsZvIEHIzsMabig/clKyWpuJNScvgFKZGSR5Fk5lIGl37t68cmt2nFs5K6rIaSmVF/RtOkdT6PmXUF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781235964; c=relaxed/simple;
-	bh=YmIT30wJVMHHDBOaAYxOWOsJy3qLJqGh5jo8uWSE3IM=;
+	s=arc-20240116; t=1781237779; c=relaxed/simple;
+	bh=S45NGb5nHnP1iFpxpFlQ0YTorvzPHiJtJltQczKK3kI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P9asc+VXvcJFzLVJMFpuRnG6eRYx4x71VPMZKJaZAvgaTMH2lfQWZL1CcuBUjocv7ZICb9/wMVbqcRJXwmUMxEznAkwTH9UZRRmvlu06uyAhxS9GZmbnLH1Y7jKvcet4TPMm3CzBwOQsZ+1fuv2327QBIsO/ClM251Dn7SaRbaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b=klgtFRZa; arc=none smtp.client-ip=180.181.231.80
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
-	from:content-type:reply-to; bh=Bhaujo1ehdyWC/DbtAq8rlj792b9Kpuyl7yql8WoRa0=; 
-	b=klgtFRZa0JchY1z3u9Z+TRPFlWziQRUxg4swv9VF+nu0Ikw5OIxlVGmbjZhvO0nIQ5x1eEQ48vL
-	6BX28lE+RUDaX8WMtbA9h89TdQm4OmBUGin2sI/PLeSOyX0De6Hqi/7544M81NJk9wawiTRP6eSfc
-	U3CS675ZqCANKS6/pu7iQpd2eczvF681faprkBoVZDCabooknz4YDj7mrtt950pkDBAtzccwNO/jN
-	xkt/EhWxcBmJkV1mN0fbQgJyk4tr/V141pMWKC0tsa5uBf2Oi9FjxIs9CE3a4Be2AxaE4QGdcX2aw
-	cbGaalhlrdx4U2Bz1xSzEhAAZc6RdO6PNyIg==;
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.98.2 #2 (Debian))
-	id 1wXsq8-00000004mdI-3Me3;
-	Fri, 12 Jun 2026 11:45:53 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 12 Jun 2026 11:45:52 +0800
-Date: Fri, 12 Jun 2026 11:45:52 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Thara Gopinath <thara.gopinath@linaro.org>,
-	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	 Content-Type:Content-Disposition:In-Reply-To; b=lYyyiLuqKv5w8hLNAddvhxRAWinxtuJlMowmc2TFjKJFQNNaDvtGKtrTw41Aa7pwyCSa4IP77y2W5t3K3afbByar/tgrsrgBzWq3EiohiB92x9aw7VbkAf/h9ciMLyeaR59+1lOa0kBCXgRM6I/QMkVRLdSGzISti4TVbfnS4aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9k/kSie; arc=none smtp.client-ip=209.85.214.169
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2bf125989f2so4337075ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Jun 2026 21:16:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781237777; x=1781842577; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tzOTMyOpfLnyNK+VGAde0WzU286Gd6+LpsOa0E/ts9o=;
+        b=X9k/kSiezeARoKznaBGdd38vBsfyKloyopiJmHJ5dUxcfSHfvsQoxSELmmzj66bgLE
+         LKleYIKPwF53ZVKx0IMjqTz9GdJZhC/DdY+PWucioiNisbqQnLH3vhhooOj8AOxtKEw3
+         yWzGpzz8VaceEj0LFEvE6dGPOo1ruH1fncfxp2TDFiL9PQvBWCOqSbpjX6LNShs1K223
+         gSSaZypcDchsr3JCW8tts4WZYrJ59Wdn1FOlgJt5mkYDqnkfWtattK+o6E0JLfvh2tBQ
+         wCMoG/0gks9jz7jM5JVq/xC38oJ67BBqXrqE0swgbSm2mpL4d+1DJ8QXe3YaspYY4Q8Z
+         4A/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781237777; x=1781842577;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tzOTMyOpfLnyNK+VGAde0WzU286Gd6+LpsOa0E/ts9o=;
+        b=M/4ae37a+dbx6LxaVDA/BqsEwje6XWNBj+ZvQBYlAl9L3OSnzyMZv3Y4vQjTv6BJjr
+         FuW7gEEvmzWJjw0supTYR3qVRMquhden7h5phXeEkiWFpLQv78sua+4shgYYYOZJkOYy
+         wkkx7S5j6tvQ/F7HvJgcDfAtgG7dmyTDxWMsLZJ+rbauOvVowqAywQqu8jGJP0PrX0a9
+         U+NH/i71PRupHNcBCaP+d9Iy+QTXPqPyv2GCUpQh0C1C4FVO0QMGEsJneaJVNqTX2vI3
+         X6XgkES3eYgKGCegmoN3+lBawqfMuvBCjP59AjqsOS+hMWI1D407qH3p9DIU7Fx6GPif
+         +o2Q==
+X-Forwarded-Encrypted: i=1; AFNElJ+nvbRwB9vaTt2pd7uy7xJE9clCw5GjzYtBHMXu+Uw+t/jjQdNsjD4Zv5JiNjeGW1A+MjEuZUoNtAYAnB1c@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUHtNoCHVjebq+Bpd9G7YS0o1nhMlix0C4QGwN4/FuIR7eEerJ
+	YlwuIsNHjcD1fOI/VJ4ydNXkkf0mcuITqH6tzw9SHTkXFxsTq7HC4yIm
+X-Gm-Gg: Acq92OHMEXwfqWdGJVbhvMbftde4K4/2vxJt5s11NL/5/ZJKDgIlA+wbQJfff21FcZz
+	sFZw1hKbRJd4ySexWY2sjnTjCORYANnr9ETtg/FuVf3hUcOc4sctl9UX5CNQzz+TL0HSBL14dul
+	dGfBWvRUJB5d/n0u0tOsVauAe0X+sZsVGKvZs0H/vovk64EsqbMYDul4IALVd5/75tsGSRF+n7X
+	3HUrUwSpbUAd1xdH9nKc5PrI9IoauQm9DjuvUpQQRC0ToKeSd0p1D7n2KWR+1omzPLBo9qn9NrI
+	FUfJ8V9IPs/z4f6RZwVHy/bClMa/YvfDjI0u4earXjOeriNippxrfPUn8193YR/+jYDjvyB4EQQ
+	fts16HNbIIDlkxMUs+kRQB4irM/PDReZwzSwwZuX2NmEnPI/eNvSyN+GBAs0JnCVdJlTAtbxgXy
+	O375Fdi9JbJy/1PJuMrfNC6WjvZNFPetHwZGA+4nlcG3M=
+X-Received: by 2002:a17:903:247:b0:2c1:a19:8396 with SMTP id d9443c01a7336-2c413dbb942mr14852495ad.31.1781237777134;
+        Thu, 11 Jun 2026 21:16:17 -0700 (PDT)
+Received: from page.local ([2402:a00:163:2ce9:95bf:5776:9b95:85ee])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c42f2e535csm5089475ad.6.2026.06.11.21.16.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jun 2026 21:16:16 -0700 (PDT)
+Date: Fri, 12 Jun 2026 09:46:10 +0530
+From: Ajit Singh <blfizzyy@gmail.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] crypto: qce: Fix xts-aes-qce for weak keys
-Message-ID: <aiuA8CCGcfP6MdLy@gondor.apana.org.au>
-References: <20260610-qce_selftest_fix-v1-0-1b0504783a46@oss.qualcomm.com>
- <20260610-qce_selftest_fix-v1-1-1b0504783a46@oss.qualcomm.com>
- <533motquixnbence674lawbnlnxevcrcnysymwncjis46j5uoq@wcemraangg63>
+Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: Add Vicharak Axon Mini
+Message-ID: <aiuGjH4qeOIXXgqq@page.local>
+References: <20260607113658.25117-1-blfizzyy@gmail.com>
+ <20260607113658.25117-4-blfizzyy@gmail.com>
+ <39228ace-9404-4ade-bcb1-28e763548b7f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <533motquixnbence674lawbnlnxevcrcnysymwncjis46j5uoq@wcemraangg63>
+In-Reply-To: <39228ace-9404-4ade-bcb1-28e763548b7f@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[apana.org.au,quarantine];
-	R_DKIM_ALLOW(-0.20)[gondor.apana.org.au:s=h01];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,gmail.com,davemloft.net,kernel.org,linaro.org,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-112841-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-112842-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:bartosz.golaszewski@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[herbert@gondor.apana.org.au,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER(0.00)[blfizzyy@gmail.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:kuldeep.singh@oss.qualcomm.com,m:thara.gopinath@gmail.com,m:davem@davemloft.net,m:brgl@kernel.org,m:ebiggers@kernel.org,m:thara.gopinath@linaro.org,m:linux-crypto@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[gondor.apana.org.au:+];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[herbert@gondor.apana.org.au,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[blfizzyy@gmail.com,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCPT_COUNT_SEVEN(0.00)[10];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 71EC9676788
+X-Rspamd-Queue-Id: 33146676917
 
-On Fri, Jun 12, 2026 at 03:40:49AM +0300, Dmitry Baryshkov wrote:
->
-> > Fix xts-aes-qce behavior by using generic helper xts_verify_key() to
-> > reject keys early with -EINVAL for FIPS mode active(or FORBID_WEAK_KEYS
-> > set). For non-FIPS mode, since QCE hardware cannot accept the keys, use
-> > software fallback mechanism to encrypt the data.
+On Wed, Jun 10, 2026 at 02:58:19PM +0530, Konrad Dybcio wrote:
+> On 6/7/26 1:36 PM, Ajit Singh wrote:
+> > Add DTS for the Vicharak Axon Mini board based on the Qualcomm
+> > QCS6490 SoC.
+> > 
+> > This adds debug UART, eMMC, UFS, SDIO WLAN, USB 2.0 host, PCIe
+> > support along with regulators.
+> > 
+> > The UFS ICE block is kept disabled because enabling it currently causes
+> > an SError during qcom_ice_create() on this board. UFS works without ICE.
+> > 
+> > Signed-off-by: Ajit Singh <blfizzyy@gmail.com>
+> > ---
 > 
-> No, if it is a hardware driver, there should be no software fallback.
+> [...]
+> 
+> > +		vreg_l12c_1p8: ldo12 {
+> > +			regulator-name = "vreg_l12c_1p8";
+> > +			regulator-min-microvolt = <1800000>;
+> > +			regulator-max-microvolt = <2000000>;
+> > +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> > +
+> > +			/*
+> > +			 * VREG_L12C_1P8 supplies the Ampak WLAN/BT module
+> > +			 * VDDIO and the external 32.768 kHz oscillator.
+> > +			 */
+> 
+> Sorry for the long review timelines on the previous patch, many of us
+> were out for conferences..
+> 
+> Is the oscillator used for that WLAN module? Would you ideally like to
+> be able to turn it on/off?
 
-The driver must support everything that the software implementation
-supports.  So if the hardware can't do something, it has to use a
-fallback.
+yes, oscillator is used for WLAN modules. Oscillator is powered from the same
+VREG_L12C rail as WLAN VDDIO, so there is no separate regulator control to put
+in pwrseq. So I think this will work fine?
 
-Cheers,
--- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+> 
+> Perhaps you could get that with a simple pwrseq driver (+Bartosz)
+> 
+> Konrad
 
