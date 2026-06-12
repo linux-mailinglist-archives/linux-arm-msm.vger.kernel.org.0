@@ -1,236 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-112951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-112975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id z7R9LbQeLGoJLwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-112951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 16:59:00 +0200
+	id PDJHFM2FLGo1SAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-112975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 00:18:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51CF267A606
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 16:59:00 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD31B67CB42
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 00:18:52 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=imd-tec.com header.s=google header.b=HEO3pFkf;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112951-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112951-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=imd-tec.com;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=MCcjGVU5;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-112975-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-112975-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9201631A102D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 14:56:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 56A163016B6C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Jun 2026 22:18:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6019A38D3EA;
-	Fri, 12 Jun 2026 14:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 552853CFF6A;
+	Fri, 12 Jun 2026 22:18:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FF138B12C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jun 2026 14:56:42 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781276204; cv=pass; b=UY64y0omwNnT2le0dW5hBt6b8A7ci/nDoL4+hk2SsOiTC7WiTPmZ6cwyTMgJsJTP73JWayPN/3TPutCgQODcnbD/z+b0B3WN+tMkvLBDHymTzq9ILks7trvE9zDfQ/JKAABjrm6eHJug/pA3WNwx2Ka9QAoYSLuU+F1K4PnW/Eg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781276204; c=relaxed/simple;
-	bh=QIW62ikKZcv1KNzbDJe5YxTSN/5XVxBnzFHD2epcV7Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=neP1GFT83+i68PrboS4hyaQ5KFevkz9a/e8wc+k1rujsZj3qTGgvWNNQj3p2TCSCVLZ5UhErVYI+fCcU7FEZqRT7xKjCz13LtLc13PyRsUyup5f1XoAb5TWGPe/BnlyZyIdfkfmpdq960Qz1ri4/Lkwc/EEYbFu55JNkpwEp2UI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=imd-tec.com; spf=pass smtp.mailfrom=imd-tec.com; dkim=pass (2048-bit key) header.d=imd-tec.com header.i=@imd-tec.com header.b=HEO3pFkf; arc=pass smtp.client-ip=209.85.217.51
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-6cfd9f4d6f5so400988137.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Jun 2026 07:56:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781276202; cv=none;
-        d=google.com; s=arc-20240605;
-        b=iRl+B412uJCek6zhMERoXY1IN2shR+YDXpt8XO7SSMnLYSczry0tiCMOqxx+suPf5a
-         yFFonkYXjStM35TKTeWMuX3z7GSOU/vgROfU7dO276R/m6jkMnCbq/8ctWOXTg8wFxpS
-         6034j9FE0wuQ1T0rZY4BwvCKF77gLnOg5wVrP742yrY7SXrNr41jM9MazVWYiNkEkmnm
-         JE+yWNoz0Jo9POdbhpL0FIxxsKmH0KaQWczCzs67c09V/0KO6J8FSt/2woDxV0fXcDTx
-         JVIlyHIB+lN01BLczSMZYUbFUM6PVl1nKf8tJFdD0xdR60FasB6FdezjhmFcqrMGQVEX
-         Uu9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=lG0qX+ayOcM7ycNEY66FF0f5sN+HRaPLdeR2N8mYiP0=;
-        fh=xIKqLMXBAt+f3F3HyFBJErXseBxWrQKDnPPd0Mu92Qc=;
-        b=DN6cbxsAb6/iVi6sNFzAezTRRaMuIj06ZUTsq8rvm/Ua7aF5N3iJopBDw2MprV8ahh
-         Ogy7Hn929NfJXlG7L81pDsUgI7a0VLxe+E5h7DkM/MUU4BfO0R7fIma+pWXLoAXEXhHm
-         Tcr4cSpb3FGO5zwWFrsHZaGC+FLbXNkTWulPjHAXaQYuhlV9ZIjLHolYK4qBwi0BxjoE
-         +n3MFE2yHUrCfTdmO2O3n92QA9ICrPmNsmeWG0P35wbc4HGcQ8W0/ZYXfIUAvSCrSZjY
-         fU6TagJ6JoJjcXaNt75fZxP96n8ldTD5C2p1UzrksDe5K9pFzj1Yd2oyIYaR7XXREYZ/
-         AWbA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=imd-tec.com; s=google; t=1781276202; x=1781881002; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lG0qX+ayOcM7ycNEY66FF0f5sN+HRaPLdeR2N8mYiP0=;
-        b=HEO3pFkfpF5FYECoxFiZO0nIVVFG5eXvYB5h/5xdgh7ilA/gtRk845A0nVTIyj2/fH
-         qEaN7dKhS1Ip1JK0DyJgtwWoQSbQKK+/0Bu0LWamdybbjryATSCYdhYiOWHTgTZD0VdI
-         TewM/e2BS3OKJR7HnNOLszlCuCfRDZsNJkMjmFYiYwvtYTPJhISt08ctwBZogFXBOwzx
-         92QhtS4O3wdhV2aPM0IQE5fGBTbyzls9/H+zOXTXwX2XK9axiGxWW84XaHDgZZpC4L4f
-         T/uSE9u1f2CbC40X3zNBSKYURmEj6AjmDHQD5aTP+R2oy1ty2cKnrth3qRM6037B2adX
-         w0GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781276202; x=1781881002;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=lG0qX+ayOcM7ycNEY66FF0f5sN+HRaPLdeR2N8mYiP0=;
-        b=UFI/F6q9/u5b6PtifgpEWTUxwaqtPPbJ4WNCVyerkyIfL5XexuHsZv2VKizjoOtWk5
-         rLaTgek6UjYJGjtiGU65ohtthbvIrUbblhDR6qHjM276fzcVe+qWS6wPhInlFNQnwJWn
-         ZYSzuhledF4WqNkSiC9j49LmLjIxDNwP7l9D0DsqKBJ54gWXVTyQ/my833hBvrmP9NDU
-         d5S9/KL4FE7svm3o+EAMKLYa29Wih1DyFmKYLSw8xgf2mXeND//pgdZYC2ZAkF/AhHHe
-         atRxpxiWOnlJiYNgto31TVyWyfDqAaXZKxYInUGfQzRjhXkkmEg5PYVKcEFGmx55tt4p
-         1U5w==
-X-Forwarded-Encrypted: i=1; AFNElJ+SLytR+D/3MVEkMH6Xiu2GP1Yk0gcM0gtA56CKEQ+FvG1A3cLyWZ4eDEGP7jI0NgAyKdkXrpn2Getl/P5H@vger.kernel.org
-X-Gm-Message-State: AOJu0YznSpAblNFLkKCU/dvaoIgLzqdpsJ/fh9RsJ3gluoh8ILdQLjWV
-	Qpcv7lVOV4mSHErBSM5IbZREtLn0tcP5JK1t/ULStuL0PjDd8CuEf3kaSYsWgGcs5BJJm7H13FU
-	Q4eWWrEDmiWqRxkQ8n1Pnm9iISESQbUWuUyfnKvTtKQ==
-X-Gm-Gg: Acq92OH57cbOzK5knqCzD454DtI34aJMQpZDueMoiv155KC5Cs8PbK06tVntmsRRfYp
-	Ptann29A9qIh1RvjmXGtHiYTD5Oh3qSJlcNaiOtqYyL+aBYUniX7ahX5/IM+DvFHcMNElEUnbab
-	VPqL71rCJpaRIqu7L2hJMoPbFt2MCdjrdbTKhq83dz1WDKGUtQkgffTJYLjEA7QPXS3TdEQz9Ya
-	g7tsEnnMXjZdQKrM1Fw6VjpSLqx/Yg1No0L7+HT/pJhouRF9lECNMvYmfjLVXV8dMeLFW5xrTza
-	UU0x5UhRfQSyGHQw
-X-Received: by 2002:a05:6102:644b:b0:631:4cd8:b6aa with SMTP id
- ada2fe7eead31-71e88c54814mr1696500137.13.1781276201695; Fri, 12 Jun 2026
- 07:56:41 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7CF3CF68B;
+	Fri, 12 Jun 2026 22:18:48 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781302729; cv=none; b=mjpyFNPm1KyrmGeYc1GUwVNa3jc6yiz2M+Q1EZ2FpgJui7NyhWx/iYmBWa5c2RkKvG90iJDvvY7J9OjtOPq6ZtaSu7OzO35Wl+gv8XsKr/Hreik0MmbQclGSpSs6kHwoXjsw0tPSYU00x0Pw+k/dp6DZLw95eRyeMZeaodvYv/c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781302729; c=relaxed/simple;
+	bh=6NdJ1oXu8X+yrUyYOh3BVEt16gq7UD6K3TfA3IfrptY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Z0byvKZFQip85lNfAy8gENAv1HoYK+1DhJ+GdQbWSA/tJzMGUOMiC0XpMwIt+kSB3xnNQk5o58PD1GWFo7MFSXyEV55XbqHaX0kh/hP8zv62vW9U13jSq8Yrx32YZkgNbjBSUQlOXNnE/506QDf5ytM53divVLdX4xDPxrAhG3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MCcjGVU5; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BC71F000E9;
+	Fri, 12 Jun 2026 22:18:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781302728;
+	bh=+EaqxrR/sV3bOU1Rowx551pwQAzOjjox3enBFC+z/Nc=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=MCcjGVU5k6xblfjlm0hOAQ0LxniK+ioRseQAbGr0sTWq5Lvyq/kScY4vYXkb/bfHt
+	 whIPFKbPmP/Ai80uaaYsLEKZdkge2EV9bFQJ8FpSqRvTekmxqA2m4ENfJ45lDWb23x
+	 JRoKEzD8PwT3Gi7LFaSUE3fz9rV7bdQPQh8T50fB+l9V4vBBBVOZgZTotMERGRI2j+
+	 J/RNWyA2lumXc+UcKfnTHysZq0b5GRmfgSBSt73C0Kqcl+lcjT3N2TQ99nImUGUNVm
+	 X4iMalO4cRwCX3tnuh50dZRQ0NYuJVlja1KFyzwDKG4daTUmWSEXpYwa0KIMhdlG+8
+	 YIrtwz6f2NHEA==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srini@kernel.org>, Takashi Iwai <tiwai@suse.com>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Herve Codina <herve.codina@bootlin.com>, 
+ Shengjiu Wang <shengjiu.wang@gmail.com>, Xiubo Li <Xiubo.Lee@gmail.com>, 
+ Fabio Estevam <festevam@gmail.com>, Nicolin Chen <nicoleotsuka@gmail.com>, 
+ Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
+ Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+ =?utf-8?q?C=C3=A1ssio_Gabriel?= <cassiogabrielcontato@gmail.com>
+Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
+ linux-arm-kernel@lists.infradead.org, notify@kernel.org
+In-Reply-To: <20260608-asoc-of-node-scoped-cleanup-v1-0-9e3ac518dc2e@gmail.com>
+References: <20260608-asoc-of-node-scoped-cleanup-v1-0-9e3ac518dc2e@gmail.com>
+Subject: Re: [PATCH 0/3] ASoC: use scoped OF node handling in manual
+ cleanup paths
+Message-Id: <178127725305.48375.17603847447471691265.b4-ty@b4>
+Date: Fri, 12 Jun 2026 16:14:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260427-sm8550-sdhc4-support-v2-1-a4241f43ecd5@imd-tec.com>
- <e0731edc-81da-429a-a12e-a1d1b75f9544@linaro.org> <aig9licCxhtZbHMq@will-Legion-Slim-5-16APH8>
- <5a5cbf8f-07ef-419a-8d30-c1b0b2786312@linaro.org> <aik1ZYUT-cnpfdQn@will-Legion-Slim-5-16APH8>
- <00643a25-040a-4bec-8324-f52b30d84f9f@linaro.org> <aivHs6p28uN3d6TI@will-Legion-Slim-5-16APH8>
- <aca9bd93-9dff-4493-a1c4-daf9ba27aad6@linaro.org>
-In-Reply-To: <aca9bd93-9dff-4493-a1c4-daf9ba27aad6@linaro.org>
-From: Tendai Makumire <tendai.makumire@imd-tec.com>
-Date: Fri, 12 Jun 2026 15:56:29 +0100
-X-Gm-Features: AVVi8CeifV9qAmQffT_sMCM2pBZ4K5zACZU61maUzZh8KhZaZlMdzWUp7xFuXTU
-Message-ID: <CAPF-P6qT4FL9FDSx44JCP+oOiAYC47x3XVuEbqaQtJTPeMXB4A@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550: add SDHC4 controller node
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: William Bright <william.bright@imd-tec.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Ram Boukobza <ram@imd-tec.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1663; i=broonie@kernel.org;
+ h=from:subject:message-id; bh=6NdJ1oXu8X+yrUyYOh3BVEt16gq7UD6K3TfA3IfrptY=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqLIXBRNPXenH0pNh+GaHTYt582SCRLiGDStmcX
+ CIiqu8x+JmJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCaiyFwQAKCRAk1otyXVSH
+ 0KzSB/9EIxR68YF4xkDdQc5qt3LLq490icnYLlz3hS/NZYEltakjL8njExuQ3zcTJBfIUrJCoZe
+ V1ON3uZ3j1Ea91FUKsiBqIRNWpfU9cOfYwKdezXVTXFbrtH8oYaas6j/H0fm3C3KFDrcx6OV62E
+ veBD3U/6ovNL+EL/marF53J8tw5ujOw6s6ht+U6oO7M/aQqxpT59X0xh0pYOSN8xvvbEC0RIO14
+ nE1lO2wTJVHs2UYC1pLy0fuJyexr2jtykNji0JTzLDnobKjHMfIwxzCmM7fiCMq9aeTTzznCM7k
+ IlTzJifQ4K3OWu56FdA49audNwYAbb6FUZGz2hV7qyC9/1jV
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[imd-tec.com,none];
-	R_DKIM_ALLOW(-0.20)[imd-tec.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+X-Spamd-Result: default: False [-3.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-112951-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:srini@kernel.org,m:tiwai@suse.com,m:lgirdwood@gmail.com,m:perex@perex.cz,m:herve.codina@bootlin.com,m:shengjiu.wang@gmail.com,m:Xiubo.Lee@gmail.com,m:festevam@gmail.com,m:nicoleotsuka@gmail.com,m:rjui@broadcom.com,m:sbranden@broadcom.com,m:bcm-kernel-feedback-list@broadcom.com,m:cassiogabrielcontato@gmail.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linuxppc-dev@lists.ozlabs.org,m:linux-arm-kernel@lists.infradead.org,m:notify@kernel.org,m:shengjiuwang@gmail.com,m:XiuboLee@gmail.com,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[kernel.org,suse.com,gmail.com,perex.cz,bootlin.com,broadcom.com];
+	FORGED_SENDER(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:vladimir.zapolskiy@linaro.org,m:william.bright@imd-tec.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:ram@imd-tec.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[tendai.makumire@imd-tec.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[imd-tec.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[tendai.makumire@imd-tec.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-112975-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 51CF267A606
+X-Rspamd-Queue-Id: DD31B67CB42
 
-On Fri, Jun 12, 2026 at 10:11 AM, Vladimir Zapolskiy wrote:
-> If Qualcomm supports their downstream Android kernel running on your
-> board, it should be worth to contact them.
+On Mon, 08 Jun 2026 10:39:10 -0300, Cássio Gabriel wrote:
+> ASoC: use scoped OF node handling in manual cleanup paths
+> 
+> Some ASoC drivers still manually release child OF nodes
+> when leaving child-node iteration loops early.
+> 
+> Convert these focused cases to scoped OF node cleanup
+> so early returns and normal loop exits keep the same node
+> lifetime handling without explicit of_node_put() calls.
+> 
+> [...]
 
-Hi Vladimir,
+Applied to
 
-I had previously opened a case with Qualcomm when I started trying to get
-SDHC4 working on our board and we didn't get very far with them. I did almo=
-st
-all the work here without their support.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.2
 
-What's interesting to me is that we managed to get SDHC2 working at
-UHS-I SDR104 speeds quite early on. And the traces for SDHC4 on our
-board are actually shorter than what we have for SDHC2.
-The only difference between the two controllers on our board
-is that we don't have a level shifter on SDHC4 and the pins are
-connected directly to the IW416 without any pullups or pulldowns.
-The signals looked clean last time I measured them.
+Thanks!
 
-Tendai
+[1/3] ASoC: qcom: common: use scoped OF node handling
+      https://git.kernel.org/broonie/sound/c/22aed576add0
+[2/3] ASoC: fsl: fsl_qmc_audio: use scoped child node loop
+      https://git.kernel.org/broonie/sound/c/065df02692f0
+[3/3] ASoC: bcm: cygnus: use scoped child node loop
+      https://git.kernel.org/broonie/sound/c/9741aad24432
 
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-On Fri, Jun 12, 2026 at 10:11=E2=80=AFAM Vladimir Zapolskiy
-<vladimir.zapolskiy@linaro.org> wrote:
->
-> On 6/12/26 11:47, William Bright wrote:
-> > On Thu, Jun 11, 2026 at 10:48:34AM +0300, Vladimir Zapolskiy wrote:
-> >> Looks like the SDHC driver behaves expectedly then. For me it's hard t=
-o say
-> >> what may be the rootcause, I believe the lower bus frequency should be=
- fine,
-> >> so it sounds like a hardware issue, but could it be PCB/board specific=
- one?
-> >>
-> >> If you find a chance to copy the SDHC driver (and its small dependenci=
-es)
-> >> from Android and test it on your board, and if it also fails, then it =
-might
-> >> be well concluded that something is wrong with hardware, still it won'=
-t be
-> >> quite convincing that the SoC SDHC is to blame here.
-> >>
-> >> Hope it helps.
-> >>
-> > My colleague Tendai (<tendai.makumire@imd-tec.com>) had the same issue
-> > with dll-tuning failing in SDR50 when working on the downstream 5.15 ms=
-m
-> > kernel [1].
->
-> If Qualcomm supports their downstream Android kernel running on your
-> board, it should be worth to contact them.
->
-> > It does sound like a potential SI issue so I will try the following:
-> >    - Sweeping the drive-strength values for the sdhc_4 lines to see if =
-I
-> >      can find a set of values that work
-> >    - Scoping the lines to check SI when performing dll-tuning, our boar=
-d
-> >      is very dense so this is challenging.
-> > I am guessing this patch is only acceptable to be upstreamed once we ge=
-t
-> > to the bottom of why dll-tuning is failing?
->
-> Apparently if Qualcomm confirms that SM8550 SDHC4 actually has this
-> discovered and unveiled defect, then this change will be accepted for
-> all SM8550 platform like you propose it to be done.
->
-> According to my experince SM8550 SDHC2 operates properly in UHS-I
-> SDR50/SDR104 speed modes, this can be verified on the reference boards
-> like HDK or QRD, and for me it sounds oddly that there is such a problem
-> with SDHC4.
->
-> If the proposed change as is does not enter upstream for SM8550 SoC, you
-> may keep it as a necessary change in your particular board .dts file.
->
-> > [1] https://github.com/imd-tec/meta-imdt-qcom/tree/kirkstone/patches/ms=
-m-kernel/files
-> >
->
-> --
-> Best wishes,
-> Vladimir
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
