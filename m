@@ -1,123 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-113022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id achpFSDgLWrllwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 00:56:32 +0200
+	id sOmxNJzkLWoZmQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 01:15:40 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0E5F67FFD3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 00:56:31 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2686B68004B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 01:15:40 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Bsnum7D3;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113022-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113022-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=infradead.org header.s=casper.20170209 header.b=hLXD7eOS;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113023-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113023-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=infradead.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DCC77301A920
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 22:55:48 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EB4FE300D16D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 23:15:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7777439099C;
-	Sat, 13 Jun 2026 22:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61D0E25B0B2;
+	Sat, 13 Jun 2026 23:15:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831E030D3FE;
-	Sat, 13 Jun 2026 22:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716193C06;
+	Sat, 13 Jun 2026 23:15:33 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781391348; cv=none; b=kqBcgTMX3u/IXzOUOqCAjo3rQf5zpDM1hYGGrGtwbaEnqvJQHNBpNxwDE2Y/VrX629QH2UjrWsB5uI7gY93PrjwpusLJwQdlcIGoG477NUGB0CmOx94WQtMIDU+bZLZljaWe4hx1OHBjFDCmWn1ufjwjw7JVdUHeFpL3X1L0qd0=
+	t=1781392538; cv=none; b=RBI9qPo0FLF/F/4xbA0Vc5dN/UFsSm4rMh05qYr0D19mC429JAoe98qhAj6dnC8TOZqwGHO0jFMv1brCta92v25tiAESGzvnzkvoA6NOrcu1BMCnuWKljwsOyKsoUdzdV0StEJNQelbS3kkJVd+aWngrx7Ci6rJHTyiNKXxXzV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781391348; c=relaxed/simple;
-	bh=waFcLfIWDrFtfyHeoFg4ES5dRKtg1IRhVdKp4lqp/rw=;
-	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
-	 To:Date:Message-ID; b=lqSPR3LyHy4JnGn8udmZGx8zq+iag6Bk1mo/DohEdTNq8k5PU7HRZKeUfDydFVbyPkN64a54Jv1S3+ePSHnn/OxqlC9pOp0B0+AIbdzLERuCUJM/B3vnSm4dJ3NwAH6rWs7RDi7MZIis4WCU9a+N8DIvDq2F2gadgYwI8KKKDaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bsnum7D3; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9EF1F000E9;
-	Sat, 13 Jun 2026 22:55:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781391347;
-	bh=8Y9czviEfUCs9RDuFGMQRHETjuWFS4198YhyV0ORENA=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date;
-	b=Bsnum7D3HeZqfpgRMb8xikPmhEOVSat1u5u8opBITtAkcWMVEgAmbJgdLsHq7gm/C
-	 GMVOCc5iOJ6jFCJ7qv6zS6rEHeEJJMBqQXPdLKlFkZhXqtLzOA9hb6tn+b2pCeQUTi
-	 PoWfjMhuLVnSnUpiLtLeZdPmJViT3Xm8rGx75r7X/5sr6vfkFtZODbd+V7/PtWoLX1
-	 9/A1dWuhmiU/ECglT3EBs8OaVluvPzgEm8l/S8tftU/3QONSn3R4M02BSDxEmHKK+a
-	 oS32GjUUZvLkNKg+F/UN96HtdmmCZxRB8GapW3jY9txi+akDib6yVC47zCGqe28M7z
-	 bXhuA4iwzrpWg==
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1781392538; c=relaxed/simple;
+	bh=oRCbb7uF19rBpg+kFz0Ksuzjghw5gzUWnmeats7BJ0w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OStR7WPDfwuaekZL7iYOHmoWeJmfxeHr5mc2Ic2WWtajYzmHq8AUR4ftKqIfaPGL6iZ8/TzuxDtYLUEIWxxMEMqgLGQjbFF03a8q74QS8pPYi4UjaljFiCmMjXdSpwwsra5dpbH/YX4d69qjbyzEBaYqW8L+ZRAso4jad47gi+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=hLXD7eOS; arc=none smtp.client-ip=90.155.50.34
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=dG3xiqATit6gEoZb/SAPMSkQ9RbQB4Q9JV9vSc+U8/U=; b=hLXD7eOSFoc4e2VKrlStDVD/Du
+	Rr+P17+rwokxTAhVCNohqPP9xa8dwN5Gi99qnUYhjXMy1K2Er6rjVlTluAYt0GL2ig88zArVF+8DL
+	1/r8ywXcf5yEuOG0JnPadEGtjy5v63TLkLSQ70KRMIuWmvKKakX7q1pHwcg1DfEk4IeZ/S6IqkYln
+	kK9hiVzrvTJZ/6d9Odoqp+g1zWurLoBhkgzSKTtbcDwye5KDzjdlm+L9hX3dMprypCjS5+1y1JLrS
+	xwqZskhRqi/p1tQ841bYJ3x4SRVontkg24HJu8IqA2hPgNMB4hyDySHxDiw4H7B/Tgi2UkDMmFTXs
+	EFlnYPnA==;
+Received: from willy by casper.infradead.org with local (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1wYXZY-00000006DCZ-3ADY;
+	Sat, 13 Jun 2026 23:15:28 +0000
+Date: Sun, 14 Jun 2026 00:15:28 +0100
+From: Matthew Wilcox <willy@infradead.org>
+To: Pranjal Arya <pranjal.arya@oss.qualcomm.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andrew Ballance <andrewjballance@gmail.com>,
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org, maple-tree@lists.infradead.org,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Pranjal Shrivastava <praan@google.com>,
+	Will Deacon <will@kernel.org>,
+	Suzuki K Poulose <Suzuki.Poulose@arm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mostafa Saleh <smostafa@google.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Marco Elver <elver@google.com>, Dmitry Vyukov <dvyukov@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Shuah Khan <shuah@kernel.org>, Dev Jain <dev.jain@arm.com>,
+	Brendan Jackman <jackmanb@google.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Santosh Shukla <santosh.shukla@amd.com>,
+	Wyes Karny <wkarny@gmail.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>
+Subject: Re: [PATCH RFC 00/12] mm/vmalloc: migrate vmap_area indexing from
+ rb-tree to maple-tree
+Message-ID: <ai3kkIpaR0aT_6q5@casper.infradead.org>
+References: <20260613-vmalloc_maple-v1-0-0aa740bb944b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20260612224825.852551-1-andersson@kernel.org>
-References: <20260612224825.852551-1-andersson@kernel.org>
-Subject: Re: [GIT PULL] Qualcomm clock updates for v7.2
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Vivek Aknurwar <vivek.aknurwar@oss.qualcomm.com>, Luca Weiss <luca.weiss@fairphone.com>, Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>, Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, Luo Jie <jie.luo@oss.qualcomm.com>, Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>, Alexander Koskovich <akoskovich@pm.me>, Biswapriyo Nath <nathbappai@gmail.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Phillip Varney <pbvarney@protonmail.com>
-To: Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org
-Date: Sat, 13 Jun 2026 15:55:45 -0700
-Message-ID: <178139134534.819343.861205819784064327@lazor>
-User-Agent: alot/0.12
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260613-vmalloc_maple-v1-0-0aa740bb944b@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[infradead.org,none];
+	R_DKIM_ALLOW(-0.20)[infradead.org:s=casper.20170209];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS(0.00)[m:linux-arm-msm@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:vivek.aknurwar@oss.qualcomm.com,m:luca.weiss@fairphone.com,m:jagadeesh.kona@oss.qualcomm.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:jie.luo@oss.qualcomm.com,m:bartosz.golaszewski@oss.qualcomm.com,m:kathiravan.thirumoorthy@oss.qualcomm.com,m:akoskovich@pm.me,m:nathbappai@gmail.com,m:konrad.dybcio@oss.qualcomm.com,m:pbvarney@protonmail.com,m:andersson@kernel.org,m:linux-clk@vger.kernel.org,s:lists@lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[sboyd@kernel.org,linux-arm-msm@vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[15];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-113023-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER(0.00)[willy@infradead.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[linux-foundation.org,gmail.com,infradead.org,google.com,vger.kernel.org,kvack.org,lists.infradead.org,kernel.org,arm.com,linaro.org,nvidia.com,amd.com];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	FORGED_RECIPIENTS(0.00)[m:pranjal.arya@oss.qualcomm.com,m:akpm@linux-foundation.org,m:urezki@gmail.com,m:liam@infradead.org,m:aliceryhl@google.com,m:andrewjballance@gmail.com,m:linux-arm-msm@vger.kernel.org,m:linux-mm@kvack.org,m:linux-kernel@vger.kernel.org,m:maple-tree@lists.infradead.org,m:ljs@kernel.org,m:praan@google.com,m:will@kernel.org,m:Suzuki.Poulose@arm.com,m:neil.armstrong@linaro.org,m:smostafa@google.com,m:balbirs@nvidia.com,m:surenb@google.com,m:elver@google.com,m:dvyukov@google.com,m:glider@google.com,m:shuah@kernel.org,m:dev.jain@arm.com,m:jackmanb@google.com,m:puranjay@kernel.org,m:santosh.shukla@amd.com,m:wkarny@gmail.com,m:sudeep.holla@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-113022-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sboyd@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,oss.qualcomm.com,fairphone.com,pm.me,gmail.com,protonmail.com];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[willy@infradead.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[infradead.org:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,infradead.org:dkim,infradead.org:from_mime]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A0E5F67FFD3
+X-Rspamd-Queue-Id: 2686B68004B
 
-Quoting Bjorn Andersson (2026-06-12 15:48:25)
->=20
-> The following changes since commit 254f49634ee16a731174d2ae34bc50bd5f45e7=
-31:
->=20
->   Linux 7.1-rc1 (2026-04-26 14:19:00 -0700)
->=20
-> are available in the Git repository at:
->=20
->   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
-m-clk-for-7.2
->=20
-> for you to fetch changes up to e108373c54fbc844b7f541c6fd7ecb31772afd3c:
->=20
->   clk: qcom: regmap-phy-mux: Rework the implementation (2026-06-08 09:17:=
-24 -0500)
->=20
-> ----------------------------------------------------------------
+On Sat, Jun 13, 2026 at 10:49:42PM +0530, Pranjal Arya wrote:
+> vmalloc's free/busy/lazy area tracking is one of the last remaining
+> augmented-rb_tree consumers in the core mm allocators. The rest of
+> mm/ has been gradually consolidating range-keyed indexing around
+> maple_tree (notably the per-process VMA tree in mm/mmap.c), and
+> the underlying reason is a structural mismatch between rb_tree and
+> range tracking:
 
-Thanks. Pulled into clk-next
+First, and most importantly, I love this.  The maple tree is undoubtedly
+the right data structure to use for this purpose.
+
+What I don't understand is why you maintain a separate "free" tree.
+It should not be necessary any more, but maybe you tried removing it
+already and found a performance problem?
 
