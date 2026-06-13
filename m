@@ -1,183 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-113020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id RtwBNBG/LWqIjQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 22:35:29 +0200
+	id isniOdzfLWrNlwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 00:55:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34A2C67FA57
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 22:35:29 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 986D267FFAD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 00:55:24 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=google.com header.s=20251104 header.b=apg+IHY5;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113020-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113020-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=google.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=R0bDutmf;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113021-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113021-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F1DD63035830
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 20:35:21 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 769FF301C95D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 22:55:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F57038E113;
-	Sat, 13 Jun 2026 20:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 608F139891D;
+	Sat, 13 Jun 2026 22:55:16 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023E4331A5B
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jun 2026 20:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9AB348860;
+	Sat, 13 Jun 2026 22:55:15 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781382921; cv=none; b=nt1jngbhHQoiQNt2cGcAnmwqyzl6gJpUpekkdeszrpUPDEipnC4/QXAsFFwPOkyqHEjxeRNWd6iCiT0uGNLZ++h8RDpIrtFkZlSvlBuVeTgnWWsGAXMN2NODhZlqO4YtvIPKfJLu68/pdqcJO+EHSgv/2iBA6L2BcyfzAe5+alI=
+	t=1781391316; cv=none; b=hAIYgCpvICCj0+d0oncvq0XSsqbbBtCp/1XfEk7JbG42+zay+gk2ZX2Aa6qNiCtk3F6ufXc/6fNmriTFXLxKt4/3GEAZfS8pUOyB4I1iAB9zKGBbS7eofwb2u22XtHEFcd59/m0Ouwq8AhVDhUQ6opjixxJ+LkCKgpf5wbvmECA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781382921; c=relaxed/simple;
-	bh=jY+5h6BEqTigLHC2QbDztdBxYdYvY/v+aeeg3os3Dn0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sGUWRCdVXjmJRPQYpGGT8Js6yE2mw7VdJ8LdaxDSesw32HCSzaF5THVt4AqKQ3pNATCchR9vzfc9eruepmtpO1Wk8xy8Z5TUf+jb0ojDOy3DkNa5oQD7tVFBvwKXHHFvLGunJcNfRyTzmZWj6QmFkJWPFx3DB4yJ2zRf1cOKH7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=apg+IHY5; arc=none smtp.client-ip=209.85.214.177
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2bf2911f93cso50135ad.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jun 2026 13:35:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1781382918; x=1781987718; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lFug7r9V2IZ6ttYLRSwXSuZdIzMUMmjx+agrhP1KloM=;
-        b=apg+IHY5EFWnXL9g1EiX77U0u3H94ggPa3gh7pfv66zbsk/wGcEXkLBDF1x+tuOJbT
-         OG9kWhMBf4pRXF9uda/m+Wf/TarWhsEIjVQaZ9T9KArd3A3JpI0/Iv4qfU/VCZjvJPa9
-         EnCUPtX9aDVaFD2qbKeVOIjiQ+DEJ0IUoKptnGg4DfwtIoMF7zoAql3n+ABfVZ8kGtux
-         MnhSSd2tVIHs2ejfZ0Yq+NWkdKoEbi6hAOJhH17k0OPEhbx6KAoOCfJX3kLPIhGwPpK+
-         5YWwyZMdvpvVfGz4wBgst87wGUSpoyNPgWGVc2nDOs4Oi6GI7DG6/Xj3V8U88AwStaeP
-         yepg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781382918; x=1781987718;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lFug7r9V2IZ6ttYLRSwXSuZdIzMUMmjx+agrhP1KloM=;
-        b=ZKDQMmlE7mnNCsM4lJVitxzPoUKrP8kk22VsK0WtISfhJDHgpkVWVt2LxtK04lh0rp
-         j512mBDfY9HfwZ6KgQujGzJ74cdtrZ/lCtT2EtDFRENbrEdxySu3wvf9VqkKjoLjROa5
-         YyyMBebai5DpSfSR81dGQaNlePJttNwXdEMeJNFeFMWLo2jmlhQCrvBlhYXWeGaKggJu
-         tle9JkMaeJ82q4dqVsPBRIMrLpXZ/8AtnD1lPuYqsjqgyM3gQfFDo3Idyhg1uk/a4lDH
-         xiug2x+lmQCWN+YdEnH9GoRFbVQXvyLPDywO/eMcoxOY42edtob7nWH+UdDeMR2cz31c
-         vWRA==
-X-Forwarded-Encrypted: i=1; AFNElJ/iL1cqcplqhTiW6Ge0gm9+eJDlaNGKshjB2EgYiXAgbV44VEwQkgUa2BCB5hQgWYEZrRNeKdqb06IqWFxx@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy/EB1khF8H5BKeFHLi2hosojkWH2POhEl2pt9rheWAESoNvySr
-	EIo4xw52Na+TTxwT9eugdoNakdUv4ufCJQF0rvWv8XQgulixqyuFhi5NSujf6hpcpA==
-X-Gm-Gg: Acq92OHOxl24DbzXYRjS38JSbcC0RDSaYQ58qJQfXgO/NGaue6MCZkVol4lMituLwfv
-	bPkgB38FGKTNvsqw+WZD2N+rKTsGH7QvbLgb60JOnRTLdsW6qVdMycJIahnAo4m+Fx01nvVU8nt
-	DaBx66Dw1Mtnjllt9smTnxmF5Jm2bo2jxfok1dabH1VqjcNEhpNfBHWgaFeWb9xDmIfr0URbxgh
-	0M1DsMyjBRBQkThfWX3DundFxkm2TlqMp1C1dTJZJDaHV0PZA4uXHfJeoCmcBdj0KfJjXXX9tpx
-	eWnF3gjaAQeC0qvpT9Zo4MtSWlzzBWzY7eXzl0TowRYNPhUJJvdlNV2jp//LAvA+cCDNhYngcJh
-	c3Ykzm17Fw3IdNzxs4jI0c9jrs+Y/JYxK6a/k0jnClhEydszFfe2ExhEzN2gmSMbq8AhS9cFgs5
-	l2jW/+FdYEjCN6W4W//tIW+myb8m5Ui1Fmtp8PzJ6ct5bOxokfYVfP9yFM4BW9
-X-Received: by 2002:a17:903:24f:b0:2bf:3741:5b76 with SMTP id d9443c01a7336-2c665e34838mr1217385ad.3.1781382917803;
-        Sat, 13 Jun 2026 13:35:17 -0700 (PDT)
-Received: from google.com (199.255.142.34.bc.googleusercontent.com. [34.142.255.199])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c4327ac7fbsm59623015ad.42.2026.06.13.13.35.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jun 2026 13:35:16 -0700 (PDT)
-Date: Sat, 13 Jun 2026 20:35:10 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Pranjal Arya <pranjal.arya@oss.qualcomm.com>
-Cc: Alex Williamson <alex@shazbot.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	David Matlack <dmatlack@google.com>, Shuah Khan <shuah@kernel.org>,
-	linux-arm-msm@vger.kernel.org, kvm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kselftest@vger.kernel.org,
-	Manivannan Sadhasivam <mani@kernel.org>
-Subject: Re: [PATCH RFC 0/3] vfio/pci: Hide and optionally override the PCIe
- Device Serial Number
-Message-ID: <ai2-_nWEXPyHmmLJ@google.com>
-References: <20260613-pcie_vfio-v1-0-09168188f3f2@oss.qualcomm.com>
+	s=arc-20240116; t=1781391316; c=relaxed/simple;
+	bh=cojz8L42QoYl4v8USwM1fmjxLhPaAAO4EBmbvPz+95w=;
+	h=Content-Type:MIME-Version:In-Reply-To:References:Subject:From:Cc:
+	 To:Date:Message-ID; b=PZCdw+Y+cJintVHJE0kCBqX4YU2kRvarrgD3hzuuKGqGCxnUgi93dAl/qh+VwnwUbYivzwjMo8moX6+EzgEI4cGuNRstVHK/KG7aUxPqGuz5l83TWINaIB8y1KYMo33GqwxLVzAmkAHHH1e6zUFr6X9KLrpWkRcd++DXpxWn6rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R0bDutmf; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2750F1F000E9;
+	Sat, 13 Jun 2026 22:55:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781391315;
+	bh=cojz8L42QoYl4v8USwM1fmjxLhPaAAO4EBmbvPz+95w=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date;
+	b=R0bDutmfWV/1bHtsseUtk4NuDpcqjBpr/3X+l3QT539C98oqUFuVRoXwhZ1F2tApZ
+	 EW/xXcgZFOh7w64Jo5SZaoqimxnssWMc6+6R9W1g622zYTFcIA4tG25g5i/Rlq4R7t
+	 Ctlpp9R954fGyNfOFhZ3RCoQ2EjhMFHy/738yV+2iM1UIjkNDj9nt1TUczgUmyBqCO
+	 fJBN2bY4g2szgbiC2DvRWiGDReP5v4+8Ir7c5RIbH21a07TU2VIYEI1trbZfpMLAF6
+	 N8LgYf7wRifY93I7rYZWS51KP6o4igC1/ML7WG3ZwCwM77pPfSGbz6n8KavhuLmEVQ
+	 moBbAo8FWIijQ==
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260613-pcie_vfio-v1-0-09168188f3f2@oss.qualcomm.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260602-tcsr_qref_0527-v5-2-8ea174a59d7e@oss.qualcomm.com>
+References: <20260602-tcsr_qref_0527-v5-0-8ea174a59d7e@oss.qualcomm.com> <20260602-tcsr_qref_0527-v5-2-8ea174a59d7e@oss.qualcomm.com>
+Subject: Re: [PATCH v5 2/7] clk: qcom: Add generic clkref_en support
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Qiang Yu <qiang.yu@oss.qualcomm.com>, krishna.chundru@oss.qualcomm.com
+To: Bjorn Andersson <andersson@kernel.org>, Brian Masney <bmasney@redhat.com>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Qiang Yu <qiang.yu@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, Taniya Das <taniya.das@oss.qualcomm.com>
+Date: Sat, 13 Jun 2026 15:46:17 -0700
+Message-ID: <178139077723.819343.8364833855890359860@localhost.localdomain>
+User-Agent: alot/0.12
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[google.com,reject];
-	R_DKIM_ALLOW(-0.20)[google.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[google.com:+];
-	TAGGED_FROM(0.00)[bounces-113020-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:qiang.yu@oss.qualcomm.com,m:krishna.chundru@oss.qualcomm.com,m:andersson@kernel.org,m:bmasney@redhat.com,m:conor+dt@kernel.org,m:konradybcio@kernel.org,m:krzk+dt@kernel.org,m:mturquette@baylibre.com,m:robh@kernel.org,m:taniya.das@oss.qualcomm.com,m:conor@kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:pranjal.arya@oss.qualcomm.com,m:alex@shazbot.org,m:bhelgaas@google.com,m:dmatlack@google.com,m:shuah@kernel.org,m:linux-arm-msm@vger.kernel.org,m:kvm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pci@vger.kernel.org,m:linux-kselftest@vger.kernel.org,m:mani@kernel.org,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[praan@google.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FORGED_SENDER(0.00)[sboyd@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113021-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[praan@google.com,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sboyd@kernel.org,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp,localhost.localdomain:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 34A2C67FA57
+X-Rspamd-Queue-Id: 986D267FFAD
 
-On Sat, Jun 13, 2026 at 11:13:35PM +0530, Pranjal Arya wrote:
-
-Hi Pranjal,
-
-> vfio-pci has no perm_bits entry for the PCIe Device Serial Number (DSN)
-> Extended Capability, so guest reads of the serial
-> number currently fall through to the physical device.  The DSN is a
-> unique, persistent hardware serial number that identifies the physical
-> component (the functions of a Multi-Function Device report the same
-> value; Root Complex integrated Endpoints may implement it independently),
-> so exposing it lets a guest fingerprint the host hardware and correlate
-> it across VMs.  For multi-tenant passthrough this is an unnecessary
-> host-identifier leak.
->
-
-+ 1 to what Alex said here, QEMU / VMM should be able to trap and present
-the desired values here, we shouldn't need this in the vconfig. Thus, I
-believe this is better suited to QEMU (maybe this should be a patch to
-QEMU?)
-
-> 
-> Signed-off-by: Pranjal Arya <pranjal.arya@oss.qualcomm.com>
+Quoting Qiang Yu (2026-06-02 01:02:18)
+> Before XO refclk is distributed to PCIe/USB/eDP PHYs, it passes through
+> a QREF block. QREF is powered by dedicated LDO rails, and the clkref_en
+> register controls whether refclk is gated through to the PHY side.
+>=20
+> These clkref controls are different from typical GCC branch clocks:
+> - only a single enable bit is present, without branch-style config bits
+> - regulators must be voted before enable and unvoted after disable
+>=20
+> Model this as a dedicated clk_ref clock type with custom clk_ops instead
+> of reusing struct clk_branch semantics.
+>=20
+> Also provide a common registration/probe API so the same clkref model
+> can be reused regardless of where clkref_en registers are placed, e.g.
+> TCSR on glymur and TLMM on SM8750.
+>=20
+> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
 > ---
-> Pranjal Arya (3):
->       vfio/pci: Virtualize and scrub Device Serial Number from guests
->       vfio/pci: Allow userspace to set a virtual Device Serial Number
->       selftests/vfio: Add PCIe Device Serial Number test
-> 
->  MAINTAINERS                                      |   6 +
->  drivers/vfio/pci/vfio_pci_config.c               |  98 +++++++++++
->  drivers/vfio/pci/vfio_pci_core.c                 |   2 +
->  drivers/vfio/pci/vfio_pci_priv.h                 |   2 +
->  include/uapi/linux/pci_regs.h                    |   5 +
->  include/uapi/linux/vfio.h                        |  18 ++
->  tools/testing/selftests/vfio/Makefile            |   1 +
->  tools/testing/selftests/vfio/vfio_pci_dsn_test.c | 206 +++++++++++++++++++++++
->  8 files changed, 338 insertions(+)
-> ---
-> base-commit: c425609d6ac4012c8bbf01ec2e10e801b1923a7b
-> change-id: 20260613-pcie_vfio-48506602ec6a
+[...]
+> diff --git a/include/linux/clk/qcom.h b/include/linux/clk/qcom.h
+> new file mode 100644
+> index 000000000000..09e2e3178cfb
+> --- /dev/null
+> +++ b/include/linux/clk/qcom.h
 
-A few minor things, we don't use change-id upstream and no need to add a
-MAINTAINERS entry per test, we already have an entry to maintain
-tools/testing/selftests/vfio.
-
-Thanks,
-Praan
+Why are we making this file in linux/clk when only drivers/clk/qcom/ is
+going to use it? We can have some qref.h header in the qcom clk driver
+area.
 
