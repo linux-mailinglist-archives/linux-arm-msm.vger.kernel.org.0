@@ -1,139 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-113023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id sOmxNJzkLWoZmQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 01:15:40 +0200
+	id Ei0rK3TtLWqamwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 01:53:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2686B68004B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 01:15:40 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3E44680107
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 01:53:23 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=infradead.org header.s=casper.20170209 header.b=hLXD7eOS;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113023-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113023-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=infradead.org;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=hWQlSYii;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113024-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113024-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EB4FE300D16D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 23:15:38 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id D1A623002514
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 23:53:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61D0E25B0B2;
-	Sat, 13 Jun 2026 23:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB476384CDC;
+	Sat, 13 Jun 2026 23:53:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716193C06;
-	Sat, 13 Jun 2026 23:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6776375AD0;
+	Sat, 13 Jun 2026 23:53:16 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781392538; cv=none; b=RBI9qPo0FLF/F/4xbA0Vc5dN/UFsSm4rMh05qYr0D19mC429JAoe98qhAj6dnC8TOZqwGHO0jFMv1brCta92v25tiAESGzvnzkvoA6NOrcu1BMCnuWKljwsOyKsoUdzdV0StEJNQelbS3kkJVd+aWngrx7Ci6rJHTyiNKXxXzV8=
+	t=1781394797; cv=none; b=FG4EHH1vfm+uSKRgm9C6eE/ROwwhtRrSfVgk+HHvrRF8X8NwA+2EFLRMifQzBCOCoCS8JVoWI1ScWIZHkYA9SuyTczor1HJKiHyi2FuhDSyhnrCLggmBlcXMKNM5aHCYmuMus8sBqH8wGyBS4nQInpugclSdC2x38c/H/lHBbpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781392538; c=relaxed/simple;
-	bh=oRCbb7uF19rBpg+kFz0Ksuzjghw5gzUWnmeats7BJ0w=;
+	s=arc-20240116; t=1781394797; c=relaxed/simple;
+	bh=koV2TAYBF5WHJNhfJ/J3NYj8was8bgtOC2ZkqxLqxdo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OStR7WPDfwuaekZL7iYOHmoWeJmfxeHr5mc2Ic2WWtajYzmHq8AUR4ftKqIfaPGL6iZ8/TzuxDtYLUEIWxxMEMqgLGQjbFF03a8q74QS8pPYi4UjaljFiCmMjXdSpwwsra5dpbH/YX4d69qjbyzEBaYqW8L+ZRAso4jad47gi+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=hLXD7eOS; arc=none smtp.client-ip=90.155.50.34
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=dG3xiqATit6gEoZb/SAPMSkQ9RbQB4Q9JV9vSc+U8/U=; b=hLXD7eOSFoc4e2VKrlStDVD/Du
-	Rr+P17+rwokxTAhVCNohqPP9xa8dwN5Gi99qnUYhjXMy1K2Er6rjVlTluAYt0GL2ig88zArVF+8DL
-	1/r8ywXcf5yEuOG0JnPadEGtjy5v63TLkLSQ70KRMIuWmvKKakX7q1pHwcg1DfEk4IeZ/S6IqkYln
-	kK9hiVzrvTJZ/6d9Odoqp+g1zWurLoBhkgzSKTtbcDwye5KDzjdlm+L9hX3dMprypCjS5+1y1JLrS
-	xwqZskhRqi/p1tQ841bYJ3x4SRVontkg24HJu8IqA2hPgNMB4hyDySHxDiw4H7B/Tgi2UkDMmFTXs
-	EFlnYPnA==;
-Received: from willy by casper.infradead.org with local (Exim 4.99.1 #2 (Red Hat Linux))
-	id 1wYXZY-00000006DCZ-3ADY;
-	Sat, 13 Jun 2026 23:15:28 +0000
-Date: Sun, 14 Jun 2026 00:15:28 +0100
-From: Matthew Wilcox <willy@infradead.org>
-To: Pranjal Arya <pranjal.arya@oss.qualcomm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>,
-	Uladzislau Rezki <urezki@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andrew Ballance <andrewjballance@gmail.com>,
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org, maple-tree@lists.infradead.org,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Pranjal Shrivastava <praan@google.com>,
-	Will Deacon <will@kernel.org>,
-	Suzuki K Poulose <Suzuki.Poulose@arm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Mostafa Saleh <smostafa@google.com>,
-	Balbir Singh <balbirs@nvidia.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Marco Elver <elver@google.com>, Dmitry Vyukov <dvyukov@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Shuah Khan <shuah@kernel.org>, Dev Jain <dev.jain@arm.com>,
-	Brendan Jackman <jackmanb@google.com>,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Santosh Shukla <santosh.shukla@amd.com>,
-	Wyes Karny <wkarny@gmail.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>
-Subject: Re: [PATCH RFC 00/12] mm/vmalloc: migrate vmap_area indexing from
- rb-tree to maple-tree
-Message-ID: <ai3kkIpaR0aT_6q5@casper.infradead.org>
-References: <20260613-vmalloc_maple-v1-0-0aa740bb944b@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Oxq/1kU+yWeMjH41fv2f86D60F5tiDo9vS3MB/bWRUIOIZPk///63Vqny6OEe0iAhQI0+ZfgSJxczNtNxoXSK8IYI7U100vdTvAkgg3Gjk11Qsnq029rQ0dkCGSldsuaW0r0O9jFYgq64KdMfzuCuAwAPaJ35NMtHdWmNup3sy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hWQlSYii; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CBD1F000E9;
+	Sat, 13 Jun 2026 23:53:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781394796;
+	bh=O4la2TojX64zx12v0Wqx9SZlzrIofaTN8KcPfsKVwFQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=hWQlSYiian3BYBRE2teh2zuRwMwJ3AdT5RWsXjIlAh1wp6mQQNQyfRvNcrhgYt/om
+	 ozb+LlY0gVpslubhsSHyZVEP+qVCMZJ/N6W5wX1vhxXZg8P7ZhkyGR5g+1Xx2E5nAc
+	 HaqN6Sci7ARYzsUCypiL3OvvVkNCyb3POoWSH0+b1OcYALFC7llzlZv+DT2gfYfJN+
+	 6Co01TtAIwHTKI3AIZteOIV4RxUxrOPm9ebV7rHSrY1pc9jVJDGlo6PWUmXhgjlvF4
+	 5q4alacbREfeJuSaxBTONDQlTGivaPCcpKxcNU5FaFLdv/ln7QCCLXNa4adwEdbeyo
+	 Dh8/MzmoTVX4g==
+Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
+	id E32751AC5AC5; Sun, 14 Jun 2026 00:53:13 +0100 (BST)
+Date: Sun, 14 Jun 2026 00:53:13 +0100
+From: Mark Brown <broonie@kernel.org>
+To: david@ixit.cz
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: Re: [PATCH QUESTION] ASoC: qcom: sdm845: use DSP_A format for TDM
+ codec DAIs
+Message-ID: <ai3tafRfEgN938cu@sirena.co.uk>
+References: <20260613-rfc-dsp-b-to-a-v1-1-7d095fe90a05@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="qWbkYjLMmfIIcVL7"
+Content-Disposition: inline
+In-Reply-To: <20260613-rfc-dsp-b-to-a-v1-1-7d095fe90a05@ixit.cz>
+X-Cookie: Price does not include taxes.
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-7.26 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SIGNED_PGP(-2.00)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	MAILLIST(-0.15)[generic];
+	HAS_LIST_UNSUB(-0.01)[];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-113024-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	FORGED_RECIPIENTS(0.00)[m:david@ixit.cz,m:srini@kernel.org,m:lgirdwood@gmail.com,m:perex@perex.cz,m:tiwai@suse.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:phone-devel@vger.kernel.org,s:lists@lfdr.de];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+X-Rspamd-Server: lfdr
+X-Rspamd-Queue-Id: A3E44680107
+
+
+--qWbkYjLMmfIIcVL7
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260613-vmalloc_maple-v1-0-0aa740bb944b@oss.qualcomm.com>
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[infradead.org,none];
-	R_DKIM_ALLOW(-0.20)[infradead.org:s=casper.20170209];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
-	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-113023-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER(0.00)[willy@infradead.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[linux-foundation.org,gmail.com,infradead.org,google.com,vger.kernel.org,kvack.org,lists.infradead.org,kernel.org,arm.com,linaro.org,nvidia.com,amd.com];
-	RCPT_COUNT_TWELVE(0.00)[28];
-	FORGED_RECIPIENTS(0.00)[m:pranjal.arya@oss.qualcomm.com,m:akpm@linux-foundation.org,m:urezki@gmail.com,m:liam@infradead.org,m:aliceryhl@google.com,m:andrewjballance@gmail.com,m:linux-arm-msm@vger.kernel.org,m:linux-mm@kvack.org,m:linux-kernel@vger.kernel.org,m:maple-tree@lists.infradead.org,m:ljs@kernel.org,m:praan@google.com,m:will@kernel.org,m:Suzuki.Poulose@arm.com,m:neil.armstrong@linaro.org,m:smostafa@google.com,m:balbirs@nvidia.com,m:surenb@google.com,m:elver@google.com,m:dvyukov@google.com,m:glider@google.com,m:shuah@kernel.org,m:dev.jain@arm.com,m:jackmanb@google.com,m:puranjay@kernel.org,m:santosh.shukla@amd.com,m:wkarny@gmail.com,m:sudeep.holla@kernel.org,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[willy@infradead.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[infradead.org:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,infradead.org:dkim,infradead.org:from_mime]
-X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 2686B68004B
 
-On Sat, Jun 13, 2026 at 10:49:42PM +0530, Pranjal Arya wrote:
-> vmalloc's free/busy/lazy area tracking is one of the last remaining
-> augmented-rb_tree consumers in the core mm allocators. The rest of
-> mm/ has been gradually consolidating range-keyed indexing around
-> maple_tree (notably the per-process VMA tree in mm/mmap.c), and
-> the underlying reason is a structural mismatch between rb_tree and
-> range tracking:
+On Sat, Jun 13, 2026 at 09:55:59PM +0200, David Heidelberg via B4 Relay wrote:
 
-First, and most importantly, I love this.  The maple tree is undoubtedly
-the right data structure to use for this purpose.
+> Currently this worked only because the cs35l36
+> codec mapped both DSP_A and DSP_B to the same hardware register value
+> (asp_fmt = 0), which is inherently DSP_A timing.
 
-What I don't understand is why you maintain a separate "free" tree.
-It should not be necessary any more, but maybe you tried removing it
-already and found a performance problem?
+> The CPU-side AFE is configured with qcom,tdm-data-delay = <1> which
+> produces DSP_A framing.
+> The codec format should match what is actually on the wire.
+
+> So I'm pretty lost if I should go fixing cs35l36 or sdm845.c.
+
+That sounds like both.  The Cirrus driver is definitely buggy if it's
+mapping DSP A and B to the same register value, at least one of those is
+wrong.
+
+--qWbkYjLMmfIIcVL7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmot7WYACgkQJNaLcl1U
+h9AUkAf/ZFJUJ799o4iveN67FSg87nTg6lBOaKtzqMrm4WL5V4qm9ZoTzmtA/3Mw
+XYBDOokv+YWQVayhnNNkdjMtTIgtEGU6C2DFVMsPT+vvts+GXwsLhCOpudliQY78
+OP8CuJ9/4P4kJslM9ER+g0e3eowpzchXXGBOByzWZ3mgy8mCHPZ6tJsRPYOsZjbp
+F7+Bz/XMsDKiju6hnmOKndL8COq849QWC3wmuiT5Eh5h9+U6BzvWa0OM1tmzbION
+yQw5CnUGF6IzooHUgdclhFuyMtQaMXby6/vm0f7bIg9VPDNlXFrj3o7moHrNIGux
+p6li8hv1jkAojmOHdpzI0t3RiLQxfQ==
+=CcoX
+-----END PGP SIGNATURE-----
+
+--qWbkYjLMmfIIcVL7--
 
