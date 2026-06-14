@@ -1,196 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-113049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Ax7DKcb7Lmra6wQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 21:06:46 +0200
+	id PfTBEVUaL2qc7wQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 23:17:09 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41861681EEB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 21:06:46 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95F65682462
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 23:17:08 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=JvGXkcTy;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113049-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113049-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=V2Nd5EsN;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=ACPIYfcX;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113050-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113050-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id A0FE9300102A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 19:06:45 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 19CF930075DD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 21:16:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BFEA280CE5;
-	Sun, 14 Jun 2026 19:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31D5233B6F6;
+	Sun, 14 Jun 2026 21:16:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5832C23AE62;
-	Sun, 14 Jun 2026 19:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E392882DE
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 21:16:48 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781464003; cv=none; b=ei+MJEEu/YYPENPAqTreLnUe6HIeUt8Whu22DNKfQN9DtPwtkjQvvb+Q3T4+YpHwmyqnLy2e7DLfLCuDjN5Ql/R+tsg2ljLRlqBHTftKgCzhf4enuBA/Men6SMGY+OjDNCMPHHvqIVPmQJU/qXsKK38Pyb7w7iksv42IKpEinr4=
+	t=1781471811; cv=none; b=QPLJMvee/qjrVI7jPR0mW/T7FaaiKIvUxugtRVRkRLWPPYtLPEOsNIUB3yqXPykqqWVCsBJQA8+2MPbFo6KLgXJu9XyxXVNrkJ0Mt1ndsQQJbaG+h9g3uOKdYgZmYdKUvZdNNfqBIpAquU0kwMZkA75IMqoS+nlq9t/V/zXL31o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781464003; c=relaxed/simple;
-	bh=hhKZmyCl1nlGbiSgRi6ImyY7Yqw8WFjGuQaj8NpEvnE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=csvn11MjKHZRsXETTuWvIDFmDrTxMp2OvCGtbTBTJsxZiAStPnpFZa9lWvPBxzcvlH8y2+njSeqiSgh9TIQIw4B0NWNCwmnIQCCS/MbiUn0TDvSjzAk1Tt3X+15CByyiSd3sDzFz4BQx9spZEtp6y80NIGo0P6YnDG1hwvXeuTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JvGXkcTy; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B1241F000E9;
-	Sun, 14 Jun 2026 19:06:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781464002;
-	bh=/VXI67DOMw8cHtqaIo95wnFIHVXV1YBH75iWiT6gYus=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=JvGXkcTyauddm+aN+4xKc5839Gd9wa/VspObJOABk7DcvqpnvBBuk3Hv+SoI8OMFW
-	 r8N/bO9tT8PuZyYqdNh+py/lfqHFqMc98n79O5xqpybLrEHAIw2WDmqRdMZyqrnZwA
-	 5ohztof/Sg2BKNQv9qVF2jTzRvOf1f1GPxZ7yHfslrMEkCDiopxnRxSOgiX9gD7E1F
-	 xle7//iqSPS7BKLakB5h6K1IxPafP5IYGx0dATU1yObrKiCuXBeexud/CJNllzH7eE
-	 BbPel9Y/WBOhzh64JYFx0VbvzE4qGQti5HQiEG6juDEhZF25h5EBwvQdm1FTg5ZgLi
-	 ifNwcTh3pNtEQ==
-Date: Sun, 14 Jun 2026 20:06:30 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-Cc: David Lechner <dlechner@baylibre.com>, Nuno =?UTF-8?B?U8Oh?=
- <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>, Amit Kucheria
- <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, "Rafael J.
- Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@kernel.org>,
- Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
- linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, Kamal Wadhwa
- <kamal.wadhwa@oss.qualcomm.com>, David Collins
- <david.collins@oss.qualcomm.com>, Anjelique Melendez
- <anjelique.melendez@oss.qualcomm.com>, Neil Armstrong
- <neil.armstrong@linaro.org>, Stephan Gerhold <stephan.gerhold@linaro.org>
-Subject: Re: [PATCH v2 2/2] thermal: qcom: add support for PMIC5 Gen3 ADC
- thermal monitoring
-Message-ID: <20260614200630.2ea04817@jic23-huawei>
-In-Reply-To: <27631a0f-b5ba-4181-94f9-aa7726a4054b@oss.qualcomm.com>
-References: <20260526-gen3_adc_tm-v2-0-702fbac919ac@oss.qualcomm.com>
-	<20260526-gen3_adc_tm-v2-2-702fbac919ac@oss.qualcomm.com>
-	<20260527124220.39ac0b64@jic23-huawei>
-	<27631a0f-b5ba-4181-94f9-aa7726a4054b@oss.qualcomm.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1781471811; c=relaxed/simple;
+	bh=OnQN8rk07OguiwIShipBYJB87jroy5ghHMUG8Q/P79w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d6G0oCefVydvYZUsdWeUNa3l3m9b6LIWTQ4VqVH/bbMMYPx/r6x8UgJULZ3YL0mKO9IPOu4vkxdqQSI4tT9CNSaZiHc2A4jgkRZqWTzuIcKwhr6QUDMbbTjz737tJmUSTE5VERETOg16Fm22+yEXFvbieKQNsPkjjbCSSiWTDzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=V2Nd5EsN; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ACPIYfcX; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65ELEb2K2731070
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 21:16:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=q2kynjv38blCZw5JxOBaBRl0
+	OMUucc4OfZpGXP4Wdi8=; b=V2Nd5EsNyFNAA9E6e5XYoiRBaGQ23Hk+/aPbuSJ3
+	y092w4rVrEeA+M7RhjmzFcECfD/xaoiie1JGf+kXzhLP7IRJumPkmDgvaj8Mn1kQ
+	WLaMlMXJoFBRduLanrJDoql1k/Jvz5VrAojEPyQKvDwfYfUXKZyv+9y+HZTeHhAy
+	CEJEK4thWwZm/V3UB6ZhXsfLxNTEiNIKHWWzhCx8pvAZfElwrQ10p18iizA/U9po
+	eMGBAAAOQ+L0+j79w+MH6czDHE2wttfbPZiNtYuXjCSDpcyB2alatUNuqD7J37wJ
+	pJJpIxb9pogM1yqzgZyt+4UjQTXtIz5lEc0/H8JVIZuSJQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ery8wvj5u-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 21:16:47 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-9159c4b210aso431444585a.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 14:16:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1781471807; x=1782076607; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=q2kynjv38blCZw5JxOBaBRl0OMUucc4OfZpGXP4Wdi8=;
+        b=ACPIYfcX29iel9ORubVSgMwmNoJaGGlbpYuq1iX+NJVNh1pvX1sbCLwBvYpn7msLRP
+         JUfvsh2eN1DkEJtNBlvM+d4czK+j3oT3/sqcPsEBX/x+dHNPDnTxu6C/PeC+51sEU4wd
+         l8x9R2oYJxNANx5gYWkkr+5vKqhYg1pQ35q/vcrR1U3lzAMcQP0CcUL7q+O9+frYHfUs
+         tZNwDOr+ownaotI0dA2W3AnU97Uyrg2iYdUDV0mFbv5BpxXpWUP6fm96BF+FOSsdqLvI
+         bNxPm3O4PjDS2q8fHPiblM+fOCOvePOb35EwcQJ/ossDqSHwvbE36wrzyslFyXfK5Q+x
+         SDMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781471807; x=1782076607;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q2kynjv38blCZw5JxOBaBRl0OMUucc4OfZpGXP4Wdi8=;
+        b=JOdm8Pj/63ER2VyPVyuIZfgW1YBGh2OrvfFphbemZCd/3o+T9fMLYt9w3fwSN0qRds
+         sSkyBUbygs8wMGJqSVA4GhZeGBKNyMR1aChV3zksi/fiVmWBH43JqcgAS/oKmadNxhcL
+         6YyEmhDIEyjfFTm6lbSnc9uF042NXX6oFdcOvnfRayNtykkflqulW0KT/2jCgV48n4gR
+         MAvmvL2B2QoMQXJpScRCzB/88ybwqP2pUSrcWRI3P4M6Xgj8s9nXH+wmQjEV3GyirIz8
+         2MvLMEanvdaKZJX9VbweMwurzZuiUoKPQtSh6+vOeB1fjJGGKjsHwUU6OmbA3531s6Pa
+         OVFw==
+X-Forwarded-Encrypted: i=1; AFNElJ/d0Tot6iJeWL/olr66OThaEkxxgjVE4q1mqCXR0N/cWRpBFSaUx4N6UIx61Ycjgyn+m032dv3lqokzayh/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz1ajk2m+egrOtm0IP1yDXVUMeW3kV23bP2Gh8Fe76daS98NMBH
+	EYmF5XB9/57BFa4Y8o0bSBf0edZTsMebuYOV0SMaRY8Sw3C+Buw3Z/o7tlvD+Jj4WHga5CuC6nV
+	f4C+m0eSUZLKs3/oe/tLUlCM+oN/WI+FoHjpYzWJr3lJxYyuPojSfghC96PZsLkwXQauM
+X-Gm-Gg: Acq92OFg8fwkvHIAs61PNDSnZ2nIxtTZMn7j+hm0Xs72VPZsq9DvXtHVyIAPlN73Jh+
+	TjVA0wgIiEmbAK6fcYCzaz+gdWFepkDN1pQXgFCsrat4sUIzJNc35CEbM6r5i8Ne20S6FNXi7ll
+	UjTs7jipPBcwgMMwaWmKbpzdpOfBOg4XgUQa76n05Y7+8egBWGzlNyyU5tczSwiMSzFFyeQZmz9
+	WqJdM57UVXr2iJwD88idmPmqjbyk/aFv0bPyiHwYm8mpFodUgrn62PwfaOXN6G2EsGndM6LlJfO
+	lBXHaSfZZ48MCk/vHlgHkms3RPzjlRnQumA4VhBsE/VWN+m9UpSD9XwZQ5I/zuAYAl+LmSkgsUV
+	wXRM06pKfOQoXDCxC4/eLe73NIe0o97c+UHwk77PReBZRqwoSQaaV7/cPWVPeYYcpxI8+Y4udTl
+	KcEwsoe24vqVfAHvzqmvIep9ABD28hhOSq7oE=
+X-Received: by 2002:a05:620a:4804:b0:918:4374:bbb with SMTP id af79cd13be357-91843740d1dmr917579485a.23.1781471806679;
+        Sun, 14 Jun 2026 14:16:46 -0700 (PDT)
+X-Received: by 2002:a05:620a:4804:b0:918:4374:bbb with SMTP id af79cd13be357-91843740d1dmr917577185a.23.1781471806269;
+        Sun, 14 Jun 2026 14:16:46 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5ad2e1a734csm2217235e87.40.2026.06.14.14.16.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 14 Jun 2026 14:16:45 -0700 (PDT)
+Date: Mon, 15 Jun 2026 00:16:42 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Daniel J Blueman <daniel@quora.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-kernel@vger.kernel.org,
+        Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
+        Maya Matuszczyk <maccraft123mc@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Abel Vesa <abel.vesa@oss.qualcomm.com>,
+        Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x:
+ Add Embedded Controller node
+Message-ID: <otnrim6weraf47ncpo6ngb467wvvytx43o3q7jntdaslsl2rck@fbhbskgyxasx>
+References: <20260614130621.68811-1-daniel@quora.org>
+ <20260614130621.68811-2-daniel@quora.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260614130621.68811-2-daniel@quora.org>
+X-Proofpoint-ORIG-GUID: PTw7OAuH-mSYyvpUBrE_4EQSorDluRVG
+X-Proofpoint-GUID: PTw7OAuH-mSYyvpUBrE_4EQSorDluRVG
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE0MDIyNSBTYWx0ZWRfXxldSPTXYJBdb
+ DtOyqenGa7i8od8aH72fcAkBc8N3JioH+UVA56sgkuRiRfoj604TB8mlncV97WLV+mHxjAeWrrU
+ BjcUTh3g1cFNtYWFPKHO3lp5R9o9fyg=
+X-Authority-Analysis: v=2.4 cv=IqAutr/g c=1 sm=1 tr=0 ts=6a2f1a3f cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22 a=KKAkSRfTAAAA:8
+ a=EUspDBNiAAAA:8 a=t9ty7G3lAAAA:8 a=QbvKFJkngEId-OerJWAA:9 a=CjuIK1q_8ugA:10
+ a=PEH46H7Ffwr30OY-TuGO:22 a=cvBusfyB2V15izCimMoJ:22 a=CsAS6f0m0zARWR-uHzm3:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE0MDIyNSBTYWx0ZWRfX0OILz05gCPPG
+ QnWHk233OC2+8noJSW/ch7FYCwLFKivM2Mp3DvmqW+Iuxd7OEB/OpFrmw4dERx8DJhXSMxony/p
+ iwz6b8aRpnLcUr0bugDB+K9kq+EGTE7/S8DKR3coNrkD5TDfVmm5PglvcsJ0f7VsrpifNxvmuUk
+ G2gcTt2Tw18HNwV8ef5ANCKh1E4LtngngPpUNx4AHjnBAnPcUD1qcoZHYHN4ssi7D8VfmuBv4RE
+ zd/6iyG2Bglb8QHqne7mmpf4kGWJ22PVBG1msGcAMr1PwjAIF7/tk9gOlB5dxrXnd03t38TPRTd
+ Oe7TrKMsMt0fy8kzhZZt04EkYjE2YWDADgKHP96O46JMAfuO1VYsQ93aJUV5+/5IUUYS7yvhvP7
+ Sj/UJhCvHMMzwDfiM36LXhIyruQM7j8Kt8wFqTe5Ax6Xwu7lnv13OMby1HnHcKZSRNyVctli0M1
+ p822XnPuRqU5UfoV6/w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-14_05,2026-06-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606140225
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-113049-lists,linux-arm-msm=lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:jishnu.prakash@oss.qualcomm.com,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:amitk@kernel.org,m:thara.gopinath@gmail.com,m:rafael@kernel.org,m:daniel.lezcano@kernel.org,m:rui.zhang@intel.com,m:lukasz.luba@arm.com,m:linux-arm-msm@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:kamal.wadhwa@oss.qualcomm.com,m:david.collins@oss.qualcomm.com,m:anjelique.melendez@oss.qualcomm.com,m:neil.armstrong@linaro.org,m:stephan.gerhold@linaro.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-113050-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:daniel@quora.org,m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:sibi.sankar@oss.qualcomm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:hansg@kernel.org,m:rdunlap@infradead.org,m:bryan.odonoghue@linaro.org,m:linux-kernel@vger.kernel.org,m:anvesh.p@oss.qualcomm.com,m:maccraft123mc@gmail.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:akhilpo@oss.qualcomm.com,m:abel.vesa@oss.qualcomm.com,m:gaurav.kohli@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[19];
+	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,vger.kernel.org,infradead.org,linaro.org,gmail.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[baylibre.com,analog.com,kernel.org,gmail.com,intel.com,arm.com,vger.kernel.org,oss.qualcomm.com,linaro.org];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp,jic23-huawei:mid]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 41861681EEB
+X-Rspamd-Queue-Id: 95F65682462
 
+On Sun, Jun 14, 2026 at 09:06:18PM +0800, Daniel J Blueman wrote:
+> The Lenovo Slim7x uses the same Embedded Controller as the Qualcomm Hamoa
+> X1 Customer Reference Device. Use the lenovo,yoga-slim7x-ec compatible
+> introduced by patch 1 for fan control, thermal sensor and suspend
 
-> >> +static irqreturn_t adctm5_gen3_isr_thread(int irq, void *dev_id)
-> >> +{
-> >> +	struct adc_tm5_gen3_chip *adc_tm5 = dev_id;
-> >> +	int sdam_index = -1;
-> >> +	u8 tm_status[2] = { };
-> >> +	u8 buf[16] = { };
-> >> +
-> >> +	for (int i = 0; i < adc_tm5->nchannels; i++) {
-> >> +		struct adc_tm5_gen3_channel_props *chan_prop = &adc_tm5->chan_props[i];
-> >> +		int offset = chan_prop->tm_chan_index;
-> >> +		bool upper_set, lower_set;
-> >> +		int ret;
-> >> +
-> >> +		scoped_guard(adc5_gen3, adc_tm5) {
-> >> +			if (chan_prop->sdam_index != sdam_index) {
-> >> +				sdam_index = chan_prop->sdam_index;
-> >> +				ret = adc5_gen3_tm_status_check(adc_tm5, sdam_index,
-> >> +								tm_status, buf);  
-> > 
-> > I think the clear of other sdam interrupt status that sashiko was pointing out
-> > is here as somewhat unexpectedly a function called status_check clears as well.
-> >   
-> 
-> This is the full comment from Sashiko at this point:
-> 
-> > "Does the threaded handler clear statuses across all SDAMs indiscriminately?  
-> 
-> > Since this thread loops over all channels and clears the high status on any
-> > SDAM with an active event, could it clear a pending event on a different SDAM
-> > than the one that triggered the IRQ?  
-> 
-> > Because each SDAM has its own independent IRQ line, if the thread clears a
-> > pending event on SDAM 1 while servicing SDAM 0, couldn't SDAM 1's subsequent
-> > hardirq read a status of 0 and return IRQ_NONE? Could repeated IRQ_NONE
-> > returns cause the IRQ subsystem to shut down SDAM 1's interrupt line as a
-> > spurious interrupt storm?"  
-> 
-> This sequence of events can happen, but it should not be an issue.
-> 
-> It is possible that the threaded handler is called for servicing an
-> interrupt on SDAM0, and in the loop there is a violation detected on
-> a TM channel on SDAM1, and the SDAM1 TM status is cleared. But in this
-> case, this violation would also be handled after we notify the thermal
-> framework at the end of the loop, by some threshold update or disablement.
-> 
-> Even if the subsequent hardirq fires for SDAM1 and it returns IRQ_NONE
-> as the TM status was cleared, the violation would have been handled
-> by some threshold update, so the interrupt would not keep getting
-> triggered afterwards for the same threshold's violation.
-> 
-> 
-> I also checked the conditions from note_interrupt() in kernel/irq/spurious.c,
-> for enough repeated IRQ_NONE returns to happen to cause a spurious interrupt
-> disablement. 
-> It looks like there needs to be more than one interrupts returning IRQ_NONE
-> within 0.1 second to increment the irqs_unhandled counter once, but there can be
-> at most one TM interrupt in one second since we set the time period of
-> recurring TM measurement as one second here in the probe:
-> 
-> 		adc_tm5->chan_props[i].timer = MEAS_INT_1S;
-> 
-> So a spurious interrupt storm is not possible here.
+This is going to become commit message in the Git history of the Linux
+kernel. There is no 'patch 1'. Moreover, the patches will go through
+different trees.
+Please rewrite the commit message accordingly (just drop the 'introduced
+by' reference).
 
-Whilst sounds valid, it's a convoluted argument given it relies
-on us getting spurious interrupts reported, but not enough to trigger
-the stuff to stop interrupt storms. The rules around that may change
-in future given it's a heuristic to stop us seeing problems on dodgy
-hardware.
-
-Can we just avoid handling interrupts for SDAMs that weren't the one that
-triggered this particular interrupt?
-
-Thanks,
-
-Jonathan
-
-
+> behaviour.
+> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Daniel J Blueman <daniel@quora.org>
+> ---
+> v4:
+> - add reviews
+> v3:
+> - use lenovo,yoga-slim7x-ec compatible (introduced by patch 1)
+> v2:
+> - corrected DT compatible node
+> 
+>  .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 22 +++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
+-- 
+With best wishes
+Dmitry
 
