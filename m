@@ -1,149 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-113024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Ei0rK3TtLWqamwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 01:53:24 +0200
+	id IjPaCpT7LWoDoAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 02:53:40 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3E44680107
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 01:53:23 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F156680235
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 02:53:39 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=hWQlSYii;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113024-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113024-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=NVPI43lf;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113025-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113025-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id D1A623002514
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Jun 2026 23:53:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 43070301E239
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 00:53:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB476384CDC;
-	Sat, 13 Jun 2026 23:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B175C1C84D0;
+	Sun, 14 Jun 2026 00:53:37 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6776375AD0;
-	Sat, 13 Jun 2026 23:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39D332C8B;
+	Sun, 14 Jun 2026 00:53:36 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781394797; cv=none; b=FG4EHH1vfm+uSKRgm9C6eE/ROwwhtRrSfVgk+HHvrRF8X8NwA+2EFLRMifQzBCOCoCS8JVoWI1ScWIZHkYA9SuyTczor1HJKiHyi2FuhDSyhnrCLggmBlcXMKNM5aHCYmuMus8sBqH8wGyBS4nQInpugclSdC2x38c/H/lHBbpc=
+	t=1781398417; cv=none; b=QDahAEiwkDWIFsAqMCFHdhLbrjgulUdujlDprrsCFcZXARRmb8wZ8fG+J12S6IDCsbHPDO7J4mt2e9kkssFNlhZsvTk1Gifs+YqOHebLaWKzJRgGc2hnIJSG1CCxkgFyxCjpmhyDuPSeNPs4iOW2qi3zqjAurqqv+KtYAUrSSiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781394797; c=relaxed/simple;
-	bh=koV2TAYBF5WHJNhfJ/J3NYj8was8bgtOC2ZkqxLqxdo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Oxq/1kU+yWeMjH41fv2f86D60F5tiDo9vS3MB/bWRUIOIZPk///63Vqny6OEe0iAhQI0+ZfgSJxczNtNxoXSK8IYI7U100vdTvAkgg3Gjk11Qsnq029rQ0dkCGSldsuaW0r0O9jFYgq64KdMfzuCuAwAPaJ35NMtHdWmNup3sy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hWQlSYii; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CBD1F000E9;
-	Sat, 13 Jun 2026 23:53:16 +0000 (UTC)
+	s=arc-20240116; t=1781398417; c=relaxed/simple;
+	bh=vFTAKzdCStzmtKNDciDsPZcUwg0KopujRzsaa9oHFbg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EZNhhMP+ZqOr5nctsm+MNdSIOmseKM5oxrdPvx3FZQ3c2NE+1IJfvd7kOu+zVCbO6XunWWp3R86cYsJyjK12iz1I3krqXvUrFYfyhGX/k2cJARRDVajFbHBOg0Bxd1u0bwIA3vdYQufNQMcXsoZ3N/fpjti+ERRPgYPTJVeTYH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NVPI43lf; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17FD1F00A3A;
+	Sun, 14 Jun 2026 00:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781394796;
-	bh=O4la2TojX64zx12v0Wqx9SZlzrIofaTN8KcPfsKVwFQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hWQlSYiian3BYBRE2teh2zuRwMwJ3AdT5RWsXjIlAh1wp6mQQNQyfRvNcrhgYt/om
-	 ozb+LlY0gVpslubhsSHyZVEP+qVCMZJ/N6W5wX1vhxXZg8P7ZhkyGR5g+1Xx2E5nAc
-	 HaqN6Sci7ARYzsUCypiL3OvvVkNCyb3POoWSH0+b1OcYALFC7llzlZv+DT2gfYfJN+
-	 6Co01TtAIwHTKI3AIZteOIV4RxUxrOPm9ebV7rHSrY1pc9jVJDGlo6PWUmXhgjlvF4
-	 5q4alacbREfeJuSaxBTONDQlTGivaPCcpKxcNU5FaFLdv/ln7QCCLXNa4adwEdbeyo
-	 Dh8/MzmoTVX4g==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id E32751AC5AC5; Sun, 14 Jun 2026 00:53:13 +0100 (BST)
-Date: Sun, 14 Jun 2026 00:53:13 +0100
-From: Mark Brown <broonie@kernel.org>
-To: david@ixit.cz
-Cc: Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org
-Subject: Re: [PATCH QUESTION] ASoC: qcom: sdm845: use DSP_A format for TDM
- codec DAIs
-Message-ID: <ai3tafRfEgN938cu@sirena.co.uk>
-References: <20260613-rfc-dsp-b-to-a-v1-1-7d095fe90a05@ixit.cz>
+	s=k20260515; t=1781398416;
+	bh=nPpEnVdEvknURp7YuZUISdz4VkUVoOdR+kXYW1ezay8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=NVPI43lf/pwbXJvWQ0ipzfIDZqHQiNadU0PFokkDFALmGoCmoPfsOr/GYYTVWuMUj
+	 mRY/xh//3+97fLzbJuoj5zF+6qvDOhhCGA1+W/uUUxQHzwXWieHagZnAGJH6DW8Ehp
+	 Cm2NjUKMi0zJqOo57UutFIILW9m598zfktaiKQVsGuPTg7RG8VHcLwVPDMVCI7pWoU
+	 SaPlCn+BUsNgFW6BVz+36dQZE09G90RkbH+oBBr12ysiqs5t82dF/jr9+zrbOuRZ8F
+	 0zoxmYQQHP1m4zHojWBjt4TJ8gb6MFNec496KUExwfju6vLfltxy8anGDbQo102tGc
+	 CV4u+vjbqdMwA==
+Message-ID: <be6f78ce-d347-4225-a03e-6d1adecbfd4c@kernel.org>
+Date: Sun, 14 Jun 2026 01:53:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qWbkYjLMmfIIcVL7"
-Content-Disposition: inline
-In-Reply-To: <20260613-rfc-dsp-b-to-a-v1-1-7d095fe90a05@ixit.cz>
-X-Cookie: Price does not include taxes.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 2/4] arm64: dts: qcom: sm8550: Add JPEG encoder node
+To: Atanas Filipov <atanas.filipov@oss.qualcomm.com>,
+ linux-media@vger.kernel.org
+Cc: mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260612194417.1737009-1-atanas.filipov@oss.qualcomm.com>
+ <eY8-IbmZdQzKJEghATTeVJerci7KPVBImWk85jbXw_LZ14uTj2j55zx7DEhdyu6218wQrolFoVbRWTaL3QQjNw==@protonmail.internalid>
+ <20260612194417.1737009-3-atanas.filipov@oss.qualcomm.com>
+ <2ad008a6-bf67-4854-906a-bd2ba395cfba@kernel.org>
+ <UFrrNRXEJSDO7FkBh_3XP6dZazuHS4TrV1DHfLJER_xz2Pt7gpE7MUMG4D1MM6eM3GrFxQQtFrUdRW4MDx5_8A==@protonmail.internalid>
+ <2a0fc1ce-2f19-4268-8117-cd90b512312a@oss.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=bod@kernel.org; keydata=
+ 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
+In-Reply-To: <2a0fc1ce-2f19-4268-8117-cd90b512312a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-7.26 / 15.00];
+X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SIGNED_PGP(-2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-113024-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113025-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	FORGED_RECIPIENTS(0.00)[m:david@ixit.cz,m:srini@kernel.org,m:lgirdwood@gmail.com,m:perex@perex.cz,m:tiwai@suse.com,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:phone-devel@vger.kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS(0.00)[m:atanas.filipov@oss.qualcomm.com,m:linux-media@vger.kernel.org,m:mchehab@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A3E44680107
+X-Rspamd-Queue-Id: 7F156680235
 
+On 13/06/2026 17:05, Atanas Filipov wrote:
+> Checked.  The MMCX/MXC dependency is covered transitively — camcc
+> itself declares:
+> 
+>     power-domains = <&rpmhpd RPMHPD_MMCX>, <&rpmhpd RPMHPD_MXC>;
+> 
+> CAM_CC_TITAN_TOP_GDSC is a subdomain of camcc, so the RPMh votes are
+> enforced before any consumer is powered on.
 
---qWbkYjLMmfIIcVL7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Powered on yes, scaling the voltage correctly no.
 
-On Sat, Jun 13, 2026 at 09:55:59PM +0200, David Heidelberg via B4 Relay wrote:
+> This matches the pattern used by every other single-GDSC camera node
+> in the upstream tree (cci0/1/2 on sm8250, sm8550, sm8650) — none of
+> them list MMCX/MXC directly.  No change needed.
 
-> Currently this worked only because the cs35l36
-> codec mapped both DSP_A and DSP_B to the same hardware register value
-> (asp_fmt = 0), which is inherently DSP_A timing.
+CCI doesn't have any operating points. Please check the clock frequency 
+plans.
 
-> The CPU-side AFE is configured with qcom,tdm-data-delay = <1> which
-> produces DSP_A framing.
-> The codec format should match what is actually on the wire.
+> afilipov
+> 
+> On 6/13/2026 2:52 AM, Bryan O'Donoghue wrote:
 
-> So I'm pretty lost if I should go fixing cs35l36 or sdm845.c.
+Honestly. Stop top posting !
 
-That sounds like both.  The Cirrus driver is definitely buggy if it's
-mapping DSP A and B to the same register value, at least one of those is
-wrong.
+Documentation/process/submitting-patches.rst:.. _interleaved_replies:
 
---qWbkYjLMmfIIcVL7
-Content-Type: application/pgp-signature; name="signature.asc"
+sm8650 which you have cited, has operating points for the JPEG encoder 
+and votes, must vote, on MXC. I believe the same as Hamoa for the JPEG 
+core clock.
 
------BEGIN PGP SIGNATURE-----
+This is melting my head a bit now TBH.
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmot7WYACgkQJNaLcl1U
-h9AUkAf/ZFJUJ799o4iveN67FSg87nTg6lBOaKtzqMrm4WL5V4qm9ZoTzmtA/3Mw
-XYBDOokv+YWQVayhnNNkdjMtTIgtEGU6C2DFVMsPT+vvts+GXwsLhCOpudliQY78
-OP8CuJ9/4P4kJslM9ER+g0e3eowpzchXXGBOByzWZ3mgy8mCHPZ6tJsRPYOsZjbp
-F7+Bz/XMsDKiju6hnmOKndL8COq849QWC3wmuiT5Eh5h9+U6BzvWa0OM1tmzbION
-yQw5CnUGF6IzooHUgdclhFuyMtQaMXby6/vm0f7bIg9VPDNlXFrj3o7moHrNIGux
-p6li8hv1jkAojmOHdpzI0t3RiLQxfQ==
-=CcoX
------END PGP SIGNATURE-----
-
---qWbkYjLMmfIIcVL7--
+---
+bod
 
