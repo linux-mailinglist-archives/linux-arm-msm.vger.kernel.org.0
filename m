@@ -1,215 +1,709 @@
-Return-Path: <linux-arm-msm+bounces-113028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Yln5LK1LLmrjswQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 08:35:25 +0200
+	id NHCUMThRLmootQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 08:59:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFE246807B6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 08:35:24 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14F186807E2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 08:59:04 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=none;
-	dmarc=fail reason="SPF not aligned (relaxed), No valid DKIM" header.from=appspotmail.com (policy=none);
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113028-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113028-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=qEazGcuj;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113029-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113029-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 882D7300A134
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 06:35:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B2A1530097EB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 06:59:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06F80313534;
-	Sun, 14 Jun 2026 06:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DAC638D007;
+	Sun, 14 Jun 2026 06:59:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com [209.85.167.200])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A783233939
-	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 06:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD5E19CCF5
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 06:58:59 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781418922; cv=none; b=O9ni+IZp30t38C94JzW26f+sIFHXwSmUIPxGOid+CNQyJROZouYlPwK0FxEBJeqyG5NMzqbZb8qzWjGKdW+ohpAEN/uXXTkvShw/84+VxROQxMKabWEKhz31lOvwrphXxeR130HWPT0k8E+TtK1LzlV4wlqAeCTnyHm7T2IZmgM=
+	t=1781420342; cv=none; b=QHrhZp6FTI6s25NDi4EchvPQWFNm36/qmpCiqBaW2xmZpeTIhf9My9uyZM2W2e+O8k3sY0fqhxZxd7oQE1xC0XGba6nfkSFZDN+15JnY5XGGJVPwb1lfagBqXhhqixjQ9MXqdXmoJCdxCUvWxxglVary6oA7bAYWsOqkAMgGLoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781418922; c=relaxed/simple;
-	bh=EZZyW2ZU93TbBJhrcX7GgGo0IIldE2RPsm73CxcqY0A=;
-	h=MIME-Version:Date:In-Reply-To:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=VDRHny8uFJBCLDXqNxfgqckAr5CZZjW/muYVrWPzvf3WxpGc47brctN9yD1P4mSRS9hyKzu5Y0R30TgAHwnmo4cWDwnGC8Qh11QVtR4FM8wzGGJApLfbU7UC7au1u7L5GDoAA5B5w2zHNq0MGNo0tgza1Km6GH8JGrMmEw1RXtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.167.200
-Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-486db2bf46eso3022762b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jun 2026 23:35:21 -0700 (PDT)
+	s=arc-20240116; t=1781420342; c=relaxed/simple;
+	bh=DzbpV0I+9TZhB/THJBqqfrtorHpDj4mQL6q6lkbo1k8=;
+	h=From:Date:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AdBRPb+2oN/vfTl9k8sMWM+KLZkBc90Vh653ac9/LEvg6H1Nsj3fvHVWqBhqFNFoulFgtjYvWdGKceO/qZN7iDmiEIr7o5oWavQYDlJD6S9tXWnBX/8mTuoUbwT77FEtTGwR88JhE7wZqzpP/FEILqTbAOvuT71i3ck6uj1dDo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qEazGcuj; arc=none smtp.client-ip=209.85.167.49
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5aa612bf6efso2003387e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 Jun 2026 23:58:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1781420338; x=1782025138; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LWy9/j9eSdTtrV2mgp02d/XO6b2yGV/xRPz/rW30LOw=;
+        b=qEazGcujhoiuqZk12+I/j7hu+Fb7aCpEkUN46gnNM6COzZ6cOTBzB8wYzdU9Y+TVdB
+         K0RGvWoQY7u6EaRmmY4cUgHiRpJPJV5VCPIQIcAoHkh4wW2q7zw/wSgE4Ou/S8Lx6FMV
+         SFbRGijeXUxmp961Og63QawjpRB51F9cOW92XpQHml9DJVo1bXMHVKNAWwlZkXov8rgb
+         r1owrp+b16NqI7eepLpKIC+Lnj9M2Rml9mCI2m35V4P2/uItEI8+FAyV3mVHstprtAqD
+         ind11uNCywHwc41cUQ16PaZgFeWpee4v8kWl+6shd4y0+jCaniiJrn42X27BYAZRUHlY
+         wp5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781418920; x=1782023720;
-        h=cc:to:from:subject:message-id:in-reply-to:date:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2r4zfjzZDA4KbiiIFggzjIxr+jx1S4GN8osZMKExG8M=;
-        b=K9Ofj2xSjjiwnHXPvTJy0n8xqDqngfArOnU/dZNK/j0QMhS/H4nHzXY0OP1aYrATUt
-         d4cf2z3GCtP1l7s8v2/nbXYli6AmsMHZwEOKN7VS/FUA8V/u1f6lxhIfN3GRQhEy9Vxn
-         NElitD8GJZLRj/AsYDPikqrzr0R6Z8T8jRtkpu2KHduzE3zRZiEqpDqG+u2WYTimEaa5
-         KZ+KIzt1rDNooK4Mqll84+D7h1MXspoZGxahukLBofQd2adDYSswBPyFvO6mntgKgI5O
-         vR8aYaNjsSlePeV8UqMolqlMncibqBb+pL1LbgAF2mwOY/uOqI6Fczh7bFynIxQnBEvQ
-         C9KQ==
-X-Forwarded-Encrypted: i=1; AFNElJ/MR8RlD47ndh2p4H8vcCqvb8thAgOu/jcJfjz2JhNM1ErYyQ8XoK0leJhGJFEWy1nUMN76ASzghS4nnJiN@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXayyKzeiiRW5H0UIJyLTCqoUklq6+K7Rny7u1ZFUSp9IIVvlA
-	LOe1kz3LqdDHKjtiK0nXd74hN0nnGuyq7mnzEBHwWzIX3bLTeJJPqedqUIH7+N8OVOIWeI9DpZ1
-	qSou4dkHn0E1mEPdWoL7E4brE+9xyvSEWrWZvjhxVSVOdGlXABUiz2o50YMM=
+        d=1e100.net; s=20251104; t=1781420338; x=1782025138;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LWy9/j9eSdTtrV2mgp02d/XO6b2yGV/xRPz/rW30LOw=;
+        b=bvnN1JKA9hMpoaGJnC6Dm8RbXqB5xGxWGXqdnR3gco1i5HG+nOjDtzuwbSJQvlE/LN
+         hXgDkfibuhWupXfJR6krGghQ0QtC+g4QP9z7T4nD+krcB47emI+i/TpQeQmt3a0RkJyR
+         6seECA4duf5DBp6uixLDmFpG4XaoZgWhxVQtvVi8fSNMCXIEZUaoRIGtsC37/My4Mn06
+         +E9Z/j9fdXuaO9LSfUB9ITWVxQOZXO69qWapulcf6AksPuSyAnDQk48fvRLQo9+5Bz5i
+         8zrLDFOZw281edIiDevTX0L0EGwgbA7r2MSeVpoKNUpRLdkmnaR6+m0PIZ71f2+1SypC
+         7wcQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/XyTOYK2Xdcu0puC7/38OR5/WjJF/GdqlMUvrSzqpbfeUFqBfg5mNopGalEN3hQ3242PjyrC+blDAblAag@vger.kernel.org
+X-Gm-Message-State: AOJu0YyfCbsqUwukigRuGwb8YY5HSX54ke5I9eEJqi95lX9ERiSTxo44
+	egXsC9vLyj8xKUIGoat8e+9rnITubhp8+MYaEwIq6oRGrs/y7RW1AkKO
+X-Gm-Gg: Acq92OF256HyypfoKHDrhNGP8XsJ3pfoHAsD4sqcPxl2UVxkpXQS+HGNrmamIeRNRl3
+	bShSHPiHIbtP4Wc0B2eLTWbpiMNWSPPyTPTAP2uD3kzC1ugRD8Cj1XdoE+v5My2AxlW7WKjYoGm
+	SZbATxXOmS2njr8fT7zT2DedXnQK7fbjWOktxrjqxNV+B+BvSGyLKJ82t9nA+m8IQPacNzfqIdD
+	50sv6SSpbICdgiiOmgjQYttEJNR/N9MuiFEAqTi1W/dRRpFOwJHdmjt+rYxcSVjpInAxzoX7UBB
+	ELLhPZo4T4R/n82ZIyTsjnfyxPeafgFanT1KzaZ3XaQ/dtQzMbxmHcxRqUYBh953qK8IxA2ZAsT
+	BTKlH+QqE8aU5jwXqdsMIcsHaYVdrgWMTYCxA/1j+pvn7DWIJPwRIfSe7PadVzIglTBMbkJgoQS
+	IIZ1UwqGFr
+X-Received: by 2002:a05:6512:3053:b0:5aa:64b4:13dc with SMTP id 2adb3069b0e04-5ad30da2a21mr1618675e87.5.1781420337512;
+        Sat, 13 Jun 2026 23:58:57 -0700 (PDT)
+Received: from pc636 ([2001:9b1:d5a0:a500:de96:9acf:5dca:ede4])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5ad2e171f94sm1802393e87.37.2026.06.13.23.58.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 13 Jun 2026 23:58:57 -0700 (PDT)
+From: Uladzislau Rezki <urezki@gmail.com>
+X-Google-Original-From: Uladzislau Rezki <urezki@pc636>
+Date: Sun, 14 Jun 2026 08:58:55 +0200
+To: Pranjal Arya <pranjal.arya@oss.qualcomm.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andrew Ballance <andrewjballance@gmail.com>,
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org, maple-tree@lists.infradead.org,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Pranjal Shrivastava <praan@google.com>,
+	Will Deacon <will@kernel.org>,
+	Suzuki K Poulose <Suzuki.Poulose@arm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mostafa Saleh <smostafa@google.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Marco Elver <elver@google.com>, Dmitry Vyukov <dvyukov@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Shuah Khan <shuah@kernel.org>, Dev Jain <dev.jain@arm.com>,
+	Brendan Jackman <jackmanb@google.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Santosh Shukla <santosh.shukla@amd.com>,
+	Wyes Karny <wkarny@gmail.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>
+Subject: Re: [PATCH RFC 00/12] mm/vmalloc: migrate vmap_area indexing from
+ rb-tree to maple-tree
+Message-ID: <ai5RL6QNKJJMo6Fl@pc636>
+References: <20260613-vmalloc_maple-v1-0-0aa740bb944b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6808:15a9:b0:479:f7e7:4a81 with SMTP id
- 5614622812f47-487416dc1d4mr3871956b6e.0.1781418920603; Sat, 13 Jun 2026
- 23:35:20 -0700 (PDT)
-Date: Sat, 13 Jun 2026 23:35:20 -0700
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20260613-vmalloc_maple-v1-0-0aa740bb944b@oss.qualcomm.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <6a2e4ba8.8812e0fc.3c3fa4.000f.GAE@google.com>
-Subject: [syzbot ci] Re: mm/vmalloc: migrate vmap_area indexing from rb-tree
- to maple-tree
-From: syzbot ci <syzbot+ciff8167f913c663d5@syzkaller.appspotmail.com>
-To: akpm@linux-foundation.org, aliceryhl@google.com, andrewjballance@gmail.com, 
-	balbirs@nvidia.com, dev.jain@arm.com, dvyukov@google.com, elver@google.com, 
-	glider@google.com, jackmanb@google.com, liam@infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mm@kvack.org, ljs@kernel.org, maple-tree@lists.infradead.org, 
-	neil.armstrong@linaro.org, praan@google.com, pranjal.arya@oss.qualcomm.com, 
-	puranjay@kernel.org, santosh.shukla@amd.com, shuah@kernel.org, 
-	smostafa@google.com, sudeep.holla@kernel.org, surenb@google.com, 
-	suzuki.poulose@arm.com, urezki@gmail.com, will@kernel.org, wkarny@gmail.com
-Cc: syzbot@lists.linux.dev, syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-1.36 / 15.00];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[appspotmail.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-113029-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:akpm@linux-foundation.org,m:aliceryhl@google.com,m:andrewjballance@gmail.com,m:balbirs@nvidia.com,m:dev.jain@arm.com,m:dvyukov@google.com,m:elver@google.com,m:glider@google.com,m:jackmanb@google.com,m:liam@infradead.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-mm@kvack.org,m:ljs@kernel.org,m:maple-tree@lists.infradead.org,m:neil.armstrong@linaro.org,m:praan@google.com,m:pranjal.arya@oss.qualcomm.com,m:puranjay@kernel.org,m:santosh.shukla@amd.com,m:shuah@kernel.org,m:smostafa@google.com,m:sudeep.holla@kernel.org,m:surenb@google.com,m:suzuki.poulose@arm.com,m:urezki@gmail.com,m:will@kernel.org,m:wkarny@gmail.com,m:syzbot@lists.linux.dev,m:syzkaller-bugs@googlegroups.com,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[linux-foundation.org,google.com,gmail.com,nvidia.com,arm.com,infradead.org,vger.kernel.org,kvack.org,kernel.org,lists.infradead.org,linaro.org,oss.qualcomm.com,amd.com];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-113028-lists,linux-arm-msm=lfdr.de,ciff8167f913c663d5];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[syzbot@syzkaller.appspotmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:pranjal.arya@oss.qualcomm.com,m:akpm@linux-foundation.org,m:urezki@gmail.com,m:liam@infradead.org,m:aliceryhl@google.com,m:andrewjballance@gmail.com,m:linux-arm-msm@vger.kernel.org,m:linux-mm@kvack.org,m:linux-kernel@vger.kernel.org,m:maple-tree@lists.infradead.org,m:ljs@kernel.org,m:praan@google.com,m:will@kernel.org,m:Suzuki.Poulose@arm.com,m:neil.armstrong@linaro.org,m:smostafa@google.com,m:balbirs@nvidia.com,m:surenb@google.com,m:elver@google.com,m:dvyukov@google.com,m:glider@google.com,m:shuah@kernel.org,m:dev.jain@arm.com,m:jackmanb@google.com,m:puranjay@kernel.org,m:santosh.shukla@amd.com,m:wkarny@gmail.com,m:sudeep.holla@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[urezki@gmail.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[linux-foundation.org,gmail.com,infradead.org,google.com,vger.kernel.org,kvack.org,lists.infradead.org,kernel.org,arm.com,linaro.org,nvidia.com,amd.com];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	FORWARDED(0.00)[lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[30];
+	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[syzbot@syzkaller.appspotmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_NONE(0.00)[];
-	R_DKIM_NA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[urezki@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	ALIAS_RESOLVED(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,googlegroups.com:email,syzbot.org:url,googlesource.com:url]
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,pc636:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: EFE246807B6
+X-Rspamd-Queue-Id: 14F186807E2
 
-syzbot ci has tested the following series
+On Sat, Jun 13, 2026 at 10:49:42PM +0530, Pranjal Arya wrote:
+> vmalloc's free/busy/lazy area tracking is one of the last remaining
+> augmented-rb_tree consumers in the core mm allocators. The rest of
+> mm/ has been gradually consolidating range-keyed indexing around
+> maple_tree (notably the per-process VMA tree in mm/mmap.c), and
+> the underlying reason is a structural mismatch between rb_tree and
+> range tracking:
+> 
+> - rb_tree is a binary tree with a single entry per node. A lookup
+>   walks log2(N) nodes via a pointer chase that touches log2(N)
+>   cache lines, with one comparison per node. Range queries are not
+>   native to rb_tree; vmalloc has historically maintained them by
+>   augmenting every node with a subtree_max_size field whose value
+>   has to be recomputed on every insert, erase, and rotation via a
+>   custom callback. That callback machinery is vmalloc-specific
+>   code that exists only to coax range semantics out of a
+>   binary-keyed tree.
+> - maple_tree stores up to 16 ranges per node (fanout f=16), so a
+>   lookup walks ~log16(N) nodes in tightly-packed pivot/slot arrays
+>   that are far more cache-friendly. Range queries are first-class
+>   (mas_empty_area, mas_find, mas_erase), with no augmentation
+>   callback to maintain. RCU traversal and sentinel range storage
+>   (XA_ZERO_ENTRY) are part of the data structure's contract, not
+>   bolted on by the consumer.
+> 
+> For the vmalloc allocator's hot paths this means shallower walks
+> under the same N, fewer cache lines touched per lookup, and no
+> custom augmented-callback machinery to maintain. Aligning vmalloc
+> with the same range-tree direction the rest of mm/ has taken
+> collapses the augmented gap walker to a single mas_empty_area()
+> descent, retires the augmented rb_node from struct vmap_area
+> (-24 bytes per object on 64-bit), and exposes the range,
+> sentinel, and RCU primitives needed for a per-CPU range cache
+> that the augmented rb_tree could not host cleanly.
+> 
+> This series completes the vmalloc internal migration from rb-tree
+> indexed tracking to maple-tree indexed tracking for free, busy, and
+> lazy vmap_area range management.
+> 
+> The series removes vmalloc's internal rb-tree dependencies and moves
+> address indexing and range lookups/scans to maple-tree-backed paths,
+> while keeping ordered list neighbour traversal where coalescing
+> semantics require stable predecessor/successor behaviour.
+> 
+> In addition to the direct rb -> maple migration, the series includes
+> robustness and scalability refinements in the same code path:
+> 
+> - deferred/lazy maple bring-up to avoid early-boot allocator hazards
+> - maple-assisted ordered-list insertion for busy/lazy tracking
+> - mas_preallocate / mas_store_prealloc fast path for common-case
+>   publish work, with a non-indexed retry queue that absorbs the
+>   rare publish-under-pressure case without leaking or panicking
+> - single mas_store(NULL, ...) sub-range trim in va_clip() in place
+>   of an erase-and-restore pair when narrowing a free-area entry
+> - single mas_erase() for the busy-tree find-then-unlink pair on the
+>   free path
+> - consolidation of in-use ranges as a single authoritative index on
+>   the steady-state allocation hot path
+> - list_head representation of the lazy-purge queue, since that queue
+>   is bulk-drained and has no address-keyed query
+> - per-CPU bump-allocator overlay layered on top of the migrated
+>   indices for short-lived, page-aligned, common-case allocations
+>   (design and chunk-size derivation in the 0010-0012 commit
+>   messages)
+> - explicit lock/serialisation behaviour preserved (no lock removed)
+> 
+> Primary advantages
+> ==================
+> 
+> - struct vmap_area shrinks by 24 bytes on 64-bit layouts (72 -> 48),
+>   removing the embedded augmented rb_node and the subtree_max_size
+>   field that the rb-tree gap walk depended on. Verified with pahole
+>   on arm64.
+> - maple_tree's per-node fanout (multiple pivots/slots per node)
+>   replaces a binary rb-tree descent for indexed lookups, giving a
+>   shallower walk for the same allocation count.
+> - alloc-side gap finding moves from a recursive augmented-rb walk to
+>   mas_empty_area() over the in-use range index, returning the lowest
+>   matching gap in a single descent.
+> - vfree of a chunk-resident allocation through the per-CPU overlay
+>   resolves addr -> vmap_area in O(1) via the chunk's back-pointer
+>   array, with a bounded fast-reject for addresses outside any
+>   reserved chunk; the maple-tree busy lookup remains the fallback.
+> - correctness behaviour preserved: ordered list neighbour traversal
+>   for coalescing remains; the locking/serialisation model is
+>   unchanged; lockdep is silent across the test_vmalloc subtest sweep.
+> - robustness in bring-up and high churn: deferred/lazy maple
+>   initialisation avoids early-boot allocator hazards; the retry
+>   queue keeps publish failures under GFP_NOWAIT pressure correct
+>   without leaking or panicking.
+> 
+> Real-silicon validation
+> =======================
+> 
+> The series was tested on Qualcomm Snapdragon X1E80100.
+> The patched kernel was booted on the device against an RB baseline
+> image of the same kernel revision, and exercised through:
+> 
+> - GFXBench, run for several hours of sustained graphics workload;
+>   the patched kernel ran clean throughout, with throughput matching
+>   the RB baseline within run-to-run noise.
+> - boot-time module loading via the finit_module / kernel_read_file
+>   path that exercises the bump-allocator's indexed write loop;
+>   this path drove the patch 0012 hardening, and the patched kernel
+>   is UBSAN-clean here.
+> - repeated insmod / rmmod cycles to soak the chunk install / drain
+>   paths under live workload.
+> 
+> No kernel WARN, BUG, or UBSAN report was observed across the
+> multi-hour soak.
+> 
+I tried to do some testing using this series. See below the kernel
+splat. I use test_vmalloc.sh to test/stress it.
 
-[v1] mm/vmalloc: migrate vmap_area indexing from rb-tree to maple-tree
-https://lore.kernel.org/all/20260613-vmalloc_maple-v1-0-0aa740bb944b@oss.qualcomm.com
-* [PATCH RFC 01/12] mm/vmalloc: introduce maple_tree-based indexing for vmap_area
-* [PATCH RFC 02/12] mm/vmalloc: convert allocation-side gap finding and insertion to maple_tree
-* [PATCH RFC 03/12] mm/vmalloc: convert free, purge, and pcpu paths to maple_tree
-* [PATCH RFC 04/12] mm/vmalloc: finalize maple-only indexing and shrink struct vmap_area
-* [PATCH RFC 05/12] mm/vmalloc: tighten failure handling under memory pressure
-* [PATCH RFC 06/12] mm/vmalloc: tighten alloc/free hot paths
-* [PATCH RFC 07/12] mm/vmalloc: consolidate occupied tree as authoritative index on hot path
-* [PATCH RFC 08/12] mm/vmalloc: track lazy-purge queue as a list_head
-* [PATCH RFC 09/12] mm/vmalloc: collapse busy-tree find-then-unlink into a single mas_erase
-* [PATCH RFC 10/12] mm/vmalloc: per-CPU caching of free ranges from the maple_tree allocator
-* [PATCH RFC 11/12] mm/vmalloc: O(1) lookup of cached vmap_areas with bounded fast-reject
-* [PATCH RFC 12/12] mm/vmalloc: harden bump-allocator alloc/free against UBSAN array bounds
+<snip>
+[   50.661082] ------------[ cut here ]------------
+[   50.662455] WARNING: mm/vmalloc.c:545 at vmap_small_pages_range_noflush+0x569/0x6c0, CPU#12: vmalloc_test/41/646
+[   50.664685] Modules linked in:
+[   50.665454] CPU: 12 UID: 0 PID: 646 Comm: vmalloc_test/41 Tainted: G        W           7.1.0-rc7+ #347 PREEMPT(full)
+[   50.667765] Tainted: [W]=WARN
+[   50.668492] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   50.670639] RIP: 0010:vmap_small_pages_range_noflush+0x569/0x6c0
+[   50.671974] Code: e9 2d 01 00 00 b8 01 00 00 00 48 85 c2 0f 84 2d 01 00 00 4c 89 e6 4c 89 f7 e8 d3 80 c3 ff e9 1d 01 00 00 89 c3 e9 dc fe ff ff <0f> 0b 65 66 f7 05 fc 3e 14 02 ff ff 75 b2 65 48 8b 15 d9 3e 14 02
+[   50.676003] RSP: 0018:ffffcd36cc22bbe0 EFLAGS: 00010286
+[   50.677198] RAX: 8000000938940163 RBX: 0000000000000000 RCX: ffff8a7e9dd36000
+[   50.678752] RDX: fffffcb13b3a8000 RSI: ffff8a6fc919e800 RDI: 0000000000000000
+[   50.680313] RBP: ffffcd36cc22bc90 R08: ffffce6240000000 R09: ffffce622c064000
+[   50.681895] R10: 0000000000000024 R11: 000000000000000a R12: ffff8a7e9dd36000
+[   50.683459] R13: ffffce622c000000 R14: ffffce622c000000 R15: ffff8a776700db00
+[   50.685059] FS:  0000000000000000(0000) GS:ffff8a7f1a012000(0000) knlGS:0000000000000000
+[   50.686881] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   50.688165] CR2: 0000000000000000 CR3: 0000000839c3c000 CR4: 00000000000006f0
+[   50.689773] Call Trace:
+[   50.690419]  <TASK>
+[   50.690994]  __vmap_pages_range_noflush+0xda/0x100
+[   50.692100]  __vmalloc_node_range_noprof+0x3e2/0x980
+[   50.693269]  ? long_busy_list_alloc_test+0x68/0xf0
+[   50.694375]  __vmalloc_node_noprof+0x52/0x70
+[   50.695366]  ? long_busy_list_alloc_test+0x68/0xf0
+[   50.696470]  vmalloc_noprof+0x25/0x30
+[   50.697389]  long_busy_list_alloc_test+0x68/0xf0
+[   50.698436]  ? __pfx_long_busy_list_alloc_test+0x10/0x10
+[   50.699626]  test_func+0x112/0x230
+[   50.700442]  ? __pfx_test_func+0x10/0x10
+[   50.701373]  kthread+0x10d/0x140
+[   50.702153]  ? __pfx_kthread+0x10/0x10
+[   50.703039]  ret_from_fork+0x3a1/0x430
+[   50.703925]  ? __pfx_kthread+0x10/0x10
+[   50.704821]  ret_from_fork_asm+0x1a/0x30
+[   50.705736]  </TASK>
+[   50.706322] irq event stamp: 1124795
+[   50.707157] hardirqs last  enabled at (1124805): [<ffffffffa1fe09b8>] __up_console_sem+0x68/0x80
+[   50.709082] hardirqs last disabled at (1124816): [<ffffffffa1fe099d>] __up_console_sem+0x4d/0x80
+[   50.711031] softirqs last  enabled at (0): [<ffffffffa1f1ba57>] copy_process+0xd67/0x2570
+[   50.712874] softirqs last disabled at (0): [<0000000000000000>] 0x0
+[   50.714247] ---[ end trace 0000000000000000 ]---
+[   50.715336] warn_alloc: 15 callbacks suppressed
+[   50.715339] vmalloc_test/41: vmalloc error: size 409600, failed to map pages, mode:0xcc2(GFP_KERNEL|__GFP_HIGHMEM), nodemask=(null),cpuset=/,mems_allowed=0
+[   50.719421] CPU: 12 UID: 0 PID: 646 Comm: vmalloc_test/41 Tainted: G        W           7.1.0-rc7+ #347 PREEMPT(full)
+[   50.719424] Tainted: [W]=WARN
+[   50.719425] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   50.719426] Call Trace:
+[   50.719427]  <TASK>
+[   50.719428]  dump_stack_lvl+0x72/0xa0
+[   50.719433]  dump_stack+0x14/0x1a
+[   50.719435]  warn_alloc+0x137/0x160
+[   50.719445]  __vmalloc_node_range_noprof+0x8cd/0x980
+[   50.719450]  ? long_busy_list_alloc_test+0x68/0xf0
+[   50.719457]  __vmalloc_node_noprof+0x52/0x70
+[   50.719460]  ? long_busy_list_alloc_test+0x68/0xf0
+[   50.719461]  vmalloc_noprof+0x25/0x30
+[   50.719463]  long_busy_list_alloc_test+0x68/0xf0
+[   50.719465]  ? __pfx_long_busy_list_alloc_test+0x10/0x10
+[   50.719467]  test_func+0x112/0x230
+[   50.719472]  ? __pfx_test_func+0x10/0x10
+[   50.719474]  kthread+0x10d/0x140
+[   50.719476]  ? __pfx_kthread+0x10/0x10
+[   50.719479]  ret_from_fork+0x3a1/0x430
+[   50.719482]  ? __pfx_kthread+0x10/0x10
+[   50.719484]  ret_from_fork_asm+0x1a/0x30
+[   50.719493]  </TASK>
+[   50.719494] Mem-Info:
+[   50.743128] active_anon:0 inactive_anon:0 isolated_anon:0
+[   50.743128]  active_file:0 inactive_file:0 isolated_file:0
+[   50.743128]  unevictable:0 dirty:0 writeback:0
+[   50.743128]  slab_reclaimable:928 slab_unreclaimable:1820126
+[   50.743128]  mapped:0 shmem:0 pagetables:610948
+[   50.743128]  sec_pagetables:0 bounce:0
+[   50.743128]  kernel_misc_reclaimable:0
+[   50.743128]  free:12765547 free_pcp:26676 free_cma:0
+[   50.751177] Node 0 active_anon:0kB inactive_anon:0kB active_file:0kB inactive_file:0kB unevictable:0kB isolated(anon):0kB isolated(file):0kB mapped:0kB dirty:0kB writeback:0kB shmem:0kB shmem_thp:0kB shmem_pmdmapped:0kB anon_thp:0kB kernel_stack:15136kB pagetables:2444312kB sec_pagetables:0kB all_unreclaimable? no Balloon:0kB gpu_active:0kB gpu_reclaim:0kB
+[   50.757522] Node 0 DMA free:11264kB boost:0kB min:12kB low:24kB high:36kB reserved_highatomic:0KB free_highatomic:0KB active_anon:0kB inactive_anon:0kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB zspages:0kB present:15992kB managed:15360kB mlocked:0kB bounce:0kB free_pcp:0kB local_pcp:0kB free_cma:0kB
+[   50.763396] lowmem_reserve[]: 0 2991 64259 64259 64259
+[   50.764526] Node 0 DMA32 free:346136kB boost:0kB min:3144kB low:6204kB high:9264kB reserved_highatomic:0KB free_highatomic:0KB active_anon:0kB inactive_anon:0kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB zspages:0kB present:3129216kB managed:3063680kB mlocked:0kB bounce:0kB free_pcp:54788kB local_pcp:760kB free_cma:0kB
+[   50.770714] lowmem_reserve[]: 0 0 61267 61267 61267
+[   50.771803] Node 0 Normal free:50727200kB boost:2048kB min:66468kB low:129204kB high:191940kB reserved_highatomic:0KB free_highatomic:0KB active_anon:0kB inactive_anon:0kB active_file:0kB inactive_file:0kB unevictable:0kB writepending:0kB zspages:0kB present:63963136kB managed:62737744kB mlocked:0kB bounce:0kB free_pcp:51984kB local_pcp:520kB free_cma:0kB
+[   50.778200] lowmem_reserve[]: 0 0 0 0 0
+[   50.779086] Node 0 DMA: 0*4kB 0*8kB 0*16kB 0*32kB 0*64kB 0*128kB 0*256kB 0*512kB 1*1024kB (U) 1*2048kB (M) 2*4096kB (M) = 11264kB
+[   50.781534] Node 0 DMA32: 31*4kB (U) 28*8kB (U) 34*16kB (U) 38*32kB (U) 41*64kB (U) 48*128kB (UM) 366*256kB (UM) 15*512kB (UM) 1*1024kB (M) 3*2048kB (UM) 55*4096kB (M) = 344700kB
+[   50.788250] Node 0 Normal: 1282565*4kB (UM) 889838*8kB (UM) 149191*16kB (UME) 301234*32kB (UME) 240946*64kB (UME) 84458*128kB (UME) 775*256kB (UE) 32*512kB (U) 1*1024kB (U) 1*2048kB (U) 0*4096kB = 50724532kB
+[   50.792662] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
+[   50.794471] 0 total pagecache pages
+[   50.795273] 0 pages in swap cache
+[   50.796063] Free swap  = 0kB
+[   50.796759] Total swap = 0kB
+[   50.797457] 16777086 pages RAM
+[   50.798184] 0 pages HighMem/MovableOnly
+[   50.799061] 322890 pages reserved
+[   50.799851] 0 pages hwpoisoned
+[   50.800578] Memory cgroup min protection 0kB -- low protection 0kB
+[   51.818069] BUG: TASK stack guard page was hit at ffffcd36cc25fff8 (stack is ffffcd36cc260000..ffffcd36cc264000)
+[   51.818078] Oops: stack guard page: 0000 [#1] SMP NOPTI
+[   51.818084] CPU: 31 UID: 0 PID: 653 Comm: vmalloc_test/48 Tainted: G        W           7.1.0-rc7+ #347 PREEMPT(full)
+[   51.818088] Tainted: [W]=WARN
+[   51.818090] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   51.818091] RIP: 0010:__lock_acquire+0x8/0x21d0
+[   51.818098] Code: c7 c6 78 9f 40 a3 67 48 0f b9 3a e9 4e ff ff ff 66 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 55 48 89 e5 41 57 41 56 <41> 55 41 54 53 48 83 ec 48 48 8b 45 10 8b 1d b9 ac f6 01 48 89 45
+[   51.818100] RSP: 0018:ffffcd36cc260000 EFLAGS: 00010002
+[   51.818103] RAX: 0000000000000046 RBX: 0000000000000000 RCX: 0000000000000002
+[   51.818104] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffffa3e065c8
+[   51.818105] RBP: ffffcd36cc260010 R08: 0000000000000001 R09: 0000000000000001
+[   51.818106] R10: 0000000000000002 R11: 0000000000000000 R12: 0000000000000002
+[   51.818107] R13: 0000000000000001 R14: ffffffffa3e065c8 R15: 0000000000000000
+[   51.818110] FS:  0000000000000000(0000) GS:ffff8a7f1a992000(0000) knlGS:0000000000000000
+[   51.818111] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   51.818112] CR2: ffffcd36cc25fff8 CR3: 0000000839c3c000 CR4: 00000000000006f0
+[   51.818116] Call Trace:
+[   51.818117]  <TASK>
+[   51.818119]  lock_acquire+0xc9/0x2e0
+[   51.818122]  ? __alloc_pages_slowpath.constprop.0+0xca/0x14e0
+[   51.818129]  seqcount_lockdep_reader_access+0x7a/0xa0
+[   51.818131]  ? __alloc_pages_slowpath.constprop.0+0xca/0x14e0
+[   51.818133]  __alloc_pages_slowpath.constprop.0+0xca/0x14e0
+[   51.818139]  __alloc_frozen_pages_noprof+0x361/0x3b0
+[   51.818144]  alloc_pages_mpol+0xa8/0x170
+[   51.818147]  alloc_frozen_pages_noprof+0x54/0x90
+[   51.818148]  ___kmalloc_large_node+0xc2/0xe0
+[   51.818151]  __kmalloc_large_node_noprof+0x2e/0x130
+[   51.818154]  __kvmalloc_node_noprof+0x5c0/0x9a0
+[   51.818157]  ? vmap_bump_refill+0x44/0x1100
+[   51.818162]  vmap_bump_refill+0x44/0x1100
+[   51.818164]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818166]  ? lock_release+0xd1/0x2b0
+[   51.818169]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818171]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818173]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818176]  alloc_vmap_area+0x1780/0x20b0
+[   51.818178]  ? __lock_acquire+0x46d/0x21d0
+[   51.818181]  ? lock_acquire+0xc9/0x2e0
+[   51.818182]  ? find_held_lock+0x31/0x90
+[   51.818185]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818189]  ? lock_release+0xd1/0x2b0
+[   51.818191]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818205]  __get_vm_area_node+0xd1/0x130
+[   51.818209]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818210]  ? vmap_bump_refill+0x44/0x1100
+[   51.818214]  ? vmap_bump_refill+0x44/0x1100
+[   51.818217]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818220]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818222]  ? vmap_bump_refill+0x44/0x1100
+[   51.818225]  ? vmap_bump_refill+0x44/0x1100
+[   51.818228]  vmap_bump_refill+0x44/0x1100
+[   51.818230]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818232]  ? lock_release+0xd1/0x2b0
+[   51.818234]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818236]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818238]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818242]  alloc_vmap_area+0x1780/0x20b0
+[   51.818243]  ? __lock_acquire+0x46d/0x21d0
+[   51.818246]  ? lock_acquire+0xc9/0x2e0
+[   51.818247]  ? find_held_lock+0x31/0x90
+[   51.818249]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818252]  ? lock_release+0xd1/0x2b0
+[   51.818254]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818258]  __get_vm_area_node+0xd1/0x130
+[   51.818260]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818262]  ? vmap_bump_refill+0x44/0x1100
+[   51.818265]  ? vmap_bump_refill+0x44/0x1100
+[   51.818268]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818271]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818273]  ? vmap_bump_refill+0x44/0x1100
+[   51.818276]  ? vmap_bump_refill+0x44/0x1100
+[   51.818279]  vmap_bump_refill+0x44/0x1100
+[   51.818281]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818283]  ? lock_release+0xd1/0x2b0
+[   51.818285]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818287]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818289]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818293]  alloc_vmap_area+0x1780/0x20b0
+[   51.818294]  ? __lock_acquire+0x46d/0x21d0
+[   51.818297]  ? lock_acquire+0xc9/0x2e0
+[   51.818298]  ? find_held_lock+0x31/0x90
+[   51.818300]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818303]  ? lock_release+0xd1/0x2b0
+[   51.818305]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818308]  __get_vm_area_node+0xd1/0x130
+[   51.818311]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818312]  ? vmap_bump_refill+0x44/0x1100
+[   51.818315]  ? vmap_bump_refill+0x44/0x1100
+[   51.818318]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818321]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818323]  ? vmap_bump_refill+0x44/0x1100
+[   51.818325]  ? vmap_bump_refill+0x44/0x1100
+[   51.818329]  vmap_bump_refill+0x44/0x1100
+[   51.818331]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818333]  ? lock_release+0xd1/0x2b0
+[   51.818335]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818338]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818340]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818344]  alloc_vmap_area+0x1780/0x20b0
+[   51.818345]  ? __lock_acquire+0x46d/0x21d0
+[   51.818348]  ? lock_acquire+0xc9/0x2e0
+[   51.818350]  ? find_held_lock+0x31/0x90
+[   51.818352]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818354]  ? lock_release+0xd1/0x2b0
+[   51.818357]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818360]  __get_vm_area_node+0xd1/0x130
+[   51.818362]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818364]  ? vmap_bump_refill+0x44/0x1100
+[   51.818367]  ? vmap_bump_refill+0x44/0x1100
+[   51.818370]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818373]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818375]  ? vmap_bump_refill+0x44/0x1100
+[   51.818377]  ? vmap_bump_refill+0x44/0x1100
+[   51.818380]  vmap_bump_refill+0x44/0x1100
+[   51.818382]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818385]  ? lock_release+0xd1/0x2b0
+[   51.818386]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818389]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818390]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818394]  alloc_vmap_area+0x1780/0x20b0
+[   51.818395]  ? __lock_acquire+0x46d/0x21d0
+[   51.818398]  ? lock_acquire+0xc9/0x2e0
+[   51.818400]  ? find_held_lock+0x31/0x90
+[   51.818402]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818404]  ? lock_release+0xd1/0x2b0
+[   51.818407]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818410]  __get_vm_area_node+0xd1/0x130
+[   51.818412]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818414]  ? vmap_bump_refill+0x44/0x1100
+[   51.818417]  ? vmap_bump_refill+0x44/0x1100
+[   51.818420]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818423]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818425]  ? vmap_bump_refill+0x44/0x1100
+[   51.818427]  ? vmap_bump_refill+0x44/0x1100
+[   51.818430]  vmap_bump_refill+0x44/0x1100
+[   51.818433]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818435]  ? lock_release+0xd1/0x2b0
+[   51.818437]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818439]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818441]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818444]  alloc_vmap_area+0x1780/0x20b0
+[   51.818445]  ? __lock_acquire+0x46d/0x21d0
+[   51.818448]  ? lock_acquire+0xc9/0x2e0
+[   51.818450]  ? find_held_lock+0x31/0x90
+[   51.818452]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818454]  ? lock_release+0xd1/0x2b0
+[   51.818456]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818459]  __get_vm_area_node+0xd1/0x130
+[   51.818462]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818464]  ? vmap_bump_refill+0x44/0x1100
+[   51.818467]  ? vmap_bump_refill+0x44/0x1100
+[   51.818469]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818472]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818474]  ? vmap_bump_refill+0x44/0x1100
+[   51.818477]  ? vmap_bump_refill+0x44/0x1100
+[   51.818480]  vmap_bump_refill+0x44/0x1100
+[   51.818482]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818484]  ? lock_release+0xd1/0x2b0
+[   51.818486]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818488]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818490]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818493]  alloc_vmap_area+0x1780/0x20b0
+[   51.818495]  ? __lock_acquire+0x46d/0x21d0
+[   51.818497]  ? lock_acquire+0xc9/0x2e0
+[   51.818499]  ? find_held_lock+0x31/0x90
+[   51.818501]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818503]  ? lock_release+0xd1/0x2b0
+[   51.818506]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818509]  __get_vm_area_node+0xd1/0x130
+[   51.818511]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818513]  ? vmap_bump_refill+0x44/0x1100
+[   51.818516]  ? vmap_bump_refill+0x44/0x1100
+[   51.818519]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818521]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818524]  ? vmap_bump_refill+0x44/0x1100
+[   51.818526]  ? vmap_bump_refill+0x44/0x1100
+[   51.818529]  vmap_bump_refill+0x44/0x1100
+[   51.818531]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818533]  ? lock_release+0xd1/0x2b0
+[   51.818535]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818537]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818539]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818543]  alloc_vmap_area+0x1780/0x20b0
+[   51.818544]  ? __lock_acquire+0x46d/0x21d0
+[   51.818547]  ? lock_acquire+0xc9/0x2e0
+[   51.818549]  ? find_held_lock+0x31/0x90
+[   51.818550]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818553]  ? lock_release+0xd1/0x2b0
+[   51.818555]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818558]  __get_vm_area_node+0xd1/0x130
+[   51.818561]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818562]  ? vmap_bump_refill+0x44/0x1100
+[   51.818565]  ? vmap_bump_refill+0x44/0x1100
+[   51.818568]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818571]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818573]  ? vmap_bump_refill+0x44/0x1100
+[   51.818575]  ? vmap_bump_refill+0x44/0x1100
+[   51.818578]  vmap_bump_refill+0x44/0x1100
+[   51.818581]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818583]  ? lock_release+0xd1/0x2b0
+[   51.818585]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818587]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818589]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818592]  alloc_vmap_area+0x1780/0x20b0
+[   51.818594]  ? __lock_acquire+0x46d/0x21d0
+[   51.818596]  ? lock_acquire+0xc9/0x2e0
+[   51.818598]  ? find_held_lock+0x31/0x90
+[   51.818600]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818602]  ? lock_release+0xd1/0x2b0
+[   51.818605]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818608]  __get_vm_area_node+0xd1/0x130
+[   51.818610]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818612]  ? vmap_bump_refill+0x44/0x1100
+[   51.818615]  ? vmap_bump_refill+0x44/0x1100
+[   51.818618]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818620]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818623]  ? vmap_bump_refill+0x44/0x1100
+[   51.818625]  ? vmap_bump_refill+0x44/0x1100
+[   51.818628]  vmap_bump_refill+0x44/0x1100
+[   51.818630]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818633]  ? lock_release+0xd1/0x2b0
+[   51.818634]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818637]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818638]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818642]  alloc_vmap_area+0x1780/0x20b0
+[   51.818643]  ? __lock_acquire+0x46d/0x21d0
+[   51.818646]  ? lock_acquire+0xc9/0x2e0
+[   51.818647]  ? find_held_lock+0x31/0x90
+[   51.818649]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818652]  ? lock_release+0xd1/0x2b0
+[   51.818654]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818657]  __get_vm_area_node+0xd1/0x130
+[   51.818660]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818661]  ? vmap_bump_refill+0x44/0x1100
+[   51.818664]  ? vmap_bump_refill+0x44/0x1100
+[   51.818667]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818670]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818672]  ? vmap_bump_refill+0x44/0x1100
+[   51.818674]  ? vmap_bump_refill+0x44/0x1100
+[   51.818677]  vmap_bump_refill+0x44/0x1100
+[   51.818679]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818682]  ? lock_release+0xd1/0x2b0
+[   51.818684]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818686]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818688]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818691]  alloc_vmap_area+0x1780/0x20b0
+[   51.818692]  ? __lock_acquire+0x46d/0x21d0
+[   51.818695]  ? lock_acquire+0xc9/0x2e0
+[   51.818697]  ? find_held_lock+0x31/0x90
+[   51.818698]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818701]  ? lock_release+0xd1/0x2b0
+[   51.818703]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818706]  __get_vm_area_node+0xd1/0x130
+[   51.818709]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818710]  ? vmap_bump_refill+0x44/0x1100
+[   51.818714]  ? vmap_bump_refill+0x44/0x1100
+[   51.818717]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818720]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818722]  ? vmap_bump_refill+0x44/0x1100
+[   51.818725]  ? vmap_bump_refill+0x44/0x1100
+[   51.818728]  vmap_bump_refill+0x44/0x1100
+[   51.818730]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818732]  ? lock_release+0xd1/0x2b0
+[   51.818734]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818737]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818738]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818742]  alloc_vmap_area+0x1780/0x20b0
+[   51.818743]  ? __lock_acquire+0x46d/0x21d0
+[   51.818746]  ? lock_acquire+0xc9/0x2e0
+[   51.818748]  ? find_held_lock+0x31/0x90
+[   51.818750]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818753]  ? lock_release+0xd1/0x2b0
+[   51.818755]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818758]  __get_vm_area_node+0xd1/0x130
+[   51.818761]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818763]  ? vmap_bump_refill+0x44/0x1100
+[   51.818766]  ? vmap_bump_refill+0x44/0x1100
+[   51.818768]  ? alloc_frozen_pages_noprof+0x54/0x90
+[   51.818771]  __kvmalloc_node_noprof+0x2fd/0x9a0
+[   51.818774]  ? vmap_bump_refill+0x44/0x1100
+[   51.818776]  ? vmap_bump_refill+0x44/0x1100
+[   51.818779]  vmap_bump_refill+0x44/0x1100
+[   51.818781]  ? kmem_cache_free+0x2d3/0x4e0
+[   51.818784]  ? lock_release+0xd1/0x2b0
+[   51.818786]  ? vmap_bump_alloc+0x1ae/0x1e0
+[   51.818788]  ? kmem_cache_free+0x2d8/0x4e0
+[   51.818790]  ? vmap_bump_alloc+0x81/0x1e0
+[   51.818793]  alloc_vmap_area+0x1780/0x20b0
+[   51.818795]  ? __lock_acquire+0x46d/0x21d0
+[   51.818798]  ? lock_acquire+0xc9/0x2e0
+[   51.818800]  ? find_held_lock+0x31/0x90
+[   51.818802]  ? __kmalloc_cache_node_noprof+0x18d/0x6e0
+[   51.818805]  ? lock_release+0xd1/0x2b0
+[   51.818807]  ? __kmalloc_cache_node_noprof+0x41a/0x6e0
+[   51.818810]  __get_vm_area_node+0xd1/0x130
+[   51.818813]  __vmalloc_node_range_noprof+0x145/0x980
+[   51.818814]  ? long_busy_list_alloc_test+0x68/0xf0
+[   51.818818]  ? kfree+0x32f/0x4a0
+[   51.818820]  ? long_busy_list_alloc_test+0x68/0xf0
+[   51.818822]  ? vfree+0xf6/0x2b0
+[   51.818825]  __vmalloc_node_noprof+0x52/0x70
+[   51.818827]  ? long_busy_list_alloc_test+0x68/0xf0
+[   51.818828]  vmalloc_noprof+0x25/0x30
+[   51.818829]  long_busy_list_alloc_test+0x68/0xf0
+[   51.818831]  ? __pfx_long_busy_list_alloc_test+0x10/0x10
+[   51.818832]  test_func+0x112/0x230
+[   51.818835]  ? __pfx_test_func+0x10/0x10
+[   51.818836]  kthread+0x10d/0x140
+[   51.818839]  ? __pfx_kthread+0x10/0x10
+[   51.818842]  ret_from_fork+0x3a1/0x430
+[   51.818845]  ? __pfx_kthread+0x10/0x10
+[   51.818847]  ret_from_fork_asm+0x1a/0x30
+[   51.818853]  </TASK>
+[   51.818853] Modules linked in:
+[   51.818857] ---[ end trace 0000000000000000 ]---
+[   51.818859] RIP: 0010:__lock_acquire+0x8/0x21d0
+[   51.818860] Code: c7 c6 78 9f 40 a3 67 48 0f b9 3a e9 4e ff ff ff 66 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 55 48 89 e5 41 57 41 56 <41> 55 41 54 53 48 83 ec 48 48 8b 45 10 8b 1d b9 ac f6 01 48 89 45
+[   51.818861] RSP: 0018:ffffcd36cc260000 EFLAGS: 00010002
+[   51.818862] RAX: 0000000000000046 RBX: 0000000000000000 RCX: 0000000000000002
+[   51.818863] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffffa3e065c8
+[   51.818864] RBP: ffffcd36cc260010 R08: 0000000000000001 R09: 0000000000000001
+[   51.818865] R10: 0000000000000002 R11: 0000000000000000 R12: 0000000000000002
+[   51.818865] R13: 0000000000000001 R14: ffffffffa3e065c8 R15: 0000000000000000
+[   51.818868] FS:  0000000000000000(0000) GS:ffff8a7f1a992000(0000) knlGS:0000000000000000
+[   51.818869] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   51.818869] CR2: ffffcd36cc25fff8 CR3: 0000000839c3c000 CR4: 00000000000006f0
+[   51.818873] Kernel panic - not syncing: Fatal exception in interrupt
+[   51.819725] Kernel Offset: 0x20c00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+<snip>
 
-and found the following issue:
-WARNING in alloc_vmap_area
+I have not looked through the patches yet. See below some questions.
 
-Full report is available here:
-https://ci.syzbot.org/series/45e14120-bbb8-4a0c-b5c6-0aaf3b421101
+Do you solve any real issue by this series? Can we split this series
+to several sections? I mean swap busy-tree then lazy-tree and latest
+free-tree. This is for better code review reason and performance
+evaluation one.
 
-***
+I am not sure we need to switch free-tree(it is not fragmented data structure)
+whereas lazy and busy sounds good to me as those contain more objects. 
 
-WARNING in alloc_vmap_area
-
-tree:      linux-next
-URL:       https://kernel.googlesource.com/pub/scm/linux/kernel/git/next/linux-next
-base:      c425609d6ac4012c8bbf01ec2e10e801b1923a7b
-arch:      amd64
-compiler:  Debian clang version 21.1.8 (++20251221033036+2078da43e25a-1~exp1~20251221153213.50), Debian LLD 21.1.8
-config:    https://ci.syzbot.org/builds/481f4f4b-8d55-4e3c-b96c-1de7b763686d/config
-syz repro: https://ci.syzbot.org/findings/ae02a227-b4c3-476a-826b-3bbf18bdbfe4/syz_repro
-
-------------[ cut here ]------------
-(*left)->va_end > start
-WARNING: mm/vmalloc.c:1371 at find_vmap_area_insert_neighbors_mt_locked mm/vmalloc.c:1371 [inline], CPU#0: syz.0.17/5834
-WARNING: mm/vmalloc.c:1371 at validate_vmap_area_range_insert_mt_locked mm/vmalloc.c:1388 [inline], CPU#0: syz.0.17/5834
-WARNING: mm/vmalloc.c:1371 at insert_vmap_area_busy_locked mm/vmalloc.c:1480 [inline], CPU#0: syz.0.17/5834
-WARNING: mm/vmalloc.c:1371 at alloc_vmap_area+0x5458/0x87f0 mm/vmalloc.c:2917, CPU#0: syz.0.17/5834
-Modules linked in:
-CPU: 0 UID: 0 PID: 5834 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT_{RT,(full)} 
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
-RIP: 0010:find_vmap_area_insert_neighbors_mt_locked mm/vmalloc.c:1371 [inline]
-RIP: 0010:validate_vmap_area_range_insert_mt_locked mm/vmalloc.c:1388 [inline]
-RIP: 0010:insert_vmap_area_busy_locked mm/vmalloc.c:1480 [inline]
-RIP: 0010:alloc_vmap_area+0x5458/0x87f0 mm/vmalloc.c:2917
-Code: a5 ff e9 fc 0f 00 00 e8 e6 80 a5 ff 4c 8b 74 24 18 e9 ed 17 00 00 e8 d7 80 a5 ff 90 0f 0b 90 e9 34 e5 ff ff e8 c9 80 a5 ff 90 <0f> 0b 90 4c 8b 74 24 18 eb 09 e8 b9 80 a5 ff 90 0f 0b 90 49 bf 00
-RSP: 0018:ffffc90031ade360 EFLAGS: 00010293
-RAX: ffffffff82200aa7 RBX: ffffffffa0000000 RCX: ffff888109e2bb80
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc90031adf4f8 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000100 R11: 0000000000000003 R12: ffff88810007d888
-R13: ffffffffa0002000 R14: ffffffffa0401000 R15: ffffc90031adeb80
-FS:  00007f97268b66c0(0000) GS:ffff88818e8af000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f9727132780 CR3: 000000010cd9e000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- __get_vm_area_node+0x1f8/0x300 mm/vmalloc.c:4214
- __vmalloc_node_range_noprof+0x36a/0x1750 mm/vmalloc.c:5030
- execmem_vmalloc+0xa7/0x1d0 mm/execmem.c:41
- bpf_dispatcher_change_prog+0x25d/0xd70 kernel/bpf/dispatcher.c:151
- bpf_prog_test_run_xdp+0x794/0x1160 net/bpf/test_run.c:1464
- bpf_prog_test_run+0x2cd/0x340 kernel/bpf/syscall.c:4859
- __sys_bpf+0xa20/0xd90 kernel/bpf/syscall.c:6436
- __do_sys_bpf kernel/bpf/syscall.c:6537 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:6534 [inline]
- __x64_sys_bpf+0xba/0xd0 kernel/bpf/syscall.c:6534
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f972725ce59
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f97268b6028 EFLAGS: 00000246 ORIG_RAX: 0000000000000141
-RAX: ffffffffffffffda RBX: 00007f97274d5fa0 RCX: 00007f972725ce59
-RDX: 0000000000000050 RSI: 0000200000000b80 RDI: 000000000000000a
-RBP: 00007f97272f2d6f R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f97274d6038 R14: 00007f97274d5fa0 R15: 00007ffd7848c2a8
- </TASK>
-
-
-***
-
-If these findings have caused you to resend the series or submit a
-separate fix, please add the following tag to your commit message:
-  Tested-by: syzbot@syzkaller.appspotmail.com
-
----
-This report is generated by a bot. It may contain errors.
-syzbot ci engineers can be reached at syzkaller@googlegroups.com.
-
-To test a patch for this bug, please reply with `#syz test`
-(should be on a separate line).
-
-The patch should be attached to the email.
-Note: arguments like custom git repos and branches are not supported.
+--
+Uladzislau Rezki
 
