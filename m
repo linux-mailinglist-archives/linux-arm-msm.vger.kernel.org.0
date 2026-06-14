@@ -1,189 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-113038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id jLZfHQ1oLmoPvgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 10:36:29 +0200
+	id +eyzEziCLmqUxwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 12:28:08 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FC4E680AC9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 10:36:29 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9485680D91
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 12:28:07 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=S3PtJMUi;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113038-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113038-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
+	dkim=pass header.d=quora.org header.s=google header.b=c5Z4WZ2C;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113039-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113039-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A6B39300B61E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 08:36:04 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 2F04E3001023
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 10:28:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E649D34041E;
-	Sun, 14 Jun 2026 08:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13AC6315793;
+	Sun, 14 Jun 2026 10:28:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF181B4257
-	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 08:36:02 +0000 (UTC)
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781426163; cv=none; b=jG56t2UCmHv9sDmT3ZNpO2UeSLhKAIp7SakbjU+6c5vVEtb+u2QRHtTv3JUeAC5ebAjAf/rjldrt80Y3INJORrw+KWEXkWEqSWJRouOlKkvcf+N7VTh4k0ARt2vj7KU6+wwrz/FwNzSjngdYzNRy1d8vz87nxxgVnulpIZhebk8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781426163; c=relaxed/simple;
-	bh=s4L4ukk0KyujJ0HblA0DbVk6Hm5VHHVGY6UKqtf8+Zg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fg30+oy0CYPeW2qxEotI5Tb7Tyj5W4sxUNE2Cj9p6jOvnWAhHc2JhDbkwgef/yW9Bn31i6a3yKMGCPGD9bFxPvru19e4R3roDkvZY84V3eccxnD/yNmKA4EfH4al0tGZ2Fe39P0Tuv/Xlz+1um0OI/KTj/7Fw4CbyZoHhryC5JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S3PtJMUi; arc=none smtp.client-ip=209.85.215.175
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-c8589498839so905039a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 01:36:02 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96B5204C3B
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 10:28:03 +0000 (UTC)
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781432885; cv=pass; b=lFoSy8YkQ9Fpl6SqzFmSU/ehs8/mkvOHSOmzugDzvvSfQxNU+NOoeCo5+x47a5jtKLLrkbxz5CvKeWV9B8ucaSX8BzmwANb4p2vqDfaVYduGLQFTlaaXqhyJuURIqM+gsKd19/AZZ/4Q85qjORaJDCQb4VtIQImI/Nok+oMZl/4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781432885; c=relaxed/simple;
+	bh=yph45RDO36+XI5xBpmVSQXCA/NwDLnfli0nBiTjgmrM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Xnt+S0tWT4nixQjWzZemw7ub3y8uEjFhigHU+CB6r0WQ3SAUddLJh/2x3SxBpljCqX+tgRidRjI1xpu2g/ttZZU4PQc7oLnEwrpUs5RGbe6vI79nqSNr+jZGuY910YnXsEqh3QzEfxLWT7/ChxlBS4xU96PbMQoW2hdwSjYx6YU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org; spf=pass smtp.mailfrom=quora.org; dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b=c5Z4WZ2C; arc=pass smtp.client-ip=209.85.214.171
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2bf2247e38eso22544645ad.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 03:28:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781432883; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Qk/SA4auG5ywyWMqcc7tu5rfebi74X2WLIy8PgjQ3VCeYnBWkU9rZTnjkaq1A2R0fp
+         FvmddrUlvpG68AowPobMva8WxdjyQngcBbOi2kH5mpRkT1YVKFUSGS8rSmmOfh3ZkcE4
+         jtYYbxj3CW0xHbqMs7GwziWJNhgLp4DK8qjoDCNh/b5cYgwm7FBChVbKHK63y9ovKIzL
+         ylrs8CNAnvP/iQma+RXaZUaN/4rY4bx3WzqlzeFtYLysYpcNxwhJu85sxDWiC1BfpA3y
+         Q4nkYcPSQD0WwLTLEZJD9cDWz+SH5kGioZAvQSZ5E9aD7XUVBJp1eAb0ii5OtlBIOp4o
+         +36A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=yzePJ3jQDgqzUoVchbve1mIf57FTjpX6L66SunK2+KA=;
+        fh=nOpJFO3UH0AP7QcE01J/9AOmv9ENVcLMoc68zxVd4Ek=;
+        b=HUKeqHSQDEKDzAYCI0S725K0pGSJUGl0kHlgEyvsBD6lUSzhNCGEYrWXqm75Zs8ypY
+         5gwBtmqb8l/EQb0i1pVQLCHy1CG7+cVI1rZboDPzU2D2doA9WFqercrKmYF3fPgNqz45
+         +tNMO9uL2WS5cdy0sJxJ43ELPkVPLyknd6Yoh7nYO3fsC61OFAGb7TY3VFmvKiHyaEjH
+         p+1uguuB3ftIm1dtYnuXu5KWQBfywp93kD/t+uEITLBPwjbC1KCCQHiqcmLGi8E4ELpD
+         42LE4zySbP7fHV5vC4F76cMasc7S3VBmSY7yFCPGllS9uTDjt8CoG51DYRKSt62j3PBA
+         RA/Q==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781426162; x=1782030962; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tAITfEL9UqrO9L8OmSD1zMxFdEqiUvJMm9blfi4uSXM=;
-        b=S3PtJMUiS69D2k614mFzce4tH101RiTzfiLa6MNdtGYTKbLUH2MyZX4iRptmSwkRkq
-         Ynjs+HSRlIo3jYfkUFSAOgVCzJNIJ2PhTTaQGnNCCcWerqAvaQiWB6FhTgrySRzBqYhO
-         VuFuRecYUA2i94dScZopATd8ceW21jYU56EeOxmEFVwaFT0ML4cIZGzaMF6vclzr61w9
-         jf6PhVLQHayy5QxuNEnZzedbCnYzQQxwAtPTpttiBU2MzySW2sKbpENJG9lk8nO+JNZY
-         eTkLw/hpX2kn9fLcjaSV2BmL0rbmehs24xF3kIbpUnrA29IZ7WctWCpRD/N2uh+UT7p6
-         KleA==
+        d=quora.org; s=google; t=1781432883; x=1782037683; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yzePJ3jQDgqzUoVchbve1mIf57FTjpX6L66SunK2+KA=;
+        b=c5Z4WZ2CT4TgqdBvs2Yl//5cdmKUBMexaPwekJ54z6m+4Atksc9Mfr+sahCyb2o4yO
+         VKjiD50NQlC8zlcCntQyw7nV7YAL6T5EFH1/+zhBPn3bjlGdeuj+T1jo5vsZmV9xPSef
+         t5GFbYAfnMt8wAJT+wQz47Sls4XzWP7samsB0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781426162; x=1782030962;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=tAITfEL9UqrO9L8OmSD1zMxFdEqiUvJMm9blfi4uSXM=;
-        b=ejlfwD1nAaUb3LuZIOltkLrnf3spQ/GsT9uFI0QAzc+VcouMd0QOtQfcHVGqmW+IbV
-         mxG81gn9nph9F8idJpTLzVTgRLijI56dtMTclVSbKvnOHcuVD8ekirABIG/e1E3ok9nG
-         ehzQFAVChW979b5m2/rhQ4G2BIuLHgSFjsqCoPb4kwsb9u1yjpyxflAEQZciZdn7PB9U
-         s/dKFmab29+hEyoyBPNMJsuzFP1j+UCRpqaD9bE6z6qX9d45KvWIEyHIyijrVH7hjFVy
-         mtzF0Kr8UutdstF1BQ0xDr2xwSEtugqM4hp+l3xVncIlqPEAZteSzD+o57CgsgM82vBf
-         xmkA==
-X-Gm-Message-State: AOJu0YybEK1Ob/i6GQiTR4YYGl/BOhSo8QjcW0N0VpcbjrPgxiWWSLUF
-	MI4lZilbl4F9uj4DQ6lIqGa4x4kWIeF7OpCXOh5sp0h4pV6fCbqLMn3n
-X-Gm-Gg: Acq92OFZyzyDHSh3euxAJBgKlgw/FTzCoF732tHVCUobzNZ3jYUr3E6V0cnz4hUpVRp
-	r8sT9C4Dl0dUCUfn3XsyIvSK4LucD7rkp+BPkeR2H+cmHZZogYcrXGhEBAtaQkPV560QZmF9fjr
-	QF7oagBI3vg0bN7+0O5zS6+l6GWvNYJzJlgqqhPiiv1VBPdBUXP+Kcynv104CCDpalyY0N6VHth
-	vok7ui6REasNRS/ZzE0Iq3rR1rzgzHBKjmg7Qvj7KBpA667IuJJ+jyfe4JjI1R2wL+1yGB1cWZa
-	QsDuajyJsbU1tv5T1Nx209L3p+OdHLL/dk/whkcszS21W4VxaTFhbazFAS1/gb3jmiLcjq6eoLm
-	MAW8lj0Yhes0WuZBtXbjECeu2u0KNjATSdS1OFW0X6OYy5wXnLi8x1uk4sbJERmjEeyfbZyXEbA
-	6uAnG+b2aQCLgbl1DmkDGT4A==
-X-Received: by 2002:a05:6a00:3390:b0:842:5634:3c1d with SMTP id d2e1a72fcca58-844e199926amr6606163b3a.19.1781426162161;
-        Sun, 14 Jun 2026 01:36:02 -0700 (PDT)
-Received: from nuvole ([2408:844f:2361:d7cd:deb7:4e0e:26d0:4076])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434afc8fc7sm7263053b3a.37.2026.06.14.01.35.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Jun 2026 01:36:01 -0700 (PDT)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-spi@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Pengyu Luo <mitltlatltl@gmail.com>
-Subject: [PATCH 2/2] spi: qcom-geni: Add property to force GSI mode
-Date: Sun, 14 Jun 2026 16:34:24 +0800
-Message-ID: <20260614083424.464132-2-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260614083424.464132-1-mitltlatltl@gmail.com>
-References: <20260614083424.464132-1-mitltlatltl@gmail.com>
+        d=1e100.net; s=20251104; t=1781432883; x=1782037683;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yzePJ3jQDgqzUoVchbve1mIf57FTjpX6L66SunK2+KA=;
+        b=BS6Pkwr0pEX1FA998gXAk8yeBRjvsqGt2QicZlmuTllU52WjrmSIQgi2csj0k779C6
+         D6qzSdJpXOwXMR7mUX+tF3KUa9JQ1FHhgYy+K9ObeCujAXMTiXphG0Mj6mYwooC8iBtB
+         UDm8MABLgklFadkD08JsWVc7bSlZtYllKyyc/MbGfj+adzHtStduYR/NZqlu82Bc50A/
+         dkS7GdU5B0s6i5XHS6sn6c8ekvY6xz7Z96TV62UeTBB943o/0U4GjlL6UdJ+m50MZVY/
+         MeGU0JzQ35MmejfYPgzy3G2c9tc21xiU5BP/b7MtX6gbY808oj3vEOaB9NQqE2A94+lk
+         KaIQ==
+X-Gm-Message-State: AOJu0YykiEciY043mzKKEQTdXNsDANhn5kRnsydyXXJMtcqsyay8yiXZ
+	trs6JUj43sRF2S84hTl/mcxRoD6EIn7fO7uaMCefd1AL5LpekQ6PN/lowZcNycJbgKKSCJcKOk0
+	3Kq4DpCf9xGq5pw9+6EJh2r5cLPDFBNRwy8hrooh4X03YD3d2manqgSAAgA==
+X-Gm-Gg: Acq92OEiK/7iDCrG0ee8e9yxEhP9EZvOlcZJDGpjYFsiFLEq1rxhIeMyU1EPW1ERihO
+	wjtYNwLaVqI49wgQCpAW0cTciwMCOjw3qZz4IRoKn1XuYlmsWFSKburPhzBepu5Pv4u4dDoj8kC
+	y3SKGEEV3H2E/+cS2776y/1iWrXKzYHmdnWRfN1pbYAZr6G3+UeZxYuuJN6796w8Ou/GAiG7vtc
+	g5UpEI8j1vUnuKrdEFYK2Q9nVzOIEgCaVxZ0tSJKioNgwBiTAp18gIoINQqDX1NxZ5jvGOd+RVe
+	2RyxerFBwW4apqa+jPQ9y/0raU29VRElZHszOVDLB4pvcEJZsBaxHhjpLWZ4UxxvJjNgHP7otrI
+	zVPx9T7bRJepCJTW/rj2HKVEg8VcsVH4IVqS2E5GYI5Hc/wfhuCXTlzj/8iFNZFQUnf7oNwlpDQ
+	hQbtC92gQ0T7JU3VgK/A1d6ruIAPcd5DFKbmwYgEMK8rpcFdhoWdd2P6uJDL0dP1ZGEFfkA0/Q6
+	9gPoBs=
+X-Received: by 2002:a17:903:1a4e:b0:2c0:c940:dc32 with SMTP id
+ d9443c01a7336-2c4111b93fcmr108749535ad.16.1781432883171; Sun, 14 Jun 2026
+ 03:28:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAMVG2st2udHCUHZ_2j=jNmwTAVi2Cvda0qGgH4tDZHwsGVfLKQ@mail.gmail.com>
+In-Reply-To: <CAMVG2st2udHCUHZ_2j=jNmwTAVi2Cvda0qGgH4tDZHwsGVfLKQ@mail.gmail.com>
+From: Daniel J Blueman <daniel@quora.org>
+Date: Sun, 14 Jun 2026 18:27:50 +0800
+X-Gm-Features: AVVi8CdcXb4-gMPYfo_2MKrfEemE11HwTvuMlcaF21UGcMmG1gPdvrVoSsDvb1k
+Message-ID: <CAMVG2stuY5aTwfmJkL_cLDn86hfuFD+sT-LdqdmN5m21y2aL5g@mail.gmail.com>
+Subject: Re: [BUG] qcom: x1: GAMMA_LUT corruption on DPMS wake
+To: linux-arm-msm@vger.kernel.org, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, Abel Vesa <abel.vesa@oss.qualcomm.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>
+Cc: David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Jun Nie <jun.nie@linaro.org>, 
+	Federico Amedeo Izzo <federico@izzo.pro>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	=?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>, 
+	Randy Dunlap <rdunlap@infradead.org>, Linux Kernel <linux-kernel@vger.kernel.org>, 
+	Val Packett <val@packett.cool>, Steev Klimaszewski <threeway@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	R_DKIM_ALLOW(-0.20)[quora.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-113038-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:agross@kernel.org,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-spi@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:mitltlatltl@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
+	DMARC_NA(0.00)[quora.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:linux-arm-msm@vger.kernel.org,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:jesszhan0024@gmail.com,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:abel.vesa@oss.qualcomm.com,m:krzk@kernel.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:jun.nie@linaro.org,m:federico@izzo.pro,m:neil.armstrong@linaro.org,m:thomas.weissschuh@linutronix.de,m:rdunlap@infradead.org,m:linux-kernel@vger.kernel.org,m:val@packett.cool,m:threeway@gmail.com,s:lists@lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_SENDER(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	FREEMAIL_TO(0.00)[vger.kernel.org,oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,lists.freedesktop.org];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113039-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[quora.org:+];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[gmail.com,ffwll.ch,linaro.org,izzo.pro,linutronix.de,infradead.org,vger.kernel.org,packett.cool];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp]
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,mail.gmail.com:mid,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,gitlab.freedesktop.org:url]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0FC4E680AC9
+X-Rspamd-Queue-Id: C9485680D91
 
-Some devices (such as gaokun3) do not disable FIFO mode, causing the
-driver to fallback to FIFO mode by default. However, these platforms
-also support GSI mode, which is highly preferred for certain
-peripherals like SPI touchscreens to improve performance.
+On Mon, 1 Jun 2026 at 13:37, Daniel J Blueman <daniel@quora.org> wrote:
+> Since Adreno X1-85 GAMMA_LUT support was introduced in Linux v7.0 (eg
+> Ubuntu 26.04), when waking from DPMS-off, palette corruption is
+> frequently seen; this manifests as purple banding. If GNOME night
+> light or similar is enabled, the visual impact is greater.
+>
+> Further, on larger panel monitors or laptops eg the Lenovo Yoga Slim
+> 7x (2944x1840), a second INT2 block is used for the right half of the
+> screen, which may remain totally blank on wake; major usability
+> impact.
+>
+> Intuitively, the symptoms feel like the LUT SRAM clock isn't being
+> driven soon enough during the wakeup, thus state loss may depend on
+> silicon binning/variation or related. No such symptom is seen in
+> Windows on the same hardware. I found a workaround supporting this
+> mechanism is to activate the GNOME night light and adjust the slider
+> to update the LUT - any black right half of the screen always
+> reappears.
+>
+> Please can someone with X1-85 Adreno insight check the Linux clock and
+> power domain behaviour around GC_EN, Layer Mixer, INTerFace and INT2
+> on DPMS wake? Happy to test changes; this is a stunning platform
+> otherwise.
+...
+> Link: https://gitlab.freedesktop.org/drm/msm/-/work_items/89
 
-Introduce the "qcom,force-gsi-mode" device property to hint and force
-the controller into GSI mode during initialization.
+Just a heads-up on this with additional findings. Note this issue
+could be the only remaining daily friction on X1 laptops with suspend,
+once my video decode reboot workaround or similar is merged. Also note
+in my case, without GNOME night light active, only a few LUT entries
+render purple so visual artifacts often go unnoticed until a gradient
+eg in an image is visible.
 
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
----
- drivers/spi/spi-geni-qcom.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+From DPMS wake on a dual-LM panel (>2560 pixels wide) with
+INTF_5/DSPP_0 (master) and INTF_6/DSPP_1, I find DSPP_1's registers
+are intermittently unresponsive just after MDSS resume. DSPP_0 doesn't
+exhibit this issue, suggesting some missing slave/second unit setup,
+despite booting clk_ignore_unused pd_ignore_unused.
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 26e723cfea61..eece7312f780 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -102,6 +102,7 @@ struct spi_geni_master {
- 	int irq;
- 	bool cs_flag;
- 	bool abort_failed;
-+	bool force_gsi_mode;
- 	struct dma_chan *tx;
- 	struct dma_chan *rx;
- 	int cur_xfer_mode;
-@@ -655,6 +656,9 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 		mas->oversampling = 1;
- 
- 	fifo_disable = readl(se->base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
-+	if (mas->force_gsi_mode)
-+		fifo_disable = 1;
+I found the extracted Windows DSDT \_SB.PEP0.G0MD F-state EXIT block
+enables disp_cc_mdss_rscc_ahb_clk and disp_cc_mdss_rscc_vsync_clk;
+could this relate? RSCC being the RPMh bridge subblock. Also, could
+any of the *1_CLK or MDSS_INT2_GDSC entries in dispcc-x1e80100.c lack
+setup?
+
+Does Qualcomm also see this readback failure [1]?
+
+Thanks!
+  Dan
+
+-- [1]
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+index 23dcbe1ce1b8..xxxxxxxxxxxx 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dspp.c
+@@ -83,7 +83,7 @@ static void dpu_setup_dspp_pcc(struct dpu_hw_dspp *ctx,
+ static void dpu_setup_dspp_gc(struct dpu_hw_dspp *ctx,
+         struct dpu_hw_gc_lut *gc_lut)
+ {
+     int i = 0;
+-    u32 base, reg;
++    u32 base, reg, rb;
+
+     if (!ctx) {
+         DRM_ERROR("invalid ctx\n");
+@@ -113,4 +113,8 @@ static void dpu_setup_dspp_gc(struct dpu_hw_dspp *ctx,
+
+     reg = GC_EN | ((gc_lut->flags & PGC_8B_ROUND) ? GC_8B_ROUND_EN : 0);
+     DPU_REG_WRITE(&ctx->hw, base, reg);
 +
- 	switch (fifo_disable) {
- 	case 1:
- 		ret = spi_geni_grab_gpi_chan(mas);
-@@ -1133,6 +1137,9 @@ static int spi_geni_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
-+	if (device_property_read_bool(&pdev->dev, "qcom,force-gsi-mode"))
-+		mas->force_gsi_mode = true;
-+
- 	ret = spi_geni_init(mas);
- 	if (ret)
- 		return ret;
++    rb = DPU_REG_READ(&ctx->hw, base);
++    if (rb != reg)
++        pr_warn("dpu_dspp_gc: dspp %u wrote %08X but read back %08X\n",
++            ctx->idx - DSPP_0, reg, rb);
+ }
 -- 
-2.54.0
-
+Daniel J Blueman
 
