@@ -1,148 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-113041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id CUKMAJ2ILmqhyQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 12:55:25 +0200
+	id V+h4JLKeLmpT0gQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 14:29:38 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47D84680E28
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 12:55:24 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26AA9681047
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 14:29:38 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Jz6zlDM9;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113041-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113041-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=iskren.info header.s=purelymail3 header.b=ZSydUS+S;
+	dkim=pass header.d=purelymail.com header.s=purelymail3 header.b=LDs6mJtg;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113042-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113042-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=iskren.info;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1AC403007E13
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 10:55:23 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 86D0E3002310
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 12:29:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EF45395D86;
-	Sun, 14 Jun 2026 10:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2075931A556;
+	Sun, 14 Jun 2026 12:29:35 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669C71C84D0;
-	Sun, 14 Jun 2026 10:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8892030E859
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 12:29:32 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781434522; cv=none; b=m6loiNwZ79hZlJX4QGNPIxCDMi7AkrxxTmWPV7kdoGNKsNYBLFtd8+U/67k8EDC2TPLEvqrUsCtD4A+G3o7p+2/fE/2llUmBH07REa8KGqY18f+aoe/NUPv/2D3AujdKg2+qOlLzmNtQmS2LuToQNWszA+VY/VVum72TLK7uAYE=
+	t=1781440175; cv=none; b=AP2pfEtJy+cwLRdJr/ibixuhBcLkxZdcfbN1k1lq8fd6U+lfLAdbEpIKtbydLty607Vn9Jm9sPzaT52NYd2JD3bf4zvF4t2KCPS2bWQ/u8ZOrUfI1/h/BAtzxy9cQll70q0j1iYr7AdMXP8qS58IWP+A9M/qCwFQB9MhIOxNl0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781434522; c=relaxed/simple;
-	bh=vyBHfavMEG2AJu68aDC9eikYb7Xnl8YNTMGJezJAJ88=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FF0M2go207AOFuEGj6SOsfqbiAAn/qHsYn5fyEnLxe2lvU5vEabAgTGNjeGpGQQ2flGtOWUpxm527oYTxuBKcJl4DiYGWA28rfzP3earJmZSj/H1JF4okydxieeZyEqoYmIt7v3xf8k67q49rT/Vb5YrHFsXMde+yeu519bwIN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jz6zlDM9; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB561F000E9;
-	Sun, 14 Jun 2026 10:55:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781434521;
-	bh=dKwyRbKTxaslTpb3ZAqL3emqIA6Fbw1/6vGrU/BeSUE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Jz6zlDM9MTa3JqH+aLRu6XAiZut97zXGsisbXR6gl3TjBKzrO+O+A20QrfpoCdg7d
-	 Dbr3qyFBl8qyjJU/H5XOzceYaDcHxseepwuy7Sn/+mJaqqv8IasSwTcQH2hCpAb6Fa
-	 j5V5o0snxO5AYdy3/vxZGZVzr+Nzs9865iqLE3SZ2+ODkSj4qfb3rj9jT883/06KeA
-	 MhEOER2zoXaA3ZdUKEgUXlty2aaguZAn5yN2vrzu4ebMVHZCO+6CTiMmxs/jtGd23Q
-	 R+wErGj0SQRoWnIag199EnkS+82Wj5CH0UeQJPJELa2bqqTGD6ROBGqwULc729kcDe
-	 PPKMLVP8lEuKQ==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id 4ED4F1AC5AC6; Sun, 14 Jun 2026 11:55:17 +0100 (BST)
-Date: Sun, 14 Jun 2026 11:55:17 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Pengyu Luo <mitltlatltl@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] spi: dt-bindings: qcom,spi-geni-qcom: Add property
- to force GSI mode
-Message-ID: <ai6IlfGZL9kAYpwJ@sirena.co.uk>
-References: <20260614083424.464132-1-mitltlatltl@gmail.com>
+	s=arc-20240116; t=1781440175; c=relaxed/simple;
+	bh=IQSjTyjS8hNRnK0DIocyeVZNIoUq+jWIAPq7VzDKUBw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=q+NHEYByDuVnUZc/uvilewlsaQTa5fhA7VjVcnvbHrBRjWs5K9B0fcJCVvAurxRS5tjw3ScWkjE8j6mo2Kmy2VAe6SsIzTY8Tg838BucE5nXTAdaft+P2ru6YuFUr8hpY/+BO0OBhVGoHMYuhmeSFFEEFbbVWKoUhHqZWUlzg7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iskren.info; spf=pass smtp.mailfrom=iskren.info; dkim=pass (2048-bit key) header.d=iskren.info header.i=@iskren.info header.b=ZSydUS+S; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=LDs6mJtg; arc=none smtp.client-ip=34.202.193.197
+DKIM-Signature: a=rsa-sha256; b=ZSydUS+Sxie6wgLyavL9/rY2x92XkLI3EbPlJg5Cngk1W+nE0fsSiX/N1hr3/+UkE/ben6P39PwFQqdRJZWjPjjZl4YqwSplchi6Mc0JUE42c0lrJ3uegEMuvqe3R+yDyol+PnzbtaZzK5Wku7PL4P5iWkVKVXqAWCM1onSUFUnj4tryl3y8f9EfZ16G3n1lkYPZ5Iq+uA0dvkkB1EjWlbFBGsVyxkIHuNUQJiKiFKcWH8qWMh1luf4ZAV16VmoSG0RhR/koEj3svakZBPS7s69hL+yDQUKqfVHaeJ5rb/aKQzlHocvNCgC5qzAencLqKeCkPOdl3MsRhBr8TTFZyg==; s=purelymail3; d=iskren.info; v=1; bh=IQSjTyjS8hNRnK0DIocyeVZNIoUq+jWIAPq7VzDKUBw=; h=Received:Date:Subject:To:From;
+DKIM-Signature: a=rsa-sha256; b=LDs6mJtg4ZpamSh30QeGss5dT/n2Kxd13MjMHysYnhchh/ISMmgxnS3rd69WxYLnmTIljo1+uVQuuXxQa6Nyxgk9kUcbt1rD6v832bI6n9EGSEsQ38Yypnb7ZfQkABFuYEnCYSQzt0lh0B3DV5oEkA/G41cMP2VjLoettsadc8R6wydcttNAs0HudfiVWnBvZpo+tq4U52/3WIqx3vtkzmOLBx/IL65QX5kE0iNt8lLIowkSD81iwfMmcC9aPejYXRyTZJkfB9W8nZPi4sIk+tO6ynpeMqgeM5EK1ipu28TsATz/GacRJttZQuIauoMFaNrkvEqKS0ku4VeL+erLLA==; s=purelymail3; d=purelymail.com; v=1; bh=IQSjTyjS8hNRnK0DIocyeVZNIoUq+jWIAPq7VzDKUBw=; h=Feedback-ID:Received:Date:Subject:To:From;
+Feedback-ID: 10275:2339:null:purelymail
+X-Pm-Original-To: linux-arm-msm@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1565696518;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Sun, 14 Jun 2026 12:29:11 +0000 (UTC)
+Message-ID: <5b474af3-f651-4a64-a5b9-c18136e589eb@iskren.info>
+Date: Sun, 14 Jun 2026 15:29:08 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="m6CVO7kLlwpdAouq"
-Content-Disposition: inline
-In-Reply-To: <20260614083424.464132-1-mitltlatltl@gmail.com>
-X-Cookie: Price does not include taxes.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] phy: qcom-qusb2: Fix SM6115 init sequence
+To: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20260610-topic-8996_61x5_qusb2phy-v1-0-d7135980e78f@oss.qualcomm.com>
+ <20260610-topic-8996_61x5_qusb2phy-v1-2-d7135980e78f@oss.qualcomm.com>
+Content-Language: en-US
+From: Iskren Chernev <me@iskren.info>
+In-Reply-To: <20260610-topic-8996_61x5_qusb2phy-v1-2-d7135980e78f@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-7.26 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SIGNED_PGP(-2.00)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[iskren.info,reject];
+	R_DKIM_ALLOW(-0.20)[iskren.info:s=purelymail3,purelymail.com:s=purelymail3];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-113041-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:mitltlatltl@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:agross@kernel.org,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-spi@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113042-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	FREEMAIL_TO(0.00)[gmail.com];
+	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:quic_wcheng@quicinc.com,m:gregkh@linuxfoundation.org,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[me@iskren.info,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
+	DKIM_TRACE(0.00)[iskren.info:+,purelymail.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[me@iskren.info,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	HAS_WP_URI(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,sirena.co.uk:mid]
+	TO_DN_SOME(0.00)[]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 47D84680E28
+X-Rspamd-Queue-Id: 26AA9681047
 
 
---m6CVO7kLlwpdAouq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 14, 2026 at 04:34:23PM +0800, Pengyu Luo wrote:
-> Some devices (such as gaokun3) do not disable FIFO mode, causing the
-> driver to fallback to FIFO mode by default. However, these platforms
-> also support GSI mode, which is highly preferred for certain
-> peripherals like SPI touchscreens to improve performance.
->=20
-> Introduce the "qcom,force-gsi-mode" device property to hint and force
-> the controller into GSI mode during initialization.
+On 6/10/26 3:04 PM, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
+> I don't know where the existing one came from, but it's apparently
+> wrong, according to both docs and a downstream DT [1]. Fix it up.
 
-This is an optimisation not a fundamental part of how these devices
-operate.  The DT should describe whatever it is about these SoCs that
-allows this mode, or this should be triggered based on the compatible
-for the variant of the device that can do this.
+They came from DTB extracted from a running billie2 (OnePlus Nord N100):
+[1] 
+https://mainlining.dev/wp-content/uploads/2021/02/03_dtbdump_Qualcomm_Technologies_Inc._Bengal_SoC.dts 
 
---m6CVO7kLlwpdAouq
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+The phone was bough early after launch, so it could have been 
+wrong/updated later.
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmouiJEACgkQJNaLcl1U
-h9Ch9Af/afKgdlUtQvVkG3nt9zzAdtJTeIgZyyt+C13HEOVuekF9IWmX13/aF2Dy
-RyeqArGAB0SGiSsXV7Ml2+XQuQjRhhwbE/d3uYvNb0W9LiHbY9FJKHCt2jc2SRja
-CdOYBlkdFcUKwhc+yfY4Cub8hBagezLedvIn6TJ6rnuUMRbsNOLcAEOOcizMZ29C
-YjNweKOrFQ7dOdPQCEfh9Q1Z5/e5nFuacKC5aVAfGr6hvJCrUiEyG0dsGooeQBCG
-9XiMtmFao9sLPmKyrW3MGKYuH9weZDWNitF3gZHTfJhErDyLk0Xl23gHJRiwp/Ev
-BcApOWYVGI4m6FirMobmfCHVfRxklA==
-=XWIg
------END PGP SIGNATURE-----
+> The updated values also happen to match SM6125, which will allow us
+> to fix that platform too.
+> 
+> [1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/bengal-usb.dtsi#145
+> Fixes: 7756f1d6369e ("phy: qcom-qusb2: Add configuration for SM4250 and SM6115")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>   drivers/phy/qualcomm/phy-qcom-qusb2.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> index eb93015be841..c304ccd9f31f 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> @@ -233,9 +233,9 @@ static const struct qusb2_phy_init_tbl msm8998_init_tbl[] = {
+>   
+>   static const struct qusb2_phy_init_tbl sm6115_init_tbl[] = {
+>   	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE1, 0xf8),
+> -	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE2, 0x53),
+> +	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE2, 0xb3),
+>   	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE3, 0x81),
+> -	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE4, 0x17),
+> +	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE4, 0xc0),
+>   
+>   	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_TUNE, 0x30),
+>   	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_USER_CTL1, 0x79),
+> 
 
---m6CVO7kLlwpdAouq--
 
