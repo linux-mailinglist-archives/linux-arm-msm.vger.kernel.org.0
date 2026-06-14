@@ -1,172 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-113047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id eXJRBG3ILmrH2gQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 17:27:41 +0200
+	id +Ks9J+j6LmqT6wQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 21:03:04 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D3E6681636
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 17:27:40 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5A1F681ED2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 21:03:03 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linux.dev header.s=key1 header.b=nkOd8rKE;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113047-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113047-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=linux.dev;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=kG4fdTFi;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113048-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113048-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id E390F30028AE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 15:27:39 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A6BBA3006957
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 19:03:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9C3039989B;
-	Sun, 14 Jun 2026 15:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0FD5256C6C;
+	Sun, 14 Jun 2026 19:03:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E3939935D
-	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 15:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E649122D4D3;
+	Sun, 14 Jun 2026 19:02:59 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781450858; cv=none; b=a917Kf85BFIaHtLdqw2cdoNiB4Gh/mBUvuk7/FcFDeEZLAts+JVw+phgXagYru9DdN1Ec09Dr+iUkxdmQ2ez55TwfguVIZeDScJ8+0PrJpEN1vL2ZlWXxhymYwud11xV0sDNo0lrjLFEQNpFcrgGl3X/UiTMbWwFGA0G5a6xHGE=
+	t=1781463780; cv=none; b=GbFL+AC70JV2PuFv08LOx3CxLBxp8QJW8+PYOFHvDOvhOUX5XbuWQQV6DTnlTNAR0QHk4eKjYO2iKHmHIu13cAmwBXgi16btFeLfH1sP5N4oJbfd6PcMihO3U8thWDFEov6S7ORsVJ0KflPpfQlgL0ymXFzbOjdeaRp19RhV4ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781450858; c=relaxed/simple;
-	bh=2kNkUgAdLJGKlXgq8oY9CHVL3t2dpNtXWG2IT1ZC6lc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MwZ16aLoBnwJsYNFOT15AHVa8Bzkqt347J/EYFTM2z1qFFxC6u0q7bq1jeFwYklDzYHxPgOoHxKWM+e6t+dDzwxaQ3Vk5w5Oziy4JgqFJcMGxnneL7fuDNctUpruAYcXxcC/+8OEzYIu1hJIpxwWV3apFO8CUlJpFj0vLmsfLCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=nkOd8rKE; arc=none smtp.client-ip=91.218.175.172
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1781450845;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=eDCFtAvpueOIK9+mnyHt/B8LMjjjILaDNCbh2gVjU8Y=;
-	b=nkOd8rKEIYIYcbpcac8X47XAi+crhIfm87m3OcSZoAgOnjCaPbUTERSfl6gLCo+yRXO3JC
-	PRjTqzDgqw1R3GNrmd62VbL5l121K9kCB0j89g0yMFuwV0q0imWzespm0iE6wUkSe1kFe+
-	0a4h7GPtb338dywM1VTaIRzgwvBhLUY=
-From: Thorsten Blum <thorsten.blum@linux.dev>
-To: Bartosz Golaszewski <brgl@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>
-Cc: Thorsten Blum <thorsten.blum@linux.dev>,
-	linux-crypto@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] crypto: qce - drop unused scatterlist traversal in qce_ahash_update
-Date: Sun, 14 Jun 2026 17:26:07 +0200
-Message-ID: <20260614152605.701754-3-thorsten.blum@linux.dev>
+	s=arc-20240116; t=1781463780; c=relaxed/simple;
+	bh=cR0bQ/fQAn1YmlBeX2cniHr+ILp1JeeuSM2XY7vZYKo=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=urMpzcjJKqACOVnq9iiWQkp+59Yj+Fkrd2Oj/LWimTVEtfSqcLmg7lY9QrA/5gxvWLnrBtM6F8P0vvJ8RCaOvhUfMW6DYy4jn+1O9QHE0O7xxqQW/netuHuAy7SGZFPVOOcxHHKTxMh7/Out8Ue+Cdn9km60Ed/kBa/4xVdxrhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kG4fdTFi; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BC01F000E9;
+	Sun, 14 Jun 2026 19:02:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781463779;
+	bh=gq2R1f9PKvG4GeQx4qtnQ+1U1ShL/Y2qGYC1zfTULbk=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=kG4fdTFi9mSBILAaHp/pxZI8mfYYmRk5YosafQlNkf2qrtpb1bDqwUjABftaMAZ8/
+	 WwqXRAiI3Rok9jrHNQqF+UKQvnkgJDuyab6d96wymtswRZWi3XxbT2qj9vDpwvQsrD
+	 GkLl7bxeC93CXgjj2Uh8OhpRrsz78s0BAxZJZ6ycjXsyhu8gsXNZ3Km2wtvERXOchJ
+	 ujZuXBu8GBmhcbO9qXC+F4KUsgpTOMyC6Uj1VxNFBMO25cF5RouBcgTy6ib1XI2epe
+	 uOEN4maBciWZksNPX3tWrFJ22cTxtitiZLwtZNr9EKGu6QHNLR2rMF8VBm1EGnNqap
+	 7jDtzXpsdnqrA==
+Date: Sun, 14 Jun 2026 20:02:47 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>, David Lechner
+ <dlechner@baylibre.com>, Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>, Andy
+ Shevchenko <andy@kernel.org>, Amit Kucheria <amitk@kernel.org>, Thara
+ Gopinath <thara.gopinath@gmail.com>, "Rafael J. Wysocki"
+ <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@kernel.org>, Zhang Rui
+ <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+ linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, Kamal Wadhwa
+ <kamal.wadhwa@oss.qualcomm.com>, David Collins
+ <david.collins@oss.qualcomm.com>, Anjelique Melendez
+ <anjelique.melendez@oss.qualcomm.com>, Neil Armstrong
+ <neil.armstrong@linaro.org>, Stephan Gerhold <stephan.gerhold@linaro.org>
+Subject: Re: [PATCH v2 1/2] iio: adc: qcom-spmi-adc5-gen3: Share SDAM0 IRQ
+ with ADC_TM auxiliary driver
+Message-ID: <20260614200247.6a90021f@jic23-huawei>
+In-Reply-To: <aisELR6v1EWGcmqb@ashevche-desk.local>
+References: <20260526-gen3_adc_tm-v2-0-702fbac919ac@oss.qualcomm.com>
+	<20260526-gen3_adc_tm-v2-1-702fbac919ac@oss.qualcomm.com>
+	<ah9ouLQFI7VtHCWL@ashevche-desk.local>
+	<20260604114630.23ca427a@jic23-huawei>
+	<aiGPMqHcz_AkUezI@ashevche-desk.local>
+	<d095233e-ac2a-4b50-8a62-29fe1e36c2d1@oss.qualcomm.com>
+	<aisELR6v1EWGcmqb@ashevche-desk.local>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2258; i=thorsten.blum@linux.dev; h=from:subject; bh=2kNkUgAdLJGKlXgq8oY9CHVL3t2dpNtXWG2IT1ZC6lc=; b=owGbwMvMwCUWt7pQ4caZUj3G02pJDFl6J3gZ35XscGM6GWyf819ddrP2TyvDj73pzH8FHv0TO NvIsySio5SFQYyLQVZMkeXBrB8zfEtrKjeZROyEmcPKBDKEgYtTACYycS/D/5AzoYXax+UZE9RP zmFhfRh2ZdPu/b9fybyTmbVTqYZpfRvDPyMeRYYui/kSh4xcF657f4jrtktU4Y3zi9cm6a7rXpK uzAoA
-X-Developer-Key: i=thorsten.blum@linux.dev; a=openpgp; fpr=1D60735E8AEF3BE473B69D84733678FD8DFEEAD4
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-3.16 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
-	R_DKIM_ALLOW(-0.20)[linux.dev:s=key1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-113047-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-113048-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[thorsten.blum@linux.dev,linux-arm-msm@vger.kernel.org];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:brgl@kernel.org,m:herbert@gondor.apana.org.au,m:davem@davemloft.net,m:thorsten.blum@linux.dev,m:linux-crypto@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,s:lists@lfdr.de];
-	DKIM_TRACE(0.00)[linux.dev:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[thorsten.blum@linux.dev,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS(0.00)[m:andriy.shevchenko@intel.com,m:jishnu.prakash@oss.qualcomm.com,m:dlechner@baylibre.com,m:nuno.sa@analog.com,m:andy@kernel.org,m:amitk@kernel.org,m:thara.gopinath@gmail.com,m:rafael@kernel.org,m:daniel.lezcano@kernel.org,m:rui.zhang@intel.com,m:lukasz.luba@arm.com,m:linux-arm-msm@vger.kernel.org,m:linux-iio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:kamal.wadhwa@oss.qualcomm.com,m:david.collins@oss.qualcomm.com,m:anjelique.melendez@oss.qualcomm.com,m:neil.armstrong@linaro.org,m:stephan.gerhold@linaro.org,m:tharagopinath@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,baylibre.com,analog.com,kernel.org,gmail.com,intel.com,arm.com,vger.kernel.org,linaro.org];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,jic23-huawei:mid,intel.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 9D3E6681636
+X-Rspamd-Queue-Id: E5A1F681ED2
 
-Commit df12ef60c87b ("crypto: qce/sha - Do not modify scatterlist passed
-along with request") removed the only use of sg_last, rendering the
-scatterlist traversal useless. Remove it and its local variables.
+On Thu, 11 Jun 2026 21:53:33 +0300
+Andy Shevchenko <andriy.shevchenko@intel.com> wrote:
 
-Also remove the redundant hash_later check, inline the source offset,
-and assign the number of complete blocks directly to req->nbytes.
+> On Thu, Jun 11, 2026 at 04:13:07PM +0530, Jishnu Prakash wrote:
+> > On 6/4/2026 8:14 PM, Andy Shevchenko wrote:  
+> > > On Thu, Jun 04, 2026 at 11:46:30AM +0100, Jonathan Cameron wrote:  
+> > >> On Wed, 3 Jun 2026 02:35:20 +0300
+> > >> Andy Shevchenko <andriy.shevchenko@intel.com> wrote:  
+> > >>> On Tue, May 26, 2026 at 04:26:09PM +0530, Jishnu Prakash wrote:  
+> 
+> ...
+> 
+> > >>>> +	ret = devm_request_threaded_irq(dev, adc->dev_data.base[ADC5_GEN3_VADC_SDAM].irq,
+> > >>>> +					NULL, adc5_gen3_isr, IRQF_ONESHOT | IRQF_SHARED,
+> > >>>> +					adc->dev_data.base[ADC5_GEN3_VADC_SDAM].irq_name,
+> > >>>> +					adc);
+> > >>>>  	if (ret)
+> > >>>>  		return dev_err_probe(dev, ret,
+> > >>>>  				     "Failed to request SDAM%d irq\n",    
+> > >>>
+> > >>> Also add a patch to drop this duplicate message.  
+> > >>
+> > >> There is another thread going on this.  It might not be duplicate
+> > >> if -EPROBE_DEFER is returned.  The message won't be printed but it
+> > >> will be logged for helping debug deferred probe reasons.  
+> > > 
+> > > Yes, and I explained that it is duplicated as long as I understand current
+> > > code base.  
+> > 
+> > After I checked for Andy's first comment, my understanding was that
+> > devm_request_threaded_irq would internally call dev_err_probe in case
+> > of an error, so this dev_err_probe print above would not be needed.  
+> 
+> Correct.
 
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
----
- drivers/crypto/qce/sha.c | 31 +++++--------------------------
- 1 file changed, 5 insertions(+), 26 deletions(-)
+Ah. I'd missed that wrapper devm_request_result()
 
-diff --git a/drivers/crypto/qce/sha.c b/drivers/crypto/qce/sha.c
-index 1b37121cbcdc..13a1174d2175 100644
---- a/drivers/crypto/qce/sha.c
-+++ b/drivers/crypto/qce/sha.c
-@@ -187,10 +187,8 @@ static int qce_ahash_update(struct ahash_request *req)
- 	struct qce_sha_reqctx *rctx = ahash_request_ctx_dma(req);
- 	struct qce_alg_template *tmpl = to_ahash_tmpl(req->base.tfm);
- 	struct qce_device *qce = tmpl->qce;
--	struct scatterlist *sg_last, *sg;
--	unsigned int total, len;
-+	unsigned int total;
- 	unsigned int hash_later;
--	unsigned int nbytes;
- 	unsigned int blocksize;
- 
- 	blocksize = crypto_tfm_alg_blocksize(crypto_ahash_tfm(tfm));
-@@ -238,28 +236,8 @@ static int qce_ahash_update(struct ahash_request *req)
- 	if (!hash_later)
- 		hash_later = blocksize;
- 
--	if (hash_later) {
--		unsigned int src_offset = req->nbytes - hash_later;
--		scatterwalk_map_and_copy(rctx->buf, req->src, src_offset,
--					 hash_later, 0);
--	}
--
--	/* here nbytes is multiple of blocksize */
--	nbytes = total - hash_later;
--
--	len = rctx->buflen;
--	sg = sg_last = req->src;
--
--	while (len < nbytes && sg) {
--		if (len + sg_dma_len(sg) > nbytes)
--			break;
--		len += sg_dma_len(sg);
--		sg_last = sg;
--		sg = sg_next(sg);
--	}
--
--	if (!sg_last)
--		return -EINVAL;
-+	scatterwalk_map_and_copy(rctx->buf, req->src, req->nbytes - hash_later,
-+				 hash_later, 0);
- 
- 	if (rctx->buflen) {
- 		sg_init_table(rctx->sg, 2);
-@@ -268,7 +246,8 @@ static int qce_ahash_update(struct ahash_request *req)
- 		req->src = rctx->sg;
- 	}
- 
--	req->nbytes = nbytes;
-+	/* hash only complete blocks */
-+	req->nbytes = total - hash_later;
- 	rctx->buflen = hash_later;
- 
- 	return qce->async_req_enqueue(tmpl->qce, &req->base);
+Thanks!
+
+> 
+> > Please let me know if it's better to keep or remove this print.  
+> 
+> You already know my position here :-)
+> 
+> > And if I make the change, shall I add it in a separate patch
+> > before or after this patch in the next series?  
+> 
+> The rule of thumb is to make sure your series won't do ping-pong type of
+> changes: when one patch introduces (or moves) some code that is removed or
+> modified in different way by another patch in the same series.
+> 
+> > >> So maybe we have been a little too energetic in removing these.  
+> > > 
+> > > Or maybe sashiko consumed a bit of LSD :-)  
+> 
+
 
