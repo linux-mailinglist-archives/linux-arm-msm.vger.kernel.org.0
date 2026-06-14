@@ -1,151 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-113042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id V+h4JLKeLmpT0gQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 14:29:38 +0200
+	id Y1qMDHGnLmpp1gQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 15:06:57 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26AA9681047
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 14:29:38 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96ADA681127
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 15:06:56 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=iskren.info header.s=purelymail3 header.b=ZSydUS+S;
-	dkim=pass header.d=purelymail.com header.s=purelymail3 header.b=LDs6mJtg;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113042-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113042-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=iskren.info;
+	dkim=pass header.d=quora.org header.s=google header.b="GeTEcTb/";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113043-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.105.105.114 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113043-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 86D0E3002310
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 12:29:37 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 4FF113009014
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Jun 2026 13:06:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2075931A556;
-	Sun, 14 Jun 2026 12:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E54B0386423;
+	Sun, 14 Jun 2026 13:06:54 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8892030E859
-	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 12:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1377E31DDBB
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 13:06:52 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781440175; cv=none; b=AP2pfEtJy+cwLRdJr/ibixuhBcLkxZdcfbN1k1lq8fd6U+lfLAdbEpIKtbydLty607Vn9Jm9sPzaT52NYd2JD3bf4zvF4t2KCPS2bWQ/u8ZOrUfI1/h/BAtzxy9cQll70q0j1iYr7AdMXP8qS58IWP+A9M/qCwFQB9MhIOxNl0k=
+	t=1781442414; cv=none; b=Tgx8+AuS0UGljJCbQBIt3p1SObMA2ytOVFunuk2VEbDr3lWIdqWpds3VSnj2pOIg2yDFryNLDO614rBigegy+w11Y/CkhP2/r6ACgzLCL1O/rceAdUsm8x8WH1m16N89u1sqfxf5gWKUqVJgmrnhJR4yRffNLN8Cj5oslEPDoHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781440175; c=relaxed/simple;
-	bh=IQSjTyjS8hNRnK0DIocyeVZNIoUq+jWIAPq7VzDKUBw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q+NHEYByDuVnUZc/uvilewlsaQTa5fhA7VjVcnvbHrBRjWs5K9B0fcJCVvAurxRS5tjw3ScWkjE8j6mo2Kmy2VAe6SsIzTY8Tg838BucE5nXTAdaft+P2ru6YuFUr8hpY/+BO0OBhVGoHMYuhmeSFFEEFbbVWKoUhHqZWUlzg7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=iskren.info; spf=pass smtp.mailfrom=iskren.info; dkim=pass (2048-bit key) header.d=iskren.info header.i=@iskren.info header.b=ZSydUS+S; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=LDs6mJtg; arc=none smtp.client-ip=34.202.193.197
-DKIM-Signature: a=rsa-sha256; b=ZSydUS+Sxie6wgLyavL9/rY2x92XkLI3EbPlJg5Cngk1W+nE0fsSiX/N1hr3/+UkE/ben6P39PwFQqdRJZWjPjjZl4YqwSplchi6Mc0JUE42c0lrJ3uegEMuvqe3R+yDyol+PnzbtaZzK5Wku7PL4P5iWkVKVXqAWCM1onSUFUnj4tryl3y8f9EfZ16G3n1lkYPZ5Iq+uA0dvkkB1EjWlbFBGsVyxkIHuNUQJiKiFKcWH8qWMh1luf4ZAV16VmoSG0RhR/koEj3svakZBPS7s69hL+yDQUKqfVHaeJ5rb/aKQzlHocvNCgC5qzAencLqKeCkPOdl3MsRhBr8TTFZyg==; s=purelymail3; d=iskren.info; v=1; bh=IQSjTyjS8hNRnK0DIocyeVZNIoUq+jWIAPq7VzDKUBw=; h=Received:Date:Subject:To:From;
-DKIM-Signature: a=rsa-sha256; b=LDs6mJtg4ZpamSh30QeGss5dT/n2Kxd13MjMHysYnhchh/ISMmgxnS3rd69WxYLnmTIljo1+uVQuuXxQa6Nyxgk9kUcbt1rD6v832bI6n9EGSEsQ38Yypnb7ZfQkABFuYEnCYSQzt0lh0B3DV5oEkA/G41cMP2VjLoettsadc8R6wydcttNAs0HudfiVWnBvZpo+tq4U52/3WIqx3vtkzmOLBx/IL65QX5kE0iNt8lLIowkSD81iwfMmcC9aPejYXRyTZJkfB9W8nZPi4sIk+tO6ynpeMqgeM5EK1ipu28TsATz/GacRJttZQuIauoMFaNrkvEqKS0ku4VeL+erLLA==; s=purelymail3; d=purelymail.com; v=1; bh=IQSjTyjS8hNRnK0DIocyeVZNIoUq+jWIAPq7VzDKUBw=; h=Feedback-ID:Received:Date:Subject:To:From;
-Feedback-ID: 10275:2339:null:purelymail
-X-Pm-Original-To: linux-arm-msm@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 1565696518;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Sun, 14 Jun 2026 12:29:11 +0000 (UTC)
-Message-ID: <5b474af3-f651-4a64-a5b9-c18136e589eb@iskren.info>
-Date: Sun, 14 Jun 2026 15:29:08 +0300
+	s=arc-20240116; t=1781442414; c=relaxed/simple;
+	bh=745xk+d8bU62cDW9chGbuU96+vAIrE7f3vnioeAiqf4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=almPNXUqwpkQoXoyuYxWn1I8LUNxFVNSVNWBfW9eaCyhb/eqfdccUCHfHt5C0yc1HVR3bSKL743rIUpRjoNC3hCKM3LRJvyr3ouMAwbfuP8KsXEYla/QYiH7IuQLKDol0s9pYFzuT+5fdVvX4Ex4AuR8YORwp7EF9sG0Dd2wvf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=quora.org; spf=pass smtp.mailfrom=quora.org; dkim=pass (1024-bit key) header.d=quora.org header.i=@quora.org header.b=GeTEcTb/; arc=none smtp.client-ip=209.85.216.46
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-36bb3551f6eso2027659a91.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Jun 2026 06:06:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=quora.org; s=google; t=1781442412; x=1782047212; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zij5vWCaKi9JF5NLKqK6c8ikNCjMvtbTlKZgqjFTiHQ=;
+        b=GeTEcTb/u2rg3b7QArOQEJEO7oGrGHr7a6XrqcUd85PunLkVtDgjL9OxtlVlFfPwu6
+         TCGz2pu3kqg8sw/UgTsLcGa2RomWplMPveL/oiLugf0yegI6lSHe39XcomJIxQtMjafw
+         vCnm3+uYQQqVD07rFuSr2ZsEB6weDWhsL6+P0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781442412; x=1782047212;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Zij5vWCaKi9JF5NLKqK6c8ikNCjMvtbTlKZgqjFTiHQ=;
+        b=OCZw9VTdyjnSP9hqwjYlhxEzQSn6oXO6XVUowP/JdHTAgvqGvJy2cgxnWj6wvkhJXB
+         ZeL57+82cs4BV8pifJmSuyokkmMlKJKXT3UOi7CPweTY3austz8+FhLzULamYZip1Dw1
+         iMSnTxi1wRNW/cQkz4KV2caNLknhEEUeX0YC1Uewb0FgmOQ8xWFIj+AIFPiv6bpj4AI6
+         YyRuUPogJ16f3K1a8d7KQPThYcPaVFHZw51ugaszARHKzPFOmrTegKQ7RQ9bi21opqks
+         kROHxHXodiU9dRHBB4yeCrNVf+xUpDgDbRkBGaZztLsNQVR7s19v4zQ7OPvA6VtpZYyY
+         MApQ==
+X-Gm-Message-State: AOJu0YxrsiZ25Ry/xFlDC729YHHDKFiAXUc5FUFmLEY2IRDtY5/e1MzG
+	R3mJqmhaJU741qQigMMvBY5sx1T80kKPaLX9vChIjHz6Sxa0ldXdII/svRYfhhe5yKA=
+X-Gm-Gg: Acq92OFWLUHoYhbuJLVPt2ndjl2tO59INyR0ppBVuFiiDKP+OxvIvdthPVAcFeIKKkr
+	yT/QratmXh/O+9ic9KQ0KOlwssygekYXewdxRz3A5Yk2m+J76NugXiU0qrNUIbCnAI6xb1vzENt
+	c4er3rSW1tHNkpPj9Qy39qm2c25UvfVK5OmAIPRmqegXHDzybuBqvH7KQpfHCbIjkXm1NtXs0Ua
+	+xWR7ypOeWKrzK2fr+eO1irVxYoLGPA3onQTv4QSCyAGDQYGbvK26sriY40eppe9xoWntIo9/Dw
+	GWO8VJNQk5aEx/Lj/tK33NLmX251f53opoJP7KFurAM2zbr0V4ekOFJz/6cgwOJ46PFVLnDaQre
+	4UUdK2Q1ZYV8Gu4iOxeDpQDCYS7x8CxaYUF6+js0ZTCUmIpsRE6//AaUbdJvafvAuiFE9YJ9oC/
+	RLZCgbtQ3FQmfjLYAHDj0lxJUjO43pDBQqfwcHTxCobfXvvi4zz9U/HgLLvXmlYET2gn4FPjaTb
+	1HSfsI5Vr5A+lDcIJUTGK+5D9Z93xLexJtpTsXZlqTaUmLQYyUaBLBredwe0hOCVXRPn4o2QicR
+	k3rzRB0NpaGXxY/sTbuwJVBUaV0HNv5iA5uR+07f5SuTaWOtTwsE8s3Rc4hVpA==
+X-Received: by 2002:a17:90b:1808:b0:36b:bec8:94cf with SMTP id 98e67ed59e1d1-37c2bc87071mr7283647a91.9.1781442412426;
+        Sun, 14 Jun 2026 06:06:52 -0700 (PDT)
+Received: from aegis ([2001:fd8:4d03:c800:f499:6f6c:fbd4:8f])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-37a1c4abe46sm7758344a91.0.2026.06.14.06.06.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 14 Jun 2026 06:06:52 -0700 (PDT)
+From: Daniel J Blueman <daniel@quora.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	"Bjorn Andersson" <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	"Sibi Sankar" <sibi.sankar@oss.qualcomm.com>,
+	"Randy Dunlap" <rdunlap@infradead.org>,
+	"Rob Herring" <robh@kernel.org>,
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+	"Conor Dooley" <conor+dt@kernel.org>,
+	"Hans de Goede" <hansg@kernel.org>,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	linux-kernel@vger.kernel.org,
+	Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
+	Maya Matuszczyk <maccraft123mc@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>,
+	Daniel J Blueman <daniel@quora.org>
+Subject: [PATCH v4 1/2] dt-bindings: embedded-controller: qcom,hamoa-crd-ec: add Lenovo Yoga Slim 7x
+Date: Sun, 14 Jun 2026 21:06:17 +0800
+Message-ID: <20260614130621.68811-1-daniel@quora.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] phy: qcom-qusb2: Fix SM6115 init sequence
-To: Konrad Dybcio <konradybcio@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20260610-topic-8996_61x5_qusb2phy-v1-0-d7135980e78f@oss.qualcomm.com>
- <20260610-topic-8996_61x5_qusb2phy-v1-2-d7135980e78f@oss.qualcomm.com>
-Content-Language: en-US
-From: Iskren Chernev <me@iskren.info>
-In-Reply-To: <20260610-topic-8996_61x5_qusb2phy-v1-2-d7135980e78f@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [1.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[iskren.info,reject];
-	R_DKIM_ALLOW(-0.20)[iskren.info:s=purelymail3,purelymail.com:s=purelymail3];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[quora.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-113042-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:konradybcio@kernel.org,m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:quic_wcheng@quicinc.com,m:gregkh@linuxfoundation.org,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[me@iskren.info,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-113043-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:konrad.dybcio@oss.qualcomm.com,m:andersson@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:sibi.sankar@oss.qualcomm.com,m:rdunlap@infradead.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:hansg@kernel.org,m:bryan.odonoghue@linaro.org,m:linux-kernel@vger.kernel.org,m:anvesh.p@oss.qualcomm.com,m:maccraft123mc@gmail.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:akhilpo@oss.qualcomm.com,m:abel.vesa@oss.qualcomm.com,m:gaurav.kohli@oss.qualcomm.com,m:daniel@quora.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
+	DMARC_NA(0.00)[quora.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,infradead.org,kernel.org,linaro.org,gmail.com,quora.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[iskren.info:+,purelymail.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[me@iskren.info,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[daniel@quora.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[quora.org:+];
+	RCVD_COUNT_FIVE(0.00)[5];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	HAS_WP_URI(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ALIAS_RESOLVED(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp,qualcomm.com:email,linaro.org:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 26AA9681047
+X-Rspamd-Queue-Id: 96ADA681127
 
+The Lenovo Yoga Slim 7x uses the same Embedded Controller as the Qualcomm
+Hamoa X1 CRD. Add a board-specific compatible with qcom,hamoa-crd-ec as
+the fallback.
 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Daniel J Blueman <daniel@quora.org>
+---
+v4:
+- add reviews and acknowledgements
+- updated dependency URL
+v3: https://lore.kernel.org/lkml/20260526112409.66325-1-daniel@quora.org/
+- new patch with DT bindings
+v2: https://lore.kernel.org/lkml/20260502063518.15153-1-daniel@quora.org/
+v1: https://lore.kernel.org/lkml/20260429103301.17449-1-daniel@quora.org/
 
-On 6/10/26 3:04 PM, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> 
-> I don't know where the existing one came from, but it's apparently
-> wrong, according to both docs and a downstream DT [1]. Fix it up.
+Dependencies:
+https://lore.kernel.org/lkml/20260511-add-driver-for-ec-v9-0-e5437c39b7f8@oss.qualcomm.com/
 
-They came from DTB extracted from a running billie2 (OnePlus Nord N100):
-[1] 
-https://mainlining.dev/wp-content/uploads/2021/02/03_dtbdump_Qualcomm_Technologies_Inc._Bengal_SoC.dts 
+ .../bindings/embedded-controller/qcom,hamoa-crd-ec.yaml          | 1 +
+ 1 file changed, 1 insertion(+)
 
-
-The phone was bough early after launch, so it could have been 
-wrong/updated later.
-
-> The updated values also happen to match SM6125, which will allow us
-> to fix that platform too.
-> 
-> [1] https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/bengal-usb.dtsi#145
-> Fixes: 7756f1d6369e ("phy: qcom-qusb2: Add configuration for SM4250 and SM6115")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->   drivers/phy/qualcomm/phy-qcom-qusb2.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-> index eb93015be841..c304ccd9f31f 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-> @@ -233,9 +233,9 @@ static const struct qusb2_phy_init_tbl msm8998_init_tbl[] = {
->   
->   static const struct qusb2_phy_init_tbl sm6115_init_tbl[] = {
->   	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE1, 0xf8),
-> -	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE2, 0x53),
-> +	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE2, 0xb3),
->   	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE3, 0x81),
-> -	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE4, 0x17),
-> +	QUSB2_PHY_INIT_CFG_L(QUSB2PHY_PORT_TUNE4, 0xc0),
->   
->   	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_TUNE, 0x30),
->   	QUSB2_PHY_INIT_CFG(QUSB2PHY_PLL_USER_CTL1, 0x79),
-> 
+diff --git a/Documentation/devicetree/bindings/embedded-controller/qcom,hamoa-crd-ec.yaml b/Documentation/devicetree/bindings/embedded-controller/qcom,hamoa-crd-ec.yaml
+index ac5a08f8f76d..813d41769c0b 100644
+--- a/Documentation/devicetree/bindings/embedded-controller/qcom,hamoa-crd-ec.yaml
++++ b/Documentation/devicetree/bindings/embedded-controller/qcom,hamoa-crd-ec.yaml
+@@ -20,6 +20,7 @@ properties:
+     oneOf:
+       - items:
+           - enum:
++              - lenovo,yoga-slim7x-ec
+               - qcom,glymur-crd-ec
+               - qcom,hamoa-iot-evk-ec
+           - const: qcom,hamoa-crd-ec
+-- 
+2.53.0
 
 
