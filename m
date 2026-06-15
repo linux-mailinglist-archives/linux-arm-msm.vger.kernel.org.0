@@ -1,217 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-113197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id Ry99GjsLMGqWMQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 16:24:59 +0200
+	id r0OuL80MMGobMgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 16:31:41 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E56F6871B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 16:24:59 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E905B687328
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 16:31:40 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=dkB3ow2n;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113197-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113197-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=redhat.com header.s=mimecast20190719 header.b=PHy1hDd9;
+	dkim=pass header.d=redhat.com header.s=google header.b=kyk5KUQP;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113198-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113198-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=redhat.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id F2F9B3040330
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 14:23:44 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9BD433051A55
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 14:23:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEBE5400DF7;
-	Mon, 15 Jun 2026 14:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B3A63F6C3B;
+	Mon, 15 Jun 2026 14:22:47 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BBF3FF8B4;
-	Mon, 15 Jun 2026 14:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E87A3FA5C6
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 14:22:44 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781533355; cv=none; b=eR7S7ck9PTUftpDu4yjNijA4/x728R9XI3r79C445zVNnRJXfM5sXH1umUhgPIqBLH4QiX3QmpfbKycWMDuiYdXuQBa6oNGtnUq2uvGkk4fgWYpUhlDTpkCjRsTJJhuGUqD+17uzyCO6GbgsTfQ0EhWNpKtmPLx2AJJkuvYuBFc=
+	t=1781533367; cv=none; b=OscsHezT7JSTA8L7RLfl4hhoKSp1aeyFOUfcoH+Evrwxq5xOI9dq3zDO8VaElNq+JV7nZfQN7hNZWJ4yP6CY4WV8qDp9hcvnjwOTOadkFaRAmnjQ9PCjgeDcu9wPvXwQ04qjpWljN+8B0ROLpJs2kfJWMaCEho68zkMQqbH+AEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781533355; c=relaxed/simple;
-	bh=rZaVt8Ws5gtAJV+GoGQAWHPqAVxY5skFXxkyhwS/8JM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UL5h7jsiy/AW404DraLf8i/qeUK/1nFEvMPN1CiWM0+GAwK3UDig/+3ddnruN0/uQx27qwktcPHoVWzRwW6lyYwbRX1ckSb0crwgm4k9Uk+RqYD7KsvTHbvmwEdpRaSW67Xntyx6NFkbWwOKUFt3AIIBZVl+p5J3BScYkJk8Tqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dkB3ow2n; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBF51F000E9;
-	Mon, 15 Jun 2026 14:22:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781533353;
-	bh=afxo2q67tV47U2FNyPKEGjT+gagcWsu+AwA1kg7ekPs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc;
-	b=dkB3ow2nVpHeRl6oVTcUslzuUNe3cESpDUSy4pIGsHcyaRuosXFfPm/h6S8dkKZzC
-	 Hwlw9qB7dbML7T2VSLF89GmNRyqhquLwLDy2Y1L/rMjBiSZm4xwSlo/4Unw2bZYI6g
-	 OTrd2KDRygNvIsOe0WT2SERObCQE1wk+zDEFtnFP2l185lInE6MhBfRodsH4+CIlvM
-	 cHCLhXEWpFODxKj3O5C10woALhQcaaAlwZOPGpYhdOucyfoj5NDcUSp3DksXIL4FJT
-	 EojmhByhdP4VkBx7xXpxwudq8jWij75izb+VF+PRfrcEplmX0oANFcPU4GDa3YBdq+
-	 7bUhb4RE12gSQ==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 15 Jun 2026 16:22:07 +0200
-Subject: [PATCH 4/4] arm64: dts: qcom: sc8180x-lenovo-flex-5g: Describe the
- display power net
+	s=arc-20240116; t=1781533367; c=relaxed/simple;
+	bh=ZQn8hPrkM36VCBIdCi3eFgK8VPUUP8gn25zK7fcuS7g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p1TZPlLfTDhlCOH2iefF+JWw9EjmOuuX+djSro8cVDa2O66f6rIH2pcEux29t4gkpLH3rtbOE2uk6BXg6LiFTrRfGRoNEO5C+yD3Ac6s1BRuQlsaXJHh2LcmxURHuYvcGl38tY9XiRP8lJtt6mAhRuYagL+fcjQMpZAEDl9kFXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PHy1hDd9; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=kyk5KUQP; arc=none smtp.client-ip=170.10.133.124
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1781533363;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=3zuMhQAEiwW8EZyF1+ggYbLN42TmxHM1hwGejQcOObs=;
+	b=PHy1hDd9hnr0l5rMkejst0Pk1ZzCyMPErTf6dOtBVhuuit0fohZhNV9jJHocH3yso7zB6o
+	UyeFwszIPW7wi4m+OzzqTkTRSER5aJ0qRQqMVuZILG5159upvN+xEidKENj6XXb1u8X61G
+	eM5NtAIP8RRFHTMSHa3TpiUS1J5dnso=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-62-Z1QHuAglNXWkKp7ot9Kbvg-1; Mon, 15 Jun 2026 10:22:42 -0400
+X-MC-Unique: Z1QHuAglNXWkKp7ot9Kbvg-1
+X-Mimecast-MFC-AGG-ID: Z1QHuAglNXWkKp7ot9Kbvg_1781533361
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-9157f1be083so599067385a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 07:22:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=redhat.com; s=google; t=1781533361; x=1782138161; darn=vger.kernel.org;
+        h=user-agent:in-reply-to:content-transfer-encoding
+         :content-disposition:mime-version:references:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3zuMhQAEiwW8EZyF1+ggYbLN42TmxHM1hwGejQcOObs=;
+        b=kyk5KUQPY6IiQqZqKBxJpnYeLi+ufrcDYW01yXtg0oVYtHKe/78MdlnaHhlDLeV+vr
+         AuGKAYKwGF0K6KQ95Jy22FMAwxzHu1YGZUChseL7c+z+6eUuHZtz+NKeClqnxING6tMz
+         LVrIOBEqZmKh0qm27iVgplLFx895CjspBGoD+EQZ2fZcTDqwjijRWeTDi+UKPG3iW/xL
+         aq5iLE7V7GoKoFX75aqJiwhGLWOgej1vuBdUjIzfxlek37xhNLaCW5+ahhklvo+m+dJ2
+         dMkreoclrGwnk2zn80pkYfszv7X3OCXipJEJDdY7hMQaP7nDN+7Cjy+k6t04CyX4x5D1
+         pKGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781533361; x=1782138161;
+        h=user-agent:in-reply-to:content-transfer-encoding
+         :content-disposition:mime-version:references:message-id:subject:cc
+         :to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3zuMhQAEiwW8EZyF1+ggYbLN42TmxHM1hwGejQcOObs=;
+        b=BOWaCQpg7oc38jAaOkYE2XTCNhxAPTAC+wbFi06DJTCZEHjBWMfIUDPomOSKdpAGwW
+         +qJgFlDKfnBaUO5A0znq/Qc/o68JyD2pt7ViSvDObKvD2bN26TD+Ji5gux5rs3Ew0JNU
+         iYagH/n7RpXIiAKMsTuXfMr7Fns1wxKuIlnBakK2qleMICsM839KPuBwqJKt7Js8PIoY
+         x7nXdH4BZav8mw0j2P2c+i2vzJXZAkwgzEbQ5i53QKoGDhxoT77Va0FpsYVKFB5RsDYA
+         rMZYPeQR8UMUoP3YeGBUxvhveodyV9fJXlgRuouw8r+Yyxy0BFFPUYEHkeacv/u7o1r4
+         oUUQ==
+X-Forwarded-Encrypted: i=1; AFNElJ9YnfnOM2dbGQBKjalRH4VamVeb0m/cbbkWzJ8jFNjfYQUQbuigkIYEUB39x0moUCXxixOWY9ruBTCScdbT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5Sft5G0X0lXhuA6zPotA8abaIO4UcjDBmNJ/TA+r8M1TUVWgU
+	CLvyKPvHhhZ50Jft79Vs7HtBtTzA4z+sEs7wu4zK9V7hOlkO9129pVycyj3DWOy/+7caPRHwTL1
+	rC4Y8ZcRCx+CEZ4/SNUPWuztRIDIgVUzuBB4XS0lfu+bz91GamAGTr9lpxAgNlMnnSFg=
+X-Gm-Gg: Acq92OHIHQCOBHWz4Qt0JHf2Fs2Lg1YXnsvH6ae8vumhRHfDqBYfKYIW8qCl9R7R4ha
+	qjxptl2LhdRXbI8cskhBu7E/cQcHYMOYBqpLRELrKfOxahDa+60zudeL/hMcJZ3ke3pBhcFpvPs
+	uLYcBIJn7IFlReZO4zJomYjbYCbsuk02d19iLT3yFymWMZEiblwYQ+XNh8c6X76K/R+0xdUl2D6
+	Za8EF6AUNxoQVXcMU/PgphWy4awVqKhHQaE3ghs8LG0Grjj0JjIKcKFeO1fmglJnaLRrEtVyzuD
+	mTBhIsINZkDDrA5k8TTk0SuNMJIiPgFppOkcvGJ9Ovcs/3vqiSHvqunEiSs23ERYobdSRJs0Kff
+	t5jvjSdVNJgsRoAWQ3/Nidz+AR0rGW/Luj9XD84Z+87+syyRqEJoKMKmR
+X-Received: by 2002:a05:620a:8906:b0:915:8c48:4975 with SMTP id af79cd13be357-9161bc8d76dmr2160615185a.34.1781533361195;
+        Mon, 15 Jun 2026 07:22:41 -0700 (PDT)
+X-Received: by 2002:a05:620a:8906:b0:915:8c48:4975 with SMTP id af79cd13be357-9161bc8d76dmr2160609685a.34.1781533360658;
+        Mon, 15 Jun 2026 07:22:40 -0700 (PDT)
+Received: from redhat.com (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9161a006ef0sm1087098485a.24.2026.06.15.07.22.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jun 2026 07:22:39 -0700 (PDT)
+Date: Mon, 15 Jun 2026 10:22:37 -0400
+From: Brian Masney <bmasney@redhat.com>
+To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Cc: Saravana Kannan <saravanak@kernel.org>, Abel Vesa <abelvesa@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 3/4] clk: qcom: convert from icc_sync_state() to
+ qcom_cc_sync_state()
+Message-ID: <ajAKrYK44-C9B9Yp@redhat.com>
+References: <20260603-clk-sync-state-v1-0-457120eed200@redhat.com>
+ <20260603-clk-sync-state-v1-3-457120eed200@redhat.com>
+ <b732e65f-5963-4598-a341-06338044d90c@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260615-topic-8180_disp_power-v1-4-18d36b548c48@oss.qualcomm.com>
-References: <20260615-topic-8180_disp_power-v1-0-18d36b548c48@oss.qualcomm.com>
-In-Reply-To: <20260615-topic-8180_disp_power-v1-0-18d36b548c48@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1781533332; l=2593;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=rnn0bOizRXEWen7is6SUvyZOZuwIq1kQ7NZm59fxIkM=;
- b=1zVR3mBgzZpzFwE9w394y/0ueK2NLLt2PHoG4OwotnXkqVwGNyJDCcxzoaWXkNIeOkRLtBaH2
- Ongebu+nEmFAziZbULGg7zmyc0Ajq98ei+x/lSHr7GUWztYbceldzgw
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b732e65f-5963-4598-a341-06338044d90c@oldschoolsolutions.biz>
+User-Agent: Mutt/2.3.1 (2026-03-20)
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-113198-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:vkoul@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[konradybcio@kernel.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-113197-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	FORGED_RECIPIENTS(0.00)[m:jens.glathe@oldschoolsolutions.biz,m:saravanak@kernel.org,m:abelvesa@kernel.org,m:mripard@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:linux@armlinux.org.uk,m:andersson@kernel.org,m:johannes.goede@oss.qualcomm.com,m:linux-clk@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[bmasney@redhat.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[redhat.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konradybcio@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bmasney@redhat.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp,qualcomm.com:email,oss.qualcomm.com:mid]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp,oldschoolsolutions.biz:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 0E56F6871B1
+X-Rspamd-Queue-Id: E905B687328
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Hi Jens,
 
-Describe and wire up the power supplies for the eDP panel and its
-backlight. Previously, this was only working because of settings
-inherited from the bootloader.
+On Sat, Jun 06, 2026 at 08:25:45AM +0200, Jens Glathe wrote:
+> On 03.06.26 16:21, Brian Masney wrote:
+> > Convert all of the qcom clk drivers from icc_sync_state() to
+> > qcom_cc_sync_state().
+> > 
+> > Signed-off-by: Brian Masney <bmasney@redhat.com>
+> > ---
+> [...]
+> > diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
+> > index 0b40ed601f9a..0d920bd5a992 100644
+> > --- a/drivers/clk/qcom/clk-cbf-8996.c
+> > +++ b/drivers/clk/qcom/clk-cbf-8996.c
+> > @@ -6,7 +6,6 @@
+> >   #include <linux/clk.h>
+> >   #include <linux/clk-provider.h>
+> >   #include <linux/interconnect-clk.h>
+> > -#include <linux/interconnect-provider.h>
+> >   #include <linux/of.h>
+> >   #include <linux/module.h>
+> >   #include <linux/platform_device.h>
+> > @@ -249,7 +248,7 @@ static void qcom_msm8996_cbf_icc_remove(struct platform_device *pdev)
+> > 
+> Hi Brian, thank you for the patch set. To successfully build there seems to
+> be a header missing. I tested this in my tree on Thinkbook 16 G7 QOY and
+> Ideapad Slim3x 15Q8X10 without adverse effects, looking good.
+> 
+> jglathe@tb16-jg:~$ sudo dmesg|grep "unused clocks"
+> [    0.492547] clk: Disabling unused clocks not associated with a device
+> [    1.178818] clk-rpmh 17500000.rsc:clock-controller: clk: Disabling unused
+> clocks
+> [    1.314479] qcom-edp-phy aec5a00.phy: clk: Disabling unused clocks
+> [    1.327608] tcsrcc-x1e80100 1fc0000.clock-controller: clk: Disabling
+> unused clocks
+> [    1.544869] qcom-qmp-combo-phy fdf000.phy: clk: Disabling unused clocks
+> [    1.614767] qcom-qmp-usb-phy 88e5000.phy: clk: Disabling unused clocks
+> [    1.616222] qcom-qmp-usb-phy 88e3000.phy: clk: Disabling unused clocks
+> [    1.690273] qcom-qmp-combo-phy fd5000.phy: clk: Disabling unused clocks
+> [    1.726354] qcom-qmp-pcie-phy 1bfc000.phy: clk: Disabling unused clocks
+> [   10.956342] qcom-qmp-pcie-phy 1c0e000.phy: clk: Disabling unused clocks
+> [   15.858926] q6prm-lpass-clock
+> 6800000.remoteproc:glink-edge:gpr:service@2:clock-controller: clk: Disabling
+> unused clocks
+> [   15.867120] rx_macro 6ac0000.codec: clk: Disabling unused clocks
+> [   15.867990] wsa_macro 6aa0000.codec: clk: Disabling unused clocks
+> [   15.868589] va_macro 6d44000.codec: clk: Disabling unused clocks
+> [   15.970465] wsa_macro 6b00000.codec: clk: Disabling unused clocks
+> [   15.973614] tx_macro 6ae0000.codec: clk: Disabling unused clocks
+> 
+> Tested-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-Fixes: 20dea72a393c ("arm64: dts: qcom: sc8180x: Introduce Lenovo Flex 5G")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- .../arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts | 47 ++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+Thanks for testing. I'm going to put the Tested-by on patch 4 that actually
+adds the sync_state support when I post the new version unless I hear
+from you otherwise.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-index 0d2cfb830e83..0a8980c36c4e 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-@@ -26,6 +26,7 @@ backlight: backlight {
- 		compatible = "pwm-backlight";
- 		pwms = <&pmc8180c_lpg 4 1000000>;
- 		enable-gpios = <&pmc8180c_gpios 8 GPIO_ACTIVE_HIGH>;
-+		power-supply = <&vled_bl_pw>;
- 
- 		pinctrl-0 = <&bl_pwm_default>;
- 		pinctrl-names = "default";
-@@ -157,6 +158,38 @@ cdsp_mem: cdsp-region@98900000 {
- 		};
- 	};
- 
-+	vled_bl_pw: regulator-vled-bl-pw {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VLED_BL_PW";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&pmc8180_2_gpios 1 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&bl_pwr_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_lcm_3v3: regulator-edp-3p3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_LCM_3V3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 130 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&lcm_3v3_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
- 	vreg_s4a_1p8: regulator-pm8150-s4 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vreg_s4a_1p8";
-@@ -438,6 +471,7 @@ &mdss_edp {
- 	aux-bus {
- 		panel {
- 			compatible = "edp-panel";
-+			power-supply = <&vreg_lcm_3v3>;
- 			no-hpd;
- 
- 			backlight = <&backlight>;
-@@ -472,6 +506,13 @@ &pcie3_phy {
- 	status = "okay";
- };
- 
-+&pmc8180_2_gpios {
-+	bl_pwr_en: blw-pwr-en-state {
-+		pins = "gpio1";
-+		function = "normal";
-+	};
-+};
-+
- &pmc8180_pwrkey {
- 	status = "okay";
- };
-@@ -765,6 +806,12 @@ ts_int_default: ts-int-default-state {
- 		drive-strength = <2>;
- 	};
- 
-+	lcm_3v3_en: lcm-3v3-en-state {
-+		pins = "gpio130";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
- 	usbprim_sbu_default: usbprim-sbu-state {
- 		oe-n-pins {
- 			pins = "gpio152";
-
--- 
-2.54.0
+Brian
 
 
