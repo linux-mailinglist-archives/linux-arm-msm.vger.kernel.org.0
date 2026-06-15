@@ -1,490 +1,284 @@
-Return-Path: <linux-arm-msm+bounces-113269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 8FOFHVuAMGqMTwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 00:44:43 +0200
+	id Ogf2ML2PMGrDUQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 01:50:21 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0B1768A762
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 00:44:42 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id D02DE68AA72
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 01:50:20 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=asPa6HK5;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113269-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113269-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=quarantine) header.from=kernel.org;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="UY//1OGH";
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=fx5iU4bZ;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113270-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113270-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4FED7312DF37
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 22:42:12 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 10CB43006D5B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 23:50:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88CB63BFE24;
-	Mon, 15 Jun 2026 22:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 870D7345729;
+	Mon, 15 Jun 2026 23:50:15 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A603BE148;
-	Mon, 15 Jun 2026 22:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244E82F8EB0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 23:50:13 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781563324; cv=none; b=l0Bb/cb9s0J9Upue5HtsSXbuAGZJgEONMyhJJ2hJGvt6+Ddx4npBNTm5C9YHYRko9ujKAxPXOWB+y0yjU8YYkYObfAXYksawLDG0zX+hecDZ7diLE06uszz9zRcZ+cJ0NQF8iHWkZhD0dj0ZsDmAhmYKGBfnx1BvRyHIeI50/K8=
+	t=1781567415; cv=none; b=eXLX9rMBIuR8FeG7IE7jV2E1p1Dbt45YvbbV6XLxteFBdOV1MkqUN4/CrwPZ1HyP2y8gAjDFYfk9oZ4YYEAlJcCZPbzAoPNPOm+nTUjnssYO6Pp79J8gJAOdMrQETmUD+ELbE1iDma7PSy4BjT8fXKqukbnNfSjp6xgkE9BLVx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781563324; c=relaxed/simple;
-	bh=13vJVQB6IBkAcMUDW/WNKRo0Rx7wM0bDmj2DeqK1Yyo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JXuFCe6aek2q5NL+AqOv40TdB/hcFNbV4zJ7LPBqbqQTjJs9Q7wJbsQy/DWLXZd7dODht4P2UihQa8TH2hYAX3//WW9qRpFSsAfoYl/R6/7j+c+VkRYg2q/moygEpoaUBgje6K3O83UP+RtME65WUe2jJ9gbIRzv62oX/yGHaVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=asPa6HK5; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32E11F00AC4;
-	Mon, 15 Jun 2026 22:42:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781563322;
-	bh=wFVd4DO0kVmrUZvx8B6H/iLIvZyImm5GnP/psgO1KRo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=asPa6HK5H1LtWqbFg6idUuryMLBNm0PHaGUAC0HEpuBsvtFDl0Iuns4d9giiRGgZn
-	 WqT/W7gAnMZ4gTQe+jLm7luKruY60SleSXSWNHuG5t5HT5lRNZUvbsBdPZ223Gf874
-	 VyVri6ey4stVTZ3r3vj4Y6tON1k+PXKkRejLu89MxQ93AuGtdAFcFRMEq+hfk9cUlS
-	 Z5xjMXDDIn1plQvaf/UHfY5WELY0uBnYf1hIoxYSz1/uQQzBLajkrBNAPFFJVMcVG/
-	 MfUH9gOlmABmGizg61od0MfOSuB3BTvKCkv52aM6rGODfknhfrUKVNcJFkPv+20HQE
-	 q7RxhXHReEw8w==
-From: Eric Biggers <ebiggers@kernel.org>
-To: linux-crypto@vger.kernel.org,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Cc: linux-kernel@vger.kernel.org,
-	Gaurav Jain <gaurav.jain@nxp.com>,
-	=?UTF-8?q?Horia=20Geant=C4=83?= <horia.geanta@nxp.com>,
-	Pankaj Gupta <pankaj.gupta@nxp.com>,
-	Corentin Labbe <clabbe.montjoie@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 7/7] crypto: caam - Remove crypto_rng interface
-Date: Mon, 15 Jun 2026 15:41:31 -0700
-Message-ID: <20260615224131.69370-8-ebiggers@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260615224131.69370-1-ebiggers@kernel.org>
-References: <20260615224131.69370-1-ebiggers@kernel.org>
+	s=arc-20240116; t=1781567415; c=relaxed/simple;
+	bh=ZJE4bpawKev606p9CfK/9HaQjRenhBHPXjX4K4Jv79w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ohqDitqA1Xr+yTPXLwqGXoDnCnJPU+y9QoXOf5ker+g0ahJJTotHy0Or3m1x/bcdC2bccyXkYYWkfdTJks/zTUwJ2Fte8poSRo/2UKw13X0ZZkEHujdq7Vc68kN8m4clXJU4KJQQ9GNjkpZi+DzfQhPfnIB3wjPHzRINWKgshIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UY//1OGH; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fx5iU4bZ; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65FJ11Rm1453954
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 23:50:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=PtbPkBFkYuHZJNlttISlt1Fz
+	gsGmJsC9TY2z2xFeuuQ=; b=UY//1OGH8tUQ93zAAz28HmsDuC+tPCbGTemB55dg
+	6MqwM/Bs9d+ynvYTPnikYjMx0Vpjw/qn45+3kmO1cqpNfdHOJq9V79qAsP3/cSp0
+	lVhMJBCQa2OVONHzi759YK5R41NySz+nnbABDLo8THHA2anH7wRb9iv4kry/d4H5
+	1uVXp9S7u8qVamxsJsagzxkTBY4MY7uSHHyswUDyD88efeifYAfRqnOYBmPRyPHx
+	eM+f487bfW+saacHa73P/HV7OJuvzThfPZaGASwzgT9iZA4QxqMcsxYaimrVJqkR
+	xpGt6va/YAtdjuypZIWS0r9Yg+bX4u/qhuwTPgSmdnZiBw==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etd2cc55a-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 23:50:13 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-91574ad681eso609917885a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 16:50:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1781567412; x=1782172212; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PtbPkBFkYuHZJNlttISlt1FzgsGmJsC9TY2z2xFeuuQ=;
+        b=fx5iU4bZcHLnywoYX3dA+XMEKjagObBun0SU1Q9p2ciyKhvOdbd5tg/C06DwwqBJf+
+         d0DQ9USqdfMeXnT3xXMXFafrxCrmBf/OOf0bCPOtJZEJf+zyzUUTsvcaTlb119cgmDpe
+         5prAx5c7d8KZ9SIfY3PjHQCJZqVDU+6ZFO1ZlDbzC6i0DXego1WqcgWkK2sf6dtP/SWF
+         LzTN68psDze+TcXo5pp0IHSFSO9BLB/jjxzSuX45TNfoDYb78qO30G4ISvAs1snrKw+i
+         JH6T/wTCma4FUnGdpK8ApKULNtPgvcLsT9cJPGxjrrJSUpLi9Gh1l5v5cBBQpe9Dlw/4
+         zn9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781567412; x=1782172212;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PtbPkBFkYuHZJNlttISlt1FzgsGmJsC9TY2z2xFeuuQ=;
+        b=iIu+RPHRa+BcX2VxGL5t4X7S4GEvZxQ9VgRiw4hNTaco1m72XvZCxIHluqndVnyOfG
+         KDpvLi+3ic3Npz+SzIeLdSh/+RnUXagfEroeduLsluCl83PecsXQZWHRbxQDtTE+3IJg
+         /rDZxc2ip6Czd+vkas6AIlfsdg7DUcdD5DRFuHCCUik23QASJDu6w1G4qg2aYkx4+cvG
+         5vIcDZe+dCYGyCoornbhz7sgbl6WDXw2NsyeH2iCfROQ2uI5w6VAeNnqJkshuR72OrMS
+         CDX5oE2QcXkdRF8QTrikG9ptGkg9PNqm0D84uFgPodeEdpOtKEOQRWU1S74FK4/xcPzI
+         YJ8Q==
+X-Forwarded-Encrypted: i=1; AFNElJ/uAwAGH0PxbP8rQacl0/obhqvPy+VOmwd2C1SaXHq4b3R4z13zSIYJNYVHLggCUm5xUXdb4aKiZV2HBGwR@vger.kernel.org
+X-Gm-Message-State: AOJu0YyfNQKc/6+UlfQK3LSNMsUJb5nodI3nCzzMkCQafVGfVeBgMjVs
+	FpHZPPqqP/gGtKceOoSY6tjfiLY/2kagiU233dCAvYVW8plwCo4bVihium7xi5WGVsnzfePp9B/
+	NiGgfwu57uXrhYAPyVu4UblEJpPuGZrmSkU4uls6Ie+7+2Feh1pfMQRRiqCjwMYvIeSAS5z0c6u
+	34
+X-Gm-Gg: Acq92OF5FCGNe4k0gQBX2lVuYtd5U2Sjnjjd9O4XFdumnAKYYjq55aFPAryT7vBseNi
+	QScPQqZj4O3VOJuVGVh6O4BiSCqgK5ECuzpcUTHl/O/dfal+rftdtPaatE3ZfxxoCePdYuLDdyj
+	0nLLqcAoEmsGWFJre2tfBYlI1M3SLjVDIgBJv9mf1OwzgOzlK9E8oe6Xyrs3meYWX3BmCjUcuVQ
+	9uFKDyLYaqAnmRZJmyLzseknqqXueqAxzNat0kVI6ABCkqBRUBgspuJSrW4kPd3yYYXvm9Q6lHd
+	EWnYQTj+/h3Q7yVEs4VkR1OZ0xI4GgPO27bgEFDKiIgQRdPqR9kU04Oh50sOqN7PhnuyLeMUYP9
+	zcydbfOSql7xC1lnJYKFUgyR7Zd8geKQBbNxq6M/DxXtNudRp9wxSFT6DLemO3BcZ6mkMlHX9WO
+	Gbp/1KhIrNMPJ/6S7R+DbMXD86iEnAirLVWUQ=
+X-Received: by 2002:a05:620a:1b90:b0:915:89d4:df18 with SMTP id af79cd13be357-91c47f6ea93mr199515485a.41.1781567412425;
+        Mon, 15 Jun 2026 16:50:12 -0700 (PDT)
+X-Received: by 2002:a05:620a:1b90:b0:915:89d4:df18 with SMTP id af79cd13be357-91c47f6ea93mr199511085a.41.1781567411932;
+        Mon, 15 Jun 2026 16:50:11 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5ad2e1ae1absm3015001e87.59.2026.06.15.16.50.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Jun 2026 16:50:09 -0700 (PDT)
+Date: Tue, 16 Jun 2026 02:50:05 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mohammad.rafi.shaik@oss.qualcomm.com,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v6 1/2] pinctrl: qcom: lpass-lpi: Enable runtime PM hooks
+ on LPASS LPI SoCs
+Message-ID: <jo3nelsqepovnmjc7ycsxehfc7iprzzplx4lzei4s774fb4xh6@t2pb5vv5kbf7>
+References: <20260522204644.4101640-1-ajay.nandam@oss.qualcomm.com>
+ <20260522204644.4101640-2-ajay.nandam@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260522204644.4101640-2-ajay.nandam@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDI1MiBTYWx0ZWRfX+buNMfYriLXg
+ CPtSGG/oDXiegX10URKqmk4GRalSHnuMqN6pmjUSXkt+NHbaa3yINFbPtyEH54B5lv3n14fhdgc
+ WbEM6dSxBperq99z/Td7nXHSjSlHvIB5yt2WadTHyhj7nDUpCeQJT/72hMtpmouCm0Cis+lpn52
+ 0b6L1oqF5482HGUWy48uMsqjogWV6U+d0LB2n+Yara7fZ57lFr0mOiGL46SpHaDvCv78Am6zUfg
+ ZZNx+GcEharHMIn+Z+lDUcg2fN8b+I4lLp0Y8Cdxc0WhkBN+9o2kJHywZNTqrUsNh6yyKqkA+kh
+ nemP3e+HovgjfVHOVdPgGRG/X8G9ZFjSaocUG4JZvXtihc4hw9KQCglDUut1g5XBg47Z6p2IJZF
+ injCyteQR4e3dF9Z6ovFRj/voGwSuMEo5yeuRvI5d8GVInQBx5CYSoSnaog+6xbZYo8gb0a/+Nd
+ +ZCA7nnSxqsePkWp29g==
+X-Proofpoint-ORIG-GUID: a9huHPFf91b_cOvwOwgD7VBDkZYNqTE3
+X-Proofpoint-GUID: a9huHPFf91b_cOvwOwgD7VBDkZYNqTE3
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDI1MiBTYWx0ZWRfXxLxVIICB8mAb
+ 4erYn7nKwh1COvh8NAAuB5hGa5tnWC6IZ/guxy4SKzd4U6t5K3bEdWniURPjsCgP069B5DyU+Dx
+ 1eFWf2PcF+qMePXycHw2lixB86QYjYY=
+X-Authority-Analysis: v=2.4 cv=MsRiLWae c=1 sm=1 tr=0 ts=6a308fb5 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
+ a=1z5vHLmaq52fhps1YVsA:9 a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150252
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.66 / 15.00];
-	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-113270-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-113269-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:linux-crypto@vger.kernel.org,m:herbert@gondor.apana.org.au,m:linux-kernel@vger.kernel.org,m:gaurav.jain@nxp.com,m:horia.geanta@nxp.com,m:pankaj.gupta@nxp.com,m:clabbe.montjoie@gmail.com,m:dmitry.baryshkov@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:ebiggers@kernel.org,m:clabbemontjoie@gmail.com,s:lists@lfdr.de];
-	FORGED_SENDER(0.00)[ebiggers@kernel.org,linux-arm-msm@vger.kernel.org];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,t2pb5vv5kbf7:mid,vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo];
+	FORGED_RECIPIENTS(0.00)[m:ajay.nandam@oss.qualcomm.com,m:andersson@kernel.org,m:linusw@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:mohammad.rafi.shaik@oss.qualcomm.com,m:konrad.dybcio@oss.qualcomm.com,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,nxp.com,gmail.com,oss.qualcomm.com,kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ebiggers@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E0B1768A762
+X-Rspamd-Queue-Id: D02DE68AA72
 
-Since the crypto_rng interface for hardware PRNGs is unused and is
-redundant with hwrng and the actual Linux RNG, it's being phased out.
-Most drivers for it were already removed.  Go ahead and remove the CAAM
-support which is one of the only remaining ones.
+On Sat, May 23, 2026 at 02:16:43AM +0530, Ajay Kumar Nandam wrote:
+> The LPASS LPI core conversion to PM clock framework relies on variant
+> drivers wiring runtime PM callbacks.
+> 
+> Hook up runtime PM callbacks for the LPASS LPI variant drivers touched
+> in this patch so they are prepared for the shared core conversion.
+> 
+> This commit is a preparatory NOP on its own, as runtime PM is still
+> disabled on these devices until the following core conversion patch.
+> 
+> This is a mechanical per-variant driver update that relies on the
+> same generic PM clock flow (of_pm_clk_add_clks() + pm_clk_suspend/
+> pm_clk_resume()) and DT-provided clocks.
+> 
+> Runtime behavior was validated on Kodiak (sc7280).
+> 
+> Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+> ---
+>  .../pinctrl/qcom/pinctrl-milos-lpass-lpi.c    |  7 +++++++
+>  .../pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c   | 19 +++++++++++++------
+>  .../pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c | 15 +++++++++++----
+>  .../pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c   |  7 +++++++
+>  .../pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c   |  7 +++++++
+>  .../pinctrl/qcom/pinctrl-sm4250-lpass-lpi.c   |  7 +++++++
+>  .../pinctrl/qcom/pinctrl-sm6115-lpass-lpi.c   |  7 +++++++
+>  .../pinctrl/qcom/pinctrl-sm6350-lpass-lpi.c   |  7 +++++++
+>  .../pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c   | 15 +++++++++++----
+>  .../pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c   | 15 +++++++++++----
+>  .../pinctrl/qcom/pinctrl-sm8550-lpass-lpi.c   | 15 +++++++++++----
+>  .../pinctrl/qcom/pinctrl-sm8650-lpass-lpi.c   | 15 +++++++++++----
+>  12 files changed, 110 insertions(+), 26 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-milos-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-milos-lpass-lpi.c
+> index 3bf6fe0cf1bb..72b8ffd97860 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-milos-lpass-lpi.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-milos-lpass-lpi.c
+> @@ -7,6 +7,8 @@
+>  #include <linux/gpio/driver.h>
+>  #include <linux/module.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/pm_clock.h>
+> +#include <linux/pm_runtime.h>
+>  
+>  #include "pinctrl-lpass-lpi.h"
+>  
+> @@ -203,10 +205,15 @@ static const struct of_device_id lpi_pinctrl_of_match[] = {
+>  };
+>  MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
+>  
+> +static const struct dev_pm_ops lpi_pinctrl_pm_ops = {
+> +	RUNTIME_PM_OPS(pm_clk_suspend, pm_clk_resume, NULL)
+> +};
+> +
+>  static struct platform_driver lpi_pinctrl_driver = {
+>  	.driver = {
+>  		.name = "qcom-milos-lpass-lpi-pinctrl",
+>  		.of_match_table = lpi_pinctrl_of_match,
+> +		.pm = pm_ptr(&lpi_pinctrl_pm_ops),
+>  	},
+>  	.probe = lpi_pinctrl_probe,
+>  	.remove = lpi_pinctrl_remove,
+> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+> index 750f410311a8..a61df10d46cb 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+> @@ -7,6 +7,8 @@
+>  #include <linux/gpio/driver.h>
+>  #include <linux/module.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/pm_clock.h>
+> +#include <linux/pm_runtime.h>
+>  
+>  #include "pinctrl-lpass-lpi.h"
+>  
+> @@ -129,20 +131,25 @@ static const struct lpi_pinctrl_variant_data sc7280_lpi_data = {
+>  
+>  static const struct of_device_id lpi_pinctrl_of_match[] = {
+>  	{
+> -	       .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
+> -	       .data = &sc7280_lpi_data,
+> +		.compatible = "qcom,sc7280-lpass-lpi-pinctrl",
+> +		.data = &sc7280_lpi_data,
 
-Note that the CAAM support for hwrng remains in place.  That is the
-interface that actually matters.
+Split whitespace changes to a separate patch. Never mix cleanups (like
+the whitespace or formatting) and the sensible changes in a single
+patch.
 
-Note that this code also had several issues, including dlen > 65535
-causing corruption of the CAAM descriptor.
+>  	}, {
+> -	       .compatible = "qcom,sm8350-lpass-lpi-pinctrl",
+> -	       .data = &sc7280_lpi_data,
+> +		.compatible = "qcom,sm8350-lpass-lpi-pinctrl",
+> +		.data = &sc7280_lpi_data,
+>  	},
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
+>  
 
-Cc: Gaurav Jain <gaurav.jain@nxp.com>
-Cc: Horia Geantă <horia.geanta@nxp.com>
-Cc: Pankaj Gupta <pankaj.gupta@nxp.com>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
----
- drivers/crypto/caam/Kconfig    |   9 --
- drivers/crypto/caam/Makefile   |   1 -
- drivers/crypto/caam/caamprng.c | 241 ---------------------------------
- drivers/crypto/caam/intern.h   |  15 --
- drivers/crypto/caam/jr.c       |   2 -
- 5 files changed, 268 deletions(-)
- delete mode 100644 drivers/crypto/caam/caamprng.c
-
-diff --git a/drivers/crypto/caam/Kconfig b/drivers/crypto/caam/Kconfig
-index 05210a0edb8a..ec57bf6aaf6c 100644
---- a/drivers/crypto/caam/Kconfig
-+++ b/drivers/crypto/caam/Kconfig
-@@ -143,24 +143,15 @@ config CRYPTO_DEV_FSL_CAAM_PKC_API
- 	  signature and verification.
- 
- config CRYPTO_DEV_FSL_CAAM_RNG_API
- 	bool "Register caam device for hwrng API"
- 	default y
--	select CRYPTO_RNG
- 	select HW_RANDOM
- 	help
- 	  Selecting this will register the SEC4 hardware rng to
- 	  the hw_random API for supplying the kernel entropy pool.
- 
--config CRYPTO_DEV_FSL_CAAM_PRNG_API
--	bool "Register Pseudo random number generation implementation with Crypto API"
--	default y
--	select CRYPTO_RNG
--	help
--	  Selecting this will register the SEC hardware prng to
--	  the Crypto API.
--
- config CRYPTO_DEV_FSL_CAAM_BLOB_GEN
- 	bool
- 
- config CRYPTO_DEV_FSL_CAAM_RNG_TEST
- 	bool "Test caam rng"
-diff --git a/drivers/crypto/caam/Makefile b/drivers/crypto/caam/Makefile
-index d2eaf5205b1c..a17e3cf14c61 100644
---- a/drivers/crypto/caam/Makefile
-+++ b/drivers/crypto/caam/Makefile
-@@ -18,11 +18,10 @@ caam-y := ctrl.o
- caam_jr-y := jr.o key_gen.o
- caam_jr-$(CONFIG_CRYPTO_DEV_FSL_CAAM_CRYPTO_API) += caamalg.o
- caam_jr-$(CONFIG_CRYPTO_DEV_FSL_CAAM_CRYPTO_API_QI) += caamalg_qi.o
- caam_jr-$(CONFIG_CRYPTO_DEV_FSL_CAAM_AHASH_API) += caamhash.o
- caam_jr-$(CONFIG_CRYPTO_DEV_FSL_CAAM_RNG_API) += caamrng.o
--caam_jr-$(CONFIG_CRYPTO_DEV_FSL_CAAM_PRNG_API) += caamprng.o
- caam_jr-$(CONFIG_CRYPTO_DEV_FSL_CAAM_PKC_API) += caampkc.o pkc_desc.o
- caam_jr-$(CONFIG_CRYPTO_DEV_FSL_CAAM_BLOB_GEN) += blob_gen.o
- 
- caam-$(CONFIG_CRYPTO_DEV_FSL_CAAM_CRYPTO_API_QI) += qi.o
- caam-$(CONFIG_DEBUG_FS) += debugfs.o
-diff --git a/drivers/crypto/caam/caamprng.c b/drivers/crypto/caam/caamprng.c
-deleted file mode 100644
-index 6e4c1191cb28..000000000000
---- a/drivers/crypto/caam/caamprng.c
-+++ /dev/null
-@@ -1,241 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0+
--/*
-- * Driver to expose SEC4 PRNG via crypto RNG API
-- *
-- * Copyright 2022 NXP
-- *
-- */
--
--#include <linux/completion.h>
--#include <crypto/internal/rng.h>
--#include <linux/dma-mapping.h>
--#include <linux/kernel.h>
--#include "compat.h"
--#include "regs.h"
--#include "intern.h"
--#include "desc_constr.h"
--#include "jr.h"
--#include "error.h"
--
--/*
-- * Length of used descriptors, see caam_init_desc()
-- */
--#define CAAM_PRNG_MAX_DESC_LEN (CAAM_CMD_SZ +				\
--			    CAAM_CMD_SZ +				\
--			    CAAM_CMD_SZ + CAAM_PTR_SZ_MAX)
--
--/* prng per-device context */
--struct caam_prng_ctx {
--	int err;
--	struct completion done;
--};
--
--struct caam_prng_alg {
--	struct rng_alg rng;
--	bool registered;
--};
--
--static void caam_prng_done(struct device *jrdev, u32 *desc, u32 err,
--			  void *context)
--{
--	struct caam_prng_ctx *jctx = context;
--
--	jctx->err = err ? caam_jr_strstatus(jrdev, err) : 0;
--
--	complete(&jctx->done);
--}
--
--static u32 *caam_init_reseed_desc(u32 *desc)
--{
--	init_job_desc(desc, 0);	/* + 1 cmd_sz */
--	/* Generate random bytes: + 1 cmd_sz */
--	append_operation(desc, OP_TYPE_CLASS1_ALG | OP_ALG_ALGSEL_RNG |
--			OP_ALG_AS_FINALIZE);
--
--	print_hex_dump_debug("prng reseed desc@: ", DUMP_PREFIX_ADDRESS,
--			     16, 4, desc, desc_bytes(desc), 1);
--
--	return desc;
--}
--
--static u32 *caam_init_prng_desc(u32 *desc, dma_addr_t dst_dma, u32 len)
--{
--	init_job_desc(desc, 0);	/* + 1 cmd_sz */
--	/* Generate random bytes: + 1 cmd_sz */
--	append_operation(desc, OP_ALG_ALGSEL_RNG | OP_TYPE_CLASS1_ALG);
--	/* Store bytes: + 1 cmd_sz + caam_ptr_sz  */
--	append_fifo_store(desc, dst_dma,
--			  len, FIFOST_TYPE_RNGSTORE);
--
--	print_hex_dump_debug("prng job desc@: ", DUMP_PREFIX_ADDRESS,
--			     16, 4, desc, desc_bytes(desc), 1);
--
--	return desc;
--}
--
--static int caam_prng_generate(struct crypto_rng *tfm,
--			     const u8 *src, unsigned int slen,
--			     u8 *dst, unsigned int dlen)
--{
--	unsigned int aligned_dlen = ALIGN(dlen, dma_get_cache_alignment());
--	struct caam_prng_ctx ctx;
--	struct device *jrdev;
--	dma_addr_t dst_dma;
--	u32 *desc;
--	u8 *buf;
--	int ret;
--
--	if (aligned_dlen < dlen)
--		return -EOVERFLOW;
--
--	buf = kzalloc(aligned_dlen, GFP_KERNEL);
--	if (!buf)
--		return -ENOMEM;
--
--	jrdev = caam_jr_alloc();
--	ret = PTR_ERR_OR_ZERO(jrdev);
--	if (ret) {
--		pr_err("Job Ring Device allocation failed\n");
--		kfree(buf);
--		return ret;
--	}
--
--	desc = kzalloc(CAAM_PRNG_MAX_DESC_LEN, GFP_KERNEL);
--	if (!desc) {
--		ret = -ENOMEM;
--		goto out1;
--	}
--
--	dst_dma = dma_map_single(jrdev, buf, dlen, DMA_FROM_DEVICE);
--	if (dma_mapping_error(jrdev, dst_dma)) {
--		dev_err(jrdev, "Failed to map destination buffer memory\n");
--		ret = -ENOMEM;
--		goto out;
--	}
--
--	init_completion(&ctx.done);
--	ret = caam_jr_enqueue(jrdev,
--			      caam_init_prng_desc(desc, dst_dma, dlen),
--			      caam_prng_done, &ctx);
--
--	if (ret == -EINPROGRESS) {
--		wait_for_completion(&ctx.done);
--		ret = ctx.err;
--	}
--
--	dma_unmap_single(jrdev, dst_dma, dlen, DMA_FROM_DEVICE);
--
--	if (!ret)
--		memcpy(dst, buf, dlen);
--out:
--	kfree(desc);
--out1:
--	caam_jr_free(jrdev);
--	kfree(buf);
--	return ret;
--}
--
--static void caam_prng_exit(struct crypto_tfm *tfm) {}
--
--static int caam_prng_init(struct crypto_tfm *tfm)
--{
--	return 0;
--}
--
--static int caam_prng_seed(struct crypto_rng *tfm,
--			 const u8 *seed, unsigned int slen)
--{
--	struct caam_prng_ctx ctx;
--	struct device *jrdev;
--	u32 *desc;
--	int ret;
--
--	if (slen) {
--		pr_err("Seed length should be zero\n");
--		return -EINVAL;
--	}
--
--	jrdev = caam_jr_alloc();
--	ret = PTR_ERR_OR_ZERO(jrdev);
--	if (ret) {
--		pr_err("Job Ring Device allocation failed\n");
--		return ret;
--	}
--
--	desc = kzalloc(CAAM_PRNG_MAX_DESC_LEN, GFP_KERNEL);
--	if (!desc) {
--		caam_jr_free(jrdev);
--		return -ENOMEM;
--	}
--
--	init_completion(&ctx.done);
--	ret = caam_jr_enqueue(jrdev,
--			      caam_init_reseed_desc(desc),
--			      caam_prng_done, &ctx);
--
--	if (ret == -EINPROGRESS) {
--		wait_for_completion(&ctx.done);
--		ret = ctx.err;
--	}
--
--	kfree(desc);
--	caam_jr_free(jrdev);
--	return ret;
--}
--
--static struct caam_prng_alg caam_prng_alg = {
--	.rng = {
--		.generate = caam_prng_generate,
--		.seed = caam_prng_seed,
--		.seedsize = 0,
--		.base = {
--			.cra_name = "stdrng",
--			.cra_driver_name = "prng-caam",
--			.cra_priority = 500,
--			.cra_ctxsize = sizeof(struct caam_prng_ctx),
--			.cra_module = THIS_MODULE,
--			.cra_init = caam_prng_init,
--			.cra_exit = caam_prng_exit,
--		},
--	}
--};
--
--void caam_prng_unregister(void *data)
--{
--	if (caam_prng_alg.registered)
--		crypto_unregister_rng(&caam_prng_alg.rng);
--}
--
--int caam_prng_register(struct device *ctrldev)
--{
--	struct caam_drv_private *priv = dev_get_drvdata(ctrldev);
--	u32 rng_inst;
--	int ret = 0;
--
--	/* Check for available RNG blocks before registration */
--	if (priv->era < 10)
--		rng_inst = (rd_reg32(&priv->jr[0]->perfmon.cha_num_ls) &
--			    CHA_ID_LS_RNG_MASK) >> CHA_ID_LS_RNG_SHIFT;
--	else
--		rng_inst = rd_reg32(&priv->jr[0]->vreg.rng) & CHA_VER_NUM_MASK;
--
--	if (!rng_inst) {
--		dev_dbg(ctrldev, "RNG block is not available... skipping registering algorithm\n");
--		return ret;
--	}
--
--	ret = crypto_register_rng(&caam_prng_alg.rng);
--	if (ret) {
--		dev_err(ctrldev,
--			"couldn't register rng crypto alg: %d\n",
--			ret);
--		return ret;
--	}
--
--	caam_prng_alg.registered = true;
--
--	dev_info(ctrldev,
--		 "rng crypto API alg registered %s\n", caam_prng_alg.rng.base.cra_driver_name);
--
--	return 0;
--}
-diff --git a/drivers/crypto/caam/intern.h b/drivers/crypto/caam/intern.h
-index a88da0d31b23..6e48bf7d6054 100644
---- a/drivers/crypto/caam/intern.h
-+++ b/drivers/crypto/caam/intern.h
-@@ -210,25 +210,10 @@ static inline int caam_rng_init(struct device *dev)
- 
- static inline void caam_rng_exit(struct device *dev) {}
- 
- #endif /* CONFIG_CRYPTO_DEV_FSL_CAAM_RNG_API */
- 
--#ifdef CONFIG_CRYPTO_DEV_FSL_CAAM_PRNG_API
--
--int caam_prng_register(struct device *dev);
--void caam_prng_unregister(void *data);
--
--#else
--
--static inline int caam_prng_register(struct device *dev)
--{
--	return 0;
--}
--
--static inline void caam_prng_unregister(void *data) {}
--#endif /* CONFIG_CRYPTO_DEV_FSL_CAAM_PRNG_API */
--
- #ifdef CONFIG_CRYPTO_DEV_FSL_CAAM_CRYPTO_API_QI
- 
- int caam_qi_algapi_init(struct device *dev);
- void caam_qi_algapi_exit(void);
- 
-diff --git a/drivers/crypto/caam/jr.c b/drivers/crypto/caam/jr.c
-index 0ef00df9730e..bddeaaaca487 100644
---- a/drivers/crypto/caam/jr.c
-+++ b/drivers/crypto/caam/jr.c
-@@ -38,11 +38,10 @@ static void register_algs(struct caam_drv_private_jr *jrpriv,
- 
- 	caam_algapi_init(dev);
- 	caam_algapi_hash_init(dev);
- 	caam_pkc_init(dev);
- 	jrpriv->hwrng = !caam_rng_init(dev);
--	caam_prng_register(dev);
- 	caam_qi_algapi_init(dev);
- 
- algs_unlock:
- 	mutex_unlock(&algs_lock);
- }
-@@ -53,11 +52,10 @@ static void unregister_algs(void)
- 
- 	if (--active_devs != 0)
- 		goto algs_unlock;
- 
- 	caam_qi_algapi_exit();
--	caam_prng_unregister(NULL);
- 	caam_pkc_exit();
- 	caam_algapi_hash_exit();
- 	caam_algapi_exit();
- 
- algs_unlock:
 -- 
-2.54.0
-
+With best wishes
+Dmitry
 
