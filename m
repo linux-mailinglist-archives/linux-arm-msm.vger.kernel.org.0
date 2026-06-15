@@ -1,84 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-113230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id YEKVFlcuMGpIPgUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 18:54:47 +0200
+	id Q2EDCFwuMGpJPgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 18:54:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B594068892E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 18:54:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ABB98688934
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 18:54:51 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b=H77jf2mD;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113230-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113230-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=linaro.org header.s=google header.b=zWDXwbHF;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113231-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113231-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=linaro.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 640E630F2C85
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 16:49:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9974B30F88C2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 16:49:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A6DC41166D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9549B411693;
 	Mon, 15 Jun 2026 16:49:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB64340FDA0
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 16:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA5840FD87
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 16:49:03 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781542145; cv=none; b=IfetBBfd+o3YhQTH8QD22PZlCVTpc8Sqthto4pOxmSrUwkpYIUO54d8JsU5VzOwRGC6MG8IqzMbDuSVIvsK8xZLVBxciHZMUXgc24L0Ts8v+grTy3s2W7qaYbHADA63FAbMJ6KEXTB3aza58pZwTuvTMN7UEEYch+2ffkJCJtZg=
+	t=1781542145; cv=none; b=u25T0FRjO4WJvk1YJdxvdkT7O+4KFEKmwRXRwuEE51SdPtq18ls4EHJ2mXItzNIxQHLy34PxjgfUx6Cg8FPNQ1wMs8hY+HlQMXmXkymcd5ZNk2TA+x4ngzxOgzAGImSXstn5lM+3uCKPynQzfwIlkAUjKtBLLVjjKlRGgKSs3FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1781542145; c=relaxed/simple;
-	bh=4HjNMydN5tW67EpwgcKq0bJylrgzUaRgs8yaNRqheFs=;
+	bh=BlJOCMxVLaAOmzm9jG6rG810V5HTRlTC4PbDQe+T4+8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XCdSv1GUH9P0gsGA+M4l51z0KOMjnlDWL/QFP+yxxJ/1n3fEdr2zVej7VvlRme0xS9ztyXOpeLU/bnQL+kOMrddnpNhLGhpyZqdv2lucjgMqYOxBNg6vbaWkx3jR6A20Bd0iTsFfDbQDSpVT/8nbI3rmGBgznASfjWos6y3pJPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H77jf2mD; arc=none smtp.client-ip=209.85.128.49
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-490ac10e337so24981795e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 09:49:02 -0700 (PDT)
+	 In-Reply-To:To:Cc; b=SvU9AZgH7Sm28MUKdpOv+Y2mESCHAWMGXlJcfPatEmY5CV6YWz1iSAXooj0li8wORAHfprkJS9+o+sBzq05MmLT12qRRlVfW5Pvkn+q1a+BuQ2VvnN7JCW/WGTR09FhP6V0cpPRXcb+ez+JNb9B8OeMXzrfiQac3YQ3FNeZMmzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zWDXwbHF; arc=none smtp.client-ip=209.85.128.43
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-490b1bbcf3aso26786505e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 09:49:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1781542141; x=1782146941; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1781542142; x=1782146942; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OUXv3GxUdJrnvQC/PhSLkI1Hz8IfckJ8inkqhUnweag=;
-        b=H77jf2mDtgI2h0xxEazON8CFF+z+v4AamO/Ypo8HSS3qUAbQtOG8p7EZsxOhjnRDm8
-         oOXceYVt6t5G7653ZoVTwXg7jnXWi2ZRByyf1ijpvmtRVG9olCGO1TlL8F7aKJnuoMa5
-         85nAhGQb2p7Ho9Hy+Lug79k2SeRVIhcGWzCHi48r814ttRpxhlIvxFdgvZNP9DVIF3r0
-         zsAVh7ycK6LTrAWgIQq9mwYXtQvHnsi/BnsVPCM/tS/wq7iu0GDdPKY30p7PHQ+cKIwz
-         l6ghWmtoXvDz/DC8brqq0UScwxG38Ar4O9ZLo/38iZqptXumupJMwpA9NJsSnC7Sg7kR
-         XwzQ==
+        bh=njyoUc9o+UR/jRlgGA5KJrg3KkVr3WPKZv815VQwNJk=;
+        b=zWDXwbHFS+ODO37Qv1+8B1MOlshqHW8nvJo5L6nRw8wDoZ0jwYlf6GYpE6MAaAZnqY
+         YOnVDIwA+p05Vi/OXXMSi2vaMIemBwdb1z0ivEXcPL2NjBZtZ+z9WX33hc5MTMRDIpDI
+         ewdyVFvCOlzoOImVNoN+Qgw0IWHmhx8TIY3+1zXi3jSfgaA2HZScmVqlih061e3JWe3U
+         Qd0USgQxz47rG9EH75bAhQFpRrRRvj3BEGNIezrRCWG4jWxAIQ8q0s0uY3IJdSD1H492
+         XOaKFcaC1v+yH6gOwWzIQQIibVdjzZ5tW0jz3QIOENpP9a6XBMiza0YNHj29J9v/EBZq
+         YwFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781542141; x=1782146941;
+        d=1e100.net; s=20251104; t=1781542142; x=1782146942;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=OUXv3GxUdJrnvQC/PhSLkI1Hz8IfckJ8inkqhUnweag=;
-        b=cf8JKDP7uma5BcMEaGotWoA6CTYUe0iTHpyiMWzRqdDBgP+jAPDrs12e7C7cuiv26G
-         vaPAmMMH5EcpX4VJ38kPx4C7Op8hvCrqvhrzUCR5ZUZsk7xsiFQiI1v4ZcsZezMncgbC
-         dXyXz6Dza5natdW6fcUL+cTWb860wXZygElXl9PUMN3uUhBPBp14cim7KNRJljNgGI23
-         MRHclKbxn8/CptKwSnaDphTCiaoLwgFo0aCP2+JYXwALYbrkbQNTr9BI0zbScpN5fOZ9
-         A8elnoNswSDuP59iMphj+2QLHzIjM4RC/q71bCfzjx4K19WJoeSnYk6iewcjK3wNfxQu
-         98rA==
-X-Gm-Message-State: AOJu0YwQZYBWpwHGGvmEPPyXr7w08mM4mZFJPq8m/fOCZ5AyQTLrrici
-	qcH85f5F26gGhrnOZ2Isr7XjBmxYFjn630vtFZeMOVKxDJiUEb68PH8jb1Z12VYxwbM=
-X-Gm-Gg: Acq92OHkyUSuM4kWXu26Fu3DmOZzx5/8pDXzG2ZvzQRaMSHOofxZoskkmwEgYL/wAIs
-	5xo4i42qnR4jjtX/qXdKkK+uFsANCNai+dEqr6tbMm3YrcR0y1AoVFlvVFdiUgume4YWt+0vS3/
-	i9BahKJ5Z5dsLCxx/ZkqXspd8HhFJEf7R4ycwdqylWy/JJ1xhcmm/lBz5T8VeOaFLkpdEi6Ewr4
-	StISxgl7OChZyUP9J91s5DdmqJh7hQJRM52X8csIXgp7MQAd5RVDw+hv2lttyB3L5s1rrJP1TTB
-	VCWnORv3Dm+587EpMjW3JCyhwWFuVGDl2pskvSA0WcHVG6HSBSsG2uHtzdnFMnCteCAEKfUmKYX
-	V94H1hxEkXPNSDfulCrb2mbPrxRLfxWHj3XsaaJbrZmCJsJcnyQUbNIwBsVDV5hEAqbZNwZQQ8P
-	YNAAk5bg84Y0qRpxpzRGxEfhB4HgfOVPTz5eN1XKSfx+fR
-X-Received: by 2002:a05:600c:348b:b0:490:e5c1:b89e with SMTP id 5b1f17b1804b1-49220061e38mr147294985e9.10.1781542141226;
-        Mon, 15 Jun 2026 09:49:01 -0700 (PDT)
+        bh=njyoUc9o+UR/jRlgGA5KJrg3KkVr3WPKZv815VQwNJk=;
+        b=C6TzHkxcTwRjADFls83lbD7WbpQ4BFxYOqbXO2lgyvhY/LnCe8/jo0HgbIPnAa02t0
+         k0etzMcMhd5eEEjvCkJ9lr81nWD7xZGr6te83fikWc7elLMAw2DWqV7Q7EaHRb+mMdGs
+         NBIzQ3rmdMBosI4DIY+wV436Kmrk1110Do03XLSuyomVfaLQcbxgwlJIj8mtLpqZDZJZ
+         DboaWO+PF5RYXvoWvKJcsEllHQ/qDUeyI3dLLcrY9ijJjWvabpXLN+uPaTvrNZYZ8+dw
+         OIUsuZ9dLdfRme9f5KWCs5YwGuT/tmGpinbnd8ctyBjWEtIbdAp89d7kenUi9YpvNxg1
+         kbpw==
+X-Gm-Message-State: AOJu0YzNs12inGDqswKd69m5JL4tusvY0pxQnf7kiGqJtG1hflHwt36+
+	U25zHjwqIAIn7wWHMD6bbeor8q/uPZI8SvHRyqLHytme7QdXGosIRSLFh7LRZCkSgcg=
+X-Gm-Gg: Acq92OHkGJBo24i/rk2I6brZ1igLKyneCBvGwQt7amexzozSgI3iNeuZSjYo7/d08p3
+	4G+4Km28deYWGyZ0M2REPRV7im1V/OAnxpQFe5UgK7xJXBffv8S0xOgS02HODVa+ypjU8jxk/GM
+	fSf25ZXY/wu96VbMo7nWVP1o9TYZzm5ilQOX9jvXar7PyTRZsd4odPqVq8siDEO2yuPKRhiZX7v
+	sNBF98G5VNkfV+sUVsvEN/vQCbbEgw8FOfuW3sFMy38BKlxBlo8DwYkahkbgD5UPiBB8oJBWGfx
+	JoHcgUk2BBgq44pQskRe5zgJdnqlDaE0aOrgowjvKRVNO/NuUk959HgBMfKNKdm95z1UEig6k+j
+	RrJjDpzSdcgKaqeJUk1gx3tcY29J6Mt+8mkt2RLoXRfze9oS3pQlZOkKgV99JlL/Aleem4bAO1Z
+	lOIrjwehBi3utTDndDvO8AnMZ7T7cMM3of0jBloR8dXcM+
+X-Received: by 2002:a05:600c:3548:b0:490:ea8a:32d0 with SMTP id 5b1f17b1804b1-490ec501917mr213872805e9.20.1781542142073;
+        Mon, 15 Jun 2026 09:49:02 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:106d:1080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4922fa58f80sm5670735e9.11.2026.06.15.09.49.00
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4922fa58f80sm5670735e9.11.2026.06.15.09.49.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2026 09:49:00 -0700 (PDT)
+        Mon, 15 Jun 2026 09:49:01 -0700 (PDT)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Mon, 15 Jun 2026 18:48:56 +0200
-Subject: [PATCH v3 1/3] arm64: dts: qcom: sm8650: update the cpus
- capacity-dmips-mhz
+Date: Mon, 15 Jun 2026 18:48:57 +0200
+Subject: [PATCH v3 2/3] arm64: dts: qcom: sm8650: add CPU cache size
+ properties
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260615-topic-sm8650-upstream-cpu-props-v3-1-eeb6e9fa7581@linaro.org>
+Message-Id: <20260615-topic-sm8650-upstream-cpu-props-v3-2-eeb6e9fa7581@linaro.org>
 References: <20260615-topic-sm8650-upstream-cpu-props-v3-0-eeb6e9fa7581@linaro.org>
 In-Reply-To: <20260615-topic-sm8650-upstream-cpu-props-v3-0-eeb6e9fa7581@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -98,20 +98,20 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2456;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4741;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=4HjNMydN5tW67EpwgcKq0bJylrgzUaRgs8yaNRqheFs=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBqMCz5xS9GJqTCNHkog1BlkPNcz1FAPC6mkpwqRzjO
- SS2fs+KJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCajAs+QAKCRB33NvayMhJ0Y9GEA
- DChGYTSaDf5U8w0dI2k7yC8hoHsAkMGdLqQlhnx/40V6ikap6mA5qj9l3SegHMt3Q1XryIF9Sbc7c0
- ziFWACnoDYJj4j8FlLrLaj/d/WeZsDoQWI099es7xdBoOcPcbjDTD7h9U1i9+zBNw8+fYhG1ySDFNq
- jTyNT4wD2VS/75ShHWyLGWFvS1uH7qHUdeiAEQSnA6ksjcjSiVajOkyhcecnEggQEEba9CLm0pFpYl
- hxY3nCtvn8LR+MyQ7yp+CNGv3Z6AkdWwYHjieu2DAEtKxqJs7QjFcjwTuwPfSC/8bsWpPTxP6rp+d3
- eq6o1gHvc1u62OQxDPnlcpmsvAVEVsUvxzaAzt/RTTXlStYfBsvbWpFXpFsYOZJb7vsxBvkwxNMvt0
- kjrI7zSQyVHQ1e3vJ0DqowUbPfJJOQFSzgNuUU9pNDau14/Y3r3XwfFGhzMl8y3/LPdfNFHkIfSBCi
- niukuQp/9vJnp6aDJS3vSh80ictjhU0suyjjo66lmVG2juj4SbdUJwcBqlBlBHQw6uGN4of7AV5CgH
- PtQcnotmZNFYn7Mcqc3wgerhuR7yhFKqTkm4Y1ZgcB+THxxvGe468gQcTeq+oPnRPM2G4T9uCwXYYh
- rK1rWRGKnUCQgWtN+jbbJGfgDRsqSTLhzP+YGgfCJo3jtP9taaq6qjJL5XVw==
+ bh=BlJOCMxVLaAOmzm9jG6rG810V5HTRlTC4PbDQe+T4+8=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBqMCz6oqhIKAWaF/8RHFtcSNiEw8uqXjg3dOrU5MBZ
+ K6JHNxWJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCajAs+gAKCRB33NvayMhJ0R9iD/
+ 9c5kHyT6/OUxZZ6KvUXfw2PZjJJV4HxqI9BKgf7fzQbu74wXNYRGJff6M0JTiETWCrpnxbqLPBjexd
+ 6pzdHgdN2nY3Jz48EgFijnFh+30FFR2ux7jZVbD5E6nGil+a2nXkK8xk8/8LSgdOI3a0Z/aGxnynhj
+ XBU4wszeUZ5hk2IRDHd09Y8xBX3ONHJvhqs6oNM1atuKAnnXKWp1FwQZdSouj/w81m4KwTZCDbT1sq
+ iEQWZeNXzcfW72BfI9rIU2ZE3Mv2PhLQmtcg70XlQOEGgZ0OE5ZzxatAZoO3knVRiDIZg0rJ24KMya
+ HIDVsswb7+e94xTFqUV+RMoC2ro4mv9u6OjHycXdm11Gu7/9rKvkFD+htUFuKRIgbYCuzeWWaFDQLS
+ 2/idmz4Sw/2N4fZZfiiTDHkeuNyDCqi1K1iKEcqWs/kiAWoDj0cZlOHpLVFH7qcmx2Ld+lAEmfq3bf
+ l7uOt2MwiqW5lCwh+04JsEEvBxx7YnM52yGwkJqjOTsuXPGRl8PjAY7C9JOO7cbWu8x4eeEx9mmmn3
+ SOcXkGsBNUqD4N+e3L/YIgm2rGg+G7q/S+Hk60r2ugJXxGxYMCplZBMDMNdeABTFy8GIO78OXRKQz6
+ UkB67dZkONJLniWAeUlFMxaAO0thBezWMv9KhYsOEKIrdT+9Yoe81eP4ubcQ==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Rspamd-Action: no action
@@ -125,7 +125,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-113230-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113231-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:neil.armstrong@linaro.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
@@ -146,85 +146,195 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,qualcomm.com:email,linaro.org:dkim,linaro.org:email,linaro.org:mid,linaro.org:from_mime]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,linaro.org:dkim,linaro.org:email,linaro.org:mid,linaro.org:from_mime,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B594068892E
+X-Rspamd-Queue-Id: ABB98688934
 
-After some more advanced benchmarks with Integer, Floaring Point,
-Encryption, Compression, NEON, ... on the A520, A720 and X4 cpus,
-the median gain with the same frequency range is:
-- 281% of A720 over A520
-- 126% of X4 over A720
+Add the L1 cache size and its line size (cache-size and
+cache-line-size) with the corresponding L1-I cache and L1-D cache.
 
-When adjusted with the frequency delta, we get better values
-describing the difference in capacity, showing the weakness of
-the A520 designed for very small tasks while the A720 and X4
-are much more powerful.
+L1 cache is unified, but clidr_el1 register (get_cache_type) tells that
+L1 cache is separated (CACHE_TYPE_SEPARATE), add i-cache-line-size and
+d-cache-line-size and cache-line-size of L3 cache is specified.
+
+All cache line sizes were confirmed by checking ccsidr_el1.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 56 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 160ead25ecf7..e8e43ddc3032 100644
+index e8e43ddc3032..090a4739ebc1 100644
 --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -153,7 +153,7 @@ cpu2: cpu@200 {
+@@ -75,6 +75,11 @@ cpu0: cpu@0 {
+ 			compatible = "arm,cortex-a520";
+ 			reg = <0 0>;
  
- 			enable-method = "psci";
- 			next-level-cache = <&l2_200>;
--			capacity-dmips-mhz = <1792>;
-+			capacity-dmips-mhz = <2909>;
- 			dynamic-power-coefficient = <238>;
++			i-cache-size = <65536>;
++			i-cache-line-size = <64>;
++			d-cache-size = <65536>;
++			d-cache-line-size = <64>;
++
+ 			clocks = <&cpufreq_hw 0>;
  
- 			qcom,freq-domain = <&cpufreq_hw 3>;
-@@ -189,7 +189,7 @@ cpu3: cpu@300 {
+ 			power-domains = <&cpu_pd0>;
+@@ -103,11 +108,15 @@ l2_0: l2-cache {
+ 				cache-level = <2>;
+ 				cache-unified;
+ 				next-level-cache = <&l3_0>;
++				cache-size = <524288>;
++				cache-line-size = <64>;
  
- 			enable-method = "psci";
- 			next-level-cache = <&l2_300>;
--			capacity-dmips-mhz = <1792>;
-+			capacity-dmips-mhz = <2909>;
- 			dynamic-power-coefficient = <238>;
+ 				l3_0: l3-cache {
+ 					compatible = "cache";
+ 					cache-level = <3>;
+ 					cache-unified;
++					cache-size = <12582912>;
++					cache-line-size = <64>;
+ 				};
+ 			};
+ 		};
+@@ -117,6 +126,11 @@ cpu1: cpu@100 {
+ 			compatible = "arm,cortex-a520";
+ 			reg = <0 0x100>;
  
- 			qcom,freq-domain = <&cpufreq_hw 3>;
-@@ -225,7 +225,7 @@ cpu4: cpu@400 {
++			i-cache-size = <65536>;
++			i-cache-line-size = <64>;
++			d-cache-size = <65536>;
++			d-cache-line-size = <64>;
++
+ 			clocks = <&cpufreq_hw 0>;
  
- 			enable-method = "psci";
- 			next-level-cache = <&l2_400>;
--			capacity-dmips-mhz = <1792>;
-+			capacity-dmips-mhz = <2909>;
- 			dynamic-power-coefficient = <238>;
+ 			power-domains = <&cpu_pd1>;
+@@ -146,6 +160,11 @@ cpu2: cpu@200 {
+ 			compatible = "arm,cortex-a720";
+ 			reg = <0 0x200>;
  
- 			qcom,freq-domain = <&cpufreq_hw 3>;
-@@ -261,7 +261,7 @@ cpu5: cpu@500 {
++			i-cache-size = <65536>;
++			i-cache-line-size = <64>;
++			d-cache-size = <65536>;
++			d-cache-line-size = <64>;
++
+ 			clocks = <&cpufreq_hw 3>;
  
- 			enable-method = "psci";
- 			next-level-cache = <&l2_500>;
--			capacity-dmips-mhz = <1792>;
-+			capacity-dmips-mhz = <2909>;
- 			dynamic-power-coefficient = <238>;
+ 			power-domains = <&cpu_pd2>;
+@@ -174,6 +193,8 @@ l2_200: l2-cache {
+ 				cache-level = <2>;
+ 				cache-unified;
+ 				next-level-cache = <&l3_0>;
++				cache-size = <524288>;
++				cache-line-size = <64>;
+ 			};
+ 		};
  
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-@@ -297,7 +297,7 @@ cpu6: cpu@600 {
+@@ -182,6 +203,11 @@ cpu3: cpu@300 {
+ 			compatible = "arm,cortex-a720";
+ 			reg = <0 0x300>;
  
- 			enable-method = "psci";
- 			next-level-cache = <&l2_600>;
--			capacity-dmips-mhz = <1792>;
-+			capacity-dmips-mhz = <2909>;
- 			dynamic-power-coefficient = <238>;
++			i-cache-size = <65536>;
++			i-cache-line-size = <64>;
++			d-cache-size = <65536>;
++			d-cache-line-size = <64>;
++
+ 			clocks = <&cpufreq_hw 3>;
  
- 			qcom,freq-domain = <&cpufreq_hw 1>;
-@@ -333,7 +333,7 @@ cpu7: cpu@700 {
+ 			power-domains = <&cpu_pd3>;
+@@ -210,6 +236,8 @@ l2_300: l2-cache {
+ 				cache-level = <2>;
+ 				cache-unified;
+ 				next-level-cache = <&l3_0>;
++				cache-size = <524288>;
++				cache-line-size = <64>;
+ 			};
+ 		};
  
- 			enable-method = "psci";
- 			next-level-cache = <&l2_700>;
--			capacity-dmips-mhz = <1894>;
-+			capacity-dmips-mhz = <3591>;
- 			dynamic-power-coefficient = <588>;
+@@ -218,6 +246,11 @@ cpu4: cpu@400 {
+ 			compatible = "arm,cortex-a720";
+ 			reg = <0 0x400>;
  
- 			qcom,freq-domain = <&cpufreq_hw 2>;
++			i-cache-size = <65536>;
++			i-cache-line-size = <64>;
++			d-cache-size = <65536>;
++			d-cache-line-size = <64>;
++
+ 			clocks = <&cpufreq_hw 3>;
+ 
+ 			power-domains = <&cpu_pd4>;
+@@ -246,6 +279,8 @@ l2_400: l2-cache {
+ 				cache-level = <2>;
+ 				cache-unified;
+ 				next-level-cache = <&l3_0>;
++				cache-size = <524288>;
++				cache-line-size = <64>;
+ 			};
+ 		};
+ 
+@@ -254,6 +289,11 @@ cpu5: cpu@500 {
+ 			compatible = "arm,cortex-a720";
+ 			reg = <0 0x500>;
+ 
++			i-cache-size = <65536>;
++			i-cache-line-size = <64>;
++			d-cache-size = <65536>;
++			d-cache-line-size = <64>;
++
+ 			clocks = <&cpufreq_hw 1>;
+ 
+ 			power-domains = <&cpu_pd5>;
+@@ -282,6 +322,8 @@ l2_500: l2-cache {
+ 				cache-level = <2>;
+ 				cache-unified;
+ 				next-level-cache = <&l3_0>;
++				cache-size = <524288>;
++				cache-line-size = <64>;
+ 			};
+ 		};
+ 
+@@ -290,6 +332,11 @@ cpu6: cpu@600 {
+ 			compatible = "arm,cortex-a720";
+ 			reg = <0 0x600>;
+ 
++			i-cache-size = <65536>;
++			i-cache-line-size = <64>;
++			d-cache-size = <65536>;
++			d-cache-line-size = <64>;
++
+ 			clocks = <&cpufreq_hw 1>;
+ 
+ 			power-domains = <&cpu_pd6>;
+@@ -318,6 +365,8 @@ l2_600: l2-cache {
+ 				cache-level = <2>;
+ 				cache-unified;
+ 				next-level-cache = <&l3_0>;
++				cache-size = <524288>;
++				cache-line-size = <64>;
+ 			};
+ 		};
+ 
+@@ -326,6 +375,11 @@ cpu7: cpu@700 {
+ 			compatible = "arm,cortex-x4";
+ 			reg = <0 0x700>;
+ 
++			i-cache-size = <65536>;
++			i-cache-line-size = <64>;
++			d-cache-size = <65536>;
++			d-cache-line-size = <64>;
++
+ 			clocks = <&cpufreq_hw 2>;
+ 
+ 			power-domains = <&cpu_pd7>;
+@@ -354,6 +408,8 @@ l2_700: l2-cache {
+ 				cache-level = <2>;
+ 				cache-unified;
+ 				next-level-cache = <&l3_0>;
++				cache-size = <2097152>;
++				cache-line-size = <64>;
+ 			};
+ 		};
+ 
 
 -- 
 2.34.1
