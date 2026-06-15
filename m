@@ -1,268 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-113146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id BhYEMUnKL2qvGQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 11:47:53 +0200
+	id W0M+G/TJL2qaGQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 11:46:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D77E6852B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 11:47:53 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70331685296
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 11:46:27 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=UhC+qQcL;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113146-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113146-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
-	arc=pass ("subspace.kernel.org:s=arc-20240116:i=2")
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=UymCYjNc;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=YPYqjjW1;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113147-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 104.64.211.4 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113147-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2036E3034579
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 09:46:02 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A24883004C96
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Jun 2026 09:46:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B04B03DB63F;
-	Mon, 15 Jun 2026 09:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D8093DB30F;
+	Mon, 15 Jun 2026 09:46:24 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BDF3C37A3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 09:45:59 +0000 (UTC)
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781516761; cv=pass; b=mliBGHBo8oE94woOB+J2zaH4vkOv57e5+mZTh+XZCt5k9mpxBCNRIPGpTnPskpvVnG7ELW0X9UY7AingLg8+aQuYLQSlsrrRQeLsGv3jKsmdx1YuBzfj77ROIgFfL3L8ErBMJD4vhC6ALrvrrc+AIE7UMU+paKN9sT4WM4VtjS4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781516761; c=relaxed/simple;
-	bh=+0PpjdZOtlZVdHY09clHhkAlxOivu8V467n0BMiBkJo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XWR50ejZCOS55NWtfqHyRqoWBmfYbSScbhD4yaQeXBX5JmmhH0WHkv33copzxs6BIRci6gAqfU9KXBORbBLZ+VFJ1odTESmLdMSLZU3Q/4l+lIVxuKFoO83XFr5CcfabCAMhv3W2NwuNt7tS1D8CKYfMqMYw5Mgbquy/RuU1vTQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UhC+qQcL; arc=pass smtp.client-ip=209.85.221.169
-Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-59eb57ed4cbso1133184e0c.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 02:45:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781516758; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Qh4e9++56Y/JYwnqS1T3n9KPNpdhX2mgSxmC2rje9MVRVFW2lxhMSLbcQMzcO0fmNs
-         TYe2Hb4so/ZFGxcytPiW4XeggKWR4tINXS2mY/tVNjkn0MMpiWp9DP2Nnm3fGCL0YLO+
-         YVunxHzxY9klb6ZJ+6Rnfk5pfPq49qpSKFYjR8NhOWofFKFd4y3m7EDMEyAicnA+U3OT
-         dS5nHLcJaiE2fJZieZRNIGBdAKE0M4Uc5SUM1E/lKTnQ2HI7uoYNRMIrc+EpecMmBLgz
-         pGoYjyCHHwnoFYmzZvfq7LMyhToaWXVP/fxoWz7hcnxGxouB5uKR3jIUSvE+jj2WKZ1c
-         5qKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nYEPbdWhREgm72MPD718fjlljpJlC4uJ1ZbrV25kB0g=;
-        fh=gH6TjShctf8JpfkJMWc5M3CmMkb/auscIxykcnh0klY=;
-        b=SyIqZh4m0VZ9oi1kQGhTK6q4N1RqXmN1ZvW0i63j7vB1/jQpVTZqq/cLG28uAavVpd
-         D4Qnl9zGpOwPKR/djc9VHcG9o+WaIN9t5iDycbKFpFefWm4PPrdeikYdV/IcPttDDdI2
-         DG4pNHwrvmfu05lyRVcgQi/o3H2UPkEDOniPS6lAlIvZklLn64oHa+FqrpQ+C2AShzjf
-         Ih7RglK1h5zUe2otts5TRbR38I6L7DAOJN8Ifbt+/tyyYd45a/fGsFw2T4YmF6+APg3y
-         1sjnUqF4uzoegQOCPaUuncKOFQdz6l63YuKzpcxjD2WdNw8WAZqYPG8xFklEbJVjbXDR
-         ZjbA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E527C3DB655
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 09:46:22 +0000 (UTC)
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1781516784; cv=none; b=fCT+0itSbefnZ0Gx2EiZnmHImr4ZdB+gOgXJFBbSca4eoTcmVtt1fedzc6wrl7AU0z1SUd5zfn57XPMcB/7n0BegEB0hALDYQ+c3zH2Qn0RwtGcTVXAYE5r74zl/gdG4CsX1wLLll7/+KEWY6l13cu/Ee3Yme3NQ3lnbnIaRXus=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1781516784; c=relaxed/simple;
+	bh=RfHlJyVY3qOQ1gvEl60Xwl3FcvFNo2dgj1KhjcIFKxU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rO09oohN7DhiFA23l5BAJ0fy8wQZMiw0HGOjyXkl5iHdIOFI78Sbu2uyTOaeakTL0xiOG7CMBWmmipgitEIB0bF6bdkBNIPcexOEgrQ0zMWxNQnUVsslUlTTVPqWge6KJb9XVzix0CmbTn5G3VEcfFuBMApk9Sn1GCX+G216Wf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UymCYjNc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=YPYqjjW1; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65F9ZB2i3819054
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 09:46:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	x7cxzz2bMuaIGQXwrnW+Ls6KtkN6+BZuFlXPJCuStfM=; b=UymCYjNcWzxqFDi9
+	tF0Dk421TzOUACQRVE/wKL7m0+ifqJ//5FDRjG4cHfwIF14ZbFEVJJSuYweeLNbG
+	aIeq0qaFAnRUTJwxE6eGggfC8QKBIsSNBc0jkVdXzIkyqttrShDP9bK3A0/rOenI
+	a0fWei7+NviBNAKwlD3F13oyxEfKxmu6J1g0OrTsQg1t4yKA+qaSV/Siup0zSzYb
+	52uhAUpkY7HFKXkOFXBZlVmIOHkcPnWmsURr+wLbuPlCLkB/sCMQrtHw9b7yCq01
+	6/oA5pBYYb9qBAHnyimGMwefPT10coRmA4B+xSGMDHzK4ifCrXwSonnmUqErhccb
+	zxddeg==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etew0g16r-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 09:46:22 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-8423f424d5bso2337409b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 02:46:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781516758; x=1782121558; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nYEPbdWhREgm72MPD718fjlljpJlC4uJ1ZbrV25kB0g=;
-        b=UhC+qQcLvH1X+Q2fpETrQa2DKBBtEGi33ijiEnb9QoFlWbeCr3jglJXkw9NzAqaP2r
-         8UCq7/ImMn/a4nicNOfS76K5M5VzL2Zwfu8ITQ5OsnzK+8vcMLTrx6JT18tr+2TTz/j9
-         9lodcVl/FX44HlYSy3X5uX+kLvbZRScjsHWke4jGdaxMBl4MgUWSxijcNW3O5z7+nvMQ
-         PUmp0JTzPMzA0m0UfaQ8LyIXqYyUnQlKZiUWCfXOtTVJq8oAwvtTDZ6zpJJDdkQCsP/I
-         7J5U3TKftmRjkuNjHUjpQl5dxdVRf6Gt8leIFoWtI6gk284cHOJY0ykUEgMmLsw/ycWE
-         1v4Q==
+        d=oss.qualcomm.com; s=google; t=1781516782; x=1782121582; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=x7cxzz2bMuaIGQXwrnW+Ls6KtkN6+BZuFlXPJCuStfM=;
+        b=YPYqjjW1VxI3e4KSSqegI86duuwceFORdG9dm14cfVO0gjV20kZ7ByhFL57EPLY3h0
+         RbQb66vmTlbpX+jB9TgEbc8VZ9yWp9UU1tXYA60/TQ9bamEI0foMALr/wmy1GwZwDCBl
+         xbTYoccOJrYYSfYRJ/rW54xWG/G+etCmaAkbdRglaoyEadLpFNQq7HBNUPYFqwRtnlEO
+         odnfEoStzxlS1V27NVJDcGS/tbXrMlKXBYw+ElRDPNFnaPz0kyeledmr2Dk+QkJ8Q/q1
+         p7Qv0H39NLHKoezoMCP/AjjporkMwN5GNFBpLMf41k0bcCZ7POWJxnqrq8bT7Wb3DONO
+         vbCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781516758; x=1782121558;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=nYEPbdWhREgm72MPD718fjlljpJlC4uJ1ZbrV25kB0g=;
-        b=plvkc2O3ac83+PB7Vq2CM2i+bQZIw7eErvCA++3XPMjj86KCAi1djLP1pjoIPml2pO
-         TN9zpb0r8Glwh69YELYSEhTFV1BRQAN4+A3MPi5FC0JXoZOyWDD4TcVjNYcvMTCzo+oe
-         N2GTjqzSCCiEdCFqRa/JZcx9IA3q1gtXIDj8LAWcKtKjI3hOgiq+UuJ+RLE4Wb1HauT4
-         uuivSf/WeFnGczwJmN/cdoZgyd5g55Hnm4mcqAK4lHPvw9FWhDId8dtIZy4IEyhfKlsN
-         vCJsBkpGeKWk+p8Bl8d+cl3NRdTkLbWsJobeBsJ2qiLnQlkSmNGSFCO2hfxXNeVOI5Ir
-         Cfxg==
-X-Forwarded-Encrypted: i=1; AFNElJ/9ELuxM4fluvJvMh5yVtmxhHBVfz0wNsSRGEGg83BWXW51L/GfE/2fPYxhEVUzx56NsAusyl6Q/tTMCYAW@vger.kernel.org
-X-Gm-Message-State: AOJu0YyaUmamakKSLBZik5yvwTRVbClMGWjPN2WfDzoyae1rbb1JDVPA
-	2hUn288VHtPNHWm57CxVgi/z06AgsY0BOiVxTEHEW3VhnQ+x/YNwEWvR5jDA7c3CEa2aAzauZzz
-	ZMitTpzuVJSnxME+OjU4/GDC7f0dAp8E=
-X-Gm-Gg: Acq92OE4In9mdtQop5Z6qmyMKzNd6VLO74hyonVNxCBlmRXCExCxTPlnj8dVPvkInD2
-	J/7slEiu10CI4jkHCkyBrr3bgJWq9OqfeSY8iSMo5nKRLcQAbB1tEpkRORD1yIAXW29WZIjRx5O
-	SFRtkd+y5FECKdmrSx32jsydJlcGhz9pUhwKm21/nMn6+peWF7xubPd9qpcs4Jzw/r7zU4kVGTZ
-	+/hYSIUS6bU+S3GTAxiwxSfGfe3UKg4lpoiKjV0MbNrX0Vcw+EyZusyecXyPYRcHQKtFGKtWFYf
-	a1QeBzQD
-X-Received: by 2002:a05:6102:5707:b0:6cf:37fe:2cb with SMTP id
- ada2fe7eead31-71e88e0816dmr6614649137.27.1781516758273; Mon, 15 Jun 2026
- 02:45:58 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1781516782; x=1782121582;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x7cxzz2bMuaIGQXwrnW+Ls6KtkN6+BZuFlXPJCuStfM=;
+        b=J1lutKIwcMXogMQBGkT2H7UABlvPBJyq7eaW83RNe09Y7lILfYZ5yoc6Cy2hsXQrIz
+         SasJeD+eGudSOhiDz4dd4fWBVZPMF9yFHeuwUmm33CLbC60mFpJ8Lo8KIHLiVXbYsFez
+         7CaLklLPUVy7VyQip6uy2QIxT031y8HzoxPcYMzNSkpuvT7Y4E95EBYJLCziCLVcruyu
+         e7I2P03uzTatg9GT4gJ5i2sWvz7brkywB27S1Bf1J/CkkoYNedx+bAheABLLRRRHOpa0
+         lNUN+ErNKXssYPS3p/usy8RhdvVPVgbKarzMFPzPop3+ShKDvtxQEw65bH9KvgHA14Zx
+         mAIw==
+X-Forwarded-Encrypted: i=1; AFNElJ+3pAeNH0CFywQ9rqyxF7jheLU70F8YGVmrYQcABFNC5GRau+z+n+BttcY1Uex2+ouSIQDc0iQu/iZKd6Rf@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMz5KA9sNaFhY7HD148CGiWCQJVZ+2tGt12QE8BtCBlqMl63vI
+	6BjJ8+heKVJrSu6aTqUZq+IV6Co80OlqqRW2GGnWJtsEXoLd1ux4vOaJNvzEYERqIoFuLNaPw+N
+	JVZG0CbANiUGwRs6th1Cv1MkpuXY45IZP9TY+cE9PQe6wcQavwZBEhImMhvJtXbKNBcgl2uoMcR
+	CK
+X-Gm-Gg: Acq92OEJbMZInQSOeiCv2htPKNfQ/ja7Qwrl6f46xjACdQe8MQRP1/uZHX+nrPjBCkV
+	O+i2B36JKiU6kUvGAwkQ7iFhkpnot1H0dc3gTZpgZcH9Ttf6KqDS0U7a8uPsw/CdFVBqboJ4Yn+
+	bjYU/blOlkE7pD7fnA6+nGbvndle6q7472g1z62gUcAAvCVOyzUO7UPhE/ltacPZMyPMjLuQTRM
+	3XlMLnt7dhChQoQwruThFJbKAT/g/OKM0qtO6sYtniL+NCPn4o0xPGCusZ8tQgsUtULN9FDLYKv
+	ENqn4qk7hTp+K4dIXlLkq4IW6FZkWhpLzqR8mAwViWjb3u/ILt00k2LTus5LLg3Vs8iesuYbyRu
+	Kwq6OI9HljqreSjRRzj/WW0JiXa/+7lhQU6hh03rqPL8QwGvVYOgYqjmND0/H
+X-Received: by 2002:a05:6a00:1f04:b0:843:497e:b392 with SMTP id d2e1a72fcca58-844e1939fdbmr9893055b3a.9.1781516781505;
+        Mon, 15 Jun 2026 02:46:21 -0700 (PDT)
+X-Received: by 2002:a05:6a00:1f04:b0:843:497e:b392 with SMTP id d2e1a72fcca58-844e1939fdbmr9893005b3a.9.1781516780914;
+        Mon, 15 Jun 2026 02:46:20 -0700 (PDT)
+Received: from [10.218.21.154] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434b05921bsm9597116b3a.59.2026.06.15.02.46.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Jun 2026 02:46:20 -0700 (PDT)
+Message-ID: <970e9449-ef38-47d2-8e77-9f406722afa9@oss.qualcomm.com>
+Date: Mon, 15 Jun 2026 15:16:14 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260603011333.3306102-1-qingtao.cao.au@gmail.com>
- <20260603011333.3306102-2-qingtao.cao.au@gmail.com> <0d3e4046-42d5-4f91-be85-8681215e84b4@oss.qualcomm.com>
- <CAPcThSE7wY7Zm=H5npSdCqnEFv0VEMP=3x8UkyJqwfqyEscBsg@mail.gmail.com> <cadb7c5d-d856-4217-9c02-98ba37713897@oss.qualcomm.com>
-In-Reply-To: <cadb7c5d-d856-4217-9c02-98ba37713897@oss.qualcomm.com>
-From: Qingtao Cao <qingtao.cao.au@gmail.com>
-Date: Mon, 15 Jun 2026 19:45:46 +1000
-X-Gm-Features: AVVi8CckJ1lCxpYrUd1VTz8eVNyssy9HrHtsI7IzkAAEjS2Kc7y0CraAYBtWLfI
-Message-ID: <CAPcThSFP6RkBhXt_GVpSbRKzFmb9hzMYPY8R-tjv-iYhZVThnA@mail.gmail.com>
-Subject: Re: [v1 PATCH 1/1] bus: mhi: core: fix sys error handling latency
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: mani@kernel.org, kees@kernel.org, linux-arm-msm@vger.kernel.org, 
-	mhi@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Vivek Pernamitta <quic_vpernami@quicinc.com>, Qingtao Cao <qcao@digi.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] ASoC: qcom: q6apm-lpass-dais: Add MI2S clock
+ control
+To: Val Packett <val@packett.cool>, Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+References: <20260608023011.942228-1-mohammad.rafi.shaik@oss.qualcomm.com>
+ <20260608023011.942228-3-mohammad.rafi.shaik@oss.qualcomm.com>
+ <8b2318ff-d07c-4c2d-9c2d-ef7c5c763096@packett.cool>
+Content-Language: en-US
+From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+In-Reply-To: <8b2318ff-d07c-4c2d-9c2d-ef7c5c763096@packett.cool>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDEwMiBTYWx0ZWRfXw8Bbs75FVB5m
+ U/KUY3UNlEzg4y8tZaHwBwjO423lhUspPgePp9zY/fK6gkx09kCE7S8oLNvDeF872AeYZwzL4R3
+ glB0Cu7yKFUy1Ehl0Cx54E+GBSpTjbM=
+X-Authority-Analysis: v=2.4 cv=QLlYgALL c=1 sm=1 tr=0 ts=6a2fc9ee cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=wLQ3rIZANEYmN962rggA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDEwMiBTYWx0ZWRfX8NuVs5pZcFql
+ tXnZMZhcsOjCZ3l8427tUV4SCPleyunAH1TnHiZElBcTeySK3OzCauAtoPmlB57SP9sPC+hRJWJ
+ V1E64fLPLd22yy8US0jECq1ovbYMTVd42o231SIu4ozTDYPhH9ZwbxvgOOwCjt2FODMxf/Y7WdQ
+ WRzkjV5WBrKh0b/bEporBHie6Qhk+4Ix8cvk0jOgJsgVLiBnrgo5CeqevcP3dIUuf9ubgOcyeaN
+ 0+Kx1wykuttPI5xe8ILzyz/raTOu1mh2uzesdANDzfGYyIAUBo64IRh5xLKbOVsgVb8yL2tuWIA
+ 9axRNJOa+T3FTPcSL6ZO08OBDpBJz1DBrRV/w3ZjgxZlKxz94uY8UiwofE9kjQ/fBdniI9jNsp6
+ p89Ms5Z+ywFl4zIJhzPk8v7e3//cM7Ym5evjdbHUCmV751GS9JNNyG8+/z0NpNIGwbxPgMbbJ2m
+ 8OC/x1V4o90K/kE0v1A==
+X-Proofpoint-GUID: wu79QTvIUhlxqP8R3_tXza-j-ysO_I0t
+X-Proofpoint-ORIG-GUID: wu79QTvIUhlxqP8R3_tXza-j-ysO_I0t
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-15_02,2026-06-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 adultscore=0 spamscore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150102
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-113146-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:krishna.chundru@oss.qualcomm.com,m:mani@kernel.org,m:kees@kernel.org,m:linux-arm-msm@vger.kernel.org,m:mhi@lists.linux.dev,m:linux-kernel@vger.kernel.org,m:quic_vpernami@quicinc.com,m:qcao@digi.com,s:lists@lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER(0.00)[qingtaocaoau@gmail.com,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-113147-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[qingtaocaoau@gmail.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_TO(0.00)[packett.cool,kernel.org,gmail.com,perex.cz,suse.com];
+	FORGED_RECIPIENTS(0.00)[m:val@packett.cool,m:srini@kernel.org,m:lgirdwood@gmail.com,m:broonie@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:krzk@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:srinivas.kandagatla@oss.qualcomm.com,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[mohammad.rafi.shaik@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:dkim,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,vger.kernel.org:from_smtp,qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mohammad.rafi.shaik@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ALIAS_RESOLVED(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 4D77E6852B0
+X-Rspamd-Queue-Id: 70331685296
 
-Yes indeed, this is exactly what the original commit,
-44b1eba44dc537edf076f131f1eeee7544d0e04f, by Loic Poulain on 2021 Jun
-21 was about:
 
-    On graceful power-down/disable transition, when an MHI reset is
-    performed, the MHI device loses its context, including interrupt
-    configuration. However, the current implementation is waiting for
-    event(irq) driven state change to confirm reset has been completed,
-    which never happens, and causes reset timeout, leading to unexpected
-    high latency of the mhi_power_down procedure (up to 45 seconds).
 
-    Fix that by moving to the recently introduced poll_reg_field method,
-    waiting for the reset bit to be cleared, in the same way as the
-    power_on procedure.
+On 6/8/2026 8:19 AM, Val Packett wrote:
+> 
+> On 6/7/26 11:30 PM, Mohammad Rafi Shaik wrote:
+>> Add support for MI2S clock control within q6apm-lpass DAIs, including
+>> handling of MCLK, BCLK, and ECLK via the DAI .set_sysclk callback.
+>> Each MI2S port now retrieves its clock handles from the device tree,
+>> allowing per-port clock configuration and proper enable/disable during
+>> startup and shutdown.
+>> [..]
+>> @@ -297,6 +373,59 @@ static const struct snd_soc_component_driver 
+>> q6apm_lpass_dai_component = {
+>>       .remove_order   = SND_SOC_COMP_ORDER_FIRST,
+>>   };
+>> +static int of_q6apm_parse_dai_data(struct device *dev,
+>> +                   struct q6apm_lpass_dai_data *data)
+>> +{
+>> +    struct device_node *node;
+>> +    int ret;
+>> +
+>> +    for_each_child_of_node(dev->of_node, node) {
+>> +        struct q6apm_dai_priv_data *priv;
+>> +        int id;
+>> +
+>> +        ret = of_property_read_u32(node, "reg", &id);
+>> +        if (ret || id < 0 || id >= APM_PORT_MAX) {
+>> +            dev_err(dev, "valid dai id not found:%d\n", ret);
+>> +            continue;
+>> +        }
+>> +
+>> +        switch (id) {
+>> +        /* MI2S specific properties */
+>> +        case PRIMARY_MI2S_RX ... QUATERNARY_MI2S_TX:
+>> +        case QUINARY_MI2S_RX ... QUINARY_MI2S_TX:
+> 
+> SENARY is also a thing these days btw..
+> 
 
-Thanks,
-Qingtao
+Ack, will include SENARY dai also.
 
-On Mon, Jun 15, 2026 at 2:07=E2=80=AFPM Krishna Chaitanya Chundru
-<krishna.chundru@oss.qualcomm.com> wrote:
->
->
->
-> On 6/11/2026 4:29 AM, Qingtao Cao wrote:
-> > Hello Krishna,
-> >
-> > Thanks for your reply!
-> >
-> > I am using an old 5.17.0 kernel and Sierra Wireless EM9291, the MHI
-> > pci_generic.c driver was modified a bit to support it,
-> > which is very similar to EM919x and the modem_sierra_em919x_config
-> > descriptor was reused for it (thus the timeout_ms
-> > =3D 24000ms, or 24s applies)
-> >
-> > Without the proposed change, the AT!RESET handling will finish after
-> > timeout in 24 seconds, whereas with the change,
-> > the handling can finish in about 11 seconds
-> >
-> > I was inspired by another earlier commit to fix MHI_STATE_RESET handlin=
-g in
-> > mhi_pm_disable_transition().
-> >
-> > Warm regards,
-> > Qingtao
->
-> Looks like device is clearing reset state, but we are not getting any msi
-> to trigger mhi state event. As MSI is not expected to send msi from the
-> device after clearing MHI RESET.
->
-> Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
->
-> - Krishna Chaitanya.
->
-> > On Wed, Jun 10, 2026 at 10:40=E2=80=AFPM Krishna Chaitanya Chundru <
-> > krishna.chundru@oss.qualcomm.com> wrote:
-> >
-> >>
-> >> On 6/3/2026 6:36 AM, Qingtao Cao wrote:
-> >>> Bring forward the idea to fix the power down latency in
-> >>> mhi_pm_disable_transition() further to mhi_pm_sys_error_transition()
-> >>> so that the transition into system error (triggered by AT!RESET)
-> >>> won't have to return only after the timeout of up to 24 seconds
-> >> Hi,
-> >>
-> >> Generally we should not see this delay, as device is actually clearing
-> >> reset. can you give more details what is the device you are using and
-> >> kernel you
-> >> are using etc.
-> >>
-> >> - Krishna Chaitanya.
-> >>> Signed-off-by: Qingtao Cao <qingtao.cao.au@gmail.com>
-> >>> ---
-> >>>  drivers/bus/mhi/host/pm.c | 14 +++-----------
-> >>>  1 file changed, 3 insertions(+), 11 deletions(-)
-> >>>
-> >>> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> >>> index f799503c8f36..9d29f1591a45 100644
-> >>> --- a/drivers/bus/mhi/host/pm.c
-> >>> +++ b/drivers/bus/mhi/host/pm.c
-> >>> @@ -651,21 +651,13 @@ static void mhi_pm_sys_error_transition(struct
-> >> mhi_controller *mhi_cntrl)
-> >>>       /* Trigger MHI RESET so that the device will not access host
-> >> memory */
-> >>>       if (reset_device) {
-> >>> -             u32 in_reset =3D -1;
-> >>> -             unsigned long timeout =3D
-> >> msecs_to_jiffies(mhi_cntrl->timeout_ms);
-> >>> -
-> >>>               dev_dbg(dev, "Triggering MHI Reset in device\n");
-> >>>               mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
-> >>>
-> >>>               /* Wait for the reset bit to be cleared by the device *=
-/
-> >>> -             ret =3D wait_event_timeout(mhi_cntrl->state_event,
-> >>> -                                      mhi_read_reg_field(mhi_cntrl,
-> >>> -
-> >>  mhi_cntrl->regs,
-> >>> -                                                         MHICTRL,
-> >>> -
-> >>  MHICTRL_RESET_MASK,
-> >>> -                                                         &in_reset) =
-||
-> >>> -                                     !in_reset, timeout);
-> >>> -             if (!ret || in_reset) {
-> >>> +             ret =3D mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs,
-> >> MHICTRL,
-> >>> +                              MHICTRL_RESET_MASK, 0, 25000,
-> >> mhi_cntrl->timeout_ms);
-> >>> +             if (ret) {
-> >>>                       dev_err(dev, "Device failed to exit MHI Reset
-> >> state\n");
-> >>>                       write_lock_irq(&mhi_cntrl->pm_lock);
-> >>>                       cur_state =3D mhi_tryset_pm_state(mhi_cntrl,
-> >>
->
+Thanks & Regards,
+Rafi.
+
+> 
+> ~val
+> 
+
 
