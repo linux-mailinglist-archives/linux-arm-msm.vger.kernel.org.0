@@ -1,209 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-113335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id aYS5DnMMMWpOawUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 10:42:27 +0200
+	id rTvKHlMSMWqpbAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:07:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 924BE68D403
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 10:42:26 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D459568D5F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:07:30 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=linaro.org header.s=google header.b="J7OZ/uPb";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113335-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113335-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=linaro.org;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b="YKGGi/f4";
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113336-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113336-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 25FFA305A8FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 08:39:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 18E88307C7F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 09:07:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C361A41360C;
-	Tue, 16 Jun 2026 08:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A25B741169B;
+	Tue, 16 Jun 2026 09:07:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B9CF29346F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 08:39:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4383B42E0;
+	Tue, 16 Jun 2026 09:07:21 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781599142; cv=none; b=tmbPHTC/cOMCkmcDt+uFkRMVu8oxXBXMe+Jjqr0+URfDE9xGpAAwuOtrAvqPjNIgW5Nht3MJn39S8MvHik4cqZPa4qALCxmbinDPlmu1QJhbU5IHRMNDeyiaSobWNEtOLPoLbH9pnmBevBqGSqU0nt36Og3rjWPRi0tsvJFNKhY=
+	t=1781600842; cv=none; b=Uu+AH6mWy8VnQI3SaoL0TNNM09fPq4OKgUdpl3Gxjk99OW15c/QYLhLHdx7NTi0QzVUuN7qxwhWrHmUJIdYI+/WY23Umrbk0V4HV70OaYL6/1FP697Jugf5Jf1OfvivlKy9Mi/NTWwp4Z3+Cw3dOVcu1odR1schy9aarAFc2RFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781599142; c=relaxed/simple;
-	bh=k8aQq5wGmFAB4J4lBgkr9j72Y9UninjoFJHtA/6CKlU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=fGZiGCPW+1fz4T4TUiey6jrBBxfjdZBH9bfWw5UPUF1PKoCFnqtX+FOVZ7ouASMWnAWsQ89eqmwNW+/VCt6k5U6XcMxthFD/iLK/cjAnoz9F6FbaDCB5LnwFu46pN21grOoksTLc53xLP+Mpamp/0OBpajKqcOyi0nOsLK0tQzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J7OZ/uPb; arc=none smtp.client-ip=209.85.128.49
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-490b12270b3so26291615e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 01:39:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1781599140; x=1782203940; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kTZp3Url2zZDdRq9wvwMvf217hOXdGlg4G7ifVPCt0M=;
-        b=J7OZ/uPbYioBaElB78mQDC8gLuglE0SIflZu864FX+21Osctd+gkjzlUrqNWORzpxR
-         OIDofk8l2k3i8E8nCtN+MtlehMgE9BQiggK5SCDy8TMNWUq795eSwo0bRunt9OPTivnO
-         A1GO4Icw/4yTOsDFycv0G8zAegc2SBABQcXb2wHquEALpuU2AcPIJUpRi4A2BPeckiuR
-         FtEKDlfmyCbXPgGB74M9IzWexkAm1POuDWUrMdkFtVYgrXIIXkpqvk68YcrQCrNBtyG+
-         C6PMzV8A5c8o1gJyJNynwnMYxyF/YHiibeQF7fZq1nhtIwBGXbJft288cPp5/Mvi4Os4
-         THAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781599140; x=1782203940;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kTZp3Url2zZDdRq9wvwMvf217hOXdGlg4G7ifVPCt0M=;
-        b=fin0d1DDWr+EDCrqT1ou9ZMmbOPXmRQNnUKw+2hIequ410lkclOTfzUjRazeen4KW1
-         QVhU8XKNE/gb9TDb/oEfuhlAgBu0QDytmuL7oKUjtq60k6gROKUlOn4Q1ykWzuXjs5yK
-         1qRgo+Eaa1gkQ42tNmuH8Ya2dLXttjjaBU2JaRMCpMdD40BsbjktB36Gkd7dXblhb/2P
-         xzDp8GGeIy8Iz9qEBBSIR+s0SMLCFyq9brnVQ2Xvf6r1M6FSJfZMHC4V1Pf4RyIWJ4xy
-         OIAW2tEnHRXGHmwldOF2cLvWj1W2t4wlRrQB6/Dchnc16BZQFzSmEyxEo8bVdWAX7lva
-         Ubog==
-X-Gm-Message-State: AOJu0YycxOei1a/ap2Q0VtlHqika2wdmJeD2m16GsuGyMXcFsB/6U0+y
-	ZOiTNzn+Xh8KNm6UNIEL0xdarUfW6ie2yom/5EsbEKBD2dZB8C22kjCpm4atKJ3tRo4=
-X-Gm-Gg: Acq92OG1xzGmn54VCljwtUtR7U6h0kBg7yxAloFQnW7rKBU3ffiSB3ycQ07wyrMAIgk
-	mJZHFd49QfnfwoNP1csl7kR5VKrjcWK8Cw5PZx5TCzohk0bgoHOkTRKikJ9yITYvRIsAOxUVJfN
-	3hGc/WMQ7TPyezDIN2ftTxkc8LwG1p03Lfcn+R6UFSLEdMNmL/uivut7A+Fero/9pC30S/5FpiR
-	qDmQOGSTTd3RRibiFHZigksgwJ85okUyrIJI0nRnQYczjtddEkqWCTlC1BWKjFfQy3s1EgPtOD/
-	ci9VxNVlxFP8eyJmq42rJbOuaOXpuDEChBAkDTWlR2XinoOGeHs4D9OYPVCMXID1q7OTqCNxUMz
-	FXbgSk8eXkH6uTXgoOjxIi0XZFUOcfG2y/dfw7jm/3UrZbaW6SHxXeXtwHfMHcGzSk2kbNrurXe
-	adeoAw/uGa9GBq8SbR2qd2oteTy9t1XA==
-X-Received: by 2002:a05:600c:34c8:b0:492:1e36:8c4b with SMTP id 5b1f17b1804b1-4921e368c91mr191827965e9.36.1781599139730;
-        Tue, 16 Jun 2026 01:38:59 -0700 (PDT)
-Received: from [10.3.4.22] ([212.133.41.77])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4606f2b0c10sm42736575f8f.21.2026.06.16.01.38.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jun 2026 01:38:59 -0700 (PDT)
-Message-ID: <50b8d6e1-7038-4752-a200-441736dc7135@linaro.org>
-Date: Tue, 16 Jun 2026 10:38:57 +0200
+	s=arc-20240116; t=1781600842; c=relaxed/simple;
+	bh=qzeryRYpdLGCVYS4KABk0ntO6zNjQc2NMGaaVW2AJ5c=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=b7m2yfNhCMIn7vv3AniOLKfXz6wXqzzGSQvoEio+1291WTnYue/ZUJTtYXofMYkKRDweWWkPPjAH1y+zcDQmaJC1eaCMesgAkSEuPMhPUBy4FdMnN3ao0Mqd0ZTyFtFpwAS8Izxu+cLE5pNSpVJWMKS++TwFIEtofMOgyt1bnrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YKGGi/f4; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65G65fUU2699304;
+	Tue, 16 Jun 2026 09:06:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=Q49hmB3FmH5hqN2TomYa5f2WQRUZP4pblCY
+	yLO2OOAY=; b=YKGGi/f4XCOPB00jiJkPc2F4KNGVhxaYwg+W6DvfHPd1v1rK2MP
+	TP80dRpoIa8VwRfUeai1/0CTYNcNTBRxtBz7SqH4kU62EBIMbwrD/bdOnFnUi4Vc
+	4D++GBoVsXvT84UsgJG3lbdInXYzrddrhyCKuUu3vk5j6H2YVBR49nsnc+X8Fv6V
+	0NlS9FXK2fetZV/uL4YGOdz/73XMQ4weuEPx3bSKHPW7I4n1LGohy64OV8s5nPES
+	gIEQpZ4AH1q34fK+cynWT5GC2XeQiTauAWuEFLgV7avYkOfofedwoC4jvxYRKmrI
+	pmpTC6M98SfG1200LokYJ5cRf4h4XqB3iBQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu09k8xcn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jun 2026 09:06:56 +0000 (GMT)
+Received: from pps.filterd (NALASPPMTA01.qualcomm.com [127.0.0.1])
+	by NALASPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 65G95sE7021280;
+	Tue, 16 Jun 2026 09:06:55 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 4ettxpvpbr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jun 2026 09:06:55 +0000 (GMT)
+Received: from NALASPPMTA01.qualcomm.com (NALASPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65G96tRO023199;
+	Tue, 16 Jun 2026 09:06:55 GMT
+Received: from hu-devc-lv-u22-c.qualcomm.com (hu-cang-lv.qualcomm.com [10.81.25.255])
+	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 65G96tIc023194
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 16 Jun 2026 09:06:55 +0000 (GMT)
+Received: by hu-devc-lv-u22-c.qualcomm.com (Postfix, from userid 359480)
+	id 3E961644; Tue, 16 Jun 2026 02:06:55 -0700 (PDT)
+From: Can Guo <can.guo@oss.qualcomm.com>
+To: bvanassche@acm.org, beanhuo@micron.com, peter.wang@mediatek.com,
+        martin.petersen@oracle.com, mani@kernel.org
+Cc: linux-scsi@vger.kernel.org, Can Guo <can.guo@oss.qualcomm.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+        linux-kernel@vger.kernel.org (open list),
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM MAILING LIST)
+Subject: [PATCH] scsi: ufs: core: Avoid possible memory reclaim deadlock in TX EQTR context
+Date: Tue, 16 Jun 2026 02:06:42 -0700
+Message-Id: <20260616090654.421850-1-can.guo@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 1/6] dt-bindings: clock: qcom: gcc-sm8450: Add missing
- power-domains property
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Abel Vesa <abelvesa@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
- Brian Masney <bmasney@redhat.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260615-topic-sm8x50-tie-gcc-to-cx-v2-0-6b5752dd4747@linaro.org>
- <20260615-topic-sm8x50-tie-gcc-to-cx-v2-1-6b5752dd4747@linaro.org>
- <1d4f3e4e-ec9e-44d0-9e4a-651b6920015c@kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <1d4f3e4e-ec9e-44d0-9e4a-651b6920015c@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDA5MCBTYWx0ZWRfX7Dur2vpheyW/
+ inVrxZpw/kv8sUY068o7me6t/1g3r2PtL5rsYIPXRQUjGhXRnEJIvIlvhmxh80IuBE2HiLk4fOq
+ AJz5o/8xjXWZXLkY/tRh+QxunzbyAgE=
+X-Proofpoint-GUID: 2Rc9tUVEWN-SITlOHqjE6lZorYvKQYel
+X-Authority-Analysis: v=2.4 cv=DoZmPm/+ c=1 sm=1 tr=0 ts=6a311230 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=ZpdpYltYx_vBUK5n70dp:22 a=c92rfblmAAAA:8 a=EUspDBNiAAAA:8
+ a=GQIZyLKiKp83YMogZvcA:9 a=GvGzcOZaWPEFPQC_NcjD:22
+X-Proofpoint-ORIG-GUID: 2Rc9tUVEWN-SITlOHqjE6lZorYvKQYel
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDA5MCBTYWx0ZWRfXzjJ53/4VnP5K
+ Mjkv4x6wFlW00f76ja7gjSr5XQXbC0lUzdJvP1aQ+esGoAdCc2ZBkeTC8fga7vWkaoq7ZYWR2V8
+ fiOwiv0D6f3KCwOiNjJWjtAmuG4MhLmMvEeHZRVXRkCpOdesXXWKEp0qcbAiZ3by4eLKrlsFtVF
+ rZWYnXEtpnyK5944MUixxL3mheyeSd5tEl3QaxHGaYPusdyeXFfiJazTEnqR/f4H3U2KV8icvor
+ KRV2jjTl9kK2OFL80F3foIM3h1hBct8xoXLnzczDbOij1wPlixjwRD0vulezElxktkY3mpw2+2c
+ /K4jkhOivEEfnIxokUTJPreF4GTqCWcEZ0udzyE/7dkNjX3JlhCRbl0fqO9nnJc2YJ482lE2J8O
+ 0ued2yxAe9c9jQap9fII+wV9R7pQbS+fc1AyOMFFL6uWAb5VJZfaTBGFZwRNJP/ZmuYrei8Hxb+
+ 2C3EVAtjck9Ere4ho5g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-16_02,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 impostorscore=0
+ suspectscore=0 priorityscore=1501 spamscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160090
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-113335-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	TO_DN_SOME(0.00)[];
-	HAS_ORG_HEADER(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	TAGGED_FROM(0.00)[bounces-113336-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:krzk@kernel.org,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:vkoul@kernel.org,m:abelvesa@kernel.org,m:konradybcio@kernel.org,m:quic_saipraka@quicinc.com,m:bmasney@redhat.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_SENDER(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp,linaro.org:from_mime,linaro.org:dkim,linaro.org:email,linaro.org:mid,linaro.org:replyto];
-	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	ALIAS_RESOLVED(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	REPLYTO_EQ_FROM(0.00)[]
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_SENDER(0.00)[can.guo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:bvanassche@acm.org,m:beanhuo@micron.com,m:peter.wang@mediatek.com,m:martin.petersen@oracle.com,m:mani@kernel.org,m:linux-scsi@vger.kernel.org,m:can.guo@oss.qualcomm.com,m:alim.akhtar@samsung.com,m:avri.altman@wdc.com,m:James.Bottomley@HansenPartnership.com,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,s:lists@lfdr.de];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[can.guo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sashiko.dev:url,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	TO_DN_SOME(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[10]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 924BE68D403
+X-Rspamd-Queue-Id: D459568D5F3
 
-On 6/16/26 10:36, Krzysztof Kozlowski wrote:
-> On 15/06/2026 18:57, Neil Armstrong wrote:
->> In order for the GCC votes on the GDSCs it provides to be propagated
->> to CX, CX needs to be declared as power domain of the GCC.
-> 
-> I would be happier to see here short mentioning what is the effect of
-> missing votes - do things work? - as justification why required
-> property, thus ABI change, is justified.
-> 
-> The DTS patches gave me that answer, but should be here as well the best.
-> 
-> Well, don't want to stall anything here, so anyway:
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+TX EQTR may run while devfreq gear scaling has quiesced the UFS tagset. In
+that context, functions ufshcd_tx_eqtr(), __ufshcd_tx_eqtr() and
+ufs_qcom_get_rx_fom() allocate memory with GFP_KERNEL. If direct reclaim
+is triggered, reclaim/writeback can depend on I/O to UFS device. Because
+the queue is quiesced, this can cause deadlock.
 
-Thanks I'll update the commit message with the same explanation as
-the DT changes.
+Use GFP_NOIO for TX EQTR memory allocations:
+- params->eqtr_record in ufshcd_tx_eqtr()
+- eqtr_data in __ufshcd_tx_eqtr()
+- params in ufs_qcom_get_rx_fom()
 
-Thanks,
-Neil
+Fixes: 03e5d38e2f98 ("scsi: ufs: core: Add support for TX Equalization")
+Closes: https://sashiko.dev/#/patchset/20260615132834.2985346-1-can.guo@oss.qualcomm.com?part=2
+Signed-off-by: Can Guo <can.guo@oss.qualcomm.com>
+---
+ drivers/ufs/core/ufs-txeq.c | 4 ++--
+ drivers/ufs/host/ufs-qcom.c | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-> 
->>
->> Document the missing power-domains property to that purpose.
->>
->> Fixes: 72a0ca203ca7 ("dt-bindings: clock: Add SM8450 GCC clock bindings")
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> 
-> 
-> 
-> Best regards,
-> Krzysztof
+diff --git a/drivers/ufs/core/ufs-txeq.c b/drivers/ufs/core/ufs-txeq.c
+index 4b264adfdf49..3a2fb5329d27 100644
+--- a/drivers/ufs/core/ufs-txeq.c
++++ b/drivers/ufs/core/ufs-txeq.c
+@@ -1059,7 +1059,7 @@ static int __ufshcd_tx_eqtr(struct ufs_hba *hba,
+ 			    struct ufs_pa_layer_attr *pwr_mode)
+ {
+ 	struct ufshcd_tx_eqtr_data *eqtr_data  __free(kfree) =
+-		kzalloc(sizeof(*eqtr_data), GFP_KERNEL);
++		kzalloc(sizeof(*eqtr_data), GFP_NOIO);
+ 	struct tx_eqtr_iter h_iter = {};
+ 	struct tx_eqtr_iter d_iter = {};
+ 	u32 gear = pwr_mode->gear_tx;
+@@ -1217,7 +1217,7 @@ static int ufshcd_tx_eqtr(struct ufs_hba *hba,
+ 	if (!params->eqtr_record) {
+ 		params->eqtr_record = devm_kzalloc(hba->dev,
+ 						   sizeof(*params->eqtr_record),
+-						   GFP_KERNEL);
++						   GFP_NOIO);
+ 		if (!params->eqtr_record)
+ 			return -ENOMEM;
+ 	}
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index c084ccc72523..e7f104987c6a 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -2760,7 +2760,7 @@ static int ufs_qcom_get_rx_fom(struct ufs_hba *hba,
+ 			       struct tx_eqtr_iter *d_iter)
+ {
+ 	struct ufshcd_tx_eq_params *params __free(kfree) =
+-		kzalloc(sizeof(*params), GFP_KERNEL);
++		kzalloc(sizeof(*params), GFP_NOIO);
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+ 	struct ufs_pa_layer_attr old_pwr_info;
+ 	u32 fom[PA_MAXDATALANES] = { 0 };
+-- 
+2.34.1
 
 
