@@ -1,180 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-113331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 6hNsAy0JMWqjagUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 10:28:29 +0200
+	id yUE+Gv8KMWr7agUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 10:36:15 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88CD368D27E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 10:28:28 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7D4D68D349
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 10:36:14 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Uo0jo+1X;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113331-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113331-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=Q257ADpZ;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113332-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113332-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 75B1B30207D9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 08:27:34 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 94564301F176
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 08:36:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FF8E40E8D9;
-	Tue, 16 Jun 2026 08:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2903F4183BE;
+	Tue, 16 Jun 2026 08:36:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCD43B47CF;
-	Tue, 16 Jun 2026 08:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29041165F16;
+	Tue, 16 Jun 2026 08:36:09 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781598453; cv=none; b=ThKx9wbBwtTIReRZbb9VYjbnH+/Hj/wWRCgFmunBxAO3da4WaodJ1NQq5UIDCI5bu+UEaVl/dRjM2CB506s+sHM4XozlWiV/rmSGXn63LDbxjYxAcxc2RMAErBFiLr4NbCQjw45m87wLbNHp12n/5xpke4rbYo8FenU8EleA24k=
+	t=1781598971; cv=none; b=rHu6SbpojjHlIZmTfYSJU57MlgR/fOtDjzWm0w3WsA/+U0DJQu8AaMgp6+mlomCh8A20vk8DeTq6UuZM7EfzxVFiA2iVe9i3zv2qdXGOqwjbQfFvB0c/Un+hzFn+BcBff5biozgFxjPIEVmPAScFMq+Vj+db6Uf065D+j337HxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781598453; c=relaxed/simple;
-	bh=OZlrVaq8cSFNA3Rt09tG3hk2INw3iVFCfo5f5Ru+45M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UHHU3mLpJyMun35zKKLW4Y3l9wHiqeNZx4eZgivKMed8xcII4ZVToopNRz3FSYKduxiea670f5ysov8OH4Bkgp3R4a71fuKdqy39JjieTi1F+yKXOao/IKdMiRISWa328fDhgamoS+BK+e+yALKU4Kv7x9tbOH/7CH95cBDNftE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uo0jo+1X; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30781F000E9;
-	Tue, 16 Jun 2026 08:27:27 +0000 (UTC)
+	s=arc-20240116; t=1781598971; c=relaxed/simple;
+	bh=boZCRrX6QeXgrOrWVTQWF4Bm6PIPot4WDoMly6Jm8rQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lx9uKPBWXBi/6qKgwVAoYeuLdIdicsL+5CeO/iCKDZvRUcrGsDbhEf4nnEbv7Queyg8+1y40lB2QAo6WIAKCGxF5XsO77GkT7ND0DV+RM4SBy2w9hJix0jZO3mSKEoZ5RGMKPzgM+3Zl57TTAQJMV19GI5bP8sBCGfCUibhO9YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q257ADpZ; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF51D1F000E9;
+	Tue, 16 Jun 2026 08:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781598452;
-	bh=Q0fLaFQ950eBptOVg8md2eixmDLx1TIa5yy+9sn5UnI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Uo0jo+1XthHZVO2hdLrC0mDJGqQqRvUVfi5P8TKbPbggYu92RYZGF270mBt2damKG
-	 fYpKdCUQDLPeW8jfZrn39XtOZTuuoiTJiTIY6cb1UFquKj26esMnjxENMI7AcviBmi
-	 gEtac6MDfV048DQLSM65MTyRvmhfjkVcMddqm/WQ5v5hWHsW1HXtY5u9bWg6kn9nJk
-	 oSQCt8WHPSn5gu2VkLuKYjVwloWEkEaKPDmzrMQIRECcK8NNVp1C1rLYoY+mQ51LhP
-	 m8dAMVkVtvxcoa1vPBC7o6Mv0fGDQOJkLHsaqSAcovFRy0X+yipacJIlJzz0GNI8m8
-	 zUb1VMOLk2ZHA==
-Date: Tue, 16 Jun 2026 09:27:25 +0100
-From: Sudeep Holla <sudeep.holla@kernel.org>
-To: Pragnesh Papaniya <pragnesh.papaniya@oss.qualcomm.com>
-Cc: Cristian Marussi <cristian.marussi@arm.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-	MyungJoo Ham <myungjoo.ham@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Dmitry Osipenko <digetx@gmail.com>,
-	Thierry Reding <thierry.reding@kernel.org>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rajendra Nayak <rajendra.nayak@oss.qualcomm.com>,
-	Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-tegra@vger.kernel.org,
-	Amir Vajid <amir.vajid@oss.qualcomm.com>,
-	Ramakrishna Gottimukkula <ramakrishna.gottimukkula@oss.qualcomm.com>
-Subject: Re: [PATCH RFC v7 0/9] firmware: arm_scmi: vendors: Qualcomm Generic
- Vendor Extensions
-Message-ID: <20260616-responsible-junglefowl-of-chaos-7eda7d@sudeepholla>
-References: <20260610-rfc_v7_scmi_memlat-v7-0-f3f68c608f25@oss.qualcomm.com>
+	s=k20260515; t=1781598969;
+	bh=T2WO11Yvy+joBc64YU8rn0xdejIi6A7h3daYt6wUBxs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=Q257ADpZYeMLuChuW2jSYWrd0tnjSrkqsN4PQaMhMOqInxJQTSZcFYbPyDhxh4T+T
+	 DGttlVMNygBLGqMYQNAafrIZxn0evicke0WXQvqWt0u9uxHF6YQowjMZ5A+dXMTTHu
+	 ov2EipnouHO/wHMIE9Y0pBSvOZY7EPxsEOZKNWNrI5ctW8FK6GLQUQTRGvwz//DhqM
+	 V/nznwde2Mv+KYyhV/WHF6t7cRPXBy2a24U0Vq1NDulHUepYuZUUzh0cebQLtNjT5O
+	 b6eIhOGIFZGquRq5liereztJR2O2luO4HfBvKdJQZfFVR+T510xG1LhN4fmD1CkQUM
+	 NXG9cCK+vXutg==
+Message-ID: <1d4f3e4e-ec9e-44d0-9e4a-651b6920015c@kernel.org>
+Date: Tue, 16 Jun 2026 10:36:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260610-rfc_v7_scmi_memlat-v7-0-f3f68c608f25@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/6] dt-bindings: clock: qcom: gcc-sm8450: Add missing
+ power-domains property
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Abel Vesa <abelvesa@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+ Brian Masney <bmasney@redhat.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260615-topic-sm8x50-tie-gcc-to-cx-v2-0-6b5752dd4747@linaro.org>
+ <20260615-topic-sm8x50-tie-gcc-to-cx-v2-1-6b5752dd4747@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGPBBMBCgA5AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJp2mE8AAoJEBuTQ307QWKbeaIP
+ /ihHTkTW4KsN/DQ945JJbyu5tI0J80Wue7QyyLPglyKfhgb5cLLNPpOC8cCIJsc7+W3i2P38
+ s2c1cOH6CYGE7E9ur3Vfme8NW2S2I/Z8VC7bZnzyS23wT17LrsdS/qCpx4o8U+pt/xdXDKph
+ EGRYrIEmMpUWvyYzyYKGIe25FtaayIIKpq8eZYyFcp2f/sG5IkOW5uZzHPMPdcm87jU7fyuQ
+ rAU2vx9r+ulUfQ/q9Z2roC/ode3l7t2pN7BCBCsUDp6JCrUyZrtT1e7EbA0ZRP3aOBNk2P2E
+ DQOgJGjGdO5Yx2Y9LFtltu6JbsBJHi1syGRX3AtQYOMc4Y1WGoeZJmMlvKj2ZqqXNkcWi2DS
+ IQEWB0uW6CqFsBBIMGDa+6OzdaVO/uAVXWDWml02Men3CILdI1MbVjoh8ECqYUY7OQ+JJvNN
+ vnliuq5WM3Ghd3jg/LZZrxXjdIginRHFQCjIJYLKpLZWm1/iDFedcfzqRNYmTtqscdCNHW41
+ oT3Z7BmO9xwdjuwBS6nmS6JJwkbf5Ot2QR4pB/DRU7ZwjT1qHe+9r9gF32wXVQatHNGK/VVu
+ sfwOnkdxCWkp/qb2gdQRmZh+SedStWshigH6sNfuHBloF/q+hjMRc8b2m326OZdrbSHwY1Sz
+ vti8Hn7n8NjdHO9LKB7BIdjkA9DA5WsqOuVCzsFNBFVDXDQBEADNkrQYSREUL4D3Gws46JEo
+ Z9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLueMNsWLJBv
+ BaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6eiOMheesVS
+ 5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wAGldWsRxb
+ f3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA6z6lBZn0
+ WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9YegxWKvX
+ XHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt91pFzBSO
+ IpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gUBLHFTg2h
+ YnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/JoFzZ4B0
+ p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu4vXVFBYI
+ GmpyNPYzRm0QPwARAQABwsF2BBgBCgAgAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtBYpsFAmna
+ YUkACgkQG5NDfTtBYptX+BAApg32CkxwNucNEi8WfWA8oKkW0y8YDuY6ORMo9FWNGiT/OTy0
+ vyJrLocrpn86zwfjVp+eCrssPYh8eqJfnWqmYv6ACQtHPYzPZQ3mSo8H97Z01oUxITzCxpXm
+ ZkLgPIqtDPcC2E3dPM/fVxcyowM8XsaMA9wcsaUYrta8toOq2b9tKcjleKMfMrm0gQ9u7wUc
+ QbLkwj6TCLOwucb07GXzLTNF9PZmaDUpKAZjMjmrW+le+SFvQbhamx0rxLWPR0NWntXpbCn+
+ +ACch03p/JyTBVktxFsFyCt7pTPE1kEaeuXBTe/a2D9iQvRxRW19LvuO2e59/u1wYUiH/orz
+ wbIC2S4dBsPAPihL3ztOU1yE86GPyQtSE0kU+/7snnLt4QGi6PChf3t5gnNjAzjUUovO8rgI
+ c+5yN5heq5loYHgK6OQ9OlHzsPHO9e9MOQcKlFycs1pyijFGzDwdNUm/SchK8iWT2QApTx4A
+ K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
+ n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
+ qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
+In-Reply-To: <20260615-topic-sm8x50-tie-gcc-to-cx-v2-1-6b5752dd4747@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-113332-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[26];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:pragnesh.papaniya@oss.qualcomm.com,m:cristian.marussi@arm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:sudeep.holla@kernel.org,m:conor+dt@kernel.org,m:sibi.sankar@oss.qualcomm.com,m:myungjoo.ham@samsung.com,m:kyungmin.park@samsung.com,m:cw00.choi@samsung.com,m:digetx@gmail.com,m:thierry.reding@kernel.org,m:jonathanh@nvidia.com,m:andersson@kernel.org,m:konradybcio@kernel.org,m:rajendra.nayak@oss.qualcomm.com,m:pankaj.patil@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:arm-scmi@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-tegra@vger.kernel.org,m:amir.vajid@oss.qualcomm.com,m:ramakrishna.gottimukkula@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-113331-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER(0.00)[sudeep.holla@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FORGED_RECIPIENTS(0.00)[m:neil.armstrong@linaro.org,m:andersson@kernel.org,m:mturquette@baylibre.com,m:sboyd@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:vkoul@kernel.org,m:abelvesa@kernel.org,m:konradybcio@kernel.org,m:quic_saipraka@quicinc.com,m:bmasney@redhat.com,m:linux-arm-msm@vger.kernel.org,m:linux-clk@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORWARDED(0.00)[lists@lfdr.de];
+	URIBL_MULTI_FAIL(0.00)[linaro.org:server fail,qualcomm.com:server fail,vger.kernel.org:server fail,tor.lore.kernel.org:server fail];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TO_DN_SOME(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sudeep.holla@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[arm.com,kernel.org,oss.qualcomm.com,samsung.com,gmail.com,nvidia.com,vger.kernel.org,lists.infradead.org];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,linaro.org:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 88CD368D27E
+X-Rspamd-Queue-Id: B7D4D68D349
 
-On Wed, Jun 10, 2026 at 02:21:27PM +0530, Pragnesh Papaniya wrote:
-> The QCOM SCMI vendor protocol provides a generic way of exposing a number of
-> Qualcomm SoC specific features (like memory bus scaling) through a mixture of
-> pre-determined algorithm strings and param_id pairs hosted on the SCMI
-> controller. On Qualcomm Glymur and Hamoa SoCs, the memlat governor and the
-> mechanism to control the various caches and RAM is hosted on the CPU Control
-> Processor (CPUCP) and the method to tweak and start the governor is exposed
-> through the QCOM SCMI Generic Extension Protocol.
-> 
-> This series introduces the devfreq SCMI client driver that uses the MEMLAT
-> algorithm string hosted on the QCOM SCMI Generic Extension Protocol to detect
-> memory latency workloads and control frequency/level of the various memory
-> buses (DDR/LLCC/DDR_QOS). DDR/LLCC/DDR_QOS are modelled as devfreq devices
-> using the remote devfreq governor. This provides basic insight into device
-> operation via trans_stat and lets userspace further tweak the parameters of
-> the remote governor.
-> 
-> trans_stat data for DDR/LLCC/DDR_QOS is now available with this series:
-> 
->      From  :   To
->    315000000 479000000 545000000 725000000 840000000  959000000 1090000000 1211000000   time(ms)
->    315000000:         0         3         6         6         6         7         0        30    143956
->    479000000:         2         0         7         1         1         1         0         3       356
->    545000000:         7         6         0         5         5         0         0        10      1200
->    725000000:         3         0         5         0         6         1         0         6      2172
->    840000000:         8         2         3         2         0         4         0        12      1188
->    959000000:         3         0         1         2         2         0         0        13       272
->   1090000000:         0         0         0         0         0         0         0         0         0
->   1211000000:        35         4        11         5        11         8         0         0     21684
-> Total transition : 253
-> 
-> QCOM SCMI Generic Vendor protocol background:
-> A lot of the vendor protocol numbers used internally were for
-> debug/internal development purposes that were either highly SoC-specific
-> or had to be disabled because some features were fused out during
-> production. This led to a large number of vendor protocol numbers being
-> quickly consumed and never released. Using a single generic vendor
-> protocol with functionality abstracted behind algorithm strings gives us
-> the flexibility of letting such functionality exist during initial
-> development/debugging while still being able to expose mature features
-> (like MEMLAT) once they have stabilised. The param_ids are expected to
-> act as ABI for algorithm strings like MEMLAT.
-> 
+On 15/06/2026 18:57, Neil Armstrong wrote:
+> In order for the GCC votes on the GDSCs it provides to be propagated
+> to CX, CX needs to be declared as power domain of the GCC.
 
-Not sure if it was discussed in the previous versions or not, it would be
-good if you can capture why some of bus scaling doesn't work with the existing
-SCMI performance protocol and the monitors don't fit the MPAM mode.
+I would be happier to see here short mentioning what is the effect of
+missing votes - do things work? - as justification why required
+property, thus ABI change, is justified.
 
-Please capture them in 1/9 as a motivation for this vendor protocol. It will
-then help to understand it better as I am still struggling to. Sorry for that.
+The DTS patches gave me that answer, but should be here as well the best.
 
--- 
-Regards,
-Sudeep
+Well, don't want to stall anything here, so anyway:
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
+
+> 
+> Document the missing power-domains property to that purpose.
+> 
+> Fixes: 72a0ca203ca7 ("dt-bindings: clock: Add SM8450 GCC clock bindings")
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+
+
+
+Best regards,
+Krzysztof
 
