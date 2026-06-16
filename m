@@ -1,203 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-113436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id oACfF3BbMWq+hwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 16:19:28 +0200
+	id AL6LNd5bMWoMiAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 16:21:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC85C690655
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 16:19:27 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4405B6906A8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 16:21:18 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=I1B9pZnw;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="BaQsH/Rs";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113436-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113436-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=none;
+	dmarc=none;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113437-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113437-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AA91D326251B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 14:10:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CAF4831B24B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 14:12:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D63C44E02A;
-	Tue, 16 Jun 2026 14:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D512336C580;
+	Tue, 16 Jun 2026 14:10:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC2044E02C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 14:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E35036A356;
+	Tue, 16 Jun 2026 14:10:01 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781618961; cv=none; b=nAJk+JkK9YRmau/6jrTFJn2Yt41DB5jjcWsAMRZ3t3bTdagRRC8752RI0/0uSo1IHAny7G85XW4nwb2T14oxf6cONVRYNZ0U6ruAIaIsCnTBALC05tNk4oeY/96bf2NY0rlPYMo7S4wDgCcVE1dt8y5LpggDgoXDSjAIhBa6yL4=
+	t=1781619004; cv=none; b=sKpX35BRod7j9rm8a7llGWsDOjXIp94+lml/4PVbapCQT3obRmehVVRJjGh2rafAgNFiJJhioTA0w4LQ+6OnxEhODcMnDRX9iBygo/TnHxNTm1orsx+IhHfnyWHzCTBdvdUG+28SfREr6phlcmdgrpkLuZqi52kp8tdv6vgPjDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781618961; c=relaxed/simple;
-	bh=HiUkKbB68+cZ6cUApFyv9kZ5xwG4w4rZ6kimXeuV73M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PC6OWFyxsRVId2jeD41qlIR3JqPn/R9NfqkYJoL20argUbcRIqJcq9Vtt34gXFfvvXu29nJWTwecO8scmcsT210eaYZyL39Rxam+fhbyRXiUJoOjj7EL7T7oF2eGJ8bgeqJDWvDGj3AapF5sH+WPDlk3IboTjsY/Fvu/LPR81fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=I1B9pZnw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BaQsH/Rs; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65GDxlZQ3894589
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 14:09:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MRVejRmG+rwlzMAPiJBU0ONVq9PptIShWVpCuWLNbO8=; b=I1B9pZnwbdojQkb9
-	/L/I7WO2NkUR0R8AsjVJOcwYcZZzVeTD9LO0yRE86q2xwqmryCw5suC4Ktphx1EA
-	P9xD09O/RNHntvmfMfhbX+eqdTWLYvv31qz6A4jmJn5xJm09B4nLNafqMQrEltxV
-	Phm9iXxHlIYflMI9IF87kFHEoSliG0VibRFaOdxp3YfJtMjoC995ygsYffuZIhqr
-	muCnVeeONe1qMx7xBrNmaOL+i0WFIM4s2BnhakmZrQytsU9rEcWuYfSiHl+SMVBd
-	po01K3Vdg4r3T6AS/iO8QdzNF5/vYE33PgNGF1C/s9PJM1gZifW82SDuPgaCSlsc
-	AlVznA==
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com [209.85.217.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu1ep9v2c-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 14:09:17 +0000 (GMT)
-Received: by mail-vs1-f72.google.com with SMTP id ada2fe7eead31-6c59b44054cso182255137.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 07:09:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781618957; x=1782223757; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MRVejRmG+rwlzMAPiJBU0ONVq9PptIShWVpCuWLNbO8=;
-        b=BaQsH/RsiGVDCYNlvRSrN3xEWVcKqk9M/orlJu35rGR+eEO+hwATBEvPmIhAKGgxQP
-         V5jPIz/aN80E/kd61RHPfz28EEoIDBLrnghizBWBqAWNDyJXO3ZcoPoyo/CqTDq7RcUI
-         zK0G6Xc9/1jam/SEvOU8Sy7RiZeJUspcjrHaEFgvaxAJEKvSNCdxyd35xYmogVAmbdrc
-         0EXdiNsLC75iH134M3WKDuz49AhSQiiQ6MJYHTuA+Llzei2Hj6tpCyJGvyVC58e1LrNT
-         JlG+b2E3unDIm0Ad4AFFNtEVG41+rxjlEeyy0CYiZs+7GrxeuzkIqgwAue5zcZYn3KE0
-         +t9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781618957; x=1782223757;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MRVejRmG+rwlzMAPiJBU0ONVq9PptIShWVpCuWLNbO8=;
-        b=NBQw0wQ8J+aec/keH94OTZUG/BT3M+ukql4kiISZJOeSkjTeDZfvv9T7wAhrxJkJzO
-         aZnYQnb2Yh/Cy5KwQ7yxrbtbh1nM9HkWIpK7W0LPnykitbjRYMONcfnSxLf2ufov7eBl
-         gDO6vExftMAA0KQD0Rc1DrqYeInnSQAEzwrBBNGYZj8xSBeK766WQgoEN/WehxIe6kDr
-         gxo6+AQPu1XA1BKdDme7kSEyesLZMDYHv8XlxOvhRTaRfqcapY2LBk6v+7UVDY9f2dx7
-         tWNiciTW55/ZIZoElBpe2TYGfEja5susLb9IGzYPwhL5u7uXhsIPktxbOuPm7lETpZku
-         9+gw==
-X-Gm-Message-State: AOJu0YzuaClMvsWZlc+XgdBzG9HcajuJ9rCRS5d+0X69w7PIei1iSAo0
-	lZppYywBYcMDSLd2mxHF7RxUIUv81+BkbVD6I0k6FGAKLfJAg+QMEGqz3KDRN/f2NYGBIbzcST4
-	TltHubgu2gWYGY8Qiic4BUowfTZUk0HmqblU1fcvOJDHho1wYKyIr+YCgVTP7+YlYz+bA
-X-Gm-Gg: Acq92OFL/HKCpHzeQiahhwffd3GBXv+kdmPxxWf/b+mi8wqrJMxcuVdrVE+Suzrugk/
-	VmddDW/ClOAktPBy3xZsjoH9HpoG/Cm1aWGDsKc7ONegvKSN84xr4FJlmcEygeYel3cpFoLIlAn
-	fESQzy4DYWVgtfUw2OGN6p2tDWMTLBcD2+WmIvV5Kym1wGo1xRCzSBUV9VCesQaEf3t31/G8CNi
-	n7KZSV5IiiI9zLRmR68awcT+XbQmqUsu/K1rRFIaAL2RLPIPFyDMjQrgKAP7fyfYtwKvhiKT9Q8
-	PRa5pPSY9QJOpeK8vFsLQ7P/Nlw1KseyW+hq4mP8fEAnf4+OtupZbGKrxKlFrHw2gpsVQihu6Jd
-	FZDJHuqwURE3M9TzT1vNRE+O2aiMiDEZdjcWwPA83Qzx74Q==
-X-Received: by 2002:a05:6102:f07:b0:631:2be3:b6e8 with SMTP id ada2fe7eead31-71e88dd8cd2mr2931510137.6.1781618957337;
-        Tue, 16 Jun 2026 07:09:17 -0700 (PDT)
-X-Received: by 2002:a05:6102:f07:b0:631:2be3:b6e8 with SMTP id ada2fe7eead31-71e88dd8cd2mr2931465137.6.1781618956771;
-        Tue, 16 Jun 2026 07:09:16 -0700 (PDT)
-Received: from [192.168.120.170] ([178.235.128.140])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bfdb83420e9sm638282066b.45.2026.06.16.07.09.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jun 2026 07:09:16 -0700 (PDT)
-Message-ID: <eb5ace9e-543e-4258-b3d5-50be84c1be05@oss.qualcomm.com>
-Date: Tue, 16 Jun 2026 16:09:14 +0200
+	s=arc-20240116; t=1781619004; c=relaxed/simple;
+	bh=/OodjjavcRaZsEcvBHKrJCaDAxEMhV+ZP3saeAM2fMA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=FhX5lSs38WwSocVJJ+QPX1twyZBzaRm2/0vRmYJjAWciSsFbTnbRKI6IFWndQUX23fRTG3iuwNrhZbj10no4fdJX3IptTbD3PBYip/7oCKiH3rA+w18vwEWB+j35ytbpYaxnRKIjNHuc6fX4nNRUPqLHxSfuW439MqX1xWJUqXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Received: from dfae2b116770.home.arpa (unknown [36.110.52.2])
+	by APP-01 (Coremail) with SMTP id qwCowAA32NAxWTFq70_vAQ--.22518S2;
+	Tue, 16 Jun 2026 22:09:53 +0800 (CST)
+From: Wentao Liang <vulab@iscas.ac.cn>
+To: mani@kernel.org,
+	lpieralisi@kernel.org,
+	kwilczynski@kernel.org,
+	bhelgaas@google.com
+Cc: robh@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	stable@vger.kernel.org
+Subject: [PATCH] PCI: xilinx-xdma-pl: fix refcount leak in xilinx_pl_dma_pcie_init_irq_domain()
+Date: Tue, 16 Jun 2026 14:09:49 +0000
+Message-Id: <20260616140949.1686840-1-vulab@iscas.ac.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: interrupt-controller: qcom,pdc:
- Document Purwa PDC
-To: Maulik Shah <maulik.shah@oss.qualcomm.com>,
-        Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20260616-purwa-pdc-v2-0-8dda7ef25ce5@oss.qualcomm.com>
- <20260616-purwa-pdc-v2-1-8dda7ef25ce5@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260616-purwa-pdc-v2-1-8dda7ef25ce5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=I/ZVgtgg c=1 sm=1 tr=0 ts=6a31590e cx=c_pps
- a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=px_f_vAfgXbzbh29wf4A:9 a=QEXdDO2ut3YA:10
- a=-aSRE8QhW-JAV6biHavz:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE0NCBTYWx0ZWRfXxfgwQzedJO9K
- MkCD4ueyxiD4eumtkT8akMy1C8/g7pmETlPT0v7/3bfTg0fM5pwIOwaUIBUPdx5paLLPe2YKbMU
- ZmjJ3a9yAUOuBe3O8MvX7R+Ts83/T0k=
-X-Proofpoint-ORIG-GUID: 5EHGbmJRKjfvrTi8z9xLOEZs9rjINdnm
-X-Proofpoint-GUID: 5EHGbmJRKjfvrTi8z9xLOEZs9rjINdnm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE0NCBTYWx0ZWRfX3aQom5wbUAQl
- drqbrHAxPnZCIF1hM0Z0uVRJVO/rKypDwvmpl3/Yfh1I2xh8HVvdp/oWN74keRcb1HHnE16PXR2
- 65iQctwxgFppDIgAYDONtWnC4sJi7SdHf5z/UYerDxQpF3zEC31WQzSaSAoc2TNn56KpjccYufR
- w6AbcXdMFohYZDOvX5ZS2I6iwSTCioB7w+8QvGUU+52pqoYmE6ImFbMiGznnKGbHggzhbY5rtlS
- VS2nFzIj5/u81IKH4DSaw35LcJC/s8p9RP/g9aubGjiT4vQzN9MHGShudSoCl5bP0m5ik69+yTm
- iXGM/Wig0ThlpZYk8VoRmaJqbiz6Kv/vkGrivSxYmuGkdldUD+sg0Oxdh9M9m0c4DIY9B6sPQYe
- XocYJ2IKGqHJnzqB5AUWEPXzNfMOVQPoKVsD/Va5zDE47mMcZA0VcUK5PR9cfkpIJ3VMWOQGKkK
- KgNDR8wakBpR2tjGs/w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_04,2026-06-15_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0 adultscore=0
- malwarescore=0 spamscore=0 clxscore=1015 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160144
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qwCowAA32NAxWTFq70_vAQ--.22518S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxWw45Cr48KF4UJw1DCF4UArb_yoW5Xr1DpF
+	W8G3ya9rWUtr4IgrsFk3ZY9Fya9Fnakr92y3y2k3ZrZr13Jw4UWFy5WF909ry3GFW8XFy3
+	AF47tF15uF17AFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9014x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+	jxv20xvE14v26r1Y6r17McIj6I8E87Iv67AKxVWxJr0_GcWlOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
+	n2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7x
+	kEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E
+	67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCw
+	CI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1x
+	MIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIda
+	VFxhVjvjDU0xZFpf9x0Jjb4SrUUUUU=
+X-CM-SenderInfo: pyxotu46lvutnvoduhdfq/1tbiDAUAA2oxFt-2pwAAsJ
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.04 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORWARDED(0.00)[lists@lfdr.de];
-	TAGGED_FROM(0.00)[bounces-113436-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-113437-lists,linux-arm-msm=lfdr.de];
+	DMARC_NA(0.00)[iscas.ac.cn];
+	FORGED_RECIPIENTS(0.00)[m:mani@kernel.org,m:lpieralisi@kernel.org,m:kwilczynski@kernel.org,m:bhelgaas@google.com,m:robh@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-pci@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:vulab@iscas.ac.cn,m:stable@vger.kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[vulab@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS(0.00)[m:maulik.shah@oss.qualcomm.com,m:tglx@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[vulab@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	R_DKIM_NA(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[iscas.ac.cn:email,iscas.ac.cn:mid,iscas.ac.cn:from_mime,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: AC85C690655
+X-Rspamd-Queue-Id: 4405B6906A8
 
-On 6/16/26 12:27 PM, Maulik Shah wrote:
-> X1P42100 (Purwa) shares the X1E80100 (Hamoa) PDC device, but the hardware
-> register bug addressed in commit e9a48ea4d90b ("irqchip/qcom-pdc:
-> Workaround hardware register bug on X1E80100") is already fixed in
-> X1P42100 silicon.
-> 
-> X1E80100 compatible forces the software workaround. Add PDC compatible
-> for purwa as "qcom,x1p42100-pdc" to remove the workaround from Purwa.
-> 
-> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
-> ---
+of_get_child_by_name() acquires a reference on the returned device node,
+which must be released with of_node_put() after use. In
+xilinx_pl_dma_pcie_init_irq_domain(), the reference is properly released
+on the success path, but error paths that return directly fail to do so,
+leading to a reference count leak.
 
-Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Additionally, when the INTx domain creation or MSI initialization fails,
+the already created PL DMA IRQ domain is not removed, causing another
+memory leak.
 
-Konrad
+Fix this by using goto-based error handling:
+- Add a common 'out_put_node' label to release the node reference.
+- Add 'out_remove_pldma' to delete the PL DMA domain before releasing
+  the node.
+- Ensure all error paths jump to the appropriate cleanup labels.
+
+Cc: stable@vger.kernel.org
+Fixes: 8d786149d78c ("PCI: xilinx-xdma: Add Xilinx XDMA Root Port driver")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+---
+ drivers/pci/controller/pcie-xilinx-dma-pl.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/pci/controller/pcie-xilinx-dma-pl.c b/drivers/pci/controller/pcie-xilinx-dma-pl.c
+index b037c8f315e4..e7a83a758874 100644
+--- a/drivers/pci/controller/pcie-xilinx-dma-pl.c
++++ b/drivers/pci/controller/pcie-xilinx-dma-pl.c
+@@ -580,8 +580,10 @@ static int xilinx_pl_dma_pcie_init_irq_domain(struct pl_dma_pcie *port)
+ 
+ 	port->pldma_domain = irq_domain_create_linear(of_fwnode_handle(pcie_intc_node), 32,
+ 						      &event_domain_ops, port);
+-	if (!port->pldma_domain)
+-		return -ENOMEM;
++	if (!port->pldma_domain) {
++		ret = -ENOMEM;
++		goto out_put_node;
++	}
+ 
+ 	irq_domain_update_bus_token(port->pldma_domain, DOMAIN_BUS_NEXUS);
+ 
+@@ -589,7 +591,8 @@ static int xilinx_pl_dma_pcie_init_irq_domain(struct pl_dma_pcie *port)
+ 						     &intx_domain_ops, port);
+ 	if (!port->intx_domain) {
+ 		dev_err(dev, "Failed to get a INTx IRQ domain\n");
+-		return -ENOMEM;
++		ret = -ENOMEM;
++		goto out_remove_pldma;
+ 	}
+ 
+ 	irq_domain_update_bus_token(port->intx_domain, DOMAIN_BUS_WIRED);
+@@ -597,13 +600,20 @@ static int xilinx_pl_dma_pcie_init_irq_domain(struct pl_dma_pcie *port)
+ 	ret = xilinx_pl_dma_pcie_init_msi_irq_domain(port);
+ 	if (ret != 0) {
+ 		irq_domain_remove(port->intx_domain);
+-		return -ENOMEM;
++		ret = -ENOMEM;
++		goto out_remove_pldma;
+ 	}
+ 
+ 	of_node_put(pcie_intc_node);
+ 	raw_spin_lock_init(&port->lock);
+ 
+ 	return 0;
++
++out_remove_pldma:
++	irq_domain_remove(port->pldma_domain);
++out_put_node:
++	of_node_put(pcie_intc_node);
++	return ret;
+ }
+ 
+ static int xilinx_pl_dma_pcie_setup_irq(struct pl_dma_pcie *port)
+-- 
+2.34.1
+
 
