@@ -1,294 +1,382 @@
-Return-Path: <linux-arm-msm+bounces-113342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id XZnqHhgWMWqvbQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:23:36 +0200
+	id 2W7eAggXMWrqbQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:27:36 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E07F68D7DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:23:35 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52B8268D866
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:27:35 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=oyrXOda9;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="iZp/xUXy";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113342-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113342-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=b5wR3OyR;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=bt+iiHPZ;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113343-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113343-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 75C5E300729A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 09:23:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2DAA63027692
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 09:26:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6B6B416CE3;
-	Tue, 16 Jun 2026 09:23:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE751397699;
+	Tue, 16 Jun 2026 09:26:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A98130BB9B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 09:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6BA416CE3
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 09:26:06 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781601805; cv=none; b=HVQxe/Oh8hpxf6/upfOzSXnEoFLk/l1xiupbE+d/6sRfPi/BJZJJW7mICsd7vnX3bYd3V+wUtv/CIKzcwW12p+RWQO/GFH10UPnvacaV5r610+5sW66QWd7ULMJ/DFPpXf+2o0+QV39zczze6dyoPP4TdsSTRi9ljqTRAu5rTT4=
+	t=1781601967; cv=none; b=lC6BfmFU4pkJPaH8+nxUEtDH0eIRO8qdzDVcP2HTsQvSwWaCz2nSlN+3Lz86cyRNvudg3RzJ72iDyk7bFIokV9jjUu4oRu7zoUCf5gQX50JemktlPpQ6cs6kIRXVVyi2/BaFF0EyETayWJunw6mrzVa/LqQ+RwcOymHKVH9FQqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781601805; c=relaxed/simple;
-	bh=szIFmq9trnDGRMkH31Lg6OUAgi48Us5qv94sPXVoC2g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BXGnrfEzBh7729GCT4X1RP2wNBi98PqZmZswuhrwD5r6JlCiUWXytDI7WmPMBaMp376jCJVGhMfwHp9SQLBvUbMC+hno0axGnQNdLOQO8RtVj6IPkcLuqpXjir2volgMdOasfMkv9nXUhRX6w1rJyWPQN4D0kRpgsAbMpkAjk3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oyrXOda9; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iZp/xUXy; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65G8s3OH1239608
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 09:23:22 GMT
+	s=arc-20240116; t=1781601967; c=relaxed/simple;
+	bh=oKCA3rXYCYVsu2qwFtdFelHjE9P2vs0ADX+IZRTIOVw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=LzXxrAD2XdgQEWPcWNLLwbeLzfoofbGKhMWNWSkOvUFlld8lxloS5LBdkUwbhYZZRRH6qf6Ew8F8wIzGhkQCgyIYbNj9S4/gMZcD7hWrQPkrrr2MLiuMnmy/R+Jz2KfYnzBOSEP+zkmEAFdT5uy8AH7qy93gcsH8SxZ+P6gPqpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b5wR3OyR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=bt+iiHPZ; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65G8OUpc006653
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 09:26:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1Qq8vPHgKwH4q0SQ20diO3tSTvhdrp1Q/CuwfNHfduU=; b=oyrXOda9Vh6h4jKO
-	qi2P0JZUYE1q88Me/6Zict/gF1BGdDMvwpZCszzVzE56B5j+/E+l03s9OH/jWhbv
-	6rH98zRH05jD7YDd1q32s0tnQ5XkDLGKOe07F/zzVaXLq77n02Ur8KVhVGRbWJ4C
-	ji8SFwTDYZ0vfTttDc9By5TyzAuU4EgO4zdQkJ7HPrTYwNMAyrAHpryX6zm419mp
-	UdWEQMgcC7iyOaFhvzN7OkX6qfA46KYaevm+Vfmrbzu1521ys/1qk38qs5kCrvn0
-	fC+rGdADW7S5Qe2ko3sGecSaKej0QqFrEVMFyNyuTv2tDaxQZmX//H0gC/zGV1DM
-	o3eBXg==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu3ct0412-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=oeksz3pBbwZn9UfmKvs2oI
+	BAjNFxdRTHnOAeYAAOUGA=; b=b5wR3OyRKWEaLHkhicxd5cn5s1Qg2kmDhhCidG
+	V1qURxj5pKWgmLaGp2rJqh9wdMR+abueyj21rHq1khCHy26sxUW9ch+M5g0L4JQi
+	g0/geV5JZlUd6n/88qnQFvYWO4civYzZeXlcFAczENpFjFhbtSH+sLSJcdipCGKP
+	YAosxf1rTCY59SHLCrM89Ntl8RjFMGKsixa4P5ABlvlaIA6lSJgKfM07WECfUrQT
+	+JXGbromIfYhyjAx9Bif3X/fm+h7bUGGcHLI0zKXVugphUOSudDxXB7BOl0aSS45
+	D1YCOYBr+x8HQiVErJVzhGf68mf4xVmFfyi3HHYxOt/Bcd8g==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu2xs88eh-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 09:23:22 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-842688fa7b8so4856125b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 02:23:22 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 09:26:05 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2c2a4babe45so25965755ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 02:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781601802; x=1782206602; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1Qq8vPHgKwH4q0SQ20diO3tSTvhdrp1Q/CuwfNHfduU=;
-        b=iZp/xUXyjkaVJ1OE0IF+CMQ5aO00ObNTYQvFbQzEh0V440BpuvgLBualS4Qq98pqRv
-         z8RxQ4J/1EqM4sS7QsWJfXcMjicumCO1RB/HUxZEZ7XqfZKbfz9HKZNh7xRd3vgnWv4k
-         S47PmcprTmvi7hPWB/UyawzFFOMCvrtsd3BsWiUBwJlv9xpBCZXrDQqI2kL3Uc6m3jMw
-         lbAdPJV2BvNMQo7B+oNT6XDde8GgmxxYjeCeb4fGZKhrtGbj0SOwyGrAicoTSkWXhi+e
-         do3WcxI0FJKKzCgpQGJ82iVPO1NOnniPMfGc3REfZzIycdgCl2Z2Ss0iyCzgB355albS
-         ib5g==
+        d=oss.qualcomm.com; s=google; t=1781601965; x=1782206765; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oeksz3pBbwZn9UfmKvs2oIBAjNFxdRTHnOAeYAAOUGA=;
+        b=bt+iiHPZriqE5MOJjbFQxVtRpa/TXkUGh2v9LHFPb9tBf92YwXF7gRhRtfJq9YQarK
+         RpPr+FS+SY/MDSPemy22Pvi+4VoViDGN+JPKQEBiqXp/J3JHQPhUlsWfrt4boswW7HMP
+         It2IM9R0ryO8fcktoJHkaZBtAt7nbjZBncHoGffwoCwXNQ0FwjS5mvg13Mx/tHg1t6z0
+         Hp0JbG5KkSA5oLF9x98ofl1WgniB2ts8GuWZCptgVKJ0JV/497XbH6IJZ72+2YWpcrPE
+         2DoePUm7GqX7R0DjSmGtqOQLNpghmTyhQN2IAENjIRRLpr0Y9/Ek7O9W2zrjmsbkMRWF
+         cQSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781601802; x=1782206602;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1Qq8vPHgKwH4q0SQ20diO3tSTvhdrp1Q/CuwfNHfduU=;
-        b=SWHpa2qmEAxZ/ykVyxgjn8IENfXjvGG3cTY84OEU7aFJlLf+TXSU///R6vFuE9CbLv
-         a3LLK9F5msEYzevRShvjwfElefnyvtvy0MGO9/b1mtwbsiVA9YTN7QXRtmANZ+O830N3
-         VBsbytHsJFE8HEJx/DOaG7w0uI/gzTpvoQw99WjYz+ICkMVXvmXdYaY7RD0lr6wjTPYR
-         Cw0bw04HqDDBoVSzpQuYGLjqB44KRvB4L/N52SKVSv+TXIs7gaXE/O4QCrFu4qD9wWux
-         1ZWkUsutpoWOsHGVCtZP13/eD9o886mT8s+oXs/akTwcNxrqWnDqkzYSpGjkVi0bGYGY
-         9Ejg==
-X-Forwarded-Encrypted: i=1; AFNElJ9IBDmTYbC3ED2Dz4G6ksOPtbC+WIKN1hm/NazUlCihsV2iXlZ7qJ227FnaVZ63eDIic728vn1KXJO0rZh/@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJ/qFpi5wvJOZCr93gYjq8pdmxtkkHbs1hq/F7CjNE2lz4RcKa
-	fdiP6hcAy+er5QYppWfl1uRFgGWGyv/H8y22TQ4mBdkmRd9oBrBshn5jpEijtzQhILsqJMMuCEM
-	3Uion8kAPDxogA8yqeLHwnhczqqB5yd1XZHKcxJNILpjhLbiNf/kiwTSdYbenPE/AimLO
-X-Gm-Gg: Acq92OEQslxaIzyoJ5deYA8LKO2ZQ0CMYeLCA2EpWImzjcC0HnRXUTCKoHi6wdILCAX
-	TyfeIG3QOSD9qzgavNh0KgErwr+vzL6IquO6fO9byy00bz2hzKfjhjFUqZSFyaembX/Q4g01pV0
-	ryI53kxtoRpgOC9Cg46Ds+9Xn9Ie6SFG0qHAvqjRmaViy5AEXMQBsTV0o74wbiYESETQquA5n3L
-	tC/CuTrP4WRgU1CmqRp6wnyZ5ek0mNjiuRyr5bGgtx7qXXhPef69TVNhWIig7dbqJorvkq5hP0v
-	6cgOfhz2HvqJ990QgCu4BvARuEvY5EssKNC8K+ciBu+Q3ll3/1iNMl+hWXSrkk+PPS2H5l3MuBb
-	u6IHWIZGHplUXhn/eWEYtA0zJ+zWPyWJd7Pp4qLDVMgf0z1YtMapl5HvVPTvX3O0bhlPiMTKFRi
-	BUhs2QDoyMAY5pmjo3
-X-Received: by 2002:a05:6a00:1954:b0:82f:7888:e2fa with SMTP id d2e1a72fcca58-84513eb9e2dmr2530019b3a.17.1781601802052;
-        Tue, 16 Jun 2026 02:23:22 -0700 (PDT)
-X-Received: by 2002:a05:6a00:1954:b0:82f:7888:e2fa with SMTP id d2e1a72fcca58-84513eb9e2dmr2529994b3a.17.1781601801577;
-        Tue, 16 Jun 2026 02:23:21 -0700 (PDT)
-Received: from [10.133.33.98] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434afd50f7sm12099158b3a.35.2026.06.16.02.23.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jun 2026 02:23:20 -0700 (PDT)
-Message-ID: <8c80a4e3-7c3d-4d0f-93e1-27f7f3fe6bf2@oss.qualcomm.com>
-Date: Tue, 16 Jun 2026 17:23:15 +0800
+        d=1e100.net; s=20251104; t=1781601965; x=1782206765;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oeksz3pBbwZn9UfmKvs2oIBAjNFxdRTHnOAeYAAOUGA=;
+        b=Crzjod8Lzd8O2w0BtaBiX8Y1VurtrXAlRnn9zeUmc7FRN/tqfkCnYTZHf4uOpfHwTv
+         5cLYjHhBgsMrQlxrGz4KBhli2/rCJvIvgTUy4uNE4CRXVa0F6LwanwARl1qpax/9to51
+         SJ2IvVdwIoZLtk2txaBfdMCyBHyXREobOj24q9LWOwpggyiHKFRH8+3uybCWqoqxecxB
+         w4BDPgLXQU6pejv9q8JuZzYYLyhglzPhsagjp+PstEtEgq/jmpEmcR0wUvu4azo51fFT
+         XKsR+WSa1BVR0RN8udwe/K23kQ4oWygepjmaeBceST+zhPtDsmrUq1nebPgn2awzJNgz
+         bgfw==
+X-Gm-Message-State: AOJu0YwBb6NUzpm1CgEWmoKwQI5wGeEkCNnf07WlXR+reAJDsXlOOpUR
+	cWBfzkWYPs3NlDJYHqoOh0icthjTNQ6CH8NtDcaFttH0yTOJW9RMDRyX+G9DMQTEmanroTG3fCI
+	/QMS7pgYl8wvx0EU3R6tSJrkayDBjiSXNKKvqMdKH13uFtRJDh/yZlecxIjxuT73dvl8n
+X-Gm-Gg: Acq92OHgt3+aYFGizUSwECE6/lS57Fj7kh4VP1Vd5kcch6n7iIxZduUXzqJrzPB14vR
+	ZfVqQQjzQ2NtNxez5b1bHuaQlehoD07vg7oJ+6xeGPZp9B6sNM2lDfkbXnSFUFD3YHhlkWkU0vs
+	YtS7840Cx6SALHss2mUwKFSzfxg0zxfFMwkRImYS2VuY5YdubSdDmP8ca8lNlFnh/eVzWYfweOR
+	9bLECQvX0cE7H+3VIMFMCP9rGNx0DeWzepQD5ctl6qfQ82ZhOe+hMSqUdFwrUVjV2rvmzTqB5Py
+	j6EJNm1grR3CMiwLK++NbmyHqB5zog7DOb5XWioApn9q6I3/xKSiKuK+iSvAngCMcGtms88A2gs
+	w2/H3NkaP+4OXozXASyNXXBA3XVKs4bfOt+qGmmEGYZXj1cJR0A==
+X-Received: by 2002:a17:903:2f43:b0:2c0:f807:56b2 with SMTP id d9443c01a7336-2c6642b91e0mr137428805ad.34.1781601964657;
+        Tue, 16 Jun 2026 02:26:04 -0700 (PDT)
+X-Received: by 2002:a17:903:2f43:b0:2c0:f807:56b2 with SMTP id d9443c01a7336-2c6642b91e0mr137428495ad.34.1781601964176;
+        Tue, 16 Jun 2026 02:26:04 -0700 (PDT)
+Received: from hu-mkshah-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2c42f2e586bsm130042025ad.12.2026.06.16.02.25.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jun 2026 02:26:03 -0700 (PDT)
+From: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Subject: [PATCH v3 0/8] x1e80100: Enable PDC wake GPIOs and deepest idle
+ state
+Date: Tue, 16 Jun 2026 14:55:50 +0530
+Message-Id: <20260616-hamoa_pdc_v3-v3-0-4d8e1504ea75@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 22/39] drm/msm/dp: Add support for sending VCPF packets
- in DP controller
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar
- <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jessica Zhang <jesszhan0024@gmail.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-References: <20260410-msm-dp-mst-v4-0-b20518dea8de@oss.qualcomm.com>
- <20260410-msm-dp-mst-v4-22-b20518dea8de@oss.qualcomm.com>
- <i6x7675n4neufglcjwneds6nehetclystyg3abosbdjkh25ub5@psdjsrfl6wek>
- <d3689914-4afd-4bcb-8aad-380aefbf23d2@oss.qualcomm.com>
- <n6qjiuouisangxtov7dd7au7wb5ubt4vouodhhziuq4fychkva@275qni5tykry>
-Content-Language: en-US
-From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-In-Reply-To: <n6qjiuouisangxtov7dd7au7wb5ubt4vouodhhziuq4fychkva@275qni5tykry>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=SoCgLvO0 c=1 sm=1 tr=0 ts=6a31160a cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+X-B4-Tracking: v=1; b=H4sIAJ8WMWoC/y2NSwqEMBAFryK9NhCjhsGriEjstGML/hIVQby7m
+ dFlQb16J3hyTB6K6ARHO3uexgBpHAF2ZvySYBsYlFRaapmLzgyTqWeL9Z4KbU2DnyyXKkEIk9l
+ Ry8c/V1YP+63pCddf4zUcLVv4WV/tum45NK7FhQAAAA==
+X-Change-ID: 20260605-hamoa_pdc_v3-6dabc845021c
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
+        Linus Walleij <linusw@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
+        Maulik Shah <maulik.shah@oss.qualcomm.com>,
+        Stephan Gerhold <stephan.gerhold@linaro.org>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781601959; l=7964;
+ i=maulik.shah@oss.qualcomm.com; s=20240109; h=from:subject:message-id;
+ bh=oKCA3rXYCYVsu2qwFtdFelHjE9P2vs0ADX+IZRTIOVw=;
+ b=QqpBGBOHRz3NrRFvEbN6/R8EinvO/+gWnTMmgVhVCZBWeGzpU0ChS6UCwJbnpXsyCqeZMfN36
+ C0aDJTWDnkPBvcdcuAiqzGi/Q0KjGSefnuLR9vqVYcXv0rlAVj5SsU5
+X-Developer-Key: i=maulik.shah@oss.qualcomm.com; a=ed25519;
+ pk=bd9h5FIIliUddIk8p3BlQWBlzKEQ/YW5V+fe759hTWQ=
+X-Proofpoint-ORIG-GUID: 55pYSnjmDckKsDgad1tQZngYMRRkG6gP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDA5NCBTYWx0ZWRfX5Xzu10ibByyv
+ gC82XPbReddVijtIvE97TzvGuefN9laziVokxKQi9kxUIjo49+yLvora5MdhImdDM5w+/9xfmjI
+ kYTXPbr9/KmhJx5uEwAzkw2cy8jrNMOuNe0i37tdsnuTU1EtMPo1FoV4LuQZJlzk9GAeSu7ZpEy
+ PmdsPvrimsVkfhGHpmWyl/cANrBYWGDMaQKQlCnQrz4mZB//ez176N9Xu5Mh4AGGx4YN6mF6HDO
+ m2tuyUdyJ71dUGMitVcAAj0i9zkJ14hdQLKN84NZMVNCS1F64z98G8n+YunRbhOvOl4shGoAkIj
+ sdP2nqUl1Y4gUEEYOuSXcLhIJrOHNRPWEPdOwZhDwjUYunp/9KtEZ8aiLdps5Wjcig1KpotlLN3
+ /YffMoBuiUYxwi+jOsnyow/fXol/X6yGgc1QVA+GkTHCDVeUMK9kdEx5K6z1YIisWRbGnEWpJt3
+ nJ/090getMvM9LJvdAg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDA5NCBTYWx0ZWRfXw4sFlWK7zJfm
+ Eivh21QgoWq1Ew6g2aJ+qoK4sv0iiNfe2uAt571VvTFz0EJbFyaFx6+WUu1slmEcOU6MCBRfGns
+ yXtP3A6iSRM/7Q+n2YPEMAXvUJgHFdk=
+X-Authority-Analysis: v=2.4 cv=MdJcfZ/f c=1 sm=1 tr=0 ts=6a3116ad cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=h4G6HOsH2xYsS-_yFfgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: E4cZjZewJkDu9OtK1kPtjjjldcJl69SB
-X-Proofpoint-ORIG-GUID: E4cZjZewJkDu9OtK1kPtjjjldcJl69SB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDA5NCBTYWx0ZWRfX6p45zIJN/mOr
- sq1h5I2Fzlo52CGdL8pXve7UiF+kKLe8SZzs3CfqnvMi5vM9QMbZn9sNrt56bFWXfaPVtGKm1jp
- q6aXRvMqhs2cmZ5yynxcZHAAXg6n/Z2/ym9hR9Cat3x/wZ2/9OJHiZU/E5Ef6EU0iNsIu6jfgQR
- Z0EmzdbtKjxePjpHUoa5vuRBJj5bre0pMp0ZJBNGmIjIBMRu8AyQwVfw2RnslyrxcEc19LYeSr4
- TH48afAmTGPH8OyvL/IB60+7HnMY8o/r1lRtga9mtYw0xPcBFED2zF2H2Vh+Jkz0AneewxWoWLj
- E+Vj/OsZ2q++VYftMVqpGJI5pJrn+4DDJ+GQiE4wmMkFueccFWtZVYFiVprQRO3syuu0bSXh3Id
- C8KnR16CBiK0meTh+tR0x+Zc84EgZclc2UvIkKL/8CyeFBMOg6bggJi9V4/Be0qVDih/v8/1deP
- fybCakQKPQiM2Tdgmpw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDA5NCBTYWx0ZWRfX1ZhlUEG9H1ts
- d3iAAWUS34D9LMvv8xxgfIbl0lc/DpReVHCliVj9M1G9Fy0Oi/Nb3GghTuSSfyzSKFeB+dHU3RH
- 7iuia6fwt78VVgMm4MJqrDbaXN+aJu8=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=bC-a23v3AAAA:8 a=aMSERw3ZVSxg4zp0N1wA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+ a=FO4_E8m0qiDe52t0p3_H:22
+X-Proofpoint-GUID: 55pYSnjmDckKsDgad1tQZngYMRRkG6gP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-16_02,2026-06-15_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 clxscore=1015 spamscore=0 phishscore=0
- suspectscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
- definitions=main-2606160094
+ bulkscore=0 impostorscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015
+ malwarescore=0 spamscore=0 priorityscore=1501 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160094
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-113342-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,poorly.run,somainline.org,gmail.com,ffwll.ch,vger.kernel.org,lists.freedesktop.org,quicinc.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,vger.kernel.org:from_smtp,quicinc.com:email];
-	FORGED_SENDER(0.00)[yongxing.mou@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-113343-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[14];
-	FORGED_RECIPIENTS(0.00)[m:dmitry.baryshkov@oss.qualcomm.com,m:robin.clark@oss.qualcomm.com,m:lumag@kernel.org,m:abhinav.kumar@linux.dev,m:sean@poorly.run,m:marijn.suijten@somainline.org,m:airlied@gmail.com,m:simona@ffwll.ch,m:jesszhan0024@gmail.com,m:linux-arm-msm@vger.kernel.org,m:dri-devel@lists.freedesktop.org,m:freedreno@lists.freedesktop.org,m:linux-kernel@vger.kernel.org,m:quic_abhinavk@quicinc.com,s:lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	FORWARDED(0.00)[lists@lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:tglx@kernel.org,m:linusw@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:sneh.mankad@oss.qualcomm.com,m:maulik.shah@oss.qualcomm.com,m:stephan.gerhold@linaro.org,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_SENDER(0.00)[maulik.shah@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[msgid.link:url,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[yongxing.mou@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[maulik.shah@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6E07F68D7DA
+X-Rspamd-Queue-Id: 52B8268D866
 
+There are two modes PDC irqchip can work in
+        - pass through mode
+        - secondary controller mode
 
+Secondary mode is supported depending on SoC using PDC HW Version v3.0
+or higher.
 
-On 6/16/2026 8:44 AM, Dmitry Baryshkov wrote:
-> On Mon, Jun 15, 2026 at 04:35:06PM +0800, Yongxing Mou wrote:
->>
->>
->> On 4/12/2026 3:24 AM, Dmitry Baryshkov wrote:
->>> On Fri, Apr 10, 2026 at 05:33:57PM +0800, Yongxing Mou wrote:
->>>> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>>>
->>>> The VC Payload Fill (VCPF) sequence is inserted by the DP controller
->>>> when stream symbols are absent, typically before a stream is disabled.
->>>> This patch adds support for triggering the VCPF sequence in the MSM DP
->>>> controller.
->>>>
->>>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>>> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
->>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>>> ---
->>>>    drivers/gpu/drm/msm/dp/dp_ctrl.c    | 55 ++++++++++++++++++++++++++++++++++---
->>>>    drivers/gpu/drm/msm/dp/dp_ctrl.h    |  2 +-
->>>>    drivers/gpu/drm/msm/dp/dp_display.c |  2 +-
->>>>    drivers/gpu/drm/msm/dp/dp_reg.h     |  5 ++++
->>>>    4 files changed, 58 insertions(+), 6 deletions(-)
->>>>
->>>> @@ -516,14 +542,28 @@ static bool msm_dp_ctrl_mainlink_ready(struct msm_dp_ctrl_private *ctrl)
->>>>    	return true;
->>>>    }
->>>> -void msm_dp_ctrl_push_idle(struct msm_dp_ctrl *msm_dp_ctrl)
->>>> +void msm_dp_ctrl_push_idle(struct msm_dp_ctrl *msm_dp_ctrl, struct msm_dp_panel *msm_dp_panel)
->>>>    {
->>>>    	struct msm_dp_ctrl_private *ctrl;
->>>> +	u32 state = 0x0;
->>>>    	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
->>>> +	if (!ctrl->mst_active)
->>>> +		state |= DP_STATE_CTRL_PUSH_IDLE;
->>>> +	else if (msm_dp_panel->stream_id == DP_STREAM_0)
->>>> +		state |= DP_DP0_PUSH_VCPF;
->>>> +	else if (msm_dp_panel->stream_id == DP_STREAM_1)
->>>> +		state |= DP_DP1_PUSH_VCPF;
->>>> +	else
->>>> +		state |= DP_MSTLINK_PUSH_VCPF;
->>>> +
->>>>    	reinit_completion(&ctrl->idle_comp);
->>>
->>> And there can't be two streams wanting to push idle at the same time?
->>>
->> In MST, msm_dp_ctrl_push_idle() is only reached from
->> msm_dp_display_disable_helper(), which is called from
->> msm_dp_mst_stream_disable() / msm_dp_mst_stream_post_disable() in
->> dp_mst_drm.c. Both of those
->>     callers hold mst->mst_lock for the duration of the disable sequence,
->> which serializes push_idle (and the wait on idle_comp) across streams. So
->> sharing a single idle_comp on the ctrl is safe.
-> 
-> Comment, protected by mst_lock in msm_dp_foo().
-> 
-Got it.
->>>> -	msm_dp_write_link(ctrl, 0, REG_DP_STATE_CTRL, DP_STATE_CTRL_PUSH_IDLE);
->>>> +
->>>> +	msm_dp_write_link(ctrl, msm_dp_panel->stream_id,
->>>> +			  msm_dp_panel->stream_id > 1 ?
->>>> +			  REG_DP_MSTLINK_STATE_CTRL : REG_DP_STATE_CTRL,
->>>> +			  state);
->>>>    	if (!wait_for_completion_timeout(&ctrl->idle_comp,
->>>>    			IDLE_PATTERN_COMPLETION_TIMEOUT_JIFFIES))
-> 
->>>> @@ -2183,7 +2223,7 @@ static int msm_dp_ctrl_link_maintenance(struct msm_dp_ctrl_private *ctrl)
->>>>    	int ret = 0;
->>>>    	int training_step = DP_TRAINING_NONE;
->>>> -	msm_dp_ctrl_push_idle(&ctrl->msm_dp_ctrl);
->>>> +	msm_dp_ctrl_push_idle(&ctrl->msm_dp_ctrl, ctrl->panel);
->>>
->>> Which panel are we passing and why? It feels to me that we have two
->>> different cases, one for the MST stream and another one for the SST
->>> link. Can we handle them separately? (note: I might be wrong here,
->>> please correct me if I'm wrong).
->>>
->> For SST, we push to bit 8 of MDSS_0_DPTX_0_STATE_CTRL.
->> For MST, stream0 and stream1 use bit 12 and bit 14 respectively.
->> For MST stream2 and stream3 use REG_DP_MSTLINK_STATE_CTRL.
->> Do we need to handle MST and SST separately here?
-> 
-> Where is the MST panel coming from? You are pushing ctrl->panel, which
-> is the SST one, if I'm not mistaken.
-> 
-This function is only used in the SST path, which is why ctrl->panel is 
-passed in.
-The only reason for the change here is the interface update of 
-msm_dp_ctrl_push_idle().
-If needed, we could keep msm_dp_ctrl_push_idle() for SST and introduce a 
-new msm_dp_ctrl_push_vcpf() for MST. Since the SST behavior hasn’t 
-changed, no modification is needed here.
->>>>    	ctrl->link->phy_params.p_level = 0;
->>>>    	ctrl->link->phy_params.v_level = 0;
-> 
++------------------------------------------------------------------------+
+| SoC             |  SM8350, SM8450  | SM8550, Hamoa   | SM8650, SM8750  |
+|----------------------------------------------------------- ------------|
+| Version         |        v2.7      |       v3.0        |       v3.2    |
+|------------------------------------------------------------------------|
+| Pass through    |        Yes       |       Yes         |       Yes     |
+|------------------------------------------------------------------------|
+| Secondary       |        No        |       Yes         |       Yes     |
++------------------------------------------------------------------------+
+
+All PDC irqchip supports pass through mode in which both Direct SPIs and
+GPIO IRQs (as SPIs) are sent to GIC without latching at PDC, PDC only does
+inversion when needed for falling edge to rising edge or level low to level
+high, as the GIC do not support falling edge/level low interrupts.
+
+Newer PDCs (v3.0 onwards) also support additional secondary controller mode
+where PDC latches GPIO IRQs and sends to GIC as level type IRQ. Direct SPIs
+still works same as pass through mode without latching at PDC even in
+secondary controller mode.
+
+All the SoCs defaulted to pass through mode with the exception of some x1e.
+
+x1e PDC may be set to secondary controller mode for builds on CRD boards
+whereas it may be set to pass through mode for IoT-EVK boards. The mode
+configuration is done in firmware and initially shipped windows firmware
+did not have SCM interface to read or modify the PDC configuration.
+Later only write access is opened up for non secure world.
+
+Using the write access available add changes to modify the PDC mode to
+pass through mode via SCM write. When the write fails (on older firmware)
+assume to work in secondary mode.
+
+As the deepest idle state as the PDC can now wake up SoC from GPIOs and
+revert commit 602cb14e310a ("pinctrl: qcom: x1e80100: Bypass PDC wakeup
+parent for now").
+
+The series has been tested on x1e80100 CRD with both old and new firmware
+and also on kaanapali. Test conducted with tlmm-test module after
+applying [3] as test module needed to be fixed first.
+
+All 17/17 passes in pass through mode and 16/17 passes in secondary mode.
+Failing test tlmm_test_rising_while_disabled seems to be because when in
+irq disabled state PDC is not latching the edge interrupt.
+
+Test #1: Pass through mode on x1e80100 CRD (New firmware)
+
+root@qcom-armv8a:~# insmod tlmm-test.ko gpio=91
+
+KTAP version 1
+1..1
+    KTAP version 1
+    # Subtest: tlmm-test
+    # module: tlmm_test
+    1..17
+    ok 1 tlmm_test_silent_rising
+    ok 2 tlmm_test_silent_falling
+    ok 3 tlmm_test_silent_low
+    ok 4 tlmm_test_silent_high
+    ok 5 tlmm_test_rising
+    ok 6 tlmm_test_falling
+    ok 7 tlmm_test_high
+    ok 8 tlmm_test_low
+    ok 9 tlmm_test_rising_in_handler
+    ok 10 tlmm_test_falling_in_handler
+    ok 11 tlmm_test_thread_rising
+    ok 12 tlmm_test_thread_falling
+    ok 13 tlmm_test_thread_high
+    ok 14 tlmm_test_thread_low
+    ok 15 tlmm_test_thread_rising_in_handler
+    ok 16 tlmm_test_thread_falling_in_handler
+    ok 17 tlmm_test_rising_while_disabled
+
+ok 1 tlmm-test
+
+Test #2: Secondary mode on x1e80100 CRD (Old firmware)
+
+root@qcom-armv8a:~# insmod tlmm-test.ko gpio=91
+
+KTAP version 1
+1..1
+    KTAP version 1
+    # Subtest: tlmm-test
+    # module: tlmm_test
+    1..17
+    ok 1 tlmm_test_silent_rising
+    ok 2 tlmm_test_silent_falling
+    ok 3 tlmm_test_silent_low
+    ok 4 tlmm_test_silent_high
+    ok 5 tlmm_test_rising
+    ok 6 tlmm_test_falling
+    ok 7 tlmm_test_high
+    ok 8 tlmm_test_low
+    ok 9 tlmm_test_rising_in_handler
+    ok 10 tlmm_test_falling_in_handler
+    ok 11 tlmm_test_thread_rising
+    ok 12 tlmm_test_thread_falling
+    ok 13 tlmm_test_thread_high
+    ok 14 tlmm_test_thread_low
+    ok 15 tlmm_test_thread_rising_in_handler
+    ok 16 tlmm_test_thread_falling_in_handler
+    # tlmm_test_rising_while_disabled: ASSERTION FAILED at drivers/pinctrl/qcom/tlmm-test.c:545
+    Expected atomic_read(&priv->intr_count) == 1, but
+        atomic_read(&priv->intr_count) == 0 (0x0)
+    not ok 17 tlmm_test_rising_while_disabled
+
+not ok 1 tlmm-test
+root@qcom-armv8a:~#
+
+v2 series is dependent on [1] as mostly all changes are already reviewed.
+v3 series is dependent on [2] which is already merged in linux-next
+
+[1] https://lore.kernel.org/linux-arm-msm/20260410184124.1068210-1-mukesh.ojha@oss.qualcomm.com/
+[2] https://lore.kernel.org/linux-arm-msm/20260527095426.2324504-1-mukesh.ojha@oss.qualcomm.com/
+[3] https://lore.kernel.org/linux-arm-msm/20260529-tlmm_test_changes-v1-0-88bfdccb4369@oss.qualcomm.com/
+
+---
+Changes in v3:
+- Add test results in cover letter with tlmm-test module
+- Fix coding style and struct defination
+- Convert raw_spin_lock to guard(raw_spin_lock) and remove _irqsave
+- Use bit number instead of GENMASK() for single bit fields
+- Use __assign_bit() and __clear_bit() APIs for single bit modifications
+- Use devm_ioremap() instead of ioremap()
+- Use devm_kcalloc() instead of kzalloc_objs()
+- Add separate irq chips for pass through and secondary mode IRQs
+- Add IRQCHIP_EOI_THREADED flag for threaded IRQ on pinctrl irqchip
+- Link to v2: https://patch.msgid.link/20260526-hamoa_pdc-v2-0-f6857af1ce91@oss.qualcomm.com
+
+Changes in v2:
+- Update to mention SoC names along with PDC versions in cover letter
+- Drop devicetree change to remove scm interconnects
+- Use qcom_scm_is_available() to wait for dependency on SCM
+- Drop binding change mentioning qcom,qmp and PDC config reg
+- Restructure version support and move all statics to struct pdc_desc
+- Remove pdc_enable_intr() wrapper
+- Differentiate direct SPI and GPIOs as SPI using PDC IRQ PARAM reg
+- Add changes to make PDC work in secondary controller mode
+- Rework and include Stephan's change to invoke irq_ack() for edge interrupt
+- Mention dependency via b4 prerequisites and cover letter
+- Link to v1: https://lore.kernel.org/r/20260312-hamoa_pdc-v1-0-760c8593ce50@oss.qualcomm.com
+---
+
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Thomas Gleixner <tglx@kernel.org>
+To: Linus Walleij <linusw@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-gpio@vger.kernel.org
+Cc: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+
+---
+Maulik Shah (7):
+      irqchip/qcom-pdc: restructure version support
+      irqchip/qcom-pdc: Move all statics to struct pdc_desc
+      irqchip/qcom-pdc: Remove pdc_enable_intr() wrapper
+      irqchip/qcom-pdc: Differentiate between direct SPI and GPIO as SPI
+      irqchip/qcom-pdc: Configure PDC to pass through mode
+      Revert "pinctrl: qcom: x1e80100: Bypass PDC wakeup parent for now"
+      arm64: dts: qcom: x1e80100: Add deepest idle state
+
+Stephan Gerhold (1):
+      pinctrl: qcom: Acknowledge IRQs for PDC interrupt controller
+
+ arch/arm64/boot/dts/qcom/hamoa.dtsi     |  10 +-
+ drivers/irqchip/qcom-pdc.c              | 506 +++++++++++++++++++++++++-------
+ drivers/pinctrl/qcom/pinctrl-msm.c      |  16 +-
+ drivers/pinctrl/qcom/pinctrl-x1e80100.c |   4 +-
+ 4 files changed, 430 insertions(+), 106 deletions(-)
+---
+base-commit: 8d6dbbbe3ba62de0a63e962ee004afb848c8e3ac
+change-id: 20260605-hamoa_pdc_v3-6dabc845021c
+
+Best regards,
+--  
+Maulik Shah <maulik.shah@oss.qualcomm.com>
 
 
