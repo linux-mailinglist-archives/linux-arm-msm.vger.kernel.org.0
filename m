@@ -1,106 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-113289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id CjudGK+UMGrLUgUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 02:11:27 +0200
+	id kWEIGdOTMGqcUgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 02:07:47 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B319368AD5C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 02:11:26 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0972968ACC8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 02:07:47 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=BVMiuk3I;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="FQf/zYnI";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113289-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113289-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=hbYRMHxY;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=Dv7W3rby;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113290-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113290-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5889C31BC77C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 00:06:08 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 001E43039887
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 00:06:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E835233945;
-	Tue, 16 Jun 2026 00:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15C6D243376;
+	Tue, 16 Jun 2026 00:05:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF1A8634C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 00:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4791A9F9B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 00:05:40 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781568339; cv=none; b=V8RDR2jk7+cnb5zuEjDDcy0BAf6iwzalwOYEi9cCW+Lu1bLFZJbKwWAwvG4bYMf0KJIvwxYPOJoFRyi64Xzvq7yBlxFJiYm1Ia7RJCzLPjSYtSVVPHSSRcxolelr1/QwXHlAvDWLuLwpHINuxGGsR9qhHMoj9BCvxdyu3habeBA=
+	t=1781568342; cv=none; b=oUd7TxsZUM0coM3lqfkdZ3Fq2tSAielrrnAj4EQxa9kytXvCI/EVPjif3tc9V6FMWqnMEi08YiCLFFcNzj/JNTvfOwkLz/HPe40FMzZEcJRYviGIpSK2EzsSk8xTUbwQtKl4yCNaoRbMdOCKAZrk6CnBxm8DOs/G9L7WAuJU55I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781568339; c=relaxed/simple;
-	bh=7e9Z74Q1L0nekJViAOnYD+dOHRBzFO189DFrri+T0ok=;
+	s=arc-20240116; t=1781568342; c=relaxed/simple;
+	bh=bBMr05z3+hZKyiKnqtJur9lg4bNIQFaGUAfGEfPWSb0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PjnhtvArkSA3IdoCOggxV7juS2Q514zvCPkuxTz20hjKR0E2u1eaRR6J+CswT8lZJezR4iz9MBZEfd4hulgk2cCPtbIQDbrs42W82UQZGdWqSj8js83rBM/ypkCngOnzyby5XY4Zud52u0Sd5BksGcQ4pTNFQrpsvOBXufcMjF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BVMiuk3I; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FQf/zYnI; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65FIwxB0883722
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 00:05:37 GMT
+	 In-Reply-To:To:Cc; b=fIa7K/WN6FLElsQITGU3Q7ArFgfC7fI/34zrUDT4ZFKpQUw2cbBGg64cAFl0bgpTaPxVGHgKaYXYrg5suACyToOnAib5H2kNKW8FPKy9eN5mcxJ2x/w3stsY9D6cXwHXBHd/A0T5SUTwN21eqJFPAYSkA/CefVESbjKi9vXWcv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hbYRMHxY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Dv7W3rby; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65FIxDGG861104
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 00:05:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	NSZIeR/PALw0s5YexEl8YedZMsbjMIImpBw2uZ0uvz8=; b=BVMiuk3I0ijXKq56
-	235VD1mjQJRjTGpOh6gzqZ5JH8gjwaP7+LgADXeUhsTLDBUlXrev3dpJ7n85BlTh
-	kR+FhoRtyfYeorVTGxXbjV24Sd6FroHrFAdVAESns/q7M+wRKsL7lv2REgkU7ZCJ
-	1KblPkMMJMaVDLioDFGKdrgU2k02ImR/2riMV5IP1WlmBI6crwptDT4vYEVgm1vE
-	KLCNRAIun18Ivq3aTJf851UaHJrpbnK15SbrQ/wUpsmqWoMsQ72S9NWC+gs9nN4b
-	goU2FHy4ySG91hIASf5ldkqTem8uhTCtUPzKojHv+u5e8BzGCaeALtvwwmHiQ3gw
-	sbEgoQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etfa73m6t-1
+	AWJObvt7y+kbPGRMk8Pkpq/KWzg0qp4Ve45uTUJVorU=; b=hbYRMHxYe02vlCT0
+	X1snr0Mh87ob7zj/yEWy3In1nCSZpwCIeboJPPLhf4sGV4h3/Oa0IMbMrDaUAQWP
+	jp9zSmbFz1PibTYAZaPh+1pTGQO4Y8jlYSfKNf0iBaDjQRACD4mKOCqgNJbJAw1G
+	Vsb1Rso3nI8MAjDUV4x2xWl4pYAE2OkJ38l0VUnpHHeWpJNvd4n3Ykce6PLfUEA7
+	sjQxuBpFBewvhsad5Y0KfNg5iavHT/RpjQVUjq4+JiLFsqrHgUBBpMaOW7txnQxS
+	mfQgGp2YoM8R5pLSHNSv+J4zVcuue5VDuT1tvacYF7l//1jf9PKpCTfP0vO3Mw3b
+	P3MgQA==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eteydbmtu-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 00:05:36 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-915d3261c5cso814693085a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 17:05:36 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 00:05:40 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-9157db42dd8so741407885a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Jun 2026 17:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781568336; x=1782173136; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1781568339; x=1782173139; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NSZIeR/PALw0s5YexEl8YedZMsbjMIImpBw2uZ0uvz8=;
-        b=FQf/zYnIEHQqZ66hMFzvdlscaq0oYTPEeAo3hmuSWVSggD6HClkh5/hLIFhC2NGT8w
-         VGGRM7NdFCrCZUQSwJgN6yYOveVHhwCoHRE5jC+SUGfa3AB8a8/Oi3JPn/Gx8NSDxl1v
-         oJExxvC+QhRx0AmxHbOkgGwoyn9D5zfJ3DqUoBjVASmRjL2nSiN+lmqYNC9XQCbEFDTo
-         q6sy2i87YjZjyDnXPqIOq+nQwoPG5TsVsWPgZJ3Wr1EReorDrsEgjXIDZ6CmTZ5du14D
-         FGXUuOP52Qn8fL0t4zvlQkoIC9aPeMCEzBg/QHkZO7NA8TOFRGwxnxyLbfLx5n8KLYp6
-         Uzrw==
+        bh=AWJObvt7y+kbPGRMk8Pkpq/KWzg0qp4Ve45uTUJVorU=;
+        b=Dv7W3rbySsPoSONWjBsPhmVYXs0exN5NoUFnVjNzhI736GroNDAYLQojEvbm5H43No
+         0G2ZopllZqdgSq+H0u648/O+53dAch2IMG7+bTBpqSd8Nxa3K7ySxjIZqAD2G+RAnUIN
+         y99vTJKEMyj7viQTNwBQC3TFzktab2VmSxsN/Uc/Y3T/cIhuGVtVDD+Ake0PsJptbrxL
+         usAR2QMgK/d0F6Dm/dVkkBeQM+VZPHPDVsnXV8CCRYDm1ij1HTgaOkaT3elaOQgcF8ix
+         oSb/oYGPxaBjbYl9XNrCw77pThYafXQByyMYBxVuO1QnBGxz1qRQj0JTDxG24S5hVapg
+         ZP0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781568336; x=1782173136;
+        d=1e100.net; s=20251104; t=1781568339; x=1782173139;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=NSZIeR/PALw0s5YexEl8YedZMsbjMIImpBw2uZ0uvz8=;
-        b=GV7/IVjeu9Kj1BYV/BK8aL87R02UErXv0WMC/A/DJD6Wkm8vCaHObfnev1WN0DJ3Ny
-         LF1IRRr46zlA8P8c4BlX6x/3tLxoYImElfpH+2EF9HKqJC0WsYjnOgCC5jVsByRYprEr
-         lZA4MeI4wfW1N2EKaSucS2mZc2uZ33ed9Qmpzf7rkt+rGaCNl7NmedeoBcOMYEonO8Hd
-         4vjkkXtjf6kbOLblxgk3h6vcdRcBnWFVey9WrmMq+Dmd8aBayM3nTtYp03pMvB4wrOni
-         1WxjcsjHmDM/yC8xYyHd5j8xK60kwWoiqNy9IyXcrbYz8do9mmnWS3n3R2xHZP4goJRc
-         0nMA==
-X-Forwarded-Encrypted: i=1; AFNElJ/7ZIpbM7ht3Wn+qACwctvlVw2JgSjckH7La1FsNXVvgUT1RDYC24FwSHcGveJFp2vrJbswcn0SrKAgssPZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxPUJRD7Ti6VzDqQTqQHoq1RxwyZoZoFLRaBrcQx4J2x2LXjh2W
-	sizGLriSinvC1VJxCX8CIn5yanO7OB5A48yuFmZQ81rTFGacbtZSeDG4R5hbp8Tn4viazZEWx6V
-	lRcZm/ZdkzbAUlLoMeyxD9N65ddO0pjemb2usLqaMuH373kQshMYcYsf+QlM5RL639bhS
-X-Gm-Gg: Acq92OGbHoBqf22ayDx55cJIy59SbawRzv2bTeFflPmajQRL0qeKEqD6u5UXTzb5/Ci
-	0QLQdWVQFTM99O9RioDTvFtiANRXb9h+yafQzKsyr0dBoo6MvxvzjNsicjakMEUdTKqc5di8sUy
-	YN32IFT4gwleC3rXVTwvdVqV4seRw74F9p7VQpxksdtxjxV2/aPBTGC18RCKuP5ZaaHJf6AalED
-	isoRicrEKFBMWeihGNU3qzVmzRk4cqn5vYPHVZYCfklA5cRcdml55T1NA0z6gP5Tg8KYoFvVxft
-	uDNEdUZ1u6PRwoFBgOlLjjem9RunJdAHCA2kMQDJLh99guyc+7MzoJn9JgetVF0KfWmjQ6nEN2q
-	iuyGqpKfD8bqT2UvQ/xCrlWdkmOWfs4ogHe/+rBy7EAlMjC2mSVUYvwIoUXJzX3MkVmUsFLw3tB
-	S8D0awZO8yQ5Pleyz/W5mGwA/hW2UOCvGUimI=
-X-Received: by 2002:a05:620a:27c6:b0:914:bc2f:baf7 with SMTP id af79cd13be357-91c45511b20mr208206085a.4.1781568335384;
-        Mon, 15 Jun 2026 17:05:35 -0700 (PDT)
-X-Received: by 2002:a05:620a:27c6:b0:914:bc2f:baf7 with SMTP id af79cd13be357-91c45511b20mr208199885a.4.1781568334757;
-        Mon, 15 Jun 2026 17:05:34 -0700 (PDT)
+        bh=AWJObvt7y+kbPGRMk8Pkpq/KWzg0qp4Ve45uTUJVorU=;
+        b=GR/7kPPUrtOpama3ChJThVBBOv9hMLsSJseBgakjVOBGMxAu5IuETNv15fTaUS0+lE
+         F+O2/gZOJihshyKWZYa1z8wSK3ZAVJwEGdurO7Y4OzxgcHq+JDKcH82udjaHgBZMe2Dt
+         /AonIh7G7pe6fBKLd2ZfxbMltynSFFTkNzNeraH84OKMeJamPl7p4CXO8G7bDDQ01VIi
+         XOxmFTK0Ro4eOEgKxyAwlKCnucxH3Jqyi3LD9OmwzXbRt76OPVmSpVLLR/IiLhh6nPFK
+         YkdyBIKaoJYHMnkll7oUQvZwXZbFPz0lkQAP4yFsoVrkiDPyaXGkc8CF9yZXIhFiT7RD
+         BnLw==
+X-Forwarded-Encrypted: i=1; AFNElJ9WsOpC6RMb0xWxAPlU5LJGrKra0P3UyERMi5l/l23ndkQUy8oV1VG5PNisAqiDI8O46AulbWMa0Yyz2q10@vger.kernel.org
+X-Gm-Message-State: AOJu0YyJ/ystSRqXRIdrvZJiU74GopuILXvZMuC5UefoUI/zAB/nIDES
+	6FfJQkp7JsUzH9eE971jUdTV0m0oYDkB4xCRIEcgDEmS8vWNh1A0lrOrQTdakMuTqivUBz0ior9
+	d/ox7XEYrp5p6nbBI79d6NtSaXPcP/AeNEVMTSAY2xsqPUKQ2n7PIkuSMDH+GgFYZ9yDF
+X-Gm-Gg: Acq92OFg3+CqcgA00YsYqtcDeM4ws6hK8HPwVXn+4v5o+0iSA3lcHbslmiVX3N35RsI
+	RrwGGRRNLkgSNzDy4cqpSDcPlQ9A9BA0sTL7SVlTUph6Pyzo3dHK7h2fpdXWcfmk2OAe8tOlY2l
+	j35Cc1qxn3/4riOHwvsVodHsAMtyIJS56HKLaxv2+q3/7/4UHONvOJaQGIw475Fy2P0OAVLPAn2
+	Fk+9KRSaMLRkVx1NrAs34ivQ9ffPdlFKdBI3+6p8ov/ewhWNjDXaRXntFF6GN3U8NrrXv+hhliv
+	qo551ANQ7YIfOvQtOGO8v9mkYoqg9Gu7SUUVz+CGgVoE4DZwJqR3KeFj5lf+8vKbQ54GGjncU5H
+	5bdpvnvZC0o4WfO+qmxkJ+9vzggUU0CHiYbykRz+jpjfIAvBh7KrtTpBlQy261dbt10wTq8sRQ0
+	B1OZ/kNaSvboKuBSGZkF6WJXab/TEW7r5UVro=
+X-Received: by 2002:a05:620a:2992:b0:915:86a4:6691 with SMTP id af79cd13be357-917efbbd2d6mr2192263285a.4.1781568339054;
+        Mon, 15 Jun 2026 17:05:39 -0700 (PDT)
+X-Received: by 2002:a05:620a:2992:b0:915:86a4:6691 with SMTP id af79cd13be357-917efbbd2d6mr2192258785a.4.1781568338659;
+        Mon, 15 Jun 2026 17:05:38 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5ad2e1a7092sm3015731e87.50.2026.06.15.17.05.31
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5ad2e1a7092sm3015731e87.50.2026.06.15.17.05.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2026 17:05:33 -0700 (PDT)
+        Mon, 15 Jun 2026 17:05:36 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Tue, 16 Jun 2026 03:04:41 +0300
-Subject: [PATCH v5 14/16] media: iris: add Gen2 firmware support on the
- Agatti platform
+Date: Tue, 16 Jun 2026 03:04:42 +0300
+Subject: [PATCH v5 15/16] media: venus: skip QCM2290 if Iris driver is
+ enabled
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -109,7 +109,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260616-iris-ar50lt-v5-14-583b42770b6a@oss.qualcomm.com>
+Message-Id: <20260616-iris-ar50lt-v5-15-583b42770b6a@oss.qualcomm.com>
 References: <20260616-iris-ar50lt-v5-0-583b42770b6a@oss.qualcomm.com>
 In-Reply-To: <20260616-iris-ar50lt-v5-0-583b42770b6a@oss.qualcomm.com>
 To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
@@ -125,54 +125,55 @@ Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=22525;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1810;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=LPduOF4U48dDdNMZXEau7vak3Qu2qM+bqRiM2DzBGS4=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBqMJMQ7Qlr2KDxOrwOifBBhOdhtCpIY/yGC5x6p
- LtmRJbpQ82JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCajCTEAAKCRCLPIo+Aiko
- 1ajMB/9Azdcnyw5QFju3SWVZKMjGNM7Rw/kZW/8ii5z/U/YQ7EqgiJVZGEsUaFDCXuaSdUJ5+G1
- oL/vnMpd5wocoJ+fyw760SUc8YDcwZGSUBngE/iO5iYwOIs5fMoR1d1qb08kxrtlbSS860Q/WeJ
- QBN07SsVzffKHqbbbYPjd5Yhb+uwzfpnis+gnNyXhJZmLRe4ZnHQrAcjOnjr2r+3n8Cvqw1HbrA
- aVKSiMluJjhGjTznO0DWTbKAte5ziDJ9uSc0y/a0CqV6EPSsjKrFn8N7AAjPhXgnnctd2SaYajE
- BldZwc6vEjKoJIU5yBKFNjVNbpk57qNoBw6hUSz0ijW4Auof
+ bh=bBMr05z3+hZKyiKnqtJur9lg4bNIQFaGUAfGEfPWSb0=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBqMJMQ9jyjI0xtGZm9mkeQcVIITP3V5I9BWIzP2
+ B+zypqYjDCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCajCTEAAKCRCLPIo+Aiko
+ 1ckNB/9gQAoQXZ9c6otmE0V8YpLudu7XUS3NIMxAZq5Vra5YVT7sFL3y94zeBvMGRjioKK5ssTy
+ O3Ty2uYR1qpZnWqZnDR261US0PDhbZ0kZyOUvxhoM3FjqvdpM9SOLKimUsyPQvdt7EHnavWdd9v
+ pAkFOweeYp4QzGwT6LGBE//jSLILvsDSltX3AVoR+g63mA3WkKCoFAr1RqkrCHlQ5h8uwgR4Rrv
+ mGBHpbpQT0vb86PPXdvYYzB3mM29lxjD794q6EprPbEWqtCwYDrYY5Ic1M3akqdjY0kNlaFsx6q
+ 0gemNMP79cm8yuXiuSwwySiJcG1vjQM+iWbkwZoL8iAbci+r
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-ORIG-GUID: p_UM3So8pEzRgNqvQKWdJxD_oFFpKXTh
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDI1NCBTYWx0ZWRfX1yhUViqtYE5m
- XNxlr3JUkNqO6LtfZzqDoRSVufKP3TwHoX0M/AWvkqnu2m1T7Rf1c2ghk/gugtaBQdi5zyzboBQ
- GneyT6ERha7pUFUhYpHyS/O7evC6794=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDI1NCBTYWx0ZWRfX8KNidrF0MOt9
- p9uAVShLqQQ2YLtce+Wu4v2PQzf8RpaM+jZCYDzwnbnwKNXtvQRMbH3bC4HjOj2aX2//Twu6f1M
- yZOq5rTqHjtoVb4DkffBo72YAlGztGuDmw+8kldy5QWsO9VxuQYhUJ5vLzUXdbM7kM9vmqvFjes
- tU/ousoTyTi2zGwUG5FX+CHqrtZJczjbGVI8hvW20wpWKLo36UfkNxN+poOb141FEzfpXnwtVf5
- k4ZcmlJQZjlZnHs6a//j7z840CCsllltmOGUs0KVJrdXstNtbDVfcYNRuWwKlN1kvRZ1I5LV1G4
- QKs8X7CNhh2DOUFf1thXdF3qWU4nW+bNrUe41xBBqjR3YOST6OQqIgOv3YXx0XBpayK50H1Iugm
- MX0s5cESagThCduc/7oyfFNR/iOQuU25s54rAfkpQNfVD/sxZAzUT7LZmLIDXvGpdHGXQvb0UBr
- VSFLu9JADxbBuv06pLA==
-X-Proofpoint-GUID: p_UM3So8pEzRgNqvQKWdJxD_oFFpKXTh
-X-Authority-Analysis: v=2.4 cv=AN2yTM5Z c=1 sm=1 tr=0 ts=6a309350 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+X-Proofpoint-GUID: LGEp3PfF97j94v1TVwgIeet31Z0hu4iq
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDI1NCBTYWx0ZWRfX78u5X9vuKO1i
+ j2da2iV0KfulX5V1NgTtLNK/f/sMYNRETcfPVsrJC0ncD3JrxE2broVRwB16Daukp7XRtOhrH7j
+ /20WZfs+XdJdl3K77rLvMggz39cdEkk=
+X-Authority-Analysis: v=2.4 cv=QrJuG1yd c=1 sm=1 tr=0 ts=6a309354 cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
- a=GUEZgOuAT4xZVSXxJacA:9 a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=TAcc6fXARiqENDJ69lsA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-ORIG-GUID: LGEp3PfF97j94v1TVwgIeet31Z0hu4iq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDI1NCBTYWx0ZWRfXx+YzminKYBQ4
+ JYCv2Zpzi+3mdZgafBC1cbeX0C0px/ajLdkU1FZSbUc4l6j2gyW9YKlMMFwaZ4ADhfcQLFFlzTM
+ //CrlFPdqe8zhMMnnrdSm16DaYbrZXbL7lPYVUGqgkbk5PcZ+qluWrVFZAlEpAv3R2dJg7c66/j
+ Cxnbzqmbo5uVxb1WfJ0fpok4TR8AeU1yfmPEHIpZqc/OaFWNKXuyJ+suXNsUzLMfXzxnvWOGtZ4
+ CJ75Wd5jJ6wrBfkx/nj40WeHQiIAG9bYFh7WnXYs3QW2GqMXJLwIcXVNMxBPbAxmb32GWnl6d+c
+ 6ejYG3IHvCyvrp0ch6b1Ddb/c3ZziKHCrOAD9HGtY0P5dEtgJLHxoLL8edqU3NwawxMryfGHZDw
+ lbnWZ5ygbJXYD5gVDgIv4NPs5kEvOqeyrhYT7ejs4Q3f2nSwUGMYVqTpL4ynnTs7ZGLnPA/7rmq
+ CMrD2Dunz0Zg6+GC/Ng==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 phishscore=0 adultscore=0 malwarescore=0
- clxscore=1015 suspectscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150254
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ phishscore=0 spamscore=0 impostorscore=0 malwarescore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606150254
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-113289-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113290-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
@@ -182,13 +183,13 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	FORGED_SENDER(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
@@ -196,691 +197,48 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: B319368AD5C
+X-Rspamd-Queue-Id: 0972968ACC8
 
-From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+As the Iris driver now supports the QCM2290 hardware too, there is a
+race between Venus and Iris drivers on binding to the corresponding
+device. Follow the approach used by other platforms and skip QCM2290 in
+the Venus driver if Iris is enabled.
 
-Agatti platform is using HFI Gen1 firmware, which is considered to be
-legacy firmware branch. Follow the example of the SC7280 platform and
-extend the driver with supporting both HFI Gen1 and Gen2 firmwares for
-this platform. Like HFI Gen1 this firmware doesn't have PIPE property
-(but unlike Gen1 buffer sizes are calculated on the driver side).
-
-Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 ---
- drivers/media/platform/qcom/iris/iris_hfi_gen2.c   | 613 +++++++++++++++++++++
- .../platform/qcom/iris/iris_platform_common.h      |   1 +
- .../platform/qcom/iris/iris_platform_vpu_ar50lt.c  |  11 +-
- 3 files changed, 623 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/venus/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2.c
-index acc0ed8adda1..f89245269e8c 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2.c
-@@ -1118,3 +1118,616 @@ const struct iris_firmware_data iris_hfi_gen2_data = {
- 	.enc_op_int_buf_tbl = sm8550_enc_op_int_buf_tbl,
- 	.enc_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_op_int_buf_tbl),
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index 243e342b0ae7..3c88594eb1d0 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -1118,7 +1118,6 @@ static const struct venus_resources sc7280_res = {
+ 	.dec_nodename = "video-decoder",
+ 	.enc_nodename = "video-encoder",
  };
-+
-+static const struct platform_inst_fw_cap inst_fw_cap_gen2_ar50lt_dec[] = {
-+	{
-+		.cap_id = PROFILE_H264,
-+		.min = V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE,
-+		.max = V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE) |
-+				BIT(V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_BASELINE) |
-+				BIT(V4L2_MPEG_VIDEO_H264_PROFILE_MAIN) |
-+				BIT(V4L2_MPEG_VIDEO_H264_PROFILE_HIGH) |
-+				BIT(V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH),
-+		.value = V4L2_MPEG_VIDEO_H264_PROFILE_HIGH,
-+		.hfi_id = HFI_PROP_PROFILE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_u32_enum,
-+	},
-+	{
-+		.cap_id = PROFILE_HEVC,
-+		.min = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
-+		.max = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE),
-+		.value = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
-+		.hfi_id = HFI_PROP_PROFILE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_u32_enum,
-+	},
-+	{
-+		.cap_id = PROFILE_VP9,
-+		.min = V4L2_MPEG_VIDEO_VP9_PROFILE_0,
-+		.max = V4L2_MPEG_VIDEO_VP9_PROFILE_0,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_VP9_PROFILE_0),
-+		.value = V4L2_MPEG_VIDEO_VP9_PROFILE_0,
-+		.hfi_id = HFI_PROP_PROFILE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_u32_enum,
-+	},
-+	{
-+		.cap_id = LEVEL_H264,
-+		.min = V4L2_MPEG_VIDEO_H264_LEVEL_1_0,
-+		.max = V4L2_MPEG_VIDEO_H264_LEVEL_4_2,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_0) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1B) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_1) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_2) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_3) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_0) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_1) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_2) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_0) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_1) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_2) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_0) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_1) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_2),
-+		.value = V4L2_MPEG_VIDEO_H264_LEVEL_4_2,
-+		.hfi_id = HFI_PROP_LEVEL,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_u32_enum,
-+	},
-+	{
-+		.cap_id = LEVEL_HEVC,
-+		.min = V4L2_MPEG_VIDEO_HEVC_LEVEL_1,
-+		.max = V4L2_MPEG_VIDEO_HEVC_LEVEL_4_1,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_1) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_2) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_2_1) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_3) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_3_1) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_4) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_4_1),
-+		.value = V4L2_MPEG_VIDEO_HEVC_LEVEL_4_1,
-+		.hfi_id = HFI_PROP_LEVEL,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_u32_enum,
-+	},
-+	{
-+		.cap_id = LEVEL_VP9,
-+		.min = V4L2_MPEG_VIDEO_VP9_LEVEL_1_0,
-+		.max = V4L2_MPEG_VIDEO_VP9_LEVEL_4_1,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_1_0) |
-+				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_1_1) |
-+				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_2_0) |
-+				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_2_1) |
-+				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_3_0) |
-+				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_3_1) |
-+				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_4_0) |
-+				BIT(V4L2_MPEG_VIDEO_VP9_LEVEL_4_1),
-+		.value = V4L2_MPEG_VIDEO_VP9_LEVEL_4_1,
-+		.hfi_id = HFI_PROP_LEVEL,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_u32_enum,
-+	},
-+	{
-+		.cap_id = TIER,
-+		.min = V4L2_MPEG_VIDEO_HEVC_TIER_MAIN,
-+		.max = V4L2_MPEG_VIDEO_HEVC_TIER_HIGH,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_TIER_MAIN) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_TIER_HIGH),
-+		.value = V4L2_MPEG_VIDEO_HEVC_TIER_HIGH,
-+		.hfi_id = HFI_PROP_TIER,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_u32_enum,
-+	},
-+	{
-+		.cap_id = INPUT_BUF_HOST_MAX_COUNT,
-+		.min = DEFAULT_MAX_HOST_BUF_COUNT,
-+		.max = DEFAULT_MAX_HOST_BURST_BUF_COUNT,
-+		.step_or_mask = 1,
-+		.value = DEFAULT_MAX_HOST_BUF_COUNT,
-+		.hfi_id = HFI_PROP_BUFFER_HOST_MAX_COUNT,
-+		.flags = CAP_FLAG_INPUT_PORT,
-+		.set = iris_set_u32,
-+	},
-+	{
-+		.cap_id = STAGE,
-+		.min = STAGE_1,
-+		.max = STAGE_2,
-+		.step_or_mask = 1,
-+		.value = STAGE_2,
-+		.hfi_id = HFI_PROP_STAGE,
-+		.set = iris_set_stage,
-+	},
-+	{
-+		.cap_id = POC,
-+		.min = 0,
-+		.max = 2,
-+		.step_or_mask = 1,
-+		.value = 1,
-+		.hfi_id = HFI_PROP_PIC_ORDER_CNT_TYPE,
-+	},
-+	{
-+		.cap_id = CODED_FRAMES,
-+		.min = CODED_FRAMES_PROGRESSIVE,
-+		.max = CODED_FRAMES_PROGRESSIVE,
-+		.step_or_mask = 0,
-+		.value = CODED_FRAMES_PROGRESSIVE,
-+		.hfi_id = HFI_PROP_CODED_FRAMES,
-+	},
-+	{
-+		.cap_id = BIT_DEPTH,
-+		.min = BIT_DEPTH_8,
-+		.max = BIT_DEPTH_8,
-+		.step_or_mask = 1,
-+		.value = BIT_DEPTH_8,
-+		.hfi_id = HFI_PROP_LUMA_CHROMA_BIT_DEPTH,
-+	},
-+	{
-+		.cap_id = RAP_FRAME,
-+		.min = 0,
-+		.max = 1,
-+		.step_or_mask = 1,
-+		.value = 1,
-+		.hfi_id = HFI_PROP_DEC_START_FROM_RAP_FRAME,
-+		.flags = CAP_FLAG_INPUT_PORT,
-+		.set = iris_set_u32,
-+	},
-+};
-+
-+static const struct platform_inst_fw_cap inst_fw_cap_gen2_ar50lt_enc[] = {
-+	{
-+		.cap_id = PROFILE_H264,
-+		.min = V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE,
-+		.max = V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_PROFILE_BASELINE) |
-+				BIT(V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH) |
-+				BIT(V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_BASELINE) |
-+				BIT(V4L2_MPEG_VIDEO_H264_PROFILE_MAIN) |
-+				BIT(V4L2_MPEG_VIDEO_H264_PROFILE_HIGH),
-+		.value = V4L2_MPEG_VIDEO_H264_PROFILE_HIGH,
-+		.hfi_id = HFI_PROP_PROFILE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_profile,
-+	},
-+	{
-+		.cap_id = PROFILE_HEVC,
-+		.min = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
-+		.max = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN_STILL_PICTURE),
-+		.value = V4L2_MPEG_VIDEO_HEVC_PROFILE_MAIN,
-+		.hfi_id = HFI_PROP_PROFILE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_profile,
-+	},
-+	{
-+		.cap_id = LEVEL_H264,
-+		.min = V4L2_MPEG_VIDEO_H264_LEVEL_1_0,
-+		.max = V4L2_MPEG_VIDEO_H264_LEVEL_4_2,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_0) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1B) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_1) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_2) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_1_3) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_0) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_1) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_2_2) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_0) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_1) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_3_2) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_0) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_1) |
-+				BIT(V4L2_MPEG_VIDEO_H264_LEVEL_4_2),
-+		.value = V4L2_MPEG_VIDEO_H264_LEVEL_4_2,
-+		.hfi_id = HFI_PROP_LEVEL,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_level,
-+	},
-+	{
-+		.cap_id = LEVEL_HEVC,
-+		.min = V4L2_MPEG_VIDEO_HEVC_LEVEL_1,
-+		.max = V4L2_MPEG_VIDEO_HEVC_LEVEL_4_1,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_1) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_2) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_2_1) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_3) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_3_1) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_4) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_LEVEL_4_1),
-+		.value = V4L2_MPEG_VIDEO_HEVC_LEVEL_4_1,
-+		.hfi_id = HFI_PROP_LEVEL,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_level,
-+	},
-+	{
-+		.cap_id = STAGE,
-+		.min = STAGE_1,
-+		.max = STAGE_2,
-+		.step_or_mask = 1,
-+		.value = STAGE_2,
-+		.hfi_id = HFI_PROP_STAGE,
-+		.set = iris_set_stage,
-+	},
-+	{
-+		.cap_id = HEADER_MODE,
-+		.min = V4L2_MPEG_VIDEO_HEADER_MODE_SEPARATE,
-+		.max = V4L2_MPEG_VIDEO_HEADER_MODE_JOINED_WITH_1ST_FRAME,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEADER_MODE_SEPARATE) |
-+				BIT(V4L2_MPEG_VIDEO_HEADER_MODE_JOINED_WITH_1ST_FRAME),
-+		.value = V4L2_MPEG_VIDEO_HEADER_MODE_JOINED_WITH_1ST_FRAME,
-+		.hfi_id = HFI_PROP_SEQ_HEADER_MODE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_header_mode_gen2,
-+	},
-+	{
-+		.cap_id = PREPEND_SPSPPS_TO_IDR,
-+		.min = 0,
-+		.max = 1,
-+		.step_or_mask = 1,
-+		.value = 0,
-+	},
-+	{
-+		.cap_id = BITRATE,
-+		.min = 1,
-+		.max = BITRATE_MAX_AR50LT,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT_AR50LT,
-+		.hfi_id = HFI_PROP_TOTAL_BITRATE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_bitrate_gen2,
-+	},
-+	{
-+		.cap_id = BITRATE_PEAK,
-+		.min = 1,
-+		.max = BITRATE_MAX_AR50LT,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT_AR50LT,
-+		.hfi_id = HFI_PROP_TOTAL_PEAK_BITRATE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_peak_bitrate,
-+	},
-+	{
-+		.cap_id = BITRATE_MODE,
-+		.min = V4L2_MPEG_VIDEO_BITRATE_MODE_VBR,
-+		.max = V4L2_MPEG_VIDEO_BITRATE_MODE_CBR,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_BITRATE_MODE_VBR) |
-+				BIT(V4L2_MPEG_VIDEO_BITRATE_MODE_CBR),
-+		.value = V4L2_MPEG_VIDEO_BITRATE_MODE_VBR,
-+		.hfi_id = HFI_PROP_RATE_CONTROL,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_bitrate_mode_gen2,
-+	},
-+	{
-+		.cap_id = FRAME_SKIP_MODE,
-+		.min = V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED,
-+		.max = V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED) |
-+				BIT(V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_LEVEL_LIMIT) |
-+				BIT(V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_BUF_LIMIT),
-+		.value = V4L2_MPEG_VIDEO_FRAME_SKIP_MODE_DISABLED,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+	},
-+	{
-+		.cap_id = FRAME_RC_ENABLE,
-+		.min = 0,
-+		.max = 1,
-+		.step_or_mask = 1,
-+		.value = 1,
-+	},
-+	{
-+		.cap_id = GOP_SIZE,
-+		.min = 0,
-+		.max = INT_MAX,
-+		.step_or_mask = 1,
-+		.value = 2 * DEFAULT_FPS - 1,
-+		.hfi_id = HFI_PROP_MAX_GOP_FRAMES,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_u32,
-+	},
-+	{
-+		.cap_id = ENTROPY_MODE,
-+		.min = V4L2_MPEG_VIDEO_H264_ENTROPY_MODE_CAVLC,
-+		.max = V4L2_MPEG_VIDEO_H264_ENTROPY_MODE_CABAC,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_ENTROPY_MODE_CAVLC) |
-+				BIT(V4L2_MPEG_VIDEO_H264_ENTROPY_MODE_CABAC),
-+		.value = V4L2_MPEG_VIDEO_H264_ENTROPY_MODE_CABAC,
-+		.hfi_id = HFI_PROP_CABAC_SESSION,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_entropy_mode_gen2,
-+	},
-+	{
-+		.cap_id = MIN_FRAME_QP_H264,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MIN_QP_8BIT_AR50LT,
-+		.hfi_id = HFI_PROP_MIN_QP_PACKED,
-+		.flags = CAP_FLAG_OUTPUT_PORT,
-+		.set = iris_set_min_qp,
-+	},
-+	{
-+		.cap_id = MIN_FRAME_QP_HEVC,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MIN_QP_8BIT_AR50LT,
-+		.hfi_id = HFI_PROP_MIN_QP_PACKED,
-+		.flags = CAP_FLAG_OUTPUT_PORT,
-+		.set = iris_set_min_qp,
-+	},
-+	{
-+		.cap_id = MAX_FRAME_QP_H264,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MAX_QP,
-+		.hfi_id = HFI_PROP_MAX_QP_PACKED,
-+		.flags = CAP_FLAG_OUTPUT_PORT,
-+		.set = iris_set_max_qp,
-+	},
-+	{
-+		.cap_id = MAX_FRAME_QP_HEVC,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MAX_QP,
-+		.hfi_id = HFI_PROP_MAX_QP_PACKED,
-+		.flags = CAP_FLAG_OUTPUT_PORT,
-+		.set = iris_set_max_qp,
-+	},
-+	{
-+		.cap_id = I_FRAME_MIN_QP_H264,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MIN_QP_8BIT_AR50LT,
-+	},
-+	{
-+		.cap_id = I_FRAME_MIN_QP_HEVC,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MIN_QP_8BIT_AR50LT,
-+	},
-+	{
-+		.cap_id = P_FRAME_MIN_QP_H264,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MIN_QP_8BIT_AR50LT,
-+	},
-+	{
-+		.cap_id = P_FRAME_MIN_QP_HEVC,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MIN_QP_8BIT_AR50LT,
-+	},
-+	{
-+		.cap_id = B_FRAME_MIN_QP_H264,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MIN_QP_8BIT_AR50LT,
-+	},
-+	{
-+		.cap_id = B_FRAME_MIN_QP_HEVC,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MIN_QP_8BIT_AR50LT,
-+	},
-+	{
-+		.cap_id = I_FRAME_MAX_QP_H264,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MAX_QP,
-+	},
-+	{
-+		.cap_id = I_FRAME_MAX_QP_HEVC,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MAX_QP,
-+	},
-+	{
-+		.cap_id = P_FRAME_MAX_QP_H264,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MAX_QP,
-+	},
-+	{
-+		.cap_id = P_FRAME_MAX_QP_HEVC,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MAX_QP,
-+	},
-+	{
-+		.cap_id = B_FRAME_MAX_QP_H264,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MAX_QP,
-+	},
-+	{
-+		.cap_id = B_FRAME_MAX_QP_HEVC,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = MAX_QP,
-+	},
-+	{
-+		.cap_id = I_FRAME_QP_H264,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = DEFAULT_QP,
-+		.hfi_id = HFI_PROP_QP_PACKED,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_frame_qp,
-+	},
-+	{
-+		.cap_id = I_FRAME_QP_HEVC,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = DEFAULT_QP,
-+		.hfi_id = HFI_PROP_QP_PACKED,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_frame_qp,
-+	},
-+	{
-+		.cap_id = P_FRAME_QP_H264,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = DEFAULT_QP,
-+		.hfi_id = HFI_PROP_QP_PACKED,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_frame_qp,
-+	},
-+	{
-+		.cap_id = P_FRAME_QP_HEVC,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = DEFAULT_QP,
-+		.hfi_id = HFI_PROP_QP_PACKED,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_frame_qp,
-+	},
-+	{
-+		.cap_id = B_FRAME_QP_H264,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = DEFAULT_QP,
-+		.hfi_id = HFI_PROP_QP_PACKED,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_frame_qp,
-+	},
-+	{
-+		.cap_id = B_FRAME_QP_HEVC,
-+		.min = MIN_QP_8BIT_AR50LT,
-+		.max = MAX_QP,
-+		.step_or_mask = 1,
-+		.value = DEFAULT_QP,
-+		.hfi_id = HFI_PROP_QP_PACKED,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_frame_qp,
-+	},
-+	{
-+		.cap_id = INPUT_BUF_HOST_MAX_COUNT,
-+		.min = DEFAULT_MAX_HOST_BUF_COUNT,
-+		.max = DEFAULT_MAX_HOST_BURST_BUF_COUNT,
-+		.step_or_mask = 1,
-+		.value = DEFAULT_MAX_HOST_BUF_COUNT,
-+		.hfi_id = HFI_PROP_BUFFER_HOST_MAX_COUNT,
-+		.flags = CAP_FLAG_INPUT_PORT,
-+		.set = iris_set_u32,
-+	},
-+	{
-+		.cap_id = OUTPUT_BUF_HOST_MAX_COUNT,
-+		.min = DEFAULT_MAX_HOST_BUF_COUNT,
-+		.max = DEFAULT_MAX_HOST_BURST_BUF_COUNT,
-+		.step_or_mask = 1,
-+		.value = DEFAULT_MAX_HOST_BUF_COUNT,
-+		.hfi_id = HFI_PROP_BUFFER_HOST_MAX_COUNT,
-+		.flags = CAP_FLAG_OUTPUT_PORT,
-+		.set = iris_set_u32,
-+	},
-+	{
-+		.cap_id = IR_TYPE,
-+		.min = V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM,
-+		.max = V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM,
-+		.step_or_mask = BIT(V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM),
-+		.value = V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD_TYPE_RANDOM,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+	},
-+	{
-+		.cap_id = IR_PERIOD,
-+		.min = 0,
-+		.max = INT_MAX,
-+		.step_or_mask = 1,
-+		.value = 0,
-+		.flags = CAP_FLAG_OUTPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_ir_period_gen2,
-+	},
-+};
-+
-+static const u32 iris_hfi_gen2_ar50lt_dec_ip_int_buf_tbl[] = {
-+	BUF_BIN,
-+	BUF_COMV,
-+	BUF_NON_COMV,
-+	BUF_LINE,
-+};
-+
-+const struct iris_firmware_data iris_hfi_gen2_ar50lt_data = {
-+	.init_hfi_ops = iris_hfi_gen2_sys_ops_init,
-+
-+	.core_arch = VIDEO_ARCH_LX,
-+
-+	.inst_fw_caps_dec = inst_fw_cap_gen2_ar50lt_dec,
-+	.inst_fw_caps_dec_size = ARRAY_SIZE(inst_fw_cap_gen2_ar50lt_dec),
-+	.inst_fw_caps_enc = inst_fw_cap_gen2_ar50lt_enc,
-+	.inst_fw_caps_enc_size = ARRAY_SIZE(inst_fw_cap_gen2_ar50lt_enc),
-+	.dec_input_config_params_default =
-+		sm8550_vdec_input_config_params_default,
-+	.dec_input_config_params_default_size =
-+		ARRAY_SIZE(sm8550_vdec_input_config_params_default),
-+	.dec_input_config_params_hevc =
-+		sm8550_vdec_input_config_param_hevc,
-+	.dec_input_config_params_hevc_size =
-+		ARRAY_SIZE(sm8550_vdec_input_config_param_hevc),
-+	.dec_input_config_params_vp9 =
-+		sm8550_vdec_input_config_param_vp9,
-+	.dec_input_config_params_vp9_size =
-+		ARRAY_SIZE(sm8550_vdec_input_config_param_vp9),
-+	.dec_output_config_params =
-+		sm8550_vdec_output_config_params,
-+	.dec_output_config_params_size =
-+		ARRAY_SIZE(sm8550_vdec_output_config_params),
-+	.enc_input_config_params =
-+		sm8550_venc_input_config_params,
-+	.enc_input_config_params_size =
-+		ARRAY_SIZE(sm8550_venc_input_config_params),
-+	.enc_output_config_params =
-+		sm8550_venc_output_config_params,
-+	.enc_output_config_params_size =
-+		ARRAY_SIZE(sm8550_venc_output_config_params),
-+	.dec_input_prop = sm8550_vdec_subscribe_input_properties,
-+	.dec_input_prop_size = ARRAY_SIZE(sm8550_vdec_subscribe_input_properties),
-+	.dec_output_prop_avc = sm8550_vdec_subscribe_output_properties_avc,
-+	.dec_output_prop_avc_size =
-+		ARRAY_SIZE(sm8550_vdec_subscribe_output_properties_avc),
-+	.dec_output_prop_hevc = sm8550_vdec_subscribe_output_properties_hevc,
-+	.dec_output_prop_hevc_size =
-+		ARRAY_SIZE(sm8550_vdec_subscribe_output_properties_hevc),
-+	.dec_output_prop_vp9 = sm8550_vdec_subscribe_output_properties_vp9,
-+	.dec_output_prop_vp9_size =
-+		ARRAY_SIZE(sm8550_vdec_subscribe_output_properties_vp9),
-+	.dec_ip_int_buf_tbl = iris_hfi_gen2_ar50lt_dec_ip_int_buf_tbl,
-+	.dec_ip_int_buf_tbl_size = ARRAY_SIZE(iris_hfi_gen2_ar50lt_dec_ip_int_buf_tbl),
-+	.dec_op_int_buf_tbl = sm8550_dec_op_int_buf_tbl,
-+	.dec_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_dec_op_int_buf_tbl),
-+	.enc_ip_int_buf_tbl = sm8550_enc_ip_int_buf_tbl,
-+	.enc_ip_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_ip_int_buf_tbl),
-+	.enc_op_int_buf_tbl = sm8550_enc_op_int_buf_tbl,
-+	.enc_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_op_int_buf_tbl),
-+};
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-index bc04831ae7fc..5afe395cc4a0 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-+++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-@@ -57,6 +57,7 @@ enum pipe_type {
- extern const struct iris_firmware_data iris_hfi_gen1_data;
- extern const struct iris_firmware_data iris_hfi_gen1_ar50lt_data;
- extern const struct iris_firmware_data iris_hfi_gen2_data;
-+extern const struct iris_firmware_data iris_hfi_gen2_ar50lt_data;
+-#endif
  
- extern const struct iris_platform_data qcm2290_data;
- extern const struct iris_platform_data qcs8300_data;
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_vpu_ar50lt.c b/drivers/media/platform/qcom/iris/iris_platform_vpu_ar50lt.c
-index 393256f39112..d9de7dcb59e3 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_vpu_ar50lt.c
-+++ b/drivers/media/platform/qcom/iris/iris_platform_vpu_ar50lt.c
-@@ -13,12 +13,18 @@
- 
- #define WRAPPER_INTR_STATUS_A2HWD_BMSK		0x10
- 
--const struct iris_firmware_desc iris_vpu_ar50lt_p1_gen1_s6_desc = {
-+const struct iris_firmware_desc iris_vpu_ar50lt_p1_gen1_desc = {
- 	.firmware_data = &iris_hfi_gen1_ar50lt_data,
- 	.get_vpu_buffer_size = iris_vpu_ar50lt_gen1_buf_size,
- 	.fwname = "qcom/venus-6.0/venus.mbn",
+ static const struct bw_tbl qcm2290_bw_table_dec[] = {
+ 	{ 352800, 597000, 0, 746000, 0 }, /* 1080p@30 + 720p@30 */
+@@ -1169,13 +1168,16 @@ static const struct venus_resources qcm2290_res = {
+ 	.enc_nodename = "video-encoder",
+ 	.min_fw = &min_fw,
  };
++#endif
  
-+const struct iris_firmware_desc iris_vpu_ar50lt_p1_gen2_s6_desc = {
-+	.firmware_data = &iris_hfi_gen2_ar50lt_data,
-+	.get_vpu_buffer_size = iris_vpu_ar50lt_gen2_buf_size,
-+	.fwname = "qcom/vpu/ar50lt_p1_gen2_s6.mbn",
-+};
-+
- static const u32 iris_fmts_ar50lt_dec[] = {
- 	[IRIS_FMT_H264] = V4L2_PIX_FMT_H264,
- 	[IRIS_FMT_HEVC] = V4L2_PIX_FMT_HEVC,
-@@ -78,7 +84,8 @@ static struct platform_inst_caps platform_inst_cap_ar50lt = {
- };
- 
- const struct iris_platform_data qcm2290_data = {
--	.firmware_desc_gen1 = &iris_vpu_ar50lt_p1_gen1_s6_desc,
-+	.firmware_desc_gen1 = &iris_vpu_ar50lt_p1_gen1_desc,
-+	.firmware_desc_gen2 = &iris_vpu_ar50lt_p1_gen2_s6_desc,
- 	.vpu_ops = &iris_vpu_ar50lt_ops,
- 	.icc_tbl = iris_icc_info_ar50lt,
- 	.icc_tbl_size = ARRAY_SIZE(iris_icc_info_ar50lt),
+ static const struct of_device_id venus_dt_match[] = {
+ 	{ .compatible = "qcom,msm8916-venus", .data = &msm8916_res, },
+ 	{ .compatible = "qcom,msm8939-venus", .data = &msm8939_res, },
+ 	{ .compatible = "qcom,msm8996-venus", .data = &msm8996_res, },
+ 	{ .compatible = "qcom,msm8998-venus", .data = &msm8998_res, },
++#if (!IS_ENABLED(CONFIG_VIDEO_QCOM_IRIS))
+ 	{ .compatible = "qcom,qcm2290-venus", .data = &qcm2290_res, },
++#endif
+ 	{ .compatible = "qcom,sc7180-venus", .data = &sc7180_res, },
+ 	{ .compatible = "qcom,sdm660-venus", .data = &sdm660_res, },
+ 	{ .compatible = "qcom,sdm845-venus", .data = &sdm845_res, },
 
 -- 
 2.47.3
