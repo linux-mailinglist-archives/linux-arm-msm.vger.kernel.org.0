@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-113317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id N9fbMObHMGpMXQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 05:49:58 +0200
+	id 6FqnLmnPMGpHXgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 06:22:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61BB468BC2A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 05:49:58 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 34DC568BDA9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 06:22:01 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=iNKpTGNm;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113317-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113317-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=nqH3gPma;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113318-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c04:e001:36c::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113318-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B09C63045DE2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 03:49:41 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 169AC3013889
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 04:21:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 106F537BE75;
-	Tue, 16 Jun 2026 03:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF0F03C8C62;
+	Tue, 16 Jun 2026 04:21:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0082F8E96;
-	Tue, 16 Jun 2026 03:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAAD3C8C52;
+	Tue, 16 Jun 2026 04:21:48 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781581780; cv=none; b=FiHfVYRPhsfQ4DuZmACCE/wU6J9bdj/cW1GWZzhmeOVC1NT4av3WE/ge+ToOZv2UsogaAdO0TaIAX0KAT14qh4xzFSXHsKYlne8bVnFGRbnbYeBG3qFILJ34fhXnMEiZ72lp8AcqZIBtIQxzwas0mE+21TNDF8sdUZuPPUsAAv0=
+	t=1781583709; cv=none; b=Iic771b7BNz8D0P7xVOuUFBLiGv5nPSs1IOEew0RmqE+wvKLrKou2F7uUdPz3/wOxcyySTcp7ABcGeC0pMlOCDDAyFyZExtWHAIbUe+QL+AZtmgv1Jq6ZeY6T3un/K2/zDfF46e/ZzGdp8AlB7/rC59jKbYuQNLeptaL1ITxMq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781581780; c=relaxed/simple;
-	bh=OUCFcuyKnRRE4PnHiT2Tu+2FaPoPVrI8ilWygmqFJvc=;
+	s=arc-20240116; t=1781583709; c=relaxed/simple;
+	bh=BIJC9nGJVTskXqPkP2HZIC03/YGTlGrgxfduSTCRuoU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XNGhYHYBWHerJvKTroAlFcHQy4hXJNBQvBnTSSp8R/+2A2MTYUPkqKaprgcIT59LJ7bp6l/17337BwljVopmh37YHdx9ONYo8+S6RF5Lw4rXxQO7CKDuU/10fS+XjySt/3iQRBn6J2zNnBjJC5oEUqD2sKsOy3Qj2j0tZS5H4no=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iNKpTGNm; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2C31F000E9;
-	Tue, 16 Jun 2026 03:49:35 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ZAkLhpyTYdk+JSAgWlLbfYWpD2p0fOxPJIYvWOm2v+bFoq6Anr6+28ZBt9+u/VxZJPSinwBCYXHDCQjjmfsmpYrEf5CCdcho6nosW1D2mZFJ5m+83NxlSX/yjEhFYEIiWc5wYRjtaXV9Qo/cPBwKsMxkw03wQgEvVpWbpY4bbt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nqH3gPma; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F311F000E9;
+	Tue, 16 Jun 2026 04:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781581778;
-	bh=cDc8Xi19f30oX4QQKMwPG2K9ujGq0ToE5G6/ak0TJWA=;
+	s=k20260515; t=1781583708;
+	bh=pIFC0N4/T+x1YfWpeU1JbH1iDzDnnxHDvj6vks2DFuo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=iNKpTGNmFRDdVoyRd1VJB1WPLhxzg+WdmATrrZ/lS0cjBMrLzU2dtRX2EVSn2SQ59
-	 86k0ogxf57y0EoP4wt8RXw1kDJml+XQFf1k/wfe0EVTrvg+qCqLGIYsRTmR0Xgguse
-	 lJA0s/DFuBf6KHvMxkxEdumYSUSvkYfaAqyBIngYJyrmpG5ZahBN0e305Yq+0Ji5Le
-	 jwIyK8QeCJLTeltT10g4Ph0ms2WzZM1OQ+YejW7vwQluQhvyl4hifNK8UNxMjyiqbW
-	 t0tRkF27BHYztQGHZ/sxNT85/yTYRHdtumHbMGPPy6VIBDFGyJTooTHRBl2i4eb0fa
-	 bNtOzEJOPMblA==
-Message-ID: <ce96a826-08ce-4e63-a794-26d9600f73f4@kernel.org>
-Date: Tue, 16 Jun 2026 05:49:32 +0200
+	b=nqH3gPmaVOHQpLYstqjcsrwMvJYaEBFW1jX4lCeG68DgDhITTdd2KSWdWVvHzIe+h
+	 C1uKSIsthOznsTe/UKS1bRW6WmtxJIHr27LqCo5q42/LnfOAduU64/B1t968wYsurR
+	 GHByYnScmvBePofmvy8BOhaRD/zqjpzsCzs7IG17QWTyrzji5kug4PQ6Oc+hA3hbqV
+	 FUNTe0OdiAe/Jiniiaim1MBchdS/ZRvLycvC8D2JOfJKbLb2HNBmAbTbN7OPaoFjSj
+	 Lzd0evNy8drEJaqNdvksMdhnTYWVrSddw1/SCvV8Vj3l6ND76gzItboUhrpT4uDrE3
+	 mxTkPeta6ZzLQ==
+Message-ID: <c32e263c-ba4e-4899-a935-e129de0f1269@kernel.org>
+Date: Tue, 16 Jun 2026 06:21:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,14 +55,33 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: install DT overlays via dtbs_install
-To: Vishwas Udupa <vishwas.udupa@oss.qualcomm.com>
-Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
- kbajaj@qti.qualcomm.com, konradybcio@kernel.org, krzk+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, robh@kernel.org, snb@qti.qualcomm.com,
- vudupa@qti.qualcomm.com
-References: <0f045b88-94fc-46b5-8a49-8a53235fc8fc@kernel.org>
- <20260615162739.787779-1-vishwas.udupa@oss.qualcomm.com>
+Subject: Re: [PATCH v3 1/8] dt-bindings: remoteproc: qcom,pas: add thermal
+ mitigation properties
+To: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
+ Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Amit Kucheria <amit.kucheria@oss.qualcomm.com>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Kees Cook <kees@kernel.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+ linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-hardening@vger.kernel.org,
+ Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
+References: <20260609-qmi-tmd-v3-0-291a2ff4c634@oss.qualcomm.com>
+ <20260609-qmi-tmd-v3-1-291a2ff4c634@oss.qualcomm.com>
+ <20260610-ocelot-of-stimulating-excellence-bcb0fe@quoll>
+ <03d863ee-2caa-41f2-94b5-7332fc930b42@oss.qualcomm.com>
+ <d81bc78e-2c1d-45fd-90c9-f7ec462183a0@kernel.org>
+ <7f1e46fb-15e3-4638-9930-8abc1dd5a778@oss.qualcomm.com>
+ <fcf93e0f-a2f0-4070-86ec-8a34e9344b76@kernel.org>
+ <ec65893d-873a-4a62-b0e2-5008b2130545@oss.qualcomm.com>
+ <3cbcaf8c-357e-42d2-91c1-9d1a32c55ed0@oss.qualcomm.com>
+ <ae43a691-4879-4bfa-8c7c-1be16945480c@oss.qualcomm.com>
+ <9a31bb29-75d7-42fa-b8a8-4155cf85cadf@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,67 +127,104 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <20260615162739.787779-1-vishwas.udupa@oss.qualcomm.com>
+In-Reply-To: <9a31bb29-75d7-42fa-b8a8-4155cf85cadf@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-5.16 / 15.00];
+X-Spamd-Result: default: False [-3.66 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-113317-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:vishwas.udupa@oss.qualcomm.com,m:andersson@kernel.org,m:conor+dt@kernel.org,m:devicetree@vger.kernel.org,m:kbajaj@qti.qualcomm.com,m:konradybcio@kernel.org,m:krzk+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:robh@kernel.org,m:snb@qti.qualcomm.com,m:vudupa@qti.qualcomm.com,m:conor@kernel.org,m:krzk@kernel.org,s:lists@lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-113318-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS(0.00)[m:daniel.lezcano@oss.qualcomm.com,m:gaurav.kohli@oss.qualcomm.com,m:andersson@kernel.org,m:mathieu.poirier@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:amit.kucheria@oss.qualcomm.com,m:mani@kernel.org,m:konradybcio@kernel.org,m:kees@kernel.org,m:gustavoars@kernel.org,m:cros-qcom-dts-watchers@chromium.org,m:linux-arm-msm@vger.kernel.org,m:linux-remoteproc@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-pm@vger.kernel.org,m:linux-hardening@vger.kernel.org,m:manaf.pallikunhi@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 61BB468BC2A
+X-Rspamd-Queue-Id: 34DC568BDA9
 
-On 15/06/2026 18:27, Vishwas Udupa wrote:
-> EL2 DTBOs are used at build time to construct DTBs corresponding to
-> an EL2 (hypervisor-enabled) boot configuration. These DTBs are included in
-> distributions [1] as complete boot configurations (e.g. EL1 and EL2).
+On 15/06/2026 14:30, Daniel Lezcano wrote:
+> Hi Gaurav,
+>>>> thanks for review, shall i use driver data, which is basically pas 
+>>>> data structure like below:
+>>>>
+>>>> static const struct qcom_pas_data {
+>>>>      .crash_reason_smem = 601,
+>>>>      .firmware_name = "cdsp.mdt",
+>>>>      .tmd_names = (const char *[]){"xyz", NULL},
+>>>>      .num_tmds = 1,
+>>>>
+>>>> Is something like above acceptable? and this will also help to filter 
+>>>> tmd names as well?
+>>>
+>>>
+>>> How the thermal framework will bind the thermal zone with the TMD ? 
+>>> (node pointer, id) ?
+>>>
+>>
+>> Hi Daniel,
+>>
+>> thanks for review.
+>>
+>> With id only, in this case instead of taking tmd names from device tree, 
+>> qmi_tmd will take tmd name from pas_data(driver) and register with the 
+>> cooling framework with id only. Please let us know if this looks fine.
+> May be I'm missing something but:
 > 
-> The EL2 configuration is not enabled by default and is typically selected
-> after the initial boot by updating a UEFI runtime variable from userspace.
-> Once set, firmware selects the prebuilt EL2 DTB on subsequent boots.
+>   - The QMI TMD returns a list of names, not ids
+>   - The QMI TMD may return the list in different order than assumed
+>   - The cooling map index points to the name of the TMD in the DT
+>   - This name is used to match the name in the aformentionned list
+>   - The index in the list and the id in the DT can differ
 > 
-> Although EL2 DTBOs are not used directly at runtime during initial boot,
-> they are required to generate and package the EL2 DTBs in the image so that
-> firmware can switch to EL2 when the configuration variable is enabled. Hence, el2 dtbo's
-> need to be retained.
-> 
-> 1: https://github.com/qualcomm-linux/qcom-dtb-metadata/blob/main/qcom-next-fitimage.its#L273
+> Krzysztof , I don't get why having the TMD names as properties is wrong, 
+> they describes the existing TMDs on the system and the cooling maps 
+> index points to the one to be connected with thermal zone.
 
-You cut entire context making any discussion very difficult.
 
-Anyway, comment stays. EL2 is not an overlay. If I need to repeat
-myself, then let's do like:
+'xxx-names' have a fixed meaning in DT by convention - assign
+identifiable strings to the 'xxx'. I miss the property 'tmd' in such
+case - its definition and meaning. Where is it?
 
-NAK
+But maybe you just want list of strings, so I am open to discuss it - I
+don't understand the need for this property and commit and property
+description tell me nothing.
+
+Really, this commit message is basically non-existing. It explains what
+it did and provides that much explanation WHY:
+
+"- tmd-names (thermal mitigation device names)"
+
+Really? This is the explanation why this change is being made, why this
+property is needed?
+
+So sure, describe the problem being solved and WHY this problem is being
+solved that way. Maybe it will fit DT.
+
 
 Best regards,
 Krzysztof
