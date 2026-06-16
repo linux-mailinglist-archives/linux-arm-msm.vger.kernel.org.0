@@ -1,230 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-113456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id fQPjA1mEMWqplQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 19:14:01 +0200
+	id q1XzMxWRMWqbmwUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 20:08:21 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B29B692E41
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 19:14:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 361BE693D3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 20:08:21 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=hX1Jd+R5;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b="Qk/Sn8/+";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113456-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113456-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=infradead.org header.s=casper.20170209 header.b=Tgw+agkf;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113458-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.234.253.10 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113458-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=none) header.from=infradead.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3AA13304149A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 17:03:06 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 670623160E0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 18:08:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75286328610;
-	Tue, 16 Jun 2026 17:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 392503D45D0;
+	Tue, 16 Jun 2026 18:08:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9A143D4E9
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 17:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EBF3D45CB;
+	Tue, 16 Jun 2026 18:08:15 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781629385; cv=none; b=RycxZtENqejoejoqJx9gxFbwDcxSoBY6amB5TZ3dfG7qTdd5lSe5B3BzRgpou+6FYrd94zQRsVJjELd5zGwhFA2BwTVZg15P5ty37DYyQ214tiLGwwETbU4L94ZV/mImsnpk4fam5Cu73mUzxy0Uw1gLZ/mJdv8yP9Eeargir0g=
+	t=1781633297; cv=none; b=Vg0cyOjihnLq94xMIxPB4qVwobkhlpgEPib88O0XYZNr7uEZjSlnjyQpG6jc8/63r1HySuyO4hDkgpCAe2llWei25hOGK3jtnDzFvwQ8etBuGNUpYr19gFDI+cXJCLLS/x4xAu2KfhUbBzLaQLYeqMXji74RHB7Em/5EQU8h84c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781629385; c=relaxed/simple;
-	bh=lLxvdHCAPpQZp6pnlDmDv20UFFdnnMDjt/ZuR81XGvY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eVTAP5FXTvgCm+0T8DajHJsskmmA7uwBZbC/K9liJlCZkiTJXu4H3rIExJgDvQ27gYJIFJUr+CfC/Tf/WCCqMWiiG+1M79JRZbi4tV9cAlAvczatLjv/LLk1nJQOiW0IwJHLEJo+ccUA6tngZU90fv0jX2Rz+czJR7HZMI+D+bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hX1Jd+R5; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Qk/Sn8/+; arc=none smtp.client-ip=205.220.168.131
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65GFcsV53666614
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 17:03:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=tqkhb6/HtxqIF1Por0FEpscFxhtJwz/EzUn
-	01w0gJKE=; b=hX1Jd+R5M7aATIDNo799S+JfrEXg0FLn4Y28Qv/xWHwm8TauawI
-	5G7SQ3qsafwuTiM41xKq01doa9Ge/mWvL83Idut1g5fUzgFdAC+b9U6mwpm/UIdG
-	H+l2gbVs01XILvy1trVNSA5X7MNZfroE7dkom7jIoS57MGtJ8bFv3AZbaiPncBfK
-	40V+khDciizBwclUqur/vCjAbyZNhYcOVMdTBYq2ck1B1ShyAXddQOyiqNdyZpl/
-	d7PenKzkZquu/5aOyCxbFpkhSHha04ZkyeF+EhkNYqTiQaK+MlJOWDGhmeyI4Tnc
-	mVDr2dJCJSGMtTaFRSrHF9ozg9R4bsvQl8Q==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu1762u8m-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 17:03:03 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c85a298cd62so3279727a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 10:03:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781629383; x=1782234183; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tqkhb6/HtxqIF1Por0FEpscFxhtJwz/EzUn01w0gJKE=;
-        b=Qk/Sn8/+Mjw3vFTeiuOOMpQBacvqJrByzFGklbJ9LOzaIa0jcV7sA+LJb2KPGyo1go
-         I05igR53LYO8p+mcw8i8Ghmo8fUDV2QIxKe/QuK10kN8S5JyZCfbD5oEOQ+U4hwIoptk
-         RuS2iSfhnGCofMaHoLSutys1eevP7c54B3KRDXqzNOR6+mJFzmzquFYbyhzuTuASOjya
-         u+Nj4YJP0qX+MLTLR9OknjViFz6RTQh88Tnv+46Z1ltKLj3JhYaxOemWRxqalJuh+kAG
-         Wlc0PKqE+ZoLZ9SJsMUWaunLvS2wWhvG2uFp1N5LMBhGit5QsHouabBNCLXV4tPUgOzO
-         8YSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781629383; x=1782234183;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tqkhb6/HtxqIF1Por0FEpscFxhtJwz/EzUn01w0gJKE=;
-        b=bwoMRqBl8RTrtQumuSTku49kNWAb97fcSPOTWYgPgMPvyiyH38h/0NlBPSJeSXTu1e
-         JWtoXLemCMEJ86riP0L0ts1OxujH96g7Xhu0Hm4Vw2AmS9BKkogMoaRfG6Cc8MEIkw7E
-         AO7etcTjrWG1K3CO5UmMHXtnTxHQwiC3rtRvIVHZlPXwhJfc8yngiu6etvfPFMukVzIi
-         E/+Isczu5eliw1K9QAStflqN/1tI0cDoEwBk3xp+ZdWxiFEanGgTvreGPleqk+d6o/pi
-         exgGPe/ks/1ySVJg/3vtlkF2STl3oPg561jYyUrl2tkckFFYE8eUcae1AWjmdtLJzmvb
-         ghBw==
-X-Forwarded-Encrypted: i=1; AFNElJ/2ULTP44/MTBXwylHHpJjOENgwbJRR5A+0g/k9oO/PINHgwEKzmz7EKdzjCN1HKXrweDovq/f3GRMj9q+y@vger.kernel.org
-X-Gm-Message-State: AOJu0YzPwo2UHbbLY+gxYeTePUmB3eR6AtBbIAx4ZohALLLzUgFRuEjF
-	lraQYe/ULMTo8SMWUKTDssuDF+5X7DhhVqXYHIW1HxAA8GHnacVXtbO2oTiiwOxpTM8nBpB48k0
-	4qNnD+MHM2tP176oNK0LucRP1+rrQ7lk4UBnctVGLVdkEEg/ACmg4g20eydxSsmefxqxH
-X-Gm-Gg: Acq92OGgyLQT+6x1UE/VJ0e58hzGhJB8RN8y2Q3IVrpNOUftrWwfbOuqlrZkBfl42gQ
-	EUeMwRC7X4bmMag5Gp1ttXFwlHVFA0tJh9UOZQSchsOPyH86AXcDqLqNf3BDJ9a21OTPbT+K+WW
-	Y6UMw2MjGvSHyPrUVsj+NCATpbxVahupA67+HapDzWhZ6n4j/A8C6H5MGt9bXH0ytdmlaltxW3b
-	vX4gQYmcFW9L+OQoVoDA8oWxljWScK7SEjHwh9qp6+UpSzS1vDjEsi+TTAdjFgqxZbNusS9aSQ5
-	P4HWr62WWHnDy03ISgfvSV6FqPC26kmrxDbxUYGjPAyz7VbELaGuC2B2dWCELqjrfDFY1X/c51i
-	EUjMe0K3dmO8zYJqlszai6qorFPDMdIfPoBU=
-X-Received: by 2002:a05:6a21:3086:b0:3b4:85db:1bd0 with SMTP id adf61e73a8af0-3b8b603267dmr215803637.12.1781629382723;
-        Tue, 16 Jun 2026 10:03:02 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3086:b0:3b4:85db:1bd0 with SMTP id adf61e73a8af0-3b8b603267dmr215723637.12.1781629382056;
-        Tue, 16 Jun 2026 10:03:02 -0700 (PDT)
-Received: from debian ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49230a458f2sm75542575e9.3.2026.06.16.10.03.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jun 2026 10:03:01 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-To: broonie@kernel.org
-Cc: perex@perex.cz, tiwai@suse.com, krzysztof.kozlowski@oss.qualcomm.com,
-        andersson@kernel.org, pierre-louis.bossart@linux.dev,
-        linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-        Stable@vger.kernel.org, Val Packett <val@packett.cool>
-Subject: [PATCH] ASoC: qcom: q6apm: fix NULL pointer dereference in graph_callback
-Date: Tue, 16 Jun 2026 18:02:57 +0100
-Message-ID: <20260616170257.9381-1-srinivas.kandagatla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1781633297; c=relaxed/simple;
+	bh=ZfH3JOgmf9XdcKWDOKQ+is9C8wTOGtm2ZIDba5Hcbeg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UvwHWxCqhF7a8s8q2EsDsiWx3OzAKWD8weUgMbVn7vrH/xn4oChPl/kGqOGI5iz5KM3xv0b3qQEOTT33xwxZNA20ykSF3a60DTgnb9d4mmjfd1KWnAlbvCFNYVMPr8RUrvOXRNQ/xf3h2aY2mMTmMa3oYcV9Eqdct3XsZHO3uXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=infradead.org; spf=pass smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Tgw+agkf; arc=none smtp.client-ip=90.155.50.34
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=BCfXNXLBXAr5Arz1BeAs2uSx+MoF38R1sHrI4zD9Grw=; b=Tgw+agkf9gNlr8xaAP7VLpUzIn
+	mt1q8YgGNxaT3kdLwwutfEOiVNWP8kfZl5jlDf/gbEwtfOk0/voLcLbyZ4c6+vlrbtaEWg3c9pJ47
+	TJAbjLdXZWaEYwwdJiNm7Hf2BMTC67SE/oQFHWawdwQuQ/tuP8551dSyKfgF97f3KHEGYa8+ur9v3
+	2qumHDZ3IyHB+cpsKf5VnypfQwsU9pFSAnHk88i+oJerth2ngfdZXq/EkhaKrnXLr9uotceyBKJM3
+	hdw5NTp4WubwiE38Aowitpr8cKTxGFQPnThPTi+4QU6OAaL9RDlK2LPUlwhOVr2ELXgK2WT8K9gSo
+	17584hAg==;
+Received: from willy by casper.infradead.org with local (Exim 4.99.1 #2 (Red Hat Linux))
+	id 1wZYCb-0000000BFII-16Pg;
+	Tue, 16 Jun 2026 18:07:57 +0000
+Date: Tue, 16 Jun 2026 19:07:57 +0100
+From: Matthew Wilcox <willy@infradead.org>
+To: Uladzislau Rezki <urezki@gmail.com>
+Cc: Pranjal Arya <pranjal.arya@oss.qualcomm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andrew Ballance <andrewjballance@gmail.com>,
+	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org, maple-tree@lists.infradead.org,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Pranjal Shrivastava <praan@google.com>,
+	Will Deacon <will@kernel.org>,
+	Suzuki K Poulose <Suzuki.Poulose@arm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mostafa Saleh <smostafa@google.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Marco Elver <elver@google.com>, Dmitry Vyukov <dvyukov@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Shuah Khan <shuah@kernel.org>, Dev Jain <dev.jain@arm.com>,
+	Brendan Jackman <jackmanb@google.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Santosh Shukla <santosh.shukla@amd.com>,
+	Wyes Karny <wkarny@gmail.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>
+Subject: Re: [PATCH RFC 00/12] mm/vmalloc: migrate vmap_area indexing from
+ rb-tree to maple-tree
+Message-ID: <ajGQ_WPT3Ra2kPCQ@casper.infradead.org>
+References: <20260613-vmalloc_maple-v1-0-0aa740bb944b@oss.qualcomm.com>
+ <ai3kkIpaR0aT_6q5@casper.infradead.org>
+ <ai_LVreyRWx-RDEd@pc636>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: V_2XLwH7Mez5UiysM37azNJK4QX_IAQS
-X-Proofpoint-ORIG-GUID: V_2XLwH7Mez5UiysM37azNJK4QX_IAQS
-X-Authority-Analysis: v=2.4 cv=I4RVgtgg c=1 sm=1 tr=0 ts=6a3181c7 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=MGBxgCYFQN7ghPknZEEA:9 a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE3NSBTYWx0ZWRfX2w5JxaOmp/Ve
- EnA+cXwXw7McnGzuYZtX3zvwQIdo0e3yIjoCQnWJL+26v6ClYafg5KUHKMLqexq8ckQe2iSW/OU
- GKEKvHDqFqP+iKv4kgrLifGcJEJlYw0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE3NSBTYWx0ZWRfX/QFE8q83hst2
- AM0trzQpR1vbI9IBxt7easS4nY+3ZyhW5MzE17hvTLwJMV5QZyJDB8Q8laYlm7JgWRQrpaiakya
- FV4O9je3s48WccyVoUcg9DDlyQeqFyDiYRbPkq/9wXkclxJW02B2r4oRHHjyBgXURgeaDURJqto
- Zke/IaEwaHMrD3a3Cwmtfq9gS9mcz40vt/UMK6J0A8KV/EEfmdSnhEE/3I5FeDSVoUNnoZduK8T
- Kk92u42zMxuNAH81XlQc/WK8YG7X90HGqFC5tlgIJ6kolDGPVT0howz/vEV4JDPboLRFVa1woS3
- dFH//SWw53l3CNkH+xb/DRgTJb0xUx68f2vJExrGWkbRUxL8NYdVbryOEqdyKKpmJoajv/6DKAf
- /bxVgoslJxdBkQdN9Kio99vTTOUqs9gB740nzfxic+a4/RHFg1GlbSrFp4UJ5fZJNxlP63xF9Dd
- J1jz1yDug/xt5r3xHuw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_05,2026-06-15_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160175
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ai_LVreyRWx-RDEd@pc636>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[infradead.org,none];
+	R_DKIM_ALLOW(-0.20)[infradead.org:s=casper.20170209];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-113456-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113458-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:urezki@gmail.com,m:pranjal.arya@oss.qualcomm.com,m:akpm@linux-foundation.org,m:liam@infradead.org,m:aliceryhl@google.com,m:andrewjballance@gmail.com,m:linux-arm-msm@vger.kernel.org,m:linux-mm@kvack.org,m:linux-kernel@vger.kernel.org,m:maple-tree@lists.infradead.org,m:ljs@kernel.org,m:praan@google.com,m:will@kernel.org,m:Suzuki.Poulose@arm.com,m:neil.armstrong@linaro.org,m:smostafa@google.com,m:balbirs@nvidia.com,m:surenb@google.com,m:elver@google.com,m:dvyukov@google.com,m:glider@google.com,m:shuah@kernel.org,m:dev.jain@arm.com,m:jackmanb@google.com,m:puranjay@kernel.org,m:santosh.shukla@amd.com,m:wkarny@gmail.com,m:sudeep.holla@kernel.org,s:lists@lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:perex@perex.cz,m:tiwai@suse.com,m:krzysztof.kozlowski@oss.qualcomm.com,m:andersson@kernel.org,m:pierre-louis.bossart@linux.dev,m:linux-sound@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:srinivas.kandagatla@oss.qualcomm.com,m:Stable@vger.kernel.org,m:val@packett.cool,s:lists@lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FORGED_SENDER(0.00)[srinivas.kandagatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	FORGED_SENDER(0.00)[willy@infradead.org,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	FORWARDED(0.00)[lists@lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[srinivas.kandagatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,linux-foundation.org,infradead.org,google.com,gmail.com,vger.kernel.org,kvack.org,lists.infradead.org,kernel.org,arm.com,linaro.org,nvidia.com,amd.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,packett.cool:email];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[willy@infradead.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[infradead.org:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,infradead.org:dkim,infradead.org:from_mime,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,casper.infradead.org:mid]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6B29B692E41
+X-Rspamd-Queue-Id: 361BE693D3F
 
-When q6apm_free_fragments() is called it frees rx_data.buf/tx_data.buf
-and sets them to NULL under graph->lock. A late DSP buffer-done response
-can race with this: graph_callback() passes the !graph->ar_graph guard
-(not yet NULL), acquires the lock, but then dereferences a now-NULL buf
-pointer to read buf[token].phys, crashing at virtual address 0x10.
+On Mon, Jun 15, 2026 at 11:52:22AM +0200, Uladzislau Rezki wrote:
+> On Sun, Jun 14, 2026 at 12:15:28AM +0100, Matthew Wilcox wrote:
+> > What I don't understand is why you maintain a separate "free" tree.
+> > It should not be necessary any more, but maybe you tried removing it
+> > already and found a performance problem?
+>
+> We maintain it in order to split several entities. That prevents
+> interfering between allocated data and vmap-free-space manager.
+> So in that case one context can easily access allocated data, for
+> example vread iterator, etc., whereas another can do an allocation.
+> 
+> So by splitting parts i minimize lock-contention.
 
-Add a NULL check for buf inside the mutex-protected section in both the
-write-done (DATA_CMD_RSP_WR_SH_MEM_EP_DATA_BUFFER_DONE_V2) and
-read-done (DATA_CMD_RSP_RD_SH_MEM_EP_DATA_BUFFER_V2) handlers and bail
-out cleanly if buffers have already been freed.
+Sure, but there are many ways to reduce lock contention.  One is to not
+take locks at all; the maple tree is RCU-safe, so you can read the tree
+holding only the RCU read lock, as long as you obey the RCU rules.
 
-This problem is only shown up recently while apr bus was updated to
-process the commands per service rather from single global queue.
-
-Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
-Cc: Stable@vger.kernel.org
-Assisted-by: Claude:claude-4-6-sonnet
-Reported-by: Val Packett <val@packett.cool>
-Closes: https://lore.kernel.org/all/133ced18-1aa9-475d-80d8-6120678bdde4@packett.cool/
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
----
- sound/soc/qcom/qdsp6/q6apm.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index 2ab378fb5032..2873e831a8de 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -549,6 +549,10 @@ static int graph_callback(const struct gpr_resp_pkt *data, void *priv, int op)
- 		token = hdr->token & APM_WRITE_TOKEN_MASK;
- 
- 		done = data->payload;
-+		if (!graph->rx_data.buf) {
-+			mutex_unlock(&graph->lock);
-+			break;
-+		}
- 		phys = graph->rx_data.buf[token].phys;
- 		mutex_unlock(&graph->lock);
- 		/* token numbering starts at 0 */
-@@ -571,6 +575,10 @@ static int graph_callback(const struct gpr_resp_pkt *data, void *priv, int op)
- 		client_event = APM_CLIENT_EVENT_DATA_READ_DONE;
- 		mutex_lock(&graph->lock);
- 		rd_done = data->payload;
-+		if (!graph->tx_data.buf) {
-+			mutex_unlock(&graph->lock);
-+			break;
-+		}
- 		phys = graph->tx_data.buf[hdr->token].phys;
- 		mutex_unlock(&graph->lock);
- 		/* token numbering starts at 0 */
--- 
-2.53.0
-
+Specifically:
+ - Write side has to RCU-free the objects that are stored in the tree
+ - Read side has to trylock the objects it finds (and retry the walk
+   if the trylock fails)
+ - Read side can see a mixture of objects if the tree is changed while
+   it is reading, but for any given index in the tree it is guaranteed
+   to see one of the objects which has been referred to by that index.
+   That is, if the write side overwrites an index that referred to
+   object A with object B, the reader will see either object A or B.
+   It will not see NULL and it will not see any other object.
+ - If the write side stores both object C and object D in the tree,
+   the read side may see neither, both, only C or only D.
 
