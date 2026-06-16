@@ -1,266 +1,261 @@
-Return-Path: <linux-arm-msm+bounces-113395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id ltAfBdo5MWrEeQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 13:56:10 +0200
+	id tc+GOAE6MWrPeQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 13:56:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id A548B68F009
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 13:56:09 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A35F268F026
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 13:56:49 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=collabora.com header.s=mail header.b=df6uXJRF;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113395-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113395-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=collabora.com;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=N7N5Lq1O;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=RZBShAU1;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113396-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113396-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 273C13035CD0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:55:26 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id B5381303E86D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:55:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7472443E49D;
-	Tue, 16 Jun 2026 11:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9C9643E9CE;
+	Tue, 16 Jun 2026 11:55:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63E543D504;
-	Tue, 16 Jun 2026 11:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5739143D4ED
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 11:55:06 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781610875; cv=none; b=trRIGmKkKewvAk95deALGCgoO6bgDNB2sKuXSKeDtB6VBO4ewvseCUSeBX1qclDvXY+eE50e5Hi1tP6KUTtmjxIFdg5qAC1sMCy3pokiQQnJkpqS1FOF+5/nOE1s8jt6uqqmgwmBQg3yy4n/cEid6/x5iHodoX5jGlKzlvbpFxU=
+	t=1781610907; cv=none; b=p1BLFKSSluLGqJvqDsUWkULdWnZxHHX4E5fe9+UahoSVKHNJBgzt0Dzll2a0cIlVPvRU3R0Yby2MeoYFHy8+e5N2S/Rmr+yKj0zwCBa2130nea5E248cSuFVwj80JpOQZ/8mNGM6Xelf5IwW6q3SI/BYt7QMY5Td+JMJ2qHj/hM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781610875; c=relaxed/simple;
-	bh=jC+FAM3EW54MLhU3yGmuzjo8IWqD8uHcIWces1mre1w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCPSTsnZu/VTmha4AIA78GZkbR5FIiLneSlarK7VJy0SUVTpwCC7307jnsUoSQb9XhrFQU3y43m8hiMWfz8CTbv46vW+Oso97GhYmmuilwn+wji6pgbycjHjlmjYi0UHkfCOdd0R71NyfBAoFHriC4xhWKGoFDL8bNThb0FE+tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=df6uXJRF; arc=none smtp.client-ip=148.251.105.195
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1781610872;
-	bh=jC+FAM3EW54MLhU3yGmuzjo8IWqD8uHcIWces1mre1w=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=df6uXJRFBPQ8mJOw4V2ugIhBbyJEBrvc5ZRPwpZRkoR6SaMaG07aVbvztMHxM0IGT
-	 6g5YwHflSBylgWymhKG/YD1ez+QMyYeNDtcjeqrPF8Xb0JH6Hkc7B8bU0QcuI4xsso
-	 8ZkbF2IEhkRkn+yafqMq6IPkS5PtC63rG87IMaR6deLet7lrOirwCWLrXzS0KsrbtH
-	 4hxWxkTiv6DguN6y94/c+B1Cu3QVBGpPelU2AL3FfeVI/ZjgHBwX0WoCW/TZ5eoeUe
-	 cBqDEViQyWFBGBMPfrNUo/kvBhH+C819Lnd/GuJkMvDM2ZrJduTlTGVMNutH4WZuXp
-	 KiYVtNrxDUYJg==
-Received: from vignesh-thinkpad.. (unknown [100.64.0.157])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: vignesh)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id A67A117E0CAC;
-	Tue, 16 Jun 2026 13:54:29 +0200 (CEST)
-From: Vignesh Raman <vignesh.raman@collabora.com>
-To: dri-devel@lists.freedesktop.org
-Cc: daniels@collabora.com,
-	helen.fornazier@gmail.com,
-	airlied@gmail.com,
-	simona.vetter@ffwll.ch,
-	dmitry.baryshkov@oss.qualcomm.com,
-	lumag@kernel.org,
-	robdclark@gmail.com,
-	robin.clark@oss.qualcomm.com,
-	valentine.burley@collabora.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v3 2/2] drm/ci: add sc7180-trogdor-wormdingler-rev1-boe
-Date: Tue, 16 Jun 2026 17:24:05 +0530
-Message-ID: <20260616115410.325837-3-vignesh.raman@collabora.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260616115410.325837-1-vignesh.raman@collabora.com>
-References: <20260616115410.325837-1-vignesh.raman@collabora.com>
+	s=arc-20240116; t=1781610907; c=relaxed/simple;
+	bh=IkcWGshUEa4u7dhMzEQVwaerWwxFO++zUBrXJW6rS0I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BN9mw6+/BuzQMW5r/9hRBRA+iCndi+KG1ViQAkEqEx3QSUhcuwh+MZfPfjUI/PPI7W+nJOpCxLmmzJpGyZCS6PGhSdTajuvHEFQ6W8OqaIvgRN1eRzTUMOM8X7G4NN/uMO0XnEBWSF5cSCEw3w05YSeUhKWc9h0qfWTc0R2dO0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N7N5Lq1O; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RZBShAU1; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65GACB603455371
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 11:55:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=BqZE6aH27VWQfilGircM46
+	jMc+11CYdxAMP4Jw18oyE=; b=N7N5Lq1OFoJ0CYokMHJIfzVUE42feUuuPAlMCW
+	bSyiqjlXwezZCSZI9F/oa97kHLKqVxOj7anvgIpmJUy0Gxcr8X80b6d2mKK3mSn2
+	1U2R9rHDuJcJXsRYunJvEbT5L35aJLI0zy4x7fEbScFp1SNvoCHbIWYY7kA5objE
+	WMtOQBIPMw0+QeK+Tvz4KMYjYmiKpN/0u/ra9Kuuw6j6zQOs57R85nKxxmT3+fAL
+	3rxTeiwjkZO6An/VLpzWfV+21F05CMl+8PUmOcjhQ6iRVK/jbNGfYtFxWx1mYb10
+	QQayrxpiLJJa9gLx3kpqT/kPxUhVicgjtgjIlJtHqj7o8jnA==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu4dkgfb1-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 11:55:05 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-8421f5d76aaso3241123b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 04:55:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1781610904; x=1782215704; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BqZE6aH27VWQfilGircM46jMc+11CYdxAMP4Jw18oyE=;
+        b=RZBShAU1r4mVUAEY6NAVlS6cabAgs/elnO92K6A54fnkm3Qtnq7+2EMTXi7FoBWO02
+         wqsbtL3Ypzy60y8GGVNkWTxBC5JFpjAa7OyanarbCo+jd0J9U5y0023QKaV0CfBViDmj
+         W8H9ieZdx9lOuyASQW34gZXOoDJjjz7Zy0jQ8y6z6/r3u3Esb7mlXxezRejjwlOsIA0x
+         +Jn93K3XRiW0fK6UUqtkW3gCqtFfk+RbwFtN4hIscjSqDMnbQM+9VefBdkv//bgnYddW
+         +796gLj/2W8F4E+vVF8GZziY4h6kF4wyko0ciyPRyRrttxkOWCKWpGLX2Q82MqfZM3fD
+         c/mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781610904; x=1782215704;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BqZE6aH27VWQfilGircM46jMc+11CYdxAMP4Jw18oyE=;
+        b=KM4j1A0KhsQp6SIgaeEtNa7btYi9SYsbw9zM9JDbUr3cuEMGaixct1GNQPggHTMDr5
+         C++DFlnRElF57jXvCy7PycXEWfx5N3/qyAdiOgmSvkyAMIAWCkP/lj8KCxoZ+s7xmvzZ
+         DtvVmGWD8+X6196ilEgU8/4EZySqXkz3QpYQalnulWdstf8iWnNH3eYaKrCXjsmOpkp0
+         Nu3wCbZWMWZkmXw8lEIQ5Jzv7QKIQEWLWE3DAQHilUuGhLm4wddHfHQ6dUZ1luq7prrT
+         5BqK3t77yzfyYnhPayIrAvbuBcUeDUCvnbLeAN+EeKlatXJYNQoyYO9WutieO3ZPJHkc
+         CSPw==
+X-Gm-Message-State: AOJu0Yw+CAA2VEgLXu5Qq2JGGiRA7Yt3nS3AegjbZgG9qsPx5eCWedCG
+	3m9UfwvVS5/BhL7kZHouAeyaML/0jcfAJYgtsRLaAvz36qy+lzGHa55a5p8nq+QmEqv6NGR/API
+	gX4HqSDMNjoVJtYW2aNmrYkg5LLrtWifSjXT21dHxWvgFLqyuwW8UccdUMlz9nt8tBury
+X-Gm-Gg: Acq92OE6avZBTxaWIE0JtM3WJyqEhx0RLGg5sIBAUjnflW/R9fD7fYu63Ul44wu8YGY
+	XctrY5f8G6VDeucTrRpEW5Wlb4qdSQ2jaPpoH9xa/QZXp7zLmTxPROjUPeDnt7t3XbGnv9mcPGC
+	HIU1od855cTCyIpSz73AiyRMsurD1H0o0hqIIvQpkyemxM9iTPTLRAJa82ktNFOGQhMTmJgW/qr
+	wsoQ/NrSzjpeHDk+06XJNZMQORvnyycHUgAJwP7JX/vZ73x4YAhdSZ2ZrKy2IebPvlpXG4CWbBQ
+	OiybxfdFYIfgDVyeliYnVeb20MBqTawuZrgEWRtFpusxA3H8E7PSlPdyIuRN7T5Zn/jAEy+P3D0
+	Pl2S6u+tD4ogV1NugwXzofCE+AdzozNnW2ctLZ1yvaKPKLf3Wpy8=
+X-Received: by 2002:a05:6a00:1907:b0:842:2ddb:e305 with SMTP id d2e1a72fcca58-844e1ab9f5amr15874134b3a.43.1781610904069;
+        Tue, 16 Jun 2026 04:55:04 -0700 (PDT)
+X-Received: by 2002:a05:6a00:1907:b0:842:2ddb:e305 with SMTP id d2e1a72fcca58-844e1ab9f5amr15874098b3a.43.1781610903559;
+        Tue, 16 Jun 2026 04:55:03 -0700 (PDT)
+Received: from hu-smankad-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8434acf4b5csm16050549b3a.23.2026.06.16.04.54.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jun 2026 04:55:02 -0700 (PDT)
+From: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+Date: Tue, 16 Jun 2026 17:24:53 +0530
+Subject: [PATCH v3] pinctrl: qcom: Unconditionally mark gpio as wakeup
+ enable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260616-enable_wakeup_capable_gpios-v3-1-fb59647d89cb@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAIw5MWoC/5XNSw6CMBSF4a2Yji3pg1cduQ9jSCkXaARaW6kaw
+ t4tjB3o5Cb/HXxnQR6cBo9OhwU5CNprM8XgxwNSvZw6wLqJjRhhOUk5wTDJeoDqKW8w20pJu2d
+ ntfFY1SLlQkJZFAxFwTpo9WvXL9fYvfYP4977WKDb9zc3UExx1gAXdUtyItKz8T65z3JQZhyTe
+ NDGB/YHySJZKpZLVYiM0/ILua7rB21wq4IgAQAA
+X-Change-ID: 20260430-enable_wakeup_capable_gpios-cb9439ae8772
+To: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
+        Maulik Shah <maulik.shah@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781610899; l=3105;
+ i=sneh.mankad@oss.qualcomm.com; s=20250818; h=from:subject:message-id;
+ bh=IkcWGshUEa4u7dhMzEQVwaerWwxFO++zUBrXJW6rS0I=;
+ b=63/ySxmq4UtHp74zjtRfXCIVzdA1nKbfE7WhjCV7hFsTX1yJph99Hoiu7jCnjvdAcpGXY05M0
+ dZta5VjWstWAVVUwVYWl8QdLDmgBclpumiWMGiMuBcfMIu4tufXwvQj
+X-Developer-Key: i=sneh.mankad@oss.qualcomm.com; a=ed25519;
+ pk=sv57EGwdcfnp6xJmoBCIT1JFSqWI+gawRHkJWj/T2B0=
+X-Proofpoint-GUID: g-nf6Mz5BT5_kvU0Qz3FDhu7F6o51yZN
+X-Proofpoint-ORIG-GUID: g-nf6Mz5BT5_kvU0Qz3FDhu7F6o51yZN
+X-Authority-Analysis: v=2.4 cv=Ibi3n2qa c=1 sm=1 tr=0 ts=6a313999 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=SnbX5S4nitk782EHpS4A:9 a=QEXdDO2ut3YA:10
+ a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDEyMCBTYWx0ZWRfX+gZ6hglj3aJd
+ BP6usGo6LmqKwsG107Zvt/quNrgeq1CGwm7zG/nsvt0fmugQyBxjK3Z5zEgeAygcgk4KBALmFFt
+ 8aoFRdInsc1aMLySjl8JIWMpm/jPZ5VtaoaposLTL534Och0L148g2YmRV2FLRBI22oKuNgI/mr
+ ccteLoJFO26xuD4PvLiPQm3vL6tCrXns9Z6S0rcomaQSY9ugMs5dLjuXoHBhawBKuUG6XE8qX+w
+ xoZoHq1KrVpW5GJuHl69Dzc77AIbqSHvNYfzTCnSkOLN8Pcyb/qk4AMqKc3K/lVJE0j8k1jJ7T4
+ +SNoOKRGJnT+RGEtmHnWMD4KKX1jAiAhWVxQE9o7Y+KQ7dwMmyNIqYCbXilWPnucd21Y4b6Y3jk
+ U8x/gte1fzmcZy+DhRHZyidsfv6AXA8kgS6RyY50VkwEZagYu5S6sYvvCfHrClP1N7ETPzmgFA/
+ 4L2qJS/L5dRhcoySnFQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDEyMCBTYWx0ZWRfX3XF4EiGKdDBj
+ XXJxDFzP1zvrOfVA1+LFnbUpzHffIvIFwuVhBLQV7Brr9uZ5wcUfk1/FUwOwJsoT4uQYE+WCzQD
+ YqbE1GHvFUzVUBGm5C47mX3Wg29cbdA=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-16_03,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 spamscore=0 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160120
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORWARDED(0.00)[lists@lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[collabora.com,gmail.com,ffwll.ch,oss.qualcomm.com,kernel.org,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-113395-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113396-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_SENDER(0.00)[vignesh.raman@collabora.com,linux-arm-msm@vger.kernel.org];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS(0.00)[m:dri-devel@lists.freedesktop.org,m:daniels@collabora.com,m:helen.fornazier@gmail.com,m:airlied@gmail.com,m:simona.vetter@ffwll.ch,m:dmitry.baryshkov@oss.qualcomm.com,m:lumag@kernel.org,m:robdclark@gmail.com,m:robin.clark@oss.qualcomm.com,m:valentine.burley@collabora.com,m:linux-arm-msm@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:helenfornazier@gmail.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[sneh.mankad@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:linusw@kernel.org,m:neil.armstrong@linaro.org,m:krzk@kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:stable@vger.kernel.org,m:sneh.mankad@oss.qualcomm.com,m:maulik.shah@oss.qualcomm.com,s:lists@lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,vger.kernel.org:from_smtp,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vignesh.raman@collabora.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[sneh.mankad@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[collabora.com:+];
-	TO_DN_NONE(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	ALIAS_RESOLVED(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,gitlab.freedesktop.org:url,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,collabora.com:dkim,collabora.com:email,collabora.com:mid,collabora.com:from_mime]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: A548B68F009
+X-Rspamd-Queue-Id: A35F268F026
 
-Add job that executes the IGT test suite for
-sc7180-trogdor-wormdingler-rev1-boe.
+GPIO interrupts that are wakeup capable need to be forwarded to wakeup
+capable parent irqchip. This is done via writing to it's wakeup_enable bit.
 
-Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+Currently the bit is set only for PDC irqchip by checking skip_wake_irqs.
+skip_wake_irqs is set to differentiate between parent irqchips MPM and
+PDC. It is set when the parent irqchip is PDC to inform pinctrl about
+skipping the IRQ setting up at TLMM.
+
+However, the functionality to forward GPIO interrupts during SoC low
+power mode is needed regardless of which parent irqchip it is.
+Without the functionality it is impossible for MPM irqchip to detect the
+GPIO interrupt during SoC low power mode since for MPM irqchip the
+skip_wake_irqs is always false.
+
+Remove skip_wake_irqs condition when setting wakeup enable bit to allow
+forwarding GPIO interrupts for SoCs using MPM irqchip too.
+
+Fixes: 76b446f5b86e ("pinctrl: qcom: handle intr_target_reg wakeup_present/enable bits")
+Signed-off-by: Sneh Mankad <sneh.mankad@oss.qualcomm.com>
+Reviewed-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
 ---
+Changes in v3:
+- Added explanation about skip_wake_irqs in commit message.
+- Link to v2: https://lore.kernel.org/r/20260430-enable_wakeup_capable_gpios-v2-1-8c26ac795318@oss.qualcomm.com
 
-v3:
-  - Rebase with msm-next
-  - https://gitlab.freedesktop.org/drm/msm/-/merge_requests/221
+Changes in v2:
+- Modified comment to specify MPM HW as well.
+- Spelling correction.
+- Link to v1: https://lore.kernel.org/r/20260430-enable_wakeup_capable_gpios-v1-1-5de39bf06094@oss.qualcomm.com
+---
+ drivers/pinctrl/qcom/pinctrl-msm.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-v2:
-  - Add comments to clarify panel configurations for sc7180 trogdor devices
-  - https://gitlab.freedesktop.org/drm/msm/-/merge_requests/221
-  - Failure pipeline - https://gitlab.freedesktop.org/vigneshraman/msm/-/pipelines/1642103
-
-v1:
-  - https://gitlab.freedesktop.org/drm/msm/-/merge_requests/221
-  - Depends on https://lore.kernel.org/dri-devel/20260210071138.2256773-1-vignesh.raman@collabora.com/
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 45b3a2763eb85405fecdd4770ba3d4ab684563f0..6a24f9b5e4a979528ba6b5b87fd297c2783ec765 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -1242,12 +1242,12 @@ static int msm_gpio_irq_reqres(struct irq_data *d)
+ 	/*
+ 	 * If the wakeup_enable bit is present and marked as available for the
+ 	 * requested GPIO, it should be enabled when the GPIO is marked as
+-	 * wake irq in order to allow the interrupt event to be transfered to
+-	 * the PDC HW.
++	 * wake irq in order to allow the interrupt event to be transferred to
++	 * the PDC/MPM HW.
+ 	 * While the name implies only the wakeup event, it's also required for
+ 	 * the interrupt event.
+ 	 */
+-	if (test_bit(d->hwirq, pctrl->skip_wake_irqs) && g->intr_wakeup_present_bit) {
++	if (g->intr_wakeup_present_bit) {
+ 		u32 intr_cfg;
+ 
+ 		raw_spin_lock_irqsave(&pctrl->lock, flags);
+@@ -1275,7 +1275,7 @@ static void msm_gpio_irq_relres(struct irq_data *d)
+ 	unsigned long flags;
+ 
+ 	/* Disable the wakeup_enable bit if it has been set in msm_gpio_irq_reqres() */
+-	if (test_bit(d->hwirq, pctrl->skip_wake_irqs) && g->intr_wakeup_present_bit) {
++	if (g->intr_wakeup_present_bit) {
+ 		u32 intr_cfg;
+ 
+ 		raw_spin_lock_irqsave(&pctrl->lock, flags);
 
 ---
- drivers/gpu/drm/ci/arm64.config               |  4 +++
- drivers/gpu/drm/ci/build.sh                   |  1 +
- drivers/gpu/drm/ci/test.yml                   | 12 +++++++++
- ...180-trogdor-wormdingler-rev1-boe-fails.txt | 23 ++++++++++++++++
- ...180-trogdor-wormdingler-rev1-boe-skips.txt | 27 +++++++++++++++++++
- 5 files changed, 67 insertions(+)
- create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-wormdingler-rev1-boe-fails.txt
- create mode 100644 drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-wormdingler-rev1-boe-skips.txt
+base-commit: b4e07588e743c989499ca24d49e752c074924a9a
+change-id: 20260430-enable_wakeup_capable_gpios-cb9439ae8772
 
-diff --git a/drivers/gpu/drm/ci/arm64.config b/drivers/gpu/drm/ci/arm64.config
-index 563a69669a7b..f601b662c82f 100644
---- a/drivers/gpu/drm/ci/arm64.config
-+++ b/drivers/gpu/drm/ci/arm64.config
-@@ -214,3 +214,7 @@ CONFIG_PWM_TEGRA=y
- CONFIG_DRM_PANTHOR=m
- CONFIG_PHY_ROCKCHIP_NANENG_COMBO_PHY=y
- CONFIG_PHY_ROCKCHIP_SAMSUNG_HDPTX=y
-+
-+# For sc7180-trogdor-wormdingler-rev1-boe
-+CONFIG_DRM_PANEL_BOE_TV101WUM_NL6=y
-+CONFIG_GPIO_SHARED_PROXY=y
-diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
-index fdaa26ad79d6..61ac2d043ce3 100644
---- a/drivers/gpu/drm/ci/build.sh
-+++ b/drivers/gpu/drm/ci/build.sh
-@@ -28,6 +28,7 @@ if [[ "$KERNEL_ARCH" = "arm64" ]]; then
-     DEVICE_TREES+=" arch/arm64/boot/dts/mediatek/mt8192-asurada-spherion-r0.dtb"
-     DEVICE_TREES+=" arch/arm64/boot/dts/qcom/sc7180-trogdor-kingoftown.dtb"
-     DEVICE_TREES+=" arch/arm64/boot/dts/qcom/sm8350-hdk.dtb"
-+    DEVICE_TREES+=" arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dtb"
- elif [[ "$KERNEL_ARCH" = "arm" ]]; then
-     GCC_ARCH="arm-linux-gnueabihf"
-     DEBIAN_ARCH="armhf"
-diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
-index 3777189e9737..d9b21d63fb65 100644
---- a/drivers/gpu/drm/ci/test.yml
-+++ b/drivers/gpu/drm/ci/test.yml
-@@ -102,6 +102,7 @@
-     KERNEL_IMAGE_TYPE: ""
-     LAVA_FIRMWARE: qcom-lava
- 
-+# eDP panel (parade ps8640 dsi->edp bridge)
- msm:sc7180-trogdor-kingoftown:
-   extends:
-     - .msm-sc7180
-@@ -112,6 +113,17 @@ msm:sc7180-trogdor-kingoftown:
-     GPU_VERSION: ${DEVICE_TYPE}
-     RUNNER_TAG: mesa-ci-x86-64-lava-sc7180-trogdor-kingoftown
- 
-+# MIPI DSI panel
-+msm:sc7180-trogdor-wormdingler:
-+  extends:
-+    - .msm-sc7180
-+  parallel: 6
-+  variables:
-+    DEVICE_TYPE: sc7180-trogdor-wormdingler-rev1-boe
-+    DTB: sc7180-trogdor-wormdingler-rev1-boe
-+    GPU_VERSION: ${DEVICE_TYPE}
-+    RUNNER_TAG: mesa-ci-x86-64-lava-sc7180-trogdor-wormdingler-rev1-boe
-+
- msm:apq8016:
-   extends:
-     - .lava-igt:arm64
-diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-wormdingler-rev1-boe-fails.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-wormdingler-rev1-boe-fails.txt
-new file mode 100644
-index 000000000000..4af93eeeaf99
---- /dev/null
-+++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-wormdingler-rev1-boe-fails.txt
-@@ -0,0 +1,23 @@
-+core_setmaster@master-drop-set-user,Fail
-+kms_color@ctm-0-25,Fail
-+kms_color@ctm-0-50,Fail
-+kms_color@ctm-0-75,Fail
-+kms_color@ctm-blue-to-red,Fail
-+kms_color@ctm-green-to-red,Fail
-+kms_color@ctm-negative,Fail
-+kms_color@ctm-red-to-blue,Fail
-+kms_color@ctm-signed,Fail
-+kms_color@gamma,Fail
-+kms_color@legacy-gamma,Fail
-+kms_cursor_legacy@cursor-vs-flip-toggle,Fail
-+kms_cursor_legacy@cursor-vs-flip-varying-size,Fail
-+kms_flip@flip-vs-modeset-vs-hang,Fail
-+kms_flip@flip-vs-panning-vs-hang,Fail
-+kms_invalid_mode@overflow-vrefresh,Fail
-+kms_lease@lease-uevent,Fail
-+kms_pipe_crc_basic@compare-crc-sanitycheck-nv12,Fail
-+kms_plane@pixel-format,Fail
-+kms_plane@pixel-format-source-clamping,Fail
-+kms_plane_alpha_blend@alpha-7efc,Fail
-+kms_plane_alpha_blend@coverage-7efc,Fail
-+kms_plane_alpha_blend@coverage-vs-premult-vs-constant,Fail
-diff --git a/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-wormdingler-rev1-boe-skips.txt b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-wormdingler-rev1-boe-skips.txt
-new file mode 100644
-index 000000000000..8d1768de90cc
---- /dev/null
-+++ b/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-wormdingler-rev1-boe-skips.txt
-@@ -0,0 +1,27 @@
-+# Skip driver specific tests
-+^amdgpu.*
-+nouveau_.*
-+^panfrost.*
-+^v3d.*
-+^vc4.*
-+^vmwgfx*
-+
-+# Skip intel specific tests
-+gem_.*
-+i915_.*
-+tools_test.*
-+kms_dp_link_training.*
-+
-+# Currently fails and causes coverage loss for other tests
-+# since core_getversion also fails.
-+core_hotunplug.*
-+
-+# IGT issue. is_joiner_mode() should return false for non-Intel hardware.
-+# https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/issues/162
-+kms_display_modes@extended-mode-basic
-+kms_display_modes@mst-extended-mode-negative
-+
-+# sc7180 does not have APRIV, so memptrs is not protected.
-+# (Preemption is not supported on devices that do not have
-+# APRIV, so this is ok)
-+msm/msm_mapping@memptrs
+Best regards,
 -- 
-2.47.3
+Sneh Mankad <sneh.mankad@oss.qualcomm.com>
 
 
