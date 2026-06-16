@@ -1,412 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-113360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id bdtnJhAdMWpAbwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:53:20 +0200
+	id gK2WADD+MGq/aAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 09:41:36 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAD0568DBED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:53:19 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42FA168CE5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 09:41:35 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=thundersoft.com header.s=default header.b=FKmW9NA4;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113360-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c09:e001:a7::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113360-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=thundersoft.com;
+	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=YFfrVMrY;
+	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=Wr66GQcg;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113329-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113329-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=reject) header.from=qualcomm.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 33BAD300751B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 09:53:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8AB613051155
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 07:37:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 472CB3DC4DF;
-	Tue, 16 Jun 2026 09:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E83FD30D3FA;
+	Tue, 16 Jun 2026 07:37:26 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m19731105.qiye.163.com (mail-m19731105.qiye.163.com [220.197.31.105])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD81F3AA1B5;
-	Tue, 16 Jun 2026 09:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E78409638
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 07:37:25 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781603598; cv=none; b=FJPZ0grALrjirEFaDKQ0f9e4P1OOU0BFUGzyn4gsbSZrHCtIYuz333IcI92SNw8SqWIHr5Uk5U9XsojQ5ksE5CM0rAAgPdsiyj+KWjb1wGTT5GV8RX+MH8IpThJYfD/+u/qRw6ENtoc6KFgPs27G+Yrw0lm3C6bqGv0bsqQXCAA=
+	t=1781595446; cv=none; b=PnIrie4tpEJLshYHIhjks1yGFBAJcDTeV+8ks5MVTl1BXR1mx+JjrFaHsZli4CwpKihgujHzwLliKCEuVE5oPx3y467YY5fiIeLm65eC/EOH3qxe6XkERuCc8fWL5PXXbjBLENsUgXjmL/vOhvcXDsM6i3U87yU+ZfArAOnVrjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781603598; c=relaxed/simple;
-	bh=a+3UGF08cFL7cI1EM2tla9p6Lw3eS5Rnp+Tn1jG9eF0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=owLl6JlIpevzXOH4kjRAt2c6R34yZ3j5ROKlaq9r1i9+mezXT7h9vZw9TgWpMfnYb4khelfxpx+cenNjQYux3ihH9B6pPInplWeOYcatBszIgCt9lM92hIYerXMaLBGjOzF2hkrtvf3s/JJBxlah4+grwT4ERt3NNVwMO9dd9jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com; spf=pass smtp.mailfrom=thundersoft.com; dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b=FKmW9NA4; arc=none smtp.client-ip=220.197.31.105
-Received: from [127.0.1.1] (unknown [36.129.139.90])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 428f8c714;
-	Tue, 16 Jun 2026 15:30:28 +0800 (GMT+08:00)
-From: Hongyang Zhao <hongyang.zhao@thundersoft.com>
-Date: Tue, 16 Jun 2026 15:29:58 +0800
-Subject: [PATCH] arm64: dts: qcom: qcs6490-rubikpi3: Enable cameras
+	s=arc-20240116; t=1781595446; c=relaxed/simple;
+	bh=+d+MalgaHFdaHZ4kRY2NIU+01UETJbwu9uGioyEZ7l8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qzsETkV1WzFtax+OMnlj+0wCBpO1hYYT5buJ9oSDq6hR7cQZtMfYFDYMzHphs9xQ45qT2+aFTEIegf+VpUWarrV8LBR1BzIRYwP8DatyYlP8Q6ml41CcteIG8mgPf1t/2vtDp3sKQYYhuvVPSMwLFULKoyuiZY41BlbM5AhH0kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YFfrVMrY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Wr66GQcg; arc=none smtp.client-ip=205.220.180.131
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65G65Ho72849806
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 07:37:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=AcLDgmWZTS4s2Sn/xP9SdWaHwheyO6SQdW9
+	n/fciaqk=; b=YFfrVMrY5msrs7PYpW55qNHss7ZpOQ+1XMm6QCNHMpslTvfNksb
+	SGlyEWDeXpBza+vfDcQkw89MIs+sI7vTfqrw1ruqpUp7v2HHdBQ7kkDDpBARZjQQ
+	ye2KEWdm6HpZcMqgpIw8mNTc4OMnKH4CeaKnW0K2bB9uE7J846N7pVrsrFZ6q+aN
+	P04/KQ5KJh0QUWWAmXgEBqKF7QvgB2hqYrwgseuHT2+11WYOuOGXEXpR6rUQnjDj
+	Mh6Rdl9+yYcm4W92RSr56IOo0a8ZnwEJ5yN3fClygjQumptOeLVbek2AXNGVIFII
+	UCZ/5J5vD4zNNRbsx0uT5eXEroKNNMzt9ew==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu09g8k01-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 07:37:24 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-8ce9df49c6bso54048786d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 00:37:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1781595444; x=1782200244; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AcLDgmWZTS4s2Sn/xP9SdWaHwheyO6SQdW9n/fciaqk=;
+        b=Wr66GQcgekX2YX1QAxY7b5iV2u2N3oyeLXdMa0PMsgLHbKnOaCFlPvxgqj75E37I6J
+         nBhPUPFNvQILzhDrih7Vg/Y9R1iy/U1Gk1dZ7qY5WXuqAa2BXRsp8AbO16tUVknT9tCS
+         ick38Su93P73JEW3Ruk3+tykwKX6C6xJ+qlpzHFb2FpkvI/emHtvZeU+o2NnDY493BkP
+         kfnat/1ecToAm31ic0Eh4vNfV7f2IaRm0ARcUau5KpGve6ahahZHLqRcUVVnxb3NNOLc
+         IzA5cTgKkgdrWcAGImLqSqfe6QXfH2Wse3P2Dj22CvLPIx6R9UQVCj+W572G2ZwqDmxs
+         eL4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781595444; x=1782200244;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AcLDgmWZTS4s2Sn/xP9SdWaHwheyO6SQdW9n/fciaqk=;
+        b=ASjXhTigUQLuOl1h8OXjcFNnbCdkF69NL2oqNohJ0U0KbLIGjFEbPtp5A/pVRTwYxL
+         9omzWepflyOrzAFK4Ih3knK3d7ym+/KIfkZSllSzaU+wKTG0Wh0BZMs403U5F4hGIUsp
+         smOsH95GiDvM3+R45eLhBhHUZrGcINRAaBMIFI5Piuf15nARdjGP8bbjroqqkvqqx9GY
+         8vo3EdiPh5zBwd57opVdj8JROqstHg1/0q05YIXr7UxWF0vjkKk2xkMH+QPSG4pM8GFU
+         mH+9jcMdKRggonVUbK6n3WhPhzKr3iQCPe1GO5L7wwROxaLIdWyYGd3cZdgcswLGu0Mv
+         qYgQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+Dw989lOGDhXqGWvrWWckiImDVmx2K99DvhyaZfJiyG6JrxSLvpDTMNSo8HLwuWMuk+0rjTSUqcLr1eKsA@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWxg6gzI428ZSKRNRB9tvt2qOob1WC6vR2Y8pjY1z8YzZ19hnp
+	/MpNmahDHicLDuZoGeL7nwljWJQ50Y6GP74HqZcTP1sHvrdoAOXhdS0sVfjBx9dRPmWgT2uvnBN
+	bnD9deQszTBX2Opbc7FqDpOSxCni/ah0UbPkbKCjoHq3r8tCTwFvWJmExYsRpwJHXkRUbZIhvKv
+	9Pxy8=
+X-Gm-Gg: Acq92OGYj7GZLTxSrMHSBcmRy65AXo2PXHkyLKH/B4sdTlHlx0O0R91jvgXTjoNRqch
+	eGEXcaac0qQgtkMSbhW/VZNkCIQl1uYT25NHUzCGibBn5YxMsoXAVlt8yr7OMsAhm7D+ycYcG/O
+	seFzqgbAwo+V0RhGSEbDiEh5L+fASb1epxFUtY1aV5ho00lAPTMbo+SmZM7w+V/6LDFvbHcf81w
+	7ATcns09hoRLpbaRVbTBMbGnqWUXdQ/i3+q3Zit/IaAMu8aEJ8WcHjF/K+KGS5OhKDPmnGsLTcs
+	7DS++KWjZz1b7OKHhCp8FjZ8wywUNDPHqmKVt3KO+NwhHN1VWtkP/P0IOOkQBc9ozMnNV2/afFJ
+	6yC2+/+xIBw7hThToH+W2/pSDCqbw6EqmTvNCelvxJvI5lp0tYQ==
+X-Received: by 2002:a05:620a:458c:b0:915:d322:c465 with SMTP id af79cd13be357-91c4541436bmr384185285a.6.1781595443892;
+        Tue, 16 Jun 2026 00:37:23 -0700 (PDT)
+X-Received: by 2002:a05:620a:458c:b0:915:d322:c465 with SMTP id af79cd13be357-91c4541436bmr384181585a.6.1781595443498;
+        Tue, 16 Jun 2026 00:37:23 -0700 (PDT)
+Received: from brgl-qcom.home ([2a01:cb1d:dc:7e00:cbbd:82b7:e325:35a9])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4922fa47d1csm56407175e9.4.2026.06.16.00.37.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Jun 2026 00:37:22 -0700 (PDT)
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+To: Linus Walleij <linusw@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: brgl@kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH] MAINTAINERS: add myself as the maintainer for Qualcomm pin control drivers
+Date: Tue, 16 Jun 2026 09:37:08 +0200
+Message-ID: <20260616073708.5534-1-bartosz.golaszewski@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260616-rubikpi-next-20260615-v1-1-3d96b89397ff@thundersoft.com>
-X-B4-Tracking: v=1; b=H4sIAHX7MGoC/y2M0QpAQBAAf0X7bMtdbsmvyMNhsamjO6Qu/+6Sx
- 5maiRDYCwdosgieLwmyuQQqz2BYrJsZZUwMutBUkCL0Zy/rLuj4PvC3BkvSpaqsrclYSO3ueZL
- 7+7bd87yZHF8LZwAAAA==
-X-Change-ID: 20260616-rubikpi-next-20260615-462417aa865a
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, rosh@debian.org, 
- Hongyang Zhao <hongyang.zhao@thundersoft.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1781595028; l=7053;
- i=hongyang.zhao@thundersoft.com; s=20260127; h=from:subject:message-id;
- bh=a+3UGF08cFL7cI1EM2tla9p6Lw3eS5Rnp+Tn1jG9eF0=;
- b=XVAkEi63dPBKqqa8KYLP3PPtPzTmL2iii2UcmhHuSTNIOE0hFv8uT1Xi8c+6Ix0+kt2TObpo0
- 4WajQ4xmqlkCxEnqDZLjvAZTR90m5RRNz/xu1DaJeOcXpp6HN8YPd0F
-X-Developer-Key: i=hongyang.zhao@thundersoft.com; a=ed25519;
- pk=D9yL5W9Zj0lPBDAq9gzY++1849VlXuTWAkROzZ88J/4=
-X-HM-Tid: 0a9ecf56bbf309d5kunma7c9ac087e8ef
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVlCH0JIVk9CThhOTUtJHkhKS1YVFA
-	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlITVVKSUJVSkhCVUJLWVdZFhoPEhUdFFlBWU9LSFVKS0
-	lPT09IVUpLS1VKQktLWQY+
-DKIM-Signature: a=rsa-sha256;
-	b=FKmW9NA4CCNYsaemwHLO78ahYqDpJgY/oq4cFGsLurE9Y1zyTO/kskxh0YpGjMW8oWmj4yOl0p5zj+8Co7oMApFhMVVvcfhY38VaBQDIS1C3vkoyR8SNnhbULGXEiIIaB3TwT1/jYpb853ijNV09KfD904o4chq+bq3g97V+SnA=; s=default; c=relaxed/relaxed; d=thundersoft.com; v=1;
-	bh=Lf4eElgUPOCo6NrM/vA3roTGYsMOixzoLCvI8OJThLY=;
-	h=date:mime-version:subject:message-id:from;
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDA3NCBTYWx0ZWRfXxcF1TRe9EQQF
+ sWQbkWf2HQ7SQmcQEInxmAbuOJLsGt5T/ZBtCfXvzotvJtltAk7C9K30dDhmQ00yITNY4bCPWRT
+ RV8bo7l1Wj/3hP0Hlif7OROfODcSohN/C5DN2vwAp5hyegEv9p9kN8AQaU1FLyUVclIb3FZo43k
+ V+7Qtu5T8M7JtlnyLKa4Z8HLuO7EoRMGdYzTLio1qKv7i9XWupvKPi2h+uBnPmNF8aPFzeX5GGF
+ DhPysaVQDHtLAZW4IRXeMFwlb+8FxGY2tPlCn3i2zIU9xEEudRRI48FHzWcmEunD/RX0PRCFp83
+ k4Sd7XplhF46tfbWfU8mCsSqcxJzCmr8BvnYpOYW8sYl2WpkwIDepyzezAQJMz5nnmYkcKS8Jcn
+ 2yjYGRd93Ql6hHTBTuU0HTSqbhDegJ98mdmmiarX3eUqK6mDRbZB5/yWFtgRQK6q2vmbCa/UazI
+ SOHkNO33BLc5whfjw+Q==
+X-Proofpoint-ORIG-GUID: uiUuDpdm-AsNfGoAcQUZbzD0vSFJxfq-
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDA3NCBTYWx0ZWRfX+8iJxOoVYCac
+ IZXutSyeSYlrx211RjRORwUiiUJRckynpxtkMuzm4G9fBkUwEEqZTu3cHV28E199mfEr8CNOapU
+ WGijGe7sfVgxnNw8z6H/ZGcQtlkLi4c=
+X-Authority-Analysis: v=2.4 cv=DLa/JSNb c=1 sm=1 tr=0 ts=6a30fd34 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=FelO9ux0wxsA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
+ a=jVqbDabETOUBSQthAj8A:9 a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-GUID: uiUuDpdm-AsNfGoAcQUZbzD0vSFJxfq-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-16_02,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0 malwarescore=0
+ priorityscore=1501 phishscore=0 suspectscore=0 bulkscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160074
 X-Rspamd-Action: no action
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[thundersoft.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[thundersoft.com:s=default];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-113360-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_FORWARDING(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER(0.00)[hongyang.zhao@thundersoft.com,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:rosh@debian.org,m:hongyang.zhao@thundersoft.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113329-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS(0.00)[m:linusw@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:brgl@kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-msm@vger.kernel.org,m:linux-gpio@vger.kernel.org,m:bartosz.golaszewski@oss.qualcomm.com,s:lists@lfdr.de];
+	FORGED_SENDER(0.00)[bartosz.golaszewski@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	FROM_NEQ_ENVFROM(0.00)[bartosz.golaszewski@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	ALIAS_RESOLVED(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[hongyang.zhao@thundersoft.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[thundersoft.com:+];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	ALIAS_RESOLVED(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: BAD0568DBED
+X-Rspamd-Queue-Id: 42FA168CE5C
 
-Enable the two Raspberry Pi camera connectors on RubikPi 3 with
-IMX219 sensors. CAM1 is connected to CCI1 and CSIPHY1, while CAM2
-is connected to CCI0 and CSIPHY4.
+Linus Walleij expresed the need for a dedicated maintainer for Qualcomm
+pin control drivers which receive a lot more changes lately. Qualcomm
+volunteered me for this role so add an entry to MAINTAINERS.
 
-Add the shared 24 MHz camera oscillator, camera power enable
-regulators, CAMSS endpoints, CCI sensor nodes and privacy LED GPIOs.
-
-Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 ---
-Enable the two Raspberry Pi camera connectors on Thundercomm RUBIK Pi 3.
-Both connectors are populated with IMX219 camera modules.
+ MAINTAINERS | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-CAM1 is wired to CCI1 and CSIPHY1, while CAM2 is wired to CCI0 and
-CSIPHY4. Add the fixed 24 MHz camera oscillator, camera power enable
-regulators, CAMSS endpoints, CCI sensor nodes, and the privacy LED GPIOs.
-
-The cameras were validated on RUBIK Pi 3 with two IMX219 modules. Both
-sensors enumerate through CAMSS and can capture 3280x2464 RGGB frames. The
-privacy LEDs are also toggled by the V4L2 subdev privacy LED support while
-streaming.
----
- .../boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts | 204 +++++++++++++++++++++
- 1 file changed, 204 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-index f47efca42d48..280ce9316f50 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-@@ -47,6 +47,12 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 825e7cd2d673..5d0d2e4b2cf4 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -22343,6 +22343,13 @@ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ F:	drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
  
-+	cam_osc_24m: clock-24000000 {
-+		compatible = "fixed-clock";
-+		#clock-cells = <0>;
-+		clock-frequency = <24000000>;
-+	};
++QUALCOMM PINCTRL DRIVERS
++M:	Bartosz Golaszewski <brgl@kernel.org>
++L:	linux-arm-msm@vger.kernel.org
++S:	Supported
++F:	Documentation/devicetree/bindings/pinctrl/qcom,*.yaml
++F:	drivers/pinctrl/qcom/
 +
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
-@@ -61,6 +67,27 @@ key-volume-up {
- 		};
- 	};
- 
-+	gpio-leds {
-+		compatible = "gpio-leds";
-+
-+		pinctrl-0 = <&cam1_privacy_led_state>, <&cam2_privacy_led_state>;
-+		pinctrl-names = "default";
-+
-+		cam1_privacy_led: led-camera1 {
-+			function = LED_FUNCTION_INDICATOR;
-+			function-enumerator = <1>;
-+			gpios = <&tlmm 18 GPIO_ACTIVE_HIGH>;
-+			default-state = "off";
-+		};
-+
-+		cam2_privacy_led: led-camera2 {
-+			function = LED_FUNCTION_INDICATOR;
-+			function-enumerator = <2>;
-+			gpios = <&tlmm 19 GPIO_ACTIVE_HIGH>;
-+			default-state = "off";
-+		};
-+	};
-+
- 	hdmi-connector {
- 		compatible = "hdmi-connector";
- 		type = "a";
-@@ -128,6 +155,38 @@ fan0: pwm-fan {
- 		pinctrl-names = "default";
- 	};
- 
-+	vreg_cam1_pwr: regulator-camera1-pwr {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vreg_camera1_pwr";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 57 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&cam1_pwr_en>;
-+		pinctrl-names = "default";
-+
-+		vin-supply = <&vreg_vcc3v3_output>;
-+	};
-+
-+	vreg_cam2_pwr: regulator-camera2-pwr {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vreg_camera2_pwr";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 58 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&cam2_pwr_en>;
-+		pinctrl-names = "default";
-+
-+		vin-supply = <&vreg_vcc3v3_output>;
-+	};
-+
- 	vreg_eth_1v8: regulator-eth-1v8 {
- 		compatible = "regulator-fixed";
- 
-@@ -214,6 +273,23 @@ vreg_usbhub_rest_1v8: regulator-usbhub-rest-1v8 {
- 		regulator-boot-on;
- 	};
- 
-+	vreg_vcc3v3_output: regulator-vcc3v3-output {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vcc3v3_output";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 14 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&vcc3v3_output_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
- 	vph_pwr: regulator-vph-pwr {
- 		compatible = "regulator-fixed";
- 
-@@ -694,6 +770,94 @@ vreg_bob_3p296: bob {
- 	};
- };
- 
-+&camss {
-+	vdda-phy-supply = <&vreg_l10c_0p88>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
-+
-+	status = "okay";
-+
-+	ports {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		/* CAM1 is routed to CSI1 / CSIPHY1. */
-+		port@1 {
-+			reg = <1>;
-+
-+			csiphy1_ep: endpoint {
-+				data-lanes = <0 1>;
-+				remote-endpoint = <&cam1_imx219_ep>;
-+			};
-+		};
-+
-+		/* CAM2 is routed to CSI4 / CSIPHY4. */
-+		port@4 {
-+			reg = <4>;
-+
-+			csiphy4_ep: endpoint {
-+				data-lanes = <0 1>;
-+				remote-endpoint = <&cam2_imx219_ep>;
-+			};
-+		};
-+	};
-+};
-+
-+&cci0 {
-+	status = "okay";
-+};
-+
-+&cci0_i2c0 {
-+	cam2_imx219: camera@10 {
-+		compatible = "sony,imx219";
-+		reg = <0x10>;
-+
-+		clocks = <&cam_osc_24m>;
-+
-+		VANA-supply = <&vreg_cam2_pwr>;
-+		VDIG-supply = <&vreg_l18b_1p8>;
-+		VDDL-supply = <&vreg_cam2_pwr>;
-+
-+		leds = <&cam2_privacy_led>;
-+		led-names = "privacy";
-+
-+		port {
-+			cam2_imx219_ep: endpoint {
-+				data-lanes = <1 2>;
-+				link-frequencies = /bits/ 64 <456000000>;
-+				remote-endpoint = <&csiphy4_ep>;
-+			};
-+		};
-+	};
-+};
-+
-+&cci1 {
-+	status = "okay";
-+};
-+
-+&cci1_i2c0 {
-+	cam1_imx219: camera@10 {
-+		compatible = "sony,imx219";
-+		reg = <0x10>;
-+
-+		clocks = <&cam_osc_24m>;
-+
-+		VANA-supply = <&vreg_cam1_pwr>;
-+		VDIG-supply = <&vreg_l18b_1p8>;
-+		VDDL-supply = <&vreg_cam1_pwr>;
-+
-+		leds = <&cam1_privacy_led>;
-+		led-names = "privacy";
-+
-+		port {
-+			cam1_imx219_ep: endpoint {
-+				data-lanes = <1 2>;
-+				link-frequencies = /bits/ 64 <456000000>;
-+				remote-endpoint = <&csiphy1_ep>;
-+			};
-+		};
-+	};
-+};
-+
- &gcc {
- 	protected-clocks = <GCC_CFG_NOC_LPASS_CLK>,
- 			   <GCC_MSS_CFG_AHB_CLK>,
-@@ -1243,6 +1407,14 @@ usb_eth_power: usb-eth-power-state {
- 		bias-disable;
- 	};
- 
-+	vcc3v3_output_en: vcc3v3-output-en-state {
-+		pins = "gpio14";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		output-high;
-+		bias-disable;
-+	};
-+
- 	wifi_reset_active: wifi-reset-active-state {
- 		pins = "gpio16";
- 		function = "gpio";
-@@ -1258,6 +1430,22 @@ bt_reset: bt-reset-state {
- 		bias-disable;
- 	};
- 
-+	cam1_privacy_led_state: cam1-privacy-led-state {
-+		pins = "gpio18";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		output-low;
-+		bias-disable;
-+	};
-+
-+	cam2_privacy_led_state: cam2-privacy-led-state {
-+		pins = "gpio19";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		output-low;
-+		bias-disable;
-+	};
-+
- 	lt9611_irq_pin: lt9611-irq-state {
- 		pins = "gpio20";
- 		function = "gpio";
-@@ -1358,6 +1546,22 @@ m2_vcc_pin: m2-vcc-state {
- 		input-disable;
- 	};
- 
-+	cam1_pwr_en: cam1-pwr-en-state {
-+		pins = "gpio57";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		output-low;
-+		bias-disable;
-+	};
-+
-+	cam2_pwr_en: cam2-pwr-en-state {
-+		pins = "gpio58";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		output-low;
-+		bias-disable;
-+	};
-+
- 	lt9611_vcc_pin: lt9611-vcc-pin-state {
- 		pins = "gpio83";
- 		function = "gpio";
-
----
-base-commit: 8d6dbbbe3ba62de0a63e962ee004afb848c8e3ac
-change-id: 20260616-rubikpi-next-20260615-462417aa865a
-
-Best regards,
+ QUALCOMM RMNET DRIVER
+ M:	Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
+ M:	Sean Tranchetti <sean.tranchetti@oss.qualcomm.com>
 -- 
-Hongyang Zhao <hongyang.zhao@thundersoft.com>
+2.47.3
 
 
