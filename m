@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-113337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 0YXjJ60SMWrFbAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:09:01 +0200
+	id rmDuCBUTMWrvbAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:10:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6151968D623
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:08:59 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37D9768D670
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 11:10:44 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=kernel.org header.s=k20260515 header.b=f91E9B6F;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113337-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113337-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=XFXXoYju;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113338-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113338-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 8B02B300D4D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 09:08:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E1FA53125554
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 09:09:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC86341B375;
-	Tue, 16 Jun 2026 09:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 876EA41B37D;
+	Tue, 16 Jun 2026 09:09:01 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8453B42E0;
-	Tue, 16 Jun 2026 09:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCCB3B42E0;
+	Tue, 16 Jun 2026 09:09:00 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781600937; cv=none; b=nuEoPn6b5rAPPrTkehS23B1CkFvlENKB+Y+DyICBfVHlD1UfMJVnuw8o4JGY4FNU7Vph8TflWmqagSV7EZQGJAFn13POmFVQFBa4nsBzFa0dhaGhAWBycwne9DYcgY7cKTWZHzLk5fWJ0kV9fTNxpCtkEly6/qi/JxhjzMH5i08=
+	t=1781600941; cv=none; b=TjF/vviWrge/ZB6r4Ni6tivniVxXtFvXrYILOLnzgU/Ua1dRIHuVZboSr6lrJZ8CHhooFnG7AHrVpCFgavsznS8uKZ/hZpjWMJNipaKRZpU0s2Fbp9texjxyEciM8aVXpuDPjle7F8KpnqcnkeXAQEJCwUiNGAX8jIxeNy9Mhyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781600937; c=relaxed/simple;
-	bh=e2x04y9trWHLVKYSlXxpVFxVMddWeo8Zw5ZRnEUYWQ4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WnPvMI2OxCAAhqax4f6dTZGgXq/IUxo08DV1rWEAwS9FWnPUh2F4Db2rjGWGi7q2unfo7uTw4oufdpaZQ1gX+k69Lc223NZYd5HZ39jO781u/lpVxsMXt4UD1KO54aiCfBRT0GWBEJKpmzDzwwaXMx7j4W/12fc4rkPzaxmdUHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f91E9B6F; arc=none smtp.client-ip=100.103.45.18
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF211F000E9;
-	Tue, 16 Jun 2026 09:08:52 +0000 (UTC)
+	s=arc-20240116; t=1781600941; c=relaxed/simple;
+	bh=zhGCKp5AVqdmNqSbpWtLWEt6rsWVDkbB9uzEdQP5xVk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=nFTMZFR+Xhcl7MjhflLEX871kK2Ky2vhV/vfpFLaNCCZTrulE/6o94xfVqyf001pPp/7IpMdmfqXYYi/x84EtMTd8Km9JhaI+Aa2I2aVqQzcRGxAwcfmmRcY+ObOikvvxpKrxKyFIkR6SqjUzbtraP4cazZS7jU0zq1C0riX+QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XFXXoYju; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC3E1F00A3A;
+	Tue, 16 Jun 2026 09:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1781600936;
-	bh=ZKc7L7/7ELh1FPQJxElbbQEOdfQLPqnQrns6u7AawPs=;
-	h=From:Subject:Date:To:Cc;
-	b=f91E9B6FZ0JEKNIEv1zv3yS6IQ9+u6zaUvgoPmTbDRL0frM64mJjXBSvpW1mouhpu
-	 S5NKpnhW/7TEH09a0dpM4m1MowJAa8kztMliufzOpPIlCeuSfjGc91xS/TbDK6owGZ
-	 2lcgCh+4wOkmyrEzv1H/uy9UOg9bCtJM40q89vQpETfkgTnOHWVqIrIHqIy+2R8kkS
-	 cqZ5KsIMgFz7lCf5mr5KzPY1Ayf1XGyBfGALfK7e2KJgnLTQcObRqWqmZ0lY/HfYaa
-	 mQKJ3NiDmud5ky4CnOAPVsZ5XRXM8IdsWSzI4UAnVlW3i0hCtWzA5dXmRhpqYYFW3h
-	 CancRWTjWfycg==
+	s=k20260515; t=1781600940;
+	bh=kSHyiCgp5d6eVqHZyPNjJsy+a5aJhBNneo0LUB6QoqU=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc;
+	b=XFXXoYjutJSSKq4VKOS2u5cxXz8ItPCKmC0HUBIz3LTnz18l640oSX21rFhiHo2c3
+	 kPoZ+v78peWiWAfT/czCk38/qc+ORKA9bhFI6Fzo+UuwG09Tgb2QdmN+3ZHzyLqvkL
+	 sGn4G/GuBEiFgJiW7zn9Q1rrrOxnvVxJRRIk1RUdp7XhctjWIq55mfMc3VVKFN9hjo
+	 iFjmcUuFtY8fAiB8TUL4RZWxAMBSvMg4kliT5jImKHqb6vZJmzRhNwnF3ya+bj6+Jz
+	 9rEyVL0tG7IqVjAF0UEPE6ntSJ52YN5TPKIxyBLSupzJYOvw39qwNCM5Dg7CHPUSo1
+	 0KW/Peg6V0RjA==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Subject: [PATCH v2 0/4] Describe display voltage regulators on SC8180X
- devices
-Date: Tue, 16 Jun 2026 11:08:48 +0200
-Message-Id: <20260616-topic-8180_disp_power-v2-0-167785993231@oss.qualcomm.com>
+Date: Tue, 16 Jun 2026 11:08:49 +0200
+Subject: [PATCH v2 1/4] arm64: dts: qcom: sc8180x-primus: Rename regulator
+ nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,11 +58,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WNWw6CMBREt2L6bUlbHjZ+uQ9DCLQXuUZo7QXUE
- PZuwQX4M8lJZuYsjCAgEDsfFhZgRkI3RFDHAzNdPdyAo43MlFCFKGTOR+fRcC21qCySr7x7QeB
- WZrZNc2VNc2Jx6wO0+N5/r+WPaWruYMbtbGt0SKMLn108y633zzFLLrjUNi2aPNMm0xdHlDyn+
- mFc3ycxWLmu6xfpFfOo0wAAAA==
-X-Change-ID: 20260615-topic-8180_disp_power-d14df352dcb7
+Message-Id: <20260616-topic-8180_disp_power-v2-1-167785993231@oss.qualcomm.com>
+References: <20260616-topic-8180_disp_power-v2-0-167785993231@oss.qualcomm.com>
+In-Reply-To: <20260616-topic-8180_disp_power-v2-0-167785993231@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, 
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
@@ -72,11 +70,11 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1781600932; l=1681;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781600932; l=1708;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=e2x04y9trWHLVKYSlXxpVFxVMddWeo8Zw5ZRnEUYWQ4=;
- b=KMvJJFl0SszCwr57ZdeJmXXgt+Pkq1fqZ/oWB7v0ZBYkEbzXT5kTs/EVNGHz/3EZe6dDqISxK
- C8S6EjInr8KDhNV69AfoMBI29xuj400t3DHM13nGDlejTzjksSbP6yx
+ bh=qPdaNciSliS3qTLHCjZfNv5rbyKrWCLVH53Z2F6YASc=;
+ b=b1Nq5TQQLOMTKwSaXbqsxSRv7ab4a5lTTjDycZ6NeHnQ9SOaKCdNxgh1vLH8rAK8+B2iVJbtT
+ 6pLmJhIDZ45AdM4XDtJw8hmiexSAXZS8Sgb56izfigxb0yWyq2ZZi22
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Rspamd-Action: no action
@@ -84,7 +82,7 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -96,9 +94,9 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:andersson@kernel.org,m:konradybcio@kernel.org,m:dmitry.baryshkov@oss.qualcomm.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:vkoul@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:konrad.dybcio@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORGED_SENDER(0.00)[konradybcio@kernel.org,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-113337-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113338-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_FORWARDING(0.00)[];
 	ALIAS_RESOLVED(0.00)[];
@@ -110,54 +108,64 @@ X-Spamd-Result: default: False [-5.16 / 15.00];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp,msgid.link:url]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,vger.kernel.org:from_smtp,qualcomm.com:email]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 6151968D623
+X-Rspamd-Queue-Id: 37D9768D670
 
-Let Linux control these supplies to both ensure a known state and allow
-for some power savings.
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-This series is compile-tested only, but verified against schematics.
+The nodes would be sorted correctly, if their names started with
+"regulator-" (which is the style used in the latest submissions).
+Touch that up.
 
-Resolves the following kind of DT checker warnings:
-
-sc8180x-lenovo-flex-5g.dtb: panel (edp-panel): 'power-supply' is a required property
-
-Making the SC8180X platform warning-free.
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
-Changes in v2:
-- Fix a typo in the bl_pwr_en pinctrl node name
-- Pick up tags
-- Link to v1: https://patch.msgid.link/20260615-topic-8180_disp_power-v1-0-18d36b548c48@oss.qualcomm.com
+ arch/arm64/boot/dts/qcom/sc8180x-primus.dts | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-To: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-To: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>
-To: Conor Dooley <conor+dt@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+index aff398390eba..ffe7c45366ed 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
++++ b/arch/arm64/boot/dts/qcom/sc8180x-primus.dts
+@@ -167,7 +167,7 @@ reserved-region@9a500000 {
+ 		};
+ 	};
+ 
+-	vreg_nvme_0p9: nvme-0p9-regulator {
++	vreg_nvme_0p9: regulator-nvme-0p9 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vreg_nvme_0p9";
+ 
+@@ -177,7 +177,7 @@ vreg_nvme_0p9: nvme-0p9-regulator {
+ 		regulator-always-on;
+ 	};
+ 
+-	vreg_nvme_3p3: nvme-3p3-regulator {
++	vreg_nvme_3p3: regulator-nvme-3p3 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vreg_nvme_3p3";
+ 
+@@ -190,7 +190,7 @@ vreg_nvme_3p3: nvme-3p3-regulator {
+ 		regulator-always-on;
+ 	};
+ 
+-	vdd_kb_tp_3v3: vdd-kb-tp-3v3-regulator {
++	vdd_kb_tp_3v3: regulator-vdd-kb-tp-3v3 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vdd_kb_tp_3v3";
+ 		regulator-min-microvolt = <3300000>;
+@@ -205,7 +205,7 @@ vdd_kb_tp_3v3: vdd-kb-tp-3v3-regulator {
+ 		pinctrl-0 = <&kb_tp_3v3_en_active_state>;
+ 	};
+ 
+-	vph_pwr: vph-pwr-regulator {
++	vph_pwr: regulator-vph-pwr {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vph_pwr";
+ 		regulator-min-microvolt = <3700000>;
 
----
-Konrad Dybcio (4):
-      arm64: dts: qcom: sc8180x-primus: Rename regulator nodes
-      arm64: dts: qcom: sc8180x-primus: Describe the display power net
-      arm64: dts: qcom: sc8180x-lenovo-flex-5g: Rename regulator nodes
-      arm64: dts: qcom: sc8180x-lenovo-flex-5g: Describe the display power net
-
- .../arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts | 57 ++++++++++++++++++++--
- arch/arm64/boot/dts/qcom/sc8180x-primus.dts        | 56 +++++++++++++++++++--
- 2 files changed, 103 insertions(+), 10 deletions(-)
----
-base-commit: c425609d6ac4012c8bbf01ec2e10e801b1923a7b
-change-id: 20260615-topic-8180_disp_power-d14df352dcb7
-
-Best regards,
---  
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+-- 
+2.54.0
 
 
