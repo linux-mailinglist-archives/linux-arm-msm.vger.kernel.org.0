@@ -1,221 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-113421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id 28tmAexOMWqYgQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 15:26:04 +0200
+	id NgX2HrtPMWoLggUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 15:29:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8423568FE77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 15:26:03 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE01668FF15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 15:29:30 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=qualcomm.com header.s=qcppdkim1 header.b=hYo9RqbM;
-	dkim=pass header.d=oss.qualcomm.com header.s=google header.b=ARvP5JP0;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113421-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113421-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=reject) header.from=qualcomm.com;
+	dkim=pass header.d=herrie.org header.s=transip-a header.b=r3hMYV12;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113423-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c0a:e001:db::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113423-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=none;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id F02E33025B80
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 13:26:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3E7AF319C8C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Jun 2026 13:27:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4869132D0FC;
-	Tue, 16 Jun 2026 13:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E44EA32FA18;
+	Tue, 16 Jun 2026 13:27:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from outbound4.mail.transip.nl (outbound4.mail.transip.nl [136.144.136.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565EE32AAA3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 13:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA92332D0EE;
+	Tue, 16 Jun 2026 13:27:01 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781616359; cv=none; b=ayfqA+EUyQrD3MkPNIooXfSs9kKYTqPF5O2K7IVe+SOt2eNLj/dGT/A8Qi0vKVbLSO8q7mnxfY985U/f9Ed9DwHnUE0N5Q2SaBDasx7QLFtwpW+NP7EUutxneQ7EQsJoMn6chkTgeOvYN5qMR6J4SfGv1qOAG22Uqoar9W0GBJo=
+	t=1781616424; cv=none; b=Jv+tUdYA+iPFlhxU1ldZQWrHwDrD+a1A8JRAaNp+iOfcaelNsBVALl7OJtZVoDCDneT03Jj1+epu1e+58kL2R0OVgsdIZWic1lw7+UIlnvDhgTPlvgR90Toc3cePrjP/lbMjDb+qG0g1Ty2B8WlHvHoS2mxkfHQNxz3hzFrmuAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781616359; c=relaxed/simple;
-	bh=Ioea2Y3umLF6KJsfs6zmlpUj+peP8XvUMDhOYe7LilE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kYupXCjOI6A0d1wTJ/YXZ/XaLJa1gK5FIK4m/6wvKBKyiGF7u5UhnZH8cKkX9h5g5Wg0SUTiKtj1mEegPcOz434vYXIp0RfvaBbcBw8V/98PwTKVNsfq1jY1tyn4M4eUNUSc67CkLu+JBIPlbRNjmAKCKNhEiMusfW4rhSkzOGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hYo9RqbM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ARvP5JP0; arc=none smtp.client-ip=205.220.180.131
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 65GAC1Yl3256225
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 13:25:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MwjvuYt5+PoE/3vS01HiYTn+yCCieemIIEOSQmhKM4w=; b=hYo9RqbMS797uCiB
-	/BtjaAezFPZN+3L4jWIj/VY79XiFj+X27I/Toe8k0yupi2+jkIB+e7FqIbh1bsgp
-	1Dd0lwvfbng5qskjlg1eUd+5FNo5ZfZPGz0khBpmqMl4XAdq5PjulXHtv6Kl2Vr4
-	AcM2AW71p2HjfW08bjbEdBekSI9gquZ9+qg9tK50VOMLiq/lJmGJdzLHfuG2KhHw
-	zkzWv4TFzTs3jpfdwInL10WvnakotiRvOcXOICIbmAbOQi4jVEzxl/cpAVn8AIAo
-	n+wi8IqUL05KUcTHJ9y3Fa2rUK18bjuG9aHlKheT1INWR2lR/0bYEBFEXTplv6cc
-	6JjjsA==
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com [209.85.217.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu09k9yhh-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 13:25:56 +0000 (GMT)
-Received: by mail-vs1-f71.google.com with SMTP id ada2fe7eead31-6c9239a1dccso153320137.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Jun 2026 06:25:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1781616355; x=1782221155; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MwjvuYt5+PoE/3vS01HiYTn+yCCieemIIEOSQmhKM4w=;
-        b=ARvP5JP0maEXTG/Xsqk4lbDxr46E8JLtMbIJVVlhEQoOpPe3+lljzOPLcySsc3YBrI
-         g7YtMvrl3LM4Kt4E+84SYFRmhCGFTnp702CdH/E6uUCIY+A1h+J0XhP8ADe+RSZJlwsN
-         MH0PVrjnIkpAEAiP40DXibmlzB2H2iS6F5hMGFClDaUy0h8SbRLj/UQVeAD7jrQqkM/B
-         Tkt4uiZ5XfjwBy5OO8A7u3DeGm9wtJUHY6sjsgu05GcnuZmTEoC2TPGBB78xeFfDkxNW
-         LIAecNkVxlQrDCgg4asMe08F0uFpmW9JxCIzRBvQ4HxjfLsp2UsqYLWRzbEI3XUmhRjz
-         UHyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781616355; x=1782221155;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MwjvuYt5+PoE/3vS01HiYTn+yCCieemIIEOSQmhKM4w=;
-        b=BXjtb0UZBZyzTLVVZHNR6JIfSr4WZEX+XVsisH7eC771JfPYbWHo2qmRK9rY2/AyO2
-         tLB/kPSzAfqQUaNcxYRaoxcWIuLrIgIndcI2sRojGY7QwtAB4UghaC6icDotolQ7rXYB
-         P7qNMzH6URusTLL/8qLk0qLDoP3qWqbg1bYvyEv08ZKz3W6poklCJ23+tz0ep8deU5Ep
-         FJeiS25GZpdngC4xv3mY0RlQrW+kJ3rBvy3PUGmUNp3zqnyY+5c4tbEOuu7/TQJbrQOx
-         Caq2Ebiz4yArmZrZuN0ylmuJO4/0Hi0ANGO9aUy+nFyUQyGZZYCQQj4pQZA/Y1zUjjpZ
-         7zBw==
-X-Gm-Message-State: AOJu0Ywi186XBULTxyltXMdpnMfrxSIC3oidfUEtk9TXSeIWbyi2nRUF
-	V/xlW+LcKz74SJyibGQIdX65s1btFv0lzQDD4YzBe7cFZKHuw3uYKSNykmHMqhGmVqlxW0pYimV
-	PMB4qtsySxE/BfhDZYQUNdQhwiuzLpoo/KB1FJz9jy2ydrrMp3FvNZTz3MoZXq+WUFEsT
-X-Gm-Gg: Acq92OE+JpeMtRpNulwKODBAyTvYC9TljCgQEg5X8qrU6M8vft/wUeqJ9vv7bk2jFJU
-	rRZn/MrlHvmn5jYvrs7FmHcdJ+N1ORZu+tcBnUAGIPacfO8NTdoUmrx3mgBYngr+RnNt7fvK86d
-	9LgtA7ardr3cG5rAj5XzYJ0+B2Ne65NKJl+DKcvaOFIkF6Lwn5MBS4SAM9UpBorZlfCCgAcaa/q
-	Qh42ZQTS6BdftggsSNohRn7FYLxyiDSaBE/iZ8W1/+lQOAWXw8BMoHsR+a7up44ZBYiuZ++CU7s
-	vMPCabsANAdG+QDZOSEOZOK3FGsKHsd+K3wGbmlxvE4k8+aOnXrgkYl9hwO+fdtwgwJ56rD7SFO
-	DsxTAEtE9d+GWLLAR+bZE7lgIA4vG0HnR2pQiHSbwjzxtgg==
-X-Received: by 2002:a05:6102:3912:b0:71e:1c56:e79c with SMTP id ada2fe7eead31-71e88b60f45mr3018649137.2.1781616355595;
-        Tue, 16 Jun 2026 06:25:55 -0700 (PDT)
-X-Received: by 2002:a05:6102:3912:b0:71e:1c56:e79c with SMTP id ada2fe7eead31-71e88b60f45mr3018633137.2.1781616355146;
-        Tue, 16 Jun 2026 06:25:55 -0700 (PDT)
-Received: from [192.168.120.170] ([178.235.128.140])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-bfdb844060csm641401666b.46.2026.06.16.06.25.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Jun 2026 06:25:54 -0700 (PDT)
-Message-ID: <fe3135e1-8d47-4797-80f2-e929fe59948f@oss.qualcomm.com>
-Date: Tue, 16 Jun 2026 15:25:51 +0200
+	s=arc-20240116; t=1781616424; c=relaxed/simple;
+	bh=QxzEAuQxibbMXRjJzE5v7vlVvETfRHRlzoNHKYQcRvo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kkOA9BL4aOzDJGru/QwnmgAhpn5khNaxf/Dh9B2d2l3dZg6TsHaC1VCEmBmrsVsc1wGsQq72Misq8cCPuocEgLKoxeOr6gPMVcyTkwBzIiB91XiCbXITPnisY1Cq5JD1nywGPhHtBAdkR5LJDw4EN1J1lX/tgKw8NlYO0jOIjyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=herrie.org; spf=pass smtp.mailfrom=herrie.org; dkim=pass (2048-bit key) header.d=herrie.org header.i=@herrie.org header.b=r3hMYV12; arc=none smtp.client-ip=136.144.136.2
+Received: from submission10.mail.transip.nl (unknown [10.103.8.161])
+	by outbound4.mail.transip.nl (Postfix) with ESMTP id 4gfnp55MnlzwPSJ;
+	Tue, 16 Jun 2026 15:26:53 +0200 (CEST)
+Received: from [127.0.1.1] (180-93-184-31.ftth.glasoperator.nl [31.184.93.180])
+	by submission10.mail.transip.nl (Postfix) with ESMTPA id 4gfnp50TYhz1g93PY;
+	Tue, 16 Jun 2026 15:26:53 +0200 (CEST)
+From: Herman van Hazendonk <github.com@herrie.org>
+Subject: [PATCH v3 0/2] phy: qcom: usb-hs: MSM8x60 vendor ULPI init
+Date: Tue, 16 Jun 2026 15:26:52 +0200
+Message-Id: <20260616-submit-phy-usb-hs-vendor-init-seq-v3-0-7d21fb1d1484@herrie.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/3] arm64: dts: qcom: sdm670: add default uart pinctrl
- nodes
-To: pabloyoyoista@postmarketos.org, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Richard Acayan <mailingradian@gmail.com>,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20260601-pabloyoyoista-debug-uart-on-rdacayan-next-v4-0-c5d51dd96ca0@postmarketos.org>
- <20260601-pabloyoyoista-debug-uart-on-rdacayan-next-v4-1-c5d51dd96ca0@postmarketos.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260601-pabloyoyoista-debug-uart-on-rdacayan-next-v4-1-c5d51dd96ca0@postmarketos.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDEzNiBTYWx0ZWRfXz/3RNVboSv6F
- 3n0XtUPrI9iE5aK6y7WUykktub+WtTErQyHImssND9wKHZjACMWkdJPc+ZgbpBPy2Y74aKNPOyk
- 6kRFQWSy4QyeXYhhrNUatJ4Vbtp6d/w=
-X-Proofpoint-GUID: w8cNY3iWptZ0a78cOSWmiEdX9IZinXOG
-X-Authority-Analysis: v=2.4 cv=DoZmPm/+ c=1 sm=1 tr=0 ts=6a314ee4 cx=c_pps
- a=P2rfLEam3zuxRRdjJWA2cw==:117 a=PRfkaYvzSr8QmIIGAkY2Sg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=Gbw9aFdXAAAA:8 a=FyMMustK1Au6H1ATeJ8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=zgiPjhLxNE0A:10 a=ODZdjJIeia2B_SHc_B0f:22 a=9vIz8raoGPyDa4jBFAYH:22
-X-Proofpoint-ORIG-GUID: w8cNY3iWptZ0a78cOSWmiEdX9IZinXOG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDEzNiBTYWx0ZWRfXxh8bIPzEjiCN
- BR/KPVd75fezuRHlPR/gNi6EgzWgW1d1gCno9G7D/HBwjJ5dPpPZe3X3ruEsJQGFdEgK2CDpBDZ
- qxmXlluetuu6cDDWX50YzkowYFxzbzmtFJfKyuBiH2C6v/oSQfkCe6sQTF9R5HitApoJZP6f6Ra
- ecOl5RhlAADtNvGmrK6EqvSzV6iNFVnvz70/XUJF2px0qM4eHvtyLYlZpoqwFkXj27fWQBS+LK9
- PJ3SeJxzGQgLLE3PdBGIoJoVETdg0n5imRvtmghz0eXY9YiToI1qBevBJbaJGb/FJePy5CxtD9D
- bkYvwrXd6gBfsUxkHTgBMO1C+xFF7OIAGK3Z5VV5HVtSZ07wUkyZzvfjULnDvYt57E9bjVEqI3z
- zZyUY54pHc7jebe8WWvYbfIKGqOHMyy1hPV9rQA+1p4Nptert6wNEPkucvfO48bRN8QcaPhLBj2
- n4x+vZreFYgauCGMqHg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_03,2026-06-15_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 impostorscore=0
- suspectscore=0 priorityscore=1501 spamscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160136
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABxPMWoC/x2NQQ5AMBAAvyJ7tgkVTfiKOFS7dA+KLkLE3zWOM
+ 4eZB4Qik0CbPRDpZOElJKjyDKw3YSJklxhUoXShS41yDDPvuPobDxnQC54U3BKRQ9JCGxpXNU4
+ 11pqxhtRZI418/Y+uf98PCrVKtHMAAAA=
+To: Vinod Koul <vkoul@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Nathan Chancellor <nathan@kernel.org>, 
+ Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
+ Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ llvm@lists.linux.dev, Herman van Hazendonk <github.com@herrie.org>, 
+ konrad.dybcio@oss.qualcomm.com, dmitry.baryshkov@oss.qualcomm.com
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1781616413; l=3528;
+ i=github.com@herrie.org; s=20240417; h=from:subject:message-id;
+ bh=QxzEAuQxibbMXRjJzE5v7vlVvETfRHRlzoNHKYQcRvo=;
+ b=RLcxVZCoWq7ZQlYfkLDUXilWs09Z7OWsMIY6BDvnh5qQEITspTK2w0whn+t5l4UfYygvAAOy4
+ TUhdxRGfv/uBs9QFgRUtQ0RoXelFhVm9jri0MiXyuvcmx34Xif5MLHl
+X-Developer-Key: i=github.com@herrie.org; a=ed25519;
+ pk=YYxdq8fb5O9vhkW3n2dCH044FPZZO5718v/du7fRhFw=
+X-Scanned-By: ClueGetter at submission10.mail.transip.nl
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=transip-a; d=herrie.org; t=1781616413; h=from:subject:to:cc:date:
+ mime-version:content-type;
+ bh=ACun7JswmPdJb8Ejo5q1RfESUkL4z6rwXeuZJzAnH1o=;
+ b=r3hMYV12CW7ncILVmWGj4XaUdax9q6dSZj3VaGRR1f1m3rSWoaT7Q91KTVnpQqbyHRzLl8
+ ggKlRsJIHUnfqNFapxYGQqhO7LtkntPHiALT0WXjwsUxaa0VraYPfTtxYYSzptN4VVo9iT
+ o5ETXOH5rTPNws6eLXuZZ6XhRqq+1sP6jnJyZLqzGmzWfBnmgZw3aexTe3iPr6mYpcCftQ
+ pqMJaF/e0kVydIozohR/giqfDthdMTpt6yvXcgHe2GHpZ+o2rBHy2FouRZJ/vGMSv7GjL4
+ hEIkMQC5v+36hclokIfsjjGtw/9bx50KHQl65iU94B6J2xDWq6vZmgefd7Z2tQ==
+X-Report-Abuse-To: abuse@transip.nl
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[herrie.org:s=transip-a];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,lists.sr.ht];
-	TAGGED_FROM(0.00)[bounces-113421-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:from_mime,vger.kernel.org:from_smtp,postmarketos.org:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo];
-	FORGED_SENDER(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS(0.00)[m:pabloyoyoista@postmarketos.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:linux-arm-msm@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:mailingradian@gmail.com,m:~postmarketos/upstreaming@lists.sr.ht,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS(0.00)[m:vkoul@kernel.org,m:neil.armstrong@linaro.org,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:andersson@kernel.org,m:p.zabel@pengutronix.de,m:nathan@kernel.org,m:nick.desaulniers+lkml@gmail.com,m:morbo@google.com,m:justinstitt@google.com,m:linux-arm-msm@vger.kernel.org,m:linux-phy@lists.infradead.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:llvm@lists.linux.dev,m:github.com@herrie.org,m:konrad.dybcio@oss.qualcomm.com,m:dmitry.baryshkov@oss.qualcomm.com,m:krzk@kernel.org,m:conor@kernel.org,m:nickdesaulniers@gmail.com,s:lists@lfdr.de];
+	FREEMAIL_TO(0.00)[kernel.org,linaro.org,pengutronix.de,gmail.com,google.com];
+	DMARC_NA(0.00)[herrie.org];
+	FORGED_SENDER(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-113423-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[github.com@herrie.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[herrie.org:+];
 	ALIAS_RESOLVED(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_RECIPIENTS_FORWARDING(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,lkml];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[checkpatch.pl:url,herrie.org:dkim,herrie.org:email,herrie.org:mid,herrie.org:from_mime,googlesource.com:url,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 8423568FE77
+X-Rspamd-Queue-Id: CE01668FF15
 
-On 6/1/26 6:55 PM, Pablo Correa Gómez via B4 Relay wrote:
-> From: Pablo Correa Gómez <pabloyoyoista@postmarketos.org>
-> 
-> This is a pre-requisite to enable UART in sargo and bonito. Values for
-> the pins have been taken from sdm845, and cross-checking dowstream,
-> where available.
-> 
-> Signed-off-by: Pablo Correa Gómez <pabloyoyoista@postmarketos.org>
-> ---
+v3 (this round):
+ - Re-introduce a much smaller DT binding patch following Konrad's
+   "do we have values for MTP/QRD" question and Dmitry's
+   "qcom,hsdrvslope (or similarly named) property in DT" suggestion.
+ - Survey of every MSM8x60-class downstream tree I could reach --
+   Qualcomm reference (SURF/FFA/Fluid/Dragon/Fusion via
+   board-msm8x60.c on android.googlesource.com), Samsung Galaxy S2
+   family (Q1 / Celox / Dali / generic 8x60 MTP), Sony MSM8660
+   (sony-kernel-msm8660), HTC MSM8660 ports
+   (shooter / holiday / pyramid / doubleshot / shooter_u / ruby) and
+   HP TouchPad -- shows that pre-emphasis, CDR auto-reset and SE1
+   gating values are *identical* across every reference board.
+   Only the 4-bit HS driver slope in reg 0x32 [3:0] varies.
+ - Patch 1/2 adds a single qcom,hs-drv-slope DT property (u32,
+   range 0..15) gated to the qcom,usb-hs-phy-msm8660 compatible.
+ - Patch 2/2 hardcodes the three platform-wide writes in the driver
+   behind the same compatible match, consumes qcom,hs-drv-slope for
+   the board-specific bits, and leaves the silicon default in place
+   when the property is absent -- which matches Qualcomm's own MTP,
+   Samsung and Sony reference behaviour.
+ - The bit-level meaning we *do* have comes from Code Aurora's
+   downstream arch/arm/mach-msm/include/mach/msm_hsusb_hw.h, which
+   Samsung and HP both shipped byte-for-byte identical.
+ - Per Dmitry's request, both commit messages call out explicitly
+   that there is no public Qualcomm documentation describing how the
+   4-bit slope value maps to an actual slew rate / V/ns / %.  The
+   field is an opaque hardware control; boards must copy the value
+   from their vendor / downstream kernel as a measured-per-layout
+   knob, not a derived one.
 
-[...]
+v2:
+ - Dropped the original qcom,vendor-init-seq DT property entirely
+   and folded all the vendor-register programming into the driver
+   behind the qcom,usb-hs-phy-msm8660 compatible.
+ - HS driver slope was hardcoded in v2.  v3 promotes that one
+   varying value to a DT property as Dmitry requested.
 
-> +			qup_uart0_default: qup-uart0-default-state {
-> +				qup_uart0_tx: tx-pins {
-> +					pins = "gpio2";
-> +					function = "qup0";
-> +				};
-> +
-> +				qup_uart0_rx: rx-pins {
-> +					pins = "gpio3";
-> +					function = "qup0";
-> +				};
+Companion TouchPad DTS work (flipping the PHY compatible from
+"qcom,usb-hs-phy-apq8064" to "qcom,usb-hs-phy-msm8660" and adding
+qcom,hs-drv-slope = <5>) will be sent separately with the rest of
+the apq8060-tenderloin DT series.
 
-Let's drop the unused labels and let's bring the default config
-(bias-disable + drive-strength = <2>) to the SoC DT, like we have
-in glymur.dtsi
+On-device validation (HP TouchPad / APQ8060):
+ - Booted with v3 + the upcoming DTS hookup.  PHY driver bound,
+   msm_hsusb HS link came up at high-speed.  No regression vs the v2
+   hardcoded build.
 
-Please also cross-check whether the pull-up you enable in your
-phone's DT is actually necessary (and whether it's defined as such
-in the vendor DT - FWIW it's not in the sdm670-pinctrl.dtsi common
-one)
+Build / schema verification:
+ - dt_binding_check DT_SCHEMA_FILES=.../qcom,usb-hs-phy.yaml: clean.
+ - dtbs_check on qcom-apq8060-dragonboard.dtb and
+   qcom-msm8960-cdp.dtb (the two existing in-tree usb-hs-phy
+   consumers): clean.
+ - drivers/phy/qualcomm/phy-qcom-usb-hs.o builds clean.
+ - checkpatch.pl --strict: no warnings on either patch.
 
-Konrad
+Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
+---
+Herman van Hazendonk (2):
+      dt-bindings: phy: qcom,usb-hs-phy: add qcom,hs-drv-slope
+      phy: qcom: usb-hs: program MSM8x60 vendor ULPI registers on power-on
+
+ .../devicetree/bindings/phy/qcom,usb-hs-phy.yaml   | 89 +++++++++++++++-------
+ drivers/phy/qualcomm/phy-qcom-usb-hs.c             | 68 +++++++++++++++++
+ 2 files changed, 131 insertions(+), 26 deletions(-)
+---
+base-commit: 944125b4c454b58d2fe6e35f1087a932b2050dff
+change-id: 20260616-submit-phy-usb-hs-vendor-init-seq-ad39d29ccaf5
+
+Best regards,
+-- 
+Herman van Hazendonk <github.com@herrie.org>
+
 
