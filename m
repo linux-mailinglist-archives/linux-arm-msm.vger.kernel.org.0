@@ -1,282 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-113598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id tgbBF7Z8MmrP0gUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 12:53:42 +0200
+	id Sv9hAD2BMmo61AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 13:13:01 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7E57698AF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 12:53:41 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E57D7698DDD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 13:12:59 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b="AO/RlTVv";
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113598-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113598-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
-	dmarc=pass (policy=none) header.from=gmail.com;
+	dkim=pass header.d=kernel.org header.s=k20260515 header.b=d0oupw+8;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113557-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113557-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dmarc=pass (policy=quarantine) header.from=kernel.org;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 91C7030DC852
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 10:47:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id E889130E1C0C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 10:37:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46FF847AF49;
-	Wed, 17 Jun 2026 10:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78EF73B9604;
+	Wed, 17 Jun 2026 10:35:28 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dl1-f47.google.com (mail-dl1-f47.google.com [74.125.82.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D1D47885C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 10:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D8D397691;
+	Wed, 17 Jun 2026 10:35:27 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781692892; cv=none; b=hh37GWMS9VHZ9g1i1CkWHBnTQQeOpNVDRSPj89rEqSSoaiNRtLbpHH1KWqDTg4DSSrt0z2Qi0sbKQunbQMWnMTP22cLp4Lxq05pZszlweER+IHzscobVRdNjOhS90DaechOj5yqcGoWVZI0kp8KmoIcVf2PlHrrDpHGyO9tMc9s=
+	t=1781692528; cv=none; b=F35cEHtNX9oMF4zPFMQEAl/YQe5KYeQedjxwl/ins+O7R9X1t8uIRScWQ97SASJws7r5L/1rtAH5AxfnljX404ooy/8u6s/iMbfpg0BOzyii3BqCUtznt8d5yLmNdhHeUBfI9eXLuRcZ0GI0oCOjKca1NwfUSRu4DctblwH+IMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781692892; c=relaxed/simple;
-	bh=CUFDizm8j2l+aG+O0iqDVpukA4UDOPYwQgm/2dCZpzw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gMFY2Vpu7WqI6C7iIWSTG3+zgD/cDVnX1HlYwGpH7aecy9EaY1rX7ZtEwrWwA88UtlN+nihWzGE7kjwceHpwcycxFqlNDAEWknqV6FetuPeExrjrZx/IQvIqtYUdMCO6gJi7RrWDW9iTGqZRz14722MNFs9zBw5A5G9tIvDba2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AO/RlTVv; arc=none smtp.client-ip=74.125.82.47
-Received: by mail-dl1-f47.google.com with SMTP id a92af1059eb24-137335bc3caso6891541c88.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 03:41:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781692890; x=1782297690; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AUF1nUSK8JjVFEerCymxn+O2TFW28hvbz/kOFuEnXM4=;
-        b=AO/RlTVvD6fSYqF29OtDghAnCboUI9orKJmr5ID8kK2caCIPRDm18ZMBzd0cRXAN+u
-         9mkr6oF+PqppVS3RXchI8v28A849GqJVDtenyKmSdrbfPyHiNYyiiH0A0y1CoWXZMAFH
-         qdwZ/8R7V00AfmFlvVY7N9VA8ItSZeAELsiuyoloVIOhmkohtUXxJhjv8rWY5JgOOxlp
-         +ZP7L1JTM+aspDZzmltO32vfT8Uk3p4sBP4jkCd/vP6zcRSRnjrU7rrONNJksDlxSB3Q
-         i+XnRPTBgtofqkb+whDrqEB9U2SfkG6+uDjFx8LKaWNojl/XdAF3y4dquxeKrqy+UZcf
-         YyjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781692890; x=1782297690;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=AUF1nUSK8JjVFEerCymxn+O2TFW28hvbz/kOFuEnXM4=;
-        b=MmlqLmvSGQ7aJUWhbOwQOZvJVzO8wAumoW46kC44OjKTpqY+Y5YUgKb80dUMr8zqgk
-         KAFuqATq+EQcDO7B5f1u3Fumcs1ZxS5qhniMlWzk6E7ps4MJE2U6SOxGa5AMSkaSVqg8
-         vlbCPSKYVq1HAzzKsvebY3M6VcOdxScwKnb80j1jdsK7LqfwtJKhpN2b37U9rMIRVgZQ
-         qt28OEIe5geUQbuLqwc/xZbIeK7nOtbuosGwkHv4u+cHD5yW2L7YUOWZzFo9pFyazwlk
-         ercE0PVBIpj/ok+1DXHt6kiAGv5H6J7XfxNeXoGX/VsKV9imxliawUsozr8cTG9GI2iu
-         0HBA==
-X-Forwarded-Encrypted: i=1; AFNElJ9sqZUhQfnqqfAHFaHu8EzukPQSn/bGum0s39/l0tJYwqOLG0zD4SVMTJ8shjZuoH5IfV6gkE3kqDREWmNz@vger.kernel.org
-X-Gm-Message-State: AOJu0YychB4rwWEJ5vNvk7VQ2aS8gQQJATKJ1/sNpCFPq/1ygcT9G4pp
-	KUSL55UU8TBaz1LNAedGuKs73ZwcAButDf72PFvsr324TXps2+2b3EgX
-X-Gm-Gg: Acq92OGfK2irTXfPKH/JPmC5Ya7iq1VBx+1tXZyP1u0sx9SUuknJ9+7JKUmt0gz57/W
-	hFNlKpfR8/7e8qp5HygGeF9lYePZrAUDOFGyT45sWnGnR6C8lEU1yPRlvfmEK6WGmm5ZDEGNtCC
-	tN05ZS1ajXK3B8esKYoJLtpK8xtfBpXaKUXLYH9zplIRdYuLY9MYtVop2y5aMM9AQ3SSjyCUTXH
-	SavgFd+l92716f4BYQzONTZmnWkkAgHvNWZ/DluF1PNcgctrOta0nguluaTvAIWlnckBs86rsny
-	8Jf3NhVh3t4RZXJ8vZbaojWQR/whguQQYq3srBj28dLzLfAevnJLhXWH4YHQigeCO27TXAwu5hg
-	Rarp/U6lKT3kGW2CzdJ6ghtm7w4SCau06sgrWp3JpP9pZR8ARAO+jmaMxOy0JyD19uMWKqIi2gl
-	SBij1N2CthyQ33j7SqSdooU924tpBdKqiU24WIfJa0W95g/FANDdGeorOKkQ==
-X-Received: by 2002:a05:7022:112:b0:137:edc4:a5e6 with SMTP id a92af1059eb24-1398f6b4762mr1323943c88.29.1781692889954;
-        Wed, 17 Jun 2026 03:41:29 -0700 (PDT)
-Received: from phuc-desktop.. ([183.91.15.56])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3081e5d0828sm24616275eec.10.2026.06.17.03.41.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2026 03:41:29 -0700 (PDT)
-From: phucduc.bui@gmail.com
-To: Mark Brown <broonie@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Cheng-Yi Chiang <cychiang@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Benson Leung <bleung@chromium.org>,
-	David Rhodes <david.rhodes@cirrus.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	povik+lin@cutebit.org,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Support Opensource <support.opensource@diasemi.com>,
-	Nick Li <nick.li@foursemi.com>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Shenghao Ding <shenghao-ding@ti.com>,
-	Kevin Lu <kevin-lu@ti.com>,
-	Baojun Xu <baojun.xu@ti.com>,
-	Sen Wang <sen@ti.com>,
-	Oder Chiou <oder_chiou@realtek.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	nuno.sa@analog.com,
-	Steven Eckhoff <steven.eckhoff.opensource@gmail.com>,
-	patches@opensource.cirrus.com,
-	chrome-platform@lists.linux.dev,
-	asahi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	bui duc phuc <phucduc.bui@gmail.com>
-Subject: [PATCH 55/78] ASoC: codecs: tas2781: Use guard() for mutex locks
-Date: Wed, 17 Jun 2026 17:32:12 +0700
-Message-ID: <20260617103235.449609-56-phucduc.bui@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260617103235.449609-1-phucduc.bui@gmail.com>
-References: <20260617103235.449609-1-phucduc.bui@gmail.com>
+	s=arc-20240116; t=1781692528; c=relaxed/simple;
+	bh=YATjfhdG8QJadKxAXqDFxyb+G7ogx/mrKisCPvJK/Aw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HMitiZ/FXJhj0cJ4CBihAyNpuN6i6zeChNHEtIokZZSaHmBc5hqfJBSBQuufjw20peScG4KSw750SY3rdwsY8WSr4EPf3fWX429egAFraFwZyWeTkA1QSV9oIWK9ZqCEfjpG/j3EhWU6JDwPx+JYI+tY0EpUtP+5stMWEjF04uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d0oupw+8; arc=none smtp.client-ip=100.103.45.18
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204911F00A3D;
+	Wed, 17 Jun 2026 10:35:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1781692527;
+	bh=x8xxlxTGEj0CZoc86q1lnJiZrWKHMAJXTF6mcwFVekw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=d0oupw+8bQhJ6FI+Yrv0Ihjwaz7pEJazimtXdMkizqT+nuMUo49bH38tn7eEi1t+l
+	 W8JM/I1es5iRk9bhbY6Bxou0oXYnkQsKHH9EbvF1K3urZGqP2nFFYenwVoAEIUJcqX
+	 cMY1skh+z51NS1LmBpXR9a+y2wHo810dkHcinx29PPLyGkwv8Pk5UglsLQeXp/PC2g
+	 Pj8pptN9nqIBTcbNqcTx8Yy4/blPntbatQoicEvmlm9VVePBn1ox4bawTYrCrgyJe8
+	 meCGASEZthtPbzy1pJrJrLfHz/l7BQqS68Nv8JkkNT6hIVsGCJFG2Hlpz4xazrdBGX
+	 xrB9LVVVVt+zg==
+Date: Wed, 17 Jun 2026 12:35:22 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
+	Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, David Collins <david.collins@oss.qualcomm.com>, 
+	Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>, 
+	kernel@oss.qualcomm.com, linux-input@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: input: Add binding for Qualcomm SPMI
+ PMIC haptics
+Message-ID: <20260617-wakeful-gorilla-of-feminism-75287c@quoll>
+References: <20260616-qcom-spmi-haptics-v1-0-d24e422de6b4@oss.qualcomm.com>
+ <20260616-qcom-spmi-haptics-v1-1-d24e422de6b4@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260616-qcom-spmi-haptics-v1-1-d24e422de6b4@oss.qualcomm.com>
 X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-4.66 / 15.00];
+	WHITELIST_SPF_DKIM(-3.00)[kernel.org:d:+,kernel.org:s:+];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20260515];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FORGED_RECIPIENTS(0.00)[m:fenglin.wu@oss.qualcomm.com,m:linux-arm-msm@vger.kernel.org,m:dmitry.torokhov@gmail.com,m:robh@kernel.org,m:krzk+dt@kernel.org,m:conor+dt@kernel.org,m:lee@kernel.org,m:sboyd@kernel.org,m:andersson@kernel.org,m:konradybcio@kernel.org,m:david.collins@oss.qualcomm.com,m:subbaraman.narayanamurthy@oss.qualcomm.com,m:kamal.wadhwa@oss.qualcomm.com,m:kernel@oss.qualcomm.com,m:linux-input@vger.kernel.org,m:devicetree@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:dmitrytorokhov@gmail.com,m:krzk@kernel.org,m:conor@kernel.org,s:lists@lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[35];
-	TAGGED_FROM(0.00)[bounces-113598-lists,linux-arm-msm=lfdr.de];
-	FORWARDED(0.00)[lists@lfdr.de];
-	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:lgirdwood@gmail.com,m:perex@perex.cz,m:tiwai@suse.com,m:cychiang@chromium.org,m:tzungbi@kernel.org,m:groeck@chromium.org,m:bleung@chromium.org,m:david.rhodes@cirrus.com,m:rf@opensource.cirrus.com,m:povik+lin@cutebit.org,m:ckeepax@opensource.cirrus.com,m:support.opensource@diasemi.com,m:nick.li@foursemi.com,m:herve.codina@bootlin.com,m:srini@kernel.org,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:shenghao-ding@ti.com,m:kevin-lu@ti.com,m:baojun.xu@ti.com,m:sen@ti.com,m:oder_chiou@realtek.com,m:lars@metafoo.de,m:nuno.sa@analog.com,m:steven.eckhoff.opensource@gmail.com,m:patches@opensource.cirrus.com,m:chrome-platform@lists.linux.dev,m:asahi@lists.linux.dev,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-mediatek@lists.infradead.org,m:phucduc.bui@gmail.com,m:povik@cutebit.org,m:matthiasbgg@gmail.com,m:steveneckhoffopensource@g
- mail.com,m:phucducbui@gmail.com,s:lists@lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com,perex.cz,suse.com,chromium.org,kernel.org,cirrus.com,opensource.cirrus.com,cutebit.org,diasemi.com,foursemi.com,bootlin.com,collabora.com,ti.com,realtek.com,metafoo.de,analog.com,lists.linux.dev,vger.kernel.org,lists.infradead.org];
-	FORGED_SENDER(0.00)[phucducbui@gmail.com,linux-arm-msm@vger.kernel.org];
-	FROM_NO_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	ALIAS_RESOLVED(0.00)[];
-	FORGED_SENDER_FORWARDING(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[phucducbui@gmail.com,linux-arm-msm@vger.kernel.org];
-	PRECEDENCE_BULK(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,lin];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FORGED_SENDER(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	FORWARDED(0.00)[lists@lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113557-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_FORWARDING(0.00)[];
+	ALIAS_RESOLVED(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,kernel.org,oss.qualcomm.com];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,vger.kernel.org:from_smtp,devicetree.org:url,quoll:mid,bootlin.com:url]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: E7E57698AF3
+X-Rspamd-Queue-Id: E57D7698DDD
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+On Tue, Jun 16, 2026 at 03:08:24AM -0700, Fenglin Wu wrote:
+> Add binding document for the haptics module inside Qualcomm PMIH010X.
 
-Clean up the code using guard() for mutex locks.
-Merely code refactoring, and no behavior change.
+A nit, subject: drop second/last, redundant "binding for". The
+"dt-bindings" prefix is already stating that these are bindings.
+See also:
+https://elixir.bootlin.com/linux/v7.1-rc7/source/Documentation/devicetree/bindings/submitting-patches.rst#L23
 
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
----
- sound/soc/codecs/tas2781-comlib-i2c.c |  4 +---
- sound/soc/codecs/tas2781-i2c.c        | 20 ++++++++------------
- 2 files changed, 9 insertions(+), 15 deletions(-)
+> 
+> Assisted-by: Claude:claude-4-6-sonnet
+> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+> ---
+>  .../bindings/input/qcom,spmi-haptics.yaml          | 119 +++++++++++++++++++++
+>  1 file changed, 119 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml b/Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml
+> new file mode 100644
+> index 000000000000..0e26d68563dc
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml
 
-diff --git a/sound/soc/codecs/tas2781-comlib-i2c.c b/sound/soc/codecs/tas2781-comlib-i2c.c
-index e24d56a14cfd..85fcb33752a1 100644
---- a/sound/soc/codecs/tas2781-comlib-i2c.c
-+++ b/sound/soc/codecs/tas2781-comlib-i2c.c
-@@ -342,7 +342,7 @@ int tascodec_init(struct tasdevice_priv *tas_priv, void *codec,
- 	/* Codec Lock Hold to ensure that codec_probe and firmware parsing and
- 	 * loading do not simultaneously execute.
- 	 */
--	mutex_lock(&tas_priv->codec_lock);
-+	guard(mutex)(&tas_priv->codec_lock);
- 
- 	if (tas_priv->name_prefix)
- 		scnprintf(tas_priv->rca_binaryname, 64, "%s-%sRCA%d.bin",
-@@ -360,8 +360,6 @@ int tascodec_init(struct tasdevice_priv *tas_priv, void *codec,
- 		dev_err(tas_priv->dev, "request_firmware_nowait err:0x%08x\n",
- 			ret);
- 
--	/* Codec Lock Release*/
--	mutex_unlock(&tas_priv->codec_lock);
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(tascodec_init);
-diff --git a/sound/soc/codecs/tas2781-i2c.c b/sound/soc/codecs/tas2781-i2c.c
-index 9e6f0ad5f05d..f2b739780f73 100644
---- a/sound/soc/codecs/tas2781-i2c.c
-+++ b/sound/soc/codecs/tas2781-i2c.c
-@@ -843,12 +843,12 @@ static int tasdevice_digital_gain_get(
- 	unsigned char data[4];
- 	int ret;
- 
--	mutex_lock(&tas_dev->codec_lock);
-+	guard(mutex)(&tas_dev->codec_lock);
- 	/* Read the primary device */
- 	ret = tasdevice_dev_bulk_read(tas_dev, 0, reg, data, 4);
- 	if (ret) {
- 		dev_err(tas_dev->dev, "%s, get AMP vol error\n", __func__);
--		goto out;
-+		return ret;
- 	}
- 
- 	target = get_unaligned_be32(&data[0]);
-@@ -868,8 +868,7 @@ static int tasdevice_digital_gain_get(
- 	/* find out the member same as or closer to the current volume */
- 	ucontrol->value.integer.value[0] =
- 		abs(target - ar_l) <= abs(target - ar_r) ? l : r;
--out:
--	mutex_unlock(&tas_dev->codec_lock);
-+
- 	return 0;
- }
- 
-@@ -889,13 +888,13 @@ static int tasdevice_digital_gain_put(
- 	unsigned char data[4];
- 
- 	vol = clamp(vol, 0, max);
--	mutex_lock(&tas_dev->codec_lock);
-+	guard(mutex)(&tas_dev->codec_lock);
- 	/* Read the primary device */
- 	ret = tasdevice_dev_bulk_read(tas_dev, 0, reg, data, 4);
- 	if (ret) {
- 		dev_err(tas_dev->dev, "%s, get AMP vol error\n", __func__);
- 		rc = -1;
--		goto out;
-+		return rc;
- 	}
- 
- 	volrd = get_unaligned_be32(&data[0]);
-@@ -903,7 +902,7 @@ static int tasdevice_digital_gain_put(
- 
- 	if (volrd == volwr) {
- 		rc = 0;
--		goto out;
-+		return rc;
- 	}
- 
- 	for (i = 0; i < tas_dev->ndev; i++) {
-@@ -919,8 +918,7 @@ static int tasdevice_digital_gain_put(
- 
- 	if (status)
- 		rc = -1;
--out:
--	mutex_unlock(&tas_dev->codec_lock);
-+
- 	return rc;
- }
- 
-@@ -1766,12 +1764,10 @@ static int tasdevice_dapm_event(struct snd_soc_dapm_widget *w,
- 	int state = 0;
- 
- 	/* Codec Lock Hold */
--	mutex_lock(&tas_priv->codec_lock);
-+	guard(mutex)(&tas_priv->codec_lock);
- 	if (event == SND_SOC_DAPM_PRE_PMD)
- 		state = 1;
- 	tasdevice_tuning_switch(tas_priv, state);
--	/* Codec Lock Release*/
--	mutex_unlock(&tas_priv->codec_lock);
- 
- 	return 0;
- }
--- 
-2.43.0
+Filenamem should match compatible.
+
+> @@ -0,0 +1,119 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/input/qcom,spmi-haptics.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Haptics device inside Qualcomm Technologies, Inc. PMIH010X
+> +
+> +maintainers:
+> +  - Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+> +
+
+...
+
+> +properties:
+> +  compatible:
+> +    const: qcom,pmih010x-haptics
+
+Don't use Claude. It does not understand DT. Please read writing
+bindings document or DTS101 slides. You cannot have wildcards.
+
+> +
+> +  reg:
+> +    items:
+> +      - description: HAP_CFG module base address
+> +      - description: HAP_PTN module base address
+> +
+> +  reg-names:
+> +    items:
+> +      - const: hap-cfg
+
+cfg
+
+> +      - const: hap-ptn
+
+ptn
+
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: fifo-empty
+> +
+> +  qcom,vmax-mv:
+
+And claude did not tell you that this is not correct? If so, please
+don't use it. It's crap tool if it cannot get the basics of DT (was
+mentioned on talks many times, is documented etc).
+
+You need proper suffix.
+
+
+> +    description:
+> +      Maximum allowed output driving voltage in millivolts, rounded to the
+> +      nearest 50 mV step. This is the peak driving voltage in DIRECT_PLAY mode
+> +      which outputs sinusoidal waveforms. The value should be equal to the square
+> +      root of 2 times the Vrms voltage of the LRA.
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 50
+> +    maximum: 10000
+> +
+> +  qcom,lra-period-us:
+> +    description:
+> +      LRA actuator initial resonance period in microseconds
+> +      (1,000,000 / resonant_freq_hz).  Used to configure T_LRA-based play
+> +      rates and the auto-resonance zero-crossing window.
+
+This does not feel like static characteristic. Isn't period depending on
+intensity of vibration you want to have? Why would that be fixed per
+board?
+
+> +    minimum: 5
+> +    maximum: 20475
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - interrupts
+> +  - interrupt-names
+> +  - qcom,vmax-mv
+> +  - qcom,lra-period-us
+> +
+
+Best regards,
+Krzysztof
 
 
