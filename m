@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-113586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-113587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by mail.lfdr.de with LMTP
-	id e/9uCqCCMmrP1AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-113586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 13:18:56 +0200
+	id uz6VGMF7Mmp/0gUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-113587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 12:49:37 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26D6E698F62
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 13:18:55 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06F68698A6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 12:49:37 +0200 (CEST)
 Authentication-Results: mail.lfdr.de;
-	dkim=pass header.d=gmail.com header.s=20251104 header.b=W4svsVwo;
-	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113586-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 2600:3c15:e001:75::12fc:5321 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113586-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
+	dkim=pass header.d=gmail.com header.s=20251104 header.b=kj1mA3Ap;
+	spf=pass (mail.lfdr.de: domain of "linux-arm-msm+bounces-113587-lists+linux-arm-msm=lfdr.de@vger.kernel.org" designates 172.232.135.74 as permitted sender) smtp.mailfrom="linux-arm-msm+bounces-113587-lists+linux-arm-msm=lfdr.de@vger.kernel.org";
 	dmarc=pass (policy=none) header.from=gmail.com;
 	arc=pass ("subspace.kernel.org:s=arc-20240116:i=1")
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id E66EA31969A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 10:44:10 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D93FF304BF3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Jun 2026 10:44:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 938A546AF0D;
-	Wed, 17 Jun 2026 10:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3CC748C8BB;
+	Wed, 17 Jun 2026 10:40:01 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB6643DA25
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 10:39:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E90B492180
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 10:39:57 +0000 (UTC)
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781692789; cv=none; b=od+Iujln8CNo8Oyc/uDABdwWMeRbY4MNAE8KQs9Yr8+6Kum7h9X3cS6mo3W0gf5XMAqCB5DydnFhuYwTF23+NHPmfu+cp/2dpchvApgqqz5m88+yaivN8r9eYu6x9OmeJj6V1lg3MQkVGDLG46j+QR2NjcwfYbVGVvszJpZbjuo=
+	t=1781692801; cv=none; b=OkFJziHHnRS5adoQ0SSO3/SYzWv8SJUPDZsVD1mMXyPjjh596BeLTjB6CsuTzE2Asjvr+NlJfE/nXVCmvQxLA3+46IOLmdsUMt3d9KIZSmyiELVeJtdGnnTsfDSHHk1P3aYBgy76cz+hBmjmOz4Gk4TJnKzNcC5gsf+CMt87fvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781692789; c=relaxed/simple;
-	bh=5JCNTsV1p32IiiWp8LevAgThvpw4U0A4EV+Xvmc/Vns=;
+	s=arc-20240116; t=1781692801; c=relaxed/simple;
+	bh=CfPSrFVheY2+VrZHiVHqixZx/q7uaP11RkObiCVMyqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4i6c+XkP+5sf10jHoZDlFqlQG+Cx/QKrldsBEPNAKqamy9E0B/0SXdNW/t3qioufmNZW9N+K+qHu9rOH9rT9yp7AWAMAM+gzR8uSV5Q+luA591q8reWuz77u9eWEniXkj/PzPY/PicTVUtHl6kzJubola3GfDmDyrDF23re8PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W4svsVwo; arc=none smtp.client-ip=74.125.82.177
-Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-30bd47b9f0fso484193eec.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 03:39:48 -0700 (PDT)
+	 MIME-Version; b=LxEpqOVImvSf1lSLXCrl5a6Qita/49MY9MkonDcZVFl6FiPKgwRaBDCs8reC1YSjAKer2xnM5yOSGusOTd0AK7yomRbHOiXFkO2CK9CPcpt6/g+ng92dEd9zzzTZ4tiA/Q4EOi4gjYfuUYZ9cw7GiPZIA3reSJ3NiCwrzPmBjno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kj1mA3Ap; arc=none smtp.client-ip=74.125.82.177
+Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-304d8362a58so603920eec.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Jun 2026 03:39:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781692787; x=1782297587; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1781692796; x=1782297596; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Z8UzOcdKlzqr8WU+ZxDYdCm6hGtyTeRisevBsOozeA4=;
-        b=W4svsVwobv8HyZAXp7szDmYYU5W9FCQDaR47OizoO1j7AqkzIE7oE6EkCRDpqHPVj/
-         8I62ya7onaTIeQbJLq7uuDF3VWtsQxQMofkE+klMZ7/ctEpJYPgbCEYtCULedMW2OkQY
-         S8k2EXR8EY/NpCnOd6RYQhCciQ9u8ueLuozwJYa87tKdLpkMQOOK0syooOb0kdvsE0EP
-         R/xUu4vxvrNoRY+z4vOB1o6U8E7r4pRCF+tusXwvxYyONlRCNVSSfskU+r+mxXJH1Jsb
-         S6TR1WKyUk4Ehx5NCQAy1exJPSnX2pMKrARNuKZ41jYDstdGWBoUbFpWdk2Bs3k1UYKa
-         b09w==
+        bh=c9NimHoJxrkt0fKeQ5nDtc/hHZTnOxU7Jn5N5pQIslE=;
+        b=kj1mA3ApmfFqFUXGU6/LIlztl8DgfAT8Y/wZ9lnwm3AATorYnwu3VW7l1vzJLCmKXe
+         6GGmNZXCT+65pg3y6X7Wx6objXaeDjnyegB3Vc4sybXKMghwDqpIo98WC7v0YDT/YatS
+         pAGTV3AmoIs4DOiuQEUpd5R/B+/Uzd113Rqx3TfF3BS2km9EP2ZcLy0Zrle9zO2jA/kQ
+         V2jG53JBgw5sPS/4bYKhB7VUPXXJnlkXNCPCTtxxFHebkGFkGWHg0S6Vr+ix7R3R5rFs
+         xkjKBOyUFv1xTdakBpNx0Acn6gV+XYJJm7QdQi4jwmZYPJS8Cz8olb2jdfcQvRZg9tj3
+         ml9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781692787; x=1782297587;
+        d=1e100.net; s=20251104; t=1781692796; x=1782297596;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Z8UzOcdKlzqr8WU+ZxDYdCm6hGtyTeRisevBsOozeA4=;
-        b=qLwTedNTyLmkP1jTks73Kg4iINGKed+zrJGwrBqRRo7ynhvHvU5oJDBD8Qy8915mDo
-         ssuHbyCnftp4SkzS1AqwS/K5VkeLedrfAr4EusW8BLn1s8Z2hWt7s/fZ2bhz8Ed9UMDU
-         wbR/jq/XWeAPfJPhc6kegnjhgiSFhc2C460PwBJ5AHmiOqvYglQyY/U0SlVaOU7MPiCP
-         aOoqThix7k4vAgjTZXg/bWkXKrswis6LL4PIz66IS8ph6MpEXE2RhetJERwCUfOLVTjq
-         2fHseO8/EQUMmXd/lj0NpdAyC3Ya4uWo+J3p6HdwHv2IOL/w17BHX86kauudbZthG/S7
-         z4lQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+X0mMOayGQw1+hCDVI146+9/7tuGgQm12J5A/aZrA4EGmbTQJS09hT+kKkE6STM9/FP+VT5LhiX17gHB/S@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxjd60bHOPP8zdjmDQIeFneac5UzAdKYQO1a/J5Z89rXsme2byH
-	vGBa5QIUwR9MTHurbjiE1zoFDAMMWhQu1WcDJryd5LBBnFX5+wFJaz9N
-X-Gm-Gg: AfdE7cmsua3yflNftUVcWhhSf/xe3ib31TXDzSbDrndNc80VP2BGmsp2oA+j1LA6o10
-	cBOWyOOWVRRxjtP8cXm/+bNdStJNXeavjX251bki/f1vnAsuM3zzC0BM26o1I2ulA+GVAlraHkC
-	Q/U1oof84VRpnNVU1u559IxBy/+mp4JKwBkM8+RSdenrKhrlN28T+jPAlhKX/LpzuORoQN4iU7x
-	vE3W8KeCm757R2lMYXe1YTS6ZiR3aDEJ7oGzwXYkYii2R2tfdTpbK9XRaT5QJvrtNYgM443vmLK
-	SofUGxcJV9UQsp9pbEJYIoncs14NcUnh3go2MIXIHS6xyGrYGmnTP80W+PZV12tJOKeL2v5/hNn
-	uU54QTSP1TT5BWWbwkgfxGnLkHocazXDvGFvvMZwCAdMPsD+mzmlRulfhlcgOBSov7pHuSWBev6
-	C6U2BuT7w74UBpO2Z0otM2ItIQz8Neg6RyFaDrprvexplUFSQlHdfxK3yiLw==
-X-Received: by 2002:a05:7300:6402:b0:303:f26f:df30 with SMTP id 5a478bee46e88-30bca09f522mr1864287eec.23.1781692787536;
-        Wed, 17 Jun 2026 03:39:47 -0700 (PDT)
+        bh=c9NimHoJxrkt0fKeQ5nDtc/hHZTnOxU7Jn5N5pQIslE=;
+        b=BZie9vARrmrlfHyLy7BTZ2/Gb61gpoPQ9Noa78AbBjb1xG4v2HFNG6IoicGAVClZhO
+         k0MXQtiLQ/0idDpK937R/7ue9TiRwz/RkXRUBLBA+m7QfSCShUaNHOjNo2eY5dS9G9ow
+         Txjg8O/ZxZzqnKHNA8limUVLb0U9NvY3q5x4B9QvIjm1K5L+1JZLS+AiumwZHjsDVztI
+         TCFrwC8jAN7GKTk21ir21qpQ6CK6rqPW8muJKTwFnfDtfAkJZ0C4SdS4xTzXkhIgnppS
+         RM8Uh1OIYAvfpaIws2uB6pKbi0c7oya6VNjUtdcAc0wDTlBoX842YpPma4LdEdaZjrWR
+         03bg==
+X-Forwarded-Encrypted: i=1; AFNElJ/XgnFAQCPqN5VK4ZhP/6Tx9sSDhBTgYfF8pTvtGSFvrb/QPRHTJKSESPd7UWhLpRzIIm8axlLv49E64z9v@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUDiO4d85W+mMu4KRSU+WHPT8qaypDDwEl6rGQWH8AU4HNXqFw
+	W7R0oMxV4JIGFQWgzVPl2qU3A+TATRW1z50j7tILEla3SYeIlbBjunIM
+X-Gm-Gg: AfdE7cnfmh2iOTnblSSv8ZZSoV+mqWQ4Poh1zrwxw3l6P5hDekcCJr0to7UfWR89NUe
+	ZcSKHrI3MHhBDQksZDN7Dgkl/7vPfYpg1YpHRs9qdIFhBzeClixTZNe2BwIPJ72WOk+CXzwP3VJ
+	0HXyJhMbg36wZT6t+Icmxn4acv4TslNwZUkyxrSNbr3joWArEavBjfMYrn5TvRztUYXlptomX7Z
+	hE8T6h64WYX+QJAWjXPr44s9bwXOPXczjfILHpMD1csJyQ/qNXraOCz5wNVqHWth4evDATO4sUh
+	j7afV8nfHLBhg+KUZZEFs29Oi5m/fY6V522o45eGblo7jZTqWirqRttA9k19ie03iL2ZhtCdULS
+	eoGYJpZeAOr7HL09M6OzKtO3SlEAMvKrnyiFbQepghGyIpi2tv4BspQHh/tSSbzjLk/FbmkYESM
+	e1xyee/RkCvjQwca5qcUnf3O8GSr0Xfbg1KaWBjJq3bOSca/zmd4bMxzNsfQ==
+X-Received: by 2002:a05:7300:3aa8:b0:30b:df3b:fe94 with SMTP id 5a478bee46e88-30bdf3c0705mr266574eec.3.1781692796467;
+        Wed, 17 Jun 2026 03:39:56 -0700 (PDT)
 Received: from phuc-desktop.. ([183.91.15.56])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3081e5d0828sm24616275eec.10.2026.06.17.03.39.39
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-3081e5d0828sm24616275eec.10.2026.06.17.03.39.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jun 2026 03:39:47 -0700 (PDT)
+        Wed, 17 Jun 2026 03:39:56 -0700 (PDT)
 From: phucduc.bui@gmail.com
 To: Mark Brown <broonie@kernel.org>
 Cc: Liam Girdwood <lgirdwood@gmail.com>,
@@ -112,9 +112,9 @@ Cc: Liam Girdwood <lgirdwood@gmail.com>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-mediatek@lists.infradead.org,
 	bui duc phuc <phucduc.bui@gmail.com>
-Subject: [PATCH 43/78] ASoC: codecs: rt5665: Use guard() for mutex locks
-Date: Wed, 17 Jun 2026 17:32:00 +0700
-Message-ID: <20260617103235.449609-44-phucduc.bui@gmail.com>
+Subject: [PATCH 44/78] ASoC: codecs: rt5668: Use guard() for mutex locks
+Date: Wed, 17 Jun 2026 17:32:01 +0700
+Message-ID: <20260617103235.449609-45-phucduc.bui@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260617103235.449609-1-phucduc.bui@gmail.com>
 References: <20260617103235.449609-1-phucduc.bui@gmail.com>
@@ -132,14 +132,14 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	RCPT_COUNT_TWELVE(0.00)[35];
-	TAGGED_FROM(0.00)[bounces-113586-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-113587-lists,linux-arm-msm=lfdr.de];
 	FORWARDED(0.00)[lists@lfdr.de];
 	FORGED_RECIPIENTS(0.00)[m:broonie@kernel.org,m:lgirdwood@gmail.com,m:perex@perex.cz,m:tiwai@suse.com,m:cychiang@chromium.org,m:tzungbi@kernel.org,m:groeck@chromium.org,m:bleung@chromium.org,m:david.rhodes@cirrus.com,m:rf@opensource.cirrus.com,m:povik+lin@cutebit.org,m:ckeepax@opensource.cirrus.com,m:support.opensource@diasemi.com,m:nick.li@foursemi.com,m:herve.codina@bootlin.com,m:srini@kernel.org,m:matthias.bgg@gmail.com,m:angelogioacchino.delregno@collabora.com,m:shenghao-ding@ti.com,m:kevin-lu@ti.com,m:baojun.xu@ti.com,m:sen@ti.com,m:oder_chiou@realtek.com,m:lars@metafoo.de,m:nuno.sa@analog.com,m:steven.eckhoff.opensource@gmail.com,m:patches@opensource.cirrus.com,m:chrome-platform@lists.linux.dev,m:asahi@lists.linux.dev,m:linux-arm-msm@vger.kernel.org,m:linux-sound@vger.kernel.org,m:linux-kernel@vger.kernel.org,m:linux-arm-kernel@lists.infradead.org,m:linux-mediatek@lists.infradead.org,m:phucduc.bui@gmail.com,m:povik@cutebit.org,m:matthiasbgg@gmail.com,m:steveneckhoffopensource@g
  mail.com,m:phucducbui@gmail.com,s:lists@lfdr.de];
@@ -159,11 +159,11 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,lin];
 	TO_DN_SOME(0.00)[];
 	FORGED_RECIPIENTS_FORWARDING(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[vger.kernel.org:from_smtp,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,vger.kernel.org:from_smtp]
 X-Rspamd-Server: lfdr
-X-Rspamd-Queue-Id: 26D6E698F62
+X-Rspamd-Queue-Id: 06F68698A6F
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
@@ -172,48 +172,50 @@ Merely code refactoring, and no behavior change.
 
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
 ---
- sound/soc/codecs/rt5665.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ sound/soc/codecs/rt5668.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5665.c b/sound/soc/codecs/rt5665.c
-index 48f57cd0920d..9048632488ab 100644
---- a/sound/soc/codecs/rt5665.c
-+++ b/sound/soc/codecs/rt5665.c
-@@ -1208,7 +1208,7 @@ static void rt5665_jack_detect_handler(struct work_struct *work)
- 		usleep_range(10000, 15000);
+diff --git a/sound/soc/codecs/rt5668.c b/sound/soc/codecs/rt5668.c
+index fed6de40b8c8..1eba4d559c0f 100644
+--- a/sound/soc/codecs/rt5668.c
++++ b/sound/soc/codecs/rt5668.c
+@@ -986,7 +986,7 @@ static void rt5668_jack_detect_handler(struct work_struct *work)
+ 		return;
  	}
  
--	mutex_lock(&rt5665->calibrate_mutex);
-+	guard(mutex)(&rt5665->calibrate_mutex);
+-	mutex_lock(&rt5668->calibrate_mutex);
++	guard(mutex)(&rt5668->calibrate_mutex);
  
- 	val = snd_soc_component_read(rt5665->component, RT5665_AJD1_CTRL) & 0x0010;
- 	if (!val) {
-@@ -1274,8 +1274,6 @@ static void rt5665_jack_detect_handler(struct work_struct *work)
- 		schedule_delayed_work(&rt5665->jd_check_work, 0);
+ 	val = snd_soc_component_read(rt5668->component, RT5668_AJD1_CTRL)
+ 		& RT5668_JDH_RS_MASK;
+@@ -1053,8 +1053,6 @@ static void rt5668_jack_detect_handler(struct work_struct *work)
+ 		schedule_delayed_work(&rt5668->jd_check_work, 0);
  	else
- 		cancel_delayed_work_sync(&rt5665->jd_check_work);
+ 		cancel_delayed_work_sync(&rt5668->jd_check_work);
 -
--	mutex_unlock(&rt5665->calibrate_mutex);
+-	mutex_unlock(&rt5668->calibrate_mutex);
  }
  
- static const char * const rt5665_clk_sync[] = {
-@@ -4564,7 +4562,7 @@ static void rt5665_calibrate(struct rt5665_priv *rt5665)
+ static const struct snd_kcontrol_new rt5668_snd_controls[] = {
+@@ -2356,7 +2354,7 @@ static void rt5668_calibrate(struct rt5668_priv *rt5668)
  {
  	int value, count;
  
--	mutex_lock(&rt5665->calibrate_mutex);
-+	guard(mutex)(&rt5665->calibrate_mutex);
+-	mutex_lock(&rt5668->calibrate_mutex);
++	guard(mutex)(&rt5668->calibrate_mutex);
  
- 	regcache_cache_bypass(rt5665->regmap, true);
- 
-@@ -4637,7 +4635,6 @@ static void rt5665_calibrate(struct rt5665_priv *rt5665)
- 
- out_unlock:
- 	rt5665->calibration_done = true;
--	mutex_unlock(&rt5665->calibrate_mutex);
+ 	rt5668_reset(rt5668->regmap);
+ 	regmap_write(rt5668->regmap, RT5668_PWR_ANLG_1, 0xa2bf);
+@@ -2400,9 +2398,6 @@ static void rt5668_calibrate(struct rt5668_priv *rt5668)
+ 	/* restore settings */
+ 	regmap_write(rt5668->regmap, RT5668_STO1_ADC_MIXER, 0xc0c4);
+ 	regmap_write(rt5668->regmap, RT5668_PWR_DIG_1, 0x0000);
+-
+-	mutex_unlock(&rt5668->calibrate_mutex);
+-
  }
  
- static void rt5665_calibrate_handler(struct work_struct *work)
+ static int rt5668_i2c_probe(struct i2c_client *i2c)
 -- 
 2.43.0
 
